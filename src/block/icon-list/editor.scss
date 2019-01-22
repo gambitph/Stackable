@@ -1,0 +1,16 @@
+/**
+ * Editor styles for the Icon List Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+// UL is a child when in block form, remove the bullets.
+.ugb-icon-list ul {
+	list-style: none !important;
+}
+
+// Hide the list formatting toolbar buttons since we cannot use those.
+// Depends on https://github.com/WordPress/gutenberg/pull/12527
+.editor-block-list__block[data-type="ugb/icon-list"] .list-format-toolbar {
+	display: none;
+}

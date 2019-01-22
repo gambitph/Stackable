@@ -1,0 +1,140 @@
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+
+// Most used breakpoints
+$break-huge: 1440px;
+$break-wide: 1280px;
+$break-large: 960px; // admin sidebar auto folds
+$break-medium: 782px; // adminbar goes big
+$break-small: 600px;
+$break-mobile: 480px;
+
+[class*="ugb-"] form[class*="-link"],
+form[class*="ugb-"][class*="-link"],
+[class*="ugb-"] + form[class*="-link"] {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+// Box
+$box-radius: 12px;
+$box-hori-padding: 35px;
+$box-vert-padding: 60px;
+
+/**
+ * For blocks with a box outline, we can use the custom properties:
+ * --box-padding-vert
+ * --box-padding-hori
+ * to get the current padding values
+ */
+@mixin box() {
+	box-shadow: 0 5px 5px 0 rgba(18, 63, 82, 0.035), 0 0 0 1px rgba(176, 181, 193, 0.2);
+	background-color: #fff;
+	border-radius: $box-radius;
+	overflow: hidden;
+	padding: $box-vert-padding $box-hori-padding;
+	--box-padding-vert: #{$box-vert-padding};
+	--box-padding-hori: #{$box-hori-padding};
+	@media screen and (max-width: $break-medium) {
+		padding: ($box-vert-padding * 2/3) ($box-hori-padding * 2/3);
+		--box-padding-vert: #{($box-vert-padding * 2/3)};
+		--box-padding-hori: #{($box-hori-padding * 2/3)};
+	}
+	@media screen and (max-width: $break-small) {
+		padding: $box-hori-padding ($box-hori-padding / 2);
+		--box-padding-vert: #{$box-hori-padding};
+		--box-padding-hori: #{($box-hori-padding / 2)};
+	}
+}
+
+@mixin baseBlock() {
+	@include blockContentReset();
+	@include baseMargins();
+}
+
+@mixin baseMargins() {
+	margin-top: 1.5em;
+	margin-bottom: 1.5em;
+}
+
+@mixin blockContentReset() {
+	> * {
+		margin-top: 0 !important;
+		margin-bottom: 1rem !important;
+		&:first-child {
+			margin-top: 0 !important;
+		}
+		&:last-child {
+			margin-bottom: 0 !important;
+		}
+	}
+}
+
+@mixin baseButton() {
+	padding-bottom: calc(0.375em - var(--s-border, 0px));
+	padding-left: 1.25em;
+	padding-right: 1.25em;
+	padding-top: calc(0.375em - var(--s-border, 0px));
+	font-size: 1em;
+	line-height: 1.5 !important;
+	align-items: center;
+}
+
+// Full-widths should be on top of each other in the editor.
+[data-type^="ugb/"][data-align="full"] + [data-type^="ugb/"][data-align="full"] {
+	margin-top: -32px;
+}
+
+// Different box shadows for the shadow setting.
+.ugb--shadow-0,
+.ugb-shadow-0 { // Old naming convention.
+	box-shadow: none !important;
+}
+.ugb--shadow-1,
+.ugb-shadow-1 { // Old naming convention.
+	box-shadow: 0 0 0 1px rgba(120, 120, 120, 0.1) !important;
+}
+.ugb--shadow-2,
+.ugb-shadow-2 { // Old naming convention.
+	box-shadow: 0 0 0 2px rgba(120, 120, 120, 0.1) !important;
+}
+.ugb--shadow-3,
+.ugb-shadow-3 { // Old naming convention.
+	box-shadow: 0 5px 5px 0 rgba(18, 63, 82, 0.035), 0 0 0 1px rgba(176, 181, 193, 0.2); // Our normal.
+}
+.ugb--shadow-4,
+.ugb-shadow-4 { // Old naming convention.
+	box-shadow: 0px 2px 20px rgba(153, 153, 153, 0.2) !important;
+}
+.ugb--shadow-5,
+.ugb-shadow-5 { // Old naming convention.
+	box-shadow: 0 5px 30px -10px rgba(18, 63, 82, 0.3) !important;
+}
+.ugb--shadow-6,
+.ugb-shadow-6 { // Old naming convention.
+	box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.05) !important;
+}
+.ugb--shadow-7,
+.ugb-shadow-7 { // Old naming convention.
+	box-shadow: 7px 5px 30px rgba(72, 73, 121, 0.15) !important;
+}
+.ugb--shadow-8,
+.ugb-shadow-8 { // Old naming convention.
+	box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.1) !important;
+}
+.ugb--shadow-9,
+.ugb-shadow-9 { // Old naming convention.
+	box-shadow: 0px 70px 130px -60px rgba(72, 73, 121, 0.38) !important;
+}
+
+// A block can have a ugb-content-width class to make it's content fit the content-width.
+.ugb--content-width .ugb-content-wrapper,
+.ugb-content-width .ugb-content-wrapper { // Old naming convention.
+	max-width: var(--content-width);
+	margin: 0 auto;
+}

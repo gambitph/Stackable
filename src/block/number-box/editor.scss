@@ -1,0 +1,31 @@
+/**
+ * Editor styles for the Number Box Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+.ugb-number-box {
+	.ugb-number-box__number[data-is-placeholder-visible="true"] {
+		transition: none;
+		height: 2.5em;
+		width: 2.5em;
+		left: calc(50% - 2.5em / 2); // Prevent transitions.
+	}
+}
+
+[data-type="ugb/number-box"] {
+	// Fade out placeholder text.
+	[data-is-placeholder-visible="true"] + .editor-rich-text__tinymce {
+		opacity: 0.5;
+	}
+
+	// Only show placeholder text while selected or typing.
+	&:not(.is-selected):not(.is-typing) {
+		[data-is-placeholder-visible="true"] + .editor-rich-text__tinymce {
+			display: none;
+		}
+		[data-is-placeholder-visible="true"] {
+			display: none;
+		}
+	}
+}

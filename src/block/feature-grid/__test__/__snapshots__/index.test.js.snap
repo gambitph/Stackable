@@ -1,0 +1,230 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Feature Grid block edit matches snapshots 1`] = `
+<Fragment>
+  <InspectorControls>
+    <PanelBody>
+      <RangeControl
+        label="Columns"
+        max={3}
+        min={1}
+        onChange={[Function]}
+        value={3}
+      />
+      <RangeControl
+        label="Image Size %"
+        max={100}
+        min={0}
+        onChange={[Function]}
+        value={100}
+      />
+    </PanelBody>
+  </InspectorControls>
+  <div
+    className="ugb-feature-grid columns-3"
+  >
+    <div>
+      <div
+        className="ugb-feature-grid-item"
+      >
+        <div>
+          <MediaUpload
+            allowedTypes={
+              Array [
+                "image",
+              ]
+            }
+            onSelect={[Function]}
+            render={[Function]}
+            value={123}
+          />
+        </div>
+        <RichText
+          keepPlaceholderOnFocus={true}
+          onChange={[Function]}
+          placeholder="Feature 1"
+          tagName="h5"
+          value="Title"
+        />
+        <RichText
+          keepPlaceholderOnFocus={true}
+          onChange={[Function]}
+          placeholder="Some feature description for an awesome feature"
+          tagName="p"
+          value="Description"
+        />
+        <p>
+          <a
+            href="#"
+          >
+            <RichText
+              formattingControls={
+                Array [
+                  "bold",
+                  "italic",
+                  "strikethrough",
+                ]
+              }
+              keepPlaceholderOnFocus={true}
+              onChange={[Function]}
+              placeholder="View More"
+              tagName="span"
+              value="View More"
+            />
+          </a>
+        </p>
+      </div>
+    </div>
+    <div>
+      <div
+        className="ugb-feature-grid-item"
+      >
+        <div>
+          <MediaUpload
+            allowedTypes={
+              Array [
+                "image",
+              ]
+            }
+            onSelect={[Function]}
+            render={[Function]}
+            value={123}
+          />
+        </div>
+        <RichText
+          keepPlaceholderOnFocus={true}
+          onChange={[Function]}
+          placeholder="Feature 2"
+          tagName="h5"
+          value="Title"
+        />
+        <RichText
+          keepPlaceholderOnFocus={true}
+          onChange={[Function]}
+          placeholder="Some feature description for an awesome feature"
+          tagName="p"
+          value="Description"
+        />
+        <p>
+          <a
+            href="#"
+          >
+            <RichText
+              formattingControls={
+                Array [
+                  "bold",
+                  "italic",
+                  "strikethrough",
+                ]
+              }
+              keepPlaceholderOnFocus={true}
+              onChange={[Function]}
+              placeholder="View More"
+              tagName="span"
+              value="View More"
+            />
+          </a>
+        </p>
+      </div>
+    </div>
+    <div>
+      <div
+        className="ugb-feature-grid-item"
+      >
+        <div>
+          <MediaUpload
+            allowedTypes={
+              Array [
+                "image",
+              ]
+            }
+            onSelect={[Function]}
+            render={[Function]}
+            value={123}
+          />
+        </div>
+        <RichText
+          keepPlaceholderOnFocus={true}
+          onChange={[Function]}
+          placeholder="Feature 3"
+          tagName="h5"
+          value="Title"
+        />
+        <RichText
+          keepPlaceholderOnFocus={true}
+          onChange={[Function]}
+          placeholder="Some feature description for an awesome feature"
+          tagName="p"
+          value="Description"
+        />
+        <p>
+          <a
+            href="#"
+          >
+            <RichText
+              formattingControls={
+                Array [
+                  "bold",
+                  "italic",
+                  "strikethrough",
+                ]
+              }
+              keepPlaceholderOnFocus={true}
+              onChange={[Function]}
+              placeholder="View More"
+              tagName="span"
+              value="View More"
+            />
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</Fragment>
+`;
+
+exports[`Feature Grid block save all attributes matches snapshots 1`] = `
+<div
+  className="ugb-feature-grid columns-3"
+>
+  <div
+    className="ugb-feature-grid-item"
+  >
+    <img
+      src="#"
+      style={
+        Object {
+          "width": "100%",
+        }
+      }
+    />
+    <p />
+  </div>
+  <div
+    className="ugb-feature-grid-item"
+  >
+    <img
+      src="#"
+      style={
+        Object {
+          "width": "100%",
+        }
+      }
+    />
+    <p />
+  </div>
+  <div
+    className="ugb-feature-grid-item"
+  >
+    <img
+      src="#"
+      style={
+        Object {
+          "width": "100%",
+        }
+      }
+    />
+    <p />
+  </div>
+</div>
+`;

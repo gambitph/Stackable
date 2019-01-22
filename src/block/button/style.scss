@@ -1,0 +1,68 @@
+/**
+ * Frontend styles for the Button Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+
+@import "common";
+
+// Only add paddings to the link/button if there's another button before it.
+.ugb-button-wrapper .ugb-button.ugb-button--design-plain,
+.ugb-button-wrapper .ugb-button.ugb-plain-button {
+	margin-left: 0.75em;
+	margin-right: 0.75em;
+}
+
+// Only add paddings to the link/button if there's another button before it.
+.ugb-button-wrapper .ugb-button.ugb-button--design-link,
+.ugb-button-wrapper .ugb-button.ugb-link-button {
+	margin-left: 0.75em;
+	margin-right: 0.75em;
+}
+
+.ugb-button-wrapper {
+	@include baseMargins();
+	display: flex !important;
+	justify-content: center;
+	flex-wrap: wrap;
+	align-items: center;
+	margin-left: -0.5em;
+	margin-right: -0.5em;
+	.ugb-button {
+		margin: 0 0.5em 0.5em;
+		display: block;
+	}
+	.ugb-button.ugb-button--has-icon,
+	.ugb-button.ugb-has-icon {
+		display: flex;
+	}
+
+	&.ugb-button--align-left {
+		justify-content: flex-start;
+	}
+	&.ugb-button--align-right {
+		justify-content: flex-end;
+	}
+	&.ugb-button--align-full {
+		> div {
+			flex: 1;
+			text-align: center;
+		}
+	}
+}
+
+// Deprecated < v1.11
+.ugb-button-wrapper {
+	&.ugb-button-left {
+		justify-content: flex-start;
+	}
+	&.ugb-button-right {
+		justify-content: flex-end;
+	}
+	&.ugb-button-full {
+		> div {
+			flex: 1;
+			text-align: center;
+		}
+	}
+}

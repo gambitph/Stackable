@@ -1,0 +1,28 @@
+.ugb-svg-icon-placeholder {
+	background: transparent;
+	box-shadow: none;
+	color: inherit;
+	padding: 0 !important;
+	&:hover {
+		background: transparent !important;
+		box-shadow: none !important;
+		color: inherit !important;
+		outline: 1px solid #e2e4e7;
+		outline-offset: 8px;
+	}
+}
+
+.ugb-svg-icon-placeholder > svg {
+	min-width: 20px;
+	min-height: 20px;
+}
+
+.ugb-svg-icon-placeholder__popup {
+	.components-popover__content {
+		padding: 8px;
+	}
+	.components-ugb-icon-control__iconlist {
+		max-height: 200px;
+		overflow: auto;
+	}
+}

@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@stackable/*": ["./src/*"]
+		}
+	},
+	"exclude": [
+		"node_modules"
+    ]
+}

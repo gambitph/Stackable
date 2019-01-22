@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Spacer Block block edit matches snapshot 1`] = `
+<Fragment>
+  <InspectorControls>
+    <PanelBody>
+      <RangeControl
+        label="Height"
+        max="200"
+        min="30"
+        onChange={[Function]}
+        value={100}
+      />
+    </PanelBody>
+  </InspectorControls>
+  <div
+    className={undefined}
+    style={
+      Object {
+        "height": "100px",
+      }
+    }
+  />
+</Fragment>
+`;
+
+exports[`Spacer Block block save matches snapshot 1`] = `
+<div
+  style={
+    Object {
+      "height": "100px",
+    }
+  }
+/>
+`;

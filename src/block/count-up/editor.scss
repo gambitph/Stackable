@@ -1,0 +1,53 @@
+/**
+ * Editor styles for the Count Up Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+[data-align="full"] {
+	.ugb-countup {
+		border-radius: 0 !important;
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+}
+
+// While editing, make sure the numbers are always visible.
+[data-type="ugb/count-up"] .ugb-countup--hide,
+[data-type="ugb/count-up"] .ugb-countup-hide {
+	visibility: visible !important;
+}
+
+// Fade out placeholder text.
+.ugb-countup {
+	[data-is-placeholder-visible="true"] + .editor-rich-text__tinymce {
+		opacity: 0.5;
+	}
+}
+
+// Only show placeholder text while selected or typing.
+[data-type="ugb/count-up"]:not(.is-selected):not(.is-typing) {
+	[data-is-placeholder-visible="true"] + .editor-rich-text__tinymce {
+		display: none;
+	}
+}
+
+// Hide columns.
+.ugb-countup.ugb-countup--columns-1 {
+	.ugb-countup__item:nth-child(2),
+	.ugb-countup__item:nth-child(3),
+	.ugb-countup__item:nth-child(4) {
+		display: none;
+	}
+}
+.ugb-countup.ugb-countup--columns-2 {
+	.ugb-countup__item:nth-child(3),
+	.ugb-countup__item:nth-child(4) {
+		display: none;
+	}
+}
+.ugb-countup.ugb-countup--columns-3 {
+	.ugb-countup__item:nth-child(4) {
+		display: none;
+	}
+}

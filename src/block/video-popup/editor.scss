@@ -1,0 +1,17 @@
+/**
+ * Editor styles for the Video Popup Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+.ugb-video-popup__link-description {
+	text-align: center;
+	margin: 0;
+}
+
+[data-align="center"] .ugb-video-popup {
+	max-width: 600px;
+}
+[data-align="full"] .ugb-video-popup {
+	border-radius: 0;
+}

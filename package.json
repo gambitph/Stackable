@@ -1,0 +1,127 @@
+{
+  "name": "stackable",
+  "version": "1.10.0",
+  "private": true,
+  "description": "Blocks for everyone",
+  "author": "Benjamin Intal of Gambit",
+  "license": "GPL-3.0",
+  "keywords": [
+    "WordPress",
+    "Stackable",
+    "blocks"
+  ],
+  "homepage": "https://wpstackable.com",
+  "repository": "git+https://github.com/gambitph/Stackable.git",
+  "bugs": "https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks",
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.8",
+    "@fortawesome/free-brands-svg-icons": "^5.5.0",
+    "@fortawesome/free-regular-svg-icons": "^5.5.0",
+    "@fortawesome/free-solid-svg-icons": "^5.5.0",
+    "@fortawesome/react-fontawesome": "^0.1.3",
+    "@wordpress/dom-ready": "^2.0.2",
+    "bigpicture": "^2.1.0",
+    "classnames": "^2.2.6",
+    "counterup2": "^1.0.4",
+    "is-dark-color": "^1.2.0",
+    "md5": "^2.2.1",
+    "striptags": "^3.1.1",
+    "waypoints": "^4.0.1"
+  },
+  "devDependencies": {
+    "@wordpress/browserslist-config": "^2.2.3",
+    "@wordpress/eslint-plugin": "^1.0.1",
+    "@wordpress/hooks": "^2.0.5",
+    "@wordpress/scripts": "^2.5.0",
+    "autoprefixer": "^9.4.5",
+    "babel-core": "^6.26.0",
+    "babel-jest": "^22.4.3",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-es2015-destructuring": "^6.23.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "browserslist": "^4.4.1",
+    "concurrently": "^4.1.0",
+    "css-mqpacker": "^7.0.0",
+    "cssnano": "^4.1.8",
+    "delete-empty": "^2.0.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "eslint": "^5.10.0",
+    "eslint-plugin-jest": "^22.1.3",
+    "gulp": "^4.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-postcss": "^8.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^4.0.2",
+    "husky": "^1.2.1",
+    "jest": "^23.6.0",
+    "lint-staged": "^8.1.0",
+    "lodash": "^4.17.11",
+    "node-sass": "^4.10.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-test-renderer": "^16.2.0",
+    "replace-in-file": "^3.4.3",
+    "rimraf": "^2.6.2",
+    "stylelint": "^9.9.0",
+    "stylelint-config-wordpress": "^13.1.0",
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.1.2"
+  },
+  "scripts": {
+    "clean": "rimraf ./dist/* ./build/*",
+    "start:js": "webpack --config .config/webpack.config.dev.js --watch",
+    "start:css": "gulp watch",
+    "start": "npm run clean && concurrently \"npm run start:js\" \"npm run start:css\"",
+    "package": "gulp package && delete-empty build && gulp generate-indexphp",
+    "build:js": "webpack --config .config/webpack.config.prod.js --silent",
+    "build:css": "gulp build",
+    "prebuild": "node ./tools/ensure-version-number",
+    "build": "npm run clean && concurrently --raw \"npm:build:js\" \"npm:build:css\" && npm run package",
+    "test": "jest",
+    "test:scripts": "wp-scripts test-unit-js",
+    "lint": "concurrently \"npm run lint-js\" \"npm run lint-css\"",
+    "lint:fix": "concurrently \"npm run lint-js:fix\" \"npm run lint-css:fix\"",
+    "lint-js": "wp-scripts lint-js .",
+    "lint-js:fix": "wp-scripts lint-js . --fix",
+    "lint-css": "stylelint './src/**/*.scss'",
+    "lint-css:fix": "stylelint './src/**/*.scss' --fix",
+    "check-licenses": "concurrently \"wp-scripts check-licenses --prod --gpl2\" \"wp-scripts check-licenses --dev\"",
+    "postinstall": "npm run check-licenses"
+  },
+  "lint-staged": {
+    "package.json": [
+      "wp-scripts lint-pkg-json"
+    ],
+    "*.scss": [
+      "stylelint"
+    ],
+    "*.js": [
+      "wp-scripts lint-js"
+    ],
+    "ignore": [
+      "./dist/*",
+      "./build/**/*"
+    ]
+  },
+  "jest": {
+    "setupFiles": [
+      "./src/test/jestsetup.js"
+    ],
+    "moduleNameMapper": {
+      ".s?css$": "<rootDir>/src/test/scssStub.js"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "browserslist": [
+    "extends @wordpress/browserslist-config"
+  ]
+}

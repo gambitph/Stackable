@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Divider Block block edit matches snapshot 1`] = `
+<Fragment>
+  <BlockControls>
+    <BlockAlignmentToolbar
+      controls={
+        Array [
+          "left",
+          "center",
+          "right",
+          "full",
+        ]
+      }
+      onChange={[Function]}
+      value={undefined}
+    />
+  </BlockControls>
+  <InspectorControls>
+    <DesignPanelBody
+      onChange={[Function]}
+      options={
+        Array [
+          Object {
+            "label": <DesignPanelItem
+              imageFile="button/images/test.jpg"
+            />,
+            "title": "Basic",
+            "value": "basic",
+          },
+          Object {
+            "label": <DesignPanelItem
+              imageFile="button/images/test.jpg"
+              isPro={true}
+            />,
+            "title": "Center",
+            "value": "center",
+          },
+          Object {
+            "label": <DesignPanelItem
+              imageFile="https://via.placeholder.com/350x150"
+              isPro={true}
+            />,
+            "title": "Right",
+            "value": "right",
+          },
+          Object {
+            "label": <DesignPanelItem
+              imageFile="https://via.placeholder.com/350x150"
+              isPro={true}
+            />,
+            "title": "Full",
+            "value": "full",
+          },
+        ]
+      }
+      selected={undefined}
+    />
+  </InspectorControls>
+  <InspectorControls>
+    <PanelBody>
+      <SelectControl
+        label="Size"
+        onChange={[Function]}
+        options={
+          Array [
+            Object {
+              "label": "Small",
+              "value": "small",
+            },
+            Object {
+              "label": "Normal",
+              "value": "normal",
+            },
+            Object {
+              "label": "Medium",
+              "value": "medium",
+            },
+            Object {
+              "label": "Large",
+              "value": "large",
+            },
+          ]
+        }
+        value="normal"
+      />
+      <RangeControl
+        label="Corner Radius"
+        max="50"
+        min="1"
+        onChange={[Function]}
+        value={4}
+      />
+    </PanelBody>
+    <PanelColorSettings
+      colorSettings={
+        Array [
+          Object {
+            "label": "Background Color",
+            "onChange": [Function],
+            "value": "#2091e1",
+          },
+          Object {
+            "label": "Text Color",
+            "onChange": [Function],
+            "value": "#ffffff",
+          },
+        ]
+      }
+      title="Color Settings"
+    />
+  </InspectorControls>
+  <ButtonEdit
+    align={undefined}
+    backgroundColor="#2091e1"
+    borderRadius={4}
+    color="#ffffff"
+    onChange={[Function]}
+    size="normal"
+    text="We Simplify and Revolutionize"
+  />
+</Fragment>
+`;
+
+exports[`Divider Block block save matches snapshot 1`] = `
+<ButtonSave
+  align={undefined}
+  backgroundColor="#2091e1"
+  borderRadius={4}
+  color="#ffffff"
+  size="normal"
+  text="We Simplify and Revolutionize"
+  url="http://www.gambit.ph/"
+/>
+`;

@@ -1,0 +1,35 @@
+/**
+ * Frontend styles for the CTA Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+
+@import "common";
+
+.ugb-cta {
+	text-align: center;
+	background-color: #f4f4f4;
+	@include baseBlock();
+	@include box();
+	.ugb-content-wrapper {
+		@include baseBlock();
+	}
+	.ugb-button {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+}
+
+.ugb-cta.ugb-cta--design-plain,
+.ugb-cta.ugb-design-plain {
+	box-shadow: none;
+	border-radius: 0;
+	padding: 0;
+	overflow: visible;
+	background: transparent;
+}
+
+// Backward compatibility version < 1.0
+.wp-block-ugb-button .wp-ugb-button:hover {
+	color: #fff;
+}

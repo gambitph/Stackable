@@ -1,0 +1,40 @@
+.ugb-design-control {
+	// Hide the radio button.
+	input {
+		position: absolute;
+		opacity: 0;
+	}
+	.components-radio-control__option {
+		display: inline-block;
+		width: 50%;
+		text-align: center;
+	}
+	label > span {
+		padding: 5px;
+		display: block;
+		border-radius: 8px;
+		> img {
+			border-radius: 4px;
+		}
+	}
+	input:checked + label > span {
+		box-shadow: inset 0 0 0 2px #888;
+	}
+
+	.is-pro {
+		&:hover {
+			cursor: help;
+		}
+		img {
+			opacity: 0.4;
+		}
+	}
+
+	.design-label {
+		svg {
+			height: 12px;
+			margin: 0 0 0 5px;
+			fill: #ffad00;
+		}
+	}
+}

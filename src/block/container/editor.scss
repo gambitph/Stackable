@@ -1,0 +1,68 @@
+/**
+ * Editor styles for the Container Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+@import "../../common.scss";
+
+// Remove border radius on full width.
+[data-align="full"] {
+	.ugb-container {
+		border-radius: 0 !important;
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+}
+[data-type="ugb/container"][data-align="full"] {
+	.ugb-container:not(.ugb-has-background) {
+		padding-left: $box-hori-padding !important;
+		padding-right: $box-hori-padding !important;
+	}
+}
+
+// Prevent block align center from centering our text.
+[data-type="ugb/container"][data-align="center"] {
+	text-align: inherit;
+}
+
+// Inner blocks are always restricted to the content width.
+.ugb-container .editor-block-list__block {
+	max-width: none !important;
+}
+
+// Force color
+body.wp-admin {
+	.ugb-container[style*="--ugb-text-color"] {
+		.editor-block-list__block-edit [data-block] {
+			> *:not(.wp-block-html) { // Do not include HTML block code.
+				&,
+				p,
+				h1,
+				h2,
+				h3,
+				h4,
+				h5,
+				h6,
+				* {
+					color: var(--ugb-text-color);
+				}
+			}
+		}
+	}
+}
+
+// Make sure our first & last contents (visually) in the editor don't have margins.
+.ugb-container__content-wrapper > .editor-inner-blocks > .editor-block-list__layout {
+	> .editor-block-list__block:first-child > .editor-block-list__block-edit {
+		margin-top: 0 !important;
+	}
+	> *:empty:last-child {
+		margin-bottom: -32px !important;
+	}
+}
+
+// Fix: Make Columns placed inside Container blocks occupy the entire Container width
+.ugb-container .wp-block-columns .editor-inner-blocks {
+	width: 100%;
+}

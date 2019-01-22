@@ -1,0 +1,23 @@
+/**
+ * Frontend styles for the Divider Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+
+@import "common";
+
+.wp-block-ugb-divider {
+	border: 0;
+	height: 1px;
+	width: 100%;
+	background-color: transparent;
+	// margin-top: 2rem;
+	// margin-bottom: 2rem;
+	@include baseBlock();
+	hr {
+		background-color: #ddd;
+		border: 0 !important;
+		padding: 0 !important;
+		max-width: none !important;
+	}
+}

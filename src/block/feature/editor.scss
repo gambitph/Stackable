@@ -1,0 +1,41 @@
+/**
+ * Editor styles for the Feature Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+@import "common";
+
+// Remove border radius on full width.
+[data-align="full"] {
+	.ugb-feature.ugb-has-background,
+	.ugb-feature.ugb--has-background {
+		border-radius: 0 !important;
+	}
+	.ugb-feature.ugb-feature--design-plain {
+		padding-right: $box-hori-padding;
+		padding-left: $box-hori-padding;
+	}
+}
+
+[data-type="ugb/feature"] {
+	// Fade out placeholder text.
+	[data-is-placeholder-visible="true"] + .editor-rich-text__tinymce {
+		opacity: 0.5;
+	}
+
+	// Only show placeholder text while selected or typing.
+	&:not(.is-selected):not(.is-typing) {
+		[data-is-placeholder-visible="true"] + .editor-rich-text__tinymce {
+			display: none;
+		}
+		[data-is-placeholder-visible="true"] {
+			display: none;
+		}
+	}
+}
+
+.ugb-feature .ugb-feature__image-side .ugb-image-upload-placeholder.ugb-image-upload-has-placeholder,
+.ugb-feature .ugb-feature-image-side .ugb-image-upload-placeholder.ugb-image-upload-has-placeholder {
+	height: 250px;
+}

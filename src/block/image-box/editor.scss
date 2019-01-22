@@ -1,0 +1,98 @@
+/**
+ * Editor styles for the Image Box Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+@import "common";
+
+// Make sure that the text can be edited.
+.ugb-image-box__overlay {
+	pointer-events: none !important;
+}
+.ugb-image-box__content {
+	pointer-events: all !important;
+}
+
+// Visible placeholders do not work since they grab focus.
+.ugb-image-box__item {
+	[data-is-placeholder-visible="true"] + * {
+		pointer-events: none !important;
+	}
+}
+
+.ugb-image-box.ugb-image-box--columns-1 {
+	> *:nth-child(2),
+	> *:nth-child(3),
+	> *:nth-child(4) {
+		display: none;
+	}
+}
+.ugb-image-box.ugb-image-box--columns-2 {
+	> *:nth-child(3),
+	> *:nth-child(4) {
+		display: none;
+	}
+}
+.ugb-image-box.ugb-image-box--columns-3 {
+	> *:nth-child(4) {
+		display: none;
+	}
+}
+
+// No border-radius for full width 1 column.
+[data-type="ugb/image-box"][data-align="full"] {
+	.ugb-image-box.ugb-image-box--columns-1 {
+		.ugb-image-box__item {
+			border-radius: 0;
+		}
+	}
+	.ugb-image-box:not(.ugb-image-box--columns-1) {
+		padding-left: $box-hori-padding;
+		padding-right: $box-hori-padding;
+	}
+}
+
+// Center single images.
+[data-type="ugb/image-box"]:not([data-align="wide"]):not([data-align="full"]) {
+	.ugb-image-box.ugb-image-box--columns-1 {
+		.ugb-image-box__item {
+			margin: 0 auto;
+		}
+	}
+}
+
+// Make the image placeholder take the whole space.
+.ugb-image-box__item {
+	.ugb-image-upload-placeholder.ugb-image-upload-has-placeholder {
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+}
+
+[data-type="ugb/image-box"] {
+	// Fade out placeholder text.
+	[data-is-placeholder-visible="true"] + .editor-rich-text__tinymce {
+		opacity: 0.5;
+	}
+
+	// Fade out description text when not hovered.
+	.ugb-image-box__item:not(:hover) [data-is-placeholder-visible="true"] + .ugb-image-box__description.editor-rich-text__tinymce {
+		opacity: 0;
+	}
+	.ugb-image-box__item:hover [data-is-placeholder-visible="true"] + .ugb-image-box__description.editor-rich-text__tinymce {
+		opacity: 0.5;
+	}
+
+	// Only show placeholder text while selected or typing.
+	&:not(.is-selected):not(.is-typing) {
+		[data-is-placeholder-visible="true"] + .editor-rich-text__tinymce {
+			display: none;
+		}
+		.ugb-button[data-is-placeholder-visible="true"] {
+			display: none;
+		}
+	}
+}

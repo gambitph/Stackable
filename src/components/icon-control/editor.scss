@@ -1,0 +1,48 @@
+.ugb-image-control {
+
+	// Make room for the icon preview.
+	.components-text-control__input {
+		padding-left: 30px !important;
+	}
+
+	// Icon preview that should be placed inside the text input.
+	.components-ugb-icon-control__input_wrapper {
+		position: relative;
+	}
+	.components-text-control__icon-preview {
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		display: flex;
+		align-items: center;
+		width: 30px;
+		justify-content: center;
+		svg {
+			height: 60%;
+			width: 60%;
+		}
+	}
+
+	// Icon search list.
+	.components-ugb-icon-control__iconlist {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		margin-top: 5px;
+		button {
+			background: none;
+			padding: 5px;
+			height: auto;
+			border-color: transparent;
+			box-shadow: none;
+		}
+		svg {
+			width: 30px !important;
+			height: 30px;
+			margin: 0;
+			box-sizing: content-box;
+			border-radius: 4px;
+		}
+	}
+}

@@ -1,0 +1,41 @@
+/**
+ * Editor styles for the Feature Grid Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+[data-type="ugb/feature-grid"] {
+	// Fade out placeholder text.
+	[data-is-placeholder-visible="true"] + .editor-rich-text__tinymce {
+		opacity: 0.5;
+	}
+
+	// Only show placeholder text while selected or typing.
+	&:not(.is-selected):not(.is-typing) {
+		[data-is-placeholder-visible="true"] + .editor-rich-text__tinymce {
+			display: none;
+		}
+		[data-is-placeholder-visible="true"] {
+			display: none;
+		}
+	}
+}
+
+.ugb-feature-grid.ugb-feature-grid--columns-1 {
+	> *:nth-child(2),
+	> *:nth-child(3) {
+		display: none;
+	}
+}
+.ugb-feature-grid.ugb-feature-grid--columns-2 {
+	> *:nth-child(3) {
+		display: none;
+	}
+}
+
+.ugb-feature-grid .ugb-image-upload-placeholder.ugb-image-upload-has-placeholder {
+	height: 100px;
+	width: 100px;
+	margin: 0 auto;
+	border-radius: 100%;
+}

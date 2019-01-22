@@ -1,0 +1,19 @@
+/**
+ * Editor styles for the Posts Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+@import "common";
+
+[data-type="ugb/blog-posts"][data-align="center"] {
+	text-align: inherit;
+}
+
+// No border-radius for full width 1 column.
+[data-type="ugb/blog-posts"][data-align="full"] {
+	.ugb-blog-posts {
+		padding-left: $box-hori-padding;
+		padding-right: $box-hori-padding;
+	}
+}

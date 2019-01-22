@@ -1,0 +1,45 @@
+/**
+ * Frontend styles for the Expand Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+
+@import "common";
+
+.ugb-expand {
+	@include baseBlock();
+}
+
+.ugb-expand__less-text p:last-child,
+.ugb-expand__more-text p:last-child {
+	margin-bottom: 0;
+}
+
+.ugb-expand.ugb-expand--more {
+	.ugb-expand__less-text,
+	.ugb-expand__more-toggle-text {
+		display: none;
+	}
+	.ugb-expand__more-text,
+	.ugb-expand__less-toggle-text {
+		display: block !important;
+	}
+}
+
+// Deprecated version < 1.10.
+.ugb-expand {
+	@include baseBlock();
+	p:last-child {
+		margin-bottom: 0;
+	}
+	&.ugb-more {
+		.ugb-expand-less-text,
+		.ugb-expand-more {
+			display: none;
+		}
+		.ugb-expand-more-text,
+		.ugb-expand-less {
+			display: block !important;
+		}
+	}
+}

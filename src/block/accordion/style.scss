@@ -1,0 +1,103 @@
+/**
+ * Frontend styles for the Accordion Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+
+@import "common";
+
+.ugb-accordion {
+	@include baseBlock();
+	position: relative;
+	&.ugb-accordion--open .ugb-accordion__heading svg {
+		transform: rotate(180deg);
+	}
+}
+.ugb-accordion__heading {
+	@include box();
+	padding: ($box-hori-padding / 2) $box-hori-padding;
+	margin: 0 !important;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	cursor: pointer;
+	> * {
+		margin: 0 !important;
+	}
+	> *:first-child {
+		margin-right: 1em !important;
+	}
+	svg {
+		transition: transform 0.3s ease-in-out;
+		transform: rotate(0deg);
+	}
+	&:focus {
+		outline-width: 1px;
+		outline-style: dotted;
+	}
+
+	// Common shadow #9 doesn't show up since notification is too short.
+	&.ugb--shadow-9 {
+		box-shadow: 0 25px 60px -15px rgba(72, 73, 121, 0.38) !important;
+	}
+}
+.ugb-accordion__text {
+	max-height: 800px;
+	transition: max-height 0.6s linear, transform 0.4s ease-in-out, opacity 0.3s ease-in-out, margin 0.1s linear;
+	transform: translateY(0);
+	opacity: 1;
+	margin: $box-hori-padding $box-hori-padding 0 !important;
+}
+body:not(.wp-admin) .ugb-accordion:not(.ugb-accordion--open) .ugb-accordion__text {
+	max-height: 0;
+	transform: translateY(25px);
+	opacity: 0;
+	transition: max-height 0.3s linear, transform 0.4s ease-in-out, opacity 0.3s ease-in-out, margin 0.4s linear;
+	margin-top: 0 !important;
+}
+.ugb-accordion.ugb-accordion--design-plain {
+	.ugb-accordion__heading {
+		box-shadow: none;
+		border-radius: 0;
+		padding: 0;
+		&:focus {
+			outline-offset: 10px;
+		}
+	}
+	.ugb-accordion__text {
+		margin: $box-hori-padding 0 0 !important;
+	}
+}
+
+/**
+ * Compatibility < v1.11
+ */
+.ugb-accordion > input[type="checkbox"] {
+	display: none !important;
+}
+
+// Open at start state.
+.ugb-accordion > input[type="checkbox"]:checked {
+	~ .ugb-accordion__text.ugb-accordion__text {
+		max-height: 800px;
+		transition: max-height 0.6s linear, transform 0.4s ease-in-out, opacity 0.3s ease-in-out, margin 0.1s linear;
+		transform: translateY(0);
+		opacity: 1;
+		margin: 35px 35px 0 !important;
+	}
+	~ .ugb-accordion__heading svg {
+		transform: rotate(0deg);
+	}
+}
+body:not(.wp-admin) .ugb-accordion.ugb-accordion--open > input[type="checkbox"]:checked {
+	~ .ugb-accordion__text.ugb-accordion__text {
+		max-height: 0;
+		transform: translateY(25px);
+		opacity: 0;
+		transition: max-height 0.3s linear, transform 0.4s ease-in-out, opacity 0.3s ease-in-out, margin 0.4s linear;
+		margin-top: 0 !important;
+	}
+	~ .ugb-accordion__heading svg {
+		transform: rotate(180deg);
+	}
+}

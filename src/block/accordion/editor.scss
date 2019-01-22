@@ -1,0 +1,28 @@
+/**
+ * Editor styles for the Accordion Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+@import "common";
+
+// Only show placeholder text while selected or typing.
+[data-type="ugb/accordion"] {
+	.ugb-accordion__heading {
+		svg {
+			transform: rotate(180deg) !important;
+		}
+	}
+}
+
+// Animate accordion arrow.
+[data-type="ugb/accordion"]:not(.is-selected):not(.is-typing) {
+	.ugb-accordion:not(.ugb-accordion--open) .ugb-accordion__text {
+		display: none;
+	}
+	.ugb-accordion:not(.ugb-accordion--open) .ugb-accordion__heading {
+		svg {
+			transform: rotate(0deg) !important;
+		}
+	}
+}

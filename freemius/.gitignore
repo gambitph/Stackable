@@ -1,0 +1,16 @@
+output/
+assets/img/icon.*
+
+pootle-page-builder.png
+rating-widget.jpg
+hello-dolly-pro.png
+woocommerce-fiscalita-italiana.png
+assets/img/content-aware-sidebars.png
+assets/img/custom-post-type-ui.png
+.idea
+nextgen-gallery.png
+node_modules
+languages/_freemius-en.mo
+languages/_freemius-en.po
+foobox-image-lightbox.png
+transifex-config.json

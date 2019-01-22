@@ -1,0 +1,160 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Video Popup block edit matches snapshot 1`] = `
+<Fragment>
+  <BlockControls>
+    <Toolbar>
+      <MediaUpload
+        allowedTypes={
+          Array [
+            "image",
+          ]
+        }
+        onSelect={[Function]}
+        render={[Function]}
+        value=""
+      />
+    </Toolbar>
+  </BlockControls>
+  <InspectorControls>
+    <PanelBody>
+      <SelectControl
+        label="Play Button Style"
+        onChange={[Function]}
+        options={
+          Array [
+            Object {
+              "label": "Normal Play Button",
+              "value": "normal",
+            },
+            Object {
+              "label": "Play Button with Circle",
+              "value": "circle",
+            },
+            Object {
+              "label": "Outline Play Button",
+              "value": "outline",
+            },
+          ]
+        }
+        value="normal"
+      />
+    </PanelBody>
+    <PanelColorSettings
+      colorSettings={
+        Array [
+          Object {
+            "label": "Background / Overlay Color",
+            "onChange": [Function],
+            "value": "#000000",
+          },
+        ]
+      }
+      initialOpen={false}
+      title="Color Settings"
+    />
+  </InspectorControls>
+  <div
+    className="ugb-video-popup"
+    data-video="QJ9ygdD2sIY"
+    style={
+      Object {
+        "backgroundColor": "#000000",
+      }
+    }
+  >
+    <div
+      className="ugb-video-preview"
+      style={
+        Object {
+          "backgroundImage": "url(https://images.unsplash.com/photo-1506269351850-0428eaed2193?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a1512d7659e4817df8217cdb9aa09d7a&auto=format&fit=crop&w=1050&q=80)",
+        }
+      }
+    />
+    <div
+      className="ugb-video-wrapper"
+    >
+      <MediaUpload
+        allowedTypes={
+          Array [
+            "image",
+          ]
+        }
+        onSelect={[Function]}
+        render={[Function]}
+        value=""
+      />
+      <div
+        className="ugb-video-overlay"
+        style={
+          Object {
+            "backgroundColor": "#000000",
+          }
+        }
+      />
+      <span
+        className="ugb-play-button"
+      >
+        <svg
+          height="30"
+          viewBox="0 0 256 320"
+          width="30"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 0v320l256-160L0 0z"
+          />
+        </svg>
+      </span>
+    </div>
+  </div>
+</Fragment>
+`;
+
+exports[`Video Popup block save matches snapshot 1`] = `
+<div
+  className="ugb-video-popup"
+  data-video="QJ9ygdD2sIY"
+  style={
+    Object {
+      "backgroundColor": "#000000",
+    }
+  }
+>
+  <div
+    className="ugb-video-preview"
+    data-url="https://images.unsplash.com/photo-1506269351850-0428eaed2193?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a1512d7659e4817df8217cdb9aa09d7a&auto=format&fit=crop&w=1050&q=80"
+    style={
+      Object {
+        "backgroundImage": "url(https://images.unsplash.com/photo-1506269351850-0428eaed2193?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a1512d7659e4817df8217cdb9aa09d7a&auto=format&fit=crop&w=1050&q=80)",
+      }
+    }
+  />
+  <div
+    className="ugb-video-wrapper"
+  >
+    <a
+      href="#"
+      style={
+        Object {
+          "backgroundColor": "#000000",
+        }
+      }
+    />
+    <span
+      className="ugb-play-button"
+    >
+      <svg
+        height="30"
+        viewBox="0 0 256 320"
+        width="30"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M0 0v320l256-160L0 0z"
+        />
+      </svg>
+    </span>
+  </div>
+</div>
+`;

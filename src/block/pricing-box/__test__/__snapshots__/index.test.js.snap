@@ -1,0 +1,961 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pricing Box block edit matches snapshots 1`] = `
+<Fragment>
+  <InspectorControls>
+    <PanelBody>
+      <SelectControl
+        label="Column Number"
+        onChange={[Function]}
+        options={
+          Array [
+            Object {
+              "label": "One Column",
+              "value": "1",
+            },
+            Object {
+              "label": "Two Column",
+              "value": "2",
+            },
+            Object {
+              "label": "Three Column",
+              "value": "3",
+            },
+          ]
+        }
+        value="1"
+      />
+      <RangeControl
+        label="Corner Radius"
+        max="50"
+        min="1"
+        onChange={[Function]}
+        value="4"
+      />
+      <SelectControl
+        label="Button Size"
+        onChange={[Function]}
+        options={
+          Array [
+            Object {
+              "label": "Small",
+              "value": "small",
+            },
+            Object {
+              "label": "Normal",
+              "value": "normal",
+            },
+            Object {
+              "label": "Medium",
+              "value": "medium",
+            },
+            Object {
+              "label": "Large",
+              "value": "large",
+            },
+          ]
+        }
+        value="normal"
+      />
+    </PanelBody>
+    <PanelColorSettings
+      colorSettings={
+        Array [
+          Object {
+            "label": "Pricing Title Color",
+            "onChange": [Function],
+            "value": "#000000",
+          },
+          Object {
+            "label": "Price Color",
+            "onChange": [Function],
+            "value": "#000000",
+          },
+          Object {
+            "label": "Per Month Label Color",
+            "onChange": [Function],
+            "value": "#000000",
+          },
+          Object {
+            "label": "Feature List Color",
+            "onChange": [Function],
+            "value": "#000000",
+          },
+        ]
+      }
+      initialOpen={false}
+      title="Text Colors"
+    />
+    <PanelColorSettings
+      colorSettings={
+        Array [
+          Object {
+            "label": "Button Color",
+            "onChange": [Function],
+            "value": "#000000",
+          },
+          Object {
+            "label": "Button Text Color",
+            "onChange": [Function],
+            "value": "#000000",
+          },
+        ]
+      }
+      initialOpen={false}
+      title="Button Colors"
+    />
+  </InspectorControls>
+  <div
+    className="ugb-pricing-box column-1"
+  >
+    <div
+      className="ugb-pricing-box-column-one"
+    >
+      <RichText
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="h3"
+        value="Basic"
+      />
+      <RichText
+        className="ugb-pricing-box-pricing"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value="$9"
+      />
+      <RichText
+        className="ugb-pricing-box-per-month-label"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value="per month"
+      />
+      <ButtonEdit
+        backgroundColor="#000000"
+        borderRadius="4"
+        color="#000000"
+        onChange={[Function]}
+        size="normal"
+        text="Buy Now"
+      />
+      <RichText
+        className="ugb-pricing-box-feature-list"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value="Consectetur adipiscing elit Suspendisse at pretium tortor Vestibulum ante ipsum primis In faucibus orci luctus et Ultrices posuere cubilia cura Aenean consectetur nec"
+      />
+    </div>
+    <div
+      className="ugb-pricing-box-column-two"
+    >
+      <RichText
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="h3"
+        value={undefined}
+      />
+      <RichText
+        className="ugb-pricing-box-pricing"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value={undefined}
+      />
+      <RichText
+        className="ugb-pricing-box-per-month-label"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value={undefined}
+      />
+      <ButtonEdit
+        backgroundColor="#000000"
+        borderRadius="4"
+        color="#000000"
+        onChange={[Function]}
+        size="normal"
+        text={undefined}
+      />
+      <RichText
+        className="ugb-pricing-box-feature-list"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value={undefined}
+      />
+    </div>
+    <div
+      className="ugb-pricing-box-column-three"
+    >
+      <RichText
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="h3"
+        value={undefined}
+      />
+      <RichText
+        className="ugb-pricing-box-pricing"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value={undefined}
+      />
+      <RichText
+        className="ugb-pricing-box-per-month-label"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value={undefined}
+      />
+      <ButtonEdit
+        backgroundColor="#000000"
+        borderRadius="4"
+        color="#000000"
+        onChange={[Function]}
+        size="normal"
+        text={undefined}
+      />
+      <RichText
+        className="ugb-pricing-box-feature-list"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value={undefined}
+      />
+    </div>
+  </div>
+</Fragment>
+`;
+
+exports[`Pricing Box block edit matches snapshots 2`] = `
+<Fragment>
+  <InspectorControls>
+    <PanelBody>
+      <SelectControl
+        label="Column Number"
+        onChange={[Function]}
+        options={
+          Array [
+            Object {
+              "label": "One Column",
+              "value": "1",
+            },
+            Object {
+              "label": "Two Column",
+              "value": "2",
+            },
+            Object {
+              "label": "Three Column",
+              "value": "3",
+            },
+          ]
+        }
+        value="2"
+      />
+      <RangeControl
+        label="Corner Radius"
+        max="50"
+        min="1"
+        onChange={[Function]}
+        value="4"
+      />
+      <SelectControl
+        label="Button Size"
+        onChange={[Function]}
+        options={
+          Array [
+            Object {
+              "label": "Small",
+              "value": "small",
+            },
+            Object {
+              "label": "Normal",
+              "value": "normal",
+            },
+            Object {
+              "label": "Medium",
+              "value": "medium",
+            },
+            Object {
+              "label": "Large",
+              "value": "large",
+            },
+          ]
+        }
+        value="normal"
+      />
+    </PanelBody>
+    <PanelColorSettings
+      colorSettings={
+        Array [
+          Object {
+            "label": "Pricing Title Color",
+            "onChange": [Function],
+            "value": "#000000",
+          },
+          Object {
+            "label": "Price Color",
+            "onChange": [Function],
+            "value": "#000000",
+          },
+          Object {
+            "label": "Per Month Label Color",
+            "onChange": [Function],
+            "value": "#000000",
+          },
+          Object {
+            "label": "Feature List Color",
+            "onChange": [Function],
+            "value": "#000000",
+          },
+        ]
+      }
+      initialOpen={false}
+      title="Text Colors"
+    />
+    <PanelColorSettings
+      colorSettings={
+        Array [
+          Object {
+            "label": "Button Color",
+            "onChange": [Function],
+            "value": "#000000",
+          },
+          Object {
+            "label": "Button Text Color",
+            "onChange": [Function],
+            "value": "#000000",
+          },
+        ]
+      }
+      initialOpen={false}
+      title="Button Colors"
+    />
+  </InspectorControls>
+  <div
+    className="ugb-pricing-box column-2"
+  >
+    <div
+      className="ugb-pricing-box-column-one"
+    >
+      <RichText
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="h3"
+        value="Basic"
+      />
+      <RichText
+        className="ugb-pricing-box-pricing"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value="$9"
+      />
+      <RichText
+        className="ugb-pricing-box-per-month-label"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value="per month"
+      />
+      <ButtonEdit
+        backgroundColor="#000000"
+        borderRadius="4"
+        color="#000000"
+        onChange={[Function]}
+        size="normal"
+        text="Buy Now"
+      />
+      <RichText
+        className="ugb-pricing-box-feature-list"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value="Consectetur adipiscing elit Suspendisse at pretium tortor Vestibulum ante ipsum primis In faucibus orci luctus et Ultrices posuere cubilia cura Aenean consectetur nec"
+      />
+    </div>
+    <div
+      className="ugb-pricing-box-column-two"
+    >
+      <RichText
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="h3"
+        value="Basic"
+      />
+      <RichText
+        className="ugb-pricing-box-pricing"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value="$9"
+      />
+      <RichText
+        className="ugb-pricing-box-per-month-label"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value="per month"
+      />
+      <ButtonEdit
+        backgroundColor="#000000"
+        borderRadius="4"
+        color="#000000"
+        onChange={[Function]}
+        size="normal"
+        text="Buy Now"
+      />
+      <RichText
+        className="ugb-pricing-box-feature-list"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value="Consectetur adipiscing elit Suspendisse at pretium tortor Vestibulum ante ipsum primis In faucibus orci luctus et Ultrices posuere cubilia cura Aenean consectetur nec"
+      />
+    </div>
+    <div
+      className="ugb-pricing-box-column-three"
+    >
+      <RichText
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="h3"
+        value={undefined}
+      />
+      <RichText
+        className="ugb-pricing-box-pricing"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value={undefined}
+      />
+      <RichText
+        className="ugb-pricing-box-per-month-label"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value={undefined}
+      />
+      <ButtonEdit
+        backgroundColor="#000000"
+        borderRadius="4"
+        color="#000000"
+        onChange={[Function]}
+        size="normal"
+        text={undefined}
+      />
+      <RichText
+        className="ugb-pricing-box-feature-list"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value={undefined}
+      />
+    </div>
+  </div>
+</Fragment>
+`;
+
+exports[`Pricing Box block edit matches snapshots 3`] = `
+<Fragment>
+  <InspectorControls>
+    <PanelBody>
+      <SelectControl
+        label="Column Number"
+        onChange={[Function]}
+        options={
+          Array [
+            Object {
+              "label": "One Column",
+              "value": "1",
+            },
+            Object {
+              "label": "Two Column",
+              "value": "2",
+            },
+            Object {
+              "label": "Three Column",
+              "value": "3",
+            },
+          ]
+        }
+        value="3"
+      />
+      <RangeControl
+        label="Corner Radius"
+        max="50"
+        min="1"
+        onChange={[Function]}
+        value="4"
+      />
+      <SelectControl
+        label="Button Size"
+        onChange={[Function]}
+        options={
+          Array [
+            Object {
+              "label": "Small",
+              "value": "small",
+            },
+            Object {
+              "label": "Normal",
+              "value": "normal",
+            },
+            Object {
+              "label": "Medium",
+              "value": "medium",
+            },
+            Object {
+              "label": "Large",
+              "value": "large",
+            },
+          ]
+        }
+        value="normal"
+      />
+    </PanelBody>
+    <PanelColorSettings
+      colorSettings={
+        Array [
+          Object {
+            "label": "Pricing Title Color",
+            "onChange": [Function],
+            "value": "#000000",
+          },
+          Object {
+            "label": "Price Color",
+            "onChange": [Function],
+            "value": "#000000",
+          },
+          Object {
+            "label": "Per Month Label Color",
+            "onChange": [Function],
+            "value": "#000000",
+          },
+          Object {
+            "label": "Feature List Color",
+            "onChange": [Function],
+            "value": "#000000",
+          },
+        ]
+      }
+      initialOpen={false}
+      title="Text Colors"
+    />
+    <PanelColorSettings
+      colorSettings={
+        Array [
+          Object {
+            "label": "Button Color",
+            "onChange": [Function],
+            "value": "#000000",
+          },
+          Object {
+            "label": "Button Text Color",
+            "onChange": [Function],
+            "value": "#000000",
+          },
+        ]
+      }
+      initialOpen={false}
+      title="Button Colors"
+    />
+  </InspectorControls>
+  <div
+    className="ugb-pricing-box column-3"
+  >
+    <div
+      className="ugb-pricing-box-column-one"
+    >
+      <RichText
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="h3"
+        value="Basic"
+      />
+      <RichText
+        className="ugb-pricing-box-pricing"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value="$9"
+      />
+      <RichText
+        className="ugb-pricing-box-per-month-label"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value="per month"
+      />
+      <ButtonEdit
+        backgroundColor="#000000"
+        borderRadius="4"
+        color="#000000"
+        onChange={[Function]}
+        size="normal"
+        text="Buy Now"
+      />
+      <RichText
+        className="ugb-pricing-box-feature-list"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value="Consectetur adipiscing elit Suspendisse at pretium tortor Vestibulum ante ipsum primis In faucibus orci luctus et Ultrices posuere cubilia cura Aenean consectetur nec"
+      />
+    </div>
+    <div
+      className="ugb-pricing-box-column-two"
+    >
+      <RichText
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="h3"
+        value="Basic"
+      />
+      <RichText
+        className="ugb-pricing-box-pricing"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value="$9"
+      />
+      <RichText
+        className="ugb-pricing-box-per-month-label"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value="per month"
+      />
+      <ButtonEdit
+        backgroundColor="#000000"
+        borderRadius="4"
+        color="#000000"
+        onChange={[Function]}
+        size="normal"
+        text="Buy Now"
+      />
+      <RichText
+        className="ugb-pricing-box-feature-list"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value="Consectetur adipiscing elit Suspendisse at pretium tortor Vestibulum ante ipsum primis In faucibus orci luctus et Ultrices posuere cubilia cura Aenean consectetur nec"
+      />
+    </div>
+    <div
+      className="ugb-pricing-box-column-three"
+    >
+      <RichText
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="h3"
+        value="Basic"
+      />
+      <RichText
+        className="ugb-pricing-box-pricing"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value="$9"
+      />
+      <RichText
+        className="ugb-pricing-box-per-month-label"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value="per month"
+      />
+      <ButtonEdit
+        backgroundColor="#000000"
+        borderRadius="4"
+        color="#000000"
+        onChange={[Function]}
+        size="normal"
+        text="Buy Now"
+      />
+      <RichText
+        className="ugb-pricing-box-feature-list"
+        keepPlaceholderOnFocus={true}
+        onChange={[Function]}
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+        tagName="p"
+        value="Consectetur adipiscing elit Suspendisse at pretium tortor Vestibulum ante ipsum primis In faucibus orci luctus et Ultrices posuere cubilia cura Aenean consectetur nec"
+      />
+    </div>
+  </div>
+</Fragment>
+`;
+
+exports[`Pricing Box block save matches snapshots 1`] = `
+<div
+  className="ugb-pricing-box column-1"
+>
+  <div
+    className="ugb-pricing-box-column-one"
+  >
+    <ButtonSave
+      backgroundColor="#000000"
+      borderRadius="4"
+      color="#000000"
+      size="normal"
+      text="Buy Now"
+      url="http://www.gambit.ph/"
+    />
+  </div>
+</div>
+`;
+
+exports[`Pricing Box block save matches snapshots 2`] = `
+<div
+  className="ugb-pricing-box column-2"
+>
+  <div
+    className="ugb-pricing-box-column-one"
+  >
+    <ButtonSave
+      backgroundColor="#000000"
+      borderRadius="4"
+      color="#000000"
+      size="normal"
+      text="Buy Now"
+      url="http://www.gambit.ph/"
+    />
+  </div>
+  <div
+    className="ugb-pricing-box-column-two"
+  >
+    <ButtonSave
+      backgroundColor="#000000"
+      borderRadius="4"
+      color="#000000"
+      size="normal"
+      text="Buy Now"
+      url="http://www.gambit.ph/"
+    />
+  </div>
+</div>
+`;
+
+exports[`Pricing Box block save matches snapshots 3`] = `
+<div
+  className="ugb-pricing-box column-3"
+>
+  <div
+    className="ugb-pricing-box-column-one"
+  >
+    <ButtonSave
+      backgroundColor="#000000"
+      borderRadius="4"
+      color="#000000"
+      size="normal"
+      text="Buy Now"
+      url="http://www.gambit.ph/"
+    />
+  </div>
+  <div
+    className="ugb-pricing-box-column-two"
+  >
+    <ButtonSave
+      backgroundColor="#000000"
+      borderRadius="4"
+      color="#000000"
+      size="normal"
+      text="Buy Now"
+      url="http://www.gambit.ph/"
+    />
+  </div>
+  <div
+    className="ugb-pricing-box-column-three"
+  >
+    <ButtonSave
+      backgroundColor="#000000"
+      borderRadius="4"
+      color="#000000"
+      size="normal"
+      text="Buy Now"
+      url="http://www.gambit.ph/"
+    />
+  </div>
+</div>
+`;

@@ -1,0 +1,26 @@
+/**
+ * Editor styles for the CTA Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+// Remove border radius on full width.
+[data-align="full"] div.ugb-cta {
+	border-radius: 0 !important;
+}
+
+[data-type="ugb/cta"] {
+	[data-is-placeholder-visible="true"] + .editor-rich-text__tinymce {
+		opacity: 0.5;
+	}
+
+	// Only show placeholder text while selected or typing.
+	&:not(.is-selected):not(.is-typing) {
+		[data-is-placeholder-visible="true"] + .editor-rich-text__tinymce {
+			display: none;
+		}
+		[data-is-placeholder-visible="true"] {
+			display: none;
+		}
+	}
+}
