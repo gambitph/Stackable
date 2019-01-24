@@ -7,7 +7,7 @@ const openAccordion = el => {
 
 domReady( () => {
 	const elems = document.querySelectorAll( '.ugb-accordion' )
-	elems.forEach( el => {
+	Array.prototype.forEach.call( elems, el => {
 		const a = el.querySelector( '.ugb-accordion__heading' )
 		a.addEventListener( 'click', ev => {
 			ev.preventDefault()
