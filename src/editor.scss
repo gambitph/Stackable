@@ -11,3 +11,8 @@ $effect-transition: color 0.2s ease-in-out, opacity 0.2s ease-in-out, background
 .wp-admin .wp-block [class*="ugb-"] * {
 	transition: $effect-transition;
 }
+
+// Stackable gradient fill. Works in tandem with icons.js
+svg.ugb-stackable-icon-gradient {
+	fill: url(#stackable-gradient) !important;
+}

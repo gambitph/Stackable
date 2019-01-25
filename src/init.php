@@ -158,7 +158,7 @@ if ( ! function_exists( 'stackable_block_category' ) ) {
 			array(
 				array(
 					'slug' => 'stackable',
-					'title' => __( 'Stackable - Gutenberg Blocks', 'stackable' ),
+					'title' => __( 'Stackable', 'stackable' ),
 				),
 			)
 		);

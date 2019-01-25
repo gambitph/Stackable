@@ -29,6 +29,7 @@
     "waypoints": "^4.0.1"
   },
   "devDependencies": {
+    "@svgr/webpack": "^4.1.0",
     "@wordpress/browserslist-config": "^2.2.3",
     "@wordpress/eslint-plugin": "^1.0.1",
     "@wordpress/hooks": "^2.0.5",
