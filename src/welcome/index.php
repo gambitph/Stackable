@@ -19,14 +19,23 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
         }
 
         public function add_dashboard_page() {
+
+			// @see images/stackable-icon.svg
+			$svg = <<< SVG
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" style="fill: #ffffff;">
+	<path d="M64.08,136L23,176.66a4.75,4.75,0,0,0,3.53,8.15l86.91,0.14Z"/>
+	<path d="M177.91,128.39a17,17,0,0,0-5-12.07L71.39,14.72h0L26.61,59.5a17,17,0,0,0-5,12.05h0a17,17,0,0,0,5,12.05L128.16,185.2v-0.07l0,0,44.76-44.76a17,17,0,0,0,5-12h0Z"/>
+	<path d="M172.95,14.69l-86.83,0,49.42,49.62,40.92-41.16A5,5,0,0,0,172.95,14.69Z"/>
+</svg>
+SVG;
+
             add_menu_page(
                 __( 'Stackable', 'stackable' ), // Page Title.
                 __( 'Stackable', 'stackable' ) . ' ' . stackable_notification_count(), // Menu Title.
                 'edit_posts', // Capability.
                 'stackable', // Menu slug.
                 array( $this, 'stackable_welcome_content' ), // Action.
-                // Stackable icon.
-                'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiBzdHlsZT0iZmlsbDogI2ZmZmZmZjsiPgogIDxwYXRoIGQ9Ik02NC4wOCwxMzZMMjMsMTc2LjY2YTQuNzUsNC43NSwwLDAsMCwzLjUzLDguMTVsODYuOTEsMC4xNFoiLz4KICA8cGF0aCBkPSJNMTc3LjkxLDEyOC4zOWExNywxNywwLDAsMC01LTEyLjA3TDcxLjM5LDE0LjcyaDBMMjYuNjEsNTkuNWExNywxNywwLDAsMC01LDEyLjA1aDBhMTcsMTcsMCwwLDAsNSwxMi4wNUwxMjguMTYsMTg1LjJ2LTAuMDdsMCwwLDQ0Ljc2LTQ0Ljc2YTE3LDE3LDAsMCwwLDUtMTJoMFoiLz4KICA8cGF0aCBkPSJNMTcyLjk1LDE0LjY5bC04Ni44MywwLDQ5LjQyLDQ5LjYyLDQwLjkyLTQxLjE2QTUsNSwwLDAsMCwxNzIuOTUsMTQuNjlaIi8+Cjwvc3ZnPgo='
+                'data:image/svg+xml;base64,' . base64_encode( $svg ) // Stackable icon.
             );
         }
 
