@@ -62,13 +62,25 @@
 	}
 }
 
-// Make the image placeholder take the whole space.
 .ugb-image-box__item {
+
+	// Make the image placeholder take the whole space.
 	.ugb-image-upload-placeholder.ugb-image-upload-has-placeholder {
 		height: 100%;
 		position: absolute;
 		top: 0;
 		left: 0;
+	}
+
+	// Make sure that the placeholder is clickable and doesn't hide the hover effect.
+	.ugb-image-upload-placeholder.ugb-image-upload-has-image {
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		z-index: 3;
+		opacity: 0;
 	}
 }
 
