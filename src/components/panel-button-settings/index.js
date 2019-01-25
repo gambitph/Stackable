@@ -55,16 +55,16 @@ function PanelButtonSettings( props ) {
 					selected={ buttonDesign }
 					options={ [
 						{
-							label: __( 'Basic' ), value: 'basic', image: 'components/panel-button-settings/images/basic.png',
+							label: __( 'Basic' ), value: 'basic', image: 'src/components/panel-button-settings/images/basic.png',
 						},
 						{
-							label: __( 'Ghost' ), value: 'ghost', image: 'components/panel-button-settings/images/ghost.png',
+							label: __( 'Ghost' ), value: 'ghost', image: 'src/components/panel-button-settings/images/ghost.png',
 						},
 						{
-							label: __( 'Plain' ), value: 'plain', image: 'components/panel-button-settings/images/plain.png',
+							label: __( 'Plain' ), value: 'plain', image: 'src/components/panel-button-settings/images/plain.png',
 						},
 						{
-							label: __( 'Link' ), value: 'link', image: 'components/panel-button-settings/images/link.png',
+							label: __( 'Link' ), value: 'link', image: 'src/components/panel-button-settings/images/link.png',
 						},
 						...applyFilters( 'stackable.button.edit.designs', [] ),
 					] }
