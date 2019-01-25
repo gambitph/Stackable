@@ -28,6 +28,13 @@
 		// text-indent here plus the padding-left in the container makes sure our text doesn't wrap below the bullet.
 		text-indent: calc(var(--icon-size, 20px) * -1 - 1em) !important;
 		padding-left: calc(var(--icon-size, 20px) + 1em) !important;
+
+		// Minimal support for nest lists.
+		ul {
+			margin-top: var(--gap, 16) !important;
+			list-style: none;
+			margin-left: 0;
+		}
 	}
 	li:last-child {
 		margin-bottom: 0;
