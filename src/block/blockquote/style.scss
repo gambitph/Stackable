@@ -68,6 +68,11 @@
 			z-index: 1;
 		}
 	}
+	&.ugb-blockquote--small-quote svg {
+		top: $box-vert-padding;
+		left: $box-hori-padding;
+		transform: translateX(-100%) translateY(-80%);
+	}
 }
 
 .ugb-blockquote.ugb-blockquote--design-plain {
@@ -84,6 +89,11 @@
 		transform: translateX(-30%) translateY(-30%);
 		top: 21px;
 		left: 35px;
+	}
+	&.ugb-blockquote--small-quote svg {
+		top: $box-vert-padding;
+		left: $box-hori-padding;
+		transform: translateX(-100%) translateY(-80%);
 	}
 }
 

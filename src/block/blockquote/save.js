@@ -13,8 +13,8 @@ const save = props => {
 		backgroundImageURL,
 		backgroundOpacity = 5,
 		fixedBackground,
-		quotationMark,
-		quotationSize,
+		quotationMark = 'round-thin',
+		quotationSize = 70,
 		align,
 		contentWidth,
 		design = 'plain',
@@ -35,6 +35,7 @@ const save = props => {
 		'ugb--has-background-image': designHasBackground && backgroundImageURL,
 		[ `ugb--shadow-${ shadow }` ]: designHasBackground && shadow !== 3,
 		[ `ugb-content-width` ]: align === 'full' && contentWidth,
+		'ugb-blockquote--small-quote': quotationSize < 60,
 		...applyFilters( 'stackable.blockquote.mainclasses', {}, props ),
 	} )
 
