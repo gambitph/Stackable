@@ -4,7 +4,7 @@ Tags: gutenberg, block, blocks, gutenberg blocks, page builder, editor, wordpres
 Requires at least: 4.8
 Tested up to: 5.0.3
 Requires PHP: 5.3
-Stable tag: 1.10.0
+Stable tag: 1.11.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -118,9 +118,12 @@ You will have to redo all your blocks
 == Changelog ==
 
 = 1.11.1 =
-* Fixed: Clearing the Button block's text color resulted in an error
-* Fixed: Button block's margin animates when being selected in the editor
 * Fixed: Refrain the link field from getting focus when a block is selected
+* Fixed: Image Box block images cannot be replaced
+* Fixed: Clearing the Button block's text color resulted in an error
+* Fixed: Blockquote's quote mark is too far in small sizes
+* Fixed: Accordion doesn't open/close in IE11
+* Fixed: Button block's margin animates when being selected in the editor
 
 = 1.11 =
 [Read the news update](https://wpstackable.com/blog/huge-updates-across-all-blocks/)
