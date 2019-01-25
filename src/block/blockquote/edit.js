@@ -27,8 +27,8 @@ const edit = props => {
 		backgroundImageURL,
 		backgroundOpacity,
 		fixedBackground,
-		quotationMark,
-		quotationSize,
+		quotationMark = 'round-thin',
+		quotationSize = 70,
 		contentWidth,
 		align,
 		design = 'plain',
@@ -49,6 +49,7 @@ const edit = props => {
 		'ugb--has-background-image': designHasBackground && backgroundImageURL,
 		[ `ugb--shadow-${ shadow }` ]: designHasBackground && shadow !== 3,
 		[ `ugb-content-width` ]: align === 'full' && contentWidth,
+		'ugb-blockquote--small-quote': quotationSize < 60,
 		...applyFilters( 'stackable.blockquote.mainclasses', {}, props ),
 	} )
 
