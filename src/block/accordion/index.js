@@ -6,14 +6,9 @@ import { __ } from '@wordpress/i18n'
 import { AccordionIcon } from '@stackable/icons'
 import { descriptionPlaceholder } from '@stackable/util'
 import { disabledBlocks } from 'stackable'
+import SVGArrowIcon from './images/arrow.svg'
 
-export const ArrowIcon = props => {
-	return (
-		<svg role="img" focusable="false" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" { ...props }>
-			<polygon points="16.7,3.3 10,10 3.3,3.4 0,6.7 10,16.7 10,16.6 20,6.7 " />
-		</svg>
-	)
-}
+export const ArrowIcon = ( { fill } ) => <SVGArrowIcon width="20" height="20" fill={ fill } />
 
 export const schema = {
 	heading: {

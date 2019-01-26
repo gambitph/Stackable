@@ -7,51 +7,26 @@
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
 import { find } from 'lodash'
+import SVGIconBottom from './images/bottom.svg'
+import SVGIconCenter from './images/center.svg'
+import SVGIconTop from './images/top.svg'
 import { Toolbar } from '@wordpress/components'
 import { withSelect } from '@wordpress/data'
 import { withViewportMatch } from '@wordpress/viewport'
 
-export const IconTop = () => {
-	return (
-		<svg viewBox="0 0 20 20" width="20" height="20">
-			<rect x="3" y="3" width="14" height="2" />
-			<path d="M10.6,17.1H9.4V8.4L8.1,9.7L7,9l3-3l3,3l-1.1,0.8l-1.3-1.3C10.6,8.5,10.6,17.1,10.6,17.1z" />
-		</svg>
-	)
-}
-
-export const IconCenter = () => {
-	return (
-		<svg viewBox="0 0 20 20" width="20" height="20">
-			<rect x="3" y="9" width="14" height="2" />
-			<path d="M10.6,18.4H9.4v-3.9l-1.3,1.3L7,15l3-3l3,3l-1.1,0.8l-1.3-1.3V18.4z" />
-			<path d="M9.4,1.6h1.2v3.9l1.3-1.3L13,5l-3,3L7,5l1.1-0.8l1.3,1.3V1.6z" />
-		</svg>
-	)
-}
-
-export const IconBottom = () => {
-	return (
-		<svg viewBox="0 0 20 20" width="20" height="20">
-			<rect x="3" y="15.1" width="14" height="2" />
-			<path d="M9.4,2.9h1.2v8.6l1.3-1.3L13,11l-3,3l-3-3l1.1-0.8l1.3,1.3V2.9z" />
-		</svg>
-	)
-}
-
 const ALIGNMENT_CONTROLS = [
 	{
-		icon: IconTop(),
+		icon: <SVGIconTop />,
 		title: __( 'Align Top' ),
 		align: 'flex-start',
 	},
 	{
-		icon: IconCenter(),
+		icon: <SVGIconCenter />,
 		title: __( 'Align center' ),
 		align: 'center',
 	},
 	{
-		icon: IconBottom(),
+		icon: <SVGIconBottom />,
 		title: __( 'Align right' ),
 		align: 'flex-end',
 	},
@@ -69,7 +44,7 @@ export function VerticalAlignmentToolbar( {
 	return (
 		<Toolbar
 			isCollapsed={ isCollapsed }
-			icon={ activeAlignment ? activeAlignment.icon : IconTop() }
+			icon={ activeAlignment ? activeAlignment.icon : <SVGIconTop /> }
 			label={ __( 'Change Vertical Alignment' ) }
 			controls={ ALIGNMENT_CONTROLS.map( control => {
 				const { align } = control

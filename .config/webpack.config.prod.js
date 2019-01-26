@@ -67,6 +67,10 @@ module.exports = [ {
                     }
                 }
 			},
+			{
+				test: /\.svg$/,
+				use: ['@svgr/webpack'],
+			}
         ]
     }
 },
@@ -126,6 +130,10 @@ module.exports = [ {
                     }
                 }
 			},
+			{
+				test: /\.svg$/,
+				use: ['@svgr/webpack'],
+			}
         ]
     }
 } ]
