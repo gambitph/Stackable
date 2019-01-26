@@ -1,6 +1,9 @@
 ---
-name: 🤔 Question
+name: "\U0001F914 Question"
 about: Questions or 'how to' about Stackable
+title: ''
+labels: question
+assignees: ''
 
 ---
 

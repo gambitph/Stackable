@@ -1,6 +1,9 @@
 ---
-name: 💡 Feature request
+name: "\U0001F4A1 Feature request"
 about: Suggest an idea, feature or block
+title: ''
+labels: enhancement
+assignees: ''
 
 ---
 
