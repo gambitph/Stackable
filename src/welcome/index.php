@@ -56,7 +56,6 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
         }
 
         public function stackable_welcome_content() {
-            $plus_image = 'data:image/svg+xml;base64,PHN2ZyBhcmlhLWhpZGRlbj0idHJ1ZSIgcm9sZT0iaW1nIiBmb2N1c2FibGU9ImZhbHNlIiBjbGFzcz0iZGFzaGljb24gZGFzaGljb25zLWluc2VydCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCI+PHBhdGggZD0iTTEwIDFjLTUgMC05IDQtOSA5czQgOSA5IDkgOS00IDktOS00LTktOS05em0wIDE2Yy0zLjkgMC03LTMuMS03LTdzMy4xLTcgNy03IDcgMy4xIDcgNy0zLjEgNy03IDd6bTEtMTFIOXYzSDZ2MmgzdjNoMnYtM2gzVjloLTNWNnoiPjwvcGF0aD48L3N2Zz4=';
             ?>
             <div class="wrap">
                 <header class="s-header">
@@ -75,7 +74,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
                             <div class="s-intro-col">
                                 <h2><?php _e( '📖 How to Use', 'stackable' ) ?></h2>
                                 <ol>
-                                    <li><?php printf( __( 'Edit your page and click on the %s button to add a block', 'stackable' ), '<img src="' . esc_attr( $plus_image ) . '" class="s-plus-button"/>' ) ?></li>
+                                    <li><?php printf( __( 'Edit your page and click on the %s button to add a block', 'stackable' ), '<img src="' . esc_url( plugins_url( 'images/editor-plus-icon.svg', __FILE__ ) ) . '" class="s-plus-button"/>' ) ?></li>
                                     <li><?php _e( 'Scroll down and pick a Stackable block and customize it!', 'stackable' ) ?></li>
                                 </ol>
                             </div>
