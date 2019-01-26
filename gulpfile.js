@@ -24,6 +24,7 @@ const buildInclude = [
 	path.resolve( __dirname, './images/**' ),
 	'!' + path.resolve( __dirname, '**/+(__test__|test)/**' ), // No tests.
 	'!' + path.resolve( __dirname, './src/**/*.+(js|scss|md|ai)' ), // No source.
+	'!' + path.resolve( __dirname, './src/!(welcome)/**/*.svg' ), // No svgs except settings.
 ]
 
 const postCSSOptions = [

@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { descriptionPlaceholder } from '@stackable/util'
-import { QUOTE_ICONS } from './quotes'
+import { QUOTE_ICONS_1_11 } from './deprecated-quotes'
 import { RichText } from '@wordpress/editor'
 
 const deprecatedSchema_1_10 = {
@@ -191,7 +191,7 @@ const deprecatedSave_1_11 = props => {
 			className={ mainClasses }
 			style={ mainStyle }>
 			<div className="ugb-content-wrapper">
-				{ QUOTE_ICONS[ quotationMark ].iconFunc( {
+				{ QUOTE_ICONS_1_11[ quotationMark ].iconFunc( {
 					fill: quoteColor,
 					width: quotationSize,
 					height: quotationSize,

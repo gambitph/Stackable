@@ -69,12 +69,7 @@ module.exports = [ {
 			},
 			{
 				test: /\.svg$/,
-				use: [ {
-					loader: '@svgr/webpack',
-					options: {
-						svgo: true,
-					}
-				} ]
+				use: ['@svgr/webpack'],
 			}
         ]
     }
@@ -137,12 +132,7 @@ module.exports = [ {
 			},
 			{
 				test: /\.svg$/,
-				use: [ {
-					loader: '@svgr/webpack',
-					options: {
-						svgo: true,
-					}
-				} ]
+				use: ['@svgr/webpack'],
 			}
         ]
     }
