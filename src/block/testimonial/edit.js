@@ -8,6 +8,8 @@ import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
+import ImageDesignBasic from './images/basic.png'
+import ImageDesignPlain from './images/plain.png'
 import { showProNotice } from 'stackable'
 
 const edit = props => {
@@ -53,10 +55,10 @@ const edit = props => {
 					selected={ design }
 					options={ [
 						{
-							image: 'src/block/testimonial/images/basic.png', label: __( 'Basic' ), value: 'basic',
+							image: ImageDesignBasic, label: __( 'Basic' ), value: 'basic',
 						},
 						{
-							image: 'src/block/testimonial/images/plain.png', label: __( 'Plain' ), value: 'plain',
+							image: ImageDesignPlain, label: __( 'Plain' ), value: 'plain',
 						},
 						...applyFilters( 'stackable.testimonial.edit.designs', [] ),
 					] }

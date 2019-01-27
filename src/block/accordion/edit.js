@@ -11,6 +11,8 @@ import { ArrowIcon } from './index'
 import classnames from 'classnames'
 import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
+import imageDesignBasic from './images/basic.png'
+import imageDesignPlain from './images/plain.png'
 import { showProNotice } from 'stackable'
 
 const edit = props => {
@@ -56,10 +58,10 @@ const edit = props => {
 					selected={ design }
 					options={ applyFilters( 'stackable.accordion.edit.designs', [
 						{
-							label: __( 'Basic' ), value: 'basic', image: 'src/block/accordion/images/basic.png',
+							label: __( 'Basic' ), value: 'basic', image: imageDesignBasic,
 						},
 						{
-							label: __( 'Plain' ), value: 'plain', image: 'src/block/accordion/images/plain.png',
+							label: __( 'Plain' ), value: 'plain', image: imageDesignPlain,
 						},
 					] ) }
 					onChange={ design => setAttributes( { design } ) }

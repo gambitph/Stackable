@@ -13,6 +13,8 @@ import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { decodeEntities } from '@wordpress/htmlEntities'
 import { Fragment } from '@wordpress/element'
+import ImageDesignBasic from './images/basic.png'
+import ImageDesignList from './images/list.png'
 import { showProNotice } from 'stackable'
 import { withSelect } from '@wordpress/data'
 
@@ -82,10 +84,10 @@ export const _edit = props => {
 				selected={ design }
 				options={ [
 					{
-						label: 'Basic', value: 'basic', image: 'src/block/blog-posts/images/basic.png',
+						label: 'Basic', value: 'basic', image: ImageDesignBasic,
 					},
 					{
-						label: 'List', value: 'list', image: 'src/block/blog-posts/images/list.png',
+						label: 'List', value: 'list', image: ImageDesignList,
 					},
 				] }
 				onChange={ design => {

@@ -1,4 +1,5 @@
 const externals = require( './externals' )
+const rules = require( './rules' )
 const path = require( 'path' )
 
 module.exports = [ {
@@ -52,34 +53,7 @@ module.exports = [ {
 
 	module: {
         strictExportPresence: true,
-        rules: [
-            {
-                test: /\.js$/,
-                exclude: /(node_modules|bower_components)/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        // presets: ['es2015'],
-                        // Cache compilation results in ./node_modules/.cache/babel-loader/
-    					cacheDirectory: true,
-                        plugins: [
-                            'transform-es2015-destructuring',
-                            'transform-object-rest-spread',
-                            [
-                                'transform-react-jsx',
-                                {
-                                    pragma: 'wp.element.createElement',
-                                },
-                            ]
-                        ]
-                    }
-                }
-			},
-			{
-				test: /\.svg$/,
-				use: ['@svgr/webpack'],
-			}
-        ]
+        rules,
     }
 },
 {
@@ -119,34 +93,7 @@ module.exports = [ {
 
 	module: {
         strictExportPresence: true,
-        rules: [
-            {
-                test: /\.js$/,
-                exclude: /(node_modules|bower_components)/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        // presets: ['es2015'],
-                        // Cache compilation results in ./node_modules/.cache/babel-loader/
-    					cacheDirectory: true,
-                        plugins: [
-                            'transform-es2015-destructuring',
-                            'transform-object-rest-spread',
-                            [
-                                'transform-react-jsx',
-                                {
-                                    pragma: 'wp.element.createElement',
-                                },
-                            ]
-                        ]
-                    }
-                }
-			},
-			{
-				test: /\.svg$/,
-				use: ['@svgr/webpack'],
-			}
-        ]
+        rules,
     }
 }
 ]

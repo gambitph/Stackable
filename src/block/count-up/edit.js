@@ -10,6 +10,8 @@ import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { Fragment } from '@wordpress/element'
 import { getFontFamily } from './font'
+import ImageDesignBasic from './images/basic.png'
+import ImageDesignPlain from './images/plain.png'
 import { showProNotice } from 'stackable'
 
 const edit = props => {
@@ -116,10 +118,10 @@ const edit = props => {
 					selected={ design }
 					options={ applyFilters( 'stackable.count-up.edit.designs', [
 						{
-							label: __( 'Basic' ), value: 'basic', image: 'src/block/count-up/images/basic.png',
+							label: __( 'Basic' ), value: 'basic', image: ImageDesignBasic,
 						},
 						{
-							label: __( 'Plain' ), value: 'plain', image: 'src/block/count-up/images/plain.png',
+							label: __( 'Plain' ), value: 'plain', image: ImageDesignPlain,
 						},
 					] ) }
 					onChange={ design => setAttributes( { design } ) }

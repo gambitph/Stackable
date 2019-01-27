@@ -10,6 +10,8 @@ import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
+import ImageDesignBasic from './images/basic.png'
+import ImageDesignPlain from './images/plain.png'
 import { QUOTE_ICONS } from './quotes'
 import { showProNotice } from 'stackable'
 
@@ -95,10 +97,10 @@ const edit = props => {
 					selected={ design }
 					options={ applyFilters( 'stackable.blockquote.edit.designs', [
 						{
-							label: __( 'Basic' ), value: 'basic', image: 'src/block/blockquote/images/basic.png',
+							label: __( 'Basic' ), value: 'basic', image: ImageDesignBasic,
 						},
 						{
-							label: __( 'Plain' ), value: 'plain', image: 'src/block/blockquote/images/plain.png',
+							label: __( 'Plain' ), value: 'plain', image: ImageDesignPlain,
 						},
 					] ) }
 					onChange={ design => setAttributes( { design } ) }
