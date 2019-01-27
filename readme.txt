@@ -118,6 +118,8 @@ You will have to redo all your blocks
 == Changelog ==
 
 = 1.11.1 =
+* New: Better build tooling, way less files now in the build
+* New: index.php for all directories
 * Fixed: Refrain the link field from getting focus when a block is selected
 * Fixed: Image Box block images cannot be replaced
 * Fixed: Clearing the Button block's text color resulted in an error
