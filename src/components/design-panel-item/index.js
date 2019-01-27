@@ -4,8 +4,8 @@ function DesignPanelItem( {
 	imageFile, label,
 } ) {
 	const src = imageFile.match( /https?:/i ) ? imageFile :
-		srcUrl ? `${ srcUrl }/${ imageFile }` :
-			imageFile
+	            srcUrl ? `${ srcUrl }/${ imageFile }` :
+	            imageFile
 
 	return (
 		<span>

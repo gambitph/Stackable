@@ -33,9 +33,11 @@ export const colorizeIcon = SvgIcon => {
 }
 
 // Add an icon to our block category.
-updateCategory( 'stackable', {
-	icon: colorizeIcon( <StackableIcon className="components-panel__icon" width="20" height="20" /> ),
-} )
+if ( typeof window.wp.blocks !== 'undefined' ) {
+	updateCategory( 'stackable', {
+		icon: colorizeIcon( <StackableIcon className="components-panel__icon" width="20" height="20" /> ),
+	} )
+}
 
 // Add our SVG gradient placeholder definition that we'll reuse.
 domReady( () => {

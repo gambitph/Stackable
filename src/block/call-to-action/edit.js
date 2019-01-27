@@ -12,6 +12,8 @@ import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
+import ImageDesignBasic from './images/basic.png'
+import ImageDesignPlain from './images/plain.png'
 import { showProNotice } from 'stackable'
 
 const edit = props => {
@@ -74,10 +76,10 @@ const edit = props => {
 					selected={ design }
 					options={ applyFilters( 'stackable.cta.edit.designs', [
 						{
-							label: __( 'Basic' ), value: 'basic', image: 'src/block/call-to-action/images/basic.png',
+							label: __( 'Basic' ), value: 'basic', image: ImageDesignBasic,
 						},
 						{
-							label: __( 'Plain' ), value: 'plain', image: 'src/block/call-to-action/images/plain.png',
+							label: __( 'Plain' ), value: 'plain', image: ImageDesignPlain,
 						},
 					] ) }
 					onChange={ design => setAttributes( { design } ) }

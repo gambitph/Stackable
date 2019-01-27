@@ -3,6 +3,10 @@ import { RangeControl, SelectControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
+import ImageDesignBasic from './images/basic.png'
+import ImageDesignGhost from './images/ghost.png'
+import ImageDesignLink from './images/link.png'
+import ImageDesignPlain from './images/plain.png'
 
 function PanelButtonSettings( props ) {
 	const {
@@ -55,16 +59,16 @@ function PanelButtonSettings( props ) {
 					selected={ buttonDesign }
 					options={ [
 						{
-							label: __( 'Basic' ), value: 'basic', image: 'src/components/panel-button-settings/images/basic.png',
+							label: __( 'Basic' ), value: 'basic', image: ImageDesignBasic,
 						},
 						{
-							label: __( 'Ghost' ), value: 'ghost', image: 'src/components/panel-button-settings/images/ghost.png',
+							label: __( 'Ghost' ), value: 'ghost', image: ImageDesignGhost,
 						},
 						{
-							label: __( 'Plain' ), value: 'plain', image: 'src/components/panel-button-settings/images/plain.png',
+							label: __( 'Plain' ), value: 'plain', image: ImageDesignPlain,
 						},
 						{
-							label: __( 'Link' ), value: 'link', image: 'src/components/panel-button-settings/images/link.png',
+							label: __( 'Link' ), value: 'link', image: ImageDesignLink,
 						},
 						...applyFilters( 'stackable.button.edit.designs', [] ),
 					] }

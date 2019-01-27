@@ -17,14 +17,14 @@ const autoprefixer = require( 'autoprefixer' ),
 
 // These files are the ones which will be included in the `package` task.
 const buildInclude = [
-	path.resolve( __dirname, './*.+(txt|php)' ), // All files in the root
-	path.resolve( __dirname, './src/**' ),
+	path.resolve( __dirname, './*.+(txt|php)' ), // All files in the root.
+	path.resolve( __dirname, './src/**/*.php' ), // Only PHP files in our source files, others will be compiled into dist.
 	path.resolve( __dirname, './dist/**' ),
 	path.resolve( __dirname, './freemius/**' ),
 	path.resolve( __dirname, './images/**' ),
-	'!' + path.resolve( __dirname, '**/+(__test__|test)/**' ), // No tests.
-	'!' + path.resolve( __dirname, './src/**/*.+(js|scss|md|ai)' ), // No source.
-	'!' + path.resolve( __dirname, './src/!(welcome)/**/*.svg' ), // No svgs except settings.
+
+	path.resolve( __dirname, './src/welcome/images/**' ), // Welcome screen / settings images.
+	'!' + path.resolve( __dirname, './src/welcome/images/block-*.svg' ), // Except these, since these are embedded via webpack.
 ]
 
 const postCSSOptions = [

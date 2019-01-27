@@ -8,6 +8,8 @@ import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { Fragment } from '@wordpress/element'
+import ImageDesignBasic from './images/basic.png'
+import ImageDesignPlain from './images/plain.png'
 import isDarkColor from 'is-dark-color'
 import { showProNotice } from 'stackable'
 
@@ -47,10 +49,10 @@ const edit = props => {
 					selected={ design }
 					options={ [
 						{
-							image: 'src/block/number-box/images/basic.png', label: __( 'Basic' ), value: 'basic',
+							image: ImageDesignBasic, label: __( 'Basic' ), value: 'basic',
 						},
 						{
-							image: 'src/block/number-box/images/plain.png', label: __( 'Plain' ), value: 'plain',
+							image: ImageDesignPlain, label: __( 'Plain' ), value: 'plain',
 						},
 						...applyFilters( 'stackable.number-box.edit.designs', [] ),
 					] }
