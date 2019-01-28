@@ -145,21 +145,23 @@ const edit = props => {
 					] }
 				>
 				</PanelColorSettings>
-				<PanelBackgroundSettings
-					initialOpen={ true }
-					backgroundColor={ backgroundColor }
-					backgroundImageID={ backgroundImageID }
-					backgroundImageURL={ backgroundImageURL }
-					backgroundOpacity={ backgroundOpacity }
-					fixedBackground={ fixedBackground }
-					onChangeBackgroundColor={ backgroundColor => setAttributes( { backgroundColor } ) }
-					onChangeBackgroundImage={ ( { url, id } ) => setAttributes( { backgroundImageID: id, backgroundImageURL: url } ) }
-					onRemoveBackgroundImage={ () => {
-						setAttributes( { backgroundImageID: 0, backgroundImageURL: '' } )
-					} }
-					onChangeBackgroundOpacity={ backgroundOpacity => setAttributes( { backgroundOpacity } ) }
-					onChangeFixedBackground={ value => setAttributes( { fixedBackground: !! value } ) }
-				/>
+				{ design !== 'plain' &&
+					<PanelBackgroundSettings
+						initialOpen={ true }
+						backgroundColor={ backgroundColor }
+						backgroundImageID={ backgroundImageID }
+						backgroundImageURL={ backgroundImageURL }
+						backgroundOpacity={ backgroundOpacity }
+						fixedBackground={ fixedBackground }
+						onChangeBackgroundColor={ backgroundColor => setAttributes( { backgroundColor } ) }
+						onChangeBackgroundImage={ ( { url, id } ) => setAttributes( { backgroundImageID: id, backgroundImageURL: url } ) }
+						onRemoveBackgroundImage={ () => {
+							setAttributes( { backgroundImageID: 0, backgroundImageURL: '' } )
+						} }
+						onChangeBackgroundOpacity={ backgroundOpacity => setAttributes( { backgroundOpacity } ) }
+						onChangeFixedBackground={ value => setAttributes( { fixedBackground: !! value } ) }
+					/>
+				}
 				<PanelButtonSettings
 					initialOpen={ false }
 					buttonColor={ buttonColor }
