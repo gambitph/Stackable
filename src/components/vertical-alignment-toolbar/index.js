@@ -17,17 +17,17 @@ import { withViewportMatch } from '@wordpress/viewport'
 const ALIGNMENT_CONTROLS = [
 	{
 		icon: <SVGIconTop />,
-		title: __( 'Align Top' ),
+		title: __( 'Align text top' ),
 		align: 'flex-start',
 	},
 	{
 		icon: <SVGIconCenter />,
-		title: __( 'Align center' ),
+		title: __( 'Align text center' ),
 		align: 'center',
 	},
 	{
 		icon: <SVGIconBottom />,
-		title: __( 'Align right' ),
+		title: __( 'Align text bottom' ),
 		align: 'flex-end',
 	},
 ]
