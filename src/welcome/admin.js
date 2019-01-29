@@ -1,26 +1,10 @@
 import { __, sprintf } from '@wordpress/i18n'
 import { Component, render } from '@wordpress/element'
-import { disabledBlocks, nonce } from 'stackable'
+import { disabledBlocks, nonce, srcUrl } from 'stackable'
 import { send as ajaxSend } from '@wordpress/ajax'
 import classnames from 'classnames'
 import domReady from '@wordpress/dom-ready'
 import { Spinner } from '@wordpress/components'
-
-// Load our SVGs
-const contextSVGs = require.context(
-	'./images', // Search within the images directory.
-	true, // Search recursively.
-	/block-(.*)?\.svg$/ // Match all `block-*` svgs.
-)
-
-// This holds all our SVGs as Components.
-const SVGS = contextSVGs.keys().reduce( ( svgs, key ) => {
-	const blockName = key.match( /block-(.*)?.svg/ )[ 1 ]
-	return {
-		...svgs,
-		[ blockName ]: contextSVGs( key ).default,
-	}
-}, {} )
 
 // Gather all the blocks.
 const context = require.context(
@@ -124,11 +108,9 @@ class BlockToggler extends Component {
 							's-is-disabled': isDisabled,
 						} )
 
-						const Icon = SVGS[ blockNameTrim ]
-
 						return (
 							<div key={ i + 1 } className={ mainClasses }>
-								{ <Icon className="s-block-icon" /> }
+								<img src={ `${ srcUrl }images/block-${ blockNameTrim }.svg` } alt={ `${ title } icon` } className="s-block-icon" />
 								<h3>{ title }</h3>
 								<p>{ block.description }</p>
 								<button

@@ -22,9 +22,7 @@ const buildInclude = [
 	path.resolve( __dirname, './dist/**' ),
 	path.resolve( __dirname, './freemius/**' ),
 	path.resolve( __dirname, './images/**' ),
-
 	path.resolve( __dirname, './src/welcome/images/**' ), // Welcome screen / settings images.
-	'!' + path.resolve( __dirname, './src/welcome/images/block-*.svg' ), // Except these, since these are embedded via webpack.
 ]
 
 const postCSSOptions = [
