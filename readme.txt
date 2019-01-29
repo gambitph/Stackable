@@ -1,10 +1,10 @@
 === Stackable - Gutenberg Blocks ===
 Contributors: bfintal, gambitph, freemius
-Tags: gutenberg, block, blocks, gutenberg blocks, page builder, editor, wordpress 5.0
+Tags: gutenberg, block, blocks, block editor, gutenberg blocks, page builder, editor, wordpress 5.0
 Requires at least: 4.8
 Tested up to: 5.0.3
 Requires PHP: 5.3
-Stable tag: 1.11.1
+Stable tag: 1.12.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -45,6 +45,7 @@ Stackable provides feature-rich blocks that gives you more design options for yo
 
 ### News Article Updates
 
+- [v1.12 Stackable Is Now in GitHub](https://wpstackable.com/blog/stackable-is-now-in-github/)
 - [v1.11 Huge Updates Across All Blocks](https://wpstackable.com/blog/huge-updates-across-all-blocks/)
 - [v1.10 Enable and Disable Blocks](https://wpstackable.com/blog/enable-and-disable-blocks/)
 - [v1.9 Button Icons and More Button Designs](https://wpstackable.com/blog/button-icons-and-more-button-designs/)
@@ -117,7 +118,9 @@ You will have to redo all your blocks
 
 == Changelog ==
 
-= 1.11.1 =
+= 1.12.0 =
+[Read the news update](https://wpstackable.com/blog/stackable-is-now-in-github/)
+
 * New: Better build tooling, way less files now in the build
 * New: index.php for all directories
 * Fixed: Refrain the link field from getting focus when a block is selected
