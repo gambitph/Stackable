@@ -123,7 +123,11 @@ You will have to redo all your blocks
 
 * New: Better build tooling, way less files now in the build
 * New: index.php for all directories
+* New: Bundle SVGs and PNGs to dist for less files
+* Fixed: Hide header background settings for plain designs
+* Fixed: Vertical align toolbar labels
 * Fixed: Refrain the link field from getting focus when a block is selected
+* Fixed: Nested icon list styles
 * Fixed: Image Box block images cannot be replaced
 * Fixed: Clearing the Button block's text color resulted in an error
 * Fixed: Blockquote's quote mark is too far in small sizes
