@@ -9,10 +9,10 @@ module.exports = [
 				// Cache compilation results in ./node_modules/.cache/babel-loader/
 				cacheDirectory: true,
 				plugins: [
-					'transform-es2015-destructuring',
-					'transform-object-rest-spread',
+					'@babel/plugin-transform-destructuring',
+					'@babel/plugin-proposal-object-rest-spread',
 					[
-						'transform-react-jsx',
+						'@babel/plugin-transform-react-jsx',
 						{
 							pragma: 'wp.element.createElement',
 						},
