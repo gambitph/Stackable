@@ -154,8 +154,6 @@ const blockMigrationTests = function( props ) {
 			expect( console ).toHaveWarned()
 		} )
 	} )
-
-	// TODO: After migration, all previous attributes should stay the same.
 }
 
 export default blockMigrationTests
