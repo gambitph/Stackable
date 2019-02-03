@@ -73,18 +73,21 @@ export const schema = {
 		source: 'attribute',
 		selector: '.ugb-feature-grid__item:nth-child(1) .ugb-button',
 		attribute: 'href',
+		default: '',
 	},
 	linkUrl2: {
 		type: 'string',
 		source: 'attribute',
 		selector: '.ugb-feature-grid__item:nth-child(2) .ugb-button',
 		attribute: 'href',
+		default: '',
 	},
 	linkUrl3: {
 		type: 'string',
 		source: 'attribute',
 		selector: '.ugb-feature-grid__item:nth-child(3) .ugb-button',
 		attribute: 'href',
+		default: '',
 	},
 	newTab1: {
 		type: 'boolean',

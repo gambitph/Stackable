@@ -20,7 +20,8 @@ const blockMigrationTests = function( props ) {
 		settings,
 		save,
 		deprecated,
-		attributeValuesOverride = {},
+		defaultAttributes: defaultAttributesOverride = {},
+		attributes: attributeValuesOverride = {},
 		hasInnerBlocks = false,
 	} = props
 
@@ -67,12 +68,15 @@ const blockMigrationTests = function( props ) {
 	deprecated.forEach( ( deprecate, i ) => {
 		test( `should migrate deprecated blocks. Deprecation ${ i + 1 }/${ deprecated.length }`, () => {
 			// Get the default attributes of the deprecated block.
-			const defaultAttributes = getDefaultAttributes( name, {
-				...settings,
-				category: 'common',
-				save: deprecate.save,
-				attributes: deprecate.attributes,
-			} )
+			const defaultAttributes = {
+				...getDefaultAttributes( name, {
+					...settings,
+					category: 'common',
+					save: deprecate.save,
+					attributes: deprecate.attributes,
+				} ),
+				...defaultAttributesOverride,
+			}
 
 			// Mimick saving, get the saved html.
 			const savedDeprecatedHTML = getSaveContent(
@@ -150,6 +154,8 @@ const blockMigrationTests = function( props ) {
 			expect( console ).toHaveWarned()
 		} )
 	} )
+
+	// TODO: After migration, all previous attributes should stay the same.
 }
 
 export default blockMigrationTests

@@ -15,6 +15,7 @@ const schema = {
 		source: 'attribute',
 		selector: '.ugb-button',
 		attribute: 'href',
+		default: '',
 	},
 	newTab: {
 		type: 'boolean',

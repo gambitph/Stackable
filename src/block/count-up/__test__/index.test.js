@@ -1,38 +1,38 @@
-import { edit, save } from '../index'
+import { name, settings } from '../'
+import blockEditableAfterSaveTests from '@stackable/test/shared/block-editable-after-save'
+import blockMigrationTests from '@stackable/test/shared/block-migration'
+import deprecated from '../deprecated'
+import save from '../save'
 
-describe( 'Count Up', () => {
-	test( 'block edit matches snapshots', () => {
-		const wrapper = edit( {
-			isSelected: false,
-			attributes: {
-				title: 'Happy Customers',
-				counter: '12,345',
-				des: 'and counting',
-				fontSize: '60',
-				headingColor: '#444444',
-				desColor: '#444444',
-				color: '#444444',
-			},
+describe( `${ settings.title } block`, () => {
+	const attributes = {
+		columns: 2,
+		countText3: '',
+		countText4: '',
+		description3: '',
+		description4: '',
+		title3: '',
+		title4: '',
+	}
 
-		} )
-
-		expect( wrapper ).toMatchSnapshot()
+	// Checks whether adding the block, saving it then refreshing the editor renders the block valid & editable.
+	// Checks whether adding the block, changing values, saving it then refreshing the editor renders the block valid & editable.
+	blockEditableAfterSaveTests.bind( this )( {
+		name,
+		settings,
+		save,
+		deprecated,
+		attributes,
 	} )
 
-	test( 'block save matches snapshots', () => {
-		const wrapper = save( {
-			isSelected: false,
-			attributes: {
-				title: 'Happy Customers',
-				counter: '12,345',
-				des: 'and counting',
-				fontSize: '60',
-				headingColor: '#444444',
-				desColor: '#444444',
-				color: '#444444',
-			},
+	// Checks whether saved HTML of older versioned blocks would migrate and remain valid & editable.
+	// Checks whether saved HTML of older versioned blocks with changed values, would migrate and remain valid & editable.
+	describe( 'Deprecated migration', () => {
+		blockMigrationTests.bind( this )( {
+			name,
+			settings,
+			save,
+			deprecated,
 		} )
-
-		expect( wrapper ).toMatchSnapshot()
 	} )
 } )

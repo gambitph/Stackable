@@ -98,6 +98,7 @@ export const schema = {
 		source: 'attribute',
 		selector: `.ugb-image-box__item:nth-child(${ i }) .ugb-image-box__overlay`,
 		attribute: 'href',
+		default: '',
 	}
 	schema[ `newTab${ i }` ] = {
 		type: 'boolean',

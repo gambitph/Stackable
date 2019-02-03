@@ -1,37 +1,43 @@
-import { edit, save } from '../index'
+import { name, settings } from '../'
+import blockEditableAfterSaveTests from '@stackable/test/shared/block-editable-after-save'
+import blockMigrationTests from '@stackable/test/shared/block-migration'
+import deprecated from '../deprecated'
+import save from '../save'
 
-describe( 'Divider Block', () => {
-	test( 'block edit matches snapshot', () => {
-		const wrapper = edit( {
-			isSelected: false,
-			attributes: {
-				url: 'http://www.gambit.ph/',
-				text: 'We Simplify and Revolutionize',
-				textAlignment: 'center',
-				color: '#2091e1',
-				textColor: '#ffffff',
-				size: 'normal',
-				cornerButtonRadius: 4,
-			},
+describe( `${ settings.title } block`, () => {
+	const defaultAttributes = {
+		text2: '',
+		text3: '',
+	}
+	const attributes = {
+		buttons: 1,
+		text2: '',
+		text3: '',
+		newTab2: false,
+		newTab3: false,
+		url2: '',
+		url3: '',
+	}
 
-		} )
-
-		expect( wrapper ).toMatchSnapshot()
+	// Checks whether adding the block, saving it then refreshing the editor renders the block valid & editable.
+	// Checks whether adding the block, changing values, saving it then refreshing the editor renders the block valid & editable.
+	blockEditableAfterSaveTests.bind( this )( {
+		name,
+		settings,
+		save,
+		deprecated,
+		defaultAttributes,
+		attributes,
 	} )
 
-	test( 'block save matches snapshot', () => {
-		const wrapper = save( {
-			attributes: {
-				url: 'http://www.gambit.ph/',
-				text: 'We Simplify and Revolutionize',
-				textAlignment: 'center',
-				color: '#2091e1',
-				textColor: '#ffffff',
-				size: 'normal',
-				cornerButtonRadius: 4,
-			},
+	// Checks whether saved HTML of older versioned blocks would migrate and remain valid & editable.
+	// Checks whether saved HTML of older versioned blocks with changed values, would migrate and remain valid & editable.
+	describe( 'Deprecated migration', () => {
+		blockMigrationTests.bind( this )( {
+			name,
+			settings,
+			save,
+			deprecated,
 		} )
-
-		expect( wrapper ).toMatchSnapshot()
 	} )
 } )

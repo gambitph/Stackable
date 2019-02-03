@@ -1,4 +1,3 @@
-import { merge, omit } from 'lodash'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
@@ -250,39 +249,6 @@ export const deprecatedSave_1_4 = props => {
 	)
 }
 
-export const deprecatedSchema_0_7 = {
-	text: {
-		type: 'array',
-		source: 'children',
-		selector: 'p',
-		default: __( 'It\'s okay to acknowledge that life can get complicated, but we musn\'t forget the beauty in its simplicity, too. From the multitude of stars above, to freshly mowed grass in the morning, life is simply wonderful.' ),
-	},
-	color: {
-		type: 'string',
-		default: '#424242',
-	},
-	borderColor: {
-		type: 'string',
-		default: '#2091e1',
-	},
-}
-
-export const deprecatedSave_0_7 = props => {
-	const {
-		color, text, borderColor,
-	} = props.attributes
-
-	return (
-		<blockquote
-			className="ugb-blockquote"
-			style={ {
-				borderLeftColor: borderColor,
-			} }>
-			<p style={ { color: color } }>{ text }</p>
-		</blockquote>
-	)
-}
-
 const deprecated = [
 	{
 		attributes: deprecatedSchema_1_11,
@@ -309,13 +275,6 @@ const deprecated = [
 	{
 		attributes: deprecatedSchema_1_4,
 		save: deprecatedSave_1_4,
-	},
-	{
-		attributes: deprecatedSchema_0_7,
-		migrate: attributes => {
-			return omit( merge( attributes, { quoteColor: attributes.borderColor } ), [ 'borderColor' ] )
-		},
-		save: deprecatedSave_0_7,
 	},
 ]
 

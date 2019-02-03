@@ -1,55 +1,27 @@
-import { edit } from '../index'
+import { name, settings } from '../'
+import blockEditableAfterSaveTests from '@stackable/test/shared/block-editable-after-save'
+import blockMigrationTests from '@stackable/test/shared/block-migration'
+import deprecated from '../deprecated'
+import save from '../save'
 
-describe( 'Team Member', () => {
-	test( 'block edit matches snapshots', () => {
-		const wrapper = edit( {
-			isSelected: false,
-			attributes: {
-				mediaID: 1,
-				mediaURL: 'http://www.gambit.ph/',
-				heading: 'Ben Adams',
-				tagline: 'Ben is the head of our small team',
-				des: 'Ben is the head of our small team. He loves walking his dog, Walter, when he has some free time.',
-				headingColor: 'string',
-				taglineColor: 'string',
-				desColor: 'string',
-				buttonURL: 'http://www.gambit.ph/',
-				buttonText: 'Button',
-				buttonColor: '#2091e1',
-				buttonTextColor: '#ffffff',
-				size: 'normal',
-				cornerButtonRadius: 4,
-				contentAlign: 'left',
-			},
-
-		} )
-
-		expect( wrapper ).toMatchSnapshot()
+describe( `${ settings.title } block`, () => {
+	// Checks whether adding the block, saving it then refreshing the editor renders the block valid & editable.
+	// Checks whether adding the block, changing values, saving it then refreshing the editor renders the block valid & editable.
+	blockEditableAfterSaveTests.bind( this )( {
+		name,
+		settings,
+		save,
+		deprecated,
 	} )
 
-	test( 'block save matches snapshots', () => {
-		const wrapper = edit( {
-			isSelected: false,
-			attributes: {
-				mediaID: 1,
-				mediaURL: 'http://www.gambit.ph/',
-				heading: 'Ben Adams',
-				tagline: 'Ben is the head of our small team',
-				des: 'Ben is the head of our small team. He loves walking his dog, Walter, when he has some free time.',
-				headingColor: 'string',
-				taglineColor: 'string',
-				desColor: 'string',
-				buttonURL: 'http://www.gambit.ph/',
-				buttonText: 'Button',
-				buttonColor: '#2091e1',
-				buttonTextColor: '#ffffff',
-				size: 'normal',
-				cornerButtonRadius: 4,
-				contentAlign: 'left',
-			},
-
+	// Checks whether saved HTML of older versioned blocks would migrate and remain valid & editable.
+	// Checks whether saved HTML of older versioned blocks with changed values, would migrate and remain valid & editable.
+	describe( 'Deprecated migration', () => {
+		blockMigrationTests.bind( this )( {
+			name,
+			settings,
+			save,
+			deprecated,
 		} )
-
-		expect( wrapper ).toMatchSnapshot()
 	} )
 } )

@@ -44,6 +44,7 @@ export const schema = {
 		source: 'attribute',
 		selector: '.ugb-button',
 		attribute: 'href',
+		default: '',
 	},
 	buttonNewTab: {
 		type: 'boolean',

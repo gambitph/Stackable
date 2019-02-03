@@ -201,6 +201,7 @@ const deprecatedSave_1_9_1 = props => {
 		fixedBackground,
 		buttonDesign,
 		buttonIcon,
+		columns = undefined,
 	} = props.attributes
 
 	const mainClasses = classnames( [
@@ -657,55 +658,6 @@ export const deprecatedSave_1_1 = props => {
 	)
 }
 
-export const deprecatedSave_0_7 = props => {
-	const {
-		url,
-		buttonText,
-		ctaTitle,
-		bodyText,
-		color,
-		textColor,
-		size,
-		borderButtonRadius,
-		bodyTextColor,
-		titleColor,
-		bgColor,
-	} = props.attributes
-
-	const buttonStyle = {
-		backgroundColor: color,
-		color: textColor,
-		borderRadius: borderButtonRadius + 'px',
-	}
-
-	return (
-		<div className={ `ugb-cta` } style={ { backgroundColor: bgColor } }>
-			{ ctaTitle && !! ctaTitle.length && (
-				<h3
-					className="ugb-cta-title"
-					style={ { color: titleColor } }>
-					{ ctaTitle }
-				</h3>
-			) }
-			{ bodyText && !! bodyText.length && (
-				<p
-					className="ugb-cta-bodyText"
-					style={ { color: bodyTextColor } }>
-					{ bodyText }
-				</p>
-			) }
-			{ buttonText && !! buttonText.length && (
-				<a
-					href={ url }
-					className={ `wp-ugb-button ugb-cta-button ugb-button-${ size }` }
-					style={ buttonStyle }>
-					{ buttonText }
-				</a>
-			) }
-		</div>
-	)
-}
-
 const deprecated = [
 	{
 		attributes: deprecatedSchema_1_10,
@@ -750,9 +702,6 @@ const deprecated = [
 	{
 		attributes: deprecatedSchema_1_1,
 		save: deprecatedSave_1_1,
-	},
-	{
-		save: deprecatedSave_0_7,
 	},
 ]
 

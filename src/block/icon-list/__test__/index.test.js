@@ -1,38 +1,33 @@
-import { edit, save } from '../index'
+import { name, settings } from '../'
+import blockEditableAfterSaveTests from '@stackable/test/shared/block-editable-after-save'
+import blockMigrationTests from '@stackable/test/shared/block-migration'
+import deprecated from '../deprecated'
+import save from '../save'
 
-describe( 'Icon List', () => {
-	test( 'block edit matches snapshots', () => {
-		const wrapper = edit( {
-			isSelected: false,
-			attributes: {
-				icon: 'check',
-				iconShape: 'circle',
-				iconColor: '#000000',
-				iconSize: 20,
-				columns: 1,
-				text: 'Some Text',
-				gap: 16,
-			},
+describe( `${ settings.title } block`, () => {
+	const attributes = {
+		icon: 'cross',
+	}
 
-		} )
-
-		expect( wrapper ).toMatchSnapshot()
+	// Checks whether adding the block, saving it then refreshing the editor renders the block valid & editable.
+	// Checks whether adding the block, changing values, saving it then refreshing the editor renders the block valid & editable.
+	blockEditableAfterSaveTests.bind( this )( {
+		name,
+		settings,
+		save,
+		deprecated,
+		attributes,
 	} )
 
-	test( 'block save matches snapshots', () => {
-		const wrapper = save( {
-			isSelected: false,
-			attributes: {
-				icon: 'check',
-				iconShape: 'circle',
-				iconColor: '#000000',
-				iconSize: 20,
-				columns: 1,
-				text: 'Some Text',
-				gap: 16,
-			},
+	// Checks whether saved HTML of older versioned blocks would migrate and remain valid & editable.
+	// Checks whether saved HTML of older versioned blocks with changed values, would migrate and remain valid & editable.
+	describe( 'Deprecated migration', () => {
+		blockMigrationTests.bind( this )( {
+			name,
+			settings,
+			save,
+			deprecated,
+			attributes,
 		} )
-
-		expect( wrapper ).toMatchSnapshot()
 	} )
 } )

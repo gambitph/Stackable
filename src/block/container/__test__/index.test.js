@@ -1,24 +1,29 @@
-import { edit, save } from '../index'
+import { name, settings } from '../'
+import blockEditableAfterSaveTests from '@stackable/test/shared/block-editable-after-save'
+import blockMigrationTests from '@stackable/test/shared/block-migration'
+import deprecated from '../deprecated'
+import save from '../save'
 
-describe( 'Container', () => {
-	test( 'block edit matches snapshots', () => {
-		const wrapper = edit( {
-			isSelected: false,
-			attributes: {
-			},
-
-		} )
-
-		expect( wrapper ).toMatchSnapshot()
+describe( `${ settings.title } block`, () => {
+	// Checks whether adding the block, saving it then refreshing the editor renders the block valid & editable.
+	// Checks whether adding the block, changing values, saving it then refreshing the editor renders the block valid & editable.
+	blockEditableAfterSaveTests.bind( this )( {
+		name,
+		settings,
+		save,
+		deprecated,
+		hasInnerBlocks: true,
 	} )
 
-	test( 'block save all attributes matches snapshots', () => {
-		const wrapper = save( {
-			isSelected: false,
-			attributes: {
-			},
+	// Checks whether saved HTML of older versioned blocks would migrate and remain valid & editable.
+	// Checks whether saved HTML of older versioned blocks with changed values, would migrate and remain valid & editable.
+	describe( 'Deprecated migration', () => {
+		blockMigrationTests.bind( this )( {
+			name,
+			settings,
+			save,
+			deprecated,
+			hasInnerBlocks: true,
 		} )
-
-		expect( wrapper ).toMatchSnapshot()
 	} )
 } )

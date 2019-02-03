@@ -1,32 +1,33 @@
-import { edit, save } from '../index'
+import { name, settings } from '../'
+import blockEditableAfterSaveTests from '@stackable/test/shared/block-editable-after-save'
+import blockMigrationTests from '@stackable/test/shared/block-migration'
+import deprecated from '../deprecated'
+import save from '../save'
 
-describe( 'Video Popup', () => {
-	test( 'block edit matches snapshot', () => {
-		const wrapper = edit( {
-			isSelected: false,
-			attributes: {
-				videoLink: 'QJ9ygdD2sIY',
-				mediaLink: 'https://images.unsplash.com/photo-1506269351850-0428eaed2193?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a1512d7659e4817df8217cdb9aa09d7a&auto=format&fit=crop&w=1050&q=80',
-				mediaID: '',
-				overlayColor: '#000000',
-				playButtonType: 'normal',
-			},
-		} )
+describe( `${ settings.title } block`, () => {
+	const attributes = {
+		playButtonType: 'outline',
+	}
 
-		expect( wrapper ).toMatchSnapshot()
+	// Checks whether adding the block, saving it then refreshing the editor renders the block valid & editable.
+	// Checks whether adding the block, changing values, saving it then refreshing the editor renders the block valid & editable.
+	blockEditableAfterSaveTests.bind( this )( {
+		name,
+		settings,
+		save,
+		deprecated,
+		attributes,
 	} )
 
-	test( 'block save matches snapshot', () => {
-		const wrapper = save( {
-			attributes: {
-				videoLink: 'QJ9ygdD2sIY',
-				mediaLink: 'https://images.unsplash.com/photo-1506269351850-0428eaed2193?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a1512d7659e4817df8217cdb9aa09d7a&auto=format&fit=crop&w=1050&q=80',
-				mediaID: '',
-				overlayColor: '#000000',
-				playButtonType: 'normal',
-			},
+	// Checks whether saved HTML of older versioned blocks would migrate and remain valid & editable.
+	// Checks whether saved HTML of older versioned blocks with changed values, would migrate and remain valid & editable.
+	describe( 'Deprecated migration', () => {
+		blockMigrationTests.bind( this )( {
+			name,
+			settings,
+			save,
+			deprecated,
+			attributes,
 		} )
-
-		expect( wrapper ).toMatchSnapshot()
 	} )
 } )

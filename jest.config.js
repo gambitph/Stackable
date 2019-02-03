@@ -31,4 +31,6 @@ module.exports = {
 		'!src/block/ghost-button/**/*', // Deprecated block, don't test anymore.
 		'!src/block/pullquote/**/*', // Deprecated block, don't test anymore.
 	],
+
+	testMatch: [ '**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)' ],
 }

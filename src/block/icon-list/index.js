@@ -29,6 +29,7 @@ export const schema = {
 		source: 'html',
 		selector: 'ul',
 		multiline: 'li',
+		default: '',
 	},
 	gap: {
 		type: 'number',

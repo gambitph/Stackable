@@ -1,35 +1,34 @@
-import { edit, save } from '../index'
+import { name, settings } from '../'
+import blockEditableAfterSaveTests from '@stackable/test/shared/block-editable-after-save'
+import blockMigrationTests from '@stackable/test/shared/block-migration'
+import deprecated from '../deprecated'
+import save from '../save'
 
-describe( 'Notification', () => {
-	test( 'block edit matches snapshots', () => {
-		const wrapper = edit( {
-			isSelected: false,
-			attributes: {
-				text: 'This is an informational alert, usually used for successful subscriptions, promo announcements, and the like.',
-				color: '#000000',
-				textColor: '#ffffff',
-				notifType: 'success',
-				dismissible: false,
-			},
+describe( `${ settings.title } block`, () => {
+	const defaultAttributes = {
+		// Need this to be true since v1.11 -> v1.12 deprecation is about the SVG close button icon.
+		dismissible: true,
+	}
 
-		} )
-
-		expect( wrapper ).toMatchSnapshot()
+	// Checks whether adding the block, saving it then refreshing the editor renders the block valid & editable.
+	// Checks whether adding the block, changing values, saving it then refreshing the editor renders the block valid & editable.
+	blockEditableAfterSaveTests.bind( this )( {
+		name,
+		settings,
+		save,
+		deprecated,
+		defaultAttributes,
 	} )
 
-	test( 'block save matches snapshots', () => {
-		const wrapper = save( {
-			isSelected: false,
-			attributes: {
-				text: 'This is an informational alert, usually used for successful subscriptions, promo announcements, and the like.',
-				color: '#000000',
-				textColor: '#ffffff',
-				notifType: 'success',
-				dismissible: false,
-			},
-
+	// Checks whether saved HTML of older versioned blocks would migrate and remain valid & editable.
+	// Checks whether saved HTML of older versioned blocks with changed values, would migrate and remain valid & editable.
+	describe( 'Deprecated migration', () => {
+		blockMigrationTests.bind( this )( {
+			name,
+			settings,
+			save,
+			deprecated,
+			defaultAttributes,
 		} )
-
-		expect( wrapper ).toMatchSnapshot()
 	} )
 } )

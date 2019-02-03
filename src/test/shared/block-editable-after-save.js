@@ -20,7 +20,8 @@ const blockEditableAfterSaveTests = function( props ) {
 		settings,
 		save = null,
 		deprecated = null,
-		attributeValuesOverride = {},
+		defaultAttributes: defaultAttributesOverride = {},
+		attributes: attributeValuesOverride = {},
 		hasInnerBlocks = false,
 	} = props
 
@@ -65,7 +66,10 @@ const blockEditableAfterSaveTests = function( props ) {
 
 	// Checks whether adding the block, saving it then refreshing the editor renders the block valid & editable.
 	test( 'should be able to edit the block, after saving block defaults', () => {
-		const defaultAttributes = getDefaultAttributes( name, blockSettings )
+		const defaultAttributes = {
+			...getDefaultAttributes( name, blockSettings ),
+			...defaultAttributesOverride,
+		}
 
 		const savedHTML = getSaveContent(
 			{
@@ -93,36 +97,38 @@ const blockEditableAfterSaveTests = function( props ) {
 	} )
 
 	// Checks whether adding the block, changing values, saving it then refreshing the editor renders the block valid & editable.
-	test( 'should be able to edit the block, after saving with values', () => {
-		const attributes = {
-			...createAttributeValues( blockSettings.attributes ),
-			...attributeValuesOverride,
-		}
+	if ( blockSettings.attributes ) {
+		test( 'should be able to edit the block, after saving with values', () => {
+			const attributes = {
+				...createAttributeValues( blockSettings.attributes ),
+				...attributeValuesOverride,
+			}
 
-		const savedHTML = getSaveContent(
-			{
-				...settings,
-				category: 'common',
-				name,
-				save,
-			},
-			attributes,
-			// innerBlocks
-		)
+			const savedHTML = getSaveContent(
+				{
+					...settings,
+					category: 'common',
+					name,
+					save,
+				},
+				attributes,
+				// innerBlocks
+			)
 
-		registerBlockType( name, blockSettings )
+			registerBlockType( name, blockSettings )
 
-		const block = createBlockWithFallback( {
-			blockName: name,
-			innerHTML: savedHTML,
-			attrs: attributes,
-			innerBlocks: innerBlocksFallbackArgs,
+			const block = createBlockWithFallback( {
+				blockName: name,
+				innerHTML: savedHTML,
+				attrs: attributes,
+				innerBlocks: innerBlocksFallbackArgs,
+			} )
+
+			expect( block.name ).toEqual( name )
+			expect( block.isValid ).toBe( true )
+			expect( block.attributes ).toEqual( attributes )
 		} )
-
-		expect( block.name ).toEqual( name )
-		expect( block.isValid ).toBe( true )
-		expect( block.attributes ).toEqual( attributes )
-	} )
+	}
 }
 
 export default blockEditableAfterSaveTests

@@ -63,7 +63,7 @@ const save = props => {
 					<RichText.Content
 						tagName="p"
 						className="ugb-blockquote__text"
-						style={ { color } }
+						style={ { color: color ? color : undefined } }
 						value={ text }
 					/>,
 					props
