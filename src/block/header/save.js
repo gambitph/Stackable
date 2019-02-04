@@ -83,7 +83,7 @@ const save = props => {
 					<ButtonEdit.Content
 						size={ size }
 						url={ buttonURL }
-						buttonNewTab={ buttonNewTab }
+						newTab={ buttonNewTab }
 						align={ contentAlign }
 						color={ buttonTextColor }
 						text={ buttonText }

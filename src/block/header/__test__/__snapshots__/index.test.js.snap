@@ -61,6 +61,7 @@ exports[`Header block saved block HTML shouldn't change 1`] = `
             "color": "#123456",
           }
         }
+        target="_blank"
       >
         <span
           className="ugb-button--inner"
