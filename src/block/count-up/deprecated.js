@@ -510,7 +510,10 @@ const deprecated = [
 		attributes: deprecatedSchema_1_10,
 		save: deprecatedSave_1_10,
 		migrate: attributes => {
-			const className = ( attributes.className || '' ).replace( /align\w+/, '' ).trim()
+			const className = ( attributes.className || '' )
+			                  .replace( /align\w+/, '' )
+			                  .replace( /\s+/, ' ' )
+							  .trim()
 			return {
 				...attributes,
 				className: className ? className : undefined,
@@ -522,6 +525,10 @@ const deprecated = [
 		attributes: deprecatedSchema_1_9_1,
 		save: deprecatedSave_1_9_1,
 		migrate: attributes => {
+			const className = ( attributes.className || '' )
+			                  .replace( /align\w+/, '' )
+			                  .replace( /\s+/, ' ' )
+			                  .trim()
 			return {
 				...attributes,
 				design: attributes.backgroundColor ? 'basic' : 'plain',
@@ -530,7 +537,7 @@ const deprecated = [
 				contentWidth: false,
 				countFont: 'theme',
 				countFontWeight: '400',
-				className: [ 'aligncenter', 'alignwide', 'alignfull' ].includes( attributes.className ) ? '' : attributes.className,
+				className: className ? className : undefined,
 				align: [ 'aligncenter', 'alignwide', 'alignfull' ].includes( attributes.className ) ? attributes.className.replace( /^align/, '' ) : attributes.align,
 			}
 		},
@@ -539,6 +546,10 @@ const deprecated = [
 		attributes: deprecatedSchema_1_4,
 		save: deprecatedSave_1_4,
 		migrate: attributes => {
+			const className = ( attributes.className || '' )
+			                  .replace( /align\w+/, '' )
+			                  .replace( /\s+/, ' ' )
+			                  .trim()
 			return {
 				columns: 1,
 				title1: attributes.title,
@@ -547,6 +558,8 @@ const deprecated = [
 				textColor: attributes.headingColor,
 				countColor: attributes.color,
 				countSize: attributes.fontSize,
+				className: className ? className : undefined,
+				align: [ 'aligncenter', 'alignwide', 'alignfull' ].includes( attributes.className ) ? attributes.className.replace( /^align/, '' ) : attributes.align,
 			}
 		},
 	},

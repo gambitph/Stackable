@@ -383,7 +383,10 @@ const deprecated = [
 		attributes: deprecatedSchema_1_10,
 		save: deprecatedSave_1_10,
 		migrate: attributes => {
-			const className = ( attributes.className || '' ).replace( /align\w+/, '' ).replace( /\s+/, ' ' ).trim()
+			const className = ( attributes.className || '' )
+			                  .replace( /align\w+/, '' )
+			                  .replace( /\s+/, ' ' )
+			                  .trim()
 			return {
 				...attributes,
 				design: 'basic',
@@ -402,6 +405,10 @@ const deprecated = [
 		attributes: deprecatedSchema_1_5,
 		save: deprecatedSave_1_5,
 		migrate: attributes => {
+			const className = ( attributes.className || '' )
+			                  .replace( /align\w+/, '' )
+			                  .replace( /\s+/, ' ' )
+			                  .trim()
 			return omit( {
 				...attributes,
 				columns: 1,
@@ -414,6 +421,7 @@ const deprecated = [
 				link1: attributes.href,
 				imageURL1: attributes.url,
 				imageID1: attributes.id,
+				className: className ? className : undefined,
 			}, [
 				'full', 'title', 'subtitle', 'href', 'url', 'id',
 			] )
@@ -422,6 +430,17 @@ const deprecated = [
 	{
 		attributes: deprecatedSchema_1_1_2,
 		save: deprecatedSave_1_1_2,
+		migrate: attributes => {
+			const className = ( attributes.className || '' )
+			                  .replace( /align\w+/, '' )
+			                  .replace( /\s+/, ' ' )
+							  .trim()
+			return {
+				...attributes,
+				className: className ? className : undefined,
+				align: [ 'aligncenter', 'alignwide', 'alignfull' ].includes( attributes.className ) ? attributes.className.replace( /^align/, '' ) : attributes.align,
+			}
+		},
 	},
 ]
 

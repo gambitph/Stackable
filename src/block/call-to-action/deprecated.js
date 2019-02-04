@@ -174,6 +174,9 @@ const deprecatedSchema_1_10 = {
 		type: 'number',
 		default: 3,
 	},
+	align: {
+		type: 'string',
+	},
 
 	// Keep the old attributes. Gutenberg issue https://github.com/WordPress/gutenberg/issues/10406
 	bgColor: {
@@ -320,6 +323,9 @@ const deprecatedSchema_1_9_1 = {
 	buttonIcon: {
 		type: 'string',
 	},
+	align: {
+		type: 'string',
+	},
 
 	// Keep the old attributes. Gutenberg issue https://github.com/WordPress/gutenberg/issues/10406
 	bgColor: {
@@ -391,6 +397,9 @@ export const deprecatedSchema_1_9 = {
 		default: false,
 	},
 	buttonIcon: {
+		type: 'string',
+	},
+	align: {
 		type: 'string',
 	},
 
@@ -518,6 +527,9 @@ export const deprecatedSchema_1_4 = {
 		type: 'number',
 		default: 4,
 	},
+	align: {
+		type: 'string',
+	},
 }
 
 export const deprecatedSave_1_4 = props => {
@@ -571,7 +583,9 @@ const deprecated = [
 		attributes: deprecatedSchema_1_10,
 		save: deprecatedSave_1_10,
 		migrate: attributes => {
-			const className = ( attributes.className || '' ).replace( /align\w+/, '' ).trim()
+			const className = ( attributes.className || '' )
+			                  .replace( /align\w+/, '' )
+			                  .trim()
 			return {
 				...attributes,
 				newTab: false,
@@ -584,26 +598,46 @@ const deprecated = [
 		attributes: deprecatedSchema_1_9_1,
 		save: deprecatedSave_1_9_1,
 		migrate: attributes => {
+			const className = ( attributes.className || '' )
+			                  .replace( /align\w+/, '' )
+			                  .trim()
 			return {
 				...attributes,
 				contentWidth: false,
 				design: 'basic',
 				borderRadius: 12,
 				shadow: 3,
+				className: className ? className : undefined,
+				align: [ 'aligncenter', 'alignwide', 'alignfull' ].includes( attributes.className ) ? attributes.className.replace( /^align/, '' ) : attributes.align,
 			}
 		},
 	},
 	{
 		attributes: deprecatedSchema_1_9,
 		save: deprecatedSave_1_9,
+		migrate: attributes => {
+			const className = ( attributes.className || '' )
+			                  .replace( /align\w+/, '' )
+			                  .trim()
+			return {
+				...attributes,
+				className: className ? className : undefined,
+				align: [ 'aligncenter', 'alignwide', 'alignfull' ].includes( attributes.className ) ? attributes.className.replace( /^align/, '' ) : attributes.align,
+			}
+		},
 	},
 	{
 		attributes: deprecatedSchema_1_4,
 		save: deprecatedSave_1_4,
 		migrate: attributes => {
+			const className = ( attributes.className || '' )
+			                  .replace( /align\w+/, '' )
+			                  .trim()
 			return {
 				backgroundColor: attributes.bgColor,
 				...attributes,
+				className: className ? className : undefined,
+				align: [ 'aligncenter', 'alignwide', 'alignfull' ].includes( attributes.className ) ? attributes.className.replace( /^align/, '' ) : attributes.align,
 			}
 		},
 	},
