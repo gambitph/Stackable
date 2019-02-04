@@ -2,7 +2,7 @@
 
 exports[`Feature block saved block HTML shouldn't change 1`] = `
 <div
-  className="wp-block-ugb-feature ugb-feature ugb--background-opacity-2 ugb-feature--design-design ugb-feature--content-contentAlign ugb-feature--invert ugb--has-background ugb--has-background-image ugb--shadow-1 className"
+  className="wp-block-ugb-feature alignfull ugb-feature ugb--background-opacity-2 ugb-feature--design-design ugb-feature--content-contentAlign ugb-feature--invert ugb--has-background ugb--has-background-image ugb--content-width ugb--shadow-1 className"
   style={
     Object {
       "--image-size": "200px",

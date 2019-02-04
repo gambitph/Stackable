@@ -2,7 +2,7 @@
 
 exports[`Header block saved block HTML shouldn't change 1`] = `
 <div
-  className="wp-block-ugb-header ugb-header ugb-header--v2 ugb--background-opacity-2 ugb-header--design-design ugb--has-background ugb--has-background-image ugb--shadow-1 className"
+  className="wp-block-ugb-header alignfull ugb-header ugb-header--v2 ugb--background-opacity-2 ugb-header--design-design ugb--has-background ugb--has-background-image ugb--shadow-1 ugb--content-width className"
   style={
     Object {
       "--ugb-background-color": "#123456",

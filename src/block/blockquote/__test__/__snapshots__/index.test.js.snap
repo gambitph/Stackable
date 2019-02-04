@@ -2,7 +2,7 @@
 
 exports[`Blockquote block saved block HTML shouldn't change 1`] = `
 <blockquote
-  className="wp-block-ugb-blockquote ugb-blockquote ugb-blockquote--v2 ugb--background-opacity-2 ugb-blockquote--design-design ugb-blockquote--small-quote className"
+  className="wp-block-ugb-blockquote alignfull ugb-blockquote ugb-blockquote--v2 ugb--background-opacity-2 ugb-blockquote--design-design ugb-content-width ugb-blockquote--small-quote className"
   style={
     Object {
       "--quote-color": "#123456",

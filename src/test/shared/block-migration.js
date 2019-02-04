@@ -117,7 +117,7 @@ const blockMigrationTests = function( props ) {
 		test( `should migrate deprecated blocks with values. Deprecation ${ i + 1 }/${ deprecated.length }`, () => {
 			// Get the default attributes of the deprecated block.
 			const attributes = {
-				...createAttributeValues( deprecate.attributes ),
+				...createAttributeValues( deprecate.attributes, settings ),
 				...attributeValuesOverride,
 			}
 

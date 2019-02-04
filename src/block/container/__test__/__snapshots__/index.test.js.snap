@@ -2,7 +2,7 @@
 
 exports[`Container block saved block HTML shouldn't change 1`] = `
 <div
-  className="wp-block-ugb-container ugb-container ugb--background-opacity-2 ugb-container--content-contentAlign ugb--has-background ugb--has-background-image ugb-container--height-height ugb-container--align-horizontal-contentLocation ugb--content-width ugb--shadow-1 className"
+  className="wp-block-ugb-container alignfull ugb-container ugb--background-opacity-2 ugb-container--content-contentAlign ugb--has-background ugb--has-background-image ugb-container--height-height ugb-container--align-horizontal-contentLocation ugb--content-width ugb--shadow-1 className"
   style={
     Object {
       "--ugb-background-color": "#123456",

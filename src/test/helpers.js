@@ -12,22 +12,26 @@ export const getDefaultAttributes = ( blockName, blockSettings ) => {
 	return attributes
 }
 
-export const createAttributeValues = schema => {
+export const createAttributeValues = ( schema, blockSettings ) => {
 	return Object.keys( schema ).reduce( ( attrs, attrName ) => {
 		return {
 			...attrs,
-			[ attrName ]: createAttributeValue( attrName, schema[ attrName ] ),
+			[ attrName ]: createAttributeValue( attrName, schema[ attrName ], blockSettings ),
 		}
 	}, {} )
 }
 
-export const createAttributeValue = ( attrName, attrParams ) => {
+export const createAttributeValue = ( attrName, attrParams, blockSettings = {} ) => {
 	const {
 		type = 'string',
 		default: defaultValue = '',
 	} = attrParams
 
 	if ( attrName === 'align' ) {
+		if ( blockSettings.supports && blockSettings.supports.align ) {
+			const align = blockSettings.supports.align
+			return Array.isArray( align ) ? align[ align.length - 1 ] : 'right'
+		}
 		return 'right'
 	} else if ( type === 'boolean' ) {
 		// return Math.random() > 0.5

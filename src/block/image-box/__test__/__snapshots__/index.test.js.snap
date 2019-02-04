@@ -2,7 +2,7 @@
 
 exports[`Image Box block saved block HTML shouldn't change 1`] = `
 <div
-  className="wp-block-ugb-image-box ugb-image-box ugb-image-box--v3 ugb-image-box--columns-1 className"
+  className="wp-block-ugb-image-box alignfull ugb-image-box ugb-image-box--v3 ugb-image-box--columns-1 className"
   style={
     Object {
       "--overlay-color": "#123456",
@@ -18,7 +18,7 @@ exports[`Image Box block saved block HTML shouldn't change 1`] = `
         "borderRadius": 6,
         "height": 200,
         "justifyContent": "verticalAlign",
-        "maxWidth": 200,
+        "maxWidth": undefined,
         "textAlign": "horizontalAlign",
       }
     }

@@ -31,7 +31,7 @@ const blockSaveSnapshotTests = function( props ) {
 	if ( blockSettings.attributes ) {
 		test( 'saved block HTML shouldn\'t change', () => {
 			const attributes = {
-				...createAttributeValues( blockSettings.attributes ),
+				...createAttributeValues( blockSettings.attributes, settings ),
 				...attributeValuesOverride,
 			}
 			const savedElement = TestRenderer.create(
