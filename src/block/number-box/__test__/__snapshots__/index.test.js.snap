@@ -1,215 +1,267 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Number Box block saved block HTML shouldn't change 1`] = `
-<BlockContentProvider
-  innerBlocks={Array []}
+<div
+  className="wp-block-ugb-number-box ugb-number-box ugb-number-box--v2 ugb-number-box--columns-1 ugb-number-box--design-design className"
 >
   <div
-    className="wp-block-ugb-number-box ugb-number-box ugb-number-box--v2 ugb-number-box--columns-1 ugb-number-box--design-design className"
+    className="ugb-number-box__item ugb--shadow-1"
+    style={
+      Object {
+        "backgroundColor": "#123456",
+        "borderRadius": 6,
+      }
+    }
   >
-    <div
-      className="ugb-number-box__item ugb--shadow-1"
+    <span
+      className="ugb-number-box__number"
       style={
         Object {
           "backgroundColor": "#123456",
-          "borderRadius": 6,
+          "color": "#123456",
         }
       }
     >
-      <Unknown
-        className="ugb-number-box__number"
-        format="string"
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "num1",
+          }
+        }
+      />
+    </span>
+    <div
+      className="ugb-number-box__content"
+    >
+      <h4
+        className="ugb-number-box__title"
         style={
           Object {
-            "backgroundColor": "#123456",
             "color": "#123456",
           }
         }
-        tagName="span"
-        value="num1"
-      />
-      <div
-        className="ugb-number-box__content"
       >
-        <Unknown
-          className="ugb-number-box__title"
-          format="string"
-          style={
+        <div
+          dangerouslySetInnerHTML={
             Object {
-              "color": "#123456",
+              "__html": "title1",
             }
           }
-          tagName="h4"
-          value="title1"
         />
-        <Unknown
-          className="ugb-number-box__description"
-          format="string"
-          style={
+      </h4>
+      <p
+        className="ugb-number-box__description"
+        style={
+          Object {
+            "color": "#123456",
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
             Object {
-              "color": "#123456",
+              "__html": "description1",
             }
           }
-          tagName="p"
-          value="description1"
         />
-      </div>
+      </p>
     </div>
   </div>
-</BlockContentProvider>
+</div>
 `;
 
 exports[`Number Box block saved default block HTML shouldn't change 1`] = `
-<BlockContentProvider
-  innerBlocks={Array []}
+<div
+  className="wp-block-ugb-number-box ugb-number-box ugb-number-box--v2 ugb-number-box--columns-3"
 >
   <div
-    className="wp-block-ugb-number-box ugb-number-box ugb-number-box--v2 ugb-number-box--columns-3"
+    className="ugb-number-box__item"
+    style={
+      Object {
+        "backgroundColor": undefined,
+        "borderRadius": undefined,
+      }
+    }
   >
-    <div
-      className="ugb-number-box__item"
+    <span
+      className="ugb-number-box__number"
       style={
         Object {
           "backgroundColor": undefined,
-          "borderRadius": undefined,
+          "color": undefined,
         }
       }
     >
-      <Unknown
-        className="ugb-number-box__number"
-        format="string"
-        style={
+      <div
+        dangerouslySetInnerHTML={
           Object {
-            "backgroundColor": undefined,
-            "color": undefined,
+            "__html": "01",
           }
         }
-        tagName="span"
-        value="01"
       />
-      <div
-        className="ugb-number-box__content"
-      >
-        <Unknown
-          className="ugb-number-box__title"
-          format="string"
-          style={
-            Object {
-              "color": undefined,
-            }
-          }
-          tagName="h4"
-          value="Title"
-        />
-        <Unknown
-          className="ugb-number-box__description"
-          format="string"
-          style={
-            Object {
-              "color": undefined,
-            }
-          }
-          tagName="p"
-          value="Description for this block. Use this space for describing your block. Any text will do."
-        />
-      </div>
-    </div>
+    </span>
     <div
-      className="ugb-number-box__item"
-      style={
-        Object {
-          "backgroundColor": undefined,
-          "borderRadius": undefined,
-        }
-      }
+      className="ugb-number-box__content"
     >
-      <Unknown
-        className="ugb-number-box__number"
-        format="string"
+      <h4
+        className="ugb-number-box__title"
         style={
           Object {
-            "backgroundColor": undefined,
             "color": undefined,
           }
         }
-        tagName="span"
-        value="02"
-      />
-      <div
-        className="ugb-number-box__content"
       >
-        <Unknown
-          className="ugb-number-box__title"
-          format="string"
-          style={
+        <div
+          dangerouslySetInnerHTML={
             Object {
-              "color": undefined,
+              "__html": "Title",
             }
           }
-          tagName="h4"
-          value="Title"
         />
-        <Unknown
-          className="ugb-number-box__description"
-          format="string"
-          style={
-            Object {
-              "color": undefined,
-            }
-          }
-          tagName="p"
-          value="Description for this block. Use this space for describing your block. Any text will do."
-        />
-      </div>
-    </div>
-    <div
-      className="ugb-number-box__item"
-      style={
-        Object {
-          "backgroundColor": undefined,
-          "borderRadius": undefined,
-        }
-      }
-    >
-      <Unknown
-        className="ugb-number-box__number"
-        format="string"
+      </h4>
+      <p
+        className="ugb-number-box__description"
         style={
           Object {
-            "backgroundColor": undefined,
             "color": undefined,
           }
         }
-        tagName="span"
-        value="03"
-      />
-      <div
-        className="ugb-number-box__content"
       >
-        <Unknown
-          className="ugb-number-box__title"
-          format="string"
-          style={
+        <div
+          dangerouslySetInnerHTML={
             Object {
-              "color": undefined,
+              "__html": "Description for this block. Use this space for describing your block. Any text will do.",
             }
           }
-          tagName="h4"
-          value="Title"
         />
-        <Unknown
-          className="ugb-number-box__description"
-          format="string"
-          style={
-            Object {
-              "color": undefined,
-            }
-          }
-          tagName="p"
-          value="Description for this block. Use this space for describing your block. Any text will do."
-        />
-      </div>
+      </p>
     </div>
   </div>
-</BlockContentProvider>
+  <div
+    className="ugb-number-box__item"
+    style={
+      Object {
+        "backgroundColor": undefined,
+        "borderRadius": undefined,
+      }
+    }
+  >
+    <span
+      className="ugb-number-box__number"
+      style={
+        Object {
+          "backgroundColor": undefined,
+          "color": undefined,
+        }
+      }
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "02",
+          }
+        }
+      />
+    </span>
+    <div
+      className="ugb-number-box__content"
+    >
+      <h4
+        className="ugb-number-box__title"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Title",
+            }
+          }
+        />
+      </h4>
+      <p
+        className="ugb-number-box__description"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Description for this block. Use this space for describing your block. Any text will do.",
+            }
+          }
+        />
+      </p>
+    </div>
+  </div>
+  <div
+    className="ugb-number-box__item"
+    style={
+      Object {
+        "backgroundColor": undefined,
+        "borderRadius": undefined,
+      }
+    }
+  >
+    <span
+      className="ugb-number-box__number"
+      style={
+        Object {
+          "backgroundColor": undefined,
+          "color": undefined,
+        }
+      }
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "03",
+          }
+        }
+      />
+    </span>
+    <div
+      className="ugb-number-box__content"
+    >
+      <h4
+        className="ugb-number-box__title"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Title",
+            }
+          }
+        />
+      </h4>
+      <p
+        className="ugb-number-box__description"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Description for this block. Use this space for describing your block. Any text will do.",
+            }
+          }
+        />
+      </p>
+    </div>
+  </div>
+</div>
 `;

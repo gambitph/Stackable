@@ -1,140 +1,203 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Card block saved block HTML shouldn't change 1`] = `
-<BlockContentProvider
-  innerBlocks={Array []}
+<div
+  className="wp-block-ugb-card ugb-card ugb-card--design-design ugb--shadow-1 className"
+  style={
+    Object {
+      "backgroundColor": "#123456",
+      "borderRadius": 6,
+    }
+  }
 >
   <div
-    className="wp-block-ugb-card ugb-card ugb-card--design-design ugb--shadow-1 className"
+    className="ugb-card__image-container"
+    data-src="mediaURL"
     style={
       Object {
-        "backgroundColor": "#123456",
-        "borderRadius": 6,
+        "backgroundImage": "url(mediaURL)",
+        "borderRadius": undefined,
+        "textAlign": "contentAlign",
+      }
+    }
+  />
+  <h4
+    className="ugb-card__title"
+    style={
+      Object {
+        "color": "#123456",
+        "textAlign": "contentAlign",
       }
     }
   >
     <div
-      className="ugb-card__image-container"
-      data-src="mediaURL"
-      style={
+      dangerouslySetInnerHTML={
         Object {
-          "backgroundImage": "url(mediaURL)",
-          "borderRadius": undefined,
-          "textAlign": "contentAlign",
+          "__html": "heading",
         }
       }
     />
-    <Unknown
-      className="ugb-card__title"
-      format="string"
-      style={
-        Object {
-          "color": "#123456",
-          "textAlign": "contentAlign",
-        }
-      }
-      tagName="h4"
-      value="heading"
-    />
-    <Unknown
-      className="ugb-card__tagline"
-      format="string"
-      style={
-        Object {
-          "color": "#123456",
-          "textAlign": "contentAlign",
-        }
-      }
-      tagName="p"
-      value="tagline"
-    />
-    <Unknown
-      className="ugb-card__description"
-      format="string"
-      style={
-        Object {
-          "color": "#123456",
-          "textAlign": "contentAlign",
-        }
-      }
-      tagName="p"
-      value="des"
-    />
-    <Unknown
-      align="contentAlign"
-      backgroundColor="#123456"
-      borderRadius={2}
-      color="#123456"
-      design="buttonDesign"
-      icon="buttonIcon"
-      newTab={true}
-      size="size"
-      text="buttonText"
-      url="buttonURL"
-    />
-  </div>
-</BlockContentProvider>
-`;
-
-exports[`Card block saved default block HTML shouldn't change 1`] = `
-<BlockContentProvider
-  innerBlocks={Array []}
->
-  <div
-    className="wp-block-ugb-card ugb-card ugb--shadow-3"
+  </h4>
+  <p
+    className="ugb-card__tagline"
     style={
       Object {
-        "backgroundColor": "#ffffff",
-        "borderRadius": 12,
+        "color": "#123456",
+        "textAlign": "contentAlign",
       }
     }
   >
-    <Unknown
-      className="ugb-card__title"
-      format="string"
-      style={
+    <div
+      dangerouslySetInnerHTML={
         Object {
-          "color": undefined,
-          "textAlign": "left",
+          "__html": "tagline",
         }
       }
-      tagName="h4"
-      value="Title for This Block"
     />
-    <Unknown
-      className="ugb-card__tagline"
-      format="string"
-      style={
+  </p>
+  <p
+    className="ugb-card__description"
+    style={
+      Object {
+        "color": "#123456",
+        "textAlign": "contentAlign",
+      }
+    }
+  >
+    <div
+      dangerouslySetInnerHTML={
         Object {
-          "color": undefined,
-          "textAlign": "left",
+          "__html": "des",
         }
       }
-      tagName="p"
-      value="Subtitle for this block"
     />
-    <Unknown
-      className="ugb-card__description"
-      format="string"
+  </p>
+  <div>
+    <a
+      className="ugb-button ugb-button--align-contentAlign ugb-button--size-size ugb-button--design-buttonDesign ugb-button--has-icon"
+      href="buttonURL"
       style={
         Object {
-          "color": undefined,
-          "textAlign": "left",
+          "backgroundColor": "#123456",
+          "borderColor": undefined,
+          "borderRadius": "2px",
+          "color": "#123456",
         }
       }
-      tagName="p"
-      value="Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block. Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block."
-    />
-    <Unknown
-      align="left"
-      borderRadius={4}
-      color="#ffffff"
-      design="basic"
-      newTab={false}
-      size="normal"
-      text="Button text"
-      url=""
-    />
+      target="_blank"
+    >
+      <span
+        className="ugb-button--inner"
+        style={
+          Object {
+            "color": "#123456",
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "buttonText",
+            }
+          }
+        />
+      </span>
+    </a>
   </div>
-</BlockContentProvider>
+</div>
+`;
+
+exports[`Card block saved default block HTML shouldn't change 1`] = `
+<div
+  className="wp-block-ugb-card ugb-card ugb--shadow-3"
+  style={
+    Object {
+      "backgroundColor": "#ffffff",
+      "borderRadius": 12,
+    }
+  }
+>
+  <h4
+    className="ugb-card__title"
+    style={
+      Object {
+        "color": undefined,
+        "textAlign": "left",
+      }
+    }
+  >
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "Title for This Block",
+        }
+      }
+    />
+  </h4>
+  <p
+    className="ugb-card__tagline"
+    style={
+      Object {
+        "color": undefined,
+        "textAlign": "left",
+      }
+    }
+  >
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "Subtitle for this block",
+        }
+      }
+    />
+  </p>
+  <p
+    className="ugb-card__description"
+    style={
+      Object {
+        "color": undefined,
+        "textAlign": "left",
+      }
+    }
+  >
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block. Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.",
+        }
+      }
+    />
+  </p>
+  <div>
+    <a
+      className="ugb-button ugb-button--align-left ugb-button--size-normal"
+      href=""
+      style={
+        Object {
+          "backgroundColor": undefined,
+          "borderColor": undefined,
+          "borderRadius": "4px",
+          "color": "#ffffff",
+        }
+      }
+    >
+      <span
+        className="ugb-button--inner"
+        style={
+          Object {
+            "color": "#ffffff",
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Button text",
+            }
+          }
+        />
+      </span>
+    </a>
+  </div>
+</div>
 `;

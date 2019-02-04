@@ -1,41 +1,43 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Icon List block saved block HTML shouldn't change 1`] = `
-<BlockContentProvider
-  innerBlocks={Array []}
+<ul
+  className="wp-block-ugb-icon-list ugb-icon-list ugb-icon--icon-cross ugb-icon--columns-0 className"
+  style={
+    Object {
+      "--gap": "8px",
+      "--icon": "url('data:image/svg+xml;base64,PGRpdj48L2Rpdj4=')",
+      "--icon-size": "10px",
+    }
+  }
 >
-  <Unknown
-    className="wp-block-ugb-icon-list ugb-icon-list ugb-icon--icon-cross ugb-icon--columns-0 className"
-    format="string"
-    style={
+  <div
+    dangerouslySetInnerHTML={
       Object {
-        "--gap": "8px",
-        "--icon": "url('data:image/svg+xml;base64,PGRpdj48L2Rpdj4=')",
-        "--icon-size": "10px",
+        "__html": "<li>text</li>",
       }
     }
-    tagName="ul"
-    value="<li>text</li>"
   />
-</BlockContentProvider>
+</ul>
 `;
 
 exports[`Icon List block saved default block HTML shouldn't change 1`] = `
-<BlockContentProvider
-  innerBlocks={Array []}
+<ul
+  className="wp-block-ugb-icon-list ugb-icon-list ugb-icon--icon-check ugb-icon--columns-1"
+  style={
+    Object {
+      "--gap": "16px",
+      "--icon": "url('data:image/svg+xml;base64,PGRpdj48L2Rpdj4=')",
+      "--icon-size": "20px",
+    }
+  }
 >
-  <Unknown
-    className="wp-block-ugb-icon-list ugb-icon-list ugb-icon--icon-check ugb-icon--columns-1"
-    format="string"
-    style={
+  <div
+    dangerouslySetInnerHTML={
       Object {
-        "--gap": "16px",
-        "--icon": "url('data:image/svg+xml;base64,PGRpdj48L2Rpdj4=')",
-        "--icon-size": "20px",
+        "__html": "",
       }
     }
-    tagName="ul"
-    value=""
   />
-</BlockContentProvider>
+</ul>
 `;

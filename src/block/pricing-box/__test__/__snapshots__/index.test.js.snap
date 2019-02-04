@@ -1,307 +1,456 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Pricing Box block saved block HTML shouldn't change 1`] = `
-<BlockContentProvider
-  innerBlocks={Array []}
+<div
+  className="wp-block-ugb-pricing-box ugb-pricing-box ugb-pricing-box--v2 ugb-pricing-box--columns-1 ugb-pricing-box--design-design className"
 >
   <div
-    className="wp-block-ugb-pricing-box ugb-pricing-box ugb-pricing-box--v2 ugb-pricing-box--columns-1 ugb-pricing-box--design-design className"
+    className="ugb-pricing-box__item ugb--shadow-1"
+    style={
+      Object {
+        "borderRadius": 6,
+      }
+    }
   >
     <div
-      className="ugb-pricing-box__item ugb--shadow-1"
+      className="ugb-pricing-grid__image"
+    >
+      <img
+        alt="pricingBoxTitle"
+        src="imageURL"
+      />
+    </div>
+    <h3
+      className="ugb-pricing-box__title"
       style={
         Object {
-          "borderRadius": 6,
+          "color": "#123456",
         }
       }
     >
       <div
-        className="ugb-pricing-grid__image"
-      >
-        <img
-          alt="pricingBoxTitle"
-          src="imageURL"
-        />
-      </div>
-      <Unknown
-        className="ugb-pricing-box__title"
-        format="string"
-        style={
+        dangerouslySetInnerHTML={
           Object {
-            "color": "#123456",
+            "__html": "pricingBoxTitle",
           }
         }
-        tagName="h3"
-        value="pricingBoxTitle"
       />
+    </h3>
+    <div
+      className="ugb-pricing-box__price-wrapper"
+    >
       <div
-        className="ugb-pricing-box__price-wrapper"
+        className="ugb-pricing-box__price-line"
       >
-        <div
-          className="ugb-pricing-box__price-line"
-        >
-          <Unknown
-            className="ugb-pricing-box__price-prefix"
-            format="string"
-            style={
-              Object {
-                "color": "#123456",
-              }
-            }
-            tagName="span"
-            value="pricePrefix"
-          />
-          <Unknown
-            className="ugb-pricing-box__price"
-            format="string"
-            style={
-              Object {
-                "color": "#123456",
-              }
-            }
-            tagName="span"
-            value="price"
-          />
-          <Unknown
-            className="ugb-pricing-box__price-suffix"
-            format="string"
-            style={
-              Object {
-                "color": "#123456",
-              }
-            }
-            tagName="span"
-            value="priceSuffix"
-          />
-        </div>
-        <Unknown
-          className="ugb-pricing-box__subprice"
-          format="string"
+        <span
+          className="ugb-pricing-box__price-prefix"
           style={
             Object {
               "color": "#123456",
             }
           }
-          tagName="p"
-          value="perMonthLabel"
-        />
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "pricePrefix",
+              }
+            }
+          />
+        </span>
+        <span
+          className="ugb-pricing-box__price"
+          style={
+            Object {
+              "color": "#123456",
+            }
+          }
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "price",
+              }
+            }
+          />
+        </span>
+        <span
+          className="ugb-pricing-box__price-suffix"
+          style={
+            Object {
+              "color": "#123456",
+            }
+          }
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "priceSuffix",
+              }
+            }
+          />
+        </span>
       </div>
-      <Unknown
-        backgroundColor="#123456"
-        borderRadius={2}
-        color="#123456"
-        design="buttonDesign"
-        icon="buttonIcon"
-        newTab={true}
-        size="size"
-        text="buttonText"
-        url="url"
-      />
-      <Unknown
-        className="ugb-pricing-box__description"
-        format="string"
+      <p
+        className="ugb-pricing-box__subprice"
         style={
           Object {
             "color": "#123456",
           }
         }
-        tagName="p"
-        value="featureList"
-      />
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "perMonthLabel",
+            }
+          }
+        />
+      </p>
     </div>
+    <div>
+      <a
+        className="ugb-button ugb-button--align-center ugb-button--size-size ugb-button--design-buttonDesign ugb-button--has-icon"
+        href="url"
+        style={
+          Object {
+            "backgroundColor": "#123456",
+            "borderColor": undefined,
+            "borderRadius": "2px",
+            "color": "#123456",
+          }
+        }
+        target="_blank"
+      >
+        <span
+          className="ugb-button--inner"
+          style={
+            Object {
+              "color": "#123456",
+            }
+          }
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "buttonText",
+              }
+            }
+          />
+        </span>
+      </a>
+    </div>
+    <p
+      className="ugb-pricing-box__description"
+      style={
+        Object {
+          "color": "#123456",
+        }
+      }
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "featureList",
+          }
+        }
+      />
+    </p>
   </div>
-</BlockContentProvider>
+</div>
 `;
 
 exports[`Pricing Box block saved default block HTML shouldn't change 1`] = `
-<BlockContentProvider
-  innerBlocks={Array []}
+<div
+  className="wp-block-ugb-pricing-box ugb-pricing-box ugb-pricing-box--v2 ugb-pricing-box--columns-2 ugb-pricing-box--design-basic"
 >
   <div
-    className="wp-block-ugb-pricing-box ugb-pricing-box ugb-pricing-box--v2 ugb-pricing-box--columns-2 ugb-pricing-box--design-basic"
+    className="ugb-pricing-box__item"
+    style={
+      Object {
+        "borderRadius": undefined,
+      }
+    }
   >
-    <div
-      className="ugb-pricing-box__item"
+    <h3
+      className="ugb-pricing-box__title"
       style={
         Object {
-          "borderRadius": undefined,
+          "color": undefined,
         }
       }
     >
-      <Unknown
-        className="ugb-pricing-box__title"
-        format="string"
-        style={
+      <div
+        dangerouslySetInnerHTML={
           Object {
-            "color": undefined,
+            "__html": "Title",
           }
         }
-        tagName="h3"
-        value="Title"
       />
+    </h3>
+    <div
+      className="ugb-pricing-box__price-wrapper"
+    >
       <div
-        className="ugb-pricing-box__price-wrapper"
+        className="ugb-pricing-box__price-line"
       >
-        <div
-          className="ugb-pricing-box__price-line"
-        >
-          <Unknown
-            className="ugb-pricing-box__price-prefix"
-            format="string"
-            style={
-              Object {
-                "color": undefined,
-              }
-            }
-            tagName="span"
-            value="$"
-          />
-          <Unknown
-            className="ugb-pricing-box__price"
-            format="string"
-            style={
-              Object {
-                "color": undefined,
-              }
-            }
-            tagName="span"
-            value="9"
-          />
-          <Unknown
-            className="ugb-pricing-box__price-suffix"
-            format="string"
-            style={
-              Object {
-                "color": undefined,
-              }
-            }
-            tagName="span"
-            value=".00"
-          />
-        </div>
-        <Unknown
-          className="ugb-pricing-box__subprice"
-          format="string"
+        <span
+          className="ugb-pricing-box__price-prefix"
           style={
             Object {
               "color": undefined,
             }
           }
-          tagName="p"
-          value="Description"
-        />
-      </div>
-      <Unknown
-        borderRadius={4}
-        design="basic"
-        newTab={false}
-        size="normal"
-        text="Button text"
-        url=""
-      />
-      <Unknown
-        className="ugb-pricing-box__description"
-        format="string"
-        style={
-          Object {
-            "color": undefined,
-          }
-        }
-        tagName="p"
-        value="Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block."
-      />
-    </div>
-    <div
-      className="ugb-pricing-box__item"
-      style={
-        Object {
-          "borderRadius": undefined,
-        }
-      }
-    >
-      <Unknown
-        className="ugb-pricing-box__title"
-        format="string"
-        style={
-          Object {
-            "color": undefined,
-          }
-        }
-        tagName="h3"
-        value="Title"
-      />
-      <div
-        className="ugb-pricing-box__price-wrapper"
-      >
-        <div
-          className="ugb-pricing-box__price-line"
         >
-          <Unknown
-            className="ugb-pricing-box__price-prefix"
-            format="string"
-            style={
+          <div
+            dangerouslySetInnerHTML={
               Object {
-                "color": undefined,
+                "__html": "$",
               }
             }
-            tagName="span"
-            value="$"
           />
-          <Unknown
-            className="ugb-pricing-box__price"
-            format="string"
-            style={
-              Object {
-                "color": undefined,
-              }
-            }
-            tagName="span"
-            value="29"
-          />
-          <Unknown
-            className="ugb-pricing-box__price-suffix"
-            format="string"
-            style={
-              Object {
-                "color": undefined,
-              }
-            }
-            tagName="span"
-            value=".00"
-          />
-        </div>
-        <Unknown
-          className="ugb-pricing-box__subprice"
-          format="string"
+        </span>
+        <span
+          className="ugb-pricing-box__price"
           style={
             Object {
               "color": undefined,
             }
           }
-          tagName="p"
-          value="Description"
-        />
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "9",
+              }
+            }
+          />
+        </span>
+        <span
+          className="ugb-pricing-box__price-suffix"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": ".00",
+              }
+            }
+          />
+        </span>
       </div>
-      <Unknown
-        borderRadius={4}
-        design="basic"
-        newTab={false}
-        size="normal"
-        text="Button text"
-        url=""
-      />
-      <Unknown
-        className="ugb-pricing-box__description"
-        format="string"
+      <p
+        className="ugb-pricing-box__subprice"
         style={
           Object {
             "color": undefined,
           }
         }
-        tagName="p"
-        value="Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block."
-      />
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Description",
+            }
+          }
+        />
+      </p>
     </div>
+    <div>
+      <a
+        className="ugb-button ugb-button--align-center ugb-button--size-normal"
+        href=""
+        style={
+          Object {
+            "backgroundColor": undefined,
+            "borderColor": undefined,
+            "borderRadius": "4px",
+            "color": undefined,
+          }
+        }
+      >
+        <span
+          className="ugb-button--inner"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "Button text",
+              }
+            }
+          />
+        </span>
+      </a>
+    </div>
+    <p
+      className="ugb-pricing-box__description"
+      style={
+        Object {
+          "color": undefined,
+        }
+      }
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.",
+          }
+        }
+      />
+    </p>
   </div>
-</BlockContentProvider>
+  <div
+    className="ugb-pricing-box__item"
+    style={
+      Object {
+        "borderRadius": undefined,
+      }
+    }
+  >
+    <h3
+      className="ugb-pricing-box__title"
+      style={
+        Object {
+          "color": undefined,
+        }
+      }
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "Title",
+          }
+        }
+      />
+    </h3>
+    <div
+      className="ugb-pricing-box__price-wrapper"
+    >
+      <div
+        className="ugb-pricing-box__price-line"
+      >
+        <span
+          className="ugb-pricing-box__price-prefix"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "$",
+              }
+            }
+          />
+        </span>
+        <span
+          className="ugb-pricing-box__price"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "29",
+              }
+            }
+          />
+        </span>
+        <span
+          className="ugb-pricing-box__price-suffix"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": ".00",
+              }
+            }
+          />
+        </span>
+      </div>
+      <p
+        className="ugb-pricing-box__subprice"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Description",
+            }
+          }
+        />
+      </p>
+    </div>
+    <div>
+      <a
+        className="ugb-button ugb-button--align-center ugb-button--size-normal"
+        href=""
+        style={
+          Object {
+            "backgroundColor": undefined,
+            "borderColor": undefined,
+            "borderRadius": "4px",
+            "color": undefined,
+          }
+        }
+      >
+        <span
+          className="ugb-button--inner"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "Button text",
+              }
+            }
+          />
+        </span>
+      </a>
+    </div>
+    <p
+      className="ugb-pricing-box__description"
+      style={
+        Object {
+          "color": undefined,
+        }
+      }
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.",
+          }
+        }
+      />
+    </p>
+  </div>
+</div>
 `;

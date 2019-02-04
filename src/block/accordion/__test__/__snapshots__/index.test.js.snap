@@ -1,106 +1,111 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Accordion block saved block HTML shouldn't change 1`] = `
-<BlockContentProvider
-  innerBlocks={Array []}
+<div
+  className="wp-block-ugb-accordion ugb-accordion ugb-accordion--design-design ugb-accordion--open className"
+  role="presentation"
 >
   <div
-    className="wp-block-ugb-accordion ugb-accordion ugb-accordion--design-design ugb-accordion--open className"
-    role="presentation"
+    aria-expanded="true"
+    className="ugb-accordion__heading ugb--shadow-1"
+    role="button"
+    style={
+      Object {
+        "backgroundColor": "#123456",
+        "borderRadius": 6,
+      }
+    }
+    tabIndex="0"
   >
-    <div
-      aria-expanded="true"
-      className="ugb-accordion__heading ugb--shadow-1"
-      role="button"
+    <h4
+      aria-controls="090240__text"
+      aria-level="3"
+      id="090240__heading"
+      role="heading"
       style={
         Object {
-          "backgroundColor": "#123456",
-          "borderRadius": 6,
+          "color": "#123456",
         }
       }
-      tabIndex="0"
     >
-      <Unknown
-        aria-controls="090240__text"
-        aria-level="3"
-        format="string"
-        id="090240__heading"
-        role="heading"
-        style={
+      <div
+        dangerouslySetInnerHTML={
           Object {
-            "color": "#123456",
+            "__html": "heading",
           }
         }
-        tagName="h4"
-        value="heading"
       />
-      <Unknown
-        fill="#123456"
-        height="20"
-        width="20"
-      />
-    </div>
-    <Unknown
-      aria-labelledby="090240__heading"
-      className="ugb-accordion__text"
-      format="string"
-      id="090240__text"
-      role="region"
-      tagName="p"
-      value="text"
-    />
+    </h4>
+    <div />
   </div>
-</BlockContentProvider>
+  <p
+    aria-labelledby="090240__heading"
+    className="ugb-accordion__text"
+    id="090240__text"
+    role="region"
+  >
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "text",
+        }
+      }
+    />
+  </p>
+</div>
 `;
 
 exports[`Accordion block saved default block HTML shouldn't change 1`] = `
-<BlockContentProvider
-  innerBlocks={Array []}
+<div
+  className="wp-block-ugb-accordion ugb-accordion"
+  role="presentation"
 >
   <div
-    className="wp-block-ugb-accordion ugb-accordion"
-    role="presentation"
+    aria-expanded="false"
+    className="ugb-accordion__heading"
+    role="button"
+    style={
+      Object {
+        "backgroundColor": undefined,
+        "borderRadius": undefined,
+      }
+    }
+    tabIndex="0"
   >
-    <div
-      aria-expanded="false"
-      className="ugb-accordion__heading"
-      role="button"
+    <h4
+      aria-controls="5c5886__text"
+      aria-level="3"
+      id="5c5886__heading"
+      role="heading"
       style={
         Object {
-          "backgroundColor": undefined,
-          "borderRadius": undefined,
+          "color": undefined,
         }
       }
-      tabIndex="0"
     >
-      <Unknown
-        aria-controls="5c5886__text"
-        aria-level="3"
-        format="string"
-        id="5c5886__heading"
-        role="heading"
-        style={
+      <div
+        dangerouslySetInnerHTML={
           Object {
-            "color": undefined,
+            "__html": "Title for This Block",
           }
         }
-        tagName="h4"
-        value="Title for This Block"
       />
-      <Unknown
-        height="20"
-        width="20"
-      />
-    </div>
-    <Unknown
-      aria-labelledby="5c5886__heading"
-      className="ugb-accordion__text"
-      format="string"
-      id="5c5886__text"
-      role="region"
-      tagName="p"
-      value="Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block. Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block."
-    />
+    </h4>
+    <div />
   </div>
-</BlockContentProvider>
+  <p
+    aria-labelledby="5c5886__heading"
+    className="ugb-accordion__text"
+    id="5c5886__text"
+    role="region"
+  >
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block. Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.",
+        }
+      }
+    />
+  </p>
+</div>
 `;

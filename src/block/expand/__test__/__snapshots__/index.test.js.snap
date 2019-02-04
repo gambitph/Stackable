@@ -1,103 +1,119 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Expand / Show More block saved block HTML shouldn't change 1`] = `
-<BlockContentProvider
-  innerBlocks={Array []}
+<div
+  aria-expanded="false"
+  className="wp-block-ugb-expand ugb-expand className"
 >
   <div
-    aria-expanded="false"
-    className="wp-block-ugb-expand ugb-expand className"
+    className="ugb-expand__less-text"
   >
     <div
-      className="ugb-expand__less-text"
-    >
-      <Unknown
-        format="string"
-        multiline="p"
-        value="<p>text</p>"
-      />
-    </div>
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<p>text</p>",
+        }
+      }
+    />
+  </div>
+  <div
+    className="ugb-expand__more-text"
+    style={
+      Object {
+        "display": "none",
+      }
+    }
+  >
     <div
-      className="ugb-expand__more-text"
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "<p>moreText</p>",
+        }
+      }
+    />
+  </div>
+  <a
+    className="ugb-expand__toggle"
+    href="#"
+  >
+    <span
+      className="ugb-expand__more-toggle-text"
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "moreLabel",
+          }
+        }
+      />
+    </span>
+    <span
+      className="ugb-expand__less-toggle-text"
       style={
         Object {
           "display": "none",
         }
       }
     >
-      <Unknown
-        format="string"
-        multiline="p"
-        value="<p>moreText</p>"
-      />
-    </div>
-    <a
-      className="ugb-expand__toggle"
-      href="#"
-    >
-      <Unknown
-        className="ugb-expand__more-toggle-text"
-        format="string"
-        tagName="span"
-        value="moreLabel"
-      />
-      <Unknown
-        className="ugb-expand__less-toggle-text"
-        format="string"
-        style={
+      <div
+        dangerouslySetInnerHTML={
           Object {
-            "display": "none",
+            "__html": "lessLabel",
           }
         }
-        tagName="span"
-        value="lessLabel"
       />
-    </a>
-  </div>
-</BlockContentProvider>
+    </span>
+  </a>
+</div>
 `;
 
 exports[`Expand / Show More block saved default block HTML shouldn't change 1`] = `
-<BlockContentProvider
-  innerBlocks={Array []}
+<div
+  aria-expanded="false"
+  className="wp-block-ugb-expand ugb-expand"
 >
   <div
-    aria-expanded="false"
-    className="wp-block-ugb-expand ugb-expand"
+    className="ugb-expand__less-text"
+  />
+  <div
+    className="ugb-expand__more-text"
+    style={
+      Object {
+        "display": "none",
+      }
+    }
+  />
+  <a
+    className="ugb-expand__toggle"
+    href="#"
   >
-    <div
-      className="ugb-expand__less-text"
-    />
-    <div
-      className="ugb-expand__more-text"
+    <span
+      className="ugb-expand__more-toggle-text"
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "Show more",
+          }
+        }
+      />
+    </span>
+    <span
+      className="ugb-expand__less-toggle-text"
       style={
         Object {
           "display": "none",
         }
       }
-    />
-    <a
-      className="ugb-expand__toggle"
-      href="#"
     >
-      <Unknown
-        className="ugb-expand__more-toggle-text"
-        format="string"
-        tagName="span"
-        value="Show more"
-      />
-      <Unknown
-        className="ugb-expand__less-toggle-text"
-        format="string"
-        style={
+      <div
+        dangerouslySetInnerHTML={
           Object {
-            "display": "none",
+            "__html": "Show less",
           }
         }
-        tagName="span"
-        value="Show less"
       />
-    </a>
-  </div>
-</BlockContentProvider>
+    </span>
+  </a>
+</div>
 `;

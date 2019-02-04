@@ -1,172 +1,209 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Team Member block saved block HTML shouldn't change 1`] = `
-<BlockContentProvider
-  innerBlocks={Array []}
+<div
+  className="wp-block-ugb-team-member ugb-team-member ugb-team-member--v2 ugb-team-member--columns-1 ugb-team-member--image-shapes ugb-team-member--design-design className"
 >
   <div
-    className="wp-block-ugb-team-member ugb-team-member ugb-team-member--v2 ugb-team-member--columns-1 ugb-team-member--image-shapes ugb-team-member--design-design className"
+    className="ugb-team-member__item ugb--shadow-1"
+    style={
+      Object {
+        "borderRadius": 6,
+      }
+    }
   >
     <div
-      className="ugb-team-member__item ugb--shadow-1"
+      className="ugb-team-member__image"
+      data-src="mediaURL1"
       style={
         Object {
-          "borderRadius": 6,
+          "backgroundImage": "url(mediaURL1)",
         }
       }
+    />
+    <div
+      className="ugb-team-member__content"
     >
-      <div
-        className="ugb-team-member__image"
-        data-src="mediaURL1"
+      <h4
+        className="ugb-team-member__name"
         style={
           Object {
-            "backgroundImage": "url(mediaURL1)",
+            "color": "#123456",
           }
         }
-      />
-      <div
-        className="ugb-team-member__content"
       >
-        <Unknown
-          className="ugb-team-member__name"
-          format="string"
-          style={
+        <div
+          dangerouslySetInnerHTML={
             Object {
-              "color": "#123456",
+              "__html": "name1",
             }
           }
-          tagName="h4"
-          value="name1"
         />
-        <Unknown
-          className="ugb-team-member__position"
-          format="string"
-          style={
+      </h4>
+      <p
+        className="ugb-team-member__position"
+        style={
+          Object {
+            "color": "#123456",
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
             Object {
-              "color": "#123456",
+              "__html": "position1",
             }
           }
-          tagName="p"
-          value="position1"
         />
-        <Unknown
-          className="ugb-team-member__description"
-          format="string"
-          style={
+      </p>
+      <p
+        className="ugb-team-member__description"
+        style={
+          Object {
+            "color": "#123456",
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
             Object {
-              "color": "#123456",
+              "__html": "description1",
             }
           }
-          tagName="p"
-          value="description1"
         />
-      </div>
+      </p>
     </div>
   </div>
-</BlockContentProvider>
+</div>
 `;
 
 exports[`Team Member block saved default block HTML shouldn't change 1`] = `
-<BlockContentProvider
-  innerBlocks={Array []}
+<div
+  className="wp-block-ugb-team-member ugb-team-member ugb-team-member--v2 ugb-team-member--columns-2 ugb-team-member--image-circle ugb-team-member--design-basic"
 >
   <div
-    className="wp-block-ugb-team-member ugb-team-member ugb-team-member--v2 ugb-team-member--columns-2 ugb-team-member--image-circle ugb-team-member--design-basic"
+    className="ugb-team-member__item"
+    style={
+      Object {
+        "borderRadius": undefined,
+      }
+    }
   >
+    
     <div
-      className="ugb-team-member__item"
-      style={
-        Object {
-          "borderRadius": undefined,
-        }
-      }
+      className="ugb-team-member__content"
     >
-      
-      <div
-        className="ugb-team-member__content"
-      >
-        <Unknown
-          className="ugb-team-member__name"
-          format="string"
-          style={
-            Object {
-              "color": undefined,
-            }
+      <h4
+        className="ugb-team-member__name"
+        style={
+          Object {
+            "color": undefined,
           }
-          tagName="h4"
-          value="Name"
-        />
-        <Unknown
-          className="ugb-team-member__position"
-          format="string"
-          style={
-            Object {
-              "color": undefined,
-            }
-          }
-          tagName="p"
-          value="Position"
-        />
-        <Unknown
-          className="ugb-team-member__description"
-          format="string"
-          style={
-            Object {
-              "color": undefined,
-            }
-          }
-          tagName="p"
-          value="Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block."
-        />
-      </div>
-    </div>
-    <div
-      className="ugb-team-member__item"
-      style={
-        Object {
-          "borderRadius": undefined,
         }
-      }
-    >
-      
-      <div
-        className="ugb-team-member__content"
       >
-        <Unknown
-          className="ugb-team-member__name"
-          format="string"
-          style={
+        <div
+          dangerouslySetInnerHTML={
             Object {
-              "color": undefined,
+              "__html": "Name",
             }
           }
-          tagName="h4"
-          value="Name"
         />
-        <Unknown
-          className="ugb-team-member__position"
-          format="string"
-          style={
+      </h4>
+      <p
+        className="ugb-team-member__position"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
             Object {
-              "color": undefined,
+              "__html": "Position",
             }
           }
-          tagName="p"
-          value="Position"
         />
-        <Unknown
-          className="ugb-team-member__description"
-          format="string"
-          style={
+      </p>
+      <p
+        className="ugb-team-member__description"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
             Object {
-              "color": undefined,
+              "__html": "Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.",
             }
           }
-          tagName="p"
-          value="Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block."
         />
-      </div>
+      </p>
     </div>
   </div>
-</BlockContentProvider>
+  <div
+    className="ugb-team-member__item"
+    style={
+      Object {
+        "borderRadius": undefined,
+      }
+    }
+  >
+    
+    <div
+      className="ugb-team-member__content"
+    >
+      <h4
+        className="ugb-team-member__name"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Name",
+            }
+          }
+        />
+      </h4>
+      <p
+        className="ugb-team-member__position"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Position",
+            }
+          }
+        />
+      </p>
+      <p
+        className="ugb-team-member__description"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.",
+            }
+          }
+        />
+      </p>
+    </div>
+  </div>
+</div>
 `;

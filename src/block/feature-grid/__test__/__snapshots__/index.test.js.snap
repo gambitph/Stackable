@@ -1,171 +1,293 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Feature Grid block saved block HTML shouldn't change 1`] = `
-<BlockContentProvider
-  innerBlocks={Array []}
+<div
+  className="wp-block-ugb-feature-grid ugb-feature-grid ugb-feature-grid--columns-1 ugb-feature-grid--design-design className"
 >
   <div
-    className="wp-block-ugb-feature-grid ugb-feature-grid ugb-feature-grid--columns-1 ugb-feature-grid--design-design className"
+    className="ugb-feature-grid__item ugb--shadow-1"
+    style={
+      Object {
+        "borderRadius": 6,
+      }
+    }
   >
     <div
-      className="ugb-feature-grid__item ugb--shadow-1"
-      style={
-        Object {
-          "borderRadius": 6,
-        }
-      }
+      className="ugb-feature-grid__image"
     >
-      <div
-        className="ugb-feature-grid__image"
+      <img
+        alt="title1"
+        src="https://imageUrl1.com"
+        style={
+          Object {
+            "width": "50%",
+          }
+        }
+      />
+    </div>
+    <div
+      className="ugb-feature-grid__content"
+    >
+      <h5
+        className="ugb-feature-grid__title"
       >
-        <img
-          alt="title1"
-          src="https://imageUrl1.com"
-          style={
+        <div
+          dangerouslySetInnerHTML={
             Object {
-              "width": "50%",
+              "__html": "title1",
             }
           }
         />
-      </div>
-      <div
-        className="ugb-feature-grid__content"
+      </h5>
+      <p
+        className="ugb-feature-grid__description"
       >
-        <Unknown
-          className="ugb-feature-grid__title"
-          format="string"
-          tagName="h5"
-          value="title1"
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "description1",
+            }
+          }
         />
-        <Unknown
-          className="ugb-feature-grid__description"
-          format="string"
-          tagName="p"
-          value="description1"
-        />
-        <Unknown
-          backgroundColor="#123456"
-          borderRadius={2}
-          color="#123456"
-          design="buttonDesign"
-          icon="buttonIcon"
-          newTab={true}
-          size="buttonSize"
-          text="linkText1"
-          url="linkUrl1"
-        />
+      </p>
+      <div>
+        <a
+          className="ugb-button ugb-button--align-center ugb-button--size-buttonSize ugb-button--design-buttonDesign ugb-button--has-icon"
+          href="linkUrl1"
+          style={
+            Object {
+              "backgroundColor": "#123456",
+              "borderColor": undefined,
+              "borderRadius": "2px",
+              "color": "#123456",
+            }
+          }
+          target="_blank"
+        >
+          <span
+            className="ugb-button--inner"
+            style={
+              Object {
+                "color": "#123456",
+              }
+            }
+          >
+            <div
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "linkText1",
+                }
+              }
+            />
+          </span>
+        </a>
       </div>
     </div>
   </div>
-</BlockContentProvider>
+</div>
 `;
 
 exports[`Feature Grid block saved default block HTML shouldn't change 1`] = `
-<BlockContentProvider
-  innerBlocks={Array []}
+<div
+  className="wp-block-ugb-feature-grid ugb-feature-grid ugb-feature-grid--columns-3"
 >
   <div
-    className="wp-block-ugb-feature-grid ugb-feature-grid ugb-feature-grid--columns-3"
+    className="ugb-feature-grid__item"
+    style={
+      Object {
+        "borderRadius": undefined,
+      }
+    }
   >
     <div
-      className="ugb-feature-grid__item"
-      style={
-        Object {
-          "borderRadius": undefined,
-        }
-      }
+      className="ugb-feature-grid__content"
     >
-      <div
-        className="ugb-feature-grid__content"
+      <h5
+        className="ugb-feature-grid__title"
       >
-        <Unknown
-          className="ugb-feature-grid__title"
-          format="string"
-          tagName="h5"
-          value="Title"
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Title",
+            }
+          }
         />
-        <Unknown
-          className="ugb-feature-grid__description"
-          format="string"
-          tagName="p"
-          value="Description for this block. You can use this space for describing your block."
-        />
-        <Unknown
-          borderRadius={4}
-          design="link"
-          newTab={false}
-          size="normal"
-          text="Button text"
-          url=""
-        />
-      </div>
-    </div>
-    <div
-      className="ugb-feature-grid__item"
-      style={
-        Object {
-          "borderRadius": undefined,
-        }
-      }
-    >
-      <div
-        className="ugb-feature-grid__content"
+      </h5>
+      <p
+        className="ugb-feature-grid__description"
       >
-        <Unknown
-          className="ugb-feature-grid__title"
-          format="string"
-          tagName="h5"
-          value="Title"
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Description for this block. You can use this space for describing your block.",
+            }
+          }
         />
-        <Unknown
-          className="ugb-feature-grid__description"
-          format="string"
-          tagName="p"
-          value="Description for this block. You can use this space for describing your block."
-        />
-        <Unknown
-          borderRadius={4}
-          design="link"
-          newTab={false}
-          size="normal"
-          text="Button text"
-          url=""
-        />
-      </div>
-    </div>
-    <div
-      className="ugb-feature-grid__item"
-      style={
-        Object {
-          "borderRadius": undefined,
-        }
-      }
-    >
-      <div
-        className="ugb-feature-grid__content"
-      >
-        <Unknown
-          className="ugb-feature-grid__title"
-          format="string"
-          tagName="h5"
-          value="Title"
-        />
-        <Unknown
-          className="ugb-feature-grid__description"
-          format="string"
-          tagName="p"
-          value="Description for this block. You can use this space for describing your block."
-        />
-        <Unknown
-          borderRadius={4}
-          design="link"
-          newTab={false}
-          size="normal"
-          text="Button text"
-          url=""
-        />
+      </p>
+      <div>
+        <a
+          className="ugb-button ugb-button--align-center ugb-button--size-normal ugb-button--design-link"
+          href=""
+          style={
+            Object {
+              "backgroundColor": undefined,
+              "borderColor": undefined,
+              "borderRadius": undefined,
+              "color": undefined,
+            }
+          }
+        >
+          <span
+            className=""
+            style={
+              Object {
+                "color": undefined,
+              }
+            }
+          >
+            <div
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "Button text",
+                }
+              }
+            />
+          </span>
+        </a>
       </div>
     </div>
   </div>
-</BlockContentProvider>
+  <div
+    className="ugb-feature-grid__item"
+    style={
+      Object {
+        "borderRadius": undefined,
+      }
+    }
+  >
+    <div
+      className="ugb-feature-grid__content"
+    >
+      <h5
+        className="ugb-feature-grid__title"
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Title",
+            }
+          }
+        />
+      </h5>
+      <p
+        className="ugb-feature-grid__description"
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Description for this block. You can use this space for describing your block.",
+            }
+          }
+        />
+      </p>
+      <div>
+        <a
+          className="ugb-button ugb-button--align-center ugb-button--size-normal ugb-button--design-link"
+          href=""
+          style={
+            Object {
+              "backgroundColor": undefined,
+              "borderColor": undefined,
+              "borderRadius": undefined,
+              "color": undefined,
+            }
+          }
+        >
+          <span
+            className=""
+            style={
+              Object {
+                "color": undefined,
+              }
+            }
+          >
+            <div
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "Button text",
+                }
+              }
+            />
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div
+    className="ugb-feature-grid__item"
+    style={
+      Object {
+        "borderRadius": undefined,
+      }
+    }
+  >
+    <div
+      className="ugb-feature-grid__content"
+    >
+      <h5
+        className="ugb-feature-grid__title"
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Title",
+            }
+          }
+        />
+      </h5>
+      <p
+        className="ugb-feature-grid__description"
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Description for this block. You can use this space for describing your block.",
+            }
+          }
+        />
+      </p>
+      <div>
+        <a
+          className="ugb-button ugb-button--align-center ugb-button--size-normal ugb-button--design-link"
+          href=""
+          style={
+            Object {
+              "backgroundColor": undefined,
+              "borderColor": undefined,
+              "borderRadius": undefined,
+              "color": undefined,
+            }
+          }
+        >
+          <span
+            className=""
+            style={
+              Object {
+                "color": undefined,
+              }
+            }
+          >
+            <div
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "Button text",
+                }
+              }
+            />
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
 `;

@@ -1,181 +1,218 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Testimonial block saved block HTML shouldn't change 1`] = `
-<BlockContentProvider
-  innerBlocks={Array []}
+<div
+  className="wp-block-ugb-testimonial ugb-testimonial ugb-testimonial--v2 ugb-testimonial--columns-1 ugb-testimonial--design-design className"
 >
   <div
-    className="wp-block-ugb-testimonial ugb-testimonial ugb-testimonial--v2 ugb-testimonial--columns-1 ugb-testimonial--design-design className"
+    className="ugb-testimonial__item ugb--shadow-1"
+    style={
+      Object {
+        "borderRadius": 6,
+      }
+    }
   >
     <div
-      className="ugb-testimonial__item ugb--shadow-1"
-      style={
-        Object {
-          "borderRadius": 6,
-        }
-      }
+      className="ugb-testimonial__body-wrapper"
     >
-      <div
-        className="ugb-testimonial__body-wrapper"
-      >
-        <Unknown
-          className="ugb-testimonial__body"
-          format="string"
-          style={
-            Object {
-              "color": "#123456",
-            }
+      <p
+        className="ugb-testimonial__body"
+        style={
+          Object {
+            "color": "#123456",
           }
-          tagName="p"
-          value="testimonial1"
-        />
-      </div>
-      <div
-        className="ugb-testimonial__person"
+        }
       >
         <div
-          className="ugb-testimonial__image"
-          style={
+          dangerouslySetInnerHTML={
             Object {
-              "backgroundImage": "url(mediaURL1)",
+              "__html": "testimonial1",
             }
           }
         />
-        <Unknown
-          className="ugb-testimonial__name"
-          format="string"
-          style={
+      </p>
+    </div>
+    <div
+      className="ugb-testimonial__person"
+    >
+      <div
+        className="ugb-testimonial__image"
+        style={
+          Object {
+            "backgroundImage": "url(mediaURL1)",
+          }
+        }
+      />
+      <h4
+        className="ugb-testimonial__name"
+        style={
+          Object {
+            "color": "#123456",
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
             Object {
-              "color": "#123456",
+              "__html": "name1",
             }
           }
-          tagName="h4"
-          value="name1"
         />
-        <Unknown
-          className="ugb-testimonial__position"
-          format="string"
-          style={
+      </h4>
+      <p
+        className="ugb-testimonial__position"
+        style={
+          Object {
+            "color": "#123456",
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
             Object {
-              "color": "#123456",
+              "__html": "position1",
             }
           }
-          tagName="p"
-          value="position1"
         />
-      </div>
+      </p>
     </div>
   </div>
-</BlockContentProvider>
+</div>
 `;
 
 exports[`Testimonial block saved default block HTML shouldn't change 1`] = `
-<BlockContentProvider
-  innerBlocks={Array []}
+<div
+  className="wp-block-ugb-testimonial ugb-testimonial ugb-testimonial--v2 ugb-testimonial--columns-2 ugb-testimonial--design-basic"
 >
   <div
-    className="wp-block-ugb-testimonial ugb-testimonial ugb-testimonial--v2 ugb-testimonial--columns-2 ugb-testimonial--design-basic"
+    className="ugb-testimonial__item"
+    style={
+      Object {
+        "borderRadius": undefined,
+      }
+    }
   >
     <div
-      className="ugb-testimonial__item"
-      style={
-        Object {
-          "borderRadius": undefined,
-        }
-      }
+      className="ugb-testimonial__body-wrapper"
     >
-      <div
-        className="ugb-testimonial__body-wrapper"
+      <p
+        className="ugb-testimonial__body"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
       >
-        <Unknown
-          className="ugb-testimonial__body"
-          format="string"
-          style={
+        <div
+          dangerouslySetInnerHTML={
             Object {
-              "color": undefined,
+              "__html": "Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.",
             }
           }
-          tagName="p"
-          value="Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block."
         />
-      </div>
-      <div
-        className="ugb-testimonial__person"
-      >
-        <Unknown
-          className="ugb-testimonial__name"
-          format="string"
-          style={
-            Object {
-              "color": undefined,
-            }
-          }
-          tagName="h4"
-          value="Name"
-        />
-        <Unknown
-          className="ugb-testimonial__position"
-          format="string"
-          style={
-            Object {
-              "color": undefined,
-            }
-          }
-          tagName="p"
-          value="Position"
-        />
-      </div>
+      </p>
     </div>
     <div
-      className="ugb-testimonial__item"
-      style={
-        Object {
-          "borderRadius": undefined,
-        }
-      }
+      className="ugb-testimonial__person"
     >
-      <div
-        className="ugb-testimonial__body-wrapper"
+      <h4
+        className="ugb-testimonial__name"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
       >
-        <Unknown
-          className="ugb-testimonial__body"
-          format="string"
-          style={
+        <div
+          dangerouslySetInnerHTML={
             Object {
-              "color": undefined,
+              "__html": "Name",
             }
           }
-          tagName="p"
-          value="Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block."
         />
-      </div>
-      <div
-        className="ugb-testimonial__person"
+      </h4>
+      <p
+        className="ugb-testimonial__position"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
       >
-        <Unknown
-          className="ugb-testimonial__name"
-          format="string"
-          style={
+        <div
+          dangerouslySetInnerHTML={
             Object {
-              "color": undefined,
+              "__html": "Position",
             }
           }
-          tagName="h4"
-          value="Name"
         />
-        <Unknown
-          className="ugb-testimonial__position"
-          format="string"
-          style={
-            Object {
-              "color": undefined,
-            }
-          }
-          tagName="p"
-          value="Position"
-        />
-      </div>
+      </p>
     </div>
   </div>
-</BlockContentProvider>
+  <div
+    className="ugb-testimonial__item"
+    style={
+      Object {
+        "borderRadius": undefined,
+      }
+    }
+  >
+    <div
+      className="ugb-testimonial__body-wrapper"
+    >
+      <p
+        className="ugb-testimonial__body"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.",
+            }
+          }
+        />
+      </p>
+    </div>
+    <div
+      className="ugb-testimonial__person"
+    >
+      <h4
+        className="ugb-testimonial__name"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Name",
+            }
+          }
+        />
+      </h4>
+      <p
+        className="ugb-testimonial__position"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Position",
+            }
+          }
+        />
+      </p>
+    </div>
+  </div>
+</div>
 `;

@@ -1,5 +1,6 @@
 import { createAttributeValues, getDefaultAttributes } from '@stackable/test/helpers'
 import { getSaveElement } from '@wordpress/blocks'
+import TestRenderer from 'react-test-renderer'
 
 const blockSaveSnapshotTests = function( props ) {
 	const {
@@ -20,7 +21,9 @@ const blockSaveSnapshotTests = function( props ) {
 
 	test( 'saved default block HTML shouldn\'t change', () => {
 		const defaultAttributes = getDefaultAttributes( name, blockSettings )
-		const savedElement = getSaveElement( blockSettings, defaultAttributes )
+		const savedElement = TestRenderer.create(
+			getSaveElement( blockSettings, defaultAttributes )
+		).toJSON()
 
 		expect( savedElement ).toMatchSnapshot()
 	} )
@@ -31,7 +34,9 @@ const blockSaveSnapshotTests = function( props ) {
 				...createAttributeValues( blockSettings.attributes ),
 				...attributeValuesOverride,
 			}
-			const savedElement = getSaveElement( blockSettings, attributes )
+			const savedElement = TestRenderer.create(
+				getSaveElement( blockSettings, attributes )
+			).toJSON()
 
 			expect( savedElement ).toMatchSnapshot()
 		} )

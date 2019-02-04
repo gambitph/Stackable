@@ -1,72 +1,68 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Notification block saved block HTML shouldn't change 1`] = `
-<BlockContentProvider
-  innerBlocks={Array []}
+<div
+  className="wp-block-ugb-notification ugb-notification ugb-notification--type-notifType ugb-notification--dismissible ugb--shadow-1 className"
+  data-uid="74d2bd"
+  style={
+    Object {
+      "backgroundColor": "#123456",
+      "borderRadius": 6,
+      "color": "#123456",
+    }
+  }
 >
-  <div
-    className="wp-block-ugb-notification ugb-notification ugb-notification--type-notifType ugb-notification--dismissible ugb--shadow-1 className"
-    data-uid="74d2bd"
+  <span
+    className="ugb-notification__close-button"
+    role="button"
+    tabIndex="0"
+  >
+    <div />
+  </span>
+  <p
     style={
       Object {
-        "backgroundColor": "#123456",
-        "borderRadius": 6,
         "color": "#123456",
       }
     }
   >
-    <span
-      className="ugb-notification__close-button"
-      role="button"
-      tabIndex="0"
-    >
-      <Unknown
-        style={
-          Object {
-            "fill": "#123456",
-          }
-        }
-      />
-    </span>
-    <Unknown
-      format="string"
-      style={
+    <div
+      dangerouslySetInnerHTML={
         Object {
-          "color": "#123456",
+          "__html": "text",
         }
       }
-      tagName="p"
-      value="text"
     />
-  </div>
-</BlockContentProvider>
+  </p>
+</div>
 `;
 
 exports[`Notification block saved default block HTML shouldn't change 1`] = `
-<BlockContentProvider
-  innerBlocks={Array []}
+<div
+  className="wp-block-ugb-notification ugb-notification ugb-notification--type-success"
+  data-uid="77baac"
+  style={
+    Object {
+      "backgroundColor": undefined,
+      "borderRadius": undefined,
+      "color": undefined,
+    }
+  }
 >
-  <div
-    className="wp-block-ugb-notification ugb-notification ugb-notification--type-success"
-    data-uid="77baac"
+  <p
     style={
       Object {
-        "backgroundColor": undefined,
-        "borderRadius": undefined,
         "color": undefined,
       }
     }
   >
-    <Unknown
-      format="string"
-      style={
+    <div
+      dangerouslySetInnerHTML={
         Object {
-          "color": undefined,
+          "__html": "Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block. Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.",
         }
       }
-      tagName="p"
-      value="Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block. Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block."
     />
-  </div>
-</BlockContentProvider>
+  </p>
+</div>
 `;
