@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Divider block saved block HTML shouldn't change 1`] = `
+<BlockContentProvider
+  innerBlocks={Array []}
+>
+  <div
+    className="ugb-divider"
+  >
+    <hr
+      align="alignment"
+      style={
+        Object {
+          "backgroundColor": "#123456",
+          "height": 0,
+          "width": "25%",
+        }
+      }
+    />
+  </div>
+</BlockContentProvider>
+`;
+
+exports[`Divider block saved default block HTML shouldn't change 1`] = `
+<BlockContentProvider
+  innerBlocks={Array []}
+>
+  <div
+    className="ugb-divider"
+  >
+    <hr
+      align="center"
+      style={
+        Object {
+          "backgroundColor": "#dddddd",
+          "height": 1,
+          "width": "50%",
+        }
+      }
+    />
+  </div>
+</BlockContentProvider>
+`;

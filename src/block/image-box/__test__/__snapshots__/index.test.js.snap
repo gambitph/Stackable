@@ -1,0 +1,212 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Image Box block saved block HTML shouldn't change 1`] = `
+<BlockContentProvider
+  innerBlocks={Array []}
+>
+  <div
+    className="wp-block-ugb-image-box ugb-image-box ugb-image-box--v3 ugb-image-box--columns-1 className"
+    style={
+      Object {
+        "--overlay-color": "#123456",
+        "textAlign": "horizontalAlign",
+      }
+    }
+  >
+    <div
+      className="ugb-image-box__item ugb--shadow-1"
+      style={
+        Object {
+          "backgroundImage": "url(imageURL1)",
+          "borderRadius": 6,
+          "height": 200,
+          "justifyContent": "verticalAlign",
+          "maxWidth": 200,
+          "textAlign": "horizontalAlign",
+        }
+      }
+    >
+      <a
+        className="ugb-image-box__overlay"
+        href="link1"
+        target="_blank"
+      />
+      <div
+        className="ugb-image-box__content"
+      >
+        <Unknown
+          className="ugb-image-box__title"
+          format="string"
+          style={
+            Object {
+              "color": "#123456",
+            }
+          }
+          tagName="h4"
+          value="title1"
+        />
+        <Unknown
+          className="ugb-image-box__description"
+          format="string"
+          style={
+            Object {
+              "color": "#123456",
+            }
+          }
+          tagName="p"
+          value="description1"
+        />
+      </div>
+    </div>
+  </div>
+</BlockContentProvider>
+`;
+
+exports[`Image Box block saved default block HTML shouldn't change 1`] = `
+<BlockContentProvider
+  innerBlocks={Array []}
+>
+  <div
+    className="wp-block-ugb-image-box ugb-image-box ugb-image-box--v3 ugb-image-box--columns-3"
+    style={
+      Object {
+        "--overlay-color": undefined,
+        "textAlign": "center",
+      }
+    }
+  >
+    <div
+      className="ugb-image-box__item"
+      style={
+        Object {
+          "backgroundImage": undefined,
+          "borderRadius": 12,
+          "height": 400,
+          "justifyContent": "center",
+          "maxWidth": undefined,
+          "textAlign": "center",
+        }
+      }
+    >
+      <a
+        className="ugb-image-box__overlay"
+        href=""
+      />
+      <div
+        className="ugb-image-box__content"
+      >
+        <Unknown
+          className="ugb-image-box__title"
+          format="string"
+          style={
+            Object {
+              "color": "#ffffff",
+            }
+          }
+          tagName="h4"
+          value="Title"
+        />
+        <Unknown
+          className="ugb-image-box__description"
+          format="string"
+          style={
+            Object {
+              "color": "#ffffff",
+            }
+          }
+          tagName="p"
+          value="Description"
+        />
+      </div>
+    </div>
+    <div
+      className="ugb-image-box__item"
+      style={
+        Object {
+          "backgroundImage": undefined,
+          "borderRadius": 12,
+          "height": 400,
+          "justifyContent": "center",
+          "maxWidth": undefined,
+          "textAlign": "center",
+        }
+      }
+    >
+      <a
+        className="ugb-image-box__overlay"
+        href=""
+      />
+      <div
+        className="ugb-image-box__content"
+      >
+        <Unknown
+          className="ugb-image-box__title"
+          format="string"
+          style={
+            Object {
+              "color": "#ffffff",
+            }
+          }
+          tagName="h4"
+          value="Title"
+        />
+        <Unknown
+          className="ugb-image-box__description"
+          format="string"
+          style={
+            Object {
+              "color": "#ffffff",
+            }
+          }
+          tagName="p"
+          value="Description"
+        />
+      </div>
+    </div>
+    <div
+      className="ugb-image-box__item"
+      style={
+        Object {
+          "backgroundImage": undefined,
+          "borderRadius": 12,
+          "height": 400,
+          "justifyContent": "center",
+          "maxWidth": undefined,
+          "textAlign": "center",
+        }
+      }
+    >
+      <a
+        className="ugb-image-box__overlay"
+        href=""
+      />
+      <div
+        className="ugb-image-box__content"
+      >
+        <Unknown
+          className="ugb-image-box__title"
+          format="string"
+          style={
+            Object {
+              "color": "#ffffff",
+            }
+          }
+          tagName="h4"
+          value="Title"
+        />
+        <Unknown
+          className="ugb-image-box__description"
+          format="string"
+          style={
+            Object {
+              "color": "#ffffff",
+            }
+          }
+          tagName="p"
+          value="Description"
+        />
+      </div>
+    </div>
+  </div>
+</BlockContentProvider>
+`;

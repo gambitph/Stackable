@@ -1,0 +1,171 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Feature Grid block saved block HTML shouldn't change 1`] = `
+<BlockContentProvider
+  innerBlocks={Array []}
+>
+  <div
+    className="wp-block-ugb-feature-grid ugb-feature-grid ugb-feature-grid--columns-1 ugb-feature-grid--design-design className"
+  >
+    <div
+      className="ugb-feature-grid__item ugb--shadow-1"
+      style={
+        Object {
+          "borderRadius": 6,
+        }
+      }
+    >
+      <div
+        className="ugb-feature-grid__image"
+      >
+        <img
+          alt="title1"
+          src="https://imageUrl1.com"
+          style={
+            Object {
+              "width": "50%",
+            }
+          }
+        />
+      </div>
+      <div
+        className="ugb-feature-grid__content"
+      >
+        <Unknown
+          className="ugb-feature-grid__title"
+          format="string"
+          tagName="h5"
+          value="title1"
+        />
+        <Unknown
+          className="ugb-feature-grid__description"
+          format="string"
+          tagName="p"
+          value="description1"
+        />
+        <Unknown
+          backgroundColor="#123456"
+          borderRadius={2}
+          color="#123456"
+          design="buttonDesign"
+          icon="buttonIcon"
+          newTab={true}
+          size="buttonSize"
+          text="linkText1"
+          url="linkUrl1"
+        />
+      </div>
+    </div>
+  </div>
+</BlockContentProvider>
+`;
+
+exports[`Feature Grid block saved default block HTML shouldn't change 1`] = `
+<BlockContentProvider
+  innerBlocks={Array []}
+>
+  <div
+    className="wp-block-ugb-feature-grid ugb-feature-grid ugb-feature-grid--columns-3"
+  >
+    <div
+      className="ugb-feature-grid__item"
+      style={
+        Object {
+          "borderRadius": undefined,
+        }
+      }
+    >
+      <div
+        className="ugb-feature-grid__content"
+      >
+        <Unknown
+          className="ugb-feature-grid__title"
+          format="string"
+          tagName="h5"
+          value="Title"
+        />
+        <Unknown
+          className="ugb-feature-grid__description"
+          format="string"
+          tagName="p"
+          value="Description for this block. You can use this space for describing your block."
+        />
+        <Unknown
+          borderRadius={4}
+          design="link"
+          newTab={false}
+          size="normal"
+          text="Button text"
+          url=""
+        />
+      </div>
+    </div>
+    <div
+      className="ugb-feature-grid__item"
+      style={
+        Object {
+          "borderRadius": undefined,
+        }
+      }
+    >
+      <div
+        className="ugb-feature-grid__content"
+      >
+        <Unknown
+          className="ugb-feature-grid__title"
+          format="string"
+          tagName="h5"
+          value="Title"
+        />
+        <Unknown
+          className="ugb-feature-grid__description"
+          format="string"
+          tagName="p"
+          value="Description for this block. You can use this space for describing your block."
+        />
+        <Unknown
+          borderRadius={4}
+          design="link"
+          newTab={false}
+          size="normal"
+          text="Button text"
+          url=""
+        />
+      </div>
+    </div>
+    <div
+      className="ugb-feature-grid__item"
+      style={
+        Object {
+          "borderRadius": undefined,
+        }
+      }
+    >
+      <div
+        className="ugb-feature-grid__content"
+      >
+        <Unknown
+          className="ugb-feature-grid__title"
+          format="string"
+          tagName="h5"
+          value="Title"
+        />
+        <Unknown
+          className="ugb-feature-grid__description"
+          format="string"
+          tagName="p"
+          value="Description for this block. You can use this space for describing your block."
+        />
+        <Unknown
+          borderRadius={4}
+          design="link"
+          newTab={false}
+          size="normal"
+          text="Button text"
+          url=""
+        />
+      </div>
+    </div>
+  </div>
+</BlockContentProvider>
+`;

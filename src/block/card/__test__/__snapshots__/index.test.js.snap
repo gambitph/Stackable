@@ -1,0 +1,140 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Card block saved block HTML shouldn't change 1`] = `
+<BlockContentProvider
+  innerBlocks={Array []}
+>
+  <div
+    className="wp-block-ugb-card ugb-card ugb-card--design-design ugb--shadow-1 className"
+    style={
+      Object {
+        "backgroundColor": "#123456",
+        "borderRadius": 6,
+      }
+    }
+  >
+    <div
+      className="ugb-card__image-container"
+      data-src="mediaURL"
+      style={
+        Object {
+          "backgroundImage": "url(mediaURL)",
+          "borderRadius": undefined,
+          "textAlign": "contentAlign",
+        }
+      }
+    />
+    <Unknown
+      className="ugb-card__title"
+      format="string"
+      style={
+        Object {
+          "color": "#123456",
+          "textAlign": "contentAlign",
+        }
+      }
+      tagName="h4"
+      value="heading"
+    />
+    <Unknown
+      className="ugb-card__tagline"
+      format="string"
+      style={
+        Object {
+          "color": "#123456",
+          "textAlign": "contentAlign",
+        }
+      }
+      tagName="p"
+      value="tagline"
+    />
+    <Unknown
+      className="ugb-card__description"
+      format="string"
+      style={
+        Object {
+          "color": "#123456",
+          "textAlign": "contentAlign",
+        }
+      }
+      tagName="p"
+      value="des"
+    />
+    <Unknown
+      align="contentAlign"
+      backgroundColor="#123456"
+      borderRadius={2}
+      color="#123456"
+      design="buttonDesign"
+      icon="buttonIcon"
+      newTab={true}
+      size="size"
+      text="buttonText"
+      url="buttonURL"
+    />
+  </div>
+</BlockContentProvider>
+`;
+
+exports[`Card block saved default block HTML shouldn't change 1`] = `
+<BlockContentProvider
+  innerBlocks={Array []}
+>
+  <div
+    className="wp-block-ugb-card ugb-card ugb--shadow-3"
+    style={
+      Object {
+        "backgroundColor": "#ffffff",
+        "borderRadius": 12,
+      }
+    }
+  >
+    <Unknown
+      className="ugb-card__title"
+      format="string"
+      style={
+        Object {
+          "color": undefined,
+          "textAlign": "left",
+        }
+      }
+      tagName="h4"
+      value="Title for This Block"
+    />
+    <Unknown
+      className="ugb-card__tagline"
+      format="string"
+      style={
+        Object {
+          "color": undefined,
+          "textAlign": "left",
+        }
+      }
+      tagName="p"
+      value="Subtitle for this block"
+    />
+    <Unknown
+      className="ugb-card__description"
+      format="string"
+      style={
+        Object {
+          "color": undefined,
+          "textAlign": "left",
+        }
+      }
+      tagName="p"
+      value="Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block. Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block."
+    />
+    <Unknown
+      align="left"
+      borderRadius={4}
+      color="#ffffff"
+      design="basic"
+      newTab={false}
+      size="normal"
+      text="Button text"
+      url=""
+    />
+  </div>
+</BlockContentProvider>
+`;

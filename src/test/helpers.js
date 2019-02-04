@@ -27,7 +27,9 @@ export const createAttributeValue = ( attrName, attrParams ) => {
 		default: defaultValue = '',
 	} = attrParams
 
-	if ( type === 'boolean' ) {
+	if ( attrName === 'align' ) {
+		return 'right'
+	} else if ( type === 'boolean' ) {
 		// return Math.random() > 0.5
 		return ! defaultValue
 	} else if ( type === 'number' ) {

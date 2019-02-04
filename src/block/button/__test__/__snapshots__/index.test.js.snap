@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button block saved block HTML shouldn't change 1`] = `
+<BlockContentProvider
+  innerBlocks={Array []}
+>
+  <div
+    className="wp-block-ugb-button ugb-button-wrapper ugb-button--align-right className"
+  />
+</BlockContentProvider>
+`;
+
+exports[`Button block saved default block HTML shouldn't change 1`] = `
+<BlockContentProvider
+  innerBlocks={Array []}
+>
+  <div
+    className="wp-block-ugb-button ugb-button-wrapper ugb-button--align-center"
+  >
+    <Unknown
+      align="center"
+      borderRadius={4}
+      design="basic"
+      newTab={false}
+      size="normal"
+      text="Button text"
+      url=""
+    />
+  </div>
+</BlockContentProvider>
+`;

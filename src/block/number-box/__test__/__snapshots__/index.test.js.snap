@@ -1,0 +1,215 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Number Box block saved block HTML shouldn't change 1`] = `
+<BlockContentProvider
+  innerBlocks={Array []}
+>
+  <div
+    className="wp-block-ugb-number-box ugb-number-box ugb-number-box--v2 ugb-number-box--columns-1 ugb-number-box--design-design className"
+  >
+    <div
+      className="ugb-number-box__item ugb--shadow-1"
+      style={
+        Object {
+          "backgroundColor": "#123456",
+          "borderRadius": 6,
+        }
+      }
+    >
+      <Unknown
+        className="ugb-number-box__number"
+        format="string"
+        style={
+          Object {
+            "backgroundColor": "#123456",
+            "color": "#123456",
+          }
+        }
+        tagName="span"
+        value="num1"
+      />
+      <div
+        className="ugb-number-box__content"
+      >
+        <Unknown
+          className="ugb-number-box__title"
+          format="string"
+          style={
+            Object {
+              "color": "#123456",
+            }
+          }
+          tagName="h4"
+          value="title1"
+        />
+        <Unknown
+          className="ugb-number-box__description"
+          format="string"
+          style={
+            Object {
+              "color": "#123456",
+            }
+          }
+          tagName="p"
+          value="description1"
+        />
+      </div>
+    </div>
+  </div>
+</BlockContentProvider>
+`;
+
+exports[`Number Box block saved default block HTML shouldn't change 1`] = `
+<BlockContentProvider
+  innerBlocks={Array []}
+>
+  <div
+    className="wp-block-ugb-number-box ugb-number-box ugb-number-box--v2 ugb-number-box--columns-3"
+  >
+    <div
+      className="ugb-number-box__item"
+      style={
+        Object {
+          "backgroundColor": undefined,
+          "borderRadius": undefined,
+        }
+      }
+    >
+      <Unknown
+        className="ugb-number-box__number"
+        format="string"
+        style={
+          Object {
+            "backgroundColor": undefined,
+            "color": undefined,
+          }
+        }
+        tagName="span"
+        value="01"
+      />
+      <div
+        className="ugb-number-box__content"
+      >
+        <Unknown
+          className="ugb-number-box__title"
+          format="string"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          tagName="h4"
+          value="Title"
+        />
+        <Unknown
+          className="ugb-number-box__description"
+          format="string"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          tagName="p"
+          value="Description for this block. Use this space for describing your block. Any text will do."
+        />
+      </div>
+    </div>
+    <div
+      className="ugb-number-box__item"
+      style={
+        Object {
+          "backgroundColor": undefined,
+          "borderRadius": undefined,
+        }
+      }
+    >
+      <Unknown
+        className="ugb-number-box__number"
+        format="string"
+        style={
+          Object {
+            "backgroundColor": undefined,
+            "color": undefined,
+          }
+        }
+        tagName="span"
+        value="02"
+      />
+      <div
+        className="ugb-number-box__content"
+      >
+        <Unknown
+          className="ugb-number-box__title"
+          format="string"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          tagName="h4"
+          value="Title"
+        />
+        <Unknown
+          className="ugb-number-box__description"
+          format="string"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          tagName="p"
+          value="Description for this block. Use this space for describing your block. Any text will do."
+        />
+      </div>
+    </div>
+    <div
+      className="ugb-number-box__item"
+      style={
+        Object {
+          "backgroundColor": undefined,
+          "borderRadius": undefined,
+        }
+      }
+    >
+      <Unknown
+        className="ugb-number-box__number"
+        format="string"
+        style={
+          Object {
+            "backgroundColor": undefined,
+            "color": undefined,
+          }
+        }
+        tagName="span"
+        value="03"
+      />
+      <div
+        className="ugb-number-box__content"
+      >
+        <Unknown
+          className="ugb-number-box__title"
+          format="string"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          tagName="h4"
+          value="Title"
+        />
+        <Unknown
+          className="ugb-number-box__description"
+          format="string"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          tagName="p"
+          value="Description for this block. Use this space for describing your block. Any text will do."
+        />
+      </div>
+    </div>
+  </div>
+</BlockContentProvider>
+`;

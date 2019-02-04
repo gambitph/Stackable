@@ -152,6 +152,18 @@ const blockMigrationTests = function( props ) {
 			// Gutenberg WILL throw an error.
 			expect( console ).toHaveErrored()
 			expect( console ).toHaveWarned()
+
+			// Align should still be the same.
+			// A good indicator if something wasn't parsed right.
+			if ( typeof attributes.align !== 'undefined' ) {
+				expect( block.attributes.align ).toBe( attributes.align )
+			}
+
+			// ClassName should still be the same.
+			// A good indicator if something wasn't parsed right.
+			if ( typeof attributes.className !== 'undefined' ) {
+				expect( block.attributes.className ).toBe( attributes.className )
+			}
 		} )
 	} )
 }

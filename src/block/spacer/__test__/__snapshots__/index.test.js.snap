@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Spacer block saved block HTML shouldn't change 1`] = `
+<BlockContentProvider
+  innerBlocks={Array []}
+>
+  <div
+    className="ugb-spacer"
+    style={
+      Object {
+        "height": "25px",
+      }
+    }
+  />
+</BlockContentProvider>
+`;
+
+exports[`Spacer block saved default block HTML shouldn't change 1`] = `
+<BlockContentProvider
+  innerBlocks={Array []}
+>
+  <div
+    className="ugb-spacer"
+    style={
+      Object {
+        "height": "50px",
+      }
+    }
+  />
+</BlockContentProvider>
+`;

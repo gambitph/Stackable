@@ -1,0 +1,117 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header block saved block HTML shouldn't change 1`] = `
+<BlockContentProvider
+  innerBlocks={Array []}
+>
+  <div
+    className="wp-block-ugb-header ugb-header ugb-header--v2 ugb--background-opacity-2 ugb-header--design-design ugb--has-background ugb--has-background-image ugb--shadow-1 className"
+    style={
+      Object {
+        "--ugb-background-color": "#123456",
+        "backgroundAttachment": "fixed",
+        "backgroundColor": "#123456",
+        "backgroundImage": "url(backgroundImageURL)",
+        "borderRadius": 6,
+        "textAlign": "contentAlign",
+      }
+    }
+  >
+    <div
+      className="ugb-content-wrapper"
+    >
+      <Unknown
+        className="ugb-header__title"
+        format="string"
+        style={
+          Object {
+            "color": "#123456",
+          }
+        }
+        tagName="h2"
+        value="title"
+      />
+      <Unknown
+        className="ugb-header__subtitle"
+        format="string"
+        style={
+          Object {
+            "color": "#123456",
+          }
+        }
+        tagName="p"
+        value="subtitle"
+      />
+      <Unknown
+        align="contentAlign"
+        backgroundColor="#123456"
+        borderRadius={2}
+        buttonNewTab={true}
+        color="#123456"
+        design="buttonDesign"
+        icon="buttonIcon"
+        size="size"
+        text="buttonText"
+        url="buttonURL"
+      />
+    </div>
+  </div>
+</BlockContentProvider>
+`;
+
+exports[`Header block saved default block HTML shouldn't change 1`] = `
+<BlockContentProvider
+  innerBlocks={Array []}
+>
+  <div
+    className="wp-block-ugb-header ugb-header ugb-header--v2 ugb--background-opacity-5 ugb-header--design-basic ugb--has-background"
+    style={
+      Object {
+        "--ugb-background-color": undefined,
+        "backgroundAttachment": undefined,
+        "backgroundColor": "#000000",
+        "backgroundImage": undefined,
+        "borderRadius": undefined,
+        "textAlign": "center",
+      }
+    }
+  >
+    <div
+      className="ugb-content-wrapper"
+    >
+      <Unknown
+        className="ugb-header__title"
+        format="string"
+        style={
+          Object {
+            "color": "#ffffff",
+          }
+        }
+        tagName="h2"
+        value="Title for This Block"
+      />
+      <Unknown
+        className="ugb-header__subtitle"
+        format="string"
+        style={
+          Object {
+            "color": "#ffffff",
+          }
+        }
+        tagName="p"
+        value="Description for this block. Use this space for describing your block. Any text will do."
+      />
+      <Unknown
+        align="center"
+        borderRadius={4}
+        buttonNewTab={false}
+        color="#ffffff"
+        design="basic"
+        size="normal"
+        text="Button text"
+        url=""
+      />
+    </div>
+  </div>
+</BlockContentProvider>
+`;

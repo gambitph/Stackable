@@ -91,7 +91,7 @@
     "build:css": "gulp build",
     "prebuild": "node ./tools/ensure-version-number",
     "build": "npm run clean && concurrently --raw \"npm:build:js\" \"npm:build:css\" && npm run package",
-    "test": "npm run clean:build && jest --coverage",
+    "test": "npm run clean:build && jest --coverage --silent",
     "test:scripts": "wp-scripts test-unit-js",
     "lint": "concurrently \"npm run lint-js\" \"npm run lint-css\"",
     "lint:fix": "concurrently \"npm run lint-js:fix\" \"npm run lint-css:fix\"",

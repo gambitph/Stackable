@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Blockquote block saved block HTML shouldn't change 1`] = `
+<BlockContentProvider
+  innerBlocks={Array []}
+>
+  <blockquote
+    className="wp-block-ugb-blockquote ugb-blockquote ugb-blockquote--v2 ugb--background-opacity-2 ugb-blockquote--design-design ugb-blockquote--small-quote className"
+    style={
+      Object {
+        "--quote-color": "#123456",
+        "--ugb-background-color": undefined,
+        "backgroundAttachment": undefined,
+        "backgroundColor": undefined,
+        "backgroundImage": undefined,
+        "borderRadius": undefined,
+      }
+    }
+  >
+    <div
+      className="ugb-content-wrapper"
+    >
+      <Unknown
+        style={
+          Object {
+            "fill": "#123456",
+            "height": 35,
+            "width": 35,
+          }
+        }
+      />
+      <Unknown
+        className="ugb-blockquote__text"
+        format="string"
+        style={
+          Object {
+            "color": "#123456",
+          }
+        }
+        tagName="p"
+        value="text"
+      />
+    </div>
+  </blockquote>
+</BlockContentProvider>
+`;
+
+exports[`Blockquote block saved default block HTML shouldn't change 1`] = `
+<BlockContentProvider
+  innerBlocks={Array []}
+>
+  <blockquote
+    className="wp-block-ugb-blockquote ugb-blockquote ugb-blockquote--v2 ugb--background-opacity-5 ugb-blockquote--design-plain"
+    style={
+      Object {
+        "--quote-color": undefined,
+        "--ugb-background-color": undefined,
+        "backgroundAttachment": undefined,
+        "backgroundColor": undefined,
+        "backgroundImage": undefined,
+        "borderRadius": undefined,
+      }
+    }
+  >
+    <div
+      className="ugb-content-wrapper"
+    >
+      <Unknown
+        style={
+          Object {
+            "fill": "",
+            "height": 70,
+            "width": 70,
+          }
+        }
+      />
+      <Unknown
+        className="ugb-blockquote__text"
+        format="string"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+        tagName="p"
+        value="Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block. Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block."
+      />
+    </div>
+  </blockquote>
+</BlockContentProvider>
+`;

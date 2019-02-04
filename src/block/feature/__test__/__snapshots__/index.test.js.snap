@@ -1,0 +1,141 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Feature block saved block HTML shouldn't change 1`] = `
+<BlockContentProvider
+  innerBlocks={Array []}
+>
+  <div
+    className="wp-block-ugb-feature ugb-feature ugb--background-opacity-2 ugb-feature--design-design ugb-feature--content-contentAlign ugb-feature--invert ugb--has-background ugb--has-background-image ugb--shadow-1 className"
+    style={
+      Object {
+        "--image-size": "200px",
+        "--ugb-background-color": "#123456",
+        "backgroundAttachment": "fixed",
+        "backgroundColor": "#123456",
+        "backgroundImage": "url(backgroundImageURL)",
+        "borderRadius": 6,
+      }
+    }
+  >
+    <div
+      className="ugb-content-wrapper"
+    >
+      <div
+        className="ugb-feature__content"
+      >
+        <Unknown
+          className="ugb-feature__title"
+          format="string"
+          style={
+            Object {
+              "color": "#123456",
+            }
+          }
+          tagName="h2"
+          value="title"
+        />
+        <Unknown
+          className="ugb-feature__description"
+          format="string"
+          style={
+            Object {
+              "color": "#123456",
+            }
+          }
+          tagName="p"
+          value="description"
+        />
+        <Unknown
+          align="contentAlign"
+          backgroundColor="#123456"
+          borderRadius={2}
+          color="#123456"
+          design="buttonDesign"
+          icon="buttonIcon"
+          newTab={true}
+          size="buttonSize"
+          text="buttonText"
+          url="buttonURL"
+        />
+      </div>
+      <div
+        className="ugb-feature__image-side"
+      >
+        <img
+          alt="title"
+          className="ugb-feature__image"
+          src="https://imageUrl.com"
+          style={
+            Object {
+              "borderRadius": undefined,
+            }
+          }
+        />
+      </div>
+    </div>
+  </div>
+</BlockContentProvider>
+`;
+
+exports[`Feature block saved default block HTML shouldn't change 1`] = `
+<BlockContentProvider
+  innerBlocks={Array []}
+>
+  <div
+    className="wp-block-ugb-feature ugb-feature ugb--background-opacity-5 ugb-feature--design-plain ugb-feature--content-left"
+    style={
+      Object {
+        "--image-size": "400px",
+        "--ugb-background-color": undefined,
+        "backgroundAttachment": undefined,
+        "backgroundColor": undefined,
+        "backgroundImage": undefined,
+        "borderRadius": undefined,
+      }
+    }
+  >
+    <div
+      className="ugb-content-wrapper"
+    >
+      <div
+        className="ugb-feature__content"
+      >
+        <Unknown
+          className="ugb-feature__title"
+          format="string"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          tagName="h2"
+          value="Title for This Block"
+        />
+        <Unknown
+          className="ugb-feature__description"
+          format="string"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          tagName="p"
+          value="Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block."
+        />
+        <Unknown
+          align="left"
+          borderRadius={4}
+          design="basic"
+          newTab={false}
+          size="normal"
+          text="Button text"
+          url=""
+        />
+      </div>
+      <div
+        className="ugb-feature__image-side"
+      />
+    </div>
+  </div>
+</BlockContentProvider>
+`;

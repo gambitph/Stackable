@@ -1,6 +1,5 @@
+import { blockEditableAfterSaveTests, blockMigrationTests, blockSaveSnapshotTests } from '@stackable/test/shared'
 import { name, settings } from '../'
-import blockEditableAfterSaveTests from '@stackable/test/shared/block-editable-after-save'
-import blockMigrationTests from '@stackable/test/shared/block-migration'
 import deprecated from '../deprecated'
 import save from '../save'
 
@@ -38,6 +37,17 @@ describe( `${ settings.title } block`, () => {
 		url2: '',
 		url3: '',
 	}
+
+	// Checks whether the save method has changed. This shouldn't change in the normal
+	// course of things. This should only change when the block receives an update.
+	// When the block gets an update, a new deprecation step should be added,
+	// and the snapshot updated.
+	blockSaveSnapshotTests.bind( this )( {
+		name,
+		settings,
+		save,
+		deprecated,
+	} )
 
 	// Checks whether adding the block, saving it then refreshing the editor renders the block valid & editable.
 	// Checks whether adding the block, changing values, saving it then refreshing the editor renders the block valid & editable.

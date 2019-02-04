@@ -1,0 +1,181 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testimonial block saved block HTML shouldn't change 1`] = `
+<BlockContentProvider
+  innerBlocks={Array []}
+>
+  <div
+    className="wp-block-ugb-testimonial ugb-testimonial ugb-testimonial--v2 ugb-testimonial--columns-1 ugb-testimonial--design-design className"
+  >
+    <div
+      className="ugb-testimonial__item ugb--shadow-1"
+      style={
+        Object {
+          "borderRadius": 6,
+        }
+      }
+    >
+      <div
+        className="ugb-testimonial__body-wrapper"
+      >
+        <Unknown
+          className="ugb-testimonial__body"
+          format="string"
+          style={
+            Object {
+              "color": "#123456",
+            }
+          }
+          tagName="p"
+          value="testimonial1"
+        />
+      </div>
+      <div
+        className="ugb-testimonial__person"
+      >
+        <div
+          className="ugb-testimonial__image"
+          style={
+            Object {
+              "backgroundImage": "url(mediaURL1)",
+            }
+          }
+        />
+        <Unknown
+          className="ugb-testimonial__name"
+          format="string"
+          style={
+            Object {
+              "color": "#123456",
+            }
+          }
+          tagName="h4"
+          value="name1"
+        />
+        <Unknown
+          className="ugb-testimonial__position"
+          format="string"
+          style={
+            Object {
+              "color": "#123456",
+            }
+          }
+          tagName="p"
+          value="position1"
+        />
+      </div>
+    </div>
+  </div>
+</BlockContentProvider>
+`;
+
+exports[`Testimonial block saved default block HTML shouldn't change 1`] = `
+<BlockContentProvider
+  innerBlocks={Array []}
+>
+  <div
+    className="wp-block-ugb-testimonial ugb-testimonial ugb-testimonial--v2 ugb-testimonial--columns-2 ugb-testimonial--design-basic"
+  >
+    <div
+      className="ugb-testimonial__item"
+      style={
+        Object {
+          "borderRadius": undefined,
+        }
+      }
+    >
+      <div
+        className="ugb-testimonial__body-wrapper"
+      >
+        <Unknown
+          className="ugb-testimonial__body"
+          format="string"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          tagName="p"
+          value="Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block."
+        />
+      </div>
+      <div
+        className="ugb-testimonial__person"
+      >
+        <Unknown
+          className="ugb-testimonial__name"
+          format="string"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          tagName="h4"
+          value="Name"
+        />
+        <Unknown
+          className="ugb-testimonial__position"
+          format="string"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          tagName="p"
+          value="Position"
+        />
+      </div>
+    </div>
+    <div
+      className="ugb-testimonial__item"
+      style={
+        Object {
+          "borderRadius": undefined,
+        }
+      }
+    >
+      <div
+        className="ugb-testimonial__body-wrapper"
+      >
+        <Unknown
+          className="ugb-testimonial__body"
+          format="string"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          tagName="p"
+          value="Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block."
+        />
+      </div>
+      <div
+        className="ugb-testimonial__person"
+      >
+        <Unknown
+          className="ugb-testimonial__name"
+          format="string"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          tagName="h4"
+          value="Name"
+        />
+        <Unknown
+          className="ugb-testimonial__position"
+          format="string"
+          style={
+            Object {
+              "color": undefined,
+            }
+          }
+          tagName="p"
+          value="Position"
+        />
+      </div>
+    </div>
+  </div>
+</BlockContentProvider>
+`;

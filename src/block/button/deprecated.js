@@ -3,7 +3,6 @@ import {
 	DeprecatedButtonContent_1_4,
 	DeprecatedButtonContent_1_9,
 } from '@stackable/components/button-edit'
-import { merge, omit } from 'lodash'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
