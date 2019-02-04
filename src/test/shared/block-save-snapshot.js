@@ -1,3 +1,7 @@
+/**
+ * Snapshot for saved html with default attributes shouldn't change
+ * Snapshot for saved html with modified attributes shouldn't change
+ */
 import { createAttributeValues, getDefaultAttributes } from '@stackable/test/helpers'
 import { getSaveElement } from '@wordpress/blocks'
 import TestRenderer from 'react-test-renderer'

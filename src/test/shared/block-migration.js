@@ -1,6 +1,7 @@
 /**
  * Checks whether saved HTML of older versioned blocks would migrate and remain valid & editable.
  * Checks whether saved HTML of older versioned blocks with changed values, would migrate and remain valid & editable.
+ * Block migration should preserve the value of the `align` & `className` attribute
  */
 
 import { createAttributeValues, getDefaultAttributes } from '@stackable/test/helpers'
