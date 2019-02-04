@@ -118,6 +118,11 @@ You will have to redo all your blocks
 
 == Changelog ==
 
+= 1.12.1 =
+* Fixed: Open in New Tab option for Header Block didn't work
+* Fixed: Editing the HTML content of the Accordion block & Notification block makes the block error out.
+* Fixed: Deprecation issues with regards to the `align` attribute in many blocks
+
 = 1.12.0 =
 [Read the news update](https://wpstackable.com/blog/stackable-is-now-in-github/)
 
