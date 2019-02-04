@@ -1,5 +1,4 @@
 import classnames from 'classnames'
-import md5 from 'md5'
 import { RichText } from '@wordpress/editor'
 import SVGCloseIcon from './images/close-icon.svg'
 
@@ -30,12 +29,8 @@ const save = props => {
 		borderRadius: borderRadius !== 12 ? borderRadius : undefined,
 	}
 
-	// UID is a unique string depending on the contents and is used for
-	// remembering whether the notification was closed in the frontend.
-	const uid = md5( text + notifType ).substr( 0, 6 )
-
 	return (
-		<div className={ mainClasses } style={ mainStyles } data-uid={ uid }>
+		<div className={ mainClasses } style={ mainStyles }>
 			{ dismissible && (
 				<span className="ugb-notification__close-button" role="button" tabIndex="0">
 					<SVGCloseIcon style={ { fill: textColor } } />
