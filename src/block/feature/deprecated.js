@@ -502,10 +502,32 @@ const deprecated = [
 	{
 		attributes: deprecatedSchema_1_9,
 		save: deprecatedSave_1_9,
+		migrate: attributes => {
+			const className = ( attributes.className || '' )
+			                  .replace( /align\w+/, '' )
+			                  .replace( /\s+/, ' ' )
+							  .trim()
+			return {
+				...attributes,
+				className: className ? className : undefined,
+				align: [ 'aligncenter', 'alignwide', 'alignfull' ].includes( attributes.className ) ? attributes.className.replace( /^align/, '' ) : attributes.align,
+			}
+		},
 	},
 	{
 		attributes: deprecatedSchema_1_4,
 		save: deprecatedSave_1_4,
+		migrate: attributes => {
+			const className = ( attributes.className || '' )
+			                  .replace( /align\w+/, '' )
+			                  .replace( /\s+/, ' ' )
+							  .trim()
+			return {
+				...attributes,
+				className: className ? className : undefined,
+				align: [ 'aligncenter', 'alignwide', 'alignfull' ].includes( attributes.className ) ? attributes.className.replace( /^align/, '' ) : attributes.align,
+			}
+		},
 	},
 ]
 

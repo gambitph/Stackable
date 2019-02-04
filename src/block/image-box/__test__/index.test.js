@@ -21,6 +21,7 @@ describe( `${ settings.title } block`, () => {
 		newTab4: false,
 		title3: '',
 		title4: '',
+		align: 'wide',
 	}
 
 	// Checks whether the save method has changed. This shouldn't change in the normal
