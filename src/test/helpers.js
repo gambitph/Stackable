@@ -28,16 +28,15 @@ export const createAttributeValue = ( attrName, attrParams, blockSettings = {} )
 	} = attrParams
 
 	if ( attrName === 'align' ) {
+		// Use the last supported value of align.
 		if ( blockSettings.supports && blockSettings.supports.align ) {
 			const align = blockSettings.supports.align
 			return Array.isArray( align ) ? align[ align.length - 1 ] : 'right'
 		}
 		return 'right'
 	} else if ( type === 'boolean' ) {
-		// return Math.random() > 0.5
 		return ! defaultValue
 	} else if ( type === 'number' ) {
-		// return Math.floor( Math.random() * 100 )
 		return Math.floor( defaultValue / 2 )
 	} else if ( type === 'url' ) {
 		return `https://${ attrName }.com`
