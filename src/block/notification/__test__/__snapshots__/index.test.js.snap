@@ -3,7 +3,6 @@
 exports[`Notification block saved block HTML shouldn't change 1`] = `
 <div
   className="wp-block-ugb-notification ugb-notification ugb-notification--type-notifType ugb-notification--dismissible ugb--shadow-1 className"
-  data-uid="74d2bd"
   style={
     Object {
       "backgroundColor": "#123456",
@@ -40,7 +39,6 @@ exports[`Notification block saved block HTML shouldn't change 1`] = `
 exports[`Notification block saved default block HTML shouldn't change 1`] = `
 <div
   className="wp-block-ugb-notification ugb-notification ugb-notification--type-success"
-  data-uid="77baac"
   style={
     Object {
       "backgroundColor": undefined,

@@ -1,6 +1,5 @@
 import { ArrowIcon } from './index'
 import classnames from 'classnames'
-import md5 from 'md5'
 import { RichText } from '@wordpress/editor'
 
 // Accessibility: https://www.w3.org/TR/wai-aria-practices/examples/accordion/accordion.html
@@ -36,8 +35,6 @@ const save = props => {
 		backgroundColor: design !== 'plain' && headingBackgroundColor ? headingBackgroundColor : undefined,
 	}
 
-	const uid = md5( text + heading ).substr( 0, 6 )
-
 	return (
 		<div className={ mainClasses } role="presentation">
 			<div className={ headingClasses }
@@ -50,8 +47,6 @@ const save = props => {
 					tagName="h4"
 					role="heading"
 					aria-level="3"
-					id={ `${ uid }__heading` }
-					aria-controls={ `${ uid }__text` }
 					style={ { color: headingColor ? headingColor : undefined } }
 					value={ heading }
 				/>
@@ -63,8 +58,6 @@ const save = props => {
 				tagName="p"
 				className="ugb-accordion__text"
 				role="region"
-				id={ `${ uid }__text` }
-				aria-labelledby={ `${ uid }__heading` }
 				value={ text }
 			/>
 		</div>

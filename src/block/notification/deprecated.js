@@ -2,6 +2,84 @@ import classnames from 'classnames'
 import { descriptionPlaceholder } from '@stackable/util'
 import md5 from 'md5'
 import { RichText } from '@wordpress/editor'
+import SVGCloseIconV112 from './images/close-icon-v1-12.svg'
+
+const deprecatedSchema_1_12 = {
+	text: {
+		source: 'html',
+		selector: 'p',
+		default: descriptionPlaceholder( 'long' ),
+	},
+	color: {
+		type: 'string',
+	},
+	textColor: {
+		type: 'string',
+	},
+	notifType: {
+		type: 'string',
+		default: 'success',
+	},
+	dismissible: {
+		type: 'boolean',
+		default: false,
+	},
+	borderRadius: {
+		type: 'number',
+		default: 12,
+	},
+	shadow: {
+		type: 'number',
+		default: 3,
+	},
+}
+
+const deprecatedSave_1_12 = props => {
+	const { className } = props
+	const {
+		text,
+		color,
+		textColor,
+		notifType,
+		dismissible,
+		borderRadius = 12,
+		shadow = 3,
+	} = props.attributes
+
+	const mainClasses = classnames( [
+		className,
+		'ugb-notification',
+		`ugb-notification--type-${ notifType }`,
+	], {
+		'ugb-notification--dismissible': dismissible,
+		[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
+	} )
+
+	const mainStyles = {
+		backgroundColor: color,
+		color: textColor,
+		borderRadius: borderRadius !== 12 ? borderRadius : undefined,
+	}
+
+	// UID is a unique string depending on the contents and is used for
+	// remembering whether the notification was closed in the frontend.
+	const uid = md5( text + notifType ).substr( 0, 6 )
+
+	return (
+		<div className={ mainClasses } style={ mainStyles } data-uid={ uid }>
+			{ dismissible && (
+				<span className="ugb-notification__close-button" role="button" tabIndex="0">
+					<SVGCloseIconV112 style={ { fill: textColor } } />
+				</span>
+			) }
+			<RichText.Content
+				tagName="p"
+				style={ { color: textColor } }
+				value={ text }
+			/>
+		</div>
+	)
+}
 
 const deprecatedSchema_1_11 = {
 	text: {
@@ -152,6 +230,10 @@ const deprecatedSave_1_10 = props => {
 }
 
 const deprecated = [
+	{
+		attributes: deprecatedSchema_1_12,
+		save: deprecatedSave_1_12,
+	},
 	{
 		attributes: deprecatedSchema_1_11,
 		save: deprecatedSave_1_11,

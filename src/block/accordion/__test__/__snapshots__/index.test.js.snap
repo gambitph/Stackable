@@ -18,9 +18,7 @@ exports[`Accordion block saved block HTML shouldn't change 1`] = `
     tabIndex="0"
   >
     <h4
-      aria-controls="090240__text"
       aria-level="3"
-      id="090240__heading"
       role="heading"
       style={
         Object {
@@ -39,9 +37,7 @@ exports[`Accordion block saved block HTML shouldn't change 1`] = `
     <div />
   </div>
   <p
-    aria-labelledby="090240__heading"
     className="ugb-accordion__text"
-    id="090240__text"
     role="region"
   >
     <div
@@ -73,9 +69,7 @@ exports[`Accordion block saved default block HTML shouldn't change 1`] = `
     tabIndex="0"
   >
     <h4
-      aria-controls="5c5886__text"
       aria-level="3"
-      id="5c5886__heading"
       role="heading"
       style={
         Object {
@@ -94,9 +88,7 @@ exports[`Accordion block saved default block HTML shouldn't change 1`] = `
     <div />
   </div>
   <p
-    aria-labelledby="5c5886__heading"
     className="ugb-accordion__text"
-    id="5c5886__text"
     role="region"
   >
     <div

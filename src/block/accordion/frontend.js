@@ -6,6 +6,7 @@ const openAccordion = el => {
 }
 
 domReady( () => {
+	let instanceID = 1
 	const elems = document.querySelectorAll( '.ugb-accordion' )
 	Array.prototype.forEach.call( elems, el => {
 		const a = el.querySelector( '.ugb-accordion__heading' )
@@ -17,5 +18,14 @@ domReady( () => {
 			ev.preventDefault()
 			openAccordion( el )
 		} )
+
+		// Accessibility: https://www.w3.org/TR/wai-aria-practices/examples/accordion/accordion.html
+		const heading = el.querySelector( '.ugb-accordion__heading h4' )
+		const text = el.querySelector( '.ugb-accordion__text' )
+		heading.setAttribute( 'id', `ugb-accordion-${ instanceID }__heading` )
+		heading.setAttribute( 'aria-controls', `ugb-accordion-${ instanceID }__text` )
+		text.setAttribute( 'id', `ugb-accordion-${ instanceID }__text` )
+		text.setAttribute( 'aria-labelledby', `ugb-accordion-${ instanceID }__heading` )
+		instanceID++
 	} )
 } )

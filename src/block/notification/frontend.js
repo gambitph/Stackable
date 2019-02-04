@@ -1,13 +1,17 @@
 import domReady from '@wordpress/dom-ready'
+import md5 from 'md5'
 
 /**
  * Permanently hide the dismissible notification if clicked.
  */
 domReady( () => {
-	const elems = document.querySelectorAll( '.ugb-notification.ugb-notification--dismissible[data-uid]' )
+	const elems = document.querySelectorAll( '.ugb-notification.ugb-notification--dismissible' )
 	elems.forEach( el => {
 		// Dismiss handler.
-		const uid = el.getAttribute( 'data-uid' )
+		const uid = el.getAttribute( 'data-uid' ) ?
+		            el.getAttribute( 'data-uid' ) : // Backward compatibility < 1.12.
+		            md5( el.outerHTML ).substr( 0, 6 )
+
 		el.querySelector( '.ugb-notification__close-button' ).addEventListener( 'click', ev => {
 			ev.preventDefault()
 			localStorage.setItem( `stckbl-notif-${ uid }`, 1 )
