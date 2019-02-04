@@ -1,97 +1,48 @@
-import { edit, save } from '../index'
+import { blockEditableAfterSaveTests, blockMigrationTests, blockSaveSnapshotTests } from '@stackable/test/shared'
+import { name, settings } from '../'
+import deprecated from '../deprecated'
+import save from '../save'
 
-describe( 'Feature Grid', () => {
-	test( 'block edit matches snapshots', () => {
-		const wrapper = edit( {
-			isSelected: false,
-			attributes: {
-				columns: 3,
-				imageSize: 100,
-				imageID1: 123,
-				imageID2: 123,
-				imageID3: 123,
-				imageUrl1: '#',
-				imageUrl2: '#',
-				imageUrl3: '#',
-				title1: 'Title',
-				title2: 'Title',
-				title3: 'Title',
-				description1: 'Description',
-				description2: 'Description',
-				description3: 'Description',
-				linkUrl1: '#',
-				linkUrl2: '#',
-				linkUrl3: '#',
-				linkText1: 'View More',
-				linkText2: 'View More',
-				linkText3: 'View More',
-			},
+describe( `${ settings.title } block`, () => {
+	// Override auto-generated attributes since < 3 columns will make #3 attributes blank.
+	const attributes = {
+		columns: 2,
+		description3: '',
+		linkText3: '',
+		linkUrl3: '',
+		newTab3: false,
+		title3: '',
+	}
 
+	// Checks whether the save method has changed. This shouldn't change in the normal
+	// course of things. This should only change when the block receives an update.
+	// When the block gets an update, a new deprecation step should be added,
+	// and the snapshot updated.
+	blockSaveSnapshotTests.bind( this )( {
+		name,
+		settings,
+		save,
+		deprecated,
+	} )
+
+	// Checks whether adding the block, saving it then refreshing the editor renders the block valid & editable.
+	// Checks whether adding the block, changing values, saving it then refreshing the editor renders the block valid & editable.
+	blockEditableAfterSaveTests.bind( this )( {
+		name,
+		settings,
+		save,
+		deprecated,
+		attributes,
+	} )
+
+	// Checks whether saved HTML of older versioned blocks would migrate and remain valid & editable.
+	// Checks whether saved HTML of older versioned blocks with changed values, would migrate and remain valid & editable.
+	describe( 'Deprecated migration', () => {
+		blockMigrationTests.bind( this )( {
+			name,
+			settings,
+			save,
+			deprecated,
 		} )
-
-		expect( wrapper ).toMatchSnapshot()
-	} )
-
-	test( 'block save all attributes matches snapshots', () => {
-		const wrapper = save( {
-			isSelected: false,
-			attributes: {
-				columns: 3,
-				imageSize: 100,
-				imageID1: 123,
-				imageID2: 123,
-				imageID3: 123,
-				imageUrl1: '#',
-				imageUrl2: '#',
-				imageUrl3: '#',
-				title1: 'Title',
-				title2: 'Title',
-				title3: 'Title',
-				description1: 'Description',
-				description2: 'Description',
-				description3: 'Description',
-				linkUrl1: '#',
-				linkUrl2: '#',
-				linkUrl3: '#',
-				linkText1: 'View More',
-				linkText2: 'View More',
-				linkText3: 'View More',
-			},
-		} )
-
-		expect( wrapper ).toMatchSnapshot()
-	} )
-
-	test( 'block save 3 columns', () => {
-		const wrapper = shallow( save( {
-			isSelected: false,
-			attributes: {
-				columns: 3,
-			},
-		} ) )
-
-		expect( wrapper.find( '.ugb-feature-grid-item' ).length ).toBe( 3 )
-	} )
-
-	test( 'block save 2 columns', () => {
-		const wrapper = shallow( save( {
-			isSelected: false,
-			attributes: {
-				columns: 2,
-			},
-		} ) )
-
-		expect( wrapper.find( '.ugb-feature-grid-item' ).length ).toBe( 2 )
-	} )
-
-	test( 'block save 1 column', () => {
-		const wrapper = shallow( save( {
-			isSelected: false,
-			attributes: {
-				columns: 1,
-			},
-		} ) )
-
-		expect( wrapper.find( '.ugb-feature-grid-item' ).length ).toBe( 1 )
 	} )
 } )

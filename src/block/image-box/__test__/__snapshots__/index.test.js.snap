@@ -1,186 +1,244 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Image Box block edit matches snapshots 1`] = `
-<Fragment>
-  <BlockControls>
-    <Toolbar>
-      <MediaUpload
-        allowedTypes={
-          Array [
-            "image",
-          ]
-        }
-        onSelect={[Function]}
-        render={[Function]}
-        value=""
-      />
-    </Toolbar>
-  </BlockControls>
-  <InspectorControls>
-    <PanelBody>
-      <ToggleControl
-        checked={false}
-        label="Full-Width"
-        onChange={[Function]}
-      />
-      <RangeControl
-        label="Height"
-        max="700"
-        min="135"
-        onChange={[Function]}
-        value="400"
-      />
-      <RangeControl
-        label="Width"
-        max="999"
-        min="400"
-        onChange={[Function]}
-        value="400"
-      />
-      <SelectControl
-        label="Vertical Alignment"
-        onChange={[Function]}
-        options={
-          Array [
-            Object {
-              "label": "Top",
-              "value": "flex-start",
-            },
-            Object {
-              "label": "Center",
-              "value": "center",
-            },
-            Object {
-              "label": "Bottom",
-              "value": "flex-end",
-            },
-          ]
-        }
-        value="center"
-      />
-      <SelectControl
-        label="Horizontal Alignment"
-        onChange={[Function]}
-        options={
-          Array [
-            Object {
-              "label": "Left",
-              "value": "flex-start",
-            },
-            Object {
-              "label": "Center",
-              "value": "center",
-            },
-            Object {
-              "label": "Right",
-              "value": "flex-end",
-            },
-          ]
-        }
-        value="center"
-      />
-    </PanelBody>
-    <PanelColorSettings
-      colorSettings={
-        Array [
-          Object {
-            "label": "Overlay Color",
-            "onChange": [Function],
-            "value": "#42b078",
-          },
-          Object {
-            "label": "Title Color",
-            "onChange": [Function],
-            "value": "#ffffff",
-          },
-          Object {
-            "label": "Subtitle Color",
-            "onChange": [Function],
-            "value": "#ffffff",
-          },
-        ]
-      }
-      title="Color Settings"
-    />
-  </InspectorControls>
-  <div
-    className="ugb-image-box has-image "
-    data-url="https://images.unsplash.com/photo-1506269351850-0428eaed2193?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a1512d7659e4817df8217cdb9aa09d7a&auto=format&fit=crop&w=1050&q=80"
-    style={
-      Object {
-        "alignItems": "center",
-        "backgroundImage": "url(https://images.unsplash.com/photo-1506269351850-0428eaed2193?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a1512d7659e4817df8217cdb9aa09d7a&auto=format&fit=crop&w=1050&q=80)",
-        "height": "400px",
-        "justifyContent": "center",
-        "width": "400px",
-      }
-    }
-  >
-    <MediaUpload
-      allowedTypes={
-        Array [
-          "image",
-        ]
-      }
-      onSelect={[Function]}
-      render={[Function]}
-      value=""
-    />
-    <a
-      href="http://google.com"
-      style={
-        Object {
-          "backgroundColor": "#42b078",
-        }
-      }
-    />
-    <RichText
-      onChange={[Function]}
-      placeholder={undefined}
-      style={
-        Object {
-          "color": "#ffffff",
-        }
-      }
-      tagName="h4"
-      value="Title"
-    />
-    <RichText
-      onChange={[Function]}
-      placeholder={undefined}
-      style={
-        Object {
-          "color": "#ffffff",
-        }
-      }
-      tagName="p"
-      value="Subtitle goes here"
-    />
-  </div>
-</Fragment>
-`;
-
-exports[`Image Box block save matches snapshots 1`] = `
+exports[`Image Box block saved block HTML shouldn't change 1`] = `
 <div
-  className="ugb-image-box has-image has-content "
-  data-url="https://images.unsplash.com/photo-1506269351850-0428eaed2193?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a1512d7659e4817df8217cdb9aa09d7a&auto=format&fit=crop&w=1050&q=80"
+  className="wp-block-ugb-image-box alignfull ugb-image-box ugb-image-box--v3 ugb-image-box--columns-1 className"
   style={
     Object {
-      "alignItems": "center",
-      "backgroundImage": "url(https://images.unsplash.com/photo-1506269351850-0428eaed2193?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a1512d7659e4817df8217cdb9aa09d7a&auto=format&fit=crop&w=1050&q=80)",
-      "height": "400px",
-      "justifyContent": "center",
-      "width": "400px",
+      "--overlay-color": "#123456",
+      "textAlign": "horizontalAlign",
     }
   }
 >
-  <a
-    href="http://google.com"
+  <div
+    className="ugb-image-box__item ugb--shadow-1"
     style={
       Object {
-        "backgroundColor": "#42b078",
+        "backgroundImage": "url(imageURL1)",
+        "borderRadius": 6,
+        "height": 200,
+        "justifyContent": "verticalAlign",
+        "maxWidth": undefined,
+        "textAlign": "horizontalAlign",
       }
     }
-  />
+  >
+    <a
+      className="ugb-image-box__overlay"
+      href="link1"
+      target="_blank"
+    />
+    <div
+      className="ugb-image-box__content"
+    >
+      <h4
+        className="ugb-image-box__title"
+        style={
+          Object {
+            "color": "#123456",
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "title1",
+            }
+          }
+        />
+      </h4>
+      <p
+        className="ugb-image-box__description"
+        style={
+          Object {
+            "color": "#123456",
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "description1",
+            }
+          }
+        />
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Image Box block saved default block HTML shouldn't change 1`] = `
+<div
+  className="wp-block-ugb-image-box ugb-image-box ugb-image-box--v3 ugb-image-box--columns-3"
+  style={
+    Object {
+      "--overlay-color": undefined,
+      "textAlign": "center",
+    }
+  }
+>
+  <div
+    className="ugb-image-box__item"
+    style={
+      Object {
+        "backgroundImage": undefined,
+        "borderRadius": 12,
+        "height": 400,
+        "justifyContent": "center",
+        "maxWidth": undefined,
+        "textAlign": "center",
+      }
+    }
+  >
+    <a
+      className="ugb-image-box__overlay"
+      href=""
+    />
+    <div
+      className="ugb-image-box__content"
+    >
+      <h4
+        className="ugb-image-box__title"
+        style={
+          Object {
+            "color": "#ffffff",
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Title",
+            }
+          }
+        />
+      </h4>
+      <p
+        className="ugb-image-box__description"
+        style={
+          Object {
+            "color": "#ffffff",
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Description",
+            }
+          }
+        />
+      </p>
+    </div>
+  </div>
+  <div
+    className="ugb-image-box__item"
+    style={
+      Object {
+        "backgroundImage": undefined,
+        "borderRadius": 12,
+        "height": 400,
+        "justifyContent": "center",
+        "maxWidth": undefined,
+        "textAlign": "center",
+      }
+    }
+  >
+    <a
+      className="ugb-image-box__overlay"
+      href=""
+    />
+    <div
+      className="ugb-image-box__content"
+    >
+      <h4
+        className="ugb-image-box__title"
+        style={
+          Object {
+            "color": "#ffffff",
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Title",
+            }
+          }
+        />
+      </h4>
+      <p
+        className="ugb-image-box__description"
+        style={
+          Object {
+            "color": "#ffffff",
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Description",
+            }
+          }
+        />
+      </p>
+    </div>
+  </div>
+  <div
+    className="ugb-image-box__item"
+    style={
+      Object {
+        "backgroundImage": undefined,
+        "borderRadius": 12,
+        "height": 400,
+        "justifyContent": "center",
+        "maxWidth": undefined,
+        "textAlign": "center",
+      }
+    }
+  >
+    <a
+      className="ugb-image-box__overlay"
+      href=""
+    />
+    <div
+      className="ugb-image-box__content"
+    >
+      <h4
+        className="ugb-image-box__title"
+        style={
+          Object {
+            "color": "#ffffff",
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Title",
+            }
+          }
+        />
+      </h4>
+      <p
+        className="ugb-image-box__description"
+        style={
+          Object {
+            "color": "#ffffff",
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Description",
+            }
+          }
+        />
+      </p>
+    </div>
+  </div>
 </div>
 `;

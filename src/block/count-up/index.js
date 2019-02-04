@@ -128,13 +128,13 @@ export const schema = {
 
 	// Keep the old attributes. Gutenberg issue https://github.com/WordPress/gutenberg/issues/10406
 	title: {
-		source: 'html',
+		type: 'string',
 	},
 	counter: {
-		source: 'html',
+		type: 'string',
 	},
 	des: {
-		source: 'html',
+		type: 'string',
 	},
 	fontSize: {
 		type: 'number',

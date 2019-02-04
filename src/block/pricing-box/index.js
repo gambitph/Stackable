@@ -66,6 +66,7 @@ const schema = {
 		source: 'attribute',
 		selector: `.ugb-pricing-box__item:nth-child(${ i }) .ugb-button`,
 		attribute: 'href',
+		default: '',
 	}
 	schema[ `newTab${ index }` ] = {
 		type: 'boolean',

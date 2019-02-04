@@ -1,66 +1,77 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Blockquote Block block edit matches snapshot 1`] = `
-<Fragment>
-  <blockquote
-    className="ugb-blockquote"
-    style={
-      Object {
-        "--quote-color": undefined,
-      }
-    }
-  >
-    <RichText
-      className="ugb-blockquote-text"
-      isSelected={false}
-      onChange={[Function]}
-      style={
-        Object {
-          "color": "#424242",
-        }
-      }
-      value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-    />
-  </blockquote>
-  <InspectorControls>
-    <PanelColorSettings
-      colorSettings={
-        Array [
-          Object {
-            "label": "Text Color",
-            "onChange": [Function],
-            "value": "#424242",
-          },
-          Object {
-            "label": "Quote Color",
-            "onChange": [Function],
-            "value": undefined,
-          },
-        ]
-      }
-      title="Color Settings"
-    />
-  </InspectorControls>
-</Fragment>
-`;
-
-exports[`Blockquote Block block save matches snapshot 1`] = `
+exports[`Blockquote block saved block HTML shouldn't change 1`] = `
 <blockquote
-  className="ugb-blockquote"
+  className="wp-block-ugb-blockquote alignfull ugb-blockquote ugb-blockquote--v2 ugb--background-opacity-2 ugb-blockquote--design-design ugb-content-width ugb-blockquote--small-quote className"
   style={
     Object {
-      "--quote-color": undefined,
+      "--quote-color": "#123456",
+      "--ugb-background-color": undefined,
+      "backgroundAttachment": undefined,
+      "backgroundColor": undefined,
+      "backgroundImage": undefined,
+      "borderRadius": undefined,
     }
   }
 >
-  <Unknown
-    style={
-      Object {
-        "color": "#424242",
+  <div
+    className="ugb-content-wrapper"
+  >
+    <div />
+    <p
+      className="ugb-blockquote__text"
+      style={
+        Object {
+          "color": "#123456",
+        }
       }
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "text",
+          }
+        }
+      />
+    </p>
+  </div>
+</blockquote>
+`;
+
+exports[`Blockquote block saved default block HTML shouldn't change 1`] = `
+<blockquote
+  className="wp-block-ugb-blockquote ugb-blockquote ugb-blockquote--v2 ugb--background-opacity-5 ugb-blockquote--design-plain"
+  style={
+    Object {
+      "--quote-color": undefined,
+      "--ugb-background-color": undefined,
+      "backgroundAttachment": undefined,
+      "backgroundColor": undefined,
+      "backgroundImage": undefined,
+      "borderRadius": undefined,
     }
-    tagName="p"
-    value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-  />
+  }
+>
+  <div
+    className="ugb-content-wrapper"
+  >
+    <div />
+    <p
+      className="ugb-blockquote__text"
+      style={
+        Object {
+          "color": undefined,
+        }
+      }
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block. Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.",
+          }
+        }
+      />
+    </p>
+  </div>
 </blockquote>
 `;

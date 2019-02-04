@@ -1,192 +1,73 @@
-import { edit, save } from '../index'
+import { blockEditableAfterSaveTests, blockMigrationTests, blockSaveSnapshotTests } from '@stackable/test/shared'
+import { name, settings } from '../'
+import deprecated from '../deprecated'
+import save from '../save'
 
-describe( 'Pricing Box', () => {
-	test( 'block edit matches snapshots', () => {
-		const wrapper = edit( {
-			isSelected: false,
-			attributes: {
-				url: 'http://www.gambit.ph/',
-				pricingBoxTitle: 'Basic',
-				price: '$9',
-				perMonthLabel: 'per month',
-				buttonText: 'Buy Now',
-				featureList: 'Consectetur adipiscing elit Suspendisse at pretium tortor Vestibulum ante ipsum primis In faucibus orci luctus et Ultrices posuere cubilia cura Aenean consectetur nec',
-				pricingBoxColor: '#000000',
-				priceColor: '#000000',
-				perMonthLabelColor: '#000000',
-				buttonColor: '#000000',
-				buttonTextColor: '#000000',
-				featureListColor: '#000000',
-				columns: '1',
-				size: 'normal',
-				cornerButtonRadius: '4',
-			},
+describe( `${ settings.title } block`, () => {
+	const defaultAttributes = {
+		columns: 2,
+		featureList3: '',
+		perMonthLabel3: '',
+		buttonText3: '',
+		price3: '',
+		pricePrefix3: '',
+		priceSuffix3: '',
+		pricingBoxTitle3: '',
+		newTab3: false,
+	}
 
-		} )
+	const attributes = {
+		columns: 1,
+		featureList2: '',
+		featureList3: '',
+		perMonthLabel2: '',
+		perMonthLabel3: '',
+		buttonText2: '',
+		buttonText3: '',
+		price2: '',
+		price3: '',
+		pricePrefix2: '',
+		pricePrefix3: '',
+		priceSuffix2: '',
+		priceSuffix3: '',
+		pricingBoxTitle2: '',
+		pricingBoxTitle3: '',
+		newTab2: false,
+		newTab3: false,
+		url2: '',
+		url3: '',
+	}
 
-		expect( wrapper ).toMatchSnapshot()
+	// Checks whether the save method has changed. This shouldn't change in the normal
+	// course of things. This should only change when the block receives an update.
+	// When the block gets an update, a new deprecation step should be added,
+	// and the snapshot updated.
+	blockSaveSnapshotTests.bind( this )( {
+		name,
+		settings,
+		save,
+		deprecated,
 	} )
 
-	test( '2 column block edit matches snapshots', () => {
-		const wrapper = edit( {
-			isSelected: false,
-			attributes: {
-				url: 'http://www.gambit.ph/',
-				url2: 'http://www.gambit.ph/',
-				pricingBoxTitle: 'Basic',
-				pricingBoxTitle2: 'Basic',
-				price: '$9',
-				price2: '$9',
-				perMonthLabel: 'per month',
-				perMonthLabel2: 'per month',
-				buttonText: 'Buy Now',
-				buttonText2: 'Buy Now',
-				featureList: 'Consectetur adipiscing elit Suspendisse at pretium tortor Vestibulum ante ipsum primis In faucibus orci luctus et Ultrices posuere cubilia cura Aenean consectetur nec',
-				featureList2: 'Consectetur adipiscing elit Suspendisse at pretium tortor Vestibulum ante ipsum primis In faucibus orci luctus et Ultrices posuere cubilia cura Aenean consectetur nec',
-				pricingBoxColor: '#000000',
-				priceColor: '#000000',
-				perMonthLabelColor: '#000000',
-				buttonColor: '#000000',
-				buttonTextColor: '#000000',
-				featureListColor: '#000000',
-				columns: '2',
-				size: 'normal',
-				cornerButtonRadius: '4',
-			},
-
-		} )
-
-		expect( wrapper ).toMatchSnapshot()
+	// Checks whether adding the block, saving it then refreshing the editor renders the block valid & editable.
+	// Checks whether adding the block, changing values, saving it then refreshing the editor renders the block valid & editable.
+	blockEditableAfterSaveTests.bind( this )( {
+		name,
+		settings,
+		save,
+		deprecated,
+		defaultAttributes,
+		attributes,
 	} )
 
-	test( '3 column block edit matches snapshots', () => {
-		const wrapper = edit( {
-			isSelected: false,
-			attributes: {
-				url: 'http://www.gambit.ph/',
-				url2: 'http://www.gambit.ph/',
-				url3: 'http://www.gambit.ph/',
-				pricingBoxTitle: 'Basic',
-				pricingBoxTitle2: 'Basic',
-				pricingBoxTitle3: 'Basic',
-				price: '$9',
-				price2: '$9',
-				price3: '$9',
-				perMonthLabel: 'per month',
-				perMonthLabel2: 'per month',
-				perMonthLabel3: 'per month',
-				buttonText: 'Buy Now',
-				buttonText2: 'Buy Now',
-				buttonText3: 'Buy Now',
-				featureList: 'Consectetur adipiscing elit Suspendisse at pretium tortor Vestibulum ante ipsum primis In faucibus orci luctus et Ultrices posuere cubilia cura Aenean consectetur nec',
-				featureList2: 'Consectetur adipiscing elit Suspendisse at pretium tortor Vestibulum ante ipsum primis In faucibus orci luctus et Ultrices posuere cubilia cura Aenean consectetur nec',
-				featureList3: 'Consectetur adipiscing elit Suspendisse at pretium tortor Vestibulum ante ipsum primis In faucibus orci luctus et Ultrices posuere cubilia cura Aenean consectetur nec',
-				pricingBoxColor: '#000000',
-				priceColor: '#000000',
-				perMonthLabelColor: '#000000',
-				buttonColor: '#000000',
-				buttonTextColor: '#000000',
-				featureListColor: '#000000',
-				columns: '3',
-				size: 'normal',
-				cornerButtonRadius: '4',
-			},
-
+	// Checks whether saved HTML of older versioned blocks would migrate and remain valid & editable.
+	// Checks whether saved HTML of older versioned blocks with changed values, would migrate and remain valid & editable.
+	describe( 'Deprecated migration', () => {
+		blockMigrationTests.bind( this )( {
+			name,
+			settings,
+			save,
+			deprecated,
 		} )
-
-		expect( wrapper ).toMatchSnapshot()
-	} )
-
-	test( 'block save matches snapshots', () => {
-		const wrapper = save( {
-			isSelected: false,
-			attributes: {
-				url: 'http://www.gambit.ph/',
-				pricingBoxTitle: 'Basic',
-				price: '$9',
-				perMonthLabel: 'per month',
-				buttonText: 'Buy Now',
-				featureList: 'Consectetur adipiscing elit Suspendisse at pretium tortor Vestibulum ante ipsum primis In faucibus orci luctus et Ultrices posuere cubilia cura Aenean consectetur nec',
-				pricingBoxColor: '#000000',
-				priceColor: '#000000',
-				perMonthLabelColor: '#000000',
-				buttonColor: '#000000',
-				buttonTextColor: '#000000',
-				featureListColor: '#000000',
-				columns: '1',
-				size: 'normal',
-				cornerButtonRadius: '4',
-			},
-		} )
-
-		expect( wrapper ).toMatchSnapshot()
-	} )
-
-	test( '2 column block save matches snapshots', () => {
-		const wrapper = save( {
-			isSelected: false,
-			attributes: {
-				url: 'http://www.gambit.ph/',
-				url2: 'http://www.gambit.ph/',
-				pricingBoxTitle: 'Basic',
-				pricingBoxTitle2: 'Basic',
-				price: '$9',
-				price2: '$9',
-				perMonthLabel: 'per month',
-				perMonthLabel2: 'per month',
-				buttonText: 'Buy Now',
-				buttonText2: 'Buy Now',
-				featureList: 'Consectetur adipiscing elit Suspendisse at pretium tortor Vestibulum ante ipsum primis In faucibus orci luctus et Ultrices posuere cubilia cura Aenean consectetur nec',
-				featureList2: 'Consectetur adipiscing elit Suspendisse at pretium tortor Vestibulum ante ipsum primis In faucibus orci luctus et Ultrices posuere cubilia cura Aenean consectetur nec',
-				pricingBoxColor: '#000000',
-				priceColor: '#000000',
-				perMonthLabelColor: '#000000',
-				buttonColor: '#000000',
-				buttonTextColor: '#000000',
-				featureListColor: '#000000',
-				columns: '2',
-				size: 'normal',
-				cornerButtonRadius: '4',
-			},
-		} )
-
-		expect( wrapper ).toMatchSnapshot()
-	} )
-
-	test( '3 column block save matches snapshots', () => {
-		const wrapper = save( {
-			isSelected: false,
-			attributes: {
-				url: 'http://www.gambit.ph/',
-				url2: 'http://www.gambit.ph/',
-				url3: 'http://www.gambit.ph/',
-				pricingBoxTitle: 'Basic',
-				pricingBoxTitle2: 'Basic',
-				pricingBoxTitle3: 'Basic',
-				price: '$9',
-				price2: '$9',
-				price3: '$9',
-				perMonthLabel: 'per month',
-				perMonthLabel2: 'per month',
-				perMonthLabel3: 'per month',
-				buttonText: 'Buy Now',
-				buttonText2: 'Buy Now',
-				buttonText3: 'Buy Now',
-				featureList: 'Consectetur adipiscing elit Suspendisse at pretium tortor Vestibulum ante ipsum primis In faucibus orci luctus et Ultrices posuere cubilia cura Aenean consectetur nec',
-				featureList2: 'Consectetur adipiscing elit Suspendisse at pretium tortor Vestibulum ante ipsum primis In faucibus orci luctus et Ultrices posuere cubilia cura Aenean consectetur nec',
-				featureList3: 'Consectetur adipiscing elit Suspendisse at pretium tortor Vestibulum ante ipsum primis In faucibus orci luctus et Ultrices posuere cubilia cura Aenean consectetur nec',
-				pricingBoxColor: '#000000',
-				priceColor: '#000000',
-				perMonthLabelColor: '#000000',
-				buttonColor: '#000000',
-				buttonTextColor: '#000000',
-				featureListColor: '#000000',
-				columns: '3',
-				size: 'normal',
-				cornerButtonRadius: '4',
-			},
-		} )
-
-		expect( wrapper ).toMatchSnapshot()
 	} )
 } )

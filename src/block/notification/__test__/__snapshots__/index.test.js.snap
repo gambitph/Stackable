@@ -1,93 +1,68 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Notification block edit matches snapshots 1`] = `
-<Fragment>
-  <InspectorControls>
-    <PanelBody>
-      <ToggleControl
-        checked={false}
-        label="Dismissible"
-        onChange={[Function]}
-      />
-      <SelectControl
-        label="Notification Type"
-        onChange={[Function]}
-        options={
-          Array [
-            Object {
-              "label": "Success",
-              "value": "success",
-            },
-            Object {
-              "label": "Error",
-              "value": "error",
-            },
-            Object {
-              "label": "Warning",
-              "value": "warning",
-            },
-            Object {
-              "label": "Information",
-              "value": "info",
-            },
-          ]
-        }
-        value="success"
-      />
-    </PanelBody>
-    <PanelColorSettings
-      colorSettings={
-        Array [
-          Object {
-            "label": "Background Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Text Color",
-            "onChange": [Function],
-            "value": "#ffffff",
-          },
-        ]
-      }
-      title="Color Settings"
-    />
-  </InspectorControls>
-  <div
-    className="ugb-notification type-success dismissible-false"
-  >
-    <RichText
-      className="wp-ugb-notif notif-success"
-      onChange={[Function]}
-      placeholder={undefined}
-      style={
-        Object {
-          "backgroundColor": "#000000",
-          "color": "#ffffff",
-        }
-      }
-      tagName="p"
-      value="This is an informational alert, usually used for successful subscriptions, promo announcements, and the like."
-    />
-  </div>
-</Fragment>
-`;
-
-exports[`Notification block save matches snapshots 1`] = `
+exports[`Notification block saved block HTML shouldn't change 1`] = `
 <div
-  className="ugb-notification type-success dismissible-false"
-  data-uid="14f948"
+  className="wp-block-ugb-notification ugb-notification ugb-notification--type-notifType ugb-notification--dismissible ugb--shadow-1 className"
+  data-uid="74d2bd"
+  style={
+    Object {
+      "backgroundColor": "#123456",
+      "borderRadius": 6,
+      "color": "#123456",
+    }
+  }
 >
-  <Unknown
-    className="wp-ugb-notif notif-success"
+  <span
+    className="ugb-notification__close-button"
+    role="button"
+    tabIndex="0"
+  >
+    <div />
+  </span>
+  <p
     style={
       Object {
-        "backgroundColor": "#000000",
-        "color": "#ffffff",
+        "color": "#123456",
       }
     }
-    tagName="p"
-    value="This is an informational alert, usually used for successful subscriptions, promo announcements, and the like."
-  />
+  >
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "text",
+        }
+      }
+    />
+  </p>
+</div>
+`;
+
+exports[`Notification block saved default block HTML shouldn't change 1`] = `
+<div
+  className="wp-block-ugb-notification ugb-notification ugb-notification--type-success"
+  data-uid="77baac"
+  style={
+    Object {
+      "backgroundColor": undefined,
+      "borderRadius": undefined,
+      "color": undefined,
+    }
+  }
+>
+  <p
+    style={
+      Object {
+        "color": undefined,
+      }
+    }
+  >
+    <div
+      dangerouslySetInnerHTML={
+        Object {
+          "__html": "Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block. Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.",
+        }
+      }
+    />
+  </p>
 </div>
 `;

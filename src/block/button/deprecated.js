@@ -1,10 +1,8 @@
 import {
-	DeprecatedButtonContent_1_1,
 	DeprecatedButtonContent_1_10,
 	DeprecatedButtonContent_1_4,
 	DeprecatedButtonContent_1_9,
 } from '@stackable/components/button-edit'
-import { merge, omit } from 'lodash'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
@@ -364,107 +362,6 @@ export const deprecatedSave_1_8 = props => {
 	return applyFilters( 'stackable.designs.button.save', saved, design, props )
 }
 
-export const deprecatedSave_1_1 = props => {
-	const {
-		url, text, align, color, textColor, size, cornerButtonRadius, design,
-	} = props.attributes
-
-	const saved = <DeprecatedButtonContent_1_1 align={ align } size={ size } url={ url } color={ textColor } text={ text } backgroundColor={ color } borderRadius={ cornerButtonRadius } />
-
-	return applyFilters( 'stackable.designs.button.save', saved, design, props )
-}
-
-export const deprecatedSchema_1_1 = {
-	url: {
-		type: 'string',
-		source: 'attribute',
-		selector: 'a',
-		attribute: 'href',
-	},
-	text: {
-		type: 'html',
-		selector: 'a',
-	},
-	align: {
-		type: 'string',
-		default: 'center',
-	},
-	color: {
-		type: 'string',
-		// default: '#2091e1',
-	},
-	textColor: {
-		type: 'string',
-		default: '#ffffff',
-	},
-	size: {
-		type: 'string',
-		default: 'normal',
-	},
-	cornerButtonRadius: {
-		type: 'number',
-		default: 4,
-	},
-	design: {
-		type: 'string',
-		default: 'basic',
-	},
-}
-
-export const deprecatedSave_0_7 = props => {
-	const {
-		url, text, textAlignment, color, textColor, size, cornerButtonRadius,
-	} = props.attributes
-
-	const buttonStyle = {
-		backgroundColor: color,
-		color: textColor,
-		borderRadius: cornerButtonRadius + 'px',
-	}
-
-	return (
-		<div className={ `ugb-button-${ textAlignment }` }>
-			<a href={ url } className={ `wp-ugb-button ugb-button-${ size }` } style={ buttonStyle }>
-				{ text }
-			</a>
-		</div>
-	)
-}
-
-export const deprecatedSchema_0_7 = {
-	url: {
-		type: 'string',
-		source: 'attribute',
-		selector: 'a',
-		attribute: 'href',
-	},
-	text: {
-		type: 'array',
-		source: 'children',
-		selector: 'a',
-	},
-	align: {
-		type: 'string',
-		default: 'center',
-	},
-	color: {
-		type: 'string',
-		default: '#2091e1',
-	},
-	textColor: {
-		type: 'string',
-		default: '#ffffff',
-	},
-	size: {
-		type: 'string',
-		default: 'normal',
-	},
-	cornerButtonRadius: {
-		type: 'number',
-		default: 4,
-	},
-}
-
 const deprecated = [
 	{
 		attributes: deprecatedSchema_1_10,
@@ -491,17 +388,6 @@ const deprecated = [
 				buttons: 1,
 			}
 		},
-	},
-	{
-		attributes: deprecatedSchema_1_1,
-		save: deprecatedSave_1_1,
-	},
-	{
-		attributes: deprecatedSchema_0_7,
-		migrate: attributes => {
-			return omit( merge( attributes, { align: attributes.textAlignment } ), [ 'textAlignment' ] )
-		},
-		save: deprecatedSave_0_7,
 	},
 ]
 

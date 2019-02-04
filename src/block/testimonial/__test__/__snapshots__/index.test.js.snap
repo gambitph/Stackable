@@ -1,745 +1,218 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Testimonial block edit matches snapshots 1`] = `
-<Fragment>
-  <InspectorControls>
-    <PanelBody>
-      <SelectControl
-        label="Column Number"
-        onChange={[Function]}
-        options={
-          Array [
-            Object {
-              "label": "One Column",
-              "value": "1",
-            },
-            Object {
-              "label": "Two Column",
-              "value": "2",
-            },
-            Object {
-              "label": "Three Column",
-              "value": "3",
-            },
-          ]
-        }
-        value="1"
-      />
-    </PanelBody>
-    <PanelColorSettings
-      colorSettings={
-        Array [
-          Object {
-            "label": "Title Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Position Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Body Text Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Icon Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-        ]
-      }
-      initialOpen={false}
-      title="Color Settings"
-    />
-  </InspectorControls>
-  <div
-    className="ugb-testimonial column-1"
-  >
-    <div
-      className="ugb-testimonial-column-one"
-    >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
-          }
-          onSelect={[Function]}
-          render={[Function]}
-          value="1"
-        />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="h4"
-        value="Ben Adams"
-      />
-      <RichText
-        className="ugb-testimonial-position"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Founder"
-      />
-      <RichText
-        className="ugb-testimonial-body"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Stackable: Ultimate Blocks from Gutenberg has all the blocks I need to make a great webpage."
-      />
-    </div>
-    <div
-      className="ugb-testimonial-column-two"
-    >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
-          }
-          onSelect={[Function]}
-          render={[Function]}
-          value={undefined}
-        />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="h4"
-        value={undefined}
-      />
-      <RichText
-        className="ugb-testimonial-position-two"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value={undefined}
-      />
-      <RichText
-        className="ugb-testimonial-body-two"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value={undefined}
-      />
-    </div>
-    <div
-      className="ugb-testimonial-column-three"
-    >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
-          }
-          onSelect={[Function]}
-          render={[Function]}
-          value={undefined}
-        />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="h4"
-        value={undefined}
-      />
-      <RichText
-        className="ugb-testimonial-position-three"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value={undefined}
-      />
-      <RichText
-        className="ugb-testimonial-body-three"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value={undefined}
-      />
-    </div>
-  </div>
-</Fragment>
-`;
-
-exports[`Testimonial block edit matches snapshots 2`] = `
-<Fragment>
-  <InspectorControls>
-    <PanelBody>
-      <SelectControl
-        label="Column Number"
-        onChange={[Function]}
-        options={
-          Array [
-            Object {
-              "label": "One Column",
-              "value": "1",
-            },
-            Object {
-              "label": "Two Column",
-              "value": "2",
-            },
-            Object {
-              "label": "Three Column",
-              "value": "3",
-            },
-          ]
-        }
-        value="2"
-      />
-    </PanelBody>
-    <PanelColorSettings
-      colorSettings={
-        Array [
-          Object {
-            "label": "Title Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Position Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Body Text Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Icon Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-        ]
-      }
-      initialOpen={false}
-      title="Color Settings"
-    />
-  </InspectorControls>
-  <div
-    className="ugb-testimonial column-2"
-  >
-    <div
-      className="ugb-testimonial-column-one"
-    >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
-          }
-          onSelect={[Function]}
-          render={[Function]}
-          value="1"
-        />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="h4"
-        value="Ben Adams"
-      />
-      <RichText
-        className="ugb-testimonial-position"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Founder"
-      />
-      <RichText
-        className="ugb-testimonial-body"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Stackable: Ultimate Blocks from Gutenberg has all the blocks I need to make a great webpage."
-      />
-    </div>
-    <div
-      className="ugb-testimonial-column-two"
-    >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
-          }
-          onSelect={[Function]}
-          render={[Function]}
-          value="2"
-        />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="h4"
-        value="Alex Johnson"
-      />
-      <RichText
-        className="ugb-testimonial-position-two"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Editor"
-      />
-      <RichText
-        className="ugb-testimonial-body-two"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Stackable: Ultimate Blocks from Gutenberg has all the blocks I need to make a great webpage."
-      />
-    </div>
-    <div
-      className="ugb-testimonial-column-three"
-    >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
-          }
-          onSelect={[Function]}
-          render={[Function]}
-          value={undefined}
-        />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="h4"
-        value={undefined}
-      />
-      <RichText
-        className="ugb-testimonial-position-three"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value={undefined}
-      />
-      <RichText
-        className="ugb-testimonial-body-three"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value={undefined}
-      />
-    </div>
-  </div>
-</Fragment>
-`;
-
-exports[`Testimonial block edit matches snapshots 3`] = `
-<Fragment>
-  <InspectorControls>
-    <PanelBody>
-      <SelectControl
-        label="Column Number"
-        onChange={[Function]}
-        options={
-          Array [
-            Object {
-              "label": "One Column",
-              "value": "1",
-            },
-            Object {
-              "label": "Two Column",
-              "value": "2",
-            },
-            Object {
-              "label": "Three Column",
-              "value": "3",
-            },
-          ]
-        }
-        value="3"
-      />
-    </PanelBody>
-    <PanelColorSettings
-      colorSettings={
-        Array [
-          Object {
-            "label": "Title Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Position Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Body Text Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Icon Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-        ]
-      }
-      initialOpen={false}
-      title="Color Settings"
-    />
-  </InspectorControls>
-  <div
-    className="ugb-testimonial column-3"
-  >
-    <div
-      className="ugb-testimonial-column-one"
-    >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
-          }
-          onSelect={[Function]}
-          render={[Function]}
-          value="1"
-        />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="h4"
-        value="Ben Adams"
-      />
-      <RichText
-        className="ugb-testimonial-position"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Founder"
-      />
-      <RichText
-        className="ugb-testimonial-body"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Stackable: Ultimate Blocks from Gutenberg has all the blocks I need to make a great webpage."
-      />
-    </div>
-    <div
-      className="ugb-testimonial-column-two"
-    >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
-          }
-          onSelect={[Function]}
-          render={[Function]}
-          value="2"
-        />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="h4"
-        value="Alex Johnson"
-      />
-      <RichText
-        className="ugb-testimonial-position-two"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Editor"
-      />
-      <RichText
-        className="ugb-testimonial-body-two"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Stackable: Ultimate Blocks from Gutenberg has all the blocks I need to make a great webpage."
-      />
-    </div>
-    <div
-      className="ugb-testimonial-column-three"
-    >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
-          }
-          onSelect={[Function]}
-          render={[Function]}
-          value="3"
-        />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="h4"
-        value="Sammy Simpson"
-      />
-      <RichText
-        className="ugb-testimonial-position-three"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Programmer"
-      />
-      <RichText
-        className="ugb-testimonial-body-three"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Stackable: Ultimate Blocks from Gutenberg has all the blocks I need to make a great webpage."
-      />
-    </div>
-  </div>
-</Fragment>
-`;
-
-exports[`Testimonial block save matches snapshots 1`] = `
+exports[`Testimonial block saved block HTML shouldn't change 1`] = `
 <div
-  className="ugb-testimonial column-1"
+  className="wp-block-ugb-testimonial ugb-testimonial ugb-testimonial--v2 ugb-testimonial--columns-1 ugb-testimonial--design-design className"
 >
   <div
-    className="ugb-testimonial-column-one"
+    className="ugb-testimonial__item ugb--shadow-1"
+    style={
+      Object {
+        "borderRadius": 6,
+      }
+    }
   >
     <div
-      className="testimonial-image"
-      data-src="https://images.unsplash.com/photo-1522198734915-76c764a8454d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7892e6f709c6e46512bb4b08ce3d1a3c&auto=format&fit=crop&w=1050&q=80"
-      style={
-        Object {
-          "backgroundImage": "url(https://images.unsplash.com/photo-1522198734915-76c764a8454d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7892e6f709c6e46512bb4b08ce3d1a3c&auto=format&fit=crop&w=1050&q=80)",
+      className="ugb-testimonial__body-wrapper"
+    >
+      <p
+        className="ugb-testimonial__body"
+        style={
+          Object {
+            "color": "#123456",
+          }
         }
-      }
-    />
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "testimonial1",
+            }
+          }
+        />
+      </p>
+    </div>
+    <div
+      className="ugb-testimonial__person"
+    >
+      <div
+        className="ugb-testimonial__image"
+        style={
+          Object {
+            "backgroundImage": "url(mediaURL1)",
+          }
+        }
+      />
+      <h4
+        className="ugb-testimonial__name"
+        style={
+          Object {
+            "color": "#123456",
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "name1",
+            }
+          }
+        />
+      </h4>
+      <p
+        className="ugb-testimonial__position"
+        style={
+          Object {
+            "color": "#123456",
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "position1",
+            }
+          }
+        />
+      </p>
+    </div>
   </div>
 </div>
 `;
 
-exports[`Testimonial block save matches snapshots 2`] = `
+exports[`Testimonial block saved default block HTML shouldn't change 1`] = `
 <div
-  className="ugb-testimonial column-2"
+  className="wp-block-ugb-testimonial ugb-testimonial ugb-testimonial--v2 ugb-testimonial--columns-2 ugb-testimonial--design-basic"
 >
   <div
-    className="ugb-testimonial-column-one"
+    className="ugb-testimonial__item"
+    style={
+      Object {
+        "borderRadius": undefined,
+      }
+    }
   >
     <div
-      className="testimonial-image"
-      data-src="https://images.unsplash.com/photo-1522198734915-76c764a8454d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7892e6f709c6e46512bb4b08ce3d1a3c&auto=format&fit=crop&w=1050&q=80"
-      style={
-        Object {
-          "backgroundImage": "url(https://images.unsplash.com/photo-1522198734915-76c764a8454d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7892e6f709c6e46512bb4b08ce3d1a3c&auto=format&fit=crop&w=1050&q=80)",
+      className="ugb-testimonial__body-wrapper"
+    >
+      <p
+        className="ugb-testimonial__body"
+        style={
+          Object {
+            "color": undefined,
+          }
         }
-      }
-    />
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.",
+            }
+          }
+        />
+      </p>
+    </div>
+    <div
+      className="ugb-testimonial__person"
+    >
+      <h4
+        className="ugb-testimonial__name"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Name",
+            }
+          }
+        />
+      </h4>
+      <p
+        className="ugb-testimonial__position"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Position",
+            }
+          }
+        />
+      </p>
+    </div>
   </div>
   <div
-    className="ugb-testimonial-column-two"
+    className="ugb-testimonial__item"
+    style={
+      Object {
+        "borderRadius": undefined,
+      }
+    }
   >
     <div
-      className="testimonial-image"
-      data-src="https://images.unsplash.com/photo-1522198734915-76c764a8454d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7892e6f709c6e46512bb4b08ce3d1a3c&auto=format&fit=crop&w=1050&q=80"
-      style={
-        Object {
-          "backgroundImage": "url(https://images.unsplash.com/photo-1522198734915-76c764a8454d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7892e6f709c6e46512bb4b08ce3d1a3c&auto=format&fit=crop&w=1050&q=80)",
+      className="ugb-testimonial__body-wrapper"
+    >
+      <p
+        className="ugb-testimonial__body"
+        style={
+          Object {
+            "color": undefined,
+          }
         }
-      }
-    />
-  </div>
-</div>
-`;
-
-exports[`Testimonial block save matches snapshots 3`] = `
-<div
-  className="ugb-testimonial column-3"
->
-  <div
-    className="ugb-testimonial-column-one"
-  >
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.",
+            }
+          }
+        />
+      </p>
+    </div>
     <div
-      className="testimonial-image"
-      data-src="https://images.unsplash.com/photo-1522198734915-76c764a8454d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7892e6f709c6e46512bb4b08ce3d1a3c&auto=format&fit=crop&w=1050&q=80"
-      style={
-        Object {
-          "backgroundImage": "url(https://images.unsplash.com/photo-1522198734915-76c764a8454d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7892e6f709c6e46512bb4b08ce3d1a3c&auto=format&fit=crop&w=1050&q=80)",
+      className="ugb-testimonial__person"
+    >
+      <h4
+        className="ugb-testimonial__name"
+        style={
+          Object {
+            "color": undefined,
+          }
         }
-      }
-    />
-  </div>
-  <div
-    className="ugb-testimonial-column-two"
-  >
-    <div
-      className="testimonial-image"
-      data-src="https://images.unsplash.com/photo-1522198734915-76c764a8454d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7892e6f709c6e46512bb4b08ce3d1a3c&auto=format&fit=crop&w=1050&q=80"
-      style={
-        Object {
-          "backgroundImage": "url(https://images.unsplash.com/photo-1522198734915-76c764a8454d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7892e6f709c6e46512bb4b08ce3d1a3c&auto=format&fit=crop&w=1050&q=80)",
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Name",
+            }
+          }
+        />
+      </h4>
+      <p
+        className="ugb-testimonial__position"
+        style={
+          Object {
+            "color": undefined,
+          }
         }
-      }
-    />
-  </div>
-  <div
-    className="ugb-testimonial-column-three"
-  >
-    <div
-      className="testimonial-image"
-      data-src="https://images.unsplash.com/photo-1522198734915-76c764a8454d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7892e6f709c6e46512bb4b08ce3d1a3c&auto=format&fit=crop&w=1050&q=80"
-      style={
-        Object {
-          "backgroundImage": "url(https://images.unsplash.com/photo-1522198734915-76c764a8454d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7892e6f709c6e46512bb4b08ce3d1a3c&auto=format&fit=crop&w=1050&q=80)",
-        }
-      }
-    />
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Position",
+            }
+          }
+        />
+      </p>
+    </div>
   </div>
 </div>
 `;

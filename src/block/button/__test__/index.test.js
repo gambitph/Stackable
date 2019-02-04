@@ -1,37 +1,53 @@
-import { edit, save } from '../index'
+import { blockEditableAfterSaveTests, blockMigrationTests, blockSaveSnapshotTests } from '@stackable/test/shared'
+import { name, settings } from '../'
+import deprecated from '../deprecated'
+import save from '../save'
 
-describe( 'Divider Block', () => {
-	test( 'block edit matches snapshot', () => {
-		const wrapper = edit( {
-			isSelected: false,
-			attributes: {
-				url: 'http://www.gambit.ph/',
-				text: 'We Simplify and Revolutionize',
-				textAlignment: 'center',
-				color: '#2091e1',
-				textColor: '#ffffff',
-				size: 'normal',
-				cornerButtonRadius: 4,
-			},
+describe( `${ settings.title } block`, () => {
+	const defaultAttributes = {
+		text2: '',
+		text3: '',
+	}
+	const attributes = {
+		buttons: 1,
+		text2: '',
+		text3: '',
+		newTab2: false,
+		newTab3: false,
+		url2: '',
+		url3: '',
+	}
 
-		} )
-
-		expect( wrapper ).toMatchSnapshot()
+	// Checks whether the save method has changed. This shouldn't change in the normal
+	// course of things. This should only change when the block receives an update.
+	// When the block gets an update, a new deprecation step should be added,
+	// and the snapshot updated.
+	blockSaveSnapshotTests.bind( this )( {
+		name,
+		settings,
+		save,
+		deprecated,
 	} )
 
-	test( 'block save matches snapshot', () => {
-		const wrapper = save( {
-			attributes: {
-				url: 'http://www.gambit.ph/',
-				text: 'We Simplify and Revolutionize',
-				textAlignment: 'center',
-				color: '#2091e1',
-				textColor: '#ffffff',
-				size: 'normal',
-				cornerButtonRadius: 4,
-			},
-		} )
+	// Checks whether adding the block, saving it then refreshing the editor renders the block valid & editable.
+	// Checks whether adding the block, changing values, saving it then refreshing the editor renders the block valid & editable.
+	blockEditableAfterSaveTests.bind( this )( {
+		name,
+		settings,
+		save,
+		deprecated,
+		defaultAttributes,
+		attributes,
+	} )
 
-		expect( wrapper ).toMatchSnapshot()
+	// Checks whether saved HTML of older versioned blocks would migrate and remain valid & editable.
+	// Checks whether saved HTML of older versioned blocks with changed values, would migrate and remain valid & editable.
+	describe( 'Deprecated migration', () => {
+		blockMigrationTests.bind( this )( {
+			name,
+			settings,
+			save,
+			deprecated,
+		} )
 	} )
 } )

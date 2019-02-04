@@ -19,6 +19,7 @@ export const schema = {
 		source: 'attribute',
 		selector: 'a',
 		attribute: 'href',
+		default: '',
 	},
 	newTab: {
 		type: 'boolean',
@@ -63,6 +64,7 @@ export const schema = {
 		source: 'attribute',
 		selector: 'div:nth-child(2) .ugb-button',
 		attribute: 'href',
+		default: '',
 	},
 	newTab2: {
 		type: 'boolean',
@@ -100,6 +102,7 @@ export const schema = {
 		source: 'attribute',
 		selector: 'div:nth-child(3) .ugb-button',
 		attribute: 'href',
+		default: '',
 	},
 	newTab3: {
 		type: 'boolean',

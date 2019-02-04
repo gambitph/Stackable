@@ -1,117 +1,379 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Count Up block edit matches snapshots 1`] = `
-<Fragment>
+exports[`Count Up block saved block HTML shouldn't change 1`] = `
+<div
+  className="wp-block-ugb-count-up alignfull ugb-countup ugb-countup--v3 ugb-countup--columns-2 ugb--background-opacity-2 ugb--has-background-image ugb--content-width ugb-countup--design-design ugb--shadow-1 className"
+  style={
+    Object {
+      "--ugb-background-color": "#123456",
+      "backgroundAttachment": "fixed",
+      "backgroundColor": "#123456",
+      "backgroundImage": "url(backgroundImageURL)",
+      "borderRadius": 6,
+    }
+  }
+>
   <div
-    className="ugb-countup"
+    className="ugb-content-wrapper"
   >
-    <RichText
-      onChange={[Function]}
-      style={
-        Object {
-          "color": "#444444",
+    <div
+      className="ugb-countup__item"
+    >
+      <h4
+        className="ugb-countup__title"
+        style={
+          Object {
+            "color": "#123456",
+          }
         }
-      }
-      tagName="h4"
-      value="Happy Customers"
-    />
-    <RichText
-      className="ugb-counter"
-      data-delay="16"
-      data-duration="1000"
-      onChange={[Function]}
-      placeholder={undefined}
-      style={
-        Object {
-          "color": "#444444",
-          "fontSize": "60px",
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "title1",
+            }
+          }
+        />
+      </h4>
+      <div
+        className="ugb-countup__counter"
+        data-delay="16"
+        data-duration="1000"
+        style={
+          Object {
+            "color": "#123456",
+            "fontFamily": "-apple-system, BlinkMacSystemFont, \\"Segoe UI\\", Roboto, Helvetica, Arial, sans-serif, \\"Apple Color Emoji\\", \\"Segoe UI Emoji\\", \\"Segoe UI Symbol\\"",
+            "fontSize": "20px",
+            "fontWeight": "countFontWeight",
+          }
         }
-      }
-      tagName="div"
-      value="12,345"
-    />
-    <RichText
-      className="ugb-counter-des"
-      onChange={[Function]}
-      style={
-        Object {
-          "color": "#444444",
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "countText1",
+            }
+          }
+        />
+      </div>
+      <p
+        className="ugb-countup__description"
+        style={
+          Object {
+            "color": "#123456",
+          }
         }
-      }
-      tagName="p"
-      value="and counting"
-    />
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "description1",
+            }
+          }
+        />
+      </p>
+    </div>
+    <div
+      className="ugb-countup__item"
+    >
+      <h4
+        className="ugb-countup__title"
+        style={
+          Object {
+            "color": "#123456",
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "title2",
+            }
+          }
+        />
+      </h4>
+      <div
+        className="ugb-countup__counter"
+        data-delay="16"
+        data-duration="1000"
+        style={
+          Object {
+            "color": "#123456",
+            "fontFamily": "-apple-system, BlinkMacSystemFont, \\"Segoe UI\\", Roboto, Helvetica, Arial, sans-serif, \\"Apple Color Emoji\\", \\"Segoe UI Emoji\\", \\"Segoe UI Symbol\\"",
+            "fontSize": "20px",
+            "fontWeight": "countFontWeight",
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "countText2",
+            }
+          }
+        />
+      </div>
+      <p
+        className="ugb-countup__description"
+        style={
+          Object {
+            "color": "#123456",
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "description2",
+            }
+          }
+        />
+      </p>
+    </div>
   </div>
-  <InspectorControls>
-    <PanelColorSettings
-      colorSettings={
-        Array [
-          Object {
-            "label": "Heading Color",
-            "onChange": [Function],
-            "value": "#444444",
-          },
-          Object {
-            "label": "Number Color",
-            "onChange": [Function],
-            "value": "#444444",
-          },
-          Object {
-            "label": "Description Color",
-            "onChange": [Function],
-            "value": "#444444",
-          },
-        ]
-      }
-      title="Color Settings"
-    />
-    <PanelBody>
-      <RangeControl
-        label="Counter Text Font Size"
-        max="100"
-        min="10"
-        onChange={[Function]}
-        value="60"
-      />
-    </PanelBody>
-  </InspectorControls>
-</Fragment>
+</div>
 `;
 
-exports[`Count Up block save matches snapshots 1`] = `
+exports[`Count Up block saved default block HTML shouldn't change 1`] = `
 <div
-  className="ugb-countup"
+  className="wp-block-ugb-count-up ugb-countup ugb-countup--v3 ugb-countup--columns-4 ugb--background-opacity-5"
+  style={
+    Object {
+      "--ugb-background-color": undefined,
+      "backgroundAttachment": undefined,
+      "backgroundColor": undefined,
+      "backgroundImage": undefined,
+      "borderRadius": undefined,
+    }
+  }
 >
-  <Unknown
-    style={
-      Object {
-        "color": "#444444",
-      }
-    }
-    tagName="h4"
-    value="Happy Customers"
-  />
-  <Unknown
-    className="ugb-counter"
-    data-delay="16"
-    data-duration="1000"
-    style={
-      Object {
-        "color": "#444444",
-        "fontSize": "60px",
-      }
-    }
-    tagName="div"
-    value="12,345"
-  />
-  <Unknown
-    style={
-      Object {
-        "color": "#444444",
-      }
-    }
-    tagName="p"
-    value="and counting"
-  />
+  <div
+    className="ugb-content-wrapper"
+  >
+    <div
+      className="ugb-countup__item"
+    >
+      <h4
+        className="ugb-countup__title"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Title",
+            }
+          }
+        />
+      </h4>
+      <div
+        className="ugb-countup__counter"
+        data-delay="16"
+        data-duration="1000"
+        style={
+          Object {
+            "color": undefined,
+            "fontSize": "40px",
+            "fontWeight": "400",
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "$99.99",
+            }
+          }
+        />
+      </div>
+      <p
+        className="ugb-countup__description"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Description",
+            }
+          }
+        />
+      </p>
+    </div>
+    <div
+      className="ugb-countup__item"
+    >
+      <h4
+        className="ugb-countup__title"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Title",
+            }
+          }
+        />
+      </h4>
+      <div
+        className="ugb-countup__counter"
+        data-delay="16"
+        data-duration="1000"
+        style={
+          Object {
+            "color": undefined,
+            "fontSize": "40px",
+            "fontWeight": "400",
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "1,234",
+            }
+          }
+        />
+      </div>
+      <p
+        className="ugb-countup__description"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Description",
+            }
+          }
+        />
+      </p>
+    </div>
+    <div
+      className="ugb-countup__item"
+    >
+      <h4
+        className="ugb-countup__title"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Title",
+            }
+          }
+        />
+      </h4>
+      <div
+        className="ugb-countup__counter"
+        data-delay="16"
+        data-duration="1000"
+        style={
+          Object {
+            "color": undefined,
+            "fontSize": "40px",
+            "fontWeight": "400",
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "1,234.56",
+            }
+          }
+        />
+      </div>
+      <p
+        className="ugb-countup__description"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Description",
+            }
+          }
+        />
+      </p>
+    </div>
+    <div
+      className="ugb-countup__item"
+    >
+      <h4
+        className="ugb-countup__title"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Title",
+            }
+          }
+        />
+      </h4>
+      <div
+        className="ugb-countup__counter"
+        data-delay="16"
+        data-duration="1000"
+        style={
+          Object {
+            "color": undefined,
+            "fontSize": "40px",
+            "fontWeight": "400",
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "£99.99",
+            }
+          }
+        />
+      </div>
+      <p
+        className="ugb-countup__description"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Description",
+            }
+          }
+        />
+      </p>
+    </div>
+  </div>
 </div>
 `;

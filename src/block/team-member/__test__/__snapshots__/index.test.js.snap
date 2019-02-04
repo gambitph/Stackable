@@ -1,1393 +1,209 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Team Member block edit matches snapshots 1`] = `
-<Fragment>
-  <InspectorControls>
-    <PanelBody>
-      <SelectControl
-        label="Image Shape"
-        onChange={[Function]}
-        options={
-          Array [
-            Object {
-              "label": "Square",
-              "value": "square",
-            },
-            Object {
-              "label": "Circle",
-              "value": "circle",
-            },
-          ]
-        }
-        value="square"
-      />
-      <SelectControl
-        label="Column Number"
-        onChange={[Function]}
-        options={
-          Array [
-            Object {
-              "label": "One Column",
-              "value": "1",
-            },
-            Object {
-              "label": "Two Column",
-              "value": "2",
-            },
-            Object {
-              "label": "Three Column",
-              "value": "3",
-            },
-          ]
-        }
-        value="1"
-      />
-    </PanelBody>
-    <PanelColorSettings
-      colorSettings={
-        Array [
-          Object {
-            "label": "Name Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Position Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Description Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Icon Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-        ]
-      }
-      initialOpen={false}
-      title="Color Settings"
-    />
-  </InspectorControls>
+exports[`Team Member block saved block HTML shouldn't change 1`] = `
+<div
+  className="wp-block-ugb-team-member ugb-team-member ugb-team-member--v2 ugb-team-member--columns-1 ugb-team-member--image-shapes ugb-team-member--design-design className"
+>
   <div
-    className="ugb-team-member column-1 image-square"
+    className="ugb-team-member__item ugb--shadow-1"
+    style={
+      Object {
+        "borderRadius": 6,
+      }
+    }
   >
     <div
-      className="ugb-team-member-column-one"
-    >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
-          }
-          onSelect={[Function]}
-          render={[Function]}
-          value="1"
-        />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
+      className="ugb-team-member__image"
+      data-src="mediaURL1"
+      style={
+        Object {
+          "backgroundImage": "url(mediaURL1)",
         }
-        tagName="h4"
-        value="Ben Adams"
-      />
-      <RichText
-        className="ugb-team-member-position"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Founder"
-      />
-      <RichText
-        className="ugb-team-member-des"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Ben is the head of our small team. He loves walking his dog, Walter, when he has some free time."
-      />
-    </div>
+      }
+    />
     <div
-      className="ugb-team-member-column-two"
+      className="ugb-team-member__content"
     >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
+      <h4
+        className="ugb-team-member__name"
+        style={
+          Object {
+            "color": "#123456",
           }
-          onSelect={[Function]}
-          render={[Function]}
-          value={undefined}
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "name1",
+            }
+          }
         />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
+      </h4>
+      <p
+        className="ugb-team-member__position"
         style={
           Object {
-            "color": "#000000",
+            "color": "#123456",
           }
         }
-        tagName="h4"
-        value={undefined}
-      />
-      <RichText
-        className="ugb-team-member-position"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "position1",
+            }
           }
-        }
-        tagName="p"
-        value={undefined}
-      />
-      <RichText
-        className="ugb-team-member-des-two"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value={undefined}
-      />
-    </div>
-    <div
-      className="ugb-team-member-column-three"
-    >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
-          }
-          onSelect={[Function]}
-          render={[Function]}
-          value={undefined}
         />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
+      </p>
+      <p
+        className="ugb-team-member__description"
         style={
           Object {
-            "color": "#000000",
+            "color": "#123456",
           }
         }
-        tagName="h4"
-        value={undefined}
-      />
-      <RichText
-        className="ugb-team-member-position"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "description1",
+            }
           }
-        }
-        tagName="p"
-        value={undefined}
-      />
-      <RichText
-        className="ugb-team-member-des-three"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value={undefined}
-      />
+        />
+      </p>
     </div>
   </div>
-</Fragment>
+</div>
 `;
 
-exports[`Team Member block edit matches snapshots 2`] = `
-<Fragment>
-  <InspectorControls>
-    <PanelBody>
-      <SelectControl
-        label="Image Shape"
-        onChange={[Function]}
-        options={
-          Array [
-            Object {
-              "label": "Square",
-              "value": "square",
-            },
-            Object {
-              "label": "Circle",
-              "value": "circle",
-            },
-          ]
-        }
-        value="square"
-      />
-      <SelectControl
-        label="Column Number"
-        onChange={[Function]}
-        options={
-          Array [
-            Object {
-              "label": "One Column",
-              "value": "1",
-            },
-            Object {
-              "label": "Two Column",
-              "value": "2",
-            },
-            Object {
-              "label": "Three Column",
-              "value": "3",
-            },
-          ]
-        }
-        value="2"
-      />
-    </PanelBody>
-    <PanelColorSettings
-      colorSettings={
-        Array [
-          Object {
-            "label": "Name Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Position Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Description Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Icon Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-        ]
-      }
-      initialOpen={false}
-      title="Color Settings"
-    />
-  </InspectorControls>
+exports[`Team Member block saved default block HTML shouldn't change 1`] = `
+<div
+  className="wp-block-ugb-team-member ugb-team-member ugb-team-member--v2 ugb-team-member--columns-2 ugb-team-member--image-circle ugb-team-member--design-basic"
+>
   <div
-    className="ugb-team-member column-2 image-square"
+    className="ugb-team-member__item"
+    style={
+      Object {
+        "borderRadius": undefined,
+      }
+    }
   >
+    
     <div
-      className="ugb-team-member-column-one"
+      className="ugb-team-member__content"
     >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
+      <h4
+        className="ugb-team-member__name"
+        style={
+          Object {
+            "color": undefined,
           }
-          onSelect={[Function]}
-          render={[Function]}
-          value="1"
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Name",
+            }
+          }
         />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
+      </h4>
+      <p
+        className="ugb-team-member__position"
         style={
           Object {
-            "color": "#000000",
+            "color": undefined,
           }
         }
-        tagName="h4"
-        value="Ben Adams"
-      />
-      <RichText
-        className="ugb-team-member-position"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Position",
+            }
           }
-        }
-        tagName="p"
-        value="Founder"
-      />
-      <RichText
-        className="ugb-team-member-des"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Ben is the head of our small team. He loves walking his dog, Walter, when he has some free time."
-      />
-    </div>
-    <div
-      className="ugb-team-member-column-two"
-    >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
-          }
-          onSelect={[Function]}
-          render={[Function]}
-          value="2"
         />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
+      </p>
+      <p
+        className="ugb-team-member__description"
         style={
           Object {
-            "color": "#000000",
+            "color": undefined,
           }
         }
-        tagName="h4"
-        value="Alex Johnson"
-      />
-      <RichText
-        className="ugb-team-member-position"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.",
+            }
           }
-        }
-        tagName="p"
-        value="Editor"
-      />
-      <RichText
-        className="ugb-team-member-des-two"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Alex handles all written content. She enjoys painting and playing softball on the weekends."
-      />
-    </div>
-    <div
-      className="ugb-team-member-column-three"
-    >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
-          }
-          onSelect={[Function]}
-          render={[Function]}
-          value={undefined}
         />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="h4"
-        value={undefined}
-      />
-      <RichText
-        className="ugb-team-member-position"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value={undefined}
-      />
-      <RichText
-        className="ugb-team-member-des-three"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value={undefined}
-      />
+      </p>
     </div>
   </div>
-</Fragment>
-`;
-
-exports[`Team Member block edit matches snapshots 3`] = `
-<Fragment>
-  <InspectorControls>
-    <PanelBody>
-      <SelectControl
-        label="Image Shape"
-        onChange={[Function]}
-        options={
-          Array [
-            Object {
-              "label": "Square",
-              "value": "square",
-            },
-            Object {
-              "label": "Circle",
-              "value": "circle",
-            },
-          ]
-        }
-        value="square"
-      />
-      <SelectControl
-        label="Column Number"
-        onChange={[Function]}
-        options={
-          Array [
-            Object {
-              "label": "One Column",
-              "value": "1",
-            },
-            Object {
-              "label": "Two Column",
-              "value": "2",
-            },
-            Object {
-              "label": "Three Column",
-              "value": "3",
-            },
-          ]
-        }
-        value="3"
-      />
-    </PanelBody>
-    <PanelColorSettings
-      colorSettings={
-        Array [
-          Object {
-            "label": "Name Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Position Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Description Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Icon Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-        ]
-      }
-      initialOpen={false}
-      title="Color Settings"
-    />
-  </InspectorControls>
   <div
-    className="ugb-team-member column-3 image-square"
+    className="ugb-team-member__item"
+    style={
+      Object {
+        "borderRadius": undefined,
+      }
+    }
   >
+    
     <div
-      className="ugb-team-member-column-one"
+      className="ugb-team-member__content"
     >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
+      <h4
+        className="ugb-team-member__name"
+        style={
+          Object {
+            "color": undefined,
           }
-          onSelect={[Function]}
-          render={[Function]}
-          value="1"
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Name",
+            }
+          }
         />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
+      </h4>
+      <p
+        className="ugb-team-member__position"
         style={
           Object {
-            "color": "#000000",
+            "color": undefined,
           }
         }
-        tagName="h4"
-        value="Ben Adams"
-      />
-      <RichText
-        className="ugb-team-member-position"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Position",
+            }
           }
-        }
-        tagName="p"
-        value="Founder"
-      />
-      <RichText
-        className="ugb-team-member-des"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Ben is the head of our small team. He loves walking his dog, Walter, when he has some free time."
-      />
-    </div>
-    <div
-      className="ugb-team-member-column-two"
-    >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
-          }
-          onSelect={[Function]}
-          render={[Function]}
-          value="2"
         />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
+      </p>
+      <p
+        className="ugb-team-member__description"
         style={
           Object {
-            "color": "#000000",
+            "color": undefined,
           }
         }
-        tagName="h4"
-        value="Alex Johnson"
-      />
-      <RichText
-        className="ugb-team-member-position"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.",
+            }
           }
-        }
-        tagName="p"
-        value="Editor"
-      />
-      <RichText
-        className="ugb-team-member-des-two"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Alex handles all written content. She enjoys painting and playing softball on the weekends."
-      />
-    </div>
-    <div
-      className="ugb-team-member-column-three"
-    >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
-          }
-          onSelect={[Function]}
-          render={[Function]}
-          value="3"
         />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="h4"
-        value="Sammy Simpson"
-      />
-      <RichText
-        className="ugb-team-member-position"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Programmer"
-      />
-      <RichText
-        className="ugb-team-member-des-three"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Sammy is our programmer. You'll usually find her nose in a book. She has a cat named Skitty."
-      />
+      </p>
     </div>
   </div>
-</Fragment>
-`;
-
-exports[`Team Member block save matches snapshots 1`] = `
-<Fragment>
-  <InspectorControls>
-    <PanelBody>
-      <SelectControl
-        label="Image Shape"
-        onChange={[Function]}
-        options={
-          Array [
-            Object {
-              "label": "Square",
-              "value": "square",
-            },
-            Object {
-              "label": "Circle",
-              "value": "circle",
-            },
-          ]
-        }
-        value="square"
-      />
-      <SelectControl
-        label="Column Number"
-        onChange={[Function]}
-        options={
-          Array [
-            Object {
-              "label": "One Column",
-              "value": "1",
-            },
-            Object {
-              "label": "Two Column",
-              "value": "2",
-            },
-            Object {
-              "label": "Three Column",
-              "value": "3",
-            },
-          ]
-        }
-        value="1"
-      />
-    </PanelBody>
-    <PanelColorSettings
-      colorSettings={
-        Array [
-          Object {
-            "label": "Name Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Position Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Description Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Icon Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-        ]
-      }
-      initialOpen={false}
-      title="Color Settings"
-    />
-  </InspectorControls>
-  <div
-    className="ugb-team-member column-1 image-square"
-  >
-    <div
-      className="ugb-team-member-column-one"
-    >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
-          }
-          onSelect={[Function]}
-          render={[Function]}
-          value="1"
-        />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="h4"
-        value="Ben Adams"
-      />
-      <RichText
-        className="ugb-team-member-position"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Founder"
-      />
-      <RichText
-        className="ugb-team-member-des"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Ben is the head of our small team. He loves walking his dog, Walter, when he has some free time."
-      />
-    </div>
-    <div
-      className="ugb-team-member-column-two"
-    >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
-          }
-          onSelect={[Function]}
-          render={[Function]}
-          value={undefined}
-        />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="h4"
-        value={undefined}
-      />
-      <RichText
-        className="ugb-team-member-position"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value={undefined}
-      />
-      <RichText
-        className="ugb-team-member-des-two"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value={undefined}
-      />
-    </div>
-    <div
-      className="ugb-team-member-column-three"
-    >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
-          }
-          onSelect={[Function]}
-          render={[Function]}
-          value={undefined}
-        />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="h4"
-        value={undefined}
-      />
-      <RichText
-        className="ugb-team-member-position"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value={undefined}
-      />
-      <RichText
-        className="ugb-team-member-des-three"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value={undefined}
-      />
-    </div>
-  </div>
-</Fragment>
-`;
-
-exports[`Team Member block save matches snapshots 2`] = `
-<Fragment>
-  <InspectorControls>
-    <PanelBody>
-      <SelectControl
-        label="Image Shape"
-        onChange={[Function]}
-        options={
-          Array [
-            Object {
-              "label": "Square",
-              "value": "square",
-            },
-            Object {
-              "label": "Circle",
-              "value": "circle",
-            },
-          ]
-        }
-        value="square"
-      />
-      <SelectControl
-        label="Column Number"
-        onChange={[Function]}
-        options={
-          Array [
-            Object {
-              "label": "One Column",
-              "value": "1",
-            },
-            Object {
-              "label": "Two Column",
-              "value": "2",
-            },
-            Object {
-              "label": "Three Column",
-              "value": "3",
-            },
-          ]
-        }
-        value="2"
-      />
-    </PanelBody>
-    <PanelColorSettings
-      colorSettings={
-        Array [
-          Object {
-            "label": "Name Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Position Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Description Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Icon Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-        ]
-      }
-      initialOpen={false}
-      title="Color Settings"
-    />
-  </InspectorControls>
-  <div
-    className="ugb-team-member column-2 image-square"
-  >
-    <div
-      className="ugb-team-member-column-one"
-    >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
-          }
-          onSelect={[Function]}
-          render={[Function]}
-          value="1"
-        />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="h4"
-        value="Ben Adams"
-      />
-      <RichText
-        className="ugb-team-member-position"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Founder"
-      />
-      <RichText
-        className="ugb-team-member-des"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Ben is the head of our small team. He loves walking his dog, Walter, when he has some free time."
-      />
-    </div>
-    <div
-      className="ugb-team-member-column-two"
-    >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
-          }
-          onSelect={[Function]}
-          render={[Function]}
-          value="2"
-        />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="h4"
-        value="Alex Johnson"
-      />
-      <RichText
-        className="ugb-team-member-position"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Editor"
-      />
-      <RichText
-        className="ugb-team-member-des-two"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Alex handles all written content. She enjoys painting and playing softball on the weekends."
-      />
-    </div>
-    <div
-      className="ugb-team-member-column-three"
-    >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
-          }
-          onSelect={[Function]}
-          render={[Function]}
-          value={undefined}
-        />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="h4"
-        value={undefined}
-      />
-      <RichText
-        className="ugb-team-member-position"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value={undefined}
-      />
-      <RichText
-        className="ugb-team-member-des-three"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value={undefined}
-      />
-    </div>
-  </div>
-</Fragment>
-`;
-
-exports[`Team Member block save matches snapshots 3`] = `
-<Fragment>
-  <InspectorControls>
-    <PanelBody>
-      <SelectControl
-        label="Image Shape"
-        onChange={[Function]}
-        options={
-          Array [
-            Object {
-              "label": "Square",
-              "value": "square",
-            },
-            Object {
-              "label": "Circle",
-              "value": "circle",
-            },
-          ]
-        }
-        value="square"
-      />
-      <SelectControl
-        label="Column Number"
-        onChange={[Function]}
-        options={
-          Array [
-            Object {
-              "label": "One Column",
-              "value": "1",
-            },
-            Object {
-              "label": "Two Column",
-              "value": "2",
-            },
-            Object {
-              "label": "Three Column",
-              "value": "3",
-            },
-          ]
-        }
-        value="3"
-      />
-    </PanelBody>
-    <PanelColorSettings
-      colorSettings={
-        Array [
-          Object {
-            "label": "Name Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Position Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Description Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-          Object {
-            "label": "Icon Color",
-            "onChange": [Function],
-            "value": "#000000",
-          },
-        ]
-      }
-      initialOpen={false}
-      title="Color Settings"
-    />
-  </InspectorControls>
-  <div
-    className="ugb-team-member column-3 image-square"
-  >
-    <div
-      className="ugb-team-member-column-one"
-    >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
-          }
-          onSelect={[Function]}
-          render={[Function]}
-          value="1"
-        />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="h4"
-        value="Ben Adams"
-      />
-      <RichText
-        className="ugb-team-member-position"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Founder"
-      />
-      <RichText
-        className="ugb-team-member-des"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Ben is the head of our small team. He loves walking his dog, Walter, when he has some free time."
-      />
-    </div>
-    <div
-      className="ugb-team-member-column-two"
-    >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
-          }
-          onSelect={[Function]}
-          render={[Function]}
-          value="2"
-        />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="h4"
-        value="Alex Johnson"
-      />
-      <RichText
-        className="ugb-team-member-position"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Editor"
-      />
-      <RichText
-        className="ugb-team-member-des-two"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Alex handles all written content. She enjoys painting and playing softball on the weekends."
-      />
-    </div>
-    <div
-      className="ugb-team-member-column-three"
-    >
-      <div>
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
-          }
-          onSelect={[Function]}
-          render={[Function]}
-          value="3"
-        />
-      </div>
-      <RichText
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="h4"
-        value="Sammy Simpson"
-      />
-      <RichText
-        className="ugb-team-member-position"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Programmer"
-      />
-      <RichText
-        className="ugb-team-member-des-three"
-        keepPlaceholderOnFocus={true}
-        onChange={[Function]}
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-        tagName="p"
-        value="Sammy is our programmer. You'll usually find her nose in a book. She has a cat named Skitty."
-      />
-    </div>
-  </div>
-</Fragment>
+</div>
 `;

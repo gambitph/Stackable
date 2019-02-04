@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Container block saved block HTML shouldn't change 1`] = `
+<div
+  className="wp-block-ugb-container alignfull ugb-container ugb--background-opacity-2 ugb-container--content-contentAlign ugb--has-background ugb--has-background-image ugb-container--height-height ugb-container--align-horizontal-contentLocation ugb--content-width ugb--shadow-1 className"
+  style={
+    Object {
+      "--ugb-background-color": "#123456",
+      "--ugb-text-color": "#123456",
+      "backgroundAttachment": "fixed",
+      "backgroundColor": "#123456",
+      "backgroundImage": "url(backgroundImageURL)",
+      "borderRadius": 6,
+      "justify-content": undefined,
+    }
+  }
+>
+  <div
+    className="ugb-container__wrapper"
+  >
+    <div
+      className="ugb-container__content-wrapper"
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "",
+          }
+        }
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Container block saved default block HTML shouldn't change 1`] = `
+<div
+  className="wp-block-ugb-container ugb-container ugb--background-opacity-5 ugb--has-background ugb-container--height-normal ugb-container--align-horizontal-full"
+  style={
+    Object {
+      "--ugb-background-color": undefined,
+      "--ugb-text-color": undefined,
+      "backgroundAttachment": undefined,
+      "backgroundColor": "#f1f1f1",
+      "backgroundImage": undefined,
+      "borderRadius": undefined,
+      "justify-content": undefined,
+    }
+  }
+>
+  <div
+    className="ugb-container__wrapper"
+  >
+    <div
+      className="ugb-container__content-wrapper"
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "",
+          }
+        }
+      />
+    </div>
+  </div>
+</div>
+`;

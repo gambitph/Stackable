@@ -1,164 +1,168 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Call to Action block edit matches snapshots 1`] = `
-<Fragment>
-  <InspectorControls>
-    <PanelBody>
-      <SelectControl
-        label="Button Size"
-        onChange={[Function]}
-        options={
-          Array [
-            Object {
-              "label": "Small",
-              "value": "small",
-            },
-            Object {
-              "label": "Normal",
-              "value": "normal",
-            },
-            Object {
-              "label": "Medium",
-              "value": "medium",
-            },
-            Object {
-              "label": "Large",
-              "value": "large",
-            },
-          ]
-        }
-        value="normal"
-      />
-      <RangeControl
-        label="Button Border Radius"
-        max="50"
-        min="1"
-        onChange={[Function]}
-        value={4}
-      />
-    </PanelBody>
-    <PanelColorSettings
-      colorSettings={
-        Array [
-          Object {
-            "label": "Background Color",
-            "onChange": [Function],
-            "value": "#f4f4f4",
-          },
-          Object {
-            "label": "Title Color",
-            "onChange": [Function],
-            "value": "#23282d",
-          },
-          Object {
-            "label": "Body Text Color",
-            "onChange": [Function],
-            "value": "#ffffff",
-          },
-        ]
-      }
-      initialOpen={false}
-      title="Color Settings"
-    />
-    <PanelColorSettings
-      colorSettings={
-        Array [
-          Object {
-            "label": "Button Background Color",
-            "onChange": [Function],
-            "value": "#2091e1",
-          },
-          Object {
-            "label": "Button Text Color",
-            "onChange": [Function],
-            "value": "#ffffff",
-          },
-        ]
-      }
-      title="Button Colors"
-    />
-  </InspectorControls>
-  <div
-    className="ugb-cta"
-    style={
-      Object {
-        "backgroundColor": "#f4f4f4",
-      }
-    }
-  >
-    <RichText
-      className="ugb-cta-title"
-      keepPlaceholderOnFocus={true}
-      onChange={[Function]}
-      placeholder="Add Title"
-      style={
-        Object {
-          "color": "#23282d",
-        }
-      }
-      tagName="h3"
-      value="Get Started Today"
-    />
-    <RichText
-      className="ugb-cta-bodyText"
-      onChange={[Function]}
-      placeholder="Write body text…"
-      style={
-        Object {
-          "color": "#ffffff",
-        }
-      }
-      tagName="p"
-      value="Get Stackable: Ultimate Gutenberg Blocks today.  Apart from adding new blocks, it gives Gutenberg users more options and settings to tinker with, expanding Gutenberg’s functionality."
-    />
-    <ButtonEdit
-      backgroundColor="#2091e1"
-      borderRadius={4}
-      color="#ffffff"
-      onChange={[Function]}
-      size="normal"
-      text="Button"
-    />
-  </div>
-</Fragment>
-`;
-
-exports[`Call to Action block save matches snapshots 1`] = `
+exports[`Call to Action block saved block HTML shouldn't change 1`] = `
 <div
-  className="ugb-cta"
+  className="wp-block-ugb-cta alignfull ugb-cta ugb--background-opacity-2 ugb-cta--design-design ugb--shadow-1 ugb--has-background ugb--has-background-image ugb--content-width className"
   style={
     Object {
-      "backgroundColor": "#f4f4f4",
+      "--ugb-background-color": "#123456",
+      "backgroundAttachment": "fixed",
+      "backgroundColor": "#123456",
+      "backgroundImage": "url(backgroundImageURL)",
+      "borderRadius": 6,
     }
   }
 >
-  <Unknown
-    className="ugb-cta-title"
-    style={
-      Object {
-        "color": "#23282d",
+  <div
+    className="ugb-content-wrapper"
+  >
+    <h3
+      className="ugb-cta__title"
+      style={
+        Object {
+          "color": "#123456",
+        }
       }
-    }
-    tagName="h3"
-    value="Get Started Today"
-  />
-  <Unknown
-    className="ugb-cta-bodyText"
-    style={
-      Object {
-        "color": "#ffffff",
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "ctaTitle",
+          }
+        }
+      />
+    </h3>
+    <p
+      className="ugb-cta__description"
+      style={
+        Object {
+          "color": "#123456",
+        }
       }
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "bodyText",
+          }
+        }
+      />
+    </p>
+    <div>
+      <a
+        className="ugb-button ugb-button--align-center ugb-button--size-size ugb-button--design-buttonDesign ugb-button--has-icon"
+        href="url"
+        style={
+          Object {
+            "backgroundColor": "#123456",
+            "borderColor": undefined,
+            "borderRadius": "2px",
+            "color": "#123456",
+          }
+        }
+        target="_blank"
+      >
+        <span
+          className="ugb-button--inner"
+          style={
+            Object {
+              "color": "#123456",
+            }
+          }
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "buttonText",
+              }
+            }
+          />
+        </span>
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Call to Action block saved default block HTML shouldn't change 1`] = `
+<div
+  className="wp-block-ugb-cta ugb-cta ugb--background-opacity-5"
+  style={
+    Object {
+      "--ugb-background-color": undefined,
+      "backgroundAttachment": undefined,
+      "backgroundColor": undefined,
+      "backgroundImage": undefined,
+      "borderRadius": undefined,
     }
-    tagName="p"
-    value="Get Stackable: Ultimate Gutenberg Blocks today.  Apart from adding new blocks, it gives Gutenberg users more options and settings to tinker with, expanding Gutenberg’s functionality."
-  />
-  <ButtonSave
-    backgroundColor="#2091e1"
-    borderRadius={4}
-    color="#ffffff"
-    size="normal"
-    text="Button"
-    url="http://www.gambit.ph/"
-  />
+  }
+>
+  <div
+    className="ugb-content-wrapper"
+  >
+    <h3
+      className="ugb-cta__title"
+      style={
+        Object {
+          "color": undefined,
+        }
+      }
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "Title for This Block",
+          }
+        }
+      />
+    </h3>
+    <p
+      className="ugb-cta__description"
+      style={
+        Object {
+          "color": undefined,
+        }
+      }
+    >
+      <div
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "Description for this block. Use this space for describing your block. Any text will do.",
+          }
+        }
+      />
+    </p>
+    <div>
+      <a
+        className="ugb-button ugb-button--align-center ugb-button--size-normal"
+        href=""
+        style={
+          Object {
+            "backgroundColor": undefined,
+            "borderColor": undefined,
+            "borderRadius": "4px",
+            "color": "#ffffff",
+          }
+        }
+      >
+        <span
+          className="ugb-button--inner"
+          style={
+            Object {
+              "color": "#ffffff",
+            }
+          }
+        >
+          <div
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "Button text",
+              }
+            }
+          />
+        </span>
+      </a>
+    </div>
+  </div>
 </div>
 `;

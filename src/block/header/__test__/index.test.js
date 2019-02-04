@@ -1,53 +1,37 @@
-import { edit, save } from '../index'
+import { blockEditableAfterSaveTests, blockMigrationTests, blockSaveSnapshotTests } from '@stackable/test/shared'
+import { name, settings } from '../'
+import deprecated from '../deprecated'
+import save from '../save'
 
-describe( 'Header', () => {
-	test( 'block edit matches snapshots', () => {
-		const wrapper = edit( {
-			isSelected: false,
-			attributes: {
-				title: 'Heading Title',
-				subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus congue tincidunt nisit ut pretium. Duis blandit, tortor et suscipit tincidunt, dolor metus mattis neque, ac varius magna nibh ac tortor.',
-				url: 'https://images.unsplash.com/photo-1506269351850-0428eaed2193?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a1512d7659e4817df8217cdb9aa09d7a&auto=format&fit=crop&w=1050&q=80',
-				buttonURL: 'http://www.gambit.ph/',
-				titleColor: '#ffffff',
-				subtitleColor: '#ffffff',
-				buttonText: 'Button',
-				buttonColor: '#2091e1',
-				buttonTextColor: '#ffffff',
-				size: 'normal',
-				cornerButtonRadius: 4,
-				contentAlign: 'center',
-				id: '',
-				backgroundColor: '#000000',
-				opacity: 5,
-			},
-		} )
-
-		expect( wrapper ).toMatchSnapshot()
+describe( `${ settings.title } block`, () => {
+	// Checks whether the save method has changed. This shouldn't change in the normal
+	// course of things. This should only change when the block receives an update.
+	// When the block gets an update, a new deprecation step should be added,
+	// and the snapshot updated.
+	blockSaveSnapshotTests.bind( this )( {
+		name,
+		settings,
+		save,
+		deprecated,
 	} )
 
-	test( 'block save matches snapshots', () => {
-		const wrapper = save( {
-			isSelected: false,
-			attributes: {
-				title: 'Heading Title',
-				subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus congue tincidunt nisit ut pretium. Duis blandit, tortor et suscipit tincidunt, dolor metus mattis neque, ac varius magna nibh ac tortor.',
-				url: 'https://images.unsplash.com/photo-1506269351850-0428eaed2193?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a1512d7659e4817df8217cdb9aa09d7a&auto=format&fit=crop&w=1050&q=80',
-				buttonURL: 'http://www.gambit.ph/',
-				titleColor: '#ffffff',
-				subtitleColor: '#ffffff',
-				buttonText: 'Button',
-				buttonColor: '#2091e1',
-				buttonTextColor: '#ffffff',
-				size: 'normal',
-				cornerButtonRadius: 4,
-				contentAlign: 'center',
-				id: '',
-				backgroundColor: '#000000',
-				opacity: 5,
-			},
-		} )
+	// Checks whether adding the block, saving it then refreshing the editor renders the block valid & editable.
+	// Checks whether adding the block, changing values, saving it then refreshing the editor renders the block valid & editable.
+	blockEditableAfterSaveTests.bind( this )( {
+		name,
+		settings,
+		save,
+		deprecated,
+	} )
 
-		expect( wrapper ).toMatchSnapshot()
+	// Checks whether saved HTML of older versioned blocks would migrate and remain valid & editable.
+	// Checks whether saved HTML of older versioned blocks with changed values, would migrate and remain valid & editable.
+	describe( 'Deprecated migration', () => {
+		blockMigrationTests.bind( this )( {
+			name,
+			settings,
+			save,
+			deprecated,
+		} )
 	} )
 } )

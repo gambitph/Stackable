@@ -1,209 +1,194 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Feature block edit matches snapshots 1`] = `
-<Fragment>
-  <BlockControls>
-    <AlignmentToolbar
-      onChange={[Function]}
-      value={undefined}
-    />
-  </BlockControls>
-  <InspectorControls>
-    <PanelBody>
-      <ToggleControl
-        checked={undefined}
-        label="Reverse Horizontally"
-        onChange={[Function]}
-      />
-      <RangeControl
-        help="The theme's content width may have an effect here."
-        label="Image Size"
-        max={600}
-        min={100}
-        onChange={[Function]}
-        value={undefined}
-      />
-    </PanelBody>
-    <PanelColorSettings
-      colorSettings={
-        Array [
-          Object {
-            "label": "Background Color",
-            "onChange": [Function],
-            "value": undefined,
-          },
-          Object {
-            "label": "Text Color",
-            "onChange": [Function],
-            "value": undefined,
-          },
-        ]
-      }
-      initialOpen={true}
-      title="Colors"
-    />
-    <PanelColorSettings
-      colorSettings={
-        Array [
-          Object {
-            "label": "Button Color",
-            "onChange": [Function],
-            "value": undefined,
-          },
-          Object {
-            "label": "Text Color",
-            "onChange": [Function],
-            "value": undefined,
-          },
-        ]
-      }
-      initialOpen={false}
-      title="Button Settings"
-    >
-      <SelectControl
-        label="Size"
-        onChange={[Function]}
-        options={
-          Array [
-            Object {
-              "label": "Small",
-              "value": "small",
-            },
-            Object {
-              "label": "Normal",
-              "value": "normal",
-            },
-            Object {
-              "label": "Medium",
-              "value": "medium",
-            },
-            Object {
-              "label": "Large",
-              "value": "large",
-            },
-          ]
-        }
-        value={undefined}
-      />
-      <RangeControl
-        label="Border Radius"
-        max="50"
-        min="1"
-        onChange={[Function]}
-        value={undefined}
-      />
-    </PanelColorSettings>
-  </InspectorControls>
-  <div
-    className="ugb-feature"
-    style={
-      Object {
-        "--image-size": undefined,
-        "backgroundColor": undefined,
-      }
-    }
-  >
-    <div
-      className="ugb-feature-wrapper"
-    >
-      <div>
-        <RichText
-          keepPlaceholderOnFocus={true}
-          onChange={[Function]}
-          placeholder="Feature Title"
-          style={
-            Object {
-              "color": undefined,
-            }
-          }
-          tagName="h2"
-          value={undefined}
-        />
-        <RichText
-          keepPlaceholderOnFocus={true}
-          onChange={[Function]}
-          placeholder="Some feature description for an awesome feature"
-          style={
-            Object {
-              "color": undefined,
-            }
-          }
-          tagName="p"
-          value={undefined}
-        />
-        <ButtonEdit
-          align={undefined}
-          backgroundColor={undefined}
-          borderRadius={undefined}
-          color={undefined}
-          onChange={[Function]}
-          size={undefined}
-          text={undefined}
-        />
-      </div>
-      <div
-        className="ugb-feature-image-side"
-      >
-        <MediaUpload
-          allowedTypes={
-            Array [
-              "image",
-            ]
-          }
-          onSelect={[Function]}
-          render={[Function]}
-          value={undefined}
-        />
-      </div>
-    </div>
-  </div>
-</Fragment>
-`;
-
-exports[`Feature block save all attributes matches snapshots 1`] = `
+exports[`Feature block saved block HTML shouldn't change 1`] = `
 <div
-  className="ugb-feature"
+  className="wp-block-ugb-feature alignfull ugb-feature ugb--background-opacity-2 ugb-feature--design-design ugb-feature--content-contentAlign ugb-feature--invert ugb--has-background ugb--has-background-image ugb--content-width ugb--shadow-1 className"
   style={
     Object {
-      "--image-size": undefined,
-      "backgroundColor": undefined,
+      "--image-size": "200px",
+      "--ugb-background-color": "#123456",
+      "backgroundAttachment": "fixed",
+      "backgroundColor": "#123456",
+      "backgroundImage": "url(backgroundImageURL)",
+      "borderRadius": 6,
     }
   }
 >
   <div
-    className="ugb-feature-wrapper"
+    className="ugb-content-wrapper"
   >
-    <div>
-      <Unknown
+    <div
+      className="ugb-feature__content"
+    >
+      <h2
+        className="ugb-feature__title"
         style={
           Object {
-            "color": undefined,
+            "color": "#123456",
           }
         }
-        tagName="h2"
-        value={undefined}
-      />
-      <Unknown
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "title",
+            }
+          }
+        />
+      </h2>
+      <p
+        className="ugb-feature__description"
         style={
           Object {
-            "color": undefined,
+            "color": "#123456",
           }
         }
-        tagName="p"
-        value={undefined}
-      />
-      <ButtonSave
-        align={undefined}
-        backgroundColor={undefined}
-        borderRadius={undefined}
-        color={undefined}
-        size={undefined}
-        text={undefined}
-        url={undefined}
-      />
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "description",
+            }
+          }
+        />
+      </p>
+      <div>
+        <a
+          className="ugb-button ugb-button--align-contentAlign ugb-button--size-buttonSize ugb-button--design-buttonDesign ugb-button--has-icon"
+          href="buttonURL"
+          style={
+            Object {
+              "backgroundColor": "#123456",
+              "borderColor": undefined,
+              "borderRadius": "2px",
+              "color": "#123456",
+            }
+          }
+          target="_blank"
+        >
+          <span
+            className="ugb-button--inner"
+            style={
+              Object {
+                "color": "#123456",
+              }
+            }
+          >
+            <div
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "buttonText",
+                }
+              }
+            />
+          </span>
+        </a>
+      </div>
     </div>
     <div
-      className="ugb-feature-image-side"
+      className="ugb-feature__image-side"
+    >
+      <img
+        alt="title"
+        className="ugb-feature__image"
+        src="https://imageUrl.com"
+        style={
+          Object {
+            "borderRadius": undefined,
+          }
+        }
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Feature block saved default block HTML shouldn't change 1`] = `
+<div
+  className="wp-block-ugb-feature ugb-feature ugb--background-opacity-5 ugb-feature--design-plain ugb-feature--content-left"
+  style={
+    Object {
+      "--image-size": "400px",
+      "--ugb-background-color": undefined,
+      "backgroundAttachment": undefined,
+      "backgroundColor": undefined,
+      "backgroundImage": undefined,
+      "borderRadius": undefined,
+    }
+  }
+>
+  <div
+    className="ugb-content-wrapper"
+  >
+    <div
+      className="ugb-feature__content"
+    >
+      <h2
+        className="ugb-feature__title"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Title for This Block",
+            }
+          }
+        />
+      </h2>
+      <p
+        className="ugb-feature__description"
+        style={
+          Object {
+            "color": undefined,
+          }
+        }
+      >
+        <div
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.",
+            }
+          }
+        />
+      </p>
+      <div>
+        <a
+          className="ugb-button ugb-button--align-left ugb-button--size-normal"
+          href=""
+          style={
+            Object {
+              "backgroundColor": undefined,
+              "borderColor": undefined,
+              "borderRadius": "4px",
+              "color": undefined,
+            }
+          }
+        >
+          <span
+            className="ugb-button--inner"
+            style={
+              Object {
+                "color": undefined,
+              }
+            }
+          >
+            <div
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "Button text",
+                }
+              }
+            />
+          </span>
+        </a>
+      </div>
+    </div>
+    <div
+      className="ugb-feature__image-side"
     />
   </div>
 </div>

@@ -31,18 +31,21 @@ export const schema = {
 		source: 'attribute',
 		selector: '.ugb-team-member__item:nth-child(1) .ugb-team-member__image',
 		attribute: 'data-src',
+		default: '',
 	},
 	mediaURL2: {
 		type: 'string',
 		source: 'attribute',
 		selector: '.ugb-team-member__item:nth-child(2) .ugb-team-member__image',
 		attribute: 'data-src',
+		default: '',
 	},
 	mediaURL3: {
 		type: 'string',
 		source: 'attribute',
 		selector: '.ugb-team-member__item:nth-child(3) .ugb-team-member__image',
 		attribute: 'data-src',
+		default: '',
 	},
 	name1: {
 		source: 'html',

@@ -24,4 +24,13 @@ module.exports = {
 	transformIgnorePatterns: [
 		'<rootDir>/node_modules/(?!simple-html-tokenizer)',
 	],
+
+	// All relevant code should be included in coverage.
+	collectCoverageFrom: [
+		'src/(block|components|icons|welcome)/**/*.js',
+		'!src/block/ghost-button/**/*', // Deprecated block, don't test anymore.
+		'!src/block/pullquote/**/*', // Deprecated block, don't test anymore.
+	],
+
+	testMatch: [ '**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)' ],
 }

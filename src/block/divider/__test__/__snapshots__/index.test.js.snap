@@ -1,70 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Divider Block block edit matches snapshot 1`] = `
-<Fragment>
-  <BlockControls>
-    <AlignmentToolbar
-      onChange={[Function]}
-      value="center"
-    />
-  </BlockControls>
-  <InspectorControls>
-    <PanelBody>
-      <RangeControl
-        label="Height"
-        max="10"
-        min="1"
-        onChange={[Function]}
-        value={1}
-      />
-      <RangeControl
-        label="Width"
-        max="100"
-        min="10"
-        onChange={[Function]}
-        step="0.1"
-        value={50}
-      />
-    </PanelBody>
-    <PanelColorSettings
-      colorSettings={
-        Array [
-          Object {
-            "label": "Divider Color",
-            "onChange": [Function],
-            "value": "#dddddd",
-          },
-        ]
-      }
-      title="Color Settings"
-    />
-  </InspectorControls>
-  <div
-    className="ugb-divider"
+exports[`Divider block saved block HTML shouldn't change 1`] = `
+<div
+  className="ugb-divider"
+>
+  <hr
+    align="alignment"
     style={
       Object {
-        "paddingBottom": 8,
-        "paddingTop": 8,
+        "backgroundColor": "#123456",
+        "height": 0,
+        "width": "25%",
       }
     }
-  >
-    <hr
-      align="center"
-      style={
-        Object {
-          "backgroundColor": "#dddddd",
-          "height": 1,
-          "marginBottom": 0,
-          "marginTop": 0,
-          "width": "50%",
-        }
-      }
-    />
-  </div>
-</Fragment>
+  />
+</div>
 `;
 
-exports[`Divider Block block save matches snapshot 1`] = `
+exports[`Divider block saved default block HTML shouldn't change 1`] = `
 <div
   className="ugb-divider"
 >
