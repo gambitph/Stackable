@@ -55,6 +55,7 @@
     "css-mqpacker": "^7.0.0",
     "cssnano": "^4.1.8",
     "delete-empty": "^2.0.0",
+    "dom-testing-library": "^3.16.5",
     "enzyme": "^3.3.0",
     "eslint": "^5.10.0",
     "eslint-plugin-jest": "^22.2.1",

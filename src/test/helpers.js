@@ -1,4 +1,9 @@
-import { createBlock, registerBlockType, unregisterBlockType } from '@wordpress/blocks'
+import {
+	createBlock,
+	getSaveContent,
+	registerBlockType,
+	unregisterBlockType,
+} from '@wordpress/blocks'
 
 export const getDefaultAttributes = ( blockName, blockSettings ) => {
 	if ( typeof blockSettings.save === 'undefined' ) {
@@ -10,6 +15,34 @@ export const getDefaultAttributes = ( blockName, blockSettings ) => {
 	unregisterBlockType( blockName )
 
 	return attributes
+}
+
+export const getSavedBlockHTML = props => {
+	const {
+		name,
+		settings,
+		save,
+		attributes = {},
+	} = props
+
+	const blockSettings = {
+		...settings,
+		category: 'common',
+		save,
+	}
+
+	const renderAttributes = {
+		...getDefaultAttributes( name, blockSettings ),
+		...attributes,
+	}
+
+	return getSaveContent(
+		{
+			...blockSettings,
+			name,
+		},
+		renderAttributes,
+	)
 }
 
 export const createAttributeValues = ( schema, blockSettings ) => {
