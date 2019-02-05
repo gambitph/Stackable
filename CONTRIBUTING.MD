@@ -1,7 +1,7 @@
 👋 Hello!
 =========
 
-> Hold up! This document is a work in progress. It's currently a mixture of an outline & dev notes. We'll Tweet when it's ready, [so follow us](https://twitter.com/wpstackable).
+> Hold up! This document is a work in progress. It's currently a mixture of an outline & dev notes. We'll [Tweet](https://twitter.com/wpstackable) when it's ready, [so follow us](https://twitter.com/wpstackable).
 
 We're thrilled that you want to help out in Stackable. This document should help you get started with everything you need.
 
@@ -193,7 +193,7 @@ This is to prevent errors when upgrading Stackable.
 
 ### Block Testing
 
-Block testing is done in 3 steps, and covers the entirety of a block's codebase.
+Block testing is done in 4 steps, and covers the entirety of a block's codebase.
 
 #### 1. Save & Deprecation Tests
 
@@ -220,6 +220,18 @@ No React / Enzyme here since the we assume here that the HTML code already exist
 #### 3. Edit Tests
 
 TBA
+
+> Test `edit.js` of block code.
+
+#### 4. Frontend Visual Tests
+
+TBA
+
+> Purpose: streamlined visual testing of block frontend final renders.
+>
+> Produce a visual compilation of the different deprecated frontend saved HTML.
+>
+> Output an HTML containing the saved block HTMLs + Block frontend CSS + Block frontend JS + Stackable's general CSS. All blocks should be working, with default / filled in attribute values. For easy manual visual inspection.
 
 ### Component Testing
 
