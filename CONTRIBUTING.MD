@@ -1,5 +1,18 @@
-Starting Development
-====================
+👋 Hello!
+=========
+
+We're thrilled that you want to help out in Stackable. This document should help you get started with everything you need.
+
+🙋‍ Ways You Can Contribute
+==========================
+
+There are lots of ways to contribute, you don't need to be a coding genius to help out. Here's a few things we need help on:
+
+- Fixing Bugs
+- 📑 Writing Documentation
+
+👨‍💻 Starting Development
+=======================
 
 Installation:
 
@@ -13,7 +26,7 @@ Start development:
 $ npm run start
 ```
 
-BUILDING
+🏢 Building
 ========
 
 When building, the plugin will be placed in the **build** directory afterwards.
@@ -34,7 +47,7 @@ Download the FREE build and commit that to WP.org.
 
 Note: There is no direct build process for FREE.
 
-Development
+💻 Development
 ===========
 
 `init.php`
@@ -66,7 +79,7 @@ Scripts for the block in the frontend.
 
 Styles for the block in the frontend.
 
-DEPRECATING: Adding New Features / Attributes to Blocks
+🏚 DEPRECATING: Adding New Features / Attributes to Blocks
 =======================================================
 
 Gutenberg has a block [deprecation system](https://wordpress.org/gutenberg/handbook/block-api/deprecated-blocks/) in place that we use. We also have a few steps that we need to perform in order to maintain a clean code structure.
@@ -115,7 +128,7 @@ export const deprecatedSchema_1_5 = {
 
 Note that any functions created and used in the deprecated `save` function and `attributes` list should be copied into `deprecated.js` and follow the `deprecatedName_#_#` convention as well. This is to ensure that all deprecated code will continue to work.
 
-IMPORTANT NOTES
+🚨 IMPORTANT NOTES
 ===============
 
 * When creating new files, be sure to re-run `npm run start`
@@ -164,3 +177,52 @@ IMPORTANT NOTES
 
 * ALWAYS add default values when using block attributes in `edit()` and `save()` methods.
 This is to prevent errors when upgrading Stackable.
+
+📐 Design Rules
+============
+
+TBA.
+
+> But use https://github.com/CocoaPods/CocoaPods/wiki/Communication-&-Design-Rules for inspiration
+
+📝 Writing Tests
+=============
+
+### Block Testing
+
+Block testing is done in 3 steps, and covers the entirety of a block's codebase.
+
+#### 1. Save & Deprecation Tests
+
+The tests for this reside in `__test__/index.test.js` and covers the following tests:
+- Snapshot of the block with default attributes
+- Snapshot of the block with all modified attributes
+- Adding a block ➡️ Saving ️➡️ Editing again
+- Adding a block ➡️ Modifying attributes ➡️ Saving ➡️ Editing again
+- Adding a deprecated block ➡️ Migrating to the latest version ➡️ Editing
+- Adding a deprecated block with modified attributes ➡️ Migrating to the latest version ➡️ Editing
+
+This is the easiest of the tests to implement since this will mostly be copying and pasting from other existing blocks.
+
+#### 2. Frontend Tests
+
+The tests for this reside in `__test__/frontend.test.js` and handles all the frontend JS code if the block has them.
+
+If a block has a `frontend.js` script that runs when the post is loaded, then we'll need to test everything in that script.
+
+Testing frontend code is done using Vanilla JS + [dom-testing-library](https://github.com/kentcdodds/dom-testing-library).
+
+No React / Enzyme here since the we assume here that the HTML code already exists and the frontend code simply attaches to the already present HTML - just like how it is in actual webpages.
+
+#### 3. Edit Tests
+
+TBA
+
+### Component Testing
+
+TBA
+
+📑 Writing Documentation
+========================
+
+TBA
