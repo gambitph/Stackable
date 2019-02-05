@@ -1,15 +1,29 @@
 👋 Hello!
 =========
 
+> Hold up! This document is a work in progress. It's currently a mixture of an outline & dev notes. We'll Tweet when it's ready, [so follow us](https://twitter.com/wpstackable).
+
 We're thrilled that you want to help out in Stackable. This document should help you get started with everything you need.
 
 🙋‍ Ways You Can Contribute
 ==========================
 
-There are lots of ways to contribute, you don't need to be a coding genius to help out. Here's a few things we need help on:
+There are lots of ways to contribute, you don't even have to know code to help out. Here's a few things we need help on:
 
-- Fixing Bugs
+- Answering Questions
 - [Writing Documentation](#-writing-documentation)
+- [Designing New Blocks](#-design-rules)
+- [Suggesting New Features](#-design-rules)
+- Contributing Code / Fixing Bugs
+- Writing Tests
+- Spreading the Word
+
+📐 Design Rules
+============
+
+TBA.
+
+> But use https://github.com/CocoaPods/CocoaPods/wiki/Communication-&-Design-Rules for inspiration
 
 👨‍💻 Starting Development
 =======================
@@ -27,28 +41,24 @@ $ npm run start
 ```
 
 🏢 Building
-========
+===========
 
-When building, the plugin will be placed in the **build** directory afterwards.
-
-You can zip the folder inside the **build** directory and it will be ready for distribution.
-
-#### To build for PRO distribution:
+Simply run:
 
 `npm run build`
 
-Then upload to Freemius.
+The built plugin will be placed in the **build** directory.
 
-#### To build for FREE WP.org distribution:
+Zip the folder inside the **build** directory to get the plugin installable zip file.
 
-Perform the PRO distribution above, and let Freemius generate the FREE build.
+### To build for WP.org distribution:
+
+Build, then upload to Freemius, and let Freemius generate the build.
 
 Download the FREE build and commit that to WP.org.
 
-Note: There is no direct build process for FREE.
-
 💻 Development
-===========
+==============
 
 `init.php`
 
@@ -177,13 +187,6 @@ Note that any functions created and used in the deprecated `save` function and `
 
 * ALWAYS add default values when using block attributes in `edit()` and `save()` methods.
 This is to prevent errors when upgrading Stackable.
-
-📐 Design Rules
-============
-
-TBA.
-
-> But use https://github.com/CocoaPods/CocoaPods/wiki/Communication-&-Design-Rules for inspiration
 
 📝 Writing Tests
 =============
