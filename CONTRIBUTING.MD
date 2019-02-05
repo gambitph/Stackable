@@ -9,7 +9,7 @@ We're thrilled that you want to help out in Stackable. This document should help
 There are lots of ways to contribute, you don't need to be a coding genius to help out. Here's a few things we need help on:
 
 - Fixing Bugs
-- 📑 Writing Documentation
+- [Writing Documentation](#-writing-documentation)
 
 👨‍💻 Starting Development
 =======================
