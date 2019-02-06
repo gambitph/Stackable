@@ -43,7 +43,9 @@ $ npm run start
 🏢 Building
 ===========
 
-Simply run:
+Increment the version number in the header of `plugin.php`, e.g. `1.12.2` (the other version numbers in other places will match this)
+
+Then run:
 
 `npm run build`
 
