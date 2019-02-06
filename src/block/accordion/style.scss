@@ -46,7 +46,10 @@
 	transition: max-height 0.6s linear, transform 0.4s ease-in-out, opacity 0.3s ease-in-out, margin 0.1s linear;
 	transform: translateY(0);
 	opacity: 1;
-	margin: $box-hori-padding $box-hori-padding 0 !important;
+	margin-top: $box-hori-padding !important;
+	margin-bottom: 0 !important;
+	margin-left: $box-hori-padding;
+	margin-right: $box-hori-padding;
 }
 body:not(.wp-admin) .ugb-accordion:not(.ugb-accordion--open) .ugb-accordion__text {
 	max-height: 0;
