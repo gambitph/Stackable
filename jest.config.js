@@ -1,10 +1,13 @@
 const test = require( '@wordpress/jest-preset-default/jest-preset.json' )
 const { omit } = require( 'lodash' )
+const path = require( 'path' )
 
 module.exports = {
 
 	// Remove deprecated: Option 'setupTestFrameworkScriptFile' was replaced by configuration 'setupFilesAfterEnv', which supports multiple paths.
 	...omit( test, 'setupTestFrameworkScriptFile' ),
+
+	rootDir: path.resolve( __dirname ),
 
 	// Override the setup with some of our own stuff.
 	setupFilesAfterEnv: [
