@@ -12,6 +12,7 @@ const save = props => {
 		invert,
 		contentAlign,
 		textColor,
+		imageAlt = '',
 		imageSize,
 		imageUrl,
 		title,
@@ -110,7 +111,7 @@ const save = props => {
 							className={ imageClasses }
 							style={ imageStyle }
 							src={ imageUrl }
-							alt={ striptags( title ) }
+							alt={ striptags( title ? title : imageAlt ) }
 						/>
 					) }
 				</div>

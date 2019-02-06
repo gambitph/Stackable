@@ -149,10 +149,18 @@ const edit = props => {
 										imageID={ imageID }
 										imageURL={ imageUrl }
 										onRemove={ () => {
-											setAttributes( { [ `imageUrl${ i }` ]: '', [ `imageID${ i }` ]: '' } )
+											setAttributes( {
+												[ `imageUrl${ i }` ]: '',
+												[ `imageID${ i }` ]: '',
+												[ `imageAlt${ i }` ]: '',
+											} )
 										} }
-										onChange={ ( { url, id } ) => {
-											setAttributes( { [ `imageUrl${ i }` ]: url, [ `imageID${ i }` ]: id } )
+										onChange={ ( { url, id, alt } ) => {
+											setAttributes( {
+												[ `imageUrl${ i }` ]: url,
+												[ `imageID${ i }` ]: id,
+												[ `imageAlt${ i }` ]: alt,
+											} )
 										} }
 										render={ <img src={ imageUrl } alt={ title } /> }
 										style={ {

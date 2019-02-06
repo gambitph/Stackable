@@ -42,6 +42,7 @@ const save = props => {
 		<div className={ mainClasses }>
 			{ range( 1, columns + 1 ).map( i => {
 				const imageUrl = attributes[ `imageUrl${ i }` ]
+				const imageAlt = attributes[ `imageAlt${ i }` ]
 				const title = attributes[ `title${ i }` ]
 				const description = attributes[ `description${ i }` ]
 				const linkUrl = attributes[ `linkUrl${ i }` ]
@@ -51,7 +52,11 @@ const save = props => {
 					<div className={ itemClasses } style={ itemStyle } key={ i }>
 						{ imageUrl &&
 							<div className="ugb-feature-grid__image">
-								<img src={ imageUrl } style={ { width: `${ imageSize }%` } } alt={ striptags( title ) } />
+								<img
+									src={ imageUrl }
+									style={ { width: `${ imageSize }%` } }
+									alt={ striptags( title ? title : imageAlt ) }
+								/>
 							</div>
 						}
 						<div className="ugb-feature-grid__content">

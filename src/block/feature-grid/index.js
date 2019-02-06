@@ -38,6 +38,15 @@ export const schema = {
 	imageUrl3: {
 		type: 'url',
 	},
+	imageAlt1: {
+		type: 'string',
+	},
+	imageAlt2: {
+		type: 'string',
+	},
+	imageAlt3: {
+		type: 'string',
+	},
 	title1: {
 		source: 'html',
 		selector: '.ugb-feature-grid__item:nth-child(1) .ugb-feature-grid__title',

@@ -231,10 +231,10 @@ const edit = props => {
 							className={ imageClasses }
 							style={ imageStyle }
 							onRemove={ () => {
-								setAttributes( { imageUrl: '', imageID: '' } )
+								setAttributes( { imageUrl: '', imageID: '', imageAlt: '' } )
 							} }
-							onChange={ ( { url, id } ) => {
-								setAttributes( { imageUrl: url, imageID: id } )
+							onChange={ ( { url, id, alt } ) => {
+								setAttributes( { imageUrl: url, imageID: id, imageAlt: alt } )
 							} }
 							render={ <img src={ imageUrl } alt={ __( 'feature' ) } /> }
 						/>
