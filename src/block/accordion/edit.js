@@ -35,21 +35,23 @@ const edit = props => {
 	const mainClasses = classnames( [
 		className,
 		'ugb-accordion',
-	], {
+	], applyFilters( 'stackable.accordion.mainclasses', {
 		[ `ugb-accordion--design-${ design }` ]: design !== 'basic',
 		'ugb-accordion--open': openStart,
-	} )
+	}, props ) )
+
+	const mainStyles = applyFilters( 'stackable.accordion.mainstyles', {}, props )
 
 	const headingClasses = classnames( [
 		'ugb-accordion__heading',
-	], {
+	], applyFilters( 'stackable.accordion.headingclasses', {
 		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-	} )
+	}, props ) )
 
-	const headingStyles = {
+	const headingStyles = applyFilters( 'stackable.accordion.headingstyles', {
 		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
 		backgroundColor: design !== 'plain' && headingBackgroundColor ? headingBackgroundColor : undefined,
-	}
+	}, props )
 
 	return (
 		<Fragment>
@@ -112,8 +114,8 @@ const edit = props => {
 					/>
 				</PanelColorSettings>
 			</InspectorControls>
-			<div className={ mainClasses }>
-				<div className={ headingClasses } style={ headingStyles } >
+			<div className={ mainClasses } style={ mainStyles }>
+				<div className={ headingClasses } style={ headingStyles }>
 					<RichText
 						tagName="h4"
 						value={ heading }

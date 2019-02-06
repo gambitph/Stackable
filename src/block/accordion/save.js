@@ -1,3 +1,4 @@
+import { applyFilters } from '@wordpress/hooks'
 import { ArrowIcon } from './index'
 import classnames from 'classnames'
 import { RichText } from '@wordpress/editor'
@@ -19,24 +20,26 @@ const save = props => {
 	const mainClasses = classnames( [
 		className,
 		'ugb-accordion',
-	], {
+	], applyFilters( 'stackable.accordion.mainclasses', {
 		[ `ugb-accordion--design-${ design }` ]: design !== 'basic',
 		'ugb-accordion--open': openStart,
-	} )
+	}, props ) )
+
+	const mainStyles = applyFilters( 'stackable.accordion.mainstyles', {}, props )
 
 	const headingClasses = classnames( [
 		'ugb-accordion__heading',
-	], {
+	], applyFilters( 'stackable.accordion.headingclasses', {
 		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-	} )
+	}, props ) )
 
-	const headingStyles = {
+	const headingStyles = applyFilters( 'stackable.accordion.headingstyles', {
 		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
 		backgroundColor: design !== 'plain' && headingBackgroundColor ? headingBackgroundColor : undefined,
-	}
+	}, props )
 
 	return (
-		<div className={ mainClasses } role="presentation">
+		<div className={ mainClasses } style={ mainStyles } role="presentation">
 			<div className={ headingClasses }
 				role="button"
 				tabIndex="0"
