@@ -29,6 +29,9 @@ export const schema = {
 	imageUrl: {
 		type: 'url',
 	},
+	imageAlt: {
+		type: 'string',
+	},
 	title: {
 		source: 'html',
 		selector: 'h2',

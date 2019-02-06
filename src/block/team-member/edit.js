@@ -154,10 +154,16 @@ const edit = props => {
 								imageID={ mediaID }
 								imageURL={ mediaURL }
 								onRemove={ () => {
-									setAttributes( { [ `mediaURL${ i }` ]: '', [ `mediaID${ i }` ]: '' } )
+									setAttributes( {
+										[ `mediaURL${ i }` ]: '',
+										[ `mediaID${ i }` ]: '',
+									} )
 								} }
 								onChange={ ( { url, id } ) => {
-									setAttributes( { [ `mediaURL${ i }` ]: url, [ `mediaID${ i }` ]: id } )
+									setAttributes( {
+										[ `mediaURL${ i }` ]: url,
+										[ `mediaID${ i }` ]: id,
+									} )
 								} }
 								hasRemove={ false }
 							/>

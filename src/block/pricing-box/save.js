@@ -55,11 +55,12 @@ const save = props => {
 				const buttonText = attributes[ `buttonText${ index }` ]
 				const description = attributes[ `featureList${ index }` ]
 				const imageURL = attributes[ `imageURL${ index }` ]
+				const imageAlt = attributes[ `imageAlt${ index }` ]
 				return (
 					<div className={ boxClasses } style={ boxStyle } key={ i }>
 						{ imageURL &&
 							<div className="ugb-pricing-grid__image">
-								<img src={ imageURL } alt={ striptags( title ) } />
+								<img src={ imageURL } alt={ striptags( title ? title : imageAlt ) } />
 							</div>
 						}
 						{ ! RichText.isEmpty( title ) && (
