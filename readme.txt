@@ -4,7 +4,7 @@ Tags: gutenberg, block, blocks, block editor, gutenberg blocks, page builder, ed
 Requires at least: 4.8
 Tested up to: 5.0.3
 Requires PHP: 5.3
-Stable tag: 1.12.0
+Stable tag: 1.12.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -119,6 +119,7 @@ You will have to redo all your blocks
 == Changelog ==
 
 = 1.12.1 =
+* Fixed: Img tags will now use the image's alt value if the block has no title
 * Fixed: Open in New Tab option for Header Block didn't work
 * Fixed: Editing the HTML content of the Accordion block & Notification block makes the block error out.
 * Fixed: Deprecation issues with regards to the `align` attribute in many blocks
