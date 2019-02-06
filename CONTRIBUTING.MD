@@ -193,9 +193,9 @@ This is to prevent errors when upgrading Stackable.
 
 ### Block Testing
 
-Block testing is done in 4 steps, and covers the entirety of a block's codebase.
+Block testing is done in 5 steps, and covers the entirety of a block's codebase.
 
-#### 1. Save & Deprecation Tests
+#### 1. Block Validation Tests
 
 The tests for this reside in `__test__/index.test.js` and covers the following tests:
 - Snapshot of the block with default attributes
@@ -219,13 +219,19 @@ No React / Enzyme here since the we assume here that the HTML code already exist
 
 #### 3. Edit Tests
 
-TBA
+The tests for this reside in `__test__/edit.test.js` and handles all the editing form `edit.js` of the block.
 
-> Test `edit.js` of block code.
+> This part is still incomplete
 
-#### 4. Frontend Visual Tests
+#### 4. Save Tests
 
-TBA
+The tests for this reside in `__test__/save.test.js` and ensures that the saved block HTML from `save.js` is correct. E.g. images always have `alt` attributes and bug fix tests.
+
+> This part is still incomplete
+
+#### 5. Frontend Visual Tests
+
+> This part is still incomplete
 
 > Purpose: streamlined visual testing of block frontend final renders.
 >
