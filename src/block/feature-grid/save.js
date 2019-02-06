@@ -52,10 +52,10 @@ const save = props => {
 					<div className={ itemClasses } style={ itemStyle } key={ i }>
 						{ imageUrl &&
 							<div className="ugb-feature-grid__image">
-								<img 
-									src={ imageUrl } 
-									style={ { width: `${ imageSize }%` } } 
-									alt={ striptags( title ? title : imageAlt ) } 
+								<img
+									src={ imageUrl }
+									style={ { width: `${ imageSize }%` } }
+									alt={ striptags( title ? title : imageAlt ) }
 								/>
 							</div>
 						}
