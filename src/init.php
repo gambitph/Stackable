@@ -22,8 +22,6 @@ if ( ! function_exists( 'stackable_block_assets' ) ) {
 	*/
 	function stackable_block_assets() {
 
-		$plugin_path  = trailingslashit( plugin_dir_path( STACKABLE_FILE ) );
-
 		// Frontend block styles.
 		wp_enqueue_style(
 			'ugb-style-css',
@@ -41,30 +39,6 @@ if ( ! function_exists( 'stackable_block_assets' ) ) {
 				STACKABLE_VERSION
 			);
 		}
-
-		// Premium specific stuff.
-		if ( sugb_fs()->is__premium_only() ) {
-
-			if ( file_exists( $plugin_path . 'dist/frontend_blocks__premium_only.css' ) ) {
-				wp_enqueue_style(
-					'ugb-style-css-premium',
-					plugins_url( 'dist/frontend_blocks__premium_only.css', STACKABLE_FILE ),
-					array( 'ugb-style-css' ),
-					STACKABLE_VERSION
-				);
-			}
-
-			if ( file_exists( $plugin_path . 'dist/frontend_blocks__premium_only.js' ) ) {
-				if ( ! is_admin() ) {
-					wp_enqueue_script(
-						'ugb-block-frontend-js-premium',
-						plugins_url( 'dist/frontend_blocks__premium_only.js', STACKABLE_FILE ),
-						array( 'ugb-block-frontend-js' ),
-						STACKABLE_VERSION
-					);
-				}
-			}
-		}
 	}
 	add_action( 'enqueue_block_assets', 'stackable_block_assets' );
 }
@@ -77,8 +51,6 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 	 * @since 0.1
 	 */
 	function stackable_block_editor_assets() {
-
-		$plugin_path  = trailingslashit( plugin_dir_path( STACKABLE_FILE ) );
 
 		// Backend editor scripts: common vendor files.
 		wp_enqueue_script(
@@ -103,28 +75,6 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 			array( 'wp-edit-blocks' ),
 			STACKABLE_VERSION
 		);
-
-		// Premium specific stuff.
-		if ( sugb_fs()->is__premium_only() ) {
-
-			if ( file_exists( $plugin_path . 'dist/editor_blocks__premium_only.js' ) ) {
-				wp_enqueue_script(
-					'ugb-block-js-premium',
-					plugins_url( 'dist/editor_blocks__premium_only.js', STACKABLE_FILE ),
-					array( 'ugb-block-js' ),
-					STACKABLE_VERSION
-				);
-			}
-
-			if ( file_exists( $plugin_path . 'dist/editor_blocks__premium_only.css' ) ) {
-				wp_enqueue_style(
-					'ugb-block-editor-css-premium',
-					plugins_url( 'dist/editor_blocks__premium_only.css', STACKABLE_FILE ),
-					array( 'ugb-block-editor-css' ),
-					STACKABLE_VERSION
-				);
-			}
-		}
 
 		global $content_width;
 		wp_localize_script( 'ugb-block-js', 'stackable', array(
