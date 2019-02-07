@@ -82,14 +82,14 @@ export const _edit = props => {
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ [
+				options={ applyFilters( 'stackable.blogposts.edit.designs', [
 					{
 						label: 'Basic', value: 'basic', image: ImageDesignBasic,
 					},
 					{
 						label: 'List', value: 'list', image: ImageDesignList,
 					},
-				] }
+				] ) }
 				onChange={ design => {
 					setAttributes( { design } )
 				} }
@@ -135,18 +135,22 @@ export const _edit = props => {
 					checked={ displayTitle }
 					onChange={ displayTitle => setAttributes( { displayTitle } ) }
 				/>
-				<ToggleControl
-					label={ __( 'Display Featured Image' ) }
-					checked={ displayFeaturedImage }
-					onChange={ displayFeaturedImage => setAttributes( { displayFeaturedImage } ) }
-				/>
-				{ displayFeaturedImage &&
-				<SelectControl
-					label={ __( 'Featured Image Shape' ) }
-					options={ featuredImageShapes }
-					value={ featuredImageShape }
-					onChange={ featuredImageShape => setAttributes( { featuredImageShape } ) }
-				/>
+				{ applyFilters( 'stackable.blogposts.edit.show-featured-image', true, props ) &&
+					<Fragment>
+						<ToggleControl
+							label={ __( 'Display Featured Image' ) }
+							checked={ displayFeaturedImage }
+							onChange={ displayFeaturedImage => setAttributes( { displayFeaturedImage } ) }
+						/>
+						{ displayFeaturedImage &&
+						<SelectControl
+							label={ __( 'Featured Image Shape' ) }
+							options={ featuredImageShapes }
+							value={ featuredImageShape }
+							onChange={ featuredImageShape => setAttributes( { featuredImageShape } ) }
+						/>
+						}
+					</Fragment>
 				}
 				<ToggleControl
 					label={ __( 'Display Excerpt' ) }
@@ -248,6 +252,7 @@ export const _edit = props => {
 							</a>
 						</figure>
 					)
+					const image = featuredImageSrc ? featuredImageSrc : ''
 					const author = displayAuthor && post.author_info && (
 						<span>{ post.author_info.name }</span>
 					)
@@ -297,6 +302,7 @@ export const _edit = props => {
 					const passedProps = {
 						...props,
 						i,
+						image,
 						featuredImageSrc,
 						category,
 						featuredImage,

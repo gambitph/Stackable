@@ -80,7 +80,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
                         esc_attr( get_the_title( $post_id ) )
                     );
                 }
-            }
+			}
 
             // Author.
             $author = '';
@@ -180,6 +180,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 
             // Let others change the saved markup.
             $props = array(
+				'post_id' => $post_id,
                 'attributes' => $attributes,
                 'category' => $category,
                 'featured_image' => $featured_image,
