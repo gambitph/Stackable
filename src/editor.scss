@@ -12,6 +12,11 @@ $effect-transition: color 0.2s ease-in-out, opacity 0.2s ease-in-out, background
 	transition: $effect-transition;
 }
 
+// Full-widths should be on top of each other in the editor.
+[data-type^="ugb/"][data-align="full"] + [data-type^="ugb/"][data-align="full"] {
+	margin-top: -32px;
+}
+
 // Stackable gradient fill. Works in tandem with icons.js
 svg.ugb-stackable-icon-gradient {
 	fill: url(#stackable-gradient) !important;

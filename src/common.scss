@@ -85,9 +85,9 @@ $box-vert-padding: 60px;
 	align-items: center;
 }
 
-// Full-widths should be on top of each other in the editor.
-[data-type^="ugb/"][data-align="full"] + [data-type^="ugb/"][data-align="full"] {
-	margin-top: -32px;
+// Full-widths should be on top of each other.
+[class*="ugb-"].alignfull + [class*="ugb-"].alignfull {
+    margin-top: -1.5em;
 }
 
 // Different box shadows for the shadow setting.
