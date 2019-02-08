@@ -1,5 +1,5 @@
 import {
-	DesignPanelBody, PanelBackgroundSettings, ProControl,
+	ColorPaletteControl, DesignPanelBody, PanelBackgroundSettings, ProControl,
 } from '@stackable/components'
 import {
 	InspectorControls, PanelColorSettings, RichText,
@@ -43,21 +43,21 @@ const edit = props => {
 		'ugb-countup--v3', // For backward compatibility.
 		`ugb-countup--columns-${ columns }`,
 		'ugb--background-opacity-' + ( 1 * Math.round( backgroundOpacity / 1 ) ),
-	], {
+	], applyFilters( 'stackable.count-up.mainclasses', {
 		// 'ugb-has-background': backgroundColor || backgroundImageURL,
 		'ugb--has-background-image': backgroundImageURL,
 		[ `ugb--content-width` ]: align === 'full' && contentWidth,
 		[ `ugb-countup--design-${ design }` ]: design !== 'plain',
-		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-	} )
+		[ `ugb--shadow-${ shadow }` ]: design === 'basic' && shadow !== 3,
+	}, design, props ) )
 
-	const mainStyle = {
-		backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
-		backgroundImage: design !== 'plain' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
+	const mainStyle = applyFilters( 'stackable.count-up.mainstyle', {
+		backgroundColor: design === 'basic' && backgroundColor ? backgroundColor : undefined,
+		backgroundImage: design === 'basic' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
 		backgroundAttachment: fixedBackground ? 'fixed' : undefined,
-		'--ugb-background-color': design !== 'plain' && backgroundImageURL ? backgroundColor : undefined,
-		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
-	}
+		'--ugb-background-color': design === 'basic' && backgroundImageURL ? backgroundColor : undefined,
+		borderRadius: design === 'basic' && borderRadius !== 12 ? borderRadius : undefined,
+	}, design, props )
 
 	const countStyle = {
 		color: countColor ? countColor : undefined,
@@ -77,39 +77,49 @@ const edit = props => {
 						const title = attributes[ `title${ i }` ]
 						const description = attributes[ `description${ i }` ]
 						const countText = attributes[ `countText${ i }` ]
-						return (
+
+						const titleComp = <RichText
+							tagName="h4"
+							className="ugb-countup__title"
+							value={ title }
+							placeholder={ __( 'Title' ) }
+							onChange={ value => setAttributes( { [ `title${ i }` ]: value } ) }
+							style={ { color: textColor ? textColor : undefined } }
+							keepPlaceholderOnFocus
+						/>
+						const countComp = <RichText
+							tagName="div"
+							className="ugb-countup__counter"
+							placeholder="1,234"
+							data-duration="1000"
+							data-delay="16"
+							value={ countText }
+							onChange={ value => setAttributes( { [ `countText${ i }` ]: value } ) }
+							style={ countStyle }
+							keepPlaceholderOnFocus
+						/>
+						const descriptionComp = <RichText
+							tagName="p"
+							className="ugb-countup__description"
+							placeholder={ __( 'Description' ) }
+							value={ description }
+							onChange={ value => setAttributes( { [ `description${ i }` ]: value } ) }
+							style={ { color: textColor ? textColor : undefined } }
+							keepPlaceholderOnFocus
+						/>
+						const comps = {
+							i,
+							titleComp,
+							countComp,
+							descriptionComp,
+						}
+						return applyFilters( 'stackable.count-up.edit.output', (
 							<div className="ugb-countup__item" key={ i }>
-								<RichText
-									tagName="h4"
-									className="ugb-countup__title"
-									value={ title }
-									placeholder={ __( 'Title' ) }
-									onChange={ value => setAttributes( { [ `title${ i }` ]: value } ) }
-									style={ { color: textColor ? textColor : undefined } }
-									keepPlaceholderOnFocus
-								/>
-								<RichText
-									tagName="div"
-									className="ugb-countup__counter"
-									placeholder="1,234"
-									data-duration="1000"
-									data-delay="16"
-									value={ countText }
-									onChange={ value => setAttributes( { [ `countText${ i }` ]: value } ) }
-									style={ countStyle }
-									keepPlaceholderOnFocus
-								/>
-								<RichText
-									tagName="p"
-									className="ugb-countup__description"
-									placeholder={ __( 'Description' ) }
-									value={ description }
-									onChange={ value => setAttributes( { [ `description${ i }` ]: value } ) }
-									style={ { color: textColor ? textColor : undefined } }
-									keepPlaceholderOnFocus
-								/>
+								{ titleComp }
+								{ countComp }
+								{ descriptionComp }
 							</div>
-						)
+						), comps, i, props )
 					} ) }
 				</div>
 			</div>
@@ -126,8 +136,14 @@ const edit = props => {
 					] ) }
 					onChange={ design => setAttributes( { design } ) }
 				>
-					{ applyFilters( 'stackable.count-up.edit.designs.before', null, props ) }
-					{ design !== 'plain' &&
+					{ applyFilters( 'stackable.count-up.edit.background-color', false, design, props ) &&
+						<ColorPaletteControl
+							label={ __( 'Background Color' ) }
+							value={ backgroundColor }
+							onChange={ backgroundColor => setAttributes( { backgroundColor } ) }
+						/>
+					}
+					{ applyFilters( 'stackable.count-up.edit.border-radius', design !== 'plain', design, props ) &&
 						<RangeControl
 							label={ __( 'Border Radius' ) }
 							value={ borderRadius }
@@ -136,7 +152,7 @@ const edit = props => {
 							max={ 50 }
 						/>
 					}
-					{ design !== 'plain' &&
+					{ applyFilters( 'stackable.count-up.edit.shadow', design !== 'plain', design, props ) &&
 						<RangeControl
 							label={ __( 'Shadow / Outline' ) }
 							value={ shadow }
@@ -152,7 +168,6 @@ const edit = props => {
 							onChange={ contentWidth => setAttributes( { contentWidth } ) }
 						/>
 					}
-					{ applyFilters( 'stackable.count-up.edit.designs.after', null, props ) }
 					{ showProNotice && <ProControl size="small" /> }
 				</DesignPanelBody>
 				<PanelColorSettings
@@ -207,7 +222,7 @@ const edit = props => {
 						onChange={ countFontWeight => setAttributes( { countFontWeight } ) }
 					/>
 				</PanelColorSettings>
-				{ design !== 'plain' &&
+				{ applyFilters( 'stackable.count-up.edit.background', design !== 'plain', design ) &&
 					<PanelBackgroundSettings
 						backgroundColor={ backgroundColor }
 						backgroundImageID={ backgroundImageID }

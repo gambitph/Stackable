@@ -1,3 +1,4 @@
+import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { getFontFamily } from './font'
 import { range } from '@stackable/util'
@@ -29,21 +30,21 @@ const save = props => {
 		'ugb-countup--v3', // For backward compatibility.
 		`ugb-countup--columns-${ columns }`,
 		'ugb--background-opacity-' + ( 1 * Math.round( backgroundOpacity / 1 ) ),
-	], {
+	], applyFilters( 'stackable.count-up.mainclasses', {
 		// 'ugb-has-background': backgroundColor || backgroundImageURL,
 		'ugb--has-background-image': backgroundImageURL,
 		[ `ugb--content-width` ]: align === 'full' && contentWidth,
 		[ `ugb-countup--design-${ design }` ]: design !== 'plain',
-		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-	} )
+		[ `ugb--shadow-${ shadow }` ]: design === 'basic' && shadow !== 3,
+	}, design, props ) )
 
-	const mainStyle = {
-		backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
-		backgroundImage: design !== 'plain' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
+	const mainStyle = applyFilters( 'stackable.count-up.mainstyle', {
+		backgroundColor: design === 'basic' && backgroundColor ? backgroundColor : undefined,
+		backgroundImage: design === 'basic' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
 		backgroundAttachment: fixedBackground ? 'fixed' : undefined,
-		'--ugb-background-color': design !== 'plain' && backgroundImageURL ? backgroundColor : undefined,
-		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
-	}
+		'--ugb-background-color': design === 'basic' && backgroundImageURL ? backgroundColor : undefined,
+		borderRadius: design === 'basic' && borderRadius !== 12 ? borderRadius : undefined,
+	}, design, props )
 
 	const countStyle = {
 		color: countColor ? countColor : undefined,
@@ -62,36 +63,46 @@ const save = props => {
 					const title = attributes[ `title${ i }` ]
 					const description = attributes[ `description${ i }` ]
 					const countText = attributes[ `countText${ i }` ]
-					return (
-						<div className="ugb-countup__item" key={ i }>
-							{ ! RichText.isEmpty( title ) && (
-								<RichText.Content
-									tagName="h4"
-									className="ugb-countup__title"
-									style={ { color: textColor ? textColor : undefined } }
-									value={ title }
-								/>
-							) }
-							{ ! RichText.isEmpty( countText ) && (
-								<RichText.Content
-									tagName="div"
-									className="ugb-countup__counter"
-									style={ countStyle }
-									value={ countText }
-									data-duration="1000"
-									data-delay="16"
-								/>
-							) }
-							{ ! RichText.isEmpty( description ) && (
-								<RichText.Content
-									tagName="p"
-									className="ugb-countup__description"
-									style={ { color: textColor ? textColor : undefined } }
-									value={ description }
-								/>
-							) }
-						</div>
+
+					const titleComp = ! RichText.isEmpty( title ) && (
+						<RichText.Content
+							tagName="h4"
+							className="ugb-countup__title"
+							style={ { color: textColor ? textColor : undefined } }
+							value={ title }
+						/>
 					)
+					const countComp = ! RichText.isEmpty( countText ) && (
+						<RichText.Content
+							tagName="div"
+							className="ugb-countup__counter"
+							style={ countStyle }
+							value={ countText }
+							data-duration="1000"
+							data-delay="16"
+						/>
+					)
+					const descriptionComp = ! RichText.isEmpty( description ) && (
+						<RichText.Content
+							tagName="p"
+							className="ugb-countup__description"
+							style={ { color: textColor ? textColor : undefined } }
+							value={ description }
+						/>
+					)
+					const comps = {
+						i,
+						titleComp,
+						countComp,
+						descriptionComp,
+					}
+					return applyFilters( 'stackable.count-up.save.output', (
+						<div className="ugb-countup__item" key={ i }>
+							{ titleComp }
+							{ countComp }
+							{ descriptionComp }
+						</div>
+					), comps, i, props )
 				} ) }
 			</div>
 		</div>
