@@ -19,6 +19,14 @@
 	.ugb-testimonial__body-wrapper {
 		margin-bottom: 1em;
 	}
+	&.ugb-testimonial--serif .ugb-testimonial__body {
+		font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif !important;
+		font-style: italic;
+		font-size: 20px;
+		line-height: 1.7em !important;
+		font-weight: 400;
+		color: #555;
+	}
 
 	&.ugb-testimonial--columns-2 {
 		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);

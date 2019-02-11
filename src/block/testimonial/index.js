@@ -80,6 +80,14 @@ export const schema = {
 	bodyTextColor: {
 		type: 'string',
 	},
+	backgroundColor: {
+		type: 'string',
+		default: '',
+	},
+	serif: {
+		type: 'boolean',
+		default: false,
+	},
 	columns: {
 		type: 'number',
 		default: 2,

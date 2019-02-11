@@ -1,3 +1,4 @@
+import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { range } from '@stackable/util'
 import { RichText } from '@wordpress/editor'
@@ -12,6 +13,7 @@ const save = props => {
 		design = 'basic',
 		borderRadius = 12,
 		shadow = 3,
+		serif = false,
 	} = attributes
 
 	const mainClasses = classnames( [
@@ -20,17 +22,25 @@ const save = props => {
 		'ugb-testimonial--v2',
 		`ugb-testimonial--columns-${ columns }`,
 		`ugb-testimonial--design-${ design }`,
-	] )
+	], {
+		'ugb-testimonial--serif': serif,
+	} )
 
 	const itemClasses = classnames( [
 		'ugb-testimonial__item',
-	], {
+	], applyFilters( 'stackable.testimonial.itemclasses', {
 		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-	} )
+	}, design, props ) )
 
-	const itemStyle = {
-		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
-	}
+	const styles = applyFilters( 'stackable.testimonial.styles', {
+		item: {
+			borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
+		},
+		bodyWrapper: {},
+		body: {
+			color: bodyTextColor ? bodyTextColor : undefined,
+		},
+	}, design, props )
 
 	return (
 		<div className={ mainClasses }>
@@ -39,14 +49,19 @@ const save = props => {
 				const name = attributes[ `name${ i }` ]
 				const position = attributes[ `position${ i }` ]
 				const testimonial = attributes[ `testimonial${ i }` ]
+
+				const bodyClasses = classnames( [
+					'ugb-testimonial__body-wrapper',
+				], applyFilters( 'stackable.testimonial.bodyclasses', {}, design, props ) )
+
 				return (
-					<div className={ itemClasses } style={ itemStyle } key={ i }>
-						<div className="ugb-testimonial__body-wrapper">
+					<div className={ itemClasses } style={ styles.item } key={ i }>
+						<div className={ bodyClasses } style={ styles.bodyWrapper }>
 							{ ! RichText.isEmpty( testimonial ) && (
 								<RichText.Content
 									tagName="p"
 									className="ugb-testimonial__body"
-									style={ { color: bodyTextColor } }
+									style={ styles.body }
 									value={ testimonial }
 								/>
 							) }
