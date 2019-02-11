@@ -41,6 +41,14 @@ const edit = props => {
 		[ `ugb-number-box--design-${ design }` ]: design !== 'basic',
 	} )
 
+	const show = applyFilters( 'stackable.number-box.edit.show', {
+		backgroundColor: design !== 'plain',
+		borderRadius: design !== 'plain',
+		shadow: design !== 'plain',
+		numberColor: true,
+		numberBGColor: true,
+	}, design, props )
+
 	return (
 		<Fragment>
 			<InspectorControls>
@@ -60,15 +68,14 @@ const edit = props => {
 						setAttributes( { design } )
 					} }
 				>
-					{ applyFilters( 'stackable.number-box.edit.designs.before', null, props ) }
-					{ design !== 'plain' &&
+					{ show.backgroundColor &&
 						<ColorPaletteControl
 							label={ __( 'Background Color' ) }
 							value={ backgroundColor }
 							onChange={ backgroundColor => setAttributes( { backgroundColor } ) }
 						/>
 					}
-					{ design !== 'plain' &&
+					{ show.borderRadius &&
 						<RangeControl
 							label={ __( 'Border Radius' ) }
 							value={ borderRadius }
@@ -77,7 +84,7 @@ const edit = props => {
 							max={ 50 }
 						/>
 					}
-					{ design !== 'plain' &&
+					{ show.shadow &&
 						<RangeControl
 							label={ __( 'Shadow / Outline' ) }
 							value={ shadow }
@@ -86,7 +93,6 @@ const edit = props => {
 							max={ 9 }
 						/>
 					}
-					{ applyFilters( 'stackable.number-box.edit.designs.after', null, props ) }
 					{ showProNotice && <ProControl size="small" /> }
 				</DesignPanelBody>
 				<PanelBody title={ __( 'General Settings' ) }>
@@ -101,16 +107,20 @@ const edit = props => {
 				<PanelColorSettings
 					title={ __( 'Color Settings' ) }
 					colorSettings={ [
-						{
-							value: numberColor,
-							onChange: colorValue => setAttributes( { numberColor: colorValue } ),
-							label: __( 'Number Color' ),
-						},
-						{
-							value: numberBGColor,
-							onChange: colorValue => setAttributes( { numberBGColor: colorValue } ),
-							label: __( 'Number Background Color' ),
-						},
+						...( ! show.numberColor ? [] : [
+							{
+								value: numberColor,
+								onChange: colorValue => setAttributes( { numberColor: colorValue } ),
+								label: __( 'Number Color' ),
+							},
+						] ),
+						...( ! show.numberBGColor ? [] : [
+							{
+								value: numberBGColor,
+								onChange: colorValue => setAttributes( { numberBGColor: colorValue } ),
+								label: __( 'Number Background Color' ),
+							},
+						] ),
 						{
 							value: titleColor,
 							onChange: colorValue => setAttributes( { titleColor: colorValue } ),
@@ -133,28 +143,43 @@ const edit = props => {
 
 					const boxClasses = classnames( [
 						'ugb-number-box__item',
-					], {
+					], applyFilters( 'stackable.number-box.boxclasses', {
 						[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-					} )
+					}, design, props ) )
 
-					const boxStyle = {
-						borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
-						backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
-					}
+					const styles = applyFilters( 'stackable.number-box.styles', {
+						box: {
+							borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
+							backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
+						},
+						number: {
+							backgroundColor: numberBGColor,
+							color: numberColor ? numberColor :
+							       ! numberBGColor ? undefined :
+							       isDarkColor( numberBGColor ) ? '#ffffff' : '#222222',
+						},
+						title: {
+							color: titleColor ? titleColor :
+							       design === 'plain' ? undefined :
+							       ! backgroundColor ? undefined :
+							       isDarkColor( backgroundColor ) ? '#ffffff' : '#222222',
+						},
+						description: {
+							color: descriptionColor ? descriptionColor :
+							       design === 'plain' ? undefined :
+							       ! backgroundColor ? undefined :
+							       isDarkColor( backgroundColor ) ? '#ffffff' : '#222222',
+						},
+					}, design, props )
 
 					return (
-						<div className={ boxClasses } style={ boxStyle } key={ i }>
+						<div className={ boxClasses } style={ styles.box } key={ i }>
 							<RichText
 								tagName="div"
 								className="ugb-number-box__number"
 								value={ num }
 								onChange={ value => setAttributes( { [ `num${ i }` ]: value } ) }
-								style={ {
-									backgroundColor: numberBGColor,
-									color: numberColor ? numberColor :
-										   ! numberBGColor ? undefined :
-										   isDarkColor( numberBGColor ) ? '#ffffff' : '#222222',
-								} }
+								style={ styles.number }
 								placeholder={ `0${ i }` }
 								keepPlaceholderOnFocus
 							/>
@@ -164,12 +189,7 @@ const edit = props => {
 									value={ title }
 									className="ugb-number-box__title"
 									onChange={ value => setAttributes( { [ `title${ i }` ]: value } ) }
-									style={ {
-										color: titleColor ? titleColor :
-											   design === 'plain' ? undefined :
-											   ! backgroundColor ? undefined :
-										       isDarkColor( backgroundColor ) ? '#ffffff' : '#222222',
-									} }
+									style={ styles.title }
 									placeholder={ __( 'Title' ) }
 									keepPlaceholderOnFocus
 								/>
@@ -178,12 +198,7 @@ const edit = props => {
 									value={ description }
 									className="ugb-number-box__description"
 									onChange={ value => setAttributes( { [ `description${ i }` ]: value } ) }
-									style={ {
-										color: descriptionColor ? descriptionColor :
-											   design === 'plain' ? undefined :
-											   ! backgroundColor ? undefined :
-										       isDarkColor( backgroundColor ) ? '#ffffff' : '#222222',
-									} }
+									style={ styles.description }
 									placeholder={ descriptionPlaceholder() }
 									keepPlaceholderOnFocus
 								/>

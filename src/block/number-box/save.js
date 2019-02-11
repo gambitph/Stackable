@@ -1,3 +1,4 @@
+import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import isDarkColor from 'is-dark-color'
 import { range } from '@stackable/util'
@@ -35,27 +36,42 @@ const save = props => {
 
 				const boxClasses = classnames( [
 					'ugb-number-box__item',
-				], {
+				], applyFilters( 'stackable.number-box.boxclasses', {
 					[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-				} )
+				}, design, props ) )
 
-				const boxStyle = {
-					borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
-					backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
-				}
+				const styles = applyFilters( 'stackable.number-box.styles', {
+					box: {
+						borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
+						backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
+					},
+					number: {
+						backgroundColor: numberBGColor,
+						color: numberColor ? numberColor :
+							   ! numberBGColor ? undefined :
+							   isDarkColor( numberBGColor ) ? '#ffffff' : '#222222',
+					},
+					title: {
+						color: titleColor ? titleColor :
+							   design === 'plain' ? undefined :
+							   ! backgroundColor ? undefined :
+							   isDarkColor( backgroundColor ) ? '#ffffff' : '#222222',
+					},
+					description: {
+						color: descriptionColor ? descriptionColor :
+							   design === 'plain' ? undefined :
+							   ! backgroundColor ? undefined :
+							   isDarkColor( backgroundColor ) ? '#ffffff' : '#222222',
+					},
+				}, design, props )
 
 				return (
-					<div className={ boxClasses } style={ boxStyle } key={ i }>
+					<div className={ boxClasses } style={ styles.box } key={ i }>
 						{ ! RichText.isEmpty( num ) && (
 							<RichText.Content
 								tagName="span"
 								className="ugb-number-box__number"
-								style={ {
-									backgroundColor: numberBGColor,
-									color: numberColor ? numberColor :
-										   ! numberBGColor ? undefined :
-										   isDarkColor( numberBGColor ) ? '#ffffff' : '#222222',
-								} }
+								style={ styles.number }
 								value={ num }
 							/>
 						) }
@@ -65,12 +81,7 @@ const save = props => {
 									<RichText.Content
 										tagName="h4"
 										className="ugb-number-box__title"
-										style={ {
-											color: titleColor ? titleColor :
-												   design === 'plain' ? undefined :
-												   ! backgroundColor ? undefined :
-												   isDarkColor( backgroundColor ) ? '#ffffff' : '#222222',
-										} }
+										style={ styles.title }
 										value={ title }
 									/>
 								) }
@@ -78,12 +89,7 @@ const save = props => {
 									<RichText.Content
 										tagName="p"
 										className="ugb-number-box__description"
-										style={ {
-											color: descriptionColor ? descriptionColor :
-												   design === 'plain' ? undefined :
-												   ! backgroundColor ? undefined :
-												   isDarkColor( backgroundColor ) ? '#ffffff' : '#222222',
-										} }
+										style={ styles.description }
 										value={ description }
 									/>
 								) }
