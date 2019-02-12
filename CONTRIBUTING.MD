@@ -91,6 +91,11 @@ Scripts for the block in the frontend.
 
 Styles for the block in the frontend.
 
+📟 Internet Explorer 11
+=======================
+
+Support for IE 11 should be the bare minimum. Instead of revamping designs in order to fully support IE 11, just ignore it when designing and implementing designs, and just add fallbacks for IE 11 after-the-fact. This allows us not to be hindered by the capabilities of non-modern browsers.
+
 🏚 DEPRECATING: Adding New Features / Attributes to Blocks
 =======================================================
 
