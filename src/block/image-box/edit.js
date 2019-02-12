@@ -5,7 +5,7 @@ import {
 	DesignPanelBody, ImageUploadPlaceholder, ProControl, URLInputControl, VerticalAlignmentToolbar,
 } from '@stackable/components'
 import {
-	PanelBody, RangeControl,
+	PanelBody, RangeControl, SelectControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
@@ -34,6 +34,8 @@ const edit = props => {
 		design = 'basic',
 		borderRadius = 12,
 		shadow = 3,
+		hoverEffect = '',
+		overlayOpacity = 7,
 	} = attributes
 
 	const mainClasses = classnames( [
@@ -41,7 +43,11 @@ const edit = props => {
 		'ugb-image-box',
 		'ugb-image-box--v3',
 		`ugb-image-box--columns-${ columns }`,
-	] )
+	], {
+		[ `ugb-image-box--design-${ design }` ]: design !== 'basic',
+		[ `ugb-image-box--effect-${ hoverEffect }` ]: hoverEffect,
+		[ `ugb-image-box--overlay-${ overlayOpacity }` ]: overlayOpacity !== 7,
+	} )
 
 	const mainStyles = {
 		textAlign: horizontalAlign ? horizontalAlign : undefined,
@@ -71,7 +77,6 @@ const edit = props => {
 						setAttributes( { design } )
 					} }
 				>
-					{ applyFilters( 'stackable.image-box.edit.designs.before', null, props ) }
 					<RangeControl
 						label={ __( 'Border Radius' ) }
 						value={ borderRadius }
@@ -86,7 +91,6 @@ const edit = props => {
 						min={ 0 }
 						max={ 9 }
 					/>
-					{ applyFilters( 'stackable.image-box.edit.designs.after', null, props ) }
 					{ showProNotice && <ProControl size="small" /> }
 				</DesignPanelBody>
 				<PanelBody title={ __( 'General Settings' ) }>
@@ -96,6 +100,23 @@ const edit = props => {
 						onChange={ columns => setAttributes( { columns } ) }
 						min={ 1 }
 						max={ 4 }
+					/>
+					<SelectControl
+						label={ __( 'Image Hover Effect' ) }
+						options={ applyFilters( 'stackable.image-box.edit.image-hover-effects', [
+							{ label: __( 'None' ), value: '' },
+							{ label: __( 'Zoom In' ), value: 'zoom-in' },
+							{ label: __( 'Zoom Out' ), value: 'zoom-out' },
+						] ) }
+						value={ hoverEffect }
+						onChange={ hoverEffect => setAttributes( { hoverEffect } ) }
+					/>
+					<RangeControl
+						label={ __( 'Hover Overlay Opacity' ) }
+						value={ overlayOpacity }
+						onChange={ overlayOpacity => setAttributes( { overlayOpacity } ) }
+						min={ 0 }
+						max={ 10 }
 					/>
 					<RangeControl
 						label={ __( 'Height' ) }

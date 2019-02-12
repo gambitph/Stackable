@@ -14,9 +14,11 @@ const save = props => {
 		horizontalAlign,
 		align,
 		columns,
-		// design = 'basic',
+		design = 'basic',
 		borderRadius = 12,
 		shadow = 3,
+		hoverEffect = '',
+		overlayOpacity = 7,
 	} = props.attributes
 
 	const mainClasses = classnames( [
@@ -24,7 +26,11 @@ const save = props => {
 		'ugb-image-box',
 		'ugb-image-box--v3',
 		`ugb-image-box--columns-${ columns }`,
-	] )
+	], {
+		[ `ugb-image-box--design-${ design }` ]: design !== 'basic',
+		[ `ugb-image-box--effect-${ hoverEffect }` ]: hoverEffect,
+		[ `ugb-image-box--overlay-${ overlayOpacity }` ]: overlayOpacity !== 7,
+	} )
 
 	const mainStyles = {
 		textAlign: horizontalAlign ? horizontalAlign : undefined,
@@ -57,6 +63,12 @@ const save = props => {
 
 				return (
 					<div className={ boxClasses } style={ boxStyles } key={ i }>
+						{ hoverEffect && <div
+							className="ugb-image-box__image-effect"
+							style={ {
+								backgroundImage: imageURL ? `url(${ imageURL })` : undefined,
+							} } />
+						}
 						{ /* eslint-disable-next-line */ }
 						<a
 							className="ugb-image-box__overlay"

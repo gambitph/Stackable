@@ -9,6 +9,7 @@
 // Make sure that the text can be edited.
 .ugb-image-box__overlay {
 	pointer-events: none !important;
+	z-index: 2;
 }
 .ugb-image-box__content {
 	pointer-events: all !important;
@@ -79,8 +80,27 @@
 		left: 0;
 		bottom: 0;
 		right: 0;
-		z-index: 3;
-		opacity: 0;
+		z-index: 2;
+		background-size: cover;
+		background-position: center;
+		opacity: 1 !important;
+	}
+}
+
+// Hover effects
+.ugb-image-box--effect-zoom-in .ugb-image-box__item:hover {
+	.ugb-image-upload-placeholder.ugb-image-upload-has-image {
+		transform: scale(1.1);
+	}
+}
+.ugb-image-box--effect-zoom-out .ugb-image-box__item {
+	.ugb-image-upload-placeholder.ugb-image-upload-has-image {
+		transform: scale(1.1);
+	}
+	&:hover {
+		.ugb-image-upload-placeholder.ugb-image-upload-has-image {
+			transform: scale(1);
+		}
 	}
 }
 

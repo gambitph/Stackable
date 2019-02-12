@@ -85,6 +85,26 @@
 		transform: translateY(0);
 	}
 }
+
+// Overlay opacity.
+@for $i from 0 through 10 {
+	.ugb-image-box--overlay-#{ $i } {
+		.ugb-image-box__item:hover .ugb-image-box__overlay {
+			opacity: $i * 0.1;
+		}
+	}
+}
+
+.ugb-image-box__image-effect {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-size: cover;
+	background-position: center;
+	z-index: 1;
+}
 .ugb-image-box__overlay {
 	position: absolute;
 	z-index: 2;
@@ -105,6 +125,25 @@
 	margin: 0 !important;
 	opacity: 0;
 	transform: translateY(-15px);
+}
+
+/**
+ * Hover effects
+ */
+.ugb-image-box--effect-zoom-in .ugb-image-box__item:hover {
+	.ugb-image-box__image-effect {
+		transform: scale(1.1);
+	}
+}
+.ugb-image-box--effect-zoom-out .ugb-image-box__item {
+	.ugb-image-box__image-effect {
+		transform: scale(1.1);
+	}
+	&:hover {
+		.ugb-image-box__image-effect {
+			transform: scale(1);
+		}
+	}
 }
 
 /**
