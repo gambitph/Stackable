@@ -128,6 +128,52 @@
 }
 
 /**
+ * Arrow
+ */
+.ugb-image-box__arrow {
+	fill: #fff;
+	z-index: 2;
+	width: 30px;
+	height: 20px;
+	position: absolute;
+	bottom: 35px;
+	left: auto;
+	right: auto;
+	z-index: 4;
+	opacity: 0;
+	transform: translateY(15px);
+	pointer-events: none;
+	&.ugb-image-box__arrow--align-left {
+		left: $box-hori-padding;
+	}
+	&.ugb-image-box__arrow--align-right {
+		right: $box-hori-padding;
+	}
+	&.ugb-image-box__arrow--align-center {
+		left: 50%;
+		transform: translateX(-50%) translateY(15px);
+	}
+}
+.ugb-image-box__item:hover {
+	.ugb-image-box__arrow {
+		opacity: 1;
+		transform: none;
+		&.ugb-image-box__arrow--align-center {
+			transform: translateX(-50%);
+		}
+	}
+}
+
+// Adjust some locations if we have an arrow.
+
+// Basic design, text aligned bottom should make space for arrow.
+.ugb-image-box--arrow:not([class*="ugb-image-box--design"]) {
+	.ugb-image-box__item[style*="flex-end"] .ugb-image-box__content {
+		margin-bottom: 50px;
+	}
+}
+
+/**
  * Hover effects
  */
 .ugb-image-box--effect-zoom-in .ugb-image-box__item:hover {

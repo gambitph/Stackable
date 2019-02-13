@@ -61,6 +61,10 @@ export const schema = {
 		type: 'string',
 		default: '',
 	},
+	arrow: {
+		type: 'string',
+		default: '',
+	},
 
 	// Keep the old attributes. Gutenberg issue https://github.com/WordPress/gutenberg/issues/10406
 	full: {

@@ -33,7 +33,7 @@ const ALIGNMENT_CONTROLS = [
 ]
 
 export function VerticalAlignmentToolbar( {
-	isCollapsed, value, onChange,
+	isCollapsed, value, onChange, isDisabled,
 } ) {
 	function applyOrUnset( align ) {
 		return () => onChange( value === align ? undefined : align )
@@ -52,6 +52,7 @@ export function VerticalAlignmentToolbar( {
 
 				return {
 					...control,
+					isDisabled,
 					isActive,
 					onClick: applyOrUnset( align ),
 				}

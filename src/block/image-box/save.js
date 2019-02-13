@@ -1,6 +1,8 @@
+import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { range } from '@stackable/util'
 import { RichText } from '@wordpress/editor'
+import SVGArrow from './images/arrow.svg'
 
 const save = props => {
 	const { className, attributes } = props
@@ -19,6 +21,7 @@ const save = props => {
 		shadow = 3,
 		hoverEffect = '',
 		overlayOpacity = 7,
+		arrow = '',
 	} = props.attributes
 
 	const mainClasses = classnames( [
@@ -26,11 +29,12 @@ const save = props => {
 		'ugb-image-box',
 		'ugb-image-box--v3',
 		`ugb-image-box--columns-${ columns }`,
-	], {
+	], applyFilters( 'stackable.image-box.mainclasses', {
 		[ `ugb-image-box--design-${ design }` ]: design !== 'basic',
 		[ `ugb-image-box--effect-${ hoverEffect }` ]: hoverEffect,
 		[ `ugb-image-box--overlay-${ overlayOpacity }` ]: overlayOpacity !== 7,
-	} )
+		'ugb-image-box--arrow': arrow,
+	}, design, props ) )
 
 	const mainStyles = {
 		textAlign: horizontalAlign ? horizontalAlign : undefined,
@@ -60,6 +64,11 @@ const save = props => {
 				], {
 					[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
 				} )
+
+				const arrowClasses = classnames( [
+					'ugb-image-box__arrow',
+					`ugb-image-box__arrow--align-${ arrow }`,
+				] )
 
 				return (
 					<div className={ boxClasses } style={ boxStyles } key={ i }>
@@ -93,6 +102,11 @@ const save = props => {
 								/>
 							) }
 						</div>
+						{ arrow && (
+							<div className={ arrowClasses }>
+								<SVGArrow style={ { fill: titleColor ? titleColor : undefined } } />
+							</div>
+						) }
 					</div>
 				)
 			} ) }

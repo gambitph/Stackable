@@ -12,6 +12,7 @@ import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { Fragment } from '@wordpress/element'
 import { showProNotice } from 'stackable'
+import SVGArrow from './images/arrow.svg'
 
 const edit = props => {
 	const {
@@ -36,6 +37,7 @@ const edit = props => {
 		shadow = 3,
 		hoverEffect = '',
 		overlayOpacity = 7,
+		arrow = '',
 	} = attributes
 
 	const mainClasses = classnames( [
@@ -43,16 +45,21 @@ const edit = props => {
 		'ugb-image-box',
 		'ugb-image-box--v3',
 		`ugb-image-box--columns-${ columns }`,
-	], {
+	], applyFilters( 'stackable.image-box.mainclasses', {
 		[ `ugb-image-box--design-${ design }` ]: design !== 'basic',
 		[ `ugb-image-box--effect-${ hoverEffect }` ]: hoverEffect,
 		[ `ugb-image-box--overlay-${ overlayOpacity }` ]: overlayOpacity !== 7,
-	} )
+		'ugb-image-box--arrow': arrow,
+	}, design, props ) )
 
 	const mainStyles = {
 		textAlign: horizontalAlign ? horizontalAlign : undefined,
 		'--overlay-color': overlayColor,
 	}
+
+	const show = applyFilters( 'stackable.image-box.edit.show', {
+		verticalAlignmentToolbar: true,
+	}, design, props )
 
 	return (
 		<Fragment>
@@ -64,6 +71,7 @@ const edit = props => {
 				<VerticalAlignmentToolbar
 					value={ verticalAlign }
 					onChange={ verticalAlign => setAttributes( { verticalAlign } ) }
+					isDisabled={ ! show.verticalAlignmentToolbar }
 				/>
 			</BlockControls>
 			<InspectorControls>
@@ -135,6 +143,17 @@ const edit = props => {
 							onChange={ width => setAttributes( { width: width } ) }
 						/>
 					) }
+					<SelectControl
+						label={ __( 'Arrow' ) }
+						options={ [
+							{ label: __( 'None' ), value: '' },
+							{ label: __( 'Center' ), value: 'center' },
+							{ label: __( 'Left' ), value: 'left' },
+							{ label: __( 'Right' ), value: 'right' },
+						] }
+						value={ arrow }
+						onChange={ arrow => setAttributes( { arrow } ) }
+					/>
 				</PanelBody>
 				<PanelColorSettings
 					title={ __( 'Color Settings' ) }
@@ -148,7 +167,7 @@ const edit = props => {
 						{
 							value: titleColor,
 							onChange: colorValue => setAttributes( { titleColor: colorValue } ),
-							label: __( 'Title Color' ),
+							label: ! arrow ? __( 'Title Color' ) : __( 'Title & Arrow Color' ),
 						},
 						{
 							value: subtitleColor,
@@ -182,6 +201,11 @@ const edit = props => {
 					], {
 						[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
 					} )
+
+					const arrowClasses = classnames( [
+						'ugb-image-box__arrow',
+						`ugb-image-box__arrow--align-${ arrow }`,
+					] )
 
 					return (
 						<div className="ugb-image-box__editor-wrapper" key={ i }>
@@ -231,6 +255,11 @@ const edit = props => {
 										/>
 									) }
 								</div>
+								{ arrow && (
+									<div className={ arrowClasses }>
+										<SVGArrow style={ { fill: titleColor ? titleColor : undefined } } />
+									</div>
+								) }
 							</div>
 							{ isSelected && (
 								<URLInputControl
