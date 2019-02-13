@@ -17,20 +17,6 @@ const schema = {
 		selector: 'p',
 		default: descriptionPlaceholder(),
 	},
-	buttonURL: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.ugb-button',
-		attribute: 'href',
-		default: '',
-	},
-	buttonNewTab: {
-		type: 'boolean',
-		source: 'attribute',
-		selector: '.ugb-button',
-		attribute: 'target',
-		default: false,
-	},
 	titleColor: {
 		type: 'string',
 		// default: '#ffffff',
@@ -38,33 +24,6 @@ const schema = {
 	subtitleColor: {
 		type: 'string',
 		// default: '#ffffff',
-	},
-	buttonText: {
-		source: 'html',
-		selector: '.ugb-button span',
-		default: __( 'Button text' ),
-	},
-	buttonColor: {
-		type: 'string',
-	},
-	buttonTextColor: {
-		type: 'string',
-		default: '#ffffff',
-	},
-	buttonDesign: {
-		type: 'string',
-		default: 'basic',
-	},
-	buttonIcon: {
-		type: 'string',
-	},
-	size: {
-		type: 'string',
-		default: 'normal',
-	},
-	cornerButtonRadius: {
-		type: 'number',
-		default: 4,
 	},
 	contentAlign: {
 		type: 'string',
@@ -106,6 +65,92 @@ const schema = {
 	},
 	align: {
 		type: 'string',
+	},
+
+	// Button.
+	buttonURL: {
+		type: 'string',
+		source: 'attribute',
+		selector: '.ugb-button',
+		attribute: 'href',
+		default: '',
+	},
+	buttonNewTab: {
+		type: 'boolean',
+		source: 'attribute',
+		selector: '.ugb-button',
+		attribute: 'target',
+		default: false,
+	},
+	buttonText: {
+		source: 'html',
+		selector: '.ugb-button span',
+		default: __( 'Button text' ),
+	},
+	buttonColor: {
+		type: 'string',
+	},
+	buttonTextColor: {
+		type: 'string',
+		default: '#ffffff',
+	},
+	buttonDesign: {
+		type: 'string',
+		default: 'basic',
+	},
+	buttonIcon: {
+		type: 'string',
+	},
+	size: {
+		type: 'string',
+		default: 'normal',
+	},
+	cornerButtonRadius: {
+		type: 'number',
+		default: 4,
+	},
+
+	// Button #2.
+	buttonURL2: {
+		type: 'string',
+		source: 'attribute',
+		selector: '.ugb-header__buttons > *:nth-child(2) .ugb-button',
+		attribute: 'href',
+		default: '',
+	},
+	buttonNewTab2: {
+		type: 'boolean',
+		source: 'attribute',
+		selector: '.ugb-header__buttons > *:nth-child(2) .ugb-button',
+		attribute: 'target',
+		default: false,
+	},
+	buttonText2: {
+		source: 'html',
+		selector: '.ugb-header__buttons > *:nth-child(2) .ugb-button span',
+		default: __( 'Button text' ),
+	},
+	buttonColor2: {
+		type: 'string',
+	},
+	buttonTextColor2: {
+		type: 'string',
+		default: '#ffffff',
+	},
+	buttonDesign2: {
+		type: 'string',
+		default: 'basic',
+	},
+	buttonIcon2: {
+		type: 'string',
+	},
+	buttonSize2: {
+		type: 'string',
+		default: 'normal',
+	},
+	buttonBorderRadius2: {
+		type: 'number',
+		default: 4,
 	},
 
 	// Keep the old attributes. Gutenberg issue https://github.com/WordPress/gutenberg/issues/10406

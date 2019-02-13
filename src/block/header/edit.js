@@ -178,11 +178,13 @@ const edit = props => {
 					onChangeButtonBorderRadius={ value => setAttributes( { cornerButtonRadius: value } ) }
 					onChangeButtonDesign={ buttonDesign => setAttributes( { buttonDesign } ) }
 					onChangeButtonIcon={ buttonIcon => setAttributes( { buttonIcon } ) }
+					{ ...applyFilters( 'stackable.header.edit.button.props', {}, design, props ) }
 				/>
+				{ applyFilters( 'stackable.header.edit.inspector.post', null, design, props ) }
 			</InspectorControls>
 			<div className={ mainClasses } style={ mainStyle }>
-				<div className="ugb-content-wrapper">
-					<RichText
+				{ ( () => {
+					const titleComp = <RichText
 						tagName="h2"
 						className="ugb-header__title"
 						placeholder={ __( 'Title for This Block' ) }
@@ -196,7 +198,7 @@ const edit = props => {
 							textAlign: contentAlign,
 						} }
 					/>
-					<RichText
+					const subtitleComp = <RichText
 						tagName="p"
 						className="ugb-header__subtitle"
 						placeholder={ descriptionPlaceholder() }
@@ -205,12 +207,12 @@ const edit = props => {
 						onChange={ value => setAttributes( { subtitle: value } ) }
 						style={ {
 							color: subtitleColor ? subtitleColor :
-								   design === 'plain' ? undefined :
-								   '#ffffff',
+							       design === 'plain' ? undefined :
+							       '#ffffff',
 							textAlign: contentAlign,
 						} }
 					/>
-					<ButtonEdit
+					const buttonComp = <ButtonEdit
 						size={ size }
 						align={ contentAlign }
 						color={ buttonTextColor }
@@ -221,15 +223,30 @@ const edit = props => {
 						icon={ buttonIcon }
 						onChange={ text => setAttributes( { buttonText: text } ) }
 					/>
-				</div>
+					const comps = {
+						titleComp,
+						subtitleComp,
+						buttonComp,
+					}
+					return applyFilters( 'stackable.header.edit.output', (
+						<div className="ugb-content-wrapper">
+							{ titleComp }
+							{ subtitleComp }
+							{ buttonComp }
+						</div>
+					), design, props, comps )
+				} )() }
 			</div>
 			{ isSelected && (
-				<URLInputControl
-					value={ buttonURL }
-					newTab={ buttonNewTab }
-					onChange={ buttonURL => setAttributes( { buttonURL } ) }
-					onChangeNewTab={ buttonNewTab => setAttributes( { buttonNewTab } ) }
-				/>
+				<div className="ugb-header__url-inputs">
+					<URLInputControl
+						value={ buttonURL }
+						newTab={ buttonNewTab }
+						onChange={ buttonURL => setAttributes( { buttonURL } ) }
+						onChangeNewTab={ buttonNewTab => setAttributes( { buttonNewTab } ) }
+					/>
+					{ applyFilters( 'stackable.header.edit.url', null, design, props ) }
+				</div>
 			) }
 		</Fragment>
 	)

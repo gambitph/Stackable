@@ -1,3 +1,4 @@
+import { applyFilters } from '@wordpress/hooks'
 import { ButtonEdit } from '@stackable/components'
 import classnames from 'classnames'
 import { RichText } from '@wordpress/editor'
@@ -56,8 +57,8 @@ const save = props => {
 
 	return (
 		<div className={ mainClasses } style={ mainStyle }>
-			<div className="ugb-content-wrapper">
-				{ ! RichText.isEmpty( title ) && (
+			{ ( () => {
+				const titleComp = ! RichText.isEmpty( title ) && (
 					<RichText.Content
 						tagName="h2"
 						className="ugb-header__title"
@@ -67,8 +68,8 @@ const save = props => {
 						} }
 						value={ title }
 					/>
-				) }
-				{ ! RichText.isEmpty( subtitle ) && (
+				)
+				const subtitleComp = ! RichText.isEmpty( subtitle ) && (
 					<RichText.Content
 						tagName="p"
 						className="ugb-header__subtitle"
@@ -78,8 +79,8 @@ const save = props => {
 						} }
 						value={ subtitle }
 					/>
-				) }
-				{ buttonText && !! buttonText.length && (
+				)
+				const buttonComp = buttonText && !! buttonText.length && (
 					<ButtonEdit.Content
 						size={ size }
 						url={ buttonURL }
@@ -92,8 +93,20 @@ const save = props => {
 						backgroundColor={ buttonColor }
 						borderRadius={ cornerButtonRadius }
 					/>
-				) }
-			</div>
+				)
+				const comps = {
+					titleComp,
+					subtitleComp,
+					buttonComp,
+				}
+				return applyFilters( 'stackable.header.save.output', (
+					<div className="ugb-content-wrapper">
+						{ titleComp }
+						{ subtitleComp }
+						{ buttonComp }
+					</div>
+				), design, props, comps )
+			} )() }
 		</div>
 	)
 }
