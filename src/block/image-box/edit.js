@@ -145,6 +145,7 @@ const edit = props => {
 					) }
 					<SelectControl
 						label={ __( 'Arrow' ) }
+						help={ __( 'The arrow will only appear if the image has a link.' ) }
 						options={ [
 							{ label: __( 'None' ), value: '' },
 							{ label: __( 'Center' ), value: 'center' },

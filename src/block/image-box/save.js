@@ -102,7 +102,7 @@ const save = props => {
 								/>
 							) }
 						</div>
-						{ arrow && (
+						{ arrow && link && (
 							<div className={ arrowClasses }>
 								<SVGArrow style={ { fill: titleColor ? titleColor : undefined } } />
 							</div>
