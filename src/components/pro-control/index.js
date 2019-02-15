@@ -1,6 +1,6 @@
+import { pricingURL, showSmallProNotices } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
-import { pricingURL } from 'stackable'
 import SVGProIcon from './images/pro-icon.svg'
 
 const ProControl = props => {
@@ -14,7 +14,14 @@ const ProControl = props => {
 	const mainClasses = classnames( [
 		'ugb-design-control-pro-note',
 		`ugb-pro-note__${ size }`,
-	] )
+	], {
+		'ugb-pro-note--fade': size === 'small' && showSmallProNotices === 'fade',
+	} )
+
+	// Don't show small pro notices at all.
+	if ( size === 'small' && ! showSmallProNotices ) {
+		return null
+	}
 
 	return (
 		<div className={ mainClasses }>

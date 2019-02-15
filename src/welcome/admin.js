@@ -4,7 +4,7 @@ import {
 	disabledBlocks,
 	nonce,
 	nonceProNotice,
-	proNoticeOption,
+	showProNoticesOption,
 	srcUrl,
 } from 'stackable'
 import { send as ajaxSend } from '@wordpress/ajax'
@@ -155,7 +155,7 @@ class ProNoticeToggler extends Component {
 
 		clearTimeout( this.ajaxTimeout )
 		this.ajaxTimeout = setTimeout( () => {
-			ajaxSend( 'stackable_update_show_pro_notice', {
+			ajaxSend( 'stackable_update_show_pro_notice_option', {
 				success: () => {
 					this.setState( { isSaving: false } )
 				},
@@ -201,7 +201,7 @@ domReady( () => {
 
 	if ( document.querySelector( '.s-pro-control-wrapper' ) ) {
 		render(
-			<ProNoticeToggler checked={ proNoticeOption } />,
+			<ProNoticeToggler checked={ showProNoticesOption } />,
 			document.querySelector( '.s-pro-control-wrapper' )
 		)
 	}
