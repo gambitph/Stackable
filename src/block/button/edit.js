@@ -130,7 +130,6 @@ class edit extends Component {
 						buttonIcon={ icon }
 						onChangeButtonIcon={ icon => setAttributes( { icon } ) }
 					>
-						{ showProNotice && <ProControl size="small" /> }
 					</PanelButtonSettings>
 					{ showProNotice &&
 						<PanelBody
