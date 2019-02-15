@@ -312,6 +312,15 @@ body.toplevel_page_stackable {
 			line-height: 1em;
 		}
 	}
+
+	// Go premium notice checkbox.
+	.s-input-checkbox {
+		display: flex;
+		align-items: center;
+		.components-spinner {
+			margin-top: 0;
+		}
+	}
 }
 
 // Collapse to a single column for mobile.

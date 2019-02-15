@@ -60,6 +60,8 @@ SVG;
 					'planName' => sugb_fs()->get_plan_name(),
 					'disabledBlocks' => stackable_get_disabled_blocks(),
 					'nonce' => stackable_get_disabled_blocks_nonce(),
+					'nonceProNotice' => stackable_get_pro_notice_nonce(),
+					'proNoticeOption' => stackable_get_show_pro_notice(),
 				) );
             }
         }
@@ -96,7 +98,10 @@ SVG;
                             <p><?php _e( 'We have a lot of awesome blocks. But if you\'re overwhelmed with awesomeness, you can hide some of them.' , 'stackable' ) ?><br /><em><?php _e( '(If your post contains a disabled block, it will still continue to work. You won\'t just be able to add the disabled blocks.)' , 'stackable' ) ?></em></p>
 							<!-- We put all the block controls here. -->
                             <div class="s-settings-wrapper" />
-                        </article>
+						</article>
+						<?php if ( STACKABLE_SHOW_PRO_NOTICES ): ?>
+							<aside class="s-pro-control-wrapper"></aside>
+						<?php endif; ?>
                     </div>
                     <div class="s-side">
                         <aside class="s-box">
