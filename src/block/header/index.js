@@ -70,6 +70,10 @@ const schema = {
 		type: 'boolean',
 		default: false,
 	},
+	fullHeight: {
+		type: 'boolean',
+		default: false,
+	},
 
 	// Button.
 	buttonURL: {

@@ -30,6 +30,7 @@ const save = props => {
 		contentWidth = false,
 		buttonNewTab,
 		invert = false,
+		fullHeight = false,
 	} = props.attributes
 
 	const mainClasses = classnames( [
@@ -46,6 +47,7 @@ const save = props => {
 		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
 		[ `ugb--content-width` ]: align === 'full' && contentWidth,
 		'ugb-header--invert': invert,
+		'ugb-header--full-height': fullHeight,
 	}, design, props ) )
 
 	const styles = applyFilters( 'stackable.header.styles', {

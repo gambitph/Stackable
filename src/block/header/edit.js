@@ -49,6 +49,7 @@ const edit = props => {
 		contentWidth = false,
 		buttonNewTab,
 		invert = false,
+		fullHeight = false,
 	} = props.attributes
 
 	const mainClasses = classnames( [
@@ -65,6 +66,7 @@ const edit = props => {
 		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
 		[ `ugb--content-width` ]: align === 'full' && contentWidth,
 		'ugb-header--invert': invert,
+		'ugb-header--full-height': fullHeight,
 	}, design, props ) )
 
 	const styles = applyFilters( 'stackable.header.styles', {
@@ -116,6 +118,11 @@ const edit = props => {
 					} }
 				>
 					{ applyFilters( 'stackable.header.edit.designs.before', null, design, props ) }
+					<ToggleControl
+						label={ __( 'Full Height' ) }
+						checked={ fullHeight }
+						onChange={ fullHeight => setAttributes( { fullHeight } ) }
+					/>
 					{ design !== 'plain' &&
 						<RangeControl
 							label={ __( 'Border Radius' ) }

@@ -26,6 +26,11 @@
 		margin-top: 0;
 		margin-bottom: 0;
 	}
+	&.ugb-header--full-height {
+		min-height: 100vh;
+		align-items: center;
+		display: flex;
+	}
 }
 
 .ugb-header.ugb-header--design-basic {
