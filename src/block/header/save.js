@@ -18,7 +18,7 @@ const save = props => {
 		titleColor,
 		subtitle,
 		subtitleColor,
-		contentAlign,
+		contentAlign = 'center',
 		backgroundColor,
 		backgroundImageURL,
 		backgroundOpacity,
@@ -29,6 +29,7 @@ const save = props => {
 		align,
 		contentWidth = false,
 		buttonNewTab,
+		invert = false,
 	} = props.attributes
 
 	const mainClasses = classnames( [
@@ -37,35 +38,47 @@ const save = props => {
 		'ugb-header--v2',
 		'ugb--background-opacity-' + ( 1 * Math.round( backgroundOpacity / 1 ) ),
 		[ `ugb-header--design-${ design }` ],
-	], {
+	], applyFilters( 'stackable.header.mainclasses', {
 		'ugb--has-background': design !== 'plain' &&
 		                       ( backgroundColor || backgroundImageURL ),
 		'ugb--has-background-image': design !== 'plain' &&
 		                             backgroundImageURL,
 		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
 		[ `ugb--content-width` ]: align === 'full' && contentWidth,
-	} )
+		'ugb-header--invert': invert,
+	}, design, props ) )
 
-	const mainStyle = {
-		'--ugb-background-color': design !== 'plain' && backgroundImageURL ? backgroundColor : undefined,
-		backgroundAttachment: design !== 'plain' && fixedBackground ? 'fixed' : undefined,
-		backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
-		backgroundImage: design !== 'plain' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
-		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
-		textAlign: contentAlign ? contentAlign : undefined,
-	}
+	const styles = applyFilters( 'stackable.header.styles', {
+		main: {
+			'--ugb-background-color': design !== 'plain' && backgroundImageURL ? backgroundColor : undefined,
+			backgroundAttachment: design !== 'plain' && fixedBackground ? 'fixed' : undefined,
+			backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
+			backgroundImage: design !== 'plain' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
+			borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
+			textAlign: contentAlign ? contentAlign : undefined,
+		},
+		title: {
+			color: titleColor ? titleColor :
+				   design === 'plain' ? undefined :
+				   '#ffffff',
+			textAlign: contentAlign,
+		},
+		subtitle: {
+			color: subtitleColor ? subtitleColor :
+				   design === 'plain' ? undefined :
+				   '#ffffff',
+			textAlign: contentAlign,
+		},
+	}, design, props )
 
 	return (
-		<div className={ mainClasses } style={ mainStyle }>
+		<div className={ mainClasses } style={ styles.main }>
 			{ ( () => {
 				const titleComp = ! RichText.isEmpty( title ) && (
 					<RichText.Content
 						tagName="h2"
 						className="ugb-header__title"
-						style={ {
-							color: titleColor ? titleColor :
-							       design === 'plain' ? undefined : '#ffffff',
-						} }
+						style={ styles.title }
 						value={ title }
 					/>
 				)
@@ -73,10 +86,7 @@ const save = props => {
 					<RichText.Content
 						tagName="p"
 						className="ugb-header__subtitle"
-						style={ {
-							color: subtitleColor ? subtitleColor :
-							       design === 'plain' ? undefined : '#ffffff',
-						} }
+						style={ styles.subtitle }
 						value={ subtitle }
 					/>
 				)

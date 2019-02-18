@@ -66,6 +66,10 @@ const schema = {
 	align: {
 		type: 'string',
 	},
+	invert: {
+		type: 'boolean',
+		default: false,
+	},
 
 	// Button.
 	buttonURL: {

@@ -36,7 +36,7 @@ const edit = props => {
 		titleColor,
 		subtitle,
 		subtitleColor,
-		contentAlign,
+		contentAlign = 'center',
 		backgroundColor,
 		backgroundImageID,
 		backgroundImageURL,
@@ -48,6 +48,7 @@ const edit = props => {
 		align,
 		contentWidth = false,
 		buttonNewTab,
+		invert = false,
 	} = props.attributes
 
 	const mainClasses = classnames( [
@@ -56,23 +57,38 @@ const edit = props => {
 		'ugb-header--v2',
 		'ugb--background-opacity-' + ( 1 * Math.round( backgroundOpacity / 1 ) ),
 		[ `ugb-header--design-${ design }` ],
-	], {
+	], applyFilters( 'stackable.header.mainclasses', {
 		'ugb--has-background': design !== 'plain' &&
 		                       ( backgroundColor || backgroundImageURL ),
 		'ugb--has-background-image': design !== 'plain' &&
 		                             backgroundImageURL,
 		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
 		[ `ugb--content-width` ]: align === 'full' && contentWidth,
-	} )
+		'ugb-header--invert': invert,
+	}, design, props ) )
 
-	const mainStyle = {
-		'--ugb-background-color': design !== 'plain' && backgroundImageURL ? backgroundColor : undefined,
-		backgroundAttachment: design !== 'plain' && fixedBackground ? 'fixed' : undefined,
-		backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
-		backgroundImage: design !== 'plain' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
-		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
-		textAlign: contentAlign ? contentAlign : undefined,
-	}
+	const styles = applyFilters( 'stackable.header.styles', {
+		main: {
+			'--ugb-background-color': design !== 'plain' && backgroundImageURL ? backgroundColor : undefined,
+			backgroundAttachment: design !== 'plain' && fixedBackground ? 'fixed' : undefined,
+			backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
+			backgroundImage: design !== 'plain' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
+			borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
+			textAlign: contentAlign ? contentAlign : undefined,
+		},
+		title: {
+			color: titleColor ? titleColor :
+				   design === 'plain' ? undefined :
+				   '#ffffff',
+			textAlign: contentAlign,
+		},
+		subtitle: {
+			color: subtitleColor ? subtitleColor :
+				   design === 'plain' ? undefined :
+				   '#ffffff',
+			textAlign: contentAlign,
+		},
+	}, design, props )
 
 	return (
 		<Fragment>
@@ -99,7 +115,7 @@ const edit = props => {
 						setAttributes( { design } )
 					} }
 				>
-					{ applyFilters( 'stackable.header.edit.designs.before', null, props ) }
+					{ applyFilters( 'stackable.header.edit.designs.before', null, design, props ) }
 					{ design !== 'plain' &&
 						<RangeControl
 							label={ __( 'Border Radius' ) }
@@ -182,7 +198,7 @@ const edit = props => {
 				/>
 				{ applyFilters( 'stackable.header.edit.inspector.post', null, design, props ) }
 			</InspectorControls>
-			<div className={ mainClasses } style={ mainStyle }>
+			<div className={ mainClasses } style={ styles.main }>
 				{ ( () => {
 					const titleComp = <RichText
 						tagName="h2"
@@ -191,12 +207,7 @@ const edit = props => {
 						keepPlaceholderOnFocus
 						value={ title }
 						onChange={ value => setAttributes( { title: value } ) }
-						style={ {
-							color: titleColor ? titleColor :
-							       design === 'plain' ? undefined :
-							       '#ffffff',
-							textAlign: contentAlign,
-						} }
+						style={ styles.title }
 					/>
 					const subtitleComp = <RichText
 						tagName="p"
@@ -205,12 +216,7 @@ const edit = props => {
 						keepPlaceholderOnFocus
 						value={ subtitle }
 						onChange={ value => setAttributes( { subtitle: value } ) }
-						style={ {
-							color: subtitleColor ? subtitleColor :
-							       design === 'plain' ? undefined :
-							       '#ffffff',
-							textAlign: contentAlign,
-						} }
+						style={ styles.subtitle }
 					/>
 					const buttonComp = <ButtonEdit
 						size={ size }
