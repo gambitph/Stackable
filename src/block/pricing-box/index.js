@@ -84,6 +84,10 @@ const schema = {
 	schema[ `imageAlt${ index }` ] = {
 		type: 'string',
 	}
+	schema[ `highlightColor${ index }` ] = {
+		type: 'string',
+		default: '',
+	}
 	schema[ `pricingBoxTitle${ index }` ] = {
 		source: 'html',
 		selector: `.ugb-pricing-box__item:nth-child(${ i }) .ugb-pricing-box__title`,

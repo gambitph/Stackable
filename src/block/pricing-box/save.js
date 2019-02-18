@@ -1,5 +1,7 @@
+import { applyFilters } from '@wordpress/hooks'
 import { ButtonEdit } from '@stackable/components'
 import classnames from 'classnames'
+import isDarkColor from 'is-dark-color'
 import { range } from '@stackable/util'
 import { RichText } from '@wordpress/editor'
 import striptags from 'striptags'
@@ -31,16 +33,6 @@ const save = props => {
 		`ugb-pricing-box--design-${ design }`,
 	] )
 
-	const boxClasses = classnames( [
-		'ugb-pricing-box__item',
-	], {
-		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-	} )
-
-	const boxStyle = {
-		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
-	}
-
 	return (
 		<div className={ mainClasses }>
 			{ range( 1, columns + 1 ).map( i => {
@@ -56,8 +48,37 @@ const save = props => {
 				const description = attributes[ `featureList${ index }` ]
 				const imageURL = attributes[ `imageURL${ index }` ]
 				const imageAlt = attributes[ `imageAlt${ index }` ]
+				const highlightColor = attributes[ `highlightColor${ index }` ] || ''
+
+				const itemClasses = classnames( [
+					'ugb-pricing-box__item',
+				], applyFilters( 'stackable.pricing-box.itemclasses', {
+					[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
+					'ugb-pricing-box--highlighted': design !== 'plain' && highlightColor,
+					'ugb-pricing-box--is-dark': design !== 'plain' && highlightColor ? isDarkColor( highlightColor ) : false,
+				}, design, i, props ) )
+
+				const styles = applyFilters( 'stackable.pricing-box.styles', {
+					item: {
+						borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
+						backgroundColor: design !== 'plain' && highlightColor ? highlightColor : undefined,
+					},
+					title: {
+						color: pricingBoxColor,
+					},
+					price: {
+						color: priceColor,
+					},
+					month: {
+						color: perMonthLabelColor,
+					},
+					description: {
+						color: featureListColor,
+					},
+				}, design, i, props )
+
 				return (
-					<div className={ boxClasses } style={ boxStyle } key={ i }>
+					<div className={ itemClasses } style={ styles.item } key={ i }>
 						{ imageURL &&
 							<div className="ugb-pricing-grid__image">
 								<img src={ imageURL } alt={ striptags( title ? title : imageAlt ) } />
@@ -67,7 +88,7 @@ const save = props => {
 							<RichText.Content
 								tagName="h3"
 								className="ugb-pricing-box__title"
-								style={ { color: pricingBoxColor } }
+								style={ styles.title }
 								value={ title }
 							/>
 						) }
@@ -78,21 +99,21 @@ const save = props => {
 										<RichText.Content
 											tagName="span"
 											className="ugb-pricing-box__price-prefix"
-											style={ { color: priceColor } }
+											style={ styles.price }
 											value={ pricePrefix }
 										/>
 									) }
 									<RichText.Content
 										tagName="span"
 										className="ugb-pricing-box__price"
-										style={ { color: priceColor } }
+										style={ styles.price }
 										value={ price }
 									/>
 									{ ! RichText.isEmpty( priceSuffix ) && (
 										<RichText.Content
 											tagName="span"
 											className="ugb-pricing-box__price-suffix"
-											style={ { color: priceColor } }
+											style={ styles.price }
 											value={ priceSuffix }
 										/>
 									) }
@@ -102,7 +123,7 @@ const save = props => {
 								<RichText.Content
 									tagName="p"
 									className="ugb-pricing-box__subprice"
-									style={ { color: perMonthLabelColor } }
+									style={ styles.month }
 									value={ subPrice }
 								/>
 							) }
@@ -124,7 +145,7 @@ const save = props => {
 							<RichText.Content
 								tagName="p"
 								className="ugb-pricing-box__description"
-								style={ { color: featureListColor } }
+								style={ styles.description }
 								value={ description }
 							/>
 						) }

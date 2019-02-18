@@ -14,6 +14,7 @@ import classnames from 'classnames'
 import { Fragment } from '@wordpress/element'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import isDarkColor from 'is-dark-color'
 import { showProNotice } from 'stackable'
 
 const edit = props => {
@@ -39,6 +40,9 @@ const edit = props => {
 		design = 'basic',
 		borderRadius = 12,
 		shadow = 3,
+		highlightColor = '',
+		highlightColor2 = '',
+		highlightColor3 = '',
 	} = attributes
 
 	const mainClasses = classnames( [
@@ -48,16 +52,6 @@ const edit = props => {
 		`ugb-pricing-box--columns-${ columns }`,
 		`ugb-pricing-box--design-${ design }`,
 	] )
-
-	const boxClasses = classnames( [
-		'ugb-pricing-box__item',
-	], {
-		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-	} )
-
-	const boxStyle = {
-		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
-	}
 
 	return (
 		<Fragment>
@@ -109,6 +103,33 @@ const edit = props => {
 						max={ 3 }
 					/>
 				</PanelBody>
+				{ design !== 'plain' &&
+					<PanelColorSettings
+						initialOpen={ false }
+						title={ __( 'Column Highlight Colors' ) }
+						colorSettings={ [
+							{
+								value: highlightColor,
+								onChange: highlightColor => setAttributes( { highlightColor } ),
+								label: __( 'Column #1 Highlight' ),
+							},
+							...( columns < 2 ? [] : [
+								{
+									value: highlightColor2,
+									onChange: highlightColor2 => setAttributes( { highlightColor2 } ),
+									label: __( 'Column #2 Highlight' ),
+								},
+							] ),
+							...( columns < 3 ? [] : [
+								{
+									value: highlightColor3,
+									onChange: highlightColor3 => setAttributes( { highlightColor3 } ),
+									label: __( 'Column #3 Highlight' ),
+								},
+							] ),
+						] }
+					/>
+				}
 				<PanelColorSettings
 					initialOpen={ false }
 					title={ __( 'Text Colors' ) }
@@ -168,9 +189,38 @@ const edit = props => {
 					const description = attributes[ `featureList${ index }` ]
 					const imageURL = attributes[ `imageURL${ index }` ]
 					const imageID = attributes[ `imageID${ index }` ]
+					const highlightColor = attributes[ `highlightColor${ index }` ] || ''
+
+					const itemClasses = classnames( [
+						'ugb-pricing-box__item',
+					], applyFilters( 'stackable.pricing-box.itemclasses', {
+						[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
+						'ugb-pricing-box--highlighted': design !== 'plain' && highlightColor,
+						'ugb-pricing-box--is-dark': design !== 'plain' && highlightColor ? isDarkColor( highlightColor ) : false,
+					}, design, i, props ) )
+
+					const styles = applyFilters( 'stackable.pricing-box.styles', {
+						item: {
+							borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
+							backgroundColor: design !== 'plain' && highlightColor ? highlightColor : undefined,
+						},
+						title: {
+							color: pricingBoxColor,
+						},
+						price: {
+							color: priceColor,
+						},
+						month: {
+							color: perMonthLabelColor,
+						},
+						description: {
+							color: featureListColor,
+						},
+					}, design, i, props )
+
 					return (
 						<div key={ i }>
-							<div className={ boxClasses } style={ boxStyle }>
+							<div className={ itemClasses } style={ styles.item }>
 								<div
 									className="ugb-pricing-box__image"
 									data-is-placeholder-visible={ ! imageURL }
@@ -200,9 +250,7 @@ const edit = props => {
 									className="ugb-pricing-box__title"
 									value={ title }
 									onChange={ value => setAttributes( { [ `pricingBoxTitle${ index }` ]: value } ) }
-									style={ {
-										color: pricingBoxColor,
-									} }
+									style={ styles.title }
 									placeholder={ __( 'Title' ) }
 									keepPlaceholderOnFocus
 								/>
@@ -213,9 +261,7 @@ const edit = props => {
 											className="ugb-pricing-box__price-prefix"
 											value={ pricePrefix }
 											onChange={ value => setAttributes( { [ `pricePrefix${ index }` ]: value } ) }
-											style={ {
-												color: priceColor,
-											} }
+											style={ styles.price }
 											placeholder="$"
 											keepPlaceholderOnFocus
 										/>
@@ -224,9 +270,7 @@ const edit = props => {
 											className="ugb-pricing-box__price"
 											value={ price }
 											onChange={ value => setAttributes( { [ `price${ index }` ]: value } ) }
-											style={ {
-												color: priceColor,
-											} }
+											style={ styles.price }
 											placeholder="9"
 											keepPlaceholderOnFocus
 										/>
@@ -235,9 +279,7 @@ const edit = props => {
 											className="ugb-pricing-box__price-suffix"
 											value={ priceSuffix }
 											onChange={ value => setAttributes( { [ `priceSuffix${ index }` ]: value } ) }
-											style={ {
-												color: priceColor,
-											} }
+											style={ styles.price }
 											placeholder=".00"
 											keepPlaceholderOnFocus
 										/>
@@ -247,9 +289,7 @@ const edit = props => {
 										className="ugb-pricing-box__subprice"
 										value={ subPrice }
 										onChange={ value => setAttributes( { [ `perMonthLabel${ index }` ]: value } ) }
-										style={ {
-											color: perMonthLabelColor,
-										} }
+										style={ styles.month }
 										placeholder={ __( 'Description' ) }
 										keepPlaceholderOnFocus
 									/>
@@ -269,9 +309,7 @@ const edit = props => {
 									value={ description }
 									className="ugb-pricing-box__description"
 									onChange={ value => setAttributes( { [ `featureList${ index }` ]: value } ) }
-									style={ {
-										color: featureListColor,
-									} }
+									style={ styles.description }
 									placeholder={ descriptionPlaceholder( 'medium' ) }
 									keepPlaceholderOnFocus
 								/>

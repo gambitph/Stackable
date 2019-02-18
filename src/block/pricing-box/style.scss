@@ -40,6 +40,17 @@
 		font-size: 3.5em;
 		line-height: 100% !important;
 	}
+
+	&.ugb-pricing-box--highlighted {
+		* {
+			color: #222;
+		}
+		&.ugb-pricing-box--is-dark {
+			* {
+				color: #fff;
+			}
+		}
+	}
 }
 
 .ugb-pricing-box__price-wrapper {
