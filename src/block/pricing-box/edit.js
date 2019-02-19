@@ -165,12 +165,10 @@ const edit = props => {
 					buttonBorderRadius={ cornerButtonRadius }
 					buttonDesign={ buttonDesign }
 					buttonIcon={ buttonIcon }
-					onChangeButtonColor={ value => setAttributes( { buttonColor: value } ) }
-					onChangeButtonTextColor={ value => setAttributes( { buttonTextColor: value } ) }
-					onChangeButtonSize={ value => {
-						setAttributes( { size: value } )
-					} }
-					onChangeButtonBorderRadius={ value => setAttributes( { cornerButtonRadius: value } ) }
+					onChangeButtonColor={ buttonColor => setAttributes( { buttonColor } ) }
+					onChangeButtonTextColor={ buttonTextColor => setAttributes( { buttonTextColor } ) }
+					onChangeButtonSize={ size => setAttributes( { size } ) }
+					onChangeButtonBorderRadius={ cornerButtonRadius => setAttributes( { cornerButtonRadius } ) }
 					onChangeButtonDesign={ buttonDesign => setAttributes( { buttonDesign } ) }
 					onChangeButtonIcon={ buttonIcon => setAttributes( { buttonIcon } ) }
 				/>
