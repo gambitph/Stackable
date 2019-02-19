@@ -1,6 +1,7 @@
 import { applyFilters } from '@wordpress/hooks'
 import { ButtonEdit } from '@stackable/components'
 import classnames from 'classnames'
+import { Fragment } from '@wordpress/element'
 import isDarkColor from 'is-dark-color'
 import { range } from '@stackable/util'
 import { RichText } from '@wordpress/editor'
@@ -79,76 +80,105 @@ const save = props => {
 
 				return (
 					<div className={ itemClasses } style={ styles.item } key={ i }>
-						{ imageURL &&
-							<div className="ugb-pricing-grid__image">
-								<img src={ imageURL } alt={ striptags( title ? title : imageAlt ) } />
-							</div>
-						}
-						{ ! RichText.isEmpty( title ) && (
-							<RichText.Content
-								tagName="h3"
-								className="ugb-pricing-box__title"
-								style={ styles.title }
-								value={ title }
-							/>
-						) }
-						<div className="ugb-pricing-box__price-wrapper">
-							{ ! RichText.isEmpty( price ) && (
-								<div className="ugb-pricing-box__price-line">
-									{ ! RichText.isEmpty( pricePrefix ) && (
-										<RichText.Content
-											tagName="span"
-											className="ugb-pricing-box__price-prefix"
-											style={ styles.price }
-											value={ pricePrefix }
-										/>
+						{ ( () => {
+							const imageComp = imageURL && (
+								<div className="ugb-pricing-box__image">
+									<img src={ imageURL } alt={ striptags( title ? title : imageAlt ) } />
+								</div>
+							)
+							const imageBGComp = imageURL && (
+								<div className="ugb-pricing-box__image-bg" style={ {
+									backgroundImage: `url(${ imageURL })`,
+								} }>
+								</div>
+							)
+							const titleComp = ! RichText.isEmpty( title ) && (
+								<RichText.Content
+									tagName="h3"
+									className="ugb-pricing-box__title"
+									style={ styles.title }
+									value={ title }
+								/>
+							)
+							const priceComp = ! RichText.isEmpty( price ) && ! RichText.isEmpty( subPrice ) && (
+								<div className="ugb-pricing-box__price-wrapper">
+									{ ! RichText.isEmpty( price ) && (
+										<div className="ugb-pricing-box__price-line">
+											{ ! RichText.isEmpty( pricePrefix ) && (
+												<RichText.Content
+													tagName="span"
+													className="ugb-pricing-box__price-prefix"
+													style={ styles.price }
+													value={ pricePrefix }
+												/>
+											) }
+											<RichText.Content
+												tagName="span"
+												className="ugb-pricing-box__price"
+												style={ styles.price }
+												value={ price }
+											/>
+											{ ! RichText.isEmpty( priceSuffix ) && (
+												<RichText.Content
+													tagName="span"
+													className="ugb-pricing-box__price-suffix"
+													style={ styles.price }
+													value={ priceSuffix }
+												/>
+											) }
+										</div>
 									) }
-									<RichText.Content
-										tagName="span"
-										className="ugb-pricing-box__price"
-										style={ styles.price }
-										value={ price }
-									/>
-									{ ! RichText.isEmpty( priceSuffix ) && (
+									{ ! RichText.isEmpty( subPrice ) && (
 										<RichText.Content
-											tagName="span"
-											className="ugb-pricing-box__price-suffix"
-											style={ styles.price }
-											value={ priceSuffix }
+											tagName="p"
+											className="ugb-pricing-box__subprice"
+											style={ styles.month }
+											value={ subPrice }
 										/>
 									) }
 								</div>
-							) }
-							{ ! RichText.isEmpty( subPrice ) && (
+							)
+							const buttonComp = buttonText && !! buttonText.length && (
+								<div className="ugb-pricing-box__button">
+									<ButtonEdit.Content
+										size={ size }
+										url={ buttonURL }
+										newTab={ buttonNewTab }
+										color={ buttonTextColor }
+										text={ buttonText }
+										design={ buttonDesign }
+										icon={ buttonIcon }
+										backgroundColor={ buttonColor }
+										borderRadius={ cornerButtonRadius }
+									/>
+								</div>
+							)
+							const descriptionComp = ! RichText.isEmpty( description ) && (
 								<RichText.Content
 									tagName="p"
-									className="ugb-pricing-box__subprice"
-									style={ styles.month }
-									value={ subPrice }
+									className="ugb-pricing-box__description"
+									style={ styles.description }
+									value={ description }
 								/>
-							) }
-						</div>
-						{ buttonText && !! buttonText.length && (
-							<ButtonEdit.Content
-								size={ size }
-								url={ buttonURL }
-								newTab={ buttonNewTab }
-								color={ buttonTextColor }
-								text={ buttonText }
-								design={ buttonDesign }
-								icon={ buttonIcon }
-								backgroundColor={ buttonColor }
-								borderRadius={ cornerButtonRadius }
-							/>
-						) }
-						{ ! RichText.isEmpty( description ) && (
-							<RichText.Content
-								tagName="p"
-								className="ugb-pricing-box__description"
-								style={ styles.description }
-								value={ description }
-							/>
-						) }
+							)
+							const comps = {
+								imageComp,
+								imageBGComp,
+								titleComp,
+								priceComp,
+								buttonComp,
+								descriptionComp,
+							}
+							return applyFilters( 'stackable.pricing-box.save.output', (
+								<Fragment>
+									{ imageComp }
+									{ titleComp }
+									{ priceComp }
+									{ buttonComp }
+									{ descriptionComp }
+								</Fragment>
+							), design, comps, i, props )
+						} )() }
 					</div>
 				)
 			} ) }

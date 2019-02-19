@@ -31,7 +31,6 @@
 }
 
 .ugb-pricing-box__item {
-	@include baseBlock();
 	@include box();
 	margin-bottom: 0 !important;
 	text-align: center;
@@ -39,17 +38,6 @@
 	.ugb-pricing-box__price {
 		font-size: 3.5em;
 		line-height: 100% !important;
-	}
-
-	&.ugb-pricing-box--highlighted {
-		* {
-			color: #222;
-		}
-		&.ugb-pricing-box--is-dark {
-			* {
-				color: #fff;
-			}
-		}
 	}
 }
 
@@ -89,9 +77,25 @@
 
 .ugb-pricing-box--design-plain {
 	.ugb-pricing-box__item {
+		@include baseBlock();
 		box-shadow: none;
 		padding: 0;
 		border-radius: 0;
+	}
+}
+.ugb-pricing-box--design-basic {
+	.ugb-pricing-box__item {
+		@include baseBlock();
+		&.ugb-pricing-box--highlighted {
+			* {
+				color: #222;
+			}
+			&.ugb-pricing-box--is-dark {
+				* {
+					color: #fff;
+				}
+			}
+		}
 	}
 }
 

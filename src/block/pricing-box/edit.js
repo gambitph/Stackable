@@ -219,98 +219,154 @@ const edit = props => {
 					return (
 						<div key={ i }>
 							<div className={ itemClasses } style={ styles.item }>
-								<div
-									className="ugb-pricing-box__image"
-									data-is-placeholder-visible={ ! imageURL }
-								>
-									<ImageUploadPlaceholder
-										imageID={ imageID }
-										imageURL={ imageURL }
-										onRemove={ () => {
-											setAttributes( {
-												[ `imageURL${ index }` ]: '',
-												[ `imageID${ index }` ]: '',
-												[ `imageAlt${ index }` ]: '',
-											} )
-										} }
-										onChange={ ( { url, id, alt } ) => {
-											setAttributes( {
-												[ `imageURL${ index }` ]: url,
-												[ `imageID${ index }` ]: id,
-												[ `imageAlt${ index }` ]: alt,
-											} )
-										} }
-										render={ <img src={ imageURL } alt={ title } /> }
-									/>
-								</div>
-								<RichText
-									tagName="h3"
-									className="ugb-pricing-box__title"
-									value={ title }
-									onChange={ value => setAttributes( { [ `pricingBoxTitle${ index }` ]: value } ) }
-									style={ styles.title }
-									placeholder={ __( 'Title' ) }
-									keepPlaceholderOnFocus
-								/>
-								<div className="ugb-pricing-box__price-wrapper">
-									<div className="ugb-pricing-box__price-line">
+								{ ( () => {
+									const imageBGComp = (
+										<div
+											className="ugb-pricing-box__image-bg"
+											data-is-placeholder-visible={ ! imageURL }
+										>
+											<ImageUploadPlaceholder
+												imageID={ imageID }
+												imageURL={ imageURL }
+												onRemove={ () => {
+													setAttributes( {
+														[ `imageURL${ index }` ]: '',
+														[ `imageID${ index }` ]: '',
+														[ `imageAlt${ index }` ]: '',
+													} )
+												} }
+												onChange={ ( { url, id, alt } ) => {
+													setAttributes( {
+														[ `imageURL${ index }` ]: url,
+														[ `imageID${ index }` ]: id,
+														[ `imageAlt${ index }` ]: alt,
+													} )
+												} }
+											/>
+										</div>
+									)
+									const imageComp = (
+										<div
+											className="ugb-pricing-box__image"
+											data-is-placeholder-visible={ ! imageURL }
+										>
+											<ImageUploadPlaceholder
+												imageID={ imageID }
+												imageURL={ imageURL }
+												onRemove={ () => {
+													setAttributes( {
+														[ `imageURL${ index }` ]: '',
+														[ `imageID${ index }` ]: '',
+														[ `imageAlt${ index }` ]: '',
+													} )
+												} }
+												onChange={ ( { url, id, alt } ) => {
+													setAttributes( {
+														[ `imageURL${ index }` ]: url,
+														[ `imageID${ index }` ]: id,
+														[ `imageAlt${ index }` ]: alt,
+													} )
+												} }
+												render={ <img src={ imageURL } alt={ title } /> }
+											/>
+										</div>
+									)
+									const titleComp = (
 										<RichText
-											tagName="div"
-											className="ugb-pricing-box__price-prefix"
-											value={ pricePrefix }
-											onChange={ value => setAttributes( { [ `pricePrefix${ index }` ]: value } ) }
-											style={ styles.price }
-											placeholder="$"
+											tagName="h3"
+											className="ugb-pricing-box__title"
+											value={ title }
+											onChange={ value => setAttributes( { [ `pricingBoxTitle${ index }` ]: value } ) }
+											style={ styles.title }
+											placeholder={ __( 'Title' ) }
 											keepPlaceholderOnFocus
 										/>
+									)
+									const priceComp = (
+										<div className="ugb-pricing-box__price-wrapper">
+											<div className="ugb-pricing-box__price-line">
+												<RichText
+													tagName="div"
+													className="ugb-pricing-box__price-prefix"
+													value={ pricePrefix }
+													onChange={ value => setAttributes( { [ `pricePrefix${ index }` ]: value } ) }
+													style={ styles.price }
+													placeholder="$"
+													keepPlaceholderOnFocus
+												/>
+												<RichText
+													tagName="div"
+													className="ugb-pricing-box__price"
+													value={ price }
+													onChange={ value => setAttributes( { [ `price${ index }` ]: value } ) }
+													style={ styles.price }
+													placeholder="9"
+													keepPlaceholderOnFocus
+												/>
+												<RichText
+													tagName="div"
+													className="ugb-pricing-box__price-suffix"
+													value={ priceSuffix }
+													onChange={ value => setAttributes( { [ `priceSuffix${ index }` ]: value } ) }
+													style={ styles.price }
+													placeholder=".00"
+													keepPlaceholderOnFocus
+												/>
+											</div>
+											<RichText
+												tagName="p"
+												className="ugb-pricing-box__subprice"
+												value={ subPrice }
+												onChange={ value => setAttributes( { [ `perMonthLabel${ index }` ]: value } ) }
+												style={ styles.month }
+												placeholder={ __( 'Description' ) }
+												keepPlaceholderOnFocus
+											/>
+										</div>
+									)
+									const buttonComp = (
+										<div className="ugb-pricing-box__button">
+											<ButtonEdit
+												size={ size }
+												color={ buttonTextColor }
+												backgroundColor={ buttonColor }
+												text={ buttonText }
+												borderRadius={ cornerButtonRadius }
+												design={ buttonDesign }
+												icon={ buttonIcon }
+												onChange={ value => setAttributes( { [ `buttonText${ index }` ]: value } ) }
+											/>
+										</div>
+									)
+									const descriptionComp = (
 										<RichText
-											tagName="div"
-											className="ugb-pricing-box__price"
-											value={ price }
-											onChange={ value => setAttributes( { [ `price${ index }` ]: value } ) }
-											style={ styles.price }
-											placeholder="9"
+											tagName="p"
+											value={ description }
+											className="ugb-pricing-box__description"
+											onChange={ value => setAttributes( { [ `featureList${ index }` ]: value } ) }
+											style={ styles.description }
+											placeholder={ descriptionPlaceholder( 'medium' ) }
 											keepPlaceholderOnFocus
 										/>
-										<RichText
-											tagName="div"
-											className="ugb-pricing-box__price-suffix"
-											value={ priceSuffix }
-											onChange={ value => setAttributes( { [ `priceSuffix${ index }` ]: value } ) }
-											style={ styles.price }
-											placeholder=".00"
-											keepPlaceholderOnFocus
-										/>
-									</div>
-									<RichText
-										tagName="p"
-										className="ugb-pricing-box__subprice"
-										value={ subPrice }
-										onChange={ value => setAttributes( { [ `perMonthLabel${ index }` ]: value } ) }
-										style={ styles.month }
-										placeholder={ __( 'Description' ) }
-										keepPlaceholderOnFocus
-									/>
-								</div>
-								<ButtonEdit
-									size={ size }
-									color={ buttonTextColor }
-									backgroundColor={ buttonColor }
-									text={ buttonText }
-									borderRadius={ cornerButtonRadius }
-									design={ buttonDesign }
-									icon={ buttonIcon }
-									onChange={ value => setAttributes( { [ `buttonText${ index }` ]: value } ) }
-								/>
-								<RichText
-									tagName="p"
-									value={ description }
-									className="ugb-pricing-box__description"
-									onChange={ value => setAttributes( { [ `featureList${ index }` ]: value } ) }
-									style={ styles.description }
-									placeholder={ descriptionPlaceholder( 'medium' ) }
-									keepPlaceholderOnFocus
-								/>
+									)
+									const comps = {
+										imageComp,
+										imageBGComp,
+										titleComp,
+										priceComp,
+										buttonComp,
+										descriptionComp,
+									}
+									return applyFilters( 'stackable.pricing-box.edit.output', (
+										<Fragment>
+											{ imageComp }
+											{ titleComp }
+											{ priceComp }
+											{ buttonComp }
+											{ descriptionComp }
+										</Fragment>
+									), design, comps, i, props )
+								} )() }
 							</div>
 							{
 								isSelected && (
