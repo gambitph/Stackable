@@ -3,8 +3,6 @@
  */
 
 import { DesignPanelItem } from '@stackable/components'
-import { doAction } from '@wordpress/hooks'
-import { isPro } from 'stackable'
 import { RadioControl } from '@wordpress/components'
 
 function DesignControl( props ) {
@@ -21,24 +19,13 @@ function DesignControl( props ) {
 		}
 	} )
 
-	const onChangeHandler = value => {
-		const selectedOption = fixedOptions.find( opt => opt.value === value )
-		if ( ! isPro ) {
-			if ( selectedOption.isPro ) {
-				doAction( 'stackable.get_pro' )
-				return
-			}
-		}
-		onChange( value )
-	}
-
 	return (
 		<RadioControl
 			{ ...props }
 			className="ugb-design-control"
 			selected={ selected }
 			options={ fixedOptions }
-			onChange={ onChangeHandler }
+			onChange={ onChange }
 		/>
 	)
 }
