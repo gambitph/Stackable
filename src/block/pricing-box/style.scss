@@ -87,11 +87,11 @@
 	.ugb-pricing-box__item {
 		@include baseBlock();
 		&.ugb-pricing-box--highlighted {
-			* {
+			*:not(.ugb-button--inner) {
 				color: #222;
 			}
 			&.ugb-pricing-box--is-dark {
-				* {
+				*:not(.ugb-button--inner) {
 					color: #fff;
 				}
 			}
