@@ -15,7 +15,6 @@ const save = props => {
 		design = 'basic',
 		borderRadius = 12,
 		shadow = 3,
-		colorOnHover = false,
 	} = props.attributes
 
 	const mainClasses = classnames( [
@@ -25,15 +24,7 @@ const save = props => {
 		`ugb-team-member--columns-${ columns }`,
 		`ugb-team-member--image-${ shapes }`,
 		`ugb-team-member--design-${ design }`,
-	], {
-		'ugb-team-member--color-on-hover': colorOnHover,
-	} )
-
-	const itemClasses = classnames( [
-		'ugb-team-member__item',
-	], {
-		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-	} )
+	], applyFilters( 'stackable.team-member.mainclasses', {}, design, props ) )
 
 	return (
 		<div className={ mainClasses }>
@@ -43,6 +34,12 @@ const save = props => {
 				const name = attributes[ `name${ i }` ]
 				const position = attributes[ `position${ i }` ]
 				const description = attributes[ `description${ i }` ]
+
+				const itemClasses = classnames( [
+					'ugb-team-member__item',
+				], applyFilters( 'stackable.team-member.itemclasses', {
+					[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
+				}, design, i, props ) )
 
 				const styles = applyFilters( 'stackable.team-member.itemstyles', {
 					item: {
