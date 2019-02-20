@@ -23,7 +23,7 @@ const save = props => {
 		buttonDesign,
 		buttonIcon,
 		design = 'basic',
-		backgroundColor,
+		backgroundColor = '#ffffff',
 		borderRadius = 12,
 		shadow = 3,
 	} = props.attributes
