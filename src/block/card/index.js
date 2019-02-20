@@ -93,7 +93,7 @@ export const schema = {
 	},
 	backgroundColor: {
 		type: 'string',
-		default: '#ffffff',
+		// default: '#ffffff',
 	},
 	borderRadius: {
 		type: 'number',

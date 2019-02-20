@@ -41,7 +41,7 @@ const edit = props => {
 		buttonDesign,
 		buttonIcon,
 		design = 'basic',
-		backgroundColor = '#ffffff',
+		backgroundColor,
 		borderRadius = 12,
 		shadow = 3,
 	} = props.attributes
