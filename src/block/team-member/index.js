@@ -121,6 +121,10 @@ export const schema = {
 		type: 'number',
 		default: 3,
 	},
+	colorOnHover: {
+		type: 'boolean',
+		default: false,
+	},
 
 	// Keep the old attributes. Gutenberg issue https://github.com/WordPress/gutenberg/issues/10406
 	href: {

@@ -42,7 +42,6 @@
 	}
 
 	.ugb-team-member__content {
-		@include baseBlock();
 		margin: 0;
 	}
 
@@ -62,6 +61,18 @@
 			grid-template-columns: minmax(0, 1fr);
 		}
 	}
+
+	&.ugb-team-member--color-on-hover {
+		.ugb-team-member__image {
+			filter: grayscale(100%);
+			transition: all .4s ease-in-out;
+		}
+		.ugb-team-member__item:hover {
+			.ugb-team-member__image {
+				filter: grayscale(0%);
+			}
+		}
+	}
 }
 
 .ugb-team-member__position {
@@ -71,6 +82,13 @@
 .ugb-team-member.ugb-team-member--design-basic {
 	.ugb-team-member__item {
 		@include box();
+	}
+}
+
+.ugb-team-member.ugb-team-member--design-basic,
+.ugb-team-member.ugb-team-member--design-plain {
+	.ugb-team-member__content {
+		@include baseBlock();
 	}
 }
 
