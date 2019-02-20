@@ -47,15 +47,13 @@ const edit = props => {
 		[ `ugb-feature-grid--design-${ design }` ]: design && design !== 'basic',
 	} )
 
-	const itemClasses = classnames( [
-		'ugb-feature-grid__item',
-	], {
-		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-	} )
-
 	const itemStyle = {
 		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
 	}
+
+	const show = applyFilters( 'stackable.feature-grid.edit.show', {
+		imageSize: true,
+	}, design, props )
 
 	return (
 		<Fragment>
@@ -106,13 +104,15 @@ const edit = props => {
 						min={ 1 }
 						max={ 3 }
 					/>
-					<RangeControl
-						label={ __( 'Image Size %' ) }
-						value={ imageSize }
-						onChange={ imageSize => setAttributes( { imageSize } ) }
-						min={ 0 }
-						max={ 100 }
-					/>
+					{ show.imageSize && (
+						<RangeControl
+							label={ __( 'Image Size %' ) }
+							value={ imageSize }
+							onChange={ imageSize => setAttributes( { imageSize } ) }
+							min={ 0 }
+							max={ 100 }
+						/>
+					) }
 				</PanelBody>
 				<PanelButtonSettings
 					initialOpen={ false }
@@ -141,6 +141,19 @@ const edit = props => {
 					const linkUrl = attributes[ `linkUrl${ i }` ]
 					const newTab = attributes[ `newTab${ i }` ]
 					const linkText = attributes[ `linkText${ i }` ]
+
+					const itemClasses = classnames( [
+						'ugb-feature-grid__item',
+					], applyFilters( 'stackable.feature-grid.itemclasses', {
+						[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
+					}, design, i, props ) )
+
+					const itemStyles = applyFilters( 'stackable.feature-grid.itemstyles', {
+						image: {
+							width: imageID ? `${ imageSize }%` : undefined,
+						},
+					}, design, i, props )
+
 					return (
 						<div key={ i }>
 							<div className={ itemClasses } style={ itemStyle }>
@@ -163,9 +176,7 @@ const edit = props => {
 											} )
 										} }
 										render={ <img src={ imageUrl } alt={ title } /> }
-										style={ {
-											width: imageID ? `${ imageSize }%` : undefined,
-										} }
+										style={ itemStyles.image }
 									/>
 								</div>
 								<div className="ugb-feature-grid__content">

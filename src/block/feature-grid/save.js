@@ -1,3 +1,4 @@
+import { applyFilters } from '@wordpress/hooks'
 import { ButtonEdit } from '@stackable/components'
 import classnames from 'classnames'
 import { range } from '@stackable/util'
@@ -28,12 +29,6 @@ const save = props => {
 		[ `ugb-feature-grid--design-${ design }` ]: design && design !== 'basic',
 	} )
 
-	const itemClasses = classnames( [
-		'ugb-feature-grid__item',
-	], {
-		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-	} )
-
 	const itemStyle = {
 		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
 	}
@@ -48,13 +43,26 @@ const save = props => {
 				const linkUrl = attributes[ `linkUrl${ i }` ]
 				const newTab = attributes[ `newTab${ i }` ]
 				const linkText = attributes[ `linkText${ i }` ]
+
+				const itemClasses = classnames( [
+					'ugb-feature-grid__item',
+				], applyFilters( 'stackable.feature-grid.itemclasses', {
+					[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
+				}, design, i, props ) )
+
+				const itemStyles = applyFilters( 'stackable.feature-grid.itemstyles', {
+					image: {
+						width: imageUrl ? `${ imageSize }%` : undefined,
+					},
+				}, design, i, props )
+
 				return (
 					<div className={ itemClasses } style={ itemStyle } key={ i }>
 						{ imageUrl &&
 							<div className="ugb-feature-grid__image">
 								<img
 									src={ imageUrl }
-									style={ { width: `${ imageSize }%` } }
+									style={ itemStyles.image }
 									alt={ striptags( title ? title : imageAlt ) }
 								/>
 							</div>
