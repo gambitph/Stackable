@@ -48,7 +48,7 @@ const schema = {
 	},
 	textColor: {
 		type: 'string',
-		default: '#ffffff',
+		// default: '#ffffff',
 	},
 	titleColor: {
 		type: 'string',
