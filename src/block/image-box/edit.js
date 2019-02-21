@@ -35,7 +35,7 @@ const edit = props => {
 		design = 'basic',
 		borderRadius = 12,
 		shadow = 3,
-		hoverEffect = '',
+		imageHoverEffect = '',
 		overlayOpacity = 7,
 		arrow = '',
 	} = attributes
@@ -47,7 +47,7 @@ const edit = props => {
 		`ugb-image-box--columns-${ columns }`,
 	], applyFilters( 'stackable.image-box.mainclasses', {
 		[ `ugb-image-box--design-${ design }` ]: design !== 'basic',
-		[ `ugb-image-box--effect-${ hoverEffect }` ]: hoverEffect,
+		[ `ugb-image-box--effect-${ imageHoverEffect }` ]: imageHoverEffect,
 		[ `ugb-image-box--overlay-${ overlayOpacity }` ]: overlayOpacity !== 7,
 		'ugb-image-box--arrow': arrow,
 	}, design, props ) )
@@ -116,8 +116,8 @@ const edit = props => {
 							{ label: __( 'Zoom In' ), value: 'zoom-in' },
 							{ label: __( 'Zoom Out' ), value: 'zoom-out' },
 						] ) }
-						value={ hoverEffect }
-						onChange={ hoverEffect => setAttributes( { hoverEffect } ) }
+						value={ imageHoverEffect }
+						onChange={ imageHoverEffect => setAttributes( { imageHoverEffect } ) }
 					/>
 					<RangeControl
 						label={ __( 'Hover Overlay Opacity' ) }
@@ -178,6 +178,7 @@ const edit = props => {
 					] }
 				>
 				</PanelColorSettings>
+				{ applyFilters( 'stackable.image-box.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
 			<div className={ mainClasses } style={ mainStyles }>
 				{ [ 1, 2, 3, 4 ].map( i => {
@@ -199,9 +200,9 @@ const edit = props => {
 
 					const boxClasses = classnames( [
 						'ugb-image-box__item',
-					], {
+					], applyFilters( 'stackable.image-box.itemclasses', {
 						[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
-					} )
+					}, design, i, props ) )
 
 					const arrowClasses = classnames( [
 						'ugb-image-box__arrow',

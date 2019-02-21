@@ -194,6 +194,7 @@ const edit = props => {
 					onChangeButtonDesign={ buttonDesign => setAttributes( { buttonDesign } ) }
 					onChangeButtonIcon={ buttonIcon => setAttributes( { buttonIcon } ) }
 				/>
+				{ applyFilters( 'stackable.feature.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
 			<div className={ mainClasses } style={ styles.main }>
 				{ ( () => {

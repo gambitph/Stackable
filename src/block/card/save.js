@@ -1,3 +1,4 @@
+import { applyFilters } from '@wordpress/hooks'
 import { ButtonEdit } from '@stackable/components'
 import classnames from 'classnames'
 import { RichText } from '@wordpress/editor'
@@ -31,10 +32,10 @@ const save = props => {
 	const mainClasses = classnames( [
 		className,
 		'ugb-card',
-	], {
+	], applyFilters( 'stackable.card.mainclasses', {
 		[ `ugb-card--design-${ design }` ]: design !== 'basic',
-		[ `ugb--shadow-${ shadow }` ]: design !== 'plain',
-	} )
+		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
+	}, design, props ) )
 
 	const mainStyles = {
 		borderRadius: design !== 'plain' ? borderRadius : undefined,

@@ -25,9 +25,9 @@ const save = props => {
 		className,
 		'ugb-feature-grid',
 		`ugb-feature-grid--columns-${ columns }`,
-	], {
+	], applyFilters( 'stackable.feature-grid.mainclasses', {
 		[ `ugb-feature-grid--design-${ design }` ]: design && design !== 'basic',
-	} )
+	}, design, props ) )
 
 	const itemStyle = {
 		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,

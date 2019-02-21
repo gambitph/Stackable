@@ -57,11 +57,15 @@ export const schema = {
 		type: 'number',
 		default: 7,
 	},
-	hoverEffect: {
+	imageHoverEffect: {
 		type: 'string',
 		default: '',
 	},
 	arrow: {
+		type: 'string',
+		default: '',
+	},
+	hoverEffect: {
 		type: 'string',
 		default: '',
 	},

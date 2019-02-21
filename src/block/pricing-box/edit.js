@@ -172,6 +172,7 @@ const edit = props => {
 					onChangeButtonDesign={ buttonDesign => setAttributes( { buttonDesign } ) }
 					onChangeButtonIcon={ buttonIcon => setAttributes( { buttonIcon } ) }
 				/>
+				{ applyFilters( 'stackable.pricing-box.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
 			<div className={ mainClasses }>
 				{ range( 1, columns + 1 ).map( i => {

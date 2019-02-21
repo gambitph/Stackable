@@ -103,6 +103,10 @@ export const schema = {
 		type: 'number',
 		default: 3,
 	},
+	hoverEffect: {
+		type: 'string',
+		default: '',
+	},
 }
 
 export const name = 'ugb/card'

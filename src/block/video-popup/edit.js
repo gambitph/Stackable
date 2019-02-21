@@ -37,11 +37,11 @@ const edit = props => {
 		`ugb-video-popup--design-${ design }`,
 		`ugb-video-popup--button-${ playButtonType }`,
 		'ugb--background-opacity-' + ( 1 * Math.round( backgroundOpacity / 1 ) ),
-	], {
+	], applyFilters( 'stackable.video-popup.mainclasses', {
 		'ugb--has-background': backgroundColor || backgroundImageURL,
 		'ugb--has-background-image': backgroundImageURL,
 		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-	} )
+	}, design, props ) )
 
 	const mainStyle = {
 		backgroundColor: backgroundColor ? backgroundColor : undefined,
@@ -110,6 +110,7 @@ const edit = props => {
 					} }
 					onChangeBackgroundOpacity={ backgroundOpacity => setAttributes( { backgroundOpacity } ) }
 				/>
+				{ applyFilters( 'stackable.video-popup.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
 			<div className={ mainClasses } style={ mainStyle }>
 				<div className="ugb-video-popup__wrapper" >

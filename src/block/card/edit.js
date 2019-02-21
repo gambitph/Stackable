@@ -49,10 +49,10 @@ const edit = props => {
 	const mainClasses = classnames( [
 		className,
 		'ugb-card',
-	], {
+	], applyFilters( 'stackable.card.mainclasses', {
 		[ `ugb-card--design-${ design }` ]: design !== 'basic',
 		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-	} )
+	}, design, props ) )
 
 	const mainStyles = {
 		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
@@ -151,6 +151,7 @@ const edit = props => {
 					onChangeButtonDesign={ buttonDesign => setAttributes( { buttonDesign } ) }
 					onChangeButtonIcon={ buttonIcon => setAttributes( { buttonIcon } ) }
 				/>
+				{ applyFilters( 'stackable.card.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
 			<div className={ mainClasses } style={ mainStyles }>
 				<ImageUploadPlaceholder
