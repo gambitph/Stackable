@@ -5,7 +5,6 @@ import {
 	DeprecatedButtonContent_1_9,
 } from '@stackable/components/button-edit'
 import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { range } from '@stackable/util'
 
@@ -151,7 +150,7 @@ const deprecatedSave_1_12 = props => {
 		[ `ugb-button--align-${ align }` ]: align,
 	} )
 
-	const saved = (
+	return (
 		<div className={ mainClasses }>
 			{ range( 1, buttons + 1 ).map( i => {
 				const {
@@ -181,8 +180,6 @@ const deprecatedSave_1_12 = props => {
 			} ) }
 		</div>
 	)
-
-	return applyFilters( 'stackable.designs.button.save', saved, props )
 }
 
 const deprecatedSchema_1_10 = {
@@ -304,7 +301,7 @@ const deprecatedSave_1_10 = props => {
 		[ `ugb-button-${ align }` ]: align,
 	} )
 
-	const saved = (
+	return (
 		<div className={ mainClasses }>
 			{ range( 1, buttons + 1 ).map( i => {
 				const {
@@ -332,8 +329,6 @@ const deprecatedSave_1_10 = props => {
 			} ) }
 		</div>
 	)
-
-	return applyFilters( 'stackable.designs.button.save', saved, props )
 }
 
 const deprecatedSchema_1_9 = {
@@ -455,7 +450,7 @@ export const deprecatedSave_1_9 = props => {
 		[ `ugb-button-${ align }` ]: align,
 	} )
 
-	const saved = (
+	return (
 		<div className={ mainClasses }>
 			{ range( 1, buttons + 1 ).map( i => {
 				const {
@@ -483,8 +478,6 @@ export const deprecatedSave_1_9 = props => {
 			} ) }
 		</div>
 	)
-
-	return applyFilters( 'stackable.designs.button.save', saved, props )
 }
 
 export const deprecatedSchema_1_8 = {
@@ -526,7 +519,13 @@ export const deprecatedSchema_1_8 = {
 export const deprecatedSave_1_8 = props => {
 	const { className } = props
 	const {
-		url, text, align, color, textColor, size, cornerButtonRadius, design,
+		url, 
+		text, 
+		align, 
+		color, 
+		textColor, 
+		size, 
+		cornerButtonRadius,
 	} = props.attributes
 
 	const mainClasses = classnames( [
@@ -534,9 +533,7 @@ export const deprecatedSave_1_8 = props => {
 		'ugb-button',
 	] )
 
-	const saved = <DeprecatedButtonContent_1_4 className={ mainClasses } align={ align } size={ size } url={ url } color={ textColor } text={ text } backgroundColor={ color } borderRadius={ cornerButtonRadius } />
-
-	return applyFilters( 'stackable.designs.button.save', saved, design, props )
+	return <DeprecatedButtonContent_1_4 className={ mainClasses } align={ align } size={ size } url={ url } color={ textColor } text={ text } backgroundColor={ color } borderRadius={ cornerButtonRadius } />
 }
 
 const deprecated = [

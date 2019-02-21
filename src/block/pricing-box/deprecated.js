@@ -5,7 +5,6 @@ import {
 } from '@stackable/components/button-edit'
 import { descriptionPlaceholder, range } from '@stackable/util'
 import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import isDarkColor from 'is-dark-color'
 import { RichText } from '@wordpress/editor'
@@ -57,13 +56,13 @@ const deprecatedSave_1_12 = props => {
 
 				const itemClasses = classnames( [
 					'ugb-pricing-box__item',
-				], applyFilters( 'stackable.pricing-box.itemclasses', {
+				], {
 					[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
 					'ugb-pricing-box--highlighted': design !== 'plain' && highlightColor,
 					'ugb-pricing-box--is-dark': design !== 'plain' && highlightColor ? isDarkColor( highlightColor ) : false,
-				}, design, i, props ) )
+				} )
 
-				const styles = applyFilters( 'stackable.pricing-box.styles', {
+				const styles = {
 					item: {
 						borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
 						backgroundColor: design !== 'plain' && highlightColor ? highlightColor : undefined,
@@ -80,7 +79,7 @@ const deprecatedSave_1_12 = props => {
 					description: {
 						color: featureListColor,
 					},
-				}, design, i, props )
+				}
 
 				return (
 					<div className={ itemClasses } style={ styles.item } key={ i }>
