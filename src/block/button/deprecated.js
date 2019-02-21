@@ -519,12 +519,12 @@ export const deprecatedSchema_1_8 = {
 export const deprecatedSave_1_8 = props => {
 	const { className } = props
 	const {
-		url, 
-		text, 
-		align, 
-		color, 
-		textColor, 
-		size, 
+		url,
+		text,
+		align,
+		color,
+		textColor,
+		size,
 		cornerButtonRadius,
 	} = props.attributes
 

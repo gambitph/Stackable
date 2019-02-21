@@ -63,13 +63,13 @@ const save = props => {
 			color: titleColor ? titleColor :
 				   design === 'plain' ? undefined :
 				   '#ffffff',
-			textAlign: contentAlign,
+			textAlign: contentAlign ? contentAlign : undefined,
 		},
 		subtitle: {
 			color: subtitleColor ? subtitleColor :
 				   design === 'plain' ? undefined :
 				   '#ffffff',
-			textAlign: contentAlign,
+			textAlign: contentAlign ? contentAlign : undefined,
 		},
 	}, design, props )
 
