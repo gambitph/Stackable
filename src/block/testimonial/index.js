@@ -163,6 +163,9 @@ export const schema = {
 	iconColor: {
 		type: 'string',
 	},
+	align: {
+		type: 'string',
+	},
 }
 
 export const name = 'ugb/testimonial'
@@ -178,6 +181,7 @@ export const settings = {
 	],
 	attributes: schema,
 	supports: {
+		align: [ 'wide' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
 	},
 

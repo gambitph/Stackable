@@ -184,6 +184,9 @@ export const schema = {
 	iconColor: {
 		type: 'string',
 	},
+	align: {
+		type: 'string',
+	},
 }
 
 export const name = 'ugb/team-member'

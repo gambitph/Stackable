@@ -61,6 +61,9 @@ const schema = {
 		type: 'string',
 		default: '',
 	},
+	align: {
+		type: 'string',
+	},
 }
 // Wrap in curly or else statement will merge with the previous one and will error out.
 { [ 1, 2, 3 ].forEach( i => {
@@ -142,6 +145,7 @@ export const settings = {
 	],
 	attributes: schema,
 	supports: {
+		align: [ 'wide' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
 	},
 
