@@ -25,6 +25,9 @@
 	.ugb-feature-grid__content {
 		text-align: center;
 		@include baseBlock();
+		&:last-child {
+			margin-bottom: 0;
+		}
 	}
 	.ugb-feature-grid__image {
 		img {
