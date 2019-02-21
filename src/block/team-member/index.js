@@ -199,6 +199,7 @@ export const settings = {
 	],
 	attributes: schema,
 	supports: {
+		align: [ 'wide' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
 	},
 
