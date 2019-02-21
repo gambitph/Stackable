@@ -140,7 +140,7 @@ if ( ! class_exists( 'Stackable_Go_Premium_Notification' ) ) {
 			// Show faded.
 			} else if ( self::FADE_NOTICE_TIME < $elapsed_time ) {
 				update_option( 'stackable_small_pro_notice_show', 'fade' );
-                stackable_add_welcome_notification( 'premium', sprintf( __( 'Did you know that there\'s a Premium version for Stackable? Get more designs per block and new effects per block. %sWatch our video to learn more.%s', 'stackable' ), '<a href="https://rebrand.ly/plugin-learn-premium" target="_blank">', '</a>' ) );
+                stackable_add_welcome_notification( 'premium', sprintf( __( 'Did you know that there\'s a Premium version for Stackable? Get more designs per block and new effects per block. %sClick here to learn more.%s', 'stackable' ), '<a href="https://rebrand.ly/plugin-learn-premium" target="_blank">', '</a>' ) );
 			}
         }
     }
