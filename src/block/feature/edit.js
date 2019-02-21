@@ -67,23 +67,28 @@ const edit = props => {
 		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
 	}, design, props ) )
 
-	const mainStyle = applyFilters( 'stackable.feature.mainstyle', {
-		'--image-size': imageSize ? `${ imageSize }px` : undefined,
-		backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
-		backgroundImage: design !== 'plain' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
-		backgroundAttachment: design !== 'plain' && fixedBackground ? 'fixed' : undefined,
-		'--ugb-background-color': design !== 'plain' && backgroundImageURL ? backgroundColor : undefined,
-		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
-	}, design, props )
-
 	const imageClasses = classnames( [
 		'ugb-feature__image',
 	], applyFilters( 'stackable.feature.imageclasses', {
 		[ `ugb--shadow-${ shadow }` ]: design === 'plain',
 	}, design, props ) )
 
-	const imageStyle = applyFilters( 'stackable.feature.imagestyle', {
-		borderRadius: design === 'plain' ? borderRadius : undefined,
+	const styles = applyFilters( 'stackable.feature.styles', {
+		main: {
+			'--image-size': imageSize ? `${ imageSize }px` : undefined,
+			backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
+			backgroundImage: design !== 'plain' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
+			backgroundAttachment: design !== 'plain' && fixedBackground ? 'fixed' : undefined,
+			'--ugb-background-color': design !== 'plain' && backgroundImageURL ? backgroundColor : undefined,
+			borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
+		},
+		image: {
+			borderRadius: design === 'plain' ? borderRadius : undefined,
+		},
+	}, design, props )
+
+	const show = applyFilters( 'stackable.feature.edit.show', {
+		background: design !== 'plain',
 	}, design, props )
 
 	return (
@@ -155,8 +160,8 @@ const edit = props => {
 						max={ 800 }
 					/>
 				</PanelColorSettings>
-				{ applyFilters( 'stackable.feature.edit', null, design, props ) }
-				{ applyFilters( 'stackable.feature.edit.background', design !== 'plain', design, props ) &&
+				{ applyFilters( 'stackable.feature.edit.inspector', null, design, props ) }
+				{ show.background &&
 					<PanelBackgroundSettings
 						backgroundColor={ backgroundColor }
 						backgroundImageID={ backgroundImageID }
@@ -190,7 +195,7 @@ const edit = props => {
 					onChangeButtonIcon={ buttonIcon => setAttributes( { buttonIcon } ) }
 				/>
 			</InspectorControls>
-			<div className={ mainClasses } style={ mainStyle }>
+			<div className={ mainClasses } style={ styles.main }>
 				{ ( () => {
 					const titleComp = <RichText
 						tagName="h2"
@@ -225,7 +230,7 @@ const edit = props => {
 						imageID={ imageID }
 						imageURL={ imageUrl }
 						className={ imageClasses }
-						style={ imageStyle }
+						style={ styles.image }
 						onRemove={ () => {
 							setAttributes( { imageUrl: '', imageID: '', imageAlt: '' } )
 						} }
@@ -237,7 +242,7 @@ const edit = props => {
 						imageID={ imageID }
 						imageURL={ imageUrl }
 						className={ imageClasses }
-						style={ imageStyle }
+						style={ styles.image }
 						onRemove={ () => {
 							setAttributes( { imageUrl: '', imageID: '', imageAlt: '' } )
 						} }

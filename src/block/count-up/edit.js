@@ -1,5 +1,5 @@
 import {
-	ColorPaletteControl, DesignPanelBody, PanelBackgroundSettings, ProControl,
+	DesignPanelBody, PanelBackgroundSettings, ProControl,
 } from '@stackable/components'
 import {
 	InspectorControls, PanelColorSettings, RichText,
@@ -69,6 +69,12 @@ const edit = props => {
 		countStyle.fontFamily = getFontFamily( countFont )
 	}
 
+	const show = applyFilters( 'stackable.count-up.edit.show', {
+		borderRadius: design !== 'plain',
+		shadow: design !== 'plain',
+		background: design !== 'plain',
+	}, design, props )
+
 	return (
 		<Fragment>
 			<div className={ mainClasses } style={ mainStyle }>
@@ -136,14 +142,7 @@ const edit = props => {
 					] ) }
 					onChange={ design => setAttributes( { design } ) }
 				>
-					{ applyFilters( 'stackable.count-up.edit.background-color', false, design, props ) &&
-						<ColorPaletteControl
-							label={ __( 'Background Color' ) }
-							value={ backgroundColor }
-							onChange={ backgroundColor => setAttributes( { backgroundColor } ) }
-						/>
-					}
-					{ applyFilters( 'stackable.count-up.edit.border-radius', design !== 'plain', design, props ) &&
+					{ show.borderRadius &&
 						<RangeControl
 							label={ __( 'Border Radius' ) }
 							value={ borderRadius }
@@ -152,7 +151,7 @@ const edit = props => {
 							max={ 50 }
 						/>
 					}
-					{ applyFilters( 'stackable.count-up.edit.shadow', design !== 'plain', design, props ) &&
+					{ show.shadow &&
 						<RangeControl
 							label={ __( 'Shadow / Outline' ) }
 							value={ shadow }
@@ -222,7 +221,8 @@ const edit = props => {
 						onChange={ countFontWeight => setAttributes( { countFontWeight } ) }
 					/>
 				</PanelColorSettings>
-				{ applyFilters( 'stackable.count-up.edit.background', design !== 'plain', design ) &&
+				{ applyFilters( 'stackable.count-up.edit.inspector', null, design, props ) }
+				{ show.background &&
 					<PanelBackgroundSettings
 						backgroundColor={ backgroundColor }
 						backgroundImageID={ backgroundImageID }

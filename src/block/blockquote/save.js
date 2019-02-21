@@ -30,43 +30,46 @@ const save = props => {
 		'ugb-blockquote--v2',
 		'ugb--background-opacity-' + ( 1 * Math.round( backgroundOpacity / 1 ) ),
 		`ugb-blockquote--design-${ design }`,
-	], {
+	], applyFilters( 'stackable.blockquote.mainclasses', {
 		'ugb--has-background': designHasBackground && ( backgroundColor || backgroundImageURL ),
 		'ugb--has-background-image': designHasBackground && backgroundImageURL,
 		[ `ugb--shadow-${ shadow }` ]: designHasBackground && shadow !== 3,
 		[ `ugb-content-width` ]: align === 'full' && contentWidth,
 		'ugb-blockquote--small-quote': quotationSize < 60,
-		...applyFilters( 'stackable.blockquote.mainclasses', {}, props ),
-	} )
+	}, design, props ) )
 
-	const mainStyle = {
-		'--quote-color': quoteColor ? quoteColor : undefined,
-		backgroundColor: designHasBackground && backgroundColor ? backgroundColor : undefined,
-		backgroundImage: designHasBackground && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
-		backgroundAttachment: designHasBackground && fixedBackground ? 'fixed' : undefined,
-		'--ugb-background-color': designHasBackground && backgroundImageURL ? backgroundColor : undefined,
-		borderRadius: designHasBackground && borderRadius !== 12 ? borderRadius : undefined,
-		...applyFilters( 'stackable.blockquote.mainstyle', {}, props ),
-	}
+	const styles = applyFilters( 'stackable.blockquote.styles', {
+		main: {
+			'--quote-color': quoteColor ? quoteColor : undefined,
+			backgroundColor: designHasBackground && backgroundColor ? backgroundColor : undefined,
+			backgroundImage: designHasBackground && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
+			backgroundAttachment: designHasBackground && fixedBackground ? 'fixed' : undefined,
+			'--ugb-background-color': designHasBackground && backgroundImageURL ? backgroundColor : undefined,
+			borderRadius: designHasBackground && borderRadius !== 12 ? borderRadius : undefined,
+		},
+		text: {
+			color: color,
+		},
+	}, design, props )
 
 	return (
 		<blockquote
 			className={ mainClasses }
-			style={ mainStyle }>
+			style={ styles.main }>
 			<div className="ugb-content-wrapper">
 				{ QUOTE_ICONS[ quotationMark ].iconFunc( {
 					fill: quoteColor,
 					width: quotationSize,
 					height: quotationSize,
 				} ) }
-				{ applyFilters( 'stackable.blockquote.text',
+				{ applyFilters( 'stackable.blockquote.save.output',
 					<RichText.Content
 						tagName="p"
 						className="ugb-blockquote__text"
-						style={ { color: color ? color : undefined } }
+						style={ styles.text }
 						value={ text }
 					/>,
-					props
+					design, props
 				) }
 			</div>
 		</blockquote>

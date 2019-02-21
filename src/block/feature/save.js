@@ -52,23 +52,24 @@ const save = props => {
 		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
 	}, design, props ) )
 
-	const mainStyle = applyFilters( 'stackable.feature.mainstyle', {
-		'--image-size': imageSize ? `${ imageSize }px` : undefined,
-		backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
-		backgroundImage: design !== 'plain' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
-		backgroundAttachment: design !== 'plain' && fixedBackground ? 'fixed' : undefined,
-		'--ugb-background-color': design !== 'plain' && backgroundImageURL ? backgroundColor : undefined,
-		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
-	}, design, props )
-
 	const imageClasses = classnames( [
 		'ugb-feature__image',
 	], applyFilters( 'stackable.feature.imageclasses', {
 		[ `ugb--shadow-${ shadow }` ]: design === 'plain',
 	}, design, props ) )
 
-	const imageStyle = applyFilters( 'stackable.feature.imagestyle', {
-		borderRadius: design === 'plain' ? borderRadius : undefined,
+	const styles = applyFilters( 'stackable.feature.styles', {
+		main: {
+			'--image-size': imageSize ? `${ imageSize }px` : undefined,
+			backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
+			backgroundImage: design !== 'plain' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
+			backgroundAttachment: design !== 'plain' && fixedBackground ? 'fixed' : undefined,
+			'--ugb-background-color': design !== 'plain' && backgroundImageURL ? backgroundColor : undefined,
+			borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
+		},
+		image: {
+			borderRadius: design === 'plain' ? borderRadius : undefined,
+		},
 	}, design, props )
 
 	const titleComp = ! RichText.isEmpty( title ) && (
@@ -104,7 +105,7 @@ const save = props => {
 	const imageComp = imageUrl && (
 		<img
 			className={ imageClasses }
-			style={ imageStyle }
+			style={ styles.image }
 			src={ imageUrl }
 			alt={ striptags( title ? title : imageAlt ) }
 		/>
@@ -117,7 +118,7 @@ const save = props => {
 	}
 
 	return (
-		<div className={ mainClasses } style={ mainStyle }>
+		<div className={ mainClasses } style={ styles.main }>
 			{ applyFilters( 'stackable.feature.save.output', (
 				<div className="ugb-content-wrapper">
 					<div className="ugb-feature__content">

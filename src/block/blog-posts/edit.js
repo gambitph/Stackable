@@ -77,6 +77,10 @@ export const _edit = props => {
 		borderRadius: borderRadius !== 12 ? borderRadius : undefined,
 	}
 
+	const show = applyFilters( 'stackable.blogposts.edit.show', {
+		featuredImage: true,
+	}, design, props )
+
 	const inspectorControls = (
 		<InspectorControls>
 			<DesignPanelBody
@@ -135,7 +139,7 @@ export const _edit = props => {
 					checked={ displayTitle }
 					onChange={ displayTitle => setAttributes( { displayTitle } ) }
 				/>
-				{ applyFilters( 'stackable.blogposts.edit.show-featured-image', true, props ) &&
+				{ show.featuredImage &&
 					<Fragment>
 						<ToggleControl
 							label={ __( 'Display Featured Image' ) }
@@ -313,7 +317,7 @@ export const _edit = props => {
 						excerpt,
 						readMore,
 					}
-					return applyFilters( 'stackable.designs.blog-posts.edit', defaultEditDesign, design, passedProps )
+					return applyFilters( 'stackable.blog-posts.edit.output', defaultEditDesign, design, passedProps )
 				} ) }
 			</div>
 		</Fragment>

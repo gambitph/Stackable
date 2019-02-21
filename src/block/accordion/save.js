@@ -23,34 +23,38 @@ const save = props => {
 	], applyFilters( 'stackable.accordion.mainclasses', {
 		[ `ugb-accordion--design-${ design }` ]: design !== 'basic',
 		'ugb-accordion--open': openStart,
-	}, props ) )
-
-	const mainStyles = applyFilters( 'stackable.accordion.mainstyles', {}, props )
+	}, design, props ) )
 
 	const headingClasses = classnames( [
 		'ugb-accordion__heading',
 	], applyFilters( 'stackable.accordion.headingclasses', {
 		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-	}, props ) )
+	}, design, props ) )
 
-	const headingStyles = applyFilters( 'stackable.accordion.headingstyles', {
-		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
-		backgroundColor: design !== 'plain' && headingBackgroundColor ? headingBackgroundColor : undefined,
-	}, props )
+	const styles = applyFilters( 'stackable.accordion.styles', {
+		main: {},
+		heading: {
+			borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
+			backgroundColor: design !== 'plain' && headingBackgroundColor ? headingBackgroundColor : undefined,
+		},
+		title: {
+			color: headingColor ? headingColor : undefined,
+		},
+	}, design, props )
 
 	return (
-		<div className={ mainClasses } style={ mainStyles } role="presentation">
+		<div className={ mainClasses } style={ styles.main } role="presentation">
 			<div className={ headingClasses }
 				role="button"
 				tabIndex="0"
 				aria-expanded={ openStart ? 'true' : 'false' }
-				style={ headingStyles }
+				style={ styles.heading }
 			>
 				<RichText.Content
 					tagName="h4"
 					role="heading"
 					aria-level="3"
-					style={ { color: headingColor ? headingColor : undefined } }
+					style={ styles.title }
 					value={ heading }
 				/>
 				{ ArrowIcon( {
