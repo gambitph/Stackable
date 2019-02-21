@@ -60,7 +60,7 @@ exports[`Blockquote block saved default block HTML shouldn't change 1`] = `
       className="ugb-blockquote__text"
       style={
         Object {
-          "color": undefined,
+          "color": "",
         }
       }
     >

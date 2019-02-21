@@ -2,14 +2,14 @@
 
 exports[`Count Up block saved block HTML shouldn't change 1`] = `
 <div
-  className="wp-block-ugb-count-up alignfull ugb-countup ugb-countup--v3 ugb-countup--columns-2 ugb--background-opacity-2 ugb--has-background-image ugb--content-width ugb-countup--design-design ugb--shadow-1 className"
+  className="wp-block-ugb-count-up alignfull ugb-countup ugb-countup--v3 ugb-countup--columns-2 ugb--background-opacity-2 ugb--has-background-image ugb--content-width ugb-countup--design-design className"
   style={
     Object {
-      "--ugb-background-color": "#123456",
+      "--ugb-background-color": undefined,
       "backgroundAttachment": "fixed",
-      "backgroundColor": "#123456",
-      "backgroundImage": "url(backgroundImageURL)",
-      "borderRadius": 6,
+      "backgroundColor": undefined,
+      "backgroundImage": undefined,
+      "borderRadius": undefined,
     }
   }
 >

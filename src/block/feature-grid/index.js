@@ -167,6 +167,9 @@ export const schema = {
 		type: 'string',
 		default: '',
 	},
+	align: {
+		type: 'string',
+	},
 }
 
 export const name = 'ugb/feature-grid'
@@ -182,6 +185,7 @@ export const settings = {
 	],
 	attributes: schema,
 	supports: {
+		align: [ 'wide' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
 	},
 

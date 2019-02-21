@@ -2,7 +2,7 @@
 
 exports[`Image Box block saved block HTML shouldn't change 1`] = `
 <div
-  className="wp-block-ugb-image-box alignfull ugb-image-box ugb-image-box--v3 ugb-image-box--columns-1 className"
+  className="wp-block-ugb-image-box alignfull ugb-image-box ugb-image-box--v3 ugb-image-box--columns-1 ugb-image-box--design-design ugb-image-box--effect-imageHoverEffect ugb-image-box--overlay-3 ugb-image-box--arrow className"
   style={
     Object {
       "--overlay-color": "#123456",
@@ -23,6 +23,14 @@ exports[`Image Box block saved block HTML shouldn't change 1`] = `
       }
     }
   >
+    <div
+      className="ugb-image-box__image-effect"
+      style={
+        Object {
+          "backgroundImage": "url(imageURL1)",
+        }
+      }
+    />
     <a
       className="ugb-image-box__overlay"
       href="link1"
@@ -64,6 +72,11 @@ exports[`Image Box block saved block HTML shouldn't change 1`] = `
         />
       </p>
     </div>
+    <div
+      className="ugb-image-box__arrow ugb-image-box__arrow--align-arrow"
+    >
+      <div />
+    </div>
   </div>
 </div>
 `;
@@ -91,6 +104,7 @@ exports[`Image Box block saved default block HTML shouldn't change 1`] = `
       }
     }
   >
+    
     <a
       className="ugb-image-box__overlay"
       href=""
@@ -131,6 +145,7 @@ exports[`Image Box block saved default block HTML shouldn't change 1`] = `
         />
       </p>
     </div>
+    
   </div>
   <div
     className="ugb-image-box__item"
@@ -145,6 +160,7 @@ exports[`Image Box block saved default block HTML shouldn't change 1`] = `
       }
     }
   >
+    
     <a
       className="ugb-image-box__overlay"
       href=""
@@ -185,6 +201,7 @@ exports[`Image Box block saved default block HTML shouldn't change 1`] = `
         />
       </p>
     </div>
+    
   </div>
   <div
     className="ugb-image-box__item"
@@ -199,6 +216,7 @@ exports[`Image Box block saved default block HTML shouldn't change 1`] = `
       }
     }
   >
+    
     <a
       className="ugb-image-box__overlay"
       href=""
@@ -239,6 +257,7 @@ exports[`Image Box block saved default block HTML shouldn't change 1`] = `
         />
       </p>
     </div>
+    
   </div>
 </div>
 `;

@@ -2,7 +2,7 @@
 
 exports[`Testimonial block saved block HTML shouldn't change 1`] = `
 <div
-  className="wp-block-ugb-testimonial ugb-testimonial ugb-testimonial--v2 ugb-testimonial--columns-1 ugb-testimonial--design-design className"
+  className="wp-block-ugb-testimonial alignwide ugb-testimonial ugb-testimonial--v2 ugb-testimonial--columns-1 ugb-testimonial--design-design ugb-testimonial--serif className"
 >
   <div
     className="ugb-testimonial__item ugb--shadow-1"
@@ -14,6 +14,7 @@ exports[`Testimonial block saved block HTML shouldn't change 1`] = `
   >
     <div
       className="ugb-testimonial__body-wrapper"
+      style={Object {}}
     >
       <p
         className="ugb-testimonial__body"
@@ -94,6 +95,7 @@ exports[`Testimonial block saved default block HTML shouldn't change 1`] = `
   >
     <div
       className="ugb-testimonial__body-wrapper"
+      style={Object {}}
     >
       <p
         className="ugb-testimonial__body"
@@ -159,6 +161,7 @@ exports[`Testimonial block saved default block HTML shouldn't change 1`] = `
   >
     <div
       className="ugb-testimonial__body-wrapper"
+      style={Object {}}
     >
       <p
         className="ugb-testimonial__body"

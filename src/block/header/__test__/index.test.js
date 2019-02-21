@@ -4,6 +4,17 @@ import deprecated from '../deprecated'
 import save from '../save'
 
 describe( `${ settings.title } block`, () => {
+	const defaultAttributes = {
+		buttonText2: '',
+		buttonNewTab2: false,
+		buttonURL2: '',
+	}
+	const attributes = {
+		buttonText2: '', // Unused.
+		buttonNewTab2: false,
+		buttonURL2: '',
+	}
+
 	// Checks whether the save method has changed. This shouldn't change in the normal
 	// course of things. This should only change when the block receives an update.
 	// When the block gets an update, a new deprecation step should be added,
@@ -22,6 +33,8 @@ describe( `${ settings.title } block`, () => {
 		settings,
 		save,
 		deprecated,
+		defaultAttributes,
+		attributes,
 	} )
 
 	// Checks whether saved HTML of older versioned blocks would migrate and remain valid & editable.
