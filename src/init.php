@@ -87,9 +87,11 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 
 			// Premium related variables.
 			'isPro' => sugb_fs()->can_use_premium_code(),
-			'showProNotice' => STACKABLE_SHOW_PRO_NOTICES && ! sugb_fs()->can_use_premium_code(),
+			'showProNotice' => stackable_should_show_pro_notices(),
+			'showSmallProNotices' => stackable_should_show_small_pro_notices(),
 			'pricingURL' => sugb_fs()->get_upgrade_url(),
-			'planName' => sugb_fs()->get_plan_name(),
+			'planName' => sugb_fs()->is_plan( 'starter', true ) ? 'starter' :
+			              sugb_fs()->is_plan( 'professional', true ) ? 'professional' : 'business',
 		) );
 	}
 	add_action( 'enqueue_block_editor_assets', 'stackable_block_editor_assets' );

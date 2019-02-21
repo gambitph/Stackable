@@ -1,4 +1,5 @@
 
+import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { getPlayButton } from './util'
 
@@ -23,11 +24,11 @@ const save = props => {
 		`ugb-video-popup--design-${ design }`,
 		`ugb-video-popup--button-${ playButtonType }`,
 		'ugb--background-opacity-' + ( 1 * Math.round( backgroundOpacity / 1 ) ),
-	], {
+	], applyFilters( 'stackable.video-popup.mainclasses', {
 		'ugb--has-background': backgroundColor || backgroundImageURL,
 		'ugb--has-background-image': backgroundImageURL,
 		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-	} )
+	}, design, props ) )
 
 	const mainStyle = {
 		backgroundColor: backgroundColor ? backgroundColor : undefined,

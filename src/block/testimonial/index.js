@@ -80,6 +80,14 @@ export const schema = {
 	bodyTextColor: {
 		type: 'string',
 	},
+	backgroundColor: {
+		type: 'string',
+		default: '',
+	},
+	serif: {
+		type: 'boolean',
+		default: false,
+	},
 	columns: {
 		type: 'number',
 		default: 2,
@@ -155,6 +163,9 @@ export const schema = {
 	iconColor: {
 		type: 'string',
 	},
+	align: {
+		type: 'string',
+	},
 }
 
 export const name = 'ugb/testimonial'
@@ -170,6 +181,7 @@ export const settings = {
 	],
 	attributes: schema,
 	supports: {
+		align: [ 'wide' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
 	},
 

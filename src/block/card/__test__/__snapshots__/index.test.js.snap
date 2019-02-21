@@ -109,10 +109,10 @@ exports[`Card block saved block HTML shouldn't change 1`] = `
 
 exports[`Card block saved default block HTML shouldn't change 1`] = `
 <div
-  className="wp-block-ugb-card ugb-card ugb--shadow-3"
+  className="wp-block-ugb-card ugb-card"
   style={
     Object {
-      "backgroundColor": "#ffffff",
+      "backgroundColor": undefined,
       "borderRadius": 12,
     }
   }

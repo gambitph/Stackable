@@ -93,7 +93,7 @@ export const schema = {
 	},
 	backgroundColor: {
 		type: 'string',
-		default: '#ffffff',
+		// default: '#ffffff',
 	},
 	borderRadius: {
 		type: 'number',
@@ -102,6 +102,10 @@ export const schema = {
 	shadow: {
 		type: 'number',
 		default: 3,
+	},
+	hoverEffect: {
+		type: 'string',
+		default: '',
 	},
 }
 

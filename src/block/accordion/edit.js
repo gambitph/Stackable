@@ -35,21 +35,33 @@ const edit = props => {
 	const mainClasses = classnames( [
 		className,
 		'ugb-accordion',
-	], {
+	], applyFilters( 'stackable.accordion.mainclasses', {
 		[ `ugb-accordion--design-${ design }` ]: design !== 'basic',
 		'ugb-accordion--open': openStart,
-	} )
+	}, design, props ) )
 
 	const headingClasses = classnames( [
 		'ugb-accordion__heading',
-	], {
+	], applyFilters( 'stackable.accordion.headingclasses', {
 		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-	} )
+	}, design, props ) )
 
-	const headingStyles = {
-		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
-		backgroundColor: design !== 'plain' && headingBackgroundColor ? headingBackgroundColor : undefined,
-	}
+	const styles = applyFilters( 'stackable.accordion.styles', {
+		main: {},
+		heading: {
+			borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
+			backgroundColor: design !== 'plain' && headingBackgroundColor ? headingBackgroundColor : undefined,
+		},
+		title: {
+			color: headingColor ? headingColor : undefined,
+		},
+	}, design, props )
+
+	const show = applyFilters( 'stackable.accordion.edit.show', {
+		backgroundColor: design !== 'plain',
+		borderRadius: design !== 'plain',
+		shadow: design !== 'plain',
+	}, design, props )
 
 	return (
 		<Fragment>
@@ -66,15 +78,15 @@ const edit = props => {
 					] ) }
 					onChange={ design => setAttributes( { design } ) }
 				>
-					{ applyFilters( 'stackable.accordion.edit.designs.before', null, props ) }
-					{ ! [ 'plain' ].includes( design ) &&
+					{ applyFilters( 'stackable.accordion.edit.designs.before', null, design, props ) }
+					{ show.backgroundColor &&
 						<ColorPaletteControl
 							label={ __( 'Background Color' ) }
 							value={ headingBackgroundColor }
 							onChange={ headingBackgroundColor => setAttributes( { headingBackgroundColor } ) }
 						/>
 					}
-					{ design !== 'plain' &&
+					{ show.borderRadius &&
 						<RangeControl
 							label={ __( 'Border Radius' ) }
 							value={ borderRadius }
@@ -83,7 +95,7 @@ const edit = props => {
 							max={ 50 }
 						/>
 					}
-					{ design !== 'plain' &&
+					{ show.shadow &&
 						<RangeControl
 							label={ __( 'Shadow / Outline' ) }
 							value={ shadow }
@@ -112,15 +124,13 @@ const edit = props => {
 					/>
 				</PanelColorSettings>
 			</InspectorControls>
-			<div className={ mainClasses }>
-				<div className={ headingClasses } style={ headingStyles } >
+			<div className={ mainClasses } style={ styles.main }>
+				<div className={ headingClasses } style={ styles.heading }>
 					<RichText
 						tagName="h4"
 						value={ heading }
 						onChange={ heading => setAttributes( { heading } ) }
-						style={ {
-							color: headingColor ? headingColor : undefined,
-						} }
+						style={ styles.title }
 						placeholder={ __( 'Title for This Block' ) }
 						keepPlaceholderOnFocus
 					/>

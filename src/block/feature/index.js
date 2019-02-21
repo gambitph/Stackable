@@ -118,6 +118,10 @@ export const schema = {
 	align: {
 		type: 'string',
 	},
+	hoverEffect: {
+		type: 'string',
+		default: '',
+	},
 }
 
 export const name = 'ugb/feature'

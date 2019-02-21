@@ -77,19 +77,23 @@ export const _edit = props => {
 		borderRadius: borderRadius !== 12 ? borderRadius : undefined,
 	}
 
+	const show = applyFilters( 'stackable.blogposts.edit.show', {
+		featuredImage: true,
+	}, design, props )
+
 	const inspectorControls = (
 		<InspectorControls>
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ [
+				options={ applyFilters( 'stackable.blogposts.edit.designs', [
 					{
 						label: 'Basic', value: 'basic', image: ImageDesignBasic,
 					},
 					{
 						label: 'List', value: 'list', image: ImageDesignList,
 					},
-				] }
+				] ) }
 				onChange={ design => {
 					setAttributes( { design } )
 				} }
@@ -135,18 +139,22 @@ export const _edit = props => {
 					checked={ displayTitle }
 					onChange={ displayTitle => setAttributes( { displayTitle } ) }
 				/>
-				<ToggleControl
-					label={ __( 'Display Featured Image' ) }
-					checked={ displayFeaturedImage }
-					onChange={ displayFeaturedImage => setAttributes( { displayFeaturedImage } ) }
-				/>
-				{ displayFeaturedImage &&
-				<SelectControl
-					label={ __( 'Featured Image Shape' ) }
-					options={ featuredImageShapes }
-					value={ featuredImageShape }
-					onChange={ featuredImageShape => setAttributes( { featuredImageShape } ) }
-				/>
+				{ show.featuredImage &&
+					<Fragment>
+						<ToggleControl
+							label={ __( 'Display Featured Image' ) }
+							checked={ displayFeaturedImage }
+							onChange={ displayFeaturedImage => setAttributes( { displayFeaturedImage } ) }
+						/>
+						{ displayFeaturedImage &&
+						<SelectControl
+							label={ __( 'Featured Image Shape' ) }
+							options={ featuredImageShapes }
+							value={ featuredImageShape }
+							onChange={ featuredImageShape => setAttributes( { featuredImageShape } ) }
+						/>
+						}
+					</Fragment>
 				}
 				<ToggleControl
 					label={ __( 'Display Excerpt' ) }
@@ -248,6 +256,7 @@ export const _edit = props => {
 							</a>
 						</figure>
 					)
+					const image = featuredImageSrc ? featuredImageSrc : ''
 					const author = displayAuthor && post.author_info && (
 						<span>{ post.author_info.name }</span>
 					)
@@ -297,6 +306,7 @@ export const _edit = props => {
 					const passedProps = {
 						...props,
 						i,
+						image,
 						featuredImageSrc,
 						category,
 						featuredImage,
@@ -307,7 +317,7 @@ export const _edit = props => {
 						excerpt,
 						readMore,
 					}
-					return applyFilters( 'stackable.designs.blog-posts.edit', defaultEditDesign, design, passedProps )
+					return applyFilters( 'stackable.blog-posts.edit.output', defaultEditDesign, design, passedProps )
 				} ) }
 			</div>
 		</Fragment>

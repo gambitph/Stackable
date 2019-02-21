@@ -64,8 +64,14 @@ class edit extends Component {
 					const color = attributes[ `color${ i === 1 ? '' : i }` ]
 					const textColor = attributes[ `textColor${ i === 1 ? '' : i }` ]
 					const icon = attributes[ `icon${ i === 1 ? '' : i }` ]
+
+					const buttonClasses = classnames(
+						applyFilters( 'stackable.button.buttonclasses', {}, design, i, this.props )
+					)
+
 					return (
 						<ButtonEdit key={ i }
+							className={ buttonClasses }
 							onChange={ text => setAttributes( { [ `text${ i === 1 ? '' : i }` ]: text } ) }
 							icon={ icon }
 							size={ size }
@@ -130,7 +136,6 @@ class edit extends Component {
 						buttonIcon={ icon }
 						onChangeButtonIcon={ icon => setAttributes( { icon } ) }
 					>
-						{ showProNotice && <ProControl size="small" /> }
 					</PanelButtonSettings>
 					{ showProNotice &&
 						<PanelBody

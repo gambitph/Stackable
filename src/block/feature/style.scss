@@ -57,12 +57,19 @@
 		margin-top: 0;
 		margin-bottom: 0;
 	}
+	&.alignfull {
+		border-radius: 0 !important;
+	}
 }
-.ugb-feature__image {
-	max-width: var(--image-size, 400px);
-	width: 100%;
-	img {
-		margin: 0 auto;
+
+.ugb-feature.ugb-feature--design-basic,
+.ugb-feature.ugb-feature--design-plain {
+	.ugb-feature__image {
+		max-width: var(--image-size, 400px);
+		width: 100%;
+		img {
+			margin: 0 auto;
+		}
 	}
 }
 .ugb-feature.ugb-feature--design-basic {

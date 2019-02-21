@@ -8,8 +8,7 @@
 
 // Remove border radius on full width.
 [data-align="full"] {
-	.ugb-feature.ugb-has-background,
-	.ugb-feature.ugb--has-background {
+	.ugb-feature {
 		border-radius: 0 !important;
 	}
 	.ugb-feature.ugb-feature--design-plain {

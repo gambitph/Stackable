@@ -141,7 +141,7 @@ exports[`Call to Action block saved default block HTML shouldn't change 1`] = `
             "backgroundColor": undefined,
             "borderColor": undefined,
             "borderRadius": "4px",
-            "color": "#ffffff",
+            "color": undefined,
           }
         }
       >
@@ -149,7 +149,7 @@ exports[`Call to Action block saved default block HTML shouldn't change 1`] = `
           className="ugb-button--inner"
           style={
             Object {
-              "color": "#ffffff",
+              "color": undefined,
             }
           }
         >

@@ -14,6 +14,7 @@ import classnames from 'classnames'
 import { Fragment } from '@wordpress/element'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import isDarkColor from 'is-dark-color'
 import { showProNotice } from 'stackable'
 
 const edit = props => {
@@ -39,6 +40,9 @@ const edit = props => {
 		design = 'basic',
 		borderRadius = 12,
 		shadow = 3,
+		highlightColor = '',
+		highlightColor2 = '',
+		highlightColor3 = '',
 	} = attributes
 
 	const mainClasses = classnames( [
@@ -48,16 +52,6 @@ const edit = props => {
 		`ugb-pricing-box--columns-${ columns }`,
 		`ugb-pricing-box--design-${ design }`,
 	] )
-
-	const boxClasses = classnames( [
-		'ugb-pricing-box__item',
-	], {
-		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-	} )
-
-	const boxStyle = {
-		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
-	}
 
 	return (
 		<Fragment>
@@ -109,6 +103,33 @@ const edit = props => {
 						max={ 3 }
 					/>
 				</PanelBody>
+				{ design !== 'plain' &&
+					<PanelColorSettings
+						initialOpen={ false }
+						title={ __( 'Column Highlight Colors' ) }
+						colorSettings={ [
+							{
+								value: highlightColor,
+								onChange: highlightColor => setAttributes( { highlightColor } ),
+								label: __( 'Column #1 Highlight' ),
+							},
+							...( columns < 2 ? [] : [
+								{
+									value: highlightColor2,
+									onChange: highlightColor2 => setAttributes( { highlightColor2 } ),
+									label: __( 'Column #2 Highlight' ),
+								},
+							] ),
+							...( columns < 3 ? [] : [
+								{
+									value: highlightColor3,
+									onChange: highlightColor3 => setAttributes( { highlightColor3 } ),
+									label: __( 'Column #3 Highlight' ),
+								},
+							] ),
+						] }
+					/>
+				}
 				<PanelColorSettings
 					initialOpen={ false }
 					title={ __( 'Text Colors' ) }
@@ -144,15 +165,14 @@ const edit = props => {
 					buttonBorderRadius={ cornerButtonRadius }
 					buttonDesign={ buttonDesign }
 					buttonIcon={ buttonIcon }
-					onChangeButtonColor={ value => setAttributes( { buttonColor: value } ) }
-					onChangeButtonTextColor={ value => setAttributes( { buttonTextColor: value } ) }
-					onChangeButtonSize={ value => {
-						setAttributes( { size: value } )
-					} }
-					onChangeButtonBorderRadius={ value => setAttributes( { cornerButtonRadius: value } ) }
+					onChangeButtonColor={ buttonColor => setAttributes( { buttonColor } ) }
+					onChangeButtonTextColor={ buttonTextColor => setAttributes( { buttonTextColor } ) }
+					onChangeButtonSize={ size => setAttributes( { size } ) }
+					onChangeButtonBorderRadius={ cornerButtonRadius => setAttributes( { cornerButtonRadius } ) }
 					onChangeButtonDesign={ buttonDesign => setAttributes( { buttonDesign } ) }
 					onChangeButtonIcon={ buttonIcon => setAttributes( { buttonIcon } ) }
 				/>
+				{ applyFilters( 'stackable.pricing-box.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
 			<div className={ mainClasses }>
 				{ range( 1, columns + 1 ).map( i => {
@@ -168,113 +188,186 @@ const edit = props => {
 					const description = attributes[ `featureList${ index }` ]
 					const imageURL = attributes[ `imageURL${ index }` ]
 					const imageID = attributes[ `imageID${ index }` ]
+					const highlightColor = attributes[ `highlightColor${ index }` ] || ''
+
+					const itemClasses = classnames( [
+						'ugb-pricing-box__item',
+					], applyFilters( 'stackable.pricing-box.itemclasses', {
+						[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
+						'ugb-pricing-box--highlighted': design !== 'plain' && highlightColor,
+						'ugb-pricing-box--is-dark': design !== 'plain' && highlightColor ? isDarkColor( highlightColor ) : false,
+					}, design, i, props ) )
+
+					const styles = applyFilters( 'stackable.pricing-box.styles', {
+						item: {
+							borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
+							backgroundColor: design !== 'plain' && highlightColor ? highlightColor : undefined,
+						},
+						title: {
+							color: pricingBoxColor,
+						},
+						price: {
+							color: priceColor,
+						},
+						month: {
+							color: perMonthLabelColor,
+						},
+						description: {
+							color: featureListColor,
+						},
+					}, design, i, props )
+
 					return (
 						<div key={ i }>
-							<div className={ boxClasses } style={ boxStyle }>
-								<div
-									className="ugb-pricing-box__image"
-									data-is-placeholder-visible={ ! imageURL }
-								>
-									<ImageUploadPlaceholder
-										imageID={ imageID }
-										imageURL={ imageURL }
-										onRemove={ () => {
-											setAttributes( {
-												[ `imageURL${ index }` ]: '',
-												[ `imageID${ index }` ]: '',
-												[ `imageAlt${ index }` ]: '',
-											} )
-										} }
-										onChange={ ( { url, id, alt } ) => {
-											setAttributes( {
-												[ `imageURL${ index }` ]: url,
-												[ `imageID${ index }` ]: id,
-												[ `imageAlt${ index }` ]: alt,
-											} )
-										} }
-										render={ <img src={ imageURL } alt={ title } /> }
-									/>
-								</div>
-								<RichText
-									tagName="h3"
-									className="ugb-pricing-box__title"
-									value={ title }
-									onChange={ value => setAttributes( { [ `pricingBoxTitle${ index }` ]: value } ) }
-									style={ {
-										color: pricingBoxColor,
-									} }
-									placeholder={ __( 'Title' ) }
-									keepPlaceholderOnFocus
-								/>
-								<div className="ugb-pricing-box__price-wrapper">
-									<div className="ugb-pricing-box__price-line">
+							<div className={ itemClasses } style={ styles.item }>
+								{ ( () => {
+									const imageBGComp = (
+										<div
+											className="ugb-pricing-box__image-bg"
+											data-is-placeholder-visible={ ! imageURL }
+										>
+											<ImageUploadPlaceholder
+												imageID={ imageID }
+												imageURL={ imageURL }
+												onRemove={ () => {
+													setAttributes( {
+														[ `imageURL${ index }` ]: '',
+														[ `imageID${ index }` ]: '',
+														[ `imageAlt${ index }` ]: '',
+													} )
+												} }
+												onChange={ ( { url, id, alt } ) => {
+													setAttributes( {
+														[ `imageURL${ index }` ]: url,
+														[ `imageID${ index }` ]: id,
+														[ `imageAlt${ index }` ]: alt,
+													} )
+												} }
+											/>
+										</div>
+									)
+									const imageComp = (
+										<div
+											className="ugb-pricing-box__image"
+											data-is-placeholder-visible={ ! imageURL }
+										>
+											<ImageUploadPlaceholder
+												imageID={ imageID }
+												imageURL={ imageURL }
+												onRemove={ () => {
+													setAttributes( {
+														[ `imageURL${ index }` ]: '',
+														[ `imageID${ index }` ]: '',
+														[ `imageAlt${ index }` ]: '',
+													} )
+												} }
+												onChange={ ( { url, id, alt } ) => {
+													setAttributes( {
+														[ `imageURL${ index }` ]: url,
+														[ `imageID${ index }` ]: id,
+														[ `imageAlt${ index }` ]: alt,
+													} )
+												} }
+												render={ <img src={ imageURL } alt={ title } /> }
+											/>
+										</div>
+									)
+									const titleComp = (
 										<RichText
-											tagName="div"
-											className="ugb-pricing-box__price-prefix"
-											value={ pricePrefix }
-											onChange={ value => setAttributes( { [ `pricePrefix${ index }` ]: value } ) }
-											style={ {
-												color: priceColor,
-											} }
-											placeholder="$"
+											tagName="h3"
+											className="ugb-pricing-box__title"
+											value={ title }
+											onChange={ value => setAttributes( { [ `pricingBoxTitle${ index }` ]: value } ) }
+											style={ styles.title }
+											placeholder={ __( 'Title' ) }
 											keepPlaceholderOnFocus
 										/>
+									)
+									const priceComp = (
+										<div className="ugb-pricing-box__price-wrapper">
+											<div className="ugb-pricing-box__price-line">
+												<RichText
+													tagName="div"
+													className="ugb-pricing-box__price-prefix"
+													value={ pricePrefix }
+													onChange={ value => setAttributes( { [ `pricePrefix${ index }` ]: value } ) }
+													style={ styles.price }
+													placeholder="$"
+													keepPlaceholderOnFocus
+												/>
+												<RichText
+													tagName="div"
+													className="ugb-pricing-box__price"
+													value={ price }
+													onChange={ value => setAttributes( { [ `price${ index }` ]: value } ) }
+													style={ styles.price }
+													placeholder="9"
+													keepPlaceholderOnFocus
+												/>
+												<RichText
+													tagName="div"
+													className="ugb-pricing-box__price-suffix"
+													value={ priceSuffix }
+													onChange={ value => setAttributes( { [ `priceSuffix${ index }` ]: value } ) }
+													style={ styles.price }
+													placeholder=".00"
+													keepPlaceholderOnFocus
+												/>
+											</div>
+											<RichText
+												tagName="p"
+												className="ugb-pricing-box__subprice"
+												value={ subPrice }
+												onChange={ value => setAttributes( { [ `perMonthLabel${ index }` ]: value } ) }
+												style={ styles.month }
+												placeholder={ __( 'Description' ) }
+												keepPlaceholderOnFocus
+											/>
+										</div>
+									)
+									const buttonComp = (
+										<div className="ugb-pricing-box__button">
+											<ButtonEdit
+												size={ size }
+												color={ buttonTextColor }
+												backgroundColor={ buttonColor }
+												text={ buttonText }
+												borderRadius={ cornerButtonRadius }
+												design={ buttonDesign }
+												icon={ buttonIcon }
+												onChange={ value => setAttributes( { [ `buttonText${ index }` ]: value } ) }
+											/>
+										</div>
+									)
+									const descriptionComp = (
 										<RichText
-											tagName="div"
-											className="ugb-pricing-box__price"
-											value={ price }
-											onChange={ value => setAttributes( { [ `price${ index }` ]: value } ) }
-											style={ {
-												color: priceColor,
-											} }
-											placeholder="9"
+											tagName="p"
+											value={ description }
+											className="ugb-pricing-box__description"
+											onChange={ value => setAttributes( { [ `featureList${ index }` ]: value } ) }
+											style={ styles.description }
+											placeholder={ descriptionPlaceholder( 'medium' ) }
 											keepPlaceholderOnFocus
 										/>
-										<RichText
-											tagName="div"
-											className="ugb-pricing-box__price-suffix"
-											value={ priceSuffix }
-											onChange={ value => setAttributes( { [ `priceSuffix${ index }` ]: value } ) }
-											style={ {
-												color: priceColor,
-											} }
-											placeholder=".00"
-											keepPlaceholderOnFocus
-										/>
-									</div>
-									<RichText
-										tagName="p"
-										className="ugb-pricing-box__subprice"
-										value={ subPrice }
-										onChange={ value => setAttributes( { [ `perMonthLabel${ index }` ]: value } ) }
-										style={ {
-											color: perMonthLabelColor,
-										} }
-										placeholder={ __( 'Description' ) }
-										keepPlaceholderOnFocus
-									/>
-								</div>
-								<ButtonEdit
-									size={ size }
-									color={ buttonTextColor }
-									backgroundColor={ buttonColor }
-									text={ buttonText }
-									borderRadius={ cornerButtonRadius }
-									design={ buttonDesign }
-									icon={ buttonIcon }
-									onChange={ value => setAttributes( { [ `buttonText${ index }` ]: value } ) }
-								/>
-								<RichText
-									tagName="p"
-									value={ description }
-									className="ugb-pricing-box__description"
-									onChange={ value => setAttributes( { [ `featureList${ index }` ]: value } ) }
-									style={ {
-										color: featureListColor,
-									} }
-									placeholder={ descriptionPlaceholder( 'medium' ) }
-									keepPlaceholderOnFocus
-								/>
+									)
+									const comps = {
+										imageComp,
+										imageBGComp,
+										titleComp,
+										priceComp,
+										buttonComp,
+										descriptionComp,
+									}
+									return applyFilters( 'stackable.pricing-box.edit.output', (
+										<Fragment>
+											{ imageComp }
+											{ titleComp }
+											{ priceComp }
+											{ buttonComp }
+											{ descriptionComp }
+										</Fragment>
+									), design, comps, i, props )
+								} )() }
 							</div>
 							{
 								isSelected && (

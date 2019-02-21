@@ -1,6 +1,8 @@
+import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { range } from '@stackable/util'
 import { RichText } from '@wordpress/editor'
+import SVGArrow from './images/arrow.svg'
 
 const save = props => {
 	const { className, attributes } = props
@@ -14,9 +16,12 @@ const save = props => {
 		horizontalAlign,
 		align,
 		columns,
-		// design = 'basic',
+		design = 'basic',
 		borderRadius = 12,
 		shadow = 3,
+		imageHoverEffect = '',
+		overlayOpacity = 7,
+		arrow = '',
 	} = props.attributes
 
 	const mainClasses = classnames( [
@@ -24,7 +29,12 @@ const save = props => {
 		'ugb-image-box',
 		'ugb-image-box--v3',
 		`ugb-image-box--columns-${ columns }`,
-	] )
+	], applyFilters( 'stackable.image-box.mainclasses', {
+		[ `ugb-image-box--design-${ design }` ]: design !== 'basic',
+		[ `ugb-image-box--effect-${ imageHoverEffect }` ]: imageHoverEffect,
+		[ `ugb-image-box--overlay-${ overlayOpacity }` ]: overlayOpacity !== 7,
+		'ugb-image-box--arrow': arrow,
+	}, design, props ) )
 
 	const mainStyles = {
 		textAlign: horizontalAlign ? horizontalAlign : undefined,
@@ -51,12 +61,23 @@ const save = props => {
 
 				const boxClasses = classnames( [
 					'ugb-image-box__item',
-				], {
+				], applyFilters( 'stackable.image-box.itemclasses', {
 					[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
-				} )
+				}, design, i, props ) )
+
+				const arrowClasses = classnames( [
+					'ugb-image-box__arrow',
+					`ugb-image-box__arrow--align-${ arrow }`,
+				] )
 
 				return (
 					<div className={ boxClasses } style={ boxStyles } key={ i }>
+						{ imageHoverEffect && <div
+							className="ugb-image-box__image-effect"
+							style={ {
+								backgroundImage: imageURL ? `url(${ imageURL })` : undefined,
+							} } />
+						}
 						{ /* eslint-disable-next-line */ }
 						<a
 							className="ugb-image-box__overlay"
@@ -81,6 +102,11 @@ const save = props => {
 								/>
 							) }
 						</div>
+						{ arrow && link && (
+							<div className={ arrowClasses }>
+								<SVGArrow style={ { fill: titleColor ? titleColor : undefined } } />
+							</div>
+						) }
 					</div>
 				)
 			} ) }

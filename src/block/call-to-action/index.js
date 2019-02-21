@@ -48,7 +48,7 @@ const schema = {
 	},
 	textColor: {
 		type: 'string',
-		default: '#ffffff',
+		// default: '#ffffff',
 	},
 	titleColor: {
 		type: 'string',
@@ -102,6 +102,10 @@ const schema = {
 	},
 	align: {
 		type: 'string',
+	},
+	hoverEffect: {
+		type: 'string',
+		default: '',
 	},
 
 	// Keep the old attributes. Gutenberg issue https://github.com/WordPress/gutenberg/issues/10406

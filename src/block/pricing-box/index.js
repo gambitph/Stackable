@@ -57,6 +57,13 @@ const schema = {
 		type: 'number',
 		default: 3,
 	},
+	hoverEffect: {
+		type: 'string',
+		default: '',
+	},
+	align: {
+		type: 'string',
+	},
 }
 // Wrap in curly or else statement will merge with the previous one and will error out.
 { [ 1, 2, 3 ].forEach( i => {
@@ -83,6 +90,10 @@ const schema = {
 	}
 	schema[ `imageAlt${ index }` ] = {
 		type: 'string',
+	}
+	schema[ `highlightColor${ index }` ] = {
+		type: 'string',
+		default: '',
 	}
 	schema[ `pricingBoxTitle${ index }` ] = {
 		source: 'html',
@@ -134,6 +145,7 @@ export const settings = {
 	],
 	attributes: schema,
 	supports: {
+		align: [ 'wide' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
 	},
 

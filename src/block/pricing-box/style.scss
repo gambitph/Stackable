@@ -31,7 +31,6 @@
 }
 
 .ugb-pricing-box__item {
-	@include baseBlock();
 	@include box();
 	margin-bottom: 0 !important;
 	text-align: center;
@@ -78,9 +77,25 @@
 
 .ugb-pricing-box--design-plain {
 	.ugb-pricing-box__item {
+		@include baseBlock();
 		box-shadow: none;
 		padding: 0;
 		border-radius: 0;
+	}
+}
+.ugb-pricing-box--design-basic {
+	.ugb-pricing-box__item {
+		@include baseBlock();
+		&.ugb-pricing-box--highlighted {
+			*:not(.ugb-button--inner) {
+				color: #222;
+			}
+			&.ugb-pricing-box--is-dark {
+				*:not(.ugb-button--inner) {
+					color: #fff;
+				}
+			}
+		}
 	}
 }
 

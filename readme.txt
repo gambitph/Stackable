@@ -4,7 +4,7 @@ Tags: gutenberg, block, blocks, block editor, gutenberg blocks, page builder, ed
 Requires at least: 4.8
 Tested up to: 5.0.3
 Requires PHP: 5.3
-Stable tag: 1.12.1
+Stable tag: 1.13.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -45,6 +45,7 @@ Stackable provides feature-rich blocks that gives you more design options for yo
 
 ### News Article Updates
 
+- [v1.13 Introducing Stackable Premium](https://wpstackable.com/blog/introducing-stackable-premium/)
 - [v1.12 Stackable Is Now in GitHub](https://wpstackable.com/blog/stackable-is-now-in-github/)
 - [v1.11 Huge Updates Across All Blocks](https://wpstackable.com/blog/huge-updates-across-all-blocks/)
 - [v1.10 Enable and Disable Blocks](https://wpstackable.com/blog/enable-and-disable-blocks/)
@@ -117,6 +118,26 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 You will have to redo all your blocks
 
 == Changelog ==
+
+= 1.13.0 =
+[Introducing Stackable Premium](https://wpstackable.com/blog/introducing-stackable-premium/)
+
+* New: Added Stackable Premium pricing page
+* New: Image Hover Effect option for the Image Box block
+* New: Hover Overlay Opacity option for the Image Box block
+* New: Arrow option for the Image Box block
+* New: Serif option for the Testimonial block
+* New: Added background color option for the Testimonial block
+* New: Added Full-Height option for the Header block
+* New: Column Highlight option for Pricing Box block
+* New: Added Color on Hover option for the Team Member block
+* New: Wide alignment for the Team Member, Testimonial, and Pricing Box blocks
+* Fixed: The URL input is now center aligned
+* Fixed: Class name typo in Pricing Box block
+* Fixed: Removing the background color of a Card block results in an error
+* Fixed: Removing the background color of a Call to Action block results in an error
+* Fixed: Using an #ffffff button color results in an error
+* Fixed: Bottom content padding of Feature Grid block
 
 = 1.12.1 =
 * Fixed: Img tags will now use the image's alt value if the block has no title

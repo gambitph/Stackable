@@ -2,7 +2,7 @@
 
 exports[`Header block saved block HTML shouldn't change 1`] = `
 <div
-  className="wp-block-ugb-header alignfull ugb-header ugb-header--v2 ugb--background-opacity-2 ugb-header--design-design ugb--has-background ugb--has-background-image ugb--shadow-1 ugb--content-width className"
+  className="wp-block-ugb-header alignfull ugb-header ugb-header--v2 ugb--background-opacity-2 ugb-header--design-design ugb--has-background ugb--has-background-image ugb--shadow-1 ugb--content-width ugb-header--invert ugb-header--full-height className"
   style={
     Object {
       "--ugb-background-color": "#123456",
@@ -22,6 +22,7 @@ exports[`Header block saved block HTML shouldn't change 1`] = `
       style={
         Object {
           "color": "#123456",
+          "textAlign": "contentAlign",
         }
       }
     >
@@ -38,6 +39,7 @@ exports[`Header block saved block HTML shouldn't change 1`] = `
       style={
         Object {
           "color": "#123456",
+          "textAlign": "contentAlign",
         }
       }
     >
@@ -107,6 +109,7 @@ exports[`Header block saved default block HTML shouldn't change 1`] = `
       style={
         Object {
           "color": "#ffffff",
+          "textAlign": "center",
         }
       }
     >
@@ -123,6 +126,7 @@ exports[`Header block saved default block HTML shouldn't change 1`] = `
       style={
         Object {
           "color": "#ffffff",
+          "textAlign": "center",
         }
       }
     >

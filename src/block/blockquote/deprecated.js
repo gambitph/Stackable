@@ -1,5 +1,4 @@
 import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { descriptionPlaceholder } from '@stackable/util'
 import { QUOTE_ICONS_1_11 } from './deprecated-quotes'
@@ -172,7 +171,6 @@ const deprecatedSave_1_11 = props => {
 		'ugb--has-background-image': designHasBackground && backgroundImageURL,
 		[ `ugb--shadow-${ shadow }` ]: designHasBackground && shadow !== 3,
 		[ `ugb-content-width` ]: align === 'full' && contentWidth,
-		...applyFilters( 'stackable.blockquote.mainclasses', {}, props ),
 	} )
 
 	const mainStyle = {
@@ -182,7 +180,6 @@ const deprecatedSave_1_11 = props => {
 		backgroundAttachment: designHasBackground && fixedBackground ? 'fixed' : undefined,
 		'--ugb-background-color': designHasBackground && backgroundImageURL ? backgroundColor : undefined,
 		borderRadius: designHasBackground && borderRadius !== 12 ? borderRadius : undefined,
-		...applyFilters( 'stackable.blockquote.mainstyle', {}, props ),
 	}
 
 	return (
@@ -195,15 +192,12 @@ const deprecatedSave_1_11 = props => {
 					width: quotationSize,
 					height: quotationSize,
 				} ) }
-				{ applyFilters( 'stackable.blockquote.text',
-					<RichText.Content
-						tagName="p"
-						className="ugb-blockquote__text"
-						style={ { color } }
-						value={ text }
-					/>,
-					props
-				) }
+				<RichText.Content
+					tagName="p"
+					className="ugb-blockquote__text"
+					style={ { color } }
+					value={ text }
+				/>
 			</div>
 		</blockquote>
 	)

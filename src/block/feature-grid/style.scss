@@ -21,11 +21,13 @@
 	}
 	.ugb-feature-grid__item {
 		@include box();
-		@include baseBlock();
 	}
 	.ugb-feature-grid__content {
 		text-align: center;
 		@include baseBlock();
+		&:last-child {
+			margin-bottom: 0;
+		}
 	}
 	.ugb-feature-grid__image {
 		img {
@@ -61,6 +63,13 @@
 			padding-top: #{($box-hori-padding / 2)};
 			padding-bottom: #{($box-hori-padding / 2)};
 		}
+	}
+}
+
+.ugb-feature-grid--design-basic,
+.ugb-feature-grid--design-plain {
+	.ugb-feature-grid__item {
+		@include baseBlock();
 	}
 }
 

@@ -163,6 +163,13 @@ export const schema = {
 		type: 'number',
 		default: 3,
 	},
+	hoverEffect: {
+		type: 'string',
+		default: '',
+	},
+	align: {
+		type: 'string',
+	},
 }
 
 export const name = 'ugb/feature-grid'
@@ -178,6 +185,7 @@ export const settings = {
 	],
 	attributes: schema,
 	supports: {
+		align: [ 'wide' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
 	},
 

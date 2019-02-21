@@ -38,45 +38,52 @@ const edit = props => {
 		shadow = 3,
 	} = props.attributes
 
-	const designHasBackground = [ 'basic', 'top-icon' ].includes( design )
-
 	const mainClasses = classnames( [
 		className,
 		'ugb-blockquote',
 		'ugb-blockquote--v2',
 		'ugb--background-opacity-' + ( 1 * Math.round( backgroundOpacity / 1 ) ),
 		`ugb-blockquote--design-${ design }`,
-	], {
-		'ugb--has-background': designHasBackground && ( backgroundColor || backgroundImageURL ),
-		'ugb--has-background-image': designHasBackground && backgroundImageURL,
-		[ `ugb--shadow-${ shadow }` ]: designHasBackground && shadow !== 3,
+	], applyFilters( 'stackable.blockquote.mainclasses', {
+		'ugb--has-background': design === 'basic' && ( backgroundColor || backgroundImageURL ),
+		'ugb--has-background-image': design === 'basic' && backgroundImageURL,
+		[ `ugb--shadow-${ shadow }` ]: design === 'basic' && shadow !== 3,
 		[ `ugb-content-width` ]: align === 'full' && contentWidth,
 		'ugb-blockquote--small-quote': quotationSize < 60,
-		...applyFilters( 'stackable.blockquote.mainclasses', {}, props ),
-	} )
+	}, design, props ) )
 
-	const mainStyle = {
-		'--quote-color': quoteColor ? quoteColor : undefined,
-		backgroundColor: designHasBackground && backgroundColor ? backgroundColor : undefined,
-		backgroundImage: designHasBackground && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
-		backgroundAttachment: designHasBackground && fixedBackground ? 'fixed' : undefined,
-		'--ugb-background-color': designHasBackground && backgroundImageURL ? backgroundColor : undefined,
-		borderRadius: designHasBackground && borderRadius !== 12 ? borderRadius : undefined,
-		...applyFilters( 'stackable.blockquote.mainstyle', {}, props ),
-	}
+	const styles = applyFilters( 'stackable.blockquote.styles', {
+		main: {
+			'--quote-color': quoteColor ? quoteColor : undefined,
+			backgroundColor: design === 'basic' && backgroundColor ? backgroundColor : undefined,
+			backgroundImage: design === 'basic' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
+			backgroundAttachment: design === 'basic' && fixedBackground ? 'fixed' : undefined,
+			'--ugb-background-color': design === 'basic' && backgroundImageURL ? backgroundColor : undefined,
+			borderRadius: design === 'basic' && borderRadius !== 12 ? borderRadius : undefined,
+		},
+		text: {
+			color: color,
+		},
+	}, design, props )
+
+	const show = applyFilters( 'stackable.blockquote.edit.show', {
+		background: design === 'basic',
+		borderRadius: design === 'basic',
+		shadow: design === 'basic',
+	}, design, props )
 
 	return (
 		<Fragment>
 			<blockquote
 				className={ mainClasses }
-				style={ mainStyle }>
+				style={ styles.main }>
 				<div className="ugb-content-wrapper">
 					{ QUOTE_ICONS[ quotationMark ].iconFunc( {
 						fill: quoteColor,
 						width: quotationSize,
 						height: quotationSize,
 					} ) }
-					{ applyFilters( 'stackable.blockquote.text',
+					{ applyFilters( 'stackable.blockquote.edit.output',
 						<RichText
 							className="ugb-blockquote__text"
 							value={ text }
@@ -84,11 +91,9 @@ const edit = props => {
 							isSelected={ isSelected }
 							placeholder={ descriptionPlaceholder( 'long' ) }
 							keepPlaceholderOnFocus
-							style={ {
-								color: color,
-							} }
+							style={ styles.text }
 						/>,
-						props
+						design, props
 					) }
 				</div>
 			</blockquote>
@@ -106,7 +111,7 @@ const edit = props => {
 					onChange={ design => setAttributes( { design } ) }
 				>
 					{ applyFilters( 'stackable.blockquote.edit.designs.before', null, props ) }
-					{ designHasBackground &&
+					{ show.borderRadius &&
 						<RangeControl
 							label={ __( 'Border Radius' ) }
 							value={ borderRadius }
@@ -115,7 +120,7 @@ const edit = props => {
 							max={ 50 }
 						/>
 					}
-					{ designHasBackground &&
+					{ show.shadow &&
 						<RangeControl
 							label={ __( 'Shadow / Outline' ) }
 							value={ shadow }
@@ -173,7 +178,7 @@ const edit = props => {
 						max={ 400 }
 					/>
 				</PanelColorSettings>
-				{ designHasBackground &&
+				{ show.background &&
 					<PanelBackgroundSettings
 						backgroundColor={ backgroundColor }
 						backgroundImageID={ backgroundImageID }

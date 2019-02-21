@@ -2,18 +2,19 @@
 
 exports[`Pricing Box block saved block HTML shouldn't change 1`] = `
 <div
-  className="wp-block-ugb-pricing-box ugb-pricing-box ugb-pricing-box--v2 ugb-pricing-box--columns-1 ugb-pricing-box--design-design className"
+  className="wp-block-ugb-pricing-box alignwide ugb-pricing-box ugb-pricing-box--v2 ugb-pricing-box--columns-1 ugb-pricing-box--design-design className"
 >
   <div
-    className="ugb-pricing-box__item ugb--shadow-1"
+    className="ugb-pricing-box__item ugb--shadow-1 ugb-pricing-box--highlighted ugb-pricing-box--is-dark"
     style={
       Object {
+        "backgroundColor": "#123456",
         "borderRadius": 6,
       }
     }
   >
     <div
-      className="ugb-pricing-grid__image"
+      className="ugb-pricing-box__image"
     >
       <img
         alt="pricingBoxTitle"
@@ -108,37 +109,41 @@ exports[`Pricing Box block saved block HTML shouldn't change 1`] = `
         />
       </p>
     </div>
-    <div>
-      <a
-        className="ugb-button ugb-button--align-center ugb-button--size-size ugb-button--design-buttonDesign ugb-button--has-icon"
-        href="url"
-        style={
-          Object {
-            "backgroundColor": "#123456",
-            "borderColor": undefined,
-            "borderRadius": "2px",
-            "color": "#123456",
-          }
-        }
-        target="_blank"
-      >
-        <span
-          className="ugb-button--inner"
+    <div
+      className="ugb-pricing-box__button"
+    >
+      <div>
+        <a
+          className="ugb-button ugb-button--align-center ugb-button--size-size ugb-button--design-buttonDesign ugb-button--has-icon"
+          href="url"
           style={
             Object {
+              "backgroundColor": "#123456",
+              "borderColor": undefined,
+              "borderRadius": "2px",
               "color": "#123456",
             }
           }
+          target="_blank"
         >
-          <div
-            dangerouslySetInnerHTML={
+          <span
+            className="ugb-button--inner"
+            style={
               Object {
-                "__html": "buttonText",
+                "color": "#123456",
               }
             }
-          />
-        </span>
-      </a>
+          >
+            <div
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "buttonText",
+                }
+              }
+            />
+          </span>
+        </a>
+      </div>
     </div>
     <p
       className="ugb-pricing-box__description"
@@ -168,6 +173,7 @@ exports[`Pricing Box block saved default block HTML shouldn't change 1`] = `
     className="ugb-pricing-box__item"
     style={
       Object {
+        "backgroundColor": undefined,
         "borderRadius": undefined,
       }
     }
@@ -260,36 +266,40 @@ exports[`Pricing Box block saved default block HTML shouldn't change 1`] = `
         />
       </p>
     </div>
-    <div>
-      <a
-        className="ugb-button ugb-button--align-center ugb-button--size-normal"
-        href=""
-        style={
-          Object {
-            "backgroundColor": undefined,
-            "borderColor": undefined,
-            "borderRadius": "4px",
-            "color": undefined,
-          }
-        }
-      >
-        <span
-          className="ugb-button--inner"
+    <div
+      className="ugb-pricing-box__button"
+    >
+      <div>
+        <a
+          className="ugb-button ugb-button--align-center ugb-button--size-normal"
+          href=""
           style={
             Object {
+              "backgroundColor": undefined,
+              "borderColor": undefined,
+              "borderRadius": "4px",
               "color": undefined,
             }
           }
         >
-          <div
-            dangerouslySetInnerHTML={
+          <span
+            className="ugb-button--inner"
+            style={
               Object {
-                "__html": "Button text",
+                "color": undefined,
               }
             }
-          />
-        </span>
-      </a>
+          >
+            <div
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "Button text",
+                }
+              }
+            />
+          </span>
+        </a>
+      </div>
     </div>
     <p
       className="ugb-pricing-box__description"
@@ -312,6 +322,7 @@ exports[`Pricing Box block saved default block HTML shouldn't change 1`] = `
     className="ugb-pricing-box__item"
     style={
       Object {
+        "backgroundColor": undefined,
         "borderRadius": undefined,
       }
     }
@@ -404,36 +415,40 @@ exports[`Pricing Box block saved default block HTML shouldn't change 1`] = `
         />
       </p>
     </div>
-    <div>
-      <a
-        className="ugb-button ugb-button--align-center ugb-button--size-normal"
-        href=""
-        style={
-          Object {
-            "backgroundColor": undefined,
-            "borderColor": undefined,
-            "borderRadius": "4px",
-            "color": undefined,
-          }
-        }
-      >
-        <span
-          className="ugb-button--inner"
+    <div
+      className="ugb-pricing-box__button"
+    >
+      <div>
+        <a
+          className="ugb-button ugb-button--align-center ugb-button--size-normal"
+          href=""
           style={
             Object {
+              "backgroundColor": undefined,
+              "borderColor": undefined,
+              "borderRadius": "4px",
               "color": undefined,
             }
           }
         >
-          <div
-            dangerouslySetInnerHTML={
+          <span
+            className="ugb-button--inner"
+            style={
               Object {
-                "__html": "Button text",
+                "color": undefined,
               }
             }
-          />
-        </span>
-      </a>
+          >
+            <div
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "Button text",
+                }
+              }
+            />
+          </span>
+        </a>
+      </div>
     </div>
     <p
       className="ugb-pricing-box__description"

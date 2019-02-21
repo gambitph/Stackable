@@ -58,33 +58,38 @@ const edit = props => {
 		'ugb-feature',
 		'ugb--background-opacity-' + ( 1 * Math.round( backgroundOpacity / 1 ) ),
 		`ugb-feature--design-${ design }`,
-	], {
+	], applyFilters( 'stackable.feature.mainclasses', {
 		[ `ugb-feature--content-${ contentAlign }` ]: contentAlign,
 		'ugb-feature--invert': invert,
 		'ugb--has-background': design !== 'plain' && ( backgroundColor || backgroundImageURL ),
 		'ugb--has-background-image': design !== 'plain' && backgroundImageURL,
 		[ `ugb--content-width` ]: align === 'full' && contentWidth,
 		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-	} )
-
-	const mainStyle = {
-		'--image-size': imageSize ? `${ imageSize }px` : undefined,
-		backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
-		backgroundImage: design !== 'plain' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
-		backgroundAttachment: design !== 'plain' && fixedBackground ? 'fixed' : undefined,
-		'--ugb-background-color': design !== 'plain' && backgroundImageURL ? backgroundColor : undefined,
-		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
-	}
+	}, design, props ) )
 
 	const imageClasses = classnames( [
 		'ugb-feature__image',
-	], {
+	], applyFilters( 'stackable.feature.imageclasses', {
 		[ `ugb--shadow-${ shadow }` ]: design === 'plain',
-	} )
+	}, design, props ) )
 
-	const imageStyle = {
-		borderRadius: design === 'plain' ? borderRadius : undefined,
-	}
+	const styles = applyFilters( 'stackable.feature.styles', {
+		main: {
+			'--image-size': imageSize ? `${ imageSize }px` : undefined,
+			backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
+			backgroundImage: design !== 'plain' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
+			backgroundAttachment: design !== 'plain' && fixedBackground ? 'fixed' : undefined,
+			'--ugb-background-color': design !== 'plain' && backgroundImageURL ? backgroundColor : undefined,
+			borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
+		},
+		image: {
+			borderRadius: design === 'plain' ? borderRadius : undefined,
+		},
+	}, design, props )
+
+	const show = applyFilters( 'stackable.feature.edit.show', {
+		background: design !== 'plain',
+	}, design, props )
 
 	return (
 		<Fragment>
@@ -107,7 +112,6 @@ const edit = props => {
 					] ) }
 					onChange={ design => setAttributes( { design } ) }
 				>
-					{ applyFilters( 'stackable.feature.edit.designs.before', null, props ) }
 					<RangeControl
 						label={ __( 'Border Radius' ) }
 						value={ borderRadius }
@@ -129,7 +133,6 @@ const edit = props => {
 							onChange={ contentWidth => setAttributes( { contentWidth } ) }
 						/>
 					}
-					{ applyFilters( 'stackable.feature.edit.designs.after', null, props ) }
 					{ showProNotice && <ProControl size="small" /> }
 				</DesignPanelBody>
 				<PanelColorSettings
@@ -154,10 +157,11 @@ const edit = props => {
 						onChange={ imageSize => setAttributes( { imageSize } ) }
 						help={ __( 'The theme\'s content width may have an effect here.' ) }
 						min={ 100 }
-						max={ 600 }
+						max={ 800 }
 					/>
 				</PanelColorSettings>
-				{ design !== 'plain' &&
+				{ applyFilters( 'stackable.feature.edit.inspector', null, design, props ) }
+				{ show.background &&
 					<PanelBackgroundSettings
 						backgroundColor={ backgroundColor }
 						backgroundImageID={ backgroundImageID }
@@ -190,56 +194,84 @@ const edit = props => {
 					onChangeButtonDesign={ buttonDesign => setAttributes( { buttonDesign } ) }
 					onChangeButtonIcon={ buttonIcon => setAttributes( { buttonIcon } ) }
 				/>
+				{ applyFilters( 'stackable.feature.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
-			<div className={ mainClasses } style={ mainStyle }>
-				<div className="ugb-content-wrapper">
-					<div className="ugb-feature__content">
-						<RichText
-							tagName="h2"
-							className="ugb-feature__title"
-							value={ title }
-							onChange={ title => setAttributes( { title } ) }
-							style={ { color: textColor } }
-							placeholder={ __( 'Title for This Block' ) }
-							keepPlaceholderOnFocus
-						/>
-						<RichText
-							tagName="p"
-							className="ugb-feature__description"
-							value={ description }
-							onChange={ description => setAttributes( { description } ) }
-							style={ { color: textColor } }
-							placeholder={ descriptionPlaceholder( 'medium' ) }
-							keepPlaceholderOnFocus
-						/>
-						<ButtonEdit
-							size={ buttonSize }
-							align={ contentAlign }
-							color={ buttonTextColor }
-							backgroundColor={ buttonColor }
-							text={ buttonText }
-							borderRadius={ buttonBorderRadius }
-							design={ buttonDesign }
-							icon={ buttonIcon }
-							onChange={ buttonText => setAttributes( { buttonText } ) }
-						/>
-					</div>
-					<div className="ugb-feature__image-side">
-						<ImageUploadPlaceholder
-							imageID={ imageID }
-							imageURL={ imageUrl }
-							className={ imageClasses }
-							style={ imageStyle }
-							onRemove={ () => {
-								setAttributes( { imageUrl: '', imageID: '', imageAlt: '' } )
-							} }
-							onChange={ ( { url, id, alt } ) => {
-								setAttributes( { imageUrl: url, imageID: id, imageAlt: alt } )
-							} }
-							render={ <img src={ imageUrl } alt={ __( 'feature' ) } /> }
-						/>
-					</div>
-				</div>
+			<div className={ mainClasses } style={ styles.main }>
+				{ ( () => {
+					const titleComp = <RichText
+						tagName="h2"
+						className="ugb-feature__title"
+						value={ title }
+						onChange={ title => setAttributes( { title } ) }
+						style={ { color: textColor } }
+						placeholder={ __( 'Title for This Block' ) }
+						keepPlaceholderOnFocus
+					/>
+					const descriptionComp = <RichText
+						tagName="p"
+						className="ugb-feature__description"
+						value={ description }
+						onChange={ description => setAttributes( { description } ) }
+						style={ { color: textColor } }
+						placeholder={ descriptionPlaceholder( 'medium' ) }
+						keepPlaceholderOnFocus
+					/>
+					const buttonComp = <ButtonEdit
+						size={ buttonSize }
+						align={ contentAlign }
+						color={ buttonTextColor }
+						backgroundColor={ buttonColor }
+						text={ buttonText }
+						borderRadius={ buttonBorderRadius }
+						design={ buttonDesign }
+						icon={ buttonIcon }
+						onChange={ buttonText => setAttributes( { buttonText } ) }
+					/>
+					const imageBGComp = <ImageUploadPlaceholder
+						imageID={ imageID }
+						imageURL={ imageUrl }
+						className={ imageClasses }
+						style={ styles.image }
+						onRemove={ () => {
+							setAttributes( { imageUrl: '', imageID: '', imageAlt: '' } )
+						} }
+						onChange={ ( { url, id, alt } ) => {
+							setAttributes( { imageUrl: url, imageID: id, imageAlt: alt } )
+						} }
+					/>
+					const imageComp = <ImageUploadPlaceholder
+						imageID={ imageID }
+						imageURL={ imageUrl }
+						className={ imageClasses }
+						style={ styles.image }
+						onRemove={ () => {
+							setAttributes( { imageUrl: '', imageID: '', imageAlt: '' } )
+						} }
+						onChange={ ( { url, id, alt } ) => {
+							setAttributes( { imageUrl: url, imageID: id, imageAlt: alt } )
+						} }
+						render={ <img src={ imageUrl } alt={ __( 'feature' ) } /> }
+					/>
+					const comps = {
+						titleComp,
+						descriptionComp,
+						buttonComp,
+						imageBGComp,
+						imageComp,
+					}
+					return applyFilters( 'stackable.feature.edit.output', (
+						<div className="ugb-content-wrapper">
+							<div className="ugb-feature__content">
+								{ titleComp }
+								{ descriptionComp }
+								{ buttonComp }
+							</div>
+							<div className="ugb-feature__image-side">
+								{ imageComp }
+							</div>
+						</div>
+					), comps, props )
+				} )() }
 			</div>
 			{ isSelected && (
 				<URLInputControl

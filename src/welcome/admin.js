@@ -1,6 +1,12 @@
 import { __, sprintf } from '@wordpress/i18n'
 import { Component, render } from '@wordpress/element'
-import { disabledBlocks, nonce, srcUrl } from 'stackable'
+import {
+	disabledBlocks,
+	nonce,
+	nonceProNotice,
+	showProNoticesOption,
+	srcUrl,
+} from 'stackable'
 import { send as ajaxSend } from '@wordpress/ajax'
 import classnames from 'classnames'
 import domReady from '@wordpress/dom-ready'
@@ -40,7 +46,6 @@ class BlockToggler extends Component {
 
 	// Send our changes.
 	componentDidUpdate( prevProps, prevState ) {
-		// console.log(this.state === prevState);
 		if ( this.state.disabledBlocks === prevState.disabledBlocks ) {
 			return
 		}
@@ -132,10 +137,72 @@ class BlockToggler extends Component {
 	}
 }
 
-// Load all the blocks into the UI.
+class ProNoticeToggler extends Component {
+	constructor() {
+		super( ...arguments )
+		this.toggle = this.toggle.bind( this )
+		this.ajaxTimeout = null
+		this.state = {
+			checked: this.props.checked,
+			isSaving: false,
+		}
+	}
+
+	componentDidUpdate( prevProps, prevState ) {
+		if ( this.state.checked === prevState.checked ) {
+			return
+		}
+
+		clearTimeout( this.ajaxTimeout )
+		this.ajaxTimeout = setTimeout( () => {
+			ajaxSend( 'stackable_update_show_pro_notice_option', {
+				success: () => {
+					this.setState( { isSaving: false } )
+				},
+				error: message => {
+					this.setState( { isSaving: false } )
+					alert( message ) // eslint-disable-line no-alert
+				},
+				data: {
+					nonce: nonceProNotice,
+					checked: this.state.checked,
+				},
+			} )
+			this.setState( { isSaving: true } )
+		}, 600 )
+	}
+
+	toggle() {
+		this.setState( { checked: ! this.state.checked } )
+	}
+
+	render() {
+		return (
+			<label className="s-input-checkbox" htmlFor="s-input-go-premium">
+				<input
+					type="checkbox"
+					id="s-input-go-premium"
+					checked={ this.state.checked }
+					onChange={ this.toggle }
+				/>
+				{ __( 'Show "Go premium" notices' ) }
+				{ this.state.isSaving && <Spinner /> }
+			</label>
+		)
+	}
+}
+
+// Load all the options into the UI.
 domReady( () => {
 	render(
 		<BlockToggler blocks={ blockData } disabledBlocks={ disabledBlocks } />,
 		document.querySelector( '.s-settings-wrapper' )
 	)
+
+	if ( document.querySelector( '.s-pro-control-wrapper' ) ) {
+		render(
+			<ProNoticeToggler checked={ showProNoticesOption } />,
+			document.querySelector( '.s-pro-control-wrapper' )
+		)
+	}
 } )

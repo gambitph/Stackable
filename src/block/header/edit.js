@@ -36,7 +36,7 @@ const edit = props => {
 		titleColor,
 		subtitle,
 		subtitleColor,
-		contentAlign,
+		contentAlign = 'center',
 		backgroundColor,
 		backgroundImageID,
 		backgroundImageURL,
@@ -48,6 +48,8 @@ const edit = props => {
 		align,
 		contentWidth = false,
 		buttonNewTab,
+		invert = false,
+		fullHeight = false,
 	} = props.attributes
 
 	const mainClasses = classnames( [
@@ -56,23 +58,39 @@ const edit = props => {
 		'ugb-header--v2',
 		'ugb--background-opacity-' + ( 1 * Math.round( backgroundOpacity / 1 ) ),
 		[ `ugb-header--design-${ design }` ],
-	], {
+	], applyFilters( 'stackable.header.mainclasses', {
 		'ugb--has-background': design !== 'plain' &&
 		                       ( backgroundColor || backgroundImageURL ),
 		'ugb--has-background-image': design !== 'plain' &&
 		                             backgroundImageURL,
 		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
 		[ `ugb--content-width` ]: align === 'full' && contentWidth,
-	} )
+		'ugb-header--invert': invert,
+		'ugb-header--full-height': fullHeight,
+	}, design, props ) )
 
-	const mainStyle = {
-		'--ugb-background-color': design !== 'plain' && backgroundImageURL ? backgroundColor : undefined,
-		backgroundAttachment: design !== 'plain' && fixedBackground ? 'fixed' : undefined,
-		backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
-		backgroundImage: design !== 'plain' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
-		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
-		textAlign: contentAlign ? contentAlign : undefined,
-	}
+	const styles = applyFilters( 'stackable.header.styles', {
+		main: {
+			'--ugb-background-color': design !== 'plain' && backgroundImageURL ? backgroundColor : undefined,
+			backgroundAttachment: design !== 'plain' && fixedBackground ? 'fixed' : undefined,
+			backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
+			backgroundImage: design !== 'plain' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
+			borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
+			textAlign: contentAlign ? contentAlign : undefined,
+		},
+		title: {
+			color: titleColor ? titleColor :
+				   design === 'plain' ? undefined :
+				   '#ffffff',
+			textAlign: contentAlign,
+		},
+		subtitle: {
+			color: subtitleColor ? subtitleColor :
+				   design === 'plain' ? undefined :
+				   '#ffffff',
+			textAlign: contentAlign,
+		},
+	}, design, props )
 
 	return (
 		<Fragment>
@@ -99,7 +117,12 @@ const edit = props => {
 						setAttributes( { design } )
 					} }
 				>
-					{ applyFilters( 'stackable.header.edit.designs.before', null, props ) }
+					{ applyFilters( 'stackable.header.edit.designs.before', null, design, props ) }
+					<ToggleControl
+						label={ __( 'Full Height' ) }
+						checked={ fullHeight }
+						onChange={ fullHeight => setAttributes( { fullHeight } ) }
+					/>
 					{ design !== 'plain' &&
 						<RangeControl
 							label={ __( 'Border Radius' ) }
@@ -178,39 +201,31 @@ const edit = props => {
 					onChangeButtonBorderRadius={ value => setAttributes( { cornerButtonRadius: value } ) }
 					onChangeButtonDesign={ buttonDesign => setAttributes( { buttonDesign } ) }
 					onChangeButtonIcon={ buttonIcon => setAttributes( { buttonIcon } ) }
+					{ ...applyFilters( 'stackable.header.edit.button.props', {}, design, props ) }
 				/>
+				{ applyFilters( 'stackable.header.edit.inspector.post', null, design, props ) }
 			</InspectorControls>
-			<div className={ mainClasses } style={ mainStyle }>
-				<div className="ugb-content-wrapper">
-					<RichText
+			<div className={ mainClasses } style={ styles.main }>
+				{ ( () => {
+					const titleComp = <RichText
 						tagName="h2"
 						className="ugb-header__title"
 						placeholder={ __( 'Title for This Block' ) }
 						keepPlaceholderOnFocus
 						value={ title }
 						onChange={ value => setAttributes( { title: value } ) }
-						style={ {
-							color: titleColor ? titleColor :
-							       design === 'plain' ? undefined :
-							       '#ffffff',
-							textAlign: contentAlign,
-						} }
+						style={ styles.title }
 					/>
-					<RichText
+					const subtitleComp = <RichText
 						tagName="p"
 						className="ugb-header__subtitle"
 						placeholder={ descriptionPlaceholder() }
 						keepPlaceholderOnFocus
 						value={ subtitle }
 						onChange={ value => setAttributes( { subtitle: value } ) }
-						style={ {
-							color: subtitleColor ? subtitleColor :
-								   design === 'plain' ? undefined :
-								   '#ffffff',
-							textAlign: contentAlign,
-						} }
+						style={ styles.subtitle }
 					/>
-					<ButtonEdit
+					const buttonComp = <ButtonEdit
 						size={ size }
 						align={ contentAlign }
 						color={ buttonTextColor }
@@ -221,15 +236,30 @@ const edit = props => {
 						icon={ buttonIcon }
 						onChange={ text => setAttributes( { buttonText: text } ) }
 					/>
-				</div>
+					const comps = {
+						titleComp,
+						subtitleComp,
+						buttonComp,
+					}
+					return applyFilters( 'stackable.header.edit.output', (
+						<div className="ugb-content-wrapper">
+							{ titleComp }
+							{ subtitleComp }
+							{ buttonComp }
+						</div>
+					), design, props, comps )
+				} )() }
 			</div>
 			{ isSelected && (
-				<URLInputControl
-					value={ buttonURL }
-					newTab={ buttonNewTab }
-					onChange={ buttonURL => setAttributes( { buttonURL } ) }
-					onChangeNewTab={ buttonNewTab => setAttributes( { buttonNewTab } ) }
-				/>
+				<div className="ugb-header__url-inputs">
+					<URLInputControl
+						value={ buttonURL }
+						newTab={ buttonNewTab }
+						onChange={ buttonURL => setAttributes( { buttonURL } ) }
+						onChangeNewTab={ buttonNewTab => setAttributes( { buttonNewTab } ) }
+					/>
+					{ applyFilters( 'stackable.header.edit.url', null, design, props ) }
+				</div>
 			) }
 		</Fragment>
 	)

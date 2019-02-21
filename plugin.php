@@ -5,7 +5,7 @@
  * Description: Blocks for everyone
  * Author: Gambit Technologies, Inc
  * Author URI: http://gambit.ph
- * Version: 1.12.1
+ * Version: 1.13.0
  *
  * @package Stackable
  */
@@ -21,8 +21,8 @@ if ( function_exists( 'sugb_fs' ) ) {
 	return;
 }
 
-defined( 'STACKABLE_SHOW_PRO_NOTICES' ) || define( 'STACKABLE_SHOW_PRO_NOTICES', false );
-defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '1.12.1' );
+defined( 'STACKABLE_SHOW_PRO_NOTICES' ) || define( 'STACKABLE_SHOW_PRO_NOTICES', true );
+defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '1.13.0' );
 defined( 'STACKABLE_FILE' ) || define( 'STACKABLE_FILE', __FILE__ );
 
 /********************************************************************************************
@@ -91,6 +91,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/block/disabled-blocks.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/blog-posts/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/blog-posts/designs.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/pro.php' );
 
 /**
  * Welcome screen.
@@ -100,13 +101,9 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/notification.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/notification-rate.php' );
 
-if ( sugb_fs()->is__premium_only() ) {
-	if ( sugb_fs()->can_use_premium_code() ) {
-		/**
-		 * Premium initialize code.
-		 */
-		if ( file_exists( plugin_dir_path( __FILE__ ) . 'pro__premium_only/src/init.php' ) ) {
-			require_once( plugin_dir_path( __FILE__ ) . 'pro__premium_only/src/init.php' );
-		}
-	}
+/**
+ * Premium initialize code.
+ */
+if ( file_exists( plugin_dir_path( __FILE__ ) . 'pro__premium_only/index.php' ) ) {
+	require_once( plugin_dir_path( __FILE__ ) . 'pro__premium_only/index.php' );
 }

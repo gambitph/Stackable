@@ -121,6 +121,10 @@ export const schema = {
 		type: 'number',
 		default: 3,
 	},
+	colorOnHover: {
+		type: 'boolean',
+		default: false,
+	},
 
 	// Keep the old attributes. Gutenberg issue https://github.com/WordPress/gutenberg/issues/10406
 	href: {
@@ -180,6 +184,9 @@ export const schema = {
 	iconColor: {
 		type: 'string',
 	},
+	align: {
+		type: 'string',
+	},
 }
 
 export const name = 'ugb/team-member'
@@ -195,6 +202,7 @@ export const settings = {
 	],
 	attributes: schema,
 	supports: {
+		align: [ 'wide' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
 	},
 

@@ -55,11 +55,13 @@ SVG;
 				wp_localize_script( 'stackable-welcome', 'stackable', array(
 					'srcUrl' => plugins_url( '/', __FILE__ ),
 					'isPro' => sugb_fs()->can_use_premium_code(),
-					'showProNotice' => STACKABLE_SHOW_PRO_NOTICES && ! sugb_fs()->can_use_premium_code(),
+					'showProNotice' => stackable_should_show_pro_notices(),
 					'pricingURL' => sugb_fs()->get_upgrade_url(),
 					'planName' => sugb_fs()->get_plan_name(),
 					'disabledBlocks' => stackable_get_disabled_blocks(),
 					'nonce' => stackable_get_disabled_blocks_nonce(),
+					'showProNoticesOption' => stackable_show_pro_notices_option(),
+					'nonceProNotice' => stackable_show_pro_notices_option_nonce(),
 				) );
             }
         }
@@ -96,7 +98,10 @@ SVG;
                             <p><?php _e( 'We have a lot of awesome blocks. But if you\'re overwhelmed with awesomeness, you can hide some of them.' , 'stackable' ) ?><br /><em><?php _e( '(If your post contains a disabled block, it will still continue to work. You won\'t just be able to add the disabled blocks.)' , 'stackable' ) ?></em></p>
 							<!-- We put all the block controls here. -->
                             <div class="s-settings-wrapper" />
-                        </article>
+						</article>
+						<?php if ( STACKABLE_SHOW_PRO_NOTICES && ! sugb_fs()->can_use_premium_code() ): ?>
+							<aside class="s-pro-control-wrapper"></aside>
+						<?php endif; ?>
                     </div>
                     <div class="s-side">
                         <aside class="s-box">

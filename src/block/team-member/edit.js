@@ -44,17 +44,11 @@ const edit = props => {
 		`ugb-team-member--columns-${ columns }`,
 		`ugb-team-member--image-${ shapes }`,
 		`ugb-team-member--design-${ design }`,
-	] )
+	], applyFilters( 'stackable.team-member.mainclasses', {}, design, props ) )
 
-	const itemClasses = classnames( [
-		'ugb-team-member__item',
-	], {
-		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-	} )
-
-	const itemStyle = {
-		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
-	}
+	const show = applyFilters( 'stackable.team-member.edit.show', {
+		imageShape: true,
+	}, design, props )
 
 	return (
 		<Fragment>
@@ -98,17 +92,20 @@ const edit = props => {
 					{ showProNotice && <ProControl size="small" /> }
 				</DesignPanelBody>
 				<PanelBody title={ __( 'General Settings' ) }>
-					<SelectControl
-						label={ __( 'Image Shape' ) }
-						value={ shapes }
-						options={ shape.map( ( { value, label } ) => ( {
-							value: value,
-							label: label,
-						} ) ) }
-						onChange={ newShape => {
-							setAttributes( { shapes: newShape } )
-						} }
-					/>
+					{ applyFilters( 'stackable.team-member.edit.general.before', null, design, props ) }
+					{ show.imageShape && (
+						<SelectControl
+							label={ __( 'Image Shape' ) }
+							value={ shapes }
+							options={ shape.map( ( { value, label } ) => ( {
+								value: value,
+								label: label,
+							} ) ) }
+							onChange={ newShape => {
+								setAttributes( { shapes: newShape } )
+							} }
+						/>
+					) }
 					<RangeControl
 						label={ __( 'Columns' ) }
 						value={ columns }
@@ -147,61 +144,96 @@ const edit = props => {
 					const name = attributes[ `name${ i }` ]
 					const position = attributes[ `position${ i }` ]
 					const description = attributes[ `description${ i }` ]
+
+					const itemClasses = classnames( [
+						'ugb-team-member__item',
+					], applyFilters( 'stackable.team-member.itemclasses', {
+						[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
+					}, design, i, props ) )
+
+					const styles = applyFilters( 'stackable.team-member.itemstyles', {
+						item: {
+							borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
+						},
+					}, design, i, props )
+
+					const imageComp = (
+						<ImageUploadPlaceholder
+							className="ugb-team-member__image"
+							imageID={ mediaID }
+							imageURL={ mediaURL }
+							onRemove={ () => {
+								setAttributes( {
+									[ `mediaURL${ i }` ]: '',
+									[ `mediaID${ i }` ]: '',
+								} )
+							} }
+							onChange={ ( { url, id } ) => {
+								setAttributes( {
+									[ `mediaURL${ i }` ]: url,
+									[ `mediaID${ i }` ]: id,
+								} )
+							} }
+							hasRemove={ false }
+						/>
+					)
+					const nameComp = (
+						<RichText
+							tagName="h4"
+							className="ugb-team-member__name"
+							value={ name }
+							onChange={ name => setAttributes( { [ `name${ i }` ]: name } ) }
+							style={ {
+								color: nameColor,
+							} }
+							placeholder={ __( 'Name' ) }
+							keepPlaceholderOnFocus
+						/>
+					)
+					const positionComp = (
+						<RichText
+							tagName="p"
+							value={ position }
+							className="ugb-team-member__position"
+							onChange={ position => setAttributes( { [ `position${ i }` ]: position } ) }
+							style={ {
+								color: posColor,
+							} }
+							placeholder={ __( 'Position' ) }
+							keepPlaceholderOnFocus
+						/>
+					)
+					const descriptionComp = (
+						<RichText
+							tagName="p"
+							value={ description }
+							className="ugb-team-member__description"
+							onChange={ description => setAttributes( { [ `description${ i }` ]: description } ) }
+							style={ {
+								color: desColor,
+							} }
+							placeholder={ descriptionPlaceholder( 'medium' ) }
+							keepPlaceholderOnFocus
+						/>
+					)
+					const comps = {
+						imageComp,
+						nameComp,
+						positionComp,
+						descriptionComp,
+					}
 					return (
-						<div className={ itemClasses } style={ itemStyle } key={ i }>
-							<ImageUploadPlaceholder
-								className="ugb-team-member__image"
-								imageID={ mediaID }
-								imageURL={ mediaURL }
-								onRemove={ () => {
-									setAttributes( {
-										[ `mediaURL${ i }` ]: '',
-										[ `mediaID${ i }` ]: '',
-									} )
-								} }
-								onChange={ ( { url, id } ) => {
-									setAttributes( {
-										[ `mediaURL${ i }` ]: url,
-										[ `mediaID${ i }` ]: id,
-									} )
-								} }
-								hasRemove={ false }
-							/>
-							<div className="ugb-team-member__content">
-								<RichText
-									tagName="h4"
-									className="ugb-team-member__name"
-									value={ name }
-									onChange={ name => setAttributes( { [ `name${ i }` ]: name } ) }
-									style={ {
-										color: nameColor,
-									} }
-									placeholder={ __( 'Name' ) }
-									keepPlaceholderOnFocus
-								/>
-								<RichText
-									tagName="p"
-									value={ position }
-									className="ugb-team-member__position"
-									onChange={ position => setAttributes( { [ `position${ i }` ]: position } ) }
-									style={ {
-										color: posColor,
-									} }
-									placeholder={ __( 'Position' ) }
-									keepPlaceholderOnFocus
-								/>
-								<RichText
-									tagName="p"
-									value={ description }
-									className="ugb-team-member__description"
-									onChange={ description => setAttributes( { [ `description${ i }` ]: description } ) }
-									style={ {
-										color: desColor,
-									} }
-									placeholder={ descriptionPlaceholder( 'medium' ) }
-									keepPlaceholderOnFocus
-								/>
-							</div>
+						<div className={ itemClasses } style={ styles.item } key={ i }>
+							{ applyFilters( 'stackable.team-member.edit.output', (
+								<Fragment>
+									{ imageComp }
+									<div className="ugb-team-member__content">
+										{ nameComp }
+										{ positionComp }
+										{ descriptionComp }
+									</div>
+								</Fragment>
+							), design, comps, i, props ) }
 						</div>
 					)
 				} ) }

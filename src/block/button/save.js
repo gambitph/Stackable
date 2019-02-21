@@ -31,8 +31,14 @@ const save = props => {
 					[ `icon${ i === 1 ? '' : i }` ]: icon,
 					[ `newTab${ i === 1 ? '' : i }` ]: newTab,
 				} = attributes
+
+				const buttonClasses = classnames(
+					applyFilters( 'stackable.button.buttonclasses', {}, design, i, props )
+				)
+
 				return (
 					<ButtonEdit.Content key={ i }
+						className={ buttonClasses }
 						align={ align }
 						size={ size }
 						url={ url }

@@ -53,6 +53,10 @@ export const schema = {
 		type: 'number',
 		default: 3,
 	},
+	hoverEffect: {
+		type: 'string',
+		default: '',
+	},
 
 	// Keep the old attributes. Gutenberg issue https://github.com/WordPress/gutenberg/issues/10406
 	overlayColor: {

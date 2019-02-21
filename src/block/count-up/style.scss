@@ -44,7 +44,7 @@
 
 	// Collapse to 4 columns to 2 rows of 2-columns.
 	@media screen and (max-width: $break-medium) {
-		&.ugb-countup--columns-4,
+		&.ugb-countup--columns-4 .ugb-content-wrapper,
 		&.columns-4 {
 			display: grid !important;
 			grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -65,7 +65,7 @@
 
 	// Collapse 3 columns to 1 column.
 	@media screen and (max-width: $break-small) {
-		&.ugb-countup--columns-3,
+		&.ugb-countup--columns-3 .ugb-content-wrapper,
 		&.columns-3 {
 			flex-direction: column;
 			.ugb-countup__item:not(:last-child),

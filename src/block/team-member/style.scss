@@ -42,7 +42,6 @@
 	}
 
 	.ugb-team-member__content {
-		@include baseBlock();
 		margin: 0;
 	}
 
@@ -71,6 +70,13 @@
 .ugb-team-member.ugb-team-member--design-basic {
 	.ugb-team-member__item {
 		@include box();
+	}
+}
+
+.ugb-team-member.ugb-team-member--design-basic,
+.ugb-team-member.ugb-team-member--design-plain {
+	.ugb-team-member__content {
+		@include baseBlock();
 	}
 }
 

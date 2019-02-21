@@ -1,3 +1,4 @@
+import { applyFilters } from '@wordpress/hooks'
 import { ButtonEdit } from '@stackable/components'
 import classnames from 'classnames'
 import { RichText } from '@wordpress/editor'
@@ -33,13 +34,13 @@ const save = props => {
 		className,
 		'ugb-cta',
 		'ugb--background-opacity-' + ( 1 * Math.round( backgroundOpacity / 1 ) ),
-	], {
+	], applyFilters( 'stackable.cta.mainclasses', {
 		[ `ugb-cta--design-${ design }` ]: design !== 'basic',
 		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
 		'ugb--has-background': backgroundColor || backgroundImageURL,
 		'ugb--has-background-image': backgroundImageURL,
 		[ `ugb--content-width` ]: align === 'full' && contentWidth,
-	} )
+	}, design, props ) )
 
 	const mainStyle = {
 		backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,

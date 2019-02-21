@@ -1,8 +1,13 @@
-import { DesignPanelBody, ImageUploadPlaceholder, ProControl } from '@stackable/components'
+import {
+	ColorPaletteControl,
+	DesignPanelBody,
+	ImageUploadPlaceholder,
+	ProControl,
+} from '@stackable/components'
 import {
 	InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/editor'
-import { PanelBody, RangeControl } from '@wordpress/components'
+import { PanelBody, RangeControl, ToggleControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
@@ -27,6 +32,8 @@ const edit = props => {
 		design = 'basic',
 		borderRadius = 12,
 		shadow = 3,
+		backgroundColor = '',
+		serif = false,
 	} = attributes
 
 	const mainClasses = classnames( [
@@ -35,17 +42,30 @@ const edit = props => {
 		'ugb-testimonial--v2',
 		`ugb-testimonial--columns-${ columns }`,
 		`ugb-testimonial--design-${ design }`,
-	] )
+	], {
+		'ugb-testimonial--serif': serif,
+	} )
 
 	const itemClasses = classnames( [
 		'ugb-testimonial__item',
-	], {
+	], applyFilters( 'stackable.testimonial.itemclasses', {
 		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-	} )
+	}, design, props ) )
 
-	const itemStyle = {
-		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
-	}
+	const styles = applyFilters( 'stackable.testimonial.styles', {
+		item: {
+			borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
+			backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
+		},
+		bodyWrapper: {},
+		body: {
+			color: bodyTextColor ? bodyTextColor : undefined,
+		},
+	}, design, props )
+
+	const show = applyFilters( 'stackable.testimonial.show', {
+		backgroundColor: design === 'basic',
+	}, design, props )
 
 	return (
 		<Fragment>
@@ -66,7 +86,13 @@ const edit = props => {
 						setAttributes( { design } )
 					} }
 				>
-					{ applyFilters( 'stackable.testimonial.edit.designs.before', null, props ) }
+					{ show.backgroundColor &&
+						<ColorPaletteControl
+							label={ __( 'Background Color' ) }
+							value={ backgroundColor }
+							onChange={ backgroundColor => setAttributes( { backgroundColor } ) }
+						/>
+					}
 					{ design !== 'plain' &&
 						<RangeControl
 							label={ __( 'Border Radius' ) }
@@ -85,7 +111,6 @@ const edit = props => {
 							max={ 9 }
 						/>
 					}
-					{ applyFilters( 'stackable.testimonial.edit.designs.after', null, props ) }
 					{ showProNotice && <ProControl size="small" /> }
 				</DesignPanelBody>
 				<PanelBody title={ __( 'General Settings' ) }>
@@ -95,6 +120,11 @@ const edit = props => {
 						onChange={ columns => setAttributes( { columns } ) }
 						min={ 1 }
 						max={ 3 }
+					/>
+					<ToggleControl
+						label={ __( 'Serif Font' ) }
+						checked={ serif }
+						onChange={ serif => setAttributes( { serif } ) }
 					/>
 				</PanelBody>
 				<PanelColorSettings
@@ -127,17 +157,20 @@ const edit = props => {
 					const name = attributes[ `name${ i }` ]
 					const position = attributes[ `position${ i }` ]
 					const testimonial = attributes[ `testimonial${ i }` ]
+
+					const bodyClasses = classnames( [
+						'ugb-testimonial__body-wrapper',
+					], applyFilters( 'stackable.testimonial.bodyclasses', {}, design, props ) )
+
 					return (
-						<div className={ itemClasses } style={ itemStyle } key={ i }>
-							<div className="ugb-testimonial__body-wrapper">
+						<div className={ itemClasses } style={ styles.item } key={ i }>
+							<div className={ bodyClasses } style={ styles.bodyWrapper }>
 								<RichText
 									tagName="p"
 									className="ugb-testimonial__body"
 									value={ testimonial }
 									onChange={ testimonial => setAttributes( { [ `testimonial${ i }` ]: testimonial } ) }
-									style={ {
-										color: bodyTextColor,
-									} }
+									style={ styles.body }
 									placeholder={ descriptionPlaceholder( 'medium' ) }
 									keepPlaceholderOnFocus
 								/>
@@ -153,7 +186,6 @@ const edit = props => {
 									onChange={ ( { url, id } ) => {
 										setAttributes( { [ `mediaURL${ i }` ]: url, [ `mediaID${ i }` ]: id } )
 									} }
-									hasRemove={ false }
 								/>
 								<RichText
 									tagName="h4"
