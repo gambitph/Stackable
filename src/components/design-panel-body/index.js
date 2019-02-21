@@ -7,7 +7,7 @@ import { PanelBody } from '@wordpress/components'
 
 function DesignPanelBody( props ) {
 	const {
-		options, selected, title = 'Design',
+		options, selected, title = 'Layout',
 	} = props
 	const selectedOption = options.find( opt => opt.value === selected )
 	const panelTitle = selectedOption ? `${ title } – ${ selectedOption.label }` : title
