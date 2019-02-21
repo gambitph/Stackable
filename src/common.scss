@@ -91,45 +91,22 @@ $box-vert-padding: 60px;
 }
 
 // Different box shadows for the shadow setting.
-.ugb--shadow-0,
-.ugb-shadow-0 { // Old naming convention.
-	box-shadow: none !important;
-}
-.ugb--shadow-1,
-.ugb-shadow-1 { // Old naming convention.
-	box-shadow: 0 0 0 1px rgba(120, 120, 120, 0.1) !important;
-}
-.ugb--shadow-2,
-.ugb-shadow-2 { // Old naming convention.
-	box-shadow: 0 0 0 2px rgba(120, 120, 120, 0.1) !important;
-}
-.ugb--shadow-3,
-.ugb-shadow-3 { // Old naming convention.
-	box-shadow: 0 5px 5px 0 rgba(18, 63, 82, 0.035), 0 0 0 1px rgba(176, 181, 193, 0.2); // Our normal.
-}
-.ugb--shadow-4,
-.ugb-shadow-4 { // Old naming convention.
-	box-shadow: 0px 2px 20px rgba(153, 153, 153, 0.2) !important;
-}
-.ugb--shadow-5,
-.ugb-shadow-5 { // Old naming convention.
-	box-shadow: 0 5px 30px -10px rgba(18, 63, 82, 0.3) !important;
-}
-.ugb--shadow-6,
-.ugb-shadow-6 { // Old naming convention.
-	box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.05) !important;
-}
-.ugb--shadow-7,
-.ugb-shadow-7 { // Old naming convention.
-	box-shadow: 7px 5px 30px rgba(72, 73, 121, 0.15) !important;
-}
-.ugb--shadow-8,
-.ugb-shadow-8 { // Old naming convention.
-	box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.1) !important;
-}
-.ugb--shadow-9,
-.ugb-shadow-9 { // Old naming convention.
-	box-shadow: 0px 70px 130px -60px rgba(72, 73, 121, 0.38) !important;
+$shadows: ( none )
+	( 0 0 0 1px rgba(120, 120, 120, 0.1) )
+	( 0 0 0 2px rgba(120, 120, 120, 0.1) )
+	( 0 5px 5px 0 rgba(18, 63, 82, 0.035), 0 0 0 1px rgba(176, 181, 193, 0.2) )
+	( 0px 2px 20px rgba(153, 153, 153, 0.2) )
+	( 0 5px 30px -10px rgba(18, 63, 82, 0.3) )
+	( 0px 10px 30px rgba(0, 0, 0, 0.05) )
+	( 7px 5px 30px rgba(72, 73, 121, 0.15) )
+	( 0px 10px 60px rgba(0, 0, 0, 0.1) )
+	( 0px 70px 130px -60px rgba(72, 73, 121, 0.38) );
+
+@for $i from 0 through 9 {
+	.ugb--shadow-#{ $i },
+	.ugb-shadow-#{ $i } { // Old naming convention.
+		box-shadow: nth($shadows, $i + 1) !important;
+	}
 }
 
 // A block can have a ugb-content-width class to make it's content fit the content-width.
