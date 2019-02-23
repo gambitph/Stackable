@@ -105,21 +105,27 @@ SVG;
 						<?php endif; ?>
                     </div>
                     <div class="s-side">
+                        <aside class="s-box s-premium-box">
+                            <h3><?php _e( '🚀 Stackable Premium', 'stackable' ) ?></h3>
+                            <p><?php _e( 'If you are ready for even more, Stackable Premium will give you more layout options & effects for creating your perfect site!', 'stackable' ) ?></p>
+                            <p><a href="<?php echo esc_url( sugb_fs()->get_upgrade_url() ) ?>" class="s-button" title="<?php esc_attr_e( 'Go Premium', 'stackable' ) ?>"><?php _e( 'Go Premium', 'stackable' ) ?></a></p>
+                            <p><a href="https://rebrand.ly/plugin-learn-premium-side" target="blank" title="<?php esc_attr_e( 'Learn more about Premium', 'stackable' ) ?>"><?php _e( 'Learn more about Premium', 'stackable' ) ?></a></p>
+                        </aside>
                         <aside class="s-box">
                             <h3><?php _e( '🍺 Free Theme Download', 'stackable' ) ?></h3>
                             <p><?php _e( 'Get our FREE WordPress theme that\'s beautiful & flexible, and made especially for Stackable blocks and the new WordPress editor. Subscribe to our newsletter to get the Stackable Theme now.', 'stackable' ) ?></p>
-                            <p><a href="https://rebrand.ly/plugin-welcome-theme-download" class="s-button" target="blank" title="Subscibe & Download"><?php _e( 'Subscribe & Download', 'stackable' ) ?></a></p>
+                            <p><a href="https://rebrand.ly/plugin-welcome-theme-download" class="s-button" target="blank" title="<?php esc_attr_e( 'Subscribe & Download', 'stackable' ) ?>"><?php _e( 'Subscribe & Download', 'stackable' ) ?></a></p>
                         </aside>
                         <aside class="s-box s-news-box">
 							<h3><?php _e( '🗞 Stackable News', 'stackable' ) ?></h3>
 							<div class="s-news-box-content"><?php stackable_news_feed_links_cached() ?></div>
 							<p><?php _e( 'Keep up to date by subscribing to our newsletter.', 'stackable' ) ?></p>
-							<p><a href="https://rebrand.ly/plugin-welcome-subscribe" class="s-button" target="blank" title="Subscibe"><?php _e( 'Subscribe', 'stackable' ) ?></a></p>
+							<p><a href="https://rebrand.ly/plugin-welcome-subscribe" class="s-button" target="blank" title="<?php esc_attr_e( 'Subscribe', 'stackable' ) ?>"><?php _e( 'Subscribe', 'stackable' ) ?></a></p>
                         </aside>
                         <aside class="s-box s-support-box">
                             <h3><?php _e( '🐛 Suggestions or Bug Reports', 'stackable' ) ?></h3>
                             <p><?php _e( 'If you have any suggestions and bug reports, let us know in our plugin support forum.', 'stackable' ) ?></p>
-                            <p><a href="https://rebrand.ly/plugin-welcome-report" target="blank" title="Support Forum"><?php _e( 'Plugin Support Forum', 'stackable' ) ?></a></p>
+                            <p><a href="https://rebrand.ly/plugin-welcome-report" target="blank" title="<?php esc_attr_e( 'Plugin Support Forum', 'stackable' ) ?>"><?php _e( 'Plugin Support Forum', 'stackable' ) ?></a></p>
                         </aside>
                     </div>
                 </section>
