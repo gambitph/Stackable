@@ -114,6 +114,7 @@ if ( ! class_exists( 'Stackable_Go_Premium_Notification' ) ) {
 
         function __construct() {
             add_action( 'admin_menu', array( $this, 'check_pro_notice_date' ), 9 );
+			add_action( 'admin_menu', array( $this, 'go_premium_notice_old_raters' ), 9 );
         }
 
         /**
@@ -140,9 +141,36 @@ if ( ! class_exists( 'Stackable_Go_Premium_Notification' ) ) {
 			// Show faded.
 			} else if ( self::FADE_NOTICE_TIME < $elapsed_time ) {
 				update_option( 'stackable_small_pro_notice_show', 'fade' );
-                stackable_add_welcome_notification( 'premium', sprintf( __( 'Did you know that there\'s a Premium version for Stackable? Get more designs per block and new effects per block. %sClick here to learn more.%s', 'stackable' ), '<a href="https://rebrand.ly/plugin-learn-premium" target="_blank">', '</a>' ) );
+				$this->show_notification();
 			}
-        }
+		}
+
+		/**
+		 * Show Premium notice to old timers
+		 */
+		public function go_premium_notice_old_raters() {
+			if ( get_option( 'stackable_activation_date' ) === false ) {
+				return;
+			}
+
+			$activation_time = get_option( 'stackable_activation_date' );
+			$elapsed_time = time() - absint( $activation_time );
+
+			// This time is more than the rating notice so as not to be annoying.
+			if ( $elapsed_time > self::FADE_NOTICE_TIME ) {
+				$this->show_notification();
+			}
+		}
+
+		/**
+		 * Show Premium notification.
+		 */
+		public function show_notification() {
+			stackable_add_welcome_notification( 'premium', sprintf( __( 'We hope you\'re enjoying Stackable. If you want more, you may want to check out %sStackable Premium%s. Ready to upgrade and do more? %sGo premium now%s', 'stackable' ),
+				'<a href="https://rebrand.ly/plugin-learn-premium" target="_blank">', '</a>',
+				'<a href="' . esc_url( sugb_fs()->get_upgrade_url() ) . '">', '</a>'
+			) );
+		}
     }
 
 	if ( STACKABLE_SHOW_PRO_NOTICES && ! sugb_fs()->can_use_premium_code() ) {
