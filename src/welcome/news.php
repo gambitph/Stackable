@@ -9,7 +9,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! function_exists( 'stackable_news_feed_links' ) ) {
+
+	/**
+	 * Gets the news feed. Returns the cached copy if available.
+	 * Caches the news feed acquired.
+	 *
+	 * @return String
+	 */
 	function stackable_news_feed_links() {
+
+		// Get cached.
+		if ( get_transient( 'stackable_news_feed_links' ) ) {
+			return get_transient( 'stackable_news_feed_links' );
+		}
+
 		include_once( ABSPATH . WPINC . '/feed.php' );
 
 		$rss = fetch_feed( 'https://wpstackable.com/feed' );
@@ -25,6 +38,8 @@ if ( ! function_exists( 'stackable_news_feed_links' ) ) {
 		if ( ! count( $rss_items ) ) {
 			return;
 		}
+
+		ob_start();
 
 		?><ul><?php
 		foreach ( $rss_items as $item ) {
@@ -55,5 +70,52 @@ if ( ! function_exists( 'stackable_news_feed_links' ) ) {
 			<?php
 		}
 		?></ul><?php
+
+		$out = ob_get_clean();
+		set_transient( 'stackable_news_feed_links', $out, 60 * 60 * 24 );
+		return $out;
+	}
+}
+
+if ( ! function_exists( 'stackable_news_feed_links_cached' ) ) {
+
+	/**
+	 * Shows the cached news feed. Shows nothing if nothing's cached.
+	 *
+	 * @return String
+	 */
+	function stackable_news_feed_links_cached() {
+		echo get_transient( 'stackable_news_feed_links' );
+	}
+}
+
+if ( ! function_exists( 'stackable_news_feed_ajax' ) ) {
+
+	/**
+	 * Ajax handler for loading & caching news feed.
+	 *
+	 * @return void
+	 */
+	function stackable_news_feed_ajax() {
+		$nonce = isset( $_POST['nonce'] ) ? sanitize_key( $_POST['nonce'] ) : '';
+
+		if ( ! wp_verify_nonce( $nonce, 'stackable_news_feed' ) ) {
+			wp_send_json_error( __( 'Security error, please refresh the page and try again.', 'stackable' ) );
+		}
+
+		wp_send_json_success( stackable_news_feed_links() );
+	}
+	add_action( 'wp_ajax_stackable_news_feed_ajax', 'stackable_news_feed_ajax' );
+}
+
+if ( ! function_exists( 'stackable_get_news_feed_nonce' ) ) {
+
+	/**
+	 * Create a nonce for disabling blocks.
+	 *
+	 * @return String
+	 */
+	function stackable_get_news_feed_nonce() {
+		return wp_create_nonce( 'stackable_news_feed' );
 	}
 }

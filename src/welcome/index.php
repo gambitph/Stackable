@@ -62,6 +62,7 @@ SVG;
 					'nonce' => stackable_get_disabled_blocks_nonce(),
 					'showProNoticesOption' => stackable_show_pro_notices_option(),
 					'nonceProNotice' => stackable_show_pro_notices_option_nonce(),
+					'nonceNews' => stackable_get_news_feed_nonce(),
 				) );
             }
         }
@@ -109,12 +110,12 @@ SVG;
                             <p><?php _e( 'Get our FREE WordPress theme that\'s beautiful & flexible, and made especially for Stackable blocks and the new WordPress editor. Subscribe to our newsletter to get the Stackable Theme now.', 'stackable' ) ?></p>
                             <p><a href="https://rebrand.ly/plugin-welcome-theme-download" class="s-button" target="blank" title="Subscibe & Download"><?php _e( 'Subscribe & Download', 'stackable' ) ?></a></p>
                         </aside>
-                        <!-- <aside class="s-box s-news-box">
+                        <aside class="s-box s-news-box">
 							<h3><?php _e( '🗞 Stackable News', 'stackable' ) ?></h3>
-							<?php // stackable_news_feed_links() ?>
+							<div class="s-news-box-content"><?php stackable_news_feed_links_cached() ?></div>
 							<p><?php _e( 'Keep up to date by subscribing to our newsletter.', 'stackable' ) ?></p>
 							<p><a href="https://rebrand.ly/plugin-welcome-subscribe" class="s-button" target="blank" title="Subscibe"><?php _e( 'Subscribe', 'stackable' ) ?></a></p>
-                        </aside> -->
+                        </aside>
                         <aside class="s-box s-support-box">
                             <h3><?php _e( '🐛 Suggestions or Bug Reports', 'stackable' ) ?></h3>
                             <p><?php _e( 'If you have any suggestions and bug reports, let us know in our plugin support forum.', 'stackable' ) ?></p>

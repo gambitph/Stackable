@@ -1,3 +1,4 @@
+import './news'
 import { __, sprintf } from '@wordpress/i18n'
 import { Component, render } from '@wordpress/element'
 import {
