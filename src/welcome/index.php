@@ -107,7 +107,7 @@ SVG;
                     <div class="s-side">
                         <aside class="s-box s-premium-box">
                             <h3><?php _e( '🚀 Stackable Premium', 'stackable' ) ?></h3>
-                            <p><?php _e( 'If you are ready for even more, Stackable Premium will give you more layout options & effects for creating your perfect site!', 'stackable' ) ?></p>
+                            <p><?php _e( 'If you are ready for even more, Stackable Premium will give you premium layout options, effects and other goodies for creating your perfect site!', 'stackable' ) ?></p>
                             <p><a href="<?php echo esc_url( sugb_fs()->get_upgrade_url() ) ?>" class="s-button" title="<?php esc_attr_e( 'Go Premium', 'stackable' ) ?>"><?php _e( 'Go Premium', 'stackable' ) ?></a></p>
                             <p><a href="https://rebrand.ly/plugin-learn-premium-side" target="blank" title="<?php esc_attr_e( 'Learn more about Premium', 'stackable' ) ?>"><?php _e( 'Learn more about Premium', 'stackable' ) ?></a></p>
                         </aside>
