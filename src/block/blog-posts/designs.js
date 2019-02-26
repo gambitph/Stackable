@@ -1,6 +1,6 @@
 import { addFilter } from '@wordpress/hooks'
 
-addFilter( 'stackable.designs.blog-posts.edit', 'core/designs', ( ret, design, props ) => {
+addFilter( 'stackable.blog-posts.edit.output', 'core/designs', ( ret, design, props ) => {
 	const {
 		i, category, featuredImage, author, date, comments, title, excerpt, readMore,
 	} = props
