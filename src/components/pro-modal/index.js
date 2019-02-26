@@ -16,6 +16,8 @@ const ProModal = props => {
 		button = __( 'Learn More' ),
 		buttonClassName = 'button button-secondary',
 	} = props
+
+	// Slider params.
 	const swiperParams = {
 		loop: true,
 		pagination: {
@@ -39,11 +41,11 @@ const ProModal = props => {
 					onRequestClose={ () => setState( { isOpen: false } ) }
 				>
 					<Swiper { ...swiperParams }>
-						<img src={ srcUrl + '/' + ImageCover } alt={ __( '50 Premium Layouts' ) } />
-						<img src={ srcUrl + '/' + ImageLayouts } alt={ __( '50 Premium Layouts' ) } />
-						<img src={ srcUrl + '/' + ImageSeamless } alt={ __( 'Seamless Layout Switching' ) } />
-						<img src={ srcUrl + '/' + ImageEffects } alt={ __( '50 Premium Layouts' ) } />
-						<img src={ srcUrl + '/' + ImageOthers } alt={ __( 'Seamless Layout Switching' ) } />
+						<img src={ srcUrl + '/' + ImageCover } alt={ __( 'Do more with Stackable Premium' ) } />
+						<img src={ srcUrl + '/' + ImageLayouts } alt={ __( 'Premium Layouts' ) } />
+						<img src={ srcUrl + '/' + ImageSeamless } alt={ __( 'Seamless Layouts Switching' ) } />
+						<img src={ srcUrl + '/' + ImageEffects } alt={ __( 'Premium Effects' ) } />
+						<img src={ srcUrl + '/' + ImageOthers } alt={ __( 'Other Features' ) } />
 					</Swiper>
 					<div className="ugb-pro-modal__footer">
 						<a href={ pricingURL }
@@ -54,11 +56,19 @@ const ProModal = props => {
 							{ __( 'Go Premium' ) }
 						</a>
 						<a href="https://rebrand.ly/plugin-premium-demo"
-							target="_blank"
-							rel="noopener noreferrer"
-							title={ __( 'Try Demo' ) }
+							className="button button-secondary button-ghost"
+							target="_blank" // eslint-disable-line
+							rel="noopener"
+							title={ __( 'Try Premium Demo' ) }
 						>
-							{ __( 'Try Demo' ) }
+							{ __( 'Try Premium Demo' ) }
+						</a>
+						<a href="https://rebrand.ly/plugin-slider-premium"
+							target="_blank" // eslint-disable-line
+							rel="noopener"
+							title={ __( 'Visit Site' ) }
+						>
+							{ __( 'Visit Site' ) }
 						</a>
 					</div>
 				</Modal>

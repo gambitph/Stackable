@@ -71,5 +71,18 @@
 				color: #ab5af1;
 			}
 		}
+		.button-ghost {
+			box-shadow: inset 0 0 0 2px #fb6874;
+			background: none;
+			color: #fb6874;
+			font-weight: normal;
+			text-transform: none;
+			&:hover {
+				box-shadow: inset 0 0 0 2px #ab5af1;
+				background: none;
+				font-weight: normal;
+				color: #ab5af1;
+			}
+		}
 	}
 }
