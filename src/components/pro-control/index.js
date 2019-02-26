@@ -1,6 +1,7 @@
-import { pricingURL, showSmallProNotices } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
+import ProModal from '../pro-modal'
+import { showSmallProNotices } from 'stackable'
 import SVGProIcon from './images/pro-icon.svg'
 
 const ProControl = props => {
@@ -8,7 +9,7 @@ const ProControl = props => {
 	const {
 		title = __( 'Say Hello to Designs 👋' ),
 		description = size === 'normal' ? __( 'Get more designs for this block. This feature is only available on Stackable Premium.' ) : __( 'Get more designs on Stackable Premium' ),
-		button = __( 'Go Premium' ),
+		button = __( 'Learn More' ),
 	} = props
 
 	const mainClasses = classnames( [
@@ -28,7 +29,7 @@ const ProControl = props => {
 			<SVGProIcon />
 			{ size !== 'small' && <h4>{ title }</h4> }
 			<p>{ description }</p>
-			<a href={ pricingURL } target="_blank" className="button button-secondary">{ button }</a>
+			<ProModal button={ button } />
 		</div>
 	)
 }

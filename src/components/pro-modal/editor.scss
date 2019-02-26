@@ -1,0 +1,75 @@
+@import "../../../node_modules/react-id-swiper/src/styles/scss/swiper";
+
+.ugb-pro-modal {
+	overflow: hidden !important;
+	.swiper-container {
+		width: 1000px;
+		height: 500px;
+		max-width: 100%;
+	}
+	@media screen and (max-width: 900px) {
+		.swiper-container {
+			width: 700px;
+			height: 350px;
+		}
+	}
+	.swiper-button-prev {
+		background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'%3E%3Cpath d='M0 22L22 0l2.1 2.1L4.2 22l19.9 19.9L22 44 0 22z' fill='%23333333'/%3E%3C/svg%3E");
+	}
+	.swiper-button-next {
+		background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'%3E%3Cpath d='M27 22L5 44l-2.1-2.1L22.8 22 2.9 2.1 5 0l22 22z' fill='%23333333'/%3E%3C/svg%3E");
+	}
+	.swiper-pagination-bullet-active {
+		background: #333333;
+	}
+	.swiper-container-horizontal>.swiper-pagination-bullets {
+		bottom: 5px;
+	}
+	.components-modal__header {
+		position: absolute;
+		top: 0;
+		right: 10px;
+		z-index: 3;
+		border: 0;
+		background: transparent;
+	}
+	.components-modal__content {
+		padding: 0;
+		img {
+			max-width: 1000px;
+			width: 100% !important;
+			height: auto;
+		}
+	}
+	.ugb-pro-modal__footer {
+		padding: 30px;
+		background: #fafafa;
+		text-align: center;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		* {
+			margin: 0 5px;
+		}
+		.button {
+			color: #ffffff;
+			background: linear-gradient(90deg,#ab5af1 -50%,#fb6874);
+			border: 0;
+			padding: 5px 15px;
+			height: auto;
+			font-size: 14px;
+			text-transform: uppercase;
+			font-weight: bold;
+			&:hover {
+				background: linear-gradient(90deg,#ab5af1 -50%,#fb6874 50%);
+			}
+		}
+		a:not(.button) {
+			color: #fb6874;
+			text-decoration: none;
+			&:hover {
+				color: #ab5af1;
+			}
+		}
+	}
+}

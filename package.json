@@ -72,6 +72,7 @@
     "node-sass": "^4.10.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-id-swiper": "^1.6.9",
     "react-test-renderer": "^16.2.0",
     "replace-in-file": "^3.4.3",
     "rimraf": "^2.6.2",

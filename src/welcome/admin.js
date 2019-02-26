@@ -6,11 +6,12 @@ import {
 	nonce,
 	nonceProNotice,
 	showProNoticesOption,
-	srcUrl,
+	welcomeSrcUrl,
 } from 'stackable'
 import { send as ajaxSend } from '@wordpress/ajax'
 import classnames from 'classnames'
 import domReady from '@wordpress/dom-ready'
+import ProModal from '../components/pro-modal'
 import { Spinner } from '@wordpress/components'
 
 // Gather all the blocks.
@@ -116,7 +117,7 @@ class BlockToggler extends Component {
 
 						return (
 							<div key={ i + 1 } className={ mainClasses }>
-								<img src={ `${ srcUrl }images/block-${ blockNameTrim }.svg` } alt={ `${ title } icon` } className="s-block-icon" />
+								<img src={ `${ welcomeSrcUrl }/images/block-${ blockNameTrim }.svg` } alt={ `${ title } icon` } className="s-block-icon" />
 								<h3>{ title }</h3>
 								<p>{ block.description }</p>
 								<button
@@ -206,4 +207,10 @@ domReady( () => {
 			document.querySelector( '.s-pro-control-wrapper' )
 		)
 	}
+
+	render( (
+		<p>
+			<ProModal buttonClassName="s-button" button={ __( 'Learn About Premium' ) } />
+		</p>
+	), document.querySelector( '.s-premium-box__button' ) )
 } )

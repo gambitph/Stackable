@@ -53,7 +53,8 @@ SVG;
 				wp_enqueue_script( 'stackable-welcome', plugins_url( 'dist/admin_welcome.js', STACKABLE_FILE ), array( 'wp-i18n', 'wp-element', 'wp-hooks', 'wp-util', 'wp-components' ) );
 
 				wp_localize_script( 'stackable-welcome', 'stackable', array(
-					'srcUrl' => plugins_url( '/', __FILE__ ),
+					'srcUrl' => untrailingslashit( plugins_url( '/', STACKABLE_FILE ) ),
+					'welcomeSrcUrl' => untrailingslashit( plugins_url( '/', __FILE__ ) ),
 					'isPro' => sugb_fs()->can_use_premium_code(),
 					'showProNotice' => stackable_should_show_pro_notices(),
 					'pricingURL' => sugb_fs()->get_upgrade_url(),
@@ -108,8 +109,9 @@ SVG;
                         <aside class="s-box s-premium-box">
                             <h3><?php _e( '🚀 Stackable Premium', 'stackable' ) ?></h3>
                             <p><?php _e( 'If you are ready for even more, Stackable Premium will give you premium layout options, effects and other goodies for creating your perfect site!', 'stackable' ) ?></p>
-                            <p><a href="<?php echo esc_url( sugb_fs()->get_upgrade_url() ) ?>" class="s-button" title="<?php esc_attr_e( 'Go Premium', 'stackable' ) ?>"><?php _e( 'Go Premium', 'stackable' ) ?></a></p>
-                            <p><a href="https://rebrand.ly/plugin-learn-premium-side" target="blank" title="<?php esc_attr_e( 'Learn more about Premium', 'stackable' ) ?>"><?php _e( 'Learn more about Premium', 'stackable' ) ?></a></p>
+							<div class="s-premium-box__button">
+								<p><a href="<?php echo esc_url( sugb_fs()->get_upgrade_url() ) ?>" class="s-button" title="<?php esc_attr_e( 'Learn About Premium', 'stackable' ) ?>"><?php _e( 'Learn About Premium', 'stackable' ) ?></a></p>
+							</div>
                         </aside>
                         <aside class="s-box">
                             <h3><?php _e( '🍺 Free Theme Download', 'stackable' ) ?></h3>

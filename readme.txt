@@ -119,6 +119,11 @@ You will have to redo all your blocks
 
 == Changelog ==
 
+= 1.13.2 =
+* New: Added modal slider for Premium "Learn More" buttons
+* Fixed: Duplicated notifications can show up.
+* Fixed: Blog Posts block List design shows incorrectly in the editor.
+
 = 1.13.1 =
 * New: Added news section in the welcome screen
 * New: Added Premium section in the welcome screen
