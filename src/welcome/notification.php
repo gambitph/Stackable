@@ -1,7 +1,7 @@
 <?php
 /**
  * Functions to add notifications in the welcome screen and top level menu.
- * 
+ *
  * @package Stackable
  */
 
@@ -18,9 +18,9 @@ if ( ! isset( $stackable_notifications ) ) {
 if ( ! function_exists( 'stackable_ajax_dismiss_notice' ) ) {
     add_action( 'wp_ajax_stackable_dismiss_notice', 'stackable_ajax_dismiss_notice' );
 
-    /** 
+    /**
      * Handles the dismissal of a notification via ajax.
-     * 
+     *
      * @since 1.7
      */
     function stackable_ajax_dismiss_notice() {
@@ -50,9 +50,9 @@ if ( ! function_exists( 'stackable_ajax_dismiss_notice' ) ) {
 if ( ! function_exists( 'stackable_notification_count' ) ) {
     /**
      * Returns the number of notifications.
-     * 
+     *
      * @since 1.7
-     * 
+     *
      * @return int
      */
     function stackable_notification_count() {
@@ -73,7 +73,7 @@ if ( ! function_exists( 'stackable_welcome_notification' ) ) {
 
     /**
      * Echoes out the available notifications in the welcome screen.
-     * 
+     *
      * @since 1.7
      */
     function stackable_welcome_notification() {
@@ -86,11 +86,11 @@ if ( ! function_exists( 'stackable_welcome_notification' ) ) {
         <script type="text/javascript">
             function stackable_dismiss( button ) {
                 jQuery.post(
-                    ajaxurl, { 
-                        action: 'stackable_dismiss_notice', 
+                    ajaxurl, {
+                        action: 'stackable_dismiss_notice',
                         id: button.getAttribute( 'data-id' ),
                         nonce: '<?php echo esc_attr( wp_create_nonce( 'stackable_dismiss_notice' ) ) ?>'
-                    }, 
+                    },
                     function() {
 
                         // Remove the notice.
@@ -134,22 +134,30 @@ if ( ! function_exists( 'stackable_welcome_notification' ) ) {
 if ( ! function_exists( 'stackable_add_welcome_notification' ) ) {
     /**
      * Adds a notification to the Stackable welcome screen.
-     * 
+     *
      * Should be called on or before the `admin_menu` action (priority 9)
      * in order for the notification indicator to appear.
-     * 
+     *
      * @since 1.7
-     * 
+     *
      * @param $id       string  A unique ID for the message. This will be used to perma-dismiss the message.
      * @param $message  string  The message to display in the notification.
      */
     function stackable_add_welcome_notification( $id, $message ) {
         global $stackable_notifications;
 
+		// Don't show dismissed.
         $dismissed = get_option( 'stackable_notifications_dismissed' );
         if ( $dismissed && in_array( $id, $dismissed ) ) {
             return;
-        }
+		}
+
+		// Don't show duplicates.
+		foreach ( $stackable_notifications as $notification ) {
+			if ( $notification[ 'id' ] === $id ) {
+				return;
+			}
+		}
 
         $stackable_notifications[] = array(
             'id' => $id,
