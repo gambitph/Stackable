@@ -121,8 +121,12 @@ You will have to redo all your blocks
 
 = 1.13.2 =
 * New: Added modal slider for Premium "Learn More" buttons
+* Fixed: Divider Elementor margin conflict
+* Fixed: Feature Block content doesn't force center on mobile
 * Fixed: Duplicated notifications can show up.
 * Fixed: Blog Posts block List design shows incorrectly in the editor.
+* Fixed: Click-holding on an icon doesn't select the icon
+* Fixed: Remove Icon list bullets, compatibility for Genesis theme
 
 = 1.13.1 =
 * New: Added news section in the welcome screen
