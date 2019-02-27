@@ -48,6 +48,7 @@ export const searchIcon = ( search, onChange = () => {} ) => {
 					className="components-button is-button is-default"
 					data-value={ `${ prefix }-${ iconName }` }
 					onClick={ onClick }
+					onMouseDown={ onClick }
 				>
 					<FontAwesomeIcon icon={ [ prefix, iconName ] } />
 				</button>
