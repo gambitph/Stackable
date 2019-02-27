@@ -6,7 +6,7 @@
 
 @import "common";
 
-.wp-block-ugb-divider {
+.ugb-divider {
 	border: 0;
 	height: 1px;
 	width: 100%;
@@ -19,5 +19,7 @@
 		border: 0 !important;
 		padding: 0 !important;
 		max-width: none !important;
+		margin-left: auto !important;
+		margin-right: auto !important;
 	}
 }
