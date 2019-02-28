@@ -2,7 +2,7 @@
 
 exports[`Feature Grid block saved block HTML shouldn't change 1`] = `
 <div
-  className="wp-block-ugb-feature-grid ugb-feature-grid ugb-feature-grid--columns-1 ugb-feature-grid--design-design className"
+  className="wp-block-ugb-feature-grid alignwide ugb-feature-grid ugb-feature-grid--columns-1 ugb-feature-grid--design-design className"
 >
   <div
     className="ugb-feature-grid__item ugb--shadow-1"
