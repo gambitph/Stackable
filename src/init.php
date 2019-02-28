@@ -38,6 +38,9 @@ if ( ! function_exists( 'stackable_block_assets' ) ) {
 				array(),
 				STACKABLE_VERSION
 			);
+
+			stackable_set_style_async( 'ugb-style-css' );
+			stackable_set_script_async( 'ugb-block-frontend-js' );
 		}
 	}
 	add_action( 'enqueue_block_assets', 'stackable_block_assets' );
@@ -135,4 +138,46 @@ if ( ! function_exists( 'stackable_add_required_block_styles' ) ) {
 		wp_add_inline_style( 'ugb-style-css', $custom_css );
 	}
 	add_action( 'enqueue_block_assets', 'stackable_add_required_block_styles', 11 );
+}
+
+if ( ! function_exists( 'stackable_set_style_async' ) ) {
+	global $stackable_style_asyncs;
+	$stackable_style_asyncs = [];
+	function stackable_set_style_async( $handle ) {
+		global $stackable_style_asyncs;
+		$stackable_style_asyncs[] = $handle;
+	}
+}
+
+if ( ! function_exists( 'stackable_style_async' ) ) {
+	function stackable_style_async( $tag, $handle, $src ) {
+		global $stackable_style_asyncs;
+		// ugb-style-css is our BASE CSS, so preload it to prioritize.
+		$rel = $handle === 'ugb-style-css' ? 'preload' : 'prefetch';
+		if ( in_array( $handle, $stackable_style_asyncs ) ) {
+			return str_replace( "rel='stylesheet'", "rel='$rel' as='style' onload='this.rel = \"stylesheet\"'", $tag );
+		}
+		return $tag;
+	}
+	add_filter( 'style_loader_tag', 'stackable_style_async', 10, 3 );
+}
+
+if ( ! function_exists( 'stackable_set_script_async' ) ) {
+	global $stackable_script_asyncs;
+	$stackable_script_asyncs = [];
+	function stackable_set_script_async( $handle ) {
+		global $stackable_script_asyncs;
+		$stackable_script_asyncs[] = $handle;
+	}
+}
+
+if ( ! function_exists( 'stackable_script_async' ) ) {
+	function stackable_script_async( $tag, $handle, $src ) {
+		global $stackable_script_asyncs;
+		if ( in_array( $handle, $stackable_script_asyncs ) ) {
+			return str_replace( "<script", "<script defer", $tag );
+		}
+		return $tag;
+	}
+	add_filter( 'script_loader_tag', 'stackable_script_async', 10, 3 );
 }
