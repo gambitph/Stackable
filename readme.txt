@@ -122,6 +122,7 @@ You will have to redo all your blocks
 = 1.13.2 =
 * New: Added modal slider for Premium "Learn More" buttons
 * New: Scripts & style loading optimization: CSS files are now preloaded / prefetched, JS files are now deferred
+* New: Added Contact Us & Support Forum in admin menu
 * Fixed: Divider Elementor margin conflict
 * Fixed: Feature Block content doesn't force center on mobile
 * Fixed: Duplicated notifications can show up.

@@ -31,8 +31,8 @@ if ( ! function_exists( 'sugb_fs' ) ) {
 					'first-path' => 'admin.php?page=stackable',
 					'account'    => true,
 					'pricing'    => true,
-					'contact'    => false,
-					'support'    => false,
+					'contact'    => true,
+					'support'    => true,
 				),
 	        ) );
 	    }
