@@ -92,7 +92,7 @@ SVG;
                                 </ol>
                             </div>
                             <div class="s-intro-col">
-                                <p><img src="<?php echo esc_url( plugins_url( 'images/stackable-how.gif', __FILE__ ) ) ?>" alt="<?php esc_attr_e( 'Stackable Screenshot' ) ?>" class="s-gif"/></p>
+                                <p><img src="https://gambitph.github.io/Stackable/assets/welcome/how.gif" alt="<?php esc_attr_e( 'Stackable Screenshot' ) ?>" class="s-gif"/></p>
                             </div>
                         </article>
                         <article class="s-box">
