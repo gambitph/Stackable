@@ -2,28 +2,55 @@
 
 .ugb-pro-modal {
 	overflow: hidden !important;
-	.swiper-container {
+	.ugb-pro-modal__carousel {
 		width: 1000px;
 		height: 500px;
 		max-width: 100%;
+		overflow: hidden;
+		position: relative;
+		user-select: none;
+	}
+	.ugb-pro-modal__carousel-wrapper {
+		width: 500%;
+		height: 100%;
+		transition: all 0.5s ease-in-out;
+	}
+	@for $i from 0 through 4 {
+		.ugb-pro-modal__carousel--slide-#{ $i } .ugb-pro-modal__carousel-wrapper {
+			transform: translateX($i / 5 * -100%);
+		}
+	}
+	.ugb-pro-modal__carousel-left,
+	.ugb-pro-modal__carousel-right {
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		width: 50%;
+		padding: 10px;
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		cursor: pointer;
+		svg {
+			width: 20px;
+		}
+		&:hover {
+			svg {
+				opacity: 0.7;
+			}
+		}
+	}
+	.ugb-pro-modal__carousel-right {
+		left: auto;
+		right: 0;
+		justify-content: flex-end;
 	}
 	@media screen and (max-width: 900px) {
-		.swiper-container {
+		.ugb-pro-modal__carousel {
 			width: 700px;
 			height: 350px;
 		}
-	}
-	.swiper-button-prev {
-		background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'%3E%3Cpath d='M0 22L22 0l2.1 2.1L4.2 22l19.9 19.9L22 44 0 22z' fill='%23333333'/%3E%3C/svg%3E"); /* stylelint-disable-line function-url-quotes */
-	}
-	.swiper-button-next {
-		background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'%3E%3Cpath d='M27 22L5 44l-2.1-2.1L22.8 22 2.9 2.1 5 0l22 22z' fill='%23333333'/%3E%3C/svg%3E"); /* stylelint-disable-line function-url-quotes */
-	}
-	.swiper-pagination-bullet-active {
-		background: #333;
-	}
-	.swiper-container-horizontal > .swiper-pagination-bullets {
-		bottom: 5px;
 	}
 	.components-modal__header {
 		position: absolute;
@@ -37,8 +64,8 @@
 		padding: 0;
 		img {
 			max-width: 1000px;
-			width: 100% !important;
-			height: auto;
+			height: 100%;
+			width: auto !important;
 		}
 	}
 	.ugb-pro-modal__footer {
