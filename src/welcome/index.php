@@ -106,6 +106,7 @@ SVG;
 						<?php endif; ?>
                     </div>
                     <div class="s-side">
+						<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
                         <aside class="s-box s-premium-box">
                             <h3><?php _e( '🚀 Stackable Premium', 'stackable' ) ?></h3>
                             <p><?php _e( 'If you are ready for even more, Stackable Premium will give you premium layout options, effects and other goodies for creating your perfect site!', 'stackable' ) ?></p>
@@ -113,7 +114,8 @@ SVG;
 								<p><a href="<?php echo esc_url( sugb_fs()->get_upgrade_url() ) ?>" class="s-button" title="<?php esc_attr_e( 'View Premium Features', 'stackable' ) ?>"><?php _e( 'View Premium Features', 'stackable' ) ?></a></p>
 							</div>
 							<p><a href="https://rebrand.ly/plugin-learn-premium-side" target="_blank" title="<?php esc_attr_e( 'Visit Plugin Site', 'stackable' ) ?>"><?php _e( 'Visit Plugin Site', 'stackable' ) ?></a></p>
-                        </aside>
+						</aside>
+						<?php endif; ?>
                         <aside class="s-box">
                             <h3><?php _e( '🍺 Free Theme Download', 'stackable' ) ?></h3>
                             <p><?php _e( 'Get our FREE WordPress theme that\'s beautiful & flexible, and made especially for Stackable blocks and the new WordPress editor. Subscribe to our newsletter to get the Stackable Theme now.', 'stackable' ) ?></p>
