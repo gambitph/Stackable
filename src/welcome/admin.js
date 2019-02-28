@@ -209,8 +209,6 @@ domReady( () => {
 	}
 
 	render( (
-		<p>
-			<ProModal buttonClassName="s-button" button={ __( 'View Premium Features' ) } />
-		</p>
+		<ProModal tag="p" buttonClassName="s-button" button={ __( 'View Premium Features' ) } />
 	), document.querySelector( '.s-premium-box__button' ) )
 } )
