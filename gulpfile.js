@@ -105,7 +105,7 @@ gulp.task( 'package', function() {
 const watchFuncs = () => {
 	gulp.watch(
 		[ path.resolve( __dirname, './src/**/*.scss' ) ],
-		gulp.parallel( [ 'style', 'style-editor' ] )
+		gulp.parallel( [ 'style', 'style-editor', 'welcome-styles' ] )
 	)
 	gulp.watch(
 		[ path.resolve( __dirname, './src/welcome/**/*.scss' ) ],
