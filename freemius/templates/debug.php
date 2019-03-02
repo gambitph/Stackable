@@ -113,6 +113,7 @@
             if (optionName) {
                 $.post(ajaxurl, {
                     action     : 'fs_get_db_option',
+                    _wpnonce   : '<?php echo wp_create_nonce( 'fs_get_db_option' ) ?>',
                     option_name: optionName
                 }, function (response) {
                     if (response.data.value)
@@ -132,6 +133,7 @@
                 if (optionValue) {
                     $.post(ajaxurl, {
                         action      : 'fs_set_db_option',
+                        _wpnonce   : '<?php echo wp_create_nonce( 'fs_set_db_option' ) ?>',
                         option_name : optionName,
                         option_value: optionValue
                     }, function () {

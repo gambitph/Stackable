@@ -2977,6 +2977,10 @@
          * @since  1.1.7.3
          */
         static function _toggle_debug_mode() {
+            if ( ! is_super_admin() ) {
+                return;
+            }
+
             $is_on = fs_request_get( 'is_on', false, 'post' );
 
             if ( fs_request_is_post() && in_array( $is_on, array( 0, 1 ) ) ) {
@@ -3008,7 +3012,15 @@
          * @since  1.2.1.7
          */
         static function _get_db_option() {
+            check_admin_referer( 'fs_get_db_option' );
+
             $option_name = fs_request_get( 'option_name' );
+
+            if ( ! is_super_admin() ||
+                 ! fs_starts_with( $option_name, 'fs_' )
+            ) {
+                self::shoot_ajax_failure();
+            }
 
             $value = get_option( $option_name );
 
@@ -3032,7 +3044,16 @@
          * @since  1.2.1.7
          */
         static function _set_db_option() {
-            $option_name  = fs_request_get( 'option_name' );
+            check_admin_referer( 'fs_set_db_option' );
+
+            $option_name = fs_request_get( 'option_name' );
+
+            if ( ! is_super_admin() ||
+                 ! fs_starts_with( $option_name, 'fs_' )
+            ) {
+                self::shoot_ajax_failure();
+            }
+
             $option_value = fs_request_get( 'option_value' );
 
             if ( ! empty( $option_value ) ) {
