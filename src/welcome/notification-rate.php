@@ -1,7 +1,7 @@
 <?php
 /**
  * Adds a Rate us notification if the plugin has been installed for some time.
- * 
+ *
  * @package Stackable
  */
 
@@ -15,18 +15,18 @@ if ( ! class_exists( 'Stackable_Welcome_Notification_Rate' ) ) {
 
         /**
          * The amount of time from plugin activation to wait in seconds to display the rating notice.
-         * 
+         *
          * @var int
          */
-        const RATING_NOTICE_TIME = 604800; // 7 * 24 * 60 * 60
+        const RATING_NOTICE_TIME = 432000; // 5 * 24 * 60 * 60
 
         function __construct() {
             add_action( 'admin_menu', array( $this, 'check_activation_date' ), 9 );
         }
 
-        /** 
+        /**
          * Checks whether the activation date surpasses our limit and then displays a rating notification.
-         * 
+         *
          * @since 1.7
          */
         public function check_activation_date() {

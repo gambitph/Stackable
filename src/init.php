@@ -88,7 +88,7 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 			// Premium related variables.
 			'isPro' => sugb_fs()->can_use_premium_code(),
 			'showProNotice' => stackable_should_show_pro_notices(),
-			'showSmallProNotices' => stackable_should_show_small_pro_notices(),
+			'showSmallProNotices' => false,
 			'pricingURL' => sugb_fs()->get_upgrade_url(),
 			'planName' => sugb_fs()->is_plan( 'starter', true ) ? 'starter' :
 			              sugb_fs()->is_plan( 'professional', true ) ? 'professional' : 'business',

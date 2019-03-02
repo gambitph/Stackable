@@ -66,22 +66,6 @@ if ( ! function_exists( 'stackable_show_pro_notices_option_nonce' ) ) {
 	}
 }
 
-if ( ! function_exists( 'stackable_should_show_small_pro_notices' ) ) {
-
-	/**
-	 * Should we show small premium notices?
-	 *
-	 * @return Mixed False if hide, 'show' if visible, 'fade' if visible but slightly less.
-	 */
-	function stackable_should_show_small_pro_notices() {
-		$small_notice_show = get_option( 'stackable_small_pro_notice_show' );
-		if ( in_array( $small_notice_show, array( 'show', 'fade' ) ) ) {
-			return $small_notice_show;
-		}
-		return false;
-	}
-}
-
 if ( ! function_exists( 'stackable_should_show_pro_notices' ) ) {
 
 	/**
@@ -102,14 +86,14 @@ if ( ! class_exists( 'Stackable_Go_Premium_Notification' ) ) {
          *
          * @var int
          */
-		const SHOW_NOTICE_TIME = 172800; // 2 * 24 * 60 * 60
+		const SHOW_NOTICE_TIME = 604800; // 7 * 24 * 60 * 60
 
 		/**
-         * The amount of time from plugin activation to wait in seconds to display the Go Premium notices in faded form.
+         * The amount of time for old plugin users to see the premium notice.
          *
          * @var int
          */
-		const FADE_NOTICE_TIME = 864000; // 10 * 24 * 60 * 60
+		const OLD_TIMER_NOTICE_TIME = 604800; // 7 * 24 * 60 * 60
 
 
         function __construct() {
@@ -130,17 +114,7 @@ if ( ! class_exists( 'Stackable_Go_Premium_Notification' ) ) {
             $activation_time = get_option( 'stackable_pro_notice_start_date' );
             $elapsed_time = time() - absint( $activation_time );
 
-			// Hide notices.
-			if ( $elapsed_time < self::SHOW_NOTICE_TIME ) {
-				delete_option( 'stackable_small_pro_notice_show' );
-
-			// Show notices.
-			} else if ( self::SHOW_NOTICE_TIME < $elapsed_time && $elapsed_time < self::FADE_NOTICE_TIME ) {
-				update_option( 'stackable_small_pro_notice_show', 'show' );
-
-			// Show faded.
-			} else if ( self::FADE_NOTICE_TIME < $elapsed_time ) {
-				update_option( 'stackable_small_pro_notice_show', 'fade' );
+			if ( self::SHOW_NOTICE_TIME < $elapsed_time ) {
 				$this->show_notification();
 			}
 		}
@@ -156,8 +130,8 @@ if ( ! class_exists( 'Stackable_Go_Premium_Notification' ) ) {
 			$activation_time = get_option( 'stackable_activation_date' );
 			$elapsed_time = time() - absint( $activation_time );
 
-			// This time is more than the rating notice so as not to be annoying.
-			if ( $elapsed_time > self::FADE_NOTICE_TIME ) {
+			// This time should be more than the rating notice so as not to be annoying.
+			if ( $elapsed_time > self::OLD_TIMER_NOTICE_TIME ) {
 				$this->show_notification();
 			}
 		}
