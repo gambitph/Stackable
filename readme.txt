@@ -119,6 +119,10 @@ You will have to redo all your blocks
 
 == Changelog ==
 
+= 1.13.3 =
+* Fixed: Removed preload & prefetch since they're causing problems in Safari and Firefox. Let's leave this to the optimization plugins.
+* Fixed: Security fix
+
 = 1.13.2 =
 * New: Added modal slider for Premium "Learn More" buttons
 * New: Scripts & style loading optimization: CSS files are now preloaded / prefetched, JS files are now deferred
