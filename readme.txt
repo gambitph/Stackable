@@ -4,7 +4,7 @@ Tags: gutenberg, block, blocks, block editor, gutenberg blocks, page builder, ed
 Requires at least: 4.8
 Tested up to: 5.1
 Requires PHP: 5.3
-Stable tag: 1.13.2
+Stable tag: 1.13.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -122,6 +122,7 @@ You will have to redo all your blocks
 = 1.13.3 =
 * Fixed: Removed preload & prefetch since they're causing problems in Safari and Firefox. Let's leave this to the optimization plugins.
 * Fixed: Security fix
+* Change: Removed small Premium notices from the editor
 
 = 1.13.2 =
 * New: Added modal slider for Premium "Learn More" buttons
