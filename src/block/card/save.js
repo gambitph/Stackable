@@ -54,6 +54,7 @@ const save = props => {
 
 	return (
 		<div className={ mainClasses } style={ mainStyles }>
+			{ applyFilters( 'stackable.card.save.output.before', null, design, props ) }
 			{ mediaURL && (
 				<div
 					className={ imageClasses }

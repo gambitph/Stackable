@@ -4,7 +4,9 @@ import {
 import {
 	InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/editor'
-import { RangeControl, SelectControl, ToggleControl } from '@wordpress/components'
+import {
+	PanelBody, RangeControl, SelectControl, ToggleControl,
+} from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
@@ -78,6 +80,7 @@ const edit = props => {
 	return (
 		<Fragment>
 			<div className={ mainClasses } style={ mainStyle }>
+				{ applyFilters( 'stackable.count-up.edit.output.before', null, design, props ) }
 				<div className="ugb-content-wrapper">
 					{ [ 1, 2, 3, 4 ].map( i => {
 						const title = attributes[ `title${ i }` ]
@@ -238,6 +241,18 @@ const edit = props => {
 						onChangeFixedBackground={ value => setAttributes( { fixedBackground: !! value } ) }
 					/>
 				}
+				{ showProNotice &&
+					<PanelBody
+						initialOpen={ false }
+						title={ __( 'Custom CSS' ) }
+					>
+						<ProControl
+							title={ __( 'Say Hello to Custom CSS 👋' ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+						/>
+					</PanelBody>
+				}
+				{ applyFilters( 'stackable.count-up.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
 		</Fragment>
 	)

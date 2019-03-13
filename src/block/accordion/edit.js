@@ -3,7 +3,7 @@ import {
 	InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/editor'
 import {
-	RangeControl, ToggleControl,
+	PanelBody, RangeControl, ToggleControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
@@ -123,8 +123,21 @@ const edit = props => {
 						onChange={ openStart => setAttributes( { openStart } ) }
 					/>
 				</PanelColorSettings>
+				{ showProNotice &&
+					<PanelBody
+						initialOpen={ false }
+						title={ __( 'Custom CSS' ) }
+					>
+						<ProControl
+							title={ __( 'Say Hello to Custom CSS 👋' ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+						/>
+					</PanelBody>
+				}
+				{ applyFilters( 'stackable.accordion.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
 			<div className={ mainClasses } style={ styles.main }>
+				{ applyFilters( 'stackable.accordion.edit.output.before', null, design, props ) }
 				<div className={ headingClasses } style={ styles.heading }>
 					<RichText
 						tagName="h4"

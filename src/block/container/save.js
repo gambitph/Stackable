@@ -1,3 +1,4 @@
+import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { InnerBlocks } from '@wordpress/editor'
 
@@ -25,7 +26,7 @@ const save = props => {
 		className,
 		'ugb-container',
 		'ugb--background-opacity-' + ( 1 * Math.round( backgroundOpacity / 1 ) ),
-	], {
+	], applyFilters( 'stackable.container.mainclasses', {
 		[ `ugb-container--content-${ contentAlign }` ]: contentAlign,
 		'ugb--has-background': ( backgroundColor && backgroundColor !== 'transparent' ) || backgroundImageURL,
 		'ugb--has-background-image': backgroundImageURL,
@@ -33,7 +34,7 @@ const save = props => {
 		[ `ugb-container--align-horizontal-${ contentLocation }` ]: contentLocation,
 		[ `ugb--content-width` ]: contentWidth,
 		[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
-	} )
+	}, props ) )
 
 	const mainStyle = {
 		'--ugb-text-color': textColor ? textColor : undefined,
@@ -47,6 +48,7 @@ const save = props => {
 
 	return (
 		<div className={ mainClasses } style={ mainStyle }>
+			{ applyFilters( 'stackable.container.edit.output.before', null, props ) }
 			<div className="ugb-container__wrapper">
 				<div className="ugb-container__content-wrapper">
 					<InnerBlocks.Content />

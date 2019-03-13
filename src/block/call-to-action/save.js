@@ -52,6 +52,7 @@ const save = props => {
 
 	return (
 		<div className={ mainClasses } style={ mainStyle }>
+			{ applyFilters( 'stackable.cta.save.output.before', null, design, props ) }
 			<div className="ugb-content-wrapper">
 				{ ctaTitle && !! ctaTitle.length && (
 					<RichText.Content

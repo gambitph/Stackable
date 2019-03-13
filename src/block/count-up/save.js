@@ -58,6 +58,7 @@ const save = props => {
 
 	return (
 		<div className={ mainClasses } style={ mainStyle }>
+			{ applyFilters( 'stackable.count-up.save.output.before', null, design, props ) }
 			<div className="ugb-content-wrapper">
 				{ range( 1, columns + 1 ).map( i => {
 					const title = attributes[ `title${ i }` ]

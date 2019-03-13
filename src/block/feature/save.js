@@ -119,6 +119,7 @@ const save = props => {
 
 	return (
 		<div className={ mainClasses } style={ styles.main }>
+			{ applyFilters( 'stackable.feature.save.output.before', null, design, props ) }
 			{ applyFilters( 'stackable.feature.save.output', (
 				<div className="ugb-content-wrapper">
 					<div className="ugb-feature__content">

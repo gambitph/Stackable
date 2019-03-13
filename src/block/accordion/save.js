@@ -44,6 +44,7 @@ const save = props => {
 
 	return (
 		<div className={ mainClasses } style={ styles.main } role="presentation">
+			{ applyFilters( 'stackable.accordion.save.output.before', null, design, props ) }
 			<div className={ headingClasses }
 				role="button"
 				tabIndex="0"

@@ -1,8 +1,12 @@
+import { InspectorControls, RichText } from '@wordpress/editor'
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
-import { RichText } from '@wordpress/editor'
+import { PanelBody } from '@wordpress/components'
+import { ProControl } from '@stackable/components'
+import { showProNotice } from 'stackable'
 
 const edit = props => {
 	const {
@@ -21,10 +25,24 @@ const edit = props => {
 	const mainClasses = classnames( [
 		className,
 		'ugb-expand',
-	] )
+	], applyFilters( 'stackable.expand.mainclasses', {}, props ) )
 
 	return (
 		<Fragment>
+			<InspectorControls>
+				{ showProNotice &&
+					<PanelBody
+						initialOpen={ false }
+						title={ __( 'Custom CSS' ) }
+					>
+						<ProControl
+							title={ __( 'Say Hello to Custom CSS 👋' ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+						/>
+					</PanelBody>
+				}
+				{ applyFilters( 'stackable.expand.edit.inspector.after', null, props ) }
+			</InspectorControls>
 			<div className={ mainClasses }>
 				{ /* eslint-disable-next-line jsx-a11y/label-has-for */ }
 				{ isSelected && <label className="ugb-expand__label">{ __( 'Less text' ) }</label> }
@@ -73,6 +91,7 @@ const edit = props => {
 						/>
 					</a>
 				}
+				{ applyFilters( 'stackable.expand.edit.output.after', null, props ) }
 			</div>
 		</Fragment>
 	)

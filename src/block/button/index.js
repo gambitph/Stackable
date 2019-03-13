@@ -134,6 +134,20 @@ export const schema = {
 	icon3: {
 		type: 'string',
 	},
+
+	// Custom CSS attributes.
+	customCSSUniqueID: {
+		type: 'string',
+		default: '',
+	},
+	customCSS: {
+		type: 'string',
+		default: '',
+	},
+	customCSSCompiled: {
+		type: 'string',
+		default: '',
+	},
 }
 
 export const name = 'ugb/button'

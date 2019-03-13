@@ -59,9 +59,9 @@ export const _edit = props => {
 		`ugb-blog-posts--columns-${ columns }`,
 		`ugb-blog-posts--feature-image-shape-${ featuredImageShape }`,
 		`ugb-blog-posts--design-${ design }`,
-	], {
+	], applyFilters( 'stackable.blog-posts.mainclasses', {
 		[ `ugb-blog-posts--align-${ contentAlign }` ]: contentAlign,
-	} )
+	}, design, props ) )
 
 	const mainStyles = {
 		'--s-accent-color': accentColor ? accentColor : undefined,
@@ -77,7 +77,7 @@ export const _edit = props => {
 		borderRadius: borderRadius !== 12 ? borderRadius : undefined,
 	}
 
-	const show = applyFilters( 'stackable.blogposts.edit.show', {
+	const show = applyFilters( 'stackable.blog-posts.edit.show', {
 		featuredImage: true,
 	}, design, props )
 
@@ -86,7 +86,7 @@ export const _edit = props => {
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ applyFilters( 'stackable.blogposts.edit.designs', [
+				options={ applyFilters( 'stackable.blog-posts.edit.designs', [
 					{
 						label: 'Basic', value: 'basic', image: ImageDesignBasic,
 					},
@@ -98,7 +98,7 @@ export const _edit = props => {
 					setAttributes( { design } )
 				} }
 			>
-				{ applyFilters( 'stackable.blogposts.edit.designs.before', null, props ) }
+				{ applyFilters( 'stackable.blog-posts.edit.designs.before', null, props ) }
 				<RangeControl
 					label={ __( 'Border Radius' ) }
 					value={ borderRadius }
@@ -113,7 +113,7 @@ export const _edit = props => {
 					min={ 0 }
 					max={ 9 }
 				/>
-				{ applyFilters( 'stackable.blogposts.edit.designs.after', null, props ) }
+				{ applyFilters( 'stackable.blog-posts.edit.designs.after', null, props ) }
 				{ showProNotice && <ProControl size="small" /> }
 			</DesignPanelBody>
 			<PanelBody title={ __( 'Posts Settings' ) }>
@@ -206,6 +206,18 @@ export const _edit = props => {
 					},
 				] }
 			></PanelColorSettings>
+			{ showProNotice &&
+				<PanelBody
+					initialOpen={ false }
+					title={ __( 'Custom CSS' ) }
+				>
+					<ProControl
+						title={ __( 'Say Hello to Custom CSS 👋' ) }
+						description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+					/>
+				</PanelBody>
+			}
+			{ applyFilters( 'stackable.blog-posts.edit.inspector.after', null, design, props ) }
 		</InspectorControls>
 	)
 
@@ -241,6 +253,7 @@ export const _edit = props => {
 				/>
 			</BlockControls>
 			<div className={ mainClasses } style={ mainStyles }>
+				{ applyFilters( 'stackable.blog-posts.edit.output.before', null, design, props ) }
 				{ displayPosts.map( ( post, i ) => {
 					const sizeName = featuredImageShape !== 'full' && columns < 2 ? `${ featuredImageShape }_large` : featuredImageShape
 					const featuredImageSrc = post.featured_image_urls[ sizeName ][ 0 ]

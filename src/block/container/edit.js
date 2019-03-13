@@ -2,15 +2,17 @@ import {
 	AlignmentToolbar, BlockControls, InnerBlocks, InspectorControls, PanelColorSettings,
 } from '@wordpress/editor'
 import {
-	HorizontalAlignmentToolbar, PanelBackgroundSettings, VerticalAlignmentToolbar,
+	HorizontalAlignmentToolbar, PanelBackgroundSettings, ProControl, VerticalAlignmentToolbar,
 } from '@stackable/components'
 import {
-	RangeControl, SelectControl, ToggleControl,
+	PanelBody, RangeControl, SelectControl, ToggleControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
+import { showProNotice } from 'stackable'
 
 const TEMPLATE = [
 	[ 'core/heading', { content: __( 'Title for This Block' ) } ],
@@ -44,7 +46,7 @@ const edit = props => {
 		className,
 		'ugb-container',
 		'ugb--background-opacity-' + ( 1 * Math.round( backgroundOpacity / 1 ) ),
-	], {
+	], applyFilters( 'stackable.container.mainclasses', {
 		[ `ugb-container--content-${ contentAlign }` ]: contentAlign,
 		'ugb--has-background': ( backgroundColor && backgroundColor !== 'transparent' ) || backgroundImageURL,
 		'ugb--has-background-image': backgroundImageURL,
@@ -52,7 +54,7 @@ const edit = props => {
 		[ `ugb-container--align-horizontal-${ contentLocation }` ]: contentLocation,
 		[ `ugb--content-width` ]: contentWidth,
 		[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
-	} )
+	}, props ) )
 
 	const mainStyle = {
 		'--ugb-text-color': textColor ? textColor : undefined,
@@ -147,8 +149,21 @@ const edit = props => {
 					onChangeBackgroundOpacity={ backgroundOpacity => setAttributes( { backgroundOpacity } ) }
 					onChangeFixedBackground={ value => setAttributes( { fixedBackground: !! value } ) }
 				/>
+				{ showProNotice &&
+					<PanelBody
+						initialOpen={ false }
+						title={ __( 'Custom CSS' ) }
+					>
+						<ProControl
+							title={ __( 'Say Hello to Custom CSS 👋' ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+						/>
+					</PanelBody>
+				}
+				{ applyFilters( 'stackable.container.edit.inspector.after', null, props ) }
 			</InspectorControls>
 			<div className={ mainClasses } style={ mainStyle }>
+				{ applyFilters( 'stackable.container.edit.output.before', null, props ) }
 				<div className="ugb-container__wrapper">
 					<div className="ugb-container__content-wrapper">
 						<InnerBlocks template={ TEMPLATE } />

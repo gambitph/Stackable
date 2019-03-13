@@ -51,12 +51,13 @@ class edit extends Component {
 		const mainClasses = classnames( [
 			className,
 			'ugb-button-wrapper',
-		], {
+		], applyFilters( 'stackable.button.mainclasses', {
 			[ `ugb-button--align-${ align }` ]: align,
-		} )
+		}, this.props ) )
 
-		const defaultEditDesign = (
+		const editDesign = (
 			<div className={ mainClasses }>
+				{ applyFilters( 'stackable.button.edit.output.before', null, this.props ) }
 				{ range( 1, buttons + 1 ).map( i => {
 					const text = attributes[ `text${ i === 1 ? '' : i }` ]
 					const size = attributes[ `size${ i === 1 ? '' : i }` ]
@@ -89,10 +90,9 @@ class edit extends Component {
 						/>
 					)
 				} ) }
+				{ applyFilters( 'stackable.button.edit.output.after', null, this.props ) }
 			</div>
 		)
-
-		const editDesign = applyFilters( 'stackable.button.edit.designs', defaultEditDesign, design, this.props )
 
 		return (
 			<Fragment>
@@ -159,7 +159,18 @@ class edit extends Component {
 							/>
 						</PanelBody>
 					}
-					{ applyFilters( 'stackable.button.edit.inspector.end', null, this.props ) }
+					{ showProNotice &&
+						<PanelBody
+							initialOpen={ false }
+							title={ __( 'Custom CSS' ) }
+						>
+							<ProControl
+								title={ __( 'Say Hello to Custom CSS 👋' ) }
+								description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+							/>
+						</PanelBody>
+					}
+					{ applyFilters( 'stackable.button.edit.inspector.after', null, this.props ) }
 				</InspectorControls>
 				{ editDesign }
 				{ isSelected &&

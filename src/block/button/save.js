@@ -14,12 +14,13 @@ const save = props => {
 	const mainClasses = classnames( [
 		className,
 		'ugb-button-wrapper',
-	], {
+	], applyFilters( 'stackable.button.mainclasses', {
 		[ `ugb-button--align-${ align }` ]: align,
-	} )
+	}, props ) )
 
 	const saved = (
 		<div className={ mainClasses }>
+			{ applyFilters( 'stackable.button.save.output.before', null, props ) }
 			{ range( 1, buttons + 1 ).map( i => {
 				const {
 					[ `text${ i === 1 ? '' : i }` ]: text,
@@ -52,6 +53,7 @@ const save = props => {
 					/>
 				)
 			} ) }
+			{ applyFilters( 'stackable.button.save.output.after', null, props ) }
 		</div>
 	)
 

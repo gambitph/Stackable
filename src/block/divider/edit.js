@@ -1,10 +1,13 @@
 import {
 	AlignmentToolbar, BlockControls, InspectorControls, PanelColorSettings,
 } from '@wordpress/editor'
+import { PanelBody, RangeControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { Fragment } from '@wordpress/element'
-import { RangeControl } from '@wordpress/components'
+import { ProControl } from '@stackable/components'
+import { showProNotice } from 'stackable'
 
 const edit = props => {
 	const { className } = props
@@ -15,7 +18,7 @@ const edit = props => {
 	const mainClasses = classnames( [
 		className,
 		'ugb-divider',
-	] )
+	], applyFilters( 'stackable.divider.mainclasses', {}, props ) )
 
 	return (
 		<Fragment>
@@ -58,10 +61,27 @@ const edit = props => {
 						} }
 					/>
 				</PanelColorSettings>
+				{ showProNotice &&
+					<PanelBody
+						initialOpen={ false }
+						title={ __( 'Custom CSS' ) }
+					>
+						<ProControl
+							title={ __( 'Say Hello to Custom CSS 👋' ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+						/>
+					</PanelBody>
+				}
+				{ applyFilters( 'stackable.divider.edit.inspector.after', null, props ) }
 			</InspectorControls>
 			<div className={ mainClasses } style={ { paddingTop: 8, paddingBottom: 8 } }>
+				{ applyFilters( 'stackable.divider.edit.output.before', null, props ) }
 				<hr align={ alignment } style={ {
-					marginTop: 0, marginBottom: 0, backgroundColor: color, width: width + '%', height: height,
+					marginTop: 0,
+					marginBottom: 0,
+					backgroundColor: color,
+					width: width + '%',
+					height: height,
 				} } />
 			</div>
 		</Fragment>

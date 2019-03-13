@@ -56,6 +56,7 @@ const save = props => {
 		<blockquote
 			className={ mainClasses }
 			style={ styles.main }>
+			{ applyFilters( 'stackable.blockquote.save.output.before', null, design, props ) }
 			<div className="ugb-content-wrapper">
 				{ QUOTE_ICONS[ quotationMark ].iconFunc( {
 					fill: quoteColor,

@@ -1,3 +1,4 @@
+import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { RichText } from '@wordpress/editor'
 
@@ -13,7 +14,7 @@ const save = props => {
 	const mainClasses = classnames( [
 		className,
 		'ugb-expand',
-	] )
+	], applyFilters( 'stackable.expand.mainclasses', {}, props ) )
 
 	return (
 		<div className={ mainClasses } aria-expanded="false">
@@ -47,6 +48,7 @@ const save = props => {
 					style={ { display: 'none' } }
 				/>
 			</a>
+			{ applyFilters( 'stackable.expand.save.output.after', null, props ) }
 		</div>
 	)
 }
