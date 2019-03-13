@@ -119,6 +119,9 @@ You will have to redo all your blocks
 
 == Changelog ==
 
+= 1.14.0 =
+* Fixed: Not setting a subprice hides the price in the Pricing box block
+
 = 1.13.3 =
 * Fixed: Removed preload & prefetch since they're causing problems in Safari and Firefox. Let's leave this to the optimization plugins.
 * Fixed: Security fix

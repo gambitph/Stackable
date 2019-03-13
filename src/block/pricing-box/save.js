@@ -100,7 +100,7 @@ const save = props => {
 									value={ title }
 								/>
 							)
-							const priceComp = ! RichText.isEmpty( price ) && ! RichText.isEmpty( subPrice ) && (
+							const priceComp = ( ! RichText.isEmpty( price ) || ! RichText.isEmpty( subPrice ) ) && (
 								<div className="ugb-pricing-box__price-wrapper">
 									{ ! RichText.isEmpty( price ) && (
 										<div className="ugb-pricing-box__price-line">
