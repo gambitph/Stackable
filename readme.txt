@@ -120,7 +120,9 @@ You will have to redo all your blocks
 == Changelog ==
 
 = 1.14.0 =
+* New: Custom CSS tab for all blocks (Premium)
 * Fixed: Not setting a subprice hides the price in the Pricing box block
+* Fixed: Blockquote block highlight design not being applied correctly.
 
 = 1.13.3 =
 * Fixed: Removed preload & prefetch since they're causing problems in Safari and Firefox. Let's leave this to the optimization plugins.
