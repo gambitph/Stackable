@@ -2,12 +2,15 @@ import {
 	InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/editor'
 import {
-	RangeControl, SelectControl, ToggleControl,
+	PanelBody, RangeControl, SelectControl, ToggleControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
+import { ProControl } from '@stackable/components'
+import { showProNotice } from 'stackable'
 import SVGCloseIcon from './images/close-icon.svg'
 
 const edit = props => {
@@ -31,16 +34,17 @@ const edit = props => {
 		dismissible,
 		borderRadius = 12,
 		shadow = 3,
+		design = '',
 	} = props.attributes
 
 	const mainClasses = classnames( [
 		className,
 		'ugb-notification',
 		`ugb-notification--type-${ notifType }`,
-	], {
+	], applyFilters( 'stackable.notification.mainclasses', {
 		'ugb-notification--dismissible': dismissible,
 		[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
-	} )
+	}, design, props ) )
 
 	const mainStyles = {
 		backgroundColor: color,
@@ -97,7 +101,20 @@ const edit = props => {
 						max={ 9 }
 					/>
 				</PanelColorSettings>
+				{ showProNotice &&
+					<PanelBody
+						initialOpen={ false }
+						title={ __( 'Custom CSS' ) }
+					>
+						<ProControl
+							title={ __( 'Say Hello to Custom CSS 👋' ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+						/>
+					</PanelBody>
+				}
+				{ applyFilters( 'stackable.notification.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
+			{ applyFilters( 'stackable.notification.edit.output.before', null, design, props ) }
 			<div className={ mainClasses } style={ mainStyles }>
 				{ dismissible && (
 					<span className="ugb-notification__close-button" role="button">

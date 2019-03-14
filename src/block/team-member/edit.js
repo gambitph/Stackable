@@ -136,7 +136,20 @@ const edit = props => {
 					] }
 				>
 				</PanelColorSettings>
+				{ showProNotice &&
+					<PanelBody
+						initialOpen={ false }
+						title={ __( 'Custom CSS' ) }
+					>
+						<ProControl
+							title={ __( 'Say Hello to Custom CSS 👋' ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+						/>
+					</PanelBody>
+				}
+				{ applyFilters( 'stackable.team-member.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
+			{ applyFilters( 'stackable.team-member.edit.output.before', null, design, props ) }
 			<div className={ mainClasses }>
 				{ [ 1, 2, 3 ].map( i => {
 					const mediaURL = attributes[ `mediaURL${ i }` ]

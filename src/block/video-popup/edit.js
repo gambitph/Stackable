@@ -110,8 +110,20 @@ const edit = props => {
 					} }
 					onChangeBackgroundOpacity={ backgroundOpacity => setAttributes( { backgroundOpacity } ) }
 				/>
+				{ showProNotice &&
+					<PanelBody
+						initialOpen={ false }
+						title={ __( 'Custom CSS' ) }
+					>
+						<ProControl
+							title={ __( 'Say Hello to Custom CSS 👋' ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+						/>
+					</PanelBody>
+				}
 				{ applyFilters( 'stackable.video-popup.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
+			{ applyFilters( 'stackable.video-popup.edit.output.before', null, design, props ) }
 			<div className={ mainClasses } style={ mainStyle }>
 				<div className="ugb-video-popup__wrapper" >
 					<span className="ugb-video-popup__play-button">

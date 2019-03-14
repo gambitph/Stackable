@@ -53,11 +53,11 @@ class edit extends Component {
 			'ugb-button-wrapper',
 		], applyFilters( 'stackable.button.mainclasses', {
 			[ `ugb-button--align-${ align }` ]: align,
-		}, this.props ) )
+		}, design, this.props ) )
 
 		const editDesign = (
 			<div className={ mainClasses }>
-				{ applyFilters( 'stackable.button.edit.output.before', null, this.props ) }
+				{ applyFilters( 'stackable.button.edit.output.before', null, design, this.props ) }
 				{ range( 1, buttons + 1 ).map( i => {
 					const text = attributes[ `text${ i === 1 ? '' : i }` ]
 					const size = attributes[ `size${ i === 1 ? '' : i }` ]
@@ -90,7 +90,7 @@ class edit extends Component {
 						/>
 					)
 				} ) }
-				{ applyFilters( 'stackable.button.edit.output.after', null, this.props ) }
+				{ applyFilters( 'stackable.button.edit.output.after', null, design, this.props ) }
 			</div>
 		)
 
@@ -170,7 +170,7 @@ class edit extends Component {
 							/>
 						</PanelBody>
 					}
-					{ applyFilters( 'stackable.button.edit.inspector.after', null, this.props ) }
+					{ applyFilters( 'stackable.button.edit.inspector.after', null, design, this.props ) }
 				</InspectorControls>
 				{ editDesign }
 				{ isSelected &&

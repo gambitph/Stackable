@@ -20,6 +20,7 @@ const save = props => {
 		contentWidth,
 		borderRadius = 12,
 		shadow = 3,
+		design = '',
 	} = props.attributes
 
 	const mainClasses = classnames( [
@@ -34,7 +35,7 @@ const save = props => {
 		[ `ugb-container--align-horizontal-${ contentLocation }` ]: contentLocation,
 		[ `ugb--content-width` ]: contentWidth,
 		[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
-	}, props ) )
+	}, design, props ) )
 
 	const mainStyle = {
 		'--ugb-text-color': textColor ? textColor : undefined,
@@ -48,7 +49,7 @@ const save = props => {
 
 	return (
 		<div className={ mainClasses } style={ mainStyle }>
-			{ applyFilters( 'stackable.container.edit.output.before', null, props ) }
+			{ applyFilters( 'stackable.container.edit.output.before', null, design, props ) }
 			<div className="ugb-container__wrapper">
 				<div className="ugb-container__content-wrapper">
 					<InnerBlocks.Content />

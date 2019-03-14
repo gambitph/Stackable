@@ -1,17 +1,23 @@
 import { PanelBody, RangeControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { Fragment } from '@wordpress/element'
 import { InspectorControls } from '@wordpress/editor'
+import { ProControl } from '@stackable/components'
+import { showProNotice } from 'stackable'
 
 const edit = props => {
 	const { className } = props
-	const { height } = props.attributes
+	const {
+		height,
+		design = '',
+	} = props.attributes
 
 	const mainClasses = classnames( [
 		className,
 		'ugb-spacer',
-	] )
+	], applyFilters( 'stackable.spacer.mainclasses', {}, design, props ) )
 
 	return (
 		<Fragment>
@@ -27,7 +33,20 @@ const edit = props => {
 						} }
 					/>
 				</PanelBody>
+				{ showProNotice &&
+					<PanelBody
+						initialOpen={ false }
+						title={ __( 'Custom CSS' ) }
+					>
+						<ProControl
+							title={ __( 'Say Hello to Custom CSS 👋' ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+						/>
+					</PanelBody>
+				}
+				{ applyFilters( 'stackable.spacer.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
+			{ applyFilters( 'stackable.spacer.edit.output.before', null, design, props ) }
 			<div className={ mainClasses } style={ { height: height + 'px' } }></div>
 		</Fragment>
 	)

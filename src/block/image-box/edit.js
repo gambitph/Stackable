@@ -178,8 +178,20 @@ const edit = props => {
 					] }
 				>
 				</PanelColorSettings>
+				{ showProNotice &&
+					<PanelBody
+						initialOpen={ false }
+						title={ __( 'Custom CSS' ) }
+					>
+						<ProControl
+							title={ __( 'Say Hello to Custom CSS 👋' ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+						/>
+					</PanelBody>
+				}
 				{ applyFilters( 'stackable.image-box.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
+			{ applyFilters( 'stackable.image-box.edit.output.before', null, design, props ) }
 			<div className={ mainClasses } style={ mainStyles }>
 				{ [ 1, 2, 3, 4 ].map( i => {
 					const imageURL = attributes[ `imageURL${ i }` ]

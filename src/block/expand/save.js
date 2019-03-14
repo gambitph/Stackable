@@ -9,12 +9,13 @@ const save = props => {
 		moreLabel,
 		moreText,
 		lessLabel,
+		design = '',
 	} = props.attributes
 
 	const mainClasses = classnames( [
 		className,
 		'ugb-expand',
-	], applyFilters( 'stackable.expand.mainclasses', {}, props ) )
+	], applyFilters( 'stackable.expand.mainclasses', {}, design, props ) )
 
 	return (
 		<div className={ mainClasses } aria-expanded="false">
@@ -48,7 +49,7 @@ const save = props => {
 					style={ { display: 'none' } }
 				/>
 			</a>
-			{ applyFilters( 'stackable.expand.save.output.after', null, props ) }
+			{ applyFilters( 'stackable.expand.save.output.after', null, design, props ) }
 		</div>
 	)
 }

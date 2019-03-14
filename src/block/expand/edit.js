@@ -20,12 +20,13 @@ const edit = props => {
 		moreLabel,
 		moreText,
 		lessLabel,
+		design = '',
 	} = props.attributes
 
 	const mainClasses = classnames( [
 		className,
 		'ugb-expand',
-	], applyFilters( 'stackable.expand.mainclasses', {}, props ) )
+	], applyFilters( 'stackable.expand.mainclasses', {}, design, props ) )
 
 	return (
 		<Fragment>
@@ -41,7 +42,7 @@ const edit = props => {
 						/>
 					</PanelBody>
 				}
-				{ applyFilters( 'stackable.expand.edit.inspector.after', null, props ) }
+				{ applyFilters( 'stackable.expand.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
 			<div className={ mainClasses }>
 				{ /* eslint-disable-next-line jsx-a11y/label-has-for */ }
@@ -91,7 +92,7 @@ const edit = props => {
 						/>
 					</a>
 				}
-				{ applyFilters( 'stackable.expand.edit.output.after', null, props ) }
+				{ applyFilters( 'stackable.expand.edit.output.after', null, design, props ) }
 			</div>
 		</Fragment>
 	)

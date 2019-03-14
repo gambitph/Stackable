@@ -40,6 +40,7 @@ const edit = props => {
 		align,
 		borderRadius = 12,
 		shadow = 3,
+		design = '',
 	} = props.attributes
 
 	const mainClasses = classnames( [
@@ -54,7 +55,7 @@ const edit = props => {
 		[ `ugb-container--align-horizontal-${ contentLocation }` ]: contentLocation,
 		[ `ugb--content-width` ]: contentWidth,
 		[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
-	}, props ) )
+	}, design, props ) )
 
 	const mainStyle = {
 		'--ugb-text-color': textColor ? textColor : undefined,
@@ -160,10 +161,10 @@ const edit = props => {
 						/>
 					</PanelBody>
 				}
-				{ applyFilters( 'stackable.container.edit.inspector.after', null, props ) }
+				{ applyFilters( 'stackable.container.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
 			<div className={ mainClasses } style={ mainStyle }>
-				{ applyFilters( 'stackable.container.edit.output.before', null, props ) }
+				{ applyFilters( 'stackable.container.edit.output.before', null, design, props ) }
 				<div className="ugb-container__wrapper">
 					<div className="ugb-container__content-wrapper">
 						<InnerBlocks template={ TEMPLATE } />

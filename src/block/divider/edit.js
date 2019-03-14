@@ -12,13 +12,17 @@ import { showProNotice } from 'stackable'
 const edit = props => {
 	const { className } = props
 	const {
-		height, width, color, alignment,
+		height,
+		width,
+		color,
+		alignment,
+		design = '',
 	} = props.attributes
 
 	const mainClasses = classnames( [
 		className,
 		'ugb-divider',
-	], applyFilters( 'stackable.divider.mainclasses', {}, props ) )
+	], applyFilters( 'stackable.divider.mainclasses', {}, design, props ) )
 
 	return (
 		<Fragment>
@@ -72,10 +76,10 @@ const edit = props => {
 						/>
 					</PanelBody>
 				}
-				{ applyFilters( 'stackable.divider.edit.inspector.after', null, props ) }
+				{ applyFilters( 'stackable.divider.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
 			<div className={ mainClasses } style={ { paddingTop: 8, paddingBottom: 8 } }>
-				{ applyFilters( 'stackable.divider.edit.output.before', null, props ) }
+				{ applyFilters( 'stackable.divider.edit.output.before', null, design, props ) }
 				<hr align={ alignment } style={ {
 					marginTop: 0,
 					marginBottom: 0,

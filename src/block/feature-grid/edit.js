@@ -131,9 +131,21 @@ const edit = props => {
 					onChangeButtonDesign={ buttonDesign => setAttributes( { buttonDesign } ) }
 					onChangeButtonIcon={ buttonIcon => setAttributes( { buttonIcon } ) }
 				/>
+				{ showProNotice &&
+					<PanelBody
+						initialOpen={ false }
+						title={ __( 'Custom CSS' ) }
+					>
+						<ProControl
+							title={ __( 'Say Hello to Custom CSS 👋' ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+						/>
+					</PanelBody>
+				}
 				{ applyFilters( 'stackable.feature-grid.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
 			<div className={ mainClasses }>
+				{ applyFilters( 'stackable.feature-grid.edit.output.before', null, design, props ) }
 				{ [ 1, 2, 3 ].map( i => {
 					const imageUrl = attributes[ `imageUrl${ i }` ]
 					const imageID = attributes[ `imageID${ i }` ]

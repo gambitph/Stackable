@@ -35,6 +35,7 @@ const save = props => {
 
 	return (
 		<div className={ mainClasses }>
+			{ applyFilters( 'stackable.feature-grid.edit.output.before', null, design, props ) }
 			{ range( 1, columns + 1 ).map( i => {
 				const imageUrl = attributes[ `imageUrl${ i }` ]
 				const imageAlt = attributes[ `imageAlt${ i }` ]
