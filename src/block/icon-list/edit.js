@@ -2,6 +2,7 @@
 import {
 	BaseControl, PanelBody, RangeControl, Toolbar,
 } from '@wordpress/components'
+import { ColorPaletteControl, ProControl } from '@stackable/components'
 import {
 	getIconShapeToolbarList,
 	getIconSVG,
@@ -12,9 +13,10 @@ import {
 	InspectorControls, RichText,
 } from '@wordpress/editor'
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
-import { ColorPaletteControl } from '@stackable/components'
 import { Fragment } from '@wordpress/element'
+import { showProNotice } from 'stackable'
 
 const edit = props => {
 	const {
@@ -30,6 +32,7 @@ const edit = props => {
 		text,
 		columns,
 		gap,
+		design = '',
 	} = props.attributes
 
 	const mainClasses = classnames( [
@@ -37,7 +40,7 @@ const edit = props => {
 		'ugb-icon-list',
 		`ugb-icon--icon-${ icon }`,
 		`ugb-icon--columns-${ columns }`,
-	] )
+	], applyFilters( 'stackable.icon-list.mainclasses', {}, design, props ) )
 
 	const iconSVGString = getIconSVGBase64( icon, iconShape, iconColor )
 	const style = {
@@ -102,7 +105,20 @@ const edit = props => {
 						max={ 30 }
 					/>
 				</PanelBody>
+				{ showProNotice &&
+					<PanelBody
+						initialOpen={ false }
+						title={ __( 'Custom CSS' ) }
+					>
+						<ProControl
+							title={ __( 'Say Hello to Custom CSS 👋' ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+						/>
+					</PanelBody>
+				}
+				{ applyFilters( 'stackable.icon-list.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
+			{ applyFilters( 'stackable.icon-list.edit.output.before', null, design, props ) }
 			<div className={ mainClasses } style={ style }>
 				<RichText
 					tagName="ul"

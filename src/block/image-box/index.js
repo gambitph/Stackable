@@ -89,6 +89,20 @@ export const schema = {
 	href: {
 		type: 'string',
 	},
+
+	// Custom CSS attributes.
+	customCSSUniqueID: {
+		type: 'string',
+		default: '',
+	},
+	customCSS: {
+		type: 'string',
+		default: '',
+	},
+	customCSSCompiled: {
+		type: 'string',
+		default: '',
+	},
 }
 
 // Wrap in curly or else statement will merge with the previous one and will error out.

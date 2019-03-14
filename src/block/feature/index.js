@@ -122,6 +122,20 @@ export const schema = {
 		type: 'string',
 		default: '',
 	},
+
+	// Custom CSS attributes.
+	customCSSUniqueID: {
+		type: 'string',
+		default: '',
+	},
+	customCSS: {
+		type: 'string',
+		default: '',
+	},
+	customCSSCompiled: {
+		type: 'string',
+		default: '',
+	},
 }
 
 export const name = 'ugb/feature'

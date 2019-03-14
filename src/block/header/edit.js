@@ -5,7 +5,7 @@ import {
 	ButtonEdit, DesignPanelBody, PanelBackgroundSettings, PanelButtonSettings, ProControl, URLInputControl,
 } from '@stackable/components'
 import {
-	RangeControl, ToggleControl,
+	PanelBody, RangeControl, ToggleControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
@@ -203,8 +203,20 @@ const edit = props => {
 					onChangeButtonIcon={ buttonIcon => setAttributes( { buttonIcon } ) }
 					{ ...applyFilters( 'stackable.header.edit.button.props', {}, design, props ) }
 				/>
-				{ applyFilters( 'stackable.header.edit.inspector.post', null, design, props ) }
+				{ showProNotice &&
+					<PanelBody
+						initialOpen={ false }
+						title={ __( 'Custom CSS' ) }
+					>
+						<ProControl
+							title={ __( 'Say Hello to Custom CSS 👋' ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+						/>
+					</PanelBody>
+				}
+				{ applyFilters( 'stackable.header.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
+			{ applyFilters( 'stackable.header.edit.output.before', null, design, props ) }
 			<div className={ mainClasses } style={ styles.main }>
 				{ ( () => {
 					const titleComp = <RichText

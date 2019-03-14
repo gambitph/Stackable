@@ -51,7 +51,7 @@ const edit = props => {
 		'ugb-pricing-box--v2',
 		`ugb-pricing-box--columns-${ columns }`,
 		`ugb-pricing-box--design-${ design }`,
-	] )
+	], applyFilters( 'stackable.pricing-box.mainclasses', {}, design, props ) )
 
 	return (
 		<Fragment>
@@ -172,8 +172,20 @@ const edit = props => {
 					onChangeButtonDesign={ buttonDesign => setAttributes( { buttonDesign } ) }
 					onChangeButtonIcon={ buttonIcon => setAttributes( { buttonIcon } ) }
 				/>
+				{ showProNotice &&
+					<PanelBody
+						initialOpen={ false }
+						title={ __( 'Custom CSS' ) }
+					>
+						<ProControl
+							title={ __( 'Say Hello to Custom CSS 👋' ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+						/>
+					</PanelBody>
+				}
 				{ applyFilters( 'stackable.pricing-box.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
+			{ applyFilters( 'stackable.pricing-box.edit.output.before', null, design, props ) }
 			<div className={ mainClasses }>
 				{ range( 1, columns + 1 ).map( i => {
 					const index = i === 1 ? '' : i

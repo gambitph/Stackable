@@ -11,6 +11,20 @@ export const schema = {
 		default: 50,
 		type: 'number',
 	},
+
+	// Custom CSS attributes.
+	customCSSUniqueID: {
+		type: 'string',
+		default: '',
+	},
+	customCSS: {
+		type: 'string',
+		default: '',
+	},
+	customCSSCompiled: {
+		type: 'string',
+		default: '',
+	},
 }
 
 export const name = 'ugb/spacer'

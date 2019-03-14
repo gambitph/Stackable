@@ -1,5 +1,6 @@
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
+import { Fragment } from '@wordpress/element'
 import { range } from '@stackable/util'
 import { RichText } from '@wordpress/editor'
 
@@ -22,9 +23,9 @@ const save = props => {
 		'ugb-testimonial--v2',
 		`ugb-testimonial--columns-${ columns }`,
 		`ugb-testimonial--design-${ design }`,
-	], {
+	], applyFilters( 'stackable.testimonial.mainclasses', {
 		'ugb-testimonial--serif': serif,
-	} )
+	}, design, props ) )
 
 	const itemClasses = classnames( [
 		'ugb-testimonial__item',
@@ -43,54 +44,57 @@ const save = props => {
 	}, design, props )
 
 	return (
-		<div className={ mainClasses }>
-			{ range( 1, columns + 1 ).map( i => {
-				const mediaURL = attributes[ `mediaURL${ i }` ]
-				const name = attributes[ `name${ i }` ]
-				const position = attributes[ `position${ i }` ]
-				const testimonial = attributes[ `testimonial${ i }` ]
+		<Fragment>
+			{ applyFilters( 'stackable.testimonial.save.output.before', null, design, props ) }
+			<div className={ mainClasses }>
+				{ range( 1, columns + 1 ).map( i => {
+					const mediaURL = attributes[ `mediaURL${ i }` ]
+					const name = attributes[ `name${ i }` ]
+					const position = attributes[ `position${ i }` ]
+					const testimonial = attributes[ `testimonial${ i }` ]
 
-				const bodyClasses = classnames( [
-					'ugb-testimonial__body-wrapper',
-				], applyFilters( 'stackable.testimonial.bodyclasses', {}, design, props ) )
+					const bodyClasses = classnames( [
+						'ugb-testimonial__body-wrapper',
+					], applyFilters( 'stackable.testimonial.bodyclasses', {}, design, props ) )
 
-				return (
-					<div className={ itemClasses } style={ styles.item } key={ i }>
-						<div className={ bodyClasses } style={ styles.bodyWrapper }>
-							{ ! RichText.isEmpty( testimonial ) && (
-								<RichText.Content
-									tagName="p"
-									className="ugb-testimonial__body"
-									style={ styles.body }
-									value={ testimonial }
-								/>
-							) }
+					return (
+						<div className={ itemClasses } style={ styles.item } key={ i }>
+							<div className={ bodyClasses } style={ styles.bodyWrapper }>
+								{ ! RichText.isEmpty( testimonial ) && (
+									<RichText.Content
+										tagName="p"
+										className="ugb-testimonial__body"
+										style={ styles.body }
+										value={ testimonial }
+									/>
+								) }
+							</div>
+							<div className="ugb-testimonial__person">
+								{ mediaURL && (
+									<div className="ugb-testimonial__image" style={ { backgroundImage: `url(${ mediaURL })` } }></div>
+								) }
+								{ ! RichText.isEmpty( name ) && (
+									<RichText.Content
+										tagName="h4"
+										className="ugb-testimonial__name"
+										style={ { color: titleColor } }
+										value={ name }
+									/>
+								) }
+								{ ! RichText.isEmpty( position ) && (
+									<RichText.Content
+										tagName="p"
+										className="ugb-testimonial__position"
+										style={ { color: posColor } }
+										value={ position }
+									/>
+								) }
+							</div>
 						</div>
-						<div className="ugb-testimonial__person">
-							{ mediaURL && (
-								<div className="ugb-testimonial__image" style={ { backgroundImage: `url(${ mediaURL })` } }></div>
-							) }
-							{ ! RichText.isEmpty( name ) && (
-								<RichText.Content
-									tagName="h4"
-									className="ugb-testimonial__name"
-									style={ { color: titleColor } }
-									value={ name }
-								/>
-							) }
-							{ ! RichText.isEmpty( position ) && (
-								<RichText.Content
-									tagName="p"
-									className="ugb-testimonial__position"
-									style={ { color: posColor } }
-									value={ position }
-								/>
-							) }
-						</div>
-					</div>
-				)
-			} ) }
-		</div>
+					)
+				} ) }
+			</div>
+		</Fragment>
 	)
 }
 

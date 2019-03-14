@@ -108,6 +108,20 @@ const schema = {
 		default: '',
 	},
 
+	// Custom CSS attributes.
+	customCSSUniqueID: {
+		type: 'string',
+		default: '',
+	},
+	customCSS: {
+		type: 'string',
+		default: '',
+	},
+	customCSSCompiled: {
+		type: 'string',
+		default: '',
+	},
+
 	// Keep the old attributes. Gutenberg issue https://github.com/WordPress/gutenberg/issues/10406
 	bgColor: {
 		type: 'string',

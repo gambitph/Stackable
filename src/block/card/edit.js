@@ -4,6 +4,7 @@ import {
 import {
 	ButtonEdit, ColorPaletteControl, DesignPanelBody, ImageUploadPlaceholder, PanelButtonSettings, ProControl, URLInputControl,
 } from '@stackable/components'
+import { PanelBody, RangeControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
@@ -11,7 +12,6 @@ import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
-import { RangeControl } from '@wordpress/components'
 import { showProNotice } from 'stackable'
 
 const edit = props => {
@@ -151,8 +151,20 @@ const edit = props => {
 					onChangeButtonDesign={ buttonDesign => setAttributes( { buttonDesign } ) }
 					onChangeButtonIcon={ buttonIcon => setAttributes( { buttonIcon } ) }
 				/>
+				{ showProNotice &&
+					<PanelBody
+						initialOpen={ false }
+						title={ __( 'Custom CSS' ) }
+					>
+						<ProControl
+							title={ __( 'Say Hello to Custom CSS 👋' ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+						/>
+					</PanelBody>
+				}
 				{ applyFilters( 'stackable.card.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
+			{ applyFilters( 'stackable.card.edit.output.before', null, design, props ) }
 			<div className={ mainClasses } style={ mainStyles }>
 				<ImageUploadPlaceholder
 					className={ imageClasses }

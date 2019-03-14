@@ -1,6 +1,6 @@
-
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
+import { Fragment } from '@wordpress/element'
 import { getPlayButton } from './util'
 
 const save = props => {
@@ -38,15 +38,18 @@ const save = props => {
 	}
 
 	return (
-		<div className={ mainClasses } style={ mainStyle } data-video={ videoID }>
-			<div className="ugb-video-popup__wrapper" >
-				{ /* eslint-disable-next-line */ }
-				<a href="#" className="ugb-video-popup__overlay" />
-				<span className="ugb-video-popup__play-button">
-					{ getPlayButton( playButtonType, playButtonColor ) }
-				</span>
+		<Fragment>
+			{ applyFilters( 'stackable.video-popup.save.output.before', null, design, props ) }
+			<div className={ mainClasses } style={ mainStyle } data-video={ videoID }>
+				<div className="ugb-video-popup__wrapper" >
+					{ /* eslint-disable-next-line */ }
+					<a href="#" className="ugb-video-popup__overlay" />
+					<span className="ugb-video-popup__play-button">
+						{ getPlayButton( playButtonType, playButtonColor ) }
+					</span>
+				</div>
 			</div>
-		</div>
+		</Fragment>
 	)
 }
 

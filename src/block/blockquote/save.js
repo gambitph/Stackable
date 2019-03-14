@@ -1,5 +1,6 @@
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
+import { Fragment } from '@wordpress/element'
 import { QUOTE_ICONS } from './quotes'
 import { RichText } from '@wordpress/editor'
 
@@ -53,26 +54,29 @@ const save = props => {
 	}, design, props )
 
 	return (
-		<blockquote
-			className={ mainClasses }
-			style={ styles.main }>
-			<div className="ugb-content-wrapper">
-				{ QUOTE_ICONS[ quotationMark ].iconFunc( {
-					fill: quoteColor,
-					width: quotationSize,
-					height: quotationSize,
-				} ) }
-				{ applyFilters( 'stackable.blockquote.save.output',
-					<RichText.Content
-						tagName="p"
-						className="ugb-blockquote__text"
-						style={ styles.text }
-						value={ text }
-					/>,
-					design, props
-				) }
-			</div>
-		</blockquote>
+		<Fragment>
+			{ applyFilters( 'stackable.blockquote.save.output.before', null, design, props ) }
+			<blockquote
+				className={ mainClasses }
+				style={ styles.main }>
+				<div className="ugb-content-wrapper">
+					{ QUOTE_ICONS[ quotationMark ].iconFunc( {
+						fill: quoteColor,
+						width: quotationSize,
+						height: quotationSize,
+					} ) }
+					{ applyFilters( 'stackable.blockquote.save.output',
+						<RichText.Content
+							tagName="p"
+							className="ugb-blockquote__text"
+							style={ styles.text }
+							value={ text }
+						/>,
+						design, props
+					) }
+				</div>
+			</blockquote>
+		</Fragment>
 	)
 }
 

@@ -5,7 +5,7 @@ import {
 	InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/editor'
 import {
-	RangeControl, ToggleControl,
+	PanelBody, RangeControl, ToggleControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
@@ -162,8 +162,20 @@ const edit = props => {
 					onChangeButtonDesign={ buttonDesign => setAttributes( { buttonDesign } ) }
 					onChangeButtonIcon={ buttonIcon => setAttributes( { buttonIcon } ) }
 				/>
+				{ showProNotice &&
+					<PanelBody
+						initialOpen={ false }
+						title={ __( 'Custom CSS' ) }
+					>
+						<ProControl
+							title={ __( 'Say Hello to Custom CSS 👋' ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+						/>
+					</PanelBody>
+				}
 				{ applyFilters( 'stackable.cta.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
+			{ applyFilters( 'stackable.cta.edit.output.before', null, design, props ) }
 			<div className={ mainClasses } style={ mainStyle }>
 				<div className="ugb-content-wrapper">
 					<RichText

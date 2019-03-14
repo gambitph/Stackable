@@ -215,22 +215,26 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
         }
         if ( ! empty( $attributes['align'] ) ) {
             $mainClasses[] = 'align' . $attributes['align'];
-        }
+		}
+		$mainClasses = apply_filters( 'stackable/blog-posts_main-classes', $mainClasses, $attributes['design'], $props );
 
         // Main styles.
         $mainStyles = array();
         if ( ! empty( $attributes['accentColor'] ) ) {
             $mainStyles[] = '--s-accent-color: ' . $attributes['accentColor'];
-        }
+		}
+
+		$before_output = apply_filters( 'stackable/blog-posts_save_output_before', '', $attributes['design'], $props );
+		$after_output = apply_filters( 'stackable/blog-posts_save_output_after', '', $attributes['design'], $props );
 
         $block_content = sprintf(
             '<div class="%s" style="%s">%s</div>',
             esc_attr( implode( ' ', $mainClasses ) ),
-            esc_attr( implode( ';', $mainStyles ) ),
+			esc_attr( implode( ';', $mainStyles ) ),
             $posts_markup
         );
 
-        return $block_content;
+        return $before_output . $block_content . $after_output;
     }
 }
 
@@ -328,6 +332,20 @@ if ( ! function_exists( 'stackable_register_blog_posts_block' ) ) {
 					'shadow' => array(
 						'type' => 'number',
 						'default' => 3,
+					),
+
+					// Custom CSS attributes.
+					'customCSSUniqueID' => array(
+						'type' => 'string',
+						'default' => '',
+					),
+					'customCSS' => array(
+						'type' => 'string',
+						'default' => '',
+					),
+					'customCSSCompiled' => array(
+						'type' => 'string',
+						'default' => '',
 					),
                 ),
                 'render_callback' => 'stackable_render_blog_posts_block',

@@ -1,6 +1,7 @@
 import { applyFilters } from '@wordpress/hooks'
 import { ButtonEdit } from '@stackable/components'
 import classnames from 'classnames'
+import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/editor'
 
 const save = props => {
@@ -53,57 +54,60 @@ const save = props => {
 	}
 
 	return (
-		<div className={ mainClasses } style={ mainStyles }>
-			{ mediaURL && (
-				<div
-					className={ imageClasses }
-					style={ {
-						...imageStyles,
-						backgroundImage: `url(${ mediaURL })`,
-						textAlign: contentAlign,
-					} }
-					data-src={ mediaURL }
-				/>
-			) }
-			{ ! RichText.isEmpty( heading ) && (
-				<RichText.Content
-					tagName="h4"
-					className="ugb-card__title"
-					style={ { color: headingColor, textAlign: contentAlign } }
-					value={ heading }
-				/>
-			) }
-			{ ! RichText.isEmpty( tagline ) && (
-				<RichText.Content
-					tagName="p"
-					className="ugb-card__tagline"
-					style={ { color: taglineColor, textAlign: contentAlign } }
-					value={ tagline }
-				/>
-			) }
-			{ ! RichText.isEmpty( des ) && (
-				<RichText.Content
-					tagName="p"
-					className="ugb-card__description"
-					style={ { color: desColor, textAlign: contentAlign } }
-					value={ des }
-				/>
-			) }
-			{ buttonText && !! buttonText.length && (
-				<ButtonEdit.Content
-					size={ size }
-					url={ buttonURL }
-					newTab={ buttonNewTab }
-					align={ contentAlign }
-					color={ buttonTextColor }
-					text={ buttonText }
-					icon={ buttonIcon }
-					design={ buttonDesign }
-					backgroundColor={ buttonColor }
-					borderRadius={ cornerButtonRadius }
-				/>
-			) }
-		</div>
+		<Fragment>
+			{ applyFilters( 'stackable.card.save.output.before', null, design, props ) }
+			<div className={ mainClasses } style={ mainStyles }>
+				{ mediaURL && (
+					<div
+						className={ imageClasses }
+						style={ {
+							...imageStyles,
+							backgroundImage: `url(${ mediaURL })`,
+							textAlign: contentAlign,
+						} }
+						data-src={ mediaURL }
+					/>
+				) }
+				{ ! RichText.isEmpty( heading ) && (
+					<RichText.Content
+						tagName="h4"
+						className="ugb-card__title"
+						style={ { color: headingColor, textAlign: contentAlign } }
+						value={ heading }
+					/>
+				) }
+				{ ! RichText.isEmpty( tagline ) && (
+					<RichText.Content
+						tagName="p"
+						className="ugb-card__tagline"
+						style={ { color: taglineColor, textAlign: contentAlign } }
+						value={ tagline }
+					/>
+				) }
+				{ ! RichText.isEmpty( des ) && (
+					<RichText.Content
+						tagName="p"
+						className="ugb-card__description"
+						style={ { color: desColor, textAlign: contentAlign } }
+						value={ des }
+					/>
+				) }
+				{ buttonText && !! buttonText.length && (
+					<ButtonEdit.Content
+						size={ size }
+						url={ buttonURL }
+						newTab={ buttonNewTab }
+						align={ contentAlign }
+						color={ buttonTextColor }
+						text={ buttonText }
+						icon={ buttonIcon }
+						design={ buttonDesign }
+						backgroundColor={ buttonColor }
+						borderRadius={ cornerButtonRadius }
+					/>
+				) }
+			</div>
+		</Fragment>
 	)
 }
 

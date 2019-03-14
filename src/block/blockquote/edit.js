@@ -1,5 +1,5 @@
 import {
-	BaseControl, RangeControl, ToggleControl, Toolbar,
+	BaseControl, PanelBody, RangeControl, ToggleControl, Toolbar,
 } from '@wordpress/components'
 import { DesignPanelBody, PanelBackgroundSettings, ProControl } from '@stackable/components'
 import {
@@ -74,6 +74,7 @@ const edit = props => {
 
 	return (
 		<Fragment>
+			{ applyFilters( 'stackable.blockquote.edit.output.before', null, design, props ) }
 			<blockquote
 				className={ mainClasses }
 				style={ styles.main }>
@@ -194,6 +195,18 @@ const edit = props => {
 						onChangeFixedBackground={ value => setAttributes( { fixedBackground: !! value } ) }
 					/>
 				}
+				{ showProNotice &&
+					<PanelBody
+						initialOpen={ false }
+						title={ __( 'Custom CSS' ) }
+					>
+						<ProControl
+							title={ __( 'Say Hello to Custom CSS 👋' ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+						/>
+					</PanelBody>
+				}
+				{ applyFilters( 'stackable.blockquote.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
 		</Fragment>
 	)

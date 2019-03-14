@@ -1,5 +1,6 @@
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
+import { Fragment } from '@wordpress/element'
 import { getFontFamily } from './font'
 import { range } from '@stackable/util'
 import { RichText } from '@wordpress/editor'
@@ -57,55 +58,58 @@ const save = props => {
 	}
 
 	return (
-		<div className={ mainClasses } style={ mainStyle }>
-			<div className="ugb-content-wrapper">
-				{ range( 1, columns + 1 ).map( i => {
-					const title = attributes[ `title${ i }` ]
-					const description = attributes[ `description${ i }` ]
-					const countText = attributes[ `countText${ i }` ]
+		<Fragment>
+			{ applyFilters( 'stackable.count-up.save.output.before', null, design, props ) }
+			<div className={ mainClasses } style={ mainStyle }>
+				<div className="ugb-content-wrapper">
+					{ range( 1, columns + 1 ).map( i => {
+						const title = attributes[ `title${ i }` ]
+						const description = attributes[ `description${ i }` ]
+						const countText = attributes[ `countText${ i }` ]
 
-					const titleComp = ! RichText.isEmpty( title ) && (
-						<RichText.Content
-							tagName="h4"
-							className="ugb-countup__title"
-							style={ { color: textColor ? textColor : undefined } }
-							value={ title }
-						/>
-					)
-					const countComp = ! RichText.isEmpty( countText ) && (
-						<RichText.Content
-							tagName="div"
-							className="ugb-countup__counter"
-							style={ countStyle }
-							value={ countText }
-							data-duration="1000"
-							data-delay="16"
-						/>
-					)
-					const descriptionComp = ! RichText.isEmpty( description ) && (
-						<RichText.Content
-							tagName="p"
-							className="ugb-countup__description"
-							style={ { color: textColor ? textColor : undefined } }
-							value={ description }
-						/>
-					)
-					const comps = {
-						i,
-						titleComp,
-						countComp,
-						descriptionComp,
-					}
-					return applyFilters( 'stackable.count-up.save.output', (
-						<div className="ugb-countup__item" key={ i }>
-							{ titleComp }
-							{ countComp }
-							{ descriptionComp }
-						</div>
-					), comps, i, props )
-				} ) }
+						const titleComp = ! RichText.isEmpty( title ) && (
+							<RichText.Content
+								tagName="h4"
+								className="ugb-countup__title"
+								style={ { color: textColor ? textColor : undefined } }
+								value={ title }
+							/>
+						)
+						const countComp = ! RichText.isEmpty( countText ) && (
+							<RichText.Content
+								tagName="div"
+								className="ugb-countup__counter"
+								style={ countStyle }
+								value={ countText }
+								data-duration="1000"
+								data-delay="16"
+							/>
+						)
+						const descriptionComp = ! RichText.isEmpty( description ) && (
+							<RichText.Content
+								tagName="p"
+								className="ugb-countup__description"
+								style={ { color: textColor ? textColor : undefined } }
+								value={ description }
+							/>
+						)
+						const comps = {
+							i,
+							titleComp,
+							countComp,
+							descriptionComp,
+						}
+						return applyFilters( 'stackable.count-up.save.output', (
+							<div className="ugb-countup__item" key={ i }>
+								{ titleComp }
+								{ countComp }
+								{ descriptionComp }
+							</div>
+						), comps, i, props )
+					} ) }
+				</div>
 			</div>
-		</div>
+		</Fragment>
 	)
 }
 

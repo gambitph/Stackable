@@ -42,9 +42,9 @@ const edit = props => {
 		'ugb-testimonial--v2',
 		`ugb-testimonial--columns-${ columns }`,
 		`ugb-testimonial--design-${ design }`,
-	], {
+	], applyFilters( 'stackable.testimonial.mainclasses', {
 		'ugb-testimonial--serif': serif,
-	} )
+	}, design, props ) )
 
 	const itemClasses = classnames( [
 		'ugb-testimonial__item',
@@ -149,7 +149,20 @@ const edit = props => {
 					] }
 				>
 				</PanelColorSettings>
+				{ showProNotice &&
+					<PanelBody
+						initialOpen={ false }
+						title={ __( 'Custom CSS' ) }
+					>
+						<ProControl
+							title={ __( 'Say Hello to Custom CSS 👋' ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+						/>
+					</PanelBody>
+				}
+				{ applyFilters( 'stackable.testimonial.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
+			{ applyFilters( 'stackable.testimonial.edit.output.before', null, design, props ) }
 			<div className={ mainClasses }>
 				{ [ 1, 2, 3 ].map( i => {
 					const mediaURL = attributes[ `mediaURL${ i }` ]

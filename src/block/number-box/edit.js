@@ -37,9 +37,9 @@ const edit = props => {
 		'ugb-number-box',
 		'ugb-number-box--v2',
 		`ugb-number-box--columns-${ columns }`,
-	], {
+	], applyFilters( 'stackable.number-box.mainclasses', {
 		[ `ugb-number-box--design-${ design }` ]: design !== 'basic',
-	} )
+	}, design, props ) )
 
 	const show = applyFilters( 'stackable.number-box.edit.show', {
 		backgroundColor: design !== 'plain',
@@ -134,7 +134,20 @@ const edit = props => {
 					] }
 				>
 				</PanelColorSettings>
+				{ showProNotice &&
+					<PanelBody
+						initialOpen={ false }
+						title={ __( 'Custom CSS' ) }
+					>
+						<ProControl
+							title={ __( 'Say Hello to Custom CSS 👋' ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+						/>
+					</PanelBody>
+				}
+				{ applyFilters( 'stackable.number-box.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
+			{ applyFilters( 'stackable.number-box.edit.output.before', null, design, props ) }
 			<div className={ mainClasses }>
 				{ range( 1, columns + 1 ).map( i => {
 					const num = attributes[ `num${ i }` ]
