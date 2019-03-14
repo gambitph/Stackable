@@ -225,16 +225,16 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 		}
 
 		$before_output = apply_filters( 'stackable/blog-posts_save_output_before', '', $attributes['design'], $props );
+		$after_output = apply_filters( 'stackable/blog-posts_save_output_after', '', $attributes['design'], $props );
 
         $block_content = sprintf(
-            '<div class="%s" style="%s">%s%s</div>',
+            '<div class="%s" style="%s">%s</div>',
             esc_attr( implode( ' ', $mainClasses ) ),
 			esc_attr( implode( ';', $mainStyles ) ),
-			$before_output,
             $posts_markup
         );
 
-        return $block_content;
+        return $before_output . $block_content . $after_output;
     }
 }
 

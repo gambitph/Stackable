@@ -78,8 +78,8 @@ const edit = props => {
 				}
 				{ applyFilters( 'stackable.divider.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
+			{ applyFilters( 'stackable.divider.edit.output.before', null, design, props ) }
 			<div className={ mainClasses } style={ { paddingTop: 8, paddingBottom: 8 } }>
-				{ applyFilters( 'stackable.divider.edit.output.before', null, design, props ) }
 				<hr align={ alignment } style={ {
 					marginTop: 0,
 					marginBottom: 0,

@@ -1,5 +1,6 @@
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
+import { Fragment } from '@wordpress/element'
 
 const save = props => {
 	const { className } = props
@@ -17,15 +18,17 @@ const save = props => {
 	], applyFilters( 'stackable.divider.mainclasses', {}, design, props ) )
 
 	return (
-		<div className={ mainClasses }>
+		<Fragment>
 			{ applyFilters( 'stackable.divider.save.output.before', null, design, props ) }
-			<hr align={ alignment } style={ {
-				backgroundColor: color,
-				width: width + '%',
-				height: height,
-			} }
-			/>
-		</div>
+			<div className={ mainClasses }>
+				<hr align={ alignment } style={ {
+					backgroundColor: color,
+					width: width + '%',
+					height: height,
+				} }
+				/>
+			</div>
+		</Fragment>
 	)
 }
 

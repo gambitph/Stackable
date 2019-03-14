@@ -144,8 +144,8 @@ const edit = props => {
 				}
 				{ applyFilters( 'stackable.feature-grid.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
+			{ applyFilters( 'stackable.feature-grid.edit.output.before', null, design, props ) }
 			<div className={ mainClasses }>
-				{ applyFilters( 'stackable.feature-grid.edit.output.before', null, design, props ) }
 				{ [ 1, 2, 3 ].map( i => {
 					const imageUrl = attributes[ `imageUrl${ i }` ]
 					const imageID = attributes[ `imageID${ i }` ]

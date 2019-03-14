@@ -136,8 +136,8 @@ const edit = props => {
 				}
 				{ applyFilters( 'stackable.accordion.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
+			{ applyFilters( 'stackable.accordion.edit.output.before', null, design, props ) }
 			<div className={ mainClasses } style={ styles.main }>
-				{ applyFilters( 'stackable.accordion.edit.output.before', null, design, props ) }
 				<div className={ headingClasses } style={ styles.heading }>
 					<RichText
 						tagName="h4"

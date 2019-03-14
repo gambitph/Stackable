@@ -118,8 +118,8 @@ const edit = props => {
 				}
 				{ applyFilters( 'stackable.icon-list.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
+			{ applyFilters( 'stackable.icon-list.edit.output.before', null, design, props ) }
 			<div className={ mainClasses } style={ style }>
-				{ applyFilters( 'stackable.icon-list.edit.output.before', null, design, props ) }
 				<RichText
 					tagName="ul"
 					multiline="li"

@@ -79,8 +79,8 @@ const edit = props => {
 
 	return (
 		<Fragment>
+			{ applyFilters( 'stackable.count-up.edit.output.before', null, design, props ) }
 			<div className={ mainClasses } style={ mainStyle }>
-				{ applyFilters( 'stackable.count-up.edit.output.before', null, design, props ) }
 				<div className="ugb-content-wrapper">
 					{ [ 1, 2, 3, 4 ].map( i => {
 						const title = attributes[ `title${ i }` ]

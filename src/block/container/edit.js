@@ -163,8 +163,8 @@ const edit = props => {
 				}
 				{ applyFilters( 'stackable.container.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
+			{ applyFilters( 'stackable.container.edit.output.before', null, design, props ) }
 			<div className={ mainClasses } style={ mainStyle }>
-				{ applyFilters( 'stackable.container.edit.output.before', null, design, props ) }
 				<div className="ugb-container__wrapper">
 					<div className="ugb-container__content-wrapper">
 						<InnerBlocks template={ TEMPLATE } />

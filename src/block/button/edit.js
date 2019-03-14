@@ -57,7 +57,6 @@ class edit extends Component {
 
 		const editDesign = (
 			<div className={ mainClasses }>
-				{ applyFilters( 'stackable.button.edit.output.before', null, design, this.props ) }
 				{ range( 1, buttons + 1 ).map( i => {
 					const text = attributes[ `text${ i === 1 ? '' : i }` ]
 					const size = attributes[ `size${ i === 1 ? '' : i }` ]
@@ -172,6 +171,7 @@ class edit extends Component {
 					}
 					{ applyFilters( 'stackable.button.edit.inspector.after', null, design, this.props ) }
 				</InspectorControls>
+				{ applyFilters( 'stackable.button.edit.output.before', null, design, this.props ) }
 				{ editDesign }
 				{ isSelected &&
 					<div className={ `ugb-button__group-urls ugb-button__selected-${ this.state.selectedButton } ugb-num-${ buttons }` }>

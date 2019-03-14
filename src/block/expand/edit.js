@@ -44,6 +44,7 @@ const edit = props => {
 				}
 				{ applyFilters( 'stackable.expand.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
+			{ applyFilters( 'stackable.expand.edit.output.before', null, design, props ) }
 			<div className={ mainClasses }>
 				{ /* eslint-disable-next-line jsx-a11y/label-has-for */ }
 				{ isSelected && <label className="ugb-expand__label">{ __( 'Less text' ) }</label> }
@@ -92,8 +93,8 @@ const edit = props => {
 						/>
 					</a>
 				}
-				{ applyFilters( 'stackable.expand.edit.output.after', null, design, props ) }
 			</div>
+			{ applyFilters( 'stackable.expand.edit.output.after', null, design, props ) }
 		</Fragment>
 	)
 }
