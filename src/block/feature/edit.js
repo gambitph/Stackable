@@ -207,8 +207,8 @@ const edit = props => {
 				}
 				{ applyFilters( 'stackable.feature.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
-			{ applyFilters( 'stackable.feature.edit.output.before', null, design, props ) }
 			<div className={ mainClasses } style={ styles.main }>
+				{ applyFilters( 'stackable.feature.edit.output.before', null, design, props ) }
 				{ ( () => {
 					const titleComp = <RichText
 						tagName="h2"
@@ -284,6 +284,7 @@ const edit = props => {
 						</div>
 					), comps, props )
 				} )() }
+				{ applyFilters( 'stackable.feature.edit.output.after', null, design, props ) }
 			</div>
 			{ isSelected && (
 				<URLInputControl

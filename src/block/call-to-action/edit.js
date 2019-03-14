@@ -175,8 +175,8 @@ const edit = props => {
 				}
 				{ applyFilters( 'stackable.cta.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
-			{ applyFilters( 'stackable.cta.edit.output.before', null, design, props ) }
 			<div className={ mainClasses } style={ mainStyle }>
+				{ applyFilters( 'stackable.cta.edit.output.before', null, design, props ) }
 				<div className="ugb-content-wrapper">
 					<RichText
 						className="ugb-cta__title"
@@ -211,6 +211,7 @@ const edit = props => {
 						onChange={ text => setAttributes( { buttonText: text } ) }
 					/>
 				</div>
+				{ applyFilters( 'stackable.cta.edit.output.after', null, design, props ) }
 			</div>
 			{ isSelected && (
 				<URLInputControl

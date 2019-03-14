@@ -1,6 +1,5 @@
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
-import { Fragment } from '@wordpress/element'
 import { getIconSVGBase64 } from './util'
 import { RichText } from '@wordpress/editor'
 
@@ -19,10 +18,14 @@ const save = props => {
 
 	const mainClasses = classnames( [
 		className,
+		'ugb-icon-list-wrapper',
+	], applyFilters( 'stackable.icon-list.mainclasses', {}, design, props ) )
+
+	const ulClasses = classnames( [
 		'ugb-icon-list',
 		`ugb-icon--icon-${ icon }`,
 		`ugb-icon--columns-${ columns }`,
-	], applyFilters( 'stackable.icon-list.mainclasses', {}, design, props ) )
+	], applyFilters( 'stackable.icon-list.ulclasses', {}, design, props ) )
 
 	const iconSVGString = getIconSVGBase64( icon, iconShape, iconColor )
 	const style = {
@@ -32,16 +35,16 @@ const save = props => {
 	}
 
 	return (
-		<Fragment>
+		<div className={ mainClasses }>
 			{ applyFilters( 'stackable.icon-list.save.output.before', null, design, props ) }
 			<RichText.Content
 				tagName="ul"
-				className={ mainClasses }
+				className={ ulClasses }
 				style={ style }
 				value={ text }
-			>
-			</RichText.Content>
-		</Fragment>
+			/>
+			{ applyFilters( 'stackable.icon-list.save.output.after', null, design, props ) }
+		</div>
 	)
 }
 

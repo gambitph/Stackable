@@ -1,7 +1,6 @@
 import { applyFilters } from '@wordpress/hooks'
 import { ButtonEdit } from '@stackable/components'
 import classnames from 'classnames'
-import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/editor'
 
 const save = props => {
@@ -75,55 +74,54 @@ const save = props => {
 	}, design, props )
 
 	return (
-		<Fragment>
+		<div className={ mainClasses } style={ styles.main }>
 			{ applyFilters( 'stackable.header.save.output.before', null, design, props ) }
-			<div className={ mainClasses } style={ styles.main }>
-				{ ( () => {
-					const titleComp = ! RichText.isEmpty( title ) && (
-						<RichText.Content
-							tagName="h2"
-							className="ugb-header__title"
-							style={ styles.title }
-							value={ title }
-						/>
-					)
-					const subtitleComp = ! RichText.isEmpty( subtitle ) && (
-						<RichText.Content
-							tagName="p"
-							className="ugb-header__subtitle"
-							style={ styles.subtitle }
-							value={ subtitle }
-						/>
-					)
-					const buttonComp = buttonText && !! buttonText.length && (
-						<ButtonEdit.Content
-							size={ size }
-							url={ buttonURL }
-							newTab={ buttonNewTab }
-							align={ contentAlign }
-							color={ buttonTextColor }
-							text={ buttonText }
-							design={ buttonDesign }
-							icon={ buttonIcon }
-							backgroundColor={ buttonColor }
-							borderRadius={ cornerButtonRadius }
-						/>
-					)
-					const comps = {
-						titleComp,
-						subtitleComp,
-						buttonComp,
-					}
-					return applyFilters( 'stackable.header.save.output', (
-						<div className="ugb-content-wrapper">
-							{ titleComp }
-							{ subtitleComp }
-							{ buttonComp }
-						</div>
-					), design, props, comps )
-				} )() }
-			</div>
-		</Fragment>
+			{ ( () => {
+				const titleComp = ! RichText.isEmpty( title ) && (
+					<RichText.Content
+						tagName="h2"
+						className="ugb-header__title"
+						style={ styles.title }
+						value={ title }
+					/>
+				)
+				const subtitleComp = ! RichText.isEmpty( subtitle ) && (
+					<RichText.Content
+						tagName="p"
+						className="ugb-header__subtitle"
+						style={ styles.subtitle }
+						value={ subtitle }
+					/>
+				)
+				const buttonComp = buttonText && !! buttonText.length && (
+					<ButtonEdit.Content
+						size={ size }
+						url={ buttonURL }
+						newTab={ buttonNewTab }
+						align={ contentAlign }
+						color={ buttonTextColor }
+						text={ buttonText }
+						design={ buttonDesign }
+						icon={ buttonIcon }
+						backgroundColor={ buttonColor }
+						borderRadius={ cornerButtonRadius }
+					/>
+				)
+				const comps = {
+					titleComp,
+					subtitleComp,
+					buttonComp,
+				}
+				return applyFilters( 'stackable.header.save.output', (
+					<div className="ugb-content-wrapper">
+						{ titleComp }
+						{ subtitleComp }
+						{ buttonComp }
+					</div>
+				), design, props, comps )
+			} )() }
+			{ applyFilters( 'stackable.header.save.output.after', null, design, props ) }
+		</div>
 	)
 }
 

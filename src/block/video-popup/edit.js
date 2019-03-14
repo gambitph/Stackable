@@ -123,13 +123,14 @@ const edit = props => {
 				}
 				{ applyFilters( 'stackable.video-popup.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
-			{ applyFilters( 'stackable.video-popup.edit.output.before', null, design, props ) }
 			<div className={ mainClasses } style={ mainStyle }>
+				{ applyFilters( 'stackable.video-popup.edit.output.before', null, design, props ) }
 				<div className="ugb-video-popup__wrapper" >
 					<span className="ugb-video-popup__play-button">
 						{ getPlayButton( playButtonType, playButtonColor ) }
 					</span>
 				</div>
+				{ applyFilters( 'stackable.video-popup.edit.output.after', null, design, props ) }
 			</div>
 			{ isSelected && (
 				<div>

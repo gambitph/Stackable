@@ -74,10 +74,10 @@ const edit = props => {
 
 	return (
 		<Fragment>
-			{ applyFilters( 'stackable.blockquote.edit.output.before', null, design, props ) }
 			<blockquote
 				className={ mainClasses }
 				style={ styles.main }>
+				{ applyFilters( 'stackable.blockquote.edit.output.before', null, design, props ) }
 				<div className="ugb-content-wrapper">
 					{ QUOTE_ICONS[ quotationMark ].iconFunc( {
 						fill: quoteColor,
@@ -97,6 +97,7 @@ const edit = props => {
 						design, props
 					) }
 				</div>
+				{ applyFilters( 'stackable.blockquote.edit.output.after', null, design, props ) }
 			</blockquote>
 			<InspectorControls>
 				<DesignPanelBody

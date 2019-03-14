@@ -1,7 +1,6 @@
 import { applyFilters } from '@wordpress/hooks'
 import { ArrowIcon } from './index'
 import classnames from 'classnames'
-import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/editor'
 
 // Accessibility: https://www.w3.org/TR/wai-aria-practices/examples/accordion/accordion.html
@@ -44,34 +43,33 @@ const save = props => {
 	}, design, props )
 
 	return (
-		<Fragment>
+		<div className={ mainClasses } style={ styles.main } role="presentation">
 			{ applyFilters( 'stackable.accordion.save.output.before', null, design, props ) }
-			<div className={ mainClasses } style={ styles.main } role="presentation">
-				<div className={ headingClasses }
-					role="button"
-					tabIndex="0"
-					aria-expanded={ openStart ? 'true' : 'false' }
-					style={ styles.heading }
-				>
-					<RichText.Content
-						tagName="h4"
-						role="heading"
-						aria-level="3"
-						style={ styles.title }
-						value={ heading }
-					/>
-					{ ArrowIcon( {
-						fill: headingColor ? headingColor : undefined,
-					} ) }
-				</div>
+			<div className={ headingClasses }
+				role="button"
+				tabIndex="0"
+				aria-expanded={ openStart ? 'true' : 'false' }
+				style={ styles.heading }
+			>
 				<RichText.Content
-					tagName="p"
-					className="ugb-accordion__text"
-					role="region"
-					value={ text }
+					tagName="h4"
+					role="heading"
+					aria-level="3"
+					style={ styles.title }
+					value={ heading }
 				/>
+				{ ArrowIcon( {
+					fill: headingColor ? headingColor : undefined,
+				} ) }
 			</div>
-		</Fragment>
+			<RichText.Content
+				tagName="p"
+				className="ugb-accordion__text"
+				role="region"
+				value={ text }
+			/>
+			{ applyFilters( 'stackable.accordion.save.output.after', null, design, props ) }
+		</div>
 	)
 }
 

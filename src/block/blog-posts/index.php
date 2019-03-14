@@ -228,13 +228,15 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 		$after_output = apply_filters( 'stackable/blog-posts_save_output_after', '', $attributes['design'], $props );
 
         $block_content = sprintf(
-            '<div class="%s" style="%s">%s</div>',
+            '<div class="%s" style="%s">%s%s%s</div>',
             esc_attr( implode( ' ', $mainClasses ) ),
 			esc_attr( implode( ';', $mainStyles ) ),
-            $posts_markup
+			$before_output,
+			$posts_markup,
+			$after_output
         );
 
-        return $before_output . $block_content . $after_output;
+        return $block_content;
     }
 }
 

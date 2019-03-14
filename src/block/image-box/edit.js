@@ -191,8 +191,8 @@ const edit = props => {
 				}
 				{ applyFilters( 'stackable.image-box.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
-			{ applyFilters( 'stackable.image-box.edit.output.before', null, design, props ) }
 			<div className={ mainClasses } style={ mainStyles }>
+				{ applyFilters( 'stackable.image-box.edit.output.before', null, design, props ) }
 				{ [ 1, 2, 3, 4 ].map( i => {
 					const imageURL = attributes[ `imageURL${ i }` ]
 					const imageID = attributes[ `imageID${ i }` ]
@@ -290,6 +290,7 @@ const edit = props => {
 						</div>
 					)
 				} ) }
+				{ applyFilters( 'stackable.image-box.edit.output.after', null, design, props ) }
 			</div>
 		</Fragment>
 	)

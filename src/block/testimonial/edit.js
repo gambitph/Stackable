@@ -162,8 +162,8 @@ const edit = props => {
 				}
 				{ applyFilters( 'stackable.testimonial.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
-			{ applyFilters( 'stackable.testimonial.edit.output.before', null, design, props ) }
 			<div className={ mainClasses }>
+				{ applyFilters( 'stackable.testimonial.edit.output.before', null, design, props ) }
 				{ [ 1, 2, 3 ].map( i => {
 					const mediaURL = attributes[ `mediaURL${ i }` ]
 					const mediaID = attributes[ `mediaID${ i }` ]
@@ -226,6 +226,7 @@ const edit = props => {
 						</div>
 					)
 				} ) }
+				{ applyFilters( 'stackable.testimonial.edit.output.after', null, design, props ) }
 			</div>
 		</Fragment>
 	)

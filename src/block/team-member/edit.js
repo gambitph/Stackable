@@ -149,8 +149,8 @@ const edit = props => {
 				}
 				{ applyFilters( 'stackable.team-member.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
-			{ applyFilters( 'stackable.team-member.edit.output.before', null, design, props ) }
 			<div className={ mainClasses }>
+				{ applyFilters( 'stackable.team-member.edit.output.before', null, design, props ) }
 				{ [ 1, 2, 3 ].map( i => {
 					const mediaURL = attributes[ `mediaURL${ i }` ]
 					const mediaID = attributes[ `mediaID${ i }` ]
@@ -250,6 +250,7 @@ const edit = props => {
 						</div>
 					)
 				} ) }
+				{ applyFilters( 'stackable.team-member.edit.output.after', null, design, props ) }
 			</div>
 		</Fragment>
 	)

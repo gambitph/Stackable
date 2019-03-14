@@ -37,10 +37,14 @@ const edit = props => {
 
 	const mainClasses = classnames( [
 		className,
+		'ugb-icon-list-wrapper',
+	], applyFilters( 'stackable.icon-list.mainclasses', {}, design, props ) )
+
+	const ulClasses = classnames( [
 		'ugb-icon-list',
 		`ugb-icon--icon-${ icon }`,
 		`ugb-icon--columns-${ columns }`,
-	], applyFilters( 'stackable.icon-list.mainclasses', {}, design, props ) )
+	], applyFilters( 'stackable.icon-list.ulclasses', {}, design, props ) )
 
 	const iconSVGString = getIconSVGBase64( icon, iconShape, iconColor )
 	const style = {
@@ -118,16 +122,18 @@ const edit = props => {
 				}
 				{ applyFilters( 'stackable.icon-list.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
-			{ applyFilters( 'stackable.icon-list.edit.output.before', null, design, props ) }
 			<div className={ mainClasses } style={ style }>
+				{ applyFilters( 'stackable.icon-list.edit.output.before', null, design, props ) }
 				<RichText
 					tagName="ul"
 					multiline="li"
 					value={ text }
+					className={ ulClasses }
 					onChange={ text => setAttributes( { text } ) }
 					placeholder={ __( 'Text for this block' ) }
 					keepPlaceholderOnFocus
 				/>
+				{ applyFilters( 'stackable.icon-list.edit.output.after', null, design, props ) }
 			</div>
 		</Fragment>
 	)

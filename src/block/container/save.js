@@ -1,6 +1,5 @@
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
-import { Fragment } from '@wordpress/element'
 import { InnerBlocks } from '@wordpress/editor'
 
 const save = props => {
@@ -49,16 +48,15 @@ const save = props => {
 	}
 
 	return (
-		<Fragment>
+		<div className={ mainClasses } style={ mainStyle }>
 			{ applyFilters( 'stackable.container.edit.output.before', null, design, props ) }
-			<div className={ mainClasses } style={ mainStyle }>
-				<div className="ugb-container__wrapper">
-					<div className="ugb-container__content-wrapper">
-						<InnerBlocks.Content />
-					</div>
+			<div className="ugb-container__wrapper">
+				<div className="ugb-container__content-wrapper">
+					<InnerBlocks.Content />
 				</div>
 			</div>
-		</Fragment>
+			{ applyFilters( 'stackable.container.edit.output.after', null, design, props ) }
+		</div>
 	)
 }
 

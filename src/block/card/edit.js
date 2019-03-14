@@ -164,8 +164,8 @@ const edit = props => {
 				}
 				{ applyFilters( 'stackable.card.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
-			{ applyFilters( 'stackable.card.edit.output.before', null, design, props ) }
 			<div className={ mainClasses } style={ mainStyles }>
+				{ applyFilters( 'stackable.card.edit.output.before', null, design, props ) }
 				<ImageUploadPlaceholder
 					className={ imageClasses }
 					style={ imageStyles }
@@ -221,6 +221,7 @@ const edit = props => {
 					icon={ buttonIcon }
 					onChange={ text => setAttributes( { buttonText: text } ) }
 				/>
+				{ applyFilters( 'stackable.card.edit.output.after', null, design, props ) }
 			</div>
 			{ isSelected && (
 				<URLInputControl

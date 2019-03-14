@@ -114,8 +114,8 @@ const edit = props => {
 				}
 				{ applyFilters( 'stackable.notification.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
-			{ applyFilters( 'stackable.notification.edit.output.before', null, design, props ) }
 			<div className={ mainClasses } style={ mainStyles }>
+				{ applyFilters( 'stackable.notification.edit.output.before', null, design, props ) }
 				{ dismissible && (
 					<span className="ugb-notification__close-button" role="button">
 						<SVGCloseIcon style={ { fill: textColor } } />
@@ -131,6 +131,7 @@ const edit = props => {
 					placeholder={ descriptionPlaceholder( 'long' ) }
 					keepPlaceholderOnFocus
 				/>
+				{ applyFilters( 'stackable.notification.edit.output.after', null, design, props ) }
 			</div>
 		</Fragment>
 	)

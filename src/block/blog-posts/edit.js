@@ -252,8 +252,8 @@ export const _edit = props => {
 					onChange={ contentAlign => setAttributes( { contentAlign } ) }
 				/>
 			</BlockControls>
-			{ applyFilters( 'stackable.blog-posts.edit.output.before', null, design, props ) }
 			<div className={ mainClasses } style={ mainStyles }>
+				{ applyFilters( 'stackable.blog-posts.edit.output.before', null, design, props ) }
 				{ displayPosts.map( ( post, i ) => {
 					const sizeName = featuredImageShape !== 'full' && columns < 2 ? `${ featuredImageShape }_large` : featuredImageShape
 					const featuredImageSrc = post.featured_image_urls[ sizeName ][ 0 ]
@@ -332,6 +332,7 @@ export const _edit = props => {
 					}
 					return applyFilters( 'stackable.blog-posts.edit.output', defaultEditDesign, design, passedProps )
 				} ) }
+				{ applyFilters( 'stackable.blog-posts.edit.output.after', null, design, props ) }
 			</div>
 		</Fragment>
 	)

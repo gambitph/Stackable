@@ -1,7 +1,6 @@
 import { applyFilters } from '@wordpress/hooks'
 import { ButtonEdit } from '@stackable/components'
 import classnames from 'classnames'
-import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/editor'
 import striptags from 'striptags'
 
@@ -119,23 +118,22 @@ const save = props => {
 	}
 
 	return (
-		<Fragment>
+		<div className={ mainClasses } style={ styles.main }>
 			{ applyFilters( 'stackable.feature.save.output.before', null, design, props ) }
-			<div className={ mainClasses } style={ styles.main }>
-				{ applyFilters( 'stackable.feature.save.output', (
-					<div className="ugb-content-wrapper">
-						<div className="ugb-feature__content">
-							{ titleComp }
-							{ descriptionComp }
-							{ buttonComp }
-						</div>
-						<div className="ugb-feature__image-side">
-							{ imageComp }
-						</div>
+			{ applyFilters( 'stackable.feature.save.output', (
+				<div className="ugb-content-wrapper">
+					<div className="ugb-feature__content">
+						{ titleComp }
+						{ descriptionComp }
+						{ buttonComp }
 					</div>
-				), comps, props ) }
-			</div>
-		</Fragment>
+					<div className="ugb-feature__image-side">
+						{ imageComp }
+					</div>
+				</div>
+			), comps, props ) }
+			{ applyFilters( 'stackable.feature.save.output.after', null, design, props ) }
+		</div>
 	)
 }
 

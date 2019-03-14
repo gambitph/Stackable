@@ -185,8 +185,8 @@ const edit = props => {
 				}
 				{ applyFilters( 'stackable.pricing-box.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
-			{ applyFilters( 'stackable.pricing-box.edit.output.before', null, design, props ) }
 			<div className={ mainClasses }>
+				{ applyFilters( 'stackable.pricing-box.edit.output.before', null, design, props ) }
 				{ range( 1, columns + 1 ).map( i => {
 					const index = i === 1 ? '' : i
 					const title = attributes[ `pricingBoxTitle${ index }` ]
@@ -394,6 +394,7 @@ const edit = props => {
 						</div>
 					)
 				} ) }
+				{ applyFilters( 'stackable.pricing-box.edit.output.after', null, design, props ) }
 			</div>
 		</Fragment>
 	)

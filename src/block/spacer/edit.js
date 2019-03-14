@@ -46,8 +46,9 @@ const edit = props => {
 				}
 				{ applyFilters( 'stackable.spacer.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
-			{ applyFilters( 'stackable.spacer.edit.output.before', null, design, props ) }
-			<div className={ mainClasses } style={ { height: height + 'px' } }></div>
+			<div className={ mainClasses } style={ { height: height + 'px' } }>
+				{ applyFilters( 'stackable.spacer.edit.output.before', null, design, props ) }
+			</div>
 		</Fragment>
 	)
 }

@@ -147,8 +147,8 @@ const edit = props => {
 				}
 				{ applyFilters( 'stackable.number-box.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
-			{ applyFilters( 'stackable.number-box.edit.output.before', null, design, props ) }
 			<div className={ mainClasses }>
+				{ applyFilters( 'stackable.number-box.edit.output.before', null, design, props ) }
 				{ range( 1, columns + 1 ).map( i => {
 					const num = attributes[ `num${ i }` ]
 					const title = attributes[ `title${ i }` ]
@@ -219,6 +219,7 @@ const edit = props => {
 						</div>
 					)
 				} ) }
+				{ applyFilters( 'stackable.number-box.edit.output.after', null, design, props ) }
 			</div>
 		</Fragment>
 	)

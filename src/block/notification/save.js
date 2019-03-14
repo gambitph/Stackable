@@ -1,6 +1,5 @@
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
-import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/editor'
 import SVGCloseIcon from './images/close-icon.svg'
 
@@ -33,21 +32,20 @@ const save = props => {
 	}
 
 	return (
-		<Fragment>
+		<div className={ mainClasses } style={ mainStyles }>
 			{ applyFilters( 'stackable.notification.save.output.before', null, design, props ) }
-			<div className={ mainClasses } style={ mainStyles }>
-				{ dismissible && (
-					<span className="ugb-notification__close-button" role="button" tabIndex="0">
-						<SVGCloseIcon style={ { fill: textColor } } />
-					</span>
-				) }
-				<RichText.Content
-					tagName="p"
-					style={ { color: textColor } }
-					value={ text }
-				/>
-			</div>
-		</Fragment>
+			{ dismissible && (
+				<span className="ugb-notification__close-button" role="button" tabIndex="0">
+					<SVGCloseIcon style={ { fill: textColor } } />
+				</span>
+			) }
+			<RichText.Content
+				tagName="p"
+				style={ { color: textColor } }
+				value={ text }
+			/>
+			{ applyFilters( 'stackable.notification.save.output.after', null, design, props ) }
+		</div>
 	)
 }
 

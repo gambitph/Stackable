@@ -1,7 +1,6 @@
 import { applyFilters } from '@wordpress/hooks'
 import { ButtonEdit } from '@stackable/components'
 import classnames from 'classnames'
-import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/editor'
 
 const save = props => {
@@ -52,42 +51,41 @@ const save = props => {
 	}
 
 	return (
-		<Fragment>
+		<div className={ mainClasses } style={ mainStyle }>
 			{ applyFilters( 'stackable.cta.save.output.before', null, design, props ) }
-			<div className={ mainClasses } style={ mainStyle }>
-				<div className="ugb-content-wrapper">
-					{ ctaTitle && !! ctaTitle.length && (
-						<RichText.Content
-							tagName="h3"
-							className="ugb-cta__title"
-							style={ { color: titleColor } }
-							value={ ctaTitle }
-						/>
-					) }
-					{ bodyText && !! bodyText.length && (
-						<RichText.Content
-							tagName="p"
-							className="ugb-cta__description"
-							style={ { color: bodyTextColor } }
-							value={ bodyText }
-						/>
-					) }
-					{ buttonText && !! buttonText.length && (
-						<ButtonEdit.Content
-							size={ size }
-							url={ url }
-							color={ textColor }
-							text={ buttonText }
-							design={ buttonDesign }
-							icon={ buttonIcon }
-							backgroundColor={ color }
-							borderRadius={ borderButtonRadius }
-							newTab={ newTab }
-						/>
-					) }
-				</div>
+			<div className="ugb-content-wrapper">
+				{ ctaTitle && !! ctaTitle.length && (
+					<RichText.Content
+						tagName="h3"
+						className="ugb-cta__title"
+						style={ { color: titleColor } }
+						value={ ctaTitle }
+					/>
+				) }
+				{ bodyText && !! bodyText.length && (
+					<RichText.Content
+						tagName="p"
+						className="ugb-cta__description"
+						style={ { color: bodyTextColor } }
+						value={ bodyText }
+					/>
+				) }
+				{ buttonText && !! buttonText.length && (
+					<ButtonEdit.Content
+						size={ size }
+						url={ url }
+						color={ textColor }
+						text={ buttonText }
+						design={ buttonDesign }
+						icon={ buttonIcon }
+						backgroundColor={ color }
+						borderRadius={ borderButtonRadius }
+						newTab={ newTab }
+					/>
+				) }
 			</div>
-		</Fragment>
+			{ applyFilters( 'stackable.cta.save.output.after', null, design, props ) }
+		</div>
 	)
 }
 

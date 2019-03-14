@@ -216,8 +216,8 @@ const edit = props => {
 				}
 				{ applyFilters( 'stackable.header.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
-			{ applyFilters( 'stackable.header.edit.output.before', null, design, props ) }
 			<div className={ mainClasses } style={ styles.main }>
+				{ applyFilters( 'stackable.header.edit.output.before', null, design, props ) }
 				{ ( () => {
 					const titleComp = <RichText
 						tagName="h2"
@@ -261,6 +261,7 @@ const edit = props => {
 						</div>
 					), design, props, comps )
 				} )() }
+				{ applyFilters( 'stackable.header.edit.output.after', null, design, props ) }
 			</div>
 			{ isSelected && (
 				<div className="ugb-header__url-inputs">
