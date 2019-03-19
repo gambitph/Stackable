@@ -9,7 +9,11 @@ const save = props => {
 		color,
 		text,
 		quoteColor,
+		backgroundColorType = '',
 		backgroundColor,
+		backgroundColor2,
+		backgroundColorDirection = 0,
+		backgroundType = '',
 		backgroundImageURL,
 		backgroundOpacity = 5,
 		fixedBackground,
@@ -36,16 +40,24 @@ const save = props => {
 		[ `ugb--shadow-${ shadow }` ]: designHasBackground && shadow !== 3,
 		[ `ugb-content-width` ]: align === 'full' && contentWidth,
 		'ugb-blockquote--small-quote': quotationSize < 60,
+		[ `ugb--has-background-gradient` ]: backgroundColorType === 'gradient',
+		[ `ugb--has-background-video` ]: backgroundType === 'video',
 	}, design, props ) )
+
+	const basicStyles = ! designHasBackground ? {} : {
+		backgroundColor: backgroundColor ? backgroundColor : undefined,
+		backgroundImage: backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
+		backgroundAttachment: fixedBackground ? 'fixed' : undefined,
+		'--ugb-background-color': backgroundImageURL || backgroundColorType === 'gradient' ? backgroundColor : undefined,
+		'--ugb-background-color2': backgroundColorType === 'gradient' && backgroundColor2 ? backgroundColor2 : undefined,
+		'--ugb-background-direction': backgroundColorType === 'gradient' ? `${ backgroundColorDirection }deg` : undefined,
+		borderRadius: borderRadius !== 12 ? borderRadius : undefined,
+	}
 
 	const styles = applyFilters( 'stackable.blockquote.styles', {
 		main: {
 			'--quote-color': quoteColor ? quoteColor : undefined,
-			backgroundColor: designHasBackground && backgroundColor ? backgroundColor : undefined,
-			backgroundImage: designHasBackground && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
-			backgroundAttachment: designHasBackground && fixedBackground ? 'fixed' : undefined,
-			'--ugb-background-color': designHasBackground && backgroundImageURL ? backgroundColor : undefined,
-			borderRadius: designHasBackground && borderRadius !== 12 ? borderRadius : undefined,
+			...basicStyles,
 		},
 		text: {
 			color: color,
@@ -56,6 +68,15 @@ const save = props => {
 		<blockquote
 			className={ mainClasses }
 			style={ styles.main }>
+			{ designHasBackground && backgroundType === 'video' && (
+				<video
+					className="ugb-video-background"
+					autoPlay
+					muted
+					loop
+					src={ backgroundImageURL }
+				/>
+			) }
 			{ applyFilters( 'stackable.blockquote.save.output.before', null, design, props ) }
 			<div className="ugb-content-wrapper">
 				{ QUOTE_ICONS[ quotationMark ].iconFunc( {

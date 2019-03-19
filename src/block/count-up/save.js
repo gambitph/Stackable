@@ -8,7 +8,11 @@ const save = props => {
 	const { className, attributes } = props
 	const {
 		columns,
+		backgroundColorType = '',
 		backgroundColor,
+		backgroundColor2,
+		backgroundColorDirection = 0,
+		backgroundType = '',
 		backgroundImageURL,
 		fixedBackground,
 		backgroundOpacity = 5,
@@ -24,6 +28,12 @@ const save = props => {
 		countFontWeight,
 	} = attributes
 
+	const show = applyFilters( 'stackable.count-up.edit.show', {
+		background: design !== 'plain',
+	}, design, props )
+
+	const designHasBackground = design === 'basic'
+
 	const mainClasses = classnames( [
 		className,
 		'ugb-countup',
@@ -36,14 +46,22 @@ const save = props => {
 		[ `ugb--content-width` ]: align === 'full' && contentWidth,
 		[ `ugb-countup--design-${ design }` ]: design !== 'plain',
 		[ `ugb--shadow-${ shadow }` ]: design === 'basic' && shadow !== 3,
+		[ `ugb--has-background-gradient` ]: design === 'basic' && backgroundColorType === 'gradient',
+		[ `ugb--has-background-video` ]: design === 'basic' && backgroundType === 'video',
 	}, design, props ) )
 
+	const backgroundStyle = ! designHasBackground ? {} : {
+		backgroundColor: backgroundColor ? backgroundColor : undefined,
+		backgroundImage: backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
+		'--ugb-background-color': backgroundImageURL || backgroundColorType === 'gradient' ? backgroundColor : undefined,
+		'--ugb-background-color2': backgroundColorType === 'gradient' && backgroundColor2 ? backgroundColor2 : undefined,
+		'--ugb-background-direction': backgroundColorType === 'gradient' ? `${ backgroundColorDirection }deg` : undefined,
+		borderRadius: borderRadius !== 12 ? borderRadius : undefined,
+	}
+
 	const mainStyle = applyFilters( 'stackable.count-up.mainstyle', {
-		backgroundColor: design === 'basic' && backgroundColor ? backgroundColor : undefined,
-		backgroundImage: design === 'basic' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
 		backgroundAttachment: fixedBackground ? 'fixed' : undefined,
-		'--ugb-background-color': design === 'basic' && backgroundImageURL ? backgroundColor : undefined,
-		borderRadius: design === 'basic' && borderRadius !== 12 ? borderRadius : undefined,
+		...backgroundStyle,
 	}, design, props )
 
 	const countStyle = {
@@ -58,6 +76,15 @@ const save = props => {
 
 	return (
 		<div className={ mainClasses } style={ mainStyle }>
+			{ show.background && backgroundType === 'video' && (
+				<video
+					className="ugb-video-background"
+					autoPlay
+					muted
+					loop
+					src={ backgroundImageURL }
+				/>
+			) }
 			{ applyFilters( 'stackable.count-up.save.output.before', null, design, props ) }
 			<div className="ugb-content-wrapper">
 				{ range( 1, columns + 1 ).map( i => {

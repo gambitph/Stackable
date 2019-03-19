@@ -43,6 +43,8 @@
 		min-width: 100px;
 		flex: 1 1 100px;
 		margin: 0;
+		position: relative;
+		z-index: 2;
 	}
 	.ugb-image-preview-remove {
 		background: none !important;
@@ -52,5 +54,6 @@
 		top: 10px;
 		right: 4px;
 		cursor: not-allowed;
+		z-index: 3;
 	}
 }

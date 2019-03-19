@@ -27,7 +27,11 @@ const save = props => {
 		buttonBorderRadius,
 		buttonDesign,
 		buttonIcon,
+		backgroundColorType = '',
 		backgroundColor,
+		backgroundColor2,
+		backgroundColorDirection = 0,
+		backgroundType = '',
 		backgroundImageURL,
 		backgroundOpacity = 5,
 		fixedBackground,
@@ -50,6 +54,8 @@ const save = props => {
 		'ugb--has-background-image': design !== 'plain' && backgroundImageURL,
 		[ `ugb--content-width` ]: align === 'full' && contentWidth,
 		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
+		[ `ugb--has-background-gradient` ]: design !== 'plain' && backgroundColorType === 'gradient',
+		[ `ugb--has-background-video` ]: design !== 'plain' && backgroundType === 'video',
 	}, design, props ) )
 
 	const imageClasses = classnames( [
@@ -58,14 +64,20 @@ const save = props => {
 		[ `ugb--shadow-${ shadow }` ]: design === 'plain',
 	}, design, props ) )
 
+	const backgroundStyles = design === 'plain' ? {} : {
+		backgroundColor: backgroundColor ? backgroundColor : undefined,
+		backgroundImage: backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
+		backgroundAttachment: fixedBackground ? 'fixed' : undefined,
+		'--ugb-background-color': backgroundImageURL || backgroundColorType === 'gradient' ? backgroundColor : undefined,
+		'--ugb-background-color2': backgroundColorType === 'gradient' && backgroundColor2 ? backgroundColor2 : undefined,
+		'--ugb-background-direction': backgroundColorType === 'gradient' ? `${ backgroundColorDirection }deg` : undefined,
+		borderRadius: borderRadius !== 12 ? borderRadius : undefined,
+	}
+
 	const styles = applyFilters( 'stackable.feature.styles', {
 		main: {
 			'--image-size': imageSize ? `${ imageSize }px` : undefined,
-			backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
-			backgroundImage: design !== 'plain' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
-			backgroundAttachment: design !== 'plain' && fixedBackground ? 'fixed' : undefined,
-			'--ugb-background-color': design !== 'plain' && backgroundImageURL ? backgroundColor : undefined,
-			borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
+			...backgroundStyles,
 		},
 		image: {
 			borderRadius: design === 'plain' ? borderRadius : undefined,
@@ -119,6 +131,15 @@ const save = props => {
 
 	return (
 		<div className={ mainClasses } style={ styles.main }>
+			{ design === 'basic' && backgroundType === 'video' && (
+				<video
+					className="ugb-video-background"
+					autoPlay
+					muted
+					loop
+					src={ backgroundImageURL }
+				/>
+			) }
 			{ applyFilters( 'stackable.feature.save.output.before', null, design, props ) }
 			{ applyFilters( 'stackable.feature.save.output', (
 				<div className="ugb-content-wrapper">

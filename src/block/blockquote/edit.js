@@ -24,7 +24,11 @@ const edit = props => {
 		color,
 		text,
 		quoteColor,
+		backgroundColorType = '',
 		backgroundColor,
+		backgroundColor2,
+		backgroundColorDirection = 0,
+		backgroundType = '',
 		backgroundImageID,
 		backgroundImageURL,
 		backgroundOpacity,
@@ -50,16 +54,23 @@ const edit = props => {
 		[ `ugb--shadow-${ shadow }` ]: design === 'basic' && shadow !== 3,
 		[ `ugb-content-width` ]: align === 'full' && contentWidth,
 		'ugb-blockquote--small-quote': quotationSize < 60,
+		[ `ugb--has-background-gradient` ]: design === 'basic' && backgroundColorType === 'gradient',
+		[ `ugb--has-background-video` ]: design === 'basic' && backgroundType === 'video',
 	}, design, props ) )
 
+	const basicStyles = design !== 'basic' ? {} : {
+		backgroundColor: backgroundColor ? backgroundColor : undefined,
+		backgroundImage: backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
+		backgroundAttachment: fixedBackground ? 'fixed' : undefined,
+		'--ugb-background-color': backgroundImageURL || backgroundColorType === 'gradient' ? backgroundColor : undefined,
+		'--ugb-background-color2': backgroundColorType === 'gradient' && backgroundColor2 ? backgroundColor2 : undefined,
+		'--ugb-background-direction': backgroundColorType === 'gradient' ? `${ backgroundColorDirection }deg` : undefined,
+		borderRadius: borderRadius !== 12 ? borderRadius : undefined,
+	}
 	const styles = applyFilters( 'stackable.blockquote.styles', {
 		main: {
 			'--quote-color': quoteColor ? quoteColor : undefined,
-			backgroundColor: design === 'basic' && backgroundColor ? backgroundColor : undefined,
-			backgroundImage: design === 'basic' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
-			backgroundAttachment: design === 'basic' && fixedBackground ? 'fixed' : undefined,
-			'--ugb-background-color': design === 'basic' && backgroundImageURL ? backgroundColor : undefined,
-			borderRadius: design === 'basic' && borderRadius !== 12 ? borderRadius : undefined,
+			...basicStyles,
 		},
 		text: {
 			color: color,
@@ -77,6 +88,15 @@ const edit = props => {
 			<blockquote
 				className={ mainClasses }
 				style={ styles.main }>
+				{ design === 'basic' && backgroundType === 'video' && (
+					<video
+						className="ugb-video-background"
+						autoPlay
+						muted
+						loop
+						src={ backgroundImageURL }
+					/>
+				) }
 				{ applyFilters( 'stackable.blockquote.edit.output.before', null, design, props ) }
 				<div className="ugb-content-wrapper">
 					{ QUOTE_ICONS[ quotationMark ].iconFunc( {
@@ -182,12 +202,20 @@ const edit = props => {
 				</PanelColorSettings>
 				{ show.background &&
 					<PanelBackgroundSettings
+						backgroundColorType={ backgroundColorType }
 						backgroundColor={ backgroundColor }
+						backgroundColor2={ backgroundColor2 }
+						backgroundColorDirection={ backgroundColorDirection }
+						backgroundType={ backgroundType }
 						backgroundImageID={ backgroundImageID }
 						backgroundImageURL={ backgroundImageURL }
 						backgroundOpacity={ backgroundOpacity }
 						fixedBackground={ fixedBackground }
+						onChangeBackgroundColorType={ backgroundColorType => setAttributes( { backgroundColorType } ) }
 						onChangeBackgroundColor={ value => setAttributes( { backgroundColor: value } ) }
+						onChangeBackgroundColor2={ backgroundColor2 => setAttributes( { backgroundColor2 } ) }
+						onChangeBackgroundColorDirection={ backgroundColorDirection => setAttributes( { backgroundColorDirection } ) }
+						onChangeBackgroundType={ backgroundType => setAttributes( { backgroundType } ) }
 						onChangeBackgroundImage={ ( { url, id } ) => setAttributes( { backgroundImageURL: url, backgroundImageID: id } ) }
 						onRemoveBackgroundImage={ () => {
 							setAttributes( { backgroundImageURL: '', backgroundImageID: 0 } )

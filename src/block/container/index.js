@@ -14,9 +14,25 @@ export const schema = {
 		type: 'string',
 		default: '',
 	},
+	backgroundColorType: {
+		type: 'string',
+		default: '',
+	},
 	backgroundColor: {
 		type: 'string',
 		default: '#f1f1f1',
+	},
+	backgroundColor2: {
+		type: 'string',
+		default: '',
+	},
+	backgroundColorDirection: {
+		type: 'number',
+		default: 0,
+	},
+	backgroundType: {
+		type: 'string',
+		default: '',
 	},
 	backgroundImageID: {
 		type: 'number',

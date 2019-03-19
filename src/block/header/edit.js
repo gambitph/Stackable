@@ -37,7 +37,11 @@ const edit = props => {
 		subtitle,
 		subtitleColor,
 		contentAlign = 'center',
+		backgroundColorType = '',
 		backgroundColor,
+		backgroundColor2,
+		backgroundColorDirection = 0,
+		backgroundType = '',
 		backgroundImageID,
 		backgroundImageURL,
 		backgroundOpacity,
@@ -67,16 +71,24 @@ const edit = props => {
 		[ `ugb--content-width` ]: align === 'full' && contentWidth,
 		'ugb-header--invert': invert,
 		'ugb-header--full-height': fullHeight,
+		[ `ugb--has-background-gradient` ]: backgroundColorType === 'gradient',
+		[ `ugb--has-background-video` ]: backgroundType === 'video',
 	}, design, props ) )
+
+	const mainBackgroundStyles = design === 'plain' ? {} : {
+		'--ugb-background-color': backgroundImageURL || backgroundColorType === 'gradient' ? backgroundColor : undefined,
+		'--ugb-background-color2': backgroundColorType === 'gradient' && backgroundColor2 ? backgroundColor2 : undefined,
+		'--ugb-background-direction': backgroundColorType === 'gradient' ? `${ backgroundColorDirection }deg` : undefined,
+		backgroundAttachment: fixedBackground ? 'fixed' : undefined,
+		backgroundColor: backgroundColor ? backgroundColor : undefined,
+		backgroundImage: backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
+		borderRadius: borderRadius !== 12 ? borderRadius : undefined,
+	}
 
 	const styles = applyFilters( 'stackable.header.styles', {
 		main: {
-			'--ugb-background-color': design !== 'plain' && backgroundImageURL ? backgroundColor : undefined,
-			backgroundAttachment: design !== 'plain' && fixedBackground ? 'fixed' : undefined,
-			backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
-			backgroundImage: design !== 'plain' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
-			borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
 			textAlign: contentAlign ? contentAlign : undefined,
+			...mainBackgroundStyles,
 		},
 		title: {
 			color: titleColor ? titleColor :
@@ -171,12 +183,20 @@ const edit = props => {
 				{ design !== 'plain' &&
 					<PanelBackgroundSettings
 						initialOpen={ true }
+						backgroundColorType={ backgroundColorType }
 						backgroundColor={ backgroundColor }
+						backgroundColor2={ backgroundColor2 }
+						backgroundColorDirection={ backgroundColorDirection }
+						backgroundType={ backgroundType }
 						backgroundImageID={ backgroundImageID }
 						backgroundImageURL={ backgroundImageURL }
 						backgroundOpacity={ backgroundOpacity }
 						fixedBackground={ fixedBackground }
+						onChangeBackgroundColorType={ backgroundColorType => setAttributes( { backgroundColorType } ) }
 						onChangeBackgroundColor={ backgroundColor => setAttributes( { backgroundColor } ) }
+						onChangeBackgroundColor2={ backgroundColor2 => setAttributes( { backgroundColor2 } ) }
+						onChangeBackgroundColorDirection={ backgroundColorDirection => setAttributes( { backgroundColorDirection } ) }
+						onChangeBackgroundType={ backgroundType => setAttributes( { backgroundType } ) }
 						onChangeBackgroundImage={ ( { url, id } ) => setAttributes( { backgroundImageID: id, backgroundImageURL: url } ) }
 						onRemoveBackgroundImage={ () => {
 							setAttributes( { backgroundImageID: 0, backgroundImageURL: '' } )
@@ -217,6 +237,15 @@ const edit = props => {
 				{ applyFilters( 'stackable.header.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
 			<div className={ mainClasses } style={ styles.main }>
+				{ design !== 'plain' && backgroundType === 'video' && (
+					<video
+						className="ugb-video-background"
+						autoPlay
+						muted
+						loop
+						src={ backgroundImageURL }
+					/>
+				) }
 				{ applyFilters( 'stackable.header.edit.output.before', null, design, props ) }
 				{ ( () => {
 					const titleComp = <RichText

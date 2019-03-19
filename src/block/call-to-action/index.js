@@ -64,8 +64,24 @@ const schema = {
 		type: 'number',
 		default: 4,
 	},
+	backgroundColorType: {
+		type: 'string',
+		default: '',
+	},
 	backgroundColor: {
 		type: 'string',
+	},
+	backgroundColor2: {
+		type: 'string',
+		default: '',
+	},
+	backgroundColorDirection: {
+		type: 'number',
+		default: 0,
+	},
+	backgroundType: {
+		type: 'string',
+		default: '',
 	},
 	backgroundImageID: {
 		type: 'number',

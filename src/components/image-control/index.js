@@ -15,6 +15,8 @@ function ImageControl( props ) {
 		help,
 	} = props
 
+	const type = imageURL && imageURL.match( /(mp4|webm|ogg)/i ) ? 'video' : 'image'
+
 	return (
 		<div className="ugb-image-control">
 			<BaseControl label={ label } help={ help }>
@@ -28,18 +30,35 @@ function ImageControl( props ) {
 								{ imageURL &&
 								<div className="ugb-image-preview-wrapper">
 									<button className="ugb-image-preview-remove" onClick={ onRemove }><Dashicon icon="no" /></button>
-									{ /* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */ }
-									<img
-										className="ugb-image-preview"
-										src={ imageURL }
-										onClick={ obj.open }
-										onKeyDown={ event => {
-											if ( event.keyCode === 13 ) {
-												obj.open()
-											}
-										} }
-										alt={ __( 'preview' ) }
-									/>
+									{ type === 'video' && (
+										<video
+											className="ugb-image-preview"
+											autoPlay
+											muted
+											loop
+											src={ imageURL }
+											onClick={ obj.open }
+											onKeyDown={ event => {
+												if ( event.keyCode === 13 ) {
+													obj.open()
+												}
+											} }
+										/>
+									) }
+									{ type === 'image' && (
+										/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */
+										<img
+											className="ugb-image-preview"
+											src={ imageURL }
+											onClick={ obj.open }
+											onKeyDown={ event => {
+												if ( event.keyCode === 13 ) {
+													obj.open()
+												}
+											} }
+											alt={ __( 'preview' ) }
+										/>
+									) }
 								</div>
 								}
 								{ ! imageURL && (

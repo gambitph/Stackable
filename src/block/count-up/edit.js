@@ -22,7 +22,11 @@ const edit = props => {
 	} = props
 	const {
 		columns,
+		backgroundColorType = '',
 		backgroundColor,
+		backgroundColor2,
+		backgroundColorDirection = 0,
+		backgroundType = '',
 		backgroundImageID,
 		backgroundImageURL,
 		backgroundOpacity,
@@ -39,6 +43,14 @@ const edit = props => {
 		countFontWeight,
 	} = attributes
 
+	const show = applyFilters( 'stackable.count-up.edit.show', {
+		borderRadius: design !== 'plain',
+		shadow: design !== 'plain',
+		background: design !== 'plain',
+	}, design, props )
+
+	const designHasBackground = design === 'basic'
+
 	const mainClasses = classnames( [
 		className,
 		'ugb-countup',
@@ -51,14 +63,22 @@ const edit = props => {
 		[ `ugb--content-width` ]: align === 'full' && contentWidth,
 		[ `ugb-countup--design-${ design }` ]: design !== 'plain',
 		[ `ugb--shadow-${ shadow }` ]: design === 'basic' && shadow !== 3,
+		[ `ugb--has-background-gradient` ]: design === 'basic' && backgroundColorType === 'gradient',
+		[ `ugb--has-background-video` ]: design === 'basic' && backgroundType === 'video',
 	}, design, props ) )
 
+	const backgroundStyle = ! designHasBackground ? {} : {
+		backgroundColor: backgroundColor ? backgroundColor : undefined,
+		backgroundImage: backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
+		'--ugb-background-color': backgroundImageURL || backgroundColorType === 'gradient' ? backgroundColor : undefined,
+		'--ugb-background-color2': backgroundColorType === 'gradient' && backgroundColor2 ? backgroundColor2 : undefined,
+		'--ugb-background-direction': backgroundColorType === 'gradient' ? `${ backgroundColorDirection }deg` : undefined,
+		borderRadius: borderRadius !== 12 ? borderRadius : undefined,
+	}
+
 	const mainStyle = applyFilters( 'stackable.count-up.mainstyle', {
-		backgroundColor: design === 'basic' && backgroundColor ? backgroundColor : undefined,
-		backgroundImage: design === 'basic' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
 		backgroundAttachment: fixedBackground ? 'fixed' : undefined,
-		'--ugb-background-color': design === 'basic' && backgroundImageURL ? backgroundColor : undefined,
-		borderRadius: design === 'basic' && borderRadius !== 12 ? borderRadius : undefined,
+		...backgroundStyle,
 	}, design, props )
 
 	const countStyle = {
@@ -71,15 +91,18 @@ const edit = props => {
 		countStyle.fontFamily = getFontFamily( countFont )
 	}
 
-	const show = applyFilters( 'stackable.count-up.edit.show', {
-		borderRadius: design !== 'plain',
-		shadow: design !== 'plain',
-		background: design !== 'plain',
-	}, design, props )
-
 	return (
 		<Fragment>
 			<div className={ mainClasses } style={ mainStyle }>
+				{ show.background && backgroundType === 'video' && (
+					<video
+						className="ugb-video-background"
+						autoPlay
+						muted
+						loop
+						src={ backgroundImageURL }
+					/>
+				) }
 				{ applyFilters( 'stackable.count-up.edit.output.before', null, design, props ) }
 				<div className="ugb-content-wrapper">
 					{ [ 1, 2, 3, 4 ].map( i => {
@@ -228,12 +251,20 @@ const edit = props => {
 				{ applyFilters( 'stackable.count-up.edit.inspector', null, design, props ) }
 				{ show.background &&
 					<PanelBackgroundSettings
+						backgroundColorType={ backgroundColorType }
 						backgroundColor={ backgroundColor }
+						backgroundColor2={ backgroundColor2 }
+						backgroundColorDirection={ backgroundColorDirection }
+						backgroundType={ backgroundType }
 						backgroundImageID={ backgroundImageID }
 						backgroundImageURL={ backgroundImageURL }
 						backgroundOpacity={ backgroundOpacity }
 						fixedBackground={ fixedBackground }
+						onChangeBackgroundColorType={ backgroundColorType => setAttributes( { backgroundColorType } ) }
 						onChangeBackgroundColor={ backgroundColor => setAttributes( { backgroundColor } ) }
+						onChangeBackgroundColor2={ backgroundColor2 => setAttributes( { backgroundColor2 } ) }
+						onChangeBackgroundColorDirection={ backgroundColorDirection => setAttributes( { backgroundColorDirection } ) }
+						onChangeBackgroundType={ backgroundType => setAttributes( { backgroundType } ) }
 						onChangeBackgroundImage={ ( { url, id } ) => setAttributes( { backgroundImageURL: url, backgroundImageID: id } ) }
 						onRemoveBackgroundImage={ () => {
 							setAttributes( { backgroundImageURL: '', backgroundImageID: 0 } )

@@ -8,7 +8,8 @@ import { ColorPaletteControl } from '@stackable/components'
 
 function PanelColorSettings( props ) {
 	const {
-		colorSettings, title = __( 'Color Settings' ),
+		colorSettings = [],
+		title = __( 'Color Settings' ),
 	} = props
 
 	const className = 'editor-panel-color-settings'

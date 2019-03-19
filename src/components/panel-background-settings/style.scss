@@ -8,7 +8,9 @@
 	@include box();
 }
 .ugb--has-background-image,
-.ugb-has-background-image {
+.ugb-has-background-image,
+.ugb--has-background-gradient,
+.ugb--has-background-video {
 	position: relative;
 	background-size: cover;
 	background-position: center;
@@ -16,21 +18,39 @@
 	// We need to reset this to none, or else the container's
 	// background color will apply to all child blocks.
 	--ugb-background-color: none;
+	--ugb-background-color2: none;
+	--ugb-background-direction: none;
 
 	&::before {
 		display: block !important;
 		content: "";
 		position: absolute;
-		z-index: 1;
+		z-index: 2;
 		top: 0;
 		right: 0;
 		left: 0;
 		bottom: 0;
 		background-color: var(--ugb-background-color, #fff);
 	}
+	&.ugb--has-background-gradient {
+		overflow: hidden;
+		&::before {
+			background-image: linear-gradient(var(--ugb-background-direction, 0deg), var(--ugb-background-color, #fff), var(--ugb-background-color2, #fff));
+		}
+	}
+	.ugb-video-background {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translateX(-50%) translateY(-50%);
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+		object-fit: cover;
+	}
 	> * {
 		position: relative;
-		z-index: 2;
+		z-index: 3;
 	}
 }
 .alignfull.ugb--has-background,

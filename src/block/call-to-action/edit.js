@@ -36,7 +36,11 @@ const edit = props => {
 		borderButtonRadius,
 		bodyTextColor,
 		titleColor,
+		backgroundColorType = '',
 		backgroundColor,
+		backgroundColor2,
+		backgroundColorDirection = 0,
+		backgroundType = '',
 		backgroundImageID,
 		backgroundImageURL,
 		backgroundOpacity,
@@ -49,6 +53,8 @@ const edit = props => {
 		newTab,
 	} = props.attributes
 
+	const designHasBackground = design !== 'plain'
+
 	const mainClasses = classnames( [
 		className,
 		'ugb-cta',
@@ -59,14 +65,22 @@ const edit = props => {
 		'ugb--has-background': backgroundColor || backgroundImageURL,
 		'ugb--has-background-image': backgroundImageURL,
 		[ `ugb-content-width` ]: align === 'full' && contentWidth,
+		[ `ugb--has-background-gradient` ]: designHasBackground && backgroundColorType === 'gradient',
+		[ `ugb--has-background-video` ]: designHasBackground && backgroundType === 'video',
 	}, design, props ) )
 
+	const backgroundStyle = ! designHasBackground ? {} : {
+		backgroundColor: backgroundColor ? backgroundColor : undefined,
+		backgroundImage: backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
+		'--ugb-background-color': backgroundImageURL || backgroundColorType === 'gradient' ? backgroundColor : undefined,
+		'--ugb-background-color2': backgroundColorType === 'gradient' && backgroundColor2 ? backgroundColor2 : undefined,
+		'--ugb-background-direction': backgroundColorType === 'gradient' ? `${ backgroundColorDirection }deg` : undefined,
+		borderRadius: borderRadius !== 12 ? borderRadius : undefined,
+	}
+
 	const mainStyle = {
-		backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
-		backgroundImage: design !== 'plain' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
 		backgroundAttachment: fixedBackground ? 'fixed' : undefined,
-		'--ugb-background-color': design !== 'plain' && backgroundImageURL ? backgroundColor : undefined,
-		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
+		...backgroundStyle,
 	}
 
 	return (
@@ -131,12 +145,20 @@ const edit = props => {
 				</PanelColorSettings>
 				{ design !== 'plain' &&
 					<PanelBackgroundSettings
+						backgroundColorType={ backgroundColorType }
 						backgroundColor={ backgroundColor }
+						backgroundColor2={ backgroundColor2 }
+						backgroundColorDirection={ backgroundColorDirection }
+						backgroundType={ backgroundType }
 						backgroundImageID={ backgroundImageID }
 						backgroundImageURL={ backgroundImageURL }
 						backgroundOpacity={ backgroundOpacity }
 						fixedBackground={ fixedBackground }
+						onChangeBackgroundColorType={ backgroundColorType => setAttributes( { backgroundColorType } ) }
 						onChangeBackgroundColor={ backgroundColor => setAttributes( { backgroundColor } ) }
+						onChangeBackgroundColor2={ backgroundColor2 => setAttributes( { backgroundColor2 } ) }
+						onChangeBackgroundColorDirection={ backgroundColorDirection => setAttributes( { backgroundColorDirection } ) }
+						onChangeBackgroundType={ backgroundType => setAttributes( { backgroundType } ) }
 						onChangeBackgroundImage={ ( { url, id } ) => setAttributes( { backgroundImageURL: url, backgroundImageID: id } ) }
 						onRemoveBackgroundImage={ () => {
 							setAttributes( { backgroundImageURL: '', backgroundImageID: 0 } )
@@ -176,6 +198,15 @@ const edit = props => {
 				{ applyFilters( 'stackable.cta.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
 			<div className={ mainClasses } style={ mainStyle }>
+				{ designHasBackground && backgroundType === 'video' && (
+					<video
+						className="ugb-video-background"
+						autoPlay
+						muted
+						loop
+						src={ backgroundImageURL }
+					/>
+				) }
 				{ applyFilters( 'stackable.cta.edit.output.before', null, design, props ) }
 				<div className="ugb-content-wrapper">
 					<RichText

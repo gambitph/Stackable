@@ -21,7 +21,11 @@ const edit = props => {
 		videoLink,
 		backgroundImageID,
 		backgroundImageURL,
+		backgroundColorType = '',
 		backgroundColor,
+		backgroundColor2,
+		backgroundColorDirection = 0,
+		backgroundType = '',
 		playButtonType,
 		playButtonColor = '#ffffff',
 		backgroundOpacity,
@@ -41,12 +45,16 @@ const edit = props => {
 		'ugb--has-background': backgroundColor || backgroundImageURL,
 		'ugb--has-background-image': backgroundImageURL,
 		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
+		[ `ugb--has-background-gradient` ]: backgroundColorType === 'gradient',
+		[ `ugb--has-background-video` ]: backgroundType === 'video',
 	}, design, props ) )
 
 	const mainStyle = {
 		backgroundColor: backgroundColor ? backgroundColor : undefined,
 		backgroundImage: backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
-		'--ugb-background-color': backgroundImageURL ? backgroundColor : undefined,
+		'--ugb-background-color': backgroundImageURL || backgroundColorType === 'gradient' ? backgroundColor : undefined,
+		'--ugb-background-color2': backgroundColorType === 'gradient' && backgroundColor2 ? backgroundColor2 : undefined,
+		'--ugb-background-direction': backgroundColorType === 'gradient' ? `${ backgroundColorDirection }deg` : undefined,
 		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
 	}
 
@@ -99,11 +107,19 @@ const edit = props => {
 				</PanelBody>
 				<PanelBackgroundSettings
 					initialOpen={ true }
+					backgroundColorType={ backgroundColorType }
 					backgroundColor={ backgroundColor }
+					backgroundColor2={ backgroundColor2 }
+					backgroundColorDirection={ backgroundColorDirection }
+					backgroundType={ backgroundType }
 					backgroundImageID={ backgroundImageID }
 					backgroundImageURL={ backgroundImageURL }
 					backgroundOpacity={ backgroundOpacity }
+					onChangeBackgroundColorType={ backgroundColorType => setAttributes( { backgroundColorType } ) }
 					onChangeBackgroundColor={ backgroundColor => setAttributes( { backgroundColor } ) }
+					onChangeBackgroundColor2={ backgroundColor2 => setAttributes( { backgroundColor2 } ) }
+					onChangeBackgroundColorDirection={ backgroundColorDirection => setAttributes( { backgroundColorDirection } ) }
+					onChangeBackgroundType={ backgroundType => setAttributes( { backgroundType } ) }
 					onChangeBackgroundImage={ ( { url, id } ) => setAttributes( { backgroundImageURL: url, backgroundImageID: id } ) }
 					onRemoveBackgroundImage={ () => {
 						setAttributes( { backgroundImageURL: '', backgroundImageID: 0 } )
@@ -124,6 +140,15 @@ const edit = props => {
 				{ applyFilters( 'stackable.video-popup.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
 			<div className={ mainClasses } style={ mainStyle }>
+				{ backgroundType === 'video' && (
+					<video
+						className="ugb-video-background"
+						autoPlay
+						muted
+						loop
+						src={ backgroundImageURL }
+					/>
+				) }
 				{ applyFilters( 'stackable.video-popup.edit.output.before', null, design, props ) }
 				<div className="ugb-video-popup__wrapper" >
 					<span className="ugb-video-popup__play-button">

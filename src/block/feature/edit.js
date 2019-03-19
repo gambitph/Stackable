@@ -41,7 +41,11 @@ const edit = props => {
 		buttonBorderRadius,
 		buttonDesign,
 		buttonIcon,
+		backgroundColorType = '',
 		backgroundColor,
+		backgroundColor2,
+		backgroundColorDirection = 0,
+		backgroundType = '',
 		backgroundImageID,
 		backgroundImageURL,
 		backgroundOpacity,
@@ -65,6 +69,8 @@ const edit = props => {
 		'ugb--has-background-image': design !== 'plain' && backgroundImageURL,
 		[ `ugb--content-width` ]: align === 'full' && contentWidth,
 		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
+		[ `ugb--has-background-gradient` ]: design !== 'plain' && backgroundColorType === 'gradient',
+		[ `ugb--has-background-video` ]: design !== 'plain' && backgroundType === 'video',
 	}, design, props ) )
 
 	const imageClasses = classnames( [
@@ -73,14 +79,20 @@ const edit = props => {
 		[ `ugb--shadow-${ shadow }` ]: design === 'plain',
 	}, design, props ) )
 
+	const backgroundStyles = design === 'plain' ? {} : {
+		backgroundColor: backgroundColor ? backgroundColor : undefined,
+		backgroundImage: backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
+		backgroundAttachment: fixedBackground ? 'fixed' : undefined,
+		'--ugb-background-color': backgroundImageURL || backgroundColorType === 'gradient' ? backgroundColor : undefined,
+		'--ugb-background-color2': backgroundColorType === 'gradient' && backgroundColor2 ? backgroundColor2 : undefined,
+		'--ugb-background-direction': backgroundColorType === 'gradient' ? `${ backgroundColorDirection }deg` : undefined,
+		borderRadius: borderRadius !== 12 ? borderRadius : undefined,
+	}
+
 	const styles = applyFilters( 'stackable.feature.styles', {
 		main: {
 			'--image-size': imageSize ? `${ imageSize }px` : undefined,
-			backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
-			backgroundImage: design !== 'plain' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
-			backgroundAttachment: design !== 'plain' && fixedBackground ? 'fixed' : undefined,
-			'--ugb-background-color': design !== 'plain' && backgroundImageURL ? backgroundColor : undefined,
-			borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
+			...backgroundStyles,
 		},
 		image: {
 			borderRadius: design === 'plain' ? borderRadius : undefined,
@@ -163,12 +175,20 @@ const edit = props => {
 				{ applyFilters( 'stackable.feature.edit.inspector', null, design, props ) }
 				{ show.background &&
 					<PanelBackgroundSettings
+						backgroundColorType={ backgroundColorType }
 						backgroundColor={ backgroundColor }
+						backgroundColor2={ backgroundColor2 }
+						backgroundColorDirection={ backgroundColorDirection }
+						backgroundType={ backgroundType }
 						backgroundImageID={ backgroundImageID }
 						backgroundImageURL={ backgroundImageURL }
 						backgroundOpacity={ backgroundOpacity }
 						fixedBackground={ fixedBackground }
+						onChangeBackgroundColorType={ backgroundColorType => setAttributes( { backgroundColorType } ) }
 						onChangeBackgroundColor={ backgroundColor => setAttributes( { backgroundColor } ) }
+						onChangeBackgroundColor2={ backgroundColor2 => setAttributes( { backgroundColor2 } ) }
+						onChangeBackgroundColorDirection={ backgroundColorDirection => setAttributes( { backgroundColorDirection } ) }
+						onChangeBackgroundType={ backgroundType => setAttributes( { backgroundType } ) }
 						onChangeBackgroundImage={ ( { url, id } ) => setAttributes( { backgroundImageURL: url, backgroundImageID: id } ) }
 						onRemoveBackgroundImage={ () => {
 							setAttributes( { backgroundImageURL: '', backgroundImageID: 0 } )
@@ -208,6 +228,15 @@ const edit = props => {
 				{ applyFilters( 'stackable.feature.edit.inspector.after', null, design, props ) }
 			</InspectorControls>
 			<div className={ mainClasses } style={ styles.main }>
+				{ design === 'basic' && backgroundType === 'video' && (
+					<video
+						className="ugb-video-background"
+						autoPlay
+						muted
+						loop
+						src={ backgroundImageURL }
+					/>
+				) }
 				{ applyFilters( 'stackable.feature.edit.output.before', null, design, props ) }
 				{ ( () => {
 					const titleComp = <RichText

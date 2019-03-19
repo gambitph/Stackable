@@ -16,7 +16,11 @@ const save = props => {
 		borderButtonRadius,
 		bodyTextColor,
 		titleColor,
+		backgroundColorType = '',
 		backgroundColor,
+		backgroundColor2,
+		backgroundColorDirection = 0,
+		backgroundType = '',
 		backgroundImageURL,
 		backgroundOpacity,
 		fixedBackground,
@@ -30,6 +34,8 @@ const save = props => {
 		newTab,
 	} = props.attributes
 
+	const designHasBackground = design !== 'plain'
+
 	const mainClasses = classnames( [
 		className,
 		'ugb-cta',
@@ -39,19 +45,36 @@ const save = props => {
 		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
 		'ugb--has-background': backgroundColor || backgroundImageURL,
 		'ugb--has-background-image': backgroundImageURL,
-		[ `ugb--content-width` ]: align === 'full' && contentWidth,
+		[ `ugb-content-width` ]: align === 'full' && contentWidth,
+		[ `ugb--has-background-gradient` ]: designHasBackground && backgroundColorType === 'gradient',
+		[ `ugb--has-background-video` ]: designHasBackground && backgroundType === 'video',
 	}, design, props ) )
 
+	const backgroundStyle = ! designHasBackground ? {} : {
+		backgroundColor: backgroundColor ? backgroundColor : undefined,
+		backgroundImage: backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
+		'--ugb-background-color': backgroundImageURL || backgroundColorType === 'gradient' ? backgroundColor : undefined,
+		'--ugb-background-color2': backgroundColorType === 'gradient' && backgroundColor2 ? backgroundColor2 : undefined,
+		'--ugb-background-direction': backgroundColorType === 'gradient' ? `${ backgroundColorDirection }deg` : undefined,
+		borderRadius: borderRadius !== 12 ? borderRadius : undefined,
+	}
+
 	const mainStyle = {
-		backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
-		backgroundImage: design !== 'plain' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
 		backgroundAttachment: fixedBackground ? 'fixed' : undefined,
-		'--ugb-background-color': design !== 'plain' && backgroundImageURL ? backgroundColor : undefined,
-		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
+		...backgroundStyle,
 	}
 
 	return (
 		<div className={ mainClasses } style={ mainStyle }>
+			{ designHasBackground && backgroundType === 'video' && (
+				<video
+					className="ugb-video-background"
+					autoPlay
+					muted
+					loop
+					src={ backgroundImageURL }
+				/>
+			) }
 			{ applyFilters( 'stackable.cta.save.output.before', null, design, props ) }
 			<div className="ugb-content-wrapper">
 				{ ctaTitle && !! ctaTitle.length && (

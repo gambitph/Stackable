@@ -19,7 +19,11 @@ const save = props => {
 		subtitle,
 		subtitleColor,
 		contentAlign = 'center',
+		backgroundColorType = '',
 		backgroundColor,
+		backgroundColor2,
+		backgroundColorDirection = 0,
+		backgroundType = '',
 		backgroundImageURL,
 		backgroundOpacity,
 		fixedBackground,
@@ -48,16 +52,24 @@ const save = props => {
 		[ `ugb--content-width` ]: align === 'full' && contentWidth,
 		'ugb-header--invert': invert,
 		'ugb-header--full-height': fullHeight,
+		[ `ugb--has-background-gradient` ]: backgroundColorType === 'gradient',
+		[ `ugb--has-background-video` ]: backgroundType === 'video',
 	}, design, props ) )
+
+	const mainBackgroundStyles = design === 'plain' ? {} : {
+		'--ugb-background-color': backgroundImageURL || backgroundColorType === 'gradient' ? backgroundColor : undefined,
+		'--ugb-background-color2': backgroundColorType === 'gradient' && backgroundColor2 ? backgroundColor2 : undefined,
+		'--ugb-background-direction': backgroundColorType === 'gradient' ? `${ backgroundColorDirection }deg` : undefined,
+		backgroundAttachment: fixedBackground ? 'fixed' : undefined,
+		backgroundColor: backgroundColor ? backgroundColor : undefined,
+		backgroundImage: backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
+		borderRadius: borderRadius !== 12 ? borderRadius : undefined,
+	}
 
 	const styles = applyFilters( 'stackable.header.styles', {
 		main: {
-			'--ugb-background-color': design !== 'plain' && backgroundImageURL ? backgroundColor : undefined,
-			backgroundAttachment: design !== 'plain' && fixedBackground ? 'fixed' : undefined,
-			backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
-			backgroundImage: design !== 'plain' && backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
-			borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
 			textAlign: contentAlign ? contentAlign : undefined,
+			...mainBackgroundStyles,
 		},
 		title: {
 			color: titleColor ? titleColor :
@@ -75,6 +87,15 @@ const save = props => {
 
 	return (
 		<div className={ mainClasses } style={ styles.main }>
+			{ design !== 'plain' && backgroundType === 'video' && (
+				<video
+					className="ugb-video-background"
+					autoPlay
+					muted
+					loop
+					src={ backgroundImageURL }
+				/>
+			) }
 			{ applyFilters( 'stackable.header.save.output.before', null, design, props ) }
 			{ ( () => {
 				const titleComp = ! RichText.isEmpty( title ) && (
