@@ -2,9 +2,9 @@
 Contributors: bfintal, gambitph, freemius
 Tags: gutenberg, block, blocks, block editor, gutenberg blocks, page builder, editor, wordpress 5.0
 Requires at least: 4.8
-Tested up to: 5.1
+Tested up to: 5.1.1
 Requires PHP: 5.3
-Stable tag: 1.13.3
+Stable tag: 1.14.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -45,6 +45,7 @@ Stackable provides feature-rich blocks that gives you more design options for yo
 
 ### News Article Updates
 
+- [v1.14 Video Backgrounds & Background Gradients](https://wpstackable.com/blog/video-backgrounds-background-gradients/)
 - [v1.13 Introducing Stackable Premium](https://wpstackable.com/blog/introducing-stackable-premium/)
 - [v1.12 Stackable Is Now in GitHub](https://wpstackable.com/blog/stackable-is-now-in-github/)
 - [v1.11 Huge Updates Across All Blocks](https://wpstackable.com/blog/huge-updates-across-all-blocks/)
@@ -120,6 +121,10 @@ You will have to redo all your blocks
 == Changelog ==
 
 = 1.14.0 =
+[Video Backgrounds & Background Gradients](https://wpstackable.com/blog/video-backgrounds-background-gradients/)
+
+* New: Video backgrounds
+* New: Background gradient colors
 * New: Custom CSS tab for all blocks (Premium)
 * Fixed: Not setting a subprice hides the price in the Pricing box block
 * Fixed: Blockquote block highlight design not being applied correctly.
