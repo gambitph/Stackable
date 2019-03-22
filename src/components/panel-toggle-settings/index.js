@@ -35,7 +35,6 @@ class PanelToggleSettings extends Component {
 							onClick={ ev => {
 								ev.stopPropagation()
 								ev.preventDefault()
-								ev.currentTarget.blur()
 								const checked = this.state.checked
 								if ( checked && this.state.opened ) {
 									this.onToggle()
