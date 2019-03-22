@@ -3,3 +3,6 @@
  *
  * Enqueued in the editor only.
  */
+[data-type="ugb/separator"] {
+	z-index: 30 !important; // Full-width blocks are z-index 20.
+}
