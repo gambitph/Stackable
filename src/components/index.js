@@ -8,6 +8,7 @@ export { default as ColorPaletteControl } from './color-palette-control'
 export { default as ImageControl } from './image-control'
 export { default as PanelColorSettings } from './panel-color-settings'
 export { default as PanelBackgroundSettings } from './panel-background-settings'
+export { default as PanelToggleSettings } from './panel-toggle-settings'
 export { default as PanelButtonSettings } from './panel-button-settings'
 
 // Reusable non-editor components

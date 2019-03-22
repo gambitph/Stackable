@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Wave_3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1600 200" style="enable-background:new 0 0 1600 200;" xml:space="preserve" filter="url(#dropShadow)">
+	<filter id="dropShadow">
+		<feGaussianBlur in="SourceAlpha" stdDeviation="4" />
+		<feComponentTransfer>
+			<feFuncA type="linear" slope="0.4"/>
+		</feComponentTransfer>
+		<feMerge>
+			<feMergeNode />
+			<feMergeNode in="SourceGraphic" />
+		</feMerge>
+	</filter>
+<path id="Shadow" class="st2" d="M1413.6,161.4c-157.9,0-338.2-37.7-495.1-67.4C702.9,53.2,590.4,49.4,500.3,52.9
+	S317,73.4,188.5,102S-10,136.2-10,136.2v10c0,0,69.9-5.7,198.5-34.3s221.7-45.7,311.8-49.1s202.6,0.3,418.2,41.1
+	c156.9,29.7,337.2,67.4,495.1,67.4c127.6,0,196.4-19.4,196.4-19.4v-10C1610,141.9,1541.2,161.4,1413.6,161.4z"/>
+</svg>
