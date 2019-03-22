@@ -242,8 +242,18 @@ const edit = props => {
 			<div className={ mainClasses } style={ mainStyle } aria-hidden="true">
 				<div className="ugb-separator__top-pad" style={ topPadStyle }></div>
 				<div className="ugb-separator__svg-wrapper" style={ svgWrapperStyle }>
-					{ layer1Shadow && <Shadow preserveAspectRatio="none" style={ layer1Style } /> }
-					<Separator preserveAspectRatio="none" style={ layer1Style } />
+					{ layer1Shadow && (
+						<Shadow
+							className="ugb-separator__shadow"
+							preserveAspectRatio="none"
+							style={ layer1Style }
+						/>
+					) }
+					<Separator
+						className="ugb-separator__layer-1"
+						preserveAspectRatio="none"
+						style={ layer1Style }
+					/>
 					{ applyFilters( 'stackable.separator.edit.output.layers', null, design, props ) }
 				</div>
 				<div className="ugb-separator__bottom-pad" style={ bottomPadStyle }></div>
