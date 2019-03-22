@@ -19,6 +19,13 @@
 	}
 	.ugb-separator__svg-wrapper {
 		position: relative;
+		display: flex;
+    	align-items: flex-end;
+	}
+	.ugb-separator__svg-inner {
+		position: relative;
+		height: 100%;
+		width: 100%;
 	}
 	svg {
 		height: 100%;
@@ -49,11 +56,8 @@
 	}
 
 	@media screen and (max-width: $break-large) {
-		.ugb-separator__svg-wrapper {
+		.ugb-separator__svg-inner {
 			max-height: 20vw;
-		}
-		.ugb-separator__top-pad, .ugb-separator__bottom-pad {
-			max-height: 10vw;
 		}
 	}
 }

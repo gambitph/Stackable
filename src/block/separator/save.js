@@ -67,9 +67,11 @@ const save = props => {
 			{ applyFilters( 'stackable.separator.save.output.before', null, design, props ) }
 			<div className="ugb-separator__top-pad" style={ topPadStyle }></div>
 			<div className="ugb-separator__svg-wrapper" style={ svgWrapperStyle }>
-				{ layer1Shadow && <Shadow preserveAspectRatio="none" style={ layer1Style } /> }
-				<Separator preserveAspectRatio="none" style={ layer1Style } />
-				{ applyFilters( 'stackable.separator.save.output.layers', null, design, props ) }
+				<div className="ugb-separator__svg-inner">
+					{ layer1Shadow && <Shadow preserveAspectRatio="none" style={ layer1Style } /> }
+					<Separator preserveAspectRatio="none" style={ layer1Style } />
+					{ applyFilters( 'stackable.separator.save.output.layers', null, design, props ) }
+				</div>
 			</div>
 			<div className="ugb-separator__bottom-pad" style={ bottomPadStyle }></div>
 		</div>
