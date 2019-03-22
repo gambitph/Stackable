@@ -120,6 +120,9 @@ You will have to redo all your blocks
 
 == Changelog ==
 
+= 1.15.0 =
+* New: Separator block with 10 designs
+
 = 1.14.0 =
 [Video Backgrounds & Background Gradients](https://wpstackable.com/blog/video-backgrounds-background-gradients/)
 

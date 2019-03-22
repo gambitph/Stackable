@@ -137,7 +137,7 @@ export const name = 'ugb/separator'
 
 export const settings = {
 	title: __( 'Separator' ),
-	description: __( 'Specially designed separator to be placed between containers and content.' ),
+	description: __( 'A fancy separator to be placed between containers and content.' ),
 	icon: SeparatorIcon,
 	category: 'stackable',
 	keywords: [
