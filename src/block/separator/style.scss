@@ -1,0 +1,58 @@
+/**
+ * Frontend styles for the Separator Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+@import "common";
+
+.ugb-separator {
+	box-sizing: content-box;
+	&.ugb-separator--flip-vertical {
+		transform: scaleY(-1);
+	}
+	&.ugb-separator--flip-horizontal {
+		transform: scaleX(-1);
+	}
+	&.ugb-separator--flip-vertical.ugb-separator--flip-horizontal {
+		transform: scaleY(-1) scaleX(-1);
+	}
+	.ugb-separator__svg-wrapper {
+		position: relative;
+	}
+	svg {
+		height: 100%;
+		width: 100%;
+		display: block;
+		fill: #abb8c3;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 3;
+		transform-origin: bottom;
+	}
+	svg.ugb-separator--no-shadow *:not(:last-child) {
+		display: none;
+	}
+	.ugb-separator__top-pad, .ugb-separator__bottom-pad {
+		height: 0;
+		width: 100%;
+	}
+	.ugb-separator__top-pad {
+		margin-bottom: -1px; // Prevent white lines.
+	}
+	.ugb-separator__bottom-pad {
+		margin-top: -1px; // Prevent white lines.
+		background: #abb8c3;
+	}
+
+	@media screen and (max-width: $break-large) {
+		.ugb-separator__svg-wrapper {
+			max-height: 20vw;
+		}
+		.ugb-separator__top-pad, .ugb-separator__bottom-pad {
+			max-height: 10vw;
+		}
+	}
+}

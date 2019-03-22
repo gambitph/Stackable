@@ -19,6 +19,7 @@ import SVGImageBoxIcon from './images/image-box-icon.svg'
 import SVGNotificationIcon from './images/notification-icon.svg'
 import SVGNumberBoxIcon from './images/number-box-icon.svg'
 import SVGPricingBoxIcon from './images/pricing-box-icon.svg'
+import SVGSeparatorIcon from './images/separator-icon.svg'
 import SVGSpacerIcon from './images/spacer-icon.svg'
 import SVGTeamMemberIcon from './images/team-member-icon.svg'
 import SVGTestimonialIcon from './images/testimonial-icon.svg'
@@ -131,6 +132,10 @@ export const NumberBoxIcon = () => {
 
 export const PricingBoxIcon = () => {
 	return colorizeIcon( <SVGPricingBoxIcon width="20" height="20" /> )
+}
+
+export const SeparatorIcon = () => {
+	return colorizeIcon( <SVGSeparatorIcon width="20" height="20" /> )
 }
 
 export const SpacerIcon = () => {
