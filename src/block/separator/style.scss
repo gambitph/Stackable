@@ -7,6 +7,7 @@
 
 .ugb-separator {
 	box-sizing: content-box;
+	overflow-x: hidden;
 	&.ugb-separator--flip-vertical {
 		transform: scaleY(-1);
 	}
