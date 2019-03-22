@@ -115,3 +115,8 @@ $shadows: ( none )
 	max-width: var(--content-width);
 	margin: 0 auto;
 }
+
+// Make sure all our blocks are at the same level. Mainly for our separator to work.
+div[class^="wp-block-"] {
+	z-index: 1;
+}
