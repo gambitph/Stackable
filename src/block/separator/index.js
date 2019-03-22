@@ -118,27 +118,6 @@ export const schema = {
 		default: 0.5,
 	},
 
-	color: {
-		type: 'string',
-		default: '',
-	},
-	color2: {
-		type: 'string',
-		default: '',
-	},
-	color3: {
-		type: 'string',
-		default: '',
-	},
-	shadow: {
-		type: 'boolean',
-		default: false,
-	},
-	inverted: {
-		type: 'boolean',
-		default: false,
-	},
-
 	// Custom CSS attributes.
 	customCSSUniqueID: {
 		type: 'string',
