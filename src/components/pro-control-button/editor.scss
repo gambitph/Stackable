@@ -10,6 +10,7 @@
 	cursor: pointer;
 	transition: all 0.3s ease-in-out;
 	border: none;
+	outline: none;
 
 	.ugb-pro-control-more-dots__dot {
 		width: 6px;
@@ -20,7 +21,7 @@
 		transition: all 0.3s ease-in-out;
 	}
 
-	&:hover {
+	&:hover, &:focus {
 		background: #eee;
 		.ugb-pro-control-more-dots__dot {
 			background: #555;
