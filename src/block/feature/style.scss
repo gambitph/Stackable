@@ -26,6 +26,9 @@
 	&.ugb-invert .ugb-feature-wrapper { // Old class.
 		flex-direction: row-reverse;
 	}
+	.ugb-feature__image { // Fix for IE11 stretching images vertically.
+		min-height: 1px;
+	}
 	.ugb-feature__image-side,
 	.ugb-feature-image-side {
 		align-items: center;
