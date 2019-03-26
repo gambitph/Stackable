@@ -1,4 +1,9 @@
-import { ColorPaletteControl, DesignPanelBody, ProControl } from '@stackable/components'
+import {
+	ColorPaletteControl,
+	DesignPanelBody,
+	ProControl,
+	ProControlButton,
+} from '@stackable/components'
 import {
 	InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/editor'
@@ -105,7 +110,7 @@ const edit = props => {
 						/>
 					}
 					{ applyFilters( 'stackable.accordion.edit.designs.after', null, props ) }
-					{ showProNotice && <ProControl size="small" /> }
+					{ showProNotice && <ProControlButton /> }
 				</DesignPanelBody>
 				<PanelColorSettings
 					title={ __( 'General Settings' ) }

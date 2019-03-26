@@ -2,7 +2,7 @@ import {
 	AlignmentToolbar, BlockControls, InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/editor'
 import {
-	ButtonEdit, DesignPanelBody, PanelBackgroundSettings, PanelButtonSettings, ProControl, URLInputControl,
+	ButtonEdit, DesignPanelBody, PanelBackgroundSettings, PanelButtonSettings, ProControl, ProControlButton, URLInputControl,
 } from '@stackable/components'
 import {
 	PanelBody, RangeControl, ToggleControl,
@@ -161,7 +161,7 @@ const edit = props => {
 						/>
 					}
 					{ applyFilters( 'stackable.header.edit.designs.after', null, props ) }
-					{ showProNotice && <ProControl size="small" /> }
+					{ showProNotice && <ProControlButton /> }
 				</DesignPanelBody>
 				<PanelColorSettings
 					initialOpen={ true }

@@ -3,7 +3,7 @@ import {
 	AlignmentToolbar, BlockControls, InspectorControls, PanelColorSettings,
 } from '@wordpress/editor'
 import { dateI18n, format } from '@wordpress/date'
-import { DesignPanelBody, ProControl } from '@stackable/components/'
+import { DesignPanelBody, ProControl, ProControlButton } from '@stackable/components/'
 import { isUndefined, pickBy } from 'lodash'
 import {
 	PanelBody, Placeholder, QueryControls, RangeControl, SelectControl, Spinner, TextControl, ToggleControl,
@@ -114,7 +114,7 @@ export const _edit = props => {
 					max={ 9 }
 				/>
 				{ applyFilters( 'stackable.blog-posts.edit.designs.after', null, props ) }
-				{ showProNotice && <ProControl size="small" /> }
+				{ showProNotice && <ProControlButton /> }
 			</DesignPanelBody>
 			<PanelBody title={ __( 'Posts Settings' ) }>
 				<QueryControls

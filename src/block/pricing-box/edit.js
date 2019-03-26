@@ -1,5 +1,5 @@
 import {
-	ButtonEdit, DesignPanelBody, ImageUploadPlaceholder, PanelButtonSettings, ProControl, URLInputControl,
+	ButtonEdit, DesignPanelBody, ImageUploadPlaceholder, PanelButtonSettings, ProControl, ProControlButton, URLInputControl,
 } from '@stackable/components'
 import { descriptionPlaceholder, range } from '@stackable/util'
 import {
@@ -92,7 +92,7 @@ const edit = props => {
 						/>
 					}
 					{ applyFilters( 'stackable.pricing-box.edit.designs.after', null, props ) }
-					{ showProNotice && <ProControl size="small" /> }
+					{ showProNotice && <ProControlButton /> }
 				</DesignPanelBody>
 				<PanelBody title={ __( 'General Settings' ) }>
 					<RangeControl

@@ -3,6 +3,7 @@ import {
 	DesignPanelBody,
 	ImageUploadPlaceholder,
 	ProControl,
+	ProControlButton,
 } from '@stackable/components'
 import {
 	InspectorControls, PanelColorSettings, RichText,
@@ -111,7 +112,7 @@ const edit = props => {
 							max={ 9 }
 						/>
 					}
-					{ showProNotice && <ProControl size="small" /> }
+					{ showProNotice && <ProControlButton /> }
 				</DesignPanelBody>
 				<PanelBody title={ __( 'General Settings' ) }>
 					<RangeControl

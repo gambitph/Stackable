@@ -1,5 +1,5 @@
 import {
-	DesignPanelBody, PanelBackgroundSettings, ProControl,
+	DesignPanelBody, PanelBackgroundSettings, ProControl, ProControlButton,
 } from '@stackable/components'
 import {
 	InspectorControls, PanelColorSettings, RichText,
@@ -194,7 +194,7 @@ const edit = props => {
 							onChange={ contentWidth => setAttributes( { contentWidth } ) }
 						/>
 					}
-					{ showProNotice && <ProControl size="small" /> }
+					{ showProNotice && <ProControlButton /> }
 				</DesignPanelBody>
 				<PanelColorSettings
 					title={ __( 'Color Settings' ) }

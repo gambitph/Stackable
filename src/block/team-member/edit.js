@@ -1,4 +1,6 @@
-import { DesignPanelBody, ImageUploadPlaceholder, ProControl } from '@stackable/components'
+import {
+	DesignPanelBody, ImageUploadPlaceholder, ProControl, ProControlButton,
+} from '@stackable/components'
 import {
 	InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/editor'
@@ -89,7 +91,7 @@ const edit = props => {
 						/>
 					}
 					{ applyFilters( 'stackable.team-member.edit.designs.after', null, props ) }
-					{ showProNotice && <ProControl size="small" /> }
+					{ showProNotice && <ProControlButton /> }
 				</DesignPanelBody>
 				<PanelBody title={ __( 'General Settings' ) }>
 					{ applyFilters( 'stackable.team-member.edit.general.before', null, design, props ) }

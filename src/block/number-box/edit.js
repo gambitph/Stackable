@@ -1,4 +1,6 @@
-import { ColorPaletteControl, DesignPanelBody, ProControl } from '@stackable/components'
+import {
+	ColorPaletteControl, DesignPanelBody, ProControl, ProControlButton,
+} from '@stackable/components'
 import { descriptionPlaceholder, range } from '@stackable/util'
 import {
 	InspectorControls, PanelColorSettings, RichText,
@@ -93,7 +95,7 @@ const edit = props => {
 							max={ 9 }
 						/>
 					}
-					{ showProNotice && <ProControl size="small" /> }
+					{ showProNotice && <ProControlButton /> }
 				</DesignPanelBody>
 				<PanelBody title={ __( 'General Settings' ) }>
 					<RangeControl

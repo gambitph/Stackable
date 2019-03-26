@@ -1,5 +1,5 @@
 import {
-	ColorPaletteControl, DesignPanelBody, PanelBackgroundSettings, ProControl, URLInputControl,
+	ColorPaletteControl, DesignPanelBody, PanelBackgroundSettings, ProControl, ProControlButton, URLInputControl,
 } from '@stackable/components'
 import { getPlayButton, playButtonTypes } from './util'
 import { PanelBody, RangeControl, SelectControl } from '@wordpress/components'
@@ -85,7 +85,7 @@ const edit = props => {
 						max={ 9 }
 					/>
 					{ applyFilters( 'stackable.video-popup.edit.designs.after', null, props ) }
-					{ showProNotice && <ProControl size="small" /> }
+					{ showProNotice && <ProControlButton /> }
 				</DesignPanelBody>
 				<PanelBody title={ __( 'General Settings' ) }>
 					<SelectControl

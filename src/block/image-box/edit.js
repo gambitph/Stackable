@@ -2,7 +2,7 @@ import {
 	AlignmentToolbar, BlockControls, InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/editor'
 import {
-	DesignPanelBody, ImageUploadPlaceholder, ProControl, URLInputControl, VerticalAlignmentToolbar,
+	DesignPanelBody, ImageUploadPlaceholder, ProControl, ProControlButton, URLInputControl, VerticalAlignmentToolbar,
 } from '@stackable/components'
 import {
 	PanelBody, RangeControl, SelectControl,
@@ -99,7 +99,7 @@ const edit = props => {
 						min={ 0 }
 						max={ 9 }
 					/>
-					{ showProNotice && <ProControl size="small" /> }
+					{ showProNotice && <ProControlButton /> }
 				</DesignPanelBody>
 				<PanelBody title={ __( 'General Settings' ) }>
 					<RangeControl

@@ -2,7 +2,7 @@ import {
 	AlignmentToolbar, BlockControls, InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/editor'
 import {
-	ButtonEdit, ColorPaletteControl, DesignPanelBody, ImageUploadPlaceholder, PanelButtonSettings, ProControl, URLInputControl,
+	ButtonEdit, ColorPaletteControl, DesignPanelBody, ImageUploadPlaceholder, PanelButtonSettings, ProControl, ProControlButton, URLInputControl,
 } from '@stackable/components'
 import { PanelBody, RangeControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
@@ -113,7 +113,7 @@ const edit = props => {
 						max={ 9 }
 					/>
 					{ applyFilters( 'stackable.card.edit.designs.after', null, props ) }
-					{ showProNotice && <ProControl size="small" /> }
+					{ showProNotice && <ProControlButton /> }
 				</DesignPanelBody>
 				<PanelColorSettings
 					title={ __( 'Text Colors' ) }

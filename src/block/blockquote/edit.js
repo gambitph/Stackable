@@ -1,7 +1,9 @@
 import {
 	BaseControl, PanelBody, RangeControl, ToggleControl, Toolbar,
 } from '@wordpress/components'
-import { DesignPanelBody, PanelBackgroundSettings, ProControl } from '@stackable/components'
+import {
+	DesignPanelBody, PanelBackgroundSettings, ProControl, ProControlButton,
+} from '@stackable/components'
 import {
 	InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/editor'
@@ -159,7 +161,7 @@ const edit = props => {
 						/>
 					}
 					{ applyFilters( 'stackable.blockquote.edit.designs.after', null, props ) }
-					{ showProNotice && <ProControl size="small" /> }
+					{ showProNotice && <ProControlButton /> }
 				</DesignPanelBody>
 				<PanelColorSettings
 					title={ __( 'General Settings' ) }

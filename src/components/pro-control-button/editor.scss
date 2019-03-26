@@ -1,0 +1,38 @@
+.ugb-pro-control-more-dots {
+	display: flex;
+    background: #fff;
+    margin: 0 auto;
+    width: 50px;
+    justify-content: center;
+    border-radius: 25px;
+    height: 25px;
+    align-items: center;
+	cursor: pointer;
+	transition: all 0.3s ease-in-out;
+	border: none;
+
+	.ugb-pro-control-more-dots__dot {
+		width: 6px;
+		height: 6px;
+		background: #aaa;
+		border-radius: 100%;
+		margin: 0 2px;
+		transition: all 0.3s ease-in-out;
+	}
+
+	&:hover {
+		background: #eee;
+		.ugb-pro-control-more-dots__dot {
+			background: #555;
+		}
+	}
+}
+
+.ugb-pro-control-button__wrapper {
+	max-height: 800px;
+	transition: all 0.3s ease-in-out;
+	overflow: hidden;
+	&.ugb-pro-control-button--hidden {
+		max-height: 0;
+	}
+}

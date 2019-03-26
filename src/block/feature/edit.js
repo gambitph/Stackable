@@ -2,7 +2,7 @@ import {
 	AlignmentToolbar, BlockControls, InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/editor'
 import {
-	ButtonEdit, DesignPanelBody, ImageUploadPlaceholder, PanelBackgroundSettings, PanelButtonSettings, ProControl, URLInputControl,
+	ButtonEdit, DesignPanelBody, ImageUploadPlaceholder, PanelBackgroundSettings, PanelButtonSettings, ProControl, ProControlButton, URLInputControl,
 } from '@stackable/components'
 import {
 	PanelBody, RangeControl, ToggleControl,
@@ -145,7 +145,7 @@ const edit = props => {
 							onChange={ contentWidth => setAttributes( { contentWidth } ) }
 						/>
 					}
-					{ showProNotice && <ProControl size="small" /> }
+					{ showProNotice && <ProControlButton /> }
 				</DesignPanelBody>
 				<PanelColorSettings
 					initialOpen={ true }
