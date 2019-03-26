@@ -122,6 +122,8 @@ You will have to redo all your blocks
 
 = 1.15.0 =
 * New: Separator block with 10 designs
+* Fixed: IE11 stretching images vertically in the Feature block
+* Change: Replaced removed small Premium notices with 3-dot toggle buttons
 
 = 1.14.0 =
 [Video Backgrounds & Background Gradients](https://wpstackable.com/blog/video-backgrounds-background-gradients/)
