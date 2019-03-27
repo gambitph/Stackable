@@ -27,7 +27,7 @@
 	.ugb-separator__svg-wrapper {
 		position: relative;
 		display: flex;
-    	align-items: flex-end;
+		align-items: flex-end;
 	}
 	.ugb-separator__svg-inner {
 		position: relative;
@@ -50,7 +50,8 @@
 	svg.ugb-separator--no-shadow *:not(:last-child) {
 		display: none;
 	}
-	.ugb-separator__top-pad, .ugb-separator__bottom-pad {
+	.ugb-separator__top-pad,
+	.ugb-separator__bottom-pad {
 		height: 0;
 		width: 100%;
 	}

@@ -1,12 +1,12 @@
 .ugb-pro-control-more-dots {
 	display: flex;
-    background: #fff;
-    margin: 0 auto;
-    width: 50px;
-    justify-content: center;
-    border-radius: 25px;
-    height: 25px;
-    align-items: center;
+	background: #fff;
+	margin: 0 auto;
+	width: 50px;
+	justify-content: center;
+	border-radius: 25px;
+	height: 25px;
+	align-items: center;
 	cursor: pointer;
 	transition: all 0.3s ease-in-out;
 	border: none;
@@ -21,7 +21,8 @@
 		transition: all 0.3s ease-in-out;
 	}
 
-	&:hover, &:focus {
+	&:hover,
+	&:focus {
 		background: #eee;
 		.ugb-pro-control-more-dots__dot {
 			background: #555;
