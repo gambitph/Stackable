@@ -1,0 +1,31 @@
+.ugb-heading-buttons-control {
+	.components-button-group {
+		width: 100%;
+		display: flex;
+	}
+	.components-button {
+		width: 100%;
+		text-align: center;
+		display: block;
+		&:nth-child(1) {
+			font-weight: bold;
+			font-size: 1.1em;
+		}
+		&:nth-child(2) {
+			font-weight: bold;
+		}
+		&:nth-child(3) {
+			font-size: 0.9em;
+			font-weight: bold;
+		}
+		&:nth-child(4) {
+			font-size: 0.8em;
+		}
+		&:nth-child(5) {
+			font-size: 0.7em;
+		}
+		&:nth-child(6) {
+			font-size: 0.6em;
+		}
+	}
+}

@@ -46,5 +46,6 @@ module.exports = {
 		shallow: true,
 		btoa: true,
 		alert: true,
+		Element: true,
 	}
 };

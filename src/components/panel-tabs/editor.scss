@@ -1,0 +1,76 @@
+.ugb-panel-tabs {
+	display: grid !important;
+	grid-template-columns: 1fr 1fr 1fr;
+	button {
+		outline: none !important;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding: 12px 0 !important;
+		height: auto;
+		border-bottom: 3px solid transparent;
+		svg {
+			margin: 5px;
+			height: 20px;
+			color: #555d66;
+		}
+		&.is-active {
+			background: #fafafa;
+			background: linear-gradient(to bottom, #fafafa, #fff 70%);
+		}
+	}
+}
+
+// Panels can become hard to decipher, separate them a bit to make things easier to see.
+.ugb-panel-tabs {
+	border-bottom: 1px solid #e2e4e7 !important;
+}
+[data-ugb-tab] > * {
+	.components-panel__body:not(.ugb-panel-tabs) {
+		box-shadow: 0 -12px 0 #f0f3f5;
+		margin-top: 12px;
+		border-bottom: 1px solid #e2e4e7;
+	}
+}
+.edit-post-sidebar.ugb--has-panel-tabs {
+	background-color: #f0f3f5;
+	> .components-panel {
+		border: 0;
+	}
+	.edit-post-settings-sidebar__panel-block .components-panel__body:last-child {
+		margin-bottom: 0;
+	}
+}
+
+// Fixes the small gap at the bottom of the panel tabs
+// when other panels further below are hidden.
+[data-ugb-tab] > * {
+	padding-bottom: 0 !important;
+}
+
+[data-ugb-tab="layout"] {
+	.ugb-inspector-panel-controls:not(.ugb-panel-layout) {
+		display: none;
+	}
+	// Advanced Gutenberg tab is always in advanced, hide it.
+	.editor-block-inspector__advanced {
+		display: none;
+	}
+}
+
+[data-ugb-tab="style"] {
+	.ugb-inspector-panel-controls:not(.ugb-panel-style) {
+		display: none;
+	}
+	// Advanced Gutenberg tab is always in advanced, hide it.
+	.editor-block-inspector__advanced {
+		display: none;
+	}
+}
+
+[data-ugb-tab="advanced"] {
+	.ugb-inspector-panel-controls:not(.ugb-panel-advanced) {
+		display: none;
+	}
+}

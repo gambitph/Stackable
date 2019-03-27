@@ -1,0 +1,28 @@
+.ugb-four-number-control__wrapper {
+	display: grid;
+	grid-gap: 4px;
+	grid-template-columns: 1fr 1fr 1fr 1fr min-content;
+	align-items: flex-start;
+	button {
+		padding: 6px !important;
+		&.ugb--is-locked,
+		&.ugb--is-locked:hover {
+			background: #aaa !important;
+			color: #fff !important;
+		}
+	}
+}
+.ugb-four-number-control__label {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	span {
+		font-size: 9px;
+		opacity: 0.8;
+	}
+	input {
+		margin: 0;
+		width: 100%;
+	}
+}
