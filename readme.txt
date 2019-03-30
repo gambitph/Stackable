@@ -21,6 +21,7 @@ Stackable provides feature-rich blocks that gives you more design options for yo
 ## Kick-ass blocks
 
 - Container Block - [View Block](https://wpstackable.com/container-block/)
+- Separator Block - [View Block](https://wpstackable.com/separator-block/)
 - Posts Block - [View Block](https://wpstackable.com/blog-posts-block/)
 - Feature Grid Block — [View Block](https://wpstackable.com/feature-grid-block/)
 - Accordion Block - [View Block](https://wpstackable.com/accordion-block/)
