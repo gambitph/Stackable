@@ -8,7 +8,6 @@
 .ugb-separator {
 	box-sizing: content-box;
 	position: relative;
-	overflow-x: hidden;
 
 	// Make sure we are 1 level above all the other blocks.
 	&.ugb-separator.ugb-separator.ugb-separator {
@@ -28,6 +27,8 @@
 		position: relative;
 		display: flex;
 		align-items: flex-end;
+		overflow-x: hidden;
+		overflow-y: visible;
 	}
 	.ugb-separator__svg-inner {
 		position: relative;
