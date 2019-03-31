@@ -46,6 +46,7 @@ Stackable provides feature-rich blocks that gives you more design options for yo
 
 ### News Article Updates
 
+- [v1.15 Separators Are Here](https://wpstackable.com/blog/separators-are-here/)
 - [v1.14 Video Backgrounds & Background Gradients](https://wpstackable.com/blog/video-backgrounds-background-gradients/)
 - [v1.13 Introducing Stackable Premium](https://wpstackable.com/blog/introducing-stackable-premium/)
 - [v1.12 Stackable Is Now in GitHub](https://wpstackable.com/blog/stackable-is-now-in-github/)
@@ -122,6 +123,8 @@ You will have to redo all your blocks
 == Changelog ==
 
 = 1.15.0 =
+[Separators Are Here](https://wpstackable.com/blog/separators-are-here/)
+
 * New: Separator block with 10 designs
 * Fixed: IE11 stretching images vertically in the Feature block
 * Change: Replaced removed small Premium notices with 3-dot toggle buttons
