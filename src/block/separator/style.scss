@@ -30,6 +30,12 @@
 		overflow-x: hidden;
 		overflow-y: visible;
 	}
+	&.alignfull {
+		overflow: visible;
+		.ugb-separator__svg-wrapper {
+			overflow: visible;
+		}
+	}
 	.ugb-separator__svg-inner {
 		position: relative;
 		height: 100%;

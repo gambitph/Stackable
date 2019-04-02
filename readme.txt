@@ -122,6 +122,9 @@ You will have to redo all your blocks
 
 == Changelog ==
 
+= 1.15.1 =
+* Fixed: Separator block clipping when full-width
+
 = 1.15.0 =
 [Separators Are Here](https://wpstackable.com/blog/separators-are-here/)
 
