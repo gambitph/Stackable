@@ -113,7 +113,7 @@ if ( ! function_exists( 'stackable_should_show_pro_pricing_popup' ) ) {
 		$activation_time = get_option( 'stackable_activation_date' );
 		$elapsed_time = time() - absint( $activation_time );
 
-		if ( $elapsed_time < 209600 ) { // 14 * 24 * 60 * 60
+		if ( $elapsed_time < 1209600 ) { // 14 * 24 * 60 * 60
 			return false;
 		}
 
