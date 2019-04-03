@@ -78,52 +78,6 @@ if ( ! function_exists( 'stackable_should_show_pro_notices' ) ) {
 	}
 }
 
-if ( ! function_exists( 'stackable_should_show_pro_pricing_popup' ) ) {
-
-	/**
-	 * Should we show the premium price popup? This is only shown after 14 days of using free.
-	 *
-	 * @return Boolean
-	 */
-	function stackable_should_show_pro_pricing_popup() {
-		if ( ! STACKABLE_SHOW_PRO_NOTICES || sugb_fs()->can_use_premium_code() ) {
-			return false;
-		}
-
-		if ( ! function_exists( 'get_current_screen' ) ) {
-			return false;
-		}
-
-		$screen = get_current_screen();
-		if ( $screen->base !== 'post' ) {
-			return false;
-		}
-		if ( $screen->post_type !== 'post' && $screen->post_type !== 'page' ) {
-			return false;
-		}
-
-		if ( get_option( 'stackable_pro_price_popup' ) ) {
-			return false;
-		}
-
-		if ( get_option( 'stackable_activation_date' ) === false ) {
-			return false;
-		}
-
-		$activation_time = get_option( 'stackable_activation_date' );
-		$elapsed_time = time() - absint( $activation_time );
-
-		if ( $elapsed_time < 1209600 ) { // 14 * 24 * 60 * 60
-			return false;
-		}
-
-		// Don't show again.
-		update_option( 'stackable_pro_price_popup', 1 );
-
-		return true;
-	}
-}
-
 if ( ! class_exists( 'Stackable_Go_Premium_Notification' ) ) {
     class Stackable_Go_Premium_Notification {
 

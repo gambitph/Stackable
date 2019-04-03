@@ -125,6 +125,7 @@ You will have to redo all your blocks
 = 1.15.1 =
 * Fixed: Separator block clipping when full-width
 * Fixed: Typo in background image help text
+* Change: Removed promotional popup
 
 = 1.15.0 =
 [Separators Are Here](https://wpstackable.com/blog/separators-are-here/)
