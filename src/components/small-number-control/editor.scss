@@ -1,0 +1,10 @@
+.ugb-small-number-control {
+	.components-base-control__field {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	input {
+		width: 80px;
+	}
+}

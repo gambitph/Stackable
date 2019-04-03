@@ -1,5 +1,6 @@
 import { BaseControl, Dashicon, IconButton } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
+import BaseControlMultiLabel from '../base-control-multi-label'
 import classnames from 'classnames'
 import { Component } from '@wordpress/element'
 import { withInstanceId } from '@wordpress/compose'
@@ -91,6 +92,19 @@ class FourNumberControl extends Component {
 	}
 
 	componentDidUpdate( prevProps, prevState ) {
+		if ( this.props.top !== prevProps.top ) {
+			this.setState( { top: this.props.top } )
+		}
+		if ( this.props.right !== prevProps.right ) {
+			this.setState( { right: this.props.right } )
+		}
+		if ( this.props.bottom !== prevProps.bottom ) {
+			this.setState( { bottom: this.props.bottom } )
+		}
+		if ( this.props.left !== prevProps.left ) {
+			this.setState( { left: this.props.left } )
+		}
+
 		if ( this.state.top === prevState.top &&
 			 this.state.right === prevState.right &&
 			 this.state.bottom === prevState.bottom &&
@@ -112,10 +126,16 @@ class FourNumberControl extends Component {
 
 		return (
 			<BaseControl
-				label={ this.props.label }
 				help={ this.props.help }
 				className={ classnames( 'ugb-four-number-control', this.props.className ) }
 			>
+				<BaseControlMultiLabel
+					label={ this.props.label }
+					units={ this.props.units }
+					unit={ this.props.unit }
+					onChangeUnit={ this.props.onChangeUnit }
+					screens={ this.props.screens }
+				/>
 				<div className="ugb-four-number-control__wrapper">
 					<label className="ugb-four-number-control__label" htmlFor={ `${ id }-top` }>
 						<input
@@ -181,6 +201,10 @@ FourNumberControl.defaultProps = {
 	right: '',
 	bottom: '',
 	left: '',
+	units: [ 'px' ],
+	unit: 'px',
+	onChangeUnit: () => {},
+	screens: [ 'desktop' ],
 }
 
 export default withInstanceId( FourNumberControl )

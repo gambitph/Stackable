@@ -1,0 +1,26 @@
+.ugb-base-control-multi-label__responsive {
+	display: flex;
+	margin-left: 8px;
+	button {
+		height: 12px;
+		width: 12px;
+		padding: 4px;
+		box-sizing: content-box;
+		background: #eee;
+		border-radius: 100%;
+		margin: 0 2px 0 4px;
+		svg {
+			height: 100%;
+			width: 100%;
+		}
+		&:hover, &.is-active {
+			background: #999 !important;
+			color: #fff !important;
+			border: none !important;
+			box-shadow: none !important;
+		}
+		&.is-active:not(:first-child) {
+			background: #ab5af1 !important;
+		}
+	}
+}

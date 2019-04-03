@@ -1,0 +1,30 @@
+.ugb-base-control-multi-label {
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	margin-bottom: 5px;
+}
+
+.ugb-base-control-multi-label__units {
+	top: 0;
+	right: 0;
+	display: flex;
+	button {
+		border: 0;
+		font-size: 10px;
+		margin: 0;
+		font-weight: 400;
+		outline: none;
+		color: #aaa;
+		padding: 0 6px;
+		background: transparent;
+		cursor: pointer;
+		text-transform: uppercase;
+		&:hover {
+			color: #333;
+		}
+		&.is-active {
+			color: #333;
+			text-decoration: underline;
+		}
+	}
+}
