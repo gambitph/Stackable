@@ -101,7 +101,7 @@ function PanelBackgroundSettings( props ) {
 				{ onChangeBackgroundImage && (
 					<ImageControl
 						label={ __( 'Background Image or Video' ) }
-						help={ __( 'For use .mp4 format for videos' ) }
+						help={ __( 'Use .mp4 format for videos' ) }
 						onRemove={ media => {
 							if ( onChangeBackgroundType ) {
 								onChangeBackgroundType( '' )
