@@ -142,6 +142,7 @@ ButtonEdit.Content = props => {
 				href={ url }
 				style={ style }
 				target={ newTab ? '_blank' : undefined }
+				rel={ newTab ? 'noopener noreferrer' : undefined }
 			>
 				{ icon && design !== 'link' &&
 					<SvgIcon.Content

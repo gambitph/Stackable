@@ -125,6 +125,7 @@ You will have to redo all your blocks
 = 1.15.1 =
 * Fixed: Separator block clipping when full-width
 * Fixed: Typo in background image help text
+* Fixed: Blocks become invalid if they have a button that opens in a new tab
 * Change: Removed promotional popup
 
 = 1.15.0 =
