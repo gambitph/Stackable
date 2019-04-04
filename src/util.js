@@ -91,11 +91,12 @@ export const isEditor = () => typeof window.wp !== 'undefined' && typeof window.
 /**
  * Makes a unique ID based on the block's clientID.
  *
- * @param {string} clientID The block's clientID
+ * @param {string|Object} clientID The block's clientID or block props
  *
  * @return {string} A unique ID
  */
 export const getUniqueID = clientID => {
+
 	// Create a unique ID based on the block's clientId.
 	const last7 = ( 'ugb-' + clientID.substring( clientID.length - 7 ) )
 	const first7 = ( 'ugb-' + clientID.substring( 0, 7 ) )
@@ -106,22 +107,39 @@ export const getUniqueID = clientID => {
 }
 
 /**
+ * Makes a unique ID based for a block.
+ *
+ * @param {Object} props Block props.
+ *
+ * @return {string} A unique ID for the block.
+ */
+export const getUniqueIDFromProps = props => getUniqueID( props.clientId )
+
+/**
  * Simple CSS minification.
  *
  * @see https://stackoverflow.com/questions/15411263/how-do-i-write-a-better-regexp-for-css-minification-in-php
  *
  * @param {string} css CSS to minify.
+ * @param {boolean} important Add !important to all rules.
  *
  * @return {string} Minified CSS
  */
-export const minifyCSS = css => {
-	return css.replace( /\/\*.*?\*\//g, '' ) // Comments.
+export const minifyCSS = ( css, important = false ) => {
+	const minified = css.replace( /\/\*.*?\*\//g, '' ) // Comments.
 		.replace( /\n\s*\n/g, '' ) // Comments.
 		.replace( /[\n\r \t]/g, ' ' ) // Spaces.
 		.replace( / +/g, ' ' ) // Multi-spaces.
 		.replace( / ?([,:;{}]) ?/g, '$1' ) // Extra spaces.
 		.replace( /[^\}]+\{\}/g, '' ) // Blank selectors.
 		.replace( /;}/g, '}' ) // Trailing semi-colon.
+		.trim()
+
+	if ( ! important ) {
+		return minified
+	}
+
+	return minified
 		.replace( /\s?\!important/g, '' ) // Remove all !important
 		.replace( /([;\}])/g, ' !important$1' ) // Add our own !important
 		.trim()

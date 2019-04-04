@@ -15,6 +15,7 @@ export { default as PanelAdvancedSettings } from './panel-advanced-settings'
 export { default as PanelButtonSettings } from './panel-button-settings'
 export { default as InspectorPanelControls } from './panel-tabs/inspector-panel-controls'
 export { default as PanelTabs } from './panel-tabs'
+export { default as BlockStyles } from './block-styles'
 
 // Reusable non-editor components
 export { default as DesignPanelBody } from './design-panel-body'
