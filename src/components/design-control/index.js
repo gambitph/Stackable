@@ -13,6 +13,7 @@ function DesignControl( props ) {
 	// Convert the options.
 	const fixedOptions = options.map( option => {
 		return {
+			...option,
 			label: <DesignPanelItem imageFile={ option.image } imageHoverFile={ option.hoverImage } isPro={ option.isPro } label={ option.label } />,
 			title: option.label,
 			value: option.value,

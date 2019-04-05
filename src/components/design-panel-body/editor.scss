@@ -1,0 +1,9 @@
+.ugb-design-control {
+	max-height: 30vh;
+	overflow-y: scroll;
+	padding: 0 25px;
+	.components-base-control__label {
+		margin-left: -25px;
+		margin-right: -25px;
+	}
+}
