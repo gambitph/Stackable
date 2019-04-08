@@ -64,7 +64,8 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 		wp_enqueue_script(
 			'ugb-block-js',
 			plugins_url( 'dist/editor_blocks.js', STACKABLE_FILE ),
-			array( 'ugb-block-js-vendor', 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor' ),
+			array( 'ugb-block-js-vendor', 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'wp-util' ),
+			// wp-util for wp.ajax.
 			STACKABLE_VERSION
 		);
 
@@ -81,6 +82,7 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 			'srcUrl' => untrailingslashit( plugins_url( '/', STACKABLE_FILE ) ),
 			'contentWidth' => isset( $content_width ) ? $content_width : 900,
 			'disabledBlocks' => stackable_get_disabled_blocks(),
+			'nonce' => wp_create_nonce( 'stackable' ),
 
 			// Overridable default primary color for buttons and other blocks.
 			'primaryColor' => get_theme_mod( 's_primary_color', '#2091e1' ),

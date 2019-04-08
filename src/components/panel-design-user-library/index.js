@@ -2,41 +2,72 @@
  * A Panel for pre-designed designs
  */
 
-import { Button, IconButton } from '@wordpress/components'
+import { Button, IconButton, Spinner } from '@wordpress/components'
 import { dispatch, select } from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
+import { send as ajaxSend } from '@wordpress/ajax'
 import classnames from 'classnames'
 import { Component } from '@wordpress/element'
 import { DesignPanelBody } from '@stackable/components'
 import ModalDesignManage from './modal-design-manage'
 import ModalDesignNew from './modal-design-new'
+import { nonce } from 'stackable'
 import { omit } from 'lodash'
 import SVGStar from './images/star.svg'
+
+/**
+ * Keep our ajax loaded designs here for fast getting.
+ */
+const cachedDesigns = {}
 
 class PanelDesignUserLibrary extends Component {
 	constructor() {
 		super( ...arguments )
 		this.state = {
 			isManaging: false,
+			isCreating: false,
 			isSaving: false,
+			isLoading: false,
+			firstLoad: true,
 			currentBlockAttributes: {},
-			designs: [ {
-				name: 'Test',
-				setAsDefault: false,
-				isFavorite: true,
-				attributes: {},
-			}, {
-				name: 'Me second block',
-				setAsDefault: false,
-				isFavorite: true,
-				attributes: {},
-			} ],
+			currentSelected: null,
+			designs: [],
 		}
 		this.onToggleManage = this.onToggleManage.bind( this )
 		this.onToggleNew = this.onToggleNew.bind( this )
 		this.onSaveNewDesign = this.onSaveNewDesign.bind( this )
 		this.onSaveManagedDesigns = this.onSaveManagedDesigns.bind( this )
-		this.onClick = this.onClick.bind( this )
+		this.onApplyDesign = this.onApplyDesign.bind( this )
+	}
+
+	componentDidMount() {
+		if ( cachedDesigns[ this.props.block ] ) {
+			this.setState( {
+				designs: cachedDesigns[ this.props.block ],
+				firstLoad: false,
+			} )
+			return
+		}
+
+		this.setState( { isLoading: true } )
+
+		ajaxSend( 'stackable_get_user_designs_library', {
+			success: designs => {
+				this.setState( {
+					isLoading: false,
+					designs: JSON.parse( designs ),
+					firstLoad: false,
+				} )
+			},
+			error: message => {
+				this.setState( { isLoading: false } )
+				alert( message ) // eslint-disable-line no-alert
+			},
+			data: {
+				nonce,
+				block: this.props.block,
+			},
+		} )
 	}
 
 	/**
@@ -76,9 +107,12 @@ class PanelDesignUserLibrary extends Component {
 
 	onToggleNew() {
 		const currentBlockClientID = select( 'core/editor' ).getBlockSelectionStart()
-		const attributes = select( 'core/editor' ).getBlockAttributes( currentBlockClientID )
+		const attributes = omit(
+			select( 'core/editor' ).getBlockAttributes( currentBlockClientID ),
+			this.props.ignoredAttributes,
+		)
 		this.setState( { currentBlockAttributes: attributes } )
-		this.setState( { isSaving: ! this.state.isSaving } )
+		this.setState( { isCreating: ! this.state.isCreating } )
 	}
 
 	onSaveNewDesign( newDesign ) {
@@ -100,15 +134,69 @@ class PanelDesignUserLibrary extends Component {
 		this.setState( { designs } )
 	}
 
+	onSaveChanges( index ) {
+		const currentBlockClientID = select( 'core/editor' ).getBlockSelectionStart()
+		const attributes = omit(
+			select( 'core/editor' ).getBlockAttributes( currentBlockClientID ),
+			this.props.ignoredAttributes,
+		)
+		this.setState( {
+			designs: this.state.designs.map( ( design, i ) => {
+				if ( i === index ) {
+					return {
+						...design,
+						attributes,
+					}
+				}
+				return design
+			} ),
+		} )
+	}
+
 	componentDidUpdate( prevProps, prevState ) {
 		if ( JSON.stringify( this.state.designs ) !== JSON.stringify( prevState.designs ) ) {
+			// Clear selection.
+			if ( ! this.state.designs.length ) {
+				this.setState( { currentSelected: null } )
+			}
+
 			const designs = this.fixDesignOrder()
-			// TODO save designs
-			console.log('save', designs)
+
+			// Cache our new designs.
+			cachedDesigns[ this.props.block ] = designs
+
+			// On first load, don't save our designs since the inequality above
+			// is because we just assigned our deisgns.
+			if ( prevState.firstLoad ) {
+				return
+			}
+
+			this.setState( { isSaving: true } )
+
+			ajaxSend( 'stackable_update_user_designs_library', {
+				success: () => {
+					this.setState( { isSaving: false } )
+				},
+				error: message => {
+					this.setState( { isSaving: false } )
+					alert( message ) // eslint-disable-line no-alert
+				},
+				data: {
+					nonce,
+					designs: JSON.stringify( designs ),
+					block: this.props.block,
+				},
+			} )
 		}
 	}
 
-	onClick( index ) {
+	/**
+	 * Apply the attributes of a design.
+	 *
+	 * @param {number} index The index of the design to apply
+	 */
+	onApplyDesign( index ) {
+		this.setState( { currentSelected: index } )
 		const design = this.state.designs[ index ]
 		const currentBlockClientID = select( 'core/editor' ).getBlockSelectionStart()
 		dispatch( 'core/editor' ).updateBlockAttributes( currentBlockClientID, design.attributes )
@@ -116,22 +204,27 @@ class PanelDesignUserLibrary extends Component {
 
 	render() {
 		const {
-			className = '',
-			title = __( 'Saved Block Designs' ),
-			help = __( 'Save designs to reuse them across your site. Note that using saved designs will override your current block settings.' ),
+			className,
+			title,
+			help,
 		} = this.props
 
-		const mainClasses = classnames( [ 'ugb-panel-design-settings', className ] )
+		const mainClasses = classnames( [ 'ugb-panel-design-user-library', className ] )
 
 		return (
 			<DesignPanelBody
 				{ ...omit( this.props, [ 'options' ] ) }
 				selectedOptionInTitle={ false }
-				title={ title }
+				title={ (
+					<span>
+						{ title }
+						{ ( this.state.isSaving || this.state.isLoading ) && <Spinner /> }
+					</span>
+				) }
 				className={ mainClasses }
 				help={ help }
 			>
-				{ ! this.state.designs.length && (
+				{ ! this.state.designs.length && ! this.state.isLoading && (
 					<IconButton
 						icon="plus"
 						className="ugb-panel-design-user-library__empty-save-button"
@@ -165,17 +258,47 @@ class PanelDesignUserLibrary extends Component {
 				) }
 				<div className="ugb-panel-design-user-library__designs-wrapper">
 					{ this.state.designs.map( ( design, i ) => {
+						if ( this.state.currentSelected === i ) {
+							return (
+								<div key={ i } className="ugb-panel-design-user-library__design-button">
+									{ design.name }
+									{ design.setAsDefault &&
+										<small>{ __( '(default)' ) }</small>
+									}
+									{ ! design.setAsDefault && design.isFavorite &&
+										<SVGStar size="14" role="img" aria-label={ __( 'Favorite' ) } />
+									}
+									<div>
+										<Button
+											isLink
+											isSmall
+											onClick={ () => this.onApplyDesign( i ) }
+										>
+											{ __( 'Reset' ) }
+										</Button>
+										<Button
+											isDefault
+											isSmall
+											onClick={ () => this.onSaveChanges( i ) }
+										>
+											{ __( 'Save Changes' ) }
+										</Button>
+									</div>
+								</div>
+							)
+						}
 						return (
 							<Button
 								key={ i }
-								onClick={ () => this.onClick( i ) }
+								onClick={ () => this.onApplyDesign( i ) }
+								className="ugb-panel-design-user-library__design-button"
 							>
 								{ design.name }
 								{ design.setAsDefault &&
 									<small>{ __( '(default)' ) }</small>
 								}
 								{ ! design.setAsDefault && design.isFavorite &&
-									<SVGStar size="14" role="img" aria-label={ __( 'Favorite' ) }/>
+									<SVGStar size="14" role="img" aria-label={ __( 'Favorite' ) } />
 								}
 							</Button>
 						)
@@ -188,7 +311,7 @@ class PanelDesignUserLibrary extends Component {
 						onSave={ this.onSaveManagedDesigns }
 					/>
 				) }
-				{ this.state.isSaving && (
+				{ this.state.isCreating && (
 					<ModalDesignNew
 						designs={ this.state.designs }
 						blockAttributes={ this.state.currentBlockAttributes }
@@ -200,6 +323,14 @@ class PanelDesignUserLibrary extends Component {
 			</DesignPanelBody>
 		)
 	}
+}
+
+PanelDesignUserLibrary.defaultProps = {
+	className: '',
+	title: __( 'Saved Block Designs' ),
+	help: __( 'Save designs to reuse them across your site. Note that using saved designs will override your current block settings.' ),
+	ignoredAttributes: [],
+	block: '',
 }
 
 export default PanelDesignUserLibrary
