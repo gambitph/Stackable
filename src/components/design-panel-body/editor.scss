@@ -1,9 +1,12 @@
+$padding: 30px;
+
 .ugb-design-control {
-	max-height: 30vh;
+	max-height: 40vh;
 	overflow-y: scroll;
-	padding: 0 25px;
+	padding: 0 $padding;
 	.components-base-control__label {
-		margin-left: -25px;
-		margin-right: -25px;
+		margin-left: #{ -$padding };
+		margin-right: #{ -$padding };
+		margin-bottom: 8px;
 	}
 }

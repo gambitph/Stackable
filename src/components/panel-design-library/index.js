@@ -1,5 +1,5 @@
 /**
- * A Panel for pre-designed templates
+ * A Panel for Stackable-built designs
  */
 
 import { DesignControl, DesignPanelBody } from '@stackable/components'
@@ -8,15 +8,15 @@ import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { omit } from 'lodash'
 
-function PanelTemplateSettings( props ) {
+function PanelDesignLibrary( props ) {
 	const {
 		className = '',
 		options = [],
-		title = __( 'Templates' ),
-		help = __( 'Pick a template to start from, this will override your block settings' ),
+		title = __( 'Designs' ),
+		help = __( 'Pick a design to start from, this will override your block settings' ),
 	} = props
 
-	const mainClasses = classnames( [ 'ugb-panel-template-settings', className ] )
+	const mainClasses = classnames( [ 'ugb-panel-design-settings', className ] )
 
 	if ( ! options.length ) {
 		return null
@@ -44,9 +44,9 @@ function PanelTemplateSettings( props ) {
 					{ ...omit( props, [ 'help', 'title' ] ) }
 					options={ fixedOptions }
 					onChange={ i => {
-						const templateAttributes = options[ i ].value
+						const designAttributes = options[ i ].value
 						const currentBlockClientID = select( 'core/editor' ).getBlockSelectionStart()
-						dispatch( 'core/editor' ).updateBlockAttributes( currentBlockClientID, templateAttributes )
+						dispatch( 'core/editor' ).updateBlockAttributes( currentBlockClientID, designAttributes )
 					} }
 				/>
 			}
@@ -55,4 +55,4 @@ function PanelTemplateSettings( props ) {
 	)
 }
 
-export default PanelTemplateSettings
+export default PanelDesignLibrary

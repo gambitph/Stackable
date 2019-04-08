@@ -1,13 +1,13 @@
-# PanelTemplateSettings
+# PanelDesignSettings
 
-A panel for picking templates.
+A panel for picking design.
 
 # Usage
 
 ```
 import ImageDesignWave2 from './image.jpg'
 
-<PanelTemplateSettings
+<PanelDesignSettings
 	options={ [
 		{
 			image: 'https://gambitph.github.io/Stackable/assets/premium-slider/cover.jpg',
@@ -31,7 +31,7 @@ import ImageDesignWave2 from './image.jpg'
 				marginTop: '300',
 			},
 		},
-		...applyFilters( 'stackable.separator.edit.templates', [] ),
+		...applyFilters( 'stackable.separator.edit.designs', [] ),
 	] }
 />
 ```
