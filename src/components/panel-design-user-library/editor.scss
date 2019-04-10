@@ -78,6 +78,9 @@
 	span {
 		margin-bottom: 5px;
 	}
+	&.ugb--is-error {
+		color: #ca3d3d !important;
+	}
 }
 
 .ugb-modal-design-new .components-base-control {

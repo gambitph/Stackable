@@ -28,6 +28,7 @@ class PanelDesignUserLibrary extends Component {
 			isCreating: false,
 			isSaving: false,
 			isLoading: false,
+			errored: false,
 			firstLoad: true,
 			currentBlockAttributes: {},
 			currentSelected: null,
@@ -38,6 +39,33 @@ class PanelDesignUserLibrary extends Component {
 		this.onSaveNewDesign = this.onSaveNewDesign.bind( this )
 		this.onSaveManagedDesigns = this.onSaveManagedDesigns.bind( this )
 		this.onApplyDesign = this.onApplyDesign.bind( this )
+		this.ajaxLoadDesigns = this.ajaxLoadDesigns.bind( this )
+	}
+
+	ajaxLoadDesigns() {
+		this.setState( { isLoading: true } )
+
+		ajaxSend( 'stackable_get_user_designs_library', {
+			success: designs => {
+				this.setState( {
+					isLoading: false,
+					designs: JSON.parse( designs ),
+					firstLoad: false,
+					errored: false,
+				} )
+			},
+			error: message => {
+				this.setState( {
+					isLoading: false,
+					errored: true,
+				} )
+				alert( message ) // eslint-disable-line no-alert
+			},
+			data: {
+				nonce,
+				block: this.props.block,
+			},
+		} )
 	}
 
 	componentDidMount() {
@@ -49,25 +77,7 @@ class PanelDesignUserLibrary extends Component {
 			return
 		}
 
-		this.setState( { isLoading: true } )
-
-		ajaxSend( 'stackable_get_user_designs_library', {
-			success: designs => {
-				this.setState( {
-					isLoading: false,
-					designs: JSON.parse( designs ),
-					firstLoad: false,
-				} )
-			},
-			error: message => {
-				this.setState( { isLoading: false } )
-				alert( message ) // eslint-disable-line no-alert
-			},
-			data: {
-				nonce,
-				block: this.props.block,
-			},
-		} )
+		this.ajaxLoadDesigns()
 	}
 
 	/**
@@ -224,7 +234,7 @@ class PanelDesignUserLibrary extends Component {
 				className={ mainClasses }
 				help={ help }
 			>
-				{ ! this.state.designs.length && ! this.state.isLoading && (
+				{ ! this.state.designs.length && ! this.state.isLoading && ! this.state.errored && (
 					<IconButton
 						icon="plus"
 						className="ugb-panel-design-user-library__empty-save-button"
@@ -232,6 +242,16 @@ class PanelDesignUserLibrary extends Component {
 					>
 						<span>{ __( 'No saved designs yet' ) }</span>
 						<small>{ __( 'Click here to save your block\'s design' ) }</small>
+					</IconButton>
+				) }
+				{ ! this.state.isLoading && this.state.errored && (
+					<IconButton
+						icon="warning"
+						className="ugb-panel-design-user-library__empty-save-button ugb--is-error"
+						onClick={ this.ajaxLoadDesigns }
+					>
+						<span>{ __( 'Error Getting Designs' ) }</span>
+						<small>{ __( 'Click here to retry fetching your saved designs' ) }</small>
 					</IconButton>
 				) }
 				{ !! this.state.designs.length && (
