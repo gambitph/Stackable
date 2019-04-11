@@ -4,6 +4,27 @@ import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { Icon } from '@wordpress/components'
 
+const TABS = [
+	{
+		value: 'layout',
+		title: __( 'Layout' ),
+		label: __( 'Layout Tab' ),
+		icon: 'admin-settings',
+	},
+	{
+		value: 'style',
+		title: __( 'Style' ),
+		label: __( 'Style Tab' ),
+		icon: 'admin-appearance',
+	},
+	{
+		value: 'advanced',
+		title: __( 'Advanced' ),
+		label: __( 'Advanced Tab' ),
+		icon: 'admin-tools',
+	},
+]
+
 const closeAllOpenPanels = clickedEl => {
 	[].forEach.call( document.querySelectorAll( '.components-panel__body .components-panel__body-toggle' ), el => {
 		if ( el.offsetHeight === 0 ) {
@@ -83,45 +104,24 @@ class PanelTabs extends Component {
 				className="components-panel__body ugb-panel-tabs"
 				ref={ this.containerDiv }
 			>
-				<button
-					onClick={ () => this.select( 'layout' ) }
-					className={ classnames( [ 'edit-post-sidebar__panel-tab' ],
-						{
-							'is-active': this.state.activeTab === 'layout',
-						}
-					) }
-					aria-label={ __( 'Layout' ) }
-					data-label={ __( 'Layout' ) }
-				>
-					<Icon icon="admin-settings" />
-					{ __( 'Layout' ) }
-				</button>
-				<button
-					onClick={ () => this.select( 'style' ) }
-					className={ classnames( [ 'edit-post-sidebar__panel-tab' ],
-						{
-							'is-active': this.state.activeTab === 'style',
-						}
-					) }
-					aria-label={ __( 'Style' ) }
-					data-label={ __( 'Style' ) }
-				>
-					<Icon icon="admin-appearance" />
-					{ __( 'Style' ) }
-				</button>
-				<button
-					onClick={ () => this.select( 'advanced' ) }
-					className={ classnames( [ 'edit-post-sidebar__panel-tab' ],
-						{
-							'is-active': this.state.activeTab === 'advanced',
-						}
-					) }
-					aria-label={ __( 'Advanced' ) }
-					data-label={ __( 'Advanced' ) }
-				>
-					<Icon icon="admin-tools" />
-					{ __( 'Advanced' ) }
-				</button>
+				{ TABS.map( ( { value, title, label, icon }, i ) => {
+					return (
+						<button
+							key={ i }
+							onClick={ () => this.select( value ) }
+							className={ classnames( [ 'edit-post-sidebar__panel-tab' ],
+								{
+									'is-active': this.state.activeTab === value,
+								}
+							) }
+							aria-label={ label }
+							data-label={ label }
+						>
+							<Icon icon={ icon } />
+							{ title }
+						</button>
+					)
+				} ) }
 			</div>
 		)
 	}
