@@ -1,16 +1,14 @@
 import './pro'
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import {
-	ColorPaletteControl, DesignPanelBody, FourNumberControl, InspectorPanelControls, PanelTabs, WhenResponsiveScreen, BlockStyles, PanelDesignLibrary, PanelDesignUserLibrary,
-} from '@stackable/components'
-import {
-	PanelBody, RangeControl, ToggleControl,
-} from '@wordpress/components'
+import { ColorPaletteControl, DesignPanelBody, PanelDesignLibrary, PanelDesignUserLibrary } from '@stackable/components'
+import { PanelBody, RangeControl, ToggleControl } from '@wordpress/components'
 import { separators, shadows } from './separators'
+import { withAdvancedSpacing, withBlockStyles, withMainClassname, withTabbedInspector } from '@stackable/higher-order'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
+import { compose } from '@wordpress/compose'
+import createStyles from './style'
 import { Fragment } from '@wordpress/element'
-import { getUniqueIDFromProps } from '@stackable/util'
 import ImageDesignCurve1 from './images/curve-1.png'
 import ImageDesignCurve2 from './images/curve-2.png'
 import ImageDesignCurve3 from './images/curve-3.png'
@@ -21,14 +19,10 @@ import ImageDesignSlant2 from './images/slant-2.png'
 import ImageDesignWave1 from './images/wave-1.png'
 import ImageDesignWave2 from './images/wave-2.png'
 import ImageDesignWave3 from './images/wave-3.png'
-import { InspectorControls } from '@wordpress/editor'
-import createStyles from './style'
 import { name as blockName } from './'
-import { withAdvancedSpacing, withBlockStyles, withMainClassname, withTabbedInspector } from '@stackable/higher-order'
-import { compose } from '@wordpress/compose'
 
 addFilter( 'stackable.separator.edit.inspector.layout.before', 'stackable/separator', ( output, props ) => {
-	const { className, setAttributes } = props
+	const { setAttributes } = props
 	const {
 		design = 'wave-1',
 	} = props.attributes
@@ -86,10 +80,9 @@ addFilter( 'stackable.separator.edit.inspector.layout.before', 'stackable/separa
 } )
 
 addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separator', ( output, props ) => {
-	const { className, setAttributes } = props
+	const { setAttributes } = props
 	const {
 		height,
-		design = 'wave-1',
 		marginTop = 0,
 		marginBottom = 0,
 		backgroundColor = '',
@@ -249,6 +242,6 @@ const edit = props => {
 export default compose(
 	withMainClassname,
 	withTabbedInspector,
-	withAdvancedSpacing,
+	withAdvancedSpacing(),
 	withBlockStyles( createStyles ),
 )( edit )

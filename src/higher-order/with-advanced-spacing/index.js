@@ -5,7 +5,7 @@ import { __ } from '@wordpress/i18n'
 import { createHigherOrderComponent } from '@wordpress/compose'
 import { PanelBody } from '@wordpress/components'
 
-const withAdvancedSpacing = createHigherOrderComponent(
+const withAdvancedSpacing = spacingSelector => createHigherOrderComponent(
 	WrappedComponent => class extends Component {
 		constructor() {
 			super( ...arguments )
@@ -231,11 +231,11 @@ const withAdvancedSpacing = createHigherOrderComponent(
 				mobilePaddingUnit = 'px',
 			} = props.attributes
 
-			const blockClass = props.name.replace( /\//g, '-' )
+			const blockClass = spacingSelector ? spacingSelector : `.${ props.mainClassName }`
 			styleObject = {
 				...styleObject,
-				[ `.${ blockClass }` ]: {
-					...styleObject[ `.${ blockClass }` ],
+				[ blockClass ]: {
+					...styleObject[ blockClass ],
 					marginTop: marginTop !== '' ? `${ marginTop }${ marginUnit }` : undefined,
 					marginRight: marginRight !== '' ? `${ marginRight }${ marginUnit }` : undefined,
 					marginBottom: marginBottom !== '' ? `${ marginBottom }${ marginUnit }` : undefined,
@@ -247,8 +247,8 @@ const withAdvancedSpacing = createHigherOrderComponent(
 					paddingLeft: paddingLeft !== '' ? `${ paddingLeft }${ paddingUnit }` : undefined,
 				},
 				tablet: {
-					[ `.${ blockClass }` ]: {
-						...( styleObject.tablet ? styleObject.tablet[ `.${ blockClass }` ] : {} ),
+					[ blockClass ]: {
+						...( styleObject.tablet ? styleObject.tablet[ blockClass ] : {} ),
 						tabletMarginTop: tabletMarginTop !== '' ? `${ tabletMarginTop }${ tabletMarginUnit }` : undefined,
 						tabletMarginRight: tabletMarginRight !== '' ? `${ tabletMarginRight }${ tabletMarginUnit }` : undefined,
 						tabletMarginBottom: tabletMarginBottom !== '' ? `${ tabletMarginBottom }${ tabletMarginUnit }` : undefined,
@@ -261,8 +261,8 @@ const withAdvancedSpacing = createHigherOrderComponent(
 					},
 				},
 				mobile: {
-					[ `.${ blockClass }` ]: {
-						...( styleObject.mobile ? styleObject.mobile[ `.${ blockClass }` ] : {} ),
+					[ blockClass ]: {
+						...( styleObject.mobile ? styleObject.mobile[ blockClass ] : {} ),
 						mobileMarginTop: mobileMarginTop !== '' ? `${ mobileMarginTop }${ mobileMarginUnit }` : undefined,
 						mobileMarginRight: mobileMarginRight !== '' ? `${ mobileMarginRight }${ mobileMarginUnit }` : undefined,
 						mobileMarginBottom: mobileMarginBottom !== '' ? `${ mobileMarginBottom }${ mobileMarginUnit }` : undefined,
@@ -280,13 +280,13 @@ const withAdvancedSpacing = createHigherOrderComponent(
 		}
 
 		componentDidMount() {
-			const blockName = this.props.name.replace( /^\w+\//g, '' )
+			const blockName = this.props.blockName
 			addFilter( `stackable.${ blockName }.edit.inspector.advanced.before`, `stackable/${ blockName }/advancedspacing`, this.advancedSpacingBefore )
 			addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/advancedstyles`, this.advancedSpacingStyles )
 		}
 
 		componentWillUnmount() {
-			const blockName = this.props.name.replace( /^\w+\//g, '' )
+			const blockName = this.props.blockName
 			removeFilter( `stackable.${ blockName }.edit.inspector.advanced.before`, `stackable/${ blockName }/advancedspacing` )
 			removeFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/advancedstyles` )
 		}

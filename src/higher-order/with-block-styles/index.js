@@ -17,13 +17,13 @@ const withBlockStyles = ( styleFunction, render = true ) => createHigherOrderCom
 				getUniqueIDFromProps( this.props ),
 			] )
 
-			const blockName = this.props.name.replace( /^\w+\//g, '' )
+			const blockName = this.props.blockName
 			const styleObject = applyFilters( `stackable.${ blockName }.styles`, styleFunction( this.props ), this.props )
 
 			const BlockStyle = (
 				<BlockStyles
 					blockUniqueClassName={ getUniqueIDFromProps( this.props ) }
-					blockMainClassName={ this.props.name.replace( /\//g, '-' ) }
+					blockMainClassName={ this.props.mainClassName }
 					style={ styleObject }
 				/>
 			)

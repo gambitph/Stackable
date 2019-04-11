@@ -5,13 +5,21 @@ import { createHigherOrderComponent } from '@wordpress/compose'
 const withMainClassname = createHigherOrderComponent(
 	WrappedComponent => class extends Component {
 		render() {
+			const mainClassName = this.props.name.replace( /\//g, '-' )
+			const blockName = this.props.name.replace( /^\w+\//g, '' )
+
 			const className = classnames( [
 				this.props.className,
-				this.props.name.replace( /\//g, '-' ),
+				mainClassName,
 			] )
 
 			return (
-				<WrappedComponent { ...this.props } className={ className } />
+				<WrappedComponent
+					{ ...this.props }
+					className={ className }
+					mainClassName={ mainClassName }
+					blockName={ blockName }
+				/>
 			)
 		}
 	},

@@ -7,7 +7,7 @@ import { InspectorControls } from '@wordpress/editor'
 const withTabbedInspector = createHigherOrderComponent(
 	WrappedComponent => class extends Component {
 		render() {
-			const blockName = this.props.name.replace( /^\w+\//g, '' )
+			const blockName = this.props.blockName
 			const { design = '' } = this.props.attributes
 
 			return (
