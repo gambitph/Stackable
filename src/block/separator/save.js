@@ -28,7 +28,7 @@ const save = props => {
 	], applyFilters( 'stackable.separator.mainclasses', {
 		'ugb-separator--flip-vertical': flipVertically,
 		'ugb-separator--flip-horizontal': flipHorizontally,
-	}, design, props ) )
+	}, props ) )
 
 	const mainStyle = {
 		backgroundColor: backgroundColor ? backgroundColor : undefined,

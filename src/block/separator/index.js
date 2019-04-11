@@ -5,8 +5,9 @@
 import { __ } from '@wordpress/i18n'
 import { disabledBlocks } from 'stackable'
 import { SeparatorIcon } from '@stackable/icons'
+import { withAdvancedSpacingAttributes } from '@stackable/higher-order'
 
-export const schema = {
+export const schema = withAdvancedSpacingAttributes( {
 	align: {
 		type: 'string',
 		default: 'full',
@@ -131,7 +132,7 @@ export const schema = {
 		type: 'string',
 		default: '',
 	},
-}
+} )
 
 export const name = 'ugb/separator'
 
