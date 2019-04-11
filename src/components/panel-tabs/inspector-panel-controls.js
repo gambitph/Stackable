@@ -2,13 +2,9 @@ import classnames from 'classnames'
 import { InspectorControls } from '@wordpress/editor'
 
 const InspectorPanelControls = props => {
-	const {
-		tab = 'layout',
-	} = props
-
 	const mainClasses = classnames( [
 		'ugb-inspector-panel-controls',
-		`ugb-panel-${ tab }`,
+		`ugb-panel-${ props.tab }`,
 	] )
 
 	return (
@@ -18,6 +14,10 @@ const InspectorPanelControls = props => {
 			</div>
 		</InspectorControls>
 	)
+}
+
+InspectorPanelControls.defaultProps = {
+	tab: 'layout',
 }
 
 export default InspectorPanelControls
