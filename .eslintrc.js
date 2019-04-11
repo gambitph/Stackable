@@ -19,7 +19,7 @@ module.exports = {
 		// Force destructuring assignments to be multiline if they have lots of variables.
 		'object-curly-newline': ["error", {
 			multiline: true,
-			minProperties: 4,
+			minProperties: 6,
 			consistent: true
 		}],
 
