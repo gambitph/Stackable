@@ -23,7 +23,7 @@ const addBlockClassNames = ( styleObject, blockMainClassName = '', blockUniqueCl
 	return Object.keys( styleObject ).reduce( ( newStyles, selector ) => {
 		const newSelector = selector.trim()
 			// Add the Unique ID at the start
-			.replace( /\s*,\s*/g, `, .${ blockUniqueClassName }` )
+			.replace( /\s*,\s*/g, `, .${ blockUniqueClassName } ` )
 
 			// The first one at the start doesn't get replaced.
 			.replace( /^(.*?)/g, `.${ blockUniqueClassName } ` )
