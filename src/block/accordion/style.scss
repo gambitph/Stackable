@@ -43,7 +43,8 @@
 }
 .ugb-accordion__text {
 	max-height: 800px;
-	transition: max-height 0.6s linear, transform 0.4s ease-in-out, opacity 0.3s ease-in-out, margin 0.1s linear;
+	max-height: var(--max-height, none); // Dynamic max-height set by JS.
+	transition: max-height 0.3s linear, transform 0.4s ease-in-out, opacity 0.3s ease-in-out, margin 0.1s linear;
 	transform: translateY(0);
 	opacity: 1;
 	margin-top: $box-hori-padding !important;
@@ -83,7 +84,7 @@ body:not(.wp-admin) .ugb-accordion:not(.ugb-accordion--open) .ugb-accordion__tex
 .ugb-accordion > input[type="checkbox"]:checked {
 	~ .ugb-accordion__text.ugb-accordion__text {
 		max-height: 800px;
-		transition: max-height 0.6s linear, transform 0.4s ease-in-out, opacity 0.3s ease-in-out, margin 0.1s linear;
+		transition: max-height 0.3s linear, transform 0.4s ease-in-out, opacity 0.3s ease-in-out, margin 0.1s linear;
 		transform: translateY(0);
 		opacity: 1;
 		margin: 35px 35px 0 !important;

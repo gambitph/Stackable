@@ -122,6 +122,9 @@ You will have to redo all your blocks
 
 == Changelog ==
 
+= 1.15.2 =
+* Fixed: Accordion now doesn't clip its content to a maximum of 800px
+
 = 1.15.1 =
 * Fixed: Separator block clipping when full-width
 * Fixed: Typo in background image help text
