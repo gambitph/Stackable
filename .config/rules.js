@@ -9,6 +9,7 @@ module.exports = [
 				// Cache compilation results in ./node_modules/.cache/babel-loader/
 				cacheDirectory: true,
 				plugins: [
+					'@babel/plugin-proposal-class-properties',
 					'@babel/plugin-transform-destructuring',
 					'@babel/plugin-proposal-object-rest-spread',
 					[

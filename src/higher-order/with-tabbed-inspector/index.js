@@ -7,8 +7,7 @@ import { InspectorControls } from '@wordpress/editor'
 const withTabbedInspector = createHigherOrderComponent(
 	WrappedComponent => class extends Component {
 		render() {
-			const blockName = this.props.blockName
-			const { design = '' } = this.props.attributes
+			const { blockName } = this.props
 
 			return (
 				<Fragment>
@@ -31,9 +30,7 @@ const withTabbedInspector = createHigherOrderComponent(
 						{ applyFilters( `stackable.${ blockName }.edit.inspector.advanced.after`, null, this.props ) }
 					</InspectorPanelControls>
 
-					{ applyFilters( `stackable.${ blockName }.edit.output.before`, null, design, this.props ) }
 					<WrappedComponent { ...this.props } />
-					{ applyFilters( `stackable.${ blockName }.edit.output.after`, null, design, this.props ) }
 				</Fragment>
 			)
 		}

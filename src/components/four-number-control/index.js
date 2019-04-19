@@ -10,10 +10,10 @@ class FourNumberControl extends Component {
 		super( ...arguments )
 		this.state = {
 			locked: typeof this.props.locked !== 'undefined' ? this.props.locked : this.props.top === this.props.left && this.props.top === this.props.bottom && this.props.top === this.props.right,
-			top: this.props.top || '',
-			right: this.props.right || '',
-			bottom: this.props.bottom || '',
-			left: this.props.left || '',
+			top: this.props.top,
+			right: this.props.right,
+			bottom: this.props.bottom,
+			left: this.props.left,
 		}
 		this.onToggleLock = this.onToggleLock.bind( this )
 		this.onChangeTop = this.onChangeTop.bind( this )

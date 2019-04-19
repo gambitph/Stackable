@@ -89,33 +89,6 @@ export const descriptionPlaceholder = length => {
 export const isEditor = () => typeof window.wp !== 'undefined' && typeof window.wp.editor !== 'undefined'
 
 /**
- * Makes a unique ID based on the block's clientID.
- *
- * @param {string|Object} clientID The block's clientID or block props
- *
- * @return {string} A unique ID
- */
-export const getUniqueID = clientID => {
-
-	// Create a unique ID based on the block's clientId.
-	const last7 = ( 'ugb-' + clientID.substring( clientID.length - 7 ) )
-	const first7 = ( 'ugb-' + clientID.substring( 0, 7 ) )
-
-	// Make sure we have a unique one.
-	const lastExists = document.querySelectorAll( `.${ last7 }` ).length > 1
-	return lastExists ? first7 : last7
-}
-
-/**
- * Makes a unique ID based for a block.
- *
- * @param {Object} props Block props.
- *
- * @return {string} A unique ID for the block.
- */
-export const getUniqueIDFromProps = props => getUniqueID( props.clientId )
-
-/**
  * Simple CSS minification.
  *
  * @see https://stackoverflow.com/questions/15411263/how-do-i-write-a-better-regexp-for-css-minification-in-php
