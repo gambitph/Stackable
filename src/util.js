@@ -104,7 +104,8 @@ export const minifyCSS = ( css, important = false ) => {
 		.replace( /[\n\r \t]/g, ' ' ) // Spaces.
 		.replace( / +/g, ' ' ) // Multi-spaces.
 		.replace( / ?([,:;{}]) ?/g, '$1' ) // Extra spaces.
-		.replace( /[^\}]+\{\}/g, '' ) // Blank selectors.
+		.replace( /[^\}\{]+\{\}/g, '' ) // Blank selectors.
+		.replace( /[^\}\{]+\{\}/g, '' ) // Blank selectors. Repeat to catch empty media queries.
 		.replace( /;}/g, '}' ) // Trailing semi-colon.
 		.trim()
 
