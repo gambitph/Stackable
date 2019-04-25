@@ -6,9 +6,11 @@
 import './icons'
 import './modules'
 import { applyFilters } from '@wordpress/hooks'
+import { compose } from '@wordpress/compose'
 import domReady from '@wordpress/dom-ready'
 import { initBlockModule } from '@stackable/modules'
 import { registerBlockType } from '@wordpress/blocks'
+import { withMainClassname } from '@stackable/higher-order'
 
 const context = require.context( './block', true, /index\.js$/ )
 const editContext = require.context( './block', true, /edit\.js$/ )
@@ -32,12 +34,15 @@ domReady( () => {
 			settings.save = saveContext( key.replace( 'index.js', 'save.js' ) ).default
 		} catch ( error ) {}
 		try {
-			settings.deprecated = deprecatedContext( key.replace( 'index.js', 'deprecated.js' ) ).default
+			settings.deprecated = deprecatedContext( key.replace( 'index.js', 'deprecated.js' ) ).default.map( deprecated => {
+				return {
+					...deprecated,
+					save: compose(
+						withMainClassname( block.name ),
+					)( deprecated.save ),
+				}
+			} )
 		} catch ( error ) {}
-
-		if ( ! block.name ) {
-			return
-		}
 
 		const blockName = block.name.replace( /^\w+\//g, '' )
 
