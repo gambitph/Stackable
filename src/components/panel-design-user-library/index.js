@@ -6,6 +6,7 @@ import { Button, IconButton, Spinner } from '@wordpress/components'
 import { dispatch, select } from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
 import { send as ajaxSend } from '@wordpress/ajax'
+import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { Component } from '@wordpress/element'
 import { DesignPanelBody } from '@stackable/components'
@@ -117,9 +118,10 @@ class PanelDesignUserLibrary extends Component {
 
 	onToggleNew() {
 		const currentBlockClientID = select( 'core/editor' ).getBlockSelectionStart()
+		const blockName = select( 'core/editor' ).getBlockName( currentBlockClientID ).replace( /^\w+\//g, '' )
 		const attributes = omit(
 			select( 'core/editor' ).getBlockAttributes( currentBlockClientID ),
-			this.props.ignoredAttributes,
+			applyFilters( 'stackable.user-design-library.save.ignore', this.props.ignoredAttributes, blockName ),
 		)
 		this.setState( { currentBlockAttributes: attributes } )
 		this.setState( { isCreating: ! this.state.isCreating } )
@@ -146,9 +148,10 @@ class PanelDesignUserLibrary extends Component {
 
 	onSaveChanges( index ) {
 		const currentBlockClientID = select( 'core/editor' ).getBlockSelectionStart()
+		const blockName = select( 'core/editor' ).getBlockName( currentBlockClientID ).replace( /^\w+\//g, '' )
 		const attributes = omit(
 			select( 'core/editor' ).getBlockAttributes( currentBlockClientID ),
-			this.props.ignoredAttributes,
+			applyFilters( 'stackable.user-design-library.save.ignore', this.props.ignoredAttributes, blockName ),
 		)
 		this.setState( {
 			designs: this.state.designs.map( ( design, i ) => {
@@ -209,7 +212,8 @@ class PanelDesignUserLibrary extends Component {
 		this.setState( { currentSelected: index } )
 		const design = this.state.designs[ index ]
 		const currentBlockClientID = select( 'core/editor' ).getBlockSelectionStart()
-		dispatch( 'core/editor' ).updateBlockAttributes( currentBlockClientID, design.attributes )
+		const attributes = applyFilters( 'stackable.user-design-library.apply.attributes', design.attributes, currentBlockClientID )
+		dispatch( 'core/editor' ).updateBlockAttributes( currentBlockClientID, attributes )
 	}
 
 	render() {
