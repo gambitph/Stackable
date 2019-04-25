@@ -5,6 +5,7 @@ export { default as VerticalAlignmentToolbar } from './vertical-alignment-toolba
 export { default as ImageUploadPlaceholder } from './image-upload-placeholder'
 export { default as URLInputControl } from './url-input-control'
 export { default as ColorPaletteControl } from './color-palette-control'
+export { default as BlendModeControl } from './blend-mode-control'
 export { default as ImageControl } from './image-control'
 export { default as AdvancedRangeControl } from './advanced-range-control'
 export { default as AdvancedSelectControl } from './advanced-select-control'
