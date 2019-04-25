@@ -10,7 +10,7 @@ const withUniqueClass = createHigherOrderComponent(
 			const { attributes, setAttributes } = this.props
 			const { uniqueClass = '' } = attributes
 
-			if ( ! uniqueClass || document.querySelectorAll( `.${ uniqueClass }` ).length > 1 ) {
+			if ( ! uniqueClass ) {
 				const newUniqueClass = createUniqueClass( this.props.clientId )
 				if ( uniqueClass !== newUniqueClass ) {
 					setAttributes( { uniqueClass: newUniqueClass } )
