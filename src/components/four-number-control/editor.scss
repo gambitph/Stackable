@@ -27,5 +27,9 @@
 		padding-left: 0 !important;
 		padding-right: 0 !important;
 		text-align: center;
+		&[disabled] {
+			background: #e5e4e8;
+			cursor: not-allowed;
+		}
 	}
 }

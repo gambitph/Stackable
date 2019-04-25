@@ -3,18 +3,34 @@ import { __ } from '@wordpress/i18n'
 import BaseControlMultiLabel from '../base-control-multi-label'
 import classnames from 'classnames'
 import { Component } from '@wordpress/element'
+import { omit } from 'lodash'
 import { withInstanceId } from '@wordpress/compose'
 
 class FourNumberControl extends Component {
 	constructor() {
 		super( ...arguments )
+
+		// The directions to omit from all saving.
+		this.omit = [
+			...( ! this.props.enableTop ? [ 'top' ] : [] ),
+			...( ! this.props.enableRight ? [ 'right' ] : [] ),
+			...( ! this.props.enableBottom ? [ 'bottom' ] : [] ),
+			...( ! this.props.enableLeft ? [ 'left' ] : [] ),
+		]
+
+		// Need to set the state first so we can check if we should lock the inputs.
 		this.state = {
-			locked: typeof this.props.locked !== 'undefined' ? this.props.locked : this.props.top === this.props.left && this.props.top === this.props.bottom && this.props.top === this.props.right,
 			top: this.props.top,
 			right: this.props.right,
 			bottom: this.props.bottom,
 			left: this.props.left,
 		}
+
+		// Locked state.
+		const values = this.getEnabledValues()
+		const isEqualValues = ! values.length ? true : values.every( value => value === values[ 0 ] )
+		this.state.locked = typeof this.props.locked !== 'undefined' ? this.props.locked : isEqualValues
+
 		this.onToggleLock = this.onToggleLock.bind( this )
 		this.onChangeTop = this.onChangeTop.bind( this )
 		this.onChangeRight = this.onChangeRight.bind( this )
@@ -22,15 +38,28 @@ class FourNumberControl extends Component {
 		this.onChangeLeft = this.onChangeLeft.bind( this )
 	}
 
+	getEnabledValues() {
+		return [
+			...( this.props.enableTop ? [ this.state.top ] : [] ),
+			...( this.props.enableRight ? [ this.state.right ] : [] ),
+			...( this.props.enableBottom ? [ this.state.bottom ] : [] ),
+			...( this.props.enableLeft ? [ this.state.left ] : [] ),
+		]
+	}
+
+	getFirstEnabledValue() {
+		return this.getEnabledValues().shift()
+	}
+
 	onToggleLock() {
 		if ( ! this.state.locked ) {
-			const value = this.state.top
-			this.setState( {
+			const value = this.getFirstEnabledValue()
+			this.setState( omit( {
 				top: value,
 				right: value,
 				bottom: value,
 				left: value,
-			} )
+			}, this.omit ) )
 		}
 		this.setState( { locked: ! this.state.locked } )
 	}
@@ -40,12 +69,12 @@ class FourNumberControl extends Component {
 		if ( ! this.state.locked ) {
 			this.setState( { top: value } )
 		} else {
-			this.setState( {
+			this.setState( omit( {
 				top: value,
 				right: value,
 				bottom: value,
 				left: value,
-			} )
+			}, this.omit ) )
 		}
 	}
 
@@ -54,12 +83,12 @@ class FourNumberControl extends Component {
 		if ( ! this.state.locked ) {
 			this.setState( { right: value } )
 		} else {
-			this.setState( {
+			this.setState( omit( {
 				top: value,
 				right: value,
 				bottom: value,
 				left: value,
-			} )
+			}, this.omit ) )
 		}
 	}
 
@@ -68,12 +97,12 @@ class FourNumberControl extends Component {
 		if ( ! this.state.locked ) {
 			this.setState( { bottom: value } )
 		} else {
-			this.setState( {
+			this.setState( omit( {
 				top: value,
 				right: value,
 				bottom: value,
 				left: value,
-			} )
+			}, this.omit ) )
 		}
 	}
 
@@ -82,12 +111,12 @@ class FourNumberControl extends Component {
 		if ( ! this.state.locked ) {
 			this.setState( { left: value } )
 		} else {
-			this.setState( {
+			this.setState( omit( {
 				top: value,
 				right: value,
 				bottom: value,
 				left: value,
-			} )
+			}, this.omit ) )
 		}
 	}
 
@@ -144,6 +173,7 @@ class FourNumberControl extends Component {
 							onChange={ this.onChangeTop }
 							aria-label={ __( 'Top' ) }
 							value={ this.state.top }
+							disabled={ ! this.props.enableTop }
 						/>
 						<span>{ __( 'Top' ) }</span>
 					</label>
@@ -154,6 +184,7 @@ class FourNumberControl extends Component {
 							onChange={ this.onChangeRight }
 							aria-label={ this.props.label }
 							value={ this.state.right }
+							disabled={ ! this.props.enableRight }
 						/>
 						<span>{ __( 'Right' ) }</span>
 					</label>
@@ -164,6 +195,7 @@ class FourNumberControl extends Component {
 							onChange={ this.onChangeBottom }
 							aria-label={ this.props.label }
 							value={ this.state.bottom }
+							disabled={ ! this.props.enableBottom }
 						/>
 						<span>{ __( 'Bottom' ) }</span>
 					</label>
@@ -174,6 +206,7 @@ class FourNumberControl extends Component {
 							onChange={ this.onChangeLeft }
 							aria-label={ this.props.label }
 							value={ this.state.left }
+							disabled={ ! this.props.enableLeft }
 						/>
 						<span>{ __( 'Left' ) }</span>
 					</label>
@@ -205,6 +238,10 @@ FourNumberControl.defaultProps = {
 	unit: 'px',
 	onChangeUnit: () => {},
 	screens: [ 'desktop' ],
+	enableTop: true,
+	enableRight: true,
+	enableBottom: true,
+	enableLeft: true,
 }
 
 export default withInstanceId( FourNumberControl )
