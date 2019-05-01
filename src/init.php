@@ -64,8 +64,9 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 		wp_enqueue_script(
 			'ugb-block-js',
 			plugins_url( 'dist/editor_blocks.js', STACKABLE_FILE ),
-			array( 'ugb-block-js-vendor', 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'wp-util' ),
 			// wp-util for wp.ajax.
+			// wp-plugins & wp-edit-post for Gutenberg plugins.
+			array( 'ugb-block-js-vendor', 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'wp-util', 'wp-plugins', 'wp-edit-post' ),
 			STACKABLE_VERSION
 		);
 
@@ -78,7 +79,7 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 		);
 
 		global $content_width;
-		wp_localize_script( 'ugb-block-js', 'stackable', array(
+		wp_localize_script( 'ugb-block-js-vendor', 'stackable', array(
 			'srcUrl' => untrailingslashit( plugins_url( '/', STACKABLE_FILE ) ),
 			'contentWidth' => isset( $content_width ) ? $content_width : 900,
 			'disabledBlocks' => stackable_get_disabled_blocks(),
@@ -95,7 +96,9 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 			              sugb_fs()->is_plan( 'professional', true ) ? 'professional' : 'business',
 		) );
 	}
-	add_action( 'enqueue_block_editor_assets', 'stackable_block_editor_assets' );
+
+	// Enqueue in a higher number so that other scripts that add on Stackable can load first. E.g. Premium.
+	add_action( 'enqueue_block_editor_assets', 'stackable_block_editor_assets', 20 );
 }
 
 if ( ! function_exists( 'stackable_block_category' ) ) {
