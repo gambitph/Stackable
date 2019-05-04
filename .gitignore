@@ -3,5 +3,6 @@ node_modules
 build
 .DS_Store
 dist
+!dist/*.json
 **/*__premium_only*
 coverage
