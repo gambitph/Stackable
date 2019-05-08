@@ -431,11 +431,11 @@ if ( ! function_exists( 'stackable_blog_posts_rest_fields' ) ) {
 		    // Category links.
 		    register_rest_field( $post_type, 'terms_list',
 			    array(
-				    'get_callback' => 'stackable_category_list',
+				    'get_callback' => 'stackable_terms_list',
 				    'update_callback' => null,
 				    'schema' => array(
-					    'description' => __( 'Category list links' ),
-					    'type' => 'string',
+					    'description' => __( 'Terms list links' ),
+					    'type' => 'array',
 				    ),
 			    )
 		    );
@@ -514,13 +514,13 @@ if ( ! function_exists( 'stackable_commments_number' ) ) {
     }
 }
 
-if ( ! function_exists( 'stackable_category_list' ) ) {
+if ( ! function_exists( 'stackable_terms_list' ) ) {
     /**
      * Get the category links.
      *
      * @since 1.7
      */
-    function stackable_category_list( $object ) {
+    function stackable_terms_list( $object ) {
     	$post = get_post( $object['id'] );
 	    $taxonomies = wp_list_filter( get_object_taxonomies( $post, 'objects' ), array( 'show_in_rest' => true ) );
 	    $data = [];
