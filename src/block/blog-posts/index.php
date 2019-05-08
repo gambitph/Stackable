@@ -21,13 +21,34 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
     function stackable_render_blog_posts_block( $attributes ) {
+    	$tax_query = array();
+    	foreach ( $attributes['taxQuery'] as $taxonomy => $term_id ) {
+    		$term = get_term( $term_id );
+    		if ( ! is_a( $term, 'WP_Term' ) ) {
+    			continue;
+		    }
+
+		    $taxonomy_object = get_taxonomies( [ 'rest_base' => $taxonomy ], 'objects' );
+    		if ( empty( $taxonomy_object ) || ! is_array( $taxonomy_object ) ) {
+			    continue;
+		    }
+
+    		$taxonomy = current( $taxonomy_object );
+
+		    $tax_query[] = array(
+			    'field' => 'term_id',
+			    'terms' => absint( $term_id ),
+			    'taxonomy' => $taxonomy->name,
+		    );
+	    }
         $recent_posts = wp_get_recent_posts(
             array(
+				'tax_query' => $tax_query,
+                'post_type' => $attributes['postType'],
                 'numberposts' => ! empty( $attributes['postsToShow'] ) ? $attributes['postsToShow'] : '',
                 'post_status' => 'publish',
                 'order' => ! empty( $attributes['order'] ) ? $attributes['order'] : '',
                 'orderby' => ! empty( $attributes['orderBy'] ) ? $attributes['orderBy'] : '',
-                'category' => ! empty( $attributes['categories'] ) ? $attributes['categories'] : '',
             )
         );
 
@@ -36,12 +57,12 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
         foreach ( $recent_posts as $post ) {
             $post_id = $post['ID'];
 
-            // Category.
-            $category = '';
-            if ( ! empty( $attributes['displayCategory'] ) ) {
-                $category = sprintf(
+            // Taxonomy.
+            $taxonomy = '';
+            if ( ! empty( $attributes['displayTaxonomy'] ) ) {
+                $taxonomy = sprintf(
                     '<div class="ugb-blog-posts__category-list">%s</div>',
-                    get_the_category_list( esc_html__( ', ', 'stackable' ), '', $post_id )
+                    get_the_term_list( $post_id, $attributes['displayTaxonomy'], '', ', ' )
                 );
             }
 
@@ -158,7 +179,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
              * This is the default basic style.
              */
             $post_markup = "<article class='ugb-blog-posts__item'>";
-            $post_markup .= $category;
+            $post_markup .= $taxonomy;
             $post_markup .= $featured_image;
             if ( $attributes['displayDate'] || $attributes['displayAuthor'] || $attributes['displayComments'] ) {
                 $post_markup .= '<aside class="entry-meta ugb-blog-posts__meta">';
@@ -182,7 +203,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
             $props = array(
 				'post_id' => $post_id,
                 'attributes' => $attributes,
-                'category' => $category,
+                'category' => $taxonomy,
                 'featured_image' => $featured_image,
                 'author' => $author,
                 'date' => $date,
@@ -349,6 +370,18 @@ if ( ! function_exists( 'stackable_register_blog_posts_block' ) ) {
 						'type' => 'string',
 						'default' => '',
 					),
+                    'postType' => array(
+	                    'type' => 'string',
+	                    'default' => 'post',
+                    ),
+	                'taxQuery' => array(
+	                	'type' => 'object',
+		                'default' => [],
+	                ),
+	                'displayTaxonomy' => array(
+	                	'type' => 'string',
+		                'default' => '',
+	                ),
                 ),
                 'render_callback' => 'stackable_render_blog_posts_block',
             )
@@ -364,66 +397,73 @@ if ( ! function_exists( 'stackable_blog_posts_rest_fields' ) ) {
      * @since 1.7
      */
     function stackable_blog_posts_rest_fields() {
+	    $post_types = get_post_types( [ 'public' => true, 'show_in_rest' => true ] );
 
-        // Featured image urls.
-        register_rest_field( 'post', 'featured_image_urls',
-            array(
-                'get_callback' => 'stackable_featured_image_urls',
-                'update_callback' => null,
-                'schema' => array(
-                    'description' => __( 'Different sized featured images' ),
-                    'type' => 'array',
-                ),
-            )
-        );
+	    foreach ( $post_types as $post_type ) {
+		    if ( $post_type === 'attachment' ) {
+			    continue;
+		    }
 
-        // Excerpt.
-        register_rest_field( 'post', 'post_excerpt_stackable',
-            array(
-                'get_callback' => 'stackable_post_excerpt',
-                'update_callback' => null,
-                'schema' => array(
-                    'description' => __( 'Post excerpt for Stackable' ),
-                    'type' => 'string',
-                ),
-            )
-        );
+		    // Featured image urls.
+		    register_rest_field( $post_type, 'featured_image_urls',
+			    array(
+				    'get_callback' => 'stackable_featured_image_urls',
+				    'update_callback' => null,
+				    'schema' => array(
+					    'description' => __( 'Different sized featured images' ),
+					    'type' => 'array',
+				    ),
+			    )
+		    );
 
-        // Category links.
-        register_rest_field( 'post', 'category_list',
-            array(
-                'get_callback' => 'stackable_category_list',
-                'update_callback' => null,
-                'schema' => array(
-                    'description' => __( 'Category list links' ),
-                    'type' => 'string',
-                ),
-            )
-        );
+		    // Excerpt.
+		    register_rest_field( $post_type, 'post_excerpt_stackable',
+			    array(
+				    'get_callback' => 'stackable_post_excerpt',
+				    'update_callback' => null,
+				    'schema' => array(
+					    'description' => __( 'Post excerpt for Stackable' ),
+					    'type' => 'string',
+				    ),
+			    )
+		    );
 
-        // Author name.
-        register_rest_field( 'post', 'author_info',
-            array(
-                'get_callback' => 'stackable_author_info',
-                'update_callback' => null,
-                'schema' => array(
-                    'description' => __( 'Author information' ),
-                    'type' => 'array',
-                ),
-            )
-        );
+		    // Category links.
+		    register_rest_field( $post_type, 'terms_list',
+			    array(
+				    'get_callback' => 'stackable_category_list',
+				    'update_callback' => null,
+				    'schema' => array(
+					    'description' => __( 'Category list links' ),
+					    'type' => 'string',
+				    ),
+			    )
+		    );
 
-        // Number of comments.
-        register_rest_field( 'post', 'comments_num',
-            array(
-                'get_callback' => 'stackable_commments_number',
-                'update_callback' => null,
-                'schema' => array(
-                    'description' => __( 'Number of comments' ),
-                    'type' => 'number',
-                ),
-            )
-        );
+		    // Author name.
+		    register_rest_field( $post_type, 'author_info',
+			    array(
+				    'get_callback' => 'stackable_author_info',
+				    'update_callback' => null,
+				    'schema' => array(
+					    'description' => __( 'Author information' ),
+					    'type' => 'array',
+				    ),
+			    )
+		    );
+
+		    // Number of comments.
+		    register_rest_field( $post_type, 'comments_num',
+			    array(
+				    'get_callback' => 'stackable_commments_number',
+				    'update_callback' => null,
+				    'schema' => array(
+					    'description' => __( 'Number of comments' ),
+					    'type' => 'number',
+				    ),
+			    )
+		    );
+	    }
     }
     add_action( 'rest_api_init', 'stackable_blog_posts_rest_fields' );
 }
@@ -481,7 +521,25 @@ if ( ! function_exists( 'stackable_category_list' ) ) {
      * @since 1.7
      */
     function stackable_category_list( $object ) {
-        return get_the_category_list( esc_html__( ', ', 'stackable' ), '', $object['id'] );
+    	$post = get_post( $object['id'] );
+	    $taxonomies = wp_list_filter( get_object_taxonomies( $post, 'objects' ), array( 'show_in_rest' => true ) );
+	    $data = [];
+	    foreach ( $taxonomies as $taxonomy ) {
+		    $_terms         = get_the_terms( $object['id'], $taxonomy->name );
+		    if ( $_terms === false || is_a( $_terms, 'WP_Error' ) ) {
+		    	continue;
+		    }
+		    $terms = array();
+		    foreach ( $_terms as $term ) {
+		    	$terms[] = array_merge(
+				    (array) $term,
+				    [ 'term_link' => get_term_link( $term ) ]
+			    );
+		    }
+		    $data[ $taxonomy->name ] = $terms ? $terms : array();
+	    }
+
+        return $data;
     }
 }
 

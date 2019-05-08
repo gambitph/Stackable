@@ -1,12 +1,21 @@
 import './designs'
+import CategorySelect from './category-select';
+import CategoriesList from './categories-list';
 import {
 	AlignmentToolbar, BlockControls, InspectorControls, PanelColorSettings,
 } from '@wordpress/editor'
 import { dateI18n, format } from '@wordpress/date'
 import { DesignPanelBody, ProControl, ProControlButton } from '@stackable/components/'
-import { isUndefined, pickBy } from 'lodash'
+import { isUndefined, pickBy, get } from 'lodash'
 import {
-	PanelBody, Placeholder, QueryControls, RangeControl, SelectControl, Spinner, TextControl, ToggleControl,
+	PanelBody,
+	Placeholder,
+	QueryControls,
+	RangeControl,
+	SelectControl,
+	Spinner,
+	TextControl,
+	ToggleControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
@@ -27,19 +36,24 @@ const featuredImageShapes = [
 
 export const _edit = props => {
 	const {
-		attributes, categoriesList, setAttributes, latestPosts, className,
-	} = props
+		attributes,
+		setAttributes,
+		latestPosts,
+		className,
+		terms,
+		postTypes,
+		postTypeTaxonomies,
+	} = props;
 	const {
 		contentAlign,
 		columns,
 		order,
 		orderBy,
-		categories,
 		postsToShow,
 		displayFeaturedImage,
 		featuredImageShape,
 		displayTitle,
-		displayCategory,
+		displayTaxonomy,
 		displayComments,
 		displayAuthor,
 		displayDate,
@@ -49,8 +63,10 @@ export const _edit = props => {
 		design,
 		borderRadius,
 		shadow,
+		taxQuery,
 		accentColor,
-	} = attributes
+		postType,
+	} = attributes;
 
 	const hasPosts = Array.isArray( latestPosts ) && latestPosts.length
 	const mainClasses = classnames( [
@@ -79,7 +95,15 @@ export const _edit = props => {
 
 	const show = applyFilters( 'stackable.blog-posts.edit.show', {
 		featuredImage: true,
-	}, design, props )
+	}, design, props );
+
+	const termEntries = Object.entries( terms );
+	const taxonomyEntries = Object.entries( postTypeTaxonomies );
+
+	const displayTaxonomyOptions = [ { label: __( 'None' ), value: '' } ]
+		.concat( taxonomyEntries
+			.map( ( [ value, { name } ] ) => ( { value, label: name } ) )
+	);
 
 	const inspectorControls = (
 		<InspectorControls>
@@ -117,14 +141,39 @@ export const _edit = props => {
 				{ showProNotice && <ProControlButton /> }
 			</DesignPanelBody>
 			<PanelBody title={ __( 'Posts Settings' ) }>
+				<SelectControl
+					label={ __( 'Post Type' ) }
+					value={ postType }
+					options={ postTypes.map( ( { name, slug } ) => ( { value: slug, label: name } ) ) }
+					onChange={ postType => {
+						setAttributes( {
+							postType,
+							taxQuery: {},
+						} )
+					} }
+				/>
+				{ Array.isArray( termEntries ) && termEntries.map( ( [ taxonomy, terms ] ) => {
+					const restBase = get( postTypeTaxonomies, [ taxonomy, 'rest_base' ], '' );
+					return Array.isArray( terms ) && <CategorySelect
+						label={ get( postTypeTaxonomies, [ taxonomy, 'name' ], '' ) }
+						categoriesList={ terms }
+						selectedCategoryId={ get( taxQuery, restBase, '' ) }
+						noOptionLabel={ __( 'All' ) }
+						onChange={ ( term ) => {
+							setAttributes( {
+								taxQuery: {
+									...taxQuery,
+									[ restBase ]: term,
+								}
+							})
+						} }
+					/>
+				} ) }
 				<QueryControls
 					{ ...{ order, orderBy } }
 					numberOfItems={ postsToShow }
-					categoriesList={ categoriesList }
-					selectedCategoryId={ categories }
 					onOrderChange={ order => setAttributes( { order } ) }
 					onOrderByChange={ orderBy => setAttributes( { orderBy } ) }
-					onCategoryChange={ value => setAttributes( { categories: '' !== value ? value : undefined } ) }
 					onNumberOfItemsChange={ postsToShow => setAttributes( { postsToShow } ) }
 				/>
 				<RangeControl
@@ -161,10 +210,11 @@ export const _edit = props => {
 					checked={ displayExcerpt }
 					onChange={ displayExcerpt => setAttributes( { displayExcerpt } ) }
 				/>
-				<ToggleControl
-					label={ __( 'Display Category' ) }
-					checked={ displayCategory }
-					onChange={ displayCategory => setAttributes( { displayCategory } ) }
+				<SelectControl
+					label={ __( 'Display Taxonomy' ) }
+					options={ displayTaxonomyOptions }
+					value={ displayTaxonomy }
+					onChange={ displayTaxonomy => setAttributes( { displayTaxonomy: displayTaxonomy === '' ? null : displayTaxonomy } ) }
 				/>
 				<ToggleControl
 					label={ __( 'Display Date' ) }
@@ -205,7 +255,7 @@ export const _edit = props => {
 						label: __( 'Accent Color' ),
 					},
 				] }
-			></PanelColorSettings>
+			/>
 			{ showProNotice &&
 				<PanelBody
 					initialOpen={ false }
@@ -256,12 +306,17 @@ export const _edit = props => {
 				{ applyFilters( 'stackable.blog-posts.edit.output.before', null, design, props ) }
 				{ displayPosts.map( ( post, i ) => {
 					const sizeName = featuredImageShape !== 'full' && columns < 2 ? `${ featuredImageShape }_large` : featuredImageShape
-					const featuredImageSrc = post.featured_image_urls[ sizeName ][ 0 ]
+					const featuredImageSrc = get( post, [ 'featured_image_urls', sizeName, 0 ] );
 
 					// Ready the different blog post components.
-					const category = displayCategory && post.category_list && (
-						<div className="ugb-blog-posts__category-list" dangerouslySetInnerHTML={ { __html: post.category_list } } />
-					)
+					const { terms_list } = post;
+					const displayTerms = get( terms_list, displayTaxonomy, [] );
+					const taxonomies = displayTerms && (
+						<CategoriesList
+							terms={ displayTerms }
+							separator=", "
+						/>
+					);
 					const featuredImage = displayFeaturedImage && featuredImageSrc && (
 						<figure className={ featuredImageClasses } style={ featuredImageStyle }>
 							<a href={ post.link } target="_blank">
@@ -295,7 +350,7 @@ export const _edit = props => {
 
 					const defaultEditDesign = (
 						<article key={ i } className="ugb-blog-posts__item">
-							{ category }
+							{ taxonomies }
 							{ featuredImage }
 							{ ( displayDate || displayAuthor || displayComments ) &&
 							<aside className="entry-meta ugb-blog-posts__meta">
@@ -321,7 +376,6 @@ export const _edit = props => {
 						i,
 						image,
 						featuredImageSrc,
-						category,
 						featuredImage,
 						author,
 						date,
@@ -340,22 +394,67 @@ export const _edit = props => {
 
 const edit = withSelect( ( select, props ) => {
 	const {
-		postsToShow, order, orderBy, categories,
-	} = props.attributes
-	const { getEntityRecords } = select( 'core' )
+		postsToShow,
+		order,
+		orderBy,
+		postType,
+		taxQuery,
+		displayCategory,
+	} = props.attributes;
+	let { displayTaxonomy } = props.attributes;
+	const { getEntityRecords, getPostTypes, getTaxonomies } = select( 'core' );
+
+	const postTypes = getPostTypes() || [];
+	const allTaxonomies = getTaxonomies() || [];
+
+	const postTypeTaxonomies = allTaxonomies
+		.filter( taxonomy => taxonomy.hierarchical === true
+			&& taxonomy.types.includes( postType )
+			&& taxonomy.visibility.public === true
+		)
+		.reduce( ( acc, taxonomy ) => {
+			return {
+				...acc,
+				[ taxonomy.slug ]: {
+					name: taxonomy.name,
+					rest_base: taxonomy.rest_base
+				}
+			}
+		}, {} );
+
 	const latestPostsQuery = pickBy( {
-		categories,
+		...taxQuery,
 		order,
 		orderby: orderBy,
 		per_page: postsToShow, // eslint-disable-line camelcase
-	}, value => ! isUndefined( value ) )
-	const categoriesListQuery = {
-		per_page: 100, // eslint-disable-line camelcase
+	}, value => ! isUndefined( value ) );
+
+	const termsQuery = {
+		per_page: 100,
+	};
+
+	const postTypeTaxonomiesSlugs = Object.keys( postTypeTaxonomies );
+	const terms = {};
+	postTypeTaxonomiesSlugs.forEach( slug => {
+		terms[ slug ] = getEntityRecords( 'taxonomy', slug, termsQuery );
+	});
+
+
+	if ( displayCategory === true && displayTaxonomy === '' && postTypeTaxonomiesSlugs.includes( 'category' ) ) {
+		// Backwards compatibility
+		displayTaxonomy = 'category';
 	}
+
 	return {
-		latestPosts: getEntityRecords( 'postType', 'post', latestPostsQuery ),
-		categoriesList: getEntityRecords( 'taxonomy', 'category', categoriesListQuery ),
+		latestPosts: getEntityRecords( 'postType', postType, latestPostsQuery ),
+		postTypes: postTypes.filter( postType => postType.viewable === true && postType.slug !== 'attachment' ),
+		terms,
+		postTypeTaxonomies,
+		attributes: {
+			...props.attributes,
+			displayTaxonomy,
+		}
 	}
-} )( _edit )
+} )( _edit );
 
 export default edit
