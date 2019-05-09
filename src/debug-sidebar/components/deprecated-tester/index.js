@@ -149,6 +149,7 @@ class DeprecatedTester extends Component {
 												</div>
 												<div className="ugb-deprecated-tester--test-details">
 													<small className="ugb--version">{ sprintf( __( 'v%s' ), test.version ) }</small>
+													{ test.plan && <small className={ `ugb--plan ugb--plan-${ test.plan }` }>{ test.plan }</small> }
 													<ClipboardButton isDefault={ false } isLink text={ test.html }>{ __( 'Copy code' ) }</ClipboardButton>
 												</div>
 											</div>
