@@ -52,6 +52,15 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 	 */
 	function stackable_block_editor_assets() {
 
+		// Enqueue CodeMirror for Custom CSS.
+		wp_enqueue_code_editor( array(
+			'type' => 'text/css', // @see https://developer.wordpress.org/reference/functions/wp_get_code_editor_settings/
+			'codemirror' => array(
+				'indentUnit' => 2,
+				'tabSize' => 2,
+			),
+		) );
+
 		// Backend editor scripts: common vendor files.
 		wp_enqueue_script(
 			'ugb-block-js-vendor',
@@ -66,7 +75,7 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 			plugins_url( 'dist/editor_blocks.js', STACKABLE_FILE ),
 			// wp-util for wp.ajax.
 			// wp-plugins & wp-edit-post for Gutenberg plugins.
-			array( 'ugb-block-js-vendor', 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'wp-util', 'wp-plugins', 'wp-edit-post' ),
+			array( 'ugb-block-js-vendor', 'code-editor', 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'wp-util', 'wp-plugins', 'wp-edit-post' ),
 			STACKABLE_VERSION
 		);
 

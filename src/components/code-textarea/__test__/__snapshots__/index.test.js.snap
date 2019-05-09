@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Code Textarea should render correctly 1`] = `
+<textarea
+  id="ugb-code-textarea-1"
+  onChange={[Function]}
+  value=""
+/>
+`;

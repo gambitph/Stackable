@@ -1,0 +1,14 @@
+.ugb-html-validator .CodeMirror {
+	height: 300px;
+}
+.ugb-html-validator .components-base-control__help {
+	margin-top: 0;
+}
+.ugb-html-validator--valid, .ugb-html-validator--invalid {
+	font-weight: bold;
+	text-transform: uppercase;
+	color: #1fb51f;
+}
+.ugb-html-validator--invalid {
+	color: #e4174d;
+}

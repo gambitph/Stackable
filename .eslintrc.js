@@ -42,6 +42,7 @@ module.exports = {
 	},
 	globals: {
 		localStorage: true,
+		fetch: true,
 		Waypoint: true,
 		shallow: true,
 		btoa: true,
