@@ -81,7 +81,7 @@ class ModalDesignManage extends Component {
 					<header className="ugb-modal-design-manage__design">
 						<span>{ __( 'Favorite' ) }</span>
 						<span>{ __( 'Design Name' ) }</span>
-						{/* <span>{ __( 'Default' ) }</span> */}
+						{ /* <span>{ __( 'Default' ) }</span> */ }
 					</header>
 					<div className="ugb-modal-design-manage__design-wrapper">
 						{ this.state.designs.map( ( design, i ) => {
@@ -103,12 +103,12 @@ class ModalDesignManage extends Component {
 										label={ __( 'Design name' ) }
 										onChange={ value => this.onChange( 'name', value, i ) }
 									/>
-									{/* <ToggleControl
+									{ /* <ToggleControl
 										className="ugb-modal-design-manage__default-control"
 										checked={ design.setAsDefault }
 										label={ __( 'Set as default block design' ) }
 										onChange={ value => this.onChange( 'setAsDefault', value, i ) }
-									/> */}
+									/> */ }
 									<IconButton
 										icon="trash"
 										onClick={ () => this.onRemove( i ) }

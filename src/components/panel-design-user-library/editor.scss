@@ -50,7 +50,8 @@
 			align-items: center;
 			width: 100%;
 			margin-top: 15px;
-			.is-link, .is-link:active {
+			.is-link,
+ 			.is-link:active {
 				box-shadow: none;
 				background: transparent;
 			}
@@ -86,7 +87,8 @@
 .ugb-modal-design-new .components-base-control {
 	margin-bottom: 24px;
 }
-.ugb-modal-design-new__buttons, .ugb-modal-design-manage__buttons {
+.ugb-modal-design-new__buttons,
+.ugb-modal-design-manage__buttons {
 	display: flex;
 	justify-content: flex-end;
 	margin-left: -4px;
@@ -115,12 +117,12 @@
 }
 .ugb-modal-design-manage__design {
 	display: grid;
-    align-items: center;
-    justify-content: space-between;
-    // grid-template-columns: 60px 200px 60px min-content;
-    grid-template-columns: 60px 200px min-content;
-    grid-gap: 20px;
-    padding: 12px 0;
+	align-items: center;
+	justify-content: space-between;
+	// grid-template-columns: 60px 200px 60px min-content;
+	grid-template-columns: 60px 200px min-content;
+	grid-gap: 20px;
+	padding: 12px 0;
 	border-bottom: 1px solid #eee;
 	&:last-child {
 		border-bottom: 0;
@@ -136,7 +138,8 @@
 		width: 100% !important;
 	}
 	// Aria-labels.
-	.components-toggle-control__label, .components-base-control__label {
+	.components-toggle-control__label,
+ .components-base-control__label {
 		display: none !important;
 	}
 }

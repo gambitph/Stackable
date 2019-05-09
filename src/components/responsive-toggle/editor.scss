@@ -13,7 +13,8 @@
 			height: 100%;
 			width: 100%;
 		}
-		&:hover, &.is-active {
+		&:hover,
+		&.is-active {
 			background: #999 !important;
 			color: #fff !important;
 			border: none !important;

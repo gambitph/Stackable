@@ -93,12 +93,12 @@ class ModalDesignNew extends Component {
 					checked={ this.state.isFavorite }
 					onChange={ this.onChangeFavorite }
 				/>
-				{/* <ToggleControl
+				{ /* <ToggleControl
 					label={ __( 'Set as default block design' ) }
 					help={ __( 'New blocks created will use this design automatically' ) }
 					checked={ this.state.setAsDefault }
 					onChange={ this.onChangeDefault }
-				/> */}
+				/> */ }
 				<div className="ugb-modal-design-new__buttons">
 					<Button isDefault onClick={ this.props.onClose }>{ __( 'Cancel' ) }</Button>
 					<Button isPrimary onClick={ this.onSave }>{ __( 'Add New Design' ) }</Button>

@@ -2,7 +2,7 @@
 	.ugb-deprecated-tester__load-button {
 		display: flex;
 		align-items: center;
-		transition: all .3s ease-in-out;
+		transition: all 0.3s ease-in-out;
 		margin-top: 5px;
 		svg {
 			margin-right: 8px;
@@ -17,12 +17,12 @@
 }
 .ugb-deprecated-tester--row {
 	display: flex;
-    align-items: center;
+	align-items: center;
 	justify-content: space-between;
 	margin: 8px 0;
 	button {
 		background: #fafafa;
-    	border-color: #ddd;
+		border-color: #ddd;
 	}
 	&.ugb--first {
 		justify-content: flex-end;
@@ -36,11 +36,11 @@
 			padding: 4px;
 			height: 26px;
 			width: 26px;
-			margin-left: 8px
+			margin-left: 8px;
 		}
 		svg {
 			height: 18px;
-    		width: 18px;
+			width: 18px;
 		}
 	}
 	.ugb--green {
@@ -74,18 +74,18 @@
 	.ugb--plan {
 		background: #fb6874;
 		color: #fff;
-		padding: 0 .5em;
+		padding: 0 0.5em;
 		border-radius: 3px;
-		margin-left: .5em;
-		font-size: .6em;
-    	text-transform: uppercase;
+		margin-left: 0.5em;
+		font-size: 0.6em;
+		text-transform: uppercase;
 	}
 	.components-icon-button {
 		padding: 2px;
 		margin-left: 4px;
 		svg {
 			height: 12px;
-    		width: 12px;
+			width: 12px;
 		}
 	}
 	.components-clipboard-button {
@@ -95,14 +95,15 @@
 }
 .ugb-deprecated-tester--test-detail-wrapper {
 	background: #fafafa;
-    padding: 6px;
+	padding: 6px;
 	border: 1px solid #ddd;
 	border-radius: 4px;
 	> div > div {
 		display: flex;
 		flex-wrap: wrap;
 	}
-	.ugb--passed, .ugb--failed {
+	.ugb--passed,
+	.ugb--failed {
 		padding: 0 6px;
 		border-radius: 2px;
 		display: inline-block;
@@ -110,7 +111,7 @@
 		background: #a7e8a7;
 		color: #0c7b0c;
 		align-self: flex-end;
-    	margin-left: auto;
+		margin-left: auto;
 	}
 	.ugb--failed {
 		background: #efd5d5;
