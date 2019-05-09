@@ -34,6 +34,10 @@ const addAttributes = attributes => {
 			type: 'string',
 			default: '',
 		},
+		customCSSUniqueID: {
+			type: 'string',
+			default: '',
+		},
 	}
 }
 
