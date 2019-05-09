@@ -1,10 +1,13 @@
 import './pro'
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import { ColorPaletteControl, DesignPanelBody, PanelDesignLibrary, PanelDesignUserLibrary } from '@stackable/components'
+import {
+	BlockContainer, ColorPaletteControl, DesignPanelBody, PanelDesignLibrary, PanelDesignUserLibrary, ResponsiveRangeControl, WhenResponsiveScreen,
+} from '@stackable/components'
 import { PanelBody, RangeControl, ToggleControl } from '@wordpress/components'
 import { separators, shadows } from './separators'
-import { withAdvancedSpacing, withBlockStyles, withMainClassname, withTabbedInspector } from '@stackable/higher-order'
+import { withBlockStyles, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
 import { __ } from '@wordpress/i18n'
+import { name as blockName } from './'
 import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
 import createStyles from './style'
@@ -19,10 +22,10 @@ import ImageDesignSlant2 from './images/slant-2.png'
 import ImageDesignWave1 from './images/wave-1.png'
 import ImageDesignWave2 from './images/wave-2.png'
 import ImageDesignWave3 from './images/wave-3.png'
-import { name as blockName } from './'
 
 addFilter( 'stackable.separator.edit.inspector.layout.before', 'stackable/separator', ( output, props ) => {
 	const { setAttributes } = props
+
 	const {
 		design = 'wave-1',
 	} = props.attributes
@@ -74,6 +77,7 @@ addFilter( 'stackable.separator.edit.inspector.layout.before', 'stackable/separa
 			<PanelDesignUserLibrary
 				initialOpen={ false }
 				block={ blockName }
+				ignoredAttributes={ [] }
 			/>
 		</Fragment>
 	)
@@ -83,8 +87,14 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 	const { setAttributes } = props
 	const {
 		height,
+		tabletHeight = '',
+		mobileHeight = '',
 		marginTop = 0,
 		marginBottom = 0,
+		tabletMarginTop = '',
+		tabletMarginBottom = '',
+		mobileMarginTop = '',
+		mobileMarginBottom = '',
 		backgroundColor = '',
 		flipVertically = false,
 		flipHorizontally = false,
@@ -94,42 +104,17 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 		layer1Shadow = false,
 		paddingTop = 0,
 		paddingBottom = 0,
+		tabletPaddingTop = '',
+		tabletPaddingBottom = '',
+		mobilePaddingTop = '',
+		mobilePaddingBottom = '',
 	} = props.attributes
 
 	return (
 		<Fragment>
 			{ output }
 			<PanelBody
-				title={ __( 'General' ) }
-			>
-				<RangeControl
-					label={ __( 'Height' ) }
-					value={ height }
-					min="30"
-					max="400"
-					onChange={ height => {
-						props.setAttributes( { height } )
-					} }
-				/>
-				<ToggleControl
-					label={ __( 'Flip Vertically' ) }
-					checked={ flipVertically }
-					onChange={ flipVertically => setAttributes( { flipVertically } ) }
-				/>
-				<ToggleControl
-					label={ __( 'Flip Horizontally' ) }
-					checked={ flipHorizontally }
-					onChange={ flipHorizontally => setAttributes( { flipHorizontally } ) }
-				/>
-				<ColorPaletteControl
-					label={ __( 'Background Color' ) }
-					value={ backgroundColor }
-					onChange={ backgroundColor => setAttributes( { backgroundColor } ) }
-				/>
-			</PanelBody>
-			<PanelBody
 				title={ __( 'Separator' ) }
-				initialOpen={ false }
 			>
 				<ColorPaletteControl
 					label={ __( 'Separator Color' ) }
@@ -156,39 +141,176 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 				/>
 			</PanelBody>
 			<PanelBody
+				title={ __( 'General' ) }
+				initialOpen={ false }
+			>
+				<WhenResponsiveScreen screen="desktop">
+					<ResponsiveRangeControl
+						label={ __( 'Height' ) }
+						value={ height }
+						min="30"
+						max="400"
+						onChange={ height => {
+							props.setAttributes( { height } )
+						} }
+					/>
+				</WhenResponsiveScreen>
+				<WhenResponsiveScreen screen="tablet">
+					<ResponsiveRangeControl
+						label={ __( 'Height' ) }
+						value={ tabletHeight }
+						min="30"
+						max="400"
+						onChange={ tabletHeight => {
+							props.setAttributes( { tabletHeight } )
+						} }
+					/>
+				</WhenResponsiveScreen>
+				<WhenResponsiveScreen screen="mobile">
+					<ResponsiveRangeControl
+						label={ __( 'Height' ) }
+						value={ mobileHeight }
+						min="30"
+						max="400"
+						onChange={ mobileHeight => {
+							props.setAttributes( { mobileHeight } )
+						} }
+					/>
+				</WhenResponsiveScreen>
+				<ToggleControl
+					label={ __( 'Flip Vertically' ) }
+					checked={ flipVertically }
+					onChange={ flipVertically => setAttributes( { flipVertically } ) }
+				/>
+				<ToggleControl
+					label={ __( 'Flip Horizontally' ) }
+					checked={ flipHorizontally }
+					onChange={ flipHorizontally => setAttributes( { flipHorizontally } ) }
+				/>
+				<ColorPaletteControl
+					label={ __( 'Background Color' ) }
+					value={ backgroundColor }
+					onChange={ backgroundColor => setAttributes( { backgroundColor } ) }
+				/>
+			</PanelBody>
+			<PanelBody
 				title={ __( 'Spacing' ) }
 				initialOpen={ false }
 			>
-				<RangeControl
-					label={ __( 'Padding Top' ) }
-					value={ paddingTop }
-					min="0"
-					max="400"
-					onChange={ paddingTop => setAttributes( { paddingTop } ) }
-				/>
-				<RangeControl
-					label={ __( 'Padding Bottom' ) }
-					value={ paddingBottom }
-					min="0"
-					max="400"
-					onChange={ paddingBottom => setAttributes( { paddingBottom } ) }
-				/>
-				<RangeControl
-					label={ __( 'Margin Top' ) }
-					value={ marginTop }
-					min={ -height - paddingTop - 100 }
-					max="400"
-					onChange={ marginTop => setAttributes( { marginTop } ) }
-					help={ __( 'Use this to pull up/down the separator to the block above it' ) }
-				/>
-				<RangeControl
-					label={ __( 'Margin Bottom' ) }
-					value={ marginBottom }
-					min={ -height - paddingBottom - 100 }
-					max="400"
-					onChange={ marginBottom => setAttributes( { marginBottom } ) }
-					help={ __( 'Use this to pull up/down the separator to the block below it' ) }
-				/>
+				<WhenResponsiveScreen screen="desktop">
+					<ResponsiveRangeControl
+						label={ __( 'Padding Top' ) }
+						value={ paddingTop }
+						min="0"
+						max="400"
+						onChange={ paddingTop => setAttributes( { paddingTop } ) }
+					/>
+				</WhenResponsiveScreen>
+				<WhenResponsiveScreen screen="tablet">
+					<ResponsiveRangeControl
+						label={ __( 'Padding Top' ) }
+						value={ tabletPaddingTop }
+						min="0"
+						max="400"
+						onChange={ tabletPaddingTop => setAttributes( { tabletPaddingTop } ) }
+					/>
+				</WhenResponsiveScreen>
+				<WhenResponsiveScreen screen="mobile">
+					<ResponsiveRangeControl
+						label={ __( 'Padding Top' ) }
+						value={ mobilePaddingTop }
+						min="0"
+						max="400"
+						onChange={ mobilePaddingTop => setAttributes( { mobilePaddingTop } ) }
+					/>
+				</WhenResponsiveScreen>
+				<WhenResponsiveScreen screen="desktop">
+					<ResponsiveRangeControl
+						label={ __( 'Padding Bottom' ) }
+						value={ paddingBottom }
+						min="0"
+						max="400"
+						onChange={ paddingBottom => setAttributes( { paddingBottom } ) }
+					/>
+				</WhenResponsiveScreen>
+				<WhenResponsiveScreen screen="tablet">
+					<ResponsiveRangeControl
+						label={ __( 'Padding Bottom' ) }
+						value={ tabletPaddingBottom }
+						min="0"
+						max="400"
+						onChange={ tabletPaddingBottom => setAttributes( { tabletPaddingBottom } ) }
+					/>
+				</WhenResponsiveScreen>
+				<WhenResponsiveScreen screen="mobile">
+					<ResponsiveRangeControl
+						label={ __( 'Padding Bottom' ) }
+						value={ mobilePaddingBottom }
+						min="0"
+						max="400"
+						onChange={ mobilePaddingBottom => setAttributes( { mobilePaddingBottom } ) }
+					/>
+				</WhenResponsiveScreen>
+				<WhenResponsiveScreen screen="desktop">
+					<ResponsiveRangeControl
+						label={ __( 'Margin Top' ) }
+						value={ marginTop }
+						min={ -height - paddingTop - 100 }
+						max="400"
+						onChange={ marginTop => setAttributes( { marginTop } ) }
+						help={ __( 'Use this to pull up/down the separator to the block above it' ) }
+					/>
+				</WhenResponsiveScreen>
+				<WhenResponsiveScreen screen="tablet">
+					<ResponsiveRangeControl
+						label={ __( 'Margin Top' ) }
+						value={ tabletMarginTop }
+						min={ -tabletHeight - tabletPaddingTop - 100 }
+						max="400"
+						onChange={ tabletMarginTop => setAttributes( { tabletMarginTop } ) }
+						help={ __( 'Use this to pull up/down the separator to the block above it' ) }
+					/>
+				</WhenResponsiveScreen>
+				<WhenResponsiveScreen screen="mobile">
+					<ResponsiveRangeControl
+						label={ __( 'Margin Top' ) }
+						value={ mobileMarginTop }
+						min={ -mobileHeight - mobilePaddingTop - 100 }
+						max="400"
+						onChange={ mobileMarginTop => setAttributes( { mobileMarginTop } ) }
+						help={ __( 'Use this to pull up/down the separator to the block above it' ) }
+					/>
+				</WhenResponsiveScreen>
+				<WhenResponsiveScreen screen="desktop">
+					<ResponsiveRangeControl
+						label={ __( 'Margin Bottom' ) }
+						value={ marginBottom }
+						min={ -height - paddingBottom - 100 }
+						max="400"
+						onChange={ marginBottom => setAttributes( { marginBottom } ) }
+						help={ __( 'Use this to pull up/down the separator to the block below it' ) }
+					/>
+				</WhenResponsiveScreen>
+				<WhenResponsiveScreen screen="tablet">
+					<ResponsiveRangeControl
+						label={ __( 'Margin Bottom' ) }
+						value={ tabletMarginBottom }
+						min={ -tabletHeight - tabletPaddingBottom - 100 }
+						max="400"
+						onChange={ tabletMarginBottom => setAttributes( { tabletMarginBottom } ) }
+						help={ __( 'Use this to pull up/down the separator to the block below it' ) }
+					/>
+				</WhenResponsiveScreen>
+				<WhenResponsiveScreen screen="mobile">
+					<ResponsiveRangeControl
+						label={ __( 'Margin Bottom' ) }
+						value={ mobileMarginBottom }
+						min={ -mobileHeight - mobilePaddingBottom - 100 }
+						max="400"
+						onChange={ mobileMarginBottom => setAttributes( { mobileMarginBottom } ) }
+						help={ __( 'Use this to pull up/down the separator to the block below it' ) }
+					/>
+				</WhenResponsiveScreen>
 			</PanelBody>
 		</Fragment>
 	)
@@ -215,16 +337,13 @@ const edit = props => {
 	const Shadow = shadows[ design ]
 
 	return (
-		<Fragment>
-			<div className={ mainClasses } aria-hidden="true">
+		<BlockContainer.Edit className={ mainClasses } aria-hidden="true" blockProps={ props } render={ () => (
+			<Fragment>
 				<div className="ugb-separator__top-pad" />
 				<div className="ugb-separator__svg-wrapper">
 					<div className="ugb-separator__svg-inner">
 						{ layer1Shadow && (
-							<Shadow
-								className="ugb-separator__shadow"
-								preserveAspectRatio="none"
-							/>
+							<Shadow className="ugb-separator__shadow" preserveAspectRatio="none" />
 						) }
 						<Separator
 							className="ugb-separator__layer-1"
@@ -234,14 +353,13 @@ const edit = props => {
 					</div>
 				</div>
 				<div className="ugb-separator__bottom-pad" />
-			</div>
-		</Fragment>
+			</Fragment>
+		) } />
 	)
 }
 
 export default compose(
-	withMainClassname,
+	withUniqueClass,
 	withTabbedInspector,
-	withAdvancedSpacing(),
 	withBlockStyles( createStyles ),
 )( edit )

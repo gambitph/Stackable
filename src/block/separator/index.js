@@ -3,11 +3,14 @@
  */
 
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
+import { default as deprecated } from './deprecated'
 import { disabledBlocks } from 'stackable'
+import { default as edit } from './edit'
+import { default as save } from './save'
 import { SeparatorIcon } from '@stackable/icons'
-import { withAdvancedSpacingAttributes } from '@stackable/higher-order'
 
-export const schema = withAdvancedSpacingAttributes( {
+export const schema = {
 	align: {
 		type: 'string',
 		default: 'full',
@@ -19,6 +22,14 @@ export const schema = withAdvancedSpacingAttributes( {
 	height: {
 		type: 'number',
 		default: 200,
+	},
+	tabletHeight: {
+		type: 'number',
+		default: '',
+	},
+	mobileHeight: {
+		type: 'number',
+		default: '',
 	},
 	flipVertically: {
 		type: 'boolean',
@@ -40,6 +51,22 @@ export const schema = withAdvancedSpacingAttributes( {
 		type: 'number',
 		default: 0,
 	},
+	tabletMarginTop: {
+		type: 'number',
+		default: '',
+	},
+	tabletMarginBottom: {
+		type: 'number',
+		default: '',
+	},
+	mobileMarginTop: {
+		type: 'number',
+		default: '',
+	},
+	mobileMarginBottom: {
+		type: 'number',
+		default: '',
+	},
 	paddingTop: {
 		type: 'number',
 		default: 0,
@@ -47,6 +74,22 @@ export const schema = withAdvancedSpacingAttributes( {
 	paddingBottom: {
 		type: 'number',
 		default: 0,
+	},
+	tabletPaddingTop: {
+		type: 'number',
+		default: '',
+	},
+	tabletPaddingBottom: {
+		type: 'number',
+		default: '',
+	},
+	mobilePaddingTop: {
+		type: 'number',
+		default: '',
+	},
+	mobilePaddingBottom: {
+		type: 'number',
+		default: '',
 	},
 
 	// Separator
@@ -92,6 +135,10 @@ export const schema = withAdvancedSpacingAttributes( {
 		type: 'number',
 		default: 0.5,
 	},
+	layer2BlendMode: {
+		type: 'string',
+		default: '',
+	},
 
 	// Layer 3
 	layer3: {
@@ -119,20 +166,11 @@ export const schema = withAdvancedSpacingAttributes( {
 		default: 0.5,
 	},
 
-	// Custom CSS attributes.
-	customCSSUniqueID: {
+	uniqueClass: {
 		type: 'string',
 		default: '',
 	},
-	customCSS: {
-		type: 'string',
-		default: '',
-	},
-	customCSSCompiled: {
-		type: 'string',
-		default: '',
-	},
-} )
+}
 
 export const name = 'ugb/separator'
 
@@ -150,6 +188,16 @@ export const settings = {
 	supports: {
 		align: [ 'full' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
+	},
+	deprecated,
+	save,
+	edit,
+
+	// Stackable modules.
+	modules: {
+		'custom-css': {
+			default: applyFilters( 'stackable.separator.custom-css.default', '' ),
+		},
 	},
 
 	// Stackable specific settings.

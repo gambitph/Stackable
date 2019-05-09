@@ -29,6 +29,7 @@
 		align-items: flex-end;
 		overflow-x: hidden;
 		overflow-y: visible;
+		box-sizing: content-box;
 	}
 	&.alignfull {
 		overflow: visible;

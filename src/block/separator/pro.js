@@ -34,21 +34,4 @@ if ( showProNotice ) {
 			</Fragment>
 		)
 	} )
-
-	addFilter( 'stackable.separator.edit.inspector.advanced.after', 'stackable/separator', output => {
-		return (
-			<Fragment>
-				{ output }
-				<PanelBody
-					initialOpen={ false }
-					title={ __( 'Custom CSS' ) }
-				>
-					<ProControl
-						title={ __( 'Say Hello to Custom CSS 👋' ) }
-						description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
-					/>
-				</PanelBody>
-			</Fragment>
-		)
-	} )
 }

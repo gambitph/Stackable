@@ -1,6 +1,9 @@
 export const createStyles = props => {
 	const {
 		height,
+		tabletHeight = '',
+		mobileHeight = '',
+
 		backgroundColor = '',
 		layer1Color = '',
 		layer1Width = 1,
@@ -9,9 +12,22 @@ export const createStyles = props => {
 		marginTop = 0,
 		marginBottom = 0,
 		marginUnit = 'px',
+		tabletMarginTop = '',
+		tabletMarginBottom = '',
+		tabletMarginUnit = 'px',
+		mobileMarginTop = '',
+		mobileMarginBottom = '',
+		mobileMarginUnit = 'px',
+
 		paddingTop = 0,
 		paddingBottom = 0,
 		paddingUnit = 'px',
+		tabletPaddingTop = '',
+		tabletPaddingBottom = '',
+		tabletPaddingUnit = 'px',
+		mobilePaddingTop = '',
+		mobilePaddingBottom = '',
+		mobilePaddingUnit = 'px',
 	} = props.attributes
 
 	return {
@@ -40,6 +56,36 @@ export const createStyles = props => {
 				}
 				return transform
 			} )(),
+		},
+		tablet: {
+			'.ugb-separator__svg-wrapper': {
+				height: tabletHeight !== '' ? `${ tabletHeight }px` : undefined,
+			},
+			'.ugb-separator': {
+				marginTop: `${ tabletMarginTop - 1 }${ tabletMarginUnit }`, // -1 to prevent white lines.
+				marginBottom: `${ tabletMarginBottom - 1 }${ tabletMarginUnit }`, // -1 to prevent white lines.
+			},
+			'.ugb-separator__bottom-pad': {
+				height: tabletPaddingBottom !== '' ? `${ tabletPaddingBottom }${ tabletPaddingUnit }` : undefined,
+			},
+			'.ugb-separator__top-pad': {
+				height: tabletPaddingTop !== '' ? `${ tabletPaddingTop }${ tabletPaddingUnit }` : undefined,
+			},
+		},
+		mobile: {
+			'.ugb-separator__svg-wrapper': {
+				height: mobileHeight !== '' ? `${ mobileHeight }px` : undefined,
+			},
+			'.ugb-separator': {
+				marginTop: `${ mobileMarginTop - 1 }${ mobileMarginUnit }`, // -1 to prevent white lines.
+				marginBottom: `${ mobileMarginBottom - 1 }${ mobileMarginUnit }`, // -1 to prevent white lines.
+			},
+			'.ugb-separator__bottom-pad': {
+				height: mobilePaddingBottom !== '' ? `${ mobilePaddingBottom }${ mobilePaddingUnit }` : undefined,
+			},
+			'.ugb-separator__top-pad': {
+				height: mobilePaddingTop !== '' ? `${ mobilePaddingTop }${ mobilePaddingUnit }` : undefined,
+			},
 		},
 	}
 }
