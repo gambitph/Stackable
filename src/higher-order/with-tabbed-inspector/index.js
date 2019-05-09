@@ -38,4 +38,33 @@ const withTabbedInspector = createHigherOrderComponent(
 	'withTabbedInspector'
 )
 
+withTabbedInspector.wrappedComponent = props => {
+	const { blockName } = props
+
+	return (
+		<Fragment>
+			<InspectorControls>
+				<PanelTabs />
+			</InspectorControls>
+
+			<InspectorPanelControls>
+				{ applyFilters( `stackable.${ blockName }.edit.inspector.layout.before`, null, props ) }
+				{ applyFilters( `stackable.${ blockName }.edit.inspector.layout.after`, null, props ) }
+			</InspectorPanelControls>
+
+			<InspectorPanelControls tab="style">
+				{ applyFilters( `stackable.${ blockName }.edit.inspector.style.before`, null, props ) }
+				{ applyFilters( `stackable.${ blockName }.edit.inspector.style.after`, null, props ) }
+			</InspectorPanelControls>
+
+			<InspectorPanelControls tab="advanced">
+				{ applyFilters( `stackable.${ blockName }.edit.inspector.advanced.before`, null, props ) }
+				{ applyFilters( `stackable.${ blockName }.edit.inspector.advanced.after`, null, props ) }
+			</InspectorPanelControls>
+
+			{ props.children }
+		</Fragment>
+	)
+}
+
 export default withTabbedInspector
