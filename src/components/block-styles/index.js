@@ -1,17 +1,9 @@
 import { kebabCase, omit } from 'lodash'
-import { minifyCSS } from '@stackable/util'
+import { minifyCSS, prependCSSClass } from '@stackable/util'
 
 /**
  * Returns an identical styleObject with all the selectors modified to be wrapped
  * in the provided unique className selector.
- *
- * 	Regex steps:
- *  Add the unique ID:
- *  		".ugb-accordion" -> ".uniqueID .ugb-accordion"
- *  		".ugb-accordion__title" -> ".uniqueID .ugb-accordion__title"
- *  Connect the unique ID and the main class:
- *  		".ugb-accordion" -> ".uniqueID.ugb-accordion"
- *  		".ugb-accordion__title" -> ".uniqueID .ugb-accordion__title"
  *
  * @param {Object} styleObject The object containing selectors and style rules
  * @param {string} blockMainClassName The main className of the block
@@ -19,20 +11,9 @@ import { minifyCSS } from '@stackable/util'
  *
  * @return {Object} Modified styleObject
  */
-const addBlockClassNames = ( styleObject, blockMainClassName = '', blockUniqueClassName = '' ) => {
+export const addBlockClassNames = ( styleObject, blockMainClassName = '', blockUniqueClassName = '' ) => {
 	return Object.keys( styleObject ).reduce( ( newStyles, selector ) => {
-		const newSelector = selector.trim()
-			// Add the Unique ID at the start
-			.replace( /\s*,\s*/g, `, .${ blockUniqueClassName } ` )
-
-			// The first one at the start doesn't get replaced.
-			.replace( /^(.*?)/g, `.${ blockUniqueClassName } ` )
-
-			// Connect the unique ID and the main class.
-			.replace( new RegExp( `(.${ blockUniqueClassName }) (.${ blockMainClassName }[^_-\w\d])`, 'g' ), '$1$2' )
-
-			// The last one at the end doesn't get replaced.
-			.replace( new RegExp( `(.${ blockUniqueClassName }) (.${ blockMainClassName })$`, 'g' ), '$1$2' )
+		const newSelector = prependCSSClass( selector, blockMainClassName, blockUniqueClassName )
 		return {
 			...newStyles,
 			[ newSelector ]: styleObject[ selector ],
@@ -47,17 +28,19 @@ const addBlockClassNames = ( styleObject, blockMainClassName = '', blockUniqueCl
  *
  * @return {string} The CSS string
  */
-const combineStyleRules = styleObject => {
-	return Object.keys( styleObject ).reduce( ( styleString, selector ) => {
-		const styles = Object.keys( styleObject[ selector ] ).reduce( ( rules, ruleName ) => {
-			const rule = styleObject[ selector ][ ruleName ]
-			if ( typeof rule === 'undefined' ) {
-				return rules
-			}
-			return `${ rules }\n\t${ kebabCase( ruleName ) }: ${ rule };`
-		}, '' )
-		return `${ styleString }\n\n${ selector } {${ styles }\n}`
-	}, '' ).trim()
+export const combineStyleRules = styleObject => {
+	return minifyCSS(
+		Object.keys( styleObject ).reduce( ( styleString, selector ) => {
+			const styles = Object.keys( styleObject[ selector ] ).reduce( ( rules, ruleName ) => {
+				const rule = styleObject[ selector ][ ruleName ]
+				if ( typeof rule === 'undefined' ) {
+					return rules
+				}
+				return `${ rules }\n\t${ kebabCase( ruleName ) }: ${ rule };`
+			}, '' )
+			return `${ styleString }\n\n${ selector } {${ styles }\n}`
+		}, '' ).trim()
+	)
 }
 
 /**

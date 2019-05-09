@@ -120,6 +120,37 @@ export const minifyCSS = ( css, important = false ) => {
 }
 
 /**
+ * Ensures the cssSelector is only applied to the uniqueClassName element.
+ * Wraps the cssSelector with a uniqueClassName, and takes into account the mainClassName.
+ *
+ * For example:
+ * .title-block -> .my-title-be8d9a.title-block
+ * .title-block span -> .my-title-be8d9a.title-block span
+ * span -> .my-title-be8d9a span
+ *
+ * @param {string} cssSelector The CSS selector.
+ * @param {string} mainClassName The main class of the block to target.
+ * @param {string} uniqueClassName The unique parent classname to wrap the selector.
+ *
+ * @return {string} The modified CSS selector.
+ */
+export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassName = '' ) => {
+	return cssSelector.trim().replace( /[\n\s\t]+/g, ' ' )
+		.split( ',' )
+		.map( s => {
+			if ( ! uniqueClassName || ! mainClassName ) {
+				return s
+			}
+			if ( uniqueClassName && ! mainClassName ) {
+				return `.${ uniqueClassName } ${ s.trim() }`
+			}
+			return `.${ uniqueClassName } ${ s.trim() }`
+				.replace( new RegExp( `(.${ uniqueClassName }) (.${ mainClassName }(#|\\[|\\.|\\s|$))`, 'g' ), '$1$2' )
+		} )
+		.join( ', ' )
+}
+
+/**
  * Global responsive setting functions. This is used by the
  * WhenResponsiveScreen and ResponsiveToggle components to
  * specify the current responsive screen size.
