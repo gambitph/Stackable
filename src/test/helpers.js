@@ -1,9 +1,45 @@
 import {
 	createBlock,
+	getBlockType,
 	getSaveContent,
+	getSaveElement,
 	registerBlockType,
 	unregisterBlockType,
 } from '@wordpress/blocks'
+import { BlockEdit } from '@wordpress/editor'
+import { noop } from 'lodash'
+import registerStackableBlock from '@stackable/register-block'
+import { render } from 'enzyme'
+
+export const blockEditRender = ( name, settings ) => {
+	if ( ! getBlockType( name ) ) {
+		registerStackableBlock( name, { ...settings, category: 'common' } )
+	}
+	const block = createBlock( name )
+
+	return render(
+		<BlockEdit
+			name={ name }
+			isSelected={ false }
+			attributes={ block.attributes }
+			setAttributes={ noop }
+			user={ {} }
+		/>
+	)
+}
+
+export const blockSaveRender = ( name, settings, attributes = null ) => {
+	if ( ! getBlockType( name ) ) {
+		registerStackableBlock( name, { ...settings, category: 'common' } )
+	}
+	const block = createBlock( name )
+	const attributesToRender = {
+		...block.attributes,
+		...( attributes ? { ...createAttributeValues( settings.attributes, settings ), ...attributes } : {} ),
+	}
+
+	return render( getSaveElement( name, attributesToRender ) )
+}
 
 export const getDefaultAttributes = ( blockName, blockSettings ) => {
 	if ( typeof blockSettings.save === 'undefined' ) {
@@ -70,7 +106,10 @@ export const createAttributeValue = ( attrName, attrParams, blockSettings = {} )
 	} else if ( type === 'boolean' ) {
 		return ! defaultValue
 	} else if ( type === 'number' ) {
-		return Math.floor( defaultValue / 2 )
+		if ( typeof defaultValue === 'number' ) {
+			return Math.floor( defaultValue / 2 )
+		}
+		return parseInt( Math.random() * 500, 10 )
 	} else if ( type === 'url' ) {
 		return `https://${ attrName }.com`
 	} else if ( type === 'color' ) {
