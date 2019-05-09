@@ -5,7 +5,7 @@ const path = require( 'path' )
 module.exports = {
 
 	// Remove deprecated: Option 'setupTestFrameworkScriptFile' was replaced by configuration 'setupFilesAfterEnv', which supports multiple paths.
-	...omit( test, 'setupTestFrameworkScriptFile' ),
+	...omit( test, 'setupTestFrameworkScriptFile', 'verbose', 'testMatch' ),
 
 	rootDir: path.resolve( __dirname ),
 
@@ -17,10 +17,12 @@ module.exports = {
 	// Custom mappers.
 	moduleNameMapper: {
 		'^@stackable(.*)$': '<rootDir>/src$1',
-		'.s?css$': '<rootDir>/src/test/scss-stub.js',
-		'.(png|jpg|gif)$': '<rootDir>/src/test/image-stub.js',
-		'.svg$': '<rootDir>/src/test/svgr-mock.js',
+		'.*\\.s?css$': '<rootDir>/src/test/scss-stub.js',
+		'.*\\.(png|jpg|gif)$': '<rootDir>/src/test/image-stub.js',
+		'.*\\.svg$': '<rootDir>/src/test/svgr-mock.js',
 		stackable: '<rootDir>/src/test/stackable-mock.js',
+		'@wordpress/ajax': '<rootDir>/src/test/ajax-stub.js',
+		'@wordpress/codeEditor': '<rootDir>/src/test/ajax-stub.js',
 	},
 
 	// Ignore Unexpected identifiers in node_modules/simple-html-tokenizer/dist/es6/tokenizer.js
@@ -36,4 +38,6 @@ module.exports = {
 	],
 
 	testMatch: [ '**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)' ],
+
+	testPathIgnorePatterns: [ '/node_modules/', '<rootDir>/pro__premium_only/' ],
 }
