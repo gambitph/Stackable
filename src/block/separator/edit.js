@@ -69,14 +69,10 @@ addFilter( 'stackable.separator.edit.inspector.layout.before', 'stackable/separa
 				] }
 				onChange={ design => setAttributes( { design } ) }
 			/>
-			<PanelDesignLibrary
-				options={ [
-					...applyFilters( 'stackable.separator.edit.templates', [] ),
-				] }
-			/>
+			<PanelDesignLibrary block={ props.name } />
 			<PanelDesignUserLibrary
 				initialOpen={ false }
-				block={ blockName }
+				block={ props.name }
 				ignoredAttributes={ [] }
 			/>
 		</Fragment>

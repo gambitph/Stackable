@@ -5,13 +5,14 @@
 import { DesignControl, DesignPanelBody } from '@stackable/components'
 import { dispatch, select } from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { omit } from 'lodash'
 
 function PanelDesignLibrary( props ) {
+	const options = applyFilters( `stackable.${ props.block }.edit.templates`, props.options || [] )
 	const {
 		className = '',
-		options = [],
 		title = __( 'Designs' ),
 		help = __( 'Pick a design to start from, this will override your block settings' ),
 	} = props
