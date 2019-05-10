@@ -92,11 +92,8 @@ const BlockStyles = props => {
 		breakMobile = 768,
 	} = props
 
-	return (
-		<style>
-			{ generateStyles( style, blockMainClassName, blockUniqueClassName, breakTablet, breakMobile ) }
-		</style>
-	)
+	const styles = generateStyles( style, blockMainClassName, blockUniqueClassName, breakTablet, breakMobile )
+	return styles ? <style>{ styles }</style> : null
 }
 
 export default BlockStyles
