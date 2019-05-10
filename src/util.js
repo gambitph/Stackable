@@ -65,6 +65,7 @@ export const getVideoProviderFromURL = url => {
 
 /**
  * Generates a placeholder text for short to long descriptions.
+ * Deprecations are dependent on this, this shouldn't change.
  *
  * @param {string} length The length of the placeholder. Values are: short, medium, long, normal. Defaults to normal.
  *
