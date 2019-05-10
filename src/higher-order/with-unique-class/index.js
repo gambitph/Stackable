@@ -2,19 +2,16 @@ import { addFilter } from '@wordpress/hooks'
 import { Component } from '@wordpress/element'
 import { createHigherOrderComponent } from '@wordpress/compose'
 
-const createUniqueClass = uid => `ugb-${ uid.substring( 0, 7 ) }`
+export const createUniqueClass = uid => `ugb-${ uid.substring( 0, 7 ) }`
 
 const withUniqueClass = createHigherOrderComponent(
 	WrappedComponent => class extends Component {
 		componentDidMount() {
-			const { attributes, setAttributes } = this.props
-			const { uniqueClass = '' } = attributes
+			const { attributes, setAttributes, clientId } = this.props
+			const newUniqueClass = createUniqueClass( clientId )
 
-			if ( ! uniqueClass ) {
-				const newUniqueClass = createUniqueClass( this.props.clientId )
-				if ( uniqueClass !== newUniqueClass ) {
-					setAttributes( { uniqueClass: newUniqueClass } )
-				}
+			if ( attributes.uniqueClass !== newUniqueClass ) {
+				setAttributes( { uniqueClass: newUniqueClass } )
 			}
 		}
 
