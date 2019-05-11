@@ -6,11 +6,17 @@ export const createUniqueClass = uid => `ugb-${ uid.substring( 0, 7 ) }`
 
 const withUniqueClass = createHigherOrderComponent(
 	WrappedComponent => class extends Component {
+		static defaultProps = {
+			attributes: {},
+			clientId: '',
+			setAttributes: () => {},
+		}
+
 		componentDidMount() {
 			const { attributes, setAttributes, clientId } = this.props
 			const newUniqueClass = createUniqueClass( clientId )
 
-			if ( attributes.uniqueClass !== newUniqueClass ) {
+			if ( typeof attributes.uniqueClass === 'undefined' || attributes.uniqueClass !== newUniqueClass ) {
 				setAttributes( { uniqueClass: newUniqueClass } )
 			}
 		}

@@ -6,6 +6,11 @@ import { InspectorControls } from '@wordpress/editor'
 
 const withTabbedInspector = createHigherOrderComponent(
 	WrappedComponent => class extends Component {
+		static defaultProps = {
+			attributes: {},
+			blockName: '',
+		}
+
 		render() {
 			const { blockName } = this.props
 
