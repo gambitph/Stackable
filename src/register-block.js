@@ -32,6 +32,7 @@ const registerBlock = ( name, settings = {} ) => {
 	} )
 
 	// Allow modules to modify the block's attributes.
+	blockSettings.attributes = applyFilters( `stackable.block.attributes`, blockSettings.attributes )
 	blockSettings.attributes = applyFilters( `stackable.${ blockName }.attributes`, blockSettings.attributes )
 
 	blockSettings.edit = withMainClassname( name )( blockSettings.edit )

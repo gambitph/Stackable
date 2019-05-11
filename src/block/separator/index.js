@@ -165,11 +165,6 @@ export const schema = {
 		type: 'number',
 		default: 0.5,
 	},
-
-	uniqueClass: {
-		type: 'string',
-		default: '',
-	},
 }
 
 export const name = 'ugb/separator'

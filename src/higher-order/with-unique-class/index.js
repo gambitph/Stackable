@@ -31,4 +31,17 @@ addFilter( 'stackable.user-design-library.save.ignore', 'stackable/unique-class'
 	return [ ...attributesToIgnore, 'uniqueClass' ]
 } )
 
+/**
+ * Always add the uniqueClass attribute to all Stackable blocks.
+ */
+addFilter( `stackable.block.attributes`, 'stackable/unique-class', attributes => {
+	return {
+		...attributes,
+		uniqueClass: {
+			type: 'string',
+			default: '',
+		},
+	}
+} )
+
 export default withUniqueClass
