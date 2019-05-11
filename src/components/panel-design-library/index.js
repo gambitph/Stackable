@@ -10,8 +10,9 @@ import classnames from 'classnames'
 import { omit } from 'lodash'
 
 function PanelDesignLibrary( props ) {
-	const options = applyFilters( `stackable.${ props.block }.edit.templates`, props.options || [] )
 	const {
+		block = 'all',
+		options = applyFilters( `stackable.${ block }.edit.templates`, props.options || [] ),
 		className = '',
 		title = __( 'Designs' ),
 		help = __( 'Pick a design to start from, this will override your block settings' ),
