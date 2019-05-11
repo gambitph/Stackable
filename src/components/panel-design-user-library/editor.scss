@@ -51,7 +51,7 @@
 			width: 100%;
 			margin-top: 15px;
 			.is-link,
- 			.is-link:active {
+			.is-link:active {
 				box-shadow: none;
 				background: transparent;
 			}
@@ -139,7 +139,7 @@
 	}
 	// Aria-labels.
 	.components-toggle-control__label,
- .components-base-control__label {
+	.components-base-control__label {
 		display: none !important;
 	}
 }
