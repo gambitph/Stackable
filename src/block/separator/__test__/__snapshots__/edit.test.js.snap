@@ -1,0 +1,575 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Separator block Edit render should match inspector tabbed controls snapshot 1`] = `
+<Fragment>
+  <IfBlockEditSelected(InspectorControlsFill)>
+    <PanelTabs
+      closeOtherPanels={true}
+    />
+  </IfBlockEditSelected(InspectorControlsFill)>
+  <InspectorPanelControls
+    tab="layout"
+  >
+    <DesignPanelBody
+      onChange={[Function]}
+      options={
+        Array [
+          Object {
+            "image": Object {},
+            "label": "Wave 1",
+            "value": "wave-1",
+          },
+          Object {
+            "image": Object {},
+            "label": "Wave 2",
+            "value": "wave-2",
+          },
+          Object {
+            "image": Object {},
+            "label": "Wave 3",
+            "value": "wave-3",
+          },
+          Object {
+            "image": Object {},
+            "label": "Slant 1",
+            "value": "slant-1",
+          },
+          Object {
+            "image": Object {},
+            "label": "Slant 2",
+            "value": "slant-2",
+          },
+          Object {
+            "image": Object {},
+            "label": "Curve 1",
+            "value": "curve-1",
+          },
+          Object {
+            "image": Object {},
+            "label": "Curve 2",
+            "value": "curve-2",
+          },
+          Object {
+            "image": Object {},
+            "label": "Curve 3",
+            "value": "curve-3",
+          },
+          Object {
+            "image": Object {},
+            "label": "Rounded 1",
+            "value": "rounded-1",
+          },
+          Object {
+            "image": Object {},
+            "label": "Rounded 2",
+            "value": "rounded-2",
+          },
+        ]
+      }
+      selected="wave-1"
+    />
+    <PanelDesignLibrary />
+    <PanelDesignUserLibrary
+      block=""
+      className=""
+      help="Save designs to reuse them across your site. Note that using saved designs will override your current block settings."
+      ignoredAttributes={Array []}
+      initialOpen={false}
+      title="Saved Block Designs"
+    />
+  </InspectorPanelControls>
+  <InspectorPanelControls
+    tab="style"
+  >
+    <ForwardRef(PanelBody)
+      title="Separator"
+    >
+      <WithColorContext(IfCondition(ColorPaletteControl))
+        label="Separator Color"
+        onChange={[Function]}
+        value=""
+      />
+      <WithInstanceId(RangeControl)
+        label="Separator Width"
+        max="4"
+        min="1"
+        onChange={[Function]}
+        step="0.1"
+        value={1}
+      />
+      <WithInstanceId(ToggleControl)
+        checked={false}
+        label="Flip Horizontally"
+        onChange={[Function]}
+      />
+      <WithInstanceId(ToggleControl)
+        checked={false}
+        label="Shadow"
+        onChange={[Function]}
+      />
+    </ForwardRef(PanelBody)>
+    <ForwardRef(PanelBody)
+      initialOpen={false}
+      title="General"
+    >
+      <WithInstanceId(WhenResponsiveScreen)
+        screen="desktop"
+      >
+        <ResponsiveRangeControl
+          className=""
+          help=""
+          label="Height"
+          max="400"
+          min="30"
+          onChange={[Function]}
+          onChangeUnit={[Function]}
+          screens={
+            Array [
+              "desktop",
+              "tablet",
+              "mobile",
+            ]
+          }
+          unit="px"
+          units={
+            Array [
+              "px",
+            ]
+          }
+        />
+      </WithInstanceId(WhenResponsiveScreen)>
+      <WithInstanceId(WhenResponsiveScreen)
+        screen="tablet"
+      >
+        <ResponsiveRangeControl
+          className=""
+          help=""
+          label="Height"
+          max="400"
+          min="30"
+          onChange={[Function]}
+          onChangeUnit={[Function]}
+          screens={
+            Array [
+              "desktop",
+              "tablet",
+              "mobile",
+            ]
+          }
+          unit="px"
+          units={
+            Array [
+              "px",
+            ]
+          }
+          value=""
+        />
+      </WithInstanceId(WhenResponsiveScreen)>
+      <WithInstanceId(WhenResponsiveScreen)
+        screen="mobile"
+      >
+        <ResponsiveRangeControl
+          className=""
+          help=""
+          label="Height"
+          max="400"
+          min="30"
+          onChange={[Function]}
+          onChangeUnit={[Function]}
+          screens={
+            Array [
+              "desktop",
+              "tablet",
+              "mobile",
+            ]
+          }
+          unit="px"
+          units={
+            Array [
+              "px",
+            ]
+          }
+          value=""
+        />
+      </WithInstanceId(WhenResponsiveScreen)>
+      <WithInstanceId(ToggleControl)
+        checked={false}
+        label="Flip Vertically"
+        onChange={[Function]}
+      />
+      <WithInstanceId(ToggleControl)
+        checked={false}
+        label="Flip Horizontally"
+        onChange={[Function]}
+      />
+      <WithColorContext(IfCondition(ColorPaletteControl))
+        label="Background Color"
+        onChange={[Function]}
+        value=""
+      />
+    </ForwardRef(PanelBody)>
+    <ForwardRef(PanelBody)
+      initialOpen={false}
+      title="Spacing"
+    >
+      <WithInstanceId(WhenResponsiveScreen)
+        screen="desktop"
+      >
+        <ResponsiveRangeControl
+          className=""
+          help=""
+          label="Padding Top"
+          max="400"
+          min="0"
+          onChange={[Function]}
+          onChangeUnit={[Function]}
+          screens={
+            Array [
+              "desktop",
+              "tablet",
+              "mobile",
+            ]
+          }
+          unit="px"
+          units={
+            Array [
+              "px",
+            ]
+          }
+          value={0}
+        />
+      </WithInstanceId(WhenResponsiveScreen)>
+      <WithInstanceId(WhenResponsiveScreen)
+        screen="tablet"
+      >
+        <ResponsiveRangeControl
+          className=""
+          help=""
+          label="Padding Top"
+          max="400"
+          min="0"
+          onChange={[Function]}
+          onChangeUnit={[Function]}
+          screens={
+            Array [
+              "desktop",
+              "tablet",
+              "mobile",
+            ]
+          }
+          unit="px"
+          units={
+            Array [
+              "px",
+            ]
+          }
+          value=""
+        />
+      </WithInstanceId(WhenResponsiveScreen)>
+      <WithInstanceId(WhenResponsiveScreen)
+        screen="mobile"
+      >
+        <ResponsiveRangeControl
+          className=""
+          help=""
+          label="Padding Top"
+          max="400"
+          min="0"
+          onChange={[Function]}
+          onChangeUnit={[Function]}
+          screens={
+            Array [
+              "desktop",
+              "tablet",
+              "mobile",
+            ]
+          }
+          unit="px"
+          units={
+            Array [
+              "px",
+            ]
+          }
+          value=""
+        />
+      </WithInstanceId(WhenResponsiveScreen)>
+      <WithInstanceId(WhenResponsiveScreen)
+        screen="desktop"
+      >
+        <ResponsiveRangeControl
+          className=""
+          help=""
+          label="Padding Bottom"
+          max="400"
+          min="0"
+          onChange={[Function]}
+          onChangeUnit={[Function]}
+          screens={
+            Array [
+              "desktop",
+              "tablet",
+              "mobile",
+            ]
+          }
+          unit="px"
+          units={
+            Array [
+              "px",
+            ]
+          }
+          value={0}
+        />
+      </WithInstanceId(WhenResponsiveScreen)>
+      <WithInstanceId(WhenResponsiveScreen)
+        screen="tablet"
+      >
+        <ResponsiveRangeControl
+          className=""
+          help=""
+          label="Padding Bottom"
+          max="400"
+          min="0"
+          onChange={[Function]}
+          onChangeUnit={[Function]}
+          screens={
+            Array [
+              "desktop",
+              "tablet",
+              "mobile",
+            ]
+          }
+          unit="px"
+          units={
+            Array [
+              "px",
+            ]
+          }
+          value=""
+        />
+      </WithInstanceId(WhenResponsiveScreen)>
+      <WithInstanceId(WhenResponsiveScreen)
+        screen="mobile"
+      >
+        <ResponsiveRangeControl
+          className=""
+          help=""
+          label="Padding Bottom"
+          max="400"
+          min="0"
+          onChange={[Function]}
+          onChangeUnit={[Function]}
+          screens={
+            Array [
+              "desktop",
+              "tablet",
+              "mobile",
+            ]
+          }
+          unit="px"
+          units={
+            Array [
+              "px",
+            ]
+          }
+          value=""
+        />
+      </WithInstanceId(WhenResponsiveScreen)>
+      <WithInstanceId(WhenResponsiveScreen)
+        screen="desktop"
+      >
+        <ResponsiveRangeControl
+          className=""
+          help="Use this to pull up/down the separator to the block above it"
+          label="Margin Top"
+          max="400"
+          min={NaN}
+          onChange={[Function]}
+          onChangeUnit={[Function]}
+          screens={
+            Array [
+              "desktop",
+              "tablet",
+              "mobile",
+            ]
+          }
+          unit="px"
+          units={
+            Array [
+              "px",
+            ]
+          }
+          value={0}
+        />
+      </WithInstanceId(WhenResponsiveScreen)>
+      <WithInstanceId(WhenResponsiveScreen)
+        screen="tablet"
+      >
+        <ResponsiveRangeControl
+          className=""
+          help="Use this to pull up/down the separator to the block above it"
+          label="Margin Top"
+          max="400"
+          min={-100}
+          onChange={[Function]}
+          onChangeUnit={[Function]}
+          screens={
+            Array [
+              "desktop",
+              "tablet",
+              "mobile",
+            ]
+          }
+          unit="px"
+          units={
+            Array [
+              "px",
+            ]
+          }
+          value=""
+        />
+      </WithInstanceId(WhenResponsiveScreen)>
+      <WithInstanceId(WhenResponsiveScreen)
+        screen="mobile"
+      >
+        <ResponsiveRangeControl
+          className=""
+          help="Use this to pull up/down the separator to the block above it"
+          label="Margin Top"
+          max="400"
+          min={-100}
+          onChange={[Function]}
+          onChangeUnit={[Function]}
+          screens={
+            Array [
+              "desktop",
+              "tablet",
+              "mobile",
+            ]
+          }
+          unit="px"
+          units={
+            Array [
+              "px",
+            ]
+          }
+          value=""
+        />
+      </WithInstanceId(WhenResponsiveScreen)>
+      <WithInstanceId(WhenResponsiveScreen)
+        screen="desktop"
+      >
+        <ResponsiveRangeControl
+          className=""
+          help="Use this to pull up/down the separator to the block below it"
+          label="Margin Bottom"
+          max="400"
+          min={NaN}
+          onChange={[Function]}
+          onChangeUnit={[Function]}
+          screens={
+            Array [
+              "desktop",
+              "tablet",
+              "mobile",
+            ]
+          }
+          unit="px"
+          units={
+            Array [
+              "px",
+            ]
+          }
+          value={0}
+        />
+      </WithInstanceId(WhenResponsiveScreen)>
+      <WithInstanceId(WhenResponsiveScreen)
+        screen="tablet"
+      >
+        <ResponsiveRangeControl
+          className=""
+          help="Use this to pull up/down the separator to the block below it"
+          label="Margin Bottom"
+          max="400"
+          min={-100}
+          onChange={[Function]}
+          onChangeUnit={[Function]}
+          screens={
+            Array [
+              "desktop",
+              "tablet",
+              "mobile",
+            ]
+          }
+          unit="px"
+          units={
+            Array [
+              "px",
+            ]
+          }
+          value=""
+        />
+      </WithInstanceId(WhenResponsiveScreen)>
+      <WithInstanceId(WhenResponsiveScreen)
+        screen="mobile"
+      >
+        <ResponsiveRangeControl
+          className=""
+          help="Use this to pull up/down the separator to the block below it"
+          label="Margin Bottom"
+          max="400"
+          min={-100}
+          onChange={[Function]}
+          onChangeUnit={[Function]}
+          screens={
+            Array [
+              "desktop",
+              "tablet",
+              "mobile",
+            ]
+          }
+          unit="px"
+          units={
+            Array [
+              "px",
+            ]
+          }
+          value=""
+        />
+      </WithInstanceId(WhenResponsiveScreen)>
+    </ForwardRef(PanelBody)>
+  </InspectorPanelControls>
+  <InspectorPanelControls
+    tab="advanced"
+  />
+  <MockBlockComponent
+    attributes={Object {}}
+    blockName="separator"
+  />
+</Fragment>
+`;
+
+exports[`Separator block Edit render should match snapshot 1`] = `
+<div
+  aria-hidden="true"
+  class="wp-block-ugb-separator ugb-separator ugb-separator--design-wave-1"
+>
+  <div
+    class="ugb-separator__top-pad"
+  />
+  <div
+    class="ugb-separator__svg-wrapper"
+  >
+    <div
+      class="ugb-separator__svg-inner"
+    >
+      <svg
+        class="ugb-separator__layer-1"
+        preserveAspectRatio="none"
+      />
+    </div>
+  </div>
+  <div
+    class="ugb-separator__bottom-pad"
+  />
+</div>
+`;
