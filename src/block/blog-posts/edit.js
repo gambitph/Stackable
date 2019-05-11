@@ -254,7 +254,7 @@ export const _edit = props => {
 			</BlockControls>
 			<div className={ mainClasses } style={ mainStyles }>
 				{ applyFilters( 'stackable.blog-posts.edit.output.before', null, design, props ) }
-				{ displayPosts.map( ( post, i ) => {
+				{ ( displayPosts || [] ).map( ( post, i ) => {
 					const sizeName = featuredImageShape !== 'full' && columns < 2 ? `${ featuredImageShape }_large` : featuredImageShape
 					const featuredImageSrc = post.featured_image_urls[ sizeName ][ 0 ]
 
@@ -340,7 +340,10 @@ export const _edit = props => {
 
 const edit = withSelect( ( select, props ) => {
 	const {
-		postsToShow, order, orderBy, categories,
+		postsToShow = 6,
+		order = 'desc',
+		orderBy = 'date',
+		categories = '',
 	} = props.attributes
 	const { getEntityRecords } = select( 'core' )
 	const latestPostsQuery = pickBy( {
