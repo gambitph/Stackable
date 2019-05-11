@@ -1,21 +1,25 @@
+import { withBlockStyles, withUniqueClass } from '@stackable/higher-order'
 import { applyFilters } from '@wordpress/hooks'
+import { BlockContainer } from '@stackable/components'
 import classnames from 'classnames'
-import isDarkColor from 'is-dark-color'
+import { compose } from '@wordpress/compose'
+import createStyles from './style'
+import { Fragment } from '@wordpress/element'
 import { range } from '@stackable/util'
 import { RichText } from '@wordpress/editor'
 
 const save = props => {
 	const { className, attributes } = props
 	const {
-		numberColor,
-		titleColor,
-		descriptionColor,
-		numberBGColor,
+		// numberColor,
+		// titleColor,
+		// descriptionColor,
+		// numberBGColor,
 		columns = 3,
 		design = 'basic',
-		borderRadius = 12,
+		// borderRadius = 12,
 		shadow = 3,
-		backgroundColor,
+		// backgroundColor,
 	} = attributes
 
 	const mainClasses = classnames( [
@@ -28,80 +32,56 @@ const save = props => {
 	}, design, props ) )
 
 	return (
-		<div className={ mainClasses }>
-			{ applyFilters( 'stackable.number-box.edit.output.before', null, design, props ) }
-			{ range( 1, columns + 1 ).map( i => {
-				const num = attributes[ `num${ i }` ]
-				const title = attributes[ `title${ i }` ]
-				const description = attributes[ `description${ i }` ]
+		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
+			<Fragment>
+				{ range( 1, columns + 1 ).map( i => {
+					const num = attributes[ `num${ i }` ]
+					const title = attributes[ `title${ i }` ]
+					const description = attributes[ `description${ i }` ]
 
-				const boxClasses = classnames( [
-					'ugb-number-box__item',
-				], applyFilters( 'stackable.number-box.boxclasses', {
-					[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-				}, design, props ) )
+					const boxClasses = classnames( [
+						'ugb-number-box__item',
+						`ugb-number-box__item${ i }`,
+					], applyFilters( 'stackable.number-box.boxclasses', {
+						[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
+					}, design, props ) )
 
-				const styles = applyFilters( 'stackable.number-box.styles', {
-					box: {
-						borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
-						backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
-					},
-					number: {
-						backgroundColor: numberBGColor,
-						color: numberColor ? numberColor :
-						       ! numberBGColor ? undefined :
-						       isDarkColor( numberBGColor ) ? '#ffffff' : '#222222',
-					},
-					title: {
-						color: titleColor ? titleColor :
-						       design === 'plain' ? undefined :
-						       ! backgroundColor ? undefined :
-						       isDarkColor( backgroundColor ) ? '#ffffff' : '#222222',
-					},
-					description: {
-						color: descriptionColor ? descriptionColor :
-						       design === 'plain' ? undefined :
-						       ! backgroundColor ? undefined :
-						       isDarkColor( backgroundColor ) ? '#ffffff' : '#222222',
-					},
-				}, design, props )
-
-				return (
-					<div className={ boxClasses } style={ styles.box } key={ i }>
-						{ ! RichText.isEmpty( num ) && (
-							<RichText.Content
-								tagName="span"
-								className="ugb-number-box__number"
-								style={ styles.number }
-								value={ num }
-							/>
-						) }
-						{ ( ! RichText.isEmpty( title ) || ! RichText.isEmpty( description ) ) &&
-							<div className="ugb-number-box__content">
-								{ ! RichText.isEmpty( title ) && (
-									<RichText.Content
-										tagName="h4"
-										className="ugb-number-box__title"
-										style={ styles.title }
-										value={ title }
-									/>
-								) }
-								{ ! RichText.isEmpty( description ) && (
-									<RichText.Content
-										tagName="p"
-										className="ugb-number-box__description"
-										style={ styles.description }
-										value={ description }
-									/>
-								) }
-							</div>
-						}
-					</div>
-				)
-			} ) }
-			{ applyFilters( 'stackable.number-box.edit.output.after', null, design, props ) }
-		</div>
+					return (
+						<div className={ boxClasses } key={ i }>
+							{ ! RichText.isEmpty( num ) && (
+								<RichText.Content
+									tagName="span"
+									className="ugb-number-box__number"
+									value={ num }
+								/>
+							) }
+							{ ( ! RichText.isEmpty( title ) || ! RichText.isEmpty( description ) ) &&
+								<div className="ugb-number-box__content">
+									{ ! RichText.isEmpty( title ) && (
+										<RichText.Content
+											tagName="h4"
+											className="ugb-number-box__title"
+											value={ title }
+										/>
+									) }
+									{ ! RichText.isEmpty( description ) && (
+										<RichText.Content
+											tagName="p"
+											className="ugb-number-box__description"
+											value={ description }
+										/>
+									) }
+								</div>
+							}
+						</div>
+					)
+				} ) }
+			</Fragment>
+		) } />
 	)
 }
 
-export default save
+export default compose(
+	withUniqueClass,
+	withBlockStyles( createStyles ),
+)( save )

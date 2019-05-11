@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Number Box block Rendered styles should match snapshot 1`] = `
+Object {
+  ".ugb-number-box__description": Object {
+    "color": undefined,
+  },
+  ".ugb-number-box__item": Object {
+    "backgroundColor": undefined,
+    "borderRadius": undefined,
+  },
+  ".ugb-number-box__number": Object {
+    "backgroundColor": undefined,
+    "color": undefined,
+  },
+  ".ugb-number-box__title": Object {
+    "color": undefined,
+  },
+}
+`;
+
+exports[`Number Box block Rendered styles should match snapshot with modified attributes 1`] = `
+Object {
+  ".ugb-number-box__description": Object {
+    "color": "#123456",
+  },
+  ".ugb-number-box__item": Object {
+    "backgroundColor": "#123456",
+    "borderRadius": 6,
+  },
+  ".ugb-number-box__number": Object {
+    "backgroundColor": "#123456",
+    "color": "#123456",
+  },
+  ".ugb-number-box__title": Object {
+    "color": "#123456",
+  },
+}
+`;

@@ -3,54 +3,58 @@
  */
 
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
+import { default as deprecated } from './deprecated'
 import { descriptionPlaceholder } from '@stackable/util'
 import { disabledBlocks } from 'stackable'
+import { default as edit } from './edit'
 import { NumberBoxIcon } from '@stackable/icons'
+import { default as save } from './save'
 
 export const schema = {
 	num1: {
 		source: 'html',
-		selector: '.ugb-number-box__item:nth-child(1) .ugb-number-box__number',
+		selector: '.ugb-number-box__item1 .ugb-number-box__number',
 		default: '01',
 	},
 	num2: {
 		source: 'html',
-		selector: '.ugb-number-box__item:nth-child(2) .ugb-number-box__number',
+		selector: '.ugb-number-box__item2 .ugb-number-box__number',
 		default: '02',
 	},
 	num3: {
 		source: 'html',
-		selector: '.ugb-number-box__item:nth-child(3) .ugb-number-box__number',
+		selector: '.ugb-number-box__item3 .ugb-number-box__number',
 		default: '03',
 	},
 	title1: {
 		source: 'html',
-		selector: '.ugb-number-box__item:nth-child(1) .ugb-number-box__title',
+		selector: '.ugb-number-box__item1 .ugb-number-box__title',
 		default: __( 'Title' ),
 	},
 	title2: {
 		source: 'html',
-		selector: '.ugb-number-box__item:nth-child(2) .ugb-number-box__title',
+		selector: '.ugb-number-box__item2 .ugb-number-box__title',
 		default: __( 'Title' ),
 	},
 	title3: {
 		source: 'html',
-		selector: '.ugb-number-box__item:nth-child(3) .ugb-number-box__title',
+		selector: '.ugb-number-box__item3 .ugb-number-box__title',
 		default: __( 'Title' ),
 	},
 	description1: {
 		source: 'html',
-		selector: '.ugb-number-box__item:nth-child(1) .ugb-number-box__description',
+		selector: '.ugb-number-box__item1 .ugb-number-box__description',
 		default: descriptionPlaceholder(),
 	},
 	description2: {
 		source: 'html',
-		selector: '.ugb-number-box__item:nth-child(2) .ugb-number-box__description',
+		selector: '.ugb-number-box__item2 .ugb-number-box__description',
 		default: descriptionPlaceholder(),
 	},
 	description3: {
 		source: 'html',
-		selector: '.ugb-number-box__item:nth-child(3) .ugb-number-box__description',
+		selector: '.ugb-number-box__item3 .ugb-number-box__description',
 		default: descriptionPlaceholder(),
 	},
 	numberColor: {
@@ -83,20 +87,6 @@ export const schema = {
 	},
 	backgroundColor: {
 		type: 'string',
-	},
-
-	// Custom CSS attributes.
-	customCSSUniqueID: {
-		type: 'string',
-		default: '',
-	},
-	customCSS: {
-		type: 'string',
-		default: '',
-	},
-	customCSSCompiled: {
-		type: 'string',
-		default: '',
 	},
 
 	// Keep the old attributes. Gutenberg issue https://github.com/WordPress/gutenberg/issues/10406
@@ -152,6 +142,17 @@ export const settings = {
 	attributes: schema,
 	supports: {
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
+	},
+	deprecated,
+	save,
+	edit,
+
+	// Stackable modules.
+	modules: {
+		'advanced-spacing': true,
+		'custom-css': {
+			default: applyFilters( 'stackable.number-box.custom-css.default', '' ),
+		},
 	},
 
 	// Stackable specific settings.

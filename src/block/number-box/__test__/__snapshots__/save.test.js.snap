@@ -1,0 +1,131 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Number Box block Save render should match snapshot 1`] = `
+<div
+  class="wp-block-ugb-number-box ugb-number-box ugb-number-box ugb-number-box--v2 ugb-number-box--columns-3"
+>
+  <div
+    class="ugb-number-box__item ugb-number-box__item1"
+  >
+    <span
+      class="ugb-number-box__number"
+    >
+      <div>
+        01
+      </div>
+    </span>
+    <div
+      class="ugb-number-box__content"
+    >
+      <h4
+        class="ugb-number-box__title"
+      >
+        <div>
+          Title
+        </div>
+      </h4>
+      <p
+        class="ugb-number-box__description"
+      />
+      <div>
+        Description for this block. Use this space for describing your block. Any text will do.
+      </div>
+      <p />
+    </div>
+  </div>
+  <div
+    class="ugb-number-box__item ugb-number-box__item2"
+  >
+    <span
+      class="ugb-number-box__number"
+    >
+      <div>
+        02
+      </div>
+    </span>
+    <div
+      class="ugb-number-box__content"
+    >
+      <h4
+        class="ugb-number-box__title"
+      >
+        <div>
+          Title
+        </div>
+      </h4>
+      <p
+        class="ugb-number-box__description"
+      />
+      <div>
+        Description for this block. Use this space for describing your block. Any text will do.
+      </div>
+      <p />
+    </div>
+  </div>
+  <div
+    class="ugb-number-box__item ugb-number-box__item3"
+  >
+    <span
+      class="ugb-number-box__number"
+    >
+      <div>
+        03
+      </div>
+    </span>
+    <div
+      class="ugb-number-box__content"
+    >
+      <h4
+        class="ugb-number-box__title"
+      >
+        <div>
+          Title
+        </div>
+      </h4>
+      <p
+        class="ugb-number-box__description"
+      />
+      <div>
+        Description for this block. Use this space for describing your block. Any text will do.
+      </div>
+      <p />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Number Box block Save render should match snapshot with attributes 1`] = `
+<div
+  class="wp-block-ugb-number-box ugb-number-box ugb-number-box ugb-number-box--v2 ugb-number-box--columns-1 ugb-number-box--design-wave-2"
+>
+  <div
+    class="ugb-number-box__item ugb-number-box__item1 ugb--shadow-1"
+  >
+    <span
+      class="ugb-number-box__number"
+    >
+      <div>
+        num1
+      </div>
+    </span>
+    <div
+      class="ugb-number-box__content"
+    >
+      <h4
+        class="ugb-number-box__title"
+      >
+        <div>
+          title1
+        </div>
+      </h4>
+      <p
+        class="ugb-number-box__description"
+      />
+      <div>
+        description1
+      </div>
+      <p />
+    </div>
+  </div>
+</div>
+`;

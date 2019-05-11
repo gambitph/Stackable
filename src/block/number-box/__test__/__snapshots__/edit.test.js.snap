@@ -1,0 +1,347 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Number Box block Edit render should match inspector tabbed controls snapshot 1`] = `
+<Fragment>
+  <IfBlockEditSelected(InspectorControlsFill)>
+    <PanelTabs
+      closeOtherPanels={true}
+    />
+  </IfBlockEditSelected(InspectorControlsFill)>
+  <InspectorPanelControls
+    tab="layout"
+  >
+    <DesignPanelBody
+      initialOpen={true}
+      onChange={[Function]}
+      options={
+        Array [
+          Object {
+            "image": Object {},
+            "label": "Basic",
+            "value": "basic",
+          },
+          Object {
+            "image": Object {},
+            "label": "Plain",
+            "value": "plain",
+          },
+        ]
+      }
+      selected="basic"
+    />
+    <PanelDesignLibrary />
+    <PanelDesignUserLibrary
+      block=""
+      className=""
+      help="Save designs to reuse them across your site. Note that using saved designs will override your current block settings."
+      ignoredAttributes={Array []}
+      initialOpen={false}
+      title="Saved Block Designs"
+    />
+  </InspectorPanelControls>
+  <InspectorPanelControls
+    tab="style"
+  >
+    <ForwardRef(PanelBody)
+      title="General Settings"
+    >
+      <WithInstanceId(RangeControl)
+        label="Columns"
+        max={3}
+        min={1}
+        onChange={[Function]}
+      />
+      <WithColorContext(IfCondition(ColorPaletteControl))
+        label="Background Color"
+        onChange={[Function]}
+      />
+      <WithInstanceId(RangeControl)
+        label="Border Radius"
+        max={50}
+        min={0}
+        onChange={[Function]}
+        value={12}
+      />
+      <WithInstanceId(RangeControl)
+        label="Shadow / Outline"
+        max={9}
+        min={0}
+        onChange={[Function]}
+        value={3}
+      />
+    </ForwardRef(PanelBody)>
+    <WithColorContext(IfCondition(Component))
+      colorSettings={
+        Array [
+          Object {
+            "label": "Number Color",
+            "onChange": [Function],
+            "value": undefined,
+          },
+          Object {
+            "label": "Number Background Color",
+            "onChange": [Function],
+            "value": undefined,
+          },
+          Object {
+            "label": "Title Color",
+            "onChange": [Function],
+            "value": undefined,
+          },
+          Object {
+            "label": "Description Color",
+            "onChange": [Function],
+            "value": undefined,
+          },
+        ]
+      }
+      title="Color Settings"
+    />
+  </InspectorPanelControls>
+  <InspectorPanelControls
+    tab="advanced"
+  />
+  <MockBlockComponent
+    attributes={Object {}}
+    blockName="number-box"
+  />
+</Fragment>
+`;
+
+exports[`Number Box block Edit render should match snapshot 1`] = `
+<div
+  class="wp-block-ugb-number-box ugb-number-box ugb-number-box ugb-number-box--v2 ugb-number-box--columns-3"
+>
+  <div
+    class="ugb-number-box__item ugb-number-box__item1"
+  >
+    <div
+      class="editor-rich-text"
+    >
+      <div>
+        <div>
+          <div
+            class="components-autocomplete"
+          >
+            <div
+              aria-autocomplete="list"
+              aria-label="01"
+              aria-multiline="true"
+              class="ugb-number-box__number editor-rich-text__tinymce"
+              contenteditable="true"
+              data-is-placeholder-visible="false"
+              role="textbox"
+            >
+              01
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="ugb-number-box__content"
+    >
+      <div
+        class="editor-rich-text"
+      >
+        <div>
+          <div>
+            <div
+              class="components-autocomplete"
+            >
+              <h4
+                aria-autocomplete="list"
+                aria-label="Title"
+                aria-multiline="true"
+                class="ugb-number-box__title editor-rich-text__tinymce"
+                contenteditable="true"
+                data-is-placeholder-visible="false"
+                role="textbox"
+              >
+                Title
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="editor-rich-text"
+      >
+        <div>
+          <div>
+            <div
+              class="components-autocomplete"
+            >
+              <p
+                aria-autocomplete="list"
+                aria-label="Description for this block. Use this space for describing your block. Any text will do."
+                aria-multiline="true"
+                class="ugb-number-box__description editor-rich-text__tinymce"
+                contenteditable="true"
+                data-is-placeholder-visible="false"
+                role="textbox"
+              >
+                Description for this block. Use this space for describing your block. Any text will do.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="ugb-number-box__item ugb-number-box__item2"
+  >
+    <div
+      class="editor-rich-text"
+    >
+      <div>
+        <div>
+          <div
+            class="components-autocomplete"
+          >
+            <div
+              aria-autocomplete="list"
+              aria-label="02"
+              aria-multiline="true"
+              class="ugb-number-box__number editor-rich-text__tinymce"
+              contenteditable="true"
+              data-is-placeholder-visible="false"
+              role="textbox"
+            >
+              02
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="ugb-number-box__content"
+    >
+      <div
+        class="editor-rich-text"
+      >
+        <div>
+          <div>
+            <div
+              class="components-autocomplete"
+            >
+              <h4
+                aria-autocomplete="list"
+                aria-label="Title"
+                aria-multiline="true"
+                class="ugb-number-box__title editor-rich-text__tinymce"
+                contenteditable="true"
+                data-is-placeholder-visible="false"
+                role="textbox"
+              >
+                Title
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="editor-rich-text"
+      >
+        <div>
+          <div>
+            <div
+              class="components-autocomplete"
+            >
+              <p
+                aria-autocomplete="list"
+                aria-label="Description for this block. Use this space for describing your block. Any text will do."
+                aria-multiline="true"
+                class="ugb-number-box__description editor-rich-text__tinymce"
+                contenteditable="true"
+                data-is-placeholder-visible="false"
+                role="textbox"
+              >
+                Description for this block. Use this space for describing your block. Any text will do.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="ugb-number-box__item ugb-number-box__item3"
+  >
+    <div
+      class="editor-rich-text"
+    >
+      <div>
+        <div>
+          <div
+            class="components-autocomplete"
+          >
+            <div
+              aria-autocomplete="list"
+              aria-label="03"
+              aria-multiline="true"
+              class="ugb-number-box__number editor-rich-text__tinymce"
+              contenteditable="true"
+              data-is-placeholder-visible="false"
+              role="textbox"
+            >
+              03
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="ugb-number-box__content"
+    >
+      <div
+        class="editor-rich-text"
+      >
+        <div>
+          <div>
+            <div
+              class="components-autocomplete"
+            >
+              <h4
+                aria-autocomplete="list"
+                aria-label="Title"
+                aria-multiline="true"
+                class="ugb-number-box__title editor-rich-text__tinymce"
+                contenteditable="true"
+                data-is-placeholder-visible="false"
+                role="textbox"
+              >
+                Title
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="editor-rich-text"
+      >
+        <div>
+          <div>
+            <div
+              class="components-autocomplete"
+            >
+              <p
+                aria-autocomplete="list"
+                aria-label="Description for this block. Use this space for describing your block. Any text will do."
+                aria-multiline="true"
+                class="ugb-number-box__description editor-rich-text__tinymce"
+                contenteditable="true"
+                data-is-placeholder-visible="false"
+                role="textbox"
+              >
+                Description for this block. Use this space for describing your block. Any text will do.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
