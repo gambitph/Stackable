@@ -11,6 +11,8 @@ import { noop } from 'lodash'
 import registerStackableBlock from '@stackable/register-block'
 import { render } from 'enzyme'
 
+// TODO: cleanup, remove unused functions here
+
 export const blockEditRender = ( name, settings ) => {
 	if ( ! getBlockType( name ) ) {
 		registerStackableBlock( name, { ...settings, category: 'common' } )
@@ -32,13 +34,28 @@ export const blockSaveRender = ( name, settings, attributes = null ) => {
 	if ( ! getBlockType( name ) ) {
 		registerStackableBlock( name, { ...settings, category: 'common' } )
 	}
+	const attributesToRender = getBlockModifiedAttributes( name, settings, attributes )
+	return render( getSaveElement( name, attributesToRender ) )
+}
+
+/**
+ * Creates an object containing attributes with modified values.
+ *
+ * @param {string} name Block name
+ * @param {Object} settings Block settings
+ * @param {Object} attributes Attributes to override
+ *
+ * @return {Object} Attributes
+ */
+export const getBlockModifiedAttributes = ( name, settings, attributes = null ) => {
+	if ( ! getBlockType( name ) ) {
+		registerStackableBlock( name, { ...settings, category: 'common' } )
+	}
 	const block = createBlock( name )
-	const attributesToRender = {
+	return {
 		...block.attributes,
 		...( attributes ? { ...createAttributeValues( settings.attributes, settings ), ...attributes } : {} ),
 	}
-
-	return render( getSaveElement( name, attributesToRender ) )
 }
 
 export const getDefaultAttributes = ( blockName, blockSettings ) => {
