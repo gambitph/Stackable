@@ -109,7 +109,7 @@ export const createAttributeValue = ( attrName, attrParams, blockSettings = {} )
 		if ( typeof defaultValue === 'number' ) {
 			return Math.floor( defaultValue / 2 )
 		}
-		return parseInt( Math.random() * 500, 10 )
+		return 123
 	} else if ( type === 'url' ) {
 		return `https://${ attrName }.com`
 	} else if ( type === 'color' ) {
