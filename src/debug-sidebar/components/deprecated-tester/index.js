@@ -140,6 +140,11 @@ class DeprecatedTester extends Component {
 							{ this.state.show.includes( blockName ) && (
 								<div className="ugb-deprecated-tester--test-detail-wrapper">
 									{ currentBlockTests.map( ( test, i ) => {
+										// Escape new lines and tabs in the block's attribute list.
+										const copiedHTML = test.html.replace( /(<!--[\s\S]*?-->)/g, ( match, html ) => {
+											return html.replace( /\n/g, '\\n', ).replace( /\t/g, '\\t' )
+										} )
+
 										return (
 											<div key={ i }>
 												<div>
@@ -150,7 +155,7 @@ class DeprecatedTester extends Component {
 												<div className="ugb-deprecated-tester--test-details">
 													<small className="ugb--version">{ sprintf( __( 'v%s' ), test.version ) }</small>
 													{ test.plan && <small className={ `ugb--plan ugb--plan-${ test.plan }` }>{ test.plan }</small> }
-													<ClipboardButton isDefault={ false } isLink text={ test.html }>{ __( 'Copy code' ) }</ClipboardButton>
+													<ClipboardButton isDefault={ false } isLink text={ copiedHTML }>{ __( 'Copy code' ) }</ClipboardButton>
 												</div>
 											</div>
 										)
