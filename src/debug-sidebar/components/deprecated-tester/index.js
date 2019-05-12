@@ -60,6 +60,12 @@ class DeprecatedTester extends Component {
 
 	onRunAllTests() {
 		const newTests = this.state.tests.map( test => {
+			if ( test.skip ) {
+				return {
+					...test,
+					passed: true,
+				}
+			}
 			return {
 				...test,
 				passed: validateBlockHTML( test.html ),
@@ -72,6 +78,12 @@ class DeprecatedTester extends Component {
 		const newTests = this.state.tests.map( test => {
 			if ( test.block !== blockName ) {
 				return test
+			}
+			if ( test.skip ) {
+				return {
+					...test,
+					passed: true,
+				}
 			}
 			return {
 				...test,
@@ -149,13 +161,15 @@ class DeprecatedTester extends Component {
 											<div key={ i }>
 												<div>
 													{ test.description }
-													{ test.passed === true && <small className="ugb--passed">{ __( 'Passed' ) }</small> }
-													{ test.passed === false && <small className="ugb--failed">{ __( 'Failed' ) }</small> }
+													{ ! test.skip && test.passed === true && <small className="ugb--passed">{ __( 'Passed' ) }</small> }
+													{ ! test.skip && test.passed === false && <small className="ugb--failed">{ __( 'Failed' ) }</small> }
+													{ test.skip && <small className="ugb--skipped">{ __( 'Skipped' ) }</small> }
 												</div>
 												<div className="ugb-deprecated-tester--test-details">
 													<small className="ugb--version">{ sprintf( __( 'v%s' ), test.version ) }</small>
 													{ test.plan && <small className={ `ugb--plan ugb--plan-${ test.plan }` }>{ test.plan }</small> }
 													<ClipboardButton isDefault={ false } isLink text={ copiedHTML }>{ __( 'Copy code' ) }</ClipboardButton>
+													{ test.skip && <small className="ugb--skipped-note"><span role="img" aria-label={ __( 'Note' ) }>⚠️</span> { test.skip }</small> }
 												</div>
 											</div>
 										)

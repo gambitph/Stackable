@@ -80,6 +80,10 @@
 		font-size: 0.6em;
 		text-transform: uppercase;
 	}
+	.ugb--skipped-note {
+		width: 100%;
+		font-style: italic;
+	}
 	.components-icon-button {
 		padding: 2px;
 		margin-left: 4px;
@@ -103,7 +107,8 @@
 		flex-wrap: wrap;
 	}
 	.ugb--passed,
-	.ugb--failed {
+	.ugb--failed,
+	.ugb--skipped {
 		padding: 0 6px;
 		border-radius: 2px;
 		display: inline-block;
@@ -116,6 +121,10 @@
 	.ugb--failed {
 		background: #efd5d5;
 		color: #a70d0d;
+	}
+	.ugb--skipped {
+		background: #eee;
+		color: #666;
 	}
 }
 
