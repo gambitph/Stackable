@@ -15,7 +15,7 @@ export const createStyles = props => {
 
 	return {
 		'.ugb-number-box__item': {
-			borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
+			borderRadius: design !== 'plain' && borderRadius !== 12 ? `${ borderRadius }px` : undefined,
 			backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
 		},
 		'.ugb-number-box__number': {
