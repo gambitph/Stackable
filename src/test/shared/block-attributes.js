@@ -10,7 +10,7 @@ const blockAttributeTests = props => {
 		} )
 	} )
 
-	test( 'should not have old custom CSS selectors (< 1.16), remove these from code', () => {
+	test( 'should not have old custom CSS selectors (< 1.16), custom-css module does this already', () => {
 		expect( Object.keys( attributes ) ).not.toContain( 'customCSSUniqueID' )
 		expect( Object.keys( attributes ) ).not.toContain( 'customCSS' )
 		expect( Object.keys( attributes ) ).not.toContain( 'customCSSCompiled' )
