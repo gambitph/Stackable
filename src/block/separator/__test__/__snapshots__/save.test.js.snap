@@ -29,7 +29,7 @@ exports[`Separator block Save render should match snapshot 1`] = `
 exports[`Separator block Save render should match snapshot with attributes 1`] = `
 <div
   aria-hidden="true"
-  class="wp-block-ugb-separator alignfull ugb-separator uniqueClass ugb-separator--design-wave-2 ugb-separator--flip-vertical ugb-separator--flip-horizontal"
+  class="wp-block-ugb-separator alignfull ugb-separator ugb-separator--design-wave-2 ugb-separator--flip-vertical ugb-separator--flip-horizontal"
 >
   <div
     class="ugb-separator__top-pad"
