@@ -71,7 +71,7 @@ export const schema = {
 	},
 	columns: {
 		type: 'number',
-		default: 3,
+		default: 2,
 	},
 	design: {
 		type: 'string',

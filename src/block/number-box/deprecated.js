@@ -415,6 +415,12 @@ const deprecated = [
 	{
 		attributes: deprecatedSchema_1_15,
 		save: deprecatedSave_1_15,
+		migrate: attributes => {
+			return {
+				...attributes,
+				columns: attributes.columns ? attributes.columns : 3,
+			}
+		},
 	},
 	{
 		attributes: deprecatedSchema_1_10,

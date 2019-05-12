@@ -15,7 +15,7 @@ const save = props => {
 		// titleColor,
 		// descriptionColor,
 		// numberBGColor,
-		columns = 3,
+		columns = 2,
 		design = 'basic',
 		// borderRadius = 12,
 		shadow = 3,
