@@ -26,6 +26,11 @@ const AdvancedRangeControl = props => {
 AdvancedRangeControl.defaultProps = {
 	onChange: () => {},
 	onChangeUnit: () => {},
+	help: '',
+	className: '',
+	units: [ 'px' ],
+	unit: 'px',
+	screens: [ 'desktop' ],
 }
 
 export default AdvancedRangeControl

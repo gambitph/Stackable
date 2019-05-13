@@ -26,6 +26,11 @@ const AdvancedSelectControl = props => {
 AdvancedSelectControl.defaultProps = {
 	onChange: () => {},
 	onChangeUnit: () => {},
+	help: '',
+	className: '',
+	units: [ 'px' ],
+	unit: 'px',
+	screens: [ 'desktop' ],
 }
 
 export default AdvancedSelectControl
