@@ -440,6 +440,7 @@ const advancedSpacing = ( blockName, options = {} ) => {
 		selector: '',
 		margins: true,
 		paddings: true,
+		modifyStyles: true,
 		enableMarginTop: true,
 		enableMarginRight: true,
 		enableMarginBottom: true,
@@ -452,7 +453,9 @@ const advancedSpacing = ( blockName, options = {} ) => {
 	}
 
 	addFilter( `stackable.${ blockName }.edit.inspector.advanced.before`, `stackable/${ blockName }/advanced-spacing`, inspectorControls( optionsToPass ) )
-	addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/advanced-spacing`, addToStyleObject( blockName, optionsToPass ) )
+	if ( optionsToPass.modifyStyles ) {
+		addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/advanced-spacing`, addToStyleObject( blockName, optionsToPass ) )
+	}
 	addFilter( `stackable.${ blockName }.attributes`, `stackable/${ blockName }/advanced-spacing`, addAttributes )
 	doAction( `stackable.module.advanced-spacing`, blockName )
 }
