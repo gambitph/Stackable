@@ -38,12 +38,12 @@ class FourNumberControl extends Component {
 		this.onChangeLeft = this.onChangeLeft.bind( this )
 	}
 
-	getEnabledValues() {
+	getEnabledValues( data = this.state ) {
 		return [
-			...( this.props.enableTop ? [ this.state.top ] : [] ),
-			...( this.props.enableRight ? [ this.state.right ] : [] ),
-			...( this.props.enableBottom ? [ this.state.bottom ] : [] ),
-			...( this.props.enableLeft ? [ this.state.left ] : [] ),
+			...( this.props.enableTop ? [ data.top ] : [] ),
+			...( this.props.enableRight ? [ data.right ] : [] ),
+			...( this.props.enableBottom ? [ data.bottom ] : [] ),
+			...( this.props.enableLeft ? [ data.left ] : [] ),
 		]
 	}
 
@@ -132,6 +132,16 @@ class FourNumberControl extends Component {
 		}
 		if ( this.props.left !== prevProps.left ) {
 			this.setState( { left: this.props.left } )
+		}
+
+		// Update locked state when props are changed.
+		if ( this.props.top !== prevProps.top ||
+			 this.props.right !== prevProps.right ||
+			 this.props.bottom !== prevProps.bottom ||
+			 this.props.left !== prevProps.left ) {
+			const values = this.getEnabledValues( this.props )
+			const locked = ! values.length ? true : values.every( value => value === values[ 0 ] )
+			this.setState( { locked } )
 		}
 
 		if ( this.state.top === prevState.top &&
