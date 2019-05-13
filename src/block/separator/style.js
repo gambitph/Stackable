@@ -30,11 +30,15 @@ export const createStyles = props => {
 		mobilePaddingUnit = 'px',
 	} = props.attributes
 
+	const isEditing = typeof props.mergeBlocks !== 'undefined'
+
 	return {
 		'.ugb-separator': {
 			backgroundColor: backgroundColor ? backgroundColor : undefined,
-			marginTop: `${ marginTop - 1 }${ marginUnit }`, // -1 to prevent white lines.
-			marginBottom: `${ marginBottom - 1 }${ marginUnit }`, // -1 to prevent white lines.
+			// -1 to prevent white lines.
+			// -14 during editing only.
+			marginTop: `${ marginTop - 1 + ( isEditing ? -14 : 0 ) }${ marginUnit }`,
+			marginBottom: `${ marginBottom - 1 + ( isEditing ? -14 : 0 ) }${ marginUnit }`,
 		},
 		'.ugb-separator__bottom-pad': {
 			height: paddingBottom !== '' ? `${ paddingBottom }${ paddingUnit }` : undefined,

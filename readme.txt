@@ -126,6 +126,7 @@ You will have to redo all your blocks
 * Fixed: Some values in Custom CSS can mess up the rendered block CSS.
 * Fixed: Editor error shows up when no latest posts are found.
 * Fixed: Number box plain layouts now don't have a background
+* Fixed: The Separator block in the editor has top & bottom margins that makes placing separators hard.
 
 = 1.15.2 =
 * Fixed: Accordion now doesn't clip its content to a maximum of 800px
