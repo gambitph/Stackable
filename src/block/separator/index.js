@@ -190,6 +190,13 @@ export const settings = {
 
 	// Stackable modules.
 	modules: {
+		'advanced-spacing': {
+			enableMarginRight: false,
+			enableMarginLeft: false,
+			enablePaddingRight: false,
+			enablePaddingLeft: false,
+			modifyStyles: false,
+		},
 		'custom-css': {
 			default: applyFilters( 'stackable.separator.custom-css.default', '' ),
 		},

@@ -1,13 +1,12 @@
 import './pro'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import {
-	BlockContainer, ColorPaletteControl, DesignPanelBody, PanelDesignLibrary, PanelDesignUserLibrary, ResponsiveRangeControl, WhenResponsiveScreen,
+	AdvancedRangeControl, BlockContainer, ColorPaletteControl, DesignPanelBody, PanelDesignLibrary, PanelDesignUserLibrary, WhenResponsiveScreen,
 } from '@stackable/components'
 import { PanelBody, RangeControl, ToggleControl } from '@wordpress/components'
 import { separators, shadows } from './separators'
 import { withBlockStyles, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
 import { __ } from '@wordpress/i18n'
-import { name as blockName } from './'
 import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
 import createStyles from './style'
@@ -87,10 +86,13 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 		mobileHeight = '',
 		marginTop = 0,
 		marginBottom = 0,
+		marginUnit = 'px',
 		tabletMarginTop = '',
 		tabletMarginBottom = '',
+		tabletMarginUnit = 'px',
 		mobileMarginTop = '',
 		mobileMarginBottom = '',
+		mobileMarginUnit = 'px',
 		backgroundColor = '',
 		flipVertically = false,
 		flipHorizontally = false,
@@ -100,10 +102,13 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 		layer1Shadow = false,
 		paddingTop = 0,
 		paddingBottom = 0,
+		paddingUnit = 'px',
 		tabletPaddingTop = '',
 		tabletPaddingBottom = '',
+		tabletPaddingUnit = 'px',
 		mobilePaddingTop = '',
 		mobilePaddingBottom = '',
+		mobilePaddingUnit = 'px',
 	} = props.attributes
 
 	return (
@@ -141,7 +146,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 				initialOpen={ false }
 			>
 				<WhenResponsiveScreen screen="desktop">
-					<ResponsiveRangeControl
+					<AdvancedRangeControl
 						label={ __( 'Height' ) }
 						value={ height }
 						min="30"
@@ -152,7 +157,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 					/>
 				</WhenResponsiveScreen>
 				<WhenResponsiveScreen screen="tablet">
-					<ResponsiveRangeControl
+					<AdvancedRangeControl
 						label={ __( 'Height' ) }
 						value={ tabletHeight }
 						min="30"
@@ -163,7 +168,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 					/>
 				</WhenResponsiveScreen>
 				<WhenResponsiveScreen screen="mobile">
-					<ResponsiveRangeControl
+					<AdvancedRangeControl
 						label={ __( 'Height' ) }
 						value={ mobileHeight }
 						min="30"
@@ -194,117 +199,135 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 				initialOpen={ false }
 			>
 				<WhenResponsiveScreen screen="desktop">
-					<ResponsiveRangeControl
+					<AdvancedRangeControl
 						label={ __( 'Padding Top' ) }
 						value={ paddingTop }
 						min="0"
 						max="400"
 						onChange={ paddingTop => setAttributes( { paddingTop } ) }
+						units={ [ 'px', 'em', '%' ] }
+						unit={ paddingUnit }
+						onChangeUnit={ paddingUnit => setAttributes( { paddingUnit } ) }
 					/>
-				</WhenResponsiveScreen>
-				<WhenResponsiveScreen screen="tablet">
-					<ResponsiveRangeControl
-						label={ __( 'Padding Top' ) }
-						value={ tabletPaddingTop }
-						min="0"
-						max="400"
-						onChange={ tabletPaddingTop => setAttributes( { tabletPaddingTop } ) }
-					/>
-				</WhenResponsiveScreen>
-				<WhenResponsiveScreen screen="mobile">
-					<ResponsiveRangeControl
-						label={ __( 'Padding Top' ) }
-						value={ mobilePaddingTop }
-						min="0"
-						max="400"
-						onChange={ mobilePaddingTop => setAttributes( { mobilePaddingTop } ) }
-					/>
-				</WhenResponsiveScreen>
-				<WhenResponsiveScreen screen="desktop">
-					<ResponsiveRangeControl
+					<AdvancedRangeControl
 						label={ __( 'Padding Bottom' ) }
 						value={ paddingBottom }
 						min="0"
 						max="400"
 						onChange={ paddingBottom => setAttributes( { paddingBottom } ) }
+						units={ [ 'px', 'em', '%' ] }
+						unit={ paddingUnit }
+						onChangeUnit={ paddingUnit => setAttributes( { paddingUnit } ) }
 					/>
-				</WhenResponsiveScreen>
-				<WhenResponsiveScreen screen="tablet">
-					<ResponsiveRangeControl
-						label={ __( 'Padding Bottom' ) }
-						value={ tabletPaddingBottom }
-						min="0"
-						max="400"
-						onChange={ tabletPaddingBottom => setAttributes( { tabletPaddingBottom } ) }
-					/>
-				</WhenResponsiveScreen>
-				<WhenResponsiveScreen screen="mobile">
-					<ResponsiveRangeControl
-						label={ __( 'Padding Bottom' ) }
-						value={ mobilePaddingBottom }
-						min="0"
-						max="400"
-						onChange={ mobilePaddingBottom => setAttributes( { mobilePaddingBottom } ) }
-					/>
-				</WhenResponsiveScreen>
-				<WhenResponsiveScreen screen="desktop">
-					<ResponsiveRangeControl
+					<AdvancedRangeControl
 						label={ __( 'Margin Top' ) }
 						value={ marginTop }
 						min={ -height - paddingTop - 100 }
 						max="400"
 						onChange={ marginTop => setAttributes( { marginTop } ) }
 						help={ __( 'Use this to pull up/down the separator to the block above it' ) }
+						units={ [ 'px', '%' ] }
+						unit={ marginUnit }
+						onChangeUnit={ marginUnit => setAttributes( { marginUnit } ) }
 					/>
-				</WhenResponsiveScreen>
-				<WhenResponsiveScreen screen="tablet">
-					<ResponsiveRangeControl
-						label={ __( 'Margin Top' ) }
-						value={ tabletMarginTop }
-						min={ -tabletHeight - tabletPaddingTop - 100 }
-						max="400"
-						onChange={ tabletMarginTop => setAttributes( { tabletMarginTop } ) }
-						help={ __( 'Use this to pull up/down the separator to the block above it' ) }
-					/>
-				</WhenResponsiveScreen>
-				<WhenResponsiveScreen screen="mobile">
-					<ResponsiveRangeControl
-						label={ __( 'Margin Top' ) }
-						value={ mobileMarginTop }
-						min={ -mobileHeight - mobilePaddingTop - 100 }
-						max="400"
-						onChange={ mobileMarginTop => setAttributes( { mobileMarginTop } ) }
-						help={ __( 'Use this to pull up/down the separator to the block above it' ) }
-					/>
-				</WhenResponsiveScreen>
-				<WhenResponsiveScreen screen="desktop">
-					<ResponsiveRangeControl
+					<AdvancedRangeControl
 						label={ __( 'Margin Bottom' ) }
 						value={ marginBottom }
 						min={ -height - paddingBottom - 100 }
 						max="400"
 						onChange={ marginBottom => setAttributes( { marginBottom } ) }
 						help={ __( 'Use this to pull up/down the separator to the block below it' ) }
+						units={ [ 'px', '%' ] }
+						unit={ marginUnit }
+						onChangeUnit={ marginUnit => setAttributes( { marginUnit } ) }
 					/>
 				</WhenResponsiveScreen>
 				<WhenResponsiveScreen screen="tablet">
-					<ResponsiveRangeControl
+					<AdvancedRangeControl
+						label={ __( 'Padding Top' ) }
+						value={ tabletPaddingTop }
+						min="0"
+						max="400"
+						onChange={ tabletPaddingTop => setAttributes( { tabletPaddingTop } ) }
+						units={ [ 'px', 'em', '%' ] }
+						unit={ tabletPaddingUnit }
+						onChangeUnit={ tabletPaddingUnit => setAttributes( { tabletPaddingUnit } ) }
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Padding Bottom' ) }
+						value={ tabletPaddingBottom }
+						min="0"
+						max="400"
+						onChange={ tabletPaddingBottom => setAttributes( { tabletPaddingBottom } ) }
+						units={ [ 'px', 'em', '%' ] }
+						unit={ tabletPaddingUnit }
+						onChangeUnit={ tabletPaddingUnit => setAttributes( { tabletPaddingUnit } ) }
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Margin Top' ) }
+						value={ tabletMarginTop }
+						min={ -tabletHeight - tabletPaddingTop - 100 }
+						max="400"
+						onChange={ tabletMarginTop => setAttributes( { tabletMarginTop } ) }
+						help={ __( 'Use this to pull up/down the separator to the block above it' ) }
+						units={ [ 'px', '%' ] }
+						unit={ tabletMarginUnit }
+						onChangeUnit={ tabletMarginUnit => setAttributes( { tabletMarginUnit } ) }
+					/>
+					<AdvancedRangeControl
 						label={ __( 'Margin Bottom' ) }
 						value={ tabletMarginBottom }
 						min={ -tabletHeight - tabletPaddingBottom - 100 }
 						max="400"
 						onChange={ tabletMarginBottom => setAttributes( { tabletMarginBottom } ) }
 						help={ __( 'Use this to pull up/down the separator to the block below it' ) }
+						units={ [ 'px', '%' ] }
+						unit={ tabletMarginUnit }
+						onChangeUnit={ tabletMarginUnit => setAttributes( { tabletMarginUnit } ) }
 					/>
 				</WhenResponsiveScreen>
 				<WhenResponsiveScreen screen="mobile">
-					<ResponsiveRangeControl
+					<AdvancedRangeControl
+						label={ __( 'Padding Top' ) }
+						value={ mobilePaddingTop }
+						min="0"
+						max="400"
+						onChange={ mobilePaddingTop => setAttributes( { mobilePaddingTop } ) }
+						units={ [ 'px', 'em', '%' ] }
+						unit={ mobilePaddingUnit }
+						onChangeUnit={ mobilePaddingUnit => setAttributes( { mobilePaddingUnit } ) }
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Padding Bottom' ) }
+						value={ mobilePaddingBottom }
+						min="0"
+						max="400"
+						onChange={ mobilePaddingBottom => setAttributes( { mobilePaddingBottom } ) }
+						units={ [ 'px', 'em', '%' ] }
+						unit={ mobilePaddingUnit }
+						onChangeUnit={ mobilePaddingUnit => setAttributes( { mobilePaddingUnit } ) }
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Margin Top' ) }
+						value={ mobileMarginTop }
+						min={ -mobileHeight - mobilePaddingTop - 100 }
+						max="400"
+						onChange={ mobileMarginTop => setAttributes( { mobileMarginTop } ) }
+						help={ __( 'Use this to pull up/down the separator to the block above it' ) }
+						units={ [ 'px', '%' ] }
+						unit={ mobileMarginUnit }
+						onChangeUnit={ mobileMarginUnit => setAttributes( { mobileMarginUnit } ) }
+					/>
+					<AdvancedRangeControl
 						label={ __( 'Margin Bottom' ) }
 						value={ mobileMarginBottom }
 						min={ -mobileHeight - mobilePaddingBottom - 100 }
 						max="400"
 						onChange={ mobileMarginBottom => setAttributes( { mobileMarginBottom } ) }
 						help={ __( 'Use this to pull up/down the separator to the block below it' ) }
+						units={ [ 'px', '%' ] }
+						unit={ mobileMarginUnit }
+						onChangeUnit={ mobileMarginUnit => setAttributes( { mobileMarginUnit } ) }
 					/>
 				</WhenResponsiveScreen>
 			</PanelBody>
