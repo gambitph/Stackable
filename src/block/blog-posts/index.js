@@ -5,6 +5,8 @@
 import { __ } from '@wordpress/i18n'
 import { BlogPostsIcon } from '@stackable/icons'
 import { disabledBlocks } from 'stackable'
+import { default as edit } from './edit'
+import { default as save } from './save'
 
 export const name = 'ugb/blog-posts'
 
@@ -22,6 +24,9 @@ export const settings = {
 		align: [ 'center', 'wide', 'full' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
 	},
+
+	save,
+	edit,
 
 	// Stackable specific settings.
 	sAdminTitle: __( 'Blog Posts' ),
