@@ -5,7 +5,9 @@ addFilter( 'stackable.blog-posts.edit.output', 'core/designs', ( ret, design, pr
 		i, category, featuredImage, author, date, comments, title, excerpt, readMore,
 	} = props
 	const {
-		displayDate, displayAuthor, displayComments,
+		displayDate = true,
+		displayAuthor = true,
+		displayComments = true,
 	} = props.attributes
 
 	if ( design === 'list' ) {
