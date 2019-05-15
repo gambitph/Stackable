@@ -5,7 +5,7 @@ import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 import { PanelBody } from '@wordpress/components'
 
-const inspectorControls = options => ( output, props ) => {
+const inspectorControls = ( blockName, options ) => ( output, props ) => {
 	const { setAttributes } = props
 	const {
 		marginTop = '',
@@ -52,6 +52,7 @@ const inspectorControls = options => ( output, props ) => {
 				title={ __( 'Spacing' ) }
 				initialOpen={ true }
 			>
+				{ applyFilters( `stackable.${ blockName }.edit.advanced.spacing.before`, null, props ) }
 				{ options.margins && <Fragment>
 					<WhenResponsiveScreen screen="desktop">
 						<FourNumberControl
@@ -206,6 +207,7 @@ const inspectorControls = options => ( output, props ) => {
 						/>
 					</WhenResponsiveScreen>
 				</Fragment> }
+				{ applyFilters( `stackable.${ blockName }.edit.advanced.spacing.after`, null, props ) }
 			</PanelBody>
 		</Fragment>
 	)
@@ -452,7 +454,7 @@ const advancedSpacing = ( blockName, options = {} ) => {
 		...options,
 	}
 
-	addFilter( `stackable.${ blockName }.edit.inspector.advanced.before`, `stackable/${ blockName }/advanced-spacing`, inspectorControls( optionsToPass ) )
+	addFilter( `stackable.${ blockName }.edit.inspector.advanced.before`, `stackable/${ blockName }/advanced-spacing`, inspectorControls( blockName, optionsToPass ), 5 )
 	if ( optionsToPass.modifyStyles ) {
 		addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/advanced-spacing`, addToStyleObject( blockName, optionsToPass ) )
 	}
