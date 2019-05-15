@@ -2,9 +2,9 @@
 Contributors: bfintal, gambitph, freemius
 Tags: gutenberg, block, blocks, block editor, gutenberg blocks, page builder, editor, wordpress 5.0
 Requires at least: 4.8
-Tested up to: 5.1.1
+Tested up to: 5.2
 Requires PHP: 5.3
-Stable tag: 1.15.1
+Stable tag: 1.15.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -121,6 +121,11 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 You will have to redo all your blocks
 
 == Changelog ==
+
+= 1.15.2 =
+* Fixed: Accordion block now doesn't clip its content to a maximum of 800px
+* Fixed: Blog Posts Block error in WordPress 5.2
+* Fixed: Testimonial block's basic & basic 2 background colors did not work
 
 = 1.15.1 =
 * Fixed: Separator block clipping when full-width
