@@ -131,6 +131,8 @@ You will have to redo all your blocks
 
 = 1.15.2 =
 * Fixed: Accordion now doesn't clip its content to a maximum of 800px
+* Fixed: Blog Posts Block error in WordPress 5.2
+* Fixed: Testimonial block's basic & basic 2 background colors did not work
 
 = 1.15.1 =
 * Fixed: Separator block clipping when full-width
