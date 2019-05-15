@@ -139,9 +139,9 @@ class FourNumberControl extends Component {
 			 this.props.right !== prevProps.right ||
 			 this.props.bottom !== prevProps.bottom ||
 			 this.props.left !== prevProps.left ) {
-			const values = this.getEnabledValues( this.props )
-			const locked = ! values.length ? true : values.every( value => value === values[ 0 ] )
-			this.setState( { locked } )
+			// const values = this.getEnabledValues( this.props )
+			// const locked = ! values.length ? true : values.every( value => value === values[ 0 ] )
+			// this.setState( { locked } )
 		}
 
 		if ( this.state.top === prevState.top &&
