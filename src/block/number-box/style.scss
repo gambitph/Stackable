@@ -6,7 +6,8 @@
 
 @import "common";
 
-.ugb-number-box.ugb-number-box--v2 {
+.ugb-number-box.ugb-number-box--v2,
+.ugb-number-box.ugb-number-box--v3 {
 	@include baseBlock();
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
@@ -37,12 +38,14 @@
 
 .ugb-number-box__item {
 	text-align: center;
-	@include baseBlock();
+	display: flex;
+	flex-direction: column;
+	// @include baseBlock();
 	@include box();
 }
 
 .ugb-number-box__content {
-	@include baseBlock();
+	// @include baseBlock();
 }
 
 .ugb-number-box__number {
@@ -60,6 +63,18 @@
 	line-height: 2.5em !important;
 }
 
+.ugb-number-box__number,
+.ugb-number-box__title,
+.ugb-number-box__description {
+	margin-bottom: 1rem;
+}
+
+.ugb-number-box.ugb-number-box--v3 {
+	.ugb-number-box__title {
+		line-height: 1.1em;
+	}
+}
+
 .ugb-number-box.ugb-number-box--design-plain {
 	.ugb-number-box__item {
 		box-shadow: none;
@@ -70,7 +85,7 @@
 }
 
 // Deprecated < 1.11
-.ugb-number-box:not(.ugb-number-box--v2) {
+.ugb-number-box:not(.ugb-number-box--v2):not(.ugb-number-box--v3) {
 	@include baseBlock();
 	display: flex;
 	flex-wrap: wrap;

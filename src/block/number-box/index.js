@@ -4,6 +4,7 @@
 
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
+import { camelCase } from 'lodash'
 import { default as deprecated } from './deprecated'
 import { descriptionPlaceholder } from '@stackable/util'
 import { disabledBlocks } from 'stackable'
@@ -89,6 +90,88 @@ export const schema = {
 		type: 'string',
 	},
 
+	...[ '', 'tablet', 'mobile' ].reduce( ( attributes, screen ) => {
+		attributes[ camelCase( `${ screen }ColumnGap` ) ] = {
+			type: 'number',
+			default: 35,
+		}
+		return attributes
+	}, {} ),
+
+	// Container attributes.
+	...[ '', 'Tablet', 'Mobile' ].reduce( ( attributes, screen ) => {
+		return {
+			...attributes,
+			...[ 'Top', 'Right', 'Bottom', 'Left' ].reduce( ( attributes, direction ) => {
+				attributes[ `box${ screen }${ direction }Padding` ] = {
+					type: 'number',
+					default: '',
+				}
+				return attributes
+			}, {} ),
+		}
+	}, {} ),
+
+	// boxTopPadding: {
+	// 	type: 'number',
+	// 	default: '',
+	// },
+	// boxRightPadding: {
+	// 	type: 'number',
+	// 	default: '',
+	// },
+	// boxBottomPadding: {
+	// 	type: 'number',
+	// 	default: '',
+	// },
+	// boxLeftPadding: {
+	// 	type: 'number',
+	// 	default: '',
+	// },
+
+	// Number attributes.
+	showNumber: {
+		type: 'boolean',
+		default: true,
+	},
+	...[ '', 'Tablet', 'Mobile' ].reduce( ( attributes, screen ) => {
+		attributes[ `number${ screen }BottomMargin` ] = {
+			type: 'number',
+			default: '',
+		}
+		return attributes
+	}, {} ),
+
+	// Title attributes.
+	showTitle: {
+		type: 'boolean',
+		default: true,
+	},
+	...[ '', 'Tablet', 'Mobile' ].reduce( ( attributes, screen ) => {
+		attributes[ `title${ screen }BottomMargin` ] = {
+			type: 'number',
+			default: '',
+		}
+		attributes[ `title${ screen }Size` ] = {
+			type: 'number',
+			default: '',
+		}
+		return attributes
+	}, {} ),
+
+	// Description attributes.
+	showDescription: {
+		type: 'boolean',
+		default: true,
+	},
+	...[ '', 'Tablet', 'Mobile' ].reduce( ( attributes, screen ) => {
+		attributes[ `description${ screen }Size` ] = {
+			type: 'number',
+			default: '',
+		}
+		return attributes
+	}, {} ),
+
 	// Keep the old attributes. Gutenberg issue https://github.com/WordPress/gutenberg/issues/10406
 	numberBox: {
 		type: 'string',
@@ -141,6 +224,7 @@ export const settings = {
 	],
 	attributes: schema,
 	supports: {
+		align: [ 'center', 'wide' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
 	},
 	deprecated,
@@ -149,7 +233,7 @@ export const settings = {
 
 	// Stackable modules.
 	modules: {
-		'advanced-spacing': true,
+		'advanced-spacing': {},
 		'custom-css': {
 			default: applyFilters( 'stackable.number-box.custom-css.default', '' ),
 		},
