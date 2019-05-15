@@ -12,6 +12,7 @@ const save = props => {
 		bodyTextColor,
 		design = 'basic',
 		borderRadius = 12,
+		backgroundColor = '',
 		shadow = 3,
 		serif = false,
 	} = attributes
@@ -35,6 +36,7 @@ const save = props => {
 	const styles = applyFilters( 'stackable.testimonial.styles', {
 		item: {
 			borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
+			backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
 		},
 		bodyWrapper: {},
 		body: {
