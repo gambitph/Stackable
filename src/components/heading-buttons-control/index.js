@@ -1,20 +1,50 @@
-import { BaseControl, Button, ButtonGroup } from '@wordpress/components'
+import { BaseControl, Toolbar } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
+import SVGH1 from './images/heading1.svg'
+import SVGH2 from './images/heading2.svg'
+import SVGH3 from './images/heading3.svg'
+import SVGH4 from './images/heading4.svg'
+import SVGH5 from './images/heading5.svg'
+import SVGH6 from './images/heading6.svg'
 
-const tags = [
-	{ tag: 'h1', label: __( 'H1' ) },
-	{ tag: 'h2', label: __( 'H2' ) },
-	{ tag: 'h3', label: __( 'H3' ) },
-	{ tag: 'h4', label: __( 'H4' ) },
-	{ tag: 'h5', label: __( 'H5' ) },
-	{ tag: 'h6', label: __( 'H6' ) },
+const TAG_OPTIONS = [
+	{
+		value: 'h1',
+		title: __( 'Heading 1' ),
+		icon: <SVGH1 />,
+	},
+	{
+		value: 'h2',
+		title: __( 'Heading 2' ),
+		icon: <SVGH2 />,
+	},
+	{
+		value: 'h3',
+		title: __( 'Heading 3' ),
+		icon: <SVGH3 />,
+	},
+	{
+		value: 'h4',
+		title: __( 'Heading 4' ),
+		icon: <SVGH4 />,
+	},
+	{
+		value: 'h5',
+		title: __( 'Heading 5' ),
+		icon: <SVGH5 />,
+	},
+	{
+		value: 'h6',
+		title: __( 'Heading 6' ),
+		icon: <SVGH6 />,
+	},
 ]
 
 const HeadingButtonsControl = props => {
 	const {
-		label = 'Title Tag',
-		value = tags[ 0 ].tag,
-		onChange = () => {},
+		label,
+		value,
+		onChange,
 	} = props
 
 	return (
@@ -22,22 +52,26 @@ const HeadingButtonsControl = props => {
 			label={ label }
 			className="ugb-heading-buttons-control"
 		>
-			<ButtonGroup aria-label={ label }>
-				{ tags.map( ( { tag, label }, i ) => {
-					return (
-						<Button
-							key={ i }
-							isPrimary={ value === tag }
-							isDefault={ value !== tag }
-							onClick={ () => onChange( tag ) }
-						>
-							{ label }
-						</Button>
-					)
-				} ) }
-			</ButtonGroup>
+			<Toolbar
+				className="ugb-toolbar-full-width"
+				controls={
+					TAG_OPTIONS.map( option => {
+						return {
+							...option,
+							onclick: () => onChange( option.value ),
+							isActive: value === option.value,
+						}
+					} )
+				}
+			/>
 		</BaseControl>
 	)
+}
+
+HeadingButtonsControl.defaultProps = {
+	label: __( 'HTML Tag' ),
+	value: TAG_OPTIONS[ 0 ].value,
+	onChange: () => {},
 }
 
 export default HeadingButtonsControl
