@@ -4,6 +4,20 @@ import classnames from 'classnames'
 import { omit } from 'lodash'
 
 const AdvancedRangeControl = props => {
+	const propsToPass = { ...omit( props, [ 'className', 'help', 'label', 'units', 'unit', 'onChangeUnit', 'screens' ] ) }
+
+	// Change the min, max & step values depending on the unit used.
+	const i = props.units.indexOf( props.unit ) < 0 ? 0 : props.units.indexOf( props.unit )
+	if ( Array.isArray( props.min ) ) {
+		propsToPass.min = props.min[ i ]
+	}
+	if ( Array.isArray( props.max ) ) {
+		propsToPass.max = props.max[ i ]
+	}
+	if ( Array.isArray( props.step ) ) {
+		propsToPass.step = props.step[ i ]
+	}
+
 	return (
 		<BaseControl
 			help={ props.help }
@@ -16,9 +30,7 @@ const AdvancedRangeControl = props => {
 				onChangeUnit={ props.onChangeUnit }
 				screens={ props.screens }
 			/>
-			<RangeControl
-				{ ...omit( props, [ 'className', 'help', 'label', 'units', 'unit', 'onChangeUnit', 'screens' ] ) }
-			/>
+			<RangeControl { ...propsToPass } />
 		</BaseControl>
 	)
 }
