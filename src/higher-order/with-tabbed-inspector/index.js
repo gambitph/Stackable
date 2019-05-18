@@ -16,6 +16,8 @@ const withTabbedInspector = createHigherOrderComponent(
 
 			return (
 				<Fragment>
+					{ applyFilters( `stackable.${ blockName }.edit.inspector.before`, null, this.props ) }
+
 					<InspectorControls>
 						<PanelTabs />
 					</InspectorControls>
