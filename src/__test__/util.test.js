@@ -1,4 +1,42 @@
-import { descriptionPlaceholder, prependCSSClass } from '../util'
+import { createAllCombinationAttributes, descriptionPlaceholder, prependCSSClass } from '../util'
+
+describe( 'Create All Combination Attributes', () => {
+	test( 'should work with 1 array', () => {
+		const attrs = createAllCombinationAttributes( 'Camel%sCase', { a: 'b' }, [ 'Foo', 'Bar' ] )
+		expect( typeof attrs ).toBe( 'object' )
+		expect( Object.keys( attrs ).length ).toBe( 2 )
+		expect( Object.keys( attrs ) ).toContain( 'camelFooCase' )
+		expect( Object.keys( attrs ) ).toContain( 'camelBarCase' )
+		expect( Object.keys( attrs.camelFooCase ).length ).toBe( 1 )
+		expect( Object.keys( attrs.camelFooCase )[ 0 ] ).toBe( 'a' )
+		expect( attrs.camelFooCase.a ).toBe( 'b' )
+		expect( Object.keys( attrs.camelBarCase ).length ).toBe( 1 )
+		expect( Object.keys( attrs.camelBarCase )[ 0 ] ).toBe( 'a' )
+		expect( attrs.camelBarCase.a ).toBe( 'b' )
+	} )
+
+	test( 'should work with 2 arrays', () => {
+		const attrs = createAllCombinationAttributes( 'Camel%sCase%s', { a: 'b' }, [ 'Foo', 'Bar' ], [ 'Stack', 'Able' ] )
+		expect( typeof attrs ).toBe( 'object' )
+		expect( Object.keys( attrs ).length ).toBe( 4 )
+		expect( Object.keys( attrs ) ).toContain( 'camelBarCaseStack' )
+		expect( Object.keys( attrs ) ).toContain( 'camelBarCaseAble' )
+		expect( Object.keys( attrs ) ).toContain( 'camelFooCaseStack' )
+		expect( Object.keys( attrs ) ).toContain( 'camelFooCaseAble' )
+		expect( Object.keys( attrs.camelBarCaseStack ).length ).toBe( 1 )
+		expect( Object.keys( attrs.camelBarCaseAble ).length ).toBe( 1 )
+		expect( Object.keys( attrs.camelFooCaseStack ).length ).toBe( 1 )
+		expect( Object.keys( attrs.camelFooCaseAble ).length ).toBe( 1 )
+		expect( Object.keys( attrs.camelBarCaseStack )[ 0 ] ).toBe( 'a' )
+		expect( Object.keys( attrs.camelBarCaseAble )[ 0 ] ).toBe( 'a' )
+		expect( Object.keys( attrs.camelFooCaseStack )[ 0 ] ).toBe( 'a' )
+		expect( Object.keys( attrs.camelFooCaseAble )[ 0 ] ).toBe( 'a' )
+		expect( attrs.camelBarCaseStack.a ).toBe( 'b' )
+		expect( attrs.camelBarCaseAble.a ).toBe( 'b' )
+		expect( attrs.camelFooCaseStack.a ).toBe( 'b' )
+		expect( attrs.camelFooCaseAble.a ).toBe( 'b' )
+	} )
+} )
 
 describe( 'Prepend CSS Class', () => {
 	test( 'should work', () => {
