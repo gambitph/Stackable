@@ -39,7 +39,7 @@ const registerBlock = ( name, settings = {} ) => {
 	blockSettings.save = withMainClassname( name )( blockSettings.save )
 
 	// Register the block.
-	registerBlockType( name, blockSettings )
+	registerBlockType( name, applyFilters( `stackable.${ blockName }.settings`, blockSettings ) )
 }
 
 export default registerBlock
