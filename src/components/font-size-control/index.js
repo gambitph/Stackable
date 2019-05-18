@@ -9,6 +9,18 @@ const FontSizeControl = props => {
 			step={ [ 1, 0.05 ] }
 			units={ [ 'px', 'em' ] }
 			{ ...props }
+			onChangeUnit={ value => {
+				// Change font-size so as not to surprise the user.
+				if ( props.value ) {
+					if ( value === 'em' || value === 'rem' ) {
+						props.onChange( 1.0 )
+					} else if ( value === 'px' ) {
+						props.onChange( 20 )
+					}
+				}
+
+				props.onChangeUnit( value )
+			} }
 		/>
 	)
 }
