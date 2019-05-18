@@ -256,49 +256,49 @@ const addToStyleObject = ( blockName, options = {} ) => ( styleObject, props ) =
 	const blockClass = applyFilters( `stackable.${ blockName }.advanced-spacing.selector`, options.selector || `.${ props.mainClassName }` )
 	const margins = applyFilters( `stackable.${ blockName }.advanced-spacing.margins`, {
 		[ blockClass ]: {
-			marginTop: marginTop !== '' ? `${ marginTop }${ marginUnit }` : undefined,
-			marginRight: marginRight !== '' ? `${ marginRight }${ marginUnit }` : undefined,
-			marginBottom: marginBottom !== '' ? `${ marginBottom }${ marginUnit }` : undefined,
-			marginLeft: marginLeft !== '' ? `${ marginLeft }${ marginUnit }` : undefined,
+			marginTop: marginTop !== '' ? `${ marginTop }${ marginUnit } !important` : undefined,
+			marginRight: marginRight !== '' ? `${ marginRight }${ marginUnit } !important` : undefined,
+			marginBottom: marginBottom !== '' ? `${ marginBottom }${ marginUnit } !important` : undefined,
+			marginLeft: marginLeft !== '' ? `${ marginLeft }${ marginUnit } !important` : undefined,
 		},
 		tablet: {
 			[ blockClass ]: {
-				marginTop: tabletMarginTop !== '' ? `${ tabletMarginTop }${ tabletMarginUnit }` : undefined,
-				marginRight: tabletMarginRight !== '' ? `${ tabletMarginRight }${ tabletMarginUnit }` : undefined,
-				marginBottom: tabletMarginBottom !== '' ? `${ tabletMarginBottom }${ tabletMarginUnit }` : undefined,
-				marginLeft: tabletMarginLeft !== '' ? `${ tabletMarginLeft }${ tabletMarginUnit }` : undefined,
+				marginTop: tabletMarginTop !== '' ? `${ tabletMarginTop }${ tabletMarginUnit } !important` : undefined,
+				marginRight: tabletMarginRight !== '' ? `${ tabletMarginRight }${ tabletMarginUnit } !important` : undefined,
+				marginBottom: tabletMarginBottom !== '' ? `${ tabletMarginBottom }${ tabletMarginUnit } !important` : undefined,
+				marginLeft: tabletMarginLeft !== '' ? `${ tabletMarginLeft }${ tabletMarginUnit } !important` : undefined,
 			},
 		},
 		mobile: {
 			[ blockClass ]: {
-				marginTop: mobileMarginTop !== '' ? `${ mobileMarginTop }${ mobileMarginUnit }` : undefined,
-				marginRight: mobileMarginRight !== '' ? `${ mobileMarginRight }${ mobileMarginUnit }` : undefined,
-				marginBottom: mobileMarginBottom !== '' ? `${ mobileMarginBottom }${ mobileMarginUnit }` : undefined,
-				marginLeft: mobileMarginLeft !== '' ? `${ mobileMarginLeft }${ mobileMarginUnit }` : undefined,
+				marginTop: mobileMarginTop !== '' ? `${ mobileMarginTop }${ mobileMarginUnit } !important` : undefined,
+				marginRight: mobileMarginRight !== '' ? `${ mobileMarginRight }${ mobileMarginUnit } !important` : undefined,
+				marginBottom: mobileMarginBottom !== '' ? `${ mobileMarginBottom }${ mobileMarginUnit } !important` : undefined,
+				marginLeft: mobileMarginLeft !== '' ? `${ mobileMarginLeft }${ mobileMarginUnit } !important` : undefined,
 			},
 		},
 	} )
 	const paddings = applyFilters( `stackable.${ blockName }.advanced-spacing.paddings`, {
 		[ blockClass ]: {
-			paddingTop: paddingTop !== '' ? `${ paddingTop }${ paddingUnit }` : undefined,
-			paddingRight: paddingRight !== '' ? `${ paddingRight }${ paddingUnit }` : undefined,
-			paddingBottom: paddingBottom !== '' ? `${ paddingBottom }${ paddingUnit }` : undefined,
-			paddingLeft: paddingLeft !== '' ? `${ paddingLeft }${ paddingUnit }` : undefined,
+			paddingTop: paddingTop !== '' ? `${ paddingTop }${ paddingUnit } !important` : undefined,
+			paddingRight: paddingRight !== '' ? `${ paddingRight }${ paddingUnit } !important` : undefined,
+			paddingBottom: paddingBottom !== '' ? `${ paddingBottom }${ paddingUnit } !important` : undefined,
+			paddingLeft: paddingLeft !== '' ? `${ paddingLeft }${ paddingUnit } !important` : undefined,
 		},
 		tablet: {
 			[ blockClass ]: {
-				paddingTop: tabletPaddingTop !== '' ? `${ tabletPaddingTop }${ tabletPaddingUnit }` : undefined,
-				paddingRight: tabletPaddingRight !== '' ? `${ tabletPaddingRight }${ tabletPaddingUnit }` : undefined,
-				paddingBottom: tabletPaddingBottom !== '' ? `${ tabletPaddingBottom }${ tabletPaddingUnit }` : undefined,
-				paddingLeft: tabletPaddingLeft !== '' ? `${ tabletPaddingLeft }${ tabletPaddingUnit }` : undefined,
+				paddingTop: tabletPaddingTop !== '' ? `${ tabletPaddingTop }${ tabletPaddingUnit } !important` : undefined,
+				paddingRight: tabletPaddingRight !== '' ? `${ tabletPaddingRight }${ tabletPaddingUnit } !important` : undefined,
+				paddingBottom: tabletPaddingBottom !== '' ? `${ tabletPaddingBottom }${ tabletPaddingUnit } !important` : undefined,
+				paddingLeft: tabletPaddingLeft !== '' ? `${ tabletPaddingLeft }${ tabletPaddingUnit } !important` : undefined,
 			},
 		},
 		mobile: {
 			[ blockClass ]: {
-				paddingTop: mobilePaddingTop !== '' ? `${ mobilePaddingTop }${ mobilePaddingUnit }` : undefined,
-				paddingRight: mobilePaddingRight !== '' ? `${ mobilePaddingRight }${ mobilePaddingUnit }` : undefined,
-				paddingBottom: mobilePaddingBottom !== '' ? `${ mobilePaddingBottom }${ mobilePaddingUnit }` : undefined,
-				paddingLeft: mobilePaddingLeft !== '' ? `${ mobilePaddingLeft }${ mobilePaddingUnit }` : undefined,
+				paddingTop: mobilePaddingTop !== '' ? `${ mobilePaddingTop }${ mobilePaddingUnit } !important` : undefined,
+				paddingRight: mobilePaddingRight !== '' ? `${ mobilePaddingRight }${ mobilePaddingUnit } !important` : undefined,
+				paddingBottom: mobilePaddingBottom !== '' ? `${ mobilePaddingBottom }${ mobilePaddingUnit } !important` : undefined,
+				paddingLeft: mobilePaddingLeft !== '' ? `${ mobilePaddingLeft }${ mobilePaddingUnit } !important` : undefined,
 			},
 		},
 	} )
