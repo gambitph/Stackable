@@ -52,6 +52,7 @@ $box-vert-padding: 60px;
 	}
 }
 
+// TODO: Don't use this anymore for 1.16.0!
 @mixin baseBlock() {
 	@include blockContentReset();
 	@include baseMargins();
@@ -85,9 +86,24 @@ $box-vert-padding: 60px;
 	align-items: center;
 }
 
-// Full-widths should be on top of each other.
-[class*="ugb-"].alignfull + [class*="ugb-"].alignfull {
-	margin-top: -1.5em;
+// New standardized block styles.
+.ugb-main-block {
+	margin-top: 35px;
+	margin-bottom: 35px;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	&.alignfull {
+		padding: 0 35px;
+		@media screen and (max-width: $break-small) {
+			padding-right: 17.5px;
+			padding-left: 17.5px;
+		}
+	}
+}
+.ugb-inner-block {
+	margin: 0;
+	padding: 0;
 }
 
 // Different box shadows for the shadow setting.

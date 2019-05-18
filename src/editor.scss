@@ -12,12 +12,29 @@ $effect-transition: color 0.2s ease-in-out, opacity 0.2s ease-in-out, background
 	transition: $effect-transition;
 }
 
-// Full-widths should be on top of each other in the editor.
-[data-type^="ugb/"][data-align="full"] + [data-type^="ugb/"][data-align="full"] {
-	margin-top: -32px;
-}
-
 // Stackable gradient fill. Works in tandem with icons.js
 svg.ugb-stackable-icon-gradient {
 	fill: url(#stackable-gradient) !important;
+}
+
+// Standardized block styles for the editor.
+
+// Remove all block margins, we will add our own.
+[data-type^="ugb/"] {
+	> .editor-block-list__block-edit {
+		margin-top: 0 !important; // Originally 32px
+		margin-bottom: 0 !important; // Originally 32px
+	}
+}
+[data-type^="ugb/"][data-align="full"] {
+	> .editor-block-list__block-edit > [data-block] > .ugb-main-block {
+		margin-top: 35px; // Implement our own block margins
+		margin-bottom: 35px; // Implement our own block margins
+		padding: 0 35px;
+		// We don't need this in the editor, but save for the future.
+		// @media screen and (max-width: $break-small) {
+		// 	padding-right: 17.5px;
+		// 	padding-left: 17.5px;
+		// }
+	}
 }
