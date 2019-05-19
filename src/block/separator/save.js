@@ -29,7 +29,7 @@ const save = props => {
 	const Shadow = shadows[ design ]
 
 	return (
-		<BlockContainer.Save className={ mainClasses } aria-hidden="true" blockProps={ props } render={ () => (
+		<BlockContainer.Save mainClass={ false } className={ mainClasses } aria-hidden="true" blockProps={ props } render={ () => (
 			<Fragment>
 				<div className="ugb-separator__top-pad" />
 				<div className="ugb-separator__svg-wrapper">

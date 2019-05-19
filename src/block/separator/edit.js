@@ -356,7 +356,7 @@ const edit = props => {
 	const Shadow = shadows[ design ]
 
 	return (
-		<BlockContainer.Edit className={ mainClasses } aria-hidden="true" blockProps={ props } render={ () => (
+		<BlockContainer.Edit mainClass={ false } className={ mainClasses } aria-hidden="true" blockProps={ props } render={ () => (
 			<Fragment>
 				<div className="ugb-separator__top-pad" />
 				<div className="ugb-separator__svg-wrapper">
