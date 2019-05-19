@@ -1,10 +1,9 @@
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import {
-	BlockContainer, ColorPaletteControl, DesignPanelBody, PanelDesignLibrary, PanelDesignUserLibrary, ProControlButton, FourNumberControl, WhenResponsiveScreen, AdvancedRangeControl, PanelAdvancedSettings, HeadingButtonsControl, AlignButtonsControl, PanelBackgroundSettings,
+	AdvancedRangeControl, AlignButtonsControl, BlockContainer, ColorPaletteControl, DesignPanelBody, FontSizeControl, FourNumberControl, HeadingButtonsControl, PanelAdvancedSettings, PanelBackgroundSettings, PanelDesignLibrary, PanelDesignUserLibrary, ProControlButton, WhenResponsiveScreen,
 } from '@stackable/components'
 import { descriptionPlaceholder, range } from '@stackable/util'
 import { PanelBody, RangeControl, SelectControl, ToggleControl } from '@wordpress/components'
-import { PanelColorSettings, RichText } from '@wordpress/editor'
 import { withBlockStyles, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
@@ -13,6 +12,7 @@ import createStyles from './style'
 import { Fragment } from '@wordpress/element'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import { RichText } from '@wordpress/editor'
 import { showProNotice } from 'stackable'
 
 addFilter( 'stackable.number-box.edit.inspector.layout.before', 'stackable/number-box', ( output, props ) => {
@@ -96,13 +96,11 @@ addFilter( 'stackable.number-box.edit.advanced.spacing.before', 'stackable/numbe
 			<WhenResponsiveScreen screen="tablet">
 				<FourNumberControl
 					label={ __( 'Box Paddings' ) }
-					// screens={ [ 'desktop', 'tablet', 'mobile' ] }
 				/>
 			</WhenResponsiveScreen>
 			<WhenResponsiveScreen screen="mobile">
 				<FourNumberControl
 					label={ __( 'Box Paddings' ) }
-					// screens={ [ 'desktop', 'tablet', 'mobile' ] }
 				/>
 			</WhenResponsiveScreen>
 			{ columns > 1 && (
@@ -170,6 +168,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 		descriptionSize = '',
 		descriptionTabletSize = '',
 		descriptionMobileSize = '',
+		descriptionUnit = 'px',
 	} = props.attributes
 
 	const show = applyFilters( 'stackable.number-box.edit.show', {
@@ -400,13 +399,12 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					label={ __( 'Description Color' ) }
 				/>
 				<WhenResponsiveScreen>
-					<AdvancedRangeControl
+					<FontSizeControl
 						label={ __( 'Description Size' ) }
 						value={ descriptionSize }
-						onChange={ descriptionSize => setAttributes( { descriptionSize } ) }
-						min={ 0 }
-						max={ 100 }
-						units={ [ 'px', 'em' ] }
+						onChange={ ( descriptionSize = '' ) => setAttributes( { descriptionSize } ) }
+						unit={ descriptionUnit }
+						onChangeUnit={ descriptionUnit => setAttributes( { descriptionUnit } ) }
 					/>
 				</WhenResponsiveScreen>
 				<WhenResponsiveScreen screen="tablet">
@@ -436,10 +434,9 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					{ showNumber && (
 						<AdvancedRangeControl
 							label={ __( 'Number' ) }
-							// screens={ [ 'desktop', 'tablet', 'mobile' ] }
 							value={ numberBottomMargin }
 							onChange={ numberBottomMargin => setAttributes( { numberBottomMargin } ) }
-							min={ 0 }
+							min={ -50 }
 							max={ 100 }
 						/>
 					) }
@@ -448,19 +445,10 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 							label={ __( 'Title' ) }
 							value={ titleBottomMargin }
 							onChange={ titleBottomMargin => setAttributes( { titleBottomMargin } ) }
-							min={ 0 }
+							min={ -50 }
 							max={ 100 }
 						/>
 					) }
-					{/* { showDescription && (
-						<AdvancedRangeControl
-							label={ __( 'Description' ) }
-							value={ 0 }
-							// onChange={ shadow => setAttributes( { shadow } ) }
-							min={ 0 }
-							max={ 100 }
-						/>
-					) } */}
 				</WhenResponsiveScreen>
 				<WhenResponsiveScreen screen="tablet">
 					{ showNumber && (
@@ -468,7 +456,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 							label={ __( 'Number' ) }
 							value={ numberTabletBottomMargin }
 							onChange={ numberTabletBottomMargin => setAttributes( { numberTabletBottomMargin } ) }
-							min={ 0 }
+							min={ -50 }
 							max={ 100 }
 						/>
 					) }
@@ -477,19 +465,10 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 							label={ __( 'Title' ) }
 							value={ titleTabletBottomMargin }
 							onChange={ titleTabletBottomMargin => setAttributes( { titleTabletBottomMargin } ) }
-							min={ 0 }
+							min={ -50 }
 							max={ 100 }
 						/>
 					) }
-					{/* { showDescription && (
-						<AdvancedRangeControl
-							label={ __( 'Description' ) }
-							value={ 0 }
-							// onChange={ shadow => setAttributes( { shadow } ) }
-							min={ 0 }
-							max={ 100 }
-						/>
-					) } */}
 				</WhenResponsiveScreen>
 				<WhenResponsiveScreen screen="mobile">
 					{ showNumber && (
@@ -497,7 +476,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 							label={ __( 'Number' ) }
 							value={ numberMobileBottomMargin }
 							onChange={ numberMobileBottomMargin => setAttributes( { numberMobileBottomMargin } ) }
-							min={ 0 }
+							min={ -50 }
 							max={ 100 }
 						/>
 					) }
@@ -506,19 +485,10 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 							label={ __( 'Title' ) }
 							value={ titleMobileBottomMargin }
 							onChange={ titleMobileBottomMargin => setAttributes( { titleMobileBottomMargin } ) }
-							min={ 0 }
+							min={ -50 }
 							max={ 100 }
 						/>
 					) }
-					{/* { showDescription && (
-						<AdvancedRangeControl
-							label={ __( 'Description' ) }
-							value={ 0 }
-							// onChange={ shadow => setAttributes( { shadow } ) }
-							min={ 0 }
-							max={ 100 }
-						/>
-					) } */}
 				</WhenResponsiveScreen>
 			</PanelBody>
 		</Fragment>
@@ -613,32 +583,23 @@ addFilter( `stackable.number-box.edit.inspector.advanced.before`, `stackable/num
 					/>
 				</PanelBody>
 			) }
-			<PanelBody
-				initialOpen={ false }
-				title={ __( 'Responsive' ) }
-			>
-				<SelectControl
-					label={ __( 'Collapse to 1 Column On' ) }
-					value={ 'mobile' }
-					options={ [
-						{ label: __( 'Do Not Collapse' ), value: 'none' },
-						{ label: __( 'Tablet' ), value: 'tablet' },
-						{ label: __( 'Mobile' ), value: 'mobile' },
-					] }
-				/>
-				<ToggleControl
-					label={ __( 'Hide on Desktop' ) }
-					checked={ false }
-				/>
-				<ToggleControl
-					label={ __( 'Hide on Tablet' ) }
-					checked={ false }
-				/>
-				<ToggleControl
-					label={ __( 'Hide on Mobile' ) }
-					checked={ false }
-				/>
-			</PanelBody>
+		</Fragment>
+	)
+} )
+
+addFilter( 'stackable.number-box.edit.advanced.responsive.before', 'stackable/number-box/collapse', ( output, props ) => {
+	return (
+		<Fragment>
+			{ output }
+			<SelectControl
+				label={ __( 'Collapse to 1 Column On mmmmm' ) }
+				value={ 'mobile' }
+				options={ [
+					{ label: __( 'Do Not Collapse' ), value: 'none' },
+					{ label: __( 'Tablet' ), value: 'tablet' },
+					{ label: __( 'Mobile' ), value: 'mobile' },
+				] }
+			/>
 		</Fragment>
 	)
 } )

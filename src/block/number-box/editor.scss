@@ -15,17 +15,22 @@
 
 [data-type="ugb/number-box"] {
 	// Fade out placeholder text.
-	[data-is-placeholder-visible="true"] + .editor-rich-text__tinymce {
+	[data-is-placeholder-visible="true"] + .editor-rich-text__editable {
 		opacity: 0.5;
 	}
 
 	// Only show placeholder text while selected or typing.
 	&:not(.is-selected):not(.is-typing) {
-		[data-is-placeholder-visible="true"] + .editor-rich-text__tinymce {
+		[data-is-placeholder-visible="true"] + .editor-rich-text__editable {
 			display: none;
 		}
 		[data-is-placeholder-visible="true"] {
 			display: none;
 		}
 	}
+}
+
+// Hide the block alignment toolbar, because we will replace it with our own in the
+[data-type="ugb/number-box"] > .editor-block-list__block-edit > .editor-block-contextual-toolbar > .editor-block-toolbar > .components-toolbar:nth-child(2) {
+	display: none;
 }

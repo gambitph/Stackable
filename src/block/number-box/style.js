@@ -26,6 +26,7 @@ export const createStyles = props => {
 		descriptionSize = '',
 		descriptionTabletSize = '',
 		descriptionMobileSize = '',
+		descriptionUnit = 'px',
 		boxTopPadding = '',
 		boxRightPadding = '',
 		boxBottomPadding = '',
@@ -33,7 +34,7 @@ export const createStyles = props => {
 	} = props.attributes
 
 	return {
-		'.ugb-number-box': {
+		'.ugb-number-box .ugb-inner-block': {
 			gridGap: columnGap !== '' ? `${ columnGap }px` : undefined,
 		},
 		'.ugb-number-box__item': {
@@ -60,14 +61,14 @@ export const createStyles = props => {
 			       isDarkColor( backgroundColor ) ? '#ffffff' : '#222222',
 		},
 		'.ugb-number-box__description': {
-			fontSize: descriptionSize ? `${ descriptionSize }px !important` : undefined,
+			fontSize: descriptionSize ? `${ descriptionSize }${ descriptionUnit } !important` : undefined,
 			color: descriptionColor ? descriptionColor :
 			       design === 'plain' ? undefined :
 			       ! backgroundColor ? undefined :
 			       isDarkColor( backgroundColor ) ? '#ffffff' : '#222222',
 		},
 		tablet: {
-			'.ugb-number-box': {
+			'.ugb-number-box .ugb-inner-block': {
 				gridGap: tabletColumnGap !== '' ? `${ tabletColumnGap }px` : undefined,
 			},
 			'.ugb-number-box__number': {
@@ -79,7 +80,7 @@ export const createStyles = props => {
 			},
 		},
 		mobile: {
-			'.ugb-number-box': {
+			'.ugb-number-box .ugb-inner-block': {
 				gridGap: mobileColumnGap !== '' ? `${ mobileColumnGap }px` : undefined,
 			},
 			'.ugb-number-box__number': {

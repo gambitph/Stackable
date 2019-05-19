@@ -124,6 +124,7 @@ You will have to redo all your blocks
 
 = 1.16.0 =
 * New: Additional options for the Separator block
+* New: Standardized block margins and paddings
 * Fixed: Some values in Custom CSS can mess up the rendered block CSS.
 * Fixed: Editor error shows up when no latest posts are found.
 * Fixed: Number box plain layouts now don't have a background

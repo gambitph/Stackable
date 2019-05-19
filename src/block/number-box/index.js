@@ -2,11 +2,10 @@
  * BLOCK: Number Box Block.
  */
 
+import { createAllCombinationAttributes, descriptionPlaceholder } from '@stackable/util'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
-import { camelCase } from 'lodash'
 import { default as deprecated } from './deprecated'
-import { descriptionPlaceholder } from '@stackable/util'
 import { disabledBlocks } from 'stackable'
 import { default as edit } from './edit'
 import { NumberBoxIcon } from '@stackable/icons'
@@ -90,87 +89,83 @@ export const schema = {
 		type: 'string',
 	},
 
-	...[ '', 'tablet', 'mobile' ].reduce( ( attributes, screen ) => {
-		attributes[ camelCase( `${ screen }ColumnGap` ) ] = {
+	...createAllCombinationAttributes(
+		'%sColumnGap',
+		{
 			type: 'number',
 			default: 35,
-		}
-		return attributes
-	}, {} ),
+		},
+		[ '', 'Tablet', 'Mobile' ]
+	),
 
 	// Container attributes.
-	...[ '', 'Tablet', 'Mobile' ].reduce( ( attributes, screen ) => {
-		return {
-			...attributes,
-			...[ 'Top', 'Right', 'Bottom', 'Left' ].reduce( ( attributes, direction ) => {
-				attributes[ `box${ screen }${ direction }Padding` ] = {
-					type: 'number',
-					default: '',
-				}
-				return attributes
-			}, {} ),
-		}
-	}, {} ),
-
-	// boxTopPadding: {
-	// 	type: 'number',
-	// 	default: '',
-	// },
-	// boxRightPadding: {
-	// 	type: 'number',
-	// 	default: '',
-	// },
-	// boxBottomPadding: {
-	// 	type: 'number',
-	// 	default: '',
-	// },
-	// boxLeftPadding: {
-	// 	type: 'number',
-	// 	default: '',
-	// },
+	...createAllCombinationAttributes(
+		'box%s%sPadding',
+		{
+			type: 'number',
+			default: '',
+		},
+		[ '', 'Tablet', 'Mobile' ],
+		[ 'Top', 'Right', 'Bottom', 'Left' ]
+	),
 
 	// Number attributes.
 	showNumber: {
 		type: 'boolean',
 		default: true,
 	},
-	...[ '', 'Tablet', 'Mobile' ].reduce( ( attributes, screen ) => {
-		attributes[ `number${ screen }BottomMargin` ] = {
+	...createAllCombinationAttributes(
+		'number%sBottomMargin',
+		{
 			type: 'number',
 			default: '',
-		}
-		return attributes
-	}, {} ),
+		},
+		[ '', 'Tablet', 'Mobile' ]
+	),
 
 	// Title attributes.
 	showTitle: {
 		type: 'boolean',
 		default: true,
 	},
-	...[ '', 'Tablet', 'Mobile' ].reduce( ( attributes, screen ) => {
-		attributes[ `title${ screen }BottomMargin` ] = {
+	...createAllCombinationAttributes(
+		'title%sBottomMargin',
+		{
 			type: 'number',
 			default: '',
-		}
-		attributes[ `title${ screen }Size` ] = {
+		},
+		[ '', 'Tablet', 'Mobile' ]
+	),
+	...createAllCombinationAttributes(
+		'title%sSize',
+		{
 			type: 'number',
 			default: '',
-		}
-		return attributes
-	}, {} ),
+		},
+		[ '', 'Tablet', 'Mobile' ]
+	),
 
 	// Description attributes.
 	showDescription: {
 		type: 'boolean',
 		default: true,
 	},
-	...[ '', 'Tablet', 'Mobile' ].reduce( ( attributes, screen ) => {
-		attributes[ `description${ screen }Size` ] = {
+	...createAllCombinationAttributes(
+		'description%sSize',
+		{
 			type: 'number',
 			default: '',
-		}
-		return attributes
-	}, {} ),
+		},
+		[ '', 'Tablet', 'Mobile' ]
+	),
+	...createAllCombinationAttributes(
+		'description%sUnit',
+		{
+			type: 'string',
+			default: 'px',
+		},
+		[ '', 'Tablet', 'Mobile' ]
+	),
 
 	// Keep the old attributes. Gutenberg issue https://github.com/WordPress/gutenberg/issues/10406
 	numberBox: {
@@ -224,7 +219,7 @@ export const settings = {
 	],
 	attributes: schema,
 	supports: {
-		align: [ 'center', 'wide' ],
+		align: [ 'center', 'wide', 'full' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
 	},
 	deprecated,
@@ -233,7 +228,9 @@ export const settings = {
 
 	// Stackable modules.
 	modules: {
-		'advanced-spacing': {},
+		'advanced-spacing': true,
+		'advanced-responsive': true,
+		'block-background': true,
 		'custom-css': {
 			default: applyFilters( 'stackable.number-box.custom-css.default', '' ),
 		},

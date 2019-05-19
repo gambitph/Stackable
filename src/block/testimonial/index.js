@@ -3,8 +3,11 @@
  */
 
 import { __ } from '@wordpress/i18n'
+import { default as deprecated } from './deprecated'
 import { descriptionPlaceholder } from '@stackable/util'
 import { disabledBlocks } from 'stackable'
+import { default as edit } from './edit'
+import { default as save } from './save'
 import { TestimonialIcon } from '@stackable/icons'
 
 export const schema = {
@@ -198,6 +201,9 @@ export const settings = {
 		align: [ 'wide' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
 	},
+	deprecated,
+	edit,
+	save,
 
 	// Stackable specific settings.
 	sDemoURL: 'https://wpstackable.com/testimonial-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',

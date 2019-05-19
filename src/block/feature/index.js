@@ -3,9 +3,12 @@
  */
 
 import { __ } from '@wordpress/i18n'
+import deprecated from './deprecated'
 import { descriptionPlaceholder } from '@stackable/util'
 import { disabledBlocks } from 'stackable'
+import edit from './edit'
 import { FeatureIcon } from '@stackable/icons'
+import save from './save'
 
 export const schema = {
 	textColor: {
@@ -169,6 +172,10 @@ export const settings = {
 		align: [ 'center', 'wide', 'full' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
 	},
+	deprecated,
+	edit,
+	save,
+
 	attributes: schema,
 
 	// Stackable specific settings.
