@@ -8,9 +8,9 @@
 // Most used breakpoints
 $break-huge: 1440px;
 $break-wide: 1280px;
-$break-large: 960px; // admin sidebar auto folds
+$break-large: 960px; // admin sidebar auto folds. Breakpoint for tablet
 $break-medium: 782px; // adminbar goes big
-$break-small: 600px;
+$break-small: 600px; // Breakpoint for mobile
 $break-mobile: 480px;
 
 [class*="ugb-"] form[class*="-link"],

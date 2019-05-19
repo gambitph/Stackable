@@ -1,0 +1,22 @@
+@import "common";
+
+// Desktop only.
+@media screen and (min-width: $break-medium) {
+	.ugb--hide-desktop {
+		display: none !important;
+	}
+}
+
+// Tablet only.
+@media screen and (min-width: $break-small) and (max-width: $break-large) {
+	.ugb--hide-tablet {
+		display: none !important;
+	}
+}
+
+// Mobile only.
+@media screen and (max-width: $break-small) {
+	.ugb--hide-mobile {
+		display: none !important;
+	}
+}

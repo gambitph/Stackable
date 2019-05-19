@@ -23,7 +23,7 @@ const save = props => {
 	], applyFilters( 'stackable.separator.mainclasses', {
 		'ugb-separator--flip-vertical': flipVertically,
 		'ugb-separator--flip-horizontal': flipHorizontally,
-	}, props ) )
+	}, design, props ) )
 
 	const Separator = separators[ design ]
 	const Shadow = shadows[ design ]

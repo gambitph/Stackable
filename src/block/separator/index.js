@@ -190,6 +190,7 @@ export const settings = {
 
 	// Stackable modules.
 	modules: {
+		'advanced-responsive': true,
 		'advanced-spacing': {
 			enableMarginRight: false,
 			enableMarginLeft: false,

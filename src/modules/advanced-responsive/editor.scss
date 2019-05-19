@@ -1,0 +1,11 @@
+@import "common";
+
+// Always show in the editor.
+.ugb--hide-desktop.ugb--hide-desktop.ugb--hide-desktop,
+.ugb--hide-tablet.ugb--hide-tablet.ugb--hide-tablet,
+.ugb--hide-mobile.ugb--hide-mobile.ugb--hide-mobile {
+	display: block !important;
+	&.ugb-main-block {
+		display: flex !important;
+	}
+}
