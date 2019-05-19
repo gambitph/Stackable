@@ -1,11 +1,9 @@
-import { addFilter, doAction, removeFilter, withToolbarControls } from '@wordpress/hooks'
+import { addFilter, doAction } from '@wordpress/hooks'
 import { BlockAlignmentToolbar, BlockControls } from '@wordpress/editor'
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
-import { PanelBody, Toolbar } from '@wordpress/components'
-import { ProControl, PanelAdvancedSettings } from '@stackable/components'
-import { showProNotice } from 'stackable'
-import { omit } from 'lodash'
+import { PanelAdvancedSettings } from '@stackable/components'
+import { Toolbar } from '@wordpress/components'
 
 const customCSSProPanel = ( output, props ) => {
 	const { setAttributes } = props

@@ -12,7 +12,7 @@ const importAllAndRegister = r => {
 		try {
 			return name && settings && registerBlock( name, settings )
 		} catch ( error ) {
-			console.error( `${ name } needs to be converted` )
+			console.error( `${ name } needs to be converted` ) // eslint-disable-line
 		}
 	} )
 }

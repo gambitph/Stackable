@@ -3,7 +3,7 @@ import { createHigherOrderComponent } from '@wordpress/compose'
 
 const withTabbedInspector = createHigherOrderComponent(
 	WrappedComponent => class extends Component {
-		constructor() {
+		constructor() { // eslint-disable-line
 			super( ...arguments )
 		}
 
