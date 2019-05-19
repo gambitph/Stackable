@@ -122,6 +122,11 @@ You will have to redo all your blocks
 
 == Changelog ==
 
+= 1.15.3 =
+* Fixed: Placeholder text no longer becomes hidden when block is blurred
+* Fixed: Separator blocks won't overlap against block outlines and toolbars
+* Fixed: Category dropdown in the Blog Posts block doesn't show categories
+
 = 1.15.2 =
 * Fixed: Accordion block now doesn't clip its content to a maximum of 800px
 * Fixed: Blog Posts Block error in WordPress 5.2
