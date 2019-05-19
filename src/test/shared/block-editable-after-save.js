@@ -1,6 +1,7 @@
 /**
  * Checks whether adding the block, saving it then refreshing the editor renders the block valid & editable.
  * Checks whether adding the block, changing values, saving it then refreshing the editor renders the block valid & editable.
+ * TODO: Remove tests that use this!
  */
 
 import { createAttributeValues, getDefaultAttributes } from '@stackable/test/helpers'
@@ -85,10 +86,6 @@ const blockEditableAfterSaveTests = function( props ) {
 
 		// registerBlockType( name, blockSettings )
 		registerStackableBlock( name, blockSettings )
-
-		const createdBlock = createBlock( name, {} )
-		const savedHTML2 = serialize( createdBlock )
-		const block2 = parse( savedHTML2 )[ 0 ]
 
 		const block = createBlockWithFallback( {
 			blockName: name,
