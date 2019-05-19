@@ -9,7 +9,7 @@
 	z-index: 30 !important;
 }
 // Make adjacent blocks higher when selected to show the outlines.
-[data-type="ugb/separator"] + .block-editor-block-list__block.is-selected {
+[data-type="ugb/separator"] ~ .block-editor-block-list__block.is-selected {
     z-index: 31;
 }
 [data-type="ugb/separator"][data-align="full"] {
