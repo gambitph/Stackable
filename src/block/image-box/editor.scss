@@ -106,21 +106,21 @@
 
 [data-type="ugb/image-box"] {
 	// Fade out placeholder text.
-	[data-is-placeholder-visible="true"] + .editor-rich-text__tinymce {
+	[data-is-placeholder-visible="true"] + .editor-rich-text__editable {
 		opacity: 0.5;
 	}
 
 	// Fade out description text when not hovered.
-	.ugb-image-box__item:not(:hover) [data-is-placeholder-visible="true"] + .ugb-image-box__description.editor-rich-text__tinymce {
+	.ugb-image-box__item:not(:hover) [data-is-placeholder-visible="true"] + .ugb-image-box__description.editor-rich-text__editable {
 		opacity: 0;
 	}
-	.ugb-image-box__item:hover [data-is-placeholder-visible="true"] + .ugb-image-box__description.editor-rich-text__tinymce {
+	.ugb-image-box__item:hover [data-is-placeholder-visible="true"] + .ugb-image-box__description.editor-rich-text__editable {
 		opacity: 0.5;
 	}
 
 	// Only show placeholder text while selected or typing.
 	&:not(.is-selected):not(.is-typing) {
-		[data-is-placeholder-visible="true"] + .editor-rich-text__tinymce {
+		[data-is-placeholder-visible="true"] + .editor-rich-text__editable {
 			display: none;
 		}
 		.ugb-button[data-is-placeholder-visible="true"] {
