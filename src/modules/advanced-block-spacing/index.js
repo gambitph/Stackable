@@ -1,9 +1,29 @@
 import * as deepmerge from 'deepmerge'
 import { addFilter, applyFilters, doAction } from '@wordpress/hooks'
-import { FourNumberControl, WhenResponsiveScreen } from '@stackable/components'
+import { AdvancedRangeControl, AdvancedSelectControl, FourNumberControl, WhenResponsiveScreen } from '@stackable/components'
 import { __ } from '@wordpress/i18n'
+import { createAllCombinationAttributes } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
 import { PanelBody } from '@wordpress/components'
+
+const verticalAlignOptions = [
+	{ value: '', label: __( 'Default' ) },
+	{ value: 'stretch', label: __( 'Stretch' ) },
+	{ value: 'flex-start', label: __( 'Top' ) },
+	{ value: 'flex-end', label: __( 'Bottom' ) },
+	{ value: 'center', label: __( 'Center' ) },
+	// { value: 'baseline', label: __( 'Baseline' ) },
+]
+
+const horizontalAlignOptions = [
+	{ value: '', label: __( 'Default' ) },
+	{ value: 'flex-start', label: __( 'Left' ) },
+	{ value: 'center', label: __( 'Center' ) },
+	{ value: 'flex-end', label: __( 'Right' ) },
+	// { value: 'space-between', label: __( 'Space Between' ) },
+	// { value: 'space-around', label: __( 'Space Around' ) },
+	// { value: 'space-evenly', label: __( 'Space Evenly' ) },
+]
 
 const inspectorControls = ( blockName, options ) => ( output, props ) => {
 	const { setAttributes } = props
@@ -43,20 +63,42 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 		mobilePaddingRight = '',
 		mobilePaddingLeft = '',
 		mobilePaddingUnit = 'px',
+
+		blockHeight = '',
+		blockHeightUnit = 'px',
+		tabletBlockHeight = '',
+		tabletBlockHeightUnit = 'px',
+		mobileBlockHeight = '',
+		mobileBlockHeightUnit = 'px',
+
+		blockWidth = '',
+		blockWidthUnit = 'px',
+		tabletBlockWidth = '',
+		tabletBlockWidthUnit = 'px',
+		mobileBlockWidth = '',
+		mobileBlockWidthUnit = 'px',
+
+		blockHorizontalAlign = '',
+		tabletBlockHorizontalAlign = '',
+		mobileBlockHorizontalAlign = '',
+
+		blockVerticalAlign = '',
+		tabletBlockVerticalAlign = '',
+		mobileBlockVerticalAlign = '',
 	} = props.attributes
 
 	return (
 		<Fragment>
 			{ output }
 			<PanelBody
-				title={ __( 'Spacing' ) }
+				title={ __( 'Block Spacing' ) }
 				initialOpen={ true }
 			>
-				{ applyFilters( `stackable.${ blockName }.edit.advanced.spacing.before`, null, props ) }
+				{ applyFilters( `stackable.${ blockName }.edit.advanced.block-spacing.before`, null, props ) }
 				{ options.margins && <Fragment>
 					<WhenResponsiveScreen screen="desktop">
 						<FourNumberControl
-							label={ __( 'Margins' ) }
+							label={ __( 'Block Margins' ) }
 							units={ [ 'px', '%' ] }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
 							top={ marginTop }
@@ -81,7 +123,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
 						<FourNumberControl
-							label={ __( 'Margins' ) }
+							label={ __( 'Block Margins' ) }
 							units={ [ 'px', '%' ] }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
 							top={ tabletMarginTop }
@@ -106,7 +148,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
 						<FourNumberControl
-							label={ __( 'Margins' ) }
+							label={ __( 'Block Margins' ) }
 							units={ [ 'px', '%' ] }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
 							top={ mobileMarginTop }
@@ -133,7 +175,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 				{ options.paddings && <Fragment>
 					<WhenResponsiveScreen screen="desktop">
 						<FourNumberControl
-							label={ __( 'Paddings' ) }
+							label={ __( 'Block Paddings' ) }
 							units={ [ 'px', 'em', '%' ] }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
 							top={ paddingTop }
@@ -158,7 +200,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
 						<FourNumberControl
-							label={ __( 'Paddings' ) }
+							label={ __( 'Block Paddings' ) }
 							units={ [ 'px', 'em', '%' ] }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
 							top={ tabletPaddingTop }
@@ -183,7 +225,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
 						<FourNumberControl
-							label={ __( 'Paddings' ) }
+							label={ __( 'Block Paddings' ) }
 							units={ [ 'px', 'em', '%' ] }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
 							top={ mobilePaddingTop }
@@ -207,13 +249,157 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 						/>
 					</WhenResponsiveScreen>
 				</Fragment> }
-				{ applyFilters( `stackable.${ blockName }.edit.advanced.spacing.after`, null, props ) }
+
+				{ options.height && <Fragment>
+					<WhenResponsiveScreen>
+						<AdvancedRangeControl
+							label={ __( 'Block Height' ) }
+							units={ [ 'px', 'vh' ] }
+							min={ [ 100, 10 ] }
+							max={ [ 1000, 100 ] }
+							step={ [ 1, 1 ] }
+							allowReset={ true }
+							value={ blockHeight }
+							unit={ blockHeightUnit }
+							onChange={ blockHeight => setAttributes( { blockHeight } ) }
+							onChangeUnit={ blockHeightUnit => setAttributes( { blockHeightUnit } ) }
+						/>
+					</WhenResponsiveScreen>
+					<WhenResponsiveScreen screen="tablet">
+						<AdvancedRangeControl
+							label={ __( 'Block Height' ) }
+							units={ [ 'px', 'vh' ] }
+							min={ [ 100, 10 ] }
+							max={ [ 1000, 100 ] }
+							step={ [ 1, 1 ] }
+							allowReset={ true }
+							value={ tabletBlockHeight }
+							unit={ tabletBlockHeightUnit }
+							onChange={ tabletBlockHeight => setAttributes( { tabletBlockHeight } ) }
+							onChangeUnit={ tabletBlockHeightUnit => setAttributes( { tabletBlockHeightUnit } ) }
+						/>
+					</WhenResponsiveScreen>
+					<WhenResponsiveScreen screen="mobile">
+						<AdvancedRangeControl
+							label={ __( 'Block Height' ) }
+							units={ [ 'px', 'vh' ] }
+							min={ [ 100, 10 ] }
+							max={ [ 1000, 100 ] }
+							step={ [ 1, 1 ] }
+							allowReset={ true }
+							value={ mobileBlockHeight }
+							unit={ mobileBlockHeightUnit }
+							onChange={ mobileBlockHeight => setAttributes( { mobileBlockHeight } ) }
+							onChangeUnit={ mobileBlockHeightUnit => setAttributes( { mobileBlockHeightUnit } ) }
+						/>
+					</WhenResponsiveScreen>
+				</Fragment> }
+
+				{ options.width && <Fragment>
+					<WhenResponsiveScreen>
+						<AdvancedRangeControl
+							label={ __( 'Content Width' ) }
+							units={ [ 'px', '%' ] }
+							min={ [ 100, 10 ] }
+							max={ [ 2000, 100 ] }
+							step={ [ 1, 1 ] }
+							allowReset={ true }
+							value={ blockWidth }
+							unit={ blockWidthUnit }
+							onChange={ blockWidth => setAttributes( { blockWidth } ) }
+							onChangeUnit={ blockWidthUnit => setAttributes( { blockWidthUnit } ) }
+						/>
+					</WhenResponsiveScreen>
+					<WhenResponsiveScreen screen="tablet">
+						<AdvancedRangeControl
+							label={ __( 'Content Width' ) }
+							units={ [ 'px', '%' ] }
+							min={ [ 100, 10 ] }
+							max={ [ 1500, 100 ] }
+							step={ [ 1, 1 ] }
+							allowReset={ true }
+							value={ tabletBlockWidth }
+							unit={ tabletBlockWidthUnit }
+							onChange={ tabletBlockWidth => setAttributes( { tabletBlockWidth } ) }
+							onChangeUnit={ tabletBlockWidthUnit => setAttributes( { tabletBlockWidthUnit } ) }
+						/>
+					</WhenResponsiveScreen>
+					<WhenResponsiveScreen screen="mobile">
+						<AdvancedRangeControl
+							label={ __( 'Content Width' ) }
+							units={ [ 'px', '%' ] }
+							min={ [ 100, 10 ] }
+							max={ [ 1000, 100 ] }
+							step={ [ 1, 1 ] }
+							allowReset={ true }
+							value={ mobileBlockWidth }
+							unit={ mobileBlockWidthUnit }
+							onChange={ mobileBlockWidth => setAttributes( { mobileBlockWidth } ) }
+							onChangeUnit={ mobileBlockWidthUnit => setAttributes( { mobileBlockWidthUnit } ) }
+						/>
+					</WhenResponsiveScreen>
+				</Fragment> }
+
+				{ options.horizontalAlign && <Fragment>
+					<WhenResponsiveScreen>
+						<AdvancedSelectControl
+							label={ __( 'Content Horizontal Align' ) }
+							options={ horizontalAlignOptions }
+							value={ blockHorizontalAlign }
+							onChange={ blockHorizontalAlign => setAttributes( { blockHorizontalAlign } ) }
+						/>
+					</WhenResponsiveScreen>
+					<WhenResponsiveScreen screen="tablet">
+						<AdvancedSelectControl
+							label={ __( 'Content Horizontal Align' ) }
+							options={ horizontalAlignOptions }
+							value={ tabletBlockHorizontalAlign }
+							onChange={ tabletBlockHorizontalAlign => setAttributes( { tabletBlockHorizontalAlign } ) }
+						/>
+					</WhenResponsiveScreen>
+					<WhenResponsiveScreen screen="mobile">
+						<AdvancedSelectControl
+							label={ __( 'Content Horizontal Align' ) }
+							options={ horizontalAlignOptions }
+							value={ mobileBlockHorizontalAlign }
+							onChange={ mobileBlockHorizontalAlign => setAttributes( { mobileBlockHorizontalAlign } ) }
+						/>
+					</WhenResponsiveScreen>
+				</Fragment> }
+
+				{ options.verticalAlign && <Fragment>
+					<WhenResponsiveScreen>
+						<AdvancedSelectControl
+							label={ __( 'Content Vertical Align' ) }
+							options={ verticalAlignOptions }
+							value={ blockVerticalAlign }
+							onChange={ blockVerticalAlign => setAttributes( { blockVerticalAlign } ) }
+						/>
+					</WhenResponsiveScreen>
+					<WhenResponsiveScreen screen="tablet">
+						<AdvancedSelectControl
+							label={ __( 'Content Vertical Align' ) }
+							options={ verticalAlignOptions }
+							value={ tabletBlockVerticalAlign }
+							onChange={ tabletBlockVerticalAlign => setAttributes( { tabletBlockVerticalAlign } ) }
+						/>
+					</WhenResponsiveScreen>
+					<WhenResponsiveScreen screen="mobile">
+						<AdvancedSelectControl
+							label={ __( 'Content Vertical Align' ) }
+							options={ verticalAlignOptions }
+							value={ mobileBlockVerticalAlign }
+							onChange={ mobileBlockVerticalAlign => setAttributes( { mobileBlockVerticalAlign } ) }
+						/>
+					</WhenResponsiveScreen>
+				</Fragment> }
+				{ applyFilters( `stackable.${ blockName }.edit.advanced.block-spacing.after`, null, props ) }
 			</PanelBody>
 		</Fragment>
 	)
 }
 
-const addToStyleObject = ( blockName, options = {} ) => ( styleObject, props ) => {
+const addToStyleObject = blockName => ( styleObject, props ) => {
 	const {
 		marginTop = '',
 		marginRight = '',
@@ -250,11 +436,32 @@ const addToStyleObject = ( blockName, options = {} ) => ( styleObject, props ) =
 		mobilePaddingRight = '',
 		mobilePaddingLeft = '',
 		mobilePaddingUnit = 'px',
+
+		blockHeight = '',
+		blockHeightUnit = 'px',
+		tabletBlockHeight = '',
+		tabletBlockHeightUnit = 'px',
+		mobileBlockHeight = '',
+		mobileBlockHeightUnit = 'px',
+
+		blockWidth = '',
+		blockWidthUnit = 'px',
+		tabletBlockWidth = '',
+		tabletBlockWidthUnit = 'px',
+		mobileBlockWidth = '',
+		mobileBlockWidthUnit = 'px',
+
+		blockHorizontalAlign = '',
+		tabletBlockHorizontalAlign = '',
+		mobileBlockHorizontalAlign = '',
+
+		blockVerticalAlign = '',
+		tabletBlockVerticalAlign = '',
+		mobileBlockVerticalAlign = '',
 	} = props.attributes
 
-	// const blockClass = applyFilters( `stackable.${ blockName }.advanced-spacing.selector`, `.${ props.mainClassName }` )
-	const blockClass = applyFilters( `stackable.${ blockName }.advanced-spacing.selector`, options.selector || `.${ props.mainClassName }` )
-	const margins = applyFilters( `stackable.${ blockName }.advanced-spacing.margins`, {
+	const blockClass = `.${ props.mainClassName }`
+	const margins = applyFilters( `stackable.${ blockName }.advanced-block-spacing.margins`, {
 		[ blockClass ]: {
 			marginTop: marginTop !== '' ? `${ marginTop }${ marginUnit } !important` : undefined,
 			marginRight: marginRight !== '' ? `${ marginRight }${ marginUnit } !important` : undefined,
@@ -278,7 +485,7 @@ const addToStyleObject = ( blockName, options = {} ) => ( styleObject, props ) =
 			},
 		},
 	} )
-	const paddings = applyFilters( `stackable.${ blockName }.advanced-spacing.paddings`, {
+	const paddings = applyFilters( `stackable.${ blockName }.advanced-block-spacing.paddings`, {
 		[ blockClass ]: {
 			paddingTop: paddingTop !== '' ? `${ paddingTop }${ paddingUnit } !important` : undefined,
 			paddingRight: paddingRight !== '' ? `${ paddingRight }${ paddingUnit } !important` : undefined,
@@ -303,145 +510,138 @@ const addToStyleObject = ( blockName, options = {} ) => ( styleObject, props ) =
 		},
 	} )
 
-	return deepmerge.all( [ styleObject, margins, paddings ] )
+	const others = {
+		[ blockClass ]: {
+			minHeight: blockHeight !== '' ? `${ blockHeight }${ blockHeightUnit }` : undefined,
+			justifyContent: blockHorizontalAlign !== '' ? blockHorizontalAlign : undefined,
+			alignItems: blockVerticalAlign !== '' ? blockVerticalAlign : undefined,
+		},
+		[ `${ blockClass } .ugb-inner-block` ]: {
+			width: blockWidth !== '' ? `${ blockWidth }${ blockWidthUnit } !important` : undefined,
+		},
+		tablet: {
+			[ blockClass ]: {
+				minHeight: tabletBlockHeight !== '' ? `${ tabletBlockHeight }${ tabletBlockHeightUnit }` : undefined,
+				justifyContent: tabletBlockHorizontalAlign !== '' ? tabletBlockHorizontalAlign : undefined,
+				alignItems: tabletBlockVerticalAlign !== '' ? tabletBlockVerticalAlign : undefined,
+			},
+			[ `${ blockClass } .ugb-inner-block` ]: {
+				width: tabletBlockWidth !== '' ? `${ tabletBlockWidth }${ tabletBlockWidthUnit } !important` : undefined,
+			},
+		},
+		mobile: {
+			[ blockClass ]: {
+				minHeight: mobileBlockHeight !== '' ? `${ mobileBlockHeight }${ mobileBlockHeightUnit } !important` : undefined,
+				justifyContent: mobileBlockHorizontalAlign !== '' ? mobileBlockHorizontalAlign : undefined,
+				alignItems: mobileBlockVerticalAlign !== '' ? mobileBlockVerticalAlign : undefined,
+			},
+			[ `${ blockClass } .ugb-inner-block` ]: {
+				width: mobileBlockWidth !== '' ? `${ mobileBlockWidth }${ mobileBlockWidthUnit } !important` : undefined,
+			},
+		},
+	}
+
+	return deepmerge.all( [ styleObject, margins, paddings, others ] )
 }
 
 const addAttributes = attributes => {
 	return {
 		...attributes,
-		marginTop: {
-			type: 'number',
-			default: '',
-		},
-		marginRight: {
-			type: 'number',
-			default: '',
-		},
-		marginBottom: {
-			type: 'number',
-			default: '',
-		},
-		marginLeft: {
-			type: 'number',
-			default: '',
-		},
-		marginUnit: {
-			type: 'string',
-			default: 'px',
-		},
 
-		tabletMarginTop: {
-			type: 'number',
-			default: '',
-		},
-		tabletMarginRight: {
-			type: 'number',
-			default: '',
-		},
-		tabletMarginBottom: {
-			type: 'number',
-			default: '',
-		},
-		tabletMarginLeft: {
-			type: 'number',
-			default: '',
-		},
-		tabletMarginUnit: {
-			type: 'string',
-			default: 'px',
-		},
+		...createAllCombinationAttributes(
+			'%sMargin%s',
+			{
+				type: 'number',
+				default: '',
+			},
+			[ '', 'Tablet', 'Mobile' ],
+			[ 'Top', 'Right', 'Bottom', 'Left' ]
+		),
 
-		mobileMarginTop: {
-			type: 'number',
-			default: '',
-		},
-		mobileMarginRight: {
-			type: 'number',
-			default: '',
-		},
-		mobileMarginBottom: {
-			type: 'number',
-			default: '',
-		},
-		mobileMarginLeft: {
-			type: 'number',
-			default: '',
-		},
-		mobileMarginUnit: {
-			type: 'string',
-			default: 'px',
-		},
+		...createAllCombinationAttributes(
+			'%sMarginUnit',
+			{
+				type: 'string',
+				default: 'px',
+			},
+			[ '', 'Tablet', 'Mobile' ],
+		),
 
-		paddingTop: {
-			type: 'number',
-			default: '',
-		},
-		paddingRight: {
-			type: 'number',
-			default: '',
-		},
-		paddingBottom: {
-			type: 'number',
-			default: '',
-		},
-		paddingLeft: {
-			type: 'number',
-			default: '',
-		},
-		paddingUnit: {
-			type: 'string',
-			default: 'px',
-		},
+		...createAllCombinationAttributes(
+			'%sPadding%s',
+			{
+				type: 'number',
+				default: '',
+			},
+			[ '', 'Tablet', 'Mobile' ],
+			[ 'Top', 'Right', 'Bottom', 'Left' ]
+		),
 
-		tabletPaddingTop: {
-			type: 'number',
-			default: '',
-		},
-		tabletPaddingRight: {
-			type: 'number',
-			default: '',
-		},
-		tabletPaddingBottom: {
-			type: 'number',
-			default: '',
-		},
-		tabletPaddingLeft: {
-			type: 'number',
-			default: '',
-		},
-		tabletPaddingUnit: {
-			type: 'string',
-			default: 'px',
-		},
+		...createAllCombinationAttributes(
+			'%sPaddingUnit',
+			{
+				type: 'string',
+				default: 'px',
+			},
+			[ '', 'Tablet', 'Mobile' ],
+		),
 
-		mobilePaddingTop: {
-			type: 'number',
-			default: '',
-		},
-		mobilePaddingRight: {
-			type: 'number',
-			default: '',
-		},
-		mobilePaddingBottom: {
-			type: 'number',
-			default: '',
-		},
-		mobilePaddingLeft: {
-			type: 'number',
-			default: '',
-		},
-		mobilePaddingUnit: {
-			type: 'string',
-			default: 'px',
-		},
+		...createAllCombinationAttributes(
+			'%sBlockHeight',
+			{
+				type: 'number',
+				default: '',
+			},
+			[ '', 'Tablet', 'Mobile' ]
+		),
+
+		...createAllCombinationAttributes(
+			'%sBlockHeightUnit',
+			{
+				type: 'string',
+				default: 'px',
+			},
+			[ '', 'Tablet', 'Mobile' ]
+		),
+
+		...createAllCombinationAttributes(
+			'%sBlockWidth',
+			{
+				type: 'number',
+				default: '',
+			},
+			[ '', 'Tablet', 'Mobile' ]
+		),
+
+		...createAllCombinationAttributes(
+			'%sBlockWidthUnit',
+			{
+				type: 'string',
+				default: 'px',
+			},
+			[ '', 'Tablet', 'Mobile' ]
+		),
+
+		...createAllCombinationAttributes(
+			'%sBlock%sAlign',
+			{
+				type: 'string',
+				default: '',
+			},
+			[ '', 'Tablet', 'Mobile' ],
+			[ 'Vertical', 'Horizontal' ]
+		),
 	}
 }
 
-const advancedSpacing = ( blockName, options = {} ) => {
+const advancedBlockSpacing = ( blockName, options = {} ) => {
 	const optionsToPass = {
-		selector: '',
 		margins: true,
 		paddings: true,
+		height: true,
+		width: true,
+		horizontalAlign: true,
+		verticalAlign: true,
 		modifyStyles: true,
 		enableMarginTop: true,
 		enableMarginRight: true,
@@ -454,12 +654,12 @@ const advancedSpacing = ( blockName, options = {} ) => {
 		...options,
 	}
 
-	addFilter( `stackable.${ blockName }.edit.inspector.advanced.before`, `stackable/${ blockName }/advanced-spacing`, inspectorControls( blockName, optionsToPass ), 5 )
+	addFilter( `stackable.${ blockName }.edit.inspector.advanced.before`, `stackable/${ blockName }/advanced-block-spacing`, inspectorControls( blockName, optionsToPass ), 5 )
 	if ( optionsToPass.modifyStyles ) {
-		addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/advanced-spacing`, addToStyleObject( blockName, optionsToPass ) )
+		addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/advanced-block-spacing`, addToStyleObject( blockName, optionsToPass ) )
 	}
-	addFilter( `stackable.${ blockName }.attributes`, `stackable/${ blockName }/advanced-spacing`, addAttributes )
-	doAction( `stackable.module.advanced-spacing`, blockName )
+	addFilter( `stackable.${ blockName }.attributes`, `stackable/${ blockName }/advanced-block-spacing`, addAttributes )
+	doAction( `stackable.module.advanced-block-spacing`, blockName )
 }
 
-export default advancedSpacing
+export default advancedBlockSpacing

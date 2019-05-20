@@ -52,95 +52,6 @@ addFilter( 'stackable.number-box.edit.inspector.layout.before', 'stackable/numbe
 	)
 } )
 
-addFilter( 'stackable.number-box.edit.advanced.spacing.before', 'stackable/number-box', ( output, props ) => {
-	const { setAttributes } = props
-	const {
-		columns = 2,
-		columnGap = '',
-		tabletColumnGap = '',
-		mobileColumnGap = '',
-		boxTopPadding = '',
-		boxRightPadding = '',
-		boxBottomPadding = '',
-		boxLeftPadding = '',
-		boxTabletTopPadding = '',
-		boxTabletRightPadding = '',
-		boxTabletBottomPadding = '',
-		boxTabletLeftPadding = '',
-		boxMobileTopPadding = '',
-		boxMobileRightPadding = '',
-		boxMobileBottomPadding = '',
-		boxMobileLeftPadding = '',
-	} = props.attributes
-
-	return (
-		<Fragment>
-			{ output }
-			<WhenResponsiveScreen>
-				<FourNumberControl
-					label={ __( 'Box Paddings' ) }
-					top={ boxTopPadding }
-					right={ boxRightPadding }
-					bottom={ boxBottomPadding }
-					left={ boxLeftPadding }
-					onChange={ paddings => {
-						setAttributes( {
-							boxTopPadding: paddings.top !== '' ? parseInt( paddings.top, 10 ) : '',
-							boxRightPadding: paddings.right !== '' ? parseInt( paddings.right, 10 ) : '',
-							boxBottomPadding: paddings.bottom !== '' ? parseInt( paddings.bottom, 10 ) : '',
-							boxLeftPadding: paddings.left !== '' ? parseInt( paddings.left, 10 ) : '',
-						} )
-					} }
-				/>
-			</WhenResponsiveScreen>
-			<WhenResponsiveScreen screen="tablet">
-				<FourNumberControl
-					label={ __( 'Box Paddings' ) }
-				/>
-			</WhenResponsiveScreen>
-			<WhenResponsiveScreen screen="mobile">
-				<FourNumberControl
-					label={ __( 'Box Paddings' ) }
-				/>
-			</WhenResponsiveScreen>
-			{ columns > 1 && (
-				<Fragment>
-					<WhenResponsiveScreen>
-						<AdvancedRangeControl
-							label={ __( 'Column Gap' ) }
-							min={ 0 }
-							max={ 200 }
-							value={ columnGap }
-							onChange={ ( columnGap = 35 ) => setAttributes( { columnGap } ) }
-							allowReset={ true }
-						/>
-					</WhenResponsiveScreen>
-					<WhenResponsiveScreen screen="tablet">
-						<AdvancedRangeControl
-							label={ __( 'Column Gap' ) }
-							min={ 0 }
-							max={ 200 }
-							value={ tabletColumnGap }
-							onChange={ ( tabletColumnGap = 35 ) => setAttributes( { tabletColumnGap } ) }
-							allowReset={ true }
-						/>
-					</WhenResponsiveScreen>
-					<WhenResponsiveScreen screen="mobile">
-						<AdvancedRangeControl
-							label={ __( 'Column Gap' ) }
-							min={ 0 }
-							max={ 200 }
-							value={ mobileColumnGap }
-							onChange={ ( mobileColumnGap = 35 ) => setAttributes( { mobileColumnGap } ) }
-							allowReset={ true }
-						/>
-					</WhenResponsiveScreen>
-				</Fragment>
-			) }
-		</Fragment>
-	)
-} )
-
 addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number-box', ( output, props ) => {
 	const { setAttributes } = props
 	const {
@@ -229,6 +140,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 			</PanelBody>
 
 			<PanelBackgroundSettings
+				title={ __( 'Column Background' ) }
 				initialOpen={ false }
 				// backgroundColorType={ backgroundColorType }
 				backgroundColor={ backgroundColor }
@@ -592,7 +504,7 @@ addFilter( 'stackable.number-box.edit.advanced.responsive.before', 'stackable/nu
 		<Fragment>
 			{ output }
 			<SelectControl
-				label={ __( 'Collapse to 1 Column On mmmmm' ) }
+				label={ __( 'Collapse to 1 Column On' ) }
 				value={ 'mobile' }
 				options={ [
 					{ label: __( 'Do Not Collapse' ), value: 'none' },

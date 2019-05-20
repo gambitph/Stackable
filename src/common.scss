@@ -93,6 +93,7 @@ $box-vert-padding: 60px;
 	padding: 0;
 	display: flex;
 	justify-content: center;
+	align-items: center;
 	&.alignfull {
 		padding: 0 35px;
 		@media screen and (max-width: $break-small) {

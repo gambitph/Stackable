@@ -18,6 +18,7 @@ BlockContainer.Edit = props => {
 	return (
 		<div { ...containerProps } className={ mainClasses }>
 			{ blockProps.styles }
+			{ applyFilters( `stackable.${ blockName }.edit.output.outer`, null, design, blockProps ) }
 			<div className="ugb-inner-block">
 				{ applyFilters( `stackable.${ blockName }.edit.output.before`, null, design, blockProps ) }
 				{ render( blockProps ) }
@@ -47,6 +48,7 @@ BlockContainer.Save = props => {
 	return (
 		<div { ...containerProps } className={ mainClasses }>
 			{ blockProps.styles }
+			{ applyFilters( `stackable.${ blockName }.save.output.outer`, null, design, blockProps ) }
 			<div className="ugb-inner-block">
 				{ applyFilters( `stackable.${ blockName }.save.output.before`, null, design, blockProps ) }
 				{ render( blockProps ) }

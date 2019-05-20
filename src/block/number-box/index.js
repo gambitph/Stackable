@@ -98,17 +98,6 @@ export const schema = {
 		[ '', 'Tablet', 'Mobile' ]
 	),
 
-	// Container attributes.
-	...createAllCombinationAttributes(
-		'box%s%sPadding',
-		{
-			type: 'number',
-			default: '',
-		},
-		[ '', 'Tablet', 'Mobile' ],
-		[ 'Top', 'Right', 'Bottom', 'Left' ]
-	),
-
 	// Number attributes.
 	showNumber: {
 		type: 'boolean',
@@ -228,7 +217,8 @@ export const settings = {
 
 	// Stackable modules.
 	modules: {
-		'advanced-spacing': true,
+		'advanced-block-spacing': true,
+		'advanced-column-spacing': true,
 		'advanced-responsive': true,
 		'block-background': true,
 		'custom-css': {
