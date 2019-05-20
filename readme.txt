@@ -125,8 +125,9 @@ You will have to redo all your blocks
 = 1.15.3 =
 * Fixed: Placeholder text no longer becomes hidden when block is blurred
 * Fixed: Separator blocks won't overlap against block outlines and toolbars
-* Fixed: Category dropdown in the Blog Posts block doesn't show categories
+* Fixed: Category dropdown in the Blog Posts block doesn't show categories. Fixes #107
 * Fixed: A Javascript error prevented the Freemius opt-in from skipping. Fixes #91
+* Fixed: Icon List block icon vertical alignment. Fixes #97
 
 = 1.15.2 =
 * Fixed: Accordion block now doesn't clip its content to a maximum of 800px
