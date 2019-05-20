@@ -4,7 +4,7 @@ Tags: gutenberg, block, blocks, block editor, gutenberg blocks, page builder, ed
 Requires at least: 4.8
 Tested up to: 5.2
 Requires PHP: 5.3
-Stable tag: 1.15.2
+Stable tag: 1.15.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
