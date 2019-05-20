@@ -31,7 +31,8 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
             )
         );
 
-        $posts_markup = '';
+		$posts_markup = '';
+		$props = array( 'attributes' => array() );
 
         foreach ( $recent_posts as $post ) {
             $post_id = $post['ID'];
