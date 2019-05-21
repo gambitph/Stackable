@@ -17,6 +17,7 @@ const save = props => {
 		// numberBGColor,
 		columns = 2,
 		design = 'basic',
+		titleTag = '',
 		// borderRadius = 12,
 		shadow = 3,
 		// backgroundColor,
@@ -59,7 +60,7 @@ const save = props => {
 								<div className="ugb-number-box__content">
 									{ ! RichText.isEmpty( title ) && (
 										<RichText.Content
-											tagName="h4"
+											tagName={ titleTag || 'h4' }
 											className="ugb-number-box__title"
 											value={ title }
 										/>

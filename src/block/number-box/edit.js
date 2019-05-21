@@ -1,9 +1,10 @@
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import {
-	AdvancedRangeControl, AlignButtonsControl, BlockContainer, ColorPaletteControl, DesignPanelBody, FontSizeControl, FourNumberControl, HeadingButtonsControl, PanelAdvancedSettings, PanelBackgroundSettings, PanelDesignLibrary, PanelDesignUserLibrary, ProControlButton, WhenResponsiveScreen,
+	AdvancedRangeControl, AlignButtonsControl, BlockContainer, ColorPaletteControl, DesignPanelBody, FontSizeControl, HeadingButtonsControl, PanelAdvancedSettings, PanelBackgroundSettings, PanelDesignLibrary, PanelDesignUserLibrary, ProControlButton, WhenResponsiveScreen,
 } from '@stackable/components'
+import { AlignmentToolbar, BlockControls, RichText } from '@wordpress/editor'
 import { descriptionPlaceholder, range } from '@stackable/util'
-import { PanelBody, RangeControl, SelectControl, ToggleControl } from '@wordpress/components'
+import { PanelBody, RangeControl, SelectControl } from '@wordpress/components'
 import { withBlockStyles, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
@@ -12,7 +13,6 @@ import createStyles from './style'
 import { Fragment } from '@wordpress/element'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
-import { RichText } from '@wordpress/editor'
 import { showProNotice } from 'stackable'
 
 addFilter( 'stackable.number-box.edit.inspector.layout.before', 'stackable/number-box', ( output, props ) => {
@@ -67,9 +67,13 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 		showNumber = true,
 		showTitle = true,
 		showDescription = true,
+		contentAlign = '',
+		tabletContentAlign = '',
+		mobileContentAlign = '',
 		numberBottomMargin = '',
 		numberTabletBottomMargin = '',
 		numberMobileBottomMargin = '',
+		titleTag = '',
 		titleSize = '',
 		titleTabletSize = '',
 		titleMobileSize = '',
@@ -125,17 +129,23 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 				<WhenResponsiveScreen>
 					<AlignButtonsControl
 						label={ __( 'Align' ) }
-					></AlignButtonsControl>
+						value={ contentAlign }
+						onChange={ contentAlign => setAttributes( { contentAlign } ) }
+					/>
 				</WhenResponsiveScreen>
 				<WhenResponsiveScreen screen="tablet">
 					<AlignButtonsControl
 						label={ __( 'Align' ) }
-					></AlignButtonsControl>
+						value={ tabletContentAlign }
+						onChange={ tabletContentAlign => setAttributes( { tabletContentAlign } ) }
+					/>
 				</WhenResponsiveScreen>
 				<WhenResponsiveScreen screen="mobile">
 					<AlignButtonsControl
 						label={ __( 'Align' ) }
-					></AlignButtonsControl>
+						value={ mobileContentAlign }
+						onChange={ mobileContentAlign => setAttributes( { mobileContentAlign } ) }
+					/>
 				</WhenResponsiveScreen>
 			</PanelBody>
 
@@ -262,7 +272,9 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 			>
 				<HeadingButtonsControl
 					label={ __( 'Title HTML Tag' ) }
-				></HeadingButtonsControl>
+					value={ titleTag || 'h4' }
+					onChange={ titleTag => setAttributes( { titleTag } ) }
+				/>
 				<ColorPaletteControl
 					value={ titleColor }
 					onChange={ titleColor => setAttributes( { titleColor } ) }
@@ -499,6 +511,24 @@ addFilter( `stackable.number-box.edit.inspector.advanced.before`, `stackable/num
 	)
 } )
 
+addFilter( 'stackable.number-box.edit.inspector.before', 'stackable/number-box/align', ( output, props ) => {
+	const { setAttributes } = props
+	const {
+		contentAlign = '',
+	} = props.attributes
+	return (
+		<Fragment>
+			{ output }
+			<BlockControls>
+				<AlignmentToolbar
+					value={ contentAlign }
+					onChange={ contentAlign => setAttributes( { contentAlign } ) }
+				/>
+			</BlockControls>
+		</Fragment>
+	)
+}, 11 )
+
 addFilter( 'stackable.number-box.edit.advanced.responsive.before', 'stackable/number-box/collapse', ( output, props ) => {
 	return (
 		<Fragment>
@@ -530,6 +560,7 @@ const edit = props => {
 		// descriptionColor,
 		// numberBGColor,
 		design = 'basic',
+		titleTag = '',
 		// borderRadius = 12,
 		shadow = 3,
 		showNumber = true,
@@ -578,7 +609,7 @@ const edit = props => {
 								<div className="ugb-number-box__content">
 									{ showTitle && (
 										<RichText
-											tagName="h4"
+											tagName={ titleTag || 'h4' }
 											value={ title }
 											className="ugb-number-box__title"
 											onChange={ value => setAttributes( { [ `title${ i }` ]: value } ) }

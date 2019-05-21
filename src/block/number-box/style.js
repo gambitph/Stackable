@@ -12,6 +12,9 @@ export const createStyles = props => {
 		// shadow = 3,
 		backgroundColor,
 		columnGap = '',
+		contentAlign = '',
+		tabletContentAlign = '',
+		mobileContentAlign = '',
 		tabletColumnGap = '',
 		mobileColumnGap = '',
 		numberBottomMargin = '',
@@ -44,8 +47,11 @@ export const createStyles = props => {
 			paddingRight: boxRightPadding !== '' ? `${ boxRightPadding }px` : undefined,
 			paddingBottom: boxBottomPadding !== '' ? `${ boxBottomPadding }px` : undefined,
 			paddingLeft: boxLeftPadding !== '' ? `${ boxLeftPadding }px` : undefined,
+			textAlign: contentAlign !== '' ? contentAlign : undefined,
 		},
 		'.ugb-number-box__number': {
+			marginLeft: contentAlign === 'left' ? 0 : undefined,
+			marginRight: contentAlign === 'right' ? 0 : undefined,
 			backgroundColor: numberBGColor,
 			marginBottom: numberBottomMargin !== '' ? `${ numberBottomMargin }px` : undefined,
 			color: numberColor ? numberColor :
@@ -71,7 +77,12 @@ export const createStyles = props => {
 			'.ugb-number-box .ugb-inner-block': {
 				gridGap: tabletColumnGap !== '' ? `${ tabletColumnGap }px` : undefined,
 			},
+			'.ugb-number-box__item': {
+				textAlign: tabletContentAlign !== '' ? tabletContentAlign : undefined,
+			},
 			'.ugb-number-box__number': {
+				marginLeft: tabletContentAlign === 'left' ? 0 : undefined,
+				marginRight: tabletContentAlign === 'right' ? 0 : undefined,
 				marginBottom: numberTabletBottomMargin !== '' ? `${ numberTabletBottomMargin }px` : undefined,
 			},
 			'.ugb-number-box__title': {
@@ -83,7 +94,12 @@ export const createStyles = props => {
 			'.ugb-number-box .ugb-inner-block': {
 				gridGap: mobileColumnGap !== '' ? `${ mobileColumnGap }px` : undefined,
 			},
+			'.ugb-number-box__item': {
+				textAlign: mobileContentAlign !== '' ? mobileContentAlign : undefined,
+			},
 			'.ugb-number-box__number': {
+				marginLeft: mobileContentAlign === 'left' ? 0 : undefined,
+				marginRight: mobileContentAlign === 'right' ? 0 : undefined,
 				marginBottom: numberMobileBottomMargin !== '' ? `${ numberMobileBottomMargin }px` : undefined,
 			},
 			'.ugb-number-box__title': {

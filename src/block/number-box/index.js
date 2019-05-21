@@ -90,10 +90,10 @@ export const schema = {
 	},
 
 	...createAllCombinationAttributes(
-		'%sColumnGap',
+		'%sContentAlign',
 		{
-			type: 'number',
-			default: 35,
+			type: 'string',
+			default: '',
 		},
 		[ '', 'Tablet', 'Mobile' ]
 	),
@@ -116,6 +116,10 @@ export const schema = {
 	showTitle: {
 		type: 'boolean',
 		default: true,
+	},
+	titleTag: {
+		type: 'string',
+		defualt: '',
 	},
 	...createAllCombinationAttributes(
 		'title%sBottomMargin',
