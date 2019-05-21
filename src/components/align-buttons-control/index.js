@@ -50,7 +50,7 @@ const AlignButtonsControl = props => {
 					} ).map( option => {
 						return {
 							...option,
-							onclick: () => onChange( option.value ),
+							onClick: () => onChange( value !== option.value ? option.value : '' ),
 							isActive: value === option.value,
 						}
 					} )
