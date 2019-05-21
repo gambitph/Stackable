@@ -58,7 +58,7 @@ const HeadingButtonsControl = props => {
 					TAG_OPTIONS.map( option => {
 						return {
 							...option,
-							onclick: () => onChange( option.value ),
+							onClick: () => onChange( value !== option.value ? option.value : '' ),
 							isActive: value === option.value,
 						}
 					} )
