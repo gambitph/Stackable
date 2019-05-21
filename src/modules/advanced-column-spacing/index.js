@@ -171,7 +171,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 				{ options.height && <Fragment>
 					<WhenResponsiveScreen>
 						<AdvancedRangeControl
-							label={ __( 'Column Height' ) }
+							label={ __( 'Min. Column Height' ) }
 							min={ 100 }
 							max={ 1000 }
 							value={ columnHeight }
@@ -181,7 +181,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
 						<AdvancedRangeControl
-							label={ __( 'Column Height' ) }
+							label={ __( 'Min. Column Height' ) }
 							min={ 100 }
 							max={ 1000 }
 							value={ tabletColumnHeight }
@@ -191,7 +191,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
 						<AdvancedRangeControl
-							label={ __( 'Column Height' ) }
+							label={ __( 'Min. Column Height' ) }
 							min={ 100 }
 							max={ 1000 }
 							value={ mobileColumnHeight }
