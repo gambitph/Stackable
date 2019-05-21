@@ -1,14 +1,15 @@
 .ugb-base-control-multi-label__responsive {
 	display: flex;
-	margin-left: 8px;
+	margin-left: 6px;
+	align-items: center;
 	button {
-		height: 12px;
-		width: 12px;
-		padding: 4px;
+		height: 11px;
+		width: 11px;
+		padding: 3px;
 		box-sizing: content-box;
 		background: #eee;
 		border-radius: 100%;
-		margin: 0 2px 0 4px;
+		margin: 0 2px 0 3px;
 		svg {
 			height: 100%;
 			width: 100%;

@@ -2,6 +2,9 @@
 	display: grid;
 	grid-template-columns: auto 1fr auto;
 	margin-bottom: 5px;
+	.ugb-base-control-multi-label__label {
+		margin-bottom: 0;
+	}
 }
 
 .ugb-base-control-multi-label__units {
@@ -15,7 +18,7 @@
 		font-weight: 400;
 		outline: none;
 		color: #aaa;
-		padding: 0 6px;
+		padding: 0 4px;
 		background: transparent;
 		cursor: pointer;
 		text-transform: uppercase;
