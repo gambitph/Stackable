@@ -1,4 +1,6 @@
 /**
+ * Build script for google-fonts.json
+ *
  * Downloads & generates list of Google Fonts.
  */
 

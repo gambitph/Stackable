@@ -298,7 +298,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 				{ options.width && <Fragment>
 					<WhenResponsiveScreen>
 						<AdvancedRangeControl
-							label={ __( 'Min. Content Width' ) }
+							label={ __( 'Max. Content Width' ) }
 							units={ [ 'px', '%' ] }
 							min={ [ 100, 10 ] }
 							max={ [ 2000, 100 ] }
@@ -312,7 +312,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
 						<AdvancedRangeControl
-							label={ __( 'Min. Content Width' ) }
+							label={ __( 'Max. Content Width' ) }
 							units={ [ 'px', '%' ] }
 							min={ [ 100, 10 ] }
 							max={ [ 1500, 100 ] }
@@ -326,7 +326,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
 						<AdvancedRangeControl
-							label={ __( 'Min. Content Width' ) }
+							label={ __( 'Max. Content Width' ) }
 							units={ [ 'px', '%' ] }
 							min={ [ 100, 10 ] }
 							max={ [ 1000, 100 ] }
