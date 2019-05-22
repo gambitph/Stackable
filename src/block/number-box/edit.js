@@ -1,6 +1,19 @@
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import {
-	AdvancedRangeControl, AlignButtonsControl, BlockContainer, ColorPaletteControl, DesignPanelBody, FontSizeControl, HeadingButtonsControl, PanelAdvancedSettings, PanelBackgroundSettings, PanelDesignLibrary, PanelDesignUserLibrary, ProControlButton, WhenResponsiveScreen,
+	AdvancedRangeControl,
+	AlignButtonsControl,
+	BlockContainer,
+	ColorPaletteControl,
+	DesignPanelBody,
+	FontSizeControl,
+	HeadingButtonsControl,
+	PanelAdvancedSettings,
+	PanelBackgroundSettings,
+	PanelDesignLibrary,
+	PanelDesignUserLibrary,
+	ProControlButton,
+	TypographyControl,
+	WhenResponsiveScreen,
 } from '@stackable/components'
 import { AlignmentToolbar, BlockControls, RichText } from '@wordpress/editor'
 import { descriptionPlaceholder, range } from '@stackable/util'
@@ -74,9 +87,22 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 		numberTabletBottomMargin = '',
 		numberMobileBottomMargin = '',
 		titleTag = '',
-		titleSize = '',
-		titleTabletSize = '',
-		titleMobileSize = '',
+		titleFontFamily = '',
+		titleFontWeight = '',
+		titleTextTransform = '',
+		titleLetterSpacing = '',
+		titleFontSize = '',
+		titleTabletFontSize = '',
+		titleMobileFontSize = '',
+		titleFontSizeUnit = 'px',
+		titleTabletFontSizeUnit = 'px',
+		titleMobileFontSizeUnit = 'px',
+		titleLineHeight = '',
+		titleTabletLineHeight = '',
+		titleMobileLineHeight = '',
+		titleLineHeightUnit = 'em',
+		titleTabletLineHeightUnit = 'em',
+		titleMobileLineHeightUnit = 'em',
 		titleBottomMargin = '',
 		titleTabletBottomMargin = '',
 		titleMobileBottomMargin = '',
@@ -270,6 +296,60 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 				checked={ showTitle }
 				onChange={ showTitle => setAttributes( { showTitle } ) }
 			>
+				<TypographyControl
+					fontFamily={ titleFontFamily }
+					fontSize={ titleFontSize }
+					tabletFontSize={ titleTabletFontSize }
+					mobileFontSize={ titleMobileFontSize }
+					fontSizeUnit={ titleFontSizeUnit }
+					tabletFontSizeUnit={ titleTabletFontSizeUnit }
+					mobileFontSizeUnit={ titleMobileFontSizeUnit }
+					fontWeight={ titleFontWeight }
+					textTransform={ titleTextTransform }
+					letterSpacing={ titleLetterSpacing }
+					lineHeight={ titleLineHeight }
+					tabletLineHeight={ titleTabletLineHeight }
+					mobileLineHeight={ titleMobileLineHeight }
+					lineHeightUnit={ titleLineHeightUnit }
+					tabletLineHeightUnit={ titleTabletLineHeightUnit }
+					mobileLineHeightUnit={ titleMobileLineHeightUnit }
+					onChangeFontFamily={ titleFontFamily => setAttributes( { titleFontFamily } ) }
+					onChangeFontSize={ titleFontSize => setAttributes( { titleFontSize } ) }
+					onChangeTabletFontSize={ titleTabletFontSize => setAttributes( { titleTabletFontSize } ) }
+					onChangeMobileFontSize={ titleMobileFontSize => setAttributes( { titleMobileFontSize } ) }
+					onChangeFontSizeUnit={ titleFontSizeUnit => setAttributes( { titleFontSizeUnit } ) }
+					onChangeTabletFontSizeUnit={ titleTabletFontSizeUnit => setAttributes( { titleTabletFontSizeUnit } ) }
+					onChangeMobileFontSizeUnit={ mobileFontSizeUnit => setAttributes( { mobileFontSizeUnit } ) }
+					onChangeFontWeight={ titleFontWeight => setAttributes( { titleFontWeight } ) }
+					onChangeTextTransform={ titleTextTransform => setAttributes( { titleTextTransform } ) }
+					onChangeLetterSpacing={ titleLetterSpacing => setAttributes( { titleLetterSpacing } ) }
+					onChangeLineHeight={ titleLineHeight => setAttributes( { titleLineHeight } ) }
+					onChangeTabletLineHeight={ titleTabletLineHeight => setAttributes( { titleTabletLineHeight } ) }
+					onChangeMobileLineHeight={ titleMobileLineHeight => setAttributes( { titleMobileLineHeight } ) }
+					onChangeLineHeightUnit={ titleLineHeightUnit => setAttributes( { titleLineHeightUnit } ) }
+					onChangeTabletLineHeightUnit={ titleTabletLineHeightUnit => setAttributes( { titleTabletLineHeightUnit } ) }
+					onChangeMobileLineHeightUnit={ titleMobileLineHeightUnit => setAttributes( { titleMobileLineHeightUnit } ) }
+					onReset={ () => {
+						setAttributes( {
+							titleFontFamily: '',
+							titleFontSize: '',
+							titleTabletFontSize: '',
+							titleMobileFontSize: '',
+							titleFontSizeUnit: 'px',
+							titleTabletFontSizeUnit: 'px',
+							mobileFontSizeUnit: 'px',
+							titleFontWeight: '',
+							titleTextTransform: '',
+							titleLetterSpacing: '',
+							titleLineHeight: '',
+							titleTabletLineHeight: '',
+							titleMobileLineHeight: '',
+							titleLineHeightUnit: 'em',
+							titleTabletLineHeightUnit: 'em',
+							titleMobileLineHeightUnit: 'em',
+						} )
+					} }
+				/>
 				<HeadingButtonsControl
 					label={ __( 'Title HTML Tag' ) }
 					value={ titleTag || 'h4' }
@@ -280,36 +360,6 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					onChange={ titleColor => setAttributes( { titleColor } ) }
 					label={ __( 'Title Color' ) }
 				/>
-				<WhenResponsiveScreen>
-					<AdvancedRangeControl
-						label={ __( 'Title Size' ) }
-						value={ titleSize }
-						onChange={ titleSize => setAttributes( { titleSize } ) }
-						min={ 0 }
-						max={ 100 }
-						units={ [ 'px', 'em' ] }
-					/>
-				</WhenResponsiveScreen>
-				<WhenResponsiveScreen screen="tablet">
-					<AdvancedRangeControl
-						label={ __( 'Title Size' ) }
-						value={ titleTabletSize }
-						onChange={ titleTabletSize => setAttributes( { titleTabletSize } ) }
-						min={ 0 }
-						max={ 100 }
-						units={ [ 'px', 'em' ] }
-					/>
-				</WhenResponsiveScreen>
-				<WhenResponsiveScreen screen="mobile">
-					<AdvancedRangeControl
-						label={ __( 'Title Size' ) }
-						value={ titleMobileSize }
-						onChange={ titleMobileSize => setAttributes( { titleMobileSize } ) }
-						min={ 0 }
-						max={ 100 }
-						units={ [ 'px', 'em' ] }
-					/>
-				</WhenResponsiveScreen>
 			</PanelAdvancedSettings>
 
 			<PanelAdvancedSettings
@@ -362,6 +412,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 							onChange={ numberBottomMargin => setAttributes( { numberBottomMargin } ) }
 							min={ -50 }
 							max={ 100 }
+							allowReset={ true }
 						/>
 					) }
 					{ showTitle && (
@@ -371,6 +422,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 							onChange={ titleBottomMargin => setAttributes( { titleBottomMargin } ) }
 							min={ -50 }
 							max={ 100 }
+							allowReset={ true }
 						/>
 					) }
 				</WhenResponsiveScreen>
@@ -382,6 +434,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 							onChange={ numberTabletBottomMargin => setAttributes( { numberTabletBottomMargin } ) }
 							min={ -50 }
 							max={ 100 }
+							allowReset={ true }
 						/>
 					) }
 					{ showTitle && (
@@ -391,6 +444,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 							onChange={ titleTabletBottomMargin => setAttributes( { titleTabletBottomMargin } ) }
 							min={ -50 }
 							max={ 100 }
+							allowReset={ true }
 						/>
 					) }
 				</WhenResponsiveScreen>
@@ -402,6 +456,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 							onChange={ numberMobileBottomMargin => setAttributes( { numberMobileBottomMargin } ) }
 							min={ -50 }
 							max={ 100 }
+							allowReset={ true }
 						/>
 					) }
 					{ showTitle && (
@@ -411,6 +466,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 							onChange={ titleMobileBottomMargin => setAttributes( { titleMobileBottomMargin } ) }
 							min={ -50 }
 							max={ 100 }
+							allowReset={ true }
 						/>
 					) }
 				</WhenResponsiveScreen>

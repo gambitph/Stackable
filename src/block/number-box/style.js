@@ -1,3 +1,4 @@
+import { getFontFamily } from '@stackable/util'
 import isDarkColor from 'is-dark-color'
 
 export const createStyles = props => {
@@ -23,9 +24,22 @@ export const createStyles = props => {
 		titleBottomMargin = '',
 		titleTabletBottomMargin = '',
 		titleMobileBottomMargin = '',
-		titleSize = '',
-		titleTabletSize = '',
-		titleMobileSize = '',
+		titleFontFamily = '',
+		titleFontWeight = '',
+		titleTextTransform = '',
+		titleLetterSpacing = '',
+		titleFontSize = '',
+		titleTabletFontSize = '',
+		titleMobileFontSize = '',
+		titleFontSizeUnit = 'px',
+		titleTabletFontSizeUnit = 'px',
+		titleMobileFontSizeUnit = 'px',
+		titleLineHeight = '',
+		titleTabletLineHeight = '',
+		titleMobileLineHeight = '',
+		titleLineHeightUnit = 'em',
+		titleTabletLineHeightUnit = 'em',
+		titleMobileLineHeightUnit = 'em',
 		descriptionSize = '',
 		descriptionTabletSize = '',
 		descriptionMobileSize = '',
@@ -60,7 +74,12 @@ export const createStyles = props => {
 		},
 		'.ugb-number-box__title': {
 			marginBottom: titleBottomMargin !== '' ? `${ titleBottomMargin }px` : undefined,
-			fontSize: titleSize !== '' ? `${ titleSize }px` : undefined,
+			fontSize: titleFontSize !== '' ? `${ titleFontSize }${ titleFontSizeUnit }` : undefined,
+			fontFamily: titleFontFamily !== '' ? getFontFamily( titleFontFamily ) : undefined,
+			fontWeight: titleFontWeight !== '' ? titleFontWeight : undefined,
+			textTransform: titleTextTransform !== '' ? titleTextTransform : undefined,
+			letterSpacing: titleLetterSpacing !== '' ? `${ titleLetterSpacing }px` : undefined,
+			lineHeight: titleLineHeight !== '' ? `${ titleLineHeight }${ titleLineHeightUnit }` : undefined,
 			color: titleColor ? titleColor :
 			       design === 'plain' ? undefined :
 			       ! backgroundColor ? undefined :
@@ -87,7 +106,8 @@ export const createStyles = props => {
 			},
 			'.ugb-number-box__title': {
 				marginBottom: titleTabletBottomMargin !== '' ? `${ titleTabletBottomMargin }px` : undefined,
-				fontSize: titleSize !== '' ? `${ titleSize }px` : undefined,
+				fontSize: titleTabletFontSize !== '' ? `${ titleTabletFontSize }${ titleTabletFontSizeUnit }` : undefined,
+				lineHeight: titleTabletLineHeight !== '' ? `${ titleTabletLineHeight }${ titleTabletLineHeightUnit }` : undefined,
 			},
 		},
 		mobile: {
@@ -104,7 +124,8 @@ export const createStyles = props => {
 			},
 			'.ugb-number-box__title': {
 				marginBottom: titleMobileBottomMargin !== '' ? `${ titleMobileBottomMargin }px` : undefined,
-				fontSize: titleSize !== '' ? `${ titleSize }px` : undefined,
+				fontSize: titleMobileFontSize !== '' ? `${ titleMobileFontSize }${ titleMobileFontSizeUnit }` : undefined,
+				lineHeight: titleMobileLineHeight !== '' ? `${ titleMobileLineHeight }${ titleMobileLineHeightUnit }` : undefined,
 			},
 		},
 	}
