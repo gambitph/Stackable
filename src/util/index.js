@@ -1,3 +1,4 @@
+export * from './font'
 import { __, sprintf } from '@wordpress/i18n'
 import { camelCase } from 'lodash'
 
