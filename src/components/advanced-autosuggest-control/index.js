@@ -1,9 +1,9 @@
+import { Component, createRef } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import Autosuggest from 'react-autosuggest'
 import { BaseControl } from '@wordpress/components'
 import BaseControlMultiLabel from '../base-control-multi-label'
 import classnames from 'classnames'
-import { Component } from '@wordpress/element'
 
 // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
 const escapeRegexCharacters = str => str.replace( /[.*+?^${}()|[\]\\]/g, '\\$&' )
@@ -78,7 +78,7 @@ const getSuggestionValue = suggestion => suggestion.value
 
 // Use your imagination to render suggestions.
 const renderSuggestion = suggestion => {
-	return <div className="ugb--autosuggest-option">{ suggestion.label }</div>
+	return <div className="ugb-autosuggest-option" data-value={ suggestion.value }>{ suggestion.label }</div>
 }
 
 const renderSectionTitle = section => {
@@ -105,6 +105,8 @@ class AdvancedAutosuggestControl extends Component {
 		this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind( this )
 		this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind( this )
 		this.onChange = this.onChange.bind( this )
+		this.onFocus = this.onFocus.bind( this )
+		this.autosuggestDiv = createRef()
 	}
 
 	onChange( event, { newValue } ) {
@@ -115,9 +117,28 @@ class AdvancedAutosuggestControl extends Component {
 		} )
 	}
 
+	onFocus() {
+		setTimeout( () => {
+			const option = this.autosuggestDiv.current.querySelector( `[data-value="${ this.state.value }"]` )
+			if ( option ) {
+				option.scrollIntoView()
+			}
+		}, 0 )
+	}
+
 	// Autosuggest will call this function every time you need to update suggestions.
 	// You already implemented this logic above, so just use it.
-	onSuggestionsFetchRequested( { value } ) {
+	onSuggestionsFetchRequested( { value, reason } ) {
+		// If the input was clicked (can be thought as a dropdown was opened), show all the options.
+		if ( reason === 'input-focused' || reason === 'suggestion-selected' ) {
+			this.setState( {
+				suggestions: this.props.options,
+				isEmpty: false,
+			} )
+			return
+		}
+
+		// Show our normal search suggestions
 		const suggestions = getSuggestions( value, this.props.options )
 		this.setState( {
 			suggestions,
@@ -140,6 +161,7 @@ class AdvancedAutosuggestControl extends Component {
 			placeholder: '',
 			value: label,
 			onChange: this.onChange,
+			onFocus: this.onFocus,
 		}
 
 		return (
@@ -151,10 +173,12 @@ class AdvancedAutosuggestControl extends Component {
 					label={ this.props.label }
 					screens={ this.props.screens }
 				/>
-				<div className="ugb-advanced-autosuggest-control__select">
+				<div className="ugb-advanced-autosuggest-control__select" ref={ this.autosuggestDiv }>
 					<Autosuggest
 						multiSection={ isGroupedOptions( this.props.options ) }
 						suggestions={ suggestions }
+						// alwaysRenderSuggestions={ true }
+						focusInputOnSuggestionClick={ false }
 						onSuggestionsFetchRequested={ this.onSuggestionsFetchRequested }
 						onSuggestionsClearRequested={ this.onSuggestionsClearRequested }
 						getSuggestionValue={ getSuggestionValue }
