@@ -31,7 +31,7 @@ class ButtonIconPopoverControl extends Component {
 				className={ classnames( 'ugb-button-icon-control', this.props.className ) }
 			>
 				<div className="ugb-button-icon-control__wrapper">
-					{ this.props.showReset && (
+					{ this.props.allowReset && (
 						<IconButton
 							onClick={ this.props.onReset }
 							className="ugb-button-icon-control__reset"
@@ -69,7 +69,7 @@ ButtonIconPopoverControl.defaultProps = {
 	help: '',
 	label: '',
 	className: '',
-	showReset: false,
+	allowReset: false,
 	onReset: () => {},
 }
 
