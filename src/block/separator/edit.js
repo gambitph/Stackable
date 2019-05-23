@@ -5,7 +5,7 @@ import {
 } from '@stackable/components'
 import { PanelBody, RangeControl, ToggleControl } from '@wordpress/components'
 import { separators, shadows } from './separators'
-import { withBlockStyles, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
+import { withBlockStyles, withGoogleFont, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
@@ -379,6 +379,7 @@ const edit = props => {
 
 export default compose(
 	withUniqueClass,
+	withGoogleFont,
 	withTabbedInspector,
 	withBlockStyles( createStyles ),
 )( edit )

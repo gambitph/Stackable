@@ -7,12 +7,19 @@ export const getGoogleFontURL = fontName => {
 
 export const isWebFont = fontName => ! fontName.match( /^(sans[-+]serif|serif|monospace)$/i )
 
+// Already done loading.
+const loadedFonts = []
+
 /**
  * Load the stylesheet of a Google Font.
  *
  * @param {string} fontName The name of the font
  */
 export const loadGoogleFont = fontName => {
+	if ( loadedFonts.includes( fontName ) ) {
+		return
+	}
+
 	if ( document && isWebFont( fontName ) ) {
 		const link = document.createElement( 'link' )
 		link.setAttribute( 'href', getGoogleFontURL( fontName ) )
@@ -20,6 +27,8 @@ export const loadGoogleFont = fontName => {
 		link.setAttribute( 'type', 'text/css' )
 		document.querySelector( 'head' ).appendChild( link )
 	}
+
+	loadedFonts.push( fontName )
 }
 
 export const getFontFamily = fontName => {
