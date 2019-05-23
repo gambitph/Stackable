@@ -34,6 +34,7 @@ const TypographyControl = props => {
 							allowReset={ true }
 							unit={ props.fontSizeUnit }
 							onChangeUnit={ props.onChangeFontSizeUnit }
+							{ ...props.fontSizeProps }
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
@@ -44,6 +45,7 @@ const TypographyControl = props => {
 							allowReset={ true }
 							unit={ props.tabletfontSizeUnit }
 							onChangeUnit={ props.onChangeTabletFontSizeUnit }
+							{ ...props.fontSizeProps }
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
@@ -54,6 +56,7 @@ const TypographyControl = props => {
 							allowReset={ true }
 							unit={ props.mobilefontSizeUnit }
 							onChangeUnit={ props.onChangeMobileFontSizeUnit }
+							{ ...props.fontSizeProps }
 						/>
 					</WhenResponsiveScreen>
 				</Fragment>
@@ -172,6 +175,7 @@ TypographyControl.defaultProps = {
 	tabletLineHeightUnit: 'em',
 	mobileLineHeightUnit: 'em',
 	letterSpacing: '',
+	fontSizeProps: {},
 	onReset: () => {},
 	onChangeFontFamily: () => {},
 	onChangeFontSize: () => {},
