@@ -12,11 +12,10 @@ import {
 	PanelDesignLibrary,
 	PanelDesignUserLibrary,
 	ProControlButton,
-	TypographyControl,
 	WhenResponsiveScreen,
 } from '@stackable/components'
 import { AlignmentToolbar, BlockControls, RichText } from '@wordpress/editor'
-import { descriptionPlaceholder, range } from '@stackable/util'
+import { descriptionPlaceholder, range, TypographyControlHelper } from '@stackable/util'
 import { PanelBody, RangeControl, SelectControl } from '@wordpress/components'
 import { withBlockStyles, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
 import { __ } from '@wordpress/i18n'
@@ -87,22 +86,6 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 		numberTabletBottomMargin = '',
 		numberMobileBottomMargin = '',
 		titleTag = '',
-		titleFontFamily = '',
-		titleFontWeight = '',
-		titleTextTransform = '',
-		titleLetterSpacing = '',
-		titleFontSize = '',
-		titleTabletFontSize = '',
-		titleMobileFontSize = '',
-		titleFontSizeUnit = 'px',
-		titleTabletFontSizeUnit = 'px',
-		titleMobileFontSizeUnit = 'px',
-		titleLineHeight = '',
-		titleTabletLineHeight = '',
-		titleMobileLineHeight = '',
-		titleLineHeightUnit = 'em',
-		titleTabletLineHeightUnit = 'em',
-		titleMobileLineHeightUnit = 'em',
 		titleBottomMargin = '',
 		titleTabletBottomMargin = '',
 		titleMobileBottomMargin = '',
@@ -296,59 +279,10 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 				checked={ showTitle }
 				onChange={ showTitle => setAttributes( { showTitle } ) }
 			>
-				<TypographyControl
-					fontFamily={ titleFontFamily }
-					fontSize={ titleFontSize }
-					tabletFontSize={ titleTabletFontSize }
-					mobileFontSize={ titleMobileFontSize }
-					fontSizeUnit={ titleFontSizeUnit }
-					tabletFontSizeUnit={ titleTabletFontSizeUnit }
-					mobileFontSizeUnit={ titleMobileFontSizeUnit }
-					fontWeight={ titleFontWeight }
-					textTransform={ titleTextTransform }
-					letterSpacing={ titleLetterSpacing }
-					lineHeight={ titleLineHeight }
-					tabletLineHeight={ titleTabletLineHeight }
-					mobileLineHeight={ titleMobileLineHeight }
-					lineHeightUnit={ titleLineHeightUnit }
-					tabletLineHeightUnit={ titleTabletLineHeightUnit }
-					mobileLineHeightUnit={ titleMobileLineHeightUnit }
-					onChangeFontFamily={ titleFontFamily => setAttributes( { titleFontFamily } ) }
-					onChangeFontSize={ titleFontSize => setAttributes( { titleFontSize } ) }
-					onChangeTabletFontSize={ titleTabletFontSize => setAttributes( { titleTabletFontSize } ) }
-					onChangeMobileFontSize={ titleMobileFontSize => setAttributes( { titleMobileFontSize } ) }
-					onChangeFontSizeUnit={ titleFontSizeUnit => setAttributes( { titleFontSizeUnit } ) }
-					onChangeTabletFontSizeUnit={ titleTabletFontSizeUnit => setAttributes( { titleTabletFontSizeUnit } ) }
-					onChangeMobileFontSizeUnit={ mobileFontSizeUnit => setAttributes( { mobileFontSizeUnit } ) }
-					onChangeFontWeight={ titleFontWeight => setAttributes( { titleFontWeight } ) }
-					onChangeTextTransform={ titleTextTransform => setAttributes( { titleTextTransform } ) }
-					onChangeLetterSpacing={ titleLetterSpacing => setAttributes( { titleLetterSpacing } ) }
-					onChangeLineHeight={ titleLineHeight => setAttributes( { titleLineHeight } ) }
-					onChangeTabletLineHeight={ titleTabletLineHeight => setAttributes( { titleTabletLineHeight } ) }
-					onChangeMobileLineHeight={ titleMobileLineHeight => setAttributes( { titleMobileLineHeight } ) }
-					onChangeLineHeightUnit={ titleLineHeightUnit => setAttributes( { titleLineHeightUnit } ) }
-					onChangeTabletLineHeightUnit={ titleTabletLineHeightUnit => setAttributes( { titleTabletLineHeightUnit } ) }
-					onChangeMobileLineHeightUnit={ titleMobileLineHeightUnit => setAttributes( { titleMobileLineHeightUnit } ) }
-					onReset={ () => {
-						setAttributes( {
-							titleFontFamily: '',
-							titleFontSize: '',
-							titleTabletFontSize: '',
-							titleMobileFontSize: '',
-							titleFontSizeUnit: 'px',
-							titleTabletFontSizeUnit: 'px',
-							mobileFontSizeUnit: 'px',
-							titleFontWeight: '',
-							titleTextTransform: '',
-							titleLetterSpacing: '',
-							titleLineHeight: '',
-							titleTabletLineHeight: '',
-							titleMobileLineHeight: '',
-							titleLineHeightUnit: 'em',
-							titleTabletLineHeightUnit: 'em',
-							titleMobileLineHeightUnit: 'em',
-						} )
-					} }
+				<TypographyControlHelper
+					attrNameTemplate="title%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
 				/>
 				<HeadingButtonsControl
 					label={ __( 'Title HTML Tag' ) }

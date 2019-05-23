@@ -2,7 +2,7 @@
  * BLOCK: Number Box Block.
  */
 
-import { createAllCombinationAttributes, descriptionPlaceholder } from '@stackable/util'
+import { createAllCombinationAttributes, createTypographyAttributes, descriptionPlaceholder } from '@stackable/util'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { default as deprecated } from './deprecated'
@@ -129,56 +129,7 @@ export const schema = {
 		},
 		[ '', 'Tablet', 'Mobile' ]
 	),
-
-	// TODO create a generator for attributes for typography.
-	titleFontFamily: {
-		type: 'string',
-		defualt: '',
-	},
-	titleFontWeight: {
-		type: 'string',
-		default: '',
-	},
-	titleTextTransform: {
-		type: 'string',
-		default: '',
-	},
-	titleLetterSpacing: {
-		type: 'number',
-		default: '',
-	},
-	...createAllCombinationAttributes(
-		'title%sFontSize',
-		{
-			type: 'number',
-			default: '',
-		},
-		[ '', 'Tablet', 'Mobile' ]
-	),
-	...createAllCombinationAttributes(
-		'title%sFontSizeUnit',
-		{
-			type: 'string',
-			default: 'px',
-		},
-		[ '', 'Tablet', 'Mobile' ]
-	),
-	...createAllCombinationAttributes(
-		'title%sLineHeight',
-		{
-			type: 'number',
-			default: '',
-		},
-		[ '', 'Tablet', 'Mobile' ]
-	),
-	...createAllCombinationAttributes(
-		'title%sLineHeightUnit',
-		{
-			type: 'string',
-			default: 'em',
-		},
-		[ '', 'Tablet', 'Mobile' ]
-	),
+	...createTypographyAttributes( 'title%s' ),
 
 	// Description attributes.
 	showDescription: {
