@@ -89,6 +89,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'freemius.php' );
  */
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/disabled-blocks.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/init.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/fonts.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/blog-posts/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/blog-posts/designs.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/components/panel-design-user-library/ajax.php' );

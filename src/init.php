@@ -94,6 +94,9 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 			'disabledBlocks' => stackable_get_disabled_blocks(),
 			'nonce' => wp_create_nonce( 'stackable' ),
 
+			// Fonts.
+			'locale' => get_locale(),
+
 			// Overridable default primary color for buttons and other blocks.
 			'primaryColor' => get_theme_mod( 's_primary_color', '#2091e1' ),
 
