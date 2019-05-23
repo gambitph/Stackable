@@ -37,3 +37,19 @@ export const createAllCombinationAttributes = ( attrNameTemplate = '', attrParam
 		}
 	}, {} )
 }
+
+/**
+ * Generates a combination set of attributes with responsive names.
+ *
+ * @param {string} attrNameTemplate The attribute name template, will be used with sprintf
+ * @param {Object} attrParams The parameters the attribute will have
+ *
+ * @return {Array} The attributes
+ */
+export const createResponsiveAttributes = ( attrNameTemplate = '', attrParams = {} ) => {
+	return createAllCombinationAttributes(
+		attrNameTemplate,
+		attrParams,
+		[ '', 'Tablet', 'Mobile' ]
+	)
+}

@@ -2,7 +2,7 @@
  * BLOCK: Number Box Block.
  */
 
-import { createAllCombinationAttributes, createTypographyAttributes, descriptionPlaceholder } from '@stackable/util'
+import { createResponsiveAttributes, createTypographyAttributes, descriptionPlaceholder } from '@stackable/util'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { default as deprecated } from './deprecated'
@@ -89,28 +89,20 @@ export const schema = {
 		type: 'string',
 	},
 
-	...createAllCombinationAttributes(
-		'%sContentAlign',
-		{
-			type: 'string',
-			default: '',
-		},
-		[ '', 'Tablet', 'Mobile' ]
-	),
+	...createResponsiveAttributes( '%sContentAlign', {
+		type: 'string',
+		default: '',
+	} ),
 
 	// Number attributes.
 	showNumber: {
 		type: 'boolean',
 		default: true,
 	},
-	...createAllCombinationAttributes(
-		'number%sBottomMargin',
-		{
-			type: 'number',
-			default: '',
-		},
-		[ '', 'Tablet', 'Mobile' ]
-	),
+	...createResponsiveAttributes( 'number%sBottomMargin', {
+		type: 'number',
+		default: '',
+	} ),
 
 	// Title attributes.
 	showTitle: {
@@ -121,14 +113,10 @@ export const schema = {
 		type: 'string',
 		defualt: '',
 	},
-	...createAllCombinationAttributes(
-		'title%sBottomMargin',
-		{
-			type: 'number',
-			default: '',
-		},
-		[ '', 'Tablet', 'Mobile' ]
-	),
+	...createResponsiveAttributes( 'title%sBottomMargin', {
+		type: 'number',
+		default: '',
+	} ),
 	...createTypographyAttributes( 'title%s' ),
 
 	// Description attributes.
@@ -136,22 +124,14 @@ export const schema = {
 		type: 'boolean',
 		default: true,
 	},
-	...createAllCombinationAttributes(
-		'description%sSize',
-		{
-			type: 'number',
-			default: '',
-		},
-		[ '', 'Tablet', 'Mobile' ]
-	),
-	...createAllCombinationAttributes(
-		'description%sUnit',
-		{
-			type: 'string',
-			default: 'px',
-		},
-		[ '', 'Tablet', 'Mobile' ]
-	),
+	...createResponsiveAttributes( 'description%sSize', {
+		type: 'number',
+		default: '',
+	} ),
+	...createResponsiveAttributes( 'description%sUnit', {
+		type: 'string',
+		default: 'px',
+	} ),
 
 	// Keep the old attributes. Gutenberg issue https://github.com/WordPress/gutenberg/issues/10406
 	numberBox: {

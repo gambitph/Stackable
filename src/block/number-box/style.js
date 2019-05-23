@@ -1,4 +1,5 @@
-import { createTypographyStyles, getFontFamily } from '@stackable/util'
+import { marginLeftAlign, marginRightAlign } from '@stackable/util/styles'
+import { createTypographyStyles } from '@stackable/util'
 import isDarkColor from 'is-dark-color'
 
 export const createStyles = props => {
@@ -48,8 +49,8 @@ export const createStyles = props => {
 			textAlign: contentAlign !== '' ? contentAlign : undefined,
 		},
 		'.ugb-number-box__number': {
-			marginLeft: contentAlign === 'left' ? 0 : undefined,
-			marginRight: contentAlign === 'right' ? 0 : undefined,
+			marginLeft: marginLeftAlign( contentAlign ),
+			marginRight: marginRightAlign( contentAlign ),
 			backgroundColor: numberBGColor,
 			marginBottom: numberBottomMargin !== '' ? `${ numberBottomMargin }px` : undefined,
 			color: numberColor ? numberColor :
@@ -79,8 +80,8 @@ export const createStyles = props => {
 				textAlign: tabletContentAlign !== '' ? tabletContentAlign : undefined,
 			},
 			'.ugb-number-box__number': {
-				marginLeft: tabletContentAlign === 'left' ? 0 : undefined,
-				marginRight: tabletContentAlign === 'right' ? 0 : undefined,
+				marginLeft: marginLeftAlign( tabletContentAlign ),
+				marginRight: marginRightAlign( tabletContentAlign ),
 				marginBottom: numberTabletBottomMargin !== '' ? `${ numberTabletBottomMargin }px` : undefined,
 			},
 			'.ugb-number-box__title': {
@@ -96,8 +97,8 @@ export const createStyles = props => {
 				textAlign: mobileContentAlign !== '' ? mobileContentAlign : undefined,
 			},
 			'.ugb-number-box__number': {
-				marginLeft: mobileContentAlign === 'left' ? 0 : undefined,
-				marginRight: mobileContentAlign === 'right' ? 0 : undefined,
+				marginLeft: marginLeftAlign( mobileContentAlign ),
+				marginRight: marginRightAlign( mobileContentAlign ),
 				marginBottom: numberMobileBottomMargin !== '' ? `${ numberMobileBottomMargin }px` : undefined,
 			},
 			'.ugb-number-box__title': {

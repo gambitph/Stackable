@@ -12,10 +12,12 @@ import {
 	PanelDesignLibrary,
 	PanelDesignUserLibrary,
 	ProControlButton,
+	ResponsiveControl,
+	TypographyControlHelper,
 	WhenResponsiveScreen,
 } from '@stackable/components'
 import { AlignmentToolbar, BlockControls, RichText } from '@wordpress/editor'
-import { descriptionPlaceholder, range, TypographyControlHelper } from '@stackable/util'
+import { descriptionPlaceholder, range } from '@stackable/util'
 import { PanelBody, RangeControl, SelectControl } from '@wordpress/components'
 import { withBlockStyles, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
 import { __ } from '@wordpress/i18n'
@@ -79,9 +81,6 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 		showNumber = true,
 		showTitle = true,
 		showDescription = true,
-		contentAlign = '',
-		tabletContentAlign = '',
-		mobileContentAlign = '',
 		numberBottomMargin = '',
 		numberTabletBottomMargin = '',
 		numberMobileBottomMargin = '',
@@ -135,27 +134,13 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 						allowReset={ true }
 					/>
 				}
-				<WhenResponsiveScreen>
-					<AlignButtonsControl
-						label={ __( 'Align' ) }
-						value={ contentAlign }
-						onChange={ contentAlign => setAttributes( { contentAlign } ) }
-					/>
-				</WhenResponsiveScreen>
-				<WhenResponsiveScreen screen="tablet">
-					<AlignButtonsControl
-						label={ __( 'Align' ) }
-						value={ tabletContentAlign }
-						onChange={ tabletContentAlign => setAttributes( { tabletContentAlign } ) }
-					/>
-				</WhenResponsiveScreen>
-				<WhenResponsiveScreen screen="mobile">
-					<AlignButtonsControl
-						label={ __( 'Align' ) }
-						value={ mobileContentAlign }
-						onChange={ mobileContentAlign => setAttributes( { mobileContentAlign } ) }
-					/>
-				</WhenResponsiveScreen>
+				<ResponsiveControl
+					attrNameTemplate="%sContentAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AlignButtonsControl label={ __( 'Align' ) } />
+				</ResponsiveControl>
 			</PanelBody>
 
 			<PanelBackgroundSettings
@@ -338,72 +323,34 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 			</PanelAdvancedSettings>
 
 			<PanelBody title={ __( 'Spacing' ) } initialOpen={ false }>
-				<WhenResponsiveScreen>
-					{ showNumber && (
+				{ showNumber && (
+					<ResponsiveControl
+						attrNameTemplate="number%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
 						<AdvancedRangeControl
 							label={ __( 'Number' ) }
-							value={ numberBottomMargin }
-							onChange={ numberBottomMargin => setAttributes( { numberBottomMargin } ) }
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
 						/>
-					) }
-					{ showTitle && (
+					</ResponsiveControl>
+				) }
+				{ showTitle && (
+					<ResponsiveControl
+						attrNameTemplate="title%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
 						<AdvancedRangeControl
 							label={ __( 'Title' ) }
-							value={ titleBottomMargin }
-							onChange={ titleBottomMargin => setAttributes( { titleBottomMargin } ) }
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
 						/>
-					) }
-				</WhenResponsiveScreen>
-				<WhenResponsiveScreen screen="tablet">
-					{ showNumber && (
-						<AdvancedRangeControl
-							label={ __( 'Number' ) }
-							value={ numberTabletBottomMargin }
-							onChange={ numberTabletBottomMargin => setAttributes( { numberTabletBottomMargin } ) }
-							min={ -50 }
-							max={ 100 }
-							allowReset={ true }
-						/>
-					) }
-					{ showTitle && (
-						<AdvancedRangeControl
-							label={ __( 'Title' ) }
-							value={ titleTabletBottomMargin }
-							onChange={ titleTabletBottomMargin => setAttributes( { titleTabletBottomMargin } ) }
-							min={ -50 }
-							max={ 100 }
-							allowReset={ true }
-						/>
-					) }
-				</WhenResponsiveScreen>
-				<WhenResponsiveScreen screen="mobile">
-					{ showNumber && (
-						<AdvancedRangeControl
-							label={ __( 'Number' ) }
-							value={ numberMobileBottomMargin }
-							onChange={ numberMobileBottomMargin => setAttributes( { numberMobileBottomMargin } ) }
-							min={ -50 }
-							max={ 100 }
-							allowReset={ true }
-						/>
-					) }
-					{ showTitle && (
-						<AdvancedRangeControl
-							label={ __( 'Title' ) }
-							value={ titleMobileBottomMargin }
-							onChange={ titleMobileBottomMargin => setAttributes( { titleMobileBottomMargin } ) }
-							min={ -50 }
-							max={ 100 }
-							allowReset={ true }
-						/>
-					) }
-				</WhenResponsiveScreen>
+					</ResponsiveControl>
+				) }
 			</PanelBody>
 		</Fragment>
 	)
