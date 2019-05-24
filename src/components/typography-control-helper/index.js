@@ -60,6 +60,7 @@ const TypographyControlHelper = props => {
 					[ getAttrName( 'MobileLineHeightUnit' ) ]: 'em',
 				} )
 			} }
+			{ ...props }
 		/>
 	)
 }
