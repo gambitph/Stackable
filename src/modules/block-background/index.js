@@ -22,7 +22,7 @@ const customCSSProPanel = ( output, props ) => {
 					setAttributes( {
 						showBlockBackground,
 						align: showBlockBackground ? 'full' : ( blockInnerWidth || 'center' ),
-						blockInnerWidth: showBlockBackground ? align : '',
+						blockInnerWidth: showBlockBackground ? ( ! align ? 'center' : align ) : '',
 					} )
 				} }
 			>
