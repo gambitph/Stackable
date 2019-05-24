@@ -22,13 +22,13 @@ export const createStyles = props => {
 		numberBottomMargin = '',
 		numberTabletBottomMargin = '',
 		numberMobileBottomMargin = '',
+		numberLetterSpacing = '',
+		numberPadding = '',
+		numberTabletPadding = '',
+		numberMobilePadding = '',
 		titleBottomMargin = '',
 		titleTabletBottomMargin = '',
 		titleMobileBottomMargin = '',
-		descriptionSize = '',
-		descriptionTabletSize = '',
-		descriptionMobileSize = '',
-		descriptionUnit = 'px',
 		boxTopPadding = '',
 		boxRightPadding = '',
 		boxBottomPadding = '',
@@ -49,10 +49,16 @@ export const createStyles = props => {
 			textAlign: contentAlign !== '' ? contentAlign : undefined,
 		},
 		'.ugb-number-box__number': {
+			...createTypographyStyles( 'number%s', 'desktop', props.attributes ),
+			textIndent: ( design === 'basic' || design === 'plain' ) && numberLetterSpacing !== '' ? `${ numberLetterSpacing }px` : undefined,
 			marginLeft: marginLeftAlign( contentAlign ),
 			marginRight: marginRightAlign( contentAlign ),
 			backgroundColor: numberBGColor,
 			marginBottom: numberBottomMargin !== '' ? `${ numberBottomMargin }px` : undefined,
+			// padding: numberPadding !== '' ? `${ numberPadding }px` : undefined,
+			height: numberPadding !== '' ? `${ numberPadding }em` : undefined,
+			width: numberPadding !== '' ? `${ numberPadding }em` : undefined,
+			lineHeight: numberPadding !== '' ? `${ numberPadding }em` : undefined,
 			color: numberColor ? numberColor :
 				   ! numberBGColor ? undefined :
 				   isDarkColor( numberBGColor ) ? '#ffffff' : '#222222',
@@ -66,7 +72,7 @@ export const createStyles = props => {
 			       isDarkColor( backgroundColor ) ? '#ffffff' : '#222222',
 		},
 		'.ugb-number-box__description': {
-			fontSize: descriptionSize ? `${ descriptionSize }${ descriptionUnit } !important` : undefined,
+			...createTypographyStyles( 'description%s', 'desktop', props.attributes ),
 			color: descriptionColor ? descriptionColor :
 			       design === 'plain' ? undefined :
 			       ! backgroundColor ? undefined :
@@ -80,13 +86,21 @@ export const createStyles = props => {
 				textAlign: tabletContentAlign !== '' ? tabletContentAlign : undefined,
 			},
 			'.ugb-number-box__number': {
+				...createTypographyStyles( 'number%s', 'tablet', props.attributes ),
 				marginLeft: marginLeftAlign( tabletContentAlign ),
 				marginRight: marginRightAlign( tabletContentAlign ),
 				marginBottom: numberTabletBottomMargin !== '' ? `${ numberTabletBottomMargin }px` : undefined,
+				// padding: numberTabletPadding !== '' ? `${ numberTabletPadding }px` : undefined,
+				height: numberTabletPadding !== '' ? `${ numberTabletPadding }em` : undefined,
+				width: numberTabletPadding !== '' ? `${ numberTabletPadding }em` : undefined,
+				lineHeight: numberTabletPadding !== '' ? `${ numberTabletPadding }em` : undefined,
 			},
 			'.ugb-number-box__title': {
 				marginBottom: titleTabletBottomMargin !== '' ? `${ titleTabletBottomMargin }px` : undefined,
 				...createTypographyStyles( 'title%s', 'tablet', props.attributes ),
+			},
+			'.ugb-number-box__description': {
+				...createTypographyStyles( 'description%s', 'tablet', props.attributes ),
 			},
 		},
 		mobile: {
@@ -97,13 +111,21 @@ export const createStyles = props => {
 				textAlign: mobileContentAlign !== '' ? mobileContentAlign : undefined,
 			},
 			'.ugb-number-box__number': {
+				...createTypographyStyles( 'number%s', 'mobile', props.attributes ),
 				marginLeft: marginLeftAlign( mobileContentAlign ),
 				marginRight: marginRightAlign( mobileContentAlign ),
 				marginBottom: numberMobileBottomMargin !== '' ? `${ numberMobileBottomMargin }px` : undefined,
+				// padding: numberMobilePadding !== '' ? `${ numberMobilePadding }px` : undefined,
+				height: numberMobilePadding !== '' ? `${ numberMobilePadding }em` : undefined,
+				width: numberMobilePadding !== '' ? `${ numberMobilePadding }em` : undefined,
+				lineHeight: numberMobilePadding !== '' ? `${ numberMobilePadding }em` : undefined,
 			},
 			'.ugb-number-box__title': {
 				marginBottom: titleMobileBottomMargin !== '' ? `${ titleMobileBottomMargin }px` : undefined,
 				...createTypographyStyles( 'title%s', 'mobile', props.attributes ),
+			},
+			'.ugb-number-box__description': {
+				...createTypographyStyles( 'description%s', 'mobile', props.attributes ),
 			},
 		},
 	}

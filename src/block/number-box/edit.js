@@ -171,16 +171,14 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 				checked={ showNumber }
 				onChange={ showNumber => setAttributes( { showNumber } ) }
 			>
-				<SelectControl
-					label={ __( 'Counter Font' ) }
-					options={ [
-						{ label: __( 'Theme default' ), value: 'theme' },
-						{ label: __( 'Sans-Serif' ), value: 'sans-serif' },
-						{ label: __( 'Serif' ), value: 'serif' },
-						{ label: __( 'Monospace' ), value: 'monospace' },
-					] }
-					// value={ countFont }
-					// onChange={ countFont => setAttributes( { countFont } ) }
+				<TypographyControlHelper
+					attrNameTemplate="number%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+					fontSizeProps={ {
+						max: design === 'basic' || design === 'plain' ? [ 100, 7 ] : [ 500, 15 ],
+					} }
+					onChangeLineHeight={ false }
 				/>
 				{ show.numberStyle && (
 					<SelectControl
@@ -206,57 +204,21 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 						label={ __( 'Number Color' ) }
 					/>
 				) }
-				<WhenResponsiveScreen>
-					<AdvancedRangeControl
-						label={ __( 'Number Size' ) }
-						value={ 0 }
-						// onChange={ shadow => setAttributes( { shadow } ) }
-						min={ 0 }
-						max={ 100 }
-						units={ [ 'px', 'em' ] }
-					/>
-					<AdvancedRangeControl
-						label={ __( 'Number Padding' ) }
-						value={ 0 }
-						// onChange={ shadow => setAttributes( { shadow } ) }
-						min={ 0 }
-						max={ 100 }
-					/>
-				</WhenResponsiveScreen>
-				<WhenResponsiveScreen screen="tablet">
-					<AdvancedRangeControl
-						label={ __( 'Number Size' ) }
-						value={ 0 }
-						// onChange={ shadow => setAttributes( { shadow } ) }
-						min={ 0 }
-						max={ 100 }
-						units={ [ 'px', 'em' ] }
-					/>
-					<AdvancedRangeControl
-						label={ __( 'Number Padding' ) }
-						value={ 0 }
-						// onChange={ shadow => setAttributes( { shadow } ) }
-						min={ 0 }
-						max={ 100 }
-					/>
-				</WhenResponsiveScreen>
-				<WhenResponsiveScreen screen="mobile">
-					<AdvancedRangeControl
-						label={ __( 'Number Size' ) }
-						value={ 0 }
-						// onChange={ shadow => setAttributes( { shadow } ) }
-						min={ 0 }
-						max={ 100 }
-						units={ [ 'px', 'em' ] }
-					/>
-					<AdvancedRangeControl
-						label={ __( 'Number Padding' ) }
-						value={ 0 }
-						// onChange={ shadow => setAttributes( { shadow } ) }
-						min={ 0 }
-						max={ 100 }
-					/>
-				</WhenResponsiveScreen>
+				{ show.numberBGColor && (
+					<ResponsiveControl
+						attrNameTemplate="number%sPadding"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Padding' ) }
+							min={ 0 }
+							max={ 5 }
+							step={ 0.1 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				) }
 			</PanelAdvancedSettings>
 
 			<PanelAdvancedSettings
@@ -286,40 +248,16 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 				checked={ showDescription }
 				onChange={ showDescription => setAttributes( { showDescription } ) }
 			>
+				<TypographyControlHelper
+					attrNameTemplate="description%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
 				<ColorPaletteControl
 					value={ descriptionColor }
 					onChange={ descriptionColor => setAttributes( { descriptionColor } ) }
 					label={ __( 'Description Color' ) }
 				/>
-				<WhenResponsiveScreen>
-					<FontSizeControl
-						label={ __( 'Description Size' ) }
-						value={ descriptionSize }
-						onChange={ ( descriptionSize = '' ) => setAttributes( { descriptionSize } ) }
-						unit={ descriptionUnit }
-						onChangeUnit={ descriptionUnit => setAttributes( { descriptionUnit } ) }
-					/>
-				</WhenResponsiveScreen>
-				<WhenResponsiveScreen screen="tablet">
-					<AdvancedRangeControl
-						label={ __( 'Description Size' ) }
-						value={ descriptionTabletSize }
-						onChange={ descriptionTabletSize => setAttributes( { descriptionTabletSize } ) }
-						min={ 0 }
-						max={ 100 }
-						units={ [ 'px', 'em' ] }
-					/>
-				</WhenResponsiveScreen>
-				<WhenResponsiveScreen screen="mobile">
-					<AdvancedRangeControl
-						label={ __( 'Description Size' ) }
-						value={ descriptionMobileSize }
-						onChange={ descriptionMobileSize => setAttributes( { descriptionMobileSize } ) }
-						min={ 0 }
-						max={ 100 }
-						units={ [ 'px', 'em' ] }
-					/>
-				</WhenResponsiveScreen>
 			</PanelAdvancedSettings>
 
 			<PanelBody title={ __( 'Spacing' ) } initialOpen={ false }>

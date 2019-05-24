@@ -99,6 +99,11 @@ export const schema = {
 		type: 'boolean',
 		default: true,
 	},
+	...createTypographyAttributes( 'number%s' ),
+	...createResponsiveAttributes( 'number%sPadding', {
+		type: 'number',
+		default: '',
+	} ),
 	...createResponsiveAttributes( 'number%sBottomMargin', {
 		type: 'number',
 		default: '',
@@ -124,14 +129,7 @@ export const schema = {
 		type: 'boolean',
 		default: true,
 	},
-	...createResponsiveAttributes( 'description%sSize', {
-		type: 'number',
-		default: '',
-	} ),
-	...createResponsiveAttributes( 'description%sUnit', {
-		type: 'string',
-		default: 'px',
-	} ),
+	...createTypographyAttributes( 'description%s' ),
 
 	// Keep the old attributes. Gutenberg issue https://github.com/WordPress/gutenberg/issues/10406
 	numberBox: {

@@ -55,7 +55,9 @@
 	margin: 0 auto;
 	height: 2.5em;
 	width: 2.5em;
-	line-height: 2.5em !important;
+	line-height: 2.5em;
+	box-sizing: content-box;
+    white-space: nowrap !important;
 }
 
 .ugb-number-box__number,
