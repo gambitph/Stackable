@@ -8,12 +8,13 @@ import { minifyCSS, prependCSSClass } from '@stackable/util'
  * @param {Object} styleObject The object containing selectors and style rules
  * @param {string} blockMainClassName The main className of the block
  * @param {string} blockUniqueClassName The unique className of the block
+ * @param {boolean} editorMode If true, wrap the selectors with `#editor`
  *
  * @return {Object} Modified styleObject
  */
-export const addBlockClassNames = ( styleObject, blockMainClassName = '', blockUniqueClassName = '' ) => {
+export const addBlockClassNames = ( styleObject, blockMainClassName = '', blockUniqueClassName = '', editorMode = false ) => {
 	return Object.keys( styleObject ).reduce( ( newStyles, selector ) => {
-		const newSelector = prependCSSClass( selector, blockMainClassName, blockUniqueClassName )
+		const newSelector = prependCSSClass( selector, blockMainClassName, blockUniqueClassName, editorMode ? '#editor' : '' )
 		return {
 			...newStyles,
 			[ newSelector ]: styleObject[ selector ],
@@ -51,20 +52,21 @@ export const combineStyleRules = styleObject => {
  * @param {string} blockUniqueClassName Unique ID className for the block
  * @param {number} breakTablet max-width for tablets
  * @param {number} breakMobile max-width for mobile
+ * @param {boolean} editorMode If true, the styles generated will be wrapped in the `#editor` selector
  *
  * @return {string} Minified CSS string
  */
-const generateStyles = ( styleObject, blockMainClassName = '', blockUniqueClassName = '', breakTablet = 1025, breakMobile = 768 ) => {
+const generateStyles = ( styleObject, blockMainClassName = '', blockUniqueClassName = '', breakTablet = 1025, breakMobile = 768, editorMode = false ) => {
 	let desktopStyleString = ''
 	const desktopStyles = omit( styleObject, [ 'tablet', 'mobile' ] )
 	if ( Object.keys( desktopStyles ).length ) {
-		const cleanedStyles = addBlockClassNames( desktopStyles, blockMainClassName, blockUniqueClassName )
+		const cleanedStyles = addBlockClassNames( desktopStyles, blockMainClassName, blockUniqueClassName, editorMode )
 		desktopStyleString = combineStyleRules( cleanedStyles )
 	}
 
 	let tabletStyleString = ''
 	if ( typeof styleObject.tablet !== 'undefined' ) {
-		const cleanedStyles = addBlockClassNames( styleObject.tablet, blockMainClassName, blockUniqueClassName )
+		const cleanedStyles = addBlockClassNames( styleObject.tablet, blockMainClassName, blockUniqueClassName, editorMode )
 		tabletStyleString = combineStyleRules( cleanedStyles )
 	}
 	if ( tabletStyleString ) {
@@ -73,7 +75,7 @@ const generateStyles = ( styleObject, blockMainClassName = '', blockUniqueClassN
 
 	let mobileStyleString = ''
 	if ( typeof styleObject.mobile !== 'undefined' ) {
-		const cleanedStyles = addBlockClassNames( styleObject.mobile, blockMainClassName, blockUniqueClassName )
+		const cleanedStyles = addBlockClassNames( styleObject.mobile, blockMainClassName, blockUniqueClassName, editorMode )
 		mobileStyleString = combineStyleRules( cleanedStyles )
 	}
 	if ( mobileStyleString ) {
@@ -86,13 +88,14 @@ const generateStyles = ( styleObject, blockMainClassName = '', blockUniqueClassN
 const BlockStyles = props => {
 	const {
 		style = {},
+		editorMode = false,
 		blockUniqueClassName = '',
 		blockMainClassName = '',
 		breakTablet = 1025,
 		breakMobile = 768,
 	} = props
 
-	const styles = generateStyles( style, blockMainClassName, blockUniqueClassName, breakTablet, breakMobile )
+	const styles = generateStyles( style, blockMainClassName, blockUniqueClassName, breakTablet, breakMobile, editorMode )
 	return styles ? <style>{ styles }</style> : null
 }
 

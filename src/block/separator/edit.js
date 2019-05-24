@@ -381,5 +381,5 @@ export default compose(
 	withUniqueClass,
 	withGoogleFont,
 	withTabbedInspector,
-	withBlockStyles( createStyles ),
+	withBlockStyles( createStyles, { editorMode: true } ),
 )( edit )

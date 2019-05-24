@@ -135,21 +135,24 @@ export const minifyCSS = ( css, important = false ) => {
  * @param {string} cssSelector The CSS selector.
  * @param {string} mainClassName The main class of the block to target.
  * @param {string} uniqueClassName The unique parent classname to wrap the selector.
+ * @param {string} wrapSelector All selectors will be wrapped in this if provided.
  *
  * @return {string} The modified CSS selector.
  */
-export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassName = '' ) => {
+export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassName = '', wrapSelector = '' ) => {
 	return cssSelector.trim().replace( /[\n\s\t]+/g, ' ' )
 		.split( ',' )
 		.map( s => {
+			let newSelector = ''
 			if ( ! uniqueClassName || ! mainClassName ) {
-				return s
+				newSelector = s
+			} else if ( uniqueClassName && ! mainClassName ) {
+				newSelector = `.${ uniqueClassName } ${ s.trim() }`
+			} else {
+				newSelector = `.${ uniqueClassName } ${ s.trim() }`
+					.replace( new RegExp( `(.${ uniqueClassName }) (.${ mainClassName }(#|\\[|\\.|\\s|$))`, 'g' ), '$1$2' )
 			}
-			if ( uniqueClassName && ! mainClassName ) {
-				return `.${ uniqueClassName } ${ s.trim() }`
-			}
-			return `.${ uniqueClassName } ${ s.trim() }`
-				.replace( new RegExp( `(.${ uniqueClassName }) (.${ mainClassName }(#|\\[|\\.|\\s|$))`, 'g' ), '$1$2' )
+			return wrapSelector ? `${ wrapSelector } ${ newSelector }` : newSelector
 		} )
 		.join( ', ' )
 }

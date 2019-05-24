@@ -5,7 +5,7 @@ import { Component } from '@wordpress/element'
 import { createHigherOrderComponent } from '@wordpress/compose'
 import PropTypes from 'prop-types'
 
-const withBlockStyles = styleFunction => createHigherOrderComponent(
+const withBlockStyles = ( styleFunction, options = {} ) => createHigherOrderComponent(
 	WrappedComponent => class extends Component {
 		static propTypes = {
 			attributes: PropTypes.shape( {
@@ -36,6 +36,7 @@ const withBlockStyles = styleFunction => createHigherOrderComponent(
 					blockUniqueClassName={ this.props.attributes.uniqueClass }
 					blockMainClassName={ this.props.mainClassName }
 					style={ styleObject }
+					editorMode={ options.editorMode || false }
 				/>
 			)
 
