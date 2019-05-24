@@ -2,6 +2,7 @@ import { addAction, doAction, removeAction } from '@wordpress/hooks'
 import {
 	getSelectedScreen, isScreenPickerOpen, setIsScreenPickerOpen, setSelectedScreen,
 } from '@stackable/util'
+import { __ } from '@wordpress/i18n'
 import { Component } from '@wordpress/element'
 import { IconButton } from '@wordpress/components'
 import SVGDesktop from './images/desktop.svg'
@@ -13,6 +14,12 @@ const responsiveIcons = {
 	desktop: <SVGDesktop />,
 	tablet: <SVGTablet />,
 	mobile: <SVGMobile />,
+}
+
+const labels = {
+	desktop: __( 'Desktop' ),
+	tablet: __( 'Tablet' ),
+	mobile: __( 'Mobile' ),
 }
 
 class ResponsiveToggle extends Component {
@@ -92,6 +99,7 @@ class ResponsiveToggle extends Component {
 								className={ this.state.screen === screen ? 'is-active' : '' }
 								onClick={ () => this.onChangeScreen( screen ) }
 								icon={ responsiveIcons[ screen ] }
+								label={ labels[ screen ] }
 							/>
 						)
 					} )
