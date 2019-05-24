@@ -1,11 +1,9 @@
 import {
 	BaseControl,
-	Button,
-	ButtonGroup,
 	RangeControl,
 	ToggleControl,
 } from '@wordpress/components'
-import { ColorPaletteControl, PanelColorSettings } from '@stackable/components'
+import { ColorPaletteControl, PanelColorSettings, TextToolbar } from '@stackable/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
@@ -46,28 +44,22 @@ function PanelBackgroundSettings( props ) {
 					<BaseControl
 						label={ __( 'Background Color Type' ) }
 					>
-						<ButtonGroup
-							aria-label={ __( 'Image Size' ) }
-						>
-							<Button
-								isPrimary={ backgroundColorType === '' }
-								isDefault={ backgroundColorType !== '' }
-								onClick={ () => {
-									onChangeBackgroundColorType( '' )
-								} }
-							>
-								{ __( 'Single' ) }
-							</Button>
-							<Button
-								isPrimary={ backgroundColorType === 'gradient' }
-								isDefault={ backgroundColorType !== 'gradient' }
-								onClick={ () => {
-									onChangeBackgroundColorType( 'gradient' )
-								} }
-							>
-								{ __( 'Gradient' ) }
-							</Button>
-						</ButtonGroup>
+						<TextToolbar
+							controls={ [
+								{
+									value: '',
+									title: __( 'Single' ),
+									isActive: backgroundColorType === '',
+									onClick: () => onChangeBackgroundColorType( '' ),
+								},
+								{
+									value: 'gradient',
+									title: __( 'Gradient' ),
+									isActive: backgroundColorType === 'gradient',
+									onClick: () => onChangeBackgroundColorType( 'gradient' ),
+								},
+							] }
+						/>
 					</BaseControl>
 				) }
 				{ onChangeBackgroundColor && (
