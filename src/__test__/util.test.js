@@ -65,6 +65,11 @@ describe( 'Prepend CSS Class', () => {
 	test( 'should not confuse similar selectors', () => {
 		expect( prependCSSClass( '.aa-bb', 'aa', 'unique' ) ).toBe( '.unique .aa-bb' )
 		expect( prependCSSClass( '.aa[bb]', 'aa', 'unique' ) ).toBe( '.unique.aa[bb]' )
+		expect( prependCSSClass( '.aa:before', 'aa', 'unique' ) ).toBe( '.unique.aa:before' )
+		expect( prependCSSClass( '.aa#id', 'aa', 'unique' ) ).toBe( '.unique.aa#id' )
+		expect( prependCSSClass( '.aa:nth-child(1)', 'aa', 'unique' ) ).toBe( '.unique.aa:nth-child(1)' )
+		expect( prependCSSClass( '.aa:not(:first-child)', 'aa', 'unique' ) ).toBe( '.unique.aa:not(:first-child)' )
+		expect( prependCSSClass( '.aa.bb', 'aa', 'unique' ) ).toBe( '.unique.aa.bb' )
 		expect( prependCSSClass( '.aaa', 'aa', 'unique' ) ).toBe( '.unique .aaa' )
 		expect( prependCSSClass( '.aa1', 'aa', 'unique' ) ).toBe( '.unique .aa1' )
 	} )

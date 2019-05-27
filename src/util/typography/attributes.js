@@ -1,6 +1,9 @@
+/**
+ * Creates all the attributes needed for the Typography Control component
+ */
 import { createAllCombinationAttributes } from '@stackable/util'
 
-export const createTypographyAttributes = attrNameTemplate => {
+const createTypographyAttributes = attrNameTemplate => {
 	return {
 		...createAllCombinationAttributes(
 			attrNameTemplate,
@@ -44,3 +47,5 @@ export const createTypographyAttributes = attrNameTemplate => {
 		),
 	}
 }
+
+export default createTypographyAttributes

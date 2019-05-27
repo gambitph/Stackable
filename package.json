@@ -22,6 +22,7 @@
     "@wordpress/dom-ready": "^2.0.2",
     "bigpicture": "^2.1.0",
     "classnames": "^2.2.6",
+    "color-rgba": "^2.1.1",
     "counterup2": "^1.0.4",
     "deepmerge": "^3.2.0",
     "is-dark-color": "^1.2.0",

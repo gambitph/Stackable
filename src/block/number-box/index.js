@@ -2,7 +2,7 @@
  * BLOCK: Number Box Block.
  */
 
-import { createResponsiveAttributes, createTypographyAttributes, descriptionPlaceholder } from '@stackable/util'
+import { createBackgroundAttributes, createResponsiveAttributes, createTypographyAttributes, descriptionPlaceholder } from '@stackable/util'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { default as deprecated } from './deprecated'
@@ -93,6 +93,9 @@ export const schema = {
 		type: 'string',
 		default: '',
 	} ),
+
+	// Column.
+	...createBackgroundAttributes( 'column%s' ),
 
 	// Number attributes.
 	showNumber: {

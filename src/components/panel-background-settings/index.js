@@ -9,6 +9,7 @@ import { applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import ImageControl from '../image-control'
 
+// TODO: Don't use this anymore.
 function PanelBackgroundSettings( props ) {
 	const {
 		backgroundColorType = '',

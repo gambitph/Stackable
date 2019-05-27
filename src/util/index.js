@@ -1,6 +1,7 @@
 export * from './font'
 export * from './attributes'
 export * from './typography'
+export * from './background'
 import { __ } from '@wordpress/i18n'
 
 /**
@@ -150,7 +151,7 @@ export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassNam
 				newSelector = `.${ uniqueClassName } ${ s.trim() }`
 			} else {
 				newSelector = `.${ uniqueClassName } ${ s.trim() }`
-					.replace( new RegExp( `(.${ uniqueClassName }) (.${ mainClassName }(#|\\[|\\.|\\s|$))`, 'g' ), '$1$2' )
+					.replace( new RegExp( `(.${ uniqueClassName }) (.${ mainClassName }(#|:|\\[|\\.|\\s|$))`, 'g' ), '$1$2' )
 			}
 			return wrapSelector ? `${ wrapSelector } ${ newSelector }` : newSelector
 		} )

@@ -1,5 +1,10 @@
+import * as deepmerge from 'deepmerge'
+import {
+	createBackgroundStyleSet,
+	createTypographyStyles,
+} from '@stackable/util'
 import { marginLeftAlign, marginRightAlign } from '@stackable/util/styles'
-import { createTypographyStyles } from '@stackable/util'
+import { applyFilters } from '@wordpress/hooks'
 import isDarkColor from 'is-dark-color'
 
 export const createStyles = props => {
@@ -35,7 +40,17 @@ export const createStyles = props => {
 		boxLeftPadding = '',
 	} = props.attributes
 
-	return {
+	const show = applyFilters( 'stackable.number-box.edit.show', {
+		backgroundColor: design !== 'plain',
+		borderRadius: design !== 'plain',
+		shadow: design !== 'plain',
+		numberColor: true,
+		numberBGColor: true,
+		numberStyle: true,
+		columnBackground: design !== 'plain',
+	}, design, props )
+
+	const styles = {
 		'.ugb-number-box .ugb-inner-block': {
 			gridGap: columnGap !== '' ? `${ columnGap }px` : undefined,
 		},
@@ -129,6 +144,12 @@ export const createStyles = props => {
 			},
 		},
 	}
+
+	const columnBackgroundStyles = {
+		...( show.columnBackground ? createBackgroundStyleSet( 'column%s', 'ugb-number-box__item', props.attributes ) : {} ),
+	}
+
+	return deepmerge.all( [ styles, columnBackgroundStyles ] )
 }
 
 export default createStyles

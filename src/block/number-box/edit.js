@@ -2,22 +2,20 @@ import { addFilter, applyFilters } from '@wordpress/hooks'
 import {
 	AdvancedRangeControl,
 	AlignButtonsControl,
+	BackgroundControlsHelper,
 	BlockContainer,
 	ColorPaletteControl,
 	DesignPanelBody,
-	FontSizeControl,
 	HeadingButtonsControl,
 	PanelAdvancedSettings,
-	PanelBackgroundSettings,
 	PanelDesignLibrary,
 	PanelDesignUserLibrary,
 	ProControlButton,
 	ResponsiveControl,
 	TypographyControlHelper,
-	WhenResponsiveScreen,
 } from '@stackable/components'
 import { AlignmentToolbar, BlockControls, RichText } from '@wordpress/editor'
-import { descriptionPlaceholder, range } from '@stackable/util'
+import { descriptionPlaceholder, hasBackgroundOverlay, range } from '@stackable/util'
 import { PanelBody, RangeControl, SelectControl } from '@wordpress/components'
 import { withBlockStyles, withGoogleFont, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
 import { __ } from '@wordpress/i18n'
@@ -77,21 +75,10 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 		design = 'basic',
 		borderRadius = 12,
 		shadow = 3,
-		backgroundColor,
 		showNumber = true,
 		showTitle = true,
 		showDescription = true,
-		numberBottomMargin = '',
-		numberTabletBottomMargin = '',
-		numberMobileBottomMargin = '',
 		titleTag = '',
-		titleBottomMargin = '',
-		titleTabletBottomMargin = '',
-		titleMobileBottomMargin = '',
-		descriptionSize = '',
-		descriptionTabletSize = '',
-		descriptionMobileSize = '',
-		descriptionUnit = 'px',
 	} = props.attributes
 
 	const show = applyFilters( 'stackable.number-box.edit.show', {
@@ -101,6 +88,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 		numberColor: true,
 		numberBGColor: true,
 		numberStyle: true,
+		columnBackground: design !== 'plain',
 	}, design, props )
 
 	return (
@@ -143,29 +131,18 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 				</ResponsiveControl>
 			</PanelBody>
 
-			<PanelBackgroundSettings
-				title={ __( 'Column Background' ) }
-				initialOpen={ false }
-				// backgroundColorType={ backgroundColorType }
-				backgroundColor={ backgroundColor }
-				// backgroundColor2={ backgroundColor2 }
-				// backgroundColorDirection={ backgroundColorDirection }
-				// backgroundType={ backgroundType }
-				// backgroundImageID={ backgroundImageID }
-				// backgroundImageURL={ backgroundImageURL }
-				// backgroundOpacity={ backgroundOpacity }
-				// fixedBackground={ fixedBackground }
-				onChangeBackgroundColorType={ () => {} }
-				onChangeBackgroundColor={ show.backgroundColor && ( backgroundColor => setAttributes( { backgroundColor } ) ) }
-				onChangeBackgroundColor2={ () => {} }
-				onChangeBackgroundColorDirection={ () => {} }
-				onChangeBackgroundType={ () => {} }
-				onChangeBackgroundImage={ () => {} }
-				onRemoveBackgroundImage={ () => {} }
-				onChangeBackgroundOpacity={ () => {} }
-				// onChangeFixedBackground={ () => {} }
-			/>
-
+			{ show.columnBackground &&
+				<PanelBody
+					title={ __( 'Column Background' ) }
+					initialOpen={ false }
+				>
+					<BackgroundControlsHelper
+						attrNameTemplate="column%s"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					/>
+				</PanelBody>
+			}
 			<PanelAdvancedSettings
 				title={ __( 'Number' ) }
 				checked={ showNumber }
@@ -404,6 +381,7 @@ addFilter( 'stackable.number-box.edit.inspector.before', 'stackable/number-box/a
 	)
 }, 11 )
 
+// TODO: collapse
 addFilter( 'stackable.number-box.edit.advanced.responsive.before', 'stackable/number-box/collapse', ( output, props ) => {
 	return (
 		<Fragment>
@@ -466,6 +444,7 @@ const edit = props => {
 						`ugb-number-box__item${ i }`,
 					], applyFilters( 'stackable.number-box.boxclasses', {
 						[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
+						'ugb--has-background-overlay': hasBackgroundOverlay( 'column%s', props.attributes ),
 					}, design, props ) )
 
 					return (

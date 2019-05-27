@@ -3,6 +3,9 @@ import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { Component } from '@wordpress/element'
 
+// Keep the instance ID.
+let buttonInstance = 1
+
 class ButtonIconPopoverControl extends Component {
 	constructor() {
 		super( ...arguments )
@@ -11,6 +14,7 @@ class ButtonIconPopoverControl extends Component {
 		}
 		this.handleOpen = this.handleOpen.bind( this )
 		this.handleClose = this.handleClose.bind( this )
+		this.instanceId = buttonInstance++
 	}
 
 	handleOpen() {
@@ -27,7 +31,7 @@ class ButtonIconPopoverControl extends Component {
 		return (
 			<BaseControl
 				help={ this.props.help }
-				label={ this.props.label }
+				label={ <label htmlFor={ `ugb-button-icon-control__edit-${ this.instanceId }` }>{ this.props.label }</label> }
 				className={ classnames( 'ugb-button-icon-control', this.props.className ) }
 			>
 				<div className="ugb-button-icon-control__wrapper">
@@ -45,6 +49,7 @@ class ButtonIconPopoverControl extends Component {
 						label={ __( 'Edit' ) }
 						isDefault
 						icon="edit"
+						id={ `ugb-button-icon-control__edit-${ this.instanceId }` }
 					>
 						{ this.state.open && (
 							<Popover
@@ -53,7 +58,9 @@ class ButtonIconPopoverControl extends Component {
 								onClose={ this.handleClose }
 							>
 								<PanelBody>
-									{ this.props.label && <h2 className="components-panel__body-title">{ this.props.label }</h2> }
+									{ ( this.props.label || this.props.popoverLabel ) &&
+										<h2 className="components-panel__body-title">{ this.props.popoverLabel || this.props.label }</h2>
+									}
 									{ this.props.children }
 								</PanelBody>
 							</Popover>
@@ -68,6 +75,7 @@ class ButtonIconPopoverControl extends Component {
 ButtonIconPopoverControl.defaultProps = {
 	help: '',
 	label: '',
+	popoverLabel: '',
 	className: '',
 	allowReset: false,
 	onReset: () => {},

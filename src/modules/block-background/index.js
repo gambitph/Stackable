@@ -1,8 +1,19 @@
+import * as deepmerge from 'deepmerge'
 import { addFilter, doAction } from '@wordpress/hooks'
+import {
+	BackgroundControlsHelper,
+	ButtonIconPopoverControl,
+	PanelAdvancedSettings,
+} from '@stackable/components'
 import { BlockAlignmentToolbar, BlockControls } from '@wordpress/editor'
+import {
+	createBackgroundAttributes,
+	createBackgroundOverlayStyles,
+	createBackgroundStyles,
+	hasBackgroundOverlay,
+} from '@stackable/util'
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
-import { PanelAdvancedSettings } from '@stackable/components'
 import { Toolbar } from '@wordpress/components'
 
 const customCSSProPanel = ( output, props ) => {
@@ -26,8 +37,19 @@ const customCSSProPanel = ( output, props ) => {
 					} )
 				} }
 			>
-
-				dslkldnsaldns
+				<BackgroundControlsHelper
+					attrNameTemplate="blockBackground%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+				{/* TODO */}
+				<ButtonIconPopoverControl
+					label={ __( 'Top Shape' ) }
+				/>
+				{/* TODO */}
+				<ButtonIconPopoverControl
+					label={ __( 'Bottom Shape' ) }
+				/>
 			</PanelAdvancedSettings>
 		</Fragment>
 	)
@@ -125,6 +147,7 @@ const addAttributes = attributes => {
 		align: {
 			type: 'string',
 		},
+		...createBackgroundAttributes( 'blockBackground%s' ),
 	}
 }
 
@@ -142,7 +165,41 @@ const addBlockAlignClasses = ( classes, props ) => {
 		...classes,
 		[ `ugb-main-block--inner-${ blockInnerWidth }` ]: blockInnerWidth,
 		'ugb--has-block-background': showBlockBackground,
+		'ugb--has-background-overlay': hasBackgroundOverlay( 'blockBackground%s', props.attributes ),
 	}
+}
+
+const addStyles = ( styleObject, props ) => {
+	if ( ! props.attributes.showBlockBackground ) {
+		return styleObject
+	}
+
+	const styles = {
+		[ `.${ props.mainClassName }` ]: {
+			...createBackgroundStyles( 'blockBackground%s', 'desktop', props.attributes ),
+		},
+		[ `.${ props.mainClassName }:before` ]: {
+			...createBackgroundOverlayStyles( 'blockBackground%s', 'desktop', props.attributes ),
+		},
+		tablet: {
+			[ `.${ props.mainClassName }` ]: {
+				...createBackgroundStyles( 'blockBackground%s', 'tablet', props.attributes ),
+			},
+			[ `.${ props.mainClassName }:before` ]: {
+				...createBackgroundOverlayStyles( 'blockBackground%s', 'tablet', props.attributes ),
+			},
+		},
+		mobile: {
+			[ `.${ props.mainClassName }` ]: {
+				...createBackgroundStyles( 'blockBackground%s', 'mobile', props.attributes ),
+			},
+			[ `.${ props.mainClassName }:before` ]: {
+				...createBackgroundOverlayStyles( 'blockBackground%s', 'mobile', props.attributes ),
+			},
+		},
+	}
+
+	return deepmerge( styleObject, styles )
 }
 
 const blockBackground = blockName => {
@@ -151,6 +208,7 @@ const blockBackground = blockName => {
 	addFilter( `stackable.${ blockName }.edit.inspector.before`, `stackable/${ blockName }/block-background`, addAlignmentToolbar )
 	addFilter( `stackable.${ blockName }.settings`, `stackable/${ blockName }/block-background`, addAlignSupport )
 	addFilter( `stackable.${ blockName }.main-block.classes`, `stackable/${ blockName }/block-background`, addBlockAlignClasses )
+	addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/block-background`, addStyles )
 	doAction( `stackable.module.block-background`, blockName )
 }
 

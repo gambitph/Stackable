@@ -5,7 +5,8 @@ import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
 import createStyles from './style'
 import { Fragment } from '@wordpress/element'
-import { range } from '@stackable/util'
+import { hasBackgroundOverlay } from '@stackable/util'
+import { range } from 'lodash'
 import { RichText } from '@wordpress/editor'
 
 const save = props => {
@@ -45,6 +46,7 @@ const save = props => {
 						`ugb-number-box__item${ i }`,
 					], applyFilters( 'stackable.number-box.boxclasses', {
 						[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
+						'ugb--has-background-overlay': hasBackgroundOverlay( 'column%s', props.attributes ),
 					}, design, props ) )
 
 					return (

@@ -1,5 +1,7 @@
 # Typography Control Helper
 
+Use the helper functions in `@stackable/util/typography` in conjuction with this.
+
 Adds the `TypographyControl` in a quicker way:
 
 ```js
