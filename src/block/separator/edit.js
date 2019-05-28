@@ -1,26 +1,23 @@
 import './pro'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import {
-	AdvancedRangeControl, BlockContainer, ColorPaletteControl, DesignPanelBody, PanelDesignLibrary, PanelDesignUserLibrary, WhenResponsiveScreen,
+	AdvancedRangeControl,
+	BlockContainer,
+	ColorPaletteControl,
+	DesignPanelBody,
+	DesignSeparatorControl,
+	PanelDesignLibrary,
+	PanelDesignUserLibrary,
+	Separator,
+	WhenResponsiveScreen,
 } from '@stackable/components'
 import { PanelBody, RangeControl, ToggleControl } from '@wordpress/components'
-import { separators, shadows } from './separators'
 import { withBlockStyles, withGoogleFont, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
 import createStyles from './style'
 import { Fragment } from '@wordpress/element'
-import ImageDesignCurve1 from './images/curve-1.png'
-import ImageDesignCurve2 from './images/curve-2.png'
-import ImageDesignCurve3 from './images/curve-3.png'
-import ImageDesignRounded1 from './images/rounded-1.png'
-import ImageDesignRounded2 from './images/rounded-2.png'
-import ImageDesignSlant1 from './images/slant-1.png'
-import ImageDesignSlant2 from './images/slant-2.png'
-import ImageDesignWave1 from './images/wave-1.png'
-import ImageDesignWave2 from './images/wave-2.png'
-import ImageDesignWave3 from './images/wave-3.png'
 
 addFilter( 'stackable.separator.edit.inspector.layout.before', 'stackable/separator', ( output, props ) => {
 	const { setAttributes } = props
@@ -31,43 +28,13 @@ addFilter( 'stackable.separator.edit.inspector.layout.before', 'stackable/separa
 	return (
 		<Fragment>
 			{ output }
-			<DesignPanelBody
-				selected={ design }
-				options={ [
-					{
-						image: ImageDesignWave1, label: __( 'Wave 1' ), value: 'wave-1',
-					},
-					{
-						image: ImageDesignWave2, label: __( 'Wave 2' ), value: 'wave-2',
-					},
-					{
-						image: ImageDesignWave3, label: __( 'Wave 3' ), value: 'wave-3',
-					},
-					{
-						image: ImageDesignSlant1, label: __( 'Slant 1' ), value: 'slant-1',
-					},
-					{
-						image: ImageDesignSlant2, label: __( 'Slant 2' ), value: 'slant-2',
-					},
-					{
-						image: ImageDesignCurve1, label: __( 'Curve 1' ), value: 'curve-1',
-					},
-					{
-						image: ImageDesignCurve2, label: __( 'Curve 2' ), value: 'curve-2',
-					},
-					{
-						image: ImageDesignCurve3, label: __( 'Curve 3' ), value: 'curve-3',
-					},
-					{
-						image: ImageDesignRounded1, label: __( 'Rounded 1' ), value: 'rounded-1',
-					},
-					{
-						image: ImageDesignRounded2, label: __( 'Rounded 2' ), value: 'rounded-2',
-					},
-					...applyFilters( 'stackable.separator.edit.designs', [] ),
-				] }
-				onChange={ design => setAttributes( { design } ) }
-			/>
+			<DesignPanelBody>
+				<DesignSeparatorControl
+					onChange={ design => setAttributes( { design } ) }
+					selected={ design }
+					excludeDesigns={ [ 'straight-1' ] }
+				/>
+			</DesignPanelBody>
 			<PanelDesignLibrary block={ props.name } />
 			<PanelDesignUserLibrary
 				initialOpen={ false }
@@ -352,24 +319,18 @@ const edit = props => {
 		'ugb-separator--flip-horizontal': flipHorizontally,
 	}, design, props ) )
 
-	const Separator = separators[ design ]
-	const Shadow = shadows[ design ]
-
 	return (
 		<BlockContainer.Edit mainClass={ false } className={ mainClasses } aria-hidden="true" blockProps={ props } render={ () => (
 			<Fragment>
 				<div className="ugb-separator__top-pad" />
 				<div className="ugb-separator__svg-wrapper">
-					<div className="ugb-separator__svg-inner">
-						{ layer1Shadow && (
-							<Shadow className="ugb-separator__shadow" preserveAspectRatio="none" />
-						) }
-						<Separator
-							className="ugb-separator__layer-1"
-							preserveAspectRatio="none"
-						/>
+					<Separator
+						design={ design }
+						shadow={ layer1Shadow }
+						className="ugb-separator__svg-inner"
+					>
 						{ applyFilters( 'stackable.separator.edit.output.layers', null, design, props ) }
-					</div>
+					</Separator>
 				</div>
 				<div className="ugb-separator__bottom-pad" />
 			</Fragment>

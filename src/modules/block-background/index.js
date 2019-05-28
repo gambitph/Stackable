@@ -2,7 +2,6 @@ import * as deepmerge from 'deepmerge'
 import { addFilter, doAction } from '@wordpress/hooks'
 import {
 	BackgroundControlsHelper,
-	ButtonIconPopoverControl,
 	PanelAdvancedSettings,
 } from '@stackable/components'
 import { BlockAlignmentToolbar, BlockControls } from '@wordpress/editor'
@@ -41,14 +40,6 @@ const customCSSProPanel = ( output, props ) => {
 					attrNameTemplate="blockBackground%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-				/>
-				{/* TODO */}
-				<ButtonIconPopoverControl
-					label={ __( 'Top Shape' ) }
-				/>
-				{/* TODO */}
-				<ButtonIconPopoverControl
-					label={ __( 'Bottom Shape' ) }
 				/>
 			</PanelAdvancedSettings>
 		</Fragment>
@@ -203,7 +194,7 @@ const addStyles = ( styleObject, props ) => {
 }
 
 const blockBackground = blockName => {
-	addFilter( `stackable.${ blockName }.edit.inspector.style.after`, `stackable/${ blockName }/block-background`, customCSSProPanel, 9 )
+	addFilter( `stackable.${ blockName }.edit.inspector.style.after`, `stackable/${ blockName }/block-background`, customCSSProPanel, 19 )
 	addFilter( `stackable.${ blockName }.attributes`, `stackable/${ blockName }/block-background`, addAttributes )
 	addFilter( `stackable.${ blockName }.edit.inspector.before`, `stackable/${ blockName }/block-background`, addAlignmentToolbar )
 	addFilter( `stackable.${ blockName }.settings`, `stackable/${ blockName }/block-background`, addAlignSupport )

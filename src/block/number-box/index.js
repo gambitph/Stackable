@@ -199,6 +199,7 @@ export const settings = {
 		'advanced-column-spacing': true,
 		'advanced-responsive': true,
 		'block-background': true,
+		'block-separators': true,
 		'custom-css': {
 			default: applyFilters( 'stackable.number-box.custom-css.default', '' ),
 		},

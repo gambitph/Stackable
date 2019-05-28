@@ -1,7 +1,6 @@
-import { separators, shadows } from './separators'
+import { BlockContainer, Separator } from '@stackable/components'
 import { withBlockStyles, withUniqueClass } from '@stackable/higher-order'
 import { applyFilters } from '@wordpress/hooks'
-import { BlockContainer } from '@stackable/components'
 import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
 import createStyles from './style'
@@ -25,24 +24,18 @@ const save = props => {
 		'ugb-separator--flip-horizontal': flipHorizontally,
 	}, design, props ) )
 
-	const Separator = separators[ design ]
-	const Shadow = shadows[ design ]
-
 	return (
 		<BlockContainer.Save mainClass={ false } className={ mainClasses } aria-hidden="true" blockProps={ props } render={ () => (
 			<Fragment>
 				<div className="ugb-separator__top-pad" />
 				<div className="ugb-separator__svg-wrapper">
-					<div className="ugb-separator__svg-inner">
-						{ layer1Shadow && (
-							<Shadow className="ugb-separator__shadow" preserveAspectRatio="none" />
-						) }
-						<Separator
-							className="ugb-separator__layer-1"
-							preserveAspectRatio="none"
-						/>
-						{ applyFilters( 'stackable.separator.save.output.layers', null, design, props ) }
-					</div>
+					<Separator
+						design={ design }
+						shadow={ layer1Shadow }
+						className="ugb-separator__svg-inner"
+					>
+						{ applyFilters( 'stackable.separator.edit.output.layers', null, design, props ) }
+					</Separator>
 				</div>
 				<div className="ugb-separator__bottom-pad" />
 			</Fragment>

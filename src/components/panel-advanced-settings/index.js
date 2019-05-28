@@ -29,6 +29,7 @@ class PanelAdvancedSettings extends Component {
 
 	render() {
 		const mainClasses = classnames( [
+			this.props.className,
 			'ugb-toggle-panel-body',
 		], {
 			'ugb-toggle-panel-body--advanced': this.state.showAdvanced,
@@ -84,6 +85,7 @@ class PanelAdvancedSettings extends Component {
 }
 
 PanelAdvancedSettings.defaultProps = {
+	className: '',
 	title: __( 'Settings' ),
 	checked: false,
 	initialOpen: false,

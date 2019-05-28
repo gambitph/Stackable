@@ -1,4 +1,4 @@
-import { separators, shadows } from './separators'
+import { separators, shadows } from './deprecated/separators_1_15'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 
