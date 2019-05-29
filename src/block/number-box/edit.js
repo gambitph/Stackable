@@ -1,3 +1,4 @@
+import { __, sprintf } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import {
 	AdvancedRangeControl,
@@ -18,7 +19,6 @@ import { AlignmentToolbar, BlockControls, RichText } from '@wordpress/editor'
 import { descriptionPlaceholder, hasBackgroundOverlay, range } from '@stackable/util'
 import { PanelBody, RangeControl, SelectControl } from '@wordpress/components'
 import { withBlockStyles, withGoogleFont, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
-import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
 import createStyles from './style'
@@ -196,6 +196,13 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 						/>
 					</ResponsiveControl>
 				) }
+				<ResponsiveControl
+					attrNameTemplate="Number%sAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AlignButtonsControl label={ __( 'Align' ) } />
+				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
 			<PanelAdvancedSettings
@@ -218,6 +225,13 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					onChange={ titleColor => setAttributes( { titleColor } ) }
 					label={ __( 'Title Color' ) }
 				/>
+				<ResponsiveControl
+					attrNameTemplate="Title%sAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AlignButtonsControl label={ __( 'Align' ) } />
+				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
 			<PanelAdvancedSettings
@@ -235,6 +249,13 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					onChange={ descriptionColor => setAttributes( { descriptionColor } ) }
 					label={ __( 'Description Color' ) }
 				/>
+				<ResponsiveControl
+					attrNameTemplate="description%sAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AlignButtonsControl label={ __( 'Align' ) } />
+				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
 			<PanelBody title={ __( 'Spacing' ) } initialOpen={ false }>
@@ -272,6 +293,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 } )
 
 addFilter( `stackable.number-box.edit.inspector.advanced.before`, `stackable/number-box/column-colors`, ( output, props ) => {
+	const { setAttributes } = props
 	const {
 		columns = 2,
 		design = 'basic',
@@ -289,76 +311,54 @@ addFilter( `stackable.number-box.edit.inspector.advanced.before`, `stackable/num
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody
-				initialOpen={ false }
-				title={ __( 'Column #1' ) }
-			>
-				<p className="components-base-control__help">{ __( 'Override settings for this column.' ) }</p>
-				{ show.numberBGColor && (
-					<ColorPaletteControl
-						label={ __( 'Number Background' ) }
-					/>
-				) }
-				{ show.numberColor && (
-					<ColorPaletteControl
-						label={ __( 'Number Text' ) }
-					/>
-				) }
-				<ColorPaletteControl
-					label={ __( 'Title' ) }
-				/>
-				<ColorPaletteControl
-					label={ __( 'Description' ) }
-				/>
-			</PanelBody>
-			{ columns >= 2 && (
-				<PanelBody
-					initialOpen={ false }
-					title={ __( 'Column #2' ) }
-				>
-					<p className="components-base-control__help">{ __( 'Override settings for this column.' ) }</p>
-					{ show.numberBGColor && (
+			{ [ 1, 2, 3 ].map( ( num, i ) => {
+				if ( columns < num ) {
+					return null
+				}
+
+				const attrName = attrNameTemplate => sprintf( attrNameTemplate, num )
+
+				return (
+					<PanelBody
+						key={ i }
+						initialOpen={ false }
+						title={ sprintf( __( 'Column #%s' ), num ) }
+					>
+						<p className="components-base-control__help">{ __( 'Override settings for this column.' ) }</p>
+						{ show.backgroundColor && (
+							<ColorPaletteControl
+								label={ __( 'Column Background' ) }
+								value={ props.attributes[ attrName( 'Column%sBackgroundColor' ) ] }
+								onChange={ value => setAttributes( { [ attrName( 'Column%sBackgroundColor' ) ]: value } ) }
+							/>
+						) }
+						{ show.numberBGColor && (
+							<ColorPaletteControl
+								label={ __( 'Number Background' ) }
+								value={ props.attributes[ attrName( 'Column%sNumberBackgroundColor' ) ] }
+								onChange={ value => setAttributes( { [ attrName( 'Column%sNumberBackgroundColor' ) ]: value } ) }
+							/>
+						) }
+						{ show.numberColor && (
+							<ColorPaletteControl
+								label={ __( 'Number Text' ) }
+								value={ props.attributes[ attrName( 'Column%sNumberColor' ) ] }
+								onChange={ value => setAttributes( { [ attrName( 'Column%sNumberColor' ) ]: value } ) }
+							/>
+						) }
 						<ColorPaletteControl
-							label={ __( 'Number Background' ) }
+							label={ __( 'Title' ) }
+							value={ props.attributes[ attrName( 'Column%sTitleColor' ) ] }
+							onChange={ value => setAttributes( { [ attrName( 'Column%sTitleColor' ) ]: value } ) }
 						/>
-					) }
-					{ show.numberColor && (
 						<ColorPaletteControl
-							label={ __( 'Number Text' ) }
+							label={ __( 'Description' ) }
+							value={ props.attributes[ attrName( 'Column%sDescriptionColor' ) ] }
+							onChange={ value => setAttributes( { [ attrName( 'Column%sDescriptionColor' ) ]: value } ) }
 						/>
-					) }
-					<ColorPaletteControl
-						label={ __( 'Title' ) }
-					/>
-					<ColorPaletteControl
-						label={ __( 'Description' ) }
-					/>
-				</PanelBody>
-			) }
-			{ columns >= 3 && (
-				<PanelBody
-					initialOpen={ false }
-					title={ __( 'Column #3' ) }
-				>
-					<p className="components-base-control__help">{ __( 'Override settings for this column.' ) }</p>
-					{ show.numberBGColor && (
-						<ColorPaletteControl
-							label={ __( 'Number Background' ) }
-						/>
-					) }
-					{ show.numberColor && (
-						<ColorPaletteControl
-							label={ __( 'Number Text' ) }
-						/>
-					) }
-					<ColorPaletteControl
-						label={ __( 'Title' ) }
-					/>
-					<ColorPaletteControl
-						label={ __( 'Description' ) }
-					/>
-				</PanelBody>
-			) }
+					</PanelBody>
+				)
+			} ) }
 		</Fragment>
 	)
 } )

@@ -2,6 +2,7 @@ export * from './font'
 export * from './attributes'
 export * from './typography'
 export * from './background'
+export * from './styles'
 import { __ } from '@wordpress/i18n'
 
 /**

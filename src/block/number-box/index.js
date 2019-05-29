@@ -2,7 +2,13 @@
  * BLOCK: Number Box Block.
  */
 
-import { createBackgroundAttributes, createResponsiveAttributes, createTypographyAttributes, descriptionPlaceholder } from '@stackable/util'
+import {
+	createAllCombinationAttributes,
+	createBackgroundAttributes,
+	createResponsiveAttributes,
+	createTypographyAttributes,
+	descriptionPlaceholder,
+} from '@stackable/util'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { default as deprecated } from './deprecated'
@@ -89,10 +95,14 @@ export const schema = {
 		type: 'string',
 	},
 
-	...createResponsiveAttributes( '%sContentAlign', {
-		type: 'string',
-		default: '',
-	} ),
+	...createAllCombinationAttributes(
+		'%s%sAlign', {
+			type: 'string',
+			default: '',
+		},
+		[ 'Content', 'Number', 'Title', 'Description' ],
+		[ '', 'Tablet', 'Mobile' ]
+	),
 
 	// Column.
 	...createBackgroundAttributes( 'column%s' ),
@@ -133,6 +143,16 @@ export const schema = {
 		default: true,
 	},
 	...createTypographyAttributes( 'description%s' ),
+
+	// Individual column colors.
+	...createAllCombinationAttributes(
+		'Column%s%sColor', {
+			type: 'string',
+			default: '',
+		},
+		[ '1', '2', '3' ],
+		[ 'Background', 'NumberBackground', 'Number', 'Title', 'Description' ]
+	),
 
 	// Keep the old attributes. Gutenberg issue https://github.com/WordPress/gutenberg/issues/10406
 	numberBox: {

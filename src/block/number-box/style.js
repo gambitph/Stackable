@@ -2,42 +2,23 @@ import * as deepmerge from 'deepmerge'
 import {
 	createBackgroundStyleSet,
 	createTypographyStyles,
+	marginLeftAlign,
+	marginRightAlign,
+	whiteIfDark,
+	whiteIfDarkBlackIfLight,
 } from '@stackable/util'
-import { marginLeftAlign, marginRightAlign } from '@stackable/util/styles'
 import { applyFilters } from '@wordpress/hooks'
-import isDarkColor from 'is-dark-color'
+import { sprintf } from '@wordpress/i18n'
 
 export const createStyles = props => {
+	const getValue = ( attrName, format = '' ) => {
+		const value = typeof props.attributes[ attrName ] === 'undefined' ? '' : props.attributes[ attrName ]
+		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
+	}
+
 	const {
-		// columns,
-		numberColor,
-		titleColor,
-		descriptionColor,
-		numberBGColor,
 		design = 'basic',
-		borderRadius = 12,
-		// shadow = 3,
-		backgroundColor,
-		columnGap = '',
-		contentAlign = '',
-		tabletContentAlign = '',
-		mobileContentAlign = '',
-		tabletColumnGap = '',
-		mobileColumnGap = '',
-		numberBottomMargin = '',
-		numberTabletBottomMargin = '',
-		numberMobileBottomMargin = '',
-		numberLetterSpacing = '',
-		numberPadding = '',
-		numberTabletPadding = '',
-		numberMobilePadding = '',
-		titleBottomMargin = '',
-		titleTabletBottomMargin = '',
-		titleMobileBottomMargin = '',
-		boxTopPadding = '',
-		boxRightPadding = '',
-		boxBottomPadding = '',
-		boxLeftPadding = '',
+		columnBackgroundColor = '',
 	} = props.attributes
 
 	const show = applyFilters( 'stackable.number-box.edit.show', {
@@ -50,106 +31,202 @@ export const createStyles = props => {
 		columnBackground: design !== 'plain',
 	}, design, props )
 
-	const styles = {
-		'.ugb-number-box .ugb-inner-block': {
-			gridGap: columnGap !== '' ? `${ columnGap }px` : undefined,
-		},
+	// General.
+	const {
+		contentAlign = '',
+		borderRadius = 12,
+		tabletContentAlign = '',
+		mobileContentAlign = '',
+	} = props.attributes
+	const general = {
 		'.ugb-number-box__item': {
 			borderRadius: design !== 'plain' && borderRadius !== 12 ? `${ borderRadius }px` : undefined,
-			backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
-			paddingTop: boxTopPadding !== '' ? `${ boxTopPadding }px` : undefined,
-			paddingRight: boxRightPadding !== '' ? `${ boxRightPadding }px` : undefined,
-			paddingBottom: boxBottomPadding !== '' ? `${ boxBottomPadding }px` : undefined,
-			paddingLeft: boxLeftPadding !== '' ? `${ boxLeftPadding }px` : undefined,
-			textAlign: contentAlign !== '' ? contentAlign : undefined,
-		},
-		'.ugb-number-box__number': {
-			...createTypographyStyles( 'number%s', 'desktop', props.attributes ),
-			textIndent: ( design === 'basic' || design === 'plain' ) && numberLetterSpacing !== '' ? `${ numberLetterSpacing }px` : undefined,
-			marginLeft: marginLeftAlign( contentAlign ),
-			marginRight: marginRightAlign( contentAlign ),
-			backgroundColor: numberBGColor,
-			marginBottom: numberBottomMargin !== '' ? `${ numberBottomMargin }px` : undefined,
-			// padding: numberPadding !== '' ? `${ numberPadding }px` : undefined,
-			height: numberPadding !== '' ? `${ numberPadding }em` : undefined,
-			width: numberPadding !== '' ? `${ numberPadding }em` : undefined,
-			lineHeight: numberPadding !== '' ? `${ numberPadding }em` : undefined,
-			color: numberColor ? numberColor :
-				   ! numberBGColor ? undefined :
-				   isDarkColor( numberBGColor ) ? '#ffffff' : '#222222',
-		},
-		'.ugb-number-box__title': {
-			...createTypographyStyles( 'title%s', 'desktop', props.attributes ),
-			marginBottom: titleBottomMargin !== '' ? `${ titleBottomMargin }px` : undefined,
-			color: titleColor ? titleColor :
-			       design === 'plain' ? undefined :
-			       ! backgroundColor ? undefined :
-			       isDarkColor( backgroundColor ) ? '#ffffff' : '#222222',
-		},
-		'.ugb-number-box__description': {
-			...createTypographyStyles( 'description%s', 'desktop', props.attributes ),
-			color: descriptionColor ? descriptionColor :
-			       design === 'plain' ? undefined :
-			       ! backgroundColor ? undefined :
-			       isDarkColor( backgroundColor ) ? '#ffffff' : '#222222',
+			textAlign: getValue( 'contentAlign' ),
 		},
 		tablet: {
-			'.ugb-number-box .ugb-inner-block': {
-				gridGap: tabletColumnGap !== '' ? `${ tabletColumnGap }px` : undefined,
-			},
 			'.ugb-number-box__item': {
-				textAlign: tabletContentAlign !== '' ? tabletContentAlign : undefined,
-			},
-			'.ugb-number-box__number': {
-				...createTypographyStyles( 'number%s', 'tablet', props.attributes ),
-				marginLeft: marginLeftAlign( tabletContentAlign ),
-				marginRight: marginRightAlign( tabletContentAlign ),
-				marginBottom: numberTabletBottomMargin !== '' ? `${ numberTabletBottomMargin }px` : undefined,
-				// padding: numberTabletPadding !== '' ? `${ numberTabletPadding }px` : undefined,
-				height: numberTabletPadding !== '' ? `${ numberTabletPadding }em` : undefined,
-				width: numberTabletPadding !== '' ? `${ numberTabletPadding }em` : undefined,
-				lineHeight: numberTabletPadding !== '' ? `${ numberTabletPadding }em` : undefined,
-			},
-			'.ugb-number-box__title': {
-				marginBottom: titleTabletBottomMargin !== '' ? `${ titleTabletBottomMargin }px` : undefined,
-				...createTypographyStyles( 'title%s', 'tablet', props.attributes ),
-			},
-			'.ugb-number-box__description': {
-				...createTypographyStyles( 'description%s', 'tablet', props.attributes ),
+				textAlign: getValue( 'tabletContentAlign' ),
 			},
 		},
 		mobile: {
-			'.ugb-number-box .ugb-inner-block': {
-				gridGap: mobileColumnGap !== '' ? `${ mobileColumnGap }px` : undefined,
-			},
 			'.ugb-number-box__item': {
-				textAlign: mobileContentAlign !== '' ? mobileContentAlign : undefined,
-			},
-			'.ugb-number-box__number': {
-				...createTypographyStyles( 'number%s', 'mobile', props.attributes ),
-				marginLeft: marginLeftAlign( mobileContentAlign ),
-				marginRight: marginRightAlign( mobileContentAlign ),
-				marginBottom: numberMobileBottomMargin !== '' ? `${ numberMobileBottomMargin }px` : undefined,
-				// padding: numberMobilePadding !== '' ? `${ numberMobilePadding }px` : undefined,
-				height: numberMobilePadding !== '' ? `${ numberMobilePadding }em` : undefined,
-				width: numberMobilePadding !== '' ? `${ numberMobilePadding }em` : undefined,
-				lineHeight: numberMobilePadding !== '' ? `${ numberMobilePadding }em` : undefined,
-			},
-			'.ugb-number-box__title': {
-				marginBottom: titleMobileBottomMargin !== '' ? `${ titleMobileBottomMargin }px` : undefined,
-				...createTypographyStyles( 'title%s', 'mobile', props.attributes ),
-			},
-			'.ugb-number-box__description': {
-				...createTypographyStyles( 'description%s', 'mobile', props.attributes ),
+				textAlign: getValue( 'mobileContentAlign' ),
 			},
 		},
 	}
 
-	const columnBackgroundStyles = {
+	// Column Background.
+	const columnBackground = {
 		...( show.columnBackground ? createBackgroundStyleSet( 'column%s', 'ugb-number-box__item', props.attributes ) : {} ),
 	}
 
-	return deepmerge.all( [ styles, columnBackgroundStyles ] )
+	// Number
+	// TODO: number style
+	const {
+		numberBGColor = '',
+		numberColor = '',
+		numberAlign = '',
+		numberTabletAlign = '',
+		numberMobileAlign = '',
+	} = props.attributes
+	const number = {
+		'.ugb-number-box__number': {
+			...createTypographyStyles( 'number%s', 'desktop', props.attributes ),
+			backgroundColor: show.numberBGColor && getValue( 'numberBGColor' ),
+			height: getValue( 'numberPadding', '%sem' ),
+			width: getValue( 'numberPadding', '%sem' ),
+			lineHeight: getValue( 'numberPadding', '%sem' ),
+			marginLeft: numberAlign !== '' || contentAlign !== '' ? marginLeftAlign( numberAlign || contentAlign ) : undefined,
+			marginRight: numberAlign !== '' || contentAlign !== '' ? marginRightAlign( numberAlign || contentAlign ) : undefined,
+			color: whiteIfDarkBlackIfLight( numberColor, numberBGColor ),
+			// Special case for centering the text with letter-spacing.
+			textIndent: ( design === 'basic' || design === 'plain' ) && getValue( 'numberLetterSpacing', '%spx' ),
+		},
+		tablet: {
+			'.ugb-number-box__number': {
+				height: getValue( 'numberTabletPadding', '%sem' ),
+				width: getValue( 'numberTabletPadding', '%sem' ),
+				lineHeight: getValue( 'numberTabletPadding', '%sem' ),
+				marginLeft: numberTabletAlign !== '' && tabletContentAlign !== '' ? marginLeftAlign( numberTabletAlign || tabletContentAlign ) : undefined,
+				marginRight: numberTabletAlign !== '' && tabletContentAlign !== '' ? marginRightAlign( numberTabletAlign || tabletContentAlign ) : undefined,
+			},
+		},
+		mobile: {
+			'.ugb-number-box__number': {
+				height: getValue( 'numberMobilePadding', '%sem' ),
+				width: getValue( 'numberMobilePadding', '%sem' ),
+				lineHeight: getValue( 'numberMobilePadding', '%sem' ),
+				marginLeft: numberMobileAlign !== '' && mobileContentAlign !== '' ? marginLeftAlign( numberMobileAlign || mobileContentAlign ) : undefined,
+				marginRight: numberMobileAlign !== '' && mobileContentAlign !== '' ? marginRightAlign( numberMobileAlign || mobileContentAlign ) : undefined,
+			},
+		},
+	}
+	const {
+		titleColor = '',
+	} = props.attributes
+	const title = {
+		'.ugb-number-box__title': {
+			...createTypographyStyles( 'title%s', 'desktop', props.attributes ),
+			color: whiteIfDark( titleColor, columnBackgroundColor ),
+			textAlign: getValue( 'titleAlign' ),
+		},
+		tablet: {
+			'.ugb-number-box__title': {
+				...createTypographyStyles( 'title%s', 'tablet', props.attributes ),
+				textAlign: getValue( 'titleTabletAlign' ),
+			},
+		},
+		mobile: {
+			'.ugb-number-box__title': {
+				...createTypographyStyles( 'title%s', 'mobile', props.attributes ),
+				textAlign: getValue( 'titleMobileAlign' ),
+			},
+		},
+	}
+
+	const {
+		descriptionColor = '',
+	} = props.attributes
+	const description = {
+		'.ugb-number-box__description': {
+			...createTypographyStyles( 'description%s', 'desktop', props.attributes ),
+			color: whiteIfDark( descriptionColor, columnBackgroundColor ),
+			textAlign: getValue( 'descriptionAlign' ),
+		},
+		tablet: {
+			'.ugb-number-box__description': {
+				...createTypographyStyles( 'description%s', 'tablet', props.attributes ),
+				textAlign: getValue( 'descriptionTabletAlign' ),
+			},
+		},
+		mobile: {
+			'.ugb-number-box__description': {
+				...createTypographyStyles( 'description%s', 'mobile', props.attributes ),
+				textAlign: getValue( 'descriptionMobileAlign' ),
+			},
+		},
+	}
+
+	const spacing = {
+		'.ugb-number-box__number': {
+			marginBottom: getValue( 'numberBottomMargin', '%spx' ),
+		},
+		'.ugb-number-box__title': {
+			marginBottom: getValue( 'titleBottomMargin', '%spx' ),
+		},
+		tablet: {
+			'.ugb-number-box__number': {
+				marginBottom: getValue( 'numberTabletBottomMargin', '%spx' ),
+			},
+			'.ugb-number-box__title': {
+				marginBottom: getValue( 'titleTabletBottomMargin', '%spx' ),
+			},
+		},
+		mobile: {
+			'.ugb-number-box__number': {
+				marginBottom: getValue( 'numberMobileBottomMargin', '%spx' ),
+			},
+			'.ugb-number-box__title': {
+				marginBottom: getValue( 'titleMobileBottomMargin', '%spx' ),
+			},
+		},
+	}
+
+	const individual = {
+		'.ugb-number-box__item1': {
+			backgroundColor: getValue( 'Column1BackgroundColor' ),
+		},
+		'.ugb-number-box__item1:before': {
+			background: getValue( 'Column1BackgroundColor' ),
+		},
+		'.ugb-number-box__item2': {
+			backgroundColor: getValue( 'Column2BackgroundColor' ),
+		},
+		'.ugb-number-box__item2:before': {
+			background: getValue( 'Column2BackgroundColor' ),
+		},
+		'.ugb-number-box__item3': {
+			backgroundColor: getValue( 'Column3BackgroundColor' ),
+		},
+		'.ugb-number-box__item3:before': {
+			background: getValue( 'Column3BackgroundColor' ),
+		},
+
+		'.ugb-number-box__item1 .ugb-number-box__number': {
+			backgroundColor: show.numberBGColor && getValue( 'Column1NumberBackgroundColor' ),
+			color: getValue( 'Column1NumberColor' ),
+		},
+		'.ugb-number-box__item2 .ugb-number-box__number': {
+			backgroundColor: show.numberBGColor && getValue( 'Column2NumberBackgroundColor' ),
+			color: getValue( 'Column2NumberColor' ),
+		},
+		'.ugb-number-box__item3 .ugb-number-box__number': {
+			backgroundColor: show.numberBGColor && getValue( 'Column3NumberBackgroundColor' ),
+			color: getValue( 'Column3NumberColor' ),
+		},
+
+		'.ugb-number-box__item1 .ugb-number-box__title': {
+			color: getValue( 'Column1TitleColor' ),
+		},
+		'.ugb-number-box__item2 .ugb-number-box__title': {
+			color: getValue( 'Column2TitleColor' ),
+		},
+		'.ugb-number-box__item3 .ugb-number-box__title': {
+			color: getValue( 'Column3TitleColor' ),
+		},
+
+		'.ugb-number-box__item1 .ugb-number-box__description': {
+			color: getValue( 'Column1DescriptionColor' ),
+		},
+		'.ugb-number-box__item2 .ugb-number-box__description': {
+			color: getValue( 'Column2DescriptionColor' ),
+		},
+		'.ugb-number-box__item3 .ugb-number-box__description': {
+			color: getValue( 'Column3DescriptionColor' ),
+		},
+	}
+
+	return deepmerge.all( [ general, columnBackground, number, title, description, spacing, individual ] )
 }
 
 export default createStyles
