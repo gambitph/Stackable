@@ -89,7 +89,7 @@ const addBlockSeparatorPanels = ( output, props ) => {
 					checked={ topSeparatorBringToFront }
 					onChange={ topSeparatorBringToFront => setAttributes( { topSeparatorBringToFront } ) }
 				/>
-				{ applyFilters( 'stackable.block-separators.edit.layer2', null, props ) }
+				{ applyFilters( 'stackable.block-separators.edit.top', null, props ) }
 				{ showProNotice && <ProControlButton
 					title={ __( 'Say Hello to Gorgeous Separators 👋' ) }
 					description={ __( 'Add a second & third layer to this separator and make it look even sweeter. This feature is only available on Stackable Premium' ) }
@@ -147,7 +147,7 @@ const addBlockSeparatorPanels = ( output, props ) => {
 					checked={ bottomSeparatorBringToFront }
 					onChange={ bottomSeparatorBringToFront => setAttributes( { bottomSeparatorBringToFront } ) }
 				/>
-				{ applyFilters( 'stackable.block-separators.edit.layer3', null, props ) }
+				{ applyFilters( 'stackable.block-separators.edit.bottom', null, props ) }
 				{ showProNotice && <ProControlButton
 					title={ __( 'Say Hello to Gorgeous Separators 👋' ) }
 					description={ __( 'Add a second & third layer to this separator and make it look even sweeter. This feature is only available on Stackable Premium' ) }
@@ -204,6 +204,44 @@ const addAttributes = attributes => {
 			[ 'Top', 'Bottom' ],
 			[ 'FlipHorizontally', 'Shadow', 'BringToFront' ],
 		),
+
+		// Premium attributes.
+		...createAllCombinationAttributes(
+			'Show%sSeparator%s',
+			{
+				type: 'boolean',
+				default: '',
+			},
+			[ 'Top', 'Bottom' ],
+			[ 'Layer2', 'Layer3' ],
+		),
+		...createAllCombinationAttributes(
+			'%sSeparator%s',
+			{
+				type: 'string',
+				default: '',
+			},
+			[ 'Top', 'Bottom' ],
+			[ 'Layer2Color', 'Layer3Color', 'Layer2BlendMode', 'Layer3BlendMode' ],
+		),
+		...createAllCombinationAttributes(
+			'%sSeparator%s',
+			{
+				type: 'number',
+				default: '',
+			},
+			[ 'Top', 'Bottom' ],
+			[ 'Layer2Height', 'Layer3Height', 'Layer2Width', 'Layer3Width', 'Layer2Opacity', 'Layer3Opacity' ],
+		),
+		...createAllCombinationAttributes(
+			'%sSeparator%s',
+			{
+				type: 'boolean',
+				default: '',
+			},
+			[ 'Top', 'Bottom' ],
+			[ 'Layer2FlipHorizontally', 'Layer3FlipHorizontally' ],
+		),
 	}
 }
 
@@ -223,14 +261,18 @@ const addShapeOutput = ( output, design, blockProps ) => {
 			{ showTopSeparator && (
 				<Fragment>
 					<div className="ugb-top-separator">
-						<Separator design={ topSeparatorDesign } shadow={ topSeparatorShadow } />
+						<Separator design={ topSeparatorDesign } shadow={ topSeparatorShadow }>
+							{ applyFilters( 'stackable.module.block-separator.output.top.after', null, blockProps ) }
+						</Separator>
 					</div>
 				</Fragment>
 			) }
 			{ showBottomSeparator && (
 				<Fragment>
 					<div className="ugb-bottom-separator">
-						<Separator design={ bottomSeparatorDesign } shadow={ bottomSeparatorShadow } />
+						<Separator design={ bottomSeparatorDesign } shadow={ bottomSeparatorShadow }>
+							{ applyFilters( 'stackable.module.block-separator.output.bottom.after', null, blockProps ) }
+						</Separator>
 					</div>
 				</Fragment>
 			) }
@@ -256,23 +298,23 @@ const addTopStyles = ( styleObject, props ) => {
 
 	const styles = {
 		[ `.ugb-top-separator` ]: {
-			height: topSeparatorHeight !== '' ? `${ topSeparatorHeight }px` : undefined,
 			zIndex: topSeparatorBringToFront ? 4 : undefined,
-		},
-		[ `.ugb-top-separator svg` ]: {
-			fill: topSeparatorColor !== '' ? topSeparatorColor : '#fff',
 			transform: topSeparatorFlipHorizontally ? 'scale(-1)' : undefined,
 		},
+		[ `.ugb-top-separator svg` ]: {
+			fill: topSeparatorColor !== '' ? topSeparatorColor : undefined,
+		},
 		[ `.ugb-top-separator .ugb-separator-wrapper` ]: {
+			height: topSeparatorHeight !== '' ? `${ topSeparatorHeight }px` : undefined,
 			transform: topSeparatorWidth !== '' ? `scaleX(${ topSeparatorWidth })` : undefined,
 		},
 		tablet: {
-			[ `.ugb-top-separator` ]: {
+			[ `.ugb-top-separator .ugb-separator-wrapper` ]: {
 				height: topSeparatorTabletHeight !== '' ? `${ topSeparatorTabletHeight }px` : undefined,
 			},
 		},
 		mobile: {
-			[ `.ugb-top-separator` ]: {
+			[ `.ugb-top-separator .ugb-separator-wrapper` ]: {
 				height: topSeparatorMobileHeight !== '' ? `${ topSeparatorMobileHeight }px` : undefined,
 			},
 		},
@@ -329,8 +371,8 @@ const blockSeparators = blockName => {
 	addFilter( `stackable.${ blockName }.attributes`, `stackable/${ blockName }/block-separators`, addAttributes )
 	addFilter( `stackable.${ blockName }.edit.output.outer`, `stackable/${ blockName }/block-separators`, addShapeOutput )
 	addFilter( `stackable.${ blockName }.save.output.outer`, `stackable/${ blockName }/block-separators`, addShapeOutput )
-	addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/block-separators`, addTopStyles )
-	addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/block-separators`, addBottomStyles )
+	addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/block-separators/top`, addTopStyles )
+	addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/block-separators/bottom`, addBottomStyles )
 	doAction( `stackable.module.block-separators`, blockName )
 }
 
