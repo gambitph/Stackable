@@ -1,16 +1,18 @@
 import * as deepmerge from 'deepmerge'
-import { addFilter, doAction } from '@wordpress/hooks'
+import { addFilter, applyFilters, doAction } from '@wordpress/hooks'
 import {
 	AdvancedRangeControl,
 	ColorPaletteControl,
 	DesignSeparatorControl,
 	PanelAdvancedSettings,
+	ProControlButton,
 	ResponsiveControl,
 	Separator,
 } from '@stackable/components'
 import { __ } from '@wordpress/i18n'
 import { createAllCombinationAttributes } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
+import { showProNotice } from 'stackable'
 import { ToggleControl } from '@wordpress/components'
 
 const addBlockSeparatorPanels = ( output, props ) => {
@@ -87,11 +89,17 @@ const addBlockSeparatorPanels = ( output, props ) => {
 					checked={ topSeparatorBringToFront }
 					onChange={ topSeparatorBringToFront => setAttributes( { topSeparatorBringToFront } ) }
 				/>
+				{ applyFilters( 'stackable.block-separators.edit.layer2', null, props ) }
+				{ showProNotice && <ProControlButton
+					title={ __( 'Say Hello to Gorgeous Separators 👋' ) }
+					description={ __( 'Add a second & third layer to this separator and make it look even sweeter. This feature is only available on Stackable Premium' ) }
+				/> }
 			</PanelAdvancedSettings>
 			<PanelAdvancedSettings
 				title={ __( 'Bottom Separator' ) }
 				checked={ showBottomSeparator }
 				onChange={ showBottomSeparator => setAttributes( { showBottomSeparator } ) }
+				className="ugb-bottom-block-separator-panel"
 			>
 				<DesignSeparatorControl
 					label={ __( 'Design' ) }
@@ -139,6 +147,11 @@ const addBlockSeparatorPanels = ( output, props ) => {
 					checked={ bottomSeparatorBringToFront }
 					onChange={ bottomSeparatorBringToFront => setAttributes( { bottomSeparatorBringToFront } ) }
 				/>
+				{ applyFilters( 'stackable.block-separators.edit.layer3', null, props ) }
+				{ showProNotice && <ProControlButton
+					title={ __( 'Say Hello to Gorgeous Separators 👋' ) }
+					description={ __( 'Add a second & third layer to this separator and make it look even sweeter. This feature is only available on Stackable Premium' ) }
+				/> }
 			</PanelAdvancedSettings>
 		</Fragment>
 	)

@@ -1,4 +1,3 @@
-import './modules'
 import { getBlockType, registerBlockType } from '@wordpress/blocks'
 import { applyFilters } from '@wordpress/hooks'
 import { initBlockModule } from '@stackable/modules'
