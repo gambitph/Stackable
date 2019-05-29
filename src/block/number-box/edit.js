@@ -79,6 +79,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 		showTitle = true,
 		showDescription = true,
 		titleTag = '',
+		numberStyle = '',
 	} = props.attributes
 
 	const show = applyFilters( 'stackable.number-box.edit.show', {
@@ -86,7 +87,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 		borderRadius: design !== 'plain',
 		shadow: design !== 'plain',
 		numberColor: true,
-		numberBGColor: true,
+		numberBGColor: ( design === 'basic' || design === 'plain' ) && numberStyle !== 'none',
 		numberStyle: true,
 		columnBackground: design !== 'plain',
 	}, design, props )
@@ -153,7 +154,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 					fontSizeProps={ {
-						max: design === 'basic' || design === 'plain' ? [ 100, 7 ] : [ 500, 15 ],
+						max: design === 'basic' || design === 'plain' ? [ 150, 7 ] : [ 500, 15 ],
 					} }
 					onChangeLineHeight={ false }
 				/>
@@ -161,10 +162,12 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					<SelectControl
 						label={ __( 'Number Style' ) }
 						options={ [
-							{ label: __( 'None' ), value: '' },
-							{ label: __( 'Circle' ), value: 'circle' },
+							{ label: __( 'None' ), value: 'none' },
+							{ label: __( 'Circle' ), value: '' },
 							{ label: __( 'Square' ), value: 'square' },
 						] }
+						value={ numberStyle }
+						onChange={ numberStyle => setAttributes( { numberStyle } ) }
 					/>
 				) }
 				{ show.numberBGColor && (
@@ -297,6 +300,7 @@ addFilter( `stackable.number-box.edit.inspector.advanced.before`, `stackable/num
 	const {
 		columns = 2,
 		design = 'basic',
+		numberStyle = '',
 	} = props.attributes
 
 	const show = applyFilters( 'stackable.number-box.edit.show', {
@@ -304,8 +308,9 @@ addFilter( `stackable.number-box.edit.inspector.advanced.before`, `stackable/num
 		borderRadius: design !== 'plain',
 		shadow: design !== 'plain',
 		numberColor: true,
-		numberBGColor: true,
+		numberBGColor: ( design === 'basic' || design === 'plain' ) && numberStyle !== 'none',
 		numberStyle: true,
+		columnBackground: design !== 'plain',
 	}, design, props )
 
 	return (
@@ -419,6 +424,7 @@ const edit = props => {
 		showNumber = true,
 		showTitle = true,
 		showDescription = true,
+		numberStyle = '',
 		// backgroundColor,
 	} = props.attributes
 
@@ -429,6 +435,7 @@ const edit = props => {
 		`ugb-number-box--columns-${ columns }`,
 	], applyFilters( 'stackable.number-box.mainclasses', {
 		[ `ugb-number-box--design-${ design }` ]: design !== 'basic',
+		[ `ugb-number-box--number-style-${ numberStyle }` ]: numberStyle !== '' && ( design === 'basic' || design === 'plain' ),
 	}, design, props ) )
 
 	return (

@@ -19,6 +19,7 @@ export const createStyles = props => {
 	const {
 		design = 'basic',
 		columnBackgroundColor = '',
+		numberStyle = '',
 	} = props.attributes
 
 	const show = applyFilters( 'stackable.number-box.edit.show', {
@@ -26,7 +27,7 @@ export const createStyles = props => {
 		borderRadius: design !== 'plain',
 		shadow: design !== 'plain',
 		numberColor: true,
-		numberBGColor: true,
+		numberBGColor: ( design === 'basic' || design === 'plain' ) && numberStyle !== 'none',
 		numberStyle: true,
 		columnBackground: design !== 'plain',
 	}, design, props )
@@ -61,7 +62,6 @@ export const createStyles = props => {
 	}
 
 	// Number
-	// TODO: number style
 	const {
 		numberBGColor = '',
 		numberColor = '',
@@ -73,31 +73,34 @@ export const createStyles = props => {
 		'.ugb-number-box__number': {
 			...createTypographyStyles( 'number%s', 'desktop', props.attributes ),
 			backgroundColor: show.numberBGColor && getValue( 'numberBGColor' ),
-			height: getValue( 'numberPadding', '%sem' ),
-			width: getValue( 'numberPadding', '%sem' ),
-			lineHeight: getValue( 'numberPadding', '%sem' ),
+			height: show.numberBGColor && getValue( 'numberPadding', '%sem' ),
+			width: show.numberBGColor && getValue( 'numberPadding', '%sem' ),
+			lineHeight: show.numberBGColor && getValue( 'numberPadding', '%sem' ),
 			marginLeft: numberAlign !== '' || contentAlign !== '' ? marginLeftAlign( numberAlign || contentAlign ) : undefined,
 			marginRight: numberAlign !== '' || contentAlign !== '' ? marginRightAlign( numberAlign || contentAlign ) : undefined,
-			color: whiteIfDarkBlackIfLight( numberColor, numberBGColor ),
+			textAlign: getValue( 'numberAlign' ),
+			color: whiteIfDarkBlackIfLight( numberColor, show.numberBGColor && numberBGColor ),
 			// Special case for centering the text with letter-spacing.
 			textIndent: ( design === 'basic' || design === 'plain' ) && getValue( 'numberLetterSpacing', '%spx' ),
 		},
 		tablet: {
 			'.ugb-number-box__number': {
-				height: getValue( 'numberTabletPadding', '%sem' ),
-				width: getValue( 'numberTabletPadding', '%sem' ),
-				lineHeight: getValue( 'numberTabletPadding', '%sem' ),
+				height: show.numberBGColor && getValue( 'numberTabletPadding', '%sem' ),
+				width: show.numberBGColor && getValue( 'numberTabletPadding', '%sem' ),
+				lineHeight: show.numberBGColor && getValue( 'numberTabletPadding', '%sem' ),
 				marginLeft: numberTabletAlign !== '' && tabletContentAlign !== '' ? marginLeftAlign( numberTabletAlign || tabletContentAlign ) : undefined,
 				marginRight: numberTabletAlign !== '' && tabletContentAlign !== '' ? marginRightAlign( numberTabletAlign || tabletContentAlign ) : undefined,
+				textAlign: getValue( 'numberTabletAlign' ),
 			},
 		},
 		mobile: {
 			'.ugb-number-box__number': {
-				height: getValue( 'numberMobilePadding', '%sem' ),
-				width: getValue( 'numberMobilePadding', '%sem' ),
-				lineHeight: getValue( 'numberMobilePadding', '%sem' ),
+				height: show.numberBGColor && getValue( 'numberMobilePadding', '%sem' ),
+				width: show.numberBGColor && getValue( 'numberMobilePadding', '%sem' ),
+				lineHeight: show.numberBGColor && getValue( 'numberMobilePadding', '%sem' ),
 				marginLeft: numberMobileAlign !== '' && mobileContentAlign !== '' ? marginLeftAlign( numberMobileAlign || mobileContentAlign ) : undefined,
 				marginRight: numberMobileAlign !== '' && mobileContentAlign !== '' ? marginRightAlign( numberMobileAlign || mobileContentAlign ) : undefined,
+				textAlign: getValue( 'numberMobileAlign' ),
 			},
 		},
 	}

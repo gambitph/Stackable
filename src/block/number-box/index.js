@@ -112,6 +112,10 @@ export const schema = {
 		type: 'boolean',
 		default: true,
 	},
+	numberStyle: {
+		type: 'string',
+		default: '',
+	},
 	...createTypographyAttributes( 'number%s' ),
 	...createResponsiveAttributes( 'number%sPadding', {
 		type: 'number',

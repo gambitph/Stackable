@@ -22,6 +22,7 @@ const save = props => {
 		// borderRadius = 12,
 		shadow = 3,
 		// backgroundColor,
+		numberStyle = '',
 	} = attributes
 
 	const mainClasses = classnames( [
@@ -31,6 +32,7 @@ const save = props => {
 		`ugb-number-box--columns-${ columns }`,
 	], applyFilters( 'stackable.number-box.mainclasses', {
 		[ `ugb-number-box--design-${ design }` ]: design !== 'basic',
+		[ `ugb-number-box--number-style-${ numberStyle }` ]: numberStyle !== '' && ( design === 'basic' || design === 'plain' ),
 	}, design, props ) )
 
 	return (

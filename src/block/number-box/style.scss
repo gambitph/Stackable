@@ -50,14 +50,28 @@
 	font-size: 3em;
 	display: block;
 	padding: 0;
-	text-align: center;
 	overflow: hidden;
 	margin: 0 auto;
 	height: 2.5em;
 	width: 2.5em;
 	line-height: 2.5em;
 	box-sizing: content-box;
-    white-space: nowrap !important;
+	white-space: nowrap !important;
+}
+.ugb-number-box--number-style-square .ugb-number-box__number {
+	border-radius: 0;
+}
+.ugb-number-box:not(.ugb-number-box--number-style-none) .ugb-number-box__number {
+	text-align: center !important;
+}
+.ugb-number-box--number-style-none .ugb-number-box__number {
+	display: block;
+	background: none;
+	border-radius: 0;
+	color: var(--s-primary-color, #222);
+	line-height: 1em;
+	height: auto;
+	width: 100%;
 }
 
 .ugb-number-box__number,
