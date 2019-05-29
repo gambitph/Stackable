@@ -36,3 +36,11 @@
 		}
 	}
 }
+// Toggle.
+.ugb-button-icon-control {
+	.components-toggle-control {
+		&, .components-base-control__field, .components-toggle-control__label {
+			margin-bottom: 0 !important;
+		}
+	}
+}

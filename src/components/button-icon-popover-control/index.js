@@ -1,4 +1,4 @@
-import { BaseControl, IconButton, PanelBody, Popover } from '@wordpress/components'
+import { BaseControl, IconButton, PanelBody, Popover, ToggleControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { Component } from '@wordpress/element'
@@ -31,9 +31,16 @@ class ButtonIconPopoverControl extends Component {
 		return (
 			<BaseControl
 				help={ this.props.help }
-				label={ <label htmlFor={ `ugb-button-icon-control__edit-${ this.instanceId }` }>{ this.props.label }</label> }
+				label={ ! this.props.onToggle && <label htmlFor={ `ugb-button-icon-control__edit-${ this.instanceId }` }>{ this.props.label }</label> }
 				className={ classnames( 'ugb-button-icon-control', this.props.className ) }
 			>
+				{ this.props.onToggle && (
+					<ToggleControl
+						label={ this.props.label }
+						checked={ this.props.checked }
+						onChange={ this.props.onToggle }
+					/>
+				) }
 				<div className="ugb-button-icon-control__wrapper">
 					{ this.props.allowReset && (
 						<IconButton
@@ -79,6 +86,8 @@ ButtonIconPopoverControl.defaultProps = {
 	className: '',
 	allowReset: false,
 	onReset: () => {},
+	checked: false,
+	onToggle: undefined,
 }
 
 export default ButtonIconPopoverControl
