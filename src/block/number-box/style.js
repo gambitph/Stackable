@@ -68,6 +68,12 @@ export const createStyles = props => {
 		numberAlign = '',
 		numberTabletAlign = '',
 		numberMobileAlign = '',
+		numberLineHeight = '',
+		numberTabletLineHeight = '',
+		numberMobileLineHeight = '',
+		numberLineHeightUnit = 'em',
+		numberTabletLineHeightUnit = 'em',
+		numberMobileLineHeightUnit = 'em',
 	} = props.attributes
 	const number = {
 		'.ugb-number-box__number': {
@@ -75,10 +81,10 @@ export const createStyles = props => {
 			backgroundColor: show.numberBGColor && getValue( 'numberBGColor' ),
 			height: show.numberBGColor && getValue( 'numberPadding', '%sem' ),
 			width: show.numberBGColor && getValue( 'numberPadding', '%sem' ),
-			lineHeight: show.numberBGColor && getValue( 'numberPadding', '%sem' ),
+			lineHeight: show.numberBGColor && numberLineHeight === '' ? getValue( 'numberPadding', '%sem' ) : `${ numberLineHeight }${ numberLineHeightUnit }`,
 			marginLeft: numberAlign !== '' || contentAlign !== '' ? marginLeftAlign( numberAlign || contentAlign ) : undefined,
 			marginRight: numberAlign !== '' || contentAlign !== '' ? marginRightAlign( numberAlign || contentAlign ) : undefined,
-			textAlign: getValue( 'numberAlign' ),
+			textAlign: show.numberBGColor ? undefined : ( getValue( 'numberAlign' ) || getValue( 'contentAlign' ) ),
 			color: whiteIfDarkBlackIfLight( numberColor, show.numberBGColor && numberBGColor ),
 			// Special case for centering the text with letter-spacing.
 			textIndent: ( design === 'basic' || design === 'plain' ) && getValue( 'numberLetterSpacing', '%spx' ),
@@ -87,20 +93,20 @@ export const createStyles = props => {
 			'.ugb-number-box__number': {
 				height: show.numberBGColor && getValue( 'numberTabletPadding', '%sem' ),
 				width: show.numberBGColor && getValue( 'numberTabletPadding', '%sem' ),
-				lineHeight: show.numberBGColor && getValue( 'numberTabletPadding', '%sem' ),
+				lineHeight: show.numberBGColor && numberTabletLineHeight === '' ? getValue( 'numberTabletPadding', '%sem' ) : `${ numberTabletLineHeight }${ numberTabletLineHeightUnit }`,
 				marginLeft: numberTabletAlign !== '' && tabletContentAlign !== '' ? marginLeftAlign( numberTabletAlign || tabletContentAlign ) : undefined,
 				marginRight: numberTabletAlign !== '' && tabletContentAlign !== '' ? marginRightAlign( numberTabletAlign || tabletContentAlign ) : undefined,
-				textAlign: getValue( 'numberTabletAlign' ),
+				textAlign: show.numberBGColor ? undefined : ( getValue( 'numberTabletAlign' ) || getValue( 'tabletContentAlign' ) ),
 			},
 		},
 		mobile: {
 			'.ugb-number-box__number': {
 				height: show.numberBGColor && getValue( 'numberMobilePadding', '%sem' ),
 				width: show.numberBGColor && getValue( 'numberMobilePadding', '%sem' ),
-				lineHeight: show.numberBGColor && getValue( 'numberMobilePadding', '%sem' ),
+				lineHeight: show.numberBGColor && numberMobileLineHeight === '' ? getValue( 'numberMobilePadding', '%sem' ) : `${ numberMobileLineHeight }${ numberMobileLineHeightUnit }`,
 				marginLeft: numberMobileAlign !== '' && mobileContentAlign !== '' ? marginLeftAlign( numberMobileAlign || mobileContentAlign ) : undefined,
 				marginRight: numberMobileAlign !== '' && mobileContentAlign !== '' ? marginRightAlign( numberMobileAlign || mobileContentAlign ) : undefined,
-				textAlign: getValue( 'numberMobileAlign' ),
+				textAlign: show.numberBGColor ? undefined : ( getValue( 'numberMobileAlign' ) || getValue( 'mobileContentAlign' ) ),
 			},
 		},
 	}

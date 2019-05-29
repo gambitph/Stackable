@@ -156,7 +156,6 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					fontSizeProps={ {
 						max: design === 'basic' || design === 'plain' ? [ 150, 7 ] : [ 500, 15 ],
 					} }
-					onChangeLineHeight={ false }
 				/>
 				{ show.numberStyle && (
 					<SelectControl
@@ -385,24 +384,6 @@ addFilter( 'stackable.number-box.edit.inspector.before', 'stackable/number-box/a
 		</Fragment>
 	)
 }, 11 )
-
-// TODO: collapse
-addFilter( 'stackable.number-box.edit.advanced.responsive.before', 'stackable/number-box/collapse', ( output, props ) => {
-	return (
-		<Fragment>
-			{ output }
-			<SelectControl
-				label={ __( 'Collapse to 1 Column On' ) }
-				value={ 'mobile' }
-				options={ [
-					{ label: __( 'Do Not Collapse' ), value: 'none' },
-					{ label: __( 'Tablet' ), value: 'tablet' },
-					{ label: __( 'Mobile' ), value: 'mobile' },
-				] }
-			/>
-		</Fragment>
-	)
-} )
 
 const edit = props => {
 	const {
