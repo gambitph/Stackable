@@ -418,6 +418,8 @@ const deprecated = [
 			return {
 				...attributes,
 				columns: attributes.columns ? attributes.columns : 3,
+				columnBackgroundColor: attributes.backgroundColor ? attributes.backgroundColor : undefined,
+				backgroundColor: undefined,
 			}
 		},
 	},
