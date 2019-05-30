@@ -144,6 +144,38 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					/>
 				</PanelBody>
 			}
+
+			<PanelBody title={ __( 'Spacing' ) } initialOpen={ false }>
+				{ showNumber && (
+					<ResponsiveControl
+						attrNameTemplate="number%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Number' ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				) }
+				{ showTitle && (
+					<ResponsiveControl
+						attrNameTemplate="title%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Title' ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				) }
+			</PanelBody>
+
 			<PanelAdvancedSettings
 				title={ __( 'Number' ) }
 				checked={ showNumber }
@@ -159,7 +191,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 				/>
 				{ show.numberStyle && (
 					<SelectControl
-						label={ __( 'Number Style' ) }
+						label={ __( 'Number Shape' ) }
 						options={ [
 							{ label: __( 'None' ), value: 'none' },
 							{ label: __( 'Circle' ), value: '' },
@@ -168,6 +200,21 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 						value={ numberStyle }
 						onChange={ numberStyle => setAttributes( { numberStyle } ) }
 					/>
+				) }
+				{ show.numberBGColor && (
+					<ResponsiveControl
+						attrNameTemplate="number%sPadding"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Shape Size' ) }
+							min={ 0 }
+							max={ 5 }
+							step={ 0.1 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
 				) }
 				{ show.numberBGColor && (
 					<ColorPaletteControl
@@ -182,21 +229,6 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 						onChange={ numberColor => setAttributes( { numberColor } ) }
 						label={ __( 'Number Color' ) }
 					/>
-				) }
-				{ show.numberBGColor && (
-					<ResponsiveControl
-						attrNameTemplate="number%sPadding"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Padding' ) }
-							min={ 0 }
-							max={ 5 }
-							step={ 0.1 }
-							allowReset={ true }
-						/>
-					</ResponsiveControl>
 				) }
 				<ResponsiveControl
 					attrNameTemplate="Number%sAlign"
@@ -259,37 +291,6 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					<AlignButtonsControl label={ __( 'Align' ) } />
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
-
-			<PanelBody title={ __( 'Spacing' ) } initialOpen={ false }>
-				{ showNumber && (
-					<ResponsiveControl
-						attrNameTemplate="number%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Number' ) }
-							min={ -50 }
-							max={ 100 }
-							allowReset={ true }
-						/>
-					</ResponsiveControl>
-				) }
-				{ showTitle && (
-					<ResponsiveControl
-						attrNameTemplate="title%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Title' ) }
-							min={ -50 }
-							max={ 100 }
-							allowReset={ true }
-						/>
-					</ResponsiveControl>
-				) }
-			</PanelBody>
 		</Fragment>
 	)
 } )
