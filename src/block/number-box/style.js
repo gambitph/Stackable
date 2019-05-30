@@ -76,7 +76,7 @@ export const createStyles = props => {
 		numberLineHeightUnit = 'em',
 		numberTabletLineHeightUnit = 'em',
 		numberMobileLineHeightUnit = 'em',
-		showNumber = '',
+		showNumber = true,
 	} = props.attributes
 
 	if ( showNumber ) {
@@ -119,7 +119,7 @@ export const createStyles = props => {
 
 	const {
 		titleColor = '',
-		showTitle = '',
+		showTitle = true,
 	} = props.attributes
 	if ( showTitle ) {
 		styles.push( {
@@ -145,7 +145,7 @@ export const createStyles = props => {
 
 	const {
 		descriptionColor = '',
-		showDescription = '',
+		showDescription = true,
 	} = props.attributes
 	if ( showDescription ) {
 		styles.push( {
