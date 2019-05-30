@@ -16,6 +16,8 @@ export const createStyles = props => {
 		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
 	}
 
+	const styles = []
+
 	const {
 		design = 'basic',
 		columnBackgroundColor = '',
@@ -39,7 +41,7 @@ export const createStyles = props => {
 		tabletContentAlign = '',
 		mobileContentAlign = '',
 	} = props.attributes
-	const general = {
+	styles.push( {
 		'.ugb-number-box__item': {
 			borderRadius: design !== 'plain' && borderRadius !== 12 ? `${ borderRadius }px` : undefined,
 			textAlign: getValue( 'contentAlign' ),
@@ -54,12 +56,12 @@ export const createStyles = props => {
 				textAlign: getValue( 'mobileContentAlign' ),
 			},
 		},
-	}
+	} )
 
 	// Column Background.
-	const columnBackground = {
+	styles.push( {
 		...( show.columnBackground ? createBackgroundStyleSet( 'column%s', 'ugb-number-box__item', props.attributes ) : {} ),
-	}
+	} )
 
 	// Number
 	const {
@@ -74,89 +76,100 @@ export const createStyles = props => {
 		numberLineHeightUnit = 'em',
 		numberTabletLineHeightUnit = 'em',
 		numberMobileLineHeightUnit = 'em',
+		showNumber = '',
 	} = props.attributes
-	const number = {
-		'.ugb-number-box__number': {
-			...createTypographyStyles( 'number%s', 'desktop', props.attributes ),
-			backgroundColor: show.numberBGColor && getValue( 'numberBGColor' ),
-			height: show.numberBGColor && getValue( 'numberPadding', '%sem' ),
-			width: show.numberBGColor && getValue( 'numberPadding', '%sem' ),
-			lineHeight: show.numberBGColor && numberLineHeight === '' ? getValue( 'numberPadding', '%sem' ) : `${ numberLineHeight }${ numberLineHeightUnit }`,
-			marginLeft: numberAlign !== '' || contentAlign !== '' ? marginLeftAlign( numberAlign || contentAlign ) : undefined,
-			marginRight: numberAlign !== '' || contentAlign !== '' ? marginRightAlign( numberAlign || contentAlign ) : undefined,
-			textAlign: show.numberBGColor ? undefined : ( getValue( 'numberAlign' ) || getValue( 'contentAlign' ) ),
-			color: whiteIfDarkBlackIfLight( numberColor, show.numberBGColor && numberBGColor ),
-			// Special case for centering the text with letter-spacing.
-			textIndent: ( design === 'basic' || design === 'plain' ) && getValue( 'numberLetterSpacing', '%spx' ),
-		},
-		tablet: {
+
+	if ( showNumber ) {
+		styles.push( {
 			'.ugb-number-box__number': {
-				height: show.numberBGColor && getValue( 'numberTabletPadding', '%sem' ),
-				width: show.numberBGColor && getValue( 'numberTabletPadding', '%sem' ),
-				lineHeight: show.numberBGColor && numberTabletLineHeight === '' ? getValue( 'numberTabletPadding', '%sem' ) : `${ numberTabletLineHeight }${ numberTabletLineHeightUnit }`,
-				marginLeft: numberTabletAlign !== '' && tabletContentAlign !== '' ? marginLeftAlign( numberTabletAlign || tabletContentAlign ) : undefined,
-				marginRight: numberTabletAlign !== '' && tabletContentAlign !== '' ? marginRightAlign( numberTabletAlign || tabletContentAlign ) : undefined,
-				textAlign: show.numberBGColor ? undefined : ( getValue( 'numberTabletAlign' ) || getValue( 'tabletContentAlign' ) ),
+				...createTypographyStyles( 'number%s', 'desktop', props.attributes ),
+				backgroundColor: show.numberBGColor ? getValue( 'numberBGColor' ) : undefined,
+				height: show.numberBGColor ? getValue( 'numberPadding', '%sem' ) : undefined,
+				width: show.numberBGColor ? getValue( 'numberPadding', '%sem' ) : undefined,
+				lineHeight: show.numberBGColor && numberLineHeight === '' ? getValue( 'numberPadding', '%sem' ) : getValue( 'numberLineHeight', `%s${ numberLineHeightUnit }` ),
+				marginLeft: numberAlign !== '' || contentAlign !== '' ? marginLeftAlign( numberAlign || contentAlign ) : undefined,
+				marginRight: numberAlign !== '' || contentAlign !== '' ? marginRightAlign( numberAlign || contentAlign ) : undefined,
+				textAlign: show.numberBGColor ? undefined : ( getValue( 'numberAlign' ) || getValue( 'contentAlign' ) ),
+				color: whiteIfDarkBlackIfLight( numberColor, show.numberBGColor && numberBGColor ),
+				// Special case for centering the text with letter-spacing.
+				textIndent: ( design === 'basic' || design === 'plain' ) ? getValue( 'numberLetterSpacing', '%spx' ) : undefined,
 			},
-		},
-		mobile: {
-			'.ugb-number-box__number': {
-				height: show.numberBGColor && getValue( 'numberMobilePadding', '%sem' ),
-				width: show.numberBGColor && getValue( 'numberMobilePadding', '%sem' ),
-				lineHeight: show.numberBGColor && numberMobileLineHeight === '' ? getValue( 'numberMobilePadding', '%sem' ) : `${ numberMobileLineHeight }${ numberMobileLineHeightUnit }`,
-				marginLeft: numberMobileAlign !== '' && mobileContentAlign !== '' ? marginLeftAlign( numberMobileAlign || mobileContentAlign ) : undefined,
-				marginRight: numberMobileAlign !== '' && mobileContentAlign !== '' ? marginRightAlign( numberMobileAlign || mobileContentAlign ) : undefined,
-				textAlign: show.numberBGColor ? undefined : ( getValue( 'numberMobileAlign' ) || getValue( 'mobileContentAlign' ) ),
+			tablet: {
+				'.ugb-number-box__number': {
+					height: show.numberBGColor ? getValue( 'numberTabletPadding', '%sem' ) : undefined,
+					width: show.numberBGColor ? getValue( 'numberTabletPadding', '%sem' ) : undefined,
+					lineHeight: show.numberBGColor && numberTabletLineHeight === '' ? getValue( 'numberTabletPadding', '%sem' ) : getValue( 'numberTabletLineHeight', `%s${ numberTabletLineHeightUnit }` ),
+					marginLeft: numberTabletAlign !== '' && tabletContentAlign !== '' ? marginLeftAlign( numberTabletAlign || tabletContentAlign ) : undefined,
+					marginRight: numberTabletAlign !== '' && tabletContentAlign !== '' ? marginRightAlign( numberTabletAlign || tabletContentAlign ) : undefined,
+					textAlign: show.numberBGColor ? undefined : ( getValue( 'numberTabletAlign' ) || getValue( 'tabletContentAlign' ) ),
+				},
 			},
-		},
+			mobile: {
+				'.ugb-number-box__number': {
+					height: show.numberBGColor ? getValue( 'numberMobilePadding', '%sem' ) : undefined,
+					width: show.numberBGColor ? getValue( 'numberMobilePadding', '%sem' ) : undefined,
+					lineHeight: show.numberBGColor && numberMobileLineHeight === '' ? getValue( 'numberMobilePadding', '%sem' ) : getValue( 'numberMobileLineHeight', `%s${ numberMobileLineHeightUnit }` ),
+					marginLeft: numberMobileAlign !== '' && mobileContentAlign !== '' ? marginLeftAlign( numberMobileAlign || mobileContentAlign ) : undefined,
+					marginRight: numberMobileAlign !== '' && mobileContentAlign !== '' ? marginRightAlign( numberMobileAlign || mobileContentAlign ) : undefined,
+					textAlign: show.numberBGColor ? undefined : ( getValue( 'numberMobileAlign' ) || getValue( 'mobileContentAlign' ) ),
+				},
+			},
+		} )
 	}
+
 	const {
 		titleColor = '',
+		showTitle = '',
 	} = props.attributes
-	const title = {
-		'.ugb-number-box__title': {
-			...createTypographyStyles( 'title%s', 'desktop', props.attributes ),
-			color: whiteIfDark( titleColor, columnBackgroundColor ),
-			textAlign: getValue( 'titleAlign' ),
-		},
-		tablet: {
+	if ( showTitle ) {
+		styles.push( {
 			'.ugb-number-box__title': {
-				...createTypographyStyles( 'title%s', 'tablet', props.attributes ),
-				textAlign: getValue( 'titleTabletAlign' ),
+				...createTypographyStyles( 'title%s', 'desktop', props.attributes ),
+				color: whiteIfDark( titleColor, columnBackgroundColor ),
+				textAlign: getValue( 'titleAlign' ),
 			},
-		},
-		mobile: {
-			'.ugb-number-box__title': {
-				...createTypographyStyles( 'title%s', 'mobile', props.attributes ),
-				textAlign: getValue( 'titleMobileAlign' ),
+			tablet: {
+				'.ugb-number-box__title': {
+					...createTypographyStyles( 'title%s', 'tablet', props.attributes ),
+					textAlign: getValue( 'titleTabletAlign' ),
+				},
 			},
-		},
+			mobile: {
+				'.ugb-number-box__title': {
+					...createTypographyStyles( 'title%s', 'mobile', props.attributes ),
+					textAlign: getValue( 'titleMobileAlign' ),
+				},
+			},
+		} )
 	}
 
 	const {
 		descriptionColor = '',
+		showDescription = '',
 	} = props.attributes
-	const description = {
-		'.ugb-number-box__description': {
-			...createTypographyStyles( 'description%s', 'desktop', props.attributes ),
-			color: whiteIfDark( descriptionColor, columnBackgroundColor ),
-			textAlign: getValue( 'descriptionAlign' ),
-		},
-		tablet: {
+	if ( showDescription ) {
+		styles.push( {
 			'.ugb-number-box__description': {
-				...createTypographyStyles( 'description%s', 'tablet', props.attributes ),
-				textAlign: getValue( 'descriptionTabletAlign' ),
+				...createTypographyStyles( 'description%s', 'desktop', props.attributes ),
+				color: whiteIfDark( descriptionColor, columnBackgroundColor ),
+				textAlign: getValue( 'descriptionAlign' ),
 			},
-		},
-		mobile: {
-			'.ugb-number-box__description': {
-				...createTypographyStyles( 'description%s', 'mobile', props.attributes ),
-				textAlign: getValue( 'descriptionMobileAlign' ),
+			tablet: {
+				'.ugb-number-box__description': {
+					...createTypographyStyles( 'description%s', 'tablet', props.attributes ),
+					textAlign: getValue( 'descriptionTabletAlign' ),
+				},
 			},
-		},
+			mobile: {
+				'.ugb-number-box__description': {
+					...createTypographyStyles( 'description%s', 'mobile', props.attributes ),
+					textAlign: getValue( 'descriptionMobileAlign' ),
+				},
+			},
+		} )
 	}
 
-	const spacing = {
+	styles.push( {
 		'.ugb-number-box__number': {
 			marginBottom: getValue( 'numberBottomMargin', '%spx' ),
 		},
@@ -179,9 +192,10 @@ export const createStyles = props => {
 				marginBottom: getValue( 'titleMobileBottomMargin', '%spx' ),
 			},
 		},
-	}
+	} )
 
-	const individual = {
+	// Advanced individual column color styles.
+	styles.push( {
 		'.ugb-number-box__item1': {
 			backgroundColor: getValue( 'Column1BackgroundColor' ),
 		},
@@ -202,15 +216,15 @@ export const createStyles = props => {
 		},
 
 		'.ugb-number-box__item1 .ugb-number-box__number': {
-			backgroundColor: show.numberBGColor && getValue( 'Column1NumberBackgroundColor' ),
+			backgroundColor: show.numberBGColor ? getValue( 'Column1NumberBackgroundColor' ) : undefined,
 			color: getValue( 'Column1NumberColor' ),
 		},
 		'.ugb-number-box__item2 .ugb-number-box__number': {
-			backgroundColor: show.numberBGColor && getValue( 'Column2NumberBackgroundColor' ),
+			backgroundColor: show.numberBGColor ? getValue( 'Column2NumberBackgroundColor' ) : undefined,
 			color: getValue( 'Column2NumberColor' ),
 		},
 		'.ugb-number-box__item3 .ugb-number-box__number': {
-			backgroundColor: show.numberBGColor && getValue( 'Column3NumberBackgroundColor' ),
+			backgroundColor: show.numberBGColor ? getValue( 'Column3NumberBackgroundColor' ) : undefined,
 			color: getValue( 'Column3NumberColor' ),
 		},
 
@@ -233,9 +247,9 @@ export const createStyles = props => {
 		'.ugb-number-box__item3 .ugb-number-box__description': {
 			color: getValue( 'Column3DescriptionColor' ),
 		},
-	}
+	} )
 
-	return deepmerge.all( [ general, columnBackground, number, title, description, spacing, individual ] )
+	return deepmerge.all( styles )
 }
 
 export default createStyles
