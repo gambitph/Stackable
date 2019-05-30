@@ -1,9 +1,8 @@
+import { descriptionPlaceholder, isDarkColor } from '@stackable/util'
 import { omit, range } from 'lodash'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
-import { descriptionPlaceholder } from '@stackable/util'
-import isDarkColor from 'is-dark-color'
 import { RichText } from '@wordpress/editor'
 
 const deprecatedSchema_1_15 = {
