@@ -36,8 +36,8 @@ export const createStyles = props => {
 
 	// General.
 	const {
-		contentAlign = '',
 		borderRadius = 12,
+		contentAlign = '',
 		tabletContentAlign = '',
 		mobileContentAlign = '',
 	} = props.attributes
