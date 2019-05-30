@@ -298,7 +298,7 @@ const addTopStyles = ( styleObject, props ) => {
 
 	const styles = {
 		[ `.ugb-top-separator` ]: {
-			zIndex: topSeparatorBringToFront ? 4 : undefined,
+			zIndex: topSeparatorBringToFront ? 6 : undefined,
 			transform: topSeparatorFlipHorizontally ? 'scale(-1)' : undefined,
 		},
 		[ `.ugb-top-separator svg` ]: {
@@ -342,7 +342,7 @@ const addBottomStyles = ( styleObject, props ) => {
 	const styles = {
 		[ `.ugb-bottom-separator` ]: {
 			height: bottomSeparatorHeight !== '' ? `${ bottomSeparatorHeight }px` : undefined,
-			zIndex: bottomSeparatorBringToFront ? 4 : undefined,
+			zIndex: bottomSeparatorBringToFront ? 6 : undefined,
 		},
 		[ `.ugb-bottom-separator svg` ]: {
 			fill: bottomSeparatorColor !== '' ? bottomSeparatorColor : '#fff',
