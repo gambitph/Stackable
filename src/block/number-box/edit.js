@@ -16,7 +16,7 @@ import {
 	TypographyControlHelper,
 } from '@stackable/components'
 import { AlignmentToolbar, BlockControls, RichText } from '@wordpress/editor'
-import { descriptionPlaceholder, hasBackgroundOverlay, range } from '@stackable/util'
+import { descriptionPlaceholder, getAttrName, hasBackgroundOverlay, range } from '@stackable/util'
 import { PanelBody, RangeControl, SelectControl } from '@wordpress/components'
 import { withBlockStyles, withGoogleFont, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
 import classnames from 'classnames'
@@ -127,6 +127,15 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					attrNameTemplate="%sContentAlign"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					onChange={ ( attributeName, value, screen ) => {
+						setAttributes( {
+							[ attributeName ]: value,
+							// Reset the other alignment options.
+							[ getAttrName( 'Number%sAlign', screen ) ]: undefined,
+							[ getAttrName( 'Title%sAlign', screen ) ]: undefined,
+							[ getAttrName( 'Description%sAlign', screen ) ]: undefined,
+						} )
+					} }
 				>
 					<AlignButtonsControl label={ __( 'Align' ) } />
 				</ResponsiveControl>

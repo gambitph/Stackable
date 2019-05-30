@@ -1,6 +1,10 @@
 import { camelCase } from 'lodash'
 import { sprintf } from '@wordpress/i18n'
 
+export const getAttrName = ( attrNameTemplate = '%s', param1 = '', param2 = '' ) => {
+	return camelCase( sprintf( attrNameTemplate, param1, param2 ) )
+}
+
 /**
  * Generates a combination set of attributes with different names.
  *

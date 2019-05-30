@@ -13,7 +13,13 @@ const ResponsiveControl = props => {
 				{ Children.toArray( props.children ).map( child => {
 					return cloneElement( child, {
 						value: getValue(),
-						onChange: value => props.setAttributes( { [ getAttrName() ]: value } ),
+						onChange: value => {
+							if ( props.onChange ) {
+								props.onChange( getAttrName(), value, '' )
+							} else {
+								props.setAttributes( { [ getAttrName() ]: value } )
+							}
+						},
 					} )
 				} ) }
 			</WhenResponsiveScreen>
@@ -21,7 +27,13 @@ const ResponsiveControl = props => {
 				{ Children.toArray( props.children ).map( child => {
 					return cloneElement( child, {
 						value: getValue( 'Tablet' ),
-						onChange: value => props.setAttributes( { [ getAttrName( 'Tablet' ) ]: value } ),
+						onChange: value => {
+							if ( props.onChange ) {
+								props.onChange( getAttrName( 'Tablet' ), value, 'tablet' )
+							} else {
+								props.setAttributes( { [ getAttrName( 'Tablet' ) ]: value } )
+							}
+						},
 					} )
 				} ) }
 			</WhenResponsiveScreen>
@@ -29,7 +41,13 @@ const ResponsiveControl = props => {
 				{ Children.toArray( props.children ).map( child => {
 					return cloneElement( child, {
 						value: getValue( 'Mobile' ),
-						onChange: value => props.setAttributes( { [ getAttrName( 'Mobile' ) ]: value } ),
+						onChange: value => {
+							if ( props.onChange ) {
+								props.onChange( getAttrName( 'Mobile' ), value, 'mobile' )
+							} else {
+								props.setAttributes( { [ getAttrName( 'Mobile' ) ]: value } )
+							}
+						},
 					} )
 				} ) }
 			</WhenResponsiveScreen>
@@ -41,6 +59,7 @@ ResponsiveControl.defaultProps = {
 	attrNameTemplate: '%s',
 	setAttributes: () => {},
 	blockAttributes: {},
+	onChange: null,
 }
 
 export default ResponsiveControl
