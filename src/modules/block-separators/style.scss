@@ -8,6 +8,7 @@
 	}
 }
 .ugb-top-separator, .ugb-bottom-separator {
+	pointer-events: none;
     position: absolute;
     top: -1px;
     left: -1px;
