@@ -64,7 +64,7 @@ export const deprecatedSave_1_15 = props => {
 
 	return (
 		<div className={ mainClasses } style={ mainStyle } aria-hidden="true">
-			{ applyFilters( 'stackable.separator.save.output.before', null, design, props ) }
+			{ applyFilters( 'stackable.separator.save.output.before_1_15', null, design, props ) }
 			<div className="ugb-separator__top-pad" style={ topPadStyle }></div>
 			<div className="ugb-separator__svg-wrapper" style={ svgWrapperStyle }>
 				<div className="ugb-separator__svg-inner">
