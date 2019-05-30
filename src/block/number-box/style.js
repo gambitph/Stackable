@@ -125,7 +125,7 @@ export const createStyles = props => {
 		styles.push( {
 			'.ugb-number-box__title': {
 				...createTypographyStyles( 'title%s', 'desktop', props.attributes ),
-				color: whiteIfDark( titleColor, columnBackgroundColor ),
+				color: show.columnBackground ? whiteIfDark( titleColor, columnBackgroundColor ) : undefined,
 				textAlign: getValue( 'titleAlign' ),
 			},
 			tablet: {
@@ -151,7 +151,7 @@ export const createStyles = props => {
 		styles.push( {
 			'.ugb-number-box__description': {
 				...createTypographyStyles( 'description%s', 'desktop', props.attributes ),
-				color: whiteIfDark( descriptionColor, columnBackgroundColor ),
+				color: show.columnBackground ? whiteIfDark( descriptionColor, columnBackgroundColor ) : undefined,
 				textAlign: getValue( 'descriptionAlign' ),
 			},
 			tablet: {
