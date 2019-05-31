@@ -85,14 +85,14 @@ const schema = {
 	schema[ `url${ index }` ] = {
 		type: 'string',
 		source: 'attribute',
-		selector: `.ugb-pricing-box__item:nth-child(${ i }) .ugb-button`,
+		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-button`,
 		attribute: 'href',
 		default: '',
 	}
 	schema[ `newTab${ index }` ] = {
 		type: 'boolean',
 		source: 'attribute',
-		selector: `.ugb-pricing-box__item:nth-child(${ i }) .ugb-button`,
+		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-button`,
 		attribute: 'target',
 		default: false,
 	}
@@ -111,37 +111,37 @@ const schema = {
 	}
 	schema[ `pricingBoxTitle${ index }` ] = {
 		source: 'html',
-		selector: `.ugb-pricing-box__item:nth-child(${ i }) .ugb-pricing-box__title`,
+		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__title`,
 		default: __( 'Title' ),
 	}
 	schema[ `price${ index }` ] = {
 		source: 'html',
-		selector: `.ugb-pricing-box__item:nth-child(${ i }) .ugb-pricing-box__price`,
+		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__price`,
 		default: `${ index }9`,
 	}
 	schema[ `pricePrefix${ index }` ] = {
 		source: 'html',
-		selector: `.ugb-pricing-box__item:nth-child(${ i }) .ugb-pricing-box__price-prefix`,
+		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__price-prefix`,
 		default: '$',
 	}
 	schema[ `priceSuffix${ index }` ] = {
 		source: 'html',
-		selector: `.ugb-pricing-box__item:nth-child(${ i }) .ugb-pricing-box__price-suffix`,
+		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__price-suffix`,
 		default: '.00',
 	}
 	schema[ `perMonthLabel${ index }` ] = {
 		source: 'html',
-		selector: `.ugb-pricing-box__item:nth-child(${ i }) .ugb-pricing-box__subprice`,
+		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__subprice`,
 		default: __( 'Description' ),
 	}
 	schema[ `buttonText${ index }` ] = {
 		source: 'html',
-		selector: `.ugb-pricing-box__item:nth-child(${ i }) .ugb-button span`,
+		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-button span`,
 		default: __( 'Button text' ),
 	}
 	schema[ `featureList${ index }` ] = {
 		source: 'html',
-		selector: `.ugb-pricing-box__item:nth-child(${ i }) .ugb-pricing-box__description`,
+		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__description`,
 		default: descriptionPlaceholder( 'medium' ),
 	}
 } ) }

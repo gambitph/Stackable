@@ -10,47 +10,47 @@ import { NumberBoxIcon } from '@stackable/icons'
 export const schema = {
 	num1: {
 		source: 'html',
-		selector: '.ugb-number-box__item:nth-child(1) .ugb-number-box__number',
+		selector: '.ugb-number-box__item:nth-of-type(1) .ugb-number-box__number',
 		default: '01',
 	},
 	num2: {
 		source: 'html',
-		selector: '.ugb-number-box__item:nth-child(2) .ugb-number-box__number',
+		selector: '.ugb-number-box__item:nth-of-type(2) .ugb-number-box__number',
 		default: '02',
 	},
 	num3: {
 		source: 'html',
-		selector: '.ugb-number-box__item:nth-child(3) .ugb-number-box__number',
+		selector: '.ugb-number-box__item:nth-of-type(3) .ugb-number-box__number',
 		default: '03',
 	},
 	title1: {
 		source: 'html',
-		selector: '.ugb-number-box__item:nth-child(1) .ugb-number-box__title',
+		selector: '.ugb-number-box__item:nth-of-type(1) .ugb-number-box__title',
 		default: __( 'Title' ),
 	},
 	title2: {
 		source: 'html',
-		selector: '.ugb-number-box__item:nth-child(2) .ugb-number-box__title',
+		selector: '.ugb-number-box__item:nth-of-type(2) .ugb-number-box__title',
 		default: __( 'Title' ),
 	},
 	title3: {
 		source: 'html',
-		selector: '.ugb-number-box__item:nth-child(3) .ugb-number-box__title',
+		selector: '.ugb-number-box__item:nth-of-type(3) .ugb-number-box__title',
 		default: __( 'Title' ),
 	},
 	description1: {
 		source: 'html',
-		selector: '.ugb-number-box__item:nth-child(1) .ugb-number-box__description',
+		selector: '.ugb-number-box__item:nth-of-type(1) .ugb-number-box__description',
 		default: descriptionPlaceholder(),
 	},
 	description2: {
 		source: 'html',
-		selector: '.ugb-number-box__item:nth-child(2) .ugb-number-box__description',
+		selector: '.ugb-number-box__item:nth-of-type(2) .ugb-number-box__description',
 		default: descriptionPlaceholder(),
 	},
 	description3: {
 		source: 'html',
-		selector: '.ugb-number-box__item:nth-child(3) .ugb-number-box__description',
+		selector: '.ugb-number-box__item:nth-of-type(3) .ugb-number-box__description',
 		default: descriptionPlaceholder(),
 	},
 	numberColor: {

@@ -109,12 +109,12 @@ export const schema = {
 { [ 1, 2, 3, 4 ].forEach( i => {
 	schema[ `title${ i }` ] = {
 		source: 'html',
-		selector: `.ugb-image-box__item:nth-child(${ i }) .ugb-image-box__title`,
+		selector: `.ugb-image-box__item:nth-of-type(${ i }) .ugb-image-box__title`,
 		default: __( 'Title' ),
 	}
 	schema[ `description${ i }` ] = {
 		source: 'html',
-		selector: `.ugb-image-box__item:nth-child(${ i }) .ugb-image-box__description`,
+		selector: `.ugb-image-box__item:nth-of-type(${ i }) .ugb-image-box__description`,
 		default: __( 'Description' ),
 	}
 	schema[ `imageURL${ i }` ] = {
@@ -126,14 +126,14 @@ export const schema = {
 	schema[ `link${ i }` ] = {
 		type: 'string',
 		source: 'attribute',
-		selector: `.ugb-image-box__item:nth-child(${ i }) .ugb-image-box__overlay`,
+		selector: `.ugb-image-box__item:nth-of-type(${ i }) .ugb-image-box__overlay`,
 		attribute: 'href',
 		default: '',
 	}
 	schema[ `newTab${ i }` ] = {
 		type: 'boolean',
 		source: 'attribute',
-		selector: `.ugb-image-box__item:nth-child(${ i }) .ugb-image-box__overlay`,
+		selector: `.ugb-image-box__item:nth-of-type(${ i }) .ugb-image-box__overlay`,
 		attribute: 'target',
 		default: false,
 	}

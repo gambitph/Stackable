@@ -61,20 +61,20 @@ export const deprecatedSchema_1_12 = {
 	url2: {
 		type: 'string',
 		source: 'attribute',
-		selector: 'div:nth-child(2) .ugb-button',
+		selector: 'div:nth-of-type(2) .ugb-button',
 		attribute: 'href',
 		default: '',
 	},
 	newTab2: {
 		type: 'boolean',
 		source: 'attribute',
-		selector: 'div:nth-child(2) .ugb-button',
+		selector: 'div:nth-of-type(2) .ugb-button',
 		attribute: 'target',
 		default: false,
 	},
 	text2: {
 		source: 'html',
-		selector: 'div:nth-child(2) .ugb-button span',
+		selector: 'div:nth-of-type(2) .ugb-button span',
 		default: __( 'Button text' ),
 	},
 	color2: {
@@ -99,20 +99,20 @@ export const deprecatedSchema_1_12 = {
 	url3: {
 		type: 'string',
 		source: 'attribute',
-		selector: 'div:nth-child(3) .ugb-button',
+		selector: 'div:nth-of-type(3) .ugb-button',
 		attribute: 'href',
 		default: '',
 	},
 	newTab3: {
 		type: 'boolean',
 		source: 'attribute',
-		selector: 'div:nth-child(3) .ugb-button',
+		selector: 'div:nth-of-type(3) .ugb-button',
 		attribute: 'target',
 		default: false,
 	},
 	text3: {
 		source: 'html',
-		selector: 'div:nth-child(3) .ugb-button span',
+		selector: 'div:nth-of-type(3) .ugb-button span',
 		default: __( 'Button text' ),
 	},
 	color3: {
@@ -228,12 +228,12 @@ const deprecatedSchema_1_10 = {
 	url2: {
 		type: 'string',
 		source: 'attribute',
-		selector: 'div:nth-child(2) .ugb-button',
+		selector: 'div:nth-of-type(2) .ugb-button',
 		attribute: 'href',
 	},
 	text2: {
 		source: 'html',
-		selector: 'div:nth-child(2) .ugb-button span',
+		selector: 'div:nth-of-type(2) .ugb-button span',
 		default: __( 'Button text' ),
 	},
 	color2: {
@@ -258,12 +258,12 @@ const deprecatedSchema_1_10 = {
 	url3: {
 		type: 'string',
 		source: 'attribute',
-		selector: 'div:nth-child(3) .ugb-button',
+		selector: 'div:nth-of-type(3) .ugb-button',
 		attribute: 'href',
 	},
 	text3: {
 		source: 'html',
-		selector: 'div:nth-child(3) .ugb-button span',
+		selector: 'div:nth-of-type(3) .ugb-button span',
 		default: __( 'Button text' ),
 	},
 	color3: {
@@ -377,12 +377,12 @@ const deprecatedSchema_1_9 = {
 	url2: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.ugb-button:nth-child(2) a',
+		selector: '.ugb-button:nth-of-type(2) a',
 		attribute: 'href',
 	},
 	text2: {
 		source: 'html',
-		selector: '.ugb-button:nth-child(2) a',
+		selector: '.ugb-button:nth-of-type(2) a',
 		default: 'Button',
 	},
 	color2: {
@@ -407,12 +407,12 @@ const deprecatedSchema_1_9 = {
 	url3: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.ugb-button:nth-child(3) a',
+		selector: '.ugb-button:nth-of-type(3) a',
 		attribute: 'href',
 	},
 	text3: {
 		source: 'html',
-		selector: '.ugb-button:nth-child(3) a',
+		selector: '.ugb-button:nth-of-type(3) a',
 		default: 'Button',
 	},
 	color3: {
