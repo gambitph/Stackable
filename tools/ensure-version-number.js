@@ -12,6 +12,11 @@ const getVersion = () => {
 	return content.match( /Version: ([\d.]+)/ )[ 1 ]
 }
 
+const getFullVersion = () => {
+	const content = fs.readFileSync( 'plugin.php', 'utf8' )
+	return content.match( /Version: ([\d\w-_.]+)/ )[ 1 ]
+}
+
 const replaceConstant = version => {
 	replace( {
 		files: 'plugin.php',
@@ -49,6 +54,7 @@ const replacePackageJson = version => {
 }
 
 const version = getVersion()
-replaceConstant( version )
+const fullVersion = getFullVersion()
+replaceConstant( fullVersion )
 replaceReadme( version )
 replacePackageJson( version )
