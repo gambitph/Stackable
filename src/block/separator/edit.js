@@ -6,8 +6,6 @@ import {
 	ColorPaletteControl,
 	DesignPanelBody,
 	DesignSeparatorControl,
-	PanelDesignLibrary,
-	PanelDesignUserLibrary,
 	Separator,
 	WhenResponsiveScreen,
 } from '@stackable/components'
@@ -35,12 +33,6 @@ addFilter( 'stackable.separator.edit.inspector.layout.before', 'stackable/separa
 					excludeDesigns={ [ 'straight-1' ] }
 				/>
 			</DesignPanelBody>
-			<PanelDesignLibrary block={ props.name } />
-			<PanelDesignUserLibrary
-				initialOpen={ false }
-				block={ props.name }
-				ignoredAttributes={ [] }
-			/>
 		</Fragment>
 	)
 } )

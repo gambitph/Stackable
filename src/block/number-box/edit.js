@@ -9,8 +9,6 @@ import {
 	DesignPanelBody,
 	HeadingButtonsControl,
 	PanelAdvancedSettings,
-	PanelDesignLibrary,
-	PanelDesignUserLibrary,
 	ProControlButton,
 	ResponsiveControl,
 	TypographyControlHelper,
@@ -54,12 +52,6 @@ addFilter( 'stackable.number-box.edit.inspector.layout.before', 'stackable/numbe
 			>
 				{ showProNotice && <ProControlButton /> }
 			</DesignPanelBody>
-			<PanelDesignLibrary block={ props.name } />
-			<PanelDesignUserLibrary
-				initialOpen={ false }
-				block={ props.name }
-				ignoredAttributes={ [] }
-			/>
 		</Fragment>
 	)
 } )
