@@ -65,15 +65,19 @@ export const schema = {
 	},
 	numberColor: {
 		type: 'string',
+		default: '',
 	},
 	numberBGColor: {
 		type: 'string',
+		default: '',
 	},
 	titleColor: {
 		type: 'string',
+		default: '',
 	},
 	descriptionColor: {
 		type: 'string',
+		default: '',
 	},
 	columns: {
 		type: 'number',
@@ -90,9 +94,6 @@ export const schema = {
 	shadow: {
 		type: 'number',
 		default: 3,
-	},
-	backgroundColor: {
-		type: 'string',
 	},
 
 	...createAllCombinationAttributes(
@@ -159,6 +160,9 @@ export const schema = {
 	),
 
 	// Keep the old attributes. Gutenberg issue https://github.com/WordPress/gutenberg/issues/10406
+	backgroundColor: {
+		type: 'string',
+	},
 	numberBox: {
 		type: 'string',
 	},
