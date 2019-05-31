@@ -62,20 +62,20 @@ export const schema = {
 	url2: {
 		type: 'string',
 		source: 'attribute',
-		selector: 'div:nth-child(2) .ugb-button',
+		selector: 'div:nth-of-type(2) .ugb-button',
 		attribute: 'href',
 		default: '',
 	},
 	newTab2: {
 		type: 'boolean',
 		source: 'attribute',
-		selector: 'div:nth-child(2) .ugb-button',
+		selector: 'div:nth-of-type(2) .ugb-button',
 		attribute: 'target',
 		default: false,
 	},
 	text2: {
 		source: 'html',
-		selector: 'div:nth-child(2) .ugb-button span',
+		selector: 'div:nth-of-type(2) .ugb-button span',
 		default: __( 'Button text' ),
 	},
 	color2: {
@@ -100,20 +100,20 @@ export const schema = {
 	url3: {
 		type: 'string',
 		source: 'attribute',
-		selector: 'div:nth-child(3) .ugb-button',
+		selector: 'div:nth-of-type(3) .ugb-button',
 		attribute: 'href',
 		default: '',
 	},
 	newTab3: {
 		type: 'boolean',
 		source: 'attribute',
-		selector: 'div:nth-child(3) .ugb-button',
+		selector: 'div:nth-of-type(3) .ugb-button',
 		attribute: 'target',
 		default: false,
 	},
 	text3: {
 		source: 'html',
-		selector: 'div:nth-child(3) .ugb-button span',
+		selector: 'div:nth-of-type(3) .ugb-button span',
 		default: __( 'Button text' ),
 	},
 	color3: {
