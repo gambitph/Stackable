@@ -31,17 +31,17 @@
 	}
 }
 .ugb-button__group-urls.ugb-button__selected-1 {
-	.blocks-button__inline-link:not(:nth-child(1)) {
+	.blocks-button__inline-link:not(:nth-of-type(1)) {
 		display: none !important;
 	}
 }
 .ugb-button__group-urls.ugb-button__selected-2 {
-	.blocks-button__inline-link:not(:nth-child(2)) {
+	.blocks-button__inline-link:not(:nth-of-type(2)) {
 		display: none !important;
 	}
 }
 .ugb-button__group-urls.ugb-button__selected-3 {
-	.blocks-button__inline-link:not(:nth-child(3)) {
+	.blocks-button__inline-link:not(:nth-of-type(3)) {
 		display: none !important;
 	}
 }
@@ -51,10 +51,10 @@
 		left: auto;
 		right: 200px;
 	}
-	.blocks-button__inline-link:nth-child(2) {
+	.blocks-button__inline-link:nth-of-type(2) {
 		right: 100px;
 	}
-	.blocks-button__inline-link:nth-child(3) {
+	.blocks-button__inline-link:nth-of-type(3) {
 		right: 0;
 	}
 	&.ugb-num-1 {
@@ -66,7 +66,7 @@
 		.blocks-button__inline-link {
 			right: 100px;
 		}
-		.blocks-button__inline-link:nth-child(2) {
+		.blocks-button__inline-link:nth-of-type(2) {
 			right: 0;
 		}
 	}
@@ -76,10 +76,10 @@
 	.blocks-button__inline-link {
 		left: 0;
 	}
-	.blocks-button__inline-link:nth-child(2) {
+	.blocks-button__inline-link:nth-of-type(2) {
 		left: 100px;
 	}
-	.blocks-button__inline-link:nth-child(3) {
+	.blocks-button__inline-link:nth-of-type(3) {
 		left: 200px;
 	}
 }
@@ -91,10 +91,10 @@
 		transform: translateX(-50%);
 		margin-left: -100px;
 	}
-	.blocks-button__inline-link:nth-child(2) {
+	.blocks-button__inline-link:nth-of-type(2) {
 		margin-left: 0;
 	}
-	.blocks-button__inline-link:nth-child(3) {
+	.blocks-button__inline-link:nth-of-type(3) {
 		margin-left: 100px;
 	}
 	&.ugb-num-1 {
@@ -106,7 +106,7 @@
 		.blocks-button__inline-link {
 			margin-left: -50px;
 		}
-		.blocks-button__inline-link:nth-child(2) {
+		.blocks-button__inline-link:nth-of-type(2) {
 			margin-left: 50px;
 		}
 	}
@@ -116,11 +116,11 @@
 	.blocks-button__inline-link {
 		left: 0;
 	}
-	.blocks-button__inline-link:nth-child(2) {
+	.blocks-button__inline-link:nth-of-type(2) {
 		left: 50%;
 		transform: translateX(-50%);
 	}
-	.blocks-button__inline-link:nth-child(3) {
+	.blocks-button__inline-link:nth-of-type(3) {
 		left: auto;
 		right: 0;
 	}
@@ -131,7 +131,7 @@
 		}
 	}
 	&.ugb-num-2 {
-		.blocks-button__inline-link:nth-child(2) {
+		.blocks-button__inline-link:nth-of-type(2) {
 			left: auto;
 			right: 0;
 			transform: none;
