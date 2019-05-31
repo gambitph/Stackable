@@ -2,7 +2,7 @@
 Contributors: bfintal, gambitph, freemius
 Tags: gutenberg, block, blocks, block editor, gutenberg blocks, page builder, editor, wordpress 5.0
 Requires at least: 4.8
-Tested up to: 5.2
+Tested up to: 5.2.1
 Requires PHP: 5.3
 Stable tag: 1.15.4
 License: GPLv3

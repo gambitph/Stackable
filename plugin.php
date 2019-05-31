@@ -5,7 +5,7 @@
  * Description: Blocks for everyone
  * Author: Gambit Technologies, Inc
  * Author URI: http://gambit.ph
- * Version: 1.15.4-dev1
+ * Version: 1.15.4
  *
  * @package Stackable
  */
