@@ -126,6 +126,7 @@ You will have to redo all your blocks
 * Fixed: Error encountered when re-editing blocks with containers if they have custom CSS
 * Fixed: While editing, other columns get hidden when custom CSS is used
 * Fixed: YouTube videos in Video Popup doesn't autoplay.
+* Fixed: Changed cursor in remove background image button since it was confusing
 
 = 1.15.3 =
 * Fixed: Placeholder text no longer becomes hidden when block is blurred
