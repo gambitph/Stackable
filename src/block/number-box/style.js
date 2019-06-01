@@ -25,6 +25,7 @@ export const createStyles = props => {
 	} = props.attributes
 
 	const show = applyFilters( 'stackable.number-box.edit.show', {
+		spacingNumber: true,
 		backgroundColor: design !== 'plain',
 		borderRadius: design !== 'plain',
 		shadow: design !== 'plain',
@@ -169,30 +170,32 @@ export const createStyles = props => {
 		} )
 	}
 
-	styles.push( {
-		'.ugb-number-box__number': {
-			marginBottom: getValue( 'numberBottomMargin', '%spx' ),
-		},
-		'.ugb-number-box__title': {
-			marginBottom: getValue( 'titleBottomMargin', '%spx' ),
-		},
-		tablet: {
+	if ( show.spacingNumber ) {
+		styles.push( {
 			'.ugb-number-box__number': {
-				marginBottom: getValue( 'numberTabletBottomMargin', '%spx' ),
+				marginBottom: getValue( 'numberBottomMargin', '%spx' ),
 			},
 			'.ugb-number-box__title': {
-				marginBottom: getValue( 'titleTabletBottomMargin', '%spx' ),
+				marginBottom: getValue( 'titleBottomMargin', '%spx' ),
 			},
-		},
-		mobile: {
-			'.ugb-number-box__number': {
-				marginBottom: getValue( 'numberMobileBottomMargin', '%spx' ),
+			tablet: {
+				'.ugb-number-box__number': {
+					marginBottom: getValue( 'numberTabletBottomMargin', '%spx' ),
+				},
+				'.ugb-number-box__title': {
+					marginBottom: getValue( 'titleTabletBottomMargin', '%spx' ),
+				},
 			},
-			'.ugb-number-box__title': {
-				marginBottom: getValue( 'titleMobileBottomMargin', '%spx' ),
+			mobile: {
+				'.ugb-number-box__number': {
+					marginBottom: getValue( 'numberMobileBottomMargin', '%spx' ),
+				},
+				'.ugb-number-box__title': {
+					marginBottom: getValue( 'titleMobileBottomMargin', '%spx' ),
+				},
 			},
-		},
-	} )
+		} )
+	}
 
 	// Advanced individual column color styles.
 	styles.push( {

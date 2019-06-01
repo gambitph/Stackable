@@ -75,6 +75,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 	} = props.attributes
 
 	const show = applyFilters( 'stackable.number-box.edit.show', {
+		spacingNumber: true,
 		backgroundColor: design !== 'plain',
 		borderRadius: design !== 'plain',
 		shadow: design !== 'plain',
@@ -147,7 +148,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 			}
 
 			<PanelBody title={ __( 'Spacing' ) } initialOpen={ false }>
-				{ showNumber && (
+				{ show.spacingNumber && showNumber && (
 					<ResponsiveControl
 						attrNameTemplate="number%sBottomMargin"
 						setAttributes={ setAttributes }
