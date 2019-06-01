@@ -1,14 +1,9 @@
 @import "common";
 
-.ugb-main-block.alignfull.ugb--has-block-background {
+// Lots of alignfulls to force our margins!
+.ugb-main-block.ugb--has-block-background.alignfull.alignfull.alignfull.alignfull {
 	margin-top: 0;
-
-	// Instead of doing margin-bottom 0, pull the next full-width with a background up.
-	// margin-bottom: 0;
-	margin-bottom: 35px;
-	+ .ugb-main-block.ugb--has-block-background {
-		margin-top: -35px;
-	}
+	margin-bottom: 0;
 
 	padding-top: 35px;
 	padding-bottom: 35px;
