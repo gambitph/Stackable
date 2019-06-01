@@ -126,7 +126,7 @@ export const createStyles = props => {
 		styles.push( {
 			'.ugb-number-box__title': {
 				...createTypographyStyles( 'title%s', 'desktop', props.attributes ),
-				color: show.columnBackground ? whiteIfDark( titleColor, columnBackgroundColor ) : undefined,
+				color: whiteIfDark( titleColor, columnBackgroundColor ),
 				textAlign: getValue( 'titleAlign' ),
 			},
 			tablet: {
