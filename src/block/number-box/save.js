@@ -23,6 +23,9 @@ const save = props => {
 		shadow = 3,
 		// backgroundColor,
 		numberStyle = '',
+		showNumber = true,
+		showTitle = true,
+		showDescription = true,
 	} = attributes
 
 	const mainClasses = classnames( [
@@ -53,23 +56,23 @@ const save = props => {
 
 					return (
 						<div className={ boxClasses } key={ i }>
-							{ ! RichText.isEmpty( num ) && (
+							{ showNumber && ! RichText.isEmpty( num ) && (
 								<RichText.Content
 									tagName="span"
 									className="ugb-number-box__number"
 									value={ num }
 								/>
 							) }
-							{ ( ! RichText.isEmpty( title ) || ! RichText.isEmpty( description ) ) &&
+							{ ( showTitle || showDescription ) && ( ! RichText.isEmpty( title ) || ! RichText.isEmpty( description ) ) &&
 								<div className="ugb-number-box__content">
-									{ ! RichText.isEmpty( title ) && (
+									{ showTitle && ! RichText.isEmpty( title ) && (
 										<RichText.Content
 											tagName={ titleTag || 'h4' }
 											className="ugb-number-box__title"
 											value={ title }
 										/>
 									) }
-									{ ! RichText.isEmpty( description ) && (
+									{ showDescription && ! RichText.isEmpty( description ) && (
 										<RichText.Content
 											tagName="p"
 											className="ugb-number-box__description"
