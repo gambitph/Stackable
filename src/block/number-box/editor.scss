@@ -11,6 +11,13 @@
 		width: 2.5em;
 		left: calc(50% - 2.5em / 2); // Prevent transitions.
 	}
+	// Ensure the number is behind.
+	.ugb-number-box__item > * {
+		z-index: 2;
+	}
+	.ugb-number-box__item > *:first-child {
+		z-index: 1;
+	}
 }
 
 [data-type="ugb/number-box"] {
