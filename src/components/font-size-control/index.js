@@ -4,7 +4,7 @@ import { AdvancedRangeControl } from '@stackable/components'
 const FontSizeControl = props => {
 	return (
 		<AdvancedRangeControl
-			min={ [ 5, 0.1 ] }
+			min={ [ 10, 0.1 ] }
 			max={ [ 100, 3 ] }
 			step={ [ 1, 0.05 ] }
 			units={ [ 'px', 'em' ] }
