@@ -341,23 +341,23 @@ const addBottomStyles = ( styleObject, props ) => {
 
 	const styles = {
 		[ `.ugb-bottom-separator` ]: {
-			height: bottomSeparatorHeight !== '' ? `${ bottomSeparatorHeight }px` : undefined,
 			zIndex: bottomSeparatorBringToFront ? 6 : undefined,
+			transform: bottomSeparatorFlipHorizontally ? 'scaleX(-1)' : undefined,
 		},
 		[ `.ugb-bottom-separator svg` ]: {
 			fill: bottomSeparatorColor !== '' ? bottomSeparatorColor : '#fff',
-			transform: bottomSeparatorFlipHorizontally ? 'scaleX(-1)' : undefined,
 		},
 		[ `.ugb-bottom-separator .ugb-separator-wrapper` ]: {
+			height: bottomSeparatorHeight !== '' ? `${ bottomSeparatorHeight }px` : undefined,
 			transform: bottomSeparatorWidth !== '' ? `scaleX(${ bottomSeparatorWidth })` : undefined,
 		},
 		tablet: {
-			[ `.ugb-bottom-separator` ]: {
+			[ `.ugb-bottom-separator .ugb-separator-wrapper` ]: {
 				height: bottomSeparatorTabletHeight !== '' ? `${ bottomSeparatorTabletHeight }px` : undefined,
 			},
 		},
 		mobile: {
-			[ `.ugb-bottom-separator` ]: {
+			[ `.ugb-bottom-separator .ugb-separator-wrapper` ]: {
 				height: bottomSeparatorMobileHeight !== '' ? `${ bottomSeparatorMobileHeight }px` : undefined,
 			},
 		},
