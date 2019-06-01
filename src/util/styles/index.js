@@ -40,13 +40,15 @@ export const whiteIfDark = ( textColor, backgroundColor = '' ) => {
  *
  * @param {string} textColor
  * @param {string} backgroundColor
+ * @param {string} white
+ * @param {string} black
  *
  * @return {string} White if the background color is dark, black if light, textColor if not
  */
-export const whiteIfDarkBlackIfLight = ( textColor, backgroundColor = '' ) => {
+export const whiteIfDarkBlackIfLight = ( textColor, backgroundColor = '', white = '#ffffff', black = '#222222' ) => {
 	const returnColor = textColor !== '' ? textColor : undefined
 	if ( ! returnColor && backgroundColor ) {
-		return isDarkColor( backgroundColor ) ? '#ffffff' : '#222222'
+		return isDarkColor( backgroundColor ) ? white : black
 	}
 	return returnColor
 }
