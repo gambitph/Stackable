@@ -71,6 +71,61 @@ const BackgroundControls = props => {
 				/>
 			) }
 
+			{ props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' && props.hasAdvancedGradient &&
+				<ButtonIconPopoverControl
+					label={ __( 'Adv. Gradient Color Settings' ) }
+					onReset={ props.onResetAdvancedGradient }
+					allowReset={
+						props.backgroundGradientDirection ||
+						props.backgroundGradientBlendMode
+					}
+				>
+					{ props.onChangeBackgroundGradientDirection && (
+						<RangeControl
+							label={ __( 'Gradient Direction (degrees)' ) }
+							value={ props.backgroundGradientDirection }
+							onChange={ props.onChangeBackgroundGradientDirection }
+							min={ 0 }
+							max={ 360 }
+							step={ 10 }
+							allowReset={ true }
+						/>
+					) }
+
+					{ props.onChangeBackgroundGradientLocation1 && (
+						<RangeControl
+							label={ __( 'Color 1 Location' ) }
+							value={ props.backgroundGradientLocation1 }
+							onChange={ props.onChangeBackgroundGradientLocation1 }
+							min={ 0 }
+							max={ 100 }
+							step={ 1 }
+							allowReset={ true }
+						/>
+					) }
+
+					{ props.onChangeBackgroundGradientLocation2 && (
+						<RangeControl
+							label={ __( 'Color 2 Location' ) }
+							value={ props.backgroundGradientLocation2 }
+							onChange={ props.onChangeBackgroundGradientLocation2 }
+							min={ 0 }
+							max={ 100 }
+							step={ 1 }
+							allowReset={ true }
+						/>
+					) }
+
+					{ props.onChangeBackgroundGradientBlendMode && (
+						<BlendModeControl
+							label={ __( 'Background Gradient Blend Mode' ) }
+							value={ props.backgroundGradientBlendMode }
+							onChange={ props.onChangeBackgroundGradientBlendMode }
+						/>
+					) }
+				</ButtonIconPopoverControl>
+			}
+
 			{ props.onChangeBackgroundMedia && (
 				<Fragment>
 					<WhenResponsiveScreen>
@@ -131,62 +186,8 @@ const BackgroundControls = props => {
 				/>
 			) }
 
-			{ props.hasAdvancedGradient &&
-				<ButtonIconPopoverControl
-					label={ __( 'Adv. Gradient Color Settings' ) }
-					onReset={ props.onResetAdvancedGradient }
-					allowReset={
-						props.backgroundGradientDirection ||
-						props.backgroundGradientBlendMode
-					}
-				>
-					{ props.onChangeBackgroundGradientDirection && (
-						<RangeControl
-							label={ __( 'Gradient Direction (degrees)' ) }
-							value={ props.backgroundGradientDirection }
-							onChange={ props.onChangeBackgroundGradientDirection }
-							min={ 0 }
-							max={ 360 }
-							step={ 10 }
-							allowReset={ true }
-						/>
-					) }
-
-					{ props.onChangeBackgroundGradientLocation1 && (
-						<RangeControl
-							label={ __( 'Color 1 Location' ) }
-							value={ props.backgroundGradientLocation1 }
-							onChange={ props.onChangeBackgroundGradientLocation1 }
-							min={ 0 }
-							max={ 100 }
-							step={ 1 }
-							allowReset={ true }
-						/>
-					) }
-
-					{ props.onChangeBackgroundGradientLocation2 && (
-						<RangeControl
-							label={ __( 'Color 2 Location' ) }
-							value={ props.backgroundGradientLocation2 }
-							onChange={ props.onChangeBackgroundGradientLocation2 }
-							min={ 0 }
-							max={ 100 }
-							step={ 1 }
-							allowReset={ true }
-						/>
-					) }
-
-					{ props.onChangeBackgroundGradientBlendMode && (
-						<BlendModeControl
-							label={ __( 'Background Gradient Blend Mode' ) }
-							value={ props.backgroundGradientBlendMode }
-							onChange={ props.onChangeBackgroundGradientBlendMode }
-						/>
-					) }
-				</ButtonIconPopoverControl>
-			}
-
 			{ props.hasAdvancedBackground &&
+				( props.backgroundMediaURL || props.tabletBackgroundMediaURL || props.mobileBackgroundMediaURL ) &&
 				<ButtonIconPopoverControl
 					label={ __( 'Adv. Background Image Settings' ) }
 					onReset={ props.onResetAdvancedBackground }
