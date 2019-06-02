@@ -23,14 +23,14 @@ const addBlockSeparatorPanels = ( output, props ) => {
 		topSeparatorColor = '',
 		topSeparatorWidth = '',
 		topSeparatorFlipHorizontally = false,
-		topSeparatorShadow = false,
+		topSeparatorShadow = true,
 		topSeparatorBringToFront = false,
 		showBottomSeparator = false,
 		bottomSeparatorDesign = 'wave-1',
 		bottomSeparatorColor = '',
 		bottomSeparatorWidth = '',
 		bottomSeparatorFlipHorizontally = false,
-		bottomSeparatorShadow = false,
+		bottomSeparatorShadow = true,
 		bottomSeparatorBringToFront = false,
 	} = props.attributes
 
@@ -202,7 +202,15 @@ const addAttributes = attributes => {
 				default: '',
 			},
 			[ 'Top', 'Bottom' ],
-			[ 'FlipHorizontally', 'Shadow', 'BringToFront' ],
+			[ 'FlipHorizontally', 'BringToFront' ],
+		),
+		...createAllCombinationAttributes(
+			'%sSeparatorShadow',
+			{
+				type: 'boolean',
+				default: true,
+			},
+			[ 'Top', 'Bottom' ],
 		),
 
 		// Premium attributes.
@@ -249,10 +257,10 @@ const addShapeOutput = ( output, design, blockProps ) => {
 	const {
 		showTopSeparator = false,
 		topSeparatorDesign = 'wave-1',
-		topSeparatorShadow = false,
+		topSeparatorShadow = true,
 		showBottomSeparator = false,
 		bottomSeparatorDesign = 'wave-1',
-		bottomSeparatorShadow = false,
+		bottomSeparatorShadow = true,
 	} = blockProps.attributes
 
 	return (
