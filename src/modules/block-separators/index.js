@@ -15,6 +15,60 @@ import { Fragment } from '@wordpress/element'
 import { showProNotice } from 'stackable'
 import { ToggleControl } from '@wordpress/components'
 
+const separatorAddedPadding = 170
+
+const setShowTopSeparator = ( showTopSeparator, props ) => {
+	const attributes = { showTopSeparator }
+	if ( showTopSeparator ) {
+		if ( props.attributes.paddingTop === '' ) {
+			attributes.paddingTop = separatorAddedPadding
+		}
+		if ( props.attributes.tabletPaddingTop === '' ) {
+			attributes.tabletPaddingTop = separatorAddedPadding
+		}
+		if ( props.attributes.mobilePaddingTop === '' ) {
+			attributes.mobilePaddingTop = separatorAddedPadding
+		}
+	} else {
+		if ( props.attributes.paddingTop === separatorAddedPadding ) {
+			attributes.paddingTop = ''
+		}
+		if ( props.attributes.tabletPaddingTop === separatorAddedPadding ) {
+			attributes.tabletPaddingTop = ''
+		}
+		if ( props.attributes.mobilePaddingTop === separatorAddedPadding ) {
+			attributes.mobilePaddingTop = ''
+		}
+	}
+	props.setAttributes( attributes )
+}
+
+const setShowBottomSeparator = ( showBottomSeparator, props ) => {
+	const attributes = { showBottomSeparator }
+	if ( showBottomSeparator ) {
+		if ( props.attributes.paddingBottom === '' ) {
+			attributes.paddingBottom = separatorAddedPadding
+		}
+		if ( props.attributes.tabletPaddingBottom === '' ) {
+			attributes.tabletPaddingBottom = separatorAddedPadding
+		}
+		if ( props.attributes.mobilePaddingBottom === '' ) {
+			attributes.mobilePaddingBottom = separatorAddedPadding
+		}
+	} else {
+		if ( props.attributes.paddingBottom === separatorAddedPadding ) {
+			attributes.paddingBottom = ''
+		}
+		if ( props.attributes.tabletPaddingBottom === separatorAddedPadding ) {
+			attributes.tabletPaddingBottom = ''
+		}
+		if ( props.attributes.mobilePaddingBottom === separatorAddedPadding ) {
+			attributes.mobilePaddingBottom = ''
+		}
+	}
+	props.setAttributes( attributes )
+}
+
 const addBlockSeparatorPanels = ( output, props ) => {
 	const { setAttributes } = props
 	const {
@@ -40,7 +94,7 @@ const addBlockSeparatorPanels = ( output, props ) => {
 			<PanelAdvancedSettings
 				title={ __( 'Top Separator' ) }
 				checked={ showTopSeparator }
-				onChange={ showTopSeparator => setAttributes( { showTopSeparator } ) }
+				onChange={ showTopSeparator => setShowTopSeparator( showTopSeparator,  props ) }
 				className="ugb-top-block-separator-panel"
 			>
 				<DesignSeparatorControl
@@ -98,7 +152,7 @@ const addBlockSeparatorPanels = ( output, props ) => {
 			<PanelAdvancedSettings
 				title={ __( 'Bottom Separator' ) }
 				checked={ showBottomSeparator }
-				onChange={ showBottomSeparator => setAttributes( { showBottomSeparator } ) }
+				onChange={ showBottomSeparator => setShowBottomSeparator( showBottomSeparator, props ) }
 				className="ugb-bottom-block-separator-panel"
 			>
 				<DesignSeparatorControl
