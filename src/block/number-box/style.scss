@@ -32,6 +32,9 @@
 
 	.ugb-number-box__item {
 		margin-bottom: 0 !important;
+		* {
+			z-index: 4;
+		}
 	}
 }
 
@@ -58,6 +61,7 @@
 	box-sizing: content-box;
 	white-space: nowrap !important;
 	text-align: center;
+	z-index: 3;
 }
 .ugb-number-box--number-style-square .ugb-number-box__number {
 	border-radius: 0;
