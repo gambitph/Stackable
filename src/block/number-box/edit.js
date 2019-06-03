@@ -208,6 +208,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					blockAttributes={ props.attributes }
 					fontSizeProps={ {
 						max: design === 'basic' || design === 'plain' ? [ 150, 7 ] : [ 500, 15 ],
+						min: 40,
 					} }
 				/>
 				{ show.numberStyle && (
