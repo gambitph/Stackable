@@ -155,7 +155,7 @@ const TypographyControl = props => {
 					/>
 				) }
 			</ButtonIconPopoverControl>
-			{/* A second font size option. */}
+			{ /* A second font size option. */ }
 			{ props.showSecondFontSize && props.onChangeFontSize && (
 				<Fragment>
 					<WhenResponsiveScreen>
