@@ -75,6 +75,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 		num1 = '',
 		num2 = '',
 		num3 = '',
+		numberOpacity = '',
 	} = props.attributes
 
 	const show = applyFilters( 'stackable.number-box.edit.show', {
@@ -250,6 +251,14 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 						label={ __( 'Number Color' ) }
 					/>
 				) }
+				<AdvancedRangeControl
+					label={ __( 'Opacity' ) }
+					min={ 0.1 }
+					max={ 1.0 }
+					step={ 0.1 }
+					value={ numberOpacity }
+					onChange={ numberOpacity => setAttributes( { numberOpacity } ) }
+				/>
 				<ResponsiveControl
 					attrNameTemplate="Number%sAlign"
 					setAttributes={ setAttributes }

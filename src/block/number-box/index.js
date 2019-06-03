@@ -117,6 +117,10 @@ export const schema = {
 		type: 'string',
 		default: '',
 	},
+	numberOpacity: {
+		type: 'number',
+		default: '',
+	},
 	...createTypographyAttributes( 'number%s' ),
 	...createResponsiveAttributes( 'number%sPadding', {
 		type: 'number',

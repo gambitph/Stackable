@@ -78,6 +78,7 @@ export const createStyles = props => {
 		numberTabletLineHeightUnit = 'em',
 		numberMobileLineHeightUnit = 'em',
 		showNumber = true,
+		numberOpacity = '',
 	} = props.attributes
 
 	if ( showNumber ) {
@@ -92,6 +93,7 @@ export const createStyles = props => {
 				marginRight: numberAlign !== '' || contentAlign !== '' ? marginRightAlign( numberAlign || contentAlign ) : undefined,
 				textAlign: show.numberBGColor ? undefined : ( getValue( 'numberAlign' ) || getValue( 'contentAlign' ) ),
 				color: whiteIfDarkBlackIfLight( numberColor, show.numberBGColor && numberBGColor ),
+				opacity: getValue( 'numberOpacity' ),
 				// Special case for centering the text with letter-spacing.
 				textIndent: ( design === 'basic' || design === 'plain' ) ? getValue( 'numberLetterSpacing', '%spx' ) : undefined,
 			},
