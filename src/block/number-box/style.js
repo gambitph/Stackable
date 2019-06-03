@@ -78,7 +78,6 @@ export const createStyles = props => {
 		numberTabletLineHeightUnit = 'em',
 		numberMobileLineHeightUnit = 'em',
 		showNumber = true,
-		numberOpacity = '',
 	} = props.attributes
 
 	if ( showNumber ) {
