@@ -15,7 +15,7 @@ import {
 } from '@stackable/components'
 import { AlignmentToolbar, BlockControls, RichText } from '@wordpress/editor'
 import { descriptionPlaceholder, getAttrName, hasBackgroundOverlay, range } from '@stackable/util'
-import { PanelBody, RangeControl, SelectControl } from '@wordpress/components'
+import { PanelBody, RangeControl, SelectControl, TextControl } from '@wordpress/components'
 import { withBlockStyles, withGoogleFont, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
 import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
@@ -72,6 +72,9 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 		showDescription = true,
 		titleTag = '',
 		numberStyle = '',
+		num1 = '',
+		num2 = '',
+		num3 = '',
 	} = props.attributes
 
 	const show = applyFilters( 'stackable.number-box.edit.show', {
@@ -183,6 +186,21 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 				checked={ showNumber }
 				onChange={ showNumber => setAttributes( { showNumber } ) }
 			>
+				<TextControl
+					label={ __( 'Number 1 Label' ) }
+					value={ num1 }
+					onChange={ num1 => setAttributes( { num1 } ) }
+				/>
+				<TextControl
+					label={ __( 'Number 2 Label' ) }
+					value={ num2 }
+					onChange={ num2 => setAttributes( { num2 } ) }
+				/>
+				<TextControl
+					label={ __( 'Number 3 Label' ) }
+					value={ num3 }
+					onChange={ num3 => setAttributes( { num3 } ) }
+				/>
 				<TypographyControlHelper
 					attrNameTemplate="number%s"
 					setAttributes={ setAttributes }
