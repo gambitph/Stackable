@@ -1,3 +1,4 @@
+import { addFilter, removeFilter } from '@wordpress/hooks'
 import { BaseControl, IconButton, PanelBody, Popover, ToggleControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
@@ -15,6 +16,48 @@ class ButtonIconPopoverControl extends Component {
 		this.handleOpen = this.handleOpen.bind( this )
 		this.handleClose = this.handleClose.bind( this )
 		this.instanceId = buttonInstance++
+	}
+
+	checkIfAttributeShouldToggleOn( attributes, blockProps ) {
+		if ( ! this.props.onToggle || ! this.props.toggleAttributeName || ! this.props.toggleOnSetAttributes.length ) {
+			return attributes
+		}
+
+		// Don't do anything if turned on already.
+		if ( blockProps.attributes[ this.props.toggleAttributeName ] ) {
+			return attributes
+		}
+
+		// Check if an attribute we're watching for was modified with a value.
+		let checkToggle = false
+		this.props.toggleOnSetAttributes.some( attrName => {
+			if ( Object.keys( attributes ).includes( attrName ) ) {
+				if ( attributes[ attrName ] !== '' ) {
+					checkToggle = true
+					return true
+				}
+			}
+			return false
+		} )
+
+		// Toggle on the "show" attribute along with the other attributes being set.
+		if ( checkToggle ) {
+			return {
+				...attributes,
+				[ this.props.toggleAttributeName ]: true,
+			}
+		}
+
+		return attributes
+	}
+
+	componentDidMount() {
+		// Watch for attribute changes.
+		addFilter( 'stackable.setAttributes', `stackable/button-icon-popover-control-${ this.instanceId }`, this.checkIfAttributeShouldToggleOn.bind( this ), 9 )
+	}
+
+	componentWillUnmount() {
+		removeFilter( 'stackable.setAttributes', `stackable/button-icon-popover-control-${ this.instanceId }` )
 	}
 
 	handleOpen() {
@@ -88,6 +131,8 @@ ButtonIconPopoverControl.defaultProps = {
 	onReset: () => {},
 	checked: false,
 	onToggle: undefined,
+	toggleOnSetAttributes: [],
+	toggleAttributeName: '',
 }
 
 export default ButtonIconPopoverControl
