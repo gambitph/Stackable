@@ -23,14 +23,12 @@ addFilter( 'stackable.setAttributes', 'stackable/module/block-background/show', 
 		return attributes
 	}
 
-	if ( attributes.showBlockBackground ) {
-		const {
-			align = '',
-			blockInnerWidth = '',
-		} = blockProps.attributes
-		attributes.align = attributes.showBlockBackground ? 'full' : ( blockInnerWidth || 'center' )
-		attributes.blockInnerWidth = attributes.showBlockBackground ? ( ! align ? 'center' : align ) : ''
-	}
+	const {
+		align = '',
+		blockInnerWidth = '',
+	} = blockProps.attributes
+	attributes.align = attributes.showBlockBackground ? 'full' : ( blockInnerWidth || 'center' )
+	attributes.blockInnerWidth = attributes.showBlockBackground ? ( ! align ? 'center' : align ) : ''
 
 	return attributes
 } )
