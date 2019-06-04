@@ -171,32 +171,41 @@ export const createStyles = props => {
 		} )
 	}
 
+	// Number spacing.
 	if ( show.spacingNumber ) {
 		styles.push( {
 			'.ugb-number-box__number': {
 				marginBottom: getValue( 'numberBottomMargin', '%spx' ),
 			},
-			'.ugb-number-box__title': {
-				marginBottom: getValue( 'titleBottomMargin', '%spx' ),
-			},
 			tablet: {
 				'.ugb-number-box__number': {
 					marginBottom: getValue( 'numberTabletBottomMargin', '%spx' ),
-				},
-				'.ugb-number-box__title': {
-					marginBottom: getValue( 'titleTabletBottomMargin', '%spx' ),
 				},
 			},
 			mobile: {
 				'.ugb-number-box__number': {
 					marginBottom: getValue( 'numberMobileBottomMargin', '%spx' ),
 				},
-				'.ugb-number-box__title': {
-					marginBottom: getValue( 'titleMobileBottomMargin', '%spx' ),
-				},
 			},
 		} )
 	}
+
+	// Title spacing.
+	styles.push( {
+		'.ugb-number-box__title': {
+			marginBottom: getValue( 'titleBottomMargin', '%spx' ),
+		},
+		tablet: {
+			'.ugb-number-box__title': {
+				marginBottom: getValue( 'titleTabletBottomMargin', '%spx' ),
+			},
+		},
+		mobile: {
+			'.ugb-number-box__title': {
+				marginBottom: getValue( 'titleMobileBottomMargin', '%spx' ),
+			},
+		},
+	} )
 
 	// Advanced individual column color styles.
 	styles.push( {
