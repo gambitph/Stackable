@@ -92,7 +92,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 			{ output }
 			<PanelBody
 				title={ __( 'Block Spacing' ) }
-				initialOpen={ true }
+				initialOpen={ false }
 			>
 				{ applyFilters( `stackable.${ blockName }.edit.advanced.block-spacing.before`, null, props ) }
 				{ options.margins && <Fragment>
