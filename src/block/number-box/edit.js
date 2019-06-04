@@ -16,7 +16,7 @@ import {
 import { AlignmentToolbar, BlockControls, RichText } from '@wordpress/editor'
 import { descriptionPlaceholder, getAttrName, hasBackgroundOverlay, range } from '@stackable/util'
 import { PanelBody, RangeControl, SelectControl, TextControl } from '@wordpress/components'
-import { withBlockStyles, withGoogleFont, withTabbedInspector, withUniqueClass, withSetAttributeHook } from '@stackable/higher-order'
+import { withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
 import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
 import createStyles from './style'
