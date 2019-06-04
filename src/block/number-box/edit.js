@@ -14,7 +14,7 @@ import {
 	TypographyControlHelper,
 } from '@stackable/components'
 import { AlignmentToolbar, BlockControls, RichText } from '@wordpress/editor'
-import { descriptionPlaceholder, getAttrName, hasBackgroundOverlay, range } from '@stackable/util'
+import { descriptionPlaceholder, getAttrName, hasBackgroundOverlay, range, createTypographyAttributeNames, createResponsiveAttributeNames } from '@stackable/util'
 import { PanelBody, RangeControl, SelectControl, TextControl } from '@wordpress/components'
 import { withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
 import classnames from 'classnames'
@@ -186,6 +186,18 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 				title={ __( 'Number' ) }
 				checked={ showNumber }
 				onChange={ showNumber => setAttributes( { showNumber } ) }
+				toggleOnSetAttributes={ [
+					...createTypographyAttributeNames( 'number%s' ),
+					'num1',
+					'num2',
+					'num3',
+					...createResponsiveAttributeNames( 'number%sPadding' ),
+					'numberStyle',
+					'numberColor',
+					'numberOpacity',
+					...createResponsiveAttributeNames( 'Number%sAlign' ),
+				] }
+				toggleAttributeName="showNumber"
 			>
 				<TextControl
 					label={ __( 'Number 1 Label' ) }
@@ -273,6 +285,13 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 				title={ __( 'Title' ) }
 				checked={ showTitle }
 				onChange={ showTitle => setAttributes( { showTitle } ) }
+				toggleOnSetAttributes={ [
+					...createTypographyAttributeNames( 'title%s' ),
+					'titleTag',
+					'titleColor',
+					...createResponsiveAttributeNames( 'Title%sAlign' ),
+				] }
+				toggleAttributeName="showTitle"
 			>
 				<TypographyControlHelper
 					attrNameTemplate="title%s"
@@ -302,6 +321,12 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 				title={ __( 'Description' ) }
 				checked={ showDescription }
 				onChange={ showDescription => setAttributes( { showDescription } ) }
+				toggleOnSetAttributes={ [
+					...createTypographyAttributeNames( 'description%s' ),
+					'descriptionColor',
+					...createResponsiveAttributeNames( 'description%sAlign' ),
+				] }
+				toggleAttributeName="showDescription"
 			>
 				<TypographyControlHelper
 					attrNameTemplate="description%s"

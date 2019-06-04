@@ -49,3 +49,5 @@ const createTypographyAttributes = attrNameTemplate => {
 }
 
 export default createTypographyAttributes
+
+export const createTypographyAttributeNames = attrNameTemplate => Object.keys( createTypographyAttributes( attrNameTemplate ) )

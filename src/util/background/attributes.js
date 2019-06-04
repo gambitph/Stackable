@@ -76,3 +76,5 @@ const createBackgroundAttributes = attrNameTemplate => {
 }
 
 export default createBackgroundAttributes
+
+export const createBackgroundAttributeNames = attrNameTemplate => Object.keys( createBackgroundAttributes( attrNameTemplate ) )

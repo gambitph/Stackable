@@ -1,5 +1,5 @@
 import * as deepmerge from 'deepmerge'
-import { addFilter, applyFilters, doAction } from '@wordpress/hooks'
+import { addFilter, applyFilters, doAction, removeFilter } from '@wordpress/hooks'
 import {
 	AdvancedRangeControl,
 	ColorPaletteControl,
@@ -17,57 +17,65 @@ import { ToggleControl } from '@wordpress/components'
 
 const separatorAddedPadding = 170
 
-const setShowTopSeparator = ( showTopSeparator, props ) => {
-	const attributes = { showTopSeparator }
-	if ( showTopSeparator ) {
-		if ( props.attributes.paddingTop === '' ) {
+// Adjust the padding when the separator is added.
+removeFilter( 'stackable.setAttributes', 'stackable/modules/block-separators/top' )
+addFilter( 'stackable.setAttributes', 'stackable/modules/block-separators/top', ( attributes, blockProps ) => {
+	if ( typeof attributes.showTopSeparator === 'undefined' ) {
+		return attributes
+	}
+	if ( attributes.showTopSeparator ) {
+		if ( blockProps.attributes.paddingTop === '' ) {
 			attributes.paddingTop = separatorAddedPadding
 		}
-		if ( props.attributes.tabletPaddingTop === '' ) {
+		if ( blockProps.attributes.tabletPaddingTop === '' ) {
 			attributes.tabletPaddingTop = separatorAddedPadding
 		}
-		if ( props.attributes.mobilePaddingTop === '' ) {
+		if ( blockProps.attributes.mobilePaddingTop === '' ) {
 			attributes.mobilePaddingTop = separatorAddedPadding
 		}
 	} else {
-		if ( props.attributes.paddingTop === separatorAddedPadding ) {
+		if ( blockProps.attributes.paddingTop === separatorAddedPadding ) {
 			attributes.paddingTop = ''
 		}
-		if ( props.attributes.tabletPaddingTop === separatorAddedPadding ) {
+		if ( blockProps.attributes.tabletPaddingTop === separatorAddedPadding ) {
 			attributes.tabletPaddingTop = ''
 		}
-		if ( props.attributes.mobilePaddingTop === separatorAddedPadding ) {
+		if ( blockProps.attributes.mobilePaddingTop === separatorAddedPadding ) {
 			attributes.mobilePaddingTop = ''
 		}
 	}
-	props.setAttributes( attributes )
-}
+	return attributes
+} )
 
-const setShowBottomSeparator = ( showBottomSeparator, props ) => {
-	const attributes = { showBottomSeparator }
-	if ( showBottomSeparator ) {
-		if ( props.attributes.paddingBottom === '' ) {
+// Adjust the padding when the separator is added.
+removeFilter( 'stackable.setAttributes', 'stackable/modules/block-separators/bottom' )
+addFilter( 'stackable.setAttributes', 'stackable/modules/block-separators/bottom', ( attributes, blockProps ) => {
+	if ( typeof attributes.showBottomSeparator === 'undefined' ) {
+		return attributes
+	}
+	if ( attributes.showBottomSeparator ) {
+		if ( blockProps.attributes.paddingBottom === '' ) {
 			attributes.paddingBottom = separatorAddedPadding
 		}
-		if ( props.attributes.tabletPaddingBottom === '' ) {
+		if ( blockProps.attributes.tabletPaddingBottom === '' ) {
 			attributes.tabletPaddingBottom = separatorAddedPadding
 		}
-		if ( props.attributes.mobilePaddingBottom === '' ) {
+		if ( blockProps.attributes.mobilePaddingBottom === '' ) {
 			attributes.mobilePaddingBottom = separatorAddedPadding
 		}
 	} else {
-		if ( props.attributes.paddingBottom === separatorAddedPadding ) {
+		if ( blockProps.attributes.paddingBottom === separatorAddedPadding ) {
 			attributes.paddingBottom = ''
 		}
-		if ( props.attributes.tabletPaddingBottom === separatorAddedPadding ) {
+		if ( blockProps.attributes.tabletPaddingBottom === separatorAddedPadding ) {
 			attributes.tabletPaddingBottom = ''
 		}
-		if ( props.attributes.mobilePaddingBottom === separatorAddedPadding ) {
+		if ( blockProps.attributes.mobilePaddingBottom === separatorAddedPadding ) {
 			attributes.mobilePaddingBottom = ''
 		}
 	}
-	props.setAttributes( attributes )
-}
+	return attributes
+} )
 
 const addBlockSeparatorPanels = ( output, props ) => {
 	const { setAttributes } = props
@@ -94,8 +102,34 @@ const addBlockSeparatorPanels = ( output, props ) => {
 			<PanelAdvancedSettings
 				title={ __( 'Top Separator' ) }
 				checked={ showTopSeparator }
-				onChange={ showTopSeparator => setShowTopSeparator( showTopSeparator,  props ) }
+				onChange={ showTopSeparator => setAttributes( { showTopSeparator } ) }
 				className="ugb-top-block-separator-panel"
+				toggleOnSetAttributes={ [
+					'topSeparatorDesign',
+					'topSeparatorColor',
+					'topSeparatorHeight',
+					'topSeparatorTabletHeight',
+					'topSeparatorMobileHeight',
+					'topSeparatorWidth',
+					'topSeparatorFlipHorizontally',
+					'topSeparatorShadow',
+					'topSeparatorBringToFront',
+					'showTopSeparatorLayer2',
+					'showTopSeparatorLayer3',
+					'topSeparatorLayer2Color',
+					'topSeparatorLayer3Color',
+					'topSeparatorLayer2BlendMode',
+					'topSeparatorLayer3BlendMode',
+					'topSeparatorLayer2Height',
+					'topSeparatorLayer3Height',
+					'topSeparatorLayer2Width',
+					'topSeparatorLayer3Width',
+					'topSeparatorLayer2Opacity',
+					'topSeparatorLayer3Opacity',
+					'topSeparatorLayer2FlipHorizontally',
+					'topSeparatorLayer3FlipHorizontally',
+				] }
+				toggleAttributeName="showTopSeparator"
 			>
 				<DesignSeparatorControl
 					label={ __( 'Design' ) }
@@ -152,8 +186,34 @@ const addBlockSeparatorPanels = ( output, props ) => {
 			<PanelAdvancedSettings
 				title={ __( 'Bottom Separator' ) }
 				checked={ showBottomSeparator }
-				onChange={ showBottomSeparator => setShowBottomSeparator( showBottomSeparator, props ) }
+				onChange={ showBottomSeparator => setAttributes( { showBottomSeparator } ) }
 				className="ugb-bottom-block-separator-panel"
+				toggleOnSetAttributes={ [
+					'bottomSeparatorDesign',
+					'bottomSeparatorColor',
+					'bottomSeparatorHeight',
+					'bottomSeparatorTabletHeight',
+					'bottomSeparatorMobileHeight',
+					'bottomSeparatorWidth',
+					'bottomSeparatorFlipHorizontally',
+					'bottomSeparatorShadow',
+					'bottomSeparatorBringToFront',
+					'showBottomSeparatorLayer2',
+					'showBottomSeparatorLayer3',
+					'bottomSeparatorLayer2Color',
+					'bottomSeparatorLayer3Color',
+					'bottomSeparatorLayer2BlendMode',
+					'bottomSeparatorLayer3BlendMode',
+					'bottomSeparatorLayer2Height',
+					'bottomSeparatorLayer3Height',
+					'bottomSeparatorLayer2Width',
+					'bottomSeparatorLayer3Width',
+					'bottomSeparatorLayer2Opacity',
+					'bottomSeparatorLayer3Opacity',
+					'bottomSeparatorLayer2FlipHorizontally',
+					'bottomSeparatorLayer3FlipHorizontally',
+				] }
+				toggleAttributeName="showBottomSeparator"
 			>
 				<DesignSeparatorControl
 					label={ __( 'Design' ) }

@@ -1,11 +1,12 @@
 import * as deepmerge from 'deepmerge'
-import { addFilter, doAction } from '@wordpress/hooks'
+import { addFilter, doAction, removeFilter } from '@wordpress/hooks'
 import {
 	BackgroundControlsHelper,
 	PanelAdvancedSettings,
 } from '@stackable/components'
 import { BlockAlignmentToolbar, BlockControls } from '@wordpress/editor'
 import {
+	createBackgroundAttributeNames,
 	createBackgroundAttributes,
 	createBackgroundOverlayStyles,
 	createBackgroundStyles,
@@ -15,11 +16,28 @@ import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 import { Toolbar } from '@wordpress/components'
 
+// When block background is turned on, change the ailgnment and block inner width also.
+removeFilter( 'stackable.setAttributes', 'stackable/module/block-background/show' )
+addFilter( 'stackable.setAttributes', 'stackable/module/block-background/show', ( attributes, blockProps ) => {
+	if ( typeof attributes.showBlockBackground === 'undefined' ) {
+		return attributes
+	}
+
+	if ( attributes.showBlockBackground ) {
+		const {
+			align = '',
+			blockInnerWidth = '',
+		} = blockProps.attributes
+		attributes.align = attributes.showBlockBackground ? 'full' : ( blockInnerWidth || 'center' )
+		attributes.blockInnerWidth = attributes.showBlockBackground ? ( ! align ? 'center' : align ) : ''
+	}
+
+	return attributes
+} )
+
 const customCSSProPanel = ( output, props ) => {
 	const { setAttributes } = props
 	const {
-		align = '',
-		blockInnerWidth = '',
 		showBlockBackground = false,
 	} = props.attributes
 	return (
@@ -28,13 +46,9 @@ const customCSSProPanel = ( output, props ) => {
 			<PanelAdvancedSettings
 				title={ __( 'Block Background' ) }
 				checked={ showBlockBackground }
-				onChange={ showBlockBackground => {
-					setAttributes( {
-						showBlockBackground,
-						align: showBlockBackground ? 'full' : ( blockInnerWidth || 'center' ),
-						blockInnerWidth: showBlockBackground ? ( ! align ? 'center' : align ) : '',
-					} )
-				} }
+				onChange={ showBlockBackground => setAttributes( { showBlockBackground } ) }
+				toggleOnSetAttributes={ createBackgroundAttributeNames( 'blockBackground%s' ) }
+				toggleAttributeName="showBlockBackground"
 			>
 				<BackgroundControlsHelper
 					attrNameTemplate="blockBackground%s"

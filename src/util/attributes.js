@@ -57,3 +57,5 @@ export const createResponsiveAttributes = ( attrNameTemplate = '', attrParams = 
 		[ '', 'Tablet', 'Mobile' ]
 	)
 }
+
+export const createResponsiveAttributeNames = attrNameTemplate => Object.keys( createResponsiveAttributes( attrNameTemplate ) )

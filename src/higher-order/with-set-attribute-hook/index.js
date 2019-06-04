@@ -18,7 +18,8 @@ const withSetAttributeHook = createHigherOrderComponent(
 
 		setAttributes( attributes ) {
 			const { blockName } = this.props
-			const attributesToSet = applyFilters( `stackable.${ blockName }.setAttributes`, attributes, this.props )
+			let attributesToSet = applyFilters( 'stackable.setAttributes', attributes, this.props )
+			attributesToSet = applyFilters( `stackable.${ blockName }.setAttributes`, attributesToSet, this.props )
 			this.props.setAttributes( attributesToSet )
 		}
 

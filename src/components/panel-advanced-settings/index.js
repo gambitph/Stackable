@@ -2,10 +2,13 @@
  * A Panel for selecting designs
  */
 
+import { addFilter, removeFilter } from '@wordpress/hooks'
 import { Component, Fragment } from '@wordpress/element'
 import { FormToggle, PanelBody } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
+
+let instanceId = 1
 
 class PanelAdvancedSettings extends Component {
 	constructor( props ) {
@@ -17,6 +20,49 @@ class PanelAdvancedSettings extends Component {
 		}
 		this.onToggle = this.onToggle.bind( this )
 		this.onAdvancedToggle = this.onAdvancedToggle.bind( this )
+		this.instanceId = instanceId++
+	}
+
+	checkIfAttributeShouldToggleOn( attributes, blockProps ) {
+		if ( ! this.props.hasToggle || ! this.props.toggleAttributeName || ! this.props.toggleOnSetAttributes.length ) {
+			return attributes
+		}
+
+		// Don't do anything if turned on already.
+		if ( blockProps.attributes[ this.props.toggleAttributeName ] ) {
+			return attributes
+		}
+
+		// Check if an attribute we're watching for was modified with a value.
+		let checkToggle = false
+		this.props.toggleOnSetAttributes.some( attrName => {
+			if ( Object.keys( attributes ).includes( attrName ) ) {
+				if ( attributes[ attrName ] !== '' ) {
+					checkToggle = true
+					return true
+				}
+			}
+			return false
+		} )
+
+		// Toggle on the "show" attribute along with the other attributes being set.
+		if ( checkToggle ) {
+			this.setState( { checked: true } )
+			return {
+				...attributes,
+				[ this.props.toggleAttributeName ]: true,
+			}
+		}
+
+		return attributes
+	}
+
+	componentDidMount() {
+		addFilter( 'stackable.setAttributes', `stackable/panel-advanced-settings-${ this.instanceId }`, this.checkIfAttributeShouldToggleOn.bind( this ), 9 )
+	}
+
+	componentWillUnmount() {
+		removeFilter( 'stackable.setAttributes', `stackable/panel-advanced-settings-${ this.instanceId }` )
 	}
 
 	onToggle() {
@@ -88,10 +134,13 @@ PanelAdvancedSettings.defaultProps = {
 	className: '',
 	title: __( 'Settings' ),
 	checked: false,
+	onChange: null,
 	initialOpen: false,
 	hasToggle: true,
 	initialAdvanced: false,
 	advancedChildren: null,
+	toggleOnSetAttributes: [],
+	toggleAttributeName: '',
 }
 
 export default PanelAdvancedSettings
