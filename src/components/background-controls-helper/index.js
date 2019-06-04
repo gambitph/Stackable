@@ -10,6 +10,7 @@ const BackgroundControlsHelper = props => {
 		<BackgroundControls
 			backgroundColorType={ props.blockAttributes[ getAttrName( 'BackgroundColorType' ) ] || '' }
 			backgroundColor={ props.blockAttributes[ getAttrName( 'BackgroundColor' ) ] || '' }
+			backgroundColorOpacity={ props.blockAttributes[ getAttrName( 'BackgroundColorOpacity' ) ] }
 			backgroundColor2={ props.blockAttributes[ getAttrName( 'BackgroundColor2' ) ] || '' }
 			backgroundMediaID={ props.blockAttributes[ getAttrName( 'BackgroundMediaID' ) ] || '' }
 			backgroundMediaURL={ props.blockAttributes[ getAttrName( 'BackgroundMediaURL' ) ] || '' }
@@ -21,6 +22,7 @@ const BackgroundControlsHelper = props => {
 			fixedBackground={ props.blockAttributes[ getAttrName( 'FixedBackground' ) ] || '' }
 			onChangeBackgroundColorType={ value => setAttributes( { [ getAttrName( 'BackgroundColorType' ) ]: value } ) }
 			onChangeBackgroundColor={ value => setAttributes( { [ getAttrName( 'BackgroundColor' ) ]: value } ) }
+			onChangeBackgroundColorOpacity={ value => setAttributes( { [ getAttrName( 'BackgroundColorOpacity' ) ]: value } ) }
 			onChangeBackgroundColor2={ value => setAttributes( { [ getAttrName( 'BackgroundColor2' ) ]: value } ) }
 			onChangeBackgroundMedia={ ( { url, id } ) => {
 				setAttributes( {

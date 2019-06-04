@@ -62,6 +62,18 @@ const BackgroundControls = props => {
 					onChange={ props.onChangeBackgroundColor }
 				/>
 			) }
+			{ props.onChangeBackgroundColorOpacity && props.backgroundColorType !== 'gradient' &&
+				( ! props.backgroundMediaURL && ! props.tabletBackgroundMediaURL && ! props.mobileBackgroundMediaURL ) && (
+				<RangeControl
+					label={ __( 'Background Color Opacity' ) }
+					value={ props.backgroundColorOpacity }
+					onChange={ props.onChangeBackgroundColorOpacity }
+					min={ 0 }
+					max={ 1 }
+					step={ 0.1 }
+					allowReset={ true }
+				/>
+			) }
 
 			{ props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' && (
 				<ColorPaletteControl
@@ -173,6 +185,7 @@ const BackgroundControls = props => {
 					min={ 1 }
 					max={ 10 }
 					step={ 1 }
+					allowReset={ true }
 				/>
 			) }
 
@@ -405,6 +418,7 @@ const BackgroundControls = props => {
 BackgroundControls.defaultProps = {
 	backgroundColorType: '',
 	backgroundColor: '',
+	backgroundColorOpacity: '',
 	backgroundColor2: '',
 	backgroundMediaID: '',
 	backgroundMediaURL: '',
@@ -416,6 +430,7 @@ BackgroundControls.defaultProps = {
 	fixedBackground: '',
 	onChangeBackgroundColorType: () => {},
 	onChangeBackgroundColor: () => {},
+	onChangeBackgroundColorOpacity: () => {},
 	onChangeBackgroundColor2: () => {},
 	onChangeBackgroundMedia: ( { url, id } ) => {}, // eslint-disable-line
 	onChangeTabletBackgroundMedia: ( { url, id } ) => {}, // eslint-disable-line

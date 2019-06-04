@@ -10,9 +10,19 @@ const createBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 	const tabletCustomSize = getValue( 'TabletBackgroundCustomSize' ) !== '' ? `${ getValue( 'TabletBackgroundCustomSize' ) }${ getValue( 'TabletBackgroundCustomSizeUnit', '%' ) }` : undefined
 	const mobileCustomSize = getValue( 'MobileBackgroundCustomSize' ) !== '' ? `${ getValue( 'MobileBackgroundCustomSize' ) }${ getValue( 'MobileBackgroundCustomSizeUnit', '%' ) }` : undefined
 
+	// Background color opacity.
+	let backgroundColor = getValue( 'BackgroundColor' ) !== '' ? getValue( 'BackgroundColor' ) : undefined
+	if ( getValue( 'BackgroundColorType' ) === '' && typeof blockAttributes[ getAttrName( 'BackgroundColorOpacity' ) ] !== 'undefined' && blockAttributes[ getAttrName( 'BackgroundColorOpacity' ) ] !== '' ) {
+		if ( ! getValue( 'BackgroundMediaURL' ) && ! getValue( 'TabletBackgroundMediaURL' ) && ! getValue( 'MobileBackgroundMediaURL' ) ) {
+			const newColor = rgba( `${ getValue( 'BackgroundColor', '#ffffff' ) }ff` )
+			newColor[ 3 ] = getValue( 'BackgroundColorOpacity', 0 )
+			backgroundColor = `rgba(${ newColor.join( ', ' ) })`
+		}
+	}
+
 	if ( screen !== 'tablet' && screen !== 'mobile' ) { // Desktop.
 		return {
-			backgroundColor: getValue( 'BackgroundColor' ) !== '' ? getValue( 'BackgroundColor' ) : undefined,
+			backgroundColor: backgroundColor,
 			backgroundAttachment: getValue( 'FixedBackground' ) !== '' ? 'fixed' : undefined,
 			backgroundImage: getValue( 'BackgroundMediaURL' ) !== '' ? `url(${ getValue( 'BackgroundMediaURL' ) })` : undefined,
 			backgroundPosition: getValue( 'BackgroundPosition' ) !== '' ? getValue( 'BackgroundPosition' ) : undefined,

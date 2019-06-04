@@ -41,6 +41,7 @@ const createBackgroundAttributes = attrNameTemplate => {
 				default: '',
 			},
 			[
+				'BackgroundColorOpacity',
 				'BackgroundTintStrength',
 				'BackgroundGradientDirection',
 				'BackgroundCustomSize',
