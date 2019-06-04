@@ -3,6 +3,7 @@ export * from './attributes'
 export * from './typography'
 export * from './background'
 export * from './styles'
+export * from './blocks'
 import { __ } from '@wordpress/i18n'
 
 /**

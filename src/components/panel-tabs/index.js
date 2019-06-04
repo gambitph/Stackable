@@ -3,6 +3,7 @@ import { Component, createRef } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { Icon } from '@wordpress/components'
+import { isUnmodifiedBlock } from '@stackable/util';
 
 const TABS = [
 	{
@@ -52,8 +53,9 @@ const onButtonPanelClick = ev => {
 class PanelTabs extends Component {
 	constructor() {
 		super( ...arguments )
+		const defaultTab = isUnmodifiedBlock( this.props.blockProps ) ? 'layout' : 'style'
 		this.state = {
-			activeTab: this.props.activeTab ? this.props.activeTab : 'layout',
+			activeTab: this.props.activeTab ? this.props.activeTab : defaultTab,
 		}
 		this.containerDiv = createRef()
 	}
@@ -129,6 +131,7 @@ class PanelTabs extends Component {
 
 PanelTabs.defaultProps = {
 	closeOtherPanels: true,
+	blockProps: {},
 }
 
 export default PanelTabs
