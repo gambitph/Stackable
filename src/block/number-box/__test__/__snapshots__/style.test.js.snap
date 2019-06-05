@@ -4,36 +4,283 @@ exports[`Number Box block Rendered styles should match snapshot 1`] = `
 Object {
   ".ugb-number-box__description": Object {
     "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
   },
   ".ugb-number-box__item": Object {
+    "backgroundAttachment": undefined,
+    "backgroundBlendMode": undefined,
     "backgroundColor": undefined,
+    "backgroundImage": undefined,
+    "backgroundPosition": undefined,
+    "backgroundRepeat": undefined,
+    "backgroundSize": undefined,
     "borderRadius": undefined,
+    "textAlign": undefined,
+  },
+  ".ugb-number-box__item1": Object {
+    "backgroundColor": undefined,
+  },
+  ".ugb-number-box__item1 .ugb-number-box__description": Object {
+    "color": undefined,
+  },
+  ".ugb-number-box__item1 .ugb-number-box__number": Object {
+    "backgroundColor": undefined,
+    "color": undefined,
+  },
+  ".ugb-number-box__item1 .ugb-number-box__title": Object {
+    "color": undefined,
+  },
+  ".ugb-number-box__item1:before": Object {
+    "background": undefined,
+  },
+  ".ugb-number-box__item2": Object {
+    "backgroundColor": undefined,
+  },
+  ".ugb-number-box__item2 .ugb-number-box__description": Object {
+    "color": undefined,
+  },
+  ".ugb-number-box__item2 .ugb-number-box__number": Object {
+    "backgroundColor": undefined,
+    "color": undefined,
+  },
+  ".ugb-number-box__item2 .ugb-number-box__title": Object {
+    "color": undefined,
+  },
+  ".ugb-number-box__item2:before": Object {
+    "background": undefined,
+  },
+  ".ugb-number-box__item3": Object {
+    "backgroundColor": undefined,
+  },
+  ".ugb-number-box__item3 .ugb-number-box__description": Object {
+    "color": undefined,
+  },
+  ".ugb-number-box__item3 .ugb-number-box__number": Object {
+    "backgroundColor": undefined,
+    "color": undefined,
+  },
+  ".ugb-number-box__item3 .ugb-number-box__title": Object {
+    "color": undefined,
+  },
+  ".ugb-number-box__item3:before": Object {
+    "background": undefined,
+  },
+  ".ugb-number-box__item:before": Object {
+    "backgroundColor": undefined,
+    "backgroundImage": undefined,
+    "mixBlendMode": undefined,
+    "opacity": undefined,
   },
   ".ugb-number-box__number": Object {
     "backgroundColor": undefined,
     "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "height": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "marginLeft": undefined,
+    "marginRight": undefined,
+    "opacity": undefined,
+    "textAlign": undefined,
+    "textIndent": undefined,
+    "textTransform": undefined,
+    "width": undefined,
   },
   ".ugb-number-box__title": Object {
     "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  "mobile": Object {
+    ".ugb-number-box__description": Object {
+      "fontSize": undefined,
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-number-box__item": Object {
+      "backgroundImage": undefined,
+      "backgroundPosition": undefined,
+      "backgroundRepeat": undefined,
+      "backgroundSize": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-number-box__item:before": Object {
+      "opacity": undefined,
+    },
+    ".ugb-number-box__number": Object {
+      "height": undefined,
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "marginLeft": undefined,
+      "marginRight": undefined,
+      "textAlign": undefined,
+      "width": undefined,
+    },
+    ".ugb-number-box__title": Object {
+      "fontSize": undefined,
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+  },
+  "tablet": Object {
+    ".ugb-number-box__description": Object {
+      "fontSize": undefined,
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-number-box__item": Object {
+      "backgroundImage": undefined,
+      "backgroundPosition": undefined,
+      "backgroundRepeat": undefined,
+      "backgroundSize": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-number-box__item:before": Object {
+      "opacity": undefined,
+    },
+    ".ugb-number-box__number": Object {
+      "height": undefined,
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "marginLeft": undefined,
+      "marginRight": undefined,
+      "textAlign": undefined,
+      "width": undefined,
+    },
+    ".ugb-number-box__title": Object {
+      "fontSize": undefined,
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
   },
 }
 `;
 
 exports[`Number Box block Rendered styles should match snapshot with modified attributes 1`] = `
 Object {
-  ".ugb-number-box__description": Object {
-    "color": "#123456",
-  },
   ".ugb-number-box__item": Object {
+    "backgroundAttachment": "fixed",
+    "backgroundBlendMode": "columnBackgroundImageBlendMode",
     "backgroundColor": "#123456",
-    "borderRadius": 6,
+    "backgroundImage": "url(columnBackgroundMediaUrl)",
+    "backgroundPosition": "columnBackgroundPosition",
+    "backgroundRepeat": "columnBackgroundRepeat",
+    "backgroundSize": "columnBackgroundSize",
+    "borderRadius": "6px",
+    "textAlign": "contentAlign",
+  },
+  ".ugb-number-box__item1": Object {
+    "backgroundColor": undefined,
+  },
+  ".ugb-number-box__item1 .ugb-number-box__description": Object {
+    "color": undefined,
+  },
+  ".ugb-number-box__item1 .ugb-number-box__number": Object {
+    "backgroundColor": undefined,
+    "color": undefined,
+  },
+  ".ugb-number-box__item1 .ugb-number-box__title": Object {
+    "color": undefined,
+  },
+  ".ugb-number-box__item1:before": Object {
+    "background": undefined,
+  },
+  ".ugb-number-box__item2": Object {
+    "backgroundColor": undefined,
+  },
+  ".ugb-number-box__item2 .ugb-number-box__description": Object {
+    "color": undefined,
+  },
+  ".ugb-number-box__item2 .ugb-number-box__number": Object {
+    "backgroundColor": undefined,
+    "color": undefined,
+  },
+  ".ugb-number-box__item2 .ugb-number-box__title": Object {
+    "color": undefined,
+  },
+  ".ugb-number-box__item2:before": Object {
+    "background": undefined,
+  },
+  ".ugb-number-box__item3": Object {
+    "backgroundColor": undefined,
+  },
+  ".ugb-number-box__item3 .ugb-number-box__description": Object {
+    "color": undefined,
+  },
+  ".ugb-number-box__item3 .ugb-number-box__number": Object {
+    "backgroundColor": undefined,
+    "color": undefined,
+  },
+  ".ugb-number-box__item3 .ugb-number-box__title": Object {
+    "color": undefined,
+  },
+  ".ugb-number-box__item3:before": Object {
+    "background": undefined,
+  },
+  ".ugb-number-box__item:before": Object {
+    "backgroundColor": undefined,
+    "backgroundImage": undefined,
+    "mixBlendMode": "columnBackgroundGradientBlendMode",
+    "opacity": 12.3,
   },
   ".ugb-number-box__number": Object {
-    "backgroundColor": "#123456",
-    "color": "#123456",
+    "marginBottom": "123px",
   },
   ".ugb-number-box__title": Object {
-    "color": "#123456",
+    "marginBottom": "123px",
+  },
+  "mobile": Object {
+    ".ugb-number-box__item": Object {
+      "backgroundImage": "url(columnMobileBackgroundMediaUrl)",
+      "backgroundPosition": "columnMobileBackgroundPosition",
+      "backgroundRepeat": "columnMobileBackgroundRepeat",
+      "backgroundSize": "columnMobileBackgroundSize",
+      "textAlign": undefined,
+    },
+    ".ugb-number-box__item:before": Object {
+      "opacity": 12.3,
+    },
+    ".ugb-number-box__number": Object {
+      "marginBottom": "123px",
+    },
+    ".ugb-number-box__title": Object {
+      "marginBottom": "123px",
+    },
+  },
+  "tablet": Object {
+    ".ugb-number-box__item": Object {
+      "backgroundImage": "url(columnTabletBackgroundMediaUrl)",
+      "backgroundPosition": "columnTabletBackgroundPosition",
+      "backgroundRepeat": "columnTabletBackgroundRepeat",
+      "backgroundSize": "columnTabletBackgroundSize",
+      "textAlign": undefined,
+    },
+    ".ugb-number-box__item:before": Object {
+      "opacity": 12.3,
+    },
+    ".ugb-number-box__number": Object {
+      "marginBottom": "123px",
+    },
+    ".ugb-number-box__title": Object {
+      "marginBottom": "123px",
+    },
   },
 }
 `;

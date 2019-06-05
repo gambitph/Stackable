@@ -16,11 +16,12 @@ const blockAttributeTests = props => {
 		expect( Object.keys( attributes ) ).not.toContain( 'customCSSCompiled' )
 	} )
 
-	test( 'should have an `align` attribute if it is supported', () => {
-		if ( typeof supports.align !== 'undefined' ) {
-			expect( Object.keys( attributes ) ).toContain( 'align' )
-		}
-	} )
+	// Handled by HOC already.
+	// test( 'should have an `align` attribute if it is supported', () => {
+	// 	if ( typeof supports.align !== 'undefined' ) {
+	// 		expect( Object.keys( attributes ) ).toContain( 'align' )
+	// 	}
+	// } )
 }
 
 export default blockAttributeTests

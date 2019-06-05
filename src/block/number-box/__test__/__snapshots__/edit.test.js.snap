@@ -2,9 +2,22 @@
 
 exports[`Number Box block Edit render should match inspector tabbed controls snapshot 1`] = `
 <Fragment>
+  <IfBlockEditSelected(BlockControlsFill)>
+    <WithBlockEditContext(WithViewportMatch(WithSelect(AlignmentToolbar)))
+      onChange={[Function]}
+      value=""
+    />
+  </IfBlockEditSelected(BlockControlsFill)>
   <IfBlockEditSelected(InspectorControlsFill)>
-    <PanelTabs
-      closeOtherPanels={true}
+    <WithMemory(PanelTabs)
+      blockProps={
+        Object {
+          "attributes": Object {},
+          "blockName": "number-box",
+          "clientId": "abc",
+          "name": "core/paragraph",
+        }
+      }
     />
   </IfBlockEditSelected(InspectorControlsFill)>
   <InspectorPanelControls
@@ -29,21 +42,12 @@ exports[`Number Box block Edit render should match inspector tabbed controls sna
       }
       selected="basic"
     />
-    <PanelDesignLibrary />
-    <PanelDesignUserLibrary
-      block=""
-      className=""
-      help="Save designs to reuse them across your site. Note that using saved designs will override your current block settings."
-      ignoredAttributes={Array []}
-      initialOpen={false}
-      title="Saved Block Designs"
-    />
   </InspectorPanelControls>
   <InspectorPanelControls
     tab="style"
   >
     <ForwardRef(PanelBody)
-      title="General Settings"
+      title="General"
     >
       <WithInstanceId(RangeControl)
         label="Columns"
@@ -51,11 +55,8 @@ exports[`Number Box block Edit render should match inspector tabbed controls sna
         min={1}
         onChange={[Function]}
       />
-      <WithColorContext(IfCondition(ColorPaletteControl))
-        label="Background Color"
-        onChange={[Function]}
-      />
       <WithInstanceId(RangeControl)
+        allowReset={true}
         label="Border Radius"
         max={50}
         min={0}
@@ -63,83 +64,568 @@ exports[`Number Box block Edit render should match inspector tabbed controls sna
         value={12}
       />
       <WithInstanceId(RangeControl)
+        allowReset={true}
         label="Shadow / Outline"
         max={9}
         min={0}
         onChange={[Function]}
         value={3}
       />
+      <ResponsiveControl
+        attrNameTemplate="%sContentAlign"
+        blockAttributes={Object {}}
+        onChange={[Function]}
+        setAttributes={[Function]}
+      >
+        <AlignButtonsControl
+          justified={false}
+          label="Align"
+          onChange={[Function]}
+          screens={
+            Array [
+              "desktop",
+            ]
+          }
+          value="left"
+        />
+      </ResponsiveControl>
     </ForwardRef(PanelBody)>
-    <WithColorContext(IfCondition(Component))
-      colorSettings={
+    <ForwardRef(PanelBody)
+      initialOpen={false}
+      title="Column Background"
+    >
+      <BackgroundControlsHelper
+        attrNameTemplate="column%s"
+        blockAttributes={Object {}}
+        setAttributes={[Function]}
+      />
+    </ForwardRef(PanelBody)>
+    <ForwardRef(PanelBody)
+      initialOpen={false}
+      title="Spacing"
+    >
+      <ResponsiveControl
+        attrNameTemplate="number%sBottomMargin"
+        blockAttributes={Object {}}
+        onChange={null}
+        setAttributes={[Function]}
+      >
+        <AdvancedRangeControl
+          allowReset={true}
+          className=""
+          help=""
+          label="Number"
+          max={100}
+          min={-50}
+          onChange={[Function]}
+          onChangeUnit={[Function]}
+          screens={
+            Array [
+              "desktop",
+            ]
+          }
+          unit="px"
+          units={
+            Array [
+              "px",
+            ]
+          }
+        />
+      </ResponsiveControl>
+      <ResponsiveControl
+        attrNameTemplate="title%sBottomMargin"
+        blockAttributes={Object {}}
+        onChange={null}
+        setAttributes={[Function]}
+      >
+        <AdvancedRangeControl
+          allowReset={true}
+          className=""
+          help=""
+          label="Title"
+          max={100}
+          min={-50}
+          onChange={[Function]}
+          onChangeUnit={[Function]}
+          screens={
+            Array [
+              "desktop",
+            ]
+          }
+          unit="px"
+          units={
+            Array [
+              "px",
+            ]
+          }
+        />
+      </ResponsiveControl>
+    </ForwardRef(PanelBody)>
+    <PanelAdvancedSettings
+      advancedChildren={null}
+      checked={true}
+      className=""
+      hasToggle={true}
+      initialAdvanced={false}
+      initialOpen={false}
+      onChange={[Function]}
+      title="Number"
+      toggleAttributeName="showNumber"
+      toggleOnSetAttributes={
         Array [
-          Object {
-            "label": "Number Color",
-            "onChange": [Function],
-            "value": undefined,
-          },
-          Object {
-            "label": "Number Background Color",
-            "onChange": [Function],
-            "value": undefined,
-          },
-          Object {
-            "label": "Title Color",
-            "onChange": [Function],
-            "value": undefined,
-          },
-          Object {
-            "label": "Description Color",
-            "onChange": [Function],
-            "value": undefined,
-          },
+          "numberFontFamily",
+          "numberFontWeight",
+          "numberTextTransform",
+          "numberLetterSpacing",
+          "numberFontSize",
+          "numberTabletFontSize",
+          "numberMobileFontSize",
+          "numberLineHeight",
+          "numberTabletLineHeight",
+          "numberMobileLineHeight",
+          "numberFontSizeUnit",
+          "numberTabletFontSizeUnit",
+          "numberMobileFontSizeUnit",
+          "titleLineHeightUnitLineHeightUnit",
+          "titleTabletLineHeightUnitLineHeightUnit",
+          "titleMobileLineHeightUnitLineHeightUnit",
+          "num1",
+          "num2",
+          "num3",
+          "numberPadding",
+          "numberTabletPadding",
+          "numberMobilePadding",
+          "numberStyle",
+          "numberColor",
+          "numberOpacity",
+          "numberAlign",
+          "numberTabletAlign",
+          "numberMobileAlign",
         ]
       }
-      title="Color Settings"
-    />
+    >
+      <WithInstanceId(TextControl)
+        label="Number 1 Label"
+        onChange={[Function]}
+        value=""
+      />
+      <WithInstanceId(TextControl)
+        label="Number 2 Label"
+        onChange={[Function]}
+        value=""
+      />
+      <WithInstanceId(TextControl)
+        label="Number 3 Label"
+        onChange={[Function]}
+        value=""
+      />
+      <TypographyControlHelper
+        attrNameTemplate="number%s"
+        blockAttributes={Object {}}
+        fontSizeProps={
+          Object {
+            "max": Array [
+              150,
+              7,
+            ],
+            "min": 40,
+          }
+        }
+        setAttributes={[Function]}
+      />
+      <WithInstanceId(SelectControl)
+        label="Number Shape"
+        onChange={[Function]}
+        options={
+          Array [
+            Object {
+              "label": "None",
+              "value": "none",
+            },
+            Object {
+              "label": "Circle",
+              "value": "",
+            },
+            Object {
+              "label": "Square",
+              "value": "square",
+            },
+          ]
+        }
+        value=""
+      />
+      <ResponsiveControl
+        attrNameTemplate="number%sPadding"
+        blockAttributes={Object {}}
+        onChange={null}
+        setAttributes={[Function]}
+      >
+        <AdvancedRangeControl
+          allowReset={true}
+          className=""
+          help=""
+          label="Shape Size"
+          max={5}
+          min={0}
+          onChange={[Function]}
+          onChangeUnit={[Function]}
+          screens={
+            Array [
+              "desktop",
+            ]
+          }
+          step={0.1}
+          unit="px"
+          units={
+            Array [
+              "px",
+            ]
+          }
+        />
+      </ResponsiveControl>
+      <WithColorContext(IfCondition(ColorPaletteControl))
+        label="Number Background Color"
+        onChange={[Function]}
+      />
+      <WithColorContext(IfCondition(ColorPaletteControl))
+        label="Number Color"
+        onChange={[Function]}
+      />
+      <AdvancedRangeControl
+        className=""
+        help=""
+        label="Opacity"
+        max={1}
+        min={0.1}
+        onChange={[Function]}
+        onChangeUnit={[Function]}
+        screens={
+          Array [
+            "desktop",
+          ]
+        }
+        step={0.1}
+        unit="px"
+        units={
+          Array [
+            "px",
+          ]
+        }
+        value=""
+      />
+      <ResponsiveControl
+        attrNameTemplate="Number%sAlign"
+        blockAttributes={Object {}}
+        onChange={null}
+        setAttributes={[Function]}
+      >
+        <AlignButtonsControl
+          justified={false}
+          label="Align"
+          onChange={[Function]}
+          screens={
+            Array [
+              "desktop",
+            ]
+          }
+          value="left"
+        />
+      </ResponsiveControl>
+    </PanelAdvancedSettings>
+    <PanelAdvancedSettings
+      advancedChildren={null}
+      checked={true}
+      className=""
+      hasToggle={true}
+      initialAdvanced={false}
+      initialOpen={false}
+      onChange={[Function]}
+      title="Title"
+      toggleAttributeName="showTitle"
+      toggleOnSetAttributes={
+        Array [
+          "titleFontFamily",
+          "titleFontWeight",
+          "titleTextTransform",
+          "titleLetterSpacing",
+          "titleFontSize",
+          "titleTabletFontSize",
+          "titleMobileFontSize",
+          "titleLineHeight",
+          "titleTabletLineHeight",
+          "titleMobileLineHeight",
+          "titleFontSizeUnit",
+          "titleTabletFontSizeUnit",
+          "titleMobileFontSizeUnit",
+          "titleLineHeightUnitLineHeightUnit",
+          "titleTabletLineHeightUnitLineHeightUnit",
+          "titleMobileLineHeightUnitLineHeightUnit",
+          "titleTag",
+          "titleColor",
+          "titleAlign",
+          "titleTabletAlign",
+          "titleMobileAlign",
+        ]
+      }
+    >
+      <TypographyControlHelper
+        attrNameTemplate="title%s"
+        blockAttributes={Object {}}
+        setAttributes={[Function]}
+      />
+      <HeadingButtonsControl
+        label="Title HTML Tag"
+        onChange={[Function]}
+        value="h4"
+      />
+      <WithColorContext(IfCondition(ColorPaletteControl))
+        label="Title Color"
+        onChange={[Function]}
+      />
+      <ResponsiveControl
+        attrNameTemplate="Title%sAlign"
+        blockAttributes={Object {}}
+        onChange={null}
+        setAttributes={[Function]}
+      >
+        <AlignButtonsControl
+          justified={false}
+          label="Align"
+          onChange={[Function]}
+          screens={
+            Array [
+              "desktop",
+            ]
+          }
+          value="left"
+        />
+      </ResponsiveControl>
+    </PanelAdvancedSettings>
+    <PanelAdvancedSettings
+      advancedChildren={null}
+      checked={true}
+      className=""
+      hasToggle={true}
+      initialAdvanced={false}
+      initialOpen={false}
+      onChange={[Function]}
+      title="Description"
+      toggleAttributeName="showDescription"
+      toggleOnSetAttributes={
+        Array [
+          "descriptionFontFamily",
+          "descriptionFontWeight",
+          "descriptionTextTransform",
+          "descriptionLetterSpacing",
+          "descriptionFontSize",
+          "descriptionTabletFontSize",
+          "descriptionMobileFontSize",
+          "descriptionLineHeight",
+          "descriptionTabletLineHeight",
+          "descriptionMobileLineHeight",
+          "descriptionFontSizeUnit",
+          "descriptionTabletFontSizeUnit",
+          "descriptionMobileFontSizeUnit",
+          "titleLineHeightUnitLineHeightUnit",
+          "titleTabletLineHeightUnitLineHeightUnit",
+          "titleMobileLineHeightUnitLineHeightUnit",
+          "descriptionColor",
+          "descriptionAlign",
+          "descriptionTabletAlign",
+          "descriptionMobileAlign",
+        ]
+      }
+    >
+      <TypographyControlHelper
+        attrNameTemplate="description%s"
+        blockAttributes={Object {}}
+        setAttributes={[Function]}
+      />
+      <WithColorContext(IfCondition(ColorPaletteControl))
+        label="Description Color"
+        onChange={[Function]}
+      />
+      <ResponsiveControl
+        attrNameTemplate="description%sAlign"
+        blockAttributes={Object {}}
+        onChange={null}
+        setAttributes={[Function]}
+      >
+        <AlignButtonsControl
+          justified={false}
+          label="Align"
+          onChange={[Function]}
+          screens={
+            Array [
+              "desktop",
+            ]
+          }
+          value="left"
+        />
+      </ResponsiveControl>
+    </PanelAdvancedSettings>
   </InspectorPanelControls>
   <InspectorPanelControls
     tab="advanced"
-  />
+  >
+    <ForwardRef(PanelBody)
+      initialOpen={false}
+      key="0"
+      title="Column #1"
+    >
+      <p
+        className="components-base-control__help"
+      >
+        Override settings for this column.
+      </p>
+      <WithColorContext(IfCondition(ColorPaletteControl))
+        label="Column Background"
+        onChange={[Function]}
+      />
+      <WithColorContext(IfCondition(ColorPaletteControl))
+        label="Number Background"
+        onChange={[Function]}
+      />
+      <WithColorContext(IfCondition(ColorPaletteControl))
+        label="Number Text"
+        onChange={[Function]}
+      />
+      <WithColorContext(IfCondition(ColorPaletteControl))
+        label="Title"
+        onChange={[Function]}
+      />
+      <WithColorContext(IfCondition(ColorPaletteControl))
+        label="Description"
+        onChange={[Function]}
+      />
+    </ForwardRef(PanelBody)>
+    <ForwardRef(PanelBody)
+      initialOpen={false}
+      key="1"
+      title="Column #2"
+    >
+      <p
+        className="components-base-control__help"
+      >
+        Override settings for this column.
+      </p>
+      <WithColorContext(IfCondition(ColorPaletteControl))
+        label="Column Background"
+        onChange={[Function]}
+      />
+      <WithColorContext(IfCondition(ColorPaletteControl))
+        label="Number Background"
+        onChange={[Function]}
+      />
+      <WithColorContext(IfCondition(ColorPaletteControl))
+        label="Number Text"
+        onChange={[Function]}
+      />
+      <WithColorContext(IfCondition(ColorPaletteControl))
+        label="Title"
+        onChange={[Function]}
+      />
+      <WithColorContext(IfCondition(ColorPaletteControl))
+        label="Description"
+        onChange={[Function]}
+      />
+    </ForwardRef(PanelBody)>
+  </InspectorPanelControls>
   <MockBlockComponent
     attributes={Object {}}
     blockName="number-box"
+    clientId="abc"
+    name="core/paragraph"
   />
 </Fragment>
 `;
 
 exports[`Number Box block Edit render should match snapshot 1`] = `
 <div
-  class="wp-block-ugb-number-box ugb-number-box ugb-number-box ugb-number-box--v2 ugb-number-box--columns-3"
+  class="wp-block-ugb-number-box ugb-number-box ugb-number-box ugb-number-box--v3 ugb-number-box--columns-2 ugb-main-block"
 >
   <div
-    class="ugb-number-box__item ugb-number-box__item1"
+    class="ugb-inner-block"
   >
     <div
-      class="editor-rich-text"
+      class="ugb-number-box__item ugb-number-box__item1"
     >
-      <div>
+      <div
+        class="editor-rich-text"
+      >
         <div>
-          <div
-            class="components-autocomplete"
-          >
+          <div>
             <div
-              aria-autocomplete="list"
-              aria-label="01"
-              aria-multiline="true"
-              class="ugb-number-box__number editor-rich-text__editable"
-              contenteditable="true"
-              data-is-placeholder-visible="false"
-              role="textbox"
+              class="components-autocomplete"
             >
-              01
+              <div
+                aria-autocomplete="list"
+                aria-label="01"
+                aria-multiline="true"
+                class="ugb-number-box__number editor-rich-text__tinymce"
+                contenteditable="true"
+                data-is-placeholder-visible="false"
+                role="textbox"
+              >
+                01
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ugb-number-box__content"
+      >
+        <div
+          class="editor-rich-text"
+        >
+          <div>
+            <div>
+              <div
+                class="components-autocomplete"
+              >
+                <h4
+                  aria-autocomplete="list"
+                  aria-label="Title"
+                  aria-multiline="true"
+                  class="ugb-number-box__title editor-rich-text__tinymce"
+                  contenteditable="true"
+                  data-is-placeholder-visible="false"
+                  role="textbox"
+                >
+                  Title
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="editor-rich-text"
+        >
+          <div>
+            <div>
+              <div
+                class="components-autocomplete"
+              >
+                <p
+                  aria-autocomplete="list"
+                  aria-label="Description for this block. Use this space for describing your block. Any text will do."
+                  aria-multiline="true"
+                  class="ugb-number-box__description editor-rich-text__tinymce"
+                  contenteditable="true"
+                  data-is-placeholder-visible="false"
+                  role="textbox"
+                >
+                  Description for this block. Use this space for describing your block. Any text will do.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div
-      class="ugb-number-box__content"
+      class="ugb-number-box__item ugb-number-box__item2"
     >
       <div
         class="editor-rich-text"
@@ -149,194 +635,67 @@ exports[`Number Box block Edit render should match snapshot 1`] = `
             <div
               class="components-autocomplete"
             >
-              <h4
+              <div
                 aria-autocomplete="list"
-                aria-label="Title"
+                aria-label="02"
                 aria-multiline="true"
-                class="ugb-number-box__title editor-rich-text__editable"
+                class="ugb-number-box__number editor-rich-text__tinymce"
                 contenteditable="true"
                 data-is-placeholder-visible="false"
                 role="textbox"
               >
-                Title
-              </h4>
+                02
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div
-        class="editor-rich-text"
+        class="ugb-number-box__content"
       >
-        <div>
+        <div
+          class="editor-rich-text"
+        >
           <div>
-            <div
-              class="components-autocomplete"
-            >
-              <p
-                aria-autocomplete="list"
-                aria-label="Description for this block. Use this space for describing your block. Any text will do."
-                aria-multiline="true"
-                class="ugb-number-box__description editor-rich-text__editable"
-                contenteditable="true"
-                data-is-placeholder-visible="false"
-                role="textbox"
+            <div>
+              <div
+                class="components-autocomplete"
               >
-                Description for this block. Use this space for describing your block. Any text will do.
-              </p>
+                <h4
+                  aria-autocomplete="list"
+                  aria-label="Title"
+                  aria-multiline="true"
+                  class="ugb-number-box__title editor-rich-text__tinymce"
+                  contenteditable="true"
+                  data-is-placeholder-visible="false"
+                  role="textbox"
+                >
+                  Title
+                </h4>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <div
-    class="ugb-number-box__item ugb-number-box__item2"
-  >
-    <div
-      class="editor-rich-text"
-    >
-      <div>
-        <div>
-          <div
-            class="components-autocomplete"
-          >
-            <div
-              aria-autocomplete="list"
-              aria-label="02"
-              aria-multiline="true"
-              class="ugb-number-box__number editor-rich-text__editable"
-              contenteditable="true"
-              data-is-placeholder-visible="false"
-              role="textbox"
-            >
-              02
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="ugb-number-box__content"
-    >
-      <div
-        class="editor-rich-text"
-      >
-        <div>
+        <div
+          class="editor-rich-text"
+        >
           <div>
-            <div
-              class="components-autocomplete"
-            >
-              <h4
-                aria-autocomplete="list"
-                aria-label="Title"
-                aria-multiline="true"
-                class="ugb-number-box__title editor-rich-text__editable"
-                contenteditable="true"
-                data-is-placeholder-visible="false"
-                role="textbox"
+            <div>
+              <div
+                class="components-autocomplete"
               >
-                Title
-              </h4>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="editor-rich-text"
-      >
-        <div>
-          <div>
-            <div
-              class="components-autocomplete"
-            >
-              <p
-                aria-autocomplete="list"
-                aria-label="Description for this block. Use this space for describing your block. Any text will do."
-                aria-multiline="true"
-                class="ugb-number-box__description editor-rich-text__editable"
-                contenteditable="true"
-                data-is-placeholder-visible="false"
-                role="textbox"
-              >
-                Description for this block. Use this space for describing your block. Any text will do.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div
-    class="ugb-number-box__item ugb-number-box__item3"
-  >
-    <div
-      class="editor-rich-text"
-    >
-      <div>
-        <div>
-          <div
-            class="components-autocomplete"
-          >
-            <div
-              aria-autocomplete="list"
-              aria-label="03"
-              aria-multiline="true"
-              class="ugb-number-box__number editor-rich-text__editable"
-              contenteditable="true"
-              data-is-placeholder-visible="false"
-              role="textbox"
-            >
-              03
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="ugb-number-box__content"
-    >
-      <div
-        class="editor-rich-text"
-      >
-        <div>
-          <div>
-            <div
-              class="components-autocomplete"
-            >
-              <h4
-                aria-autocomplete="list"
-                aria-label="Title"
-                aria-multiline="true"
-                class="ugb-number-box__title editor-rich-text__editable"
-                contenteditable="true"
-                data-is-placeholder-visible="false"
-                role="textbox"
-              >
-                Title
-              </h4>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="editor-rich-text"
-      >
-        <div>
-          <div>
-            <div
-              class="components-autocomplete"
-            >
-              <p
-                aria-autocomplete="list"
-                aria-label="Description for this block. Use this space for describing your block. Any text will do."
-                aria-multiline="true"
-                class="ugb-number-box__description editor-rich-text__editable"
-                contenteditable="true"
-                data-is-placeholder-visible="false"
-                role="textbox"
-              >
-                Description for this block. Use this space for describing your block. Any text will do.
-              </p>
+                <p
+                  aria-autocomplete="list"
+                  aria-label="Description for this block. Use this space for describing your block. Any text will do."
+                  aria-multiline="true"
+                  class="ugb-number-box__description editor-rich-text__tinymce"
+                  contenteditable="true"
+                  data-is-placeholder-visible="false"
+                  role="textbox"
+                >
+                  Description for this block. Use this space for describing your block. Any text will do.
+                </p>
+              </div>
             </div>
           </div>
         </div>
