@@ -10,7 +10,7 @@ import {
 	WhenResponsiveScreen,
 } from '@stackable/components'
 import { PanelBody, RangeControl, ToggleControl } from '@wordpress/components'
-import { withBlockStyles, withGoogleFont, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
+import { withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
@@ -332,6 +332,7 @@ const edit = props => {
 
 export default compose(
 	withUniqueClass,
+	withSetAttributeHook,
 	withGoogleFont,
 	withTabbedInspector,
 	withBlockStyles( createStyles, { editorMode: true } ),
