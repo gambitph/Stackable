@@ -3,7 +3,7 @@ import { Component, createRef } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { Icon } from '@wordpress/components'
-import { isUnmodifiedBlock } from '@stackable/util'
+import withMemory from './with-memory'
 
 const TABS = [
 	{
@@ -26,9 +26,7 @@ const TABS = [
 	},
 ]
 
-const panelStatus = {}
-
-const closeAllOpenPanels = clickedEl => {
+export const closeAllOpenPanels = clickedEl => {
 	[].forEach.call( document.querySelectorAll( '.components-panel__body .components-panel__body-toggle' ), el => {
 		if ( el.offsetHeight === 0 ) {
 			return
@@ -45,18 +43,8 @@ class PanelTabs extends Component {
 	constructor() {
 		super( ...arguments )
 
-		// Create a cache for the status of this panel.
-		this.blockClientId = this.props.blockProps.clientId
-		if ( typeof panelStatus[ this.blockClientId ] === 'undefined' ) {
-			panelStatus[ this.blockClientId ] = {
-				// New/default blocks should start at the layout tab, others in the style tab.
-				tab: isUnmodifiedBlock( this.props.blockProps ) ? 'layout' : 'style',
-				panel: 0,
-			}
-		}
-
 		this.state = {
-			activeTab: this.props.initialTab ? this.props.initialTab : panelStatus[ this.blockClientId ].tab,
+			activeTab: this.props.initialTab ? this.props.initialTab : 'layout',
 		}
 
 		this.onButtonPanelClick = this.onButtonPanelClick.bind( this )
@@ -69,39 +57,12 @@ class PanelTabs extends Component {
 		sidebarPanel.closest( '.edit-post-sidebar' ).classList.add( 'ugb--has-panel-tabs' )
 	}
 
-	getPanelIndex( panel ) {
-		return panel ? Array.prototype.slice.call( panel.parentElement.children ).indexOf( panel ) : -1
-	}
-
-	getOpenPanelIndex( tab = this.state.activeTab ) {
-		const openPanel = this.containerDiv.current.parentElement.querySelector( `.ugb-inspector-panel-controls.ugb-panel-${ tab } .components-panel__body.is-opened` )
-		return this.getPanelIndex( openPanel )
-	}
-
-	getPanelFromIndex( panelIndex = -1 ) {
-		if ( panelIndex === -1 ) {
-			return null
-		}
-		const container = this.containerDiv.current.parentElement.querySelector( `.ugb-inspector-panel-controls.ugb-panel-${ this.state.activeTab }` )
-		return container.querySelector( `.components-panel__body:nth-child(${ panelIndex + 1 }):not(.is-opened) .components-panel__body-toggle` )
-	}
-
 	componentDidMount() {
 		this.updateSidebarPanelTab( this.state.activeTab )
 
 		// Listen to panel closes
 		if ( this.props.closeOtherPanels ) {
 			document.body.addEventListener( 'click', this.onButtonPanelClick )
-		}
-
-		// Open the previous panel.
-		const panel = this.getPanelFromIndex( panelStatus[ this.blockClientId ].panel )
-		if ( panel ) {
-			panel.click()
-		}
-		// Or close everything.
-		if ( panelStatus[ this.blockClientId ].panel === -1 ) {
-			closeAllOpenPanels()
 		}
 	}
 
@@ -118,27 +79,18 @@ class PanelTabs extends Component {
 
 	onButtonPanelClick( ev ) {
 		const toggle = ev.target.closest( '.components-panel__body-toggle' )
-		if ( toggle ) {
-			closeAllOpenPanels( toggle )
-
-			// Update the cache, get the current open panel
-			const panel = toggle.closest( '.components-panel__body' )
-			panelStatus[ this.blockClientId ] = {
-				...panelStatus[ this.blockClientId ],
-				panel: ! panel.classList.contains( 'is-opened' ) ? this.getPanelIndex( panel ) : -1, //this.getOpenPanelIndex(),
-			}
+		if ( ! toggle ) {
+			return
 		}
+
+		closeAllOpenPanels( toggle )
+		this.props.onClickPanel( toggle.closest( '.components-panel__body' ) )
 	}
 
 	select( tab ) {
 		this.setState( { activeTab: tab } )
 		this.updateSidebarPanelTab( tab )
-
-		// Update the cache.
-		panelStatus[ this.blockClientId ] = {
-			tab,
-			panel: this.getOpenPanelIndex( tab ),
-		}
+		this.props.onClick( tab )
 	}
 
 	render() {
@@ -174,6 +126,8 @@ PanelTabs.defaultProps = {
 	closeOtherPanels: true,
 	blockProps: {},
 	initialTab: '',
+	onClickPanel: () => {},
+	onClick: () => {},
 }
 
-export default PanelTabs
+export default withMemory( PanelTabs )
