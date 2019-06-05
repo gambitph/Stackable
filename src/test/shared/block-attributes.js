@@ -1,6 +1,6 @@
 const blockAttributeTests = props => {
 	const {
-		supports = {},
+		// supports = {},
 		attributes = {},
 	} = props.settings
 
