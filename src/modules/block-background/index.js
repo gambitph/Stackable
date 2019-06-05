@@ -1,4 +1,3 @@
-import * as deepmerge from 'deepmerge'
 import { addFilter, doAction, removeFilter } from '@wordpress/hooks'
 import {
 	BackgroundControlsHelper,
@@ -13,6 +12,7 @@ import {
 	hasBackgroundOverlay,
 } from '@stackable/util'
 import { __ } from '@wordpress/i18n'
+import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
 import { Toolbar } from '@wordpress/components'
 

@@ -1,4 +1,3 @@
-import * as deepmerge from 'deepmerge'
 import {
 	createBackgroundStyleSet,
 	createTypographyStyles,
@@ -8,6 +7,7 @@ import {
 	whiteIfDarkBlackIfLight,
 } from '@stackable/util'
 import { applyFilters } from '@wordpress/hooks'
+import deepmerge from 'deepmerge'
 import { sprintf } from '@wordpress/i18n'
 
 export const createStyles = props => {

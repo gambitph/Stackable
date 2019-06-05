@@ -1,8 +1,8 @@
-import * as deepmerge from 'deepmerge'
 import { addFilter, applyFilters, doAction } from '@wordpress/hooks'
 import { AdvancedRangeControl, AdvancedSelectControl, FourNumberControl, WhenResponsiveScreen } from '@stackable/components'
 import { __ } from '@wordpress/i18n'
 import { createAllCombinationAttributes } from '@stackable/util'
+import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
 import { PanelBody } from '@wordpress/components'
 

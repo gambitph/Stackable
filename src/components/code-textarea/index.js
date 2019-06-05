@@ -1,7 +1,7 @@
-import * as deepmerge from 'deepmerge'
 import { debounce, uniqueId } from 'lodash'
 import { defaultSettings, initialize } from '@wordpress/codeEditor'
 import { Component } from '@wordpress/element'
+import deepmerge from 'deepmerge'
 
 class CodeTextarea extends Component {
 	constructor() {

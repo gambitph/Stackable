@@ -1,4 +1,3 @@
-import * as deepmerge from 'deepmerge'
 import { addFilter, applyFilters, doAction, removeFilter } from '@wordpress/hooks'
 import {
 	AdvancedRangeControl,
@@ -11,6 +10,7 @@ import {
 } from '@stackable/components'
 import { __ } from '@wordpress/i18n'
 import { createAllCombinationAttributes } from '@stackable/util'
+import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
 import { showProNotice } from 'stackable'
 import { ToggleControl } from '@wordpress/components'
