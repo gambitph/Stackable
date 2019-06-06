@@ -15,7 +15,7 @@ import { Fragment } from '@wordpress/element'
 import { showProNotice } from 'stackable'
 import { ToggleControl } from '@wordpress/components'
 
-const separatorAddedPadding = 170
+const separatorAddedPadding = 200
 
 // Adjust the padding when the separator is added.
 removeFilter( 'stackable.setAttributes', 'stackable/modules/block-separators/top' )
