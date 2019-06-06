@@ -38,24 +38,10 @@ export const createStyles = props => {
 	// General.
 	const {
 		borderRadius = 12,
-		contentAlign = '',
-		tabletContentAlign = '',
-		mobileContentAlign = '',
 	} = props.attributes
 	styles.push( {
 		'.ugb-number-box__item': {
 			borderRadius: design !== 'plain' && borderRadius !== 12 ? `${ borderRadius }px` : undefined,
-			textAlign: getValue( 'contentAlign' ),
-		},
-		tablet: {
-			'.ugb-number-box__item': {
-				textAlign: getValue( 'tabletContentAlign' ),
-			},
-		},
-		mobile: {
-			'.ugb-number-box__item': {
-				textAlign: getValue( 'mobileContentAlign' ),
-			},
 		},
 	} )
 
@@ -66,6 +52,9 @@ export const createStyles = props => {
 
 	// Number
 	const {
+		contentAlign = '',
+		tabletContentAlign = '',
+		mobileContentAlign = '',
 		numberBGColor = '',
 		numberColor = '',
 		numberAlign = '',

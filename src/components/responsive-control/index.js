@@ -29,7 +29,7 @@ const ResponsiveControl = props => {
 						value: getValue( 'Tablet' ),
 						onChange: value => {
 							if ( props.onChange ) {
-								props.onChange( getAttrName( 'Tablet' ), value, 'tablet' )
+								props.onChange( getAttrName( 'Tablet' ), value, 'Tablet' )
 							} else {
 								props.setAttributes( { [ getAttrName( 'Tablet' ) ]: value } )
 							}
@@ -43,7 +43,7 @@ const ResponsiveControl = props => {
 						value: getValue( 'Mobile' ),
 						onChange: value => {
 							if ( props.onChange ) {
-								props.onChange( getAttrName( 'Mobile' ), value, 'mobile' )
+								props.onChange( getAttrName( 'Mobile' ), value, 'Mobile' )
 							} else {
 								props.setAttributes( { [ getAttrName( 'Mobile' ) ]: value } )
 							}

@@ -489,7 +489,7 @@ const addBottomStyles = ( styleObject, props ) => {
 }
 
 const blockSeparators = blockName => {
-	addFilter( `stackable.${ blockName }.edit.inspector.style.after`, `stackable/${ blockName }/block-separators`, addBlockSeparatorPanels, 20 )
+	addFilter( `stackable.${ blockName }.edit.inspector.style.block`, `stackable/${ blockName }/block-separators`, addBlockSeparatorPanels, 18 )
 	addFilter( `stackable.${ blockName }.attributes`, `stackable/${ blockName }/block-separators`, addAttributes )
 	addFilter( `stackable.${ blockName }.edit.output.outer`, `stackable/${ blockName }/block-separators`, addShapeOutput )
 	addFilter( `stackable.${ blockName }.save.output.outer`, `stackable/${ blockName }/block-separators`, addShapeOutput )

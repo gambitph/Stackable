@@ -268,10 +268,10 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 	} = props.attributes
 
 	const styles = applyFilters( `stackable.${ blockName }.advanced-column-spacing.styles`, {
-		'.ugb-inner-block': {
+		'.ugb-block-content': {
 			columnGap: columnGap !== '' ? `${ columnGap }px` : undefined,
 		},
-		'.ugb-inner-block > *': {
+		'.ugb-block-content > *': {
 			paddingTop: columnPaddingTop !== '' ? `${ columnPaddingTop }${ columnPaddingUnit } !important` : undefined,
 			paddingRight: columnPaddingRight !== '' ? `${ columnPaddingRight }${ columnPaddingUnit } !important` : undefined,
 			paddingBottom: columnPaddingBottom !== '' ? `${ columnPaddingBottom }${ columnPaddingUnit } !important` : undefined,
@@ -280,10 +280,10 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 			justifyContent: columnVerticalAlign !== '' ? columnVerticalAlign : undefined,
 		},
 		tablet: {
-			'.ugb-inner-block': {
+			'.ugb-block-content': {
 				columnGap: tabletColumnGap !== '' ? `${ tabletColumnGap }px` : undefined,
 			},
-			'.ugb-inner-block > *': {
+			'.ugb-block-content > *': {
 				paddingTop: tabletColumnPaddingTop !== '' ? `${ tabletColumnPaddingTop }${ tabletColumnPaddingUnit } !important` : undefined,
 				paddingRight: tabletColumnPaddingRight !== '' ? `${ tabletColumnPaddingRight }${ tabletColumnPaddingUnit } !important` : undefined,
 				paddingBottom: tabletColumnPaddingBottom !== '' ? `${ tabletColumnPaddingBottom }${ tabletColumnPaddingUnit } !important` : undefined,
@@ -293,10 +293,10 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 			},
 		},
 		mobile: {
-			'.ugb-inner-block': {
+			'.ugb-block-content': {
 				columnGap: mobileColumnGap !== '' ? `${ mobileColumnGap }px` : undefined,
 			},
-			'.ugb-inner-block > *': {
+			'.ugb-block-content > *': {
 				paddingTop: mobileColumnPaddingTop !== '' ? `${ mobileColumnPaddingTop }${ mobileColumnPaddingUnit } !important` : undefined,
 				paddingRight: mobileColumnPaddingRight !== '' ? `${ mobileColumnPaddingRight }${ mobileColumnPaddingUnit } !important` : undefined,
 				paddingBottom: mobileColumnPaddingBottom !== '' ? `${ mobileColumnPaddingBottom }${ mobileColumnPaddingUnit } !important` : undefined,

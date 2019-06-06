@@ -6,15 +6,16 @@ import {
 	BackgroundControlsHelper,
 	BlockContainer,
 	ColorPaletteControl,
+	ContentAlignControl,
 	DesignPanelBody,
 	HeadingButtonsControl,
 	PanelAdvancedSettings,
+	PanelSpacingBody,
 	ProControlButton,
 	ResponsiveControl,
 	TypographyControlHelper,
 } from '@stackable/components'
-import { AlignmentToolbar, BlockControls, RichText } from '@wordpress/editor'
-import { descriptionPlaceholder, getAttrName, hasBackgroundOverlay, range, createTypographyAttributeNames, createResponsiveAttributeNames } from '@stackable/util'
+import { createResponsiveAttributeNames, createTypographyAttributeNames, descriptionPlaceholder, hasBackgroundOverlay, range } from '@stackable/util'
 import { PanelBody, RangeControl, SelectControl, TextControl } from '@wordpress/components'
 import { withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
 import classnames from 'classnames'
@@ -23,6 +24,7 @@ import createStyles from './style'
 import { Fragment } from '@wordpress/element'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import { RichText } from '@wordpress/editor'
 import { showProNotice } from 'stackable'
 
 addFilter( 'stackable.number-box.edit.inspector.layout.before', 'stackable/number-box', ( output, props ) => {
@@ -120,22 +122,11 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 						allowReset={ true }
 					/>
 				}
-				<ResponsiveControl
-					attrNameTemplate="%sContentAlign"
+				<ContentAlignControl
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					onChange={ ( attributeName, value, screen ) => {
-						setAttributes( {
-							[ attributeName ]: value,
-							// Reset the other alignment options.
-							[ getAttrName( 'Number%sAlign', screen ) ]: undefined,
-							[ getAttrName( 'Title%sAlign', screen ) ]: undefined,
-							[ getAttrName( 'Description%sAlign', screen ) ]: undefined,
-						} )
-					} }
-				>
-					<AlignButtonsControl label={ __( 'Align' ) } />
-				</ResponsiveControl>
+					attributeNamesToReset={ [ 'Number%sAlign', 'Title%sAlign', 'Description%sAlign' ] }
+				/>
 			</PanelBody>
 
 			{ show.columnBackground &&
@@ -151,7 +142,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 				</PanelBody>
 			}
 
-			<PanelBody title={ __( 'Spacing' ) } initialOpen={ false }>
+			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
 				{ show.spacingNumber && showNumber && (
 					<ResponsiveControl
 						attrNameTemplate="number%sBottomMargin"
@@ -180,7 +171,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 						/>
 					</ResponsiveControl>
 				) }
-			</PanelBody>
+			</PanelSpacingBody>
 
 			<PanelAdvancedSettings
 				title={ __( 'Number' ) }
@@ -204,16 +195,20 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					value={ num1 }
 					onChange={ num1 => setAttributes( { num1 } ) }
 				/>
-				<TextControl
-					label={ __( 'Number 2 Label' ) }
-					value={ num2 }
-					onChange={ num2 => setAttributes( { num2 } ) }
-				/>
-				<TextControl
-					label={ __( 'Number 3 Label' ) }
-					value={ num3 }
-					onChange={ num3 => setAttributes( { num3 } ) }
-				/>
+				{ columns !== '' && columns >= 2 && (
+					<TextControl
+						label={ __( 'Number 2 Label' ) }
+						value={ num2 }
+						onChange={ num2 => setAttributes( { num2 } ) }
+					/>
+				) }
+				{ columns !== '' && columns >= 3 && (
+					<TextControl
+						label={ __( 'Number 3 Label' ) }
+						value={ num3 }
+						onChange={ num3 => setAttributes( { num3 } ) }
+					/>
+				) }
 				<TypographyControlHelper
 					attrNameTemplate="number%s"
 					setAttributes={ setAttributes }
@@ -271,6 +266,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					step={ 0.1 }
 					value={ numberOpacity }
 					onChange={ numberOpacity => setAttributes( { numberOpacity } ) }
+					allowReset={ true }
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Number%sAlign"
@@ -422,24 +418,6 @@ addFilter( `stackable.number-box.edit.inspector.advanced.before`, `stackable/num
 		</Fragment>
 	)
 } )
-
-addFilter( 'stackable.number-box.edit.inspector.before', 'stackable/number-box/align', ( output, props ) => {
-	const { setAttributes } = props
-	const {
-		contentAlign = '',
-	} = props.attributes
-	return (
-		<Fragment>
-			{ output }
-			<BlockControls>
-				<AlignmentToolbar
-					value={ contentAlign }
-					onChange={ contentAlign => setAttributes( { contentAlign } ) }
-				/>
-			</BlockControls>
-		</Fragment>
-	)
-}, 11 )
 
 const edit = props => {
 	const {

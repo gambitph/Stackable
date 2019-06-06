@@ -101,7 +101,7 @@ export const schema = {
 			type: 'string',
 			default: '',
 		},
-		[ 'Content', 'Number', 'Title', 'Description' ],
+		[ 'Number', 'Title', 'Description' ],
 		[ '', 'Tablet', 'Mobile' ]
 	),
 
@@ -232,6 +232,8 @@ export const settings = {
 		'advanced-responsive': true,
 		'block-background': true,
 		'block-separators': true,
+		'block-title': true,
+		'content-align': true,
 		'custom-css': {
 			default: applyFilters( 'stackable.number-box.custom-css.default', '' ),
 		},

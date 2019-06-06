@@ -21,7 +21,9 @@ BlockContainer.Edit = props => {
 			{ applyFilters( `stackable.${ blockName }.edit.output.outer`, null, design, blockProps ) }
 			<div className="ugb-inner-block">
 				{ applyFilters( `stackable.${ blockName }.edit.output.before`, null, design, blockProps ) }
-				{ render( blockProps ) }
+				<div className="ugb-block-content">
+					{ render( blockProps ) }
+				</div>
 				{ applyFilters( `stackable.${ blockName }.edit.output.after`, null, design, blockProps ) }
 			</div>
 		</div>
@@ -51,7 +53,9 @@ BlockContainer.Save = props => {
 			{ applyFilters( `stackable.${ blockName }.save.output.outer`, null, design, blockProps ) }
 			<div className="ugb-inner-block">
 				{ applyFilters( `stackable.${ blockName }.save.output.before`, null, design, blockProps ) }
-				{ render( blockProps ) }
+				<div className="ugb-block-content">
+					{ render( blockProps ) }
+				</div>
 				{ applyFilters( `stackable.${ blockName }.save.output.after`, null, design, blockProps ) }
 			</div>
 		</div>
