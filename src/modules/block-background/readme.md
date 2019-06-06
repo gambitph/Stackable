@@ -18,3 +18,5 @@ The original will still be there, and you'll have to write include some CSS to h
 	display: none;
 }
 ```
+
+3. It's required for the block to use the `withTabbedInspector` HOC for displaying options.

@@ -4,6 +4,10 @@ Adds the Advanced Block Spacing panel to the block where users can change main b
 
 The styles are automatically added to the main block class `ugb-main-block`
 
+# Developer Notes
+
+It's required for the block to use the `withTabbedInspector` HOC for displaying options.
+
 # Options
 
 `modifyStyles`

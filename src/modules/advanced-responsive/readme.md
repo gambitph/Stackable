@@ -1,6 +1,6 @@
-# Block Separator Module
+# Advanced Responsive Module
 
-Adds the ability for a block to have a top and bottom separators.
+Adds a Responsive panel for turning on/off the block in different screen sizes.
 
 # Developer Notes
 

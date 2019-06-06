@@ -4,6 +4,10 @@ Adds the Advanced Column Spacing panel to the block where users can change colum
 
 The styles are automatically added to the children of the inner block class `ugb-inner-block > *`
 
+# Developer Notes
+
+It's required for the block to use the `withTabbedInspector` HOC for displaying options.
+
 # Options
 
 `modifyStyles`
