@@ -3,7 +3,6 @@ import { __ } from '@wordpress/i18n'
 import BaseControlMultiLabel from '../base-control-multi-label'
 import classnames from 'classnames'
 import { Component } from '@wordpress/element'
-import { omit } from 'lodash'
 import { withInstanceId } from '@wordpress/compose'
 
 class FourNumberControl extends Component {
