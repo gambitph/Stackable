@@ -37,7 +37,10 @@ export const combineStyleRules = styleObject => {
 				if ( typeof rule === 'undefined' ) {
 					return rules
 				}
-				return `${ rules }\n\t${ kebabCase( ruleName ) }: ${ rule };`
+
+				// KebabCase the style rule, but support custom CSS properties (double dash at the start).
+				const cleanedRuleName = ruleName.replace( /^(--)?(.*?$)/, ( matches, dashes, rule ) => `${ dashes || '' }${ kebabCase( rule ) }` )
+				return `${ rules }\n\t${ cleanedRuleName }: ${ rule };`
 			}, '' )
 			return `${ styleString }\n\n${ selector } {${ styles }\n}`
 		}, '' ).trim()

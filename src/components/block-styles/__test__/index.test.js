@@ -62,4 +62,15 @@ describe( 'Combine Style Rules', () => {
 			},
 		} ) ).toBe( '.class{margin:0;padding:0}.class3:after{margin:0;content:""}' )
 	} )
+
+	test( 'should adjust style rule names', () => {
+		expect( combineStyleRules( {
+			'.class': {
+				marginRight: 0,
+				padding: 0,
+				BorderTopRadius: 0,
+				'--customProp': 0,
+			},
+		} ) ).toBe( '.class{margin-right:0;padding:0;border-top-radius:0;--custom-prop:0}' )
+	} )
 } )
