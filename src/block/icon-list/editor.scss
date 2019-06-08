@@ -14,3 +14,8 @@
 .editor-block-list__block[data-type="ugb/icon-list"] .list-format-toolbar {
 	display: none;
 }
+
+// Hide the block alignment toolbar, because we will replace it with our own in the
+[data-type="ugb/icon-list"] > .editor-block-list__block-edit > .editor-block-contextual-toolbar > .editor-block-toolbar > .components-toolbar:nth-child(2) {
+	display: none;
+}

@@ -1,0 +1,21 @@
+import { name, settings } from '../'
+import { blockSaveRender } from '@stackable/test'
+
+describe( `${ settings.title } block`, () => {
+	describe( 'Save render', () => {
+		// Specified attributes for save testing.
+		const attributes = {
+			design: 'basic',
+		}
+
+		test( 'should match snapshot', () => {
+			const wrapper = blockSaveRender( name, settings )
+			expect( wrapper ).toMatchSnapshot()
+		} )
+
+		test( 'should match snapshot with attributes', () => {
+			const wrapper = blockSaveRender( name, settings, attributes )
+			expect( wrapper ).toMatchSnapshot()
+		} )
+	} )
+} )

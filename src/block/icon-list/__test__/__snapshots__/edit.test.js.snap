@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Icon List block Edit render should match inspector tabbed controls snapshot 1`] = `
+<Fragment>
+  <IfBlockEditSelected(InspectorControlsFill)>
+    <WithMemory(PanelTabs)
+      blockProps={
+        Object {
+          "attributes": Object {},
+          "blockName": "icon-list",
+          "clientId": "abc",
+          "name": "core/paragraph",
+        }
+      }
+    />
+  </IfBlockEditSelected(InspectorControlsFill)>
+  <InspectorPanelControls
+    tab="layout"
+  />
+  <InspectorPanelControls
+    tab="style"
+  />
+  <InspectorPanelControls
+    tab="advanced"
+  />
+  <MockBlockComponent
+    attributes={Object {}}
+    blockName="icon-list"
+    clientId="abc"
+    name="core/paragraph"
+  />
+</Fragment>
+`;
+
+exports[`Icon List block Edit render should match snapshot 1`] = `
+<div
+  class="wp-block-ugb-icon-list ugb-icon-list ugb-icon-list-wrapper"
+  style="--icon:url('data:image/svg+xml;base64,PHN2Zz48L3N2Zz4=');--icon-size:20px;--gap:16px"
+>
+  <div
+    class="editor-rich-text"
+  >
+    <div>
+      <div>
+        <div
+          class="components-autocomplete"
+        >
+          <ul
+            aria-autocomplete="list"
+            aria-label="Text for this block"
+            aria-multiline="true"
+            class="ugb-icon-list ugb-icon--icon-check ugb-icon--columns-1 editor-rich-text__tinymce"
+            contenteditable="true"
+            data-is-placeholder-visible="true"
+            role="textbox"
+          >
+            <li>
+              <br
+                data-mce-bogus="1"
+              />
+            </li>
+          </ul>
+          <ul
+            class="editor-rich-text__tinymce ugb-icon-list ugb-icon--icon-check ugb-icon--columns-1"
+          >
+            <li>
+              Text for this block
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

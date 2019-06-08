@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Icon List block Save render should match snapshot 1`] = `
+<div
+  class="wp-block-ugb-icon-list ugb-icon-list ugb-icon-list-wrapper"
+>
+  <ul
+    class="ugb-icon-list ugb-icon--icon-check ugb-icon--columns-1"
+    style="--icon:url('data:image/svg+xml;base64,PHN2Zz48L3N2Zz4=');--icon-size:20px;--gap:16px"
+  >
+    <div />
+  </ul>
+</div>
+`;

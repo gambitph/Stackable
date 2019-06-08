@@ -6,10 +6,12 @@
 
 @import "common";
 
-.ugb-icon-list {
-	margin: 0 0 1.5em 0 !important;
-	padding: 0 !important;
-	list-style: none !important;
+.ugb-icon-list, .ugb-icon-list-wrapper {
+	ul {
+		margin: 0 !important;
+		padding: 0 !important;
+		list-style: none !important;
+	}
 	li::before {
 		content: "";
 		display: inline-block;
