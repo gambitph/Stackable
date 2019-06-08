@@ -18,7 +18,7 @@ const deprecatedSave_1_15_4 = props => {
 	} = props.attributes
 
 	const mainClasses = classnames( [
-		className,
+		className.split( ' ' ).filter( name => name !== 'ugb-icon-list' ),
 		'ugb-icon-list-wrapper',
 	], applyFilters( 'stackable.icon-list.mainclasses_1_15_4', {}, design, props ) )
 
@@ -296,6 +296,19 @@ const deprecated = [
 	{
 		attributes: deprecatedSchema_1_15_4,
 		save: deprecatedSave_1_15_4,
+		migrate: attributes => {
+			// Update the custom CSS since the structure has changed.
+			const updateCSS = css => css
+				.replace( /.ugb-icon-list-wrapper .ugb-icon-list li/g, '.ugb-icon-list li' )
+				.replace( /.ugb-icon-list-wrapper .ugb-icon-list/g, '.ugb-icon-list ul' )
+				.replace( /.ugb-icon-list-wrapper/g, '.ugb-icon-list' )
+
+			return {
+				...attributes,
+				customCSS: updateCSS( attributes.customCSS ),
+				customCSSCompiled: updateCSS( attributes.customCSSCompiled ),
+			}
+		},
 	},
 	{
 		attributes: deprecatedSchema_1_13_3,

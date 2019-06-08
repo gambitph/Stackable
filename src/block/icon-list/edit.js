@@ -120,14 +120,9 @@ const edit = props => {
 
 	const mainClasses = classnames( [
 		className,
-		'ugb-icon-list-wrapper',
-	], applyFilters( 'stackable.icon-list.mainclasses', {}, design, props ) )
-
-	const ulClasses = classnames( [
-		'ugb-icon-list',
 		`ugb-icon--icon-${ icon }`,
 		`ugb-icon--columns-${ columns }`,
-	], applyFilters( 'stackable.icon-list.ulclasses', {}, design, props ) )
+	], applyFilters( 'stackable.icon-list.mainclasses', {}, design, props ) )
 
 	return (
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
@@ -136,7 +131,6 @@ const edit = props => {
 					tagName="ul"
 					multiline="li"
 					value={ text }
-					className={ ulClasses }
 					onChange={ text => setAttributes( { text } ) }
 					placeholder={ __( 'Text for this block' ) }
 					keepPlaceholderOnFocus

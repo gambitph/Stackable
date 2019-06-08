@@ -112,6 +112,10 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Upgrade Notice ==
 
+= 2.0 =
+* Custom CSS of some blocks might fail to upgrade to a newer format and might stop working after editing existing blocks. Here are the affected blocks and how to manually fix your custom CSS:
+	* Icon List block - Change all selectors `ugb-icon-list-wrapper` to `ugb-icon-list`
+
 = 1.11 =
 * Video Popup block - if you are using this block, existing ones may occupy the entire available width after editing. To bring back the old alignment where the block occupies only a small area in the middle, choose `center` align in the toolbar.
 * Heading block - the top and bottom paddings are now a little bit larger

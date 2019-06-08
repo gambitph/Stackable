@@ -18,21 +18,15 @@ const save = props => {
 
 	const mainClasses = classnames( [
 		className,
-		'ugb-icon-list-wrapper',
-	], applyFilters( 'stackable.icon-list.mainclasses', {}, design, props ) )
-
-	const ulClasses = classnames( [
-		'ugb-icon-list',
 		`ugb-icon--icon-${ icon }`,
 		`ugb-icon--columns-${ columns }`,
-	], applyFilters( 'stackable.icon-list.ulclasses', {}, design, props ) )
+	], applyFilters( 'stackable.icon-list.mainclasses', {}, design, props ) )
 
 	return (
 		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
 				<RichText.Content
 					tagName="ul"
-					className={ ulClasses }
 					value={ text }
 				/>
 			</Fragment>
