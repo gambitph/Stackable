@@ -24,7 +24,7 @@ const withMemory = createHigherOrderComponent(
 			if ( typeof panelStatus[ this.blockClientId ] === 'undefined' ) {
 				panelStatus[ this.blockClientId ] = {
 					// New/default blocks should start at the layout tab, others in the style tab.
-					tab: isUnmodifiedBlock( this.props.blockProps ) ? 'layout' : 'style',
+					tab: isUnmodifiedBlock( this.props.blockProps ) ? '' : 'style',
 					panel: 0,
 				}
 			}

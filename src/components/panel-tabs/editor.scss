@@ -1,6 +1,5 @@
 .ugb-panel-tabs {
-	display: grid !important;
-	grid-template-columns: 1fr 1fr 1fr;
+	display: flex !important;
 	button {
 		outline: none !important;
 		display: flex;
@@ -9,6 +8,7 @@
 		align-items: center;
 		padding: 12px 0 !important;
 		height: auto;
+		flex: 1;
 		svg {
 			margin: 5px;
 			height: 20px;

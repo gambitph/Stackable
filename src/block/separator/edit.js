@@ -334,6 +334,6 @@ export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
 	withGoogleFont,
-	withTabbedInspector,
+	withTabbedInspector(),
 	withBlockStyles( createStyles, { editorMode: true } ),
 )( edit )

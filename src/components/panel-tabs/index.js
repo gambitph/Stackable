@@ -43,8 +43,10 @@ class PanelTabs extends Component {
 	constructor() {
 		super( ...arguments )
 
+		this.tabsToUse = this.props.tabs || [ 'layout', 'style', 'advanced' ]
+
 		this.state = {
-			activeTab: this.props.initialTab ? this.props.initialTab : 'layout',
+			activeTab: this.props.initialTab ? this.props.initialTab : this.tabsToUse[ 0 ],
 		}
 
 		this.onButtonPanelClick = this.onButtonPanelClick.bind( this )
@@ -100,6 +102,9 @@ class PanelTabs extends Component {
 				ref={ this.containerDiv }
 			>
 				{ TABS.map( ( { value, title, label, icon }, i ) => {
+					if ( ! this.tabsToUse.includes( value ) ) {
+						return null
+					}
 					return (
 						<button
 							key={ i }
@@ -128,6 +133,7 @@ PanelTabs.defaultProps = {
 	initialTab: '',
 	onClickPanel: () => {},
 	onClick: () => {},
+	tabs: null,
 }
 
 export default withMemory( PanelTabs )

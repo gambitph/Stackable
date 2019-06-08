@@ -4,7 +4,7 @@ import { applyFilters } from '@wordpress/hooks'
 import { createHigherOrderComponent } from '@wordpress/compose'
 import { InspectorControls } from '@wordpress/editor'
 
-const withTabbedInspector = createHigherOrderComponent(
+const withTabbedInspector = ( tabs = null ) => createHigherOrderComponent(
 	WrappedComponent => class extends Component {
 		static defaultProps = {
 			attributes: {},
@@ -20,7 +20,7 @@ const withTabbedInspector = createHigherOrderComponent(
 					{ applyFilters( `stackable.${ blockName }.edit.inspector.before`, null, this.props ) }
 
 					<InspectorControls>
-						<PanelTabs blockProps={ this.props } />
+						<PanelTabs tabs={ tabs } blockProps={ this.props } />
 					</InspectorControls>
 
 					<InspectorPanelControls>
