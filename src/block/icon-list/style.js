@@ -1,14 +1,7 @@
 import {
-	createBackgroundStyleSet,
 	createTypographyStyles,
-	marginLeftAlign,
-	marginRightAlign,
 	whiteIfDark,
-	whiteIfDarkBlackIfLight,
 } from '@stackable/util'
-import { applyFilters } from '@wordpress/hooks'
-import deepmerge from 'deepmerge'
-import { sprintf } from '@wordpress/i18n'
 import { getIconSVGBase64 } from './util'
 
 export const createStyles = props => {
@@ -17,10 +10,7 @@ export const createStyles = props => {
 		iconShape,
 		iconColor,
 		iconSize,
-		text,
-		columns,
 		gap,
-		design = '',
 		showBlockBackground = '',
 		blockBackgroundBackgroundColor = '',
 		listTextColor = '',

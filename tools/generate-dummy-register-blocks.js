@@ -24,7 +24,7 @@ const getBlockName = content => {
 	return ( content.match( /name\s*=\s*['"](.*?)['"]/ ) || [] )[ 1 ]
 }
 
-const getTitle = content => {
+const getTitle = content => { // eslint-disable-line
 	return ( content.match( /title\s*:.*?['"](.*?)['"]/ ) || [] )[ 1 ]
 }
 
@@ -33,7 +33,6 @@ const getArgs = content => {
 }
 
 const registerBlocks = glob.sync( './src/block/*/index.js' ).reduce( ( code, file ) => {
-
 	const content = fs.readFileSync( path.resolve( file ), 'utf8' )
 
 	if ( isDeprecatedBlock( content ) ) {
@@ -48,9 +47,9 @@ registerBlockType( '${ name }', ${ args.trim() } )`
 }, content )
 
 fs.writeFile( file, registerBlocks, err => {
-    if ( err ) {
-        return console.log( err )
-    }
+	if ( err ) {
+		return console.log( err ) // eslint-disable-line
+	}
 
 	console.log( `✔️  Sucessfully writen dummy block registration script ${ file }` ) // eslint-disable-line
 } )

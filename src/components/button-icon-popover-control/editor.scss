@@ -1,6 +1,6 @@
 .ugb-button-icon-control {
 	.components-popover__content {
-		box-shadow: 0 5px 5px 0 rgba(18,63,82,.035), 0 0 0 1px rgba(176,181,193,.2), 0 5px 30px -10px rgba(18,63,82,.3);
+		box-shadow: 0 5px 5px 0 rgba(18, 63, 82, 0.035), 0 0 0 1px rgba(176, 181, 193, 0.2), 0 5px 30px -10px rgba(18, 63, 82, 0.3);
 	}
 	.components-base-control__field {
 		display: flex;
@@ -39,7 +39,9 @@
 // Toggle.
 .ugb-button-icon-control {
 	.components-toggle-control {
-		&, .components-base-control__field, .components-toggle-control__label {
+		&,
+		.components-base-control__field,
+		.components-toggle-control__label {
 			margin-bottom: 0 !important;
 		}
 	}
