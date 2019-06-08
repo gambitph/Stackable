@@ -1,4 +1,4 @@
-import { addFilter, applyFilters, doAction } from '@wordpress/hooks'
+import { addFilter, applyFilters, doAction, removeFilter } from '@wordpress/hooks'
 import { AdvancedRangeControl, AdvancedSelectControl, FourNumberControl, WhenResponsiveScreen } from '@stackable/components'
 import { __ } from '@wordpress/i18n'
 import { createAllCombinationAttributes } from '@stackable/util'
@@ -25,9 +25,27 @@ const horizontalAlignOptions = [
 	// { value: 'space-evenly', label: __( 'Space Evenly' ) },
 ]
 
+removeFilter( 'stackable.setAttributes', 'stackable/module/block-spacing' )
+addFilter( 'stackable.setAttributes', 'stackable/module/block-spacing', ( attributes, blockProps ) => {
+	if ( typeof attributes.align === 'undefined' ) {
+		return attributes
+	}
+	if ( attributes.align === 'full' && blockProps.align !== 'full' ) {
+		attributes.marginRight = ''
+		attributes.marginLeft = ''
+		attributes.tabletMarginRight = ''
+		attributes.tabletMarginLeft = ''
+		attributes.tabletPaddingRight = ''
+		attributes.tabletPaddingLeft = ''
+	}
+	return attributes
+} )
+
 const inspectorControls = ( blockName, options ) => ( output, props ) => {
 	const { setAttributes } = props
 	const {
+		align = false,
+
 		marginTop = '',
 		marginRight = '',
 		marginBottom = '',
@@ -116,9 +134,9 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							} }
 							onChangeUnit={ marginUnit => setAttributes( { marginUnit } ) }
 							enableTop={ options.enableMarginTop }
-							enableRight={ options.enableMarginRight }
+							enableRight={ align !== 'full' && options.enableMarginRight }
 							enableBottom={ options.enableMarginBottom }
-							enableLeft={ options.enableMarginLeft }
+							enableLeft={ align !== 'full' && options.enableMarginLeft }
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
@@ -141,9 +159,9 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							} }
 							onChangeUnit={ tabletMarginUnit => setAttributes( { tabletMarginUnit } ) }
 							enableTop={ options.enableMarginTop }
-							enableRight={ options.enableMarginRight }
+							enableRight={ align !== 'full' && options.enableMarginRight }
 							enableBottom={ options.enableMarginBottom }
-							enableLeft={ options.enableMarginLeft }
+							enableLeft={ align !== 'full' && options.enableMarginLeft }
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
@@ -166,9 +184,9 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							} }
 							onChangeUnit={ mobileMarginUnit => setAttributes( { mobileMarginUnit } ) }
 							enableTop={ options.enableMarginTop }
-							enableRight={ options.enableMarginRight }
+							enableRight={ align !== 'full' && options.enableMarginRight }
 							enableBottom={ options.enableMarginBottom }
-							enableLeft={ options.enableMarginLeft }
+							enableLeft={ align !== 'full' && options.enableMarginLeft }
 						/>
 					</WhenResponsiveScreen>
 				</Fragment> }
