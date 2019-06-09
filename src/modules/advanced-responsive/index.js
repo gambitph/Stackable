@@ -40,7 +40,7 @@ const responsivePanel = blockName => ( output, props ) => {
 	)
 }
 
-const addHideClasses = ( mainClasses, design, props ) => {
+const addHideClasses = ( mainClasses, props ) => {
 	const {
 		hideDesktop = false,
 		hideTablet = false,
@@ -76,7 +76,7 @@ const addAttributes = attributes => {
 const advancedResponsive = blockName => {
 	addFilter( `stackable.${ blockName }.edit.inspector.advanced.before`, `stackable/${ blockName }/advanced-responsive`, responsivePanel( blockName ), 19 )
 	addFilter( `stackable.${ blockName }.attributes`, `stackable/${ blockName }/advanced-responsive`, addAttributes )
-	addFilter( `stackable.${ blockName }.mainclasses`, `stackable/${ blockName }/advanced-responsive`, addHideClasses )
+	addFilter( `stackable.${ blockName }.main-block.classes`, `stackable/${ blockName }/advanced-responsive`, addHideClasses )
 	doAction( `stackable.module.advanced-responsive`, blockName )
 }
 
