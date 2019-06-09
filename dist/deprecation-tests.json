@@ -163,5 +163,29 @@
     "plan": "premium",
     "description": "Custom CSS",
     "html": "<!-- wp:ugb/separator {\"customCSSUniqueID\":\"ugb-f781bfe\",\"customCSS\":\"/* Separator container */\n.ugb-separator {\n\tbackground: navy;\n\topacity: 0.8;\n}\n\n/* Separator SVG wrapper */\n.ugb-separator .ugb-separator__svg-wrapper {\n\t\n}\n\n/* SVG Layer 1 (top layer) */\n.ugb-separator .ugb-separator__layer-1 {\n\n}\n\n/* SVG Layer 1 Shadow */\n.ugb-separator .ugb-separator__shadow {\n\t\n}\n\n/* SVG Layer 2 */\n.ugb-separator .ugb-separator__layer-2 {\n\t\n}\n\n/* SVG Layer 3 */\n.ugb-separator .ugb-separator__layer-3 {\n\t\n}\n\n/* Top padding */\n.ugb-separator .ugb-separator__top-pad {\n\t\n}\n\n/* Bottom padding */\n.ugb-separator .ugb-separator__bottom-pad {\n\t\n}\",\"customCSSCompiled\":\".ugb-f781bfe.ugb-separator{background:navy !important;opacity:0.8 !important}\"} -->\n\t\t<div class=\"wp-block-ugb-separator alignfull ugb-separator ugb-separator--design-wave-1 ugb-f781bfe\" style=\"margin-top:-1px;margin-bottom:-1px\" aria-hidden=\"true\"><style>.ugb-f781bfe.ugb-separator{background:navy !important;opacity:0.8 !important}</style><div class=\"ugb-separator__top-pad\" style=\"height:0px\"></div><div class=\"ugb-separator__svg-wrapper\" style=\"height:200px\"><div class=\"ugb-separator__svg-inner\"><svg viewbox=\"0 0 1600 200\" xmlns=\"http://www.w3.org/2000/svg\" preserveaspectratio=\"none\" style=\"transform:scaleX(1)\"><path class=\"wave-1_svg__st2\" d=\"M1341.4 48.9c-182.4 0-254.2 80.4-429.4 80.4-117.8 0-209.7-67.5-393.5-67.5-142.2 0-212.6 38.8-324.6 38.8S-10 64.7-10 64.7V210h1620V102c-110.6-40.2-181-53.1-268.6-53.1z\"></path></svg></div></div><div class=\"ugb-separator__bottom-pad\" style=\"height:0px\"></div></div>\n\t\t<!-- /wp:ugb/separator -->"
+  },
+  {
+    "block": "Spacer",
+    "version": "1.15.4",
+    "description": "Default block",
+    "html": "<!-- wp:ugb/spacer -->\n\t\t<div class=\"wp-block-ugb-spacer ugb-spacer\" style=\"height:50px\"></div>\n\t\t<!-- /wp:ugb/spacer -->"
+  },
+  {
+    "block": "Spacer",
+    "version": "1.15.4",
+    "description": "Modified block",
+    "html": "<!-- wp:ugb/spacer {\"height\":141} -->\n\t\t<div class=\"wp-block-ugb-spacer ugb-spacer\" style=\"height:141px\"></div>\n\t\t<!-- /wp:ugb/spacer -->"
+  },
+  {
+    "block": "Spacer",
+    "version": "1.15.4",
+    "description": "Custom class",
+    "html": "<!-- wp:ugb/spacer {\"height\":141,\"className\":\"custom-class\"} -->\n\t\t<div class=\"wp-block-ugb-spacer ugb-spacer custom-class\" style=\"height:141px\"></div>\n\t\t<!-- /wp:ugb/spacer -->"
+  },
+  {
+    "block": "Spacer",
+    "version": "1.15.4",
+    "description": "Custom CSS",
+    "html": "<!-- wp:ugb/spacer {\"height\":141,\"customCSSUniqueID\":\"ugb-b06476b\",\"customCSS\":\"/* Spacer container */\n.ugb-spacer {\n\tbackground: red;\n}\",\"customCSSCompiled\":\".ugb-b06476b.ugb-spacer{background:red !important}\"} -->\n\t\t<div class=\"wp-block-ugb-spacer ugb-spacer ugb-b06476b\" style=\"height:141px\"><style>.ugb-b06476b.ugb-spacer{background:red !important}</style></div>\n\t\t<!-- /wp:ugb/spacer -->"
   }
 ]

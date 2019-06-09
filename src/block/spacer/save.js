@@ -1,23 +1,15 @@
-import { applyFilters } from '@wordpress/hooks'
-import classnames from 'classnames'
+import { withBlockStyles, withUniqueClass } from '@stackable/higher-order'
+import { BlockContainer } from '@stackable/components'
+import { compose } from '@wordpress/compose'
+import createStyles from './style'
 
 const save = props => {
-	const { className } = props
-	const {
-		height,
-		design = '',
-	} = props.attributes
-
-	const mainClasses = classnames( [
-		className,
-		'ugb-spacer',
-	], applyFilters( 'stackable.spacer.mainclasses', {}, design, props ) )
-
 	return (
-		<div className={ mainClasses } style={ { height: height + 'px' } }>
-			{ applyFilters( 'stackable.spacer.save.output.before', null, design, props ) }
-		</div>
+		<BlockContainer.Save className={ props.className } blockProps={ props } render={ () => null } />
 	)
 }
 
-export default save
+export default compose(
+	withUniqueClass,
+	withBlockStyles( createStyles ),
+)( save )
