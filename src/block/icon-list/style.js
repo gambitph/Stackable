@@ -42,18 +42,26 @@ export const createStyles = props => {
 	} )
 
 	// Columns.
+	const {
+		displayAsGrid = false,
+	} = props.attributes
+	const columnsNum = attrName => getValue( attrName ) ? parseInt( getValue( attrName ), 10 ) : 1
+	const getGridColumns = columns => ( new Array( columns + 1 ).join( '1fr ' ) ).trim()
 	styles.push( {
 		'.ugb-icon-list ul': {
 			columns: getValue( 'columns' ),
+			gridTemplateColumns: getValue( 'columns' ) && displayAsGrid ? getGridColumns( columnsNum( 'columns' ) ) : undefined,
 		},
 		tablet: {
 			'.ugb-icon-list ul': {
 				columns: getValue( 'tabletColumns', '%s !important' ),
+				gridTemplateColumns: getValue( 'tabletColumns' ) && displayAsGrid ? getGridColumns( columnsNum( 'tabletColumns' ) ) + ' !important' : undefined,
 			},
 		},
 		mobile: {
 			'.ugb-icon-list ul': {
 				columns: getValue( 'mobileColumns', '%s !important' ),
+				gridTemplateColumns: getValue( 'mobileColumns' ) && displayAsGrid ? getGridColumns( columnsNum( 'mobileColumns' ) ) + ' !important' : undefined,
 			},
 		},
 	} )

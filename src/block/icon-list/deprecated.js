@@ -305,6 +305,7 @@ const deprecated = [
 
 			return {
 				...attributes,
+				columns: attributes.columns ? attributes.columns : 1,
 				customCSS: updateCSS( attributes.customCSS ),
 				customCSSCompiled: updateCSS( attributes.customCSSCompiled ),
 			}

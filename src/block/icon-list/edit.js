@@ -9,7 +9,7 @@ import {
 	TypographyControlHelper,
 } from '@stackable/components'
 import {
-	BaseControl, PanelBody, RangeControl, Toolbar,
+	BaseControl, PanelBody, RangeControl, ToggleControl, Toolbar,
 } from '@wordpress/components'
 import {
 	getIconShapeToolbarList,
@@ -34,6 +34,10 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 		iconSize,
 		gap,
 		listTextColor = '',
+		displayAsGrid = false,
+		columns = '',
+		tabletColumns = '',
+		mobileColumns = '',
 	} = props.attributes
 
 	return (
@@ -84,6 +88,13 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 						max={ 4 }
 					/>
 				</ResponsiveControl>
+				{ ( ( columns && columns > 1 ) || ( tabletColumns && tabletColumns > 1 ) || ( mobileColumns && mobileColumns > 1 ) ) && (
+					<ToggleControl
+						label={ __( 'Display as a grid (left to right & evenly spaced)' ) }
+						checked={ displayAsGrid }
+						onChange={ displayAsGrid => setAttributes( { displayAsGrid } ) }
+					/>
+				) }
 				<ContentAlignControl
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
@@ -126,12 +137,15 @@ const edit = props => {
 		icon,
 		text,
 		design = '',
+		displayAsGrid = false,
 	} = props.attributes
 
 	const mainClasses = classnames( [
 		className,
 		`ugb-icon--icon-${ icon }`,
-	], applyFilters( 'stackable.icon-list.mainclasses', {}, design, props ) )
+	], applyFilters( 'stackable.icon-list.mainclasses', {
+		'ugb-icon-list--display-grid': displayAsGrid,
+	}, design, props ) )
 
 	return (
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (

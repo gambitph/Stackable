@@ -13,12 +13,15 @@ const save = props => {
 		icon,
 		text,
 		design = '',
+		displayAsGrid = false,
 	} = props.attributes
 
 	const mainClasses = classnames( [
 		className,
 		`ugb-icon--icon-${ icon }`,
-	], applyFilters( 'stackable.icon-list.mainclasses', {}, design, props ) )
+	], applyFilters( 'stackable.icon-list.mainclasses', {
+		'ugb-icon-list--display-grid': displayAsGrid,
+	}, design, props ) )
 
 	return (
 		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (

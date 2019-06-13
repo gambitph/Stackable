@@ -2,9 +2,9 @@
  * BLOCK: Icon List Block.
  */
 
-import { createResponsiveAttributes, createTypographyAttributes } from '@stackable/util'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
+import { createTypographyAttributes } from '@stackable/util'
 import deprecated from './deprecated'
 import { disabledBlocks } from 'stackable'
 import edit from './edit'
@@ -26,15 +26,27 @@ export const schema = {
 		type: 'number',
 		default: 20,
 	},
-	...createResponsiveAttributes( '%sColumns', {
+	columns: {
 		type: 'number',
 		default: 1,
-	} ),
+	},
+	tabletColumns: {
+		type: 'number',
+		default: '',
+	},
+	mobileColumns: {
+		type: 'number',
+		default: '',
+	},
 	text: {
 		source: 'html',
 		selector: 'ul',
 		multiline: 'li',
 		default: '',
+	},
+	displayAsGrid: {
+		type: 'boolean',
+		default: false,
 	},
 	gap: {
 		type: 'number',

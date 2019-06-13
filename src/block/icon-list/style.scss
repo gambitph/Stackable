@@ -46,6 +46,15 @@
 	li:last-child {
 		margin-bottom: 0;
 	}
+	&.ugb-icon-list--display-grid ul {
+		display: grid;
+		grid-column-gap: 20px;
+	}
+	@media screen and (max-width: $break-small) {
+		&.ugb-icon-list.ugb-icon-list--display-grid ul { // Ensure our columns get applied.
+			grid-template-columns: 1fr;
+		}
+	}
 	@media screen and (max-width: $break-small) {
 		&.ugb-icon-list.ugb-icon-list ul { // Ensure our columns get applied.
 			columns: 1;
