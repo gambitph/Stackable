@@ -9,7 +9,7 @@
 .ugb-number-box.ugb-number-box--v3 {
 	.ugb-block-content {
 		display: grid;
-		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+		grid-auto-columns: minmax(0, 1fr);
 		grid-gap: $box-hori-padding;
 	}
 
@@ -79,7 +79,7 @@
 .ugb-number-box__number,
 .ugb-number-box__title,
 .ugb-number-box__description {
-	margin-bottom: 1rem;
+	margin-bottom: 16px;
 }
 
 .ugb-number-box {

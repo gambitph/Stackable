@@ -30,7 +30,6 @@ const save = props => {
 
 	const mainClasses = classnames( [
 		className,
-		'ugb-number-box',
 		'ugb-number-box--v3',
 		`ugb-number-box--columns-${ columns }`,
 	], applyFilters( 'stackable.number-box.mainclasses', {

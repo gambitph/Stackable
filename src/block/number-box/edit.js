@@ -80,7 +80,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 		numberOpacity = '',
 	} = props.attributes
 
-	const show = applyFilters( 'stackable.number-box.edit.show', {
+	const show = applyFilters( 'stackable.number-box.show', {
 		spacingNumber: true,
 		backgroundColor: design !== 'plain',
 		borderRadius: design !== 'plain',
@@ -354,7 +354,7 @@ addFilter( `stackable.number-box.edit.inspector.advanced.before`, `stackable/num
 		numberStyle = '',
 	} = props.attributes
 
-	const show = applyFilters( 'stackable.number-box.edit.show', {
+	const show = applyFilters( 'stackable.number-box.show', {
 		backgroundColor: design !== 'plain',
 		borderRadius: design !== 'plain',
 		shadow: design !== 'plain',
@@ -445,7 +445,6 @@ const edit = props => {
 
 	const mainClasses = classnames( [
 		className,
-		'ugb-number-box',
 		'ugb-number-box--v3',
 		`ugb-number-box--columns-${ columns }`,
 	], applyFilters( 'stackable.number-box.mainclasses', {

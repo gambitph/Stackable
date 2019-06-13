@@ -24,7 +24,7 @@ export const createStyles = props => {
 		numberStyle = '',
 	} = props.attributes
 
-	const show = applyFilters( 'stackable.number-box.edit.show', {
+	const show = applyFilters( 'stackable.number-box.show', {
 		spacingNumber: true,
 		backgroundColor: design !== 'plain',
 		borderRadius: design !== 'plain',
