@@ -1,8 +1,16 @@
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import {
+	AdvancedRangeControl,
+	BlockContainer,
+	ColorPaletteControl,
+	ContentAlignControl,
+	PanelSpacingBody,
+	ResponsiveControl,
+	TypographyControlHelper,
+} from '@stackable/components'
+import {
 	BaseControl, PanelBody, RangeControl, Toolbar,
 } from '@wordpress/components'
-import { BlockContainer, ColorPaletteControl, ContentAlignControl, PanelSpacingBody, TypographyControlHelper } from '@stackable/components'
 import {
 	getIconShapeToolbarList,
 	getIconSVG,
@@ -24,7 +32,6 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 		iconShape,
 		iconColor,
 		iconSize,
-		columns,
 		gap,
 		listTextColor = '',
 	} = props.attributes
@@ -66,13 +73,17 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 				/>
 			</PanelBody>
 			<PanelBody title={ __( 'General' ) } initialOpen={ false }>
-				<RangeControl
-					label={ __( 'Columns' ) }
-					value={ columns }
-					onChange={ columns => setAttributes( { columns } ) }
-					min={ 1 }
-					max={ 3 }
-				/>
+				<ResponsiveControl
+					attrNameTemplate="%sColumns"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AdvancedRangeControl
+						label={ __( 'Columns' ) }
+						min={ 1 }
+						max={ 4 }
+					/>
+				</ResponsiveControl>
 				<ContentAlignControl
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
@@ -114,14 +125,12 @@ const edit = props => {
 	const {
 		icon,
 		text,
-		columns,
 		design = '',
 	} = props.attributes
 
 	const mainClasses = classnames( [
 		className,
 		`ugb-icon--icon-${ icon }`,
-		`ugb-icon--columns-${ columns }`,
 	], applyFilters( 'stackable.icon-list.mainclasses', {}, design, props ) )
 
 	return (

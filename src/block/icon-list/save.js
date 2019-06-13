@@ -12,14 +12,12 @@ const save = props => {
 	const {
 		icon,
 		text,
-		columns,
 		design = '',
 	} = props.attributes
 
 	const mainClasses = classnames( [
 		className,
 		`ugb-icon--icon-${ icon }`,
-		`ugb-icon--columns-${ columns }`,
 	], applyFilters( 'stackable.icon-list.mainclasses', {}, design, props ) )
 
 	return (

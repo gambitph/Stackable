@@ -2,9 +2,16 @@ import {
 	createTypographyStyles,
 	whiteIfDark,
 } from '@stackable/util'
+import deepmerge from 'deepmerge'
 import { getIconSVGBase64 } from './util'
+import { sprintf } from '@wordpress/i18n'
 
 export const createStyles = props => {
+	const getValue = ( attrName, format = '' ) => {
+		const value = typeof props.attributes[ attrName ] === 'undefined' ? '' : props.attributes[ attrName ]
+		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
+	}
+
 	const {
 		icon,
 		iconShape,
@@ -22,7 +29,9 @@ export const createStyles = props => {
 		whiteIfDark( iconColor, showBlockBackground && blockBackgroundBackgroundColor )
 	)
 
-	return {
+	const styles = []
+
+	styles.push( {
 		'.ugb-icon-list li': {
 			...createTypographyStyles( 'listText%s', 'desktop', props.attributes ),
 			color: whiteIfDark( listTextColor, showBlockBackground && blockBackgroundBackgroundColor ),
@@ -30,7 +39,26 @@ export const createStyles = props => {
 			'--icon-size': iconSize ? `${ iconSize }px` : undefined,
 			'--gap': gap ? `${ gap }px` : undefined,
 		},
-	}
+	} )
+
+	// Columns.
+	styles.push( {
+		'.ugb-icon-list ul': {
+			columns: getValue( 'columns' ),
+		},
+		tablet: {
+			'.ugb-icon-list ul': {
+				columns: getValue( 'tabletColumns', '%s !important' ),
+			},
+		},
+		mobile: {
+			'.ugb-icon-list ul': {
+				columns: getValue( 'mobileColumns', '%s !important' ),
+			},
+		},
+	} )
+
+	return deepmerge.all( styles )
 }
 
 export default createStyles

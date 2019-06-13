@@ -46,11 +46,26 @@
 	li:last-child {
 		margin-bottom: 0;
 	}
-	&.ugb-icon--columns-2,
+	@media screen and (max-width: $break-small) {
+		&.ugb-icon-list.ugb-icon-list ul { // Ensure our columns get applied.
+			columns: 1;
+		}
+	}
+	// @from https://css-tricks.com/almanac/properties/b/break-inside/
+	li {
+		page-break-inside: avoid; /* Firefox */
+		break-inside: avoid;
+	}
+}
+
+// Deprecated v < 2
+.ugb-icon-list,
+.ugb-icon-list-wrapper {
+	&.ugb-icon--columns-2, // < v2
 	&.column-2 { // Old style.
 		columns: 2;
 	}
-	&.ugb-icon--columns-3,
+	&.ugb-icon--columns-3, // < v2
 	&.column-3 { // Old style.
 		columns: 3;
 	}
@@ -58,16 +73,6 @@
 		&.ugb-icon--columns-3,
 		&.column-3 { // Old style.
 			columns: 2;
-		}
-	}
-	// @from https://css-tricks.com/almanac/properties/b/break-inside/
-	&.ugb-icon-columns-2,
-	&.ugb-icon-columns-3,
-	&.column-2, // Old style.
-	&.column-3 { // Old style.
-		li {
-			page-break-inside: avoid; /* Firefox */
-			break-inside: avoid;
 		}
 	}
 }
