@@ -6,41 +6,67 @@
 
 @import "common";
 
-.ugb-countup {
+.ugb-count-up {
 	text-align: center;
-	@include baseBlock();
-	.ugb-countup__counter,
-	.ugb-counter {
-		line-height: 1em !important;
-	}
 	.ugb-countup--hide,
 	.ugb-countup-hide {
 		visibility: hidden;
 	}
-	.ugb-content-wrapper {
-		width: 100%;
+
+	.ugb-block-content {
+		display: grid;
+    	// grid-auto-columns: auto;
+    	grid-auto-columns: minmax(0, 1fr);
+		grid-gap: $box-hori-padding;
 	}
-	&.alignfull {
-		border-radius: 0 !important;
-		margin-top: 0;
+
+	.ugb-countup__item {
+		grid-row: 1;
+	}
+	.ugb-countup__counter {
+		font-size: 40px;
+		line-height: 1em;
+	}
+
+	.ugb-countup__icon {
+		svg {
+			height: 50px;
+			width: 50px;
+		}
+	}
+
+	.ugb-countup__icon,
+	.ugb-countup__title,
+	.ugb-countup__counter {
+		margin-bottom: 16px;
+	}
+	.ugb-countup__description {
 		margin-bottom: 0;
+	}
+
+	// Collapse to 4 columns to 2 rows of 2-columns.
+	@media screen and (max-width: $break-medium) {
+		// Resize numbers to make them smaller in small screens.
+		.ugb-countup__counter {
+			font-size: calc(1rem + 4vw) !important;
+		}
 	}
 }
 
 .ugb-countup,
 .ugb-countup .ugb-content-wrapper {
-	@include baseBlock();
-	text-align: center;
-	display: flex !important;
-	flex-wrap: nowrap;
-	flex-direction: row;
-	justify-content: center;
-	.ugb-countup__item,
-	.ugb-countup-item {
-		@include baseBlock();
-		flex: 1;
-		margin: 0 ($box-hori-padding / 2) !important;
-	}
+	// @include baseBlock();
+	// text-align: center;
+	// display: flex !important;
+	// flex-wrap: nowrap;
+	// flex-direction: row;
+	// justify-content: center;
+	// .ugb-countup__item,
+	// .ugb-countup-item {
+	// 	@include baseBlock();
+	// 	flex: 1;
+	// 	margin: 0 ($box-hori-padding / 2) !important;
+	// }
 
 	// Collapse to 4 columns to 2 rows of 2-columns.
 	@media screen and (max-width: $break-medium) {
@@ -59,7 +85,7 @@
 		// Resize numbers to make them smaller in small screens.
 		.ugb-countup__counter,
 		.ugb-counter {
-			font-size: calc(1rem + 4vw) !important;
+			font-size: calc(1rem + 4vw);
 		}
 	}
 
@@ -73,6 +99,43 @@
 				margin-bottom: $box-hori-padding !important;
 			}
 		}
+	}
+}
+
+.ugb-countup.ugb-countup--v3 {
+	@include baseBlock();
+	text-align: center;
+	.ugb-countup--hide,
+	.ugb-countup-hide {
+		visibility: hidden;
+	}
+	.ugb-countup__counter,
+	.ugb-counter {
+		line-height: 1em !important;
+	}
+	.ugb-content-wrapper {
+		width: 100%;
+	}
+	&.alignfull {
+		border-radius: 0 !important;
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+}
+
+.ugb-countup.ugb-countup--v3,
+.ugb-countup.ugb-countup--v3 .ugb-content-wrapper {
+	@include baseBlock();
+	text-align: center;
+	display: flex !important;
+	flex-wrap: nowrap;
+	flex-direction: row;
+	justify-content: center;
+	.ugb-countup__item,
+	.ugb-countup-item {
+		@include baseBlock();
+		flex: 1;
+		margin: 0 ($box-hori-padding / 2) !important;
 	}
 }
 

@@ -1,20 +1,340 @@
+import { __, sprintf } from '@wordpress/i18n'
+import { addFilter, applyFilters } from '@wordpress/hooks'
 import {
-	DesignPanelBody, PanelBackgroundSettings, ProControl, ProControlButton,
+	AdvancedRangeControl,
+	AlignButtonsControl,
+	BackgroundControlsHelper,
+	BlockContainer,
+	ColorPaletteControl,
+	ContentAlignControl,
+	DesignPanelBody,
+	HeadingButtonsControl,
+	IconControl,
+	PanelAdvancedSettings,
+	PanelSpacingBody,
+	ProControlButton,
+	ResponsiveControl,
+	SvgIcon,
+	TypographyControlHelper,
 } from '@stackable/components'
+import { createResponsiveAttributeNames, createTypographyAttributeNames, hasBackgroundOverlay } from '@stackable/util'
 import {
-	InspectorControls, PanelColorSettings, RichText,
-} from '@wordpress/editor'
-import {
-	PanelBody, RangeControl, SelectControl, ToggleControl,
+	PanelBody, RangeControl,
 } from '@wordpress/components'
-import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
+import { withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
 import classnames from 'classnames'
+import { compose } from '@wordpress/compose'
+import createStyles from './style'
 import { Fragment } from '@wordpress/element'
-import { getFontFamily } from './font'
-import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignPlain2 from './images/plain-2.png'
+import { range } from 'lodash'
+import { RichText } from '@wordpress/editor'
 import { showProNotice } from 'stackable'
+
+addFilter( 'stackable.count-up.edit.inspector.layout.before', 'stackable/count-up', ( output, props ) => {
+	const { setAttributes } = props
+	const {
+		design = 'basic',
+	} = props.attributes
+
+	return (
+		<Fragment>
+			{ output }
+			<DesignPanelBody
+				initialOpen={ true }
+				selected={ design }
+				options={ applyFilters( 'stackable.count-up.edit.designs', [
+					{
+						label: __( 'Plain' ), value: 'plain', image: ImageDesignPlain,
+					},
+					{
+						label: __( 'Plain 2' ), value: 'plain-2', image: ImageDesignPlain2,
+					},
+				] ) }
+				onChange={ design => setAttributes( { design } ) }
+			>
+				{ showProNotice && <ProControlButton /> }
+			</DesignPanelBody>
+		</Fragment>
+	)
+} )
+
+addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up', ( output, props ) => {
+	const { setAttributes } = props
+	const {
+		columns,
+		design = 'plain',
+		borderRadius = 12,
+		shadow = 3,
+		showNumber = true,
+		showTitle = true,
+		showDescription = true,
+		showIcon = false,
+		numberColor = '',
+		titleTag = '',
+		titleColor = '',
+		descriptionColor = '',
+		iconColor = '',
+	} = props.attributes
+
+	const show = applyFilters( 'stackable.count-up.show', {
+		columnBackground: false,
+	}, design, props )
+
+	return (
+		<Fragment>
+			{ output }
+			<PanelBody title={ __( 'General' ) }>
+				<RangeControl
+					label={ __( 'Columns' ) }
+					value={ columns }
+					onChange={ columns => setAttributes( { columns } ) }
+					min={ 1 }
+					max={ 4 }
+				/>
+				{ show.columnBackground &&
+					<RangeControl
+						label={ __( 'Border Radius' ) }
+						value={ borderRadius }
+						onChange={ borderRadius => setAttributes( { borderRadius } ) }
+						min={ 0 }
+						max={ 50 }
+						allowReset={ true }
+					/>
+				}
+				{ show.columnBackground &&
+					<RangeControl
+						label={ __( 'Shadow / Outline' ) }
+						value={ shadow }
+						onChange={ shadow => setAttributes( { shadow } ) }
+						min={ 0 }
+						max={ 9 }
+						allowReset={ true }
+					/>
+				}
+				<ContentAlignControl
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+					attributeNamesToReset={ [
+						'Icon%sAlign',
+						'Number%sAlign',
+						'Title%sAlign',
+						'Description%sAlign',
+					] }
+				/>
+			</PanelBody>
+
+			{ show.columnBackground &&
+				<PanelBody
+					title={ __( 'Column Background' ) }
+					initialOpen={ false }
+				>
+					<BackgroundControlsHelper
+						attrNameTemplate="column%s"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					/>
+				</PanelBody>
+			}
+
+			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
+				{ showIcon && (
+					<ResponsiveControl
+						attrNameTemplate="icon%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Icon' ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				) }
+				{ showTitle && (
+					<ResponsiveControl
+						attrNameTemplate="title%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Title' ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				) }
+				{ showNumber && (
+					<ResponsiveControl
+						attrNameTemplate="number%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Number' ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				) }
+			</PanelSpacingBody>
+
+			<PanelAdvancedSettings
+				title={ __( 'Icon' ) }
+				checked={ showIcon }
+				onChange={ showIcon => setAttributes( { showIcon } ) }
+				toggleOnSetAttributes={ [
+					'icon1',
+					'icon2',
+					'icon3',
+					'icon4',
+					'iconColor',
+					...createResponsiveAttributeNames( 'icon%sSize' ),
+					...createResponsiveAttributeNames( 'icon%sAlign' ),
+				] }
+				toggleAttributeName="showIcon"
+			>
+				{ range( 1, columns + 1 ).map( i => {
+					return (
+						<IconControl
+							key={ i }
+							label={ sprintf( __( 'Icon #%s' ), i ) }
+							value={ props.attributes[ `icon${ i }` ] }
+							onChange={ value => setAttributes( { [ `icon${ i }` ]: value } ) }
+						/>
+					)
+				} ) }
+				<ColorPaletteControl
+					value={ iconColor }
+					onChange={ iconColor => setAttributes( { iconColor } ) }
+					label={ __( 'Icon Color' ) }
+				/>
+				<ResponsiveControl
+					attrNameTemplate="icon%sSize"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AdvancedRangeControl
+						label={ __( 'Icon Size' ) }
+						min={ 10 }
+						max={ 200 }
+						allowReset={ true }
+					/>
+				</ResponsiveControl>
+				<ResponsiveControl
+					attrNameTemplate="Icon%sAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AlignButtonsControl label={ __( 'Align' ) } />
+				</ResponsiveControl>
+			</PanelAdvancedSettings>
+
+			<PanelAdvancedSettings
+				title={ __( 'Title' ) }
+				checked={ showTitle }
+				onChange={ showTitle => setAttributes( { showTitle } ) }
+				toggleOnSetAttributes={ [
+					...createTypographyAttributeNames( 'title%s' ),
+					'titleTag',
+					'titleColor',
+					...createResponsiveAttributeNames( 'Title%sAlign' ),
+				] }
+				toggleAttributeName="showTitle"
+			>
+				<TypographyControlHelper
+					attrNameTemplate="title%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+				<HeadingButtonsControl
+					label={ __( 'Title HTML Tag' ) }
+					value={ titleTag || 'h4' }
+					onChange={ titleTag => setAttributes( { titleTag } ) }
+				/>
+				<ColorPaletteControl
+					value={ titleColor }
+					onChange={ titleColor => setAttributes( { titleColor } ) }
+					label={ __( 'Title Color' ) }
+				/>
+				<ResponsiveControl
+					attrNameTemplate="Title%sAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AlignButtonsControl label={ __( 'Align' ) } />
+				</ResponsiveControl>
+			</PanelAdvancedSettings>
+
+			<PanelAdvancedSettings
+				title={ __( 'Number' ) }
+				checked={ showNumber }
+				onChange={ showNumber => setAttributes( { showNumber } ) }
+				toggleOnSetAttributes={ [
+					...createTypographyAttributeNames( 'number%s' ),
+					'numberColor',
+					...createResponsiveAttributeNames( 'Number%sAlign' ),
+				] }
+				toggleAttributeName="showNumber"
+			>
+				<TypographyControlHelper
+					attrNameTemplate="number%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+					fontSizeProps={ {
+						max: [ 150, 10 ],
+					} }
+				/>
+				<ColorPaletteControl
+					value={ numberColor }
+					onChange={ numberColor => setAttributes( { numberColor } ) }
+					label={ __( 'Number Color' ) }
+				/>
+				<ResponsiveControl
+					attrNameTemplate="Number%sAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AlignButtonsControl label={ __( 'Align' ) } />
+				</ResponsiveControl>
+			</PanelAdvancedSettings>
+
+			<PanelAdvancedSettings
+				title={ __( 'Description' ) }
+				checked={ showDescription }
+				onChange={ showDescription => setAttributes( { showDescription } ) }
+				toggleOnSetAttributes={ [
+					...createTypographyAttributeNames( 'description%s' ),
+					'descriptionColor',
+					...createResponsiveAttributeNames( 'description%sAlign' ),
+				] }
+				toggleAttributeName="showDescription"
+			>
+				<TypographyControlHelper
+					attrNameTemplate="description%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+				<ColorPaletteControl
+					value={ descriptionColor }
+					onChange={ descriptionColor => setAttributes( { descriptionColor } ) }
+					label={ __( 'Description Color' ) }
+				/>
+				<ResponsiveControl
+					attrNameTemplate="description%sAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AlignButtonsControl label={ __( 'Align' ) } />
+				</ResponsiveControl>
+			</PanelAdvancedSettings>
+		</Fragment>
+	)
+} )
 
 const edit = props => {
 	const {
@@ -22,272 +342,103 @@ const edit = props => {
 	} = props
 	const {
 		columns,
-		backgroundColorType = '',
-		backgroundColor,
-		backgroundColor2,
-		backgroundColorDirection = 0,
-		backgroundType = '',
-		backgroundImageID,
-		backgroundImageURL,
-		backgroundOpacity,
-		fixedBackground,
-		textColor,
-		countColor,
-		countSize,
-		contentWidth,
 		design = 'plain',
-		align,
-		borderRadius = 12,
-		shadow = 3,
-		countFont,
-		countFontWeight,
+		titleTag = '',
+		showIcon = false,
+		showNumber = true,
+		showTitle = true,
+		showDescription = true,
 	} = attributes
-
-	const show = applyFilters( 'stackable.count-up.edit.show', {
-		borderRadius: design !== 'plain',
-		shadow: design !== 'plain',
-		background: design !== 'plain',
-	}, design, props )
-
-	const designHasBackground = design === 'basic'
 
 	const mainClasses = classnames( [
 		className,
-		'ugb-countup',
-		'ugb-countup--v3', // For backward compatibility.
+		'ugb-countup--v4', // For backward compatibility.
 		`ugb-countup--columns-${ columns }`,
-		'ugb--background-opacity-' + ( 1 * Math.round( backgroundOpacity / 1 ) ),
 	], applyFilters( 'stackable.count-up.mainclasses', {
-		// 'ugb-has-background': backgroundColor || backgroundImageURL,
-		'ugb--has-background-image': backgroundImageURL,
-		[ `ugb--content-width` ]: align === 'full' && contentWidth,
 		[ `ugb-countup--design-${ design }` ]: design !== 'plain',
-		[ `ugb--shadow-${ shadow }` ]: design === 'basic' && shadow !== 3,
-		[ `ugb--has-background-gradient` ]: design === 'basic' && backgroundColorType === 'gradient',
-		[ `ugb--has-background-video` ]: design === 'basic' && backgroundType === 'video',
 	}, design, props ) )
 
-	const backgroundStyle = ! designHasBackground ? {} : {
-		backgroundColor: backgroundColor ? backgroundColor : undefined,
-		backgroundImage: backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
-		'--ugb-background-color': backgroundImageURL || backgroundColorType === 'gradient' ? backgroundColor : undefined,
-		'--ugb-background-color2': backgroundColorType === 'gradient' && backgroundColor2 ? backgroundColor2 : undefined,
-		'--ugb-background-direction': backgroundColorType === 'gradient' ? `${ backgroundColorDirection }deg` : undefined,
-		borderRadius: borderRadius !== 12 ? borderRadius : undefined,
-	}
-
-	const mainStyle = applyFilters( 'stackable.count-up.mainstyle', {
-		backgroundAttachment: fixedBackground ? 'fixed' : undefined,
-		...backgroundStyle,
-	}, design, props )
-
-	const countStyle = {
-		color: countColor ? countColor : undefined,
-		fontSize: countSize ? countSize + 'px' : undefined,
-		// fontFamily: countFont && countFont !== 'theme' ? getFontFamily( countFont ) : undefined,
-		fontWeight: countFontWeight ? countFontWeight : undefined,
-	}
-	if ( countFont && countFont !== 'theme' ) {
-		countStyle.fontFamily = getFontFamily( countFont )
-	}
-
 	return (
-		<Fragment>
-			<div className={ mainClasses } style={ mainStyle }>
-				{ show.background && backgroundType === 'video' && (
-					<video
-						className="ugb-video-background"
-						autoPlay
-						muted
-						loop
-						src={ backgroundImageURL }
-					/>
-				) }
-				{ applyFilters( 'stackable.count-up.edit.output.before', null, design, props ) }
-				<div className="ugb-content-wrapper">
-					{ [ 1, 2, 3, 4 ].map( i => {
-						const title = attributes[ `title${ i }` ]
-						const description = attributes[ `description${ i }` ]
-						const countText = attributes[ `countText${ i }` ]
+		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
+			<Fragment>
+				{ range( 1, columns + 1 ).map( i => {
+					const icon = attributes[ `icon${ i }` ]
+					const title = attributes[ `title${ i }` ]
+					const description = attributes[ `description${ i }` ]
+					const countText = attributes[ `countText${ i }` ]
 
-						const titleComp = <RichText
-							tagName="h4"
-							className="ugb-countup__title"
-							value={ title }
-							placeholder={ __( 'Title' ) }
-							onChange={ value => setAttributes( { [ `title${ i }` ]: value } ) }
-							style={ { color: textColor ? textColor : undefined } }
-							keepPlaceholderOnFocus
-						/>
-						const countComp = <RichText
-							tagName="div"
-							className="ugb-countup__counter"
-							placeholder="1,234"
-							data-duration="1000"
-							data-delay="16"
-							value={ countText }
-							onChange={ value => setAttributes( { [ `countText${ i }` ]: value } ) }
-							style={ countStyle }
-							keepPlaceholderOnFocus
-						/>
-						const descriptionComp = <RichText
-							tagName="p"
-							className="ugb-countup__description"
-							placeholder={ __( 'Description' ) }
-							value={ description }
-							onChange={ value => setAttributes( { [ `description${ i }` ]: value } ) }
-							style={ { color: textColor ? textColor : undefined } }
-							keepPlaceholderOnFocus
-						/>
-						const comps = {
-							i,
-							titleComp,
-							countComp,
-							descriptionComp,
-						}
+					const iconComp = showIcon && <div className="ugb-countup__icon">
+						<SvgIcon value={ icon } />
+					</div>
+					const titleComp = showTitle && <RichText
+						tagName={ titleTag || 'h4' }
+						className="ugb-countup__title"
+						value={ title }
+						placeholder={ __( 'Title' ) }
+						onChange={ value => setAttributes( { [ `title${ i }` ]: value } ) }
+						keepPlaceholderOnFocus
+					/>
+					const countComp = showNumber && <RichText
+						tagName="div"
+						className="ugb-countup__counter"
+						placeholder="1,234"
+						data-duration="1000"
+						data-delay="16"
+						value={ countText }
+						onChange={ value => setAttributes( { [ `countText${ i }` ]: value } ) }
+						keepPlaceholderOnFocus
+					/>
+					const descriptionComp = showDescription && <RichText
+						tagName="p"
+						className="ugb-countup__description"
+						placeholder={ __( 'Description' ) }
+						value={ description }
+						onChange={ value => setAttributes( { [ `description${ i }` ]: value } ) }
+						keepPlaceholderOnFocus
+					/>
+					const comps = {
+						i,
+						iconComp,
+						titleComp,
+						countComp,
+						descriptionComp,
+					}
+
+					const boxClasses = classnames( [
+						'ugb-countup__item',
+						`ugb-countup__item${ i }`,
+					], applyFilters( 'stackable.count-up.boxclasses', {
+						'ugb--has-background-overlay': hasBackgroundOverlay( 'column%s', props.attributes ),
+					}, design, props ) )
+
+					if ( design === 'plain-2' ) {
 						return applyFilters( 'stackable.count-up.edit.output', (
-							<div className="ugb-countup__item" key={ i }>
-								{ titleComp }
+							<div className={ boxClasses } key={ i }>
+								{ iconComp }
 								{ countComp }
+								{ titleComp }
 								{ descriptionComp }
 							</div>
 						), comps, i, props )
-					} ) }
-				</div>
-				{ applyFilters( 'stackable.count-up.edit.output.after', null, design, props ) }
-			</div>
-			<InspectorControls>
-				<DesignPanelBody
-					selected={ design }
-					options={ applyFilters( 'stackable.count-up.edit.designs', [
-						{
-							label: __( 'Basic' ), value: 'basic', image: ImageDesignBasic,
-						},
-						{
-							label: __( 'Plain' ), value: 'plain', image: ImageDesignPlain,
-						},
-					] ) }
-					onChange={ design => setAttributes( { design } ) }
-				>
-					{ show.borderRadius &&
-						<RangeControl
-							label={ __( 'Border Radius' ) }
-							value={ borderRadius }
-							onChange={ borderRadius => setAttributes( { borderRadius } ) }
-							min={ 0 }
-							max={ 50 }
-						/>
 					}
-					{ show.shadow &&
-						<RangeControl
-							label={ __( 'Shadow / Outline' ) }
-							value={ shadow }
-							onChange={ shadow => setAttributes( { shadow } ) }
-							min={ 0 }
-							max={ 9 }
-						/>
-					}
-					{ align === 'full' &&
-						<ToggleControl
-							label={ __( 'Restrict to Content Width' ) }
-							checked={ contentWidth }
-							onChange={ contentWidth => setAttributes( { contentWidth } ) }
-						/>
-					}
-					{ showProNotice && <ProControlButton /> }
-				</DesignPanelBody>
-				<PanelColorSettings
-					title={ __( 'Color Settings' ) }
-					colorSettings={ [
-						{
-							value: textColor,
-							onChange: textColor => setAttributes( { textColor } ),
-							label: __( 'Heading & Description Color' ),
-						},
-						{
-							value: countColor,
-							onChange: countColor => setAttributes( { countColor } ),
-							label: __( 'Counter Color' ),
-						},
-					] }
-				>
-					<RangeControl
-						label={ __( 'Columns' ) }
-						value={ columns }
-						onChange={ columns => setAttributes( { columns } ) }
-						min={ 1 }
-						max={ 4 }
-					/>
-					<RangeControl
-						label={ __( 'Counter Text Size' ) }
-						max="100"
-						min="10"
-						value={ countSize }
-						onChange={ countSize => setAttributes( { countSize } ) }
-					/>
-					<SelectControl
-						label={ __( 'Counter Font' ) }
-						options={ [
-							{ label: __( 'Theme default' ), value: 'theme' },
-							{ label: __( 'Sans-Serif' ), value: 'sans-serif' },
-							{ label: __( 'Serif' ), value: 'serif' },
-							{ label: __( 'Monospace' ), value: 'monospace' },
-						] }
-						value={ countFont }
-						onChange={ countFont => setAttributes( { countFont } ) }
-					/>
-					<SelectControl
-						label={ __( 'Counter Font Weight' ) }
-						options={ [
-							{ label: __( 'Light' ), value: '100' },
-							{ label: __( 'Regular' ), value: '400' },
-							{ label: __( 'Bold' ), value: '600' },
-							{ label: __( 'Bolder' ), value: '800' },
-						] }
-						value={ countFontWeight }
-						onChange={ countFontWeight => setAttributes( { countFontWeight } ) }
-					/>
-				</PanelColorSettings>
-				{ applyFilters( 'stackable.count-up.edit.inspector', null, design, props ) }
-				{ show.background &&
-					<PanelBackgroundSettings
-						backgroundColorType={ backgroundColorType }
-						backgroundColor={ backgroundColor }
-						backgroundColor2={ backgroundColor2 }
-						backgroundColorDirection={ backgroundColorDirection }
-						backgroundType={ backgroundType }
-						backgroundImageID={ backgroundImageID }
-						backgroundImageURL={ backgroundImageURL }
-						backgroundOpacity={ backgroundOpacity }
-						fixedBackground={ fixedBackground }
-						onChangeBackgroundColorType={ backgroundColorType => setAttributes( { backgroundColorType } ) }
-						onChangeBackgroundColor={ backgroundColor => setAttributes( { backgroundColor } ) }
-						onChangeBackgroundColor2={ backgroundColor2 => setAttributes( { backgroundColor2 } ) }
-						onChangeBackgroundColorDirection={ backgroundColorDirection => setAttributes( { backgroundColorDirection } ) }
-						onChangeBackgroundType={ backgroundType => setAttributes( { backgroundType } ) }
-						onChangeBackgroundImage={ ( { url, id } ) => setAttributes( { backgroundImageURL: url, backgroundImageID: id } ) }
-						onRemoveBackgroundImage={ () => {
-							setAttributes( { backgroundImageURL: '', backgroundImageID: 0 } )
-						} }
-						onChangeBackgroundOpacity={ backgroundOpacity => setAttributes( { backgroundOpacity } ) }
-						onChangeFixedBackground={ value => setAttributes( { fixedBackground: !! value } ) }
-					/>
-				}
-				{ showProNotice &&
-					<PanelBody
-						initialOpen={ false }
-						title={ __( 'Custom CSS' ) }
-					>
-						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋' ) }
-							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
-						/>
-					</PanelBody>
-				}
-				{ applyFilters( 'stackable.count-up.edit.inspector.after', null, design, props ) }
-			</InspectorControls>
-		</Fragment>
+					return applyFilters( 'stackable.count-up.edit.output', (
+						<div className={ boxClasses } key={ i }>
+							{ iconComp }
+							{ titleComp }
+							{ countComp }
+							{ descriptionComp }
+						</div>
+					), comps, i, props )
+				} ) }
+			</Fragment>
+		) } />
 	)
 }
 
-export default edit
+export default compose(
+	withUniqueClass,
+	withSetAttributeHook,
+	withGoogleFont,
+	withTabbedInspector(),
+	withBlockStyles( createStyles, { editorMode: true } ),
+)( edit )
