@@ -4,7 +4,7 @@ import classnames from 'classnames'
 import { descriptionPlaceholder } from '@stackable/util'
 import { QUOTE_ICONS } from './quotes'
 import { QUOTE_ICONS_1_11 } from './deprecated-quotes'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 
 const deprecatedSave_1_13 = props => {
 	const { className } = props

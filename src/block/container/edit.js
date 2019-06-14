@@ -1,6 +1,6 @@
 import {
 	AlignmentToolbar, BlockControls, InnerBlocks, InspectorControls, PanelColorSettings,
-} from '@wordpress/editor'
+} from '@wordpress/block-editor'
 import {
 	HorizontalAlignmentToolbar, PanelBackgroundSettings, ProControl, VerticalAlignmentToolbar,
 } from '@stackable/components'

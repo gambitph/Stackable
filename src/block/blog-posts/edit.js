@@ -1,7 +1,7 @@
 import './designs'
 import {
 	AlignmentToolbar, BlockControls, InspectorControls, PanelColorSettings,
-} from '@wordpress/editor'
+} from '@wordpress/block-editor'
 import { Component, Fragment } from '@wordpress/element'
 import { dateI18n, format } from '@wordpress/date'
 import { DesignPanelBody, ProControl, ProControlButton } from '@stackable/components/'

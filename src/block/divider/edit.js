@@ -1,6 +1,6 @@
 import {
 	AlignmentToolbar, BlockControls, InspectorControls, PanelColorSettings,
-} from '@wordpress/editor'
+} from '@wordpress/block-editor'
 import { PanelBody, RangeControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'

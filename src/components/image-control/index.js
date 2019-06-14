@@ -1,7 +1,7 @@
 import { BaseControl, Dashicon } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
-import { MediaUpload } from '@wordpress/editor'
+import { MediaUpload } from '@wordpress/block-editor'
 import SVGImageIcon from './images/image.svg'
 
 function ImageControl( props ) {

@@ -8,7 +8,7 @@ import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { Fragment } from '@wordpress/element'
 import { getVideoProviderFromURL } from '@stackable/util'
-import { InspectorControls } from '@wordpress/editor'
+import { InspectorControls } from '@wordpress/block-editor'
 import { showProNotice } from 'stackable'
 
 const edit = props => {

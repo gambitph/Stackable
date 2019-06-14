@@ -3,7 +3,7 @@ import {
 } from '@stackable/components'
 import {
 	InspectorControls, PanelColorSettings, RichText,
-} from '@wordpress/editor'
+} from '@wordpress/block-editor'
 import {
 	PanelBody, RangeControl, SelectControl,
 } from '@wordpress/components'

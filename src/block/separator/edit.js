@@ -15,7 +15,7 @@ import ImageDesignSlant2 from './images/slant-2.png'
 import ImageDesignWave1 from './images/wave-1.png'
 import ImageDesignWave2 from './images/wave-2.png'
 import ImageDesignWave3 from './images/wave-3.png'
-import { InspectorControls } from '@wordpress/editor'
+import { InspectorControls } from '@wordpress/block-editor'
 import { showProNotice } from 'stackable'
 
 const edit = props => {

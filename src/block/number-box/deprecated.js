@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { descriptionPlaceholder } from '@stackable/util'
 import { omit } from 'lodash'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 
 const deprecatedSchema_1_10 = {
 	numberBox: {

@@ -4,7 +4,7 @@ import classnames from 'classnames'
 import { Fragment } from '@wordpress/element'
 import isDarkColor from 'is-dark-color'
 import { range } from '@stackable/util'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 import striptags from 'striptags'
 
 const save = props => {

@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 
 const deprecatedSchema_1_10 = {
 	text: {

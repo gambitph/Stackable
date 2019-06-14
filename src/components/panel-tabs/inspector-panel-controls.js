@@ -1,5 +1,5 @@
 import classnames from 'classnames'
-import { InspectorControls } from '@wordpress/editor'
+import { InspectorControls } from '@wordpress/block-editor'
 
 const InspectorPanelControls = props => {
 	const {

@@ -1,6 +1,6 @@
 import classnames from 'classnames'
 import { Dashicon } from '@wordpress/components'
-import { MediaUpload } from '@wordpress/editor'
+import { MediaUpload } from '@wordpress/block-editor'
 import SVGImageIcon from './images/image.svg'
 
 const ImageUploadPlaceholder = props => {

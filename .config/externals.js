@@ -22,28 +22,29 @@ const camelCaseDash = string => string.replace(
  */
 const externals = [
 	'api-fetch',
-    'blocks',
-    'components',
-    'compose',
-    'data',
-    'date',
-    'htmlEntities',
-    'hooks',
+	'block-editor',
+	'blocks',
+	'components',
+	'compose',
+	'data',
+	'date',
+	'htmlEntities',
+	'hooks',
 	'edit-post',
-    'element',
-    'editor',
+	'element',
+	'editor',
 	'i18n',
-    'plugins',
-    'viewport',
+	'plugins',
+	'viewport',
 	'ajax',
 	'codeEditor',
 ].reduce( ( externals, name ) => ( {
 	...externals,
 	[ `@wordpress/${ name }` ]: `wp.${ camelCaseDash( name ) }`,
 } ), {
-    wp: 'wp',
-    lodash: 'lodash', // WP loads lodash already.
-    stackable: 'stackable', // Our localized JS variable.
+	wp: 'wp',
+	lodash: 'lodash', // WP loads lodash already.
+	stackable: 'stackable', // Our localized JS variable.
 } );
 
 module.exports = externals;

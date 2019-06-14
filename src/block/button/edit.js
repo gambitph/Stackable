@@ -1,6 +1,6 @@
 import {
 	BlockAlignmentToolbar, BlockControls, InspectorControls,
-} from '@wordpress/editor'
+} from '@wordpress/block-editor'
 import {
 	ButtonEdit, PanelButtonSettings, ProControl, URLInputControl,
 } from '@stackable/components'

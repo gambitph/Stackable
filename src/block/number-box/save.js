@@ -2,7 +2,7 @@ import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import isDarkColor from 'is-dark-color'
 import { range } from '@stackable/util'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 
 const save = props => {
 	const { className, attributes } = props

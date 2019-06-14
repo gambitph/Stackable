@@ -1,4 +1,4 @@
-import { InspectorControls, RichText } from '@wordpress/editor'
+import { InspectorControls, RichText } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'

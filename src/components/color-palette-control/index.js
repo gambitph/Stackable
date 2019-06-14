@@ -7,7 +7,7 @@
 import { __, sprintf } from '@wordpress/i18n'
 import { BaseControl, ColorIndicator, ColorPalette } from '@wordpress/components'
 import { compose, ifCondition } from '@wordpress/compose'
-import { getColorObjectByColorValue, withColorContext } from '@wordpress/editor'
+import { getColorObjectByColorValue, withColorContext } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
 
 // translators: first %s: The type of color (e.g. background color), second %s: the color name or value (e.g. red or #ff0000)

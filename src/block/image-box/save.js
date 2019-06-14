@@ -1,7 +1,7 @@
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { range } from '@stackable/util'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 import SVGArrow from './images/arrow.svg'
 
 const save = props => {

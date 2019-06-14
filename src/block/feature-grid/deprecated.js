@@ -1,7 +1,7 @@
 import { descriptionPlaceholder, range } from '@stackable/util'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 
 const deprecatedSave_1_10 = props => {
 	const { attributes, className } = props
