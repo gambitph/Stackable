@@ -129,13 +129,24 @@ You will have to redo all your blocks
 
 == Changelog ==
 
-= 1.16.0 =
+= 2.0 =
 * New: Additional options for the Separator block
 * New: Standardized block margins and paddings
 * Fixed: Some values in Custom CSS can mess up the rendered block CSS.
 * Fixed: Editor error shows up when no latest posts are found.
 * Fixed: Number box plain layouts now don't have a background
 * Fixed: The Separator block in the editor has top & bottom margins that makes placing separators hard.
+
+= 1.15.5 =
+* Fixed: Gutenberg 5.9 compatibility
+* Fixed: Buttons getting cut when the text is too long in smaller screens.
+* Fixed: WordPress 5.0 compatibility fix
+
+= 1.15.4 =
+* Fixed: Error encountered when re-editing blocks with containers if they have custom CSS
+* Fixed: While editing, other columns get hidden when custom CSS is used
+* Fixed: YouTube videos in Video Popup doesn't autoplay.
+* Fixed: Changed cursor in remove background image button since it was confusing
 
 = 1.15.3 =
 * Fixed: Placeholder text no longer becomes hidden when block is blurred
