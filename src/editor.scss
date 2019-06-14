@@ -36,5 +36,11 @@ svg.ugb-stackable-icon-gradient {
 		// 	padding-right: 17.5px;
 		// 	padding-left: 17.5px;
 		// }
+
+// Gutenberg v5.9 adds top & bottom margins in the editor, get rid of them.
+.editor-styles-wrapper [data-type^="ugb/"] {
+	h1, h2, h3, h4, h5, h6, p {
+		margin-top: 0;
+		margin-bottom: 0;
 	}
 }
