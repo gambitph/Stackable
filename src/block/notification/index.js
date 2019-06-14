@@ -3,9 +3,12 @@
  */
 
 import { __ } from '@wordpress/i18n'
+import deprecated from './deprecated'
 import { descriptionPlaceholder } from '@stackable/util'
 import { disabledBlocks } from 'stackable'
+import edit from './edit'
 import { NotificationIcon } from '@stackable/icons'
+import save from './save'
 
 export const schema = {
 	text: {
@@ -66,6 +69,10 @@ export const settings = {
 	supports: {
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
 	},
+
+	deprecated,
+	edit,
+	save,
 
 	// Stackable specific settings.
 	sDemoURL: 'https://wpstackable.com/notification-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',

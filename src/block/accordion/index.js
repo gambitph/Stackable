@@ -4,8 +4,11 @@
 
 import { __ } from '@wordpress/i18n'
 import { AccordionIcon } from '@stackable/icons'
+import deprecated from './deprecated'
 import { descriptionPlaceholder } from '@stackable/util'
 import { disabledBlocks } from 'stackable'
+import edit from './edit'
+import save from './save'
 import SVGArrowIcon from './images/arrow.svg'
 
 export const ArrowIcon = ( { fill } ) => <SVGArrowIcon width="20" height="20" fill={ fill } />
@@ -72,6 +75,10 @@ export const settings = {
 		__( 'Stackable' ),
 	],
 	attributes: schema,
+
+	deprecated,
+	edit,
+	save,
 
 	supports: {
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
