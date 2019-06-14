@@ -1,6 +1,6 @@
 import {
 	InspectorControls, PanelColorSettings, RichText,
-} from '@wordpress/editor'
+} from '@wordpress/block-editor'
 import {
 	PanelBody, RangeControl, SelectControl, ToggleControl,
 } from '@wordpress/components'

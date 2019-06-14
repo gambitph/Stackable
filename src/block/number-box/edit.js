@@ -24,7 +24,7 @@ import createStyles from './style'
 import { Fragment } from '@wordpress/element'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 import { showProNotice } from 'stackable'
 
 addFilter( 'stackable.number-box.edit.inspector.layout.before', 'stackable/number-box', ( output, props ) => {

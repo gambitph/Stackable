@@ -2,7 +2,7 @@ import { applyFilters } from '@wordpress/hooks'
 import { ButtonEdit } from '@stackable/components'
 import classnames from 'classnames'
 import { range } from '@stackable/util'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 import striptags from 'striptags'
 
 const save = props => {

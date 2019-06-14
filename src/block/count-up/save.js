@@ -6,7 +6,7 @@ import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
 import createStyles from './style'
 import { Fragment } from '@wordpress/element'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 
 const save = props => {
 	const { className, attributes } = props

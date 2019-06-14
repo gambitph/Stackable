@@ -2,7 +2,7 @@ import { descriptionPlaceholder, range } from '@stackable/util'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { omit } from 'lodash'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 
 const deprecatedSchema_1_10 = {
 	mediaID1: {

@@ -1,7 +1,7 @@
 import { Dashicon, IconButton, ToggleControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { Component } from '@wordpress/element'
-import { URLInput } from '@wordpress/editor'
+import { URLInput } from '@wordpress/block-editor'
 
 const ariaClosed = __( 'Show more tools & options' )
 const ariaOpen = __( 'Hide more tools & options' )

@@ -1,7 +1,7 @@
 import classnames from 'classnames'
 import { descriptionPlaceholder } from '@stackable/util'
 import md5 from 'md5'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 import SVGCloseIconV112 from './images/close-icon-v1-12.svg'
 
 const deprecatedSchema_1_12 = {

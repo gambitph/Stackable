@@ -1,5 +1,5 @@
 import { addFilter, doAction } from '@wordpress/hooks'
-import { AlignmentToolbar, BlockControls } from '@wordpress/editor'
+import { AlignmentToolbar, BlockControls } from '@wordpress/block-editor'
 import { createAllCombinationAttributes } from '@stackable/util'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'

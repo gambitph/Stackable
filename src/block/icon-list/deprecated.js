@@ -2,7 +2,7 @@ import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { getIconSVGBase64 as deprecatedGetIconSVGBase64 } from './deprecated-util'
 import { getIconSVGBase64 } from './util'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 
 const deprecatedSave_1_15_4 = props => {
 	const { className } = props

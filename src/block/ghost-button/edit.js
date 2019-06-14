@@ -1,6 +1,6 @@
 import {
 	BlockAlignmentToolbar, BlockControls, InspectorControls, PanelColorSettings, RichText, URLInput,
-} from '@wordpress/editor'
+} from '@wordpress/block-editor'
 import {
 	Dashicon, IconButton, PanelBody, RangeControl, SelectControl,
 } from '@wordpress/components'

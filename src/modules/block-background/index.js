@@ -3,7 +3,7 @@ import {
 	BackgroundControlsHelper,
 	PanelAdvancedSettings,
 } from '@stackable/components'
-import { BlockAlignmentToolbar, BlockControls } from '@wordpress/editor'
+import { BlockAlignmentToolbar, BlockControls } from '@wordpress/block-editor'
 import {
 	createBackgroundAttributeNames,
 	createBackgroundAttributes,

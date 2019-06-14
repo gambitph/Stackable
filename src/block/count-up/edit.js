@@ -29,7 +29,7 @@ import { Fragment } from '@wordpress/element'
 import ImageDesignPlain from './images/plain.png'
 import ImageDesignPlain2 from './images/plain-2.png'
 import { range } from 'lodash'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 import { showProNotice } from 'stackable'
 
 addFilter( 'stackable.count-up.edit.inspector.layout.before', 'stackable/count-up', ( output, props ) => {

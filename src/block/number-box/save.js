@@ -7,7 +7,7 @@ import createStyles from './style'
 import { Fragment } from '@wordpress/element'
 import { hasBackgroundOverlay } from '@stackable/util'
 import { range } from 'lodash'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 
 const save = props => {
 	const { className, attributes } = props

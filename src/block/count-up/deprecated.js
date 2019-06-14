@@ -3,7 +3,7 @@ import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { getFontFamily } from './deprecated-font'
 import { range } from '@stackable/util'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 
 export const deprecatedSave_1_15_4 = props => {
 	const { className, attributes } = props

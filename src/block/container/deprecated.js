@@ -1,5 +1,5 @@
 import classnames from 'classnames'
-import { InnerBlocks } from '@wordpress/editor'
+import { InnerBlocks } from '@wordpress/block-editor'
 
 const deprecatedSchema_1_10 = {
 	textColor: {

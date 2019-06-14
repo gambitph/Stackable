@@ -6,7 +6,7 @@ import {
 	registerBlockType,
 	unregisterBlockType,
 } from '@wordpress/blocks'
-import { BlockEdit } from '@wordpress/editor'
+import { BlockEdit } from '@wordpress/block-editor'
 import { noop } from 'lodash'
 import registerStackableBlock from '@stackable/register-block'
 import { render } from 'enzyme'

@@ -20,7 +20,7 @@ import {
 } from '@stackable/util'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 
 const addInspectorPanel = ( output, props ) => {
 	// console.log('HAHAHA')

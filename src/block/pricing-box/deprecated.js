@@ -6,7 +6,7 @@ import {
 import { descriptionPlaceholder, isDarkColor, range } from '@stackable/util'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 import striptags from 'striptags'
 
 const deprecatedSave_1_12 = props => {

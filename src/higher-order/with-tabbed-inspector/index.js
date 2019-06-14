@@ -2,7 +2,7 @@ import { Component, Fragment } from '@wordpress/element'
 import { InspectorPanelControls, PanelTabs } from '@stackable/components'
 import { applyFilters } from '@wordpress/hooks'
 import { createHigherOrderComponent } from '@wordpress/compose'
-import { InspectorControls } from '@wordpress/editor'
+import { InspectorControls } from '@wordpress/block-editor'
 
 const withTabbedInspector = ( tabs = null ) => createHigherOrderComponent(
 	WrappedComponent => class extends Component {

@@ -1,6 +1,6 @@
 import {
 	InspectorControls, PanelColorSettings, RichText,
-} from '@wordpress/editor'
+} from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { descriptionPlaceholder } from '@stackable/util'

@@ -4,7 +4,7 @@ import {
 import { descriptionPlaceholder, isDarkColor, range } from '@stackable/util'
 import {
 	InspectorControls, PanelColorSettings, RichText,
-} from '@wordpress/editor'
+} from '@wordpress/block-editor'
 import {
 	PanelBody, RangeControl,
 } from '@wordpress/components'
