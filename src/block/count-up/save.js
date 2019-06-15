@@ -29,7 +29,7 @@ const save = props => {
 	}, design, props ) )
 
 	return (
-		<BlockContainer.Save className={ mainClasses } aria-hidden="true" blockProps={ props } render={ () => (
+		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
 				{ range( 1, columns + 1 ).map( i => {
 					const icon = attributes[ `icon${ i }` ]

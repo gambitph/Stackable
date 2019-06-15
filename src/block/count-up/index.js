@@ -187,6 +187,16 @@ export const schema = {
 		[ 'Icon', 'Number', 'Title', 'Description' ],
 		[ '', 'Tablet', 'Mobile' ]
 	),
+
+	// Individual column colors.
+	...createAllCombinationAttributes(
+		'Column%s%sColor', {
+			type: 'string',
+			default: '',
+		},
+		[ '1', '2', '3', '4' ],
+		[ 'Background', 'Icon', 'Number', 'Title', 'Description' ]
+	),
 }
 
 export const name = 'ugb/count-up'

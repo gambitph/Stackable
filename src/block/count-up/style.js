@@ -216,6 +216,35 @@ export const createStyles = props => {
 		} )
 	}
 
+	// Advanced individual column color styles.
+	const { columns = 2 } = props.attributes
+	styles.push( [ 1, 2, 3, 4 ].reduce( ( colStyles, i ) => {
+		if ( columns < i ) {
+			return colStyles
+		}
+		return {
+			...colStyles,
+			[ `.ugb-countup__item${ i }` ]: {
+				backgroundColor: show.columnBackground ? getValue( `column${ i }BackgroundColor` ) : undefined,
+			},
+			[ `.ugb-countup__item${ i }:before` ]: {
+				background: show.columnBackground ? getValue( `column${ i }BackgroundColor` ) : undefined,
+			},
+			[ `.ugb-countup__item${ i } .ugb-countup__icon svg` ]: {
+				color: showIcon ? getValue( `column${ i }IconColor` ) : undefined,
+			},
+			[ `.ugb-countup__item${ i } .ugb-countup__title` ]: {
+				color: showTitle ? getValue( `column${ i }TitleColor` ) : undefined,
+			},
+			[ `.ugb-countup__item${ i } .ugb-countup__counter` ]: {
+				color: showNumber ? getValue( `column${ i }NumberColor` ) : undefined,
+			},
+			[ `.ugb-countup__item${ i } .ugb-countup__description` ]: {
+				color: showDescription ? getValue( `column${ i }DescriptionColor` ) : undefined,
+			},
+		}
+	}, {} ) )
+
 	return deepmerge.all( styles )
 	// return {
 	// 	'.ugb-icon-list li': {

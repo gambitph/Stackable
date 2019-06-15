@@ -336,6 +336,80 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 	)
 } )
 
+addFilter( `stackable.count-up.edit.inspector.advanced.before`, `stackable/count-up/column-colors`, ( output, props ) => {
+	const { setAttributes } = props
+	const {
+		columns = 2,
+		design = 'plain',
+		showIcon = false,
+		showNumber = true,
+		showTitle = true,
+		showDescription = true,
+	} = props.attributes
+
+	const show = applyFilters( 'stackable.count-up.show', {
+		columnBackground: false,
+	}, design, props )
+
+	return (
+		<Fragment>
+			{ output }
+			{ [ 1, 2, 3, 4 ].map( ( num, i ) => {
+				if ( columns < num ) {
+					return null
+				}
+
+				const attrName = attrNameTemplate => sprintf( attrNameTemplate, num )
+
+				return (
+					<PanelBody
+						key={ i }
+						initialOpen={ false }
+						title={ sprintf( __( 'Column #%s' ), num ) }
+					>
+						<p className="components-base-control__help">{ __( 'Override settings for this column.' ) }</p>
+						{ show.columnBackground && (
+							<ColorPaletteControl
+								label={ __( 'Column Background' ) }
+								value={ props.attributes[ attrName( 'column%sBackgroundColor' ) ] }
+								onChange={ value => setAttributes( { [ attrName( 'column%sBackgroundColor' ) ]: value } ) }
+							/>
+						) }
+						{ showIcon && (
+							<ColorPaletteControl
+								label={ __( 'Icon' ) }
+								value={ props.attributes[ attrName( 'column%sIconColor' ) ] }
+								onChange={ value => setAttributes( { [ attrName( 'column%sIconColor' ) ]: value } ) }
+							/>
+						) }
+						{ showTitle && (
+							<ColorPaletteControl
+								label={ __( 'Title' ) }
+								value={ props.attributes[ attrName( 'column%sTitleColor' ) ] }
+								onChange={ value => setAttributes( { [ attrName( 'column%sTitleColor' ) ]: value } ) }
+							/>
+						) }
+						{ showNumber && (
+							<ColorPaletteControl
+								label={ __( 'Number' ) }
+								value={ props.attributes[ attrName( 'column%sNumberColor' ) ] }
+								onChange={ value => setAttributes( { [ attrName( 'column%sNumberColor' ) ]: value } ) }
+							/>
+						) }
+						{ showDescription && (
+							<ColorPaletteControl
+								label={ __( 'Description' ) }
+								value={ props.attributes[ attrName( 'column%sDescriptionColor' ) ] }
+								onChange={ value => setAttributes( { [ attrName( 'column%sDescriptionColor' ) ]: value } ) }
+							/>
+						) }
+					</PanelBody>
+				)
+			} ) }
+		</Fragment>
+	)
+} )
+
 const edit = props => {
 	const {
 		setAttributes, className, attributes,
