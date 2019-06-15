@@ -125,6 +125,7 @@ $box-vert-padding: 60px;
 		z-index: 2;
 	}
 	> * {
+		position: relative;
 		z-index: 3;
 	}
 }
