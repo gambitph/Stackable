@@ -197,59 +197,31 @@ export const createStyles = props => {
 	} )
 
 	// Advanced individual column color styles.
-	styles.push( {
-		'.ugb-number-box__item1': {
-			backgroundColor: getValue( 'Column1BackgroundColor' ),
-		},
-		'.ugb-number-box__item1:before': {
-			background: getValue( 'Column1BackgroundColor' ),
-		},
-		'.ugb-number-box__item2': {
-			backgroundColor: getValue( 'Column2BackgroundColor' ),
-		},
-		'.ugb-number-box__item2:before': {
-			background: getValue( 'Column2BackgroundColor' ),
-		},
-		'.ugb-number-box__item3': {
-			backgroundColor: getValue( 'Column3BackgroundColor' ),
-		},
-		'.ugb-number-box__item3:before': {
-			background: getValue( 'Column3BackgroundColor' ),
-		},
-
-		'.ugb-number-box__item1 .ugb-number-box__number': {
-			backgroundColor: show.numberBGColor ? getValue( 'Column1NumberBackgroundColor' ) : undefined,
-			color: getValue( 'Column1NumberColor' ),
-		},
-		'.ugb-number-box__item2 .ugb-number-box__number': {
-			backgroundColor: show.numberBGColor ? getValue( 'Column2NumberBackgroundColor' ) : undefined,
-			color: getValue( 'Column2NumberColor' ),
-		},
-		'.ugb-number-box__item3 .ugb-number-box__number': {
-			backgroundColor: show.numberBGColor ? getValue( 'Column3NumberBackgroundColor' ) : undefined,
-			color: getValue( 'Column3NumberColor' ),
-		},
-
-		'.ugb-number-box__item1 .ugb-number-box__title': {
-			color: getValue( 'Column1TitleColor' ),
-		},
-		'.ugb-number-box__item2 .ugb-number-box__title': {
-			color: getValue( 'Column2TitleColor' ),
-		},
-		'.ugb-number-box__item3 .ugb-number-box__title': {
-			color: getValue( 'Column3TitleColor' ),
-		},
-
-		'.ugb-number-box__item1 .ugb-number-box__description': {
-			color: getValue( 'Column1DescriptionColor' ),
-		},
-		'.ugb-number-box__item2 .ugb-number-box__description': {
-			color: getValue( 'Column2DescriptionColor' ),
-		},
-		'.ugb-number-box__item3 .ugb-number-box__description': {
-			color: getValue( 'Column3DescriptionColor' ),
-		},
-	} )
+	const { columns = 2 } = props.attributes
+	styles.push( [ 1, 2, 3 ].reduce( ( colStyles, i ) => {
+		if ( columns < i ) {
+			return colStyles
+		}
+		return {
+			...colStyles,
+			[ `.ugb-number-box__item${ i }` ]: {
+				backgroundColor: getValue( `column${ i }BackgroundColor` ),
+			},
+			[ `.ugb-number-box__item${ i }:before` ]: {
+				background: getValue( `column${ i }BackgroundColor` ),
+			},
+			[ `.ugb-number-box__item${ i } .ugb-number-box__number` ]: {
+				backgroundColor: show.numberBGColor ? getValue( `column${ i }NumberBackgroundColor` ) : undefined,
+				color: getValue( `column${ i }NumberColor` ),
+			},
+			[ `.ugb-number-box__item${ i } .ugb-number-box__title` ]: {
+				color: getValue( `column${ i }TitleColor` ),
+			},
+			[ `.ugb-number-box__item${ i } .ugb-number-box__description` ]: {
+				color: getValue( `column${ i }DescriptionColor` ),
+			},
+		}
+	}, {} ) )
 
 	return deepmerge.all( styles )
 }

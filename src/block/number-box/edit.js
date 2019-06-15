@@ -352,6 +352,9 @@ addFilter( `stackable.number-box.edit.inspector.advanced.before`, `stackable/num
 		columns = 2,
 		design = 'basic',
 		numberStyle = '',
+		showNumber = true,
+		showTitle = true,
+		showDescription = true,
 	} = props.attributes
 
 	const show = applyFilters( 'stackable.number-box.show', {
@@ -384,34 +387,38 @@ addFilter( `stackable.number-box.edit.inspector.advanced.before`, `stackable/num
 						{ show.backgroundColor && (
 							<ColorPaletteControl
 								label={ __( 'Column Background' ) }
-								value={ props.attributes[ attrName( 'Column%sBackgroundColor' ) ] }
-								onChange={ value => setAttributes( { [ attrName( 'Column%sBackgroundColor' ) ]: value } ) }
+								value={ props.attributes[ attrName( 'column%sBackgroundColor' ) ] }
+								onChange={ value => setAttributes( { [ attrName( 'column%sBackgroundColor' ) ]: value } ) }
 							/>
 						) }
-						{ show.numberBGColor && (
+						{ showNumber && show.numberBGColor && (
 							<ColorPaletteControl
 								label={ __( 'Number Background' ) }
-								value={ props.attributes[ attrName( 'Column%sNumberBackgroundColor' ) ] }
-								onChange={ value => setAttributes( { [ attrName( 'Column%sNumberBackgroundColor' ) ]: value } ) }
+								value={ props.attributes[ attrName( 'column%sNumberBackgroundColor' ) ] }
+								onChange={ value => setAttributes( { [ attrName( 'column%sNumberBackgroundColor' ) ]: value } ) }
 							/>
 						) }
-						{ show.numberColor && (
+						{ showNumber && show.numberColor && (
 							<ColorPaletteControl
 								label={ __( 'Number Text' ) }
-								value={ props.attributes[ attrName( 'Column%sNumberColor' ) ] }
-								onChange={ value => setAttributes( { [ attrName( 'Column%sNumberColor' ) ]: value } ) }
+								value={ props.attributes[ attrName( 'column%sNumberColor' ) ] }
+								onChange={ value => setAttributes( { [ attrName( 'column%sNumberColor' ) ]: value } ) }
 							/>
 						) }
-						<ColorPaletteControl
-							label={ __( 'Title' ) }
-							value={ props.attributes[ attrName( 'Column%sTitleColor' ) ] }
-							onChange={ value => setAttributes( { [ attrName( 'Column%sTitleColor' ) ]: value } ) }
-						/>
-						<ColorPaletteControl
-							label={ __( 'Description' ) }
-							value={ props.attributes[ attrName( 'Column%sDescriptionColor' ) ] }
-							onChange={ value => setAttributes( { [ attrName( 'Column%sDescriptionColor' ) ]: value } ) }
-						/>
+						{ showTitle && (
+							<ColorPaletteControl
+								label={ __( 'Title' ) }
+								value={ props.attributes[ attrName( 'column%sTitleColor' ) ] }
+								onChange={ value => setAttributes( { [ attrName( 'column%sTitleColor' ) ]: value } ) }
+							/>
+						) }
+						{ showDescription && (
+							<ColorPaletteControl
+								label={ __( 'Description' ) }
+								value={ props.attributes[ attrName( 'column%sDescriptionColor' ) ] }
+								onChange={ value => setAttributes( { [ attrName( 'column%sDescriptionColor' ) ]: value } ) }
+							/>
+						) }
 					</PanelBody>
 				)
 			} ) }
