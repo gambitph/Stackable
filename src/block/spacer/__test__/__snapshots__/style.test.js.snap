@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Spacer block Rendered styles should match snapshot 1`] = `
+Object {
+  ".ugb-spacer": Object {
+    "height": undefined,
+  },
+  "mobile": Object {
+    ".ugb-spacer": Object {
+      "height": undefined,
+    },
+  },
+  "tablet": Object {
+    ".ugb-spacer": Object {
+      "height": undefined,
+    },
+  },
+}
+`;
+
+exports[`Spacer block Rendered styles should match snapshot with modified attributes 1`] = `
+Object {
+  ".ugb-spacer": Object {
+    "height": "123heightUnit",
+  },
+  "mobile": Object {
+    ".ugb-spacer": Object {
+      "height": "123mobileHeightUnit",
+    },
+  },
+  "tablet": Object {
+    ".ugb-spacer": Object {
+      "height": "123tabletHeightUnit",
+    },
+  },
+}
+`;

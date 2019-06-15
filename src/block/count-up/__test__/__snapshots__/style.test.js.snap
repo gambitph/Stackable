@@ -1,0 +1,126 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Count Up block Rendered styles should match snapshot 1`] = `
+Object {
+  ".ugb-countup__counter": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  ".ugb-countup__description": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  ".ugb-countup__icon, .ugb-countup__counter, .ugb-countup__title, .ugb-countup__description": Object {
+    "textAlign": undefined,
+  },
+  ".ugb-countup__title": Object {
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "marginBottom": undefined,
+    "textAlign": undefined,
+    "textTransform": undefined,
+  },
+  "mobile": Object {
+    ".ugb-countup__counter": Object {
+      "fontSize": undefined,
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-countup__description": Object {
+      "fontSize": undefined,
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-countup__icon, .ugb-countup__counter, .ugb-countup__title, .ugb-countup__description": Object {
+      "textAlign": undefined,
+    },
+    ".ugb-countup__title": Object {
+      "fontSize": undefined,
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+  },
+  "tablet": Object {
+    ".ugb-countup__counter": Object {
+      "fontSize": undefined,
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-countup__description": Object {
+      "fontSize": undefined,
+      "lineHeight": undefined,
+      "textAlign": undefined,
+    },
+    ".ugb-countup__icon, .ugb-countup__counter, .ugb-countup__title, .ugb-countup__description": Object {
+      "textAlign": undefined,
+    },
+    ".ugb-countup__title": Object {
+      "fontSize": undefined,
+      "lineHeight": undefined,
+      "marginBottom": undefined,
+      "textAlign": undefined,
+    },
+  },
+}
+`;
+
+exports[`Count Up block Rendered styles should match snapshot with modified attributes 1`] = `
+Object {
+  ".ugb-countup__icon": Object {
+    "marginBottom": "123px",
+    "textAlign": "iconAlign",
+  },
+  ".ugb-countup__icon svg": Object {
+    "color": "#123456",
+    "height": "123px",
+    "width": "123px",
+  },
+  ".ugb-countup__icon, .ugb-countup__counter, .ugb-countup__title, .ugb-countup__description": Object {
+    "textAlign": undefined,
+  },
+  "mobile": Object {
+    ".ugb-countup__icon": Object {
+      "marginBottom": "123px",
+    },
+    ".ugb-countup__icon svg": Object {
+      "height": "123px",
+      "width": "123px",
+    },
+    ".ugb-countup__icon, .ugb-countup__counter, .ugb-countup__title, .ugb-countup__description": Object {
+      "textAlign": undefined,
+    },
+  },
+  "tablet": Object {
+    ".ugb-countup__icon": Object {
+      "marginBottom": "123px",
+    },
+    ".ugb-countup__icon svg": Object {
+      "height": "123px",
+      "width": "123px",
+    },
+    ".ugb-countup__icon, .ugb-countup__counter, .ugb-countup__title, .ugb-countup__description": Object {
+      "textAlign": undefined,
+    },
+  },
+}
+`;

@@ -21,7 +21,6 @@ Object {
     "backgroundRepeat": undefined,
     "backgroundSize": undefined,
     "borderRadius": undefined,
-    "textAlign": undefined,
   },
   ".ugb-number-box__item1": Object {
     "backgroundColor": undefined,
@@ -117,7 +116,6 @@ Object {
       "backgroundPosition": undefined,
       "backgroundRepeat": undefined,
       "backgroundSize": undefined,
-      "textAlign": undefined,
     },
     ".ugb-number-box__item:before": Object {
       "opacity": undefined,
@@ -149,7 +147,6 @@ Object {
       "backgroundPosition": undefined,
       "backgroundRepeat": undefined,
       "backgroundSize": undefined,
-      "textAlign": undefined,
     },
     ".ugb-number-box__item:before": Object {
       "opacity": undefined,
@@ -184,7 +181,6 @@ Object {
     "backgroundRepeat": "columnBackgroundRepeat",
     "backgroundSize": "columnBackgroundSize",
     "borderRadius": "6px",
-    "textAlign": "contentAlign",
   },
   ".ugb-number-box__item1": Object {
     "backgroundColor": undefined,
@@ -252,7 +248,6 @@ Object {
       "backgroundPosition": "columnMobileBackgroundPosition",
       "backgroundRepeat": "columnMobileBackgroundRepeat",
       "backgroundSize": "columnMobileBackgroundSize",
-      "textAlign": undefined,
     },
     ".ugb-number-box__item:before": Object {
       "opacity": 12.3,
@@ -270,7 +265,6 @@ Object {
       "backgroundPosition": "columnTabletBackgroundPosition",
       "backgroundRepeat": "columnTabletBackgroundRepeat",
       "backgroundSize": "columnTabletBackgroundSize",
-      "textAlign": undefined,
     },
     ".ugb-number-box__item:before": Object {
       "opacity": 12.3,

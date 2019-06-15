@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Count Up block Save render should match snapshot 1`] = `
+<div
+  aria-hidden="true"
+  class="ugb-count-up ugb-countup--v4 ugb-countup--columns-2 ugb-main-block"
+>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-countup__item ugb-countup__item1"
+      >
+        <h4
+          class="ugb-countup__title"
+        >
+          <div>
+            Title
+          </div>
+        </h4>
+        <div
+          class="ugb-countup__counter"
+          data-delay="16"
+          data-duration="1000"
+        >
+          <div>
+            $99.99
+          </div>
+        </div>
+        <p
+          class="ugb-countup__description"
+        />
+        <div>
+          Description
+        </div>
+        <p />
+      </div>
+      <div
+        class="ugb-countup__item ugb-countup__item2"
+      >
+        <h4
+          class="ugb-countup__title"
+        >
+          <div>
+            Title
+          </div>
+        </h4>
+        <div
+          class="ugb-countup__counter"
+          data-delay="16"
+          data-duration="1000"
+        >
+          <div>
+            1,234
+          </div>
+        </div>
+        <p
+          class="ugb-countup__description"
+        />
+        <div>
+          Description
+        </div>
+        <p />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Count Up block Save render should match snapshot with attributes 1`] = `
+<div
+  aria-hidden="true"
+  class="ugb-count-up ugb-countup--v4 ugb-countup--columns-1 ugb-countup--design-wave-2 ugb-main-block"
+>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-countup__item ugb-countup__item1 ugb--has-background-overlay"
+      >
+        <div
+          class="ugb-countup__icon"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

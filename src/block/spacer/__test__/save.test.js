@@ -5,8 +5,7 @@ describe( `${ settings.title } block`, () => {
 	describe( 'Save render', () => {
 		// Specified attributes for save testing.
 		const attributes = {
-			design: 'basic',
-			icon: 'check',
+			design: 'wave-2',
 		}
 
 		test( 'should match snapshot', () => {

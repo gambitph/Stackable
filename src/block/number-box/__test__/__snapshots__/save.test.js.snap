@@ -2,67 +2,71 @@
 
 exports[`Number Box block Save render should match snapshot 1`] = `
 <div
-  class="wp-block-ugb-number-box ugb-number-box ugb-number-box ugb-number-box--v3 ugb-number-box--columns-2 ugb-main-block"
+  class="ugb-number-box ugb-number-box--v3 ugb-number-box--columns-2 ugb-main-block"
 >
   <div
     class="ugb-inner-block"
   >
     <div
-      class="ugb-number-box__item ugb-number-box__item1"
+      class="ugb-block-content"
     >
-      <span
-        class="ugb-number-box__number"
-      >
-        <div>
-          01
-        </div>
-      </span>
       <div
-        class="ugb-number-box__content"
+        class="ugb-number-box__item ugb-number-box__item1"
       >
-        <h4
-          class="ugb-number-box__title"
+        <span
+          class="ugb-number-box__number"
         >
           <div>
-            Title
+            01
           </div>
-        </h4>
-        <p
-          class="ugb-number-box__description"
-        />
-        <div>
-          Description for this block. Use this space for describing your block. Any text will do.
+        </span>
+        <div
+          class="ugb-number-box__content"
+        >
+          <h4
+            class="ugb-number-box__title"
+          >
+            <div>
+              Title
+            </div>
+          </h4>
+          <p
+            class="ugb-number-box__description"
+          />
+          <div>
+            Description for this block. Use this space for describing your block. Any text will do.
+          </div>
+          <p />
         </div>
-        <p />
       </div>
-    </div>
-    <div
-      class="ugb-number-box__item ugb-number-box__item2"
-    >
-      <span
-        class="ugb-number-box__number"
-      >
-        <div>
-          02
-        </div>
-      </span>
       <div
-        class="ugb-number-box__content"
+        class="ugb-number-box__item ugb-number-box__item2"
       >
-        <h4
-          class="ugb-number-box__title"
+        <span
+          class="ugb-number-box__number"
         >
           <div>
-            Title
+            02
           </div>
-        </h4>
-        <p
-          class="ugb-number-box__description"
-        />
-        <div>
-          Description for this block. Use this space for describing your block. Any text will do.
+        </span>
+        <div
+          class="ugb-number-box__content"
+        >
+          <h4
+            class="ugb-number-box__title"
+          >
+            <div>
+              Title
+            </div>
+          </h4>
+          <p
+            class="ugb-number-box__description"
+          />
+          <div>
+            Description for this block. Use this space for describing your block. Any text will do.
+          </div>
+          <p />
         </div>
-        <p />
       </div>
     </div>
   </div>
@@ -71,14 +75,18 @@ exports[`Number Box block Save render should match snapshot 1`] = `
 
 exports[`Number Box block Save render should match snapshot with attributes 1`] = `
 <div
-  class="wp-block-ugb-number-box ugb-number-box ugb-number-box ugb-number-box--v3 ugb-number-box--columns-1 ugb-number-box--design-wave-2 ugb-main-block"
+  class="ugb-number-box ugb-number-box--v3 ugb-number-box--columns-1 ugb-number-box--design-wave-2 ugb-main-block"
 >
   <div
     class="ugb-inner-block"
   >
     <div
-      class="ugb-number-box__item ugb-number-box__item1 ugb--shadow-1 ugb--has-background-overlay"
-    />
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-number-box__item ugb-number-box__item1 ugb--shadow-1 ugb--has-background-overlay"
+      />
+    </div>
   </div>
 </div>
 `;

@@ -3,55 +3,74 @@
 exports[`Separator block Save render should match snapshot 1`] = `
 <div
   aria-hidden="true"
-  class="wp-block-ugb-separator alignfull ugb-separator ugb-separator--design-wave-1"
+  class="ugb-separator ugb-separator--design-wave-1"
 >
   <div
-    class="ugb-separator__top-pad"
-  />
-  <div
-    class="ugb-separator__svg-wrapper"
+    class="ugb-inner-block"
   >
     <div
-      class="ugb-separator__svg-inner"
+      class="ugb-block-content"
     >
-      <svg
-        class="ugb-separator__layer-1"
-        preserveAspectRatio="none"
+      <div
+        class="ugb-separator__top-pad"
+      />
+      <div
+        class="ugb-separator__svg-wrapper"
+      >
+        <div
+          class="ugb-separator__svg-inner ugb-separator-wrapper"
+        >
+          <svg
+            aria-hidden="true"
+            class="ugb-separator__layer-1"
+            preserveAspectRatio="none"
+          />
+        </div>
+      </div>
+      <div
+        class="ugb-separator__bottom-pad"
       />
     </div>
   </div>
-  <div
-    class="ugb-separator__bottom-pad"
-  />
 </div>
 `;
 
 exports[`Separator block Save render should match snapshot with attributes 1`] = `
 <div
   aria-hidden="true"
-  class="wp-block-ugb-separator alignfull ugb-separator ugb-separator--design-wave-2 ugb-separator--flip-vertical ugb-separator--flip-horizontal"
+  class="ugb-separator ugb-separator--design-wave-2 ugb-separator--flip-vertical ugb-separator--flip-horizontal"
 >
   <div
-    class="ugb-separator__top-pad"
-  />
-  <div
-    class="ugb-separator__svg-wrapper"
+    class="ugb-inner-block"
   >
     <div
-      class="ugb-separator__svg-inner"
+      class="ugb-block-content"
     >
-      <svg
-        class="ugb-separator__shadow"
-        preserveAspectRatio="none"
+      <div
+        class="ugb-separator__top-pad"
       />
-      <svg
-        class="ugb-separator__layer-1"
-        preserveAspectRatio="none"
+      <div
+        class="ugb-separator__svg-wrapper"
+      >
+        <div
+          class="ugb-separator__svg-inner ugb-separator-wrapper"
+        >
+          <svg
+            aria-hidden="true"
+            class="ugb-separator__shadow"
+            preserveAspectRatio="none"
+          />
+          <svg
+            aria-hidden="true"
+            class="ugb-separator__layer-1"
+            preserveAspectRatio="none"
+          />
+        </div>
+      </div>
+      <div
+        class="ugb-separator__bottom-pad"
       />
     </div>
   </div>
-  <div
-    class="ugb-separator__bottom-pad"
-  />
 </div>
 `;

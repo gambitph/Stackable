@@ -6,29 +6,10 @@ import {
 	registerBlockType,
 	unregisterBlockType,
 } from '@wordpress/blocks'
-import { BlockEdit } from '@wordpress/block-editor'
-import { noop } from 'lodash'
 import registerStackableBlock from '@stackable/register-block'
 import { render } from 'enzyme'
 
 // TODO: cleanup, remove unused functions here
-
-export const blockEditRender = ( name, settings ) => {
-	if ( ! getBlockType( name ) ) {
-		registerStackableBlock( name, { ...settings, category: 'common' } )
-	}
-	const block = createBlock( name )
-
-	return render(
-		<BlockEdit
-			name={ name }
-			isSelected={ false }
-			attributes={ block.attributes }
-			setAttributes={ noop }
-			user={ {} }
-		/>
-	)
-}
 
 export const blockSaveRender = ( name, settings, attributes = null ) => {
 	if ( ! getBlockType( name ) ) {
@@ -120,6 +101,8 @@ export const createAttributeValue = ( attrName, attrParams, blockSettings = {} )
 			return Array.isArray( align ) ? align[ align.length - 1 ] : 'right'
 		}
 		return 'right'
+	} else if ( attrName === 'columns' ) {
+		return 3
 	} else if ( type === 'boolean' ) {
 		return ! defaultValue
 	} else if ( type === 'number' ) {

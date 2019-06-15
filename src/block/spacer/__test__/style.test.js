@@ -5,9 +5,7 @@ import createStyles from '../style'
 describe( `${ settings.title } block`, () => {
 	describe( 'Rendered styles', () => {
 		// Specified attributes for save testing.
-		const attributes = {
-			columns: 3,
-		}
+		const attributes = {}
 
 		blockStyleTests( { settings, name, attributes, createStyles } )
 	} )

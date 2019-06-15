@@ -4,9 +4,9 @@ const blockAttributeTests = props => {
 		attributes = {},
 	} = props.settings
 
-	test( 'selectors should not have :nth-child, or similar', () => {
+	test( 'selectors should not have :nth-child', () => {
 		Object.values( attributes ).filter( attributes => attributes.selector ).forEach( attributes => {
-			expect( attributes.selector ).not.toMatch( /:nth-\w/ )
+			expect( attributes.selector ).not.toMatch( /:nth-child\w/ )
 		} )
 	} )
 

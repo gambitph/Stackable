@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Spacer block Save render should match snapshot 1`] = `
+<div
+  class="ugb-spacer ugb-main-block"
+>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    />
+  </div>
+</div>
+`;
+
+exports[`Spacer block Save render should match snapshot with attributes 1`] = `
+<div
+  class="ugb-spacer ugb-main-block"
+>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    />
+  </div>
+</div>
+`;

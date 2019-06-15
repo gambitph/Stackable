@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Icon List block Rendered styles should match snapshot 1`] = `
+Object {
+  ".ugb-icon-list li": Object {
+    "--gap": undefined,
+    "--icon": "url('data:image/svg+xml;base64,')",
+    "--icon-size": undefined,
+    "color": undefined,
+    "fontFamily": undefined,
+    "fontSize": undefined,
+    "fontWeight": undefined,
+    "letterSpacing": undefined,
+    "lineHeight": undefined,
+    "textTransform": undefined,
+  },
+  ".ugb-icon-list ul": Object {
+    "columns": 3,
+    "gridTemplateColumns": undefined,
+  },
+  "mobile": Object {
+    ".ugb-icon-list ul": Object {
+      "columns": undefined,
+      "gridTemplateColumns": undefined,
+    },
+  },
+  "tablet": Object {
+    ".ugb-icon-list ul": Object {
+      "columns": undefined,
+      "gridTemplateColumns": undefined,
+    },
+  },
+}
+`;
+
+exports[`Icon List block Rendered styles should match snapshot with modified attributes 1`] = `
+Object {
+  ".ugb-icon-list li": Object {
+    "--gap": "8px",
+    "--icon": "url('data:image/svg+xml;base64,')",
+    "--icon-size": "10px",
+    "color": "#123456",
+    "fontFamily": "\\"listTextFontFamily\\", Sans-serif",
+    "fontSize": "123listTextFontSizeUnit",
+    "fontWeight": "listTextFontWeight",
+    "letterSpacing": "123px",
+    "lineHeight": "123em",
+    "textTransform": "listTextTextTransform",
+  },
+  ".ugb-icon-list ul": Object {
+    "columns": 3,
+    "gridTemplateColumns": "1fr 1fr 1fr",
+  },
+  "mobile": Object {
+    ".ugb-icon-list ul": Object {
+      "columns": "123 !important",
+      "gridTemplateColumns": "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr !important",
+    },
+  },
+  "tablet": Object {
+    ".ugb-icon-list ul": Object {
+      "columns": "123 !important",
+      "gridTemplateColumns": "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr !important",
+    },
+  },
+}
+`;

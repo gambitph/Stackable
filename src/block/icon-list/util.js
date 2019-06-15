@@ -82,6 +82,9 @@ const getIconShapeFunction = iconShape => {
  * @return {Object} An svg component.
  */
 export const getIconSVG = ( icon, shape = '' ) => {
+	if ( ! BLOCK_ICONS[ icon ] ) {
+		return null
+	}
 	return BLOCK_ICONS[ icon ][ getIconShapeFunction( shape ) ]()
 }
 
@@ -96,6 +99,9 @@ export const getIconSVG = ( icon, shape = '' ) => {
  */
 export const getIconSVGBase64 = ( icon, iconShape, iconColor ) => {
 	const shapeFunc = getIconShapeFunction( iconShape )
+	if ( ! BLOCK_ICONS[ icon ] ) {
+		return ''
+	}
 	const iconString = svgRenderToString( BLOCK_ICONS[ icon ][ shapeFunc ]( iconColor ), false )
 	return btoa( iconString )
 }
