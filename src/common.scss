@@ -107,6 +107,7 @@ $box-vert-padding: 60px;
 	margin: 0;
 	padding: 0;
 	width: 100%;
+	position: relative;
 }
 
 // Background overlay. Any block / item that has a background/gradient/overlay should have this class.
@@ -125,7 +126,6 @@ $box-vert-padding: 60px;
 		z-index: 2;
 	}
 	> * {
-		position: relative;
 		z-index: 3;
 	}
 }
