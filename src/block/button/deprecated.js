@@ -1,12 +1,213 @@
 import {
 	DeprecatedButtonContent_1_10,
 	DeprecatedButtonContent_1_12,
+	DeprecatedButtonContent_1_15_5,
 	DeprecatedButtonContent_1_4,
 	DeprecatedButtonContent_1_9,
 } from '@stackable/components/button-edit'
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { range } from '@stackable/util'
+
+export const deprecatedSchema_1_15_5 = {
+	buttons: {
+		type: 'number',
+		default: 1,
+	},
+	url: {
+		type: 'string',
+		source: 'attribute',
+		selector: 'a',
+		attribute: 'href',
+		default: '',
+	},
+	newTab: {
+		type: 'boolean',
+		source: 'attribute',
+		selector: 'a',
+		attribute: 'target',
+		default: false,
+	},
+	text: {
+		source: 'html',
+		selector: 'a span',
+		default: __( 'Button text' ),
+	},
+	align: {
+		type: 'string',
+		default: 'center',
+	},
+	color: {
+		type: 'string',
+	},
+	textColor: {
+		type: 'string',
+	},
+	size: {
+		type: 'string',
+		default: 'normal',
+	},
+	cornerButtonRadius: {
+		type: 'number',
+		default: 4,
+	},
+	design: {
+		type: 'string',
+		default: 'basic',
+	},
+	icon: {
+		type: 'string',
+	},
+
+	url2: {
+		type: 'string',
+		source: 'attribute',
+		selector: 'div:nth-of-type(2) .ugb-button',
+		attribute: 'href',
+		default: '',
+	},
+	newTab2: {
+		type: 'boolean',
+		source: 'attribute',
+		selector: 'div:nth-of-type(2) .ugb-button',
+		attribute: 'target',
+		default: false,
+	},
+	text2: {
+		source: 'html',
+		selector: 'div:nth-of-type(2) .ugb-button span',
+		default: __( 'Button text' ),
+	},
+	color2: {
+		type: 'string',
+	},
+	textColor2: {
+		type: 'string',
+		default: '#ffffff',
+	},
+	size2: {
+		type: 'string',
+		default: 'normal',
+	},
+	design2: {
+		type: 'string',
+		default: 'basic',
+	},
+	icon2: {
+		type: 'string',
+	},
+
+	url3: {
+		type: 'string',
+		source: 'attribute',
+		selector: 'div:nth-of-type(3) .ugb-button',
+		attribute: 'href',
+		default: '',
+	},
+	newTab3: {
+		type: 'boolean',
+		source: 'attribute',
+		selector: 'div:nth-of-type(3) .ugb-button',
+		attribute: 'target',
+		default: false,
+	},
+	text3: {
+		source: 'html',
+		selector: 'div:nth-of-type(3) .ugb-button span',
+		default: __( 'Button text' ),
+	},
+	color3: {
+		type: 'string',
+	},
+	textColor3: {
+		type: 'string',
+		default: '#ffffff',
+	},
+	size3: {
+		type: 'string',
+		default: 'normal',
+	},
+	design3: {
+		type: 'string',
+		default: 'basic',
+	},
+	icon3: {
+		type: 'string',
+	},
+
+	// Custom CSS attributes.
+	customCSSUniqueID: {
+		type: 'string',
+		default: '',
+	},
+	customCSS: {
+		type: 'string',
+		default: '',
+	},
+	customCSSCompiled: {
+		type: 'string',
+		default: '',
+	},
+}
+
+export const deprecatedSave_1_15_5 = props => {
+	const { className, attributes } = props
+	const {
+		align = 'center',
+		cornerButtonRadius,
+		buttons = 1,
+		design = '',
+	} = attributes
+
+	const mainClasses = classnames( [
+		className,
+		'ugb-button-wrapper',
+	], applyFilters( 'stackable.button.mainclasses_1_15_5', {
+		[ `ugb-button--align-${ align }` ]: align,
+	}, design, props ) )
+
+	const saved = (
+		<div className={ mainClasses }>
+			{ range( 1, buttons + 1 ).map( i => {
+				const {
+					[ `text${ i === 1 ? '' : i }` ]: text,
+					[ `size${ i === 1 ? '' : i }` ]: size = 'normal',
+					[ `url${ i === 1 ? '' : i }` ]: url,
+					[ `design${ i === 1 ? '' : i }` ]: design = 'basic',
+					[ `color${ i === 1 ? '' : i }` ]: color,
+					[ `textColor${ i === 1 ? '' : i }` ]: textColor,
+					[ `icon${ i === 1 ? '' : i }` ]: icon,
+					[ `newTab${ i === 1 ? '' : i }` ]: newTab,
+				} = attributes
+
+				// const buttonClasses = classnames(
+				// 	applyFilters( 'stackable.button.buttonclasses', {}, design, i, props )
+				// )
+
+				return (
+					<DeprecatedButtonContent_1_15_5 key={ i }
+						// className={ buttonClasses }
+						align={ align }
+						size={ size }
+						url={ url }
+						newTab={ newTab }
+						color={ textColor }
+						text={ text }
+						backgroundColor={ color }
+						borderRadius={ cornerButtonRadius }
+						design={ design }
+						icon={ icon }
+					/>
+				)
+			} ) }
+			{ applyFilters( 'stackable.button.save.output.after_1_15_5', null, design, props ) }
+		</div>
+	)
+
+	return saved
+	// return applyFilters( 'stackable.designs.button.save', saved, props )
+}
 
 export const deprecatedSchema_1_12 = {
 	buttons: {
@@ -537,6 +738,23 @@ export const deprecatedSave_1_8 = props => {
 }
 
 const deprecated = [
+	{
+		attributes: deprecatedSchema_1_15_5,
+		save: deprecatedSave_1_15_5,
+		migrate: attributes => {
+			// Update the custom CSS since the structure has changed.
+			const updateCSS = css => css
+				.replace( /.ugb-button-wrapper > \*:nth-child\((\d)\) .ugb-button--inner/g, '.ugb-button-wrapper .ugb-button$1 .ugb-button--inner' )
+				.replace( /.ugb-button-wrapper > \*:nth-child\((\d)\) .ugb-button([^-])/g, '.ugb-button-wrapper .ugb-button$1$2' )
+
+			return {
+				...attributes,
+				// columns: attributes.columns ? attributes.columns : 1,
+				customCSS: updateCSS( attributes.customCSS ),
+				customCSSCompiled: updateCSS( attributes.customCSSCompiled ),
+			}
+		},
+	},
 	{
 		attributes: deprecatedSchema_1_12,
 		save: deprecatedSave_1_12,

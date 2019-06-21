@@ -1,198 +1,237 @@
+import { addFilter, applyFilters } from '@wordpress/hooks'
 import {
-	BlockAlignmentToolbar, BlockControls, InspectorControls,
-} from '@wordpress/block-editor'
-import {
-	ButtonEdit, PanelButtonSettings, ProControl, URLInputControl,
+	BlockContainer,
+	ButtonControlsHelper,
+	ButtonEdit,
+	ContentAlignControl,
+	DesignPanelBody,
+	PanelAdvancedSettings,
+	ProControlButton,
 } from '@stackable/components'
-import { Component, Fragment } from '@wordpress/element'
-import { isPro, showProNotice } from 'stackable'
+import { PanelBody, RangeControl, SelectControl } from '@wordpress/components'
+import { withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
 import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
-import { PanelBody } from '@wordpress/components'
-import { range } from '@stackable/util'
+import { compose } from '@wordpress/compose'
+import { createButtonAttributeNames } from '@stackable/util'
+import createStyles from './style'
+import { Fragment } from '@wordpress/element'
+import ImageDesignBasic from './images/basic.png'
+import ImageDesignGrouped1 from './images/grouped-1.png'
+import ImageDesignGrouped2 from './images/grouped-2.png'
+import ImageDesignSpread from './images/spread.png'
+import { showProNotice } from 'stackable'
 
-class edit extends Component {
-	constructor() {
-		super( ...arguments )
-		this.state = {
-			selectedButton: 0,
-		}
-	}
+addFilter( 'stackable.button.edit.inspector.layout.before', 'stackable/button', ( output, props ) => {
+	const { setAttributes } = props
+	const {
+		design = 'basic',
+	} = props.attributes
 
-	// Deselect button when deselecting the block
-	componentDidUpdate( prevProps ) {
-		if ( this.props.isSelected && ! prevProps.isSelected ) {
-			this.setState( {
-				selectedButton: 0,
-			} )
-		}
-	}
+	return (
+		<Fragment>
+			{ output }
+			<DesignPanelBody
+				initialOpen={ true }
+				selected={ design }
+				options={ applyFilters( 'stackable.button.edit.designs', [
+					{
+						label: __( 'Basic' ), value: 'basic', image: ImageDesignBasic,
+					},
+					{
+						label: __( 'Spread' ), value: 'spread', image: ImageDesignSpread,
+					},
+					{
+						label: __( 'Grouped 1' ), value: 'grouped-1', image: ImageDesignGrouped1,
+					},
+					{
+						label: __( 'Grouped 2' ), value: 'grouped-2', image: ImageDesignGrouped2,
+					},
+				] ) }
+				onChange={ design => setAttributes( { design } ) }
+			>
+				{ showProNotice && <ProControlButton /> }
+			</DesignPanelBody>
+		</Fragment>
+	)
+} )
 
-	render() {
-		const {
-			isSelected,
-			className,
-			setAttributes,
-			attributes,
-		} = this.props
+addFilter( 'stackable.button.edit.inspector.style.before', 'stackable/button', ( output, props ) => {
+	const { setAttributes } = props
+	const {
+		borderRadius = '',
+		collapseOn = '',
+		showButton2 = false,
+		showButton3 = false,
+	} = props.attributes
 
-		const {
-			color,
-			textColor,
-			size,
-			align,
-			cornerButtonRadius,
-			design = 'basic',
-			icon,
-			buttons = 1,
-		} = attributes
+	return (
+		<Fragment>
+			{ output }
+			<PanelBody title={ __( 'General' ) } initialOpen={ false }>
+				<RangeControl
+					label={ __( 'Border Radius' ) }
+					value={ borderRadius }
+					min="0"
+					max="50"
+					onChange={ borderRadius => {
+						setAttributes( {
+							button1BorderRadius: borderRadius,
+							button2BorderRadius: borderRadius,
+							button3BorderRadius: borderRadius,
+							borderRadius,
+						} )
+					} }
+					allowReset={ true }
+				/>
+				<ContentAlignControl
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+				<SelectControl
+					label={ __( 'Collapse Buttons On' ) }
+					value={ collapseOn }
+					options={ [
+						{ value: '', label: __( 'Don\'t collapse' ) },
+						{ value: 'tablet', label: __( 'Tablet' ) },
+						{ value: 'mobile', label: __( 'Mobile' ) },
+					] }
+					onChange={ collapseOn => setAttributes( { collapseOn } ) }
+				/>
+			</PanelBody>
+			<PanelBody title={ __( 'Button #1' ) } initialOpen={ true }>
+				<ButtonControlsHelper
+					attrNameTemplate="button1%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+			</PanelBody>
+			<PanelAdvancedSettings
+				title={ __( 'Button #2' ) }
+				checked={ showButton2 }
+				onChange={ showButton2 => setAttributes( { showButton2 } ) }
+				toggleOnSetAttributes={ [
+					...createButtonAttributeNames( 'button2%s' ),
+				] }
+				toggleAttributeName="showButton2"
+			>
+				<ButtonControlsHelper
+					attrNameTemplate="button2%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+			</PanelAdvancedSettings>
+			<PanelAdvancedSettings
+				title={ __( 'Button #3' ) }
+				checked={ showButton3 }
+				onChange={ showButton3 => setAttributes( { showButton3 } ) }
+				toggleOnSetAttributes={ [
+					...createButtonAttributeNames( 'button3%s' ),
+				] }
+				toggleAttributeName="showButton3"
+			>
+				<ButtonControlsHelper
+					attrNameTemplate="button3%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+			</PanelAdvancedSettings>
+		</Fragment>
+	)
+} )
 
-		const mainClasses = classnames( [
-			className,
-			'ugb-button-wrapper',
-		], applyFilters( 'stackable.button.mainclasses', {
-			[ `ugb-button--align-${ align }` ]: align,
-		}, design, this.props ) )
+const edit = props => {
+	const {
+		setAttributes, className, attributes,
+	} = props
+	const {
+		design = 'plain',
+		tabletContentAlign = '',
+		mobileContentAlign = '',
+		collapseOn = '',
+		showButton2 = false,
+		showButton3 = false,
+		button1Size = 'normal',
+		button1Text = '',
+		button1Shadow = 0,
+		button1HoverEffect = '',
+		button1Icon = '',
+		button1IconPosition = '',
+		button1Design = 'basic',
+		button2Size = 'normal',
+		button2Text = '',
+		button2Shadow = 0,
+		button2HoverEffect = '',
+		button2Icon = '',
+		button2IconPosition = '',
+		button2Design = 'basic',
+		button3Size = 'normal',
+		button3Text = '',
+		button3Shadow = 0,
+		button3HoverEffect = '',
+		button3Icon = '',
+		button3IconPosition = '',
+		button3Design = 'basic',
+	} = attributes
 
-		const editDesign = (
-			<div className={ mainClasses }>
-				{ applyFilters( 'stackable.button.edit.output.before', null, design, this.props ) }
-				{ range( 1, buttons + 1 ).map( i => {
-					const text = attributes[ `text${ i === 1 ? '' : i }` ]
-					const size = attributes[ `size${ i === 1 ? '' : i }` ]
-					const design = attributes[ `design${ i === 1 ? '' : i }` ]
-					const color = attributes[ `color${ i === 1 ? '' : i }` ]
-					const textColor = attributes[ `textColor${ i === 1 ? '' : i }` ]
-					const icon = attributes[ `icon${ i === 1 ? '' : i }` ]
+	const mainClasses = classnames( [
+		className,
+	], applyFilters( 'stackable.button.mainclasses', {
+		'ugb-button--tablet-aligned': tabletContentAlign !== '',
+		'ugb-button--mobile-aligned': mobileContentAlign !== '',
+		[ `ugb-button--collapse-${ collapseOn }` ]: collapseOn,
+		[ `ugb-button--design-${ design }` ]: design !== 'basic',
+	}, design, props ) )
 
-					const buttonClasses = classnames(
-						applyFilters( 'stackable.button.buttonclasses', {}, design, i, this.props )
-					)
-
-					return (
-						<ButtonEdit key={ i }
-							className={ buttonClasses }
-							onChange={ text => setAttributes( { [ `text${ i === 1 ? '' : i }` ]: text } ) }
-							icon={ icon }
-							size={ size }
-							backgroundColor={ color }
-							color={ textColor }
-							text={ text }
-							borderRadius={ cornerButtonRadius }
-							design={ design }
-							onClick={ () => {
-								this.setState( { selectedButton: i } )
-							} }
-							onSelect={ () => {
-								this.setState( { selectedButton: i } )
-							} }
-						/>
-					)
-				} ) }
-				{ applyFilters( 'stackable.button.edit.output.after', null, design, this.props ) }
-			</div>
-		)
-
-		return (
+	return (
+		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				<BlockControls>
-					<BlockAlignmentToolbar
-						value={ align }
-						onChange={ align => {
-							setAttributes( { align } )
-						} }
-						controls={ [ 'left', 'center', 'right', 'full' ] }
+				<ButtonEdit
+					className="ugb-button1"
+					size={ button1Size !== '' ? button1Size : 'normal' }
+					text={ button1Text }
+					icon={ button1Icon }
+					design={ button1Design !== '' ? button1Design : 'basic' }
+					shadow={ button1Shadow }
+					hoverEffect={ button1HoverEffect }
+					iconPosition={ button1IconPosition }
+					onChange={ button1Text => setAttributes( { button1Text } ) }
+				/>
+				{ showButton2 &&
+					<ButtonEdit
+						className="ugb-button2"
+						size={ button2Size !== '' ? button2Size : 'normal' }
+						text={ button2Text }
+						icon={ button2Icon }
+						design={ button2Design !== '' ? button2Design : 'basic' }
+						shadow={ button2Shadow }
+						hoverEffect={ button2HoverEffect }
+						iconPosition={ button2IconPosition }
+						onChange={ button2Text => setAttributes( { button2Text } ) }
 					/>
-				</BlockControls>
-				<InspectorControls>
-					{ isPro &&
-						<PanelButtonSettings
-							initialOpen={ true }
-							title={ __( 'General Settings' ) }
-							buttonBorderRadius={ cornerButtonRadius }
-							onChangeButtonBorderRadius={ cornerButtonRadius => setAttributes( { cornerButtonRadius } ) }
-						>
-							{ applyFilters( 'stackable.button.edit.inspector.general', null, this.props ) }
-						</PanelButtonSettings>
-					}
-					<PanelButtonSettings
-						title={ ! isPro && ! showProNotice ? __( 'Button Settings' ) : __( 'Button #1 Settings' ) }
-						initialOpen={ true }
-						buttonDesign={ design }
-						buttonColor={ color }
-						buttonTextColor={ textColor }
-						buttonSize={ size }
-						onChangeButtonColor={ color => setAttributes( { color } ) }
-						onChangeButtonTextColor={ textColor => setAttributes( { textColor } ) }
-						onChangeButtonSize={ size => {
-							setAttributes( { size } )
-						} }
-						onChangeButtonDesign={ design => {
-							setAttributes( { design } )
-						} }
-						buttonBorderRadius={ cornerButtonRadius }
-						onChangeButtonBorderRadius={ ! isPro && ( cornerButtonRadius => setAttributes( { cornerButtonRadius } ) ) }
-						buttonIcon={ icon }
-						onChangeButtonIcon={ icon => setAttributes( { icon } ) }
-					>
-					</PanelButtonSettings>
-					{ showProNotice &&
-						<PanelBody
-							initialOpen={ false }
-							title={ __( 'Button #2 Settings' ) }
-						>
-							<ProControl
-								title={ __( 'Say Hello to Side by Side Buttons 👋' ) }
-								description={ __( 'Give your visitors more buttons to choose from. This feature is only available on Stackable Pro' ) }
-							/>
-						</PanelBody>
-					}
-					{ showProNotice &&
-						<PanelBody
-							initialOpen={ false }
-							title={ __( 'Button #3 Settings' ) }
-						>
-							<ProControl
-								title={ __( 'Say Hello to Side by Side Buttons 👋' ) }
-								description={ __( 'Give your visitors more buttons to choose from. This feature is only available on Stackable Pro' ) }
-							/>
-						</PanelBody>
-					}
-					{ showProNotice &&
-						<PanelBody
-							initialOpen={ false }
-							title={ __( 'Custom CSS' ) }
-						>
-							<ProControl
-								title={ __( 'Say Hello to Custom CSS 👋' ) }
-								description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
-							/>
-						</PanelBody>
-					}
-					{ applyFilters( 'stackable.button.edit.inspector.after', null, design, this.props ) }
-				</InspectorControls>
-				{ editDesign }
-				{ isSelected &&
-					<div className={ `ugb-button__group-urls ugb-button__selected-${ this.state.selectedButton } ugb-num-${ buttons }` }>
-						{ range( 1, buttons + 1 ).map( i => {
-							const url = attributes[ `url${ i === 1 ? '' : i }` ]
-							const newTab = attributes[ `newTab${ i === 1 ? '' : i }` ]
-							return (
-								<URLInputControl
-									key={ i }
-									value={ url }
-									newTab={ newTab }
-									onChange={ url => setAttributes( { [ `url${ i === 1 ? '' : i }` ]: url } ) }
-									onChangeNewTab={ newTab => setAttributes( { [ `newTab${ i === 1 ? '' : i }` ]: newTab } ) }
-								/>
-							)
-						} ) }
-					</div>
+				}
+				{ showButton3 &&
+					<ButtonEdit
+						className="ugb-button3"
+						size={ button3Size !== '' ? button3Size : 'normal' }
+						text={ button3Text }
+						icon={ button3Icon }
+						design={ button3Design !== '' ? button3Design : 'basic' }
+						shadow={ button3Shadow }
+						hoverEffect={ button3HoverEffect }
+						iconPosition={ button3IconPosition }
+						onChange={ button3Text => setAttributes( { button3Text } ) }
+					/>
 				}
 			</Fragment>
-		)
-	}
+		) } />
+	)
 }
 
-export default edit
+export default compose(
+	withUniqueClass,
+	withSetAttributeHook,
+	withGoogleFont,
+	withTabbedInspector(),
+	withBlockStyles( createStyles, { editorMode: true } ),
+)( edit )
