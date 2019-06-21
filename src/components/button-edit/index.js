@@ -6,68 +6,42 @@ import { SvgIcon } from '@stackable/components'
 // Deprecated ButtonEdit.Content methods.
 export * from './deprecated'
 
+// TODO: move ButtonEdit to RichButton
+
 const ButtonEdit = props => {
 	const {
 		className = '',
-		align = 'center',
 		size = 'normal',
-		color,
 		text = '',
-		backgroundColor,
-		borderRadius = 4,
-		isSelected = null,
-		onFocus = () => {},
 		onChange = () => {},
 		icon = null,
 		design = 'basic',
-		onSelect = () => {},
+		shadow = 0,
+		iconPosition = '',
+		hoverEffect = '',
 	} = props
-
-	const style = {
-		borderRadius: design === 'link' ? undefined :
-		              design === 'plain' ? undefined :
-		              borderRadius + 'px',
-		backgroundColor: backgroundColor ? backgroundColor : undefined,
-		borderColor: design === 'ghost' ? backgroundColor : undefined,
-		color: design === 'ghost' ? backgroundColor :
-		       design === 'plain' ? backgroundColor :
-		       design === 'link' ? undefined :
-		       color,
-	}
-	style.backgroundColor = design === 'ghost' ? undefined : style.backgroundColor
-	style.backgroundColor = design === 'plain' ? undefined : style.backgroundColor
-	style.backgroundColor = design === 'link' ? undefined : style.backgroundColor
 
 	const mainClasses = classnames( [
 		className,
 		'ugb-button',
-		`ugb-button--align-${ align }`,
 		`ugb-button--size-${ size }`,
 	], {
+		[ `ugb--hover-effect-${ hoverEffect }` ]: ( design === 'basic' || design === 'ghost' ) && hoverEffect,
+		[ `ugb--shadow-${ shadow }` ]: design === 'basic' && shadow,
 		[ `ugb-button--design-${ design }` ]: design !== 'basic',
 		'ugb-button--has-icon': icon,
+		[ `ugb-button--icon-position-${ iconPosition }` ]: iconPosition,
 	} )
 
 	return (
-		<div
-			onSelect={ onSelect }
-			data-is-placeholder-visible={ RichText.isEmpty( text ) }
-		>
+		<div>
 			{ /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
 			<a
 				href="#"
 				className={ mainClasses }
-				style={ style }
 			>
 				{ icon && design !== 'link' &&
-				<SvgIcon
-					value={ icon }
-					style={ {
-						color: design === 'ghost' ? backgroundColor :
-						       design === 'plain' ? backgroundColor :
-						       color,
-					} }
-				/>
+					<SvgIcon value={ icon } />
 				}
 				{
 					// Should be tagName="span", but div for now because of issue
@@ -80,15 +54,7 @@ const ButtonEdit = props => {
 					value={ text }
 					onChange={ onChange }
 					formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
-					onFocus={ onFocus }
-					isSelected={ isSelected }
 					keepPlaceholderOnFocus
-					style={ {
-						color: design === 'ghost' ? backgroundColor :
-						       design === 'plain' ? backgroundColor :
-						       design === 'link' ? undefined :
-						       color,
-					} }
 				/>
 			</a>
 		</div>
@@ -98,71 +64,53 @@ const ButtonEdit = props => {
 ButtonEdit.Content = props => {
 	const {
 		className = '',
-		align = 'center',
 		size = 'normal',
 		url = '',
 		icon = null,
-		color,
 		text,
-		backgroundColor,
-		borderRadius,
 		design = 'basic',
 		newTab = false,
+		shadow = 0,
+		iconPosition = false,
+		hoverEffect = '',
+		noFollow = false,
 	} = props
-
-	const style = {
-		borderRadius: design === 'link' ? undefined :
-		              design === 'plain' ? undefined :
-		              borderRadius + 'px',
-		backgroundColor: backgroundColor ? backgroundColor : undefined,
-		borderColor: design === 'ghost' ? backgroundColor : undefined,
-		color: design === 'ghost' ? backgroundColor :
-		       design === 'plain' ? backgroundColor :
-		       design === 'link' ? undefined :
-		       color,
-	}
-	style.backgroundColor = design === 'ghost' ? undefined : style.backgroundColor
-	style.backgroundColor = design === 'plain' ? undefined : style.backgroundColor
-	style.backgroundColor = design === 'link' ? undefined : style.backgroundColor
 
 	const mainClasses = classnames( [
 		className,
 		'ugb-button',
-		`ugb-button--align-${ align }`,
 		`ugb-button--size-${ size }`,
 	], {
+		[ `ugb--hover-effect-${ hoverEffect }` ]: ( design === 'basic' || design === 'ghost' ) && hoverEffect,
+		[ `ugb--shadow-${ shadow }` ]: design === 'basic' && shadow,
 		[ `ugb-button--design-${ design }` ]: design !== 'basic',
 		'ugb-button--has-icon': icon,
+		[ `ugb-button--icon-position-${ iconPosition }` ]: iconPosition,
 	} )
+
+	const rel = []
+	if ( newTab ) {
+		rel.push( 'noopener' )
+		rel.push( 'noreferrer' )
+	}
+	if ( noFollow ) {
+		rel.push( 'nofollow' )
+	}
 
 	return (
 		<div>
 			<a
 				className={ mainClasses }
 				href={ url }
-				style={ style }
 				target={ newTab ? '_blank' : undefined }
-				rel={ newTab ? 'noopener noreferrer' : undefined }
+				rel={ rel.join( ' ' ) }
 			>
 				{ icon && design !== 'link' &&
-					<SvgIcon.Content
-						value={ icon }
-						style={ {
-							color: design === 'ghost' ? backgroundColor :
-							       design === 'plain' ? backgroundColor :
-							       color,
-						} }
-					/>
+					<SvgIcon.Content value={ icon } />
 				}
 				<RichText.Content
 					tagName="span"
 					className={ design === 'link' ? '' : 'ugb-button--inner' }
-					style={ {
-						color: design === 'ghost' ? backgroundColor :
-						       design === 'plain' ? backgroundColor :
-						       design === 'link' ? undefined :
-						       color,
-					} }
 					value={ text }
 				/>
 			</a>

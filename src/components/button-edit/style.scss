@@ -20,19 +20,93 @@
 		box-shadow: none !important;
 		margin: 0 !important;
 		padding: 0 !important;
+		transition: all 0.2s ease-in-out;
 	}
 	opacity: 1;
 	background: var(--s-primary-color, #2091e1);
-	transition: opacity 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
 	@include baseButton();
 	font-size: 1em;
 	&:hover {
 		opacity: 0.85;
 		box-shadow: none !important;
 	}
+	box-shadow: none !important;
 	&:not(.ugb-link-button):not(.ugb-button--design-link) {
-		box-shadow: none !important;
 		text-decoration: none !important;
+	}
+
+	// Shadows
+	&.ugb--shadow-0 {
+		box-shadow: none !important;
+	}
+	&.ugb--shadow-1 {
+		box-shadow: 0 0 0 1px rgba(120, 120, 120, 0.1) !important;
+	}
+	&.ugb--shadow-2 {
+		box-shadow: 0 0 0 2px rgba(120, 120, 120, 0.1) !important;
+	}
+	&.ugb--shadow-3 {
+		box-shadow: 0 5px 5px 0 rgba(18, 63, 82, 0.035), 0 0 0 1px rgba(176, 181, 193, 0.2) !important;
+	}
+	&.ugb--shadow-4 {
+		box-shadow: 0px 2px 22px rgba(153, 153, 153, 0.25) !important;
+	}
+	&.ugb--shadow-5 {
+		box-shadow: 0 5px 30px -6px rgba(18, 63, 82, 0.29) !important;
+	}
+	&.ugb--shadow-6 {
+		box-shadow: 0px 10px 30px 1px rgba(0, 0, 0, 0.07) !important;
+	}
+	&.ugb--shadow-7 {
+		box-shadow: 5px 7px 21px 3px rgba(72, 73, 121, 0.14) !important;
+	}
+	&.ugb--shadow-8 {
+		box-shadow: 0px 10px 33px -3px rgba(0, 0, 0, 0.12) !important;
+	}
+	&.ugb--shadow-9 {
+		box-shadow: 0 10px 34px -3px rgba(72, 73, 121, 0.2) !important;
+	}
+
+	// Pseudo style for background button gradient.
+	// Turned off by default, add :before { content: ''; } to show it.
+	position: relative;
+	// overflow: hidden;
+	&:before {
+		position: absolute;
+		z-index: 1;
+		border-radius: 4px;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		transition: all 0.2s ease-in-out;
+		opacity: 0;
+	}
+	&:hover:before {
+		opacity: 1;
+	}
+	* {
+		position: relative;
+		z-index: 2;
+	}
+	// Offset a little for ghost buttons.
+	&.ugb-button--design-ghost:before {
+		top: -2px;
+		left: -2px;
+		right: -2px;
+		bottom: -2px;
+	}
+
+	// Hover effect
+	&.ugb--hover-effect-lift:hover {
+		transform: translateY(-10%);
+	}
+	&.ugb--hover-effect-scale:hover {
+		transform: scale(1.03);
+	}
+	&.ugb--hover-effect-lift-scale:hover {
+		transform: scale(1.03) translateY(-10%);
 	}
 }
 .ugb-button .ugb-button--inner:hover,
@@ -155,6 +229,13 @@
 		height: 1em;
 		margin-bottom: 0 !important;
 		margin-right: 0.75em;
+	}
+	&.ugb-button--icon-position-right {
+		flex-direction: row-reverse;
+		svg {
+			margin-right: 0;
+			margin-left: 0.75em;
+		}
 	}
 }
 .ugb-button.ugb-button--has-icon.ugb-button--design-ghost,
