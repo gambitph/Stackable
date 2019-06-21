@@ -37,8 +37,8 @@ export const createStyles = props => {
 			backgroundColor: backgroundColor ? backgroundColor : undefined,
 			// -1 to prevent white lines.
 			// -14 during editing only.
-			marginTop: `${ marginTop - 1 + ( isEditing ? -14 : 0 ) }${ marginUnit }`,
-			marginBottom: `${ marginBottom - 1 + ( isEditing ? -14 : 0 ) }${ marginUnit }`,
+			marginTop: `${ marginTop - 1 + ( isEditing ? -14 : 0 ) }${ marginUnit } !important`,
+			marginBottom: `${ marginBottom - 1 + ( isEditing ? -14 : 0 ) }${ marginUnit } !important`,
 		},
 		'.ugb-separator__bottom-pad': {
 			height: paddingBottom !== '' ? `${ paddingBottom }${ paddingUnit }` : undefined,
@@ -66,8 +66,8 @@ export const createStyles = props => {
 				height: tabletHeight !== '' ? `${ tabletHeight }px` : undefined,
 			},
 			'.ugb-separator': {
-				marginTop: `${ tabletMarginTop - 1 }${ tabletMarginUnit }`, // -1 to prevent white lines.
-				marginBottom: `${ tabletMarginBottom - 1 }${ tabletMarginUnit }`, // -1 to prevent white lines.
+				marginTop: `${ tabletMarginTop - 1 }${ tabletMarginUnit } !important`, // -1 to prevent white lines.
+				marginBottom: `${ tabletMarginBottom - 1 }${ tabletMarginUnit } !important`, // -1 to prevent white lines.
 			},
 			'.ugb-separator__bottom-pad': {
 				height: tabletPaddingBottom !== '' ? `${ tabletPaddingBottom }${ tabletPaddingUnit }` : undefined,
@@ -81,8 +81,8 @@ export const createStyles = props => {
 				height: mobileHeight !== '' ? `${ mobileHeight }px` : undefined,
 			},
 			'.ugb-separator': {
-				marginTop: `${ mobileMarginTop - 1 }${ mobileMarginUnit }`, // -1 to prevent white lines.
-				marginBottom: `${ mobileMarginBottom - 1 }${ mobileMarginUnit }`, // -1 to prevent white lines.
+				marginTop: `${ mobileMarginTop - 1 }${ mobileMarginUnit } !important`, // -1 to prevent white lines.
+				marginBottom: `${ mobileMarginBottom - 1 }${ mobileMarginUnit } !important`, // -1 to prevent white lines.
 			},
 			'.ugb-separator__bottom-pad': {
 				height: mobilePaddingBottom !== '' ? `${ mobilePaddingBottom }${ mobilePaddingUnit }` : undefined,
