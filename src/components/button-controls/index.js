@@ -9,7 +9,6 @@ import {
 	ColorPaletteControl,
 	ControlSeparator,
 	DesignControl,
-	FourNumberControl,
 	IconControl,
 	TextToolbar,
 	TypographyControlHelper,
@@ -44,13 +43,6 @@ const ButtonControls = props => {
 					label={ __( 'Open link in new window' ) }
 					checked={ props.newWindow }
 					onChange={ props.onChangeNewWindow }
-				/>
-			) }
-			{ props.onChangeNoFollow && (
-				<ToggleControl
-					label={ __( 'Nofollow link' ) }
-					checked={ props.noFollow }
-					onChange={ props.onChangeNoFollow }
 				/>
 			) }
 
@@ -304,7 +296,7 @@ const ButtonControls = props => {
 					label={ __( 'Border Radius' ) }
 					value={ props.borderRadius }
 					min="0"
-					max="50"
+					max="150"
 					onChange={ props.onChangeBorderRadius }
 					allowReset={ true }
 				/>
@@ -359,19 +351,6 @@ const ButtonControls = props => {
 					) }
 				</ButtonIconPopoverControl>
 			) }
-
-			{ design !== 'link' && design !== 'plain' && <ControlSeparator /> }
-
-			{ props.onChangePaddings && design !== 'link' && design !== 'plain' &&
-				<FourNumberControl
-					label={ __( 'Button Paddings' ) }
-					top={ props.paddingTop }
-					bottom={ props.paddingBottom }
-					right={ props.paddingRight }
-					left={ props.paddingLeft }
-					onChange={ props.onChangePaddings }
-				/>
-			}
 		</Fragment>
 	)
 }
@@ -388,10 +367,8 @@ ButtonControls.defaultProps = {
 
 	url: '',
 	newWindow: '',
-	noFollow: '',
 	onChangeUrl: () => {},
 	onChangeNewWindow: () => {},
-	onChangeNoFollow: () => {},
 
 	size: '',
 	onChangeSize: () => {},
@@ -443,19 +420,6 @@ ButtonControls.defaultProps = {
 	onChangeIcon: () => {},
 	onChangeIconPosition: () => {},
 	onChangeIconSpacing: () => {},
-
-	// hasAdvancedSpacing: true,
-	// onResetAdvancedSpacing: () => {},
-	// marginTop: '',
-	// marginRight: '',
-	// marginBottom: '',
-	// marginLeft: '',
-	paddingTop: '',
-	paddingRight: '',
-	paddingBottom: '',
-	paddingLeft: '',
-	// onChangeMargins: () => {},
-	onChangePaddings: () => {},
 }
 
 export default ButtonControls

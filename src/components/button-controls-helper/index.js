@@ -13,10 +13,8 @@ const ButtonControlsHelper = props => {
 
 			url={ props.blockAttributes[ getAttrName( 'Url' ) ] || '' }
 			newWindow={ props.blockAttributes[ getAttrName( 'NewWindow' ) ] || '' }
-			noFollow={ props.blockAttributes[ getAttrName( 'NoFollow' ) ] || '' }
 			onChangeUrl={ value => setAttributes( { [ getAttrName( 'Url' ) ]: value } ) }
 			onChangeNewWindow={ value => setAttributes( { [ getAttrName( 'NewWindow' ) ]: value } ) }
-			onChangeNoFollow={ value => setAttributes( { [ getAttrName( 'NoFollow' ) ]: value } ) }
 
 			size={ props.blockAttributes[ getAttrName( 'Size' ) ] || '' }
 			onChangeSize={ value => setAttributes( { [ getAttrName( 'Size' ) ]: value } ) }
@@ -88,46 +86,6 @@ const ButtonControlsHelper = props => {
 			onChangeIconSize={ value => setAttributes( { [ getAttrName( 'IconSize' ) ]: value } ) }
 			onChangeIconPosition={ value => setAttributes( { [ getAttrName( 'IconPosition' ) ]: value } ) }
 			onChangeIconSpacing={ value => setAttributes( { [ getAttrName( 'IconSpacing' ) ]: value } ) }
-
-			onResetAdvancedSpacing={ () => {
-				setAttributes( {
-					// [ getAttrName( 'Width' ) ]: '',
-					[ getAttrName( 'MarginTop' ) ]: '',
-					[ getAttrName( 'MarginRight' ) ]: '',
-					[ getAttrName( 'MarginBottom' ) ]: '',
-					[ getAttrName( 'MarginLeft' ) ]: '',
-					[ getAttrName( 'PaddingTop' ) ]: '',
-					[ getAttrName( 'PaddingRight' ) ]: '',
-					[ getAttrName( 'PaddingBottom' ) ]: '',
-					[ getAttrName( 'PaddingLeft' ) ]: '',
-				} )
-			} }
-			// width={ props.blockAttributes[ getAttrName( 'Width' ) ] || '' }
-			marginTop={ props.blockAttributes[ getAttrName( 'MarginTop' ) ] || '' }
-			marginRight={ props.blockAttributes[ getAttrName( 'MarginRight' ) ] || '' }
-			marginBottom={ props.blockAttributes[ getAttrName( 'MarginBottom' ) ] || '' }
-			marginLeft={ props.blockAttributes[ getAttrName( 'MarginLeft' ) ] || '' }
-			paddingTop={ props.blockAttributes[ getAttrName( 'PaddingTop' ) ] || '' }
-			paddingRight={ props.blockAttributes[ getAttrName( 'PaddingRight' ) ] || '' }
-			paddingBottom={ props.blockAttributes[ getAttrName( 'PaddingBottom' ) ] || '' }
-			paddingLeft={ props.blockAttributes[ getAttrName( 'PaddingLeft' ) ] || '' }
-			// onChangeWidth={ value => setAttributes( { [ getAttrName( 'Width' ) ]: value } ) }
-			// onChangeMargins={ margins => {
-			// 	setAttributes( {
-			// 		[ getAttrName( 'MarginTop' ) ]: margins.top !== '' ? parseInt( margins.top, 10 ) : '',
-			// 		[ getAttrName( 'MarginRight' ) ]: margins.right !== '' ? parseInt( margins.right, 10 ) : '',
-			// 		[ getAttrName( 'MarginBottom' ) ]: margins.bottom !== '' ? parseInt( margins.bottom, 10 ) : '',
-			// 		[ getAttrName( 'MarginLeft' ) ]: margins.left !== '' ? parseInt( margins.left, 10 ) : '',
-			// 	} )
-			// } }
-			onChangePaddings={ paddings => {
-				setAttributes( {
-					[ getAttrName( 'PaddingTop' ) ]: paddings.top !== '' ? parseInt( paddings.top, 10 ) : '',
-					[ getAttrName( 'PaddingRight' ) ]: paddings.right !== '' ? parseInt( paddings.right, 10 ) : '',
-					[ getAttrName( 'PaddingBottom' ) ]: paddings.bottom !== '' ? parseInt( paddings.bottom, 10 ) : '',
-					[ getAttrName( 'PaddingLeft' ) ]: paddings.left !== '' ? parseInt( paddings.left, 10 ) : '',
-				} )
-			} }
 
 			{ ...props }
 		/>
