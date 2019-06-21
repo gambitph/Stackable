@@ -2,10 +2,54 @@
  * Creates all the attributes needed for the Button Controls component
  */
 import { createAllCombinationAttributes, createTypographyAttributes } from '@stackable/util'
+import { __ } from '@wordpress/i18n'
 
-const createButtonAttributes = attrNameTemplate => {
+const createButtonAttributes = ( attrNameTemplate, options = {} ) => {
+	const {
+		selector = '.ugb-button',
+		defaultText = __( 'Button text' ),
+	} = options
+
 	return {
 		...createTypographyAttributes( attrNameTemplate ),
+		...createAllCombinationAttributes(
+			attrNameTemplate,
+			{
+				type: 'string',
+				source: 'html',
+				selector: `${ selector } span`,
+				default: defaultText,
+			},
+			[
+				'Text',
+			]
+		),
+		...createAllCombinationAttributes(
+			attrNameTemplate,
+			{
+				type: 'string',
+				source: 'attribute',
+				selector: selector,
+				attribute: 'href',
+				default: '',
+			},
+			[
+				'Url',
+			]
+		),
+		...createAllCombinationAttributes(
+			attrNameTemplate,
+			{
+				type: 'boolean',
+				source: 'attribute',
+				selector: selector,
+				attribute: 'target',
+				default: '',
+			},
+			[
+				'NewWindow',
+			]
+		),
 		...createAllCombinationAttributes(
 			attrNameTemplate,
 			{
@@ -13,9 +57,7 @@ const createButtonAttributes = attrNameTemplate => {
 				default: '',
 			},
 			[
-				'Text',
 				'Design',
-				'Url',
 				'Size',
 				'Icon',
 				'IconPosition',
@@ -38,10 +80,6 @@ const createButtonAttributes = attrNameTemplate => {
 			[
 				'Opacity',
 				'HoverOpacity',
-				// 'MarginTop',
-				// 'MarginRight',
-				// 'MarginBottom',
-				// 'MarginLeft',
 				'PaddingTop',
 				'PaddingRight',
 				'PaddingBottom',
@@ -61,7 +99,6 @@ const createButtonAttributes = attrNameTemplate => {
 				default: '',
 			},
 			[
-				'NewWindow',
 				'HoverGhostToNormal',
 				'NoFollow',
 			]
