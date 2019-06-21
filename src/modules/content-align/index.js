@@ -10,7 +10,7 @@ const addAttributes = attributes => {
 	return {
 		...attributes,
 		...createAllCombinationAttributes(
-			'Content%sAlign', {
+			'%sContentAlign', {
 				type: 'string',
 				default: '',
 			},
