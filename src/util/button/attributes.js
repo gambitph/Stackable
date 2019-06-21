@@ -63,6 +63,7 @@ const createButtonAttributes = attrNameTemplate => {
 			[
 				'NewWindow',
 				'HoverGhostToNormal',
+				'NoFollow',
 			]
 		),
 	}
