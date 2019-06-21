@@ -1,65 +1,27 @@
-import { Dashicon, IconButton, ToggleControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
-import { Component } from '@wordpress/element'
+import { BaseControl } from '@wordpress/components'
+import { omit } from 'lodash'
 import { URLInput } from '@wordpress/block-editor'
 
-const ariaClosed = __( 'Show more tools & options' )
-const ariaOpen = __( 'Hide more tools & options' )
+const URLInputControl = props => {
+	return (
+		<BaseControl label={ props.label } help={ props.help }>
+			<URLInput
+				className="ugb-url-input-control__input"
+				value={ props.value }
+				onChange={ props.onChange }
+				autoFocus={ false } // eslint-disable-line
+				{ ...omit( props, [ 'label', 'help' ] ) }
+			/>
+		</BaseControl>
+	)
+}
 
-class URLInputControl extends Component {
-	constructor() {
-		super( ...arguments )
-		this.state = {
-			isOpen: false,
-		}
-		this.handleToggle = this.handleToggle.bind( this )
-	}
-
-	handleToggle() {
-		this.setState( { isOpen: ! this.state.isOpen } )
-	}
-
-	render() {
-		const {
-			value,
-			newTab,
-			onChange,
-			onChangeNewTab,
-		} = this.props
-		return (
-			<form
-				className="blocks-button__inline-link ugb-url-input-control"
-				onSubmit={ event => event.preventDefault() }>
-				<div className="ugb-url-input-control__wrapper">
-					<Dashicon className="ugb-url-input-control__icon" icon="admin-links" />
-					<URLInput
-						className="ugb-url-input-control__input"
-						value={ value }
-						onChange={ onChange }
-						autoFocus={ false } // eslint-disable-line
-					/>
-					{ onChangeNewTab &&
-						<IconButton
-							className="ugb-url-input-control__more-button"
-							icon="ellipsis"
-							label={ this.state.isOpen ? ariaOpen : ariaClosed }
-							onClick={ this.handleToggle }
-							aria-expanded={ this.state.isOpen }
-						/>
-					}
-				</div>
-				{ onChangeNewTab && this.state.isOpen &&
-					<div className="ugb-url-input-control__new-tab">
-						<ToggleControl
-							label={ __( 'Open in New Tab' ) }
-							checked={ newTab }
-							onChange={ onChangeNewTab }
-						/>
-					</div>
-				}
-			</form>
-		)
-	}
+URLInputControl.defaultProps = {
+	label: __( 'URL' ),
+	help: null,
+	value: '',
+	onChange: () => {},
 }
 
 export default URLInputControl
