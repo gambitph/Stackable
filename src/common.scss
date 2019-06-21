@@ -12,6 +12,8 @@ $break-large: 960px; // admin sidebar auto folds. Breakpoint for tablet
 $break-medium: 782px; // adminbar goes big
 $break-small: 600px; // Breakpoint for mobile
 $break-mobile: 480px;
+$break-js-tablet: 1025px;
+$break-js-mobile: 768px;
 
 [class*="ugb-"] form[class*="-link"],
 form[class*="ugb-"][class*="-link"],
