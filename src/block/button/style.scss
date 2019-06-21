@@ -68,6 +68,18 @@
 			}
 		}
 	}
+	&.ugb-button--design-fullwidth .ugb-block-content {
+		flex-wrap: nowrap;
+		> * {
+			width: 100%;
+		}
+		.ugb-button {
+			text-align: center;
+		}
+		@media screen and (max-width: $break-small) {
+			flex-wrap: wrap;
+		}
+	}
 }
 
 // Override the design, when alignments are set for tablet or mobile.

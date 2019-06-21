@@ -17,6 +17,7 @@ import { createButtonAttributeNames } from '@stackable/util'
 import createStyles from './style'
 import { Fragment } from '@wordpress/element'
 import ImageDesignBasic from './images/basic.png'
+import ImageDesignFullWidth from './images/fullwidth.png'
 import ImageDesignGrouped1 from './images/grouped-1.png'
 import ImageDesignGrouped2 from './images/grouped-2.png'
 import ImageDesignSpread from './images/spread.png'
@@ -40,6 +41,9 @@ addFilter( 'stackable.button.edit.inspector.layout.before', 'stackable/button', 
 					},
 					{
 						label: __( 'Spread' ), value: 'spread', image: ImageDesignSpread,
+					},
+					{
+						label: __( 'Full Width' ), value: 'fullwidth', image: ImageDesignFullWidth,
 					},
 					{
 						label: __( 'Grouped 1' ), value: 'grouped-1', image: ImageDesignGrouped1,

@@ -751,8 +751,9 @@ const deprecated = [
 				...attributes,
 				showButton2: attributes.buttons ? attributes.buttons >= 2 : false,
 				showButton3: attributes.buttons ? attributes.buttons >= 3 : false,
+				design: attributes.align === 'full' ? 'fullwidth' : undefined,
 				columns: undefined,
-				contentAlign: attributes.align,
+				contentAlign: attributes.align !== 'full' ? attributes.align : undefined,
 				align: undefined,
 				cornerButtonRadius: undefined,
 
@@ -772,7 +773,6 @@ const deprecated = [
 				color: undefined,
 				textColor: undefined,
 				size: undefined,
-				design: undefined,
 				icon: undefined,
 
 				button2Url: attributes.url2,
