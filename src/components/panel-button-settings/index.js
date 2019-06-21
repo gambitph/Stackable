@@ -44,6 +44,8 @@ function PanelButtonSettings( props ) {
 		}
 	}
 
+	console.error( 'Remove PanelButtonSettings for v2' ) // eslint-disable-line
+
 	return (
 		<Fragment>
 			<PanelColorSettings
