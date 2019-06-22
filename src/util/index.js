@@ -128,6 +128,32 @@ export const minifyCSS = ( css, important = false ) => {
 }
 
 /**
+ * "Compiles" CSS - compiles the CSS for use of a specific block only.
+ *
+ * @param {string} css
+ * @param {string} mainClass
+ * @param {string} uniqueID
+ *
+ * @return {string} CSS
+ */
+export const compileCSS = ( css, mainClass, uniqueID ) => {
+	// Regex steps:
+	// Add the unique ID:
+	// 		".ugb-accordion" -> ".uniqueID .ugb-accordion"
+	// 		".ugb-accordion__title" -> ".uniqueID .ugb-accordion__title"
+	// Connect the unique ID and the main class:
+	// 		".ugb-accordion" -> ".uniqueID.ugb-accordion"
+	// 		".ugb-accordion__title" -> ".uniqueID .ugb-accordion__title"
+	// console.log(css.replace( /\/\*.*?\*\//g, '' ))
+	return css.replace( /\/\*[\s\S]*?\*\//g, '' )
+		.replace( /\/\/(.*)?\n/g, '' )
+		.replace( /([^}]+)({)/g, ( match, selector, paren ) => {
+			const newSelector = prependCSSClass( selector, mainClass, uniqueID )
+			return `${ newSelector } ${ paren }`
+		} ).trim()
+}
+
+/**
  * Ensures the cssSelector is only applied to the uniqueClassName element.
  * Wraps the cssSelector with a uniqueClassName, and takes into account the mainClassName.
  *
