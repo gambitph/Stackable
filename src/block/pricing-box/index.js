@@ -3,9 +3,12 @@
  */
 
 import { __ } from '@wordpress/i18n'
+import deprecate from './deprecated'
 import { descriptionPlaceholder } from '@stackable/util'
 import { disabledBlocks } from 'stackable'
+import edit from './edit'
 import { PricingBoxIcon } from '@stackable/icons'
+import save from './save'
 
 const schema = {
 	pricingBoxColor: {
@@ -161,7 +164,13 @@ export const settings = {
 	supports: {
 		align: [ 'wide' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
+		// eslint-disable-next-line
+		inserter: false, // TODO: Remove when ready for v2.
 	},
+
+	deprecate,
+	edit,
+	save,
 
 	// Stackable specific settings.
 	sDemoURL: 'https://wpstackable.com/pricing-table-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',

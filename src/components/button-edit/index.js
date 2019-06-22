@@ -6,7 +6,7 @@ import { SvgIcon } from '@stackable/components'
 // Deprecated ButtonEdit.Content methods.
 export * from './deprecated'
 
-// TODO: move ButtonEdit to RichButton
+// TODO: [V2] move ButtonEdit to RichButton
 
 const ButtonEdit = props => {
 	const {

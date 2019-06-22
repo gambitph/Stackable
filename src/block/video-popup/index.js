@@ -3,7 +3,10 @@
  */
 
 import { __ } from '@wordpress/i18n'
+import deprecated from './deprecated'
 import { disabledBlocks } from 'stackable'
+import edit from './edit'
+import save from './save'
 import { VideoPopupIcon } from '@stackable/icons'
 
 export const schema = {
@@ -116,7 +119,13 @@ export const settings = {
 	supports: {
 		align: [ 'center', 'wide', 'full' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
+		// eslint-disable-next-line
+		inserter: false, // TODO: Remove when ready for v2.
 	},
+
+	deprecated,
+	edit,
+	save,
 
 	// Stackable specific settings.
 	sDemoURL: 'https://wpstackable.com/video-popup-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',

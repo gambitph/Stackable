@@ -7,7 +7,7 @@
 @import "common";
 
 .ugb-pricing-box {
-	@include baseBlock();
+	@include baseBlock(); // TODO: [V2] Deprecate this usage
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 	grid-gap: $box-hori-padding;
@@ -42,7 +42,7 @@
 }
 
 .ugb-pricing-box__price-wrapper {
-	@include baseBlock();
+	@include baseBlock(); // TODO: [V2] Deprecate this usage
 }
 
 .ugb-pricing-box__image {
@@ -77,7 +77,7 @@
 
 .ugb-pricing-box--design-plain {
 	.ugb-pricing-box__item {
-		@include baseBlock();
+		@include baseBlock(); // TODO: [V2] Deprecate this usage
 		box-shadow: none;
 		padding: 0;
 		border-radius: 0;
@@ -85,7 +85,7 @@
 }
 .ugb-pricing-box--design-basic {
 	.ugb-pricing-box__item {
-		@include baseBlock();
+		@include baseBlock(); // TODO: [V2] Deprecate this usage
 		&.ugb-pricing-box--highlighted {
 			*:not(.ugb-button--inner) {
 				color: #222;

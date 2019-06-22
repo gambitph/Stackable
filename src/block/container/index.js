@@ -109,6 +109,8 @@ export const settings = {
 	supports: {
 		align: [ 'center', 'wide', 'full' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
+		// eslint-disable-next-line
+		inserter: false, // TODO: Remove when ready for v2.
 	},
 	deprecated,
 	edit,

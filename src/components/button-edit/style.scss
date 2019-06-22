@@ -4,10 +4,6 @@
  * Button link form styles.
  */
 .ugb-button {
-	@include baseBlock();
-}
-
-.ugb-button {
 	border: none;
 	border-radius: 4px;
 	display: inline-block;
@@ -72,7 +68,7 @@
 	// Turned off by default, add :before { content: ''; } to show it.
 	position: relative;
 	// overflow: hidden;
-	&:before {
+	&::before {
 		position: absolute;
 		z-index: 1;
 		border-radius: 4px;
@@ -83,7 +79,7 @@
 		transition: all 0.2s ease-in-out;
 		opacity: 0;
 	}
-	&:hover:before {
+	&:hover::before {
 		opacity: 1;
 	}
 	* {
@@ -91,7 +87,7 @@
 		z-index: 2;
 	}
 	// Offset a little for ghost buttons.
-	&.ugb-button--design-ghost:before {
+	&.ugb-button--design-ghost::before {
 		top: -2px;
 		left: -2px;
 		right: -2px;

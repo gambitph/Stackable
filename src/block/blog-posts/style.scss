@@ -7,9 +7,9 @@
 @import "common";
 
 .ugb-blog-posts {
-	@include baseBlock();
+	@include baseBlock(); // TODO: [V2] Deprecate this usage
 	.ugb-blog-posts__item {
-		@include baseBlock();
+		@include baseBlock(); // TODO: [V2] Deprecate this usage
 	}
 	time {
 		display: inline-block;
@@ -171,7 +171,7 @@
 			align-self: flex-start;
 		}
 		.ugb-blog-posts__side {
-			@include baseBlock();
+			@include baseBlock(); // TODO: [V2] Deprecate this usage
 		}
 		@media screen and (max-width: $break-huge) {
 			&.ugb-blog-posts--columns-3,

@@ -15,8 +15,8 @@
 
 	.ugb-block-content {
 		display: grid;
-    	// grid-auto-columns: auto;
-    	grid-auto-columns: minmax(0, 1fr);
+		// grid-auto-columns: auto;
+		grid-auto-columns: minmax(0, 1fr);
 		grid-gap: $box-hori-padding;
 	}
 
@@ -55,18 +55,6 @@
 
 .ugb-countup,
 .ugb-countup .ugb-content-wrapper {
-	// @include baseBlock();
-	// text-align: center;
-	// display: flex !important;
-	// flex-wrap: nowrap;
-	// flex-direction: row;
-	// justify-content: center;
-	// .ugb-countup__item,
-	// .ugb-countup-item {
-	// 	@include baseBlock();
-	// 	flex: 1;
-	// 	margin: 0 ($box-hori-padding / 2) !important;
-	// }
 
 	// Collapse to 4 columns to 2 rows of 2-columns.
 	@media screen and (max-width: $break-medium) {
@@ -101,6 +89,8 @@
 		}
 	}
 }
+
+// Deprecated < v2
 
 .ugb-countup.ugb-countup--v3 {
 	@include baseBlock();

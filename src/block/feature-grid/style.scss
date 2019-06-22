@@ -7,7 +7,7 @@
 @import "common";
 
 .ugb-feature-grid {
-	@include baseBlock();
+	@include baseBlock(); // TODO: [V2] Deprecate this usage
 	display: flex;
 	flex-wrap: nowrap;
 	margin: 0 (-$box-hori-padding / 2);
@@ -24,7 +24,7 @@
 	}
 	.ugb-feature-grid__content {
 		text-align: center;
-		@include baseBlock();
+		@include baseBlock(); // TODO: [V2] Deprecate this usage
 		&:last-child {
 			margin-bottom: 0;
 		}
@@ -69,7 +69,7 @@
 .ugb-feature-grid--design-basic,
 .ugb-feature-grid--design-plain {
 	.ugb-feature-grid__item {
-		@include baseBlock();
+		@include baseBlock(); // TODO: [V2] Deprecate this usage
 	}
 }
 

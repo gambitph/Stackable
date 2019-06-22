@@ -9,10 +9,10 @@
 .ugb-cta {
 	text-align: center;
 	background-color: #f4f4f4;
-	@include baseBlock();
+	@include baseBlock(); // TODO: [V2] Deprecate this usage
 	@include box();
 	.ugb-content-wrapper {
-		@include baseBlock();
+		@include baseBlock(); // TODO: [V2] Deprecate this usage
 	}
 	.ugb-button {
 		margin-top: 0;

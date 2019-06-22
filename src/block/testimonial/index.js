@@ -3,11 +3,11 @@
  */
 
 import { __ } from '@wordpress/i18n'
-import { default as deprecated } from './deprecated'
+import deprecated from './deprecated'
 import { descriptionPlaceholder } from '@stackable/util'
 import { disabledBlocks } from 'stackable'
-import { default as edit } from './edit'
-import { default as save } from './save'
+import edit from './edit'
+import save from './save'
 import { TestimonialIcon } from '@stackable/icons'
 
 export const schema = {
@@ -200,6 +200,8 @@ export const settings = {
 	supports: {
 		align: [ 'wide' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
+		// eslint-disable-next-line
+		inserter: false, // TODO: Remove when ready for v2.
 	},
 	deprecated,
 	edit,

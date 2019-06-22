@@ -10,7 +10,7 @@
 	border-radius: 4px;
 	margin: 30px 0;
 	overflow: hidden;
-	@include baseBlock();
+	@include baseBlock(); // TODO: [V2] Deprecate this usage
 	@include box();
 	.ugb-card__image-container,
 	.ugb-card-image-container { // Old class name.

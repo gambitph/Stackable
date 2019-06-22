@@ -54,30 +54,6 @@ $box-vert-padding: 60px;
 	}
 }
 
-// TODO: Don't use this anymore for 1.16.0!
-@mixin baseBlock() {
-	@include blockContentReset();
-	@include baseMargins();
-}
-
-@mixin baseMargins() {
-	margin-top: 1.5em;
-	margin-bottom: 1.5em;
-}
-
-@mixin blockContentReset() {
-	> * {
-		margin-top: 0 !important;
-		margin-bottom: 1rem !important;
-		&:first-child {
-			margin-top: 0 !important;
-		}
-		&:last-child {
-			margin-bottom: 0 !important;
-		}
-	}
-}
-
 @mixin baseButton() {
 	padding-bottom: calc(0.375em - var(--s-border, 0px));
 	padding-left: 1.25em;
@@ -132,7 +108,6 @@ $box-vert-padding: 60px;
 	}
 }
 
-
 // Different box shadows for the shadow setting.
 $shadows: ( none )
 	( 0 0 0 1px rgba(120, 120, 120, 0.1) )
@@ -168,5 +143,26 @@ div[class^="wp-block-"] {
 @supports (-webkit-overflow-scrolling: touch) {
 	[class*="ugb-"][style*="background-attachment:fixed"] {
 		background-attachment: scroll !important;
+	}
+}
+
+// Deprecated < v2
+
+@mixin baseBlock() {
+	@include blockContentReset();
+	margin-top: 1.5em;
+	margin-bottom: 1.5em;
+}
+
+@mixin blockContentReset() {
+	> * {
+		margin-top: 0 !important;
+		margin-bottom: 1rem !important;
+		&:first-child {
+			margin-top: 0 !important;
+		}
+		&:last-child {
+			margin-bottom: 0 !important;
+		}
 	}
 }

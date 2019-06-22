@@ -5,6 +5,8 @@
 import { __ } from '@wordpress/i18n'
 import { disabledBlocks } from 'stackable'
 import { DividerIcon } from '@stackable/icons'
+import edit from './edit'
+import save from './save'
 
 const schema = {
 	height: {
@@ -53,5 +55,10 @@ export const settings = {
 	attributes: schema,
 	supports: {
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
+		// eslint-disable-next-line
+		inserter: false, // TODO: Remove when ready for v2.
 	},
+
+	edit,
+	save,
 }

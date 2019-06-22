@@ -7,7 +7,7 @@
 @import "common";
 
 .ugb-notification {
-	@include baseBlock();
+	@include baseBlock(); // TODO: [V2] Deprecate this usage
 	@include box();
 	padding: $box-hori-padding;
 	background-color: #40ba7b;

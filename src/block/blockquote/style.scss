@@ -8,7 +8,7 @@
 
 .ugb-blockquote {
 	border: 0 !important;
-	@include baseBlock();
+	@include baseBlock(); // TODO: [V2] Deprecate this usage
 	padding: $box-hori-padding;
 	margin-left: $box-hori-padding;
 	margin-right: $box-hori-padding;

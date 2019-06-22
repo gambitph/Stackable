@@ -7,7 +7,7 @@
 @import "common";
 
 .ugb-testimonial {
-	@include baseBlock();
+	@include baseBlock(); // TODO: [V2] Deprecate this usage
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
 	grid-gap: $box-hori-padding;
@@ -46,7 +46,7 @@
 	}
 }
 .ugb-testimonial__person {
-	@include baseBlock();
+	@include baseBlock(); // TODO: [V2] Deprecate this usage
 	margin-top: 0;
 	margin-bottom: 0;
 }

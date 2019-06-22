@@ -1,9 +1,6 @@
 import {
 	createButtonStyleSet,
-	createTypographyStyles,
-	whiteIfDark,
 } from '@stackable/util'
-import { applyFilters } from '@wordpress/hooks'
 import deepmerge from 'deepmerge'
 import { sprintf } from '@wordpress/i18n'
 
@@ -16,7 +13,6 @@ export const createStyles = props => {
 	const styles = []
 
 	const {
-		design = 'basic',
 		showButton2 = false,
 		showButton3 = false,
 	} = props.attributes

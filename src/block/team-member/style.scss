@@ -31,7 +31,7 @@
 }
 
 .ugb-team-member {
-	@include baseBlock();
+	@include baseBlock(); // TODO: [V2] Deprecate this usage
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
 	grid-gap: $box-hori-padding;
@@ -76,7 +76,7 @@
 .ugb-team-member.ugb-team-member--design-basic,
 .ugb-team-member.ugb-team-member--design-plain {
 	.ugb-team-member__content {
-		@include baseBlock();
+		@include baseBlock(); // TODO: [V2] Deprecate this usage
 	}
 }
 

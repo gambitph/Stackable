@@ -4,8 +4,11 @@
 
 import { __ } from '@wordpress/i18n'
 import { CardIcon } from '@stackable/icons'
+import deprecated from './deprecated'
 import { descriptionPlaceholder } from '@stackable/util'
 import { disabledBlocks } from 'stackable'
+import edit from './edit'
+import save from './save'
 
 export const schema = {
 	mediaID: {
@@ -137,7 +140,13 @@ export const settings = {
 	attributes: schema,
 	supports: {
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
+		// eslint-disable-next-line
+		inserter: false, // TODO: Remove when done.
 	},
+
+	deprecated,
+	edit,
+	save,
 
 	// Stackable specific settings.
 	sDemoURL: 'https://wpstackable.com/card-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',

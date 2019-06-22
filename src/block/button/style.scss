@@ -181,7 +181,8 @@
 
 // Deprecated < v2
 .ugb-button-wrapper:not(.ugb-main-block) {
-	@include baseMargins();
+	margin-top: 1.5em;
+	margin-bottom: 1.5em;
 	display: flex !important;
 	justify-content: center;
 	flex-wrap: wrap;

@@ -10,7 +10,7 @@
 .ugb-video-popup {
 	position: relative;
 	width: 100%;
-	@include baseBlock();
+	@include baseBlock(); // TODO: [V2] Deprecate this usage
 	@include box();
 	margin-left: auto;
 	margin-right: auto;

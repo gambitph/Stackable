@@ -7,14 +7,14 @@
 @import "common";
 
 .ugb-header {
-	@include baseBlock();
+	@include baseBlock(); // TODO: [V2] Deprecate this usage
 	text-align: center;
 	@include box();
 	padding: 9.5rem 4rem;
 	position: relative;
 	.ugb-content-wrapper,
 	.ugb-header-wrapper {
-		@include baseBlock();
+		@include baseBlock(); // TODO: [V2] Deprecate this usage
 	}
 	.ugb-button {
 		position: relative;

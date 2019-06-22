@@ -5,8 +5,8 @@
 import { __ } from '@wordpress/i18n'
 import { BlogPostsIcon } from '@stackable/icons'
 import { disabledBlocks } from 'stackable'
-import { default as edit } from './edit'
-import { default as save } from './save'
+import edit from './edit'
+import save from './save'
 
 export const name = 'ugb/blog-posts'
 
@@ -23,6 +23,8 @@ export const settings = {
 	supports: {
 		align: [ 'center', 'wide', 'full' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
+		// eslint-disable-next-line
+		inserter: false, // TODO: Remove when ready for v2.
 	},
 
 	save,

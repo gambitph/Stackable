@@ -13,7 +13,7 @@
 	background-color: transparent;
 	// margin-top: 2rem;
 	// margin-bottom: 2rem;
-	@include baseBlock();
+	@include baseBlock(); // TODO: [V2] Deprecate this usage
 	hr {
 		background-color: #ddd;
 		border: 0 !important;

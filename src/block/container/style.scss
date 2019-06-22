@@ -22,7 +22,7 @@ body:not(.wp-admin) {
 	}
 }
 .ugb-container {
-	@include baseBlock();
+	@include baseBlock(); // TODO: [V2] Deprecate this usage
 	@include box();
 
 	&:not(.ugb--has-background):not(.ugb-has-background) {
@@ -39,7 +39,7 @@ body:not(.wp-admin) {
 		width: 100%;
 	}
 	.ugb-container__content-wrapper {
-		@include baseBlock();
+		@include baseBlock(); // TODO: [V2] Deprecate this usage
 		margin: 0;
 	}
 

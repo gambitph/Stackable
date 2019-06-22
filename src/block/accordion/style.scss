@@ -7,7 +7,7 @@
 @import "common";
 
 .ugb-accordion {
-	@include baseBlock();
+	@include baseBlock(); // TODO: [V2] Deprecate this usage
 	position: relative;
 	&.ugb-accordion--open .ugb-accordion__heading svg {
 		transform: rotate(180deg);
