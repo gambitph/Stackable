@@ -126,7 +126,9 @@ if ( ! function_exists( 'stackable_block_category' ) ) {
 			array(
 				array(
 					'slug' => 'stackable',
-					'title' => __( 'Stackable', 'stackable' ),
+					// 'title' => __( 'Stackable', 'stackable' ),
+					// TODO: [V2] Remove below in final version
+					'title' => preg_match( '/^2.(.*)?dev/', STACKABLE_VERSION ) ? __( 'Stackable v2 beta 🧪', 'stackable' ) : __( 'Stackable', 'stackable' ),
 				),
 			)
 		);
