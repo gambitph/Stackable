@@ -296,7 +296,7 @@ const ButtonControls = props => {
 					label={ __( 'Border Radius' ) }
 					value={ props.borderRadius }
 					min="0"
-					max="150"
+					max="70"
 					onChange={ props.onChangeBorderRadius }
 					allowReset={ true }
 				/>

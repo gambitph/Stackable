@@ -78,7 +78,7 @@ addFilter( 'stackable.button.edit.inspector.style.before', 'stackable/button', (
 					label={ __( 'Border Radius' ) }
 					value={ borderRadius }
 					min="0"
-					max="150"
+					max="70"
 					onChange={ borderRadius => {
 						setAttributes( {
 							button1BorderRadius: borderRadius,
