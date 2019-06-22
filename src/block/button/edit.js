@@ -80,12 +80,17 @@ addFilter( 'stackable.button.edit.inspector.style.before', 'stackable/button', (
 					min="0"
 					max="70"
 					onChange={ borderRadius => {
-						setAttributes( {
+						const attrs = {
 							button1BorderRadius: borderRadius,
-							button2BorderRadius: borderRadius,
-							button3BorderRadius: borderRadius,
 							borderRadius,
-						} )
+						}
+						if ( showButton2 ) {
+							attrs.button2BorderRadius = borderRadius
+						}
+						if ( showButton3 ) {
+							attrs.button3BorderRadius = borderRadius
+						}
+						setAttributes( attrs )
 					} }
 					allowReset={ true }
 				/>
@@ -115,9 +120,7 @@ addFilter( 'stackable.button.edit.inspector.style.before', 'stackable/button', (
 				title={ __( 'Button #2' ) }
 				checked={ showButton2 }
 				onChange={ showButton2 => setAttributes( { showButton2 } ) }
-				toggleOnSetAttributes={ [
-					...createButtonAttributeNames( 'button2%s' ),
-				] }
+				toggleOnSetAttributes={ createButtonAttributeNames( 'button2%s' ) }
 				toggleAttributeName="showButton2"
 			>
 				<ButtonControlsHelper
@@ -130,9 +133,7 @@ addFilter( 'stackable.button.edit.inspector.style.before', 'stackable/button', (
 				title={ __( 'Button #3' ) }
 				checked={ showButton3 }
 				onChange={ showButton3 => setAttributes( { showButton3 } ) }
-				toggleOnSetAttributes={ [
-					...createButtonAttributeNames( 'button3%s' ),
-				] }
+				toggleOnSetAttributes={ createButtonAttributeNames( 'button3%s' ) }
 				toggleAttributeName="showButton3"
 			>
 				<ButtonControlsHelper
