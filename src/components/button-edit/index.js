@@ -19,6 +19,7 @@ const ButtonEdit = props => {
 		shadow = 0,
 		iconPosition = '',
 		hoverEffect = '',
+		ghostToNormalEffect = false,
 	} = props
 
 	const mainClasses = classnames( [
@@ -26,6 +27,7 @@ const ButtonEdit = props => {
 		'ugb-button',
 		`ugb-button--size-${ size }`,
 	], {
+		'ugb-button--ghost-to-normal-effect': ghostToNormalEffect,
 		[ `ugb--hover-effect-${ hoverEffect }` ]: ( design === 'basic' || design === 'ghost' ) && hoverEffect,
 		[ `ugb--shadow-${ shadow }` ]: design === 'basic' && shadow,
 		[ `ugb-button--design-${ design }` ]: design !== 'basic',
@@ -74,6 +76,7 @@ ButtonEdit.Content = props => {
 		iconPosition = false,
 		hoverEffect = '',
 		noFollow = false,
+		ghostToNormalEffect = false,
 	} = props
 
 	const mainClasses = classnames( [
@@ -81,6 +84,7 @@ ButtonEdit.Content = props => {
 		'ugb-button',
 		`ugb-button--size-${ size }`,
 	], {
+		'ugb-button--ghost-to-normal-effect': ghostToNormalEffect,
 		[ `ugb--hover-effect-${ hoverEffect }` ]: ( design === 'basic' || design === 'ghost' ) && hoverEffect,
 		[ `ugb--shadow-${ shadow }` ]: design === 'basic' && shadow,
 		[ `ugb-button--design-${ design }` ]: design !== 'basic',

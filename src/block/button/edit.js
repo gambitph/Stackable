@@ -202,6 +202,7 @@ const edit = props => {
 		button1Icon = '',
 		button1IconPosition = '',
 		button1Design = 'basic',
+		button1HoverGhostToNormal = false,
 		button2Size = 'normal',
 		button2Text = '',
 		button2Shadow = 0,
@@ -209,6 +210,7 @@ const edit = props => {
 		button2Icon = '',
 		button2IconPosition = '',
 		button2Design = 'basic',
+		button2HoverGhostToNormal = false,
 		button3Size = 'normal',
 		button3Text = '',
 		button3Shadow = 0,
@@ -216,6 +218,7 @@ const edit = props => {
 		button3Icon = '',
 		button3IconPosition = '',
 		button3Design = 'basic',
+		button3HoverGhostToNormal = false,
 	} = attributes
 
 	const mainClasses = classnames( [
@@ -238,6 +241,7 @@ const edit = props => {
 					design={ button1Design !== '' ? button1Design : 'basic' }
 					shadow={ button1Shadow }
 					hoverEffect={ button1HoverEffect }
+					ghostToNormalEffect={ button1HoverGhostToNormal }
 					iconPosition={ button1IconPosition }
 					onChange={ button1Text => setAttributes( { button1Text } ) }
 				/>
@@ -250,6 +254,7 @@ const edit = props => {
 						design={ button2Design !== '' ? button2Design : 'basic' }
 						shadow={ button2Shadow }
 						hoverEffect={ button2HoverEffect }
+						ghostToNormalEffect={ button2HoverGhostToNormal }
 						iconPosition={ button2IconPosition }
 						onChange={ button2Text => setAttributes( { button2Text } ) }
 					/>
@@ -263,6 +268,7 @@ const edit = props => {
 						design={ button3Design !== '' ? button3Design : 'basic' }
 						shadow={ button3Shadow }
 						hoverEffect={ button3HoverEffect }
+						ghostToNormalEffect={ button3HoverGhostToNormal }
 						iconPosition={ button3IconPosition }
 						onChange={ button3Text => setAttributes( { button3Text } ) }
 					/>

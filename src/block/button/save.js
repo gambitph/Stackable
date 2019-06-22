@@ -25,6 +25,7 @@ const save = props => {
 		button1NoFollow = false,
 		button1Url = '',
 		button1Design = 'basic',
+		button1HoverGhostToNormal = false,
 		button2Size = 'normal',
 		button2Text = '',
 		button2Shadow = 0,
@@ -35,6 +36,7 @@ const save = props => {
 		button2NoFollow = false,
 		button2Url = '',
 		button2Design = 'basic',
+		button2HoverGhostToNormal = false,
 		button3Size = 'normal',
 		button3Text = '',
 		button3Shadow = 0,
@@ -45,6 +47,7 @@ const save = props => {
 		button3NoFollow = false,
 		button3Url = '',
 		button3Design = 'basic',
+		button3HoverGhostToNormal = false,
 	} = attributes
 
 	const mainClasses = classnames( [
@@ -68,6 +71,7 @@ const save = props => {
 					url={ button1Url }
 					noFollow={ button1NoFollow }
 					hoverEffect={ button1HoverEffect }
+					ghostToNormalEffect={ button1HoverGhostToNormal }
 					shadow={ button1Shadow }
 					iconPosition={ button1IconPosition }
 					design={ button1Design !== '' ? button1Design : 'basic' }
@@ -82,6 +86,7 @@ const save = props => {
 						url={ button2Url }
 						noFollow={ button2NoFollow }
 						hoverEffect={ button2HoverEffect }
+						ghostToNormalEffect={ button2HoverGhostToNormal }
 						shadow={ button2Shadow }
 						iconPosition={ button2IconPosition }
 						design={ button2Design !== '' ? button2Design : 'basic' }
@@ -97,6 +102,7 @@ const save = props => {
 						url={ button3Url }
 						noFollow={ button3NoFollow }
 						hoverEffect={ button3HoverEffect }
+						ghostToNormalEffect={ button3HoverGhostToNormal }
 						shadow={ button3Shadow }
 						iconPosition={ button3IconPosition }
 						design={ button3Design !== '' ? button3Design : 'basic' }
