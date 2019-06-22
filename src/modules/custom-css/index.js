@@ -1,9 +1,10 @@
 import { addFilter, doAction } from '@wordpress/hooks'
+import { compileCSS, minifyCSS } from '@stackable/util'
+import { isPro, showProNotice } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 import { PanelBody } from '@wordpress/components'
 import { ProControl } from '@stackable/components'
-import { showProNotice } from 'stackable'
 
 const customCSSProPanel = output => {
 	return (
@@ -41,11 +42,36 @@ const addAttributes = attributes => {
 	}
 }
 
+// Mimic how the Stackable Premium renders custom CSS.
+const outputStyle = ( output, design, props ) => {
+	const mainClass = props.mainClassName
+	const {
+		customCSS = '',
+		uniqueClass = props.attributes.customCSSUniqueID || '',
+	} = props.attributes
+
+	const minified = minifyCSS( compileCSS( customCSS, mainClass, uniqueClass ), true )
+
+	return (
+		<Fragment>
+			{ output }
+			{ minified && <style>{ minified }</style> }
+		</Fragment>
+	)
+}
+
 const customCSS = blockName => {
 	if ( showProNotice ) {
 		addFilter( `stackable.${ blockName }.edit.inspector.advanced.after`, `stackable/${ blockName }/custom-css`, customCSSProPanel, 20 )
 	}
 	addFilter( `stackable.${ blockName }.attributes`, `stackable/${ blockName }/custom-css`, addAttributes )
+
+	// If there's some custom CSS, but we're in the free version (user downgraded),
+	// still render the custom CSS so as not produce a block error.
+	if ( ! isPro ) {
+		addFilter( `stackable.${ blockName }.save.output.outer`, `stackable/pro/${ blockName }/custom-css/downgrade`, outputStyle )
+	}
+
 	doAction( `stackable.module.custom-css`, blockName )
 }
 
