@@ -126,4 +126,7 @@ div[class^="wp-block-"] {
 	[class*="ugb-"][style*="background-attachment:fixed"] {
 		background-attachment: scroll !important;
 	}
+	[class*="ugb-"][style*="background-attachment: fixed"] {
+		background-attachment: scroll !important;
+	}
 }
