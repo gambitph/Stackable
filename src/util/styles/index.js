@@ -1,14 +1,18 @@
 import { default as _isDarkColor } from 'is-dark-color'
 
 export const isDarkColor = color => {
-	if ( ! color.match( /^#/ ) ) {
-		return _isDarkColor( color )
+	try {
+		if ( ! color.match( /^#/ ) ) {
+			return _isDarkColor( color )
+		}
+		let colorTest = color.replace( /#/g, '' )
+		if ( colorTest.length === 3 ) {
+			colorTest = colorTest.replace( /(.)(.)(.)/, '$1$1$2$2$3$3' )
+		}
+		return _isDarkColor( `#${ colorTest }` )
+	} catch ( err ) {
+		return false
 	}
-	let colorTest = color.replace( /#/g, '' )
-	if ( colorTest.length === 3 ) {
-		colorTest = colorTest.replace( /(.)(.)(.)/, '$1$1$2$2$3$3' )
-	}
-	return _isDarkColor( `#${ colorTest }` )
 }
 
 export const marginLeftAlign = align => {
