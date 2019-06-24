@@ -28,47 +28,47 @@ export const schema = {
 	},
 	name1: {
 		source: 'html',
-		selector: '.ugb-testimonial__item:nth-child(1) .ugb-testimonial__name',
+		selector: '.ugb-testimonial__item:nth-of-type(1) .ugb-testimonial__name',
 		default: __( 'Name' ),
 	},
 	name2: {
 		source: 'html',
-		selector: '.ugb-testimonial__item:nth-child(2) .ugb-testimonial__name',
+		selector: '.ugb-testimonial__item:nth-of-type(2) .ugb-testimonial__name',
 		default: __( 'Name' ),
 	},
 	name3: {
 		source: 'html',
-		selector: '.ugb-testimonial__item:nth-child(3) .ugb-testimonial__name',
+		selector: '.ugb-testimonial__item:nth-of-type(3) .ugb-testimonial__name',
 		default: __( 'Name' ),
 	},
 	position1: {
 		source: 'html',
-		selector: '.ugb-testimonial__item:nth-child(1) .ugb-testimonial__position',
+		selector: '.ugb-testimonial__item:nth-of-type(1) .ugb-testimonial__position',
 		default: __( 'Position' ),
 	},
 	position2: {
 		source: 'html',
-		selector: '.ugb-testimonial__item:nth-child(2) .ugb-testimonial__position',
+		selector: '.ugb-testimonial__item:nth-of-type(2) .ugb-testimonial__position',
 		default: __( 'Position' ),
 	},
 	position3: {
 		source: 'html',
-		selector: '.ugb-testimonial__item:nth-child(3) .ugb-testimonial__position',
+		selector: '.ugb-testimonial__item:nth-of-type(3) .ugb-testimonial__position',
 		default: __( 'Position' ),
 	},
 	testimonial1: {
 		source: 'html',
-		selector: '.ugb-testimonial__item:nth-child(1) .ugb-testimonial__body',
+		selector: '.ugb-testimonial__item:nth-of-type(1) .ugb-testimonial__body',
 		default: descriptionPlaceholder( 'medium' ),
 	},
 	testimonial2: {
 		source: 'html',
-		selector: '.ugb-testimonial__item:nth-child(2) .ugb-testimonial__body',
+		selector: '.ugb-testimonial__item:nth-of-type(2) .ugb-testimonial__body',
 		default: descriptionPlaceholder( 'medium' ),
 	},
 	testimonial3: {
 		source: 'html',
-		selector: '.ugb-testimonial__item:nth-child(3) .ugb-testimonial__body',
+		selector: '.ugb-testimonial__item:nth-of-type(3) .ugb-testimonial__body',
 		default: descriptionPlaceholder( 'medium' ),
 	},
 	titleColor: {

@@ -1,7 +1,7 @@
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { getIconSVGBase64 } from './util'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 
 const save = props => {
 	const { className } = props

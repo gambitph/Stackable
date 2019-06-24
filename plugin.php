@@ -5,7 +5,7 @@
  * Description: Blocks for everyone
  * Author: Gambit Technologies, Inc
  * Author URI: http://gambit.ph
- * Version: 1.15.1
+ * Version: 1.15.5
  *
  * @package Stackable
  */
@@ -22,7 +22,7 @@ if ( function_exists( 'sugb_fs' ) ) {
 }
 
 defined( 'STACKABLE_SHOW_PRO_NOTICES' ) || define( 'STACKABLE_SHOW_PRO_NOTICES', true );
-defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '1.15.1' );
+defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '1.15.5' );
 defined( 'STACKABLE_FILE' ) || define( 'STACKABLE_FILE', __FILE__ );
 
 /********************************************************************************************
@@ -88,6 +88,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'freemius.php' );
  * Block Initializer.
  */
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/disabled-blocks.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/init-deprecated.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/blog-posts/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/blog-posts/designs.php' );

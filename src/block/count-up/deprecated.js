@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { getFontFamily } from './font'
 import { range } from '@stackable/util'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 
 const deprecatedSchema_1_10 = {
 	columns: {
@@ -28,62 +28,62 @@ const deprecatedSchema_1_10 = {
 	},
 	title1: {
 		source: 'html',
-		selector: '.ugb-countup-item:nth-child(1) h4',
+		selector: '.ugb-countup-item:nth-of-type(1) h4',
 		default: __( 'Title' ),
 	},
 	title2: {
 		source: 'html',
-		selector: '.ugb-countup-item:nth-child(2) h4',
+		selector: '.ugb-countup-item:nth-of-type(2) h4',
 		default: __( 'Title' ),
 	},
 	title3: {
 		source: 'html',
-		selector: '.ugb-countup-item:nth-child(3) h4',
+		selector: '.ugb-countup-item:nth-of-type(3) h4',
 		default: __( 'Title' ),
 	},
 	title4: {
 		source: 'html',
-		selector: '.ugb-countup-item:nth-child(4) h4',
+		selector: '.ugb-countup-item:nth-of-type(4) h4',
 		default: __( 'Title' ),
 	},
 	countText1: {
 		source: 'html',
-		selector: '.ugb-countup-item:nth-child(1) .ugb-counter',
+		selector: '.ugb-countup-item:nth-of-type(1) .ugb-counter',
 		default: '$99.99',
 	},
 	countText2: {
 		source: 'html',
-		selector: '.ugb-countup-item:nth-child(2) .ugb-counter',
+		selector: '.ugb-countup-item:nth-of-type(2) .ugb-counter',
 		default: '1,234',
 	},
 	countText3: {
 		source: 'html',
-		selector: '.ugb-countup-item:nth-child(3) .ugb-counter',
+		selector: '.ugb-countup-item:nth-of-type(3) .ugb-counter',
 		default: '1,234.56',
 	},
 	countText4: {
 		source: 'html',
-		selector: '.ugb-countup-item:nth-child(4) .ugb-counter',
+		selector: '.ugb-countup-item:nth-of-type(4) .ugb-counter',
 		default: '£99.99',
 	},
 	description1: {
 		source: 'html',
-		selector: '.ugb-countup-item:nth-child(1) p',
+		selector: '.ugb-countup-item:nth-of-type(1) p',
 		default: __( 'Description' ),
 	},
 	description2: {
 		source: 'html',
-		selector: '.ugb-countup-item:nth-child(2) p',
+		selector: '.ugb-countup-item:nth-of-type(2) p',
 		default: __( 'Description' ),
 	},
 	description3: {
 		source: 'html',
-		selector: '.ugb-countup-item:nth-child(3) p',
+		selector: '.ugb-countup-item:nth-of-type(3) p',
 		default: __( 'Description' ),
 	},
 	description4: {
 		source: 'html',
-		selector: '.ugb-countup-item:nth-child(4) p',
+		selector: '.ugb-countup-item:nth-of-type(4) p',
 		default: __( 'Description' ),
 	},
 	textColor: {
@@ -266,62 +266,62 @@ const deprecatedSchema_1_9_1 = {
 	},
 	title1: {
 		source: 'html',
-		selector: '.ugb-countup-item:nth-child(1) h4',
+		selector: '.ugb-countup-item:nth-of-type(1) h4',
 		default: __( 'Stat Title' ),
 	},
 	title2: {
 		source: 'html',
-		selector: '.ugb-countup-item:nth-child(2) h4',
+		selector: '.ugb-countup-item:nth-of-type(2) h4',
 		default: __( 'Stat Title' ),
 	},
 	title3: {
 		source: 'html',
-		selector: '.ugb-countup-item:nth-child(3) h4',
+		selector: '.ugb-countup-item:nth-of-type(3) h4',
 		default: __( 'Stat Title' ),
 	},
 	title4: {
 		source: 'html',
-		selector: '.ugb-countup-item:nth-child(4) h4',
+		selector: '.ugb-countup-item:nth-of-type(4) h4',
 		default: __( 'Stat Title' ),
 	},
 	countText1: {
 		source: 'html',
-		selector: '.ugb-countup-item:nth-child(1) .ugb-counter',
+		selector: '.ugb-countup-item:nth-of-type(1) .ugb-counter',
 		default: '$99.99',
 	},
 	countText2: {
 		source: 'html',
-		selector: '.ugb-countup-item:nth-child(2) .ugb-counter',
+		selector: '.ugb-countup-item:nth-of-type(2) .ugb-counter',
 		default: '1,234',
 	},
 	countText3: {
 		source: 'html',
-		selector: '.ugb-countup-item:nth-child(3) .ugb-counter',
+		selector: '.ugb-countup-item:nth-of-type(3) .ugb-counter',
 		default: '1,234.56',
 	},
 	countText4: {
 		source: 'html',
-		selector: '.ugb-countup-item:nth-child(4) .ugb-counter',
+		selector: '.ugb-countup-item:nth-of-type(4) .ugb-counter',
 		default: '£99.99',
 	},
 	description1: {
 		source: 'html',
-		selector: '.ugb-countup-item:nth-child(1) p',
+		selector: '.ugb-countup-item:nth-of-type(1) p',
 		default: __( 'stat description' ),
 	},
 	description2: {
 		source: 'html',
-		selector: '.ugb-countup-item:nth-child(2) p',
+		selector: '.ugb-countup-item:nth-of-type(2) p',
 		default: __( 'stat description' ),
 	},
 	description3: {
 		source: 'html',
-		selector: '.ugb-countup-item:nth-child(3) p',
+		selector: '.ugb-countup-item:nth-of-type(3) p',
 		default: __( 'stat description' ),
 	},
 	description4: {
 		source: 'html',
-		selector: '.ugb-countup-item:nth-child(4) p',
+		selector: '.ugb-countup-item:nth-of-type(4) p',
 		default: __( 'stat description' ),
 	},
 	textColor: {

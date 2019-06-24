@@ -1,7 +1,7 @@
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { QUOTE_ICONS } from './quotes'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 
 const save = props => {
 	const { className } = props

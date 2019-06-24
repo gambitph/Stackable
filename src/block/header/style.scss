@@ -64,13 +64,13 @@
 		left: -50%;
 		margin-bottom: 1.5em;
 	}
-	.ugb-header-title:not(.editor-rich-text__tinymce) {
+	.ugb-header-title:not(.editor-rich-text__editable) {
 		margin-bottom: 1rem;
 		padding-bottom: 0;
 		margin-top: 0;
 		position: relative;
 	}
-	.ugb-header-subtitle:not(.editor-rich-text__tinymce) {
+	.ugb-header-subtitle:not(.editor-rich-text__editable) {
 		margin-bottom: 2rem;
 		padding-bottom: 0;
 		position: relative;

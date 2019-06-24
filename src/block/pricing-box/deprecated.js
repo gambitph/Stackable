@@ -7,7 +7,7 @@ import { descriptionPlaceholder, range } from '@stackable/util'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import isDarkColor from 'is-dark-color'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 import striptags from 'striptags'
 
 const deprecatedSave_1_12 = props => {
@@ -217,14 +217,14 @@ const deprecatedSchema_1_12 = {
 	deprecatedSchema_1_12[ `url${ index }` ] = {
 		type: 'string',
 		source: 'attribute',
-		selector: `.ugb-pricing-box__item:nth-child(${ i }) .ugb-button`,
+		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-button`,
 		attribute: 'href',
 		default: '',
 	}
 	deprecatedSchema_1_12[ `newTab${ index }` ] = {
 		type: 'boolean',
 		source: 'attribute',
-		selector: `.ugb-pricing-box__item:nth-child(${ i }) .ugb-button`,
+		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-button`,
 		attribute: 'target',
 		default: false,
 	}
@@ -243,37 +243,37 @@ const deprecatedSchema_1_12 = {
 	}
 	deprecatedSchema_1_12[ `pricingBoxTitle${ index }` ] = {
 		source: 'html',
-		selector: `.ugb-pricing-box__item:nth-child(${ i }) .ugb-pricing-box__title`,
+		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__title`,
 		default: __( 'Title' ),
 	}
 	deprecatedSchema_1_12[ `price${ index }` ] = {
 		source: 'html',
-		selector: `.ugb-pricing-box__item:nth-child(${ i }) .ugb-pricing-box__price`,
+		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__price`,
 		default: `${ index }9`,
 	}
 	deprecatedSchema_1_12[ `pricePrefix${ index }` ] = {
 		source: 'html',
-		selector: `.ugb-pricing-box__item:nth-child(${ i }) .ugb-pricing-box__price-prefix`,
+		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__price-prefix`,
 		default: '$',
 	}
 	deprecatedSchema_1_12[ `priceSuffix${ index }` ] = {
 		source: 'html',
-		selector: `.ugb-pricing-box__item:nth-child(${ i }) .ugb-pricing-box__price-suffix`,
+		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__price-suffix`,
 		default: '.00',
 	}
 	deprecatedSchema_1_12[ `perMonthLabel${ index }` ] = {
 		source: 'html',
-		selector: `.ugb-pricing-box__item:nth-child(${ i }) .ugb-pricing-box__subprice`,
+		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__subprice`,
 		default: __( 'Description' ),
 	}
 	deprecatedSchema_1_12[ `buttonText${ index }` ] = {
 		source: 'html',
-		selector: `.ugb-pricing-box__item:nth-child(${ i }) .ugb-button span`,
+		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-button span`,
 		default: __( 'Button text' ),
 	}
 	deprecatedSchema_1_12[ `featureList${ index }` ] = {
 		source: 'html',
-		selector: `.ugb-pricing-box__item:nth-child(${ i }) .ugb-pricing-box__description`,
+		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__description`,
 		default: descriptionPlaceholder( 'medium' ),
 	}
 } ) }

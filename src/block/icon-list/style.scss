@@ -20,6 +20,7 @@
 		background-image: var(--icon);
 		background-size: cover;
 		background-position: center;
+		transform: translateY(-10%);
 	}
 	li {
 		margin-top: 0 !important;
@@ -64,6 +65,16 @@
 		li {
 			page-break-inside: avoid; /* Firefox */
 			break-inside: avoid;
+		}
+	}
+}
+
+// Fallback for IE11: SVG icons will not display as bullets, fallback to normal bullets.
+@media all and (-ms-high-contrast:none) {
+	*::-ms-backdrop, .ugb-icon-list li {
+		list-style: inside disc !important;
+		&:before {
+			content: none !important;
 		}
 	}
 }

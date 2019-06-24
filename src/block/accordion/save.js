@@ -1,7 +1,7 @@
 import { applyFilters } from '@wordpress/hooks'
 import { ArrowIcon } from './index'
 import classnames from 'classnames'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 
 // Accessibility: https://www.w3.org/TR/wai-aria-practices/examples/accordion/accordion.html
 const save = props => {

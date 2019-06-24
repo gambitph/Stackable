@@ -2,7 +2,7 @@ import { descriptionPlaceholder, range } from '@stackable/util'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { omit } from 'lodash'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 
 const deprecatedSchema_1_10 = {
 	mediaID1: {
@@ -25,47 +25,47 @@ const deprecatedSchema_1_10 = {
 	},
 	name1: {
 		source: 'html',
-		selector: '.ugb-testimonial-item:nth-child(1) h4',
+		selector: '.ugb-testimonial-item:nth-of-type(1) h4',
 		default: __( 'Name' ),
 	},
 	name2: {
 		source: 'html',
-		selector: '.ugb-testimonial-item:nth-child(2) h4',
+		selector: '.ugb-testimonial-item:nth-of-type(2) h4',
 		default: __( 'Name' ),
 	},
 	name3: {
 		source: 'html',
-		selector: '.ugb-testimonial-item:nth-child(3) h4',
+		selector: '.ugb-testimonial-item:nth-of-type(3) h4',
 		default: __( 'Name' ),
 	},
 	position1: {
 		source: 'html',
-		selector: '.ugb-testimonial-item:nth-child(1) .ugb-testimonial-position',
+		selector: '.ugb-testimonial-item:nth-of-type(1) .ugb-testimonial-position',
 		default: __( 'Position' ),
 	},
 	position2: {
 		source: 'html',
-		selector: '.ugb-testimonial-item:nth-child(2) .ugb-testimonial-position',
+		selector: '.ugb-testimonial-item:nth-of-type(2) .ugb-testimonial-position',
 		default: __( 'Position' ),
 	},
 	position3: {
 		source: 'html',
-		selector: '.ugb-testimonial-item:nth-child(3) .ugb-testimonial-position',
+		selector: '.ugb-testimonial-item:nth-of-type(3) .ugb-testimonial-position',
 		default: __( 'Position' ),
 	},
 	testimonial1: {
 		source: 'html',
-		selector: '.ugb-testimonial-item:nth-child(1) .ugb-testimonial-body',
+		selector: '.ugb-testimonial-item:nth-of-type(1) .ugb-testimonial-body',
 		default: descriptionPlaceholder( 'medium' ),
 	},
 	testimonial2: {
 		source: 'html',
-		selector: '.ugb-testimonial-item:nth-child(2) .ugb-testimonial-body',
+		selector: '.ugb-testimonial-item:nth-of-type(2) .ugb-testimonial-body',
 		default: descriptionPlaceholder( 'medium' ),
 	},
 	testimonial3: {
 		source: 'html',
-		selector: '.ugb-testimonial-item:nth-child(3) .ugb-testimonial-body',
+		selector: '.ugb-testimonial-item:nth-of-type(3) .ugb-testimonial-body',
 		default: descriptionPlaceholder( 'medium' ),
 	},
 	titleColor: {

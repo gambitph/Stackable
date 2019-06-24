@@ -6,6 +6,9 @@ import { Spinner } from '@wordpress/components'
 
 domReady( () => {
 	const content = document.querySelector( '.s-news-box-content' )
+	if ( ! content ) {
+		return
+	}
 
 	// Ajax load if nothing printed out (nothing cached in PHP).
 	if ( content.innerHTML !== '' ) {

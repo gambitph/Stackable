@@ -1,6 +1,6 @@
 import {
 	AlignmentToolbar, BlockControls, InspectorControls, PanelColorSettings, RichText,
-} from '@wordpress/editor'
+} from '@wordpress/block-editor'
 import {
 	DesignPanelBody, ImageUploadPlaceholder, ProControl, ProControlButton, URLInputControl, VerticalAlignmentToolbar,
 } from '@stackable/components'

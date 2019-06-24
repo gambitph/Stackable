@@ -1,5 +1,5 @@
 import classnames from 'classnames'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 
 const save = props => {
 	const { className } = props

@@ -1,6 +1,6 @@
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
-import { InnerBlocks } from '@wordpress/editor'
+import { InnerBlocks } from '@wordpress/block-editor'
 
 const save = props => {
 	const {

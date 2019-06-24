@@ -1,6 +1,6 @@
 {
   "name": "stackable",
-  "version": "1.15.1",
+  "version": "1.15.5",
   "private": true,
   "description": "Blocks for everyone",
   "author": "Benjamin Intal of Gambit",
@@ -20,7 +20,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.5.0",
     "@fortawesome/react-fontawesome": "^0.1.3",
     "@wordpress/dom-ready": "^2.0.2",
-    "bigpicture": "^2.1.0",
+    "bigpicture": "^2.1.2",
     "classnames": "^2.2.6",
     "counterup2": "^1.0.4",
     "is-dark-color": "^1.2.0",

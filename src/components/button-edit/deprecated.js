@@ -1,5 +1,5 @@
 import classnames from 'classnames'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 import { SvgIcon } from '@stackable/components'
 
 export const DeprecatedButtonContent_1_12 = props => {

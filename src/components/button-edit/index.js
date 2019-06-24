@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
-import { RichText } from '@wordpress/editor'
+import { RichText } from '@wordpress/block-editor'
 import { SvgIcon } from '@stackable/components'
 
 // Deprecated ButtonEdit.Content methods.
