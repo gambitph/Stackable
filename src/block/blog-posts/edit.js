@@ -65,7 +65,11 @@ class Edit extends Component {
 	render() {
 		// export const _edit = props => {
 		const {
-			attributes, setAttributes, latestPosts, className,
+			attributes,
+			setAttributes,
+			latestPosts,
+			className,
+			postTypes,
 		} = this.props
 		const { categoriesList } = this.state
 		const {
@@ -89,6 +93,7 @@ class Edit extends Component {
 			borderRadius = 12,
 			shadow = 3,
 			accentColor = '',
+			postType,
 		} = attributes
 
 		const hasPosts = Array.isArray( latestPosts ) && latestPosts.length
@@ -156,6 +161,17 @@ class Edit extends Component {
 					{ showProNotice && <ProControlButton /> }
 				</DesignPanelBody>
 				<PanelBody title={ __( 'Posts Settings' ) }>
+					<SelectControl
+						label={ __( 'Post Type' ) }
+						value={ postType }
+						options={ postTypes.map( ( { name, slug } ) => ( { value: slug, label: name } ) ) }
+						onChange={ postType => {2
+							setAttributes( {
+								postType,
+								taxQuery: {},
+							} )
+						} }
+					/>
 					<QueryControls
 						{ ...{ order, orderBy } }
 						numberOfItems={ postsToShow }
@@ -384,15 +400,19 @@ export default withSelect( ( select, props ) => {
 		order = 'desc',
 		orderBy = 'date',
 		categories = '',
+		postType = 'post',
 	} = props.attributes
-	const { getEntityRecords } = select( 'core' )
+	const { getEntityRecords, getPostTypes } = select( 'core' );
 	const latestPostsQuery = pickBy( {
 		categories,
 		order,
 		orderby: orderBy,
 		per_page: postsToShow, // eslint-disable-line camelcase
 	}, value => ! isUndefined( value ) )
+
+	const postTypes = getPostTypes() || [];
 	return {
-		latestPosts: getEntityRecords( 'postType', 'post', latestPostsQuery ),
+		postTypes: postTypes.filter( postType => postType.viewable === true && postType.slug !== 'attachment' ),
+		latestPosts: getEntityRecords( 'postType', postType, latestPostsQuery ),
 	}
 } )( Edit )

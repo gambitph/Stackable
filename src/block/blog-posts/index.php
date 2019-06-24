@@ -28,6 +28,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
                 'order' => ! empty( $attributes['order'] ) ? $attributes['order'] : '',
                 'orderby' => ! empty( $attributes['orderBy'] ) ? $attributes['orderBy'] : '',
                 'category' => ! empty( $attributes['categories'] ) ? $attributes['categories'] : '',
+                'post_type' => ! empty( $attributes['postType'] ) ? $attributes['postType'] : 'post',
             )
         );
 
@@ -350,6 +351,10 @@ if ( ! function_exists( 'stackable_register_blog_posts_block' ) ) {
 						'type' => 'string',
 						'default' => '',
 					),
+                    'postType'          => array(
+	                    'type'    => 'string',
+	                    'default' => 'post',
+                    ),
                 ),
                 'render_callback' => 'stackable_render_blog_posts_block',
             )
@@ -358,7 +363,7 @@ if ( ! function_exists( 'stackable_register_blog_posts_block' ) ) {
     add_action( 'init', 'stackable_register_blog_posts_block' );
 }
 
-if ( ! function_exists( 'stackable_blog_posts_rest_fields' ) ) {
+if ( ! function_exists( 'º' ) ) {
     /**
      * Add more data in the REST API that we'll use in the blog post.
      *
@@ -366,65 +371,75 @@ if ( ! function_exists( 'stackable_blog_posts_rest_fields' ) ) {
      */
     function stackable_blog_posts_rest_fields() {
 
-        // Featured image urls.
-        register_rest_field( 'post', 'featured_image_urls',
-            array(
-                'get_callback' => 'stackable_featured_image_urls',
-                'update_callback' => null,
-                'schema' => array(
-                    'description' => __( 'Different sized featured images' ),
-                    'type' => 'array',
-                ),
-            )
-        );
+	    $post_types = get_post_types( [ 'public' => true, 'show_in_rest' => true ] );
 
-        // Excerpt.
-        register_rest_field( 'post', 'post_excerpt_stackable',
-            array(
-                'get_callback' => 'stackable_post_excerpt',
-                'update_callback' => null,
-                'schema' => array(
-                    'description' => __( 'Post excerpt for Stackable' ),
-                    'type' => 'string',
-                ),
-            )
-        );
+	    foreach ( $post_types as $post_type ) {
 
-        // Category links.
-        register_rest_field( 'post', 'category_list',
-            array(
-                'get_callback' => 'stackable_category_list',
-                'update_callback' => null,
-                'schema' => array(
-                    'description' => __( 'Category list links' ),
-                    'type' => 'string',
-                ),
-            )
-        );
+		    if ( $post_type === 'attachment' ) {
+			    continue;
+		    }
 
-        // Author name.
-        register_rest_field( 'post', 'author_info',
-            array(
-                'get_callback' => 'stackable_author_info',
-                'update_callback' => null,
-                'schema' => array(
-                    'description' => __( 'Author information' ),
-                    'type' => 'array',
-                ),
-            )
-        );
+		    // Featured image urls.
+		    register_rest_field( $post_type, 'featured_image_urls',
+			    array(
+				    'get_callback' => 'stackable_featured_image_urls',
+				    'update_callback' => null,
+				    'schema' => array(
+					    'description' => __( 'Different sized featured images' ),
+					    'type' => 'array',
+				    ),
+			    )
+		    );
 
-        // Number of comments.
-        register_rest_field( 'post', 'comments_num',
-            array(
-                'get_callback' => 'stackable_commments_number',
-                'update_callback' => null,
-                'schema' => array(
-                    'description' => __( 'Number of comments' ),
-                    'type' => 'number',
-                ),
-            )
-        );
+		    // Excerpt.
+		    register_rest_field( $post_type, 'post_excerpt_stackable',
+			    array(
+				    'get_callback' => 'stackable_post_excerpt',
+				    'update_callback' => null,
+				    'schema' => array(
+					    'description' => __( 'Post excerpt for Stackable' ),
+					    'type' => 'string',
+				    ),
+			    )
+		    );
+
+		    // Category links.
+		    register_rest_field( $post_type, 'category_list',
+			    array(
+				    'get_callback' => 'stackable_category_list',
+				    'update_callback' => null,
+				    'schema' => array(
+					    'description' => __( 'Category list links' ),
+					    'type' => 'string',
+				    ),
+			    )
+		    );
+
+		    // Author name.
+		    register_rest_field( $post_type, 'author_info',
+			    array(
+				    'get_callback' => 'stackable_author_info',
+				    'update_callback' => null,
+				    'schema' => array(
+					    'description' => __( 'Author information' ),
+					    'type' => 'array',
+				    ),
+			    )
+		    );
+
+		    // Number of comments.
+		    register_rest_field( $post_type, 'comments_num',
+			    array(
+				    'get_callback' => 'stackable_commments_number',
+				    'update_callback' => null,
+				    'schema' => array(
+					    'description' => __( 'Number of comments' ),
+					    'type' => 'number',
+				    ),
+			    )
+		    );
+	    }
+
     }
     add_action( 'rest_api_init', 'stackable_blog_posts_rest_fields' );
 }
