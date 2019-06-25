@@ -20,8 +20,26 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return string Returns the post content with latest posts added.
  */
 if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
-    function stackable_render_blog_posts_block( $attributes ) {
-        $recent_posts = wp_get_recent_posts(
+	function stackable_render_blog_posts_block( $attributes ) {
+		$tax_query = [];
+		foreach ( $attributes['taxQuery'] as $taxonomy => $term_id ) {
+			$term = get_term( $term_id );
+			if ( ! is_a( $term, 'WP_Term' ) ) {
+				continue;
+			}
+			$taxonomy_object = get_taxonomies( [ 'rest_base' => $taxonomy ], 'objects' );
+			if ( empty( $taxonomy_object ) || ! is_array( $taxonomy_object ) ) {
+				continue;
+			}
+			$taxonomy    = current( $taxonomy_object );
+			$tax_query[] = [
+				'field'    => 'term_id',
+				'terms'    => absint( $term_id ),
+				'taxonomy' => $taxonomy->name,
+			];
+		}
+
+	    $recent_posts = wp_get_recent_posts(
             array(
                 'numberposts' => ! empty( $attributes['postsToShow'] ) ? $attributes['postsToShow'] : '',
                 'post_status' => 'publish',
@@ -29,6 +47,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
                 'orderby' => ! empty( $attributes['orderBy'] ) ? $attributes['orderBy'] : '',
                 'category' => ! empty( $attributes['categories'] ) ? $attributes['categories'] : '',
                 'post_type' => ! empty( $attributes['postType'] ) ? $attributes['postType'] : 'post',
+                'tax_query' => $tax_query,
             )
         );
 
@@ -39,11 +58,11 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
             $post_id = $post['ID'];
 
             // Category.
-            $category = '';
-            if ( ! empty( $attributes['displayCategory'] ) ) {
-                $category = sprintf(
+            $taxonomy = '';
+            if ( ! empty( $attributes['displayTaxonomy'] ) ) {
+	            $taxonomy = sprintf(
                     '<div class="ugb-blog-posts__category-list">%s</div>',
-                    get_the_category_list( esc_html__( ', ', 'stackable' ), '', $post_id )
+		            get_the_term_list( $post_id, $attributes['displayTaxonomy'], '', ', ' )
                 );
             }
 
@@ -160,7 +179,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
              * This is the default basic style.
              */
             $post_markup = "<article class='ugb-blog-posts__item'>";
-            $post_markup .= $category;
+            $post_markup .= $taxonomy;
             $post_markup .= $featured_image;
             if ( $attributes['displayDate'] || $attributes['displayAuthor'] || $attributes['displayComments'] ) {
                 $post_markup .= '<aside class="entry-meta ugb-blog-posts__meta">';
@@ -184,7 +203,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
             $props = array(
 				'post_id' => $post_id,
                 'attributes' => $attributes,
-                'category' => $category,
+                'category' => $taxonomy,
                 'featured_image' => $featured_image,
                 'author' => $author,
                 'date' => $date,
@@ -355,6 +374,14 @@ if ( ! function_exists( 'stackable_register_blog_posts_block' ) ) {
 	                    'type'    => 'string',
 	                    'default' => 'post',
                     ),
+                    'taxQuery' => array(
+	                    'type' => 'object',
+	                    'default' => [],
+                    ),
+                    'displayTaxonomy' => array(
+	                    'type' => 'string',
+	                    'default' => '',
+                    ),
                 ),
                 'render_callback' => 'stackable_render_blog_posts_block',
             )
@@ -403,14 +430,14 @@ if ( ! function_exists( 'º' ) ) {
 			    )
 		    );
 
-		    // Category links.
-		    register_rest_field( $post_type, 'category_list',
+		    // Terms links.
+		    register_rest_field( $post_type, 'terms_list',
 			    array(
-				    'get_callback' => 'stackable_category_list',
+				    'get_callback' => 'stackable_terms_list',
 				    'update_callback' => null,
 				    'schema' => array(
-					    'description' => __( 'Category list links' ),
-					    'type' => 'string',
+					    'description' => __( 'Terms list links' ),
+					    'type' => 'array',
 				    ),
 			    )
 		    );
@@ -548,4 +575,27 @@ if ( ! function_exists( 'stackable_blog_posts_image_sizes' ) ) {
         add_image_size( 'stackable-square', 600, 600, true );
     }
     add_action( 'after_setup_theme', 'stackable_blog_posts_image_sizes' );
+}
+
+if ( ! function_exists( 'stackable_terms_list' ) ) {
+	function stackable_terms_list( $object ) {
+		$post = get_post( $object['id'] );
+		$taxonomies = wp_list_filter( get_object_taxonomies( $post, 'objects' ), array( 'show_in_rest' => true ) );
+		$data = [];
+		foreach ( $taxonomies as $taxonomy ) {
+			$_terms         = get_the_terms( $object['id'], $taxonomy->name );
+			if ( $_terms === false || is_a( $_terms, 'WP_Error' ) ) {
+				continue;
+			}
+			$terms = array();
+			foreach ( $_terms as $term ) {
+				$terms[] = array_merge(
+					(array) $term,
+					[ 'term_link' => get_term_link( $term ) ]
+				);
+			}
+			$data[ $taxonomy->name ] = $terms ? $terms : array();
+		}
+		return $data;
+	}
 }

@@ -1,17 +1,17 @@
 import './designs'
+import CategorySelect from './components/category-select';
+import CategoriesList from './components/categories-list';
 import {
 	AlignmentToolbar, BlockControls, InspectorControls, PanelColorSettings,
 } from '@wordpress/block-editor'
 import { Component, Fragment } from '@wordpress/element'
 import { dateI18n, format } from '@wordpress/date'
 import { DesignPanelBody, ProControl, ProControlButton } from '@stackable/components/'
-import { isUndefined, pickBy } from 'lodash'
+import { isUndefined, pickBy, get } from 'lodash'
 import {
 	PanelBody, Placeholder, QueryControls, RangeControl, SelectControl, Spinner, TextControl, ToggleControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
-import { addQueryArgs } from '@wordpress/url'
-import apiFetch from '@wordpress/api-fetch'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { decodeEntities } from '@wordpress/htmlEntities'
@@ -27,41 +27,7 @@ const featuredImageShapes = [
 	{ value: 'portrait', label: __( 'Portrait' ) },
 ]
 
-const CATEGORIES_LIST_QUERY = {
-	per_page: -1, // eslint-disable-line camelcase
-}
-
 class Edit extends Component {
-	constructor() {
-		super( ...arguments )
-		this.state = {
-			categoriesList: [],
-		}
-	}
-
-	componentWillMount() {
-		this.isStillMounted = true
-		this.fetchRequest = apiFetch( {
-			path: addQueryArgs( `/wp/v2/categories`, CATEGORIES_LIST_QUERY ),
-		} ).then(
-			categoriesList => {
-				if ( this.isStillMounted ) {
-					this.setState( { categoriesList } )
-				}
-			}
-		).catch(
-			() => {
-				if ( this.isStillMounted ) {
-					this.setState( { categoriesList: [] } )
-				}
-			}
-		)
-	}
-
-	componentWillUnmount() {
-		this.isStillMounted = false
-	}
-
 	render() {
 		// export const _edit = props => {
 		const {
@@ -70,14 +36,14 @@ class Edit extends Component {
 			latestPosts,
 			className,
 			postTypes,
+			postTypeTaxonomies,
+			terms,
 		} = this.props
-		const { categoriesList } = this.state
 		const {
 			contentAlign = '',
 			columns = 2,
 			order = 'desc',
 			orderBy = 'date',
-			categories = '',
 			postsToShow = 6,
 			displayFeaturedImage = true,
 			featuredImageShape = 'landscape',
@@ -94,6 +60,8 @@ class Edit extends Component {
 			shadow = 3,
 			accentColor = '',
 			postType,
+			displayTaxonomy,
+			taxQuery,
 		} = attributes
 
 		const hasPosts = Array.isArray( latestPosts ) && latestPosts.length
@@ -124,6 +92,17 @@ class Edit extends Component {
 		const show = applyFilters( 'stackable.blog-posts.edit.show', {
 			featuredImage: true,
 		}, design, this.props )
+
+		const termEntries = Object.entries( terms );
+		const taxonomyEntries = Object.entries( postTypeTaxonomies );
+
+		const displayTaxonomyOptions = [ { label: __( 'None' ), value: '' } ]
+			.concat(
+				taxonomyEntries
+					.map( ( [ value, { name } ] ) => ( { value, label: name } ) )
+			);
+
+		console.log( 'displayTaxonomyOptions', displayTaxonomyOptions );
 
 		const inspectorControls = (
 			<InspectorControls>
@@ -172,14 +151,28 @@ class Edit extends Component {
 							} )
 						} }
 					/>
+					{ Array.isArray( termEntries ) && termEntries.map( ( [ taxonomy, terms ] ) => {
+						const restBase = get( postTypeTaxonomies, [ taxonomy, 'rest_base' ], '' );
+						return Array.isArray( terms ) && <CategorySelect
+							label={ get( postTypeTaxonomies, [ taxonomy, 'name' ], '' ) }
+							categoriesList={ terms }
+							selectedCategoryId={ get( taxQuery, restBase, '' ) }
+							noOptionLabel={ __( 'All' ) }
+							onChange={ ( term ) => {
+								setAttributes( {
+									taxQuery: {
+										...taxQuery,
+										[ restBase ]: term,
+									}
+								})
+							} }
+						/>
+					} ) }
 					<QueryControls
 						{ ...{ order, orderBy } }
 						numberOfItems={ postsToShow }
-						categoriesList={ categoriesList }
-						selectedCategoryId={ categories }
 						onOrderChange={ order => setAttributes( { order } ) }
 						onOrderByChange={ orderBy => setAttributes( { orderBy } ) }
-						onCategoryChange={ value => setAttributes( { categories: '' !== value ? value : undefined } ) }
 						onNumberOfItemsChange={ postsToShow => setAttributes( { postsToShow } ) }
 					/>
 					<RangeControl
@@ -216,10 +209,11 @@ class Edit extends Component {
 						checked={ displayExcerpt }
 						onChange={ displayExcerpt => setAttributes( { displayExcerpt } ) }
 					/>
-					<ToggleControl
-						label={ __( 'Display Category' ) }
-						checked={ displayCategory }
-						onChange={ displayCategory => setAttributes( { displayCategory } ) }
+					<SelectControl
+						label={ __( 'Display Taxonomy' ) }
+						options={ displayTaxonomyOptions }
+						value={ displayTaxonomy }
+						onChange={ displayTaxonomy => setAttributes( { displayTaxonomy: displayTaxonomy === '' ? null: displayTaxonomy } ) }
 					/>
 					<ToggleControl
 						label={ __( 'Display Date' ) }
@@ -260,7 +254,7 @@ class Edit extends Component {
 							label: __( 'Accent Color' ),
 						},
 					] }
-				></PanelColorSettings>
+				/>
 				{ showProNotice &&
 					<PanelBody
 						initialOpen={ false }
@@ -311,7 +305,7 @@ class Edit extends Component {
 					{ applyFilters( 'stackable.blog-posts.edit.output.before', null, design, this.props ) }
 					{ displayPosts.map( ( post, i ) => {
 						const sizeName = featuredImageShape !== 'full' && columns < 2 ? `${ featuredImageShape }_large` : featuredImageShape
-						const featuredImageSrc = ( post.featured_image_urls[ sizeName ] || [] )[ 0 ]
+						const featuredImageSrc = get( post, [ 'featured_image_urls', sizeName, 0 ] );
 
 						// Ready the different blog post components.
 						const category = displayCategory && post.category_list && (
@@ -348,9 +342,21 @@ class Edit extends Component {
 							<p className="ugb-blog-posts__read_more"><a href={ post.link }>{ readMoreText ? readMoreText : __( 'Continue reading' ) }</a></p>
 						)
 
+						const { terms_list } = post;
+						const displayTerms = get( terms_list, displayTaxonomy, [] );
+
+						const taxonomies = displayTerms && (
+							<CategoriesList
+								terms={ displayTerms }
+								separator=", "
+							/>
+						);
+						console.log( 'displayTaxonomy', displayTaxonomy );
+
+
 						const defaultEditDesign = (
 							<article key={ i } className="ugb-blog-posts__item">
-								{ category }
+								{ taxonomies }
 								{ featuredImage }
 								{ ( displayDate || displayAuthor || displayComments ) &&
 								<aside className="entry-meta ugb-blog-posts__meta">
@@ -401,18 +407,59 @@ export default withSelect( ( select, props ) => {
 		orderBy = 'date',
 		categories = '',
 		postType = 'post',
-	} = props.attributes
-	const { getEntityRecords, getPostTypes } = select( 'core' );
+		taxQuery = {},
+		displayCategory,
+	} = props.attributes;
+	let { displayTaxonomy } = props.attributes;
+
+	const { getEntityRecords, getPostTypes, getTaxonomies } = select( 'core' );
+
+	const postTypeTaxonomies = ( getTaxonomies() || [] )
+		.filter( taxonomy => taxonomy.hierarchical === true
+			&& taxonomy.types.includes( postType )
+			&& taxonomy.visibility.public === true
+		)
+		.reduce( ( acc, taxonomy ) => {
+			return {
+				...acc,
+				[ taxonomy.slug ]: {
+					name: taxonomy.name,
+					rest_base: taxonomy.rest_base
+				}
+			}
+		}, {} );
+
 	const latestPostsQuery = pickBy( {
+		...taxQuery,
 		categories,
 		order,
 		orderby: orderBy,
 		per_page: postsToShow, // eslint-disable-line camelcase
-	}, value => ! isUndefined( value ) )
+	}, value => ! isUndefined( value ) );
 
-	const postTypes = getPostTypes() || [];
+	const termsQuery = {
+		per_page: 100,
+	};
+
+	const postTypeTaxonomiesSlugs = Object.keys( postTypeTaxonomies );
+	const terms = {};
+	postTypeTaxonomiesSlugs.forEach( slug => {
+		terms[ slug ] = getEntityRecords( 'taxonomy', slug, termsQuery );
+	});
+
+	if ( displayCategory === true && displayTaxonomy === '' && postTypeTaxonomiesSlugs.includes( 'category' ) ) {
+		// Backwards compatibility
+		displayTaxonomy = 'category';
+	}
+
 	return {
-		postTypes: postTypes.filter( postType => postType.viewable === true && postType.slug !== 'attachment' ),
+		postTypes: ( getPostTypes() || [] ).filter( postType => postType.viewable === true && postType.slug !== 'attachment' ),
 		latestPosts: getEntityRecords( 'postType', postType, latestPostsQuery ),
+		terms,
+		postTypeTaxonomies,
+		attributes: {
+			...props.attributes,
+			displayTaxonomy,
+		},
 	}
 } )( Edit )
