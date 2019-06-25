@@ -102,7 +102,6 @@ class Edit extends Component {
 					.map( ( [ value, { name } ] ) => ( { value, label: name } ) )
 			);
 
-		console.log( 'displayTaxonomyOptions', displayTaxonomyOptions );
 
 		const inspectorControls = (
 			<InspectorControls>
@@ -351,7 +350,6 @@ class Edit extends Component {
 								separator=", "
 							/>
 						);
-						console.log( 'displayTaxonomy', displayTaxonomy );
 
 
 						const defaultEditDesign = (
