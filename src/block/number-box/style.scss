@@ -10,23 +10,28 @@
 	.ugb-block-content {
 		display: grid;
 		grid-auto-columns: minmax(0, 1fr);
+		grid-auto-flow: column;
 		grid-gap: $box-hori-padding;
 	}
 
 	&.ugb-number-box--columns-2 .ugb-block-content {
 		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		grid-auto-flow: row;
 	}
 	&.ugb-number-box--columns-1 .ugb-block-content {
 		grid-template-columns: minmax(0, 1fr);
+		grid-auto-flow: row;
 	}
 	@media screen and (max-width: $break-medium) {
 		&.ugb-number-box--columns-3 .ugb-block-content {
 			grid-template-columns: minmax(0, 1fr);
+			grid-auto-flow: row;
 		}
 	}
 	@media screen and (max-width: $break-small) {
 		&.ugb-number-box--columns-2 .ugb-block-content {
 			grid-template-columns: minmax(0, 1fr);
+			grid-auto-flow: row;
 		}
 	}
 

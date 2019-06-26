@@ -15,14 +15,11 @@
 
 	.ugb-block-content {
 		display: grid;
-		// grid-auto-columns: auto;
 		grid-auto-columns: minmax(0, 1fr);
+		grid-auto-flow: column;
 		grid-gap: $box-hori-padding;
 	}
 
-	.ugb-countup__item {
-		grid-row: 1;
-	}
 	.ugb-countup__counter {
 		font-size: 40px;
 		line-height: 1em;
@@ -44,14 +41,32 @@
 		margin-bottom: 0;
 	}
 
-	// Collapse to 4 columns to 2 rows of 2-columns.
-	@media screen and (max-width: $break-medium) {
+	@media screen and (max-width: $break-large) {
 		// Resize numbers to make them smaller in small screens.
 		.ugb-countup__counter {
 			font-size: calc(1rem + 4vw) !important;
 		}
 	}
 }
+
+// Collapse to 4 columns to 2 rows of 2-columns.
+@media screen and (max-width: $break-large) and (min-width: $break-small) {
+	.ugb-count-up.ugb-countup--columns-4 .ugb-block-content {
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		grid-auto-flow: row;
+	}
+}
+
+// Collapse 3 columns to 1 column.
+@media screen and (max-width: $break-small) {
+	.ugb-count-up.ugb-countup--columns-3 .ugb-block-content,
+	.ugb-count-up.ugb-countup--columns-4 .ugb-block-content {
+		grid-template-columns: minmax(0, 1fr);
+		grid-auto-flow: row;
+	}
+}
+
+// Deprecated < v2
 
 .ugb-countup,
 .ugb-countup .ugb-content-wrapper {
@@ -89,8 +104,6 @@
 		}
 	}
 }
-
-// Deprecated < v2
 
 .ugb-countup.ugb-countup--v3 {
 	@include baseBlock();
