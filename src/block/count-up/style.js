@@ -37,7 +37,7 @@ export const createStyles = props => {
 	if ( show.columnBackground ) {
 		styles.push( {
 			'.ugb-countup__item': {
-				borderRadius: getValue( 'borderRadius', '%spx' ),
+				borderRadius: getValue( 'borderRadius', '%spx !important' ),
 			},
 		} )
 	}
