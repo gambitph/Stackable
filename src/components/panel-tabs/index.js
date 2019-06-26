@@ -4,6 +4,7 @@ import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { Icon } from '@wordpress/components'
 import withMemory from './with-memory'
+import withSticky from './with-sticky'
 
 const TABS = [
 	{
@@ -96,9 +97,15 @@ class PanelTabs extends Component {
 	}
 
 	render() {
+		const classNames = classnames( [
+			this.props.className,
+			'components-panel__body',
+			'ugb-panel-tabs',
+		] )
 		return (
 			<div
-				className="components-panel__body ugb-panel-tabs"
+				className={ classNames }
+				style={ this.props.style }
 				ref={ this.containerDiv }
 			>
 				{ TABS.map( ( { value, title, label, icon }, i ) => {
@@ -128,6 +135,8 @@ class PanelTabs extends Component {
 }
 
 PanelTabs.defaultProps = {
+	className: '',
+	style: {},
 	closeOtherPanels: true,
 	blockProps: {},
 	initialTab: '',
@@ -136,4 +145,4 @@ PanelTabs.defaultProps = {
 	tabs: null,
 }
 
-export default withMemory( PanelTabs )
+export default withSticky( withMemory( PanelTabs ) )
