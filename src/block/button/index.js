@@ -83,7 +83,7 @@ addFilter( 'stackable.button.mainClassName', 'stackable/button', () => {
 } )
 
 // If the alignment was changed, but the design doesn't support it, go back to the basic design to allow the alignment change.
-addFilter( 'stackable.setAttributes', 'stackable/button/contentAlign', ( attributes, blockProps ) => {
+addFilter( 'stackable.button.setAttributes', 'stackable/button/contentAlign', ( attributes, blockProps ) => {
 	if ( typeof attributes.contentAlign === 'undefined' ) {
 		return attributes
 	}
@@ -96,7 +96,7 @@ addFilter( 'stackable.setAttributes', 'stackable/button/contentAlign', ( attribu
 } )
 
 // If the design was changed, but the design doesn't support alignment, reset the alignment attribute.
-addFilter( 'stackable.setAttributes', 'stackable/button/design', attributes => {
+addFilter( 'stackable.button.setAttributes', 'stackable/button/design', attributes => {
 	if ( typeof attributes.design === 'undefined' ) {
 		return attributes
 	}
