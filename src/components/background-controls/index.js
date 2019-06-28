@@ -454,6 +454,7 @@ BackgroundControls.defaultProps = {
 
 	// Advanced background.
 	hasAdvancedBackground: true,
+	backgroundMediaAllowedTypes: true,
 	backgroundPosition: '',
 	tabletBackgroundPosition: '',
 	mobileBackgroundPosition: '',
