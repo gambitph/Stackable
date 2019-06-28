@@ -36,23 +36,3 @@
 [data-type="ugb/count-up"] > .editor-block-list__block-edit > .editor-block-contextual-toolbar > .editor-block-toolbar > .components-toolbar:nth-of-type(2) {
 	display: none;
 }
-
-// Hide columns.
-.ugb-countup.ugb-countup--columns-1 {
-	.ugb-countup__item:nth-of-type(2),
-	.ugb-countup__item:nth-of-type(3),
-	.ugb-countup__item:nth-of-type(4) {
-		display: none;
-	}
-}
-.ugb-countup.ugb-countup--columns-2 {
-	.ugb-countup__item:nth-of-type(3),
-	.ugb-countup__item:nth-of-type(4) {
-		display: none;
-	}
-}
-.ugb-countup.ugb-countup--columns-3 {
-	.ugb-countup__item:nth-of-type(4) {
-		display: none;
-	}
-}
