@@ -109,7 +109,7 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 	}
 
 	if ( getValue( 'Design' ) !== 'link' ) {
-		const iconSpacingRule = getValue( 'IconSpacing' ) !== '' ? `${ getValue( 'IconSpacing' ) }px` : undefined
+		const iconSpacingRule = blockAttributes[ getAttrName( 'IconSpacing' ) ] !== '' ? `${ getValue( 'IconSpacing', 0 ) }px` : undefined
 		const borderRadius = blockAttributes[ getAttrName( 'BorderRadius' ) ]
 		styles.push( {
 			[ `.${ mainClassName }` ]: {
