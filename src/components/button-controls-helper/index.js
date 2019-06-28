@@ -66,7 +66,7 @@ const ButtonControlsHelper = props => {
 
 			borderRadius={ props.blockAttributes[ getAttrName( 'BorderRadius' ) ] }
 			borderWidth={ props.blockAttributes[ getAttrName( 'BorderWidth' ) ] }
-			shadow={ props.blockAttributes[ getAttrName( 'Shadow' ) ] || '' }
+			shadow={ props.blockAttributes[ getAttrName( 'Shadow' ) ] }
 			onChangeBorderRadius={ value => setAttributes( { [ getAttrName( 'BorderRadius' ) ]: value } ) }
 			onChangeBorderWidth={ value => setAttributes( { [ getAttrName( 'BorderWidth' ) ]: value } ) }
 			onChangeShadow={ value => setAttributes( { [ getAttrName( 'Shadow' ) ]: value } ) }
@@ -82,7 +82,7 @@ const ButtonControlsHelper = props => {
 			} }
 			iconSize={ props.blockAttributes[ getAttrName( 'IconSize' ) ] || '' }
 			iconPosition={ props.blockAttributes[ getAttrName( 'IconPosition' ) ] || '' }
-			iconSpacing={ props.blockAttributes[ getAttrName( 'IconSpacing' ) ] || '' }
+			iconSpacing={ props.blockAttributes[ getAttrName( 'IconSpacing' ) ] }
 			onChangeIconSize={ value => setAttributes( { [ getAttrName( 'IconSize' ) ]: value } ) }
 			onChangeIconPosition={ value => setAttributes( { [ getAttrName( 'IconPosition' ) ]: value } ) }
 			onChangeIconSpacing={ value => setAttributes( { [ getAttrName( 'IconSpacing' ) ]: value } ) }
