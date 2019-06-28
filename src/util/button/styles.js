@@ -73,7 +73,8 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 				borderColor: getValue( 'HoverBackgroundColor' ) !== '' ? getValue( 'HoverBackgroundColor' ) : undefined,
 			},
 			[ `.${ mainClassName }:hover .ugb-button--inner, .${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon:hover svg` ]: {
-				color: getValue( 'HoverBackgroundColor' ) !== '' ? getValue( 'HoverBackgroundColor' ) : undefined,
+				color: getValue( 'HoverBackgroundColor' ) !== '' ? getValue( 'HoverBackgroundColor' ) :
+					( getValue( 'BackgroundColor' ) !== '' ? getValue( 'BackgroundColor' ) : undefined ),
 			},
 		} )
 
