@@ -1045,8 +1045,8 @@ const deprecated = [
 				columnBackgroundColor2: attributes.backgroundColor2,
 				columnBackgroundGradientDirection: attributes.backgroundColorDirection,
 				backgroundType: undefined,
-				columnBackgroundMediaID: attributes.backgroundImageID,
-				columnBackgroundMediaURL: attributes.backgroundImageURL,
+				columnBackgroundMediaId: attributes.backgroundImageID,
+				columnBackgroundMediaUrl: attributes.backgroundImageURL,
 				columnBackgroundTintStrength: attributes.backgroundOpacity,
 				columnFixedBackground: attributes.fixedBackground,
 			}
