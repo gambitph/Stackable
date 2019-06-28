@@ -49,7 +49,7 @@ const ButtonControlsHelper = props => {
 					[ getAttrName( 'HoverOpacity' ) ]: '',
 				} )
 			} }
-			hoverEffect={ props.blockAttributes[ getAttrName( 'hoverEffect' ) ] || '' }
+			hoverEffect={ props.blockAttributes[ getAttrName( 'HoverEffect' ) ] || '' }
 			hoverOpacity={ props.blockAttributes[ getAttrName( 'HoverOpacity' ) ] || '' }
 			hoverTextColor={ props.blockAttributes[ getAttrName( 'HoverTextColor' ) ] || '' }
 			hoverBackgroundColor={ props.blockAttributes[ getAttrName( 'HoverBackgroundColor' ) ] || '' }
