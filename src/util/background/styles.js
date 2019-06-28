@@ -2,21 +2,25 @@ import { camelCase } from 'lodash'
 import rgba from 'color-rgba'
 import { sprintf } from '@wordpress/i18n'
 
-const createBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {} ) => {
+const createBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {}, options = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
 	const getValue = ( attrName, defaultValue = '' ) => blockAttributes[ getAttrName( attrName ) ] || defaultValue
+
+	const {
+		importantBackgroundColor = false,
+	} = options
 
 	const customSize = getValue( 'BackgroundCustomSize' ) !== '' ? `${ getValue( 'BackgroundCustomSize' ) }${ getValue( 'BackgroundCustomSizeUnit', '%' ) }` : undefined
 	const tabletCustomSize = getValue( 'TabletBackgroundCustomSize' ) !== '' ? `${ getValue( 'TabletBackgroundCustomSize' ) }${ getValue( 'TabletBackgroundCustomSizeUnit', '%' ) }` : undefined
 	const mobileCustomSize = getValue( 'MobileBackgroundCustomSize' ) !== '' ? `${ getValue( 'MobileBackgroundCustomSize' ) }${ getValue( 'MobileBackgroundCustomSizeUnit', '%' ) }` : undefined
 
 	// Background color opacity.
-	let backgroundColor = getValue( 'BackgroundColor' ) !== '' ? getValue( 'BackgroundColor' ) : undefined
+	let backgroundColor = getValue( 'BackgroundColor' ) !== '' ? `${ getValue( 'BackgroundColor' ) }${ importantBackgroundColor ? ' !important' : '' }` : undefined
 	if ( getValue( 'BackgroundColorType' ) === '' && typeof blockAttributes[ getAttrName( 'BackgroundColorOpacity' ) ] !== 'undefined' && blockAttributes[ getAttrName( 'BackgroundColorOpacity' ) ] !== '' ) {
 		if ( ! getValue( 'BackgroundMediaURL' ) && ! getValue( 'TabletBackgroundMediaURL' ) && ! getValue( 'MobileBackgroundMediaURL' ) ) {
 			const newColor = rgba( `${ getValue( 'BackgroundColor', '#ffffff' ) }ff` )
 			newColor[ 3 ] = getValue( 'BackgroundColorOpacity', 0 )
-			backgroundColor = `rgba(${ newColor.join( ', ' ) })`
+			backgroundColor = `rgba(${ newColor.join( ', ' ) })${ importantBackgroundColor ? ' !important' : '' }`
 		}
 	}
 
@@ -99,28 +103,28 @@ export const hasBackgroundOverlay = ( attrNameTemplate = '%s', blockAttributes =
 		getValue( 'MobileBackgroundMediaUrl' )
 }
 
-export const createBackgroundStyleSet = ( attrNameTemplate = '%s', mainClassName = '', blockAttributes = {} ) => {
+export const createBackgroundStyleSet = ( attrNameTemplate = '%s', mainClassName = '', blockAttributes = {}, options = {} ) => {
 	return {
 		[ `.${ mainClassName }` ]: {
-			...createBackgroundStyles( attrNameTemplate, 'desktop', blockAttributes ),
+			...createBackgroundStyles( attrNameTemplate, 'desktop', blockAttributes, options ),
 		},
 		[ `.${ mainClassName }:before` ]: {
-			...createBackgroundOverlayStyles( attrNameTemplate, 'desktop', blockAttributes ),
+			...createBackgroundOverlayStyles( attrNameTemplate, 'desktop', blockAttributes, options ),
 		},
 		tablet: {
 			[ `.${ mainClassName }` ]: {
-				...createBackgroundStyles( attrNameTemplate, 'tablet', blockAttributes ),
+				...createBackgroundStyles( attrNameTemplate, 'tablet', blockAttributes, options ),
 			},
 			[ `.${ mainClassName }:before` ]: {
-				...createBackgroundOverlayStyles( attrNameTemplate, 'tablet', blockAttributes ),
+				...createBackgroundOverlayStyles( attrNameTemplate, 'tablet', blockAttributes, options ),
 			},
 		},
 		mobile: {
 			[ `.${ mainClassName }` ]: {
-				...createBackgroundStyles( attrNameTemplate, 'mobile', blockAttributes ),
+				...createBackgroundStyles( attrNameTemplate, 'mobile', blockAttributes, options ),
 			},
 			[ `.${ mainClassName }:before` ]: {
-				...createBackgroundOverlayStyles( attrNameTemplate, 'mobile', blockAttributes ),
+				...createBackgroundOverlayStyles( attrNameTemplate, 'mobile', blockAttributes, options ),
 			},
 		},
 	}
