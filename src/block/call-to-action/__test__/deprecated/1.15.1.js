@@ -40,6 +40,42 @@ module.exports = [
 	{
 		block: 'Call to Action',
 		version: '1.15.5',
+		description: 'From Demo',
+		plan: 'premium',
+		html: `<!-- wp:ugb/cta {"buttonDesign":"ghost","color":"#d1e05a","titleColor":"#d1e05a","bodyTextColor":"#a3a3a3","borderButtonRadius":50,"backgroundColorType":"gradient","backgroundColor":"#260737","backgroundImageID":373,"backgroundImageURL":"https://demo.wpstackable.com/wp-content/uploads/2019/02/Street-Night-2.jpg","backgroundOpacity":7,"fixedBackground":true,"contentWidth":true,"design":"split-centered","shadow":5,"align":"wide","hoverEffect":"scale"} -->
+		<div class="wp-block-ugb-cta alignwide ugb-cta ugb--background-opacity-7 ugb-cta--design-split-centered ugb--shadow-5 ugb--has-background ugb--has-background-image ugb--has-background-gradient ugb--hover-scale" style="background-attachment:fixed;background-color:#260737;background-image:url(https://demo.wpstackable.com/wp-content/uploads/2019/02/Street-Night-2.jpg);--ugb-background-color:#260737;--ugb-background-direction:0deg"><div class="ugb-content-wrapper"><h3 class="ugb-cta__title" style="color:#d1e05a">Call to Action Block</h3><p class="ugb-cta__description" style="color:#a3a3a3">Persuade your visitors to perform an action. </p><div><a class="ugb-button ugb-button--align-center ugb-button--size-normal ugb-button--design-ghost" href="" style="border-radius:50px;border-color:#d1e05a;color:#d1e05a"><span class="ugb-button--inner" style="color:#d1e05a">Get now</span></a></div></div></div>
+		<!-- /wp:ugb/cta -->`,
+	},
+	{
+		block: 'Call to Action',
+		version: '1.15.5',
+		description: 'From Demo',
+		plan: 'premium',
+		html: `<!-- wp:ugb/cta {"color":"#8b3aca","titleColor":"#ffffff","bodyTextColor":"#ffffff","backgroundColor":"#ff6900","backgroundImageID":672,"backgroundImageURL":"https://demo.wpstackable.com/wp-content/uploads/2019/02/Gradient-CTA.jpg","backgroundOpacity":0,"design":"horizontal-2","borderRadius":46,"shadow":9,"align":"wide","hoverEffect":"lift"} -->
+		<div class="wp-block-ugb-cta alignwide ugb-cta ugb--background-opacity-0 ugb-cta--design-horizontal-2 ugb--shadow-9 ugb--has-background ugb--has-background-image ugb--hover-lift" style="background-color:#ff6900;background-image:url(https://demo.wpstackable.com/wp-content/uploads/2019/02/Gradient-CTA.jpg);--ugb-background-color:#ff6900;border-radius:46px"><div class="ugb-content-wrapper"><h3 class="ugb-cta__title" style="color:#ffffff">Escape to our Paradise</h3><p class="ugb-cta__description" style="color:#ffffff">This is your next dream destination</p><div><a class="ugb-button ugb-button--align-center ugb-button--size-normal" href="" style="border-radius:4px;background-color:#8b3aca"><span class="ugb-button--inner">Book now</span></a></div></div></div>
+		<!-- /wp:ugb/cta -->`,
+	},
+	{
+		block: 'Call to Action',
+		version: '1.15.5',
+		description: 'From Demo',
+		plan: 'premium',
+		html: `<!-- wp:ugb/cta {"color":"#7bdcb5","textColor":"#313131","titleColor":"#7bdcb5","bodyTextColor":"#ffffff","borderButtonRadius":1,"backgroundType":"video","backgroundImageID":678,"backgroundImageURL":"https://demo.wpstackable.com/wp-content/uploads/2019/02/Fireworks-CTA.mp4","design":"horizontal-3","hoverEffect":"lower"} -->
+		<div class="wp-block-ugb-cta ugb-cta ugb--background-opacity-5 ugb-cta--design-horizontal-3 ugb--has-background ugb--has-background-image ugb--has-background-video ugb--hover-lower" style="background-image:url(https://demo.wpstackable.com/wp-content/uploads/2019/02/Fireworks-CTA.mp4)"><video class="ugb-video-background" autoplay muted loop src="https://demo.wpstackable.com/wp-content/uploads/2019/02/Fireworks-CTA.mp4"></video><div class="ugb-content-wrapper"><h3 class="ugb-cta__title" style="color:#7bdcb5">Celebrate a New Chapter with Us</h3><p class="ugb-cta__description" style="color:#ffffff">We can give you the best fireworks.</p><div><a class="ugb-button ugb-button--align-center ugb-button--size-normal" href="" style="border-radius:1px;background-color:#7bdcb5;color:#313131"><span class="ugb-button--inner" style="color:#313131">Contact Us</span></a></div></div></div>
+		<!-- /wp:ugb/cta -->`,
+	},
+	{
+		block: 'Call to Action',
+		version: '1.15.5',
+		description: 'From Demo',
+		plan: 'premium',
+		html: `<!-- wp:ugb/cta {"color":"#219a6e","borderButtonRadius":50,"backgroundColor":"#ffffff","backgroundImageID":690,"backgroundImageURL":"https://demo.wpstackable.com/wp-content/uploads/2019/02/Plant-CTA-02.jpg","backgroundOpacity":6,"buttonIcon":"fab-wordpress-simple","design":"horizontal","shadow":5,"hoverEffect":"shadow"} -->
+		<div class="wp-block-ugb-cta ugb-cta ugb--background-opacity-6 ugb-cta--design-horizontal ugb--shadow-5 ugb--has-background ugb--has-background-image ugb--hover-shadow" style="background-color:#ffffff;background-image:url(https://demo.wpstackable.com/wp-content/uploads/2019/02/Plant-CTA-02.jpg);--ugb-background-color:#ffffff"><div class="ugb-content-wrapper"><h3 class="ugb-cta__title">Make Your Living Space More Alive</h3><p class="ugb-cta__description">Go green with these beauties</p><div><a class="ugb-button ugb-button--align-center ugb-button--size-normal ugb-button--has-icon" href="" style="border-radius:50px;background-color:#219a6e"><svg aria-hidden="true" data-icon="wordpress-simple" class="svg-inline--fa ugbfa-wordpress-simple fa-w-16 " role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 512 512" value="fab-wordpress-simple"><path fill="currentColor" d="M256 8C119.3 8 8 119.2 8 256c0 136.7 111.3 248 248 248s248-111.3 248-248C504 119.2 392.7 8 256 8zM33 256c0-32.3 6.9-63 19.3-90.7l106.4 291.4C84.3 420.5 33 344.2 33 256zm223 223c-21.9 0-43-3.2-63-9.1l66.9-194.4 68.5 187.8c.5 1.1 1 2.1 1.6 3.1-23.1 8.1-48 12.6-74 12.6zm30.7-327.5c13.4-.7 25.5-2.1 25.5-2.1 12-1.4 10.6-19.1-1.4-18.4 0 0-36.1 2.8-59.4 2.8-21.9 0-58.7-2.8-58.7-2.8-12-.7-13.4 17.7-1.4 18.4 0 0 11.4 1.4 23.4 2.1l34.7 95.2L200.6 393l-81.2-241.5c13.4-.7 25.5-2.1 25.5-2.1 12-1.4 10.6-19.1-1.4-18.4 0 0-36.1 2.8-59.4 2.8-4.2 0-9.1-.1-14.4-.3C109.6 73 178.1 33 256 33c58 0 110.9 22.2 150.6 58.5-1-.1-1.9-.2-2.9-.2-21.9 0-37.4 19.1-37.4 39.6 0 18.4 10.6 33.9 21.9 52.3 8.5 14.8 18.4 33.9 18.4 61.5 0 19.1-7.3 41.2-17 72.1l-22.2 74.3-80.7-239.6zm81.4 297.2l68.1-196.9c12.7-31.8 17-57.2 17-79.9 0-8.2-.5-15.8-1.5-22.9 17.4 31.8 27.3 68.2 27.3 107 0 82.3-44.6 154.1-110.9 192.7z"></path></svg><span class="ugb-button--inner">Request for quote</span></a></div></div></div>
+		<!-- /wp:ugb/cta -->`,
+	},
+	{
+		block: 'Call to Action',
+		version: '1.15.5',
 		description: 'Custom CSS',
 		plan: 'premium',
 		html: `<!-- wp:ugb/cta {"customCSSUniqueID":"ugb-9344fd3","customCSS":"/* Call to action container */\n.ugb-cta {\n\tbackground: red;\n}\n\n/* Call to action content wrapper */\n.ugb-cta .ugb-content-wrapper {\n}\n\n/* Call to action title */\n.ugb-cta .ugb-cta__title {\n\t\n}\n\n/* Call to action description */\n.ugb-cta .ugb-cta__description {\n\t\n}\n\n/* Call to action button */\n.ugb-cta .ugb-button {\n\t\n}\n\n/* Call to action button text */\n.ugb-cta .ugb-button\u002d\u002dinner {\n\t\n}","customCSSCompiled":".ugb-9344fd3.ugb-cta{background:red !important}"} -->
