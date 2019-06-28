@@ -28,24 +28,15 @@ const addStyles = ( styleObject, props ) => {
 
 	const styles = [ styleObject ]
 	styles.push( {
-		'.ugb-number-box__item': {
-			textAlign: getValue( 'contentAlign' ),
-		},
 		'.ugb-inner-block': {
 			textAlign: getValue( 'contentAlign' ),
 		},
 		tablet: {
-			'.ugb-number-box__item': {
-				textAlign: getValue( 'tabletContentAlign' ),
-			},
 			'.ugb-inner-block': {
 				textAlign: getValue( 'tabletContentAlign' ),
 			},
 		},
 		mobile: {
-			'.ugb-number-box__item': {
-				textAlign: getValue( 'mobileContentAlign' ),
-			},
 			'.ugb-inner-block': {
 				textAlign: getValue( 'mobileContentAlign' ),
 			},
