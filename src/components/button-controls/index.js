@@ -325,7 +325,7 @@ const ButtonControls = props => {
 				<ButtonIconPopoverControl
 					label={ __( 'Adv. Icon Settings' ) }
 					onReset={ props.onResetAdvancedIcon }
-					allowReset={ props.iconPosition || props.iconSpacing }
+					allowReset={ props.iconPosition || props.iconSpacing !== '' }
 				>
 					{ props.onChangeIconPosition &&
 						<SelectControl
