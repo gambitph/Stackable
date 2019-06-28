@@ -4,9 +4,14 @@
  * Enqueued in the editor only.
  */
 
-// Remove border radius on full width.
-[data-align="full"] div.ugb-cta {
-	border-radius: 0 !important;
+// Contents go full-width when full-width.
+[data-type][data-align="full"] .ugb-cta.ugb-main-block:not(.ugb--has-block-background),
+// Contents go full-width when full-width with block background.
+[data-type][data-align="full"] .ugb-cta.ugb-main-block.ugb-main-block--inner-full.ugb--has-block-background {
+	padding: 0;
+	.ugb-cta__item {
+		border-radius: 0;
+	}
 }
 
 [data-type="ugb/cta"] {
@@ -23,4 +28,9 @@
 			display: none;
 		}
 	}
+}
+
+// Hide the block alignment toolbar, because we will replace it with our own in the
+[data-type="ugb/cta"] > .editor-block-list__block-edit > .editor-block-contextual-toolbar > .editor-block-toolbar > .components-toolbar:nth-of-type(2) {
+	display: none;
 }

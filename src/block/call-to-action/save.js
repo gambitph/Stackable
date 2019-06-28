@@ -1,115 +1,109 @@
+import { BlockContainer, ButtonEdit } from '@stackable/components'
+import { withBlockStyles, withUniqueClass } from '@stackable/higher-order'
 import { applyFilters } from '@wordpress/hooks'
-import { ButtonEdit } from '@stackable/components'
 import classnames from 'classnames'
+import { compose } from '@wordpress/compose'
+import createStyles from './style'
+import { Fragment } from '@wordpress/element'
+import { hasBackgroundOverlay } from '@stackable/util'
 import { RichText } from '@wordpress/block-editor'
 
 const save = props => {
 	const { className } = props
 	const {
-		url,
-		buttonText,
-		ctaTitle,
-		bodyText,
-		color,
-		textColor,
-		size,
-		borderButtonRadius,
-		bodyTextColor,
-		titleColor,
-		backgroundColorType = '',
-		backgroundColor,
-		backgroundColor2,
-		backgroundColorDirection = 0,
-		backgroundType = '',
-		backgroundImageURL,
-		backgroundOpacity,
-		fixedBackground,
-		buttonDesign,
-		buttonIcon,
 		design = 'basic',
-		borderRadius = 12,
 		shadow = 3,
-		align,
-		contentWidth,
-		newTab,
-	} = props.attributes
 
-	const designHasBackground = design !== 'plain'
+		// Title.
+		showTitle = true,
+		title = '',
+		titleTag = 'h3',
+
+		// Description.
+		showDescription = true,
+		description = '',
+
+		// Button.
+		showButton = true,
+		buttonUrl = '',
+		buttonNewWindow = false,
+		buttonSize = 'normal',
+		buttonText = '',
+		buttonShadow = 0,
+		buttonHoverEffect = '',
+		buttonIcon = '',
+		buttonIconPosition = '',
+		buttonDesign = 'basic',
+		buttonHoverGhostToNormal = false,
+		buttonNoFollow = false,
+	} = props.attributes
 
 	const mainClasses = classnames( [
 		className,
 		'ugb-cta',
-		'ugb--background-opacity-' + ( 1 * Math.round( backgroundOpacity / 1 ) ),
+		'ugb-cta--v2',
 	], applyFilters( 'stackable.cta.mainclasses', {
 		[ `ugb-cta--design-${ design }` ]: design !== 'basic',
-		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-		'ugb--has-background': backgroundColor || backgroundImageURL,
-		'ugb--has-background-image': backgroundImageURL,
-		[ `ugb-content-width` ]: align === 'full' && contentWidth,
-		[ `ugb--has-background-gradient` ]: designHasBackground && backgroundColorType === 'gradient',
-		[ `ugb--has-background-video` ]: designHasBackground && backgroundType === 'video',
 	}, design, props ) )
 
-	const backgroundStyle = ! designHasBackground ? {} : {
-		backgroundColor: backgroundColor ? backgroundColor : undefined,
-		backgroundImage: backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
-		'--ugb-background-color': backgroundImageURL || backgroundColorType === 'gradient' ? backgroundColor : undefined,
-		'--ugb-background-color2': backgroundColorType === 'gradient' && backgroundColor2 ? backgroundColor2 : undefined,
-		'--ugb-background-direction': backgroundColorType === 'gradient' ? `${ backgroundColorDirection }deg` : undefined,
-		borderRadius: borderRadius !== 12 ? borderRadius : undefined,
-	}
+	const itemClasses = classnames( [
+		'ugb-cta__item',
+	], applyFilters( 'stackable.cta.boxclasses', {
+		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
+		'ugb--has-background-overlay': hasBackgroundOverlay( 'column%s', props.attributes ),
+	}, design, props ) )
 
-	const mainStyle = {
-		backgroundAttachment: fixedBackground ? 'fixed' : undefined,
-		...backgroundStyle,
+	const titleComp = showTitle && ! RichText.isEmpty( title ) &&
+		<RichText.Content
+			tagName={ titleTag || 'h3' }
+			className="ugb-cta__title"
+			value={ title }
+		/>
+	const descriptionComp = showDescription && ! RichText.isEmpty( description ) &&
+		<RichText.Content
+			tagName="p"
+			className="ugb-cta__description"
+			value={ description }
+		/>
+	const buttonComp = showButton && !! buttonText.length &&
+		<ButtonEdit.Content
+			size={ buttonSize !== '' ? buttonSize : 'normal' }
+			text={ buttonText }
+			icon={ buttonIcon }
+			newTab={ buttonNewWindow !== '' && buttonNewWindow }
+			url={ buttonUrl }
+			noFollow={ buttonNoFollow }
+			hoverEffect={ buttonHoverEffect }
+			ghostToNormalEffect={ buttonHoverGhostToNormal }
+			shadow={ buttonShadow }
+			iconPosition={ buttonIconPosition }
+			design={ buttonDesign !== '' ? buttonDesign : 'basic' }
+		/>
+
+	const comps = {
+		title: titleComp,
+		description: descriptionComp,
+		button: buttonComp,
 	}
 
 	return (
-		<div className={ mainClasses } style={ mainStyle }>
-			{ designHasBackground && backgroundType === 'video' && (
-				<video
-					className="ugb-video-background"
-					autoPlay
-					muted
-					loop
-					src={ backgroundImageURL }
-				/>
-			) }
-			{ applyFilters( 'stackable.cta.save.output.before', null, design, props ) }
-			<div className="ugb-content-wrapper">
-				{ ctaTitle && !! ctaTitle.length && (
-					<RichText.Content
-						tagName="h3"
-						className="ugb-cta__title"
-						style={ { color: titleColor } }
-						value={ ctaTitle }
-					/>
-				) }
-				{ bodyText && !! bodyText.length && (
-					<RichText.Content
-						tagName="p"
-						className="ugb-cta__description"
-						style={ { color: bodyTextColor } }
-						value={ bodyText }
-					/>
-				) }
-				{ buttonText && !! buttonText.length && (
-					<ButtonEdit.Content
-						size={ size }
-						url={ url }
-						color={ textColor }
-						text={ buttonText }
-						design={ buttonDesign }
-						icon={ buttonIcon }
-						backgroundColor={ color }
-						borderRadius={ borderButtonRadius }
-						newTab={ newTab }
-					/>
-				) }
-			</div>
-			{ applyFilters( 'stackable.cta.save.output.after', null, design, props ) }
-		</div>
+		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
+			<Fragment>
+				<div className={ itemClasses }>
+					{ applyFilters( 'stackable.cta.save.output', (
+						<Fragment>
+							{ titleComp }
+							{ descriptionComp }
+							{ buttonComp }
+						</Fragment>
+					), comps, props ) }
+				</div>
+			</Fragment>
+		) } />
 	)
 }
 
-export default save
+export default compose(
+	withUniqueClass,
+	withBlockStyles( createStyles ),
+)( save )

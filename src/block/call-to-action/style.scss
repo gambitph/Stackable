@@ -6,13 +6,41 @@
 
 @import "common";
 
-.ugb-cta {
+.ugb-cta.ugb-cta--v2 {
+	.ugb-cta__item {
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+	.ugb-cta__title,
+	.ugb-cta__description {
+		margin-bottom: $text-margin-bottom;
+	}
+	&:not(.ugb-cta--design-plain) {
+		.ugb-cta__item {
+			@include box();
+		}
+	}
+}
+
+// Full width
+.ugb-cta.ugb-main-block.alignfull {
+	padding: 0;
+	.ugb-cta__item {
+		border-radius: 0;
+	}
+}
+
+// Deprecated version < 2
+
+.ugb-cta:not([class*="ugb-cta--v"]) {
 	text-align: center;
 	background-color: #f4f4f4;
-	@include baseBlock(); // TODO: [V2] Deprecate this usage
+	@include baseBlock();
 	@include box();
 	.ugb-content-wrapper {
-		@include baseBlock(); // TODO: [V2] Deprecate this usage
+		@include baseBlock();
 	}
 	.ugb-button {
 		margin-top: 0;
@@ -20,8 +48,8 @@
 	}
 }
 
-.ugb-cta.ugb-cta--design-plain,
-.ugb-cta.ugb-design-plain {
+.ugb-cta:not([class*="ugb-cta--v"]).ugb-cta--design-plain,
+.ugb-cta:not([class*="ugb-cta--v"]).ugb-design-plain {
 	box-shadow: none;
 	border-radius: 0;
 	padding: 0;

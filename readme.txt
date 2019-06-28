@@ -116,6 +116,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Custom CSS of some blocks might fail to upgrade to a newer format and might stop working after editing existing blocks. Here are the affected blocks and how to manually fix your custom CSS:
 	* Icon List block - Change all selectors `ugb-icon-list-wrapper` to `ugb-icon-list`
 	* Count Up block - Change the main selector `.ugb-countup` to `.ugb-count-up`
+	* Call to Action block - Change the box selector `ugb-content-wrapper` to `ugb-cta__item`
 * Count Up Block: We have replaced the Basic layout, with a new "Plain 2" layout since the Basic layout can be similarly achieved with the new Block Background options.
 * Icon List block: By default the multi-column lists will now collapse to 1 column on mobile.
 

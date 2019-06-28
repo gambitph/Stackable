@@ -4,109 +4,23 @@
  * Registering a basic block with Gutenberg.
  * Simple block, renders and saves the same content without any interactivity.
  */
+import {
+	createAllCombinationAttributes,
+	createBackgroundAttributes,
+	createButtonAttributes,
+	createResponsiveAttributes,
+	createTypographyAttributes,
+	descriptionPlaceholder,
+} from '@stackable/util'
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 import { CTAIcon } from '@stackable/icons'
 import deprecated from './deprecated'
-import { descriptionPlaceholder } from '@stackable/util'
 import { disabledBlocks } from 'stackable'
 import edit from './edit'
 import save from './save'
 
 const schema = {
-	url: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.ugb-button',
-		attribute: 'href',
-		default: '',
-	},
-	newTab: {
-		type: 'boolean',
-		source: 'attribute',
-		selector: '.ugb-button',
-		attribute: 'target',
-		default: false,
-	},
-	ctaTitle: {
-		source: 'html',
-		selector: 'h3',
-		default: __( 'Title for This Block' ),
-	},
-	bodyText: {
-		source: 'html',
-		selector: 'p',
-		default: descriptionPlaceholder(),
-	},
-	buttonText: {
-		source: 'html',
-		selector: '.ugb-button span',
-		default: __( 'Button text' ),
-	},
-	buttonDesign: {
-		type: 'string',
-		default: 'basic',
-	},
-	color: {
-		type: 'string',
-	},
-	textColor: {
-		type: 'string',
-		// default: '#ffffff',
-	},
-	titleColor: {
-		type: 'string',
-	},
-	bodyTextColor: {
-		type: 'string',
-	},
-	size: {
-		type: 'string',
-		default: 'normal',
-	},
-	borderButtonRadius: {
-		type: 'number',
-		default: 4,
-	},
-	backgroundColorType: {
-		type: 'string',
-		default: '',
-	},
-	backgroundColor: {
-		type: 'string',
-	},
-	backgroundColor2: {
-		type: 'string',
-		default: '',
-	},
-	backgroundColorDirection: {
-		type: 'number',
-		default: 0,
-	},
-	backgroundType: {
-		type: 'string',
-		default: '',
-	},
-	backgroundImageID: {
-		type: 'number',
-	},
-	backgroundImageURL: {
-		type: 'string',
-	},
-	backgroundOpacity: {
-		type: 'number',
-		default: 5,
-	},
-	fixedBackground: {
-		type: 'boolean',
-		default: false,
-	},
-	buttonIcon: {
-		type: 'string',
-	},
-	contentWidth: {
-		type: 'boolean',
-		default: false,
-	},
 	design: {
 		type: 'string',
 		default: 'basic',
@@ -119,31 +33,79 @@ const schema = {
 		type: 'number',
 		default: 3,
 	},
-	align: {
-		type: 'string',
+
+	// Title.
+	title: {
+		source: 'html',
+		selector: 'h3, .ugb-cta__title',
+		default: __( 'Title for This Block' ),
 	},
+	showTitle: {
+		type: 'boolean',
+		default: true,
+	},
+	titleTag: {
+		type: 'string',
+		defualt: '',
+	},
+	...createTypographyAttributes( 'title%s' ),
+	titleColor: {
+		type: 'string',
+		default: '',
+	},
+
+	// Description.
+	description: {
+		source: 'html',
+		selector: 'p, .ugb-cta__description',
+		default: descriptionPlaceholder(),
+	},
+	showDescription: {
+		type: 'boolean',
+		default: true,
+	},
+	...createTypographyAttributes( 'description%s' ),
+	descriptionColor: {
+		type: 'string',
+		default: '',
+	},
+
+	// Button.
+	showButton: {
+		type: 'boolean',
+		default: true,
+	},
+	...createButtonAttributes( 'button%s', { selector: '.ugb-button' } ),
+
+	...createBackgroundAttributes( 'column%s' ),
+
 	hoverEffect: {
 		type: 'string',
 		default: '',
 	},
 
-	// Custom CSS attributes.
-	customCSSUniqueID: {
-		type: 'string',
+	...createResponsiveAttributes( 'title%sBottomMargin', {
+		type: 'number',
 		default: '',
-	},
-	customCSS: {
-		type: 'string',
+	} ),
+	...createResponsiveAttributes( 'description%sBottomMargin', {
+		type: 'number',
 		default: '',
-	},
-	customCSSCompiled: {
-		type: 'string',
-		default: '',
-	},
+	} ),
 
-	// Keep the old attributes. Gutenberg issue https://github.com/WordPress/gutenberg/issues/10406
-	bgColor: {
-		type: 'string',
+	...createAllCombinationAttributes(
+		'%s%sAlign', {
+			type: 'string',
+			default: '',
+		},
+		[ 'Title', 'Description', 'Button' ],
+		[ '', 'Tablet', 'Mobile' ]
+	),
+
+	// TODO: Not anymore supported?
+	contentWidth: {
+		type: 'boolean',
+		default: false,
 	},
 }
 
@@ -163,14 +125,56 @@ export const settings = {
 	supports: {
 		align: [ 'center', 'wide', 'full' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
-		// eslint-disable-next-line
-		inserter: false, // TODO: Remove when ready for v2.
 	},
 
 	deprecated,
 	edit,
 	save,
 
+	// Stackable modules.
+	modules: {
+		'advanced-block-spacing': true,
+		'advanced-column-spacing': {
+			columnGap: false,
+		},
+		'advanced-responsive': true,
+		'block-background': true,
+		'block-separators': true,
+		// 'block-title': true,
+		'content-align': true,
+		'custom-css': {
+			default: applyFilters( 'stackable.cta.custom-css.default', '' ),
+		},
+	},
+
 	// Stackable specific settings.
 	sDemoURL: 'https://wpstackable.com/call-to-action-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+}
+
+export const showOptions = blockProps => {
+	const {
+		design = 'basic',
+		showBlockBackground = false,
+		blockInnerWidth = '',
+		align = '',
+	} = blockProps.attributes
+
+	// Border radius options aren't available in non-plain & full width.
+	let borderRadius = true
+	if ( design === 'plain' ) {
+		borderRadius = false
+	} else if ( align === 'full' ) {
+		if ( ! showBlockBackground ) {
+			borderRadius = false
+		} else if ( blockInnerWidth === 'full' ) {
+			borderRadius = false
+		}
+	}
+
+	return applyFilters( 'stackable.cta.show', {
+		columnBackground: design !== 'plain',
+		borderRadius,
+		titleSpacing: true,
+		descriptionSpacing: true,
+	}, blockProps )
 }

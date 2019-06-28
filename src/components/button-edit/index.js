@@ -36,7 +36,7 @@ const ButtonEdit = props => {
 	} )
 
 	return (
-		<div>
+		<div className="ugb-button-container">
 			{ /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
 			<a
 				href="#"
@@ -102,7 +102,7 @@ ButtonEdit.Content = props => {
 	}
 
 	return (
-		<div>
+		<div className="ugb-button-container">
 			<a
 				className={ mainClasses }
 				href={ url }
