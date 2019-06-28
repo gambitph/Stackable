@@ -109,13 +109,14 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 
 	if ( getValue( 'Design' ) !== 'link' ) {
 		const iconSpacingRule = getValue( 'IconSpacing' ) !== '' ? `${ getValue( 'IconSpacing' ) }px` : undefined
+		const borderRadius = blockAttributes[ getAttrName( 'borderRadius' ) ]
 		styles.push( {
 			[ `.${ mainClassName }` ]: {
 				opacity: getValue( 'Opacity' ) !== '' ? getValue( 'Opacity' ) : undefined,
-				borderRadius: blockAttributes[ getAttrName( 'borderRadius' ) ] !== '' ? `${ blockAttributes[ getAttrName( 'borderRadius' ) ] }px !important` : undefined,
+				borderRadius: borderRadius !== '' && typeof borderRadius !== 'undefined' ? `${ borderRadius }px !important` : undefined,
 			},
 			[ `.${ mainClassName }:before` ]: {
-				borderRadius: blockAttributes[ getAttrName( 'borderRadius' ) ] !== '' ? `${ blockAttributes[ getAttrName( 'borderRadius' ) ] }px !important` : undefined,
+				borderRadius: borderRadius !== '' && typeof borderRadius !== 'undefined' ? `${ borderRadius }px !important` : undefined,
 			},
 			[ `.${ mainClassName }:hover` ]: {
 				opacity: getValue( 'HoverOpacity' ) !== '' ? getValue( 'HoverOpacity' ) : undefined,
