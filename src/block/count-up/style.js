@@ -24,12 +24,12 @@ export const createStyles = props => {
 		},
 		tablet: {
 			'.ugb-countup__icon, .ugb-countup__counter, .ugb-countup__title, .ugb-countup__description': {
-				textAlign: getValue( 'contentTabletAlign' ),
+				textAlign: getValue( 'tabletContentAlign' ),
 			},
 		},
 		mobile: {
 			'.ugb-countup__icon, .ugb-countup__counter, .ugb-countup__title, .ugb-countup__description': {
-				textAlign: getValue( 'contentMobileAlign' ),
+				textAlign: getValue( 'mobileContentAlign' ),
 			},
 		},
 	} )
