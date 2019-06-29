@@ -12,19 +12,135 @@ Blocks for everyone
 
 == Description ==
 
-Stackable is a beautiful collection of ready-to-use blocks for Gutenberg - the new WordPress editor. Stackable's blocks gives you the capability to build awesome front pages and landing pages.
+Stackable is a collection of beautiful ready-to-use custom blocks that builds on and supercharges the new WordPress block editor (Gutenberg). Stackable’s blocks give you the capability to easily create great websites with just a few clicks.
 
-Stackable provides feature-rich blocks that gives you more design options for your site. Stackable's blocks look great out of the box, and will make website building a breeze. Stackable blocks are responsive and will look great even in small screens.
+Visit our [website](https://wpstackable.com) (made with Gutenberg + Stackable blocks) to learn more about Stackable.
 
-[View our website](https://wpstackable.com) which was made with Gutenberg + Stackable blocks.
+Stackable provides feature-rich blocks that gives you more design options for your site. Stackable’s blocks look great out of the box, and will make website building a breeze.
 
-## Kick-ass blocks
+Stackable’s custom blocks come with multiple block layouts that you can use to build your perfect site without writing a single line of code. Stackable blocks are also responsive and will look great even in small screens.
 
-- Container Block - [View Block](https://wpstackable.com/container-block/)
-- Separator Block - [View Block](https://wpstackable.com/separator-block/)
-- Posts Block - [View Block](https://wpstackable.com/blog-posts-block/)
+Want to see it in action? Check out our [block demos](https://wpstackable.com/container-block/).
+
+## Stackable blocks
+
+**Container Block** — [View Block](https://wpstackable.com/container-block/)
+
+The Container is a robust and flexible block that allows you to combine different blocks in a single row. You can change the container layout and size to different configurations for ultimate flexibility.
+
+**Separator Block** — [View Block](https://wpstackable.com/separator-block/)
+
+The Separator block allows you to add gorgeous transitions between sections on your page. Choose from different shape dividers to draw attention to important sections.
+
+**Posts Block** — [View Block](https://wpstackable.com/blog-posts-block/)
+
+The Posts block enables you to present your latest blog articles using great layouts. You can also choose the different details and information to be displayed.
+
+**Feature Grid Block** — [View Block](https://wpstackable.com/feature-grid-block/)
+
+The Feature Grid block allows you to showcase several features in a stylized layout. Use the grid to highlight your growing portfolio, products, and more.
+
+**Accordion Block** — [View Block](https://wpstackable.com/accordion-block/)
+
+The Accordion block allows you to display information in collapsible rows. This is can be used to display text heavy content such as FAQs or to manage the display of different content in your page.
+
+**Image Box Block** — [View Block](https://wpstackable.com/image-box-block/)
+
+The Image Box block allows you to create a collage of images. This can work as a gallery and is perfect for showcasing your portfolio, photos of your products, services and more.
+
+**Feature Block** — [View Block](https://wpstackable.com/feature-block/)
+
+The Feature block allows you to display a large section with a photo, title, description, and button. Use this block to easily give emphasis to notable posts that you want to highlight on your page.
+
+**Icon List Block** — [View Block](https://wpstackable.com/icon-list-block/)
+
+The Icon List block allows you to create bulleted lists using different icons. Use the icon list to make your layout less cluttered and showcase list items more effectively. Create checklists, feature lists and the like.
+
+**Call to Action Block** — [View Block](https://wpstackable.com/call-to-action-block/)
+
+The Call to Action block can be utilized to persuade your visitors to perform an action. You can prompt them to learn more, download, buy and more.
+
+**Card Block** — [View Block](https://wpstackable.com/card-block/)
+
+The Card block is an all-around block to display content in a crisp layout. Use this block to elegantly display information and photos to showcase your portfolio, team photos, services, and more.
+
+**Header Block** — [View Block](https://wpstackable.com/header-block/)
+
+The Header block can be used to create a striking header to catch your visitors' attention while showing what your page is all about. You can also include a brief description and a call to action to make sure people are encouraged to explore further.
+
+**Count Up Block** — [View Block](https://wpstackable.com/count-up-block/)
+
+The Count Up block is great for showcasing interesting and notable stats on your page. The counter will count up from 0 to your designated number when the page is visited.
+
+**Video Popup Block** — [View Block](https://wpstackable.com/video-popup-block/)
+
+The Video Pop-up block lets you display a thumbnail to play a full-screen video from YouTube of Vimeo. This gives your users the ability to view the video in a pop-up window.
+
+**Pricing Box Block** — [View Block](https://wpstackable.com/pricing-table-block/)
+
+The Pricing Box block allows you to display pricing options detailing plans, prices, inclusions, and more. This is perfect for comparing different tiers and product promos.
+
+**Testimonial Block** — [View Block](https://wpstackable.com/testimonial-block/)
+
+The Testimonial Block lets you easily share your social proof by letting your site visitors know what other people say about you. You can also highlight feedback from notable industry players.
+
+**Team Members Block** — [View Block](https://wpstackable.com/team-member-block/)
+
+The Team Member Block is meant to introduce the individuals in your team. Feature relevant and interesting information about each team member like their position, duties and specialties.
+
+**Notification Block** — [View Block](https://wpstackable.com/notification-block/)
+
+The Notification block displays temporary and easily dismissible notices, warnings, or information banners to easily highlight notices and announcements.
+
+**Number Box Block** — [View Block](https://wpstackable.com/number-box-block/)
+
+The Number Box block allows you to display information that is best showcased with numeric figures. This is great for displaying steps in a process, different product options, different service plans, different product features and more.
+
+**Blockquote Block** — [View Block](https://wpstackable.com/blockquote-block/)
+
+The Blockquote block can be used to highlight significant parts of a post. Use different quote styles to maximize visibility.
+
+**Button Block** — [View Block](https://wpstackable.com/button-block/)
+
+The Button block let's you add good ol' buttons, but better. Add multiple buttons per row and choose from different button types - regular, ghost, plain text and link.
+
+**Expand / Show More Block** — [View Block](https://wpstackable.com/expand-block/)
+
+The Expand/Show More block let's you show a small excerpt before showing the complete text so you don't bombard your visitors with information.
+
+**Divider Block**
+
+The Divider block is a simple but flexible block to differentiate between sections or other site elements.
+
+**Spacer Block**
+
+The Spacer block is a great to make your site look less cluttered. Add spaces between any two blocks to make sure your layout looks great.
+
+## Stackable Effects & Features
+
+Stackable also comes with **great effects and features**. Enjoy different background options - image or video backgrounds, fixed images, single and gradient tinted background effects. You can also make use of different image box hover effects to add a little something extra to your pages.
+
+Check out the Stackable demos to see what Stackable can do.
+
+## Stackable WordPress Theme
+
+Get our WordPress theme that's beautiful & flexible, Gutenberg-ready and made especially for Stackable blocks and the new WordPress editor. [Download the Stackable Theme now](http://eepurl.com/dJY9xI).
+
+## Stackable Premium
+
+Stackable Premium extends the capabilities of Stackable and the new WordPress editor to give you the smoothest page building experience. Using the core Stackable Philosophy of balancing utility and great design, Stackable Premium offers premium design layouts and effects, premium functionality and focused one-on-one customer care.
+
+While you can create great pages with Stackable, Stackable Premium lets you do so much more.
+
+Try out a [live demo of Stackable Premium](https://demo.wpstackable.com/blog-posts/)
+
+## Stackable Blocks
+
+- Container Block — [View Block](https://wpstackable.com/container-block/)
+- Separator Block — [View Block](https://wpstackable.com/separator-block/)
+- Posts Block — [View Block](https://wpstackable.com/blog-posts-block/)
 - Feature Grid Block — [View Block](https://wpstackable.com/feature-grid-block/)
-- Accordion Block - [View Block](https://wpstackable.com/accordion-block/)
+- Accordion Block — [View Block](https://wpstackable.com/accordion-block/)
 - Image Box Block — [View Block](https://wpstackable.com/image-box-block/)
 - Feature Block — [View Block](https://wpstackable.com/feature-block/)
 - Icon List Block — [View Block](https://wpstackable.com/icon-list-block/)
@@ -57,10 +173,6 @@ Stackable provides feature-rich blocks that gives you more design options for yo
 - [v1.7 Introducing the Blog Posts Block](https://wpstackable.com/blog/introducing-the-blog-posts-block/)
 - [v1.6 Better Block Experience & Improved Image Box block](https://wpstackable.com/blog/better-block-experience-improved-image-box-block/)
 - [v1.5 Better Count Up Block, Backgrounds & Full Widths](https://wpstackable.com/blog/better-count-up-block-backgrounds-full-widths/)
-
-### Stackable WordPress Theme
-
-Get our WordPress theme that's beautiful & flexible, Gutenberg-ready and made especially for Stackable blocks and the new WordPress editor. [Download the Stackable Theme now](http://eepurl.com/dJY9xI).
 
 ### Learn More About Stackable - Gutenberg Blocks
 
