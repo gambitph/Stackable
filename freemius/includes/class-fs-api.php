@@ -56,23 +56,40 @@
 		 */
 		private $_logger;
 
-		/**
+        /**
+         * @author Leo Fajardo (@leorw)
+         * @since 2.3.0
+         *
+         * @var string
+         */
+        private $_sdk_version;
+
+        /**
 		 * @param string      $slug
 		 * @param string      $scope      'app', 'developer', 'user' or 'install'.
 		 * @param number      $id         Element's id.
 		 * @param string      $public_key Public key.
 		 * @param bool        $is_sandbox
 		 * @param bool|string $secret_key Element's secret key.
+		 * @param null|string $sdk_version
 		 *
 		 * @return FS_Api
 		 */
-		static function instance( $slug, $scope, $id, $public_key, $is_sandbox, $secret_key = false ) {
+		static function instance(
+		    $slug,
+            $scope,
+            $id,
+            $public_key,
+            $is_sandbox,
+            $secret_key = false,
+            $sdk_version = null
+        ) {
 			$identifier = md5( $slug . $scope . $id . $public_key . ( is_string( $secret_key ) ? $secret_key : '' ) . json_encode( $is_sandbox ) );
 
 			if ( ! isset( self::$_instances[ $identifier ] ) ) {
 				self::_init();
 
-				self::$_instances[ $identifier ] = new FS_Api( $slug, $scope, $id, $public_key, $secret_key, $is_sandbox );
+				self::$_instances[ $identifier ] = new FS_Api( $slug, $scope, $id, $public_key, $secret_key, $is_sandbox, $sdk_version );
 			}
 
 			return self::$_instances[ $identifier ];
@@ -105,12 +122,22 @@
 		 * @param string      $public_key Public key.
 		 * @param bool|string $secret_key Element's secret key.
 		 * @param bool        $is_sandbox
+		 * @param null|string $sdk_version
 		 */
-		private function __construct( $slug, $scope, $id, $public_key, $secret_key, $is_sandbox ) {
+		private function __construct(
+		    $slug,
+            $scope,
+            $id,
+            $public_key,
+            $secret_key,
+            $is_sandbox,
+            $sdk_version
+        ) {
 			$this->_api = new Freemius_Api_WordPress( $scope, $id, $public_key, $secret_key, $is_sandbox );
 
-			$this->_slug   = $slug;
-			$this->_logger = FS_Logger::get_logger( WP_FS__SLUG . '_' . $slug . '_api', WP_FS__DEBUG_SDK, WP_FS__ECHO_DEBUG_SDK );
+			$this->_slug        = $slug;
+			$this->_sdk_version = $sdk_version;
+			$this->_logger      = FS_Logger::get_logger( WP_FS__SLUG . '_' . $slug . '_api', WP_FS__DEBUG_SDK, WP_FS__ECHO_DEBUG_SDK );
 		}
 
 		/**
@@ -154,39 +181,51 @@
 		 * @return array|mixed|string|void
 		 */
 		private function _call( $path, $method = 'GET', $params = array(), $retry = false ) {
-			$this->_logger->entrance( $method . ':' . $path );
+            $this->_logger->entrance( $method . ':' . $path );
 
-			if ( self::is_temporary_down() ) {
-				$result = $this->get_temporary_unavailable_error();
-			} else {
-				$result = $this->_api->Api( $path, $method, $params );
+            if ( self::is_temporary_down() ) {
+                $result = $this->get_temporary_unavailable_error();
+            } else {
+                /**
+                 * @since 2.3.0 Include the SDK version with all API requests that going through the API manager. IMPORTANT: Only pass the SDK version if the caller didn't include it yet.
+                 */
+                if ( ! empty( $this->_sdk_version ) ) {
+                    if ( false === strpos( $path, 'sdk_version=' ) &&
+                         ! isset( $params['sdk_version'] )
+                    ) {
+                        // Always add the sdk_version param in the querystring. DO NOT INCLUDE IT IN THE BODY PARAMS, OTHERWISE, IT MAY LEAD TO AN UNEXPECTED PARAMS PARSING IN CASES WHERE THE $params IS A REGULAR NON-ASSOCIATIVE ARRAY.
+                        $path = add_query_arg( 'sdk_version', $this->_sdk_version, $path );
+                    }
+                }
 
-				if ( null !== $result &&
-				     isset( $result->error ) &&
-				     isset( $result->error->code ) &&
-				     'request_expired' === $result->error->code
-				) {
-					if ( ! $retry ) {
-						$diff = isset( $result->error->timestamp ) ?
-							( time() - strtotime( $result->error->timestamp ) ) :
-							false;
+                $result = $this->_api->Api( $path, $method, $params );
 
-						// Try to sync clock diff.
-						if ( false !== $this->_sync_clock_diff( $diff ) ) {
-							// Retry call with new synced clock.
-							return $this->_call( $path, $method, $params, true );
-						}
-					}
-				}
-			}
+                if ( null !== $result &&
+                     isset( $result->error ) &&
+                     isset( $result->error->code ) &&
+                     'request_expired' === $result->error->code
+                ) {
+                    if ( ! $retry ) {
+                        $diff = isset( $result->error->timestamp ) ?
+                            ( time() - strtotime( $result->error->timestamp ) ) :
+                            false;
 
-			if ( $this->_logger->is_on() && self::is_api_error( $result ) ) {
-				// Log API errors.
-				$this->_logger->api_error( $result );
-			}
+                        // Try to sync clock diff.
+                        if ( false !== $this->_sync_clock_diff( $diff ) ) {
+                            // Retry call with new synced clock.
+                            return $this->_call( $path, $method, $params, true );
+                        }
+                    }
+                }
+            }
 
-			return $result;
-		}
+            if ( $this->_logger->is_on() && self::is_api_error( $result ) ) {
+                // Log API errors.
+                $this->_logger->api_error( $result );
+            }
+
+            return $result;
+        }
 
 		/**
 		 * Override API call to wrap it in servers' clock sync method.
@@ -253,7 +292,7 @@
                              * If the response code is 404, cache the result for half of the `$expiration`.
                              *
                              * @author Leo Fajardo (@leorw)
-                             * @since 2.2.3.1
+                             * @since 2.2.4
                              */
 					        $expiration /= 2;
                         } else {

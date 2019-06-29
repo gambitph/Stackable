@@ -79,7 +79,12 @@
 
 	if ( $plugin_id == $fs->get_id() ) {
 		$is_premium = $fs->is_premium();
-	} else {
+
+        $bundle_id = $fs->get_bundle_id();
+        if ( ! is_null( $bundle_id ) ) {
+            $context_params['bundle_id'] = $bundle_id;
+        }
+    } else {
 		// Identify the module code version of the checkout context module.
 		if ( $fs->is_addon_activated( $plugin_id ) ) {
 			$fs_addon   = Freemius::get_instance_by_id( $plugin_id );
@@ -96,8 +101,11 @@
 
 		if ( $plugin_id != $fs->get_id() ) {
 			if ( $fs->is_addon_activated( $plugin_id ) ) {
-				$fs_addon = Freemius::get_instance_by_id( $plugin_id );
-				$site     = $fs_addon->get_site();
+                $fs_addon   = Freemius::get_instance_by_id( $plugin_id );
+                $addon_site = $fs_addon->get_site();
+                if ( is_object( $addon_site ) ) {
+                    $site = $addon_site;
+                }
 			}
 		}
 

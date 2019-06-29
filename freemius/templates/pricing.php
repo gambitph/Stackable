@@ -57,6 +57,11 @@
 		'plugin_version'    => $fs->get_plugin_version(),
 	);
 
+	$bundle_id = $fs->get_bundle_id();
+	if ( ! is_null( $bundle_id ) ) {
+	    $context_params['bundle_id'] = $bundle_id;
+    }
+
 	// Get site context secure params.
 	if ( $fs->is_registered() ) {
 		$context_params = array_merge( $context_params, FS_Security::instance()->get_context_params(

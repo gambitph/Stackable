@@ -314,7 +314,7 @@
 				<a id="skip_activation" href="<?php echo fs_nonce_url( $fs->_get_admin_page_url( '', array( 'fs_action' => $fs->get_unique_affix() . '_skip_activation' ), $is_network_level_activation ), $fs->get_unique_affix() . '_skip_activation' ) ?>"
 				   class="button button-secondary" tabindex="2"><?php fs_esc_html_echo_x_inline( 'Skip', 'verb', 'skip', $slug ) ?></a>
 			<?php endif ?>
-			<?php if ( $is_network_level_activation ) : ?>
+			<?php if ( $is_network_level_activation && $fs->apply_filters( 'show_delegation_option', true ) ) : ?>
 				<a id="delegate_to_site_admins" class="fs-tooltip-trigger <?php echo is_rtl() ? ' rtl' : '' ?>" href="<?php echo fs_nonce_url( $fs->_get_admin_page_url( '', array( 'fs_action' => $fs->get_unique_affix() . '_delegate_activation' ) ), $fs->get_unique_affix() . '_delegate_activation' ) ?>"><?php fs_esc_html_echo_inline( 'Delegate to Site Admins', 'delegate-to-site-admins', $slug ) ?><span class="fs-tooltip"><?php fs_esc_html_echo_inline( 'If you click it, this decision will be delegated to the sites administrators.', 'delegate-sites-tooltip', $slug ) ?></span></a>
 			<?php endif ?>
 			<?php if ( $activate_with_current_user ) : ?>
@@ -474,6 +474,7 @@
 		    $licenseSecret,
 		    $licenseKeyInput     = $('#fs_license_key'),
             pauseCtaLabelUpdate  = false,
+            isNetworkDelegating  = false,
             /**
              * @author Leo Fajardo (@leorw)
              * @since 2.1.0
@@ -505,14 +506,15 @@
 
 		if ( isNetworkActive ) {
 			var
-				$multisiteOptionsContainer  = $( '#multisite_options_container' ),
-				$allSitesOptions            = $( '#all_sites_options' ),
-				$applyOnAllSites            = $( '#apply_on_all_sites' ),
-				$sitesListContainer         = $( '#sites_list_container' ),
+				$multisiteOptionsContainer  = $( '.fs-multisite-options-container' ),
+				$allSitesOptions            = $( '.fs-all-sites-options' ),
+				$applyOnAllSites            = $( '.fs-apply-on-all-sites-checkbox' ),
+				$sitesListContainer         = $( '.fs-sites-list-container' ),
 				totalSites                  = <?php echo count( $sites ) ?>,
 				maxSitesListHeight          = null,
 				$skipActivationButton       = $( '#skip_activation' ),
-				$delegateToSiteAdminsButton = $( '#delegate_to_site_admins' );
+				$delegateToSiteAdminsButton = $( '#delegate_to_site_admins' ),
+                hasAnyInstall               = <?php echo ! is_null( $fs->find_first_install() ) ? 'true' : 'false' ?>;
 
 			$applyOnAllSites.click(function() {
 				var isChecked = $( this ).is( ':checked' );
@@ -528,7 +530,7 @@
 
 				$delegateToSiteAdminsButton.toggle();
 
-				$multisiteOptionsContainer.toggleClass( 'apply-on-all-sites', isChecked );
+				$multisiteOptionsContainer.toggleClass( 'fs-apply-on-all-sites', isChecked );
 
 				$sitesListContainer.toggle( ! isChecked );
 				if ( ! isChecked && null === maxSitesListHeight ) {
@@ -575,7 +577,7 @@
 				}
 			});
 
-            if (isNetworkUpgradeMode) {
+            if ( isNetworkUpgradeMode || hasAnyInstall ) {
                 $skipActivationButton.click(function(){
                     $delegateToSiteAdminsButton.hide();
 
@@ -598,12 +600,32 @@
 
                     pauseCtaLabelUpdate = true;
 
+                    /**
+                     * Set to true so that the form submission handler can differentiate delegation from license
+                     * activation and the proper AJAX action will be used (when delegating, the action should be
+                     * `network_activate` and not `activate_license`).
+                     *
+                     * @author Leo Fajardo (@leorw)
+                     * @since 2.3.0
+                     */
+                    isNetworkDelegating = true;
+
                     // Check all sites to be skipped.
                     $allSitesOptions.find('.action.action-delegate').click();
 
                     $form.submit();
 
                     pauseCtaLabelUpdate = false;
+
+                    /**
+                     * Set to false so that in case the previous AJAX request has failed, the form submission handler
+                     * can differentiate license activation from delegation and the proper AJAX action will be used
+                     * (when activating a license, the action should be `activate_license` and not `network_activate`).
+                     *
+                     * @author Leo Fajardo (@leorw)
+                     * @since 2.3.0
+                     */
+                    isNetworkDelegating = false;
 
                     return false;
                 });
@@ -643,20 +665,31 @@
 			 */
 			if ( ajaxOptin ) {
 				if (!hasContextUser || isNetworkUpgradeMode) {
-					<?php $action = $require_license_key ? 'activate_license' : 'network_activate' ?>
+				    var action   = null,
+                        security = null;
+
+				    if ( requireLicenseKey && ! isNetworkDelegating ) {
+                        action   = '<?php echo $fs->get_ajax_action( 'activate_license' ) ?>';
+                        security = '<?php echo $fs->get_ajax_security( 'activate_license' ) ?>';
+                    } else {
+                        action   = '<?php echo $fs->get_ajax_action( 'network_activate' ) ?>';
+                        security = '<?php echo $fs->get_ajax_security( 'network_activate' ) ?>';
+                    }
 
 					$('.fs-error').remove();
 
 					var
                         licenseKey = $licenseKeyInput.val(),
                         data       = {
-                            action     : '<?php echo $fs->get_ajax_action( $action ) ?>',
-                            security   : '<?php echo $fs->get_ajax_security( $action ) ?>',
+                            action     : action,
+                            security   : security,
                             license_key: licenseKey,
                             module_id  : '<?php echo $fs->get_id() ?>'
                         };
 
-					if (requireLicenseKey &&
+					if (
+                        requireLicenseKey &&
+                        ! isNetworkDelegating &&
                         isMarketingAllowedByLicense.hasOwnProperty(licenseKey)
                     ) {
                         var
@@ -706,12 +739,18 @@
 
 							if ( ! requireLicenseKey) {
                                 site.action = $this.find('.action.selected').data('action-type');
+                            } else if ( isNetworkDelegating ) {
+							    site.action = 'delegate';
                             }
 
 							sites.push( site );
 						});
 
 						data.sites = sites;
+
+						if ( hasAnyInstall ) {
+						    data.has_any_install = hasAnyInstall;
+                        }
 					}
 
 					/**

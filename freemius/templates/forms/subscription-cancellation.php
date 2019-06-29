@@ -95,8 +95,8 @@ HTML;
 
 $downgrading_plan_text                      = fs_text_inline( 'Downgrading your plan', 'downgrading-plan', $slug );
 $cancelling_subscription_text               = fs_text_inline( 'Cancelling the subscription', 'cancelling-subscription', $slug );
-/* translators: %1s: Either 'Downgrading your plan' or 'Cancelling the subscription' */
-$downgrade_x_confirm_text                   = fs_text_inline( '%1s will immediately stop all future recurring payments and your %s plan license will expire in %s.', 'downgrade-x-confirm', $slug );
+/* translators: %1$s: Either 'Downgrading your plan' or 'Cancelling the subscription' */
+$downgrade_x_confirm_text                   = fs_text_inline( '%1$s will immediately stop all future recurring payments and your %s plan license will expire in %s.', 'downgrade-x-confirm', $slug );
 $prices_increase_text                       = fs_text_inline( 'Please note that we will not be able to grandfather outdated pricing for renewals/new subscriptions after a cancellation. If you choose to renew the subscription manually in the future, after a price increase, which typically occurs once a year, you will be charged the updated price.', 'pricing-increase-warning', $slug );
 $after_downgrade_non_blocking_text          = fs_text_inline( 'You can still enjoy all %s features but you will not have access to %s security & feature updates, nor support.', 'after-downgrade-non-blocking', $slug );
 $after_downgrade_blocking_text              = fs_text_inline( 'Once your license expires you can still use the Free version but you will NOT have access to the %s features.', 'after-downgrade-blocking', $slug );
@@ -170,7 +170,7 @@ fs_enqueue_local_style( 'fs_dialog_boxes', '/admin/dialog-boxes.css' );
                     subscriptionCancellationActionEventName = <?php echo json_encode( $fs->get_action_tag( 'subscription_cancellation_action' ) ) ?>;
 
                 if ( _this.hasClass( 'button-primary' ) ) {
-                    if ( 'true' !== $( 'input[name="cancel-subscription"]:checked' ).val() ) {
+                    if ( 'true' !== $modal.find( 'input[name="cancel-subscription"]:checked' ).val() ) {
                         $modal.trigger( subscriptionCancellationActionEventName, false );
                     } else {
                         if ( confirm( <?php echo json_encode( $subscription_cancellation_confirmation_message ) ?> ) ) {

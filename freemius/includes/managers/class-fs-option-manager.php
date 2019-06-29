@@ -143,17 +143,24 @@
 
                 $cache_group = $this->get_cache_group();
 
-                if ( ! WP_FS__DEBUG_SDK ) {
+                if ( WP_FS__DEBUG_SDK ) {
+
+                    // Don't use cache layer in DEBUG mode.
+                    $load_options = empty( $this->_options );
+
+                } else {
 
                     $this->_options = wp_cache_get(
                         $option_name,
                         $cache_group
                     );
+
+                    $load_options = ( false === $this->_options );
                 }
 
                 $cached = true;
 
-                if ( empty( $this->_options ) ) {
+                if ( $load_options ) {
                     if ( $this->_is_network_storage ) {
                         $this->_options = get_site_option( $option_name );
                     } else if ( $this->_blog_id > 0 ) {

@@ -20,7 +20,7 @@
             $($('.activate-license-trigger')[0]).click();
 
 //            setTimeout(function(){
-                $dialog.find('select#licenses option[data-id=<?php echo $license_id ?>]')
+                $dialog.find('select.fs-licenses option[data-id=<?php echo $license_id ?>]')
                     .prop('selected', true)
                     .change();
 //            }, 100);

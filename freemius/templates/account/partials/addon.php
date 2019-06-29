@@ -8,12 +8,16 @@
     $odd      = $VARS['odd'];
     $slug     = $fs->get_slug();
 
+    $fs_blog_id = $VARS['fs_blog_id'];
 
-    $addon              = $fs->get_addon( $addon_id );
+    $active_plugins_directories_map = $VARS['active_plugins_directories_map'];
+
+    $addon_info         = $VARS['addon_info'];
     $is_addon_activated = $fs->is_addon_activated( $addon_id );
-    $is_addon_connected = $fs->is_addon_connected( $addon_id );
+    $is_addon_connected = $addon_info['is_connected'];
+    $is_addon_installed = $VARS['is_addon_installed'];
 
-    $fs_addon = $is_addon_connected ?
+    $fs_addon = ( $is_addon_connected && $is_addon_installed ) ?
         freemius( $addon_id ) :
         false;
 
@@ -21,8 +25,8 @@
     $download_latest_text         = fs_text_x_inline( 'Download Latest', 'as download latest version', 'download-latest', $slug );
     $downgrading_plan_text        = fs_text_inline( 'Downgrading your plan', 'downgrading-plan', $slug );
     $cancelling_subscription_text = fs_text_inline( 'Cancelling the subscription', 'cancelling-subscription', $slug );
-    /* translators: %1s: Either 'Downgrading your plan' or 'Cancelling the subscription' */
-    $downgrade_x_confirm_text     = fs_text_inline( '%1s will immediately stop all future recurring payments and your %s plan license will expire in %s.', 'downgrade-x-confirm', $slug );
+    /* translators: %1$s: Either 'Downgrading your plan' or 'Cancelling the subscription' */
+    $downgrade_x_confirm_text     = fs_text_inline( '%1$s will immediately stop all future recurring payments and your %s plan license will expire in %s.', 'downgrade-x-confirm', $slug );
     $prices_increase_text         = fs_text_inline( 'Please note that we will not be able to grandfather outdated pricing for renewals/new subscriptions after a cancellation. If you choose to renew the subscription manually in the future, after a price increase, which typically occurs once a year, you will be charged the updated price.', 'pricing-increase-warning', $slug );
     $cancel_trial_confirm_text         = fs_text_inline( 'Cancelling the trial will immediately block access to all premium features. Are you sure?', 'cancel-trial-confirm', $slug );
     $after_downgrade_non_blocking_text = fs_text_inline( 'You can still enjoy all %s features but you will not have access to %s security & feature updates, nor support.', 'after-downgrade-non-blocking', $slug );
@@ -48,11 +52,15 @@
     // Defaults.
     $plan                   = null;
     $is_paid_trial          = false;
+    /**
+     * @var FS_Plugin_License $license
+     */
     $license                = null;
     $site                   = null;
     $is_active_subscription = false;
     $subscription           = null;
     $is_paying              = false;
+    $show_upgrade           = false;
 
     if ( is_object( $fs_addon ) ) {
         $is_paying                  = $fs_addon->is_paying();
@@ -63,18 +71,62 @@
             $fs_addon->_get_subscription( $license->id ) :
             null );
         $plan                       = $fs_addon->get_plan();
-        $is_active_subscription     = ( is_object( $subscription ) && $subscription->is_active() );
+        $plan_name                  = $plan->name;
+        $plan_title                 = $plan->title;
         $is_paid_trial              = $fs_addon->is_paid_trial();
         $show_upgrade               = ( $fs_addon->has_paid_plan() && ! $is_paying && ! $is_paid_trial && ! $fs_addon->_has_premium_license() );
-        $is_current_license_expired = is_object( $license ) && $license->is_expired();
+        $version                    = $fs_addon->get_plugin_version();
+    } else if ( $is_addon_connected ) {
+        if (
+            empty( $addon_info ) ||
+            ! isset( $addon_info['site'] )
+        ) {
+            $is_addon_connected = false;
+        } else {
+            /**
+             * @var FS_Site $site
+             */
+            $site    = $addon_info['site'];
+            $version = $addon_info['version'];
+
+            $plan_name = isset( $addon_info['plan_name'] ) ?
+                $addon_info['plan_name'] :
+                '';
+
+            $plan_title = isset( $addon_info['plan_title'] ) ?
+                $addon_info['plan_title'] :
+                '';
+
+            if ( isset( $addon_info['license'] ) ) {
+                $license = $addon_info['license'];
+            }
+
+            if ( isset( $addon_info['subscription'] ) ) {
+                $subscription = $addon_info['subscription'];
+            }
+
+            $has_valid_and_active_license = (
+                is_object( $license ) &&
+                $license->is_active() &&
+                $license->is_valid()
+            );
+
+            $is_paid_trial = (
+                $site->is_trial() &&
+                $has_valid_and_active_license &&
+                ( $site->trial_plan_id == $license->plan_id )
+            );
+        }
     }
+
+    $is_active_subscription = ( is_object( $subscription ) && $subscription->is_active() );
 ?>
 <tr<?php if ( $odd ) {
     echo ' class="alternate"';
 } ?>>
     <td>
         <!-- Title -->
-        <?php echo $addon->title ?>
+        <?php echo $addon_info['title'] ?>
     </td>
     <?php if ( $is_addon_connected ) : ?>
         <!-- ID -->
@@ -82,21 +134,21 @@
         <!--/ ID -->
 
         <!-- Version -->
-        <td><?php echo $fs_addon->get_plugin_version() ?></td>
+        <td><?php echo $version ?></td>
         <!--/ Version -->
 
         <!-- Plan Title -->
-        <td><?php echo strtoupper( is_string( $plan->name ) ? $plan->title : $free_text ) ?></td>
+        <td><?php echo strtoupper( is_string( $plan_name ) ? $plan_title : $free_text ) ?></td>
         <!--/ Plan Title -->
 
-        <?php if ( $fs_addon->is_trial() || is_object( $license ) ) : ?>
+        <?php if ( $site->is_trial() || is_object( $license ) ) : ?>
 
         <!-- Expiration -->
         <td>
             <?php
                 $tags = array();
 
-                if ( $fs_addon->is_trial() ) {
+                if ( $site->is_trial() ) {
                     $tags[] = array( 'label' => $trial_text, 'type' => 'success' );
 
                     $tags[] = array(
@@ -203,7 +255,7 @@
                     $cancel_trial_confirm_text,
                     'POST'
                 );
-            } else {
+            } else if ( ! is_object( $license ) || ! $license->is_features_enabled() ) {
                 $premium_license = $fs_addon->_get_available_premium_license();
 
                 if ( is_object( $premium_license ) ) {
@@ -258,17 +310,20 @@
         } else if ( ! $show_upgrade ) {
             if ( $fs->is_addon_installed( $addon_id ) ) {
                 $addon_file = $fs->get_addon_basename( $addon_id );
-                $buttons[]  = sprintf(
-                    '<a class="button button-primary edit" href="%s" title="%s">%s</a>',
-                    wp_nonce_url( 'plugins.php?action=activate&amp;plugin=' . $addon_file, 'activate-plugin_' . $addon_file ),
-                    fs_esc_attr_inline( 'Activate this add-on', 'activate-this-addon', $slug ),
-                    $activate_text
-                );
+
+                if ( ! isset( $active_plugins_directories_map[ dirname( $addon_file ) ] ) ) {
+                    $buttons[]  = sprintf(
+                        '<a class="button button-primary edit" href="%s" title="%s">%s</a>',
+                        wp_nonce_url( 'plugins.php?action=activate&amp;plugin=' . $addon_file, 'activate-plugin_' . $addon_file ),
+                        fs_esc_attr_inline( 'Activate this add-on', 'activate-this-addon', $slug ),
+                        $activate_text
+                    );
+                }
             } else {
                 if ( $fs->is_allowed_to_install() ) {
                     $buttons[] = sprintf(
                         '<a class="button button-primary edit" href="%s">%s</a>',
-                        wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=' . $addon->slug ), 'install-plugin_' . $addon->slug ),
+                        wp_nonce_url( self_admin_url( 'update.php?' . ( ( isset( $addon_info['has_paid_plan'] ) && $addon_info['has_paid_plan'] ) ? 'fs_allow_updater_and_dialog=true&' : '' ) . 'action=install-plugin&plugin=' . $addon_info['slug'] ), 'install-plugin_' . $addon_info['slug'] ),
                         fs_text_inline( 'Install Now', 'install-now', $slug )
                     );
                 } else {
@@ -283,10 +338,10 @@
 
         if ( $show_upgrade ) {
             $buttons[] = sprintf( '<a href="%s" class="thickbox button button-small button-primary" aria-label="%s" data-title="%s"><i class="dashicons dashicons-cart"></i> %s</a>',
-                esc_url( network_admin_url( 'plugin-install.php?fs_allow_updater_and_dialog=true&tab=plugin-information&parent_plugin_id=' . $fs->get_id() . '&plugin=' . $addon->slug .
+                esc_url( network_admin_url( 'plugin-install.php?fs_allow_updater_and_dialog=true' . ( ! empty( $fs_blog_id ) ? '&fs_blog_id=' . $fs_blog_id : '' ) . '&tab=plugin-information&parent_plugin_id=' . $fs->get_id() . '&plugin=' . $addon_info['slug'] .
                                             '&TB_iframe=true&width=600&height=550' ) ),
-                esc_attr( sprintf( fs_text_inline( 'More information about %s', 'more-information-about-x', $slug ), $addon->title ) ),
-                esc_attr( $addon->title ),
+                esc_attr( sprintf( fs_text_inline( 'More information about %s', 'more-information-about-x', $slug ), $addon_info['title'] ) ),
+                esc_attr( $addon_info['title'] ),
                 ( $fs_addon->has_free_plan() ?
                     $upgrade_text :
                     fs_text_x_inline( 'Purchase', 'verb', 'purchase', $slug ) )
@@ -312,14 +367,16 @@
         <td colspan="4">
             <?php if ( $fs->is_addon_installed( $addon_id ) ) : ?>
                 <?php $addon_file = $fs->get_addon_basename( $addon_id ) ?>
+                <?php if ( ! isset( $active_plugins_directories_map[ dirname( $addon_file ) ] ) ) : ?>
                 <a class="button button-primary"
                    href="<?php echo wp_nonce_url( 'plugins.php?action=activate&amp;plugin=' . $addon_file, 'activate-plugin_' . $addon_file ) ?>"
                    title="<?php fs_esc_attr_echo_inline( 'Activate this add-on', 'activate-this-addon', $slug ) ?>"
                    class="edit"><?php echo esc_html( $activate_text ) ?></a>
+                <?php endif ?>
             <?php else : ?>
                 <?php if ( $fs->is_allowed_to_install() ) : ?>
                     <a class="button button-primary"
-                       href="<?php echo wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=' . $addon->slug ), 'install-plugin_' . $addon->slug ) ?>"><?php fs_esc_html_echo_inline( 'Install Now', 'install-now', $slug ) ?></a>
+                       href="<?php echo wp_nonce_url( self_admin_url( 'update.php?' . ( ( isset( $addon_info['has_paid_plan'] ) && $addon_info['has_paid_plan'] ) ? 'fs_allow_updater_and_dialog=true&' : '' ) . 'action=install-plugin&plugin=' . $addon_info['slug'] ), 'install-plugin_' . $addon_info['slug'] ) ?>"><?php fs_esc_html_echo_inline( 'Install Now', 'install-now', $slug ) ?></a>
                 <?php else : ?>
                     <a target="_blank" class="button button-primary"
                        href="<?php echo $fs->_get_latest_download_local_url( $addon_id ) ?>"><?php echo esc_html( $download_latest_text ) ?></a>

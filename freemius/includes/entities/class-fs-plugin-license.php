@@ -30,6 +30,27 @@
          */
         public $plan_id;
         /**
+         * @author Leo Fajardo (@leorw)
+         * @since 2.3.0
+         *
+         * @var string
+         */
+        public $parent_plan_name;
+        /**
+         * @author Leo Fajardo (@leorw)
+         * @since 2.3.0
+         *
+         * @var string
+         */
+        public $parent_plan_title;
+        /**
+         * @author Leo Fajardo (@leorw)
+         * @since 2.3.0
+         *
+         * @var number
+         */
+        public $parent_license_id;
+        /**
          * @var number
          */
         public $pricing_id;
@@ -95,7 +116,7 @@
          * @return int
          */
         function left() {
-            if ( ! $this->is_active() || $this->is_expired() ) {
+            if ( ! $this->is_features_enabled() ) {
                 return 0;
             }
 

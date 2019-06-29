@@ -18,20 +18,14 @@
 
 	$slug = $fs->get_slug();
 
-	$payments = $fs->_fetch_payments();
+	$edit_text   = fs_text_x_inline( 'Edit', 'verb', 'edit', $slug );
+	$update_text = fs_text_x_inline( 'Update', 'verb', 'update', $slug );
 
-	$show_billing = ( is_array( $payments ) && 0 < count( $payments ) );
-
-	if ( $show_billing ) :
-
-		$edit_text   = fs_text_x_inline( 'Edit', 'verb', 'edit', $slug );
-		$update_text = fs_text_x_inline( 'Update', 'verb', 'update', $slug );
-
-		$billing     = $fs->_fetch_billing();
-		$has_billing = ( $billing instanceof FS_Billing );
-		if ( ! $has_billing ) {
-			$billing = new FS_Billing();
-		}
+	$billing     = $fs->_fetch_billing();
+	$has_billing = ( $billing instanceof FS_Billing );
+	if ( ! $has_billing ) {
+		$billing = new FS_Billing();
+	}
 ?>
 <!-- Billing -->
 <div class="postbox">
@@ -427,5 +421,3 @@
 			});
 	})(jQuery);
 </script>
-<?php
-	endif;
