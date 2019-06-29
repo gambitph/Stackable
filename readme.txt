@@ -138,6 +138,11 @@ You will have to redo all your blocks
 * Fixed: Number box plain layouts now don't have a background
 * Fixed: The Separator block in the editor has top & bottom margins that makes placing separators hard.
 
+= 1.15.6 =
+* Updated: Freemius SDK version 2.3.0. Fixes the get_blog_list is undefined error.
+* Fixed: iOS fixed background attachments do not convert to scroll.
+* Fixed: SVG icons will not display as bullets in IE11, fallback to normal bullets.
+
 = 1.15.5 =
 * Fixed: Gutenberg 5.9 compatibility
 * Fixed: Buttons getting cut when the text is too long in smaller screens.
