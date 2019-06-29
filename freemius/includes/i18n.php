@@ -465,8 +465,8 @@
 		'deactivate-plugin-title'                  => _fs_text( 'That\'s exhausting, please deactivate' ),
 		'deactivate-plugin-desc'                   => _fs_text( 'We feel your frustration and sincerely apologize for the inconvenience. Hope to see you again in the future.' ),
 		'fix-request-sent-message'                 => _fs_text( 'Thank for giving us the chance to fix it! A message was just sent to our technical staff. We will get back to you as soon as we have an update to %s. Appreciate your patience.' ),
-		'server-blocking-access'                   => _fs_x( 'Your server is blocking the access to Freemius\' API, which is crucial for %1s synchronization. Please contact your host to whitelist %2s',
-			'%1s - plugin title, %2s - API domain' ),
+		'server-blocking-access'                   => _fs_x( 'Your server is blocking the access to Freemius\' API, which is crucial for %1$s synchronization. Please contact your host to whitelist %2$s',
+			'%1$s - plugin title, %2$s - API domain' ),
 		'wrong-authentication-param-message'       => _fs_text( 'It seems like one of the authentication parameters is wrong. Update your Public Key, Secret Key & User ID, and try again.' ),
 		#endregion Connectivity Issues
 		#region Change Owner

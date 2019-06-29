@@ -204,9 +204,10 @@
 //					) );
 				}
 
-                $this->_first_time_path = $this->get_option( $menu, 'first-path', false );
-                if ( ! empty( $this->_first_time_path ) && is_string( $this->_first_time_path ) ) {
-                    $this->_first_time_path = admin_url( $this->_first_time_path, 'admin' );
+				$first_path = $this->get_option( $menu, 'first-path', false );
+
+                if ( ! empty( $first_path ) && is_string( $first_path ) ) {
+                    $this->_first_time_path = $first_path;
                 }
 			}
 		}
@@ -236,17 +237,27 @@
 		}
 
 
-		/**
-		 * Get the path of the page the user should be forwarded to after first activation.
-		 *
-		 * @author Vova Feldman (@svovaf)
-		 * @since  1.1.3
-		 *
-		 * @return string
-		 */
-		function get_first_time_path() {
-			return $this->_first_time_path;
-		}
+        /**
+         * Get the path of the page the user should be forwarded to after first activation.
+         *
+         * @author Vova Feldman (@svovaf)
+         * @since  1.1.3
+         *
+         * @param bool $is_network Since 2.4.5
+         *
+         * @return string
+         */
+        function get_first_time_path( $is_network = false ) {
+            if ( empty ( $this->_first_time_path ) ) {
+                return $this->_first_time_path;
+            }
+
+            if ( $is_network ) {
+                return network_admin_url( $this->_first_time_path );
+            } else {
+                return admin_url( $this->_first_time_path );
+            }
+        }
 
 		/**
 		 * Check if plugin's menu item is part of a custom top level menu.

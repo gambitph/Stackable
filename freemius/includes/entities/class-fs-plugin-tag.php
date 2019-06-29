@@ -36,9 +36,9 @@
          */
         public $has_premium;
         /**
-         * @var bool
+         * @var string One of the following: `pending`, `beta`, `unreleased`.
          */
-        public $is_released;
+        public $release_mode;
 
 		function __construct( $tag = false ) {
 			parent::__construct( $tag );
@@ -47,4 +47,14 @@
 		static function get_type() {
 			return 'tag';
 		}
+
+        /**
+         * @author Leo Fajardo (@leorw)
+         * @since 2.3.0
+         *
+         * @return bool
+         */
+		function is_beta() {
+		    return ( 'beta' === $this->release_mode );
+        }
 	}

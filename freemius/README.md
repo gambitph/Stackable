@@ -15,8 +15,8 @@ https://dashboard.freemius.com/register/
 
 ## Code Documentation
 
-You can find the SDK's PHP-Doc documentation here:
-https://codedoc.pub/freemius/wordpress-sdk/master/
+You can find the SDK's documentation here:
+https://freemius.com/help/documentation/wordpress-sdk/
 
 ## Initializing the SDK
 

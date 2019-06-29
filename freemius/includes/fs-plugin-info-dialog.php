@@ -31,6 +31,29 @@
          */
         private $_fs;
 
+        /**
+         * Collection of plugin installation, update, download, activation, and purchase actions. This is used in
+         * populating the actions dropdown list when there are at least 2 actions. If there's only 1 action, a button
+         * is used instead.
+         *
+         * @author Leo Fajardo (@leorw)
+         * @since 2.3.0
+         *
+         * @var string[]
+         */
+        private $actions;
+
+        /**
+         * Contains plugin status information that is used to determine which actions should be part of the actions
+         * dropdown list.
+         *
+         * @author Leo Fajardo (@leorw)
+         * @since 2.3.0
+         *
+         * @var string[]
+         */
+        private $status;
+
         function __construct( Freemius $fs ) {
             $this->_fs = $fs;
 
@@ -170,11 +193,14 @@
 
                 $data->fs_missing = ( ! $has_free_plan || $data->wp_org_missing );
             } else {
-                $data->wp_org_missing = false;
+                $data->has_purchased_license = false;
+                $data->wp_org_missing        = false;
 
+                $fs_addon              = null;
                 $current_addon_version = false;
                 if ( $this->_fs->is_addon_activated( $selected_addon->id ) ) {
-                    $current_addon_version = $this->_fs->get_addon_instance( $selected_addon->id )->get_plugin_version();
+                    $fs_addon              = $this->_fs->get_addon_instance( $selected_addon->id );
+                    $current_addon_version = $fs_addon->get_plugin_version();
                 } else if ( $this->_fs->is_addon_installed( $selected_addon->id ) ) {
                     $addon_plugin_data = get_plugin_data(
                         ( WP_PLUGIN_DIR . '/' . $this->_fs->get_addon_basename( $selected_addon->id ) ),
@@ -196,14 +222,45 @@
                 );
 
                 if ( $has_paid_plan ) {
-                    $data->checkout_link = $this->_fs->checkout_url();
+                    $blog_id           = fs_request_get( 'fs_blog_id' );
+                    $has_valid_blog_id = is_numeric( $blog_id );
+
+                    if ( $has_valid_blog_id ) {
+                        switch_to_blog( $blog_id );
+                    }
+
+                    $data->checkout_link = $this->_fs->checkout_url(
+                        WP_FS__PERIOD_ANNUALLY,
+                        false,
+                        array(),
+                        ( $has_valid_blog_id ? false : null )
+                    );
+
+                    if ( $has_valid_blog_id ) {
+                        restore_current_blog();
+                    }
+
+                    if ( is_object( $fs_addon ) ) {
+                        $data->has_purchased_license = $fs_addon->has_active_valid_license();
+                    } else {
+                        $account_addons = $this->_fs->get_account_addons();
+                        if ( ! empty( $account_addons ) && in_array( $selected_addon->id, $account_addons ) ) {
+                            $data->has_purchased_license = true;
+                        }
+                    }
                 }
-                if ( $has_free_plan ) {
+
+                if ( $has_free_plan || $data->has_purchased_license ) {
                     $data->download_link = $this->_fs->_get_latest_download_local_url( $selected_addon->id );
                 }
 
-                $data->fs_missing = ( false === $latest );
-
+                $data->fs_missing = (
+                    false === $latest &&
+                    (
+                        empty( $selected_addon->premium_releases_count ) ||
+                        ! ( $selected_addon->premium_releases_count > 0 )
+                    )
+                );
 
                 // Fetch as much as possible info from local files.
                 $plugin_local_data = $this->_fs->get_plugin_data();
@@ -228,6 +285,8 @@
                     $data->last_updated = $latest->created;
                     $data->requires     = $latest->requires_platform_version;
                     $data->tested       = $latest->tested_up_to_version;
+                } else if ( ! empty( $current_addon_version ) ) {
+                    $data->version = $current_addon_version;
                 } else {
                     // Add dummy version.
                     $data->version = '1.0.0';
@@ -267,6 +326,12 @@
             $data->has_paid_plan       = $has_paid_plan;
             $data->is_paid             = $has_paid_plan;
             $data->is_wp_org_compliant = $selected_addon->is_wp_org_compliant;
+            $data->premium_slug        = $selected_addon->premium_slug;
+            $data->addon_id            = $selected_addon->id;
+
+            if ( ! isset( $data->has_purchased_license ) ) {
+                $data->has_purchased_license = false;
+            }
 
             return $data;
         }
@@ -333,6 +398,70 @@
         }
 
         /**
+         * @author Leo Fajardo (@leorw)
+         * @since  2.3.0
+         *
+         * @param object         $api
+         * @param FS_Plugin_Plan $plan
+         *
+         * @return string
+         */
+        private function get_actions_dropdown( $api, $plan = null ) {
+            $this->actions = isset( $this->actions ) ?
+                $this->actions :
+                $this->get_plugin_actions( $api );
+
+            $actions = $this->actions;
+
+            $checkout_cta = $this->get_checkout_cta( $api, $plan );
+            if ( ! empty( $checkout_cta ) ) {
+                /**
+                 * If there's no license yet, make the checkout button the main CTA. Otherwise, make it the last item in
+                 * the actions dropdown.
+                 *
+                 * @author Leo Fajardo (@leorw)
+                 * @since 2.3.0
+                 */
+                if ( ! $api->has_purchased_license ) {
+                    array_unshift( $actions, $checkout_cta );
+                } else {
+                    $actions[] = $checkout_cta;
+                }
+            }
+
+            if ( empty( $actions ) ) {
+                return '';
+            }
+
+            $total_actions = count( $actions );
+            if ( 1 === $total_actions ) {
+                return $actions[0];
+            }
+
+            ob_start();
+
+            ?>
+            <div class="fs-cta fs-dropdown">
+                <div class="button-group">
+                    <?php
+                        // This should NOT be sanitized as the $actions are HTML buttons already.
+                        echo $actions[0] ?>
+                    <div class="button button-primary fs-dropdown-arrow-button">
+                        <span class="fs-dropdown-arrow"></span>
+                        <ul class="fs-dropdown-list" style="display: none">
+                            <?php for ( $i = 1; $i < $total_actions; $i ++ ) : ?>
+                                <li><?php echo str_replace( 'button button-primary', '', $actions[ $i ] ) ?></li>
+                            <?php endfor ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <?php
+
+            return ob_get_clean();
+        }
+
+        /**
          * @author Vova Feldman (@svovaf)
          * @since  1.1.7
          *
@@ -359,14 +488,32 @@
                 }
             }
 
-            return '<a class="button button-primary fs-checkout-button right" href="' . $this->_fs->addon_checkout_url(
+            $blog_id           = fs_request_get( 'fs_blog_id' );
+            $has_valid_blog_id = is_numeric( $blog_id );
+
+            if ( $has_valid_blog_id ) {
+                switch_to_blog( $blog_id );
+            }
+
+            $addon_checkout_url = $this->_fs->addon_checkout_url(
                 $plan->plugin_id,
                 $plan->pricing[0]->id,
                 $this->get_billing_cycle( $plan ),
-                $plan->has_trial()
-            ) . '" target="_parent">' .
-                   ( ! $plan->has_trial() ?
-                       fs_text_x_inline( 'Purchase', 'verb', 'purchase', $api->slug ) :
+                $plan->has_trial(),
+                ( $has_valid_blog_id ? false : null )
+            );
+
+            if ( $has_valid_blog_id ) {
+                restore_current_blog();
+            }
+
+            return '<a class="button button-primary fs-checkout-button right" href="' . $addon_checkout_url . '" target="_parent">' .
+                   esc_html( ! $plan->has_trial() ?
+                       (
+                           $api->has_purchased_license ?
+                               fs_text_inline( 'Purchase More', 'purchase-more', $api->slug ) :
+                               fs_text_x_inline( 'Purchase', 'verb', 'purchase', $api->slug )
+                       ) :
                        sprintf(
                        /* translators: %s: N-days trial */
                            fs_text_inline( 'Start my free %s', 'start-free-x', $api->slug ),
@@ -377,92 +524,305 @@
         }
 
         /**
-         * @author Vova Feldman (@svovaf)
-         * @since  2.0.0
+         * @author Leo Fajardo (@leorw)
+         * @since  2.3.0
          *
          * @param object $api
-         * @param bool   $is_primary
          *
-         * @return string
+         * @return string[]
          */
-        private function get_download_cta( $api, $is_primary = true ) {
-            if ( empty( $api->download_link ) ) {
-                return '';
+        private function get_plugin_actions( $api ) {
+            $this->status = isset( $this->status ) ?
+                $this->status :
+                install_plugin_install_status( $api );
+
+            $is_update_available = ( 'update_available' === $this->status['status'] );
+
+            if ( $is_update_available && empty( $this->status['url'] ) ) {
+                return array();
             }
 
-            $status = install_plugin_install_status( $api );
+            $blog_id = fs_request_get( 'fs_blog_id' );
 
-            $has_paid_version = $api->has_paid_plan;
+            $active_plugins_directories_map = Freemius::get_active_plugins_directories_map( $blog_id );
 
-            // Hosted on WordPress.org.
-            switch ( $status['status'] ) {
-                case 'install':
-                    if ( $api->is_wp_org_compliant ||
-                         ! $this->_fs->is_org_repo_compliant() ||
-                         $this->_fs->is_premium()
-                    ) {
-                        /**
-                         * Allow immediate installation if one of the following:
-                         *  1. WordPress.org add-on.
-                         *  2. The core module is NOT wp.org compliant.
-                         *  3. The core module is running the premium version which is not wp.org compliant.
-                         */
-                        if ( $status['url'] ) {
-                            return $this->get_cta(
-                                ( $has_paid_version ?
-                                    fs_esc_html_inline( 'Install Free Version Now', 'install-free-version-now', $api->slug ) :
-                                    fs_esc_html_inline( 'Install Now', 'install-now', $api->slug ) ),
-                                $is_primary,
-                                false,
-                                $status['url'],
-                                '_parent'
-                            );
+            $actions = array();
+
+            $is_addon_activated = $this->_fs->is_addon_activated( $api->slug );
+            $fs_addon           = null;
+
+            $is_free_installed    = null;
+            $is_premium_installed = null;
+
+            $has_installed_version = ( 'install' !== $this->status['status'] );
+
+            if ( ! $api->has_paid_plan ) {
+                /**
+                 * Free-only add-on.
+                 *
+                 * @author Leo Fajardo (@leorw)
+                 * @since 2.3.0
+                 */
+                $is_free_installed    = $has_installed_version;
+                $is_premium_installed = false;
+            } else if ( ! $api->has_free_plan ) {
+                /**
+                 * Premium-only add-on.
+                 *
+                 * @author Leo Fajardo (@leorw)
+                 * @since 2.3.0
+                 */
+                $is_free_installed    = false;
+                $is_premium_installed = $has_installed_version;
+            } else {
+                /**
+                 * Freemium add-on.
+                 *
+                 * @author Leo Fajardo (@leorw)
+                 * @since 2.3.0
+                 */
+                if ( ! $has_installed_version ) {
+                    $is_free_installed    = false;
+                    $is_premium_installed = false;
+                } else {
+                    $fs_addon = $is_addon_activated ?
+                        $this->_fs->get_addon_instance( $api->slug ) :
+                        null;
+
+                    if ( is_object( $fs_addon ) ) {
+                        if ( $fs_addon->is_premium() ) {
+                            $is_premium_installed = true;
+                        } else {
+                            $is_free_installed = true;
                         }
                     }
 
-                    return $this->get_cta(
-                        ( $has_paid_version ?
-                            fs_esc_html_x_inline( 'Download Latest Free Version', 'as download latest version', 'download-latest-free-version', $api->slug ) :
-                            fs_esc_html_x_inline( 'Download Latest', 'as download latest version', 'download-latest', $api->slug ) ),
-                        $is_primary,
-                        false,
-                        esc_url( $api->download_link )
-                    );
-                    break;
-                case 'update_available':
-                    if ( $status['url'] ) {
-                        return $this->get_cta(
-                            ( $has_paid_version ?
-                                fs_esc_html_inline( 'Install Free Version Update Now', 'install-free-version-update-now', $api->slug ) :
-                                fs_esc_html_inline( 'Install Update Now', 'install-update-now', $api->slug ) ),
-                            $is_primary,
-                            false,
-                            $status['url'],
-                            '_parent'
-                        );
+                    if ( is_null( $is_free_installed ) ) {
+                        $is_free_installed = file_exists( fs_normalize_path( WP_PLUGIN_DIR . "/{$api->slug}/{$api->slug}.php" ) );
+                        if ( ! $is_free_installed ) {
+                            /**
+                             * Check if there's a plugin installed in a directory named `$api->slug`.
+                             *
+                             * @author Leo Fajardo (@leorw)
+                             * @since 2.3.0
+                             */
+                            $installed_plugins = get_plugins( '/' . $api->slug );
+                            $is_free_installed = ( ! empty( $installed_plugins ) );
+                        }
                     }
-                    break;
-                case 'newer_installed':
-                    return $this->get_cta(
-                        ( $has_paid_version ?
-                            esc_html( sprintf( fs_text_inline( 'Newer Free Version (%s) Installed', 'newer-free-installed', $api->slug ), $status['version'] ) ) :
-                            esc_html( sprintf( fs_text_inline( 'Newer Version (%s) Installed', 'newer-installed', $api->slug ), $status['version'] ) ) ),
-                        $is_primary,
-                        true
-                    );
-                    break;
-                case 'latest_installed':
-                    return $this->get_cta(
-                        ( $has_paid_version ?
-                            fs_esc_html_inline( 'Latest Free Version Installed', 'latest-free-installed', $api->slug ) :
-                            fs_esc_html_inline( 'Latest Version Installed', 'latest-installed', $api->slug ) ),
-                        $is_primary,
-                        true
-                    );
-                    break;
+
+                    if ( is_null( $is_premium_installed ) ) {
+                        $is_premium_installed = file_exists( fs_normalize_path( WP_PLUGIN_DIR . "/{$api->premium_slug}/{$api->slug}.php" ) );
+                        if ( ! $is_premium_installed ) {
+                            /**
+                             * Check if there's a plugin installed in a directory named `$api->premium_slug`.
+                             *
+                             * @author Leo Fajardo (@leorw)
+                             * @since 2.3.0
+                             */
+                            $installed_plugins    = get_plugins( '/' . $api->premium_slug );
+                            $is_premium_installed = ( ! empty( $installed_plugins ) );
+                        }
+                    }
+                }
+
+                $has_installed_version = ( $is_free_installed || $is_premium_installed );
             }
 
-            return '';
+            $this->status['is_free_installed']    = $is_free_installed;
+            $this->status['is_premium_installed'] = $is_premium_installed;
+
+            $can_install_free_version           = false;
+            $can_install_free_version_update    = false;
+            $can_download_free_version          = false;
+            $can_activate_free_version          = false;
+            $can_install_premium_version        = false;
+            $can_install_premium_version_update = false;
+            $can_download_premium_version       = false;
+            $can_activate_premium_version       = false;
+
+            if ( ! $api->has_purchased_license ) {
+                if ( $api->has_free_plan ) {
+                    if ( $has_installed_version ) {
+                        if ( $is_update_available ) {
+                            $can_install_free_version_update = true;
+                        } else if ( ! $is_premium_installed && ! isset( $active_plugins_directories_map[ dirname( $this->status['file'] ) ] ) ) {
+                            $can_activate_free_version = true;
+                        }
+                    } else {
+                        if (
+                            $this->_fs->is_premium() ||
+                            ! $this->_fs->is_org_repo_compliant() ||
+                            $api->is_wp_org_compliant
+                        ) {
+                            $can_install_free_version  = true;
+                        } else {
+                            $can_download_free_version = true;
+                        }
+                    }
+                }
+            } else {
+                if ( ! is_object( $fs_addon ) && $is_addon_activated ) {
+                    $fs_addon = $this->_fs->get_addon_instance( $api->slug );
+                }
+
+                $can_download_premium_version = true;
+
+                if ( ! isset( $active_plugins_directories_map[ dirname( $this->status['file'] ) ] ) ) {
+                    if ( $is_premium_installed ) {
+                        $can_activate_premium_version = ( ! $is_addon_activated || ! $fs_addon->is_premium() );
+                    } else if ( $is_free_installed ) {
+                        $can_activate_free_version = ( ! $is_addon_activated );
+                    }
+                }
+
+                if ( $this->_fs->is_premium() || ! $this->_fs->is_org_repo_compliant() ) {
+                    if ( $is_update_available ) {
+                        $can_install_premium_version_update = true;
+                    } else if ( ! $is_premium_installed ) {
+                        $can_install_premium_version = true;
+                    }
+                }
+            }
+
+            if (
+                $can_install_premium_version ||
+                $can_install_premium_version_update
+            ) {
+                if ( is_numeric( $blog_id ) ) {
+                    /**
+                     * Replace the network status URL with a blog admin–based status URL if the `Add-Ons` page is loaded
+                     * from a specific blog admin page (when `fs_blog_id` is valid) in order for plugin installation/update
+                     * to work.
+                     *
+                     * @author Leo Fajardo (@leorw)
+                     * @since 2.3.0
+                     */
+                    $this->status['url'] = self::get_blog_status_url( $blog_id, $this->status['url'], $this->status['status'] );
+                }
+
+                /**
+                 * Add the `fs_allow_updater_and_dialog` param to the install/update URL so that the add-on can be
+                 * installed/updated.
+                 *
+                 * @author Leo Fajardo (@leorw)
+                 * @since 2.3.0
+                 */
+                $this->status['url'] = str_replace( '?', '?fs_allow_updater_and_dialog=true&amp;', $this->status['url'] );
+            }
+
+            if ( $can_install_free_version_update || $can_install_premium_version_update ) {
+                $actions[] = $this->get_cta(
+                    ( $can_install_free_version_update ?
+                        fs_esc_html_inline( 'Install Free Version Update Now', 'install-free-version-update-now', $api->slug ) :
+                        fs_esc_html_inline( 'Install Update Now', 'install-update-now', $api->slug ) ),
+                    true,
+                    false,
+                    $this->status['url'],
+                    '_parent'
+                );
+            } else if ( $can_install_free_version || $can_install_premium_version ) {
+                $actions[] = $this->get_cta(
+                    ( $can_install_free_version ?
+                        fs_esc_html_inline( 'Install Free Version Now', 'install-free-version-now', $api->slug ) :
+                        fs_esc_html_inline( 'Install Now', 'install-now', $api->slug ) ),
+                    true,
+                    false,
+                    $this->status['url'],
+                    '_parent'
+                );
+            }
+
+            $download_latest_action = '';
+
+            if (
+                ! empty( $api->download_link ) &&
+                ( $can_download_free_version || $can_download_premium_version )
+            ) {
+                $download_latest_action = $this->get_cta(
+                    ( $can_download_free_version ?
+                        fs_esc_html_x_inline( 'Download Latest Free Version', 'as download latest version', 'download-latest-free-version', $api->slug ) :
+                        fs_esc_html_x_inline( 'Download Latest', 'as download latest version', 'download-latest', $api->slug ) ),
+                    true,
+                    false,
+                    esc_url( $api->download_link )
+                );
+            }
+
+            if ( ! $can_activate_free_version && ! $can_activate_premium_version ) {
+                if ( ! empty( $download_latest_action ) ) {
+                    $actions[] = $download_latest_action;
+                }
+            } else {
+                $activate_action = sprintf(
+                    '<a class="button button-primary edit" href="%s" title="%s" target="_parent">%s</a>',
+                    wp_nonce_url( ( is_numeric( $blog_id ) ? trailingslashit( get_admin_url( $blog_id ) ) : '' ) . 'plugins.php?action=activate&amp;plugin=' . $this->status['file'], 'activate-plugin_' . $this->status['file'] ),
+                    fs_esc_attr_inline( 'Activate this add-on', 'activate-this-addon', $api->slug ),
+                    $can_activate_free_version ?
+                        fs_text_inline( 'Activate Free Version', 'activate-free', $api->slug ) :
+                        fs_text_inline( 'Activate', 'activate', $api->slug )
+                );
+
+                if ( ! $can_download_premium_version && ! empty( $download_latest_action ) ) {
+                    $actions[] = $download_latest_action;
+
+                    $download_latest_action = '';
+                }
+
+                if ( $can_install_premium_version || $can_install_premium_version_update ) {
+                    if ( $can_download_premium_version && ! empty( $download_latest_action ) ) {
+                        $actions[] = $download_latest_action;
+
+                        $download_latest_action = '';
+                    }
+
+                    $actions[] = $activate_action;
+                } else {
+                    array_unshift( $actions, $activate_action );
+                }
+
+                if ( ! empty ($download_latest_action ) ) {
+                    $actions[] = $download_latest_action;
+                }
+            }
+
+            return $actions;
+        }
+
+        /**
+         * Rebuilds the status URL based on the admin URL.
+         *
+         * @author Leo Fajardo (@leorw)
+         * @since 2.3.0
+         *
+         * @param int    $blog_id
+         * @param string $network_status_url
+         * @param string $status
+         *
+         * @return string
+         */
+        private static function get_blog_status_url( $blog_id, $network_status_url, $status ) {
+            if ( ! in_array( $status, array( 'install', 'update_available' ) ) ) {
+                return $network_status_url;
+            }
+
+            $action = ( 'install' === $status ) ?
+                'install-plugin' :
+                'upgrade-plugin';
+
+            $query = parse_url( $network_status_url, PHP_URL_QUERY );
+            if ( empty( $query ) ) {
+                return $network_status_url;
+            }
+
+            parse_str( html_entity_decode( $query ), $url_params );
+            if ( empty( $url_params ) || ! isset( $url_params['plugin'] ) ) {
+                return $network_status_url;
+            }
+
+            $plugin = $url_params['plugin'];
+
+            return wp_nonce_url( get_admin_url( $blog_id,"update.php?action={$action}&plugin={$plugin}"), "{$action}_{$plugin}");
         }
 
         /**
@@ -815,7 +1175,7 @@
                                                     }?>;
                                                 },
                                                 _updateCtaUrl           = function (plan, pricing, cycle) {
-                                                    $('.plugin-information-pricing .button, #plugin-information-footer .button.fs-checkout-button').attr('href', _checkoutUrl(plan, pricing, cycle));
+                                                    $('.plugin-information-pricing .fs-checkout-button, #plugin-information-footer .fs-checkout-button').attr('href', _checkoutUrl(plan, pricing, cycle));
                                                 };
 
                                             $(document).ready(function () {
@@ -902,7 +1262,7 @@
                                     <?php endif ?>
                                     <ul class="fs-licenses">
                                     </ul>
-                                    <?php echo $this->get_checkout_cta( $api, $plan, false ) ?>
+                                    <?php echo $this->get_actions_dropdown( $api, $plan ) ?>
                                     <div style="clear:both"></div>
                                     <?php if ( $plan->has_trial() ) : ?>
                                         <?php $trial_period = $this->get_trial_period( $plan ) ?>
@@ -1127,16 +1487,123 @@
             echo "</div>\n"; // #plugin-information-scrollable
             echo "<div id='$tab-footer'>\n";
 
-            if ( $api->has_paid_plan && ! empty( $api->checkout_link ) ) {
-                echo $this->get_checkout_cta( $api );
+            if (
+                ! empty( $api->download_link ) &&
+                ! empty( $this->status ) &&
+                in_array( $this->status['status'], array( 'newer_installed', 'latest_installed' ) )
+            ) {
+                if ( 'newer_installed' === $this->status['status'] ) {
+                    echo $this->get_cta(
+                        ( $this->status['is_premium_installed'] ?
+                            esc_html( sprintf( fs_text_inline( 'Newer Version (%s) Installed', 'newer-installed', $api->slug ), $this->status['version'] ) ) :
+                            esc_html( sprintf( fs_text_inline( 'Newer Free Version (%s) Installed', 'newer-free-installed', $api->slug ), $this->status['version'] ) ) ),
+                        false,
+                        true
+                    );
+                } else {
+                    echo $this->get_cta(
+                        ( $this->status['is_premium_installed'] ?
+                            fs_esc_html_inline( 'Latest Version Installed', 'latest-installed', $api->slug ) :
+                            fs_esc_html_inline( 'Latest Free Version Installed', 'latest-free-installed', $api->slug ) ),
+                        false,
+                        true
+                    );
+                }
             }
 
-            if ( ! empty( $api->download_link ) ) {
-                echo $this->get_download_cta( $api, empty( $api->checkout_link ) );
-            }
+            echo $this->get_actions_dropdown( $api, null );
 
             echo "</div>\n";
+            ?>
+            <script type="text/javascript">
+                ( function( $, undef ) {
+                    var $dropdowns = $( '.fs-dropdown' );
 
+                    $( '#plugin-information' )
+                        .click( function( evt ) {
+                            var $target = $( evt.target );
+
+                            if (
+                                $target.hasClass( 'fs-dropdown-arrow-button' ) ||
+                                ( 0 !== $target.parents( '.fs-dropdown-arrow-button' ).length )
+                            ) {
+                                var $dropdown = $target.parents( '.fs-dropdown' ),
+                                    isActive  = $dropdown.hasClass( 'active' );
+
+                                if ( ! isActive ) {
+                                    /**
+                                     * Close the other dropdown if it's active.
+                                     *
+                                     * @author Leo Fajardo (@leorw)
+                                     * @since 2.3.0
+                                     */
+                                    $( '.fs-dropdown.active' ).each( function() {
+                                        toggleDropdown( $( this ), false );
+                                    } );
+                                }
+
+                                /**
+                                 * Toggle the current dropdown.
+                                 *
+                                 * @author Leo Fajardo (@leorw)
+                                 * @since 2.3.0
+                                 */
+                                toggleDropdown( $dropdown, ! isActive );
+
+                                return true;
+                            }
+
+                            /**
+                             * Close all dropdowns.
+                             *
+                             * @author Leo Fajardo (@leorw)
+                             * @since 2.3.0
+                             */
+                            toggleDropdown( $( this ).find( '.fs-dropdown' ), false );
+                        });
+
+                    if ( 0 !== $dropdowns.length ) {
+                        /**
+                         * Add the `up` class so that the bottom dropdown's content will be shown above its buttons.
+                         *
+                         * @author Leo Fajardo (@leorw)
+                         * @since 2.3.0
+                         */
+                        $( '#plugin-information-footer' ).find( '.fs-dropdown' ).addClass( 'up' );
+                    }
+
+                    /**
+                     * Returns the default state of the dropdown arrow button and hides the dropdown list.
+                     *
+                     * @author Leo Fajardo (@leorw)
+                     * @since 2.3.0
+                     *
+                     * @param {Object}  [$dropdown]
+                     * @param {Boolean} [state]
+                     */
+                    function toggleDropdown( $dropdown, state ) {
+                        if ( undef === $dropdown ) {
+                            var $activeDropdown = $dropdowns.find( '.active' );
+                            if ( 0 !== $activeDropdown.length ) {
+                                $dropdown = $activeDropdown;
+                            }
+                        }
+
+                        if ( undef === $dropdown ) {
+                            return;
+                        }
+
+                        if ( undef === state ) {
+                            state = false;
+                        }
+
+                        $dropdown.toggleClass( 'active', state );
+                        $dropdown.find( '.fs-dropdown-list' ).toggle( state );
+                        $dropdown.find( '.fs-dropdown-arrow-button' ).toggleClass( 'active', state );
+                    }
+                } )( jQuery );
+            </script>
+            <?php
             iframe_footer();
             exit;
         }

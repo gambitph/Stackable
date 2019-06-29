@@ -337,12 +337,14 @@
             self::$_NETWORK_OPTIONS_MAP = array(
                 // Network level options.
                 'affiliate_application_data' => 0,
+                'beta_data'                  => 0,
                 'connectivity_test'          => 0,
                 'handle_gdpr_admin_notice'   => 0,
                 'has_trial_plan'             => 0,
                 'install_sync_timestamp'     => 0,
                 'install_sync_cron'          => 0,
                 'is_anonymous_ms'            => 0,
+                'is_network_activated'       => 0,
                 'is_on'                      => 0,
                 'is_plugin_new_install'      => 0,
                 'network_install_blog_id'    => 0,

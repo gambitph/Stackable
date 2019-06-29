@@ -127,6 +127,9 @@
 
     if ( ! function_exists( 'fs_request_get' ) ) {
         /**
+         * A helper method to fetch GET/POST user input with an optional default value when the input is not set.
+         * @author Vova Feldman (@svovaf)
+         *
          * @param string      $key
          * @param mixed       $def
          * @param string|bool $type Since 1.2.1.7 - when set to 'get' will look for the value passed via querystring, when
@@ -140,6 +143,10 @@
                 $type = strtolower( $type );
             }
 
+            /**
+             * Note to WordPress.org Reviewers:
+             *  This is a helper method to fetch GET/POST user input with an optional default value when the input is not set. The actual sanitization is done in the scope of the function's usage.
+             */
             switch ( $type ) {
                 case 'post':
                     $value = isset( $_POST[ $key ] ) ? $_POST[ $key ] : $def;
@@ -163,17 +170,39 @@
     }
 
     if ( ! function_exists( 'fs_request_get_bool' ) ) {
+        /**
+         * A helper method to fetch GET/POST user boolean input with an optional default value when the input is not set.
+         *
+         * @author Vova Feldman (@svovaf)
+         *
+         * @param string $key
+         * @param bool $def
+         *
+         * @return bool|mixed
+         */
         function fs_request_get_bool( $key, $def = false ) {
-            if ( ! isset( $_REQUEST[ $key ] ) ) {
+            $val = fs_request_get( $key, null );
+
+            if ( is_null( $val ) ) {
                 return $def;
             }
 
-            if ( 1 == $_REQUEST[ $key ] || 'true' === strtolower( $_REQUEST[ $key ] ) ) {
-                return true;
-            }
+            if ( is_bool( $val ) ) {
+                return $val;
+            } else if ( is_numeric( $val ) ) {
+                if ( 1 == $val ) {
+                    return true;
+                } else if ( 0 == $val ) {
+                    return false;
+                }
+            } else if ( is_string( $val ) ) {
+                $val = strtolower( $val );
 
-            if ( 0 == $_REQUEST[ $key ] || 'false' === strtolower( $_REQUEST[ $key ] ) ) {
-                return false;
+                if ( 'true' === $val ) {
+                    return true;
+                } else if ( 'false' === $val ) {
+                    return false;
+                }
             }
 
             return $def;

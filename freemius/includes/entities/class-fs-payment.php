@@ -43,6 +43,13 @@
          */
         public $gross;
         /**
+         * @author Leo Fajardo (@leorw)
+         * @since 2.3.0
+         *
+         * @var string One of the following: `usd`, `gbp`, `eur`.
+         */
+        public $currency;
+        /**
          * @var number
          */
         public $bound_payment_id;
@@ -75,6 +82,10 @@
 
         #endregion Properties
 
+        const CURRENCY_USD = 'usd';
+        const CURRENCY_GBP = 'gbp';
+        const CURRENCY_EUR = 'eur';
+
         /**
          * @param object|bool $payment
          */
@@ -106,5 +117,52 @@
          */
         function is_migrated() {
             return ( 0 != $this->source );
+        }
+
+        /**
+         * Returns the gross in this format:
+         *  `{symbol}{amount | 2 decimal digits} {currency | uppercase}`
+         *
+         * Examples: £9.99 GBP, -£9.99 GBP.
+         *
+         * @author Leo Fajardo (@leorw)
+         * @since 2.3.0
+         *
+         * @return string
+         */
+        function formatted_gross()
+        {
+            return (
+                ( $this->gross < 0 ? '-' : '' ) .
+                $this->get_symbol() .
+                number_format( abs( $this->gross ), 2, '.', ',' ) . ' ' .
+                strtoupper( $this->currency )
+            );
+        }
+
+        /**
+         * A map between supported currencies with their symbols.
+         *
+         * @var array<string,string>
+         */
+        static $CURRENCY_2_SYMBOL;
+
+        /**
+         * @author Leo Fajardo (@leorw)
+         * @since 2.3.0
+         *
+         * @return string
+         */
+        private function get_symbol() {
+            if ( ! isset( self::$CURRENCY_2_SYMBOL ) ) {
+                // Lazy load.
+                self::$CURRENCY_2_SYMBOL = array(
+                    self::CURRENCY_USD => '$',
+                    self::CURRENCY_GBP => '£',
+                    self::CURRENCY_EUR => '€',
+                );
+            }
+
+            return self::$CURRENCY_2_SYMBOL[ $this->currency ];
         }
     }

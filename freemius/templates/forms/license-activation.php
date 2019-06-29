@@ -13,8 +13,9 @@
 	/**
 	 * @var Freemius $fs
 	 */
-	$fs   = freemius( $VARS['id'] );
-	$slug = $fs->get_slug();
+	$fs           = freemius( $VARS['id'] );
+	$slug         = $fs->get_slug();
+    $unique_affix = $fs->get_unique_affix();
 
 	$cant_find_license_key_text = fs_text_inline( "Can't find your license key?", 'cant-find-license-key', $slug );
 	$message_above_input_field  = fs_text_inline( 'Please enter the license key that you received in the email right after the purchase:', 'activate-license-message', $slug );
@@ -94,10 +95,10 @@
     $total_available_licenses = count( $available_licenses );
     if ( $total_available_licenses > 0 ) {
         $license_input_html = <<< HTML
-        <div id="license_options_container">
+        <div class="fs-license-options-container">
             <table>
                 <tbody>
-                    <tr id="available_license_key_container">
+                    <tr class="fs-available-license-key-container">
                         <td><input type="radio" name="license_type" value="available"></td>
                         <td>
 HTML;
@@ -106,7 +107,7 @@ HTML;
             // Sort the licenses by number of activations left in descending order.
             krsort( $available_licenses );
 
-            $license_input_html .= '<select id="licenses">';
+            $license_input_html .= '<select class="fs-licenses">';
 
             /**
              * @var FS_Plugin_License $license
@@ -116,7 +117,7 @@ HTML;
                     "%s-Site %s License - %s",
                      ( 1 == $license->quota ?
                          'Single' :
-                         $license->quota
+                         ( $license->is_unlimited() ? 'Unlimited' : $license->quota )
                      ),
                      $fs->_get_plan_by_id( $license->plan_id )->title,
                      ( htmlspecialchars( substr( $license->secret_key, 0, 6 ) ) .
@@ -149,7 +150,7 @@ HTML;
 
             $license_input_html .= <<< HTML
                 <input
-                    id="available_license_key"
+                    class="fs-available-license-key"
                     type="text"
                     value="{$value}"
                     data-id="{$available_license->id}"
@@ -164,10 +165,10 @@ HTML;
                     </tr>
                     <tr>
                         <td><input type="radio" name="license_type" value="other"></td>
-                        <td id="other_license_key_container">
-                            <label for="other_license_key">Other: </label>
+                        <td class="fs-other-license-key-container">
+                            <label for="other_license_key_{$unique_affix}">Other: </label>
                             <div>
-                                <input id="other_license_key" class="license_key" type="text" placeholder="Enter license key" tabindex="1">
+                                <input id="other_license_key_{$unique_affix}" class="fs-license-key" type="text" placeholder="Enter license key" tabindex="1">
                             </div>
                         </td>
                     </tr>
@@ -176,7 +177,7 @@ HTML;
         </div>
 HTML;
     } else {
-        $license_input_html = "<input class='license_key' type='text' placeholder='{$license_key_text}' tabindex='1' />";
+        $license_input_html = "<input class='fs-license-key' type='text' placeholder='{$license_key_text}' tabindex='1' />";
     }
 
 	/**
@@ -201,7 +202,7 @@ HTML;
 	$( document ).ready(function() {
 		var modalContentHtml = <?php echo json_encode($modal_content_html); ?>,
 			modalHtml =
-				'<div class="fs-modal fs-modal-license-activation">'
+				'<div class="fs-modal fs-modal-license-activation fs-modal-license-activation-<?php echo $unique_affix ?>">'
 				+ '	<div class="fs-modal-dialog">'
 				+ '		<div class="fs-modal-header">'
 				+ '		    <h4><?php echo esc_js($header_title) ?></h4>'
@@ -217,22 +218,22 @@ HTML;
 				+ '	</div>'
 				+ '</div>',
 			$modal = $(modalHtml),
-			$activateLicenseLink      = $('span.activate-license.<?php echo $fs->get_unique_affix() ?> a, .activate-license-trigger.<?php echo $fs->get_unique_affix() ?>'),
+			$activateLicenseLink      = $('span.activate-license.<?php echo $unique_affix ?> a, .activate-license-trigger.<?php echo $unique_affix ?>'),
 			$activateLicenseButton    = $modal.find('.button-activate-license'),
-			$licenseKeyInput          = $modal.find('input.license_key'),
+			$licenseKeyInput          = $modal.find( 'input.fs-license-key' ),
 			$licenseActivationMessage = $modal.find( '.license-activation-message' ),
             isNetworkActivation       = <?php echo $is_network_activation ? 'true' : 'false' ?>;
 
 		$modal.appendTo($('body'));
 
         var
-            $licensesDropdown    = $( '#licenses' ),
-            $licenseTypes        = $( 'input[type="radio"][name="license_type"]' ),
-            $applyOnAllSites     = $( '#apply_on_all_sites' ),
-            $sitesListContainer  = $( '#sites_list_container' ),
-            $availableLicenseKey = $( '#available_license_key' ),
-            $otherLicenseKey     = $( '#other_license_key' ),
-            $multisiteOptionsContainer = $( '#multisite_options_container' ),
+            $licensesDropdown    = $modal.find( '.fs-licenses' ),
+            $licenseTypes        = $modal.find( 'input[type="radio"][name="license_type"]' ),
+            $applyOnAllSites     = $modal.find( '.fs-apply-on-all-sites-checkbox' ),
+            $sitesListContainer  = $modal.find( '.fs-sites-list-container' ),
+            $availableLicenseKey = $modal.find( '.fs-available-license-key' ),
+            $otherLicenseKey     = $modal.find( '#other_license_key_<?php echo $unique_affix ?>' ),
+            $multisiteOptionsContainer = $modal.find( '.fs-multisite-options-container' ),
             $activationsLeft     = null,
             hasLicensesDropdown  = ( $licensesDropdown.length > 0 ),
             hasLicenseTypes      = ( $licenseTypes.length > 0 ),
@@ -242,13 +243,13 @@ HTML;
 
 		function registerEventHandlers() {
             var
-                $otherLicenseKeyContainer = $( '#other_license_key_container' );
+                $otherLicenseKeyContainer = $modal.find( '.fs-other-license-key-container' );
 
             if ( isNetworkActivation ) {
                 $applyOnAllSites.click(function() {
                     var applyOnAllSites = $( this ).is( ':checked' );
 
-                    $multisiteOptionsContainer.toggleClass( 'apply-on-all-sites', applyOnAllSites );
+                    $multisiteOptionsContainer.toggleClass( 'fs-apply-on-all-sites', applyOnAllSites );
 
                     showSites( ! applyOnAllSites );
 
@@ -292,7 +293,7 @@ HTML;
             if ( hasLicenseTypes ) {
                 $licenseTypes.change(function() {
                     var
-                        licenseKey              = $( 'input.license_key' ).val().trim(),
+                        licenseKey              = $modal.find( 'input.fs-license-key' ).val().trim(),
                         otherLicenseKeySelected = isOtherLicenseKeySelected();
 
                     if ( ( licenseKey.length > 0 || ( hasLicenseTypes && ! otherLicenseKeySelected ) ) &&
@@ -339,7 +340,7 @@ HTML;
 				showModal( evt );
 			});
 
-			$modal.on('input propertychange', 'input.license_key', function () {
+			$modal.on('input propertychange', 'input.fs-license-key', function () {
 
 				var licenseKey = $(this).val().trim();
 
@@ -351,11 +352,11 @@ HTML;
 				}
 			});
 
-			$modal.on( 'blur', 'input.license_key', function( evt ) {
+			$modal.on( 'blur', 'input.fs-license-key', function( evt ) {
 				var
                     licenseKey                  = $(this).val().trim(),
                     $focusedElement             = $( evt.relatedTarget ),
-                    hasSelectedAvailableLicense = ( hasLicenseTypes && $focusedElement.parents( '#available_license_key_container' ).length > 0 );
+                    hasSelectedAvailableLicense = ( hasLicenseTypes && $focusedElement.parents( '.fs-available-license-key-container' ).length > 0 );
 
                 /**
                  * If license key is empty, disable the license activation button.
@@ -522,7 +523,7 @@ HTML;
                     licenseKey = $otherLicenseKey.val();
                 }
             } else {
-                licenseKey = $( 'input.license_key' ).val();
+                licenseKey = $modal.find( 'input.fs-license-key' ).val();
             }
 
             return ( licenseKey.trim().length > 0 );
@@ -557,11 +558,11 @@ HTML;
             }
 
             // Cleanup previously auto-selected site.
-            $('#sites_list_container input[type=checkbox]:disabled')
+            $modal.find( '.fs-sites-list-container input[type=checkbox]:disabled' )
                 .attr('disabled', false)
                 .attr('checked', false);
 
-            var $blogsWithActiveLicense = $('#sites_list_container tr[data-license-id=' + licenseID + '] input[type=checkbox]');
+            var $blogsWithActiveLicense = $modal.find( '.fs-sites-list-container tr[data-license-id=' + licenseID + '] input[type=checkbox]' );
 
             if ($blogsWithActiveLicense.length > 0) {
                 $blogsWithActiveLicense.attr('checked', true)
@@ -591,7 +592,7 @@ HTML;
 
             // Update the label of the "Activate license on all sites" checkbox.
             $applyOnAllSites.parent().find( 'span' ).html( activateLicenseCheckboxLabel );
-            $activationsLeft = $( '.activations-left' );
+            $activationsLeft = $modal.find( '.activations-left' );
 
             if ( hasSelectedSite() ) {
                 enableActivateLicenseButton();

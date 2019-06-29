@@ -9,10 +9,14 @@
 
     $sites               = $VARS['sites'];
     $require_license_key = $VARS['require_license_key'];
+
+    $show_delegation_option     = $fs->apply_filters( 'show_delegation_option', true );
+    $enable_per_site_activation = $fs->apply_filters( 'enable_per_site_activation', true );
 ?>
 <?php $separator      = '<td>|</td>' ?>
-<div id="multisite_options_container" class="apply-on-all-sites">
-    <table id="all_sites_options">
+<div class="fs-multisite-options-container fs-apply-on-all-sites"<?php if ( ! $enable_per_site_activation )
+    echo ' style="display: none;"' ?>>
+    <table class="fs-all-sites-options">
         <tbody>
         <tr>
             <td width="600">
@@ -29,13 +33,15 @@
 
                         }
                     ?>
-                    <input id="apply_on_all_sites" type="checkbox" value="true" checked><span><?php echo esc_html( $apply_checkbox_label ) ?></span>
+                    <input class="fs-apply-on-all-sites-checkbox" type="checkbox" value="true" checked><span><?php echo esc_html( $apply_checkbox_label ) ?></span>
                 </label>
             </td>
             <?php if ( ! $require_license_key ) : ?>
                 <td><a class="action action-allow" data-action-type="allow" href="#"><?php fs_esc_html_echo_inline( 'allow', 'allow', $slug ) ?></a></td>
                 <?php echo $separator ?>
+                <?php if ( $show_delegation_option ) : ?>
                 <td><a class="action action-delegate" data-action-type="delegate" href="#"><?php fs_esc_html_echo_inline( 'delegate', 'delegate', $slug ) ?></a></td>
+                <?php endif ?>
                 <?php if ( $fs->is_enable_anonymous() ) : ?>
                     <?php echo $separator ?>
                     <td><a class="action action-skip" data-action-type="skip" href="#"><?php echo strtolower( fs_esc_html_inline( 'skip', 'skip', $slug ) ) ?></a></td>
@@ -44,7 +50,7 @@
         </tr>
         </tbody>
     </table>
-    <div id="sites_list_container">
+    <div class="fs-sites-list-container">
         <table cellspacing="0">
             <tbody>
             <?php $site_props = array('uid', 'url', 'title', 'charset', 'language') ?>
@@ -67,7 +73,9 @@
                     <?php if ( ! $require_license_key ) : ?>
                         <td><a class="action action-allow selected" data-action-type="allow" href="#"><?php fs_esc_html_echo_inline( 'allow', 'allow', $slug ) ?></a></td>
                         <?php echo $separator ?>
+                        <?php if ( $show_delegation_option ) : ?>
                         <td><a class="action action-delegate" data-action-type="delegate" href="#"><?php fs_esc_html_echo_inline( 'delegate', 'delegate', $slug ) ?></a></td>
+                        <?php endif ?>
                         <?php if ( $fs->is_enable_anonymous() ) : ?>
                             <?php echo $separator ?>
                             <td><a class="action action-skip" data-action-type="skip" href="#"><?php echo strtolower( fs_esc_html_inline( 'skip', 'skip', $slug ) ) ?></a></td>
