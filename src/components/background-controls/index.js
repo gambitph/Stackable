@@ -15,14 +15,13 @@ import {
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
-
-export const isVideo = url => url.match( /(mp4|webm|ogg)/i )
+import { urlIsVideo } from '@stackable/util'
 
 const BackgroundControls = props => {
 	const isBackgroundVideo = () => {
 		return [ props.backgroundMediaURL, props.tabletBackgroundMediaURL, props.mobileBackgroundMediaURL ]
 			.filter( value => value )
-			.filter( isVideo )
+			.filter( urlIsVideo )
 			.length > 0
 	}
 
@@ -144,8 +143,8 @@ const BackgroundControls = props => {
 				<Fragment>
 					<WhenResponsiveScreen>
 						<ImageControl
-							label={ __( 'Background Image or Video' ) }
-							help={ __( 'Use .mp4 format for videos' ) }
+							label={ props.backgroundMediaAllowedTypes ? __( 'Background Image or Video' ) : __( 'Background Image' ) }
+							help={ props.backgroundMediaAllowedTypes ? __( 'Use .mp4 format for videos' ) : '' }
 							onRemove={ () => props.onChangeBackgroundMedia( { url: '', id: '' } ) }
 							onChange={ props.onChangeBackgroundMedia }
 							imageID={ props.backgroundMediaID }
@@ -155,8 +154,8 @@ const BackgroundControls = props => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
 						<ImageControl
-							label={ __( 'Background Image or Video' ) }
-							help={ __( 'Use .mp4 format for videos' ) }
+							label={ props.backgroundMediaAllowedTypes ? __( 'Background Image or Video' ) : __( 'Background Image' ) }
+							help={ props.backgroundMediaAllowedTypes ? __( 'Use .mp4 format for videos' ) : '' }
 							onRemove={ () => props.onChangeTabletBackgroundMedia( { url: '', id: '' } ) }
 							onChange={ props.onChangeTabletBackgroundMedia }
 							imageID={ props.tabletBackgroundMediaID }
@@ -166,8 +165,8 @@ const BackgroundControls = props => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
 						<ImageControl
-							label={ __( 'Background Image or Video' ) }
-							help={ __( 'Use .mp4 format for videos' ) }
+							label={ props.backgroundMediaAllowedTypes ? __( 'Background Image or Video' ) : __( 'Background Image' ) }
+							help={ props.backgroundMediaAllowedTypes ? __( 'Use .mp4 format for videos' ) : '' }
 							onRemove={ () => props.onChangeMobileBackgroundMedia( { url: '', id: '' } ) }
 							onChange={ props.onChangeMobileBackgroundMedia }
 							imageID={ props.mobileBackgroundMediaID }

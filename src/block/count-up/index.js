@@ -239,3 +239,9 @@ export const settings = {
 	// Stackable specific settings.
 	sDemoURL: 'https://wpstackable.com/count-up-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
 }
+
+export const showOptions = blockProps => {
+	return applyFilters( 'stackable.count-up.show', {
+		columnBackground: false,
+	}, blockProps )
+}

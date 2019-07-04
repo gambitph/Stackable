@@ -37,7 +37,7 @@
 
 	.ugb-number-box__item {
 		margin-bottom: 0 !important;
-		* {
+		.ugb-number-box__content {
 			z-index: 4;
 		}
 	}

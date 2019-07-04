@@ -1,5 +1,5 @@
 import { BlockContainer, SvgIcon } from '@stackable/components'
-import { hasBackgroundOverlay, range } from '@stackable/util'
+import { createVideoBackground, hasBackgroundOverlay, range } from '@stackable/util'
 import { withBlockStyles, withUniqueClass } from '@stackable/higher-order'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
@@ -7,6 +7,7 @@ import { compose } from '@wordpress/compose'
 import createStyles from './style'
 import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
+import { showOptions } from '.'
 
 const save = props => {
 	const { className, attributes } = props
@@ -27,6 +28,8 @@ const save = props => {
 	], applyFilters( 'stackable.count-up.mainclasses', {
 		[ `ugb-countup--design-${ design }` ]: design !== 'plain',
 	}, design, props ) )
+
+	const show = showOptions( props )
 
 	return (
 		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
@@ -90,6 +93,7 @@ const save = props => {
 					}
 					return applyFilters( 'stackable.count-up.save.output', (
 						<div className={ boxClasses } key={ i }>
+							{ show.columnBackground && createVideoBackground( 'column%s', props ) }
 							{ iconComp }
 							{ titleComp }
 							{ countComp }

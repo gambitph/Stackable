@@ -1,0 +1,36 @@
+@import "common";
+
+.ugb-main-block {
+	position: relative;
+	.ugb-video-background {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translateX(-50%) translateY(-50%);
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+		object-fit: cover;
+
+		// Desktop only.
+		@media screen and (min-width: $break-js-tablet) {
+			&.ugb--video-hide-desktop {
+				display: none !important;
+			}
+		}
+
+		// Tablet only.
+		@media screen and (min-width: $break-js-mobile) and (max-width: $break-js-tablet) {
+			&.ugb--video-hide-tablet {
+				display: none !important;
+			}
+		}
+
+		// Mobile only.
+		@media screen and (max-width: $break-js-mobile) {
+			&.ugb--video-hide-mobile {
+				display: none !important;
+			}
+		}
+	}
+}

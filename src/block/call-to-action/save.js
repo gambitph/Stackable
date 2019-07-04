@@ -1,11 +1,11 @@
 import { BlockContainer, ButtonEdit } from '@stackable/components'
+import { createVideoBackground, hasBackgroundOverlay } from '@stackable/util'
 import { withBlockStyles, withUniqueClass } from '@stackable/higher-order'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
 import createStyles from './style'
 import { Fragment } from '@wordpress/element'
-import { hasBackgroundOverlay } from '@stackable/util'
 import { RichText } from '@wordpress/block-editor'
 
 const save = props => {
@@ -90,6 +90,7 @@ const save = props => {
 		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
 				<div className={ itemClasses }>
+					{ createVideoBackground( 'column%s', props ) }
 					{ applyFilters( 'stackable.cta.save.output', (
 						<Fragment>
 							{ titleComp }

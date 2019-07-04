@@ -21,6 +21,7 @@ import {
 	createButtonAttributeNames,
 	createResponsiveAttributeNames,
 	createTypographyAttributeNames,
+	createVideoBackground,
 	descriptionPlaceholder,
 	hasBackgroundOverlay,
 } from '@stackable/util'
@@ -353,6 +354,7 @@ const edit = props => {
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
 				<div className={ itemClasses }>
+					{ createVideoBackground( 'column%s', props ) }
 					{ applyFilters( 'stackable.cta.edit.output', (
 						<Fragment>
 							{ titleComp }

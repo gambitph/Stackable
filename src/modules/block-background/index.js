@@ -9,6 +9,7 @@ import {
 	createBackgroundAttributes,
 	createBackgroundOverlayStyles,
 	createBackgroundStyles,
+	createVideoBackground,
 	hasBackgroundOverlay,
 } from '@stackable/util'
 import { __ } from '@wordpress/i18n'
@@ -172,6 +173,19 @@ const addBlockAlignClasses = ( classes, props ) => {
 	}
 }
 
+const addVideoBackgroundOutput = ( output, design, blockProps ) => {
+	if ( ! blockProps.attributes.showBlockBackground ) {
+		return output
+	}
+
+	return (
+		<Fragment>
+			{ output }
+			{ createVideoBackground( 'blockBackground%s', blockProps ) }
+		</Fragment>
+	)
+}
+
 const addStyles = ( styleObject, props ) => {
 	if ( ! props.attributes.showBlockBackground ) {
 		return styleObject
@@ -212,6 +226,8 @@ const blockBackground = blockName => {
 	addFilter( `stackable.${ blockName }.settings`, `stackable/${ blockName }/block-background`, addAlignSupport )
 	addFilter( `stackable.${ blockName }.main-block.classes`, `stackable/${ blockName }/block-background`, addBlockAlignClasses )
 	addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/block-background`, addStyles )
+	addFilter( `stackable.${ blockName }.edit.output.outer`, `stackable/${ blockName }/block-separators`, addVideoBackgroundOutput )
+	addFilter( `stackable.${ blockName }.save.output.outer`, `stackable/${ blockName }/block-separators`, addVideoBackgroundOutput )
 	doAction( `stackable.module.block-background`, blockName )
 }
 

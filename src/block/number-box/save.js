@@ -1,3 +1,4 @@
+import { createVideoBackground, hasBackgroundOverlay } from '@stackable/util'
 import { withBlockStyles, withUniqueClass } from '@stackable/higher-order'
 import { applyFilters } from '@wordpress/hooks'
 import { BlockContainer } from '@stackable/components'
@@ -5,9 +6,9 @@ import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
 import createStyles from './style'
 import { Fragment } from '@wordpress/element'
-import { hasBackgroundOverlay } from '@stackable/util'
 import { range } from 'lodash'
 import { RichText } from '@wordpress/block-editor'
+import { showOptions } from '.'
 
 const save = props => {
 	const { className, attributes } = props
@@ -37,6 +38,8 @@ const save = props => {
 		[ `ugb-number-box--number-style-${ numberStyle }` ]: numberStyle !== '' && ( design === 'basic' || design === 'plain' ),
 	}, design, props ) )
 
+	const show = showOptions( props )
+
 	return (
 		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
@@ -55,6 +58,7 @@ const save = props => {
 
 					return (
 						<div className={ boxClasses } key={ i }>
+							{ show.columnBackground && createVideoBackground( 'column%s', props ) }
 							{ showNumber && ! RichText.isEmpty( num ) && (
 								<RichText.Content
 									tagName="span"

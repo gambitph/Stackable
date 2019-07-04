@@ -22,6 +22,15 @@ export const range = ( start, end ) => {
 }
 
 /**
+ * Check whether a URL is a video file.
+ *
+ * @param {string} url
+ *
+ * @return {boolean} True if a video.
+ */
+export const urlIsVideo = url => url.match( /(mp4|webm|ogg)/i )
+
+/**
  * From a URL, get the video ID and provider: YouTube or Vimeo.
  *
  * @param {string} url

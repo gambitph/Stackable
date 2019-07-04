@@ -6,8 +6,8 @@ import {
 	whiteIfDark,
 	whiteIfDarkBlackIfLight,
 } from '@stackable/util'
-import { applyFilters } from '@wordpress/hooks'
 import deepmerge from 'deepmerge'
+import { showOptions } from '.'
 import { sprintf } from '@wordpress/i18n'
 
 export const createStyles = props => {
@@ -21,19 +21,9 @@ export const createStyles = props => {
 	const {
 		design = 'basic',
 		columnBackgroundColor = '',
-		numberStyle = '',
 	} = props.attributes
 
-	const show = applyFilters( 'stackable.number-box.show', {
-		spacingNumber: true,
-		backgroundColor: design !== 'plain',
-		borderRadius: design !== 'plain',
-		shadow: design !== 'plain',
-		numberColor: true,
-		numberBGColor: ( design === 'basic' || design === 'plain' ) && numberStyle !== 'none',
-		numberStyle: true,
-		columnBackground: design !== 'plain',
-	}, design, props )
+	const show = showOptions( props )
 
 	// General.
 	const {
@@ -116,7 +106,7 @@ export const createStyles = props => {
 		styles.push( {
 			'.ugb-number-box__title': {
 				...createTypographyStyles( 'title%s', 'desktop', props.attributes ),
-				color: whiteIfDark( titleColor, columnBackgroundColor ),
+				color: whiteIfDark( titleColor, show.columnBackground && columnBackgroundColor ),
 				textAlign: getValue( 'titleAlign' ),
 			},
 			tablet: {
@@ -142,7 +132,7 @@ export const createStyles = props => {
 		styles.push( {
 			'.ugb-number-box__description': {
 				...createTypographyStyles( 'description%s', 'desktop', props.attributes ),
-				color: whiteIfDark( descriptionColor, columnBackgroundColor ),
+				color: whiteIfDark( descriptionColor, show.columnBackground && columnBackgroundColor ),
 				textAlign: getValue( 'descriptionAlign' ),
 			},
 			tablet: {

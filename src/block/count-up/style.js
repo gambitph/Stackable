@@ -3,8 +3,8 @@ import {
 	createTypographyStyles,
 	whiteIfDark,
 } from '@stackable/util'
-import { applyFilters } from '@wordpress/hooks'
 import deepmerge from 'deepmerge'
+import { showOptions } from '.'
 import { sprintf } from '@wordpress/i18n'
 
 export const createStyles = props => {
@@ -13,9 +13,7 @@ export const createStyles = props => {
 		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
 	}
 
-	const show = applyFilters( 'stackable.count-up.show', {
-		columnBackground: false,
-	}, props.attributes.design, props )
+	const show = showOptions( props )
 
 	const styles = []
 	styles.push( {

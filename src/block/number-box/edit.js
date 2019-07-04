@@ -15,7 +15,14 @@ import {
 	ResponsiveControl,
 	TypographyControlHelper,
 } from '@stackable/components'
-import { createResponsiveAttributeNames, createTypographyAttributeNames, descriptionPlaceholder, hasBackgroundOverlay, range } from '@stackable/util'
+import {
+	createResponsiveAttributeNames,
+	createTypographyAttributeNames,
+	createVideoBackground,
+	descriptionPlaceholder,
+	hasBackgroundOverlay,
+	range,
+} from '@stackable/util'
 import { PanelBody, RangeControl, SelectControl, TextControl } from '@wordpress/components'
 import { withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
 import classnames from 'classnames'
@@ -25,6 +32,7 @@ import { Fragment } from '@wordpress/element'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
 import { RichText } from '@wordpress/block-editor'
+import { showOptions } from '.'
 import { showProNotice } from 'stackable'
 
 addFilter( 'stackable.number-box.edit.inspector.layout.before', 'stackable/number-box', ( output, props ) => {
@@ -80,16 +88,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 		numberOpacity = '',
 	} = props.attributes
 
-	const show = applyFilters( 'stackable.number-box.show', {
-		spacingNumber: true,
-		backgroundColor: design !== 'plain',
-		borderRadius: design !== 'plain',
-		shadow: design !== 'plain',
-		numberColor: true,
-		numberBGColor: ( design === 'basic' || design === 'plain' ) && numberStyle !== 'none',
-		numberStyle: true,
-		columnBackground: design !== 'plain',
-	}, design, props )
+	const show = showOptions( props )
 
 	return (
 		<Fragment>
@@ -350,22 +349,12 @@ addFilter( `stackable.number-box.edit.inspector.advanced.before`, `stackable/num
 	const { setAttributes } = props
 	const {
 		columns = 2,
-		design = 'basic',
-		numberStyle = '',
 		showNumber = true,
 		showTitle = true,
 		showDescription = true,
 	} = props.attributes
 
-	const show = applyFilters( 'stackable.number-box.show', {
-		backgroundColor: design !== 'plain',
-		borderRadius: design !== 'plain',
-		shadow: design !== 'plain',
-		numberColor: true,
-		numberBGColor: ( design === 'basic' || design === 'plain' ) && numberStyle !== 'none',
-		numberStyle: true,
-		columnBackground: design !== 'plain',
-	}, design, props )
+	const show = showOptions( props )
 
 	return (
 		<Fragment>
@@ -459,6 +448,8 @@ const edit = props => {
 		[ `ugb-number-box--number-style-${ numberStyle }` ]: numberStyle !== '' && ( design === 'basic' || design === 'plain' ),
 	}, design, props ) )
 
+	const show = showOptions( props )
+
 	return (
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
@@ -511,6 +502,7 @@ const edit = props => {
 									) }
 								</div>
 							) }
+							{ show.columnBackground && createVideoBackground( 'column%s', props ) }
 						</div>
 					)
 				} ) }

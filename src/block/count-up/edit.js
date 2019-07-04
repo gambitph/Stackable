@@ -17,7 +17,7 @@ import {
 	SvgIcon,
 	TypographyControlHelper,
 } from '@stackable/components'
-import { createResponsiveAttributeNames, createTypographyAttributeNames, hasBackgroundOverlay } from '@stackable/util'
+import { createResponsiveAttributeNames, createTypographyAttributeNames, createVideoBackground, hasBackgroundOverlay } from '@stackable/util'
 import {
 	PanelBody, RangeControl,
 } from '@wordpress/components'
@@ -30,6 +30,7 @@ import ImageDesignPlain from './images/plain.png'
 import ImageDesignPlain2 from './images/plain-2.png'
 import { range } from 'lodash'
 import { RichText } from '@wordpress/block-editor'
+import { showOptions } from '.'
 import { showProNotice } from 'stackable'
 
 addFilter( 'stackable.count-up.edit.inspector.layout.before', 'stackable/count-up', ( output, props ) => {
@@ -64,7 +65,6 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 	const { setAttributes } = props
 	const {
 		columns,
-		design = 'plain',
 		borderRadius = 12,
 		shadow = 3,
 		showNumber = true,
@@ -78,9 +78,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 		iconColor = '',
 	} = props.attributes
 
-	const show = applyFilters( 'stackable.count-up.show', {
-		columnBackground: false,
-	}, design, props )
+	const show = showOptions( props )
 
 	return (
 		<Fragment>
@@ -340,16 +338,13 @@ addFilter( `stackable.count-up.edit.inspector.advanced.before`, `stackable/count
 	const { setAttributes } = props
 	const {
 		columns = 2,
-		design = 'plain',
 		showIcon = false,
 		showNumber = true,
 		showTitle = true,
 		showDescription = true,
 	} = props.attributes
 
-	const show = applyFilters( 'stackable.count-up.show', {
-		columnBackground: false,
-	}, design, props )
+	const show = showOptions( props )
 
 	return (
 		<Fragment>
@@ -432,6 +427,8 @@ const edit = props => {
 		[ `ugb-countup--design-${ design }` ]: design !== 'plain',
 	}, design, props ) )
 
+	const show = showOptions( props )
+
 	return (
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
@@ -497,6 +494,7 @@ const edit = props => {
 					}
 					return applyFilters( 'stackable.count-up.edit.output', (
 						<div className={ boxClasses } key={ i }>
+							{ show.columnBackground && createVideoBackground( 'column%s', props ) }
 							{ iconComp }
 							{ titleComp }
 							{ countComp }
