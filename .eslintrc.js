@@ -13,7 +13,7 @@ module.exports = {
 
 		// Allow our deprecated properties since they're readable.
 		camelcase: ["error", {
-			allow: ["d?D?eprecated\\w+[_\\d]+", "opacityToClass\\w+[_\\d]+"]
+			allow: ["\\w+(_\\d+)+"]
 		}],
 
 		// Force destructuring assignments to be multiline if they have lots of variables.
