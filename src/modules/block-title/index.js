@@ -31,6 +31,8 @@ const addInspectorPanel = ( output, props ) => {
 		blockTitleColor = '',
 		showBlockDescription = false,
 		blockDescriptionColor = '',
+		blockTitle = '',
+		blockDescription = '',
 	} = props.attributes
 	return (
 		<Fragment>
@@ -39,7 +41,14 @@ const addInspectorPanel = ( output, props ) => {
 				title={ __( 'Block Title' ) }
 				className="ugb-panel-block-title-module"
 				checked={ showBlockTitle }
-				onChange={ showBlockTitle => setAttributes( { showBlockTitle } ) }
+				onChange={ showBlockTitle => {
+					const attrs = { showBlockTitle }
+					// Fill up with a default value if empty.
+					if ( showBlockTitle && blockTitle === '' ) {
+						attrs.blockTitle = __( 'Title for This Block' )
+					}
+					setAttributes( attrs )
+				} }
 				toggleOnSetAttributes={ [
 					...createTypographyAttributeNames( 'blockTitle%s' ),
 					'blockTitleTag',
@@ -74,7 +83,14 @@ const addInspectorPanel = ( output, props ) => {
 			<PanelAdvancedSettings
 				title={ __( 'Block Description' ) }
 				checked={ showBlockDescription }
-				onChange={ showBlockDescription => setAttributes( { showBlockDescription } ) }
+				onChange={ showBlockDescription => {
+					const attrs = { showBlockDescription }
+					// Fill up with a default value if empty.
+					if ( showBlockDescription && blockDescription === '' ) {
+						attrs.blockDescription = descriptionPlaceholder()
+					}
+					setAttributes( attrs )
+				} }
 				toggleOnSetAttributes={ [
 					...createTypographyAttributeNames( 'blockDescription%s' ),
 					'blockDescriptionTag',
