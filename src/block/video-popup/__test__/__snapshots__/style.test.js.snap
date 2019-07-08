@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Video Popup block Rendered styles should match snapshot 1`] = `
+Object {
+  ".ugb-video-popup__play-button svg": Object {
+    "fill": undefined,
+    "height": undefined,
+    "opacity": undefined,
+    "width": undefined,
+  },
+  ".ugb-video-popup__wrapper": Object {
+    "backgroundAttachment": undefined,
+    "backgroundBlendMode": undefined,
+    "backgroundColor": undefined,
+    "backgroundImage": undefined,
+    "backgroundPosition": undefined,
+    "backgroundRepeat": undefined,
+    "backgroundSize": undefined,
+    "borderRadius": undefined,
+    "height": undefined,
+    "maxWidth": undefined,
+  },
+  ".ugb-video-popup__wrapper:before": Object {
+    "backgroundColor": undefined,
+    "backgroundImage": undefined,
+    "mixBlendMode": undefined,
+    "opacity": undefined,
+  },
+  "mobile": Object {
+    ".ugb-video-popup__play-button svg": Object {
+      "height": undefined,
+      "width": undefined,
+    },
+    ".ugb-video-popup__wrapper": Object {
+      "backgroundImage": undefined,
+      "backgroundPosition": undefined,
+      "backgroundRepeat": undefined,
+      "backgroundSize": undefined,
+      "height": undefined,
+      "maxWidth": undefined,
+    },
+    ".ugb-video-popup__wrapper:before": Object {
+      "opacity": undefined,
+    },
+  },
+  "tablet": Object {
+    ".ugb-video-popup__play-button svg": Object {
+      "height": undefined,
+      "width": undefined,
+    },
+    ".ugb-video-popup__wrapper": Object {
+      "backgroundImage": undefined,
+      "backgroundPosition": undefined,
+      "backgroundRepeat": undefined,
+      "backgroundSize": undefined,
+      "height": undefined,
+      "maxWidth": undefined,
+    },
+    ".ugb-video-popup__wrapper:before": Object {
+      "opacity": undefined,
+    },
+  },
+}
+`;
+
+exports[`Video Popup block Rendered styles should match snapshot with modified attributes 1`] = `
+Object {
+  ".ugb-video-popup__play-button svg": Object {
+    "fill": "#123456 !important",
+    "height": "123px",
+    "opacity": 123,
+    "width": "123px",
+  },
+  ".ugb-video-popup__wrapper": Object {
+    "backgroundAttachment": "fixed",
+    "backgroundBlendMode": "previewBackgroundImageBlendMode",
+    "backgroundColor": "#123456",
+    "backgroundImage": "url(previewBackgroundMediaUrl)",
+    "backgroundPosition": "previewBackgroundPosition",
+    "backgroundRepeat": "previewBackgroundRepeat",
+    "backgroundSize": "previewBackgroundSize",
+    "borderRadius": "6px",
+    "height": "123px !important",
+    "maxWidth": "123px",
+  },
+  ".ugb-video-popup__wrapper:before": Object {
+    "backgroundColor": undefined,
+    "backgroundImage": undefined,
+    "mixBlendMode": "previewBackgroundGradientBlendMode",
+    "opacity": 12.3,
+  },
+  "mobile": Object {
+    ".ugb-video-popup__play-button svg": Object {
+      "height": undefined,
+      "width": undefined,
+    },
+    ".ugb-video-popup__wrapper": Object {
+      "backgroundImage": "url(previewMobileBackgroundMediaUrl)",
+      "backgroundPosition": "previewMobileBackgroundPosition",
+      "backgroundRepeat": "previewMobileBackgroundRepeat",
+      "backgroundSize": "previewMobileBackgroundSize",
+      "height": "123px !important",
+      "maxWidth": "123px",
+    },
+    ".ugb-video-popup__wrapper:before": Object {
+      "opacity": 12.3,
+    },
+  },
+  "tablet": Object {
+    ".ugb-video-popup__play-button svg": Object {
+      "height": undefined,
+      "width": undefined,
+    },
+    ".ugb-video-popup__wrapper": Object {
+      "backgroundImage": "url(previewTabletBackgroundMediaUrl)",
+      "backgroundPosition": "previewTabletBackgroundPosition",
+      "backgroundRepeat": "previewTabletBackgroundRepeat",
+      "backgroundSize": "previewTabletBackgroundSize",
+      "height": "123px !important",
+      "maxWidth": "123px",
+    },
+    ".ugb-video-popup__wrapper:before": Object {
+      "opacity": 12.3,
+    },
+  },
+}
+`;

@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Video Popup block Save render should match snapshot 1`] = `
+<div
+  class="ugb-video-popup ugb-video-popup ugb-video-popup--v3 ugb-main-block"
+>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-video-popup__wrapper ugb--shadow-3"
+      >
+        <a
+          class="ugb-video-popup__overlay"
+          href="#"
+        />
+        <span
+          class="ugb-video-popup__play-button"
+        >
+          <svg
+            class="ugb-play-button-normal"
+            height="30"
+            width="30"
+          />
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Video Popup block Save render should match snapshot with attributes 1`] = `
+<div
+  class="ugb-video-popup ugb-video-popup ugb-video-popup--v3 ugb-main-block"
+>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-video-popup__wrapper ugb--shadow-1 ugb--has-background-overlay ugb--background-opacity-123"
+        data-video="videoID"
+      >
+        <a
+          class="ugb-video-popup__overlay"
+          href="#"
+        />
+        <span
+          class="ugb-video-popup__play-button"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

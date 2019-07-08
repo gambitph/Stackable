@@ -17,6 +17,8 @@
 		height: 400px;
 		padding: 0;
 		background: #000;
+		background-size: cover;
+		background-position: center;
 	}
 
 	.ugb-video-popup__play-button {
@@ -119,13 +121,15 @@
  */
 .ugb-video-popup.ugb-video-popup--v2 {
 	position: relative;
-	width: 100%;
-	@include baseBlock(); // TODO: [V2] Deprecate this usage
+	@include baseBlock();
 	@include box();
-	margin-left: auto;
-	margin-right: auto;
 	padding: 0;
 	overflow: hidden;
+	&:not(.alignfull) {
+		width: 100%;
+		margin-left: auto;
+		margin-right: auto;
+	}
 
 	// Override box padding.
 	&.ugb--has-background {
@@ -154,7 +158,6 @@
 		padding-bottom: 56.25%;
 		border: 0 !important;
 		box-shadow: none !important;
-		background: #000;
 	}
 
 	// Background tint.
