@@ -2,7 +2,7 @@ import BigPicture from 'bigpicture'
 import domReady from '@wordpress/dom-ready'
 
 domReady( () => {
-	const elems = document.querySelectorAll( '.ugb-video-popup' )
+	const elems = document.querySelectorAll( '.ugb-video-popup[data-video], .ugb-video-popup [data-video]' )
 	const openVideo = el => {
 		if ( BigPicture ) {
 			const videoID = el.getAttribute( 'data-video' )

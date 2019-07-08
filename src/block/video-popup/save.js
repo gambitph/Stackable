@@ -1,5 +1,11 @@
+import { createVideoBackground, hasBackgroundOverlay } from '@stackable/util'
+import { withBlockStyles, withUniqueClass } from '@stackable/higher-order'
 import { applyFilters } from '@wordpress/hooks'
+import { BlockContainer } from '@stackable/components'
 import classnames from 'classnames'
+import { compose } from '@wordpress/compose'
+import createStyles from './style'
+import { Fragment } from '@wordpress/element'
 import { getPlayButton } from './util'
 
 const save = props => {
@@ -7,65 +13,42 @@ const save = props => {
 	const {
 		videoID,
 		playButtonType,
-		playButtonColor = '#ffffff',
-		backgroundImageURL,
-		backgroundColorType = '',
-		backgroundColor,
-		backgroundColor2,
-		backgroundColorDirection = 0,
-		backgroundType = '',
-		backgroundOpacity,
-		design = 'basic',
-		borderRadius = 12,
 		shadow = 3,
+		previewBackgroundTintStrength = 5,
 	} = props.attributes
 
 	const mainClasses = classnames( [
 		className,
 		'ugb-video-popup',
-		'ugb-video-popup--v2',
-		`ugb-video-popup--design-${ design }`,
-		`ugb-video-popup--button-${ playButtonType }`,
-		'ugb--background-opacity-' + ( 1 * Math.round( backgroundOpacity / 1 ) ),
+		'ugb-video-popup--v3',
 	], applyFilters( 'stackable.video-popup.mainclasses', {
-		'ugb--has-background': backgroundColor || backgroundImageURL,
-		'ugb--has-background-image': backgroundImageURL,
-		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-		[ `ugb--has-background-gradient` ]: backgroundColorType === 'gradient',
-		[ `ugb--has-background-video` ]: backgroundType === 'video',
-	}, design, props ) )
+	}, props ) )
 
-	const mainStyle = {
-		backgroundColor: backgroundColor ? backgroundColor : undefined,
-		backgroundImage: backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
-		'--ugb-background-color': backgroundImageURL || backgroundColorType === 'gradient' ? backgroundColor : undefined,
-		'--ugb-background-color2': backgroundColorType === 'gradient' && backgroundColor2 ? backgroundColor2 : undefined,
-		'--ugb-background-direction': backgroundColorType === 'gradient' ? `${ backgroundColorDirection }deg` : undefined,
-		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
-	}
+	const boxClasses = classnames( [
+		'ugb-video-popup__wrapper',
+		`ugb--shadow-${ shadow }`,
+	], applyFilters( 'stackable.video-popup.boxclasses', {
+		'ugb--has-background-overlay': hasBackgroundOverlay( 'preview%s', props.attributes ),
+		[ `ugb--background-opacity-${ previewBackgroundTintStrength }` ]: hasBackgroundOverlay( 'preview%s', props.attributes ),
+	}, props ) )
 
 	return (
-		<div className={ mainClasses } style={ mainStyle } data-video={ videoID }>
-			{ backgroundType === 'video' && (
-				<video
-					className="ugb-video-background"
-					autoPlay
-					muted
-					loop
-					src={ backgroundImageURL }
-				/>
-			) }
-			{ applyFilters( 'stackable.video-popup.save.output.before', null, design, props ) }
-			<div className="ugb-video-popup__wrapper" >
-				{ /* eslint-disable-next-line */ }
-				<a href="#" className="ugb-video-popup__overlay" />
-				<span className="ugb-video-popup__play-button">
-					{ getPlayButton( playButtonType, playButtonColor ) }
-				</span>
-			</div>
-			{ applyFilters( 'stackable.video-popup.save.output.after', null, design, props ) }
-		</div>
+		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
+			<Fragment>
+				<div className={ boxClasses } data-video={ videoID }>
+					{ /* eslint-disable-next-line */ }
+					<a href="#" className="ugb-video-popup__overlay" />
+					<span className="ugb-video-popup__play-button">
+						{ getPlayButton( playButtonType ) }
+					</span>
+					{ createVideoBackground( 'preview%s', props ) }
+				</div>
+			</Fragment>
+		) } />
 	)
 }
 
-export default save
+export default compose(
+	withUniqueClass,
+	withBlockStyles( createStyles ),
+)( save )

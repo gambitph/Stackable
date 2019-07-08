@@ -6,54 +6,46 @@
 
 @import "common";
 
-
-.ugb-video-popup {
-	position: relative;
-	width: 100%;
-	@include baseBlock(); // TODO: [V2] Deprecate this usage
-	@include box();
-	margin-left: auto;
-	margin-right: auto;
-	padding: 0;
-	overflow: hidden;
-
-	// Override box padding.
-	&.ugb--has-background {
+.ugb-video-popup--v3 {
+	.ugb-video-popup__wrapper {
+		margin-left: auto;
+		margin-right: auto;
 		padding: 0;
+		overflow: hidden;
+		position: relative;
+		width: 100%;
+		height: 400px;
+		padding: 0;
+		background: #000;
 	}
 
-	&.aligncenter {
-		max-width: 600px;
-	}
-	&.alignwide {
-		.ugb-video-popup__wrapper {
-			min-height: 500px;
-			padding-bottom: 40%;
-		}
-	}
-	&.alignfull {
-		.ugb-video-popup__wrapper {
-			min-height: 500px;
-			padding-bottom: 35%;
+	.ugb-video-popup__play-button {
+		position: absolute;
+		svg {
+			fill: #fff;
 		}
 	}
 }
-
-.ugb-video-popup__wrapper {
-	position: relative;
-	width: 100%;
-	padding-bottom: 56.25%;
-	border: 0 !important;
-	box-shadow: none !important;
+.ugb-video-popup.ugb-video-popup--v3.alignfull {
+	&.ugb-main-block--inner-full.ugb--has-block-background,
+	&:not(.ugb--has-block-background) {
+		.ugb-video-popup__wrapper {
+			border-radius: 0;
+			// Escape and make it full-screen.
+			margin-left: #{ -$box-hori-padding };
+			margin-right: #{ -$box-hori-padding };
+			width: calc( 100% + #{ 2 * $box-hori-padding } );
+		}
+	}
 }
 
 .ugb-video-popup__overlay {
-	position: absolute;
+	position: absolute !important;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 0;
-	z-index: 3;
+	z-index: 6 !important;
 }
 
 .ugb-video-popup__play-button {
@@ -83,15 +75,89 @@
 	}
 }
 
-.video-popup-image {
-	height: 220px;
-	width: 220px;
-	background-position: center;
-	background-size: cover;
-	margin-bottom: 10px;
+.ugb-video-popup.ugb-video-popup--v3 .ugb-video-popup__wrapper {
+	&::before {
+		transition: all 0.3s ease-in-out;
+	}
+	&.ugb--background-opacity-0:hover::before {
+		opacity: 0.3;
+	}
+	&.ugb--background-opacity-1:hover::before {
+		opacity: 0.4;
+	}
+	&.ugb--background-opacity-2:hover::before {
+		opacity: 0.5;
+	}
+	&.ugb--background-opacity-3:hover::before {
+		opacity: 0.6;
+	}
+	&.ugb--background-opacity-4:hover::before {
+		opacity: 0.1;
+	}
+	&.ugb--background-opacity-5:hover::before {
+		opacity: 0.2;
+	}
+	&.ugb--background-opacity-6:hover::before {
+		opacity: 0.3;
+	}
+	&.ugb--background-opacity-7:hover::before {
+		opacity: 0.4;
+	}
+	&.ugb--background-opacity-8:hover::before {
+		opacity: 0.5;
+	}
+	&.ugb--background-opacity-9:hover::before {
+		opacity: 0.6;
+	}
+	&.ugb--background-opacity-10:hover::before {
+		opacity: 0.7;
+	}
 }
 
-.ugb-video-popup {
+/**
+ * Compatibility < 2
+ */
+.ugb-video-popup.ugb-video-popup--v2 {
+	position: relative;
+	width: 100%;
+	@include baseBlock(); // TODO: [V2] Deprecate this usage
+	@include box();
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0;
+	overflow: hidden;
+
+	// Override box padding.
+	&.ugb--has-background {
+		padding: 0;
+	}
+
+	&.aligncenter {
+		max-width: 600px;
+	}
+	&.alignwide {
+		.ugb-video-popup__wrapper {
+			min-height: 500px;
+			padding-bottom: 40%;
+		}
+	}
+	&.alignfull {
+		.ugb-video-popup__wrapper {
+			min-height: 500px;
+			padding-bottom: 35%;
+		}
+	}
+
+	.ugb-video-popup__wrapper {
+		position: relative;
+		width: 100%;
+		padding-bottom: 56.25%;
+		border: 0 !important;
+		box-shadow: none !important;
+		background: #000;
+	}
+
+	// Background tint.
 	&::before {
 		transition: all 0.3s ease-in-out;
 	}
@@ -170,6 +236,14 @@
 	&.ugb-has-background-opacity-10:hover::before {
 		opacity: 0.7;
 	}
+}
+
+.video-popup-image {
+	height: 220px;
+	width: 220px;
+	background-position: center;
+	background-size: cover;
+	margin-bottom: 10px;
 }
 
 .ugb-video-popup:not([class*="ugb-video-popup--v"]) {

@@ -4,9 +4,9 @@ import SVGNormalIcon from './images/play-normal.svg'
 import SVGOutlineIcon from './images/play-outline.svg'
 
 const playButton = {
-	normal: style => <SVGNormalIcon style={ style } width="30" height="30" />,
-	circle: style => <SVGCircleIcon style={ style } width="50" height="50" />,
-	outline: style => <SVGOutlineIcon style={ style } width="50" height="50" />,
+	normal: <SVGNormalIcon className="ugb-play-button-normal" width="30" height="30" />,
+	circle: <SVGCircleIcon className="ugb-play-button-cirle" width="50" height="50" />,
+	outline: <SVGOutlineIcon className="ugb-play-button-outline" width="50" height="50" />,
 }
 
 export const playButtonTypes = [
@@ -15,6 +15,6 @@ export const playButtonTypes = [
 	{ value: 'outline', label: __( 'Outline Play Button' ) },
 ]
 
-export const getPlayButton = ( name, fill = null ) => {
-	return playButton[ name ]( { fill } )
+export const getPlayButton = name => {
+	return playButton[ name ]
 }
