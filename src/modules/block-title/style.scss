@@ -1,8 +1,11 @@
 .ugb-main-block {
 	.ugb-block-title {
-		margin: 0 0 0.5em;
+		margin: 0 0 64px;
+		&.ugb-block-title--with-subtitle {
+			margin-bottom: 16px;
+		}
 	}
 	.ugb-block-description {
-		margin: 0 0 1em;
+		margin: 0 0 64px;
 	}
 }

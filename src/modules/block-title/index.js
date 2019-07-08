@@ -18,6 +18,7 @@ import {
 	descriptionPlaceholder,
 	whiteIfDark,
 } from '@stackable/util'
+import classnames from 'classnames'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
@@ -186,6 +187,12 @@ const addTitleEditOutput = ( output, design, props ) => {
 		blockDescription = '',
 	} = props.attributes
 
+	const titleClasses = classnames( [
+		'ugb-block-title',
+	], {
+		'ugb-block-title--with-subtitle': showBlockDescription && blockDescription,
+	} )
+
 	return (
 		<Fragment>
 			{ output }
@@ -193,7 +200,7 @@ const addTitleEditOutput = ( output, design, props ) => {
 				<RichText
 					tagName={ blockTitleTag || 'h2' }
 					value={ blockTitle }
-					className="ugb-block-title"
+					className={ titleClasses }
 					onChange={ blockTitle => setAttributes( { blockTitle } ) }
 					placeholder={ __( 'Title for This Block' ) }
 					keepPlaceholderOnFocus
@@ -264,13 +271,19 @@ const addTitleSaveOutput = ( output, design, props ) => {
 		blockDescription = '',
 	} = props.attributes
 
+	const titleClasses = classnames( [
+		'ugb-block-title',
+	], {
+		'ugb-block-title--with-subtitle': showBlockDescription && blockDescription,
+	} )
+
 	return (
 		<Fragment>
 			{ output }
 			{ showBlockTitle && ! RichText.isEmpty( blockTitle ) && (
 				<RichText.Content
 					tagName={ blockTitleTag || 'h2' }
-					className="ugb-block-title"
+					className={ titleClasses }
 					value={ blockTitle }
 				/>
 			) }
