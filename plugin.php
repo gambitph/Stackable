@@ -5,7 +5,7 @@
  * Description: Blocks for everyone
  * Author: Gambit Technologies, Inc
  * Author URI: http://gambit.ph
- * Version: 2.0.0-dev8.2
+ * Version: 2.0.0-dev9
  *
  * @package Stackable
  */
@@ -22,7 +22,7 @@ if ( function_exists( 'sugb_fs' ) ) {
 }
 
 defined( 'STACKABLE_SHOW_PRO_NOTICES' ) || define( 'STACKABLE_SHOW_PRO_NOTICES', true );
-defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '2.0.0-dev8.2' );
+defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '2.0.0-dev9' );
 defined( 'STACKABLE_FILE' ) || define( 'STACKABLE_FILE', __FILE__ );
 
 /********************************************************************************************
