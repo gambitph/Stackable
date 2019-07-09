@@ -21,7 +21,14 @@ import { createResponsiveAttributeNames, createTypographyAttributeNames, createV
 import {
 	PanelBody, RangeControl,
 } from '@wordpress/components'
-import { withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
+import {
+	withBlockStyles,
+	withContentAlignReseter,
+	withGoogleFont,
+	withSetAttributeHook,
+	withTabbedInspector,
+	withUniqueClass,
+} from '@stackable/higher-order'
 import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
 import createStyles from './style'
@@ -114,12 +121,6 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 				<ContentAlignControl
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					attributeNamesToReset={ [
-						'Icon%sAlign',
-						'Number%sAlign',
-						'Title%sAlign',
-						'Description%sAlign',
-					] }
 				/>
 			</PanelBody>
 
@@ -512,5 +513,6 @@ export default compose(
 	withSetAttributeHook,
 	withGoogleFont,
 	withTabbedInspector(),
+	withContentAlignReseter( [ 'Icon%sAlign', 'Number%sAlign', 'Title%sAlign', 'Description%sAlign' ] ),
 	withBlockStyles( createStyles, { editorMode: true } ),
 )( edit )

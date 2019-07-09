@@ -10,7 +10,14 @@ import {
 	ProControlButton,
 } from '@stackable/components'
 import { PanelBody, RangeControl, SelectControl } from '@wordpress/components'
-import { withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
+import {
+	withBlockStyles,
+	withContentAlignReseter,
+	withGoogleFont,
+	withSetAttributeHook,
+	withTabbedInspector,
+	withUniqueClass,
+} from '@stackable/higher-order'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
@@ -284,5 +291,6 @@ export default compose(
 	withSetAttributeHook,
 	withGoogleFont,
 	withTabbedInspector(),
+	withContentAlignReseter(),
 	withBlockStyles( createStyles, { editorMode: true } ),
 )( edit )

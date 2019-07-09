@@ -28,7 +28,14 @@ import {
 import {
 	PanelBody, RangeControl,
 } from '@wordpress/components'
-import { withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
+import {
+	withBlockStyles,
+	withContentAlignReseter,
+	withGoogleFont,
+	withSetAttributeHook,
+	withTabbedInspector,
+	withUniqueClass,
+} from '@stackable/higher-order'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
@@ -110,7 +117,6 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 				<ContentAlignControl
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					attributeNamesToReset={ [ 'Title%sAlign', 'Description%sAlign', 'Button%sAlign' ] }
 				/>
 			</PanelBody>
 
@@ -373,5 +379,6 @@ export default compose(
 	withSetAttributeHook,
 	withGoogleFont,
 	withTabbedInspector(),
+	withContentAlignReseter( [ 'Title%sAlign', 'Description%sAlign', 'Button%sAlign' ] ),
 	withBlockStyles( createStyles, { editorMode: true } ),
 )( edit )

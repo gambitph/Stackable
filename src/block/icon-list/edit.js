@@ -16,7 +16,14 @@ import {
 	getIconSVG,
 	getIconToolbarList,
 } from './util'
-import { withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
+import {
+	withBlockStyles,
+	withContentAlignReseter,
+	withGoogleFont,
+	withSetAttributeHook,
+	withTabbedInspector,
+	withUniqueClass,
+} from '@stackable/higher-order'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
@@ -98,7 +105,6 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 				<ContentAlignControl
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					// attributeNamesToReset={ [ 'Number%sAlign', 'Title%sAlign', 'Description%sAlign' ] }
 				/>
 			</PanelBody>
 			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
@@ -168,5 +174,6 @@ export default compose(
 	withSetAttributeHook,
 	withGoogleFont,
 	withTabbedInspector( [ 'style', 'advanced' ] ),
+	withContentAlignReseter(),
 	withBlockStyles( createStyles, { editorMode: true } ),
 )( edit )

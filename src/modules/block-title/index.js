@@ -385,7 +385,7 @@ const blockTitle = blockName => {
 	addFilter( `stackable.${ blockName }.edit.output.before`, `stackable/${ blockName }/block-title`, addTitleEditOutput )
 	addFilter( `stackable.${ blockName }.save.output.before`, `stackable/${ blockName }/block-title`, addTitleSaveOutput )
 	addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/block-title`, addStyles )
-	addFilter( 'stackable.components.content-align-control.attrNamesToReset', `stackable/${ blockName }/block-title`, centerBlockTitle )
+	addFilter( 'stackable.with-content-align-reseter.attributeNamesToReset', `stackable/${ blockName }/block-title`, centerBlockTitle )
 	doAction( `stackable.module.block-title`, blockName )
 }
 
