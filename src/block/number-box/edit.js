@@ -480,8 +480,6 @@ const edit = props => {
 									className="ugb-number-box__number"
 									value={ num }
 									onChange={ value => setAttributes( { [ `num${ i }` ]: value } ) }
-									placeholder={ `0${ i }` }
-									keepPlaceholderOnFocus
 								/>
 							) }
 							{ ( showTitle || showDescription ) && (
