@@ -45,10 +45,12 @@
 
 
 .ugb-number-box__item {
-	text-align: center;
 	display: flex;
 	flex-direction: column;
 	@include box();
+}
+.ugb-number-box .ugb-inner-block {
+	text-align: center;
 }
 
 .ugb-number-box__number {
