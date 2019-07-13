@@ -28,6 +28,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
                 'order' => ! empty( $attributes['order'] ) ? $attributes['order'] : '',
                 'orderby' => ! empty( $attributes['orderBy'] ) ? $attributes['orderBy'] : '',
                 'category' => ! empty( $attributes['categories'] ) ? $attributes['categories'] : '',
+				'suppress_filters' => false,
             )
         );
 
