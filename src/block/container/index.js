@@ -2,9 +2,9 @@
  * BLOCK: Container Block.
  */
 
+import { disabledBlocks, i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { ContainerIcon } from '@stackable/icons'
-import { disabledBlocks } from 'stackable'
 
 export const schema = {
 	textColor: {
@@ -94,14 +94,14 @@ export const schema = {
 export const name = 'ugb/container'
 
 export const settings = {
-	title: __( 'Container' ),
-	description: __( 'A styled container that you can add other blocks inside. Use this to create unique layouts.' ),
+	title: __( 'Container', i18n ),
+	description: __( 'A styled container that you can add other blocks inside. Use this to create unique layouts.', i18n ),
 	icon: ContainerIcon,
 	category: 'stackable',
 	keywords: [
-		__( 'Container Layout' ),
-		__( 'Row' ),
-		__( 'Stackable' ),
+		__( 'Container Layout', i18n ),
+		__( 'Row', i18n ),
+		__( 'Stackable', i18n ),
 	],
 	supports: {
 		align: [ 'center', 'wide', 'full' ],

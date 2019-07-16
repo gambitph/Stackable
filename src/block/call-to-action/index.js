@@ -4,10 +4,10 @@
  * Registering a basic block with Gutenberg.
  * Simple block, renders and saves the same content without any interactivity.
  */
+import { disabledBlocks, i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { CTAIcon } from '@stackable/icons'
 import { descriptionPlaceholder } from '@stackable/util'
-import { disabledBlocks } from 'stackable'
 
 const schema = {
 	url: {
@@ -27,7 +27,7 @@ const schema = {
 	ctaTitle: {
 		source: 'html',
 		selector: 'h3',
-		default: __( 'Title for This Block' ),
+		default: __( 'Title for This Block', i18n ),
 	},
 	bodyText: {
 		source: 'html',
@@ -37,7 +37,7 @@ const schema = {
 	buttonText: {
 		source: 'html',
 		selector: '.ugb-button span',
-		default: __( 'Button text' ),
+		default: __( 'Button text', i18n ),
 	},
 	buttonDesign: {
 		type: 'string',
@@ -147,14 +147,14 @@ const schema = {
 export const name = 'ugb/cta'
 
 export const settings = {
-	title: __( 'Call to Action' ),
-	description: __( 'A small section you can use to call the attention of your visitors. Great for calling attention to your products or deals.' ),
+	title: __( 'Call to Action', i18n ),
+	description: __( 'A small section you can use to call the attention of your visitors. Great for calling attention to your products or deals.', i18n ),
 	icon: CTAIcon,
 	category: 'stackable',
 	keywords: [
-		__( 'Call to Action' ),
-		__( 'Stackable' ),
-		__( 'CTA' ),
+		__( 'Call to Action', i18n ),
+		__( 'Stackable', i18n ),
+		__( 'CTA', i18n ),
 	],
 	attributes: schema,
 	supports: {

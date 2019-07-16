@@ -2,10 +2,10 @@
  * BLOCK: Card Block.
  */
 
+import { disabledBlocks, i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { CardIcon } from '@stackable/icons'
 import { descriptionPlaceholder } from '@stackable/util'
-import { disabledBlocks } from 'stackable'
 
 export const schema = {
 	mediaID: {
@@ -20,12 +20,12 @@ export const schema = {
 	heading: {
 		source: 'html',
 		selector: '.ugb-card__title',
-		default: __( 'Title for This Block' ),
+		default: __( 'Title for This Block', i18n ),
 	},
 	tagline: {
 		source: 'html',
 		selector: '.ugb-card__tagline',
-		default: __( 'Subtitle for this block' ),
+		default: __( 'Subtitle for this block', i18n ),
 	},
 	des: {
 		source: 'html',
@@ -58,7 +58,7 @@ export const schema = {
 	buttonText: {
 		source: 'html',
 		selector: '.ugb-button span',
-		default: __( 'Button text' ),
+		default: __( 'Button text', i18n ),
 	},
 	buttonColor: {
 		type: 'string',
@@ -126,13 +126,13 @@ export const schema = {
 export const name = 'ugb/card'
 
 export const settings = {
-	title: __( 'Card' ),
-	description: __( 'Describe a single subject in a small card. You can use this to describe your product, service or a person.' ),
+	title: __( 'Card', i18n ),
+	description: __( 'Describe a single subject in a small card. You can use this to describe your product, service or a person.', i18n ),
 	icon: CardIcon,
 	category: 'stackable',
 	keywords: [
-		__( 'Card' ),
-		__( 'Stackable' ),
+		__( 'Card', i18n ),
+		__( 'Stackable', i18n ),
 	],
 	attributes: schema,
 	supports: {

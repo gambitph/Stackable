@@ -7,6 +7,7 @@
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
 import { find } from 'lodash'
+import { i18n } from 'stackable'
 import SVGIconBottom from './images/bottom.svg'
 import SVGIconCenter from './images/center.svg'
 import SVGIconTop from './images/top.svg'
@@ -17,17 +18,17 @@ import { withViewportMatch } from '@wordpress/viewport'
 const ALIGNMENT_CONTROLS = [
 	{
 		icon: <SVGIconTop />,
-		title: __( 'Align text top' ),
+		title: __( 'Align text top', i18n ),
 		align: 'flex-start',
 	},
 	{
 		icon: <SVGIconCenter />,
-		title: __( 'Align text center' ),
+		title: __( 'Align text center', i18n ),
 		align: 'center',
 	},
 	{
 		icon: <SVGIconBottom />,
-		title: __( 'Align text bottom' ),
+		title: __( 'Align text bottom', i18n ),
 		align: 'flex-end',
 	},
 ]
@@ -45,7 +46,7 @@ export function VerticalAlignmentToolbar( {
 		<Toolbar
 			isCollapsed={ isCollapsed }
 			icon={ activeAlignment ? activeAlignment.icon : <SVGIconTop /> }
-			label={ __( 'Change Vertical Alignment' ) }
+			label={ __( 'Change Vertical Alignment', i18n ) }
 			controls={ ALIGNMENT_CONTROLS.map( control => {
 				const { align } = control
 				const isActive = ( value === align )

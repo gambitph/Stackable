@@ -1,13 +1,14 @@
 import { BaseControl, Button, ButtonGroup } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
+import { i18n } from 'stackable'
 
 const tags = [
-	{ tag: 'h1', label: __( 'H1' ) },
-	{ tag: 'h2', label: __( 'H2' ) },
-	{ tag: 'h3', label: __( 'H3' ) },
-	{ tag: 'h4', label: __( 'H4' ) },
-	{ tag: 'h5', label: __( 'H5' ) },
-	{ tag: 'h6', label: __( 'H6' ) },
+	{ tag: 'h1', label: __( 'H1', i18n ) },
+	{ tag: 'h2', label: __( 'H2', i18n ) },
+	{ tag: 'h3', label: __( 'H3', i18n ) },
+	{ tag: 'h4', label: __( 'H4', i18n ) },
+	{ tag: 'h5', label: __( 'H5', i18n ) },
+	{ tag: 'h6', label: __( 'H6', i18n ) },
 ]
 
 const HeadingButtonsControl = props => {

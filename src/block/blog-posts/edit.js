@@ -5,6 +5,7 @@ import {
 import { Component, Fragment } from '@wordpress/element'
 import { dateI18n, format } from '@wordpress/date'
 import { DesignPanelBody, ProControl, ProControlButton } from '@stackable/components/'
+import { i18n, showProNotice } from 'stackable'
 import { isUndefined, pickBy } from 'lodash'
 import {
 	PanelBody, Placeholder, QueryControls, RangeControl, SelectControl, Spinner, TextControl, ToggleControl,
@@ -17,14 +18,13 @@ import classnames from 'classnames'
 import { decodeEntities } from '@wordpress/htmlEntities'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignList from './images/list.png'
-import { showProNotice } from 'stackable'
 import { withSelect } from '@wordpress/data'
 
 const featuredImageShapes = [
-	{ value: 'full', label: __( 'Full-sized' ) },
-	{ value: 'square', label: __( 'Square' ) },
-	{ value: 'landscape', label: __( 'Landscape' ) },
-	{ value: 'portrait', label: __( 'Portrait' ) },
+	{ value: 'full', label: __( 'Full-sized', i18n ) },
+	{ value: 'square', label: __( 'Square', i18n ) },
+	{ value: 'landscape', label: __( 'Landscape', i18n ) },
+	{ value: 'portrait', label: __( 'Portrait', i18n ) },
 ]
 
 const CATEGORIES_LIST_QUERY = {
@@ -139,14 +139,14 @@ class Edit extends Component {
 				>
 					{ applyFilters( 'stackable.blog-posts.edit.designs.before', null, this.props ) }
 					<RangeControl
-						label={ __( 'Border Radius' ) }
+						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
 						onChange={ borderRadius => setAttributes( { borderRadius } ) }
 						min={ 0 }
 						max={ 50 }
 					/>
 					<RangeControl
-						label={ __( 'Shadow / Outline' ) }
+						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
 						onChange={ shadow => setAttributes( { shadow } ) }
 						min={ 0 }
@@ -155,7 +155,7 @@ class Edit extends Component {
 					{ applyFilters( 'stackable.blog-posts.edit.designs.after', null, this.props ) }
 					{ showProNotice && <ProControlButton /> }
 				</DesignPanelBody>
-				<PanelBody title={ __( 'Posts Settings' ) }>
+				<PanelBody title={ __( 'Posts Settings', i18n ) }>
 					<QueryControls
 						{ ...{ order, orderBy } }
 						numberOfItems={ postsToShow }
@@ -167,27 +167,27 @@ class Edit extends Component {
 						onNumberOfItemsChange={ postsToShow => setAttributes( { postsToShow } ) }
 					/>
 					<RangeControl
-						label={ __( 'Columns' ) }
+						label={ __( 'Columns', i18n ) }
 						value={ columns }
 						onChange={ columns => setAttributes( { columns } ) }
 						min={ 1 }
 						max={ 4 }
 					/>
 					<ToggleControl
-						label={ __( 'Display Title' ) }
+						label={ __( 'Display Title', i18n ) }
 						checked={ displayTitle }
 						onChange={ displayTitle => setAttributes( { displayTitle } ) }
 					/>
 					{ show.featuredImage &&
 						<Fragment>
 							<ToggleControl
-								label={ __( 'Display Featured Image' ) }
+								label={ __( 'Display Featured Image', i18n ) }
 								checked={ displayFeaturedImage }
 								onChange={ displayFeaturedImage => setAttributes( { displayFeaturedImage } ) }
 							/>
 							{ displayFeaturedImage &&
 							<SelectControl
-								label={ __( 'Featured Image Shape' ) }
+								label={ __( 'Featured Image Shape', i18n ) }
 								options={ featuredImageShapes }
 								value={ featuredImageShape }
 								onChange={ featuredImageShape => setAttributes( { featuredImageShape } ) }
@@ -196,38 +196,38 @@ class Edit extends Component {
 						</Fragment>
 					}
 					<ToggleControl
-						label={ __( 'Display Excerpt' ) }
+						label={ __( 'Display Excerpt', i18n ) }
 						checked={ displayExcerpt }
 						onChange={ displayExcerpt => setAttributes( { displayExcerpt } ) }
 					/>
 					<ToggleControl
-						label={ __( 'Display Category' ) }
+						label={ __( 'Display Category', i18n ) }
 						checked={ displayCategory }
 						onChange={ displayCategory => setAttributes( { displayCategory } ) }
 					/>
 					<ToggleControl
-						label={ __( 'Display Date' ) }
+						label={ __( 'Display Date', i18n ) }
 						checked={ displayDate }
 						onChange={ displayDate => setAttributes( { displayDate } ) }
 					/>
 					<ToggleControl
-						label={ __( 'Display Author' ) }
+						label={ __( 'Display Author', i18n ) }
 						checked={ displayAuthor }
 						onChange={ displayAuthor => setAttributes( { displayAuthor } ) }
 					/>
 					<ToggleControl
-						label={ __( 'Display Comments' ) }
+						label={ __( 'Display Comments', i18n ) }
 						checked={ displayComments }
 						onChange={ displayComments => setAttributes( { displayComments } ) }
 					/>
 					<ToggleControl
-						label={ __( 'Display Continue Reading Link' ) }
+						label={ __( 'Display Continue Reading Link', i18n ) }
 						checked={ displayReadMoreLink }
 						onChange={ displayReadMoreLink => setAttributes( { displayReadMoreLink } ) }
 					/>
 					{ displayReadMoreLink &&
 					<TextControl
-						label={ __( 'Customize Read More Link' ) }
+						label={ __( 'Customize Read More Link', i18n ) }
 						type="text"
 						value={ readMoreText }
 						onChange={ readMoreText => setAttributes( { readMoreText } ) }
@@ -236,23 +236,23 @@ class Edit extends Component {
 				</PanelBody>
 				<PanelColorSettings
 					initialOpen={ true }
-					title={ __( 'Color Settings' ) }
+					title={ __( 'Color Settings', i18n ) }
 					colorSettings={ [
 						{
 							value: accentColor,
 							onChange: accentColor => setAttributes( { accentColor } ),
-							label: __( 'Accent Color' ),
+							label: __( 'Accent Color', i18n ),
 						},
 					] }
 				></PanelColorSettings>
 				{ showProNotice &&
 					<PanelBody
 						initialOpen={ false }
-						title={ __( 'Custom CSS' ) }
+						title={ __( 'Custom CSS', i18n ) }
 					>
 						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋' ) }
-							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
 						/>
 					</PanelBody>
 				}
@@ -266,11 +266,11 @@ class Edit extends Component {
 					{ inspectorControls }
 					<Placeholder
 						icon="admin-post"
-						label={ __( 'Posts' ) }
+						label={ __( 'Posts', i18n ) }
 					>
 						{ ! Array.isArray( latestPosts ) ?
 							<Spinner /> :
-							__( 'No posts found.' )
+							__( 'No posts found.', i18n )
 						}
 					</Placeholder>
 				</Fragment>
@@ -304,7 +304,7 @@ class Edit extends Component {
 						const featuredImage = displayFeaturedImage && featuredImageSrc && (
 							<figure className={ featuredImageClasses } style={ featuredImageStyle }>
 								<a href={ post.link } target="_blank">
-									<img src={ featuredImageSrc } alt={ __( 'featured' ) } />
+									<img src={ featuredImageSrc } alt={ __( 'featured', i18n ) } />
 								</a>
 							</figure>
 						)
@@ -322,14 +322,14 @@ class Edit extends Component {
 						)
 						const title = displayTitle && (
 							<h3 className="ugb-blog-posts__title">
-								<a href={ post.link }>{ decodeEntities( post.title.rendered.trim() ) || __( '(Untitled)' ) }</a>
+								<a href={ post.link }>{ decodeEntities( post.title.rendered.trim() ) || __( '(Untitled)', i18n ) }</a>
 							</h3>
 						)
 						const excerpt = displayExcerpt && post.excerpt && (
 							<div className="ugb-blog-posts__excerpt" dangerouslySetInnerHTML={ { __html: post.post_excerpt_stackable } } />
 						)
 						const readMore = displayReadMoreLink && (
-							<p className="ugb-blog-posts__read_more"><a href={ post.link }>{ readMoreText ? readMoreText : __( 'Continue reading' ) }</a></p>
+							<p className="ugb-blog-posts__read_more"><a href={ post.link }>{ readMoreText ? readMoreText : __( 'Continue reading', i18n ) }</a></p>
 						)
 
 						const defaultEditDesign = (

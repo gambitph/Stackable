@@ -1,4 +1,5 @@
 import { ColorPaletteControl, DesignPanelBody, ProControl } from '@stackable/components'
+import { i18n, showProNotice } from 'stackable'
 import { PanelBody, RangeControl, ToggleControl } from '@wordpress/components'
 import { separators, shadows } from './separators'
 import { __ } from '@wordpress/i18n'
@@ -16,7 +17,6 @@ import ImageDesignWave1 from './images/wave-1.png'
 import ImageDesignWave2 from './images/wave-2.png'
 import ImageDesignWave3 from './images/wave-3.png'
 import { InspectorControls } from '@wordpress/block-editor'
-import { showProNotice } from 'stackable'
 
 const edit = props => {
 	const { className, setAttributes } = props
@@ -85,44 +85,44 @@ const edit = props => {
 					selected={ design }
 					options={ [
 						{
-							image: ImageDesignWave1, label: __( 'Wave 1' ), value: 'wave-1',
+							image: ImageDesignWave1, label: __( 'Wave 1', i18n ), value: 'wave-1',
 						},
 						{
-							image: ImageDesignWave2, label: __( 'Wave 2' ), value: 'wave-2',
+							image: ImageDesignWave2, label: __( 'Wave 2', i18n ), value: 'wave-2',
 						},
 						{
-							image: ImageDesignWave3, label: __( 'Wave 3' ), value: 'wave-3',
+							image: ImageDesignWave3, label: __( 'Wave 3', i18n ), value: 'wave-3',
 						},
 						{
-							image: ImageDesignSlant1, label: __( 'Slant 1' ), value: 'slant-1',
+							image: ImageDesignSlant1, label: __( 'Slant 1', i18n ), value: 'slant-1',
 						},
 						{
-							image: ImageDesignSlant2, label: __( 'Slant 2' ), value: 'slant-2',
+							image: ImageDesignSlant2, label: __( 'Slant 2', i18n ), value: 'slant-2',
 						},
 						{
-							image: ImageDesignCurve1, label: __( 'Curve 1' ), value: 'curve-1',
+							image: ImageDesignCurve1, label: __( 'Curve 1', i18n ), value: 'curve-1',
 						},
 						{
-							image: ImageDesignCurve2, label: __( 'Curve 2' ), value: 'curve-2',
+							image: ImageDesignCurve2, label: __( 'Curve 2', i18n ), value: 'curve-2',
 						},
 						{
-							image: ImageDesignCurve3, label: __( 'Curve 3' ), value: 'curve-3',
+							image: ImageDesignCurve3, label: __( 'Curve 3', i18n ), value: 'curve-3',
 						},
 						{
-							image: ImageDesignRounded1, label: __( 'Rounded 1' ), value: 'rounded-1',
+							image: ImageDesignRounded1, label: __( 'Rounded 1', i18n ), value: 'rounded-1',
 						},
 						{
-							image: ImageDesignRounded2, label: __( 'Rounded 2' ), value: 'rounded-2',
+							image: ImageDesignRounded2, label: __( 'Rounded 2', i18n ), value: 'rounded-2',
 						},
 						...applyFilters( 'stackable.separator.edit.designs', [] ),
 					] }
 					onChange={ design => setAttributes( { design } ) }
 				/>
 				<PanelBody
-					title={ __( 'General Settings' ) }
+					title={ __( 'General Settings', i18n ) }
 				>
 					<RangeControl
-						label={ __( 'Height' ) }
+						label={ __( 'Height', i18n ) }
 						value={ height }
 						min="30"
 						max="400"
@@ -131,61 +131,61 @@ const edit = props => {
 						} }
 					/>
 					<ToggleControl
-						label={ __( 'Flip Vertically' ) }
+						label={ __( 'Flip Vertically', i18n ) }
 						checked={ flipVertically }
 						onChange={ flipVertically => setAttributes( { flipVertically } ) }
 					/>
 					<ToggleControl
-						label={ __( 'Flip Horizontally' ) }
+						label={ __( 'Flip Horizontally', i18n ) }
 						checked={ flipHorizontally }
 						onChange={ flipHorizontally => setAttributes( { flipHorizontally } ) }
 					/>
 					<ColorPaletteControl
-						label={ __( 'Background Color' ) }
+						label={ __( 'Background Color', i18n ) }
 						value={ backgroundColor }
 						onChange={ backgroundColor => setAttributes( { backgroundColor } ) }
 					/>
 					<RangeControl
-						label={ __( 'Padding Top' ) }
+						label={ __( 'Padding Top', i18n ) }
 						value={ paddingTop }
 						min="0"
 						max="400"
 						onChange={ paddingTop => setAttributes( { paddingTop } ) }
 					/>
 					<RangeControl
-						label={ __( 'Padding Bottom' ) }
+						label={ __( 'Padding Bottom', i18n ) }
 						value={ paddingBottom }
 						min="0"
 						max="400"
 						onChange={ paddingBottom => setAttributes( { paddingBottom } ) }
 					/>
 					<RangeControl
-						label={ __( 'Margin Top' ) }
+						label={ __( 'Margin Top', i18n ) }
 						value={ marginTop }
 						min={ -height - paddingTop - 100 }
 						max="400"
 						onChange={ marginTop => setAttributes( { marginTop } ) }
-						help={ __( 'Use this to pull up/down the separator to the block above it' ) }
+						help={ __( 'Use this to pull up/down the separator to the block above it', i18n ) }
 					/>
 					<RangeControl
-						label={ __( 'Margin Bottom' ) }
+						label={ __( 'Margin Bottom', i18n ) }
 						value={ marginBottom }
 						min={ -height - paddingBottom - 100 }
 						max="400"
 						onChange={ marginBottom => setAttributes( { marginBottom } ) }
-						help={ __( 'Use this to pull up/down the separator to the block below it' ) }
+						help={ __( 'Use this to pull up/down the separator to the block below it', i18n ) }
 					/>
 				</PanelBody>
 				<PanelBody
-					title={ __( 'Separator Settings' ) }
+					title={ __( 'Separator Settings', i18n ) }
 				>
 					<ColorPaletteControl
-						label={ __( 'Separator Color' ) }
+						label={ __( 'Separator Color', i18n ) }
 						value={ layer1Color }
 						onChange={ layer1Color => setAttributes( { layer1Color } ) }
 					/>
 					<RangeControl
-						label={ __( 'Separator Width' ) }
+						label={ __( 'Separator Width', i18n ) }
 						value={ layer1Width }
 						min="1"
 						max="4"
@@ -193,12 +193,12 @@ const edit = props => {
 						onChange={ layer1Width => setAttributes( { layer1Width } ) }
 					/>
 					<ToggleControl
-						label={ __( 'Flip Horizontally' ) }
+						label={ __( 'Flip Horizontally', i18n ) }
 						checked={ layer1Flip }
 						onChange={ layer1Flip => setAttributes( { layer1Flip } ) }
 					/>
 					<ToggleControl
-						label={ __( 'Shadow' ) }
+						label={ __( 'Shadow', i18n ) }
 						checked={ layer1Shadow }
 						onChange={ layer1Shadow => setAttributes( { layer1Shadow } ) }
 					/>
@@ -206,33 +206,33 @@ const edit = props => {
 				{ showProNotice &&
 					<PanelBody
 						initialOpen={ false }
-						title={ __( 'Layer 2 Settings' ) }
+						title={ __( 'Layer 2 Settings', i18n ) }
 					>
 						<ProControl
-							title={ __( 'Say Hello to Gorgeous Separators 👋' ) }
-							description={ __( 'Add a second layer to this separator and make it look even sweeter. This feature is only available on Stackable Premium' ) }
+							title={ __( 'Say Hello to Gorgeous Separators 👋', i18n ) }
+							description={ __( 'Add a second layer to this separator and make it look even sweeter. This feature is only available on Stackable Premium', i18n ) }
 						/>
 					</PanelBody>
 				}
 				{ showProNotice &&
 					<PanelBody
 						initialOpen={ false }
-						title={ __( 'Layer 3 Settings' ) }
+						title={ __( 'Layer 3 Settings', i18n ) }
 					>
 						<ProControl
-							title={ __( 'Say Hello to Gorgeous Separators 👋' ) }
-							description={ __( 'Add a third layer to this separator and make it look even sweeter. This feature is only available on Stackable Premium' ) }
+							title={ __( 'Say Hello to Gorgeous Separators 👋', i18n ) }
+							description={ __( 'Add a third layer to this separator and make it look even sweeter. This feature is only available on Stackable Premium', i18n ) }
 						/>
 					</PanelBody>
 				}
 				{ showProNotice &&
 					<PanelBody
 						initialOpen={ false }
-						title={ __( 'Custom CSS' ) }
+						title={ __( 'Custom CSS', i18n ) }
 					>
 						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋' ) }
-							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
 						/>
 					</PanelBody>
 				}

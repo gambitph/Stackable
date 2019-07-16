@@ -125,7 +125,7 @@ const deprecatedSchema_1_12 = {
 	title: {
 		source: 'html',
 		selector: 'h2',
-		default: __( 'Title for This Block' ),
+		default: 'Title for This Block',
 	},
 	subtitle: {
 		source: 'html',
@@ -208,7 +208,7 @@ const deprecatedSchema_1_12 = {
 	buttonText: {
 		source: 'html',
 		selector: '.ugb-button span',
-		default: __( 'Button text' ),
+		default: 'Button text',
 	},
 	buttonColor: {
 		type: 'string',
@@ -325,7 +325,7 @@ const deprecatedSchema_1_10 = {
 	title: {
 		source: 'html',
 		selector: 'h2',
-		default: __( 'Title for This Block' ),
+		default: 'Title for This Block',
 	},
 	subtitle: {
 		source: 'html',
@@ -349,7 +349,7 @@ const deprecatedSchema_1_10 = {
 	buttonText: {
 		source: 'html',
 		selector: '.ugb-button span',
-		default: __( 'Button text' ),
+		default: 'Button text',
 	},
 	buttonColor: {
 		type: 'string',
@@ -488,12 +488,12 @@ export const deprecatedSchema_1_9 = {
 	title: {
 		source: 'html',
 		selector: 'h2',
-		default: __( 'Heading Title' ),
+		default: 'Heading Title',
 	},
 	subtitle: {
 		source: 'html',
 		selector: 'p',
-		default: __( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus congue tincidunt nisit ut pretium. Duis blandit, tortor et suscipit tincidunt, dolor metus mattis neque, ac varius magna nibh ac tortor.' ),
+		default: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus congue tincidunt nisit ut pretium. Duis blandit, tortor et suscipit tincidunt, dolor metus mattis neque, ac varius magna nibh ac tortor.',
 	},
 	buttonURL: {
 		type: 'string',
@@ -512,7 +512,7 @@ export const deprecatedSchema_1_9 = {
 	buttonText: {
 		source: 'html',
 		selector: '.ugb-button-inner',
-		default: __( 'Button' ),
+		default: 'Button',
 	},
 	buttonColor: {
 		type: 'string',
@@ -659,12 +659,12 @@ export const deprecatedSchema_1_4 = {
 	title: {
 		source: 'html',
 		selector: 'h2',
-		default: __( 'Heading Title' ),
+		default: 'Heading Title',
 	},
 	subtitle: {
 		source: 'html',
 		selector: 'p',
-		default: __( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus congue tincidunt nisit ut pretium. Duis blandit, tortor et suscipit tincidunt, dolor metus mattis neque, ac varius magna nibh ac tortor.' ),
+		default: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus congue tincidunt nisit ut pretium. Duis blandit, tortor et suscipit tincidunt, dolor metus mattis neque, ac varius magna nibh ac tortor.',
 	},
 	url: {
 		type: 'string',
@@ -689,7 +689,7 @@ export const deprecatedSchema_1_4 = {
 	buttonText: {
 		source: 'html',
 		selector: '.ugb-button-inner',
-		default: __( 'Button' ),
+		default: 'Button',
 	},
 	buttonColor: {
 		type: 'string',
@@ -794,13 +794,13 @@ export const deprecatedSchema_1_1_2 = {
 		type: 'array',
 		source: 'children',
 		selector: 'h2',
-		default: __( 'Heading Title' ),
+		default: 'Heading Title',
 	},
 	subtitle: {
 		type: 'array',
 		source: 'children',
 		selector: 'p',
-		default: __( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus congue tincidunt nisit ut pretium. Duis blandit, tortor et suscipit tincidunt, dolor metus mattis neque, ac varius magna nibh ac tortor.' ),
+		default: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus congue tincidunt nisit ut pretium. Duis blandit, tortor et suscipit tincidunt, dolor metus mattis neque, ac varius magna nibh ac tortor.',
 	},
 	url: {
 		type: 'string',
@@ -826,7 +826,7 @@ export const deprecatedSchema_1_1_2 = {
 		type: 'array',
 		source: 'children',
 		selector: '.ugb-button-inner',
-		default: __( 'Button' ),
+		default: 'Button',
 	},
 	buttonColor: {
 		type: 'string',

@@ -2,6 +2,7 @@ import './polyfill'
 import { Component, createRef } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
+import { i18n } from 'stackable'
 import { Icon } from '@wordpress/components'
 
 const closeAllOpenPanels = clickedEl => {
@@ -90,11 +91,11 @@ class PanelTabs extends Component {
 							'is-active': this.state.activeTab === 'layout',
 						}
 					) }
-					aria-label={ __( 'Layout' ) }
-					data-label={ __( 'Layout' ) }
+					aria-label={ __( 'Layout', i18n ) }
+					data-label={ __( 'Layout', i18n ) }
 				>
 					<Icon icon="admin-settings" />
-					{ __( 'Layout' ) }
+					{ __( 'Layout', i18n ) }
 				</button>
 				<button
 					onClick={ () => this.select( 'style' ) }
@@ -103,11 +104,11 @@ class PanelTabs extends Component {
 							'is-active': this.state.activeTab === 'style',
 						}
 					) }
-					aria-label={ __( 'Style' ) }
-					data-label={ __( 'Style' ) }
+					aria-label={ __( 'Style', i18n ) }
+					data-label={ __( 'Style', i18n ) }
 				>
 					<Icon icon="admin-appearance" />
-					{ __( 'Style' ) }
+					{ __( 'Style', i18n ) }
 				</button>
 				<button
 					onClick={ () => this.select( 'advanced' ) }
@@ -116,11 +117,11 @@ class PanelTabs extends Component {
 							'is-active': this.state.activeTab === 'advanced',
 						}
 					) }
-					aria-label={ __( 'Advanced' ) }
-					data-label={ __( 'Advanced' ) }
+					aria-label={ __( 'Advanced', i18n ) }
+					data-label={ __( 'Advanced', i18n ) }
 				>
 					<Icon icon="admin-tools" />
-					{ __( 'Advanced' ) }
+					{ __( 'Advanced', i18n ) }
 				</button>
 			</div>
 		)

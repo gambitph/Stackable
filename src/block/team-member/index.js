@@ -2,9 +2,9 @@
  * BLOCK: Team Member Block.
  */
 
+import { disabledBlocks, i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { descriptionPlaceholder } from '@stackable/util'
-import { disabledBlocks } from 'stackable'
 import { TeamMemberIcon } from '@stackable/icons'
 
 export const schema = {
@@ -50,32 +50,32 @@ export const schema = {
 	name1: {
 		source: 'html',
 		selector: '.ugb-team-member__item:nth-of-type(1) .ugb-team-member__name',
-		default: __( 'Name' ),
+		default: __( 'Name', i18n ),
 	},
 	name2: {
 		source: 'html',
 		selector: '.ugb-team-member__item:nth-of-type(2) .ugb-team-member__name',
-		default: __( 'Name' ),
+		default: __( 'Name', i18n ),
 	},
 	name3: {
 		source: 'html',
 		selector: '.ugb-team-member__item:nth-of-type(3) .ugb-team-member__name',
-		default: __( 'Name' ),
+		default: __( 'Name', i18n ),
 	},
 	position1: {
 		source: 'html',
 		selector: '.ugb-team-member__item:nth-of-type(1) .ugb-team-member__position',
-		default: __( 'Position' ),
+		default: __( 'Position', i18n ),
 	},
 	position2: {
 		source: 'html',
 		selector: '.ugb-team-member__item:nth-of-type(2) .ugb-team-member__position',
-		default: __( 'Position' ),
+		default: __( 'Position', i18n ),
 	},
 	position3: {
 		source: 'html',
 		selector: '.ugb-team-member__item:nth-of-type(3) .ugb-team-member__position',
-		default: __( 'Position' ),
+		default: __( 'Position', i18n ),
 	},
 	description1: {
 		source: 'html',
@@ -206,13 +206,13 @@ export const schema = {
 export const name = 'ugb/team-member'
 
 export const settings = {
-	title: __( 'Team Member' ),
-	description: __( 'Display members of your team or your office. Use multiple Team Member blocks if you have a large team.' ),
+	title: __( 'Team Member', i18n ),
+	description: __( 'Display members of your team or your office. Use multiple Team Member blocks if you have a large team.', i18n ),
 	icon: TeamMemberIcon,
 	category: 'stackable',
 	keywords: [
-		__( 'Team Member' ),
-		__( 'Stackable' ),
+		__( 'Team Member', i18n ),
+		__( 'Stackable', i18n ),
 	],
 	attributes: schema,
 	supports: {

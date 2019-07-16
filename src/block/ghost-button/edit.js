@@ -4,7 +4,6 @@ import {
 import {
 	Dashicon, IconButton, PanelBody, RangeControl, SelectControl,
 } from '@wordpress/components'
-import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { Fragment } from '@wordpress/element'
 
@@ -26,10 +25,10 @@ const edit = props => {
 	} = props.attributes
 
 	const buttonSizes = [
-		{ value: 'small', label: __( 'Small' ) },
-		{ value: 'normal', label: __( 'Normal ' ) },
-		{ value: 'medium', label: __( 'Medium' ) },
-		{ value: 'large', label: __( 'Large' ) },
+		{ value: 'small', label: 'Small' },
+		{ value: 'normal', label: 'Normal ' },
+		{ value: 'medium', label: 'Medium' },
+		{ value: 'large', label: 'Large' },
 	]
 
 	const mainClasses = classnames( [
@@ -54,7 +53,7 @@ const edit = props => {
 			<InspectorControls>
 				<PanelBody>
 					<SelectControl
-						label={ __( 'Size' ) }
+						label={ 'Size' }
 						value={ size }
 						options={ buttonSizes.map( ( { value, label } ) => ( {
 							value: value,
@@ -65,14 +64,14 @@ const edit = props => {
 						} }
 					/>
 					<RangeControl
-						label={ __( 'Corner Radius' ) }
+						label={ 'Corner Radius' }
 						value={ cornerButtonRadius }
 						min="1"
 						max="50"
 						onChange={ cornerRad => setAttributes( { cornerButtonRadius: cornerRad } ) }
 					/>
 					<RangeControl
-						label={ __( 'Border Thickness' ) }
+						label={ 'Border Thickness' }
 						value={ borderThickness }
 						min="1"
 						max="10"
@@ -80,12 +79,12 @@ const edit = props => {
 					/>
 				</PanelBody>
 				<PanelColorSettings
-					title={ __( 'Color Settings' ) }
+					title={ 'Color Settings' }
 					colorSettings={ [
 						{
 							value: color,
 							onChange: colorValue => setAttributes( { color: colorValue } ),
-							label: __( 'Button Color' ),
+							label: 'Button Color',
 						},
 					] }
 				>
@@ -100,7 +99,7 @@ const edit = props => {
 				} } >
 				<RichText
 					tagName="span"
-					placeholder={ __( 'Button text' ) }
+					placeholder={ 'Button text' }
 					value={ text }
 					onChange={ text => setAttributes( { text: text } ) }
 					formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
@@ -121,7 +120,7 @@ const edit = props => {
 					/>
 					<IconButton
 						icon="editor-break"
-						label={ __( 'Apply' ) }
+						label={ 'Apply' }
 						type="submit"
 					/>
 				</form>

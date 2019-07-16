@@ -1,4 +1,5 @@
 import { __ } from '@wordpress/i18n'
+import { i18n } from 'stackable'
 
 /**
  * Returns an array range of numbers.
@@ -72,13 +73,13 @@ export const getVideoProviderFromURL = url => {
  */
 export const descriptionPlaceholder = length => {
 	if ( length === 'short' ) {
-		return __( 'Description for this block. You can use this space for describing your block.' )
+		return __( 'Description for this block. You can use this space for describing your block.', i18n )
 	} else if ( length === 'medium' ) {
 		return `${ descriptionPlaceholder() } ${ descriptionPlaceholder( 'short' ) }`
 	} else if ( length === 'long' ) {
 		return `${ descriptionPlaceholder( 'medium' ) } ${ descriptionPlaceholder() } ${ descriptionPlaceholder( 'short' ) }`
 	}
-	return __( 'Description for this block. Use this space for describing your block. Any text will do.' )
+	return __( 'Description for this block. Use this space for describing your block. Any text will do.', i18n )
 }
 
 /**

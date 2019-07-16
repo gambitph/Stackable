@@ -2,6 +2,7 @@ import {
 	ColorPaletteControl, DesignPanelBody, PanelBackgroundSettings, ProControl, ProControlButton, URLInputControl,
 } from '@stackable/components'
 import { getPlayButton, playButtonTypes } from './util'
+import { i18n, showProNotice } from 'stackable'
 import { PanelBody, RangeControl, SelectControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
@@ -9,7 +10,6 @@ import classnames from 'classnames'
 import { Fragment } from '@wordpress/element'
 import { getVideoProviderFromURL } from '@stackable/util'
 import { InspectorControls } from '@wordpress/block-editor'
-import { showProNotice } from 'stackable'
 
 const edit = props => {
 	const {
@@ -71,14 +71,14 @@ const edit = props => {
 				>
 					{ applyFilters( 'stackable.video-popup.edit.designs.before', null, props ) }
 					<RangeControl
-						label={ __( 'Border Radius' ) }
+						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
 						onChange={ borderRadius => setAttributes( { borderRadius } ) }
 						min={ 0 }
 						max={ 50 }
 					/>
 					<RangeControl
-						label={ __( 'Shadow / Outline' ) }
+						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
 						onChange={ shadow => setAttributes( { shadow } ) }
 						min={ 0 }
@@ -87,9 +87,9 @@ const edit = props => {
 					{ applyFilters( 'stackable.video-popup.edit.designs.after', null, props ) }
 					{ showProNotice && <ProControlButton /> }
 				</DesignPanelBody>
-				<PanelBody title={ __( 'General Settings' ) }>
+				<PanelBody title={ __( 'General Settings', i18n ) }>
 					<SelectControl
-						label={ __( 'Play Button Style' ) }
+						label={ __( 'Play Button Style', i18n ) }
 						value={ playButtonType }
 						options={ playButtonTypes.map( ( { value, label } ) => ( {
 							value: value,
@@ -100,7 +100,7 @@ const edit = props => {
 						} }
 					/>
 					<ColorPaletteControl
-						label={ __( 'Play Button Color' ) }
+						label={ __( 'Play Button Color', i18n ) }
 						value={ playButtonColor }
 						onChange={ playButtonColor => setAttributes( { playButtonColor } ) }
 					/>
@@ -129,11 +129,11 @@ const edit = props => {
 				{ showProNotice &&
 					<PanelBody
 						initialOpen={ false }
-						title={ __( 'Custom CSS' ) }
+						title={ __( 'Custom CSS', i18n ) }
 					>
 						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋' ) }
-							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
 						/>
 					</PanelBody>
 				}
@@ -168,7 +168,7 @@ const edit = props => {
 							} )
 						} }
 					/>
-					<p className="ugb-video-popup__link-description"><i>{ __( 'Youtube / Vimeo only' ) }</i></p>
+					<p className="ugb-video-popup__link-description"><i>{ __( 'Youtube / Vimeo only', i18n ) }</i></p>
 				</div>
 			) }
 		</Fragment>

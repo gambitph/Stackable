@@ -244,7 +244,7 @@ const deprecatedSchema_1_12 = {
 	deprecatedSchema_1_12[ `pricingBoxTitle${ index }` ] = {
 		source: 'html',
 		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__title`,
-		default: __( 'Title' ),
+		default: 'Title',
 	}
 	deprecatedSchema_1_12[ `price${ index }` ] = {
 		source: 'html',
@@ -264,12 +264,12 @@ const deprecatedSchema_1_12 = {
 	deprecatedSchema_1_12[ `perMonthLabel${ index }` ] = {
 		source: 'html',
 		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__subprice`,
-		default: __( 'Description' ),
+		default: 'Description',
 	}
 	deprecatedSchema_1_12[ `buttonText${ index }` ] = {
 		source: 'html',
 		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-button span`,
-		default: __( 'Button text' ),
+		default: 'Button text',
 	}
 	deprecatedSchema_1_12[ `featureList${ index }` ] = {
 		source: 'html',
@@ -485,17 +485,17 @@ const deprecatedSchema_1_10 = {
 	pricingBoxTitle: {
 		source: 'html',
 		selector: '.ugb-pricing-box-column-one h3',
-		default: __( 'Title' ),
+		default: 'Title',
 	},
 	pricingBoxTitle2: {
 		source: 'html',
 		selector: '.ugb-pricing-box-column-two h3',
-		default: __( 'Title' ),
+		default: 'Title',
 	},
 	pricingBoxTitle3: {
 		source: 'html',
 		selector: '.ugb-pricing-box-column-three h3',
-		default: __( 'Title' ),
+		default: 'Title',
 	},
 	price: {
 		source: 'html',
@@ -515,32 +515,32 @@ const deprecatedSchema_1_10 = {
 	perMonthLabel: {
 		source: 'html',
 		selector: '.ugb-pricing-box-column-one .ugb-pricing-box-per-month-label',
-		default: __( 'Description' ),
+		default: 'Description',
 	},
 	perMonthLabel2: {
 		source: 'html',
 		selector: '.ugb-pricing-box-column-two .ugb-pricing-box-per-month-label',
-		default: __( 'Description' ),
+		default: 'Description',
 	},
 	perMonthLabel3: {
 		source: 'html',
 		selector: '.ugb-pricing-box-column-three .ugb-pricing-box-per-month-label',
-		default: __( 'Description' ),
+		default: 'Description',
 	},
 	buttonText: {
 		source: 'html',
 		selector: '.ugb-pricing-box-column-one .ugb-button span',
-		default: __( 'Button text' ),
+		default: 'Button text',
 	},
 	buttonText2: {
 		source: 'html',
 		selector: '.ugb-pricing-box-column-two .ugb-button span',
-		default: __( 'Button text' ),
+		default: 'Button text',
 	},
 	buttonText3: {
 		source: 'html',
 		selector: '.ugb-pricing-box-column-three .ugb-button span',
-		default: __( 'Button text' ),
+		default: 'Button text',
 	},
 	featureList: {
 		source: 'html',
@@ -618,77 +618,77 @@ export const deprecatedSchema_1_9 = {
 	pricingBoxTitle: {
 		source: 'html',
 		selector: '.ugb-pricing-box-column-one h3',
-		default: __( 'Basic' ),
+		default: 'Basic',
 	},
 	pricingBoxTitle2: {
 		source: 'html',
 		selector: '.ugb-pricing-box-column-two h3',
-		default: __( 'Basic' ),
+		default: 'Basic',
 	},
 	pricingBoxTitle3: {
 		source: 'html',
 		selector: '.ugb-pricing-box-column-three h3',
-		default: __( 'Basic' ),
+		default: 'Basic',
 	},
 	price: {
 		source: 'html',
 		selector: '.ugb-pricing-box-column-one .ugb-pricing-box-pricing',
-		default: __( '$9' ),
+		default: '$9',
 	},
 	price2: {
 		source: 'html',
 		selector: '.ugb-pricing-box-column-two .ugb-pricing-box-pricing',
-		default: __( '$9' ),
+		default: '$9',
 	},
 	price3: {
 		source: 'html',
 		selector: '.ugb-pricing-box-column-three .ugb-pricing-box-pricing',
-		default: __( '$9' ),
+		default: '$9',
 	},
 	perMonthLabel: {
 		source: 'html',
 		selector: '.ugb-pricing-box-column-one .ugb-pricing-box-per-month-label',
-		default: __( 'per month' ),
+		default: 'per month',
 	},
 	perMonthLabel2: {
 		source: 'html',
 		selector: '.ugb-pricing-box-column-two .ugb-pricing-box-per-month-label',
-		default: __( 'per month' ),
+		default: 'per month',
 	},
 	perMonthLabel3: {
 		source: 'html',
 		selector: '.ugb-pricing-box-column-three .ugb-pricing-box-per-month-label',
-		default: __( 'per month' ),
+		default: 'per month',
 	},
 	buttonText: {
 		source: 'html',
 		selector: '.ugb-pricing-box-column-one .ugb-button a',
-		default: __( 'Buy Now' ),
+		default: 'Buy Now',
 	},
 	buttonText2: {
 		source: 'html',
 		selector: '.ugb-pricing-box-column-two .ugb-button a',
-		default: __( 'Buy Now' ),
+		default: 'Buy Now',
 	},
 	buttonText3: {
 		source: 'html',
 		selector: '.ugb-pricing-box-column-three .ugb-button a',
-		default: __( 'Buy Now' ),
+		default: 'Buy Now',
 	},
 	featureList: {
 		source: 'html',
 		selector: '.ugb-pricing-box-column-one .ugb-pricing-box-feature-list',
-		default: __( 'Consectetur adipiscing elit Suspendisse at pretium tortor Vestibulum ante ipsum primis In faucibus orci luctus et Ultrices posuere cubilia cura Aenean consectetur nec' ),
+		default: 'Consectetur adipiscing elit Suspendisse at pretium tortor Vestibulum ante ipsum primis In faucibus orci luctus et Ultrices posuere cubilia cura Aenean consectetur nec',
 	},
 	featureList2: {
 		source: 'html',
 		selector: '.ugb-pricing-box-column-two .ugb-pricing-box-feature-list',
-		default: __( 'Consectetur adipiscing elit Suspendisse at pretium tortor Vestibulum ante ipsum primis In faucibus orci luctus et Ultrices posuere cubilia cura Aenean consectetur nec' ),
+		default: 'Consectetur adipiscing elit Suspendisse at pretium tortor Vestibulum ante ipsum primis In faucibus orci luctus et Ultrices posuere cubilia cura Aenean consectetur nec',
 	},
 	featureList3: {
 		source: 'html',
 		selector: '.ugb-pricing-box-column-three .ugb-pricing-box-feature-list',
-		default: __( 'Consectetur adipiscing elit Suspendisse at pretium tortor Vestibulum ante ipsum primis In faucibus orci luctus et Ultrices posuere cubilia cura Aenean consectetur nec' ),
+		default: 'Consectetur adipiscing elit Suspendisse at pretium tortor Vestibulum ante ipsum primis In faucibus orci luctus et Ultrices posuere cubilia cura Aenean consectetur nec',
 	},
 	pricingBoxColor: {
 		type: 'string',

@@ -100,7 +100,7 @@ if ( ! function_exists( 'stackable_news_feed_ajax' ) ) {
 		$nonce = isset( $_POST['nonce'] ) ? sanitize_key( $_POST['nonce'] ) : '';
 
 		if ( ! wp_verify_nonce( $nonce, 'stackable_news_feed' ) ) {
-			wp_send_json_error( __( 'Security error, please refresh the page and try again.', 'stackable' ) );
+			wp_send_json_error( __( 'Security error, please refresh the page and try again.', STACKABLE_I18N ) );
 		}
 
 		wp_send_json_success( stackable_news_feed_links() );

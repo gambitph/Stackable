@@ -2,9 +2,9 @@
  * BLOCK: Notification
  */
 
+import { disabledBlocks, i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { descriptionPlaceholder } from '@stackable/util'
-import { disabledBlocks } from 'stackable'
 import { NotificationIcon } from '@stackable/icons'
 
 export const schema = {
@@ -54,13 +54,13 @@ export const schema = {
 export const name = 'ugb/notification'
 
 export const settings = {
-	title: __( 'Notification' ),
-	description: __( 'Show a notice to your readers. People can dismiss the notice to permanently hide it.' ),
+	title: __( 'Notification', i18n ),
+	description: __( 'Show a notice to your readers. People can dismiss the notice to permanently hide it.', i18n ),
 	icon: NotificationIcon,
 	category: 'stackable',
 	keywords: [
-		__( 'Notification' ),
-		__( 'Stackable' ),
+		__( 'Notification', i18n ),
+		__( 'Stackable', i18n ),
 	],
 	attributes: schema,
 	supports: {

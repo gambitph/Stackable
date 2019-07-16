@@ -30,8 +30,8 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 SVG;
 
             add_menu_page(
-                __( 'Stackable', 'stackable' ), // Page Title.
-                __( 'Stackable', 'stackable' ) . ' ' . stackable_notification_count(), // Menu Title.
+                __( 'Stackable', STACKABLE_I18N ), // Page Title.
+                __( 'Stackable', STACKABLE_I18N ) . ' ' . stackable_notification_count(), // Menu Title.
                 'edit_posts', // Capability.
                 'stackable', // Menu slug.
                 array( $this, 'stackable_welcome_content' ), // Action.
@@ -52,9 +52,13 @@ SVG;
 
 				wp_enqueue_script( 'stackable-welcome', plugins_url( 'dist/admin_welcome.js', STACKABLE_FILE ), array( 'wp-i18n', 'wp-element', 'wp-hooks', 'wp-util', 'wp-components' ) );
 
+				// Add translations.
+				wp_set_script_translations( 'stackable-welcome', STACKABLE_I18N );
+
 				wp_localize_script( 'stackable-welcome', 'stackable', array(
 					'srcUrl' => untrailingslashit( plugins_url( '/', STACKABLE_FILE ) ),
 					'welcomeSrcUrl' => untrailingslashit( plugins_url( '/', __FILE__ ) ),
+					'i18n' => STACKABLE_I18N,
 					'isPro' => sugb_fs()->can_use_premium_code(),
 					'showProNotice' => stackable_should_show_pro_notices(),
 					'pricingURL' => sugb_fs()->get_upgrade_url(),
@@ -72,32 +76,32 @@ SVG;
             ?>
             <div class="wrap">
                 <header class="s-header">
-                    <h1><?php _e( 'Stackable', 'stackable' ) ?></h1>
-                    <img src="<?php echo esc_url( plugins_url( 'images/stackable-logo.svg', __FILE__ ) ) ?>" alt="<?php esc_attr_e( 'Stackable Logo' ) ?>"/>
+                    <h1><?php _e( 'Stackable', STACKABLE_I18N ) ?></h1>
+                    <img src="<?php echo esc_url( plugins_url( 'images/stackable-logo.svg', __FILE__ ) ) ?>" alt="<?php esc_attr_e( 'Stackable', STACKABLE_I18N ) ?>"/>
                 </header>
                 <section class="s-body-container">
                     <div class="s-body">
                         <?php stackable_welcome_notification() ?>
                         <article class="s-intro s-box">
                             <div class="s-intro-col">
-                                <h2><?php _e( '👋 Hello!', 'stackable' ) ?></h2>
-                                <p><?php _e( 'Stackable supercharges the new Block Editor to give you the capability to build awesome front pages and landing pages. ⚡️🚀', 'stackable' ) ?></p>
-                                <p><?php _e( 'We\'ve come up with a collection of cool blocks that will make website building a breeze. We made sure our blocks look great, fresh and responsive.', 'stackable' ) ?></p>
+                                <h2><?php _e( '👋 Hello!', STACKABLE_I18N ) ?></h2>
+                                <p><?php _e( 'Stackable supercharges the new Block Editor to give you the capability to build awesome front pages and landing pages. ⚡️🚀', STACKABLE_I18N ) ?></p>
+                                <p><?php _e( 'We\'ve come up with a collection of cool blocks that will make website building a breeze. We made sure our blocks look great, fresh and responsive.', STACKABLE_I18N ) ?></p>
                             </div>
                             <div class="s-intro-col">
-                                <h2><?php _e( '📖 How to Use', 'stackable' ) ?></h2>
+                                <h2><?php _e( '📖 How to Use', STACKABLE_I18N ) ?></h2>
                                 <ol>
-                                    <li><?php printf( __( 'Edit your page and click on the %s button to add a block', 'stackable' ), '<img src="' . esc_url( plugins_url( 'images/editor-plus-icon.svg', __FILE__ ) ) . '" class="s-plus-button"/>' ) ?></li>
-                                    <li><?php _e( 'Scroll down and pick a Stackable block and customize it!', 'stackable' ) ?></li>
+                                    <li><?php printf( __( 'Edit your page and click on the %s button to add a block', STACKABLE_I18N ), '<img src="' . esc_url( plugins_url( 'images/editor-plus-icon.svg', __FILE__ ) ) . '" class="s-plus-button"/>' ) ?></li>
+                                    <li><?php _e( 'Scroll down and pick a Stackable block and customize it!', STACKABLE_I18N ) ?></li>
                                 </ol>
                             </div>
                             <div class="s-intro-col">
-                                <p><img src="https://gambitph.github.io/Stackable/assets/welcome/how.gif" alt="<?php esc_attr_e( 'Stackable Screenshot' ) ?>" class="s-gif"/></p>
+                                <p><img src="https://gambitph.github.io/Stackable/assets/welcome/how.gif" alt="<?php esc_attr_e( 'Stackable Screenshot', STACKABLE_I18N ) ?>" class="s-gif"/></p>
                             </div>
                         </article>
                         <article class="s-box">
-                            <h2><?php _e( '🎛 Enable & Disable Blocks', 'stackable' ) ?></h2>
-                            <p><?php _e( 'We have a lot of awesome blocks. But if you\'re overwhelmed with awesomeness, you can hide some of them.' , 'stackable' ) ?><br /><em><?php _e( '(If your post contains a disabled block, it will still continue to work. You won\'t just be able to add the disabled blocks.)' , 'stackable' ) ?></em></p>
+                            <h2><?php _e( '🎛 Enable & Disable Blocks', STACKABLE_I18N ) ?></h2>
+                            <p><?php _e( 'We have a lot of awesome blocks. But if you\'re overwhelmed with awesomeness, you can hide some of them.' , STACKABLE_I18N ) ?><br /><em><?php _e( '(If your post contains a disabled block, it will still continue to work. You won\'t just be able to add the disabled blocks.)' , STACKABLE_I18N ) ?></em></p>
 							<!-- We put all the block controls here. -->
                             <div class="s-settings-wrapper" />
 						</article>
@@ -108,29 +112,29 @@ SVG;
                     <div class="s-side">
 						<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
                         <aside class="s-box s-premium-box">
-                            <h3><?php _e( '🚀 Stackable Premium', 'stackable' ) ?></h3>
-                            <p><?php _e( 'If you are ready for even more, Stackable Premium will give you premium layout options, effects and other goodies for creating your perfect site!', 'stackable' ) ?></p>
+                            <h3><?php _e( '🚀 Stackable Premium', STACKABLE_I18N ) ?></h3>
+                            <p><?php _e( 'If you are ready for even more, Stackable Premium will give you premium layout options, effects and other goodies for creating your perfect site!', STACKABLE_I18N ) ?></p>
 							<div class="s-premium-box__button">
-								<p><a href="<?php echo esc_url( sugb_fs()->get_upgrade_url() ) ?>" class="s-button" title="<?php esc_attr_e( 'View Premium Features', 'stackable' ) ?>"><?php _e( 'View Premium Features', 'stackable' ) ?></a></p>
+								<p><a href="<?php echo esc_url( sugb_fs()->get_upgrade_url() ) ?>" class="s-button" title="<?php esc_attr_e( 'View Premium Features', STACKABLE_I18N ) ?>"><?php _e( 'View Premium Features', STACKABLE_I18N ) ?></a></p>
 							</div>
-							<p><a href="https://rebrand.ly/plugin-learn-premium-side" target="_blank" title="<?php esc_attr_e( 'Visit Plugin Site', 'stackable' ) ?>"><?php _e( 'Visit Plugin Site', 'stackable' ) ?></a></p>
+							<p><a href="https://rebrand.ly/plugin-learn-premium-side" target="_blank" title="<?php esc_attr_e( 'Visit Plugin Site', STACKABLE_I18N ) ?>"><?php _e( 'Visit Plugin Site', STACKABLE_I18N ) ?></a></p>
 						</aside>
 						<?php endif; ?>
                         <aside class="s-box">
-                            <h3><?php _e( '🍺 Free Theme Download', 'stackable' ) ?></h3>
-                            <p><?php _e( 'Get our FREE WordPress theme that\'s beautiful & flexible, and made especially for Stackable blocks and the new WordPress editor. Subscribe to our newsletter to get the Stackable Theme now.', 'stackable' ) ?></p>
-                            <p><a href="https://rebrand.ly/plugin-welcome-theme-download" class="s-button" target="_blank" title="<?php esc_attr_e( 'Subscribe & Download', 'stackable' ) ?>"><?php _e( 'Subscribe & Download', 'stackable' ) ?></a></p>
+                            <h3><?php _e( '🍺 Free Theme Download', STACKABLE_I18N ) ?></h3>
+                            <p><?php _e( 'Get our FREE WordPress theme that\'s beautiful & flexible, and made especially for Stackable blocks and the new WordPress editor. Subscribe to our newsletter to get the Stackable Theme now.', STACKABLE_I18N ) ?></p>
+                            <p><a href="https://rebrand.ly/plugin-welcome-theme-download" class="s-button" target="_blank" title="<?php esc_attr_e( 'Subscribe & Download', STACKABLE_I18N ) ?>"><?php _e( 'Subscribe & Download', STACKABLE_I18N ) ?></a></p>
                         </aside>
                         <aside class="s-box s-news-box">
-							<h3><?php _e( '🗞 Stackable News', 'stackable' ) ?></h3>
+							<h3><?php _e( '🗞 Stackable News', STACKABLE_I18N ) ?></h3>
 							<div class="s-news-box-content"><?php stackable_news_feed_links_cached() ?></div>
-							<p><?php _e( 'Keep up to date by subscribing to our newsletter.', 'stackable' ) ?></p>
-							<p><a href="https://rebrand.ly/plugin-welcome-subscribe" class="s-button" target="_blank" title="<?php esc_attr_e( 'Subscribe', 'stackable' ) ?>"><?php _e( 'Subscribe', 'stackable' ) ?></a></p>
+							<p><?php _e( 'Keep up to date by subscribing to our newsletter.', STACKABLE_I18N ) ?></p>
+							<p><a href="https://rebrand.ly/plugin-welcome-subscribe" class="s-button" target="_blank" title="<?php esc_attr_e( 'Subscribe', STACKABLE_I18N ) ?>"><?php _e( 'Subscribe', STACKABLE_I18N ) ?></a></p>
                         </aside>
                         <aside class="s-box s-support-box">
-                            <h3><?php _e( '🐛 Suggestions or Bug Reports', 'stackable' ) ?></h3>
-                            <p><?php _e( 'If you have any suggestions and bug reports, let us know in our plugin support forum.', 'stackable' ) ?></p>
-                            <p><a href="https://rebrand.ly/plugin-welcome-report" target="_blank" title="<?php esc_attr_e( 'Plugin Support Forum', 'stackable' ) ?>"><?php _e( 'Plugin Support Forum', 'stackable' ) ?></a></p>
+                            <h3><?php _e( '🐛 Suggestions or Bug Reports', STACKABLE_I18N ) ?></h3>
+                            <p><?php _e( 'If you have any suggestions and bug reports, let us know in our plugin support forum.', STACKABLE_I18N ) ?></p>
+                            <p><a href="https://rebrand.ly/plugin-welcome-report" target="_blank" title="<?php esc_attr_e( 'Plugin Support Forum', STACKABLE_I18N ) ?>"><?php _e( 'Plugin Support Forum', STACKABLE_I18N ) ?></a></p>
                         </aside>
                     </div>
                 </section>

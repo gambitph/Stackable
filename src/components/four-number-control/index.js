@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n'
 import BaseControlMultiLabel from '../base-control-multi-label'
 import classnames from 'classnames'
 import { Component } from '@wordpress/element'
+import { i18n } from 'stackable'
 import { withInstanceId } from '@wordpress/compose'
 
 class FourNumberControl extends Component {
@@ -142,10 +143,10 @@ class FourNumberControl extends Component {
 							id={ `${ id }-top` }
 							type="number"
 							onChange={ this.onChangeTop }
-							aria-label={ __( 'Top' ) }
+							aria-label={ __( 'Top', i18n ) }
 							value={ this.state.top }
 						/>
-						<span>{ __( 'Top' ) }</span>
+						<span>{ __( 'Top', i18n ) }</span>
 					</label>
 					<label className="ugb-four-number-control__label" htmlFor={ `${ id }-right` }>
 						<input
@@ -155,7 +156,7 @@ class FourNumberControl extends Component {
 							aria-label={ this.props.label }
 							value={ this.state.right }
 						/>
-						<span>{ __( 'Right' ) }</span>
+						<span>{ __( 'Right', i18n ) }</span>
 					</label>
 					<label className="ugb-four-number-control__label" htmlFor={ `${ id }-bottom` }>
 						<input
@@ -165,7 +166,7 @@ class FourNumberControl extends Component {
 							aria-label={ this.props.label }
 							value={ this.state.bottom }
 						/>
-						<span>{ __( 'Bottom' ) }</span>
+						<span>{ __( 'Bottom', i18n ) }</span>
 					</label>
 					<label className="ugb-four-number-control__label" htmlFor={ `${ id }-left` }>
 						<input
@@ -175,7 +176,7 @@ class FourNumberControl extends Component {
 							aria-label={ this.props.label }
 							value={ this.state.left }
 						/>
-						<span>{ __( 'Left' ) }</span>
+						<span>{ __( 'Left', i18n ) }</span>
 					</label>
 					<IconButton
 						className={ this.state.locked ? 'ugb--is-locked' : '' }

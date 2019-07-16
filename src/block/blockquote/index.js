@@ -5,10 +5,10 @@
  * Simple block, renders and saves the same content without any interactivity.
  */
 
+import { disabledBlocks, i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { BlockquoteIcon } from '@stackable/icons'
 import { descriptionPlaceholder } from '@stackable/util'
-import { disabledBlocks } from 'stackable'
 
 const schema = {
 	align: {
@@ -103,13 +103,13 @@ const schema = {
 export const name = 'ugb/blockquote'
 
 export const settings = {
-	title: __( 'Blockquote' ),
-	description: __( 'Display a quote in style.' ),
+	title: __( 'Blockquote', i18n ),
+	description: __( 'Display a quote in style.', i18n ),
 	icon: BlockquoteIcon,
 	category: 'stackable',
 	keywords: [
-		__( 'Blockquote' ),
-		__( 'Stackable' ),
+		__( 'Blockquote', i18n ),
+		__( 'Stackable', i18n ),
 	],
 	supports: {
 		align: [ 'center', 'wide', 'full' ],

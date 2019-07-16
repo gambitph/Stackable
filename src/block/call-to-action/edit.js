@@ -1,6 +1,7 @@
 import {
 	ButtonEdit, DesignPanelBody, PanelBackgroundSettings, PanelButtonSettings, ProControl, ProControlButton, URLInputControl,
 } from '@stackable/components'
+import { i18n, showProNotice } from 'stackable'
 import {
 	InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/block-editor'
@@ -14,7 +15,6 @@ import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
-import { showProNotice } from 'stackable'
 
 const edit = props => {
 	const {
@@ -90,10 +90,10 @@ const edit = props => {
 					selected={ design }
 					options={ applyFilters( 'stackable.cta.edit.designs', [
 						{
-							label: __( 'Basic' ), value: 'basic', image: ImageDesignBasic,
+							label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
 						},
 						{
-							label: __( 'Plain' ), value: 'plain', image: ImageDesignPlain,
+							label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
 						},
 					] ) }
 					onChange={ design => setAttributes( { design } ) }
@@ -101,7 +101,7 @@ const edit = props => {
 					{ applyFilters( 'stackable.cta.edit.designs.after', null, props ) }
 					{ design !== 'plain' && align !== 'full' &&
 						<RangeControl
-							label={ __( 'Border Radius' ) }
+							label={ __( 'Border Radius', i18n ) }
 							value={ borderRadius }
 							onChange={ borderRadius => setAttributes( { borderRadius } ) }
 							min={ 0 }
@@ -110,7 +110,7 @@ const edit = props => {
 					}
 					{ design !== 'plain' &&
 						<RangeControl
-							label={ __( 'Shadow / Outline' ) }
+							label={ __( 'Shadow / Outline', i18n ) }
 							value={ shadow }
 							onChange={ shadow => setAttributes( { shadow } ) }
 							min={ 0 }
@@ -119,7 +119,7 @@ const edit = props => {
 					}
 					{ align === 'full' &&
 						<ToggleControl
-							label={ __( 'Restrict to Content Width' ) }
+							label={ __( 'Restrict to Content Width', i18n ) }
 							checked={ contentWidth }
 							onChange={ contentWidth => setAttributes( { contentWidth } ) }
 						/>
@@ -128,17 +128,17 @@ const edit = props => {
 				</DesignPanelBody>
 				<PanelColorSettings
 					initialOpen={ true }
-					title={ __( 'Color Settings' ) }
+					title={ __( 'Color Settings', i18n ) }
 					colorSettings={ [
 						{
 							value: titleColor,
 							onChange: colorValue => setAttributes( { titleColor: colorValue } ),
-							label: __( 'Title Color' ),
+							label: __( 'Title Color', i18n ),
 						},
 						{
 							value: bodyTextColor,
 							onChange: colorValue => setAttributes( { bodyTextColor: colorValue } ),
-							label: __( 'Body Text Color' ),
+							label: __( 'Body Text Color', i18n ),
 						},
 					] }
 				>
@@ -187,11 +187,11 @@ const edit = props => {
 				{ showProNotice &&
 					<PanelBody
 						initialOpen={ false }
-						title={ __( 'Custom CSS' ) }
+						title={ __( 'Custom CSS', i18n ) }
 					>
 						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋' ) }
-							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
 						/>
 					</PanelBody>
 				}
@@ -212,7 +212,7 @@ const edit = props => {
 					<RichText
 						className="ugb-cta__title"
 						tagName="h3"
-						placeholder={ __( 'Title for This Block' ) }
+						placeholder={ __( 'Title for This Block', i18n ) }
 						value={ ctaTitle }
 						onChange={ text => setAttributes( { ctaTitle: text } ) }
 						keepPlaceholderOnFocus

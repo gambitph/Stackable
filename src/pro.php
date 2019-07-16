@@ -44,7 +44,7 @@ if ( ! function_exists( 'stackable_ajax_update_show_pro_notice_notice' ) ) {
 		$nonce = isset( $_POST['nonce'] ) ? sanitize_key( $_POST['nonce'] ) : '';
 
 		if ( ! wp_verify_nonce( $nonce, 'stackable_show_pro_notices' ) ) {
-			wp_send_json_error( __( 'Security error, please refresh the page and try again.', 'stackable' ) );
+			wp_send_json_error( __( 'Security error, please refresh the page and try again.', STACKABLE_I18N ) );
 		}
 
 		$checked_show_notices = isset( $_POST['checked'] ) ? $_POST['checked'] === 'true' : false;
@@ -139,7 +139,7 @@ if ( ! class_exists( 'Stackable_Go_Premium_Notification' ) ) {
 		 * Show Premium notification.
 		 */
 		public function show_notification() {
-			stackable_add_welcome_notification( 'premium', sprintf( __( 'We hope you\'re enjoying Stackable. If you want more, you may want to check out %sStackable Premium%s. Ready to upgrade and do more? %sGo premium now%s', 'stackable' ),
+			stackable_add_welcome_notification( 'premium', sprintf( __( 'We hope you\'re enjoying Stackable. If you want more, you may want to check out %sStackable Premium%s. Ready to upgrade and do more? %sGo premium now%s', STACKABLE_I18N ),
 				'<a href="https://rebrand.ly/plugin-learn-premium" target="_blank">', '</a>',
 				'<a href="' . esc_url( sugb_fs()->get_upgrade_url() ) . '">', '</a>'
 			) );

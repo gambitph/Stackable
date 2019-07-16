@@ -2,6 +2,7 @@ import {
 	ColorPaletteControl, DesignPanelBody, ProControl, ProControlButton,
 } from '@stackable/components'
 import { descriptionPlaceholder, range } from '@stackable/util'
+import { i18n, showProNotice } from 'stackable'
 import {
 	InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/block-editor'
@@ -13,7 +14,6 @@ import { Fragment } from '@wordpress/element'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
 import isDarkColor from 'is-dark-color'
-import { showProNotice } from 'stackable'
 
 const edit = props => {
 	const {
@@ -59,10 +59,10 @@ const edit = props => {
 					selected={ design }
 					options={ [
 						{
-							image: ImageDesignBasic, label: __( 'Basic' ), value: 'basic',
+							image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
 						},
 						{
-							image: ImageDesignPlain, label: __( 'Plain' ), value: 'plain',
+							image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
 						},
 						...applyFilters( 'stackable.number-box.edit.designs', [] ),
 					] }
@@ -72,14 +72,14 @@ const edit = props => {
 				>
 					{ show.backgroundColor &&
 						<ColorPaletteControl
-							label={ __( 'Background Color' ) }
+							label={ __( 'Background Color', i18n ) }
 							value={ backgroundColor }
 							onChange={ backgroundColor => setAttributes( { backgroundColor } ) }
 						/>
 					}
 					{ show.borderRadius &&
 						<RangeControl
-							label={ __( 'Border Radius' ) }
+							label={ __( 'Border Radius', i18n ) }
 							value={ borderRadius }
 							onChange={ borderRadius => setAttributes( { borderRadius } ) }
 							min={ 0 }
@@ -88,7 +88,7 @@ const edit = props => {
 					}
 					{ show.shadow &&
 						<RangeControl
-							label={ __( 'Shadow / Outline' ) }
+							label={ __( 'Shadow / Outline', i18n ) }
 							value={ shadow }
 							onChange={ shadow => setAttributes( { shadow } ) }
 							min={ 0 }
@@ -97,9 +97,9 @@ const edit = props => {
 					}
 					{ showProNotice && <ProControlButton /> }
 				</DesignPanelBody>
-				<PanelBody title={ __( 'General Settings' ) }>
+				<PanelBody title={ __( 'General Settings', i18n ) }>
 					<RangeControl
-						label={ __( 'Columns' ) }
+						label={ __( 'Columns', i18n ) }
 						value={ columns }
 						onChange={ columns => setAttributes( { columns } ) }
 						min={ 1 }
@@ -107,31 +107,31 @@ const edit = props => {
 					/>
 				</PanelBody>
 				<PanelColorSettings
-					title={ __( 'Color Settings' ) }
+					title={ __( 'Color Settings', i18n ) }
 					colorSettings={ [
 						...( ! show.numberColor ? [] : [
 							{
 								value: numberColor,
 								onChange: colorValue => setAttributes( { numberColor: colorValue } ),
-								label: __( 'Number Color' ),
+								label: __( 'Number Color', i18n ),
 							},
 						] ),
 						...( ! show.numberBGColor ? [] : [
 							{
 								value: numberBGColor,
 								onChange: colorValue => setAttributes( { numberBGColor: colorValue } ),
-								label: __( 'Number Background Color' ),
+								label: __( 'Number Background Color', i18n ),
 							},
 						] ),
 						{
 							value: titleColor,
 							onChange: colorValue => setAttributes( { titleColor: colorValue } ),
-							label: __( 'Title Color' ),
+							label: __( 'Title Color', i18n ),
 						},
 						{
 							value: descriptionColor,
 							onChange: colorValue => setAttributes( { descriptionColor: colorValue } ),
-							label: __( 'Description Color' ),
+							label: __( 'Description Color', i18n ),
 						},
 					] }
 				>
@@ -139,11 +139,11 @@ const edit = props => {
 				{ showProNotice &&
 					<PanelBody
 						initialOpen={ false }
-						title={ __( 'Custom CSS' ) }
+						title={ __( 'Custom CSS', i18n ) }
 					>
 						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋' ) }
-							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
 						/>
 					</PanelBody>
 				}
@@ -205,7 +205,7 @@ const edit = props => {
 									className="ugb-number-box__title"
 									onChange={ value => setAttributes( { [ `title${ i }` ]: value } ) }
 									style={ styles.title }
-									placeholder={ __( 'Title' ) }
+									placeholder={ __( 'Title', i18n ) }
 									keepPlaceholderOnFocus
 								/>
 								<RichText

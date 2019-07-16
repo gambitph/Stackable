@@ -1,3 +1,4 @@
+import { i18n, showProNotice } from 'stackable'
 import { InspectorControls, RichText } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
@@ -6,7 +7,6 @@ import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
 import { PanelBody } from '@wordpress/components'
 import { ProControl } from '@stackable/components'
-import { showProNotice } from 'stackable'
 
 const edit = props => {
 	const {
@@ -34,11 +34,11 @@ const edit = props => {
 				{ showProNotice &&
 					<PanelBody
 						initialOpen={ false }
-						title={ __( 'Custom CSS' ) }
+						title={ __( 'Custom CSS', i18n ) }
 					>
 						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋' ) }
-							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
 						/>
 					</PanelBody>
 				}
@@ -47,13 +47,13 @@ const edit = props => {
 			<div className={ mainClasses }>
 				{ applyFilters( 'stackable.expand.edit.output.before', null, design, props ) }
 				{ /* eslint-disable-next-line jsx-a11y/label-has-for */ }
-				{ isSelected && <label className="ugb-expand__label">{ __( 'Less text' ) }</label> }
+				{ isSelected && <label className="ugb-expand__label">{ __( 'Less text', i18n ) }</label> }
 				<RichText
 					multiline="p"
 					value={ text }
 					onChange={ text => setAttributes( { text } ) }
 					className="ugb-expand__less-text"
-					placeholder={ __( 'Some short text that can be expanded to show more details.' ) }
+					placeholder={ __( 'Some short text that can be expanded to show more details.', i18n ) }
 					keepPlaceholderOnFocus
 				/>
 				<a>{ /* eslint-disable-line */ /* Workaround to get around RichText not allowing inlines. */ }
@@ -63,12 +63,12 @@ const edit = props => {
 						onChange={ text => setAttributes( { moreLabel: text } ) }
 						formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
 						className="ugb-expand__more-toggle-text"
-						placeholder={ __( 'Show more' ) }
+						placeholder={ __( 'Show more', i18n ) }
 						keepPlaceholderOnFocus
 					/>
 				</a>
 				{ /* eslint-disable-next-line jsx-a11y/label-has-for */ }
-				{ isSelected && <label className="ugb-expand__label">{ __( 'More text' ) }</label> }
+				{ isSelected && <label className="ugb-expand__label">{ __( 'More text', i18n ) }</label> }
 				{
 					isSelected &&
 					<RichText
@@ -76,7 +76,7 @@ const edit = props => {
 						value={ moreText }
 						onChange={ text => setAttributes( { moreText: text } ) }
 						className="ugb-expand__more-text"
-						placeholder={ `${ __( 'Some short text that can be expanded to show more details.' ) } ${ descriptionPlaceholder( 'medium' ) }` }
+						placeholder={ `${ __( 'Some short text that can be expanded to show more details.', i18n ) } ${ descriptionPlaceholder( 'medium' ) }` }
 						keepPlaceholderOnFocus
 					/>
 				}
@@ -88,7 +88,7 @@ const edit = props => {
 							onChange={ text => setAttributes( { lessLabel: text } ) }
 							formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
 							className="ugb-expand__less-toggle-text"
-							placeholder={ __( 'Show less' ) }
+							placeholder={ __( 'Show less', i18n ) }
 							keepPlaceholderOnFocus
 						/>
 					</a>

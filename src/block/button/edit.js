@@ -5,7 +5,7 @@ import {
 	ButtonEdit, PanelButtonSettings, ProControl, URLInputControl,
 } from '@stackable/components'
 import { Component, Fragment } from '@wordpress/element'
-import { isPro, showProNotice } from 'stackable'
+import { i18n, isPro, showProNotice } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
@@ -109,7 +109,7 @@ class edit extends Component {
 					{ isPro &&
 						<PanelButtonSettings
 							initialOpen={ true }
-							title={ __( 'General Settings' ) }
+							title={ __( 'General Settings', i18n ) }
 							buttonBorderRadius={ cornerButtonRadius }
 							onChangeButtonBorderRadius={ cornerButtonRadius => setAttributes( { cornerButtonRadius } ) }
 						>
@@ -117,7 +117,7 @@ class edit extends Component {
 						</PanelButtonSettings>
 					}
 					<PanelButtonSettings
-						title={ ! isPro && ! showProNotice ? __( 'Button Settings' ) : __( 'Button #1 Settings' ) }
+						title={ ! isPro && ! showProNotice ? __( 'Button Settings', i18n ) : __( 'Button #1 Settings', i18n ) }
 						initialOpen={ true }
 						buttonDesign={ design }
 						buttonColor={ color }
@@ -140,33 +140,33 @@ class edit extends Component {
 					{ showProNotice &&
 						<PanelBody
 							initialOpen={ false }
-							title={ __( 'Button #2 Settings' ) }
+							title={ __( 'Button #2 Settings', i18n ) }
 						>
 							<ProControl
-								title={ __( 'Say Hello to Side by Side Buttons 👋' ) }
-								description={ __( 'Give your visitors more buttons to choose from. This feature is only available on Stackable Pro' ) }
+								title={ __( 'Say Hello to Side by Side Buttons 👋', i18n ) }
+								description={ __( 'Give your visitors more buttons to choose from. This feature is only available on Stackable Pro', i18n ) }
 							/>
 						</PanelBody>
 					}
 					{ showProNotice &&
 						<PanelBody
 							initialOpen={ false }
-							title={ __( 'Button #3 Settings' ) }
+							title={ __( 'Button #3 Settings', i18n ) }
 						>
 							<ProControl
-								title={ __( 'Say Hello to Side by Side Buttons 👋' ) }
-								description={ __( 'Give your visitors more buttons to choose from. This feature is only available on Stackable Pro' ) }
+								title={ __( 'Say Hello to Side by Side Buttons 👋', i18n ) }
+								description={ __( 'Give your visitors more buttons to choose from. This feature is only available on Stackable Pro', i18n ) }
 							/>
 						</PanelBody>
 					}
 					{ showProNotice &&
 						<PanelBody
 							initialOpen={ false }
-							title={ __( 'Custom CSS' ) }
+							title={ __( 'Custom CSS', i18n ) }
 						>
 							<ProControl
-								title={ __( 'Say Hello to Custom CSS 👋' ) }
-								description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+								title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
+								description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
 							/>
 						</PanelBody>
 					}

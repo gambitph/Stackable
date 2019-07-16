@@ -4,6 +4,7 @@ import {
 import {
 	ButtonEdit, DesignPanelBody, ImageUploadPlaceholder, PanelBackgroundSettings, PanelButtonSettings, ProControl, ProControlButton, URLInputControl,
 } from '@stackable/components'
+import { i18n, showProNotice } from 'stackable'
 import {
 	PanelBody, RangeControl, ToggleControl,
 } from '@wordpress/components'
@@ -14,7 +15,6 @@ import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
-import { showProNotice } from 'stackable'
 
 const edit = props => {
 	const {
@@ -116,23 +116,23 @@ const edit = props => {
 					selected={ design }
 					options={ applyFilters( 'stackable.feature.edit.designs', [
 						{
-							label: __( 'Basic' ), value: 'basic', image: ImageDesignBasic,
+							label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
 						},
 						{
-							label: __( 'Plain' ), value: 'plain', image: ImageDesignPlain,
+							label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
 						},
 					] ) }
 					onChange={ design => setAttributes( { design } ) }
 				>
 					<RangeControl
-						label={ __( 'Border Radius' ) }
+						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
 						onChange={ borderRadius => setAttributes( { borderRadius } ) }
 						min={ 0 }
 						max={ 50 }
 					/>
 					<RangeControl
-						label={ __( 'Shadow / Outline' ) }
+						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
 						onChange={ shadow => setAttributes( { shadow } ) }
 						min={ 0 }
@@ -140,7 +140,7 @@ const edit = props => {
 					/>
 					{ align === 'full' &&
 						<ToggleControl
-							label={ __( 'Restrict to Content Width' ) }
+							label={ __( 'Restrict to Content Width', i18n ) }
 							checked={ contentWidth }
 							onChange={ contentWidth => setAttributes( { contentWidth } ) }
 						/>
@@ -149,25 +149,25 @@ const edit = props => {
 				</DesignPanelBody>
 				<PanelColorSettings
 					initialOpen={ true }
-					title={ __( 'General Settings' ) }
+					title={ __( 'General Settings', i18n ) }
 					colorSettings={ [
 						{
 							value: textColor,
 							onChange: textColor => setAttributes( { textColor } ),
-							label: __( 'Text Color' ),
+							label: __( 'Text Color', i18n ),
 						},
 					] }
 				>
 					<ToggleControl
-						label={ __( 'Reverse Horizontally' ) }
+						label={ __( 'Reverse Horizontally', i18n ) }
 						checked={ invert }
 						onChange={ () => setAttributes( { invert: ! invert } ) }
 					/>
 					<RangeControl
-						label={ __( 'Image Size' ) }
+						label={ __( 'Image Size', i18n ) }
 						value={ imageSize }
 						onChange={ imageSize => setAttributes( { imageSize } ) }
-						help={ __( 'The theme\'s content width may have an effect here.' ) }
+						help={ __( 'The theme\'s content width may have an effect here.', i18n ) }
 						min={ 100 }
 						max={ 800 }
 					/>
@@ -217,11 +217,11 @@ const edit = props => {
 				{ showProNotice &&
 					<PanelBody
 						initialOpen={ false }
-						title={ __( 'Custom CSS' ) }
+						title={ __( 'Custom CSS', i18n ) }
 					>
 						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋' ) }
-							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
 						/>
 					</PanelBody>
 				}
@@ -245,7 +245,7 @@ const edit = props => {
 						value={ title }
 						onChange={ title => setAttributes( { title } ) }
 						style={ { color: textColor } }
-						placeholder={ __( 'Title for This Block' ) }
+						placeholder={ __( 'Title for This Block', i18n ) }
 						keepPlaceholderOnFocus
 					/>
 					const descriptionComp = <RichText
@@ -291,7 +291,7 @@ const edit = props => {
 						onChange={ ( { url, id, alt } ) => {
 							setAttributes( { imageUrl: url, imageID: id, imageAlt: alt } )
 						} }
-						render={ <img src={ imageUrl } alt={ __( 'feature' ) } /> }
+						render={ <img src={ imageUrl } alt={ __( 'feature', i18n ) } /> }
 					/>
 					const comps = {
 						titleComp,

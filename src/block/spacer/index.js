@@ -2,8 +2,8 @@
  * BLOCK: Spacer Block.
  */
 
+import { disabledBlocks, i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
-import { disabledBlocks } from 'stackable'
 import { SpacerIcon } from '@stackable/icons'
 
 export const schema = {
@@ -30,13 +30,13 @@ export const schema = {
 export const name = 'ugb/spacer'
 
 export const settings = {
-	title: __( 'Spacer' ),
-	description: __( 'Sometimes you just need some space.' ),
+	title: __( 'Spacer', i18n ),
+	description: __( 'Sometimes you just need some space.', i18n ),
 	icon: SpacerIcon,
 	category: 'stackable',
 	keywords: [
-		__( 'Spacer' ),
-		__( 'Stackable' ),
+		__( 'Spacer', i18n ),
+		__( 'Stackable', i18n ),
 	],
 	attributes: schema,
 	supports: {

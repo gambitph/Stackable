@@ -18,12 +18,12 @@ const deprecatedSchema_1_10 = {
 	moreLabel: {
 		source: 'html',
 		selector: '.ugb-expand-more',
-		default: __( 'Show more' ),
+		default: 'Show more',
 	},
 	lessLabel: {
 		source: 'html',
 		selector: '.ugb-expand-less',
-		default: __( 'Show less' ),
+		default: 'Show less',
 	},
 }
 
@@ -95,12 +95,12 @@ export const deprecatedSchema_1_3 = {
 	moreLabel: {
 		source: 'html',
 		selector: '.ugb-expand-more',
-		default: __( 'Show more' ),
+		default: 'Show more',
 	},
 	lessLabel: {
 		source: 'html',
 		selector: '.ugb-expand-less',
-		default: __( 'Show less' ),
+		default: 'Show less',
 	},
 }
 

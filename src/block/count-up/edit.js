@@ -1,6 +1,7 @@
 import {
 	DesignPanelBody, PanelBackgroundSettings, ProControl, ProControlButton,
 } from '@stackable/components'
+import { i18n, showProNotice } from 'stackable'
 import {
 	InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/block-editor'
@@ -14,7 +15,6 @@ import { Fragment } from '@wordpress/element'
 import { getFontFamily } from './font'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
-import { showProNotice } from 'stackable'
 
 const edit = props => {
 	const {
@@ -114,7 +114,7 @@ const edit = props => {
 							tagName="h4"
 							className="ugb-countup__title"
 							value={ title }
-							placeholder={ __( 'Title' ) }
+							placeholder={ __( 'Title', i18n ) }
 							onChange={ value => setAttributes( { [ `title${ i }` ]: value } ) }
 							style={ { color: textColor ? textColor : undefined } }
 							keepPlaceholderOnFocus
@@ -133,7 +133,7 @@ const edit = props => {
 						const descriptionComp = <RichText
 							tagName="p"
 							className="ugb-countup__description"
-							placeholder={ __( 'Description' ) }
+							placeholder={ __( 'Description', i18n ) }
 							value={ description }
 							onChange={ value => setAttributes( { [ `description${ i }` ]: value } ) }
 							style={ { color: textColor ? textColor : undefined } }
@@ -161,17 +161,17 @@ const edit = props => {
 					selected={ design }
 					options={ applyFilters( 'stackable.count-up.edit.designs', [
 						{
-							label: __( 'Basic' ), value: 'basic', image: ImageDesignBasic,
+							label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
 						},
 						{
-							label: __( 'Plain' ), value: 'plain', image: ImageDesignPlain,
+							label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
 						},
 					] ) }
 					onChange={ design => setAttributes( { design } ) }
 				>
 					{ show.borderRadius &&
 						<RangeControl
-							label={ __( 'Border Radius' ) }
+							label={ __( 'Border Radius', i18n ) }
 							value={ borderRadius }
 							onChange={ borderRadius => setAttributes( { borderRadius } ) }
 							min={ 0 }
@@ -180,7 +180,7 @@ const edit = props => {
 					}
 					{ show.shadow &&
 						<RangeControl
-							label={ __( 'Shadow / Outline' ) }
+							label={ __( 'Shadow / Outline', i18n ) }
 							value={ shadow }
 							onChange={ shadow => setAttributes( { shadow } ) }
 							min={ 0 }
@@ -189,7 +189,7 @@ const edit = props => {
 					}
 					{ align === 'full' &&
 						<ToggleControl
-							label={ __( 'Restrict to Content Width' ) }
+							label={ __( 'Restrict to Content Width', i18n ) }
 							checked={ contentWidth }
 							onChange={ contentWidth => setAttributes( { contentWidth } ) }
 						/>
@@ -197,52 +197,52 @@ const edit = props => {
 					{ showProNotice && <ProControlButton /> }
 				</DesignPanelBody>
 				<PanelColorSettings
-					title={ __( 'Color Settings' ) }
+					title={ __( 'Color Settings', i18n ) }
 					colorSettings={ [
 						{
 							value: textColor,
 							onChange: textColor => setAttributes( { textColor } ),
-							label: __( 'Heading & Description Color' ),
+							label: __( 'Heading & Description Color', i18n ),
 						},
 						{
 							value: countColor,
 							onChange: countColor => setAttributes( { countColor } ),
-							label: __( 'Counter Color' ),
+							label: __( 'Counter Color', i18n ),
 						},
 					] }
 				>
 					<RangeControl
-						label={ __( 'Columns' ) }
+						label={ __( 'Columns', i18n ) }
 						value={ columns }
 						onChange={ columns => setAttributes( { columns } ) }
 						min={ 1 }
 						max={ 4 }
 					/>
 					<RangeControl
-						label={ __( 'Counter Text Size' ) }
+						label={ __( 'Counter Text Size', i18n ) }
 						max="100"
 						min="10"
 						value={ countSize }
 						onChange={ countSize => setAttributes( { countSize } ) }
 					/>
 					<SelectControl
-						label={ __( 'Counter Font' ) }
+						label={ __( 'Counter Font', i18n ) }
 						options={ [
-							{ label: __( 'Theme default' ), value: 'theme' },
-							{ label: __( 'Sans-Serif' ), value: 'sans-serif' },
-							{ label: __( 'Serif' ), value: 'serif' },
-							{ label: __( 'Monospace' ), value: 'monospace' },
+							{ label: __( 'Theme default', i18n ), value: 'theme' },
+							{ label: __( 'Sans-Serif', i18n ), value: 'sans-serif' },
+							{ label: __( 'Serif', i18n ), value: 'serif' },
+							{ label: __( 'Monospace', i18n ), value: 'monospace' },
 						] }
 						value={ countFont }
 						onChange={ countFont => setAttributes( { countFont } ) }
 					/>
 					<SelectControl
-						label={ __( 'Counter Font Weight' ) }
+						label={ __( 'Counter Font Weight', i18n ) }
 						options={ [
-							{ label: __( 'Light' ), value: '100' },
-							{ label: __( 'Regular' ), value: '400' },
-							{ label: __( 'Bold' ), value: '600' },
-							{ label: __( 'Bolder' ), value: '800' },
+							{ label: __( 'Light', i18n ), value: '100' },
+							{ label: __( 'Regular', i18n ), value: '400' },
+							{ label: __( 'Bold', i18n ), value: '600' },
+							{ label: __( 'Bolder', i18n ), value: '800' },
 						] }
 						value={ countFontWeight }
 						onChange={ countFontWeight => setAttributes( { countFontWeight } ) }
@@ -276,11 +276,11 @@ const edit = props => {
 				{ showProNotice &&
 					<PanelBody
 						initialOpen={ false }
-						title={ __( 'Custom CSS' ) }
+						title={ __( 'Custom CSS', i18n ) }
 					>
 						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋' ) }
-							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
 						/>
 					</PanelBody>
 				}

@@ -3,6 +3,7 @@ import { RangeControl, SelectControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
+import { i18n } from 'stackable'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignGhost from './images/ghost.png'
 import ImageDesignLink from './images/link.png'
@@ -30,7 +31,7 @@ function PanelButtonSettings( props ) {
 			colorSettings.push( {
 				value: buttonColor,
 				onChange: onChangeButtonColor,
-				label: __( 'Button Color' ),
+				label: __( 'Button Color', i18n ),
 			} )
 		}
 	}
@@ -39,7 +40,7 @@ function PanelButtonSettings( props ) {
 			colorSettings.push( {
 				value: buttonTextColor,
 				onChange: onChangeButtonTextColor,
-				label: __( 'Text Color' ),
+				label: __( 'Text Color', i18n ),
 			} )
 		}
 	}
@@ -48,27 +49,27 @@ function PanelButtonSettings( props ) {
 		<Fragment>
 			<PanelColorSettings
 				initialOpen={ false }
-				title={ __( 'Button Settings' ) }
+				title={ __( 'Button Settings', i18n ) }
 				colorSettings={ colorSettings }
 				className={ onChangeButtonDesign ? 'ugb-has-designs' : null }
 				{ ...props }
 			>
 				{ onChangeButtonDesign &&
 				<DesignControl
-					label={ __( 'Design' ) }
+					label={ __( 'Design', i18n ) }
 					selected={ buttonDesign }
 					options={ [
 						{
-							label: __( 'Basic' ), value: 'basic', image: ImageDesignBasic,
+							label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
 						},
 						{
-							label: __( 'Ghost' ), value: 'ghost', image: ImageDesignGhost,
+							label: __( 'Ghost', i18n ), value: 'ghost', image: ImageDesignGhost,
 						},
 						{
-							label: __( 'Plain' ), value: 'plain', image: ImageDesignPlain,
+							label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
 						},
 						{
-							label: __( 'Link' ), value: 'link', image: ImageDesignLink,
+							label: __( 'Link', i18n ), value: 'link', image: ImageDesignLink,
 						},
 						...applyFilters( 'stackable.button.edit.designs', [] ),
 					] }
@@ -77,21 +78,21 @@ function PanelButtonSettings( props ) {
 				}
 				{ onChangeButtonSize && buttonDesign !== 'link' &&
 				<SelectControl
-					label={ __( 'Size' ) }
+					label={ __( 'Size', i18n ) }
 					value={ buttonSize }
 					options={ [
-						{ value: 'tiny', label: __( 'Tiny' ) },
-						{ value: 'small', label: __( 'Small' ) },
-						{ value: 'normal', label: __( 'Normal' ) },
-						{ value: 'medium', label: __( 'Medium' ) },
-						{ value: 'large', label: __( 'Large' ) },
+						{ value: 'tiny', label: __( 'Tiny', i18n ) },
+						{ value: 'small', label: __( 'Small', i18n ) },
+						{ value: 'normal', label: __( 'Normal', i18n ) },
+						{ value: 'medium', label: __( 'Medium', i18n ) },
+						{ value: 'large', label: __( 'Large', i18n ) },
 					] }
 					onChange={ onChangeButtonSize }
 				/>
 				}
 				{ onChangeButtonBorderRadius && buttonDesign !== 'link' && buttonDesign !== 'plain' &&
 				<RangeControl
-					label={ __( 'Border Radius' ) }
+					label={ __( 'Border Radius', i18n ) }
 					value={ buttonBorderRadius }
 					min="1"
 					max="50"
@@ -100,7 +101,7 @@ function PanelButtonSettings( props ) {
 				}
 				{ onChangeButtonIcon && buttonDesign !== 'link' &&
 				<IconControl
-					label={ __( 'Icon' ) }
+					label={ __( 'Icon', i18n ) }
 					value={ buttonIcon }
 					onChange={ onChangeButtonIcon }
 				/>

@@ -1,8 +1,8 @@
 /**
  * BLOCK: Notification
  */
+import { disabledBlocks, i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
-import { disabledBlocks } from 'stackable'
 import { ExpandIcon } from '@stackable/icons'
 
 export const schema = {
@@ -21,12 +21,12 @@ export const schema = {
 	moreLabel: {
 		source: 'html',
 		selector: '.ugb-expand__more-toggle-text',
-		default: __( 'Show more' ),
+		default: __( 'Show more', i18n ),
 	},
 	lessLabel: {
 		source: 'html',
 		selector: '.ugb-expand__less-toggle-text',
-		default: __( 'Show less' ),
+		default: __( 'Show less', i18n ),
 	},
 
 	// Custom CSS attributes.
@@ -47,14 +47,14 @@ export const schema = {
 export const name = 'ugb/expand'
 
 export const settings = {
-	title: __( 'Expand / Show More' ),
-	description: __( 'Display a small snippet of text. Your readers can toggle it to show more information.' ),
+	title: __( 'Expand / Show More', i18n ),
+	description: __( 'Display a small snippet of text. Your readers can toggle it to show more information.', i18n ),
 	icon: ExpandIcon,
 	category: 'stackable',
 	keywords: [
-		__( 'Expand' ),
-		__( 'Show more/less' ),
-		__( 'Stackable' ),
+		__( 'Expand', i18n ),
+		__( 'Show more/less', i18n ),
+		__( 'Stackable', i18n ),
 	],
 	attributes: schema,
 	supports: {

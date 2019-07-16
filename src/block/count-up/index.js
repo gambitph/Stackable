@@ -2,9 +2,9 @@
  * BLOCK: Count Up
  */
 
+import { disabledBlocks, i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { CountUpIcon } from '@stackable/icons'
-import { disabledBlocks } from 'stackable'
 
 export const schema = {
 	columns: {
@@ -47,22 +47,22 @@ export const schema = {
 	title1: {
 		source: 'html',
 		selector: '.ugb-countup__item:nth-of-type(1) .ugb-countup__title',
-		default: __( 'Title' ),
+		default: __( 'Title', i18n ),
 	},
 	title2: {
 		source: 'html',
 		selector: '.ugb-countup__item:nth-of-type(2) .ugb-countup__title',
-		default: __( 'Title' ),
+		default: __( 'Title', i18n ),
 	},
 	title3: {
 		source: 'html',
 		selector: '.ugb-countup__item:nth-of-type(3) .ugb-countup__title',
-		default: __( 'Title' ),
+		default: __( 'Title', i18n ),
 	},
 	title4: {
 		source: 'html',
 		selector: '.ugb-countup__item:nth-of-type(4) .ugb-countup__title',
-		default: __( 'Title' ),
+		default: __( 'Title', i18n ),
 	},
 	countText1: {
 		source: 'html',
@@ -87,22 +87,22 @@ export const schema = {
 	description1: {
 		source: 'html',
 		selector: '.ugb-countup__item:nth-of-type(1) .ugb-countup__description',
-		default: __( 'Description' ),
+		default: __( 'Description', i18n ),
 	},
 	description2: {
 		source: 'html',
 		selector: '.ugb-countup__item:nth-of-type(2) .ugb-countup__description',
-		default: __( 'Description' ),
+		default: __( 'Description', i18n ),
 	},
 	description3: {
 		source: 'html',
 		selector: '.ugb-countup__item:nth-of-type(3) .ugb-countup__description',
-		default: __( 'Description' ),
+		default: __( 'Description', i18n ),
 	},
 	description4: {
 		source: 'html',
 		selector: '.ugb-countup__item:nth-of-type(4) .ugb-countup__description',
-		default: __( 'Description' ),
+		default: __( 'Description', i18n ),
 	},
 	textColor: {
 		type: 'string',
@@ -183,14 +183,14 @@ export const schema = {
 export const name = 'ugb/count-up'
 
 export const settings = {
-	title: __( 'Count Up' ),
-	description: __( 'Showcase your stats. Display how many customers you have or the number of downloads of your app.' ),
+	title: __( 'Count Up', i18n ),
+	description: __( 'Showcase your stats. Display how many customers you have or the number of downloads of your app.', i18n ),
 	icon: CountUpIcon,
 	category: 'stackable',
 	keywords: [
-		__( 'Statistics' ),
-		__( 'Count Up' ),
-		__( 'Stackable' ),
+		__( 'Statistics', i18n ),
+		__( 'Count Up', i18n ),
+		__( 'Stackable', i18n ),
 	],
 	attributes: schema,
 

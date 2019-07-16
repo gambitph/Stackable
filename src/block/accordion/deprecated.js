@@ -9,7 +9,7 @@ const deprecatedSchema_1_12 = {
 	heading: {
 		source: 'html',
 		selector: '.ugb-accordion__heading h4',
-		default: __( 'Title for This Block' ),
+		default: 'Title for This Block',
 	},
 	text: {
 		source: 'html',
@@ -109,7 +109,7 @@ const deprecatedSchema_1_11 = {
 	heading: {
 		source: 'html',
 		selector: '.ugb-accordion__heading h4',
-		default: __( 'Title for This Block' ),
+		default: 'Title for This Block',
 	},
 	text: {
 		source: 'html',
@@ -219,7 +219,7 @@ const deprecatedSchema_1_10 = {
 	heading: {
 		source: 'html',
 		selector: '.ugb-accordion__heading h4',
-		default: __( 'Title for This Block' ),
+		default: 'Title for This Block',
 	},
 	text: {
 		source: 'html',

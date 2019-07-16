@@ -1,7 +1,6 @@
 import {
 	InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/block-editor'
-import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
@@ -41,17 +40,17 @@ const edit = props => {
 			</blockquote>
 			<InspectorControls>
 				<PanelColorSettings
-					title={ __( 'Color Settings' ) }
+					title={ 'Color Settings' }
 					colorSettings={ [
 						{
 							value: color,
 							onChange: colorValue => setAttributes( { color: colorValue } ),
-							label: __( 'Text Color' ),
+							label: 'Text Color',
 						},
 						{
 							value: quoteColor,
 							onChange: colorValue => setAttributes( { quoteColor: colorValue } ),
-							label: __( 'Quote Color' ),
+							label: 'Quote Color',
 						},
 					] }
 				>

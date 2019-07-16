@@ -4,6 +4,7 @@ import {
 import {
 	HorizontalAlignmentToolbar, PanelBackgroundSettings, ProControl, VerticalAlignmentToolbar,
 } from '@stackable/components'
+import { i18n, showProNotice } from 'stackable'
 import {
 	PanelBody, RangeControl, SelectControl, ToggleControl,
 } from '@wordpress/components'
@@ -12,10 +13,9 @@ import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
-import { showProNotice } from 'stackable'
 
 const TEMPLATE = [
-	[ 'core/heading', { content: __( 'Title for This Block' ) } ],
+	[ 'core/heading', { content: __( 'Title for This Block', i18n ) } ],
 	[ 'core/paragraph', { content: descriptionPlaceholder( 'long' ) } ],
 ]
 
@@ -96,23 +96,23 @@ const edit = props => {
 			<InspectorControls>
 				<PanelColorSettings
 					initialOpen={ true }
-					title={ __( 'General Settings' ) }
+					title={ __( 'General Settings', i18n ) }
 					colorSettings={ [
 						{
 							value: textColor,
 							onChange: textColor => setAttributes( { textColor } ),
-							label: __( 'Text Color' ),
+							label: __( 'Text Color', i18n ),
 						},
 					] }
 				>
 					<SelectControl
-						label={ __( 'Height' ) }
+						label={ __( 'Height', i18n ) }
 						options={ [
-							{ label: __( 'Short' ), value: 'short' },
-							{ label: __( 'Normal' ), value: 'normal' },
-							{ label: __( 'Tall' ), value: 'tall' },
-							{ label: __( 'Half-screen height' ), value: 'half' },
-							{ label: __( 'Full-screen height' ), value: 'full' },
+							{ label: __( 'Short', i18n ), value: 'short' },
+							{ label: __( 'Normal', i18n ), value: 'normal' },
+							{ label: __( 'Tall', i18n ), value: 'tall' },
+							{ label: __( 'Half-screen height', i18n ), value: 'half' },
+							{ label: __( 'Full-screen height', i18n ), value: 'full' },
 						] }
 						value={ height }
 						onChange={ height => {
@@ -121,14 +121,14 @@ const edit = props => {
 					/>
 					{ align === 'full' &&
 						<ToggleControl
-							label={ __( 'Restrict to Content Width' ) }
+							label={ __( 'Restrict to Content Width', i18n ) }
 							checked={ contentWidth }
 							onChange={ contentWidth => setAttributes( { contentWidth } ) }
 						/>
 					}
 					{ align !== 'full' &&
 						<RangeControl
-							label={ __( 'Border Radius' ) }
+							label={ __( 'Border Radius', i18n ) }
 							value={ borderRadius }
 							onChange={ borderRadius => setAttributes( { borderRadius } ) }
 							min={ 0 }
@@ -136,7 +136,7 @@ const edit = props => {
 						/>
 					}
 					<RangeControl
-						label={ __( 'Shadow / Outline' ) }
+						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
 						onChange={ shadow => setAttributes( { shadow } ) }
 						min={ 0 }
@@ -169,11 +169,11 @@ const edit = props => {
 				{ showProNotice &&
 					<PanelBody
 						initialOpen={ false }
-						title={ __( 'Custom CSS' ) }
+						title={ __( 'Custom CSS', i18n ) }
 					>
 						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋' ) }
-							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
 						/>
 					</PanelBody>
 				}

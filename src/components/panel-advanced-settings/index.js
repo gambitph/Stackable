@@ -6,6 +6,7 @@ import { Component, Fragment } from '@wordpress/element'
 import { FormToggle, PanelBody } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
+import { i18n } from 'stackable'
 
 class PanelAdvancedSettings extends Component {
 	constructor( props ) {
@@ -76,7 +77,7 @@ class PanelAdvancedSettings extends Component {
 					<button
 						className="ugb-panel-advanced-button"
 						onClick={ this.onAdvancedToggle }
-					>{ this.state.showAdvanced ? __( 'Simple' ) : __( 'Advanced' ) }</button>
+					>{ this.state.showAdvanced ? __( 'Simple', i18n ) : __( 'Advanced', i18n ) }</button>
 				) }
 			</PanelBody>
 		)
@@ -84,7 +85,7 @@ class PanelAdvancedSettings extends Component {
 }
 
 PanelAdvancedSettings.defaultProps = {
-	title: __( 'Settings' ),
+	title: __( 'Settings', i18n ),
 	checked: false,
 	initialOpen: false,
 	hasToggle: true,

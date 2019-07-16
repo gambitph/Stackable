@@ -1,16 +1,16 @@
 /**
  * BLOCK: Header Block.
  */
+import { disabledBlocks, i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { descriptionPlaceholder } from '@stackable/util'
-import { disabledBlocks } from 'stackable'
 import { HeaderIcon } from '@stackable/icons'
 
 const schema = {
 	title: {
 		source: 'html',
 		selector: 'h2',
-		default: __( 'Title for This Block' ),
+		default: __( 'Title for This Block', i18n ),
 	},
 	subtitle: {
 		source: 'html',
@@ -109,7 +109,7 @@ const schema = {
 	buttonText: {
 		source: 'html',
 		selector: '.ugb-button span',
-		default: __( 'Button text' ),
+		default: __( 'Button text', i18n ),
 	},
 	buttonColor: {
 		type: 'string',
@@ -152,7 +152,7 @@ const schema = {
 	buttonText2: {
 		source: 'html',
 		selector: '.ugb-header__buttons > *:nth-child(2) .ugb-button span',
-		default: __( 'Button text' ),
+		default: __( 'Button text', i18n ),
 	},
 	buttonColor2: {
 		type: 'string',
@@ -206,13 +206,13 @@ const schema = {
 export const name = 'ugb/header'
 
 export const settings = {
-	title: __( 'Header' ),
-	description: __( 'A large header title area. Typically used at the very top of a page.' ),
+	title: __( 'Header', i18n ),
+	description: __( 'A large header title area. Typically used at the very top of a page.', i18n ),
 	icon: HeaderIcon,
 	category: 'stackable',
 	keywords: [
-		__( 'Header' ),
-		__( 'Stackable' ),
+		__( 'Header', i18n ),
+		__( 'Stackable', i18n ),
 	],
 	supports: {
 		align: [ 'center', 'wide', 'full' ],

@@ -23,7 +23,7 @@ export const deprecatedSchema_0_7 = {
 		type: 'array',
 		source: 'children',
 		selector: 'p',
-		default: __( 'It\'s okay to acknowledge that life can get complicated, but we musn\'t forget the beauty in its simplicity, too. From the multitude of stars above, to freshly mowed grass in the morning, life is simply wonderful.' ),
+		default: 'It\'s okay to acknowledge that life can get complicated, but we musn\'t forget the beauty in its simplicity, too. From the multitude of stars above, to freshly mowed grass in the morning, life is simply wonderful.',
 	},
 	color: {
 		type: 'string',

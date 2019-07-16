@@ -2,8 +2,8 @@
  * BLOCK: Separator Block.
  */
 
+import { disabledBlocks, i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
-import { disabledBlocks } from 'stackable'
 import { SeparatorIcon } from '@stackable/icons'
 
 export const schema = {
@@ -136,14 +136,14 @@ export const schema = {
 export const name = 'ugb/separator'
 
 export const settings = {
-	title: __( 'Separator' ),
-	description: __( 'A fancy separator to be placed between containers and content.' ),
+	title: __( 'Separator', i18n ),
+	description: __( 'A fancy separator to be placed between containers and content.', i18n ),
 	icon: SeparatorIcon,
 	category: 'stackable',
 	keywords: [
-		__( 'Separator' ),
-		__( 'SVG Divider' ),
-		__( 'Stackable' ),
+		__( 'Separator', i18n ),
+		__( 'SVG Divider', i18n ),
+		__( 'Stackable', i18n ),
 	],
 	attributes: schema,
 	supports: {

@@ -9,6 +9,7 @@ import {
 	getIconSVGBase64,
 	getIconToolbarList,
 } from './util'
+import { i18n, showProNotice } from 'stackable'
 import {
 	InspectorControls, RichText,
 } from '@wordpress/block-editor'
@@ -16,7 +17,6 @@ import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { Fragment } from '@wordpress/element'
-import { showProNotice } from 'stackable'
 
 const edit = props => {
 	const {
@@ -64,7 +64,7 @@ const edit = props => {
 		<Fragment>
 			<InspectorControls>
 				<PanelBody>
-					<BaseControl label={ __( 'Icon' ) }>
+					<BaseControl label={ __( 'Icon', i18n ) }>
 						<Toolbar
 							icon={ getIconSVG( icon ) }
 							controls={ getIconToolbarList( {
@@ -73,7 +73,7 @@ const edit = props => {
 							} ) }
 						/>
 					</BaseControl>
-					<BaseControl label={ __( 'Icon Shape' ) }>
+					<BaseControl label={ __( 'Icon Shape', i18n ) }>
 						<Toolbar
 							icon={ getIconSVG( icon, iconShape ) }
 							controls={ getIconShapeToolbarList( icon, {
@@ -83,26 +83,26 @@ const edit = props => {
 						/>
 					</BaseControl>
 					<ColorPaletteControl
-						label={ __( 'Icon Color' ) }
+						label={ __( 'Icon Color', i18n ) }
 						value={ iconColor }
 						onChange={ iconColor => setAttributes( { iconColor } ) }
 					/>
 					<RangeControl
-						label={ __( 'Icon Size' ) }
+						label={ __( 'Icon Size', i18n ) }
 						value={ iconSize }
 						onChange={ iconSize => setAttributes( { iconSize } ) }
 						min={ 8 }
 						max={ 30 }
 					/>
 					<RangeControl
-						label={ __( 'Columns' ) }
+						label={ __( 'Columns', i18n ) }
 						value={ columns }
 						onChange={ columns => setAttributes( { columns } ) }
 						min={ 1 }
 						max={ 3 }
 					/>
 					<RangeControl
-						label={ __( 'List Gap' ) }
+						label={ __( 'List Gap', i18n ) }
 						value={ gap }
 						onChange={ gap => setAttributes( { gap } ) }
 						min={ 0 }
@@ -112,11 +112,11 @@ const edit = props => {
 				{ showProNotice &&
 					<PanelBody
 						initialOpen={ false }
-						title={ __( 'Custom CSS' ) }
+						title={ __( 'Custom CSS', i18n ) }
 					>
 						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋' ) }
-							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
 						/>
 					</PanelBody>
 				}
@@ -130,7 +130,7 @@ const edit = props => {
 					value={ text }
 					className={ ulClasses }
 					onChange={ text => setAttributes( { text } ) }
-					placeholder={ __( 'Text for this block' ) }
+					placeholder={ __( 'Text for this block', i18n ) }
 					keepPlaceholderOnFocus
 				/>
 				{ applyFilters( 'stackable.icon-list.edit.output.after', null, design, props ) }

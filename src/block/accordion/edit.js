@@ -4,6 +4,7 @@ import {
 	ProControl,
 	ProControlButton,
 } from '@stackable/components'
+import { i18n, showProNotice } from 'stackable'
 import {
 	InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/block-editor'
@@ -18,7 +19,6 @@ import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
 import imageDesignBasic from './images/basic.png'
 import imageDesignPlain from './images/plain.png'
-import { showProNotice } from 'stackable'
 
 const edit = props => {
 	const {
@@ -75,10 +75,10 @@ const edit = props => {
 					selected={ design }
 					options={ applyFilters( 'stackable.accordion.edit.designs', [
 						{
-							label: __( 'Basic' ), value: 'basic', image: imageDesignBasic,
+							label: __( 'Basic', i18n ), value: 'basic', image: imageDesignBasic,
 						},
 						{
-							label: __( 'Plain' ), value: 'plain', image: imageDesignPlain,
+							label: __( 'Plain', i18n ), value: 'plain', image: imageDesignPlain,
 						},
 					] ) }
 					onChange={ design => setAttributes( { design } ) }
@@ -86,14 +86,14 @@ const edit = props => {
 					{ applyFilters( 'stackable.accordion.edit.designs.before', null, design, props ) }
 					{ show.backgroundColor &&
 						<ColorPaletteControl
-							label={ __( 'Background Color' ) }
+							label={ __( 'Background Color', i18n ) }
 							value={ headingBackgroundColor }
 							onChange={ headingBackgroundColor => setAttributes( { headingBackgroundColor } ) }
 						/>
 					}
 					{ show.borderRadius &&
 						<RangeControl
-							label={ __( 'Border Radius' ) }
+							label={ __( 'Border Radius', i18n ) }
 							value={ borderRadius }
 							onChange={ borderRadius => setAttributes( { borderRadius } ) }
 							min={ 0 }
@@ -102,7 +102,7 @@ const edit = props => {
 					}
 					{ show.shadow &&
 						<RangeControl
-							label={ __( 'Shadow / Outline' ) }
+							label={ __( 'Shadow / Outline', i18n ) }
 							value={ shadow }
 							onChange={ shadow => setAttributes( { shadow } ) }
 							min={ 0 }
@@ -113,17 +113,17 @@ const edit = props => {
 					{ showProNotice && <ProControlButton /> }
 				</DesignPanelBody>
 				<PanelColorSettings
-					title={ __( 'General Settings' ) }
+					title={ __( 'General Settings', i18n ) }
 					colorSettings={ [
 						{
 							value: headingColor,
 							onChange: headingColor => setAttributes( { headingColor } ),
-							label: __( 'Heading Color' ),
+							label: __( 'Heading Color', i18n ),
 						},
 					] }
 				>
 					<ToggleControl
-						label={ __( 'Open at the start' ) }
+						label={ __( 'Open at the start', i18n ) }
 						checked={ openStart }
 						onChange={ openStart => setAttributes( { openStart } ) }
 					/>
@@ -131,11 +131,11 @@ const edit = props => {
 				{ showProNotice &&
 					<PanelBody
 						initialOpen={ false }
-						title={ __( 'Custom CSS' ) }
+						title={ __( 'Custom CSS', i18n ) }
 					>
 						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋' ) }
-							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
 						/>
 					</PanelBody>
 				}
@@ -149,7 +149,7 @@ const edit = props => {
 						value={ heading }
 						onChange={ heading => setAttributes( { heading } ) }
 						style={ styles.title }
-						placeholder={ __( 'Title for This Block' ) }
+						placeholder={ __( 'Title for This Block', i18n ) }
 						keepPlaceholderOnFocus
 					/>
 					{ ArrowIcon( {

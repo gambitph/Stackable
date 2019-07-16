@@ -4,6 +4,7 @@ import {
 import {
 	DesignPanelBody, PanelBackgroundSettings, ProControl, ProControlButton,
 } from '@stackable/components'
+import { i18n, showProNotice } from 'stackable'
 import {
 	InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/block-editor'
@@ -15,7 +16,6 @@ import { Fragment } from '@wordpress/element'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
 import { QUOTE_ICONS } from './quotes'
-import { showProNotice } from 'stackable'
 
 const edit = props => {
 	const {
@@ -126,10 +126,10 @@ const edit = props => {
 					selected={ design }
 					options={ applyFilters( 'stackable.blockquote.edit.designs', [
 						{
-							label: __( 'Basic' ), value: 'basic', image: ImageDesignBasic,
+							label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
 						},
 						{
-							label: __( 'Plain' ), value: 'plain', image: ImageDesignPlain,
+							label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
 						},
 					] ) }
 					onChange={ design => setAttributes( { design } ) }
@@ -137,7 +137,7 @@ const edit = props => {
 					{ applyFilters( 'stackable.blockquote.edit.designs.before', null, props ) }
 					{ show.borderRadius &&
 						<RangeControl
-							label={ __( 'Border Radius' ) }
+							label={ __( 'Border Radius', i18n ) }
 							value={ borderRadius }
 							onChange={ borderRadius => setAttributes( { borderRadius } ) }
 							min={ 0 }
@@ -146,7 +146,7 @@ const edit = props => {
 					}
 					{ show.shadow &&
 						<RangeControl
-							label={ __( 'Shadow / Outline' ) }
+							label={ __( 'Shadow / Outline', i18n ) }
 							value={ shadow }
 							onChange={ shadow => setAttributes( { shadow } ) }
 							min={ 0 }
@@ -155,7 +155,7 @@ const edit = props => {
 					}
 					{ align === 'full' &&
 						<ToggleControl
-							label={ __( 'Restrict to Content Width' ) }
+							label={ __( 'Restrict to Content Width', i18n ) }
 							checked={ contentWidth }
 							onChange={ contentWidth => setAttributes( { contentWidth } ) }
 						/>
@@ -164,21 +164,21 @@ const edit = props => {
 					{ showProNotice && <ProControlButton /> }
 				</DesignPanelBody>
 				<PanelColorSettings
-					title={ __( 'General Settings' ) }
+					title={ __( 'General Settings', i18n ) }
 					colorSettings={ [
 						{
 							value: color,
 							onChange: colorValue => setAttributes( { color: colorValue } ),
-							label: __( 'Text Color' ),
+							label: __( 'Text Color', i18n ),
 						},
 						{
 							value: quoteColor,
 							onChange: colorValue => setAttributes( { quoteColor: colorValue } ),
-							label: __( 'Quote Color' ),
+							label: __( 'Quote Color', i18n ),
 						},
 					] }
 				>
-					<BaseControl label={ __( 'Icon' ) }>
+					<BaseControl label={ __( 'Icon', i18n ) }>
 						<Toolbar
 							className="ugb-blockquote__inspector__icon"
 							icon={ QUOTE_ICONS[ quotationMark ].icon }
@@ -195,7 +195,7 @@ const edit = props => {
 						/>
 					</BaseControl>
 					<RangeControl
-						label={ __( 'Quotation Mark Size' ) }
+						label={ __( 'Quotation Mark Size', i18n ) }
 						value={ quotationSize }
 						onChange={ quotationSize => setAttributes( { quotationSize } ) }
 						min={ 0 }
@@ -229,11 +229,11 @@ const edit = props => {
 				{ showProNotice &&
 					<PanelBody
 						initialOpen={ false }
-						title={ __( 'Custom CSS' ) }
+						title={ __( 'Custom CSS', i18n ) }
 					>
 						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋' ) }
-							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
 						/>
 					</PanelBody>
 				}

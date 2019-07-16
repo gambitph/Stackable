@@ -5,9 +5,9 @@
  * Simple block, renders and saves the same content without any interactivity.
  */
 
+import { disabledBlocks, i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { ButtonIcon } from '@stackable/icons'
-import { disabledBlocks } from 'stackable'
 
 export const schema = {
 	buttons: {
@@ -31,7 +31,7 @@ export const schema = {
 	text: {
 		source: 'html',
 		selector: 'a span',
-		default: __( 'Button text' ),
+		default: __( 'Button text', i18n ),
 	},
 	align: {
 		type: 'string',
@@ -76,7 +76,7 @@ export const schema = {
 	text2: {
 		source: 'html',
 		selector: 'div:nth-of-type(2) .ugb-button span',
-		default: __( 'Button text' ),
+		default: __( 'Button text', i18n ),
 	},
 	color2: {
 		type: 'string',
@@ -114,7 +114,7 @@ export const schema = {
 	text3: {
 		source: 'html',
 		selector: 'div:nth-of-type(3) .ugb-button span',
-		default: __( 'Button text' ),
+		default: __( 'Button text', i18n ),
 	},
 	color3: {
 		type: 'string',
@@ -153,13 +153,13 @@ export const schema = {
 export const name = 'ugb/button'
 
 export const settings = {
-	title: __( 'Button' ),
+	title: __( 'Button', i18n ),
 	icon: ButtonIcon,
-	description: __( 'Add a customizable button.' ),
+	description: __( 'Add a customizable button.', i18n ),
 	category: 'stackable',
 	keywords: [
-		__( 'Button' ),
-		__( 'Stackable' ),
+		__( 'Button', i18n ),
+		__( 'Stackable', i18n ),
 	],
 	attributes: schema,
 	supports: {

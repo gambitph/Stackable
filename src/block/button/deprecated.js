@@ -30,7 +30,7 @@ export const deprecatedSchema_1_12 = {
 	text: {
 		source: 'html',
 		selector: 'a span',
-		default: __( 'Button text' ),
+		default: 'Button text',
 	},
 	align: {
 		type: 'string',
@@ -75,7 +75,7 @@ export const deprecatedSchema_1_12 = {
 	text2: {
 		source: 'html',
 		selector: 'div:nth-of-type(2) .ugb-button span',
-		default: __( 'Button text' ),
+		default: 'Button text',
 	},
 	color2: {
 		type: 'string',
@@ -113,7 +113,7 @@ export const deprecatedSchema_1_12 = {
 	text3: {
 		source: 'html',
 		selector: 'div:nth-of-type(3) .ugb-button span',
-		default: __( 'Button text' ),
+		default: 'Button text',
 	},
 	color3: {
 		type: 'string',
@@ -196,7 +196,7 @@ const deprecatedSchema_1_10 = {
 	text: {
 		source: 'html',
 		selector: 'a span',
-		default: __( 'Button text' ),
+		default: 'Button text',
 	},
 	align: {
 		type: 'string',
@@ -234,7 +234,7 @@ const deprecatedSchema_1_10 = {
 	text2: {
 		source: 'html',
 		selector: 'div:nth-of-type(2) .ugb-button span',
-		default: __( 'Button text' ),
+		default: 'Button text',
 	},
 	color2: {
 		type: 'string',
@@ -264,7 +264,7 @@ const deprecatedSchema_1_10 = {
 	text3: {
 		source: 'html',
 		selector: 'div:nth-of-type(3) .ugb-button span',
-		default: __( 'Button text' ),
+		default: 'Button text',
 	},
 	color3: {
 		type: 'string',

@@ -1,13 +1,13 @@
 import {
 	AlignmentToolbar, BlockControls, InspectorControls, PanelColorSettings,
 } from '@wordpress/block-editor'
+import { i18n, showProNotice } from 'stackable'
 import { PanelBody, RangeControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { Fragment } from '@wordpress/element'
 import { ProControl } from '@stackable/components'
-import { showProNotice } from 'stackable'
 
 const edit = props => {
 	const { className } = props
@@ -36,17 +36,17 @@ const edit = props => {
 			</BlockControls>
 			<InspectorControls>
 				<PanelColorSettings
-					title={ __( 'General Settings' ) }
+					title={ __( 'General Settings', i18n ) }
 					colorSettings={ [
 						{
 							value: color,
 							onChange: colorValue => props.setAttributes( { color: colorValue } ),
-							label: __( 'Divider Color' ),
+							label: __( 'Divider Color', i18n ),
 						},
 					] }
 				>
 					<RangeControl
-						label={ __( 'Height' ) }
+						label={ __( 'Height', i18n ) }
 						value={ height }
 						min="1"
 						max="10"
@@ -55,7 +55,7 @@ const edit = props => {
 						} }
 					/>
 					<RangeControl
-						label={ __( 'Width' ) }
+						label={ __( 'Width', i18n ) }
 						value={ width }
 						min="10"
 						max="100"
@@ -68,11 +68,11 @@ const edit = props => {
 				{ showProNotice &&
 					<PanelBody
 						initialOpen={ false }
-						title={ __( 'Custom CSS' ) }
+						title={ __( 'Custom CSS', i18n ) }
 					>
 						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋' ) }
-							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
 						/>
 					</PanelBody>
 				}

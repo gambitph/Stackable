@@ -2,6 +2,7 @@ import {
 	ButtonEdit, DesignPanelBody, ImageUploadPlaceholder, PanelButtonSettings, ProControl, ProControlButton, URLInputControl,
 } from '@stackable/components'
 import { descriptionPlaceholder, range } from '@stackable/util'
+import { i18n, showProNotice } from 'stackable'
 import {
 	InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/block-editor'
@@ -15,7 +16,6 @@ import { Fragment } from '@wordpress/element'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
 import isDarkColor from 'is-dark-color'
-import { showProNotice } from 'stackable'
 
 const edit = props => {
 	const {
@@ -61,10 +61,10 @@ const edit = props => {
 					selected={ design }
 					options={ [
 						{
-							image: ImageDesignBasic, label: __( 'Basic' ), value: 'basic',
+							image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
 						},
 						{
-							image: ImageDesignPlain, label: __( 'Plain' ), value: 'plain',
+							image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
 						},
 						...applyFilters( 'stackable.pricing-box.edit.designs', [] ),
 					] }
@@ -75,7 +75,7 @@ const edit = props => {
 					{ applyFilters( 'stackable.pricing-box.edit.designs.before', null, props ) }
 					{ design !== 'plain' &&
 						<RangeControl
-							label={ __( 'Border Radius' ) }
+							label={ __( 'Border Radius', i18n ) }
 							value={ borderRadius }
 							onChange={ borderRadius => setAttributes( { borderRadius } ) }
 							min={ 0 }
@@ -84,7 +84,7 @@ const edit = props => {
 					}
 					{ design !== 'plain' &&
 						<RangeControl
-							label={ __( 'Shadow / Outline' ) }
+							label={ __( 'Shadow / Outline', i18n ) }
 							value={ shadow }
 							onChange={ shadow => setAttributes( { shadow } ) }
 							min={ 0 }
@@ -94,9 +94,9 @@ const edit = props => {
 					{ applyFilters( 'stackable.pricing-box.edit.designs.after', null, props ) }
 					{ showProNotice && <ProControlButton /> }
 				</DesignPanelBody>
-				<PanelBody title={ __( 'General Settings' ) }>
+				<PanelBody title={ __( 'General Settings', i18n ) }>
 					<RangeControl
-						label={ __( 'Columns' ) }
+						label={ __( 'Columns', i18n ) }
 						value={ columns }
 						onChange={ columns => setAttributes( { columns } ) }
 						min={ 1 }
@@ -106,25 +106,25 @@ const edit = props => {
 				{ design !== 'plain' &&
 					<PanelColorSettings
 						initialOpen={ false }
-						title={ __( 'Column Highlight Colors' ) }
+						title={ __( 'Column Highlight Colors', i18n ) }
 						colorSettings={ [
 							{
 								value: highlightColor,
 								onChange: highlightColor => setAttributes( { highlightColor } ),
-								label: __( 'Column #1 Highlight' ),
+								label: __( 'Column #1 Highlight', i18n ),
 							},
 							...( columns < 2 ? [] : [
 								{
 									value: highlightColor2,
 									onChange: highlightColor2 => setAttributes( { highlightColor2 } ),
-									label: __( 'Column #2 Highlight' ),
+									label: __( 'Column #2 Highlight', i18n ),
 								},
 							] ),
 							...( columns < 3 ? [] : [
 								{
 									value: highlightColor3,
 									onChange: highlightColor3 => setAttributes( { highlightColor3 } ),
-									label: __( 'Column #3 Highlight' ),
+									label: __( 'Column #3 Highlight', i18n ),
 								},
 							] ),
 						] }
@@ -132,27 +132,27 @@ const edit = props => {
 				}
 				<PanelColorSettings
 					initialOpen={ false }
-					title={ __( 'Text Colors' ) }
+					title={ __( 'Text Colors', i18n ) }
 					colorSettings={ [
 						{
 							value: pricingBoxColor,
 							onChange: colorValue => setAttributes( { pricingBoxColor: colorValue } ),
-							label: __( 'Pricing Title Color' ),
+							label: __( 'Pricing Title Color', i18n ),
 						},
 						{
 							value: priceColor,
 							onChange: colorValue => setAttributes( { priceColor: colorValue } ),
-							label: __( 'Price Color' ),
+							label: __( 'Price Color', i18n ),
 						},
 						{
 							value: perMonthLabelColor,
 							onChange: colorValue => setAttributes( { perMonthLabelColor: colorValue } ),
-							label: __( 'Per Month Label Color' ),
+							label: __( 'Per Month Label Color', i18n ),
 						},
 						{
 							value: featureListColor,
 							onChange: colorValue => setAttributes( { featureListColor: colorValue } ),
-							label: __( 'Feature List Color' ),
+							label: __( 'Feature List Color', i18n ),
 						},
 					] }
 				>
@@ -175,11 +175,11 @@ const edit = props => {
 				{ showProNotice &&
 					<PanelBody
 						initialOpen={ false }
-						title={ __( 'Custom CSS' ) }
+						title={ __( 'Custom CSS', i18n ) }
 					>
 						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋' ) }
-							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
 						/>
 					</PanelBody>
 				}
@@ -291,7 +291,7 @@ const edit = props => {
 											value={ title }
 											onChange={ value => setAttributes( { [ `pricingBoxTitle${ index }` ]: value } ) }
 											style={ styles.title }
-											placeholder={ __( 'Title' ) }
+											placeholder={ __( 'Title', i18n ) }
 											keepPlaceholderOnFocus
 										/>
 									)
@@ -332,7 +332,7 @@ const edit = props => {
 												value={ subPrice }
 												onChange={ value => setAttributes( { [ `perMonthLabel${ index }` ]: value } ) }
 												style={ styles.month }
-												placeholder={ __( 'Description' ) }
+												placeholder={ __( 'Description', i18n ) }
 												keepPlaceholderOnFocus
 											/>
 										</div>

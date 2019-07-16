@@ -1,3 +1,4 @@
+import { i18n, showProNotice } from 'stackable'
 import {
 	InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/block-editor'
@@ -10,15 +11,14 @@ import classnames from 'classnames'
 import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
 import { ProControl } from '@stackable/components'
-import { showProNotice } from 'stackable'
 import SVGCloseIcon from './images/close-icon.svg'
 
 const edit = props => {
 	const notifAlert = [
-		{ value: 'success', label: __( 'Success' ) },
-		{ value: 'error', label: __( 'Error' ) },
-		{ value: 'warning', label: __( 'Warning' ) },
-		{ value: 'info', label: __( 'Information' ) },
+		{ value: 'success', label: __( 'Success', i18n ) },
+		{ value: 'error', label: __( 'Error', i18n ) },
+		{ value: 'warning', label: __( 'Warning', i18n ) },
+		{ value: 'info', label: __( 'Information', i18n ) },
 	]
 
 	const {
@@ -56,27 +56,27 @@ const edit = props => {
 		<Fragment>
 			<InspectorControls>
 				<PanelColorSettings
-					title={ __( 'Color Settings' ) }
+					title={ __( 'Color Settings', i18n ) }
 					colorSettings={ [
 						{
 							value: color,
 							onChange: colorValue => setAttributes( { color: colorValue } ),
-							label: __( 'Background Color' ),
+							label: __( 'Background Color', i18n ),
 						},
 						{
 							value: textColor,
 							onChange: colorValue => setAttributes( { textColor: colorValue } ),
-							label: __( 'Text Color' ),
+							label: __( 'Text Color', i18n ),
 						},
 					] }
 				>
 					<ToggleControl
-						label={ __( 'Dismissible' ) }
+						label={ __( 'Dismissible', i18n ) }
 						checked={ dismissible }
 						onChange={ () => setAttributes( { dismissible: ! dismissible } ) }
 					/>
 					<SelectControl
-						label={ __( 'Notification Type' ) }
+						label={ __( 'Notification Type', i18n ) }
 						value={ notifType }
 						options={ notifAlert.map( ( { value, label } ) => ( {
 							value: value,
@@ -87,14 +87,14 @@ const edit = props => {
 						} }
 					/>
 					<RangeControl
-						label={ __( 'Border Radius' ) }
+						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
 						onChange={ borderRadius => setAttributes( { borderRadius } ) }
 						min={ 0 }
 						max={ 50 }
 					/>
 					<RangeControl
-						label={ __( 'Shadow / Outline' ) }
+						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
 						onChange={ shadow => setAttributes( { shadow } ) }
 						min={ 0 }
@@ -104,11 +104,11 @@ const edit = props => {
 				{ showProNotice &&
 					<PanelBody
 						initialOpen={ false }
-						title={ __( 'Custom CSS' ) }
+						title={ __( 'Custom CSS', i18n ) }
 					>
 						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋' ) }
-							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
 						/>
 					</PanelBody>
 				}

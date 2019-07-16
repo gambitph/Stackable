@@ -1,6 +1,7 @@
 import {
 	DesignPanelBody, ImageUploadPlaceholder, ProControl, ProControlButton,
 } from '@stackable/components'
+import { i18n, showProNotice } from 'stackable'
 import {
 	InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/block-editor'
@@ -14,7 +15,6 @@ import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
-import { showProNotice } from 'stackable'
 
 const edit = props => {
 	const {
@@ -35,8 +35,8 @@ const edit = props => {
 	} = props.attributes
 
 	const shape = [
-		{ value: 'square', label: __( 'Square' ) },
-		{ value: 'circle', label: __( 'Circle' ) },
+		{ value: 'square', label: __( 'Square', i18n ) },
+		{ value: 'circle', label: __( 'Circle', i18n ) },
 	]
 
 	const mainClasses = classnames( [
@@ -60,10 +60,10 @@ const edit = props => {
 					selected={ design }
 					options={ [
 						{
-							image: ImageDesignBasic, label: __( 'Basic' ), value: 'basic',
+							image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
 						},
 						{
-							image: ImageDesignPlain, label: __( 'Plain' ), value: 'plain',
+							image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
 						},
 						...applyFilters( 'stackable.team-member.edit.designs', [] ),
 					] }
@@ -74,7 +74,7 @@ const edit = props => {
 					{ applyFilters( 'stackable.team-member.edit.designs.before', null, props ) }
 					{ design !== 'plain' &&
 						<RangeControl
-							label={ __( 'Border Radius' ) }
+							label={ __( 'Border Radius', i18n ) }
 							value={ borderRadius }
 							onChange={ borderRadius => setAttributes( { borderRadius } ) }
 							min={ 0 }
@@ -83,7 +83,7 @@ const edit = props => {
 					}
 					{ design !== 'plain' &&
 						<RangeControl
-							label={ __( 'Shadow / Outline' ) }
+							label={ __( 'Shadow / Outline', i18n ) }
 							value={ shadow }
 							onChange={ shadow => setAttributes( { shadow } ) }
 							min={ 0 }
@@ -93,11 +93,11 @@ const edit = props => {
 					{ applyFilters( 'stackable.team-member.edit.designs.after', null, props ) }
 					{ showProNotice && <ProControlButton /> }
 				</DesignPanelBody>
-				<PanelBody title={ __( 'General Settings' ) }>
+				<PanelBody title={ __( 'General Settings', i18n ) }>
 					{ applyFilters( 'stackable.team-member.edit.general.before', null, design, props ) }
 					{ show.imageShape && (
 						<SelectControl
-							label={ __( 'Image Shape' ) }
+							label={ __( 'Image Shape', i18n ) }
 							value={ shapes }
 							options={ shape.map( ( { value, label } ) => ( {
 								value: value,
@@ -109,7 +109,7 @@ const edit = props => {
 						/>
 					) }
 					<RangeControl
-						label={ __( 'Columns' ) }
+						label={ __( 'Columns', i18n ) }
 						value={ columns }
 						onChange={ columns => setAttributes( { columns } ) }
 						min={ 1 }
@@ -118,22 +118,22 @@ const edit = props => {
 				</PanelBody>
 				<PanelColorSettings
 					initialOpen={ true }
-					title={ __( 'Color Settings' ) }
+					title={ __( 'Color Settings', i18n ) }
 					colorSettings={ [
 						{
 							value: nameColor,
 							onChange: colorValue => setAttributes( { nameColor: colorValue } ),
-							label: __( 'Name Color' ),
+							label: __( 'Name Color', i18n ),
 						},
 						{
 							value: posColor,
 							onChange: colorValue => setAttributes( { posColor: colorValue } ),
-							label: __( 'Position Color' ),
+							label: __( 'Position Color', i18n ),
 						},
 						{
 							value: desColor,
 							onChange: colorValue => setAttributes( { desColor: colorValue } ),
-							label: __( 'Description Color' ),
+							label: __( 'Description Color', i18n ),
 						},
 					] }
 				>
@@ -141,11 +141,11 @@ const edit = props => {
 				{ showProNotice &&
 					<PanelBody
 						initialOpen={ false }
-						title={ __( 'Custom CSS' ) }
+						title={ __( 'Custom CSS', i18n ) }
 					>
 						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋' ) }
-							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
 						/>
 					</PanelBody>
 				}
@@ -201,7 +201,7 @@ const edit = props => {
 							style={ {
 								color: nameColor,
 							} }
-							placeholder={ __( 'Name' ) }
+							placeholder={ __( 'Name', i18n ) }
 							keepPlaceholderOnFocus
 						/>
 					)
@@ -214,7 +214,7 @@ const edit = props => {
 							style={ {
 								color: posColor,
 							} }
-							placeholder={ __( 'Position' ) }
+							placeholder={ __( 'Position', i18n ) }
 							keepPlaceholderOnFocus
 						/>
 					)

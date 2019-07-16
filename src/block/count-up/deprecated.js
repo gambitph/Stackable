@@ -29,22 +29,22 @@ const deprecatedSchema_1_10 = {
 	title1: {
 		source: 'html',
 		selector: '.ugb-countup-item:nth-of-type(1) h4',
-		default: __( 'Title' ),
+		default: 'Title',
 	},
 	title2: {
 		source: 'html',
 		selector: '.ugb-countup-item:nth-of-type(2) h4',
-		default: __( 'Title' ),
+		default: 'Title',
 	},
 	title3: {
 		source: 'html',
 		selector: '.ugb-countup-item:nth-of-type(3) h4',
-		default: __( 'Title' ),
+		default: 'Title',
 	},
 	title4: {
 		source: 'html',
 		selector: '.ugb-countup-item:nth-of-type(4) h4',
-		default: __( 'Title' ),
+		default: 'Title',
 	},
 	countText1: {
 		source: 'html',
@@ -69,22 +69,22 @@ const deprecatedSchema_1_10 = {
 	description1: {
 		source: 'html',
 		selector: '.ugb-countup-item:nth-of-type(1) p',
-		default: __( 'Description' ),
+		default: 'Description',
 	},
 	description2: {
 		source: 'html',
 		selector: '.ugb-countup-item:nth-of-type(2) p',
-		default: __( 'Description' ),
+		default: 'Description',
 	},
 	description3: {
 		source: 'html',
 		selector: '.ugb-countup-item:nth-of-type(3) p',
-		default: __( 'Description' ),
+		default: 'Description',
 	},
 	description4: {
 		source: 'html',
 		selector: '.ugb-countup-item:nth-of-type(4) p',
-		default: __( 'Description' ),
+		default: 'Description',
 	},
 	textColor: {
 		type: 'string',
@@ -267,22 +267,22 @@ const deprecatedSchema_1_9_1 = {
 	title1: {
 		source: 'html',
 		selector: '.ugb-countup-item:nth-of-type(1) h4',
-		default: __( 'Stat Title' ),
+		default: 'Stat Title',
 	},
 	title2: {
 		source: 'html',
 		selector: '.ugb-countup-item:nth-of-type(2) h4',
-		default: __( 'Stat Title' ),
+		default: 'Stat Title',
 	},
 	title3: {
 		source: 'html',
 		selector: '.ugb-countup-item:nth-of-type(3) h4',
-		default: __( 'Stat Title' ),
+		default: 'Stat Title',
 	},
 	title4: {
 		source: 'html',
 		selector: '.ugb-countup-item:nth-of-type(4) h4',
-		default: __( 'Stat Title' ),
+		default: 'Stat Title',
 	},
 	countText1: {
 		source: 'html',
@@ -307,22 +307,22 @@ const deprecatedSchema_1_9_1 = {
 	description1: {
 		source: 'html',
 		selector: '.ugb-countup-item:nth-of-type(1) p',
-		default: __( 'stat description' ),
+		default: 'stat description',
 	},
 	description2: {
 		source: 'html',
 		selector: '.ugb-countup-item:nth-of-type(2) p',
-		default: __( 'stat description' ),
+		default: 'stat description',
 	},
 	description3: {
 		source: 'html',
 		selector: '.ugb-countup-item:nth-of-type(3) p',
-		default: __( 'stat description' ),
+		default: 'stat description',
 	},
 	description4: {
 		source: 'html',
 		selector: '.ugb-countup-item:nth-of-type(4) p',
-		default: __( 'stat description' ),
+		default: 'stat description',
 	},
 	textColor: {
 		type: 'string',
@@ -339,7 +339,7 @@ const deprecatedSchema_1_9_1 = {
 	title: {
 		source: 'html',
 		selector: 'h4',
-		default: __( 'Happy Customers' ),
+		default: 'Happy Customers',
 	},
 	counter: {
 		source: 'html',
@@ -349,7 +349,7 @@ const deprecatedSchema_1_9_1 = {
 	des: {
 		source: 'html',
 		selector: 'p',
-		default: __( 'and counting' ),
+		default: 'and counting',
 	},
 	fontSize: {
 		type: 'number',
@@ -443,7 +443,7 @@ export const deprecatedSchema_1_4 = {
 	title: {
 		source: 'html',
 		selector: 'h4',
-		default: __( 'Happy Customers' ),
+		default: 'Happy Customers',
 	},
 	counter: {
 		source: 'html',
@@ -453,7 +453,7 @@ export const deprecatedSchema_1_4 = {
 	des: {
 		source: 'html',
 		selector: 'p',
-		default: __( 'and counting' ),
+		default: 'and counting',
 	},
 	fontSize: {
 		type: 'number',

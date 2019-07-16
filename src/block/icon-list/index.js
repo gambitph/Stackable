@@ -2,8 +2,8 @@
  * BLOCK: Icon List Block.
  */
 
+import { disabledBlocks, i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
-import { disabledBlocks } from 'stackable'
 import { IconListIcon } from '@stackable/icons'
 
 export const schema = {
@@ -54,13 +54,13 @@ export const schema = {
 export const name = 'ugb/icon-list'
 
 export const settings = {
-	title: __( 'Icon List' ),
-	description: __( 'An unordered list with icons. You can use this as a list of features or benefits.' ),
+	title: __( 'Icon List', i18n ),
+	description: __( 'An unordered list with icons. You can use this as a list of features or benefits.', i18n ),
 	icon: IconListIcon,
 	category: 'stackable',
 	keywords: [
-		__( 'Icon List' ),
-		__( 'Stackable' ),
+		__( 'Icon List', i18n ),
+		__( 'Stackable', i18n ),
 	],
 	attributes: schema,
 	supports: {

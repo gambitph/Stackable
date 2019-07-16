@@ -1,5 +1,6 @@
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
+import { i18n } from 'stackable'
 import { RichText } from '@wordpress/block-editor'
 import { SvgIcon } from '@stackable/components'
 
@@ -76,7 +77,7 @@ const ButtonEdit = props => {
 				<RichText
 					tagName="div"
 					className={ design === 'link' ? '' : 'ugb-button--inner' }
-					placeholder={ __( 'Button text' ) }
+					placeholder={ __( 'Button text', i18n ) }
 					value={ text }
 					onChange={ onChange }
 					formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }

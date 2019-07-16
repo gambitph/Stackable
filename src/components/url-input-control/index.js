@@ -1,10 +1,11 @@
 import { Dashicon, IconButton, ToggleControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { Component } from '@wordpress/element'
+import { i18n } from 'stackable'
 import { URLInput } from '@wordpress/block-editor'
 
-const ariaClosed = __( 'Show more tools & options' )
-const ariaOpen = __( 'Hide more tools & options' )
+const ariaClosed = __( 'Show more tools & options', i18n )
+const ariaOpen = __( 'Hide more tools & options', i18n )
 
 class URLInputControl extends Component {
 	constructor() {
@@ -51,7 +52,7 @@ class URLInputControl extends Component {
 				{ onChangeNewTab && this.state.isOpen &&
 					<div className="ugb-url-input-control__new-tab">
 						<ToggleControl
-							label={ __( 'Open in New Tab' ) }
+							label={ __( 'Open in New Tab', i18n ) }
 							checked={ newTab }
 							onChange={ onChangeNewTab }
 						/>
