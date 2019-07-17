@@ -251,6 +251,13 @@ You will have to redo all your blocks
 * Fixed: Number box plain layouts now don't have a background
 * Fixed: The Separator block in the editor has top & bottom margins that makes placing separators hard.
 
+= 1.16.0 =
+* New: Translation ready
+* New: Updated FontAwesome to v5.9: more icons!
+* Fixed: Blog Posts block compatibility with WPML
+* Fixed: One-column Image Box block get squished
+* Fixed: Zigzag layout in Feature Grid block translate in mobile (Premium)
+
 = 1.15.6 =
 * Updated: Freemius SDK version 2.3.0. Fixes the get_blog_list is undefined error.
 * Fixed: iOS fixed background attachments do not convert to scroll.
