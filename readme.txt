@@ -236,10 +236,10 @@ You will have to redo all your blocks
 
 = 1.16.0 =
 * New: Translation ready
+* New: Updated FontAwesome to v5.9: more icons!
 * Fixed: Blog Posts block compatibility with WPML
-
-= 1.15.7 =
-* Fixed: Fixed Blog Posts block compatibility with WPML.
+* Fixed: One-column Image Box block get squished
+* Fixed: Zigzag layout in Feature Grid block translate in mobile (Premium)
 
 = 1.15.6 =
 * Updated: Freemius SDK version 2.3.0. Fixes the get_blog_list is undefined error.
