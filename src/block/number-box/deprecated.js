@@ -1,4 +1,3 @@
-import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { descriptionPlaceholder } from '@stackable/util'
 import { omit } from 'lodash'

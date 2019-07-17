@@ -1,4 +1,3 @@
-import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { descriptionPlaceholder } from '@stackable/util'

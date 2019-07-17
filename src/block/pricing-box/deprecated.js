@@ -4,7 +4,6 @@ import {
 	DeprecatedButtonContent_1_9,
 } from '@stackable/components/button-edit'
 import { descriptionPlaceholder, range } from '@stackable/util'
-import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import isDarkColor from 'is-dark-color'
 import { RichText } from '@wordpress/block-editor'

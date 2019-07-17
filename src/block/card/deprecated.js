@@ -4,7 +4,6 @@ import {
 	DeprecatedButtonContent_1_9,
 	DeprecatedButtonContent_1_9_1,
 } from '@stackable/components/button-edit'
-import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { descriptionPlaceholder } from '@stackable/util'
 import { RichText } from '@wordpress/block-editor'

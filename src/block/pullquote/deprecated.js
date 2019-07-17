@@ -1,5 +1,4 @@
 import { merge, omit } from 'lodash'
-import { __ } from '@wordpress/i18n'
 
 export const deprecatedSave_0_7 = props => {
 	const {
