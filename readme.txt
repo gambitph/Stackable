@@ -162,6 +162,7 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com/blog-pos
 
 ### News Article Updates
 
+- [v1.16 Translations: Stackable in Your Language](https://wpstackable.com/blog/translations-stackable-in-your-language/)
 - [v1.15 Separators Are Here](https://wpstackable.com/blog/separators-are-here/)
 - [v1.14 Video Backgrounds & Background Gradients](https://wpstackable.com/blog/video-backgrounds-background-gradients/)
 - [v1.13 Introducing Stackable Premium](https://wpstackable.com/blog/introducing-stackable-premium/)
@@ -235,6 +236,8 @@ You will have to redo all your blocks
 == Changelog ==
 
 = 1.16.0 =
+[Translations: Stackable in Your Language](https://wpstackable.com/blog/translations-stackable-in-your-language/)
+
 * New: Translation ready
 * New: Updated FontAwesome to v5.9: more icons!
 * Fixed: Blog Posts block compatibility with WPML
