@@ -12,11 +12,11 @@ import {
 	createTypographyAttributes,
 	descriptionPlaceholder,
 } from '@stackable/util'
+import { disabledBlocks, i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { CTAIcon } from '@stackable/icons'
 import deprecated from './deprecated'
-import { disabledBlocks } from 'stackable'
 import edit from './edit'
 import save from './save'
 
@@ -38,7 +38,7 @@ const schema = {
 	title: {
 		source: 'html',
 		selector: 'h3, .ugb-cta__title',
-		default: __( 'Title for This Block' ),
+		default: __( 'Title for This Block', i18n ),
 	},
 	showTitle: {
 		type: 'boolean',
@@ -112,14 +112,14 @@ const schema = {
 export const name = 'ugb/cta'
 
 export const settings = {
-	title: __( 'Call to Action' ),
-	description: __( 'A small section you can use to call the attention of your visitors. Great for calling attention to your products or deals.' ),
+	title: __( 'Call to Action', i18n ),
+	description: __( 'A small section you can use to call the attention of your visitors. Great for calling attention to your products or deals.', i18n ),
 	icon: CTAIcon,
 	category: 'stackable',
 	keywords: [
-		__( 'Call to Action' ),
-		__( 'Stackable' ),
-		__( 'CTA' ),
+		__( 'Call to Action', i18n ),
+		__( 'Stackable', i18n ),
+		__( 'CTA', i18n ),
 	],
 	attributes: schema,
 	supports: {

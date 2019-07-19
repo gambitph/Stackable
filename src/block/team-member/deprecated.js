@@ -1,5 +1,4 @@
 import { descriptionPlaceholder, range } from '@stackable/util'
-import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { omit } from 'lodash'
 import { RichText } from '@wordpress/block-editor'
@@ -109,32 +108,32 @@ const deprecatedSchema_1_10 = {
 	name1: {
 		source: 'html',
 		selector: 'div:nth-of-type(1) > .ugb-team-member-item h4',
-		default: __( 'Name' ),
+		default: 'Name',
 	},
 	name2: {
 		source: 'html',
 		selector: 'div:nth-of-type(2) > .ugb-team-member-item h4',
-		default: __( 'Name' ),
+		default: 'Name',
 	},
 	name3: {
 		source: 'html',
 		selector: 'div:nth-of-type(3) > .ugb-team-member-item h4',
-		default: __( 'Name' ),
+		default: 'Name',
 	},
 	position1: {
 		source: 'html',
 		selector: 'div:nth-of-type(1) > .ugb-team-member-item .ugb-team-member-position',
-		default: __( 'Position' ),
+		default: 'Position',
 	},
 	position2: {
 		source: 'html',
 		selector: 'div:nth-of-type(2) > .ugb-team-member-item .ugb-team-member-position',
-		default: __( 'Position' ),
+		default: 'Position',
 	},
 	position3: {
 		source: 'html',
 		selector: 'div:nth-of-type(3) > .ugb-team-member-item .ugb-team-member-position',
-		default: __( 'Position' ),
+		default: 'Position',
 	},
 	description1: {
 		source: 'html',
@@ -269,47 +268,47 @@ const deprecatedSchema_1_5 = {
 	name: {
 		source: 'html',
 		selector: '.ugb-team-member-column-one h4',
-		default: __( 'Ben Adams' ),
+		default: 'Ben Adams',
 	},
 	nameTwo: {
 		source: 'html',
 		selector: '.ugb-team-member-column-two h4',
-		default: __( 'Alex Johnson' ),
+		default: 'Alex Johnson',
 	},
 	nameThree: {
 		source: 'html',
 		selector: '.ugb-team-member-column-three h4',
-		default: __( 'Sammy Simpson' ),
+		default: 'Sammy Simpson',
 	},
 	position: {
 		source: 'html',
 		selector: '.ugb-team-member-column-one .ugb-team-member-position',
-		default: __( 'Founder' ),
+		default: 'Founder',
 	},
 	positionTwo: {
 		source: 'html',
 		selector: '.ugb-team-member-column-two .ugb-team-member-position',
-		default: __( 'Editor' ),
+		default: 'Editor',
 	},
 	positionThree: {
 		source: 'html',
 		selector: '.ugb-team-member-column-three .ugb-team-member-position',
-		default: __( 'Programmer' ),
+		default: 'Programmer',
 	},
 	des: {
 		source: 'html',
 		selector: '.ugb-team-member-des',
-		default: __( 'Ben is the head of our small team. He loves walking his dog, Walter, when he has some free time.' ),
+		default: 'Ben is the head of our small team. He loves walking his dog, Walter, when he has some free time.',
 	},
 	desTwo: {
 		source: 'html',
 		selector: '.ugb-team-member-des-two',
-		default: __( 'Alex handles all written content. She enjoys painting and playing softball on the weekends.' ),
+		default: 'Alex handles all written content. She enjoys painting and playing softball on the weekends.',
 	},
 	desThree: {
 		source: 'html',
 		selector: '.ugb-team-member-des-three',
-		default: __( 'Sammy is our programmer. You\'ll usually find her nose in a book. She has a cat named Skitty.' ),
+		default: 'Sammy is our programmer. You\'ll usually find her nose in a book. She has a cat named Skitty.',
 	},
 	nameColor: {
 		type: 'string',

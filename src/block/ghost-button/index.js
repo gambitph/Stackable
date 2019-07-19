@@ -2,7 +2,6 @@
  * BLOCK: Ghost Button Block.
  */
 
-import { __ } from '@wordpress/i18n'
 import { GhostButtonIcon } from '@stackable/icons'
 
 const schema = {
@@ -43,13 +42,13 @@ const schema = {
 export const name = 'ugb/ghost-button'
 
 export const settings = {
-	title: __( 'Ghost Button' ),
-	description: __( 'A customizable button with a ghost design (deprecated, use the button instead and set the design to "ghost")' ),
+	title: 'Ghost Button',
+	description: 'A customizable button with a ghost design (deprecated, use the button instead and set the design to "ghost")',
 	icon: GhostButtonIcon,
 	category: 'stackable',
 	keywords: [
-		__( 'Ghost Button' ),
-		__( 'Stackable' ),
+		'Ghost Button',
+		'Stackable',
 	],
 	attributes: schema,
 

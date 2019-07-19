@@ -1,12 +1,13 @@
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
+import { i18n } from 'stackable'
 import { PanelBody } from '@wordpress/components'
 
 const PanelSpacingBody = props => {
 	const { blockProps } = props
 	return (
 		<PanelBody
-			title={ __( 'Spacing' ) }
+			title={ __( 'Spacing', i18n ) }
 			{ ...props }
 		>
 			{ applyFilters( 'stackable.panel-spacing-body.edit.before', null, blockProps ) }

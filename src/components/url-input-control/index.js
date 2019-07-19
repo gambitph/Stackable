@@ -1,5 +1,6 @@
 import { __ } from '@wordpress/i18n'
 import { BaseControl } from '@wordpress/components'
+import { i18n } from 'stackable'
 import { omit } from 'lodash'
 import { URLInput } from '@wordpress/block-editor'
 
@@ -18,7 +19,7 @@ const URLInputControl = props => {
 }
 
 URLInputControl.defaultProps = {
-	label: __( 'URL' ),
+	label: __( 'URL', i18n ),
 	help: null,
 	value: '',
 	onChange: () => {},

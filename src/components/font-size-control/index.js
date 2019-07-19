@@ -1,5 +1,6 @@
 import { __ } from '@wordpress/i18n'
 import { AdvancedRangeControl } from '@stackable/components'
+import { i18n } from 'stackable'
 
 const FontSizeControl = props => {
 	return (
@@ -26,7 +27,7 @@ const FontSizeControl = props => {
 }
 
 FontSizeControl.defaultProps = {
-	label: __( 'Font Size' ),
+	label: __( 'Font Size', i18n ),
 	value: '',
 	onChange: () => {},
 	unit: 'px',

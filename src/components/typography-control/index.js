@@ -1,6 +1,7 @@
 import { AdvancedRangeControl, ButtonIconPopoverControl, FontFamilyControl, FontSizeControl, WhenResponsiveScreen } from '@stackable/components'
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
+import { i18n } from 'stackable'
 import { SelectControl } from '@wordpress/components'
 
 const TypographyControl = props => {
@@ -20,7 +21,7 @@ const TypographyControl = props => {
 			>
 				{ props.onChangeFontFamily && (
 					<FontFamilyControl
-						label={ __( 'Font Family' ) }
+						label={ __( 'Font Family', i18n ) }
 						onChange={ props.onChangeFontFamily }
 						value={ props.fontFamily }
 					/>
@@ -29,7 +30,7 @@ const TypographyControl = props => {
 					<Fragment>
 						<WhenResponsiveScreen>
 							<FontSizeControl
-								label={ __( 'Size' ) }
+								label={ __( 'Size', i18n ) }
 								onChange={ props.onChangeFontSize }
 								value={ props.fontSize }
 								allowReset={ true }
@@ -40,7 +41,7 @@ const TypographyControl = props => {
 						</WhenResponsiveScreen>
 						<WhenResponsiveScreen screen="tablet">
 							<FontSizeControl
-								label={ __( 'Size' ) }
+								label={ __( 'Size', i18n ) }
 								onChange={ props.onChangeTabletFontSize }
 								value={ props.tabletFontSize }
 								allowReset={ true }
@@ -51,7 +52,7 @@ const TypographyControl = props => {
 						</WhenResponsiveScreen>
 						<WhenResponsiveScreen screen="mobile">
 							<FontSizeControl
-								label={ __( 'Size' ) }
+								label={ __( 'Size', i18n ) }
 								onChange={ props.onChangeMobileFontSize }
 								value={ props.mobileFontSize }
 								allowReset={ true }
@@ -64,7 +65,7 @@ const TypographyControl = props => {
 				) }
 				{ props.onChangeFontWeight && (
 					<SelectControl
-						label={ __( 'Weight' ) }
+						label={ __( 'Weight', i18n ) }
 						options={ [
 							{ label: '100', value: '100' },
 							{ label: '200', value: '200' },
@@ -75,9 +76,9 @@ const TypographyControl = props => {
 							{ label: '700', value: '700' },
 							{ label: '800', value: '800' },
 							{ label: '900', value: '900' },
-							{ label: __( 'Default' ), value: '' },
-							{ label: __( 'Normal' ), value: 'normal' },
-							{ label: __( 'Bold' ), value: 'bold' },
+							{ label: __( 'Default', i18n ), value: '' },
+							{ label: __( 'Normal', i18n ), value: 'normal' },
+							{ label: __( 'Bold', i18n ), value: 'bold' },
 						] }
 						onChange={ props.onChangeFontWeight }
 						value={ props.fontWeight }
@@ -85,13 +86,13 @@ const TypographyControl = props => {
 				) }
 				{ props.onChangeTextTransform && (
 					<SelectControl
-						label={ __( 'Transform' ) }
+						label={ __( 'Transform', i18n ) }
 						options={ [
-							{ label: __( 'Default' ), value: '' },
-							{ label: __( 'Uppercase' ), value: 'uppercase' },
-							{ label: __( 'Lowercase' ), value: 'lowercase' },
-							{ label: __( 'Capitalize' ), value: 'capitalize' },
-							{ label: __( 'Normal' ), value: 'normal' },
+							{ label: __( 'Default', i18n ), value: '' },
+							{ label: __( 'Uppercase', i18n ), value: 'uppercase' },
+							{ label: __( 'Lowercase', i18n ), value: 'lowercase' },
+							{ label: __( 'Capitalize', i18n ), value: 'capitalize' },
+							{ label: __( 'Normal', i18n ), value: 'normal' },
 						] }
 						onChange={ props.onChangeTextTransform }
 						value={ props.textTransform }
@@ -101,7 +102,7 @@ const TypographyControl = props => {
 					<Fragment>
 						<WhenResponsiveScreen>
 							<AdvancedRangeControl
-								label={ __( 'Line-Height' ) }
+								label={ __( 'Line-Height', i18n ) }
 								units={ [ 'px', 'em' ] }
 								min={ [ 1, 0.1 ] }
 								max={ [ 100, 10 ] }
@@ -115,7 +116,7 @@ const TypographyControl = props => {
 						</WhenResponsiveScreen>
 						<WhenResponsiveScreen screen="tablet">
 							<AdvancedRangeControl
-								label={ __( 'Line-Height' ) }
+								label={ __( 'Line-Height', i18n ) }
 								units={ [ 'px', 'em' ] }
 								min={ [ 1, 0.1 ] }
 								max={ [ 100, 10 ] }
@@ -129,7 +130,7 @@ const TypographyControl = props => {
 						</WhenResponsiveScreen>
 						<WhenResponsiveScreen screen="mobile">
 							<AdvancedRangeControl
-								label={ __( 'Line-Height' ) }
+								label={ __( 'Line-Height', i18n ) }
 								units={ [ 'px', 'em' ] }
 								min={ [ 1, 0.1 ] }
 								max={ [ 100, 10 ] }
@@ -145,7 +146,7 @@ const TypographyControl = props => {
 				) }
 				{ props.onChangeLetterSpacing && (
 					<AdvancedRangeControl
-						label={ __( 'Letter Spacing' ) }
+						label={ __( 'Letter Spacing', i18n ) }
 						min={ -5 }
 						max={ 10 }
 						step={ 0.1 }
@@ -160,7 +161,7 @@ const TypographyControl = props => {
 				<Fragment>
 					<WhenResponsiveScreen>
 						<FontSizeControl
-							label={ __( 'Size' ) }
+							label={ __( 'Size', i18n ) }
 							onChange={ props.onChangeFontSize }
 							value={ props.fontSize }
 							allowReset={ true }
@@ -171,7 +172,7 @@ const TypographyControl = props => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
 						<FontSizeControl
-							label={ __( 'Size' ) }
+							label={ __( 'Size', i18n ) }
 							onChange={ props.onChangeTabletFontSize }
 							value={ props.tabletFontSize }
 							allowReset={ true }
@@ -182,7 +183,7 @@ const TypographyControl = props => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
 						<FontSizeControl
-							label={ __( 'Size' ) }
+							label={ __( 'Size', i18n ) }
 							onChange={ props.onChangeMobileFontSize }
 							value={ props.mobileFontSize }
 							allowReset={ true }
@@ -198,7 +199,7 @@ const TypographyControl = props => {
 }
 
 TypographyControl.defaultProps = {
-	label: __( 'Typography' ),
+	label: __( 'Typography', i18n ),
 	showSecondFontSize: true,
 	fontFamily: '',
 	fontSize: '',

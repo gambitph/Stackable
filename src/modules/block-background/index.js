@@ -15,6 +15,7 @@ import {
 import { __ } from '@wordpress/i18n'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
+import { i18n } from 'stackable'
 import { Toolbar } from '@wordpress/components'
 
 // When block background is turned on, change the ailgnment and block inner width also.
@@ -43,7 +44,7 @@ const addInspectorPanel = ( output, props ) => {
 		<Fragment>
 			{ output }
 			<PanelAdvancedSettings
-				title={ __( 'Block Background' ) }
+				title={ __( 'Block Background', i18n ) }
 				checked={ showBlockBackground }
 				onChange={ showBlockBackground => setAttributes( { showBlockBackground } ) }
 				toggleOnSetAttributes={ createBackgroundAttributeNames( 'blockBackground%s' ) }
@@ -91,12 +92,12 @@ const addAlignmentToolbar = ( output, props ) => {
 				) }
 				{ showBlockBackground && (
 					<Toolbar
-						label={ __( 'Change Alignment' ) }
+						label={ __( 'Change Alignment', i18n ) }
 						controls={
 							[
 								{
 									icon: 'align-center',
-									title: __( 'Align center' ),
+									title: __( 'Align center', i18n ),
 									isActive: blockInnerWidth === '' || blockInnerWidth === 'center',
 									onClick: () => {
 										setAttributes( { blockInnerWidth: 'center' } )
@@ -104,7 +105,7 @@ const addAlignmentToolbar = ( output, props ) => {
 								},
 								{
 									icon: 'align-wide',
-									title: __( 'Wide width' ),
+									title: __( 'Wide width', i18n ),
 									isActive: blockInnerWidth === 'wide',
 									onClick: () => {
 										setAttributes( { blockInnerWidth: 'wide' } )
@@ -112,7 +113,7 @@ const addAlignmentToolbar = ( output, props ) => {
 								},
 								{
 									icon: 'align-full-width',
-									title: __( 'Full width' ),
+									title: __( 'Full width', i18n ),
 									isActive: blockInnerWidth === 'full',
 									onClick: () => {
 										setAttributes( { blockInnerWidth: 'full' } )

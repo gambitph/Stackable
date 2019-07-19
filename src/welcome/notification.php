@@ -62,7 +62,7 @@ if ( ! function_exists( 'stackable_notification_count' ) ) {
             return sprintf( '<span class="update-plugins count-%s"><span class="plugin-count" aria-hidden="true">%s</span><span class="screen-reader-text">%s</span></span>',
                 $num_notifiations,
                 $num_notifiations,
-                sprintf( _n( '%s notification', '%s notifications', $num_notifiations, 'stackable' ), $num_notifiations )
+                sprintf( _n( '%s notification', '%s notifications', $num_notifiations, STACKABLE_I18N ), $num_notifiations )
             );
         }
         return '';
@@ -115,13 +115,13 @@ if ( ! function_exists( 'stackable_welcome_notification' ) ) {
             }
         </script>
         <aside class="stackable_notice_wrapper s-box">
-            <h3><?php esc_html_e( '⚠️ Notifications', 'stackable' ) ?></h3>
+            <h3><?php esc_html_e( '⚠️ Notifications', STACKABLE_I18N ) ?></h3>
             <?php
             foreach ( $stackable_notifications as $notification ) {
                 ?>
                 <div class="stackable_notice">
                     <p><?php echo wp_kses_post( $notification['message'] ) ?></p>
-                    <p><button class="button" data-id="<?php echo esc_attr( $notification['id'] ) ?>" onclick="stackable_dismiss(this); event.preventDefault();"><?php _e( 'Don\'t show me this anymore', 'stackable' ) ?></button></p>
+                    <p><button class="button" data-id="<?php echo esc_attr( $notification['id'] ) ?>" onclick="stackable_dismiss(this); event.preventDefault();"><?php _e( 'Don\'t show me this anymore', STACKABLE_I18N ) ?></button></p>
                 </div>
                 <?php
             }

@@ -15,6 +15,7 @@ import {
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
+import { i18n } from 'stackable'
 import { urlIsVideo } from '@stackable/util'
 
 const BackgroundControls = props => {
@@ -29,19 +30,19 @@ const BackgroundControls = props => {
 		<Fragment>
 			{ props.onChangeBackgroundColorType && (
 				<BaseControl
-					label={ __( 'Background Color Type' ) }
+					label={ __( 'Background Color Type', i18n ) }
 				>
 					<TextToolbar
 						controls={ [
 							{
 								value: '',
-								title: __( 'Single' ),
+								title: __( 'Single', i18n ),
 								isActive: props.backgroundColorType === '',
 								onClick: () => props.onChangeBackgroundColorType( '' ),
 							},
 							{
 								value: 'gradient',
-								title: __( 'Gradient' ),
+								title: __( 'Gradient', i18n ),
 								isActive: props.backgroundColorType === 'gradient',
 								onClick: () => props.onChangeBackgroundColorType( 'gradient' ),
 							},
@@ -54,8 +55,8 @@ const BackgroundControls = props => {
 				<ColorPaletteControl
 					label={
 						props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' ?
-							__( 'Background Color #1' ) :
-							__( 'Background Color' )
+							__( 'Background Color #1', i18n ) :
+							__( 'Background Color', i18n )
 					}
 					value={ props.backgroundColor }
 					onChange={ props.onChangeBackgroundColor }
@@ -64,7 +65,7 @@ const BackgroundControls = props => {
 			{ props.onChangeBackgroundColorOpacity && props.backgroundColorType !== 'gradient' &&
 				( ! props.backgroundMediaURL && ! props.tabletBackgroundMediaURL && ! props.mobileBackgroundMediaURL ) && (
 				<RangeControl
-					label={ __( 'Background Color Opacity' ) }
+					label={ __( 'Background Color Opacity', i18n ) }
 					value={ props.backgroundColorOpacity }
 					onChange={ props.onChangeBackgroundColorOpacity }
 					min={ 0 }
@@ -76,7 +77,7 @@ const BackgroundControls = props => {
 
 			{ props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' && (
 				<ColorPaletteControl
-					label={ __( 'Background Color #2' ) }
+					label={ __( 'Background Color #2', i18n ) }
 					value={ props.backgroundColor2 }
 					onChange={ props.onChangeBackgroundColor2 }
 				/>
@@ -84,7 +85,7 @@ const BackgroundControls = props => {
 
 			{ props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' && props.hasAdvancedGradient &&
 				<ButtonIconPopoverControl
-					label={ __( 'Adv. Gradient Color Settings' ) }
+					label={ __( 'Adv. Gradient Color Settings', i18n ) }
 					onReset={ props.onResetAdvancedGradient }
 					allowReset={
 						props.backgroundGradientDirection !== '' ||
@@ -95,7 +96,7 @@ const BackgroundControls = props => {
 				>
 					{ props.onChangeBackgroundGradientDirection && (
 						<RangeControl
-							label={ __( 'Gradient Direction (degrees)' ) }
+							label={ __( 'Gradient Direction (degrees)', i18n ) }
 							value={ props.backgroundGradientDirection }
 							onChange={ props.onChangeBackgroundGradientDirection }
 							min={ 0 }
@@ -107,7 +108,7 @@ const BackgroundControls = props => {
 
 					{ props.onChangeBackgroundGradientLocation1 && (
 						<RangeControl
-							label={ __( 'Color 1 Location' ) }
+							label={ __( 'Color 1 Location', i18n ) }
 							value={ props.backgroundGradientLocation1 }
 							onChange={ props.onChangeBackgroundGradientLocation1 }
 							min={ 0 }
@@ -119,7 +120,7 @@ const BackgroundControls = props => {
 
 					{ props.onChangeBackgroundGradientLocation2 && (
 						<RangeControl
-							label={ __( 'Color 2 Location' ) }
+							label={ __( 'Color 2 Location', i18n ) }
 							value={ props.backgroundGradientLocation2 }
 							onChange={ props.onChangeBackgroundGradientLocation2 }
 							min={ 0 }
@@ -131,7 +132,7 @@ const BackgroundControls = props => {
 
 					{ props.onChangeBackgroundGradientBlendMode && (
 						<BlendModeControl
-							label={ __( 'Background Gradient Blend Mode' ) }
+							label={ __( 'Background Gradient Blend Mode', i18n ) }
 							value={ props.backgroundGradientBlendMode }
 							onChange={ props.onChangeBackgroundGradientBlendMode }
 						/>
@@ -143,8 +144,8 @@ const BackgroundControls = props => {
 				<Fragment>
 					<WhenResponsiveScreen>
 						<ImageControl
-							label={ props.backgroundMediaAllowedTypes ? __( 'Background Image or Video' ) : __( 'Background Image' ) }
-							help={ props.backgroundMediaAllowedTypes ? __( 'Use .mp4 format for videos' ) : '' }
+							label={ props.backgroundMediaAllowedTypes ? __( 'Background Image or Video', i18n ) : __( 'Background Image', i18n ) }
+							help={ props.backgroundMediaAllowedTypes ? __( 'Use .mp4 format for videos', i18n ) : '' }
 							onRemove={ () => props.onChangeBackgroundMedia( { url: '', id: '' } ) }
 							onChange={ props.onChangeBackgroundMedia }
 							imageID={ props.backgroundMediaID }
@@ -154,8 +155,8 @@ const BackgroundControls = props => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
 						<ImageControl
-							label={ props.backgroundMediaAllowedTypes ? __( 'Background Image or Video' ) : __( 'Background Image' ) }
-							help={ props.backgroundMediaAllowedTypes ? __( 'Use .mp4 format for videos' ) : '' }
+							label={ props.backgroundMediaAllowedTypes ? __( 'Background Image or Video', i18n ) : __( 'Background Image', i18n ) }
+							help={ props.backgroundMediaAllowedTypes ? __( 'Use .mp4 format for videos', i18n ) : '' }
 							onRemove={ () => props.onChangeTabletBackgroundMedia( { url: '', id: '' } ) }
 							onChange={ props.onChangeTabletBackgroundMedia }
 							imageID={ props.tabletBackgroundMediaID }
@@ -165,8 +166,8 @@ const BackgroundControls = props => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
 						<ImageControl
-							label={ props.backgroundMediaAllowedTypes ? __( 'Background Image or Video' ) : __( 'Background Image' ) }
-							help={ props.backgroundMediaAllowedTypes ? __( 'Use .mp4 format for videos' ) : '' }
+							label={ props.backgroundMediaAllowedTypes ? __( 'Background Image or Video', i18n ) : __( 'Background Image', i18n ) }
+							help={ props.backgroundMediaAllowedTypes ? __( 'Use .mp4 format for videos', i18n ) : '' }
 							onRemove={ () => props.onChangeMobileBackgroundMedia( { url: '', id: '' } ) }
 							onChange={ props.onChangeMobileBackgroundMedia }
 							imageID={ props.mobileBackgroundMediaID }
@@ -180,7 +181,7 @@ const BackgroundControls = props => {
 			{ props.onChangeBackgroundTintStrength &&
 				( props.backgroundMediaURL || props.tabletBackgroundMediaURL || props.mobileBackgroundMediaURL ) && (
 				<RangeControl
-					label={ __( 'Background Media Tint Strength' ) }
+					label={ __( 'Background Media Tint Strength', i18n ) }
 					value={ props.backgroundTintStrength }
 					onChange={ props.onChangeBackgroundTintStrength }
 					min={ 1 }
@@ -194,7 +195,7 @@ const BackgroundControls = props => {
 				( props.backgroundMediaURL || props.tabletBackgroundMediaURL || props.mobileBackgroundMediaURL ) &&
 				! isBackgroundVideo() && (
 				<ToggleControl
-					label={ __( 'Fixed Background' ) }
+					label={ __( 'Fixed Background', i18n ) }
 					checked={ props.fixedBackground }
 					onChange={ props.onChangeFixedBackground }
 				/>
@@ -203,7 +204,7 @@ const BackgroundControls = props => {
 			{ props.hasAdvancedBackground &&
 				( props.backgroundMediaURL || props.tabletBackgroundMediaURL || props.mobileBackgroundMediaURL ) &&
 				<ButtonIconPopoverControl
-					label={ __( 'Adv. Background Image Settings' ) }
+					label={ __( 'Adv. Background Image Settings', i18n ) }
 					onReset={ props.onResetAdvancedBackground }
 					allowReset={
 						props.backgroundPosition || props.tabletBackgroundPosition || props.mobileBackgroundPosition ||
@@ -215,18 +216,18 @@ const BackgroundControls = props => {
 
 					<WhenResponsiveScreen>
 						<AdvancedSelectControl
-							label={ __( 'Image Position' ) }
+							label={ __( 'Image Position', i18n ) }
 							options={ [
-								{ label: __( 'Default' ), value: '' },
-								{ label: __( 'Top Left' ), value: 'top left' },
-								{ label: __( 'Top Center' ), value: 'top center' },
-								{ label: __( 'Top Right' ), value: 'top right' },
-								{ label: __( 'Center Left' ), value: 'center left' },
-								{ label: __( 'Center Center' ), value: 'center center' },
-								{ label: __( 'Center Right' ), value: 'center right' },
-								{ label: __( 'Bottom Left' ), value: 'bottom left' },
-								{ label: __( 'Bottom Center' ), value: 'bottom center' },
-								{ label: __( 'Bottom Right' ), value: 'bottom right' },
+								{ label: __( 'Default', i18n ), value: '' },
+								{ label: __( 'Top Left', i18n ), value: 'top left' },
+								{ label: __( 'Top Center', i18n ), value: 'top center' },
+								{ label: __( 'Top Right', i18n ), value: 'top right' },
+								{ label: __( 'Center Left', i18n ), value: 'center left' },
+								{ label: __( 'Center Center', i18n ), value: 'center center' },
+								{ label: __( 'Center Right', i18n ), value: 'center right' },
+								{ label: __( 'Bottom Left', i18n ), value: 'bottom left' },
+								{ label: __( 'Bottom Center', i18n ), value: 'bottom center' },
+								{ label: __( 'Bottom Right', i18n ), value: 'bottom right' },
 							] }
 							value={ props.backgroundPosition }
 							onChange={ props.onChangeBackgroundPosition }
@@ -234,18 +235,18 @@ const BackgroundControls = props => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
 						<AdvancedSelectControl
-							label={ __( 'Image Position' ) }
+							label={ __( 'Image Position', i18n ) }
 							options={ [
-								{ label: __( 'Default' ), value: '' },
-								{ label: __( 'Top Left' ), value: 'top left' },
-								{ label: __( 'Top Center' ), value: 'top center' },
-								{ label: __( 'Top Right' ), value: 'top right' },
-								{ label: __( 'Center Left' ), value: 'center left' },
-								{ label: __( 'Center Center' ), value: 'center center' },
-								{ label: __( 'Center Right' ), value: 'center right' },
-								{ label: __( 'Bottom Left' ), value: 'bottom left' },
-								{ label: __( 'Bottom Center' ), value: 'bottom center' },
-								{ label: __( 'Bottom Right' ), value: 'bottom right' },
+								{ label: __( 'Default', i18n ), value: '' },
+								{ label: __( 'Top Left', i18n ), value: 'top left' },
+								{ label: __( 'Top Center', i18n ), value: 'top center' },
+								{ label: __( 'Top Right', i18n ), value: 'top right' },
+								{ label: __( 'Center Left', i18n ), value: 'center left' },
+								{ label: __( 'Center Center', i18n ), value: 'center center' },
+								{ label: __( 'Center Right', i18n ), value: 'center right' },
+								{ label: __( 'Bottom Left', i18n ), value: 'bottom left' },
+								{ label: __( 'Bottom Center', i18n ), value: 'bottom center' },
+								{ label: __( 'Bottom Right', i18n ), value: 'bottom right' },
 							] }
 							value={ props.tabletBackgroundPosition }
 							onChange={ props.onChangeTabletBackgroundPosition }
@@ -253,18 +254,18 @@ const BackgroundControls = props => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
 						<AdvancedSelectControl
-							label={ __( 'Image Position' ) }
+							label={ __( 'Image Position', i18n ) }
 							options={ [
-								{ label: __( 'Default' ), value: '' },
-								{ label: __( 'Top Left' ), value: 'top left' },
-								{ label: __( 'Top Center' ), value: 'top center' },
-								{ label: __( 'Top Right' ), value: 'top right' },
-								{ label: __( 'Center Left' ), value: 'center left' },
-								{ label: __( 'Center Center' ), value: 'center center' },
-								{ label: __( 'Center Right' ), value: 'center right' },
-								{ label: __( 'Bottom Left' ), value: 'bottom left' },
-								{ label: __( 'Bottom Center' ), value: 'bottom center' },
-								{ label: __( 'Bottom Right' ), value: 'bottom right' },
+								{ label: __( 'Default', i18n ), value: '' },
+								{ label: __( 'Top Left', i18n ), value: 'top left' },
+								{ label: __( 'Top Center', i18n ), value: 'top center' },
+								{ label: __( 'Top Right', i18n ), value: 'top right' },
+								{ label: __( 'Center Left', i18n ), value: 'center left' },
+								{ label: __( 'Center Center', i18n ), value: 'center center' },
+								{ label: __( 'Center Right', i18n ), value: 'center right' },
+								{ label: __( 'Bottom Left', i18n ), value: 'bottom left' },
+								{ label: __( 'Bottom Center', i18n ), value: 'bottom center' },
+								{ label: __( 'Bottom Right', i18n ), value: 'bottom right' },
 							] }
 							value={ props.mobileBackgroundPosition }
 							onChange={ props.onChangeMobileBackgroundPosition }
@@ -273,13 +274,13 @@ const BackgroundControls = props => {
 
 					<WhenResponsiveScreen>
 						<AdvancedSelectControl
-							label={ __( 'Image Repeat' ) }
+							label={ __( 'Image Repeat', i18n ) }
 							options={ [
-								{ label: __( 'Default' ), value: '' },
-								{ label: __( 'No-Repeat' ), value: 'no-repeat' },
-								{ label: __( 'Repeat' ), value: 'repeat' },
-								{ label: __( 'Repeat-X' ), value: 'repeat-x' },
-								{ label: __( 'Repeat-Y' ), value: 'repeat-y' },
+								{ label: __( 'Default', i18n ), value: '' },
+								{ label: __( 'No-Repeat', i18n ), value: 'no-repeat' },
+								{ label: __( 'Repeat', i18n ), value: 'repeat' },
+								{ label: __( 'Repeat-X', i18n ), value: 'repeat-x' },
+								{ label: __( 'Repeat-Y', i18n ), value: 'repeat-y' },
 							] }
 							value={ props.backgroundRepeat }
 							onChange={ props.onChangeBackgroundRepeat }
@@ -287,13 +288,13 @@ const BackgroundControls = props => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
 						<AdvancedSelectControl
-							label={ __( 'Image Repeat' ) }
+							label={ __( 'Image Repeat', i18n ) }
 							options={ [
-								{ label: __( 'Default' ), value: '' },
-								{ label: __( 'No-Repeat' ), value: 'no-repeat' },
-								{ label: __( 'Repeat' ), value: 'repeat' },
-								{ label: __( 'Repeat-X' ), value: 'repeat-x' },
-								{ label: __( 'Repeat-Y' ), value: 'repeat-y' },
+								{ label: __( 'Default', i18n ), value: '' },
+								{ label: __( 'No-Repeat', i18n ), value: 'no-repeat' },
+								{ label: __( 'Repeat', i18n ), value: 'repeat' },
+								{ label: __( 'Repeat-X', i18n ), value: 'repeat-x' },
+								{ label: __( 'Repeat-Y', i18n ), value: 'repeat-y' },
 							] }
 							value={ props.tabletBackgroundRepeat }
 							onChange={ props.onChangeTabletBackgroundRepeat }
@@ -301,13 +302,13 @@ const BackgroundControls = props => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
 						<AdvancedSelectControl
-							label={ __( 'Image Repeat' ) }
+							label={ __( 'Image Repeat', i18n ) }
 							options={ [
-								{ label: __( 'Default' ), value: '' },
-								{ label: __( 'No-Repeat' ), value: 'no-repeat' },
-								{ label: __( 'Repeat' ), value: 'repeat' },
-								{ label: __( 'Repeat-X' ), value: 'repeat-x' },
-								{ label: __( 'Repeat-Y' ), value: 'repeat-y' },
+								{ label: __( 'Default', i18n ), value: '' },
+								{ label: __( 'No-Repeat', i18n ), value: 'no-repeat' },
+								{ label: __( 'Repeat', i18n ), value: 'repeat' },
+								{ label: __( 'Repeat-X', i18n ), value: 'repeat-x' },
+								{ label: __( 'Repeat-Y', i18n ), value: 'repeat-y' },
 							] }
 							value={ props.mobileBackgroundRepeat }
 							onChange={ props.onChangeMobileBackgroundRepeat }
@@ -316,13 +317,13 @@ const BackgroundControls = props => {
 
 					<WhenResponsiveScreen>
 						<AdvancedSelectControl
-							label={ __( 'Image Size' ) }
+							label={ __( 'Image Size', i18n ) }
 							options={ [
-								{ label: __( 'Default' ), value: '' },
-								{ label: __( 'Auto' ), value: 'auto' },
-								{ label: __( 'Cover' ), value: 'cover' },
-								{ label: __( 'Contain' ), value: 'contain' },
-								{ label: __( 'Custom' ), value: 'custom' },
+								{ label: __( 'Default', i18n ), value: '' },
+								{ label: __( 'Auto', i18n ), value: 'auto' },
+								{ label: __( 'Cover', i18n ), value: 'cover' },
+								{ label: __( 'Contain', i18n ), value: 'contain' },
+								{ label: __( 'Custom', i18n ), value: 'custom' },
 							] }
 							value={ props.backgroundSize }
 							onChange={ props.onChangeBackgroundSize }
@@ -330,13 +331,13 @@ const BackgroundControls = props => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
 						<AdvancedSelectControl
-							label={ __( 'Image Size' ) }
+							label={ __( 'Image Size', i18n ) }
 							options={ [
-								{ label: __( 'Default' ), value: '' },
-								{ label: __( 'Auto' ), value: 'auto' },
-								{ label: __( 'Cover' ), value: 'cover' },
-								{ label: __( 'Contain' ), value: 'contain' },
-								{ label: __( 'Custom' ), value: 'custom' },
+								{ label: __( 'Default', i18n ), value: '' },
+								{ label: __( 'Auto', i18n ), value: 'auto' },
+								{ label: __( 'Cover', i18n ), value: 'cover' },
+								{ label: __( 'Contain', i18n ), value: 'contain' },
+								{ label: __( 'Custom', i18n ), value: 'custom' },
 							] }
 							value={ props.tabletBackgroundSize }
 							onChange={ props.onChangeTabletBackgroundSize }
@@ -344,13 +345,13 @@ const BackgroundControls = props => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
 						<AdvancedSelectControl
-							label={ __( 'Image Size' ) }
+							label={ __( 'Image Size', i18n ) }
 							options={ [
-								{ label: __( 'Default' ), value: '' },
-								{ label: __( 'Auto' ), value: 'auto' },
-								{ label: __( 'Cover' ), value: 'cover' },
-								{ label: __( 'Contain' ), value: 'contain' },
-								{ label: __( 'Custom' ), value: 'custom' },
+								{ label: __( 'Default', i18n ), value: '' },
+								{ label: __( 'Auto', i18n ), value: 'auto' },
+								{ label: __( 'Cover', i18n ), value: 'cover' },
+								{ label: __( 'Contain', i18n ), value: 'contain' },
+								{ label: __( 'Custom', i18n ), value: 'custom' },
 							] }
 							value={ props.mobileBackgroundSize }
 							onChange={ props.onChangeMobileBackgroundSize }
@@ -360,7 +361,7 @@ const BackgroundControls = props => {
 					{ props.backgroundSize === 'custom' && (
 						<WhenResponsiveScreen>
 							<AdvancedRangeControl
-								label={ __( 'Custom Size' ) }
+								label={ __( 'Custom Size', i18n ) }
 								units={ [ 'px', '%', 'vw' ] }
 								min={ [ 0, 0, 0 ] }
 								max={ [ 1000, 100, 100 ] }
@@ -375,7 +376,7 @@ const BackgroundControls = props => {
 					{ props.tabletBackgroundSize === 'custom' && (
 						<WhenResponsiveScreen screen="tablet">
 							<AdvancedRangeControl
-								label={ __( 'Custom Size' ) }
+								label={ __( 'Custom Size', i18n ) }
 								units={ [ 'px', '%', 'vw' ] }
 								min={ [ 0, 0, 0 ] }
 								max={ [ 1000, 100, 100 ] }
@@ -390,7 +391,7 @@ const BackgroundControls = props => {
 					{ props.mobileBackgroundSize === 'custom' && (
 						<WhenResponsiveScreen screen="mobile">
 							<AdvancedRangeControl
-								label={ __( 'Custom Size' ) }
+								label={ __( 'Custom Size', i18n ) }
 								units={ [ 'px', '%', 'vw' ] }
 								min={ [ 0, 0, 0 ] }
 								max={ [ 1000, 100, 100 ] }
@@ -405,7 +406,7 @@ const BackgroundControls = props => {
 
 					{ props.onChangeBackgroundImageBlendMode && (
 						<BlendModeControl
-							label={ __( 'Image Blend Mode' ) }
+							label={ __( 'Image Blend Mode', i18n ) }
 							value={ props.backgroundImageBlendMode }
 							onChange={ props.onChangeBackgroundImageBlendMode }
 						/>

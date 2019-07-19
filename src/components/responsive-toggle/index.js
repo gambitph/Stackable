@@ -4,6 +4,7 @@ import {
 } from '@stackable/util'
 import { __ } from '@wordpress/i18n'
 import { Component } from '@wordpress/element'
+import { i18n } from 'stackable'
 import { IconButton } from '@wordpress/components'
 import SVGDesktop from './images/desktop.svg'
 import SVGMobile from './images/mobile.svg'
@@ -17,9 +18,9 @@ const responsiveIcons = {
 }
 
 const labels = {
-	desktop: __( 'Desktop' ),
-	tablet: __( 'Tablet' ),
-	mobile: __( 'Mobile' ),
+	desktop: __( 'Desktop', i18n ),
+	tablet: __( 'Tablet', i18n ),
+	mobile: __( 'Mobile', i18n ),
 }
 
 class ResponsiveToggle extends Component {

@@ -4,6 +4,7 @@ import Autosuggest from 'react-autosuggest'
 import { BaseControl } from '@wordpress/components'
 import BaseControlMultiLabel from '../base-control-multi-label'
 import classnames from 'classnames'
+import { i18n } from 'stackable'
 
 // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
 const escapeRegexCharacters = str => str.replace( /[.*+?^${}()|[\]\\]/g, '\\$&' )
@@ -202,7 +203,7 @@ AdvancedAutosuggestControl.defaultProps = {
 	screens: [ 'desktop' ],
 	options: [],
 	value: '',
-	noMatchesLabel: __( 'No matches found' ),
+	noMatchesLabel: __( 'No matches found', i18n ),
 }
 
 export default AdvancedAutosuggestControl

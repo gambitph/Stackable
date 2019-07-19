@@ -2,10 +2,10 @@
  * BLOCK: Pricing Box Block.
  */
 
+import { disabledBlocks, i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import deprecate from './deprecated'
 import { descriptionPlaceholder } from '@stackable/util'
-import { disabledBlocks } from 'stackable'
 import edit from './edit'
 import { PricingBoxIcon } from '@stackable/icons'
 import save from './save'
@@ -115,7 +115,7 @@ const schema = {
 	schema[ `pricingBoxTitle${ index }` ] = {
 		source: 'html',
 		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__title`,
-		default: __( 'Title' ),
+		default: __( 'Title', i18n ),
 	}
 	schema[ `price${ index }` ] = {
 		source: 'html',
@@ -135,12 +135,12 @@ const schema = {
 	schema[ `perMonthLabel${ index }` ] = {
 		source: 'html',
 		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__subprice`,
-		default: __( 'Description' ),
+		default: __( 'Description', i18n ),
 	}
 	schema[ `buttonText${ index }` ] = {
 		source: 'html',
 		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-button span`,
-		default: __( 'Button text' ),
+		default: __( 'Button text', i18n ),
 	}
 	schema[ `featureList${ index }` ] = {
 		source: 'html',
@@ -152,13 +152,13 @@ const schema = {
 export const name = 'ugb/pricing-box'
 
 export const settings = {
-	title: __( 'Pricing Box' ),
-	description: __( 'Display the different pricing tiers of your business.' ),
+	title: __( 'Pricing Box', i18n ),
+	description: __( 'Display the different pricing tiers of your business.', i18n ),
 	icon: PricingBoxIcon,
 	category: 'stackable',
 	keywords: [
-		__( 'Pricing Box' ),
-		__( 'Stackable' ),
+		__( 'Pricing Box', i18n ),
+		__( 'Stackable', i18n ),
 	],
 	attributes: schema,
 	supports: {

@@ -2,10 +2,10 @@
  * BLOCK: Feature Block.
  */
 
+import { disabledBlocks, i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import deprecated from './deprecated'
 import { descriptionPlaceholder } from '@stackable/util'
-import { disabledBlocks } from 'stackable'
 import edit from './edit'
 import { FeatureIcon } from '@stackable/icons'
 import save from './save'
@@ -38,7 +38,7 @@ export const schema = {
 	title: {
 		source: 'html',
 		selector: 'h2',
-		default: __( 'Title for This Block' ),
+		default: __( 'Title for This Block', i18n ),
 	},
 	description: {
 		source: 'html',
@@ -62,7 +62,7 @@ export const schema = {
 	buttonText: {
 		source: 'html',
 		selector: '.ugb-button span',
-		default: __( 'Button text' ),
+		default: __( 'Button text', i18n ),
 	},
 	buttonColor: {
 		type: 'string',
@@ -160,13 +160,13 @@ export const schema = {
 export const name = 'ugb/feature'
 
 export const settings = {
-	title: __( 'Feature' ),
-	description: __( 'Display a product feature or a service in a large area.' ),
+	title: __( 'Feature', i18n ),
+	description: __( 'Display a product feature or a service in a large area.', i18n ),
 	icon: FeatureIcon,
 	category: 'stackable',
 	keywords: [
-		__( 'Feature' ),
-		__( 'Stackable' ),
+		__( 'Feature', i18n ),
+		__( 'Stackable', i18n ),
 	],
 	supports: {
 		align: [ 'center', 'wide', 'full' ],

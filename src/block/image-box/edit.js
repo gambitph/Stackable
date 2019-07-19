@@ -4,6 +4,7 @@ import {
 import {
 	DesignPanelBody, ImageUploadPlaceholder, ProControl, ProControlButton, URLInputControl, VerticalAlignmentToolbar,
 } from '@stackable/components'
+import { i18n, showProNotice } from 'stackable'
 import {
 	PanelBody, RangeControl, SelectControl,
 } from '@wordpress/components'
@@ -11,7 +12,6 @@ import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { Fragment } from '@wordpress/element'
-import { showProNotice } from 'stackable'
 import SVGArrow from './images/arrow.svg'
 
 const edit = props => {
@@ -86,14 +86,14 @@ const edit = props => {
 					} }
 				>
 					<RangeControl
-						label={ __( 'Border Radius' ) }
+						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
 						onChange={ borderRadius => setAttributes( { borderRadius } ) }
 						min={ 0 }
 						max={ 50 }
 					/>
 					<RangeControl
-						label={ __( 'Shadow / Outline' ) }
+						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
 						onChange={ shadow => setAttributes( { shadow } ) }
 						min={ 0 }
@@ -101,33 +101,33 @@ const edit = props => {
 					/>
 					{ showProNotice && <ProControlButton /> }
 				</DesignPanelBody>
-				<PanelBody title={ __( 'General Settings' ) }>
+				<PanelBody title={ __( 'General Settings', i18n ) }>
 					<RangeControl
-						label={ __( 'Columns' ) }
+						label={ __( 'Columns', i18n ) }
 						value={ columns }
 						onChange={ columns => setAttributes( { columns } ) }
 						min={ 1 }
 						max={ 4 }
 					/>
 					<SelectControl
-						label={ __( 'Image Hover Effect' ) }
+						label={ __( 'Image Hover Effect', i18n ) }
 						options={ applyFilters( 'stackable.image-box.edit.image-hover-effects', [
-							{ label: __( 'None' ), value: '' },
-							{ label: __( 'Zoom In' ), value: 'zoom-in' },
-							{ label: __( 'Zoom Out' ), value: 'zoom-out' },
+							{ label: __( 'None', i18n ), value: '' },
+							{ label: __( 'Zoom In', i18n ), value: 'zoom-in' },
+							{ label: __( 'Zoom Out', i18n ), value: 'zoom-out' },
 						] ) }
 						value={ imageHoverEffect }
 						onChange={ imageHoverEffect => setAttributes( { imageHoverEffect } ) }
 					/>
 					<RangeControl
-						label={ __( 'Hover Overlay Opacity' ) }
+						label={ __( 'Hover Overlay Opacity', i18n ) }
 						value={ overlayOpacity }
 						onChange={ overlayOpacity => setAttributes( { overlayOpacity } ) }
 						min={ 0 }
 						max={ 10 }
 					/>
 					<RangeControl
-						label={ __( 'Height' ) }
+						label={ __( 'Height', i18n ) }
 						value={ height }
 						min="135"
 						max="700"
@@ -135,45 +135,45 @@ const edit = props => {
 					/>
 					{ ( align !== 'wide' && align !== 'full' && columns === 1 ) && (
 						<RangeControl
-							label={ __( 'Width' ) }
+							label={ __( 'Width', i18n ) }
 							value={ width }
 							min="400"
 							max="999"
-							help={ __( 'Only available for single column & if centered' ) }
+							help={ __( 'Only available for single column & if centered', i18n ) }
 							onChange={ width => setAttributes( { width: width } ) }
 						/>
 					) }
 					<SelectControl
-						label={ __( 'Arrow' ) }
-						help={ __( 'The arrow will only appear if the image has a link.' ) }
+						label={ __( 'Arrow', i18n ) }
+						help={ __( 'The arrow will only appear if the image has a link.', i18n ) }
 						options={ [
-							{ label: __( 'None' ), value: '' },
-							{ label: __( 'Center' ), value: 'center' },
-							{ label: __( 'Left' ), value: 'left' },
-							{ label: __( 'Right' ), value: 'right' },
+							{ label: __( 'None', i18n ), value: '' },
+							{ label: __( 'Center', i18n ), value: 'center' },
+							{ label: __( 'Left', i18n ), value: 'left' },
+							{ label: __( 'Right', i18n ), value: 'right' },
 						] }
 						value={ arrow }
 						onChange={ arrow => setAttributes( { arrow } ) }
 					/>
 				</PanelBody>
 				<PanelColorSettings
-					title={ __( 'Color Settings' ) }
+					title={ __( 'Color Settings', i18n ) }
 					initialOpen={ true }
 					colorSettings={ [
 						{
 							value: overlayColor,
 							onChange: colorValue => setAttributes( { overlayColor: colorValue } ),
-							label: __( 'Overlay Color' ),
+							label: __( 'Overlay Color', i18n ),
 						},
 						{
 							value: titleColor,
 							onChange: colorValue => setAttributes( { titleColor: colorValue } ),
-							label: ! arrow ? __( 'Title Color' ) : __( 'Title & Arrow Color' ),
+							label: ! arrow ? __( 'Title Color', i18n ) : __( 'Title & Arrow Color', i18n ),
 						},
 						{
 							value: subtitleColor,
 							onChange: colorValue => setAttributes( { subtitleColor: colorValue } ),
-							label: __( 'Subtitle Color' ),
+							label: __( 'Subtitle Color', i18n ),
 						},
 					] }
 				>
@@ -181,11 +181,11 @@ const edit = props => {
 				{ showProNotice &&
 					<PanelBody
 						initialOpen={ false }
-						title={ __( 'Custom CSS' ) }
+						title={ __( 'Custom CSS', i18n ) }
 					>
 						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋' ) }
-							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
 						/>
 					</PanelBody>
 				}
@@ -251,7 +251,7 @@ const edit = props => {
 											style={ {
 												color: titleColor,
 											} }
-											placeholder={ __( 'Title' ) }
+											placeholder={ __( 'Title', i18n ) }
 											keepPlaceholderOnFocus
 										/>
 									) }
@@ -264,7 +264,7 @@ const edit = props => {
 											style={ {
 												color: subtitleColor,
 											} }
-											placeholder={ __( 'Description' ) }
+											placeholder={ __( 'Description', i18n ) }
 											keepPlaceholderOnFocus
 										/>
 									) }

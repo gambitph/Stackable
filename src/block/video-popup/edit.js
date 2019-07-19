@@ -18,6 +18,7 @@ import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
 import createStyles from './style'
 import { Fragment } from '@wordpress/element'
+import { i18n } from 'stackable'
 import { showOptions } from '.'
 
 addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video-popup', ( output, props ) => {
@@ -42,10 +43,10 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General' ) }>
+			<PanelBody title={ __( 'General', i18n ) }>
 				<ImageControl
-					label={ __( 'Popup Option #1: Upload Video' ) }
-					help={ __( 'Use .mp4 format for videos' ) }
+					label={ __( 'Popup Option #1: Upload Video', i18n ) }
+					help={ __( 'Use .mp4 format for videos', i18n ) }
 					onRemove={ () => setAttributes( {
 						videoLink: '',
 						videoID: '',
@@ -61,8 +62,8 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 					allowedTypes={ [ 'video' ] }
 				/>
 				<TextControl
-					label={ __( 'Popup Option #2: Video URL' ) }
-					help={ __( 'Paste a Youtube / Vimeo URL' ) }
+					label={ __( 'Popup Option #2: Video URL', i18n ) }
+					help={ __( 'Paste a Youtube / Vimeo URL', i18n ) }
 					placeholder="https://"
 					value={ ! urlIsVideo( videoLink ) ? videoLink : '' }
 					onChange={ videoLink => setAttributes( {
@@ -74,12 +75,12 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 				/>
 			</PanelBody>
 
-			<PanelBody title={ __( 'Container' ) } initialOpen={ false }>
+			<PanelBody title={ __( 'Container', i18n ) } initialOpen={ false }>
 				{ show.containerWidth &&
 					<Fragment>
 						<WhenResponsiveScreen screen="desktop">
 							<AdvancedRangeControl
-								label={ __( 'Width' ) }
+								label={ __( 'Width', i18n ) }
 								value={ width }
 								min="200"
 								max="2000"
@@ -89,7 +90,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 						</WhenResponsiveScreen>
 						<WhenResponsiveScreen screen="tablet">
 							<AdvancedRangeControl
-								label={ __( 'Width' ) }
+								label={ __( 'Width', i18n ) }
 								value={ tabletWidth }
 								min="200"
 								max="1000"
@@ -99,7 +100,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 						</WhenResponsiveScreen>
 						<WhenResponsiveScreen screen="mobile">
 							<AdvancedRangeControl
-								label={ __( 'Width' ) }
+								label={ __( 'Width', i18n ) }
 								value={ mobileWidth }
 								min="200"
 								max="700"
@@ -115,7 +116,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 					blockAttributes={ props.attributes }
 				>
 					<AdvancedRangeControl
-						label={ __( 'Height' ) }
+						label={ __( 'Height', i18n ) }
 						min={ 100 }
 						max={ 1000 }
 						allowReset={ true }
@@ -123,7 +124,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 				</ResponsiveControl>
 				{ show.borderRadius &&
 					<RangeControl
-						label={ __( 'Border Radius' ) }
+						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
 						onChange={ ( borderRadius = 12 ) => setAttributes( { borderRadius } ) }
 						min={ 0 }
@@ -132,7 +133,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 					/>
 				}
 				<RangeControl
-					label={ __( 'Shadow / Outline' ) }
+					label={ __( 'Shadow / Outline', i18n ) }
 					value={ shadow }
 					onChange={ ( shadow = 3 ) => setAttributes( { shadow } ) }
 					min={ 0 }
@@ -141,7 +142,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 				/>
 			</PanelBody>
 
-			<PanelBody title={ __( 'Background' ) } initialOpen={ false }>
+			<PanelBody title={ __( 'Background', i18n ) } initialOpen={ false }>
 				<BackgroundControlsHelper
 					attrNameTemplate="preview%s"
 					setAttributes={ setAttributes }
@@ -149,9 +150,9 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 				/>
 			</PanelBody>
 
-			<PanelBody title={ __( 'Play Button' ) } initialOpen={ false }>
+			<PanelBody title={ __( 'Play Button', i18n ) } initialOpen={ false }>
 				<SelectControl
-					label={ __( 'Button Style' ) }
+					label={ __( 'Button Style', i18n ) }
 					value={ playButtonType }
 					options={ playButtonTypes.map( ( { value, label } ) => ( {
 						value: value,
@@ -167,19 +168,19 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 					blockAttributes={ props.attributes }
 				>
 					<AdvancedRangeControl
-						label={ __( 'Size' ) }
+						label={ __( 'Size', i18n ) }
 						min={ 10 }
 						max={ 200 }
 						allowReset={ true }
 					/>
 				</ResponsiveControl>
 				<ColorPaletteControl
-					label={ __( 'Color' ) }
+					label={ __( 'Color', i18n ) }
 					value={ playButtonColor }
 					onChange={ playButtonColor => setAttributes( { playButtonColor } ) }
 				/>
 				<RangeControl
-					label={ __( 'Opacity' ) }
+					label={ __( 'Opacity', i18n ) }
 					min={ 0 }
 					max={ 1 }
 					step={ 0.1 }

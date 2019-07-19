@@ -1,4 +1,3 @@
-import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { omit } from 'lodash'
 import { range } from '@stackable/util'
@@ -66,12 +65,12 @@ const deprecatedSchema_1_10 = {
 	deprecatedSchema_1_10[ `title${ i }` ] = {
 		source: 'html',
 		selector: `.ugb-image-box-wrapper > *:nth-child(${ i }) h4`,
-		default: __( 'Title' ),
+		default: 'Title',
 	}
 	deprecatedSchema_1_10[ `description${ i }` ] = {
 		source: 'html',
 		selector: `.ugb-image-box-wrapper > *:nth-child(${ i }) p`,
-		default: __( 'Description' ),
+		default: 'Description',
 	}
 	deprecatedSchema_1_10[ `imageURL${ i }` ] = {
 		type: 'string',
@@ -214,12 +213,12 @@ export const deprecatedSchema_1_5 = {
 	title: {
 		source: 'html',
 		selector: 'h4',
-		default: __( 'Title' ),
+		default: 'Title',
 	},
 	subtitle: {
 		source: 'html',
 		selector: 'p',
-		default: __( 'Subtitle goes here' ),
+		default: 'Subtitle goes here',
 	},
 	url: {
 		type: 'string',
@@ -275,13 +274,13 @@ export const deprecatedSchema_1_1_2 = {
 		type: 'array',
 		source: 'children',
 		selector: 'h4',
-		default: __( 'Title' ),
+		default: 'Title',
 	},
 	subtitle: {
 		type: 'array',
 		source: 'children',
 		selector: 'p',
-		default: __( 'Subtitle goes here' ),
+		default: 'Subtitle goes here',
 	},
 	url: {
 		type: 'string',

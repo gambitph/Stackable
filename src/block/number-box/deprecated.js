@@ -240,32 +240,32 @@ const deprecatedSchema_1_10 = {
 	numberBox: {
 		source: 'html',
 		selector: '.ugb-number-box-column-one span',
-		default: __( '01' ),
+		default: '01',
 	},
 	numberBoxTwo: {
 		source: 'html',
 		selector: '.ugb-number-box-column-two span',
-		default: __( '02' ),
+		default: '02',
 	},
 	numberBoxThree: {
 		source: 'html',
 		selector: '.ugb-number-box-column-three span',
-		default: __( '03' ),
+		default: '03',
 	},
 	name: {
 		source: 'html',
 		selector: '.ugb-number-box-name',
-		default: __( 'Title' ),
+		default: 'Title',
 	},
 	nameTwo: {
 		source: 'html',
 		selector: '.ugb-number-box-name-two',
-		default: __( 'Title' ),
+		default: 'Title',
 	},
 	nameThree: {
 		source: 'html',
 		selector: '.ugb-number-box-name-three',
-		default: __( 'Title' ),
+		default: 'Title',
 	},
 	body: {
 		source: 'html',

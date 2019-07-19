@@ -3,10 +3,10 @@
  */
 
 import { createBackgroundAttributes, createResponsiveAttributes } from '@stackable/util'
+import { disabledBlocks, i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import deprecated from './deprecated'
-import { disabledBlocks } from 'stackable'
 import edit from './edit'
 import save from './save'
 import { VideoPopupIcon } from '@stackable/icons'
@@ -67,14 +67,14 @@ export const schema = {
 export const name = 'ugb/video-popup'
 
 export const settings = {
-	title: __( 'Video Popup' ),
-	description: __( 'Display a large thumbnail that your users can click to play a video full-screen. Great for introductory or tutorial videos.' ),
+	title: __( 'Video Popup', i18n ),
+	description: __( 'Display a large thumbnail that your users can click to play a video full-screen. Great for introductory or tutorial videos.', i18n ),
 	icon: VideoPopupIcon,
 	category: 'stackable',
 	keywords: [
-		__( 'Video Popup' ),
-		__( 'Stackable' ),
-		__( 'YouTube Vimeo mp4' ),
+		__( 'Video Popup', i18n ),
+		__( 'Stackable', i18n ),
+		__( 'YouTube Vimeo mp4', i18n ),
 	],
 	attributes: schema,
 	supports: {

@@ -1,10 +1,9 @@
 import {
-	createButtonStyleSet, createBackgroundStyleSet, createTypographyStyles, whiteIfDark,
+	createBackgroundStyleSet, createButtonStyleSet, createTypographyStyles, whiteIfDark,
 } from '@stackable/util'
 import deepmerge from 'deepmerge'
-import { sprintf } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks';
 import { showOptions } from '.'
+import { sprintf } from '@wordpress/i18n'
 
 export const createStyles = props => {
 	const getValue = ( attrName, format = '' ) => {
@@ -13,16 +12,10 @@ export const createStyles = props => {
 	}
 
 	const {
-		design = 'basic',
 		columnBackgroundColor = '',
 		columnBackgroundColorOpacity = 1,
-		// showTitle = true,
-		// showDescription = true,
 	} = props.attributes
 
-	// const show = applyFilters( 'stackable.cta.show', {
-	// 	columnBackground: design !== 'plain',
-	// }, design, props )
 	const show = showOptions( props )
 
 	const styles = []

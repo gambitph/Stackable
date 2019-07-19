@@ -7,6 +7,7 @@ import { dispatch, select } from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
+import { i18n } from 'stackable'
 import { omit } from 'lodash'
 
 function PanelDesignLibrary( props ) {
@@ -14,8 +15,8 @@ function PanelDesignLibrary( props ) {
 		block = 'all',
 		options = applyFilters( `stackable.${ block }.edit.templates`, props.options || [] ),
 		className = '',
-		title = __( 'Designs' ),
-		help = __( 'Pick a design to start from, this will override your block settings' ),
+		title = __( 'Designs', i18n ),
+		help = __( 'Pick a design to start from, this will override your block settings', i18n ),
 	} = props
 
 	const mainClasses = classnames( [ 'ugb-panel-design-settings', className ] )

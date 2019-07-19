@@ -4,25 +4,26 @@ import { __ } from '@wordpress/i18n'
 import { createAllCombinationAttributes } from '@stackable/util'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
+import { i18n } from 'stackable'
 import { PanelBody } from '@wordpress/components'
 
 const verticalAlignOptions = [
-	{ value: '', label: __( 'Default' ) },
-	{ value: 'stretch', label: __( 'Stretch' ) },
-	{ value: 'flex-start', label: __( 'Top' ) },
-	{ value: 'flex-end', label: __( 'Bottom' ) },
-	{ value: 'center', label: __( 'Center' ) },
-	// { value: 'baseline', label: __( 'Baseline' ) },
+	{ value: '', label: __( 'Default', i18n ) },
+	{ value: 'stretch', label: __( 'Stretch', i18n ) },
+	{ value: 'flex-start', label: __( 'Top', i18n ) },
+	{ value: 'flex-end', label: __( 'Bottom', i18n ) },
+	{ value: 'center', label: __( 'Center', i18n ) },
+	// { value: 'baseline', label: __( 'Baseline', i18n ) },
 ]
 
 const horizontalAlignOptions = [
-	{ value: '', label: __( 'Default' ) },
-	{ value: 'flex-start', label: __( 'Left' ) },
-	{ value: 'center', label: __( 'Center' ) },
-	{ value: 'flex-end', label: __( 'Right' ) },
-	// { value: 'space-between', label: __( 'Space Between' ) },
-	// { value: 'space-around', label: __( 'Space Around' ) },
-	// { value: 'space-evenly', label: __( 'Space Evenly' ) },
+	{ value: '', label: __( 'Default', i18n ) },
+	{ value: 'flex-start', label: __( 'Left', i18n ) },
+	{ value: 'center', label: __( 'Center', i18n ) },
+	{ value: 'flex-end', label: __( 'Right', i18n ) },
+	// { value: 'space-between', label: __( 'Space Between', i18n ) },
+	// { value: 'space-around', label: __( 'Space Around', i18n ) },
+	// { value: 'space-evenly', label: __( 'Space Evenly', i18n ) },
 ]
 
 removeFilter( 'stackable.setAttributes', 'stackable/module/block-spacing' )
@@ -109,14 +110,14 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 		<Fragment>
 			{ output }
 			<PanelBody
-				title={ __( 'Block Spacing' ) }
+				title={ __( 'Block Spacing', i18n ) }
 				initialOpen={ false }
 			>
 				{ applyFilters( `stackable.${ blockName }.edit.advanced.block-spacing.before`, null, props ) }
 				{ options.margins && <Fragment>
 					<WhenResponsiveScreen screen="desktop">
 						<FourNumberControl
-							label={ __( 'Block Margins' ) }
+							label={ __( 'Block Margins', i18n ) }
 							units={ [ 'px', '%' ] }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
 							top={ marginTop }
@@ -141,7 +142,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
 						<FourNumberControl
-							label={ __( 'Block Margins' ) }
+							label={ __( 'Block Margins', i18n ) }
 							units={ [ 'px', '%' ] }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
 							top={ tabletMarginTop }
@@ -166,7 +167,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
 						<FourNumberControl
-							label={ __( 'Block Margins' ) }
+							label={ __( 'Block Margins', i18n ) }
 							units={ [ 'px', '%' ] }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
 							top={ mobileMarginTop }
@@ -193,7 +194,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 				{ options.paddings && <Fragment>
 					<WhenResponsiveScreen screen="desktop">
 						<FourNumberControl
-							label={ __( 'Block Paddings' ) }
+							label={ __( 'Block Paddings', i18n ) }
 							units={ [ 'px', 'em', '%' ] }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
 							top={ paddingTop }
@@ -218,7 +219,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
 						<FourNumberControl
-							label={ __( 'Block Paddings' ) }
+							label={ __( 'Block Paddings', i18n ) }
 							units={ [ 'px', 'em', '%' ] }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
 							top={ tabletPaddingTop }
@@ -243,7 +244,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
 						<FourNumberControl
-							label={ __( 'Block Paddings' ) }
+							label={ __( 'Block Paddings', i18n ) }
 							units={ [ 'px', 'em', '%' ] }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
 							top={ mobilePaddingTop }
@@ -271,7 +272,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 				{ options.height && <Fragment>
 					<WhenResponsiveScreen>
 						<AdvancedRangeControl
-							label={ __( 'Min. Block Height' ) }
+							label={ __( 'Min. Block Height', i18n ) }
 							units={ [ 'px', 'vh' ] }
 							min={ [ 100, 10 ] }
 							max={ [ 1000, 100 ] }
@@ -285,7 +286,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
 						<AdvancedRangeControl
-							label={ __( 'Min. Block Height' ) }
+							label={ __( 'Min. Block Height', i18n ) }
 							units={ [ 'px', 'vh' ] }
 							min={ [ 100, 10 ] }
 							max={ [ 1000, 100 ] }
@@ -299,7 +300,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
 						<AdvancedRangeControl
-							label={ __( 'Min. Block Height' ) }
+							label={ __( 'Min. Block Height', i18n ) }
 							units={ [ 'px', 'vh' ] }
 							min={ [ 100, 10 ] }
 							max={ [ 1000, 100 ] }
@@ -316,7 +317,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 				{ options.width && <Fragment>
 					<WhenResponsiveScreen>
 						<AdvancedRangeControl
-							label={ __( 'Max. Content Width' ) }
+							label={ __( 'Max. Content Width', i18n ) }
 							units={ [ 'px', '%' ] }
 							min={ [ 100, 10 ] }
 							max={ [ 2000, 100 ] }
@@ -330,7 +331,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
 						<AdvancedRangeControl
-							label={ __( 'Max. Content Width' ) }
+							label={ __( 'Max. Content Width', i18n ) }
 							units={ [ 'px', '%' ] }
 							min={ [ 100, 10 ] }
 							max={ [ 1500, 100 ] }
@@ -344,7 +345,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
 						<AdvancedRangeControl
-							label={ __( 'Max. Content Width' ) }
+							label={ __( 'Max. Content Width', i18n ) }
 							units={ [ 'px', '%' ] }
 							min={ [ 100, 10 ] }
 							max={ [ 1000, 100 ] }
@@ -361,7 +362,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 				{ options.horizontalAlign && <Fragment>
 					<WhenResponsiveScreen>
 						<AdvancedSelectControl
-							label={ __( 'Content Horizontal Align' ) }
+							label={ __( 'Content Horizontal Align', i18n ) }
 							options={ horizontalAlignOptions }
 							value={ blockHorizontalAlign }
 							onChange={ blockHorizontalAlign => setAttributes( { blockHorizontalAlign } ) }
@@ -369,7 +370,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
 						<AdvancedSelectControl
-							label={ __( 'Content Horizontal Align' ) }
+							label={ __( 'Content Horizontal Align', i18n ) }
 							options={ horizontalAlignOptions }
 							value={ tabletBlockHorizontalAlign }
 							onChange={ tabletBlockHorizontalAlign => setAttributes( { tabletBlockHorizontalAlign } ) }
@@ -377,7 +378,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
 						<AdvancedSelectControl
-							label={ __( 'Content Horizontal Align' ) }
+							label={ __( 'Content Horizontal Align', i18n ) }
 							options={ horizontalAlignOptions }
 							value={ mobileBlockHorizontalAlign }
 							onChange={ mobileBlockHorizontalAlign => setAttributes( { mobileBlockHorizontalAlign } ) }
@@ -388,7 +389,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 				{ options.verticalAlign && <Fragment>
 					<WhenResponsiveScreen>
 						<AdvancedSelectControl
-							label={ __( 'Content Vertical Align' ) }
+							label={ __( 'Content Vertical Align', i18n ) }
 							options={ verticalAlignOptions }
 							value={ blockVerticalAlign }
 							onChange={ blockVerticalAlign => setAttributes( { blockVerticalAlign } ) }
@@ -396,7 +397,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
 						<AdvancedSelectControl
-							label={ __( 'Content Vertical Align' ) }
+							label={ __( 'Content Vertical Align', i18n ) }
 							options={ verticalAlignOptions }
 							value={ tabletBlockVerticalAlign }
 							onChange={ tabletBlockVerticalAlign => setAttributes( { tabletBlockVerticalAlign } ) }
@@ -404,7 +405,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
 						<AdvancedSelectControl
-							label={ __( 'Content Vertical Align' ) }
+							label={ __( 'Content Vertical Align', i18n ) }
 							options={ verticalAlignOptions }
 							value={ mobileBlockVerticalAlign }
 							onChange={ mobileBlockVerticalAlign => setAttributes( { mobileBlockVerticalAlign } ) }

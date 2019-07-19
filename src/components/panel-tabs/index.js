@@ -2,6 +2,7 @@ import './polyfill'
 import { Component, createRef } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
+import { i18n } from 'stackable'
 import { Icon } from '@wordpress/components'
 import withMemory from './with-memory'
 import withSticky from './with-sticky'
@@ -9,20 +10,20 @@ import withSticky from './with-sticky'
 const TABS = [
 	{
 		value: 'layout',
-		title: __( 'Layout' ),
-		label: __( 'Layout Tab' ),
+		title: __( 'Layout', i18n ),
+		label: __( 'Layout Tab', i18n ),
 		icon: 'admin-settings',
 	},
 	{
 		value: 'style',
-		title: __( 'Style' ),
-		label: __( 'Style Tab' ),
+		title: __( 'Style', i18n ),
+		label: __( 'Style Tab', i18n ),
 		icon: 'admin-appearance',
 	},
 	{
 		value: 'advanced',
-		title: __( 'Advanced' ),
-		label: __( 'Advanced Tab' ),
+		title: __( 'Advanced', i18n ),
+		label: __( 'Advanced Tab', i18n ),
 		icon: 'admin-tools',
 	},
 ]

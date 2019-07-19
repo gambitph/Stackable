@@ -3,7 +3,6 @@ import {
 	DeprecatedButtonContent_1_4,
 	DeprecatedButtonContent_1_9,
 } from '@stackable/components/button-edit'
-import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { descriptionPlaceholder } from '@stackable/util'
 import { RichText } from '@wordpress/block-editor'
@@ -33,7 +32,7 @@ const deprecatedSchema_1_10 = {
 	title: {
 		source: 'html',
 		selector: 'h2',
-		default: __( 'Title for This Block' ),
+		default: 'Title for This Block',
 	},
 	description: {
 		source: 'html',
@@ -49,7 +48,7 @@ const deprecatedSchema_1_10 = {
 	buttonText: {
 		source: 'html',
 		selector: '.ugb-button span',
-		default: __( 'Button text' ),
+		default: 'Button text',
 	},
 	buttonColor: {
 		type: 'string',
@@ -204,12 +203,12 @@ export const deprecatedSchema_1_9 = {
 	title: {
 		source: 'html',
 		selector: 'h2',
-		default: __( 'Feature Title' ),
+		default: 'Feature Title',
 	},
 	description: {
 		source: 'html',
 		selector: 'p',
-		default: __( 'Some feature description for an awesome feature' ),
+		default: 'Some feature description for an awesome feature',
 	},
 	buttonURL: {
 		type: 'string',
@@ -220,7 +219,7 @@ export const deprecatedSchema_1_9 = {
 	buttonText: {
 		source: 'html',
 		selector: '.ugb-button-inner',
-		default: __( 'Learn More' ),
+		default: 'Learn More',
 	},
 	buttonColor: {
 		type: 'string',
@@ -378,12 +377,12 @@ export const deprecatedSchema_1_4 = {
 	title: {
 		source: 'html',
 		selector: 'h2',
-		default: __( 'Feature Title' ),
+		default: 'Feature Title',
 	},
 	description: {
 		source: 'html',
 		selector: 'p',
-		default: __( 'Some feature description for an awesome feature' ),
+		default: 'Some feature description for an awesome feature',
 	},
 	buttonURL: {
 		type: 'string',
@@ -394,7 +393,7 @@ export const deprecatedSchema_1_4 = {
 	buttonText: {
 		source: 'html',
 		selector: '.ugb-button-inner',
-		default: __( 'Learn More' ),
+		default: 'Learn More',
 	},
 	buttonColor: {
 		type: 'string',

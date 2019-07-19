@@ -1,7 +1,7 @@
+import { i18n, pricingURL } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { Component } from '@wordpress/element'
 import { Modal } from '@wordpress/components'
-import { pricingURL } from 'stackable'
 
 class ProModalPricing extends Component {
 	constructor() {
@@ -28,29 +28,29 @@ class ProModalPricing extends Component {
 				shouldCloseOnEsc={ false }
 				shouldCloseOnClickOutside={ false }
 			>
-				<img src="https://gambitph.github.io/Stackable/assets/premium-slider/upgrade.jpg" alt={ __( 'Do more with Stackable Premium' ) } />
+				<img src="https://gambitph.github.io/Stackable/assets/premium-slider/upgrade.jpg" alt={ __( 'Do more with Stackable Premium', i18n ) } />
 				<div className="ugb-pro-modal__footer">
 					<a href={ pricingURL }
 						className="button button-secondary"
 						target="_blank"
-						title={ __( 'Go Premium' ) }
+						title={ __( 'Go Premium', i18n ) }
 					>
-						{ __( 'Go Premium' ) }
+						{ __( 'Go Premium', i18n ) }
 					</a>
 					<a href="https://rebrand.ly/plugin-premium-demo"
 						className="button button-secondary button-ghost"
 						target="_blank" // eslint-disable-line
 						rel="noopener"
-						title={ __( 'Try Premium Demo' ) }
+						title={ __( 'Try Premium Demo', i18n ) }
 					>
-						{ __( 'Try Premium Demo' ) }
+						{ __( 'Try Premium Demo', i18n ) }
 					</a>
 					<a href="https://rebrand.ly/plugin-slider-premium"
 						target="_blank" // eslint-disable-line
 						rel="noopener"
-						title={ __( 'Visit Site' ) }
+						title={ __( 'Visit Site', i18n ) }
 					>
-						{ __( 'Visit Site' ) }
+						{ __( 'Visit Site', i18n ) }
 					</a>
 				</div>
 			</Modal>

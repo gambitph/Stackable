@@ -1,5 +1,4 @@
 import { descriptionPlaceholder, range } from '@stackable/util'
-import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { omit } from 'lodash'
 import { RichText } from '@wordpress/block-editor'
@@ -26,32 +25,32 @@ const deprecatedSchema_1_10 = {
 	name1: {
 		source: 'html',
 		selector: '.ugb-testimonial-item:nth-of-type(1) h4',
-		default: __( 'Name' ),
+		default: 'Name',
 	},
 	name2: {
 		source: 'html',
 		selector: '.ugb-testimonial-item:nth-of-type(2) h4',
-		default: __( 'Name' ),
+		default: 'Name',
 	},
 	name3: {
 		source: 'html',
 		selector: '.ugb-testimonial-item:nth-of-type(3) h4',
-		default: __( 'Name' ),
+		default: 'Name',
 	},
 	position1: {
 		source: 'html',
 		selector: '.ugb-testimonial-item:nth-of-type(1) .ugb-testimonial-position',
-		default: __( 'Position' ),
+		default: 'Position',
 	},
 	position2: {
 		source: 'html',
 		selector: '.ugb-testimonial-item:nth-of-type(2) .ugb-testimonial-position',
-		default: __( 'Position' ),
+		default: 'Position',
 	},
 	position3: {
 		source: 'html',
 		selector: '.ugb-testimonial-item:nth-of-type(3) .ugb-testimonial-position',
-		default: __( 'Position' ),
+		default: 'Position',
 	},
 	testimonial1: {
 		source: 'html',
@@ -365,47 +364,47 @@ export const deprecatedSchema_1_5 = {
 	testimonialTitle: {
 		source: 'html',
 		selector: '.ugb-testimonial-column-one h4',
-		default: __( 'Ben Adams' ),
+		default: 'Ben Adams',
 	},
 	testimonialTitleTwo: {
 		source: 'html',
 		selector: '.ugb-testimonial-column-two h4',
-		default: __( 'Alex Johnson' ),
+		default: 'Alex Johnson',
 	},
 	testimonialTitleThree: {
 		source: 'html',
 		selector: '.ugb-testimonial-column-three h4',
-		default: __( 'Sammy Simpson' ),
+		default: 'Sammy Simpson',
 	},
 	position: {
 		source: 'html',
 		selector: '.ugb-testimonial-position',
-		default: __( 'Founder' ),
+		default: 'Founder',
 	},
 	positionTwo: {
 		source: 'html',
 		selector: '.ugb-testimonial-position-two',
-		default: __( 'Editor' ),
+		default: 'Editor',
 	},
 	positionThree: {
 		source: 'html',
 		selector: '.ugb-testimonial-position-three',
-		default: __( 'Programmer' ),
+		default: 'Programmer',
 	},
 	body: {
 		source: 'html',
 		selector: '.ugb-testimonial-body',
-		default: __( 'Stackable: Ultimate Blocks from Gutenberg has all the blocks I need to make a great webpage.' ),
+		default: 'Stackable: Ultimate Blocks from Gutenberg has all the blocks I need to make a great webpage.',
 	},
 	bodyTwo: {
 		source: 'html',
 		selector: '.ugb-testimonial-body-two',
-		default: __( 'Stackable: Ultimate Blocks from Gutenberg has all the blocks I need to make a great webpage.' ),
+		default: 'Stackable: Ultimate Blocks from Gutenberg has all the blocks I need to make a great webpage.',
 	},
 	bodyThree: {
 		source: 'html',
 		selector: '.ugb-testimonial-body-three',
-		default: __( 'Stackable: Ultimate Blocks from Gutenberg has all the blocks I need to make a great webpage.' ),
+		default: 'Stackable: Ultimate Blocks from Gutenberg has all the blocks I need to make a great webpage.',
 	},
 	titleColor: {
 		type: 'string',

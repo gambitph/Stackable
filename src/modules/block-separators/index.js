@@ -8,11 +8,11 @@ import {
 	ResponsiveControl,
 	Separator,
 } from '@stackable/components'
+import { i18n, showProNotice } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { createAllCombinationAttributes } from '@stackable/util'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
-import { showProNotice } from 'stackable'
 import { ToggleControl } from '@wordpress/components'
 
 const separatorAddedPadding = 200
@@ -100,7 +100,7 @@ const addBlockSeparatorPanels = ( output, props ) => {
 		<Fragment>
 			{ output }
 			<PanelAdvancedSettings
-				title={ __( 'Top Separator' ) }
+				title={ __( 'Top Separator', i18n ) }
 				checked={ showTopSeparator }
 				onChange={ showTopSeparator => setAttributes( { showTopSeparator } ) }
 				className="ugb-top-block-separator-panel"
@@ -132,12 +132,12 @@ const addBlockSeparatorPanels = ( output, props ) => {
 				toggleAttributeName="showTopSeparator"
 			>
 				<DesignSeparatorControl
-					label={ __( 'Design' ) }
+					label={ __( 'Design', i18n ) }
 					selected={ topSeparatorDesign }
 					onChange={ topSeparatorDesign => setAttributes( { topSeparatorDesign } ) }
 				/>
 				<ColorPaletteControl
-					label={ __( 'Color' ) }
+					label={ __( 'Color', i18n ) }
 					value={ topSeparatorColor }
 					onChange={ topSeparatorColor => setAttributes( { topSeparatorColor } ) }
 				/>
@@ -147,14 +147,14 @@ const addBlockSeparatorPanels = ( output, props ) => {
 					blockAttributes={ props.attributes }
 				>
 					<AdvancedRangeControl
-						label={ __( 'Height' ) }
+						label={ __( 'Height', i18n ) }
 						min="30"
 						max="400"
 						allowReset={ true }
 					/>
 				</ResponsiveControl>
 				<AdvancedRangeControl
-					label={ __( 'Width' ) }
+					label={ __( 'Width', i18n ) }
 					min="1"
 					max="4"
 					step="0.1"
@@ -163,28 +163,28 @@ const addBlockSeparatorPanels = ( output, props ) => {
 					allowReset={ true }
 				/>
 				<ToggleControl
-					label={ __( 'Flip Horizontally' ) }
+					label={ __( 'Flip Horizontally', i18n ) }
 					checked={ topSeparatorFlipHorizontally }
 					onChange={ topSeparatorFlipHorizontally => setAttributes( { topSeparatorFlipHorizontally } ) }
 				/>
 				<ToggleControl
-					label={ __( 'Shadow' ) }
+					label={ __( 'Shadow', i18n ) }
 					checked={ topSeparatorShadow }
 					onChange={ topSeparatorShadow => setAttributes( { topSeparatorShadow } ) }
 				/>
 				<ToggleControl
-					label={ __( 'Bring to Front' ) }
+					label={ __( 'Bring to Front', i18n ) }
 					checked={ topSeparatorBringToFront }
 					onChange={ topSeparatorBringToFront => setAttributes( { topSeparatorBringToFront } ) }
 				/>
 				{ applyFilters( 'stackable.block-separators.edit.top', null, props ) }
 				{ showProNotice && <ProControlButton
-					title={ __( 'Say Hello to Gorgeous Separators 👋' ) }
-					description={ __( 'Add a second & third layer to this separator and make it look even sweeter. This feature is only available on Stackable Premium' ) }
+					title={ __( 'Say Hello to Gorgeous Separators 👋', i18n ) }
+					description={ __( 'Add a second & third layer to this separator and make it look even sweeter. This feature is only available on Stackable Premium', i18n ) }
 				/> }
 			</PanelAdvancedSettings>
 			<PanelAdvancedSettings
-				title={ __( 'Bottom Separator' ) }
+				title={ __( 'Bottom Separator', i18n ) }
 				checked={ showBottomSeparator }
 				onChange={ showBottomSeparator => setAttributes( { showBottomSeparator } ) }
 				className="ugb-bottom-block-separator-panel"
@@ -216,12 +216,12 @@ const addBlockSeparatorPanels = ( output, props ) => {
 				toggleAttributeName="showBottomSeparator"
 			>
 				<DesignSeparatorControl
-					label={ __( 'Design' ) }
+					label={ __( 'Design', i18n ) }
 					selected={ bottomSeparatorDesign }
 					onChange={ bottomSeparatorDesign => setAttributes( { bottomSeparatorDesign } ) }
 				/>
 				<ColorPaletteControl
-					label={ __( 'Color' ) }
+					label={ __( 'Color', i18n ) }
 					value={ bottomSeparatorColor }
 					onChange={ bottomSeparatorColor => setAttributes( { bottomSeparatorColor } ) }
 				/>
@@ -231,14 +231,14 @@ const addBlockSeparatorPanels = ( output, props ) => {
 					blockAttributes={ props.attributes }
 				>
 					<AdvancedRangeControl
-						label={ __( 'Height' ) }
+						label={ __( 'Height', i18n ) }
 						min="30"
 						max="400"
 						allowReset={ true }
 					/>
 				</ResponsiveControl>
 				<AdvancedRangeControl
-					label={ __( 'Width' ) }
+					label={ __( 'Width', i18n ) }
 					min="1"
 					max="4"
 					step="0.1"
@@ -247,24 +247,24 @@ const addBlockSeparatorPanels = ( output, props ) => {
 					allowReset={ true }
 				/>
 				<ToggleControl
-					label={ __( 'Flip Horizontally' ) }
+					label={ __( 'Flip Horizontally', i18n ) }
 					checked={ bottomSeparatorFlipHorizontally }
 					onChange={ bottomSeparatorFlipHorizontally => setAttributes( { bottomSeparatorFlipHorizontally } ) }
 				/>
 				<ToggleControl
-					label={ __( 'Shadow' ) }
+					label={ __( 'Shadow', i18n ) }
 					checked={ bottomSeparatorShadow }
 					onChange={ bottomSeparatorShadow => setAttributes( { bottomSeparatorShadow } ) }
 				/>
 				<ToggleControl
-					label={ __( 'Bring to Front' ) }
+					label={ __( 'Bring to Front', i18n ) }
 					checked={ bottomSeparatorBringToFront }
 					onChange={ bottomSeparatorBringToFront => setAttributes( { bottomSeparatorBringToFront } ) }
 				/>
 				{ applyFilters( 'stackable.block-separators.edit.bottom', null, props ) }
 				{ showProNotice && <ProControlButton
-					title={ __( 'Say Hello to Gorgeous Separators 👋' ) }
-					description={ __( 'Add a second & third layer to this separator and make it look even sweeter. This feature is only available on Stackable Premium' ) }
+					title={ __( 'Say Hello to Gorgeous Separators 👋', i18n ) }
+					description={ __( 'Add a second & third layer to this separator and make it look even sweeter. This feature is only available on Stackable Premium', i18n ) }
 				/> }
 			</PanelAdvancedSettings>
 		</Fragment>

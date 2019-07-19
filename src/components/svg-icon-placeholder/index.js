@@ -7,6 +7,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { i18n } from 'stackable'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 library.add( fab, far, fas )
@@ -117,8 +118,8 @@ class SvgIconPlaceholder extends Component {
 }
 
 SvgIconPlaceholder.defaultProps = {
-	colorLabel: __( 'Icon Color' ),
-	iconLabel: __( 'Pick an Icon' ),
+	colorLabel: __( 'Icon Color', i18n ),
+	iconLabel: __( 'Pick an Icon', i18n ),
 	onChangeColor: null,
 	onChange: () => {},
 	value: null,

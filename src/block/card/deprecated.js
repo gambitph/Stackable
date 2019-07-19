@@ -4,7 +4,6 @@ import {
 	DeprecatedButtonContent_1_9,
 	DeprecatedButtonContent_1_9_1,
 } from '@stackable/components/button-edit'
-import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { descriptionPlaceholder } from '@stackable/util'
 import { RichText } from '@wordpress/block-editor'
@@ -126,12 +125,12 @@ const deprecatedSchema_1_12 = {
 	heading: {
 		source: 'html',
 		selector: '.ugb-card__title',
-		default: __( 'Title for This Block' ),
+		default: 'Title for This Block',
 	},
 	tagline: {
 		source: 'html',
 		selector: '.ugb-card__tagline',
-		default: __( 'Subtitle for this block' ),
+		default: 'Subtitle for this block',
 	},
 	des: {
 		source: 'html',
@@ -164,7 +163,7 @@ const deprecatedSchema_1_12 = {
 	buttonText: {
 		source: 'html',
 		selector: '.ugb-button span',
-		default: __( 'Button text' ),
+		default: 'Button text',
 	},
 	buttonColor: {
 		type: 'string',
@@ -325,12 +324,12 @@ const deprecatedSchema_1_10 = {
 	heading: {
 		source: 'html',
 		selector: '.ugb-card h4',
-		default: __( 'Title for This Block' ),
+		default: 'Title for This Block',
 	},
 	tagline: {
 		source: 'html',
 		selector: '.ugb-tagline',
-		default: __( 'Subtitle for this block' ),
+		default: 'Subtitle for this block',
 	},
 	des: {
 		source: 'html',
@@ -355,7 +354,7 @@ const deprecatedSchema_1_10 = {
 	buttonText: {
 		source: 'html',
 		selector: '.ugb-button span',
-		default: __( 'Button text' ),
+		default: 'Button text',
 	},
 	buttonColor: {
 		type: 'string',
@@ -486,17 +485,17 @@ const deprecatedSchema_1_9_1 = {
 	heading: {
 		source: 'html',
 		selector: '.ugb-card h4',
-		default: __( 'Ben Adams' ),
+		default: 'Ben Adams',
 	},
 	tagline: {
 		source: 'html',
 		selector: '.ugb-tagline',
-		default: __( 'Ben is the head of our small team' ),
+		default: 'Ben is the head of our small team',
 	},
 	des: {
 		source: 'html',
 		selector: '.ugb-card-des',
-		default: __( 'Ben is the head of our small team. He loves walking his dog, Walter, when he has some free time.' ),
+		default: 'Ben is the head of our small team. He loves walking his dog, Walter, when he has some free time.',
 	},
 	headingColor: {
 		type: 'string',
@@ -516,7 +515,7 @@ const deprecatedSchema_1_9_1 = {
 	buttonText: {
 		source: 'html',
 		selector: '.ugb-button span',
-		default: __( 'Button' ),
+		default: 'Button',
 	},
 	buttonColor: {
 		type: 'string',
@@ -559,17 +558,17 @@ export const deprecatedSchema_1_9 = {
 	heading: {
 		source: 'html',
 		selector: '.ugb-card h4',
-		default: __( 'Ben Adams' ),
+		default: 'Ben Adams',
 	},
 	tagline: {
 		source: 'html',
 		selector: '.ugb-tagline',
-		default: __( 'Ben is the head of our small team' ),
+		default: 'Ben is the head of our small team',
 	},
 	des: {
 		source: 'html',
 		selector: '.ugb-card-des',
-		default: __( 'Ben is the head of our small team. He loves walking his dog, Walter, when he has some free time.' ),
+		default: 'Ben is the head of our small team. He loves walking his dog, Walter, when he has some free time.',
 	},
 	headingColor: {
 		type: 'string',
@@ -589,7 +588,7 @@ export const deprecatedSchema_1_9 = {
 	buttonText: {
 		source: 'html',
 		selector: '.ugb-button-inner',
-		default: __( 'Button' ),
+		default: 'Button',
 	},
 	buttonColor: {
 		type: 'string',

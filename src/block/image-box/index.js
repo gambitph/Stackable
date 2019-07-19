@@ -2,9 +2,9 @@
  * BLOCK: Image Box Block.
  */
 
+import { disabledBlocks, i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import deprecated from './deprecated'
-import { disabledBlocks } from 'stackable'
 import edit from './edit'
 import { ImageBoxIcon } from '@stackable/icons'
 import save from './save'
@@ -113,12 +113,12 @@ export const schema = {
 	schema[ `title${ i }` ] = {
 		source: 'html',
 		selector: `.ugb-image-box__item:nth-of-type(${ i }) .ugb-image-box__title`,
-		default: __( 'Title' ),
+		default: __( 'Title', i18n ),
 	}
 	schema[ `description${ i }` ] = {
 		source: 'html',
 		selector: `.ugb-image-box__item:nth-of-type(${ i }) .ugb-image-box__description`,
-		default: __( 'Description' ),
+		default: __( 'Description', i18n ),
 	}
 	schema[ `imageURL${ i }` ] = {
 		type: 'string',
@@ -145,13 +145,13 @@ export const schema = {
 export const name = 'ugb/image-box'
 
 export const settings = {
-	title: __( 'Image Box' ),
-	description: __( 'Display an image that shows more information when hovered on. Can be used as a fancy link to other pages.' ),
+	title: __( 'Image Box', i18n ),
+	description: __( 'Display an image that shows more information when hovered on. Can be used as a fancy link to other pages.', i18n ),
 	icon: ImageBoxIcon,
 	category: 'stackable',
 	keywords: [
-		__( 'Image Box' ),
-		__( 'Stackable' ),
+		__( 'Image Box', i18n ),
+		__( 'Stackable', i18n ),
 	],
 	supports: {
 		align: [ 'center', 'wide', 'full' ],

@@ -3,6 +3,7 @@ import { BaseControl, IconButton, PanelBody, Popover, ToggleControl } from '@wor
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { Component } from '@wordpress/element'
+import { i18n } from 'stackable'
 
 // Keep the instance ID.
 let buttonInstance = 1
@@ -89,14 +90,14 @@ class ButtonIconPopoverControl extends Component {
 						<IconButton
 							onClick={ this.props.onReset }
 							className="ugb-button-icon-control__reset"
-							label={ __( 'Reset' ) }
+							label={ __( 'Reset', i18n ) }
 							icon="image-rotate"
 						/>
 					) }
 					<IconButton
 						onClick={ this.handleOpen }
 						className="ugb-button-icon-control__edit"
-						label={ __( 'Edit' ) }
+						label={ __( 'Edit', i18n ) }
 						isDefault
 						icon="edit"
 						id={ `ugb-button-icon-control__edit-${ this.instanceId }` }

@@ -4,15 +4,16 @@ import { __ } from '@wordpress/i18n'
 import { createAllCombinationAttributes } from '@stackable/util'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
+import { i18n } from 'stackable'
 import { PanelBody } from '@wordpress/components'
 
 const verticalAlignOptions = [
-	{ value: '', label: __( 'Default' ) },
-	{ value: 'stretch', label: __( 'Stretch' ) },
-	{ value: 'flex-start', label: __( 'Top' ) },
-	{ value: 'flex-end', label: __( 'Bottom' ) },
-	{ value: 'center', label: __( 'Center' ) },
-	// { value: 'baseline', label: __( 'Baseline' ) },
+	{ value: '', label: __( 'Default', i18n ) },
+	{ value: 'stretch', label: __( 'Stretch', i18n ) },
+	{ value: 'flex-start', label: __( 'Top', i18n ) },
+	{ value: 'flex-end', label: __( 'Bottom', i18n ) },
+	{ value: 'center', label: __( 'Center', i18n ) },
+	// { value: 'baseline', label: __( 'Baseline', i18n ) },
 ]
 
 const inspectorControls = ( blockName, options ) => ( output, props ) => {
@@ -53,14 +54,14 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 		<Fragment>
 			{ output }
 			<PanelBody
-				title={ __( 'Column Spacing' ) }
+				title={ __( 'Column Spacing', i18n ) }
 				initialOpen={ false }
 			>
 				{ applyFilters( `stackable.${ blockName }.edit.advanced.column-spacing.before`, null, props ) }
 				{ options.paddings && <Fragment>
 					<WhenResponsiveScreen screen="desktop">
 						<FourNumberControl
-							label={ __( 'Block Paddings' ) }
+							label={ __( 'Block Paddings', i18n ) }
 							units={ [ 'px', 'em', '%' ] }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
 							top={ columnPaddingTop }
@@ -85,7 +86,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
 						<FourNumberControl
-							label={ __( 'Block Paddings' ) }
+							label={ __( 'Block Paddings', i18n ) }
 							units={ [ 'px', 'em', '%' ] }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
 							top={ tabletColumnPaddingTop }
@@ -110,7 +111,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
 						<FourNumberControl
-							label={ __( 'Block Paddings' ) }
+							label={ __( 'Block Paddings', i18n ) }
 							units={ [ 'px', 'em', '%' ] }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
 							top={ mobileColumnPaddingTop }
@@ -138,7 +139,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 				{ options.columnGap && <Fragment>
 					<WhenResponsiveScreen>
 						<AdvancedRangeControl
-							label={ __( 'Column Gap' ) }
+							label={ __( 'Column Gap', i18n ) }
 							min={ 0 }
 							max={ 200 }
 							value={ columnGap }
@@ -148,7 +149,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
 						<AdvancedRangeControl
-							label={ __( 'Column Gap' ) }
+							label={ __( 'Column Gap', i18n ) }
 							min={ 0 }
 							max={ 200 }
 							value={ tabletColumnGap }
@@ -158,7 +159,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
 						<AdvancedRangeControl
-							label={ __( 'Column Gap' ) }
+							label={ __( 'Column Gap', i18n ) }
 							min={ 0 }
 							max={ 200 }
 							value={ mobileColumnGap }
@@ -171,7 +172,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 				{ options.height && <Fragment>
 					<WhenResponsiveScreen>
 						<AdvancedRangeControl
-							label={ __( 'Min. Column Height' ) }
+							label={ __( 'Min. Column Height', i18n ) }
 							min={ 100 }
 							max={ 1000 }
 							value={ columnHeight }
@@ -181,7 +182,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
 						<AdvancedRangeControl
-							label={ __( 'Min. Column Height' ) }
+							label={ __( 'Min. Column Height', i18n ) }
 							min={ 100 }
 							max={ 1000 }
 							value={ tabletColumnHeight }
@@ -191,7 +192,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
 						<AdvancedRangeControl
-							label={ __( 'Min. Column Height' ) }
+							label={ __( 'Min. Column Height', i18n ) }
 							min={ 100 }
 							max={ 1000 }
 							value={ mobileColumnHeight }
@@ -204,7 +205,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 				{ options.verticalAlign && <Fragment>
 					<WhenResponsiveScreen>
 						<AdvancedSelectControl
-							label={ __( 'Content Vertical Align' ) }
+							label={ __( 'Content Vertical Align', i18n ) }
 							options={ verticalAlignOptions }
 							value={ columnVerticalAlign }
 							onChange={ columnVerticalAlign => setAttributes( { columnVerticalAlign } ) }
@@ -212,7 +213,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
 						<AdvancedSelectControl
-							label={ __( 'Content Vertical Align' ) }
+							label={ __( 'Content Vertical Align', i18n ) }
 							options={ verticalAlignOptions }
 							value={ tabletColumnVerticalAlign }
 							onChange={ tabletColumnVerticalAlign => setAttributes( { tabletColumnVerticalAlign } ) }
@@ -220,7 +221,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
 						<AdvancedSelectControl
-							label={ __( 'Content Vertical Align' ) }
+							label={ __( 'Content Vertical Align', i18n ) }
 							options={ verticalAlignOptions }
 							value={ mobileColumnVerticalAlign }
 							onChange={ mobileColumnVerticalAlign => setAttributes( { mobileColumnVerticalAlign } ) }

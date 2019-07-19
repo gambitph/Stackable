@@ -43,7 +43,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
             if ( ! empty( $attributes['displayCategory'] ) ) {
                 $category = sprintf(
                     '<div class="ugb-blog-posts__category-list">%s</div>',
-                    get_the_category_list( esc_html__( ', ', 'stackable' ), '', $post_id )
+                    get_the_category_list( esc_html__( ', ', STACKABLE_I18N ), '', $post_id )
                 );
             }
 
@@ -107,7 +107,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
             $comments = '';
             if ( ! empty( $attributes['displayComments'] ) ) {
                 $num = get_comments_number( $post_id );
-                $num = sprintf( _n( '%d comment', '%d comments', $num, 'stackable' ), $num );
+                $num = sprintf( _n( '%d comment', '%d comments', $num, STACKABLE_I18N ), $num );
 
                 $comments = sprintf(
                     '<span>%s</span>',
@@ -120,7 +120,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
             if ( ! empty( $attributes['displayTitle'] ) ) {
                 $title = get_the_title( $post_id );
                 if ( ! $title ) {
-                    $title = __( '(Untitled)', 'stackable' );
+                    $title = __( '(Untitled)', STACKABLE_I18N );
                 }
                 $title = sprintf(
                     '<h3 class="ugb-blog-posts__title"><a href="%s">%s</a></h3>',
@@ -145,7 +145,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
             // Read more link.
             $read_more = '';
             if ( ! empty( $attributes['displayReadMoreLink'] ) ) {
-                $read_more_text = __( 'Continue reading', 'stackable' );
+                $read_more_text = __( 'Continue reading', STACKABLE_I18N );
                 if ( ! empty( $attributes['readMoreText'] ) ) {
                     $read_more_text = $attributes['readMoreText'];
                 }
@@ -373,7 +373,7 @@ if ( ! function_exists( 'stackable_blog_posts_rest_fields' ) ) {
                 'get_callback' => 'stackable_featured_image_urls',
                 'update_callback' => null,
                 'schema' => array(
-                    'description' => __( 'Different sized featured images' ),
+                    'description' => __( 'Different sized featured images', STACKABLE_I18N ),
                     'type' => 'array',
                 ),
             )
@@ -385,7 +385,7 @@ if ( ! function_exists( 'stackable_blog_posts_rest_fields' ) ) {
                 'get_callback' => 'stackable_post_excerpt',
                 'update_callback' => null,
                 'schema' => array(
-                    'description' => __( 'Post excerpt for Stackable' ),
+                    'description' => __( 'Post excerpt for Stackable', STACKABLE_I18N ),
                     'type' => 'string',
                 ),
             )
@@ -397,7 +397,7 @@ if ( ! function_exists( 'stackable_blog_posts_rest_fields' ) ) {
                 'get_callback' => 'stackable_category_list',
                 'update_callback' => null,
                 'schema' => array(
-                    'description' => __( 'Category list links' ),
+                    'description' => __( 'Category list links', STACKABLE_I18N ),
                     'type' => 'string',
                 ),
             )
@@ -409,7 +409,7 @@ if ( ! function_exists( 'stackable_blog_posts_rest_fields' ) ) {
                 'get_callback' => 'stackable_author_info',
                 'update_callback' => null,
                 'schema' => array(
-                    'description' => __( 'Author information' ),
+                    'description' => __( 'Author information', STACKABLE_I18N ),
                     'type' => 'array',
                 ),
             )
@@ -421,7 +421,7 @@ if ( ! function_exists( 'stackable_blog_posts_rest_fields' ) ) {
                 'get_callback' => 'stackable_commments_number',
                 'update_callback' => null,
                 'schema' => array(
-                    'description' => __( 'Number of comments' ),
+                    'description' => __( 'Number of comments', STACKABLE_I18N ),
                     'type' => 'number',
                 ),
             )
@@ -472,7 +472,7 @@ if ( ! function_exists( 'stackable_commments_number' ) ) {
      */
     function stackable_commments_number( $object ) {
         $num = get_comments_number( $object['id'] );
-        return sprintf( _n( '%d comment', '%d comments', $num, 'stackable' ), $num );
+        return sprintf( _n( '%d comment', '%d comments', $num, STACKABLE_I18N ), $num );
     }
 }
 
@@ -483,7 +483,7 @@ if ( ! function_exists( 'stackable_category_list' ) ) {
      * @since 1.7
      */
     function stackable_category_list( $object ) {
-        return get_the_category_list( esc_html__( ', ', 'stackable' ), '', $object['id'] );
+        return get_the_category_list( esc_html__( ', ', STACKABLE_I18N ), '', $object['id'] );
     }
 }
 

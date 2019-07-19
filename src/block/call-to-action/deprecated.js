@@ -273,7 +273,7 @@ const deprecatedSchema_1_12 = {
 	ctaTitle: {
 		source: 'html',
 		selector: 'h3',
-		default: __( 'Title for This Block' ),
+		default: 'Title for This Block',
 	},
 	bodyText: {
 		source: 'html',
@@ -283,7 +283,7 @@ const deprecatedSchema_1_12 = {
 	buttonText: {
 		source: 'html',
 		selector: '.ugb-button span',
-		default: __( 'Button text' ),
+		default: 'Button text',
 	},
 	buttonDesign: {
 		type: 'string',
@@ -532,7 +532,7 @@ const deprecatedSchema_1_10 = {
 	ctaTitle: {
 		source: 'html',
 		selector: 'h3',
-		default: __( 'Title for This Block' ),
+		default: 'Title for This Block',
 	},
 	bodyText: {
 		source: 'html',
@@ -542,7 +542,7 @@ const deprecatedSchema_1_10 = {
 	buttonText: {
 		source: 'html',
 		selector: '.ugb-button span',
-		default: __( 'Button text' ),
+		default: 'Button text',
 	},
 	buttonDesign: {
 		type: 'string',
@@ -698,12 +698,12 @@ const deprecatedSchema_1_9_1 = {
 	ctaTitle: {
 		source: 'html',
 		selector: 'h3',
-		default: __( 'Get Started Today' ),
+		default: 'Get Started Today',
 	},
 	bodyText: {
 		source: 'html',
 		selector: 'p',
-		default: __( 'Get Stackable: Ultimate Gutenberg Blocks today.  Apart from adding new blocks, it gives Gutenberg users more options and settings to tinker with, expanding Gutenberg’s functionality.' ),
+		default: 'Get Stackable: Ultimate Gutenberg Blocks today.  Apart from adding new blocks, it gives Gutenberg users more options and settings to tinker with, expanding Gutenberg’s functionality.',
 	},
 	buttonText: {
 		source: 'html',
@@ -774,12 +774,12 @@ export const deprecatedSchema_1_9 = {
 	ctaTitle: {
 		source: 'html',
 		selector: 'h3',
-		default: __( 'Get Started Today' ),
+		default: 'Get Started Today',
 	},
 	bodyText: {
 		source: 'html',
 		selector: 'p',
-		default: __( 'Get Stackable: Ultimate Gutenberg Blocks today.  Apart from adding new blocks, it gives Gutenberg users more options and settings to tinker with, expanding Gutenberg’s functionality.' ),
+		default: 'Get Stackable: Ultimate Gutenberg Blocks today.  Apart from adding new blocks, it gives Gutenberg users more options and settings to tinker with, expanding Gutenberg’s functionality.',
 	},
 	buttonText: {
 		source: 'html',
@@ -923,12 +923,12 @@ export const deprecatedSchema_1_4 = {
 	ctaTitle: {
 		source: 'html',
 		selector: 'h3',
-		default: __( 'Get Started Today' ),
+		default: 'Get Started Today',
 	},
 	bodyText: {
 		source: 'html',
 		selector: 'p',
-		default: __( 'Get Stackable: Ultimate Gutenberg Blocks today.  Apart from adding new blocks, it gives Gutenberg users more options and settings to tinker with, expanding Gutenberg’s functionality.' ),
+		default: 'Get Stackable: Ultimate Gutenberg Blocks today.  Apart from adding new blocks, it gives Gutenberg users more options and settings to tinker with, expanding Gutenberg’s functionality.',
 	},
 	buttonText: {
 		source: 'html',

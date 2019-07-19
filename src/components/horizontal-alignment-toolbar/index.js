@@ -7,6 +7,7 @@
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
 import { find } from 'lodash'
+import { i18n } from 'stackable'
 import { Toolbar } from '@wordpress/components'
 import { withSelect } from '@wordpress/data'
 import { withViewportMatch } from '@wordpress/viewport'
@@ -14,22 +15,22 @@ import { withViewportMatch } from '@wordpress/viewport'
 const ALIGNMENT_CONTROLS = [
 	{
 		icon: 'align-wide',
-		title: __( 'Occupy Entire Width' ),
+		title: __( 'Occupy Entire Width', i18n ),
 		align: 'full',
 	},
 	{
 		icon: 'align-pull-left',
-		title: __( 'Half & Align Left' ),
+		title: __( 'Half & Align Left', i18n ),
 		align: 'left',
 	},
 	{
 		icon: 'align-center',
-		title: __( 'Half & Align Center' ),
+		title: __( 'Half & Align Center', i18n ),
 		align: 'center',
 	},
 	{
 		icon: 'align-pull-right',
-		title: __( 'Half & Align Right' ),
+		title: __( 'Half & Align Right', i18n ),
 		align: 'right',
 	},
 ]
@@ -47,7 +48,7 @@ export function HorizontalAlignmentToolbar( {
 		<Toolbar
 			isCollapsed={ isCollapsed }
 			icon={ activeAlignment ? activeAlignment.icon : 'align-wide' }
-			label={ __( 'Change Horizontal Alignment' ) }
+			label={ __( 'Change Horizontal Alignment', i18n ) }
 			controls={ ALIGNMENT_CONTROLS.map( control => {
 				const { align } = control
 				const isActive = ( value === align )

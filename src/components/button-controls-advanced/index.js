@@ -1,6 +1,7 @@
 import { __ } from '@wordpress/i18n'
 import { FourNumberControl } from '@stackable/components'
 import { Fragment } from '@wordpress/element'
+import { i18n } from 'stackable'
 import { ToggleControl } from '@wordpress/components'
 
 const ButtonControls = props => {
@@ -10,7 +11,7 @@ const ButtonControls = props => {
 		<Fragment>
 			{ props.onChangeNoFollow && (
 				<ToggleControl
-					label={ __( 'Nofollow link' ) }
+					label={ __( 'Nofollow link', i18n ) }
 					checked={ props.noFollow }
 					onChange={ props.onChangeNoFollow }
 				/>
@@ -18,7 +19,7 @@ const ButtonControls = props => {
 
 			{ props.onChangePaddings && design !== 'link' && design !== 'plain' &&
 				<FourNumberControl
-					label={ __( 'Button Paddings' ) }
+					label={ __( 'Button Paddings', i18n ) }
 					top={ props.paddingTop }
 					bottom={ props.paddingBottom }
 					right={ props.paddingRight }

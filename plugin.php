@@ -5,6 +5,7 @@
  * Description: Blocks for everyone
  * Author: Gambit Technologies, Inc
  * Author URI: http://gambit.ph
+ * Text Domain: stackable-ultimate-gutenberg-blocks
  * Version: 2.0.0-dev9
  *
  * @package Stackable
@@ -24,6 +25,7 @@ if ( function_exists( 'sugb_fs' ) ) {
 defined( 'STACKABLE_SHOW_PRO_NOTICES' ) || define( 'STACKABLE_SHOW_PRO_NOTICES', true );
 defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '2.0.0-dev9' );
 defined( 'STACKABLE_FILE' ) || define( 'STACKABLE_FILE', __FILE__ );
+defined( 'STACKABLE_I18N' ) || define( 'STACKABLE_I18N', 'stackable-ultimate-gutenberg-blocks' ); // Plugin slug.
 
 /********************************************************************************************
  * Activation & PHP version checks.
@@ -42,7 +44,7 @@ if ( ! function_exists( 'stackable_php_requirement_activation_check' ) ) {
 			deactivate_plugins( basename( __FILE__ ) );
 			wp_die(
 				sprintf(
-					__( '%s"Stackable" can not be activated. %s It requires PHP version 5.3.0 or higher, but PHP version %s is used on the site. Please upgrade your PHP version first ✌️ %s Back %s', 'stackable' ),
+					__( '%s"Stackable" can not be activated. %s It requires PHP version 5.3.0 or higher, but PHP version %s is used on the site. Please upgrade your PHP version first ✌️ %s Back %s', STACKABLE_I18N ),
 					'<strong>',
 					'</strong><br><br>',
 					PHP_VERSION,
@@ -66,7 +68,7 @@ if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
 		function stackable_php_requirement_notice() {
 	        printf(
 	            '<div class="notice notice-error"><p>%s</p></div>',
-	            sprintf( __( '"Stackable" requires PHP version 5.3.0 or higher, but PHP version %s is used on the site.', 'stackable' ), PHP_VERSION )
+	            sprintf( __( '"Stackable" requires PHP version 5.3.0 or higher, but PHP version %s is used on the site.', STACKABLE_I18N ), PHP_VERSION )
 	        );
 		}
 	}

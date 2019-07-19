@@ -5,11 +5,12 @@
 import { __, sprintf } from '@wordpress/i18n'
 import { ColorIndicator, PanelBody } from '@wordpress/components'
 import { ColorPaletteControl } from '@stackable/components'
+import { i18n } from 'stackable'
 
 function PanelColorSettings( props ) {
 	const {
 		colorSettings = [],
-		title = __( 'Color Settings' ),
+		title = __( 'Color Settings', i18n ),
 	} = props
 
 	const className = 'editor-panel-color-settings'
@@ -43,7 +44,7 @@ const renderColorIndicators = colorSettings => {
 				return null
 			}
 
-			const ariaLabel = sprintf( __( '(%s: %s)' ), label.toLowerCase(), value )
+			const ariaLabel = sprintf( __( '(%s: %s)', i18n ), label.toLowerCase(), value )
 
 			return (
 				<ColorIndicator

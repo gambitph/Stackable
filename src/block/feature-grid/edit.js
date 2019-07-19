@@ -1,6 +1,7 @@
 import {
 	ButtonEdit, DesignPanelBody, ImageUploadPlaceholder, PanelButtonSettings, ProControl, ProControlButton, URLInputControl,
 } from '@stackable/components'
+import { i18n, showProNotice } from 'stackable'
 import {
 	InspectorControls, RichText,
 } from '@wordpress/block-editor'
@@ -14,7 +15,6 @@ import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
-import { showProNotice } from 'stackable'
 
 const edit = props => {
 	const {
@@ -63,10 +63,10 @@ const edit = props => {
 					selected={ design }
 					options={ [
 						{
-							label: __( 'Basic' ), value: 'basic', image: ImageDesignBasic,
+							label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
 						},
 						{
-							label: __( 'Plain' ), value: 'plain', image: ImageDesignPlain,
+							label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
 						},
 						...applyFilters( 'stackable.feature-grid.edit.designs', [] ),
 					] }
@@ -77,7 +77,7 @@ const edit = props => {
 					{ applyFilters( 'stackable.feature-grid.edit.designs.before', null, props ) }
 					{ design !== 'plain' &&
 						<RangeControl
-							label={ __( 'Border Radius' ) }
+							label={ __( 'Border Radius', i18n ) }
 							value={ borderRadius }
 							onChange={ borderRadius => setAttributes( { borderRadius } ) }
 							min={ 0 }
@@ -86,7 +86,7 @@ const edit = props => {
 					}
 					{ design !== 'plain' &&
 						<RangeControl
-							label={ __( 'Shadow / Outline' ) }
+							label={ __( 'Shadow / Outline', i18n ) }
 							value={ shadow }
 							onChange={ shadow => setAttributes( { shadow } ) }
 							min={ 0 }
@@ -96,9 +96,9 @@ const edit = props => {
 					{ applyFilters( 'stackable.feature-grid.edit.designs.after', null, props ) }
 					{ showProNotice && <ProControlButton /> }
 				</DesignPanelBody>
-				<PanelBody title={ __( 'General Settings' ) }>
+				<PanelBody title={ __( 'General Settings', i18n ) }>
 					<RangeControl
-						label={ __( 'Columns' ) }
+						label={ __( 'Columns', i18n ) }
 						value={ columns }
 						onChange={ columns => setAttributes( { columns } ) }
 						min={ 1 }
@@ -106,7 +106,7 @@ const edit = props => {
 					/>
 					{ show.imageSize && (
 						<RangeControl
-							label={ __( 'Image Size %' ) }
+							label={ __( 'Image Size %', i18n ) }
 							value={ imageSize }
 							onChange={ imageSize => setAttributes( { imageSize } ) }
 							min={ 0 }
@@ -134,11 +134,11 @@ const edit = props => {
 				{ showProNotice &&
 					<PanelBody
 						initialOpen={ false }
-						title={ __( 'Custom CSS' ) }
+						title={ __( 'Custom CSS', i18n ) }
 					>
 						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋' ) }
-							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
 						/>
 					</PanelBody>
 				}
@@ -198,7 +198,7 @@ const edit = props => {
 										className="ugb-feature-grid__title"
 										value={ title }
 										onChange={ title => setAttributes( { [ `title${ i }` ]: title } ) }
-										placeholder={ __( 'Title' ) }
+										placeholder={ __( 'Title', i18n ) }
 										keepPlaceholderOnFocus
 									/>
 									<RichText

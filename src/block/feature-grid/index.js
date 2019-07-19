@@ -2,10 +2,10 @@
  * BLOCK: Feature Grid Block.
  */
 
+import { disabledBlocks, i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import deprecated from './deprecated'
 import { descriptionPlaceholder } from '@stackable/util'
-import { disabledBlocks } from 'stackable'
 import edit from './edit'
 import { FeatureGridIcon } from '@stackable/icons'
 import save from './save'
@@ -53,17 +53,17 @@ export const schema = {
 	title1: {
 		source: 'html',
 		selector: '.ugb-feature-grid__item:nth-of-type(1) .ugb-feature-grid__title',
-		default: __( 'Title' ),
+		default: __( 'Title', i18n ),
 	},
 	title2: {
 		source: 'html',
 		selector: '.ugb-feature-grid__item:nth-of-type(2) .ugb-feature-grid__title',
-		default: __( 'Title' ),
+		default: __( 'Title', i18n ),
 	},
 	title3: {
 		source: 'html',
 		selector: '.ugb-feature-grid__item:nth-of-type(3) .ugb-feature-grid__title',
-		default: __( 'Title' ),
+		default: __( 'Title', i18n ),
 	},
 	description1: {
 		source: 'html',
@@ -125,17 +125,17 @@ export const schema = {
 	linkText1: {
 		source: 'html',
 		selector: '.ugb-feature-grid__item:nth-of-type(1) .ugb-button span',
-		default: __( 'Button text' ),
+		default: __( 'Button text', i18n ),
 	},
 	linkText2: {
 		source: 'html',
 		selector: '.ugb-feature-grid__item:nth-of-type(2) .ugb-button span',
-		default: __( 'Button text' ),
+		default: __( 'Button text', i18n ),
 	},
 	linkText3: {
 		source: 'html',
 		selector: '.ugb-feature-grid__item:nth-of-type(3) .ugb-button span',
-		default: __( 'Button text' ),
+		default: __( 'Button text', i18n ),
 	},
 	buttonColor: {
 		type: 'string',
@@ -192,13 +192,13 @@ export const schema = {
 export const name = 'ugb/feature-grid'
 
 export const settings = {
-	title: __( 'Feature Grid' ),
-	description: __( 'Display multiple product features or services. You can use Feature Grids one after another.' ),
+	title: __( 'Feature Grid', i18n ),
+	description: __( 'Display multiple product features or services. You can use Feature Grids one after another.', i18n ),
 	icon: FeatureGridIcon,
 	category: 'stackable',
 	keywords: [
-		__( 'Feature Grid' ),
-		__( 'Stackable' ),
+		__( 'Feature Grid', i18n ),
+		__( 'Stackable', i18n ),
 	],
 	attributes: schema,
 	supports: {

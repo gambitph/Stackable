@@ -5,6 +5,7 @@
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { DesignControl } from '@stackable/components'
+import { i18n } from 'stackable'
 import { omit } from 'lodash'
 import { PanelBody } from '@wordpress/components'
 
@@ -12,7 +13,7 @@ function DesignPanelBody( props ) {
 	const {
 		options,
 		selected,
-		title = __( 'Layout' ),
+		title = __( 'Layout', i18n ),
 		selectedOptionInTitle = true,
 		help = '',
 		className = '',

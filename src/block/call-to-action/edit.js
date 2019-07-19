@@ -25,6 +25,7 @@ import {
 	descriptionPlaceholder,
 	hasBackgroundOverlay,
 } from '@stackable/util'
+import { i18n, showProNotice } from 'stackable'
 import {
 	PanelBody, RangeControl,
 } from '@wordpress/components'
@@ -45,7 +46,6 @@ import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
 import { RichText } from '@wordpress/block-editor'
 import { showOptions } from './'
-import { showProNotice } from 'stackable'
 
 addFilter( 'stackable.cta.edit.inspector.layout.before', 'stackable/cta', ( output, props ) => {
 	const { setAttributes } = props
@@ -61,10 +61,10 @@ addFilter( 'stackable.cta.edit.inspector.layout.before', 'stackable/cta', ( outp
 				selected={ design }
 				options={ applyFilters( 'stackable.cta.edit.designs', [
 					{
-						label: __( 'Basic' ), value: 'basic', image: ImageDesignBasic,
+						label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
 					},
 					{
-						label: __( 'Plain' ), value: 'plain', image: ImageDesignPlain,
+						label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
 					},
 				] ) }
 				onChange={ design => setAttributes( { design } ) }
@@ -93,10 +93,10 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General' ) }>
+			<PanelBody title={ __( 'General', i18n ) }>
 				{ show.borderRadius &&
 					<RangeControl
-						label={ __( 'Border Radius' ) }
+						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
 						onChange={ ( borderRadius = 12 ) => setAttributes( { borderRadius } ) }
 						min={ 0 }
@@ -106,7 +106,7 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 				}
 				{ show.columnBackground &&
 					<RangeControl
-						label={ __( 'Shadow / Outline' ) }
+						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
 						onChange={ ( shadow = 3 ) => setAttributes( { shadow } ) }
 						min={ 0 }
@@ -122,7 +122,7 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 
 			{ show.columnBackground &&
 				<PanelBody
-					title={ __( 'Column Background' ) }
+					title={ __( 'Column Background', i18n ) }
 					initialOpen={ false }
 				>
 					<BackgroundControlsHelper
@@ -141,7 +141,7 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 						blockAttributes={ props.attributes }
 					>
 						<AdvancedRangeControl
-							label={ __( 'Title' ) }
+							label={ __( 'Title', i18n ) }
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
@@ -155,7 +155,7 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 						blockAttributes={ props.attributes }
 					>
 						<AdvancedRangeControl
-							label={ __( 'Description' ) }
+							label={ __( 'Description', i18n ) }
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
@@ -165,7 +165,7 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 			</PanelSpacingBody>
 
 			<PanelAdvancedSettings
-				title={ __( 'Title' ) }
+				title={ __( 'Title', i18n ) }
 				checked={ showTitle }
 				onChange={ showTitle => setAttributes( { showTitle } ) }
 				toggleOnSetAttributes={ [
@@ -182,26 +182,26 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 					blockAttributes={ props.attributes }
 				/>
 				<HeadingButtonsControl
-					label={ __( 'Title HTML Tag' ) }
+					label={ __( 'Title HTML Tag', i18n ) }
 					value={ titleTag || 'h3' }
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
 				<ColorPaletteControl
 					value={ titleColor }
 					onChange={ titleColor => setAttributes( { titleColor } ) }
-					label={ __( 'Title Color' ) }
+					label={ __( 'Title Color', i18n ) }
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Title%sAlign"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align' ) } />
+					<AlignButtonsControl label={ __( 'Align', i18n ) } />
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
 			<PanelAdvancedSettings
-				title={ __( 'Description' ) }
+				title={ __( 'Description', i18n ) }
 				checked={ showDescription }
 				onChange={ showDescription => setAttributes( { showDescription } ) }
 				toggleOnSetAttributes={ [
@@ -219,19 +219,19 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 				<ColorPaletteControl
 					value={ descriptionColor }
 					onChange={ descriptionColor => setAttributes( { descriptionColor } ) }
-					label={ __( 'Description Color' ) }
+					label={ __( 'Description Color', i18n ) }
 				/>
 				<ResponsiveControl
 					attrNameTemplate="description%sAlign"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align' ) } />
+					<AlignButtonsControl label={ __( 'Align', i18n ) } />
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
 			<PanelAdvancedSettings
-				title={ __( 'Button' ) }
+				title={ __( 'Button', i18n ) }
 				checked={ showButton }
 				onChange={ showButton => setAttributes( { showButton } ) }
 				toggleOnSetAttributes={ [
@@ -250,7 +250,7 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align' ) } />
+					<AlignButtonsControl label={ __( 'Align', i18n ) } />
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 		</Fragment>
@@ -262,7 +262,7 @@ addFilter( 'stackable.cta.edit.inspector.advanced.before', 'stackable/cta', ( ou
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'Button' ) } initialOpen={ false }>
+			<PanelBody title={ __( 'Button', i18n ) } initialOpen={ false }>
 				<ButtonControlsAdvancedHelper
 					attrNameTemplate="button%s"
 					setAttributes={ setAttributes }
@@ -324,7 +324,7 @@ const edit = props => {
 			tagName={ titleTag || 'h3' }
 			value={ title }
 			className="ugb-cta__title"
-			placeholder={ __( 'Title for This Block' ) }
+			placeholder={ __( 'Title for This Block', i18n ) }
 			onChange={ title => setAttributes( { title } ) }
 			keepPlaceholderOnFocus
 		/>

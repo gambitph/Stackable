@@ -1,9 +1,10 @@
 import { __ } from '@wordpress/i18n'
+import { i18n } from 'stackable'
 import { Toolbar } from '@wordpress/components'
 
 const OPTION_DEFAULTS = {
 	value: '',
-	title: __( 'Option' ),
+	title: __( 'Option', i18n ),
 	onClick: () => {},
 	isActive: false,
 }

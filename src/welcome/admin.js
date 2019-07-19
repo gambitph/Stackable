@@ -3,6 +3,7 @@ import { __, sprintf } from '@wordpress/i18n'
 import { Component, render } from '@wordpress/element'
 import {
 	disabledBlocks,
+	i18n,
 	nonce,
 	nonceProNotice,
 	showProNoticesOption,
@@ -94,8 +95,8 @@ class BlockToggler extends Component {
 			<div>
 				<div className="s-settings-header">
 					{ this.state.isSaving && <Spinner /> }
-					<button onClick={ this.enableAllBlocks } className="button button-large button-link">{ __( 'Enable All' ) }</button>
-					<button onClick={ this.disableAllBlocks } className="button button-large button-link">{ __( 'Disable All' ) }</button>
+					<button onClick={ this.enableAllBlocks } className="button button-large button-link">{ __( 'Enable All', i18n ) }</button>
+					<button onClick={ this.disableAllBlocks } className="button button-large button-link">{ __( 'Disable All', i18n ) }</button>
 				</div>
 				<div className="s-settings-grid">
 					{ Object.keys( blockData ).map( ( blockName, i ) => {
@@ -124,11 +125,11 @@ class BlockToggler extends Component {
 									className="s-toggle-button"
 									onClick={ () => this.toggleBlock( blockName ) }
 								>
-									<span>{ __( 'Disabled' ) }</span>
-									<span>{ __( 'Enabled' ) }</span>
+									<span>{ __( 'Disabled', i18n ) }</span>
+									<span>{ __( 'Enabled', i18n ) }</span>
 								</button>
 								{ block.sDemoURL && (
-									<p className="s-demo-url"><small><a href={ block.sDemoURL } target="stackable_demo" title={ sprintf( __( 'View %s Demo', 'stackable' ), title ) } >{ __( 'View Block Demo', 'stackable' ) }</a></small></p>
+									<p className="s-demo-url"><small><a href={ block.sDemoURL } target="stackable_demo" title={ sprintf( __( 'View %s Demo', i18n ), title ) } >{ __( 'View Block Demo', i18n ) }</a></small></p>
 								) }
 							</div>
 						)
@@ -187,7 +188,7 @@ class ProNoticeToggler extends Component {
 					checked={ this.state.checked }
 					onChange={ this.toggle }
 				/>
-				{ __( 'Show "Go premium" notices' ) }
+				{ __( 'Show "Go premium" notices', i18n ) }
 				{ this.state.isSaving && <Spinner /> }
 			</label>
 		)
@@ -209,6 +210,6 @@ domReady( () => {
 	}
 
 	render( (
-		<ProModal tag="p" buttonClassName="s-button" button={ __( 'View Premium Features' ) } />
+		<ProModal tag="p" buttonClassName="s-button" button={ __( 'View Premium Features', i18n ) } />
 	), document.querySelector( '.s-premium-box__button' ) )
 } )

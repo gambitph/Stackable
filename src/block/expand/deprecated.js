@@ -1,4 +1,3 @@
-import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { RichText } from '@wordpress/block-editor'
 
@@ -18,12 +17,12 @@ const deprecatedSchema_1_10 = {
 	moreLabel: {
 		source: 'html',
 		selector: '.ugb-expand-more',
-		default: __( 'Show more' ),
+		default: 'Show more',
 	},
 	lessLabel: {
 		source: 'html',
 		selector: '.ugb-expand-less',
-		default: __( 'Show less' ),
+		default: 'Show less',
 	},
 }
 
@@ -95,12 +94,12 @@ export const deprecatedSchema_1_3 = {
 	moreLabel: {
 		source: 'html',
 		selector: '.ugb-expand-more',
-		default: __( 'Show more' ),
+		default: 'Show more',
 	},
 	lessLabel: {
 		source: 'html',
 		selector: '.ugb-expand-less',
-		default: __( 'Show less' ),
+		default: 'Show less',
 	},
 }
 

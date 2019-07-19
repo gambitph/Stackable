@@ -19,6 +19,7 @@ import {
 	StarOutlineIcon,
 } from './deprecated-icons'
 import { __ } from '@wordpress/i18n'
+import { i18n } from 'stackable'
 import { renderToString } from '@wordpress/element'
 
 /**
@@ -29,35 +30,35 @@ const BLOCK_ICONS = {
 		iconFunc: CheckIcon,
 		circleFunc: CheckCircleIcon,
 		outlineFunc: CheckOutlineIcon,
-		title: __( 'Check' ),
+		title: __( 'Check', i18n ),
 		value: 'check',
 	},
 	plus: {
 		iconFunc: PlusIcon,
 		circleFunc: PlusCircleIcon,
 		outlineFunc: PlusOutlineIcon,
-		title: __( 'Plus' ),
+		title: __( 'Plus', i18n ),
 		value: 'plus',
 	},
 	arrow: {
 		iconFunc: ArrowIcon,
 		circleFunc: ArrowCircleIcon,
 		outlineFunc: ArrowOutlineIcon,
-		title: __( 'Arrow' ),
+		title: __( 'Arrow', i18n ),
 		value: 'arrow',
 	},
 	cross: {
 		iconFunc: CrossIcon,
 		circleFunc: CrossCircleIcon,
 		outlineFunc: CrossOutlineIcon,
-		title: __( 'Cross' ),
+		title: __( 'Cross', i18n ),
 		value: 'cross',
 	},
 	star: {
 		iconFunc: StarIcon,
 		circleFunc: StarCircleIcon,
 		outlineFunc: StarOutlineIcon,
-		title: __( 'Star' ),
+		title: __( 'Star', i18n ),
 		value: 'star',
 	},
 }

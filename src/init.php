@@ -75,9 +75,12 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 			plugins_url( 'dist/editor_blocks.js', STACKABLE_FILE ),
 			// wp-util for wp.ajax.
 			// wp-plugins & wp-edit-post for Gutenberg plugins.
-			array( 'ugb-block-js-vendor', 'code-editor', 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'wp-util', 'wp-plugins', 'wp-edit-post' ),
+			array( 'ugb-block-js-vendor', 'code-editor', 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'wp-util', 'wp-plugins', 'wp-edit-post', 'wp-i18n' ),
 			STACKABLE_VERSION
 		);
+
+		// Add translations.
+		wp_set_script_translations( 'ugb-block-js', STACKABLE_I18N );
 
 		// Backend editor only styles.
 		wp_enqueue_style(
@@ -91,6 +94,7 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 		wp_localize_script( 'ugb-block-js-vendor', 'stackable', array(
 			'srcUrl' => untrailingslashit( plugins_url( '/', STACKABLE_FILE ) ),
 			'contentWidth' => isset( $content_width ) ? $content_width : 900,
+			'i18n' => STACKABLE_I18N,
 			'disabledBlocks' => stackable_get_disabled_blocks(),
 			'nonce' => wp_create_nonce( 'stackable' ),
 
@@ -113,6 +117,19 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 	add_action( 'enqueue_block_editor_assets', 'stackable_block_editor_assets', 20 );
 }
 
+if ( ! function_exists( 'stackable_load_plugin_textdomain' ) ) {
+
+	/**
+	 * Translations.
+	 */
+	function stackable_load_plugin_textdomain() {
+		load_plugin_textdomain( 'stackable-ultimate-gutenberg-blocks' );
+	}
+	add_action( 'plugins_loaded', 'stackable_load_plugin_textdomain' );
+}
+
+
+
 if ( ! function_exists( 'stackable_block_category' ) ) {
 
 	/**
@@ -126,9 +143,9 @@ if ( ! function_exists( 'stackable_block_category' ) ) {
 			array(
 				array(
 					'slug' => 'stackable',
-					// 'title' => __( 'Stackable', 'stackable' ),
+					// 'title' => __( 'Stackable', STACKABLE_I18N ),
 					// TODO: [V2] Remove below in final version
-					'title' => preg_match( '/^2.(.*)?dev/', STACKABLE_VERSION ) ? __( 'Stackable v2 beta 🧪', 'stackable' ) : __( 'Stackable', 'stackable' ),
+					'title' => preg_match( '/^2.(.*)?dev/', STACKABLE_VERSION ) ? __( 'Stackable v2 beta 🧪', STACKABLE_I18N ) : __( 'Stackable', STACKABLE_I18N ),
 				),
 			)
 		);

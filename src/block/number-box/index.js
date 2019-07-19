@@ -9,10 +9,10 @@ import {
 	createTypographyAttributes,
 	descriptionPlaceholder,
 } from '@stackable/util'
+import { disabledBlocks, i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { default as deprecated } from './deprecated'
-import { disabledBlocks } from 'stackable'
 import { default as edit } from './edit'
 import { NumberBoxIcon } from '@stackable/icons'
 import { default as save } from './save'
@@ -36,17 +36,17 @@ export const schema = {
 	title1: {
 		source: 'html',
 		selector: '.ugb-number-box__item1 .ugb-number-box__title',
-		default: __( 'Title' ),
+		default: __( 'Title', i18n ),
 	},
 	title2: {
 		source: 'html',
 		selector: '.ugb-number-box__item2 .ugb-number-box__title',
-		default: __( 'Title' ),
+		default: __( 'Title', i18n ),
 	},
 	title3: {
 		source: 'html',
 		selector: '.ugb-number-box__item3 .ugb-number-box__title',
-		default: __( 'Title' ),
+		default: __( 'Title', i18n ),
 	},
 	description1: {
 		source: 'html',
@@ -208,13 +208,13 @@ export const schema = {
 export const name = 'ugb/number-box'
 
 export const settings = {
-	title: __( 'Number Box' ),
-	description: __( 'Display steps or methods that your users will do in your service. For example, "Get started in just 3 easy steps: 1, 2 and 3!"' ),
+	title: __( 'Number Box', i18n ),
+	description: __( 'Display steps or methods that your users will do in your service. For example, "Get started in just 3 easy steps: 1, 2 and 3!"', i18n ),
 	icon: NumberBoxIcon,
 	category: 'stackable',
 	keywords: [
-		__( 'Number Box' ),
-		__( 'Stackable' ),
+		__( 'Number Box', i18n ),
+		__( 'Stackable', i18n ),
 	],
 	attributes: schema,
 	supports: {

@@ -1,4 +1,3 @@
-import { __ } from '@wordpress/i18n'
 import { parse } from '@wordpress/blocks'
 
 export const getExpectedBlockName = html => {
@@ -18,7 +17,7 @@ export const validateBlockHTML = html => {
 		const block = parse( html.replace( /\n/g, '' ).replace( /\t/g, '' ) )[ 0 ]
 		const expectedBlockName = getExpectedBlockName( html )
 		if ( block.name !== expectedBlockName ) {
-			return __( 'Block rendered as:' ) + ' ' + block.name
+			return `Block rendered as: ${ block.name }`
 		}
 		return block.isValid && block.name === expectedBlockName
 	} catch ( err ) {

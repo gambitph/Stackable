@@ -1,7 +1,6 @@
 /**
  * Deprecated < 1.11.1
  */
-import { __ } from '@wordpress/i18n'
 
 export const RoundQuote = ( style = {} ) => {
 	return (
@@ -105,55 +104,55 @@ export const QUOTE_ICONS_1_11 = {
 	'round-thin': {
 		icon: RoundThinQuote(),
 		iconFunc: RoundThinQuote,
-		title: __( 'Round Thin' ),
+		title: 'Round Thin',
 		value: 'round-thin',
 	},
 	round: {
 		icon: RoundQuote(),
 		iconFunc: RoundQuote,
-		title: __( 'Round' ),
+		title: 'Round',
 		value: 'round',
 	},
 	'round-thick': {
 		icon: RoundThickQuote(),
 		iconFunc: RoundThickQuote,
-		title: __( 'Round Thick' ),
+		title: 'Round Thick',
 		value: 'round-thick',
 	},
 	'round-fat': {
 		icon: RoundFatQuote(),
 		iconFunc: RoundFatQuote,
-		title: __( 'Round Fat' ),
+		title: 'Round Fat',
 		value: 'round-fat',
 	},
 	'square-thin': {
 		icon: SquareThinQuote(),
 		iconFunc: SquareThinQuote,
-		title: __( 'Square Thin' ),
+		title: 'Square Thin',
 		value: 'square-thin',
 	},
 	square: {
 		icon: SquareQuote(),
 		iconFunc: SquareQuote,
-		title: __( 'Square' ),
+		title: 'Square',
 		value: 'square',
 	},
 	'square-simple': {
 		icon: SquareSimpleQuote(),
 		iconFunc: SquareSimpleQuote,
-		title: __( 'Square Simple' ),
+		title: 'Square Simple',
 		value: 'square-simple',
 	},
 	'square-modern': {
 		icon: SquareModernQuote(),
 		iconFunc: SquareModernQuote,
-		title: __( 'Square Modern' ),
+		title: 'Square Modern',
 		value: 'square-modern',
 	},
 	'square-fat': {
 		icon: SquareFatQuote(),
 		iconFunc: SquareFatQuote,
-		title: __( 'Square Fat' ),
+		title: 'Square Fat',
 		value: 'square-fat',
 	},
 }

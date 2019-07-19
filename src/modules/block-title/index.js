@@ -21,6 +21,7 @@ import {
 import classnames from 'classnames'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
+import { i18n } from 'stackable'
 import { RichText } from '@wordpress/block-editor'
 
 const addInspectorPanel = ( output, props ) => {
@@ -39,14 +40,14 @@ const addInspectorPanel = ( output, props ) => {
 		<Fragment>
 			{ output }
 			<PanelAdvancedSettings
-				title={ __( 'Block Title' ) }
+				title={ __( 'Block Title', i18n ) }
 				className="ugb-panel-block-title-module"
 				checked={ showBlockTitle }
 				onChange={ showBlockTitle => {
 					const attrs = { showBlockTitle }
 					// Fill up with a default value if empty.
 					if ( showBlockTitle && blockTitle === '' ) {
-						attrs.blockTitle = __( 'Title for This Block' )
+						attrs.blockTitle = __( 'Title for This Block', i18n )
 					}
 					setAttributes( attrs )
 				} }
@@ -64,25 +65,25 @@ const addInspectorPanel = ( output, props ) => {
 					blockAttributes={ props.attributes }
 				/>
 				<HeadingButtonsControl
-					label={ __( 'Title HTML Tag' ) }
+					label={ __( 'Title HTML Tag', i18n ) }
 					value={ blockTitleTag || 'h2' }
 					onChange={ blockTitleTag => setAttributes( { blockTitleTag } ) }
 				/>
 				<ColorPaletteControl
 					value={ blockTitleColor }
 					onChange={ blockTitleColor => setAttributes( { blockTitleColor } ) }
-					label={ __( 'Title Color' ) }
+					label={ __( 'Title Color', i18n ) }
 				/>
 				<ResponsiveControl
 					attrNameTemplate="BlockTitle%sAlign"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align' ) } />
+					<AlignButtonsControl label={ __( 'Align', i18n ) } />
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 			<PanelAdvancedSettings
-				title={ __( 'Block Description' ) }
+				title={ __( 'Block Description', i18n ) }
 				checked={ showBlockDescription }
 				onChange={ showBlockDescription => {
 					const attrs = { showBlockDescription }
@@ -108,14 +109,14 @@ const addInspectorPanel = ( output, props ) => {
 				<ColorPaletteControl
 					value={ blockDescriptionColor }
 					onChange={ blockDescriptionColor => setAttributes( { blockDescriptionColor } ) }
-					label={ __( 'Description Color' ) }
+					label={ __( 'Description Color', i18n ) }
 				/>
 				<ResponsiveControl
 					attrNameTemplate="BlockDescription%sAlign"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align' ) } />
+					<AlignButtonsControl label={ __( 'Align', i18n ) } />
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 		</Fragment>
@@ -132,7 +133,7 @@ const addAttributes = attributes => {
 		blockTitle: {
 			source: 'html',
 			selector: '.ugb-block-title',
-			default: __( 'Title for This Block' ),
+			default: __( 'Title for This Block', i18n ),
 		},
 		...createResponsiveAttributes( 'blockTitle%sBottomMargin', {
 			type: 'number',
@@ -202,7 +203,7 @@ const addTitleEditOutput = ( output, design, props ) => {
 					value={ blockTitle }
 					className={ titleClasses }
 					onChange={ blockTitle => setAttributes( { blockTitle } ) }
-					placeholder={ __( 'Title for This Block' ) }
+					placeholder={ __( 'Title for This Block', i18n ) }
 					keepPlaceholderOnFocus
 				/>
 			) }
@@ -237,7 +238,7 @@ const addTitleSpacing = ( output, props ) => {
 					blockAttributes={ props.attributes }
 				>
 					<AdvancedRangeControl
-						label={ __( 'Block Title' ) }
+						label={ __( 'Block Title', i18n ) }
 						min={ -50 }
 						max={ 100 }
 						allowReset={ true }
@@ -251,7 +252,7 @@ const addTitleSpacing = ( output, props ) => {
 					blockAttributes={ props.attributes }
 				>
 					<AdvancedRangeControl
-						label={ __( 'Block Description' ) }
+						label={ __( 'Block Description', i18n ) }
 						min={ -50 }
 						max={ 100 }
 						allowReset={ true }

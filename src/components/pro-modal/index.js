@@ -1,7 +1,7 @@
+import { i18n, pricingURL } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { Component } from '@wordpress/element'
 import { Modal } from '@wordpress/components'
-import { pricingURL } from 'stackable'
 import SVGNext from './images/next.svg'
 import SVGPrev from './images/prev.svg'
 
@@ -38,7 +38,7 @@ class ProModal extends Component {
 
 	render() {
 		const {
-			button = __( 'Learn More' ),
+			button = __( 'Learn More', i18n ),
 			buttonClassName = 'button button-secondary',
 			tag = 'div',
 		} = this.props
@@ -56,11 +56,11 @@ class ProModal extends Component {
 					>
 						<div className={ `ugb-pro-modal__carousel ugb-pro-modal__carousel--slide-${ this.state.slide }` }>
 							<div className="ugb-pro-modal__carousel-wrapper">
-								<img src="https://gambitph.github.io/Stackable/assets/premium-slider/cover.jpg" alt={ __( 'Do more with Stackable Premium' ) } />
-								<img src="https://gambitph.github.io/Stackable/assets/premium-slider/layouts.jpg" alt={ __( 'Premium Layouts' ) } />
-								<img src="https://gambitph.github.io/Stackable/assets/premium-slider/seamless.jpg" alt={ __( 'Seamless Layouts Switching' ) } />
-								<img src="https://gambitph.github.io/Stackable/assets/premium-slider/effects.jpg" alt={ __( 'Premium Effects' ) } />
-								<img src="https://gambitph.github.io/Stackable/assets/premium-slider/others.jpg" alt={ __( 'Other Features' ) } />
+								<img src="https://gambitph.github.io/Stackable/assets/premium-slider/cover.jpg" alt={ __( 'Do more with Stackable Premium', i18n ) } />
+								<img src="https://gambitph.github.io/Stackable/assets/premium-slider/layouts.jpg" alt={ __( 'Premium Layouts', i18n ) } />
+								<img src="https://gambitph.github.io/Stackable/assets/premium-slider/seamless.jpg" alt={ __( 'Seamless Layouts Switching', i18n ) } />
+								<img src="https://gambitph.github.io/Stackable/assets/premium-slider/effects.jpg" alt={ __( 'Premium Effects', i18n ) } />
+								<img src="https://gambitph.github.io/Stackable/assets/premium-slider/others.jpg" alt={ __( 'Other Features', i18n ) } />
 							</div>
 							<div className="ugb-pro-modal__carousel-left" onMouseDown={ this.prev } onKeyPress={ this.prev } role="button" tabIndex="0">
 								<SVGPrev />
@@ -73,24 +73,24 @@ class ProModal extends Component {
 							<a href={ pricingURL }
 								className="button button-secondary"
 								target="_blank"
-								title={ __( 'Go Premium' ) }
+								title={ __( 'Go Premium', i18n ) }
 							>
-								{ __( 'Go Premium' ) }
+								{ __( 'Go Premium', i18n ) }
 							</a>
 							<a href="https://rebrand.ly/plugin-premium-demo"
 								className="button button-secondary button-ghost"
 								target="_blank" // eslint-disable-line
 								rel="noopener"
-								title={ __( 'Try Premium Demo' ) }
+								title={ __( 'Try Premium Demo', i18n ) }
 							>
-								{ __( 'Try Premium Demo' ) }
+								{ __( 'Try Premium Demo', i18n ) }
 							</a>
 							<a href="https://rebrand.ly/plugin-slider-premium"
 								target="_blank" // eslint-disable-line
 								rel="noopener"
-								title={ __( 'Visit Site' ) }
+								title={ __( 'Visit Site', i18n ) }
 							>
-								{ __( 'Visit Site' ) }
+								{ __( 'Visit Site', i18n ) }
 							</a>
 						</div>
 					</Modal>

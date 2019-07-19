@@ -1,6 +1,6 @@
 .ugb-panel-tabs {
 	display: flex !important;
-	transition: all .3s ease-in-out;
+	transition: all 0.3s ease-in-out;
 	background: #fff;
 	box-shadow: none;
 	button {
@@ -10,7 +10,7 @@
 		justify-content: center;
 		align-items: center;
 		height: 80px;
-    	padding: 0 !important;
+		padding: 0 !important;
 		flex: 1;
 		svg {
 			margin: 5px;
@@ -85,10 +85,10 @@
 	margin-top: 16px;
 }
 .ugb--fixed-tabs {
-    position: fixed;
-    top: 120px; // This is recomputed in JS for accuracy.
-    width: 279px; // This is recomputed in JS for accuracy.
-    background: #fff;
+	position: fixed;
+	top: 120px; // This is recomputed in JS for accuracy.
+	width: 279px; // This is recomputed in JS for accuracy.
+	background: #fff;
 	z-index: 2;
-	box-shadow: 0 20px 30px -20px rgba(0,0,0,.1);
+	box-shadow: 0 20px 30px -20px rgba(0, 0, 0, 0.1);
 }

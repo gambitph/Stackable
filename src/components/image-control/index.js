@@ -2,6 +2,7 @@ import { BaseControl, Dashicon } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { BaseControlMultiLabel } from '@stackable/components'
 import { Fragment } from '@wordpress/element'
+import { i18n } from 'stackable'
 import { MediaUpload } from '@wordpress/block-editor'
 import SVGImageIcon from './images/image.svg'
 
@@ -60,7 +61,7 @@ const ImageControl = props => {
 													obj.open()
 												}
 											} }
-											alt={ __( 'preview' ) }
+											alt={ __( 'preview', i18n ) }
 										/>
 									) }
 								</div>

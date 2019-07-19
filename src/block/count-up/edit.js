@@ -18,6 +18,7 @@ import {
 	TypographyControlHelper,
 } from '@stackable/components'
 import { createResponsiveAttributeNames, createTypographyAttributeNames, createVideoBackground, hasBackgroundOverlay } from '@stackable/util'
+import { i18n, showProNotice } from 'stackable'
 import {
 	PanelBody, RangeControl,
 } from '@wordpress/components'
@@ -38,7 +39,6 @@ import ImageDesignPlain2 from './images/plain-2.png'
 import { range } from 'lodash'
 import { RichText } from '@wordpress/block-editor'
 import { showOptions } from '.'
-import { showProNotice } from 'stackable'
 
 addFilter( 'stackable.count-up.edit.inspector.layout.before', 'stackable/count-up', ( output, props ) => {
 	const { setAttributes } = props
@@ -54,10 +54,10 @@ addFilter( 'stackable.count-up.edit.inspector.layout.before', 'stackable/count-u
 				selected={ design }
 				options={ applyFilters( 'stackable.count-up.edit.designs', [
 					{
-						label: __( 'Plain' ), value: 'plain', image: ImageDesignPlain,
+						label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
 					},
 					{
-						label: __( 'Plain 2' ), value: 'plain-2', image: ImageDesignPlain2,
+						label: __( 'Plain 2', i18n ), value: 'plain-2', image: ImageDesignPlain2,
 					},
 				] ) }
 				onChange={ design => setAttributes( { design } ) }
@@ -90,9 +90,9 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General' ) }>
+			<PanelBody title={ __( 'General', i18n ) }>
 				<RangeControl
-					label={ __( 'Columns' ) }
+					label={ __( 'Columns', i18n ) }
 					value={ columns }
 					onChange={ columns => setAttributes( { columns } ) }
 					min={ 1 }
@@ -100,7 +100,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 				/>
 				{ show.columnBackground &&
 					<RangeControl
-						label={ __( 'Border Radius' ) }
+						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
 						onChange={ borderRadius => setAttributes( { borderRadius } ) }
 						min={ 0 }
@@ -110,7 +110,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 				}
 				{ show.columnBackground &&
 					<RangeControl
-						label={ __( 'Shadow / Outline' ) }
+						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
 						onChange={ shadow => setAttributes( { shadow } ) }
 						min={ 0 }
@@ -126,7 +126,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 
 			{ show.columnBackground &&
 				<PanelBody
-					title={ __( 'Column Background' ) }
+					title={ __( 'Column Background', i18n ) }
 					initialOpen={ false }
 				>
 					<BackgroundControlsHelper
@@ -145,7 +145,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 						blockAttributes={ props.attributes }
 					>
 						<AdvancedRangeControl
-							label={ __( 'Icon' ) }
+							label={ __( 'Icon', i18n ) }
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
@@ -159,7 +159,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 						blockAttributes={ props.attributes }
 					>
 						<AdvancedRangeControl
-							label={ __( 'Title' ) }
+							label={ __( 'Title', i18n ) }
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
@@ -173,7 +173,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 						blockAttributes={ props.attributes }
 					>
 						<AdvancedRangeControl
-							label={ __( 'Number' ) }
+							label={ __( 'Number', i18n ) }
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
@@ -183,7 +183,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 			</PanelSpacingBody>
 
 			<PanelAdvancedSettings
-				title={ __( 'Icon' ) }
+				title={ __( 'Icon', i18n ) }
 				checked={ showIcon }
 				onChange={ showIcon => setAttributes( { showIcon } ) }
 				toggleOnSetAttributes={ [
@@ -201,7 +201,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 					return (
 						<IconControl
 							key={ i }
-							label={ sprintf( __( 'Icon #%s' ), i ) }
+							label={ sprintf( __( 'Icon #%s', i18n ), i ) }
 							value={ props.attributes[ `icon${ i }` ] }
 							onChange={ value => setAttributes( { [ `icon${ i }` ]: value } ) }
 						/>
@@ -210,7 +210,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 				<ColorPaletteControl
 					value={ iconColor }
 					onChange={ iconColor => setAttributes( { iconColor } ) }
-					label={ __( 'Icon Color' ) }
+					label={ __( 'Icon Color', i18n ) }
 				/>
 				<ResponsiveControl
 					attrNameTemplate="icon%sSize"
@@ -218,7 +218,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 					blockAttributes={ props.attributes }
 				>
 					<AdvancedRangeControl
-						label={ __( 'Icon Size' ) }
+						label={ __( 'Icon Size', i18n ) }
 						min={ 10 }
 						max={ 200 }
 						allowReset={ true }
@@ -229,12 +229,12 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align' ) } />
+					<AlignButtonsControl label={ __( 'Align', i18n ) } />
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
 			<PanelAdvancedSettings
-				title={ __( 'Title' ) }
+				title={ __( 'Title', i18n ) }
 				checked={ showTitle }
 				onChange={ showTitle => setAttributes( { showTitle } ) }
 				toggleOnSetAttributes={ [
@@ -251,26 +251,26 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 					blockAttributes={ props.attributes }
 				/>
 				<HeadingButtonsControl
-					label={ __( 'Title HTML Tag' ) }
+					label={ __( 'Title HTML Tag', i18n ) }
 					value={ titleTag || 'h4' }
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
 				<ColorPaletteControl
 					value={ titleColor }
 					onChange={ titleColor => setAttributes( { titleColor } ) }
-					label={ __( 'Title Color' ) }
+					label={ __( 'Title Color', i18n ) }
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Title%sAlign"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align' ) } />
+					<AlignButtonsControl label={ __( 'Align', i18n ) } />
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
 			<PanelAdvancedSettings
-				title={ __( 'Number' ) }
+				title={ __( 'Number', i18n ) }
 				checked={ showNumber }
 				onChange={ showNumber => setAttributes( { showNumber } ) }
 				toggleOnSetAttributes={ [
@@ -291,19 +291,19 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 				<ColorPaletteControl
 					value={ numberColor }
 					onChange={ numberColor => setAttributes( { numberColor } ) }
-					label={ __( 'Number Color' ) }
+					label={ __( 'Number Color', i18n ) }
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Number%sAlign"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align' ) } />
+					<AlignButtonsControl label={ __( 'Align', i18n ) } />
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
 			<PanelAdvancedSettings
-				title={ __( 'Description' ) }
+				title={ __( 'Description', i18n ) }
 				checked={ showDescription }
 				onChange={ showDescription => setAttributes( { showDescription } ) }
 				toggleOnSetAttributes={ [
@@ -321,14 +321,14 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 				<ColorPaletteControl
 					value={ descriptionColor }
 					onChange={ descriptionColor => setAttributes( { descriptionColor } ) }
-					label={ __( 'Description Color' ) }
+					label={ __( 'Description Color', i18n ) }
 				/>
 				<ResponsiveControl
 					attrNameTemplate="description%sAlign"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align' ) } />
+					<AlignButtonsControl label={ __( 'Align', i18n ) } />
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 		</Fragment>
@@ -361,40 +361,40 @@ addFilter( `stackable.count-up.edit.inspector.advanced.before`, `stackable/count
 					<PanelBody
 						key={ i }
 						initialOpen={ false }
-						title={ sprintf( __( 'Column #%s' ), num ) }
+						title={ sprintf( __( 'Column #%s', i18n ), num ) }
 					>
-						<p className="components-base-control__help">{ __( 'Override settings for this column.' ) }</p>
+						<p className="components-base-control__help">{ __( 'Override settings for this column.', i18n ) }</p>
 						{ show.columnBackground && (
 							<ColorPaletteControl
-								label={ __( 'Column Background' ) }
+								label={ __( 'Column Background', i18n ) }
 								value={ props.attributes[ attrName( 'column%sBackgroundColor' ) ] }
 								onChange={ value => setAttributes( { [ attrName( 'column%sBackgroundColor' ) ]: value } ) }
 							/>
 						) }
 						{ showIcon && (
 							<ColorPaletteControl
-								label={ __( 'Icon' ) }
+								label={ __( 'Icon', i18n ) }
 								value={ props.attributes[ attrName( 'column%sIconColor' ) ] }
 								onChange={ value => setAttributes( { [ attrName( 'column%sIconColor' ) ]: value } ) }
 							/>
 						) }
 						{ showTitle && (
 							<ColorPaletteControl
-								label={ __( 'Title' ) }
+								label={ __( 'Title', i18n ) }
 								value={ props.attributes[ attrName( 'column%sTitleColor' ) ] }
 								onChange={ value => setAttributes( { [ attrName( 'column%sTitleColor' ) ]: value } ) }
 							/>
 						) }
 						{ showNumber && (
 							<ColorPaletteControl
-								label={ __( 'Number' ) }
+								label={ __( 'Number', i18n ) }
 								value={ props.attributes[ attrName( 'column%sNumberColor' ) ] }
 								onChange={ value => setAttributes( { [ attrName( 'column%sNumberColor' ) ]: value } ) }
 							/>
 						) }
 						{ showDescription && (
 							<ColorPaletteControl
-								label={ __( 'Description' ) }
+								label={ __( 'Description', i18n ) }
 								value={ props.attributes[ attrName( 'column%sDescriptionColor' ) ] }
 								onChange={ value => setAttributes( { [ attrName( 'column%sDescriptionColor' ) ]: value } ) }
 							/>
@@ -446,7 +446,7 @@ const edit = props => {
 						tagName={ titleTag || 'h4' }
 						className="ugb-countup__title"
 						value={ title }
-						placeholder={ __( 'Title' ) }
+						placeholder={ __( 'Title', i18n ) }
 						onChange={ value => setAttributes( { [ `title${ i }` ]: value } ) }
 						keepPlaceholderOnFocus
 					/>
@@ -463,7 +463,7 @@ const edit = props => {
 					const descriptionComp = showDescription && <RichText
 						tagName="p"
 						className="ugb-countup__description"
-						placeholder={ __( 'Description' ) }
+						placeholder={ __( 'Description', i18n ) }
 						value={ description }
 						onChange={ value => setAttributes( { [ `description${ i }` ]: value } ) }
 						keepPlaceholderOnFocus

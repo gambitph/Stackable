@@ -1,6 +1,7 @@
 import { __ } from '@wordpress/i18n'
 import { AdvancedAutosuggestControl } from '@stackable/components'
 import fonts from './google-fonts.json'
+import { i18n } from 'stackable'
 import { loadGoogleFont } from '@stackable/util'
 
 const fontOptions = fonts.map( font => {
@@ -12,15 +13,15 @@ const FontFamilyControl = props => {
 		<AdvancedAutosuggestControl
 			options={ [
 				{
-					title: __( 'System Fonts' ),
+					title: __( 'System Fonts', i18n ),
 					options: [
-						{ label: __( 'Sans-Serif' ), value: 'Sans-Serif' },
-						{ label: __( 'Serif' ), value: 'Serif' },
-						{ label: __( 'Monospace' ), value: 'Monospace' },
+						{ label: __( 'Sans-Serif', i18n ), value: 'Sans-Serif' },
+						{ label: __( 'Serif', i18n ), value: 'Serif' },
+						{ label: __( 'Monospace', i18n ), value: 'Monospace' },
 					],
 				},
 				{
-					title: __( 'Google Fonts' ),
+					title: __( 'Google Fonts', i18n ),
 					options: fontOptions,
 				},
 			] }
@@ -42,7 +43,7 @@ const FontFamilyControl = props => {
 
 FontFamilyControl.defaultProps = {
 	onChange: () => {},
-	label: __( 'Font Family' ),
+	label: __( 'Font Family', i18n ),
 	value: '',
 }
 

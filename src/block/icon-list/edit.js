@@ -29,6 +29,7 @@ import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
 import createStyles from './style'
 import { Fragment } from '@wordpress/element'
+import { i18n } from 'stackable'
 import { RichText } from '@wordpress/block-editor'
 
 addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-list', ( output, props ) => {
@@ -50,8 +51,8 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'Icon' ) }>
-				<BaseControl label={ __( 'Icon' ) }>
+			<PanelBody title={ __( 'Icon', i18n ) }>
+				<BaseControl label={ __( 'Icon', i18n ) }>
 					<Toolbar
 						icon={ getIconSVG( icon ) }
 						controls={ getIconToolbarList( {
@@ -60,7 +61,7 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 						} ) }
 					/>
 				</BaseControl>
-				<BaseControl label={ __( 'Icon Shape' ) }>
+				<BaseControl label={ __( 'Icon Shape', i18n ) }>
 					<Toolbar
 						icon={ getIconSVG( icon, iconShape ) }
 						controls={ getIconShapeToolbarList( icon, {
@@ -70,12 +71,12 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 					/>
 				</BaseControl>
 				<ColorPaletteControl
-					label={ __( 'Icon Color' ) }
+					label={ __( 'Icon Color', i18n ) }
 					value={ iconColor }
 					onChange={ iconColor => setAttributes( { iconColor } ) }
 				/>
 				<RangeControl
-					label={ __( 'Icon Size' ) }
+					label={ __( 'Icon Size', i18n ) }
 					value={ iconSize }
 					onChange={ iconSize => setAttributes( { iconSize } ) }
 					min={ 8 }
@@ -83,21 +84,21 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 					allowReset={ true }
 				/>
 			</PanelBody>
-			<PanelBody title={ __( 'General' ) } initialOpen={ false }>
+			<PanelBody title={ __( 'General', i18n ) } initialOpen={ false }>
 				<ResponsiveControl
 					attrNameTemplate="%sColumns"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
 					<AdvancedRangeControl
-						label={ __( 'Columns' ) }
+						label={ __( 'Columns', i18n ) }
 						min={ 1 }
 						max={ 4 }
 					/>
 				</ResponsiveControl>
 				{ ( ( columns && columns > 1 ) || ( tabletColumns && tabletColumns > 1 ) || ( mobileColumns && mobileColumns > 1 ) ) && (
 					<ToggleControl
-						label={ __( 'Display as a grid (left to right & evenly spaced)' ) }
+						label={ __( 'Display as a grid (left to right & evenly spaced)', i18n ) }
 						checked={ displayAsGrid }
 						onChange={ displayAsGrid => setAttributes( { displayAsGrid } ) }
 					/>
@@ -109,7 +110,7 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 			</PanelBody>
 			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
 				<RangeControl
-					label={ __( 'List Gap' ) }
+					label={ __( 'List Gap', i18n ) }
 					value={ gap }
 					onChange={ gap => setAttributes( { gap } ) }
 					min={ 0 }
@@ -117,7 +118,7 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 					allowReset={ true }
 				/>
 			</PanelSpacingBody>
-			<PanelBody title={ __( 'List Text' ) } initialOpen={ false }>
+			<PanelBody title={ __( 'List Text', i18n ) } initialOpen={ false }>
 				<TypographyControlHelper
 					attrNameTemplate="listText%s"
 					setAttributes={ setAttributes }
@@ -126,7 +127,7 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 				<ColorPaletteControl
 					value={ listTextColor }
 					onChange={ listTextColor => setAttributes( { listTextColor } ) }
-					label={ __( 'Color' ) }
+					label={ __( 'Color', i18n ) }
 				/>
 			</PanelBody>
 		</Fragment>
@@ -161,7 +162,7 @@ const edit = props => {
 					multiline="li"
 					value={ text }
 					onChange={ text => setAttributes( { text } ) }
-					placeholder={ __( 'Text for this block' ) }
+					placeholder={ __( 'Text for this block', i18n ) }
 					keepPlaceholderOnFocus
 				/>
 			</Fragment>

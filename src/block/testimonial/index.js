@@ -2,10 +2,10 @@
  * BLOCK: Testimonial Block.
  */
 
+import { disabledBlocks, i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import deprecated from './deprecated'
 import { descriptionPlaceholder } from '@stackable/util'
-import { disabledBlocks } from 'stackable'
 import edit from './edit'
 import save from './save'
 import { TestimonialIcon } from '@stackable/icons'
@@ -32,32 +32,32 @@ export const schema = {
 	name1: {
 		source: 'html',
 		selector: '.ugb-testimonial__item:nth-of-type(1) .ugb-testimonial__name',
-		default: __( 'Name' ),
+		default: __( 'Name', i18n ),
 	},
 	name2: {
 		source: 'html',
 		selector: '.ugb-testimonial__item:nth-of-type(2) .ugb-testimonial__name',
-		default: __( 'Name' ),
+		default: __( 'Name', i18n ),
 	},
 	name3: {
 		source: 'html',
 		selector: '.ugb-testimonial__item:nth-of-type(3) .ugb-testimonial__name',
-		default: __( 'Name' ),
+		default: __( 'Name', i18n ),
 	},
 	position1: {
 		source: 'html',
 		selector: '.ugb-testimonial__item:nth-of-type(1) .ugb-testimonial__position',
-		default: __( 'Position' ),
+		default: __( 'Position', i18n ),
 	},
 	position2: {
 		source: 'html',
 		selector: '.ugb-testimonial__item:nth-of-type(2) .ugb-testimonial__position',
-		default: __( 'Position' ),
+		default: __( 'Position', i18n ),
 	},
 	position3: {
 		source: 'html',
 		selector: '.ugb-testimonial__item:nth-of-type(3) .ugb-testimonial__position',
-		default: __( 'Position' ),
+		default: __( 'Position', i18n ),
 	},
 	testimonial1: {
 		source: 'html',
@@ -188,13 +188,13 @@ export const schema = {
 export const name = 'ugb/testimonial'
 
 export const settings = {
-	title: __( 'Testimonial' ),
-	description: __( 'Showcase what your users say about your product or service.' ),
+	title: __( 'Testimonial', i18n ),
+	description: __( 'Showcase what your users say about your product or service.', i18n ),
 	icon: TestimonialIcon,
 	category: 'stackable',
 	keywords: [
-		__( 'Testimonial' ),
-		__( 'Stackable' ),
+		__( 'Testimonial', i18n ),
+		__( 'Stackable', i18n ),
 	],
 	attributes: schema,
 	supports: {

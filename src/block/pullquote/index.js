@@ -2,7 +2,6 @@
  * BLOCK: Pullquote
  */
 
-import { __ } from '@wordpress/i18n'
 import { BlockquoteIcon } from '@stackable/icons'
 import { descriptionPlaceholder } from '@stackable/util'
 
@@ -25,13 +24,13 @@ export const schema = {
 export const name = 'ugb/pullquote'
 
 export const settings = {
-	title: __( 'Pullquote' ),
-	description: __( 'Display a quote. This is similar to the Blockquote block, but meant to display a quote from within your current post.' ),
+	title: 'Pullquote',
+	description: 'Display a quote. This is similar to the Blockquote block, but meant to display a quote from within your current post.',
 	icon: BlockquoteIcon,
 	category: 'stackable',
 	keywords: [
-		__( 'Pullquote' ),
-		__( 'Stackable' ),
+		'Pullquote',
+		'Stackable',
 	],
 	attributes: schema,
 

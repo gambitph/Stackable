@@ -3,11 +3,12 @@
  */
 import { createAllCombinationAttributes, createTypographyAttributes } from '@stackable/util'
 import { __ } from '@wordpress/i18n'
+import { i18n } from 'stackable'
 
 const createButtonAttributes = ( attrNameTemplate, options = {} ) => {
 	const {
 		selector = '.ugb-button',
-		defaultText = __( 'Button text' ),
+		defaultText = __( 'Button text', i18n ),
 	} = options
 
 	return {

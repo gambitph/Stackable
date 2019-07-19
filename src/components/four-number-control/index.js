@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n'
 import BaseControlMultiLabel from '../base-control-multi-label'
 import classnames from 'classnames'
 import { Component } from '@wordpress/element'
+import { i18n } from 'stackable'
 import { withInstanceId } from '@wordpress/compose'
 
 class FourNumberControl extends Component {
@@ -172,12 +173,12 @@ class FourNumberControl extends Component {
 							id={ `${ id }-top` }
 							type="number"
 							onChange={ this.onChangeTop }
-							aria-label={ __( 'Top' ) }
+							aria-label={ __( 'Top', i18n ) }
 							value={ this.state.top }
-							placeholder={ this.props.enableTop ? '' : __( 'auto' ) }
+							placeholder={ this.props.enableTop ? '' : __( 'auto', i18n ) }
 							disabled={ ! this.props.enableTop }
 						/>
-						<span>{ __( 'Top' ) }</span>
+						<span>{ __( 'Top', i18n ) }</span>
 					</label>
 					<label className="ugb-four-number-control__label" htmlFor={ `${ id }-right` }>
 						<input
@@ -186,10 +187,10 @@ class FourNumberControl extends Component {
 							onChange={ this.onChangeRight }
 							aria-label={ this.props.label }
 							value={ this.state.right }
-							placeholder={ this.props.enableRight ? '' : __( 'auto' ) }
+							placeholder={ this.props.enableRight ? '' : __( 'auto', i18n ) }
 							disabled={ ! this.props.enableRight }
 						/>
-						<span>{ __( 'Right' ) }</span>
+						<span>{ __( 'Right', i18n ) }</span>
 					</label>
 					<label className="ugb-four-number-control__label" htmlFor={ `${ id }-bottom` }>
 						<input
@@ -198,10 +199,10 @@ class FourNumberControl extends Component {
 							onChange={ this.onChangeBottom }
 							aria-label={ this.props.label }
 							value={ this.state.bottom }
-							placeholder={ this.props.enableBottom ? '' : __( 'auto' ) }
+							placeholder={ this.props.enableBottom ? '' : __( 'auto', i18n ) }
 							disabled={ ! this.props.enableBottom }
 						/>
-						<span>{ __( 'Bottom' ) }</span>
+						<span>{ __( 'Bottom', i18n ) }</span>
 					</label>
 					<label className="ugb-four-number-control__label" htmlFor={ `${ id }-left` }>
 						<input
@@ -210,10 +211,10 @@ class FourNumberControl extends Component {
 							onChange={ this.onChangeLeft }
 							aria-label={ this.props.label }
 							value={ this.state.left }
-							placeholder={ this.props.enableLeft ? '' : __( 'auto' ) }
+							placeholder={ this.props.enableLeft ? '' : __( 'auto', i18n ) }
 							disabled={ ! this.props.enableLeft }
 						/>
-						<span>{ __( 'Left' ) }</span>
+						<span>{ __( 'Left', i18n ) }</span>
 					</label>
 					<IconButton
 						className={ this.state.locked ? 'ugb--is-locked' : '' }

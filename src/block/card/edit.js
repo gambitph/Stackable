@@ -4,6 +4,7 @@ import {
 import {
 	ButtonEdit, ColorPaletteControl, DesignPanelBody, ImageUploadPlaceholder, PanelButtonSettings, ProControl, ProControlButton, URLInputControl,
 } from '@stackable/components'
+import { i18n, showProNotice } from 'stackable'
 import { PanelBody, RangeControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
@@ -12,7 +13,6 @@ import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
-import { showProNotice } from 'stackable'
 
 const edit = props => {
 	const {
@@ -82,10 +82,10 @@ const edit = props => {
 					selected={ design }
 					options={ applyFilters( 'stackable.card.edit.designs', [
 						{
-							label: __( 'Basic' ), value: 'basic', image: ImageDesignBasic,
+							label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
 						},
 						{
-							label: __( 'Plain' ), value: 'plain', image: ImageDesignPlain,
+							label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
 						},
 					] ) }
 					onChange={ design => setAttributes( { design } ) }
@@ -93,20 +93,20 @@ const edit = props => {
 					{ applyFilters( 'stackable.card.edit.designs.before', null, props ) }
 					{ ! [ 'plain', 'full' ].includes( design ) &&
 						<ColorPaletteControl
-							label={ __( 'Background Color' ) }
+							label={ __( 'Background Color', i18n ) }
 							value={ backgroundColor }
 							onChange={ backgroundColor => setAttributes( { backgroundColor } ) }
 						/>
 					}
 					<RangeControl
-						label={ __( 'Border Radius' ) }
+						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
 						onChange={ borderRadius => setAttributes( { borderRadius } ) }
 						min={ 0 }
 						max={ 50 }
 					/>
 					<RangeControl
-						label={ __( 'Shadow / Outline' ) }
+						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
 						onChange={ shadow => setAttributes( { shadow } ) }
 						min={ 0 }
@@ -116,22 +116,22 @@ const edit = props => {
 					{ showProNotice && <ProControlButton /> }
 				</DesignPanelBody>
 				<PanelColorSettings
-					title={ __( 'Text Colors' ) }
+					title={ __( 'Text Colors', i18n ) }
 					colorSettings={ [
 						{
 							value: headingColor,
 							onChange: colorValue => setAttributes( { headingColor: colorValue } ),
-							label: __( 'Heading Color' ),
+							label: __( 'Heading Color', i18n ),
 						},
 						{
 							value: taglineColor,
 							onChange: colorValue => setAttributes( { taglineColor: colorValue } ),
-							label: __( 'Tagline Color' ),
+							label: __( 'Tagline Color', i18n ),
 						},
 						{
 							value: desColor,
 							onChange: colorValue => setAttributes( { desColor: colorValue } ),
-							label: __( 'Description Color' ),
+							label: __( 'Description Color', i18n ),
 						},
 					] }
 				>
@@ -154,11 +154,11 @@ const edit = props => {
 				{ showProNotice &&
 					<PanelBody
 						initialOpen={ false }
-						title={ __( 'Custom CSS' ) }
+						title={ __( 'Custom CSS', i18n ) }
 					>
 						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋' ) }
-							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium' ) }
+							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
+							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
 						/>
 					</PanelBody>
 				}
@@ -183,7 +183,7 @@ const edit = props => {
 						color: headingColor,
 						textAlign: contentAlign,
 					} }
-					placeholder={ __( 'Title for This Block' ) }
+					placeholder={ __( 'Title for This Block', i18n ) }
 					keepPlaceholderOnFocus
 				/>
 				<RichText
@@ -195,7 +195,7 @@ const edit = props => {
 						color: taglineColor,
 						textAlign: contentAlign,
 					} }
-					placeholder={ __( 'Subtitle for this block' ) }
+					placeholder={ __( 'Subtitle for this block', i18n ) }
 					keepPlaceholderOnFocus
 				/>
 				<RichText

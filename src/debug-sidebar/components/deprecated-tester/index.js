@@ -2,8 +2,8 @@ import { __, sprintf } from '@wordpress/i18n'
 import { BaseControl, Button, ClipboardButton, Dashicon, IconButton } from '@wordpress/components'
 import { Component, Fragment } from '@wordpress/element'
 import { DEPRECATION_TESTS_URL, DEPRECATION_TESTS_URL_LOCAL } from '@stackable/constants'
+import { i18n, srcUrl } from 'stackable'
 import classnames from 'classnames'
-import { srcUrl } from 'stackable'
 import { validateBlockHTML } from '../../util'
 
 class DeprecatedTester extends Component {
@@ -112,16 +112,16 @@ class DeprecatedTester extends Component {
 			<div className={ mainClasses }>
 				<BaseControl>
 					<p className="components-base-control__help">
-						{ __( 'When Stackable blocks are updated, block internal workings may change & editing existing blocks may result in errors if the changes are not backward compatible. This area tests multiple outdated blocks on whether they can migrate properly to newer versions.' ) }
+						{ __( 'When Stackable blocks are updated, block internal workings may change & editing existing blocks may result in errors if the changes are not backward compatible. This area tests multiple outdated blocks on whether they can migrate properly to newer versions.', i18n ) }
 					</p>
 					<Button className="ugb-deprecated-tester__load-button" isDefault={ true } onClick={ this.onClick } disabled={ this.state.isLoading }>
 						<Dashicon icon="image-rotate" size="12" />
-						{ __( 'Load Tests from Server' ) }
+						{ __( 'Load Tests from Server', i18n ) }
 					</Button>
 					{ process.env.NODE_ENV === 'development' && (
 						<Button className="ugb-deprecated-tester__load-button" isDefault={ true } onClick={ this.onClickLocal } disabled={ this.state.isLoading }>
 							<Dashicon icon="image-rotate" size="12" />
-							{ __( 'Load Tests from Local' ) }
+							{ __( 'Load Tests from Local', i18n ) }
 						</Button>
 					) }
 				</BaseControl>
@@ -129,7 +129,7 @@ class DeprecatedTester extends Component {
 					<Fragment>
 						<hr />
 						<p className="ugb-deprecated-tester--row ugb--first">
-							<Button isPrimary={ true } isSmall={ true } onClick={ this.onRunAllTests }>{ __( 'Run All Tests' ) }</Button>
+							<Button isPrimary={ true } isSmall={ true } onClick={ this.onRunAllTests }>{ __( 'Run All Tests', i18n ) }</Button>
 						</p>
 					</Fragment>
 				) }
@@ -145,7 +145,7 @@ class DeprecatedTester extends Component {
 									<IconButton isDefault={ false } icon="editor-help" onClick={ () => this.onShowToggle( blockName ) } />
 								</span>
 								<span className={ numTests === numPassed ? 'ugb--green' : '' }>
-									{ sprintf( __( '%d / %d Tests' ), numPassed, numTests ) }
+									{ sprintf( __( '%d / %d Tests', i18n ), numPassed, numTests ) }
 									<IconButton isDefault={ false } onClick={ () => this.onRunTest( blockName ) } icon="controls-play" />
 								</span>
 							</div>
@@ -161,15 +161,15 @@ class DeprecatedTester extends Component {
 											<div key={ i }>
 												<div>
 													{ test.description }
-													{ ! test.skip && test.passed === true && <small className="ugb--passed">{ __( 'Passed' ) }</small> }
-													{ ! test.skip && test.passed === false && <small className="ugb--failed">{ __( 'Failed' ) }</small> }
-													{ test.skip && <small className="ugb--skipped">{ __( 'Skipped' ) }</small> }
+													{ ! test.skip && test.passed === true && <small className="ugb--passed">{ __( 'Passed', i18n ) }</small> }
+													{ ! test.skip && test.passed === false && <small className="ugb--failed">{ __( 'Failed', i18n ) }</small> }
+													{ test.skip && <small className="ugb--skipped">{ __( 'Skipped', i18n ) }</small> }
 												</div>
 												<div className="ugb-deprecated-tester--test-details">
-													<small className="ugb--version">{ sprintf( __( 'v%s' ), test.version ) }</small>
+													<small className="ugb--version">{ sprintf( __( 'v%s', i18n ), test.version ) }</small>
 													{ test.plan && <small className={ `ugb--plan ugb--plan-${ test.plan }` }>{ test.plan }</small> }
-													<ClipboardButton isDefault={ false } isLink text={ copiedHTML }>{ __( 'Copy code' ) }</ClipboardButton>
-													{ test.skip && <small className="ugb--skipped-note"><span role="img" aria-label={ __( 'Note' ) }>⚠️</span> { test.skip }</small> }
+													<ClipboardButton isDefault={ false } isLink text={ copiedHTML }>{ __( 'Copy code', i18n ) }</ClipboardButton>
+													{ test.skip && <small className="ugb--skipped-note"><span role="img" aria-label={ __( 'Note', i18n ) }>⚠️</span> { test.skip }</small> }
 												</div>
 											</div>
 										)

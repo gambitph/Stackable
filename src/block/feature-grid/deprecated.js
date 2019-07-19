@@ -1,5 +1,4 @@
 import { descriptionPlaceholder, range } from '@stackable/util'
-import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { RichText } from '@wordpress/block-editor'
 
@@ -95,17 +94,17 @@ const deprecatedSchema_1_10 = {
 	title1: {
 		source: 'html',
 		selector: '.ugb-feature-grid > *:nth-child(1) h5',
-		default: __( 'Title' ),
+		default: 'Title',
 	},
 	title2: {
 		source: 'html',
 		selector: '.ugb-feature-grid > *:nth-child(2) h5',
-		default: __( 'Title' ),
+		default: 'Title',
 	},
 	title3: {
 		source: 'html',
 		selector: '.ugb-feature-grid > *:nth-child(3) h5',
-		default: __( 'Title' ),
+		default: 'Title',
 	},
 	description1: {
 		source: 'html',
@@ -143,17 +142,17 @@ const deprecatedSchema_1_10 = {
 	linkText1: {
 		source: 'html',
 		selector: '.ugb-feature-grid > *:nth-child(1) .ugb-fg-link',
-		default: __( 'Button text' ),
+		default: 'Button text',
 	},
 	linkText2: {
 		source: 'html',
 		selector: '.ugb-feature-grid > *:nth-child(2) .ugb-fg-link',
-		default: __( 'Button text' ),
+		default: 'Button text',
 	},
 	linkText3: {
 		source: 'html',
 		selector: '.ugb-feature-grid > *:nth-child(3) .ugb-fg-link',
-		default: __( 'Button text' ),
+		default: 'Button text',
 	},
 }
 
@@ -250,32 +249,32 @@ export const deprecatedSchema_1_9 = {
 	title1: {
 		source: 'html',
 		selector: '.ugb-feature-grid > *:nth-child(1) h5',
-		default: __( 'Feature 1' ),
+		default: 'Feature 1',
 	},
 	title2: {
 		source: 'html',
 		selector: '.ugb-feature-grid > *:nth-child(2) h5',
-		default: __( 'Feature 2' ),
+		default: 'Feature 2',
 	},
 	title3: {
 		source: 'html',
 		selector: '.ugb-feature-grid > *:nth-child(3) h5',
-		default: __( 'Feature 3' ),
+		default: 'Feature 3',
 	},
 	description1: {
 		source: 'html',
 		selector: '.ugb-feature-grid > *:nth-child(1) .ugb-fg-description',
-		default: __( 'Some feature description for an awesome feature' ),
+		default: 'Some feature description for an awesome feature',
 	},
 	description2: {
 		source: 'html',
 		selector: '.ugb-feature-grid > *:nth-child(2) .ugb-fg-description',
-		default: __( 'Some feature description for an awesome feature' ),
+		default: 'Some feature description for an awesome feature',
 	},
 	description3: {
 		source: 'html',
 		selector: '.ugb-feature-grid > *:nth-child(3) .ugb-fg-description',
-		default: __( 'Some feature description for an awesome feature' ),
+		default: 'Some feature description for an awesome feature',
 	},
 	linkUrl1: {
 		type: 'string',
@@ -298,17 +297,17 @@ export const deprecatedSchema_1_9 = {
 	linkText1: {
 		source: 'html',
 		selector: '.ugb-feature-grid > *:nth-child(1) .ugb-fg-link',
-		default: __( 'View More' ),
+		default: 'View More',
 	},
 	linkText2: {
 		source: 'html',
 		selector: '.ugb-feature-grid > *:nth-child(2) .ugb-fg-link',
-		default: __( 'View More' ),
+		default: 'View More',
 	},
 	linkText3: {
 		source: 'html',
 		selector: '.ugb-feature-grid > *:nth-child(3) .ugb-fg-link',
-		default: __( 'View More' ),
+		default: 'View More',
 	},
 }
 

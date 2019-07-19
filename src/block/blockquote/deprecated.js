@@ -1,4 +1,3 @@
-import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { descriptionPlaceholder } from '@stackable/util'
@@ -307,7 +306,7 @@ export const deprecatedSchema_1_4 = {
 	text: {
 		source: 'html',
 		selector: 'p',
-		default: __( 'It\'s okay to acknowledge that life can get complicated, but we musn\'t forget the beauty in its simplicity, too. From the multitude of stars above, to freshly mowed grass in the morning, life is simply wonderful.' ),
+		default: 'It\'s okay to acknowledge that life can get complicated, but we musn\'t forget the beauty in its simplicity, too. From the multitude of stars above, to freshly mowed grass in the morning, life is simply wonderful.',
 	},
 	color: {
 		type: 'string',

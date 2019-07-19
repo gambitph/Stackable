@@ -23,6 +23,7 @@ import {
 	hasBackgroundOverlay,
 	range,
 } from '@stackable/util'
+import { i18n, showProNotice } from 'stackable'
 import { PanelBody, RangeControl, SelectControl, TextControl } from '@wordpress/components'
 import {
 	withBlockStyles,
@@ -40,7 +41,6 @@ import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
 import { RichText } from '@wordpress/block-editor'
 import { showOptions } from '.'
-import { showProNotice } from 'stackable'
 
 addFilter( 'stackable.number-box.edit.inspector.layout.before', 'stackable/number-box', ( output, props ) => {
 	const { setAttributes } = props
@@ -56,10 +56,10 @@ addFilter( 'stackable.number-box.edit.inspector.layout.before', 'stackable/numbe
 				selected={ design }
 				options={ [
 					{
-						image: ImageDesignBasic, label: __( 'Basic' ), value: 'basic',
+						image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
 					},
 					{
-						image: ImageDesignPlain, label: __( 'Plain' ), value: 'plain',
+						image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
 					},
 					...applyFilters( 'stackable.number-box.edit.designs', [] ),
 				] }
@@ -100,9 +100,9 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General' ) }>
+			<PanelBody title={ __( 'General', i18n ) }>
 				<RangeControl
-					label={ __( 'Columns' ) }
+					label={ __( 'Columns', i18n ) }
 					value={ columns }
 					onChange={ columns => setAttributes( { columns } ) }
 					min={ 1 }
@@ -110,7 +110,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 				/>
 				{ show.borderRadius &&
 					<RangeControl
-						label={ __( 'Border Radius' ) }
+						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
 						onChange={ ( borderRadius = 12 ) => setAttributes( { borderRadius } ) }
 						min={ 0 }
@@ -120,7 +120,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 				}
 				{ show.shadow &&
 					<RangeControl
-						label={ __( 'Shadow / Outline' ) }
+						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
 						onChange={ ( shadow = 3 ) => setAttributes( { shadow } ) }
 						min={ 0 }
@@ -136,7 +136,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 
 			{ show.columnBackground &&
 				<PanelBody
-					title={ __( 'Column Background' ) }
+					title={ __( 'Column Background', i18n ) }
 					initialOpen={ false }
 				>
 					<BackgroundControlsHelper
@@ -155,7 +155,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 						blockAttributes={ props.attributes }
 					>
 						<AdvancedRangeControl
-							label={ __( 'Number' ) }
+							label={ __( 'Number', i18n ) }
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
@@ -169,7 +169,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 						blockAttributes={ props.attributes }
 					>
 						<AdvancedRangeControl
-							label={ __( 'Title' ) }
+							label={ __( 'Title', i18n ) }
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
@@ -179,7 +179,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 			</PanelSpacingBody>
 
 			<PanelAdvancedSettings
-				title={ __( 'Number' ) }
+				title={ __( 'Number', i18n ) }
 				checked={ showNumber }
 				onChange={ showNumber => setAttributes( { showNumber } ) }
 				toggleOnSetAttributes={ [
@@ -196,20 +196,20 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 				toggleAttributeName="showNumber"
 			>
 				<TextControl
-					label={ __( 'Number 1 Label' ) }
+					label={ __( 'Number 1 Label', i18n ) }
 					value={ num1 }
 					onChange={ num1 => setAttributes( { num1 } ) }
 				/>
 				{ columns !== '' && columns >= 2 && (
 					<TextControl
-						label={ __( 'Number 2 Label' ) }
+						label={ __( 'Number 2 Label', i18n ) }
 						value={ num2 }
 						onChange={ num2 => setAttributes( { num2 } ) }
 					/>
 				) }
 				{ columns !== '' && columns >= 3 && (
 					<TextControl
-						label={ __( 'Number 3 Label' ) }
+						label={ __( 'Number 3 Label', i18n ) }
 						value={ num3 }
 						onChange={ num3 => setAttributes( { num3 } ) }
 					/>
@@ -225,11 +225,11 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 				/>
 				{ show.numberStyle && (
 					<SelectControl
-						label={ __( 'Number Shape' ) }
+						label={ __( 'Number Shape', i18n ) }
 						options={ [
-							{ label: __( 'None' ), value: 'none' },
-							{ label: __( 'Circle' ), value: '' },
-							{ label: __( 'Square' ), value: 'square' },
+							{ label: __( 'None', i18n ), value: 'none' },
+							{ label: __( 'Circle', i18n ), value: '' },
+							{ label: __( 'Square', i18n ), value: 'square' },
 						] }
 						value={ numberStyle }
 						onChange={ numberStyle => setAttributes( { numberStyle } ) }
@@ -242,7 +242,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 						blockAttributes={ props.attributes }
 					>
 						<AdvancedRangeControl
-							label={ __( 'Shape Size' ) }
+							label={ __( 'Shape Size', i18n ) }
 							min={ 0 }
 							max={ 5 }
 							step={ 0.1 }
@@ -254,18 +254,18 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					<ColorPaletteControl
 						value={ numberBGColor }
 						onChange={ numberBGColor => setAttributes( { numberBGColor } ) }
-						label={ __( 'Number Background Color' ) }
+						label={ __( 'Number Background Color', i18n ) }
 					/>
 				) }
 				{ show.numberColor && (
 					<ColorPaletteControl
 						value={ numberColor }
 						onChange={ numberColor => setAttributes( { numberColor } ) }
-						label={ __( 'Number Color' ) }
+						label={ __( 'Number Color', i18n ) }
 					/>
 				) }
 				<AdvancedRangeControl
-					label={ __( 'Opacity' ) }
+					label={ __( 'Opacity', i18n ) }
 					min={ 0.1 }
 					max={ 1.0 }
 					step={ 0.1 }
@@ -278,12 +278,12 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align' ) } />
+					<AlignButtonsControl label={ __( 'Align', i18n ) } />
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
 			<PanelAdvancedSettings
-				title={ __( 'Title' ) }
+				title={ __( 'Title', i18n ) }
 				checked={ showTitle }
 				onChange={ showTitle => setAttributes( { showTitle } ) }
 				toggleOnSetAttributes={ [
@@ -300,26 +300,26 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					blockAttributes={ props.attributes }
 				/>
 				<HeadingButtonsControl
-					label={ __( 'Title HTML Tag' ) }
+					label={ __( 'Title HTML Tag', i18n ) }
 					value={ titleTag || 'h4' }
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
 				<ColorPaletteControl
 					value={ titleColor }
 					onChange={ titleColor => setAttributes( { titleColor } ) }
-					label={ __( 'Title Color' ) }
+					label={ __( 'Title Color', i18n ) }
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Title%sAlign"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align' ) } />
+					<AlignButtonsControl label={ __( 'Align', i18n ) } />
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
 			<PanelAdvancedSettings
-				title={ __( 'Description' ) }
+				title={ __( 'Description', i18n ) }
 				checked={ showDescription }
 				onChange={ showDescription => setAttributes( { showDescription } ) }
 				toggleOnSetAttributes={ [
@@ -337,14 +337,14 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 				<ColorPaletteControl
 					value={ descriptionColor }
 					onChange={ descriptionColor => setAttributes( { descriptionColor } ) }
-					label={ __( 'Description Color' ) }
+					label={ __( 'Description Color', i18n ) }
 				/>
 				<ResponsiveControl
 					attrNameTemplate="description%sAlign"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align' ) } />
+					<AlignButtonsControl label={ __( 'Align', i18n ) } />
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 		</Fragment>
@@ -376,40 +376,40 @@ addFilter( `stackable.number-box.edit.inspector.advanced.before`, `stackable/num
 					<PanelBody
 						key={ i }
 						initialOpen={ false }
-						title={ sprintf( __( 'Column #%s' ), num ) }
+						title={ sprintf( __( 'Column #%s', i18n ), num ) }
 					>
-						<p className="components-base-control__help">{ __( 'Override settings for this column.' ) }</p>
+						<p className="components-base-control__help">{ __( 'Override settings for this column.', i18n ) }</p>
 						{ show.backgroundColor && (
 							<ColorPaletteControl
-								label={ __( 'Column Background' ) }
+								label={ __( 'Column Background', i18n ) }
 								value={ props.attributes[ attrName( 'column%sBackgroundColor' ) ] }
 								onChange={ value => setAttributes( { [ attrName( 'column%sBackgroundColor' ) ]: value } ) }
 							/>
 						) }
 						{ showNumber && show.numberBGColor && (
 							<ColorPaletteControl
-								label={ __( 'Number Background' ) }
+								label={ __( 'Number Background', i18n ) }
 								value={ props.attributes[ attrName( 'column%sNumberBackgroundColor' ) ] }
 								onChange={ value => setAttributes( { [ attrName( 'column%sNumberBackgroundColor' ) ]: value } ) }
 							/>
 						) }
 						{ showNumber && show.numberColor && (
 							<ColorPaletteControl
-								label={ __( 'Number Text' ) }
+								label={ __( 'Number Text', i18n ) }
 								value={ props.attributes[ attrName( 'column%sNumberColor' ) ] }
 								onChange={ value => setAttributes( { [ attrName( 'column%sNumberColor' ) ]: value } ) }
 							/>
 						) }
 						{ showTitle && (
 							<ColorPaletteControl
-								label={ __( 'Title' ) }
+								label={ __( 'Title', i18n ) }
 								value={ props.attributes[ attrName( 'column%sTitleColor' ) ] }
 								onChange={ value => setAttributes( { [ attrName( 'column%sTitleColor' ) ]: value } ) }
 							/>
 						) }
 						{ showDescription && (
 							<ColorPaletteControl
-								label={ __( 'Description' ) }
+								label={ __( 'Description', i18n ) }
 								value={ props.attributes[ attrName( 'column%sDescriptionColor' ) ] }
 								onChange={ value => setAttributes( { [ attrName( 'column%sDescriptionColor' ) ]: value } ) }
 							/>
@@ -490,7 +490,7 @@ const edit = props => {
 											value={ title }
 											className="ugb-number-box__title"
 											onChange={ value => setAttributes( { [ `title${ i }` ]: value } ) }
-											placeholder={ __( 'Title' ) }
+											placeholder={ __( 'Title', i18n ) }
 											keepPlaceholderOnFocus
 										/>
 									) }

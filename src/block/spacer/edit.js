@@ -5,6 +5,7 @@ import { addFilter } from '@wordpress/hooks'
 import { compose } from '@wordpress/compose'
 import createStyles from './style'
 import { Fragment } from '@wordpress/element'
+import { i18n } from 'stackable'
 import { PanelBody } from '@wordpress/components'
 
 addFilter( 'stackable.spacer.edit.inspector.style.before', 'stackable/spacer', ( output, props ) => {
@@ -21,10 +22,10 @@ addFilter( 'stackable.spacer.edit.inspector.style.before', 'stackable/spacer', (
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General' ) }>
+			<PanelBody title={ __( 'General', i18n ) }>
 				<WhenResponsiveScreen>
 					<AdvancedRangeControl
-						label={ __( 'Height' ) }
+						label={ __( 'Height', i18n ) }
 						units={ [ 'px', 'vh' ] }
 						min={ [ 0, 0 ] }
 						max={ [ 500, 100 ] }
@@ -38,7 +39,7 @@ addFilter( 'stackable.spacer.edit.inspector.style.before', 'stackable/spacer', (
 				</WhenResponsiveScreen>
 				<WhenResponsiveScreen screen="tablet">
 					<AdvancedRangeControl
-						label={ __( 'Height' ) }
+						label={ __( 'Height', i18n ) }
 						units={ [ 'px', 'vh' ] }
 						min={ [ 0, 0 ] }
 						max={ [ 500, 100 ] }
@@ -52,7 +53,7 @@ addFilter( 'stackable.spacer.edit.inspector.style.before', 'stackable/spacer', (
 				</WhenResponsiveScreen>
 				<WhenResponsiveScreen screen="mobile">
 					<AdvancedRangeControl
-						label={ __( 'Height' ) }
+						label={ __( 'Height', i18n ) }
 						units={ [ 'px', 'vh' ] }
 						min={ [ 0, 0 ] }
 						max={ [ 500, 100 ] }

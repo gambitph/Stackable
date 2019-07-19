@@ -6,11 +6,11 @@
  */
 
 import { addFilter, applyFilters } from '@wordpress/hooks'
+import { disabledBlocks, i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { ButtonIcon } from '@stackable/icons'
 import { createButtonAttributes } from '@stackable/util'
 import deprecated from './deprecated'
-import { disabledBlocks } from 'stackable'
 import edit from './edit'
 import save from './save'
 
@@ -43,13 +43,13 @@ export const schema = {
 export const name = 'ugb/button'
 
 export const settings = {
-	title: __( 'Button' ),
+	title: __( 'Button', i18n ),
 	icon: ButtonIcon,
-	description: __( 'Add a customizable button.' ),
+	description: __( 'Add a customizable button.', i18n ),
 	category: 'stackable',
 	keywords: [
-		__( 'Button' ),
-		__( 'Stackable' ),
+		__( 'Button', i18n ),
+		__( 'Stackable', i18n ),
 	],
 	attributes: schema,
 	supports: {

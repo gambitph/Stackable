@@ -2,8 +2,8 @@
  * BLOCK: Divider Block.
  */
 
+import { disabledBlocks, i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
-import { disabledBlocks } from 'stackable'
 import { DividerIcon } from '@stackable/icons'
 import edit from './edit'
 import save from './save'
@@ -44,13 +44,13 @@ const schema = {
 export const name = 'ugb/divider'
 
 export const settings = {
-	title: __( 'Divider' ),
-	description: __( 'Add a pause between your content.' ),
+	title: __( 'Divider', i18n ),
+	description: __( 'Add a pause between your content.', i18n ),
 	icon: DividerIcon,
 	category: 'stackable',
 	keywords: [
-		__( 'Divider' ),
-		__( 'Stackable' ),
+		__( 'Divider', i18n ),
+		__( 'Stackable', i18n ),
 	],
 	attributes: schema,
 	supports: {

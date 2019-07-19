@@ -16,6 +16,7 @@ import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
 import createStyles from './style'
 import { Fragment } from '@wordpress/element'
+import { i18n } from 'stackable'
 
 addFilter( 'stackable.separator.edit.inspector.layout.before', 'stackable/separator', ( output, props ) => {
 	const { setAttributes } = props
@@ -74,15 +75,15 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 		<Fragment>
 			{ output }
 			<PanelBody
-				title={ __( 'Separator' ) }
+				title={ __( 'Separator', i18n ) }
 			>
 				<ColorPaletteControl
-					label={ __( 'Separator Color' ) }
+					label={ __( 'Separator Color', i18n ) }
 					value={ layer1Color }
 					onChange={ layer1Color => setAttributes( { layer1Color } ) }
 				/>
 				<RangeControl
-					label={ __( 'Separator Width' ) }
+					label={ __( 'Separator Width', i18n ) }
 					value={ layer1Width }
 					min="1"
 					max="4"
@@ -90,23 +91,23 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 					onChange={ layer1Width => setAttributes( { layer1Width } ) }
 				/>
 				<ToggleControl
-					label={ __( 'Flip Horizontally' ) }
+					label={ __( 'Flip Horizontally', i18n ) }
 					checked={ layer1Flip }
 					onChange={ layer1Flip => setAttributes( { layer1Flip } ) }
 				/>
 				<ToggleControl
-					label={ __( 'Shadow' ) }
+					label={ __( 'Shadow', i18n ) }
 					checked={ layer1Shadow }
 					onChange={ layer1Shadow => setAttributes( { layer1Shadow } ) }
 				/>
 			</PanelBody>
 			<PanelBody
-				title={ __( 'General' ) }
+				title={ __( 'General', i18n ) }
 				initialOpen={ false }
 			>
 				<WhenResponsiveScreen screen="desktop">
 					<AdvancedRangeControl
-						label={ __( 'Height' ) }
+						label={ __( 'Height', i18n ) }
 						value={ height }
 						min="30"
 						max="400"
@@ -117,7 +118,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 				</WhenResponsiveScreen>
 				<WhenResponsiveScreen screen="tablet">
 					<AdvancedRangeControl
-						label={ __( 'Height' ) }
+						label={ __( 'Height', i18n ) }
 						value={ tabletHeight }
 						min="30"
 						max="400"
@@ -128,7 +129,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 				</WhenResponsiveScreen>
 				<WhenResponsiveScreen screen="mobile">
 					<AdvancedRangeControl
-						label={ __( 'Height' ) }
+						label={ __( 'Height', i18n ) }
 						value={ mobileHeight }
 						min="30"
 						max="400"
@@ -138,28 +139,28 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 					/>
 				</WhenResponsiveScreen>
 				<ToggleControl
-					label={ __( 'Flip Vertically' ) }
+					label={ __( 'Flip Vertically', i18n ) }
 					checked={ flipVertically }
 					onChange={ flipVertically => setAttributes( { flipVertically } ) }
 				/>
 				<ToggleControl
-					label={ __( 'Flip Horizontally' ) }
+					label={ __( 'Flip Horizontally', i18n ) }
 					checked={ flipHorizontally }
 					onChange={ flipHorizontally => setAttributes( { flipHorizontally } ) }
 				/>
 				<ColorPaletteControl
-					label={ __( 'Background Color' ) }
+					label={ __( 'Background Color', i18n ) }
 					value={ backgroundColor }
 					onChange={ backgroundColor => setAttributes( { backgroundColor } ) }
 				/>
 			</PanelBody>
 			<PanelBody
-				title={ __( 'Spacing' ) }
+				title={ __( 'Spacing', i18n ) }
 				initialOpen={ false }
 			>
 				<WhenResponsiveScreen screen="desktop">
 					<AdvancedRangeControl
-						label={ __( 'Padding Top' ) }
+						label={ __( 'Padding Top', i18n ) }
 						value={ paddingTop }
 						min="0"
 						max="400"
@@ -169,7 +170,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						onChangeUnit={ paddingUnit => setAttributes( { paddingUnit } ) }
 					/>
 					<AdvancedRangeControl
-						label={ __( 'Padding Bottom' ) }
+						label={ __( 'Padding Bottom', i18n ) }
 						value={ paddingBottom }
 						min="0"
 						max="400"
@@ -179,23 +180,23 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						onChangeUnit={ paddingUnit => setAttributes( { paddingUnit } ) }
 					/>
 					<AdvancedRangeControl
-						label={ __( 'Margin Top' ) }
+						label={ __( 'Margin Top', i18n ) }
 						value={ marginTop }
 						min={ -height - paddingTop - 100 }
 						max="400"
 						onChange={ marginTop => setAttributes( { marginTop } ) }
-						help={ __( 'Use this to pull up/down the separator to the block above it' ) }
+						help={ __( 'Use this to pull up/down the separator to the block above it', i18n ) }
 						units={ [ 'px', '%' ] }
 						unit={ marginUnit }
 						onChangeUnit={ marginUnit => setAttributes( { marginUnit } ) }
 					/>
 					<AdvancedRangeControl
-						label={ __( 'Margin Bottom' ) }
+						label={ __( 'Margin Bottom', i18n ) }
 						value={ marginBottom }
 						min={ -height - paddingBottom - 100 }
 						max="400"
 						onChange={ marginBottom => setAttributes( { marginBottom } ) }
-						help={ __( 'Use this to pull up/down the separator to the block below it' ) }
+						help={ __( 'Use this to pull up/down the separator to the block below it', i18n ) }
 						units={ [ 'px', '%' ] }
 						unit={ marginUnit }
 						onChangeUnit={ marginUnit => setAttributes( { marginUnit } ) }
@@ -203,7 +204,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 				</WhenResponsiveScreen>
 				<WhenResponsiveScreen screen="tablet">
 					<AdvancedRangeControl
-						label={ __( 'Padding Top' ) }
+						label={ __( 'Padding Top', i18n ) }
 						value={ tabletPaddingTop }
 						min="0"
 						max="400"
@@ -213,7 +214,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						onChangeUnit={ tabletPaddingUnit => setAttributes( { tabletPaddingUnit } ) }
 					/>
 					<AdvancedRangeControl
-						label={ __( 'Padding Bottom' ) }
+						label={ __( 'Padding Bottom', i18n ) }
 						value={ tabletPaddingBottom }
 						min="0"
 						max="400"
@@ -223,23 +224,23 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						onChangeUnit={ tabletPaddingUnit => setAttributes( { tabletPaddingUnit } ) }
 					/>
 					<AdvancedRangeControl
-						label={ __( 'Margin Top' ) }
+						label={ __( 'Margin Top', i18n ) }
 						value={ tabletMarginTop }
 						min={ -tabletHeight - tabletPaddingTop - 100 }
 						max="400"
 						onChange={ tabletMarginTop => setAttributes( { tabletMarginTop } ) }
-						help={ __( 'Use this to pull up/down the separator to the block above it' ) }
+						help={ __( 'Use this to pull up/down the separator to the block above it', i18n ) }
 						units={ [ 'px', '%' ] }
 						unit={ tabletMarginUnit }
 						onChangeUnit={ tabletMarginUnit => setAttributes( { tabletMarginUnit } ) }
 					/>
 					<AdvancedRangeControl
-						label={ __( 'Margin Bottom' ) }
+						label={ __( 'Margin Bottom', i18n ) }
 						value={ tabletMarginBottom }
 						min={ -tabletHeight - tabletPaddingBottom - 100 }
 						max="400"
 						onChange={ tabletMarginBottom => setAttributes( { tabletMarginBottom } ) }
-						help={ __( 'Use this to pull up/down the separator to the block below it' ) }
+						help={ __( 'Use this to pull up/down the separator to the block below it', i18n ) }
 						units={ [ 'px', '%' ] }
 						unit={ tabletMarginUnit }
 						onChangeUnit={ tabletMarginUnit => setAttributes( { tabletMarginUnit } ) }
@@ -247,7 +248,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 				</WhenResponsiveScreen>
 				<WhenResponsiveScreen screen="mobile">
 					<AdvancedRangeControl
-						label={ __( 'Padding Top' ) }
+						label={ __( 'Padding Top', i18n ) }
 						value={ mobilePaddingTop }
 						min="0"
 						max="400"
@@ -257,7 +258,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						onChangeUnit={ mobilePaddingUnit => setAttributes( { mobilePaddingUnit } ) }
 					/>
 					<AdvancedRangeControl
-						label={ __( 'Padding Bottom' ) }
+						label={ __( 'Padding Bottom', i18n ) }
 						value={ mobilePaddingBottom }
 						min="0"
 						max="400"
@@ -267,23 +268,23 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						onChangeUnit={ mobilePaddingUnit => setAttributes( { mobilePaddingUnit } ) }
 					/>
 					<AdvancedRangeControl
-						label={ __( 'Margin Top' ) }
+						label={ __( 'Margin Top', i18n ) }
 						value={ mobileMarginTop }
 						min={ -mobileHeight - mobilePaddingTop - 100 }
 						max="400"
 						onChange={ mobileMarginTop => setAttributes( { mobileMarginTop } ) }
-						help={ __( 'Use this to pull up/down the separator to the block above it' ) }
+						help={ __( 'Use this to pull up/down the separator to the block above it', i18n ) }
 						units={ [ 'px', '%' ] }
 						unit={ mobileMarginUnit }
 						onChangeUnit={ mobileMarginUnit => setAttributes( { mobileMarginUnit } ) }
 					/>
 					<AdvancedRangeControl
-						label={ __( 'Margin Bottom' ) }
+						label={ __( 'Margin Bottom', i18n ) }
 						value={ mobileMarginBottom }
 						min={ -mobileHeight - mobilePaddingBottom - 100 }
 						max="400"
 						onChange={ mobileMarginBottom => setAttributes( { mobileMarginBottom } ) }
-						help={ __( 'Use this to pull up/down the separator to the block below it' ) }
+						help={ __( 'Use this to pull up/down the separator to the block below it', i18n ) }
 						units={ [ 'px', '%' ] }
 						unit={ mobileMarginUnit }
 						onChangeUnit={ mobileMarginUnit => setAttributes( { mobileMarginUnit } ) }

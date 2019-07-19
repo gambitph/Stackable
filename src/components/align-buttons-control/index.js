@@ -1,26 +1,27 @@
 import { BaseControl, Toolbar } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import BaseControlMultiLabel from '../base-control-multi-label'
+import { i18n } from 'stackable'
 
 const ALIGN_OPTIONS = [
 	{
 		value: 'left',
-		title: __( 'Align Left' ),
+		title: __( 'Align Left', i18n ),
 		icon: 'editor-alignleft',
 	},
 	{
 		value: 'center',
-		title: __( 'Align Center' ),
+		title: __( 'Align Center', i18n ),
 		icon: 'editor-aligncenter',
 	},
 	{
 		value: 'right',
-		title: __( 'Align Right' ),
+		title: __( 'Align Right', i18n ),
 		icon: 'editor-alignright',
 	},
 	{
 		value: 'justify',
-		title: __( 'Justified' ),
+		title: __( 'Justified', i18n ),
 		icon: 'editor-justify',
 	},
 ]
@@ -61,7 +62,7 @@ const AlignButtonsControl = props => {
 }
 
 AlignButtonsControl.defaultProps = {
-	label: __( 'Align' ),
+	label: __( 'Align', i18n ),
 	value: ALIGN_OPTIONS[ 0 ].value,
 	onChange: () => {},
 	justified: false,
