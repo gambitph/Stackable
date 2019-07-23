@@ -16,6 +16,7 @@ class ButtonIconPopoverControl extends Component {
 		}
 		this.handleOpen = this.handleOpen.bind( this )
 		this.handleClose = this.handleClose.bind( this )
+		this.handleOnClickOutside = this.handleOnClickOutside.bind( this )
 		this.instanceId = buttonInstance++
 	}
 
@@ -71,6 +72,18 @@ class ButtonIconPopoverControl extends Component {
 		this.setState( { open: false } )
 	}
 
+	/**
+	 * Use our own click/close handler. Only close this if the sidebar is clicked.
+	 * If this is not used, the popover will close when a color control's custom color field (when inside the popover) is clicked.
+	 *
+	 * @param {Event} ev Click event
+	 */
+	handleOnClickOutside( ev ) {
+		if ( ev.target.closest( '.edit-post-sidebar' ) ) {
+			this.handleClose()
+		}
+	}
+
 	render() {
 		return (
 			<BaseControl
@@ -107,6 +120,7 @@ class ButtonIconPopoverControl extends Component {
 								className="ugb-button-icon-control__popover"
 								focusOnMount="container"
 								onClose={ this.handleClose }
+								onClickOutside={ this.handleOnClickOutside }
 							>
 								<PanelBody>
 									{ ( this.props.label || this.props.popoverLabel ) &&
