@@ -1,20 +1,11 @@
 import { addFilter, applyFilters, doAction } from '@wordpress/hooks'
-import { AdvancedRangeControl, AdvancedSelectControl, FourNumberControl, WhenResponsiveScreen } from '@stackable/components'
+import { AdvancedRangeControl, AdvancedToolbarControl, FourNumberControl, WhenResponsiveScreen } from '@stackable/components'
 import { __ } from '@wordpress/i18n'
 import { createAllCombinationAttributes } from '@stackable/util'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
 import { PanelBody } from '@wordpress/components'
-
-const verticalAlignOptions = [
-	{ value: '', label: __( 'Default', i18n ) },
-	{ value: 'stretch', label: __( 'Stretch', i18n ) },
-	{ value: 'flex-start', label: __( 'Top', i18n ) },
-	{ value: 'flex-end', label: __( 'Bottom', i18n ) },
-	{ value: 'center', label: __( 'Center', i18n ) },
-	// { value: 'baseline', label: __( 'Baseline', i18n ) },
-]
 
 const inspectorControls = ( blockName, options ) => ( output, props ) => {
 	const { setAttributes } = props
@@ -204,27 +195,27 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 
 				{ options.verticalAlign && <Fragment>
 					<WhenResponsiveScreen>
-						<AdvancedSelectControl
+						<AdvancedToolbarControl
 							label={ __( 'Content Vertical Align', i18n ) }
-							options={ verticalAlignOptions }
+							controls="flex-vertical"
 							value={ columnVerticalAlign }
-							onChange={ columnVerticalAlign => setAttributes( { columnVerticalAlign } ) }
+							onChange={ value => setAttributes( { columnVerticalAlign: columnVerticalAlign !== value ? value : '' } ) }
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
-						<AdvancedSelectControl
+						<AdvancedToolbarControl
 							label={ __( 'Content Vertical Align', i18n ) }
-							options={ verticalAlignOptions }
+							controls="flex-vertical"
 							value={ tabletColumnVerticalAlign }
-							onChange={ tabletColumnVerticalAlign => setAttributes( { tabletColumnVerticalAlign } ) }
+							onChange={ value => setAttributes( { tabletColumnVerticalAlign: tabletColumnVerticalAlign !== value ? value : '' } ) }
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
-						<AdvancedSelectControl
+						<AdvancedToolbarControl
 							label={ __( 'Content Vertical Align', i18n ) }
-							options={ verticalAlignOptions }
+							controls="flex-vertical"
 							value={ mobileColumnVerticalAlign }
-							onChange={ mobileColumnVerticalAlign => setAttributes( { mobileColumnVerticalAlign } ) }
+							onChange={ value => setAttributes( { mobileColumnVerticalAlign: mobileColumnVerticalAlign !== value ? value : '' } ) }
 						/>
 					</WhenResponsiveScreen>
 				</Fragment> }

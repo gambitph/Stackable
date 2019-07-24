@@ -1,30 +1,11 @@
 import { addFilter, applyFilters, doAction, removeFilter } from '@wordpress/hooks'
-import { AdvancedRangeControl, AdvancedSelectControl, FourNumberControl, WhenResponsiveScreen } from '@stackable/components'
+import { AdvancedRangeControl, AdvancedToolbarControl, FourNumberControl, WhenResponsiveScreen } from '@stackable/components'
 import { __ } from '@wordpress/i18n'
 import { createAllCombinationAttributes } from '@stackable/util'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
 import { PanelBody } from '@wordpress/components'
-
-const verticalAlignOptions = [
-	{ value: '', label: __( 'Default', i18n ) },
-	{ value: 'stretch', label: __( 'Stretch', i18n ) },
-	{ value: 'flex-start', label: __( 'Top', i18n ) },
-	{ value: 'flex-end', label: __( 'Bottom', i18n ) },
-	{ value: 'center', label: __( 'Center', i18n ) },
-	// { value: 'baseline', label: __( 'Baseline', i18n ) },
-]
-
-const horizontalAlignOptions = [
-	{ value: '', label: __( 'Default', i18n ) },
-	{ value: 'flex-start', label: __( 'Left', i18n ) },
-	{ value: 'center', label: __( 'Center', i18n ) },
-	{ value: 'flex-end', label: __( 'Right', i18n ) },
-	// { value: 'space-between', label: __( 'Space Between', i18n ) },
-	// { value: 'space-around', label: __( 'Space Around', i18n ) },
-	// { value: 'space-evenly', label: __( 'Space Evenly', i18n ) },
-]
 
 removeFilter( 'stackable.setAttributes', 'stackable/module/block-spacing' )
 addFilter( 'stackable.setAttributes', 'stackable/module/block-spacing', ( attributes, blockProps ) => {
@@ -361,54 +342,54 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 
 				{ options.horizontalAlign && <Fragment>
 					<WhenResponsiveScreen>
-						<AdvancedSelectControl
+						<AdvancedToolbarControl
 							label={ __( 'Content Horizontal Align', i18n ) }
-							options={ horizontalAlignOptions }
+							controls="flex-horizontal"
 							value={ blockHorizontalAlign }
-							onChange={ blockHorizontalAlign => setAttributes( { blockHorizontalAlign } ) }
+							onChange={ value => setAttributes( { blockHorizontalAlign: blockHorizontalAlign !== value ? value : '' } ) }
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
-						<AdvancedSelectControl
+						<AdvancedToolbarControl
 							label={ __( 'Content Horizontal Align', i18n ) }
-							options={ horizontalAlignOptions }
+							controls="flex-horizontal"
 							value={ tabletBlockHorizontalAlign }
-							onChange={ tabletBlockHorizontalAlign => setAttributes( { tabletBlockHorizontalAlign } ) }
+							onChange={ value => setAttributes( { tabletBlockHorizontalAlign: tabletBlockHorizontalAlign !== value ? value : '' } ) }
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
-						<AdvancedSelectControl
+						<AdvancedToolbarControl
 							label={ __( 'Content Horizontal Align', i18n ) }
-							options={ horizontalAlignOptions }
+							controls="flex-horizontal"
 							value={ mobileBlockHorizontalAlign }
-							onChange={ mobileBlockHorizontalAlign => setAttributes( { mobileBlockHorizontalAlign } ) }
+							onChange={ value => setAttributes( { mobileBlockHorizontalAlign: mobileBlockHorizontalAlign !== value ? value : '' } ) }
 						/>
 					</WhenResponsiveScreen>
 				</Fragment> }
 
 				{ options.verticalAlign && <Fragment>
 					<WhenResponsiveScreen>
-						<AdvancedSelectControl
+						<AdvancedToolbarControl
 							label={ __( 'Content Vertical Align', i18n ) }
-							options={ verticalAlignOptions }
+							controls="flex-vertical"
 							value={ blockVerticalAlign }
-							onChange={ blockVerticalAlign => setAttributes( { blockVerticalAlign } ) }
+							onChange={ value => setAttributes( { blockVerticalAlign: blockVerticalAlign !== value ? value : '' } ) }
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
-						<AdvancedSelectControl
+						<AdvancedToolbarControl
 							label={ __( 'Content Vertical Align', i18n ) }
-							options={ verticalAlignOptions }
+							controls="flex-vertical"
 							value={ tabletBlockVerticalAlign }
-							onChange={ tabletBlockVerticalAlign => setAttributes( { tabletBlockVerticalAlign } ) }
+							onChange={ value => setAttributes( { tabletBlockVerticalAlign: tabletBlockVerticalAlign !== value ? value : '' } ) }
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
-						<AdvancedSelectControl
+						<AdvancedToolbarControl
 							label={ __( 'Content Vertical Align', i18n ) }
-							options={ verticalAlignOptions }
+							controls="flex-vertical"
 							value={ mobileBlockVerticalAlign }
-							onChange={ mobileBlockVerticalAlign => setAttributes( { mobileBlockVerticalAlign } ) }
+							onChange={ value => setAttributes( { mobileBlockVerticalAlign: mobileBlockVerticalAlign !== value ? value : '' } ) }
 						/>
 					</WhenResponsiveScreen>
 				</Fragment> }
