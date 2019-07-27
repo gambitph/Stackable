@@ -1,5 +1,5 @@
 import { addFilter, applyFilters, doAction, removeFilter } from '@wordpress/hooks'
-import { AdvancedRangeControl, AdvancedToolbarControl, FourNumberControl, WhenResponsiveScreen } from '@stackable/components'
+import { AdvancedRangeControl, AdvancedToolbarControl, FourRangeControl, WhenResponsiveScreen } from '@stackable/components'
 import { __ } from '@wordpress/i18n'
 import { createAllCombinationAttributes } from '@stackable/util'
 import deepmerge from 'deepmerge'
@@ -97,15 +97,18 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 				{ applyFilters( `stackable.${ blockName }.edit.advanced.block-spacing.before`, null, props ) }
 				{ options.margins && <Fragment>
 					<WhenResponsiveScreen screen="desktop">
-						<FourNumberControl
+						<FourRangeControl
 							label={ __( 'Block Margins', i18n ) }
 							units={ [ 'px', '%' ] }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
+							defaultLocked={ false }
 							top={ marginTop }
 							bottom={ marginBottom }
 							right={ marginRight }
 							left={ marginLeft }
 							unit={ marginUnit }
+							min={ -200 }
+							max={ 500 }
 							onChange={ margins => {
 								setAttributes( {
 									marginTop: margins.top !== '' ? parseInt( margins.top, 10 ) : '',
@@ -122,15 +125,18 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
-						<FourNumberControl
+						<FourRangeControl
 							label={ __( 'Block Margins', i18n ) }
 							units={ [ 'px', '%' ] }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
+							defaultLocked={ false }
 							top={ tabletMarginTop }
 							bottom={ tabletMarginBottom }
 							right={ tabletMarginRight }
 							left={ tabletMarginLeft }
 							unit={ tabletMarginUnit }
+							min={ -200 }
+							max={ 500 }
 							onChange={ margins => {
 								setAttributes( {
 									tabletMarginTop: margins.top !== '' ? parseInt( margins.top, 10 ) : '',
@@ -147,15 +153,18 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
-						<FourNumberControl
+						<FourRangeControl
 							label={ __( 'Block Margins', i18n ) }
 							units={ [ 'px', '%' ] }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
+							defaultLocked={ false }
 							top={ mobileMarginTop }
 							bottom={ mobileMarginBottom }
 							right={ mobileMarginRight }
 							left={ mobileMarginLeft }
 							unit={ mobileMarginUnit }
+							min={ -200 }
+							max={ 500 }
 							onChange={ margins => {
 								setAttributes( {
 									mobileMarginTop: margins.top !== '' ? parseInt( margins.top, 10 ) : '',
@@ -174,15 +183,18 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 				</Fragment> }
 				{ options.paddings && <Fragment>
 					<WhenResponsiveScreen screen="desktop">
-						<FourNumberControl
+						<FourRangeControl
 							label={ __( 'Block Paddings', i18n ) }
 							units={ [ 'px', 'em', '%' ] }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
+							defaultLocked={ false }
 							top={ paddingTop }
 							bottom={ paddingBottom }
 							right={ paddingRight }
 							left={ paddingLeft }
 							unit={ paddingUnit }
+							min={ 0 }
+							max={ 500 }
 							onChange={ paddings => {
 								setAttributes( {
 									paddingTop: paddings.top !== '' ? parseInt( paddings.top, 10 ) : '',
@@ -199,15 +211,18 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
-						<FourNumberControl
+						<FourRangeControl
 							label={ __( 'Block Paddings', i18n ) }
 							units={ [ 'px', 'em', '%' ] }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
+							defaultLocked={ false }
 							top={ tabletPaddingTop }
 							bottom={ tabletPaddingBottom }
 							right={ tabletPaddingRight }
 							left={ tabletPaddingLeft }
 							unit={ tabletPaddingUnit }
+							min={ 0 }
+							max={ 500 }
 							onChange={ paddings => {
 								setAttributes( {
 									tabletPaddingTop: paddings.top !== '' ? parseInt( paddings.top, 10 ) : '',
@@ -224,15 +239,18 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
-						<FourNumberControl
+						<FourRangeControl
 							label={ __( 'Block Paddings', i18n ) }
 							units={ [ 'px', 'em', '%' ] }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
+							defaultLocked={ false }
 							top={ mobilePaddingTop }
 							bottom={ mobilePaddingBottom }
 							right={ mobilePaddingRight }
 							left={ mobilePaddingLeft }
 							unit={ mobilePaddingUnit }
+							min={ 0 }
+							max={ 500 }
 							onChange={ paddings => {
 								setAttributes( {
 									mobilePaddingTop: paddings.top !== '' ? parseInt( paddings.top, 10 ) : '',

@@ -9,6 +9,7 @@ import {
 	ButtonEdit,
 	ColorPaletteControl,
 	ContentAlignControl,
+	ControlSeparator,
 	DesignPanelBody,
 	HeadingButtonsControl,
 	PanelAdvancedSettings,
@@ -245,6 +246,7 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
+				<ControlSeparator />
 				<ResponsiveControl
 					attrNameTemplate="Button%sAlign"
 					setAttributes={ setAttributes }

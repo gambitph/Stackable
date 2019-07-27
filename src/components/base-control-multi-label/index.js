@@ -22,6 +22,7 @@ const BaseControlMultiLabel = props => {
 						)
 					} )
 				}
+				{ props.afterButton }
 			</div>
 		</div>
 	)
@@ -34,6 +35,7 @@ BaseControlMultiLabel.defaultProps = {
 	onChangeUnit: () => {},
 	screens: [ 'desktop' ],
 	onChangeScreen: () => {},
+	afterButton: null,
 }
 
 export default BaseControlMultiLabel

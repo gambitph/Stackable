@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n'
 import BaseControlMultiLabel from '../base-control-multi-label'
 import { i18n } from 'stackable'
 
+// TODO: Change to AdvancedToolbarControl
 const ALIGN_OPTIONS = [
 	{
 		value: 'left',

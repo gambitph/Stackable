@@ -88,6 +88,7 @@ const createButtonAttributes = ( attrNameTemplate, options = {} ) => {
 				'BorderRadius',
 				'BorderWidth',
 				'Shadow',
+				'IconSize',
 				'IconSpacing',
 				'BackgroundGradientDirection',
 				'HoverBackgroundGradientDirection',

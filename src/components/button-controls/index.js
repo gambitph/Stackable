@@ -9,6 +9,7 @@ import {
 	ColorPaletteControl,
 	ControlSeparator,
 	DesignControl,
+	FourRangeControl,
 	IconControl,
 	TextToolbar,
 	TypographyControlHelper,
@@ -72,6 +73,114 @@ const ButtonControls = props => {
 				/>
 			) }
 
+			<ControlSeparator />
+
+			{ props.hasTypography && design !== 'link' && (
+				<TypographyControlHelper
+					attrNameTemplate={ props.attrNameTemplate }
+					setAttributes={ props.setAttributes }
+					blockAttributes={ props.blockAttributes }
+					// onChangeFontSize={ null }
+					onChangeLineHeight={ null }
+					showSecondFontSize={ false }
+				/>
+			) }
+
+			{ props.onChangeSize && ( props.onChangeDesign ? design !== 'link' : true ) &&
+				<SelectControl
+					label={ __( 'Button Size', i18n ) }
+					value={ size }
+					options={ [
+						{ value: 'tiny', label: __( 'Tiny', i18n ) },
+						{ value: 'small', label: __( 'Small', i18n ) },
+						{ value: 'normal', label: __( 'Normal', i18n ) },
+						{ value: 'medium', label: __( 'Medium', i18n ) },
+						{ value: 'large', label: __( 'Large', i18n ) },
+					] }
+					onChange={ props.onChangeSize }
+				/>
+			}
+
+			{ props.onChangePaddings && design !== 'link' && design !== 'plain' &&
+				<FourRangeControl
+					label={ __( 'Vertical Padding', i18n ) }
+					top={ props.paddingTop }
+					bottom={ props.paddingBottom }
+					onChange={ props.onChangePaddings }
+					enableLeft={ false }
+					enableRight={ false }
+				/>
+			}
+			{ props.onChangePaddings && design !== 'link' && design !== 'plain' &&
+				<FourRangeControl
+					label={ __( 'Horizontal Padding', i18n ) }
+					right={ props.paddingRight }
+					left={ props.paddingLeft }
+					onChange={ props.onChangePaddings }
+					enableTop={ false }
+					enableBottom={ false }
+					max={ 100 }
+				/>
+			}
+
+			{ props.onChangeBorderRadius && design !== 'link' && design !== 'plain' &&
+				<RangeControl
+					label={ __( 'Border Radius', i18n ) }
+					value={ props.borderRadius }
+					min="0"
+					max="100"
+					onChange={ props.onChangeBorderRadius }
+					allowReset={ true }
+				/>
+			}
+
+			{ props.onChangeBorderWidth && design === 'ghost' &&
+				<RangeControl
+					label={ __( 'Border Width', i18n ) }
+					value={ props.borderWidth }
+					min="1"
+					max="6"
+					onChange={ props.onChangeBorderWidth }
+					allowReset={ true }
+				/>
+			}
+
+			{ props.onChangeShadow && ( design === '' || design === 'basic' ) &&
+				<RangeControl
+					label={ __( 'Shadow', i18n ) }
+					value={ props.shadow }
+					onChange={ props.onChangeShadow }
+					min={ 0 }
+					max={ 9 }
+					allowReset={ true }
+				/>
+			}
+
+			{ design !== 'link' && <ControlSeparator /> }
+
+			{ props.onChangeBackgroundColorType && showGradient && (
+				<BaseControl
+					label={ __( 'Button Color Type', i18n ) }
+				>
+					<TextToolbar
+						controls={ [
+							{
+								value: '',
+								title: __( 'Single', i18n ),
+								isActive: props.backgroundColorType === '',
+								onClick: () => props.onChangeBackgroundColorType( '' ),
+							},
+							{
+								value: 'gradient',
+								title: __( 'Gradient', i18n ),
+								isActive: props.backgroundColorType === 'gradient',
+								onClick: () => props.onChangeBackgroundColorType( 'gradient' ),
+							},
+						] }
+					/>
+				</BaseControl>
+			) }
+
 			{ props.onChangeBackgroundColor && design !== 'link' && (
 				<ColorPaletteControl
 					label={
@@ -84,6 +193,26 @@ const ButtonControls = props => {
 				/>
 			) }
 
+			{ props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' && showGradient && (
+				<ColorPaletteControl
+					label={ __( 'Button Color #2', i18n ) }
+					value={ props.backgroundColor2 }
+					onChange={ props.onChangeBackgroundColor2 }
+				/>
+			) }
+
+			{ props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' && showGradient && (
+				<RangeControl
+					label={ __( 'Gradient Direction (degrees)', i18n ) }
+					value={ props.backgroundGradientDirection }
+					onChange={ props.onChangeBackgroundGradientDirection }
+					min={ 0 }
+					max={ 360 }
+					step={ 10 }
+					allowReset={ true }
+				/>
+			) }
+
 			{ props.onChangeTextColor && showGradient && (
 				<ColorPaletteControl
 					label={ __( 'Text Color', i18n ) }
@@ -92,80 +221,16 @@ const ButtonControls = props => {
 				/>
 			) }
 
-			{ props.hasAdvancedColors && design !== 'link' && (
-				<ButtonIconPopoverControl
-					label={ __( 'Adv. Color Settings', i18n ) }
-					onReset={ props.onResetAdvancedColors }
-					allowReset={
-						props.backgroundColorType ||
-						props.backgroundColor2 ||
-						props.backgroundGradientDirection ||
-						props.opacity
-					}
-				>
-					{ props.onChangeBackgroundColorType && showGradient && (
-						<BaseControl
-							label={ __( 'Button Color Type', i18n ) }
-						>
-							<TextToolbar
-								controls={ [
-									{
-										value: '',
-										title: __( 'Single', i18n ),
-										isActive: props.backgroundColorType === '',
-										onClick: () => props.onChangeBackgroundColorType( '' ),
-									},
-									{
-										value: 'gradient',
-										title: __( 'Gradient', i18n ),
-										isActive: props.backgroundColorType === 'gradient',
-										onClick: () => props.onChangeBackgroundColorType( 'gradient' ),
-									},
-								] }
-							/>
-						</BaseControl>
-					) }
-					{ props.onChangeBackgroundColor && props.backgroundColorType === 'gradient' && showGradient && (
-						<ColorPaletteControl
-							label={
-								props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' && showGradient ?
-									__( 'Button Color #1', i18n ) :
-									__( 'Button Color', i18n )
-							}
-							value={ props.backgroundColor }
-							onChange={ props.onChangeBackgroundColor }
-						/>
-					) }
-					{ props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' && showGradient && (
-						<ColorPaletteControl
-							label={ __( 'Button Color #2', i18n ) }
-							value={ props.backgroundColor2 }
-							onChange={ props.onChangeBackgroundColor2 }
-						/>
-					) }
-					{ props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' && showGradient && (
-						<RangeControl
-							label={ __( 'Gradient Direction (degrees)', i18n ) }
-							value={ props.backgroundGradientDirection }
-							onChange={ props.onChangeBackgroundGradientDirection }
-							min={ 0 }
-							max={ 360 }
-							step={ 10 }
-							allowReset={ true }
-						/>
-					) }
-					{ props.onChangeOpacity && (
-						<RangeControl
-							label={ __( 'Opacity', i18n ) }
-							value={ props.opacity }
-							onChange={ props.onChangeOpacity }
-							min={ 0.1 }
-							max={ 1 }
-							step={ 0.1 }
-							allowReset={ true }
-						/>
-					) }
-				</ButtonIconPopoverControl>
+			{ props.onChangeOpacity && (
+				<RangeControl
+					label={ __( 'Opacity', i18n ) }
+					value={ props.opacity }
+					onChange={ props.onChangeOpacity }
+					min={ 0.1 }
+					max={ 1 }
+					step={ 0.1 }
+					allowReset={ true }
+				/>
 			) }
 
 			{ design !== 'link' && <ControlSeparator /> }
@@ -192,6 +257,18 @@ const ButtonControls = props => {
 				/>
 			) }
 
+			{ props.onChangeOpacity && (
+				<RangeControl
+					label={ __( 'Hover Opacity', i18n ) }
+					value={ props.hoverOpacity }
+					onChange={ props.onChangeHoverOpacity }
+					min={ 0.1 }
+					max={ 1 }
+					step={ 0.1 }
+					allowReset={ true }
+				/>
+			) }
+
 			{ props.hasHoverColors && design !== 'link' && (
 				<ButtonIconPopoverControl
 					label={ __( 'Hover Colors', i18n ) }
@@ -200,8 +277,7 @@ const ButtonControls = props => {
 						props.hoverBackgroundColor ||
 						props.hoverBackgroundColor2 ||
 						props.hoverBackgroundGradientDirection ||
-						props.hoverTextColor ||
-						props.hoverOpacity
+						props.hoverTextColor
 					}
 				>
 					{ props.onChangeHoverBackgroundColor && (
@@ -240,79 +316,10 @@ const ButtonControls = props => {
 							onChange={ props.onChangeHoverTextColor }
 						/>
 					) }
-					{ props.onChangeOpacity && (
-						<RangeControl
-							label={ __( 'Opacity', i18n ) }
-							value={ props.hoverOpacity }
-							onChange={ props.onChangeHoverOpacity }
-							min={ 0.1 }
-							max={ 1 }
-							step={ 0.1 }
-							allowReset={ true }
-						/>
-					) }
 				</ButtonIconPopoverControl>
 			) }
 
 			{ design !== 'link' && <ControlSeparator /> }
-
-			{ props.hasTypography && design !== 'link' && (
-				<TypographyControlHelper
-					attrNameTemplate={ props.attrNameTemplate }
-					setAttributes={ props.setAttributes }
-					blockAttributes={ props.blockAttributes }
-					onChangeFontSize={ null }
-					onChangeLineHeight={ null }
-				/>
-			) }
-
-			{ props.onChangeSize && ( props.onChangeDesign ? design !== 'link' : true ) &&
-				<SelectControl
-					label={ __( 'Size', i18n ) }
-					value={ size }
-					options={ [
-						{ value: 'tiny', label: __( 'Tiny', i18n ) },
-						{ value: 'small', label: __( 'Small', i18n ) },
-						{ value: 'normal', label: __( 'Normal', i18n ) },
-						{ value: 'medium', label: __( 'Medium', i18n ) },
-						{ value: 'large', label: __( 'Large', i18n ) },
-					] }
-					onChange={ props.onChangeSize }
-				/>
-			}
-
-			{ props.onChangeBorderWidth && design === 'ghost' &&
-				<RangeControl
-					label={ __( 'Border Width', i18n ) }
-					value={ props.borderWidth }
-					min="1"
-					max="6"
-					onChange={ props.onChangeBorderWidth }
-					allowReset={ true }
-				/>
-			}
-
-			{ props.onChangeBorderRadius && design !== 'link' && design !== 'plain' &&
-				<RangeControl
-					label={ __( 'Border Radius', i18n ) }
-					value={ props.borderRadius }
-					min="0"
-					max="70"
-					onChange={ props.onChangeBorderRadius }
-					allowReset={ true }
-				/>
-			}
-
-			{ props.onChangeShadow && ( design === '' || design === 'basic' ) &&
-				<RangeControl
-					label={ __( 'Shadow', i18n ) }
-					value={ props.shadow }
-					onChange={ props.onChangeShadow }
-					min={ 0 }
-					max={ 9 }
-					allowReset={ true }
-				/>
-			}
 
 			{ props.onChangeIcon && design !== 'link' &&
 				<IconControl
@@ -326,8 +333,19 @@ const ButtonControls = props => {
 				<ButtonIconPopoverControl
 					label={ __( 'Adv. Icon Settings', i18n ) }
 					onReset={ props.onResetAdvancedIcon }
-					allowReset={ props.iconPosition || props.iconSpacing !== '' }
+					allowReset={ props.iconPosition || props.iconSize !== '' || props.iconSpacing !== '' }
 				>
+					{ props.onChangeIconSize && (
+						<RangeControl
+							label={ __( 'Icon Size', i18n ) }
+							value={ props.iconSize }
+							onChange={ props.onChangeIconSize }
+							min={ 5 }
+							max={ 100 }
+							step={ 1 }
+							allowReset={ true }
+						/>
+					) }
 					{ props.onChangeIconPosition &&
 						<SelectControl
 							label={ __( 'Icon Position', i18n ) }
@@ -374,8 +392,6 @@ ButtonControls.defaultProps = {
 	size: '',
 	onChangeSize: () => {},
 
-	hasAdvancedColors: true,
-	onResetAdvancedColors: () => {},
 	opacity: '',
 	textColor: '',
 	backgroundColorType: '',
@@ -413,12 +429,20 @@ ButtonControls.defaultProps = {
 	shadow: '',
 	onChangeShadow: () => {},
 
+	paddingTop: '',
+	paddingRight: '',
+	paddingBottom: '',
+	paddingLeft: '',
+	onChangePaddings: () => {},
+
 	hasAdvancedIcon: true,
 	onResetAdvancedIcon: () => {},
 	icon: '',
+	iconSize: '',
 	iconPosition: '',
 	iconSpacing: '',
 	onChangeIcon: () => {},
+	onChangeIconSize: () => {},
 	onChangeIconPosition: () => {},
 	onChangeIconSpacing: () => {},
 }

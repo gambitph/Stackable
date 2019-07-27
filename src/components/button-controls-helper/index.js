@@ -5,6 +5,10 @@ import { sprintf } from '@wordpress/i18n'
 const ButtonControlsHelper = props => {
 	const { setAttributes } = props
 	const getAttrName = attrName => camelCase( sprintf( props.attrNameTemplate, attrName ) )
+	const getAttrValue = attrName => {
+		const value = props.blockAttributes[ getAttrName( attrName ) ]
+		return value === 0 ? value : ( value || '' )
+	}
 
 	return (
 		<ButtonControls
@@ -19,20 +23,12 @@ const ButtonControlsHelper = props => {
 			size={ props.blockAttributes[ getAttrName( 'Size' ) ] || '' }
 			onChangeSize={ value => setAttributes( { [ getAttrName( 'Size' ) ]: value } ) }
 
-			onResetAdvancedColors={ () => {
-				setAttributes( {
-					[ getAttrName( 'BackgroundColorType' ) ]: '',
-					[ getAttrName( 'BackgroundColor2' ) ]: '',
-					[ getAttrName( 'BackgroundGradientDirection' ) ]: '',
-					[ getAttrName( 'Opacity' ) ]: '',
-				} )
-			} }
 			opacity={ props.blockAttributes[ getAttrName( 'Opacity' ) ] || '' }
 			textColor={ props.blockAttributes[ getAttrName( 'TextColor' ) ] || '' }
 			backgroundColorType={ props.blockAttributes[ getAttrName( 'BackgroundColorType' ) ] || '' }
 			backgroundColor={ props.blockAttributes[ getAttrName( 'BackgroundColor' ) ] || '' }
 			backgroundColor2={ props.blockAttributes[ getAttrName( 'BackgroundColor2' ) ] || '' }
-			backgroundGradientDirection={ props.blockAttributes[ getAttrName( 'BackgroundGradientDirection' ) ] || '' }
+			backgroundGradientDirection={ getAttrValue( 'BackgroundGradientDirection' ) }
 			onChangeOpacity={ value => setAttributes( { [ getAttrName( 'Opacity' ) ]: value } ) }
 			onChangeTextColor={ value => setAttributes( { [ getAttrName( 'TextColor' ) ]: value } ) }
 			onChangeBackgroundColorType={ value => setAttributes( { [ getAttrName( 'BackgroundColorType' ) ]: value } ) }
@@ -46,7 +42,6 @@ const ButtonControlsHelper = props => {
 					[ getAttrName( 'HoverBackgroundColor2' ) ]: '',
 					[ getAttrName( 'HoverBackgroundGradientDirection' ) ]: '',
 					[ getAttrName( 'HoverTextColor' ) ]: '',
-					[ getAttrName( 'HoverOpacity' ) ]: '',
 				} )
 			} }
 			hoverEffect={ props.blockAttributes[ getAttrName( 'HoverEffect' ) ] || '' }
@@ -54,7 +49,7 @@ const ButtonControlsHelper = props => {
 			hoverTextColor={ props.blockAttributes[ getAttrName( 'HoverTextColor' ) ] || '' }
 			hoverBackgroundColor={ props.blockAttributes[ getAttrName( 'HoverBackgroundColor' ) ] || '' }
 			hoverBackgroundColor2={ props.blockAttributes[ getAttrName( 'HoverBackgroundColor2' ) ] || '' }
-			hoverBackgroundGradientDirection={ props.blockAttributes[ getAttrName( 'HoverBackgroundGradientDirection' ) ] || '' }
+			hoverBackgroundGradientDirection={ getAttrValue( 'HoverBackgroundGradientDirection' ) }
 			hoverGhostToNormal={ props.blockAttributes[ getAttrName( 'HoverGhostToNormal' ) ] || '' }
 			onChangeHoverEffect={ value => setAttributes( { [ getAttrName( 'HoverEffect' ) ]: value } ) }
 			onChangeHoverOpacity={ value => setAttributes( { [ getAttrName( 'HoverOpacity' ) ]: value } ) }
@@ -70,6 +65,27 @@ const ButtonControlsHelper = props => {
 			onChangeBorderRadius={ value => setAttributes( { [ getAttrName( 'BorderRadius' ) ]: value } ) }
 			onChangeBorderWidth={ value => setAttributes( { [ getAttrName( 'BorderWidth' ) ]: value } ) }
 			onChangeShadow={ value => setAttributes( { [ getAttrName( 'Shadow' ) ]: value } ) }
+
+			paddingTop={ getAttrValue( 'PaddingTop' ) }
+			paddingRight={ getAttrValue( 'PaddingRight' ) }
+			paddingBottom={ getAttrValue( 'PaddingBottom' ) }
+			paddingLeft={ getAttrValue( 'PaddingLeft' ) }
+			onChangePaddings={ paddings => {
+				const values = {}
+				if ( typeof paddings.top !== 'undefined' ) {
+					values[ getAttrName( 'PaddingTop' ) ] = paddings.top !== '' ? parseInt( paddings.top, 10 ) : ''
+				}
+				if ( typeof paddings.right !== 'undefined' ) {
+					values[ getAttrName( 'PaddingRight' ) ] = paddings.right !== '' ? parseInt( paddings.right, 10 ) : ''
+				}
+				if ( typeof paddings.bottom !== 'undefined' ) {
+					values[ getAttrName( 'PaddingBottom' ) ] = paddings.bottom !== '' ? parseInt( paddings.bottom, 10 ) : ''
+				}
+				if ( typeof paddings.left !== 'undefined' ) {
+					values[ getAttrName( 'PaddingLeft' ) ] = paddings.left !== '' ? parseInt( paddings.left, 10 ) : ''
+				}
+				setAttributes( values )
+			} }
 
 			icon={ props.blockAttributes[ getAttrName( 'Icon' ) ] || '' }
 			onChangeIcon={ value => setAttributes( { [ getAttrName( 'Icon' ) ]: value } ) }

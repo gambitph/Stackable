@@ -4,24 +4,21 @@ import BaseControlMultiLabel from '../base-control-multi-label'
 import classnames from 'classnames'
 import { Component } from '@wordpress/element'
 import { i18n } from 'stackable'
+import { pick } from 'lodash'
 import { withInstanceId } from '@wordpress/compose'
 
 class FourNumberControl extends Component {
 	constructor() {
 		super( ...arguments )
 
-		// Need to set the state first so we can check if we should lock the inputs.
-		this.state = {
-			top: this.props.top,
-			right: this.props.right,
-			bottom: this.props.bottom,
-			left: this.props.left,
-		}
-
 		// Locked state.
 		const values = this.getEnabledValues()
 		const isEqualValues = ! values.length ? true : values.every( value => value === values[ 0 ] )
-		this.state.locked = typeof this.props.locked !== 'undefined' ? this.props.locked : isEqualValues
+		const isDefaults = values.every( value => value === '' )
+
+		this.state = {
+			locked: isDefaults ? this.props.defaultLocked : isEqualValues,
+		}
 
 		this.onToggleLock = this.onToggleLock.bind( this )
 		this.onChangeTop = this.onChangeTop.bind( this )
@@ -30,125 +27,102 @@ class FourNumberControl extends Component {
 		this.onChangeLeft = this.onChangeLeft.bind( this )
 	}
 
-	getEnabledValues( data = this.state ) {
+	getEnabledValues() {
 		return [
-			...( this.props.enableTop ? [ data.top ] : [] ),
-			...( this.props.enableRight ? [ data.right ] : [] ),
-			...( this.props.enableBottom ? [ data.bottom ] : [] ),
-			...( this.props.enableLeft ? [ data.left ] : [] ),
+			...( this.props.enableTop ? [ this.props.top ] : [] ),
+			...( this.props.enableRight ? [ this.props.right ] : [] ),
+			...( this.props.enableBottom ? [ this.props.bottom ] : [] ),
+			...( this.props.enableLeft ? [ this.props.left ] : [] ),
 		]
 	}
 
-	getFirstEnabledValue() {
-		return this.getEnabledValues().shift()
+	getEnabledLocations() {
+		return [
+			...( this.props.enableTop ? [ 'top' ] : [] ),
+			...( this.props.enableRight ? [ 'right' ] : [] ),
+			...( this.props.enableBottom ? [ 'bottom' ] : [] ),
+			...( this.props.enableLeft ? [ 'left' ] : [] ),
+		]
+	}
+
+	filterOnlyEnabled( forSaving = {} ) {
+		return pick( forSaving, this.getEnabledLocations() )
 	}
 
 	onToggleLock() {
-		if ( ! this.state.locked ) {
-			const value = this.getFirstEnabledValue()
-			this.setState( {
-				top: this.props.enableTop ? value : '',
-				right: this.props.enableRight ? value : '',
-				bottom: this.props.enableBottom ? value : '',
-				left: this.props.enableLeft ? value : '',
-			} )
-		}
 		this.setState( { locked: ! this.state.locked } )
 	}
 
 	onChangeTop( event ) {
 		const value = event.target.value
+		const newValue = ! value && value !== 0 ? '' : value
 		if ( ! this.state.locked ) {
-			this.setState( { top: value } )
-		} else {
-			this.setState( {
-				top: this.props.enableTop ? value : '',
-				right: this.props.enableRight ? value : '',
-				bottom: this.props.enableBottom ? value : '',
-				left: this.props.enableLeft ? value : '',
+			this.props.onChange( {
+				...this.getEnabledValues(),
+				top: newValue,
 			} )
+		} else {
+			this.props.onChange( this.filterOnlyEnabled( {
+				top: newValue,
+				right: newValue,
+				bottom: newValue,
+				left: newValue,
+			} ) )
 		}
 	}
 
 	onChangeRight( event ) {
 		const value = event.target.value
+		const newValue = ! value && value !== 0 ? '' : value
 		if ( ! this.state.locked ) {
-			this.setState( { right: value } )
-		} else {
-			this.setState( {
-				top: this.props.enableTop ? value : '',
-				right: this.props.enableRight ? value : '',
-				bottom: this.props.enableBottom ? value : '',
-				left: this.props.enableLeft ? value : '',
+			this.props.onChange( {
+				...this.getEnabledValues(),
+				right: newValue,
 			} )
+		} else {
+			this.props.onChange( this.filterOnlyEnabled( {
+				top: newValue,
+				right: newValue,
+				bottom: newValue,
+				left: newValue,
+			} ) )
 		}
 	}
 
 	onChangeBottom( event ) {
 		const value = event.target.value
+		const newValue = ! value && value !== 0 ? '' : value
 		if ( ! this.state.locked ) {
-			this.setState( { bottom: value } )
-		} else {
-			this.setState( {
-				top: this.props.enableTop ? value : '',
-				right: this.props.enableRight ? value : '',
-				bottom: this.props.enableBottom ? value : '',
-				left: this.props.enableLeft ? value : '',
+			this.props.onChange( {
+				...this.getEnabledValues(),
+				bottom: newValue,
 			} )
+		} else {
+			this.props.onChange( this.filterOnlyEnabled( {
+				top: newValue,
+				right: newValue,
+				bottom: newValue,
+				left: newValue,
+			} ) )
 		}
 	}
 
 	onChangeLeft( event ) {
 		const value = event.target.value
+		const newValue = ! value && value !== 0 ? '' : value
 		if ( ! this.state.locked ) {
-			this.setState( { left: value } )
-		} else {
-			this.setState( {
-				top: this.props.enableTop ? value : '',
-				right: this.props.enableRight ? value : '',
-				bottom: this.props.enableBottom ? value : '',
-				left: this.props.enableLeft ? value : '',
+			this.props.onChange( {
+				...this.getEnabledValues(),
+				left: newValue,
 			} )
+		} else {
+			this.props.onChange( this.filterOnlyEnabled( {
+				top: newValue,
+				right: newValue,
+				bottom: newValue,
+				left: newValue,
+			} ) )
 		}
-	}
-
-	componentDidUpdate( prevProps, prevState ) {
-		if ( this.props.top !== prevProps.top ) {
-			this.setState( { top: this.props.top } )
-		}
-		if ( this.props.right !== prevProps.right ) {
-			this.setState( { right: this.props.right } )
-		}
-		if ( this.props.bottom !== prevProps.bottom ) {
-			this.setState( { bottom: this.props.bottom } )
-		}
-		if ( this.props.left !== prevProps.left ) {
-			this.setState( { left: this.props.left } )
-		}
-
-		// Update locked state when props are changed.
-		if ( this.props.top !== prevProps.top ||
-			 this.props.right !== prevProps.right ||
-			 this.props.bottom !== prevProps.bottom ||
-			 this.props.left !== prevProps.left ) {
-			// const values = this.getEnabledValues( this.props )
-			// const locked = ! values.length ? true : values.every( value => value === values[ 0 ] )
-			// this.setState( { locked } )
-		}
-
-		if ( this.state.top === prevState.top &&
-			 this.state.right === prevState.right &&
-			 this.state.bottom === prevState.bottom &&
-			 this.state.left === prevState.left ) {
-			return
-		}
-
-		this.props.onChange( {
-			top: this.state.top,
-			right: this.state.right,
-			bottom: this.state.bottom,
-			left: this.state.left,
-		} )
 	}
 
 	render() {
@@ -174,7 +148,7 @@ class FourNumberControl extends Component {
 							type="number"
 							onChange={ this.onChangeTop }
 							aria-label={ __( 'Top', i18n ) }
-							value={ this.state.top }
+							value={ this.props.top }
 							placeholder={ this.props.enableTop ? '' : __( 'auto', i18n ) }
 							disabled={ ! this.props.enableTop }
 						/>
@@ -186,7 +160,7 @@ class FourNumberControl extends Component {
 							type="number"
 							onChange={ this.onChangeRight }
 							aria-label={ this.props.label }
-							value={ this.state.right }
+							value={ this.props.right }
 							placeholder={ this.props.enableRight ? '' : __( 'auto', i18n ) }
 							disabled={ ! this.props.enableRight }
 						/>
@@ -198,7 +172,7 @@ class FourNumberControl extends Component {
 							type="number"
 							onChange={ this.onChangeBottom }
 							aria-label={ this.props.label }
-							value={ this.state.bottom }
+							value={ this.props.bottom }
 							placeholder={ this.props.enableBottom ? '' : __( 'auto', i18n ) }
 							disabled={ ! this.props.enableBottom }
 						/>
@@ -210,7 +184,7 @@ class FourNumberControl extends Component {
 							type="number"
 							onChange={ this.onChangeLeft }
 							aria-label={ this.props.label }
-							value={ this.state.left }
+							value={ this.props.left }
 							placeholder={ this.props.enableLeft ? '' : __( 'auto', i18n ) }
 							disabled={ ! this.props.enableLeft }
 						/>
@@ -235,7 +209,7 @@ class FourNumberControl extends Component {
 
 FourNumberControl.defaultProps = {
 	onChange: () => {},
-	locked: undefined,
+	defaultLocked: true,
 	top: '',
 	right: '',
 	bottom: '',

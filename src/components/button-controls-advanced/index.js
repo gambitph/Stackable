@@ -1,12 +1,9 @@
 import { __ } from '@wordpress/i18n'
-import { FourNumberControl } from '@stackable/components'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
 import { ToggleControl } from '@wordpress/components'
 
 const ButtonControls = props => {
-	const design = props.design ? props.design : 'basic'
-
 	return (
 		<Fragment>
 			{ props.onChangeNoFollow && (
@@ -16,17 +13,6 @@ const ButtonControls = props => {
 					onChange={ props.onChangeNoFollow }
 				/>
 			) }
-
-			{ props.onChangePaddings && design !== 'link' && design !== 'plain' &&
-				<FourNumberControl
-					label={ __( 'Button Paddings', i18n ) }
-					top={ props.paddingTop }
-					bottom={ props.paddingBottom }
-					right={ props.paddingRight }
-					left={ props.paddingLeft }
-					onChange={ props.onChangePaddings }
-				/>
-			}
 		</Fragment>
 	)
 }

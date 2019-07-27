@@ -1,0 +1,22 @@
+.ugb-four-range-control__range {
+	display: flex;
+	align-items: center;
+	margin-bottom: 8px;
+	.ugb-four-range-control__icon {
+		height: 20px;
+		width: 20px;
+		flex-shrink: 0;
+		margin-right: 10px;
+	}
+	.components-base-control.components-range-control,
+	.components-base-control__field {
+		margin-bottom: 0 !important;
+	}
+}
+.ugb-four-range-control {
+	.ugb-four-range-control__lock {
+		color: #555d66;
+		box-shadow: none !important;
+		margin-left: 5px;
+	}
+}

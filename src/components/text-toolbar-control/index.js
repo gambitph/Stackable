@@ -9,13 +9,21 @@ const TextToolbarControl = props => {
 		<BaseControl
 			{ ...omit( props, [ 'controls' ] ) }
 		>
-			<TextToolbar controls={ props.controls } />
+			<TextToolbar controls={ props.controls.map( control => {
+				return {
+					...control,
+					isActive: props.value === control.value,
+					onClick: () => props.onChange( control.value ),
+				}
+			} ) } />
 		</BaseControl>
 	)
 }
 
 TextToolbarControl.defaultProps = {
 	controls: {},
+	value: '',
+	onChange: () => {},
 }
 
 export default TextToolbarControl

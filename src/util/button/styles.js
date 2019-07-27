@@ -19,13 +19,17 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 	const defaultColor1 = getValue( 'BackgroundColor2' )
 	const defaultColor2 = getValue( 'BackgroundColor' )
 
+	// Our button's default hover effect is a slight transparency effect, if a button is assigned a
+	// hover color, cancel this faded effect.
+	let cancelHoverOpacity = false
+
 	// Basic design.
 	if ( getValue( 'Design' ) === '' || getValue( 'Design' ) === 'basic' ) {
 		styles.push( {
 			[ `.${ mainClassName }` ]: {
 				backgroundColor: getValue( 'BackgroundColor' ) !== '' ? getValue( 'BackgroundColor' ) : undefined,
 				backgroundImage: getValue( 'BackgroundColorType' ) === 'gradient' ?
-					`linear-gradient(${ getValue( 'BackgroundGradientDirection', 90 ) }deg, ${ getValue( 'BackgroundColor', defaultColor1 ) }, ${ getValue( 'BackgroundColor2', defaultColor2 ) })` :
+					`linear-gradient(${ blockAttributes[ getAttrName( 'BackgroundGradientDirection' ) ] !== '' ? getValue( 'BackgroundGradientDirection', 0 ) : '90' }deg, ${ getValue( 'BackgroundColor', defaultColor1 ) }, ${ getValue( 'BackgroundColor2', defaultColor2 ) })` :
 					undefined,
 				paddingTop: getValue( 'PaddingTop' ) !== '' ? `${ getValue( 'PaddingTop' ) }px` : undefined,
 				paddingRight: getValue( 'PaddingRight' ) !== '' ? `${ getValue( 'PaddingRight' ) }px` : undefined,
@@ -43,6 +47,8 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 			},
 		} )
 
+		cancelHoverOpacity = getValue( 'HoverBackgroundColor' ) !== ''
+
 		// Hover gradient.
 		const hasHoverGradientEffect = getValue( 'BackgroundColorType' ) === 'gradient' && ( getValue( 'HoverBackgroundColor' ) || getValue( 'HoverBackgroundColor2' ) || getValue( 'HoverBackgroundGradientDirection' ) )
 		styles.push( {
@@ -53,6 +59,8 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 					undefined,
 			},
 		} )
+
+		cancelHoverOpacity = cancelHoverOpacity || hasHoverGradientEffect || getValue( 'HoverTextColor' ) !== ''
 	}
 
 	// Ghost design.
@@ -78,6 +86,8 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 			},
 		} )
 
+		cancelHoverOpacity = getValue( 'HoverBackgroundColor' ) !== ''
+
 		// Hover gradient.
 		const hasHoverGradientEffect = getValue( 'HoverGhostToNormal' )
 		if ( hasHoverGradientEffect ) {
@@ -94,6 +104,8 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 					color: whiteIfDarkBlackIfLight( getValue( 'HoverTextColor' ), getValue( 'HoverBackgroundColor', getValue( 'BackgroundColor' ) ) ),
 				},
 			} )
+
+			cancelHoverOpacity = true
 		}
 	}
 
@@ -106,6 +118,8 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 				color: getValue( 'HoverBackgroundColor' ) !== '' ? getValue( 'HoverBackgroundColor' ) : undefined,
 			},
 		} )
+
+		cancelHoverOpacity = getValue( 'HoverBackgroundColor' ) !== ''
 	}
 
 	if ( getValue( 'Design' ) !== 'link' ) {
@@ -120,11 +134,13 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 				borderRadius: borderRadius !== '' && typeof borderRadius !== 'undefined' ? `${ borderRadius }px !important` : undefined,
 			},
 			[ `.${ mainClassName }:hover` ]: {
-				opacity: getValue( 'HoverOpacity' ) !== '' ? getValue( 'HoverOpacity' ) : undefined,
+				opacity: getValue( 'HoverOpacity' ) !== '' ? getValue( 'HoverOpacity' ) : ( cancelHoverOpacity ? 1 : undefined ),
 			},
 			[ `.${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon svg` ]: {
 				marginLeft: getValue( 'Icon' ) !== '' ? ( getValue( 'IconPosition' ) === 'right' ? iconSpacingRule : undefined ) : undefined,
 				marginRight: getValue( 'Icon' ) !== '' ? ( getValue( 'IconPosition' ) !== 'right' ? iconSpacingRule : undefined ) : undefined,
+				width: getValue( 'IconSize' ) !== '' ? `${ getValue( 'IconSize' ) }px` : undefined,
+				height: getValue( 'IconSize' ) !== '' ? `${ getValue( 'IconSize' ) }px` : undefined,
 			},
 		} )
 	}
