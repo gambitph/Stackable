@@ -2,21 +2,22 @@
 
 Adds the ability for a block to have a background for the entire thing.
 
-Overrides the behavior of supports->align.
-
 # Developer Notes
 
-1. This module automatically makes your block have `support` for `center`, `wide` and `full`.
+This module performs some tweaks on how a block works internally.
 
-2. When using this module, a second `BlockAlignmentToolbar` is added to the block. 
+1. `support -> align` is overridden and is set to `null`. This does a few things:
 
-The original will still be there, and you'll have to write include some CSS to hide the original `BlockAlignmentToolbar`:
+- Removes the default `AlignmentToolbar` (our main purpose for doing this)
+- Removes the automatically added `align` attribute (side-effect)
+- `align*` classes are no longer added (side-effect)
+- `data-align` attribute in editor is no longer added (side-effect)
 
-```css
-// Hide the block alignment toolbar, because we will replace it with our own in the
-[data-type="ugb/number-box"] > .editor-block-list__block-edit > .editor-block-contextual-toolbar > .editor-block-toolbar > .components-toolbar:nth-child(2) {
-	display: none;
-}
-```
+2. To bring back the unfortunate side-effects by removing `align`, the typical align behavior is instead mimicked
+- Adds the automatically added `align` attribute (`index.js`)
+- `align*` classes are no longer added (`align.js`)
+- `data-align` attribute in editor is no longer added (`align.js`)
 
-3. It's required for the block to use the `withTabbedInspector` HOC for displaying options.
+3. Automatically makes your block have `support` for `center`, `wide` and `full`.
+
+4. It's required for the block to use the `withTabbedInspector` HOC for displaying options.

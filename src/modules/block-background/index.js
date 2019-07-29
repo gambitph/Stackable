@@ -13,6 +13,7 @@ import {
 	hasBackgroundOverlay,
 } from '@stackable/util'
 import { __ } from '@wordpress/i18n'
+import { addNewAlignFunctionality } from './align'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
@@ -60,6 +61,14 @@ const addInspectorPanel = ( output, props ) => {
 	)
 }
 
+/**
+ * Adds our custom Alignment toolbar (This adds another one)
+ *
+ * @param {Object} output Rendered Object
+ * @param {Object} props block props
+ *
+ * @return {Object} Rendered object
+ */
 const addAlignmentToolbar = ( output, props ) => {
 	const { setAttributes } = props
 	const {
@@ -230,6 +239,9 @@ const blockBackground = blockName => {
 	addFilter( `stackable.${ blockName }.edit.output.outer`, `stackable/${ blockName }/block-separators`, addVideoBackgroundOutput )
 	addFilter( `stackable.${ blockName }.save.output.outer`, `stackable/${ blockName }/block-separators`, addVideoBackgroundOutput )
 	doAction( `stackable.module.block-background`, blockName )
+
+	// Mimic align functionality.
+	addNewAlignFunctionality( blockName )
 }
 
 export default blockBackground

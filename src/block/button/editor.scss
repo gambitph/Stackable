@@ -3,8 +3,3 @@
  *
  * Enqueued in the editor only.
  */
-
-// Hide the block alignment toolbar, because we will replace it with our own in the
-[data-type="ugb/button"] > .editor-block-list__block-edit > .editor-block-contextual-toolbar > .editor-block-toolbar > .components-toolbar:nth-of-type(2) {
-	display: none;
-}
