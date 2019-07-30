@@ -70,7 +70,7 @@ const HighlightButton = props => {
 						/>
 						<RichTextToolbarButton
 							icon="editor-textcolor"
-							title={ __( 'Highlight Text', i18n ) }
+							title={ __( 'Color & Highlight', i18n ) }
 							onClick={ onToggle }
 							isActive={ isActive }
 						/>
@@ -81,14 +81,14 @@ const HighlightButton = props => {
 				<Fragment>
 					<div className="components-stackable-highlight__inner">
 						<ColorPaletteControl
-							label={ __( 'Highlight Color', i18n ) }
+							label={ __( 'Text Color', i18n ) }
 							value={ currentColor }
 							onChange={ color => {
 								onChange( createApplyFormat( value, color !== currentColor ? color : '', hasBgHighlight ) )
 							} }
 						/>
 						<ToggleControl
-							label={ __( 'Background Highlight', i18n ) }
+							label={ __( 'Highlight Text', i18n ) }
 							checked={ hasBgHighlight }
 							onChange={ hasBgHighlight => {
 								onChange( createApplyFormat( value, currentColor ? currentColor : '#8c33da', hasBgHighlight ) )
