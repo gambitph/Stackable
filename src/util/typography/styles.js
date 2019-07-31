@@ -12,7 +12,7 @@ const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 
 	if ( screen !== 'tablet' && screen !== 'mobile' ) { // Desktop.
 		return {
-			fontFamily: getValue( 'FontFamily' ) !== '' ? getFontFamily( getValue( 'FontFamily' ) ) : undefined,
+			fontFamily: getValue( 'FontFamily' ) !== '' ? `${ getFontFamily( getValue( 'FontFamily' ) ) } !important` : undefined,
 			fontSize: getValue( 'FontSize' ) !== '' ? `${ getValue( 'FontSize' ) }${ getValue( 'FontSizeUnit', 'px' ) }${ importantSize ? ' !important' : '' }` : undefined,
 			fontWeight: getValue( 'FontWeight' ) !== '' ? getValue( 'FontWeight' ) : undefined,
 			textTransform: getValue( 'TextTransform' ) !== '' ? getValue( 'TextTransform' ) : undefined,
