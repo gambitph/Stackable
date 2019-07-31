@@ -62,10 +62,10 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ columnPaddingUnit }
 							onChange={ paddings => {
 								setAttributes( {
-									columnPaddingTop: paddings.top !== '' ? parseInt( paddings.top, 10 ) : '',
-									columnPaddingRight: paddings.right !== '' ? parseInt( paddings.right, 10 ) : '',
-									columnPaddingBottom: paddings.bottom !== '' ? parseInt( paddings.bottom, 10 ) : '',
-									columnPaddingLeft: paddings.left !== '' ? parseInt( paddings.left, 10 ) : '',
+									columnPaddingTop: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
+									columnPaddingRight: ! paddings.right && paddings.right !== 0 ? '' : parseInt( paddings.right, 10 ),
+									columnPaddingBottom: ! paddings.bottom && paddings.bottom !== 0 ? '' : parseInt( paddings.bottom, 10 ),
+									columnPaddingLeft: ! paddings.left && paddings.left !== 0 ? '' : parseInt( paddings.left, 10 ),
 								} )
 							} }
 							onChangeUnit={ columnPaddingUnit => setAttributes( { columnPaddingUnit } ) }
@@ -87,10 +87,10 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ tabletColumnPaddingUnit }
 							onChange={ paddings => {
 								setAttributes( {
-									tabletColumnPaddingTop: paddings.top !== '' ? parseInt( paddings.top, 10 ) : '',
-									tabletColumnPaddingRight: paddings.right !== '' ? parseInt( paddings.right, 10 ) : '',
-									tabletColumnPaddingBottom: paddings.bottom !== '' ? parseInt( paddings.bottom, 10 ) : '',
-									tabletColumnPaddingLeft: paddings.left !== '' ? parseInt( paddings.left, 10 ) : '',
+									tabletColumnPaddingTop: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
+									tabletColumnPaddingRight: ! paddings.right && paddings.right !== 0 ? '' : parseInt( paddings.right, 10 ),
+									tabletColumnPaddingBottom: ! paddings.bottom && paddings.bottom !== 0 ? '' : parseInt( paddings.bottom, 10 ),
+									tabletColumnPaddingLeft: ! paddings.left && paddings.left !== 0 ? '' : parseInt( paddings.left, 10 ),
 								} )
 							} }
 							onChangeUnit={ tabletColumnPaddingUnit => setAttributes( { tabletColumnPaddingUnit } ) }
@@ -112,10 +112,10 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ mobileColumnPaddingUnit }
 							onChange={ paddings => {
 								setAttributes( {
-									mobileColumnPaddingTop: paddings.top !== '' ? parseInt( paddings.top, 10 ) : '',
-									mobileColumnPaddingRight: paddings.right !== '' ? parseInt( paddings.right, 10 ) : '',
-									mobileColumnPaddingBottom: paddings.bottom !== '' ? parseInt( paddings.bottom, 10 ) : '',
-									mobileColumnPaddingLeft: paddings.left !== '' ? parseInt( paddings.left, 10 ) : '',
+									mobileColumnPaddingTop: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
+									mobileColumnPaddingRight: ! paddings.right && paddings.right !== 0 ? '' : parseInt( paddings.right, 10 ),
+									mobileColumnPaddingBottom: ! paddings.bottom && paddings.bottom !== 0 ? '' : parseInt( paddings.bottom, 10 ),
+									mobileColumnPaddingLeft: ! paddings.left && paddings.left !== 0 ? '' : parseInt( paddings.left, 10 ),
 								} )
 							} }
 							onChangeUnit={ mobileColumnPaddingUnit => setAttributes( { mobileColumnPaddingUnit } ) }
