@@ -17,8 +17,10 @@ const ButtonControlsHelper = props => {
 
 			url={ props.blockAttributes[ getAttrName( 'Url' ) ] || '' }
 			newWindow={ props.blockAttributes[ getAttrName( 'NewWindow' ) ] || '' }
+			noFollow={ props.blockAttributes[ getAttrName( 'NoFollow' ) ] || '' }
 			onChangeUrl={ value => setAttributes( { [ getAttrName( 'Url' ) ]: value } ) }
 			onChangeNewWindow={ value => setAttributes( { [ getAttrName( 'NewWindow' ) ]: value } ) }
+			onChangeNoFollow={ value => setAttributes( { [ getAttrName( 'NoFollow' ) ]: value } ) }
 
 			size={ props.blockAttributes[ getAttrName( 'Size' ) ] || '' }
 			onChangeSize={ value => setAttributes( { [ getAttrName( 'Size' ) ]: value } ) }

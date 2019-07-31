@@ -47,6 +47,13 @@ const ButtonControls = props => {
 					onChange={ props.onChangeNewWindow }
 				/>
 			) }
+			{ props.onChangeNoFollow && (
+				<ToggleControl
+					label={ __( 'Nofollow link', i18n ) }
+					checked={ props.noFollow }
+					onChange={ props.onChangeNoFollow }
+				/>
+			) }
 
 			<ControlSeparator />
 
@@ -101,6 +108,17 @@ const ButtonControls = props => {
 				/>
 			}
 
+			{ props.onChangeBorderRadius && design !== 'link' && design !== 'plain' &&
+				<RangeControl
+					label={ __( 'Border Radius', i18n ) }
+					value={ props.borderRadius }
+					min="0"
+					max="100"
+					onChange={ props.onChangeBorderRadius }
+					allowReset={ true }
+				/>
+			}
+
 			{ props.onChangePaddings && design !== 'link' && design !== 'plain' &&
 				<FourRangeControl
 					label={ __( 'Vertical Padding', i18n ) }
@@ -120,17 +138,6 @@ const ButtonControls = props => {
 					enableTop={ false }
 					enableBottom={ false }
 					max={ 100 }
-				/>
-			}
-
-			{ props.onChangeBorderRadius && design !== 'link' && design !== 'plain' &&
-				<RangeControl
-					label={ __( 'Border Radius', i18n ) }
-					value={ props.borderRadius }
-					min="0"
-					max="100"
-					onChange={ props.onChangeBorderRadius }
-					allowReset={ true }
 				/>
 			}
 
@@ -386,8 +393,10 @@ ButtonControls.defaultProps = {
 
 	url: '',
 	newWindow: '',
+	noFollow: '',
 	onChangeUrl: () => {},
 	onChangeNewWindow: () => {},
+	onChangeNoFollow: () => {},
 
 	size: '',
 	onChangeSize: () => {},

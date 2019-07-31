@@ -4,7 +4,6 @@ import {
 	AlignButtonsControl,
 	BackgroundControlsHelper,
 	BlockContainer,
-	ButtonControlsAdvancedHelper,
 	ButtonControlsHelper,
 	ButtonEdit,
 	ColorPaletteControl,
@@ -255,22 +254,6 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 					<AlignButtonsControl label={ __( 'Align', i18n ) } />
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
-		</Fragment>
-	)
-} )
-
-addFilter( 'stackable.cta.edit.inspector.advanced.before', 'stackable/cta', ( output, props ) => {
-	const { setAttributes } = props
-	return (
-		<Fragment>
-			{ output }
-			<PanelBody title={ __( 'Button', i18n ) } initialOpen={ false }>
-				<ButtonControlsAdvancedHelper
-					attrNameTemplate="button%s"
-					setAttributes={ setAttributes }
-					blockAttributes={ props.attributes }
-				/>
-			</PanelBody>
 		</Fragment>
 	)
 } )

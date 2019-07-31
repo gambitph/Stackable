@@ -2,7 +2,6 @@ import { __, sprintf } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import {
 	BlockContainer,
-	ButtonControlsAdvancedHelper,
 	ButtonControlsHelper,
 	ButtonEdit,
 	ContentAlignControl,
@@ -149,45 +148,6 @@ addFilter( 'stackable.button.edit.inspector.style.before', 'stackable/button', (
 					blockAttributes={ props.attributes }
 				/>
 			</PanelAdvancedSettings>
-		</Fragment>
-	)
-} )
-
-addFilter( 'stackable.button.edit.inspector.advanced.before', 'stackable/button', ( output, props ) => {
-	const { setAttributes } = props
-	const {
-		showButton2 = false,
-		showButton3 = false,
-	} = props.attributes
-
-	return (
-		<Fragment>
-			{ output }
-			<PanelBody title={ sprintf( __( 'Button #%s', i18n ), 1 ) } initialOpen={ false }>
-				<ButtonControlsAdvancedHelper
-					attrNameTemplate="button1%s"
-					setAttributes={ setAttributes }
-					blockAttributes={ props.attributes }
-				/>
-			</PanelBody>
-			{ showButton2 &&
-				<PanelBody title={ sprintf( __( 'Button #%s', i18n ), 2 ) } initialOpen={ false }>
-					<ButtonControlsAdvancedHelper
-						attrNameTemplate="button2%s"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					/>
-				</PanelBody>
-			}
-			{ showButton3 &&
-				<PanelBody title={ sprintf( __( 'Button #%s', i18n ), 3 ) } initialOpen={ false }>
-					<ButtonControlsAdvancedHelper
-						attrNameTemplate="button3%s"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					/>
-				</PanelBody>
-			}
 		</Fragment>
 	)
 } )
