@@ -111,10 +111,10 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							max={ 500 }
 							onChange={ margins => {
 								setAttributes( {
-									marginTop: margins.top !== '' ? parseInt( margins.top, 10 ) : '',
-									marginRight: margins.right !== '' ? parseInt( margins.right, 10 ) : '',
-									marginBottom: margins.bottom !== '' ? parseInt( margins.bottom, 10 ) : '',
-									marginLeft: margins.left !== '' ? parseInt( margins.left, 10 ) : '',
+									marginTop: ! margins.top && margins.top !== 0 ? '' : parseInt( margins.top, 10 ),
+									marginRight: ! margins.right && margins.right !== 0 ? '' : parseInt( margins.right, 10 ),
+									marginBottom: ! margins.bottom && margins.bottom !== 0 ? '' : parseInt( margins.bottom, 10 ),
+									marginLeft: ! margins.left && margins.left !== 0 ? '' : parseInt( margins.left, 10 ),
 								} )
 							} }
 							onChangeUnit={ marginUnit => setAttributes( { marginUnit } ) }
@@ -139,10 +139,10 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							max={ 500 }
 							onChange={ margins => {
 								setAttributes( {
-									tabletMarginTop: margins.top !== '' ? parseInt( margins.top, 10 ) : '',
-									tabletMarginRight: margins.right !== '' ? parseInt( margins.right, 10 ) : '',
-									tabletMarginBottom: margins.bottom !== '' ? parseInt( margins.bottom, 10 ) : '',
-									tabletMarginLeft: margins.left !== '' ? parseInt( margins.left, 10 ) : '',
+									tabletMarginTop: ! margins.top && margins.top !== 0 ? '' : parseInt( margins.top, 10 ),
+									tabletMarginRight: ! margins.right && margins.right !== 0 ? '' : parseInt( margins.right, 10 ),
+									tabletMarginBottom: ! margins.bottom && margins.bottom !== 0 ? '' : parseInt( margins.bottom, 10 ),
+									tabletMarginLeft: ! margins.left && margins.left !== 0 ? '' : parseInt( margins.left, 10 ),
 								} )
 							} }
 							onChangeUnit={ tabletMarginUnit => setAttributes( { tabletMarginUnit } ) }
@@ -167,10 +167,10 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							max={ 500 }
 							onChange={ margins => {
 								setAttributes( {
-									mobileMarginTop: margins.top !== '' ? parseInt( margins.top, 10 ) : '',
-									mobileMarginRight: margins.right !== '' ? parseInt( margins.right, 10 ) : '',
-									mobileMarginBottom: margins.bottom !== '' ? parseInt( margins.bottom, 10 ) : '',
-									mobileMarginLeft: margins.left !== '' ? parseInt( margins.left, 10 ) : '',
+									mobileMarginTop: ! margins.top && margins.top !== 0 ? '' : parseInt( margins.top, 10 ),
+									mobileMarginRight: ! margins.right && margins.right !== 0 ? '' : parseInt( margins.right, 10 ),
+									mobileMarginBottom: ! margins.bottom && margins.bottom !== 0 ? '' : parseInt( margins.bottom, 10 ),
+									mobileMarginLeft: ! margins.left && margins.left !== 0 ? '' : parseInt( margins.left, 10 ),
 								} )
 							} }
 							onChangeUnit={ mobileMarginUnit => setAttributes( { mobileMarginUnit } ) }
@@ -197,10 +197,10 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							max={ 500 }
 							onChange={ paddings => {
 								setAttributes( {
-									paddingTop: paddings.top !== '' ? parseInt( paddings.top, 10 ) : '',
-									paddingRight: paddings.right !== '' ? parseInt( paddings.right, 10 ) : '',
-									paddingBottom: paddings.bottom !== '' ? parseInt( paddings.bottom, 10 ) : '',
-									paddingLeft: paddings.left !== '' ? parseInt( paddings.left, 10 ) : '',
+									paddingTop: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
+									paddingRight: ! paddings.right && paddings.right !== 0 ? '' : parseInt( paddings.right, 10 ),
+									paddingBottom: ! paddings.bottom && paddings.bottom !== 0 ? '' : parseInt( paddings.bottom, 10 ),
+									paddingLeft: ! paddings.left && paddings.left !== 0 ? '' : parseInt( paddings.left, 10 ),
 								} )
 							} }
 							onChangeUnit={ paddingUnit => setAttributes( { paddingUnit } ) }
@@ -225,10 +225,10 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							max={ 500 }
 							onChange={ paddings => {
 								setAttributes( {
-									tabletPaddingTop: paddings.top !== '' ? parseInt( paddings.top, 10 ) : '',
-									tabletPaddingRight: paddings.right !== '' ? parseInt( paddings.right, 10 ) : '',
-									tabletPaddingBottom: paddings.bottom !== '' ? parseInt( paddings.bottom, 10 ) : '',
-									tabletPaddingLeft: paddings.left !== '' ? parseInt( paddings.left, 10 ) : '',
+									tabletPaddingTop: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
+									tabletPaddingRight: ! paddings.right && paddings.right !== 0 ? '' : parseInt( paddings.right, 10 ),
+									tabletPaddingBottom: ! paddings.bottom && paddings.bottom !== 0 ? '' : parseInt( paddings.bottom, 10 ),
+									tabletPaddingLeft: ! paddings.left && paddings.left !== 0 ? '' : parseInt( paddings.left, 10 ),
 								} )
 							} }
 							onChangeUnit={ tabletPaddingUnit => setAttributes( { tabletPaddingUnit } ) }
@@ -253,10 +253,10 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							max={ 500 }
 							onChange={ paddings => {
 								setAttributes( {
-									mobilePaddingTop: paddings.top !== '' ? parseInt( paddings.top, 10 ) : '',
-									mobilePaddingRight: paddings.right !== '' ? parseInt( paddings.right, 10 ) : '',
-									mobilePaddingBottom: paddings.bottom !== '' ? parseInt( paddings.bottom, 10 ) : '',
-									mobilePaddingLeft: paddings.left !== '' ? parseInt( paddings.left, 10 ) : '',
+									mobilePaddingTop: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
+									mobilePaddingRight: ! paddings.right && paddings.right !== 0 ? '' : parseInt( paddings.right, 10 ),
+									mobilePaddingBottom: ! paddings.bottom && paddings.bottom !== 0 ? '' : parseInt( paddings.bottom, 10 ),
+									mobilePaddingLeft: ! paddings.left && paddings.left !== 0 ? '' : parseInt( paddings.left, 10 ),
 								} )
 							} }
 							onChangeUnit={ mobilePaddingUnit => setAttributes( { mobilePaddingUnit } ) }
