@@ -7,6 +7,7 @@ import { compose } from '@wordpress/compose'
 import createStyles from './style'
 import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
+import { showOptions } from '.'
 
 const save = props => {
 	const { className } = props
@@ -53,6 +54,8 @@ const save = props => {
 		'ugb--has-background-overlay': hasBackgroundOverlay( 'column%s', props.attributes ),
 	}, design, props ) )
 
+	const show = showOptions( props )
+
 	const titleComp = showTitle && ! RichText.isEmpty( title ) &&
 		<RichText.Content
 			tagName={ titleTag || 'h3' }
@@ -90,7 +93,7 @@ const save = props => {
 		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
 				<div className={ itemClasses }>
-					{ createVideoBackground( 'column%s', props ) }
+					{ show.columnBackground && createVideoBackground( 'column%s', props ) }
 					{ applyFilters( 'stackable.cta.save.output', (
 						<Fragment>
 							{ titleComp }

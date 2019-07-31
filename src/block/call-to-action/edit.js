@@ -321,6 +321,8 @@ const edit = props => {
 		'ugb--has-background-overlay': hasBackgroundOverlay( 'column%s', props.attributes ),
 	}, design, props ) )
 
+	const show = showOptions( props )
+
 	const titleComp = showTitle &&
 		<RichText
 			tagName={ titleTag || 'h3' }
@@ -362,7 +364,7 @@ const edit = props => {
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
 				<div className={ itemClasses }>
-					{ createVideoBackground( 'column%s', props ) }
+					{ show.columnBackground && createVideoBackground( 'column%s', props ) }
 					{ applyFilters( 'stackable.cta.edit.output', (
 						<Fragment>
 							{ titleComp }
