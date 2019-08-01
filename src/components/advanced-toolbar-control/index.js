@@ -5,6 +5,9 @@ import classnames from 'classnames'
 import { i18n } from 'stackable'
 import { omit } from 'lodash'
 import SVGIconBottom from './images/bottom.svg'
+import SVGIconHorizontalCenter from './images/horizontal-center.svg'
+import SVGIconLeft from './images/left.svg'
+import SVGIconRight from './images/right.svg'
 import SVGIconStretch from './images/stretch.svg'
 import SVGIconTop from './images/top.svg'
 import SVGIconVerticalCenter from './images/vertical-center.svg'
@@ -13,21 +16,21 @@ const FLEX_HORIZONTAL_ALIGN_OPTIONS = [
 	{
 		value: 'flex-start',
 		title: __( 'Align Left', i18n ),
-		icon: 'editor-alignleft',
+		icon: <SVGIconLeft />,
 	},
 	{
 		value: 'center',
 		title: __( 'Align Center', i18n ),
-		icon: 'editor-aligncenter',
+		icon: <SVGIconHorizontalCenter />,
 	},
 	{
 		value: 'flex-end',
 		title: __( 'Align Right', i18n ),
-		icon: 'editor-alignright',
+		icon: <SVGIconRight />,
 	},
 ]
 
-const FLEX_VERTICAL_ALIGN_OPTIONS = [
+const FLEX_VERTICAL_ALIGN_STRETCH_OPTIONS = [
 	{
 		value: 'flex-start',
 		title: __( 'Align Top', i18n ),
@@ -50,9 +53,28 @@ const FLEX_VERTICAL_ALIGN_OPTIONS = [
 	},
 ]
 
+const FLEX_VERTICAL_ALIGN_OPTIONS = [
+	{
+		value: 'flex-start',
+		title: __( 'Align Top', i18n ),
+		icon: <SVGIconTop />,
+	},
+	{
+		value: 'center',
+		title: __( 'Align Center', i18n ),
+		icon: <SVGIconVerticalCenter />,
+	},
+	{
+		value: 'flex-end',
+		title: __( 'Align Bottom', i18n ),
+		icon: <SVGIconBottom />,
+	},
+]
+
 const CONTROLS = {
 	'flex-horizontal': FLEX_HORIZONTAL_ALIGN_OPTIONS,
 	'flex-vertical': FLEX_VERTICAL_ALIGN_OPTIONS,
+	'flex-vertical-with-stretch': FLEX_VERTICAL_ALIGN_STRETCH_OPTIONS,
 }
 
 const AdvancedToolbarControl = props => {

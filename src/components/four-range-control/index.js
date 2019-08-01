@@ -5,13 +5,13 @@ import BaseControlMultiLabel from '../base-control-multi-label'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 import { pick } from 'lodash'
-import SVGAllImage from './images/all.svg'
+// import SVGAllImage from './images/all.svg'
 import SVGBottomImage from './images/bottom.svg'
-import SVGHorizontalImage from './images/horizontal.svg'
+// import SVGHorizontalImage from './images/horizontal.svg'
 import SVGLeftImage from './images/left.svg'
 import SVGRightImage from './images/right.svg'
 import SVGTopImage from './images/top.svg'
-import SVGVerticalImage from './images/vertical.svg'
+// import SVGVerticalImage from './images/vertical.svg'
 
 class FourRangeControl extends Component {
 	constructor() {
