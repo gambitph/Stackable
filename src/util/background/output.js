@@ -6,7 +6,10 @@ import { urlIsVideo } from '@stackable/util'
 
 export const createVideoBackground = ( attrNameTemplate, blockProps ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
-	const getValue = ( attrName, defaultValue = '' ) => blockProps.attributes[ getAttrName( attrName ) ] || defaultValue
+	const getValue = ( attrName = '', defaultValue = '' ) => {
+		const value = typeof blockProps.attributes[ getAttrName( attrName ) ] === 'undefined' ? '' : blockProps.attributes[ getAttrName( attrName ) ]
+		return value !== '' ? value : defaultValue
+	}
 
 	const mediaUrl = getValue( 'BackgroundMediaUrl' )
 	const tabletMediaUrl = getValue( 'TabletBackgroundMediaUrl' )

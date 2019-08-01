@@ -5,7 +5,10 @@ import { sprintf } from '@wordpress/i18n'
 
 export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '', blockAttributes = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
-	const getValue = ( attrName, defaultValue = '' ) => blockAttributes[ getAttrName( attrName ) ] || defaultValue
+	const getValue = ( attrName = '', defaultValue = '' ) => {
+		const value = typeof blockAttributes[ getAttrName( attrName ) ] === 'undefined' ? '' : blockAttributes[ getAttrName( attrName ) ]
+		return value !== '' ? value : defaultValue
+	}
 
 	const styles = []
 

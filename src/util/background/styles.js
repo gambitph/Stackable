@@ -4,7 +4,10 @@ import { sprintf } from '@wordpress/i18n'
 
 const createBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {}, options = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
-	const getValue = ( attrName, defaultValue = '' ) => blockAttributes[ getAttrName( attrName ) ] || defaultValue
+	const getValue = ( attrName = '', defaultValue = '' ) => {
+		const value = typeof blockAttributes[ getAttrName( attrName ) ] === 'undefined' ? '' : blockAttributes[ getAttrName( attrName ) ]
+		return value !== '' ? value : defaultValue
+	}
 
 	const {
 		importantBackgroundColor = false,
@@ -60,7 +63,10 @@ const createBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 
 export const createBackgroundOverlayStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
-	const getValue = ( attrName, defaultValue = '' ) => blockAttributes[ getAttrName( attrName ) ] || defaultValue
+	const getValue = ( attrName = '', defaultValue = '' ) => {
+		const value = typeof blockAttributes[ getAttrName( attrName ) ] === 'undefined' ? '' : blockAttributes[ getAttrName( attrName ) ]
+		return value !== '' ? value : defaultValue
+	}
 
 	const opacity = parseInt( getValue( 'BackgroundTintStrength', 5 ), 10 ) / 10
 
@@ -95,7 +101,10 @@ export const createBackgroundOverlayStyles = ( attrNameTemplate = '%s', screen =
 
 export const hasBackgroundOverlay = ( attrNameTemplate = '%s', blockAttributes = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
-	const getValue = ( attrName, defaultValue = '' ) => blockAttributes[ getAttrName( attrName ) ] || defaultValue
+	const getValue = ( attrName = '', defaultValue = '' ) => {
+		const value = typeof blockAttributes[ getAttrName( attrName ) ] === 'undefined' ? '' : blockAttributes[ getAttrName( attrName ) ]
+		return value !== '' ? value : defaultValue
+	}
 
 	return getValue( 'BackgroundColorType' ) === 'gradient' ||
 		getValue( 'BackgroundMediaUrl' ) ||

@@ -5,7 +5,10 @@ import { WhenResponsiveScreen } from '@stackable/components'
 
 const ResponsiveControl = props => {
 	const getAttrName = ( attrName = '' ) => camelCase( sprintf( props.attrNameTemplate, attrName ) )
-	const getValue = ( attrName = '', defaultValue = '' ) => props.blockAttributes[ getAttrName( attrName ) ] || defaultValue
+	const getValue = ( attrName = '', defaultValue = '' ) => {
+		const value = typeof props.blockAttributes[ getAttrName( attrName ) ] === 'undefined' ? '' : props.blockAttributes[ getAttrName( attrName ) ]
+		return value !== '' ? value : defaultValue
+	}
 
 	return (
 		<Fragment>
