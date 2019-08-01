@@ -4,6 +4,7 @@
  * This is the file that Webpack is compiling into editor_blocks.js
  */
 import './icons'
+import './format-types'
 import { registerBlockType } from '@wordpress/blocks'
 
 const context = require.context( './block', true, /index\.js$/ )

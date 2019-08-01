@@ -1,3 +1,4 @@
+export * from './styles'
 import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
 
