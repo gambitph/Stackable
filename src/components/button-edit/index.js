@@ -70,7 +70,7 @@ ButtonEdit.Content = props => {
 		size = 'normal',
 		url = '',
 		icon = null,
-		text,
+		text = '',
 		design = 'basic',
 		newTab = false,
 		shadow = 0,
@@ -116,7 +116,7 @@ ButtonEdit.Content = props => {
 				<RichText.Content
 					tagName="span"
 					className={ design === 'link' ? '' : 'ugb-button--inner' }
-					value={ text }
+					value={ text || __( 'Button Text', i18n ) }
 				/>
 			</a>
 		</div>
