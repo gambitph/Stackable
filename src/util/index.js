@@ -113,19 +113,28 @@ export const getUniqueID = clientID => {
  * @see https://stackoverflow.com/questions/15411263/how-do-i-write-a-better-regexp-for-css-minification-in-php
  *
  * @param {string} css CSS to minify.
+ * @param {boolean} important Add !important to all rules.
  *
  * @return {string} Minified CSS
  */
-export const minifyCSS = css => {
-	return css.replace( /\/\*.*?\*\//g, '' ) // Comments.
+export const minifyCSS = ( css, important = false ) => {
+	const minified = css.replace( /\/\*.*?\*\//g, '' ) // Comments.
 		.replace( /\n\s*\n/g, '' ) // Comments.
 		.replace( /[\n\r \t]/g, ' ' ) // Spaces.
 		.replace( / +/g, ' ' ) // Multi-spaces.
 		.replace( / ?([,:;{}]) ?/g, '$1' ) // Extra spaces.
-		.replace( /[^\}]+\{\}/g, '' ) // Blank selectors.
+		.replace( /[^\}\{]+\{\}/g, '' ) // Blank selectors.
+		.replace( /[^\}\{]+\{\}/g, '' ) // Blank selectors. Repeat to catch empty media queries.
 		.replace( /;}/g, '}' ) // Trailing semi-colon.
+		.trim()
+
+	if ( ! important ) {
+		return minified
+	}
+
+	return minified
 		.replace( /\s?\!important/g, '' ) // Remove all !important
-		.replace( /([;\}])/g, ' !important$1' ) // Add our own !important
+		.replace( /(?<!})([;\}])/g, ' !important$1' ) // Add our own !important. Don't add !important on }}, for example at end of media queries.
 		.trim()
 }
 
