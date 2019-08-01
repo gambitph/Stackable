@@ -133,7 +133,7 @@ export const minifyCSS = ( css, important = false ) => {
 
 	return minified
 		.replace( /\s?\!important/g, '' ) // Remove all !important
-		.replace( /([;\}])/g, ' !important$1' ) // Add our own !important
+		.replace( /(?<!})([;\}])/g, ' !important$1' ) // Add our own !important. Don't add !important on }}, for example at end of media queries.
 		.trim()
 }
 
@@ -158,6 +158,14 @@ export const compileCSS = ( css, mainClass, uniqueID ) => {
 	return css.replace( /\/\*[\s\S]*?\*\//g, '' )
 		.replace( /\/\/(.*)?\n/g, '' )
 		.replace( /([^}]+)({)/g, ( match, selector, paren ) => {
+			// Ignore media queries (re-add them after fixing the classes)
+			if ( selector.match( /@\w+/g ) ) {
+				return selector.replace( /(@\w+[^{]+{\s*)([^{]+)/g, ( match, mediaQuery, selector ) => {
+					const newSelector = prependCSSClass( selector, mainClass, uniqueID )
+					return `${ mediaQuery } ${ newSelector } ${ paren }`
+				} )
+			}
+
 			const newSelector = prependCSSClass( selector, mainClass, uniqueID )
 			return `${ newSelector } ${ paren }`
 		} ).trim()
