@@ -237,8 +237,9 @@ You will have to redo all your blocks
 
 = 1.17.0 =
 * New: Color & highlight formatting toolbar (CMD/Ctrl + H)
-* Fixed: Support for media queries in Custom CSS (Premium)
-* Fixed: Rgba style rule invalidates Custom CSS (Premium)
+* Fixed: Support for media queries in Custom CSS
+* Fixed: Rgba style rule invalidates Custom CSS
+* Fixed: Responsive issues with the Feature block layouts
 
 = 1.16.0 =
 [Translations: Stackable in Your Language](https://wpstackable.com/blog/translations-stackable-in-your-language/)
