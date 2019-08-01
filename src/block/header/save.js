@@ -1,149 +1,109 @@
+import { BlockContainer, ButtonEditHelper } from '@stackable/components'
+import { withBlockStyles, withUniqueClass } from '@stackable/higher-order'
 import { applyFilters } from '@wordpress/hooks'
-import { ButtonEdit } from '@stackable/components'
 import classnames from 'classnames'
+import { compose } from '@wordpress/compose'
+import createStyles from './style'
+import { createVideoBackground, hasBackgroundOverlay } from '@stackable/util'
+import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
+import { showOptions } from '.'
 
 const save = props => {
 	const { className } = props
 	const {
-		buttonURL,
-		buttonText,
-		buttonColor,
-		buttonTextColor,
-		buttonDesign,
-		buttonIcon,
-		cornerButtonRadius,
-		size,
-		title,
-		titleColor,
-		subtitle,
-		subtitleColor,
-		contentAlign = 'center',
-		backgroundColorType = '',
-		backgroundColor,
-		backgroundColor2,
-		backgroundColorDirection = 0,
-		backgroundType = '',
-		backgroundImageURL,
-		backgroundOpacity,
-		fixedBackground,
-		design = 'basic',
-		borderRadius = 12,
-		shadow = 3,
-		align,
-		contentWidth = false,
-		buttonNewTab,
-		invert = false,
+		restrictContentWidth = 'center',
 		fullHeight = false,
+		shadow = 3,
+		design = 'basic',
+		titleTag = '',
+		title,
+		subtitle,
+		showTitle = true,
+		showSubtitle = true,
+		showButton = true,
+		showButton2 = false,
+		buttonText = '',
+		button2Text = '',
 	} = props.attributes
+
+	const show = showOptions( props )
 
 	const mainClasses = classnames( [
 		className,
 		'ugb-header',
-		'ugb-header--v2',
-		'ugb--background-opacity-' + ( 1 * Math.round( backgroundOpacity / 1 ) ),
+		'ugb-header--v3',
 		[ `ugb-header--design-${ design }` ],
 	], applyFilters( 'stackable.header.mainclasses', {
-		'ugb--has-background': design !== 'plain' &&
-		                       ( backgroundColor || backgroundImageURL ),
-		'ugb--has-background-image': design !== 'plain' &&
-		                             backgroundImageURL,
-		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-		[ `ugb--content-width` ]: align === 'full' && contentWidth,
-		'ugb-header--invert': invert,
-		'ugb-header--full-height': fullHeight,
-		[ `ugb--has-background-gradient` ]: backgroundColorType === 'gradient',
-		[ `ugb--has-background-video` ]: backgroundType === 'video',
+		'ugb--restrict-content-width': show.restrictContent && restrictContentWidth,
 	}, design, props ) )
 
-	const mainBackgroundStyles = design === 'plain' ? {} : {
-		'--ugb-background-color': backgroundImageURL || backgroundColorType === 'gradient' ? backgroundColor : undefined,
-		'--ugb-background-color2': backgroundColorType === 'gradient' && backgroundColor2 ? backgroundColor2 : undefined,
-		'--ugb-background-direction': backgroundColorType === 'gradient' ? `${ backgroundColorDirection }deg` : undefined,
-		backgroundAttachment: fixedBackground ? 'fixed' : undefined,
-		backgroundColor: backgroundColor ? backgroundColor : undefined,
-		backgroundImage: backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
-		borderRadius: borderRadius !== 12 ? borderRadius : undefined,
+	const itemClasses = classnames( [
+		'ugb-header__item',
+	], applyFilters( 'stackable.header.boxclasses', {
+		'ugb--full-height': fullHeight,
+		[ `ugb--shadow-${ shadow }` ]: show.columnBackground,
+		'ugb--has-background-overlay': hasBackgroundOverlay( 'column%s', props.attributes ),
+	}, props ) )
+
+	const titleComp = showTitle && ! RichText.isEmpty( title ) &&
+		<RichText.Content
+			tagName={ titleTag || 'h2' }
+			className="ugb-header__title"
+			value={ title }
+		/>
+	const subtitleComp = showSubtitle && ! RichText.isEmpty( subtitle ) &&
+		<RichText.Content
+			tagName="p"
+			className="ugb-header__subtitle"
+			value={ subtitle }
+		/>
+	const buttonComp = showButton && !! buttonText.length &&
+		<ButtonEditHelper.Content
+			className="ugb-button1"
+			attrNameTemplate="button%s"
+			blockAttributes={ props.attributes }
+		/>
+	const button2Comp = showButton2 && //!! button2Text.length &&
+		<ButtonEditHelper.Content
+			className="ugb-button2"
+			attrNameTemplate="button2%s"
+			blockAttributes={ props.attributes }
+		/>
+
+	const comps = {
+		titleComp,
+		subtitleComp,
+		buttonComp,
+		button2Comp,
 	}
 
-	const styles = applyFilters( 'stackable.header.styles', {
-		main: {
-			textAlign: contentAlign ? contentAlign : undefined,
-			...mainBackgroundStyles,
-		},
-		title: {
-			color: titleColor ? titleColor :
-				   design === 'plain' ? undefined :
-				   '#ffffff',
-			textAlign: contentAlign ? contentAlign : undefined,
-		},
-		subtitle: {
-			color: subtitleColor ? subtitleColor :
-				   design === 'plain' ? undefined :
-				   '#ffffff',
-			textAlign: contentAlign ? contentAlign : undefined,
-		},
-	}, design, props )
-
 	return (
-		<div className={ mainClasses } style={ styles.main }>
-			{ design !== 'plain' && backgroundType === 'video' && (
-				<video
-					className="ugb-video-background"
-					autoPlay
-					muted
-					loop
-					src={ backgroundImageURL }
-				/>
-			) }
-			{ applyFilters( 'stackable.header.save.output.before', null, design, props ) }
-			{ ( () => {
-				const titleComp = ! RichText.isEmpty( title ) && (
-					<RichText.Content
-						tagName="h2"
-						className="ugb-header__title"
-						style={ styles.title }
-						value={ title }
-					/>
-				)
-				const subtitleComp = ! RichText.isEmpty( subtitle ) && (
-					<RichText.Content
-						tagName="p"
-						className="ugb-header__subtitle"
-						style={ styles.subtitle }
-						value={ subtitle }
-					/>
-				)
-				const buttonComp = buttonText && !! buttonText.length && (
-					<ButtonEdit.Content
-						size={ size }
-						url={ buttonURL }
-						newTab={ buttonNewTab }
-						align={ contentAlign }
-						color={ buttonTextColor }
-						text={ buttonText }
-						design={ buttonDesign }
-						icon={ buttonIcon }
-						backgroundColor={ buttonColor }
-						borderRadius={ cornerButtonRadius }
-					/>
-				)
-				const comps = {
-					titleComp,
-					subtitleComp,
-					buttonComp,
-				}
-				return applyFilters( 'stackable.header.save.output', (
+		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
+			<Fragment>
+				<div className={ itemClasses }>
+					{ show.columnBackground && createVideoBackground( 'column%s', props ) }
 					<div className="ugb-content-wrapper">
-						{ titleComp }
-						{ subtitleComp }
-						{ buttonComp }
+						{ applyFilters( 'stackable.header.save.output', (
+							<Fragment>
+								{ showTitle && titleComp }
+								{ showSubtitle && subtitleComp }
+								{ ( showButton || showButton2 ) &&
+									<div className="ugb-header__buttons">
+										{ showButton && buttonComp }
+										{ showButton2 && button2Comp }
+									</div>
+								}
+							</Fragment>
+						), design, props, comps ) }
 					</div>
-				), design, props, comps )
-			} )() }
-			{ applyFilters( 'stackable.header.save.output.after', null, design, props ) }
-		</div>
+				</div>
+			</Fragment>
+		) } />
 	)
 }
 
-export default save
+export default compose(
+	withUniqueClass,
+	withBlockStyles( createStyles ),
+)( save )

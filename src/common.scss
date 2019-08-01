@@ -91,6 +91,23 @@ $box-vert-padding: 60px;
 	position: relative;
 }
 
+// Full-height blocks
+.ugb--full-height {
+	min-height: 700px;
+}
+@media screen and (min-width: 1025px) {
+	.ugb--full-height {
+		min-height: 100vh;
+	}
+}
+
+// A block can have a ugb-content-width class to make it's content fit the content-width.
+// This should only be used for full-widths.
+.ugb--restrict-content-width .ugb-content-wrapper {
+	max-width: var(--content-width);
+	margin: 0 auto;
+}
+
 // Background overlay. Any block / item that has a background/gradient/overlay should have this class.
 .ugb--has-background-overlay {
 	position: relative;
@@ -131,13 +148,6 @@ $shadows: ( none )
 	}
 }
 
-// A block can have a ugb-content-width class to make it's content fit the content-width.
-.ugb--content-width .ugb-content-wrapper,
-.ugb-content-width .ugb-content-wrapper { // Old naming convention.
-	max-width: var(--content-width);
-	margin: 0 auto;
-}
-
 // Make sure all our blocks are at the same level. Mainly for our separator to work.
 div[class^="wp-block-"] {
 	z-index: 1;
@@ -153,7 +163,17 @@ div[class^="wp-block-"] {
 	}
 }
 
-// Deprecated < v2
+/**
+ * Deprecated < v2
+ */
+
+// A block can have a ugb-content-width class to make it's content fit the content-width.
+.ugb--content-width .ugb-content-wrapper,
+.ugb-content-width .ugb-content-wrapper { // Old naming convention.
+	max-width: var(--content-width);
+	margin: 0 auto;
+}
+
 
 @mixin baseBlock() {
 	@include blockContentReset();

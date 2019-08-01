@@ -4,22 +4,40 @@
  * Enqueued in the editor only.
  */
 
-.ugb-header {
-	.ugb-content-wrapper,
-	.ugb-header-wrapper {
-		> *:first-child {
-			margin-bottom: 1rem;
-			padding-bottom: 0;
-			margin-top: 0;
-			position: relative;
-		}
-		> *:nth-of-type(2) {
-			margin-bottom: 2rem;
-			padding-bottom: 0;
-			position: relative;
-		}
+// .ugb-header {
+// 	.ugb-content-wrapper,
+// 	.ugb-header-wrapper {
+// 		> *:first-child {
+// 			margin-bottom: 1rem;
+// 			padding-bottom: 0;
+// 			margin-top: 0;
+// 			position: relative;
+// 		}
+// 		> *:nth-of-type(2) {
+// 			margin-bottom: 2rem;
+// 			padding-bottom: 0;
+// 			position: relative;
+// 		}
+// 	}
+// }
+
+// Contents go full-width when full-width.
+[data-type][data-align="full"] .ugb-header.ugb-main-block:not(.ugb--has-block-background),
+// Contents go full-width when full-width with block background.
+[data-type][data-align="full"] .ugb-header.ugb-main-block.ugb-main-block--inner-full.ugb--has-block-background {
+	padding: 0;
+	.ugb-header__item {
+		border-radius: 0;
 	}
 }
+
+// Stick together with other full widths.
+// [data-type="ugb/header"][data-align="full"] {
+// 	.ugb-main-block {
+// 		margin-top: 0;
+// 		margin-bottom: 0;
+// 	}
+// }
 
 [data-type="ugb/header"] {
 	// Fade out placeholder text.
@@ -42,9 +60,4 @@
 	.ugb-header.ugb--has-background {
 		border-radius: 0 !important;
 	}
-}
-
-.ugb-header__url-inputs {
-	display: flex;
-	flex-direction: row;
 }

@@ -1,68 +1,21 @@
 /**
  * BLOCK: Header Block.
  */
+import { addFilter, applyFilters } from '@wordpress/hooks'
 import { disabledBlocks, i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import deprecated from './deprecated'
-import { descriptionPlaceholder } from '@stackable/util'
+import { descriptionPlaceholder, createBackgroundAttributes, createAllCombinationAttributes, createResponsiveAttributes, createTypographyAttributes, createButtonAttributes } from '@stackable/util'
 import edit from './edit'
 import { HeaderIcon } from '@stackable/icons'
 import save from './save'
 
 const schema = {
-	title: {
-		source: 'html',
-		selector: 'h2',
-		default: __( 'Title for This Block', i18n ),
+	restrictContentWidth: {
+		type: 'boolean',
+		default: false,
 	},
-	subtitle: {
-		source: 'html',
-		selector: 'p',
-		default: descriptionPlaceholder(),
-	},
-	titleColor: {
-		type: 'string',
-		// default: '#ffffff',
-	},
-	subtitleColor: {
-		type: 'string',
-		// default: '#ffffff',
-	},
-	contentAlign: {
-		type: 'string',
-		default: 'center',
-	},
-	backgroundColorType: {
-		type: 'string',
-		default: '',
-	},
-	backgroundColor: {
-		type: 'string',
-		default: '#000000',
-	},
-	backgroundColor2: {
-		type: 'string',
-		default: '',
-	},
-	backgroundColorDirection: {
-		type: 'number',
-		default: 0,
-	},
-	backgroundType: {
-		type: 'string',
-		default: '',
-	},
-	backgroundImageID: {
-		type: 'number',
-	},
-	backgroundImageURL: {
-		type: 'string',
-	},
-	backgroundOpacity: {
-		type: 'number',
-		default: 5,
-	},
-	fixedBackground: {
+	fullHeight: {
 		type: 'boolean',
 		default: false,
 	},
@@ -78,131 +31,88 @@ const schema = {
 		type: 'number',
 		default: 3,
 	},
-	contentWidth: {
+
+	// Alignments.
+	...createAllCombinationAttributes(
+		'%s%sAlign', {
+			type: 'string',
+			default: '',
+		},
+		[ 'Title', 'Subtitle' ],
+		[ '', 'Tablet', 'Mobile' ]
+	),
+
+	// Column.
+	...createBackgroundAttributes( 'column%s' ),
+
+	// Title.
+	title: {
+		source: 'html',
+		selector: '.ugb-header__title',
+		default: __( 'Title for This Block', i18n ),
+	},
+	showTitle: {
+		type: 'boolean',
+		default: true,
+	},
+	titleTag: {
+		type: 'string',
+		defualt: '',
+	},
+	titleColor: {
+		type: 'string',
+		defualt: '',
+	},
+	...createTypographyAttributes( 'title%s' ),
+
+	// Subtitle
+	subtitle: {
+		source: 'html',
+		selector: '.ugb-header__subtitle',
+		default: descriptionPlaceholder(),
+	},
+	showSubtitle: {
+		type: 'boolean',
+		default: true,
+	},
+	...createTypographyAttributes( 'subtitle%s' ),
+	subtitleColor: {
+		type: 'string',
+		defualt: '',
+	},
+
+	// Button 1.
+	showButton: {
+		type: 'boolean',
+		default: true,
+	},
+	...createButtonAttributes( 'button%s', { selector: '.ugb-button1' } ),
+
+	// Button 2.
+	showButton2: {
 		type: 'boolean',
 		default: false,
 	},
-	align: {
-		type: 'string',
-	},
+	...createButtonAttributes( 'button2%s', { selector: '.ugb-button2' } ),
+
+	// Spacing.
+	...createResponsiveAttributes( 'title%sBottomMargin', {
+		type: 'number',
+		default: '',
+	} ),
+	...createResponsiveAttributes( 'subtitle%sBottomMargin', {
+		type: 'number',
+		default: '',
+	} ),
+	...createResponsiveAttributes( 'buttonGap%s', {
+		type: 'number',
+		default: '',
+	} ),
+
+	// TODO: invert port
 	invert: {
 		type: 'boolean',
 		default: false,
-	},
-	fullHeight: {
-		type: 'boolean',
-		default: false,
-	},
-
-	// Button.
-	buttonURL: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.ugb-button',
-		attribute: 'href',
-		default: '',
-	},
-	buttonNewTab: {
-		type: 'boolean',
-		source: 'attribute',
-		selector: '.ugb-button',
-		attribute: 'target',
-		default: false,
-	},
-	buttonText: {
-		source: 'html',
-		selector: '.ugb-button span',
-		default: __( 'Button text', i18n ),
-	},
-	buttonColor: {
-		type: 'string',
-	},
-	buttonTextColor: {
-		type: 'string',
-		default: '#ffffff',
-	},
-	buttonDesign: {
-		type: 'string',
-		default: 'basic',
-	},
-	buttonIcon: {
-		type: 'string',
-	},
-	size: {
-		type: 'string',
-		default: 'normal',
-	},
-	cornerButtonRadius: {
-		type: 'number',
-		default: 4,
-	},
-
-	// Button #2.
-	buttonURL2: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.ugb-header__buttons > *:nth-child(2) .ugb-button',
-		attribute: 'href',
-		default: '',
-	},
-	buttonNewTab2: {
-		type: 'boolean',
-		source: 'attribute',
-		selector: '.ugb-header__buttons > *:nth-child(2) .ugb-button',
-		attribute: 'target',
-		default: false,
-	},
-	buttonText2: {
-		source: 'html',
-		selector: '.ugb-header__buttons > *:nth-child(2) .ugb-button span',
-		default: __( 'Button text', i18n ),
-	},
-	buttonColor2: {
-		type: 'string',
-	},
-	buttonTextColor2: {
-		type: 'string',
-		default: '#ffffff',
-	},
-	buttonDesign2: {
-		type: 'string',
-		default: 'basic',
-	},
-	buttonIcon2: {
-		type: 'string',
-	},
-	buttonSize2: {
-		type: 'string',
-		default: 'normal',
-	},
-	buttonBorderRadius2: {
-		type: 'number',
-		default: 4,
-	},
-
-	// Custom CSS attributes.
-	customCSSUniqueID: {
-		type: 'string',
-		default: '',
-	},
-	customCSS: {
-		type: 'string',
-		default: '',
-	},
-	customCSSCompiled: {
-		type: 'string',
-		default: '',
-	},
-
-	// Keep the old attributes. Gutenberg issue https://github.com/WordPress/gutenberg/issues/10406
-	opacity: {
-		type: 'number',
-	},
-	url: {
-		type: 'string',
-	},
-	id: {
-		type: 'number',
 	},
 }
 
@@ -218,10 +128,8 @@ export const settings = {
 		__( 'Stackable', i18n ),
 	],
 	supports: {
-		align: [ 'center', 'wide', 'full' ],
+		// align: [ 'center', 'wide', 'full' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
-		// eslint-disable-next-line
-		inserter: false, // TODO: Remove when ready for v2.
 	},
 	attributes: schema,
 
@@ -229,6 +137,61 @@ export const settings = {
 	edit,
 	save,
 
+	// Stackable modules.
+	modules: {
+		'advanced-block-spacing': true,
+		'advanced-column-spacing': { columnGap: false },
+		'advanced-responsive': true,
+		'block-background': true,
+		'block-separators': true,
+		// 'block-title': true,
+		'content-align': true,
+		'custom-css': {
+			default: applyFilters( 'stackable.header.custom-css.default', '' ),
+		},
+	},
+
 	// Stackable specific settings.
 	sDemoURL: 'https://wpstackable.com/header-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
 }
+
+export const showOptions = blockProps => {
+	const {
+		design = 'basic',
+		align = '',
+		showTitle = true,
+		showSubtitle = true,
+		showButton = true,
+		showButton2 = false,
+		showBlockBackground = false,
+		blockInnerWidth = '',
+	} = blockProps.attributes
+
+	const borderRadius = ( ! showBlockBackground && align !== 'full' ) || ( showBlockBackground && blockInnerWidth !== 'full' )
+
+	return applyFilters( 'stackable.header.show', {
+		columnBackground: design !== 'plain',
+		borderRadius: design !== 'plain' && borderRadius,
+		titleSpacing: showTitle && ( showSubtitle || showButton || showButton2 ),
+		subtitleSpacing: showSubtitle && ( showButton || showButton2 ),
+		buttonGap: showButton && showButton2,
+		restrictContent: ( ! showBlockBackground && align === 'full' ) || ( showBlockBackground && blockInnerWidth === 'full' ),
+	}, blockProps )
+}
+
+// Remove the shadow when a top/bottom separator is turned on.
+// addFilter( 'stackable.header.setAttributes', 'stackable/header/separator', ( attributes, blockProps ) => {
+// 	if ( blockProps.attributes.design === 'plain' ) {
+// 		return attributes
+// 	}
+
+// 	if ( typeof attributes.showTopSeparator !== 'undefined' && attributes.showTopSeparator ) {
+// 		attributes.shadow = 0
+// 	}
+
+// 	if ( typeof attributes.showBottomSeparator !== 'undefined' && attributes.showBottomSeparator ) {
+// 		attributes.shadow = 0
+// 	}
+
+// 	return attributes
+// } )
