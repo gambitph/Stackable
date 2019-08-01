@@ -6,6 +6,7 @@ import { SvgIcon } from '@stackable/components'
 
 // Deprecated ButtonEdit.Content methods.
 export * from './deprecated'
+export { default as ButtonEditHelper } from './helper'
 
 // TODO: [V2] move ButtonEdit to RichButton
 

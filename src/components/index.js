@@ -1,5 +1,8 @@
 // Editor components
-export { default as ButtonEdit } from './button-edit'
+export {
+	default as ButtonEdit,
+	ButtonEditHelper,
+} from './button-edit'
 export { default as HorizontalAlignmentToolbar } from './horizontal-alignment-toolbar'
 export { default as VerticalAlignmentToolbar } from './vertical-alignment-toolbar'
 export { default as ImageUploadPlaceholder } from './image-upload-placeholder'
