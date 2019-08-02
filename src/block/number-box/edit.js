@@ -1,7 +1,7 @@
 import {
 	ColorPaletteControl, DesignPanelBody, ProControl, ProControlButton,
 } from '@stackable/components'
-import { descriptionPlaceholder, range } from '@stackable/util'
+import { descriptionPlaceholder, isDarkColor, range } from '@stackable/util'
 import { i18n, showProNotice } from 'stackable'
 import {
 	InspectorControls, PanelColorSettings, RichText,
@@ -13,7 +13,6 @@ import classnames from 'classnames'
 import { Fragment } from '@wordpress/element'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
-import isDarkColor from 'is-dark-color'
 
 const edit = props => {
 	const {

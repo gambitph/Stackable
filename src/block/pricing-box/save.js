@@ -1,9 +1,8 @@
+import { isDarkColor, range } from '@stackable/util'
 import { applyFilters } from '@wordpress/hooks'
 import { ButtonEdit } from '@stackable/components'
 import classnames from 'classnames'
 import { Fragment } from '@wordpress/element'
-import isDarkColor from 'is-dark-color'
-import { range } from '@stackable/util'
 import { RichText } from '@wordpress/block-editor'
 import striptags from 'striptags'
 

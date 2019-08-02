@@ -3,9 +3,8 @@ import {
 	DeprecatedButtonContent_1_12,
 	DeprecatedButtonContent_1_9,
 } from '@stackable/components/button-edit'
-import { descriptionPlaceholder, range } from '@stackable/util'
+import { descriptionPlaceholder, isDarkColor, range } from '@stackable/util'
 import classnames from 'classnames'
-import isDarkColor from 'is-dark-color'
 import { RichText } from '@wordpress/block-editor'
 import striptags from 'striptags'
 
