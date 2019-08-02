@@ -162,6 +162,7 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com/blog-pos
 
 ### News Article Updates
 
+- [v1.17 Text Color and Text Highlight](https://wpstackable.com/blog/text-color-and-text-highlight)
 - [v1.16 Translations: Stackable in Your Language](https://wpstackable.com/blog/translations-stackable-in-your-language/)
 - [v1.15 Separators Are Here](https://wpstackable.com/blog/separators-are-here/)
 - [v1.14 Video Backgrounds & Background Gradients](https://wpstackable.com/blog/video-backgrounds-background-gradients/)
@@ -236,10 +237,14 @@ You will have to redo all your blocks
 == Changelog ==
 
 = 1.17.0 =
-* New: Color & highlight formatting toolbar (CMD/Ctrl + H)
+[Translations: Text Color and Text Highlight](https://wpstackable.com/blog/text-color-and-text-highlight)
+
+* New: Color & highlight formatting toolbar (⌘+h or Ctrl+h)
 * Fixed: Support for media queries in Custom CSS
 * Fixed: Rgba style rule invalidates Custom CSS
 * Fixed: Responsive issues with the Feature block layouts
+* Fixed: Blocks error out when setting some colors to pure black
+* Fixed: Squished images in Feature block when image size is adjusted
 
 = 1.16.0 =
 [Translations: Stackable in Your Language](https://wpstackable.com/blog/translations-stackable-in-your-language/)
