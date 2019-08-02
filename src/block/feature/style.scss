@@ -70,9 +70,17 @@
 	.ugb-feature__image {
 		max-width: var(--image-size, 400px);
 		width: 100%;
+		object-fit: contain;
 		img {
 			margin: 0 auto;
 		}
+	}
+}
+body:not(.wp-admin) .ugb-feature.ugb-feature--design-plain {
+	.ugb-feature__image {
+		flex: 0;
+		min-height: auto;
+		height: auto;
 	}
 }
 .ugb-feature.ugb-feature--design-basic {
