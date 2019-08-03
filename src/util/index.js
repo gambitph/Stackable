@@ -133,7 +133,8 @@ export const minifyCSS = ( css, important = false ) => {
 
 	return minified
 		.replace( /\s?\!important/g, '' ) // Remove all !important
-		.replace( /(?<!})([;\}])/g, ' !important$1' ) // Add our own !important. Don't add !important on }}, for example at end of media queries.
+		.replace( /([;\}])/g, ' !important$1' ) // Add our own !important.
+		.replace( /\} !important\}/g, '}}' ) // Ending of media queries "}}" get an added !important from the previous line, remove it.
 		.trim()
 }
 
