@@ -18,13 +18,15 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 		public function enqueue_frontend_block_fonts() {
 			if ( is_single() || is_page() || is_404() ) {
 				global $post;
-				if ( is_object( $post ) ) {
+				if ( is_object( $post ) && property_exists( $post, 'post_content' ) ) {
 					$this->_enqueue_frontend_block_fonts( $post->post_content );
 				}
 			} elseif ( is_archive() || is_home() || is_search() ) {
 				global $wp_query;
 				foreach ( $wp_query as $post ) {
-					$this->_enqueue_frontend_block_fonts( $post->post_content );
+					if ( is_object( $post ) && property_exists( $post, 'post_content' ) ) {
+						$this->_enqueue_frontend_block_fonts( $post->post_content );
+					}
 				}
 			}
 		}
