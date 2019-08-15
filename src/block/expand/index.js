@@ -60,7 +60,4 @@ export const settings = {
 	supports: {
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
 	},
-
-	// Stackable specific settings.
-	sDemoURL: 'https://wpstackable.com/expand-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
 }

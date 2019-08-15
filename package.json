@@ -25,6 +25,7 @@
     "counterup2": "^1.0.4",
     "is-dark-color": "^1.2.0",
     "md5": "^2.2.1",
+    "react-tabs": "^3.0.0",
     "striptags": "^3.1.1",
     "waypoints": "^4.0.1"
   },

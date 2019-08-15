@@ -6,33 +6,21 @@ import {
 	i18n,
 	nonce,
 	nonceProNotice,
+	pricingURL,
 	showProNoticesOption,
 	welcomeSrcUrl,
 } from 'stackable'
+import {
+	Tab,
+	TabList,
+	TabPanel,
+	Tabs,
+} from 'react-tabs'
 import { send as ajaxSend } from '@wordpress/ajax'
+import blockData from './blocks'
 import classnames from 'classnames'
 import domReady from '@wordpress/dom-ready'
-import ProModal from '../components/pro-modal'
 import { Spinner } from '@wordpress/components'
-
-// Gather all the blocks.
-const context = require.context(
-	'../block', // Search within the src/blocks directory.
-	true, // Search recursively.
-	/index\.js$/ // Match any index.js.
-)
-
-const blockData = {}
-
-// Import all the blocks and get all the settings.
-context.keys().forEach( key => {
-	try {
-		const block = context( key )
-		blockData[ block.name ] = block.settings
-	} catch ( err ) {
-		console.error( err ) // eslint-disable-line no-console
-	}
-} )
 
 class BlockToggler extends Component {
 	constructor() {
@@ -102,7 +90,6 @@ class BlockToggler extends Component {
 					{ Object.keys( blockData ).map( ( blockName, i ) => {
 						const block = blockData[ blockName ]
 						const blockNameTrim = blockName.replace( /\w+\//, '' )
-						const title = block.sAdminTitle || block.title
 
 						// Don't show blocks that we really hide due to deprecation.
 						if ( block.sDeprecated ) {
@@ -118,8 +105,8 @@ class BlockToggler extends Component {
 
 						return (
 							<div key={ i + 1 } className={ mainClasses }>
-								<img src={ `${ welcomeSrcUrl }/images/block-${ blockNameTrim }.svg` } alt={ `${ title } icon` } className="s-block-icon" />
-								<h3>{ title }</h3>
+								<img src={ `${ welcomeSrcUrl }/images/block-${ blockNameTrim }.svg` } alt={ `${ block.title } icon` } className="s-block-icon" />
+								<h3>{ block.title }</h3>
 								<p>{ block.description }</p>
 								<button
 									className="s-toggle-button"
@@ -129,7 +116,7 @@ class BlockToggler extends Component {
 									<span>{ __( 'Enabled', i18n ) }</span>
 								</button>
 								{ block.sDemoURL && (
-									<p className="s-demo-url"><small><a href={ block.sDemoURL } target="stackable_demo" title={ sprintf( __( 'View %s Demo', i18n ), title ) } >{ __( 'View Block Demo', i18n ) }</a></small></p>
+									<p className="s-demo-url"><small><a href={ block.sDemoURL } target="stackable_demo" title={ sprintf( __( 'View %s Demo', i18n ), block.title ) } >{ __( 'View Block Demo', i18n ) }</a></small></p>
 								) }
 							</div>
 						)
@@ -195,6 +182,68 @@ class ProNoticeToggler extends Component {
 	}
 }
 
+class HelpTabs extends Component {
+	render() {
+		return (
+			<Tabs>
+				<TabList className="s-tabs">
+					<Tab>{ __( 'Knowledge Base', i18n ) }</Tab>
+					<Tab>{ __( 'Get Support', i18n ) }</Tab>
+				</TabList>
+				<TabPanel>
+					<ul className="s-tabs-list">
+						<li>
+							<a href="https://wpstackable.com/documentation?utm_medium=Welcome%20Page&utm_campaign=Welcome%20Help&utm_source=Plugin" target="_blank" rel="noopener noreferrer"><strong>{ __( 'Documentation', i18n ) }</strong></a>
+							<br />
+							<span>{ __( 'Documentation & tutorials for building your site with Stackable.', i18n ) }</span>
+						</li>
+						<li>
+							<a href="https://facebook.com/groups/wpstackable" target="_blank" rel="noopener noreferrer"><strong>{ __( 'Facebook Community Group', i18n ) }</strong></a>
+							<br />
+							<span>{ __( 'Connect with other people using Stackable and join the discussion.', i18n ) }</span>
+						</li>
+						<li>
+							<a href="https://github.com/gambitph/Stackable/issues" target="_blank" rel="noopener noreferrer"><strong>{ __( 'GitHub', i18n ) }</strong></a>
+							<br />
+							<span>{ __( 'Discuss technical plugin issues and contribute to the plugin code.', i18n ) }</span>
+						</li>
+						<li>
+							<a href="https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks/" taregt="_blank" rel="noopener noreferrer"><strong>{ __( 'WordPress Plugin Support Forum', i18n ) }</strong></a>
+							<br />
+							<span>{ __( 'Community-powered plugin support forum', i18n ) }</span>
+						</li>
+					</ul>
+					<p><strong>{ __( 'Need help?', i18n ) }</strong></p>
+					<p>{ __( 'Upgrade to Premium and our support team will be there to answer any questions you might have about the usage of Stackable.', i18n ) }</p>
+					<p className="s-link-pair">
+						<a href={ pricingURL } title={ __( 'Get Stackable Premium', i18n ) }>{ __( 'Get Stackable Premium', i18n ) + ' →' }</a>
+						<a href="https://rebrand.ly/plugin-welcome-learn-premium-support" title={ __( 'Learn More', i18n ) } target="_blank" rel="noopener noreferrer">{ __( 'Learn More', i18n ) + ' →' }</a>
+					</p>
+				</TabPanel>
+				<TabPanel>
+					<h3>{ __( 'Email support is a Stackable Premium feature', i18n ) }</h3>
+					<p>{ __( 'Upgrade to Premium and our support team will be there to answer any questions you might have about the usage of Stackable.', i18n ) }</p>
+					<p>{ __( 'Here are the other features you\'ll by going Premium:', i18n ) }</p>
+					<ul className="s-check-list">
+						<li>{ __( '50+ Premium Layouts', i18n ) }</li>
+						<li>{ __( 'Seamless Layout Switching', i18n ) }</li>
+						<li>{ __( 'All Premium Effects', i18n ) }</li>
+						<li>{ __( '3-Layer Separators', i18n ) }</li>
+						<li>{ __( 'Custom CSS', i18n ) }</li>
+						<li>{ __( 'No Ads', i18n ) }</li>
+						<li>{ __( 'Lifetime Use', i18n ) }</li>
+						<li>{ __( '1 Year of Updates & Support', i18n ) }</li>
+					</ul>
+					<p className="s-link-pair">
+						<a href={ pricingURL } title={ __( 'Get Stackable Premium', i18n ) }>{ __( 'Get Stackable Premium', i18n ) + ' →' }</a>
+						<a href="https://rebrand.ly/plugin-welcome-learn-premium-support" title={ __( 'Learn More', i18n ) } target="_blank" rel="noopener noreferrer">{ __( 'Learn More', i18n ) + ' →' }</a>
+					</p>
+				</TabPanel>
+			</Tabs>
+		)
+	}
+}
+
 // Load all the options into the UI.
 domReady( () => {
 	render(
@@ -209,7 +258,5 @@ domReady( () => {
 		)
 	}
 
-	render( (
-		<ProModal tag="p" buttonClassName="s-button" button={ __( 'View Premium Features', i18n ) } />
-	), document.querySelector( '.s-premium-box__button' ) )
+	render( <HelpTabs />, document.querySelector( '#s-help-area' ) )
 } )

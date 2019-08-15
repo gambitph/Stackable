@@ -22,8 +22,4 @@ export const settings = {
 		align: [ 'center', 'wide', 'full' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
 	},
-
-	// Stackable specific settings.
-	sAdminTitle: __( 'Blog Posts', i18n ),
-	sDemoURL: 'https://wpstackable.com/blog-posts-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
 }
