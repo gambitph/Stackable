@@ -52,7 +52,7 @@
     "@wordpress/hooks": "^2.0.5",
     "@wordpress/i18n": "^3.1.1",
     "@wordpress/jest-preset-default": "^3.0.3",
-    "@wordpress/scripts": "^2.5.0",
+    "@wordpress/scripts": "^3.4.0",
     "autoprefixer": "^9.4.5",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^24.0.0",
@@ -72,10 +72,10 @@
     "gulp-postcss": "^8.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^4.0.2",
-    "husky": "^1.2.1",
+    "husky": "^3.0.3",
     "jest": "^24.0.0",
     "jsonfile": "^5.0.0",
-    "lint-staged": "^8.1.0",
+    "lint-staged": "^9.2.1",
     "lodash": "^4.17.11",
     "node-sass": "^4.10.0",
     "onchange": "^5.2.0",
@@ -87,8 +87,8 @@
     "request": "^2.88.0",
     "rimraf": "^2.6.2",
     "sprintf-js": "^1.1.2",
-    "stylelint": "^9.9.0",
-    "stylelint-config-wordpress": "^13.1.0",
+    "stylelint": "^10.1.0",
+    "stylelint-config-wordpress": "^14.0.0",
     "webpack": "^4.28.4",
     "webpack-cli": "^3.1.2"
   },
@@ -116,21 +116,14 @@
     "lint-js:fix": "wp-scripts lint-js . --fix",
     "lint-css": "stylelint './src/**/*.scss'",
     "lint-css:fix": "stylelint './src/**/*.scss' --fix",
-    "check-licenses": "concurrently \"wp-scripts check-licenses --prod --gpl2\" \"wp-scripts check-licenses --dev\""
+		"check-licenses": "concurrently \"wp-scripts check-licenses --prod --gpl2 --ignore=stackable\" \"wp-scripts check-licenses --dev --ignore=stackable\""
   },
   "lint-staged": {
-    "package.json": [
-      "wp-scripts lint-pkg-json"
-    ],
     "*.scss": [
       "stylelint"
     ],
     "*.js": [
       "wp-scripts lint-js"
-    ],
-    "ignore": [
-      "./dist/*",
-      "./build/**/*"
     ]
   },
   "husky": {

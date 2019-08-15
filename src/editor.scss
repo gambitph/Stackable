@@ -42,7 +42,8 @@ svg.ugb-stackable-icon-gradient {
 // Fade out the reset links if no value is given.
 .ugb-inspector-panel-controls .components-range-control__slider[value=""] + .components-range-control__number + .components-button {
 	color: #eee;
-	&:focus, &:focus:enabled {
+	&:focus,
+	&:focus:enabled {
 		outline: none !important;
 		box-shadow: none !important;
 	}

@@ -37,7 +37,7 @@ body.toplevel_page_stackable {
 		position: relative;
 		transform: scaleY(-1);
 		z-index: -1;
-    	margin-top: -50px;
+		margin-top: -50px;
 		svg {
 			position: absolute;
 			top: 0;
@@ -194,23 +194,23 @@ body.toplevel_page_stackable {
 		margin-bottom: 32px;
 		display: flex;
 		justify-content: center;
-		box-shadow: 0 3px rgba(0,0,0,.1);
+		box-shadow: 0 3px rgba(0, 0, 0, 0.1);
 		li {
 			list-style: none;
-			padding: .5em 2em;
+			padding: 0.5em 2em;
 			margin: 0 !important;
 			cursor: pointer;
 			&[aria-selected="true"] {
 				position: relative;
 				color: #f34957;
-				&:before {
-					content: '';
+				&::before {
+					content: "";
 					position: absolute;
 					bottom: -3px;
 					left: 0;
 					right: 0;
 					height: 3px;
-					background: linear-gradient(90deg,#8c33da -30%,#f34957 130%);
+					background: linear-gradient(90deg, #8c33da -30%, #f34957 130%);
 				}
 			}
 		}
@@ -218,7 +218,7 @@ body.toplevel_page_stackable {
 	.s-tabs-list {
 		list-style-type: disc;
 		li span {
-			font-size: .9rem;
+			font-size: 0.9rem;
 			color: #999;
 		}
 	}
@@ -228,10 +228,10 @@ body.toplevel_page_stackable {
 			font-size: 0.9rem !important;
 			margin-bottom: 3px !important;
 			list-style-type: none;
-			&:before {
+			&::before {
 				font-weight: bold;
 				font-size: 1rem;
-				content: '✓';
+				content: "✓";
 				color: #8c33da;
 				margin-right: 0.5rem;
 			}

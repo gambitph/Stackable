@@ -84,8 +84,9 @@ body:not(.wp-admin) .ugb-feature.ugb-feature--design-plain {
 	}
 }
 // Fallback for IE11: Plain image display as 1px.
-@media all and (-ms-high-contrast:none) {
-	*::-ms-backdrop, body:not(.wp-admin) .ugb-feature.ugb-feature--design-plain {
+@media all and (-ms-high-contrast: none) {
+	*::-ms-backdrop,
+	body:not(.wp-admin) .ugb-feature.ugb-feature--design-plain {
 		.ugb-feature__image {
 			flex: none;
 		}
