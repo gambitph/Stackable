@@ -116,7 +116,4 @@ export const settings = {
 	edit,
 	save,
 	attributes: schema,
-
-	// Stackable specific settings.
-	sDemoURL: 'https://wpstackable.com/container-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
 }

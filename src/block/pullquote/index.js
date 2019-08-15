@@ -38,8 +38,4 @@ export const settings = {
 	supports: {
 		inserter: false,
 	},
-
-	// Stackable specific settings.
-	sDeprecated: true,
-	sDemoURL: 'https://wpstackable.com/pull-quote-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
 }

@@ -85,7 +85,4 @@ export const settings = {
 		// eslint-disable-next-line
 		inserter: false, // TODO: Remove when ready for v2.
 	},
-
-	// Stackable specific settings.
-	sDemoURL: 'https://wpstackable.com/accordion-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
 }

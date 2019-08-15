@@ -150,9 +150,6 @@ export const settings = {
 			default: applyFilters( 'stackable.header.custom-css.default', '' ),
 		},
 	},
-
-	// Stackable specific settings.
-	sDemoURL: 'https://wpstackable.com/header-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
 }
 
 export const showOptions = blockProps => {

@@ -235,9 +235,6 @@ export const settings = {
 			default: applyFilters( 'stackable.count-up.custom-css.default', '' ),
 		},
 	},
-
-	// Stackable specific settings.
-	sDemoURL: 'https://wpstackable.com/count-up-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
 }
 
 export const showOptions = blockProps => {

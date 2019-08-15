@@ -54,8 +54,8 @@ domReady( () => {
 		>
 			<defs>
 				<linearGradient id="stackable-gradient">
-					<stop offset="0%" stopColor="#ab5af1" stopOpacity="1" />
-					<stop offset="100%" stopColor="#fb6874" stopOpacity="1" />
+					<stop offset="0%" stopColor="#8c33da" stopOpacity="1" />
+					<stop offset="100%" stopColor="#f34957" stopOpacity="1" />
 				</linearGradient>
 			</defs>
 		</svg>,

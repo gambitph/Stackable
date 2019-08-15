@@ -75,7 +75,4 @@ export const settings = {
 	deprecated,
 	edit,
 	save,
-
-	// Stackable specific settings.
-	sDemoURL: 'https://wpstackable.com/notification-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
 }

@@ -44,8 +44,8 @@ export const name = 'ugb/button'
 
 export const settings = {
 	title: __( 'Button', i18n ),
-	icon: ButtonIcon,
 	description: __( 'Add a customizable button.', i18n ),
+	icon: ButtonIcon,
 	category: 'stackable',
 	keywords: [
 		__( 'Button', i18n ),
@@ -72,9 +72,6 @@ export const settings = {
 			default: applyFilters( 'stackable.button.custom-css.default', '' ),
 		},
 	},
-
-	// Stackable specific settings.
-	sDemoURL: 'https://wpstackable.com/button-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
 }
 
 // Change the main class name since we're using `ugb-button` for the button element.

@@ -29,8 +29,4 @@ export const settings = {
 
 	save,
 	edit,
-
-	// Stackable specific settings.
-	sAdminTitle: __( 'Blog Posts', i18n ),
-	sDemoURL: 'https://wpstackable.com/blog-posts-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
 }
