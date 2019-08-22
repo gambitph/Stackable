@@ -61,7 +61,7 @@ if ( ! function_exists( 'stackable_get_latest_update_article_cached' ) ) {
 		}
 
 		$article = stackable_get_latest_update_article();
-		set_transient( 'stackable_update_article', $article, 60 * 60 * 24 );
+		set_transient( 'stackable_update_article', $article, 2 * 60 * 60 * 24 );
 		return $article;
 	}
 }
