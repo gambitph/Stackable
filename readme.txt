@@ -236,11 +236,15 @@ You will have to redo all your blocks
 
 == Changelog ==
 
+= 1.18.0 =
+* New: Rebranded new welcome page design
+* Fixed: Flashing overlay outside border-radius in Image Box blocks in Safari
+
 = 1.17.1 =
 * Fixed: Regex error in Firefox
 
 = 1.17.0 =
-[Translations: Text Color and Text Highlight](https://wpstackable.com/blog/text-color-and-text-highlight)
+[Text Color and Text Highlight](https://wpstackable.com/blog/text-color-and-text-highlight)
 
 * New: Color & highlight formatting toolbar (⌘+h or Ctrl+h)
 * Fixed: Support for media queries in Custom CSS
