@@ -1,6 +1,6 @@
 <?php
 /**
- * Adds a version update notifications.
+ * Adds a Rate us notification if the plugin has been installed for some time.
  *
  * @package Stackable
  */
@@ -13,9 +13,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! class_exists( 'Stackable_Welcome_Notification_Updates' ) ) {
     class Stackable_Welcome_Notification_Updates {
 
+        /**
+         * If the user just installed Stackable, ignore the first update notice.
+         *
+         * @var int
+         */
+        const NEWLY_INSTALLED_TIME = 86400; // 1 * 24 * 60 * 60
+
         function __construct() {
             add_action( 'admin_menu', array( $this, 'check_activation_date' ), 9 );
-            stackable_add_welcome_notification( 'rate19', 'Stackable has been updated, here\'s what\'s new:<ul><li>Better Block Experience & Improved Image Box Block <a href="https://rebrand.ly/plugin-welcome-update-1-6">Read full article</a></li></ul>' );
         }
 
         /**
@@ -30,10 +36,28 @@ if ( ! class_exists( 'Stackable_Welcome_Notification_Updates' ) ) {
 
             $activation_time = get_option( 'stackable_activation_date' );
             $elapsed_time = time() - absint( $activation_time );
+			$article = stackable_get_latest_update_article_cached();
 
-            if ( $elapsed_time > self::RATING_NOTICE_TIME ) {
-                stackable_add_welcome_notification( 'rate', sprintf( __( 'We\'ve noticed that you\'ve been using Stackable for some time now, we hope you are loving it! We would appreciate it if you can %sgive us a 5 star rating on WordPress.org%s!', STACKABLE_I18N ), '<a href="https://rebrand.ly/plugin-welcome-notice-rate" target="_blank">', '</a>' ) );
-            }
+			if ( empty( $article ) ) {
+				return;
+			}
+
+			$notification_id = 'update-article-' . $article['slug'];
+
+			// If the user just installed Stackable, ignore/hide the first update notice.
+            if ( $elapsed_time < self::NEWLY_INSTALLED_TIME ) {
+				stackable_add_in_notification_dismissed( $notification_id );
+			}
+
+			// Show our notice.
+			stackable_add_welcome_notification( $notification_id, sprintf(
+				'<p><strong>%s</strong><br />%s<br />%s%s →%s</br>',
+				sprintf( __( 'Plugin Update: %s', STACKABLE_I18N ), $article['title'] ),
+				$article['excerpt'],
+				'<a href="' . $article['url'] . '" target="_blank" rel="noopener noreferrer">',
+				__( 'Continue Reading', STACKABLE_I18N ),
+				'</a>' )
+			);
         }
     }
 

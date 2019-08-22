@@ -33,7 +33,21 @@ if ( ! function_exists( 'stackable_ajax_dismiss_notice' ) ) {
             wp_die();
         }
 
-        $id = sanitize_text_field( wp_unslash( $_POST['id'] ) ); // Input var: okay.
+		$id = sanitize_text_field( wp_unslash( $_POST['id'] ) ); // Input var: okay.
+		stackable_add_in_notification_dismissed( $id );
+
+        wp_die();
+    }
+}
+
+if ( ! function_exists( 'stackable_add_in_notification_dismissed' ) ) {
+
+	/**
+	 * Adds the ID as a dismissed notification. This hides it from being displayed.
+	 *
+	 * @since 1.18.0
+	 */
+	function stackable_add_in_notification_dismissed( $id ) {
         $dismissed = get_option( 'stackable_notifications_dismissed' );
         if ( empty( $dismissed ) ) {
             $dismissed = array();
@@ -41,10 +55,8 @@ if ( ! function_exists( 'stackable_ajax_dismiss_notice' ) ) {
         if ( ! in_array( $id, $dismissed ) ) {
             $dismissed[] = $id;
         }
-        update_option( 'stackable_notifications_dismissed', $dismissed );
-
-        wp_die();
-    }
+		update_option( 'stackable_notifications_dismissed', $dismissed );
+	}
 }
 
 if ( ! function_exists( 'stackable_notification_count' ) ) {
@@ -120,7 +132,7 @@ if ( ! function_exists( 'stackable_welcome_notification' ) ) {
             foreach ( $stackable_notifications as $notification ) {
                 ?>
                 <div class="stackable_notice">
-                    <p><?php echo wp_kses_post( $notification['message'] ) ?></p>
+                    <?php echo wp_kses_post( $notification['message'] ) ?>
                     <p><button class="button" data-id="<?php echo esc_attr( $notification['id'] ) ?>" onclick="stackable_dismiss(this); event.preventDefault();"><?php _e( 'Don\'t show me this anymore', STACKABLE_I18N ) ?></button></p>
                 </div>
                 <?php
@@ -161,7 +173,7 @@ if ( ! function_exists( 'stackable_add_welcome_notification' ) ) {
 
         $stackable_notifications[] = array(
             'id' => $id,
-            'message' => $message,
+            'message' => preg_match( '/<(p|h4|h3|h2)/', $message ) ? $message : '<p>' . $message . '</p>',
         );
     }
 }
