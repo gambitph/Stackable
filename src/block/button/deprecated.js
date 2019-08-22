@@ -160,8 +160,11 @@ export const deprecatedSave_1_15_5 = props => {
 		design = '',
 	} = attributes
 
+	// Remove align attribute from the class for migration.
+	const newClassName = className.replace( /^align\w+/g, '' ).replace( /\salign\w+/g, ' ' ).replace( /\s+/g, ' ' ).trim()
+
 	const mainClasses = classnames( [
-		className,
+		newClassName,
 		'ugb-button-wrapper',
 	], applyFilters( 'stackable.button.mainclasses_1_15_5', {
 		[ `ugb-button--align-${ align }` ]: align,
