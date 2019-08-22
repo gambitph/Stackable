@@ -147,7 +147,6 @@ export const settings = {
 		__( 'Stackable', i18n ),
 	],
 	supports: {
-		// align: [ 'center', 'wide', 'full' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
 	},
 	attributes: schema,
