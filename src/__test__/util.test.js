@@ -1,4 +1,9 @@
-import { createAllCombinationAttributes, descriptionPlaceholder, prependCSSClass } from '../util'
+/**
+ * Internal dependencies
+ */
+import {
+	createAllCombinationAttributes, descriptionPlaceholder, prependCSSClass,
+} from '../util'
 
 describe( 'Create All Combination Attributes', () => {
 	test( 'should work with 1 array', () => {

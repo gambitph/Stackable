@@ -1,8 +1,19 @@
+/**
+ * Internal dependencies
+ */
+import DeprecatedTester from './components/deprecated-tester'
+import HTMLValidator from './components/html-validator'
+
+/**
+ * WordPress dependencies
+ */
 import { PluginSidebar, PluginSidebarMoreMenuItem } from '@wordpress/edit-post'
 import { __ } from '@wordpress/i18n'
-import DeprecatedTester from './components/deprecated-tester'
 import { Fragment } from '@wordpress/element'
-import HTMLValidator from './components/html-validator'
+
+/**
+ * External dependencies
+ */
 import { i18n } from 'stackable'
 import { PanelBody } from '@wordpress/components'
 import { registerPlugin } from '@wordpress/plugins'

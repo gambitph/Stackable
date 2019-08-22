@@ -1,3 +1,11 @@
+/**
+ * External dependencies
+ */
+import registerStackableBlock from '~stackable/register-block'
+
+/**
+ * WordPress dependencies
+ */
 import {
 	createBlock,
 	getBlockType,
@@ -6,7 +14,6 @@ import {
 	registerBlockType,
 	unregisterBlockType,
 } from '@wordpress/blocks'
-import registerStackableBlock from '@stackable/register-block'
 import { render } from 'enzyme'
 
 // TODO: cleanup, remove unused functions here

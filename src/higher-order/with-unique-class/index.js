@@ -1,3 +1,6 @@
+/**
+ * WordPress dependencies
+ */
 import { addFilter } from '@wordpress/hooks'
 import { Component } from '@wordpress/element'
 import { createHigherOrderComponent } from '@wordpress/compose'
@@ -13,7 +16,9 @@ const withUniqueClass = createHigherOrderComponent(
 		}
 
 		componentDidMount() {
-			const { attributes, setAttributes, clientId } = this.props
+			const {
+				attributes, setAttributes, clientId,
+			} = this.props
 			const newUniqueClass = createUniqueClass( clientId )
 
 			if ( typeof attributes.uniqueClass === 'undefined' || attributes.uniqueClass !== newUniqueClass ) {

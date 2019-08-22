@@ -1,9 +1,20 @@
-import { applyFilters } from '@wordpress/hooks'
-import classnames from 'classnames'
-import { descriptionPlaceholder } from '@stackable/util'
+/**
+ * Internal dependencies
+ */
 import { QUOTE_ICONS } from './quotes'
 import { QUOTE_ICONS_1_11 } from './deprecated-quotes'
+
+/**
+ * External dependencies
+ */
+import { descriptionPlaceholder } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
 import { RichText } from '@wordpress/block-editor'
+import classnames from 'classnames'
 
 const deprecatedSave_1_13 = props => {
 	const { className } = props
@@ -62,7 +73,7 @@ const deprecatedSave_1_13 = props => {
 			...basicStyles,
 		},
 		text: {
-			color: color,
+			color,
 		},
 	}, design, props )
 
@@ -302,7 +313,7 @@ const deprecatedSave_1_11 = props => {
 	)
 }
 
-export const deprecatedSchema_1_4 = {
+const deprecatedSchema_1_4 = {
 	text: {
 		source: 'html',
 		selector: 'p',
@@ -318,7 +329,7 @@ export const deprecatedSchema_1_4 = {
 	},
 }
 
-export const deprecatedSave_1_4 = props => {
+const deprecatedSave_1_4 = props => {
 	const { className } = props
 	const {
 		color, text, quoteColor,

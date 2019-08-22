@@ -1,7 +1,18 @@
+/**
+ * Internal dependencies
+ */
 import { closeAllOpenPanels } from './'
+
+/**
+ * External dependencies
+ */
+import { isUnmodifiedBlock } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
 import { Component } from '@wordpress/element'
 import { createHigherOrderComponent } from '@wordpress/compose'
-import { isUnmodifiedBlock } from '@stackable/util'
 import PropTypes from 'prop-types'
 
 const panelStatus = {}

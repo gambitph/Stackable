@@ -1,3 +1,6 @@
+/**
+ * WordPress dependencies
+ */
 import { parse } from '@wordpress/blocks'
 
 export const getExpectedBlockName = html => {

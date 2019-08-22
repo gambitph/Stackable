@@ -1,8 +1,19 @@
-import { __ } from '@wordpress/i18n'
-import { i18n } from 'stackable'
+/**
+ * Internal dependencies
+ */
 import SVGCircleIcon from './images_1_15_6/play-circle.svg'
 import SVGNormalIcon from './images_1_15_6/play-normal.svg'
 import SVGOutlineIcon from './images_1_15_6/play-outline.svg'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+
+/**
+ * External dependencies
+ */
+import { i18n } from 'stackable'
 
 const playButton = {
 	normal: style => <SVGNormalIcon style={ style } width="30" height="30" />,

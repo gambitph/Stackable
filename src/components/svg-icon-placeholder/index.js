@@ -1,8 +1,19 @@
+/**
+ * Internal dependencies
+ */
 import { ColorPaletteControl, IconControl } from '..'
-import { Component, Fragment } from '@wordpress/element'
 import { getIconArray, isValidIconValue } from '../icon-control'
+
+/**
+ * WordPress dependencies
+ */
+import { Component, Fragment } from '@wordpress/element'
 import { IconButton, Popover } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
+
+/**
+ * External dependencies
+ */
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'

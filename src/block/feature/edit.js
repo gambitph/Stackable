@@ -1,9 +1,23 @@
+/**
+ * External dependencies
+ */
+import {
+	ButtonEdit, DesignPanelBody, ImageUploadPlaceholder, PanelBackgroundSettings, PanelButtonSettings, ProControl, ProControlButton, URLInputControl,
+} from '~stackable/components'
+import { descriptionPlaceholder } from '~stackable/util'
+
+/**
+ * Internal dependencies
+ */
+import ImageDesignBasic from './images/basic.png'
+import ImageDesignPlain from './images/plain.png'
+
+/**
+ * WordPress dependencies
+ */
 import {
 	AlignmentToolbar, BlockControls, InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/block-editor'
-import {
-	ButtonEdit, DesignPanelBody, ImageUploadPlaceholder, PanelBackgroundSettings, PanelButtonSettings, ProControl, ProControlButton, URLInputControl,
-} from '@stackable/components'
 import { i18n, showProNotice } from 'stackable'
 import {
 	PanelBody, RangeControl, ToggleControl,
@@ -11,10 +25,7 @@ import {
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
-import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
-import ImageDesignBasic from './images/basic.png'
-import ImageDesignPlain from './images/plain.png'
 
 const edit = props => {
 	const {
@@ -274,10 +285,16 @@ const edit = props => {
 						className={ imageClasses }
 						style={ styles.image }
 						onRemove={ () => {
-							setAttributes( { imageUrl: '', imageID: '', imageAlt: '' } )
+							setAttributes( {
+								imageUrl: '', imageID: '', imageAlt: '',
+							} )
 						} }
-						onChange={ ( { url, id, alt } ) => {
-							setAttributes( { imageUrl: url, imageID: id, imageAlt: alt } )
+						onChange={ ( {
+							url, id, alt,
+						} ) => {
+							setAttributes( {
+								imageUrl: url, imageID: id, imageAlt: alt,
+							} )
 						} }
 					/>
 					const imageComp = <ImageUploadPlaceholder
@@ -286,10 +303,16 @@ const edit = props => {
 						className={ imageClasses }
 						style={ styles.image }
 						onRemove={ () => {
-							setAttributes( { imageUrl: '', imageID: '', imageAlt: '' } )
+							setAttributes( {
+								imageUrl: '', imageID: '', imageAlt: '',
+							} )
 						} }
-						onChange={ ( { url, id, alt } ) => {
-							setAttributes( { imageUrl: url, imageID: id, imageAlt: alt } )
+						onChange={ ( {
+							url, id, alt,
+						} ) => {
+							setAttributes( {
+								imageUrl: url, imageID: id, imageAlt: alt,
+							} )
 						} }
 						render={ <img src={ imageUrl } alt={ __( 'feature', i18n ) } /> }
 					/>

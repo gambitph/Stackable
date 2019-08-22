@@ -1,8 +1,14 @@
 /**
  * A Control for selecting designs.
  */
+/**
+ * External dependencies
+ */
+import { DesignPanelItem } from '~stackable/components'
 
-import { DesignPanelItem } from '@stackable/components'
+/**
+ * WordPress dependencies
+ */
 import { RadioControl } from '@wordpress/components'
 
 function DesignControl( props ) {

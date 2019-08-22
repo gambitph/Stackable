@@ -1,4 +1,11 @@
+/**
+ * Internal dependencies
+ */
 import { separators, shadows } from './separators'
+
+/**
+ * External dependencies
+ */
 import classnames from 'classnames'
 
 const Separator = props => {

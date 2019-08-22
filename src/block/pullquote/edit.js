@@ -1,8 +1,15 @@
+/**
+ * External dependencies
+ */
+import { descriptionPlaceholder } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
 import {
 	InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/block-editor'
 import classnames from 'classnames'
-import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
 
 const edit = props => {
@@ -32,7 +39,7 @@ const edit = props => {
 					formattingControls={ [ 'bold', 'italic', 'strikethrough', 'link' ] }
 					isSelected={ isSelected }
 					style={ {
-						color: color,
+						color,
 					} }
 					placeholder={ descriptionPlaceholder( 'long' ) }
 					keepPlaceholderOnFocus

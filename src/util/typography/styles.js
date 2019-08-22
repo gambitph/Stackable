@@ -1,5 +1,12 @@
+/**
+ * External dependencies
+ */
+import { getFontFamily } from '~stackable/util'
 import { camelCase } from 'lodash'
-import { getFontFamily } from '@stackable/util'
+
+/**
+ * WordPress dependencies
+ */
 import { sprintf } from '@wordpress/i18n'
 
 const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {}, options = {} ) => {

@@ -1,7 +1,18 @@
+/**
+ * Internal dependencies
+ */
+import SVGCloseIcon from './images/close-icon.svg'
+
+/**
+ * WordPress dependencies
+ */
 import { applyFilters } from '@wordpress/hooks'
+
+/**
+ * External dependencies
+ */
 import classnames from 'classnames'
 import { RichText } from '@wordpress/block-editor'
-import SVGCloseIcon from './images/close-icon.svg'
 
 const save = props => {
 	const { className } = props

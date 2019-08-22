@@ -4,8 +4,15 @@
  *
  * The code is mostly from AlignmentToolbar
  */
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
+
+/**
+ * External dependencies
+ */
 import { find } from 'lodash'
 import { i18n } from 'stackable'
 import { Toolbar } from '@wordpress/components'

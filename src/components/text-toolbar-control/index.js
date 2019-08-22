@@ -1,8 +1,15 @@
+/**
+ * External dependencies
+ */
+import { TextToolbar } from '~stackable/components'
+
+/**
+ * WordPress dependencies
+ */
 import {
 	BaseControl,
 } from '@wordpress/components'
 import { omit } from 'lodash'
-import { TextToolbar } from '@stackable/components'
 
 const TextToolbarControl = props => {
 	return (

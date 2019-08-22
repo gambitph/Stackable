@@ -1,4 +1,6 @@
-import { addFilter, applyFilters, doAction, removeFilter } from '@wordpress/hooks'
+/**
+ * External dependencies
+ */
 import {
 	AdvancedRangeControl,
 	ColorPaletteControl,
@@ -7,10 +9,17 @@ import {
 	ProControlButton,
 	ResponsiveControl,
 	Separator,
-} from '@stackable/components'
+} from '~stackable/components'
+import { createAllCombinationAttributes } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
+import {
+	addFilter, applyFilters, doAction, removeFilter,
+} from '@wordpress/hooks'
 import { i18n, showProNotice } from 'stackable'
 import { __ } from '@wordpress/i18n'
-import { createAllCombinationAttributes } from '@stackable/util'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
 import { ToggleControl } from '@wordpress/components'

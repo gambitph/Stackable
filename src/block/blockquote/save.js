@@ -1,7 +1,18 @@
-import { applyFilters } from '@wordpress/hooks'
-import classnames from 'classnames'
+/**
+ * Internal dependencies
+ */
 import { QUOTE_ICONS } from './quotes'
+
+/**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
 import { RichText } from '@wordpress/block-editor'
+
+/**
+ * External dependencies
+ */
+import classnames from 'classnames'
 
 const save = props => {
 	const { className } = props
@@ -60,7 +71,7 @@ const save = props => {
 			...basicStyles,
 		},
 		text: {
-			color: color,
+			color,
 		},
 	}, design, props )
 

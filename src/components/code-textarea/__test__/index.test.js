@@ -1,3 +1,6 @@
+/**
+ * Internal dependencies
+ */
 import CodeTextarea from '../'
 
 describe( 'Code Textarea', () => {

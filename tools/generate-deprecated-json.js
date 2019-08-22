@@ -2,8 +2,8 @@
  * Gathers all the block deprecation tests, and compiles them into a single json file.
  */
 
-const glob = require( 'glob' )
 const path = require( 'path' )
+const glob = require( 'glob' )
 const jsonfile = require( 'jsonfile' )
 
 const file = './dist/deprecation-tests.json'

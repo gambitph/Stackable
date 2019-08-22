@@ -1,4 +1,11 @@
+/**
+ * WordPress dependencies
+ */
 import domReady from '@wordpress/dom-ready'
+
+/**
+ * External dependencies
+ */
 import md5 from 'md5'
 
 /**

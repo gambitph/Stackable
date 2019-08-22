@@ -1,4 +1,11 @@
+/**
+ * WordPress dependencies
+ */
 import { applyFilters } from '@wordpress/hooks'
+
+/**
+ * External dependencies
+ */
 import classnames from 'classnames'
 import { RichText } from '@wordpress/block-editor'
 

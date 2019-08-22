@@ -1,3 +1,6 @@
+/**
+ * External dependencies
+ */
 import { locale } from 'stackable'
 
 // Fonts already done loading.

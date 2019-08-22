@@ -1,12 +1,22 @@
 /**
  * BLOCK: Blog Posts
  */
-
-import { disabledBlocks, i18n } from 'stackable'
-import { __ } from '@wordpress/i18n'
-import { BlogPostsIcon } from '@stackable/icons'
+/**
+ * Internal dependencies
+ */
 import edit from './edit'
 import save from './save'
+
+/**
+ * External dependencies
+ */
+import { BlogPostsIcon } from '~stackable/icons'
+import { disabledBlocks, i18n } from 'stackable'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
 
 export const name = 'ugb/blog-posts'
 

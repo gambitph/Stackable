@@ -1,4 +1,11 @@
+/**
+ * External dependencies
+ */
 import { camelCase } from 'lodash'
+
+/**
+ * WordPress dependencies
+ */
 import { sprintf } from '@wordpress/i18n'
 
 export const getAttrName = ( attrNameTemplate = '%s', param1 = '', param2 = '' ) => {

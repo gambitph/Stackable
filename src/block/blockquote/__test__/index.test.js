@@ -1,7 +1,16 @@
-import { blockEditableAfterSaveTests, blockMigrationTests, blockSaveSnapshotTests } from '@stackable/test/shared'
+/**
+ * Internal dependencies
+ */
 import { name, settings } from '../'
 import deprecated from '../deprecated'
 import save from '../save'
+
+/**
+ * External dependencies
+ */
+import {
+	blockEditableAfterSaveTests, blockMigrationTests, blockSaveSnapshotTests,
+} from '~stackable/test/shared'
 
 describe( `${ settings.title } block`, () => {
 	const attributes = {

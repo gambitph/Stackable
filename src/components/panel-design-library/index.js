@@ -1,8 +1,14 @@
 /**
  * A Panel for Stackable-built designs
  */
+/**
+ * External dependencies
+ */
+import { DesignControl, DesignPanelBody } from '~stackable/components'
 
-import { DesignControl, DesignPanelBody } from '@stackable/components'
+/**
+ * WordPress dependencies
+ */
 import { dispatch, select } from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'

@@ -1,12 +1,24 @@
 /**
  * BLOCK: Notification
  */
-import { disabledBlocks, i18n } from 'stackable'
-import { __ } from '@wordpress/i18n'
+
+/**
+ * Internal dependencies
+ */
 import deprecated from './deprecated'
 import edit from './edit'
-import { ExpandIcon } from '@stackable/icons'
+
+/**
+ * External dependencies
+ */
+import { ExpandIcon } from '~stackable/icons'
 import save from './save'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+import { disabledBlocks, i18n } from 'stackable'
 
 export const schema = {
 	text: {

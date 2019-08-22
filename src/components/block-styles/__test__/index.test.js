@@ -1,3 +1,6 @@
+/**
+ * Internal dependencies
+ */
 import { addBlockClassNames, combineStyleRules } from '../'
 
 describe( 'Add Block Class Names', () => {

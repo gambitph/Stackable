@@ -1,11 +1,17 @@
 /**
  * A Panel for selecting designs
  */
-
+/**
+ * WordPress dependencies
+ */
 import { addFilter, removeFilter } from '@wordpress/hooks'
 import { Component, Fragment } from '@wordpress/element'
 import { FormToggle, PanelBody } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
+
+/**
+ * External dependencies
+ */
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 

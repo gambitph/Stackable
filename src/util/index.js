@@ -5,7 +5,15 @@ export * from './background'
 export * from './button'
 export * from './styles'
 export * from './blocks'
+
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n'
+
+/**
+ * External dependencies
+ */
 import { i18n } from 'stackable'
 
 /**

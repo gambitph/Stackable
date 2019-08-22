@@ -1,4 +1,11 @@
+/**
+ * External dependencies
+ */
 import { debounce, uniqueId } from 'lodash'
+
+/**
+ * WordPress dependencies
+ */
 import { defaultSettings, initialize } from '@wordpress/codeEditor'
 import { Component } from '@wordpress/element'
 import deepmerge from 'deepmerge'

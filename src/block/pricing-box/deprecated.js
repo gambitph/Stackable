@@ -1,10 +1,19 @@
+/**
+ * External dependencies
+ */
 import {
 	DeprecatedButtonContent_1_10,
 	DeprecatedButtonContent_1_12,
 	DeprecatedButtonContent_1_9,
-} from '@stackable/components/button-edit'
-import { descriptionPlaceholder, isDarkColor, range } from '@stackable/util'
+} from '~stackable/components/button-edit'
+import {
+	descriptionPlaceholder, isDarkColor, range,
+} from '~stackable/util'
 import classnames from 'classnames'
+
+/**
+ * WordPress dependencies
+ */
 import { RichText } from '@wordpress/block-editor'
 import striptags from 'striptags'
 

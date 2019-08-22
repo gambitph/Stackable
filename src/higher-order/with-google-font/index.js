@@ -1,6 +1,13 @@
+/**
+ * External dependencies
+ */
+import { loadGoogleFont } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
 import { Component } from '@wordpress/element'
 import { createHigherOrderComponent } from '@wordpress/compose'
-import { loadGoogleFont } from '@stackable/util'
 
 const withGoogleFont = createHigherOrderComponent(
 	WrappedComponent => class extends Component {

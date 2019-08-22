@@ -1,5 +1,6 @@
-import { __, sprintf } from '@wordpress/i18n'
-import { addFilter, applyFilters } from '@wordpress/hooks'
+/**
+ * External dependencies
+ */
 import {
 	AdvancedRangeControl,
 	AlignButtonsControl,
@@ -14,7 +15,7 @@ import {
 	ProControlButton,
 	ResponsiveControl,
 	TypographyControlHelper,
-} from '@stackable/components'
+} from '~stackable/components'
 import {
 	createResponsiveAttributeNames,
 	createTypographyAttributeNames,
@@ -22,9 +23,7 @@ import {
 	descriptionPlaceholder,
 	hasBackgroundOverlay,
 	range,
-} from '@stackable/util'
-import { i18n, showProNotice } from 'stackable'
-import { PanelBody, RangeControl, SelectControl, TextControl } from '@wordpress/components'
+} from '~stackable/util'
 import {
 	withBlockStyles,
 	withContentAlignReseter,
@@ -32,15 +31,29 @@ import {
 	withSetAttributeHook,
 	withTabbedInspector,
 	withUniqueClass,
-} from '@stackable/higher-order'
-import classnames from 'classnames'
-import { compose } from '@wordpress/compose'
+} from '~stackable/higher-order'
+
+/**
+ * Internal dependencies
+ */
 import createStyles from './style'
-import { Fragment } from '@wordpress/element'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
-import { RichText } from '@wordpress/block-editor'
 import { showOptions } from '.'
+
+/**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n'
+import { addFilter, applyFilters } from '@wordpress/hooks'
+import { i18n, showProNotice } from 'stackable'
+import {
+	PanelBody, RangeControl, SelectControl, TextControl,
+} from '@wordpress/components'
+import classnames from 'classnames'
+import { compose } from '@wordpress/compose'
+import { Fragment } from '@wordpress/element'
+import { RichText } from '@wordpress/block-editor'
 
 addFilter( 'stackable.number-box.edit.inspector.layout.before', 'stackable/number-box', ( output, props ) => {
 	const { setAttributes } = props

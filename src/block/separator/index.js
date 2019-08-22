@@ -2,13 +2,24 @@
  * BLOCK: Separator Block.
  */
 
-import { disabledBlocks, i18n } from 'stackable'
-import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
+/**
+ * Internal dependencies
+ */
 import { default as deprecated } from './deprecated'
 import { default as edit } from './edit'
 import { default as save } from './save'
-import { SeparatorIcon } from '@stackable/icons'
+
+/**
+ * External dependencies
+ */
+import { SeparatorIcon } from '~stackable/icons'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+import { disabledBlocks, i18n } from 'stackable'
+import { applyFilters } from '@wordpress/hooks'
 
 export const schema = {
 	align: {

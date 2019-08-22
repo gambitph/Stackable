@@ -1,7 +1,18 @@
-import { applyFilters } from '@wordpress/hooks'
+/**
+ * Internal dependencies
+ */
 import { ArrowIcon } from './index'
-import classnames from 'classnames'
+
+/**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
 import { RichText } from '@wordpress/block-editor'
+
+/**
+ * External dependencies
+ */
+import classnames from 'classnames'
 
 // Accessibility: https://www.w3.org/TR/wai-aria-practices/examples/accordion/accordion.html
 const save = props => {

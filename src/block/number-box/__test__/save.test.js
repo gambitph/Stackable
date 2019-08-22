@@ -1,5 +1,12 @@
+/**
+ * Internal dependencies
+ */
 import { name, settings } from '../'
-import { blockSaveRender } from '@stackable/test'
+
+/**
+ * External dependencies
+ */
+import { blockSaveRender } from '~stackable/test'
 
 describe( `${ settings.title } block`, () => {
 	describe( 'Save render', () => {

@@ -1,9 +1,24 @@
-import { AdvancedRangeControl, BlockContainer, WhenResponsiveScreen } from '@stackable/components'
-import { withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
+/**
+ * External dependencies
+ */
+import {
+	AdvancedRangeControl, BlockContainer, WhenResponsiveScreen,
+} from '~stackable/components'
+import {
+	withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass,
+} from '~stackable/higher-order'
+
+/**
+ * Internal dependencies
+ */
+import createStyles from './style'
+
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 import { compose } from '@wordpress/compose'
-import createStyles from './style'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
 import { PanelBody } from '@wordpress/components'

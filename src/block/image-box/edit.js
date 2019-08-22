@@ -1,9 +1,21 @@
+/**
+ * External dependencies
+ */
+import {
+	DesignPanelBody, ImageUploadPlaceholder, ProControl, ProControlButton, URLInputControl, VerticalAlignmentToolbar,
+} from '~stackable/components'
+
+/**
+ * Internal dependencies
+ */
+import SVGArrow from './images/arrow.svg'
+
+/**
+ * WordPress dependencies
+ */
 import {
 	AlignmentToolbar, BlockControls, InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/block-editor'
-import {
-	DesignPanelBody, ImageUploadPlaceholder, ProControl, ProControlButton, URLInputControl, VerticalAlignmentToolbar,
-} from '@stackable/components'
 import { i18n, showProNotice } from 'stackable'
 import {
 	PanelBody, RangeControl, SelectControl,
@@ -12,7 +24,6 @@ import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { Fragment } from '@wordpress/element'
-import SVGArrow from './images/arrow.svg'
 
 const edit = props => {
 	const {
@@ -131,7 +142,7 @@ const edit = props => {
 						value={ height }
 						min="135"
 						max="700"
-						onChange={ height => setAttributes( { height: height } ) }
+						onChange={ height => setAttributes( { height } ) }
 					/>
 					{ ( align !== 'wide' && align !== 'full' && columns === 1 ) && (
 						<RangeControl
@@ -140,7 +151,7 @@ const edit = props => {
 							min="400"
 							max="999"
 							help={ __( 'Only available for single column & if centered', i18n ) }
-							onChange={ width => setAttributes( { width: width } ) }
+							onChange={ width => setAttributes( { width } ) }
 						/>
 					) }
 					<SelectControl
@@ -204,10 +215,10 @@ const edit = props => {
 					const boxStyles = {
 						backgroundImage: imageURL ? `url(${ imageURL })` : undefined,
 						maxWidth: align !== 'wide' && align !== 'full' && columns === 1 ? width : undefined,
-						height: height,
+						height,
 						textAlign: horizontalAlign,
 						justifyContent: verticalAlign,
-						borderRadius: borderRadius,
+						borderRadius,
 					}
 
 					const boxClasses = classnames( [

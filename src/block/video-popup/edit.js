@@ -1,4 +1,6 @@
-import { addFilter, applyFilters } from '@wordpress/hooks'
+/**
+ * External dependencies
+ */
 import {
 	AdvancedRangeControl,
 	BackgroundControlsHelper,
@@ -8,18 +10,34 @@ import {
 	PanelSpacingBody,
 	ResponsiveControl,
 	WhenResponsiveScreen,
-} from '@stackable/components'
-import { createVideoBackground, getVideoProviderFromURL, hasBackgroundOverlay, urlIsVideo } from '@stackable/util'
+} from '~stackable/components'
+import {
+	createVideoBackground, getVideoProviderFromURL, hasBackgroundOverlay, urlIsVideo,
+} from '~stackable/util'
+
+/**
+ * Internal dependencies
+ */
 import { getPlayButton, playButtonTypes } from './util'
-import { PanelBody, RangeControl, SelectControl, TextControl } from '@wordpress/components'
-import { withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
+import {
+	withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass,
+} from '~stackable/higher-order'
+import createStyles from './style'
+import { showOptions } from '.'
+
+/**
+ * WordPress dependencies
+ */
+import { addFilter, applyFilters } from '@wordpress/hooks'
+
+import {
+	PanelBody, RangeControl, SelectControl, TextControl,
+} from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
-import createStyles from './style'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
-import { showOptions } from '.'
 
 addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video-popup', ( output, props ) => {
 	const { setAttributes } = props
@@ -155,8 +173,8 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 					label={ __( 'Button Style', i18n ) }
 					value={ playButtonType }
 					options={ playButtonTypes.map( ( { value, label } ) => ( {
-						value: value,
-						label: label,
+						value,
+						label,
 					} ) ) }
 					onChange={ newSize => {
 						setAttributes( { playButtonType: newSize } )

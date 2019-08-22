@@ -1,18 +1,29 @@
+/**
+ * External dependencies
+ */
+import {
+	ButtonEdit, ColorPaletteControl, DesignPanelBody, ImageUploadPlaceholder, PanelButtonSettings, ProControl, ProControlButton, URLInputControl,
+} from '~stackable/components'
+import { descriptionPlaceholder } from '~stackable/util'
+
+/**
+ * Internal dependencies
+ */
+import ImageDesignBasic from './images/basic.png'
+import ImageDesignPlain from './images/plain.png'
+
+/**
+ * WordPress dependencies
+ */
 import {
 	AlignmentToolbar, BlockControls, InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/block-editor'
-import {
-	ButtonEdit, ColorPaletteControl, DesignPanelBody, ImageUploadPlaceholder, PanelButtonSettings, ProControl, ProControlButton, URLInputControl,
-} from '@stackable/components'
 import { i18n, showProNotice } from 'stackable'
 import { PanelBody, RangeControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
-import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
-import ImageDesignBasic from './images/basic.png'
-import ImageDesignPlain from './images/plain.png'
 
 const edit = props => {
 	const {

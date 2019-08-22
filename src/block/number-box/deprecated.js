@@ -1,5 +1,12 @@
-import { descriptionPlaceholder, isDarkColor } from '@stackable/util'
+/**
+ * External dependencies
+ */
+import { descriptionPlaceholder, isDarkColor } from '~stackable/util'
 import { omit, range } from 'lodash'
+
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'

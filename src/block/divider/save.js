@@ -1,4 +1,11 @@
+/**
+ * WordPress dependencies
+ */
 import { applyFilters } from '@wordpress/hooks'
+
+/**
+ * External dependencies
+ */
 import classnames from 'classnames'
 
 const save = props => {
@@ -22,7 +29,7 @@ const save = props => {
 			<hr align={ alignment } style={ {
 				backgroundColor: color,
 				width: width + '%',
-				height: height,
+				height,
 			} }
 			/>
 			{ applyFilters( 'stackable.divider.save.output.after', null, design, props ) }

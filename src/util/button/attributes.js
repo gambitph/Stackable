@@ -1,7 +1,14 @@
 /**
  * Creates all the attributes needed for the Button Controls component
  */
-import { createAllCombinationAttributes, createTypographyAttributes } from '@stackable/util'
+/**
+ * External dependencies
+ */
+import { createAllCombinationAttributes, createTypographyAttributes } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
 
@@ -30,7 +37,7 @@ const createButtonAttributes = ( attrNameTemplate, options = {} ) => {
 			{
 				type: 'string',
 				source: 'attribute',
-				selector: selector,
+				selector,
 				attribute: 'href',
 				default: '',
 			},
@@ -43,7 +50,7 @@ const createButtonAttributes = ( attrNameTemplate, options = {} ) => {
 			{
 				type: 'boolean',
 				source: 'attribute',
-				selector: selector,
+				selector,
 				attribute: 'target',
 				default: '',
 			},

@@ -1,7 +1,14 @@
+/**
+ * External dependencies
+ */
+import { initBlockModule } from '~stackable/modules'
+import { withMainClassname } from '~stackable/higher-order'
+
+/**
+ * WordPress dependencies
+ */
 import { getBlockType, registerBlockType } from '@wordpress/blocks'
 import { applyFilters } from '@wordpress/hooks'
-import { initBlockModule } from '@stackable/modules'
-import { withMainClassname } from '@stackable/higher-order'
 
 const registerBlock = ( name, settings = {} ) => {
 	if ( getBlockType( name ) ) {

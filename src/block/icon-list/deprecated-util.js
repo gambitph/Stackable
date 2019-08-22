@@ -1,6 +1,9 @@
 /**
  * Deprecated < 1.11
  */
+/**
+ * Internal dependencies
+ */
 import {
 	ArrowCircleIcon,
 	ArrowIcon,
@@ -18,7 +21,15 @@ import {
 	StarIcon,
 	StarOutlineIcon,
 } from './deprecated-icons'
+
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n'
+
+/**
+ * External dependencies
+ */
 import { i18n } from 'stackable'
 import { renderToString } from '@wordpress/element'
 

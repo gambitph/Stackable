@@ -1,12 +1,19 @@
+/**
+ * External dependencies
+ */
+import { descriptionPlaceholder } from '~stackable/util'
+import { ProControl } from '~stackable/components'
 import { i18n, showProNotice } from 'stackable'
+
+/**
+ * WordPress dependencies
+ */
 import { InspectorControls, RichText } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
-import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
 import { PanelBody } from '@wordpress/components'
-import { ProControl } from '@stackable/components'
 
 const edit = props => {
 	const {

@@ -1,4 +1,11 @@
+/**
+ * WordPress dependencies
+ */
 import { Component, Fragment } from '@wordpress/element'
+
+/**
+ * External dependencies
+ */
 import classnames from 'classnames'
 import { createHigherOrderComponent } from '@wordpress/compose'
 

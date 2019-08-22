@@ -1,9 +1,7 @@
-import { BaseControl, Toolbar } from '@wordpress/components'
-import { __ } from '@wordpress/i18n'
+/**
+ * Internal dependencies
+ */
 import BaseControlMultiLabel from '../base-control-multi-label'
-import classnames from 'classnames'
-import { i18n } from 'stackable'
-import { omit } from 'lodash'
 import SVGIconBottom from './images/bottom.svg'
 import SVGIconHorizontalCenter from './images/horizontal-center.svg'
 import SVGIconLeft from './images/left.svg'
@@ -11,6 +9,19 @@ import SVGIconRight from './images/right.svg'
 import SVGIconStretch from './images/stretch.svg'
 import SVGIconTop from './images/top.svg'
 import SVGIconVerticalCenter from './images/vertical-center.svg'
+
+/**
+ * External dependencies
+ */
+import { omit } from 'lodash'
+import classnames from 'classnames'
+
+/**
+ * WordPress dependencies
+ */
+import { BaseControl, Toolbar } from '@wordpress/components'
+import { i18n } from 'stackable'
+import { __ } from '@wordpress/i18n'
 
 const FLEX_HORIZONTAL_ALIGN_OPTIONS = [
 	{

@@ -1,3 +1,6 @@
+/**
+ * External dependencies
+ */
 import { merge, omit } from 'lodash'
 
 export const deprecatedSave_0_7 = props => {
@@ -13,7 +16,7 @@ export const deprecatedSave_0_7 = props => {
 
 	const buttonStyle = {
 		borderColor: color,
-		color: color,
+		color,
 		borderRadius: cornerButtonRadius + 'px',
 		borderWidth: borderThickness + 'px',
 	}

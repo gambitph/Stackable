@@ -1,6 +1,13 @@
+/**
+ * WordPress dependencies
+ */
 import { applyFilters } from '@wordpress/hooks'
 import { Component } from '@wordpress/element'
 import { createHigherOrderComponent } from '@wordpress/compose'
+
+/**
+ * External dependencies
+ */
 import PropTypes from 'prop-types'
 
 export const createUniqueClass = uid => `ugb-${ uid.substring( 0, 7 ) }`

@@ -1,10 +1,17 @@
+/**
+ * External dependencies
+ */
 import {
 	DeprecatedButtonContent_1_10,
 	DeprecatedButtonContent_1_4,
 	DeprecatedButtonContent_1_9,
-} from '@stackable/components/button-edit'
+} from '~stackable/components/button-edit'
+import { descriptionPlaceholder } from '~stackable/util'
 import classnames from 'classnames'
-import { descriptionPlaceholder } from '@stackable/util'
+
+/**
+ * WordPress dependencies
+ */
 import { RichText } from '@wordpress/block-editor'
 
 const deprecatedSchema_1_10 = {

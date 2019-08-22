@@ -1,10 +1,21 @@
+/**
+ * External dependencies
+ */
+import { BaseControlMultiLabel } from '~stackable/components'
+
+/**
+ * Internal dependencies
+ */
+import SVGImageIcon from './images/image.svg'
+
+/**
+ * WordPress dependencies
+ */
 import { BaseControl, Dashicon } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
-import { BaseControlMultiLabel } from '@stackable/components'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
 import { MediaUpload } from '@wordpress/block-editor'
-import SVGImageIcon from './images/image.svg'
 
 const ImageControl = props => {
 	const type = props.imageURL && props.imageURL.match( /(mp4|webm|ogg)/i ) ? 'video' : 'image'

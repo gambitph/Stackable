@@ -1,8 +1,10 @@
 /**
  * BLOCK: Ghost Button Block.
  */
-
-import { GhostButtonIcon } from '@stackable/icons'
+/**
+ * External dependencies
+ */
+import { GhostButtonIcon } from '~stackable/icons'
 
 const schema = {
 	url: {

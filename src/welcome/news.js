@@ -1,8 +1,15 @@
+/**
+ * WordPress dependencies
+ */
 import { send as ajaxSend } from '@wordpress/ajax'
 import domReady from '@wordpress/dom-ready'
-import { nonceNews } from 'stackable'
 import { render } from '@wordpress/element'
 import { Spinner } from '@wordpress/components'
+
+/**
+ * External dependencies
+ */
+import { nonceNews } from 'stackable'
 
 domReady( () => {
 	const content = document.querySelector( '.s-news-box-content' )

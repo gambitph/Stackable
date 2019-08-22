@@ -1,12 +1,19 @@
 /**
  * This file only contains Premium notices and Premium panel notices.
  */
+/**
+ * External dependencies
+ */
+import { ProControl } from '~stackable/components'
 import { i18n, showProNotice } from 'stackable'
+
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { PanelBody } from '@wordpress/components'
-import { ProControl } from '@stackable/components'
 
 if ( showProNotice ) {
 	addFilter( 'stackable.separator.edit.inspector.style.after', 'stackable/separator', output => {

@@ -1,13 +1,26 @@
-import { DesignControl, IconControl, PanelColorSettings } from '@stackable/components'
+/**
+ * External dependencies
+ */
+import {
+	DesignControl, IconControl, PanelColorSettings,
+} from '~stackable/components'
+
+/**
+ * Internal dependencies
+ */
+import ImageDesignBasic from './images/basic.png'
+import ImageDesignGhost from './images/ghost.png'
+import ImageDesignLink from './images/link.png'
+import ImageDesignPlain from './images/plain.png'
+
+/**
+ * WordPress dependencies
+ */
 import { RangeControl, SelectControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
-import ImageDesignBasic from './images/basic.png'
-import ImageDesignGhost from './images/ghost.png'
-import ImageDesignLink from './images/link.png'
-import ImageDesignPlain from './images/plain.png'
 
 function PanelButtonSettings( props ) {
 	const {

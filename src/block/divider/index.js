@@ -2,11 +2,22 @@
  * BLOCK: Divider Block.
  */
 
-import { disabledBlocks, i18n } from 'stackable'
-import { __ } from '@wordpress/i18n'
-import { DividerIcon } from '@stackable/icons'
+/**
+ * External dependencies
+ */
+import { DividerIcon } from '~stackable/icons'
+
+/**
+ * Internal dependencies
+ */
 import edit from './edit'
 import save from './save'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+import { disabledBlocks, i18n } from 'stackable'
 
 const schema = {
 	height: {

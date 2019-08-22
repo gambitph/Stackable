@@ -1,4 +1,6 @@
-import { addFilter, applyFilters } from '@wordpress/hooks'
+/**
+ * External dependencies
+ */
 import {
 	AdvancedRangeControl,
 	AlignButtonsControl,
@@ -16,7 +18,7 @@ import {
 	ProControlButton,
 	ResponsiveControl,
 	TypographyControlHelper,
-} from '@stackable/components'
+} from '~stackable/components'
 import {
 	createButtonAttributeNames,
 	createResponsiveAttributeNames,
@@ -24,11 +26,7 @@ import {
 	createVideoBackground,
 	descriptionPlaceholder,
 	hasBackgroundOverlay,
-} from '@stackable/util'
-import { i18n, showProNotice } from 'stackable'
-import {
-	PanelBody, RangeControl,
-} from '@wordpress/components'
+} from '~stackable/util'
 import {
 	withBlockStyles,
 	withContentAlignReseter,
@@ -36,16 +34,29 @@ import {
 	withSetAttributeHook,
 	withTabbedInspector,
 	withUniqueClass,
-} from '@stackable/higher-order'
+} from '~stackable/higher-order'
+
+/**
+ * Internal dependencies
+ */
+import createStyles from './style'
+import ImageDesignBasic from './images/basic.png'
+import ImageDesignPlain from './images/plain.png'
+import { showOptions } from './'
+
+/**
+ * WordPress dependencies
+ */
+import { addFilter, applyFilters } from '@wordpress/hooks'
+import { i18n, showProNotice } from 'stackable'
+import {
+	PanelBody, RangeControl,
+} from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
-import createStyles from './style'
 import { Fragment } from '@wordpress/element'
-import ImageDesignBasic from './images/basic.png'
-import ImageDesignPlain from './images/plain.png'
 import { RichText } from '@wordpress/block-editor'
-import { showOptions } from './'
 
 addFilter( 'stackable.cta.edit.inspector.layout.before', 'stackable/cta', ( output, props ) => {
 	const { setAttributes } = props

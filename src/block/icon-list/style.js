@@ -1,9 +1,20 @@
+/**
+ * External dependencies
+ */
 import {
 	createTypographyStyles,
 	whiteIfDark,
-} from '@stackable/util'
-import deepmerge from 'deepmerge'
+} from '~stackable/util'
+
+/**
+ * Internal dependencies
+ */
 import { getIconSVGBase64 } from './util'
+import deepmerge from 'deepmerge'
+
+/**
+ * WordPress dependencies
+ */
 import { sprintf } from '@wordpress/i18n'
 
 export const createStyles = props => {

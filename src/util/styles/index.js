@@ -1,3 +1,6 @@
+/**
+ * External dependencies
+ */
 import { default as _isDarkColor } from 'is-dark-color'
 
 export const isDarkColor = color => {

@@ -1,7 +1,14 @@
+/**
+ * External dependencies
+ */
+import { range } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { Fragment } from '@wordpress/element'
-import { range } from '@stackable/util'
 import { RichText } from '@wordpress/block-editor'
 
 const save = props => {

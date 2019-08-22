@@ -1,3 +1,6 @@
+/**
+ * External dependencies
+ */
 import { srcUrl } from 'stackable'
 
 function DesignPanelItem( {

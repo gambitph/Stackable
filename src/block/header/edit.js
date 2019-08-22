@@ -1,4 +1,6 @@
-import { addFilter, applyFilters } from '@wordpress/hooks'
+/**
+ * External dependencies
+ */
 import {
 	AdvancedRangeControl,
 	AlignButtonsControl,
@@ -6,6 +8,7 @@ import {
 	BlockContainer,
 	ButtonControlsHelper,
 	ButtonEdit,
+	ButtonEditHelper,
 	ColorPaletteControl,
 	ContentAlignControl,
 	ControlSeparator,
@@ -20,11 +23,7 @@ import {
 	ResponsiveControl,
 	TypographyControlHelper,
 	URLInputControl,
-	ButtonEditHelper,
-} from '@stackable/components'
-import {
-	AlignmentToolbar, BlockControls, InspectorControls, PanelColorSettings, RichText,
-} from '@wordpress/block-editor'
+} from '~stackable/components'
 import {
 	createButtonAttributeNames,
 	createResponsiveAttributeNames,
@@ -32,11 +31,7 @@ import {
 	createVideoBackground,
 	descriptionPlaceholder,
 	hasBackgroundOverlay,
-} from '@stackable/util'
-import { i18n, showProNotice } from 'stackable'
-import {
-	PanelBody, RangeControl, ToggleControl,
-} from '@wordpress/components'
+} from '~stackable/util'
 import {
 	withBlockStyles,
 	withContentAlignReseter,
@@ -44,15 +39,31 @@ import {
 	withSetAttributeHook,
 	withTabbedInspector,
 	withUniqueClass,
-} from '@stackable/higher-order'
-import { __ } from '@wordpress/i18n'
-import classnames from 'classnames'
-import { compose } from '@wordpress/compose'
+} from '~stackable/higher-order'
+
+/**
+ * Internal dependencies
+ */
 import createStyles from './style'
-import { Fragment } from '@wordpress/element'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
 import { showOptions } from '.'
+
+/**
+ * WordPress dependencies
+ */
+import { addFilter, applyFilters } from '@wordpress/hooks'
+import {
+	AlignmentToolbar, BlockControls, InspectorControls, PanelColorSettings, RichText,
+} from '@wordpress/block-editor'
+import { i18n, showProNotice } from 'stackable'
+import {
+	PanelBody, RangeControl, ToggleControl,
+} from '@wordpress/components'
+import { __ } from '@wordpress/i18n'
+import classnames from 'classnames'
+import { compose } from '@wordpress/compose'
+import { Fragment } from '@wordpress/element'
 
 addFilter( 'stackable.header.edit.inspector.layout.before', 'stackable/header', ( output, props ) => {
 	const { setAttributes } = props

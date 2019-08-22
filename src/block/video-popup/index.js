@@ -1,15 +1,25 @@
 /**
  * BLOCK: Video Popup Block.
  */
+/**
+ * External dependencies
+ */
+import { VideoPopupIcon } from '~stackable/icons'
+import { createBackgroundAttributes, createResponsiveAttributes } from '~stackable/util'
 
-import { createBackgroundAttributes, createResponsiveAttributes } from '@stackable/util'
-import { disabledBlocks, i18n } from 'stackable'
-import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
+/**
+ * Internal dependencies
+ */
 import deprecated from './deprecated'
 import edit from './edit'
 import save from './save'
-import { VideoPopupIcon } from '@stackable/icons'
+
+/**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+import { __ } from '@wordpress/i18n'
+import { disabledBlocks, i18n } from 'stackable'
 
 export const schema = {
 	videoLink: {

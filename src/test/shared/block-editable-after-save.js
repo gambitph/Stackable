@@ -3,8 +3,15 @@
  * Checks whether adding the block, changing values, saving it then refreshing the editor renders the block valid & editable.
  * TODO: Remove tests that use this!
  */
+/**
+ * External dependencies
+ */
+import { createAttributeValues, getDefaultAttributes } from '~stackable/test/helpers'
+import registerStackableBlock from '~stackable/register-block'
 
-import { createAttributeValues, getDefaultAttributes } from '@stackable/test/helpers'
+/**
+ * WordPress dependencies
+ */
 import {
 	createBlock,
 	getBlockTypes,
@@ -15,7 +22,6 @@ import {
 	unregisterBlockType,
 } from '@wordpress/blocks'
 import { createBlockWithFallback } from '@wordpress/blocks/build/api/parser'
-import registerStackableBlock from '@stackable/register-block'
 
 // @see https://blog.revathskumar.com/2018/07/jest-shared-tests.html
 const blockEditableAfterSaveTests = function( props ) {

@@ -1,12 +1,23 @@
-import { BaseControl, Toolbar } from '@wordpress/components'
-import { __ } from '@wordpress/i18n'
-import { i18n } from 'stackable'
+/**
+ * Internal dependencies
+ */
 import SVGH1 from './images/heading1.svg'
 import SVGH2 from './images/heading2.svg'
 import SVGH3 from './images/heading3.svg'
 import SVGH4 from './images/heading4.svg'
 import SVGH5 from './images/heading5.svg'
 import SVGH6 from './images/heading6.svg'
+
+/**
+ * External dependencies
+ */
+import { i18n } from 'stackable'
+
+/**
+ * WordPress dependencies
+ */
+import { BaseControl, Toolbar } from '@wordpress/components'
+import { __ } from '@wordpress/i18n'
 
 const TAG_OPTIONS = [
 	{
@@ -51,6 +62,7 @@ const HeadingButtonsControl = props => {
 	return (
 		<BaseControl
 			label={ label }
+			id="ugb-heading-buttons-control"
 			className="ugb-heading-buttons-control"
 		>
 			<Toolbar

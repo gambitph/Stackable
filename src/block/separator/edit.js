@@ -1,5 +1,11 @@
+/**
+ * Internal dependencies
+ */
 import './pro'
-import { addFilter, applyFilters } from '@wordpress/hooks'
+
+/**
+ * External dependencies
+ */
 import {
 	AdvancedRangeControl,
 	BlockContainer,
@@ -8,13 +14,22 @@ import {
 	DesignSeparatorControl,
 	Separator,
 	WhenResponsiveScreen,
-} from '@stackable/components'
-import { PanelBody, RangeControl, ToggleControl } from '@wordpress/components'
-import { withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass } from '@stackable/higher-order'
+} from '~stackable/components'
+import {
+	withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass,
+} from '~stackable/higher-order'
+import createStyles from './style'
+
+/**
+ * WordPress dependencies
+ */
+import { addFilter, applyFilters } from '@wordpress/hooks'
+import {
+	PanelBody, RangeControl, ToggleControl,
+} from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
-import createStyles from './style'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
 

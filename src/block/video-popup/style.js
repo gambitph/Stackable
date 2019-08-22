@@ -1,6 +1,17 @@
-import { createBackgroundStyleSet } from '@stackable/util'
-import deepmerge from 'deepmerge'
+/**
+ * External dependencies
+ */
+import { createBackgroundStyleSet } from '~stackable/util'
+
+/**
+ * Internal dependencies
+ */
 import { showOptions } from '.'
+import deepmerge from 'deepmerge'
+
+/**
+ * WordPress dependencies
+ */
 import { sprintf } from '@wordpress/i18n'
 
 export const createStyles = props => {

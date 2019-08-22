@@ -1,5 +1,16 @@
-import { __, sprintf } from '@wordpress/i18n'
+/**
+ * Internal dependencies
+ */
 import ButtonEdit from './index'
+
+/**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n'
+
+/**
+ * External dependencies
+ */
 import { camelCase } from 'lodash'
 import { i18n } from 'stackable'
 

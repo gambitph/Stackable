@@ -1,5 +1,8 @@
+/**
+ * External dependencies
+ */
+import { minifyCSS, prependCSSClass } from '~stackable/util'
 import { kebabCase, omit } from 'lodash'
-import { minifyCSS, prependCSSClass } from '@stackable/util'
 
 /**
  * Returns an identical styleObject with all the selectors modified to be wrapped

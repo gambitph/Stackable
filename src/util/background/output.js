@@ -1,8 +1,15 @@
+/**
+ * External dependencies
+ */
+import { urlIsVideo } from '~stackable/util'
 import { camelCase } from 'lodash'
 import classnames from 'classnames'
+
+/**
+ * WordPress dependencies
+ */
 import { Fragment } from '@wordpress/element'
 import { sprintf } from '@wordpress/i18n'
-import { urlIsVideo } from '@stackable/util'
 
 export const createVideoBackground = ( attrNameTemplate, blockProps ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )

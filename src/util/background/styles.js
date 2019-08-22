@@ -1,5 +1,12 @@
+/**
+ * External dependencies
+ */
 import { camelCase } from 'lodash'
 import rgba from 'color-rgba'
+
+/**
+ * WordPress dependencies
+ */
 import { sprintf } from '@wordpress/i18n'
 
 const createBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {}, options = {} ) => {
@@ -29,7 +36,7 @@ const createBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 
 	if ( screen !== 'tablet' && screen !== 'mobile' ) { // Desktop.
 		return {
-			backgroundColor: backgroundColor,
+			backgroundColor,
 			backgroundAttachment: getValue( 'FixedBackground' ) !== '' ? 'fixed' : undefined,
 			backgroundImage: getValue( 'BackgroundMediaURL' ) !== '' ? `url(${ getValue( 'BackgroundMediaURL' ) })` : undefined,
 			backgroundPosition: getValue( 'BackgroundPosition' ) !== '' ? getValue( 'BackgroundPosition' ) : undefined,

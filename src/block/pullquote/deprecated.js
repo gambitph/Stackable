@@ -1,3 +1,6 @@
+/**
+ * External dependencies
+ */
 import { merge, omit } from 'lodash'
 
 export const deprecatedSave_0_7 = props => {
@@ -12,7 +15,7 @@ export const deprecatedSave_0_7 = props => {
 				borderTopColor: borderColor,
 				borderBottomColor: borderColor,
 			} }>
-			<p style={ { color: color } }>{ text }</p>
+			<p style={ { color } }>{ text }</p>
 		</blockquote>
 	)
 }

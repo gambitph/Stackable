@@ -1,12 +1,26 @@
-import { applyFormat, registerFormatType, removeFormat } from '@wordpress/rich-text'
+/**
+ * External dependencies
+ */
+import { ColorPaletteControl } from '~stackable/components'
+
+/**
+ * Internal dependencies
+ */
+import Dropdown from './dropdown'
+import { whiteIfDarkBlackIfLight } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
+import {
+	applyFormat, registerFormatType, removeFormat,
+} from '@wordpress/rich-text'
 import { RichTextShortcut, RichTextToolbarButton } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
-import { ColorPaletteControl } from '@stackable/components'
-import Dropdown from './dropdown'
+
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
 import { ToggleControl } from '@wordpress/components'
-import { whiteIfDarkBlackIfLight } from '@stackable/util'
 
 const createApplyFormat = ( textValue, color, hasBgHighlight ) => {
 	if ( ! color ) {
@@ -40,7 +54,9 @@ const createApplyFormat = ( textValue, color, hasBgHighlight ) => {
 }
 
 const HighlightButton = props => {
-	const { activeAttributes, isActive, onChange, value } = props
+	const {
+		activeAttributes, isActive, onChange, value,
+	} = props
 
 	let currentColor = ''
 	let hasBgHighlight = false

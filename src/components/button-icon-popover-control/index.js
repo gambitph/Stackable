@@ -1,6 +1,15 @@
+/**
+ * WordPress dependencies
+ */
 import { addFilter, removeFilter } from '@wordpress/hooks'
-import { BaseControl, IconButton, PanelBody, Popover, ToggleControl } from '@wordpress/components'
+import {
+	BaseControl, IconButton, PanelBody, Popover, ToggleControl,
+} from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
+
+/**
+ * External dependencies
+ */
 import classnames from 'classnames'
 import { Component } from '@wordpress/element'
 import { i18n } from 'stackable'
@@ -89,6 +98,7 @@ class ButtonIconPopoverControl extends Component {
 			<BaseControl
 				help={ this.props.help }
 				label={ ! this.props.onToggle && <label htmlFor={ `ugb-button-icon-control__edit-${ this.instanceId }` }>{ this.props.label }</label> }
+				id="ugb-button-icon-control"
 				className={ classnames( 'ugb-button-icon-control', this.props.className ) }
 			>
 				{ this.props.onToggle && (

@@ -1,6 +1,17 @@
-import { applyFilters } from '@wordpress/hooks'
-import classnames from 'classnames'
+/**
+ * Internal dependencies
+ */
 import { getPlayButton as getPlayButton_1_15_6 } from './deprecated/util_1_15_6'
+
+/**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+
+/**
+ * External dependencies
+ */
+import classnames from 'classnames'
 import { omit } from 'lodash'
 
 const deprecatedSave_1_15_6 = props => {

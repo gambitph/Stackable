@@ -1,6 +1,13 @@
-import {
-	BaseControl, PanelBody, RangeControl, ToggleControl, Toolbar,
-} from '@wordpress/components'
+/**
+ * Internal dependencies
+ */
+import ImageDesignBasic from './images/basic.png'
+import ImageDesignPlain from './images/plain.png'
+import { QUOTE_ICONS } from './quotes'
+
+/**
+ * External dependencies
+ */
 import {
 	DesignPanelBody,
 	FourNumberControl,
@@ -10,23 +17,33 @@ import {
 	PanelTabs,
 	ProControl,
 	ProControlButton,
-} from '@stackable/components'
-import { i18n, showProNotice } from 'stackable'
+} from '~stackable/components'
+import { descriptionPlaceholder } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
+import {
+	BaseControl,
+	PanelBody,
+	RangeControl,
+	ToggleControl,
+	Toolbar,
+} from '@wordpress/components'
 import {
 	InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
-import classnames from 'classnames'
-import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
-import ImageDesignBasic from './images/basic.png'
-import ImageDesignPlain from './images/plain.png'
-import { QUOTE_ICONS } from './quotes'
+import { i18n, showProNotice } from 'stackable'
+import classnames from 'classnames'
 
 const edit = props => {
 	const {
-		isSelected, setAttributes, className,
+		isSelected,
+		setAttributes,
+		className,
 	} = props
 
 	const {
@@ -81,9 +98,7 @@ const edit = props => {
 			'--quote-color': quoteColor ? quoteColor : undefined,
 			...basicStyles,
 		},
-		text: {
-			color: color,
-		},
+		text: { color },
 	}, design, props )
 
 	const show = applyFilters( 'stackable.blockquote.edit.show', {
@@ -106,14 +121,20 @@ const edit = props => {
 						src={ backgroundImageURL }
 					/>
 				) }
-				{ applyFilters( 'stackable.blockquote.edit.output.before', null, design, props ) }
+				{ applyFilters(
+					'stackable.blockquote.edit.output.before',
+					null,
+					design,
+					props
+				) }
 				<div className="ugb-content-wrapper">
 					{ QUOTE_ICONS[ quotationMark ].iconFunc( {
 						fill: quoteColor,
 						width: quotationSize,
 						height: quotationSize,
 					} ) }
-					{ applyFilters( 'stackable.blockquote.edit.output',
+					{ applyFilters(
+						'stackable.blockquote.edit.output',
 						<RichText
 							className="ugb-blockquote__text"
 							value={ text }
@@ -123,10 +144,16 @@ const edit = props => {
 							keepPlaceholderOnFocus
 							style={ styles.text }
 						/>,
-						design, props
+						design,
+						props
 					) }
 				</div>
-				{ applyFilters( 'stackable.blockquote.edit.output.after', null, design, props ) }
+				{ applyFilters(
+					'stackable.blockquote.edit.output.after',
+					null,
+					design,
+					props
+				) }
 			</blockquote>
 
 			<InspectorControls>
@@ -188,7 +215,10 @@ const edit = props => {
 						},
 					] }
 				>
-					<BaseControl label={ __( 'Icon', i18n ) }>
+					<BaseControl
+						label={ __( 'Icon', i18n ) }
+						id="ugb-icon-control"
+					>
 						<Toolbar
 							className="ugb-blockquote__inspector__icon"
 							icon={ QUOTE_ICONS[ quotationMark ].icon }
@@ -278,7 +308,12 @@ const edit = props => {
 						/>
 					</PanelBody>
 				}
-				{ applyFilters( 'stackable.blockquote.edit.inspector.after', null, design, props ) }
+				{ applyFilters(
+					'stackable.blockquote.edit.inspector.after',
+					null,
+					design,
+					props
+				) }
 			</InspectorPanelControls>
 		</Fragment>
 	)

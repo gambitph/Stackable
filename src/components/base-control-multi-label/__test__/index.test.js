@@ -1,3 +1,6 @@
+/**
+ * Internal dependencies
+ */
 import BaseControlMultiLabel from '../'
 
 describe( 'Unit switcher', () => {

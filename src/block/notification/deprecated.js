@@ -1,8 +1,19 @@
-import classnames from 'classnames'
-import { descriptionPlaceholder } from '@stackable/util'
-import md5 from 'md5'
-import { RichText } from '@wordpress/block-editor'
+/**
+ * External dependencies
+ */
+import { descriptionPlaceholder } from '~stackable/util'
+
+/**
+ * Internal dependencies
+ */
 import SVGCloseIconV112 from './images/close-icon-v1-12.svg'
+import classnames from 'classnames'
+import md5 from 'md5'
+
+/**
+ * WordPress dependencies
+ */
+import { RichText } from '@wordpress/block-editor'
 
 const deprecatedSchema_1_12 = {
 	text: {

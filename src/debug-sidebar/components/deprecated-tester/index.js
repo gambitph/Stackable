@@ -1,10 +1,23 @@
+/**
+ * External dependencies
+ */
+import { DEPRECATION_TESTS_URL, DEPRECATION_TESTS_URL_LOCAL } from '~stackable/constants'
+
+/**
+ * Internal dependencies
+ */
+import { validateBlockHTML } from '../../util'
+
+/**
+ * WordPress dependencies
+ */
 import { __, sprintf } from '@wordpress/i18n'
-import { BaseControl, Button, ClipboardButton, Dashicon, IconButton } from '@wordpress/components'
+import {
+	BaseControl, Button, ClipboardButton, Dashicon, IconButton,
+} from '@wordpress/components'
 import { Component, Fragment } from '@wordpress/element'
-import { DEPRECATION_TESTS_URL, DEPRECATION_TESTS_URL_LOCAL } from '@stackable/constants'
 import { i18n, srcUrl } from 'stackable'
 import classnames from 'classnames'
-import { validateBlockHTML } from '../../util'
 
 class DeprecatedTester extends Component {
 	constructor() {

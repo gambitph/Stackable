@@ -1,8 +1,19 @@
-import { __ } from '@wordpress/i18n'
-import classnames from 'classnames'
-import { i18n } from 'stackable'
+/**
+ * Internal dependencies
+ */
 import ProModal from '../pro-modal'
 import SVGProIcon from './images/pro-icon.svg'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+
+/**
+ * External dependencies
+ */
+import classnames from 'classnames'
+import { i18n } from 'stackable'
 
 const ProControl = props => {
 	const {

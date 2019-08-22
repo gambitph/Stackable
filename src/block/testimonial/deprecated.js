@@ -1,6 +1,13 @@
-import { descriptionPlaceholder, range } from '@stackable/util'
+/**
+ * External dependencies
+ */
+import { descriptionPlaceholder, range } from '~stackable/util'
 import classnames from 'classnames'
 import { omit } from 'lodash'
+
+/**
+ * WordPress dependencies
+ */
 import { RichText } from '@wordpress/block-editor'
 
 const deprecatedSchema_1_10 = {

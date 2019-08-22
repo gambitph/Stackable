@@ -1,6 +1,13 @@
+/**
+ * Internal dependencies
+ */
 import { name, settings } from '../'
-import blockEditableAfterSaveTests from '@stackable/test/shared/block-editable-after-save'
-import blockSaveSnapshotTests from '@stackable/test/shared/block-save-snapshot'
+
+/**
+ * External dependencies
+ */
+import blockEditableAfterSaveTests from '~stackable/test/shared/block-editable-after-save'
+import blockSaveSnapshotTests from '~stackable/test/shared/block-save-snapshot'
 import save from '../save'
 
 describe( `${ settings.title } block`, () => {

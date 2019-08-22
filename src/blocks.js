@@ -1,9 +1,16 @@
 /**
  * This is the file that Webpack is compiling into editor_blocks.js
  */
+/**
+ * Internal dependencies
+ */
 import './debug-sidebar'
 import './format-types'
-import registerBlock from '@stackable/register-block'
+
+/**
+ * External dependencies
+ */
+import registerBlock from '~stackable/register-block'
 
 // Import all index.js and register all the blocks found (if name & settings are exported by the script)
 const importAllAndRegister = r => {

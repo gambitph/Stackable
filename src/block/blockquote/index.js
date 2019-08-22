@@ -4,14 +4,24 @@
  * Registering a basic block with Gutenberg.
  * Simple block, renders and saves the same content without any interactivity.
  */
-
-import { disabledBlocks, i18n } from 'stackable'
-import { __ } from '@wordpress/i18n'
-import { BlockquoteIcon } from '@stackable/icons'
+/**
+ * Internal dependencies
+ */
 import deprecated from './deprecated'
-import { descriptionPlaceholder } from '@stackable/util'
 import edit from './edit'
 import save from './save'
+
+/**
+ * External dependencies
+ */
+import { BlockquoteIcon } from '~stackable/icons'
+import { descriptionPlaceholder } from '~stackable/util'
+import { disabledBlocks, i18n } from 'stackable'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
 
 const schema = {
 	align: {

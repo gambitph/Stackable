@@ -1,7 +1,16 @@
+/**
+ * WordPress dependencies
+ */
 import '@wordpress/jest-preset-default'
+
+/**
+ * External dependencies
+ */
 import '@babel/polyfill' // Fixes: ReferenceError: regeneratorRuntime is not defined
 
-import { mount, render, shallow } from 'enzyme'
+import {
+	mount, render, shallow,
+} from 'enzyme'
 import React from 'react'
 
 global.React = React

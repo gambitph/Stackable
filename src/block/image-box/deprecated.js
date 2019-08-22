@@ -1,6 +1,13 @@
+/**
+ * External dependencies
+ */
+import { range } from '~stackable/util'
 import classnames from 'classnames'
 import { omit } from 'lodash'
-import { range } from '@stackable/util'
+
+/**
+ * WordPress dependencies
+ */
 import { RichText } from '@wordpress/block-editor'
 
 const deprecatedSchema_1_10 = {
@@ -122,7 +129,7 @@ const deprecatedSave_1_10 = props => {
 				const boxStyles = {
 					backgroundImage: imageURL ? `url(${ imageURL })` : undefined,
 					maxWidth: align !== 'wide' && align !== 'full' && columns === 1 ? width : undefined,
-					height: height,
+					height,
 					textAlign: horizontalAlign,
 					justifyContent: verticalAlign,
 				}

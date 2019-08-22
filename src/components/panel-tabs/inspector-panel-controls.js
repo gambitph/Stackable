@@ -1,4 +1,11 @@
+/**
+ * External dependencies
+ */
 import classnames from 'classnames'
+
+/**
+ * WordPress dependencies
+ */
 import { InspectorControls } from '@wordpress/block-editor'
 
 const InspectorPanelControls = props => {

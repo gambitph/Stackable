@@ -1,6 +1,13 @@
-import { isDarkColor, range } from '@stackable/util'
+/**
+ * External dependencies
+ */
+import { isDarkColor, range } from '~stackable/util'
+import { ButtonEdit } from '~stackable/components'
+
+/**
+ * WordPress dependencies
+ */
 import { applyFilters } from '@wordpress/hooks'
-import { ButtonEdit } from '@stackable/components'
 import classnames from 'classnames'
 import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'

@@ -1,4 +1,11 @@
+/**
+ * External dependencies
+ */
 import classnames from 'classnames'
+
+/**
+ * WordPress dependencies
+ */
 import { InnerBlocks } from '@wordpress/block-editor'
 
 const deprecatedSchema_1_10 = {

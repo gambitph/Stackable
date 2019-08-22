@@ -1,3 +1,11 @@
+/**
+ * External dependencies
+ */
+import { ProControl } from '~stackable/components'
+
+/**
+ * WordPress dependencies
+ */
 import {
 	AlignmentToolbar, BlockControls, InspectorControls, PanelColorSettings,
 } from '@wordpress/block-editor'
@@ -7,7 +15,6 @@ import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { Fragment } from '@wordpress/element'
-import { ProControl } from '@stackable/components'
 
 const edit = props => {
 	const { className } = props
@@ -30,7 +37,7 @@ const edit = props => {
 				<AlignmentToolbar
 					value={ alignment }
 					onChange={ function( alignment ) {
-						props.setAttributes( { alignment: alignment } )
+						props.setAttributes( { alignment } )
 					} }
 				/>
 			</BlockControls>
@@ -51,7 +58,7 @@ const edit = props => {
 						min="1"
 						max="10"
 						onChange={ function( height ) {
-							props.setAttributes( { height: height } )
+							props.setAttributes( { height } )
 						} }
 					/>
 					<RangeControl
@@ -61,7 +68,7 @@ const edit = props => {
 						max="100"
 						step="0.1"
 						onChange={ function( width ) {
-							props.setAttributes( { width: width } )
+							props.setAttributes( { width } )
 						} }
 					/>
 				</PanelColorSettings>
@@ -85,7 +92,7 @@ const edit = props => {
 					marginBottom: 0,
 					backgroundColor: color,
 					width: width + '%',
-					height: height,
+					height,
 				} } />
 				{ applyFilters( 'stackable.divider.edit.output.after', null, design, props ) }
 			</div>

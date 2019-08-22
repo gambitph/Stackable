@@ -1,8 +1,11 @@
-import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
-import { BaseControl } from '@wordpress/components'
-import { DesignControl } from '@stackable/components'
-import { i18n } from 'stackable'
+/**
+ * External dependencies
+ */
+import { DesignControl } from '~stackable/components'
+
+/**
+ * Internal dependencies
+ */
 import ImageDesignCurve1 from './images/curve-1.png'
 import ImageDesignCurve2 from './images/curve-2.png'
 import ImageDesignCurve3 from './images/curve-3.png'
@@ -14,6 +17,14 @@ import ImageDesignStraight1 from './images/straight-1.png'
 import ImageDesignWave1 from './images/wave-1.png'
 import ImageDesignWave2 from './images/wave-2.png'
 import ImageDesignWave3 from './images/wave-3.png'
+import { i18n } from 'stackable'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+import { BaseControl } from '@wordpress/components'
+import { applyFilters } from '@wordpress/hooks'
 import { omit } from 'lodash'
 
 const designs = {
@@ -60,6 +71,7 @@ const DesignSeparatorControl = props => {
 	return (
 		<BaseControl
 			className="ugb-design-separator-control"
+			id="ugb-design-separator-control"
 			label={ props.label }
 			help={ props.help }
 		>

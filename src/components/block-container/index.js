@@ -1,10 +1,19 @@
+/**
+ * WordPress dependencies
+ */
 import { applyFilters } from '@wordpress/hooks'
+
+/**
+ * External dependencies
+ */
 import classnames from 'classnames'
 
 const BlockContainer = {}
 
 BlockContainer.Edit = props => {
-	const { blockProps, render, mainClass, ...containerProps } = props
+	const {
+		blockProps, render, mainClass, ...containerProps
+	} = props
 	const { blockName } = blockProps
 	const design = blockProps.attributes.design
 
@@ -36,7 +45,9 @@ BlockContainer.Edit.defaultProps = {
 }
 
 BlockContainer.Save = props => {
-	const { blockProps, render, mainClass, ...containerProps } = props
+	const {
+		blockProps, render, mainClass, ...containerProps
+	} = props
 	const { blockName } = blockProps
 	const design = blockProps.attributes.design
 

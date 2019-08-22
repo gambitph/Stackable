@@ -1,6 +1,17 @@
+/**
+ * Internal dependencies
+ */
+import BaseControlMultiLabel from '../base-control-multi-label'
+
+/**
+ * WordPress dependencies
+ */
 import { BaseControl, Toolbar } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
-import BaseControlMultiLabel from '../base-control-multi-label'
+
+/**
+ * External dependencies
+ */
 import { i18n } from 'stackable'
 
 // TODO: Change to AdvancedToolbarControl

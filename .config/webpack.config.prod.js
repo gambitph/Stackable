@@ -22,7 +22,7 @@ module.exports = [ {
 
     resolve: {
         alias: {
-            '@stackable': path.resolve( __dirname, '../src/' )
+            '~stackable': path.resolve( __dirname, '../src/' )
         }
     },
 
@@ -69,7 +69,7 @@ module.exports = [ {
 
     resolve: {
         alias: {
-            '@stackable': path.resolve( __dirname, '../src/' )
+            '~stackable': path.resolve( __dirname, '../src/' )
         }
     },
 

@@ -1,5 +1,6 @@
-import { __, sprintf } from '@wordpress/i18n'
-import { addFilter, doAction, removeFilter } from '@wordpress/hooks'
+/**
+ * External dependencies
+ */
 import {
 	AdvancedRangeControl,
 	AlignButtonsControl,
@@ -8,7 +9,7 @@ import {
 	PanelAdvancedSettings,
 	ResponsiveControl,
 	TypographyControlHelper,
-} from '@stackable/components'
+} from '~stackable/components'
 import {
 	createResponsiveAttributeNames,
 	createResponsiveAttributes,
@@ -17,7 +18,15 @@ import {
 	createTypographyStyles,
 	descriptionPlaceholder,
 	whiteIfDark,
-} from '@stackable/util'
+} from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n'
+import {
+	addFilter, doAction, removeFilter,
+} from '@wordpress/hooks'
 import classnames from 'classnames'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'

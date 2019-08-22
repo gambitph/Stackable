@@ -1,4 +1,14 @@
-import { addFilter, applyFilters } from '@wordpress/hooks'
+/**
+ * External dependencies
+ */
+import {
+	withBlockStyles,
+	withContentAlignReseter,
+	withGoogleFont,
+	withSetAttributeHook,
+	withTabbedInspector,
+	withUniqueClass,
+} from '~stackable/higher-order'
 import {
 	AdvancedRangeControl,
 	BlockContainer,
@@ -7,30 +17,31 @@ import {
 	PanelSpacingBody,
 	ResponsiveControl,
 	TypographyControlHelper,
-} from '@stackable/components'
-import {
-	BaseControl, PanelBody, RangeControl, ToggleControl, Toolbar,
-} from '@wordpress/components'
+} from '~stackable/components'
+
+/**
+ * Internal dependencies
+ */
 import {
 	getIconShapeToolbarList,
 	getIconSVG,
 	getIconToolbarList,
 } from './util'
-import {
-	withBlockStyles,
-	withContentAlignReseter,
-	withGoogleFont,
-	withSetAttributeHook,
-	withTabbedInspector,
-	withUniqueClass,
-} from '@stackable/higher-order'
-import { __ } from '@wordpress/i18n'
-import classnames from 'classnames'
-import { compose } from '@wordpress/compose'
 import createStyles from './style'
+
+/**
+ * WordPress dependencies
+ */
+import { addFilter, applyFilters } from '@wordpress/hooks'
+import {
+	BaseControl, PanelBody, RangeControl, ToggleControl, Toolbar,
+} from '@wordpress/components'
+import { __ } from '@wordpress/i18n'
+import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
-import { i18n } from 'stackable'
 import { RichText } from '@wordpress/block-editor'
+import classnames from 'classnames'
+import { i18n } from 'stackable'
 
 addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-list', ( output, props ) => {
 	const { setAttributes } = props
@@ -52,7 +63,10 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 		<Fragment>
 			{ output }
 			<PanelBody title={ __( 'Icon', i18n ) }>
-				<BaseControl label={ __( 'Icon', i18n ) }>
+				<BaseControl
+					label={ __( 'Icon', i18n ) }
+					id="ugb-icon-control"
+				>
 					<Toolbar
 						icon={ getIconSVG( icon ) }
 						controls={ getIconToolbarList( {
@@ -61,7 +75,10 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 						} ) }
 					/>
 				</BaseControl>
-				<BaseControl label={ __( 'Icon Shape', i18n ) }>
+				<BaseControl
+					label={ __( 'Icon Shape', i18n ) }
+					id="ugb-icon-shape-control"
+				>
 					<Toolbar
 						icon={ getIconSVG( icon, iconShape ) }
 						controls={ getIconShapeToolbarList( icon, {

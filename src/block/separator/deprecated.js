@@ -1,5 +1,16 @@
+/**
+ * Internal dependencies
+ */
 import { separators, shadows } from './deprecated/separators_1_15'
+
+/**
+ * WordPress dependencies
+ */
 import { applyFilters } from '@wordpress/hooks'
+
+/**
+ * External dependencies
+ */
 import classnames from 'classnames'
 
 export const deprecatedSave_1_15 = props => {

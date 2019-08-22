@@ -1,9 +1,20 @@
-import { BlockContainer, Separator } from '@stackable/components'
-import { withBlockStyles, withUniqueClass } from '@stackable/higher-order'
+/**
+ * External dependencies
+ */
+import { BlockContainer, Separator } from '~stackable/components'
+import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+
+/**
+ * Internal dependencies
+ */
+import createStyles from './style'
+
+/**
+ * WordPress dependencies
+ */
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
-import createStyles from './style'
 import { Fragment } from '@wordpress/element'
 
 const save = props => {

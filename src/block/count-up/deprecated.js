@@ -1,8 +1,19 @@
+/**
+ * Internal dependencies
+ */
+import { getFontFamily } from './deprecated-font'
+
+/**
+ * External dependencies
+ */
+import { range } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
-import { getFontFamily } from './deprecated-font'
-import { range } from '@stackable/util'
 import { RichText } from '@wordpress/block-editor'
 
 export const deprecatedSave_1_15_4 = props => {
@@ -798,7 +809,7 @@ export const deprecatedSave_1_4 = props => {
 			<RichText.Content
 				tagName="div"
 				className="ugb-counter"
-				style={ { color: color, fontSize: fontSize + 'px' } }
+				style={ { color, fontSize: fontSize + 'px' } }
 				value={ counter }
 				data-duration="1000"
 				data-delay="16"

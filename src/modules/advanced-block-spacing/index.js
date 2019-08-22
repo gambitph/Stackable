@@ -1,7 +1,18 @@
-import { addFilter, applyFilters, doAction, removeFilter } from '@wordpress/hooks'
-import { AdvancedRangeControl, AdvancedToolbarControl, FourRangeControl, WhenResponsiveScreen } from '@stackable/components'
+/**
+ * External dependencies
+ */
+import {
+	AdvancedRangeControl, AdvancedToolbarControl, FourRangeControl, WhenResponsiveScreen,
+} from '~stackable/components'
+import { createAllCombinationAttributes } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
+import {
+	addFilter, applyFilters, doAction, removeFilter,
+} from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
-import { createAllCombinationAttributes } from '@stackable/util'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'

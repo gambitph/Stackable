@@ -1,4 +1,11 @@
+/**
+ * WordPress dependencies
+ */
 import { applyFilters } from '@wordpress/hooks'
+
+/**
+ * External dependencies
+ */
 import classnames from 'classnames'
 
 export const deprecatedSave_1_15_4 = props => {

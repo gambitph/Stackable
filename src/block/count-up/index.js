@@ -1,20 +1,30 @@
 /**
  * BLOCK: Count Up
  */
-
+/**
+ * External dependencies
+ */
 import {
 	createAllCombinationAttributes,
 	createBackgroundAttributes,
 	createResponsiveAttributes,
 	createTypographyAttributes,
-} from '@stackable/util'
-import { disabledBlocks, i18n } from 'stackable'
-import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
-import { CountUpIcon } from '@stackable/icons'
+} from '~stackable/util'
+import { CountUpIcon } from '~stackable/icons'
+
+/**
+ * Internal dependencies
+ */
 import deprecated from './deprecated'
 import edit from './edit'
 import save from './save'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
+import { disabledBlocks, i18n } from 'stackable'
 
 export const schema = {
 	title1: {

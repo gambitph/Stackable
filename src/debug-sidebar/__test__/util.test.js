@@ -1,9 +1,16 @@
+/**
+ * Internal dependencies
+ */
+import { getExpectedBlockName, validateBlockHTML } from '../util'
+
+/**
+ * WordPress dependencies
+ */
 import {
 	getBlockTypes,
 	registerBlockType,
 	unregisterBlockType,
 } from '@wordpress/blocks'
-import { getExpectedBlockName, validateBlockHTML } from '../util'
 
 describe( 'Utility functions', () => {
 	describe( 'getExpectedBlockName', () => {

@@ -2,14 +2,25 @@
  * BLOCK: Icon List Block.
  */
 
-import { disabledBlocks, i18n } from 'stackable'
-import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
-import { createTypographyAttributes } from '@stackable/util'
+/**
+ * External dependencies
+ */
+import { createTypographyAttributes } from '~stackable/util'
+
+/**
+ * Internal dependencies
+ */
 import deprecated from './deprecated'
 import edit from './edit'
-import { IconListIcon } from '@stackable/icons'
+import { IconListIcon } from '~stackable/icons'
 import save from './save'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+import { disabledBlocks, i18n } from 'stackable'
+import { applyFilters } from '@wordpress/hooks'
 
 export const schema = {
 	icon: {

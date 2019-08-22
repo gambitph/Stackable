@@ -1,3 +1,6 @@
+/**
+ * WordPress dependencies
+ */
 import { sprintf } from '@wordpress/i18n'
 
 export const createStyles = props => {

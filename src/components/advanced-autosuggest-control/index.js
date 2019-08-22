@@ -1,8 +1,19 @@
+/**
+ * Internal dependencies
+ */
+import BaseControlMultiLabel from '../base-control-multi-label'
+
+/**
+ * WordPress dependencies
+ */
 import { Component, createRef } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
+
+/**
+ * External dependencies
+ */
 import Autosuggest from 'react-autosuggest'
 import { BaseControl } from '@wordpress/components'
-import BaseControlMultiLabel from '../base-control-multi-label'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 

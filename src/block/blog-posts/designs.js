@@ -1,3 +1,6 @@
+/**
+ * WordPress dependencies
+ */
 import { addFilter } from '@wordpress/hooks'
 
 addFilter( 'stackable.blog-posts.edit.output', 'core/designs', ( ret, design, props ) => {

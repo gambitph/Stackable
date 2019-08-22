@@ -1,4 +1,7 @@
-import { withTabbedInspector } from '@stackable/higher-order'
+/**
+ * External dependencies
+ */
+import { withTabbedInspector } from '~stackable/higher-order'
 
 const blockInspectorTests = props => {
 	const {

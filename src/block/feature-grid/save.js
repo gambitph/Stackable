@@ -1,7 +1,14 @@
+/**
+ * External dependencies
+ */
+import { ButtonEdit } from '~stackable/components'
+import { range } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
 import { applyFilters } from '@wordpress/hooks'
-import { ButtonEdit } from '@stackable/components'
 import classnames from 'classnames'
-import { range } from '@stackable/util'
 import { RichText } from '@wordpress/block-editor'
 import striptags from 'striptags'
 

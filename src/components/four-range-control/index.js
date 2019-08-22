@@ -1,17 +1,29 @@
-import { BaseControl, Dashicon, IconButton, RangeControl, Tooltip } from '@wordpress/components'
-import { Component, Fragment } from '@wordpress/element'
-import { __ } from '@wordpress/i18n'
+/**
+ * Internal dependencies
+ */
 import BaseControlMultiLabel from '../base-control-multi-label'
-import classnames from 'classnames'
-import { i18n } from 'stackable'
-import { pick } from 'lodash'
 // import SVGAllImage from './images/all.svg'
 import SVGBottomImage from './images/bottom.svg'
 // import SVGHorizontalImage from './images/horizontal.svg'
 import SVGLeftImage from './images/left.svg'
 import SVGRightImage from './images/right.svg'
 import SVGTopImage from './images/top.svg'
+
+/**
+ * WordPress dependencies
+ */
+import {
+	BaseControl, Dashicon, IconButton, RangeControl, Tooltip,
+} from '@wordpress/components'
+import { __ } from '@wordpress/i18n'
+import { Component, Fragment } from '@wordpress/element'
 // import SVGVerticalImage from './images/vertical.svg'
+/**
+ * External dependencies
+ */
+import classnames from 'classnames'
+import { i18n } from 'stackable'
+import { pick } from 'lodash'
 
 class FourRangeControl extends Component {
 	constructor() {
@@ -103,7 +115,9 @@ class FourRangeControl extends Component {
 	}
 
 	render() {
-		const { instanceId, units, unit } = this.props
+		const {
+			instanceId, units, unit,
+		} = this.props
 		const id = `ugb-four-range-control-${ instanceId }__item-`
 		const propsToPass = {
 			min: this.props.min,
@@ -165,6 +179,7 @@ class FourRangeControl extends Component {
 				{ this.state.locked &&
 					<div className="ugb-four-range-control__range">
 						{
+
 							/* <Tooltip text={ allLabel }>
 								<span className="ugb-four-range-control__icon">{ allIcon }</span>
 							</Tooltip> */

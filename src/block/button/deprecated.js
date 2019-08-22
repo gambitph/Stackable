@@ -1,14 +1,21 @@
+/**
+ * External dependencies
+ */
 import {
 	DeprecatedButtonContent_1_10,
 	DeprecatedButtonContent_1_12,
 	DeprecatedButtonContent_1_15_5,
 	DeprecatedButtonContent_1_4,
 	DeprecatedButtonContent_1_9,
-} from '@stackable/components/button-edit'
+} from '~stackable/components/button-edit'
+import { range } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
-import { range } from '@stackable/util'
 
 export const deprecatedSchema_1_15_5 = {
 	buttons: {

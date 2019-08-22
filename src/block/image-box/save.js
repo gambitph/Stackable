@@ -1,8 +1,19 @@
+/**
+ * External dependencies
+ */
+import { range } from '~stackable/util'
+
+/**
+ * Internal dependencies
+ */
+import SVGArrow from './images/arrow.svg'
+
+/**
+ * WordPress dependencies
+ */
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
-import { range } from '@stackable/util'
 import { RichText } from '@wordpress/block-editor'
-import SVGArrow from './images/arrow.svg'
 
 const save = props => {
 	const { className, attributes } = props
@@ -54,10 +65,10 @@ const save = props => {
 				const boxStyles = {
 					backgroundImage: imageURL ? `url(${ imageURL })` : undefined,
 					maxWidth: align !== 'wide' && align !== 'full' && columns === 1 ? width : undefined,
-					height: height,
+					height,
 					textAlign: horizontalAlign,
 					justifyContent: verticalAlign,
-					borderRadius: borderRadius,
+					borderRadius,
 				}
 
 				const boxClasses = classnames( [

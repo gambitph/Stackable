@@ -1,9 +1,16 @@
+/**
+ * WordPress dependencies
+ */
 import {
 	BlockAlignmentToolbar, BlockControls, InspectorControls, PanelColorSettings, RichText, URLInput,
 } from '@wordpress/block-editor'
 import {
 	Dashicon, IconButton, PanelBody, RangeControl, SelectControl,
 } from '@wordpress/components'
+
+/**
+ * External dependencies
+ */
 import classnames from 'classnames'
 import { Fragment } from '@wordpress/element'
 
@@ -56,8 +63,8 @@ const edit = props => {
 						label={ 'Size' }
 						value={ size }
 						options={ buttonSizes.map( ( { value, label } ) => ( {
-							value: value,
-							label: label,
+							value,
+							label,
 						} ) ) }
 						onChange={ newSize => {
 							setAttributes( { size: newSize } )
@@ -101,7 +108,7 @@ const edit = props => {
 					tagName="span"
 					placeholder={ 'Button text' }
 					value={ text }
-					onChange={ text => setAttributes( { text: text } ) }
+					onChange={ text => setAttributes( { text } ) }
 					formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
 					className={ `ugb-button-inner` }
 					style={ { color } }

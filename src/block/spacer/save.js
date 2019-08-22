@@ -1,7 +1,18 @@
-import { withBlockStyles, withUniqueClass } from '@stackable/higher-order'
-import { BlockContainer } from '@stackable/components'
-import { compose } from '@wordpress/compose'
+/**
+ * External dependencies
+ */
+import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+import { BlockContainer } from '~stackable/components'
+
+/**
+ * Internal dependencies
+ */
 import createStyles from './style'
+
+/**
+ * WordPress dependencies
+ */
+import { compose } from '@wordpress/compose'
 
 const save = props => {
 	return (

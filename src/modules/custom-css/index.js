@@ -1,10 +1,19 @@
+/**
+ * External dependencies
+ */
+import { compileCSS, minifyCSS } from '~stackable/util'
+import { ProControl } from '~stackable/components'
+
+/**
+ * WordPress dependencies
+ */
 import { addFilter, doAction } from '@wordpress/hooks'
-import { compileCSS, minifyCSS } from '@stackable/util'
-import { i18n, isPro, showProNotice } from 'stackable'
+import {
+	i18n, isPro, showProNotice,
+} from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 import { PanelBody } from '@wordpress/components'
-import { ProControl } from '@stackable/components'
 
 const customCSSProPanel = output => {
 	return (

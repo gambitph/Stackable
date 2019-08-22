@@ -1,7 +1,14 @@
+/**
+ * External dependencies
+ */
+import { getAttrName } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Component } from '@wordpress/element'
 import { createHigherOrderComponent } from '@wordpress/compose'
-import { getAttrName } from '@stackable/util'
 
 const withContentAlignReseter = ( attributeNamesToReset = [] ) => createHigherOrderComponent(
 	WrappedComponent => class extends Component {

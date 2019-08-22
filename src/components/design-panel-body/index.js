@@ -2,9 +2,16 @@
  * A Panel for selecting designs
  */
 
+/**
+ * External dependencies
+ */
+import { DesignControl } from '~stackable/components'
+
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
-import { DesignControl } from '@stackable/components'
 import { i18n } from 'stackable'
 import { omit } from 'lodash'
 import { PanelBody } from '@wordpress/components'

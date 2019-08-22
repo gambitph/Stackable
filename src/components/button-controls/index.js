@@ -1,9 +1,6 @@
-import {
-	BaseControl,
-	RangeControl,
-	SelectControl,
-	ToggleControl,
-} from '@wordpress/components'
+/**
+ * External dependencies
+ */
 import {
 	ButtonIconPopoverControl,
 	ColorPaletteControl,
@@ -14,15 +11,29 @@ import {
 	TextToolbar,
 	TypographyControlHelper,
 	URLInputControl,
-} from '@stackable/components'
-import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
-import { Fragment } from '@wordpress/element'
-import { i18n } from 'stackable'
+} from '~stackable/components'
+
+/**
+ * Internal dependencies
+ */
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignGhost from './images/ghost.png'
 import ImageDesignLink from './images/link.png'
 import ImageDesignPlain from './images/plain.png'
+
+/**
+ * WordPress dependencies
+ */
+import {
+	BaseControl,
+	RangeControl,
+	SelectControl,
+	ToggleControl,
+} from '@wordpress/components'
+import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
+import { Fragment } from '@wordpress/element'
+import { i18n } from 'stackable'
 
 const ButtonControls = props => {
 	const design = props.design ? props.design : 'basic'
@@ -168,6 +179,7 @@ const ButtonControls = props => {
 			{ props.onChangeBackgroundColorType && showGradient && (
 				<BaseControl
 					label={ __( 'Button Color Type', i18n ) }
+					id="button-color-type"
 				>
 					<TextToolbar
 						controls={ [

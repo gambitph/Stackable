@@ -1,6 +1,21 @@
+/**
+ * Internal dependencies
+ */
 import './news'
+import blockData from './blocks'
+
+/**
+ * WordPress dependencies
+ */
 import { __, sprintf } from '@wordpress/i18n'
 import { Component, render } from '@wordpress/element'
+import { send as ajaxSend } from '@wordpress/ajax'
+import domReady from '@wordpress/dom-ready'
+import { Spinner } from '@wordpress/components'
+
+/**
+ * External dependencies
+ */
 import {
 	disabledBlocks,
 	i18n,
@@ -10,12 +25,10 @@ import {
 	showProNoticesOption,
 	welcomeSrcUrl,
 } from 'stackable'
-import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
-import { send as ajaxSend } from '@wordpress/ajax'
-import blockData from './blocks'
+import {
+	Tab, TabList, TabPanel, Tabs,
+} from 'react-tabs'
 import classnames from 'classnames'
-import domReady from '@wordpress/dom-ready'
-import { Spinner } from '@wordpress/components'
 
 class BlockToggler extends Component {
 	constructor() {
@@ -47,7 +60,7 @@ class BlockToggler extends Component {
 					alert( message ) // eslint-disable-line no-alert
 				},
 				data: {
-					nonce: nonce,
+					nonce,
 					disabledBlocks: this.state.disabledBlocks,
 				},
 			} )
@@ -84,7 +97,6 @@ class BlockToggler extends Component {
 				<div className="s-settings-grid">
 					{ Object.keys( blockData ).map( ( blockName, i ) => {
 						const block = blockData[ blockName ]
-						const blockNameTrim = blockName.replace( /\w+\//, '' )
 
 						// Don't show blocks that we really hide due to deprecation.
 						if ( block.sDeprecated ) {
@@ -98,6 +110,7 @@ class BlockToggler extends Component {
 							's-is-disabled': isDisabled,
 						} )
 
+						const blockNameTrim = blockName.replace( /\w+\//, '' )
 						return (
 							<div key={ i + 1 } className={ mainClasses }>
 								<img src={ `${ welcomeSrcUrl }/images/block-${ blockNameTrim }.svg` } alt={ `${ block.title } icon` } className="s-block-icon" />

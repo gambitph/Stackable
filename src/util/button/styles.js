@@ -1,6 +1,13 @@
-import { createTypographyStyles, whiteIfDarkBlackIfLight } from '@stackable/util'
+/**
+ * External dependencies
+ */
+import { createTypographyStyles, whiteIfDarkBlackIfLight } from '~stackable/util'
 import { camelCase } from 'lodash'
 import deepmerge from 'deepmerge'
+
+/**
+ * WordPress dependencies
+ */
 import { sprintf } from '@wordpress/i18n'
 
 export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '', blockAttributes = {} ) => {

@@ -1,7 +1,14 @@
+/**
+ * External dependencies
+ */
 import {
 	createButtonStyleSet,
-} from '@stackable/util'
+} from '~stackable/util'
 import deepmerge from 'deepmerge'
+
+/**
+ * WordPress dependencies
+ */
 import { sprintf } from '@wordpress/i18n'
 
 export const createStyles = props => {

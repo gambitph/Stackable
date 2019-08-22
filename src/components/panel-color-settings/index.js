@@ -2,9 +2,16 @@
  * A Panel for selecting designs
  */
 
+/**
+ * External dependencies
+ */
+import { ColorPaletteControl } from '~stackable/components'
+
+/**
+ * WordPress dependencies
+ */
 import { __, sprintf } from '@wordpress/i18n'
 import { ColorIndicator, PanelBody } from '@wordpress/components'
-import { ColorPaletteControl } from '@stackable/components'
 import { i18n } from 'stackable'
 
 function PanelColorSettings( props ) {

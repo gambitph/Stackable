@@ -2,13 +2,24 @@
  * BLOCK: Pricing Box Block.
  */
 
-import { disabledBlocks, i18n } from 'stackable'
-import { __ } from '@wordpress/i18n'
+/**
+ * Internal dependencies
+ */
 import deprecate from './deprecated'
-import { descriptionPlaceholder } from '@stackable/util'
+
+/**
+ * External dependencies
+ */
+import { descriptionPlaceholder } from '~stackable/util'
 import edit from './edit'
-import { PricingBoxIcon } from '@stackable/icons'
+import { PricingBoxIcon } from '~stackable/icons'
 import save from './save'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+import { disabledBlocks, i18n } from 'stackable'
 
 const schema = {
 	pricingBoxColor: {

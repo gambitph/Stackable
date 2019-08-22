@@ -1,6 +1,13 @@
+/**
+ * External dependencies
+ */
+import { SvgIcon } from '~stackable/components'
 import classnames from 'classnames'
+
+/**
+ * WordPress dependencies
+ */
 import { RichText } from '@wordpress/block-editor'
-import { SvgIcon } from '@stackable/components'
 
 export const DeprecatedButtonContent_1_15_5 = props => {
 	const {

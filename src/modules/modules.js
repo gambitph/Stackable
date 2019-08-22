@@ -1,3 +1,6 @@
+/**
+ * Internal dependencies
+ */
 import { modules as modulesToRegister } from './'
 
 const modules = {}

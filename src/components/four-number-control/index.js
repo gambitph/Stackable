@@ -1,6 +1,19 @@
-import { BaseControl, Dashicon, IconButton } from '@wordpress/components'
-import { __ } from '@wordpress/i18n'
+/**
+ * Internal dependencies
+ */
 import BaseControlMultiLabel from '../base-control-multi-label'
+
+/**
+ * WordPress dependencies
+ */
+import {
+	BaseControl, Dashicon, IconButton,
+} from '@wordpress/components'
+import { __ } from '@wordpress/i18n'
+
+/**
+ * External dependencies
+ */
 import classnames from 'classnames'
 import { Component } from '@wordpress/element'
 import { i18n } from 'stackable'

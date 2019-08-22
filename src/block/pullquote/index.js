@@ -1,9 +1,11 @@
 /**
  * BLOCK: Pullquote
  */
-
-import { BlockquoteIcon } from '@stackable/icons'
-import { descriptionPlaceholder } from '@stackable/util'
+/**
+ * External dependencies
+ */
+import { BlockquoteIcon } from '~stackable/icons'
+import { descriptionPlaceholder } from '~stackable/util'
 
 export const schema = {
 	text: {

@@ -1,11 +1,14 @@
+/**
+ * WordPress dependencies
+ */
 import domReady from '@wordpress/dom-ready'
 
-export const openAccordion = el => {
+const openAccordion = el => {
 	el.classList.toggle( 'ugb-accordion--open' )
 	el.setAttribute( 'aria-expanded', el.classList.contains( 'ugb-accordion--open' ) ? 'true' : 'false' )
 }
 
-export const detectMaxHeight = el => {
+const detectMaxHeight = el => {
 	const isOpen = el.classList.contains( 'ugb-accordion--open' )
 
 	// Open the accordion if needed.
@@ -30,7 +33,7 @@ export const detectMaxHeight = el => {
 }
 
 let instanceID = 1
-export const init = el => {
+const init = el => {
 	// Set our max-height variable.
 	detectMaxHeight( el )
 

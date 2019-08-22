@@ -1,5 +1,12 @@
+/**
+ * External dependencies
+ */
+import { ButtonEdit } from '~stackable/components'
+
+/**
+ * WordPress dependencies
+ */
 import { applyFilters } from '@wordpress/hooks'
-import { ButtonEdit } from '@stackable/components'
 import classnames from 'classnames'
 import { RichText } from '@wordpress/block-editor'
 

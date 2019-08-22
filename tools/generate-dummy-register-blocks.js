@@ -2,8 +2,8 @@
  * Gathers all the block deprecation tests, and compiles them into a single json file.
  */
 const fs = require( 'fs' )
-const glob = require( 'glob' )
 const path = require( 'path' )
+const glob = require( 'glob' )
 
 const file = './dist/dummy-block-registration.js'
 const content = `/**

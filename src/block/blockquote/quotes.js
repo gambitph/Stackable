@@ -1,5 +1,6 @@
-import { __ } from '@wordpress/i18n'
-import { i18n } from 'stackable'
+/**
+ * Internal dependencies
+ */
 import SVGRoundFatQuote from './images/round-fat.svg'
 import SVGRoundQuote from './images/round.svg'
 import SVGRoundThickQuote from './images/round-thick.svg'
@@ -10,15 +11,25 @@ import SVGSquareQuote from './images/square.svg'
 import SVGSquareSimpleQuote from './images/square-simple.svg'
 import SVGSquareThinQuote from './images/square-thin.svg'
 
-export const RoundQuote = ( style = {} ) => <SVGRoundQuote style={ style } />
-export const RoundThinQuote = ( style = {} ) => <SVGRoundThinQuote style={ style } />
-export const RoundThickQuote = ( style = {} ) => <SVGRoundThickQuote style={ style } />
-export const RoundFatQuote = ( style = {} ) => <SVGRoundFatQuote style={ style } />
-export const SquareQuote = ( style = {} ) => <SVGSquareQuote style={ style } />
-export const SquareFatQuote = ( style = {} ) => <SVGSquareFatQuote style={ style } />
-export const SquareModernQuote = ( style = {} ) => <SVGSquareModernQuote style={ style } />
-export const SquareSimpleQuote = ( style = {} ) => <SVGSquareSimpleQuote style={ style } />
-export const SquareThinQuote = ( style = {} ) => <SVGSquareThinQuote style={ style } />
+/**
+ * External dependencies
+ */
+import { i18n } from 'stackable'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+
+const RoundQuote = ( style = {} ) => <SVGRoundQuote style={ style } />
+const RoundThinQuote = ( style = {} ) => <SVGRoundThinQuote style={ style } />
+const RoundThickQuote = ( style = {} ) => <SVGRoundThickQuote style={ style } />
+const RoundFatQuote = ( style = {} ) => <SVGRoundFatQuote style={ style } />
+const SquareQuote = ( style = {} ) => <SVGSquareQuote style={ style } />
+const SquareFatQuote = ( style = {} ) => <SVGSquareFatQuote style={ style } />
+const SquareModernQuote = ( style = {} ) => <SVGSquareModernQuote style={ style } />
+const SquareSimpleQuote = ( style = {} ) => <SVGSquareSimpleQuote style={ style } />
+const SquareThinQuote = ( style = {} ) => <SVGSquareThinQuote style={ style } />
 
 export const QUOTE_ICONS = {
 	'round-thin': {

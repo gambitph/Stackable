@@ -1,7 +1,18 @@
+/**
+ * Internal dependencies
+ */
+import SVGImageIcon from './images/image.svg'
+
+/**
+ * External dependencies
+ */
 import classnames from 'classnames'
+
+/**
+ * WordPress dependencies
+ */
 import { Dashicon } from '@wordpress/components'
 import { MediaUpload } from '@wordpress/block-editor'
-import SVGImageIcon from './images/image.svg'
 
 const ImageUploadPlaceholder = props => {
 	const {

@@ -1,3 +1,6 @@
+/**
+ * External dependencies
+ */
 import {
 	DeprecatedButtonContent_1_10,
 	DeprecatedButtonContent_1_12,
@@ -5,11 +8,15 @@ import {
 	DeprecatedButtonContent_1_4,
 	DeprecatedButtonContent_1_9,
 	DeprecatedButtonContent_1_9_1,
-} from '@stackable/components/button-edit'
+} from '~stackable/components/button-edit'
+import { descriptionPlaceholder } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
-import { descriptionPlaceholder } from '@stackable/util'
 import { RichText } from '@wordpress/block-editor'
 
 export const deprecatedSave_1_15_5 = props => {

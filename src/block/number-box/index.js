@@ -1,21 +1,31 @@
 /**
  * BLOCK: Number Box Block.
  */
-
+/**
+ * External dependencies
+ */
 import {
 	createAllCombinationAttributes,
 	createBackgroundAttributes,
 	createResponsiveAttributes,
 	createTypographyAttributes,
 	descriptionPlaceholder,
-} from '@stackable/util'
-import { disabledBlocks, i18n } from 'stackable'
-import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
+} from '~stackable/util'
+
+/**
+ * Internal dependencies
+ */
 import { default as deprecated } from './deprecated'
 import { default as edit } from './edit'
-import { NumberBoxIcon } from '@stackable/icons'
+import { NumberBoxIcon } from '~stackable/icons'
 import { default as save } from './save'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
+import { disabledBlocks, i18n } from 'stackable'
 
 export const schema = {
 	num1: {

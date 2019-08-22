@@ -1,8 +1,19 @@
-import classnames from 'classnames'
-import { descriptionPlaceholder } from '@stackable/util'
-import md5 from 'md5'
-import { RichText } from '@wordpress/block-editor'
+/**
+ * Internal dependencies
+ */
 import SVGArrowIconV112 from './images/arrow-v1-12.svg'
+
+/**
+ * External dependencies
+ */
+import { descriptionPlaceholder } from '~stackable/util'
+import classnames from 'classnames'
+import md5 from 'md5'
+
+/**
+ * WordPress dependencies
+ */
+import { RichText } from '@wordpress/block-editor'
 
 const deprecatedSchema_1_12 = {
 	heading: {

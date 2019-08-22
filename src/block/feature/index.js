@@ -2,13 +2,24 @@
  * BLOCK: Feature Block.
  */
 
-import { disabledBlocks, i18n } from 'stackable'
-import { __ } from '@wordpress/i18n'
+/**
+ * Internal dependencies
+ */
 import deprecated from './deprecated'
-import { descriptionPlaceholder } from '@stackable/util'
+
+/**
+ * External dependencies
+ */
+import { descriptionPlaceholder } from '~stackable/util'
 import edit from './edit'
-import { FeatureIcon } from '@stackable/icons'
+import { FeatureIcon } from '~stackable/icons'
 import save from './save'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+import { disabledBlocks, i18n } from 'stackable'
 
 export const schema = {
 	textColor: {

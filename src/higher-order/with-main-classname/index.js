@@ -1,4 +1,11 @@
+/**
+ * WordPress dependencies
+ */
 import { applyFilters } from '@wordpress/hooks'
+
+/**
+ * External dependencies
+ */
 import classnames from 'classnames'
 import { Component } from '@wordpress/element'
 import { createHigherOrderComponent } from '@wordpress/compose'

@@ -1,3 +1,6 @@
+/**
+ * External dependencies
+ */
 import {
 	AdvancedRangeControl,
 	AdvancedSelectControl,
@@ -7,7 +10,12 @@ import {
 	ImageControl,
 	TextToolbar,
 	WhenResponsiveScreen,
-} from '@stackable/components'
+} from '~stackable/components'
+import { urlIsVideo } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
 import {
 	BaseControl,
 	RangeControl,
@@ -16,7 +24,6 @@ import {
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
-import { urlIsVideo } from '@stackable/util'
 
 const BackgroundControls = props => {
 	const isBackgroundVideo = () => {
@@ -31,6 +38,7 @@ const BackgroundControls = props => {
 			{ props.onChangeBackgroundColorType && (
 				<BaseControl
 					label={ __( 'Background Color Type', i18n ) }
+					id="ugb-background-color-type"
 				>
 					<TextToolbar
 						controls={ [

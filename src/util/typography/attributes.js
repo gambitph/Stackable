@@ -1,7 +1,10 @@
 /**
  * Creates all the attributes needed for the Typography Control component
  */
-import { createAllCombinationAttributes } from '@stackable/util'
+/**
+ * External dependencies
+ */
+import { createAllCombinationAttributes } from '~stackable/util'
 
 const createTypographyAttributes = attrNameTemplate => {
 	return {

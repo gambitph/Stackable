@@ -1,9 +1,17 @@
+/**
+ * External dependencies
+ */
+import {
+	HorizontalAlignmentToolbar, PanelBackgroundSettings, ProControl, VerticalAlignmentToolbar,
+} from '~stackable/components'
+import { descriptionPlaceholder } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
 import {
 	AlignmentToolbar, BlockControls, InnerBlocks, InspectorControls, PanelColorSettings,
 } from '@wordpress/block-editor'
-import {
-	HorizontalAlignmentToolbar, PanelBackgroundSettings, ProControl, VerticalAlignmentToolbar,
-} from '@stackable/components'
 import { i18n, showProNotice } from 'stackable'
 import {
 	PanelBody, RangeControl, SelectControl, ToggleControl,
@@ -11,7 +19,6 @@ import {
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
-import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
 
 const TEMPLATE = [

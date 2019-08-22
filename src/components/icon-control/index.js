@@ -1,4 +1,11 @@
+/**
+ * WordPress dependencies
+ */
 import { Component, Fragment } from '@wordpress/element'
+
+/**
+ * External dependencies
+ */
 import { config, library } from '@fortawesome/fontawesome-svg-core'
 import { BaseControl } from '@wordpress/components'
 import { fab } from '@fortawesome/free-brands-svg-icons'
@@ -75,7 +82,9 @@ export const isValidIconValue = value => {
 		return false
 	}
 
-	const icons = { fab, far, fas }
+	const icons = {
+		fab, far, fas,
+	}
 	const matches = Object.values( icons[ prefix ] ).filter( icon => icon.iconName === iconArray[ 1 ] )
 	return matches.length > 0
 }

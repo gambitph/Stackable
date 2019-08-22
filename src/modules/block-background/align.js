@@ -6,8 +6,15 @@
  * BUT, since we removed the "align" support, normal alignments functionality stop working.
  * These methods bring the functionality back by mimicking "@wordpress/block-editor/src/hooks/align.js"
  */
+/**
+ * WordPress dependencies
+ */
 import { compose, createHigherOrderComponent } from '@wordpress/compose'
 import { addFilter } from '@wordpress/hooks'
+
+/**
+ * External dependencies
+ */
 import classnames from 'classnames'
 import { includes } from 'lodash'
 import { withSelect } from '@wordpress/data'

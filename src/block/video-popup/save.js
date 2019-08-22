@@ -1,12 +1,23 @@
-import { createVideoBackground, hasBackgroundOverlay } from '@stackable/util'
-import { withBlockStyles, withUniqueClass } from '@stackable/higher-order'
+/**
+ * External dependencies
+ */
+import { createVideoBackground, hasBackgroundOverlay } from '~stackable/util'
+import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+import { BlockContainer } from '~stackable/components'
+
+/**
+ * Internal dependencies
+ */
+import createStyles from './style'
+import { getPlayButton } from './util'
+
+/**
+ * WordPress dependencies
+ */
 import { applyFilters } from '@wordpress/hooks'
-import { BlockContainer } from '@stackable/components'
 import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
-import createStyles from './style'
 import { Fragment } from '@wordpress/element'
-import { getPlayButton } from './util'
 
 const save = props => {
 	const { className } = props

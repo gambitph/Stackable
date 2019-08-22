@@ -1,4 +1,11 @@
+/**
+ * External dependencies
+ */
 import counterUp from 'counterup2'
+
+/**
+ * WordPress dependencies
+ */
 import domReady from '@wordpress/dom-ready'
 
 domReady( () => {
@@ -8,7 +15,7 @@ domReady( () => {
 		el.classList.add( 'ugb-countup--hide' )
 		new Waypoint( {
 			element: el,
-			handler: function() {
+			handler() {
 				counterUp( el )
 				el.classList.remove( 'ugb-countup--hide' )
 				this.destroy()

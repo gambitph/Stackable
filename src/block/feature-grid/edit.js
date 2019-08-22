@@ -1,7 +1,21 @@
+/**
+ * External dependencies
+ */
 import {
 	ButtonEdit, DesignPanelBody, ImageUploadPlaceholder, PanelButtonSettings, ProControl, ProControlButton, URLInputControl,
-} from '@stackable/components'
+} from '~stackable/components'
+import { descriptionPlaceholder } from '~stackable/util'
+
+/**
+ * Internal dependencies
+ */
+import ImageDesignBasic from './images/basic.png'
+import ImageDesignPlain from './images/plain.png'
 import { i18n, showProNotice } from 'stackable'
+
+/**
+ * WordPress dependencies
+ */
 import {
 	InspectorControls, RichText,
 } from '@wordpress/block-editor'
@@ -11,10 +25,7 @@ import {
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
-import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
-import ImageDesignBasic from './images/basic.png'
-import ImageDesignPlain from './images/plain.png'
 
 const edit = props => {
 	const {
@@ -181,7 +192,9 @@ const edit = props => {
 												[ `imageAlt${ i }` ]: '',
 											} )
 										} }
-										onChange={ ( { url, id, alt } ) => {
+										onChange={ ( {
+											url, id, alt,
+										} ) => {
 											setAttributes( {
 												[ `imageUrl${ i }` ]: url,
 												[ `imageID${ i }` ]: id,

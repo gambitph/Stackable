@@ -1,3 +1,5 @@
+var path = require( 'path' )
+
 module.exports = {
 	root: true,
 	extends: [
@@ -19,8 +21,13 @@ module.exports = {
 		// Force destructuring assignments to be multiline if they have lots of variables.
 		'object-curly-newline': ["error", {
 			multiline: true,
-			minProperties: 6,
-			consistent: true
+			minProperties: 3,
+			consistent: true,
+		}],
+
+		// I don't like block comments that are too close.
+		'lines-around-comment': ["error", {
+			beforeBlockComment: true,
 		}],
 
 		// Allow assigning same named variables (mainly for function arguments) in inside code-blocks.
@@ -33,12 +40,17 @@ module.exports = {
 		'no-mixed-spaces-and-tabs': ["error", "smart-tabs"],
 
 		// Sort to find stuff easier.
-		'sort-imports': ["error", { "ignoreCase": true }],
 		'sort-vars': ["error", { "ignoreCase": true }],
 		// 'sort-keys': ["error", "asc", {caseSensitive: false, natural: true}],
 
 		// Allow arrays to be consistently vertical or horizontal.
 		'array-element-newline': ["error", "consistent"],
+
+		// We know what we're doing.
+		'@wordpress/valid-sprintf': 'off',
+
+		// Off since returning false positives.
+		'@wordpress/no-unused-vars-before-return': 'off',
 	},
 	globals: {
 		localStorage: true,
@@ -48,5 +60,5 @@ module.exports = {
 		btoa: true,
 		alert: true,
 		Element: true,
-	}
+	},
 };

@@ -2,13 +2,24 @@
  * BLOCK: Card Block.
  */
 
-import { disabledBlocks, i18n } from 'stackable'
-import { __ } from '@wordpress/i18n'
-import { CardIcon } from '@stackable/icons'
+/**
+ * External dependencies
+ */
+import { CardIcon } from '~stackable/icons'
+
+/**
+ * Internal dependencies
+ */
 import deprecated from './deprecated'
-import { descriptionPlaceholder } from '@stackable/util'
+import { descriptionPlaceholder } from '~stackable/util'
 import edit from './edit'
 import save from './save'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+import { disabledBlocks, i18n } from 'stackable'
 
 export const schema = {
 	mediaID: {

@@ -1,5 +1,12 @@
-import { BackgroundControls } from '@stackable/components'
+/**
+ * External dependencies
+ */
+import { BackgroundControls } from '~stackable/components'
 import { camelCase } from 'lodash'
+
+/**
+ * WordPress dependencies
+ */
 import { sprintf } from '@wordpress/i18n'
 
 const BackgroundControlsHelper = props => {

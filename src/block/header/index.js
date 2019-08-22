@@ -1,14 +1,33 @@
 /**
  * BLOCK: Header Block.
  */
+
+/**
+ * External dependencies
+ */
+import {
+	createAllCombinationAttributes,
+	createBackgroundAttributes,
+	createButtonAttributes,
+	createResponsiveAttributes,
+	createTypographyAttributes,
+	descriptionPlaceholder,
+} from '~stackable/util'
+
+/**
+ * Internal dependencies
+ */
+import deprecated from './deprecated'
+import edit from './edit'
+import { HeaderIcon } from '~stackable/icons'
+import save from './save'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { disabledBlocks, i18n } from 'stackable'
-import { __ } from '@wordpress/i18n'
-import deprecated from './deprecated'
-import { descriptionPlaceholder, createBackgroundAttributes, createAllCombinationAttributes, createResponsiveAttributes, createTypographyAttributes, createButtonAttributes } from '@stackable/util'
-import edit from './edit'
-import { HeaderIcon } from '@stackable/icons'
-import save from './save'
 
 const schema = {
 	restrictContentWidth: {

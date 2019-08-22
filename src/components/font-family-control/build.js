@@ -4,8 +4,8 @@
  * Downloads & generates list of Google Fonts.
  */
 
-const request = require( 'request' )
 const path = require( 'path' )
+const request = require( 'request' )
 const jsonfile = require( 'jsonfile' )
 
 const file = './google-fonts.json'

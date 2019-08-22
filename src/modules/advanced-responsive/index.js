@@ -1,7 +1,16 @@
-import { addFilter, applyFilters, doAction } from '@wordpress/hooks'
+/**
+ * WordPress dependencies
+ */
+import {
+	addFilter, applyFilters, doAction,
+} from '@wordpress/hooks'
 import { PanelBody, ToggleControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
+
+/**
+ * External dependencies
+ */
 import { i18n } from 'stackable'
 
 const responsivePanel = blockName => ( output, props ) => {

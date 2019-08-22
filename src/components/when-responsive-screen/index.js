@@ -1,6 +1,15 @@
+/**
+ * External dependencies
+ */
+import { getSelectedScreen } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
 import { addAction, removeAction } from '@wordpress/hooks'
-import { Children, cloneElement, Component, Fragment } from '@wordpress/element'
-import { getSelectedScreen } from '@stackable/util'
+import {
+	Children, cloneElement, Component, Fragment,
+} from '@wordpress/element'
 import { withInstanceId } from '@wordpress/compose'
 
 class WhenResponsiveScreen extends Component {

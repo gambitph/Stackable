@@ -1,23 +1,46 @@
+/**
+ * Internal dependencies
+ */
 import './designs'
+import ImageDesignBasic from './images/basic.png'
+import ImageDesignList from './images/list.png'
+
+/**
+ * External dependencies
+ */
 import {
-	AlignmentToolbar, BlockControls, InspectorControls, PanelColorSettings,
+	DesignPanelBody, ProControl, ProControlButton,
+} from '~stackable/components/'
+import { i18n, showProNotice } from 'stackable'
+import { isUndefined, pickBy } from 'lodash'
+import classnames from 'classnames'
+
+/**
+ * WordPress dependencies
+ */
+import {
+	AlignmentToolbar,
+	BlockControls,
+	InspectorControls,
+	PanelColorSettings,
 } from '@wordpress/block-editor'
 import { Component, Fragment } from '@wordpress/element'
 import { dateI18n, format } from '@wordpress/date'
-import { DesignPanelBody, ProControl, ProControlButton } from '@stackable/components/'
-import { i18n, showProNotice } from 'stackable'
-import { isUndefined, pickBy } from 'lodash'
 import {
-	PanelBody, Placeholder, QueryControls, RangeControl, SelectControl, Spinner, TextControl, ToggleControl,
+	PanelBody,
+	Placeholder,
+	QueryControls,
+	RangeControl,
+	SelectControl,
+	Spinner,
+	TextControl,
+	ToggleControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { addQueryArgs } from '@wordpress/url'
 import apiFetch from '@wordpress/api-fetch'
 import { applyFilters } from '@wordpress/hooks'
-import classnames from 'classnames'
 import { decodeEntities } from '@wordpress/htmlEntities'
-import ImageDesignBasic from './images/basic.png'
-import ImageDesignList from './images/list.png'
 import { withSelect } from '@wordpress/data'
 
 const featuredImageShapes = [
@@ -303,6 +326,7 @@ class Edit extends Component {
 						)
 						const featuredImage = displayFeaturedImage && featuredImageSrc && (
 							<figure className={ featuredImageClasses } style={ featuredImageStyle }>
+								{ /* eslint-disable-next-line */ }
 								<a href={ post.link } target="_blank">
 									<img src={ featuredImageSrc } alt={ __( 'featured', i18n ) } />
 								</a>

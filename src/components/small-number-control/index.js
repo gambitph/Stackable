@@ -1,3 +1,6 @@
+/**
+ * WordPress dependencies
+ */
 import { TextControl } from '@wordpress/components'
 
 const SmallNumberControl = props => {

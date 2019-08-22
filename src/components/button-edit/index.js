@@ -1,8 +1,15 @@
+/**
+ * External dependencies
+ */
+import { SvgIcon } from '~stackable/components'
+
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 import { RichText } from '@wordpress/block-editor'
-import { SvgIcon } from '@stackable/components'
 
 // Deprecated ButtonEdit.Content methods.
 export * from './deprecated'

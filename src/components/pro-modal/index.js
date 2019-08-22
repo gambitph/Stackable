@@ -1,9 +1,20 @@
+/**
+ * Internal dependencies
+ */
+import SVGNext from './images/next.svg'
+import SVGPrev from './images/prev.svg'
+
+/**
+ * External dependencies
+ */
 import { i18n, pricingURL } from 'stackable'
+
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n'
 import { Component } from '@wordpress/element'
 import { Modal } from '@wordpress/components'
-import SVGNext from './images/next.svg'
-import SVGPrev from './images/prev.svg'
 
 class ProModal extends Component {
 	constructor() {
@@ -73,21 +84,22 @@ class ProModal extends Component {
 							<a href={ pricingURL }
 								className="button button-secondary"
 								target="_blank"
+								rel="noopener noreferrer"
 								title={ __( 'Go Premium', i18n ) }
 							>
 								{ __( 'Go Premium', i18n ) }
 							</a>
 							<a href="https://rebrand.ly/plugin-premium-demo"
 								className="button button-secondary button-ghost"
-								target="_blank" // eslint-disable-line
-								rel="noopener"
+								target="_blank"
+								rel="noopener noreferrer"
 								title={ __( 'Try Premium Demo', i18n ) }
 							>
 								{ __( 'Try Premium Demo', i18n ) }
 							</a>
 							<a href="https://rebrand.ly/plugin-slider-premium"
-								target="_blank" // eslint-disable-line
-								rel="noopener"
+								target="_blank"
+								rel="noopener noreferrer"
 								title={ __( 'Visit Site', i18n ) }
 							>
 								{ __( 'Visit Site', i18n ) }

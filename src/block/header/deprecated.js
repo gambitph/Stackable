@@ -1,3 +1,6 @@
+/**
+ * External dependencies
+ */
 import {
 	DeprecatedButtonContent_1_10,
 	DeprecatedButtonContent_1_12,
@@ -5,11 +8,15 @@ import {
 	DeprecatedButtonContent_1_1_2,
 	DeprecatedButtonContent_1_4,
 	DeprecatedButtonContent_1_9,
-} from '@stackable/components/button-edit'
+} from '~stackable/components/button-edit'
+import { descriptionPlaceholder } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
-import { descriptionPlaceholder } from '@stackable/util'
 import { i18n } from 'stackable'
 import { RichText } from '@wordpress/block-editor'
 
@@ -966,7 +973,7 @@ export const deprecatedSave_1_4 = props => {
 	return (
 		<div className={ mainClasses }>
 			<div className={ overlayClasses }
-				style={ { backgroundColor: backgroundColor } }>
+				style={ { backgroundColor } }>
 			</div>
 			<section
 				key="preview"
@@ -1100,7 +1107,7 @@ export const deprecatedSave_1_1_2 = props => {
 	return (
 		<div className={ `ugb-header ${ imageClass } ${ displayNone }` }>
 			<div className={ `ugb-header-overlay ${ opacityClass }` }
-				style={ { backgroundColor: backgroundColor } }>
+				style={ { backgroundColor } }>
 			</div>
 			<section
 				key="preview"

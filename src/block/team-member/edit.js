@@ -1,7 +1,21 @@
+/**
+ * External dependencies
+ */
 import {
 	DesignPanelBody, ImageUploadPlaceholder, ProControl, ProControlButton,
-} from '@stackable/components'
+} from '~stackable/components'
+import { descriptionPlaceholder } from '~stackable/util'
+
+/**
+ * Internal dependencies
+ */
+import ImageDesignBasic from './images/basic.png'
+import ImageDesignPlain from './images/plain.png'
 import { i18n, showProNotice } from 'stackable'
+
+/**
+ * WordPress dependencies
+ */
 import {
 	InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/block-editor'
@@ -11,10 +25,7 @@ import {
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
-import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
-import ImageDesignBasic from './images/basic.png'
-import ImageDesignPlain from './images/plain.png'
 
 const edit = props => {
 	const {
@@ -100,8 +111,8 @@ const edit = props => {
 							label={ __( 'Image Shape', i18n ) }
 							value={ shapes }
 							options={ shape.map( ( { value, label } ) => ( {
-								value: value,
-								label: label,
+								value,
+								label,
 							} ) ) }
 							onChange={ newShape => {
 								setAttributes( { shapes: newShape } )

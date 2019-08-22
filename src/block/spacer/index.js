@@ -2,14 +2,25 @@
  * BLOCK: Spacer Block.
  */
 
-import { disabledBlocks, i18n } from 'stackable'
-import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
-import { createResponsiveAttributes } from '@stackable/util'
+/**
+ * External dependencies
+ */
+import { createResponsiveAttributes } from '~stackable/util'
+
+/**
+ * Internal dependencies
+ */
 import deprecated from './deprecated'
 import edit from './edit'
 import save from './save'
-import { SpacerIcon } from '@stackable/icons'
+import { SpacerIcon } from '~stackable/icons'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+import { disabledBlocks, i18n } from 'stackable'
+import { applyFilters } from '@wordpress/hooks'
 
 export const schema = {
 	...createResponsiveAttributes( '%sHeight', {

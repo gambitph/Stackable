@@ -1,9 +1,20 @@
+/**
+ * External dependencies
+ */
+import { CodeTextarea } from '~stackable/components'
+
+/**
+ * Internal dependencies
+ */
+import { validateBlockHTML } from '../../util'
+
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n'
 import { BaseControl } from '@wordpress/components'
-import { CodeTextarea } from '@stackable/components'
 import { Component } from '@wordpress/element'
 import { i18n } from 'stackable'
-import { validateBlockHTML } from '../../util'
 
 const editorSettings = {
 	codemirror: {

@@ -1,6 +1,13 @@
+/**
+ * External dependencies
+ */
+import { TypographyControl } from '~stackable/components'
 import { camelCase } from 'lodash'
+
+/**
+ * WordPress dependencies
+ */
 import { sprintf } from '@wordpress/i18n'
-import { TypographyControl } from '@stackable/components'
 
 const TypographyControlHelper = props => {
 	const { setAttributes } = props

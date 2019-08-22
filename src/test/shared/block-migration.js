@@ -4,8 +4,14 @@
  * Block migration should preserve the value of the `align` & `className` attribute
  * TODO: Remove tests that use this!
  */
+/**
+ * External dependencies
+ */
+import { createAttributeValues, getDefaultAttributes } from '~stackable/test/helpers'
 
-import { createAttributeValues, getDefaultAttributes } from '@stackable/test/helpers'
+/**
+ * WordPress dependencies
+ */
 import {
 	createBlock,
 	getBlockTypes,

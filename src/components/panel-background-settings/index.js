@@ -1,14 +1,27 @@
+/**
+ * External dependencies
+ */
+import {
+	ColorPaletteControl, PanelColorSettings, TextToolbar,
+} from '~stackable/components'
+
+/**
+ * Internal dependencies
+ */
+import ImageControl from '../image-control'
+
+/**
+ * WordPress dependencies
+ */
 import {
 	BaseControl,
 	RangeControl,
 	ToggleControl,
 } from '@wordpress/components'
-import { ColorPaletteControl, PanelColorSettings, TextToolbar } from '@stackable/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
-import ImageControl from '../image-control'
 
 // TODO: Don't use this anymore.
 function PanelBackgroundSettings( props ) {
@@ -45,6 +58,7 @@ function PanelBackgroundSettings( props ) {
 				{ onChangeBackgroundColorType && (
 					<BaseControl
 						label={ __( 'Background Color Type', i18n ) }
+						id="background-color-type-control"
 					>
 						<TextToolbar
 							controls={ [

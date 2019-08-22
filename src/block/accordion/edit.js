@@ -1,10 +1,26 @@
+/**
+ * Internal dependencies
+ */
+import imageDesignBasic from './images/basic.png'
+import imageDesignPlain from './images/plain.png'
+import { ArrowIcon } from './index'
+
+/**
+ * External dependencies
+ */
 import {
 	ColorPaletteControl,
 	DesignPanelBody,
 	ProControl,
 	ProControlButton,
-} from '@stackable/components'
+} from '~stackable/components'
+import { descriptionPlaceholder } from '~stackable/util'
 import { i18n, showProNotice } from 'stackable'
+import classnames from 'classnames'
+
+/**
+ * WordPress dependencies
+ */
 import {
 	InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/block-editor'
@@ -13,12 +29,7 @@ import {
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
-import { ArrowIcon } from './index'
-import classnames from 'classnames'
-import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
-import imageDesignBasic from './images/basic.png'
-import imageDesignPlain from './images/plain.png'
 
 const edit = props => {
 	const {

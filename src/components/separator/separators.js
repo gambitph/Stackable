@@ -1,3 +1,6 @@
+/**
+ * Internal dependencies
+ */
 import SVGCurve1 from './images/curve-1.svg'
 import SVGCurve1Shadow from './images/curve-1-shadow.svg'
 import SVGCurve2 from './images/curve-2.svg'

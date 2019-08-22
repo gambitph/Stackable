@@ -1,8 +1,14 @@
 /**
  * All block descriptions and titles are copied here.
  */
-
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n'
+
+/**
+ * External dependencies
+ */
 import { i18n } from 'stackable'
 
 const blocks = {

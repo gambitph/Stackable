@@ -1,5 +1,16 @@
-import { BaseControl, RangeControl } from '@wordpress/components'
+/**
+ * Internal dependencies
+ */
 import BaseControlMultiLabel from '../base-control-multi-label'
+
+/**
+ * WordPress dependencies
+ */
+import { BaseControl, RangeControl } from '@wordpress/components'
+
+/**
+ * External dependencies
+ */
 import classnames from 'classnames'
 import { omit } from 'lodash'
 

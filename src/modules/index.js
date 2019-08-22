@@ -1,3 +1,6 @@
+/**
+ * Internal dependencies
+ */
 import advancedBlockSpacing from './advanced-block-spacing'
 import advancedColumnSpacing from './advanced-column-spacing'
 import advancedResponsive from './advanced-responsive'

@@ -1,5 +1,12 @@
+/**
+ * External dependencies
+ */
+import { BlockStyles } from '~stackable/components'
+
+/**
+ * WordPress dependencies
+ */
 import { applyFilters } from '@wordpress/hooks'
-import { BlockStyles } from '@stackable/components'
 import classnames from 'classnames'
 import { Component } from '@wordpress/element'
 import { createHigherOrderComponent } from '@wordpress/compose'

@@ -1,4 +1,7 @@
-import { getBlockModifiedAttributes } from '@stackable/test/helpers'
+/**
+ * External dependencies
+ */
+import { getBlockModifiedAttributes } from '~stackable/test/helpers'
 
 const blockStyleTests = props => {
 	const {

@@ -4,6 +4,9 @@
  * Registering a basic block with Gutenberg.
  * Simple block, renders and saves the same content without any interactivity.
  */
+/**
+ * External dependencies
+ */
 import {
 	createAllCombinationAttributes,
 	createBackgroundAttributes,
@@ -11,14 +14,22 @@ import {
 	createResponsiveAttributes,
 	createTypographyAttributes,
 	descriptionPlaceholder,
-} from '@stackable/util'
-import { disabledBlocks, i18n } from 'stackable'
-import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
-import { CTAIcon } from '@stackable/icons'
+} from '~stackable/util'
+import { CTAIcon } from '~stackable/icons'
+
+/**
+ * Internal dependencies
+ */
 import deprecated from './deprecated'
 import edit from './edit'
 import save from './save'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
+import { disabledBlocks, i18n } from 'stackable'
 
 const schema = {
 	design: {

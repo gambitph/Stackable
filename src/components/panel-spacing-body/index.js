@@ -1,5 +1,12 @@
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
+
+/**
+ * External dependencies
+ */
 import { i18n } from 'stackable'
 import { PanelBody } from '@wordpress/components'
 

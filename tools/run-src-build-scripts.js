@@ -3,8 +3,8 @@
  */
 
 const childProcess = require( 'child_process' )
-const glob = require( 'glob' )
 const path = require( 'path' )
+const glob = require( 'glob' )
 
 const log = file => {
 	const displayFile = file.replace( /\/build.js/, '' ).replace( /^(.*?)src\//, '' )

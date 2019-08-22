@@ -2,13 +2,24 @@
  * BLOCK: Team Member Block.
  */
 
-import { disabledBlocks, i18n } from 'stackable'
-import { __ } from '@wordpress/i18n'
+/**
+ * Internal dependencies
+ */
 import deprecated from './deprecated'
-import { descriptionPlaceholder } from '@stackable/util'
+
+/**
+ * External dependencies
+ */
+import { descriptionPlaceholder } from '~stackable/util'
 import edit from './edit'
 import save from './save'
-import { TeamMemberIcon } from '@stackable/icons'
+import { TeamMemberIcon } from '~stackable/icons'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+import { disabledBlocks, i18n } from 'stackable'
 
 export const schema = {
 	href1: {

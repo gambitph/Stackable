@@ -1,6 +1,9 @@
 /**
  * All the icons used in the block.
  */
+/**
+ * Internal dependencies
+ */
 import SVGArrowCircleIcon from './images/arrow-circle-icon.svg'
 import SVGArrowIcon from './images/arrow-icon.svg'
 import SVGArrowOutlineIcon from './images/arrow-outline-icon.svg'

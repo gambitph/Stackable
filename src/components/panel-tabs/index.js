@@ -1,11 +1,22 @@
+/**
+ * Internal dependencies
+ */
 import './polyfill'
+import withMemory from './with-memory'
+import withSticky from './with-sticky'
+
+/**
+ * WordPress dependencies
+ */
 import { Component, createRef } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
+
+/**
+ * External dependencies
+ */
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 import { Icon } from '@wordpress/components'
-import withMemory from './with-memory'
-import withSticky from './with-sticky'
 
 const TABS = [
 	{
@@ -109,7 +120,9 @@ class PanelTabs extends Component {
 				style={ this.props.style }
 				ref={ this.containerDiv }
 			>
-				{ TABS.map( ( { value, title, label, icon }, i ) => {
+				{ TABS.map( ( {
+					value, title, label, icon,
+				}, i ) => {
 					if ( ! this.tabsToUse.includes( value ) ) {
 						return null
 					}

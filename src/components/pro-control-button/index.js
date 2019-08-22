@@ -1,6 +1,13 @@
+/**
+ * External dependencies
+ */
+import { ProControl } from '~stackable/components'
 import classnames from 'classnames'
+
+/**
+ * WordPress dependencies
+ */
 import { Component } from '@wordpress/element'
-import { ProControl } from '@stackable/components'
 
 class ProControlButton extends Component {
 	constructor() {

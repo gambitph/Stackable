@@ -1,5 +1,6 @@
-import { __, sprintf } from '@wordpress/i18n'
-import { addFilter, applyFilters } from '@wordpress/hooks'
+/**
+ * External dependencies
+ */
 import {
 	BlockContainer,
 	ButtonControlsHelper,
@@ -8,9 +9,7 @@ import {
 	DesignPanelBody,
 	PanelAdvancedSettings,
 	ProControlButton,
-} from '@stackable/components'
-import { i18n, showProNotice } from 'stackable'
-import { PanelBody, RangeControl, SelectControl } from '@wordpress/components'
+} from '~stackable/components'
 import {
 	withBlockStyles,
 	withContentAlignReseter,
@@ -18,17 +17,31 @@ import {
 	withSetAttributeHook,
 	withTabbedInspector,
 	withUniqueClass,
-} from '@stackable/higher-order'
-import classnames from 'classnames'
-import { compose } from '@wordpress/compose'
-import { createButtonAttributeNames } from '@stackable/util'
+} from '~stackable/higher-order'
+import { createButtonAttributeNames } from '~stackable/util'
+
+/**
+ * Internal dependencies
+ */
 import createStyles from './style'
-import { Fragment } from '@wordpress/element'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignFullWidth from './images/fullwidth.png'
 import ImageDesignGrouped1 from './images/grouped-1.png'
 import ImageDesignGrouped2 from './images/grouped-2.png'
 import ImageDesignSpread from './images/spread.png'
+
+/**
+ * WordPress dependencies
+ */
+import { Fragment } from '@wordpress/element'
+import { compose } from '@wordpress/compose'
+import classnames from 'classnames'
+import {
+	PanelBody, RangeControl, SelectControl,
+} from '@wordpress/components'
+import { __, sprintf } from '@wordpress/i18n'
+import { i18n, showProNotice } from 'stackable'
+import { addFilter, applyFilters } from '@wordpress/hooks'
 
 addFilter( 'stackable.button.edit.inspector.layout.before', 'stackable/button', ( output, props ) => {
 	const { setAttributes } = props

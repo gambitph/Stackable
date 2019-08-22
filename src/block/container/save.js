@@ -1,4 +1,11 @@
+/**
+ * WordPress dependencies
+ */
 import { applyFilters } from '@wordpress/hooks'
+
+/**
+ * External dependencies
+ */
 import classnames from 'classnames'
 import { InnerBlocks } from '@wordpress/block-editor'
 

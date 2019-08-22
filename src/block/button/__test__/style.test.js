@@ -1,5 +1,12 @@
+/**
+ * Internal dependencies
+ */
 import { name, settings } from '../'
-import { blockStyleTests } from '@stackable/test/shared'
+
+/**
+ * External dependencies
+ */
+import { blockStyleTests } from '~stackable/test/shared'
 import createStyles from '../style'
 
 describe( `${ settings.title } block`, () => {
@@ -9,6 +16,8 @@ describe( `${ settings.title } block`, () => {
 			columns: 3,
 		}
 
-		blockStyleTests( { settings, name, attributes, createStyles } )
+		blockStyleTests( {
+			settings, name, attributes, createStyles,
+		} )
 	} )
 } )

@@ -1,4 +1,18 @@
+/**
+ * External dependencies
+ */
+import { descriptionPlaceholder } from '~stackable/util'
+import { ProControl } from '~stackable/components'
+
+/**
+ * Internal dependencies
+ */
+import SVGCloseIcon from './images/close-icon.svg'
 import { i18n, showProNotice } from 'stackable'
+
+/**
+ * WordPress dependencies
+ */
 import {
 	InspectorControls, PanelColorSettings, RichText,
 } from '@wordpress/block-editor'
@@ -8,10 +22,7 @@ import {
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
-import { descriptionPlaceholder } from '@stackable/util'
 import { Fragment } from '@wordpress/element'
-import { ProControl } from '@stackable/components'
-import SVGCloseIcon from './images/close-icon.svg'
 
 const edit = props => {
 	const notifAlert = [
@@ -79,8 +90,8 @@ const edit = props => {
 						label={ __( 'Notification Type', i18n ) }
 						value={ notifType }
 						options={ notifAlert.map( ( { value, label } ) => ( {
-							value: value,
-							label: label,
+							value,
+							label,
 						} ) ) }
 						onChange={ newSize => {
 							setAttributes( { notifType: newSize } )
@@ -124,7 +135,7 @@ const edit = props => {
 				<RichText
 					tagName="p"
 					value={ text }
-					onChange={ text => setAttributes( { text: text } ) }
+					onChange={ text => setAttributes( { text } ) }
 					style={ {
 						color: textColor,
 					} }

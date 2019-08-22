@@ -1,4 +1,11 @@
+/**
+ * Internal dependencies
+ */
 import DisplayLogic from '../index'
+
+/**
+ * External dependencies
+ */
 import React from 'react'
 
 describe( 'Display Logic', () => {

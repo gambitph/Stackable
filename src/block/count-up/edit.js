@@ -1,5 +1,6 @@
-import { __, sprintf } from '@wordpress/i18n'
-import { addFilter, applyFilters } from '@wordpress/hooks'
+/**
+ * External dependencies
+ */
 import {
 	AdvancedRangeControl,
 	AlignButtonsControl,
@@ -16,12 +17,10 @@ import {
 	ResponsiveControl,
 	SvgIcon,
 	TypographyControlHelper,
-} from '@stackable/components'
-import { createResponsiveAttributeNames, createTypographyAttributeNames, createVideoBackground, hasBackgroundOverlay } from '@stackable/util'
-import { i18n, showProNotice } from 'stackable'
+} from '~stackable/components'
 import {
-	PanelBody, RangeControl,
-} from '@wordpress/components'
+	createResponsiveAttributeNames, createTypographyAttributeNames, createVideoBackground, hasBackgroundOverlay,
+} from '~stackable/util'
 import {
 	withBlockStyles,
 	withContentAlignReseter,
@@ -29,16 +28,30 @@ import {
 	withSetAttributeHook,
 	withTabbedInspector,
 	withUniqueClass,
-} from '@stackable/higher-order'
-import classnames from 'classnames'
-import { compose } from '@wordpress/compose'
+} from '~stackable/higher-order'
+
+/**
+ * Internal dependencies
+ */
 import createStyles from './style'
-import { Fragment } from '@wordpress/element'
 import ImageDesignPlain from './images/plain.png'
 import ImageDesignPlain2 from './images/plain-2.png'
+import { showOptions } from '.'
+
+/**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n'
+import { addFilter, applyFilters } from '@wordpress/hooks'
+import { i18n, showProNotice } from 'stackable'
+import {
+	PanelBody, RangeControl,
+} from '@wordpress/components'
+import classnames from 'classnames'
+import { compose } from '@wordpress/compose'
+import { Fragment } from '@wordpress/element'
 import { range } from 'lodash'
 import { RichText } from '@wordpress/block-editor'
-import { showOptions } from '.'
 
 addFilter( 'stackable.count-up.edit.inspector.layout.before', 'stackable/count-up', ( output, props ) => {
 	const { setAttributes } = props

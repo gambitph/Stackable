@@ -1,5 +1,12 @@
+/**
+ * External dependencies
+ */
+import { InspectorPanelControls, PanelTabs } from '~stackable/components'
+
+/**
+ * WordPress dependencies
+ */
 import { Component, Fragment } from '@wordpress/element'
-import { InspectorPanelControls, PanelTabs } from '@stackable/components'
 import { applyFilters } from '@wordpress/hooks'
 import { createHigherOrderComponent } from '@wordpress/compose'
 import { InspectorControls } from '@wordpress/block-editor'

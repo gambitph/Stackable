@@ -1,6 +1,13 @@
+/**
+ * External dependencies
+ */
+import { createAllCombinationAttributes } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
 import { addFilter, doAction } from '@wordpress/hooks'
 import { AlignmentToolbar, BlockControls } from '@wordpress/block-editor'
-import { createAllCombinationAttributes } from '@stackable/util'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
 import { sprintf } from '@wordpress/i18n'

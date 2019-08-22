@@ -1,9 +1,10 @@
-import { addFilter, doAction, removeFilter } from '@wordpress/hooks'
+/**
+ * External dependencies
+ */
 import {
 	BackgroundControlsHelper,
 	PanelAdvancedSettings,
-} from '@stackable/components'
-import { BlockAlignmentToolbar, BlockControls } from '@wordpress/block-editor'
+} from '~stackable/components'
 import {
 	createBackgroundAttributeNames,
 	createBackgroundAttributes,
@@ -11,9 +12,21 @@ import {
 	createBackgroundStyles,
 	createVideoBackground,
 	hasBackgroundOverlay,
-} from '@stackable/util'
-import { __ } from '@wordpress/i18n'
+} from '~stackable/util'
+
+/**
+ * Internal dependencies
+ */
 import { addNewAlignFunctionality } from './align'
+
+/**
+ * WordPress dependencies
+ */
+import {
+	addFilter, doAction, removeFilter,
+} from '@wordpress/hooks'
+import { BlockAlignmentToolbar, BlockControls } from '@wordpress/block-editor'
+import { __ } from '@wordpress/i18n'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'

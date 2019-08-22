@@ -5,14 +5,25 @@
  * Simple block, renders and saves the same content without any interactivity.
  */
 
-import { addFilter, applyFilters } from '@wordpress/hooks'
-import { disabledBlocks, i18n } from 'stackable'
-import { __ } from '@wordpress/i18n'
-import { ButtonIcon } from '@stackable/icons'
-import { createButtonAttributes } from '@stackable/util'
+/**
+ * External dependencies
+ */
+import { ButtonIcon } from '~stackable/icons'
+import { createButtonAttributes } from '~stackable/util'
+
+/**
+ * Internal dependencies
+ */
 import deprecated from './deprecated'
 import edit from './edit'
 import save from './save'
+import { disabledBlocks, i18n } from 'stackable'
+
+/**
+ * WordPress dependencies
+ */
+import { addFilter, applyFilters } from '@wordpress/hooks'
+import { __ } from '@wordpress/i18n'
 
 export const schema = {
 	design: {

@@ -1,7 +1,16 @@
-import { Children, cloneElement, Fragment } from '@wordpress/element'
+/**
+ * External dependencies
+ */
+import { WhenResponsiveScreen } from '~stackable/components'
+
+/**
+ * WordPress dependencies
+ */
+import {
+	Children, cloneElement, Fragment,
+} from '@wordpress/element'
 import { camelCase } from 'lodash'
 import { sprintf } from '@wordpress/i18n'
-import { WhenResponsiveScreen } from '@stackable/components'
 
 const ResponsiveControl = props => {
 	const getAttrName = ( attrName = '' ) => camelCase( sprintf( props.attrNameTemplate, attrName ) )

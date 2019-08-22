@@ -5,6 +5,9 @@
  *
  * e.g. The custom color picker in a color palette control will close
  */
+/**
+ * WordPress dependencies
+ */
 import { Dropdown } from '@wordpress/components'
 
 class DropdownPreventPopoverClickClose extends Dropdown {

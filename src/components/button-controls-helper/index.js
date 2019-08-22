@@ -1,5 +1,12 @@
-import { ButtonControls } from '@stackable/components'
+/**
+ * External dependencies
+ */
+import { ButtonControls } from '~stackable/components'
 import { camelCase } from 'lodash'
+
+/**
+ * WordPress dependencies
+ */
 import { sprintf } from '@wordpress/i18n'
 
 const ButtonControlsHelper = props => {

@@ -1,6 +1,6 @@
+const path = require( 'path' )
 const test = require( '@wordpress/jest-preset-default/jest-preset.json' )
 const { omit } = require( 'lodash' )
-const path = require( 'path' )
 
 module.exports = {
 

@@ -1,19 +1,29 @@
 /**
  * BLOCK: Accordion Block.
  */
-
-import { disabledBlocks, i18n } from 'stackable'
-import { __ } from '@wordpress/i18n'
-import { AccordionIcon } from '@stackable/icons'
+/**
+ * Internal dependencies
+ */
 import deprecated from './deprecated'
-import { descriptionPlaceholder } from '@stackable/util'
 import edit from './edit'
 import save from './save'
 import SVGArrowIcon from './images/arrow.svg'
 
+/**
+ * External dependencies
+ */
+import { AccordionIcon } from '~stackable/icons'
+import { descriptionPlaceholder } from '~stackable/util'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+import { disabledBlocks, i18n } from 'stackable'
+
 export const ArrowIcon = ( { fill } ) => <SVGArrowIcon width="20" height="20" fill={ fill } />
 
-export const schema = {
+const schema = {
 	heading: {
 		source: 'html',
 		selector: '.ugb-accordion__heading h4',

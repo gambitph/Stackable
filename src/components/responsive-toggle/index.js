@@ -1,14 +1,27 @@
-import { addAction, doAction, removeAction } from '@wordpress/hooks'
+/**
+ * External dependencies
+ */
 import {
 	getSelectedScreen, isScreenPickerOpen, setIsScreenPickerOpen, setSelectedScreen,
-} from '@stackable/util'
+} from '~stackable/util'
+
+/**
+ * Internal dependencies
+ */
+import SVGDesktop from './images/desktop.svg'
+import SVGMobile from './images/mobile.svg'
+import SVGTablet from './images/tablet.svg'
+
+/**
+ * WordPress dependencies
+ */
+import {
+	addAction, doAction, removeAction,
+} from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
 import { Component } from '@wordpress/element'
 import { i18n } from 'stackable'
 import { IconButton } from '@wordpress/components'
-import SVGDesktop from './images/desktop.svg'
-import SVGMobile from './images/mobile.svg'
-import SVGTablet from './images/tablet.svg'
 import { withInstanceId } from '@wordpress/compose'
 
 const responsiveIcons = {

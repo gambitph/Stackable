@@ -1,7 +1,14 @@
+/**
+ * Internal dependencies
+ */
 import { name, settings } from '../'
-import blockEditableAfterSaveTests from '@stackable/test/shared/block-editable-after-save'
-import blockSaveSnapshotTests from '@stackable/test/shared/block-save-snapshot'
 import save from '../save'
+
+/**
+ * External dependencies
+ */
+import blockEditableAfterSaveTests from '~stackable/test/shared/block-editable-after-save'
+import blockSaveSnapshotTests from '~stackable/test/shared/block-save-snapshot'
 
 describe( `${ settings.title } block`, () => {
 	// Checks whether the save method has changed. This shouldn't change in the normal
