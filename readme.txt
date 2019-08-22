@@ -8,7 +8,7 @@ Stable tag: 2.0.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Blocks for everyone
+An Amazing Block Collection to Put Some Swag to the New WordPress Editor
 
 == Description ==
 
@@ -162,6 +162,7 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com/blog-pos
 
 ### News Article Updates
 
+- [v1.17 Text Color and Text Highlight](https://wpstackable.com/blog/text-color-and-text-highlight)
 - [v1.16 Translations: Stackable in Your Language](https://wpstackable.com/blog/translations-stackable-in-your-language/)
 - [v1.15 Separators Are Here](https://wpstackable.com/blog/separators-are-here/)
 - [v1.14 Video Backgrounds & Background Gradients](https://wpstackable.com/blog/video-backgrounds-background-gradients/)
@@ -238,8 +239,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Video Popup block - if you are using this block, existing ones may occupy the entire available width after editing. To bring back the old alignment where the block occupies only a small area in the middle, choose `center` align in the toolbar.
 * Heading block - the top and bottom paddings are now a little bit larger
 
-= < 1.0 to 1.0 =
-
+= 1.0 =
 You will have to redo all your blocks
 
 == Changelog ==
@@ -251,6 +251,24 @@ You will have to redo all your blocks
 * Fixed: Editor error shows up when no latest posts are found.
 * Fixed: Number box plain layouts now don't have a background
 * Fixed: The Separator block in the editor has top & bottom margins that makes placing separators hard.
+
+= 1.17.2 =
+* New: Rebranded welcome & settings page design
+* Fixed: Flashing overlay outside border-radius in Image Box blocks in Safari
+* Fixed: Mobile responsiveness of horizontal layout in Card blocks
+
+= 1.17.1 =
+* Fixed: Regex error in Firefox
+
+= 1.17.0 =
+[Text Color and Text Highlight](https://wpstackable.com/blog/text-color-and-text-highlight)
+
+* New: Color & highlight formatting toolbar (⌘+h or Ctrl+h)
+* Fixed: Support for media queries in Custom CSS
+* Fixed: Rgba style rule invalidates Custom CSS
+* Fixed: Responsive issues with the Feature block layouts
+* Fixed: Blocks error out when setting some colors to pure black
+* Fixed: Squished images in Feature block when image size is adjusted
 
 = 1.16.0 =
 [Translations: Stackable in Your Language](https://wpstackable.com/blog/translations-stackable-in-your-language/)
