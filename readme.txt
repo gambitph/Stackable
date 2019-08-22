@@ -4,11 +4,11 @@ Tags: gutenberg, block, blocks, block editor, gutenberg blocks, page builder, ed
 Requires at least: 4.8
 Tested up to: 5.2.2
 Requires PHP: 5.3
-Stable tag: 1.17.1
+Stable tag: 1.17.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Blocks for everyone
+An Amazing Block Collection to Put Some Swag to the New WordPress Editor
 
 == Description ==
 
@@ -230,15 +230,15 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Video Popup block - if you are using this block, existing ones may occupy the entire available width after editing. To bring back the old alignment where the block occupies only a small area in the middle, choose `center` align in the toolbar.
 * Heading block - the top and bottom paddings are now a little bit larger
 
-= < 1.0 to 1.0 =
-
+= 1.0 =
 You will have to redo all your blocks
 
 == Changelog ==
 
-= 1.18.0 =
-* New: Rebranded new welcome page design
+= 1.17.2 =
+* New: Rebranded welcome & settings page design
 * Fixed: Flashing overlay outside border-radius in Image Box blocks in Safari
+* Fixed: Mobile responsiveness of horizontal layout in Card blocks
 
 = 1.17.1 =
 * Fixed: Regex error in Firefox
