@@ -101,10 +101,10 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/pro.php' );
  */
 require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/news.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/updates.php' );
+// require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/updates.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/notification.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/notification-rate.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/notification-updates.php' );
+// require_once( plugin_dir_path( __FILE__ ) . 'src/welcome/notification-updates.php' );
 
 if ( sugb_fs()->is__premium_only() ) {
 	/**
