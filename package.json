@@ -105,18 +105,11 @@
     "postinstall": "npm run check-licenses"
   },
   "lint-staged": {
-    "package.json": [
-      "wp-scripts lint-pkg-json"
-    ],
     "*.scss": [
       "stylelint"
     ],
     "*.js": [
       "wp-scripts lint-js"
-    ],
-    "ignore": [
-      "./dist/*",
-      "./build/**/*"
     ]
   },
   "husky": {
