@@ -2,8 +2,10 @@ import './news'
 import { __, sprintf } from '@wordpress/i18n'
 import { Component, render } from '@wordpress/element'
 import {
+	contactURL,
 	disabledBlocks,
 	i18n,
+	isPro,
 	nonce,
 	nonceProNotice,
 	pricingURL,
@@ -182,8 +184,46 @@ class ProNoticeToggler extends Component {
 	}
 }
 
+const knowledgeBaseList = () => {
+	return (
+		<ul className="s-tabs-list">
+			<li>
+				<a href="https://wpstackable.com/documentation?utm_medium=Welcome%20Page&utm_campaign=Welcome%20Help&utm_source=Plugin" target="_blank" rel="noopener noreferrer"><strong>{ __( 'Documentation', i18n ) }</strong></a>
+				<br />
+				<span>{ __( 'Documentation & tutorials for building your site with Stackable.', i18n ) }</span>
+			</li>
+			{ isPro &&
+				<li>
+					<a href={ contactURL }><strong>{ __( 'Contact Email Support', i18n ) }</strong></a>
+					<br />
+					<span>{ __( 'Stuck with something? Email us and we’ll help you out.', i18n ) }</span>
+				</li>
+			}
+			<li style={ { display: 'none' } }>
+				<a href="https://facebook.com/groups/wpstackable" target="_blank" rel="noopener noreferrer"><strong>{ __( 'Facebook Community Group', i18n ) }</strong></a>
+				<br />
+				<span>{ __( 'Connect with other people using Stackable and join the discussion.', i18n ) }</span>
+			</li>
+			<li>
+				<a href="https://github.com/gambitph/Stackable/issues" target="_blank" rel="noopener noreferrer"><strong>{ __( 'GitHub', i18n ) }</strong></a>
+				<br />
+				<span>{ __( 'Discuss technical plugin issues and contribute to the plugin code.', i18n ) }</span>
+			</li>
+			<li>
+				<a href="https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks/" taregt="_blank" rel="noopener noreferrer"><strong>{ __( 'WordPress Plugin Support Forum', i18n ) }</strong></a>
+				<br />
+				<span>{ __( 'Community-powered plugin support forum', i18n ) }</span>
+			</li>
+		</ul>
+	)
+}
+
 class HelpTabs extends Component {
 	render() {
+		if ( isPro ) {
+			return knowledgeBaseList()
+		}
+
 		return (
 			<Tabs>
 				<TabList className="s-tabs">
@@ -191,28 +231,7 @@ class HelpTabs extends Component {
 					<Tab>{ __( 'Get Support', i18n ) }</Tab>
 				</TabList>
 				<TabPanel>
-					<ul className="s-tabs-list">
-						<li>
-							<a href="https://wpstackable.com/documentation?utm_medium=Welcome%20Page&utm_campaign=Welcome%20Help&utm_source=Plugin" target="_blank" rel="noopener noreferrer"><strong>{ __( 'Documentation', i18n ) }</strong></a>
-							<br />
-							<span>{ __( 'Documentation & tutorials for building your site with Stackable.', i18n ) }</span>
-						</li>
-						<li>
-							<a href="https://facebook.com/groups/wpstackable" target="_blank" rel="noopener noreferrer"><strong>{ __( 'Facebook Community Group', i18n ) }</strong></a>
-							<br />
-							<span>{ __( 'Connect with other people using Stackable and join the discussion.', i18n ) }</span>
-						</li>
-						<li>
-							<a href="https://github.com/gambitph/Stackable/issues" target="_blank" rel="noopener noreferrer"><strong>{ __( 'GitHub', i18n ) }</strong></a>
-							<br />
-							<span>{ __( 'Discuss technical plugin issues and contribute to the plugin code.', i18n ) }</span>
-						</li>
-						<li>
-							<a href="https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks/" taregt="_blank" rel="noopener noreferrer"><strong>{ __( 'WordPress Plugin Support Forum', i18n ) }</strong></a>
-							<br />
-							<span>{ __( 'Community-powered plugin support forum', i18n ) }</span>
-						</li>
-					</ul>
+					{ knowledgeBaseList() }
 					<p><strong>{ __( 'Need help?', i18n ) }</strong></p>
 					<p>{ __( 'Upgrade to Premium and our support team will be there to answer any questions you might have about the usage of Stackable.', i18n ) }</p>
 					<p className="s-link-pair">
