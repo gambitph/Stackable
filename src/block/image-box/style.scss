@@ -61,6 +61,8 @@
 .ugb-image-box__item {
 	// Safari fix for flashing overlay outside border-radius.
 	-webkit-mask-image: -webkit-radial-gradient(#fff, #000);
+	// Edge fix for flashing overlay outside border-radius.
+	transform: translateZ(0px);
 	background-size: cover;
 	background-position: center;
 	display: flex;
