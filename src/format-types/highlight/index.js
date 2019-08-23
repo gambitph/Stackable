@@ -100,7 +100,7 @@ const HighlightButton = props => {
 							label={ __( 'Text Color', i18n ) }
 							value={ currentColor }
 							onChange={ color => {
-								onChange( createApplyFormat( value, color !== currentColor ? color : '', hasBgHighlight ) )
+								onChange( createApplyFormat( value, color, hasBgHighlight ) )
 							} }
 						/>
 						<ToggleControl
