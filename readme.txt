@@ -244,6 +244,7 @@ You will have to redo all your blocks
 * Fixed: Mobile responsiveness of horizontal layout in Feature Grid blocks
 * Fixed: Border radius overflow visual issue in Edge in Image Box blocks
 * Fixed: Mobile responsiveness of horizontal & half layouts in Team Member blocks
+* Fixed: Excessive padding on the horizontal layout in Card blocks
 
 = 1.17.1 =
 * Fixed: Regex error in Firefox
