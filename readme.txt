@@ -237,8 +237,13 @@ You will have to redo all your blocks
 
 = 1.17.2 =
 * New: Rebranded welcome & settings page design
+* Fixed: Selecting the custom color field resets the highlight color
 * Fixed: Flashing overlay outside border-radius in Image Box blocks in Safari
 * Fixed: Mobile responsiveness of horizontal layout in Card blocks
+* Fixed: Too-wide padding of horizontal layout in Card blocks
+* Fixed: Mobile responsiveness of horizontal layout in Feature Grid blocks
+* Fixed: Border radius overflow visual issue in Edge in Image Box blocks
+* Fixed: Mobile responsiveness of horizontal & half layouts in Team Member blocks
 
 = 1.17.1 =
 * Fixed: Regex error in Firefox
