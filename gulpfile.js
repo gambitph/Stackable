@@ -5,7 +5,6 @@
  */
 
 const autoprefixer = require( 'autoprefixer' ),
-	browsers = require( '@wordpress/browserslist-config' ),
 	concat = require( 'gulp-concat' ),
 	cssnano = require( 'cssnano' ),
 	gulp = require( 'gulp' ),
@@ -26,7 +25,7 @@ const buildInclude = [
 ]
 
 const postCSSOptions = [
-	autoprefixer( { browsers } ), // Use WordPress browserslist.
+	autoprefixer(),
 	mqpacker(), // Combine media query rules.
 	cssnano(), // Minify.
 ]
