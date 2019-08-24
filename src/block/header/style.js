@@ -100,34 +100,72 @@ export const createStyles = props => {
 		} )
 	}
 
+	const {
+		showButton = false,
+		showButton2 = true,
+	} = props.attributes
 	if ( showButton || showButton2 ) {
 		styles.push( {
 			'.ugb-header__buttons': {
 				justifyContent: getValue( 'contentAlign' ) === 'left' ? 'flex-start' :
 					getValue( 'contentAlign' ) === 'right' ? 'flex-end' :
-						undefined,
+						getValue( 'contentAlign' ) === 'center' ? 'center' :
+							undefined,
 			},
 			tablet: {
 				'.ugb-header__buttons': {
 					justifyContent: getValue( 'tabletContentAlign' ) === 'left' ? 'flex-start' :
 						getValue( 'tabletContentAlign' ) === 'right' ? 'flex-end' :
-							undefined,
+							getValue( 'tabletContentAlign' ) === 'center' ? 'center' :
+								undefined,
 				},
 			},
 			mobile: {
 				'.ugb-header__buttons': {
 					justifyContent: getValue( 'mobileContentAlign' ) === 'left' ? 'flex-start' :
 						getValue( 'mobileContentAlign' ) === 'right' ? 'flex-end' :
-							undefined,
+							getValue( 'mobileContentAlign' ) === 'center' ? 'center' :
+								undefined,
 				},
 			},
 		} )
-	}
 
-	const {
-		showButton = false,
-		showButton2 = true,
-	} = props.attributes
+		// Override button alignments.
+		if ( getValue( 'buttonAlign' ) ) {
+			styles.push( {
+				'.ugb-header__buttons': {
+					justifyContent: getValue( 'buttonAlign' ) === 'left' ? 'flex-start' :
+						getValue( 'buttonAlign' ) === 'right' ? 'flex-end' :
+							getValue( 'buttonAlign' ) === 'center' ? 'center' :
+								undefined,
+				},
+			} )
+		}
+		if ( getValue( 'buttonTabletAlign' ) ) {
+			styles.push( {
+				tablet: {
+					'.ugb-header__buttons': {
+						justifyContent: getValue( 'buttonTabletAlign' ) === 'left' ? 'flex-start' :
+							getValue( 'buttonTabletAlign' ) === 'right' ? 'flex-end' :
+								getValue( 'buttonTabletAlign' ) === 'center' ? 'center' :
+									undefined,
+					},
+				},
+			} )
+		}
+		if ( getValue( 'buttonMobileAlign' ) ) {
+			styles.push( {
+				mobile: {
+					'.ugb-header__buttons': {
+						justifyContent: getValue( 'buttonMobileAlign' ) === 'left' ? 'flex-start' :
+							getValue( 'buttonMobileAlign' ) === 'right' ? 'flex-end' :
+								getValue( 'buttonMobileAlign' ) === 'center' ? 'center' :
+									undefined,
+					},
+				},
+			} )
+		}
+	}
 
 	if ( showButton ) {
 		styles.push( {

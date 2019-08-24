@@ -35,7 +35,7 @@ const save = props => {
 		showButton = true,
 		showButton2 = false,
 		buttonText = '',
-		button2Text = '',
+		invert = false,
 	} = props.attributes
 
 	const show = showOptions( props )
@@ -47,6 +47,7 @@ const save = props => {
 		[ `ugb-header--design-${ design }` ],
 	], applyFilters( 'stackable.header.mainclasses', {
 		'ugb--restrict-content-width': show.restrictContent && restrictContentWidth,
+		'ugb-header--invert': invert,
 	}, design, props ) )
 
 	const itemClasses = classnames( [

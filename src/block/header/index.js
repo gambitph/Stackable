@@ -26,7 +26,7 @@ import save from './save'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { addFilter, applyFilters } from '@wordpress/hooks'
+import { applyFilters } from '@wordpress/hooks'
 import { disabledBlocks, i18n } from 'stackable'
 
 const schema = {
@@ -63,6 +63,10 @@ const schema = {
 
 	// Column.
 	...createBackgroundAttributes( 'column%s' ),
+	columnBackgroundColor: {
+		type: 'string',
+		default: '#000000',
+	},
 
 	// Title.
 	title: {
@@ -128,7 +132,6 @@ const schema = {
 		default: '',
 	} ),
 
-	// TODO: invert port
 	invert: {
 		type: 'boolean',
 		default: false,

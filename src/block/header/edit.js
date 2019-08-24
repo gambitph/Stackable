@@ -7,7 +7,6 @@ import {
 	BackgroundControlsHelper,
 	BlockContainer,
 	ButtonControlsHelper,
-	ButtonEdit,
 	ButtonEditHelper,
 	ColorPaletteControl,
 	ContentAlignControl,
@@ -15,14 +14,10 @@ import {
 	DesignPanelBody,
 	HeadingButtonsControl,
 	PanelAdvancedSettings,
-	PanelBackgroundSettings,
-	PanelButtonSettings,
 	PanelSpacingBody,
-	ProControl,
 	ProControlButton,
 	ResponsiveControl,
 	TypographyControlHelper,
-	URLInputControl,
 } from '~stackable/components'
 import {
 	createButtonAttributeNames,
@@ -40,6 +35,7 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 } from '~stackable/higher-order'
+import classnames from 'classnames'
 
 /**
  * Internal dependencies
@@ -53,16 +49,13 @@ import { showOptions } from '.'
  * WordPress dependencies
  */
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import {
-	AlignmentToolbar, BlockControls, InspectorControls, PanelColorSettings, RichText,
-} from '@wordpress/block-editor'
 import { i18n, showProNotice } from 'stackable'
 import {
 	PanelBody, RangeControl, ToggleControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
-import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
+import { RichText } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
 
 addFilter( 'stackable.header.edit.inspector.layout.before', 'stackable/header', ( output, props ) => {
@@ -100,21 +93,14 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 	const { setAttributes } = props
 	const {
 		design = 'basic',
-		columns,
 		borderRadius = 12,
 		shadow = 3,
-		showNumber = true,
 		showTitle = true,
 		showSubtitle = true,
-		showIcon = false,
-		numberColor = '',
 		titleTag = '',
 		titleColor = '',
 		subtitleColor = '',
-		iconColor = '',
 		invert = false,
-		// shadow = 3,
-		align = '',
 		restrictContentWidth = false,
 		fullHeight = false,
 		showButton = true,
@@ -127,7 +113,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 		<Fragment>
 			{ output }
 			<PanelBody title={ __( 'General', i18n ) }>
-				{ ! [ 'basic', 'plain' ].includes( design ) &&
+				{ ! [ 'basic', 'plain', 'center-overlay' ].includes( design ) &&
 					<ToggleControl
 						label={ __( 'Reverse Horizontally', i18n ) }
 						checked={ invert }
@@ -266,6 +252,17 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
+				<ControlSeparator />
+				<ResponsiveControl
+					attrNameTemplate="button%sAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						help={ __( 'This affects other buttons in this block', i18n ) }
+					/>
+				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
 			<PanelAdvancedSettings
@@ -274,7 +271,6 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 				onChange={ showButton2 => setAttributes( { showButton2 } ) }
 				toggleOnSetAttributes={ [
 					...createButtonAttributeNames( 'button2%s' ),
-					...createResponsiveAttributeNames( 'button2%sAlign' ),
 				] }
 				toggleAttributeName="showButton2"
 			>
@@ -283,6 +279,16 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
+				<ResponsiveControl
+					attrNameTemplate="button%sAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						help={ __( 'This affects other buttons in this block', i18n ) }
+					/>
+				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
 			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
@@ -340,34 +346,11 @@ const edit = props => {
 	} = props
 
 	const {
-		buttonText,
-		buttonURL,
-		buttonColor,
-		buttonTextColor,
-		buttonDesign,
-		buttonIcon,
-		cornerButtonRadius,
-		size,
 		title,
-		titleColor,
 		subtitle,
-		subtitleColor,
-		contentAlign = 'center',
-		backgroundColorType = '',
-		backgroundColor,
-		backgroundColor2,
-		backgroundColorDirection = 0,
-		backgroundType = '',
-		backgroundImageID,
-		backgroundImageURL,
-		backgroundOpacity,
-		fixedBackground,
 		design = 'basic',
-		borderRadius = 12,
 		shadow = 3,
-		align,
 		restrictContentWidth = false,
-		buttonNewTab,
 		invert = false,
 		fullHeight = false,
 		showTitle = true,
@@ -386,6 +369,7 @@ const edit = props => {
 		[ `ugb-header--design-${ design }` ],
 	], applyFilters( 'stackable.header.mainclasses', {
 		'ugb--restrict-content-width': show.restrictContent && restrictContentWidth,
+		'ugb-header--invert': invert,
 	}, design, props ) )
 
 	const itemClasses = classnames( [
@@ -489,7 +473,6 @@ export default compose(
 	withSetAttributeHook,
 	withGoogleFont,
 	withTabbedInspector(),
-	withContentAlignReseter(),
-	// withContentAlignReseter( [ 'Icon%sAlign', 'Number%sAlign', 'Title%sAlign', 'Description%sAlign' ] ),
+	withContentAlignReseter( [ 'Title%sAlign', 'Subtitle%sAlign', 'Button%sAlign' ] ),
 	withBlockStyles( createStyles, { editorMode: true } ),
 )( edit )
