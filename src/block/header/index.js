@@ -118,6 +118,16 @@ const schema = {
 	},
 	...createButtonAttributes( 'button2%s', { selector: '.ugb-button2' } ),
 
+	// Overlay.
+	overlayColor: {
+		type: 'string',
+		default: '',
+	},
+	overlayOpacity: {
+		type: 'number',
+		default: '',
+	},
+
 	// Spacing.
 	...createResponsiveAttributes( 'title%sBottomMargin', {
 		type: 'number',
@@ -194,6 +204,7 @@ export const showOptions = blockProps => {
 		subtitleSpacing: showSubtitle && ( showButton || showButton2 ),
 		buttonGap: showButton && showButton2,
 		restrictContent: ( ! showBlockBackground && align === 'full' ) || ( showBlockBackground && blockInnerWidth === 'full' ),
+		overlayBackground: design.match( /overlay/ ),
 	}, blockProps )
 }
 

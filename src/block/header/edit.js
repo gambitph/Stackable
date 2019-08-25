@@ -105,6 +105,8 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 		fullHeight = false,
 		showButton = true,
 		showButton2 = false,
+		overlayColor = '',
+		overlayOpacity = '',
 	} = props.attributes
 
 	const show = showOptions( props )
@@ -167,6 +169,28 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 						attrNameTemplate="column%s"
 						setAttributes={ setAttributes }
 						blockAttributes={ props.attributes }
+					/>
+				</PanelBody>
+			}
+
+			{ show.overlayBackground &&
+				<PanelBody
+					title={ __( 'Overlay Background', i18n ) }
+					initialOpen={ false }
+				>
+					<ColorPaletteControl
+						label={ __( 'Background Color', i18n ) }
+						value={ overlayColor }
+						onChange={ overlayColor => setAttributes( { overlayColor } ) }
+					/>
+					<RangeControl
+						label={ __( 'Background Color Opacity', i18n ) }
+						value={ overlayOpacity }
+						onChange={ overlayOpacity => setAttributes( { overlayOpacity } ) }
+						min={ 0 }
+						max={ 1 }
+						step={ 0.1 }
+						allowReset={ true }
 					/>
 				</PanelBody>
 			}

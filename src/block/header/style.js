@@ -5,6 +5,7 @@ import {
 	createBackgroundStyleSet,
 	createButtonStyleSet,
 	createTypographyStyles,
+	hexToRgba,
 	whiteIfDark,
 } from '~stackable/util'
 
@@ -47,6 +48,19 @@ export const createStyles = props => {
 			importantBackgroundColor: true,
 		} ) : {} ),
 	} )
+
+	// Overlay background.
+	const {
+		overlayColor = '',
+		overlayOpacity = '0.4',
+	} = props.attributes
+	if ( show.overlayBackground && ( overlayColor || overlayOpacity ) ) {
+		styles.push( {
+			'.ugb-content-wrapper, .ugb-content-wrapper:after': {
+				background: hexToRgba( overlayColor || '#000000', overlayOpacity === '' ? 0.4 : overlayOpacity ) + ' !important',
+			},
+		} )
+	}
 
 	const {
 		titleColor = '',
