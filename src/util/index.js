@@ -15,6 +15,7 @@ import { __ } from '@wordpress/i18n'
  * External dependencies
  */
 import { i18n } from 'stackable'
+import rgba from 'color-rgba'
 
 /**
  * Returns an array range of numbers.
@@ -105,6 +106,21 @@ export const descriptionPlaceholder = length => {
 		return `${ descriptionPlaceholder( 'medium' ) } ${ descriptionPlaceholder() } ${ descriptionPlaceholder( 'short' ) }`
 	}
 	return __( 'Description for this block. Use this space for describing your block. Any text will do.', i18n )
+}
+
+/**
+ *
+ * Combines hex & opacity to rgba.
+ *
+ * @param {string} hexColor Color
+ * @param {number} opacity Opacity
+ *
+ * @return {string} Rgba color.
+ */
+export const hexToRgba = ( hexColor, opacity ) => {
+	const newColor = rgba( `${ hexColor }ff` )
+	newColor[ 3 ] = opacity ? opacity : 0
+	return `rgba(${ newColor.join( ', ' ) })`
 }
 
 /**
