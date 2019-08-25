@@ -228,7 +228,6 @@ const knowledgeBaseList = () => {
 
 class HelpTabs extends Component {
 	render() {
-
 		// If already pro, no need to show the tabs.
 		if ( isPro ) {
 			return knowledgeBaseList()
