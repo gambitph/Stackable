@@ -152,20 +152,20 @@ const deprecatedSchema_1_15_6 = {
 	buttonURL2: {
 		type: 'string',
 		source: 'attribute',
-		selector: '.ugb-header__buttons > *:nth-child(2) .ugb-button',
+		selector: '.ugb-header__buttons > *:last-child .ugb-button',
 		attribute: 'href',
 		default: '',
 	},
 	buttonNewTab2: {
 		type: 'boolean',
 		source: 'attribute',
-		selector: '.ugb-header__buttons > *:nth-child(2) .ugb-button',
+		selector: '.ugb-header__buttons > *:last-child .ugb-button',
 		attribute: 'target',
 		default: false,
 	},
 	buttonText2: {
 		source: 'html',
-		selector: '.ugb-header__buttons > *:nth-child(2) .ugb-button span',
+		selector: '.ugb-header__buttons > *:last-child .ugb-button span',
 		default: __( 'Button text', i18n ),
 	},
 	buttonColor2: {
@@ -1214,6 +1214,9 @@ const deprecated = [
 		attributes: deprecatedSchema_1_15_6,
 		save: deprecatedSave_1_15_6,
 		migrate: attributes => {
+			// Update the custom CSS since the structure has changed.
+			const updateCSS = css => css.replace( /\.ugb-header(\s*\{)/g, '.ugb-header__item$1' )
+
 			const additonalAttributes = {}
 			if ( attributes.design === 'half-overlay' && attributes.fullHeight ) {
 				additonalAttributes.design = 'side-overlay'
@@ -1255,6 +1258,10 @@ const deprecated = [
 				button2Icon: attributes.buttonIcon2,
 				button2Size: attributes.buttonSize2,
 				button2BorderRadius: attributes.buttonBorderRadius2,
+
+				// Custom CSS.
+				customCSS: updateCSS( attributes.customCSS ),
+				customCSSCompiled: updateCSS( attributes.customCSSCompiled ),
 			}
 		},
 	},
