@@ -16,7 +16,7 @@ module.exports = {
 
 	// Custom mappers.
 	moduleNameMapper: {
-		'^@stackable(.*)$': '<rootDir>/src$1',
+		'^~stackable(.*)$': '<rootDir>/src$1',
 		'.*\\.s?css$': '<rootDir>/src/test/scss-stub.js',
 		'.*\\.(png|jpg|gif)$': '<rootDir>/src/test/image-stub.js',
 		'.*\\.svg$': '<rootDir>/src/test/svgr-mock.js',
