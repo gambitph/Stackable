@@ -1055,7 +1055,7 @@ const deprecated = [
 				columnBackgroundMediaId: attributes.backgroundImageID,
 				columnBackgroundMediaUrl: attributes.backgroundImageURL,
 				columnBackgroundTintStrength: attributes.backgroundOpacity,
-				columnFixedBackground: attributes.fixedBackground,
+				columnFixedBackground: attributes.fixedBackground ? attributes.fixedBackground : undefined,
 			}
 		},
 	},
