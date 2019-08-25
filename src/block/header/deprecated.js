@@ -1214,12 +1214,47 @@ const deprecated = [
 		attributes: deprecatedSchema_1_15_6,
 		save: deprecatedSave_1_15_6,
 		migrate: attributes => {
+			const additonalAttributes = {}
+			if ( attributes.design === 'half-overlay' && attributes.fullHeight ) {
+				additonalAttributes.design = 'side-overlay'
+				additonalAttributes[ attributes.invert ? 'columnPaddingRight' : 'columnPaddingLeft' ] = 0
+			}
+
 			return {
 				...attributes,
+				...additonalAttributes,
+
+				columnBackgroundColorType: attributes.backgroundColorType,
+				columnBackgroundColor: attributes.backgroundColor,
+				columnBackgroundColor2: attributes.backgroundColor2,
+				columnBackgroundGradientDirection: attributes.backgroundColorDirection,
+				backgroundType: undefined,
+				columnBackgroundMediaId: attributes.backgroundImageID,
+				columnBackgroundMediaUrl: attributes.backgroundImageURL,
+				columnBackgroundTintStrength: attributes.backgroundOpacity,
+				columnFixedBackground: attributes.fixedBackground ? attributes.fixedBackground : undefined,
+
 				restrictContentWidth: attributes.contentWidth,
-				button2Text: attributes.buttonText2,
+
+				// Button 1.
+				showButton: !! attributes.buttonText,
+				buttonUrl: attributes.buttonURL,
+				buttonNewWindow: attributes.buttonNewTab,
+				buttonBackgroundColor: attributes.buttonColor,
+				buttonSize: attributes.size,
+				buttonBorderRadius: attributes.cornerButtonRadius,
+
+				// Button 2.
 				showButton2: !! attributes.buttonText2,
-				// TODO:
+				button2Url: attributes.buttonURL2,
+				button2NewWindow: attributes.buttonNewTab2,
+				button2Text: attributes.buttonText2,
+				button2BackgroundColor: attributes.buttonColor2,
+				button2TextColor: attributes.buttonTextColor2,
+				button2Design: attributes.buttonDesign2,
+				button2Icon: attributes.buttonIcon2,
+				button2Size: attributes.buttonSize2,
+				button2BorderRadius: attributes.buttonBorderRadius2,
 			}
 		},
 	},
