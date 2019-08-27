@@ -2,10 +2,11 @@
 	"compilerOptions": {
 		"baseUrl": ".",
 		"paths": {
-			"@stackable/*": ["./src/*"]
+			"@wordpress/*": ["./node_modules/@wordpress/*"],
+			"~stackable/*": ["./src/*"]
 		}
 	},
-	"exclude": [
-		"node_modules"
-    ]
+	"include": [
+		"./src/**/*"
+	]
 }
