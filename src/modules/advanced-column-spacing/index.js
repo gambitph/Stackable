@@ -2,9 +2,11 @@
  * External dependencies
  */
 import {
-	AdvancedRangeControl, AdvancedToolbarControl, FourNumberControl, WhenResponsiveScreen,
+	AdvancedRangeControl, AdvancedToolbarControl, WhenResponsiveScreen, FourRangeControl,
 } from '~stackable/components'
 import { createAllCombinationAttributes } from '~stackable/util'
+import deepmerge from 'deepmerge'
+import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -13,9 +15,7 @@ import {
 	addFilter, applyFilters, doAction,
 } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
-import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
-import { i18n } from 'stackable'
 import { PanelBody } from '@wordpress/components'
 
 const inspectorControls = ( blockName, options ) => ( output, props ) => {
@@ -62,10 +62,13 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 				{ applyFilters( `stackable.${ blockName }.edit.advanced.column-spacing.before`, null, props ) }
 				{ options.paddings && <Fragment>
 					<WhenResponsiveScreen screen="desktop">
-						<FourNumberControl
+						<FourRangeControl
 							label={ __( 'Block Paddings', i18n ) }
 							units={ [ 'px', 'em', '%' ] }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
+							defaultLocked={ false }
+							min={ 0 }
+							max={ 500 }
 							top={ columnPaddingTop }
 							bottom={ columnPaddingBottom }
 							right={ columnPaddingRight }
@@ -87,10 +90,13 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
-						<FourNumberControl
+						<FourRangeControl
 							label={ __( 'Block Paddings', i18n ) }
 							units={ [ 'px', 'em', '%' ] }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
+							defaultLocked={ false }
+							min={ 0 }
+							max={ 500 }
 							top={ tabletColumnPaddingTop }
 							bottom={ tabletColumnPaddingBottom }
 							right={ tabletColumnPaddingRight }
@@ -112,10 +118,13 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
-						<FourNumberControl
+						<FourRangeControl
 							label={ __( 'Block Paddings', i18n ) }
 							units={ [ 'px', 'em', '%' ] }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
+							defaultLocked={ false }
+							min={ 0 }
+							max={ 500 }
 							top={ mobileColumnPaddingTop }
 							bottom={ mobileColumnPaddingBottom }
 							right={ mobileColumnPaddingRight }
@@ -205,30 +214,36 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 				</Fragment> }
 
 				{ options.verticalAlign && <Fragment>
-					<WhenResponsiveScreen>
-						<AdvancedToolbarControl
-							label={ __( 'Content Vertical Align', i18n ) }
-							controls="flex-vertical"
-							value={ columnVerticalAlign }
-							onChange={ value => setAttributes( { columnVerticalAlign: columnVerticalAlign !== value ? value : '' } ) }
-						/>
-					</WhenResponsiveScreen>
-					<WhenResponsiveScreen screen="tablet">
-						<AdvancedToolbarControl
-							label={ __( 'Content Vertical Align', i18n ) }
-							controls="flex-vertical"
-							value={ tabletColumnVerticalAlign }
-							onChange={ value => setAttributes( { tabletColumnVerticalAlign: tabletColumnVerticalAlign !== value ? value : '' } ) }
-						/>
-					</WhenResponsiveScreen>
-					<WhenResponsiveScreen screen="mobile">
-						<AdvancedToolbarControl
-							label={ __( 'Content Vertical Align', i18n ) }
-							controls="flex-vertical"
-							value={ mobileColumnVerticalAlign }
-							onChange={ value => setAttributes( { mobileColumnVerticalAlign: mobileColumnVerticalAlign !== value ? value : '' } ) }
-						/>
-					</WhenResponsiveScreen>
+					{ columnHeight &&
+						<WhenResponsiveScreen>
+							<AdvancedToolbarControl
+								label={ __( 'Content Vertical Align', i18n ) }
+								controls="flex-vertical"
+								value={ columnVerticalAlign }
+								onChange={ value => setAttributes( { columnVerticalAlign: columnVerticalAlign !== value ? value : '' } ) }
+							/>
+						</WhenResponsiveScreen>
+					}
+					{ tabletColumnHeight &&
+						<WhenResponsiveScreen screen="tablet">
+							<AdvancedToolbarControl
+								label={ __( 'Content Vertical Align', i18n ) }
+								controls="flex-vertical"
+								value={ tabletColumnVerticalAlign }
+								onChange={ value => setAttributes( { tabletColumnVerticalAlign: tabletColumnVerticalAlign !== value ? value : '' } ) }
+							/>
+						</WhenResponsiveScreen>
+					}
+					{ mobileColumnHeight &&
+						<WhenResponsiveScreen screen="mobile">
+							<AdvancedToolbarControl
+								label={ __( 'Content Vertical Align', i18n ) }
+								controls="flex-vertical"
+								value={ mobileColumnVerticalAlign }
+								onChange={ value => setAttributes( { mobileColumnVerticalAlign: mobileColumnVerticalAlign !== value ? value : '' } ) }
+							/>
+						</WhenResponsiveScreen>
+					}
 				</Fragment> }
 
 				{ applyFilters( `stackable.${ blockName }.edit.advanced.column-spacing.after`, null, props ) }
