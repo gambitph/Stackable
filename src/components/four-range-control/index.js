@@ -31,8 +31,9 @@ class FourRangeControl extends Component {
 
 		// Locked state.
 		const values = this.getEnabledValues()
-		const isEqualValues = ! values.length ? true : values.every( value => value === values[ 0 ] )
-		const isDefaults = values.every( value => value === '' )
+		const firstValue = this.firstValue()
+		const isEqualValues = Object.values( values ).every( value => value === firstValue )
+		const isDefaults = Object.values( values ).every( value => value === '' )
 
 		this.state = {
 			locked: isDefaults ? this.props.defaultLocked : isEqualValues,
@@ -47,12 +48,12 @@ class FourRangeControl extends Component {
 	}
 
 	getEnabledValues() {
-		return [
-			...( this.props.enableTop ? [ this.props.top ] : [] ),
-			...( this.props.enableRight ? [ this.props.right ] : [] ),
-			...( this.props.enableBottom ? [ this.props.bottom ] : [] ),
-			...( this.props.enableLeft ? [ this.props.left ] : [] ),
-		]
+		return this.getEnabledLocations().reduce( ( values, key ) => {
+			return {
+				...values,
+				[ key ]: this.props[ key ],
+			}
+		}, {} )
 	}
 
 	getEnabledLocations() {
@@ -65,7 +66,11 @@ class FourRangeControl extends Component {
 	}
 
 	firstValue() {
-		return this.getEnabledValues()[ 0 ]
+		const locations = this.getEnabledLocations()
+		if ( locations.length ) {
+			return Object.values( this.getEnabledValues() )[ 0 ]
+		}
+		return ''
 	}
 
 	filterOnlyEnabled( forSaving = {} ) {
