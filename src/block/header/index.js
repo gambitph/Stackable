@@ -207,20 +207,3 @@ export const showOptions = blockProps => {
 		overlayBackground: design.match( /overlay/ ),
 	}, blockProps )
 }
-
-// Remove the shadow when a top/bottom separator is turned on.
-// addFilter( 'stackable.header.setAttributes', 'stackable/header/separator', ( attributes, blockProps ) => {
-// 	if ( blockProps.attributes.design === 'plain' ) {
-// 		return attributes
-// 	}
-
-// 	if ( typeof attributes.showTopSeparator !== 'undefined' && attributes.showTopSeparator ) {
-// 		attributes.shadow = 0
-// 	}
-
-// 	if ( typeof attributes.showBottomSeparator !== 'undefined' && attributes.showBottomSeparator ) {
-// 		attributes.shadow = 0
-// 	}
-
-// 	return attributes
-// } )
