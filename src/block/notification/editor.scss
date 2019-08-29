@@ -22,7 +22,7 @@
 
 	// Always show.
 	.ugb-notification.ugb-notification--dismissible {
-		display: block !important;
+		display: flex !important;
 	}
 	.ugb-notification__item > *:last-child {
 		&,

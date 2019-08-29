@@ -237,8 +237,8 @@
 	}
 }
 
-.ugb-notification,
-.wp-block-ugb-notification {
+.ugb-notification:not([class*="ugb-notification--v"]),
+.wp-block-ugb-notification:not([class*="ugb-notification--v"]) {
 	position: relative;
 	.close-button {
 		position: absolute;
@@ -255,28 +255,30 @@
 		}
 	}
 }
-.ugb-notification.dismissible-true {
-	.wp-ugb-notif {
-		padding-right: $box-vert-padding;
+.ugb-notification:not([class*="ugb-notification--v"]) {
+	&.dismissible-true {
+		.wp-ugb-notif {
+			padding-right: $box-vert-padding;
+		}
 	}
-}
-.ugb-notification.type-success svg,
-.ugb-notification.type-error svg,
-.ugb-notification.type-info svg {
-	fill: #fff;
-}
-.ugb-notification.type-warning svg {
-	fill: #424242;
-}
-.ugb-notification.dismissible-true[data-uid] {
-	display: none;
-}
+	&.type-success svg,
+	&.type-error svg,
+	&.type-info svg {
+		fill: #fff;
+	}
+	&.type-warning svg {
+		fill: #424242;
+	}
+	&.dismissible-true[data-uid] {
+		display: none;
+	}
 
-// Fix bug where previously saved < v1.11 custom backgrounds
-// only color the middle area when viewing the page >= 1.11
-.ugb-notification:not([style*="background-color"]) {
-	p[style*="background-color"] {
-		margin: -35px !important;
-		padding: 35px;
+	// Fix bug where previously saved < v1.11 custom backgrounds
+	// only color the middle area when viewing the page >= 1.11
+	&:not([style*="background-color"]) {
+		p[style*="background-color"] {
+			margin: -35px !important;
+			padding: 35px;
+		}
 	}
 }
