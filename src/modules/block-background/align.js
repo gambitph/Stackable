@@ -87,7 +87,6 @@ export function addAssignedAlign( props, blockType, attributes ) {
 	const { name: blockName } = blockType
 	const { align } = attributes
 
-	// console.log('align', align)
 	if ( ! blocksWithBlockBackgroundModule.includes( blockName ) ) {
 		return props
 	}

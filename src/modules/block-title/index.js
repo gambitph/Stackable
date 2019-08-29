@@ -34,7 +34,6 @@ import { i18n } from 'stackable'
 import { RichText } from '@wordpress/block-editor'
 
 const addInspectorPanel = ( output, props ) => {
-	// console.log('HAHAHA')
 	const { setAttributes } = props
 	const {
 		showBlockTitle = false,

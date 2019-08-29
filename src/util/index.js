@@ -179,7 +179,6 @@ export const compileCSS = ( css, mainClass, uniqueID ) => {
 	// Connect the unique ID and the main class:
 	// 		".ugb-accordion" -> ".uniqueID.ugb-accordion"
 	// 		".ugb-accordion__title" -> ".uniqueID .ugb-accordion__title"
-	// console.log(css.replace( /\/\*.*?\*\//g, '' ))
 	return css.replace( /\/\*[\s\S]*?\*\//g, '' )
 		.replace( /\/\/(.*)?\n/g, '' )
 		.replace( /([^}]+)({)/g, ( match, selector, paren ) => {
