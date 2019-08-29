@@ -22,7 +22,6 @@ class PanelAdvancedSettings extends Component {
 		super( ...arguments )
 		this.state = {
 			opened: props.initialOpen,
-			checked: props.checked,
 			showAdvanced: props.initialAdvanced,
 		}
 		this.onToggle = this.onToggle.bind( this )
@@ -54,7 +53,9 @@ class PanelAdvancedSettings extends Component {
 
 		// Toggle on the "show" attribute along with the other attributes being set.
 		if ( checkToggle ) {
-			this.setState( { checked: true } )
+			if ( this.props.onChange ) {
+				this.props.onChange( true )
+			}
 			return {
 				...attributes,
 				[ this.props.toggleAttributeName ]: true,
@@ -100,17 +101,16 @@ class PanelAdvancedSettings extends Component {
 							<span className={ `editor-panel-toggle-settings__panel-title` }>
 								<FormToggle
 									className="ugb-toggle-panel-form-toggle"
-									checked={ this.state.checked }
+									checked={ this.props.checked }
 									onClick={ ev => {
 										ev.stopPropagation()
 										ev.preventDefault()
-										const checked = this.state.checked
+										const checked = this.props.checked
 										if ( checked && this.state.opened ) {
 											this.onToggle()
 										} else if ( ! checked && ! this.state.opened ) {
 											this.onToggle()
 										}
-										this.setState( { checked: ! checked } )
 										if ( this.props.onChange ) {
 											this.props.onChange( ! checked )
 										}
