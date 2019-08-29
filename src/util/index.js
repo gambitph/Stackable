@@ -118,7 +118,11 @@ export const descriptionPlaceholder = length => {
  * @return {string} Rgba color.
  */
 export const hexToRgba = ( hexColor, opacity ) => {
-	const newColor = rgba( `${ hexColor }ff` )
+	let hex = hexColor
+	if ( hex.length <= 4 ) {
+		hex = hex.replace( /#?(.)(.)(.)/, '$1$1$2$2$3$3' )
+	}
+	const newColor = rgba( `#${ hex }ff` )
 	newColor[ 3 ] = opacity ? opacity : 0
 	return `rgba(${ newColor.join( ', ' ) })`
 }
