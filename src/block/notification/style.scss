@@ -156,13 +156,13 @@
  */
 
 .ugb-notification:not([class*="ugb-notification--v"]) {
-	@include baseBlock(); // TODO: [V2] Deprecate this usage
+	@include baseBlock();
 	@include box();
 	padding: $box-hori-padding;
 	background-color: #40ba7b;
 	position: relative;
 	overflow: visible;
-	.ugb-notification__close-button {
+	.ugb-notification__close-button.ugb-notification__close-button {
 		margin-top: 30px !important;
 	}
 	&,
