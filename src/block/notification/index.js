@@ -44,7 +44,7 @@ export const schema = {
 
 	// Border.
 	columnBorderColor: {
-		type: 'number',
+		type: 'string',
 		default: '',
 	},
 	columnBorderThickness: {
