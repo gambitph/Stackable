@@ -110,6 +110,10 @@ const schema = {
 		default: true,
 	},
 	...createButtonAttributes( 'button%s', { selector: '.ugb-button1' } ),
+	...createResponsiveAttributes( 'button%sAlign', {
+		type: 'string',
+		default: '',
+	} ),
 
 	// Button 2.
 	showButton2: {

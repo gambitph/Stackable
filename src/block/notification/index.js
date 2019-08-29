@@ -149,6 +149,10 @@ export const schema = {
 		type: 'string',
 		default: 'ghost',
 	},
+	...createResponsiveAttributes( 'button%sAlign', {
+		type: 'string',
+		default: '',
+	} ),
 
 	// Spacing.
 	...createResponsiveAttributes( 'icon%sBottomMargin', {
