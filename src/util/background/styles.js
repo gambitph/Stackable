@@ -2,7 +2,6 @@
  * External dependencies
  */
 import { camelCase } from 'lodash'
-import rgba from 'color-rgba'
 
 /**
  * WordPress dependencies
@@ -81,8 +80,8 @@ export const createBackgroundOverlayStyles = ( attrNameTemplate = '%s', screen =
 	const opacity = parseInt( getValue( 'BackgroundTintStrength', 5 ), 10 ) / 10
 
 	// The default color is the same as the other one but transparent. Same so that there won't be a weird transition to transparent.
-	const defaultColor1 = 'rgba(' + rgba( `${ getValue( 'BackgroundColor2', '#ffffff' ) }00` ).join( ', ' ) + ')'
-	const defaultColor2 = 'rgba(' + rgba( `${ getValue( 'BackgroundColor', '#ffffff' ) }00` ).join( ', ' ) + ')'
+	const defaultColor1 = hexToRgba( getValue( 'BackgroundColor2', '#ffffff' ), 0 )
+	const defaultColor2 = hexToRgba( getValue( 'BackgroundColor', '#ffffff' ), 0 )
 
 	// Gradient location.
 	const color1Location = `${ getValue( 'BackgroundGradientLocation1', '0' ) }%`
