@@ -135,8 +135,8 @@
 	top: 0;
 	right: 0;
 	z-index: 2;
-	margin-right: 1.5rem;
-	margin-top: 1.3rem;
+	margin-right: 30px;
+	margin-top: 30px;
 	font-size: 8px;
 	cursor: pointer;
 	width: 16px;
@@ -162,6 +162,9 @@
 	background-color: #40ba7b;
 	position: relative;
 	overflow: visible;
+	.ugb-notification__close-button {
+		margin-top: 30px !important;
+	}
 	&,
 	p {
 		color: #fff;
