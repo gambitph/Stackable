@@ -32,13 +32,13 @@ domReady( () => {
 
 		// Always show notification if in preview.
 		if ( window.location.search.match( /preview=\w+/ ) ) {
-			el.style.display = 'block'
+			el.style.display = 'flex'
 			return
 		}
 
 		// Show if not yet dismissed.
 		if ( ! localStorage.getItem( `stckbl-notif-${ uid }` ) ) {
-			el.style.display = 'block'
+			el.style.display = 'flex'
 		}
 	} )
 } )
