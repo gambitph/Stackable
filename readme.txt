@@ -233,6 +233,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 	* Call to Action block - Change the box selector `.ugb-content-wrapper` to `.ugb-cta__item`
 	* Video Popup block - Change the container selector `.ugb-video-popup` to `.ugb-video-popup__wrapper`
 	* Header block - Change the container selector `ugb-header` to `.ugb-header`
+	* Notification block - Change the container selector `.ugb-notification` to `.ugb-notification__item`
 * Count Up Block: We have replaced the Basic layout, with a new "Plain 2" layout since the Basic layout can be similarly achieved with the new Block Background options.
 * Icon List block: By default the multi-column lists will now collapse to 1 column on mobile.
 

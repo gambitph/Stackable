@@ -22,6 +22,12 @@
 
 	// Always show.
 	.ugb-notification.ugb-notification--dismissible {
-		display: block;
+		display: block !important;
+	}
+	.ugb-notification__item > *:last-child {
+		&,
+		[role="textbox"] {
+			margin-bottom: 0;
+		}
 	}
 }

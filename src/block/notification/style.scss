@@ -6,7 +6,156 @@
 
 @import "common";
 
-.ugb-notification {
+.ugb-notification.ugb-notification--v2 {
+	.ugb-notification__item {
+		@include box();
+		padding: $box-hori-padding;
+		display: flex;
+		flex-direction: column;
+		> *:last-child {
+			margin-bottom: 0;
+		}
+	}
+	.ugb-notification__icon,
+	.ugb-notification__title,
+	.ugb-notification__description {
+		margin-bottom: $text-margin-bottom;
+	}
+
+	&.ugb-notification--design-basic,
+	&.ugb-notification--design-large-icon {
+		.ugb-notification__item {
+			background-color: #40ba7b;
+		}
+		.ugb-notification__icon,
+		.ugb-notification__title,
+		.ugb-notification__description {
+			color: #fff;
+		}
+		.ugb-notification__close-button svg,
+		.ugb-notification__icon {
+			fill: #fff;
+		}
+		&.ugb-notification--type-error {
+			.ugb-notification__item {
+				background-color: #d9534f;
+			}
+		}
+		&.ugb-notification--type-info {
+			.ugb-notification__item {
+				background-color: #2091e1;
+			}
+		}
+		&.ugb-notification--type-warning {
+			.ugb-notification__item {
+				background-color: #ffdd57;
+			}
+			.ugb-notification__icon,
+			.ugb-notification__title,
+			.ugb-notification__description {
+				color: #424242;
+			}
+			.ugb-notification__close-button svg,
+			.ugb-notification__icon {
+				fill: #424242;
+			}
+		}
+	}
+
+	// Plain design.
+	&.ugb-notification--design-plain {
+		.ugb-notification__item {
+			background: none;
+			border-radius: 0;
+			box-shadow: none;
+		}
+		.ugb-notification__icon,
+		.ugb-notification__title,
+		.ugb-notification__description {
+			color: #40ba7b;
+		}
+		.ugb-notification__close-button svg,
+		.ugb-notification__icon {
+			fill: #40ba7b;
+		}
+
+		&.ugb-notification--type-error {
+			.ugb-notification__icon,
+			.ugb-notification__title,
+			.ugb-notification__description {
+				color: #d9534f;
+			}
+			.ugb-notification__close-button svg,
+			.ugb-notification__icon {
+				fill: #d9534f;
+			}
+		}
+
+		&.ugb-notification--type-info {
+			.ugb-notification__icon,
+			.ugb-notification__title,
+			.ugb-notification__description {
+				color: #2091e1;
+			}
+			.ugb-notification__close-button svg,
+			.ugb-notification__icon {
+				fill: #2091e1;
+			}
+		}
+
+		&.ugb-notification--type-warning {
+			.ugb-notification__icon,
+			.ugb-notification__title,
+			.ugb-notification__description {
+				color: #ff6f2f;
+			}
+			.ugb-notification__close-button svg,
+			.ugb-notification__icon {
+				fill: #ff6f2f;
+			}
+		}
+	}
+
+	&.ugb-notification--dismissible {
+		// Hide at the start, JS will show it to avoid flickering.
+		display: none;
+
+		.ugb-notification__item {
+			position: relative;
+			padding-right: $box-vert-padding;
+		}
+	}
+}
+.ugb-notification__icon {
+	width: 30px;
+	height: 30px;
+}
+.ugb-notification__close-button {
+	position: absolute !important;
+	top: 0;
+	right: 0;
+	z-index: 2;
+	margin-right: 1.5rem;
+	margin-top: 1.3rem;
+	font-size: 8px;
+	cursor: pointer;
+	width: 16px;
+	height: 16px;
+	padding: 0.3rem 0 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	svg {
+		width: 100%;
+		height: auto;
+	}
+}
+
+/**
+ * Deprecated < v2
+ */
+
+.ugb-notification:not([class*="ugb-notification--v"]) {
 	@include baseBlock(); // TODO: [V2] Deprecate this usage
 	@include box();
 	padding: $box-hori-padding;
@@ -54,25 +203,6 @@
 		box-shadow: 0 30px 90px -30px rgba(72, 73, 121, 0.38) !important;
 	}
 }
-.ugb-notification__close-button {
-	position: absolute;
-	right: 0;
-	z-index: 2;
-	margin-right: 1.5rem;
-	margin-top: 1.3rem;
-	font-size: 8px;
-	cursor: pointer;
-	width: 16px;
-	height: 16px;
-	padding: 0.3rem 0 0;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	svg {
-		width: 100%;
-		height: auto;
-	}
-}
 
 /**
  * Deprecated. Version < 1.11
@@ -81,7 +211,7 @@
 .wp-block-ugb-notification {
 	position: relative;
 }
-.ugb-notification {
+.ugb-notification:not([class*="ugb-notification--v"]) {
 	border-radius: 4px;
 	color: #fff;
 	@include baseBlock();
