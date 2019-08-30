@@ -72,7 +72,7 @@ export const createStyles = props => {
 	if ( dismissible ) {
 		styles.push( {
 			'.ugb-notification__item': {
-				paddingRight: dismissibleIconSize && dismissibleIconSize > 40 ? '100px' : undefined,
+				paddingRight: dismissibleIconSize && dismissibleIconSize > 40 ? '100px !important' : undefined,
 			},
 			'.ugb-notification__close-button': {
 				width: dismissibleIconSize ? `${ dismissibleIconSize }px` : undefined,
