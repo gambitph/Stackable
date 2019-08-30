@@ -401,7 +401,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
-			{ show.iconSpacing && show.titleSpacing && show.descriptionSpacing &&
+			{ ( show.iconSpacing || show.titleSpacing || show.descriptionSpacing ) &&
 				<PanelSpacingBody
 					initialOpen={ false }
 					blockProps={ props }
