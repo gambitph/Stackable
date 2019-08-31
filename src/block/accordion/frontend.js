@@ -58,8 +58,7 @@ const init = el => {
 }
 
 export const initAll = () => {
-	const elems = document.querySelectorAll( '.ugb-accordion' )
-	Array.prototype.forEach.call( elems, el => init( el ) )
+	document.querySelectorAll( '.ugb-accordion' ).forEach( el => init( el ) )
 }
 
 domReady( initAll )
