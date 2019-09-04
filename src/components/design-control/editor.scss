@@ -1,8 +1,13 @@
 .ugb-design-control {
 	// Hide the radio button.
 	input {
-		position: absolute;
 		opacity: 0;
+		height: 0;
+		width: 0;
+		margin: 0;
+		padding: 0;
+		position: fixed;
+		top: 0;
 	}
 	.components-radio-control__option {
 		display: inline-block;
