@@ -41,8 +41,8 @@ export const combineStyleRules = styleObject => {
 					return rules
 				}
 
-				// KebabCase the style rule, but support custom CSS properties (double dash at the start).
-				const cleanedRuleName = ruleName.replace( /^(--)?(.*?$)/, ( matches, dashes, rule ) => `${ dashes || '' }${ kebabCase( rule ) }` )
+				// KebabCase the style rule, but support custom CSS properties (double dashes) and vendor prefixes (one dash).
+				const cleanedRuleName = ruleName.replace( /^(--?)?(.*?$)/, ( matches, dashes, rule ) => `${ dashes || '' }${ kebabCase( rule ) }` )
 				return `${ rules }\n\t${ cleanedRuleName }: ${ rule };`
 			}, '' )
 			return `${ styleString }\n\n${ selector } {${ styles }\n}`
@@ -100,7 +100,6 @@ const BlockStyles = props => {
 		breakTablet = 1025,
 		breakMobile = 768,
 	} = props
-
 	const styles = generateStyles( style, blockMainClassName, blockUniqueClassName, breakTablet, breakMobile, editorMode )
 	return styles ? <style>{ styles }</style> : null
 }
