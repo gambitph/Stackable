@@ -12,28 +12,37 @@ import { __ } from '@wordpress/i18n'
 /**
  * External dependencies
  */
-import classnames from 'classnames'
 import { i18n } from 'stackable'
 
+const LABELS = {
+	layout: {
+		title: __( 'Say Hello to More Layouts 👋', i18n ),
+		description: __( 'Get more layouts for this block. This feature is only available on Stackable Premium.', i18n ),
+		button: __( 'Learn More', i18n ),
+	},
+	image: {
+		title: __( 'Say Hello to More Shapes 👋', i18n ),
+		description: __( 'Get more cool shapes for your images. This feature is only available on Stackable Premium.', i18n ),
+		button: __( 'Learn More', i18n ),
+	},
+}
+
 const ProControl = props => {
-	const {
-		title = __( 'Say Hello to More Layouts 👋', i18n ),
-		description = __( 'Get more layouts for this block. This feature is only available on Stackable Premium.', i18n ),
-		button = __( 'Learn More', i18n ),
-	} = props
-
-	const mainClasses = classnames( [
-		'ugb-design-control-pro-note',
-	] )
-
 	return (
-		<div className={ mainClasses }>
+		<div className="ugb-design-control-pro-note">
 			<SVGProIcon />
-			<h4>{ title }</h4>
-			<p>{ description }</p>
-			<ProModal button={ button } />
+			<h4>{ props.title || LABELS[ props.type ].title }</h4>
+			<p>{ props.description || LABELS[ props.type ].description }</p>
+			<ProModal button={ props.button || LABELS[ props.type ].button } />
 		</div>
 	)
+}
+
+ProControl.defaultProps = {
+	type: 'layout',
+	title: '',
+	description: '',
+	button: '',
 }
 
 export default ProControl
