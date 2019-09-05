@@ -18,13 +18,12 @@ const ImageUploadPlaceholder = props => {
 	const {
 		imageID,
 		imageURL,
-		onChange = ( { url, id } ) => {}, // eslint-disable-line no-unused-vars
-		onRemove, // = () => {},
-		className = '',
-		allowedTypes = [ 'image' ],
-		render = undefined,
-		hasRemove = true,
-		style: mainStyle = {},
+		onRemove,
+		className,
+		allowedTypes,
+		render,
+		hasRemove,
+		style: mainStyle,
 	} = props
 
 	const imageClass = classnames( [
@@ -42,7 +41,25 @@ const ImageUploadPlaceholder = props => {
 
 	return (
 		<MediaUpload
-			onSelect={ onChange }
+			onSelect={ image => {
+				// If imageSize is provided, return the URL of that size.
+				let {
+					url, width, height,
+				} = image
+				const currentSelectedSize = props.imageSize || 'full'
+				if ( image.sizes[ currentSelectedSize ] ) {
+					url = image.sizes[ currentSelectedSize ].url
+					width = image.sizes[ currentSelectedSize ].width
+					height = image.sizes[ currentSelectedSize ].height
+				}
+
+				props.onChange( {
+					...image,
+					url,
+					width,
+					height,
+				} )
+			} }
 			allowedTypes={ allowedTypes }
 			value={ imageID }
 			render={ obj => {
@@ -94,6 +111,19 @@ const ImageUploadPlaceholder = props => {
 			} }
 		/>
 	)
+}
+
+ImageUploadPlaceholder.defaultProps = {
+	imageID: '',
+	imageURL: '',
+	imageSize: 'full', // If supplied, the imageURL that will be returned will be of this size.
+	onChange: ( { url, id } ) => {}, // eslint-disable-line no-unused-vars
+	onRemove: null,
+	className: '',
+	allowedTypes: [ 'image' ],
+	render: undefined,
+	hasRemove: true,
+	style: {},
 }
 
 export default ImageUploadPlaceholder
