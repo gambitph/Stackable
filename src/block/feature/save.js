@@ -1,7 +1,9 @@
 /**
  * External dependencies
  */
-import { ButtonEdit } from '~stackable/components'
+import {
+	ButtonEdit, BlockContainer, Image,
+} from '~stackable/components'
 
 /**
  * WordPress dependencies
@@ -9,7 +11,15 @@ import { ButtonEdit } from '~stackable/components'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { RichText } from '@wordpress/block-editor'
-import striptags from 'striptags'
+import { compose } from '@wordpress/compose'
+import { withUniqueClass, withBlockStyles } from '~stackable/higher-order'
+
+/**
+ * Internal dependencies
+ */
+import createStyles from './style'
+import { Fragment } from '@wordpress/element'
+import { showOptions } from '.'
 
 const save = props => {
 	const {
@@ -17,152 +27,131 @@ const save = props => {
 	} = props
 
 	const {
-		invert,
-		contentAlign,
-		textColor,
-		imageAlt = '',
-		imageSize,
-		imageUrl,
 		title,
-		description,
-		buttonURL,
-		buttonNewTab,
-		buttonText,
-		buttonColor,
-		buttonTextColor,
-		buttonSize,
-		buttonBorderRadius,
-		buttonDesign,
-		buttonIcon,
-		backgroundColorType = '',
-		backgroundColor,
-		backgroundColor2,
-		backgroundColorDirection = 0,
-		backgroundType = '',
-		backgroundImageURL,
-		backgroundOpacity = 5,
-		fixedBackground,
-		contentWidth,
-		align,
-		design = 'plain',
-		borderRadius = 12,
+		design = 'basic',
 		shadow = 3,
+		invert = false,
+		showTitle = true,
+		titleTag = '',
+		showDescription = true,
+		description = '',
+
+		// Image.
+		imageId = '',
+		imageUrl = '',
+		imageAlt = '',
+		imageShape = '',
+		imageShapeStretch = false,
+		imageWidth = '',
+		imageHeight = '',
+		imageShadow = '',
+
+		// Button.
+		showButton = true,
+		buttonUrl = '',
+		buttonNewWindow = false,
+		buttonSize = 'normal',
+		buttonText = '',
+		buttonShadow = 0,
+		buttonHoverEffect = '',
+		buttonIcon = '',
+		buttonIconPosition = '',
+		buttonDesign = 'basic',
+		buttonHoverGhostToNormal = false,
+		buttonNoFollow = false,
 	} = props.attributes
+
+	const show = showOptions( props )
 
 	const mainClasses = classnames( [
 		className,
-		'ugb-feature',
-		'ugb--background-opacity-' + ( 1 * Math.round( backgroundOpacity / 1 ) ),
+		'ugb-feature--v2',
 		`ugb-feature--design-${ design }`,
 	], applyFilters( 'stackable.feature.mainclasses', {
-		[ `ugb-feature--content-${ contentAlign }` ]: contentAlign,
-		'ugb-feature--invert': invert,
-		'ugb--has-background': design !== 'plain' && ( backgroundColor || backgroundImageURL ),
-		'ugb--has-background-image': design !== 'plain' && backgroundImageURL,
-		[ `ugb--content-width` ]: align === 'full' && contentWidth,
-		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-		[ `ugb--has-background-gradient` ]: design !== 'plain' && backgroundColorType === 'gradient',
-		[ `ugb--has-background-video` ]: design !== 'plain' && backgroundType === 'video',
+		'ugb-feature--invert': show.reverseHorizontally && invert,
 	}, design, props ) )
+
+	const itemClasses = classnames( [
+		'ugb-feature__item',
+	], {
+		[ `ugb--shadow-${ shadow }` ]: show.columnBackground && ( design === 'basic' || design === 'half' ) && shadow !== 3,
+	} )
+
+	const contentClasses = classnames( [
+		'ugb-feature__content',
+	], {
+		[ `ugb--shadow-${ shadow }` ]: show.columnBackground && design !== 'basic' && design !== 'half' && shadow !== 3,
+	} )
 
 	const imageClasses = classnames( [
 		'ugb-feature__image',
 	], applyFilters( 'stackable.feature.imageclasses', {
-		[ `ugb--shadow-${ shadow }` ]: design === 'plain',
+		[ `ugb--shadow-${ imageShadow }` ]: show.columnBackground && design === 'plain' && imageShape === '',
+		[ `ugb-feature__image-has-shape` ]: imageShape !== '',
 	}, design, props ) )
 
-	const backgroundStyles = design === 'plain' ? {} : {
-		backgroundColor: backgroundColor ? backgroundColor : undefined,
-		backgroundImage: backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
-		backgroundAttachment: fixedBackground ? 'fixed' : undefined,
-		'--ugb-background-color': backgroundImageURL || backgroundColorType === 'gradient' ? backgroundColor : undefined,
-		'--ugb-background-color2': backgroundColorType === 'gradient' && backgroundColor2 ? backgroundColor2 : undefined,
-		'--ugb-background-direction': backgroundColorType === 'gradient' ? `${ backgroundColorDirection }deg` : undefined,
-		borderRadius: borderRadius !== 12 ? borderRadius : undefined,
-	}
-
-	const styles = applyFilters( 'stackable.feature.styles', {
-		main: {
-			'--image-size': imageSize ? `${ imageSize }px` : undefined,
-			...backgroundStyles,
-		},
-		image: {
-			borderRadius: design === 'plain' ? borderRadius : undefined,
-		},
-	}, design, props )
-
-	const titleComp = ! RichText.isEmpty( title ) && (
-		<RichText.Content
-			tagName="h2"
-			className="ugb-feature__title"
-			style={ { color: textColor } }
-			value={ title }
-		/>
-	)
-	const descriptionComp = ! RichText.isEmpty( description ) && (
-		<RichText.Content
-			tagName="p"
-			className="ugb-feature__description"
-			style={ { color: textColor } }
-			value={ description }
-		/>
-	)
-	const buttonComp = ! RichText.isEmpty( buttonText ) && (
-		<ButtonEdit.Content
-			size={ buttonSize }
-			url={ buttonURL }
-			newTab={ buttonNewTab }
-			align={ contentAlign }
-			color={ buttonTextColor }
-			text={ buttonText }
-			icon={ buttonIcon }
-			design={ buttonDesign }
-			backgroundColor={ buttonColor }
-			borderRadius={ buttonBorderRadius }
-		/>
-	)
-	const imageComp = imageUrl && (
-		<img
-			className={ imageClasses }
-			style={ styles.image }
-			src={ imageUrl }
-			alt={ striptags( title ? title : imageAlt ) }
-		/>
-	)
-	const comps = {
-		titleComp,
-		descriptionComp,
-		buttonComp,
-		imageComp,
-	}
-
 	return (
-		<div className={ mainClasses } style={ styles.main }>
-			{ design === 'basic' && backgroundType === 'video' && (
-				<video
-					className="ugb-video-background"
-					autoPlay
-					muted
-					loop
-					src={ backgroundImageURL }
-				/>
-			) }
-			{ applyFilters( 'stackable.feature.save.output.before', null, design, props ) }
-			{ applyFilters( 'stackable.feature.save.output', (
-				<div className="ugb-content-wrapper">
-					<div className="ugb-feature__content">
-						{ titleComp }
-						{ descriptionComp }
-						{ buttonComp }
+		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
+			<Fragment>
+				<div className={ itemClasses }>
+					<div className={ contentClasses }>
+						{ showTitle && ! RichText.isEmpty( title ) &&
+							<RichText.Content
+								tagName={ titleTag || 'h2' }
+								className="ugb-feature__title"
+								value={ title }
+							/>
+						}
+						{ showDescription && ! RichText.isEmpty( description ) &&
+							<RichText.Content
+								tagName="p"
+								className="ugb-feature__description"
+								value={ description }
+							/>
+						}
+						{ showButton && !! buttonText.length &&
+							<ButtonEdit.Content
+								size={ buttonSize !== '' ? buttonSize : 'normal' }
+								text={ buttonText }
+								icon={ buttonIcon }
+								newTab={ buttonNewWindow !== '' && buttonNewWindow }
+								url={ buttonUrl }
+								noFollow={ buttonNoFollow }
+								hoverEffect={ buttonHoverEffect }
+								ghostToNormalEffect={ buttonHoverGhostToNormal }
+								shadow={ buttonShadow }
+								iconPosition={ buttonIconPosition }
+								design={ buttonDesign !== '' ? buttonDesign : 'basic' }
+							/>
+						}
 					</div>
-					<div className="ugb-feature__image-side">
-						{ imageComp }
-					</div>
+					{ ! show.featuredImageAsBackground &&
+						<div className="ugb-feature__image-side">
+							<Image
+								imageId={ imageId }
+								className={ imageClasses }
+								src={ imageUrl }
+								width={ imageWidth }
+								height={ imageHeight }
+								alt={ imageAlt }
+								shape={ imageShape }
+								shapeStretch={ imageShapeStretch }
+							/>
+						</div>
+					}
+					{ show.featuredImageAsBackground &&
+						<div
+							className="ugb-feature__image"
+							// style={ imageStyles }
+						/>
+					}
 				</div>
-			), comps, props ) }
-			{ applyFilters( 'stackable.feature.save.output.after', null, design, props ) }
-		</div>
+			</Fragment>
+		) } />
 	)
 }
 
-export default save
+export default compose(
+	withUniqueClass,
+	withBlockStyles( createStyles ),
+)( save )

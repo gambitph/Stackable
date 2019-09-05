@@ -2,352 +2,564 @@
  * External dependencies
  */
 import {
-	ButtonEdit, DesignPanelBody, ImageUploadPlaceholder, PanelBackgroundSettings, PanelButtonSettings, ProControl, ProControlButton, URLInputControl,
+	ButtonEdit,
+	DesignPanelBody,
+	ImageUploadPlaceholder,
+	ProControlButton,
+	BlockContainer,
+	ContentAlignControl,
+	BackgroundControlsHelper,
+	PanelAdvancedSettings,
+	TypographyControlHelper,
+	HeadingButtonsControl,
+	ColorPaletteControl,
+	ResponsiveControl,
+	AlignButtonsControl,
+	ButtonControlsHelper,
+	ControlSeparator,
+	PanelSpacingBody,
+	AdvancedRangeControl,
+	ImageControlsHelper,
+	Image,
+	ImageBackgroundControlsHelper,
 } from '~stackable/components'
-import { descriptionPlaceholder } from '~stackable/util'
+import {
+	descriptionPlaceholder,
+	createTypographyAttributeNames,
+	createResponsiveAttributeNames,
+	createButtonAttributeNames,
+} from '~stackable/util'
 
 /**
  * Internal dependencies
  */
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import createStyles from './style'
 
 /**
  * WordPress dependencies
  */
-import {
-	AlignmentToolbar, BlockControls, InspectorControls, PanelColorSettings, RichText,
-} from '@wordpress/block-editor'
 import { i18n, showProNotice } from 'stackable'
 import {
 	PanelBody, RangeControl, ToggleControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
+import { applyFilters, addFilter } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { Fragment } from '@wordpress/element'
+import { compose } from '@wordpress/compose'
+import { RichText } from '@wordpress/block-editor'
+import {
+	withUniqueClass,
+	withSetAttributeHook,
+	withGoogleFont,
+	withTabbedInspector,
+	withContentAlignReseter,
+	withBlockStyles,
+} from '~stackable/higher-order'
+import { showOptions } from '.'
+import { withSelect } from '@wordpress/data'
 
-const edit = props => {
+addFilter( 'stackable.feature.edit.inspector.layout.before', 'stackable/feature', ( output, props ) => {
+	const { setAttributes } = props
 	const {
-		isSelected,
-		className,
-		setAttributes,
-	} = props
-
-	const {
-		invert,
-		contentAlign,
-		textColor,
-		imageSize,
-		imageID,
-		imageUrl,
-		title,
-		description,
-		buttonURL,
-		buttonNewTab,
-		buttonText,
-		buttonColor,
-		buttonTextColor,
-		buttonSize,
-		buttonBorderRadius,
-		buttonDesign,
-		buttonIcon,
-		backgroundColorType = '',
-		backgroundColor,
-		backgroundColor2,
-		backgroundColorDirection = 0,
-		backgroundType = '',
-		backgroundImageID,
-		backgroundImageURL,
-		backgroundOpacity,
-		fixedBackground,
-		contentWidth,
-		align,
 		design = 'plain',
-		borderRadius = 12,
-		shadow = 3,
 	} = props.attributes
-
-	const mainClasses = classnames( [
-		className,
-		'ugb-feature',
-		'ugb--background-opacity-' + ( 1 * Math.round( backgroundOpacity / 1 ) ),
-		`ugb-feature--design-${ design }`,
-	], applyFilters( 'stackable.feature.mainclasses', {
-		[ `ugb-feature--content-${ contentAlign }` ]: contentAlign,
-		'ugb-feature--invert': invert,
-		'ugb--has-background': design !== 'plain' && ( backgroundColor || backgroundImageURL ),
-		'ugb--has-background-image': design !== 'plain' && backgroundImageURL,
-		[ `ugb--content-width` ]: align === 'full' && contentWidth,
-		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-		[ `ugb--has-background-gradient` ]: design !== 'plain' && backgroundColorType === 'gradient',
-		[ `ugb--has-background-video` ]: design !== 'plain' && backgroundType === 'video',
-	}, design, props ) )
-
-	const imageClasses = classnames( [
-		'ugb-feature__image',
-	], applyFilters( 'stackable.feature.imageclasses', {
-		[ `ugb--shadow-${ shadow }` ]: design === 'plain',
-	}, design, props ) )
-
-	const backgroundStyles = design === 'plain' ? {} : {
-		backgroundColor: backgroundColor ? backgroundColor : undefined,
-		backgroundImage: backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
-		backgroundAttachment: fixedBackground ? 'fixed' : undefined,
-		'--ugb-background-color': backgroundImageURL || backgroundColorType === 'gradient' ? backgroundColor : undefined,
-		'--ugb-background-color2': backgroundColorType === 'gradient' && backgroundColor2 ? backgroundColor2 : undefined,
-		'--ugb-background-direction': backgroundColorType === 'gradient' ? `${ backgroundColorDirection }deg` : undefined,
-		borderRadius: borderRadius !== 12 ? borderRadius : undefined,
-	}
-
-	const styles = applyFilters( 'stackable.feature.styles', {
-		main: {
-			'--image-size': imageSize ? `${ imageSize }px` : undefined,
-			...backgroundStyles,
-		},
-		image: {
-			borderRadius: design === 'plain' ? borderRadius : undefined,
-		},
-	}, design, props )
-
-	const show = applyFilters( 'stackable.feature.edit.show', {
-		background: design !== 'plain',
-	}, design, props )
 
 	return (
 		<Fragment>
-			<BlockControls>
-				<AlignmentToolbar
-					value={ contentAlign }
-					onChange={ contentAlign => setAttributes( { contentAlign } ) }
-				/>
-			</BlockControls>
-			<InspectorControls>
-				<DesignPanelBody
-					selected={ design }
-					options={ applyFilters( 'stackable.feature.edit.designs', [
-						{
-							label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
-						},
-						{
-							label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
-						},
-					] ) }
-					onChange={ design => setAttributes( { design } ) }
-				>
+			{ output }
+			<DesignPanelBody
+				initialOpen={ true }
+				selected={ design }
+				options={ [
+					{
+						image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
+					},
+					{
+						image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
+					},
+					...applyFilters( 'stackable.feature.edit.designs', [] ),
+				] }
+				onChange={ design => {
+					setAttributes( { design } )
+				} }
+			>
+				{ showProNotice && <ProControlButton /> }
+			</DesignPanelBody>
+		</Fragment>
+	)
+} )
+
+addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature', ( output, props ) => {
+	const { setAttributes } = props
+	const {
+		borderRadius = 12,
+		shadow = 3,
+		showTitle = true,
+		titleTag = '',
+		titleColor = '',
+		invert = false,
+		showButton = true,
+		showDescription = true,
+		descriptionColor = '',
+	} = props.attributes
+
+	const show = showOptions( props )
+
+	return (
+		<Fragment>
+			{ output }
+			<PanelBody title={ __( 'General', i18n ) }>
+				{ show.imageColumnWidth &&
+					<ResponsiveControl
+						attrNameTemplate="imageColumn%sWidth"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Image Column Width', i18n ) }
+							min={ 0 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				}
+				{ show.containerWidth &&
+					<ResponsiveControl
+						attrNameTemplate="container%sWidth"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Container Width', i18n ) }
+							min={ 300 }
+							max={ 1000 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				}
+				{ show.containerOffset &&
+					<ResponsiveControl
+						attrNameTemplate="container%sOffset"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Container Offset', i18n ) }
+							min={ 0 }
+							max={ 300 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				}
+				{ show.reverseHorizontally &&
+					<ToggleControl
+						label={ __( 'Reverse Horizontally', i18n ) }
+						checked={ invert }
+						onChange={ invert => setAttributes( { invert } ) }
+					/>
+				}
+				{ show.borderRadius &&
 					<RangeControl
 						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
 						onChange={ borderRadius => setAttributes( { borderRadius } ) }
 						min={ 0 }
 						max={ 50 }
+						allowReset={ true }
 					/>
+				}
+				{ show.columnBackground &&
 					<RangeControl
 						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
 						onChange={ shadow => setAttributes( { shadow } ) }
 						min={ 0 }
 						max={ 9 }
-					/>
-					{ align === 'full' &&
-						<ToggleControl
-							label={ __( 'Restrict to Content Width', i18n ) }
-							checked={ contentWidth }
-							onChange={ contentWidth => setAttributes( { contentWidth } ) }
-						/>
-					}
-					{ showProNotice && <ProControlButton /> }
-				</DesignPanelBody>
-				<PanelColorSettings
-					initialOpen={ true }
-					title={ __( 'General Settings', i18n ) }
-					colorSettings={ [
-						{
-							value: textColor,
-							onChange: textColor => setAttributes( { textColor } ),
-							label: __( 'Text Color', i18n ),
-						},
-					] }
-				>
-					<ToggleControl
-						label={ __( 'Reverse Horizontally', i18n ) }
-						checked={ invert }
-						onChange={ () => setAttributes( { invert: ! invert } ) }
-					/>
-					<RangeControl
-						label={ __( 'Image Size', i18n ) }
-						value={ imageSize }
-						onChange={ imageSize => setAttributes( { imageSize } ) }
-						help={ __( 'The theme\'s content width may have an effect here.', i18n ) }
-						min={ 100 }
-						max={ 800 }
-					/>
-				</PanelColorSettings>
-				{ applyFilters( 'stackable.feature.edit.inspector', null, design, props ) }
-				{ show.background &&
-					<PanelBackgroundSettings
-						backgroundColorType={ backgroundColorType }
-						backgroundColor={ backgroundColor }
-						backgroundColor2={ backgroundColor2 }
-						backgroundColorDirection={ backgroundColorDirection }
-						backgroundType={ backgroundType }
-						backgroundImageID={ backgroundImageID }
-						backgroundImageURL={ backgroundImageURL }
-						backgroundOpacity={ backgroundOpacity }
-						fixedBackground={ fixedBackground }
-						onChangeBackgroundColorType={ backgroundColorType => setAttributes( { backgroundColorType } ) }
-						onChangeBackgroundColor={ backgroundColor => setAttributes( { backgroundColor } ) }
-						onChangeBackgroundColor2={ backgroundColor2 => setAttributes( { backgroundColor2 } ) }
-						onChangeBackgroundColorDirection={ backgroundColorDirection => setAttributes( { backgroundColorDirection } ) }
-						onChangeBackgroundType={ backgroundType => setAttributes( { backgroundType } ) }
-						onChangeBackgroundImage={ ( { url, id } ) => setAttributes( { backgroundImageURL: url, backgroundImageID: id } ) }
-						onRemoveBackgroundImage={ () => {
-							setAttributes( { backgroundImageURL: '', backgroundImageID: 0 } )
-						} }
-						onChangeBackgroundOpacity={ backgroundOpacity => setAttributes( { backgroundOpacity } ) }
-						onChangeFixedBackground={ value => setAttributes( { fixedBackground: !! value } ) }
+						allowReset={ true }
 					/>
 				}
-				<PanelButtonSettings
+				<ContentAlignControl
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+			</PanelBody>
+
+			{ show.columnBackground &&
+				<PanelBody
+					title={ __( 'Background', i18n ) }
 					initialOpen={ false }
-					buttonColor={ buttonColor }
-					buttonTextColor={ buttonTextColor }
-					buttonSize={ buttonSize }
-					buttonBorderRadius={ buttonBorderRadius }
-					buttonDesign={ buttonDesign }
-					buttonIcon={ buttonIcon }
-					onChangeButtonColor={ value => setAttributes( { buttonColor: value } ) }
-					onChangeButtonTextColor={ value => setAttributes( { buttonTextColor: value } ) }
-					onChangeButtonSize={ value => {
-						setAttributes( { buttonSize: value } )
-					} }
-					onChangeButtonBorderRadius={ value => setAttributes( { buttonBorderRadius: value } ) }
-					onChangeButtonDesign={ buttonDesign => setAttributes( { buttonDesign } ) }
-					onChangeButtonIcon={ buttonIcon => setAttributes( { buttonIcon } ) }
-				/>
-				{ showProNotice &&
-					<PanelBody
-						initialOpen={ false }
-						title={ __( 'Custom CSS', i18n ) }
-					>
-						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
-							description={ __( 'Further tweak this blockby adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
-						/>
-					</PanelBody>
+				>
+					<BackgroundControlsHelper
+						attrNameTemplate="column%s"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					/>
+				</PanelBody>
+			}
+
+			<PanelBody
+				title={ __( 'Image', i18n ) }
+				initialOpen={ false }
+			>
+				{ ! show.featuredImageAsBackground &&
+					<ImageControlsHelper
+						attrNameTemplate="image%s"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+						onChangeBlendMode={ false }
+					/>
 				}
-				{ applyFilters( 'stackable.feature.edit.inspector.after', null, design, props ) }
-			</InspectorControls>
-			<div className={ mainClasses } style={ styles.main }>
-				{ design === 'basic' && backgroundType === 'video' && (
-					<video
-						className="ugb-video-background"
-						autoPlay
-						muted
-						loop
-						src={ backgroundImageURL }
-					/>
-				) }
-				{ applyFilters( 'stackable.feature.edit.output.before', null, design, props ) }
-				{ ( () => {
-					const titleComp = <RichText
-						tagName="h2"
-						className="ugb-feature__title"
-						value={ title }
-						onChange={ title => setAttributes( { title } ) }
-						style={ { color: textColor } }
-						placeholder={ __( 'Title for This Block', i18n ) }
-						keepPlaceholderOnFocus
-					/>
-					const descriptionComp = <RichText
-						tagName="p"
-						className="ugb-feature__description"
-						value={ description }
-						onChange={ description => setAttributes( { description } ) }
-						style={ { color: textColor } }
-						placeholder={ descriptionPlaceholder( 'medium' ) }
-						keepPlaceholderOnFocus
-					/>
-					const buttonComp = <ButtonEdit
-						size={ buttonSize }
-						align={ contentAlign }
-						color={ buttonTextColor }
-						backgroundColor={ buttonColor }
-						text={ buttonText }
-						borderRadius={ buttonBorderRadius }
-						design={ buttonDesign }
-						icon={ buttonIcon }
-						onChange={ buttonText => setAttributes( { buttonText } ) }
-					/>
-					const imageBGComp = <ImageUploadPlaceholder
-						imageID={ imageID }
-						imageURL={ imageUrl }
-						className={ imageClasses }
-						style={ styles.image }
-						onRemove={ () => {
-							setAttributes( {
-								imageUrl: '', imageID: '', imageAlt: '',
-							} )
-						} }
-						onChange={ ( {
-							url, id, alt,
-						} ) => {
-							setAttributes( {
-								imageUrl: url, imageID: id, imageAlt: alt,
-							} )
-						} }
-					/>
-					const imageComp = <ImageUploadPlaceholder
-						imageID={ imageID }
-						imageURL={ imageUrl }
-						className={ imageClasses }
-						style={ styles.image }
-						onRemove={ () => {
-							setAttributes( {
-								imageUrl: '', imageID: '', imageAlt: '',
-							} )
-						} }
-						onChange={ ( {
-							url, id, alt,
-						} ) => {
-							setAttributes( {
-								imageUrl: url, imageID: id, imageAlt: alt,
-							} )
-						} }
-						render={ <img src={ imageUrl } alt={ __( 'feature', i18n ) } /> }
-					/>
-					const comps = {
-						titleComp,
-						descriptionComp,
-						buttonComp,
-						imageBGComp,
-						imageComp,
-					}
-					return applyFilters( 'stackable.feature.edit.output', (
-						<div className="ugb-content-wrapper">
-							<div className="ugb-feature__content">
-								{ titleComp }
-								{ descriptionComp }
-								{ buttonComp }
-							</div>
-							<div className="ugb-feature__image-side">
-								{ imageComp }
-							</div>
-						</div>
-					), comps, props )
-				} )() }
-				{ applyFilters( 'stackable.feature.edit.output.after', null, design, props ) }
-			</div>
-			{ isSelected && (
-				<URLInputControl
-					value={ buttonURL }
-					newTab={ buttonNewTab }
-					onChange={ buttonURL => setAttributes( { buttonURL } ) }
-					onChangeNewTab={ buttonNewTab => setAttributes( { buttonNewTab } ) }
+				{ show.featuredImageAsBackground &&
+					<Fragment>
+						<ImageBackgroundControlsHelper
+							attrNameTemplate="image%s"
+							setAttributes={ setAttributes }
+							blockAttributes={ props.attributes }
+						/>
+						<ResponsiveControl
+							attrNameTemplate="imageBackground%sHeight"
+							setAttributes={ setAttributes }
+							blockAttributes={ props.attributes }
+						>
+							<AdvancedRangeControl
+								label={ __( 'Image Height', i18n ) }
+								min={ 400 }
+								max={ 1000 }
+								allowReset={ true }
+							/>
+						</ResponsiveControl>
+					</Fragment>
+				}
+			</PanelBody>
+
+			<PanelAdvancedSettings
+				title={ __( 'Title', i18n ) }
+				checked={ showTitle }
+				onChange={ showTitle => setAttributes( { showTitle } ) }
+				toggleOnSetAttributes={ [
+					...createTypographyAttributeNames( 'title%s' ),
+					'titleTag',
+					'titleColor',
+					...createResponsiveAttributeNames( 'Title%sAlign' ),
+				] }
+				toggleAttributeName="showTitle"
+			>
+				<TypographyControlHelper
+					attrNameTemplate="title%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
 				/>
-			) }
+				<HeadingButtonsControl
+					label={ __( 'Title HTML Tag', i18n ) }
+					value={ titleTag || 'h2' }
+					onChange={ titleTag => setAttributes( { titleTag } ) }
+				/>
+				<ColorPaletteControl
+					value={ titleColor }
+					onChange={ titleColor => setAttributes( { titleColor } ) }
+					label={ __( 'Title Color', i18n ) }
+				/>
+				<ResponsiveControl
+					attrNameTemplate="Title%sAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+				</ResponsiveControl>
+			</PanelAdvancedSettings>
+
+			<PanelAdvancedSettings
+				title={ __( 'Description', i18n ) }
+				checked={ showDescription }
+				onChange={ showDescription => setAttributes( { showDescription } ) }
+				toggleOnSetAttributes={ [
+					...createTypographyAttributeNames( 'description%s' ),
+					'descriptionColor',
+					...createResponsiveAttributeNames( 'description%sAlign' ),
+				] }
+				toggleAttributeName="showDescription"
+			>
+				<TypographyControlHelper
+					attrNameTemplate="description%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+				<ColorPaletteControl
+					value={ descriptionColor }
+					onChange={ descriptionColor => setAttributes( { descriptionColor } ) }
+					label={ __( 'Description Color', i18n ) }
+				/>
+				<ResponsiveControl
+					attrNameTemplate="description%sAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+				</ResponsiveControl>
+			</PanelAdvancedSettings>
+
+			<PanelAdvancedSettings
+				title={ __( 'Button', i18n ) }
+				checked={ showButton }
+				onChange={ showButton => setAttributes( { showButton } ) }
+				toggleOnSetAttributes={ [
+					...createButtonAttributeNames( 'button%s' ),
+					...createResponsiveAttributeNames( 'button%sAlign' ),
+				] }
+				toggleAttributeName="showButton"
+			>
+				<ButtonControlsHelper
+					attrNameTemplate="button%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+				<ControlSeparator />
+				<ResponsiveControl
+					attrNameTemplate="button%sAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+					/>
+				</ResponsiveControl>
+			</PanelAdvancedSettings>
+
+			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
+				{ show.titleSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="title%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Title', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				}
+				{ show.descriptionSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="description%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Description', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				}
+			</PanelSpacingBody>
 		</Fragment>
+	)
+} )
+
+const edit = props => {
+	const {
+		className,
+		setAttributes,
+	} = props
+
+	const {
+		title,
+		design = 'basic',
+		shadow = 3,
+		invert = false,
+		showTitle = true,
+		titleTag = '',
+		showDescription = true,
+		description = '',
+
+		// Image.
+		imageId = '',
+		imageUrl = '',
+		imageAlt = '',
+		imageSize = 'large',
+		imageShape = '',
+		imageShapeStretch = false,
+		imageWidth = '',
+		imageHeight = '',
+		imageShadow = '',
+
+		// Button.
+		showButton = true,
+		buttonSize = 'normal',
+		buttonText = '',
+		buttonShadow = 0,
+		buttonHoverEffect = '',
+		buttonIcon = '',
+		buttonIconPosition = '',
+		buttonDesign = 'basic',
+		buttonHoverGhostToNormal = false,
+	} = props.attributes
+
+	const show = showOptions( props )
+
+	const mainClasses = classnames( [
+		className,
+		'ugb-feature--v2',
+		// 'ugb--background-opacity-' + ( 1 * Math.round( backgroundOpacity / 1 ) ),
+		`ugb-feature--design-${ design }`,
+	], applyFilters( 'stackable.feature.mainclasses', {
+		// [ `ugb-feature--content-${ contentAlign }` ]: contentAlign,
+		'ugb-feature--invert': show.reverseHorizontally && invert,
+		// 'ugb--has-background': design !== 'plain' && ( backgroundColor || backgroundImageURL ),
+		// 'ugb--has-background-image': design !== 'plain' && backgroundImageURL,
+		// [ `ugb--content-width` ]: align === 'full' && contentWidth,
+		// [ `ugb--shadow-${ shadow }` ]: show.columnBackground && ( design === 'basic' || design === 'half' ) && shadow !== 3,
+		// [ `ugb--has-background-gradient` ]: design !== 'plain' && backgroundColorType === 'gradient',
+		// [ `ugb--has-background-video` ]: design !== 'plain' && backgroundType === 'video',
+	}, design, props ) )
+
+	const itemClasses = classnames( [
+		'ugb-feature__item',
+	], {
+		[ `ugb--shadow-${ shadow }` ]: show.columnBackground && ( design === 'basic' || design === 'half' ) && shadow !== 3,
+	} )
+
+	const contentClasses = classnames( [
+		'ugb-feature__content',
+	], {
+		[ `ugb--shadow-${ shadow }` ]: show.columnBackground && design !== 'basic' && design !== 'half' && shadow !== 3,
+	} )
+
+	const imageClasses = classnames( [
+		'ugb-feature__image',
+	], applyFilters( 'stackable.feature.imageclasses', {
+		[ `ugb--shadow-${ imageShadow }` ]: show.columnBackground && design === 'plain' && imageShape === '',
+		[ `ugb-feature__image-has-shape` ]: imageShape !== '',
+	}, design, props ) )
+
+	return (
+		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
+			<Fragment>
+				<div className={ itemClasses }>
+					<div className={ contentClasses }>
+						{ showTitle &&
+							<RichText
+								tagName={ titleTag || 'h2' }
+								className="ugb-feature__title"
+								value={ title }
+								onChange={ title => setAttributes( { title } ) }
+								placeholder={ __( 'Title for This Block', i18n ) }
+								keepPlaceholderOnFocus
+							/>
+						}
+						{ showDescription &&
+							<RichText
+								tagName="p"
+								className="ugb-feature__description"
+								value={ description }
+								onChange={ description => setAttributes( { description } ) }
+								placeholder={ descriptionPlaceholder( 'medium' ) }
+								keepPlaceholderOnFocus
+							/>
+						}
+						{ showButton &&
+							<ButtonEdit
+								size={ buttonSize !== '' ? buttonSize : 'normal' }
+								text={ buttonText }
+								icon={ buttonIcon }
+								design={ buttonDesign !== '' ? buttonDesign : 'basic' }
+								shadow={ buttonShadow }
+								hoverEffect={ buttonHoverEffect }
+								ghostToNormalEffect={ buttonHoverGhostToNormal }
+								iconPosition={ buttonIconPosition }
+								onChange={ buttonText => setAttributes( { buttonText } ) }
+							/>
+						}
+					</div>
+					{ ! show.featuredImageAsBackground &&
+						<div className="ugb-feature__image-side">
+							<ImageUploadPlaceholder
+								imageID={ imageId }
+								imageURL={ imageUrl }
+								imageSize={ imageSize }
+								className={ imageClasses }
+								onRemove={ () => {
+									setAttributes( {
+										imageUrl: '',
+										imageId: '',
+										imageAlt: '',
+										imageWidth: '',
+										imageHeight: '',
+									} )
+								} }
+								onChange={ image => {
+									setAttributes( {
+										imageUrl: image.url,
+										imageId: image.id,
+										imageAlt: image.alt,
+										imageWidth: image.width,
+										imageHeight: image.height,
+									} )
+								} }
+								render={
+									<Image
+										imageId={ imageId }
+										src={ imageUrl }
+										size={ imageSize }
+										shape={ imageShape }
+										shapeStretch={ imageShapeStretch }
+										alt={ imageAlt }
+										width={ imageWidth }
+										height={ imageHeight }
+									/>
+								}
+							/>
+						</div>
+					}
+					{ show.featuredImageAsBackground &&
+						<ImageUploadPlaceholder
+							imageID={ imageId }
+							imageURL={ imageUrl }
+							imageSize={ imageSize }
+							className={ imageClasses }
+							onRemove={ () => {
+								setAttributes( {
+									imageUrl: '',
+									imageId: '',
+									imageAlt: '',
+									imageWidth: '',
+									imageHeight: '',
+								} )
+							} }
+							onChange={ image => {
+								setAttributes( {
+									imageUrl: image.url,
+									imageId: image.id,
+									imageAlt: image.alt,
+									imageWidth: image.width,
+									imageHeight: image.height,
+								} )
+							} }
+						/>
+					}
+				</div>
+			</Fragment>
+		) } />
 	)
 }
 
-export default edit
+export default compose(
+	withUniqueClass,
+	withSetAttributeHook,
+	withGoogleFont,
+	withTabbedInspector(),
+	withContentAlignReseter( [ 'Title%sAlign', 'Description%sAlign', 'Button%sAlign' ] ),
+	withBlockStyles( createStyles, { editorMode: true } ),
+	withSelect( ( select, props ) => {
+		const { getMedia } = select( 'core' )
+		return {
+			imageData: props.attributes.imageId ? getMedia( props.attributes.imageId ) : null,
+		}
+	} ),
+)( edit )
