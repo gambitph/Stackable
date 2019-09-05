@@ -5,6 +5,7 @@ export * from './background'
 export * from './button'
 export * from './styles'
 export * from './blocks'
+export * from './svg'
 
 /**
  * WordPress dependencies
