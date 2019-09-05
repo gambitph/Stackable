@@ -23,7 +23,12 @@ const ImageControl = props => {
 		if ( props.onRemove ) {
 			props.onRemove()
 		} else {
-			props.onChange( { url: '', id: '' } )
+			props.onChange( {
+				url: '',
+				id: '',
+				width: '',
+				height: '',
+			} )
 		}
 	}
 
@@ -105,7 +110,7 @@ ImageControl.defaultProps = {
 	label: '',
 	imageID: '',
 	imageURL: '',
-	onChange: ( { url, id } ) => {}, // eslint-disable-line no-unused-vars
+	onChange: ( { url, id, width, height } ) => {}, // eslint-disable-line
 	onRemove: () => {},
 	allowedTypes: [ 'image' ],
 	help: '',
