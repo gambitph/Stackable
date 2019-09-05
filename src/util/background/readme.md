@@ -1,17 +1,17 @@
-# Typography Utility / Helper Functions
+# Background Utility / Helper Functions
 
-A set of helper functions for an easier implementation of typography options in blocks.
+A set of helper functions for an easier implementation of background options in blocks.
 
 # Attribute List Helper
 
-Adds the required typography attributes:
+Adds the required Background attributes:
 
 ```js
-import { createTypographyAttributes } from '@stackable/util'
+import { createBackgroundAttributes } from '@stackable/util'
 
 const attributes = {
 	// Creates the attributes titleFontFamily, titleFontSize, titleMobileFontSize, ...
-	...createTypographyAttributes( 'title%s' ),
+	...createBackgroundAttributes( 'title%s' ),
 }
 ```
 
@@ -30,26 +30,26 @@ const attributes = {
 }
 ```
 
-# Typography Styles Helper
+# Background Styles Helper
 
-Adds the typography styles from the typography attributes:
+Adds the Background styles from the Background attributes:
 
 ```js
-import { createTypographyStyles } from '@stackable/util'
+import { createBackgroundStyles } from '@stackable/util'
 
 export const createStyles = props => {
 	return {
 		'.ugb-number-box__title': {
-			...createTypographyStyles( 'title%s', 'desktop', props.attributes ),
+			...createBackgroundStyles( 'title%s', 'desktop', props.attributes ),
 		}
 		tablet: {
 			'.ugb-number-box__title': {
-				...createTypographyStyles( 'title%s', 'tablet', props.attributes ),
+				...createBackgroundStyles( 'title%s', 'tablet', props.attributes ),
 			}	
 		}
 		mobile: {
 			'.ugb-number-box__title': {
-				...createTypographyStyles( 'title%s', 'mobile', props.attributes ),
+				...createBackgroundStyles( 'title%s', 'mobile', props.attributes ),
 			}	
 		}
 	}
