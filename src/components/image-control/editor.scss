@@ -27,6 +27,7 @@
 	}
 	.ugb-image-preview-wrapper {
 		position: relative;
+		z-index: 1; // Prevent this from going on top of the 3-tabs.
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -45,6 +46,9 @@
 		margin: 0;
 		position: relative;
 		z-index: 2;
+		object-fit: contain;
+		width: auto;
+		height: auto;
 	}
 	.ugb-image-preview-remove {
 		background: none !important;
