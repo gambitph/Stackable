@@ -70,7 +70,7 @@ export const createStyles = props => {
 
 	// Background.
 	if ( show.columnBackground ) {
-		const selector = design === 'basic' || design === 'half' ? 'ugb-feature__item' : 'ugb-feature__content'
+		const selector = design === 'basic' ? 'ugb-feature__item' : 'ugb-feature__content'
 		styles.push( {
 			...( show.columnBackground ? createBackgroundStyleSet( 'column%s', selector, props.attributes, {
 				importantBackgroundColor: true,
