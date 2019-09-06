@@ -796,10 +796,43 @@ const deprecated = [
 		attributes: deprecatedSchema_1_17_2,
 		save: deprecatedSave_1_17_2,
 		migrate: attributes => {
+			// Update the custom CSS since the structure has changed.
+			const updateCSS = css => css
+				.replace( /\n\.ugb-feature(\s*{)/g, '\n.ugb-feature__item$1' )
+
+			const portDesigns = {
+				overlap: 'overlap-bg',
+				overlap2: 'overlap-bg2',
+				overlap3: 'overlap-bg4',
+			}
+
 			return {
 				...attributes,
+				design: Object.keys( portDesigns ).includes( attributes.design ) ? portDesigns[ attributes.design ] : attributes.design,
+
+				// Custom CSS.
+				customCSS: updateCSS( attributes.customCSS ),
+				customCSSCompiled: updateCSS( attributes.customCSSCompiled ),
+
+				titleColor: attributes.textColor,
+				descriptionColor: attributes.textColor,
+
+				imageWidth: attributes.imageSize,
 				imageId: attributes.imageID,
-				// TODO
+				imageUrl: attributes.imageUrl,
+
+				buttonUrl: attributes.buttonURL,
+				buttonNewWindow: attributes.buttonNewTab,
+				buttonBackgroundColor: attributes.buttonColor,
+
+				columnBackgroundColorType: attributes.backgroundColorType,
+				columnBackgroundColor: attributes.backgroundColor,
+				columnBackgroundColor2: attributes.backgroundColor2,
+				columnBackgroundGradientDirection: attributes.backgroundColorDirection,
+				columnBackgroundMediaId: attributes.backgroundImageID,
+				columnBackgroundMediaUrl: attributes.backgroundImageURL,
+				columnBackgroundTintStrength: attributes.backgroundOpacity,
+				columnFixedBackground: attributes.fixedBackground,
 			}
 		},
 	},
