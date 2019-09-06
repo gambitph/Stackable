@@ -61,7 +61,6 @@ import {
 	withBlockStyles,
 } from '~stackable/higher-order'
 import { showOptions } from '.'
-import { withSelect } from '@wordpress/data'
 
 addFilter( 'stackable.feature.edit.inspector.layout.before', 'stackable/feature', ( output, props ) => {
 	const { setAttributes } = props
@@ -562,10 +561,4 @@ export default compose(
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Title%sAlign', 'Description%sAlign', 'Button%sAlign' ] ),
 	withBlockStyles( createStyles, { editorMode: true } ),
-	withSelect( ( select, props ) => {
-		const { getMedia } = select( 'core' )
-		return {
-			imageData: props.attributes.imageId ? getMedia( props.attributes.imageId ) : null,
-		}
-	} ),
 )( edit )
