@@ -4,6 +4,8 @@
 import {
 	ButtonEdit, BlockContainer, Image,
 } from '~stackable/components'
+import { createVideoBackground, hasBackgroundOverlay } from '~stackable/util'
+import { withUniqueClass, withBlockStyles } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -12,13 +14,12 @@ import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { RichText } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
-import { withUniqueClass, withBlockStyles } from '~stackable/higher-order'
+import { Fragment } from '@wordpress/element'
 
 /**
  * Internal dependencies
  */
 import createStyles from './style'
-import { Fragment } from '@wordpress/element'
 import { showOptions } from '.'
 
 const save = props => {
@@ -75,12 +76,14 @@ const save = props => {
 		'ugb-feature__item',
 	], applyFilters( 'stackable.feature.itemclasses', {
 		[ `ugb--shadow-${ shadow }` ]: show.columnBackground && ( design === 'basic' || design === 'half' ) && shadow !== 3,
+		'ugb--has-background-overlay': show.columnBackground && design === 'basic' && hasBackgroundOverlay( 'column%s', props.attributes ),
 	}, props ) )
 
 	const contentClasses = classnames( [
 		'ugb-feature__content',
 	], applyFilters( 'stackable.feature.contentclasses', {
 		[ `ugb--shadow-${ shadow }` ]: show.columnBackground && design !== 'basic' && design !== 'half' && shadow !== 3,
+		'ugb--has-background-overlay': show.columnBackground && design !== 'basic' && hasBackgroundOverlay( 'column%s', props.attributes ),
 	}, props ) )
 
 	const imageClasses = classnames( [
@@ -94,7 +97,9 @@ const save = props => {
 		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
 				<div className={ itemClasses }>
+					{ show.columnBackground && design === 'basic' && createVideoBackground( 'column%s', props ) }
 					<div className={ contentClasses }>
+						{ show.columnBackground && design !== 'basic' && createVideoBackground( 'column%s', props ) }
 						{ showTitle && ! RichText.isEmpty( title ) &&
 							<RichText.Content
 								tagName={ titleTag || 'h2' }
