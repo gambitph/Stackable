@@ -63,6 +63,10 @@ export const schema = {
 		type: 'string',
 		default: '',
 	},
+	imageShapeStretch: {
+		type: 'boolean',
+		default: true,
+	},
 	...createResponsiveAttributes( 'imageBackground%sHeight', {
 		type: 'number',
 		default: '',

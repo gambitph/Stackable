@@ -47,6 +47,25 @@
 	}
 }
 
+@media screen and (max-width: $break-medium) {
+	.ugb-feature.ugb-feature--v2 {
+		&.ugb-feature--design-basic,
+		&.ugb-feature--design-plain {
+			.ugb-feature__item {
+				grid-template-columns: 1fr;
+			}
+			.ugb-feature__content {
+				grid-row: 2;
+				grid-column: 1;
+			}
+			.ugb-feature__image-side {
+				grid-row: 1;
+				grid-column: 1;
+			}
+		}
+	}
+}
+
 /**
  * Deprecated < v2
  */
