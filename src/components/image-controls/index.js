@@ -33,7 +33,7 @@ import {
 	TextareaControl,
 	ExternalLink,
 } from '@wordpress/components'
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
@@ -107,7 +107,7 @@ const ImageControls = props => {
 							label: __( 'Circle', i18n ), value: 'circle', image: ImageShapeCircle,
 						},
 						{
-							label: __( 'Blob 1', i18n ), value: 'blob1', image: ImageShapeBlob1,
+							label: sprintf( __( 'Blob %s', i18n ), 1 ), value: 'blob1', image: ImageShapeBlob1,
 						},
 						...applyFilters( 'stackable.image.control.shapes', [] ),
 					] }
