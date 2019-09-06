@@ -421,15 +421,15 @@ const edit = props => {
 
 	const itemClasses = classnames( [
 		'ugb-feature__item',
-	], {
+	], applyFilters( 'stackable.feature.itemclasses', {
 		[ `ugb--shadow-${ shadow }` ]: show.columnBackground && ( design === 'basic' || design === 'half' ) && shadow !== 3,
-	} )
+	}, props ) )
 
 	const contentClasses = classnames( [
 		'ugb-feature__content',
-	], {
+	], applyFilters( 'stackable.feature.contentclasses', {
 		[ `ugb--shadow-${ shadow }` ]: show.columnBackground && design !== 'basic' && design !== 'half' && shadow !== 3,
-	} )
+	}, props ) )
 
 	const imageClasses = classnames( [
 		'ugb-feature__image',

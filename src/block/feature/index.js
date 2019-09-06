@@ -135,109 +135,7 @@ export const schema = {
 		[ '', 'Tablet', 'Mobile' ]
 	),
 
-	// imageSize: {
-	// 	type: 'number',
-	// 	default: 400,
-	// },
-	// imageId: {
-	// 	type: 'number',
-	// },
-	// imageUrl: {
-	// 	type: 'url',
-	// },
-	// imageAlt: {
-	// 	type: 'string',
-	// },
-	// title: {
-	// 	source: 'html',
-	// 	selector: 'h2',
-	// 	default: __( 'Title for This Block', i18n ),
-	// },
-	// description: {
-	// 	source: 'html',
-	// 	selector: 'p',
-	// 	default: descriptionPlaceholder( 'medium' ),
-	// },
-	// buttonURL: {
-	// 	type: 'string',
-	// 	source: 'attribute',
-	// 	selector: '.ugb-button',
-	// 	attribute: 'href',
-	// 	default: '',
-	// },
-	// buttonNewTab: {
-	// 	type: 'boolean',
-	// 	source: 'attribute',
-	// 	selector: '.ugb-button',
-	// 	attribute: 'target',
-	// 	default: false,
-	// },
-	// buttonText: {
-	// 	source: 'html',
-	// 	selector: '.ugb-button span',
-	// 	default: __( 'Button text', i18n ),
-	// },
-	// buttonColor: {
-	// 	type: 'string',
-	// },
-	// buttonTextColor: {
-	// 	type: 'string',
-	// },
-	// buttonSize: {
-	// 	type: 'string',
-	// 	default: 'normal',
-	// },
-	// buttonBorderRadius: {
-	// 	type: 'number',
-	// 	default: 4,
-	// },
-	// buttonDesign: {
-	// 	type: 'string',
-	// 	default: 'basic',
-	// },
-	// buttonIcon: {
-	// 	type: 'string',
-	// },
-	// backgroundColorType: {
-	// 	type: 'string',
-	// 	default: '',
-	// },
-	// backgroundColor: {
-	// 	type: 'string',
-	// },
-	// backgroundColor2: {
-	// 	type: 'string',
-	// 	default: '',
-	// },
-	// backgroundColorDirection: {
-	// 	type: 'number',
-	// 	default: 0,
-	// },
-	// backgroundType: {
-	// 	type: 'string',
-	// 	default: '',
-	// },
-	// backgroundImageID: {
-	// 	type: 'number',
-	// },
-	// backgroundImageURL: {
-	// 	type: 'string',
-	// },
-	// backgroundOpacity: {
-	// 	type: 'number',
-	// 	default: 5,
-	// },
-	// fixedBackground: {
-	// 	type: 'boolean',
-	// 	default: false,
-	// },
-	// contentWidth: {
-	// 	type: 'boolean',
-	// 	default: false,
-	// },
-	// align: {
-	// 	type: 'string',
-	// },
+	// Effects.
 	hoverEffect: {
 		type: 'string',
 		default: '',
@@ -290,8 +188,6 @@ export const showOptions = blockProps => {
 		showDescription = true,
 		showButton = true,
 	} = blockProps.attributes
-
-	// const borderRadius = ( ! showBlockBackground && align !== 'full' ) || ( showBlockBackground && blockInnerWidth !== 'full' )
 
 	return applyFilters( 'stackable.feature.show', {
 		imageColumnWidth: [ 'basic', 'plain', 'half' ].includes( design ),
