@@ -31,29 +31,33 @@ export const createStyles = props => {
 	const {
 		design = 'plain',
 		columnBackgroundColor = '',
+		invert = false,
 	} = props.attributes
 
 	const styles = []
 
 	// General.
-	const computeGridFraction2 = percentage => {
-		const right = 2 * ( percentage / 100 )
+	const computeGridFraction2 = ( percentage, rightColumn = true ) => {
+		const right = 2 * ( ( typeof percentage !== 'number' ? 50 : percentage ) / 100 )
 		const left = 2 - right
-		return `${ left.toFixed( 2 ) }fr ${ right.toFixed( 2 ) }fr`
+		if ( rightColumn ) {
+			return `${ left.toFixed( 2 ) }fr ${ right.toFixed( 2 ) }fr`
+		}
+		return `${ right.toFixed( 2 ) }fr ${ left.toFixed( 2 ) }fr`
 	}
 	if ( show.imageColumnWidth ) {
 		styles.push( {
 			'.ugb-feature__item': {
-				gridTemplateColumns: props.attributes.imageColumnWidth !== '' ? computeGridFraction2( props.attributes.imageColumnWidth ) + ' !important' : undefined,
+				gridTemplateColumns: props.attributes.imageColumnWidth !== '' ? computeGridFraction2( props.attributes.imageColumnWidth, ! invert ) + ' !important' : undefined,
 			},
 			tablet: {
 				'.ugb-feature__item': {
-					gridTemplateColumns: props.attributes.imageColumnTabletWidth !== '' ? computeGridFraction2( props.attributes.imageColumnTabletWidth ) + ' !important' : undefined,
+					gridTemplateColumns: props.attributes.imageColumnTabletWidth !== '' ? computeGridFraction2( props.attributes.imageColumnTabletWidth, ! invert ) + ' !important' : undefined,
 				},
 			},
 			mobile: {
 				'.ugb-feature__item': {
-					gridTemplateColumns: props.attributes.imageColumnMobileWidth !== '' ? computeGridFraction2( props.attributes.imageColumnMobileWidth ) + ' !important' : undefined,
+					gridTemplateColumns: props.attributes.imageColumnMobileWidth !== '' ? computeGridFraction2( props.attributes.imageColumnMobileWidth, ! invert ) + ' !important' : undefined,
 				},
 			},
 		} )
