@@ -39,6 +39,11 @@
 		margin-bottom: $text-margin-bottom;
 	}
 
+	.ugb-feature__content {
+		background-size: cover;
+		background-position: center;
+	}
+
 	&.ugb-feature--invert {
 		.ugb-feature__content {
 			grid-column: 2;

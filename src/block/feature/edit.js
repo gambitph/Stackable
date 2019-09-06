@@ -28,6 +28,8 @@ import {
 	createTypographyAttributeNames,
 	createResponsiveAttributeNames,
 	createButtonAttributeNames,
+	createVideoBackground,
+	hasBackgroundOverlay,
 } from '~stackable/util'
 
 /**
@@ -423,12 +425,14 @@ const edit = props => {
 		'ugb-feature__item',
 	], applyFilters( 'stackable.feature.itemclasses', {
 		[ `ugb--shadow-${ shadow }` ]: show.columnBackground && ( design === 'basic' || design === 'half' ) && shadow !== 3,
+		'ugb--has-background-overlay': show.columnBackground && design === 'basic' && hasBackgroundOverlay( 'column%s', props.attributes ),
 	}, props ) )
 
 	const contentClasses = classnames( [
 		'ugb-feature__content',
 	], applyFilters( 'stackable.feature.contentclasses', {
 		[ `ugb--shadow-${ shadow }` ]: show.columnBackground && design !== 'basic' && design !== 'half' && shadow !== 3,
+		'ugb--has-background-overlay': show.columnBackground && design !== 'basic' && hasBackgroundOverlay( 'column%s', props.attributes ),
 	}, props ) )
 
 	const imageClasses = classnames( [
@@ -442,7 +446,9 @@ const edit = props => {
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
 				<div className={ itemClasses }>
+					{ show.columnBackground && design === 'basic' && createVideoBackground( 'column%s', props ) }
 					<div className={ contentClasses }>
+						{ show.columnBackground && design !== 'basic' && createVideoBackground( 'column%s', props ) }
 						{ showTitle &&
 							<RichText
 								tagName={ titleTag || 'h2' }
