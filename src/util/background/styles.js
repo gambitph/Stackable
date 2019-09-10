@@ -30,7 +30,7 @@ const createBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 
 	// Background color opacity.
 	let backgroundColor = getValue( 'BackgroundColor', `%s${ importantBackgroundColor ? ' !important' : '' }` )
-	if ( getValue( 'BackgroundColorType' ) === '' && typeof blockAttributes[ getAttrName( 'BackgroundColorOpacity' ) ] !== 'undefined' && blockAttributes[ getAttrName( 'BackgroundColorOpacity' ) ] !== '' ) {
+	if ( ! getValue( 'BackgroundColorType' ) && typeof blockAttributes[ getAttrName( 'BackgroundColorOpacity' ) ] !== 'undefined' && blockAttributes[ getAttrName( 'BackgroundColorOpacity' ) ] !== '' ) {
 		if ( ! getValue( 'BackgroundMediaURL' ) && ! getValue( 'TabletBackgroundMediaURL' ) && ! getValue( 'MobileBackgroundMediaURL' ) ) {
 			backgroundColor = `${ hexToRgba( getValue( 'BackgroundColor' ) || '#ffffff', getValue( 'BackgroundColorOpacity' ) || 0 ) }${ importantBackgroundColor ? ' !important' : '' }`
 		}
