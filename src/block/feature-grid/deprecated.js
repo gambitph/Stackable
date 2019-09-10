@@ -1,13 +1,300 @@
 /**
  * External dependencies
  */
+import {
+	DeprecatedButtonContent_1_15_5,
+} from '~stackable/components/button-edit'
 import { descriptionPlaceholder, range } from '~stackable/util'
 import classnames from 'classnames'
+import { i18n } from 'stackable'
+import striptags from 'striptags'
 
 /**
  * WordPress dependencies
  */
 import { RichText } from '@wordpress/block-editor'
+import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
+
+const deprecatedSave_1_17_2 = props => {
+	const { attributes, className } = props
+	const {
+		columns,
+		imageSize,
+		design,
+		buttonColor,
+		buttonTextColor,
+		buttonSize,
+		buttonBorderRadius,
+		buttonDesign = 'link',
+		buttonIcon,
+		borderRadius = 12,
+		shadow = 3,
+	} = attributes
+
+	const mainClasses = classnames( [
+		className,
+		'ugb-feature-grid',
+		`ugb-feature-grid--columns-${ columns }`,
+	], applyFilters( 'stackable.feature-grid.mainclasses_1_17_2', {
+		[ `ugb-feature-grid--design-${ design }` ]: design && design !== 'basic',
+	}, design, props ) )
+
+	const itemStyle = {
+		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
+	}
+
+	return (
+		<div className={ mainClasses }>
+			{ applyFilters( 'stackable.feature-grid.edit.output.before_1_17_2', null, design, props ) }
+			{ range( 1, columns + 1 ).map( i => {
+				const imageUrl = attributes[ `imageUrl${ i }` ]
+				const imageAlt = attributes[ `imageAlt${ i }` ]
+				const title = attributes[ `title${ i }` ]
+				const description = attributes[ `description${ i }` ]
+				const linkUrl = attributes[ `linkUrl${ i }` ]
+				const newTab = attributes[ `newTab${ i }` ]
+				const linkText = attributes[ `linkText${ i }` ]
+
+				const itemClasses = classnames( [
+					'ugb-feature-grid__item',
+				], applyFilters( 'stackable.feature-grid.itemclasses_1_17_2', {
+					[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
+				}, design, i, props ) )
+
+				const itemStyles = applyFilters( 'stackable.feature-grid.itemstyles_1_17_2', {
+					image: {
+						width: imageUrl ? `${ imageSize }%` : undefined,
+					},
+				}, design, i, props )
+
+				return (
+					<div className={ itemClasses } style={ itemStyle } key={ i }>
+						{ imageUrl &&
+							<div className="ugb-feature-grid__image">
+								<img
+									src={ imageUrl }
+									style={ itemStyles.image }
+									alt={ striptags( title ? title : imageAlt ) }
+								/>
+							</div>
+						}
+						<div className="ugb-feature-grid__content">
+							{ ! RichText.isEmpty( title ) && (
+								<RichText.Content
+									tagName="h5"
+									className="ugb-feature-grid__title"
+									value={ title }
+								/>
+							) }
+							{ ! RichText.isEmpty( description ) && (
+								<RichText.Content
+									tagName="p"
+									className="ugb-feature-grid__description"
+									value={ description }
+								/>
+							) }
+							{ ! RichText.isEmpty( linkText ) && (
+								<DeprecatedButtonContent_1_15_5
+									size={ buttonSize }
+									url={ linkUrl }
+									newTab={ newTab }
+									// align={ contentAlign }
+									color={ buttonTextColor }
+									text={ linkText }
+									icon={ buttonIcon }
+									design={ buttonDesign }
+									backgroundColor={ buttonColor }
+									borderRadius={ buttonBorderRadius }
+								/>
+							) }
+						</div>
+					</div>
+				)
+			} ) }
+			{ applyFilters( 'stackable.feature-grid.edit.output.after_1_17_2', null, design, props ) }
+		</div>
+	)
+}
+
+export const deprecatedSchema_1_17_2 = {
+	design: {
+		type: 'string',
+		default: 'basic',
+	},
+	columns: {
+		type: 'number',
+		default: 3,
+	},
+	imageSize: {
+		type: 'number',
+		default: 100,
+	},
+	imageID1: {
+		type: 'number',
+	},
+	imageID2: {
+		type: 'number',
+	},
+	imageID3: {
+		type: 'number',
+	},
+	imageUrl1: {
+		type: 'url',
+	},
+	imageUrl2: {
+		type: 'url',
+	},
+	imageUrl3: {
+		type: 'url',
+	},
+	imageAlt1: {
+		type: 'string',
+	},
+	imageAlt2: {
+		type: 'string',
+	},
+	imageAlt3: {
+		type: 'string',
+	},
+	title1: {
+		source: 'html',
+		selector: '.ugb-feature-grid__item:nth-of-type(1) .ugb-feature-grid__title',
+		default: __( 'Title', i18n ),
+	},
+	title2: {
+		source: 'html',
+		selector: '.ugb-feature-grid__item:nth-of-type(2) .ugb-feature-grid__title',
+		default: __( 'Title', i18n ),
+	},
+	title3: {
+		source: 'html',
+		selector: '.ugb-feature-grid__item:nth-of-type(3) .ugb-feature-grid__title',
+		default: __( 'Title', i18n ),
+	},
+	description1: {
+		source: 'html',
+		selector: '.ugb-feature-grid__item:nth-of-type(1) .ugb-feature-grid__description',
+		default: descriptionPlaceholder( 'short' ),
+	},
+	description2: {
+		source: 'html',
+		selector: '.ugb-feature-grid__item:nth-of-type(2) .ugb-feature-grid__description',
+		default: descriptionPlaceholder( 'short' ),
+	},
+	description3: {
+		source: 'html',
+		selector: '.ugb-feature-grid__item:nth-of-type(3) .ugb-feature-grid__description',
+		default: descriptionPlaceholder( 'short' ),
+	},
+	linkUrl1: {
+		type: 'string',
+		source: 'attribute',
+		selector: '.ugb-feature-grid__item:nth-of-type(1) .ugb-button',
+		attribute: 'href',
+		default: '',
+	},
+	linkUrl2: {
+		type: 'string',
+		source: 'attribute',
+		selector: '.ugb-feature-grid__item:nth-of-type(2) .ugb-button',
+		attribute: 'href',
+		default: '',
+	},
+	linkUrl3: {
+		type: 'string',
+		source: 'attribute',
+		selector: '.ugb-feature-grid__item:nth-of-type(3) .ugb-button',
+		attribute: 'href',
+		default: '',
+	},
+	newTab1: {
+		type: 'boolean',
+		source: 'attribute',
+		selector: '.ugb-feature-grid__item:nth-of-type(1) .ugb-button',
+		attribute: 'target',
+		default: false,
+	},
+	newTab2: {
+		type: 'boolean',
+		source: 'attribute',
+		selector: '.ugb-feature-grid__item:nth-of-type(2) .ugb-button',
+		attribute: 'target',
+		default: false,
+	},
+	newTab3: {
+		type: 'boolean',
+		source: 'attribute',
+		selector: '.ugb-feature-grid__item:nth-of-type(3) .ugb-button',
+		attribute: 'target',
+		default: false,
+	},
+	linkText1: {
+		source: 'html',
+		selector: '.ugb-feature-grid__item:nth-of-type(1) .ugb-button span',
+		default: __( 'Button text', i18n ),
+	},
+	linkText2: {
+		source: 'html',
+		selector: '.ugb-feature-grid__item:nth-of-type(2) .ugb-button span',
+		default: __( 'Button text', i18n ),
+	},
+	linkText3: {
+		source: 'html',
+		selector: '.ugb-feature-grid__item:nth-of-type(3) .ugb-button span',
+		default: __( 'Button text', i18n ),
+	},
+	buttonColor: {
+		type: 'string',
+	},
+	buttonTextColor: {
+		type: 'string',
+	},
+	buttonSize: {
+		type: 'string',
+		default: 'normal',
+	},
+	buttonBorderRadius: {
+		type: 'number',
+		default: 4,
+	},
+	buttonDesign: {
+		type: 'string',
+		default: 'link',
+	},
+	buttonIcon: {
+		type: 'string',
+	},
+	borderRadius: {
+		type: 'number',
+		default: 12,
+	},
+	shadow: {
+		type: 'number',
+		default: 3,
+	},
+	hoverEffect: {
+		type: 'string',
+		default: '',
+	},
+	align: {
+		type: 'string',
+	},
+
+	// Custom CSS attributes.
+	customCSSUniqueID: {
+		type: 'string',
+		default: '',
+	},
+	customCSS: {
+		type: 'string',
+		default: '',
+	},
+	customCSSCompiled: {
+		type: 'string',
+		default: '',
+	},
+}
 
 const deprecatedSave_1_10 = props => {
 	const { attributes, className } = props
@@ -319,6 +606,10 @@ export const deprecatedSchema_1_9 = {
 }
 
 const deprecated = [
+	{
+		attributes: deprecatedSchema_1_17_2,
+		save: deprecatedSave_1_17_2,
+	},
 	{
 		attributes: deprecatedSchema_1_10,
 		save: deprecatedSave_1_10,

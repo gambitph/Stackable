@@ -2,9 +2,46 @@
  * External dependencies
  */
 import {
-	ButtonEdit, DesignPanelBody, ImageUploadPlaceholder, PanelButtonSettings, ProControl, ProControlButton, URLInputControl,
+	ButtonEdit,
+	DesignPanelBody,
+	ImageUploadPlaceholder,
+	ProControlButton,
+	BlockContainer,
+	ContentAlignControl,
+	Image,
+	BackgroundControlsHelper,
+	ImageControlsHelper,
+	PanelAdvancedSettings,
+	TypographyControlHelper,
+	ColorPaletteControl,
+	HeadingButtonsControl,
+	AlignButtonsControl,
+	ResponsiveControl,
+	ControlSeparator,
+	ButtonControlsHelper,
+	PanelSpacingBody,
+	AdvancedRangeControl,
+	ImageAltControl,
+	ImageShapeControls,
 } from '~stackable/components'
-import { descriptionPlaceholder } from '~stackable/util'
+import {
+	descriptionPlaceholder,
+	createTypographyAttributeNames,
+	createResponsiveAttributeNames,
+	createButtonAttributeNames,
+	createVideoBackground,
+	hasBackgroundOverlay,
+} from '~stackable/util'
+import classnames from 'classnames'
+import { range } from 'lodash'
+import {
+	withUniqueClass,
+	withSetAttributeHook,
+	withGoogleFont,
+	withTabbedInspector,
+	withContentAlignReseter,
+	withBlockStyles,
+} from '~stackable/higher-order'
 
 /**
  * Internal dependencies
@@ -12,208 +49,532 @@ import { descriptionPlaceholder } from '~stackable/util'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
 import { i18n, showProNotice } from 'stackable'
+import createStyles from './style'
+import { showOptions } from '.'
 
 /**
  * WordPress dependencies
  */
 import {
-	InspectorControls, RichText,
-} from '@wordpress/block-editor'
-import {
-	PanelBody, RangeControl,
+	PanelBody,
+	RangeControl,
 } from '@wordpress/components'
-import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
-import classnames from 'classnames'
+import {
+	__, sprintf, _x,
+} from '@wordpress/i18n'
+import { applyFilters, addFilter } from '@wordpress/hooks'
+import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
+import { RichText } from '@wordpress/block-editor'
+import { withSelect } from '@wordpress/data'
+
+addFilter( 'stackable.feature-grid.edit.inspector.layout.before', 'stackable/feature-grid', ( output, props ) => {
+	const { setAttributes } = props
+	const {
+		design = 'basic',
+	} = props.attributes
+
+	return (
+		<Fragment>
+			{ output }
+			<DesignPanelBody
+				initialOpen={ true }
+				selected={ design }
+				options={ [
+					{
+						image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
+					},
+					{
+						image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
+					},
+					...applyFilters( 'stackable.feature-grid.edit.designs', [] ),
+				] }
+				onChange={ design => {
+					setAttributes( { design } )
+				} }
+			>
+				{ showProNotice && <ProControlButton /> }
+			</DesignPanelBody>
+		</Fragment>
+	)
+} )
+
+addFilter( 'stackable.feature-grid.edit.inspector.style.before', 'stackable/feature-grid', ( output, props ) => {
+	const { setAttributes } = props
+	const {
+		columns,
+		borderRadius = 12,
+		shadow = 3,
+		showTitle = true,
+		showDescription = true,
+		titleTag = '',
+		titleColor = '',
+		descriptionColor = '',
+		showImage = true,
+		showButton1 = true,
+		showButton2 = true,
+		showButton3 = true,
+		showButton4 = true,
+	} = props.attributes
+
+	const show = showOptions( props )
+
+	return (
+		<Fragment>
+			{ output }
+			<PanelBody title={ __( 'General', i18n ) }>
+				<RangeControl
+					label={ __( 'Columns', i18n ) }
+					value={ columns }
+					onChange={ columns => setAttributes( { columns } ) }
+					min={ 1 }
+					max={ 4 }
+				/>
+				{ show.columnBackground &&
+					<RangeControl
+						label={ __( 'Border Radius', i18n ) }
+						value={ borderRadius }
+						onChange={ borderRadius => setAttributes( { borderRadius } ) }
+						min={ 0 }
+						max={ 50 }
+						allowReset={ true }
+					/>
+				}
+				{ show.columnBackground &&
+					<RangeControl
+						label={ __( 'Shadow / Outline', i18n ) }
+						value={ shadow }
+						onChange={ shadow => setAttributes( { shadow } ) }
+						min={ 0 }
+						max={ 9 }
+						allowReset={ true }
+					/>
+				}
+				<ContentAlignControl
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+			</PanelBody>
+
+			{ show.columnBackground &&
+				<PanelBody
+					title={ __( 'Column Background', i18n ) }
+					initialOpen={ false }
+				>
+					<BackgroundControlsHelper
+						attrNameTemplate="column%s"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					/>
+				</PanelBody>
+			}
+
+			<PanelAdvancedSettings
+				title={ __( 'Image', i18n ) }
+				checked={ showImage }
+				onChange={ showImage => setAttributes( { showImage } ) }
+				toggleOnSetAttributes={ [
+					'imageSize',
+					'imageShape',
+					'imageShapeFlipX',
+					'imageShapeFlipY',
+					'imageShapeStretch',
+					'imageWidth',
+					...createResponsiveAttributeNames( 'image%sWidth' ),
+					'imageBorderRadius',
+					'imageShadow',
+					'imageBlendMode',
+				] }
+				toggleAttributeName="showImage"
+			>
+				<ImageControlsHelperWithData
+					image1Id={ props.attributes.image1Id }
+					image2Id={ props.attributes.image2Id }
+					image3Id={ props.attributes.image3Id }
+					image4Id={ props.attributes.image4Id }
+					setAttributes={ props.setAttributes }
+					attributes={ props.attributes }
+				/>
+			</PanelAdvancedSettings>
+
+			<PanelAdvancedSettings
+				title={ __( 'Title', i18n ) }
+				checked={ showTitle }
+				onChange={ showTitle => setAttributes( { showTitle } ) }
+				toggleOnSetAttributes={ [
+					...createTypographyAttributeNames( 'title%s' ),
+					'titleTag',
+					'titleColor',
+					...createResponsiveAttributeNames( 'Title%sAlign' ),
+				] }
+				toggleAttributeName="showTitle"
+			>
+				<TypographyControlHelper
+					attrNameTemplate="title%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+				<HeadingButtonsControl
+					label={ __( 'Title HTML Tag', i18n ) }
+					value={ titleTag || 'h2' }
+					onChange={ titleTag => setAttributes( { titleTag } ) }
+				/>
+				<ColorPaletteControl
+					value={ titleColor }
+					onChange={ titleColor => setAttributes( { titleColor } ) }
+					label={ __( 'Title Color', i18n ) }
+				/>
+				<ResponsiveControl
+					attrNameTemplate="Title%sAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+				</ResponsiveControl>
+			</PanelAdvancedSettings>
+
+			<PanelAdvancedSettings
+				title={ __( 'Description', i18n ) }
+				checked={ showDescription }
+				onChange={ showDescription => setAttributes( { showDescription } ) }
+				toggleOnSetAttributes={ [
+					...createTypographyAttributeNames( 'description%s' ),
+					'descriptionColor',
+					...createResponsiveAttributeNames( 'description%sAlign' ),
+				] }
+				toggleAttributeName="showDescription"
+			>
+				<TypographyControlHelper
+					attrNameTemplate="description%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+				<ColorPaletteControl
+					value={ descriptionColor }
+					onChange={ descriptionColor => setAttributes( { descriptionColor } ) }
+					label={ __( 'Description Color', i18n ) }
+				/>
+				<ResponsiveControl
+					attrNameTemplate="description%sAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+				</ResponsiveControl>
+			</PanelAdvancedSettings>
+
+			<PanelAdvancedSettings
+				title={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button', i18n ), 1 ) }
+				checked={ showButton1 }
+				onChange={ showButton1 => setAttributes( { showButton1 } ) }
+				toggleOnSetAttributes={ [
+					...createButtonAttributeNames( 'button1%s' ),
+				] }
+				toggleAttributeName="showButton1"
+			>
+				<ButtonControlsHelper
+					attrNameTemplate="button1%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+					design={ props.attributes.button1Design || 'plain' }
+				/>
+				<ControlSeparator />
+				<ResponsiveControl
+					attrNameTemplate="button%sAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						help={ __( 'This affects other buttons in this block', i18n ) }
+					/>
+				</ResponsiveControl>
+			</PanelAdvancedSettings>
+
+			{ columns >= 2 &&
+				<PanelAdvancedSettings
+					title={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button', i18n ), 2 ) }
+					checked={ showButton2 }
+					onChange={ showButton2 => setAttributes( { showButton2 } ) }
+					toggleOnSetAttributes={ [
+						...createButtonAttributeNames( 'button2%s' ),
+					] }
+					toggleAttributeName="showButton2"
+				>
+					<ButtonControlsHelper
+						attrNameTemplate="button2%s"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+						design={ props.attributes.button2Design || 'plain' }
+					/>
+					<ControlSeparator />
+					<ResponsiveControl
+						attrNameTemplate="button%sAlign"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AlignButtonsControl
+							label={ __( 'Align', i18n ) }
+							help={ __( 'This affects other buttons in this block', i18n ) }
+						/>
+					</ResponsiveControl>
+				</PanelAdvancedSettings>
+			}
+
+			{ columns >= 3 &&
+				<PanelAdvancedSettings
+					title={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button', i18n ), 3 ) }
+					checked={ showButton3 }
+					onChange={ showButton3 => setAttributes( { showButton3 } ) }
+					toggleOnSetAttributes={ [
+						...createButtonAttributeNames( 'button3%s' ),
+					] }
+					toggleAttributeName="showButton3"
+				>
+					<ButtonControlsHelper
+						attrNameTemplate="button3%s"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+						design={ props.attributes.button3Design || 'plain' }
+					/>
+					<ControlSeparator />
+					<ResponsiveControl
+						attrNameTemplate="button%sAlign"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AlignButtonsControl
+							label={ __( 'Align', i18n ) }
+							help={ __( 'This affects other buttons in this block', i18n ) }
+						/>
+					</ResponsiveControl>
+				</PanelAdvancedSettings>
+			}
+
+			{ columns >= 4 &&
+				<PanelAdvancedSettings
+					title={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button', i18n ), 4 ) }
+					checked={ showButton4 }
+					onChange={ showButton4 => setAttributes( { showButton4 } ) }
+					toggleOnSetAttributes={ [
+						...createButtonAttributeNames( 'button4%s' ),
+					] }
+					toggleAttributeName="showButton4"
+				>
+					<ButtonControlsHelper
+						attrNameTemplate="button4%s"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+						design={ props.attributes.button4Design || 'plain' }
+					/>
+					<ControlSeparator />
+					<ResponsiveControl
+						attrNameTemplate="button%sAlign"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AlignButtonsControl
+							label={ __( 'Align', i18n ) }
+							help={ __( 'This affects other buttons in this block', i18n ) }
+						/>
+					</ResponsiveControl>
+				</PanelAdvancedSettings>
+			}
+
+			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
+				{ show.imageSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="image%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Image', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				}
+				{ show.titleSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="title%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Title', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				}
+				{ show.descriptionSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="description%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Description', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				}
+			</PanelSpacingBody>
+		</Fragment>
+	)
+} )
+
+addFilter( 'stackable.feature-grid.edit.inspector.advanced.before', 'stackable/feature-grid', ( output, props ) => {
+	const { setAttributes } = props
+	const {
+		columns,
+		showImage = true,
+	} = props.attributes
+
+	return (
+		<Fragment>
+			{ output }
+			{ showImage && range( 1, columns + 1 ).map( i => {
+				return (
+					<PanelBody
+						title={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Image', i18n ), i ) }
+						initialOpen={ false }
+						key={ i }
+					>
+						<ImageAltControl
+							value={ props.attributes[ `image${ i }Alt` ] }
+							onChange={ value => setAttributes( { [ `image${ i }Alt` ]: value } ) }
+						/>
+						<ImageShapeControls
+							imageId={ props.attributes[ `image${ i }Id` ] }
+							imageSize={ props.attributes[ `image${ i }Size` ] }
+							shape={ props.attributes[ `image${ i }Shape` ] }
+							shapeFlipX={ props.attributes[ `image${ i }ShapeFlipX` ] }
+							shapeFlipY={ props.attributes[ `image${ i }ShapeFlipY` ] }
+							shapeStretch={ props.attributes[ `image${ i }ShapeStretch` ] }
+							onChangeShape={ value => setAttributes( { [ `image${ i }Shape` ]: value } ) }
+							onChangeShapeFlipX={ value => setAttributes( { [ `image${ i }ShapeFlipX` ]: value } ) }
+							onChangeShapeFlipY={ value => setAttributes( { [ `image${ i }ShapeFlipY` ]: value } ) }
+							onChangeShapeStretch={ value => setAttributes( { [ `image${ i }ShapeStretch` ]: value } ) }
+						/>
+					</PanelBody>
+				)
+			} ) }
+		</Fragment>
+	)
+} )
 
 const edit = props => {
 	const {
-		isSelected,
 		className,
 		setAttributes,
+		attributes,
 	} = props
 
-	const { attributes } = props
-
 	const {
-		columns,
+		columns = 3,
+		textTag = '',
 		imageSize,
-		design,
-		buttonColor,
-		buttonTextColor,
-		buttonSize,
-		buttonBorderRadius,
-		buttonDesign = 'link',
-		buttonIcon,
-		borderRadius = 12,
+		imageShape = '',
+		imageWidth = '',
+		imageShadow = '',
+		design = 'basic',
 		shadow = 3,
+		showImage = true,
+		showTitle = true,
+		showDescription = true,
 	} = attributes
 
 	const mainClasses = classnames( [
 		className,
-		'ugb-feature-grid',
 		`ugb-feature-grid--columns-${ columns }`,
+		`ugb-feature-grid--design-${ design }`,
 	], applyFilters( 'stackable.feature-grid.mainclasses', {
-		[ `ugb-feature-grid--design-${ design }` ]: design && design !== 'basic',
-	}, design, props ) )
+	}, props ) )
 
-	const itemStyle = {
-		borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
-	}
-
-	const show = applyFilters( 'stackable.feature-grid.edit.show', {
-		imageSize: true,
-	}, design, props )
+	const show = showOptions( props )
 
 	return (
-		<Fragment>
-			<InspectorControls>
-				<DesignPanelBody
-					initialOpen={ true }
-					selected={ design }
-					options={ [
-						{
-							label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
-						},
-						{
-							label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
-						},
-						...applyFilters( 'stackable.feature-grid.edit.designs', [] ),
-					] }
-					onChange={ design => {
-						setAttributes( { design } )
-					} }
-				>
-					{ applyFilters( 'stackable.feature-grid.edit.designs.before', null, props ) }
-					{ design !== 'plain' &&
-						<RangeControl
-							label={ __( 'Border Radius', i18n ) }
-							value={ borderRadius }
-							onChange={ borderRadius => setAttributes( { borderRadius } ) }
-							min={ 0 }
-							max={ 50 }
-						/>
-					}
-					{ design !== 'plain' &&
-						<RangeControl
-							label={ __( 'Shadow / Outline', i18n ) }
-							value={ shadow }
-							onChange={ shadow => setAttributes( { shadow } ) }
-							min={ 0 }
-							max={ 9 }
-						/>
-					}
-					{ applyFilters( 'stackable.feature-grid.edit.designs.after', null, props ) }
-					{ showProNotice && <ProControlButton /> }
-				</DesignPanelBody>
-				<PanelBody title={ __( 'General Settings', i18n ) }>
-					<RangeControl
-						label={ __( 'Columns', i18n ) }
-						value={ columns }
-						onChange={ columns => setAttributes( { columns } ) }
-						min={ 1 }
-						max={ 3 }
-					/>
-					{ show.imageSize && (
-						<RangeControl
-							label={ __( 'Image Size %', i18n ) }
-							value={ imageSize }
-							onChange={ imageSize => setAttributes( { imageSize } ) }
-							min={ 0 }
-							max={ 100 }
-						/>
-					) }
-				</PanelBody>
-				<PanelButtonSettings
-					initialOpen={ false }
-					buttonColor={ buttonColor }
-					buttonTextColor={ buttonTextColor }
-					buttonSize={ buttonSize }
-					buttonBorderRadius={ buttonBorderRadius }
-					buttonDesign={ buttonDesign }
-					buttonIcon={ buttonIcon }
-					onChangeButtonColor={ value => setAttributes( { buttonColor: value } ) }
-					onChangeButtonTextColor={ value => setAttributes( { buttonTextColor: value } ) }
-					onChangeButtonSize={ value => {
-						setAttributes( { buttonSize: value } )
-					} }
-					onChangeButtonBorderRadius={ value => setAttributes( { buttonBorderRadius: value } ) }
-					onChangeButtonDesign={ buttonDesign => setAttributes( { buttonDesign } ) }
-					onChangeButtonIcon={ buttonIcon => setAttributes( { buttonIcon } ) }
-				/>
-				{ showProNotice &&
-					<PanelBody
-						initialOpen={ false }
-						title={ __( 'Custom CSS', i18n ) }
-					>
-						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
-							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
-						/>
-					</PanelBody>
-				}
-				{ applyFilters( 'stackable.feature-grid.edit.inspector.after', null, design, props ) }
-			</InspectorControls>
-			<div className={ mainClasses }>
-				{ applyFilters( 'stackable.feature-grid.edit.output.before', null, design, props ) }
-				{ [ 1, 2, 3 ].map( i => {
-					const imageUrl = attributes[ `imageUrl${ i }` ]
-					const imageID = attributes[ `imageID${ i }` ]
+		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
+			<Fragment>
+				{ range( 1, columns + 1 ).map( i => {
+					const showButton = attributes[ `showButton${ i }` ]
+					const imageUrl = attributes[ `image${ i }Url` ]
+					const imageId = attributes[ `image${ i }Id` ]
+					const imageAlt = attributes[ `image${ i }Alt` ]
 					const title = attributes[ `title${ i }` ]
 					const description = attributes[ `description${ i }` ]
-					const linkUrl = attributes[ `linkUrl${ i }` ]
-					const newTab = attributes[ `newTab${ i }` ]
-					const linkText = attributes[ `linkText${ i }` ]
+					const buttonSize = attributes[ `button${ i }Size` ]
+					const buttonText = attributes[ `button${ i }Text` ] || __( 'Button text', i18n )
+					const buttonIcon = attributes[ `button${ i }Icon` ]
+					const buttonDesign = attributes[ `button${ i }Design` ] || 'plain'
+					const buttonShadow = attributes[ `button${ i }Shadow` ]
+					const buttonHoverEffect = attributes[ `button${ i }HoverEffect` ]
+					const buttonHoverGhostToNormal = attributes[ `button${ i }HoverGhostToNormal` ]
+					const buttonIconPosition = attributes[ `button${ i }IconPosition` ]
 
 					const itemClasses = classnames( [
 						'ugb-feature-grid__item',
+						`ugb-feature-grid__item${ i }`,
 					], applyFilters( 'stackable.feature-grid.itemclasses', {
-						[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
+						'ugb--has-background-overlay': show.columnBackground && hasBackgroundOverlay( 'column%s', props.attributes ),
+						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
 					}, design, i, props ) )
 
-					const itemStyles = applyFilters( 'stackable.feature-grid.itemstyles', {
-						image: {
-							width: imageID ? `${ imageSize }%` : undefined,
-						},
-					}, design, i, props )
-
 					return (
-						<div key={ i }>
-							<div className={ itemClasses } style={ itemStyle }>
+						<div className={ itemClasses } key={ i }>
+							{ show.columnBackground && createVideoBackground( 'column%s', props ) }
+							{ showImage &&
 								<div className="ugb-feature-grid__image">
 									<ImageUploadPlaceholder
-										imageID={ imageID }
+										imageID={ imageId }
 										imageURL={ imageUrl }
+										imageSize={ imageSize }
 										onRemove={ () => {
 											setAttributes( {
-												[ `imageUrl${ i }` ]: '',
-												[ `imageID${ i }` ]: '',
-												[ `imageAlt${ i }` ]: '',
+												[ `image${ i }Url` ]: '',
+												[ `image${ i }Id` ]: '',
 											} )
 										} }
 										onChange={ ( {
-											url, id, alt,
+											url, id,
 										} ) => {
 											setAttributes( {
-												[ `imageUrl${ i }` ]: url,
-												[ `imageID${ i }` ]: id,
-												[ `imageAlt${ i }` ]: alt,
+												[ `image${ i }Url` ]: url,
+												[ `image${ i }Id` ]: id,
 											} )
 										} }
-										render={ <img src={ imageUrl } alt={ title } /> }
-										style={ itemStyles.image }
+										render={
+											<Image
+												imageId={ imageId }
+												src={ imageUrl }
+												size={ imageSize }
+												shape={ attributes[ `button${ i }Shape` ] || imageShape }
+												alt={ imageAlt }
+												shadow={ imageShadow }
+												width={ imageWidth }
+											/>
+										}
 									/>
 								</div>
-								<div className="ugb-feature-grid__content">
+							}
+							<div className="ugb-feature-grid__content">
+								{ showTitle &&
 									<RichText
-										tagName="h5"
+										tagName={ textTag || 'h5' }
 										className="ugb-feature-grid__title"
 										value={ title }
 										onChange={ title => setAttributes( { [ `title${ i }` ]: title } ) }
 										placeholder={ __( 'Title', i18n ) }
 										keepPlaceholderOnFocus
 									/>
+								}
+								{ showDescription &&
 									<RichText
 										tagName="p"
 										className="ugb-feature-grid__description"
@@ -222,36 +583,76 @@ const edit = props => {
 										placeholder={ descriptionPlaceholder( 'short' ) }
 										keepPlaceholderOnFocus
 									/>
+								}
+								{ showButton &&
 									<ButtonEdit
-										size={ buttonSize }
-										// align={ contentAlign }
-										color={ buttonTextColor }
-										backgroundColor={ buttonColor }
-										text={ linkText }
-										borderRadius={ buttonBorderRadius }
-										design={ buttonDesign }
+										size={ buttonSize !== '' ? buttonSize : 'normal' }
+										text={ buttonText }
 										icon={ buttonIcon }
-										onChange={ linkText => setAttributes( { [ `linkText${ i }` ]: linkText } ) }
+										design={ buttonDesign !== '' ? buttonDesign : 'plain' }
+										shadow={ buttonShadow }
+										hoverEffect={ buttonHoverEffect }
+										ghostToNormalEffect={ buttonHoverGhostToNormal }
+										iconPosition={ buttonIconPosition }
+										onChange={ value => setAttributes( { [ `button${ i }Text` ]: value } ) }
 									/>
-								</div>
+								}
 							</div>
-							{
-								isSelected && (
-									<URLInputControl
-										value={ linkUrl }
-										newTab={ newTab }
-										onChange={ url => setAttributes( { [ `linkUrl${ i }` ]: url } ) }
-										onChangeNewTab={ newTab => setAttributes( { [ `newTab${ i }` ]: newTab } ) }
-									/>
-								)
-							}
 						</div>
 					)
 				} ) }
-				{ applyFilters( 'stackable.feature-grid.edit.output.after', null, design, props ) }
-			</div>
-		</Fragment>
+			</Fragment>
+		) } />
 	)
 }
 
-export default edit
+export default compose(
+	withUniqueClass,
+	withSetAttributeHook,
+	withGoogleFont,
+	withTabbedInspector(),
+	withContentAlignReseter( [ 'Image%sAlign', 'Title%sAlign', 'Description%sAlign', 'Button%sAlign' ] ),
+	withBlockStyles( createStyles, { editorMode: true } ),
+)( edit )
+
+const ImageControlsHelperWithData_ = props => {
+	return (
+		<ImageControlsHelper
+			attrNameTemplate="image%s"
+			setAttributes={ props.setAttributes }
+			blockAttributes={ props.attributes }
+			onChangeImage={ false }
+			onChangeAlt={ false }
+			onChangeBlendMode={ false }
+			onChangeSize={ size => {
+				const currentSelectedSize = size || 'medium'
+				const attributes = {
+					imageSize: size,
+				}
+				if ( props.image1Data ) {
+					attributes.image1Url = props.image1Data.media_details.sizes[ currentSelectedSize ] ? props.image1Data.media_details.sizes[ currentSelectedSize ].source_url : props.image1Data.source_url
+				}
+				if ( props.image2Data ) {
+					attributes.image2Url = props.image2Data.media_details.sizes[ currentSelectedSize ] ? props.image2Data.media_details.sizes[ currentSelectedSize ].source_url : props.image2Data.source_url
+				}
+				if ( props.image3Data ) {
+					attributes.image3Url = props.image3Data.media_details.sizes[ currentSelectedSize ] ? props.image3Data.media_details.sizes[ currentSelectedSize ].source_url : props.image3Data.source_url
+				}
+
+				props.setAttributes( attributes )
+			} }
+		/>
+	)
+}
+
+const ImageControlsHelperWithData = compose(
+	withSelect( ( select, props ) => {
+		const { getMedia } = select( 'core' )
+		return {
+			image1Data: props.image1Id ? getMedia( props.image1Id ) : null,
+			image2Data: props.image2Id ? getMedia( props.image2Id ) : null,
+			image3Data: props.image3Id ? getMedia( props.image3Id ) : null,
+			image4Data: props.image4Id ? getMedia( props.image4Id ) : null,
+		}
+	} ),
+)( ImageControlsHelperWithData_ )

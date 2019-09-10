@@ -6,20 +6,28 @@
  * Internal dependencies
  */
 import deprecated from './deprecated'
+import edit from './edit'
+import save from './save'
 
 /**
  * External dependencies
  */
-import { descriptionPlaceholder } from '~stackable/util'
-import edit from './edit'
+import {
+	descriptionPlaceholder,
+	createBackgroundAttributes,
+	createImageAttributes,
+	createTypographyAttributes,
+	createButtonAttributes,
+	createAllCombinationAttributes,
+} from '~stackable/util'
 import { FeatureGridIcon } from '~stackable/icons'
-import save from './save'
+import { disabledBlocks, i18n } from 'stackable'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { disabledBlocks, i18n } from 'stackable'
+import { applyFilters } from '@wordpress/hooks'
 
 export const schema = {
 	design: {
@@ -30,145 +38,6 @@ export const schema = {
 		type: 'number',
 		default: 3,
 	},
-	imageSize: {
-		type: 'number',
-		default: 100,
-	},
-	imageID1: {
-		type: 'number',
-	},
-	imageID2: {
-		type: 'number',
-	},
-	imageID3: {
-		type: 'number',
-	},
-	imageUrl1: {
-		type: 'url',
-	},
-	imageUrl2: {
-		type: 'url',
-	},
-	imageUrl3: {
-		type: 'url',
-	},
-	imageAlt1: {
-		type: 'string',
-	},
-	imageAlt2: {
-		type: 'string',
-	},
-	imageAlt3: {
-		type: 'string',
-	},
-	title1: {
-		source: 'html',
-		selector: '.ugb-feature-grid__item:nth-of-type(1) .ugb-feature-grid__title',
-		default: __( 'Title', i18n ),
-	},
-	title2: {
-		source: 'html',
-		selector: '.ugb-feature-grid__item:nth-of-type(2) .ugb-feature-grid__title',
-		default: __( 'Title', i18n ),
-	},
-	title3: {
-		source: 'html',
-		selector: '.ugb-feature-grid__item:nth-of-type(3) .ugb-feature-grid__title',
-		default: __( 'Title', i18n ),
-	},
-	description1: {
-		source: 'html',
-		selector: '.ugb-feature-grid__item:nth-of-type(1) .ugb-feature-grid__description',
-		default: descriptionPlaceholder( 'short' ),
-	},
-	description2: {
-		source: 'html',
-		selector: '.ugb-feature-grid__item:nth-of-type(2) .ugb-feature-grid__description',
-		default: descriptionPlaceholder( 'short' ),
-	},
-	description3: {
-		source: 'html',
-		selector: '.ugb-feature-grid__item:nth-of-type(3) .ugb-feature-grid__description',
-		default: descriptionPlaceholder( 'short' ),
-	},
-	linkUrl1: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.ugb-feature-grid__item:nth-of-type(1) .ugb-button',
-		attribute: 'href',
-		default: '',
-	},
-	linkUrl2: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.ugb-feature-grid__item:nth-of-type(2) .ugb-button',
-		attribute: 'href',
-		default: '',
-	},
-	linkUrl3: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.ugb-feature-grid__item:nth-of-type(3) .ugb-button',
-		attribute: 'href',
-		default: '',
-	},
-	newTab1: {
-		type: 'boolean',
-		source: 'attribute',
-		selector: '.ugb-feature-grid__item:nth-of-type(1) .ugb-button',
-		attribute: 'target',
-		default: false,
-	},
-	newTab2: {
-		type: 'boolean',
-		source: 'attribute',
-		selector: '.ugb-feature-grid__item:nth-of-type(2) .ugb-button',
-		attribute: 'target',
-		default: false,
-	},
-	newTab3: {
-		type: 'boolean',
-		source: 'attribute',
-		selector: '.ugb-feature-grid__item:nth-of-type(3) .ugb-button',
-		attribute: 'target',
-		default: false,
-	},
-	linkText1: {
-		source: 'html',
-		selector: '.ugb-feature-grid__item:nth-of-type(1) .ugb-button span',
-		default: __( 'Button text', i18n ),
-	},
-	linkText2: {
-		source: 'html',
-		selector: '.ugb-feature-grid__item:nth-of-type(2) .ugb-button span',
-		default: __( 'Button text', i18n ),
-	},
-	linkText3: {
-		source: 'html',
-		selector: '.ugb-feature-grid__item:nth-of-type(3) .ugb-button span',
-		default: __( 'Button text', i18n ),
-	},
-	buttonColor: {
-		type: 'string',
-	},
-	buttonTextColor: {
-		type: 'string',
-	},
-	buttonSize: {
-		type: 'string',
-		default: 'normal',
-	},
-	buttonBorderRadius: {
-		type: 'number',
-		default: 4,
-	},
-	buttonDesign: {
-		type: 'string',
-		default: 'link',
-	},
-	buttonIcon: {
-		type: 'string',
-	},
 	borderRadius: {
 		type: 'number',
 		default: 12,
@@ -177,24 +46,149 @@ export const schema = {
 		type: 'number',
 		default: 3,
 	},
-	hoverEffect: {
+
+	// Background.
+	...createBackgroundAttributes( 'column%s' ),
+
+	// Image.
+	showImage: {
+		type: 'boolean',
+		default: true,
+	},
+	...createImageAttributes( 'image%s', {
+		exclude: [
+			'imageUrl',
+			'imageId',
+			'imageAlt',
+			'imageBlendMode',
+		],
+	} ),
+	...createAllCombinationAttributes(
+		'image%sId', {
+			type: 'number',
+			default: '',
+		},
+		[ '1', '2', '3', '4' ]
+	),
+	...createAllCombinationAttributes(
+		'image%sUrl', {
+			type: 'string',
+			default: '',
+			source: 'attribute',
+			selector: '.ugb-feature-grid__item%d .ugb-feature-grid__image img',
+			attribute: 'src',
+		},
+		[ '1', '2', '3', '4' ]
+	),
+	...createAllCombinationAttributes(
+		'image%sAlt', {
+			type: 'string',
+			default: '',
+			source: 'attribute',
+			selector: '.ugb-feature-grid__item%d .ugb-feature-grid__image img',
+			attribute: 'alt',
+		},
+		[ '1', '2', '3', '4' ]
+	),
+	...createAllCombinationAttributes(
+		'image%sShape', {
+			type: 'string',
+			default: '',
+		},
+		[ '1', '2', '3', '4' ]
+	),
+	...createAllCombinationAttributes(
+		'image%s%s', {
+			type: 'boolean',
+			default: false,
+		},
+		[ '1', '2', '3', '4' ],
+		[ 'ShapeFlipX', 'ShapeFlipY', 'ShapeStretch' ]
+	),
+
+	// Title.
+	showTitle: {
+		type: 'boolean',
+		default: true,
+	},
+	...createAllCombinationAttributes(
+		'title%s', {
+			type: 'string',
+			default: __( 'Title', i18n ),
+		},
+		[ '1', '2', '3', '4' ]
+	),
+	titleTag: {
+		type: 'string',
+		defualt: '',
+	},
+	...createTypographyAttributes( 'title%s' ),
+	titleColor: {
 		type: 'string',
 		default: '',
-	},
-	align: {
-		type: 'string',
 	},
 
-	// Custom CSS attributes.
-	customCSSUniqueID: {
-		type: 'string',
-		default: '',
+	// Description.
+	showDescription: {
+		type: 'boolean',
+		default: true,
 	},
-	customCSS: {
+	...createAllCombinationAttributes(
+		'description%s', {
+			type: 'string',
+			default: descriptionPlaceholder( 'short' ),
+		},
+		[ '1', '2', '3', '4' ]
+	),
+	...createTypographyAttributes( 'description%s' ),
+	descriptionColor: {
 		type: 'string',
-		default: '',
+		defualt: '',
 	},
-	customCSSCompiled: {
+
+	// Button.
+	showButton1: {
+		type: 'boolean',
+		default: true,
+	},
+	...createButtonAttributes( 'button1%s', { selector: '.ugb-feature-grid__item1 .ugb-button' } ),
+	showButton2: {
+		type: 'boolean',
+		default: true,
+	},
+	...createButtonAttributes( 'button2%s', { selector: '.ugb-feature-grid__item2 .ugb-button' } ),
+	showButton3: {
+		type: 'boolean',
+		default: true,
+	},
+	...createButtonAttributes( 'button3%s', { selector: '.ugb-feature-grid__item3 .ugb-button' } ),
+	showButton4: {
+		type: 'boolean',
+		default: true,
+	},
+	...createButtonAttributes( 'button4%s', { selector: '.ugb-feature-grid__item4 .ugb-button' } ),
+
+	// Alignments.
+	...createAllCombinationAttributes(
+		'%s%sAlign', {
+			type: 'string',
+			default: '',
+		},
+		[ 'Image', 'Title', 'Description', 'Button' ],
+		[ '', 'Tablet', 'Mobile' ]
+	),
+
+	// Spacing.
+	...createAllCombinationAttributes(
+		'%s%sBottomMargin', {
+			type: 'number',
+			default: '',
+		},
+		[ 'Image', 'Title', 'Description' ],
+		[ '', 'Tablet', 'Mobile' ]
+	),
+
+	hoverEffect: {
 		type: 'string',
 		default: '',
 	},
@@ -215,11 +209,44 @@ export const settings = {
 	supports: {
 		align: [ 'wide' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
-		// eslint-disable-next-line
-		inserter: false, // TODO: Remove when ready for v2.
 	},
 
 	deprecated,
 	edit,
 	save,
+
+	// Stackable modules.
+	modules: {
+		'advanced-block-spacing': true,
+		'advanced-column-spacing': true,
+		'advanced-responsive': true,
+		'block-background': true,
+		'block-separators': true,
+		'block-title': true,
+		'content-align': true,
+		'custom-css': {
+			default: applyFilters( 'stackable.feature-grid.custom-css.default', '' ),
+		},
+	},
+}
+
+export const showOptions = blockProps => {
+	const {
+		design = 'basic',
+		showImage = true,
+		showTitle = true,
+		showDescription = true,
+		showButton1 = true,
+		showButton2 = true,
+		showButton3 = true,
+		showButton4 = true,
+	} = blockProps.attributes
+
+	const showButton = showButton1 || showButton2 || showButton3 || showButton4
+	return applyFilters( 'stackable.feature-grid.show', {
+		columnBackground: design !== 'plain',
+		imageSpacing: showImage && ( showTitle || showDescription || showButton ),
+		titleSpacing: showTitle && ( showDescription || showButton ),
+		descriptionSpacing: showDescription && showButton,
+	}, blockProps )
 }

@@ -4,35 +4,6 @@
  * Enqueued in the editor only.
  */
 
-[data-type="ugb/feature-grid"] {
-	// Fade out placeholder text.
-	[data-is-placeholder-visible="true"] + .editor-rich-text__editable {
-		opacity: 0.5;
-	}
-
-	// Only show placeholder text while selected or typing.
-	&:not(.is-selected):not(.is-typing) {
-		[data-is-placeholder-visible="true"] + .editor-rich-text__editable {
-			display: none;
-		}
-		[data-is-placeholder-visible="true"] {
-			display: none;
-		}
-	}
-}
-
-.ugb-feature-grid.ugb-feature-grid--columns-1 {
-	> *:nth-of-type(2),
-	> *:nth-of-type(3) {
-		display: none;
-	}
-}
-.ugb-feature-grid.ugb-feature-grid--columns-2 {
-	> *:nth-of-type(3) {
-		display: none;
-	}
-}
-
 .ugb-feature-grid .ugb-image-upload-placeholder.ugb-image-upload-has-placeholder {
 	height: 100px;
 	width: 100px;

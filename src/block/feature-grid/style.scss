@@ -7,6 +7,21 @@
 @import "common";
 
 .ugb-feature-grid {
+	.ugb-block-content {
+		display: grid;
+		grid-auto-columns: minmax(0, 1fr);
+		grid-auto-flow: column;
+		grid-gap: $box-hori-padding;
+	}
+	.ugb-feature-grid__item {
+		display: flex;
+		flex-direction: column;
+		background-size: cover;
+		background-position: center;
+	}
+}
+
+.ugb-feature-grid {
 	@include baseBlock(); // TODO: [V2] Deprecate this usage
 	display: flex;
 	flex-wrap: nowrap;
