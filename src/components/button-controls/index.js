@@ -51,14 +51,14 @@ const ButtonControls = props => {
 					placeholder="http://"
 				/>
 			) }
-			{ props.onChangeNewWindow && (
+			{ props.onChangeUrl && props.onChangeNewWindow && (
 				<ToggleControl
 					label={ __( 'Open link in new window', i18n ) }
 					checked={ props.newWindow }
 					onChange={ props.onChangeNewWindow }
 				/>
 			) }
-			{ props.onChangeNoFollow && (
+			{ props.onChangeUrl && props.onChangeNoFollow && (
 				<ToggleControl
 					label={ __( 'Nofollow link', i18n ) }
 					checked={ props.noFollow }
@@ -66,7 +66,7 @@ const ButtonControls = props => {
 				/>
 			) }
 
-			<ControlSeparator />
+			{ props.onChangeUrl && <ControlSeparator /> }
 
 			{ props.onChangeDesign && (
 				<DesignControl
