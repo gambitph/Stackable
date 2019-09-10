@@ -13,6 +13,9 @@ const Image = props => {
 
 		// Shape.
 		'ugb-img--shape': props.shape,
+
+		// Shadow is only available when there is no shape.
+		[ `ugb--shadow-${ props.shadow }` ]: ! props.shape && props.shadow,
 	} )
 
 	return (
@@ -37,6 +40,7 @@ Image.defaultProps = {
 	height: '',
 
 	shape: '',
+	shadow: '',
 }
 
 export default Image
