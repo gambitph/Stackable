@@ -32,8 +32,14 @@ export const getAttrName = ( attrNameTemplate = '%s', param1 = '', param2 = '' )
  */
 export const createAllCombinationAttributes = ( attrNameTemplate = '', attrParams = {}, arr1 = [], arr2 = [] ) => {
 	if ( ! arr2.length ) {
-		return arr1.reduce( ( attributes, param1 ) => {
-			attributes[ camelCase( sprintf( attrNameTemplate, param1 ) ) ] = { ...attrParams }
+		return arr1.reduce( ( attributes, param1, index ) => {
+			// Selector sprintf index
+			const newParams = { ...attrParams }
+			if ( typeof newParams.selector !== 'undefined' ) {
+				newParams.selector = sprintf( newParams.selector, index + 1 )
+			}
+
+			attributes[ camelCase( sprintf( attrNameTemplate, param1 ) ) ] = newParams
 			return attributes
 		}, {} )
 	}
@@ -41,8 +47,14 @@ export const createAllCombinationAttributes = ( attrNameTemplate = '', attrParam
 	return arr1.reduce( ( attributes, param1 ) => {
 		return {
 			...attributes,
-			...arr2.reduce( ( attributes, param2 ) => {
-				attributes[ camelCase( sprintf( attrNameTemplate, param1, param2 ) ) ] = { ...attrParams }
+			...arr2.reduce( ( attributes, param2, index ) => {
+				// Selector sprintf index
+				const newParams = { ...attrParams }
+				if ( typeof newParams.selector !== 'undefined' ) {
+					newParams.selector = sprintf( newParams.selector, index + 1 )
+				}
+
+				attributes[ camelCase( sprintf( attrNameTemplate, param1, param2 ) ) ] = newParams
 				return attributes
 			}, {} ),
 		}
