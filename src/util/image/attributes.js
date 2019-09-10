@@ -5,13 +5,15 @@
  * External dependencies
  */
 import { createAllCombinationAttributes } from '~stackable/util'
+import { omit } from 'lodash'
 
 const createImageAttributes = ( attrNameTemplate, options = {} ) => {
 	const {
 		selector = '.ugb-img',
+		exclude = [],
 	} = options
 
-	return {
+	return omit( {
 		...createAllCombinationAttributes(
 			attrNameTemplate,
 			{
@@ -89,7 +91,7 @@ const createImageAttributes = ( attrNameTemplate, options = {} ) => {
 				'Size',
 			]
 		),
-	}
+	}, exclude )
 }
 
 export default createImageAttributes
