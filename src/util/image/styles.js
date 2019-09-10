@@ -49,7 +49,7 @@ const createImageStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAt
 	}
 }
 
-const createImageMask = ( attrNameTemplate = '%s', blockAttributes = {} ) => {
+export const createImageMask = ( attrNameTemplate = '%s', blockAttributes = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
 	const getValue = ( attrName = '', format = '' ) => {
 		const value = typeof blockAttributes[ getAttrName( attrName ) ] === 'undefined' ? '' : blockAttributes[ getAttrName( attrName ) ]

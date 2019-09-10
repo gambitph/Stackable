@@ -1,7 +1,7 @@
 export { default as createImageAttributes } from './attributes'
 export { createImageAttributeNames } from './attributes'
 export { default as createImageStyles } from './styles'
-export { createImageStyleSet } from './styles'
+export { createImageStyleSet, createImageMask } from './styles'
 
 const getDefaultImageSize = ( imageData = {} ) => {
 	return {
