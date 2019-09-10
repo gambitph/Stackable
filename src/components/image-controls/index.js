@@ -1,44 +1,29 @@
 /**
- * Internal dependencies
- */
-import ImageShapeDefault from './images/default.png'
-import ImageShapeSquare from './images/square.png'
-import ImageShapeCircle from './images/circle.png'
-import ImageShapeBlob1 from './images/blob1.png'
-
-/**
  * External dependencies
  */
 import {
 	AdvancedRangeControl,
 	BlendModeControl,
 	ControlSeparator,
-	DesignControl,
 	ImageControl,
+	ImageAltControl,
 	WhenResponsiveScreen,
 	ImageSizeControl,
-	ProControlButton,
+	ImageShapeControls,
 } from '~stackable/components'
 import {
 	i18n,
-	showProNotice,
 } from 'stackable'
+import { getImageSize } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
-import {
-	RangeControl,
-	ToggleControl,
-	TextareaControl,
-	ExternalLink,
-} from '@wordpress/components'
-import { __, sprintf } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
+import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
+import { RangeControl } from '@wordpress/components'
 import { withSelect } from '@wordpress/data'
-import { getImageSize } from '~stackable/util'
 
 const ImageControls = props => {
 	// Find the maximum width for the width setting.
@@ -46,7 +31,7 @@ const ImageControls = props => {
 	let widthMax = props.widthMax || 1000
 	let heightMax = 0
 
-	if ( props.onChangeSize ) {
+	if ( props.imageData && props.onChangeSize ) {
 		if ( imageSizeData ) {
 			widthMax = imageSizeData.width
 			heightMax = imageSizeData.height
@@ -93,69 +78,25 @@ const ImageControls = props => {
 			}
 
 			{ props.onChangeShape &&
-				<DesignControl
-					label={ __( 'Shape', i18n ) }
-					selected={ props.shape }
-					options={ [
-						{
-							label: __( 'Default', i18n ), value: '', image: ImageShapeDefault,
-						},
-						{
-							label: __( 'Square', i18n ), value: 'square', image: ImageShapeSquare,
-						},
-						{
-							label: __( 'Circle', i18n ), value: 'circle', image: ImageShapeCircle,
-						},
-						{
-							label: sprintf( __( 'Blob %s', i18n ), 1 ), value: 'blob1', image: ImageShapeBlob1,
-						},
-						...applyFilters( 'stackable.image.control.shapes', [] ),
-					] }
-					onChange={ props.onChangeShape }
-				/>
-			}
-
-			{ props.onChangeShape && showProNotice && <ProControlButton type="image" /> }
-
-			{ props.onChangeShapeStretch && ! [ '', 'square', 'circle' ].includes( props.shape ) &&
-				<ToggleControl
-					label={ __( 'Flip Shape Horizontally', i18n ) }
-					checked={ props.shapeFlipX }
-					onChange={ props.onChangeShapeFlipX }
-				/>
-			}
-
-			{ props.onChangeShapeStretch && ! [ '', 'square', 'circle' ].includes( props.shape ) &&
-				<ToggleControl
-					label={ __( 'Flip Shape Vertically', i18n ) }
-					checked={ props.shapeFlipY }
-					onChange={ props.onChangeShapeFlipY }
-				/>
-			}
-
-			{ props.onChangeShapeStretch && ! [ '', 'square' ].includes( props.shape ) && ! isSquareImage &&
-				<ToggleControl
-					label={ __( 'Stretch Shape Mask', i18n ) }
-					checked={ props.shapeStretch }
-					onChange={ props.onChangeShapeStretch }
+				<ImageShapeControls
+					isSquareImage={ isSquareImage }
+					shape={ props.shape }
+					shapeFlipX={ props.shapeFlipX }
+					shapeFlipY={ props.shapeFlipY }
+					shapeStretch={ props.shapeStretch }
+					onChangeShape={ props.onChangeShape }
+					onChangeShapeFlipX={ props.onChangeShapeFlipX }
+					onChangeShapeFlipY={ props.onChangeShapeFlipY }
+					onChangeShapeStretch={ props.onChangeShapeStretch }
 				/>
 			}
 
 			<ControlSeparator />
 
 			{ props.onChangeAlt &&
-				<TextareaControl
-					label={ __( 'Alt Text (Alternative Text)', i18n ) }
+				<ImageAltControl
 					value={ props.alt }
 					onChange={ props.onChangeAlt }
-					help={
-						<Fragment>
-							<ExternalLink href="https://www.w3.org/WAI/tutorials/images/decision-tree">
-								{ __( 'Describe the purpose of the image', i18n ) }
-							</ExternalLink>
-							{ __( 'Leave empty if the image is purely decorative.', i18n ) }
-						</Fragment>
-					}
 				/>
 			}
 
