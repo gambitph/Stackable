@@ -37,7 +37,6 @@ Image.defaultProps = {
 	height: '',
 
 	shape: '',
-	shapeStretch: false,
 }
 
 export default Image

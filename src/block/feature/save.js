@@ -42,7 +42,6 @@ const save = props => {
 		imageUrl = '',
 		imageAlt = '',
 		imageShape = '',
-		imageShapeStretch = false,
 		imageWidth = '',
 		imageHeight = '',
 		imageShadow = '',
@@ -140,7 +139,6 @@ const save = props => {
 								height={ imageHeight }
 								alt={ imageAlt }
 								shape={ imageShape }
-								shapeStretch={ imageShapeStretch }
 							/>
 						</div>
 					}
