@@ -12,7 +12,6 @@
 	a.button {
 		color: #fff;
 		border: 0;
-		border-radius: 4px;
 		text-transform: uppercase;
 		display: inline-block;
 		height: auto;
@@ -22,15 +21,18 @@
 		box-shadow: none;
 		font-size: 9px;
 		line-height: 1.2em;
-		padding: 8px 12px;
-		background: linear-gradient(to right, #ab5af1 -50%, #fb6874);
+		border-radius: 25px;
+		padding: 10px 18px;
+		background: linear-gradient(to right, #8c33da -30%, #f34957 130%);
+		transition-timing-function: cubic-bezier(0.81, 0.37, 0.61, 1);
+		transition-duration: 0.2s;
 		&:hover {
-			background: linear-gradient(to right, #ab5af1 -50%, #fb6874 50%);
+			background: linear-gradient(to right, #8c33da -70%, #f34957 170%);
 			color: #fff;
+			transform: scale(1.1);
 		}
 	}
 	svg {
-		fill: url(#stackable-gradient);
 		height: 35px;
 		width: 35px;
 		margin: 0 0 1em;
