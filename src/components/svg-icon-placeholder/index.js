@@ -1,161 +1,76 @@
 /**
- * Internal dependencies
- */
-import { ColorPaletteControl, IconControl } from '..'
-import { getIconArray, isValidIconValue } from '../icon-control'
-
-/**
  * WordPress dependencies
  */
-import { Component, Fragment } from '@wordpress/element'
-import { IconButton, Popover } from '@wordpress/components'
-import { __ } from '@wordpress/i18n'
+import { Button } from '@wordpress/components'
+import { withInstanceId, withState } from '@wordpress/compose'
 
 /**
  * External dependencies
  */
-import { fab } from '@fortawesome/free-brands-svg-icons'
-import { far } from '@fortawesome/free-regular-svg-icons'
-import { fas } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { i18n } from 'stackable'
-import { library } from '@fortawesome/fontawesome-svg-core'
+import { IconSearchPopover, SvgIcon } from '~stackable/components'
 
-library.add( fab, far, fas )
+const SvgIconPlaceholder = withInstanceId( withState( {
+	openPopover: false,
+	clickedOnButton: false,
+} )( props => {
+	const {
+		instanceId,
+		openPopover,
+		clickedOnButton,
+		setState,
+	} = props
 
-class SvgIconPlaceholder extends Component {
-	constructor() {
-		super( ...arguments )
-		this.state = {
-			isOpen: false,
-			value: this.props.value,
-			color: this.props.color,
-			isFirstFocus: true,
-		}
-		this.handleOpen = this.handleOpen.bind( this )
-		this.handleClose = this.handleClose.bind( this )
-		this.handleOnChange = this.handleOnChange.bind( this )
-		this.handleOnChangeColor = this.handleOnChangeColor.bind( this )
-		this.handleOnFirstFocus = this.handleOnFirstFocus.bind( this )
-	}
-
-	handleOpen() {
-		if ( ! this.state.isOpen ) {
-			this.setState( {
-				isOpen: true,
-				isFirstFocus: true,
-			} )
-		}
-	}
-
-	handleClose() {
-		this.setState( {
-			isOpen: false,
-			isFirstFocus: true,
-		} )
-	}
-
-	handleOnChange( value ) {
-		this.setState( { value } )
-		this.props.onChange( value )
-	}
-
-	handleOnChangeColor( color ) {
-		this.setState( { color } )
-		if ( this.props.onChangeColor ) {
-			this.props.onChangeColor( color )
-		}
-	}
-
-	handleOnFirstFocus() {
-		if ( this.state.isFirstFocus ) {
-			this.setState( { isFirstFocus: false } )
-			this.inputElement.focus()
-		}
-	}
-
-	render() {
-		const selectedIcon = getIconArray( this.state.value )
-		const isValidIcon = isValidIconValue( this.state.value )
-		return (
-			<IconButton
-				className="ugb-svg-icon-placeholder"
-				onClick={ this.handleOpen }
-				icon={
-					<Fragment>
-						{ isValidIcon &&
-							<FontAwesomeIcon
-								icon={ selectedIcon }
-								className={ this.props.className }
-								style={ this.props.style }
-							/>
-						}
-						{ ! isValidIcon &&
-							<FontAwesomeIcon
-								icon={ [ 'far', 'smile' ] }
-								className={ this.props.className }
-								style={ { ...this.props.style, opacity: 0.3 } }
-							/>
-						}
-					</Fragment>
-				}
+	return (
+		<div className={ `ugb-svg-icon-placeholder ugb-svg-icon-placeholder-${ instanceId }` }>
+			<Button
+				onClick={ () => {
+					if ( ! clickedOnButton ) {
+						setState( { openPopover: true } )
+					} else {
+						// If the popup closed because this button was clicked (while the popup was open) ensure the popup is closed.
+						// This is needed or else the popup will always open when spam clicking the button.
+						setState( {
+							openPopover: false,
+							clickedOnButton: false,
+						} )
+					}
+				} }
 			>
-				{ this.state.isOpen &&
-					<Popover
-						className="ugb-svg-icon-placeholder__popup"
-						onClose={ this.handleClose }
-						position="bottom"
-						focusOnMount="container"
-						onFocus={ this.handleOnFirstFocus }
-					>
-						{ this.props.onChangeColor &&
-							<ColorPaletteControl
-								label={ this.props.colorLabel }
-								value={ this.state.color }
-								onChange={ this.handleOnChangeColor }
-							/>
+				<SvgIcon
+					color={ props.color }
+					style={ props.style }
+					value={ props.value }
+				/>
+			</Button>
+			{ openPopover &&
+				<IconSearchPopover
+					onClickOutside={ event => {
+						// This statement checks whether the close was triggered by clicking on the button that opens this.
+						// This is needed or else the popup will always open when spam clicking the button.
+						if ( event.target ) {
+							if ( event.target.closest( `.ugb-svg-icon-placeholder-${ instanceId }` ) ) {
+								setState( { clickedOnButton: true } )
+								return
+							}
 						}
-						<IconControl
-							inputRef={ el => this.inputElement = el } // Used for auto-focusing.
-							label={ this.props.iconLabel }
-							value={ this.state.value }
-							onChange={ this.handleOnChange }
-						/>
-					</Popover>
-				}
-			</IconButton>
-		)
-	}
-}
+						setState( {
+							openPopover: false,
+							clickedOnButton: false,
+						} )
+					} }
+					onClose={ () => setState( { openPopover: false } ) }
+					onChange={ props.onChange }
+				/>
+			}
+		</div>
+	)
+} ) )
 
 SvgIconPlaceholder.defaultProps = {
-	colorLabel: __( 'Icon Color', i18n ),
-	iconLabel: __( 'Pick an Icon', i18n ),
-	onChangeColor: null,
-	onChange: () => {},
-	value: null,
-	color: null,
-	className: '',
+	color: '',
+	value: '',
 	style: {},
-}
-
-SvgIconPlaceholder.Content = props => {
-	const {
-		value,
-		className = '',
-		style = {},
-		color = '',
-	} = props
-	const selectedIcon = getIconArray( value )
-	return (
-		selectedIcon &&
-			<FontAwesomeIcon
-				icon={ selectedIcon }
-				className={ className }
-				color={ color }
-				style={ style }
-			/>
-	)
+	onChange: () => {},
 }
 
 export default SvgIconPlaceholder

@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import {
-	Popover, PanelBody, TextControl,
+	Button, Popover, PanelBody, TextControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { withState } from '@wordpress/compose'
@@ -46,13 +46,29 @@ const IconSearchPopover = withState( {
 			onClickOutside={ props.onClickOutside }
 		>
 			<PanelBody>
-				<TextControl
-					value={ value }
-					onChange={ value => {
-						setState( { value } )
-					} }
-					placeholder={ __( 'Type to search icon', i18n ) }
-				/>
+				<div className="ugb-icon-popover__label-container">
+					<TextControl
+						className="ugb-icon-popover__input"
+						value={ value }
+						onChange={ value => {
+							setState( { value } )
+						} }
+						placeholder={ __( 'Type to search icon', i18n ) }
+					/>
+					{ props.allowReset &&
+						<Button
+							onClick={ () => {
+								props.onChange( '' )
+								props.onClose()
+							} }
+							isSmall
+							isDefault
+							className="components-range-control__reset"
+						>
+							{ __( 'Remove', i18n ) }
+						</Button>
+					}
+				</div>
 				<div className="ugb-icon-popover__iconlist">
 					{ results.map( ( { prefix, iconName }, i ) => {
 						const iconValue = `${ prefix }-${ iconName }`
@@ -80,6 +96,7 @@ IconSearchPopover.defaultProps = {
 	onChange: () => {},
 	onClose: () => {},
 	onClickOutside: () => {},
+	allowReset: true,
 }
 
 export default IconSearchPopover

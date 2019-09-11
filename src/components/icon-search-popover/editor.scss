@@ -26,3 +26,15 @@
 		font-style: italic;
 	}
 }
+
+.ugb-icon-popover__label-container {
+	display: flex;
+	align-items: center;
+	margin-bottom: 8px;
+	.components-base-control__field {
+		margin-bottom: 0;
+	}
+	.ugb-icon-popover__input {
+		flex: 1;
+	}
+}

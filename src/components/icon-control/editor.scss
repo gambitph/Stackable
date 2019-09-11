@@ -1,13 +1,15 @@
 .ugb-icon-control {
-	.components-button {
+	.ugb-icon-control__icon-button {
 		height: auto;
 		padding: 8px;
+		margin-right: auto;
 		svg {
-			width: 35px;
-			height: 35px;
+			width: 30px;
+			height: 30px;
 		}
 	}
-	.ugb-icon-control__button-wrapper {
-		display: inline-block;
+	.ugb-icon-control__wrapper {
+		display: flex;
+		justify-content: space-between;
 	}
 }
