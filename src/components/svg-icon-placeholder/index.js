@@ -23,6 +23,7 @@ const SvgIconPlaceholder = withInstanceId( withState( {
 	return (
 		<div className={ `ugb-svg-icon-placeholder ugb-svg-icon-placeholder-${ instanceId }` }>
 			<Button
+				className="ugb-svg-icon-placeholder__button"
 				onClick={ () => {
 					if ( ! clickedOnButton ) {
 						setState( { openPopover: true } )
@@ -37,6 +38,7 @@ const SvgIconPlaceholder = withInstanceId( withState( {
 				} }
 			>
 				<SvgIcon
+					className={ props.className }
 					color={ props.color }
 					style={ props.style }
 					value={ props.value }
@@ -67,6 +69,7 @@ const SvgIconPlaceholder = withInstanceId( withState( {
 } ) )
 
 SvgIconPlaceholder.defaultProps = {
+	className: '',
 	color: '',
 	value: '',
 	style: {},

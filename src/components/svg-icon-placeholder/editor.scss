@@ -6,4 +6,9 @@
 	border: none !important;
 	box-shadow: none !important;
 	cursor: copy;
+	display: inline-block;
+	width: auto;
+	svg {
+		display: block;
+	}
 }
