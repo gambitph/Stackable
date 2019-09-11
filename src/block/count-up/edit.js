@@ -15,8 +15,8 @@ import {
 	PanelSpacingBody,
 	ProControlButton,
 	ResponsiveControl,
-	SvgIcon,
 	TypographyControlHelper,
+	SvgIconPlaceholder,
 } from '~stackable/components'
 import {
 	createResponsiveAttributeNames, createTypographyAttributeNames, createVideoBackground, hasBackgroundOverlay,
@@ -453,7 +453,10 @@ const edit = props => {
 					const countText = attributes[ `countText${ i }` ]
 
 					const iconComp = showIcon && <div className="ugb-countup__icon">
-						<SvgIcon value={ icon } />
+						<SvgIconPlaceholder
+							value={ icon }
+							onChange={ value => setAttributes( { [ `icon${ i }` ]: value } ) }
+						/>
 					</div>
 					const titleComp = showTitle && <RichText
 						tagName={ titleTag || 'h4' }
