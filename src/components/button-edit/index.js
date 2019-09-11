@@ -1,12 +1,13 @@
 /**
  * External dependencies
  */
-import { SvgIcon } from '~stackable/components'
+import { SvgIcon, SvgIconPlaceholder } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
+import { Fragment } from '@wordpress/element'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 import { RichText } from '@wordpress/block-editor'
@@ -23,6 +24,7 @@ const ButtonEdit = props => {
 		size = 'normal',
 		text = '',
 		onChange = () => {},
+		onChangeIcon = null,
 		icon = null,
 		design = 'basic',
 		shadow = 0,
@@ -52,7 +54,19 @@ const ButtonEdit = props => {
 				className={ mainClasses }
 			>
 				{ icon && design !== 'link' &&
-					<SvgIcon value={ icon } />
+					<Fragment>
+						{ ! onChangeIcon &&
+							<SvgIcon
+								value={ icon }
+							/>
+						}
+						{ onChangeIcon &&
+							<SvgIconPlaceholder
+								value={ icon }
+								onChange={ onChangeIcon }
+							/>
+						}
+					</Fragment>
 				}
 				{
 					// Should be tagName="span", but div for now because of issue
