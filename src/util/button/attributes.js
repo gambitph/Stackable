@@ -5,20 +5,27 @@
  * External dependencies
  */
 import { createAllCombinationAttributes, createTypographyAttributes } from '~stackable/util'
+import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { i18n } from 'stackable'
+
+/**
+ * Internal dependencies
+ */
+import { omitAttributes, pickAttributes } from '../attributes'
 
 const createButtonAttributes = ( attrNameTemplate, options = {} ) => {
 	const {
 		selector = '.ugb-button',
 		defaultText = __( 'Button text', i18n ),
+		exclude = [],
+		include = [],
 	} = options
 
-	return {
+	return pickAttributes( omitAttributes( {
 		...createTypographyAttributes( attrNameTemplate ),
 		...createAllCombinationAttributes(
 			attrNameTemplate,
@@ -112,7 +119,7 @@ const createButtonAttributes = ( attrNameTemplate, options = {} ) => {
 				'NoFollow',
 			]
 		),
-	}
+	}, exclude, attrNameTemplate ), include, attrNameTemplate )
 }
 
 export default createButtonAttributes

@@ -1,7 +1,11 @@
 /**
  * External dependencies
  */
-import { camelCase } from 'lodash'
+import {
+	camelCase,
+	omit,
+	pick,
+} from 'lodash'
 
 /**
  * WordPress dependencies
@@ -28,7 +32,7 @@ export const getAttrName = ( attrNameTemplate = '%s', param1 = '', param2 = '' )
  * @param {Array} arr1 The names to combine
  * @param {Array} arr2 The names to combine (optional)
  *
- * @return {Array} The attributes
+ * @return {Object} The attributes
  */
 export const createAllCombinationAttributes = ( attrNameTemplate = '', attrParams = {}, arr1 = [], arr2 = [] ) => {
 	if ( ! arr2.length ) {
@@ -67,7 +71,7 @@ export const createAllCombinationAttributes = ( attrNameTemplate = '', attrParam
  * @param {string} attrNameTemplate The attribute name template, will be used with sprintf
  * @param {Object} attrParams The parameters the attribute will have
  *
- * @return {Array} The attributes
+ * @return {Object} The attributes
  */
 export const createResponsiveAttributes = ( attrNameTemplate = '', attrParams = {} ) => {
 	return createAllCombinationAttributes(
@@ -75,6 +79,35 @@ export const createResponsiveAttributes = ( attrNameTemplate = '', attrParams = 
 		attrParams,
 		[ '', 'Tablet', 'Mobile' ]
 	)
+}
+
+/**
+ * Removes attributes from an attribute object.
+ *
+ * @param {Object} attributes Attribute object
+ * @param {Array} namesToOmit Names of attributes (not sprintf'ed) to omit
+ * @param {string} attrNameTemplate The attribute name template, will be used with sprintf
+ *
+ * @return {Object} The attributes
+ */
+export const omitAttributes = ( attributes = {}, namesToOmit = [], attrNameTemplate = '' ) => {
+	return omit( attributes, namesToOmit.map( name => camelCase( sprintf( attrNameTemplate, name ) ) ) )
+}
+
+/**
+ * Picks specific attributes from an attribute object.
+ *
+ * @param {Object} attributes Attribute object
+ * @param {Array} namesToPick Names of attributes (not sprintf'ed) to omit
+ * @param {string} attrNameTemplate The attribute name template, will be used with sprintf
+ *
+ * @return {Object} The attributes
+ */
+export const pickAttributes = ( attributes = {}, namesToPick = [], attrNameTemplate = '' ) => {
+	if ( ! namesToPick.length ) {
+		return attributes
+	}
+	return pick( attributes, namesToPick.map( name => camelCase( sprintf( attrNameTemplate, name ) ) ) )
 }
 
 export const createResponsiveAttributeNames = attrNameTemplate => Object.keys( createResponsiveAttributes( attrNameTemplate ) )

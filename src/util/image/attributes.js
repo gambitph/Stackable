@@ -5,7 +5,11 @@
  * External dependencies
  */
 import { createAllCombinationAttributes } from '~stackable/util'
-import { omit } from 'lodash'
+
+/**
+ * Internal dependencies
+ */
+import { omitAttributes } from '../attributes'
 
 const createImageAttributes = ( attrNameTemplate, options = {} ) => {
 	const {
@@ -13,7 +17,7 @@ const createImageAttributes = ( attrNameTemplate, options = {} ) => {
 		exclude = [],
 	} = options
 
-	return omit( {
+	return omitAttributes( {
 		...createAllCombinationAttributes(
 			attrNameTemplate,
 			{
@@ -91,7 +95,7 @@ const createImageAttributes = ( attrNameTemplate, options = {} ) => {
 				'Size',
 			]
 		),
-	}, exclude )
+	}, exclude, attrNameTemplate )
 }
 
 export default createImageAttributes
