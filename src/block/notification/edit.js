@@ -28,8 +28,8 @@ import {
 	PanelSpacingBody,
 	AdvancedRangeControl,
 	ButtonEdit,
-	SvgIcon,
 	FourRangeControl,
+	SvgIconPlaceholder,
 } from '~stackable/components'
 import {
 	descriptionPlaceholder, createTypographyAttributeNames, createResponsiveAttributeNames, createButtonAttributeNames, createVideoBackground, hasBackgroundOverlay,
@@ -523,9 +523,10 @@ const edit = props => {
 						</span>
 					) }
 					{ showIcon &&
-						<SvgIcon.Content
+						<SvgIconPlaceholder
 							className="ugb-notification__icon"
 							value={ icon }
+							onChange={ icon => setAttributes( { icon } ) }
 						/>
 					}
 					{ showTitle &&
