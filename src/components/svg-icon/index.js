@@ -16,11 +16,11 @@ library.add( fab, far, fas )
 
 const SvgIcon = props => {
 	const {
-		value, color, style = {},
+		value, color, style = {}, className = '',
 	} = props
 	const selectedIcon = getIconArray( value )
 	return (
-		selectedIcon && <FontAwesomeIcon color={ color } style={ style } icon={ selectedIcon } />
+		selectedIcon && <FontAwesomeIcon color={ color } style={ style } icon={ selectedIcon } className={ className } />
 	)
 }
 
