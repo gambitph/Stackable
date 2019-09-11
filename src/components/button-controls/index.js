@@ -272,6 +272,8 @@ const ButtonControls = props => {
 						{ value: 'lift', label: __( 'Lift', i18n ) },
 						{ value: 'scale', label: __( 'Scale', i18n ) },
 						{ value: 'lift-scale', label: __( 'Lift & Scale', i18n ) },
+						{ value: 'scale-more', label: __( 'Scale More', i18n ) },
+						{ value: 'lift-scale-more', label: __( 'Lift & Scale More', i18n ) },
 					] }
 				/>
 			) }

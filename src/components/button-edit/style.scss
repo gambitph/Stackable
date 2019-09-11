@@ -104,6 +104,12 @@
 	&.ugb--hover-effect-lift-scale:hover {
 		transform: scale(1.03) translateY(-10%);
 	}
+	&.ugb--hover-effect-scale-more:hover {
+		transform: scale(1.13);
+	}
+	&.ugb--hover-effect-lift-scale-more:hover {
+		transform: scale(1.13) translateY(-10%);
+	}
 }
 .ugb-button .ugb-button--inner:hover,
 .ugb-button .ugb-button-inner:hover { // Old style.
