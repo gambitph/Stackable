@@ -4,6 +4,7 @@
 /**
  * Internal dependencies
  */
+import './fontawesome'
 import './debug-sidebar'
 import './format-types'
 

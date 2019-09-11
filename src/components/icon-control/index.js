@@ -1,68 +1,20 @@
 /**
  * WordPress dependencies
  */
-import { Component, Fragment } from '@wordpress/element'
+import { __ } from '@wordpress/i18n'
+import { BaseControl } from '@wordpress/components'
+import { withState } from '@wordpress/compose'
 
 /**
  * External dependencies
  */
-import { config, library } from '@fortawesome/fontawesome-svg-core'
-import { BaseControl } from '@wordpress/components'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { withInstanceId } from '@wordpress/compose'
-
-config.autoAddCss = false
-config.autoReplaceSvg = false
-config.familyPrefix = 'ugbfa'
-config.keepOriginalSource = false
-config.observeMutations = false
-config.showMissingIcons = false
-
-// We need to add all the available icons in the Font Awesome library so we can display them.
-library.add( fab, far, fas )
-// fab 391
-// far 152
-// fas 869
-
-// Limit to 100 searches as not to stall the browser.
-const MAX_SEARCH_ICONS = 100
-
-export const searchIconName = search => {
-	const lowerSearch = search && search.toLowerCase()
-	const results = [
-		...Object.values( fab ).filter( icon => icon.iconName.includes( lowerSearch ) ).slice( 0, MAX_SEARCH_ICONS ),
-		...Object.values( far ).filter( icon => icon.iconName.includes( lowerSearch ) ).slice( 0, MAX_SEARCH_ICONS ),
-		...Object.values( fas ).filter( icon => icon.iconName.includes( lowerSearch ) ).slice( 0, MAX_SEARCH_ICONS ),
-	]
-
-	return results.slice( 0, MAX_SEARCH_ICONS )
-}
-
-export const searchIcon = ( search, onChange = () => {} ) => {
-	const results = searchIconName( search )
-
-	const onClick = event => {
-		onChange( event.currentTarget.getAttribute( 'data-value' ) )
-	}
-
-	return (
-		<Fragment>
-			{ results.map( ( { prefix, iconName } ) => {
-				return <button key={ `${ prefix }-${ iconName }` }
-					className="components-button is-button is-default"
-					data-value={ `${ prefix }-${ iconName }` }
-					onClick={ onClick }
-					onMouseDown={ onClick }
-				>
-					<FontAwesomeIcon icon={ [ prefix, iconName ] } />
-				</button>
-			} ) }
-		</Fragment>
-	)
-}
+import { i18n } from 'stackable'
+import { omit } from 'lodash'
+import { IconSearchPopover } from '~stackable/components'
 
 /**
  * Check whether the string value is a valid icon.
@@ -103,85 +55,74 @@ export const getIconArray = value => {
 	]
 }
 
-class IconControl extends Component {
-	constructor() {
-		super( ...arguments )
-		this.state = {
-			focused: false,
-			value: this.props.value || '',
-		}
-		this.handleBlur = this.handleBlur.bind( this )
-		this.handleFocus = this.handleFocus.bind( this )
-		this.handleOnChange = this.handleOnChange.bind( this )
-	}
+const IconControl = withState( {
+	openPopover: false,
+	clickedOnButton: false,
+} )( props => {
+	const {
+		openPopover,
+		clickedOnButton,
+		setState,
+	} = props
 
-	componentDidUpdate( prevProps ) {
-		if ( this.props.value !== prevProps.value ) {
-			this.setState( { value: this.props.value } )
-		}
-	}
+	const selectedIcon = getIconArray( props.value )
+	const isValidIcon = isValidIconValue( props.value )
 
-	componentWillUnmount() {
-
-	}
-
-	handleBlur() {
-		// Add a delay here so that selecting a searched icon won't just hide the search area.
-		setTimeout( () => {
-			this.setState( { focused: false } )
-		}, 100 )
-	}
-
-	handleFocus() {
-		this.setState( { focused: true } )
-	}
-
-	handleOnChange( event ) {
-		const value = event.target.value
-		this.setState( { value } )
-		this.props.onChange( value )
-	}
-
-	render() {
-		const {
-			instanceId,
-			label,
-			help,
-			onChange = () => {},
-			type = 'text',
-		} = this.props
-		const { focused } = this.state
-
-		const id = `inspector-ugb-icon-control-${ instanceId }`
-		const selectedIcon = getIconArray( this.state.value )
-		const isValidIcon = isValidIconValue( this.state.value )
-
-		return (
-			<BaseControl label={ label } help={ help } id={ id } className="ugb-image-control">
-				<div className="components-ugb-icon-control__input_wrapper">
-					<input className="components-text-control__input"
-						ref={ this.props.inputRef } // Used for auto-focusing.
-						type={ type }
-						id={ id }
-						value={ this.state.value }
-						onChange={ this.handleOnChange }
-						onBlur={ this.handleBlur }
-						onFocus={ this.handleFocus }
-						aria-describedby={ !! help ? id + '__help' : undefined }
+	return (
+		<BaseControl
+			className="ugb-icon-control"
+			{ ...omit( props, [ 'onChange', 'value' ] ) }
+		>
+			<div className="ugb-icon-control__button-wrapper">
+				<button
+					className="ugb-icon-control__button components-button is-button is-default"
+					onClick={ () => {
+						if ( ! clickedOnButton ) {
+							setState( { openPopover: true } )
+						} else {
+							// If the popup closed because this button was clicked (while the popup was open) ensure the popup is closed.
+							// This is needed or else the popup will always open when spam clicking the button.
+							setState( {
+								openPopover: false,
+								clickedOnButton: false,
+							} )
+						}
+					} }
+				>
+					{ isValidIcon && <FontAwesomeIcon icon={ selectedIcon } /> }
+					{ ! isValidIcon && <FontAwesomeIcon icon={ [ 'far', 'smile' ] } style={ { opacity: 0.3 } } /> }
+				</button>
+				{ openPopover &&
+					<IconSearchPopover
+						onClickOutside={ event => {
+							// This statement checks whether the close was triggered by clicking on the button that opens this.
+							// This is needed or else the popup will always open when spam clicking the button.
+							if ( event.target ) {
+								if ( event.target.classList ) {
+									if ( event.target.classList.contains( 'ugb-icon-control__button' ) ) {
+										setState( { clickedOnButton: true } )
+										return
+									}
+								}
+							}
+							setState( {
+								openPopover: false,
+								clickedOnButton: false,
+							} )
+						} }
+						onClose={ () => setState( { openPopover: false } ) }
+						onChange={ props.onChange }
 					/>
-					<div className="components-text-control__icon-preview">
-						{ isValidIcon && <FontAwesomeIcon icon={ selectedIcon } /> }
-						{ ! isValidIcon && <FontAwesomeIcon icon={ [ 'far', 'smile' ] } style={ { opacity: 0.3 } } /> }
-					</div>
-				</div>
-				{ focused && ( ! selectedIcon || ! this.state.value ) &&
-				<div className="components-ugb-icon-control__iconlist">
-					{ searchIcon( this.state.value, onChange ) }
-				</div>
 				}
-			</BaseControl>
-		)
-	}
+			</div>
+		</BaseControl>
+	)
+} )
+
+IconControl.defaultProps = {
+	label: __( 'Icon', i18n ),
+	value: '',
+	onChange: () => {},
 }
 
-export default withInstanceId( IconControl )
+export default IconControl
