@@ -26,9 +26,5 @@ domReady( () => {
 			ev.preventDefault()
 			openVideo( el )
 		} )
-		a.addEventListener( 'touchend', ev => {
-			ev.preventDefault()
-			openVideo( el )
-		} )
 	} )
 } )
