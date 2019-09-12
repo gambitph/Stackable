@@ -547,6 +547,12 @@ const edit = props => {
 										iconPosition={ buttonIconPosition }
 										onChange={ value => setAttributes( { [ `button${ i }Text` ]: value } ) }
 										onChangeIcon={ value => setAttributes( { [ `button${ i }Icon` ]: value } ) }
+										url={ attributes[ `button${ i }Url` ] }
+										newWindow={ attributes[ `button${ i }NewWindow` ] }
+										noFollow={ attributes[ `button${ i }NoFollow` ] }
+										onChangeUrl={ value => setAttributes( { [ `button${ i }Url` ]: value } ) }
+										onChangeNewWindow={ value => setAttributes( { [ `button${ i }NewWindow` ]: value } ) }
+										onChangeNoFollow={ value => setAttributes( { [ `button${ i }NoFollow` ]: value } ) }
 									/>
 								}
 							</div>
