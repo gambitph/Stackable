@@ -16,6 +16,8 @@ Stackable is a collection of beautiful ready-to-use custom blocks that builds on
 
 Visit our [website](https://wpstackable.com) (made with Gutenberg + Stackable blocks) to learn more about Stackable.
 
+Join the new [Stackable Facebook Group](https://www.facebook.com/groups/wpstackable).
+
 Stackable provides feature-rich blocks that gives you more design options for your site. Stackable’s blocks look great out of the box, and will make website building a breeze.
 
 Stackable’s custom blocks come with multiple block layouts that you can use to build your perfect site without writing a single line of code. Stackable blocks are also responsive and will look great even in small screens.
@@ -178,6 +180,7 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com/blog-pos
 
 ### Learn More About Stackable - Gutenberg Blocks
 
+- [Join Facebook Community Group](https://www.facebook.com/groups/wpstackable)
 - [Twitter @wpstackable](https://twitter.com/wpstackable)
 - [Facebook Page WPStackable](https://www.facebook.com/Stackable-870555573068267/)
 - [What is Stackable?](https://wpstackable.com/blog/welcome-to-stackable/)
@@ -192,29 +195,39 @@ You’ll need WordPress version 5.0 or higher for this to work. For versions bel
 
 == Frequently Asked Questions ==
 
-**What is Gutenberg? Why WordPress 5.0?**
-
-Gutenberg is what the cool kids call the new content editor that came out in WordPress 5.0.
-
-The new content editor replaces the old text editor, and it gives you a more visual way of creating your content.
-
-With WordPress 5.0 & Gutenberg, you build your pages using *blocks*, and Stackable provides you with lots of cool ones.
-
 **What are blocks?**
 
-Blocks are the new shortcodes in WordPress 5.0 / Gutenberg.
+Blocks are the new Shortcodes in WordPress 5.0+ / Block Editor / Gutenberg.
 
 They're the basic elements that you add into your content to build your pages, like buttons, cards, videos, etc.
 
-Stackable gives you lots of awesome blocks for you to create awesome landing pages and front pages.
+Stackable gives you lots of amazing blocks for you to create awesome landing pages and front pages.
 
-**Can I use this with other block plugins?**
+**How does this work?**
 
-Yes! Stackable blocks play well with other blocks.
+Once you activate Stackable, you should get additional blocks in your Block Editor.
 
-**Can I use this add-on for other page builders I’m using?**
+**Where can I find the blocks?**
 
-Nope. Stackable only works with Gutenberg, the new WordPress editor.
+When adding a new block using the new Block Editor (Gutenberg), you should be able to see a new category in your block list labeled "Stackable". Open that up and all Stackable blocks should be inside.
+
+**Can you remove parts of a block?**
+
+Most parts of Stackable blocks are optional and can be removed by emptying out the text.
+
+For example, to remove a button from a Feature Block, highlight then delete the button's text and it should not show up in the frontend.
+
+**Will this clutter my block list?**
+
+Nope, you can disable/hide the blocks that you don't need in our settings page, or the Block Manager.
+
+**Can I use this with other blocks?**
+
+Yes! Stackable blocks play well with other block plugins.
+
+**Can I use Stackable in page builders?**
+
+Stackable only works inside the new Block Editor (Gutenberg).
 
 == Screenshots ==
 
@@ -234,6 +247,14 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 You will have to redo all your blocks
 
 == Changelog ==
+
+= 1.17.3 =
+* New: Revamped icon picker controls
+* New: Added [Facebook community group](https://www.facebook.com/groups/wpstackable) link
+* Fixed: Flashing overlay outside border-radius in Image Boxes in Edge
+* Fixed: Selecting the custom color field resets the highlight color
+* Fixed: Video Popup block opens on mobile when scrolling
+* Fixed: IE11 forEach error
 
 = 1.17.2 =
 * New: Rebranded welcome & settings page design
