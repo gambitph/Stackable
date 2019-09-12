@@ -41,10 +41,19 @@ const save = props => {
 		showImage = true,
 		showTitle = true,
 		showDescription = true,
+		showButton = true,
+		buttonSize = '',
+		buttonIcon = '',
+		buttonDesign = 'plain',
+		buttonShadow = '',
+		buttonHoverEffect = '',
+		buttonHoverGhostToNormal = '',
+		buttonIconPosition = '',
 	} = attributes
 
 	const mainClasses = classnames( [
 		className,
+		`ugb-feature-grid--v2`,
 		`ugb-feature-grid--columns-${ columns }`,
 		`ugb-feature-grid--design-${ design }`,
 	], applyFilters( 'stackable.feature-grid.mainclasses', {
@@ -61,18 +70,10 @@ const save = props => {
 					const imageAlt = attributes[ `image${ i }Alt` ]
 					const title = attributes[ `title${ i }` ]
 					const description = attributes[ `description${ i }` ]
-					const buttonSize = attributes[ `button${ i }Size` ]
 					const buttonText = attributes[ `button${ i }Text` ] || __( 'Button text', i18n )
-					const buttonIcon = attributes[ `button${ i }Icon` ]
-					const buttonDesign = attributes[ `button${ i }Design` ] || 'plain'
-					const buttonShadow = attributes[ `button${ i }Shadow` ]
-					const buttonHoverEffect = attributes[ `button${ i }HoverEffect` ]
-					const buttonHoverGhostToNormal = attributes[ `button${ i }HoverGhostToNormal` ]
-					const buttonIconPosition = attributes[ `button${ i }IconPosition` ]
 					const buttonNewWindow = attributes[ `button${ i }NewWindow` ]
 					const buttonUrl = attributes[ `button${ i }Url` ]
 					const buttonNoFollow = attributes[ `button${ i }NoFollow` ]
-					const showButton = attributes[ `showButton${ i }` ]
 
 					const itemClasses = classnames( [
 						'ugb-feature-grid__item',
@@ -91,10 +92,9 @@ const save = props => {
 										imageId={ imageId }
 										src={ imageUrl }
 										width={ imageWidth }
-										// height={ imageHeight }
 										alt={ imageAlt || ( showTitle && title ) }
 										shadow={ imageShadow }
-										shape={ imageShape }
+										shape={ attributes[ `image${ i }Shape` ] || imageShape }
 										shapeStretch={ imageShapeStretch }
 									/>
 								</div>

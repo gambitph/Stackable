@@ -27,7 +27,7 @@ import { disabledBlocks, i18n } from 'stackable'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
+import { applyFilters, addFilter } from '@wordpress/hooks'
 
 export const schema = {
 	design: {
@@ -57,10 +57,10 @@ export const schema = {
 	},
 	...createImageAttributes( 'image%s', {
 		exclude: [
-			'imageUrl',
-			'imageId',
-			'imageAlt',
-			'imageBlendMode',
+			'Url',
+			'Id',
+			'Alt',
+			'BlendMode',
 		],
 	} ),
 	...createAllCombinationAttributes(
@@ -147,26 +147,53 @@ export const schema = {
 	},
 
 	// Button.
-	showButton1: {
+	showButton: {
 		type: 'boolean',
 		default: true,
 	},
-	...createButtonAttributes( 'button1%s', { selector: '.ugb-feature-grid__item1 .ugb-button' } ),
-	showButton2: {
-		type: 'boolean',
-		default: true,
-	},
-	...createButtonAttributes( 'button2%s', { selector: '.ugb-feature-grid__item2 .ugb-button' } ),
-	showButton3: {
-		type: 'boolean',
-		default: true,
-	},
-	...createButtonAttributes( 'button3%s', { selector: '.ugb-feature-grid__item3 .ugb-button' } ),
-	showButton4: {
-		type: 'boolean',
-		default: true,
-	},
-	...createButtonAttributes( 'button4%s', { selector: '.ugb-feature-grid__item4 .ugb-button' } ),
+	...createButtonAttributes( 'button%s', {
+		exclude: [
+			'Text',
+			'Url',
+			'NewWindow',
+		],
+	} ),
+	...createButtonAttributes( 'button1%s', {
+		selector: '.ugb-feature-grid__item1 .ugb-button',
+		include: [
+			'Text',
+			'Url',
+			'NewWindow',
+			'Icon',
+		],
+	} ),
+	...createButtonAttributes( 'button2%s', {
+		selector: '.ugb-feature-grid__item2 .ugb-button',
+		include: [
+			'Text',
+			'Url',
+			'NewWindow',
+			'Icon',
+		],
+	} ),
+	...createButtonAttributes( 'button3%s', {
+		selector: '.ugb-feature-grid__item3 .ugb-button',
+		include: [
+			'Text',
+			'Url',
+			'NewWindow',
+			'Icon',
+		],
+	} ),
+	...createButtonAttributes( 'button4%s', {
+		selector: '.ugb-feature-grid__item4 .ugb-button',
+		include: [
+			'Text',
+			'Url',
+			'NewWindow',
+			'Icon',
+		],
+	} ),
 
 	// Alignments.
 	...createAllCombinationAttributes(
@@ -250,3 +277,60 @@ export const showOptions = blockProps => {
 		descriptionSpacing: showDescription && showButton,
 	}, blockProps )
 }
+
+// If the alignment was changed, but the design doesn't support it, go back to the basic design to allow the alignment change.
+addFilter( 'stackable.feature-grid.setAttributes', 'stackable/feature-grid/imageShape', attributes => {
+	if ( typeof attributes.imageShape !== 'undefined' ) {
+		return {
+			...attributes,
+			image1Shape: '',
+			image2Shape: '',
+			image3Shape: '',
+			image4Shape: '',
+			image1ShapeFlipX: '',
+			image1ShapeFlipY: '',
+			image1ShapeStretch: '',
+			image2ShapeFlipX: '',
+			image2ShapeFlipY: '',
+			image2ShapeStretch: '',
+			image3ShapeFlipX: '',
+			image3ShapeFlipY: '',
+			image3ShapeStretch: '',
+			image4ShapeFlipX: '',
+			image4ShapeFlipY: '',
+			image4ShapeStretch: '',
+		}
+	}
+
+	if ( typeof attributes.imageShapeFlipX !== 'undefined' ) {
+		return {
+			...attributes,
+			image1ShapeFlipX: '',
+			image2ShapeFlipX: '',
+			image3ShapeFlipX: '',
+			image4ShapeFlipX: '',
+		}
+	}
+
+	if ( typeof attributes.imageShapeFlipY !== 'undefined' ) {
+		return {
+			...attributes,
+			image1ShapeFlipY: '',
+			image2ShapeFlipY: '',
+			image3ShapeFlipY: '',
+			image4ShapeFlipY: '',
+		}
+	}
+
+	if ( typeof attributes.imageShapeStretch !== 'undefined' ) {
+		return {
+			...attributes,
+			image1ShapeStretch: '',
+			image2ShapeStretch: '',
+			image3ShapeStretch: '',
+			image4ShapeStretch: '',
+		}
+	}
+
+	return attributes
+} )

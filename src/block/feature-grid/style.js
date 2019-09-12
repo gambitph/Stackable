@@ -33,6 +33,7 @@ export const createStyles = props => {
 	const show = showOptions( props )
 
 	const {
+		columns = 3,
 		columnBackgroundColor = '',
 		showImage = true,
 		imageAlign = '',
@@ -126,35 +127,25 @@ export const createStyles = props => {
 
 	// Button.
 	const {
-		columns = 3,
+		showButton = true,
+		buttonDesign = '',
 	} = props.attributes
-	let atLeastOneButtonShown = false
-	{ range( 1, columns + 1 ).forEach( i => {
-		const showButton = props.attributes[ `showButton${ i }` ]
-		if ( showButton ) {
-			atLeastOneButtonShown = true
-			styles.push( {
-				...createButtonStyleSet( `button${ i }%s`, `ugb-feature-grid__item${ i } .ugb-button`, {
-					...props.attributes,
-					[ `button${ i }Design` ]: props.attributes[ `button${ i }Design` ] || 'plain',
-				} ),
-			} )
-		}
-	} ) }
-	if ( atLeastOneButtonShown ) {
+	if ( showButton ) {
+		styles.push( {
+			...createButtonStyleSet( `button%s`, `ugb-button`, {
+				...props.attributes,
+				buttonDesign: buttonDesign || 'plain',
+			} ),
+		} )
 		styles.push( {
 			'.ugb-button-container': {
 				textAlign: getValue( 'buttonAlign', '%s !important' ) || getValue( 'contentAlign', '%s !important' ),
 			},
-		} )
-		styles.push( {
 			tablet: {
 				'.ugb-button-container': {
 					textAlign: getValue( 'buttonTabletAlign', '%s !important' ) || getValue( 'contentTabletAlign', '%s !important' ),
 				},
 			},
-		} )
-		styles.push( {
 			mobile: {
 				'.ugb-button-container': {
 					textAlign: getValue( 'buttonMobileAlign', '%s !important' ) || getValue( 'contentMobileAlign', '%s !important' ),

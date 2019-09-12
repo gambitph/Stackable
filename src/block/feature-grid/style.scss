@@ -6,23 +6,36 @@
 
 @import "common";
 
-.ugb-feature-grid {
+.ugb-feature-grid.ugb-feature-grid--v2 {
 	.ugb-block-content {
 		display: grid;
 		grid-auto-columns: minmax(0, 1fr);
 		grid-auto-flow: column;
 		grid-gap: $box-hori-padding;
+		text-align: center;
+		> *:last-child {
+			margin-bottom: 0;
+		}
 	}
 	.ugb-feature-grid__item {
+		@include box();
 		display: flex;
 		flex-direction: column;
 		background-size: cover;
 		background-position: center;
 	}
+	.ugb-feature-grid__image,
+	.ugb-feature-grid__title,
+	.ugb-feature-grid__description {
+		margin-bottom: $text-margin-bottom;
+	}
 }
 
-.ugb-feature-grid {
-	@include baseBlock(); // TODO: [V2] Deprecate this usage
+/**
+ * Deprecated < v2
+ */
+.ugb-feature-grid:not([class*="ugb-feature-grid--v"]) {
+	@include baseBlock();
 	display: flex;
 	flex-wrap: nowrap;
 	margin: 0 (-$box-hori-padding / 2);
@@ -39,7 +52,7 @@
 	}
 	.ugb-feature-grid__content {
 		text-align: center;
-		@include baseBlock(); // TODO: [V2] Deprecate this usage
+		@include baseBlock();
 		&:last-child {
 			margin-bottom: 0;
 		}
@@ -54,15 +67,9 @@
 		margin-top: 0;
 		margin-bottom: 0;
 	}
-
-	// Deprecated < v1.11
-	.ugb-feature-grid-item {
-		text-align: center;
-		@include baseBlock();
-		@include box();
-	}
 }
-.ugb-feature-grid--design-plain {
+
+.ugb-feature-grid--design-plain:not([class*="ugb-feature-grid--v"]) {
 	.ugb-feature-grid__item,
 	.ugb-feature-grid-item {
 		box-shadow: none;
@@ -81,8 +88,8 @@
 	}
 }
 
-.ugb-feature-grid--design-basic,
-.ugb-feature-grid--design-plain {
+.ugb-feature-grid--design-basic:not([class*="ugb-feature-grid--v"]),
+.ugb-feature-grid--design-plain:not([class*="ugb-feature-grid--v"]) {
 	.ugb-feature-grid__item {
 		@include baseBlock(); // TODO: [V2] Deprecate this usage
 	}
@@ -90,7 +97,7 @@
 
 // For 3 columns, make sure the images are still seen if columns are narrow.
 @media screen and (max-width: $break-large) {
-	.ugb-feature-grid.ugb-feature-grid--columns-3 {
+	.ugb-feature-grid:not([class*="ugb-feature-grid--v"]).ugb-feature-grid--columns-3 {
 		.ugb-feature-grid__content > img,
 		.ugb-feature-grid-item > img {
 			width: 100% !important;
@@ -100,11 +107,24 @@
 
 // For small screens, collapse & make sure our images aren't too large.
 @media screen and (max-width: $break-small) {
-	.ugb-feature-grid__content > img,
-	.ugb-feature-grid-item > img {
-		max-width: 30vw;
+	.ugb-feature-grid:not([class*="ugb-feature-grid--v"]) {
+		.ugb-feature-grid__content > img,
+		.ugb-feature-grid-item > img {
+			max-width: 30vw;
+		}
 	}
-	.ugb-feature-grid {
+	.ugb-feature-grid:not([class*="ugb-feature-grid--v"]) {
 		flex-direction: column;
+	}
+}
+
+/**
+ * Deprecated < v1.11
+ */
+.ugb-feature-grid {
+	.ugb-feature-grid-item {
+		text-align: center;
+		@include baseBlock();
+		@include box();
 	}
 }
