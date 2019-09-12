@@ -1,0 +1,43 @@
+// Icon search list.
+.ugb-icon-popover__iconlist {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-content: flex-start;
+	align-items: flex-start;
+	margin-top: 5px;
+	height: 250px;
+	overflow: auto;
+	button {
+		background: none;
+		padding: 5px;
+		height: auto;
+		border-color: transparent;
+		box-shadow: none;
+	}
+	svg {
+		width: 30px !important;
+		height: 30px;
+		margin: 0;
+		box-sizing: content-box;
+		border-radius: 4px;
+	}
+	.components-base-control__help {
+		font-style: italic;
+	}
+}
+
+.ugb-icon-popover__label-container {
+	display: flex;
+	align-items: center;
+	margin-bottom: 8px;
+	.components-base-control__field {
+		margin-bottom: 0;
+	}
+	.ugb-icon-popover__input {
+		flex: 1;
+	}
+	.components-range-control__reset {
+		margin-left: 8px;
+	}
+}
