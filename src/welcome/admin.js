@@ -199,7 +199,7 @@ const knowledgeBaseList = () => {
 					<span>{ __( 'Stuck with something? Email us and we’ll help you out.', i18n ) }</span>
 				</li>
 			}
-			<li style={ { display: 'none' } }>
+			<li>
 				<a href="https://facebook.com/groups/wpstackable" target="_blank" rel="noopener noreferrer"><strong>{ __( 'Facebook Community Group', i18n ) }</strong></a>
 				<br />
 				<span>{ __( 'Connect with other people using Stackable and join the discussion.', i18n ) }</span>
