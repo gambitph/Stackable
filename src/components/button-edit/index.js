@@ -93,6 +93,8 @@ class ButtonEdit extends Component {
 
 			onChangeIcon = null,
 			icon = null,
+
+			isSelected = null,
 		} = this.props
 
 		const mainClasses = classnames( [
@@ -149,7 +151,7 @@ class ButtonEdit extends Component {
 						formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
 						keepPlaceholderOnFocus
 					/>
-					{ this.state.openPopup &&
+					{ ( isSelected !== null ? isSelected : true ) && this.state.openPopup &&
 						<UrlInputPopover
 							value={ url }
 							onChange={ onChangeUrl }
