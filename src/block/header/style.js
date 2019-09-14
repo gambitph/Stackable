@@ -44,7 +44,10 @@ export const createStyles = props => {
 
 	// Column Background.
 	styles.push( {
-		...( show.columnBackground ? createBackgroundStyleSet( 'column%s', 'ugb-header__item', props.attributes, {
+		...( show.columnBackground ? createBackgroundStyleSet( 'column%s', 'ugb-header__item', {
+			...props.attributes,
+			columnBackgroundColor: props.attributes.columnBackgroundColor || '#000000',
+		}, {
 			importantBackgroundColor: true,
 		} ) : {} ),
 	} )
