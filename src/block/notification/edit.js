@@ -27,9 +27,9 @@ import {
 	IconControl,
 	PanelSpacingBody,
 	AdvancedRangeControl,
-	ButtonEdit,
 	FourRangeControl,
 	SvgIconPlaceholder,
+	ButtonEditHelper,
 } from '~stackable/components'
 import {
 	descriptionPlaceholder, createTypographyAttributeNames, createResponsiveAttributeNames, createButtonAttributeNames, createVideoBackground, hasBackgroundOverlay,
@@ -481,14 +481,7 @@ const edit = props => {
 
 		// Button.
 		showButton = true,
-		buttonSize = 'normal',
-		buttonText = '',
-		buttonShadow = 0,
-		buttonHoverEffect = '',
-		buttonIcon = '',
-		buttonIconPosition = '',
 		buttonDesign = 'plain',
-		buttonHoverGhostToNormal = false,
 	} = props.attributes
 
 	const mainClasses = classnames( [
@@ -550,16 +543,13 @@ const edit = props => {
 						/>
 					}
 					{ showButton &&
-						<ButtonEdit
-							size={ buttonSize !== '' ? buttonSize : 'normal' }
-							text={ buttonText }
-							icon={ buttonIcon }
-							design={ buttonDesign !== '' ? buttonDesign : 'ghost' }
-							shadow={ buttonShadow }
-							hoverEffect={ buttonHoverEffect }
-							ghostToNormalEffect={ buttonHoverGhostToNormal }
-							iconPosition={ buttonIconPosition }
-							onChange={ buttonText => setAttributes( { buttonText } ) }
+						<ButtonEditHelper
+							attrNameTemplate="button%s"
+							setAttributes={ setAttributes }
+							blockAttributes={ {
+								...props.attributes,
+								buttonDesign: buttonDesign !== '' ? buttonDesign : 'ghost',
+							} }
 						/>
 					}
 				</div>
