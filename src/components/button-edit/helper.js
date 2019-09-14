@@ -34,6 +34,16 @@ const ButtonEditHelper = props => {
 			iconPosition={ getAttrValue( 'IconPosition' ) }
 			onChange={ value => setAttributes( { [ getAttrName( 'Text' ) ]: value } ) }
 
+			url={ getAttrValue( 'Url' ) }
+			newWindow={ getAttrValue( 'NewWindow' ) }
+			noFollow={ getAttrValue( 'NoFollow' ) }
+			onChangeUrl={ value => setAttributes( { [ getAttrName( 'Url' ) ]: value } ) }
+			onChangeNewWindow={ value => setAttributes( { [ getAttrName( 'NewWindow' ) ]: value } ) }
+			onChangeNoFollow={ value => setAttributes( { [ getAttrName( 'NoFollow' ) ]: value } ) }
+
+			onChangeIcon={ value => setAttributes( { [ getAttrName( 'Icon' ) ]: value } ) }
+
+			isSelected={ props.isSelected }
 			{ ...props }
 		/>
 	)
