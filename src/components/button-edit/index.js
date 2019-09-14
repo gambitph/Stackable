@@ -78,8 +78,6 @@ class ButtonEdit extends Component {
 			size = 'normal',
 			text = '',
 			onChange = () => {},
-			onChangeIcon = null,
-			icon = null,
 			design = 'basic',
 			shadow = 0,
 			iconPosition = '',
@@ -92,6 +90,9 @@ class ButtonEdit extends Component {
 			onChangeUrl = null,
 			onChangeNewWindow = null,
 			onChangeNoFollow = null,
+
+			onChangeIcon = null,
+			icon = null,
 		} = this.props
 
 		const mainClasses = classnames( [
