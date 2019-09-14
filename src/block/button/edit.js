@@ -184,6 +184,9 @@ const edit = props => {
 		button1IconPosition = '',
 		button1Design = 'basic',
 		button1HoverGhostToNormal = false,
+		button1Url = '',
+		button1NewWindow = false,
+		button1NoFollow = false,
 		button2Size = 'normal',
 		button2Text = '',
 		button2Shadow = 0,
@@ -192,6 +195,9 @@ const edit = props => {
 		button2IconPosition = '',
 		button2Design = 'basic',
 		button2HoverGhostToNormal = false,
+		button2Url = '',
+		button2NewWindow = false,
+		button2NoFollow = false,
 		button3Size = 'normal',
 		button3Text = '',
 		button3Shadow = 0,
@@ -200,6 +206,9 @@ const edit = props => {
 		button3IconPosition = '',
 		button3Design = 'basic',
 		button3HoverGhostToNormal = false,
+		button3Url = '',
+		button3NewWindow = false,
+		button3NoFollow = false,
 	} = attributes
 
 	const mainClasses = classnames( [
@@ -225,6 +234,15 @@ const edit = props => {
 					ghostToNormalEffect={ button1HoverGhostToNormal }
 					iconPosition={ button1IconPosition }
 					onChange={ button1Text => setAttributes( { button1Text } ) }
+
+					url={ button1Url }
+					newWindow={ button1NewWindow }
+					noFollow={ button1NoFollow }
+					onChangeUrl={ button1Url => setAttributes( { button1Url } ) }
+					onChangeNewWindow={ button1NewWindow => setAttributes( { button1NewWindow } ) }
+					onChangeNoFollow={ button1NoFollow => setAttributes( { button1NoFollow } ) }
+
+					onChangeIcon={ button1Icon => setAttributes( { button1Icon } ) }
 				/>
 				{ showButton2 &&
 					<ButtonEdit
@@ -238,6 +256,15 @@ const edit = props => {
 						ghostToNormalEffect={ button2HoverGhostToNormal }
 						iconPosition={ button2IconPosition }
 						onChange={ button2Text => setAttributes( { button2Text } ) }
+
+						url={ button2Url }
+						newWindow={ button2NewWindow }
+						noFollow={ button2NoFollow }
+						onChangeUrl={ button2Url => setAttributes( { button2Url } ) }
+						onChangeNewWindow={ button2NewWindow => setAttributes( { button2NewWindow } ) }
+						onChangeNoFollow={ button2NoFollow => setAttributes( { button2NoFollow } ) }
+
+						onChangeIcon={ button2Icon => setAttributes( { button2Icon } ) }
 					/>
 				}
 				{ showButton3 &&
@@ -252,6 +279,15 @@ const edit = props => {
 						ghostToNormalEffect={ button3HoverGhostToNormal }
 						iconPosition={ button3IconPosition }
 						onChange={ button3Text => setAttributes( { button3Text } ) }
+
+						url={ button3Url }
+						newWindow={ button3NewWindow }
+						noFollow={ button3NoFollow }
+						onChangeUrl={ button3Url => setAttributes( { button3Url } ) }
+						onChangeNewWindow={ button3NewWindow => setAttributes( { button3NewWindow } ) }
+						onChangeNoFollow={ button3NoFollow => setAttributes( { button3NoFollow } ) }
+
+						onChangeIcon={ button3Icon => setAttributes( { button3Icon } ) }
 					/>
 				}
 			</Fragment>
