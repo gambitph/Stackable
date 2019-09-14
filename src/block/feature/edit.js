@@ -2,7 +2,6 @@
  * External dependencies
  */
 import {
-	ButtonEdit,
 	DesignPanelBody,
 	ImageUploadPlaceholder,
 	ProControlButton,
@@ -22,6 +21,7 @@ import {
 	ImageControlsHelper,
 	Image,
 	ImageBackgroundControlsHelper,
+	ButtonEditHelper,
 } from '~stackable/components'
 import {
 	descriptionPlaceholder,
@@ -391,14 +391,6 @@ const edit = props => {
 
 		// Button.
 		showButton = true,
-		buttonSize = 'normal',
-		buttonText = '',
-		buttonShadow = 0,
-		buttonHoverEffect = '',
-		buttonIcon = '',
-		buttonIconPosition = '',
-		buttonDesign = 'basic',
-		buttonHoverGhostToNormal = false,
 	} = props.attributes
 
 	const show = showOptions( props )
@@ -468,16 +460,10 @@ const edit = props => {
 							/>
 						}
 						{ showButton &&
-							<ButtonEdit
-								size={ buttonSize !== '' ? buttonSize : 'normal' }
-								text={ buttonText }
-								icon={ buttonIcon }
-								design={ buttonDesign !== '' ? buttonDesign : 'basic' }
-								shadow={ buttonShadow }
-								hoverEffect={ buttonHoverEffect }
-								ghostToNormalEffect={ buttonHoverGhostToNormal }
-								iconPosition={ buttonIconPosition }
-								onChange={ buttonText => setAttributes( { buttonText } ) }
+							<ButtonEditHelper
+								attrNameTemplate="button%s"
+								setAttributes={ setAttributes }
+								blockAttributes={ props.attributes }
 							/>
 						}
 					</div>
