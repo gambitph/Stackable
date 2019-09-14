@@ -26,4 +26,9 @@
 			margin-bottom: 16px;
 		}
 	}
+
+	// More button indicator that there's a checked value.
+	.ugb-url-input-control__more-button[aria-expanded="false"].ugb--active:not(:hover) {
+		box-shadow: inset 0 0 0 1px #6c7781, inset 0 0 0 2px #fff;
+	}
 }

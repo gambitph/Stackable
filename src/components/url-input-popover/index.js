@@ -39,6 +39,12 @@ const UrlInputPopover = withState( {
 		'ugb--show-advanced': openAdvanced,
 	} )
 
+	const moreButtonClasses = classnames( [
+		'ugb-url-input-control__more-button',
+	], {
+		'ugb--active': props.newWindow || props.noFollow,
+	} )
+
 	return (
 		<Popover
 			className={ mainClassName }
@@ -58,7 +64,7 @@ const UrlInputPopover = withState( {
 					}
 					{ ( props.onChangeNewWindow || props.onChangeNoFollow ) &&
 						<IconButton
-							className="ugb-url-input-control__more-button"
+							className={ moreButtonClasses }
 							icon="ellipsis"
 							label={ openAdvanced ? ariaOpen : ariaClosed }
 							onClick={ () => setState( { openAdvanced: ! openAdvanced } ) }
