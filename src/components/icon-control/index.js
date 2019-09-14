@@ -120,7 +120,7 @@ const IconControl = withInstanceId( withState( {
 				<Button
 					onClick={ () => {
 						props.onChange( '' )
-						props.onClose()
+						setState( { openPopover: false } )
 					} }
 					isSmall
 					isDefault
