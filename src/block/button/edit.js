@@ -4,11 +4,11 @@
 import {
 	BlockContainer,
 	ButtonControlsHelper,
-	ButtonEdit,
 	ContentAlignControl,
 	DesignPanelBody,
 	PanelAdvancedSettings,
 	ProControlButton,
+	ButtonEditHelper,
 } from '~stackable/components'
 import {
 	withBlockStyles,
@@ -176,39 +176,6 @@ const edit = props => {
 		collapseOn = '',
 		showButton2 = false,
 		showButton3 = false,
-		button1Size = 'normal',
-		button1Text = '',
-		button1Shadow = 0,
-		button1HoverEffect = '',
-		button1Icon = '',
-		button1IconPosition = '',
-		button1Design = 'basic',
-		button1HoverGhostToNormal = false,
-		button1Url = '',
-		button1NewWindow = false,
-		button1NoFollow = false,
-		button2Size = 'normal',
-		button2Text = '',
-		button2Shadow = 0,
-		button2HoverEffect = '',
-		button2Icon = '',
-		button2IconPosition = '',
-		button2Design = 'basic',
-		button2HoverGhostToNormal = false,
-		button2Url = '',
-		button2NewWindow = false,
-		button2NoFollow = false,
-		button3Size = 'normal',
-		button3Text = '',
-		button3Shadow = 0,
-		button3HoverEffect = '',
-		button3Icon = '',
-		button3IconPosition = '',
-		button3Design = 'basic',
-		button3HoverGhostToNormal = false,
-		button3Url = '',
-		button3NewWindow = false,
-		button3NoFollow = false,
 	} = attributes
 
 	const mainClasses = classnames( [
@@ -223,71 +190,26 @@ const edit = props => {
 	return (
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				<ButtonEdit
+				<ButtonEditHelper
 					className="ugb-button1"
-					size={ button1Size !== '' ? button1Size : 'normal' }
-					text={ button1Text }
-					icon={ button1Icon }
-					design={ button1Design !== '' ? button1Design : 'basic' }
-					shadow={ button1Shadow }
-					hoverEffect={ button1HoverEffect }
-					ghostToNormalEffect={ button1HoverGhostToNormal }
-					iconPosition={ button1IconPosition }
-					onChange={ button1Text => setAttributes( { button1Text } ) }
-
-					url={ button1Url }
-					newWindow={ button1NewWindow }
-					noFollow={ button1NoFollow }
-					onChangeUrl={ button1Url => setAttributes( { button1Url } ) }
-					onChangeNewWindow={ button1NewWindow => setAttributes( { button1NewWindow } ) }
-					onChangeNoFollow={ button1NoFollow => setAttributes( { button1NoFollow } ) }
-
-					onChangeIcon={ button1Icon => setAttributes( { button1Icon } ) }
+					attrNameTemplate="button1%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
 				/>
 				{ showButton2 &&
-					<ButtonEdit
+					<ButtonEditHelper
 						className="ugb-button2"
-						size={ button2Size !== '' ? button2Size : 'normal' }
-						text={ button2Text }
-						icon={ button2Icon }
-						design={ button2Design !== '' ? button2Design : 'basic' }
-						shadow={ button2Shadow }
-						hoverEffect={ button2HoverEffect }
-						ghostToNormalEffect={ button2HoverGhostToNormal }
-						iconPosition={ button2IconPosition }
-						onChange={ button2Text => setAttributes( { button2Text } ) }
-
-						url={ button2Url }
-						newWindow={ button2NewWindow }
-						noFollow={ button2NoFollow }
-						onChangeUrl={ button2Url => setAttributes( { button2Url } ) }
-						onChangeNewWindow={ button2NewWindow => setAttributes( { button2NewWindow } ) }
-						onChangeNoFollow={ button2NoFollow => setAttributes( { button2NoFollow } ) }
-
-						onChangeIcon={ button2Icon => setAttributes( { button2Icon } ) }
+						attrNameTemplate="button2%s"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
 					/>
 				}
 				{ showButton3 &&
-					<ButtonEdit
+					<ButtonEditHelper
 						className="ugb-button3"
-						size={ button3Size !== '' ? button3Size : 'normal' }
-						text={ button3Text }
-						icon={ button3Icon }
-						design={ button3Design !== '' ? button3Design : 'basic' }
-						shadow={ button3Shadow }
-						hoverEffect={ button3HoverEffect }
-						ghostToNormalEffect={ button3HoverGhostToNormal }
-						iconPosition={ button3IconPosition }
-						onChange={ button3Text => setAttributes( { button3Text } ) }
-
-						url={ button3Url }
-						newWindow={ button3NewWindow }
-						noFollow={ button3NoFollow }
-						onChangeUrl={ button3Url => setAttributes( { button3Url } ) }
-						onChangeNewWindow={ button3NewWindow => setAttributes( { button3NewWindow } ) }
-						onChangeNoFollow={ button3NoFollow => setAttributes( { button3NoFollow } ) }
-
-						onChangeIcon={ button3Icon => setAttributes( { button3Icon } ) }
+						attrNameTemplate="button3%s"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
 					/>
 				}
 			</Fragment>
