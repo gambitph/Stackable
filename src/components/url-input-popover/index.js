@@ -3,6 +3,7 @@
  */
 import { withState } from '@wordpress/compose'
 import {
+	Dashicon,
 	IconButton,
 	Popover,
 	PanelBody,
@@ -46,6 +47,7 @@ const UrlInputPopover = withState( {
 		>
 			<PanelBody>
 				<div className="ugb-url-input-popover__input-wrapper">
+					<Dashicon className="ugb-url-input-control__icon" icon="admin-links" />
 					{ props.onChange &&
 						<URLInput
 							className="ugb-url-input-control__input"

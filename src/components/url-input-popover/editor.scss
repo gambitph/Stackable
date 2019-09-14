@@ -16,6 +16,10 @@
 	}
 	.ugb-url-input-popover__input-wrapper {
 		display: flex;
+		align-items: center;
+	}
+	.ugb-url-input-control__icon {
+		margin-right: 10px;
 	}
 	&.ugb--show-advanced {
 		.ugb-url-input-popover__input-wrapper {
