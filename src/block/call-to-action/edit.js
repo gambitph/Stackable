@@ -7,7 +7,6 @@ import {
 	BackgroundControlsHelper,
 	BlockContainer,
 	ButtonControlsHelper,
-	ButtonEdit,
 	ColorPaletteControl,
 	ContentAlignControl,
 	ControlSeparator,
@@ -18,6 +17,7 @@ import {
 	ProControlButton,
 	ResponsiveControl,
 	TypographyControlHelper,
+	ButtonEditHelper,
 } from '~stackable/components'
 import {
 	createButtonAttributeNames,
@@ -290,14 +290,6 @@ const edit = props => {
 
 		// Button.
 		showButton = true,
-		buttonSize = 'normal',
-		buttonText = '',
-		buttonShadow = 0,
-		buttonHoverEffect = '',
-		buttonIcon = '',
-		buttonIconPosition = '',
-		buttonDesign = 'basic',
-		buttonHoverGhostToNormal = false,
 	} = props.attributes
 
 	const mainClasses = classnames( [
@@ -336,16 +328,10 @@ const edit = props => {
 			keepPlaceholderOnFocus
 		/>
 	const buttonComp = showButton &&
-		<ButtonEdit
-			size={ buttonSize !== '' ? buttonSize : 'normal' }
-			text={ buttonText }
-			icon={ buttonIcon }
-			design={ buttonDesign !== '' ? buttonDesign : 'basic' }
-			shadow={ buttonShadow }
-			hoverEffect={ buttonHoverEffect }
-			ghostToNormalEffect={ buttonHoverGhostToNormal }
-			iconPosition={ buttonIconPosition }
-			onChange={ buttonText => setAttributes( { buttonText } ) }
+		<ButtonEditHelper
+			attrNameTemplate="button%s"
+			setAttributes={ setAttributes }
+			blockAttributes={ props.attributes }
 		/>
 
 	const comps = {
