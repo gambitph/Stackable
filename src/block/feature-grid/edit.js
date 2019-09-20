@@ -475,7 +475,7 @@ const edit = props => {
 					], applyFilters( 'stackable.feature-grid.itemclasses', {
 						'ugb--has-background-overlay': show.columnBackground && hasBackgroundOverlay( 'column%s', props.attributes ),
 						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
-					}, design, i, props ) )
+					}, props, i ) )
 
 					return (
 						<div className={ itemClasses } key={ i }>

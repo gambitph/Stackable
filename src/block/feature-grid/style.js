@@ -22,6 +22,7 @@ import deepmerge from 'deepmerge'
 /**
  * WordPress dependencies
  */
+import { applyFilters } from '@wordpress/hooks'
 import { sprintf } from '@wordpress/i18n'
 
 export const createStyles = props => {
@@ -51,8 +52,9 @@ export const createStyles = props => {
 	}
 
 	// Column Background.
+	const columnBackgroundSelector = applyFilters( 'stackable.feature-grid.styles.column-background', 'ugb-feature-grid__item', props.attributes )
 	styles.push( {
-		...( show.columnBackground ? createBackgroundStyleSet( 'column%s', 'ugb-feature-grid__item', props.attributes, {
+		...( show.columnBackground ? createBackgroundStyleSet( 'column%s', columnBackgroundSelector, props.attributes, {
 			importantBackgroundColor: true,
 		} ) : {} ),
 	} )
@@ -77,10 +79,16 @@ export const createStyles = props => {
 		showTitle = true,
 	} = props.attributes
 	if ( showTitle ) {
+		const titleColorSelector = applyFilters( 'stackable.feature-grid.styles.title.color-selector', '.ugb-feature-grid__title', props )
+		styles.push( {
+			[ titleColorSelector ]: {
+				color: whiteIfDark( titleColor, show.columnBackground && columnBackgroundColor ),
+			},
+		} )
+
 		styles.push( {
 			'.ugb-feature-grid__title': {
 				...createTypographyStyles( 'title%s', 'desktop', props.attributes ),
-				color: whiteIfDark( titleColor, show.columnBackground && columnBackgroundColor ),
 				textAlign: getValue( 'titleAlign' ) || getValue( 'contentAlign' ),
 			},
 			tablet: {
@@ -104,10 +112,15 @@ export const createStyles = props => {
 		showDescription = true,
 	} = props.attributes
 	if ( showDescription ) {
+		const colorSelector = applyFilters( 'stackable.feature-grid.styles.description.color-selector', '.ugb-feature-grid__description', props )
+		styles.push( {
+			[ colorSelector ]: {
+				color: whiteIfDark( descriptionColor, show.columnBackground && columnBackgroundColor ),
+			},
+		} )
 		styles.push( {
 			'.ugb-feature-grid__description': {
 				...createTypographyStyles( 'description%s', 'desktop', props.attributes ),
-				color: whiteIfDark( descriptionColor, show.columnBackground && columnBackgroundColor ),
 				textAlign: getValue( 'descriptionAlign' ) || getValue( 'contentAlign' ),
 			},
 			tablet: {
