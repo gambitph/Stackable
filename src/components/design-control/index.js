@@ -5,6 +5,7 @@
  * External dependencies
  */
 import { DesignPanelItem } from '~stackable/components'
+import { omit } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -27,13 +28,16 @@ function DesignControl( props ) {
 	} )
 
 	return (
-		<RadioControl
-			{ ...props }
-			className="ugb-design-control"
-			selected={ selected }
-			options={ fixedOptions }
-			onChange={ onChange }
-		/>
+		<div className="ugb-design-control-wrapper components-base-control">
+			<div className="components-base-control__label">{ props.label }</div>
+			<RadioControl
+				{ ...omit( props, [ 'label' ] ) }
+				className="ugb-design-control"
+				selected={ selected }
+				options={ fixedOptions }
+				onChange={ onChange }
+			/>
+		</div>
 	)
 }
 
