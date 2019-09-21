@@ -52,7 +52,7 @@ import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
 import { i18n, showProNotice } from 'stackable'
 import createStyles from './style'
-import { showOptions } from '.'
+import { showOptions } from './util'
 
 /**
  * WordPress dependencies

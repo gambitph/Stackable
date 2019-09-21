@@ -16,7 +16,7 @@ import { range } from 'lodash'
 /**
  * Internal dependencies
  */
-import { showOptions } from '.'
+import { showOptions } from './util'
 import deepmerge from 'deepmerge'
 
 /**
