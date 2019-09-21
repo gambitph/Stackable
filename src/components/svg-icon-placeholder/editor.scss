@@ -1,14 +1,18 @@
-.ugb-svg-icon-placeholder button {
-	padding: 0;
-	color: inherit;
-	outline: none !important;
-	background: transparent !important;
-	border: none !important;
-	box-shadow: none !important;
-	cursor: copy;
-	display: inline-block;
-	width: auto;
-	svg {
-		display: block;
+.ugb-svg-icon-placeholder {
+	line-height: 1;
+	button {
+		font-size: inherit;
+		padding: 0;
+		color: inherit;
+		outline: none !important;
+		background: transparent !important;
+		border: none !important;
+		box-shadow: none !important;
+		cursor: copy;
+		display: inline-block;
+		width: auto;
+		svg {
+			display: block;
+		}
 	}
 }
