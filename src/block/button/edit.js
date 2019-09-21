@@ -39,7 +39,9 @@ import classnames from 'classnames'
 import {
 	PanelBody, RangeControl, SelectControl,
 } from '@wordpress/components'
-import { __, sprintf } from '@wordpress/i18n'
+import {
+	__, _x, sprintf,
+} from '@wordpress/i18n'
 import { i18n, showProNotice } from 'stackable'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 
@@ -66,10 +68,10 @@ addFilter( 'stackable.button.edit.inspector.layout.before', 'stackable/button', 
 						label: __( 'Full Width', i18n ), value: 'fullwidth', image: ImageDesignFullWidth,
 					},
 					{
-						label: __( 'Grouped 1', i18n ), value: 'grouped-1', image: ImageDesignGrouped1,
+						label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Grouped', i18n ), 1 ), value: 'grouped-1', image: ImageDesignGrouped1,
 					},
 					{
-						label: __( 'Grouped 2', i18n ), value: 'grouped-2', image: ImageDesignGrouped2,
+						label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Grouped', i18n ), 2 ), value: 'grouped-2', image: ImageDesignGrouped2,
 					},
 				] ) }
 				onChange={ design => setAttributes( { design } ) }
@@ -128,7 +130,7 @@ addFilter( 'stackable.button.edit.inspector.style.before', 'stackable/button', (
 					onChange={ collapseOn => setAttributes( { collapseOn } ) }
 				/>
 			</PanelBody>
-			<PanelBody title={ sprintf( __( 'Button #%s', i18n ), 1 ) } initialOpen={ true }>
+			<PanelBody title={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button', i18n ), 1 ) } initialOpen={ true }>
 				<ButtonControlsHelper
 					attrNameTemplate="button1%s"
 					setAttributes={ setAttributes }
@@ -136,7 +138,7 @@ addFilter( 'stackable.button.edit.inspector.style.before', 'stackable/button', (
 				/>
 			</PanelBody>
 			<PanelAdvancedSettings
-				title={ sprintf( __( 'Button #%s', i18n ), 2 ) }
+				title={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button', i18n ), 2 ) }
 				checked={ showButton2 }
 				onChange={ showButton2 => setAttributes( { showButton2 } ) }
 				toggleOnSetAttributes={ createButtonAttributeNames( 'button2%s' ) }
@@ -149,7 +151,7 @@ addFilter( 'stackable.button.edit.inspector.style.before', 'stackable/button', (
 				/>
 			</PanelAdvancedSettings>
 			<PanelAdvancedSettings
-				title={ sprintf( __( 'Button #%s', i18n ), 3 ) }
+				title={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button', i18n ), 3 ) }
 				checked={ showButton3 }
 				onChange={ showButton3 => setAttributes( { showButton3 } ) }
 				toggleOnSetAttributes={ createButtonAttributeNames( 'button3%s' ) }

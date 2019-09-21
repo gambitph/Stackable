@@ -53,7 +53,9 @@ import { i18n, showProNotice } from 'stackable'
 import {
 	PanelBody, RangeControl, ToggleControl,
 } from '@wordpress/components'
-import { __ } from '@wordpress/i18n'
+import {
+	__, _x, sprintf,
+} from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
 import { RichText } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
@@ -262,7 +264,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 			</PanelAdvancedSettings>
 
 			<PanelAdvancedSettings
-				title={ __( 'Button #1', i18n ) }
+				title={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button', i18n ), 1 ) }
 				checked={ showButton }
 				onChange={ showButton => setAttributes( { showButton } ) }
 				toggleOnSetAttributes={ [
@@ -290,7 +292,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 			</PanelAdvancedSettings>
 
 			<PanelAdvancedSettings
-				title={ __( 'Button #2', i18n ) }
+				title={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button', i18n ), 2 ) }
 				checked={ showButton2 }
 				onChange={ showButton2 => setAttributes( { showButton2 } ) }
 				toggleOnSetAttributes={ [

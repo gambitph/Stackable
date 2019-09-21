@@ -17,37 +17,39 @@ import { i18n } from 'stackable'
  * WordPress dependencies
  */
 import { BaseControl, Toolbar } from '@wordpress/components'
-import { __ } from '@wordpress/i18n'
+import {
+	__, _x, sprintf,
+} from '@wordpress/i18n'
 
 const TAG_OPTIONS = [
 	{
 		value: 'h1',
-		title: __( 'Heading 1', i18n ),
+		title: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Heading', i18n ), 1 ),
 		icon: <SVGH1 />,
 	},
 	{
 		value: 'h2',
-		title: __( 'Heading 2', i18n ),
+		title: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Heading', i18n ), 2 ),
 		icon: <SVGH2 />,
 	},
 	{
 		value: 'h3',
-		title: __( 'Heading 3', i18n ),
+		title: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Heading', i18n ), 3 ),
 		icon: <SVGH3 />,
 	},
 	{
 		value: 'h4',
-		title: __( 'Heading 4', i18n ),
+		title: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Heading', i18n ), 4 ),
 		icon: <SVGH4 />,
 	},
 	{
 		value: 'h5',
-		title: __( 'Heading 5', i18n ),
+		title: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Heading', i18n ), 5 ),
 		icon: <SVGH5 />,
 	},
 	{
 		value: 'h6',
-		title: __( 'Heading 6', i18n ),
+		title: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Heading', i18n ), 6 ),
 		icon: <SVGH6 />,
 	},
 ]

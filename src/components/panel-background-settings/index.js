@@ -18,7 +18,9 @@ import {
 	RangeControl,
 	ToggleControl,
 } from '@wordpress/components'
-import { __ } from '@wordpress/i18n'
+import {
+	__, _x, sprintf,
+} from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
@@ -82,7 +84,7 @@ function PanelBackgroundSettings( props ) {
 					<ColorPaletteControl
 						label={
 							onChangeBackgroundColor2 && backgroundColorType === 'gradient' ?
-								__( 'Background Color #1', i18n ) :
+								sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Background Color', i18n ), 1 ) :
 								__( 'Background Color', i18n )
 						}
 						value={ backgroundColor }
@@ -91,7 +93,7 @@ function PanelBackgroundSettings( props ) {
 				) }
 				{ onChangeBackgroundColor2 && backgroundColorType === 'gradient' && (
 					<ColorPaletteControl
-						label={ __( 'Background Color #2', i18n ) }
+						label={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Background Color', i18n ), 2 ) }
 						value={ backgroundColor2 }
 						onChange={ onChangeBackgroundColor2 }
 					/>

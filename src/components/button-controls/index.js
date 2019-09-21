@@ -30,7 +30,9 @@ import {
 	SelectControl,
 	ToggleControl,
 } from '@wordpress/components'
-import { __ } from '@wordpress/i18n'
+import {
+	__, _x, sprintf,
+} from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
@@ -204,7 +206,7 @@ const ButtonControls = props => {
 				<ColorPaletteControl
 					label={
 						props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' && showGradient ?
-							__( 'Button Color #1', i18n ) :
+							sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button Color', i18n ), 1 ) :
 							__( 'Button Color', i18n )
 					}
 					value={ props.backgroundColor }
@@ -214,7 +216,7 @@ const ButtonControls = props => {
 
 			{ props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' && showGradient && (
 				<ColorPaletteControl
-					label={ __( 'Button Color #2', i18n ) }
+					label={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button Color', i18n ), 2 ) }
 					value={ props.backgroundColor2 }
 					onChange={ props.onChangeBackgroundColor2 }
 				/>
@@ -305,7 +307,7 @@ const ButtonControls = props => {
 						<ColorPaletteControl
 							label={
 								props.onChangeHoverBackgroundColor && ( props.hoverGhostToNormal || ( props.backgroundColorType === 'gradient' && showGradient ) ) ?
-									__( 'Button Color #1', i18n ) :
+									sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button Color', i18n ), 1 ) :
 									__( 'Button Color', i18n )
 							}
 							value={ props.hoverBackgroundColor }
@@ -314,7 +316,7 @@ const ButtonControls = props => {
 					) }
 					{ props.onChangeHoverBackgroundColor2 && ( props.hoverGhostToNormal || ( props.backgroundColorType === 'gradient' && showGradient ) ) && (
 						<ColorPaletteControl
-							label={ __( 'Button Color #2', i18n ) }
+							label={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button Color', i18n ), 2 ) }
 							value={ props.hoverBackgroundColor2 }
 							onChange={ props.onChangeHoverBackgroundColor2 }
 						/>

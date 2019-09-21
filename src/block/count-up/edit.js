@@ -41,7 +41,9 @@ import { showOptions } from '.'
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n'
+import {
+	__, _x, sprintf,
+} from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { i18n, showProNotice } from 'stackable'
 import {
@@ -70,7 +72,7 @@ addFilter( 'stackable.count-up.edit.inspector.layout.before', 'stackable/count-u
 						label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
 					},
 					{
-						label: __( 'Plain 2', i18n ), value: 'plain-2', image: ImageDesignPlain2,
+						label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Plain', i18n ), 2 ), value: 'plain-2', image: ImageDesignPlain2,
 					},
 				] ) }
 				onChange={ design => setAttributes( { design } ) }
@@ -214,7 +216,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 					return (
 						<IconControl
 							key={ i }
-							label={ sprintf( __( 'Icon #%s', i18n ), i ) }
+							label={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Icon', i18n ), i ) }
 							value={ props.attributes[ `icon${ i }` ] }
 							onChange={ value => setAttributes( { [ `icon${ i }` ]: value } ) }
 						/>
@@ -374,7 +376,7 @@ addFilter( `stackable.count-up.edit.inspector.advanced.before`, `stackable/count
 					<PanelBody
 						key={ i }
 						initialOpen={ false }
-						title={ sprintf( __( 'Column #%s', i18n ), num ) }
+						title={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Column', i18n ), num ) }
 					>
 						<p className="components-base-control__help">{ __( 'Override settings for this column.', i18n ) }</p>
 						{ show.columnBackground && (

@@ -10,7 +10,9 @@ import { i18n, showProNotice } from 'stackable'
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
+import {
+	__, _x, sprintf,
+} from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { PanelBody } from '@wordpress/components'
@@ -22,7 +24,7 @@ if ( showProNotice ) {
 				{ output }
 				<PanelBody
 					initialOpen={ false }
-					title={ __( 'Layer 2', i18n ) }
+					title={ sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Layer', i18n ), 2 ) }
 				>
 					<ProControl
 						title={ __( 'Say Hello to Gorgeous Separators 👋', i18n ) }
@@ -31,7 +33,7 @@ if ( showProNotice ) {
 				</PanelBody>
 				<PanelBody
 					initialOpen={ false }
-					title={ __( 'Layer 3', i18n ) }
+					title={ sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Layer', i18n ), 3 ) }
 				>
 					<ProControl
 						title={ __( 'Say Hello to Gorgeous Separators 👋', i18n ) }

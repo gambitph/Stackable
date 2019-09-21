@@ -21,7 +21,9 @@ import {
 	RangeControl,
 	ToggleControl,
 } from '@wordpress/components'
-import { __ } from '@wordpress/i18n'
+import {
+	__, _x, sprintf,
+} from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
 
@@ -63,7 +65,7 @@ const BackgroundControls = props => {
 				<ColorPaletteControl
 					label={
 						props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' ?
-							__( 'Background Color #1', i18n ) :
+							sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Background Color', i18n ), 1 ) :
 							__( 'Background Color', i18n )
 					}
 					value={ props.backgroundColor }
@@ -85,7 +87,7 @@ const BackgroundControls = props => {
 
 			{ props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' && (
 				<ColorPaletteControl
-					label={ __( 'Background Color #2', i18n ) }
+					label={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Background Color', i18n ), 2 ) }
 					value={ props.backgroundColor2 }
 					onChange={ props.onChangeBackgroundColor2 }
 				/>
@@ -116,7 +118,7 @@ const BackgroundControls = props => {
 
 					{ props.onChangeBackgroundGradientLocation1 && (
 						<RangeControl
-							label={ __( 'Color 1 Location', i18n ) }
+							label={ sprintf( __( 'Color %d Location', i18n ), 1 ) }
 							value={ props.backgroundGradientLocation1 }
 							onChange={ props.onChangeBackgroundGradientLocation1 }
 							min={ 0 }
@@ -128,7 +130,7 @@ const BackgroundControls = props => {
 
 					{ props.onChangeBackgroundGradientLocation2 && (
 						<RangeControl
-							label={ __( 'Color 2 Location', i18n ) }
+							label={ sprintf( __( 'Color %d Location', i18n ), 2 ) }
 							value={ props.backgroundGradientLocation2 }
 							onChange={ props.onChangeBackgroundGradientLocation2 }
 							min={ 0 }

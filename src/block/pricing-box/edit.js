@@ -24,7 +24,9 @@ import {
 import {
 	PanelBody, RangeControl,
 } from '@wordpress/components'
-import { __ } from '@wordpress/i18n'
+import {
+	__, _x, sprintf,
+} from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 import { Fragment } from '@wordpress/element'
@@ -123,20 +125,20 @@ const edit = props => {
 							{
 								value: highlightColor,
 								onChange: highlightColor => setAttributes( { highlightColor } ),
-								label: __( 'Column #1 Highlight', i18n ),
+								label: sprintf( _x( '%s #%d %s', 'Panel title with subtitle', i18n ), __( 'Column', i18n ), 1, __( 'Highlight', i18n ) ),
 							},
 							...( columns < 2 ? [] : [
 								{
 									value: highlightColor2,
 									onChange: highlightColor2 => setAttributes( { highlightColor2 } ),
-									label: __( 'Column #2 Highlight', i18n ),
+									label: sprintf( _x( '%s #%d %s', 'Panel title with subtitle', i18n ), __( 'Column', i18n ), 2, __( 'Highlight', i18n ) ),
 								},
 							] ),
 							...( columns < 3 ? [] : [
 								{
 									value: highlightColor3,
 									onChange: highlightColor3 => setAttributes( { highlightColor3 } ),
-									label: __( 'Column #3 Highlight', i18n ),
+									label: sprintf( _x( '%s #%d %s', 'Panel title with subtitle', i18n ), __( 'Column', i18n ), 3, __( 'Highlight', i18n ) ),
 								},
 							] ),
 						] }

@@ -44,7 +44,9 @@ import { showOptions } from './util'
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n'
+import {
+	__, _x, sprintf,
+} from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { i18n, showProNotice } from 'stackable'
 import {
@@ -210,20 +212,20 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 				toggleAttributeName="showNumber"
 			>
 				<TextControl
-					label={ __( 'Number 1 Label', i18n ) }
+					label={ sprintf( _x( '%s %d %s', 'Nth Title with description', i18n ), __( 'Number', i18n ), 1, __( 'Label', i18n ) ) }
 					value={ num1 }
 					onChange={ num1 => setAttributes( { num1 } ) }
 				/>
 				{ columns !== '' && columns >= 2 && (
 					<TextControl
-						label={ __( 'Number 2 Label', i18n ) }
+						label={ sprintf( _x( '%s %d %s', 'Nth Title with description', i18n ), __( 'Number', i18n ), 2, __( 'Label', i18n ) ) }
 						value={ num2 }
 						onChange={ num2 => setAttributes( { num2 } ) }
 					/>
 				) }
 				{ columns !== '' && columns >= 3 && (
 					<TextControl
-						label={ __( 'Number 3 Label', i18n ) }
+						label={ sprintf( _x( '%s %d %s', 'Nth Title with description', i18n ), __( 'Number', i18n ), 3, __( 'Label', i18n ) ) }
 						value={ num3 }
 						onChange={ num3 => setAttributes( { num3 } ) }
 					/>
@@ -365,7 +367,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 	)
 } )
 
-addFilter( `stackable.number-box.edit.inspector.advanced.before`, `stackable/number-box/column-colors`, ( output, props ) => {
+addFilter( `stackable.number-box.edit.inspector.advanced.before`, `stackable/number-box/column-colors`, output => {
 	return (
 		<Fragment>
 			{ output }
