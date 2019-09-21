@@ -39,7 +39,7 @@ import {
 import createStyles from './style'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
-import { showOptions } from '.'
+import { showOptions } from './util'
 
 /**
  * WordPress dependencies

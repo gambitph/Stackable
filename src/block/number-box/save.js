@@ -9,7 +9,7 @@ import { BlockContainer } from '~stackable/components'
  * Internal dependencies
  */
 import createStyles from './style'
-import { showOptions } from '.'
+import { showOptions } from './util'
 
 /**
  * WordPress dependencies
