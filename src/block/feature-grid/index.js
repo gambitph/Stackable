@@ -224,6 +224,23 @@ export const schema = {
 		type: 'string',
 		default: '',
 	},
+
+	// Advanced colors.
+	...createAllCombinationAttributes(
+		'Column%sBackgroundColor', {
+			type: 'string',
+			default: '',
+		},
+		[ '1', '2', '3', '4' ]
+	),
+	...createAllCombinationAttributes(
+		'%s%sColor', {
+			type: 'string',
+			default: '',
+		},
+		[ 'Title', 'Description' ],
+		[ '1', '2', '3', '4' ]
+	),
 }
 
 export const name = 'ugb/feature-grid'
