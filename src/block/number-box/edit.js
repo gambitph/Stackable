@@ -54,6 +54,7 @@ import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
+import { ProControl } from '~stackable/components/index'
 
 addFilter( 'stackable.number-box.edit.inspector.layout.before', 'stackable/number-box', ( output, props ) => {
 	const { setAttributes } = props
@@ -365,71 +366,17 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 } )
 
 addFilter( `stackable.number-box.edit.inspector.advanced.before`, `stackable/number-box/column-colors`, ( output, props ) => {
-	const { setAttributes } = props
-	const {
-		columns = 2,
-		showNumber = true,
-		showTitle = true,
-		showDescription = true,
-	} = props.attributes
-
-	const show = showOptions( props )
-
 	return (
 		<Fragment>
 			{ output }
-			{ [ 1, 2, 3 ].map( ( num, i ) => {
-				if ( columns < num ) {
-					return null
-				}
-
-				const attrName = attrNameTemplate => sprintf( attrNameTemplate, num )
-
-				return (
-					<PanelBody
-						key={ i }
-						initialOpen={ false }
-						title={ sprintf( __( 'Column #%s', i18n ), num ) }
-					>
-						<p className="components-base-control__help">{ __( 'Override settings for this column.', i18n ) }</p>
-						{ show.backgroundColor && (
-							<ColorPaletteControl
-								label={ __( 'Column Background', i18n ) }
-								value={ props.attributes[ attrName( 'column%sBackgroundColor' ) ] }
-								onChange={ value => setAttributes( { [ attrName( 'column%sBackgroundColor' ) ]: value } ) }
-							/>
-						) }
-						{ showNumber && show.numberBGColor && (
-							<ColorPaletteControl
-								label={ __( 'Number Background', i18n ) }
-								value={ props.attributes[ attrName( 'column%sNumberBackgroundColor' ) ] }
-								onChange={ value => setAttributes( { [ attrName( 'column%sNumberBackgroundColor' ) ]: value } ) }
-							/>
-						) }
-						{ showNumber && show.numberColor && (
-							<ColorPaletteControl
-								label={ __( 'Number Text', i18n ) }
-								value={ props.attributes[ attrName( 'column%sNumberColor' ) ] }
-								onChange={ value => setAttributes( { [ attrName( 'column%sNumberColor' ) ]: value } ) }
-							/>
-						) }
-						{ showTitle && (
-							<ColorPaletteControl
-								label={ __( 'Title', i18n ) }
-								value={ props.attributes[ attrName( 'column%sTitleColor' ) ] }
-								onChange={ value => setAttributes( { [ attrName( 'column%sTitleColor' ) ]: value } ) }
-							/>
-						) }
-						{ showDescription && (
-							<ColorPaletteControl
-								label={ __( 'Description', i18n ) }
-								value={ props.attributes[ attrName( 'column%sDescriptionColor' ) ] }
-								onChange={ value => setAttributes( { [ attrName( 'column%sDescriptionColor' ) ]: value } ) }
-							/>
-						) }
-					</PanelBody>
-				)
-			} ) }
+			{ showProNotice &&
+				<PanelBody
+					title={ __( 'Fine-Grained Controls', i18n ) }
+					initialOpen={ false }
+				>
+					{ <ProControl type="advanced" /> }
+				</PanelBody>
+			}
 		</Fragment>
 	)
 } )
