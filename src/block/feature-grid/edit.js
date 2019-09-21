@@ -399,14 +399,6 @@ addFilter( 'stackable.feature-grid.edit.inspector.advanced.before', 'stackable/f
 					</PanelBody>
 				)
 			} ) }
-		</Fragment>
-	)
-} )
-
-addFilter( 'stackable.feature-grid.edit.inspector.advanced.before', 'stackable/feature-grid/fine-grained', output => {
-	return (
-		<Fragment>
-			{ output }
 			{ showProNotice &&
 				<PanelBody
 					title={ __( 'Fine-Grained Controls', i18n ) }
@@ -417,7 +409,7 @@ addFilter( 'stackable.feature-grid.edit.inspector.advanced.before', 'stackable/f
 			}
 		</Fragment>
 	)
-}, 19 )
+} )
 
 const edit = props => {
 	const {
