@@ -609,6 +609,30 @@ const deprecated = [
 	{
 		attributes: deprecatedSchema_1_17_2,
 		save: deprecatedSave_1_17_2,
+		migrate: attributes => {
+			return {
+				...attributes,
+				image1Id: attributes.imageID1,
+				image2Id: attributes.imageID2,
+				image3Id: attributes.imageID3,
+				image1Url: attributes.imageUrl1,
+				image2Url: attributes.imageUrl2,
+				image3Url: attributes.imageUrl3,
+				image1Alt: attributes.imageAlt1,
+				image2Alt: attributes.imageAlt2,
+				image3Alt: attributes.imageAlt3,
+				button1Url: attributes.linkUrl1,
+				button2Url: attributes.linkUrl2,
+				button3Url: attributes.linkUrl3,
+				button1NewWindow: attributes.newTab1,
+				button2NewWindow: attributes.newTab2,
+				button3NewWindow: attributes.newTab3,
+				button1Text: attributes.linkText1,
+				button2Text: attributes.linkText2,
+				button3Text: attributes.linkText3,
+				buttonBackgroundColor: attributes.buttonColor,
+			}
+		},
 	},
 	{
 		attributes: deprecatedSchema_1_10,
