@@ -197,33 +197,6 @@ export const createStyles = props => {
 		},
 	} )
 
-	// Advanced individual column color styles.
-	const { columns = 2 } = props.attributes
-	styles.push( [ 1, 2, 3 ].reduce( ( colStyles, i ) => {
-		if ( columns < i ) {
-			return colStyles
-		}
-		return {
-			...colStyles,
-			[ `.ugb-number-box__item${ i }` ]: {
-				backgroundColor: getValue( `column${ i }BackgroundColor` ),
-			},
-			[ `.ugb-number-box__item${ i }:before` ]: {
-				background: getValue( `column${ i }BackgroundColor` ),
-			},
-			[ `.ugb-number-box__item${ i } .ugb-number-box__number` ]: {
-				backgroundColor: show.numberBGColor ? getValue( `column${ i }NumberBackgroundColor` ) : undefined,
-				color: getValue( `column${ i }NumberColor` ),
-			},
-			[ `.ugb-number-box__item${ i } .ugb-number-box__title` ]: {
-				color: getValue( `column${ i }TitleColor` ),
-			},
-			[ `.ugb-number-box__item${ i } .ugb-number-box__description` ]: {
-				color: getValue( `column${ i }DescriptionColor` ),
-			},
-		}
-	}, {} ) )
-
 	return deepmerge.all( styles )
 }
 
