@@ -114,6 +114,8 @@ export const schema = {
 	...createAllCombinationAttributes(
 		'title%s', {
 			type: 'string',
+			source: 'html',
+			selector: '.ugb-feature-grid__item%d .ugb-feature-grid__title',
 			default: __( 'Title', i18n ),
 		},
 		[ '1', '2', '3', '4' ]
@@ -136,6 +138,8 @@ export const schema = {
 	...createAllCombinationAttributes(
 		'description%s', {
 			type: 'string',
+			source: 'html',
+			selector: '.ugb-feature-grid__item%d .ugb-feature-grid__description',
 			default: descriptionPlaceholder( 'short' ),
 		},
 		[ '1', '2', '3', '4' ]
