@@ -566,6 +566,9 @@ const ImageControlsHelperWithData_ = props => {
 				if ( props.image3Data ) {
 					attributes.image3Url = props.image3Data.media_details.sizes[ currentSelectedSize ] ? props.image3Data.media_details.sizes[ currentSelectedSize ].source_url : props.image3Data.source_url
 				}
+				if ( props.image4Data ) {
+					attributes.image4Url = props.image4Data.media_details.sizes[ currentSelectedSize ] ? props.image4Data.media_details.sizes[ currentSelectedSize ].source_url : props.image4Data.source_url
+				}
 
 				props.setAttributes( attributes )
 			} }
