@@ -14,11 +14,12 @@ import deprecated from './deprecated'
 import edit from './edit'
 import { IconListIcon } from '~stackable/icons'
 import save from './save'
+import { range } from 'lodash'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import { disabledBlocks, i18n } from 'stackable'
 import { applyFilters } from '@wordpress/hooks'
 
@@ -39,7 +40,7 @@ export const schema = {
 	},
 	columns: {
 		type: 'number',
-		default: 1,
+		default: 2,
 	},
 	tabletColumns: {
 		type: 'number',
@@ -53,7 +54,7 @@ export const schema = {
 		source: 'html',
 		selector: 'ul',
 		multiline: 'li',
-		default: '',
+		default: range( 1, 7 ).map( i => sprintf( __( 'Line %d', i18n ), i ) ).map( s => `<li>${ s }</li>` ).join( '' ),
 	},
 	displayAsGrid: {
 		type: 'boolean',
