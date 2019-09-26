@@ -23,7 +23,6 @@ import {
 	AdvancedRangeControl,
 	ImageAltControl,
 	ImageShapeControls,
-	URLInputControl,
 	ProControl,
 } from '~stackable/components'
 import {
@@ -60,7 +59,6 @@ import { showOptions } from './util'
 import {
 	PanelBody,
 	RangeControl,
-	ToggleControl,
 } from '@wordpress/components'
 import {
 	__, sprintf, _x,
