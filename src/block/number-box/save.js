@@ -24,16 +24,10 @@ import { RichText } from '@wordpress/block-editor'
 const save = props => {
 	const { className, attributes } = props
 	const {
-		// numberColor,
-		// titleColor,
-		// descriptionColor,
-		// numberBGColor,
 		columns = 2,
 		design = 'basic',
 		titleTag = '',
-		// borderRadius = 12,
 		shadow = 3,
-		// backgroundColor,
 		numberStyle = '',
 		showNumber = true,
 		showTitle = true,
