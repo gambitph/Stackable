@@ -272,28 +272,6 @@ addFilter( 'stackable.feature-grid.edit.inspector.style.before', 'stackable/feat
 				] }
 				toggleAttributeName="showButton"
 			>
-				{ range( 1, columns + 1 ).map( i => {
-					return (
-						<Fragment key={ i }>
-							<URLInputControl
-								label={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Link / URL', i18n ), i ) }
-								value={ props.attributes[ `button${ i }Url` ] }
-								onChange={ value => setAttributes( { [ `button${ i }Url` ]: value } ) }
-								placeholder="http://"
-							/>
-							<ToggleControl
-								label={ __( 'Open link in new window', i18n ) }
-								checked={ props.attributes[ `button${ i }NewWindow` ] }
-								onChange={ value => setAttributes( { [ `button${ i }NewWindow` ]: value } ) }
-							/>
-							<ToggleControl
-								label={ __( 'Nofollow link', i18n ) }
-								checked={ props.attributes[ `button${ i }NoFollow` ] }
-								onChange={ value => setAttributes( { [ `button${ i }NoFollow` ]: value } ) }
-							/>
-						</Fragment>
-					)
-				} ) }
 				<ButtonControlsHelper
 					attrNameTemplate="button%s"
 					setAttributes={ setAttributes }
