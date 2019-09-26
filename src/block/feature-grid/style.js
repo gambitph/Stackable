@@ -37,7 +37,6 @@ export const createStyles = props => {
 		columns = 3,
 		columnBackgroundColor = '',
 		showImage = true,
-		imageAlign = '',
 		contentAlign = '',
 	} = props.attributes
 
@@ -60,6 +59,13 @@ export const createStyles = props => {
 	} )
 
 	// Image.
+	const {
+		imageAlign = '',
+		imageTabletAlign = '',
+		contentTabletAlign = '',
+		imageMobileAlign = '',
+		contentMobileAlign = '',
+	} = props.attributes
 	if ( showImage ) {
 		styles.push( {
 			...createImageStyleSet( 'image%s', 'ugb-img', props.attributes ),
@@ -67,8 +73,20 @@ export const createStyles = props => {
 
 		styles.push( {
 			'.ugb-img, .ugb-feature-grid__image': {
-				marginLeft: imageAlign !== '' || contentAlign !== '' ? marginLeftAlign( imageAlign || contentAlign ) : undefined,
-				marginRight: imageAlign !== '' || contentAlign !== '' ? marginRightAlign( imageAlign || contentAlign ) : undefined,
+				marginLeft: imageAlign !== '' || contentAlign !== '' ? marginLeftAlign( imageAlign || contentAlign ) + ' !important' : undefined,
+				marginRight: imageAlign !== '' || contentAlign !== '' ? marginRightAlign( imageAlign || contentAlign ) + ' !important' : undefined,
+			},
+			tablet: {
+				'.ugb-img, .ugb-feature-grid__image': {
+					marginLeft: imageTabletAlign !== '' || contentTabletAlign !== '' ? marginLeftAlign( imageTabletAlign || contentTabletAlign ) + ' !important' : undefined,
+					marginRight: imageTabletAlign !== '' || contentTabletAlign !== '' ? marginRightAlign( imageTabletAlign || contentTabletAlign ) + ' !important' : undefined,
+				},
+			},
+			mobile: {
+				'.ugb-img, .ugb-feature-grid__image': {
+					marginLeft: imageMobileAlign !== '' || contentMobileAlign !== '' ? marginLeftAlign( imageMobileAlign || contentMobileAlign ) + ' !important' : undefined,
+					marginRight: imageMobileAlign !== '' || contentMobileAlign !== '' ? marginRightAlign( imageMobileAlign || contentMobileAlign ) + ' !important' : undefined,
+				},
 			},
 		} )
 	}

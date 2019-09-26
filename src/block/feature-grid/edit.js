@@ -193,6 +193,13 @@ addFilter( 'stackable.feature-grid.edit.inspector.style.before', 'stackable/feat
 					setAttributes={ props.setAttributes }
 					attributes={ props.attributes }
 				/>
+				<ResponsiveControl
+					attrNameTemplate="Image%sAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
 			<PanelAdvancedSettings
