@@ -225,6 +225,18 @@ body.toplevel_page_stackable {
 			color: #999;
 		}
 	}
+	.s-video-tutorial-wrapper {
+		padding-bottom: 58.4%;
+		height: 0;
+		position: relative;
+		iframe {
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+		}
+	}
 	.s-check-list {
 		padding-left: 10px;
 		li {
