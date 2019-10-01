@@ -1,4 +1,10 @@
 /**
+ * Internal dependencies
+ */
+import createStyles from './style'
+import { showOptions } from './util'
+
+/**
  * External dependencies
  */
 import {
@@ -7,24 +13,18 @@ import {
 import {
 	range, hasBackgroundOverlay, createVideoBackground,
 } from '~stackable/util'
+import { withUniqueClass, withBlockStyles } from '~stackable/higher-order'
 import { i18n } from 'stackable'
+import classnames from 'classnames'
 
 /**
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
-import classnames from 'classnames'
 import { RichText } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
-
-/**
- * Internal dependencies
- */
-import createStyles from './style'
-import { showOptions } from './util'
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
-import { withUniqueClass, withBlockStyles } from '~stackable/higher-order'
 
 const save = props => {
 	const { attributes, className } = props
