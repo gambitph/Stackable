@@ -237,14 +237,6 @@ export const schema = {
 		},
 		[ '1', '2', '3', '4' ]
 	),
-	...createAllCombinationAttributes(
-		'%s%sColor', {
-			type: 'string',
-			default: '',
-		},
-		[ 'Title', 'Description' ],
-		[ '1', '2', '3', '4' ]
-	),
 }
 
 export const name = 'ugb/feature-grid'
