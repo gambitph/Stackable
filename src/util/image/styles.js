@@ -66,7 +66,7 @@ export const createImageMask = ( attrNameTemplate = '%s', blockAttributes = {} )
 	const shapeFlipY = getValue( 'ShapeFlipY' )
 	const MaskImage = applyFilters( 'stackable.image.shape.svgs', SVGS )[ shape ]
 	const MaskComp = <MaskImage
-		preserveAspectRatio={ ! [ '', 'square', 'circle' ].includes( shape ) && shapeStretch ? 'none' : undefined }
+		preserveAspectRatio={ ! [ '', 'square' ].includes( shape ) && shapeStretch ? 'none' : undefined }
 		transform={ ! shapeFlipX && ! shapeFlipY ? undefined : `scale(${ shapeFlipX ? -1 : 1 },${ shapeFlipY ? -1 : 1 })` }
 	/>
 	const maskString = btoa( svgRenderToString( MaskComp ) )
