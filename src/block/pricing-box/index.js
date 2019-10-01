@@ -6,62 +6,38 @@
  * Internal dependencies
  */
 import deprecate from './deprecated'
+import edit from './edit'
+import save from './save'
 
 /**
  * External dependencies
  */
-import { descriptionPlaceholder } from '~stackable/util'
-import edit from './edit'
+import {
+	createAllCombinationAttributes,
+	createBackgroundAttributes,
+	createButtonAttributes,
+	createImageAttributes,
+	createTypographyAttributes,
+	descriptionPlaceholder,
+} from '~stackable/util'
 import { PricingBoxIcon } from '~stackable/icons'
-import save from './save'
+// import { range } from 'lodash'
+import { disabledBlocks, i18n } from 'stackable'
 
 /**
  * WordPress dependencies
  */
+import { addFilter, applyFilters } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
-import { disabledBlocks, i18n } from 'stackable'
 
 const schema = {
-	pricingBoxColor: {
-		type: 'string',
-	},
-	priceColor: {
-		type: 'string',
-	},
-	perMonthLabelColor: {
-		type: 'string',
-	},
-	buttonColor: {
-		type: 'string',
-	},
-	buttonTextColor: {
-		type: 'string',
-	},
-	buttonDesign: {
+	design: {
 		type: 'string',
 		default: 'basic',
-	},
-	buttonIcon: {
-		type: 'string',
-	},
-	featureListColor: {
-		type: 'string',
 	},
 	columns: {
 		type: 'number',
 		default: 2,
-	},
-	size: {
-		type: 'string',
-		default: 'normal',
-	},
-	cornerButtonRadius: {
-		type: 'number',
-		default: 4,
-	},
-	design: {
-		type: 'string',
-		default: 'basic',
 	},
 	borderRadius: {
 		type: 'number',
@@ -71,94 +47,268 @@ const schema = {
 		type: 'number',
 		default: 3,
 	},
-	hoverEffect: {
+
+	// Column.
+	...createBackgroundAttributes( 'column%s' ),
+
+	// Image.
+	showImage: {
+		type: 'boolean',
+		default: true,
+	},
+	...createImageAttributes( 'image%s', {
+		exclude: [
+			'Url',
+			'Id',
+			'Alt',
+			'BlendMode',
+		],
+	} ),
+	...createAllCombinationAttributes(
+		'image%sId', {
+			type: 'number',
+			default: '',
+		},
+		[ '1', '2', '3' ]
+	),
+	...createAllCombinationAttributes(
+		'image%sUrl', {
+			type: 'string',
+			default: '',
+			source: 'attribute',
+			selector: '.ugb-pricing-box__item%d .ugb-pricing-box__image img',
+			attribute: 'src',
+		},
+		[ '1', '2', '3' ]
+	),
+	...createAllCombinationAttributes(
+		'image%sAlt', {
+			type: 'string',
+			default: '',
+			source: 'attribute',
+			selector: '.ugb-pricing-box__item%d .ugb-pricing-box__image img',
+			attribute: 'alt',
+		},
+		[ '1', '2', '3' ]
+	),
+	...createAllCombinationAttributes(
+		'image%sShape', {
+			type: 'string',
+			default: '',
+		},
+		[ '1', '2', '3' ]
+	),
+	...createAllCombinationAttributes(
+		'image%s%s', {
+			type: 'boolean',
+			default: false,
+		},
+		[ '1', '2', '3' ],
+		[ 'ShapeFlipX', 'ShapeFlipY', 'ShapeStretch' ]
+	),
+
+	// Title.
+	showTitle: {
+		type: 'boolean',
+		default: true,
+	},
+	...createAllCombinationAttributes(
+		'title%s', {
+			type: 'string',
+			source: 'html',
+			selector: '.ugb-pricing-box__item%d .ugb-pricing-box__title',
+			default: __( 'Title', i18n ),
+		},
+		[ '1', '2', '3' ]
+	),
+	titleTag: {
+		type: 'string',
+		defualt: '',
+	},
+	...createTypographyAttributes( 'title%s' ),
+	titleColor: {
 		type: 'string',
 		default: '',
-	},
-	align: {
-		type: 'string',
 	},
 
-	// Custom CSS attributes.
-	customCSSUniqueID: {
-		type: 'string',
-		default: '',
-	},
-	customCSS: {
-		type: 'string',
-		default: '',
-	},
-	customCSSCompiled: {
-		type: 'string',
-		default: '',
-	},
-}
-// Wrap in curly or else statement will merge with the previous one and will error out.
-{ [ 1, 2, 3 ].forEach( i => {
-	const index = i === 1 ? '' : i
-	schema[ `url${ index }` ] = {
-		type: 'string',
-		source: 'attribute',
-		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-button`,
-		attribute: 'href',
-		default: '',
-	}
-	schema[ `newTab${ index }` ] = {
+	// Price.
+	showPrice: {
 		type: 'boolean',
-		source: 'attribute',
-		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-button`,
-		attribute: 'target',
-		default: false,
-	}
-	schema[ `imageURL${ index }` ] = {
-		type: 'string',
-	}
-	schema[ `imageID${ index }` ] = {
-		type: 'string',
-	}
-	schema[ `imageAlt${ index }` ] = {
-		type: 'string',
-	}
-	schema[ `highlightColor${ index }` ] = {
+		default: true,
+	},
+	showPricePrefix: {
+		type: 'boolean',
+		default: true,
+	},
+	showPriceSuffix: {
+		type: 'boolean',
+		default: true,
+	},
+	...createAllCombinationAttributes(
+		'pricePrefix%s', {
+			type: 'string',
+			source: 'html',
+			selector: '.ugb-pricing-box__item%d .ugb-pricing-box__price-prefix',
+			default: '$',
+		},
+		[ '1', '2', '3' ]
+	),
+	...createTypographyAttributes( 'pricePrefix%s' ),
+	pricePrefixColor: {
 		type: 'string',
 		default: '',
-	}
-	schema[ `pricingBoxTitle${ index }` ] = {
-		source: 'html',
-		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__title`,
-		default: __( 'Title', i18n ),
-	}
-	schema[ `price${ index }` ] = {
-		source: 'html',
-		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__price`,
-		default: `${ index }9`,
-	}
-	schema[ `pricePrefix${ index }` ] = {
-		source: 'html',
-		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__price-prefix`,
-		default: '$',
-	}
-	schema[ `priceSuffix${ index }` ] = {
-		source: 'html',
-		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__price-suffix`,
-		default: '.00',
-	}
-	schema[ `perMonthLabel${ index }` ] = {
-		source: 'html',
-		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__subprice`,
-		default: __( 'Description', i18n ),
-	}
-	schema[ `buttonText${ index }` ] = {
-		source: 'html',
-		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-button span`,
-		default: __( 'Button text', i18n ),
-	}
-	schema[ `featureList${ index }` ] = {
-		source: 'html',
-		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__description`,
-		default: descriptionPlaceholder( 'medium' ),
-	}
-} ) }
+	},
+	...createAllCombinationAttributes(
+		'price%s', {
+			type: 'string',
+			source: 'html',
+			selector: '.ugb-pricing-box__item%d .ugb-pricing-box__price',
+			default: '9',
+		},
+		[ '1', '2', '3' ]
+	),
+	...createTypographyAttributes( 'price%s' ),
+	priceColor: {
+		type: 'string',
+		default: '',
+	},
+	...createAllCombinationAttributes(
+		'priceSuffix%s', {
+			type: 'string',
+			source: 'html',
+			selector: '.ugb-pricing-box__item%d .ugb-pricing-box__price-suffix',
+			default: '.00',
+		},
+		[ '1', '2', '3' ]
+	),
+	...createTypographyAttributes( 'priceSuffix%s' ),
+	priceSuffixColor: {
+		type: 'string',
+		default: '',
+	},
+
+	// Sub Price.
+	showSubPrice: {
+		type: 'boolean',
+		default: true,
+	},
+	...createAllCombinationAttributes(
+		'subPrice%s', {
+			type: 'string',
+			source: 'html',
+			selector: '.ugb-pricing-box__item%d .ugb-pricing-box__subprice',
+			default: __( 'Description', i18n ),
+		},
+		[ '1', '2', '3' ]
+	),
+	...createTypographyAttributes( 'subPrice%s' ),
+	subPriceColor: {
+		type: 'string',
+		default: '',
+	},
+
+	// Button.
+	showButton: {
+		type: 'boolean',
+		default: true,
+	},
+	...createButtonAttributes( 'button%s', {
+		exclude: [
+			'Text',
+			'Url',
+			'NewWindow',
+			'NoFollow',
+		],
+	} ),
+	...createButtonAttributes( 'button1%s', {
+		selector: '.ugb-pricing-box__item1 .ugb-button',
+		// include: [
+		// 	'Text',
+		// 	'Url',
+		// 	'NewWindow',
+		// 	'NoFollow',
+		// 	'Icon',
+		// ],
+	} ),
+	...createButtonAttributes( 'button2%s', {
+		selector: '.ugb-pricing-box__item2 .ugb-button',
+		// include: [
+		// 	'Text',
+		// 	'Url',
+		// 	'NewWindow',
+		// 	'NoFollow',
+		// 	'Icon',
+		// ],
+	} ),
+	...createButtonAttributes( 'button3%s', {
+		selector: '.ugb-pricing-box__item3 .ugb-button',
+		// include: [
+		// 	'Text',
+		// 	'Url',
+		// 	'NewWindow',
+		// 	'NoFollow',
+		// 	'Icon',
+		// ],
+	} ),
+
+	// Description.
+	showDescription: {
+		type: 'boolean',
+		default: true,
+	},
+	...createAllCombinationAttributes(
+		'description%s', {
+			type: 'string',
+			source: 'html',
+			selector: '.ugb-pricing-box__item%d .ugb-pricing-box__description',
+			default: descriptionPlaceholder( 'short' ),
+		},
+		[ '1', '2', '3' ]
+	),
+	...createTypographyAttributes( 'description%s' ),
+	descriptionColor: {
+		type: 'string',
+		default: '',
+	},
+
+	// Alignment.
+	...createAllCombinationAttributes(
+		'%s%sAlign', {
+			type: 'string',
+			default: '',
+		},
+		[ 'Image', 'Title', 'Price', 'SubPrice', 'Button', 'Description' ],
+		[ '', 'Tablet', 'Mobile' ]
+	),
+
+	// Spacing.
+	...createAllCombinationAttributes(
+		'%s%sBottomMargin', {
+			type: 'number',
+			default: '',
+		},
+		[ 'Image', 'Title', 'Price', 'SubPrice', 'Button', 'Description' ],
+		[ '', 'Tablet', 'Mobile' ]
+	),
+
+	// Advanced colors.
+	...createAllCombinationAttributes(
+		'Column%sBackgroundColor', {
+			type: 'string',
+			default: '',
+		},
+		[ '1', '2', '3' ]
+	),
+
+	// Advanced buttons.
+	...createAllCombinationAttributes(
+		'overrideButton%s', {
+			type: 'boolean',
+			default: false,
+		},
+		[ '1', '2', '3' ]
+	),
+}
 
 export const name = 'ugb/pricing-box'
 
@@ -175,11 +325,55 @@ export const settings = {
 	supports: {
 		align: [ 'wide' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
-		// eslint-disable-next-line
-		inserter: false, // TODO: Remove when ready for v2.
 	},
 
 	deprecate,
 	edit,
 	save,
+
+	// Stackable modules.
+	modules: {
+		'advanced-block-spacing': true,
+		'advanced-column-spacing': true,
+		'advanced-responsive': true,
+		'block-background': true,
+		'block-separators': true,
+		'block-title': true,
+		'content-align': true,
+		'custom-css': {
+			default: applyFilters( 'stackable.pricing-box.custom-css.default', '' ),
+		},
+	},
 }
+
+// Reset some attributes if some global attributes are set.
+addFilter( 'stackable.pricing-box.setAttributes', 'stackable/pricing-box/imageShape', attributes => {
+	if ( typeof attributes.imageShape !== 'undefined' ) {
+		return {
+			...attributes,
+			image1Shape: '',
+			image2Shape: '',
+			image3Shape: '',
+			image1ShapeFlipX: '',
+			image1ShapeFlipY: '',
+			image1ShapeStretch: '',
+			image2ShapeFlipX: '',
+			image2ShapeFlipY: '',
+			image2ShapeStretch: '',
+			image3ShapeFlipX: '',
+			image3ShapeFlipY: '',
+			image3ShapeStretch: '',
+		}
+	}
+
+	if ( typeof attributes.columnBackgroundColor !== 'undefined' || typeof attributes.columnBackgroundColorType !== 'undefined' ) {
+		return {
+			...attributes,
+			column1BackgroundColor: '',
+			column2BackgroundColor: '',
+			column3BackgroundColor: '',
+		}
+	}
+
+	return attributes
+} )
