@@ -18,7 +18,7 @@ export const showOptions = blockProps => {
 	const showButton = showButton1 || showButton2 || showButton3 || showButton4
 	return applyFilters( 'stackable.feature-grid.show', {
 		columnBackground: design !== 'plain',
-		imageSpacing: showImage && ( showTitle || showDescription || showButton ),
+		imageSpacing: showImage && ( showTitle || showDescription || showButton ) && design !== 'horizontal',
 		titleSpacing: showTitle && ( showDescription || showButton ),
 		descriptionSpacing: showDescription && showButton,
 	}, blockProps )
