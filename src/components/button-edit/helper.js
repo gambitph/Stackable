@@ -24,7 +24,7 @@ const ButtonEditHelper = props => {
 
 	return (
 		<ButtonEdit
-			design={ getAttrValue( 'Design', 'basic' ) }
+			design={ getAttrValue( 'Design', props.designDefault ) }
 			size={ getAttrValue( 'Size', 'normal' ) }
 			text={ getAttrValue( 'Text', __( 'Button text', i18n ) ) }
 			shadow={ getAttrValue( 'Shadow' ) }
@@ -53,6 +53,7 @@ ButtonEditHelper.defaultProps = {
 	attrNameTemplate: '%s',
 	setAttributes: () => {},
 	blockAttributes: {},
+	designDefault: 'basic',
 }
 
 ButtonEditHelper.Content = props => {
@@ -64,7 +65,7 @@ ButtonEditHelper.Content = props => {
 
 	return (
 		<ButtonEdit.Content
-			design={ getAttrValue( 'Design', 'basic' ) }
+			design={ getAttrValue( 'Design', props.designDefault ) }
 			size={ getAttrValue( 'Size', 'normal' ) }
 			text={ getAttrValue( 'Text' ) }
 			icon={ getAttrValue( 'Icon' ) }
@@ -83,6 +84,7 @@ ButtonEditHelper.Content = props => {
 ButtonEditHelper.Content.defaultProps = {
 	attrNameTemplate: '%s',
 	blockAttributes: {},
+	designDefault: 'basic',
 }
 
 export default ButtonEditHelper
