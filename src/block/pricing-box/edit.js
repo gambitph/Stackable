@@ -622,7 +622,6 @@ const edit = props => {
 					const pricePrefix = attributes[ `pricePrefix${ i }` ]
 					const priceSuffix = attributes[ `priceSuffix${ i }` ]
 					const subPrice = attributes[ `subPrice${ i }` ]
-					const overrideButton = attributes[ `overrideButton${ i }` ]
 
 					const itemClasses = classnames( [
 						'ugb-pricing-box__item',
@@ -726,7 +725,7 @@ const edit = props => {
 					const buttonComp = (
 						<div className="ugb-pricing-box__button">
 							<ButtonEditHelper
-								attrNameTemplate={ ! overrideButton ? `button%s` : `button${ i }%s` }
+								attrNameTemplate={ `button%s` }
 								setAttributes={ setAttributes }
 								blockAttributes={ props.attributes }
 								text={ buttonText }

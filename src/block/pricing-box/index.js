@@ -222,33 +222,12 @@ const schema = {
 	} ),
 	...createButtonAttributes( 'button1%s', {
 		selector: '.ugb-pricing-box__item1 .ugb-button',
-		// include: [
-		// 	'Text',
-		// 	'Url',
-		// 	'NewWindow',
-		// 	'NoFollow',
-		// 	'Icon',
-		// ],
 	} ),
 	...createButtonAttributes( 'button2%s', {
 		selector: '.ugb-pricing-box__item2 .ugb-button',
-		// include: [
-		// 	'Text',
-		// 	'Url',
-		// 	'NewWindow',
-		// 	'NoFollow',
-		// 	'Icon',
-		// ],
 	} ),
 	...createButtonAttributes( 'button3%s', {
 		selector: '.ugb-pricing-box__item3 .ugb-button',
-		// include: [
-		// 	'Text',
-		// 	'Url',
-		// 	'NewWindow',
-		// 	'NoFollow',
-		// 	'Icon',
-		// ],
 	} ),
 
 	// Description.
@@ -296,15 +275,6 @@ const schema = {
 		'Column%sBackgroundColor', {
 			type: 'string',
 			default: '',
-		},
-		[ '1', '2', '3' ]
-	),
-
-	// Advanced buttons.
-	...createAllCombinationAttributes(
-		'overrideButton%s', {
-			type: 'boolean',
-			default: false,
 		},
 		[ '1', '2', '3' ]
 	),

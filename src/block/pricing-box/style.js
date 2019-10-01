@@ -248,26 +248,11 @@ export const createStyles = props => {
 	// Button.
 	const {
 		showButton = true,
-		overrideButton1 = false,
-		overrideButton2 = false,
-		overrideButton3 = false,
 	} = props.attributes
 	if ( showButton ) {
-		if ( ! overrideButton1 ) {
-			styles.push( {
-				...createButtonStyleSet( `button%s`, `ugb-pricing-box__item.ugb-pricing-box__item1 .ugb-button`, props.attributes ),
-			} )
-		}
-		if ( ! overrideButton2 ) {
-			styles.push( {
-				...createButtonStyleSet( `button%s`, `ugb-pricing-box__item.ugb-pricing-box__item2 .ugb-button`, props.attributes ),
-			} )
-		}
-		if ( ! overrideButton3 ) {
-			styles.push( {
-				...createButtonStyleSet( `button%s`, `ugb-pricing-box__item.ugb-pricing-box__item3 .ugb-button`, props.attributes ),
-			} )
-		}
+		styles.push( {
+			...createButtonStyleSet( `button%s`, `ugb-button`, props.attributes ),
+		} )
 		styles.push( {
 			'.ugb-button-container': {
 				textAlign: appendImportant( getValue( 'buttonAlign' ) || getValue( 'contentAlign' ) ),
