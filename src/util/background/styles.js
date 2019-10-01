@@ -11,7 +11,7 @@ import { sprintf } from '@wordpress/i18n'
 /**
  * Internal dependencies
  */
-import { hexToRgba } from '..'
+import { appendImportant, hexToRgba } from '..'
 
 const createBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {}, options = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
@@ -29,10 +29,10 @@ const createBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 	const mobileCustomSize = getValue( 'MobileBackgroundCustomSize' ) ? getValue( 'MobileBackgroundCustomSize' ) + ( getValue( 'MobileBackgroundCustomSizeUnit' ) || '%' ) : undefined
 
 	// Background color opacity.
-	let backgroundColor = getValue( 'BackgroundColor', `%s${ importantBackgroundColor ? ' !important' : '' }` )
+	let backgroundColor = appendImportant( getValue( 'BackgroundColor' ), importantBackgroundColor )
 	if ( ! getValue( 'BackgroundColorType' ) && typeof blockAttributes[ getAttrName( 'BackgroundColorOpacity' ) ] !== 'undefined' && blockAttributes[ getAttrName( 'BackgroundColorOpacity' ) ] !== '' ) {
 		if ( ! getValue( 'BackgroundMediaURL' ) && ! getValue( 'TabletBackgroundMediaURL' ) && ! getValue( 'MobileBackgroundMediaURL' ) ) {
-			backgroundColor = `${ hexToRgba( getValue( 'BackgroundColor' ) || '#ffffff', getValue( 'BackgroundColorOpacity' ) || 0 ) }${ importantBackgroundColor ? ' !important' : '' }`
+			backgroundColor = appendImportant( `${ hexToRgba( getValue( 'BackgroundColor' ) || '#ffffff', getValue( 'BackgroundColorOpacity' ) || 0 ) }`, importantBackgroundColor )
 		}
 	}
 

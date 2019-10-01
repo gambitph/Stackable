@@ -1,4 +1,9 @@
 /**
+ * Internal dependencies
+ */
+import { appendImportant, appendImportantAll } from '../'
+
+/**
  * External dependencies
  */
 import { getFontFamily } from '~stackable/util'
@@ -18,29 +23,33 @@ const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 
 	const {
 		importantSize = false,
+		important = false,
 	} = options
 
+	let styles = {}
+
 	if ( screen !== 'tablet' && screen !== 'mobile' ) { // Desktop.
-		return {
-			fontFamily: getValue( 'FontFamily' ) !== '' ? `${ getFontFamily( getValue( 'FontFamily' ) ) } !important` : undefined,
-			fontSize: getValue( 'FontSize' ) !== '' ? `${ getValue( 'FontSize' ) }${ getValue( 'FontSizeUnit', 'px' ) }${ importantSize ? ' !important' : '' }` : undefined,
+		styles = {
+			fontFamily: getValue( 'FontFamily' ) !== '' ? appendImportant( getFontFamily( getValue( 'FontFamily' ) ) ) : undefined,
+			fontSize: getValue( 'FontSize' ) !== '' ? appendImportant( `${ getValue( 'FontSize' ) }${ getValue( 'FontSizeUnit', 'px' ) }`, importantSize ) : undefined,
 			fontWeight: getValue( 'FontWeight' ) !== '' ? getValue( 'FontWeight' ) : undefined,
 			textTransform: getValue( 'TextTransform' ) !== '' ? getValue( 'TextTransform' ) : undefined,
 			letterSpacing: getValue( 'LetterSpacing' ) !== '' ? `${ getValue( 'LetterSpacing' ) }px` : undefined,
 			lineHeight: getValue( 'LineHeight' ) !== '' ? `${ getValue( 'LineHeight' ) }${ getValue( 'LineHeightUnit', 'em' ) }` : undefined,
 		}
 	} else if ( screen === 'tablet' ) { // Tablet.
-		return {
-			fontSize: getValue( 'TabletFontSize' ) !== '' ? `${ getValue( 'TabletFontSize' ) }${ getValue( 'TabletFontSizeUnit', 'px' ) }${ importantSize ? ' !important' : '' }` : undefined,
+		styles = {
+			fontSize: getValue( 'TabletFontSize' ) !== '' ? appendImportant( `${ getValue( 'TabletFontSize' ) }${ getValue( 'TabletFontSizeUnit', 'px' ) }`, importantSize ) : undefined,
 			lineHeight: getValue( 'TabletLineHeight' ) !== '' ? `${ getValue( 'TabletLineHeight' ) }${ getValue( 'TabletLineHeightUnit', 'em' ) }` : undefined,
+		}
+	} else { // Mobile.
+		styles = {
+			fontSize: getValue( 'MobileFontSize' ) !== '' ? appendImportant( `${ getValue( 'MobileFontSize' ) }${ getValue( 'MobileFontSizeUnit', 'px' ) }`, importantSize ) : undefined,
+			lineHeight: getValue( 'MobileLineHeight' ) !== '' ? `${ getValue( 'MobileLineHeight' ) }${ getValue( 'MobileLineHeightUnit', 'em' ) }` : undefined,
 		}
 	}
 
-	// Mobile.
-	return {
-		fontSize: getValue( 'MobileFontSize' ) !== '' ? `${ getValue( 'MobileFontSize' ) }${ getValue( 'MobileFontSizeUnit', 'px' ) }${ importantSize ? ' !important' : '' }` : undefined,
-		lineHeight: getValue( 'MobileLineHeight' ) !== '' ? `${ getValue( 'MobileLineHeight' ) }${ getValue( 'MobileLineHeightUnit', 'em' ) }` : undefined,
-	}
+	return important ? appendImportantAll( styles ) : styles
 }
 
 export default createTypographyStyles

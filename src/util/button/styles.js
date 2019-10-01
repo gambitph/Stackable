@@ -1,4 +1,9 @@
 /**
+ * Internal dependencies
+ */
+import { appendImportant } from '../'
+
+/**
  * External dependencies
  */
 import { createTypographyStyles, whiteIfDarkBlackIfLight } from '~stackable/util'
@@ -138,10 +143,10 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 		styles.push( {
 			[ `.${ mainClassName }` ]: {
 				opacity: getValue( 'Opacity' ) !== '' ? getValue( 'Opacity' ) : undefined,
-				borderRadius: borderRadius !== '' && typeof borderRadius !== 'undefined' ? `${ borderRadius }px !important` : undefined,
+				borderRadius: borderRadius !== '' && typeof borderRadius !== 'undefined' ? appendImportant( `${ borderRadius }px` ) : undefined,
 			},
 			[ `.${ mainClassName }:before` ]: {
-				borderRadius: borderRadius !== '' && typeof borderRadius !== 'undefined' ? `${ borderRadius }px !important` : undefined,
+				borderRadius: borderRadius !== '' && typeof borderRadius !== 'undefined' ? appendImportant( `${ borderRadius }px` ) : undefined,
 			},
 			[ `.${ mainClassName }:hover` ]: {
 				opacity: getValue( 'HoverOpacity' ) !== '' ? getValue( 'HoverOpacity' ) : ( cancelHoverOpacity ? 1 : undefined ),
