@@ -370,7 +370,7 @@ addFilter( 'stackable.feature-grid.edit.inspector.advanced.before', 'stackable/f
 						<ImageShapeControls
 							imageId={ props.attributes[ `image${ i }Id` ] }
 							imageSize={ props.attributes[ `image${ i }Size` ] }
-							shape={ props.attributes[ `image${ i }Shape` ] }
+							shape={ props.attributes[ `image${ i }Shape` ] || props.attributes.imageShape }
 							shapeFlipX={ props.attributes[ `image${ i }ShapeFlipX` ] }
 							shapeFlipY={ props.attributes[ `image${ i }ShapeFlipY` ] }
 							shapeStretch={ props.attributes[ `image${ i }ShapeStretch` ] }
