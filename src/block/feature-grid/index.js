@@ -301,5 +301,15 @@ addFilter( 'stackable.feature-grid.setAttributes', 'stackable/feature-grid/image
 		}
 	}
 
+	if ( typeof attributes.columnBackgroundColor !== 'undefined' || typeof attributes.columnBackgroundColorType !== 'undefined' ) {
+		return {
+			...attributes,
+			column1BackgroundColor: '',
+			column2BackgroundColor: '',
+			column3BackgroundColor: '',
+			column4BackgroundColor: '',
+		}
+	}
+
 	return attributes
 } )
