@@ -165,43 +165,15 @@ export const schema = {
 	} ),
 	...createButtonAttributes( 'button1%s', {
 		selector: '.ugb-feature-grid__item1 .ugb-button',
-		include: [
-			'Text',
-			'Url',
-			'NewWindow',
-			'NoFollow',
-			'Icon',
-		],
 	} ),
 	...createButtonAttributes( 'button2%s', {
 		selector: '.ugb-feature-grid__item2 .ugb-button',
-		include: [
-			'Text',
-			'Url',
-			'NewWindow',
-			'NoFollow',
-			'Icon',
-		],
 	} ),
 	...createButtonAttributes( 'button3%s', {
 		selector: '.ugb-feature-grid__item3 .ugb-button',
-		include: [
-			'Text',
-			'Url',
-			'NewWindow',
-			'NoFollow',
-			'Icon',
-		],
 	} ),
 	...createButtonAttributes( 'button4%s', {
 		selector: '.ugb-feature-grid__item4 .ugb-button',
-		include: [
-			'Text',
-			'Url',
-			'NewWindow',
-			'NoFollow',
-			'Icon',
-		],
 	} ),
 
 	// Alignments.

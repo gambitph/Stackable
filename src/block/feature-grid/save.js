@@ -8,7 +8,7 @@ import { showOptions } from './util'
  * External dependencies
  */
 import {
-	ButtonEdit, BlockContainer, Image,
+	ButtonEditHelper, BlockContainer, Image,
 } from '~stackable/components'
 import {
 	range, hasBackgroundOverlay, createVideoBackground,
@@ -42,13 +42,7 @@ const save = props => {
 		showTitle = true,
 		showDescription = true,
 		showButton = true,
-		buttonSize = '',
 		buttonIcon = '',
-		buttonDesign = 'plain',
-		buttonShadow = '',
-		buttonHoverEffect = '',
-		buttonHoverGhostToNormal = '',
-		buttonIconPosition = '',
 	} = attributes
 
 	const mainClasses = classnames( [
@@ -71,9 +65,6 @@ const save = props => {
 					const title = attributes[ `title${ i }` ]
 					const description = attributes[ `description${ i }` ]
 					const buttonText = attributes[ `button${ i }Text` ] || __( 'Button text', i18n )
-					const buttonNewWindow = attributes[ `button${ i }NewWindow` ]
-					const buttonUrl = attributes[ `button${ i }Url` ]
-					const buttonNoFollow = attributes[ `button${ i }NoFollow` ]
 
 					const itemClasses = classnames( [
 						'ugb-feature-grid__item',
@@ -115,18 +106,15 @@ const save = props => {
 									/>
 								}
 								{ showButton && !! buttonText.length &&
-									<ButtonEdit.Content
-										size={ buttonSize !== '' ? buttonSize : 'normal' }
+									<ButtonEditHelper.Content
+										attrNameTemplate={ `button%s` }
+										blockAttributes={ props.attributes }
+										designDefault="plain"
 										text={ buttonText }
-										icon={ buttonIcon }
-										newTab={ buttonNewWindow !== '' && buttonNewWindow }
-										url={ buttonUrl }
-										noFollow={ buttonNoFollow }
-										hoverEffect={ buttonHoverEffect }
-										ghostToNormalEffect={ buttonHoverGhostToNormal }
-										shadow={ buttonShadow }
-										iconPosition={ buttonIconPosition }
-										design={ buttonDesign !== '' ? buttonDesign : 'plain' }
+										icon={ attributes[ `button${ i }Icon` ] || buttonIcon }
+										url={ attributes[ `button${ i }Url` ] }
+										newWindow={ attributes[ `button${ i }NewWindow` ] }
+										noFollow={ attributes[ `button${ i }NoFollow` ] }
 									/>
 								}
 							</div>
