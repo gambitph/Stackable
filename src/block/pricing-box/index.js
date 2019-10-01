@@ -336,6 +336,33 @@ addFilter( 'stackable.pricing-box.setAttributes', 'stackable/pricing-box/imageSh
 		}
 	}
 
+	if ( typeof attributes.imageShapeFlipX !== 'undefined' ) {
+		return {
+			...attributes,
+			image1ShapeFlipX: '',
+			image2ShapeFlipX: '',
+			image3ShapeFlipX: '',
+		}
+	}
+
+	if ( typeof attributes.imageShapeFlipY !== 'undefined' ) {
+		return {
+			...attributes,
+			image1ShapeFlipY: '',
+			image2ShapeFlipY: '',
+			image3ShapeFlipY: '',
+		}
+	}
+
+	if ( typeof attributes.imageShapeStretch !== 'undefined' ) {
+		return {
+			...attributes,
+			image1ShapeStretch: '',
+			image2ShapeStretch: '',
+			image3ShapeStretch: '',
+		}
+	}
+
 	if ( typeof attributes.columnBackgroundColor !== 'undefined' || typeof attributes.columnBackgroundColorType !== 'undefined' ) {
 		return {
 			...attributes,
