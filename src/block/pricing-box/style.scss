@@ -13,6 +13,7 @@
 		grid-auto-columns: minmax(0, 1fr);
 		grid-auto-flow: column;
 		grid-gap: $box-hori-padding;
+		align-items: flex-start;
 	}
 	.ugb-pricing-box__item {
 		@include box();
@@ -73,6 +74,25 @@
 		padding: 0;
 		box-shadow: none;
 		border-radius: 0;
+	}
+}
+
+.ugb-pricing-box.ugb-pricing-box--v3 {
+	@media screen and (max-width: $break-large) {
+		&.ugb-pricing-box--columns-3 {
+			.ugb-block-content {
+				grid-template-columns: minmax(0, 1fr);
+				grid-auto-flow: row;
+			}
+		}
+	}
+}
+.ugb-pricing-box.ugb-pricing-box--v3 {
+	@media screen and (max-width: $break-small) {
+		.ugb-block-content {
+			grid-template-columns: minmax(0, 1fr);
+			grid-auto-flow: row;
+		}
 	}
 }
 

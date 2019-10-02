@@ -75,9 +75,10 @@ const schema = {
 		'image%sUrl', {
 			type: 'string',
 			default: '',
-			source: 'attribute',
-			selector: '.ugb-pricing-box__item%d .ugb-pricing-box__image img',
-			attribute: 'src',
+			// Some layouts can have the image as an image background. Need this to be a normal attribute and not from `src`.
+			// source: 'attribute',
+			// selector: '.ugb-pricing-box__item%d .ugb-pricing-box__image img',
+			// attribute: 'src',
 		},
 		[ '1', '2', '3' ]
 	),
@@ -105,6 +106,14 @@ const schema = {
 		},
 		[ '1', '2', '3' ],
 		[ 'ShapeFlipX', 'ShapeFlipY', 'ShapeStretch' ]
+	),
+	// Used by sectioned layout.
+	...createAllCombinationAttributes(
+		'image%sHeight', {
+			type: 'number',
+			default: '',
+		},
+		[ '', 'Tablet', 'Mobile' ]
 	),
 
 	// Title.
@@ -278,6 +287,15 @@ const schema = {
 		},
 		[ '1', '2', '3' ]
 	),
+
+	// Colored background.
+	...createAllCombinationAttributes(
+		'Column%sHeaderBackgroundColor', {
+			type: 'string',
+			default: '',
+		},
+		[ '1', '2', '3' ]
+	),
 }
 
 export const name = 'ugb/pricing-box'
@@ -304,7 +322,9 @@ export const settings = {
 	// Stackable modules.
 	modules: {
 		'advanced-block-spacing': true,
-		'advanced-column-spacing': true,
+		'advanced-column-spacing': {
+			verticalColumnAlign: true,
+		},
 		'advanced-responsive': true,
 		'block-background': true,
 		'block-separators': true,

@@ -97,7 +97,7 @@ export const createStyles = props => {
 	if ( showTitle ) {
 		styles.push( {
 			'.ugb-pricing-box__title': {
-				color: whiteIfDark( titleColor, show.columnBackground && columnBackgroundColor ),
+				color: appendImportant( whiteIfDark( titleColor, show.columnBackground && columnBackgroundColor ) ),
 			},
 		} )
 
@@ -311,6 +311,9 @@ export const createStyles = props => {
 	}
 	if ( show.buttonSpacing ) {
 		styles.push( ...createResponsiveStyles( '.ugb-pricing-box__button', 'button%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+	}
+	if ( show.descriptionSpacing ) {
+		styles.push( ...createResponsiveStyles( '.ugb-pricing-box__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
 	}
 
 	// Advanced image.

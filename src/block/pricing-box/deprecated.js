@@ -1250,6 +1250,11 @@ const deprecated = [
 	{
 		deprecatedSave_1_17_3,
 		deprecatedSchema_1_17_3,
+		migrate: attributes => {
+			return {
+				...attributes,
+			}
+		},
 	},
 	{
 		attributes: deprecatedSchema_1_12,

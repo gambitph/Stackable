@@ -97,6 +97,8 @@ const save = props => {
 								shapeStretch={ imageShapeStretch }
 							/>
 						</div>
+					const imageBgComp = imageUrl &&
+						<div className="ugb-pricing-box__image"></div>
 
 					const titleComp = ! RichText.isEmpty( title ) && (
 						<RichText.Content
@@ -161,6 +163,7 @@ const save = props => {
 					)
 					const comps = {
 						imageComp,
+						imageBgComp,
 						titleComp,
 						priceComp,
 						subPriceComp,
@@ -180,7 +183,7 @@ const save = props => {
 									{ showButton && buttonComp }
 									{ showDescription && descriptionComp }
 								</Fragment>
-							), design, comps, i, props ) }
+							), props, comps, i ) }
 						</div>
 					)
 				} ) }

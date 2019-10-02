@@ -167,6 +167,8 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 				/>
 			</PanelBody>
 
+			{ applyFilters( 'stackable.pricing-box.edit.inspector.style.general.after', null, props ) }
+
 			{ show.columnBackground &&
 				<PanelBody
 					title={ __( 'Column Background', i18n ) }
@@ -180,40 +182,44 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 				</PanelBody>
 			}
 
-			<PanelAdvancedSettings
-				title={ __( 'Image', i18n ) }
-				checked={ showImage }
-				onChange={ showImage => setAttributes( { showImage } ) }
-				toggleOnSetAttributes={ [
-					'imageSize',
-					'imageShape',
-					'imageShapeFlipX',
-					'imageShapeFlipY',
-					'imageShapeStretch',
-					'imageWidth',
-					...createResponsiveAttributeNames( 'image%sWidth' ),
-					'imageBorderRadius',
-					'imageShadow',
-					'imageBlendMode',
-				] }
-				toggleAttributeName="showImage"
-			>
-				<ImageControlsHelperWithData
-					image1Id={ props.attributes.image1Id }
-					image2Id={ props.attributes.image2Id }
-					image3Id={ props.attributes.image3Id }
-					setAttributes={ props.setAttributes }
-					attributes={ props.attributes }
-				/>
-				<ControlSeparator />
-				<ResponsiveControl
-					attrNameTemplate="Image%sAlign"
-					setAttributes={ setAttributes }
-					blockAttributes={ props.attributes }
+			{ applyFilters( 'stackable.pricing-box.edit.inspector.style.column.after', null, props ) }
+
+			{ show.imageSettings &&
+				<PanelAdvancedSettings
+					title={ __( 'Image', i18n ) }
+					checked={ showImage }
+					onChange={ showImage => setAttributes( { showImage } ) }
+					toggleOnSetAttributes={ [
+						'imageSize',
+						'imageShape',
+						'imageShapeFlipX',
+						'imageShapeFlipY',
+						'imageShapeStretch',
+						'imageWidth',
+						...createResponsiveAttributeNames( 'image%sWidth' ),
+						'imageBorderRadius',
+						'imageShadow',
+						'imageBlendMode',
+					] }
+					toggleAttributeName="showImage"
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
-				</ResponsiveControl>
-			</PanelAdvancedSettings>
+					<ImageControlsHelperWithData
+						image1Id={ props.attributes.image1Id }
+						image2Id={ props.attributes.image2Id }
+						image3Id={ props.attributes.image3Id }
+						setAttributes={ props.setAttributes }
+						attributes={ props.attributes }
+					/>
+					<ControlSeparator />
+					<ResponsiveControl
+						attrNameTemplate="Image%sAlign"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					</ResponsiveControl>
+				</PanelAdvancedSettings>
+			}
 
 			<PanelAdvancedSettings
 				title={ __( 'Title', i18n ) }
@@ -517,6 +523,20 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 						/>
 					</ResponsiveControl>
 				) }
+				{ show.descriptionSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="description%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Description', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				) }
 			</PanelSpacingBody>
 		</Fragment>
 	)
@@ -669,6 +689,32 @@ const edit = props => {
 							/>
 						</div>
 					)
+					const imageBgComp = (
+						<ImageUploadPlaceholder
+							imageID={ imageId }
+							imageURL={ imageUrl }
+							imageSize={ imageSize }
+							className="ugb-pricing-box__image"
+							onRemove={ () => {
+								setAttributes( {
+									[ `image${ i }Url` ]: '',
+									[ `image${ i }Id` ]: '',
+									[ `image${ i }Alt` ]: '',
+									[ `image${ i }Width` ]: '',
+									[ `image${ i }Height` ]: '',
+								} )
+							} }
+							onChange={ image => {
+								setAttributes( {
+									[ `image${ i }Url` ]: image.url,
+									[ `image${ i }Id` ]: image.id,
+									[ `image${ i }Alt` ]: image.alt,
+									[ `image${ i }Width` ]: image.width,
+									[ `image${ i }Height` ]: image.height,
+								} )
+							} }
+						/>
+					)
 					const titleComp = (
 						<RichText
 							tagName={ titleTag || 'h3' }
@@ -753,6 +799,7 @@ const edit = props => {
 					)
 					const comps = {
 						imageComp,
+						imageBgComp,
 						titleComp,
 						priceComp,
 						subPriceComp,
@@ -772,7 +819,7 @@ const edit = props => {
 									{ showButton && buttonComp }
 									{ showDescription && descriptionComp }
 								</Fragment>
-							), design, comps, i, props ) }
+							), props, comps, i ) }
 						</div>
 					)
 				} ) }
