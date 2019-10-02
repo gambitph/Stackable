@@ -108,7 +108,7 @@ const AdvancedToolbarControl = props => {
 				controls={ controls.map( option => {
 					return {
 						...option,
-						onClick: () => props.onChange( option.value ),
+						onClick: () => props.onChange( option.value !== props.value ? option.value : '' ),
 						isActive: props.value === option.value,
 					}
 				} ) }
