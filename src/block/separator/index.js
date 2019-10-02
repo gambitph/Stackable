@@ -209,8 +209,8 @@ export const settings = {
 			enablePaddingLeft: false,
 			height: false,
 			width: false,
-			horizontalAlign: false,
-			verticalAlign: false,
+			horizontalContentAlign: false,
+			verticalContentAlign: false,
 			modifyStyles: false,
 		},
 		'custom-css': {

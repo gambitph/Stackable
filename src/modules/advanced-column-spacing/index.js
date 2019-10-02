@@ -2,9 +2,13 @@
  * External dependencies
  */
 import {
-	AdvancedRangeControl, AdvancedToolbarControl, WhenResponsiveScreen, FourRangeControl,
+	AdvancedRangeControl,
+	AdvancedToolbarControl,
+	FourRangeControl,
+	ResponsiveControl,
+	WhenResponsiveScreen,
 } from '~stackable/components'
-import { createAllCombinationAttributes } from '~stackable/util'
+import { appendImportant, createAllCombinationAttributes } from '~stackable/util'
 import deepmerge from 'deepmerge'
 import { i18n } from 'stackable'
 
@@ -14,7 +18,7 @@ import { i18n } from 'stackable'
 import {
 	addFilter, applyFilters, doAction,
 } from '@wordpress/hooks'
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 import { PanelBody } from '@wordpress/components'
 
@@ -47,9 +51,9 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 		tabletColumnHeight = '',
 		mobileColumnHeight = '',
 
-		columnVerticalAlign = '',
-		tabletColumnVerticalAlign = '',
-		mobileColumnVerticalAlign = '',
+		columnContentVerticalAlign = '',
+		tabletColumnContentVerticalAlign = '',
+		mobileColumnContentVerticalAlign = '',
 	} = props.attributes
 
 	return (
@@ -180,6 +184,19 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 				</Fragment> }
 
+				{ options.verticalColumnAlign &&
+					<ResponsiveControl
+						attrNameTemplate="%sColumnVerticalAlign"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedToolbarControl
+							label={ __( 'Column Vertical Align', i18n ) }
+							controls="flex-vertical-with-stretch"
+						/>
+					</ResponsiveControl>
+				}
+
 				{ options.height && <Fragment>
 					<WhenResponsiveScreen>
 						<AdvancedRangeControl
@@ -213,29 +230,29 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 				</Fragment> }
 
-				{ options.verticalAlign && <Fragment>
+				{ options.verticalContentAlign && <Fragment>
 					<WhenResponsiveScreen>
 						<AdvancedToolbarControl
 							label={ __( 'Content Vertical Align', i18n ) }
 							controls="flex-vertical"
-							value={ columnVerticalAlign }
-							onChange={ value => setAttributes( { columnVerticalAlign: columnVerticalAlign !== value ? value : '' } ) }
+							value={ columnContentVerticalAlign }
+							onChange={ value => setAttributes( { columnContentVerticalAlign: columnContentVerticalAlign !== value ? value : '' } ) }
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
 						<AdvancedToolbarControl
 							label={ __( 'Content Vertical Align', i18n ) }
 							controls="flex-vertical"
-							value={ tabletColumnVerticalAlign }
-							onChange={ value => setAttributes( { tabletColumnVerticalAlign: tabletColumnVerticalAlign !== value ? value : '' } ) }
+							value={ tabletColumnContentVerticalAlign }
+							onChange={ value => setAttributes( { tabletColumnContentVerticalAlign: tabletColumnContentVerticalAlign !== value ? value : '' } ) }
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
 						<AdvancedToolbarControl
 							label={ __( 'Content Vertical Align', i18n ) }
 							controls="flex-vertical"
-							value={ mobileColumnVerticalAlign }
-							onChange={ value => setAttributes( { mobileColumnVerticalAlign: mobileColumnVerticalAlign !== value ? value : '' } ) }
+							value={ mobileColumnContentVerticalAlign }
+							onChange={ value => setAttributes( { mobileColumnContentVerticalAlign: mobileColumnContentVerticalAlign !== value ? value : '' } ) }
 						/>
 					</WhenResponsiveScreen>
 				</Fragment> }
@@ -247,74 +264,56 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 }
 
 const addToStyleObject = blockName => ( styleObject, props ) => {
+	const getValue = ( attrName, format = '' ) => {
+		const value = typeof props.attributes[ attrName ] === 'undefined' ? '' : props.attributes[ attrName ]
+		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
+	}
+
 	const {
-		columnPaddingTop = '',
-		columnPaddingBottom = '',
-		columnPaddingRight = '',
-		columnPaddingLeft = '',
 		columnPaddingUnit = 'px',
-
-		tabletColumnPaddingTop = '',
-		tabletColumnPaddingBottom = '',
-		tabletColumnPaddingRight = '',
-		tabletColumnPaddingLeft = '',
 		tabletColumnPaddingUnit = 'px',
-
-		mobileColumnPaddingTop = '',
-		mobileColumnPaddingBottom = '',
-		mobileColumnPaddingRight = '',
-		mobileColumnPaddingLeft = '',
 		mobileColumnPaddingUnit = 'px',
-
-		columnGap = '',
-		tabletColumnGap = '',
-		mobileColumnGap = '',
-
-		columnHeight = '',
-		tabletColumnHeight = '',
-		mobileColumnHeight = '',
-
-		columnVerticalAlign = '',
-		tabletColumnVerticalAlign = '',
-		mobileColumnVerticalAlign = '',
 	} = props.attributes
 
 	const styles = applyFilters( `stackable.${ blockName }.advanced-column-spacing.styles`, {
 		'.ugb-block-content': {
-			columnGap: columnGap !== '' ? `${ columnGap }px` : undefined,
+			columnGap: appendImportant( getValue( 'columnGap', '%spx' ) ),
+			alignItems: getValue( 'columnVerticalAlign' ),
 		},
 		'.ugb-block-content > *': {
-			paddingTop: columnPaddingTop !== '' ? `${ columnPaddingTop }${ columnPaddingUnit } !important` : undefined,
-			paddingRight: columnPaddingRight !== '' ? `${ columnPaddingRight }${ columnPaddingUnit } !important` : undefined,
-			paddingBottom: columnPaddingBottom !== '' ? `${ columnPaddingBottom }${ columnPaddingUnit } !important` : undefined,
-			paddingLeft: columnPaddingLeft !== '' ? `${ columnPaddingLeft }${ columnPaddingUnit } !important` : undefined,
-			minHeight: columnHeight !== '' ? `${ columnHeight }px` : undefined,
-			justifyContent: columnVerticalAlign !== '' ? columnVerticalAlign : undefined,
+			paddingTop: appendImportant( getValue( 'columnPaddingTop', `%s${ columnPaddingUnit }` ) ),
+			paddingRight: appendImportant( getValue( 'columnPaddingRight', `%s${ columnPaddingUnit }` ) ),
+			paddingBottom: appendImportant( getValue( 'columnPaddingBottom', `%s${ columnPaddingUnit }` ) ),
+			paddingLeft: appendImportant( getValue( 'columnPaddingLeft', `%s${ columnPaddingUnit }` ) ),
+			minHeight: getValue( 'columnHeight', '%spx' ),
+			justifyContent: getValue( 'columnContentVerticalAlign' ),
 		},
 		tablet: {
 			'.ugb-block-content': {
-				columnGap: tabletColumnGap !== '' ? `${ tabletColumnGap }px` : undefined,
+				columnGap: appendImportant( getValue( 'tabletColumnGap', '%spx' ) ),
+				alignItems: getValue( 'tabletColumnVerticalAlign' ),
 			},
 			'.ugb-block-content > *': {
-				paddingTop: tabletColumnPaddingTop !== '' ? `${ tabletColumnPaddingTop }${ tabletColumnPaddingUnit } !important` : undefined,
-				paddingRight: tabletColumnPaddingRight !== '' ? `${ tabletColumnPaddingRight }${ tabletColumnPaddingUnit } !important` : undefined,
-				paddingBottom: tabletColumnPaddingBottom !== '' ? `${ tabletColumnPaddingBottom }${ tabletColumnPaddingUnit } !important` : undefined,
-				paddingLeft: tabletColumnPaddingLeft !== '' ? `${ tabletColumnPaddingLeft }${ tabletColumnPaddingUnit } !important` : undefined,
-				minHeight: tabletColumnHeight !== '' ? `${ tabletColumnHeight }px` : undefined,
-				justifyContent: tabletColumnVerticalAlign !== '' ? tabletColumnVerticalAlign : undefined,
+				paddingTop: appendImportant( getValue( 'tabletColumnPaddingTop', `%s${ tabletColumnPaddingUnit }` ) ),
+				paddingRight: appendImportant( getValue( 'tabletColumnPaddingRight', `%s${ tabletColumnPaddingUnit }` ) ),
+				paddingBottom: appendImportant( getValue( 'tabletColumnPaddingBottom', `%s${ tabletColumnPaddingUnit }` ) ),
+				paddingLeft: appendImportant( getValue( 'tabletColumnPaddingLeft', `%s${ tabletColumnPaddingUnit }` ) ),
+				minHeight: getValue( 'tabletColumnHeight', '%spx' ),
+				justifyContent: getValue( 'tabletColumnContentVerticalAlign' ),
 			},
 		},
 		mobile: {
 			'.ugb-block-content': {
-				columnGap: mobileColumnGap !== '' ? `${ mobileColumnGap }px` : undefined,
+				columnGap: appendImportant( getValue( 'mobileColumnGap', '%spx' ) ),
+				alignItems: getValue( 'mobileColumnVerticalAlign' ),
 			},
 			'.ugb-block-content > *': {
-				paddingTop: mobileColumnPaddingTop !== '' ? `${ mobileColumnPaddingTop }${ mobileColumnPaddingUnit } !important` : undefined,
-				paddingRight: mobileColumnPaddingRight !== '' ? `${ mobileColumnPaddingRight }${ mobileColumnPaddingUnit } !important` : undefined,
-				paddingBottom: mobileColumnPaddingBottom !== '' ? `${ mobileColumnPaddingBottom }${ mobileColumnPaddingUnit } !important` : undefined,
-				paddingLeft: mobileColumnPaddingLeft !== '' ? `${ mobileColumnPaddingLeft }${ mobileColumnPaddingUnit } !important` : undefined,
-				minHeight: mobileColumnHeight !== '' ? `${ mobileColumnHeight }px` : undefined,
-				justifyContent: mobileColumnVerticalAlign !== '' ? mobileColumnVerticalAlign : undefined,
+				paddingTop: appendImportant( getValue( 'mobileColumnPaddingTop', `%s${ mobileColumnPaddingUnit }` ) ),
+				paddingRight: appendImportant( getValue( 'mobileColumnPaddingRight', `%s${ mobileColumnPaddingUnit }` ) ),
+				paddingBottom: appendImportant( getValue( 'mobileColumnPaddingBottom', `%s${ mobileColumnPaddingUnit }` ) ),
+				paddingLeft: appendImportant( getValue( 'mobileColumnPaddingLeft', `%s${ mobileColumnPaddingUnit }` ) ),
+				minHeight: getValue( 'mobileColumnHeight', '%spx' ),
+				justifyContent: getValue( 'mobileColumnContentVerticalAlign' ),
 			},
 		},
 	} )
@@ -364,6 +363,15 @@ const addAttributes = attributes => {
 		),
 
 		...createAllCombinationAttributes(
+			'%sColumnContent%sAlign',
+			{
+				type: 'string',
+				default: '',
+			},
+			[ '', 'Tablet', 'Mobile' ],
+			[ 'Vertical', 'Horizontal' ]
+		),
+		...createAllCombinationAttributes(
 			'%sColumn%sAlign',
 			{
 				type: 'string',
@@ -379,8 +387,9 @@ const advancedColumnSpacing = ( blockName, options = {} ) => {
 	const optionsToPass = {
 		paddings: true,
 		columnGap: true,
+		verticalColumnAlign: false,
 		height: true,
-		verticalAlign: true,
+		verticalContentAlign: true,
 		modifyStyles: true,
 		enablePaddingTop: true,
 		enablePaddingRight: true,
