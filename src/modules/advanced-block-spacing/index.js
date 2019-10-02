@@ -4,7 +4,7 @@
 import {
 	AdvancedRangeControl, AdvancedToolbarControl, FourRangeControl, WhenResponsiveScreen,
 } from '~stackable/components'
-import { createAllCombinationAttributes } from '~stackable/util'
+import { createAllCombinationAttributes, appendImportant } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -12,7 +12,7 @@ import { createAllCombinationAttributes } from '~stackable/util'
 import {
 	addFilter, applyFilters, doAction, removeFilter,
 } from '@wordpress/hooks'
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
@@ -446,143 +446,105 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 }
 
 const addToStyleObject = blockName => ( styleObject, props ) => {
+	const getValue = ( attrName, format = '' ) => {
+		const value = typeof props.attributes[ attrName ] === 'undefined' ? '' : props.attributes[ attrName ]
+		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
+	}
+
 	const {
-		marginTop = '',
-		marginRight = '',
-		marginBottom = '',
-		marginLeft = '',
 		marginUnit = 'px',
-
-		tabletMarginTop = '',
-		tabletMarginRight = '',
-		tabletMarginBottom = '',
-		tabletMarginLeft = '',
 		tabletMarginUnit = 'px',
-
-		mobileMarginTop = '',
-		mobileMarginRight = '',
-		mobileMarginBottom = '',
-		mobileMarginLeft = '',
 		mobileMarginUnit = 'px',
-
-		paddingTop = '',
-		paddingBottom = '',
-		paddingRight = '',
-		paddingLeft = '',
 		paddingUnit = 'px',
-
-		tabletPaddingTop = '',
-		tabletPaddingBottom = '',
-		tabletPaddingRight = '',
-		tabletPaddingLeft = '',
 		tabletPaddingUnit = 'px',
-
-		mobilePaddingTop = '',
-		mobilePaddingBottom = '',
-		mobilePaddingRight = '',
-		mobilePaddingLeft = '',
 		mobilePaddingUnit = 'px',
 
-		blockHeight = '',
 		blockHeightUnit = 'px',
-		tabletBlockHeight = '',
 		tabletBlockHeightUnit = 'px',
-		mobileBlockHeight = '',
 		mobileBlockHeightUnit = 'px',
 
-		blockWidth = '',
 		blockWidthUnit = 'px',
-		tabletBlockWidth = '',
 		tabletBlockWidthUnit = 'px',
-		mobileBlockWidth = '',
 		mobileBlockWidthUnit = 'px',
-
-		blockHorizontalAlign = '',
-		tabletBlockHorizontalAlign = '',
-		mobileBlockHorizontalAlign = '',
-
-		blockVerticalAlign = '',
-		tabletBlockVerticalAlign = '',
-		mobileBlockVerticalAlign = '',
 	} = props.attributes
 
 	const blockClass = `.${ props.mainClassName }`
 	const margins = applyFilters( `stackable.${ blockName }.advanced-block-spacing.margins`, {
 		[ blockClass ]: {
-			marginTop: marginTop !== '' ? `${ marginTop }${ marginUnit } !important` : undefined,
-			marginRight: marginRight !== '' ? `${ marginRight }${ marginUnit } !important` : undefined,
-			marginBottom: marginBottom !== '' ? `${ marginBottom }${ marginUnit } !important` : undefined,
-			marginLeft: marginLeft !== '' ? `${ marginLeft }${ marginUnit } !important` : undefined,
+			marginTop: appendImportant( getValue( 'marginTop', `%s${ marginUnit }` ) ),
+			marginRight: appendImportant( getValue( 'marginRight', `%s${ marginUnit }` ) ),
+			marginBottom: appendImportant( getValue( 'marginBottom', `%s${ marginUnit }` ) ),
+			marginLeft: appendImportant( getValue( 'marginLeft', `%s${ marginUnit }` ) ),
 		},
 		tablet: {
 			[ blockClass ]: {
-				marginTop: tabletMarginTop !== '' ? `${ tabletMarginTop }${ tabletMarginUnit } !important` : undefined,
-				marginRight: tabletMarginRight !== '' ? `${ tabletMarginRight }${ tabletMarginUnit } !important` : undefined,
-				marginBottom: tabletMarginBottom !== '' ? `${ tabletMarginBottom }${ tabletMarginUnit } !important` : undefined,
-				marginLeft: tabletMarginLeft !== '' ? `${ tabletMarginLeft }${ tabletMarginUnit } !important` : undefined,
+				marginTop: appendImportant( getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ),
+				marginRight: appendImportant( getValue( 'tabletMarginRight', `%s${ tabletMarginUnit }` ) ),
+				marginBottom: appendImportant( getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ),
+				marginLeft: appendImportant( getValue( 'tabletMarginLeft', `%s${ tabletMarginUnit }` ) ),
 			},
 		},
 		mobile: {
 			[ blockClass ]: {
-				marginTop: mobileMarginTop !== '' ? `${ mobileMarginTop }${ mobileMarginUnit } !important` : undefined,
-				marginRight: mobileMarginRight !== '' ? `${ mobileMarginRight }${ mobileMarginUnit } !important` : undefined,
-				marginBottom: mobileMarginBottom !== '' ? `${ mobileMarginBottom }${ mobileMarginUnit } !important` : undefined,
-				marginLeft: mobileMarginLeft !== '' ? `${ mobileMarginLeft }${ mobileMarginUnit } !important` : undefined,
+				marginTop: appendImportant( getValue( 'mobileMarginTop', `%s${ mobileMarginUnit }` ) ),
+				marginRight: appendImportant( getValue( 'mobileMarginRight', `%s${ mobileMarginUnit }` ) ),
+				marginBottom: appendImportant( getValue( 'mobileMarginBottom', `%s${ mobileMarginUnit }` ) ),
+				marginLeft: appendImportant( getValue( 'mobileMarginLeft', `%s${ mobileMarginUnit }` ) ),
 			},
 		},
 	} )
 	const paddings = applyFilters( `stackable.${ blockName }.advanced-block-spacing.paddings`, {
 		[ blockClass ]: {
-			paddingTop: paddingTop !== '' ? `${ paddingTop }${ paddingUnit } !important` : undefined,
-			paddingRight: paddingRight !== '' ? `${ paddingRight }${ paddingUnit } !important` : undefined,
-			paddingBottom: paddingBottom !== '' ? `${ paddingBottom }${ paddingUnit } !important` : undefined,
-			paddingLeft: paddingLeft !== '' ? `${ paddingLeft }${ paddingUnit } !important` : undefined,
+			paddingTop: appendImportant( getValue( 'paddingTop', `%s${ paddingUnit }` ) ),
+			paddingRight: appendImportant( getValue( 'paddingRight', `%s${ paddingUnit }` ) ),
+			paddingBottom: appendImportant( getValue( 'paddingBottom', `%s${ paddingUnit }` ) ),
+			paddingLeft: appendImportant( getValue( 'paddingLeft', `%s${ paddingUnit }` ) ),
 		},
 		tablet: {
 			[ blockClass ]: {
-				paddingTop: tabletPaddingTop !== '' ? `${ tabletPaddingTop }${ tabletPaddingUnit } !important` : undefined,
-				paddingRight: tabletPaddingRight !== '' ? `${ tabletPaddingRight }${ tabletPaddingUnit } !important` : undefined,
-				paddingBottom: tabletPaddingBottom !== '' ? `${ tabletPaddingBottom }${ tabletPaddingUnit } !important` : undefined,
-				paddingLeft: tabletPaddingLeft !== '' ? `${ tabletPaddingLeft }${ tabletPaddingUnit } !important` : undefined,
+				paddingTop: appendImportant( getValue( 'tabletPaddingTop', `%s${ tabletPaddingUnit }` ) ),
+				paddingRight: appendImportant( getValue( 'tabletPaddingRight', `%s${ tabletPaddingUnit }` ) ),
+				paddingBottom: appendImportant( getValue( 'tabletPaddingBottom', `%s${ tabletPaddingUnit }` ) ),
+				paddingLeft: appendImportant( getValue( 'tabletPaddingLeft', `%s${ tabletPaddingUnit }` ) ),
 			},
 		},
 		mobile: {
 			[ blockClass ]: {
-				paddingTop: mobilePaddingTop !== '' ? `${ mobilePaddingTop }${ mobilePaddingUnit } !important` : undefined,
-				paddingRight: mobilePaddingRight !== '' ? `${ mobilePaddingRight }${ mobilePaddingUnit } !important` : undefined,
-				paddingBottom: mobilePaddingBottom !== '' ? `${ mobilePaddingBottom }${ mobilePaddingUnit } !important` : undefined,
-				paddingLeft: mobilePaddingLeft !== '' ? `${ mobilePaddingLeft }${ mobilePaddingUnit } !important` : undefined,
+				paddingTop: appendImportant( getValue( 'mobilePaddingTop', `%s${ mobilePaddingUnit }` ) ),
+				paddingRight: appendImportant( getValue( 'mobilePaddingRight', `%s${ mobilePaddingUnit }` ) ),
+				paddingBottom: appendImportant( getValue( 'mobilePaddingBottom', `%s${ mobilePaddingUnit }` ) ),
+				paddingLeft: appendImportant( getValue( 'mobilePaddingLeft', `%s${ mobilePaddingUnit }` ) ),
 			},
 		},
 	} )
 
 	const others = {
 		[ blockClass ]: {
-			minHeight: blockHeight !== '' ? `${ blockHeight }${ blockHeightUnit }` : undefined,
-			justifyContent: blockHorizontalAlign !== '' ? blockHorizontalAlign : undefined,
-			alignItems: blockVerticalAlign !== '' ? blockVerticalAlign : undefined,
+			minHeight: getValue( 'blockHeight', `%s${ blockHeightUnit }` ),
+			justifyContent: getValue( 'blockHorizontalAlign' ),
+			alignItems: getValue( 'blockVerticalAlign' ),
 		},
 		[ `${ blockClass } .ugb-inner-block` ]: {
-			width: blockWidth !== '' ? `${ blockWidth }${ blockWidthUnit } !important` : undefined,
+			width: appendImportant( getValue( 'blockWidth', `%s${ blockWidthUnit }` ) ),
 		},
 		tablet: {
 			[ blockClass ]: {
-				minHeight: tabletBlockHeight !== '' ? `${ tabletBlockHeight }${ tabletBlockHeightUnit }` : undefined,
-				justifyContent: tabletBlockHorizontalAlign !== '' ? tabletBlockHorizontalAlign : undefined,
-				alignItems: tabletBlockVerticalAlign !== '' ? tabletBlockVerticalAlign : undefined,
+				minHeight: getValue( 'tabletBlockHeight', `%s${ tabletBlockHeightUnit }` ),
+				justifyContent: getValue( 'tabletBlockHorizontalAlign' ),
+				alignItems: getValue( 'tabletBlockVerticalAlign' ),
 			},
 			[ `${ blockClass } .ugb-inner-block` ]: {
-				width: tabletBlockWidth !== '' ? `${ tabletBlockWidth }${ tabletBlockWidthUnit } !important` : undefined,
+				width: appendImportant( getValue( 'tabletBlockWidth', `%s${ tabletBlockWidthUnit }` ) ),
 			},
 		},
 		mobile: {
 			[ blockClass ]: {
-				minHeight: mobileBlockHeight !== '' ? `${ mobileBlockHeight }${ mobileBlockHeightUnit } !important` : undefined,
-				justifyContent: mobileBlockHorizontalAlign !== '' ? mobileBlockHorizontalAlign : undefined,
-				alignItems: mobileBlockVerticalAlign !== '' ? mobileBlockVerticalAlign : undefined,
+				minHeight: appendImportant( getValue( 'mobileBlockHeight', `%s${ mobileBlockHeightUnit }` ) ),
+				justifyContent: getValue( 'mobileBlockHorizontalAlign' ),
+				alignItems: getValue( 'mobileBlockVerticalAlign' ),
 			},
 			[ `${ blockClass } .ugb-inner-block` ]: {
-				width: mobileBlockWidth !== '' ? `${ mobileBlockWidth }${ mobileBlockWidthUnit } !important` : undefined,
+				width: appendImportant( getValue( 'mobileBlockWidth', `%s${ mobileBlockWidthUnit }` ) ),
 			},
 		},
 	}

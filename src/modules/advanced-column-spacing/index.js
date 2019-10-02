@@ -42,18 +42,6 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 		mobileColumnPaddingRight = '',
 		mobileColumnPaddingLeft = '',
 		mobileColumnPaddingUnit = 'px',
-
-		columnGap = '',
-		tabletColumnGap = '',
-		mobileColumnGap = '',
-
-		columnHeight = '',
-		tabletColumnHeight = '',
-		mobileColumnHeight = '',
-
-		columnContentVerticalAlign = '',
-		tabletColumnContentVerticalAlign = '',
-		mobileColumnContentVerticalAlign = '',
 	} = props.attributes
 
 	return (
@@ -151,38 +139,20 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 				</Fragment> }
 
-				{ options.columnGap && <Fragment>
-					<WhenResponsiveScreen>
+				{ options.columnGap &&
+					<ResponsiveControl
+						attrNameTemplate="%sColumnGap"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
 						<AdvancedRangeControl
 							label={ __( 'Column Gap', i18n ) }
 							min={ 0 }
 							max={ 200 }
-							value={ columnGap }
-							onChange={ columnGap => setAttributes( { columnGap } ) }
 							allowReset={ true }
 						/>
-					</WhenResponsiveScreen>
-					<WhenResponsiveScreen screen="tablet">
-						<AdvancedRangeControl
-							label={ __( 'Column Gap', i18n ) }
-							min={ 0 }
-							max={ 200 }
-							value={ tabletColumnGap }
-							onChange={ tabletColumnGap => setAttributes( { tabletColumnGap } ) }
-							allowReset={ true }
-						/>
-					</WhenResponsiveScreen>
-					<WhenResponsiveScreen screen="mobile">
-						<AdvancedRangeControl
-							label={ __( 'Column Gap', i18n ) }
-							min={ 0 }
-							max={ 200 }
-							value={ mobileColumnGap }
-							onChange={ mobileColumnGap => setAttributes( { mobileColumnGap } ) }
-							allowReset={ true }
-						/>
-					</WhenResponsiveScreen>
-				</Fragment> }
+					</ResponsiveControl>
+				}
 
 				{ options.verticalColumnAlign &&
 					<ResponsiveControl
@@ -197,65 +167,33 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</ResponsiveControl>
 				}
 
-				{ options.height && <Fragment>
-					<WhenResponsiveScreen>
+				{ options.height &&
+					<ResponsiveControl
+						attrNameTemplate="%sColumnHeight"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
 						<AdvancedRangeControl
 							label={ __( 'Min. Column Height', i18n ) }
 							min={ 100 }
 							max={ 1000 }
-							value={ columnHeight }
-							onChange={ columnHeight => setAttributes( { columnHeight } ) }
 							allowReset={ true }
 						/>
-					</WhenResponsiveScreen>
-					<WhenResponsiveScreen screen="tablet">
-						<AdvancedRangeControl
-							label={ __( 'Min. Column Height', i18n ) }
-							min={ 100 }
-							max={ 1000 }
-							value={ tabletColumnHeight }
-							onChange={ tabletColumnHeight => setAttributes( { tabletColumnHeight } ) }
-							allowReset={ true }
-						/>
-					</WhenResponsiveScreen>
-					<WhenResponsiveScreen screen="mobile">
-						<AdvancedRangeControl
-							label={ __( 'Min. Column Height', i18n ) }
-							min={ 100 }
-							max={ 1000 }
-							value={ mobileColumnHeight }
-							onChange={ mobileColumnHeight => setAttributes( { mobileColumnHeight } ) }
-							allowReset={ true }
-						/>
-					</WhenResponsiveScreen>
-				</Fragment> }
+					</ResponsiveControl>
+				}
 
-				{ options.verticalContentAlign && <Fragment>
-					<WhenResponsiveScreen>
+				{ options.verticalContentAlign &&
+					<ResponsiveControl
+						attrNameTemplate="%sColumnContentVerticalAlign"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
 						<AdvancedToolbarControl
 							label={ __( 'Content Vertical Align', i18n ) }
 							controls="flex-vertical"
-							value={ columnContentVerticalAlign }
-							onChange={ value => setAttributes( { columnContentVerticalAlign: columnContentVerticalAlign !== value ? value : '' } ) }
 						/>
-					</WhenResponsiveScreen>
-					<WhenResponsiveScreen screen="tablet">
-						<AdvancedToolbarControl
-							label={ __( 'Content Vertical Align', i18n ) }
-							controls="flex-vertical"
-							value={ tabletColumnContentVerticalAlign }
-							onChange={ value => setAttributes( { tabletColumnContentVerticalAlign: tabletColumnContentVerticalAlign !== value ? value : '' } ) }
-						/>
-					</WhenResponsiveScreen>
-					<WhenResponsiveScreen screen="mobile">
-						<AdvancedToolbarControl
-							label={ __( 'Content Vertical Align', i18n ) }
-							controls="flex-vertical"
-							value={ mobileColumnContentVerticalAlign }
-							onChange={ value => setAttributes( { mobileColumnContentVerticalAlign: mobileColumnContentVerticalAlign !== value ? value : '' } ) }
-						/>
-					</WhenResponsiveScreen>
-				</Fragment> }
+					</ResponsiveControl>
+				}
 
 				{ applyFilters( `stackable.${ blockName }.edit.advanced.column-spacing.after`, null, props ) }
 			</PanelBody>
