@@ -86,7 +86,7 @@ const save = props => {
 										alt={ imageAlt || ( showTitle && title ) }
 										shadow={ imageShadow }
 										shape={ attributes[ `image${ i }Shape` ] || imageShape }
-										shapeStretch={ imageShapeStretch }
+										shapeStretch={ attributes[ `image${ i }ShapeStretch` ] || imageShapeStretch }
 									/>
 								</div>
 							}
