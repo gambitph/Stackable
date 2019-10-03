@@ -5,15 +5,16 @@ import {
 	createBackgroundStyleSet,
 	createButtonStyleSet,
 	createTypographyStyles,
+	createResponsiveStyles,
 	hexToRgba,
 	whiteIfDark,
 } from '~stackable/util'
+import deepmerge from 'deepmerge'
 
 /**
  * Internal dependencies
  */
-import { showOptions } from '.'
-import deepmerge from 'deepmerge'
+import { showOptions } from './util'
 
 /**
  * WordPress dependencies
@@ -197,55 +198,16 @@ export const createStyles = props => {
 
 	// Spacing.
 	if ( show.titleSpacing ) {
-		styles.push( {
-			'.ugb-header__title': {
-				marginBottom: getValue( 'titleBottomMargin', '%spx !important' ),
-			},
-			tablet: {
-				'.ugb-header__title': {
-					marginBottom: getValue( 'titleTabletBottomMargin', '%spx !important' ),
-				},
-			},
-			mobile: {
-				'.ugb-header__title': {
-					marginBottom: getValue( 'titleMobileBottomMargin', '%spx !important' ),
-				},
-			},
-		} )
+		styles.push( ...createResponsiveStyles( '.ugb-header__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
 	}
 	if ( show.subtitleSpacing ) {
-		styles.push( {
-			'.ugb-header__subtitle': {
-				marginBottom: getValue( 'subtitleBottomMargin', '%spx !important' ),
-			},
-			tablet: {
-				'.ugb-header__subtitle': {
-					marginBottom: getValue( 'subtitleTabletBottomMargin', '%spx !important' ),
-				},
-			},
-			mobile: {
-				'.ugb-header__subtitle': {
-					marginBottom: getValue( 'subtitleMobileBottomMargin', '%spx !important' ),
-				},
-			},
-		} )
+		styles.push( ...createResponsiveStyles( '.ugb-header__subtitle', 'subtitle%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+	}
+	if ( show.buttonSpacing ) {
+		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'button%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
 	}
 	if ( show.buttonGap ) {
-		styles.push( {
-			'.ugb-button1': {
-				marginRight: getValue( 'buttonGap', '%spx !important' ),
-			},
-			tablet: {
-				'.ugb-button1': {
-					marginRight: getValue( 'buttonGapTablet', '%spx !important' ),
-				},
-			},
-			mobile: {
-				'.ugb-button1': {
-					marginRight: getValue( 'buttonGapMobile', '%spx !important' ),
-				},
-			},
-		} )
+		styles.push( ...createResponsiveStyles( '.ugb-button1', 'buttonGap%s', 'marginRight', '%spx', props.attributes, true ) )
 	}
 
 	return deepmerge.all( styles )

@@ -14,6 +14,7 @@ import {
 	descriptionPlaceholder,
 } from '~stackable/util'
 import { HeaderIcon } from '~stackable/icons'
+import { disabledBlocks, i18n } from 'stackable'
 
 /**
  * Internal dependencies
@@ -27,7 +28,6 @@ import save from './save'
  */
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
-import { disabledBlocks, i18n } from 'stackable'
 
 const schema = {
 	restrictContentWidth: {
@@ -141,6 +141,10 @@ const schema = {
 		type: 'number',
 		default: '',
 	} ),
+	...createResponsiveAttributes( 'button%sBottomMargin', {
+		type: 'number',
+		default: '',
+	} ),
 	...createResponsiveAttributes( 'buttonGap%s', {
 		type: 'number',
 		default: '',
@@ -185,29 +189,4 @@ export const settings = {
 			default: applyFilters( 'stackable.header.custom-css.default', '' ),
 		},
 	},
-}
-
-export const showOptions = blockProps => {
-	const {
-		design = 'basic',
-		align = '',
-		showTitle = true,
-		showSubtitle = true,
-		showButton = true,
-		showButton2 = false,
-		showBlockBackground = false,
-		blockInnerWidth = '',
-	} = blockProps.attributes
-
-	const borderRadius = ( ! showBlockBackground && align !== 'full' ) || ( showBlockBackground && blockInnerWidth !== 'full' )
-
-	return applyFilters( 'stackable.header.show', {
-		columnBackground: design !== 'plain',
-		borderRadius: design !== 'plain' && borderRadius,
-		titleSpacing: showTitle && ( showSubtitle || showButton || showButton2 ),
-		subtitleSpacing: showSubtitle && ( showButton || showButton2 ),
-		buttonGap: showButton && showButton2,
-		restrictContent: ( ! showBlockBackground && align === 'full' ) || ( showBlockBackground && blockInnerWidth === 'full' ),
-		overlayBackground: design.match( /overlay/ ),
-	}, blockProps )
 }

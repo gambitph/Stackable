@@ -7,12 +7,13 @@ import {
 	createTypographyStyles,
 	whiteIfDark,
 	createImageStyleSet,
+	createResponsiveStyles,
 } from '~stackable/util'
 
 /**
  * Internal dependencies
  */
-import { showOptions } from '.'
+import { showOptions } from './util'
 import deepmerge from 'deepmerge'
 
 /**
@@ -192,38 +193,13 @@ export const createStyles = props => {
 
 	// Spacing.
 	if ( show.titleSpacing ) {
-		styles.push( {
-			'.ugb-feature__title': {
-				marginBottom: getValue( 'titleBottomMargin', '%spx !important' ),
-			},
-			tablet: {
-				'.ugb-feature__title': {
-					marginBottom: getValue( 'titleTabletBottomMargin', '%spx !important' ),
-				},
-			},
-			mobile: {
-				'.ugb-feature__title': {
-					marginBottom: getValue( 'titleMobileBottomMargin', '%spx !important' ),
-				},
-			},
-		} )
+		styles.push( ...createResponsiveStyles( '.ugb-feature__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
 	}
 	if ( show.descriptionSpacing ) {
-		styles.push( {
-			'.ugb-feature__description': {
-				marginBottom: getValue( 'descriptionBottomMargin', '%spx !important' ),
-			},
-			tablet: {
-				'.ugb-feature__description': {
-					marginBottom: getValue( 'descriptionTabletBottomMargin', '%spx !important' ),
-				},
-			},
-			mobile: {
-				'.ugb-feature__description': {
-					marginBottom: getValue( 'descriptionMobileBottomMargin', '%spx !important' ),
-				},
-			},
-		} )
+		styles.push( ...createResponsiveStyles( '.ugb-feature__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+	}
+	if ( show.buttonSpacing ) {
+		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'button%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
 	}
 
 	return deepmerge.all( styles )

@@ -341,6 +341,20 @@ addFilter( 'stackable.feature-grid.edit.inspector.style.before', 'stackable/feat
 						/>
 					</ResponsiveControl>
 				}
+				{ show.buttonSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="button%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Button', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				}
 			</PanelSpacingBody>
 		</Fragment>
 	)

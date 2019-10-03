@@ -8,13 +8,14 @@ import {
 	marginRightAlign,
 	whiteIfDarkBlackIfLight,
 	createButtonStyleSet,
+	createResponsiveStyles,
 } from '~stackable/util'
+import deepmerge from 'deepmerge'
 
 /**
  * Internal dependencies
  */
-import { showOptions } from '.'
-import deepmerge from 'deepmerge'
+import { showOptions } from './util'
 
 /**
  * WordPress dependencies
@@ -284,55 +285,16 @@ export const createStyles = props => {
 
 	// Spacing.
 	if ( show.iconSpacing ) {
-		styles.push( {
-			'.ugb-notification__icon': {
-				marginBottom: getValue( 'iconBottomMargin', '%spx !important' ),
-			},
-			tablet: {
-				'.ugb-notification__icon': {
-					marginBottom: getValue( 'iconTabletBottomMargin', '%spx !important' ),
-				},
-			},
-			mobile: {
-				'.ugb-notification__icon': {
-					marginBottom: getValue( 'iconMobileBottomMargin', '%spx !important' ),
-				},
-			},
-		} )
+		styles.push( ...createResponsiveStyles( '.ugb-notification__icon', 'icon%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
 	}
 	if ( show.titleSpacing ) {
-		styles.push( {
-			'.ugb-notification__title': {
-				marginBottom: getValue( 'titleBottomMargin', '%spx !important' ),
-			},
-			tablet: {
-				'.ugb-notification__title': {
-					marginBottom: getValue( 'titleTabletBottomMargin', '%spx !important' ),
-				},
-			},
-			mobile: {
-				'.ugb-notification__title': {
-					marginBottom: getValue( 'titleMobileBottomMargin', '%spx !important' ),
-				},
-			},
-		} )
+		styles.push( ...createResponsiveStyles( '.ugb-notification__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
 	}
 	if ( show.descriptionSpacing ) {
-		styles.push( {
-			'.ugb-notification__description': {
-				marginBottom: getValue( 'descriptionBottomMargin', '%spx !important' ),
-			},
-			tablet: {
-				'.ugb-notification__description': {
-					marginBottom: getValue( 'descriptionTabletBottomMargin', '%spx !important' ),
-				},
-			},
-			mobile: {
-				'.ugb-notification__description': {
-					marginBottom: getValue( 'descriptionMobileBottomMargin', '%spx !important' ),
-				},
-			},
-		} )
+		styles.push( ...createResponsiveStyles( '.ugb-notification__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+	}
+	if ( show.buttonSpacing ) {
+		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'button%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
 	}
 
 	// return deepmerge.all( applyFilters( 'stackable.notification.styles', styles, props, show ) )

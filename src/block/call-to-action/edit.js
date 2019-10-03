@@ -35,6 +35,8 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 } from '~stackable/higher-order'
+import { i18n, showProNotice } from 'stackable'
+import classnames from 'classnames'
 
 /**
  * Internal dependencies
@@ -42,18 +44,16 @@ import {
 import createStyles from './style'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
-import { showOptions } from './'
+import { showOptions } from './util'
 
 /**
  * WordPress dependencies
  */
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import { i18n, showProNotice } from 'stackable'
 import {
 	PanelBody, RangeControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
-import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
@@ -143,37 +143,6 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 					/>
 				</PanelBody>
 			}
-
-			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
-				{ showTitle && show.titleSpacing && (
-					<ResponsiveControl
-						attrNameTemplate="title%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Title', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							allowReset={ true }
-						/>
-					</ResponsiveControl>
-				) }
-				{ showDescription && show.descriptionSpacing && (
-					<ResponsiveControl
-						attrNameTemplate="description%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Description', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							allowReset={ true }
-						/>
-					</ResponsiveControl>
-				) }
-			</PanelSpacingBody>
 
 			<PanelAdvancedSettings
 				title={ __( 'Title', i18n ) }
@@ -265,6 +234,54 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 					<AlignButtonsControl label={ __( 'Align', i18n ) } />
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
+
+			<PanelSpacingBody
+				initialOpen={ false }
+				blockProps={ props }
+			>
+				{ show.titleSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="title%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Title', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				}
+				{ show.descriptionSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="description%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Description', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				}
+				{ show.buttonSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="button%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Button', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				}
+			</PanelSpacingBody>
 		</Fragment>
 	)
 } )

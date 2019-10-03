@@ -4,6 +4,7 @@
 import {
 	createBackgroundStyleSet,
 	createTypographyStyles,
+	createResponsiveStyles,
 	marginLeftAlign,
 	marginRightAlign,
 	whiteIfDark,
@@ -162,40 +163,15 @@ export const createStyles = props => {
 	}
 
 	// Number spacing.
-	if ( show.spacingNumber ) {
-		styles.push( {
-			'.ugb-number-box__number': {
-				marginBottom: getValue( 'numberBottomMargin', '%spx' ),
-			},
-			tablet: {
-				'.ugb-number-box__number': {
-					marginBottom: getValue( 'numberTabletBottomMargin', '%spx' ),
-				},
-			},
-			mobile: {
-				'.ugb-number-box__number': {
-					marginBottom: getValue( 'numberMobileBottomMargin', '%spx' ),
-				},
-			},
-		} )
+	if ( show.numberSpacing ) {
+		styles.push( ...createResponsiveStyles( '.ugb-number-box__number', 'number%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
 	}
-
-	// Title spacing.
-	styles.push( {
-		'.ugb-number-box__title': {
-			marginBottom: getValue( 'titleBottomMargin', '%spx' ),
-		},
-		tablet: {
-			'.ugb-number-box__title': {
-				marginBottom: getValue( 'titleTabletBottomMargin', '%spx' ),
-			},
-		},
-		mobile: {
-			'.ugb-number-box__title': {
-				marginBottom: getValue( 'titleMobileBottomMargin', '%spx' ),
-			},
-		},
-	} )
+	if ( show.titleSpacing ) {
+		styles.push( ...createResponsiveStyles( '.ugb-number-box__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+	}
+	if ( show.descriptionSpacing ) {
+		styles.push( ...createResponsiveStyles( '.ugb-number-box__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+	}
 
 	return deepmerge.all( styles )
 }

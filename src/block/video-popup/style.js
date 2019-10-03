@@ -2,12 +2,12 @@
  * External dependencies
  */
 import { createBackgroundStyleSet } from '~stackable/util'
+import deepmerge from 'deepmerge'
 
 /**
  * Internal dependencies
  */
-import { showOptions } from '.'
-import deepmerge from 'deepmerge'
+import { showOptions } from './util'
 
 /**
  * WordPress dependencies

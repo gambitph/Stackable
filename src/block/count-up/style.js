@@ -3,6 +3,7 @@
  */
 import {
 	createBackgroundStyleSet,
+	createResponsiveStyles,
 	createTypographyStyles,
 	whiteIfDark,
 } from '~stackable/util'
@@ -56,62 +57,24 @@ export const createStyles = props => {
 		...( show.columnBackground ? createBackgroundStyleSet( 'column%s', 'ugb-countup__item', props.attributes ) : {} ),
 	} )
 
-	// Number spacing.
+	// Spacing.
 	const {
 		showIcon = false,
 		showNumber = true,
 		showTitle = true,
+		showDescription = true,
 	} = props.attributes
 	if ( showIcon ) {
-		styles.push( {
-			'.ugb-countup__icon': {
-				marginBottom: getValue( 'iconBottomMargin', '%spx' ),
-			},
-			tablet: {
-				'.ugb-countup__icon': {
-					marginBottom: getValue( 'iconTabletBottomMargin', '%spx' ),
-				},
-			},
-			mobile: {
-				'.ugb-countup__icon': {
-					marginBottom: getValue( 'iconMobileBottomMargin', '%spx' ),
-				},
-			},
-		} )
+		styles.push( ...createResponsiveStyles( '.ugb-countup__icon', 'icon%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
 	}
 	if ( showNumber ) {
-		styles.push( {
-			'.ugb-countup__counter': {
-				marginBottom: getValue( 'numberBottomMargin', '%spx' ),
-			},
-			tablet: {
-				'.ugb-countup__counter': {
-					marginBottom: getValue( 'numberTabletBottomMargin', '%spx' ),
-				},
-			},
-			mobile: {
-				'.ugb-countup__counter': {
-					marginBottom: getValue( 'numberMobileBottomMargin', '%spx' ),
-				},
-			},
-		} )
+		styles.push( ...createResponsiveStyles( '.ugb-countup__counter', 'number%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
 	}
 	if ( showTitle ) {
-		styles.push( {
-			'.ugb-countup__title': {
-				marginBottom: getValue( 'titleBottomMargin', '%spx' ),
-			},
-			tablet: {
-				'.ugb-countup__title': {
-					marginBottom: getValue( 'titleTabletBottomMargin', '%spx' ),
-				},
-			},
-			mobile: {
-				'.ugb-countup__title': {
-					marginBottom: getValue( 'titleMobileBottomMargin', '%spx' ),
-				},
-			},
-		} )
+		styles.push( ...createResponsiveStyles( '.ugb-countup__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+	}
+	if ( showDescription ) {
+		styles.push( ...createResponsiveStyles( '.ugb-countup__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
 	}
 
 	// Icon
@@ -201,7 +164,6 @@ export const createStyles = props => {
 	// Description.
 	const {
 		descriptionColor = '',
-		showDescription = true,
 	} = props.attributes
 	if ( showDescription ) {
 		styles.push( {

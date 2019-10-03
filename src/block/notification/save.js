@@ -15,7 +15,7 @@ import { createVideoBackground, hasBackgroundOverlay } from '~stackable/util'
  */
 import createStyles from './style'
 import SVGCloseIcon from './images/close-icon.svg'
-import { showOptions } from '.'
+import { showOptions } from './util'
 
 /**
  * WordPress dependencies

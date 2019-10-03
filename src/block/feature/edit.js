@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+import { i18n, showProNotice } from 'stackable'
 import {
 	DesignPanelBody,
 	ImageUploadPlaceholder,
@@ -31,27 +32,6 @@ import {
 	createVideoBackground,
 	hasBackgroundOverlay,
 } from '~stackable/util'
-
-/**
- * Internal dependencies
- */
-import ImageDesignBasic from './images/basic.png'
-import ImageDesignPlain from './images/plain.png'
-import createStyles from './style'
-
-/**
- * WordPress dependencies
- */
-import { i18n, showProNotice } from 'stackable'
-import {
-	PanelBody, RangeControl, ToggleControl,
-} from '@wordpress/components'
-import { __ } from '@wordpress/i18n'
-import { applyFilters, addFilter } from '@wordpress/hooks'
-import classnames from 'classnames'
-import { Fragment } from '@wordpress/element'
-import { compose } from '@wordpress/compose'
-import { RichText } from '@wordpress/block-editor'
 import {
 	withUniqueClass,
 	withSetAttributeHook,
@@ -60,7 +40,27 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 } from '~stackable/higher-order'
-import { showOptions } from '.'
+import classnames from 'classnames'
+
+/**
+ * Internal dependencies
+ */
+import ImageDesignBasic from './images/basic.png'
+import ImageDesignPlain from './images/plain.png'
+import createStyles from './style'
+import { showOptions } from './util'
+
+/**
+ * WordPress dependencies
+ */
+import {
+	PanelBody, RangeControl, ToggleControl,
+} from '@wordpress/components'
+import { __ } from '@wordpress/i18n'
+import { applyFilters, addFilter } from '@wordpress/hooks'
+import { Fragment } from '@wordpress/element'
+import { compose } from '@wordpress/compose'
+import { RichText } from '@wordpress/block-editor'
 
 addFilter( 'stackable.feature.edit.inspector.layout.before', 'stackable/feature', ( output, props ) => {
 	const { setAttributes } = props
@@ -352,6 +352,20 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 					>
 						<AdvancedRangeControl
 							label={ __( 'Description', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				}
+				{ show.buttonSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="button%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Button', i18n ) }
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }

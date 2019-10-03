@@ -18,12 +18,13 @@ import {
 /**
  * Internal dependencies
  */
-import { getPlayButton, playButtonTypes } from './util'
+import {
+	getPlayButton, playButtonTypes, showOptions,
+} from './util'
 import {
 	withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass,
 } from '~stackable/higher-order'
 import createStyles from './style'
-import { showOptions } from '.'
 
 /**
  * WordPress dependencies

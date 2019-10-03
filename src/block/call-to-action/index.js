@@ -16,6 +16,7 @@ import {
 	descriptionPlaceholder,
 } from '~stackable/util'
 import { CTAIcon } from '~stackable/icons'
+import { disabledBlocks, i18n } from 'stackable'
 
 /**
  * Internal dependencies
@@ -29,7 +30,6 @@ import save from './save'
  */
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
-import { disabledBlocks, i18n } from 'stackable'
 
 const schema = {
 	design: {
@@ -103,6 +103,10 @@ const schema = {
 		type: 'number',
 		default: '',
 	} ),
+	...createResponsiveAttributes( 'button%sBottomMargin', {
+		type: 'number',
+		default: '',
+	} ),
 
 	...createAllCombinationAttributes(
 		'%s%sAlign', {
@@ -112,12 +116,6 @@ const schema = {
 		[ 'Title', 'Description', 'Button' ],
 		[ '', 'Tablet', 'Mobile' ]
 	),
-
-	// TODO: Not anymore supported?
-	contentWidth: {
-		type: 'boolean',
-		default: false,
-	},
 }
 
 export const name = 'ugb/cta'
@@ -157,32 +155,4 @@ export const settings = {
 			default: applyFilters( 'stackable.cta.custom-css.default', '' ),
 		},
 	},
-}
-
-export const showOptions = blockProps => {
-	const {
-		design = 'basic',
-		showBlockBackground = false,
-		blockInnerWidth = '',
-		align = '',
-	} = blockProps.attributes
-
-	// Border radius options aren't available in non-plain & full width.
-	let borderRadius = true
-	if ( design === 'plain' ) {
-		borderRadius = false
-	} else if ( align === 'full' ) {
-		if ( ! showBlockBackground ) {
-			borderRadius = false
-		} else if ( blockInnerWidth === 'full' ) {
-			borderRadius = false
-		}
-	}
-
-	return applyFilters( 'stackable.cta.show', {
-		columnBackground: design !== 'plain',
-		borderRadius,
-		titleSpacing: true,
-		descriptionSpacing: true,
-	}, blockProps )
 }

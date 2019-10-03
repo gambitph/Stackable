@@ -9,6 +9,7 @@ import SVGOutlineIcon from './images/play-outline.svg'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 
 /**
  * External dependencies
@@ -29,4 +30,19 @@ export const playButtonTypes = [
 
 export const getPlayButton = name => {
 	return playButton[ name ]
+}
+
+export const showOptions = blockProps => {
+	const {
+		showBlockBackground = false,
+		blockInnerWidth = '',
+		align = '',
+	} = blockProps.attributes
+
+	const previewIsFullWidth = ( ! showBlockBackground && align === 'full' ) || ( showBlockBackground && blockInnerWidth === 'full' )
+
+	return applyFilters( 'stackable.video-popup.show', {
+		containerWidth: ! previewIsFullWidth,
+		borderRadius: ! previewIsFullWidth,
+	}, blockProps )
 }

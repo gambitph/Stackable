@@ -3,19 +3,19 @@
  */
 import { BlockContainer, ButtonEditHelper } from '~stackable/components'
 import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+import { createVideoBackground, hasBackgroundOverlay } from '~stackable/util'
+import classnames from 'classnames'
 
 /**
  * Internal dependencies
  */
 import createStyles from './style'
-import { createVideoBackground, hasBackgroundOverlay } from '~stackable/util'
-import { showOptions } from '.'
+import { showOptions } from './util'
 
 /**
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
-import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'

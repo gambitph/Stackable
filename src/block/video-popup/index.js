@@ -110,18 +110,3 @@ export const settings = {
 		},
 	},
 }
-
-export const showOptions = blockProps => {
-	const {
-		showBlockBackground = false,
-		blockInnerWidth = '',
-		align = '',
-	} = blockProps.attributes
-
-	const previewIsFullWidth = ( ! showBlockBackground && align === 'full' ) || ( showBlockBackground && blockInnerWidth === 'full' )
-
-	return applyFilters( 'stackable.video-popup.show', {
-		containerWidth: ! previewIsFullWidth,
-		borderRadius: ! previewIsFullWidth,
-	}, blockProps )
-}

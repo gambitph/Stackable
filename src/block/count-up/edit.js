@@ -152,51 +152,6 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 				</PanelBody>
 			}
 
-			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
-				{ showIcon && (
-					<ResponsiveControl
-						attrNameTemplate="icon%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Icon', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							allowReset={ true }
-						/>
-					</ResponsiveControl>
-				) }
-				{ showTitle && (
-					<ResponsiveControl
-						attrNameTemplate="title%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Title', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							allowReset={ true }
-						/>
-					</ResponsiveControl>
-				) }
-				{ showNumber && (
-					<ResponsiveControl
-						attrNameTemplate="number%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Number', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							allowReset={ true }
-						/>
-					</ResponsiveControl>
-				) }
-			</PanelSpacingBody>
-
 			<PanelAdvancedSettings
 				title={ __( 'Icon', i18n ) }
 				checked={ showIcon }
@@ -346,6 +301,65 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 					<AlignButtonsControl label={ __( 'Align', i18n ) } />
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
+
+			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
+				{ showIcon && (
+					<ResponsiveControl
+						attrNameTemplate="icon%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Icon', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				) }
+				{ showTitle && (
+					<ResponsiveControl
+						attrNameTemplate="title%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Title', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				) }
+				{ showNumber && (
+					<ResponsiveControl
+						attrNameTemplate="number%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Number', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				) }
+				{ showDescription && (
+					<ResponsiveControl
+						attrNameTemplate="description%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Description', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				) }
+			</PanelSpacingBody>
 		</Fragment>
 	)
 } )

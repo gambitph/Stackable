@@ -5,7 +5,7 @@ import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
 import SVGCloseIcon from './images/close-icon.svg'
 import createStyles from './style'
-import { showOptions } from '.'
+import { showOptions } from './util'
 
 /**
  * External dependencies
@@ -401,12 +401,12 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
-			{ ( show.iconSpacing || show.titleSpacing || show.descriptionSpacing ) &&
+			{ ( show.iconSpacing || show.titleSpacing || show.descriptionSpacing || show.buttonSpacing ) &&
 				<PanelSpacingBody
 					initialOpen={ false }
 					blockProps={ props }
 				>
-					{ show.iconSpacing && (
+					{ show.iconSpacing &&
 						<ResponsiveControl
 							attrNameTemplate="icon%sBottomMargin"
 							setAttributes={ setAttributes }
@@ -419,8 +419,8 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 								allowReset={ true }
 							/>
 						</ResponsiveControl>
-					) }
-					{ show.titleSpacing && (
+					}
+					{ show.titleSpacing &&
 						<ResponsiveControl
 							attrNameTemplate="title%sBottomMargin"
 							setAttributes={ setAttributes }
@@ -433,8 +433,8 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 								allowReset={ true }
 							/>
 						</ResponsiveControl>
-					) }
-					{ show.descriptionSpacing && (
+					}
+					{ show.descriptionSpacing &&
 						<ResponsiveControl
 							attrNameTemplate="description%sBottomMargin"
 							setAttributes={ setAttributes }
@@ -447,7 +447,21 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 								allowReset={ true }
 							/>
 						</ResponsiveControl>
-					) }
+					}
+					{ show.buttonSpacing &&
+						<ResponsiveControl
+							attrNameTemplate="button%sBottomMargin"
+							setAttributes={ setAttributes }
+							blockAttributes={ props.attributes }
+						>
+							<AdvancedRangeControl
+								label={ __( 'Button', i18n ) }
+								min={ -50 }
+								max={ 100 }
+								allowReset={ true }
+							/>
+						</ResponsiveControl>
+					}
 				</PanelSpacingBody>
 			}
 		</Fragment>

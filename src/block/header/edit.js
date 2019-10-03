@@ -36,6 +36,7 @@ import {
 	withUniqueClass,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
+import { i18n, showProNotice } from 'stackable'
 
 /**
  * Internal dependencies
@@ -43,13 +44,12 @@ import classnames from 'classnames'
 import createStyles from './style'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
-import { showOptions } from '.'
+import { showOptions } from './util'
 
 /**
  * WordPress dependencies
  */
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import { i18n, showProNotice } from 'stackable'
 import {
 	PanelBody, RangeControl, ToggleControl,
 } from '@wordpress/components'
@@ -340,6 +340,20 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 					>
 						<AdvancedRangeControl
 							label={ __( 'Subtitle', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				) }
+				{ show.buttonSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="button%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Button', i18n ) }
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }

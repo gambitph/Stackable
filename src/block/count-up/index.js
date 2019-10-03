@@ -121,6 +121,10 @@ export const schema = {
 		type: 'number',
 		default: '',
 	} ),
+	...createResponsiveAttributes( 'description%sBottomMargin', {
+		type: 'number',
+		default: '',
+	} ),
 
 	// Icon.
 	showIcon: {

@@ -10,6 +10,7 @@ import {
 	marginLeftAlign,
 	marginRightAlign,
 	createImageMask,
+	createResponsiveStyles,
 } from '~stackable/util'
 import { range } from 'lodash'
 
@@ -187,55 +188,16 @@ export const createStyles = props => {
 
 	// Spacing.
 	if ( show.imageSpacing ) {
-		styles.push( {
-			'.ugb-feature-grid__image': {
-				marginBottom: getValue( 'imageBottomMargin', '%spx !important' ),
-			},
-			tablet: {
-				'.ugb-feature-grid__image': {
-					marginBottom: getValue( 'imageTabletBottomMargin', '%spx !important' ),
-				},
-			},
-			mobile: {
-				'.ugb-feature-grid__image': {
-					marginBottom: getValue( 'imageMobileBottomMargin', '%spx !important' ),
-				},
-			},
-		} )
+		styles.push( ...createResponsiveStyles( '.ugb-feature-grid__image', 'image%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
 	}
 	if ( show.titleSpacing ) {
-		styles.push( {
-			'.ugb-feature-grid__title': {
-				marginBottom: getValue( 'titleBottomMargin', '%spx !important' ),
-			},
-			tablet: {
-				'.ugb-feature-grid__title': {
-					marginBottom: getValue( 'titleTabletBottomMargin', '%spx !important' ),
-				},
-			},
-			mobile: {
-				'.ugb-feature-grid__title': {
-					marginBottom: getValue( 'titleMobileBottomMargin', '%spx !important' ),
-				},
-			},
-		} )
+		styles.push( ...createResponsiveStyles( '.ugb-feature-grid__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
 	}
 	if ( show.descriptionSpacing ) {
-		styles.push( {
-			'.ugb-feature-grid__description': {
-				marginBottom: getValue( 'descriptionBottomMargin', '%spx !important' ),
-			},
-			tablet: {
-				'.ugb-feature-grid__description': {
-					marginBottom: getValue( 'descriptionTabletBottomMargin', '%spx !important' ),
-				},
-			},
-			mobile: {
-				'.ugb-feature-grid__description': {
-					marginBottom: getValue( 'descriptionMobileBottomMargin', '%spx !important' ),
-				},
-			},
-		} )
+		styles.push( ...createResponsiveStyles( '.ugb-feature-grid__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+	}
+	if ( show.buttonSpacing ) {
+		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'button%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
 	}
 
 	// Advanced image.

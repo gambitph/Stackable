@@ -163,37 +163,6 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 				</PanelBody>
 			}
 
-			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
-				{ show.spacingNumber && showNumber && (
-					<ResponsiveControl
-						attrNameTemplate="number%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Number', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							allowReset={ true }
-						/>
-					</ResponsiveControl>
-				) }
-				{ showTitle && (
-					<ResponsiveControl
-						attrNameTemplate="title%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Title', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							allowReset={ true }
-						/>
-					</ResponsiveControl>
-				) }
-			</PanelSpacingBody>
-
 			<PanelAdvancedSettings
 				title={ __( 'Number', i18n ) }
 				checked={ showNumber }
@@ -363,6 +332,51 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					<AlignButtonsControl label={ __( 'Align', i18n ) } />
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
+
+			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
+				{ show.numberSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="number%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Number', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				) }
+				{ show.titleSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="title%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Title', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				) }
+				{ show.descriptionSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="description%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Description', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				) }
+			</PanelSpacingBody>
 		</Fragment>
 	)
 } )

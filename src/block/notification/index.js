@@ -6,6 +6,8 @@
  * Internal dependencies
  */
 import deprecated from './deprecated'
+import edit from './edit'
+import save from './save'
 
 /**
  * External dependencies
@@ -13,15 +15,13 @@ import deprecated from './deprecated'
 import {
 	descriptionPlaceholder, createBackgroundAttributes, createResponsiveAttributes, createTypographyAttributes, createButtonAttributes, createAllCombinationAttributes,
 } from '~stackable/util'
-import edit from './edit'
 import { NotificationIcon } from '~stackable/icons'
-import save from './save'
+import { disabledBlocks, i18n } from 'stackable'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { disabledBlocks, i18n } from 'stackable'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 
 export const schema = {
@@ -167,6 +167,10 @@ export const schema = {
 		type: 'number',
 		default: '',
 	} ),
+	...createResponsiveAttributes( 'button%sBottomMargin', {
+		type: 'number',
+		default: '',
+	} ),
 }
 
 export const name = 'ugb/notification'
@@ -202,29 +206,6 @@ export const settings = {
 			default: applyFilters( 'stackable.notification.custom-css.default', '' ),
 		},
 	},
-}
-
-export const showOptions = blockProps => {
-	const {
-		design = 'basic',
-		showIcon = false,
-		showTitle = true,
-		showDescription = true,
-		showButton = true,
-	} = blockProps.attributes
-
-	return applyFilters( 'stackable.notification.show', {
-		columnBorder: false,
-		columnBackground: design !== 'plain',
-		backgroundColor: design !== 'plain',
-		borderRadius: design !== 'plain',
-		shadow: design !== 'plain',
-		iconSpacing: showIcon && ( showTitle || showDescription || showButton ),
-		titleSpacing: showTitle && ( showDescription || showButton ),
-		descriptionSpacing: showDescription && showButton,
-		iconAlign: true,
-		iconLocation: false,
-	}, blockProps )
 }
 
 addFilter( 'stackable.notification.setAttributes', 'stackable/notification/notifType', attributes => {

@@ -20,7 +20,7 @@ import { Fragment } from '@wordpress/element'
  * Internal dependencies
  */
 import createStyles from './style'
-import { showOptions } from '.'
+import { showOptions } from './util'
 
 const save = props => {
 	const {

@@ -6,15 +6,19 @@ import { applyFilters } from '@wordpress/hooks'
 export const showOptions = blockProps => {
 	const {
 		design = 'basic',
-		showImage = true,
 		showTitle = true,
 		showDescription = true,
 		showButton = true,
 	} = blockProps.attributes
 
-	return applyFilters( 'stackable.feature-grid.show', {
+	return applyFilters( 'stackable.feature.show', {
+		imageColumnWidth: [ 'basic', 'plain', 'half' ].includes( design ),
+		containerWidth: design.match( /^overlap/ ),
+		containerOffset: design.match( /^overlap(.*)?[2-5]$/ ),
+		reverseHorizontally: ! design.match( /^overlap-?\w*[45]$/ ),
+		borderRadius: design !== 'plain',
 		columnBackground: design !== 'plain',
-		imageSpacing: showImage && design !== 'horizontal',
+		featuredImageAsBackground: design.match( /^(overlap-bg|half)/ ),
 		titleSpacing: showTitle,
 		descriptionSpacing: showDescription,
 		buttonSpacing: showButton,

@@ -2,14 +2,18 @@
  * External dependencies
  */
 import {
-	createBackgroundStyleSet, createButtonStyleSet, createTypographyStyles, whiteIfDark,
+	createBackgroundStyleSet,
+	createButtonStyleSet,
+	createResponsiveStyles,
+	createTypographyStyles,
+	whiteIfDark,
 } from '~stackable/util'
+import deepmerge from 'deepmerge'
 
 /**
  * Internal dependencies
  */
-import { showOptions } from '.'
-import deepmerge from 'deepmerge'
+import { showOptions } from './util'
 
 /**
  * WordPress dependencies
@@ -63,39 +67,15 @@ export const createStyles = props => {
 		...( show.columnBackground ? createBackgroundStyleSet( 'column%s', 'ugb-cta__item', props.attributes, columnBackgroundOptions ) : {} ),
 	} )
 
+	// Spacing.
 	if ( show.titleSpacing ) {
-		styles.push( {
-			'.ugb-cta__title': {
-				marginBottom: getValue( 'titleBottomMargin', '%spx !important' ),
-			},
-			tablet: {
-				'.ugb-cta__title': {
-					marginBottom: getValue( 'titleTabletBottomMargin', '%spx !important' ),
-				},
-			},
-			mobile: {
-				'.ugb-cta__title': {
-					marginBottom: getValue( 'titleMobileBottomMargin', '%spx !important' ),
-				},
-			},
-		} )
+		styles.push( ...createResponsiveStyles( '.ugb-cta__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
 	}
 	if ( show.descriptionSpacing ) {
-		styles.push( {
-			'.ugb-cta__description': {
-				marginBottom: getValue( 'descriptionBottomMargin', '%spx !important' ),
-			},
-			tablet: {
-				'.ugb-cta__description': {
-					marginBottom: getValue( 'descriptionTabletBottomMargin', '%spx !important' ),
-				},
-			},
-			mobile: {
-				'.ugb-cta__description': {
-					marginBottom: getValue( 'descriptionMobileBottomMargin', '%spx !important' ),
-				},
-			},
-		} )
+		styles.push( ...createResponsiveStyles( '.ugb-cta__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+	}
+	if ( show.buttonSpacing ) {
+		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'button%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
 	}
 
 	const {

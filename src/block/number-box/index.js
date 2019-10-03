@@ -161,6 +161,10 @@ export const schema = {
 		type: 'boolean',
 		default: true,
 	},
+	...createResponsiveAttributes( 'description%sBottomMargin', {
+		type: 'number',
+		default: '',
+	} ),
 	...createTypographyAttributes( 'description%s' ),
 
 	// Individual column colors.

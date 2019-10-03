@@ -192,7 +192,7 @@ export const schema = {
 			type: 'number',
 			default: '',
 		},
-		[ 'Image', 'Title', 'Description' ],
+		[ 'Image', 'Title', 'Description', 'Button' ],
 		[ '', 'Tablet', 'Mobile' ]
 	),
 
