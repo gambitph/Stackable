@@ -174,16 +174,16 @@ export const createStyles = props => {
 		styles.push( {
 			'.ugb-pricing-box__price-prefix': {
 				color: pricePrefixColor ? pricePrefixColor : undefined,
-				...createTypographyStyles( 'pricePrefix%s', 'desktop', props.attributes ),
+				...createTypographyStyles( 'pricePrefix%s', 'desktop', props.attributes, { important: true } ),
 			},
 			tablet: {
 				'.ugb-pricing-box__price-prefix': {
-					...createTypographyStyles( 'pricePrefix%s', 'tablet', props.attributes ),
+					...createTypographyStyles( 'pricePrefix%s', 'tablet', props.attributes, { important: true } ),
 				},
 			},
 			mobile: {
 				'.ugb-pricing-box__price-prefix': {
-					...createTypographyStyles( 'pricePrefix%s', 'mobile', props.attributes ),
+					...createTypographyStyles( 'pricePrefix%s', 'mobile', props.attributes, { important: true } ),
 				},
 			},
 		} )
@@ -198,16 +198,16 @@ export const createStyles = props => {
 		styles.push( {
 			'.ugb-pricing-box__price-suffix': {
 				color: priceSuffixColor ? priceSuffixColor : undefined,
-				...createTypographyStyles( 'priceSuffix%s', 'desktop', props.attributes ),
+				...createTypographyStyles( 'priceSuffix%s', 'desktop', props.attributes, { important: true } ),
 			},
 			tablet: {
 				'.ugb-pricing-box__price-suffix': {
-					...createTypographyStyles( 'priceSuffix%s', 'tablet', props.attributes ),
+					...createTypographyStyles( 'priceSuffix%s', 'tablet', props.attributes, { important: true } ),
 				},
 			},
 			mobile: {
 				'.ugb-pricing-box__price-suffix': {
-					...createTypographyStyles( 'priceSuffix%s', 'mobile', props.attributes ),
+					...createTypographyStyles( 'priceSuffix%s', 'mobile', props.attributes, { important: true } ),
 				},
 			},
 		} )
