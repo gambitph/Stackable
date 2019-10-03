@@ -13,13 +13,13 @@ import {
 	createTypographyAttributes,
 	descriptionPlaceholder,
 } from '~stackable/util'
+import { HeaderIcon } from '~stackable/icons'
 
 /**
  * Internal dependencies
  */
 import deprecated from './deprecated'
 import edit from './edit'
-import { HeaderIcon } from '~stackable/icons'
 import save from './save'
 
 /**

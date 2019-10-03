@@ -426,36 +426,12 @@ const edit = props => {
 						value={ subtitle }
 						onChange={ value => setAttributes( { subtitle: value } ) }
 					/>
-					// const buttonComp = <ButtonEdit
-					// 	className="ugb-button1"
-					// 	size={ size }
-					// 	align={ contentAlign }
-					// 	color={ buttonTextColor }
-					// 	backgroundColor={ buttonColor }
-					// 	text={ buttonText }
-					// 	borderRadius={ cornerButtonRadius }
-					// 	design={ buttonDesign }
-					// 	icon={ buttonIcon }
-					// 	onChange={ text => setAttributes( { buttonText: text } ) }
-					// />
 					const buttonComp = <ButtonEditHelper
 						className="ugb-button1"
 						attrNameTemplate="button%s"
 						setAttributes={ setAttributes }
 						blockAttributes={ props.attributes }
 					/>
-					// const button2Comp = <ButtonEdit
-					// 	className="ugb-button2"
-					// 	size={ size }
-					// 	align={ contentAlign }
-					// 	color={ buttonTextColor }
-					// 	backgroundColor={ buttonColor }
-					// 	text={ buttonText }
-					// 	borderRadius={ cornerButtonRadius }
-					// 	design={ buttonDesign }
-					// 	icon={ buttonIcon }
-					// 	onChange={ text => setAttributes( { buttonText: text } ) }
-					// />
 					const button2Comp = <ButtonEditHelper
 						className="ugb-button2"
 						attrNameTemplate="button2%s"

@@ -249,6 +249,15 @@ const deprecatedSave_1_15_6 = props => {
 		buttonNewTab,
 		invert = false,
 		fullHeight = false,
+		buttonSize2,
+		buttonTextColor2,
+		buttonColor2,
+		buttonText2 = '',
+		buttonBorderRadius2 = 4,
+		buttonDesign2 = 'basic',
+		buttonIcon2 = '',
+		buttonURL2 = '',
+		buttonNewTab2 = false,
 	} = props.attributes
 
 	const mainClasses = classnames( [
@@ -342,18 +351,53 @@ const deprecatedSave_1_15_6 = props => {
 						borderRadius={ cornerButtonRadius }
 					/>
 				)
+				const button2Comp = buttonText2 && !! buttonText2.length &&
+					<DeprecatedButtonContent_1_15_5
+						size={ buttonSize2 }
+						url={ buttonURL2 }
+						newTab={ buttonNewTab2 }
+						align={ contentAlign }
+						color={ buttonTextColor2 }
+						text={ buttonText2 }
+						design={ buttonDesign2 }
+						icon={ buttonIcon2 }
+						backgroundColor={ buttonColor2 }
+						borderRadius={ buttonBorderRadius2 }
+					/>
 				const comps = {
 					titleComp,
 					subtitleComp,
 					buttonComp,
 				}
-				return applyFilters( 'stackable.header.save.output_1_15_6', (
-					<div className="ugb-content-wrapper">
+
+				const buttonsStyle = {
+					justifyContent: contentAlign === 'right' ? 'flex-end' :
+						contentAlign === 'left' ? 'flex-start' :
+							undefined,
+				}
+
+				const buttonArea = ! buttonText2 ? comps.buttonComp : (
+					<div className="ugb-header__buttons" style={ buttonsStyle }>
+						{ comps.buttonComp }
+						{ button2Comp }
+					</div>
+				)
+
+				if ( design === 'basic' || design === 'plain' ) {
+					return <div className="ugb-content-wrapper">
 						{ titleComp }
 						{ subtitleComp }
-						{ buttonComp }
+						{ buttonArea }
 					</div>
-				), design, props, comps )
+				}
+
+				return <div className="ugb-content-wrapper">
+					<div className="ugb-header__wrapper">
+						{ titleComp }
+						{ subtitleComp }
+						{ buttonArea }
+					</div>
+				</div>
 			} )() }
 		</div>
 	)
