@@ -198,7 +198,7 @@ const deprecatedSave_1_17_3 = props => {
 					</div>
 				)
 			} ) }
-			{ applyFilters( 'stackable.pricing-box.save.output.after', null, design, props ) }
+			{ applyFilters( 'stackable.pricing-box.save.output.after_1_17_3', null, design, props ) }
 		</div>
 	)
 }
@@ -278,64 +278,64 @@ const deprecatedSchema_1_17_3 = {
 // Wrap in curly or else statement will merge with the previous one and will error out.
 { [ 1, 2, 3 ].forEach( i => {
 	const index = i === 1 ? '' : i
-	deprecatedSave_1_17_3[ `url${ index }` ] = {
+	deprecatedSchema_1_17_3[ `url${ index }` ] = {
 		type: 'string',
 		source: 'attribute',
 		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-button`,
 		attribute: 'href',
 		default: '',
 	}
-	deprecatedSave_1_17_3[ `newTab${ index }` ] = {
+	deprecatedSchema_1_17_3[ `newTab${ index }` ] = {
 		type: 'boolean',
 		source: 'attribute',
 		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-button`,
 		attribute: 'target',
 		default: false,
 	}
-	deprecatedSave_1_17_3[ `imageURL${ index }` ] = {
+	deprecatedSchema_1_17_3[ `imageURL${ index }` ] = {
 		type: 'string',
 	}
-	deprecatedSave_1_17_3[ `imageID${ index }` ] = {
+	deprecatedSchema_1_17_3[ `imageID${ index }` ] = {
 		type: 'string',
 	}
-	deprecatedSave_1_17_3[ `imageAlt${ index }` ] = {
+	deprecatedSchema_1_17_3[ `imageAlt${ index }` ] = {
 		type: 'string',
 	}
-	deprecatedSave_1_17_3[ `highlightColor${ index }` ] = {
+	deprecatedSchema_1_17_3[ `highlightColor${ index }` ] = {
 		type: 'string',
 		default: '',
 	}
-	deprecatedSave_1_17_3[ `pricingBoxTitle${ index }` ] = {
+	deprecatedSchema_1_17_3[ `pricingBoxTitle${ index }` ] = {
 		source: 'html',
 		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__title`,
 		default: __( 'Title', i18n ),
 	}
-	deprecatedSave_1_17_3[ `price${ index }` ] = {
+	deprecatedSchema_1_17_3[ `price${ index }` ] = {
 		source: 'html',
 		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__price`,
 		default: `${ index }9`,
 	}
-	deprecatedSave_1_17_3[ `pricePrefix${ index }` ] = {
+	deprecatedSchema_1_17_3[ `pricePrefix${ index }` ] = {
 		source: 'html',
 		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__price-prefix`,
 		default: '$',
 	}
-	deprecatedSave_1_17_3[ `priceSuffix${ index }` ] = {
+	deprecatedSchema_1_17_3[ `priceSuffix${ index }` ] = {
 		source: 'html',
 		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__price-suffix`,
 		default: '.00',
 	}
-	deprecatedSave_1_17_3[ `perMonthLabel${ index }` ] = {
+	deprecatedSchema_1_17_3[ `perMonthLabel${ index }` ] = {
 		source: 'html',
 		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__subprice`,
 		default: __( 'Description', i18n ),
 	}
-	deprecatedSave_1_17_3[ `buttonText${ index }` ] = {
+	deprecatedSchema_1_17_3[ `buttonText${ index }` ] = {
 		source: 'html',
 		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-button span`,
 		default: __( 'Button text', i18n ),
 	}
-	deprecatedSave_1_17_3[ `featureList${ index }` ] = {
+	deprecatedSchema_1_17_3[ `featureList${ index }` ] = {
 		source: 'html',
 		selector: `.ugb-pricing-box__item:nth-of-type(${ i }) .ugb-pricing-box__description`,
 		default: descriptionPlaceholder( 'medium' ),
@@ -1248,11 +1248,71 @@ export const deprecatedSave_1_9 = props => {
 
 const deprecated = [
 	{
-		deprecatedSave_1_17_3,
-		deprecatedSchema_1_17_3,
+		attributes: deprecatedSchema_1_17_3,
+		save: deprecatedSave_1_17_3,
 		migrate: attributes => {
+			const {
+				design = 'basic',
+			} = attributes
+
 			return {
 				...attributes,
+
+				titleColor: attributes.pricingBoxColor,
+				priceColor: attributes.priceColor,
+				subPriceColor: attributes.perMonthLabelColor,
+				buttonBackgroundColor: attributes.buttonColor,
+				descriptionColor: attributes.featureListColor,
+				buttonSize: attributes.size,
+				buttonBorderRadius: attributes.cornerButtonRadius,
+
+				button1Url: attributes.url,
+				button2Url: attributes.url2,
+				button3Url: attributes.url3,
+				button1NewWindow: attributes.newTab,
+				button2NewWindow: attributes.newTab2,
+				button3NewWindow: attributes.newTab3,
+
+				image1Url: attributes.imageURL,
+				image2Url: attributes.imageURL2,
+				image3Url: attributes.imageURL3,
+				image1Id: attributes.imageID,
+				image2Id: attributes.imageID2,
+				image3Id: attributes.imageID3,
+				image1Alt: attributes.imageAlt,
+				image2Alt: attributes.imageAlt2,
+				image3Alt: attributes.imageAlt3,
+
+				// Depends on design, the highlight color can either be the background color or header color.
+				column1BackgroundColor: ! [ 'sectioned', 'colored' ].includes( design ) ? attributes.highlightColor : '',
+				column2BackgroundColor: ! [ 'sectioned', 'colored' ].includes( design ) ? attributes.highlightColor2 : '',
+				column3BackgroundColor: ! [ 'sectioned', 'colored' ].includes( design ) ? attributes.highlightColor3 : '',
+
+				column1HeaderBackgroundColor: [ 'sectioned', 'colored' ].includes( design ) ? attributes.highlightColor : '',
+				column2HeaderBackgroundColor: [ 'sectioned', 'colored' ].includes( design ) ? attributes.highlightColor2 : '',
+				column3HeaderBackgroundColor: [ 'sectioned', 'colored' ].includes( design ) ? attributes.highlightColor3 : '',
+
+				title1: attributes.pricingBoxTitle,
+				title2: attributes.pricingBoxTitle2,
+				title3: attributes.pricingBoxTitle3,
+				price1: attributes.price,
+				price2: attributes.price2,
+				price3: attributes.price3,
+				pricePrefix1: attributes.pricePrefix,
+				pricePrefix2: attributes.pricePrefix2,
+				pricePrefix3: attributes.pricePrefix3,
+				priceSuffix1: attributes.priceSuffix,
+				priceSuffix2: attributes.priceSuffix2,
+				priceSuffix3: attributes.priceSuffix3,
+				subPrice1: attributes.perMonthLabel,
+				subPrice2: attributes.perMonthLabel2,
+				subPrice3: attributes.perMonthLabel3,
+				button1Text: attributes.buttonText,
+				button2Text: attributes.buttonText2,
+				button3Text: attributes.buttonText3,
+				description1: attributes.featureList,
+				description2: attributes.featureList2,
+				description3: attributes.featureList3,
 			}
 		},
 	},

@@ -13,7 +13,7 @@
 		grid-auto-columns: minmax(0, 1fr);
 		grid-auto-flow: column;
 		grid-gap: $box-hori-padding;
-		align-items: flex-start;
+		align-items: center;
 	}
 	.ugb-pricing-box__item {
 		@include box();
@@ -54,6 +54,11 @@
 	.ugb-pricing-box__image {
 		margin-left: auto;
 		margin-right: auto;
+		width: 100%;
+		.ugb-img {
+			margin: 0 auto;
+			display: block;
+		}
 	}
 	.ugb-pricing-box__image,
 	.ugb-pricing-box__title,

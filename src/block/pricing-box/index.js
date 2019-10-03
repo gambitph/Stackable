@@ -5,7 +5,7 @@
 /**
  * Internal dependencies
  */
-import deprecate from './deprecated'
+import deprecated from './deprecated'
 import edit from './edit'
 import save from './save'
 
@@ -21,7 +21,6 @@ import {
 	descriptionPlaceholder,
 } from '~stackable/util'
 import { PricingBoxIcon } from '~stackable/icons'
-// import { range } from 'lodash'
 import { disabledBlocks, i18n } from 'stackable'
 
 /**
@@ -315,7 +314,7 @@ export const settings = {
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
 	},
 
-	deprecate,
+	deprecated,
 	edit,
 	save,
 

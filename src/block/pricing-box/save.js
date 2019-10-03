@@ -54,11 +54,10 @@ const save = props => {
 
 	const mainClasses = classnames( [
 		className,
-		'ugb-pricing-box',
 		'ugb-pricing-box--v3',
 		`ugb-pricing-box--columns-${ columns }`,
 		`ugb-pricing-box--design-${ design }`,
-	], applyFilters( 'stackable.pricing-box.mainclasses', {}, design, props ) )
+	], applyFilters( 'stackable.pricing-box.mainclasses', {}, props ) )
 
 	const show = showOptions( props )
 
@@ -152,7 +151,6 @@ const save = props => {
 								noFollow={ attributes[ `button${ i }NoFollow` ] }
 							/>
 						</div>
-
 					)
 					const descriptionComp = ! RichText.isEmpty( description ) && (
 						<RichText.Content

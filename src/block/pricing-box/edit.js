@@ -810,7 +810,7 @@ const edit = props => {
 					return (
 						<div className={ itemClasses } key={ i }>
 							{ show.columnBackground && createVideoBackground( 'column%s', props ) }
-							{ applyFilters( 'stackable.pricing-box.edit.output', (
+							{ applyFilters( 'stackable.pricing-box.edit.content', (
 								<Fragment>
 									{ showImage && imageComp }
 									{ showTitle && titleComp }
