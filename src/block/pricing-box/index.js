@@ -258,6 +258,11 @@ const schema = {
 		default: '',
 	},
 
+	hoverEffect: {
+		type: 'string',
+		default: '',
+	},
+
 	// Alignment.
 	...createAllCombinationAttributes(
 		'%s%sAlign', {
