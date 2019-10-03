@@ -768,7 +768,7 @@ const deprecated = [
 				cornerButtonRadius: undefined,
 
 				button1Url: attributes.url,
-				button1NewWindow: attributes.newTab,
+				button1NewTab: attributes.newTab,
 				button1Text: attributes.text,
 				button1BackgroundColor: attributes.color,
 				button1TextColor: attributes.textColor,
@@ -786,7 +786,7 @@ const deprecated = [
 				icon: undefined,
 
 				button2Url: attributes.url2,
-				button2NewWindow: attributes.newTab2,
+				button2NewTab: attributes.newTab2,
 				button2Text: attributes.text2,
 				button2BackgroundColor: attributes.color2,
 				button2TextColor: attributes.textColor2,
@@ -805,7 +805,7 @@ const deprecated = [
 				icon2: undefined,
 
 				button3Url: attributes.url3,
-				button3NewWindow: attributes.newTab3,
+				button3NewTab: attributes.newTab3,
 				button3Text: attributes.text3,
 				button3BackgroundColor: attributes.color3,
 				button3TextColor: attributes.textColor3,

@@ -62,7 +62,7 @@ const createButtonAttributes = ( attrNameTemplate, options = {} ) => {
 				default: '',
 			},
 			[
-				'NewWindow',
+				'NewTab',
 			]
 		),
 		...createAllCombinationAttributes(

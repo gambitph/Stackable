@@ -283,7 +283,7 @@ addFilter( 'stackable.feature-grid.edit.inspector.style.before', 'stackable/feat
 					blockAttributes={ props.attributes }
 					design={ props.attributes.buttonDesign || 'plain' }
 					onChangeUrl={ false }
-					onChangeNewWindow={ false }
+					onChangeNewTab={ false }
 					onChangeNoFollow={ false }
 				/>
 				<ControlSeparator />
@@ -531,10 +531,10 @@ const edit = props => {
 										onChange={ value => setAttributes( { [ `button${ i }Text` ]: value } ) }
 										onChangeIcon={ value => setAttributes( { [ `button${ i }Icon` ]: value } ) }
 										url={ attributes[ `button${ i }Url` ] }
-										newWindow={ attributes[ `button${ i }NewWindow` ] }
+										newTab={ attributes[ `button${ i }NewTab` ] }
 										noFollow={ attributes[ `button${ i }NoFollow` ] }
 										onChangeUrl={ value => setAttributes( { [ `button${ i }Url` ]: value } ) }
-										onChangeNewWindow={ value => setAttributes( { [ `button${ i }NewWindow` ]: value } ) }
+										onChangeNewTab={ value => setAttributes( { [ `button${ i }NewTab` ]: value } ) }
 										onChangeNoFollow={ value => setAttributes( { [ `button${ i }NoFollow` ]: value } ) }
 									/>
 								}

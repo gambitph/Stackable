@@ -159,7 +159,7 @@ export const schema = {
 		exclude: [
 			'Text',
 			'Url',
-			'NewWindow',
+			'NewTab',
 			'NoFollow',
 		],
 	} ),

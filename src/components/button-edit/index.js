@@ -85,10 +85,10 @@ class ButtonEdit extends Component {
 			ghostToNormalEffect = false,
 
 			url = '',
-			newWindow = '',
+			newTab = '',
 			noFollow = '',
 			onChangeUrl = null,
-			onChangeNewWindow = null,
+			onChangeNewTab = null,
 			onChangeNoFollow = null,
 
 			onChangeIcon = null,
@@ -155,9 +155,9 @@ class ButtonEdit extends Component {
 						<UrlInputPopover
 							value={ url }
 							onChange={ onChangeUrl }
-							newWindow={ newWindow }
+							newTab={ newTab }
 							noFollow={ noFollow }
-							onChangeNewWindow={ onChangeNewWindow }
+							onChangeNewTab={ onChangeNewTab }
 							onChangeNoFollow={ onChangeNoFollow }
 						/>
 					}

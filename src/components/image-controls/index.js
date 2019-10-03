@@ -202,11 +202,11 @@ const ImageControls = props => {
 					placeholder="http://"
 				/>
 			}
-			{ props.onChangeLinkNewWindow && props.linkUrl &&
+			{ props.onChangeLinkNewTab && props.linkUrl &&
 				<ToggleControl
-					label={ __( 'Open link in new window', i18n ) }
-					checked={ props.linkNewWindow }
-					onChange={ props.onChangeLinkNewWindow }
+					label={ __( 'Open link in new tab', i18n ) }
+					checked={ props.linkNewTab }
+					onChange={ props.onChangeLinkNewTab }
 				/>
 			}
 			{ props.onChangeLinkNoFollow && props.linkUrl &&
@@ -254,10 +254,10 @@ ImageControls.defaultProps = {
 	onChangeBlendMode: () => {},
 
 	// linkUrl: '',
-	// linkNewWindow: '',
+	// linkNewTab: '',
 	// linkNoFollow: '',
 	// onChangeLinkUrl: () => {},
-	// onChangeLinkNewWindow: () => {},
+	// onChangeLinkNewTab: () => {},
 	// onChangeLinkNoFollow: () => {},
 }
 

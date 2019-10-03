@@ -29,7 +29,7 @@ const UrlInputPopover = withState( {
 		setState,
 	} = props
 
-	if ( ! props.onChange && ! props.onChangeNewWindow && ! props.onChangeNoFollow ) {
+	if ( ! props.onChange && ! props.onChangeNewTab && ! props.onChangeNoFollow ) {
 		return null
 	}
 
@@ -42,7 +42,7 @@ const UrlInputPopover = withState( {
 	const moreButtonClasses = classnames( [
 		'ugb-url-input-control__more-button',
 	], {
-		'ugb--active': props.newWindow || props.noFollow,
+		'ugb--active': props.newTab || props.noFollow,
 	} )
 
 	return (
@@ -62,7 +62,7 @@ const UrlInputPopover = withState( {
 							autoFocus={ false } // eslint-disable-line
 						/>
 					}
-					{ ( props.onChangeNewWindow || props.onChangeNoFollow ) &&
+					{ ( props.onChangeNewTab || props.onChangeNoFollow ) &&
 						<IconButton
 							className={ moreButtonClasses }
 							icon="ellipsis"
@@ -72,11 +72,11 @@ const UrlInputPopover = withState( {
 						/>
 					}
 				</div>
-				{ props.onChangeNewWindow && openAdvanced &&
+				{ props.onChangeNewTab && openAdvanced &&
 					<ToggleControl
-						label={ __( 'Open link in new window', i18n ) }
-						checked={ props.newWindow }
-						onChange={ props.onChangeNewWindow }
+						label={ __( 'Open link in new tab', i18n ) }
+						checked={ props.newTab }
+						onChange={ props.onChangeNewTab }
 					/>
 				}
 				{ props.onChangeNoFollow && openAdvanced &&
@@ -95,9 +95,9 @@ UrlInputPopover.defaultProps = {
 	value: '',
 	onChange: null,
 
-	newWindow: false,
+	newTab: false,
 	noFollow: false,
-	onChangeNewWindow: null,
+	onChangeNewTab: null,
 	onChangeNoFollow: null,
 }
 

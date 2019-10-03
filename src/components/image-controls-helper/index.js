@@ -84,10 +84,10 @@ const ImageControlsHelper = props => {
 			onChangeBlendMode={ value => setAttributes( { [ getAttrName( 'BlendMode' ) ]: value } ) }
 
 			// linkUrl={ getAttrValue( 'LinkUrl' ) }
-			// linkNewWindow={ getAttrValue( 'LinkNewWindow' ) }
+			// linkNewTab={ getAttrValue( 'LinkNewTab' ) }
 			// linkNoFollow={ getAttrValue( 'LinkNoFollow' ) }
 			// onChangeLinkUrl={ value => setAttributes( { [ getAttrName( 'LinkUrl' ) ]: value } ) }
-			// onChangeLinkNewWindow={ value => setAttributes( { [ getAttrName( 'LinkNewWindow' ) ]: value } ) }
+			// onChangeLinkNewTab={ value => setAttributes( { [ getAttrName( 'LinkNewTab' ) ]: value } ) }
 			// onChangeLinkNoFollow={ value => setAttributes( { [ getAttrName( 'LinkNoFollow' ) ]: value } ) }
 
 			{ ...props }

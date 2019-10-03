@@ -1286,7 +1286,7 @@ const deprecated = [
 				// Button 1.
 				showButton: !! attributes.buttonText,
 				buttonUrl: attributes.buttonURL,
-				buttonNewWindow: attributes.buttonNewTab,
+				buttonNewTab: attributes.buttonNewTab,
 				buttonBackgroundColor: attributes.buttonColor,
 				buttonSize: attributes.size,
 				buttonBorderRadius: attributes.cornerButtonRadius,
@@ -1294,7 +1294,7 @@ const deprecated = [
 				// Button 2.
 				showButton2: !! attributes.buttonText2,
 				button2Url: attributes.buttonURL2,
-				button2NewWindow: attributes.buttonNewTab2,
+				button2NewTab: attributes.buttonNewTab2,
 				button2Text: attributes.buttonText2,
 				button2BackgroundColor: attributes.buttonColor2,
 				button2TextColor: attributes.buttonTextColor2,

@@ -35,10 +35,10 @@ const ButtonEditHelper = props => {
 			onChange={ value => setAttributes( { [ getAttrName( 'Text' ) ]: value } ) }
 
 			url={ getAttrValue( 'Url' ) }
-			newWindow={ getAttrValue( 'NewWindow' ) }
+			newTab={ getAttrValue( 'NewTab' ) }
 			noFollow={ getAttrValue( 'NoFollow' ) }
 			onChangeUrl={ value => setAttributes( { [ getAttrName( 'Url' ) ]: value } ) }
-			onChangeNewWindow={ value => setAttributes( { [ getAttrName( 'NewWindow' ) ]: value } ) }
+			onChangeNewTab={ value => setAttributes( { [ getAttrName( 'NewTab' ) ]: value } ) }
 			onChangeNoFollow={ value => setAttributes( { [ getAttrName( 'NoFollow' ) ]: value } ) }
 
 			onChangeIcon={ value => setAttributes( { [ getAttrName( 'Icon' ) ]: value } ) }
@@ -69,7 +69,7 @@ ButtonEditHelper.Content = props => {
 			size={ getAttrValue( 'Size', 'normal' ) }
 			text={ getAttrValue( 'Text' ) }
 			icon={ getAttrValue( 'Icon' ) }
-			newTab={ getAttrValue( 'NewWindow' ) }
+			newTab={ getAttrValue( 'NewTab' ) }
 			url={ getAttrValue( 'Url' ) }
 			noFollow={ getAttrValue( 'NoFollow' ) }
 			hoverEffect={ getAttrValue( 'HoverEffect' ) }

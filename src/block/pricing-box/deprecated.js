@@ -1269,9 +1269,9 @@ const deprecated = [
 				button1Url: attributes.url,
 				button2Url: attributes.url2,
 				button3Url: attributes.url3,
-				button1NewWindow: attributes.newTab,
-				button2NewWindow: attributes.newTab2,
-				button3NewWindow: attributes.newTab3,
+				button1NewTab: attributes.newTab,
+				button2NewTab: attributes.newTab2,
+				button3NewTab: attributes.newTab3,
 
 				image1Url: attributes.imageURL,
 				image2Url: attributes.imageURL2,

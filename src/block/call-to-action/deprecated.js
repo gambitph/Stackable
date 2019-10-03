@@ -1040,7 +1040,7 @@ const deprecated = [
 
 				// Button.
 				buttonUrl: attributes.url,
-				buttonNewWindow: attributes.newTab,
+				buttonNewTab: attributes.newTab,
 				buttonBackgroundColor: attributes.color,
 				buttonSize: attributes.size,
 				buttonDesign: attributes.buttonDesign,

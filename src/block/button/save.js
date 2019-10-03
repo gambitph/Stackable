@@ -32,7 +32,7 @@ const save = props => {
 		button1HoverEffect = '',
 		button1Icon = '',
 		button1IconPosition = '',
-		button1NewWindow = false,
+		button1NewTab = false,
 		button1NoFollow = false,
 		button1Url = '',
 		button1Design = 'basic',
@@ -43,7 +43,7 @@ const save = props => {
 		button2HoverEffect = '',
 		button2Icon = '',
 		button2IconPosition = '',
-		button2NewWindow = false,
+		button2NewTab = false,
 		button2NoFollow = false,
 		button2Url = '',
 		button2Design = 'basic',
@@ -54,7 +54,7 @@ const save = props => {
 		button3HoverEffect = '',
 		button3Icon = '',
 		button3IconPosition = '',
-		button3NewWindow = false,
+		button3NewTab = false,
 		button3NoFollow = false,
 		button3Url = '',
 		button3Design = 'basic',
@@ -78,7 +78,7 @@ const save = props => {
 					size={ button1Size !== '' ? button1Size : 'normal' }
 					text={ button1Text }
 					icon={ button1Icon }
-					newTab={ button1NewWindow !== '' && button1NewWindow }
+					newTab={ button1NewTab !== '' && button1NewTab }
 					url={ button1Url }
 					noFollow={ button1NoFollow }
 					hoverEffect={ button1HoverEffect }
@@ -93,7 +93,7 @@ const save = props => {
 						size={ button2Size !== '' ? button2Size : 'normal' }
 						text={ button2Text }
 						icon={ button2Icon }
-						newTab={ button2NewWindow !== '' && button2NewWindow }
+						newTab={ button2NewTab !== '' && button2NewTab }
 						url={ button2Url }
 						noFollow={ button2NoFollow }
 						hoverEffect={ button2HoverEffect }
@@ -109,7 +109,7 @@ const save = props => {
 						size={ button3Size !== '' ? button3Size : 'normal' }
 						text={ button3Text }
 						icon={ button3Icon }
-						newTab={ button3NewWindow !== '' && button3NewWindow }
+						newTab={ button3NewTab !== '' && button3NewTab }
 						url={ button3Url }
 						noFollow={ button3NoFollow }
 						hoverEffect={ button3HoverEffect }

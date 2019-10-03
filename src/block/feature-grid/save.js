@@ -113,7 +113,7 @@ const save = props => {
 										text={ buttonText }
 										icon={ attributes[ `button${ i }Icon` ] || buttonIcon }
 										url={ attributes[ `button${ i }Url` ] }
-										newWindow={ attributes[ `button${ i }NewWindow` ] }
+										newTab={ attributes[ `button${ i }NewTab` ] }
 										noFollow={ attributes[ `button${ i }NoFollow` ] }
 									/>
 								}

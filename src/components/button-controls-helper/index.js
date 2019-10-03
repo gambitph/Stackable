@@ -23,10 +23,10 @@ const ButtonControlsHelper = props => {
 			onChangeDesign={ value => setAttributes( { [ getAttrName( 'Design' ) ]: value } ) }
 
 			url={ props.blockAttributes[ getAttrName( 'Url' ) ] || '' }
-			newWindow={ props.blockAttributes[ getAttrName( 'NewWindow' ) ] || '' }
+			newTab={ props.blockAttributes[ getAttrName( 'NewTab' ) ] || '' }
 			noFollow={ props.blockAttributes[ getAttrName( 'NoFollow' ) ] || '' }
 			onChangeUrl={ value => setAttributes( { [ getAttrName( 'Url' ) ]: value } ) }
-			onChangeNewWindow={ value => setAttributes( { [ getAttrName( 'NewWindow' ) ]: value } ) }
+			onChangeNewTab={ value => setAttributes( { [ getAttrName( 'NewTab' ) ]: value } ) }
 			onChangeNoFollow={ value => setAttributes( { [ getAttrName( 'NoFollow' ) ]: value } ) }
 
 			size={ props.blockAttributes[ getAttrName( 'Size' ) ] || '' }

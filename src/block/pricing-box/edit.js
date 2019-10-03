@@ -380,34 +380,12 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 				] }
 				toggleAttributeName="showButton"
 			>
-				{ /* { range( 1, columns + 1 ).map( i => {
-					return (
-						<Fragment key={ i }>
-							<URLInputControl
-								label={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Link / URL', i18n ), i ) }
-								value={ props.attributes[ `button${ i }Url` ] }
-								onChange={ value => setAttributes( { [ `button${ i }Url` ]: value } ) }
-								placeholder="http://"
-							/>
-							<ToggleControl
-								label={ __( 'Open link in new window', i18n ) }
-								checked={ props.attributes[ `button${ i }NewWindow` ] }
-								onChange={ value => setAttributes( { [ `button${ i }NewWindow` ]: value } ) }
-							/>
-							<ToggleControl
-								label={ __( 'Nofollow link', i18n ) }
-								checked={ props.attributes[ `button${ i }NoFollow` ] }
-								onChange={ value => setAttributes( { [ `button${ i }NoFollow` ]: value } ) }
-							/>
-						</Fragment>
-					)
-				} ) } */ }
 				<ButtonControlsHelper
 					attrNameTemplate="button%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 					onChangeUrl={ false }
-					onChangeNewWindow={ false }
+					onChangeNewTab={ false }
 					onChangeNoFollow={ false }
 				/>
 				<ControlSeparator />
@@ -781,10 +759,10 @@ const edit = props => {
 								onChange={ value => setAttributes( { [ `button${ i }Text` ]: value } ) }
 								onChangeIcon={ value => setAttributes( { [ `button${ i }Icon` ]: value } ) }
 								url={ attributes[ `button${ i }Url` ] }
-								newWindow={ attributes[ `button${ i }NewWindow` ] }
+								newTab={ attributes[ `button${ i }NewTab` ] }
 								noFollow={ attributes[ `button${ i }NoFollow` ] }
 								onChangeUrl={ value => setAttributes( { [ `button${ i }Url` ]: value } ) }
-								onChangeNewWindow={ value => setAttributes( { [ `button${ i }NewWindow` ]: value } ) }
+								onChangeNewTab={ value => setAttributes( { [ `button${ i }NewTab` ]: value } ) }
 								onChangeNoFollow={ value => setAttributes( { [ `button${ i }NoFollow` ]: value } ) }
 							/>
 						</div>

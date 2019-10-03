@@ -53,11 +53,11 @@ const ButtonControls = props => {
 					placeholder="http://"
 				/>
 			) }
-			{ props.onChangeUrl && props.onChangeNewWindow && (
+			{ props.onChangeUrl && props.onChangeNewTab && (
 				<ToggleControl
-					label={ __( 'Open link in new window', i18n ) }
-					checked={ props.newWindow }
-					onChange={ props.onChangeNewWindow }
+					label={ __( 'Open link in new tab', i18n ) }
+					checked={ props.newTab }
+					onChange={ props.onChangeNewTab }
 				/>
 			) }
 			{ props.onChangeUrl && props.onChangeNoFollow && (
@@ -408,10 +408,10 @@ ButtonControls.defaultProps = {
 	onChangeDesign: () => {},
 
 	url: '',
-	newWindow: '',
+	newTab: '',
 	noFollow: '',
 	onChangeUrl: () => {},
-	onChangeNewWindow: () => {},
+	onChangeNewTab: () => {},
 	onChangeNoFollow: () => {},
 
 	size: '',

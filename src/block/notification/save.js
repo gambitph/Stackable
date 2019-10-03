@@ -57,7 +57,7 @@ const save = props => {
 		buttonIconPosition = '',
 		buttonDesign = 'plain',
 		buttonHoverGhostToNormal = false,
-		buttonNewWindow = false,
+		buttonNewTab = false,
 		buttonUrl = '',
 		buttonNoFollow = false,
 	} = props.attributes
@@ -119,7 +119,7 @@ const save = props => {
 							size={ buttonSize !== '' ? buttonSize : 'normal' }
 							text={ buttonText }
 							icon={ buttonIcon }
-							newTab={ buttonNewWindow !== '' && buttonNewWindow }
+							newTab={ buttonNewTab !== '' && buttonNewTab }
 							url={ buttonUrl }
 							noFollow={ buttonNoFollow }
 							hoverEffect={ buttonHoverEffect }

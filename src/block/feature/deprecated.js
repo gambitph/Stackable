@@ -822,7 +822,7 @@ const deprecated = [
 				imageUrl: attributes.imageUrl,
 
 				buttonUrl: attributes.buttonURL,
-				buttonNewWindow: attributes.buttonNewTab,
+				buttonNewTab: attributes.buttonNewTab,
 				buttonBackgroundColor: attributes.buttonColor,
 
 				columnBackgroundColorType: attributes.backgroundColorType,
