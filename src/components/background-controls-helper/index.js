@@ -49,7 +49,12 @@ const BackgroundControlsHelper = props => {
 					[ getAttrName( 'MobileBackgroundMediaID' ) ]: id,
 				} )
 			} }
-			onChangeBackgroundTintStrength={ value => setAttributes( { [ getAttrName( 'BackgroundTintStrength' ) ]: value } ) }
+			onChangeBackgroundTintStrength={ ( value, backgroundColor ) => {
+				setAttributes( {
+					[ getAttrName( 'BackgroundTintStrength' ) ]: value,
+					[ getAttrName( 'BackgroundColor' ) ]: backgroundColor,
+				} )
+			} }
 			onChangeFixedBackground={ value => setAttributes( { [ getAttrName( 'FixedBackground' ) ]: value } ) }
 
 			// Advanced gradient.

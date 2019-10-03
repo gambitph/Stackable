@@ -193,7 +193,18 @@ const BackgroundControls = props => {
 				<RangeControl
 					label={ __( 'Background Media Tint Strength', i18n ) }
 					value={ props.backgroundTintStrength }
-					onChange={ props.onChangeBackgroundTintStrength }
+					onChange={ value => {
+						const noValue = typeof value === 'undefined' || value === ''
+						// If the tint is changed, but on background color yet, make it black. Fixes #136.
+						if ( props.backgroundColor === '' && ! noValue ) {
+							props.onChangeBackgroundTintStrength( value, '#000000' )
+						// If the tint is reset, and the background is black (was set earlier), remove it.
+						} else if ( props.backgroundColor === '#000000' && noValue ) {
+							props.onChangeBackgroundTintStrength( value, '' )
+						} else {
+							props.onChangeBackgroundTintStrength( value, props.backgroundColor )
+						}
+					} }
 					min={ 1 }
 					max={ 10 }
 					step={ 1 }
