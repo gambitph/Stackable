@@ -63,6 +63,8 @@ class PanelTabs extends Component {
 		}
 
 		this.onButtonPanelClick = this.onButtonPanelClick.bind( this )
+		this.updateSidebarPanelTab = this.updateSidebarPanelTab.bind( this )
+		this.select = this.select.bind( this )
 		this.containerDiv = createRef()
 	}
 
@@ -97,7 +99,6 @@ class PanelTabs extends Component {
 		if ( ! toggle ) {
 			return
 		}
-
 		closeAllOpenPanels( toggle )
 		this.props.onClickPanel( toggle.closest( '.components-panel__body' ) )
 	}
@@ -120,29 +121,31 @@ class PanelTabs extends Component {
 				style={ this.props.style }
 				ref={ this.containerDiv }
 			>
-				{ TABS.map( ( {
-					value, title, label, icon,
-				}, i ) => {
-					if ( ! this.tabsToUse.includes( value ) ) {
-						return null
-					}
-					return (
-						<button
-							key={ i }
-							onClick={ () => this.select( value ) }
-							className={ classnames( [ 'edit-post-sidebar__panel-tab' ],
-								{
-									'is-active': this.state.activeTab === value,
-								}
-							) }
-							aria-label={ label }
-							data-label={ label }
-						>
-							<Icon icon={ icon } />
-							{ title }
-						</button>
-					)
-				} ) }
+				<div className="ugb-panel-tabs__wrapper">
+					{ TABS.map( ( {
+						value, title, label, icon,
+					}, i ) => {
+						if ( ! this.tabsToUse.includes( value ) ) {
+							return null
+						}
+						return (
+							<button
+								key={ i }
+								onClick={ () => this.select( value ) }
+								className={ classnames( [ 'edit-post-sidebar__panel-tab' ],
+									{
+										'is-active': this.state.activeTab === value,
+									}
+								) }
+								aria-label={ label }
+								data-label={ label }
+							>
+								<Icon icon={ icon } />
+								{ title }
+							</button>
+						)
+					} ) }
+				</div>
 			</div>
 		)
 	}

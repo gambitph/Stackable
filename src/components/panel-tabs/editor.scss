@@ -1,8 +1,11 @@
 .ugb-panel-tabs {
-	display: flex !important;
-	transition: all 0.3s ease-in-out;
-	background: #fff;
-	box-shadow: none;
+	.ugb-panel-tabs__wrapper {
+		display: flex !important;
+		transition: all 0.3s ease-in-out;
+		background: #fff;
+		box-shadow: none;
+		flex-wrap: nowrap;
+	}
 	button {
 		outline: none !important;
 		display: flex;
@@ -12,6 +15,7 @@
 		height: 80px;
 		padding: 0 !important;
 		flex: 1;
+		margin: 0 !important;
 		svg {
 			margin: 5px;
 			height: 20px;
