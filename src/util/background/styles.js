@@ -78,6 +78,7 @@ export const createBackgroundOverlayStyles = ( attrNameTemplate = '%s', screen =
 	}
 
 	const opacity = parseInt( getValue( 'BackgroundTintStrength' ) || 5, 10 ) / 10
+	const isGradient = getValue( 'BackgroundColorType' ) === 'gradient'
 
 	// The default color is the same as the other one but transparent. Same so that there won't be a weird transition to transparent.
 	const defaultColor1 = hexToRgba( getValue( 'BackgroundColor2' ) || '#ffffff', 0 )
@@ -89,12 +90,12 @@ export const createBackgroundOverlayStyles = ( attrNameTemplate = '%s', screen =
 
 	if ( screen !== 'tablet' && screen !== 'mobile' ) { // Desktop.
 		return {
-			backgroundColor: ! getValue( 'BackgroundColorType' ) && getValue( 'BackgroundColor' ) ? getValue( 'BackgroundColor' ) : undefined,
-			backgroundImage: getValue( 'BackgroundColorType' ) === 'gradient' ?
+			backgroundColor: ! isGradient && getValue( 'BackgroundColor' ) ? getValue( 'BackgroundColor' ) : undefined,
+			backgroundImage: isGradient ?
 				`linear-gradient(${ getValue( 'BackgroundGradientDirection' ) || 0 }deg, ${ getValue( 'BackgroundColor' ) || defaultColor1 } ${ color1Location }, ${ getValue( 'BackgroundColor2' ) || defaultColor2 } ${ color2Location })` :
 				undefined,
 			opacity: getValue( 'BackgroundMediaURL' ) ? opacity : undefined,
-			mixBlendMode: getValue( 'BackgroundGradientBlendMode' ),
+			mixBlendMode: isGradient ? getValue( 'BackgroundGradientBlendMode' ) : undefined,
 		}
 	} else if ( screen === 'tablet' ) { // Tablet.
 		return {
