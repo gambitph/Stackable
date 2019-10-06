@@ -181,7 +181,11 @@ export const createStyles = props => {
 
 	// Spacing.
 	if ( show.testimonialSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-testimonial__body', 'testimonial%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		if ( design !== 'bubble' ) {
+			styles.push( ...createResponsiveStyles( '.ugb-testimonial__body', 'testimonial%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		} else {
+			styles.push( ...createResponsiveStyles( '.ugb-testimonial__body-wrapper', 'testimonial%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		}
 	}
 	if ( show.imageSpacing ) {
 		styles.push( ...createResponsiveStyles( '.ugb-testimonial__image', 'image%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
