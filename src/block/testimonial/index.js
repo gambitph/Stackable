@@ -6,106 +6,29 @@
  * Internal dependencies
  */
 import deprecated from './deprecated'
+import edit from './edit'
+import save from './save'
 
 /**
  * External dependencies
  */
-import { descriptionPlaceholder } from '~stackable/util'
-import edit from './edit'
-import save from './save'
+import {
+	createBackgroundAttributes,
+	createImageAttributes,
+	createAllCombinationAttributes,
+	createTypographyAttributes,
+	descriptionPlaceholder,
+} from '~stackable/util'
 import { TestimonialIcon } from '~stackable/icons'
+import { disabledBlocks, i18n } from 'stackable'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { disabledBlocks, i18n } from 'stackable'
+import { addFilter, applyFilters } from '@wordpress/hooks'
 
 export const schema = {
-	mediaID1: {
-		type: 'number',
-	},
-	mediaID2: {
-		type: 'number',
-	},
-	mediaID3: {
-		type: 'number',
-	},
-	mediaURL1: {
-		type: 'string',
-	},
-	mediaURL2: {
-		type: 'string',
-	},
-	mediaURL3: {
-		type: 'string',
-	},
-	name1: {
-		source: 'html',
-		selector: '.ugb-testimonial__item:nth-of-type(1) .ugb-testimonial__name',
-		default: __( 'Name', i18n ),
-	},
-	name2: {
-		source: 'html',
-		selector: '.ugb-testimonial__item:nth-of-type(2) .ugb-testimonial__name',
-		default: __( 'Name', i18n ),
-	},
-	name3: {
-		source: 'html',
-		selector: '.ugb-testimonial__item:nth-of-type(3) .ugb-testimonial__name',
-		default: __( 'Name', i18n ),
-	},
-	position1: {
-		source: 'html',
-		selector: '.ugb-testimonial__item:nth-of-type(1) .ugb-testimonial__position',
-		default: __( 'Position', i18n ),
-	},
-	position2: {
-		source: 'html',
-		selector: '.ugb-testimonial__item:nth-of-type(2) .ugb-testimonial__position',
-		default: __( 'Position', i18n ),
-	},
-	position3: {
-		source: 'html',
-		selector: '.ugb-testimonial__item:nth-of-type(3) .ugb-testimonial__position',
-		default: __( 'Position', i18n ),
-	},
-	testimonial1: {
-		source: 'html',
-		selector: '.ugb-testimonial__item:nth-of-type(1) .ugb-testimonial__body',
-		default: descriptionPlaceholder( 'medium' ),
-	},
-	testimonial2: {
-		source: 'html',
-		selector: '.ugb-testimonial__item:nth-of-type(2) .ugb-testimonial__body',
-		default: descriptionPlaceholder( 'medium' ),
-	},
-	testimonial3: {
-		source: 'html',
-		selector: '.ugb-testimonial__item:nth-of-type(3) .ugb-testimonial__body',
-		default: descriptionPlaceholder( 'medium' ),
-	},
-	titleColor: {
-		type: 'string',
-	},
-	posColor: {
-		type: 'string',
-	},
-	bodyTextColor: {
-		type: 'string',
-	},
-	backgroundColor: {
-		type: 'string',
-		default: '',
-	},
-	serif: {
-		type: 'boolean',
-		default: false,
-	},
-	columns: {
-		type: 'number',
-		default: 2,
-	},
 	design: {
 		type: 'string',
 		default: 'basic',
@@ -118,82 +41,205 @@ export const schema = {
 		type: 'number',
 		default: 3,
 	},
-
-	// Custom CSS attributes.
-	customCSSUniqueID: {
-		type: 'string',
-		default: '',
-	},
-	customCSS: {
-		type: 'string',
-		default: '',
-	},
-	customCSSCompiled: {
-		type: 'string',
-		default: '',
+	columns: {
+		type: 'number',
+		default: 2,
 	},
 
-	// Keep the old attributes. Gutenberg issue https://github.com/WordPress/gutenberg/issues/10406
-	href: {
-		type: 'url',
+	// Column.
+	...createBackgroundAttributes( 'column%s' ),
+
+	// Testimonial.
+	showTestimonial: {
+		type: 'boolean',
+		default: true,
 	},
-	hrefTwo: {
-		type: 'url',
-	},
-	hrefThree: {
-		type: 'url',
-	},
-	mediaID: {
-		type: 'number',
-	},
-	mediaIDTwo: {
-		type: 'number',
-	},
-	mediaIDThree: {
-		type: 'number',
-	},
-	mediaURL: {
+	...createAllCombinationAttributes(
+		'testimonial%s', {
+			type: 'string',
+			source: 'html',
+			selector: '.ugb-testimonial__item%d .ugb-testimonial__body',
+			default: descriptionPlaceholder( 'medium' ),
+		},
+		[ '1', '2', '3' ]
+	),
+	...createTypographyAttributes( 'testimonial%s' ),
+	testimonialColor: {
 		type: 'string',
+		default: '',
 	},
-	mediaURLTwo: {
+
+	// Image.
+	showImage: {
+		type: 'boolean',
+		default: true,
+	},
+	...createImageAttributes( 'image%s', {
+		exclude: [
+			'Url',
+			'Id',
+			'Alt',
+			'BlendMode',
+		],
+	} ),
+	imageShape: {
 		type: 'string',
+		default: 'circle',
 	},
-	mediaURLThree: {
+	imageSize: {
 		type: 'string',
+		default: 'thumbnail',
 	},
-	testimonialTitle: {
+	...createAllCombinationAttributes(
+		'image%sId', {
+			type: 'number',
+			default: '',
+		},
+		[ '1', '2', '3' ]
+	),
+	...createAllCombinationAttributes(
+		'image%sUrl', {
+			type: 'string',
+			default: '',
+			// Some layouts can have the image as an image background. Need this to be a normal attribute and not from `src`.
+			// source: 'attribute',
+			// selector: '.ugb-pricing-box__item%d .ugb-pricing-box__image img',
+			// attribute: 'src',
+		},
+		[ '1', '2', '3' ]
+	),
+	...createAllCombinationAttributes(
+		'image%sAlt', {
+			type: 'string',
+			default: '',
+			source: 'attribute',
+			selector: '.ugb-testimonial__item%d .ugb-testimonial__image img',
+			attribute: 'alt',
+		},
+		[ '1', '2', '3' ]
+	),
+	...createAllCombinationAttributes(
+		'image%sShape', {
+			type: 'string',
+			default: '',
+		},
+		[ '1', '2', '3' ]
+	),
+	...createAllCombinationAttributes(
+		'image%s%s', {
+			type: 'boolean',
+			default: false,
+		},
+		[ '1', '2', '3' ],
+		[ 'ShapeFlipX', 'ShapeFlipY', 'ShapeStretch' ]
+	),
+	...createAllCombinationAttributes(
+		'image%sPosition', {
+			type: 'string',
+			default: '',
+		},
+		[ '', '1', '2', '3' ]
+	),
+
+	// Name.
+	showName: {
+		type: 'boolean',
+		default: true,
+	},
+	...createAllCombinationAttributes(
+		'name%s', {
+			type: 'string',
+			source: 'html',
+			selector: '.ugb-testimonial__item%d .ugb-testimonial__name',
+			default: __( 'Name', i18n ),
+		},
+		[ '1', '2', '3' ]
+	),
+	nameTag: {
 		type: 'string',
+		defualt: '',
 	},
-	testimonialTitleTwo: {
+	...createTypographyAttributes( 'name%s' ),
+	nameColor: {
 		type: 'string',
+		default: '',
 	},
-	testimonialTitleThree: {
+
+	// Sub Position.
+	showPosition: {
+		type: 'boolean',
+		default: true,
+	},
+	...createAllCombinationAttributes(
+		'position%s', {
+			type: 'string',
+			source: 'html',
+			selector: '.ugb-testimonial__item%d .ugb-testimonial__position',
+			default: __( 'Position', i18n ),
+		},
+		[ '1', '2', '3' ]
+	),
+	...createTypographyAttributes( 'position%s' ),
+	positionColor: {
 		type: 'string',
+		default: '',
 	},
-	position: {
+
+	hoverEffect: {
 		type: 'string',
+		default: '',
 	},
-	positionTwo: {
+
+	// Alignment.
+	...createAllCombinationAttributes(
+		'%s%sAlign', {
+			type: 'string',
+			default: '',
+		},
+		[ 'Testimonial', 'Image', 'Name', 'Position' ],
+		[ '', 'Tablet', 'Mobile' ]
+	),
+
+	// Spacing.
+	...createAllCombinationAttributes(
+		'%s%sBottomMargin', {
+			type: 'number',
+			default: '',
+		},
+		[ 'Testimonial', 'Image', 'Name', 'Position' ],
+		[ '', 'Tablet', 'Mobile' ]
+	),
+
+	// Advanced colors.
+	...createAllCombinationAttributes(
+		'Column%sBackgroundColor', {
+			type: 'string',
+			default: '',
+		},
+		[ '1', '2', '3' ]
+	),
+
+	// Bubble design
+	bubbleBackgroundColor: {
 		type: 'string',
+		default: '',
 	},
-	positionThree: {
-		type: 'string',
-	},
-	body: {
-		type: 'string',
-	},
-	bodyTwo: {
-		type: 'string',
-	},
-	bodyThree: {
-		type: 'string',
-	},
-	iconColor: {
-		type: 'string',
-	},
-	align: {
-		type: 'string',
-	},
+	...createAllCombinationAttributes(
+		'Bubble%sBackgroundColor', {
+			type: 'string',
+			default: '',
+		},
+		[ '1', '2', '3' ]
+	),
+
+	// Vertical design
+	...createAllCombinationAttributes(
+		'Vertical%sImageHeight', {
+			type: 'number',
+			default: '',
+		},
+		[ '', 'Tablet', 'Mobile' ]
+	),
 }
 
 export const name = 'ugb/testimonial'
@@ -211,10 +257,84 @@ export const settings = {
 	supports: {
 		align: [ 'wide' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
-		// eslint-disable-next-line
-		inserter: false, // TODO: Remove when ready for v2.
 	},
+
 	deprecated,
 	edit,
 	save,
+
+	// Stackable modules.
+	modules: {
+		'advanced-block-spacing': true,
+		'advanced-column-spacing': {
+			verticalColumnAlign: true,
+		},
+		'advanced-responsive': true,
+		'block-background': true,
+		'block-separators': true,
+		'block-title': true,
+		'content-align': true,
+		'custom-css': {
+			default: applyFilters( 'stackable.testimonial.custom-css.default', '' ),
+		},
+	},
 }
+
+// Reset some attributes if some global attributes are set.
+addFilter( 'stackable.testimonial.setAttributes', 'stackable/testimonial/imageShape', attributes => {
+	if ( typeof attributes.imageShape !== 'undefined' ) {
+		return {
+			...attributes,
+			image1Shape: '',
+			image2Shape: '',
+			image3Shape: '',
+			image1ShapeFlipX: '',
+			image1ShapeFlipY: '',
+			image1ShapeStretch: '',
+			image2ShapeFlipX: '',
+			image2ShapeFlipY: '',
+			image2ShapeStretch: '',
+			image3ShapeFlipX: '',
+			image3ShapeFlipY: '',
+			image3ShapeStretch: '',
+		}
+	}
+
+	if ( typeof attributes.imageShapeFlipX !== 'undefined' ) {
+		return {
+			...attributes,
+			image1ShapeFlipX: '',
+			image2ShapeFlipX: '',
+			image3ShapeFlipX: '',
+		}
+	}
+
+	if ( typeof attributes.imageShapeFlipY !== 'undefined' ) {
+		return {
+			...attributes,
+			image1ShapeFlipY: '',
+			image2ShapeFlipY: '',
+			image3ShapeFlipY: '',
+		}
+	}
+
+	if ( typeof attributes.imageShapeStretch !== 'undefined' ) {
+		return {
+			...attributes,
+			image1ShapeStretch: '',
+			image2ShapeStretch: '',
+			image3ShapeStretch: '',
+		}
+	}
+
+	if ( typeof attributes.columnBackgroundColor !== 'undefined' || typeof attributes.columnBackgroundColorType !== 'undefined' ) {
+		return {
+			...attributes,
+			column1BackgroundColor: '',
+			column2BackgroundColor: '',
+			column3BackgroundColor: '',
+		}
+	}
+
+	return attributes
+} )

@@ -4,31 +4,14 @@
  * Enqueued in the editor only.
  */
 
-.ugb-testimonial.ugb-testimonial--columns-1 {
-	> *:nth-of-type(2),
-	> *:nth-of-type(3) {
-		display: none;
-	}
-}
-.ugb-testimonial.ugb-testimonial--columns-2 {
-	> *:nth-of-type(3) {
-		display: none;
-	}
-}
-
-[data-type="ugb/testimonial"] {
-	// Fade out placeholder text.
-	[data-is-placeholder-visible="true"] + .editor-rich-text__editable {
-		opacity: 0.5;
-	}
-
-	// Only show placeholder text while selected or typing.
-	&:not(.is-selected):not(.is-typing) {
-		[data-is-placeholder-visible="true"] + .editor-rich-text__editable {
-			display: none;
-		}
-		[data-is-placeholder-visible="true"] {
-			display: none;
-		}
+.ugb-testimonial__image .ugb-image-upload-has-placeholder {
+	// height: 75px;
+	border-radius: 100%;
+	height: 0;
+	padding-bottom: 100%;
+	svg {
+		top: 50%;
+		position: absolute;
+		transform: translateY(-50%);
 	}
 }

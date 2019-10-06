@@ -1,108 +1,133 @@
 /**
+ * Internal dependencies
+ */
+import { createStyles } from './style'
+import { showOptions } from './util'
+
+/**
  * External dependencies
  */
-import { range } from '~stackable/util'
+import {
+	hasBackgroundOverlay,
+	range,
+	createVideoBackground,
+} from '~stackable/util'
+import {
+	BlockContainer,
+	Image,
+} from '~stackable/components'
+import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+import classnames from 'classnames'
 
 /**
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
-import classnames from 'classnames'
+import { compose } from '@wordpress/compose'
+import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
 
 const save = props => {
 	const { className, attributes } = props
 	const {
-		columns,
-		titleColor,
-		posColor,
-		bodyTextColor,
+		columns = 2,
 		design = 'basic',
-		borderRadius = 12,
-		backgroundColor = '',
 		shadow = 3,
-		serif = false,
+		nameTag = 'h4',
+		imageShape = 'circle',
+		imageShapeStretch = false,
+		imageWidth = '',
+		showTestimonial = true,
+		showImage = true,
+		showName = true,
+		showPosition = true,
 	} = attributes
 
 	const mainClasses = classnames( [
 		className,
-		'ugb-testimonial',
-		'ugb-testimonial--v2',
+		'ugb-testimonial--v3',
 		`ugb-testimonial--columns-${ columns }`,
 		`ugb-testimonial--design-${ design }`,
 	], applyFilters( 'stackable.testimonial.mainclasses', {
-		'ugb-testimonial--serif': serif,
-	}, design, props ) )
+	}, props ) )
 
-	const itemClasses = classnames( [
-		'ugb-testimonial__item',
-	], applyFilters( 'stackable.testimonial.itemclasses', {
-		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-	}, design, props ) )
-
-	const styles = applyFilters( 'stackable.testimonial.styles', {
-		item: {
-			borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
-			backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
-		},
-		bodyWrapper: {},
-		body: {
-			color: bodyTextColor ? bodyTextColor : undefined,
-		},
-	}, design, props )
+	const show = showOptions( props )
 
 	return (
-		<div className={ mainClasses }>
-			{ applyFilters( 'stackable.testimonial.save.output.before', null, design, props ) }
-			{ range( 1, columns + 1 ).map( i => {
-				const mediaURL = attributes[ `mediaURL${ i }` ]
-				const name = attributes[ `name${ i }` ]
-				const position = attributes[ `position${ i }` ]
-				const testimonial = attributes[ `testimonial${ i }` ]
+		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
+			<Fragment>
+				{ range( 1, columns + 1 ).map( i => {
+					const imageUrl = attributes[ `image${ i }Url` ]
+					const imageId = attributes[ `image${ i }Id` ]
+					const imageAlt = attributes[ `image${ i }Alt` ]
+					const name = attributes[ `name${ i }` ]
+					const position = attributes[ `position${ i }` ]
+					const testimonial = attributes[ `testimonial${ i }` ]
 
-				const bodyClasses = classnames( [
-					'ugb-testimonial__body-wrapper',
-				], applyFilters( 'stackable.testimonial.bodyclasses', {}, design, props ) )
+					const itemClasses = classnames( [
+						'ugb-testimonial__item',
+						`ugb-testimonial__item${ i }`,
+					], applyFilters( 'stackable.testimonial.itemclasses', {
+						'ugb--has-background-overlay': show.columnBackground && hasBackgroundOverlay( 'column%s', props.attributes ),
+						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
+					}, props, i ) )
 
-				return (
-					<div className={ itemClasses } style={ styles.item } key={ i }>
-						<div className={ bodyClasses } style={ styles.bodyWrapper }>
-							{ ! RichText.isEmpty( testimonial ) && (
-								<RichText.Content
-									tagName="p"
-									className="ugb-testimonial__body"
-									style={ styles.body }
-									value={ testimonial }
-								/>
-							) }
+					const bodyWrapperClasses = classnames( [
+						'ugb-testimonial__body-wrapper',
+					], applyFilters( 'stackable.testimonial.bodywrapperclasses', {}, props, i ) )
+
+					return (
+						<div className={ itemClasses } key={ i }>
+							{ show.columnBackground && createVideoBackground( 'column%s', props ) }
+							<div className={ bodyWrapperClasses }>
+								{ showTestimonial &&
+									<RichText.Content
+										tagName="p"
+										className="ugb-testimonial__body"
+										value={ testimonial }
+									/>
+								}
+							</div>
+							<div className="ugb-testimonial__person">
+								{ ! show.imageAsBackground && showImage && imageUrl &&
+									<div className="ugb-testimonial__image">
+										<Image
+											imageId={ imageId }
+											src={ imageUrl }
+											width={ imageWidth }
+											alt={ imageAlt || ( showName && name ) }
+											shape={ attributes[ `image${ i }Shape` ] || imageShape }
+											shapeStretch={ attributes[ `image${ i }ShapeStretch` ] || imageShapeStretch }
+										/>
+									</div>
+								}
+								{ show.imageAsBackground && showImage && imageUrl &&
+									<div className="ugb-testimonial__image"></div>
+								}
+								{ showName &&
+									<RichText.Content
+										tagName={ nameTag || 'h4' }
+										className="ugb-testimonial__name"
+										value={ name }
+									/>
+								}
+								{ showPosition &&
+									<RichText.Content
+										tagName="p"
+										className="ugb-testimonial__position"
+										value={ position }
+									/>
+								}
+							</div>
 						</div>
-						<div className="ugb-testimonial__person">
-							{ mediaURL && (
-								<div className="ugb-testimonial__image" style={ { backgroundImage: `url(${ mediaURL })` } }></div>
-							) }
-							{ ! RichText.isEmpty( name ) && (
-								<RichText.Content
-									tagName="h4"
-									className="ugb-testimonial__name"
-									style={ { color: titleColor } }
-									value={ name }
-								/>
-							) }
-							{ ! RichText.isEmpty( position ) && (
-								<RichText.Content
-									tagName="p"
-									className="ugb-testimonial__position"
-									style={ { color: posColor } }
-									value={ position }
-								/>
-							) }
-						</div>
-					</div>
-				)
-			} ) }
-			{ applyFilters( 'stackable.testimonial.save.output.after', null, design, props ) }
-		</div>
+					)
+				} ) }
+			</Fragment>
+		) } />
 	)
 }
 
-export default save
+export default compose(
+	withUniqueClass,
+	withBlockStyles( createStyles ),
+)( save )

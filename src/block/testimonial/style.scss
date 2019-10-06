@@ -6,67 +6,68 @@
 
 @import "common";
 
-.ugb-testimonial {
-	@include baseBlock(); // TODO: [V2] Deprecate this usage
-	display: grid;
-	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
-	grid-gap: $box-hori-padding;
-	text-align: center;
-
-	.ugb-testimonial__item {
-		margin-bottom: 0 !important;
+.ugb-testimonial--v3.ugb-testimonial {
+	.ugb-block-content {
+		text-align: center;
+		display: grid;
+		grid-auto-columns: minmax(0, 1fr);
+		grid-auto-flow: column;
+		grid-gap: $box-hori-padding;
 	}
-	.ugb-testimonial__body-wrapper {
-		margin-bottom: 1em;
-	}
-	&.ugb-testimonial--serif .ugb-testimonial__body {
-		font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif !important;
-		font-style: italic;
-		font-size: 20px;
-		line-height: 1.7em !important;
-		font-weight: 400;
-		color: #555;
-	}
-
-	&.ugb-testimonial--columns-2 {
-		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-	}
-	&.ugb-testimonial--columns-1 {
-		grid-template-columns: minmax(0, 1fr);
-	}
-	@media screen and (max-width: $break-medium) {
-		&.ugb-testimonial--columns-3 {
-			grid-template-columns: minmax(0, 1fr);
-		}
-	}
-	@media screen and (max-width: $break-small) {
-		&.ugb-testimonial--columns-2 {
-			grid-template-columns: minmax(0, 1fr);
-		}
-	}
-}
-.ugb-testimonial__person {
-	@include baseBlock(); // TODO: [V2] Deprecate this usage
-	margin-top: 0;
-	margin-bottom: 0;
-}
-.ugb-testimonial.ugb-testimonial--design-basic {
 	.ugb-testimonial__item {
 		@include box();
+		display: flex;
+		flex-direction: column;
+	}
+
+	.ugb-testimonial__image {
+		height: auto;
+		width: 75px;
+		margin: 0 auto;
+		overflow: hidden;
+	}
+	.ugb-testimonial__position {
+		font-size: 0.75em;
+		text-transform: uppercase;
+		color: #aaa;
+	}
+
+	.ugb-testimonial__body,
+	.ugb-testimonial__image,
+	.ugb-testimonial__name {
+		margin-bottom: $text-margin-bottom;
+	}
+	.ugb-testimonial__position {
+		margin-bottom: 0;
 	}
 }
-.ugb-testimonial__image {
-	height: 75px;
-	width: 75px;
-	background-size: cover;
-	background-position: center;
-	border-radius: 100%;
-	margin: 0 auto 1.3rem;
+
+.ugb-testimonial.ugb-testimonial--v3.ugb-testimonial--design-plain {
+	.ugb-testimonial__item {
+		background: none;
+		padding: 0;
+		box-shadow: none;
+		border-radius: 0;
+	}
 }
-.ugb-testimonial__position {
-	font-size: 0.75em;
-	text-transform: uppercase;
-	opacity: 0.7;
+
+.ugb-testimonial.ugb-testimonial--v3 {
+	@media screen and (max-width: $break-large) {
+		&.ugb-testimonial--columns-3 {
+			.ugb-block-content {
+				grid-template-columns: minmax(0, 1fr);
+				grid-auto-flow: row;
+			}
+		}
+	}
+}
+.ugb-testimonial.ugb-testimonial--v3 {
+	@media screen and (max-width: $break-small) {
+		.ugb-block-content {
+			grid-template-columns: minmax(0, 1fr);
+			grid-auto-flow: row;
+		}
+	}
 }
 
 /**
@@ -137,5 +138,72 @@
 			width: auto;
 			fill: #e6e6e6;
 		}
+	}
+}
+
+/**
+ * Deprecated < v2
+ */
+.ugb-testimonial--v2.ugb-testimonial {
+	@include baseBlock();
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+	grid-gap: $box-hori-padding;
+	text-align: center;
+
+	.ugb-testimonial__item {
+		margin-bottom: 0 !important;
+	}
+	.ugb-testimonial__body-wrapper {
+		margin-bottom: 1em;
+	}
+	&.ugb-testimonial--serif .ugb-testimonial__body {
+		font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif !important;
+		font-style: italic;
+		font-size: 20px;
+		line-height: 1.7em !important;
+		font-weight: 400;
+		color: #555;
+	}
+
+	&.ugb-testimonial--columns-2 {
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	}
+	&.ugb-testimonial--columns-1 {
+		grid-template-columns: minmax(0, 1fr);
+	}
+	@media screen and (max-width: $break-medium) {
+		&.ugb-testimonial--columns-3 {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+	@media screen and (max-width: $break-small) {
+		&.ugb-testimonial--columns-2 {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+
+	.ugb-testimonial__person {
+		@include baseBlock();
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+	.ugb-testimonial.ugb-testimonial--design-basic {
+		.ugb-testimonial__item {
+			@include box();
+		}
+	}
+	.ugb-testimonial__image {
+		height: 75px;
+		width: 75px;
+		background-size: cover;
+		background-position: center;
+		border-radius: 100%;
+		margin: 0 auto 1.3rem;
+	}
+	.ugb-testimonial__position {
+		font-size: 0.75em;
+		text-transform: uppercase;
+		opacity: 0.7;
 	}
 }

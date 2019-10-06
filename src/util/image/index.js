@@ -1,3 +1,6 @@
+/**
+ * Internal dependencies
+ */
 export { default as createImageAttributes } from './attributes'
 export { createImageAttributeNames } from './attributes'
 export { default as createImageStyles } from './styles'
@@ -23,4 +26,37 @@ export const getImageSize = ( imageData = {}, imageSize = '' ) => {
 	}
 
 	return imageData.media_details.sizes[ imageSize ] || getDefaultImageSize( imageData )
+}
+
+// Keep the cached image data in window so that other libraries (premium) can use this.
+window._stackableCachedImageData = {}
+
+/**
+ * Caches the image data. To be called inside a `withSelect` HOC.
+ *
+ * @param {number} imageId The image ID to cache
+ * @param {Object} select The select prop given by the `withSelect` HOC
+ */
+export const cacheImageData = ( imageId, select ) => {
+	const { getMedia } = select( 'core' )
+	const imageData = imageId ? getMedia( imageId ) : null
+	if ( imageData && typeof imageData.id !== 'undefined' ) {
+		window._stackableCachedImageData[ imageData.id ] = imageData
+	}
+}
+
+/**
+ * Gets the URL of the image of the given size from the cache. If size is not available, the full size is returned.
+ *
+ * @param {number} imageId The image ID
+ * @param {string} size The image size to get
+ *
+ * @return {string} The URL of the image of the given size
+ */
+export const getImageUrlFromCache = ( imageId, size = 'full' ) => {
+	const imageData = window._stackableCachedImageData[ imageId ]
+	if ( imageData ) {
+		return imageData.media_details.sizes[ size ] ? imageData.media_details.sizes[ size ].source_url : imageData.source_url
+	}
+	return ''
 }

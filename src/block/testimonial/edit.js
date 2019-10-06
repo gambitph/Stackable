@@ -1,35 +1,432 @@
 /**
- * External dependencies
- */
-import {
-	ColorPaletteControl,
-	DesignPanelBody,
-	ImageUploadPlaceholder,
-	ProControl,
-	ProControlButton,
-} from '~stackable/components'
-import { descriptionPlaceholder } from '~stackable/util'
-
-/**
  * Internal dependencies
  */
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import { createStyles } from './style'
+import { showOptions } from './util'
+
+/**
+ * External dependencies
+ */
+import {
+	BlockContainer,
+	ColorPaletteControl,
+	DesignPanelBody,
+	ImageUploadPlaceholder,
+	ProControlButton,
+	Image,
+	ContentAlignControl,
+	BackgroundControlsHelper,
+	PanelAdvancedSettings,
+	TypographyControlHelper,
+	ResponsiveControl,
+	AlignButtonsControl,
+	ControlSeparator,
+	ImageControlsHelper,
+	HeadingButtonsControl,
+	PanelSpacingBody,
+	AdvancedRangeControl,
+	ImageAltControl,
+	ImageShapeControls,
+	ProControl,
+} from '~stackable/components'
+import {
+	descriptionPlaceholder,
+	hasBackgroundOverlay,
+	createTypographyAttributeNames,
+	createResponsiveAttributeNames,
+	createVideoBackground,
+	cacheImageData,
+	getImageUrlFromCache,
+} from '~stackable/util'
+import { range } from 'lodash'
 import { i18n, showProNotice } from 'stackable'
+import classnames from 'classnames'
+import {
+	withUniqueClass,
+	withSetAttributeHook,
+	withGoogleFont,
+	withTabbedInspector,
+	withContentAlignReseter,
+	withBlockStyles,
+} from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
 import {
-	InspectorControls, PanelColorSettings, RichText,
-} from '@wordpress/block-editor'
-import {
-	PanelBody, RangeControl, ToggleControl,
+	PanelBody, RangeControl,
 } from '@wordpress/components'
-import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
-import classnames from 'classnames'
+import {
+	__, _x, sprintf,
+} from '@wordpress/i18n'
+import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
+import { compose } from '@wordpress/compose'
+import { RichText } from '@wordpress/block-editor'
+import { withSelect } from '@wordpress/data'
+
+addFilter( 'stackable.testimonial.edit.inspector.layout.before', 'stackable/testimonial', ( output, props ) => {
+	const { setAttributes } = props
+	const {
+		design = 'basic',
+	} = props.attributes
+
+	return (
+		<Fragment>
+			{ output }
+			<DesignPanelBody
+				initialOpen={ true }
+				selected={ design }
+				options={ [
+					{
+						image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
+					},
+					{
+						image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
+					},
+					...applyFilters( 'stackable.testimonial.edit.designs', [] ),
+				] }
+				onChange={ design => {
+					setAttributes( { design } )
+				} }
+			>
+				{ showProNotice && <ProControlButton /> }
+			</DesignPanelBody>
+		</Fragment>
+	)
+} )
+
+addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testimonial', ( output, props ) => {
+	const { setAttributes } = props
+	const {
+		columns = 2,
+		borderRadius = 12,
+		shadow = 3,
+		nameTag = 'h4',
+		testimonialColor = '',
+		nameColor = '',
+		positionColor = '',
+		showTestimonial = true,
+		showImage = true,
+		showName = true,
+		showPosition = true,
+		image1Id = '',
+		image2Id = '',
+		image3Id = '',
+	} = props.attributes
+
+	const show = showOptions( props )
+
+	return (
+		<Fragment>
+			{ output }
+			<PanelBody title={ __( 'General', i18n ) }>
+				<RangeControl
+					label={ __( 'Columns', i18n ) }
+					value={ columns }
+					onChange={ columns => setAttributes( { columns } ) }
+					min={ 1 }
+					max={ 3 }
+				/>
+				{ show.borderRadius &&
+					<RangeControl
+						label={ __( 'Border Radius', i18n ) }
+						value={ borderRadius }
+						onChange={ ( borderRadius = 12 ) => setAttributes( { borderRadius } ) }
+						min={ 0 }
+						max={ 50 }
+						allowReset={ true }
+					/>
+				}
+				{ show.shadow &&
+					<RangeControl
+						label={ __( 'Shadow / Outline', i18n ) }
+						value={ shadow }
+						onChange={ ( shadow = 3 ) => setAttributes( { shadow } ) }
+						min={ 0 }
+						max={ 9 }
+						allowReset={ true }
+					/>
+				}
+				<ContentAlignControl
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+			</PanelBody>
+
+			{ applyFilters( 'stackable.testimonial.edit.inspector.style.general.after', null, props ) }
+
+			{ show.columnBackground &&
+				<PanelBody
+					title={ __( 'Column Background', i18n ) }
+					initialOpen={ false }
+				>
+					<BackgroundControlsHelper
+						attrNameTemplate="column%s"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					/>
+				</PanelBody>
+			}
+
+			<PanelAdvancedSettings
+				title={ __( 'Testimonial', i18n ) }
+				checked={ showTestimonial }
+				onChange={ showTestimonial => setAttributes( { showTestimonial } ) }
+				toggleOnSetAttributes={ [
+					...createTypographyAttributeNames( 'testimonial%s' ),
+					'testimonialColor',
+					...createResponsiveAttributeNames( 'testimonial%sAlign' ),
+				] }
+				toggleAttributeName="showTestimonial"
+			>
+				<TypographyControlHelper
+					attrNameTemplate="testimonial%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+				<ColorPaletteControl
+					value={ testimonialColor }
+					onChange={ testimonialColor => setAttributes( { testimonialColor } ) }
+					label={ __( 'Testimonial Color', i18n ) }
+				/>
+				<ResponsiveControl
+					attrNameTemplate="testimonial%sAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+				</ResponsiveControl>
+			</PanelAdvancedSettings>
+
+			{ applyFilters( 'stackable.testimonial.edit.inspector.style.testimonial.after', null, props ) }
+
+			{ ! show.imageAsBackground &&
+				<PanelAdvancedSettings
+					title={ __( 'Image', i18n ) }
+					checked={ showImage }
+					onChange={ showImage => setAttributes( { showImage } ) }
+					toggleOnSetAttributes={ [
+						'imageSize',
+						'imageShape',
+						'imageShapeFlipX',
+						'imageShapeFlipY',
+						'imageShapeStretch',
+						'imageWidth',
+						...createResponsiveAttributeNames( 'image%sWidth' ),
+						'imageBorderRadius',
+						'imageShadow',
+						'imageBlendMode',
+					] }
+					toggleAttributeName="showImage"
+				>
+					<ImageControlsHelper
+						attrNameTemplate="image%s"
+						setAttributes={ props.setAttributes }
+						blockAttributes={ props.attributes }
+						widthMax={ 300 }
+						onChangeImage={ false }
+						onChangeAlt={ false }
+						onChangeBlendMode={ false }
+						onChangeSize={ size => {
+							setAttributes( {
+								imageSize: size,
+								image1Url: getImageUrlFromCache( image1Id, size || 'medium' ),
+								image2Url: getImageUrlFromCache( image2Id, size || 'medium' ),
+								image3Url: getImageUrlFromCache( image3Id, size || 'medium' ),
+							} )
+						} }
+					/>
+					<ControlSeparator />
+					<ResponsiveControl
+						attrNameTemplate="Image%sAlign"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					</ResponsiveControl>
+				</PanelAdvancedSettings>
+			}
+
+			<PanelAdvancedSettings
+				title={ __( 'Name', i18n ) }
+				checked={ showName }
+				onChange={ showName => setAttributes( { showName } ) }
+				toggleOnSetAttributes={ [
+					...createTypographyAttributeNames( 'name%s' ),
+					'nameTag',
+					'nameColor',
+					...createResponsiveAttributeNames( 'Name%sAlign' ),
+				] }
+				toggleAttributeName="showName"
+			>
+				<TypographyControlHelper
+					attrNameTemplate="name%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+				<HeadingButtonsControl
+					label={ __( 'HTML Tag', i18n ) }
+					value={ nameTag || 'h4' }
+					onChange={ nameTag => setAttributes( { nameTag } ) }
+				/>
+				<ColorPaletteControl
+					value={ nameColor }
+					onChange={ nameColor => setAttributes( { nameColor } ) }
+					label={ __( 'Name Color', i18n ) }
+				/>
+				<ResponsiveControl
+					attrNameTemplate="Name%sAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+				</ResponsiveControl>
+			</PanelAdvancedSettings>
+
+			<PanelAdvancedSettings
+				title={ __( 'Position', i18n ) }
+				checked={ showPosition }
+				onChange={ showPosition => setAttributes( { showPosition } ) }
+				toggleOnSetAttributes={ [
+					...createTypographyAttributeNames( 'position%s' ),
+					'positionColor',
+					...createResponsiveAttributeNames( 'position%sAlign' ),
+				] }
+				toggleAttributeName="showPosition"
+			>
+				<TypographyControlHelper
+					attrNameTemplate="position%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+				<ColorPaletteControl
+					value={ positionColor }
+					onChange={ positionColor => setAttributes( { positionColor } ) }
+					label={ __( 'Text Color', i18n ) }
+				/>
+				<ResponsiveControl
+					attrNameTemplate="position%sAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+				</ResponsiveControl>
+			</PanelAdvancedSettings>
+
+			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
+				{ show.testimonialSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="testimonial%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Testimonial', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				}
+				{ show.imageSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="image%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Image', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				}
+				{ show.nameSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="name%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Name', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				) }
+				{ show.positionSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="position%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Position', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				) }
+			</PanelSpacingBody>
+		</Fragment>
+	)
+} )
+
+addFilter( 'stackable.testimonial.edit.inspector.advanced.before', 'stackable/testimonial', ( output, props ) => {
+	const { setAttributes } = props
+	const {
+		columns,
+		showImage = true,
+	} = props.attributes
+
+	const show = showOptions( props )
+
+	return (
+		<Fragment>
+			{ output }
+			{ showImage && range( 1, columns + 1 ).map( i => {
+				return ! show.imageAsBackground && (
+					<PanelBody
+						title={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Image', i18n ), i ) }
+						initialOpen={ false }
+						key={ i }
+					>
+						<ImageAltControl
+							value={ props.attributes[ `image${ i }Alt` ] }
+							onChange={ value => setAttributes( { [ `image${ i }Alt` ]: value } ) }
+						/>
+						<ImageShapeControls
+							imageId={ props.attributes[ `image${ i }Id` ] }
+							imageSize={ props.attributes[ `image${ i }Size` ] }
+							shape={ props.attributes[ `image${ i }Shape` ] || props.attributes.imageShape }
+							shapeFlipX={ props.attributes[ `image${ i }ShapeFlipX` ] }
+							shapeFlipY={ props.attributes[ `image${ i }ShapeFlipY` ] }
+							shapeStretch={ props.attributes[ `image${ i }ShapeStretch` ] }
+							onChangeShape={ value => setAttributes( { [ `image${ i }Shape` ]: value } ) }
+							onChangeShapeFlipX={ value => setAttributes( { [ `image${ i }ShapeFlipX` ]: value } ) }
+							onChangeShapeFlipY={ value => setAttributes( { [ `image${ i }ShapeFlipY` ]: value } ) }
+							onChangeShapeStretch={ value => setAttributes( { [ `image${ i }ShapeStretch` ]: value } ) }
+						/>
+					</PanelBody>
+				)
+			} ) }
+			{ showProNotice &&
+				<PanelBody
+					title={ __( 'Fine-Grained Controls', i18n ) }
+					initialOpen={ false }
+				>
+					{ <ProControl type="advanced" /> }
+				</PanelBody>
+			}
+		</Fragment>
+	)
+} )
 
 const edit = props => {
 	const {
@@ -39,211 +436,172 @@ const edit = props => {
 	} = props
 
 	const {
-		columns,
-		titleColor,
-		posColor,
-		bodyTextColor,
+		columns = 2,
 		design = 'basic',
-		borderRadius = 12,
 		shadow = 3,
-		backgroundColor = '',
-		serif = false,
+		nameTag = 'h4',
+		imageSize = 'thumbnail',
+		imageShape = 'circle',
+		imageShapeStretch = false,
+		imageWidth = '',
+		showTestimonial = true,
+		showImage = true,
+		showName = true,
+		showPosition = true,
 	} = attributes
 
 	const mainClasses = classnames( [
 		className,
-		'ugb-testimonial',
-		'ugb-testimonial--v2',
+		'ugb-testimonial--v3',
 		`ugb-testimonial--columns-${ columns }`,
 		`ugb-testimonial--design-${ design }`,
 	], applyFilters( 'stackable.testimonial.mainclasses', {
-		'ugb-testimonial--serif': serif,
-	}, design, props ) )
+	}, props ) )
 
-	const itemClasses = classnames( [
-		'ugb-testimonial__item',
-	], applyFilters( 'stackable.testimonial.itemclasses', {
-		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-	}, design, props ) )
-
-	const styles = applyFilters( 'stackable.testimonial.styles', {
-		item: {
-			borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
-			backgroundColor: design !== 'plain' && backgroundColor ? backgroundColor : undefined,
-		},
-		bodyWrapper: {},
-		body: {
-			color: bodyTextColor ? bodyTextColor : undefined,
-		},
-	}, design, props )
-
-	const show = applyFilters( 'stackable.testimonial.show', {
-		backgroundColor: design === 'basic',
-	}, design, props )
+	const show = showOptions( props )
 
 	return (
-		<Fragment>
-			<InspectorControls>
-				<DesignPanelBody
-					initialOpen={ true }
-					selected={ design }
-					options={ [
-						{
-							image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
-						},
-						{
-							image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
-						},
-						...applyFilters( 'stackable.testimonial.edit.designs', [] ),
-					] }
-					onChange={ design => {
-						setAttributes( { design } )
-					} }
-				>
-					{ show.backgroundColor &&
-						<ColorPaletteControl
-							label={ __( 'Background Color', i18n ) }
-							value={ backgroundColor }
-							onChange={ backgroundColor => setAttributes( { backgroundColor } ) }
-						/>
-					}
-					{ design !== 'plain' &&
-						<RangeControl
-							label={ __( 'Border Radius', i18n ) }
-							value={ borderRadius }
-							onChange={ borderRadius => setAttributes( { borderRadius } ) }
-							min={ 0 }
-							max={ 50 }
-						/>
-					}
-					{ design !== 'plain' &&
-						<RangeControl
-							label={ __( 'Shadow / Outline', i18n ) }
-							value={ shadow }
-							onChange={ shadow => setAttributes( { shadow } ) }
-							min={ 0 }
-							max={ 9 }
-						/>
-					}
-					{ showProNotice && <ProControlButton /> }
-				</DesignPanelBody>
-				<PanelBody title={ __( 'General Settings', i18n ) }>
-					<RangeControl
-						label={ __( 'Columns', i18n ) }
-						value={ columns }
-						onChange={ columns => setAttributes( { columns } ) }
-						min={ 1 }
-						max={ 3 }
-					/>
-					<ToggleControl
-						label={ __( 'Serif Font', i18n ) }
-						checked={ serif }
-						onChange={ serif => setAttributes( { serif } ) }
-					/>
-				</PanelBody>
-				<PanelColorSettings
-					initialOpen={ true }
-					title={ __( 'Color Settings', i18n ) }
-					colorSettings={ [
-						{
-							value: bodyTextColor,
-							onChange: colorValue => setAttributes( { bodyTextColor: colorValue } ),
-							label: __( 'Body Text Color', i18n ),
-						},
-						{
-							value: titleColor,
-							onChange: colorValue => setAttributes( { titleColor: colorValue } ),
-							label: __( 'Title Color', i18n ),
-						},
-						{
-							value: posColor,
-							onChange: colorValue => setAttributes( { posColor: colorValue } ),
-							label: __( 'Position Color', i18n ),
-						},
-					] }
-				>
-				</PanelColorSettings>
-				{ showProNotice &&
-					<PanelBody
-						initialOpen={ false }
-						title={ __( 'Custom CSS', i18n ) }
-					>
-						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
-							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
-						/>
-					</PanelBody>
-				}
-				{ applyFilters( 'stackable.testimonial.edit.inspector.after', null, design, props ) }
-			</InspectorControls>
-			<div className={ mainClasses }>
-				{ applyFilters( 'stackable.testimonial.edit.output.before', null, design, props ) }
-				{ [ 1, 2, 3 ].map( i => {
-					const mediaURL = attributes[ `mediaURL${ i }` ]
-					const mediaID = attributes[ `mediaID${ i }` ]
+		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
+			<Fragment>
+				{ range( 1, columns + 1 ).map( i => {
+					const imageUrl = attributes[ `image${ i }Url` ]
+					const imageId = attributes[ `image${ i }Id` ]
+					const imageAlt = attributes[ `image${ i }Alt` ]
 					const name = attributes[ `name${ i }` ]
 					const position = attributes[ `position${ i }` ]
 					const testimonial = attributes[ `testimonial${ i }` ]
 
-					const bodyClasses = classnames( [
+					const itemClasses = classnames( [
+						'ugb-testimonial__item',
+						`ugb-testimonial__item${ i }`,
+					], applyFilters( 'stackable.testimonial.itemclasses', {
+						'ugb--has-background-overlay': show.columnBackground && hasBackgroundOverlay( 'column%s', props.attributes ),
+						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
+					}, props, i ) )
+
+					const bodyWrapperClasses = classnames( [
 						'ugb-testimonial__body-wrapper',
-					], applyFilters( 'stackable.testimonial.bodyclasses', {}, design, props ) )
+					], applyFilters( 'stackable.testimonial.bodywrapperclasses', {}, props, i ) )
 
 					return (
-						<div className={ itemClasses } style={ styles.item } key={ i }>
-							<div className={ bodyClasses } style={ styles.bodyWrapper }>
-								<RichText
-									tagName="p"
-									className="ugb-testimonial__body"
-									value={ testimonial }
-									onChange={ testimonial => setAttributes( { [ `testimonial${ i }` ]: testimonial } ) }
-									style={ styles.body }
-									placeholder={ descriptionPlaceholder( 'medium' ) }
-									keepPlaceholderOnFocus
-								/>
+						<div className={ itemClasses } key={ i }>
+							{ show.columnBackground && createVideoBackground( 'column%s', props ) }
+							<div className={ bodyWrapperClasses }>
+								{ showTestimonial &&
+									<RichText
+										tagName="p"
+										className="ugb-testimonial__body"
+										value={ testimonial }
+										onChange={ testimonial => setAttributes( { [ `testimonial${ i }` ]: testimonial } ) }
+										placeholder={ descriptionPlaceholder( 'medium' ) }
+										keepPlaceholderOnFocus
+									/>
+								}
 							</div>
 							<div className="ugb-testimonial__person">
-								<ImageUploadPlaceholder
-									className="ugb-testimonial__image"
-									imageID={ mediaID }
-									imageURL={ mediaURL }
-									onRemove={ () => {
-										setAttributes( { [ `mediaURL${ i }` ]: '', [ `mediaID${ i }` ]: '' } )
-									} }
-									onChange={ ( { url, id } ) => {
-										setAttributes( { [ `mediaURL${ i }` ]: url, [ `mediaID${ i }` ]: id } )
-									} }
-								/>
-								<RichText
-									tagName="h4"
-									className="ugb-testimonial__name"
-									value={ name }
-									onChange={ name => setAttributes( { [ `name${ i }` ]: name } ) }
-									style={ {
-										color: titleColor,
-									} }
-									placeholder={ __( 'Name', i18n ) }
-									keepPlaceholderOnFocus
-								/>
-								<RichText
-									tagName="p"
-									value={ position }
-									className="ugb-testimonial__position"
-									onChange={ position => setAttributes( { [ `position${ i }` ]: position } ) }
-									style={ {
-										color: posColor,
-									} }
-									placeholder={ __( 'Position', i18n ) }
-									keepPlaceholderOnFocus
-								/>
+								{ ! show.imageAsBackground && showImage &&
+									<div className="ugb-testimonial__image">
+										<ImageUploadPlaceholder
+											imageID={ imageId }
+											imageURL={ imageUrl }
+											imageSize={ imageSize }
+											onRemove={ () => {
+												setAttributes( {
+													[ `image${ i }Url` ]: '',
+													[ `image${ i }Id` ]: '',
+													[ `image${ i }Alt` ]: '',
+													[ `image${ i }Width` ]: '',
+													[ `image${ i }Height` ]: '',
+												} )
+											} }
+											onChange={ image => {
+												setAttributes( {
+													[ `image${ i }Url` ]: image.url,
+													[ `image${ i }Id` ]: image.id,
+													[ `image${ i }Alt` ]: image.alt,
+													[ `image${ i }Width` ]: image.width,
+													[ `image${ i }Height` ]: image.height,
+												} )
+											} }
+											render={
+												<Image
+													imageId={ imageId }
+													src={ imageUrl }
+													size={ imageSize }
+													shape={ attributes[ `image${ i }Shape` ] || imageShape }
+													shapeStretch={ attributes[ `image${ i }ShapeStretch` ] || imageShapeStretch }
+													alt={ imageAlt }
+													width={ imageWidth }
+												/>
+											}
+										/>
+									</div>
+								}
+								{ show.imageAsBackground && showImage &&
+									<ImageUploadPlaceholder
+										imageID={ imageId }
+										imageURL={ imageUrl }
+										imageSize={ imageSize }
+										className="ugb-testimonial__image"
+										onRemove={ () => {
+											setAttributes( {
+												[ `image${ i }Url` ]: '',
+												[ `image${ i }Id` ]: '',
+												[ `image${ i }Alt` ]: '',
+												[ `image${ i }Width` ]: '',
+												[ `image${ i }Height` ]: '',
+											} )
+										} }
+										onChange={ image => {
+											setAttributes( {
+												[ `image${ i }Url` ]: image.url,
+												[ `image${ i }Id` ]: image.id,
+												[ `image${ i }Alt` ]: image.alt,
+												[ `image${ i }Width` ]: image.width,
+												[ `image${ i }Height` ]: image.height,
+											} )
+										} }
+									/>
+								}
+								{ showName &&
+									<RichText
+										tagName={ nameTag || 'h4' }
+										className="ugb-testimonial__name"
+										value={ name }
+										onChange={ name => setAttributes( { [ `name${ i }` ]: name } ) }
+										placeholder={ __( 'Name', i18n ) }
+										keepPlaceholderOnFocus
+									/>
+								}
+								{ showPosition &&
+									<RichText
+										tagName="p"
+										className="ugb-testimonial__position"
+										value={ position }
+										onChange={ position => setAttributes( { [ `position${ i }` ]: position } ) }
+										placeholder={ __( 'Position', i18n ) }
+										keepPlaceholderOnFocus
+									/>
+								}
 							</div>
 						</div>
 					)
 				} ) }
-				{ applyFilters( 'stackable.testimonial.edit.output.after', null, design, props ) }
-			</div>
-		</Fragment>
+			</Fragment>
+		) } />
 	)
 }
 
-export default edit
+export default compose(
+	withUniqueClass,
+	withSetAttributeHook,
+	withGoogleFont,
+	withTabbedInspector(),
+	withContentAlignReseter( [ 'Testimonial%sAlign', 'Image%sAlign', 'Name%sAlign', 'Position%sAlign' ] ),
+	withBlockStyles( createStyles, { editorMode: true } ),
+	withSelect( ( select, props ) => {
+		cacheImageData( props.attributes.image1Id, select )
+		cacheImageData( props.attributes.image2Id, select )
+		cacheImageData( props.attributes.image3Id, select )
+	} ),
+)( edit )
