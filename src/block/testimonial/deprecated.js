@@ -708,6 +708,25 @@ const deprecated = [
 	{
 		attributes: deprecatedSchema_1_17_3,
 		save: deprecatedSave_1_17_3,
+		migrate: attributes => {
+			return {
+				...attributes,
+				image1Id: attributes.mediaID1,
+				image2Id: attributes.mediaID2,
+				image3Id: attributes.mediaID3,
+				image1Url: attributes.mediaURL1,
+				image2Url: attributes.mediaURL2,
+				image3Url: attributes.mediaURL3,
+				imageShape: 'circle',
+				nameColor: attributes.titleColor,
+				positionColor: attributes.posColor,
+				testimonialColor: attributes.bodyTextColor,
+				columnBackgroundColor: attributes.backgroundColor,
+
+				testimonialFontFamily: attributes.serif ? 'Serif' : undefined,
+				testimonialFontSize: attributes.serif ? '20' : undefined,
+			}
+		},
 	},
 	{
 		attributes: deprecatedSchema_1_10,
