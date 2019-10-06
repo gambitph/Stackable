@@ -32,6 +32,8 @@ import {
 	createButtonAttributeNames,
 	createVideoBackground,
 	hasBackgroundOverlay,
+	cacheImageData,
+	getImageUrlFromCache,
 } from '~stackable/util'
 import classnames from 'classnames'
 import { range } from 'lodash'
@@ -113,6 +115,10 @@ addFilter( 'stackable.feature-grid.edit.inspector.style.before', 'stackable/feat
 		descriptionColor = '',
 		showImage = true,
 		showButton = true,
+		image1Id = '',
+		image2Id = '',
+		image3Id = '',
+		image4Id = '',
 	} = props.attributes
 
 	const show = showOptions( props )
@@ -185,13 +191,22 @@ addFilter( 'stackable.feature-grid.edit.inspector.style.before', 'stackable/feat
 				] }
 				toggleAttributeName="showImage"
 			>
-				<ImageControlsHelperWithData
-					image1Id={ props.attributes.image1Id }
-					image2Id={ props.attributes.image2Id }
-					image3Id={ props.attributes.image3Id }
-					image4Id={ props.attributes.image4Id }
+				<ImageControlsHelper
+					attrNameTemplate="image%s"
 					setAttributes={ props.setAttributes }
-					attributes={ props.attributes }
+					blockAttributes={ props.attributes }
+					onChangeImage={ false }
+					onChangeAlt={ false }
+					onChangeBlendMode={ false }
+					onChangeSize={ size => {
+						setAttributes( {
+							imageSize: size,
+							image1Url: getImageUrlFromCache( image1Id, size || 'medium' ),
+							image2Url: getImageUrlFromCache( image2Id, size || 'medium' ),
+							image3Url: getImageUrlFromCache( image3Id, size || 'medium' ),
+							image4Url: getImageUrlFromCache( image4Id, size || 'medium' ),
+						} )
+					} }
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Image%sAlign"
@@ -220,7 +235,7 @@ addFilter( 'stackable.feature-grid.edit.inspector.style.before', 'stackable/feat
 					blockAttributes={ props.attributes }
 				/>
 				<HeadingButtonsControl
-					label={ __( 'Title HTML Tag', i18n ) }
+					label={ __( 'HTML Tag', i18n ) }
 					value={ titleTag || 'h2' }
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
@@ -554,49 +569,10 @@ export default compose(
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Image%sAlign', 'Title%sAlign', 'Description%sAlign', 'Button%sAlign' ] ),
 	withBlockStyles( createStyles, { editorMode: true } ),
-)( edit )
-
-const ImageControlsHelperWithData_ = props => {
-	return (
-		<ImageControlsHelper
-			attrNameTemplate="image%s"
-			setAttributes={ props.setAttributes }
-			blockAttributes={ props.attributes }
-			onChangeImage={ false }
-			onChangeAlt={ false }
-			onChangeBlendMode={ false }
-			onChangeSize={ size => {
-				const currentSelectedSize = size || 'medium'
-				const attributes = {
-					imageSize: size,
-				}
-				if ( props.image1Data ) {
-					attributes.image1Url = props.image1Data.media_details.sizes[ currentSelectedSize ] ? props.image1Data.media_details.sizes[ currentSelectedSize ].source_url : props.image1Data.source_url
-				}
-				if ( props.image2Data ) {
-					attributes.image2Url = props.image2Data.media_details.sizes[ currentSelectedSize ] ? props.image2Data.media_details.sizes[ currentSelectedSize ].source_url : props.image2Data.source_url
-				}
-				if ( props.image3Data ) {
-					attributes.image3Url = props.image3Data.media_details.sizes[ currentSelectedSize ] ? props.image3Data.media_details.sizes[ currentSelectedSize ].source_url : props.image3Data.source_url
-				}
-				if ( props.image4Data ) {
-					attributes.image4Url = props.image4Data.media_details.sizes[ currentSelectedSize ] ? props.image4Data.media_details.sizes[ currentSelectedSize ].source_url : props.image4Data.source_url
-				}
-
-				props.setAttributes( attributes )
-			} }
-		/>
-	)
-}
-
-const ImageControlsHelperWithData = compose(
 	withSelect( ( select, props ) => {
-		const { getMedia } = select( 'core' )
-		return {
-			image1Data: props.image1Id ? getMedia( props.image1Id ) : null,
-			image2Data: props.image2Id ? getMedia( props.image2Id ) : null,
-			image3Data: props.image3Id ? getMedia( props.image3Id ) : null,
-			image4Data: props.image4Id ? getMedia( props.image4Id ) : null,
-		}
+		cacheImageData( props.attributes.image1Id, select )
+		cacheImageData( props.attributes.image2Id, select )
+		cacheImageData( props.attributes.image3Id, select )
+		cacheImageData( props.attributes.image4Id, select )
 	} ),
-)( ImageControlsHelperWithData_ )
+)( edit )

@@ -221,7 +221,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 					blockAttributes={ props.attributes }
 				/>
 				<HeadingButtonsControl
-					label={ __( 'Title HTML Tag', i18n ) }
+					label={ __( 'HTML Tag', i18n ) }
 					value={ titleTag || 'h4' }
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
@@ -392,7 +392,7 @@ addFilter( `stackable.count-up.edit.inspector.advanced.before`, `stackable/count
 						initialOpen={ false }
 						title={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Column', i18n ), num ) }
 					>
-						<p className="components-base-control__help">{ __( 'Override settings for this column.', i18n ) }</p>
+						<p className="components-base-control__help">{ sprintf( __( 'Override settings for column %d', i18n ), i ) }</p>
 						{ show.columnBackground && (
 							<ColorPaletteControl
 								label={ __( 'Column Background', i18n ) }

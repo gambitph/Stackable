@@ -105,7 +105,7 @@
  * Deprecated < v2
  */
 .ugb-pricing-box.ugb-pricing-box--v2 {
-	@include baseBlock(); // TODO: [V2] Deprecate this usage
+	@include baseBlock();
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 	grid-gap: $box-hori-padding;
@@ -141,7 +141,7 @@
 	}
 
 	.ugb-pricing-box__price-wrapper {
-		@include baseBlock(); // TODO: [V2] Deprecate this usage
+		@include baseBlock();
 	}
 
 	.ugb-pricing-box__image {
@@ -177,7 +177,7 @@
 
 .ugb-pricing-box.ugb-pricing-box--v2.ugb-pricing-box--design-plain {
 	.ugb-pricing-box__item {
-		@include baseBlock(); // TODO: [V2] Deprecate this usage
+		@include baseBlock();
 		box-shadow: none;
 		padding: 0;
 		border-radius: 0;
@@ -185,7 +185,7 @@
 }
 .ugb-pricing-box.ugb-pricing-box--v2.ugb-pricing-box--design-basic {
 	.ugb-pricing-box__item {
-		@include baseBlock(); // TODO: [V2] Deprecate this usage
+		@include baseBlock();
 		&.ugb-pricing-box--highlighted {
 			*:not(.ugb-button--inner) {
 				color: #222;

@@ -297,6 +297,7 @@ export const createStyles = props => {
 		} )
 	}
 
+	// Spacing.
 	if ( show.imageSpacing ) {
 		styles.push( ...createResponsiveStyles( '.ugb-pricing-box__image', 'image%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
 	}

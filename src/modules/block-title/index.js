@@ -73,7 +73,7 @@ const addInspectorPanel = ( output, props ) => {
 					blockAttributes={ props.attributes }
 				/>
 				<HeadingButtonsControl
-					label={ __( 'Title HTML Tag', i18n ) }
+					label={ __( 'HTML Tag', i18n ) }
 					value={ blockTitleTag || 'h2' }
 					onChange={ blockTitleTag => setAttributes( { blockTitleTag } ) }
 				/>
