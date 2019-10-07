@@ -15,7 +15,10 @@ BlockContainer.Edit = props => {
 		blockProps, render, mainClass, ...containerProps
 	} = props
 	const { blockName } = blockProps
-	const design = blockProps.attributes.design
+	const {
+		design,
+		blockTag = 'div',
+	} = blockProps.attributes
 
 	const mainClasses = classnames( [
 		props.className,
@@ -23,9 +26,10 @@ BlockContainer.Edit = props => {
 		'ugb-main-block': mainClass,
 	}, blockProps ) )
 
+	const BlockTag = blockTag || 'div' // Allow the advanced block settings to override the HTML Tag.
 	// TODO Remove `design` from the filters below.
 	return (
-		<div { ...containerProps } className={ mainClasses }>
+		<BlockTag { ...containerProps } className={ mainClasses }>
 			{ blockProps.styles }
 			{ applyFilters( `stackable.${ blockName }.edit.output.outer`, null, design, blockProps ) }
 			<div className="ugb-inner-block">
@@ -35,7 +39,7 @@ BlockContainer.Edit = props => {
 				</div>
 				{ applyFilters( `stackable.${ blockName }.edit.output.after`, null, design, blockProps ) }
 			</div>
-		</div>
+		</BlockTag>
 	)
 }
 
@@ -49,7 +53,10 @@ BlockContainer.Save = props => {
 		blockProps, render, mainClass, ...containerProps
 	} = props
 	const { blockName } = blockProps
-	const design = blockProps.attributes.design
+	const {
+		design,
+		blockTag = 'div',
+	} = blockProps.attributes
 
 	const mainClasses = classnames( [
 		props.className,
@@ -58,8 +65,9 @@ BlockContainer.Save = props => {
 	}, blockProps ) )
 
 	// TODO Remove `design` from the filters below.
+	const BlockTag = blockTag || 'div' // Allow the advanced block settings to override the HTML Tag.
 	return (
-		<div { ...containerProps } className={ mainClasses }>
+		<BlockTag { ...containerProps } className={ mainClasses }>
 			{ blockProps.styles }
 			{ applyFilters( `stackable.${ blockName }.save.output.outer`, null, design, blockProps ) }
 			<div className="ugb-inner-block">
@@ -69,7 +77,7 @@ BlockContainer.Save = props => {
 				</div>
 				{ applyFilters( `stackable.${ blockName }.save.output.after`, null, design, blockProps ) }
 			</div>
-		</div>
+		</BlockTag>
 	)
 }
 

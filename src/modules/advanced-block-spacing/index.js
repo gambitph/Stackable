@@ -14,13 +14,15 @@ import { createAllCombinationAttributes, appendImportant } from '~stackable/util
  * WordPress dependencies
  */
 import {
+	__, _x, sprintf,
+} from '@wordpress/i18n'
+import {
 	addFilter, applyFilters, doAction, removeFilter,
 } from '@wordpress/hooks'
-import { __, sprintf } from '@wordpress/i18n'
+import { PanelBody, SelectControl } from '@wordpress/components'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
-import { PanelBody } from '@wordpress/components'
 
 removeFilter( 'stackable.setAttributes', 'stackable/module/block-spacing' )
 addFilter( 'stackable.setAttributes', 'stackable/module/block-spacing', ( attributes, blockProps ) => {
@@ -42,6 +44,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 	const { setAttributes } = props
 	const {
 		align = false,
+		blockTag = 'div',
 
 		marginTop = '',
 		marginRight = '',
@@ -110,6 +113,26 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 				initialOpen={ false }
 			>
 				{ applyFilters( `stackable.${ blockName }.edit.advanced.block-spacing.before`, null, props ) }
+				{ options.blockTag &&
+					<SelectControl
+						label={ sprintf( _x( '%s HTML Tag', 'component' ), __( 'Block', i18n ) ) }
+						value={ blockTag }
+						options={ [
+							{ value: '', label: _x( 'Div', 'HTML Tag', i18n ) },
+							{ value: 'section', label: _x( 'Section', 'HTML Tag', i18n ) },
+							{ value: 'article', label: _x( 'Article', 'HTML Tag', i18n ) },
+							{ value: 'aside', label: _x( 'Aside', 'HTML Tag', i18n ) },
+							{ value: 'main', label: _x( 'Main', 'HTML Tag', i18n ) },
+							{ value: 'header', label: _x( 'Header', 'HTML Tag', i18n ) },
+							{ value: 'footer', label: _x( 'Footer', 'HTML Tag', i18n ) },
+							{ value: 'nav', label: _x( 'Nav', 'HTML Tag', i18n ) },
+							{ value: 'address', label: _x( 'Address', 'HTML Tag', i18n ) },
+							{ value: 'hgroup', label: _x( 'Hgroup', 'HTML Tag', i18n ) },
+						] }
+						onChange={ blockTag => setAttributes( { blockTag } ) }
+					/>
+				}
+
 				{ options.margins && <Fragment>
 					<WhenResponsiveScreen screen="desktop">
 						<FourRangeControl
@@ -578,6 +601,10 @@ const addAttributes = attributes => {
 	return {
 		...attributes,
 
+		blockTag: {
+			type: 'string',
+			default: '',
+		},
 		...createAllCombinationAttributes(
 			'%sMargin%s',
 			{
@@ -675,6 +702,7 @@ const addAttributes = attributes => {
 
 const advancedBlockSpacing = ( blockName, options = {} ) => {
 	const optionsToPass = {
+		blockTag: true,
 		margins: true,
 		paddings: true,
 		height: true,
