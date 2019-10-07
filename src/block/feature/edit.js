@@ -413,17 +413,9 @@ const edit = props => {
 	const mainClasses = classnames( [
 		className,
 		'ugb-feature--v2',
-		// 'ugb--background-opacity-' + ( 1 * Math.round( backgroundOpacity / 1 ) ),
 		`ugb-feature--design-${ design }`,
 	], applyFilters( 'stackable.feature.mainclasses', {
-		// [ `ugb-feature--content-${ contentAlign }` ]: contentAlign,
 		'ugb-feature--invert': show.reverseHorizontally && invert,
-		// 'ugb--has-background': design !== 'plain' && ( backgroundColor || backgroundImageURL ),
-		// 'ugb--has-background-image': design !== 'plain' && backgroundImageURL,
-		// [ `ugb--content-width` ]: align === 'full' && contentWidth,
-		// [ `ugb--shadow-${ shadow }` ]: show.columnBackground && ( design === 'basic' || design === 'half' ) && shadow !== 3,
-		// [ `ugb--has-background-gradient` ]: design !== 'plain' && backgroundColorType === 'gradient',
-		// [ `ugb--has-background-video` ]: design !== 'plain' && backgroundType === 'video',
 	}, design, props ) )
 
 	const itemClasses = classnames( [
