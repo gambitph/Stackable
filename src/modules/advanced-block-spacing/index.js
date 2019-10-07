@@ -2,7 +2,11 @@
  * External dependencies
  */
 import {
-	AdvancedRangeControl, AdvancedToolbarControl, FourRangeControl, WhenResponsiveScreen,
+	AdvancedRangeControl,
+	AdvancedToolbarControl,
+	FourRangeControl,
+	ResponsiveControl,
+	WhenResponsiveScreen,
 } from '~stackable/components'
 import { createAllCombinationAttributes, appendImportant } from '~stackable/util'
 
@@ -439,6 +443,21 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</Fragment>
 				}
 
+				{ options.zIndex &&
+					<ResponsiveControl
+						attrNameTemplate="%sBlockZIndex"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Z-Index', i18n ) }
+							min={ -100 }
+							max={ 1000 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				}
+
 				{ applyFilters( `stackable.${ blockName }.edit.advanced.block-spacing.after`, null, props ) }
 			</PanelBody>
 		</Fragment>
@@ -523,6 +542,7 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 			minHeight: getValue( 'blockHeight', `%s${ blockHeightUnit }` ),
 			justifyContent: getValue( 'blockHorizontalAlign' ),
 			alignItems: getValue( 'blockVerticalAlign' ),
+			zIndex: appendImportant( getValue( 'blockZIndex' ) ),
 		},
 		[ `${ blockClass } .ugb-inner-block` ]: {
 			width: appendImportant( getValue( 'blockWidth', `%s${ blockWidthUnit }` ) ),
@@ -532,6 +552,7 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 				minHeight: getValue( 'tabletBlockHeight', `%s${ tabletBlockHeightUnit }` ),
 				justifyContent: getValue( 'tabletBlockHorizontalAlign' ),
 				alignItems: getValue( 'tabletBlockVerticalAlign' ),
+				zIndex: appendImportant( getValue( 'tabletBlockZIndex' ) ),
 			},
 			[ `${ blockClass } .ugb-inner-block` ]: {
 				width: appendImportant( getValue( 'tabletBlockWidth', `%s${ tabletBlockWidthUnit }` ) ),
@@ -542,6 +563,7 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 				minHeight: appendImportant( getValue( 'mobileBlockHeight', `%s${ mobileBlockHeightUnit }` ) ),
 				justifyContent: getValue( 'mobileBlockHorizontalAlign' ),
 				alignItems: getValue( 'mobileBlockVerticalAlign' ),
+				zIndex: appendImportant( getValue( 'mobileBlockZIndex' ) ),
 			},
 			[ `${ blockClass } .ugb-inner-block` ]: {
 				width: appendImportant( getValue( 'mobileBlockWidth', `%s${ mobileBlockWidthUnit }` ) ),
@@ -639,6 +661,15 @@ const addAttributes = attributes => {
 			[ '', 'Tablet', 'Mobile' ],
 			[ 'Vertical', 'Horizontal' ]
 		),
+
+		...createAllCombinationAttributes(
+			'%sBlockZIndex',
+			{
+				type: 'number',
+				default: '',
+			},
+			[ '', 'Tablet', 'Mobile' ]
+		),
 	}
 }
 
@@ -659,6 +690,7 @@ const advancedBlockSpacing = ( blockName, options = {} ) => {
 		enablePaddingRight: true,
 		enablePaddingBottom: true,
 		enablePaddingLeft: true,
+		zIndex: true,
 		...options,
 	}
 
