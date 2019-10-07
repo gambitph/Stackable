@@ -268,7 +268,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 					blockAttributes={ props.attributes }
 				/>
 				<HeadingButtonsControl
-					label={ __( 'HTML Tag', i18n ) }
+					label={ sprintf( _x( '%s HTML Tag', 'component' ), __( 'Name', i18n ) ) }
 					value={ nameTag || 'h4' }
 					onChange={ nameTag => setAttributes( { nameTag } ) }
 				/>

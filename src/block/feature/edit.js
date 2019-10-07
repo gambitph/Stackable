@@ -254,7 +254,6 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 					blockAttributes={ props.attributes }
 				/>
 				<HeadingButtonsControl
-					label={ __( 'HTML Tag', i18n ) }
 					value={ titleTag || 'h2' }
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>

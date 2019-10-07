@@ -84,7 +84,7 @@ const HeadingButtonsControl = props => {
 }
 
 HeadingButtonsControl.defaultProps = {
-	label: __( 'HTML Tag', i18n ),
+	label: sprintf( _x( '%s HTML Tag', 'component' ), __( 'Title', i18n ) ),
 	value: TAG_OPTIONS[ 0 ].value,
 	onChange: () => {},
 }

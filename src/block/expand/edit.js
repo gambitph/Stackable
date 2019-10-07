@@ -84,7 +84,6 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 					blockAttributes={ props.attributes }
 				/>
 				<HeadingButtonsControl
-					label={ __( 'HTML Tag', i18n ) }
 					value={ titleTag || 'h4' }
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>

@@ -253,7 +253,6 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					blockAttributes={ props.attributes }
 				/>
 				<HeadingButtonsControl
-					label={ __( 'HTML Tag', i18n ) }
 					value={ titleTag || 'h3' }
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>

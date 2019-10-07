@@ -328,7 +328,6 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 					blockAttributes={ props.attributes }
 				/>
 				<HeadingButtonsControl
-					label={ __( 'HTML Tag', i18n ) }
 					value={ titleTag || 'h5' }
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>

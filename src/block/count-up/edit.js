@@ -221,7 +221,6 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 					blockAttributes={ props.attributes }
 				/>
 				<HeadingButtonsControl
-					label={ __( 'HTML Tag', i18n ) }
 					value={ titleTag || 'h4' }
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>

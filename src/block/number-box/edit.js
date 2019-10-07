@@ -285,7 +285,6 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					blockAttributes={ props.attributes }
 				/>
 				<HeadingButtonsControl
-					label={ __( 'HTML Tag', i18n ) }
 					value={ titleTag || 'h4' }
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
