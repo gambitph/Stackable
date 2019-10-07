@@ -90,7 +90,7 @@ export const appendImportantAll = styleObject => {
  * @return {string} The rule with !important appended
  */
 export const appendImportant = ( rule, doImportant = true ) => {
-	return rule !== '' && typeof rule !== 'undefined' && doImportant && ! rule.match( /!important/i ) ? `${ rule } !important` : rule
+	return rule !== '' && typeof rule !== 'undefined' && doImportant && ! String( rule ).match( /!important/i ) ? `${ rule } !important` : rule
 }
 
 /**
