@@ -6,13 +6,12 @@
 
 @import "common";
 
-.ugb-expand {
-	@include baseBlock(); // TODO: [V2] Deprecate this usage
-}
-
-.ugb-expand__less-text p:last-child,
-.ugb-expand__more-text p:last-child {
-	margin-bottom: 0;
+.ugb-expand.ugb-expand--v2 {
+	.ugb-expand__title,
+	.ugb-expand__less-text,
+	.ugb-expand__more-text {
+		margin-bottom: $text-margin-bottom;
+	}
 }
 
 .ugb-expand.ugb-expand--more {
@@ -26,8 +25,17 @@
 	}
 }
 
-// Deprecated version < 1.10.
-.ugb-expand {
+/**
+ * Deprecated < v2
+ */
+.ugb-expand:not([class*="ugb-expand--v"]) {
+	@include baseBlock();
+}
+
+/**
+ * Deprecated < 1.10
+ */
+.ugb-expand:not([class*="ugb-expand--v"]) {
 	@include baseBlock();
 	p:last-child {
 		margin-bottom: 0;
@@ -41,5 +49,10 @@
 		.ugb-expand-less {
 			display: block !important;
 		}
+	}
+
+	.ugb-expand__less-text p:last-child,
+	.ugb-expand__more-text p:last-child {
+		margin-bottom: 0;
 	}
 }

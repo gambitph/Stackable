@@ -1,17 +1,29 @@
 /**
- * WordPress dependencies
+ * Internal dependencies
  */
-import { applyFilters } from '@wordpress/hooks'
+import createStyles from './style'
 
 /**
  * External dependencies
  */
 import classnames from 'classnames'
+import { BlockContainer } from '~stackable/components'
+import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+
+/**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
 import { RichText } from '@wordpress/block-editor'
+import { Fragment } from '@wordpress/element'
+import { compose } from '@wordpress/compose'
 
 const save = props => {
 	const { className } = props
 	const {
+		showTitle = true,
+		titleTag = 'h4',
+		title = '',
 		text,
 		moreLabel,
 		moreText,
@@ -21,45 +33,55 @@ const save = props => {
 
 	const mainClasses = classnames( [
 		className,
-		'ugb-expand',
+		'ugb-expand--v2',
 	], applyFilters( 'stackable.expand.mainclasses', {}, design, props ) )
 
 	return (
-		<div className={ mainClasses } aria-expanded="false">
-			{ applyFilters( 'stackable.expand.save.output.before', null, design, props ) }
-			<div className="ugb-expand__less-text">
-				{ ! RichText.isEmpty( text ) && (
+		<BlockContainer.Save className={ mainClasses } blockProps={ props } aria-expanded="false" render={ () => (
+			<Fragment>
+				{ showTitle && ! RichText.isEmpty( title ) &&
 					<RichText.Content
-						multiline="p"
-						value={ text }
+						tagName={ titleTag || 'h4' }
+						className="ugb-expand__title"
+						value={ title }
 					/>
-				) }
-			</div>
-			<div className="ugb-expand__more-text" style={ { display: 'none' } }>
-				{ ! RichText.isEmpty( moreText ) && (
+				}
+				<div className="ugb-expand__less-text">
+					{ ! RichText.isEmpty( text ) && (
+						<RichText.Content
+							multiline="p"
+							value={ text }
+						/>
+					) }
+				</div>
+				<div className="ugb-expand__more-text" style={ { display: 'none' } }>
+					{ ! RichText.isEmpty( moreText ) && (
+						<RichText.Content
+							multiline="p"
+							value={ moreText }
+						/>
+					) }
+				</div>
+				{ /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
+				<a className="ugb-expand__toggle" href="#">
 					<RichText.Content
-						multiline="p"
-						value={ moreText }
+						className="ugb-expand__more-toggle-text"
+						tagName="span"
+						value={ moreLabel }
 					/>
-				) }
-			</div>
-			{ /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
-			<a className="ugb-expand__toggle" href="#">
-				<RichText.Content
-					className="ugb-expand__more-toggle-text"
-					tagName="span"
-					value={ moreLabel }
-				/>
-				<RichText.Content
-					className="ugb-expand__less-toggle-text"
-					tagName="span"
-					value={ lessLabel }
-					style={ { display: 'none' } }
-				/>
-			</a>
-			{ applyFilters( 'stackable.expand.save.output.after', null, design, props ) }
-		</div>
+					<RichText.Content
+						className="ugb-expand__less-toggle-text"
+						tagName="span"
+						value={ lessLabel }
+						style={ { display: 'none' } }
+					/>
+				</a>
+			</Fragment>
+		) } />
 	)
 }
 
-export default save
+export default compose(
+	withUniqueClass,
+	withBlockStyles( createStyles ),
+)( save )
