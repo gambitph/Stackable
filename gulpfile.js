@@ -12,7 +12,8 @@ const autoprefixer = require( 'autoprefixer' ),
 	path = require( 'path' ),
 	postcss = require( 'gulp-postcss' ),
 	rename = require( 'gulp-rename' ),
-	sass = require( 'gulp-sass' )
+	sass = require( 'gulp-sass' ),
+	zip = require( 'gulp-zip' )
 
 // These files are the ones which will be included in the `package` task.
 const buildInclude = [
@@ -99,6 +100,13 @@ gulp.task( 'build', gulp.series( 'build-process' ) )
 gulp.task( 'package', function() {
 	return gulp.src( buildInclude, { base: './' } )
 		.pipe( gulp.dest( 'build/stackable' ) )
+} )
+
+// Zips the build folder.
+gulp.task( 'zip', function() {
+	return gulp.src( 'build/stackable/**/*' )
+		.pipe( zip( 'stackable.zip' ) )
+		.pipe( gulp.dest( 'build' ) )
 } )
 
 const watchFuncs = () => {
