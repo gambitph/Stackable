@@ -73,4 +73,4 @@ export { default as TextToolbar } from './text-toolbar'
 export { default as TextToolbarControl } from './text-toolbar-control'
 export { default as Separator } from './separator'
 export { default as Image } from './image'
-
+export { default as ConvertToContainerButton } from './convert-to-container-buttons'

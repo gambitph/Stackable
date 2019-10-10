@@ -16,19 +16,16 @@ import { Fragment } from '@wordpress/element'
  */
 import { i18n } from 'stackable'
 import { PanelBody } from '@wordpress/components'
-import { registerPlugin } from '@wordpress/plugins'
 
-const id = 'stackable-block-tester'
-
-const Component = () => (
+const DebugSidebar = () => (
 	<Fragment>
 		<PluginSidebarMoreMenuItem
-			target={ id }
+			target={ 'stackable-block-tester' }
 		>
 			{ __( 'Stackable Debugger', i18n ) }
 		</PluginSidebarMoreMenuItem>
 		<PluginSidebar
-			name={ id }
+			name={ 'stackable-block-tester' }
 			isPinnable={ false }
 			title={ __( 'Stackable Debugger', i18n ) }
 		>
@@ -53,7 +50,4 @@ const Component = () => (
 	</Fragment>
 )
 
-registerPlugin( id, {
-	icon: 'clipboard',
-	render: Component,
-} )
+export default DebugSidebar

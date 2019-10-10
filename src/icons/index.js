@@ -25,6 +25,7 @@ import SVGSpacerIcon from './images/spacer-icon.svg'
 import SVGTeamMemberIcon from './images/team-member-icon.svg'
 import SVGTestimonialIcon from './images/testimonial-icon.svg'
 import SVGVideoPopupIcon from './images/video-popup-icon.svg'
+import SVGUngroupContainerIcon from './images/ungroup-container-icon.svg'
 
 /**
  * WordPress dependencies
@@ -159,6 +160,10 @@ export const TestimonialIcon = () => {
 
 export const VideoPopupIcon = () => {
 	return colorizeIcon( <SVGVideoPopupIcon width="20" height="20" /> )
+}
+
+export const UngroupContainerIcon = () => {
+	return colorizeIcon( <SVGUngroupContainerIcon width="20" height="20" /> )
 }
 
 export const GhostButtonIcon = () => <ButtonIcon />

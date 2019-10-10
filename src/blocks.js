@@ -5,8 +5,8 @@
  * Internal dependencies
  */
 import './fontawesome'
-import './debug-sidebar'
 import './format-types'
+import './plugins'
 
 /**
  * External dependencies
