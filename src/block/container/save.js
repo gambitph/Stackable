@@ -1,87 +1,79 @@
 /**
- * WordPress dependencies
+ * Internal dependencies
  */
-import { applyFilters } from '@wordpress/hooks'
+import createStyles from './style'
+import { showOptions } from './util'
 
 /**
  * External dependencies
  */
 import classnames from 'classnames'
+import { BlockContainer } from '~stackable/components'
+import {
+	hasBackgroundOverlay,
+	createVideoBackground,
+} from '~stackable/util'
+import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+
+/**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
 import { InnerBlocks } from '@wordpress/block-editor'
+import { Fragment } from '@wordpress/element'
+import { compose } from '@wordpress/compose'
 
 const save = props => {
+	const { className } = props
 	const {
-		className,
-	} = props
-
-	const {
-		contentAlign,
-		textColor,
-		backgroundColorType = '',
-		backgroundColor,
-		backgroundColor2,
-		backgroundColorDirection = 0,
-		backgroundType = '',
-		backgroundImageURL,
-		backgroundOpacity,
-		fixedBackground,
-		height,
-		contentLocation,
-		verticalAlign,
-		contentWidth,
-		borderRadius = 12,
-		shadow = 3,
 		design = '',
+		shadow = 3,
+		contentWidth = 100,
+		restrictContentWidth = false,
 	} = props.attributes
+
+	const show = showOptions( props )
 
 	const mainClasses = classnames( [
 		className,
-		'ugb-container',
-		'ugb--background-opacity-' + ( 1 * Math.round( backgroundOpacity / 1 ) ),
+		'ugb-container--v2',
+		`ugb-container--design-${ design }`,
 	], applyFilters( 'stackable.container.mainclasses', {
-		[ `ugb-container--content-${ contentAlign }` ]: contentAlign,
-		'ugb--has-background': ( backgroundColor && backgroundColor !== 'transparent' ) || backgroundImageURL,
-		'ugb--has-background-image': backgroundImageURL,
-		[ `ugb-container--height-${ height }` ]: height,
-		[ `ugb-container--align-horizontal-${ contentLocation }` ]: contentLocation,
-		[ `ugb--content-width` ]: contentWidth,
-		[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
-		[ `ugb--has-background-gradient` ]: backgroundColorType === 'gradient',
-		[ `ugb--has-background-video` ]: backgroundType === 'video',
-	}, design, props ) )
+		'ugb-container--width-small': contentWidth <= 50,
+	}, props ) )
 
-	const mainStyle = {
-		'--ugb-text-color': textColor ? textColor : undefined,
-		backgroundColor: backgroundColor ? backgroundColor : undefined,
-		backgroundImage: backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
-		backgroundAttachment: fixedBackground ? 'fixed' : undefined,
-		'--ugb-background-color': backgroundImageURL || backgroundColorType === 'gradient' ? backgroundColor : undefined,
-		'--ugb-background-color2': backgroundColorType === 'gradient' && backgroundColor2 ? backgroundColor2 : undefined,
-		'--ugb-background-direction': backgroundColorType === 'gradient' ? `${ backgroundColorDirection }deg` : undefined,
-		'justify-content': ( height === 'full' || height === 'half' ) && verticalAlign ? verticalAlign : undefined,
-		borderRadius: borderRadius !== 12 ? borderRadius : undefined,
-	}
+	const wrapperClasses = classnames( [
+		'ugb-container__wrapper',
+	], applyFilters( 'stackable.container.wrapperClasses', {
+		[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
+		'ugb--has-background-overlay': show.columnBackground && hasBackgroundOverlay( 'column%s', props.attributes ),
+		'ugb--restrict-content-width': show.restrictContent && restrictContentWidth,
+	}, props ) )
+
+	const contentWrapperClasses = classnames( [
+		'ugb-container__content-wrapper',
+	], {
+		'ugb-content-wrapper': show.restrictContent && restrictContentWidth, // We need this for .ugb--restrict-content-width to work.
+	} )
 
 	return (
-		<div className={ mainClasses } style={ mainStyle }>
-			{ backgroundType === 'video' && (
-				<video
-					className="ugb-video-background"
-					autoPlay
-					muted
-					loop
-					src={ backgroundImageURL }
-				/>
-			) }
-			{ applyFilters( 'stackable.container.edit.output.before', null, design, props ) }
-			<div className="ugb-container__wrapper">
-				<div className="ugb-container__content-wrapper">
-					<InnerBlocks.Content />
+		<BlockContainer.Save className={ mainClasses } blockProps={ props } aria-expanded="false" render={ () => (
+			<Fragment>
+				<div className={ wrapperClasses }>
+					{ show.columnBackground && createVideoBackground( 'column%s', props ) }
+					{ applyFilters( 'stackable.container.save.wrapper.output', null, props ) }
+					<div className="ugb-container__side">
+						<div className={ contentWrapperClasses }>
+							<InnerBlocks.Content />
+						</div>
+					</div>
 				</div>
-			</div>
-			{ applyFilters( 'stackable.container.edit.output.after', null, design, props ) }
-		</div>
+			</Fragment>
+		) } />
 	)
 }
 
-export default save
+export default compose(
+	withUniqueClass,
+	withBlockStyles( createStyles ),
+)( save )

@@ -6,6 +6,13 @@
  * External dependencies
  */
 import { ContainerIcon } from '~stackable/icons'
+import {
+	createResponsiveAttributes,
+	createAllCombinationAttributes,
+	createBackgroundAttributes,
+	createImageAttributes,
+} from '~stackable/util'
+import { disabledBlocks, i18n } from 'stackable'
 
 /**
  * Internal dependencies
@@ -18,66 +25,39 @@ import save from './save'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { disabledBlocks, i18n } from 'stackable'
+import { applyFilters } from '@wordpress/hooks'
+import { createBlock } from '@wordpress/blocks'
 
 export const schema = {
-	textColor: {
-		type: 'string',
-	},
-	contentAlign: {
-		type: 'string',
-		default: '',
-	},
-	backgroundColorType: {
-		type: 'string',
-		default: '',
-	},
-	backgroundColor: {
-		type: 'string',
-		default: '#f1f1f1',
-	},
-	backgroundColor2: {
-		type: 'string',
-		default: '',
-	},
-	backgroundColorDirection: {
-		type: 'number',
-		default: 0,
-	},
-	backgroundType: {
-		type: 'string',
-		default: '',
-	},
-	backgroundImageID: {
-		type: 'number',
-	},
-	backgroundImageURL: {
-		type: 'string',
-	},
-	backgroundOpacity: {
-		type: 'number',
-		default: 5,
-	},
-	fixedBackground: {
+	restrictContentWidth: {
 		type: 'boolean',
 		default: false,
 	},
+	design: {
+		type: 'string',
+		default: 'basic',
+	},
+	...createResponsiveAttributes( '%sHeight', {
+		type: 'string',
+		default: '',
+	} ),
 	height: {
 		type: 'string',
 		default: 'normal',
 	},
-	contentWidth: {
-		type: 'boolean',
-		default: false,
-	},
-	contentLocation: {
-		type: 'string',
-		default: 'full',
-	},
-	verticalAlign: {
-		type: 'string',
-		default: 'center',
-	},
+	...createResponsiveAttributes( 'content%sWidth', {
+		type: 'number',
+		default: '',
+	} ),
+	...createAllCombinationAttributes(
+		'content%s%sAlign', {
+			type: 'string',
+			default: '',
+		},
+		[ 'Vertical', 'Horizontal' ],
+		[ '', 'Tablet', 'Mobile' ]
+	),
+
 	borderRadius: {
 		type: 'number',
 		default: 12,
@@ -86,22 +66,55 @@ export const schema = {
 		type: 'number',
 		default: 3,
 	},
-	align: {
-		type: 'string',
-	},
 
-	// Custom CSS attributes.
-	customCSSUniqueID: {
+	// Column Background
+	...createBackgroundAttributes( 'column%s' ),
+
+	// Image.
+	...createImageAttributes( 'image%s' ),
+	// Convert into a normal comment-string attribute.
+	imageUrl: {
 		type: 'string',
 		default: '',
 	},
-	customCSS: {
+	imageSize: {
 		type: 'string',
-		default: '',
+		default: 'full',
 	},
-	customCSSCompiled: {
+	...createAllCombinationAttributes(
+		'Image%s%s', {
+			type: 'number',
+			default: '',
+		},
+		[ '', 'Tablet', 'Mobile' ],
+		[ 'Height', 'Width' ]
+	),
+	...createResponsiveAttributes( 'image%sHeightUnit', {
 		type: 'string',
-		default: '',
+		default: 'px',
+	} ),
+	...createResponsiveAttributes( 'image%sWidthUnit', {
+		type: 'string',
+		default: '%',
+	} ),
+
+	// Text Colors
+	...createAllCombinationAttributes(
+		'%sColor', {
+			type: 'string',
+			default: '',
+		},
+		[ 'Heading', 'BodyText', 'Link', 'LinkHover' ]
+	),
+
+	// Options for image2 & image3 when responsive.
+	imageCollapseOnMobile: {
+		type: 'boolean',
+		default: true,
+	},
+	imageCollapseOnMobileHeight: {
+		type: 'number',
+		default: 300,
 	},
 }
 
@@ -118,13 +131,74 @@ export const settings = {
 		__( 'Stackable', i18n ),
 	],
 	supports: {
+		anchor: true,
 		align: [ 'center', 'wide', 'full' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
-		// eslint-disable-next-line
-		inserter: false, // TODO: Remove when ready for v2.
 	},
 	deprecated,
 	edit,
 	save,
 	attributes: schema,
+
+	// Stackable modules.
+	modules: {
+		'advanced-general': true,
+		'advanced-block-spacing': true,
+		'advanced-column-spacing': {
+			columnGap: false,
+			verticalColumnAlign: true,
+		},
+		'advanced-responsive': true,
+		'block-background': true,
+		'block-separators': true,
+		// 'block-title': true,
+		'content-align': true,
+		'custom-css': {
+			default: applyFilters( 'stackable.container.custom-css.default', '' ),
+		},
+	},
+
+	/**
+	 * For grouping & ungrouping blocks into Container blocks.
+	 * Based on the Group block.
+	 *
+	 * @see https://github.com/WordPress/gutenberg/blob/a78fddd06e016ef43eb420b2c82b2cdebbdb0c3c/packages/block-library/src/group/index.js
+	 */
+	transforms: {
+		from: [
+			{
+				type: 'block',
+				isMultiBlock: true,
+				blocks: [ '*' ],
+				__experimentalConvert( blocks ) {
+					// Avoid transforming a single `ugb/container` Block
+					if ( blocks.length === 1 && blocks[ 0 ].name === 'ugb/container' ) {
+						return
+					}
+
+					const alignments = [ 'wide', 'full' ]
+
+					// Determine the widest setting of all the blocks to be grouped
+					const widestAlignment = blocks.reduce( ( result, block ) => {
+						const { align } = block.attributes
+						return alignments.indexOf( align ) > alignments.indexOf( result ) ? align : result
+					}, undefined )
+
+					// Clone the Blocks to be Grouped
+					// Failing to create new block references causes the original blocks
+					// to be replaced in the switchToBlockType call thereby meaning they
+					// are removed both from their original location and within the
+					// new group block.
+					const groupInnerBlocks = blocks.map( block => {
+						return createBlock( block.name, block.attributes, block.innerBlocks )
+					} )
+
+					return createBlock( 'ugb/container', {
+						align: widestAlignment,
+					}, groupInnerBlocks )
+				},
+			},
+
+		],
+	},
 }

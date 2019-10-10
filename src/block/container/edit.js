@@ -1,118 +1,127 @@
 /**
+ * Internal dependencies
+ */
+import createStyles from './style'
+import { showOptions } from './util'
+import ImageDesignBasic from './images/basic.png'
+import ImageDesignPlain from './images/plain.png'
+
+/**
  * External dependencies
  */
 import {
-	HorizontalAlignmentToolbar, PanelBackgroundSettings, ProControl, VerticalAlignmentToolbar,
+	BlockContainer,
+	DesignPanelBody,
+	ProControlButton,
+	ContentAlignControl,
+	ResponsiveControl,
+	AdvancedSelectControl,
+	AdvancedToolbarControl,
+	WhenResponsiveScreen,
+	AdvancedRangeControl,
+	ControlSeparator,
+	BackgroundControlsHelper,
+	ColorPaletteControl,
 } from '~stackable/components'
-import { descriptionPlaceholder } from '~stackable/util'
+import {
+	createVideoBackground,
+	hasBackgroundOverlay,
+} from '~stackable/util'
+import {
+	withUniqueClass,
+	withSetAttributeHook,
+	withGoogleFont,
+	withTabbedInspector,
+	withContentAlignReseter,
+	withBlockStyles,
+} from '~stackable/higher-order'
+import classnames from 'classnames'
 
 /**
  * WordPress dependencies
  */
-import {
-	AlignmentToolbar, BlockControls, InnerBlocks, InspectorControls, PanelColorSettings,
-} from '@wordpress/block-editor'
 import { i18n, showProNotice } from 'stackable'
 import {
-	PanelBody, RangeControl, SelectControl, ToggleControl,
+	PanelBody,
+	RangeControl,
+	ToggleControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
-import classnames from 'classnames'
+import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
+import { InnerBlocks } from '@wordpress/block-editor'
+import { compose } from '@wordpress/compose'
+import { withSelect } from '@wordpress/data'
 
-const TEMPLATE = [
-	[ 'core/heading', { content: __( 'Title for This Block', i18n ) } ],
-	[ 'core/paragraph', { content: descriptionPlaceholder( 'long' ) } ],
-]
-
-const edit = props => {
+addFilter( 'stackable.container.edit.inspector.layout.before', 'stackable/container', ( output, props ) => {
+	const { setAttributes } = props
 	const {
-		className,
-		setAttributes,
-	} = props
-
-	const {
-		contentAlign,
-		textColor,
-		backgroundColorType = '',
-		backgroundColor,
-		backgroundColor2,
-		backgroundColorDirection = 0,
-		backgroundType = '',
-		backgroundImageID,
-		backgroundImageURL,
-		backgroundOpacity,
-		fixedBackground,
-		height,
-		contentLocation,
-		verticalAlign,
-		contentWidth,
-		align,
-		borderRadius = 12,
-		shadow = 3,
-		design = '',
+		design = 'basic',
 	} = props.attributes
-
-	const mainClasses = classnames( [
-		className,
-		'ugb-container',
-		'ugb--background-opacity-' + ( 1 * Math.round( backgroundOpacity / 1 ) ),
-	], applyFilters( 'stackable.container.mainclasses', {
-		[ `ugb-container--content-${ contentAlign }` ]: contentAlign,
-		'ugb--has-background': ( backgroundColor && backgroundColor !== 'transparent' ) || backgroundImageURL,
-		'ugb--has-background-image': backgroundImageURL,
-		[ `ugb-container--height-${ height }` ]: height,
-		[ `ugb-container--align-horizontal-${ contentLocation }` ]: contentLocation,
-		[ `ugb--content-width` ]: contentWidth,
-		[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
-		[ `ugb--has-background-gradient` ]: backgroundColorType === 'gradient',
-		[ `ugb--has-background-video` ]: backgroundType === 'video',
-	}, design, props ) )
-
-	const mainStyle = {
-		'--ugb-text-color': textColor ? textColor : undefined,
-		backgroundColor: backgroundColor ? backgroundColor : undefined,
-		backgroundImage: backgroundImageURL ? `url(${ backgroundImageURL })` : undefined,
-		backgroundAttachment: fixedBackground ? 'fixed' : undefined,
-		'--ugb-background-color': backgroundImageURL || backgroundColorType === 'gradient' ? backgroundColor : undefined,
-		'--ugb-background-color2': backgroundColorType === 'gradient' && backgroundColor2 ? backgroundColor2 : undefined,
-		'--ugb-background-direction': backgroundColorType === 'gradient' ? `${ backgroundColorDirection }deg` : undefined,
-		'justify-content': ( height === 'full' || height === 'half' ) && verticalAlign ? verticalAlign : undefined,
-		borderRadius: borderRadius !== 12 ? borderRadius : undefined,
-	}
 
 	return (
 		<Fragment>
-			<BlockControls>
-				<AlignmentToolbar
-					value={ contentAlign }
-					onChange={ contentAlign => setAttributes( { contentAlign } ) }
-				/>
-				<HorizontalAlignmentToolbar
-					value={ contentLocation }
-					onChange={ contentLocation => setAttributes( { contentLocation } ) }
-				/>
-				{ ( height === 'full' || height === 'half' ) &&
-					<VerticalAlignmentToolbar
-						value={ verticalAlign }
-						onChange={ verticalAlign => setAttributes( { verticalAlign } ) }
-					/>
-				}
-			</BlockControls>
-			<InspectorControls>
-				<PanelColorSettings
-					initialOpen={ true }
-					title={ __( 'General Settings', i18n ) }
-					colorSettings={ [
-						{
-							value: textColor,
-							onChange: textColor => setAttributes( { textColor } ),
-							label: __( 'Text Color', i18n ),
-						},
-					] }
+			{ output }
+			<DesignPanelBody
+				initialOpen={ true }
+				selected={ design }
+				options={ applyFilters( 'stackable.container.edit.designs', [
+					{
+						label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
+					},
+					{
+						label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
+					},
+				] ) }
+				onChange={ design => setAttributes( { design } ) }
+			>
+				{ showProNotice && <ProControlButton /> }
+			</DesignPanelBody>
+		</Fragment>
+	)
+} )
+
+addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/container', ( output, props ) => {
+	const { setAttributes } = props
+	const {
+		borderRadius = 12,
+		shadow = 3,
+		restrictContentWidth = false,
+
+		height = '',
+		tabletHeight = '',
+		mobileHeight = '',
+
+		contentVerticalAlign = '',
+		contentTabletVerticalAlign = '',
+		contentMobileVerticalAlign = '',
+
+		contentWidth = '',
+		contentTabletWidth = '',
+		contentMobileWidth = '',
+
+		contentHorizontalAlign = '',
+		contentTabletHorizontalAlign = '',
+		contentMobileHorizontalAlign = '',
+
+		headingColor = '',
+		bodyTextColor = '',
+		linkColor = '',
+		linkHoverColor = '',
+	} = props.attributes
+
+	const show = showOptions( props )
+
+	return (
+		<Fragment>
+			{ output }
+			<PanelBody title={ __( 'General', i18n ) }>
+				<ResponsiveControl
+					attrNameTemplate="%sHeight"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
 				>
-					<SelectControl
+					<AdvancedSelectControl
 						label={ __( 'Height', i18n ) }
 						options={ [
 							{ label: __( 'Short', i18n ), value: 'short' },
@@ -121,91 +130,237 @@ const edit = props => {
 							{ label: __( 'Half-screen height', i18n ), value: 'half' },
 							{ label: __( 'Full-screen height', i18n ), value: 'full' },
 						] }
-						value={ height }
-						onChange={ height => {
-							setAttributes( { height } )
-						} }
 					/>
-					{ align === 'full' &&
-						<ToggleControl
-							label={ __( 'Restrict to Content Width', i18n ) }
-							checked={ contentWidth }
-							onChange={ contentWidth => setAttributes( { contentWidth } ) }
+				</ResponsiveControl>
+
+				{ ( height === 'half' || height === 'full' ) &&
+					<WhenResponsiveScreen>
+						<AdvancedToolbarControl
+							label={ __( 'Content Vertical Align', i18n ) }
+							controls="flex-vertical"
+							value={ contentVerticalAlign }
+							onChange={ value => setAttributes( { contentVerticalAlign: value } ) }
 						/>
-					}
-					{ align !== 'full' &&
-						<RangeControl
-							label={ __( 'Border Radius', i18n ) }
-							value={ borderRadius }
-							onChange={ borderRadius => setAttributes( { borderRadius } ) }
-							min={ 0 }
-							max={ 50 }
+					</WhenResponsiveScreen>
+				}
+				{ ( height === 'half' || height === 'full' || tabletHeight === 'half' || tabletHeight === 'full' ) &&
+					<WhenResponsiveScreen screen="tablet">
+						<AdvancedToolbarControl
+							label={ __( 'Content Vertical Align', i18n ) }
+							controls="flex-vertical"
+							value={ contentTabletVerticalAlign }
+							onChange={ value => setAttributes( { contentTabletVerticalAlign: value } ) }
 						/>
-					}
+					</WhenResponsiveScreen>
+				}
+
+				{ ( height === 'half' || height === 'full' || tabletHeight === 'half' || tabletHeight === 'full' || mobileHeight === 'half' || mobileHeight === 'full' ) &&
+					<WhenResponsiveScreen screen="mobile">
+						<AdvancedToolbarControl
+							label={ __( 'Content Vertical Align', i18n ) }
+							controls="flex-vertical"
+							value={ contentMobileVerticalAlign }
+							onChange={ value => setAttributes( { contentMobileVerticalAlign: value } ) }
+						/>
+					</WhenResponsiveScreen>
+				}
+
+				{ show.restrictContent &&
+					<ToggleControl
+						label={ __( 'Restrict to Content Width', i18n ) }
+						checked={ restrictContentWidth }
+						onChange={ restrictContentWidth => setAttributes( { restrictContentWidth } ) }
+					/>
+				}
+				<ResponsiveControl
+					attrNameTemplate="content%sWidth"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AdvancedRangeControl
+						label={ __( 'Content Width', i18n ) + ' (%)' }
+						min={ 10 }
+						max={ 100 }
+						allowReset={ true }
+					/>
+				</ResponsiveControl>
+
+				{ contentWidth && contentWidth < 100 &&
+					<WhenResponsiveScreen>
+						<AdvancedToolbarControl
+							label={ __( 'Content Horizontal Align', i18n ) }
+							controls="flex-horizontal"
+							value={ contentHorizontalAlign }
+							onChange={ value => setAttributes( { contentHorizontalAlign: value } ) }
+						/>
+					</WhenResponsiveScreen>
+				}
+				{ ( ( contentWidth && contentWidth < 100 ) || ( contentTabletWidth && contentTabletWidth < 100 ) ) &&
+					<WhenResponsiveScreen screen="tablet">
+						<AdvancedToolbarControl
+							label={ __( 'Content Horizontal Align', i18n ) }
+							controls="flex-horizontal"
+							value={ contentTabletHorizontalAlign }
+							onChange={ value => setAttributes( { contentTabletHorizontalAlign: value } ) }
+						/>
+					</WhenResponsiveScreen>
+				}
+				{ ( ( contentWidth && contentWidth < 100 ) || ( contentTabletWidth && contentTabletWidth < 100 ) || ( contentMobileWidth && contentMobileWidth < 100 ) ) &&
+					<WhenResponsiveScreen screen="mobile">
+						<AdvancedToolbarControl
+							label={ __( 'Content Horizontal Align', i18n ) }
+							controls="flex-horizontal"
+							value={ contentMobileHorizontalAlign }
+							onChange={ value => setAttributes( { contentMobileHorizontalAlign: value } ) }
+						/>
+					</WhenResponsiveScreen>
+				}
+
+				<ControlSeparator />
+
+				{ show.borderRadius &&
+					<RangeControl
+						label={ __( 'Border Radius', i18n ) }
+						value={ borderRadius }
+						onChange={ ( borderRadius = 12 ) => setAttributes( { borderRadius } ) }
+						min={ 0 }
+						max={ 50 }
+						allowReset={ true }
+					/>
+				}
+				{ show.columnBackground &&
 					<RangeControl
 						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
-						onChange={ shadow => setAttributes( { shadow } ) }
+						onChange={ ( shadow = 3 ) => setAttributes( { shadow } ) }
 						min={ 0 }
 						max={ 9 }
+						allowReset={ true }
 					/>
-				</PanelColorSettings>
-				<PanelBackgroundSettings
-					initialOpen={ true }
-					backgroundColorType={ backgroundColorType }
-					backgroundColor={ backgroundColor }
-					backgroundColor2={ backgroundColor2 }
-					backgroundColorDirection={ backgroundColorDirection }
-					backgroundType={ backgroundType }
-					backgroundImageID={ backgroundImageID }
-					backgroundImageURL={ backgroundImageURL }
-					backgroundOpacity={ backgroundOpacity }
-					fixedBackground={ fixedBackground }
-					onChangeBackgroundColorType={ backgroundColorType => setAttributes( { backgroundColorType } ) }
-					onChangeBackgroundColor={ backgroundColor => setAttributes( { backgroundColor: typeof backgroundColor === 'undefined' ? 'transparent' : backgroundColor } ) }
-					onChangeBackgroundColor2={ backgroundColor2 => setAttributes( { backgroundColor2 } ) }
-					onChangeBackgroundColorDirection={ backgroundColorDirection => setAttributes( { backgroundColorDirection } ) }
-					onChangeBackgroundType={ backgroundType => setAttributes( { backgroundType } ) }
-					onChangeBackgroundImage={ ( { url, id } ) => setAttributes( { backgroundImageURL: url, backgroundImageID: id } ) }
-					onRemoveBackgroundImage={ () => {
-						setAttributes( { backgroundImageURL: '', backgroundImageID: 0 } )
-					} }
-					onChangeBackgroundOpacity={ backgroundOpacity => setAttributes( { backgroundOpacity } ) }
-					onChangeFixedBackground={ value => setAttributes( { fixedBackground: !! value } ) }
-				/>
-				{ showProNotice &&
-					<PanelBody
-						initialOpen={ false }
-						title={ __( 'Custom CSS', i18n ) }
-					>
-						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
-							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
-						/>
-					</PanelBody>
 				}
-				{ applyFilters( 'stackable.container.edit.inspector.after', null, design, props ) }
-			</InspectorControls>
-			<div className={ mainClasses } style={ mainStyle }>
-				{ backgroundType === 'video' && (
-					<video
-						className="ugb-video-background"
-						autoPlay
-						muted
-						loop
-						src={ backgroundImageURL }
+				<ContentAlignControl
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+			</PanelBody>
+
+			{ show.columnBackground &&
+				<PanelBody
+					title={ __( 'Container Background', i18n ) }
+					initialOpen={ false }
+				>
+					<BackgroundControlsHelper
+						attrNameTemplate="column%s"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
 					/>
-				) }
-				{ applyFilters( 'stackable.container.edit.output.before', null, design, props ) }
-				<div className="ugb-container__wrapper">
-					<div className="ugb-container__content-wrapper">
-						<InnerBlocks template={ TEMPLATE } />
+				</PanelBody>
+			}
+
+			{ applyFilters( 'stackable.container.edit.inspector.style.column-background.after', null, props ) }
+
+			<PanelBody
+				title={ __( 'Text Colors', i18n ) }
+				initialOpen={ false }
+			>
+				<ColorPaletteControl
+					value={ headingColor }
+					onChange={ headingColor => setAttributes( { headingColor } ) }
+					label={ __( 'Heading Color', i18n ) }
+				/>
+				<ColorPaletteControl
+					value={ bodyTextColor }
+					onChange={ bodyTextColor => setAttributes( { bodyTextColor } ) }
+					label={ __( 'Text Color', i18n ) }
+				/>
+				<ColorPaletteControl
+					value={ linkColor }
+					onChange={ linkColor => setAttributes( { linkColor } ) }
+					label={ __( 'Link Color', i18n ) }
+				/>
+				<ColorPaletteControl
+					value={ linkHoverColor }
+					onChange={ linkHoverColor => setAttributes( { linkHoverColor } ) }
+					label={ __( 'Link Hover Color', i18n ) }
+				/>
+				<p className="components-base-control__help">{ __( 'The colors above might not apply to some nested blocks.', i18n ) }</p>
+			</PanelBody>
+		</Fragment>
+	)
+} )
+
+const edit = props => {
+	const {
+		className,
+	} = props
+
+	const {
+		design = 'basic',
+		shadow = 3,
+		contentWidth = 100,
+		restrictContentWidth = false,
+	} = props.attributes
+
+	const show = showOptions( props )
+
+	const mainClasses = classnames( [
+		className,
+		'ugb-container--v2',
+		`ugb-container--design-${ design }`,
+	], applyFilters( 'stackable.container.mainclasses', {
+		'ugb-container--width-small': contentWidth <= 50,
+	}, props ) )
+
+	const wrapperClasses = classnames( [
+		'ugb-container__wrapper',
+	], applyFilters( 'stackable.container.wrapperClasses', {
+		[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
+		'ugb--has-background-overlay': show.columnBackground && hasBackgroundOverlay( 'column%s', props.attributes ),
+		'ugb--restrict-content-width': show.restrictContent && restrictContentWidth,
+	}, props ) )
+
+	const contentWrapperClasses = classnames( [
+		'ugb-container__content-wrapper',
+	], {
+		'ugb-content-wrapper': show.restrictContent && restrictContentWidth, // We need this for .ugb--restrict-content-width to work.
+	} )
+
+	return (
+		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
+			<Fragment>
+				<div className={ wrapperClasses }>
+					{ show.columnBackground && createVideoBackground( 'column%s', props ) }
+					{ applyFilters( 'stackable.container.edit.wrapper.output', null, props ) }
+					<div className="ugb-container__side">
+						<div className={ contentWrapperClasses }>
+							<InnerBlocks
+								templateLock={ false }
+								renderAppender={ () => ! props.hasInnerBlocks ? <InnerBlocks.ButtonBlockAppender /> : <InnerBlocks.DefaultBlockAppender /> }
+							/>
+						</div>
 					</div>
 				</div>
-				{ applyFilters( 'stackable.container.edit.output.after', null, design, props ) }
-			</div>
-		</Fragment>
+			</Fragment>
+		) } />
 	)
 }
 
-export default edit
+export default compose(
+	withUniqueClass,
+	withSetAttributeHook,
+	withGoogleFont,
+	withTabbedInspector(),
+	withContentAlignReseter(),
+	withBlockStyles( createStyles, { editorMode: true } ),
+	withSelect( ( select, { clientId } ) => {
+		const {
+			getBlock,
+		} = select( 'core/block-editor' )
+
+		const block = getBlock( clientId )
+
+		return {
+			hasInnerBlocks: !! ( block && block.innerBlocks.length ),
+		}
+	} ),
+)( edit )
