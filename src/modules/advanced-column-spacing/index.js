@@ -218,11 +218,7 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 			columnGap: appendImportant( getValue( 'columnGap', '%spx' ) ),
 			alignItems: getValue( 'columnVerticalAlign' ),
 		},
-		'.ugb-block-content > *': {
-			paddingTop: appendImportant( getValue( 'columnPaddingTop', `%s${ columnPaddingUnit }` ) ),
-			paddingRight: appendImportant( getValue( 'columnPaddingRight', `%s${ columnPaddingUnit }` ) ),
-			paddingBottom: appendImportant( getValue( 'columnPaddingBottom', `%s${ columnPaddingUnit }` ) ),
-			paddingLeft: appendImportant( getValue( 'columnPaddingLeft', `%s${ columnPaddingUnit }` ) ),
+		'> .ugb-inner-block > .ugb-block-content > *': {
 			minHeight: getValue( 'columnHeight', '%spx' ),
 			justifyContent: getValue( 'columnContentVerticalAlign' ),
 		},
@@ -231,11 +227,7 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 				columnGap: appendImportant( getValue( 'tabletColumnGap', '%spx' ) ),
 				alignItems: getValue( 'tabletColumnVerticalAlign' ),
 			},
-			'.ugb-block-content > *': {
-				paddingTop: appendImportant( getValue( 'tabletColumnPaddingTop', `%s${ tabletColumnPaddingUnit }` ) ),
-				paddingRight: appendImportant( getValue( 'tabletColumnPaddingRight', `%s${ tabletColumnPaddingUnit }` ) ),
-				paddingBottom: appendImportant( getValue( 'tabletColumnPaddingBottom', `%s${ tabletColumnPaddingUnit }` ) ),
-				paddingLeft: appendImportant( getValue( 'tabletColumnPaddingLeft', `%s${ tabletColumnPaddingUnit }` ) ),
+			'> .ugb-inner-block > .ugb-block-content > *': {
 				minHeight: getValue( 'tabletColumnHeight', '%spx' ),
 				justifyContent: getValue( 'tabletColumnContentVerticalAlign' ),
 			},
@@ -245,18 +237,40 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 				columnGap: appendImportant( getValue( 'mobileColumnGap', '%spx' ) ),
 				alignItems: getValue( 'mobileColumnVerticalAlign' ),
 			},
-			'.ugb-block-content > *': {
-				paddingTop: appendImportant( getValue( 'mobileColumnPaddingTop', `%s${ mobileColumnPaddingUnit }` ) ),
-				paddingRight: appendImportant( getValue( 'mobileColumnPaddingRight', `%s${ mobileColumnPaddingUnit }` ) ),
-				paddingBottom: appendImportant( getValue( 'mobileColumnPaddingBottom', `%s${ mobileColumnPaddingUnit }` ) ),
-				paddingLeft: appendImportant( getValue( 'mobileColumnPaddingLeft', `%s${ mobileColumnPaddingUnit }` ) ),
+			'> .ugb-inner-block > .ugb-block-content > *': {
 				minHeight: getValue( 'mobileColumnHeight', '%spx' ),
 				justifyContent: getValue( 'mobileColumnContentVerticalAlign' ),
 			},
 		},
 	} )
 
-	return deepmerge( styleObject, styles )
+	const paddingSelector = applyFilters( `stackable.${ blockName }.advanced-column-spacing.paddings.selector`, '> .ugb-inner-block > .ugb-block-content > *', props )
+	const paddings = applyFilters( `stackable.${ blockName }.advanced-column-spacing.paddings`, {
+		[ paddingSelector ]: {
+			paddingTop: appendImportant( getValue( 'columnPaddingTop', `%s${ columnPaddingUnit }` ) ),
+			paddingRight: appendImportant( getValue( 'columnPaddingRight', `%s${ columnPaddingUnit }` ) ),
+			paddingBottom: appendImportant( getValue( 'columnPaddingBottom', `%s${ columnPaddingUnit }` ) ),
+			paddingLeft: appendImportant( getValue( 'columnPaddingLeft', `%s${ columnPaddingUnit }` ) ),
+		},
+		tablet: {
+			[ paddingSelector ]: {
+				paddingTop: appendImportant( getValue( 'tabletColumnPaddingTop', `%s${ tabletColumnPaddingUnit }` ) ),
+				paddingRight: appendImportant( getValue( 'tabletColumnPaddingRight', `%s${ tabletColumnPaddingUnit }` ) ),
+				paddingBottom: appendImportant( getValue( 'tabletColumnPaddingBottom', `%s${ tabletColumnPaddingUnit }` ) ),
+				paddingLeft: appendImportant( getValue( 'tabletColumnPaddingLeft', `%s${ tabletColumnPaddingUnit }` ) ),
+			},
+		},
+		mobile: {
+			[ paddingSelector ]: {
+				paddingTop: appendImportant( getValue( 'mobileColumnPaddingTop', `%s${ mobileColumnPaddingUnit }` ) ),
+				paddingRight: appendImportant( getValue( 'mobileColumnPaddingRight', `%s${ mobileColumnPaddingUnit }` ) ),
+				paddingBottom: appendImportant( getValue( 'mobileColumnPaddingBottom', `%s${ mobileColumnPaddingUnit }` ) ),
+				paddingLeft: appendImportant( getValue( 'mobileColumnPaddingLeft', `%s${ mobileColumnPaddingUnit }` ) ),
+			},
+		},
+	} )
+
+	return deepmerge.all( [ styleObject, styles, paddings ] )
 }
 
 const addAttributes = attributes => {
