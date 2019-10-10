@@ -89,7 +89,18 @@ const CONTROLS = {
 }
 
 const AdvancedToolbarControl = props => {
-	const controls = typeof props.controls === 'string' ? CONTROLS[ props.controls ] : props.controls
+	let controls = typeof props.controls === 'string' ? CONTROLS[ props.controls ] : props.controls
+
+	// If no icon is given and a label is given, make the button a label.
+	controls = controls.map( button => {
+		if ( ! button.icon && button.label ) {
+			return {
+				...button,
+				icon: <span className="ugb-advanced-toolbar-control__text-button">{ button.label }</span>,
+			}
+		}
+		return button
+	} )
 
 	return (
 		<BaseControl
