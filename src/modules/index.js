@@ -1,6 +1,7 @@
 /**
  * Internal dependencies
  */
+import advancedGeneral from './advanced-general'
 import advancedBlockSpacing from './advanced-block-spacing'
 import advancedColumnSpacing from './advanced-column-spacing'
 import advancedResponsive from './advanced-responsive'
@@ -12,6 +13,7 @@ import customCSS from './custom-css'
 export { getModule, initBlockModule } from './modules'
 
 export const modules = [
+	{ name: 'advanced-general', module: advancedGeneral },
 	{ name: 'advanced-responsive', module: advancedResponsive },
 	{ name: 'advanced-block-spacing', module: advancedBlockSpacing },
 	{ name: 'advanced-column-spacing', module: advancedColumnSpacing },
