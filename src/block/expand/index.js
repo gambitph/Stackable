@@ -127,6 +127,7 @@ export const settings = {
 
 	// Stackable modules.
 	modules: {
+		'advanced-general': true,
 		'advanced-block-spacing': true,
 		// 'advanced-column-spacing': {
 		// 	columnGap: false,

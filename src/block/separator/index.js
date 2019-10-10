@@ -201,6 +201,7 @@ export const settings = {
 
 	// Stackable modules.
 	modules: {
+		'advanced-general': true,
 		'advanced-responsive': true,
 		'advanced-block-spacing': {
 			enableMarginRight: false,

@@ -59,6 +59,7 @@ export const schema = {
 
 	// Image.
 	...createImageAttributes( 'image%s' ),
+	// Convert into a normal comment-string attribute.
 	imageUrl: {
 		type: 'string',
 		default: '',
@@ -170,6 +171,7 @@ export const settings = {
 
 	// Stackable modules.
 	modules: {
+		'advanced-general': true,
 		'advanced-block-spacing': true,
 		// 'advanced-column-spacing': {
 		// 	columnGap: false,
