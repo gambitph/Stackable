@@ -126,6 +126,7 @@ const advancedBlockGeneral = ( blockName, options = {} ) => {
 	const optionsToPass = {
 		blockTag: true,
 		zIndex: true,
+		modifyStyles: true,
 		...options,
 	}
 
