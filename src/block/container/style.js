@@ -27,13 +27,12 @@ export const createStyles = props => {
 	const styles = []
 
 	const {
-		align = '',
 		uniqueClass = '',
 	} = props.attributes
 
 	const show = showOptions( props )
 
-	if ( show.borderRadius && align !== 'full' ) {
+	if ( show.borderRadius ) {
 		styles.push( {
 			[ `.${ uniqueClass }-wrapper.ugb-container__wrapper` ]: {
 				borderRadius: getValue( 'borderRadius', '%spx !important' ),
