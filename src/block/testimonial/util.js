@@ -18,7 +18,7 @@ export const showOptions = blockProps => {
 		shadow: design !== 'plain',
 		imageAsBackground: false,
 		testimonialSpacing: showTestimonial,
-		imageSpacing: showImage,
+		imageSpacing: showImage && ! [ 'background', 'vertical', 'vertical-inverse' ].includes( design ),
 		nameSpacing: showName,
 		positionSpacing: showPosition,
 	}, blockProps )
