@@ -59,6 +59,9 @@ export const createStyles = props => {
 			minHeight: height === 'half' ? '50vh' :
 				height === 'full' ? '100vh' :
 					undefined,
+			// Remove top/bottom padding for the short/tall height to display properly.
+			paddingTop: height === 'short' || height === 'tall' ? '0 !important' : undefined,
+			paddingBottom: height === 'short' || height === 'tall' ? '0 !important' : undefined,
 		},
 		tablet: {
 			'.ugb-container__side': {
@@ -73,6 +76,9 @@ export const createStyles = props => {
 				minHeight: tabletHeight === 'half' ? '50vh' :
 					tabletHeight === 'full' ? '100vh' :
 						undefined,
+				// Remove top/bottom padding for the short/tall height to display properly.
+				paddingTop: tabletHeight === 'short' || tabletHeight === 'tall' ? '0 !important' : undefined,
+				paddingBottom: tabletHeight === 'short' || tabletHeight === 'tall' ? '0 !important' : undefined,
 			},
 		},
 		mobile: {
@@ -88,6 +94,9 @@ export const createStyles = props => {
 				minHeight: mobileHeight === 'half' ? '50vh' :
 					mobileHeight === 'full' ? '100vh' :
 						undefined,
+				// Remove top/bottom padding for the short/tall height to display properly.
+				paddingTop: mobileHeight === 'short' || mobileHeight === 'tall' ? '0 !important' : undefined,
+				paddingBottom: mobileHeight === 'short' || mobileHeight === 'tall' ? '0 !important' : undefined,
 			},
 		},
 	} )
