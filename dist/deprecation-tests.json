@@ -212,6 +212,30 @@
     "html": "<!-- wp:ugb/count-up {\"customCSSUniqueID\":\"ugb-736adcc\",\"customCSS\":\"/* Count up container */\n.ugb-countup {\n\tbackground: red;\n}\n\n/* Count up item */\n.ugb-countup .ugb-countup__item {\n\t\n}\n\n/* Count up title */\n.ugb-countup .ugb-countup__title {\n\t\n}\n\n/* Count up number counter */\n.ugb-countup .ugb-countup__counter {\n\t\n}\n\n/* Count up description */\n.ugb-countup .ugb-countup__description {\n\t\n}\",\"customCSSCompiled\":\".ugb-736adcc.ugb-countup{background:red !important}\"} -->\n\t\t<div class=\"wp-block-ugb-count-up ugb-countup ugb-countup--v3 ugb-countup--columns-4 ugb--background-opacity-5 ugb-736adcc\"><style>.ugb-736adcc.ugb-countup{background:red !important}</style><div class=\"ugb-content-wrapper\"><div class=\"ugb-countup__item\"><h4 class=\"ugb-countup__title\">Title</h4><div class=\"ugb-countup__counter\" style=\"font-size:40px;font-weight:400\" data-duration=\"1000\" data-delay=\"16\">$99.99</div><p class=\"ugb-countup__description\">Description</p></div><div class=\"ugb-countup__item\"><h4 class=\"ugb-countup__title\">Title</h4><div class=\"ugb-countup__counter\" style=\"font-size:40px;font-weight:400\" data-duration=\"1000\" data-delay=\"16\">1,234</div><p class=\"ugb-countup__description\">Description</p></div><div class=\"ugb-countup__item\"><h4 class=\"ugb-countup__title\">Title</h4><div class=\"ugb-countup__counter\" style=\"font-size:40px;font-weight:400\" data-duration=\"1000\" data-delay=\"16\">1,234.56</div><p class=\"ugb-countup__description\">Description</p></div><div class=\"ugb-countup__item\"><h4 class=\"ugb-countup__title\">Title</h4><div class=\"ugb-countup__counter\" style=\"font-size:40px;font-weight:400\" data-duration=\"1000\" data-delay=\"16\">£99.99</div><p class=\"ugb-countup__description\">Description</p></div></div></div>\n\t\t<!-- /wp:ugb/count-up -->"
   },
   {
+    "block": "Divider",
+    "version": "1.17.3",
+    "description": "Default block",
+    "html": "<!-- wp:ugb/divider -->\n\t\t<div class=\"wp-block-ugb-divider ugb-divider\"><hr align=\"center\" style=\"background-color:#dddddd;width:50%;height:1px\"/></div>\n\t\t<!-- /wp:ugb/divider -->"
+  },
+  {
+    "block": "Divider",
+    "version": "1.17.3",
+    "description": "Modified block",
+    "html": "<!-- wp:ugb/divider {\"height\":4,\"width\":70.6,\"color\":\"#ff6900\"} -->\n\t\t<div class=\"wp-block-ugb-divider ugb-divider\"><hr align=\"center\" style=\"background-color:#ff6900;width:70.6%;height:4px\"/></div>\n\t\t<!-- /wp:ugb/divider -->"
+  },
+  {
+    "block": "Divider",
+    "version": "1.17.3",
+    "description": "No alignment test",
+    "html": "<!-- wp:ugb/divider -->\n\t\t<div class=\"wp-block-ugb-divider ugb-divider\"><hr style=\"background-color:#dddddd;width:50%;height:1px\"/></div>\n\t\t<!-- /wp:ugb/divider -->"
+  },
+  {
+    "block": "Divider",
+    "version": "1.17.3",
+    "description": "Custom CSS",
+    "html": "<!-- wp:ugb/divider {\"customCSSUniqueID\":\"ugb-4b3708f\",\"customCSS\":\"/* Divider */\n.ugb-divider hr {\nbackground: red;\n}\",\"customCSSCompiled\":\".ugb-4b3708f.ugb-divider hr{background:red !important}\"} -->\n\t\t<div class=\"wp-block-ugb-divider ugb-divider ugb-4b3708f\"><style>.ugb-4b3708f.ugb-divider hr{background:red !important}</style><hr align=\"center\" style=\"background-color:#dddddd;width:50%;height:1px\"/></div>\n\t\t<!-- /wp:ugb/divider -->"
+  },
+  {
     "block": "Expand",
     "version": "1.17.3",
     "description": "Default block",

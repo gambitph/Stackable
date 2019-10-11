@@ -6,14 +6,65 @@
 
 @import "common";
 
-.ugb-divider {
+.ugb-divider.ugb-divider--v2 {
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+	hr {
+		background-color: #ddd;
+		border: 0 !important;
+		padding: 0 !important;
+		max-width: none !important;
+		margin: 0 auto !important;
+	}
+
+	.ugb-divider__dots {
+		margin: 0 auto;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+	}
+	.ugb-divider__dot {
+		flex-shrink: 0;
+	}
+}
+
+.ugb-divider.ugb-divider--v2.ugb-divider--design-dots,
+.ugb-divider.ugb-divider--v2.ugb-divider--design-asterisks {
+	hr {
+		background-color: transparent !important;
+		height: 0 !important;
+	}
+
+	.ugb-divider__dot {
+		border-radius: 100%;
+	}
+}
+
+.ugb-divider.ugb-divider--v2.ugb-divider--design-asterisks {
+	.ugb-divider__dot {
+		background: transparent;
+		position: relative;
+		&::before {
+			content: "*";
+			font-family: Georgia, Times, "Times New Roman", serif;
+			line-height: 1;
+			vertical-align: middle;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+	}
+}
+
+/**
+ * Deprecated < v2
+ */
+.ugb-divider:not([class*="ugb-divider--v"]) {
 	border: 0;
 	height: 1px;
 	width: 100%;
 	background-color: transparent;
-	// margin-top: 2rem;
-	// margin-bottom: 2rem;
-	@include baseBlock(); // TODO: [V2] Deprecate this usage
+	@include baseBlock();
 	hr {
 		background-color: #ddd;
 		border: 0 !important;

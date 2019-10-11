@@ -5,6 +5,7 @@
 /**
  * External dependencies
  */
+import { disabledBlocks, i18n } from 'stackable'
 import { DividerIcon } from '~stackable/icons'
 
 /**
@@ -12,14 +13,31 @@ import { DividerIcon } from '~stackable/icons'
  */
 import edit from './edit'
 import save from './save'
+import deprecated from './deprecated'
 
 /**
  * WordPress dependencies
  */
+import { addFilter, applyFilters } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
-import { disabledBlocks, i18n } from 'stackable'
 
 const schema = {
+	design: {
+		type: 'string',
+		default: 'basic',
+	},
+	color: {
+		type: 'string',
+		default: '',
+	},
+	hrMarginTop: {
+		type: 'number',
+		default: '',
+	},
+	hrMarginBottom: {
+		type: 'number',
+		default: '',
+	},
 	height: {
 		default: 1,
 		type: 'number',
@@ -28,27 +46,9 @@ const schema = {
 		default: 50,
 		type: 'number',
 	},
-	color: {
-		type: 'string',
-		default: '#dddddd',
-	},
 	alignment: {
 		type: 'string',
 		default: 'center',
-	},
-
-	// Custom CSS attributes.
-	customCSSUniqueID: {
-		type: 'string',
-		default: '',
-	},
-	customCSS: {
-		type: 'string',
-		default: '',
-	},
-	customCSSCompiled: {
-		type: 'string',
-		default: '',
 	},
 }
 
@@ -65,11 +65,41 @@ export const settings = {
 	],
 	attributes: schema,
 	supports: {
+		align: [ 'center', 'wide', 'full' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
-		// eslint-disable-next-line
-		inserter: false, // TODO: Remove when ready for v2.
 	},
 
 	edit,
 	save,
+	deprecated,
+
+	// Stackable modules.
+	modules: {
+		'advanced-block-spacing': true,
+		'advanced-responsive': true,
+		'content-align': true,
+		'custom-css': {
+			default: applyFilters( 'stackable.divider.custom-css.default', '' ),
+		},
+	},
 }
+
+addFilter( 'stackable.divider.setAttributes', 'stackable/divider/defaults', ( attributes, blockProps ) => {
+	const blockAttributes = blockProps.attributes
+
+	if ( typeof attributes.design !== 'undefined' && attributes.design !== 'basic' ) {
+		return {
+			...attributes,
+			height: attributes.design === 'asterisks' ? 14 : 7,
+			width: attributes.design === 'dots' || attributes.design === 'asterisks' ? 10 : blockAttributes.width,
+		}
+	} else if ( attributes.design === 'basic' ) {
+		return {
+			...attributes,
+			height: 1,
+			width: 50,
+		}
+	}
+
+	return attributes
+} )
