@@ -477,7 +477,7 @@ const edit = props => {
 
 					return (
 						<div className={ itemClasses } key={ i }>
-							{ show.columnBackground && createVideoBackground( 'column%s', props ) }
+							{ show.columnBackground && show[ `columnBackground${ i }` ] && createVideoBackground( 'column%s', props ) }
 							{ showImage &&
 								<div className="ugb-feature-grid__image">
 									<ImageUploadPlaceholder
