@@ -173,7 +173,7 @@ export const createStyles = props => {
 		importantBackgroundColor: true,
 	}
 	styles.push( {
-		...( show.columnBackground ? createBackgroundStyleSet( 'column%s', 'ugb-container__wrapper', props.attributes, columnBackgroundOptions ) : {} ),
+		...( show.columnBackground ? createBackgroundStyleSet( 'column%s', `${ uniqueClass }-wrapper.ugb-container__wrapper`, props.attributes, columnBackgroundOptions ) : {} ),
 	} )
 
 	// Text Colors.
