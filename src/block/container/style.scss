@@ -53,7 +53,7 @@
 }
 
 .ugb-container.ugb-container--v2.ugb-container--design-plain {
-	.ugb-container__wrapper {
+	> .ugb-inner-block > .ugb-block-content > .ugb-container__wrapper {
 		background: none;
 		padding-left: 0;
 		padding-right: 0;
