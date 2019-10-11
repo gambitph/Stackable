@@ -386,6 +386,7 @@ const deprecated = [
 				customCSS: updateCSS( attributes.customCSS ),
 				customCSSCompiled: updateCSS( attributes.customCSSCompiled ),
 
+				design: 'basic',
 				headingColor: attributes.textColor,
 				bodyTextColor: attributes.textColor,
 				linkColor: attributes.textColor,
@@ -402,7 +403,7 @@ const deprecated = [
 
 				restrictContentWidth: attributes.contentWidth,
 
-				contentWidth: [ 'left', 'center', 'right' ].includes( attributes.contentLocation ) ? 50 : undefined,
+				contentWidth: [ 'left', 'center', 'right' ].includes( attributes.contentLocation ) ? 50 : 100,
 				contentHorizontalAlign: attributes.contentLocation === 'left' ? 'flex-start' :
 					attributes.contentLocation === 'center' ? 'center' :
 						attributes.contentLocation === 'right' ? 'flex-end' :
