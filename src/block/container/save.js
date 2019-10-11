@@ -30,6 +30,7 @@ const save = props => {
 		shadow = 3,
 		contentWidth = 100,
 		restrictContentWidth = false,
+		uniqueClass = '',
 	} = props.attributes
 
 	const show = showOptions( props )
@@ -52,6 +53,7 @@ const save = props => {
 
 	const contentWrapperClasses = classnames( [
 		'ugb-container__content-wrapper',
+		`${ uniqueClass }-wrapper`,
 	], {
 		'ugb-content-wrapper': show.restrictContent && restrictContentWidth, // We need this for .ugb--restrict-content-width to work.
 	} )

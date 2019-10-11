@@ -181,28 +181,63 @@ export const createStyles = props => {
 		columnBackgroundColor = '',
 		headingColor = '',
 		bodyTextColor = '',
+		uniqueClass = '',
 	} = props.attributes
 	styles.push( {
-		[ '.ugb-container__content-wrapper h1, ' +
-		  '.ugb-container__content-wrapper h2, ' +
-		  '.ugb-container__content-wrapper h3, ' +
-		  '.ugb-container__content-wrapper h4, ' +
-		  '.ugb-container__content-wrapper h5, ' +
-		  '.ugb-container__content-wrapper h6' ]: {
-			color: whiteIfDarkBlackIfLight( headingColor, show.columnBackground && columnBackgroundColor ),
+		[ 'h1, ' +
+		  'h2, ' +
+		  'h3, ' +
+		  'h4, ' +
+		  'h5, ' +
+		  'h6' ]: {
+			color: getValue( 'headingColor' ),
 		},
-		[ '.ugb-container__content-wrapper, ' +
-		  '.ugb-container__content-wrapper p, ' +
-		  '.ugb-container__content-wrapper li' ]: {
-			color: whiteIfDarkBlackIfLight( bodyTextColor, show.columnBackground && columnBackgroundColor ),
+		[ 'p, ' +
+		  'li' ]: {
+			color: getValue( 'bodyTextColor' ),
 		},
-		[ '.ugb-container__content-wrapper a, ' +
-		  '.ugb-container__content-wrapper a:visited, ' +
-		  '.ugb-container__content-wrapper a:focus' ]: {
+		[ 'a, ' +
+		  'a:visited, ' +
+		  'a:focus' ]: {
 			color: getValue( 'linkColor' ),
 		},
-		'.ugb-container__content-wrapper a:hover': {
+		'a:hover': {
 			color: getValue( 'linkHoverColor' ),
+		},
+	} )
+
+	// When there's a background color, change the text colors of all immediate core block children.
+	// Don't color all children since Stackable blocks and others might have their own background colors.
+	styles.push( {
+		[ `.${ uniqueClass }-wrapper > h1, ` +
+		  `.${ uniqueClass }-wrapper > h2, ` +
+		  `.${ uniqueClass }-wrapper > h3, ` +
+		  `.${ uniqueClass }-wrapper > h4, ` +
+		  `.${ uniqueClass }-wrapper > h5, ` +
+		  `.${ uniqueClass }-wrapper > h6` ]: {
+			color: whiteIfDarkBlackIfLight( headingColor, show.columnBackground && columnBackgroundColor ),
+		},
+		[ `.${ uniqueClass }-wrapper > p, ` +
+		  `.${ uniqueClass }-wrapper > ol li, ` +
+		  `.${ uniqueClass }-wrapper > ul li` ]: {
+			color: whiteIfDarkBlackIfLight( bodyTextColor, show.columnBackground && columnBackgroundColor ),
+		},
+
+		// Editor only styles for colorizing the headings & text of immediate inner blocks.
+		// This doesn't get rendered in the frontend.
+		editor: {
+			[ `.${ uniqueClass }-wrapper > * > * [data-type*="core/heading"] h1, ` +
+			  `.${ uniqueClass }-wrapper > * > * [data-type*="core/heading"] h2, ` +
+			  `.${ uniqueClass }-wrapper > * > * [data-type*="core/heading"] h3, ` +
+			  `.${ uniqueClass }-wrapper > * > * [data-type*="core/heading"] h4, ` +
+			  `.${ uniqueClass }-wrapper > * > * [data-type*="core/heading"] h5, ` +
+			  `.${ uniqueClass }-wrapper > * > * [data-type*="core/heading"] h6` ]: {
+				color: whiteIfDarkBlackIfLight( headingColor, show.columnBackground && columnBackgroundColor ),
+			},
+			[ `.${ uniqueClass }-wrapper > * > * [data-type*="core/paragraph"] p, ` +
+			  `.${ uniqueClass }-wrapper > * > * [data-type*="core/list"] li` ]: {
+				color: whiteIfDarkBlackIfLight( bodyTextColor, show.columnBackground && columnBackgroundColor ),
+			},
 		},
 	} )
 

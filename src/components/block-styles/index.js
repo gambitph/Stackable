@@ -63,32 +63,39 @@ export const combineStyleRules = styleObject => {
  * @return {string} Minified CSS string
  */
 const generateStyles = ( styleObject, blockMainClassName = '', blockUniqueClassName = '', breakTablet = 1025, breakMobile = 768, editorMode = false ) => {
-	let desktopStyleString = ''
-	const desktopStyles = omit( styleObject, [ 'tablet', 'mobile' ] )
+	const styleStrings = []
+
+	const desktopStyles = omit( styleObject, [ 'tablet', 'mobile', 'editor' ] )
 	if ( Object.keys( desktopStyles ).length ) {
 		const cleanedStyles = addBlockClassNames( desktopStyles, blockMainClassName, blockUniqueClassName, editorMode )
-		desktopStyleString = combineStyleRules( cleanedStyles )
+		styleStrings.push( combineStyleRules( cleanedStyles ) )
 	}
 
-	let tabletStyleString = ''
 	if ( typeof styleObject.tablet !== 'undefined' ) {
 		const cleanedStyles = addBlockClassNames( styleObject.tablet, blockMainClassName, blockUniqueClassName, editorMode )
-		tabletStyleString = combineStyleRules( cleanedStyles )
-	}
-	if ( tabletStyleString ) {
-		tabletStyleString = `\n@media screen and (max-width: ${ breakTablet }px) {\n${ tabletStyleString } }`
+		const tabletStyleString = combineStyleRules( cleanedStyles )
+		if ( tabletStyleString ) {
+			styleStrings.push( `\n@media screen and (max-width: ${ breakTablet }px) {\n${ tabletStyleString } }` )
+		}
 	}
 
-	let mobileStyleString = ''
 	if ( typeof styleObject.mobile !== 'undefined' ) {
 		const cleanedStyles = addBlockClassNames( styleObject.mobile, blockMainClassName, blockUniqueClassName, editorMode )
-		mobileStyleString = combineStyleRules( cleanedStyles )
-	}
-	if ( mobileStyleString ) {
-		mobileStyleString = `\n@media screen and (max-width: ${ breakMobile }px) {\n${ mobileStyleString } }`
+		const mobileStyleString = combineStyleRules( cleanedStyles )
+		if ( mobileStyleString ) {
+			styleStrings.push( `\n@media screen and (max-width: ${ breakMobile }px) {\n${ mobileStyleString } }` )
+		}
 	}
 
-	return minifyCSS( `${ desktopStyleString }${ tabletStyleString }${ mobileStyleString }` )
+	// CSS that will only be rendered while editing.
+	if ( editorMode ) {
+		if ( typeof styleObject.editor !== 'undefined' ) {
+			const cleanedStyles = addBlockClassNames( styleObject.editor, blockMainClassName, blockUniqueClassName, editorMode )
+			styleStrings.push( combineStyleRules( cleanedStyles ) )
+		}
+	}
+
+	return minifyCSS( styleStrings.join( '' ) )
 }
 
 const BlockStyles = props => {
