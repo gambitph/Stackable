@@ -7,10 +7,10 @@
 @import "common";
 
 .ugb-container.ugb-container--v2 {
-	&.alignfull:not(.ugb-container--design-plain) {
+	&.alignfull:not(.ugb-container--design-plain):not(.ugb--has-block-background) {
 		padding-left: 0;
 		padding-right: 0;
-		.ugb-container__wrapper {
+		> .ugb-inner-block > .ugb-block-content > .ugb-container__wrapper {
 			border-radius: 0 !important;
 		}
 	}

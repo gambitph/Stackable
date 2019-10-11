@@ -26,10 +26,10 @@
 
 // Remove border radius on full width.
 [data-align="full"] {
-	.ugb-container:not(.ugb-container--design-plain) {
+	.ugb-container:not(.ugb-container--design-plain):not(.ugb--has-block-background) {
 		padding-left: 0 !important;
 		padding-right: 0 !important;
-		.ugb-container__wrapper {
+		> .ugb-inner-block > .ugb-block-content > .ugb-container__wrapper {
 			border-radius: 0 !important;
 		}
 	}
