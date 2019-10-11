@@ -729,6 +729,8 @@ const deprecated = [
 				testimonial1: attributes.serif ? `<em>${ attributes.testimonial1 }</em>` : attributes.testimonial1,
 				testimonial2: attributes.serif ? `<em>${ attributes.testimonial2 }</em>` : attributes.testimonial2,
 				testimonial3: attributes.serif ? `<em>${ attributes.testimonial3 }</em>` : attributes.testimonial3,
+
+				bubbleBackgroundColor: attributes.design === 'bubble' ? attributes.backgroundColor : undefined,
 			}
 		},
 	},
