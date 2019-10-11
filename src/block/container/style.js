@@ -28,13 +28,14 @@ export const createStyles = props => {
 
 	const {
 		align = '',
+		uniqueClass = '',
 	} = props.attributes
 
 	const show = showOptions( props )
 
 	if ( show.borderRadius && align !== 'full' ) {
 		styles.push( {
-			'.ugb-container__wrapper': {
+			[ `${ uniqueClass }-wrapper.ugb-container__wrapper` ]: {
 				borderRadius: getValue( 'borderRadius', '%spx !important' ),
 			},
 		} )
@@ -47,7 +48,7 @@ export const createStyles = props => {
 		mobileHeight = '',
 	} = props.attributes
 	styles.push( {
-		'.ugb-container__side': {
+		[ `${ uniqueClass }-wrapper > .ugb-container__side` ]: {
 			paddingTop: height === 'short' ? '35px !important' :
 				height === 'tall' ? '120px !important' :
 					undefined,
@@ -55,7 +56,7 @@ export const createStyles = props => {
 				height === 'tall' ? '120px !important' :
 					undefined,
 		},
-		'.ugb-container__wrapper': {
+		[ `${ uniqueClass }-wrapper.ugb-container__wrapper` ]: {
 			minHeight: height === 'half' ? '50vh' :
 				height === 'full' ? '100vh' :
 					undefined,
@@ -64,7 +65,7 @@ export const createStyles = props => {
 			paddingBottom: height === 'short' || height === 'tall' ? '0 !important' : undefined,
 		},
 		tablet: {
-			'.ugb-container__side': {
+			[ `${ uniqueClass }-wrapper > .ugb-container__side` ]: {
 				paddingTop: tabletHeight === 'short' ? '35px !important' :
 					tabletHeight === 'tall' ? '120px !important' :
 						undefined,
@@ -72,7 +73,7 @@ export const createStyles = props => {
 					tabletHeight === 'tall' ? '120px !important' :
 						undefined,
 			},
-			'.ugb-container__wrapper': {
+			[ `${ uniqueClass }-wrapper.ugb-container__wrapper` ]: {
 				minHeight: tabletHeight === 'half' ? '50vh' :
 					tabletHeight === 'full' ? '100vh' :
 						undefined,
@@ -82,7 +83,7 @@ export const createStyles = props => {
 			},
 		},
 		mobile: {
-			'.ugb-container__side': {
+			[ `${ uniqueClass }-wrapper > .ugb-container__side` ]: {
 				paddingTop: mobileHeight === 'short' ? '35px !important' :
 					mobileHeight === 'tall' ? '120px !important' :
 						undefined,
@@ -90,7 +91,7 @@ export const createStyles = props => {
 					mobileHeight === 'tall' ? '120px !important' :
 						undefined,
 			},
-			'.ugb-container__wrapper': {
+			[ `${ uniqueClass }-wrapper.ugb-container__wrapper` ]: {
 				minHeight: mobileHeight === 'half' ? '50vh' :
 					mobileHeight === 'full' ? '100vh' :
 						undefined,
@@ -107,7 +108,7 @@ export const createStyles = props => {
 	const wrapperMobileHasHeight = mobileHeight && ( mobileHeight === 'half' || mobileHeight === 'full' )
 	if ( wrapperHasHeight ) {
 		styles.push( {
-			'.ugb-container__side': {
+			[ `${ uniqueClass }-wrapper > .ugb-container__side` ]: {
 				justifyContent: getValue( 'contentVerticalAlign' ),
 			},
 		} )
@@ -115,7 +116,7 @@ export const createStyles = props => {
 	if ( wrapperHasHeight || wrapperTabletHasHeight ) {
 		styles.push( {
 			tablet: {
-				'.ugb-container__side': {
+				[ `${ uniqueClass }-wrapper > .ugb-container__side` ]: {
 					justifyContent: getValue( 'contentTabletVerticalAlign' ),
 				},
 			},
@@ -124,7 +125,7 @@ export const createStyles = props => {
 	if ( wrapperHasHeight || wrapperTabletHasHeight || wrapperMobileHasHeight ) {
 		styles.push( {
 			mobile: {
-				'.ugb-container__side': {
+				[ `${ uniqueClass }-wrapper > .ugb-container__side` ]: {
 					justifyContent: getValue( 'contentMobileVerticalAlign' ),
 				},
 			},
@@ -136,16 +137,16 @@ export const createStyles = props => {
 	// We do the responsiveness here since doing it in style.scss is a headache with the !important rules.
 	const isSmallWidth = getValue( 'contentWidth' ) ? parseInt( getValue( 'contentWidth' ), 10 ) <= 50 : false
 	styles.push( {
-		'.ugb-container__content-wrapper': {
+		[ `.${ uniqueClass }-content-wrapper.ugb-container__content-wrapper` ]: {
 			width: appendImportant( getValue( 'contentWidth', '%s%%' ) ),
 		},
 		tablet: {
-			'.ugb-container__content-wrapper': {
+			[ `.${ uniqueClass }-content-wrapper.ugb-container__content-wrapper` ]: {
 				width: appendImportant( getValue( 'contentTabletWidth', '%s%%', isSmallWidth ? '70%' : undefined ) ),
 			},
 		},
 		mobile: {
-			'.ugb-container__content-wrapper': {
+			[ `.${ uniqueClass }-content-wrapper.ugb-container__content-wrapper` ]: {
 				width: appendImportant( getValue( 'contentMobileWidth', '%s%%', getValue( 'contentTabletWidth', '%s%%', isSmallWidth ? '70%' : undefined ) ) ),
 			},
 		},
@@ -153,16 +154,16 @@ export const createStyles = props => {
 
 	// Content horizontal align.
 	styles.push( {
-		'.ugb-container__side': {
+		[ `.${ uniqueClass }-wrapper > .ugb-container__side` ]: {
 			alignItems: appendImportant( getValue( 'contentHorizontalAlign' ) ),
 		},
 		tablet: {
-			'.ugb-container__side': {
+			[ `.${ uniqueClass }-wrapper > .ugb-container__side` ]: {
 				alignItems: appendImportant( getValue( 'contentTabletHorizontalAlign' ) ),
 			},
 		},
 		mobile: {
-			'.ugb-container__side': {
+			[ `.${ uniqueClass }-wrapper > .ugb-container__side` ]: {
 				alignItems: appendImportant( getValue( 'contentMobileHorizontalAlign' ) ),
 			},
 		},
@@ -181,7 +182,6 @@ export const createStyles = props => {
 		columnBackgroundColor = '',
 		headingColor = '',
 		bodyTextColor = '',
-		uniqueClass = '',
 	} = props.attributes
 	styles.push( {
 		[ 'h1, ' +
@@ -209,33 +209,33 @@ export const createStyles = props => {
 	// When there's a background color, change the text colors of all immediate core block children.
 	// Don't color all children since Stackable blocks and others might have their own background colors.
 	styles.push( {
-		[ `.${ uniqueClass }-wrapper > h1, ` +
-		  `.${ uniqueClass }-wrapper > h2, ` +
-		  `.${ uniqueClass }-wrapper > h3, ` +
-		  `.${ uniqueClass }-wrapper > h4, ` +
-		  `.${ uniqueClass }-wrapper > h5, ` +
-		  `.${ uniqueClass }-wrapper > h6` ]: {
+		[ `.${ uniqueClass }-content-wrapper > h1, ` +
+		  `.${ uniqueClass }-content-wrapper > h2, ` +
+		  `.${ uniqueClass }-content-wrapper > h3, ` +
+		  `.${ uniqueClass }-content-wrapper > h4, ` +
+		  `.${ uniqueClass }-content-wrapper > h5, ` +
+		  `.${ uniqueClass }-content-wrapper > h6` ]: {
 			color: whiteIfDarkBlackIfLight( headingColor, show.columnBackground && columnBackgroundColor ),
 		},
-		[ `.${ uniqueClass }-wrapper > p, ` +
-		  `.${ uniqueClass }-wrapper > ol li, ` +
-		  `.${ uniqueClass }-wrapper > ul li` ]: {
+		[ `.${ uniqueClass }-content-wrapper > p, ` +
+		  `.${ uniqueClass }-content-wrapper > ol li, ` +
+		  `.${ uniqueClass }-content-wrapper > ul li` ]: {
 			color: whiteIfDarkBlackIfLight( bodyTextColor, show.columnBackground && columnBackgroundColor ),
 		},
 
 		// Editor only styles for colorizing the headings & text of immediate inner blocks.
 		// This doesn't get rendered in the frontend.
 		editor: {
-			[ `.${ uniqueClass }-wrapper > * > * [data-type*="core/heading"] h1, ` +
-			  `.${ uniqueClass }-wrapper > * > * [data-type*="core/heading"] h2, ` +
-			  `.${ uniqueClass }-wrapper > * > * [data-type*="core/heading"] h3, ` +
-			  `.${ uniqueClass }-wrapper > * > * [data-type*="core/heading"] h4, ` +
-			  `.${ uniqueClass }-wrapper > * > * [data-type*="core/heading"] h5, ` +
-			  `.${ uniqueClass }-wrapper > * > * [data-type*="core/heading"] h6` ]: {
+			[ `.${ uniqueClass }-content-wrapper > * > * [data-type*="core/heading"] h1, ` +
+			  `.${ uniqueClass }-content-wrapper > * > * [data-type*="core/heading"] h2, ` +
+			  `.${ uniqueClass }-content-wrapper > * > * [data-type*="core/heading"] h3, ` +
+			  `.${ uniqueClass }-content-wrapper > * > * [data-type*="core/heading"] h4, ` +
+			  `.${ uniqueClass }-content-wrapper > * > * [data-type*="core/heading"] h5, ` +
+			  `.${ uniqueClass }-content-wrapper > * > * [data-type*="core/heading"] h6` ]: {
 				color: whiteIfDarkBlackIfLight( headingColor, show.columnBackground && columnBackgroundColor ),
 			},
-			[ `.${ uniqueClass }-wrapper > * > * [data-type*="core/paragraph"] p, ` +
-			  `.${ uniqueClass }-wrapper > * > * [data-type*="core/list"] li` ]: {
+			[ `.${ uniqueClass }-content-wrapper > * > * [data-type*="core/paragraph"] p, ` +
+			  `.${ uniqueClass }-content-wrapper > * > * [data-type*="core/list"] li` ]: {
 				color: whiteIfDarkBlackIfLight( bodyTextColor, show.columnBackground && columnBackgroundColor ),
 			},
 		},

@@ -45,6 +45,7 @@ const save = props => {
 
 	const wrapperClasses = classnames( [
 		'ugb-container__wrapper',
+		`${ uniqueClass }-wrapper`,
 	], applyFilters( 'stackable.container.wrapperClasses', {
 		[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
 		'ugb--has-background-overlay': show.columnBackground && hasBackgroundOverlay( 'column%s', props.attributes ),
@@ -53,7 +54,7 @@ const save = props => {
 
 	const contentWrapperClasses = classnames( [
 		'ugb-container__content-wrapper',
-		`${ uniqueClass }-wrapper`,
+		`${ uniqueClass }-content-wrapper`,
 	], {
 		'ugb-content-wrapper': show.restrictContent && restrictContentWidth, // We need this for .ugb--restrict-content-width to work.
 	} )
