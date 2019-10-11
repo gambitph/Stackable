@@ -60,7 +60,7 @@ const save = props => {
 	} )
 
 	return (
-		<BlockContainer.Save className={ mainClasses } blockProps={ props } aria-expanded="false" render={ () => (
+		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
 				<div className={ wrapperClasses }>
 					{ show.columnBackground && createVideoBackground( 'column%s', props ) }
