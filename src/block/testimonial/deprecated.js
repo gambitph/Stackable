@@ -723,8 +723,12 @@ const deprecated = [
 				testimonialColor: attributes.bodyTextColor,
 				columnBackgroundColor: attributes.backgroundColor,
 
-				testimonialFontFamily: attributes.serif ? 'Serif' : undefined,
-				testimonialFontSize: attributes.serif ? '20' : undefined,
+				testimonialFontFamily: attributes.serif ? 'Serif-Alt' : undefined,
+				testimonialFontSize: attributes.serif ? 20 : undefined,
+
+				testimonial1: attributes.serif ? `<em>${ attributes.testimonial1 }</em>` : attributes.testimonial1,
+				testimonial2: attributes.serif ? `<em>${ attributes.testimonial2 }</em>` : attributes.testimonial2,
+				testimonial3: attributes.serif ? `<em>${ attributes.testimonial3 }</em>` : attributes.testimonial3,
 			}
 		},
 	},
