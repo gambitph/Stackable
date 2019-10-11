@@ -48,7 +48,7 @@ export const createStyles = props => {
 
 	const styles = []
 
-	if ( show.columnBackground ) {
+	if ( show.borderRadius ) {
 		styles.push( {
 			'.ugb-testimonial__item': {
 				borderRadius: getValue( 'borderRadius', '%spx !important' ),
