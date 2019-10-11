@@ -28,6 +28,7 @@ const FontFamilyControl = props => {
 					options: [
 						{ label: __( 'Sans-Serif', i18n ), value: 'Sans-Serif' },
 						{ label: __( 'Serif', i18n ), value: 'Serif' },
+						{ label: __( 'Serif Alternative', i18n ), value: 'Serif-Alt' },
 						{ label: __( 'Monospace', i18n ), value: 'Monospace' },
 					],
 				},

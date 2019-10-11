@@ -25,7 +25,7 @@ export const getGoogleFontURL = fontName => {
 	return `https://fonts.googleapis.com/css?family=${ family }:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic${ subset }`
 }
 
-export const isWebFont = fontName => ! fontName.match( /^(sans[-+]serif|serif|monospace)$/i )
+export const isWebFont = fontName => ! fontName.match( /^(sans[-+]serif|serif|monospace|serif-alt)$/i )
 
 /**
  * Load the stylesheet of a Google Font.
@@ -57,6 +57,8 @@ export const getFontFamily = fontName => {
 	// System fonts.
 	if ( fontName.match( /^serif$/i ) ) {
 		return '"Palatino Linotype", Palatino, Palladio, "URW Palladio L", "Book Antiqua", Baskerville, "Bookman Old Style", "Bitstream Charter", "Nimbus Roman No9 L", Garamond, "Apple Garamond", "ITC Garamond Narrow", "New Century Schoolbook", "Century Schoolbook", "Century Schoolbook L", Georgia, serif'
+	} else if ( fontName.match( /^serif-alt$/i ) ) {
+		return 'Constantia, Lucida Bright, Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif'
 	} else if ( fontName.match( /^monospace$/i ) ) {
 		return 'SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace'
 	}
