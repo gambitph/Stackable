@@ -35,7 +35,7 @@ export const createStyles = props => {
 
 	if ( show.borderRadius && align !== 'full' ) {
 		styles.push( {
-			[ `${ uniqueClass }-wrapper.ugb-container__wrapper` ]: {
+			[ `.${ uniqueClass }-wrapper.ugb-container__wrapper` ]: {
 				borderRadius: getValue( 'borderRadius', '%spx !important' ),
 			},
 		} )
@@ -48,7 +48,7 @@ export const createStyles = props => {
 		mobileHeight = '',
 	} = props.attributes
 	styles.push( {
-		[ `${ uniqueClass }-wrapper > .ugb-container__side` ]: {
+		[ `.${ uniqueClass }-wrapper > .ugb-container__side` ]: {
 			paddingTop: height === 'short' ? '35px !important' :
 				height === 'tall' ? '120px !important' :
 					undefined,
@@ -56,7 +56,7 @@ export const createStyles = props => {
 				height === 'tall' ? '120px !important' :
 					undefined,
 		},
-		[ `${ uniqueClass }-wrapper.ugb-container__wrapper` ]: {
+		[ `.${ uniqueClass }-wrapper.ugb-container__wrapper` ]: {
 			minHeight: height === 'half' ? '50vh' :
 				height === 'full' ? '100vh' :
 					undefined,
@@ -65,7 +65,7 @@ export const createStyles = props => {
 			paddingBottom: height === 'short' || height === 'tall' ? '0 !important' : undefined,
 		},
 		tablet: {
-			[ `${ uniqueClass }-wrapper > .ugb-container__side` ]: {
+			[ `.${ uniqueClass }-wrapper > .ugb-container__side` ]: {
 				paddingTop: tabletHeight === 'short' ? '35px !important' :
 					tabletHeight === 'tall' ? '120px !important' :
 						undefined,
@@ -73,7 +73,7 @@ export const createStyles = props => {
 					tabletHeight === 'tall' ? '120px !important' :
 						undefined,
 			},
-			[ `${ uniqueClass }-wrapper.ugb-container__wrapper` ]: {
+			[ `.${ uniqueClass }-wrapper.ugb-container__wrapper` ]: {
 				minHeight: tabletHeight === 'half' ? '50vh' :
 					tabletHeight === 'full' ? '100vh' :
 						undefined,
@@ -83,7 +83,7 @@ export const createStyles = props => {
 			},
 		},
 		mobile: {
-			[ `${ uniqueClass }-wrapper > .ugb-container__side` ]: {
+			[ `.${ uniqueClass }-wrapper > .ugb-container__side` ]: {
 				paddingTop: mobileHeight === 'short' ? '35px !important' :
 					mobileHeight === 'tall' ? '120px !important' :
 						undefined,
@@ -91,7 +91,7 @@ export const createStyles = props => {
 					mobileHeight === 'tall' ? '120px !important' :
 						undefined,
 			},
-			[ `${ uniqueClass }-wrapper.ugb-container__wrapper` ]: {
+			[ `.${ uniqueClass }-wrapper.ugb-container__wrapper` ]: {
 				minHeight: mobileHeight === 'half' ? '50vh' :
 					mobileHeight === 'full' ? '100vh' :
 						undefined,
@@ -108,7 +108,7 @@ export const createStyles = props => {
 	const wrapperMobileHasHeight = mobileHeight && ( mobileHeight === 'half' || mobileHeight === 'full' )
 	if ( wrapperHasHeight ) {
 		styles.push( {
-			[ `${ uniqueClass }-wrapper > .ugb-container__side` ]: {
+			[ `.${ uniqueClass }-wrapper > .ugb-container__side` ]: {
 				justifyContent: getValue( 'contentVerticalAlign' ),
 			},
 		} )
@@ -116,7 +116,7 @@ export const createStyles = props => {
 	if ( wrapperHasHeight || wrapperTabletHasHeight ) {
 		styles.push( {
 			tablet: {
-				[ `${ uniqueClass }-wrapper > .ugb-container__side` ]: {
+				[ `.${ uniqueClass }-wrapper > .ugb-container__side` ]: {
 					justifyContent: getValue( 'contentTabletVerticalAlign' ),
 				},
 			},
@@ -125,7 +125,7 @@ export const createStyles = props => {
 	if ( wrapperHasHeight || wrapperTabletHasHeight || wrapperMobileHasHeight ) {
 		styles.push( {
 			mobile: {
-				[ `${ uniqueClass }-wrapper > .ugb-container__side` ]: {
+				[ `.${ uniqueClass }-wrapper > .ugb-container__side` ]: {
 					justifyContent: getValue( 'contentMobileVerticalAlign' ),
 				},
 			},
