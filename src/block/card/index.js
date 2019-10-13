@@ -11,103 +11,32 @@ import { CardIcon } from '~stackable/icons'
  * Internal dependencies
  */
 import deprecated from './deprecated'
-import { descriptionPlaceholder } from '~stackable/util'
+import {
+	createBackgroundAttributes,
+	createImageAttributes,
+	createAllCombinationAttributes,
+	createTypographyAttributes,
+	createButtonAttributes,
+	descriptionPlaceholder,
+} from '~stackable/util'
 import edit from './edit'
 import save from './save'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
 import { disabledBlocks, i18n } from 'stackable'
+import { addFilter, applyFilters } from '@wordpress/hooks'
+import { __ } from '@wordpress/i18n'
 
 export const schema = {
-	mediaID: {
-		type: 'number',
-	},
-	mediaURL: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.ugb-card__image-container',
-		attribute: 'data-src',
-	},
-	heading: {
-		source: 'html',
-		selector: '.ugb-card__title',
-		default: __( 'Title for This Block', i18n ),
-	},
-	tagline: {
-		source: 'html',
-		selector: '.ugb-card__tagline',
-		default: __( 'Subtitle for this block', i18n ),
-	},
-	des: {
-		source: 'html',
-		selector: '.ugb-card__description',
-		default: descriptionPlaceholder( 'long' ),
-	},
-	headingColor: {
-		type: 'string',
-	},
-	taglineColor: {
-		type: 'string',
-	},
-	desColor: {
-		type: 'string',
-	},
-	buttonURL: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.ugb-button',
-		attribute: 'href',
-		default: '',
-	},
-	buttonNewTab: {
-		type: 'boolean',
-		source: 'attribute',
-		selector: '.ugb-button',
-		attribute: 'target',
-		default: false,
-	},
-	buttonText: {
-		source: 'html',
-		selector: '.ugb-button span',
-		default: __( 'Button text', i18n ),
-	},
-	buttonColor: {
-		type: 'string',
-	},
-	buttonIcon: {
-		type: 'string',
-	},
-	buttonTextColor: {
-		type: 'string',
-		default: '#ffffff',
-	},
-	size: {
-		type: 'string',
-		default: 'normal',
-	},
-	cornerButtonRadius: {
-		type: 'number',
-		default: 4,
-	},
-	buttonDesign: {
-		type: 'string',
-		default: 'basic',
-	},
-	contentAlign: {
-		type: 'string',
-		default: 'left',
-	},
-	// Design related attributes.
 	design: {
 		type: 'string',
 		default: 'basic',
 	},
-	backgroundColor: {
-		type: 'string',
-		// default: '#ffffff',
+	columns: {
+		type: 'number',
+		default: 2,
 	},
 	borderRadius: {
 		type: 'number',
@@ -117,21 +46,162 @@ export const schema = {
 		type: 'number',
 		default: 3,
 	},
-	hoverEffect: {
+
+	// Background.
+	...createBackgroundAttributes( 'column%s' ),
+
+	// Image.
+	showImage: {
+		type: 'boolean',
+		default: true,
+	},
+	...createImageAttributes( 'image%s', {
+		exclude: [
+			'Url',
+			'Id',
+			'Alt',
+			'BlendMode',
+		],
+	} ),
+	...createAllCombinationAttributes(
+		'imageBackground%s', {
+			type: 'number',
+			default: '',
+		},
+		[ 'Width', 'Height' ]
+	),
+	...createAllCombinationAttributes(
+		'image%sId', {
+			type: 'number',
+			default: '',
+		},
+		[ '1', '2', '3' ]
+	),
+	...createAllCombinationAttributes(
+		'image%sUrl', {
+			type: 'string',
+			default: '',
+		},
+		[ '1', '2', '3' ]
+	),
+
+	// Title.
+	...createAllCombinationAttributes(
+		'title%s', {
+			type: 'string',
+			source: 'html',
+			selector: '.ugb-card__item%d .ugb-card__title',
+			default: __( 'Title for This Block', i18n ),
+		},
+		[ '1', '2', '3' ]
+	),
+	showTitle: {
+		type: 'boolean',
+		default: true,
+	},
+	titleTag: {
+		type: 'string',
+		defualt: '',
+	},
+	...createTypographyAttributes( 'title%s' ),
+	titleColor: {
 		type: 'string',
 		default: '',
 	},
 
-	// Custom CSS attributes.
-	customCSSUniqueID: {
+	// Subtitle.
+	...createAllCombinationAttributes(
+		'subtitle%s', {
+			type: 'string',
+			source: 'html',
+			selector: '.ugb-card__item%d .ugb-card__subtitle',
+			default: __( 'Subtitle for This Block', i18n ),
+		},
+		[ '1', '2', '3' ]
+	),
+	showSubtitle: {
+		type: 'boolean',
+		default: true,
+	},
+	...createTypographyAttributes( 'subtitle%s' ),
+	subtitleColor: {
 		type: 'string',
 		default: '',
 	},
-	customCSS: {
+
+	// Description.
+	...createAllCombinationAttributes(
+		'description%s', {
+			type: 'string',
+			source: 'html',
+			selector: '.ugb-card__item%d .ugb-card__description',
+			default: descriptionPlaceholder( 'medium' ),
+		},
+		[ '1', '2', '3' ]
+	),
+	showDescription: {
+		type: 'boolean',
+		default: true,
+	},
+	...createTypographyAttributes( 'description%s' ),
+	descriptionColor: {
 		type: 'string',
 		default: '',
 	},
-	customCSSCompiled: {
+
+	// Button.
+	showButton: {
+		type: 'boolean',
+		default: true,
+	},
+	...createButtonAttributes( 'button%s', {
+		exclude: [
+			'Text',
+			'Url',
+			'NewTab',
+			'NoFollow',
+		],
+	} ),
+	...createButtonAttributes( 'button1%s', {
+		selector: '.ugb-card__item1 .ugb-button',
+	} ),
+	...createButtonAttributes( 'button2%s', {
+		selector: '.ugb-card__item2 .ugb-button',
+	} ),
+	...createButtonAttributes( 'button3%s', {
+		selector: '.ugb-card__item3 .ugb-button',
+	} ),
+
+	// Alignments.
+	...createAllCombinationAttributes(
+		'%s%sAlign', {
+			type: 'string',
+			default: '',
+		},
+		[ 'Image', 'Title', 'Subtitle', 'Description', 'Button' ],
+		[ '', 'Tablet', 'Mobile' ]
+	),
+
+	// Spacing.
+	...createAllCombinationAttributes(
+		'%s%sBottomMargin', {
+			type: 'number',
+			default: '',
+		},
+		[ 'Image', 'Title', 'Subtitle', 'Description', 'Button' ],
+		[ '', 'Tablet', 'Mobile' ]
+	),
+
+	// Advanced colors.
+	...createAllCombinationAttributes(
+		'Column%sBackgroundColor', {
+			type: 'string',
+			default: '',
+		},
+		[ '1', '2', '3' ]
+	),
+
+	hoverEffect: {
 		type: 'string',
 		default: '',
 	},
@@ -151,11 +221,28 @@ export const settings = {
 	attributes: schema,
 	supports: {
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
-		// eslint-disable-next-line
-		inserter: false, // TODO: Remove when done.
 	},
 
 	deprecated,
 	edit,
 	save,
+
+	// Stackable modules.
+	modules: {
+		'advanced-general': true,
+		'advanced-block-spacing': true,
+		'advanced-column-spacing': true,
+		'advanced-responsive': true,
+		'block-background': true,
+		'block-separators': true,
+		'block-title': true,
+		'content-align': true,
+		'custom-css': {
+			default: applyFilters( 'stackable.card.custom-css.default', '' ),
+		},
+	},
 }
+
+// For column spacings, use advanced paddings & vertical align on the content area only.
+addFilter( 'stackable.card.advanced-column-spacing.paddings.selector', 'stackable/card', () => '.ugb-card__content' )
+addFilter( 'stackable.card.advanced-column-spacing.vertical-align.selector', 'stackable/card', () => '.ugb-card__content' )

@@ -220,7 +220,6 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 		},
 		'> .ugb-inner-block > .ugb-block-content > *': {
 			minHeight: getValue( 'columnHeight', '%spx' ),
-			justifyContent: getValue( 'columnContentVerticalAlign' ),
 		},
 		tablet: {
 			'.ugb-block-content': {
@@ -229,7 +228,6 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 			},
 			'> .ugb-inner-block > .ugb-block-content > *': {
 				minHeight: getValue( 'tabletColumnHeight', '%spx' ),
-				justifyContent: getValue( 'tabletColumnContentVerticalAlign' ),
 			},
 		},
 		mobile: {
@@ -239,10 +237,26 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 			},
 			'> .ugb-inner-block > .ugb-block-content > *': {
 				minHeight: getValue( 'mobileColumnHeight', '%spx' ),
-				justifyContent: getValue( 'mobileColumnContentVerticalAlign' ),
 			},
 		},
 	} )
+
+	const verticalAlignSelector = applyFilters( `stackable.${ blockName }.advanced-column-spacing.vertical-align.selector`, '> .ugb-inner-block > .ugb-block-content > *', props )
+	const verticalAlign = {
+		[ verticalAlignSelector ]: {
+			justifyContent: getValue( 'columnContentVerticalAlign' ),
+		},
+		tablet: {
+			[ verticalAlignSelector ]: {
+				justifyContent: getValue( 'tabletColumnContentVerticalAlign' ),
+			},
+		},
+		mobile: {
+			[ verticalAlignSelector ]: {
+				justifyContent: getValue( 'mobileColumnContentVerticalAlign' ),
+			},
+		},
+	}
 
 	const paddingSelector = applyFilters( `stackable.${ blockName }.advanced-column-spacing.paddings.selector`, '> .ugb-inner-block > .ugb-block-content > *', props )
 	const paddings = applyFilters( `stackable.${ blockName }.advanced-column-spacing.paddings`, {
@@ -270,7 +284,7 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 		},
 	} )
 
-	return deepmerge.all( [ styleObject, styles, paddings ] )
+	return deepmerge.all( [ styleObject, styles, verticalAlign, paddings ] )
 }
 
 const addAttributes = attributes => {
