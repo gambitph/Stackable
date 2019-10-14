@@ -9,6 +9,11 @@
 	list-style: none !important;
 }
 
+// Last in the list should have no margin bottom.
+#editor .ugb-icon-list.ugb-icon-list li:last-child {
+	margin-bottom: 0 !important;
+}
+
 // Hide the list formatting toolbar buttons since we cannot use those.
 // Depends on https://github.com/WordPress/gutenberg/pull/12527
 .editor-block-list__block[data-type="ugb/icon-list"] .list-format-toolbar {

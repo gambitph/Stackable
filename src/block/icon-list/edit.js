@@ -166,6 +166,7 @@ const edit = props => {
 
 	const mainClasses = classnames( [
 		className,
+		'ugb-icon-list--v2',
 		`ugb-icon--icon-${ icon }`,
 	], applyFilters( 'stackable.icon-list.mainclasses', {
 		'ugb-icon-list--display-grid': displayAsGrid,

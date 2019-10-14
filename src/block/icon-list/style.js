@@ -4,6 +4,7 @@
 import {
 	createTypographyStyles,
 	whiteIfDark,
+	appendImportant,
 } from '~stackable/util'
 
 /**
@@ -28,7 +29,6 @@ export const createStyles = props => {
 		iconShape,
 		iconColor,
 		iconSize,
-		gap,
 		showBlockBackground = '',
 		blockBackgroundBackgroundColor = '',
 		listTextColor = '',
@@ -43,12 +43,33 @@ export const createStyles = props => {
 	const styles = []
 
 	styles.push( {
-		'.ugb-icon-list li': {
+		li: {
 			...createTypographyStyles( 'listText%s', 'desktop', props.attributes ),
 			color: whiteIfDark( listTextColor, showBlockBackground && blockBackgroundBackgroundColor ),
-			'--icon': 'url(\'data:image/svg+xml;base64,' + iconSVGString + '\')',
+		},
+	} )
+
+	// Icon.
+	styles.push( {
+		// This is for the text-indend & padding-left trick (see style.scss for details).
+		li: {
 			'--icon-size': iconSize ? `${ iconSize }px` : undefined,
-			'--gap': gap ? `${ gap }px` : undefined,
+		},
+		'li::before': {
+			height: appendImportant( getValue( 'iconSize', '%spx' ) ),
+			width: appendImportant( getValue( 'iconSize', '%spx' ) ),
+			backgroundImage: 'url(\'data:image/svg+xml;base64,' + iconSVGString + '\')',
+		},
+	} )
+
+	// Spacing.
+	styles.push( {
+		li: {
+			marginBottom: appendImportant( getValue( 'gap', '%spx' ) ),
+		},
+		// Nested list spacing.
+		'li ul': {
+			marginBottom: appendImportant( getValue( 'gap', '%spx' ) ),
 		},
 	} )
 
