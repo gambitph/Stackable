@@ -115,7 +115,7 @@ export const createStyles = props => {
 		styles.push( {
 			'.ugb-card__title': {
 				...createTypographyStyles( 'title%s', 'desktop', props.attributes, { importantSize: true } ),
-				color: whiteIfDarkBlackIfLight( titleColor, show.columnBackground && columnBackgroundColor ),
+				color: appendImportant( whiteIfDarkBlackIfLight( titleColor, show.columnBackground && columnBackgroundColor ) ),
 				textAlign: getValue( 'titleAlign', '%s !important' ),
 			},
 			tablet: {
@@ -142,7 +142,7 @@ export const createStyles = props => {
 		styles.push( {
 			'.ugb-card__subtitle': {
 				...createTypographyStyles( 'subtitle%s', 'desktop', props.attributes, { importantSize: true } ),
-				color: whiteIfDarkBlackIfLight( subtitleColor, show.columnBackground && columnBackgroundColor ),
+				color: appendImportant( whiteIfDarkBlackIfLight( subtitleColor, show.columnBackground && columnBackgroundColor ) ),
 				textAlign: getValue( 'subtitleAlign', '%s !important' ),
 			},
 			tablet: {
@@ -169,7 +169,7 @@ export const createStyles = props => {
 		styles.push( {
 			'.ugb-card__description': {
 				...createTypographyStyles( 'description%s', 'desktop', props.attributes, { importantSize: true } ),
-				color: whiteIfDarkBlackIfLight( descriptionColor, show.columnBackground && columnBackgroundColor ),
+				color: appendImportant( whiteIfDarkBlackIfLight( descriptionColor, show.columnBackground && columnBackgroundColor ) ),
 				textAlign: getValue( 'descriptionAlign', '%s !important' ),
 			},
 			tablet: {
