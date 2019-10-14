@@ -62,7 +62,32 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'Icon', i18n ) }>
+			<PanelBody title={ __( 'General', i18n ) }>
+				<ResponsiveControl
+					attrNameTemplate="%sColumns"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AdvancedRangeControl
+						label={ __( 'Columns', i18n ) }
+						min={ 1 }
+						max={ 4 }
+					/>
+				</ResponsiveControl>
+				{ ( ( columns && columns > 1 ) || ( tabletColumns && tabletColumns > 1 ) || ( mobileColumns && mobileColumns > 1 ) ) && (
+					<ToggleControl
+						label={ __( 'Display as a grid (left to right & evenly spaced)', i18n ) }
+						checked={ displayAsGrid }
+						onChange={ displayAsGrid => setAttributes( { displayAsGrid } ) }
+					/>
+				) }
+				<ContentAlignControl
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+			</PanelBody>
+
+			<PanelBody title={ __( 'Icon', i18n ) } initialOpen={ false }>
 				<BaseControl
 					label={ __( 'Icon', i18n ) }
 					id="ugb-icon-control"
@@ -101,40 +126,7 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 					allowReset={ true }
 				/>
 			</PanelBody>
-			<PanelBody title={ __( 'General', i18n ) } initialOpen={ false }>
-				<ResponsiveControl
-					attrNameTemplate="%sColumns"
-					setAttributes={ setAttributes }
-					blockAttributes={ props.attributes }
-				>
-					<AdvancedRangeControl
-						label={ __( 'Columns', i18n ) }
-						min={ 1 }
-						max={ 4 }
-					/>
-				</ResponsiveControl>
-				{ ( ( columns && columns > 1 ) || ( tabletColumns && tabletColumns > 1 ) || ( mobileColumns && mobileColumns > 1 ) ) && (
-					<ToggleControl
-						label={ __( 'Display as a grid (left to right & evenly spaced)', i18n ) }
-						checked={ displayAsGrid }
-						onChange={ displayAsGrid => setAttributes( { displayAsGrid } ) }
-					/>
-				) }
-				<ContentAlignControl
-					setAttributes={ setAttributes }
-					blockAttributes={ props.attributes }
-				/>
-			</PanelBody>
-			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
-				<RangeControl
-					label={ __( 'List Gap', i18n ) }
-					value={ gap }
-					onChange={ gap => setAttributes( { gap } ) }
-					min={ 0 }
-					max={ 30 }
-					allowReset={ true }
-				/>
-			</PanelSpacingBody>
+
 			<PanelBody title={ __( 'List Text', i18n ) } initialOpen={ false }>
 				<TypographyControlHelper
 					attrNameTemplate="listText%s"
@@ -147,6 +139,17 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 					label={ __( 'Color', i18n ) }
 				/>
 			</PanelBody>
+
+			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
+				<RangeControl
+					label={ __( 'List Gap', i18n ) }
+					value={ gap }
+					onChange={ gap => setAttributes( { gap } ) }
+					min={ 0 }
+					max={ 30 }
+					allowReset={ true }
+				/>
+			</PanelSpacingBody>
 		</Fragment>
 	)
 } )
