@@ -17,6 +17,7 @@ import {
 	createAllCombinationAttributes,
 	createTypographyAttributes,
 	createButtonAttributes,
+	createResponsiveAttributes,
 	descriptionPlaceholder,
 } from '~stackable/util'
 import edit from './edit'
@@ -64,12 +65,17 @@ export const schema = {
 		],
 	} ),
 	...createAllCombinationAttributes(
-		'imageBackground%s', {
+		'imageBackground%s%s', {
 			type: 'number',
 			default: '',
 		},
+		[ '', 'Tablet', 'Mobile' ],
 		[ 'Width', 'Height' ]
 	),
+	...createResponsiveAttributes( 'imageBackground%sWidthUnit', {
+		type: 'string',
+		default: '%',
+	} ),
 	...createAllCombinationAttributes(
 		'image%sId', {
 			type: 'number',

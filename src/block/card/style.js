@@ -7,6 +7,7 @@ import {
 	createResponsiveStyles,
 	createTypographyStyles,
 	whiteIfDarkBlackIfLight,
+	appendImportant,
 } from '~stackable/util'
 import deepmerge from 'deepmerge'
 
@@ -21,9 +22,9 @@ import { showOptions } from './util'
 import { sprintf } from '@wordpress/i18n'
 
 export const createStyles = props => {
-	const getValue = ( attrName, format = '' ) => {
+	const getValue = ( attrName, format = '', defaultValue = undefined ) => {
 		const value = typeof props.attributes[ attrName ] === 'undefined' ? '' : props.attributes[ attrName ]
-		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
+		return value !== '' ? ( format ? sprintf( format, value ) : value ) : defaultValue
 	}
 
 	const {
@@ -88,7 +89,21 @@ export const createStyles = props => {
 		styles.push( ...createResponsiveStyles( '.ugb-card__image', 'imageBackground%sHeight', 'height', '%spx', props.attributes, true ) )
 	}
 	if ( show.imageWidth ) {
-		styles.push( ...createResponsiveStyles( '.ugb-card__image', 'imageBackground%sWidth', 'width', '%spx', props.attributes, true ) )
+		styles.push( {
+			'.ugb-card__image': {
+				width: getValue( 'imageBackgroundWidth' ) ? appendImportant( getValue( 'imageBackgroundWidth' ) + getValue( 'imageBackgroundWidthUnit', '%s', '%' ) ) : undefined,
+			},
+			tablet: {
+				'.ugb-card__image': {
+					width: getValue( 'imageBackgroundTabletWidth' ) ? appendImportant( getValue( 'imageBackgroundTabletWidth' ) + getValue( 'imageBackgroundTabletWidthUnit', '%s', '%' ) ) : undefined,
+				},
+			},
+			mobile: {
+				'.ugb-card__image': {
+					width: getValue( 'imageBackgroundMobileWidth' ) ? appendImportant( getValue( 'imageBackgroundMobileWidth' ) + getValue( 'imageBackgroundMobileWidthUnit', '%s', '%' ) ) : undefined,
+				},
+			},
+		} )
 	}
 
 	// Title.

@@ -21,6 +21,7 @@ import {
 	ButtonEditHelper,
 	ImageBackgroundControlsHelper,
 	ProControl,
+	WhenResponsiveScreen,
 } from '~stackable/components'
 import {
 	descriptionPlaceholder,
@@ -110,6 +111,12 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 		image1Id = '',
 		image2Id = '',
 		image3Id = '',
+		imageBackgroundWidth = '',
+		imageBackgroundTabletWidth = '',
+		imageBackgroundMobileWidth = '',
+		imageBackgroundWidthUnit = '%',
+		imageBackgroundTabletWidthUnit = '%',
+		imageBackgroundMobileWidthUnit = '%',
 		titleTag = '',
 		titleColor = '',
 		descriptionColor = '',
@@ -209,18 +216,50 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					</ResponsiveControl>
 				}
 				{ show.imageWidth &&
-					<ResponsiveControl
-						attrNameTemplate="imageBackground%sWidth"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Image Width', i18n ) }
-							min={ 50 }
-							max={ 1000 }
-							allowReset={ true }
-						/>
-					</ResponsiveControl>
+					<Fragment>
+						<WhenResponsiveScreen>
+							<AdvancedRangeControl
+								label={ __( 'Image Width', i18n ) }
+								units={ [ 'px', '%' ] }
+								min={ [ 50, 10 ] }
+								max={ [ 1000, 90 ] }
+								step={ [ 1, 1 ] }
+								allowReset={ true }
+								value={ imageBackgroundWidth }
+								unit={ imageBackgroundWidthUnit }
+								onChange={ imageBackgroundWidth => setAttributes( { imageBackgroundWidth } ) }
+								onChangeUnit={ imageBackgroundWidthUnit => setAttributes( { imageBackgroundWidthUnit } ) }
+							/>
+						</WhenResponsiveScreen>
+						<WhenResponsiveScreen screen="tablet">
+							<AdvancedRangeControl
+								label={ __( 'Image Width', i18n ) }
+								units={ [ 'px', '%' ] }
+								min={ [ 50, 10 ] }
+								max={ [ 1000, 90 ] }
+								step={ [ 1, 1 ] }
+								allowReset={ true }
+								value={ imageBackgroundTabletWidth }
+								unit={ imageBackgroundTabletWidthUnit }
+								onChange={ imageBackgroundTabletWidth => setAttributes( { imageBackgroundTabletWidth } ) }
+								onChangeUnit={ imageBackgroundTabletWidthUnit => setAttributes( { imageBackgroundTabletWidthUnit } ) }
+							/>
+						</WhenResponsiveScreen>
+						<WhenResponsiveScreen screen="mobile">
+							<AdvancedRangeControl
+								label={ __( 'Image Width', i18n ) }
+								units={ [ 'px', '%' ] }
+								min={ [ 50, 10 ] }
+								max={ [ 1000, 90 ] }
+								step={ [ 1, 1 ] }
+								allowReset={ true }
+								value={ imageBackgroundMobileWidth }
+								unit={ imageBackgroundMobileWidthUnit }
+								onChange={ imageBackgroundMobileWidth => setAttributes( { imageBackgroundMobileWidth } ) }
+								onChangeUnit={ imageBackgroundMobileWidthUnit => setAttributes( { imageBackgroundMobileWidthUnit } ) }
+							/>
+						</WhenResponsiveScreen>
+					</Fragment>
 				}
 			</PanelAdvancedSettings>
 
