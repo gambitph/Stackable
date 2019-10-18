@@ -43,6 +43,15 @@ const ImageBackgroundControlsHelper = props => {
 
 			backgroundPosition={ getAttrValue( 'BackgroundPosition' ) }
 			onChangeBackgroundPosition={ value => setAttributes( { [ getAttrName( 'BackgroundPosition' ) ]: value } ) }
+			backgroundRepeat={ getAttrValue( 'BackgroundRepeat' ) }
+			onChangeBackgroundRepeat={ value => setAttributes( { [ getAttrName( 'BackgroundRepeat' ) ]: value } ) }
+			backgroundSize={ getAttrValue( 'BackgroundSize' ) }
+			onChangeBackgroundSize={ value => setAttributes( { [ getAttrName( 'BackgroundSize' ) ]: value } ) }
+
+			backgroundCustomSize={ getAttrValue( 'BackgroundCustomSize' ) }
+			onChangeBackgroundCustomSize={ value => setAttributes( { [ getAttrName( 'BackgroundCustomSize' ) ]: value } ) }
+			backgroundCustomSizeUnit={ getAttrValue( 'BackgroundCustomSizeUnit' ) || 'px' }
+			onChangeBackgroundCustomSizeUnit={ value => setAttributes( { [ getAttrName( 'BackgroundCustomSizeUnit' ) ]: value } ) }
 
 			{ ...props }
 		/>

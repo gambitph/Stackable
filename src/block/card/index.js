@@ -13,7 +13,7 @@ import { CardIcon } from '~stackable/icons'
 import deprecated from './deprecated'
 import {
 	createBackgroundAttributes,
-	createImageAttributes,
+	createImageBackgroundAttributes,
 	createAllCombinationAttributes,
 	createTypographyAttributes,
 	createButtonAttributes,
@@ -56,14 +56,7 @@ export const schema = {
 		type: 'boolean',
 		default: true,
 	},
-	...createImageAttributes( 'image%s', {
-		exclude: [
-			'Url',
-			'Id',
-			'Alt',
-			'BlendMode',
-		],
-	} ),
+	...createImageBackgroundAttributes( 'image%s' ),
 	...createAllCombinationAttributes(
 		'imageBackground%s%s', {
 			type: 'number',

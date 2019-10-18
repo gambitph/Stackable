@@ -11,7 +11,13 @@ import deprecated from './deprecated'
  * External dependencies
  */
 import {
-	descriptionPlaceholder, createImageAttributes, createBackgroundAttributes, createTypographyAttributes, createButtonAttributes, createResponsiveAttributes, createAllCombinationAttributes,
+	descriptionPlaceholder,
+	createBackgroundAttributes,
+	createTypographyAttributes,
+	createButtonAttributes,
+	createResponsiveAttributes,
+	createAllCombinationAttributes,
+	createImageBackgroundAttributes,
 } from '~stackable/util'
 import edit from './edit'
 import { FeatureIcon } from '~stackable/icons'
@@ -58,12 +64,7 @@ export const schema = {
 	...createBackgroundAttributes( 'column%s' ),
 
 	// Image.
-	...createImageAttributes( 'image%s' ),
-	// Convert into a normal comment-string attribute.
-	imageUrl: {
-		type: 'string',
-		default: '',
-	},
+	...createImageBackgroundAttributes( 'image%s' ),
 	imageShapeStretch: {
 		type: 'boolean',
 		default: true,

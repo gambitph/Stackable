@@ -26,6 +26,7 @@ import {
 import {
 	createVideoBackground,
 	hasBackgroundOverlay,
+	cacheImageData,
 } from '~stackable/util'
 import {
 	withUniqueClass,
@@ -365,5 +366,8 @@ export default compose(
 		return {
 			hasInnerBlocks: !! ( block && block.innerBlocks.length ),
 		}
+	} ),
+	withSelect( ( select, props ) => {
+		cacheImageData( props.attributes.imageId, select )
 	} ),
 )( edit )

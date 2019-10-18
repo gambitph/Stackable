@@ -10,7 +10,7 @@ import {
 	createResponsiveAttributes,
 	createAllCombinationAttributes,
 	createBackgroundAttributes,
-	createImageAttributes,
+	createImageBackgroundAttributes,
 } from '~stackable/util'
 import { disabledBlocks, i18n } from 'stackable'
 
@@ -71,12 +71,7 @@ export const schema = {
 	...createBackgroundAttributes( 'column%s' ),
 
 	// Image.
-	...createImageAttributes( 'image%s' ),
-	// Convert into a normal comment-string attribute.
-	imageUrl: {
-		type: 'string',
-		default: '',
-	},
+	...createImageBackgroundAttributes( 'image%s' ),
 	imageSize: {
 		type: 'string',
 		default: 'full',

@@ -17,6 +17,7 @@ import {
 	createImageAttributes,
 	createAllCombinationAttributes,
 	createTypographyAttributes,
+	createImageBackgroundAttributes,
 	descriptionPlaceholder,
 } from '~stackable/util'
 import { TestimonialIcon } from '~stackable/icons'
@@ -133,13 +134,10 @@ export const schema = {
 		[ '1', '2', '3' ],
 		[ 'ShapeFlipX', 'ShapeFlipY', 'ShapeStretch' ]
 	),
-	...createAllCombinationAttributes(
-		'image%sPosition', {
-			type: 'string',
-			default: '',
-		},
-		[ '', '1', '2', '3' ]
-	),
+	...createImageBackgroundAttributes( 'image%s' ),
+	...createImageBackgroundAttributes( 'image1%s' ),
+	...createImageBackgroundAttributes( 'image2%s' ),
+	...createImageBackgroundAttributes( 'image3%s' ),
 
 	// Name.
 	showName: {

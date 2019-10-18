@@ -3,6 +3,7 @@
  */
 import {
 	AdvancedSelectControl,
+	AdvancedRangeControl,
 	ImageControl,
 	ImageSizeControl,
 } from '~stackable/components'
@@ -17,7 +18,7 @@ import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 import { withSelect } from '@wordpress/data'
-import { getImageSize } from '~stackable/util'
+import { getImageUrlFromCache } from '~stackable/util'
 
 const ImageBackgroundControls = props => {
 	return (
@@ -32,12 +33,9 @@ const ImageBackgroundControls = props => {
 						id: '',
 					} ) }
 					onChange={ image => {
-						const currentSelectedSize = props.size || 'full'
-						const url = image.sizes[ currentSelectedSize ] ? image.sizes[ currentSelectedSize ].url : image.url
-
 						props.onChangeImage( {
 							id: image.id,
-							url,
+							url: getImageUrlFromCache( image.id, props.size || 'full' ),
 						} )
 					} }
 				/>
@@ -48,9 +46,10 @@ const ImageBackgroundControls = props => {
 					label={ __( 'Image Size', i18n ) }
 					value={ props.size }
 					onChange={ size => {
-						const imageSizeData = getImageSize( props.imageData, size || 'full' )
-						const url = imageSizeData ? imageSizeData.source_url : props.url
-						props.onChangeSize( size, url )
+						props.onChangeSize(
+							size,
+							getImageUrlFromCache( props.id, size || 'full' ),
+						)
 					} }
 				/>
 			}
@@ -74,6 +73,50 @@ const ImageBackgroundControls = props => {
 					onChange={ props.onChangeBackgroundPosition }
 				/>
 			}
+
+			{ props.onChangeBackgroundRepeat &&
+				<AdvancedSelectControl
+					label={ __( 'Image Repeat', i18n ) }
+					options={ [
+						{ label: __( 'Default', i18n ), value: '' },
+						{ label: __( 'No-Repeat', i18n ), value: 'no-repeat' },
+						{ label: __( 'Repeat', i18n ), value: 'repeat' },
+						{ label: __( 'Repeat-X', i18n ), value: 'repeat-x' },
+						{ label: __( 'Repeat-Y', i18n ), value: 'repeat-y' },
+					] }
+					value={ props.backgroundRepeat }
+					onChange={ props.onChangeBackgroundRepeat }
+				/>
+			}
+
+			{ props.onChangeBackgroundSize &&
+				<AdvancedSelectControl
+					label={ __( 'Image Size', i18n ) }
+					options={ [
+						{ label: __( 'Default', i18n ), value: '' },
+						{ label: __( 'Auto', i18n ), value: 'auto' },
+						{ label: __( 'Cover', i18n ), value: 'cover' },
+						{ label: __( 'Contain', i18n ), value: 'contain' },
+						{ label: __( 'Custom', i18n ), value: 'custom' },
+					] }
+					value={ props.backgroundSize }
+					onChange={ props.onChangeBackgroundSize }
+				/>
+			}
+
+			{ props.onChangeBackgroundSize && props.backgroundSize === 'custom' &&
+				<AdvancedRangeControl
+					label={ __( 'Custom Size', i18n ) }
+					units={ [ 'px', '%' ] }
+					min={ [ 0, 0 ] }
+					max={ [ 1000, 100 ] }
+					unit={ props.backgroundCustomSizeUnit }
+					onChangeUnit={ props.onChangeBackgroundCustomSizeUnit }
+					value={ props.backgroundCustomSize }
+					onChange={ props.onChangeBackgroundCustomSize }
+					allowReset={ true }
+				/>
+			}
 		</Fragment>
 	)
 }
@@ -88,6 +131,17 @@ ImageBackgroundControls.defaultProps = {
 
 	backgroundPosition: '',
 	onChangeBackgroundPosition: () => {},
+
+	backgroundRepeat: '',
+	onChangeBackgroundRepeat: () => {},
+
+	backgroundSize: '',
+	onChangeBackgroundSize: () => {},
+
+	backgroundCustomSizeUnit: '',
+	onChangeBackgroundCustomSizeUnit: () => {},
+	backgroundCustomSize: '',
+	onChangeBackgroundCustomSize: () => {},
 }
 
 export default compose(

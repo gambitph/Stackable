@@ -32,6 +32,7 @@ import {
 	hasBackgroundOverlay,
 	cacheImageData,
 	getImageUrlFromCache,
+	createImageBackgroundAttributeNames,
 } from '~stackable/util'
 import classnames from 'classnames'
 import { range } from 'lodash'
@@ -180,8 +181,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 				checked={ showImage }
 				onChange={ showImage => setAttributes( { showImage } ) }
 				toggleOnSetAttributes={ [
-					'imageSize',
-					'imageBackgroundPosition',
+					...createImageBackgroundAttributeNames( 'image%s' ),
 					...createResponsiveAttributeNames( 'imageBackground%sHeight' ),
 					...createResponsiveAttributeNames( 'imageBackground%sWidth' ),
 				] }

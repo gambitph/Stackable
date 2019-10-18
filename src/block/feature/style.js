@@ -8,6 +8,7 @@ import {
 	whiteIfDark,
 	createImageStyleSet,
 	createResponsiveStyles,
+	createImageBackgroundStyleSet,
 } from '~stackable/util'
 
 /**
@@ -90,10 +91,7 @@ export const createStyles = props => {
 		} )
 	} else {
 		styles.push( {
-			'.ugb-feature__image': {
-				backgroundImage: getValue( 'imageUrl', `url(%s)` ),
-				backgroundPosition: getValue( 'imageBackgroundPosition' ),
-			},
+			...createImageBackgroundStyleSet( 'image%s', 'ugb-feature__image', props.attributes ),
 		} )
 		styles.push( {
 			'.ugb-feature__item': {

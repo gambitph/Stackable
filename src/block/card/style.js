@@ -8,6 +8,7 @@ import {
 	createTypographyStyles,
 	whiteIfDarkBlackIfLight,
 	appendImportant,
+	createImageBackgroundStyleSet,
 } from '~stackable/util'
 import deepmerge from 'deepmerge'
 
@@ -81,9 +82,7 @@ export const createStyles = props => {
 		},
 	} )
 	styles.push( {
-		'.ugb-card__image': {
-			backgroundPosition: getValue( 'imageBackgroundPosition' ),
-		},
+		...createImageBackgroundStyleSet( 'image%s', 'ugb-card__image', props.attributes ),
 	} )
 	if ( show.imageHeight ) {
 		styles.push( ...createResponsiveStyles( '.ugb-card__image', 'imageBackground%sHeight', 'height', '%spx', props.attributes, true ) )
