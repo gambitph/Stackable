@@ -84,9 +84,11 @@ const ButtonControls = props => {
 						{
 							label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
 						},
-						{
-							label: __( 'Link', i18n ), value: 'link', image: ImageDesignLink,
-						},
+						...( ! props.onChangeUseSocialColors ? [
+							{
+								label: __( 'Link', i18n ), value: 'link', image: ImageDesignLink,
+							} ] : []
+						),
 						...applyFilters( 'stackable.button.edit.designs', [] ),
 					] }
 					onChange={ props.onChangeDesign }
@@ -178,69 +180,81 @@ const ButtonControls = props => {
 
 			{ design !== 'link' && <ControlSeparator /> }
 
-			{ props.onChangeBackgroundColorType && showGradient && (
-				<BaseControl
-					label={ __( 'Button Color Type', i18n ) }
-					id="button-color-type"
-				>
-					<TextToolbar
-						controls={ [
-							{
-								value: '',
-								title: __( 'Single', i18n ),
-								isActive: props.backgroundColorType === '',
-								onClick: () => props.onChangeBackgroundColorType( '' ),
-							},
-							{
-								value: 'gradient',
-								title: __( 'Gradient', i18n ),
-								isActive: props.backgroundColorType === 'gradient',
-								onClick: () => props.onChangeBackgroundColorType( 'gradient' ),
-							},
-						] }
-					/>
-				</BaseControl>
-			) }
-
-			{ props.onChangeBackgroundColor && design !== 'link' && (
-				<ColorPaletteControl
-					label={
-						props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' && showGradient ?
-							sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button Color', i18n ), 1 ) :
-							__( 'Button Color', i18n )
-					}
-					value={ props.backgroundColor }
-					onChange={ props.onChangeBackgroundColor }
+			{ props.onChangeUseSocialColors &&
+				<ToggleControl
+					label={ __( 'Use social colors', i18n ) }
+					checked={ props.useSocialColors }
+					onChange={ props.onChangeUseSocialColors }
 				/>
-			) }
+			}
 
-			{ props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' && showGradient && (
-				<ColorPaletteControl
-					label={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button Color', i18n ), 2 ) }
-					value={ props.backgroundColor2 }
-					onChange={ props.onChangeBackgroundColor2 }
-				/>
-			) }
+			{ ( ! props.onChangeUseSocialColors || ! props.useSocialColors ) &&
+				<Fragment>
+					{ props.onChangeBackgroundColorType && showGradient && (
+						<BaseControl
+							label={ __( 'Button Color Type', i18n ) }
+							id="button-color-type"
+						>
+							<TextToolbar
+								controls={ [
+									{
+										value: '',
+										title: __( 'Single', i18n ),
+										isActive: props.backgroundColorType === '',
+										onClick: () => props.onChangeBackgroundColorType( '' ),
+									},
+									{
+										value: 'gradient',
+										title: __( 'Gradient', i18n ),
+										isActive: props.backgroundColorType === 'gradient',
+										onClick: () => props.onChangeBackgroundColorType( 'gradient' ),
+									},
+								] }
+							/>
+						</BaseControl>
+					) }
 
-			{ props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' && showGradient && (
-				<RangeControl
-					label={ __( 'Gradient Direction (degrees)', i18n ) }
-					value={ props.backgroundGradientDirection }
-					onChange={ props.onChangeBackgroundGradientDirection }
-					min={ 0 }
-					max={ 360 }
-					step={ 10 }
-					allowReset={ true }
-				/>
-			) }
+					{ props.onChangeBackgroundColor && design !== 'link' && (
+						<ColorPaletteControl
+							label={
+								props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' && showGradient ?
+									sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button Color', i18n ), 1 ) :
+									__( 'Button Color', i18n )
+							}
+							value={ props.backgroundColor }
+							onChange={ props.onChangeBackgroundColor }
+						/>
+					) }
 
-			{ props.onChangeTextColor && showGradient && (
-				<ColorPaletteControl
-					label={ __( 'Text Color', i18n ) }
-					value={ props.textColor }
-					onChange={ props.onChangeTextColor }
-				/>
-			) }
+					{ props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' && showGradient && (
+						<ColorPaletteControl
+							label={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button Color', i18n ), 2 ) }
+							value={ props.backgroundColor2 }
+							onChange={ props.onChangeBackgroundColor2 }
+						/>
+					) }
+
+					{ props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' && showGradient && (
+						<RangeControl
+							label={ __( 'Gradient Direction (degrees)', i18n ) }
+							value={ props.backgroundGradientDirection }
+							onChange={ props.onChangeBackgroundGradientDirection }
+							min={ 0 }
+							max={ 360 }
+							step={ 10 }
+							allowReset={ true }
+						/>
+					) }
+
+					{ props.onChangeTextColor && showGradient && (
+						<ColorPaletteControl
+							label={ __( 'Text Color', i18n ) }
+							value={ props.textColor }
+							onChange={ props.onChangeTextColor }
+						/>
+					) }
+				</Fragment>
+			}
 
 			{ props.onChangeOpacity && (
 				<RangeControl
@@ -264,7 +278,7 @@ const ButtonControls = props => {
 				/>
 			) }
 
-			{ props.onChangeHoverEffect && ( design !== 'plain' && design !== 'link' ) && (
+			{ props.onChangeHoverEffect && design !== 'link' && (
 				<SelectControl
 					label={ __( 'Hover Effect', i18n ) }
 					value={ props.hoverEffect }
@@ -292,7 +306,7 @@ const ButtonControls = props => {
 				/>
 			) }
 
-			{ props.hasHoverColors && design !== 'link' && (
+			{ props.hasHoverColors && design !== 'link' && ( ! props.onChangeUseSocialColors || ! props.useSocialColors ) && (
 				<ButtonIconPopoverControl
 					label={ __( 'Hover Colors', i18n ) }
 					onReset={ props.onResetHoverColors }
@@ -470,6 +484,10 @@ ButtonControls.defaultProps = {
 	onChangeIconSize: () => {},
 	onChangeIconPosition: () => {},
 	onChangeIconSpacing: () => {},
+
+	// Used by social icon buttons.
+	useSocialColors: true,
+	onChangeUseSocialColors: null,
 }
 
 export default ButtonControls

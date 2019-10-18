@@ -3,6 +3,10 @@ export {
 	default as ButtonEdit,
 	ButtonEditHelper,
 } from './button-edit'
+export {
+	default as SocialButtonEdit,
+	SocialButtonEditHelper,
+} from './social-button-edit'
 export { default as HorizontalAlignmentToolbar } from './horizontal-alignment-toolbar'
 export { default as VerticalAlignmentToolbar } from './vertical-alignment-toolbar'
 export { default as ImageUploadPlaceholder } from './image-upload-placeholder'
@@ -52,6 +56,8 @@ export { default as BackgroundControls } from './background-controls'
 export { default as BackgroundControlsHelper } from './background-controls-helper'
 export { default as ButtonControls } from './button-controls'
 export { default as ButtonControlsHelper } from './button-controls-helper'
+export { default as SocialControls } from './social-controls'
+export { default as SocialControlsHelper } from './social-controls-helper'
 export { default as SvgIcon } from './svg-icon'
 export { default as SvgIconPlaceholder } from './svg-icon-placeholder'
 export { default as ProControl } from './pro-control'

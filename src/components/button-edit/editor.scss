@@ -2,3 +2,7 @@
 .ugb-button .editor-rich-text__editable.mce-content-body {
 	box-shadow: none;
 }
+// Icon only buttons are not square/circle.
+.ugb-button.ugb-button--icon-only .ugb-svg-icon-placeholder__button {
+	display: block;
+}

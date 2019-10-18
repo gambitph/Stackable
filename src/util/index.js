@@ -6,6 +6,7 @@ export * from './image'
 export * from './image-background'
 export * from './button'
 export * from './styles'
+export * from './social'
 export * from './blocks'
 export * from './svg'
 

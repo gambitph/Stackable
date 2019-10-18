@@ -8,6 +8,7 @@ import {
 	Popover,
 	PanelBody,
 	ToggleControl,
+	TextControl,
 } from '@wordpress/components'
 import { URLInput } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
@@ -54,12 +55,21 @@ const UrlInputPopover = withState( {
 			<PanelBody>
 				<div className="ugb-url-input-popover__input-wrapper">
 					<Dashicon className="ugb-url-input-control__icon" icon="admin-links" />
-					{ props.onChange &&
+					{ props.onChange && ! props.disableSuggestions && // Auto-suggestions for inputting url.
 						<URLInput
 							className="ugb-url-input-control__input"
 							value={ props.value }
 							onChange={ props.onChange }
 							autoFocus={ false } // eslint-disable-line
+						/>
+					}
+					{ props.onChange && props.disableSuggestions && // Plain text control for inputting url.
+						<TextControl
+							className="ugb-url-input-control__input ugb-url-input-control__input--plain"
+							value={ props.value }
+							onChange={ props.onChange }
+							autoFocus={ false } // eslint-disable-line
+							placeholder={ __( 'Paste or type URL', i18n ) }
 						/>
 					}
 					{ ( props.onChangeNewTab || props.onChangeNoFollow ) &&
@@ -93,6 +103,7 @@ const UrlInputPopover = withState( {
 
 UrlInputPopover.defaultProps = {
 	value: '',
+	disableSuggestions: false,
 	onChange: null,
 
 	newTab: false,

@@ -36,7 +36,9 @@ class ButtonEdit extends Component {
 	}
 
 	onButtonClickHandler( event ) {
-		if ( event.target.closest( '.ugb-svg-icon-placeholder__button' ) ||
+		if ( this.props.iconButton && event.target.closest( '.ugb-svg-icon-placeholder__button' ) ) {
+			// If this is an icon button, open the url popover if the icon is clicked.
+		} else if ( event.target.closest( '.ugb-svg-icon-placeholder__button' ) ||
 			event.target.closest( '.ugb-url-input-popover' ) ||
 			event.target.closest( '.ugb-icon-popover' ) ||
 			event.target.closest( '.components-popover' )
@@ -54,6 +56,8 @@ class ButtonEdit extends Component {
 			! event.target.closest( '.ugb-url-input-popover' ) &&
 			! event.target.closest( '.components-popover' ) ) {
 			this.hideUrlPopup()
+		} else if ( this.props.iconButton && event.target.closest( '.ugb-svg-icon-placeholder__button' ) ) {
+			// If this is an icon button, don't close the url popover if the icon is clicked.
 		} else if ( event.target.closest( '.ugb-svg-icon-placeholder__button' ) ) {
 			this.hideUrlPopup()
 		}
@@ -74,6 +78,7 @@ class ButtonEdit extends Component {
 
 	render() {
 		const {
+			iconButton,
 			className = '',
 			size = 'normal',
 			text = '',
@@ -102,13 +107,16 @@ class ButtonEdit extends Component {
 			'ugb-button',
 			`ugb-button--size-${ size }`,
 		], {
+			'ugb-button--icon-only': iconButton,
 			'ugb-button--ghost-to-normal-effect': ghostToNormalEffect,
-			[ `ugb--hover-effect-${ hoverEffect }` ]: ( design === 'basic' || design === 'ghost' ) && hoverEffect,
+			[ `ugb--hover-effect-${ hoverEffect }` ]: design !== 'link' && hoverEffect,
 			[ `ugb--shadow-${ shadow }` ]: design === 'basic' && shadow,
 			[ `ugb-button--design-${ design }` ]: design !== 'basic',
 			'ugb-button--has-icon': icon,
 			[ `ugb-button--icon-position-${ iconPosition }` ]: iconPosition,
 		} )
+
+		const openUrlPopover = ( isSelected !== null ? isSelected : true ) && this.state.openPopup
 
 		return (
 			<div
@@ -134,6 +142,7 @@ class ButtonEdit extends Component {
 								<SvgIconPlaceholder
 									value={ icon }
 									onChange={ onChangeIcon }
+									isOpen={ ! iconButton ? null : openUrlPopover }
 								/>
 							}
 						</Fragment>
@@ -142,16 +151,18 @@ class ButtonEdit extends Component {
 						// Should be tagName="span", but div for now because of issue
 						// @see https://github.com/WordPress/gutenberg/issues/7311
 					}
-					<RichText
-						tagName="div"
-						className={ design === 'link' ? '' : 'ugb-button--inner' }
-						placeholder={ __( 'Button text', i18n ) }
-						value={ text }
-						onChange={ onChange }
-						formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
-						keepPlaceholderOnFocus
-					/>
-					{ ( isSelected !== null ? isSelected : true ) && this.state.openPopup &&
+					{ ! iconButton &&
+						<RichText
+							tagName="div"
+							className={ design === 'link' ? '' : 'ugb-button--inner' }
+							placeholder={ __( 'Button text', i18n ) }
+							value={ text }
+							onChange={ onChange }
+							formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
+							keepPlaceholderOnFocus
+						/>
+					}
+					{ openUrlPopover &&
 						<UrlInputPopover
 							value={ url }
 							onChange={ onChangeUrl }
@@ -159,6 +170,7 @@ class ButtonEdit extends Component {
 							noFollow={ noFollow }
 							onChangeNewTab={ onChangeNewTab }
 							onChangeNoFollow={ onChangeNoFollow }
+							disableSuggestions={ this.props.disableSuggestions }
 						/>
 					}
 				</a>
@@ -167,8 +179,35 @@ class ButtonEdit extends Component {
 	}
 }
 
+ButtonEdit.defaultProps = {
+	iconButton: false,
+	disableSuggestions: false,
+	className: '',
+	size: 'normal',
+	text: '',
+	onChange: () => {},
+	design: 'basic',
+	shadow: 0,
+	iconPosition: '',
+	hoverEffect: '',
+	ghostToNormalEffect: false,
+
+	url: '',
+	newTab: '',
+	noFollow: '',
+	onChangeUrl: null,
+	onChangeNewTab: null,
+	onChangeNoFollow: null,
+
+	onChangeIcon: null,
+	icon: null,
+
+	isSelected: null,
+}
+
 ButtonEdit.Content = props => {
 	const {
+		iconButton,
 		className = '',
 		size = 'normal',
 		url = '',
@@ -181,6 +220,7 @@ ButtonEdit.Content = props => {
 		hoverEffect = '',
 		noFollow = false,
 		ghostToNormalEffect = false,
+		target = '',
 	} = props
 
 	const mainClasses = classnames( [
@@ -188,8 +228,9 @@ ButtonEdit.Content = props => {
 		'ugb-button',
 		`ugb-button--size-${ size }`,
 	], {
+		'ugb-button--icon-only': iconButton,
 		'ugb-button--ghost-to-normal-effect': ghostToNormalEffect,
-		[ `ugb--hover-effect-${ hoverEffect }` ]: ( design === 'basic' || design === 'ghost' ) && hoverEffect,
+		[ `ugb--hover-effect-${ hoverEffect }` ]: design !== 'link' && hoverEffect,
 		[ `ugb--shadow-${ shadow }` ]: design === 'basic' && shadow,
 		[ `ugb-button--design-${ design }` ]: design !== 'basic',
 		'ugb-button--has-icon': icon,
@@ -210,17 +251,19 @@ ButtonEdit.Content = props => {
 			<a
 				className={ mainClasses }
 				href={ url }
-				target={ newTab ? '_blank' : undefined }
-				rel={ rel.join( ' ' ) }
+				target={ ( target || newTab ) ? ( target || '_blank' ) : undefined }
+				rel={ props.rel || rel.join( ' ' ) }
 			>
 				{ icon && design !== 'link' &&
 					<SvgIcon.Content value={ icon } />
 				}
-				<RichText.Content
-					tagName="span"
-					className={ design === 'link' ? '' : 'ugb-button--inner' }
-					value={ text || __( 'Button Text', i18n ) }
-				/>
+				{ ! iconButton &&
+					<RichText.Content
+						tagName="span"
+						className={ design === 'link' ? '' : 'ugb-button--inner' }
+						value={ text || __( 'Button Text', i18n ) }
+					/>
+				}
 			</a>
 		</div>
 	)

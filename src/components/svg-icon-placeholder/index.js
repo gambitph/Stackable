@@ -18,6 +18,7 @@ const SvgIconPlaceholder = withInstanceId( withState( {
 		openPopover,
 		clickedOnButton,
 		setState,
+		isOpen,
 	} = props
 
 	return (
@@ -44,7 +45,7 @@ const SvgIconPlaceholder = withInstanceId( withState( {
 					value={ props.value }
 				/>
 			</Button>
-			{ openPopover &&
+			{ ( ( isOpen !== null && isOpen ) || ( isOpen === null && openPopover ) ) &&
 				<IconSearchPopover
 					onClickOutside={ event => {
 						// This statement checks whether the close was triggered by clicking on the button that opens this.
@@ -69,6 +70,7 @@ const SvgIconPlaceholder = withInstanceId( withState( {
 } ) )
 
 SvgIconPlaceholder.defaultProps = {
+	isOpen: null,
 	className: '',
 	color: '',
 	value: '',

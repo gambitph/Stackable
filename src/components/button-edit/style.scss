@@ -171,6 +171,14 @@
 	text-align: center;
 }
 
+// Icon only
+.ugb-button.ugb-button--icon-only {
+	svg {
+		margin: 0 !important;
+	}
+	padding: 0.7em;
+}
+
 // Ghost button design.
 .ugb-button.ugb-button--design-ghost,
 .ugb-button.ugb-ghost-button { // Old style.
