@@ -35,6 +35,9 @@
 		height: auto;
 		margin: 0 auto;
 	}
+	.ugb-img {
+		margin: 0 auto;
+	}
 	&.ugb-team-member--columns-2 .ugb-team-member__image {
 		width: 220px;
 	}
@@ -42,6 +45,7 @@
 		width: 150px;
 	}
 
+	.ugb-team-member__image,
 	.ugb-team-member__position,
 	.ugb-team-member__description,
 	.ugb-team-member__buttons {
