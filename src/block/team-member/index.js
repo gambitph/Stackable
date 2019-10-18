@@ -117,13 +117,14 @@ export const schema = {
 		[ '1', '2', '3' ],
 		[ 'ShapeFlipX', 'ShapeFlipY', 'ShapeStretch' ]
 	),
-	// Used by sectioned layout.
+	// Used by overlay, overlay-simple & half layouts.
 	...createAllCombinationAttributes(
-		'image%sHeight', {
+		'image%sBackground%s', {
 			type: 'number',
 			default: '',
 		},
-		[ '', 'Tablet', 'Mobile' ]
+		[ '', 'Tablet', 'Mobile' ],
+		[ 'Width', 'Height' ],
 	),
 	...createImageBackgroundAttributes( 'image%s' ),
 	...createImageBackgroundAttributes( 'image1%s' ),

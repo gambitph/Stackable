@@ -99,19 +99,23 @@ const save = props => {
 								<div className="ugb-team-member__image"></div>
 							}
 							<div className="ugb-team-member__content">
-								{ showName && ! RichText.isEmpty( name ) &&
-									<RichText.Content
-										tagName={ nameTag || 'h4' }
-										className="ugb-team-member__name"
-										value={ name }
-									/>
-								}
-								{ showPosition && ! RichText.isEmpty( position ) &&
-									<RichText.Content
-										tagName="p"
-										className="ugb-team-member__position"
-										value={ position }
-									/>
+								{ ( ( showName && ! RichText.isEmpty( name ) ) || ( showPosition && ! RichText.isEmpty( position ) ) ) &&
+									<div className="ugb-team-member__title">
+										{ showName && ! RichText.isEmpty( name ) &&
+											<RichText.Content
+												tagName={ nameTag || 'h4' }
+												className="ugb-team-member__name"
+												value={ name }
+											/>
+										}
+										{ showPosition && ! RichText.isEmpty( position ) &&
+											<RichText.Content
+												tagName="p"
+												className="ugb-team-member__position"
+												value={ position }
+											/>
+										}
+									</div>
 								}
 								{ showDescription && ! RichText.isEmpty( description ) &&
 									<RichText.Content
@@ -120,7 +124,7 @@ const save = props => {
 										value={ description }
 									/>
 								}
-								{ showSocial &&
+								{ showSocial && show.social &&
 									<div className="ugb-team-member__buttons">
 										<SocialButtonEditHelper.Content
 											attrNameTemplate={ `social%s` }

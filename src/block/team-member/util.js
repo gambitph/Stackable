@@ -14,14 +14,17 @@ export const showOptions = blockProps => {
 	} = blockProps.attributes
 
 	return applyFilters( 'stackable.team-member.show', {
-		columnBackground: design !== 'plain',
+		columnBackground: design !== 'plain' && design !== 'overlay' && design !== 'overlay-simple',
 		borderRadius: design !== 'plain',
 		shadow: design !== 'plain',
-		imageAsBackground: design === 'overlay' || design === 'half',
+		social: design !== 'overlay',
+		imageAsBackground: design === 'overlay' || design === 'half' || design === 'overlay-simple',
+		imageBackgroundHeight: design === 'overlay' || design === 'overlay-simple',
+		imageBackgroundWidth: design === 'half',
 		imageSpacing: showImage && ( design === 'basic' || design === 'plain' ),
 		nameSpacing: showName,
 		positionSpacing: showPosition,
 		descriptionSpacing: showDescription,
-		socialSpacing: showSocial,
+		socialSpacing: showSocial && design !== 'overlay',
 	}, blockProps )
 }

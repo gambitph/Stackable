@@ -122,18 +122,18 @@ export const createStyles = props => {
 		styles.push( {
 			'.ugb-team-member__name': {
 				...createTypographyStyles( 'name%s', 'desktop', props.attributes ),
-				textAlign: getValue( 'nameAlign' ) || getValue( 'contentAlign' ),
+				textAlign: appendImportant( getValue( 'nameAlign' ) || getValue( 'contentAlign' ) ),
 			},
 			tablet: {
 				'.ugb-team-member__name': {
 					...createTypographyStyles( 'name%s', 'tablet', props.attributes ),
-					textAlign: getValue( 'nameTabletAlign' ) || getValue( 'contentTabletAlign' ),
+					textAlign: appendImportant( getValue( 'nameTabletAlign' ) || getValue( 'contentTabletAlign' ) ),
 				},
 			},
 			mobile: {
 				'.ugb-team-member__name': {
 					...createTypographyStyles( 'name%s', 'mobile', props.attributes ),
-					textAlign: getValue( 'nameMobileAlign' ) || getValue( 'contentMobileAlign' ),
+					textAlign: appendImportant( getValue( 'nameMobileAlign' ) || getValue( 'contentMobileAlign' ) ),
 				},
 			},
 		} )
@@ -147,25 +147,25 @@ export const createStyles = props => {
 	if ( showPosition ) {
 		styles.push( {
 			'.ugb-team-member__position': {
-				color: whiteIfDarkBlackIfLight( positionColor, show.columnBackground && columnBackgroundColor ),
+				color: appendImportant( whiteIfDarkBlackIfLight( positionColor, show.columnBackground && columnBackgroundColor ) ),
 			},
 		} )
 
 		styles.push( {
 			'.ugb-team-member__position': {
 				...createTypographyStyles( 'position%s', 'desktop', props.attributes ),
-				textAlign: getValue( 'positionAlign' ) || getValue( 'contentAlign' ),
+				textAlign: appendImportant( getValue( 'positionAlign' ) || getValue( 'contentAlign' ) ),
 			},
 			tablet: {
 				'.ugb-team-member__position': {
 					...createTypographyStyles( 'position%s', 'tablet', props.attributes ),
-					textAlign: getValue( 'positionTabletAlign' ) || getValue( 'contentTabletAlign' ),
+					textAlign: appendImportant( getValue( 'positionTabletAlign' ) || getValue( 'contentTabletAlign' ) ),
 				},
 			},
 			mobile: {
 				'.ugb-team-member__position': {
 					...createTypographyStyles( 'position%s', 'mobile', props.attributes ),
-					textAlign: getValue( 'positionMobileAlign' ) || getValue( 'contentMobileAlign' ),
+					textAlign: appendImportant( getValue( 'positionMobileAlign' ) || getValue( 'contentMobileAlign' ) ),
 				},
 			},
 		} )
@@ -186,18 +186,18 @@ export const createStyles = props => {
 		styles.push( {
 			'.ugb-team-member__description': {
 				...createTypographyStyles( 'description%s', 'desktop', props.attributes ),
-				textAlign: getValue( 'descriptionAlign' ) || getValue( 'contentAlign' ),
+				textAlign: appendImportant( getValue( 'descriptionAlign' ) || getValue( 'contentAlign' ) ),
 			},
 			tablet: {
 				'.ugb-team-member__description': {
 					...createTypographyStyles( 'description%s', 'tablet', props.attributes ),
-					textAlign: getValue( 'descriptionTabletAlign' ) || getValue( 'contentTabletAlign' ),
+					textAlign: appendImportant( getValue( 'descriptionTabletAlign' ) || getValue( 'contentTabletAlign' ) ),
 				},
 			},
 			mobile: {
 				'.ugb-team-member__description': {
 					...createTypographyStyles( 'description%s', 'mobile', props.attributes ),
-					textAlign: getValue( 'descriptionMobileAlign' ) || getValue( 'contentMobileAlign' ),
+					textAlign: appendImportant( getValue( 'descriptionMobileAlign' ) || getValue( 'contentMobileAlign' ) ),
 				},
 			},
 		} )

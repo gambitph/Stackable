@@ -27,13 +27,14 @@
 		flex-direction: column;
 		background-size: cover;
 		background-position: center;
-		// padding: $box-vert-padding $box-hori-padding;
 	}
 
 	.ugb-team-member__image {
 		width: 300px;
 		height: auto;
 		margin: 0 auto;
+		background-size: cover;
+		background-position: center;
 	}
 	.ugb-img {
 		margin: 0 auto;
@@ -59,15 +60,11 @@
 	}
 
 	.ugb-team-member__buttons {
+		margin-left: -4px;
+		margin-right: -4px;
 		.ugb-button-container {
 			display: inline-block;
-			margin: 0 4px;
-		}
-		.ugb-button-container:first-child {
-			margin-left: 0;
-		}
-		.ugb-button-container:last-child {
-			margin-right: 0;
+			margin: 0 4px 4px;
 		}
 	}
 

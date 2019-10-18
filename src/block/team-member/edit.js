@@ -191,8 +191,10 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 					'imageBorderRadius',
 					'imageShadow',
 					'imageBlendMode',
+					...createResponsiveAttributeNames( 'image%sHeight' ),
 				] }
 				toggleAttributeName="showImage"
+				hasToggle={ ! show.imageAsBackground }
 			>
 				{ ! show.imageAsBackground &&
 					<Fragment>
@@ -223,20 +225,50 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 					</Fragment>
 				}
 				{ show.imageAsBackground &&
-					<ImageBackgroundControlsHelper
-						attrNameTemplate="image%s"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-						onChangeImage={ null }
-						onChangeSize={ size => {
-							setAttributes( {
-								imageSize: size,
-								image1Url: getImageUrlFromCache( image1Id, size || 'large' ),
-								image2Url: getImageUrlFromCache( image2Id, size || 'large' ),
-								image3Url: getImageUrlFromCache( image3Id, size || 'large' ),
-							} )
-						} }
-					/>
+					<Fragment>
+						<ImageBackgroundControlsHelper
+							attrNameTemplate="image%s"
+							setAttributes={ setAttributes }
+							blockAttributes={ props.attributes }
+							onChangeImage={ null }
+							onChangeSize={ size => {
+								setAttributes( {
+									imageSize: size,
+									image1Url: getImageUrlFromCache( image1Id, size || 'large' ),
+									image2Url: getImageUrlFromCache( image2Id, size || 'large' ),
+									image3Url: getImageUrlFromCache( image3Id, size || 'large' ),
+								} )
+							} }
+						/>
+						{ show.imageBackgroundHeight &&
+							<ResponsiveControl
+								attrNameTemplate="Image%sBackgroundHeight"
+								setAttributes={ setAttributes }
+								blockAttributes={ props.attributes }
+							>
+								<AdvancedRangeControl
+									label={ __( 'Image Height', i18n ) }
+									min={ 150 }
+									max={ 800 }
+									allowReset={ true }
+								/>
+							</ResponsiveControl>
+						}
+						{ show.imageBackgroundWidth &&
+							<ResponsiveControl
+								attrNameTemplate="Image%sBackgroundWidth"
+								setAttributes={ setAttributes }
+								blockAttributes={ props.attributes }
+							>
+								<AdvancedRangeControl
+									label={ __( 'Image Width', i18n ) + ' (%)' }
+									min={ 10 }
+									max={ 90 }
+									allowReset={ true }
+								/>
+							</ResponsiveControl>
+						}
+					</Fragment>
 				}
 			</PanelAdvancedSettings>
 
@@ -335,45 +367,47 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
-			<PanelAdvancedSettings
-				title={ __( 'Social', i18n ) }
-				checked={ showSocial }
-				onChange={ showSocial => setAttributes( { showSocial } ) }
-				toggleOnSetAttributes={ [
-					...createButtonAttributeNames( 'social%s' ),
-					...createResponsiveAttributeNames( 'social%sAlign' ),
-				] }
-				toggleAttributeName="showSocial"
-			>
-				<div className="components-base-control">
-					<div className="components-base-control__label">{ __( 'Social Buttons', i18n ) }</div>
-					{ Object.keys( SOCIAL_SITES ).map( socialId => {
-						return (
-							<ToggleControl
-								key={ socialId }
-								className="ugb-team-member-setting__social"
-								label={ SOCIAL_SITES[ socialId ].label }
-								checked={ props.attributes[ `show${ upperFirst( socialId ) }` ] }
-								onChange={ value => setAttributes( { [ `show${ upperFirst( socialId ) }` ]: value } ) }
-							/>
-						)
-					} ) }
-				</div>
-				<ControlSeparator />
-				<SocialControlsHelper
-					attrNameTemplate="social%s"
-					setAttributes={ setAttributes }
-					blockAttributes={ props.attributes }
-					socialUrlFields={ false }
-				/>
-				<ResponsiveControl
-					attrNameTemplate="Social%sAlign"
-					setAttributes={ setAttributes }
-					blockAttributes={ props.attributes }
+			{ show.social &&
+				<PanelAdvancedSettings
+					title={ __( 'Social', i18n ) }
+					checked={ showSocial }
+					onChange={ showSocial => setAttributes( { showSocial } ) }
+					toggleOnSetAttributes={ [
+						...createButtonAttributeNames( 'social%s' ),
+						...createResponsiveAttributeNames( 'social%sAlign' ),
+					] }
+					toggleAttributeName="showSocial"
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
-				</ResponsiveControl>
-			</PanelAdvancedSettings>
+					<div className="components-base-control">
+						<div className="components-base-control__label">{ __( 'Social Buttons', i18n ) }</div>
+						{ Object.keys( SOCIAL_SITES ).map( socialId => {
+							return (
+								<ToggleControl
+									key={ socialId }
+									className="ugb-team-member-setting__social"
+									label={ SOCIAL_SITES[ socialId ].label }
+									checked={ props.attributes[ `show${ upperFirst( socialId ) }` ] }
+									onChange={ value => setAttributes( { [ `show${ upperFirst( socialId ) }` ]: value } ) }
+								/>
+							)
+						} ) }
+					</div>
+					<ControlSeparator />
+					<SocialControlsHelper
+						attrNameTemplate="social%s"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+						socialUrlFields={ false }
+					/>
+					<ResponsiveControl
+						attrNameTemplate="Social%sAlign"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					</ResponsiveControl>
+				</PanelAdvancedSettings>
+			}
 
 			<PanelSpacingBody
 				initialOpen={ false }
@@ -598,25 +632,29 @@ const edit = props => {
 								/>
 							}
 							<div className="ugb-team-member__content">
-								{ showName &&
-									<RichText
-										tagName={ nameTag || 'h4' }
-										value={ name }
-										className="ugb-team-member__name"
-										placeholder={ __( 'Name', i18n ) }
-										onChange={ value => setAttributes( { [ `name${ i }` ]: value } ) }
-										keepPlaceholderOnFocus
-									/>
-								}
-								{ showPosition &&
-									<RichText
-										tagName="p"
-										value={ position }
-										className="ugb-team-member__position"
-										onChange={ value => setAttributes( { [ `position${ i }` ]: value } ) }
-										placeholder={ __( 'Position', i18n ) }
-										keepPlaceholderOnFocus
-									/>
+								{ showName && showPosition &&
+									<div className="ugb-team-member__title">
+										{ showName &&
+											<RichText
+												tagName={ nameTag || 'h4' }
+												value={ name }
+												className="ugb-team-member__name"
+												placeholder={ __( 'Name', i18n ) }
+												onChange={ value => setAttributes( { [ `name${ i }` ]: value } ) }
+												keepPlaceholderOnFocus
+											/>
+										}
+										{ showPosition &&
+											<RichText
+												tagName="p"
+												value={ position }
+												className="ugb-team-member__position"
+												onChange={ value => setAttributes( { [ `position${ i }` ]: value } ) }
+												placeholder={ __( 'Position', i18n ) }
+												keepPlaceholderOnFocus
+											/>
+										}
+									</div>
 								}
 								{ showDescription &&
 									<RichText
@@ -628,7 +666,7 @@ const edit = props => {
 										keepPlaceholderOnFocus
 									/>
 								}
-								{ showSocial &&
+								{ showSocial && show.social &&
 									<div className="ugb-team-member__buttons">
 										<SocialButtonEditHelper
 											attrNameTemplate={ `social%s` }
