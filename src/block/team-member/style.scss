@@ -78,6 +78,25 @@
 	}
 }
 
+.ugb-team-member.ugb-team-member--v3 {
+	@media screen and (max-width: $break-large) {
+		&.ugb-team-member--columns-3 {
+			.ugb-block-content {
+				grid-template-columns: minmax(0, 1fr);
+				grid-auto-flow: row;
+			}
+		}
+	}
+}
+.ugb-team-member.ugb-team-member--v3 {
+	@media screen and (max-width: $break-small) {
+		.ugb-block-content {
+			grid-template-columns: minmax(0, 1fr);
+			grid-auto-flow: row;
+		}
+	}
+}
+
 /**
  * Deprecated < v2
  */
