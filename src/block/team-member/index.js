@@ -10,122 +10,36 @@ import deprecated from './deprecated'
 /**
  * External dependencies
  */
-import { descriptionPlaceholder } from '~stackable/util'
+import {
+	descriptionPlaceholder,
+	createSocialButtonAttributes,
+	createAllCombinationAttributes,
+	createBackgroundAttributes,
+	createImageAttributes,
+	createTypographyAttributes,
+	createImageBackgroundAttributes,
+	SOCIAL_SITES,
+} from '~stackable/util'
 import edit from './edit'
 import save from './save'
 import { TeamMemberIcon } from '~stackable/icons'
+import { upperFirst } from 'lodash'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
 import { disabledBlocks, i18n } from 'stackable'
+import { addFilter, applyFilters } from '@wordpress/hooks'
 
 export const schema = {
-	href1: {
-		type: 'url',
-	},
-	href2: {
-		type: 'url',
-	},
-	href3: {
-		type: 'url',
-	},
-	mediaID1: {
-		type: 'number',
-	},
-	mediaID2: {
-		type: 'number',
-	},
-	mediaID3: {
-		type: 'number',
-	},
-	mediaURL1: {
+	design: {
 		type: 'string',
-		source: 'attribute',
-		selector: '.ugb-team-member__item:nth-of-type(1) .ugb-team-member__image',
-		attribute: 'data-src',
-		default: '',
-	},
-	mediaURL2: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.ugb-team-member__item:nth-of-type(2) .ugb-team-member__image',
-		attribute: 'data-src',
-		default: '',
-	},
-	mediaURL3: {
-		type: 'string',
-		source: 'attribute',
-		selector: '.ugb-team-member__item:nth-of-type(3) .ugb-team-member__image',
-		attribute: 'data-src',
-		default: '',
-	},
-	name1: {
-		source: 'html',
-		selector: '.ugb-team-member__item:nth-of-type(1) .ugb-team-member__name',
-		default: __( 'Name', i18n ),
-	},
-	name2: {
-		source: 'html',
-		selector: '.ugb-team-member__item:nth-of-type(2) .ugb-team-member__name',
-		default: __( 'Name', i18n ),
-	},
-	name3: {
-		source: 'html',
-		selector: '.ugb-team-member__item:nth-of-type(3) .ugb-team-member__name',
-		default: __( 'Name', i18n ),
-	},
-	position1: {
-		source: 'html',
-		selector: '.ugb-team-member__item:nth-of-type(1) .ugb-team-member__position',
-		default: __( 'Position', i18n ),
-	},
-	position2: {
-		source: 'html',
-		selector: '.ugb-team-member__item:nth-of-type(2) .ugb-team-member__position',
-		default: __( 'Position', i18n ),
-	},
-	position3: {
-		source: 'html',
-		selector: '.ugb-team-member__item:nth-of-type(3) .ugb-team-member__position',
-		default: __( 'Position', i18n ),
-	},
-	description1: {
-		source: 'html',
-		selector: '.ugb-team-member__item:nth-of-type(1) .ugb-team-member__description',
-		default: descriptionPlaceholder( 'medium' ),
-	},
-	description2: {
-		source: 'html',
-		selector: '.ugb-team-member__item:nth-of-type(2) .ugb-team-member__description',
-		default: descriptionPlaceholder( 'medium' ),
-	},
-	description3: {
-		source: 'html',
-		selector: '.ugb-team-member__item:nth-of-type(3) .ugb-team-member__description',
-		default: descriptionPlaceholder( 'medium' ),
-	},
-	nameColor: {
-		type: 'string',
-	},
-	posColor: {
-		type: 'string',
-	},
-	desColor: {
-		type: 'string',
+		default: 'basic',
 	},
 	columns: {
 		type: 'number',
 		default: 2,
-	},
-	shapes: {
-		type: 'string',
-		default: 'circle',
-	},
-	design: {
-		type: 'string',
-		default: 'basic',
 	},
 	borderRadius: {
 		type: 'number',
@@ -135,86 +49,249 @@ export const schema = {
 		type: 'number',
 		default: 3,
 	},
-	colorOnHover: {
+
+	// Column.
+	...createBackgroundAttributes( 'column%s' ),
+
+	// Image.
+	showImage: {
+		type: 'boolean',
+		default: true,
+	},
+	imageColorOnHover: {
 		type: 'boolean',
 		default: false,
 	},
+	...createImageAttributes( 'image%s', {
+		exclude: [
+			'Url',
+			'Id',
+			'Alt',
+			'BlendMode',
+		],
+	} ),
+	imageShape: {
+		type: 'string',
+		default: 'circle',
+	},
+	...createAllCombinationAttributes(
+		'image%sId', {
+			type: 'number',
+			default: '',
+		},
+		[ '1', '2', '3' ]
+	),
+	...createAllCombinationAttributes(
+		'image%sUrl', {
+			type: 'string',
+			default: '',
+			// Some layouts can have the image as an image background. Need this to be a normal attribute and not from `src`.
+			// source: 'attribute',
+			// selector: '.ugb-team-member__item%d .ugb-team-member__image img',
+			// attribute: 'src',
+		},
+		[ '1', '2', '3' ]
+	),
+	...createAllCombinationAttributes(
+		'image%sAlt', {
+			type: 'string',
+			default: '',
+			source: 'attribute',
+			selector: '.ugb-team-member__item%d .ugb-team-member__image img',
+			attribute: 'alt',
+		},
+		[ '1', '2', '3' ]
+	),
+	...createAllCombinationAttributes(
+		'image%sShape', {
+			type: 'string',
+			default: '',
+		},
+		[ '1', '2', '3' ]
+	),
+	...createAllCombinationAttributes(
+		'image%s%s', {
+			type: 'boolean',
+			default: false,
+		},
+		[ '1', '2', '3' ],
+		[ 'ShapeFlipX', 'ShapeFlipY', 'ShapeStretch' ]
+	),
+	// Used by sectioned layout.
+	...createAllCombinationAttributes(
+		'image%sHeight', {
+			type: 'number',
+			default: '',
+		},
+		[ '', 'Tablet', 'Mobile' ]
+	),
+	...createImageBackgroundAttributes( 'image%s' ),
+	...createImageBackgroundAttributes( 'image1%s' ),
+	...createImageBackgroundAttributes( 'image2%s' ),
+	...createImageBackgroundAttributes( 'image3%s' ),
 
-	// Custom CSS attributes.
-	customCSSUniqueID: {
-		type: 'string',
-		default: '',
+	// Name.
+	showName: {
+		type: 'boolean',
+		default: true,
 	},
-	customCSS: {
+	...createAllCombinationAttributes(
+		'name%s', {
+			type: 'string',
+			source: 'html',
+			selector: '.ugb-team-member__item%d .ugb-team-member__name',
+			default: __( 'Name', i18n ),
+		},
+		[ '1', '2', '3' ]
+	),
+	nameTag: {
 		type: 'string',
-		default: '',
+		defualt: '',
 	},
-	customCSSCompiled: {
+	...createTypographyAttributes( 'name%s' ),
+	nameColor: {
 		type: 'string',
 		default: '',
 	},
 
-	// Keep the old attributes. Gutenberg issue https://github.com/WordPress/gutenberg/issues/10406
-	href: {
-		type: 'url',
+	// Position.
+	showPosition: {
+		type: 'boolean',
+		default: true,
 	},
-	hrefTwo: {
-		type: 'url',
-	},
-	hrefThree: {
-		type: 'url',
-	},
-	mediaID: {
-		type: 'number',
-	},
-	mediaIDTwo: {
-		type: 'number',
-	},
-	mediaIDThree: {
-		type: 'number',
-	},
-	mediaURL: {
+	...createAllCombinationAttributes(
+		'position%s', {
+			type: 'string',
+			source: 'html',
+			selector: '.ugb-team-member__item%d .ugb-team-member__position',
+			default: __( 'Position', i18n ),
+		},
+		[ '1', '2', '3' ]
+	),
+	...createTypographyAttributes( 'position%s' ),
+	positionColor: {
 		type: 'string',
+		default: '',
 	},
-	mediaURLTwo: {
+
+	// Description.
+	showDescription: {
+		type: 'boolean',
+		default: true,
+	},
+	...createAllCombinationAttributes(
+		'description%s', {
+			type: 'string',
+			source: 'html',
+			selector: '.ugb-team-member__item%d .ugb-team-member__description',
+			default: descriptionPlaceholder( 'medium' ),
+		},
+		[ '1', '2', '3' ]
+	),
+	...createTypographyAttributes( 'description%s' ),
+	descriptionColor: {
 		type: 'string',
+		default: '',
 	},
-	mediaURLThree: {
+
+	// Social.
+	showSocial: {
+		type: 'boolean',
+		default: true,
+	},
+	...createSocialButtonAttributes( 'social%s' ),
+	socialUseSocialColors: {
+		type: 'boolean',
+		default: false,
+	},
+	...createSocialButtonAttributes( 'social1%s', {
+		selector: '.ugb-team-member__item1 .ugb-button-%s',
+		facebookDefault: '#',
+		twitterDefault: '#',
+		instagramDefault: '#',
+		emailDefault: '#',
+	} ),
+	...createSocialButtonAttributes( 'social2%s', {
+		selector: '.ugb-team-member__item2 .ugb-button-%s',
+		facebookDefault: '#',
+		twitterDefault: '#',
+		instagramDefault: '#',
+		emailDefault: '#',
+	} ),
+	...createSocialButtonAttributes( 'social3%s', {
+		selector: '.ugb-team-member__item3 .ugb-button-%s',
+		facebookDefault: '#',
+		twitterDefault: '#',
+		instagramDefault: '#',
+		emailDefault: 'my@email.com',
+	} ),
+	// Individual social button show attributes.
+	...Object.keys( SOCIAL_SITES ).reduce( ( propsToPass, socialId ) => {
+		return {
+			...propsToPass,
+			[ `show${ upperFirst( socialId ) }` ]: {
+				type: 'boolean',
+				default: '',
+			},
+		}
+	}, {} ),
+	showFacebook: {
+		type: 'boolean',
+		default: true,
+	},
+	showTwitter: {
+		type: 'boolean',
+		default: true,
+	},
+	showInstagram: {
+		type: 'boolean',
+		default: true,
+	},
+	showEmail: {
+		type: 'boolean',
+		default: true,
+	},
+
+	hoverEffect: {
 		type: 'string',
+		default: '',
 	},
-	name: {
-		type: 'string',
-	},
-	nameTwo: {
-		type: 'string',
-	},
-	nameThree: {
-		type: 'string',
-	},
-	position: {
-		type: 'string',
-	},
-	positionTwo: {
-		type: 'string',
-	},
-	positionThree: {
-		type: 'string',
-	},
-	des: {
-		type: 'string',
-	},
-	desTwo: {
-		type: 'string',
-	},
-	desThree: {
-		type: 'string',
-	},
-	iconColor: {
-		type: 'string',
-	},
-	align: {
-		type: 'string',
-	},
+
+	// Alignment.
+	...createAllCombinationAttributes(
+		'%s%sAlign', {
+			type: 'string',
+			default: '',
+		},
+		[ 'Image', 'Name', 'Position', 'Description', 'Social' ],
+		[ '', 'Tablet', 'Mobile' ]
+	),
+
+	// Spacing.
+	...createAllCombinationAttributes(
+		'%s%sBottomMargin', {
+			type: 'number',
+			default: '',
+		},
+		[ 'Image', 'Name', 'Position', 'Description', 'Social' ],
+		[ '', 'Tablet', 'Mobile' ]
+	),
+	...createAllCombinationAttributes(
+		'social%sGap', {
+			type: 'number',
+			default: '',
+		},
+		[ '', 'Tablet', 'Mobile' ]
+	),
+
+	// Advanced colors.
+	...createAllCombinationAttributes(
+		'Column%sBackgroundColor', {
+			type: 'string',
+			default: '',
+		},
+		[ '1', '2', '3' ]
+	),
 }
 
 export const name = 'ugb/team-member'
@@ -232,11 +309,84 @@ export const settings = {
 	supports: {
 		align: [ 'wide' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
-		// eslint-disable-next-line
-		inserter: false, // TODO: Remove when ready for v2.
 	},
 
 	deprecated,
 	edit,
 	save,
+
+	// Stackable modules.
+	modules: {
+		'advanced-general': true,
+		'advanced-block-spacing': true,
+		'advanced-column-spacing': true,
+		'advanced-responsive': true,
+		'block-background': true,
+		'block-separators': true,
+		'block-title': true,
+		'content-align': true,
+		'custom-css': {
+			default: applyFilters( 'stackable.team-member.custom-css.default', '' ),
+		},
+	},
 }
+
+// Reset some attributes if some global attributes are set.
+addFilter( 'stackable.team-member.setAttributes', 'stackable/team-member/imageShape', attributes => {
+	if ( typeof attributes.imageShape !== 'undefined' ) {
+		return {
+			...attributes,
+			image1Shape: '',
+			image2Shape: '',
+			image3Shape: '',
+			image1ShapeFlipX: '',
+			image1ShapeFlipY: '',
+			image1ShapeStretch: '',
+			image2ShapeFlipX: '',
+			image2ShapeFlipY: '',
+			image2ShapeStretch: '',
+			image3ShapeFlipX: '',
+			image3ShapeFlipY: '',
+			image3ShapeStretch: '',
+		}
+	}
+
+	if ( typeof attributes.imageShapeFlipX !== 'undefined' ) {
+		return {
+			...attributes,
+			image1ShapeFlipX: '',
+			image2ShapeFlipX: '',
+			image3ShapeFlipX: '',
+		}
+	}
+
+	if ( typeof attributes.imageShapeFlipY !== 'undefined' ) {
+		return {
+			...attributes,
+			image1ShapeFlipY: '',
+			image2ShapeFlipY: '',
+			image3ShapeFlipY: '',
+		}
+	}
+
+	if ( typeof attributes.imageShapeStretch !== 'undefined' ) {
+		return {
+			...attributes,
+			image1ShapeStretch: '',
+			image2ShapeStretch: '',
+			image3ShapeStretch: '',
+		}
+	}
+
+	if ( typeof attributes.columnBackgroundColor !== 'undefined' || typeof attributes.columnBackgroundColorType !== 'undefined' ) {
+		return {
+			...attributes,
+			column1BackgroundColor: '',
+			column2BackgroundColor: '',
+			column3BackgroundColor: '',
+		}
+	}
+
+	return attributes
+} )
+

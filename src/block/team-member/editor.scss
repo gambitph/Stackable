@@ -4,31 +4,19 @@
  * Enqueued in the editor only.
  */
 
-.ugb-team-member.ugb-team-member--columns-1 {
-	> *:nth-of-type(2),
-	> *:nth-of-type(3) {
-		display: none;
-	}
-}
-.ugb-team-member.ugb-team-member--columns-2 {
-	> *:nth-of-type(3) {
-		display: none;
-	}
+.ugb-team-member-setting__social,
+.ugb-team-member-setting__social .components-base-control__field {
+	margin-bottom: 8px !important;
 }
 
-[data-type="ugb/team-member"] {
-	// Fade out placeholder text.
-	[data-is-placeholder-visible="true"] + .editor-rich-text__editable {
-		opacity: 0.5;
-	}
-
-	// Only show placeholder text while selected or typing.
-	&:not(.is-selected):not(.is-typing) {
-		[data-is-placeholder-visible="true"] + .editor-rich-text__editable {
-			display: none;
-		}
-		[data-is-placeholder-visible="true"] {
-			display: none;
-		}
+.ugb-team-member__image .ugb-image-upload-has-placeholder {
+	// width: 220px;
+	border-radius: 100%;
+	height: 0;
+	padding-bottom: 100%;
+	svg {
+		top: 50%;
+		position: absolute;
+		transform: translateY(-50%);
 	}
 }

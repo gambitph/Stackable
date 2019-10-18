@@ -1,115 +1,152 @@
 /**
+ * Internal dependencies
+ */
+import { createStyles } from './style'
+import { showOptions } from './util'
+
+/**
  * External dependencies
  */
-import { range } from '~stackable/util'
+import {
+	hasBackgroundOverlay,
+	range,
+	createVideoBackground,
+	SOCIAL_SITES,
+} from '~stackable/util'
+import {
+	BlockContainer,
+	Image,
+	SocialButtonEditHelper,
+} from '~stackable/components'
+import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+import classnames from 'classnames'
+import { upperFirst } from 'lodash'
 
 /**
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
-import classnames from 'classnames'
+import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
 
 const save = props => {
 	const { className, attributes } = props
+
 	const {
-		shapes,
-		nameColor,
-		posColor,
-		desColor,
 		columns = 2,
 		design = 'basic',
-		borderRadius = 12,
 		shadow = 3,
-	} = props.attributes
+		imageShape = '',
+		imageShapeStretch = false,
+		imageShadow = '',
+		imageWidth = '',
+		nameTag = 'h4',
+		showImage = true,
+		showName = true,
+		showPosition = true,
+		showDescription = true,
+		showSocial = true,
+		socialNewTab = false,
+	} = attributes
+
+	const show = showOptions( props )
 
 	const mainClasses = classnames( [
 		className,
-		'ugb-team-member',
-		'ugb-team-member--v2',
-		`ugb-team-member--columns-${ columns }`,
-		`ugb-team-member--image-${ shapes }`,
+		'ugb-team-member--v3',
 		`ugb-team-member--design-${ design }`,
-	], applyFilters( 'stackable.team-member.mainclasses', {}, design, props ) )
+		`ugb-team-member--columns-${ columns }`,
+	], applyFilters( 'stackable.team-member.mainclasses', {
+	}, props ) )
 
 	return (
-		<div className={ mainClasses }>
-			{ applyFilters( 'stackable.team-member.save.output.before', null, design, props ) }
-			{ range( 1, columns + 1 ).map( i => {
-				// const href = attributes[ `href${i}` ]
-				const mediaURL = attributes[ `mediaURL${ i }` ]
-				const name = attributes[ `name${ i }` ]
-				const position = attributes[ `position${ i }` ]
-				const description = attributes[ `description${ i }` ]
+		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
+			<Fragment>
+				{ range( 1, columns + 1 ).map( i => {
+					const imageUrl = attributes[ `image${ i }Url` ]
+					const imageId = attributes[ `image${ i }Id` ]
+					const imageAlt = attributes[ `image${ i }Alt` ]
+					const name = attributes[ `name${ i }` ]
+					const position = attributes[ `position${ i }` ]
+					const description = attributes[ `description${ i }` ]
 
-				const itemClasses = classnames( [
-					'ugb-team-member__item',
-				], applyFilters( 'stackable.team-member.itemclasses', {
-					[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-				}, design, i, props ) )
+					const itemClasses = classnames( [
+						'ugb-team-member__item',
+						`ugb-team-member__item${ i }`,
+					], applyFilters( 'stackable.team-member.itemclasses', {
+						'ugb--has-background-overlay': show.columnBackground && hasBackgroundOverlay( 'column%s', props.attributes ),
+						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
+					}, props ) )
 
-				const styles = applyFilters( 'stackable.team-member.itemstyles', {
-					item: {
-						borderRadius: design !== 'plain' && borderRadius !== 12 ? borderRadius : undefined,
-					},
-				}, design, i, props )
-
-				const imageComp = mediaURL && (
-					<div className="ugb-team-member__image"
-						style={ { backgroundImage: mediaURL ? `url(${ mediaURL })` : undefined } }
-						data-src={ mediaURL ? mediaURL : undefined }
-					/>
-				)
-				const nameComp = ! RichText.isEmpty( name ) && (
-					<RichText.Content
-						tagName="h4"
-						className="ugb-team-member__name"
-						style={ { color: nameColor } }
-						value={ name }
-					/>
-				)
-				const positionComp = ! RichText.isEmpty( position ) && (
-					<RichText.Content
-						tagName="p"
-						className="ugb-team-member__position"
-						style={ { color: posColor } }
-						value={ position }
-					/>
-				)
-				const descriptionComp = ! RichText.isEmpty( description ) && (
-					<RichText.Content
-						tagName="p"
-						className="ugb-team-member__description"
-						style={ { color: desColor } }
-						value={ description }
-					/>
-				)
-				const comps = {
-					imageComp,
-					nameComp,
-					positionComp,
-					descriptionComp,
-				}
-
-				return (
-					<div className={ itemClasses } style={ styles.item } key={ i }>
-						{ applyFilters( 'stackable.team-member.save.output', (
-							<Fragment>
-								{ imageComp }
-								<div className="ugb-team-member__content">
-									{ nameComp }
-									{ positionComp }
-									{ descriptionComp }
+					return (
+						<div className={ itemClasses } key={ i }>
+							{ show.columnBackground && createVideoBackground( 'column%s', props ) }
+							{ showImage && ! show.imageAsBackground && imageUrl &&
+								<div className="ugb-team-member__image">
+									<Image
+										imageId={ imageId }
+										src={ imageUrl }
+										width={ imageWidth }
+										alt={ imageAlt || ( showName && name ) }
+										shadow={ imageShadow }
+										shape={ attributes[ `image${ i }Shape` ] || imageShape }
+										shapeStretch={ attributes[ `image${ i }ShapeStretch` ] || imageShapeStretch }
+									/>
 								</div>
-							</Fragment>
-						), design, comps, i, props ) }
-					</div>
-				)
-			} ) }
-			{ applyFilters( 'stackable.team-member.save.output.after', null, design, props ) }
-		</div>
+							}
+							{ show.imageAsBackground &&
+								<div className="ugb-team-member__image"></div>
+							}
+							<div className="ugb-team-member__content">
+								{ showName && ! RichText.isEmpty( name ) &&
+									<RichText.Content
+										tagName={ nameTag || 'h4' }
+										className="ugb-team-member__name"
+										value={ name }
+									/>
+								}
+								{ showPosition && ! RichText.isEmpty( position ) &&
+									<RichText.Content
+										tagName="p"
+										className="ugb-team-member__position"
+										value={ position }
+									/>
+								}
+								{ showDescription && ! RichText.isEmpty( description ) &&
+									<RichText.Content
+										tagName="p"
+										className="ugb-team-member__description"
+										value={ description }
+									/>
+								}
+								{ showSocial &&
+									<div className="ugb-team-member__buttons">
+										<SocialButtonEditHelper.Content
+											attrNameTemplate={ `social%s` }
+											blockAttributes={ props.attributes }
+											newTab={ socialNewTab }
+											// Pass the show* props
+											{ ...Object.keys( SOCIAL_SITES ).reduce( ( propsToPass, socialId ) => {
+												return {
+													...propsToPass,
+													[ `${ socialId }Url` ]: props.attributes[ `social${ i }${ upperFirst( socialId ) }Url` ],
+													[ `show${ upperFirst( socialId ) }` ]: props.attributes[ `show${ upperFirst( socialId ) }` ],
+												}
+											}, {} ) }
+										/>
+									</div>
+								}
+							</div>
+						</div>
+					)
+				} ) }
+			</Fragment>
+		) } />
 	)
 }
 
-export default save
+export default compose(
+	withUniqueClass,
+	withBlockStyles( createStyles ),
+)( save )
