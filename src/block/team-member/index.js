@@ -210,14 +210,14 @@ export const schema = {
 		facebookDefault: '#',
 		twitterDefault: '#',
 		instagramDefault: '#',
-		emailDefault: '#',
+		emailDefault: 'my@email.com',
 	} ),
 	...createSocialButtonAttributes( 'social2%s', {
 		selector: '.ugb-team-member__item2 .ugb-button-%s',
 		facebookDefault: '#',
 		twitterDefault: '#',
 		instagramDefault: '#',
-		emailDefault: '#',
+		emailDefault: 'my@email.com',
 	} ),
 	...createSocialButtonAttributes( 'social3%s', {
 		selector: '.ugb-team-member__item3 .ugb-button-%s',

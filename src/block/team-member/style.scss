@@ -46,7 +46,9 @@
 		width: 150px;
 	}
 
-	.ugb-team-member__image,
+	.ugb-team-member__image {
+		margin-bottom: #{ $text-margin-bottom * 1.5 };
+	}
 	.ugb-team-member__position,
 	.ugb-team-member__description,
 	.ugb-team-member__buttons {
