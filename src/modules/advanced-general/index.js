@@ -55,6 +55,22 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					/>
 				}
 
+				{ options.opacity &&
+					<ResponsiveControl
+						attrNameTemplate="%sBlockOpacity"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Opacity', i18n ) }
+							min={ 0.0 }
+							max={ 1.0 }
+							step={ 0.1 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				}
+
 				{ options.zIndex &&
 					<ResponsiveControl
 						attrNameTemplate="%sBlockZIndex"
@@ -87,15 +103,18 @@ const addToStyleObject = () => ( styleObject, props ) => {
 	const others = {
 		[ blockClass ]: {
 			zIndex: appendImportant( getValue( 'blockZIndex' ) ),
+			opacity: appendImportant( getValue( 'blockOpacity' ) ),
 		},
 		tablet: {
 			[ blockClass ]: {
 				zIndex: appendImportant( getValue( 'tabletBlockZIndex' ) ),
+				opacity: appendImportant( getValue( 'tabletBlockOpacity' ) ),
 			},
 		},
 		mobile: {
 			[ blockClass ]: {
 				zIndex: appendImportant( getValue( 'mobileBlockZIndex' ) ),
+				opacity: appendImportant( getValue( 'mobileBlockOpacity' ) ),
 			},
 		},
 	}
@@ -112,6 +131,14 @@ const addAttributes = attributes => {
 			default: '',
 		},
 		...createAllCombinationAttributes(
+			'%sBlockOpacity',
+			{
+				type: 'number',
+				default: '',
+			},
+			[ '', 'Tablet', 'Mobile' ]
+		),
+		...createAllCombinationAttributes(
 			'%sBlockZIndex',
 			{
 				type: 'number',
@@ -125,6 +152,7 @@ const addAttributes = attributes => {
 const advancedBlockGeneral = ( blockName, options = {} ) => {
 	const optionsToPass = {
 		blockTag: true,
+		opacity: true,
 		zIndex: true,
 		modifyStyles: true,
 		...options,
