@@ -31,6 +31,11 @@ export function ConvertToGroupButton( {
 	isGroupable = false,
 	isUngroupable = false,
 } ) {
+	// Only supported by WP >= 5.3.
+	if ( ! select( 'core/block-editor' ).getSelectedBlockClientIds ) {
+		return null
+	}
+
 	return (
 		<Fragment>
 			{ isGroupable && (
