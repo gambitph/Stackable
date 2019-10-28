@@ -144,7 +144,7 @@ const edit = props => {
 	return (
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				<hr />
+				<hr className="ugb-divider__hr" />
 				{ ( design === 'dots' || design === 'asterisks' ) &&
 					<div className="ugb-divider__dots" aria-hidden="true">
 						<div className="ugb-divider__dot"></div>
