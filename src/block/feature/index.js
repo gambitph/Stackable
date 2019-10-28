@@ -17,6 +17,7 @@ import {
 	createButtonAttributes,
 	createResponsiveAttributes,
 	createAllCombinationAttributes,
+	createImageAttributes,
 	createImageBackgroundAttributes,
 } from '~stackable/util'
 import edit from './edit'
@@ -64,6 +65,7 @@ export const schema = {
 	...createBackgroundAttributes( 'column%s' ),
 
 	// Image.
+	...createImageAttributes( 'image%s' ),
 	...createImageBackgroundAttributes( 'image%s' ),
 	imageShapeStretch: {
 		type: 'boolean',
