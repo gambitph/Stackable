@@ -210,21 +210,30 @@ export const schema = {
 		facebookDefault: '#',
 		twitterDefault: '#',
 		instagramDefault: '#',
-		emailDefault: 'my@email.com',
+		pinterestDefault: '#',
+		linkedinDefault: '#',
+		youtubeDefault: '#',
+		emailDefault: 'mailto:my@email.com',
 	} ),
 	...createSocialButtonAttributes( 'social2%s', {
 		selector: '.ugb-team-member__item2 .ugb-button-%s',
 		facebookDefault: '#',
 		twitterDefault: '#',
 		instagramDefault: '#',
-		emailDefault: 'my@email.com',
+		pinterestDefault: '#',
+		linkedinDefault: '#',
+		youtubeDefault: '#',
+		emailDefault: 'mailto:my@email.com',
 	} ),
 	...createSocialButtonAttributes( 'social3%s', {
 		selector: '.ugb-team-member__item3 .ugb-button-%s',
 		facebookDefault: '#',
 		twitterDefault: '#',
 		instagramDefault: '#',
-		emailDefault: 'my@email.com',
+		pinterestDefault: '#',
+		linkedinDefault: '#',
+		youtubeDefault: '#',
+		emailDefault: 'mailto:my@email.com',
 	} ),
 	// Individual social button show attributes.
 	...Object.keys( SOCIAL_SITES ).reduce( ( propsToPass, socialId ) => {
@@ -247,6 +256,18 @@ export const schema = {
 	showInstagram: {
 		type: 'boolean',
 		default: true,
+	},
+	showPinterest: {
+		type: 'boolean',
+		default: false,
+	},
+	showLinkedin: {
+		type: 'boolean',
+		default: false,
+	},
+	showYoutube: {
+		type: 'boolean',
+		default: false,
 	},
 	showEmail: {
 		type: 'boolean',
