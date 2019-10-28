@@ -30,7 +30,17 @@ const SocialButtonEdit = props => {
 						rel="noopener noreferrer nofollow"
 						icon={ SOCIAL_SITES[ socialId ].icon }
 						url={ props[ `${ socialId }Url` ] }
-						onChangeUrl={ value => props[ `onChange${ upperFirst( socialId ) }Url` ]( value ) }
+						onChangeUrl={ value => {
+							// If email, add mailto: if not present.
+							let url = value
+							if ( socialId === 'email' ) {
+								if ( url.match( /^[^:]+@./ ) ) {
+									url = `mailto:${ url }`
+								}
+							}
+
+							props[ `onChange${ upperFirst( socialId ) }Url` ]( url )
+						} }
 						onChangeNoFollow={ false }
 						disableSuggestions={ true }
 
@@ -61,15 +71,6 @@ SocialButtonEdit.Content = props => {
 	return (
 		<Fragment>
 			{ Object.keys( SOCIAL_SITES ).map( socialId => {
-				let url = props[ `${ socialId }Url` ]
-
-				// If email, add mailto: if not present.
-				if ( socialId === 'email' ) {
-					if ( url.match( /[^:]+@./ ) ) {
-						url = `mailto:${ url }`
-					}
-				}
-
 				const buttonClasses = classnames( [
 					'ugb-social-button',
 					`ugb-button-${ socialId }`,
@@ -84,7 +85,7 @@ SocialButtonEdit.Content = props => {
 						iconButton={ true }
 						rel="noopener noreferrer nofollow"
 						icon={ SOCIAL_SITES[ socialId ].icon }
-						url={ url }
+						url={ props[ `${ socialId }Url` ] }
 
 						{ ...props }
 					/>
