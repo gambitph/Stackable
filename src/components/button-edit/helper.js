@@ -6,13 +6,12 @@ import ButtonEdit from './index'
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n'
+import { sprintf } from '@wordpress/i18n'
 
 /**
  * External dependencies
  */
 import { camelCase } from 'lodash'
-import { i18n } from 'stackable'
 
 const ButtonEditHelper = props => {
 	const { setAttributes } = props
@@ -26,7 +25,7 @@ const ButtonEditHelper = props => {
 		<ButtonEdit
 			design={ getAttrValue( 'Design', props.designDefault ) }
 			size={ getAttrValue( 'Size', 'normal' ) }
-			text={ getAttrValue( 'Text', __( 'Button text', i18n ) ) }
+			text={ getAttrValue( 'Text', '' ) }
 			shadow={ getAttrValue( 'Shadow' ) }
 			hoverEffect={ getAttrValue( 'HoverEffect' ) }
 			ghostToNormalEffect={ getAttrValue( 'HoverGhostToNormal' ) }

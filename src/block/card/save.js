@@ -6,7 +6,6 @@ import { createVideoBackground, hasBackgroundOverlay } from '~stackable/util'
 import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
 import classnames from 'classnames'
 import { range } from 'lodash'
-import { i18n } from 'stackable'
 
 /**
  * Internal dependencies
@@ -17,7 +16,6 @@ import { showOptions } from './util'
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
@@ -57,7 +55,7 @@ const save = props => {
 					const title = attributes[ `title${ i }` ]
 					const subtitle = attributes[ `subtitle${ i }` ]
 					const description = attributes[ `description${ i }` ]
-					const buttonText = attributes[ `button${ i }Text` ] || __( 'Button text', i18n )
+					const buttonText = attributes[ `button${ i }Text` ]
 
 					const itemClasses = classnames( [
 						'ugb-card__item',

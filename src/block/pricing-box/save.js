@@ -19,12 +19,10 @@ import {
 } from '~stackable/components'
 import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
 import classnames from 'classnames'
-import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
@@ -74,7 +72,7 @@ const save = props => {
 					const pricePrefix = attributes[ `pricePrefix${ i }` ]
 					const priceSuffix = attributes[ `priceSuffix${ i }` ]
 					const subPrice = attributes[ `subPrice${ i }` ]
-					const buttonText = attributes[ `button${ i }Text` ] || __( 'Button text', i18n )
+					const buttonText = attributes[ `button${ i }Text` ]
 
 					const itemClasses = classnames( [
 						'ugb-pricing-box__item',

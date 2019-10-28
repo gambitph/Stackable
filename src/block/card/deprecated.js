@@ -940,6 +940,7 @@ const deprecated = [
 				customCSSCompiled: updateCSS( attributes.customCSSCompiled ),
 
 				columns: 1,
+				showButton: !! attributes.buttonText,
 				image1Id: attributes.mediaID,
 				image1Url: attributes.mediaURL,
 				title1: attributes.heading,

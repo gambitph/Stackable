@@ -14,7 +14,6 @@ import {
 	range, hasBackgroundOverlay, createVideoBackground,
 } from '~stackable/util'
 import { withUniqueClass, withBlockStyles } from '~stackable/higher-order'
-import { i18n } from 'stackable'
 import classnames from 'classnames'
 
 /**
@@ -23,7 +22,6 @@ import classnames from 'classnames'
 import { applyFilters } from '@wordpress/hooks'
 import { RichText } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
-import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
 
 const save = props => {
@@ -64,7 +62,7 @@ const save = props => {
 					const imageAlt = attributes[ `image${ i }Alt` ]
 					const title = attributes[ `title${ i }` ]
 					const description = attributes[ `description${ i }` ]
-					const buttonText = attributes[ `button${ i }Text` ] || __( 'Button text', i18n )
+					const buttonText = attributes[ `button${ i }Text` ]
 
 					const itemClasses = classnames( [
 						'ugb-feature-grid__item',

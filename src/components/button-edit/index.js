@@ -248,23 +248,25 @@ ButtonEdit.Content = props => {
 
 	return (
 		<div className="ugb-button-container">
-			<a
-				className={ mainClasses }
-				href={ url }
-				target={ ( target || newTab ) ? ( target || '_blank' ) : undefined }
-				rel={ props.rel || rel.join( ' ' ) }
-			>
-				{ icon && design !== 'link' &&
-					<SvgIcon.Content value={ icon } />
-				}
-				{ ! iconButton &&
-					<RichText.Content
-						tagName="span"
-						className={ design === 'link' ? '' : 'ugb-button--inner' }
-						value={ text || __( 'Button Text', i18n ) }
-					/>
-				}
-			</a>
+			{ text &&
+				<a
+					className={ mainClasses }
+					href={ url }
+					target={ ( target || newTab ) ? ( target || '_blank' ) : undefined }
+					rel={ props.rel || rel.join( ' ' ) }
+				>
+					{ icon && design !== 'link' &&
+						<SvgIcon.Content value={ icon } />
+					}
+					{ ! iconButton &&
+						<RichText.Content
+							tagName="span"
+							className={ design === 'link' ? '' : 'ugb-button--inner' }
+							value={ text }
+						/>
+					}
+				</a>
+			}
 		</div>
 	)
 }

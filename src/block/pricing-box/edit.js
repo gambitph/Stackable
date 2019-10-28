@@ -629,7 +629,7 @@ const edit = props => {
 					const imageAlt = attributes[ `image${ i }Alt` ]
 					// const imageWidth = attributes[ `image${ i }Width` ]
 					// const imageHeight = attributes[ `image${ i }Height` ]
-					const buttonText = attributes[ `button${ i }Text` ] || __( 'Button text', i18n )
+					const buttonText = attributes[ `button${ i }Text` ]
 					const title = attributes[ `title${ i }` ]
 					const description = attributes[ `description${ i }` ]
 					const price = attributes[ `price${ i }` ]

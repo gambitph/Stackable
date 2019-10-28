@@ -521,7 +521,7 @@ const edit = props => {
 					const title = attributes[ `title${ i }` ]
 					const subtitle = attributes[ `subtitle${ i }` ]
 					const description = attributes[ `description${ i }` ]
-					const buttonText = attributes[ `button${ i }Text` ] || __( 'Button text', i18n )
+					const buttonText = attributes[ `button${ i }Text` ]
 
 					const itemClasses = classnames( [
 						'ugb-card__item',
