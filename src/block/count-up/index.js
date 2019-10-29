@@ -251,9 +251,3 @@ export const settings = {
 		},
 	},
 }
-
-export const showOptions = blockProps => {
-	return applyFilters( 'stackable.count-up.show', {
-		columnBackground: false,
-	}, blockProps )
-}

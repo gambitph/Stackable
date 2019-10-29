@@ -9,11 +9,9 @@ import {
 	createImageStyleSet,
 	marginLeftAlign,
 	marginRightAlign,
-	createImageMask,
 	appendImportant,
 	createResponsiveStyles,
 } from '~stackable/util'
-import { range } from 'lodash'
 
 /**
  * Internal dependencies
@@ -35,7 +33,6 @@ export const createStyles = props => {
 	const show = showOptions( props )
 
 	const {
-		columns = 3,
 		columnBackgroundColor = '',
 		showImage = true,
 		imageAlign = '',
@@ -315,17 +312,6 @@ export const createStyles = props => {
 	}
 	if ( show.descriptionSpacing ) {
 		styles.push( ...createResponsiveStyles( '.ugb-pricing-box__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
-	}
-
-	// Advanced image.
-	if ( showImage ) {
-		range( 1, columns + 1 ).forEach( i => {
-			if ( props.attributes[ `image${ i }Shape` ] ) {
-				styles.push( {
-					[ `.ugb-pricing-box__item${ i } .ugb-img` ]: createImageMask( `image${ i }%s`, props.attributes ),
-				} )
-			}
-		} )
 	}
 
 	return deepmerge.all( styles )

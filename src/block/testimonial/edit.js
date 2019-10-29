@@ -27,8 +27,6 @@ import {
 	HeadingButtonsControl,
 	PanelSpacingBody,
 	AdvancedRangeControl,
-	ImageAltControl,
-	ImageShapeControls,
 	ProControl,
 } from '~stackable/components'
 import {
@@ -378,44 +376,10 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 	)
 } )
 
-addFilter( 'stackable.testimonial.edit.inspector.advanced.before', 'stackable/testimonial', ( output, props ) => {
-	const { setAttributes } = props
-	const {
-		columns,
-		showImage = true,
-	} = props.attributes
-
-	const show = showOptions( props )
-
+addFilter( 'stackable.testimonial.edit.inspector.advanced.before', 'stackable/testimonial', output => {
 	return (
 		<Fragment>
 			{ output }
-			{ showImage && range( 1, columns + 1 ).map( i => {
-				return ! show.imageAsBackground && (
-					<PanelBody
-						title={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Image', i18n ), i ) }
-						initialOpen={ false }
-						key={ i }
-					>
-						<ImageAltControl
-							value={ props.attributes[ `image${ i }Alt` ] }
-							onChange={ value => setAttributes( { [ `image${ i }Alt` ]: value } ) }
-						/>
-						<ImageShapeControls
-							imageId={ props.attributes[ `image${ i }Id` ] }
-							imageSize={ props.attributes[ `image${ i }Size` ] }
-							shape={ props.attributes[ `image${ i }Shape` ] || props.attributes.imageShape }
-							shapeFlipX={ props.attributes[ `image${ i }ShapeFlipX` ] }
-							shapeFlipY={ props.attributes[ `image${ i }ShapeFlipY` ] }
-							shapeStretch={ props.attributes[ `image${ i }ShapeStretch` ] }
-							onChangeShape={ value => setAttributes( { [ `image${ i }Shape` ]: value } ) }
-							onChangeShapeFlipX={ value => setAttributes( { [ `image${ i }ShapeFlipX` ]: value } ) }
-							onChangeShapeFlipY={ value => setAttributes( { [ `image${ i }ShapeFlipY` ]: value } ) }
-							onChangeShapeStretch={ value => setAttributes( { [ `image${ i }ShapeStretch` ]: value } ) }
-						/>
-					</PanelBody>
-				)
-			} ) }
 			{ showProNotice &&
 				<PanelBody
 					title={ __( 'Fine-Grained Controls', i18n ) }

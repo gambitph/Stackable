@@ -17,6 +17,7 @@ import {
 	ResponsiveControl,
 	TypographyControlHelper,
 	SvgIconPlaceholder,
+	ProControl,
 } from '~stackable/components'
 import {
 	createResponsiveAttributeNames, createTypographyAttributeNames, createVideoBackground, hasBackgroundOverlay,
@@ -36,7 +37,7 @@ import {
 import createStyles from './style'
 import ImageDesignPlain from './images/plain.png'
 import ImageDesignPlain2 from './images/plain-2.png'
-import { showOptions } from '.'
+import { showOptions } from './util'
 
 /**
  * WordPress dependencies
@@ -363,73 +364,18 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 	)
 } )
 
-addFilter( `stackable.count-up.edit.inspector.advanced.before`, `stackable/count-up/column-colors`, ( output, props ) => {
-	const { setAttributes } = props
-	const {
-		columns = 2,
-		showIcon = false,
-		showNumber = true,
-		showTitle = true,
-		showDescription = true,
-	} = props.attributes
-
-	const show = showOptions( props )
-
+addFilter( 'stackable.count-up.edit.inspector.advanced.before', 'stackable/count-up', output => {
 	return (
 		<Fragment>
 			{ output }
-			{ [ 1, 2, 3, 4 ].map( ( num, i ) => {
-				if ( columns < num ) {
-					return null
-				}
-
-				const attrName = attrNameTemplate => sprintf( attrNameTemplate, num )
-
-				return (
-					<PanelBody
-						key={ i }
-						initialOpen={ false }
-						title={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Column', i18n ), num ) }
-					>
-						<p className="components-base-control__help">{ sprintf( __( 'Override settings for column %d', i18n ), i ) }</p>
-						{ show.columnBackground && (
-							<ColorPaletteControl
-								label={ __( 'Column Background', i18n ) }
-								value={ props.attributes[ attrName( 'column%sBackgroundColor' ) ] }
-								onChange={ value => setAttributes( { [ attrName( 'column%sBackgroundColor' ) ]: value } ) }
-							/>
-						) }
-						{ showIcon && (
-							<ColorPaletteControl
-								label={ __( 'Icon', i18n ) }
-								value={ props.attributes[ attrName( 'column%sIconColor' ) ] }
-								onChange={ value => setAttributes( { [ attrName( 'column%sIconColor' ) ]: value } ) }
-							/>
-						) }
-						{ showTitle && (
-							<ColorPaletteControl
-								label={ __( 'Title', i18n ) }
-								value={ props.attributes[ attrName( 'column%sTitleColor' ) ] }
-								onChange={ value => setAttributes( { [ attrName( 'column%sTitleColor' ) ]: value } ) }
-							/>
-						) }
-						{ showNumber && (
-							<ColorPaletteControl
-								label={ __( 'Number', i18n ) }
-								value={ props.attributes[ attrName( 'column%sNumberColor' ) ] }
-								onChange={ value => setAttributes( { [ attrName( 'column%sNumberColor' ) ]: value } ) }
-							/>
-						) }
-						{ showDescription && (
-							<ColorPaletteControl
-								label={ __( 'Description', i18n ) }
-								value={ props.attributes[ attrName( 'column%sDescriptionColor' ) ] }
-								onChange={ value => setAttributes( { [ attrName( 'column%sDescriptionColor' ) ]: value } ) }
-							/>
-						) }
-					</PanelBody>
-				)
-			} ) }
+			{ showProNotice &&
+				<PanelBody
+					title={ __( 'Fine-Grained Controls', i18n ) }
+					initialOpen={ false }
+				>
+					{ <ProControl type="advanced" /> }
+				</PanelBody>
+			}
 		</Fragment>
 	)
 } )

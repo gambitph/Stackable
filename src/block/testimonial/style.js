@@ -7,7 +7,6 @@ import {
 	createImageStyleSet,
 	marginLeftAlign,
 	marginRightAlign,
-	createImageMask,
 	appendImportant,
 	createResponsiveStyles,
 	whiteIfDarkBlackIfLight,
@@ -195,17 +194,6 @@ export const createStyles = props => {
 	}
 	if ( show.positionSpacing ) {
 		styles.push( ...createResponsiveStyles( '.ugb-testimonial__position', 'position%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
-	}
-
-	// Advanced image.
-	if ( ! show.imageAsBackground && showImage ) {
-		range( 1, columns + 1 ).forEach( i => {
-			if ( props.attributes[ `image${ i }Shape` ] ) {
-				styles.push( {
-					[ `.ugb-testimonial__item${ i } .ugb-img` ]: createImageMask( `image${ i }%s`, props.attributes ),
-				} )
-			}
-		} )
 	}
 
 	return deepmerge.all( styles )

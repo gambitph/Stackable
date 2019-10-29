@@ -11,7 +11,7 @@ import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
  * Internal dependencies
  */
 import createStyles from './style'
-import { showOptions } from '.'
+import { showOptions } from './util'
 
 /**
  * WordPress dependencies

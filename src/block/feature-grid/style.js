@@ -9,10 +9,8 @@ import {
 	createImageStyleSet,
 	marginLeftAlign,
 	marginRightAlign,
-	createImageMask,
 	createResponsiveStyles,
 } from '~stackable/util'
-import { range } from 'lodash'
 
 /**
  * Internal dependencies
@@ -35,7 +33,6 @@ export const createStyles = props => {
 	const show = showOptions( props )
 
 	const {
-		columns = 3,
 		columnBackgroundColor = '',
 		showImage = true,
 		contentAlign = '',
@@ -198,17 +195,6 @@ export const createStyles = props => {
 	}
 	if ( show.buttonSpacing ) {
 		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'button%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
-	}
-
-	// Advanced image.
-	if ( showImage ) {
-		range( 1, columns + 1 ).forEach( i => {
-			if ( props.attributes[ `image${ i }Shape` ] ) {
-				styles.push( {
-					[ `.ugb-feature-grid__item${ i } .ugb-img` ]: createImageMask( `image${ i }%s`, props.attributes ),
-				} )
-			}
-		} )
 	}
 
 	return deepmerge.all( styles )
