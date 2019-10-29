@@ -248,7 +248,7 @@ ButtonEdit.Content = props => {
 
 	return (
 		<div className="ugb-button-container">
-			{ text &&
+			{ ( text || iconButton ) &&
 				<a
 					className={ mainClasses }
 					href={ url }
