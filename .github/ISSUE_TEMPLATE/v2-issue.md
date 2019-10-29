@@ -14,7 +14,7 @@ Before posting, make sure that:
 -->
 
 **Describe the bug**
-A clear and concise description of what the bug is.
+A clear and concise description of what the bug is. If you encountered the error from your version 1 block when you activated version 2 (early access), paste here your page HTML content code before your encountered the block error.
 
 **To Reproduce**
 Steps to reproduce the behavior:
