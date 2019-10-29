@@ -38,7 +38,7 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 		}
 
 		public function is_web_font( $font_name ) {
-			return ! in_array( strtolower( $font_name ), [ 'serif', 'sans-serif', 'monospace' ] );
+			return ! in_array( strtolower( $font_name ), [ 'serif', 'sans-serif', 'monospace', 'serif-alt' ] );
 		}
 
 		public function is_stackable_block( $block_name ) {
@@ -77,6 +77,9 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 		 * Based on: https://github.com/elementor/elementor/blob/bc251b81afb626c4c47029aea8a762566524a811/includes/frontend.php#L647
 		 */
 		public function enqueue_google_fonts( $google_fonts ) {
+			if ( ! count( $google_fonts) ) {
+				return;
+			}
 
 			foreach ( $google_fonts as &$font ) {
 				$font = str_replace( ' ', '+', $font ) . ':100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic';
