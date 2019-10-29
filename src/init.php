@@ -195,6 +195,7 @@ if ( ! function_exists( 'stackable_allow_safe_style_css' ) ) {
 			'border-radius',
 			'opacity',
 			'justify-content',
+			'display',
 		) );
 	}
 	add_filter( 'safe_style_css', 'stackable_allow_safe_style_css' );
@@ -219,6 +220,7 @@ if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
 	 */
 	function stackable_allow_wp_kses_allowed_html( $tags, $context ) {
 		$tags['style'] = true;
+		$tags['div']['aria-expanded'] = true;
 
 		// Used by Separators & Icons.
 		$tags['svg'] = array(
