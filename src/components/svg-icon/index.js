@@ -25,10 +25,10 @@ const SvgIcon = props => {
 }
 
 SvgIcon.Content = props => {
-	const { value } = props
+	const { value, ...propsToPass } = props
 	const selectedIcon = getIconArray( value )
 	return (
-		selectedIcon && <FontAwesomeIcon focusable={ undefined } icon={ selectedIcon } { ...props } />
+		selectedIcon && <FontAwesomeIcon focusable={ undefined } icon={ selectedIcon } { ...propsToPass } />
 	)
 }
 
