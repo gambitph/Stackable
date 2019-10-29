@@ -171,3 +171,90 @@ if ( ! function_exists( 'stackable_add_required_block_styles' ) ) {
 	}
 	add_action( 'enqueue_block_assets', 'stackable_add_required_block_styles', 11 );
 }
+
+if ( ! function_exists( 'stackable_allow_safe_style_css' ) ) {
+
+	/**
+	 * Fix block saving for Non-Super-Admins (no unfiltered_html capability).
+	 * For Non-Super-Admins, some styles & HTML tags/attributes are removed upon saving,
+	 * this allows Stackable styles from being saved.
+	 *
+	 * For every Stackable block, add the styles used here.
+	 * Inlined styles are the only ones filtered out. Styles inside
+	 * <style> tags are okay.
+	 *
+	 * @see The list of style rules allowed: https://core.trac.wordpress.org/browser/tags/5.2/src/wp-includes/kses.php#L2069
+	 * @see https://github.com/gambitph/Stackable/issues/184
+	 *
+	 * @param array $styles Allowed CSS style rules.
+	 *
+	 * @return array Modified CSS style rules.
+	 */
+	function stackable_allow_safe_style_css( $styles ) {
+		return array_merge( $styles, array(
+			'border-radius',
+			'opacity',
+			'justify-content',
+		) );
+	}
+	add_filter( 'safe_style_css', 'stackable_allow_safe_style_css' );
+}
+
+if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
+
+	/**
+	 * Fix block saving for Non-Super-Admins (no unfiltered_html capability).
+	 * For Non-Super-Admins, some styles & HTML tags/attributes are removed upon saving,
+	 * this allows Stackable HTML tags & attributes from being saved.
+	 *
+	 * For every Stackable block, add the HTML tags and attributes used here.
+	 *
+	 * @see The list of tags & attributes currently allowed: https://core.trac.wordpress.org/browser/tags/5.2/src/wp-includes/kses.php#L61
+	 * @see https://github.com/gambitph/Stackable/issues/184
+	 *
+	 * @param array $tags Allowed HTML tags & attributes.
+	 * @param string $context The context wherein the HTML is being filtered.
+	 *
+	 * @return array Modified HTML tags & attributes.
+	 */
+	function stackable_allow_wp_kses_allowed_html( $tags, $context ) {
+		$tags['style'] = true;
+
+		// Used by Separators & Icons.
+		$tags['svg'] = array(
+			'viewbox' => true,
+			'filter' => true,
+			'enablebackground' => true,
+			'xmlns' => true,
+			'class' => true,
+			'preserveaspectratio' => true,
+			'aria-hidden' => true,
+			'data-*' => true,
+			'role' => true,
+		);
+		$tags['path'] = array(
+			'class' => true,
+			'fill' => true,
+			'd' => true,
+		);
+		$tags['filter'] = array(
+			'id' => true,
+		);
+		$tags['fegaussianblur'] = array(
+			'in' => true,
+			'stddeviation' => true,
+		);
+		$tags['fecomponenttransfer'] = true;
+		$tags['fefunca'] = array(
+			'type' => true,
+			'slope' => true,
+		);
+		$tags['femerge'] = true;
+		$tags['femergenode'] = array(
+			'in' => true,
+		);
+
+		return $tags;
+	}
+	add_filter( 'wp_kses_allowed_html', 'stackable_allow_wp_kses_allowed_html', 10, 2 );
+}
