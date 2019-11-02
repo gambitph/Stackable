@@ -7,43 +7,26 @@
 import deprecated from './deprecated'
 import edit from './edit'
 import save from './save'
-import SVGArrowIcon from './images/arrow.svg'
 
 /**
  * External dependencies
  */
 import { AccordionIcon } from '~stackable/icons'
-import { descriptionPlaceholder } from '~stackable/util'
+import {
+	createResponsiveAttributes,
+	createBackgroundAttributes,
+	createAllCombinationAttributes,
+	createTypographyAttributes,
+} from '~stackable/util'
+import { disabledBlocks, i18n } from 'stackable'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { disabledBlocks, i18n } from 'stackable'
-
-export const ArrowIcon = ( { fill } ) => <SVGArrowIcon width="20" height="20" fill={ fill } />
+import { applyFilters } from '@wordpress/hooks'
 
 const schema = {
-	heading: {
-		source: 'html',
-		selector: '.ugb-accordion__heading h4',
-		default: __( 'Title for This Block', i18n ),
-	},
-	text: {
-		source: 'html',
-		selector: '.ugb-accordion__text',
-		default: descriptionPlaceholder( 'long' ),
-	},
-	headingColor: {
-		type: 'string',
-	},
-	headingBackgroundColor: {
-		type: 'string',
-	},
-	openStart: {
-		type: 'boolean',
-		default: false,
-	},
 	design: {
 		type: 'string',
 		default: 'basic',
@@ -56,20 +39,86 @@ const schema = {
 		type: 'number',
 		default: 3,
 	},
+	onlyOnePanelOpen: {
+		type: 'boolean',
+		default: false,
+	},
+	openStart: {
+		type: 'boolean',
+		default: false,
+	},
+	reverseArrow: {
+		type: 'boolean',
+		default: false,
+	},
 
-	// Custom CSS attributes.
-	customCSSUniqueID: {
+	// Container.
+	...createBackgroundAttributes( 'container%s' ),
+	containerClosedBackgroundColor: {
 		type: 'string',
 		default: '',
 	},
-	customCSS: {
+
+	// Title.
+	title: {
+		source: 'html',
+		selector: '.ugb-accordion__title',
+		default: __( 'Title for This Block', i18n ),
+	},
+	showTitle: {
+		type: 'boolean',
+		default: true,
+	},
+	titleTag: {
+		type: 'string',
+		defualt: '',
+	},
+	...createTypographyAttributes( 'title%s' ),
+	titleColor: {
 		type: 'string',
 		default: '',
 	},
-	customCSSCompiled: {
-		type: 'string',
+
+	// Arrow.
+	showArrow: {
+		type: 'boolean',
+		default: true,
+	},
+	arrowSize: {
+		type: 'number',
 		default: '',
 	},
+	arrowColor: {
+		type: 'string',
+		defualt: '',
+	},
+
+	// Border.
+	showBorder: {
+		type: 'boolean',
+		default: true,
+	},
+	borderSize: {
+		type: 'number',
+		default: '',
+	},
+	borderColor: {
+		type: 'string',
+		defualt: '',
+	},
+
+	// Spacing
+	...createAllCombinationAttributes(
+		'containerPadding%s', {
+			type: 'number',
+			default: '',
+		},
+		[ 'Top', 'Right', 'Bottom', 'Left' ]
+	),
+	...createResponsiveAttributes( 'title%sBottomMargin', {
+		type: 'number',
+		default: '',
+	} ),
 }
 
 export const name = 'ugb/accordion'
@@ -92,7 +141,22 @@ export const settings = {
 
 	supports: {
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
-		// eslint-disable-next-line
-		inserter: false, // TODO: Remove when ready for v2.
+	},
+
+	// Stackable modules.
+	modules: {
+		'advanced-general': true,
+		'advanced-block-spacing': true,
+		// 'advanced-column-spacing': {
+		// 	columnGap: false,
+		// },
+		'advanced-responsive': true,
+		// 'block-background': true,
+		// 'block-separators': true,
+		// 'block-title': true,
+		'content-align': true,
+		'custom-css': {
+			default: applyFilters( 'stackable.cta.custom-css.default', '' ),
+		},
 	},
 }

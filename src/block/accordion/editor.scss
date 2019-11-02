@@ -9,20 +9,38 @@
 // Only show placeholder text while selected or typing.
 [data-type="ugb/accordion"] {
 	.ugb-accordion__heading {
+		outline: none;
 		svg {
 			transform: rotate(180deg) !important;
+		}
+		> *:first-child {
+			flex: 1;
 		}
 	}
 }
 
 // Animate accordion arrow.
-[data-type="ugb/accordion"]:not(.is-selected):not(.is-typing) {
-	.ugb-accordion:not(.ugb-accordion--open) .ugb-accordion__text {
-		display: none;
-	}
-	.ugb-accordion:not(.ugb-accordion--open) .ugb-accordion__heading {
-		svg {
-			transform: rotate(0deg) !important;
+[data-type="ugb/accordion"] {
+	.ugb-accordion:not(.ugb-accordion--open) {
+		.ugb-accordion__content {
+			display: none;
+		}
+		.ugb-accordion__heading {
+			svg {
+				transform: rotate(0deg) !important;
+			}
 		}
 	}
+}
+
+// This shows padding although not in the frontend.
+#editor .ugb-accordion.ugb-accordion--v2 .ugb-accordion__content .ugb-accordion__content-inner {
+	padding-top: 0;
+}
+#editor .ugb-accordion.ugb-accordion--v2 .ugb-accordion__content {
+	overflow: visible;
+}
+
+#editor .ugb-accordion.ugb-accordion--v2.ugb-accordion--design-plain .ugb-accordion__content .ugb-accordion__content-inner {
+	padding-bottom: 0;
 }

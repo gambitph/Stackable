@@ -220,7 +220,6 @@ if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
 	 */
 	function stackable_allow_wp_kses_allowed_html( $tags, $context ) {
 		$tags['style'] = true;
-		$tags['div']['aria-expanded'] = true;
 
 		// Used by Separators & Icons.
 		$tags['svg'] = array(
@@ -233,6 +232,8 @@ if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
 			'aria-hidden' => true,
 			'data-*' => true,
 			'role' => true,
+			'height' => true,
+			'width' => true,
 		);
 		$tags['path'] = array(
 			'class' => true,
@@ -256,7 +257,24 @@ if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
 			'in' => true,
 		);
 
+		_stackable_common_attributes( $tags, 'div' );
+		_stackable_common_attributes( $tags, 'h1' );
+		_stackable_common_attributes( $tags, 'h2' );
+		_stackable_common_attributes( $tags, 'h3' );
+		_stackable_common_attributes( $tags, 'h4' );
+		_stackable_common_attributes( $tags, 'h5' );
+		_stackable_common_attributes( $tags, 'h6' );
+		_stackable_common_attributes( $tags, 'svg' );
+
 		return $tags;
+	}
+
+	function _stackable_common_attributes( &$tags, $tag ) {
+		$tags[ $tag ]['aria-hidden'] = true; // Used by Separators & Icons
+		$tags[ $tag ]['aria-expanded'] = true; // Used by Expand block.
+		$tags[ $tag ]['aria-level'] = true; // Used by Accordion block.
+		$tags[ $tag ]['role'] = true; // Used by Accordion block.
+		$tags[ $tag ]['tabindex'] = true; // Used by Accordion block.
 	}
 	add_filter( 'wp_kses_allowed_html', 'stackable_allow_wp_kses_allowed_html', 10, 2 );
 }
