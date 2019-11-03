@@ -443,13 +443,14 @@ const deprecated = [
 
 				// Change old attribute names.
 				title: attributes.heading,
-				titleColor: attributes.headingColor,
+				titleColor: attributes.headingColor || '#222222',
 				containerBackgroundColor: attributes.headingBackgroundColor,
 
 				// New attributes in order to replicate the old designs.
 				showBorder: attributes.design !== 'plain',
 				containerClosedBackgroundColor: attributes.design === 'colored' ? '#ffffff' : undefined,
-				arrowColor: attributes.design === 'colored' || attributes.design === 'basic' || attributes.design === 'plain' ? attributes.headingColor : undefined,
+				arrowColor: attributes.design === 'colored' || attributes.design === 'basic' || attributes.design === 'plain' ? attributes.headingColor || '#222222' :
+					attributes.design === 'line-colored' ? attributes.headingBackgroundColor : undefined,
 			}
 
 			// Old block didn't have inner blocks.

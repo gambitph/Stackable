@@ -3,7 +3,6 @@
  */
 import { name, settings } from '../'
 import { initAll } from '../frontend'
-import save from '../save'
 
 /**
  * External dependencies
@@ -13,16 +12,10 @@ import { fireEvent, getByText } from 'dom-testing-library'
 
 describe( 'Accordion in frontend', () => {
 	const attributes = {
-		heading: 'Accordion Title',
-		text: 'Accordion body',
+		title: 'Accordion Title',
 	}
 
-	const savedBlockHTML = getSavedBlockHTML( {
-		name,
-		settings,
-		save,
-		attributes,
-	} )
+	const savedBlockHTML = getSavedBlockHTML( name, settings, attributes )
 
 	test( 'should open/close on click', () => {
 		const container = document.createElement( 'div' )

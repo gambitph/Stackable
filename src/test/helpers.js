@@ -58,32 +58,29 @@ export const getDefaultAttributes = ( blockName, blockSettings ) => {
 	return attributes
 }
 
-export const getSavedBlockHTML = props => {
-	const {
-		name,
-		settings,
-		save,
-		attributes = {},
-	} = props
-
-	const blockSettings = {
-		...settings,
-		category: 'common',
-		save,
-	}
+export const getSavedBlockHTML = ( blockName, blockSettings, attributes = {}, innerBlocks = [] ) => {
+	const save = registerStackableBlock( blockName, { ...blockSettings, category: 'common' } ).save
+	const { attributes: defaultAttributes } = createBlock( blockName )
 
 	const renderAttributes = {
-		...getDefaultAttributes( name, blockSettings ),
+		...defaultAttributes,
 		...attributes,
 	}
 
-	return getSaveContent(
+	const saveContent = getSaveContent(
 		{
 			...blockSettings,
-			name,
+			category: 'common',
+			save,
+			name: blockName,
 		},
 		renderAttributes,
+		innerBlocks,
 	)
+
+	unregisterBlockType( blockName )
+
+	return saveContent
 }
 
 export const createAttributeValues = ( schema, blockSettings ) => {

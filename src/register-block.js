@@ -46,6 +46,8 @@ const registerBlock = ( name, settings = {} ) => {
 
 	// Register the block.
 	registerBlockType( name, applyFilters( `stackable.${ blockName }.settings`, blockSettings ) )
+
+	return blockSettings
 }
 
 export default registerBlock
