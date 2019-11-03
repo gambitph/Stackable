@@ -1,7 +1,11 @@
 /**
+ * Internal dependencies
+ */
+import { SvgIcon_1_17_3 } from '../svg-icon/deprecated'
+
+/**
  * External dependencies
  */
-import { SvgIcon } from '~stackable/components'
 import classnames from 'classnames'
 
 /**
@@ -59,7 +63,7 @@ export const DeprecatedButtonContent_1_15_5 = props => {
 				rel={ newTab ? 'noopener noreferrer' : undefined }
 			>
 				{ icon && design !== 'link' &&
-					<SvgIcon.Content
+					<SvgIcon_1_17_3.Content
 						value={ icon }
 						style={ {
 							color: design === 'ghost' ? backgroundColor :
@@ -133,7 +137,7 @@ export const DeprecatedButtonContent_1_12 = props => {
 				target={ newTab ? '_blank' : undefined }
 			>
 				{ icon && design !== 'link' &&
-					<SvgIcon.Content
+					<SvgIcon_1_17_3.Content
 						value={ icon }
 						style={ {
 							color: design === 'ghost' ? backgroundColor :
@@ -205,7 +209,7 @@ export const DeprecatedButtonContent_1_9_1 = props => {
 				style={ style }
 			>
 				{ icon && design !== 'link' &&
-				<SvgIcon
+				<SvgIcon_1_17_3
 					value={ icon }
 					style={ {
 						color: design === 'ghost' ? backgroundColor :
@@ -268,7 +272,7 @@ export const DeprecatedButtonContent_1_9 = props => {
 	return (
 		<div className={ mainClasses } style={ style }>
 			{ icon && design !== 'link' &&
-			<SvgIcon
+			<SvgIcon_1_17_3
 				value={ icon }
 				style={ {
 					color: design === 'ghost' ? backgroundColor :
