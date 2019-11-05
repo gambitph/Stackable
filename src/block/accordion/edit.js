@@ -259,20 +259,22 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 				initialOpen={ false }
 				blockProps={ props }
 			>
-				<FourRangeControl
-					label={ __( 'Padding', i18n ) }
-					top={ containerPaddingTop }
-					right={ containerPaddingRight }
-					bottom={ containerPaddingBottom }
-					left={ containerPaddingLeft }
-					onChange={ paddings => setAttributes( {
-						containerPaddingTop: paddings.top,
-						containerPaddingRight: paddings.right,
-						containerPaddingBottom: paddings.bottom,
-						containerPaddingLeft: paddings.left,
-					} ) }
-					max={ 200 }
-				/>
+				{ ( show.headerBackground || show.containerBackground ) &&
+					<FourRangeControl
+						label={ __( 'Padding', i18n ) }
+						top={ containerPaddingTop }
+						right={ containerPaddingRight }
+						bottom={ containerPaddingBottom }
+						left={ containerPaddingLeft }
+						onChange={ paddings => setAttributes( {
+							containerPaddingTop: paddings.top,
+							containerPaddingRight: paddings.right,
+							containerPaddingBottom: paddings.bottom,
+							containerPaddingLeft: paddings.left,
+						} ) }
+						max={ 200 }
+					/>
+				}
 				{ show.titleSpacing &&
 					<ResponsiveControl
 						attrNameTemplate="title%sBottomMargin"
