@@ -8,7 +8,7 @@
 
 blockquote.ugb-pullquote {
 	border: 0 !important;
-	@include baseBlock(); // TODO: [V2] Deprecate this usage
+	@include baseBlock();
 	@include box();
 	text-align: center;
 	padding: $box-vert-padding;

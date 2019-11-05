@@ -119,7 +119,7 @@
 .ugb-feature-grid--design-basic:not([class*="ugb-feature-grid--v"]),
 .ugb-feature-grid--design-plain:not([class*="ugb-feature-grid--v"]) {
 	.ugb-feature-grid__item {
-		@include baseBlock(); // TODO: [V2] Deprecate this usage
+		@include baseBlock();
 	}
 }
 

@@ -99,7 +99,7 @@ body:not(.wp-admin) {
 		width: 100%;
 	}
 	.ugb-container__content-wrapper {
-		@include baseBlock(); // TODO: [V2] Deprecate this usage
+		@include baseBlock();
 		margin: 0;
 	}
 
