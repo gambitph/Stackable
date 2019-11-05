@@ -10,7 +10,6 @@ export const showOptions = blockProps => {
 	} = blockProps.attributes
 
 	return applyFilters( 'stackable.accordion.show', {
-		// containerBackground: design !== 'plain',
 		headerBackground: design === 'basic',
 		containerBackground: design === 'colored' || design === 'line-colored',
 		borderRadius: design !== 'plain',
