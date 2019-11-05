@@ -107,6 +107,15 @@ const schema = {
 		defualt: '',
 	},
 
+	// Alignment.
+	...createAllCombinationAttributes(
+		'Title%sAlign', {
+			type: 'string',
+			default: '',
+		},
+		[ '', 'Tablet', 'Mobile' ]
+	),
+
 	// Spacing
 	...createAllCombinationAttributes(
 		'containerPadding%s', {
