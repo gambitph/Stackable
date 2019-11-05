@@ -140,7 +140,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 						allowReset={ true }
 					/>
 				}
-				{ show.containerBackground &&
+				{ ( show.headerBackground || show.containerBackground ) &&
 					<RangeControl
 						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
