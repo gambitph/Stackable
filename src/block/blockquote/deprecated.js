@@ -545,9 +545,17 @@ const deprecated = [
 		save: deprecatedSave_1_17_3,
 		migrate: attributes => {
 			// Update the custom CSS since the structure has changed.
-			const updateCSS = css => css
-				.replace( /\.ugb-content-wrapper/g, '.ugb-blockquote__item' )
-				.replace( /svg\s*\{/g, '.ugb-blockquote__quote' )
+			const updateCSS = css => {
+				let newCss = css
+					.replace( /\.ugb-content-wrapper/g, '.ugb-blockquote__item' )
+					.replace( /svg(\s*\{)/g, '.ugb-blockquote__quote$1' )
+
+				// For the basic design, the box is colored before by just the '.ugb-blockquote' selector.
+				if ( attributes.design === 'basic' ) {
+					newCss = newCss.replace( /\.ugb-blockquote(\s*\{)/g, '.ugb-blockquote__item$1' )
+				}
+				return newCss
+			}
 
 			return {
 				...attributes,
@@ -556,9 +564,28 @@ const deprecated = [
 				customCSS: updateCSS( attributes.customCSS ),
 				customCSSCompiled: updateCSS( attributes.customCSSCompiled ),
 
-				marginRight: 35,
-				marginLeft: 35,
+				// Margins are on by default in the old block.
+				marginRight: attributes.design === 'basic' && attributes.align === 'full' ? undefined : 35,
+				marginLeft: attributes.design === 'basic' && attributes.align === 'full' ? undefined : 35,
+
+				showQuote: true,
 				quoteIcon: attributes.quotationMark,
+				quoteSize: attributes.quotationSize,
+				textColor: attributes.color ? attributes.color : ( attributes.backgroundColor ? '#000000' : undefined ),
+				containerBackgroundColorType: attributes.backgroundColorType,
+				containerBackgroundColor: attributes.backgroundColor,
+				containerBackgroundColor2: attributes.backgroundColor2,
+				containerBackgroundGradientDirection: attributes.backgroundColorDirection,
+				containerBackgroundMediaId: attributes.backgroundImageID,
+				containerBackgroundMediaUrl: attributes.backgroundImageURL,
+				containerBackgroundTintStrength: attributes.backgroundOpacity,
+				containerFixedBackground: attributes.fixedBackground,
+
+				// Full-width support.
+				design: attributes.design === 'basic' && attributes.align === 'full' ? 'plain' : attributes.design,
+				showBlockBackground: attributes.design === 'basic' && attributes.align === 'full' ? true : undefined,
+				blockInnerWidth: attributes.align !== 'full' ? undefined : ( attributes.design === 'basic' && attributes.contentWidth === true ? 'center' : 'full' ),
+				blockBackgroundBackgroundColor: attributes.design === 'basic' && attributes.align === 'full' ? attributes.backgroundColor : undefined,
 			}
 		},
 	},
