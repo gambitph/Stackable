@@ -12,7 +12,7 @@ const BlockContainer = {}
 
 BlockContainer.Edit = props => {
 	const {
-		blockProps, render, mainClass, ...containerProps
+		blockProps, render, mainClass, blockTag: blockTagProp, ...containerProps
 	} = props
 	const { blockName } = blockProps
 	const {
@@ -27,7 +27,7 @@ BlockContainer.Edit = props => {
 		'ugb-main-block': mainClass,
 	}, blockProps ) )
 
-	const BlockTag = blockTag || 'div' // Allow the advanced block settings to override the HTML Tag.
+	const BlockTag = blockTag || blockTagProp || 'div' // Allow the advanced block settings to override the HTML Tag.
 	// TODO Remove `design` from the filters below.
 	return (
 		<BlockTag { ...containerProps } id={ anchor } className={ mainClasses }>
@@ -51,7 +51,7 @@ BlockContainer.Edit.defaultProps = {
 
 BlockContainer.Save = props => {
 	const {
-		blockProps, render, mainClass, ...containerProps
+		blockProps, render, mainClass, blockTag: blockTagProp, ...containerProps
 	} = props
 	const { blockName } = blockProps
 	const {
@@ -67,7 +67,7 @@ BlockContainer.Save = props => {
 	}, blockProps ) )
 
 	// TODO Remove `design` from the filters below.
-	const BlockTag = blockTag || 'div' // Allow the advanced block settings to override the HTML Tag.
+	const BlockTag = blockTag || blockTagProp || 'div' // Allow the advanced block settings to override the HTML Tag.
 	return (
 		<BlockTag { ...containerProps } id={ anchor } className={ mainClasses }>
 			{ blockProps.styles }
