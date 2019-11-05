@@ -40,7 +40,9 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 						label={ sprintf( _x( '%s HTML Tag', 'component' ), __( 'Block', i18n ) ) }
 						value={ blockTag }
 						options={ [
-							{ value: '', label: _x( 'Div', 'HTML Tag', i18n ) },
+							{ value: '', label: __( 'Default', i18n ) },
+							{ value: 'div', label: _x( 'Div', 'HTML Tag', i18n ) },
+							{ value: 'blockquote', label: _x( 'Blockquote', 'HTML Tag', i18n ) },
 							{ value: 'section', label: _x( 'Section', 'HTML Tag', i18n ) },
 							{ value: 'article', label: _x( 'Article', 'HTML Tag', i18n ) },
 							{ value: 'aside', label: _x( 'Aside', 'HTML Tag', i18n ) },

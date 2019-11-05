@@ -3,41 +3,6 @@
  *
  * Enqueued in the editor only.
  */
-[data-align="full"] .ugb-blockquote.ugb--has-background,
-[data-align="full"] .ugb-blockquote.ugb-has-background {
-	margin-left: 0;
-	margin-right: 0;
-	padding-left: 10vw;
-	padding-right: 10vw;
-	&::after {
-		left: calc(10vw - 70px);
-	}
-}
-[data-align="full"] .ugb-blockquote {
-	border-radius: 0 !important;
-	margin: 0;
-}
-.ugb-blockquote {
-	.editor-rich-text {
-		z-index: 2;
-	}
-}
-
-[data-type="ugb/blockquote"] {
-	[data-is-placeholder-visible="true"] + .editor-rich-text__editable {
-		opacity: 0.5;
-	}
-
-	// Only show placeholder text while selected or typing.
-	&:not(.is-selected):not(.is-typing) {
-		[data-is-placeholder-visible="true"] + .editor-rich-text__editable {
-			display: none;
-		}
-		[data-is-placeholder-visible="true"] {
-			display: none;
-		}
-	}
-}
 
 .ugb-blockquote__inspector__icon {
 	flex-wrap: wrap;

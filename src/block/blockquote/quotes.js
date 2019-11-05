@@ -21,15 +21,15 @@ import { i18n } from 'stackable'
  */
 import { __ } from '@wordpress/i18n'
 
-const RoundQuote = ( style = {} ) => <SVGRoundQuote style={ style } />
-const RoundThinQuote = ( style = {} ) => <SVGRoundThinQuote style={ style } />
-const RoundThickQuote = ( style = {} ) => <SVGRoundThickQuote style={ style } />
-const RoundFatQuote = ( style = {} ) => <SVGRoundFatQuote style={ style } />
-const SquareQuote = ( style = {} ) => <SVGSquareQuote style={ style } />
-const SquareFatQuote = ( style = {} ) => <SVGSquareFatQuote style={ style } />
-const SquareModernQuote = ( style = {} ) => <SVGSquareModernQuote style={ style } />
-const SquareSimpleQuote = ( style = {} ) => <SVGSquareSimpleQuote style={ style } />
-const SquareThinQuote = ( style = {} ) => <SVGSquareThinQuote style={ style } />
+const RoundQuote = ( style = {}, props = {} ) => <SVGRoundQuote style={ style } { ...props } />
+const RoundThinQuote = ( style = {}, props = {} ) => <SVGRoundThinQuote style={ style } { ...props } />
+const RoundThickQuote = ( style = {}, props = {} ) => <SVGRoundThickQuote style={ style } { ...props } />
+const RoundFatQuote = ( style = {}, props = {} ) => <SVGRoundFatQuote style={ style } { ...props } />
+const SquareQuote = ( style = {}, props = {} ) => <SVGSquareQuote style={ style } { ...props } />
+const SquareFatQuote = ( style = {}, props = {} ) => <SVGSquareFatQuote style={ style } { ...props } />
+const SquareModernQuote = ( style = {}, props = {} ) => <SVGSquareModernQuote style={ style } { ...props } />
+const SquareSimpleQuote = ( style = {}, props = {} ) => <SVGSquareSimpleQuote style={ style } { ...props } />
+const SquareThinQuote = ( style = {}, props = {} ) => <SVGSquareThinQuote style={ style } { ...props } />
 
 export const QUOTE_ICONS = {
 	'round-thin': {

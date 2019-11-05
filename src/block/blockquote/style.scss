@@ -6,9 +6,74 @@
 
 @import "common";
 
-.ugb-blockquote {
+// Get rid of possible default blockquote styling.
+.ugb-blockquote.ugb-blockquote--v3 {
 	border: 0 !important;
-	@include baseBlock(); // TODO: [V2] Deprecate this usage
+	padding: 0 !important;
+	margin-left: 0;
+	margin-right: 0;
+	font-style: italic;
+	text-align: inherit;
+	background: transparent;
+	position: relative;
+	overflow: visible;
+	&::after {
+		content: "";
+		display: none;
+	}
+
+	.ugb-blockquote__item {
+		padding: $box-vert-padding $box-hori-padding;
+	}
+
+	.ugb-blockquote__quote {
+		position: absolute;
+		fill: rgba(129, 141, 165, 0.32);
+		width: 70px;
+		height: 70px;
+		transform: translateX(-50%) translateY(-30%);
+		top: 0;
+		left: 0;
+		z-index: 5;
+	}
+	.ugb-blockquote__content {
+		position: relative;
+		z-index: 6;
+	}
+
+	&.ugb-blockquote--small-quote .ugb-blockquote__quote {
+		top: $box-vert-padding;
+		left: $box-hori-padding;
+		transform: translateX(-100%) translateY(-80%);
+	}
+}
+
+.ugb-blockquote.ugb-blockquote--v3.ugb-blockquote--design-basic {
+	.ugb-blockquote__item {
+		@include box();
+		overflow: hidden;
+	}
+
+	.ugb-blockquote__quote {
+		transform: translateX(-30%) translateY(-30%);
+		top: 21px;
+		left: 35px;
+	}
+	&.ugb-blockquote--small-quote .ugb-blockquote__quote {
+		top: $box-vert-padding;
+		left: $box-hori-padding;
+		transform: translateX(-100%) translateY(-80%);
+	}
+}
+
+/**
+ * Deprecated < v2
+ */
+
+.ugb-blockquote.ugb-blockquote--v2,
+.ugb-blockquote:not([class*="ugb-blockquote--v"]) {
+	border: 0 !important;
+	@include baseBlock();
 	padding: $box-hori-padding;
 	margin-left: $box-hori-padding;
 	margin-right: $box-hori-padding;
@@ -75,39 +140,48 @@
 	}
 }
 
-.ugb-blockquote.ugb-blockquote--design-plain {
-	box-shadow: none;
-	border-radius: 0;
-	overflow: visible;
-}
-
-.ugb-blockquote.ugb-blockquote--design-basic {
-	@include box();
-	overflow: hidden;
-	padding: 0;
-	svg {
-		transform: translateX(-30%) translateY(-30%);
-		top: 21px;
-		left: 35px;
-	}
-	&.ugb-blockquote--small-quote svg {
-		top: $box-vert-padding;
-		left: $box-hori-padding;
-		transform: translateX(-100%) translateY(-80%);
+.ugb-blockquote.ugb-blockquote--v2,
+.ugb-blockquote:not([class*="ugb-blockquote--v"]) {
+	&.ugb-blockquote--design-plain {
+		box-shadow: none;
+		border-radius: 0;
+		overflow: visible;
 	}
 }
 
+.ugb-blockquote.ugb-blockquote--v2,
+.ugb-blockquote:not([class*="ugb-blockquote--v"]) {
+	&.ugb-blockquote--design-basic {
+		@include box();
+		overflow: hidden;
+		padding: 0;
+		svg {
+			transform: translateX(-30%) translateY(-30%);
+			top: 21px;
+			left: 35px;
+		}
+		&.ugb-blockquote--small-quote svg {
+			top: $box-vert-padding;
+			left: $box-hori-padding;
+			transform: translateX(-100%) translateY(-80%);
+		}
+	}
+}
 
-.ugb-blockquote::after {
-	content: "❛❛";
-	display: block;
-	position: absolute;
-	font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
-	font-style: normal;
-	font-size: 100px;
-	line-height: 1em;
-	left: -35px;
-	top: -15px;
-	opacity: 1;
-	color: var(--quote-color);
+
+.ugb-blockquote.ugb-blockquote--v2,
+.ugb-blockquote:not([class*="ugb-blockquote--v"]) {
+	&::after {
+		content: "❛❛";
+		display: block;
+		position: absolute;
+		font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
+		font-style: normal;
+		font-size: 100px;
+		line-height: 1em;
+		left: -35px;
+		top: -15px;
+		opacity: 1;
+		color: var(--quote-color);
+	}
 }
