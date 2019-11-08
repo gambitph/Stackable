@@ -54,9 +54,20 @@ export const cacheImageData = ( imageId, select ) => {
  * @return {string} The URL of the image of the given size
  */
 export const getImageUrlFromCache = ( imageId, size = 'full' ) => {
-	const imageData = window._stackableCachedImageData[ imageId ]
+	const imageData = getImageDataFromCache( imageId )
 	if ( imageData ) {
 		return imageData.media_details.sizes[ size ] ? imageData.media_details.sizes[ size ].source_url : imageData.source_url
 	}
 	return ''
+}
+
+/**
+ * Gets the image data of the given image from the cache.
+ *
+ * @param {number} imageId The image ID
+ *
+ * @return {Object} The image data
+ */
+export const getImageDataFromCache = imageId => {
+	return window._stackableCachedImageData[ imageId ] || null
 }

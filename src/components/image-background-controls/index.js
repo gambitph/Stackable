@@ -56,7 +56,7 @@ const ImageBackgroundControls = props => {
 
 			{ props.onChangeBackgroundPosition &&
 				<AdvancedSelectControl
-					label={ __( 'Image Position', i18n ) }
+					label={ __( 'Background Image Position', i18n ) }
 					options={ [
 						{ label: __( 'Default', i18n ), value: '' },
 						{ label: __( 'Top Left', i18n ), value: 'top left' },
@@ -76,7 +76,7 @@ const ImageBackgroundControls = props => {
 
 			{ props.onChangeBackgroundRepeat &&
 				<AdvancedSelectControl
-					label={ __( 'Image Repeat', i18n ) }
+					label={ __( 'Background Image Repeat', i18n ) }
 					options={ [
 						{ label: __( 'Default', i18n ), value: '' },
 						{ label: __( 'No-Repeat', i18n ), value: 'no-repeat' },
@@ -91,7 +91,7 @@ const ImageBackgroundControls = props => {
 
 			{ props.onChangeBackgroundSize &&
 				<AdvancedSelectControl
-					label={ __( 'Image Size', i18n ) }
+					label={ __( 'Background Image Size', i18n ) }
 					options={ [
 						{ label: __( 'Default', i18n ), value: '' },
 						{ label: __( 'Auto', i18n ), value: 'auto' },

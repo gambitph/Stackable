@@ -1,14 +1,267 @@
 /**
+ * Internal dependencies
+ */
+import SVGArrow from './images/arrow.svg'
+
+/**
  * External dependencies
  */
 import { range } from '~stackable/util'
 import classnames from 'classnames'
 import { omit } from 'lodash'
+import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
  */
+import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 import { RichText } from '@wordpress/block-editor'
+
+export const deprecatedSchema_1_17_3 = {
+	align: {
+		type: 'string',
+	},
+	columns: {
+		type: 'number',
+		default: 3,
+	},
+	titleColor: {
+		type: 'string',
+		default: '#ffffff',
+	},
+	subtitleColor: {
+		type: 'string',
+		default: '#ffffff',
+	},
+	overlayColor: {
+		type: 'string',
+	},
+	width: {
+		type: 'number',
+		default: 400,
+	},
+	height: {
+		type: 'number',
+		default: 400,
+	},
+	verticalAlign: {
+		type: 'string',
+		default: 'center',
+	},
+	horizontalAlign: {
+		type: 'string',
+		default: 'center',
+	},
+	design: {
+		type: 'string',
+		default: 'basic',
+	},
+	borderRadius: {
+		type: 'number',
+		default: 12,
+	},
+	shadow: {
+		type: 'number',
+		default: 3,
+	},
+	overlayOpacity: {
+		type: 'number',
+		default: 7,
+	},
+	imageHoverEffect: {
+		type: 'string',
+		default: '',
+	},
+	arrow: {
+		type: 'string',
+		default: '',
+	},
+	hoverEffect: {
+		type: 'string',
+		default: '',
+	},
+
+	// Keep the old attributes. Gutenberg issue https://github.com/WordPress/gutenberg/issues/10406
+	full: {
+		type: 'boolean',
+	},
+	title: {
+		type: 'string',
+	},
+	subtitle: {
+		type: 'string',
+	},
+	id: {
+		type: 'number',
+	},
+	url: {
+		type: 'string',
+	},
+	href: {
+		type: 'string',
+	},
+
+	// Custom CSS attributes.
+	customCSSUniqueID: {
+		type: 'string',
+		default: '',
+	},
+	customCSS: {
+		type: 'string',
+		default: '',
+	},
+	customCSSCompiled: {
+		type: 'string',
+		default: '',
+	},
+}
+
+// Wrap in curly or else statement will merge with the previous one and will error out.
+{ [ 1, 2, 3, 4 ].forEach( i => {
+	deprecatedSchema_1_17_3[ `title${ i }` ] = {
+		source: 'html',
+		selector: `.ugb-image-box__item:nth-of-type(${ i }) .ugb-image-box__title`,
+		default: __( 'Title', i18n ),
+	}
+	deprecatedSchema_1_17_3[ `description${ i }` ] = {
+		source: 'html',
+		selector: `.ugb-image-box__item:nth-of-type(${ i }) .ugb-image-box__description`,
+		default: __( 'Description', i18n ),
+	}
+	deprecatedSchema_1_17_3[ `imageURL${ i }` ] = {
+		type: 'string',
+	}
+	deprecatedSchema_1_17_3[ `imageID${ i }` ] = {
+		type: 'number',
+	}
+	deprecatedSchema_1_17_3[ `link${ i }` ] = {
+		type: 'string',
+		source: 'attribute',
+		selector: `.ugb-image-box__item:nth-of-type(${ i }) .ugb-image-box__overlay`,
+		attribute: 'href',
+		default: '',
+	}
+	deprecatedSchema_1_17_3[ `newTab${ i }` ] = {
+		type: 'boolean',
+		source: 'attribute',
+		selector: `.ugb-image-box__item:nth-of-type(${ i }) .ugb-image-box__overlay`,
+		attribute: 'target',
+		default: false,
+	}
+} ) }
+
+const deprecatedSave_1_17_3 = props => {
+	const { className, attributes } = props
+	const {
+		titleColor,
+		subtitleColor,
+		overlayColor,
+		height,
+		width,
+		verticalAlign,
+		horizontalAlign,
+		align,
+		columns,
+		design = 'basic',
+		borderRadius = 12,
+		shadow = 3,
+		imageHoverEffect = '',
+		overlayOpacity = 7,
+		arrow = '',
+	} = props.attributes
+
+	const mainClasses = classnames( [
+		className,
+		'ugb-image-box',
+		'ugb-image-box--v3',
+		`ugb-image-box--columns-${ columns }`,
+	], applyFilters( 'stackable.image-box.mainclasses_1_17_3', {
+		[ `ugb-image-box--design-${ design }` ]: design !== 'basic',
+		[ `ugb-image-box--effect-${ imageHoverEffect }` ]: imageHoverEffect,
+		[ `ugb-image-box--overlay-${ overlayOpacity }` ]: overlayOpacity !== 7,
+		'ugb-image-box--arrow': arrow,
+	}, design, props ) )
+
+	const mainStyles = {
+		textAlign: horizontalAlign ? horizontalAlign : undefined,
+		'--overlay-color': overlayColor,
+	}
+
+	return (
+		<div className={ mainClasses } style={ mainStyles }>
+			{ applyFilters( 'stackable.image-box.save.output.before_1_17_3', null, design, props ) }
+			{ range( 1, columns + 1 ).map( i => {
+				const imageURL = attributes[ `imageURL${ i }` ]
+				const title = attributes[ `title${ i }` ]
+				const description = attributes[ `description${ i }` ]
+				const link = attributes[ `link${ i }` ]
+				const newTab = attributes[ `newTab${ i }` ]
+
+				const boxStyles = {
+					backgroundImage: imageURL ? `url(${ imageURL })` : undefined,
+					maxWidth: align !== 'wide' && align !== 'full' && columns === 1 ? width : undefined,
+					height,
+					textAlign: horizontalAlign,
+					justifyContent: verticalAlign,
+					borderRadius,
+				}
+
+				const boxClasses = classnames( [
+					'ugb-image-box__item',
+				], applyFilters( 'stackable.image-box.itemclasses_1_17_3', {
+					[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
+				}, design, i, props ) )
+
+				const arrowClasses = classnames( [
+					'ugb-image-box__arrow',
+					`ugb-image-box__arrow--align-${ arrow }`,
+				] )
+
+				return (
+					<div className={ boxClasses } style={ boxStyles } key={ i }>
+						{ imageHoverEffect && <div
+							className="ugb-image-box__image-effect"
+							style={ {
+								backgroundImage: imageURL ? `url(${ imageURL })` : undefined,
+							} } />
+						}
+						{ /* eslint-disable-next-line */ }
+						<a
+							className="ugb-image-box__overlay"
+							href={ link }
+							target={ newTab ? '_blank' : undefined }
+						/>
+						<div className="ugb-image-box__content">
+							{ ! RichText.isEmpty( title ) && (
+								<RichText.Content
+									tagName="h4"
+									className="ugb-image-box__title"
+									style={ { color: titleColor } }
+									value={ title }
+								/>
+							) }
+							{ ! RichText.isEmpty( description ) && (
+								<RichText.Content
+									tagName="p"
+									className="ugb-image-box__description"
+									style={ { color: subtitleColor } }
+									value={ description }
+								/>
+							) }
+						</div>
+						{ arrow && link && (
+							<div className={ arrowClasses }>
+								<SVGArrow style={ { fill: titleColor ? titleColor : undefined } } />
+							</div>
+						) }
+					</div>
+				)
+			} ) }
+			{ applyFilters( 'stackable.image-box.save.output.after_1_17_3', null, design, props ) }
+		</div>
+	)
+}
 
 const deprecatedSchema_1_10 = {
 	columns: {
@@ -385,6 +638,19 @@ export const deprecatedSave_1_1_2 = props => {
 }
 
 const deprecated = [
+	{
+		attributes: deprecatedSchema_1_17_3,
+		save: deprecatedSave_1_17_3,
+		migrate: attributes => {
+			// try and get full image url & dimensions.
+
+			return {
+				...attributes,
+
+				blockWidth: attributes.columns === 1 ? attributes.width : undefined, // Old width is the same as the block width option.
+			}
+		},
+	},
 	{
 		attributes: deprecatedSchema_1_10,
 		save: deprecatedSave_1_10,

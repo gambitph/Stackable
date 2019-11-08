@@ -39,7 +39,7 @@ const BackgroundControls = props => {
 		<Fragment>
 			{ props.onChangeBackgroundColorType && (
 				<BaseControl
-					label={ __( 'Background Color Type', i18n ) }
+					label={ props.labelBackgroundColorType }
 					id="ugb-background-color-type"
 				>
 					<TextToolbar
@@ -65,8 +65,8 @@ const BackgroundControls = props => {
 				<ColorPaletteControl
 					label={
 						props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' ?
-							sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Background Color', i18n ), 1 ) :
-							__( 'Background Color', i18n )
+							sprintf( _x( '%s #%d', 'Panel title', i18n ), props.labelBackgroundColor, 1 ) :
+							props.labelBackgroundColor
 					}
 					value={ props.backgroundColor }
 					onChange={ props.onChangeBackgroundColor }
@@ -87,7 +87,7 @@ const BackgroundControls = props => {
 
 			{ props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' && (
 				<ColorPaletteControl
-					label={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Background Color', i18n ), 2 ) }
+					label={ sprintf( _x( '%s #%d', 'Panel title', i18n ), props.labelBackgroundColor, 2 ) }
 					value={ props.backgroundColor2 }
 					onChange={ props.onChangeBackgroundColor2 }
 				/>
@@ -460,6 +460,9 @@ BackgroundControls.defaultProps = {
 	onChangeMobileBackgroundMedia: ( { url, id } ) => {}, // eslint-disable-line
 	onChangeBackgroundTintStrength: () => {},
 	onChangeFixedBackground: () => {},
+
+	labelBackgroundColorType: __( 'Background Color Type', i18n ),
+	labelBackgroundColor: __( 'Background Color', i18n ),
 
 	// Advanced gradient.
 	hasAdvancedGradient: true,

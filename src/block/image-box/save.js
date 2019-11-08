@@ -1,130 +1,148 @@
 /**
  * External dependencies
  */
-import { range } from '~stackable/util'
+import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+import { BlockContainer } from '~stackable/components'
+import classnames from 'classnames'
+import { range } from 'lodash'
 
 /**
  * Internal dependencies
  */
 import SVGArrow from './images/arrow.svg'
+import createStyles from './style'
+import { showOptions } from './util'
 
 /**
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
-import classnames from 'classnames'
 import { RichText } from '@wordpress/block-editor'
+import { compose } from '@wordpress/compose'
+import { Fragment } from '@wordpress/element'
 
 const save = props => {
 	const { className, attributes } = props
 	const {
-		titleColor,
-		subtitleColor,
-		overlayColor,
-		height,
-		width,
-		verticalAlign,
-		horizontalAlign,
-		align,
-		columns,
+		columns = 2,
+		contentAlign = '',
 		design = 'basic',
-		borderRadius = 12,
+		titleTag = '',
 		shadow = 3,
+		showOverlay = false,
+		showOverlayHover = true,
+		showSubtitle = true,
+		showTitle = true,
+		showDescription = true,
+		showArrow = false,
 		imageHoverEffect = '',
-		overlayOpacity = 7,
-		arrow = '',
-	} = props.attributes
+	} = attributes
 
 	const mainClasses = classnames( [
 		className,
-		'ugb-image-box',
-		'ugb-image-box--v3',
+		'ugb-image-box--v4',
 		`ugb-image-box--columns-${ columns }`,
+		`ugb-image-box--design-${ design }`,
 	], applyFilters( 'stackable.image-box.mainclasses', {
-		[ `ugb-image-box--design-${ design }` ]: design !== 'basic',
 		[ `ugb-image-box--effect-${ imageHoverEffect }` ]: imageHoverEffect,
-		[ `ugb-image-box--overlay-${ overlayOpacity }` ]: overlayOpacity !== 7,
-		'ugb-image-box--arrow': arrow,
-	}, design, props ) )
+		'ugb-image-box--with-arrow': showArrow,
+		[ `ugb-image-box--align-${ contentAlign }` ]: contentAlign,
+	}, props ) )
 
-	const mainStyles = {
-		textAlign: horizontalAlign ? horizontalAlign : undefined,
-		'--overlay-color': overlayColor,
-	}
+	const show = showOptions( props )
 
 	return (
-		<div className={ mainClasses } style={ mainStyles }>
-			{ applyFilters( 'stackable.image-box.save.output.before', null, design, props ) }
-			{ range( 1, columns + 1 ).map( i => {
-				const imageURL = attributes[ `imageURL${ i }` ]
-				const title = attributes[ `title${ i }` ]
-				const description = attributes[ `description${ i }` ]
-				const link = attributes[ `link${ i }` ]
-				const newTab = attributes[ `newTab${ i }` ]
+		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
+			<Fragment>
+				{ range( 1, columns + 1 ).map( i => {
+					const subtitle = attributes[ `subtitle${ i }` ]
+					const title = attributes[ `title${ i }` ]
+					const description = attributes[ `description${ i }` ]
 
-				const boxStyles = {
-					backgroundImage: imageURL ? `url(${ imageURL })` : undefined,
-					maxWidth: align !== 'wide' && align !== 'full' && columns === 1 ? width : undefined,
-					height,
-					textAlign: horizontalAlign,
-					justifyContent: verticalAlign,
-					borderRadius,
-				}
+					const itemClasses = classnames( [
+						'ugb-image-box__item',
+						`ugb-image-box__item${ i }`,
+						'ugb-image-box__box',
+					], applyFilters( 'stackable.image-box.itemclasses', {
+						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
+					}, props, i ) )
 
-				const boxClasses = classnames( [
-					'ugb-image-box__item',
-				], applyFilters( 'stackable.image-box.itemclasses', {
-					[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
-				}, design, i, props ) )
+					const rel = []
+					if ( attributes[ `link${ i }NewTab` ] ) {
+						rel.push( 'noopener' )
+						rel.push( 'noreferrer' )
+					}
+					if ( attributes[ `link${ i }NoFollow` ] ) {
+						rel.push( 'nofollow' )
+					}
 
-				const arrowClasses = classnames( [
-					'ugb-image-box__arrow',
-					`ugb-image-box__arrow--align-${ arrow }`,
-				] )
-
-				return (
-					<div className={ boxClasses } style={ boxStyles } key={ i }>
-						{ imageHoverEffect && <div
-							className="ugb-image-box__image-effect"
-							style={ {
-								backgroundImage: imageURL ? `url(${ imageURL })` : undefined,
-							} } />
-						}
-						{ /* eslint-disable-next-line */ }
-						<a
-							className="ugb-image-box__overlay"
-							href={ link }
-							target={ newTab ? '_blank' : undefined }
-						/>
-						<div className="ugb-image-box__content">
-							{ ! RichText.isEmpty( title ) && (
-								<RichText.Content
-									tagName="h4"
-									className="ugb-image-box__title"
-									style={ { color: titleColor } }
-									value={ title }
-								/>
-							) }
-							{ ! RichText.isEmpty( description ) && (
-								<RichText.Content
-									tagName="p"
-									className="ugb-image-box__description"
-									style={ { color: subtitleColor } }
-									value={ description }
-								/>
-							) }
-						</div>
-						{ arrow && link && (
-							<div className={ arrowClasses }>
-								<SVGArrow style={ { fill: titleColor ? titleColor : undefined } } />
+					return (
+						<div
+							className={ itemClasses }
+							key={ i }
+						>
+							{ attributes[ `image${ i }Url` ] &&
+								<div className="ugb-image-box__box ugb-image-box__image-wrapper">
+									<div className="ugb-image-box__box ugb-image-box__image"></div>
+								</div>
+							}
+							{ showOverlay &&
+								<div className="ugb-image-box__box ugb-image-box__overlay"></div>
+							}
+							{ showOverlayHover &&
+								<div className="ugb-image-box__box ugb-image-box__overlay-hover"></div>
+							}
+							<div className="ugb-image-box__content">
+								{ ( showSubtitle || showTitle ) &&
+									<div className="ugb-image-box__header">
+										{ showSubtitle && ! RichText.isEmpty( subtitle ) &&
+											<RichText.Content
+												tagName="div"
+												className="ugb-image-box__subtitle"
+												value={ subtitle }
+											/>
+										}
+										{ showTitle && ! RichText.isEmpty( title ) &&
+											<RichText.Content
+												tagName={ titleTag || 'h4' }
+												className="ugb-image-box__title"
+												value={ title }
+											/>
+										}
+									</div>
+								}
+								{ showDescription && ! RichText.isEmpty( description ) &&
+									<RichText.Content
+										tagName="p"
+										className="ugb-image-box__description"
+										value={ description }
+									/>
+								}
 							</div>
-						) }
-					</div>
-				)
-			} ) }
-			{ applyFilters( 'stackable.image-box.save.output.after', null, design, props ) }
-		</div>
+							{ showArrow &&
+								<div className="ugb-image-box__arrow">
+									<SVGArrow />
+								</div>
+							}
+							{ attributes[ `link${ i }Url` ] &&
+								<a
+									className="ugb-image-box__overlay-link"
+									href={ attributes[ `link${ i }Url` ] }
+									target={ attributes[ `link${ i }NewTab` ] ? '_blank' : undefined }
+									rel={ rel.join( ' ' ) || undefined }
+									title={ attributes[ `title${ i }` ] }
+									aria-label={ attributes[ `title${ i }` ] }
+								>{ null }</a>
+							}
+						</div>
+					)
+				} ) }
+			</Fragment>
+		) } />
 	)
 }
 
-export default save
+export default compose(
+	withUniqueClass,
+	withBlockStyles( createStyles ),
+)( save )

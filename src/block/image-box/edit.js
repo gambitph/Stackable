@@ -2,309 +2,697 @@
  * External dependencies
  */
 import {
-	DesignPanelBody, ImageUploadPlaceholder, ProControl, ProControlButton, URLInputControl, VerticalAlignmentToolbar,
+	DesignPanelBody,
+	ImageUploadPlaceholder,
+	ProControlButton,
+	ContentAlignControl,
+	BlockContainer,
+	ColorPaletteControl,
+	BackgroundControlsHelper,
+	PanelAdvancedSettings,
+	TypographyControlHelper,
+	ResponsiveControl,
+	AlignButtonsControl,
+	HeadingButtonsControl,
+	PanelSpacingBody,
+	AdvancedRangeControl,
+	ImageBackgroundControlsHelper,
+	AdvancedToolbarControl,
+	UrlInputPopover,
 } from '~stackable/components'
+import {
+	createTypographyAttributeNames,
+	createBackgroundAttributeNames,
+	createResponsiveAttributeNames,
+	cacheImageData,
+	getImageUrlFromCache,
+} from '~stackable/util'
+import {
+	withUniqueClass,
+	withSetAttributeHook,
+	withGoogleFont,
+	withTabbedInspector,
+	withContentAlignReseter,
+	withBlockStyles,
+} from '~stackable/higher-order'
+import classnames from 'classnames'
+import { i18n, showProNotice } from 'stackable'
+import { range } from 'lodash'
 
 /**
  * Internal dependencies
  */
 import SVGArrow from './images/arrow.svg'
+import ImageDesignBasic from './images/basic.png'
+import ImageDesignPlain from './images/plain.png'
+import createStyles from './style'
+import { showOptions } from './util'
 
 /**
  * WordPress dependencies
  */
+import { RichText } from '@wordpress/block-editor'
 import {
-	AlignmentToolbar, BlockControls, InspectorControls, PanelColorSettings, RichText,
-} from '@wordpress/block-editor'
-import { i18n, showProNotice } from 'stackable'
-import {
-	PanelBody, RangeControl, SelectControl,
+	PanelBody,
+	RangeControl,
+	SelectControl,
+	withFocusOutside,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
-import classnames from 'classnames'
-import { Fragment } from '@wordpress/element'
+import { addFilter, applyFilters } from '@wordpress/hooks'
+import { Component, Fragment } from '@wordpress/element'
+import { compose } from '@wordpress/compose'
+import { withSelect } from '@wordpress/data'
 
-const edit = props => {
+addFilter( 'stackable.image-box.edit.inspector.layout.before', 'stackable/image-box', ( output, props ) => {
+	const { setAttributes } = props
 	const {
-		className,
-		setAttributes,
-		isSelected,
-		attributes,
-	} = props
-
-	const {
-		titleColor,
-		subtitleColor,
-		overlayColor,
-		height,
-		width,
-		verticalAlign,
-		horizontalAlign,
-		align,
-		columns,
 		design = 'basic',
-		borderRadius = 12,
-		shadow = 3,
-		imageHoverEffect = '',
-		overlayOpacity = 7,
-		arrow = '',
-	} = attributes
-
-	const mainClasses = classnames( [
-		className,
-		'ugb-image-box',
-		'ugb-image-box--v3',
-		`ugb-image-box--columns-${ columns }`,
-	], applyFilters( 'stackable.image-box.mainclasses', {
-		[ `ugb-image-box--design-${ design }` ]: design !== 'basic',
-		[ `ugb-image-box--effect-${ imageHoverEffect }` ]: imageHoverEffect,
-		[ `ugb-image-box--overlay-${ overlayOpacity }` ]: overlayOpacity !== 7,
-		'ugb-image-box--arrow': arrow,
-	}, design, props ) )
-
-	const mainStyles = {
-		textAlign: horizontalAlign ? horizontalAlign : undefined,
-		'--overlay-color': overlayColor,
-	}
-
-	const show = applyFilters( 'stackable.image-box.edit.show', {
-		verticalAlignmentToolbar: true,
-	}, design, props )
+	} = props.attributes
 
 	return (
 		<Fragment>
-			<BlockControls>
-				<AlignmentToolbar
-					value={ horizontalAlign }
-					onChange={ horizontalAlign => setAttributes( { horizontalAlign } ) }
+			{ output }
+			<DesignPanelBody
+				initialOpen={ true }
+				selected={ design }
+				options={ [
+					{
+						image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
+					},
+					{
+						image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
+					},
+					...applyFilters( 'stackable.image-box.edit.designs', [] ),
+				] }
+				onChange={ design => {
+					setAttributes( { design } )
+				} }
+			>
+				{ showProNotice && <ProControlButton /> }
+			</DesignPanelBody>
+		</Fragment>
+	)
+} )
+
+addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-box', ( output, props ) => {
+	const { setAttributes } = props
+	const {
+		columns = 3,
+		titleColor,
+		descriptionColor,
+		borderRadius = 12,
+		shadow = 3,
+		showTitle = true,
+		showDescription = true,
+		titleTag = '',
+		image1Id = '',
+		image2Id = '',
+		image3Id = '',
+		image4Id = '',
+		imageHoverEffect = '',
+		showOverlay = false,
+		showOverlayHover = true,
+		overlayOpacity = 0.7,
+		overlayHoverOpacity = 0.7,
+		showSubtitle = true,
+		subtitleColor = '',
+		lineColor = '',
+		lineSize = '',
+		showArrow = false,
+		arrowColor = '',
+	} = props.attributes
+
+	const show = showOptions( props )
+
+	return (
+		<Fragment>
+			{ output }
+			<PanelBody title={ __( 'General', i18n ) }>
+				<RangeControl
+					label={ __( 'Columns', i18n ) }
+					value={ columns }
+					onChange={ columns => setAttributes( { columns } ) }
+					min={ 1 }
+					max={ 4 }
 				/>
-				<VerticalAlignmentToolbar
-					value={ verticalAlign }
-					onChange={ verticalAlign => setAttributes( { verticalAlign } ) }
-					isDisabled={ ! show.verticalAlignmentToolbar }
-				/>
-			</BlockControls>
-			<InspectorControls>
-				<DesignPanelBody
-					initialOpen={ true }
-					selected={ design }
-					options={ [
-						...applyFilters( 'stackable.image-box.edit.designs', [] ),
-					] }
-					onChange={ design => {
-						setAttributes( { design } )
-					} }
+				{ /**
+				* The "height" option is really the "columnHeight" option. @see edit.js
+				* But we need to use height instead of min-height. @see index.js
+				*/ }
+				<ResponsiveControl
+					attrNameTemplate="%sColumnHeight"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
 				>
+					<AdvancedRangeControl
+						label={ __( 'Height', i18n ) }
+						min="100"
+						max="700"
+						allowReset={ true }
+					/>
+				</ResponsiveControl>
+				{ show.borderRadius &&
 					<RangeControl
 						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
-						onChange={ borderRadius => setAttributes( { borderRadius } ) }
+						onChange={ ( borderRadius = 12 ) => setAttributes( { borderRadius } ) }
 						min={ 0 }
 						max={ 50 }
+						allowReset={ true }
 					/>
+				}
+				{ show.shadow &&
 					<RangeControl
 						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
-						onChange={ shadow => setAttributes( { shadow } ) }
+						onChange={ ( shadow = 3 ) => setAttributes( { shadow } ) }
 						min={ 0 }
 						max={ 9 }
+						allowReset={ true }
 					/>
-					{ showProNotice && <ProControlButton /> }
-				</DesignPanelBody>
-				<PanelBody title={ __( 'General Settings', i18n ) }>
-					<RangeControl
-						label={ __( 'Columns', i18n ) }
-						value={ columns }
-						onChange={ columns => setAttributes( { columns } ) }
-						min={ 1 }
-						max={ 4 }
-					/>
-					<SelectControl
-						label={ __( 'Image Hover Effect', i18n ) }
-						options={ applyFilters( 'stackable.image-box.edit.image-hover-effects', [
-							{ label: __( 'None', i18n ), value: '' },
-							{ label: __( 'Zoom In', i18n ), value: 'zoom-in' },
-							{ label: __( 'Zoom Out', i18n ), value: 'zoom-out' },
-						] ) }
-						value={ imageHoverEffect }
-						onChange={ imageHoverEffect => setAttributes( { imageHoverEffect } ) }
-					/>
-					<RangeControl
-						label={ __( 'Hover Overlay Opacity', i18n ) }
-						value={ overlayOpacity }
-						onChange={ overlayOpacity => setAttributes( { overlayOpacity } ) }
-						min={ 0 }
-						max={ 10 }
-					/>
-					<RangeControl
-						label={ __( 'Height', i18n ) }
-						value={ height }
-						min="135"
-						max="700"
-						onChange={ height => setAttributes( { height } ) }
-					/>
-					{ ( align !== 'wide' && align !== 'full' && columns === 1 ) && (
-						<RangeControl
-							label={ __( 'Width', i18n ) }
-							value={ width }
-							min="400"
-							max="999"
-							help={ __( 'Only available for single column & if centered', i18n ) }
-							onChange={ width => setAttributes( { width } ) }
-						/>
-					) }
-					<SelectControl
-						label={ __( 'Arrow', i18n ) }
-						help={ __( 'The arrow will only appear if the image has a link.', i18n ) }
-						options={ [
-							{ label: __( 'None', i18n ), value: '' },
-							{ label: __( 'Center', i18n ), value: 'center' },
-							{ label: __( 'Left', i18n ), value: 'left' },
-							{ label: __( 'Right', i18n ), value: 'right' },
-						] }
-						value={ arrow }
-						onChange={ arrow => setAttributes( { arrow } ) }
-					/>
-				</PanelBody>
-				<PanelColorSettings
-					title={ __( 'Color Settings', i18n ) }
-					initialOpen={ true }
-					colorSettings={ [
-						{
-							value: overlayColor,
-							onChange: colorValue => setAttributes( { overlayColor: colorValue } ),
-							label: __( 'Overlay Color', i18n ),
-						},
-						{
-							value: titleColor,
-							onChange: colorValue => setAttributes( { titleColor: colorValue } ),
-							label: ! arrow ? __( 'Title Color', i18n ) : __( 'Title & Arrow Color', i18n ),
-						},
-						{
-							value: subtitleColor,
-							onChange: colorValue => setAttributes( { subtitleColor: colorValue } ),
-							label: __( 'Subtitle Color', i18n ),
-						},
-					] }
-				>
-				</PanelColorSettings>
-				{ showProNotice &&
-					<PanelBody
-						initialOpen={ false }
-						title={ __( 'Custom CSS', i18n ) }
-					>
-						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
-							description={ __( 'Further tweak this block by adding guided custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
-						/>
-					</PanelBody>
 				}
-				{ applyFilters( 'stackable.image-box.edit.inspector.after', null, design, props ) }
-			</InspectorControls>
-			<div className={ mainClasses } style={ mainStyles }>
-				{ applyFilters( 'stackable.image-box.edit.output.before', null, design, props ) }
-				{ [ 1, 2, 3, 4 ].map( i => {
-					const imageURL = attributes[ `imageURL${ i }` ]
-					const imageID = attributes[ `imageID${ i }` ]
-					const title = attributes[ `title${ i }` ]
-					const description = attributes[ `description${ i }` ]
-					const link = attributes[ `link${ i }` ]
-					const newTab = attributes[ `newTab${ i }` ]
+				<ResponsiveControl
+					attrNameTemplate="columnContent%sVerticalAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AdvancedToolbarControl
+						label={ __( 'Content Vertical Align', i18n ) }
+						controls="flex-vertical"
+					/>
+				</ResponsiveControl>
+				<ContentAlignControl
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+			</PanelBody>
 
-					const boxStyles = {
-						backgroundImage: imageURL ? `url(${ imageURL })` : undefined,
-						maxWidth: align !== 'wide' && align !== 'full' && columns === 1 ? width : undefined,
-						height,
-						textAlign: horizontalAlign,
-						justifyContent: verticalAlign,
-						borderRadius,
-					}
+			<PanelBody
+				title={ __( 'Image', i18n ) }
+				initialOpen={ false }
+			>
+				<ImageBackgroundControlsHelper
+					attrNameTemplate="image%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+					onChangeImage={ null }
+					onChangeSize={ size => {
+						setAttributes( {
+							imageSize: size,
+							image1Url: getImageUrlFromCache( image1Id, size || 'large' ),
+							image2Url: getImageUrlFromCache( image2Id, size || 'large' ),
+							image3Url: getImageUrlFromCache( image3Id, size || 'large' ),
+							image4Url: getImageUrlFromCache( image4Id, size || 'large' ),
+						} )
+					} }
+				/>
+			</PanelBody>
 
-					const boxClasses = classnames( [
-						'ugb-image-box__item',
-					], applyFilters( 'stackable.image-box.itemclasses', {
-						[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
-					}, design, i, props ) )
+			<PanelAdvancedSettings
+				title={ __( 'Overlay Color', i18n ) }
+				checked={ showOverlay }
+				onChange={ showOverlay => setAttributes( { showOverlay } ) }
+				toggleOnSetAttributes={ [
+					...createBackgroundAttributeNames( 'overlay%s' ),
+					'overlayOpacity',
+				] }
+				toggleAttributeName="showOverlay"
+			>
+				<BackgroundControlsHelper
+					attrNameTemplate="overlay%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+					labelBackgroundColorType={ __( 'Overlay Color Type', i18n ) }
+					labelBackgroundColor={ __( 'Overlay Color', i18n ) }
+					onChangeImage={ null }
+					onChangeBackgroundMedia={ null }
+					onChangeBackgroundColorOpacity={ null }
+				/>
+				<RangeControl
+					label={ __( 'Opacity', i18n ) }
+					value={ overlayOpacity }
+					onChange={ overlayOpacity => setAttributes( { overlayOpacity } ) }
+					min={ 0 }
+					max={ 1 }
+					step={ 0.1 }
+					allowReset={ true }
+				/>
+			</PanelAdvancedSettings>
 
-					const arrowClasses = classnames( [
-						'ugb-image-box__arrow',
-						`ugb-image-box__arrow--align-${ arrow }`,
-					] )
+			<PanelAdvancedSettings
+				title={ __( 'Overlay Hover Color', i18n ) }
+				checked={ showOverlayHover }
+				onChange={ showOverlayHover => setAttributes( { showOverlayHover } ) }
+				toggleOnSetAttributes={ [
+					...createBackgroundAttributeNames( 'overlayHover%s' ),
+					'overlayHoverOpacity',
+				] }
+				toggleAttributeName="showOverlayHover"
+			>
+				<BackgroundControlsHelper
+					attrNameTemplate="overlayHover%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+					labelBackgroundColorType={ __( 'Overlay Color Type', i18n ) }
+					labelBackgroundColor={ __( 'Overlay Color', i18n ) }
+					onChangeImage={ null }
+					onChangeBackgroundMedia={ null }
+					onChangeBackgroundColorOpacity={ null }
+				/>
+				<RangeControl
+					label={ __( 'Opacity', i18n ) }
+					value={ overlayHoverOpacity }
+					onChange={ overlayHoverOpacity => setAttributes( { overlayHoverOpacity } ) }
+					min={ 0 }
+					max={ 1 }
+					step={ 0.1 }
+					allowReset={ true }
+				/>
+			</PanelAdvancedSettings>
 
-					return (
-						<div className="ugb-image-box__editor-wrapper" key={ i }>
-							<div className={ boxClasses } style={ boxStyles }>
-								<ImageUploadPlaceholder
-									imageID={ imageID }
-									imageURL={ imageURL }
-									onRemove={ () => {
-										setAttributes( { [ `imageURL${ i }` ]: '', [ `imageID${ i }` ]: '' } )
-									} }
-									onChange={ ( { url, id } ) => {
-										setAttributes( { [ `imageURL${ i }` ]: url, [ `imageID${ i }` ]: id } )
-									} }
-									render={ null }
-								/>
-								{ imageURL && (
-									<a // eslint-disable-line
-										href={ link }
-										className="ugb-image-box__overlay"
+			<PanelBody
+				title={ __( 'Effects', i18n ) }
+				initialOpen={ false }
+			>
+				<SelectControl
+					label={ __( 'Image Hover Effect', i18n ) }
+					options={ applyFilters( 'stackable.image-box.edit.image-hover-effects', [
+						{ label: __( 'None', i18n ), value: '' },
+						{ label: __( 'Zoom In', i18n ), value: 'zoom-in' },
+						{ label: __( 'Zoom Out', i18n ), value: 'zoom-out' },
+					] ) }
+					value={ imageHoverEffect }
+					onChange={ imageHoverEffect => setAttributes( { imageHoverEffect } ) }
+				/>
+				{ applyFilters( 'stackable.image-box.edit.panel.image-hover-effects', null, props ) }
+				{ showProNotice && <ProControlButton type="effect" /> }
+			</PanelBody>
+
+			{ show.line &&
+				<PanelAdvancedSettings
+					title={ __( 'Line', i18n ) }
+					hasToggle={ false }
+				>
+					<ColorPaletteControl
+						value={ lineColor }
+						onChange={ lineColor => setAttributes( { lineColor } ) }
+						label={ __( 'Color', i18n ) }
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Size', i18n ) }
+						min="0"
+						max="10"
+						value={ lineSize }
+						onChange={ lineSize => setAttributes( { lineSize } ) }
+						allowReset={ true }
+					/>
+				</PanelAdvancedSettings>
+			}
+
+			<PanelAdvancedSettings
+				title={ __( 'Subtitle', i18n ) }
+				checked={ showSubtitle }
+				onChange={ showSubtitle => setAttributes( { showSubtitle } ) }
+				toggleOnSetAttributes={ [
+					...createTypographyAttributeNames( 'subtitle%s' ),
+					'subtitleColor',
+					...createResponsiveAttributeNames( 'subtitle%sAlign' ),
+				] }
+				toggleAttributeName="showSubtitle"
+			>
+				<TypographyControlHelper
+					attrNameTemplate="subtitle%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+				<ColorPaletteControl
+					value={ subtitleColor }
+					onChange={ subtitleColor => setAttributes( { subtitleColor } ) }
+					label={ __( 'Subtitle Color', i18n ) }
+				/>
+				<ResponsiveControl
+					attrNameTemplate="subtitle%sAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+				</ResponsiveControl>
+			</PanelAdvancedSettings>
+
+			<PanelAdvancedSettings
+				title={ __( 'Title', i18n ) }
+				checked={ showTitle }
+				onChange={ showTitle => setAttributes( { showTitle } ) }
+				toggleOnSetAttributes={ [
+					...createTypographyAttributeNames( 'title%s' ),
+					'titleTag',
+					'titleColor',
+					...createResponsiveAttributeNames( 'Title%sAlign' ),
+				] }
+				toggleAttributeName="showTitle"
+			>
+				<TypographyControlHelper
+					attrNameTemplate="title%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+				<HeadingButtonsControl
+					value={ titleTag || 'h4' }
+					onChange={ titleTag => setAttributes( { titleTag } ) }
+				/>
+				<ColorPaletteControl
+					value={ titleColor }
+					onChange={ titleColor => setAttributes( { titleColor } ) }
+					label={ __( 'Title Color', i18n ) }
+				/>
+				<ResponsiveControl
+					attrNameTemplate="Title%sAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+				</ResponsiveControl>
+			</PanelAdvancedSettings>
+
+			<PanelAdvancedSettings
+				title={ __( 'Description', i18n ) }
+				checked={ showDescription }
+				onChange={ showDescription => setAttributes( { showDescription } ) }
+				toggleOnSetAttributes={ [
+					...createTypographyAttributeNames( 'description%s' ),
+					'descriptionColor',
+					...createResponsiveAttributeNames( 'description%sAlign' ),
+				] }
+				toggleAttributeName="showDescription"
+			>
+				<TypographyControlHelper
+					attrNameTemplate="description%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+				<ColorPaletteControl
+					value={ descriptionColor }
+					onChange={ descriptionColor => setAttributes( { descriptionColor } ) }
+					label={ __( 'Description Color', i18n ) }
+				/>
+				<ResponsiveControl
+					attrNameTemplate="description%sAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+				</ResponsiveControl>
+			</PanelAdvancedSettings>
+
+			<PanelAdvancedSettings
+				title={ __( 'Arrow', i18n ) }
+				checked={ showArrow }
+				onChange={ showArrow => setAttributes( { showArrow } ) }
+				toggleOnSetAttributes={ [
+					'arrowColor',
+					...createResponsiveAttributeNames( 'Arrow%sSize' ),
+					...createResponsiveAttributeNames( 'Arrow%sAlign' ),
+				] }
+				toggleAttributeName="showArrow"
+			>
+				<ColorPaletteControl
+					value={ arrowColor }
+					onChange={ arrowColor => setAttributes( { arrowColor } ) }
+					label={ __( 'Color', i18n ) }
+				/>
+				<ResponsiveControl
+					attrNameTemplate="Arrow%sSize"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AdvancedRangeControl
+						label={ __( 'Size', i18n ) }
+						min="0"
+						max="50"
+						allowReset={ true }
+					/>
+				</ResponsiveControl>
+				<ResponsiveControl
+					attrNameTemplate="Arrow%sAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+				</ResponsiveControl>
+			</PanelAdvancedSettings>
+
+			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
+				{ show.subtitleSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="subtitle%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Subtitle', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				) }
+				{ show.titleSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="title%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Title', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				) }
+				{ show.lineSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="line%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Line', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				) }
+				{ show.descriptionSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="description%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Description', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				) }
+				{ show.arrowSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="arrow%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Arrow', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+						/>
+					</ResponsiveControl>
+				) }
+			</PanelSpacingBody>
+		</Fragment>
+	)
+} )
+
+class Edit extends Component {
+	constructor() {
+		super( ...arguments )
+		this.state = {
+			selectedBox: null,
+		}
+		this.handleFocusOutside = this.handleFocusOutside.bind( this )
+	}
+
+	handleFocusOutside() {
+		this.setState( {
+			selectedBox: null,
+		} )
+	}
+
+	render() {
+		const {
+			className,
+			setAttributes,
+			attributes,
+		} = this.props
+
+		const {
+			columns = 3,
+			contentAlign = '',
+			design = 'basic',
+			shadow = 3,
+			imageSize = 'large',
+			imageHoverEffect = '',
+			showSubtitle = true,
+			showTitle = true,
+			showDescription = true,
+			showArrow = false,
+			titleTag = '',
+			showOverlay = false,
+			showOverlayHover = true,
+		} = attributes
+
+		const mainClasses = classnames( [
+			className,
+			'ugb-image-box--v4',
+			`ugb-image-box--columns-${ columns }`,
+			`ugb-image-box--design-${ design }`,
+		], applyFilters( 'stackable.image-box.mainclasses', {
+			[ `ugb-image-box--effect-${ imageHoverEffect }` ]: imageHoverEffect,
+			'ugb-image-box--with-arrow': showArrow,
+			[ `ugb-image-box--align-${ contentAlign }` ]: contentAlign,
+		}, this.props ) )
+
+		const show = showOptions( this.props )
+
+		return (
+			<BlockContainer.Edit className={ mainClasses } blockProps={ this.props } render={ () => (
+				<Fragment>
+					{ range( 1, columns + 1 ).map( i => {
+						const itemClasses = classnames( [
+							'ugb-image-box__item',
+							`ugb-image-box__item${ i }`,
+							'ugb-image-box__box',
+						], applyFilters( 'stackable.image-box.itemclasses', {
+							[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
+						}, this.props, i ) )
+
+						return (
+							<div
+								className={ itemClasses }
+								key={ i }
+								onMouseDown={ () => this.setState( { selectedBox: i } ) }
+								role="button"
+								tabIndex="0"
+							>
+								<div className="ugb-image-box__box ugb-image-box__image-wrapper">
+									<ImageUploadPlaceholder
+										imageID={ attributes[ `image${ i }Id` ] }
+										imageURL={ attributes[ `image${ i }Url` ] }
+										imageSize={ imageSize }
+										className="ugb-image-box__box ugb-image-box__image"
+										onRemove={ () => {
+											setAttributes( {
+												[ `image${ i }Id` ]: '',
+												[ `image${ i }Url` ]: '',
+												[ `image${ i }fullWidth` ]: '',
+												[ `image${ i }fullHeight` ]: '',
+												[ `image${ i }fullUrl` ]: '',
+											} )
+										} }
+										onChange={ image => {
+											setAttributes( {
+												[ `image${ i }Id` ]: image.id,
+												[ `image${ i }Url` ]: image.url,
+												[ `image${ i }fullWidth` ]: image.sizes.full.width,
+												[ `image${ i }fullHeight` ]: image.sizes.full.height,
+												[ `image${ i }fullUrl` ]: image.sizes.full.url,
+											} )
+										} }
 									/>
-								) }
+								</div>
+								{ showOverlay &&
+									<div className="ugb-image-box__box ugb-image-box__overlay"></div>
+								}
+								{ showOverlayHover &&
+									<div className="ugb-image-box__box ugb-image-box__overlay-hover"></div>
+								}
 								<div className="ugb-image-box__content">
-									{ imageURL && (
-										<RichText
-											tagName="h4"
-											className="ugb-image-box__title"
-											value={ title }
-											onChange={ title => setAttributes( { [ `title${ i }` ]: title } ) }
-											style={ {
-												color: titleColor,
-											} }
-											placeholder={ __( 'Title', i18n ) }
-											keepPlaceholderOnFocus
-										/>
-									) }
-									{ imageURL && (
+									{ ( showSubtitle || showTitle ) &&
+										<div className="ugb-image-box__header">
+											{ showSubtitle &&
+												<RichText
+													tagName="div"
+													className="ugb-image-box__subtitle"
+													value={ attributes[ `subtitle${ i }` ] }
+													onChange={ subtitle => setAttributes( { [ `subtitle${ i }` ]: subtitle } ) }
+													placeholder={ __( 'Subtitle', i18n ) }
+													keepPlaceholderOnFocus
+												/>
+											}
+											{ showTitle &&
+												<RichText
+													tagName={ titleTag || 'h4' }
+													className="ugb-image-box__title"
+													value={ attributes[ `title${ i }` ] }
+													onChange={ title => setAttributes( { [ `title${ i }` ]: title } ) }
+													placeholder={ __( 'Title', i18n ) }
+													keepPlaceholderOnFocus
+												/>
+											}
+										</div>
+									}
+									{ showDescription &&
 										<RichText
 											tagName="p"
 											className="ugb-image-box__description"
-											value={ description }
+											value={ attributes[ `description${ i }` ] }
 											onChange={ description => setAttributes( { [ `description${ i }` ]: description } ) }
-											style={ {
-												color: subtitleColor,
-											} }
 											placeholder={ __( 'Description', i18n ) }
 											keepPlaceholderOnFocus
 										/>
-									) }
+									}
 								</div>
-								{ arrow && (
-									<div className={ arrowClasses }>
-										<SVGArrow style={ { fill: titleColor ? titleColor : undefined } } />
+								{ showArrow &&
+									<div className="ugb-image-box__arrow">
+										<SVGArrow />
 									</div>
-								) }
+								}
+								{ this.state.selectedBox === i &&
+									<UrlInputPopover
+										value={ attributes[ `link${ i }Url` ] }
+										onChange={ value => setAttributes( { [ `link${ i }Url` ]: value } ) }
+										newTab={ attributes[ `link${ i }NewTab` ] }
+										noFollow={ attributes[ `link${ i }NoFollow` ] }
+										onChangeNewTab={ value => setAttributes( { [ `link${ i }NewTab` ]: value } ) }
+										onChangeNoFollow={ value => setAttributes( { [ `link${ i }NoFollow` ]: value } ) }
+									/>
+								}
 							</div>
-							{ isSelected && (
-								<URLInputControl
-									value={ link }
-									newTab={ newTab }
-									onChange={ link => {
-										setAttributes( { [ `link${ i }` ]: link } )
-									} }
-									onChangeNewTab={ newTab => {
-										setAttributes( { [ `newTab${ i }` ]: newTab } )
-									} }
-								/>
-							) }
-						</div>
-					)
-				} ) }
-				{ applyFilters( 'stackable.image-box.edit.output.after', null, design, props ) }
-			</div>
-		</Fragment>
-	)
+						)
+					} ) }
+				</Fragment>
+			) } />
+		)
+	}
 }
 
-export default edit
+export default compose(
+	withUniqueClass,
+	withSetAttributeHook,
+	withGoogleFont,
+	withTabbedInspector(),
+	withContentAlignReseter( [ 'Line%sAlign', 'Subtitle%sAlign', 'Title%sAlign', 'Description%sAlign', 'Arrow%sAlign' ] ),
+	withBlockStyles( createStyles, { editorMode: true } ),
+	withSelect( ( select, props ) => {
+		cacheImageData( props.attributes.image1Id, select )
+		cacheImageData( props.attributes.image2Id, select )
+		cacheImageData( props.attributes.image3Id, select )
+		cacheImageData( props.attributes.image4Id, select )
+	} ),
+	withFocusOutside,
+)( Edit )

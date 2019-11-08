@@ -25,6 +25,11 @@ const LABELS = {
 		description: __( 'Get more cool shapes for your images. This feature is only available on Stackable Premium.', i18n ),
 		button: __( 'Learn More', i18n ),
 	},
+	effect: {
+		title: __( 'Say Hello to More Effects 👋', i18n ),
+		description: __( 'Get more flashy image & hover effects. This feature is only available on Stackable Premium.', i18n ),
+		button: __( 'Learn More', i18n ),
+	},
 	advanced: {
 		title: __( 'Say Hello to Fine-Grained Controls 👋', i18n ),
 		description: __( 'Get more advanced block options for adjusting column colors and more. This feature is only available on Stackable Premium.', i18n ),

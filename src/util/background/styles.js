@@ -70,12 +70,16 @@ const createBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 	}
 }
 
-export const createBackgroundOverlayStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {} ) => {
+export const createBackgroundOverlayStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {}, options = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
 	const getValue = ( attrName = '', format = '' ) => {
 		const value = typeof blockAttributes[ getAttrName( attrName ) ] === 'undefined' ? '' : blockAttributes[ getAttrName( attrName ) ]
 		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
 	}
+
+	const {
+		importantBackgroundColor = false,
+	} = options
 
 	const opacity = parseInt( getValue( 'BackgroundTintStrength' ) || 5, 10 ) / 10
 	const isGradient = getValue( 'BackgroundColorType' ) === 'gradient'
@@ -90,7 +94,7 @@ export const createBackgroundOverlayStyles = ( attrNameTemplate = '%s', screen =
 
 	if ( screen !== 'tablet' && screen !== 'mobile' ) { // Desktop.
 		return {
-			backgroundColor: ! isGradient && getValue( 'BackgroundColor' ) ? getValue( 'BackgroundColor' ) : undefined,
+			backgroundColor: appendImportant( ! isGradient && getValue( 'BackgroundColor' ) ? getValue( 'BackgroundColor' ) : undefined, importantBackgroundColor ),
 			backgroundImage: isGradient ?
 				`linear-gradient(${ getValue( 'BackgroundGradientDirection' ) || 0 }deg, ${ getValue( 'BackgroundColor' ) || defaultColor1 } ${ color1Location }, ${ getValue( 'BackgroundColor2' ) || defaultColor2 } ${ color2Location })` :
 				undefined,

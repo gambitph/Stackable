@@ -239,7 +239,7 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 				minHeight: getValue( 'mobileColumnHeight', '%spx' ),
 			},
 		},
-	} )
+	}, props )
 
 	const verticalAlignSelector = applyFilters( `stackable.${ blockName }.advanced-column-spacing.vertical-align.selector`, '> .ugb-inner-block > .ugb-block-content > *', props )
 	const verticalAlign = {
