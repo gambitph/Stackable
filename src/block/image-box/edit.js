@@ -599,18 +599,18 @@ class Edit extends Component {
 											setAttributes( {
 												[ `image${ i }Id` ]: '',
 												[ `image${ i }Url` ]: '',
-												[ `image${ i }fullWidth` ]: '',
-												[ `image${ i }fullHeight` ]: '',
-												[ `image${ i }fullUrl` ]: '',
+												[ `image${ i }FullWidth` ]: '',
+												[ `image${ i }FullHeight` ]: '',
+												[ `image${ i }FullUrl` ]: '',
 											} )
 										} }
 										onChange={ image => {
 											setAttributes( {
 												[ `image${ i }Id` ]: image.id,
 												[ `image${ i }Url` ]: image.url,
-												[ `image${ i }fullWidth` ]: image.sizes.full.width,
-												[ `image${ i }fullHeight` ]: image.sizes.full.height,
-												[ `image${ i }fullUrl` ]: image.sizes.full.url,
+												[ `image${ i }FullWidth` ]: image.sizes.full.width,
+												[ `image${ i }FullHeight` ]: image.sizes.full.height,
+												[ `image${ i }FullUrl` ]: image.sizes.full.url,
 											} )
 										} }
 									/>

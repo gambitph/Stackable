@@ -87,7 +87,7 @@ export const schema = {
 			default: '',
 		},
 		[ '1', '2', '3', '4' ],
-		[ 'Id', 'fullWidth', 'fullHeight' ]
+		[ 'Id', 'FullWidth', 'FullHeight' ]
 	),
 	...createAllCombinationAttributes(
 		'image%s%s', {
@@ -95,7 +95,7 @@ export const schema = {
 			default: '',
 		},
 		[ '1', '2', '3', '4' ],
-		[ 'Url', 'fullUrl' ]
+		[ 'Url', 'FullUrl' ]
 	),
 
 	// Overlay.

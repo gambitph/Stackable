@@ -47,6 +47,7 @@
 		height: 100%;
 		background-size: cover;
 		background-position: center;
+		will-change: filter, transform;
 	}
 	.ugb-image-box__overlay,
 	.ugb-image-box__overlay-hover {
@@ -353,7 +354,7 @@
 	.ugb-image-box__content {
 		z-index: 3;
 		pointer-events: none;
-		@include baseBlock(); // TODO: [V2] Deprecate this usage
+		@include baseBlock();
 	}
 	.ugb-image-box__description {
 		margin: 0 !important;

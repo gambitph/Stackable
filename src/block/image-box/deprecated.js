@@ -18,7 +18,7 @@ import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { RichText } from '@wordpress/block-editor'
 
-export const deprecatedSchema_1_17_3 = {
+const deprecatedSchema_1_17_3 = {
 	align: {
 		type: 'string',
 	},
@@ -246,6 +246,118 @@ const deprecatedSave_1_17_3 = props => {
 									tagName="p"
 									className="ugb-image-box__description"
 									style={ { color: subtitleColor } }
+									value={ description }
+								/>
+							) }
+						</div>
+						{ arrow && link && (
+							<div className={ arrowClasses }>
+								<SVGArrow style={ { fill: titleColor ? titleColor : undefined } } />
+							</div>
+						) }
+					</div>
+				)
+			} ) }
+			{ applyFilters( 'stackable.image-box.save.output.after_1_17_3', null, design, props ) }
+		</div>
+	)
+}
+
+const deprecatedSave_1_17_3_ = ( hasTitleStyle = true, hasDescriptionStyle = true ) => props => {
+	const { className, attributes } = props
+	const {
+		titleColor,
+		subtitleColor,
+		overlayColor,
+		height,
+		width,
+		verticalAlign,
+		horizontalAlign,
+		align,
+		columns,
+		design = 'basic',
+		borderRadius = 12,
+		shadow = 3,
+		imageHoverEffect = '',
+		overlayOpacity = 7,
+		arrow = '',
+	} = props.attributes
+
+	const mainClasses = classnames( [
+		className,
+		'ugb-image-box',
+		'ugb-image-box--v3',
+		`ugb-image-box--columns-${ columns }`,
+	], applyFilters( 'stackable.image-box.mainclasses_1_17_3', {
+		[ `ugb-image-box--design-${ design }` ]: design !== 'basic',
+		[ `ugb-image-box--effect-${ imageHoverEffect }` ]: imageHoverEffect,
+		[ `ugb-image-box--overlay-${ overlayOpacity }` ]: overlayOpacity !== 7,
+		'ugb-image-box--arrow': arrow,
+	}, design, props ) )
+
+	const mainStyles = {
+		textAlign: horizontalAlign ? horizontalAlign : undefined,
+		'--overlay-color': overlayColor,
+	}
+
+	return (
+		<div className={ mainClasses } style={ mainStyles }>
+			{ applyFilters( 'stackable.image-box.save.output.before_1_17_3', null, design, props ) }
+			{ range( 1, columns + 1 ).map( i => {
+				const imageURL = attributes[ `imageURL${ i }` ]
+				const title = attributes[ `title${ i }` ]
+				const description = attributes[ `description${ i }` ]
+				const link = attributes[ `link${ i }` ]
+				const newTab = attributes[ `newTab${ i }` ]
+
+				const boxStyles = {
+					backgroundImage: imageURL ? `url(${ imageURL })` : undefined,
+					maxWidth: align !== 'wide' && align !== 'full' && columns === 1 ? width : undefined,
+					height,
+					textAlign: horizontalAlign,
+					justifyContent: verticalAlign,
+					borderRadius,
+				}
+
+				const boxClasses = classnames( [
+					'ugb-image-box__item',
+				], applyFilters( 'stackable.image-box.itemclasses_1_17_3', {
+					[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
+				}, design, i, props ) )
+
+				const arrowClasses = classnames( [
+					'ugb-image-box__arrow',
+					`ugb-image-box__arrow--align-${ arrow }`,
+				] )
+
+				return (
+					<div className={ boxClasses } style={ boxStyles } key={ i }>
+						{ imageHoverEffect && <div
+							className="ugb-image-box__image-effect"
+							style={ {
+								backgroundImage: imageURL ? `url(${ imageURL })` : undefined,
+							} } />
+						}
+						{ /* eslint-disable-next-line */ }
+						<a
+							className="ugb-image-box__overlay"
+							href={ link }
+							target={ newTab ? '_blank' : undefined }
+						/>
+						<div className="ugb-image-box__content">
+							{ ! RichText.isEmpty( title ) && (
+								<RichText.Content
+									tagName="h4"
+									className="ugb-image-box__title"
+									style={ hasTitleStyle ? { color: titleColor } : undefined }
+									value={ title }
+								/>
+							) }
+							{ ! RichText.isEmpty( description ) && (
+								<RichText.Content
+									tagName="p"
+									className="ugb-image-box__description"
+									style={ hasDescriptionStyle ? { color: subtitleColor } : undefined }
 									value={ description }
 								/>
 							) }
@@ -637,20 +749,110 @@ export const deprecatedSave_1_1_2 = props => {
 	)
 }
 
+const migrate_1_17_3 = attributes => {
+	// Update the custom CSS since the structure has changed.
+	const updateCSS = css => css
+		.replace( /\.ugb-image-box__overlay(\s*{)/g, '.ugb-image-box__overlay-hover$1' )
+
+	// try and get full image url & dimensions.
+
+	return {
+		...attributes,
+
+		// Custom CSS.
+		customCSS: updateCSS( attributes.customCSS ),
+		customCSSCompiled: updateCSS( attributes.customCSSCompiled ),
+
+		// width option when there's only 1 column.
+		blockWidth: attributes.columns === 1 && attributes.align !== 'full' ? attributes.width : undefined, // Old width is the same as the block width option.
+		columnHeight: attributes.height,
+		columnContentVerticalAlign: attributes.verticalAlign,
+		contentAlign: attributes.horizontalAlign,
+
+		// Link.
+		link1Url: attributes.link1,
+		link2Url: attributes.link2,
+		link3Url: attributes.link3,
+		link4Url: attributes.link4,
+		link1NewTab: attributes.newTab1,
+		link2NewTab: attributes.newTab2,
+		link3NewTab: attributes.newTab3,
+		link4NewTab: attributes.newTab4,
+
+		// Image.
+		image1Id: attributes.imageID1,
+		image2Id: attributes.imageID2,
+		image3Id: attributes.imageID3,
+		image4Id: attributes.imageID4,
+		image1Url: attributes.imageURL1,
+		image2Url: attributes.imageURL2,
+		image3Url: attributes.imageURL3,
+		image4Url: attributes.imageURL4,
+		image1FullUrl: attributes.imageURL1,
+		image2FullUrl: attributes.imageURL2,
+		image3FullUrl: attributes.imageURL3,
+		image4FullUrl: attributes.imageURL4,
+		imageSize: 'full',
+
+		// Overlay.
+		showOverlay: false,
+
+		// Overlay hover.
+		showOverlayHover: true,
+		overlayHoverBackgroundColor: attributes.overlayColor,
+		overlayHoverOpacity: isNaN( parseInt( attributes.overlayOpacity, 10 ) ) ? 0.7 : parseInt( attributes.overlayOpacity, 10 ) / 10,
+
+		// Arrow.
+		showArrow: !! attributes.arrow,
+		arrowAlign: attributes.arrow ? attributes.arrow : undefined,
+		arrowColor: attributes.titleColor,
+
+		// Description.
+		descriptionColor: attributes.subtitleColor,
+
+		// Subtitle.
+		showSubtitle: false,
+
+		// Full width & 1 column.
+		borderRadius: attributes.columns === 1 && attributes.align === 'full' ? 0 : attributes.columns,
+		paddingRight: attributes.columns === 1 && attributes.align === 'full' ? 0 : undefined,
+		paddingLeft: attributes.columns === 1 && attributes.align === 'full' ? 0 : undefined,
+	}
+}
+
 const deprecated = [
 	{
 		attributes: deprecatedSchema_1_17_3,
 		save: deprecatedSave_1_17_3,
-		migrate: attributes => {
-			// try and get full image url & dimensions.
-
-			return {
-				...attributes,
-
-				blockWidth: attributes.columns === 1 ? attributes.width : undefined, // Old width is the same as the block width option.
-			}
-		},
+		migrate: migrate_1_17_3,
 	},
+
+	/**
+	 * If you blank the title color and/or subtitle color in v1.17.3,
+	 * the block will error out. These deprecation methods will fix those
+	 * errored blocks.
+	 *
+	 * How? Since the migration fails because the saved html didn't have a
+	 * style attribute for the title, the block save doesn't match.
+	 * To fix, we create a new save method that doesn't have the style attribute
+	 * to make the save method match.
+	 */
+	{
+		attributes: deprecatedSchema_1_17_3,
+		save: deprecatedSave_1_17_3_( false, false ),
+		migrate: migrate_1_17_3,
+	},
+	{
+		attributes: deprecatedSchema_1_17_3,
+		save: deprecatedSave_1_17_3_( true, false ),
+		migrate: migrate_1_17_3,
+	},
+	{
+		attributes: deprecatedSchema_1_17_3,
+		save: deprecatedSave_1_17_3_( false, true ),
+		migrate: migrate_1_17_3,
+	},
+
 	{
 		attributes: deprecatedSchema_1_10,
 		save: deprecatedSave_1_10,
