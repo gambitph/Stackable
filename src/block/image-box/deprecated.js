@@ -814,7 +814,7 @@ const migrate_1_17_3 = attributes => {
 		showSubtitle: false,
 
 		// Full width & 1 column.
-		borderRadius: attributes.columns === 1 && attributes.align === 'full' ? 0 : attributes.columns,
+		borderRadius: attributes.columns === 1 && attributes.align === 'full' ? 0 : attributes.borderRadius,
 		paddingRight: attributes.columns === 1 && attributes.align === 'full' ? 0 : undefined,
 		paddingLeft: attributes.columns === 1 && attributes.align === 'full' ? 0 : undefined,
 	}
