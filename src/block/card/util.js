@@ -17,7 +17,7 @@ export const showOptions = blockProps => {
 		columnBackground: design !== 'plain',
 		borderRadius: true,
 		shadow: true,
-		imageHeight: design === 'basic' || design === 'plain',
+		imageHeight: ( design === 'basic' || design === 'plain' ) && design !== 'horizontal-card',
 		imageWidth: design === 'horizontal',
 		imageSpacing: design === 'plain' && showImage,
 		titleSpacing: showTitle,
