@@ -17,11 +17,10 @@ import registerBlock from '~stackable/register-block'
 const importAllAndRegister = r => {
 	r.keys().forEach( key => {
 		const { name, settings } = r( key )
-		// TODO: remove try block & register right away.
 		try {
 			return name && settings && registerBlock( name, settings )
 		} catch ( error ) {
-			console.error( `${ name } needs to be converted` ) // eslint-disable-line
+			console.error( `Could not register ${ name } block` ) // eslint-disable-line
 		}
 	} )
 }
