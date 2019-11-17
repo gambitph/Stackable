@@ -39,6 +39,7 @@ const save = props => {
 		`ugb--shadow-${ shadow }`,
 	], applyFilters( 'stackable.video-popup.boxclasses', {
 		'ugb--has-background-overlay': hasBackgroundOverlay( 'preview%s', props.attributes ),
+		// TODO: generate this as styles instead of using class. Also remove from style.scss
 		[ `ugb--background-opacity-${ previewBackgroundTintStrength }` ]: hasBackgroundOverlay( 'preview%s', props.attributes ),
 	}, props ) )
 
