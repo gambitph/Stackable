@@ -67,17 +67,17 @@ export const createStyles = props => {
 	} = props.attributes
 	styles.push( {
 		'.ugb-blockquote__text': {
-			...createTypographyStyles( 'text%s', 'desktop', props.attributes ),
+			...createTypographyStyles( 'text%s', 'desktop', props.attributes, { important: true } ),
 			color: whiteIfDark( textColor, show.containerBackground && containerBackgroundColor ),
 		},
 		tablet: {
 			'.ugb-blockquote__text': {
-				...createTypographyStyles( 'text%s', 'tablet', props.attributes ),
+				...createTypographyStyles( 'text%s', 'tablet', props.attributes, { important: true } ),
 			},
 		},
 		mobile: {
 			'.ugb-blockquote__text': {
-				...createTypographyStyles( 'text%s', 'mobile', props.attributes ),
+				...createTypographyStyles( 'text%s', 'mobile', props.attributes, { important: true } ),
 			},
 		},
 	} )
