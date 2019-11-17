@@ -229,7 +229,6 @@ const edit = props => {
 
 	const mainClasses = classnames( [
 		className,
-		'ugb-video-popup',
 		'ugb-video-popup--v3',
 	], applyFilters( 'stackable.video-popup.mainclasses', {
 	}, props ) )
