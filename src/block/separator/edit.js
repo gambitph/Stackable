@@ -321,6 +321,7 @@ const edit = props => {
 
 	const mainClasses = classnames( [
 		className,
+		'ugb-separator--v2',
 		`ugb-separator--design-${ design }`,
 	], applyFilters( 'stackable.separator.mainclasses', {
 		'ugb-separator--flip-vertical': flipVertically,
