@@ -346,7 +346,7 @@
 			align-self: flex-start;
 		}
 		.ugb-blog-posts__side {
-			@include baseBlock(); // TODO: [V2] Deprecate this usage
+			@include baseBlock();
 		}
 		@media screen and (max-width: $break-huge) {
 			&.ugb-blog-posts--columns-3,
