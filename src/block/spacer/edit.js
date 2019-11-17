@@ -42,7 +42,7 @@ addFilter( 'stackable.spacer.edit.inspector.style.before', 'stackable/spacer', (
 					<AdvancedRangeControl
 						label={ __( 'Height', i18n ) }
 						units={ [ 'px', 'vh' ] }
-						min={ [ 0, 0 ] }
+						min={ [ 1, 0 ] }
 						max={ [ 500, 100 ] }
 						step={ [ 1, 1 ] }
 						allowReset={ true }
