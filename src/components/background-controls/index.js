@@ -188,7 +188,7 @@ const BackgroundControls = props => {
 				</Fragment>
 			) }
 
-			{ props.onChangeBackgroundTintStrength &&
+			{ props.onChangeBackgroundTintStrength && props.onChangeBackgroundMedia &&
 				( props.backgroundMediaURL || props.tabletBackgroundMediaURL || props.mobileBackgroundMediaURL ) && (
 				<RangeControl
 					label={ __( 'Background Media Tint Strength', i18n ) }
@@ -212,7 +212,7 @@ const BackgroundControls = props => {
 				/>
 			) }
 
-			{ props.onChangeFixedBackground &&
+			{ props.onChangeFixedBackground && props.onChangeBackgroundMedia &&
 				( props.backgroundMediaURL || props.tabletBackgroundMediaURL || props.mobileBackgroundMediaURL ) &&
 				! isBackgroundVideo() && (
 				<ToggleControl
@@ -222,7 +222,7 @@ const BackgroundControls = props => {
 				/>
 			) }
 
-			{ props.hasAdvancedBackground &&
+			{ props.hasAdvancedBackground && props.onChangeBackgroundMedia &&
 				( props.backgroundMediaURL || props.tabletBackgroundMediaURL || props.mobileBackgroundMediaURL ) &&
 				<ButtonIconPopoverControl
 					label={ __( 'Adv. Background Image Settings', i18n ) }
