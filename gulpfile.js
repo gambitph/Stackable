@@ -82,6 +82,14 @@ gulp.task( 'style', function() {
 		.pipe( gulp.dest( 'dist/' ) )
 } )
 
+gulp.task( 'style-deprecated', function() {
+	return gulp.src( [ path.resolve( __dirname, './src/deprecated/*.scss' ) ] )
+		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
+		.pipe( concat( 'frontend_blocks_deprecated.css' ) )
+		.pipe( postcss( postCSSOptions ) )
+		.pipe( gulp.dest( 'dist/' ) )
+} )
+
 gulp.task( 'welcome-styles', function() {
 	return gulp.src( path.resolve( __dirname, './src/welcome/admin.scss' ) )
 		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
@@ -93,7 +101,7 @@ gulp.task( 'welcome-styles', function() {
 		.pipe( gulp.dest( 'dist/' ) )
 } )
 
-gulp.task( 'build-process', gulp.parallel( 'style', 'style-editor', 'welcome-styles' ) )
+gulp.task( 'build-process', gulp.parallel( 'style', 'style-editor', 'welcome-styles', 'style-deprecated' ) )
 
 gulp.task( 'build', gulp.series( 'build-process' ) )
 
@@ -112,7 +120,7 @@ gulp.task( 'zip', function() {
 const watchFuncs = () => {
 	gulp.watch(
 		[ path.resolve( __dirname, './src/**/*.scss' ) ],
-		gulp.parallel( [ 'style', 'style-editor', 'welcome-styles' ] )
+		gulp.parallel( [ 'style', 'style-editor', 'welcome-styles', 'style-deprecated' ] )
 	)
 	gulp.watch(
 		[ path.resolve( __dirname, './src/welcome/**/*.scss' ) ],
