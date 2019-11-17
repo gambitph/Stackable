@@ -143,9 +143,7 @@ if ( ! function_exists( 'stackable_block_category' ) ) {
 			array(
 				array(
 					'slug' => 'stackable',
-					// 'title' => __( 'Stackable', STACKABLE_I18N ),
-					// TODO: [V2] Remove below in final version
-					'title' => preg_match( '/^2.(.*)?(dev|early)/', STACKABLE_VERSION ) ? __( 'Stackable v2 Early Access 🧪', STACKABLE_I18N ) : __( 'Stackable', STACKABLE_I18N ),
+					'title' => __( 'Stackable', STACKABLE_I18N ),
 				),
 			)
 		);
