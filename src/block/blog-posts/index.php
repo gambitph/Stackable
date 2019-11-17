@@ -10,6 +10,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+require_once( 'deprecated.php' );
+
 /**
  * Renders the `ugb/blog-posts` block on server.
  *
@@ -21,16 +23,19 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
     function stackable_render_blog_posts_block( $attributes ) {
+		$attributes = apply_filters( 'stackable_block_migrate_attributes', $attributes, 'blog-posts' );
+
+		// TODO: adjust to v2
         $recent_posts = wp_get_recent_posts(
             array(
-                'numberposts' => ! empty( $attributes['postsToShow'] ) ? $attributes['postsToShow'] : '',
+                'numberposts' => ! empty( $attributes['numberOfItems'] ) ? $attributes['numberOfItems'] : '',
                 'post_status' => 'publish',
                 'order' => ! empty( $attributes['order'] ) ? $attributes['order'] : '',
                 'orderby' => ! empty( $attributes['orderBy'] ) ? $attributes['orderBy'] : '',
                 'category' => ! empty( $attributes['categories'] ) ? $attributes['categories'] : '',
 				'suppress_filters' => false,
             )
-        );
+		);
 
 		$posts_markup = '';
 		$props = array( 'attributes' => array() );
@@ -236,7 +241,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 			$before_output,
 			$posts_markup,
 			$after_output
-        );
+		);
 
         return $block_content;
     }
@@ -254,7 +259,30 @@ if ( ! function_exists( 'stackable_register_blog_posts_block' ) ) {
         register_block_type(
             'ugb/blog-posts',
             array(
+				// TODO: Adjust to v2, copy from index.js
                 'attributes' => array(
+					'numberOfItems' => array(
+						'type' => 'number',
+						'default' => 6,
+					),
+					'postType' => array(
+						'type' => 'string',
+						'default' => 'post',
+					),
+					'taxonomyType' => array(
+						'type' => 'string',
+						'default' => 'category',
+					),
+					'taxonomy' => array(
+						'type' => 'string',
+						'default' => '',
+					),
+
+
+
+
+
+
                     'className' => array(
                         'type' => 'string',
                     ),
@@ -269,10 +297,10 @@ if ( ! function_exists( 'stackable_register_blog_posts_block' ) ) {
                     'categories' => array(
                         'type' => 'string',
                     ),
-                    'postsToShow' => array(
-                        'type' => 'number',
-                        'default' => 6,
-                    ),
+                    // 'postsToShow' => array(
+                    //     'type' => 'number',
+                    //     'default' => 6,
+                    // ),
                     'columns' => array(
                         'type' => 'number',
                         'default' => 2,
@@ -338,6 +366,12 @@ if ( ! function_exists( 'stackable_register_blog_posts_block' ) ) {
 						'default' => 3,
 					),
 
+					// UniqueClass.
+					'uniqueClass' => array(
+						'type' => 'string',
+						'default' => '',
+					),
+
 					// Custom CSS attributes.
 					'customCSSUniqueID' => array(
 						'type' => 'string',
@@ -367,65 +401,72 @@ if ( ! function_exists( 'stackable_blog_posts_rest_fields' ) ) {
      */
     function stackable_blog_posts_rest_fields() {
 
-        // Featured image urls.
-        register_rest_field( 'post', 'featured_image_urls',
-            array(
-                'get_callback' => 'stackable_featured_image_urls',
-                'update_callback' => null,
-                'schema' => array(
-                    'description' => __( 'Different sized featured images', STACKABLE_I18N ),
-                    'type' => 'array',
-                ),
-            )
-        );
+		$post_types = get_post_types( array( 'public' => true ), 'objects' );
+		foreach ( $post_types as $post_type => $data ) {
+			if ( $post_type === 'attachment' ) {
+				continue;
+			}
 
-        // Excerpt.
-        register_rest_field( 'post', 'post_excerpt_stackable',
-            array(
-                'get_callback' => 'stackable_post_excerpt',
-                'update_callback' => null,
-                'schema' => array(
-                    'description' => __( 'Post excerpt for Stackable', STACKABLE_I18N ),
-                    'type' => 'string',
-                ),
-            )
-        );
+			// Featured image urls.
+			register_rest_field( $post_type, 'featured_image_urls',
+				array(
+					'get_callback' => 'stackable_featured_image_urls',
+					'update_callback' => null,
+					'schema' => array(
+						'description' => __( 'Different sized featured images', STACKABLE_I18N ),
+						'type' => 'array',
+					),
+				)
+			);
 
-        // Category links.
-        register_rest_field( 'post', 'category_list',
-            array(
-                'get_callback' => 'stackable_category_list',
-                'update_callback' => null,
-                'schema' => array(
-                    'description' => __( 'Category list links', STACKABLE_I18N ),
-                    'type' => 'string',
-                ),
-            )
-        );
+			// Excerpt.
+			register_rest_field( $post_type, 'post_excerpt_stackable',
+				array(
+					'get_callback' => 'stackable_post_excerpt',
+					'update_callback' => null,
+					'schema' => array(
+						'description' => __( 'Post excerpt for Stackable', STACKABLE_I18N ),
+						'type' => 'string',
+					),
+				)
+			);
 
-        // Author name.
-        register_rest_field( 'post', 'author_info',
-            array(
-                'get_callback' => 'stackable_author_info',
-                'update_callback' => null,
-                'schema' => array(
-                    'description' => __( 'Author information', STACKABLE_I18N ),
-                    'type' => 'array',
-                ),
-            )
-        );
+			// Category links.
+			register_rest_field( $post_type, 'category_list',
+				array(
+					'get_callback' => 'stackable_category_list',
+					'update_callback' => null,
+					'schema' => array(
+						'description' => __( 'Category list links', STACKABLE_I18N ),
+						'type' => 'string',
+					),
+				)
+			);
 
-        // Number of comments.
-        register_rest_field( 'post', 'comments_num',
-            array(
-                'get_callback' => 'stackable_commments_number',
-                'update_callback' => null,
-                'schema' => array(
-                    'description' => __( 'Number of comments', STACKABLE_I18N ),
-                    'type' => 'number',
-                ),
-            )
-        );
+			// Author name.
+			register_rest_field( $post_type, 'author_info',
+				array(
+					'get_callback' => 'stackable_author_info',
+					'update_callback' => null,
+					'schema' => array(
+						'description' => __( 'Author information', STACKABLE_I18N ),
+						'type' => 'array',
+					),
+				)
+			);
+
+			// Number of comments.
+			register_rest_field( $post_type, 'comments_num',
+				array(
+					'get_callback' => 'stackable_commments_number',
+					'update_callback' => null,
+					'schema' => array(
+						'description' => __( 'Number of comments', STACKABLE_I18N ),
+						'type' => 'number',
+					),
+				)
+			);
+		}
     }
     add_action( 'rest_api_init', 'stackable_blog_posts_rest_fields' );
 }
@@ -437,16 +478,18 @@ if ( ! function_exists( 'stackable_featured_image_urls' ) ) {
      * @since 1.7
      */
     function stackable_featured_image_urls( $object, $field_name, $request ) {
-        $image = wp_get_attachment_image_src( $object['featured_media'], 'full', false );
-        return array(
-            'full' => is_array( $image ) ? $image : '',
-            'landscape_large' => is_array( $image ) ? wp_get_attachment_image_src( $object['featured_media'], 'stackable-landscape-large', false ) : '',
-            'portrait_large' => is_array( $image ) ? wp_get_attachment_image_src( $object['featured_media'], 'stackable-portrait-large', false ) : '',
-            'square_large' => is_array( $image ) ? wp_get_attachment_image_src( $object['featured_media'], 'stackable-square-large', false ) : '',
-            'landscape' => is_array( $image ) ? wp_get_attachment_image_src( $object['featured_media'], 'stackable-landscape', false ) : '',
-            'portrait' => is_array( $image ) ? wp_get_attachment_image_src( $object['featured_media'], 'stackable-portrait', false ) : '',
-            'square' => is_array( $image ) ? wp_get_attachment_image_src( $object['featured_media'], 'stackable-square', false ) : '',
-        );
+		$image = wp_get_attachment_image_src( $object['featured_media'], 'full', false );
+		$sizes = get_intermediate_image_sizes();
+
+		$imageSizes = array(
+			'full' => is_array( $image ) ? $image : '',
+		);
+
+		foreach ( $sizes as $size ) {
+			$imageSizes[ $size ] = is_array( $image ) ? wp_get_attachment_image_src( $object['featured_media'], $size, false ) : '';
+		}
+
+		return $imageSizes;
     }
 }
 
@@ -457,6 +500,14 @@ if ( ! function_exists( 'stackable_author_info' ) ) {
      * @since 1.7
      */
     function stackable_author_info( $object ) {
+		// Some CPTs may not support authors.
+		if ( ! array_key_exists( 'author', $object ) ) {
+			return array(
+				'name' => '',
+				'url' => '',
+			);
+		}
+
         return array(
             'name' => get_the_author_meta( 'display_name', $object['author'] ),
             'url' => get_author_posts_url( $object['author'] ),
@@ -510,28 +561,147 @@ if ( ! function_exists( 'stackable_get_excerpt' ) ) {
             return $excerpt;
         }
 
-        if ( ! empty( $post['post_content'] ) ) {
-            return apply_filters( 'the_excerpt', wp_trim_words( $post['post_content'], 55 ) );
-        }
+        $max_excerpt = 100; // WP default is 55.
 
+        if ( ! empty( $post['post_content'] ) ) {
+            return apply_filters( 'the_excerpt', wp_trim_words( $post['post_content'], $max_excerpt ) );
+        }
         $post_content = apply_filters( 'the_content', get_post_field( 'post_content', $post_id ) );
-        return apply_filters( 'the_excerpt', wp_trim_words( $post_content, 55 ) );
+        return apply_filters( 'the_excerpt', wp_trim_words( $post_content, $max_excerpt ) );
     }
 }
 
-if ( ! function_exists( 'stackable_blog_posts_image_sizes' ) ) {
-    /**
-     * Add all the image sizes.
-     *
-     * @since 1.7
-     */
-    function stackable_blog_posts_image_sizes() {
-        add_image_size( 'stackable-landscape-large', 1200, 800, true );
-        add_image_size( 'stackable-square-large', 1200, 1200, true );
-        add_image_size( 'stackable-portrait-large', 1200, 1800, true );
-        add_image_size( 'stackable-landscape', 600, 400, true );
-        add_image_size( 'stackable-portrait', 600, 900, true );
-        add_image_size( 'stackable-square', 600, 600, true );
-    }
-    add_action( 'after_setup_theme', 'stackable_blog_posts_image_sizes' );
+if ( ! function_exists( 'stackable_render_block_blog_posts' ) ) {
+	/**
+	 * Combine our JS & PHP block outputs.
+	 *
+	 * @since 2.0
+	 */
+	function stackable_render_block_blog_posts( $block_content, $block ) {
+		if ( $block['blockName'] !== 'ugb/blog-posts' ) {
+			return $block_content;
+		}
+		if ( empty( $block['innerHTML'] ) ) {
+			return $block_content;
+		}
+
+		/**
+		 * Our expected SAVE output (generated by save.js) is:
+		 *
+		 * <div class="wp-block-ugb-blog-posts ...">
+		 *     <style> ...some generated styles </style>
+		 *     <div class="ugb-inner-block">
+		 *         <div class="ugb-block-content"></div>
+		 *     </div>
+		 * </div>
+		 *
+		 * We need to place the contents inside ".ugb-block-content"
+		 */
+		return preg_replace( '/(ugb-block-content[\'"]\s*>)/', '$1' . $block_content, preg_replace( '/&lt;/', '<', $block['innerHTML'] ) );
+	}
+	add_filter( 'render_block', 'stackable_render_block_blog_posts', 10, 2 );
+}
+
+if ( ! function_exists( 'stackable_rest_get_terms' ) ) {
+	/**
+	 * REST Callback. Gets all the terms registered for all post types (including category and tags).
+	 *
+	 * @see https://stackoverflow.com/questions/42462187/wordpress-rest-api-v2-how-to-list-taxonomy-terms
+	 *
+	 * @since 2.0
+	 */
+	function stackable_rest_get_terms() {
+		$args = array(
+			'public' => true,
+		);
+		$taxonomies = get_taxonomies( $args, 'objects' );
+
+		$return = array();
+
+		$post_types = get_post_types( array( 'public' => true ), 'objects' );
+		foreach ( $post_types as $post_type => $data ) {
+			// Don't include attachments.
+			if ( $post_type === 'attachment' ) {
+				continue;
+			}
+			$return[ $post_type ] = array(
+				'label' => $data->label,
+				'taxonomies' => array(),
+			);
+		}
+
+		foreach ( $taxonomies as $taxonomy_slug => $taxonomy ) {
+			$post_type = $taxonomy->object_type[0];
+
+			// Don't include post formats.
+			if ( $post_type === 'post' && $taxonomy_slug === 'post_format' ) {
+				continue;
+			}
+
+			$return[ $post_type ]['taxonomies'][ $taxonomy_slug ] = array(
+				'label' => $taxonomy->label,
+				'terms' => get_terms( $taxonomy->name ),
+			);
+		}
+
+		return new WP_REST_Response( $return, 200 );
+	}
+}
+
+if ( ! function_exists( 'stackable_get_terms_endpoint' ) ) {
+	/**
+	 * Define our custom REST API endpoint for getting all the terms/taxonomies.
+	 *
+	 * @since 2.0
+	 */
+	function stackable_get_terms_endpoint() {
+		register_rest_route( 'wp/v2', '/stk_terms', array(
+			'methods' => 'GET',
+			'callback' => 'stackable_rest_get_terms',
+		) );
+	}
+	add_action( 'rest_api_init', 'stackable_get_terms_endpoint' );
+}
+
+if ( ! function_exists( 'stackable_add_custom_orderby_params' ) ) {
+	/**
+	 * The callback to add `rand` as an option for orderby param in REST API.
+	 * Hook to `rest_{$this->post_type}_collection_params` filter.
+	 *
+	 * @param array $query_params Accepted parameters.
+	 * @return array
+	 *
+	 * @see https://felipeelia.dev/wordpress-rest-api-enable-random-order-of-posts-list/
+	 * @see https://www.timrosswebdevelopment.com/wordpress-rest-api-post-order/
+	 */
+	function stackable_add_custom_orderby_params( $query_params ) {
+		if ( ! in_array( 'rand', $query_params['orderby']['enum'] ) ) {
+			$query_params['orderby']['enum'][] = 'rand';
+		}
+		if ( ! in_array( 'menu_order', $query_params['orderby']['enum'] ) ) {
+			$query_params['orderby']['enum'][] = 'menu_order';
+		}
+		return $query_params;
+	}
+}
+
+if ( ! function_exists( 'stackable_add_custom_orderby' ) ) {
+	/**
+	 * Add `rand` as an option for orderby param in REST API.
+	 * Hook to `rest_{$this->post_type}_collection_params` filter.
+	 *
+	 * @param array $query_params Accepted parameters.
+	 * @return array
+	 *
+	 * @see https://felipeelia.dev/wordpress-rest-api-enable-random-order-of-posts-list/
+	 * @see https://www.timrosswebdevelopment.com/wordpress-rest-api-post-order/
+	 */
+	function stackable_add_custom_orderby() {
+		$post_types = get_post_types( array( 'public' => true ) );
+		foreach ( $post_types as $post_type ) {
+			add_filter( 'rest_' . $post_type . '_collection_params', 'stackable_add_custom_orderby_params' );
+		}
+	}
+
+	add_action( 'rest_api_init', 'stackable_add_custom_orderby' );
 }
