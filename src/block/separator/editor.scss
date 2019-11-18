@@ -14,6 +14,9 @@
 }
 [data-type="ugb/separator"][data-align="full"] {
 	.ugb-separator {
+		.ugb-separator__svg-inner {
+			overflow: hidden;
+		}
 		.ugb-separator__svg-wrapper {
 			overflow: visible;
 		}
