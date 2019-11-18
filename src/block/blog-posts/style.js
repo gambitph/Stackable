@@ -55,7 +55,7 @@ export const createStyles = props => {
 
 			styles.push( {
 				[ `.ugb-blog-posts__${ content }` ]: {
-					order,
+					order: appendImportant( order ),
 				},
 			} )
 
@@ -63,7 +63,7 @@ export const createStyles = props => {
 			if ( showReadmore && content === 'excerpt' ) {
 				styles.push( {
 					'.ugb-blog-posts__readmore': {
-						order,
+						order: appendImportant( order ),
 					},
 				} )
 			}

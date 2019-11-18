@@ -11,6 +11,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once( 'deprecated.php' );
+require_once( 'attributes.php' );
+require_once( 'util.php' );
+
+if ( ! function_exists( 'stackable_attributes_default' ) ) {
+	/**
+	 * Merges an attribute array with default values.
+	 * Merged when the attribute value is "" or doesn't exist.
+	 *
+	 * @since 2.0
+	 */
+	function stackable_attributes_default( $attributes, $defaults ) {
+		$out = array();
+		foreach ( $attributes as $name => $value ) {
+			$out[ $name ] = $value;
+		}
+		foreach ( $defaults as $name => $default ) {
+			if ( array_key_exists( $name, $out ) ) {
+				if ( $out[ $name ] === '' ) {
+					$out[ $name ] = $default;
+				}
+			} else {
+				$out[ $name ] = $default;
+			}
+		}
+		return $out;
+	}
+}
 
 /**
  * Renders the `ugb/blog-posts` block on server.
@@ -25,225 +52,235 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
     function stackable_render_blog_posts_block( $attributes ) {
 		$attributes = apply_filters( 'stackable_block_migrate_attributes', $attributes, 'blog-posts' );
 
-		// TODO: adjust to v2
-        $recent_posts = wp_get_recent_posts(
-            array(
-                'numberposts' => ! empty( $attributes['numberOfItems'] ) ? $attributes['numberOfItems'] : '',
-                'post_status' => 'publish',
-                'order' => ! empty( $attributes['order'] ) ? $attributes['order'] : '',
-                'orderby' => ! empty( $attributes['orderBy'] ) ? $attributes['orderBy'] : '',
-                'category' => ! empty( $attributes['categories'] ) ? $attributes['categories'] : '',
-				'suppress_filters' => false,
-            )
+		$defaults = array(
+			'postType' => 'post',
+			'numberOfItems' => 6,
+			'orderBy' => 'date',
+			'order' => 'desc',
+			'taxonomyType' => 'category',
+			'taxonomy' => '',
+			'postOffset' => 0,
+			'postExclude' => '',
+			'postInclude' => '',
+
+			'design' => 'basic',
+			'shadow' => 3,
+			'imageSize' => 'large',
+			'titleTag' => 'h3',
+			'metaSeparator' => 'dot',
+			'excerptLength' => 55,
+			'readmoreText' => '',
+			'showAuthor' => true,
+			'showDate' => true,
+			'showComments' => true,
+			'showImage' => true,
+			'showCategory' => true,
+			'showTitle' => true,
+			'showMeta' => true,
+			'showExcerpt' => true,
+			'showReadmore' => true,
 		);
+
+		$attributes = stackable_attributes_default( $attributes, $defaults );
+
+		$post_query = apply_filters( 'stakckable/blog-post/post_query',
+			array(
+				'post_type' => $attributes['postType'],
+				'post_status' => 'publish',
+				'order' => $attributes['order'],
+				'orderby' => $attributes['orderBy'],
+				'numberposts' => $attributes['numberOfItems'],
+				'suppress_filters' => false,
+				'category' => $attributes['postType'] === 'post' && $attributes['taxonomyType'] === 'category' ? $attributes['taxonomy'] : '',
+				'tag_id' => $attributes['postType'] === 'post' && $attributes['taxonomyType'] === 'post_tag' ? $attributes['taxonomy'] : '',
+			),
+			$attributes
+		);
+
+		$recent_posts = wp_get_recent_posts( $post_query );
 
 		$posts_markup = '';
+		$show = stackable_blog_posts_util_show_options( $attributes );
 		$props = array( 'attributes' => array() );
 
-        foreach ( $recent_posts as $post ) {
-            $post_id = $post['ID'];
-
-            // Category.
-            $category = '';
-            if ( ! empty( $attributes['displayCategory'] ) ) {
-                $category = sprintf(
-                    '<div class="ugb-blog-posts__category-list">%s</div>',
-                    get_the_category_list( esc_html__( ', ', STACKABLE_I18N ), '', $post_id )
-                );
-            }
-
-            // Featured image.
-            $featured_image = '';
-            if ( ! empty( $attributes['displayFeaturedImage'] ) ) {
-                $size = 'full';
-                if ( $attributes['featuredImageShape'] === 'landscape' ) {
-                    $size = 'stackable-landscape';
-                } else if ( $attributes['featuredImageShape'] === 'square' ) {
-                    $size = 'stackable-square';
-                }
-				$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size, false );
-
-				$classes = array( 'ugb-blog-posts__featured-image' );
-				if ( ! empty( $attributes['shadow'] ) || $attributes['shadow'] === 0 ) {
-					if ( $attributes['shadow'] !== 3 ) {
-						$classes[] = 'ugb--shadow-' . $attributes['shadow'];
-					}
-				}
-
-				$styles = array();
-				if ( ! empty( $attributes['borderRadius'] ) || $attributes['borderRadius'] === 0 ) {
-					if ( $attributes['borderRadius'] !== 12 ) {
-						$styles[] = 'border-radius: ' . $attributes['borderRadius'] . 'px';
-					}
-				}
-
-                if ( ! empty( $image ) ) {
-                    $featured_image = sprintf(
-						'<figure class="%s" style="%s"><a href="%s"><img src="%s" alt="%s"/></a></figure>',
-						esc_attr( implode( ' ', $classes ) ),
-						esc_attr( implode( '; ', $styles ) ),
-                        esc_url( get_permalink( $post_id ) ),
-                        $image[0],
-                        esc_attr( get_the_title( $post_id ) )
-                    );
-                }
-			}
-
-            // Author.
-            $author = '';
-            if ( ! empty( $attributes['displayAuthor'] ) ) {
-                $author = sprintf(
-                    '<span>%s</span>',
-                    esc_html( get_the_author_meta( 'display_name', $post['post_author'] ) )
-                );
-            }
-
-            // Date.
-            $date = '';
-            if ( ! empty( $attributes['displayDate'] ) ) {
-                $date = sprintf(
-                    '<time datetime="%1$s" class="ugb-blog-posts__date">%2$s</time>',
-                    esc_attr( get_the_date( 'c', $post_id ) ),
-                    esc_html( get_the_date( '', $post_id ) )
-                );
-            }
-
-            // Comments.
-            $comments = '';
-            if ( ! empty( $attributes['displayComments'] ) ) {
-                $num = get_comments_number( $post_id );
-                $num = sprintf( _n( '%d comment', '%d comments', $num, STACKABLE_I18N ), $num );
-
-                $comments = sprintf(
-                    '<span>%s</span>',
-                    $num
-                );
-            }
-
-            // Title.
-            $title = '';
-            if ( ! empty( $attributes['displayTitle'] ) ) {
-                $title = get_the_title( $post_id );
-                if ( ! $title ) {
-                    $title = __( '(Untitled)', STACKABLE_I18N );
-                }
-                $title = sprintf(
-                    '<h3 class="ugb-blog-posts__title"><a href="%s">%s</a></h3>',
-                    esc_url( get_permalink( $post_id ) ),
-                    $title // esc_html( $title )
-                );
-            }
-
-            // Excerpt.
-            $excerpt = '';
-            if ( ! empty( $attributes['displayExcerpt'] ) ) {
-
-                $excerpt = stackable_get_excerpt( $post_id, $post );
-                if ( ! empty( $excerpt ) ) {
-                    $excerpt = sprintf(
-                        '<div class="ugb-blog-posts__excerpt">%s</div>',
-                        wp_kses_post( $excerpt )
-                    );
-                }
-            }
-
-            // Read more link.
-            $read_more = '';
-            if ( ! empty( $attributes['displayReadMoreLink'] ) ) {
-                $read_more_text = __( 'Continue reading', STACKABLE_I18N );
-                if ( ! empty( $attributes['readMoreText'] ) ) {
-                    $read_more_text = $attributes['readMoreText'];
-                }
-                $read_more = sprintf(
-                    '<p class="ugb-blog-posts__read_more"><a href="%s">%s</a></p>',
-                    esc_url( get_permalink( $post_id ) ),
-                    esc_html( $read_more_text )
-                );
-            }
-
-            /**
-             * This is the default basic style.
-             */
-            $post_markup = "<article class='ugb-blog-posts__item'>";
-            $post_markup .= $category;
-            $post_markup .= $featured_image;
-            if ( $attributes['displayDate'] || $attributes['displayAuthor'] || $attributes['displayComments'] ) {
-                $post_markup .= '<aside class="entry-meta ugb-blog-posts__meta">';
-                $post_markup .= $author;
-                if ( ! empty( $attributes['displayAuthor'] ) && ( ! empty( $attributes['displayDate'] ) || ! empty( $attributes['displayComments'] ) ) ) {
-                    $post_markup .= '<span class="ugb-blog-posts__sep">&middot;</span>';
-                }
-                $post_markup .= $date;
-                if ( ! empty( $attributes['displayDate'] ) && ! empty( $attributes['displayComments'] ) ) {
-                    $post_markup .= '<span class="ugb-blog-posts__sep">&middot;</span>';
-                }
-                $post_markup .= $comments;
-                $post_markup .= '</aside>';
-            }
-            $post_markup .= $title;
-            $post_markup .= $excerpt;
-            $post_markup .= $read_more;
-            $post_markup .= "</article>";
-
-            // Let others change the saved markup.
-            $props = array(
-				'post_id' => $post_id,
-                'attributes' => $attributes,
-                'category' => $category,
-                'featured_image' => $featured_image,
-                'author' => $author,
-                'date' => $date,
-                'comments' => $comments,
-                'title' => $title,
-                'excerpt' => $excerpt,
-                'read_more' => $read_more,
-            );
-
-            $post_markup = apply_filters( 'stackable/designs_blog-posts_save', $post_markup, $attributes['design'], $props );
-            $posts_markup .= $post_markup . "\n";
-        }
-
-        // Main classes.
-        $mainClasses = array( 'ugb-blog-posts' );
-        if ( ! empty( $attributes['className'] ) ) {
-            $mainClasses[] = $attributes['className'];
-        }
-        if ( ! empty( $attributes['columns'] ) ) {
-            $mainClasses[] = 'ugb-blog-posts--columns-' . $attributes['columns'];
-        }
-        if ( ! empty( $attributes['featuredImageShape'] ) ) {
-            $mainClasses[] = 'ugb-blog-posts--feature-image-shape-' . $attributes['featuredImageShape'];
-        }
-        if ( ! empty( $attributes['design'] ) ) {
-            $mainClasses[] = 'ugb-blog-posts--design-' . $attributes['design'];
-        }
-        if ( ! empty( $attributes['contentAlign'] ) ) {
-            $mainClasses[] = 'ugb-blog-posts--align-' . $attributes['contentAlign'];
-        }
-        if ( ! empty( $attributes['align'] ) ) {
-            $mainClasses[] = 'align' . $attributes['align'];
+		// Classes.
+		$featured_item_classes = array( 'ugb-blog-posts__item' );
+		if ( ! $show['imageShadow'] && (int) $attributes['shadow'] !== 0 ) {
+			$featured_item_classes[] = 'ugb--shadow-' . $attributes['shadow'];
 		}
-		$mainClasses = apply_filters( 'stackable/blog-posts_main-classes', $mainClasses, $attributes['design'], $props );
-
-        // Main styles.
-        $mainStyles = array();
-        if ( ! empty( $attributes['accentColor'] ) ) {
-            $mainStyles[] = '--s-accent-color: ' . $attributes['accentColor'];
+		$featured_item_classes = implode( ' ', $featured_item_classes );
+		$featured_image_classes = array( 'ugb-blog-posts__featured-image' );
+		if ( $show['imageShadow'] && (int) $attributes['shadow'] !== 0 ) {
+			$featured_image_classes[] = 'ugb--shadow-' . $attributes['shadow'];
 		}
+		$featured_image_classes = implode( ' ', $featured_image_classes );
 
-		$before_output = apply_filters( 'stackable/blog-posts_save_output_before', '', $attributes['design'], $props );
-		$after_output = apply_filters( 'stackable/blog-posts_save_output_after', '', $attributes['design'], $props );
-
-        $block_content = sprintf(
-            '<div class="%s" style="%s">%s%s%s</div>',
-            esc_attr( implode( ' ', $mainClasses ) ),
-			esc_attr( implode( ';', $mainStyles ) ),
-			$before_output,
-			$posts_markup,
-			$after_output
+		// Meta separators.
+		$meta_separators = array(
+			'dot' => '·',
+			'space' => ' ',
+			'comma' => ',',
+			'dash' => '—',
+			'pipe' => '|',
 		);
 
-        return $block_content;
+        foreach ( $recent_posts as $i => $post ) {
+			$post_id = $post['ID'];
+
+			// Featured image.
+			$featured_image = '';
+			$featured_image_background = '';
+			$featured_image_id = get_post_thumbnail_id( $post_id );
+			if ( ! empty( $featured_image_id ) ) {
+				$featured_image_urls = stackable_featured_image_urls_from_url( $featured_image_id );
+				$featured_image_src = $featured_image_urls[ $attributes['imageSize'] ];
+				if ( ! empty( $featured_image_src ) ) {
+					$featured_image = sprintf(
+						'<figure class="%s"><a href="%s"><img src="%s" alt="%s" width="%s" height="%s"/></a></figure>',
+						esc_attr( $featured_image_classes ),
+						esc_url( get_permalink( $post_id ) ),
+						esc_url( $featured_image_src[0] ),
+						esc_attr( get_the_title( $post_id ) ),
+						esc_attr( $featured_image_src[1] ),
+						esc_attr( $featured_image_src[2] ),
+					);
+
+					$featured_image_background = sprintf(
+						'<div class="%s" style="background-image: url(%s)"></div>',
+						'ugb-blog-posts__featured-image-background',
+						esc_url( $featured_image_src[0] ),
+					);
+				}
+			}
+
+			// Title.
+			$title = get_the_title( $post_id );
+			if ( ! $title ) {
+				$title = __( '(Untitled)', STACKABLE_I18N );
+			}
+			$title = sprintf(
+				'<%s class="%s"><a href="%s">%s</a></%s>',
+				$attributes['titleTag'],
+				'ugb-blog-posts__title',
+				esc_url( get_permalink( $post_id ) ),
+				$title,
+				$attributes['titleTag'],
+			);
+
+			// Category.
+			$category = sprintf(
+				'<div class="ugb-blog-posts__category">%s</div>',
+				get_the_category_list( esc_html__( ', ', STACKABLE_I18N ), '', $post_id )
+			);
+
+			// Separator.
+			$separator = sprintf(
+				'<span class="ugb-blog-posts__sep">%s</span>',
+				$meta_separators[ $attributes['metaSeparator'] ],
+			);
+
+			// Author.
+			$author = sprintf(
+				'<span>%s</span>',
+				esc_html( get_the_author_meta( 'display_name', $post['post_author'] ) )
+			);
+
+            // Date.
+			$date = sprintf(
+				'<time datetime="%1$s" class="ugb-blog-posts__date">%2$s</time>',
+				esc_attr( get_the_date( 'c', $post_id ) ),
+				esc_html( get_the_date( '', $post_id ) )
+			);
+
+            // Comments.
+			$num = get_comments_number( $post_id );
+			$num = sprintf( _n( '%d comment', '%d comments', $num, STACKABLE_I18N ), $num );
+
+			$comments = sprintf(
+				'<span>%s</span>',
+				$num
+			);
+
+            // Excerpt.
+			$excerpt = stackable_get_excerpt( $post_id, $post );
+
+			// Trim the excerpt.
+			if ( ! empty( $excerpt ) ) {
+				$excerpt = explode( ' ', $excerpt );
+				$trim_to_length = (int) $attributes['excerptLength'] ? (int) $attributes['excerptLength'] : 55;
+				if ( count( $excerpt ) > $trim_to_length ) {
+					$excerpt = implode( ' ', array_slice( $excerpt, 0, $trim_to_length ) ) . '...';
+				} else {
+					$excerpt = implode( ' ', $excerpt );
+				}
+
+				$excerpt = sprintf(
+					'<div class="ugb-blog-posts__excerpt">%s</div>',
+					wp_kses_post( $excerpt )
+				);
+			}
+
+			// Read more link.
+			$readmore_text = __( 'Continue reading', STACKABLE_I18N );
+			if ( ! empty( $attributes['readmoreText'] ) ) {
+				$readmore_text = $attributes['readmoreText'];
+			}
+			$readmore = sprintf(
+				'<p class="ugb-blog-posts__readmore"><a href="%s">%s</a></p>',
+				esc_url( get_permalink( $post_id ) ),
+				esc_html( $readmore_text )
+			);
+
+			// Meta.
+			$showAuthor = $attributes['showAuthor'];
+			$showDate = $attributes['showDate'];
+			$showComments = $attributes['showComments'];
+			$meta = '';
+			if ( $showAuthor || $showDate || $showComments ) {
+				$meta = sprintf(
+					'<aside class="entry-meta ugb-blog-posts__meta">%s%s%s%s%s</aside>',
+					$showAuthor && $author ? $author : '',
+					$showAuthor && $author && ( ( $showDate && $date ) || ( $showComments && $comments ) ) ? $separator : '',
+					$showDate && $date ? $date : '',
+					( ( $showAuthor && $author ) || ( $showDate && $date ) ) && $showComments && $comments ? $separator : '',
+					$showComments && $comments ? $comments : '',
+				);
+			}
+
+			$output = apply_filters( 'stackable/blog-posts/edit.output', null, $attributes, array(
+				'featuredItemClasses' => $featured_item_classes,
+				'featuredImageBackground' => $featured_image_background,
+				'featuredImage' => $featured_image,
+				'category' => $category,
+				'title' => $title,
+				'author' => $author,
+				'separator' => $separator,
+				'date' => $date,
+				'comments' => $comments,
+				'excerpt' => $excerpt,
+				'readmore' => $readmore,
+				'meta' => $meta,
+			), $i );
+
+			if ( ! empty( $output ) ) {
+				$posts_markup .= $output;
+			} else {
+				$posts_markup .= sprintf(
+					'<article class="%s">%s%s<div class="ugb-blog-posts__content">%s%s%s%s%s%s</div></article>',
+					$featured_item_classes,
+					$attributes['showImage'] && $show['imageAsBackground'] ? $featured_image_background : '',
+					$attributes['showImage'] && ! $show['imageAsBackground'] && $show['imageOutsideContainer'] ? $featured_image : '',
+					$attributes['showImage'] && ! $show['imageAsBackground'] && ! $show['imageOutsideContainer'] ? $featured_image : '',
+					$attributes['showCategory'] ? $category : '',
+					$attributes['showTitle'] ? $title : '',
+					$attributes['showMeta'] ? $meta : '',
+					$attributes['showExcerpt'] ? $excerpt : '',
+					$attributes['showReadmore'] ? $readmore : '',
+				);
+			}
+		}
+
+        return $posts_markup;
     }
 }
 
@@ -259,133 +296,7 @@ if ( ! function_exists( 'stackable_register_blog_posts_block' ) ) {
         register_block_type(
             'ugb/blog-posts',
             array(
-				// TODO: Adjust to v2, copy from index.js
-                'attributes' => array(
-					'numberOfItems' => array(
-						'type' => 'number',
-						'default' => 6,
-					),
-					'postType' => array(
-						'type' => 'string',
-						'default' => 'post',
-					),
-					'taxonomyType' => array(
-						'type' => 'string',
-						'default' => 'category',
-					),
-					'taxonomy' => array(
-						'type' => 'string',
-						'default' => '',
-					),
-
-
-
-
-
-
-                    'className' => array(
-                        'type' => 'string',
-                    ),
-                    'order' => array(
-                        'type' => 'string',
-                        'default' => 'desc',
-                    ),
-                    'orderBy' => array(
-                        'type' => 'string',
-                        'default' => 'date',
-                    ),
-                    'categories' => array(
-                        'type' => 'string',
-                    ),
-                    // 'postsToShow' => array(
-                    //     'type' => 'number',
-                    //     'default' => 6,
-                    // ),
-                    'columns' => array(
-                        'type' => 'number',
-                        'default' => 2,
-                    ),
-                    'displayFeaturedImage' => array(
-                        'type' => 'boolean',
-                        'default' => true,
-                    ),
-                    'featuredImageShape' => array(
-                        'type' => 'string',
-                        'default' => 'landscape',
-                    ),
-                    'displayTitle' => array(
-                        'type' => 'boolean',
-                        'default' => true,
-                    ),
-                    'displayDate' => array(
-                        'type' => 'boolean',
-                        'default' => true,
-                    ),
-                    'displayCategory' => array(
-                        'type' => 'boolean',
-                        'default' => true,
-                    ),
-                    'displayComments' => array(
-                        'type' => 'boolean',
-                        'default' => true,
-                    ),
-                    'displayAuthor' => array(
-                        'type' => 'boolean',
-                        'default' => true,
-                    ),
-                    'displayExcerpt' => array(
-                        'type' => 'boolean',
-                        'default' => true,
-                    ),
-                    'displayReadMoreLink' => array(
-                        'type' => 'boolean',
-                        'default' => false,
-                    ),
-                    'readMoreText' => array(
-                        'type' => 'string',
-                    ),
-                    'contentAlign' => array(
-                        'type' => 'string',
-                    ),
-                    'align' => array(
-                        'type' => 'string',
-                    ),
-                    'accentColor' => array(
-                        'type' => 'string',
-                    ),
-                    'design' => array(
-                        'type' => 'string',
-                        'default' => 'basic',
-					),
-					'borderRadius' => array(
-						'type' => 'number',
-						'default' => 12,
-					),
-					'shadow' => array(
-						'type' => 'number',
-						'default' => 3,
-					),
-
-					// UniqueClass.
-					'uniqueClass' => array(
-						'type' => 'string',
-						'default' => '',
-					),
-
-					// Custom CSS attributes.
-					'customCSSUniqueID' => array(
-						'type' => 'string',
-						'default' => '',
-					),
-					'customCSS' => array(
-						'type' => 'string',
-						'default' => '',
-					),
-					'customCSSCompiled' => array(
-						'type' => 'string',
-						'default' => '',
-					),
-                ),
+                'attributes' => stackable_blog_posts_attributes(),
                 'render_callback' => 'stackable_render_blog_posts_block',
             )
         );
@@ -474,11 +385,23 @@ if ( ! function_exists( 'stackable_blog_posts_rest_fields' ) ) {
 if ( ! function_exists( 'stackable_featured_image_urls' ) ) {
     /**
      * Get the different featured image sizes that the blog will use.
+	 * Used in the custom REST API endpoint.
      *
      * @since 1.7
      */
     function stackable_featured_image_urls( $object, $field_name, $request ) {
-		$image = wp_get_attachment_image_src( $object['featured_media'], 'full', false );
+		return stackable_featured_image_urls_from_url( $object['featured_media'] );
+	}
+}
+
+if ( ! function_exists( 'stackable_featured_image_urls_from_url' ) ) {
+	/**
+     * Get the different featured image sizes that the blog will use.
+     *
+     * @since 2.0
+     */
+	function stackable_featured_image_urls_from_url( $attachment_id ) {
+		$image = wp_get_attachment_image_src( $attachment_id, 'full', false );
 		$sizes = get_intermediate_image_sizes();
 
 		$imageSizes = array(
@@ -486,11 +409,11 @@ if ( ! function_exists( 'stackable_featured_image_urls' ) ) {
 		);
 
 		foreach ( $sizes as $size ) {
-			$imageSizes[ $size ] = is_array( $image ) ? wp_get_attachment_image_src( $object['featured_media'], $size, false ) : '';
+			$imageSizes[ $size ] = is_array( $image ) ? wp_get_attachment_image_src( $attachment_id, $size, false ) : '';
 		}
 
 		return $imageSizes;
-    }
+	}
 }
 
 if ( ! function_exists( 'stackable_author_info' ) ) {

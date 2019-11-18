@@ -20,7 +20,7 @@ export const showOptions = blockProps => {
 		showReadmore = true,
 	} = blockProps.attributes
 
-	return applyFilters( 'stackable.card.show', {
+	return applyFilters( 'stackable.blog-posts.show', {
 		columnBackground: ! [ 'basic', 'list' ].includes( design ),
 		borderRadius: true,
 		shadow: true,

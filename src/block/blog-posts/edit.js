@@ -354,6 +354,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					...createTypographyAttributeNames( 'title%s' ),
 					'titleTag',
 					'titleColor',
+					'titleHoverColor',
 					...createResponsiveAttributeNames( 'Title%sAlign' ),
 				] }
 				toggleAttributeName="showTitle"
@@ -468,7 +469,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 				<AdvancedSelectControl
 					label={ __( 'Separator', i18n ) }
 					options={ [
-						{ label: __( 'Default (Dot)', i18n ), value: 'dot' },
+						{ label: __( 'Default (Dot)', i18n ), value: '' },
 						{ label: __( 'Space', i18n ), value: 'space' },
 						{ label: __( 'Comma', i18n ), value: 'comma' },
 						{ label: __( 'Dash', i18n ), value: 'dash' },
@@ -491,8 +492,10 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 				checked={ showReadmore }
 				onChange={ showReadmore => setAttributes( { showReadmore } ) }
 				toggleOnSetAttributes={ [
+					'readmoreText',
 					...createTypographyAttributeNames( 'readmore%s' ),
 					'readmoreColor',
+					'readmoreHoverColor',
 					...createResponsiveAttributeNames( 'Readmore%sAlign' ),
 				] }
 				toggleAttributeName="showReadmore"
@@ -668,10 +671,16 @@ class Edit extends Component {
 			posts.slice( 0, numberOfItems ) :
 			posts
 
+		const featuredItemClasses = classnames( [
+			'ugb-blog-posts__item',
+		], {
+			[ `ugb--shadow-${ shadow }` ]: ! show.imageShadow,
+		} )
+
 		const featuredImageClasses = classnames( [
 			'ugb-blog-posts__featured-image',
 		], {
-			[ `ugb--shadow-${ shadow }` ]: show.imageShadow && shadow !== '',
+			[ `ugb--shadow-${ shadow }` ]: show.imageShadow,
 		} )
 
 		if ( ! hasPosts ) {
@@ -719,7 +728,7 @@ class Edit extends Component {
 							<span>{ post.author_info.name }</span>
 
 						const date = post.date_gmt &&
-							<time dateTime={ format( 'c', post.date_gmt ) } className="date">
+							<time dateTime={ format( 'c', post.date_gmt ) } className="ugb-blog-posts__date">
 								{ dateI18n( 'F d, Y', post.date_gmt ) }
 							</time>
 
@@ -751,6 +760,7 @@ class Edit extends Component {
 							</aside>
 
 						const output = applyFilters( 'stackable.blog-posts.edit.output', null, this.props, {
+							featuredItemClasses,
 							featuredImageBackground,
 							featuredImage,
 							category,
@@ -768,7 +778,7 @@ class Edit extends Component {
 						}
 
 						return (
-							<article className="ugb-blog-posts__item" key={ i }>
+							<article className={ featuredItemClasses } key={ i }>
 								{ showImage && show.imageAsBackground && featuredImageBackground }
 								{ showImage && ! show.imageAsBackground && show.imageOutsideContainer && featuredImage }
 								<div className="ugb-blog-posts__content">
