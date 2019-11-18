@@ -79,6 +79,8 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 			'showMeta' => true,
 			'showExcerpt' => true,
 			'showReadmore' => true,
+
+			'columns' => 2,
 		);
 
 		$attributes = stackable_attributes_default( $attributes, $defaults );
@@ -280,7 +282,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 			}
 		}
 
-        return $posts_markup;
+        return apply_filters( 'stackable/blog-posts/edit.output.markup', $posts_markup, $attributes );
     }
 }
 

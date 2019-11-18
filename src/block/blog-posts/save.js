@@ -21,6 +21,7 @@ const save = props => {
 	const {
 		columns = 2,
 		design = 'basic',
+		categoryHighlighted = false,
 	} = attributes
 
 	const mainClasses = classnames( [
@@ -29,6 +30,7 @@ const save = props => {
 		`ugb-blog-posts--design-${ design }`,
 		`ugb-blog-posts--columns-${ columns }`,
 	], applyFilters( 'stackable.blog-posts.mainclasses', {
+		'ugb-blog-posts--cat-highlighted': categoryHighlighted,
 	}, props ) )
 
 	return (

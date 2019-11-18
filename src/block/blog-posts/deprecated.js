@@ -143,6 +143,10 @@ const deprecated = [
 				showExcerpt: attributes.displayExcerpt,
 				showReadmore: attributes.displayReadMoreLink,
 				readmoreText: attributes.readMoreText,
+
+				postType: 'post',
+				taxonomyType: 'category',
+				taxonomy: attributes.categories,
 			}
 		},
 	},

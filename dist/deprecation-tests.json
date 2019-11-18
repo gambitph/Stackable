@@ -208,6 +208,65 @@
     "html": "<!-- wp:ugb/blockquote {\"design\":\"basic\",\"customCSSUniqueID\":\"ugb-981958c\",\"customCSS\":\"/* Blockquote container */\n.ugb-blockquote {\n\tbackground: yellow;\n}\n\n/* Blockquote content wrapper */\n.ugb-blockquote .ugb-content-wrapper {\n\n}\n\n/* Blockquote quotation mark */\n.ugb-blockquote svg {\n\tfill: red;\n}\n\n/* Blockquote text */\n.ugb-blockquote__text {\n\tcolor: blue;\n}\",\"customCSSCompiled\":\".ugb-981958c.ugb-blockquote{background:yellow !important}.ugb-981958c.ugb-blockquote svg{fill:red !important}.ugb-981958c .ugb-blockquote__text{color:blue !important}\"} -->\n\t\t<blockquote class=\"wp-block-ugb-blockquote ugb-blockquote ugb-blockquote--v2 ugb--background-opacity-5 ugb-blockquote--design-basic ugb-981958c\"><style>.ugb-981958c.ugb-blockquote{background:yellow !important}.ugb-981958c.ugb-blockquote svg{fill:red !important}.ugb-981958c .ugb-blockquote__text{color:blue !important}</style><div class=\"ugb-content-wrapper\"><svg viewbox=\"0 0 50 50\" xmlns=\"http://www.w3.org/2000/svg\" style=\"fill:;width:70px;height:70px\"><path d=\"M19.8 9.3C10.5 11.8 4.6 17 2.1 24.8c2.3-3.6 5.6-5.4 9.9-5.4 3.3 0 6 1.1 8.3 3.3 2.2 2.2 3.4 5 3.4 8.3 0 3.2-1.1 5.8-3.3 8-2.2 2.2-5.1 3.2-8.7 3.2-3.7 0-6.5-1.2-8.6-3.5C1 36.3 0 33.1 0 29 0 18.3 6.5 11.2 19.6 7.9l.2 1.4zm26.4 0C36.9 11.9 31 17 28.5 24.8c2.2-3.6 5.5-5.4 9.8-5.4 3.2 0 6 1.1 8.3 3.2 2.3 2.2 3.4 4.9 3.4 8.3 0 3.1-1.1 5.8-3.3 7.9-2.2 2.2-5.1 3.3-8.6 3.3-3.7 0-6.6-1.1-8.6-3.4-2.1-2.3-3.1-5.5-3.1-9.7 0-10.7 6.6-17.8 19.7-21.1l.1 1.4z\"></path></svg><p class=\"ugb-blockquote__text\" style=\"color:\">Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block. Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.</p></div></blockquote>\n\t\t<!-- /wp:ugb/blockquote -->"
   },
   {
+    "block": "Blog Posts",
+    "version": "1.17.3",
+    "description": "Default block",
+    "html": "<!-- wp:ugb/blog-posts /-->"
+  },
+  {
+    "block": "Blog Posts",
+    "version": "1.17.3",
+    "description": "Modified block",
+    "html": "<!-- wp:ugb/blog-posts {\"order\":\"asc\",\"postsToShow\":2,\"columns\":1,\"borderRadius\":46,\"shadow\":5} /-->"
+  },
+  {
+    "block": "Blog Posts",
+    "version": "1.17.3",
+    "description": "Modified block",
+    "html": "<!-- wp:ugb/blog-posts {\"categories\":\"1\"} /-->"
+  },
+  {
+    "block": "Blog Posts",
+    "version": "1.17.3",
+    "description": "Modified block",
+    "html": "<!-- wp:ugb/blog-posts {\"featuredImageShape\":\"full\",\"displayTitle\":false,\"displayDate\":false,\"displayComments\":false,\"displayExcerpt\":false,\"displayReadMoreLink\":true,\"readMoreText\":\"More\",\"accentColor\":\"#ff06e6\"} /-->"
+  },
+  {
+    "block": "Blog Posts",
+    "version": "1.17.3",
+    "description": "Modified block",
+    "plan": "Premium",
+    "html": "<!-- wp:ugb/blog-posts {\"accentColor\":\"#cd2653\",\"design\":\"portfolio\"} /-->"
+  },
+  {
+    "block": "Blog Posts",
+    "version": "1.17.3",
+    "description": "Modified block",
+    "plan": "Premium",
+    "html": "<!-- wp:ugb/blog-posts {\"postsToShow\":2,\"columns\":1,\"displayComments\":false,\"displayAuthor\":false,\"displayReadMoreLink\":true,\"design\":\"portfolio2\"} /-->"
+  },
+  {
+    "block": "Blog Posts",
+    "version": "1.17.3",
+    "description": "Modified block",
+    "plan": "Premium",
+    "html": "<!-- wp:ugb/blog-posts {\"postsToShow\":4,\"displayComments\":false,\"displayAuthor\":false,\"displayExcerpt\":false,\"accentColor\":\"#fcb900\",\"design\":\"image-card\"} /-->"
+  },
+  {
+    "block": "Blog Posts",
+    "version": "1.17.3",
+    "description": "Modified block",
+    "plan": "Premium",
+    "html": "<!-- wp:ugb/blog-posts {\"postsToShow\":2,\"featuredImageShape\":\"square\",\"displayCategory\":false,\"displayComments\":false,\"accentColor\":\"#8ed1fc\",\"design\":\"vertical-card\"} /-->"
+  },
+  {
+    "block": "Blog Posts",
+    "version": "1.17.3",
+    "description": "Custom CSS",
+    "plan": "Premium",
+    "html": "<!-- wp:ugb/blog-posts {\"displayReadMoreLink\":true,\"customCSSUniqueID\":\"ugb-d6bcad4\",\"customCSS\":\"/* Blog Posts container */\n.ugb-blog-posts {\n\t\n}\n\n/* Blog Post individual item */\n.ugb-blog-posts .ugb-blog-posts__item {\n\t\n}\n\n/* Blog Post category container */\n.ugb-blog-posts .ugb-blog-posts__category-list {\n}\n\n/* Blog Post category item */\n.ugb-blog-posts .ugb-blog-posts__category-list a {\n\tcolor: yellow\n}\n\n/* Blog Post featured image */\n.ugb-blog-posts .ugb-blog-posts__featured-image {\n\t\n}\n\n/* Blog Post meta info */\n.ugb-blog-posts .ugb-blog-posts__meta {\n\t\n}\n\n/* Blog Post titles */\n.ugb-blog-posts .ugb-blog-posts__title a {\n\t\n}\n\n/* Blog Post excerpt container */\n.ugb-blog-posts .ugb-blog-posts__excerpt {\n\t\n}\n\n/* Blog Post excerpt text */\n.ugb-blog-posts .ugb-blog-posts__excerpt p {\n\t\n}\n\n/* Blog Post continue reading link */\n.ugb-blog-posts .ugb-blog-posts__read_more a {\n\tcolor: orange\n}\",\"customCSSCompiled\":\".ugb-d6bcad4.ugb-blog-posts .ugb-blog-posts__category-list a{color:yellow !important}.ugb-d6bcad4.ugb-blog-posts .ugb-blog-posts__read_more a{color:orange !important}\"} /-->"
+  },
+  {
     "block": "Button",
     "version": "1.15.5",
     "description": "Default block",
