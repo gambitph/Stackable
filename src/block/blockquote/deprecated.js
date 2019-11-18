@@ -253,7 +253,7 @@ const deprecatedSave_1_13 = props => {
 		borderRadius: borderRadius !== 12 ? borderRadius : undefined,
 	}
 
-	const styles = applyFilters( 'stackable.blockquote.styles', {
+	const styles = applyFilters( 'stackable.blockquote.styles_1_17_3', {
 		main: {
 			'--quote-color': quoteColor ? quoteColor : undefined,
 			...basicStyles,

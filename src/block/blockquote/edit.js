@@ -105,7 +105,7 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 					<RangeControl
 						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
-						onChange={ ( borderRadius = 12 ) => setAttributes( { borderRadius } ) }
+						onChange={ borderRadius => setAttributes( { borderRadius } ) }
 						min={ 0 }
 						max={ 50 }
 						allowReset={ true }
@@ -115,7 +115,7 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 					<RangeControl
 						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
-						onChange={ ( shadow = 3 ) => setAttributes( { shadow } ) }
+						onChange={ shadow => setAttributes( { shadow } ) }
 						min={ 0 }
 						max={ 9 }
 						allowReset={ true }

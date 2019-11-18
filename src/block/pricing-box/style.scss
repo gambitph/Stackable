@@ -65,7 +65,7 @@
 	.ugb-pricing-box__price-wrapper,
 	.ugb-pricing-box__subprice,
 	.ugb-pricing-box__description {
-		margin-bottom: $text-margin-bottom;
+		margin: 0 0 $text-margin-bottom 0;
 	}
 	.ugb-pricing-box__button {
 		margin-top: #{ $text-margin-bottom * 2 };

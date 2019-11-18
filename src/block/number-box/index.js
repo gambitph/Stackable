@@ -99,11 +99,11 @@ export const schema = {
 	},
 	borderRadius: {
 		type: 'number',
-		default: 12,
+		default: '',
 	},
 	shadow: {
 		type: 'number',
-		default: 3,
+		default: '',
 	},
 
 	...createAllCombinationAttributes(

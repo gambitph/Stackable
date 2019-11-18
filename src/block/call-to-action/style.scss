@@ -15,7 +15,7 @@
 	}
 	.ugb-cta__title,
 	.ugb-cta__description {
-		margin-bottom: $text-margin-bottom;
+		margin: 0 0 $text-margin-bottom 0;
 	}
 	&:not(.ugb-cta--design-plain) {
 		.ugb-cta__item {

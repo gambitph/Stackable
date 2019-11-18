@@ -30,7 +30,7 @@
 	}
 	.ugb-card__subtitle,
 	.ugb-card__description {
-		margin-bottom: $text-margin-bottom;
+		margin: 0 0 $text-margin-bottom 0;
 	}
 	.ugb-card__image {
 		height: 300px;
@@ -39,7 +39,7 @@
 		background-position: center;
 	}
 	.ugb-card__title {
-		margin-bottom: #{ $text-margin-bottom / 2 };
+		margin: 0 0 #{ $text-margin-bottom / 2 } 0;
 	}
 	.ugb-card__subtitle {
 		font-size: 0.85em;
@@ -52,7 +52,7 @@
 	}
 	&.ugb-card--design-plain {
 		.ugb-card__image {
-			margin-bottom: $text-margin-bottom;
+			margin-bottom: 0 0 $text-margin-bottom 0;
 		}
 		.ugb-card__content {
 			padding: 0;

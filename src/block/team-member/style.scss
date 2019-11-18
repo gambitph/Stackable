@@ -52,7 +52,7 @@
 	.ugb-team-member__position,
 	.ugb-team-member__description,
 	.ugb-team-member__buttons {
-		margin-bottom: $text-margin-bottom;
+		margin: 0 0 $text-margin-bottom 0;
 	}
 	.ugb-team-member__name {
 		margin-bottom: #{ $text-margin-bottom / 2 };

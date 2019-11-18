@@ -30,7 +30,7 @@
 	.ugb-feature-grid__image,
 	.ugb-feature-grid__title,
 	.ugb-feature-grid__description {
-		margin-bottom: $text-margin-bottom;
+		margin: 0 0 $text-margin-bottom 0;
 	}
 
 	&:not(.ugb-feature-grid--design-plain) {
