@@ -139,6 +139,7 @@ const save = props => {
 								height={ imageHeight }
 								alt={ imageAlt }
 								shape={ imageShape }
+								shadow={ imageShadow }
 							/>
 						</div>
 					}

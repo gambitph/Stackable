@@ -508,6 +508,7 @@ const edit = props => {
 										alt={ imageAlt }
 										width={ imageWidth }
 										height={ imageHeight }
+										shadow={ imageShadow }
 									/>
 								}
 							/>
