@@ -102,15 +102,47 @@ const deprecated = [
 		attributes: deprecatedSchema_1_17_3,
 		save: () => null,
 		migrate: attributes => {
+			let metaColor = [ 'portfolio', 'portfolio2' ].includes( attributes.design ) ? '#ffffff' : undefined
+			if ( attributes.accentColor ) {
+				if ( [ 'basic', 'list', 'vertical-card', 'horizontal-card', 'vertical-card2' ].includes( attributes.design ) ) {
+					metaColor = attributes.accentColor
+				}
+			}
+
+			let categoryColor
+			if ( attributes.accentColor ) {
+				if ( [ 'portfolio', 'portfolio2', 'horizontal-card', 'image-card' ].includes( attributes.design ) ) {
+					categoryColor = attributes.accentColor
+				}
+			}
+
+			// Update the custom CSS since the structure has changed.
+			const updateCSS = css => css
+				.replace( /\.ugb-blog-posts__category-list/g, '.ugb-blog-posts__category' )
+				.replace( /\.ugb-blog-posts__read_more/g, '.ugb-blog-posts__readmore' )
+				.replace( /\.ugb-blog-posts__side/g, '.ugb-blog-posts__content' )
+
 			return {
 				...attributes,
 
-				// TODO: migrate to new custom CSS
-				// .ugb-blog-posts__category-list -> .ugb-blog-posts__category
-				// .ugb-blog-posts__read_more -> .ugb-blog-posts__readmore
-				// .ugb-blog-posts__side -> .ugb-blog-posts__content
+				// Custom CSS.
+				customCSS: updateCSS( attributes.customCSS ),
+				customCSSCompiled: updateCSS( attributes.customCSSCompiled ),
 
 				numberOfItems: attributes.postsToShow,
+				categoryHighlighted: [ 'portfolio', 'portfolio2', 'horizontal-card', 'image-card' ].includes( attributes.design ),
+				metaColor,
+				categoryColor,
+
+				showImage: attributes.displayFeaturedImage,
+				showTitle: attributes.displayTitle,
+				showDate: attributes.displayDate,
+				showCategory: attributes.displayCategory,
+				showComments: attributes.displayComments,
+				showAuthor: attributes.displayAuthor,
+				showExcerpt: attributes.displayExcerpt,
+				showReadmore: attributes.displayReadMoreLink,
+				readmoreText: attributes.readMoreText,
 			}
 		},
 	},
