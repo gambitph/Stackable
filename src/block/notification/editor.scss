@@ -5,10 +5,6 @@
  */
 
 [data-type="ugb/notification"] {
-	// Fade out placeholder text.
-	[data-is-placeholder-visible="true"] + .editor-rich-text__editable {
-		opacity: 0.5;
-	}
 
 	// Always show.
 	.ugb-notification.ugb-notification--dismissible {

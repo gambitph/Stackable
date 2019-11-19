@@ -13,20 +13,3 @@
 		border-radius: 0;
 	}
 }
-
-[data-type="ugb/header"] {
-	// Fade out placeholder text.
-	[data-is-placeholder-visible="true"] + .editor-rich-text__editable {
-		opacity: 0.5;
-	}
-
-	// Only show placeholder text while selected or typing.
-	&:not(.is-selected):not(.is-typing) {
-		[data-is-placeholder-visible="true"] + .editor-rich-text__editable {
-			display: none;
-		}
-		[data-is-placeholder-visible="true"] {
-			display: none;
-		}
-	}
-}
