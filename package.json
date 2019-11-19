@@ -74,6 +74,8 @@
     "gulp-sass": "^4.0.2",
     "gulp-zip": "^5.0.1",
     "husky": "^3.0.3",
+    "imagemin-pngquant": "^8.0.0",
+    "imagemin-webpack": "^5.1.0",
     "jest": "^24.8.0",
     "jsonfile": "^5.0.0",
     "lint-staged": "^9.2.1",
