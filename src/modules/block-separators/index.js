@@ -476,7 +476,7 @@ const addBottomStyles = ( styleObject, props ) => {
 			transform: bottomSeparatorFlipHorizontally ? 'scaleX(-1)' : undefined,
 		},
 		[ `.ugb-bottom-separator svg` ]: {
-			fill: bottomSeparatorColor !== '' ? bottomSeparatorColor : '#fff',
+			fill: bottomSeparatorColor !== '' ? bottomSeparatorColor : undefined,
 		},
 		[ `.ugb-bottom-separator .ugb-separator-wrapper` ]: {
 			height: bottomSeparatorHeight !== '' ? `${ bottomSeparatorHeight }px` : undefined,
