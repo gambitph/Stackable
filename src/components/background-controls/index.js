@@ -98,19 +98,14 @@ const BackgroundControls = props => {
 				<ButtonIconPopoverControl
 					label={ __( 'Adv. Gradient Color Settings', i18n ) }
 					onReset={ props.onResetAdvancedGradient }
-					allowReset={
-						props.backgroundGradientDirection !== '' ||
-						( props.backgroundGradientLocation1 !== '' && props.backgroundGradientLocation1 !== 0 ) ||
-						( props.backgroundGradientLocation2 !== '' && props.backgroundGradientLocation2 !== 100 ) ||
-						props.backgroundGradientBlendMode
-					}
+					allowReset={ true }
 				>
 					{ props.onChangeBackgroundGradientDirection && (
 						<RangeControl
 							label={ __( 'Gradient Direction (degrees)', i18n ) }
 							value={ props.backgroundGradientDirection }
 							onChange={ props.onChangeBackgroundGradientDirection }
-							min={ 0 }
+							min={ 10 }
 							max={ 360 }
 							step={ 10 }
 							allowReset={ true }
@@ -134,7 +129,7 @@ const BackgroundControls = props => {
 							label={ sprintf( __( 'Color %d Location', i18n ), 2 ) }
 							value={ props.backgroundGradientLocation2 }
 							onChange={ props.onChangeBackgroundGradientLocation2 }
-							min={ 0 }
+							min={ 1 }
 							max={ 100 }
 							step={ 1 }
 							allowReset={ true }
