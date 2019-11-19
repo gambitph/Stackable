@@ -10,6 +10,7 @@ import {
 	ImageControl,
 	TextToolbar,
 	WhenResponsiveScreen,
+	ControlSeparator,
 } from '~stackable/components'
 import { urlIsVideo } from '~stackable/util'
 
@@ -148,6 +149,10 @@ const BackgroundControls = props => {
 						/>
 					) }
 				</ButtonIconPopoverControl>
+			}
+
+			{ props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' && props.hasAdvancedGradient && props.onChangeBackgroundMedia &&
+				<ControlSeparator />
 			}
 
 			{ props.onChangeBackgroundMedia && (
