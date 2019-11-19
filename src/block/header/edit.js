@@ -79,7 +79,7 @@ addFilter( 'stackable.header.edit.inspector.layout.before', 'stackable/header', 
 					{
 						image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
 					},
-					...applyFilters( 'stackable.header.edit.designs', [] ),
+					...applyFilters( 'stackable.header.edit.layouts', [] ),
 				] }
 				onChange={ design => {
 					setAttributes( { design } )

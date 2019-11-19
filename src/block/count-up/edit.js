@@ -68,7 +68,7 @@ addFilter( 'stackable.count-up.edit.inspector.layout.before', 'stackable/count-u
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ applyFilters( 'stackable.count-up.edit.designs', [
+				options={ applyFilters( 'stackable.count-up.edit.layouts', [
 					{
 						label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
 					},

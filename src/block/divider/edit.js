@@ -52,7 +52,7 @@ addFilter( 'stackable.divider.edit.inspector.layout.before', 'stackable/divider'
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ applyFilters( 'stackable.divider.edit.designs', [
+				options={ applyFilters( 'stackable.divider.edit.layouts', [
 					{
 						label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
 					},

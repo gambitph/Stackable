@@ -66,7 +66,7 @@ addFilter( 'stackable.container.edit.inspector.layout.before', 'stackable/contai
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ applyFilters( 'stackable.container.edit.designs', [
+				options={ applyFilters( 'stackable.container.edit.layouts', [
 					{
 						label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
 					},

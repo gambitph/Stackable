@@ -84,7 +84,7 @@ addFilter( 'stackable.testimonial.edit.inspector.layout.before', 'stackable/test
 					{
 						image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
 					},
-					...applyFilters( 'stackable.testimonial.edit.designs', [] ),
+					...applyFilters( 'stackable.testimonial.edit.layouts', [] ),
 				] }
 				onChange={ design => {
 					setAttributes( { design } )

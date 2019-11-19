@@ -69,7 +69,7 @@ addFilter( 'stackable.accordion.edit.inspector.layout.before', 'stackable/accord
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ applyFilters( 'stackable.accordion.edit.designs', [
+				options={ applyFilters( 'stackable.accordion.edit.layouts', [
 					{
 						label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
 					},

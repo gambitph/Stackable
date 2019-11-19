@@ -78,7 +78,7 @@ const DesignSeparatorControl = props => {
 			help={ props.help }
 		>
 			<DesignControl
-				options={ applyFilters( 'stackable.separator.edit.designs', options, props ) }
+				options={ applyFilters( 'stackable.separator.edit.layouts', options, props ) }
 				{ ...omit( props, [ 'label', 'help' ] ) }
 			/>
 		</BaseControl>

@@ -67,7 +67,7 @@ addFilter( 'stackable.blockquote.edit.inspector.layout.before', 'stackable/block
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ applyFilters( 'stackable.blockquote.edit.designs', [
+				options={ applyFilters( 'stackable.blockquote.edit.layouts', [
 					{
 						label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
 					},

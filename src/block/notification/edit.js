@@ -83,7 +83,7 @@ addFilter( 'stackable.notification.edit.inspector.layout.before', 'stackable/not
 					{
 						image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
 					},
-					...applyFilters( 'stackable.notification.edit.designs', [] ),
+					...applyFilters( 'stackable.notification.edit.layouts', [] ),
 				] }
 				onChange={ design => {
 					setAttributes( { design } )

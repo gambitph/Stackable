@@ -89,7 +89,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.layout.before', 'stackable/pric
 					{
 						image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
 					},
-					...applyFilters( 'stackable.pricing-box.edit.designs', [] ),
+					...applyFilters( 'stackable.pricing-box.edit.layouts', [] ),
 				] }
 				onChange={ design => {
 					setAttributes( { design } )

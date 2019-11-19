@@ -89,7 +89,7 @@ const ButtonControls = props => {
 								label: __( 'Link', i18n ), value: 'link', image: ImageDesignLink,
 							} ] : []
 						),
-						...applyFilters( 'stackable.button.edit.designs', [] ),
+						...applyFilters( 'stackable.button.edit.layouts', [] ),
 					] }
 					onChange={ props.onChangeDesign }
 				/>

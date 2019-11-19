@@ -77,7 +77,7 @@ addFilter( 'stackable.number-box.edit.inspector.layout.before', 'stackable/numbe
 					{
 						image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
 					},
-					...applyFilters( 'stackable.number-box.edit.designs', [] ),
+					...applyFilters( 'stackable.number-box.edit.layouts', [] ),
 				] }
 				onChange={ design => {
 					setAttributes( { design } )

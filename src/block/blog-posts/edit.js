@@ -84,7 +84,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.layout.before', 'stackable/blog-
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ applyFilters( 'stackable.blog-posts.edit.designs', [
+				options={ applyFilters( 'stackable.blog-posts.edit.layouts', [
 					{
 						label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
 					},

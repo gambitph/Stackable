@@ -82,7 +82,7 @@ addFilter( 'stackable.card.edit.inspector.layout.before', 'stackable/card', ( ou
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ applyFilters( 'stackable.card.edit.designs', [
+				options={ applyFilters( 'stackable.card.edit.layouts', [
 					{
 						label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
 					},

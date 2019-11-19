@@ -83,7 +83,7 @@ addFilter( 'stackable.image-box.edit.inspector.layout.before', 'stackable/image-
 					{
 						image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
 					},
-					...applyFilters( 'stackable.image-box.edit.designs', [] ),
+					...applyFilters( 'stackable.image-box.edit.layouts', [] ),
 				] }
 				onChange={ design => {
 					setAttributes( { design } )

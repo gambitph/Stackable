@@ -57,7 +57,7 @@ addFilter( 'stackable.button.edit.inspector.layout.before', 'stackable/button', 
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ applyFilters( 'stackable.button.edit.designs', [
+				options={ applyFilters( 'stackable.button.edit.layouts', [
 					{
 						label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
 					},

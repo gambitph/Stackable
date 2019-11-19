@@ -70,7 +70,7 @@ addFilter( 'stackable.cta.edit.inspector.layout.before', 'stackable/cta', ( outp
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ applyFilters( 'stackable.cta.edit.designs', [
+				options={ applyFilters( 'stackable.cta.edit.layouts', [
 					{
 						label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
 					},

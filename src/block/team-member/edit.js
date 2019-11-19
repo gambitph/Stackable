@@ -84,7 +84,7 @@ addFilter( 'stackable.team-member.edit.inspector.layout.before', 'stackable/team
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ applyFilters( 'stackable.team-member.edit.designs', [
+				options={ applyFilters( 'stackable.team-member.edit.layouts', [
 					{
 						label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
 					},
