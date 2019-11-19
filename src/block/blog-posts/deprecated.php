@@ -161,7 +161,7 @@ if ( ! function_exists( 'stackable_block_blog_posts_migrate_output' ) ) {
 			$attributes['categoryHighlighted'] ? 'ugb-blog-posts--cat-highlighted' : '',
 			isset( $attributes['accentColor'] ) ? '--s-accent-color: ' . $attributes['accentColor'] : '',
 			$border_radius,
-			$output,
+			$output
 		);
 	}
 	add_filter( 'stackable/blog-posts/edit.output.markup', 'stackable_block_blog_posts_migrate_output', 10, 2 );

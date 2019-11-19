@@ -144,13 +144,13 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 						esc_url( $featured_image_src[0] ),
 						esc_attr( get_the_title( $post_id ) ),
 						esc_attr( $featured_image_src[1] ),
-						esc_attr( $featured_image_src[2] ),
+						esc_attr( $featured_image_src[2] )
 					);
 
 					$featured_image_background = sprintf(
 						'<div class="%s" style="background-image: url(%s)"></div>',
 						'ugb-blog-posts__featured-image-background',
-						esc_url( $featured_image_src[0] ),
+						esc_url( $featured_image_src[0] )
 					);
 				}
 			}
@@ -166,7 +166,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 				'ugb-blog-posts__title',
 				esc_url( get_permalink( $post_id ) ),
 				$title,
-				$attributes['titleTag'],
+				$attributes['titleTag']
 			);
 
 			// Category.
@@ -178,7 +178,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 			// Separator.
 			$separator = sprintf(
 				'<span class="ugb-blog-posts__sep">%s</span>',
-				$meta_separators[ $attributes['metaSeparator'] ],
+				$meta_separators[ $attributes['metaSeparator'] ]
 			);
 
 			// Author.
@@ -245,7 +245,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 					$showAuthor && $author && ( ( $showDate && $date ) || ( $showComments && $comments ) ) ? $separator : '',
 					$showDate && $date ? $date : '',
 					( ( $showAuthor && $author ) || ( $showDate && $date ) ) && $showComments && $comments ? $separator : '',
-					$showComments && $comments ? $comments : '',
+					$showComments && $comments ? $comments : ''
 				);
 			}
 
@@ -277,7 +277,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 					$attributes['showTitle'] ? $title : '',
 					$attributes['showMeta'] ? $meta : '',
 					$attributes['showExcerpt'] ? $excerpt : '',
-					$attributes['showReadmore'] ? $readmore : '',
+					$attributes['showReadmore'] ? $readmore : ''
 				);
 			}
 		}
