@@ -79,7 +79,8 @@ export default compose(
 	withSelect( ( select, {
 		clientId, isLargeViewport, isCollapsed,
 	} ) => {
-		const { getBlockRootClientId, getEditorSettings } = select( 'core/editor' )
+		const { getEditorSettings } = select( 'core/editor' )
+		const { getBlockRootClientId } = select( 'core/block-editor' )
 		return {
 			isCollapsed: isCollapsed || ! isLargeViewport || (
 				! getEditorSettings().hasFixedToolbar &&

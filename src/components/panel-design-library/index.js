@@ -54,8 +54,8 @@ function PanelDesignLibrary( props ) {
 					options={ fixedOptions }
 					onChange={ i => {
 						const designAttributes = options[ i ].value
-						const currentBlockClientID = select( 'core/editor' ).getBlockSelectionStart()
-						dispatch( 'core/editor' ).updateBlockAttributes( currentBlockClientID, designAttributes )
+						const currentBlockClientID = select( 'core/block-editor' ).getBlockSelectionStart()
+						dispatch( 'core/block-editor' ).updateBlockAttributes( currentBlockClientID, designAttributes )
 					} }
 				/>
 			}
