@@ -29,9 +29,9 @@ const withSticky = createHigherOrderComponent(
 		}
 
 		calcStyleTop() {
-			const card = document.querySelector( '.block-editor-block-inspector__card' )
+			const card = document.querySelector( '.block-editor-block-card' )
 			if ( card ) {
-				return card.getBoundingClientRect().top - 16
+				return card.getBoundingClientRect().top
 			}
 			return 120
 		}
@@ -46,12 +46,14 @@ const withSticky = createHigherOrderComponent(
 
 		onSidebarScroll() {
 			if ( ! this.tabTop ) {
-				const inspectorCard = document.querySelector( '.block-editor-block-inspector__card' )
-				this.tabTop = inspectorCard ? inspectorCard.getBoundingClientRect().height : 75
-				this.styleTop = this.calcStyleTop()
-				this.styleWidth = this.calcStyleWidth()
+				const inspectorCard = document.querySelector( '.block-editor-block-card' )
+				if ( inspectorCard ) {
+					this.tabTop = inspectorCard ? inspectorCard.getBoundingClientRect().height + 32 : 75
+					this.styleTop = this.calcStyleTop()
+					this.styleWidth = this.calcStyleWidth()
+				}
 			}
-			if ( this.sidebarEl ) {
+			if ( this.sidebarEl && this.tabTop ) {
 				this.setState( {
 					fixedTabs: this.sidebarEl.scrollTop >= this.tabTop,
 				} )
