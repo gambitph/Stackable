@@ -23,6 +23,7 @@ const buildInclude = [
 	path.resolve( __dirname, './freemius/**' ),
 	path.resolve( __dirname, './images/**' ),
 	path.resolve( __dirname, './src/welcome/images/**' ), // Welcome screen / settings images.
+	'!' + path.resolve( __dirname, './dist/deprecation-tests.json' ),
 ]
 
 const postCSSOptions = [
