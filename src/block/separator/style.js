@@ -59,7 +59,7 @@ export const createStyles = props => {
 			background: backgroundColor ? backgroundColor : undefined,
 		},
 		'.ugb-separator__svg-wrapper': {
-			height: height !== '' ? `${ height }px` : undefined,
+			height: appendImportant( getValue( 'tabletHeight', '%spx' ) ),
 		},
 		'.ugb-separator__shadow, .ugb-separator__layer-1': {
 			fill: layer1Color ? layer1Color : undefined,
