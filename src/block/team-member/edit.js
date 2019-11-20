@@ -632,7 +632,7 @@ const edit = props => {
 								/>
 							}
 							<div className="ugb-team-member__content">
-								{ showName && showPosition &&
+								{ ( showName || showPosition ) &&
 									<div className="ugb-team-member__title">
 										{ showName &&
 											<RichText
