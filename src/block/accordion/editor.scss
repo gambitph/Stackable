@@ -44,6 +44,11 @@
 	padding-bottom: 0;
 }
 
+// Fix header overlapping the content toolbar
+#editor .ugb-accordion.ugb-accordion--v2 .ugb-accordion__heading {
+	z-index: 0;
+}
+
 // Fix Gutenberg 6.9.0 visual error. a new blank div gets added when editing.
 .ugb-accordion__heading > div:empty {
 	display: none;
