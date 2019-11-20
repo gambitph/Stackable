@@ -82,13 +82,13 @@ class ButtonIconPopoverControl extends Component {
 	}
 
 	/**
-	 * Use our own click/close handler. Only close this if the sidebar is clicked.
+	 * Use our own click/close handler. Don't close when a popover (e.g. a colorpicker) is clicked.
 	 * If this is not used, the popover will close when a color control's custom color field (when inside the popover) is clicked.
 	 *
 	 * @param {Event} ev Click event
 	 */
 	handleOnClickOutside( ev ) {
-		if ( ev.target.closest( '.edit-post-sidebar' ) ) {
+		if ( ! ev.target.closest( '.components-popover' ) ) {
 			this.handleClose()
 		}
 	}
