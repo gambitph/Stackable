@@ -127,10 +127,7 @@ class ButtonEdit extends Component {
 				tabIndex="0"
 			>
 				{ /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
-				<a
-					href="#"
-					className={ mainClasses }
-				>
+				<a className={ mainClasses }>
 					{ icon && design !== 'link' &&
 						<Fragment>
 							{ ! onChangeIcon &&
