@@ -50,6 +50,13 @@
 			}
 		}
 	}
+
+	// Disallow nested Stackable blocks to become full-width.
+	.ugb-main-block.alignfull,
+	.ugb--has-block-background {
+		width: auto !important;
+		margin-left: 0;
+	}
 }
 
 .ugb-container.ugb-container--v2.ugb-container--design-plain {
