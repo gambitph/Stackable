@@ -26,6 +26,11 @@
 	.ugb-feature-grid__image {
 		margin-left: auto;
 		margin-right: auto;
+		img {
+			height: auto;
+			max-width: 100%;
+			position: relative;
+		}
 	}
 	.ugb-feature-grid__image,
 	.ugb-feature-grid__title,
