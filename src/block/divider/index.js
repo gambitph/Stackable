@@ -39,11 +39,11 @@ const schema = {
 		default: '',
 	},
 	height: {
-		default: 1,
+		default: '',
 		type: 'number',
 	},
 	width: {
-		default: 50,
+		default: '',
 		type: 'number',
 	},
 	alignment: {
