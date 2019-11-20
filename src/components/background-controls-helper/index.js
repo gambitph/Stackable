@@ -12,6 +12,10 @@ import { sprintf } from '@wordpress/i18n'
 const BackgroundControlsHelper = props => {
 	const { setAttributes } = props
 	const getAttrName = attrName => camelCase( sprintf( props.attrNameTemplate, attrName ) )
+	const getAttrValue = ( attrName, defaultValue = '' ) => {
+		const value = props.blockAttributes[ getAttrName( attrName ) ]
+		return value === 0 ? value : ( value || defaultValue )
+	}
 
 	return (
 		<BackgroundControls
@@ -58,10 +62,10 @@ const BackgroundControlsHelper = props => {
 			onChangeFixedBackground={ value => setAttributes( { [ getAttrName( 'FixedBackground' ) ]: value } ) }
 
 			// Advanced gradient.
-			backgroundGradientDirection={ props.blockAttributes[ getAttrName( 'BackgroundGradientDirection' ) ] || '' }
-			backgroundGradientBlendMode={ props.blockAttributes[ getAttrName( 'BackgroundGradientBlendMode' ) ] || '' }
-			backgroundGradientLocation1={ props.blockAttributes[ getAttrName( 'BackgroundGradientLocation1' ) ] || 0 }
-			backgroundGradientLocation2={ props.blockAttributes[ getAttrName( 'BackgroundGradientLocation2' ) ] || 100 }
+			backgroundGradientDirection={ getAttrValue( 'BackgroundGradientDirection', 0 ) }
+			backgroundGradientBlendMode={ getAttrValue( 'BackgroundGradientBlendMode' ) }
+			backgroundGradientLocation1={ getAttrValue( 'BackgroundGradientLocation1', 0 ) }
+			backgroundGradientLocation2={ getAttrValue( 'BackgroundGradientLocation2', 100 ) }
 			onChangeBackgroundGradientDirection={ value => setAttributes( { [ getAttrName( 'BackgroundGradientDirection' ) ]: value } ) }
 			onChangeBackgroundGradientBlendMode={ value => setAttributes( { [ getAttrName( 'BackgroundGradientBlendMode' ) ]: value } ) }
 			onChangeBackgroundGradientLocation1={ value => setAttributes( { [ getAttrName( 'BackgroundGradientLocation1' ) ]: value } ) }
