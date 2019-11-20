@@ -11,14 +11,15 @@ import {
 	createTypographyAttributes,
 	descriptionPlaceholder,
 } from '~stackable/util'
+import { NumberBoxIcon } from '~stackable/icons'
 
 /**
  * Internal dependencies
  */
-import { default as deprecated } from './deprecated'
-import { default as edit } from './edit'
-import { NumberBoxIcon } from '~stackable/icons'
-import { default as save } from './save'
+import './design'
+import deprecated from './deprecated'
+import edit from './edit'
+import save from './save'
 
 /**
  * WordPress dependencies
@@ -249,6 +250,7 @@ export const settings = {
 		'block-separators': true,
 		'block-title': true,
 		'content-align': true,
+		'block-designs': true,
 		'custom-css': {
 			default: applyFilters( 'stackable.number-box.custom-css.default', '' ),
 		},

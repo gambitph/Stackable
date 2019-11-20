@@ -4,6 +4,7 @@
 /**
  * Internal dependencies
  */
+import './design'
 import edit from './edit'
 import save from './save'
 import deprecated from './deprecated'
@@ -276,6 +277,7 @@ export const settings = {
 		'block-separators': true,
 		'block-title': true,
 		'content-align': true,
+		'block-designs': true,
 		'custom-css': {
 			default: applyFilters( 'stackable.blog-posts.custom-css.default', '' ),
 		},

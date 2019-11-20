@@ -5,6 +5,7 @@
 /**
  * Internal dependencies
  */
+import './design'
 import deprecated from './deprecated'
 import edit from './edit'
 import save from './save'
@@ -335,6 +336,7 @@ export const settings = {
 		'block-separators': true,
 		'block-title': true,
 		'content-align': true,
+		'block-designs': true,
 		'custom-css': {
 			default: applyFilters( 'stackable.pricing-box.custom-css.default', '' ),
 		},

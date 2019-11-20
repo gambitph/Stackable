@@ -5,7 +5,10 @@
 /**
  * Internal dependencies
  */
+import './design'
 import deprecated from './deprecated'
+import edit from './edit'
+import save from './save'
 
 /**
  * External dependencies
@@ -20,8 +23,6 @@ import {
 	createImageBackgroundAttributes,
 	SOCIAL_SITES,
 } from '~stackable/util'
-import edit from './edit'
-import save from './save'
 import { TeamMemberIcon } from '~stackable/icons'
 import { upperFirst } from 'lodash'
 
@@ -347,6 +348,7 @@ export const settings = {
 		'block-separators': true,
 		'block-title': true,
 		'content-align': true,
+		'block-designs': true,
 		'custom-css': {
 			default: applyFilters( 'stackable.team-member.custom-css.default', '' ),
 		},

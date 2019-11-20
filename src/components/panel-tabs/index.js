@@ -99,6 +99,12 @@ class PanelTabs extends Component {
 		if ( ! toggle ) {
 			return
 		}
+
+		// Don't auto-close panels in the layout tab.
+		if ( this.state.activeTab === 'layout' ) {
+			return
+		}
+
 		closeAllOpenPanels( toggle )
 		this.props.onClickPanel( toggle.closest( '.components-panel__body' ) )
 	}

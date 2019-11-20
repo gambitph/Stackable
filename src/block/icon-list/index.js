@@ -6,15 +6,16 @@
  * External dependencies
  */
 import { createTypographyAttributes } from '~stackable/util'
+import { IconListIcon } from '~stackable/icons'
+import { range } from 'lodash'
 
 /**
  * Internal dependencies
  */
+import './design'
 import deprecated from './deprecated'
 import edit from './edit'
-import { IconListIcon } from '~stackable/icons'
 import save from './save'
-import { range } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -101,6 +102,7 @@ export const settings = {
 		'block-separators': true,
 		'block-title': true,
 		'content-align': true,
+		'block-designs': true,
 		'custom-css': {
 			default: applyFilters( 'stackable.icon-list.custom-css.default', '' ),
 		},

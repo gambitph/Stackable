@@ -20,6 +20,11 @@ const LABELS = {
 		description: __( 'Get more layouts for this block. This feature is only available on Stackable Premium.', i18n ),
 		button: __( 'Learn More', i18n ),
 	},
+	design: {
+		title: __( 'Say Hello to More Designs 👋', i18n ),
+		description: __( 'Get more pre-set designs for this block. This feature is only available on Stackable Premium.', i18n ),
+		button: __( 'Learn More', i18n ),
+	},
 	image: {
 		title: __( 'Say Hello to More Shapes 👋', i18n ),
 		description: __( 'Get more cool shapes for your images. This feature is only available on Stackable Premium.', i18n ),

@@ -5,7 +5,10 @@
 /**
  * Internal dependencies
  */
+import './design'
 import deprecated from './deprecated'
+import edit from './edit'
+import save from './save'
 
 /**
  * External dependencies
@@ -20,9 +23,7 @@ import {
 	createImageAttributes,
 	createImageBackgroundAttributes,
 } from '~stackable/util'
-import edit from './edit'
 import { FeatureIcon } from '~stackable/icons'
-import save from './save'
 
 /**
  * WordPress dependencies
@@ -184,6 +185,7 @@ export const settings = {
 		'block-separators': true,
 		// 'block-title': true,
 		'content-align': true,
+		'block-designs': true,
 		'custom-css': {
 			default: applyFilters( 'stackable.feature.custom-css.default', '' ),
 		},

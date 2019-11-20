@@ -97,6 +97,7 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 			'i18n' => STACKABLE_I18N,
 			'disabledBlocks' => stackable_get_disabled_blocks(),
 			'nonce' => wp_create_nonce( 'stackable' ),
+			'devMode' => defined( 'WP_ENV' ) ? WP_ENV === 'development' : false,
 
 			// Fonts.
 			'locale' => get_locale(),
