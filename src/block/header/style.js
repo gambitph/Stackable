@@ -8,6 +8,7 @@ import {
 	createResponsiveStyles,
 	hexToRgba,
 	whiteIfDark,
+	appendImportant,
 } from '~stackable/util'
 import deepmerge from 'deepmerge'
 
@@ -125,25 +126,25 @@ export const createStyles = props => {
 	if ( showButton || showButton2 ) {
 		styles.push( {
 			'.ugb-header__buttons': {
-				justifyContent: getValue( 'contentAlign' ) === 'left' ? 'flex-start' :
+				justifyContent: appendImportant( getValue( 'contentAlign' ) === 'left' ? 'flex-start' :
 					getValue( 'contentAlign' ) === 'right' ? 'flex-end' :
 						getValue( 'contentAlign' ) === 'center' ? 'center' :
-							undefined,
+							undefined ),
 			},
 			tablet: {
 				'.ugb-header__buttons': {
-					justifyContent: getValue( 'tabletContentAlign' ) === 'left' ? 'flex-start' :
+					justifyContent: appendImportant( getValue( 'tabletContentAlign' ) === 'left' ? 'flex-start' :
 						getValue( 'tabletContentAlign' ) === 'right' ? 'flex-end' :
 							getValue( 'tabletContentAlign' ) === 'center' ? 'center' :
-								undefined,
+								undefined ),
 				},
 			},
 			mobile: {
 				'.ugb-header__buttons': {
-					justifyContent: getValue( 'mobileContentAlign' ) === 'left' ? 'flex-start' :
+					justifyContent: appendImportant( getValue( 'mobileContentAlign' ) === 'left' ? 'flex-start' :
 						getValue( 'mobileContentAlign' ) === 'right' ? 'flex-end' :
 							getValue( 'mobileContentAlign' ) === 'center' ? 'center' :
-								undefined,
+								undefined ),
 				},
 			},
 		} )
@@ -152,10 +153,10 @@ export const createStyles = props => {
 		if ( getValue( 'buttonAlign' ) ) {
 			styles.push( {
 				'.ugb-header__buttons': {
-					justifyContent: getValue( 'buttonAlign' ) === 'left' ? 'flex-start' :
+					justifyContent: appendImportant( getValue( 'buttonAlign' ) === 'left' ? 'flex-start' :
 						getValue( 'buttonAlign' ) === 'right' ? 'flex-end' :
 							getValue( 'buttonAlign' ) === 'center' ? 'center' :
-								undefined,
+								undefined ),
 				},
 			} )
 		}
@@ -163,10 +164,10 @@ export const createStyles = props => {
 			styles.push( {
 				tablet: {
 					'.ugb-header__buttons': {
-						justifyContent: getValue( 'buttonTabletAlign' ) === 'left' ? 'flex-start' :
+						justifyContent: appendImportant( getValue( 'buttonTabletAlign' ) === 'left' ? 'flex-start' :
 							getValue( 'buttonTabletAlign' ) === 'right' ? 'flex-end' :
 								getValue( 'buttonTabletAlign' ) === 'center' ? 'center' :
-									undefined,
+									undefined ),
 					},
 				},
 			} )
@@ -175,10 +176,10 @@ export const createStyles = props => {
 			styles.push( {
 				mobile: {
 					'.ugb-header__buttons': {
-						justifyContent: getValue( 'buttonMobileAlign' ) === 'left' ? 'flex-start' :
+						justifyContent: appendImportant( getValue( 'buttonMobileAlign' ) === 'left' ? 'flex-start' :
 							getValue( 'buttonMobileAlign' ) === 'right' ? 'flex-end' :
 								getValue( 'buttonMobileAlign' ) === 'center' ? 'center' :
-									undefined,
+									undefined ),
 					},
 				},
 			} )
