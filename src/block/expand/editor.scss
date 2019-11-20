@@ -25,8 +25,8 @@
 	}
 }
 
-.ugb-expand--v2 .ugb-block-content {
-	a {
-		display: inline-block !important;
+.ugb-expand .ugb-block-content {
+	> a {
+		display: inline-block;
 	}
 }
