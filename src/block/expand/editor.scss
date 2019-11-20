@@ -24,3 +24,9 @@
 		font-size: inherit !important;
 	}
 }
+
+.ugb-expand .ugb-block-content {
+	> a {
+		display: inline-block;
+	}
+}
