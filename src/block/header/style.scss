@@ -31,6 +31,17 @@
 	.ugb-header__subtitle {
 		margin: 0 0 $text-margin-bottom 0;
 	}
+
+	.ugb-header__buttons {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-left: -0.5em;
+		margin-right: -0.5em;
+		> * {
+			margin: 0 0.5em 0.5em;
+		}
+	}
 }
 
 // Full width
