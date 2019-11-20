@@ -193,7 +193,7 @@ export const createStyles = props => {
 		},
 		[ 'p, ' +
 		  'li, ' +
-		  'tbody' ]: {
+		  'table' ]: {
 			color: getValue( 'bodyTextColor' ),
 		},
 		[ 'a, ' +
