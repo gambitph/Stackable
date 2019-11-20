@@ -104,6 +104,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 					max="4"
 					step="0.1"
 					onChange={ layer1Width => setAttributes( { layer1Width } ) }
+					allowReset={ true }
 				/>
 				<ToggleControl
 					label={ __( 'Flip Horizontally', i18n ) }
@@ -183,6 +184,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						units={ [ 'px', 'em', '%' ] }
 						unit={ paddingUnit }
 						onChangeUnit={ paddingUnit => setAttributes( { paddingUnit } ) }
+						allowReset={ true }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Padding Bottom', i18n ) }
@@ -193,6 +195,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						units={ [ 'px', 'em', '%' ] }
 						unit={ paddingUnit }
 						onChangeUnit={ paddingUnit => setAttributes( { paddingUnit } ) }
+						allowReset={ true }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Margin Top', i18n ) }
@@ -204,6 +207,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						units={ [ 'px', '%' ] }
 						unit={ marginUnit }
 						onChangeUnit={ marginUnit => setAttributes( { marginUnit } ) }
+						allowReset={ true }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Margin Bottom', i18n ) }
@@ -215,6 +219,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						units={ [ 'px', '%' ] }
 						unit={ marginUnit }
 						onChangeUnit={ marginUnit => setAttributes( { marginUnit } ) }
+						allowReset={ true }
 					/>
 				</WhenResponsiveScreen>
 				<WhenResponsiveScreen screen="tablet">
@@ -227,6 +232,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						units={ [ 'px', 'em', '%' ] }
 						unit={ tabletPaddingUnit }
 						onChangeUnit={ tabletPaddingUnit => setAttributes( { tabletPaddingUnit } ) }
+						allowReset={ true }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Padding Bottom', i18n ) }
@@ -237,6 +243,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						units={ [ 'px', 'em', '%' ] }
 						unit={ tabletPaddingUnit }
 						onChangeUnit={ tabletPaddingUnit => setAttributes( { tabletPaddingUnit } ) }
+						allowReset={ true }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Margin Top', i18n ) }
@@ -248,6 +255,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						units={ [ 'px', '%' ] }
 						unit={ tabletMarginUnit }
 						onChangeUnit={ tabletMarginUnit => setAttributes( { tabletMarginUnit } ) }
+						allowReset={ true }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Margin Bottom', i18n ) }
@@ -259,6 +267,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						units={ [ 'px', '%' ] }
 						unit={ tabletMarginUnit }
 						onChangeUnit={ tabletMarginUnit => setAttributes( { tabletMarginUnit } ) }
+						allowReset={ true }
 					/>
 				</WhenResponsiveScreen>
 				<WhenResponsiveScreen screen="mobile">
@@ -271,6 +280,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						units={ [ 'px', 'em', '%' ] }
 						unit={ mobilePaddingUnit }
 						onChangeUnit={ mobilePaddingUnit => setAttributes( { mobilePaddingUnit } ) }
+						allowReset={ true }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Padding Bottom', i18n ) }
@@ -281,6 +291,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						units={ [ 'px', 'em', '%' ] }
 						unit={ mobilePaddingUnit }
 						onChangeUnit={ mobilePaddingUnit => setAttributes( { mobilePaddingUnit } ) }
+						allowReset={ true }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Margin Top', i18n ) }
@@ -292,6 +303,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						units={ [ 'px', '%' ] }
 						unit={ mobileMarginUnit }
 						onChangeUnit={ mobileMarginUnit => setAttributes( { mobileMarginUnit } ) }
+						allowReset={ true }
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Margin Bottom', i18n ) }
@@ -303,6 +315,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						units={ [ 'px', '%' ] }
 						unit={ mobileMarginUnit }
 						onChangeUnit={ mobileMarginUnit => setAttributes( { mobileMarginUnit } ) }
+						allowReset={ true }
 					/>
 				</WhenResponsiveScreen>
 			</PanelBody>
