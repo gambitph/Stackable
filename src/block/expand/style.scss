@@ -12,6 +12,10 @@
 	.ugb-expand__more-text {
 		margin: 0 0 $text-margin-bottom 0;
 	}
+	.ugb-expand__more-toggle-text,
+	.ugb-expand__less-toggle-text {
+		display: inline-block;
+	}
 }
 
 .ugb-expand.ugb-expand--more {
