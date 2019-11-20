@@ -192,7 +192,8 @@ export const createStyles = props => {
 			color: getValue( 'headingColor' ),
 		},
 		[ 'p, ' +
-		  'li' ]: {
+		  'li, ' +
+		  'tbody' ]: {
 			color: getValue( 'bodyTextColor' ),
 		},
 		[ 'a, ' +
