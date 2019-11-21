@@ -142,7 +142,7 @@ export const createStyles = props => {
 	if ( showNumber ) {
 		styles.push( {
 			'.ugb-countup__counter': {
-				...createTypographyStyles( 'number%s', 'desktop', props.attributes ),
+				...createTypographyStyles( 'number%s', 'desktop', props.attributes, { importantSize: true } ),
 				color: whiteIfDark( numberColor, show.columnBackground ? columnBackgroundColor : ( showBlockBackground ? blockBackgroundBackgroundColor : '' ) ),
 				textAlign: getValue( 'numberAlign' ),
 			},
