@@ -1,4 +1,9 @@
 /**
+ * WordPress dependencies
+ */
+import { sprintf } from '@wordpress/i18n'
+
+/**
  * External dependencies
  */
 import { appendImportant } from '~stackable/util'
@@ -10,10 +15,6 @@ export const createStyles = props => {
 	}
 
 	const {
-		height,
-		tabletHeight = '',
-		mobileHeight = '',
-
 		backgroundColor = '',
 		layer1Color = '',
 		layer1Width = 1,
@@ -59,7 +60,7 @@ export const createStyles = props => {
 			background: backgroundColor ? backgroundColor : undefined,
 		},
 		'.ugb-separator__svg-wrapper': {
-			height: appendImportant( getValue( 'tabletHeight', '%spx' ) ),
+			height: appendImportant( getValue( 'height', '%spx' ) ),
 		},
 		'.ugb-separator__shadow, .ugb-separator__layer-1': {
 			fill: layer1Color ? layer1Color : undefined,
