@@ -31,6 +31,7 @@ import {
 	createButtonAttributeNames,
 	createVideoBackground,
 	hasBackgroundOverlay,
+	cacheImageData,
 } from '~stackable/util'
 import {
 	withUniqueClass,
@@ -61,6 +62,7 @@ import { applyFilters, addFilter } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 import { RichText } from '@wordpress/block-editor'
+import { withSelect } from '@wordpress/data'
 
 addFilter( 'stackable.feature.edit.inspector.layout.before', 'stackable/feature', ( output, props ) => {
 	const { setAttributes } = props
@@ -553,4 +555,8 @@ export default compose(
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Title%sAlign', 'Description%sAlign', 'Button%sAlign' ] ),
 	withBlockStyles( createStyles, { editorMode: true } ),
+	withSelect( ( select, props ) => {
+		// Once the editor is loaded, cache the other sizes of the image.
+		cacheImageData( props.attributes.imageId, select )
+	} ),
 )( edit )

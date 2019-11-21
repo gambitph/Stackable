@@ -6,6 +6,11 @@ export { createImageAttributeNames } from './attributes'
 export { default as createImageStyles } from './styles'
 export { createImageStyleSet, createImageMask } from './styles'
 
+/**
+ * WordPress dependencies
+ */
+import { select } from '@wordpress/data'
+
 const getDefaultImageSize = ( imageData = {} ) => {
 	return {
 		width: imageData.media_details ? imageData.media_details.width : '',
@@ -36,6 +41,8 @@ window._stackableCachedImageData = {}
  *
  * @param {number} imageId The image ID to cache
  * @param {Object} select The select prop given by the `withSelect` HOC
+ *
+ * @return {Object} Image data being cached
  */
 export const cacheImageData = ( imageId, select ) => {
 	const { getMedia } = select( 'core' )
@@ -43,6 +50,7 @@ export const cacheImageData = ( imageId, select ) => {
 	if ( imageData && typeof imageData.id !== 'undefined' ) {
 		window._stackableCachedImageData[ imageData.id ] = imageData
 	}
+	return imageData
 }
 
 /**
@@ -54,7 +62,7 @@ export const cacheImageData = ( imageId, select ) => {
  * @return {string} The URL of the image of the given size
  */
 export const getImageUrlFromCache = ( imageId, size = 'full' ) => {
-	const imageData = getImageDataFromCache( imageId )
+	const imageData = getImageDataFromCache( imageId ) || cacheImageData( imageId, select )
 	if ( imageData ) {
 		return imageData.media_details.sizes[ size ] ? imageData.media_details.sizes[ size ].source_url : imageData.source_url
 	}

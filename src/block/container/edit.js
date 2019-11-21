@@ -368,6 +368,7 @@ export default compose(
 		}
 	} ),
 	withSelect( ( select, props ) => {
+		// Once the editor is loaded, cache the other sizes of the image.
 		cacheImageData( props.attributes.imageId, select )
 	} ),
 )( edit )

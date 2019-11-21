@@ -14,7 +14,7 @@ import {
 import {
 	i18n,
 } from 'stackable'
-import { getImageSize } from '~stackable/util'
+import { getImageSize, cacheImageData } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -264,6 +264,7 @@ ImageControls.defaultProps = {
 export default compose(
 	withSelect( ( select, props ) => {
 		const { getMedia } = select( 'core' )
+		cacheImageData( props.id, select )
 
 		return {
 			imageData: props.id ? getMedia( props.id ) : null,

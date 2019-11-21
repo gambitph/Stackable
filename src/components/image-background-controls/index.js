@@ -7,9 +7,8 @@ import {
 	ImageControl,
 	ImageSizeControl,
 } from '~stackable/components'
-import {
-	i18n,
-} from 'stackable'
+import { cacheImageData, getImageUrlFromCache } from '~stackable/util'
+import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -18,7 +17,6 @@ import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 import { withSelect } from '@wordpress/data'
-import { getImageUrlFromCache } from '~stackable/util'
 
 const ImageBackgroundControls = props => {
 	return (
@@ -33,9 +31,17 @@ const ImageBackgroundControls = props => {
 						id: '',
 					} ) }
 					onChange={ image => {
+						// Get the URL of the currently selected image size.
+						let {
+							url,
+						} = image
+						const currentSelectedSize = props.size || 'full'
+						if ( image.sizes[ currentSelectedSize ] ) {
+							url = image.sizes[ currentSelectedSize ].url
+						}
 						props.onChangeImage( {
 							id: image.id,
-							url: getImageUrlFromCache( image.id, props.size || 'full' ),
+							url,
 						} )
 					} }
 				/>
@@ -147,6 +153,7 @@ ImageBackgroundControls.defaultProps = {
 export default compose(
 	withSelect( ( select, props ) => {
 		const { getMedia } = select( 'core' )
+		cacheImageData( props.id, select )
 
 		return {
 			imageData: props.id ? getMedia( props.id ) : null,

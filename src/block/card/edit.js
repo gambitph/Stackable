@@ -628,6 +628,7 @@ export default compose(
 	withContentAlignReseter( [ 'Title%sAlign', 'Subtitle%sAlign', 'Description%sAlign', 'Button%sAlign' ] ),
 	withBlockStyles( createStyles, { editorMode: true } ),
 	withSelect( ( select, props ) => {
+		// Once the editor is loaded, cache the other sizes of the image.
 		cacheImageData( props.attributes.image1Id, select )
 		cacheImageData( props.attributes.image2Id, select )
 		cacheImageData( props.attributes.image3Id, select )
