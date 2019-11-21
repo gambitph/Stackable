@@ -27,7 +27,6 @@ import {
 	HeadingButtonsControl,
 	PanelSpacingBody,
 	AdvancedRangeControl,
-	ProControl,
 } from '~stackable/components'
 import {
 	descriptionPlaceholder,
@@ -372,22 +371,6 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 					</ResponsiveControl>
 				) }
 			</PanelSpacingBody>
-		</Fragment>
-	)
-} )
-
-addFilter( 'stackable.testimonial.edit.inspector.advanced.before', 'stackable/testimonial', output => {
-	return (
-		<Fragment>
-			{ output }
-			{ showProNotice &&
-				<PanelBody
-					title={ __( 'Fine-Grained Controls', i18n ) }
-					initialOpen={ false }
-				>
-					{ <ProControl type="advanced" /> }
-				</PanelBody>
-			}
 		</Fragment>
 	)
 } )

@@ -37,7 +37,7 @@ const LABELS = {
 	},
 	advanced: {
 		title: __( 'Say Hello to Fine-Grained Controls 👋', i18n ),
-		description: __( 'Get more advanced block options for adjusting column colors and more. This feature is only available on Stackable Premium.', i18n ),
+		description: __( 'Get column spacing options, column colors and more. This feature is only available on Stackable Premium.', i18n ),
 		button: __( 'Learn More', i18n ),
 	},
 	postsBlock: {

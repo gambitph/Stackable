@@ -20,7 +20,6 @@ import {
 	ButtonControlsHelper,
 	PanelSpacingBody,
 	AdvancedRangeControl,
-	ProControl,
 	ButtonEditHelper,
 } from '~stackable/components'
 import {
@@ -366,22 +365,6 @@ addFilter( 'stackable.feature-grid.edit.inspector.style.before', 'stackable/feat
 					</ResponsiveControl>
 				}
 			</PanelSpacingBody>
-		</Fragment>
-	)
-} )
-
-addFilter( 'stackable.feature-grid.edit.inspector.advanced.before', 'stackable/feature-grid', output => {
-	return (
-		<Fragment>
-			{ output }
-			{ showProNotice &&
-				<PanelBody
-					title={ __( 'Fine-Grained Controls', i18n ) }
-					initialOpen={ false }
-				>
-					{ <ProControl type="advanced" /> }
-				</PanelBody>
-			}
 		</Fragment>
 	)
 } )

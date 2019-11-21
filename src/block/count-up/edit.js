@@ -17,7 +17,6 @@ import {
 	ResponsiveControl,
 	TypographyControlHelper,
 	SvgIconPlaceholder,
-	ProControl,
 } from '~stackable/components'
 import {
 	createResponsiveAttributeNames, createTypographyAttributeNames, createVideoBackground, hasBackgroundOverlay,
@@ -360,22 +359,6 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 					</ResponsiveControl>
 				) }
 			</PanelSpacingBody>
-		</Fragment>
-	)
-} )
-
-addFilter( 'stackable.count-up.edit.inspector.advanced.before', 'stackable/count-up', output => {
-	return (
-		<Fragment>
-			{ output }
-			{ showProNotice &&
-				<PanelBody
-					title={ __( 'Fine-Grained Controls', i18n ) }
-					initialOpen={ false }
-				>
-					{ <ProControl type="advanced" /> }
-				</PanelBody>
-			}
 		</Fragment>
 	)
 } )

@@ -32,6 +32,8 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 } from '~stackable/higher-order'
+import classnames from 'classnames'
+import { i18n, showProNotice } from 'stackable'
 
 /**
  * Internal dependencies
@@ -48,15 +50,12 @@ import {
 	__, _x, sprintf,
 } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import { i18n, showProNotice } from 'stackable'
 import {
 	PanelBody, RangeControl, SelectControl, TextControl,
 } from '@wordpress/components'
-import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
-import { ProControl } from '~stackable/components/index'
 
 addFilter( 'stackable.number-box.edit.inspector.layout.before', 'stackable/number-box', ( output, props ) => {
 	const { setAttributes } = props
@@ -376,22 +375,6 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					</ResponsiveControl>
 				) }
 			</PanelSpacingBody>
-		</Fragment>
-	)
-} )
-
-addFilter( `stackable.number-box.edit.inspector.advanced.before`, `stackable/number-box/column-colors`, output => {
-	return (
-		<Fragment>
-			{ output }
-			{ showProNotice &&
-				<PanelBody
-					title={ __( 'Fine-Grained Controls', i18n ) }
-					initialOpen={ false }
-				>
-					{ <ProControl type="advanced" /> }
-				</PanelBody>
-			}
 		</Fragment>
 	)
 } )

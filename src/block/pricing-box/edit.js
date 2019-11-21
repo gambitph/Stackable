@@ -30,7 +30,6 @@ import {
 	ControlSeparator,
 	PanelSpacingBody,
 	AdvancedRangeControl,
-	ProControl,
 } from '~stackable/components'
 import {
 	createVideoBackground,
@@ -523,22 +522,6 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					</ResponsiveControl>
 				) }
 			</PanelSpacingBody>
-		</Fragment>
-	)
-} )
-
-addFilter( 'stackable.pricing-box.edit.inspector.advanced.before', 'stackable/pricing-box', output => {
-	return (
-		<Fragment>
-			{ output }
-			{ showProNotice &&
-				<PanelBody
-					title={ __( 'Fine-Grained Controls', i18n ) }
-					initialOpen={ false }
-				>
-					{ <ProControl type="advanced" /> }
-				</PanelBody>
-			}
 		</Fragment>
 	)
 } )

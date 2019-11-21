@@ -20,7 +20,6 @@ import {
 	AdvancedRangeControl,
 	ButtonEditHelper,
 	ImageBackgroundControlsHelper,
-	ProControl,
 	WhenResponsiveScreen,
 } from '~stackable/components'
 import {
@@ -461,22 +460,6 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					</ResponsiveControl>
 				}
 			</PanelSpacingBody>
-		</Fragment>
-	)
-} )
-
-addFilter( 'stackable.card.edit.inspector.advanced.before', 'stackable/card', output => {
-	return (
-		<Fragment>
-			{ output }
-			{ showProNotice &&
-				<PanelBody
-					title={ __( 'Fine-Grained Controls', i18n ) }
-					initialOpen={ false }
-				>
-					{ <ProControl type="advanced" /> }
-				</PanelBody>
-			}
 		</Fragment>
 	)
 } )

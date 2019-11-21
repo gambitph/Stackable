@@ -18,7 +18,6 @@ import {
 	PanelSpacingBody,
 	AdvancedRangeControl,
 	ImageBackgroundControlsHelper,
-	ProControl,
 	ImageControlsHelper,
 	SocialControlsHelper,
 	Image,
@@ -498,22 +497,6 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 					</ResponsiveControl>
 				}
 			</PanelSpacingBody>
-		</Fragment>
-	)
-} )
-
-addFilter( 'stackable.team-member.edit.inspector.advanced.before', 'stackable/team-member', output => {
-	return (
-		<Fragment>
-			{ output }
-			{ showProNotice &&
-				<PanelBody
-					title={ __( 'Fine-Grained Controls', i18n ) }
-					initialOpen={ false }
-				>
-					{ <ProControl type="advanced" /> }
-				</PanelBody>
-			}
 		</Fragment>
 	)
 } )
