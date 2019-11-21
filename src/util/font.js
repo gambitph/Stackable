@@ -64,3 +64,19 @@ export const getFontFamily = fontName => {
 	}
 	return '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
 }
+
+/**
+ * Finds all the "font family" attributes and loads the font if needed.
+ *
+ * @param {Object} attributes Block attributes
+ */
+export const loadGoogleFontInAttributes = attributes => {
+	Object.keys( attributes )
+		.filter( attrName => attrName.match( /fontfamily/i ) )
+		.forEach( attrName => {
+			const fontName = attributes[ attrName ]
+			if ( fontName ) {
+				loadGoogleFont( fontName )
+			}
+		} )
+}

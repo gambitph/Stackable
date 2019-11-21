@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { loadGoogleFont } from '~stackable/util'
+import { loadGoogleFontInAttributes } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -16,15 +16,7 @@ const withGoogleFont = createHigherOrderComponent(
 		}
 
 		componentDidMount() {
-			const { attributes } = this.props
-			Object.keys( attributes )
-				.filter( attrName => attrName.match( /fontfamily/i ) )
-				.forEach( attrName => {
-					const fontName = attributes[ attrName ]
-					if ( fontName ) {
-						loadGoogleFont( fontName )
-					}
-				} )
+			loadGoogleFontInAttributes( this.props.attributes )
 		}
 
 		render() {

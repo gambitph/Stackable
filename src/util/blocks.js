@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { omit } from 'lodash'
+import { loadGoogleFontInAttributes } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -52,6 +53,9 @@ export const applyBlockDesign = ( attributes, clientId = null ) => {
 
 	// The filter should omit attributes which should not be overridden. For example, text titles.
 	const blockAttributes = applyFilters( `stackable.${ blockName }.design.apply-block-attributes`, { ...defaultAttributes, ...attributes }, currentBlockAttributes )
+
+	// Check for any Fonts that we need to load.
+	loadGoogleFontInAttributes( blockAttributes )
 
 	updateBlockAttributes( blockClientId, omit( blockAttributes, [ 'uniqueClass' ] ) )
 }
