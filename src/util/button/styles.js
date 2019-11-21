@@ -116,7 +116,7 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 					left: getValue( 'BorderWidth' ) !== '' ? `-${ getValue( 'BorderWidth' ) }px` : undefined,
 				},
 				[ `.${ mainClassName }:hover .ugb-button--inner, .${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon:hover svg` ]: {
-					color: whiteIfDarkBlackIfLight( getValue( 'HoverTextColor' ), getValue( 'HoverBackgroundColor', getValue( 'BackgroundColor' ) ) ),
+					color: appendImportant( whiteIfDarkBlackIfLight( getValue( 'HoverTextColor' ), getValue( 'HoverBackgroundColor', getValue( 'BackgroundColor' ) ) ) ),
 				},
 			} )
 
