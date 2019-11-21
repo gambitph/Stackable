@@ -1,0 +1,64 @@
+/**
+ * Deprecated < v2
+ */
+
+@import "common";
+
+.ugb-card:not([class*="ugb-card--v"]) {
+	border-radius: 4px;
+	margin: 30px 0;
+	overflow: hidden;
+	@include baseBlock();
+	@include box();
+	.ugb-card__image-container,
+	.ugb-card-image-container { // Old class name.
+		height: 300px;
+		background-size: cover;
+		background-position: center;
+		padding-top: 0;
+		margin: calc(var(--box-padding-vert) * -1) calc(var(--box-padding-hori) * -1) var(--box-padding-vert) !important;
+		width: calc(100% + var(--box-padding-hori) * 2);
+		+ *:not(.wp-ugb-button) {
+			margin-top: 0 !important;
+			padding-top: 0 !important;
+		}
+	}
+	.ugb-card__tagline,
+	.ugb-tagline { // Old class name.
+		font-size: 0.85em;
+	}
+	.ugb-button {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+
+	// This is the button container.
+	> div:not(.editor-rich-text) {
+		display: flex;
+		.ugb-button--align-center,
+		.ugb-button-center { // Old style.
+			align-self: center;
+		}
+		.ugb-button--align-left,
+		.ugb-button-left { // Old style.
+			align-self: flex-start;
+		}
+		.ugb-button--align-right,
+		.ugb-button-right { // Old style.
+			align-self: flex-end;
+		}
+	}
+}
+
+.ugb-:not([class*="ugb-card--v"]).ugb-card--design-plain,
+.ugb-card:not([class*="ugb-card--v"]).ugb-design-plain { // Old class name.
+	box-shadow: none;
+	border-radius: 0;
+	padding: 0;
+	overflow: visible;
+	.ugb-card__image-container,
+	.ugb-card-image-container { // Old class name.
+		margin: 0 0 calc(var(--box-padding-vert) / 2) !important;
+		width: 100%;
+	}
+}

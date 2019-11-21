@@ -1,0 +1,105 @@
+/**
+ * Deprecated < v2
+ */
+
+@import "common";
+
+.ugb-accordion:not([class*="ugb-accordion--v"]) {
+	@include baseBlock();
+	position: relative;
+	&.ugb-accordion--open .ugb-accordion__heading svg {
+		transform: rotate(180deg);
+	}
+}
+.ugb-accordion:not([class*="ugb-accordion--v"]) .ugb-accordion__heading {
+	@include box();
+	padding: ($box-hori-padding / 2) $box-hori-padding;
+	margin: 0 !important;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	cursor: pointer;
+	> * {
+		margin: 0 !important;
+	}
+	> *:first-child {
+		margin-right: 1em !important;
+	}
+	svg {
+		transition: transform 0.3s ease-in-out;
+		transform: rotate(0deg);
+	}
+	&:focus {
+		outline-width: 1px;
+		outline-style: dotted;
+	}
+
+	// Common shadow #9 doesn't show up since notification is too short.
+	&.ugb--shadow-9 {
+		box-shadow: 0 25px 60px -15px rgba(72, 73, 121, 0.38) !important;
+	}
+}
+.ugb-accordion:not([class*="ugb-accordion--v"]) .ugb-accordion__text {
+	max-height: 800px;
+	max-height: var(--max-height, none); // Dynamic max-height set by JS.
+	transition: max-height 0.3s linear, transform 0.4s ease-in-out, opacity 0.3s ease-in-out, margin 0.1s linear;
+	transform: translateY(0);
+	opacity: 1;
+	margin-top: $box-hori-padding !important;
+	margin-bottom: 0 !important;
+	margin-left: $box-hori-padding;
+	margin-right: $box-hori-padding;
+}
+body:not(.wp-admin) .ugb-accordion:not([class*="ugb-accordion--v"]):not(.ugb-accordion--open) .ugb-accordion__text {
+	max-height: 0;
+	transform: translateY(25px);
+	opacity: 0;
+	transition: max-height 0.3s linear, transform 0.4s ease-in-out, opacity 0.3s ease-in-out, margin 0.4s linear;
+	margin-top: 0 !important;
+}
+.ugb-accordion:not([class*="ugb-accordion--v"]).ugb-accordion--design-plain {
+	.ugb-accordion__heading {
+		box-shadow: none;
+		border-radius: 0;
+		padding: 0;
+		&:focus {
+			outline-offset: 10px;
+		}
+	}
+	.ugb-accordion__text {
+		margin: $box-hori-padding 0 0 !important;
+	}
+}
+
+/**
+ * Deprecated < v1.11
+ */
+.ugb-accordion:not([class*="ugb-accordion--v"]) > input[type="checkbox"] {
+	display: none !important;
+}
+
+// Open at start state.
+.ugb-accordion:not([class*="ugb-accordion--v"]) > input[type="checkbox"]:checked {
+	~ .ugb-accordion__text.ugb-accordion__text {
+		max-height: 800px;
+		transition: max-height 0.3s linear, transform 0.4s ease-in-out, opacity 0.3s ease-in-out, margin 0.1s linear;
+		transform: translateY(0);
+		opacity: 1;
+		margin: 35px 35px 0 !important;
+	}
+	~ .ugb-accordion__heading svg {
+		transform: rotate(0deg);
+	}
+}
+body:not(.wp-admin) .ugb-accordion:not([class*="ugb-accordion--v"]).ugb-accordion--open > input[type="checkbox"]:checked {
+	~ .ugb-accordion__text.ugb-accordion__text {
+		max-height: 0;
+		transform: translateY(25px);
+		opacity: 0;
+		transition: max-height 0.3s linear, transform 0.4s ease-in-out, opacity 0.3s ease-in-out, margin 0.4s linear;
+		margin-top: 0 !important;
+	}
+	~ .ugb-accordion__heading svg {
+		transform: rotate(180deg);
+	}
+}

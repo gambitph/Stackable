@@ -1,0 +1,349 @@
+@import "common";
+
+/**
+ * Deprecated < v2
+ */
+
+.ugb-image-box.ugb-image-box--v3 {
+	@include baseBlock();
+	display: grid;
+	grid-gap: $box-hori-padding;
+	&.ugb-image-box--columns-4 {
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+	}
+	&.ugb-image-box--columns-3 {
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+	}
+	&.ugb-image-box--columns-2 {
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	}
+	&.ugb-image-box--columns-1:not(.alignwide):not(.alignfull) {
+		grid-template-columns: minmax(0, 1fr);
+		.ugb-image-box__item {
+			margin: 0 auto;
+		}
+	}
+
+	// Add side paddings to full-width > 1 columns.
+	&.alignfull:not(.ugb-image-box--columns-1) {
+		padding-left: $box-hori-padding;
+		padding-right: $box-hori-padding;
+	}
+
+	// No border-radius for full width 1 column.
+	&.alignfull.ugb-image-box--columns-1 {
+		.ugb-image-box__item {
+			border-radius: 0;
+		}
+	}
+
+	// Collapse
+	@media screen and (max-width: $break-large) {
+		&.ugb-image-box--columns-4 {
+			grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		}
+	}
+	@media screen and (max-width: $break-medium) {
+		&.ugb-image-box--columns-3 {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+	@media screen and (max-width: $break-mobile) {
+		&.ugb-image-box--columns-4,
+		&.ugb-image-box--columns-2 {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+}
+
+.ugb-image-box.ugb-image-box--v3 {
+	.ugb-image-box__item {
+		// Safari fix for flashing overlay outside border-radius.
+		-webkit-mask-image: -webkit-radial-gradient(#fff, #000);
+		// Edge fix for flashing overlay outside border-radius.
+		transform: translateZ(0px);
+		background-size: cover;
+		background-position: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: stretch;
+		position: relative;
+		overflow: hidden;
+		background-color: #999;
+		@include box();
+		padding: $box-hori-padding;
+		max-width: 100%;
+		width: 100%;
+		margin: 0;
+		* {
+			transition: all 0.4s ease-in-out !important;
+			border: 0 !important;
+			box-shadow: none !important;
+		}
+		&:hover .ugb-image-box__overlay {
+			opacity: 0.7;
+		}
+		&:hover .ugb-image-box__description {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+}
+
+// Overlay opacity.
+.ugb-image-box.ugb-image-box--v3 {
+	@for $i from 0 through 10 {
+		&.ugb-image-box--overlay-#{ $i } {
+			.ugb-image-box__item:hover .ugb-image-box__overlay {
+				opacity: $i * 0.1;
+			}
+		}
+	}
+}
+
+.ugb-image-box.ugb-image-box--v3 {
+	.ugb-image-box__image-effect {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-size: cover;
+		background-position: center;
+		z-index: 1;
+	}
+	.ugb-image-box__overlay {
+		position: absolute;
+		z-index: 2;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		opacity: 0;
+		margin: 0 !important;
+		background-color: var(--overlay-color, #000);
+	}
+	.ugb-image-box__content {
+		z-index: 3;
+		pointer-events: none;
+		@include baseBlock();
+	}
+	.ugb-image-box__description {
+		margin: 0 !important;
+		opacity: 0;
+		transform: translateY(-15px);
+	}
+}
+
+/**
+ * Arrow
+ */
+.ugb-image-box.ugb-image-box--v3 {
+	.ugb-image-box__arrow {
+		fill: #fff;
+		z-index: 2;
+		width: 30px;
+		height: 20px;
+		position: absolute;
+		bottom: 35px;
+		left: auto;
+		right: auto;
+		z-index: 4;
+		opacity: 0;
+		transform: translateY(15px);
+		pointer-events: none;
+		&.ugb-image-box__arrow--align-left {
+			left: $box-hori-padding;
+		}
+		&.ugb-image-box__arrow--align-right {
+			right: $box-hori-padding;
+		}
+		&.ugb-image-box__arrow--align-center {
+			left: 50%;
+			transform: translateX(-50%) translateY(15px);
+		}
+	}
+	.ugb-image-box__item:hover {
+		.ugb-image-box__arrow {
+			opacity: 1;
+			transform: none;
+			&.ugb-image-box__arrow--align-center {
+				transform: translateX(-50%);
+			}
+		}
+	}
+
+	// Adjust some locations if we have an arrow.
+
+	// Basic design, text aligned bottom should make space for arrow.
+	.ugb-image-box--arrow:not([class*="ugb-image-box--design"]) {
+		.ugb-image-box__item[style*="flex-end"] .ugb-image-box__content {
+			margin-bottom: 50px;
+		}
+	}
+}
+
+/**
+ * Hover effects
+ */
+.ugb-image-box.ugb-image-box--v3 {
+	&.ugb-image-box--effect-zoom-in .ugb-image-box__item:hover {
+		.ugb-image-box__image-effect {
+			transform: scale(1.1);
+		}
+	}
+	&.ugb-image-box--effect-zoom-out .ugb-image-box__item {
+		.ugb-image-box__image-effect {
+			transform: scale(1.1);
+		}
+		&:hover {
+			.ugb-image-box__image-effect {
+				transform: scale(1);
+			}
+		}
+	}
+}
+
+/**
+ * Deprecated styles < 1.11
+ */
+.ugb-image-box-wrapper.ugb-image-box-v2 { // Old style.
+	@include baseBlock();
+	display: grid;
+	grid-gap: $box-hori-padding;
+	&.columns-4 { // Old style.
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+	}
+	&.columns-3 { // Old style.
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+	&.columns-2 { // Old style.
+		grid-template-columns: 1fr 1fr;
+	}
+	&.columns-1:not(.alignwide):not(.alignfull) {
+		grid-template-columns: 1fr;
+		.ugb-image-box {
+			margin: 0 auto;
+		}
+	}
+	.ugb-image-box {
+		margin: 0;
+		> a {
+			background-color: var(--overlay-color, #000);
+		}
+	}
+
+	.ugb-image-box {
+		width: 100%;
+		margin-bottom: 0 !important; // Container class forces bottom margin.
+	}
+
+	// Add side paddings to full-width > 1 columns.
+	&.alignfull:not(.columns-1) {
+		padding-left: $box-hori-padding;
+		padding-right: $box-hori-padding;
+	}
+
+	// No border-radius for full width 1 column.
+	&.alignfull.columns-1 {
+		.ugb-image-box {
+			border-radius: 0;
+		}
+	}
+
+	// Collapse
+	@media screen and (max-width: $break-large) {
+		&.columns-4 {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+	@media screen and (max-width: $break-medium) {
+		&.columns-3 {
+			grid-template-columns: 1fr;
+		}
+	}
+	@media screen and (max-width: $break-mobile) {
+		&.columns-4,
+		&.columns-2 {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	> .ugb-image-box { // Old style.
+		background-size: cover;
+		background-position: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: stretch;
+		position: relative;
+		overflow: hidden;
+		background-color: #999;
+		@include baseBlock();
+		@include box();
+		padding: $box-hori-padding;
+		margin-left: auto;
+		margin-right: auto;
+		max-width: 100%;
+		* {
+			transition: all 0.4s ease-in-out !important;
+			border: 0 !important;
+			box-shadow: none !important;
+		}
+		button.components-button {
+			z-index: 3;
+			margin-bottom: 1em;
+		}
+		> a {
+			position: absolute;
+			z-index: 2;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			opacity: 0;
+			margin: 0 !important;
+		}
+		h4,
+		p {
+			z-index: 3;
+			pointer-events: none;
+		}
+		p {
+			margin: 0 !important;
+			opacity: 0;
+			transform: translateY(-15px);
+		}
+		&:hover a {
+			opacity: 0.7;
+		}
+		&:hover p {
+			opacity: 1;
+			transform: translateY(0);
+		}
+		// Behavior for non-touch devices.
+		// @media not all and (hover: none) {
+		// 	&:hover a {
+		// 		opacity: .7;
+		// 	}
+		// 	&:hover p {
+		// 		opacity: 1;
+		// 		transform: translateY(0);
+		// 	}
+		// }
+		// a:hover, a:active {
+		// 	opacity: .7;
+		// }
+	}
+}
+
+/**
+ * Deprecated styles < 1.5
+ */
+.ugb-image-box.full-width {
+	width: 100% !important;
+}
+.wp-block-ugb-image-box.has-no-content {
+	display: none;
+}

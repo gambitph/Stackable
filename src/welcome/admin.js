@@ -26,6 +26,8 @@ import {
 	pricingURL,
 	showProNoticesOption,
 	welcomeSrcUrl,
+	loadV1Styles,
+	nonceLoadV1Styles,
 } from 'stackable'
 import {
 	Tab, TabList, TabPanel, Tabs,
@@ -192,6 +194,61 @@ class ProNoticeToggler extends Component {
 	}
 }
 
+class BackwardCompatibilityToggler extends Component {
+	constructor() {
+		super( ...arguments )
+		this.toggle = this.toggle.bind( this )
+		this.ajaxTimeout = null
+		this.state = {
+			checked: this.props.checked,
+			isSaving: false,
+		}
+	}
+
+	componentDidUpdate( prevProps, prevState ) {
+		if ( this.state.checked === prevState.checked ) {
+			return
+		}
+
+		clearTimeout( this.ajaxTimeout )
+		this.ajaxTimeout = setTimeout( () => {
+			ajaxSend( 'stackable_update_load_v1_styles_option', {
+				success: () => {
+					this.setState( { isSaving: false } )
+				},
+				error: message => {
+					this.setState( { isSaving: false } )
+					alert( message ) // eslint-disable-line no-alert
+				},
+				data: {
+					nonce: nonceLoadV1Styles,
+					checked: this.state.checked,
+				},
+			} )
+			this.setState( { isSaving: true } )
+		}, 600 )
+	}
+
+	toggle() {
+		this.setState( { checked: ! this.state.checked } )
+	}
+
+	render() {
+		return (
+			<label className="s-input-checkbox" htmlFor="s-input-v1-backward-compat">
+				<input
+					type="checkbox"
+					id="s-input-v1-backward-compat"
+					checked={ this.state.checked }
+					onChange={ this.toggle }
+				/>
+				{ __( 'Load version 1 block stylesheet for backward compatibility', i18n ) }
+				{ this.state.isSaving && <Spinner /> }
+			</label>
+		)
+	}
+}
+
 const knowledgeBaseList = () => {
 	return (
 		<ul className="s-tabs-list">
@@ -321,6 +378,11 @@ domReady( () => {
 			document.querySelector( '.s-pro-control-wrapper' )
 		)
 	}
+
+	render(
+		<BackwardCompatibilityToggler checked={ loadV1Styles } />,
+		document.querySelector( '.s-backward-compatibility-control-wrapper' )
+	)
 
 	render( <HelpTabs />, document.querySelector( '#s-help-area' ) )
 } )

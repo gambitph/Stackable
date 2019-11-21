@@ -165,34 +165,3 @@ div[class^="wp-block-"] {
 		background-attachment: scroll !important;
 	}
 }
-
-/**
- * Deprecated < v2
- */
-
-// A block can have a ugb-content-width class to make it's content fit the content-width.
-.ugb--content-width .ugb-content-wrapper,
-.ugb-content-width .ugb-content-wrapper { // Old naming convention.
-	max-width: var(--content-width);
-	margin: 0 auto;
-}
-
-
-@mixin baseBlock() {
-	@include blockContentReset();
-	margin-top: 1.5em;
-	margin-bottom: 1.5em;
-}
-
-@mixin blockContentReset() {
-	> * {
-		margin-top: 0 !important;
-		margin-bottom: 1rem !important;
-		&:first-child {
-			margin-top: 0 !important;
-		}
-		&:last-child {
-			margin-bottom: 0 !important;
-		}
-	}
-}

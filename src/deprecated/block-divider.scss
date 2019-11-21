@@ -1,0 +1,22 @@
+
+/**
+ * Deprecated < v2
+ */
+
+@import "common";
+
+.ugb-divider:not([class*="ugb-divider--v"]) {
+	border: 0;
+	height: 1px;
+	width: 100%;
+	background-color: transparent;
+	@include baseBlock();
+	hr {
+		background-color: #ddd;
+		border: 0 !important;
+		padding: 0 !important;
+		max-width: none !important;
+		margin-left: auto !important;
+		margin-right: auto !important;
+	}
+}

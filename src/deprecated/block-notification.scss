@@ -1,0 +1,136 @@
+@import "common";
+
+/**
+ * Deprecated < v2
+ */
+
+.ugb-notification:not([class*="ugb-notification--v"]) {
+	@include baseBlock();
+	@include box();
+	padding: $box-hori-padding;
+	background-color: #40ba7b;
+	position: relative;
+	overflow: visible;
+	.ugb-notification__close-button.ugb-notification__close-button {
+		margin-top: 30px !important;
+	}
+	&,
+	p {
+		color: #fff;
+	}
+	svg {
+		fill: #fff;
+	}
+	&.ugb-notification--type-error {
+		background-color: #d9534f;
+		svg {
+			fill: #fff;
+		}
+	}
+	&.ugb-notification--type-info {
+		background-color: #2091e1;
+		svg {
+			fill: #fff;
+		}
+	}
+	&.ugb-notification--type-warning {
+		background-color: #ffdd57;
+		&,
+		p {
+			color: #424242;
+		}
+		svg {
+			fill: #424242;
+		}
+	}
+	&.ugb-notification--dismissible {
+		padding-right: $box-vert-padding;
+
+		// Hide at the start, JS will show it to avoid flickering.
+		display: none;
+	}
+
+	// Common shadow #9 doesn't show up since notification is too short.
+	&.ugb--shadow-9 {
+		box-shadow: 0 30px 90px -30px rgba(72, 73, 121, 0.38) !important;
+	}
+}
+
+/**
+ * Deprecated. Version < 1.11
+ */
+
+.wp-block-ugb-notification {
+	position: relative;
+}
+.ugb-notification:not([class*="ugb-notification--v"]) {
+	border-radius: 4px;
+	color: #fff;
+	@include baseBlock();
+	@include box();
+	padding: $box-hori-padding;
+	background-color: #40ba7b;
+	&,
+	p {
+		color: #fff;
+	}
+	&.type-error {
+		background-color: #d9534f;
+	}
+	&.type-info {
+		background-color: #2091e1;
+	}
+	&.type-warning {
+		background-color: #ffdd57;
+		&,
+		p {
+			color: #424242;
+		}
+	}
+}
+
+.ugb-notification:not([class*="ugb-notification--v"]),
+.wp-block-ugb-notification:not([class*="ugb-notification--v"]) {
+	position: relative;
+	.close-button {
+		position: absolute;
+		right: 0;
+		z-index: 2;
+		margin-right: 1.5rem;
+		margin-top: 1.3rem;
+		font-size: 8px;
+		padding-top: 0.3rem;
+		cursor: pointer;
+		svg {
+			width: 13px;
+			height: auto;
+		}
+	}
+}
+.ugb-notification:not([class*="ugb-notification--v"]) {
+	&.dismissible-true {
+		.wp-ugb-notif {
+			padding-right: $box-vert-padding;
+		}
+	}
+	&.type-success svg,
+	&.type-error svg,
+	&.type-info svg {
+		fill: #fff;
+	}
+	&.type-warning svg {
+		fill: #424242;
+	}
+	&.dismissible-true[data-uid] {
+		display: none;
+	}
+
+	// Fix bug where previously saved < v1.11 custom backgrounds
+	// only color the middle area when viewing the page >= 1.11
+	&:not([style*="background-color"]) {
+		p[style*="background-color"] {
+			margin: -35px !important;
+			padding: 35px;
+		}
+	}
+}

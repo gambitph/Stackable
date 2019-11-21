@@ -1,0 +1,217 @@
+@import "common";
+
+/**
+ * Compatibility < 2
+ */
+.ugb-video-popup.ugb-video-popup--v2 {
+	position: relative;
+	@include baseBlock();
+	@include box();
+	padding: 0;
+	overflow: hidden;
+	&:not(.alignfull) {
+		width: 100%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	// Override box padding.
+	&.ugb--has-background {
+		padding: 0;
+	}
+
+	&.aligncenter {
+		max-width: 600px;
+	}
+	&.alignwide {
+		.ugb-video-popup__wrapper {
+			min-height: 500px;
+			padding-bottom: 40%;
+		}
+	}
+	&.alignfull {
+		.ugb-video-popup__wrapper {
+			min-height: 500px;
+			padding-bottom: 35%;
+		}
+	}
+
+	.ugb-video-popup__wrapper {
+		position: relative;
+		width: 100%;
+		padding-bottom: 56.25%;
+		border: 0 !important;
+		box-shadow: none !important;
+	}
+
+	// Background tint.
+	&::before {
+		transition: all 0.3s ease-in-out;
+	}
+	&.ugb--background-opacity-0:hover::before {
+		opacity: 0.3;
+	}
+	&.ugb--background-opacity-1:hover::before {
+		opacity: 0.4;
+	}
+	&.ugb--background-opacity-2:hover::before {
+		opacity: 0.5;
+	}
+	&.ugb--background-opacity-3:hover::before {
+		opacity: 0.6;
+	}
+	&.ugb--background-opacity-4:hover::before {
+		opacity: 0.1;
+	}
+	&.ugb--background-opacity-5:hover::before {
+		opacity: 0.2;
+	}
+	&.ugb--background-opacity-6:hover::before {
+		opacity: 0.3;
+	}
+	&.ugb--background-opacity-7:hover::before {
+		opacity: 0.4;
+	}
+	&.ugb--background-opacity-8:hover::before {
+		opacity: 0.5;
+	}
+	&.ugb--background-opacity-9:hover::before {
+		opacity: 0.6;
+	}
+	&.ugb--background-opacity-10:hover::before {
+		opacity: 0.7;
+	}
+}
+
+/**
+ * Compatibility < 1.11
+ */
+.ugb-video-popup:not([class*="ugb-video-popup--v"]) {
+	&::before {
+		transition: all 0.3s ease-in-out;
+	}
+	&.ugb-has-background-opacity-0:hover::before {
+		opacity: 0.3;
+	}
+	&.ugb-has-background-opacity-1:hover::before {
+		opacity: 0.4;
+	}
+	&.ugb-has-background-opacity-2:hover::before {
+		opacity: 0.5;
+	}
+	&.ugb-has-background-opacity-3:hover::before {
+		opacity: 0.6;
+	}
+	&.ugb-has-background-opacity-4:hover::before {
+		opacity: 0.1;
+	}
+	&.ugb-has-background-opacity-5:hover::before {
+		opacity: 0.2;
+	}
+	&.ugb-has-background-opacity-6:hover::before {
+		opacity: 0.3;
+	}
+	&.ugb-has-background-opacity-7:hover::before {
+		opacity: 0.4;
+	}
+	&.ugb-has-background-opacity-8:hover::before {
+		opacity: 0.5;
+	}
+	&.ugb-has-background-opacity-9:hover::before {
+		opacity: 0.6;
+	}
+	&.ugb-has-background-opacity-10:hover::before {
+		opacity: 0.7;
+	}
+}
+
+.video-popup-image {
+	height: 220px;
+	width: 220px;
+	background-position: center;
+	background-size: cover;
+	margin-bottom: 10px;
+}
+
+.ugb-video-popup:not([class*="ugb-video-popup--v"]) {
+	position: relative;
+	width: 100%;
+	max-width: 600px;
+	@include baseBlock();
+	@include box();
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0;
+	overflow: hidden;
+
+	.ugb-video-preview,
+	a,
+	.ugb-video-overlay,
+	.ugb-play-button {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
+	.ugb-video-preview {
+		margin: 0 !important;
+		background-size: cover;
+		background-position: center;
+		opacity: 0.4;
+		transition: all 0.3s ease-in-out;
+		z-index: 1;
+	}
+	&:hover .ugb-video-preview {
+		opacity: 0.5;
+	}
+	.ugb-video-wrapper {
+		position: relative;
+		width: 100%;
+		padding-bottom: 56.25%;
+		border: 0 !important;
+		box-shadow: none !important;
+	}
+	a,
+	.ugb-video-overlay {
+		z-index: 3;
+		box-shadow: none !important;
+		background: transparent !important;
+		display: block !important;
+	}
+	.ugb-play-button {
+		z-index: 2;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+	}
+	svg {
+		fill: #fff;
+	}
+}
+
+.ugb-video-popup-link .editor-url-input input[type="text"] {
+	width: auto !important;
+}
+
+.ugb-video-popup {
+	button.components-button.button {
+		position: absolute;
+		z-index: 4;
+		left: 50%;
+		transform: translateX(-50%);
+		top: 30%;
+		&:active {
+			transform: translateX(-50%);
+		}
+	}
+}
+
+// Don't add a background color to the popup's close button.
+#bp_container .bp-x {
+	&,
+	&:hover {
+		background: none !important;
+	}
+}

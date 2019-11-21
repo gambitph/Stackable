@@ -1,0 +1,132 @@
+@import "common";
+
+/**
+ * Deprecated < v2
+ */
+
+.ugb-number-box__item {
+	display: flex;
+	flex-direction: column;
+	@include box();
+}
+.ugb-number-box .ugb-inner-block {
+	text-align: center;
+}
+
+.ugb-number-box.ugb-number-box--design-plain {
+	.ugb-number-box__item {
+		box-shadow: none;
+		border-radius: 0;
+		padding: 0;
+		background: none;
+	}
+}
+
+.ugb-number-box__number {
+	background-color: var(--s-primary-color, #ddd);
+	color: #fff;
+	border-radius: 100%;
+	font-size: 3em;
+	display: block;
+	padding: 0;
+	overflow: visible;
+	margin: 0 auto;
+	height: 2.5em;
+	width: 2.5em;
+	line-height: 2.5em;
+	box-sizing: content-box;
+	white-space: nowrap !important;
+	text-align: center;
+	z-index: 3;
+}
+.ugb-number-box--number-style-square .ugb-number-box__number {
+	border-radius: 0;
+}
+.ugb-number-box--number-style-none .ugb-number-box__number {
+	display: block;
+	background: none;
+	border-radius: 0;
+	color: var(--s-primary-color, #222);
+	line-height: 1em;
+	height: auto;
+	width: 100%;
+}
+
+// Deprecated < 1.15.2
+.ugb-number-box.ugb-number-box--v2 {
+	@include baseBlock();
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+	grid-gap: $box-hori-padding;
+
+	&.ugb-number-box--columns-2 {
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	}
+	&.ugb-number-box--columns-1 {
+		grid-template-columns: minmax(0, 1fr);
+	}
+	@media screen and (max-width: $break-medium) {
+		&.ugb-number-box--columns-3 {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+	@media screen and (max-width: $break-small) {
+		&.ugb-number-box--columns-2 {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+
+	.ugb-number-box__item {
+		margin-bottom: 0 !important;
+	}
+}
+
+// Deprecated < 1.11
+.ugb-number-box:not(.ugb-number-box--v2):not(.ugb-number-box--v3) {
+	@include baseBlock();
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0 (-$box-hori-padding / 2);
+	span, // Old
+	.blocks-rich-text span { // Old
+		background-color: var(--s-primary-color, #ddd);
+		color: #fff;
+		border-radius: 100%;
+		font-size: 3em;
+		display: block;
+		padding: 0;
+		text-align: center;
+		overflow: hidden;
+		margin: 0 auto;
+		height: 2.5em;
+		width: 2.5em;
+		line-height: 2.5em !important;
+	}
+	> div {
+		text-align: center;
+		@include baseBlock();
+		@include box();
+		flex: 1;
+		min-width: 250px;
+		&,
+		&:first-child,
+		&:last-child {
+			margin: ($box-hori-padding / 2) !important;
+		}
+		p {
+			text-align: center;
+		}
+	}
+	&.column-1 {
+		> div:nth-child(2),
+		> div:nth-child(3) {
+			display: none;
+		}
+	}
+	&.column-2 {
+		> div:nth-child(3) {
+			display: none;
+		}
+	}
+
+}

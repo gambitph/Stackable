@@ -1,0 +1,48 @@
+// Deprecated < v2
+.ugb-button-wrapper:not(.ugb-main-block) {
+	margin-top: 1.5em;
+	margin-bottom: 1.5em;
+	display: flex !important;
+	justify-content: center;
+	flex-wrap: wrap;
+	align-items: center;
+	margin-left: -0.5em;
+	margin-right: -0.5em;
+	.ugb-button {
+		margin: 0 0.5em 0.5em;
+		display: block;
+	}
+	.ugb-button.ugb-button--has-icon,
+	.ugb-button.ugb-has-icon {
+		display: flex;
+	}
+
+	&.ugb-button--align-left {
+		justify-content: flex-start;
+	}
+	&.ugb-button--align-right {
+		justify-content: flex-end;
+	}
+	&.ugb-button--align-full {
+		> div {
+			flex: 1;
+			text-align: center;
+		}
+	}
+}
+
+// Deprecated < v1.11
+.ugb-button-wrapper:not(.ugb-main-block) {
+	&.ugb-button-left {
+		justify-content: flex-start;
+	}
+	&.ugb-button-right {
+		justify-content: flex-end;
+	}
+	&.ugb-button-full {
+		> div {
+			flex: 1;
+			text-align: center;
+		}
+	}
+}

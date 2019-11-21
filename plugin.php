@@ -76,6 +76,28 @@ if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
 	return;
 }
 
+/**
+ * Always keep note of the Stackable version.
+ * 
+ * @since 2.0
+ */
+if ( ! function_exists( 'stackable_version_upgrade_check' ) ) {
+	function stackable_version_upgrade_check() {
+		// This is triggered only when V1 was previously activated, and this is the first time V2 is activated.
+		// Will not trigger after successive V2 activations.
+		if ( get_option( 'stackable_activation_date' ) && ! get_option( 'stackable_current_version_installed' ) ) {
+			update_option( 'stackable_current_version_installed', '1' );
+		}
+
+		// Always check the current version installed. Trigger if it changes.
+		if ( get_option( 'stackable_current_version_installed' ) !== STACKABLE_VERSION ) {
+			do_action( 'stackable_version_upgraded', get_option( 'stackable_current_version_installed' ), STACKABLE_VERSION );
+			update_option( 'stackable_current_version_installed', STACKABLE_VERSION );
+		}
+	}
+	add_action( 'admin_menu', 'stackable_version_upgrade_check', 1 );
+}
+
 /********************************************************************************************
  * END Activation & PHP version checks.
  ********************************************************************************************/

@@ -1,0 +1,78 @@
+@import "common";
+
+/**
+ * Deprecated < v2
+ */
+.ugb-icon-list:not([class*="ugb-icon-list--v"]) {
+	margin: 0 0 1.5em 0 !important;
+	padding: 0 !important;
+	list-style: none !important;
+	li::before {
+		content: "";
+		display: inline-block;
+		vertical-align: middle;
+		height: var(--icon-size, 20px);
+		width: var(--icon-size, 20px);
+		margin-right: 1em;
+		background-image: var(--icon);
+		background-size: cover;
+		background-position: center;
+		transform: translateY(-10%);
+	}
+	li {
+		margin-top: 0 !important;
+		margin-bottom: var(--gap, 16) !important;
+
+		// Force this for compatibility with others like Genesis themes.
+		list-style: none !important;
+
+		// text-indent here plus the padding-left in the container makes sure our text doesn't wrap below the bullet.
+		text-indent: calc(var(--icon-size, 20px) * -1 - 1em) !important;
+		padding-left: calc(var(--icon-size, 20px) + 1em) !important;
+
+		// Minimal support for nest lists.
+		ul {
+			margin-top: var(--gap, 16) !important;
+			list-style: none;
+			margin-left: 0;
+		}
+	}
+	li:last-child {
+		margin-bottom: 0;
+	}
+	&.ugb-icon--columns-2,
+	&.column-2 { // Old style.
+		columns: 2;
+	}
+	&.ugb-icon--columns-3,
+	&.column-3 { // Old style.
+		columns: 3;
+	}
+	@media screen and (max-width: $break-small) {
+		&.ugb-icon--columns-3,
+		&.column-3 { // Old style.
+			columns: 2;
+		}
+	}
+	// @from https://css-tricks.com/almanac/properties/b/break-inside/
+	&.ugb-icon-columns-2,
+	&.ugb-icon-columns-3,
+	&.column-2, // Old style.
+	&.column-3 { // Old style.
+		li {
+			page-break-inside: avoid; /* Firefox */
+			break-inside: avoid;
+		}
+	}
+}
+
+// Fallback for IE11: SVG icons will not display as bullets, fallback to normal bullets.
+@media all and (-ms-high-contrast: none) {
+	*::-ms-backdrop,
+	.ugb-icon-list:not([class*="ugb-icon-list--v"]) li {
+		list-style: inside disc !important;
+		&::before {
+			content: none !important;
+		}
+	}
+}

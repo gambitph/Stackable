@@ -1,0 +1,139 @@
+@import "common";
+
+/**
+ * Compatibility < v.11
+ */
+.ugb-testimonial:not([class*="ugb-testimonial--v"]) {
+	@include baseBlock();
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0 (-$box-hori-padding / 2);
+	.testimonial-image {
+		height: 75px;
+		width: 75px;
+		background-size: cover;
+		background-position: center;
+		border-radius: 100%;
+		margin: 0 auto 1.3rem;
+	}
+	> div {
+		text-align: center;
+		@include baseBlock();
+		p {
+			text-align: center;
+		}
+		flex: 1;
+		min-width: 250px;
+		&,
+		&:first-child,
+		&:last-child {
+			margin: ($box-hori-padding / 2) !important;
+		}
+	}
+	h4 {
+		margin: 0 0 0.5rem !important;
+		padding-top: 0;
+	}
+	.ugb-testimonial-position {
+		opacity: 0.5;
+	}
+}
+
+/**
+ * Deprecated. < v1.5
+ */
+.ugb-testimonial {
+	.ugb-testimonial-position,
+	.ugb-testimonial-position-two,
+	.ugb-testimonial-position-three {
+		// opacity: 0.3;
+		font-size: 0.75em;
+		margin: 0 0 1rem;
+		text-transform: uppercase;
+	}
+	.ugb-testimonial-body,
+	.ugb-testimonial-body-two,
+	.ugb-testimonial-body-three {
+		// opacity: 0.5;
+		margin: 0 0 1rem;
+		left: 0;
+	}
+	.quote-icon {
+		height: 75px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		svg {
+			height: 50px;
+			width: auto;
+			fill: #e6e6e6;
+		}
+	}
+}
+
+/**
+ * Deprecated < v2
+ */
+.ugb-testimonial--v2.ugb-testimonial {
+	@include baseBlock();
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+	grid-gap: $box-hori-padding;
+	text-align: center;
+
+	.ugb-testimonial__item {
+		margin-bottom: 0 !important;
+	}
+	.ugb-testimonial__body-wrapper {
+		margin-bottom: 1em;
+	}
+	&.ugb-testimonial--serif .ugb-testimonial__body {
+		font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif !important;
+		font-style: italic;
+		font-size: 20px;
+		line-height: 1.7em !important;
+		font-weight: 400;
+		color: #555;
+	}
+
+	&.ugb-testimonial--columns-2 {
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	}
+	&.ugb-testimonial--columns-1 {
+		grid-template-columns: minmax(0, 1fr);
+	}
+	@media screen and (max-width: $break-medium) {
+		&.ugb-testimonial--columns-3 {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+	@media screen and (max-width: $break-small) {
+		&.ugb-testimonial--columns-2 {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+
+	.ugb-testimonial__person {
+		@include baseBlock();
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+	.ugb-testimonial.ugb-testimonial--design-basic {
+		.ugb-testimonial__item {
+			@include box();
+		}
+	}
+	.ugb-testimonial__image {
+		height: 75px;
+		width: 75px;
+		background-size: cover;
+		background-position: center;
+		border-radius: 100%;
+		margin: 0 auto 1.3rem;
+	}
+	.ugb-testimonial__position {
+		font-size: 0.75em;
+		text-transform: uppercase;
+		opacity: 0.7;
+	}
+}
