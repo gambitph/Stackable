@@ -24,6 +24,7 @@ const ImageShapeControl = props => {
 	return (
 		<Fragment>
 			<DesignControl
+				className="ugb-image-shape-control"
 				{ ...props }
 				options={ [
 					{

@@ -6,6 +6,7 @@
  */
 import { DesignPanelItem } from '~stackable/components'
 import { omit } from 'lodash'
+import classnames from 'classnames'
 
 /**
  * WordPress dependencies
@@ -14,7 +15,7 @@ import { RadioControl } from '@wordpress/components'
 
 function DesignControl( props ) {
 	const {
-		selected, options, onChange,
+		selected, options, onChange, className = '',
 	} = props
 
 	// Convert the options.
@@ -32,7 +33,7 @@ function DesignControl( props ) {
 			<div className="components-base-control__label">{ props.label }</div>
 			<RadioControl
 				{ ...omit( props, [ 'label' ] ) }
-				className="ugb-design-control"
+				className={ classnames( className, 'ugb-design-control' ) }
 				selected={ selected }
 				options={ fixedOptions }
 				onChange={ onChange }
