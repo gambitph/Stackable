@@ -51,3 +51,8 @@ svg.ugb-stackable-icon-gradient {
 		margin-bottom: 0;
 	}
 }
+
+// Fix for pulsating sidebar
+.ugb-design-control {
+	max-height: 450px;
+}
