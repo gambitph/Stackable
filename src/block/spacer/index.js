@@ -5,7 +5,7 @@
 /**
  * External dependencies
  */
-import { createResponsiveAttributes } from '~stackable/util'
+import { createResponsiveAttributes, createBackgroundAttributes } from '~stackable/util'
 
 /**
  * Internal dependencies
@@ -31,6 +31,9 @@ export const schema = {
 		type: 'string',
 		default: 'px',
 	} ),
+
+	// Background.
+	...createBackgroundAttributes( '%s' ),
 }
 
 export const name = 'ugb/spacer'
@@ -46,6 +49,7 @@ export const settings = {
 	],
 	attributes: schema,
 	supports: {
+		align: [ 'center', 'full' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
 	},
 

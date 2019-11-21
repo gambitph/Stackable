@@ -12,7 +12,11 @@ const BlockContainer = {}
 
 BlockContainer.Edit = props => {
 	const {
-		blockProps, render, mainClass, blockTag: blockTagProp, ...containerProps
+		blockProps,
+		render,
+		mainClass,
+		blockTag: blockTagProp,
+		...containerProps
 	} = props
 	const { blockName } = blockProps
 	const {
@@ -33,13 +37,15 @@ BlockContainer.Edit = props => {
 		<BlockTag { ...containerProps } id={ anchor } className={ mainClasses }>
 			{ blockProps.styles }
 			{ applyFilters( `stackable.${ blockName }.edit.output.outer`, null, design, blockProps ) }
-			<div className="ugb-inner-block">
-				{ applyFilters( `stackable.${ blockName }.edit.output.before`, null, design, blockProps ) }
-				<div className="ugb-block-content">
-					{ render( blockProps ) }
+			{ render &&
+				<div className="ugb-inner-block">
+					{ applyFilters( `stackable.${ blockName }.edit.output.before`, null, design, blockProps ) }
+					<div className="ugb-block-content">
+						{ render( blockProps ) }
+					</div>
+					{ applyFilters( `stackable.${ blockName }.edit.output.after`, null, design, blockProps ) }
 				</div>
-				{ applyFilters( `stackable.${ blockName }.edit.output.after`, null, design, blockProps ) }
-			</div>
+			}
 		</BlockTag>
 	)
 }
@@ -51,7 +57,11 @@ BlockContainer.Edit.defaultProps = {
 
 BlockContainer.Save = props => {
 	const {
-		blockProps, render, mainClass, blockTag: blockTagProp, ...containerProps
+		blockProps,
+		render,
+		mainClass,
+		blockTag: blockTagProp,
+		...containerProps
 	} = props
 	const { blockName } = blockProps
 	const {
@@ -72,13 +82,15 @@ BlockContainer.Save = props => {
 		<BlockTag { ...containerProps } id={ anchor } className={ mainClasses }>
 			{ blockProps.styles }
 			{ applyFilters( `stackable.${ blockName }.save.output.outer`, null, design, blockProps ) }
-			<div className="ugb-inner-block">
-				{ applyFilters( `stackable.${ blockName }.save.output.before`, null, design, blockProps ) }
-				<div className="ugb-block-content">
-					{ render( blockProps ) }
+			{ render &&
+				<div className="ugb-inner-block">
+					{ applyFilters( `stackable.${ blockName }.save.output.before`, null, design, blockProps ) }
+					<div className="ugb-block-content">
+						{ render( blockProps ) }
+					</div>
+					{ applyFilters( `stackable.${ blockName }.save.output.after`, null, design, blockProps ) }
 				</div>
-				{ applyFilters( `stackable.${ blockName }.save.output.after`, null, design, blockProps ) }
-			</div>
+			}
 		</BlockTag>
 	)
 }

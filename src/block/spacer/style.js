@@ -1,4 +1,10 @@
 /**
+ * External dependencies
+ */
+import { createBackgroundStyleSet } from '~stackable/util'
+import deepmerge from 'deepmerge'
+
+/**
  * WordPress dependencies
  */
 import { sprintf } from '@wordpress/i18n'
@@ -9,7 +15,9 @@ export const createStyles = props => {
 		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
 	}
 
-	return {
+	const styles = []
+
+	styles.push( {
 		'.ugb-spacer': {
 			height: getValue( 'height', `%s${ getValue( 'heightUnit' ) || 'px' }` ),
 		},
@@ -23,7 +31,16 @@ export const createStyles = props => {
 				height: getValue( 'mobileHeight', `%s${ getValue( 'mobileHeightUnit' ) || 'px' }` ),
 			},
 		},
-	}
+	} )
+
+	// Column Background.
+	styles.push( {
+		...createBackgroundStyleSet( '%s', 'ugb-spacer', props.attributes, {
+			importantBackgroundColor: true,
+		} ),
+	} )
+
+	return deepmerge.all( styles )
 }
 
 export default createStyles

@@ -2,11 +2,21 @@
  * External dependencies
  */
 import {
-	AdvancedRangeControl, BlockContainer, WhenResponsiveScreen,
+	AdvancedRangeControl,
+	BlockContainer,
+	WhenResponsiveScreen,
+	BackgroundControlsHelper,
+	ControlSeparator,
 } from '~stackable/components'
 import {
-	withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass,
+	withBlockStyles,
+	withGoogleFont,
+	withSetAttributeHook,
+	withTabbedInspector,
+	withUniqueClass,
 } from '~stackable/higher-order'
+import { hasBackgroundOverlay } from '~stackable/util'
+import classnames from 'classnames'
 
 /**
  * Internal dependencies
@@ -80,13 +90,26 @@ addFilter( 'stackable.spacer.edit.inspector.style.before', 'stackable/spacer', (
 						onChangeUnit={ mobileHeightUnit => setAttributes( { mobileHeightUnit } ) }
 					/>
 				</WhenResponsiveScreen>
+
+				<ControlSeparator />
+
+				<BackgroundControlsHelper
+					attrNameTemplate="%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
 			</PanelBody>
 		</Fragment>
 	)
 } )
 
 const edit = props => {
-	return <BlockContainer.Edit className={ props.className } blockProps={ props } render={ () => null } />
+	const mainClasses = classnames( [
+		props.className,
+	], {
+		'ugb--has-background-overlay': hasBackgroundOverlay( '%s', props.attributes ),
+	} )
+	return <BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ null } />
 }
 
 export default compose(
