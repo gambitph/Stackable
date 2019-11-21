@@ -33,6 +33,7 @@ module.exports = [
 		block: 'Divider',
 		version: '1.17.3',
 		description: 'Custom CSS',
+		plan: 'Premium',
 		html: `<!-- wp:ugb/divider {"customCSSUniqueID":"ugb-4b3708f","customCSS":"/* Divider */\n.ugb-divider hr {\nbackground: red;\n}","customCSSCompiled":".ugb-4b3708f.ugb-divider hr{background:red !important}"} -->
 		<div class="wp-block-ugb-divider ugb-divider ugb-4b3708f"><style>.ugb-4b3708f.ugb-divider hr{background:red !important}</style><hr align="center" style="background-color:#dddddd;width:50%;height:1px"/></div>
 		<!-- /wp:ugb/divider -->`,
