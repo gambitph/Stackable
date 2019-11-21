@@ -23,6 +23,7 @@
 	.ugb-countup__counter {
 		font-size: 40px;
 		line-height: 1em;
+		white-space: nowrap; // Prevent counting from jumping to the next line.
 	}
 
 	.ugb-countup__icon {
