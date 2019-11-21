@@ -199,6 +199,9 @@
 	}
 	&.ugb-button--ghost-to-normal-effect:hover {
 		background-color: var(--s-primary-color, #2091e1);
+		.svg-inline--fa {
+			color: #fff;
+		}
 		.ugb-button--inner {
 			color: #fff;
 		}
