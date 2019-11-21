@@ -73,6 +73,7 @@ module.exports = [
 		block: 'Icon List',
 		version: '1.15.4',
 		description: 'Custom CSS',
+		plan: 'Premium',
 		html: `<!-- wp:ugb/icon-list {"customCSSUniqueID":"ugb-179676b","customCSS":"/* Icon list container */\n.ugb-icon-list-wrapper {\n\tbackground: red;\n}\n\n/* Icon list list */\n.ugb-icon-list-wrapper .ugb-icon-list {\n\t\n}\n\n/* Icon list list text */\n.ugb-icon-list-wrapper .ugb-icon-list li {\n\t\n}\n\n/* Icon list icon */\n.ugb-icon-list-wrapper .ugb-icon-list li:before {\n\t\n}","customCSSCompiled":".ugb-179676b.ugb-icon-list-wrapper{background:red !important}"} -->
 		<div class="wp-block-ugb-icon-list ugb-icon-list-wrapper ugb-179676b"><style>.ugb-179676b.ugb-icon-list-wrapper{background:red !important}</style><ul class="ugb-icon-list ugb-icon--icon-check ugb-icon--columns-1" style="--icon:url('data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTkwIDE5MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTczLjggMjguNEw2MC40IDE0MS44IDE1LjcgOTcuMiA1LjEgMTA3LjggNjAuNCAxNjNsMTI0LTEyNC0xMC42LTEwLjZ6Ij48L3BhdGg+PC9zdmc+');--icon-size:20px;--gap:16px"><li>dkjwqkdjnwq</li><li>dwkqjndwkjqnw</li></ul></div>
 		<!-- /wp:ugb/icon-list -->`,

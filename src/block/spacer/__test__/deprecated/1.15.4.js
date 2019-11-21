@@ -33,6 +33,7 @@ module.exports = [
 		block: 'Spacer',
 		version: '1.15.4',
 		description: 'Custom CSS',
+		plan: 'Premium',
 		html: `<!-- wp:ugb/spacer {"height":141,"customCSSUniqueID":"ugb-b06476b","customCSS":"/* Spacer container */\n.ugb-spacer {\n\tbackground: red;\n}","customCSSCompiled":".ugb-b06476b.ugb-spacer{background:red !important}"} -->
 		<div class="wp-block-ugb-spacer ugb-spacer ugb-b06476b" style="height:141px"><style>.ugb-b06476b.ugb-spacer{background:red !important}</style></div>
 		<!-- /wp:ugb/spacer -->`,

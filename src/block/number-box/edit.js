@@ -405,19 +405,13 @@ const edit = props => {
 
 	const {
 		columns,
-		// numberColor,
-		// titleColor,
-		// descriptionColor,
-		// numberBGColor,
 		design = 'basic',
 		titleTag = '',
-		// borderRadius = 12,
 		shadow = 3,
 		showNumber = true,
 		showTitle = true,
 		showDescription = true,
 		numberStyle = '',
-		// backgroundColor,
 	} = props.attributes
 
 	const mainClasses = classnames( [

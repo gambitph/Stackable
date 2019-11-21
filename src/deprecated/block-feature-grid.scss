@@ -1,0 +1,99 @@
+@import "common";
+
+/**
+ * Deprecated < v2
+ */
+.ugb-feature-grid:not([class*="ugb-feature-grid--v"]) {
+	@include baseBlock();
+	display: flex;
+	flex-wrap: nowrap;
+	margin: 0 (-$box-hori-padding / 2);
+	> div {
+		flex: 1;
+		&,
+		&:first-child,
+		&:last-child {
+			margin: ($box-hori-padding / 2) !important;
+		}
+	}
+	.ugb-feature-grid__item {
+		@include box();
+	}
+	.ugb-feature-grid__content {
+		text-align: center;
+		@include baseBlock();
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+	.ugb-feature-grid__image {
+		img {
+			display: block;
+			margin: 0 auto;
+		}
+	}
+	.ugb-button {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+}
+
+.ugb-feature-grid--design-plain:not([class*="ugb-feature-grid--v"]) {
+	.ugb-feature-grid__item,
+	.ugb-feature-grid-item {
+		box-shadow: none;
+		padding: 0;
+		border-radius: 0;
+
+		@media screen and (max-width: $break-medium) {
+			padding: 0;
+		}
+		@media screen and (max-width: $break-small) {
+			padding-left: 0;
+			padding-right: 0;
+			padding-top: #{($box-hori-padding / 2)};
+			padding-bottom: #{($box-hori-padding / 2)};
+		}
+	}
+}
+
+.ugb-feature-grid--design-basic:not([class*="ugb-feature-grid--v"]),
+.ugb-feature-grid--design-plain:not([class*="ugb-feature-grid--v"]) {
+	.ugb-feature-grid__item {
+		@include baseBlock();
+	}
+}
+
+// For 3 columns, make sure the images are still seen if columns are narrow.
+@media screen and (max-width: $break-large) {
+	.ugb-feature-grid:not([class*="ugb-feature-grid--v"]).ugb-feature-grid--columns-3 {
+		.ugb-feature-grid__content > img,
+		.ugb-feature-grid-item > img {
+			width: 100% !important;
+		}
+	}
+}
+
+// For small screens, collapse & make sure our images aren't too large.
+@media screen and (max-width: $break-small) {
+	.ugb-feature-grid:not([class*="ugb-feature-grid--v"]) {
+		.ugb-feature-grid__content > img,
+		.ugb-feature-grid-item > img {
+			max-width: 30vw;
+		}
+	}
+	.ugb-feature-grid:not([class*="ugb-feature-grid--v"]) {
+		flex-direction: column;
+	}
+}
+
+/**
+ * Deprecated < v1.11
+ */
+.ugb-feature-grid {
+	.ugb-feature-grid-item {
+		text-align: center;
+		@include baseBlock();
+		@include box();
+	}
+}

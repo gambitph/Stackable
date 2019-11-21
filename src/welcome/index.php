@@ -69,6 +69,8 @@ SVG;
 					'showProNoticesOption' => stackable_show_pro_notices_option(),
 					'nonceProNotice' => stackable_show_pro_notices_option_nonce(),
 					'nonceNews' => stackable_get_news_feed_nonce(),
+					'loadV1Styles' => stackable_should_load_v1_styles(),
+					'nonceLoadV1Styles' => stackable_load_v1_styles_nonce(),
 				) );
             }
         }
@@ -110,6 +112,7 @@ SVG;
 							<!-- We put all the block controls here. -->
                             <div class="s-settings-wrapper" />
 						</article>
+						<aside class="s-backward-compatibility-control-wrapper"></aside>
 						<?php if ( STACKABLE_SHOW_PRO_NOTICES && ! sugb_fs()->can_use_premium_code() ): ?>
 							<aside class="s-pro-control-wrapper"></aside>
 						<?php endif; ?>

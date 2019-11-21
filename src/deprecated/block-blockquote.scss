@@ -1,0 +1,121 @@
+/**
+ * Deprecated < v2
+ */
+
+@import "common";
+
+.ugb-blockquote.ugb-blockquote--v2,
+.ugb-blockquote:not([class*="ugb-blockquote--v"]) {
+	border: 0 !important;
+	@include baseBlock();
+	padding: $box-hori-padding;
+	margin-left: $box-hori-padding;
+	margin-right: $box-hori-padding;
+	font-style: italic;
+	text-align: inherit;
+	background: transparent;
+	position: relative;
+	overflow: visible;
+	--quote-color: rgba(129, 141, 165, 0.32);
+	p {
+		margin: 0;
+	}
+	&,
+	p {
+		position: relative;
+		z-index: 2;
+		&::after,
+		&::before {
+			display: none;
+		}
+	}
+
+	&.alignfull {
+		border-radius: 0 !important;
+		margin-top: 0;
+		margin-bottom: 0;
+		padding-left: 10vw;
+		padding-right: 10vw;
+		&::after {
+			left: calc(10vw - 70px);
+		}
+	}
+	&.ugb--has-background::after,
+	&.ugb-has-background::after {
+		top: 0;
+		left: 10px;
+	}
+
+	&.ugb-blockquote--v2 {
+		padding: 0;
+		.ugb-content-wrapper {
+			padding: $box-vert-padding $box-hori-padding;
+			position: relative;
+		}
+		&::after {
+			content: "";
+			display: none;
+		}
+		svg {
+			position: absolute;
+			fill: rgba(129, 141, 165, 0.32);
+			width: 70px;
+			height: 70px;
+			transform: translateX(-50%) translateY(-30%);
+			top: 0;
+			left: 0;
+			z-index: 1;
+		}
+	}
+	&.ugb-blockquote--small-quote svg {
+		top: $box-vert-padding;
+		left: $box-hori-padding;
+		transform: translateX(-100%) translateY(-80%);
+	}
+}
+
+.ugb-blockquote.ugb-blockquote--v2,
+.ugb-blockquote:not([class*="ugb-blockquote--v"]) {
+	&.ugb-blockquote--design-plain {
+		box-shadow: none;
+		border-radius: 0;
+		overflow: visible;
+	}
+}
+
+.ugb-blockquote.ugb-blockquote--v2,
+.ugb-blockquote:not([class*="ugb-blockquote--v"]) {
+	&.ugb-blockquote--design-basic {
+		@include box();
+		overflow: hidden;
+		padding: 0;
+		svg {
+			transform: translateX(-30%) translateY(-30%);
+			top: 21px;
+			left: 35px;
+		}
+		&.ugb-blockquote--small-quote svg {
+			top: $box-vert-padding;
+			left: $box-hori-padding;
+			transform: translateX(-100%) translateY(-80%);
+		}
+	}
+}
+
+
+.ugb-blockquote.ugb-blockquote--v2,
+.ugb-blockquote:not([class*="ugb-blockquote--v"]) {
+	&::after {
+		content: "❛❛";
+		display: block;
+		position: absolute;
+		font-family: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
+		font-style: normal;
+		font-size: 100px;
+		line-height: 1em;
+		left: -35px;
+		top: -15px;
+		opacity: 1;
+		color: var(--quote-color);
+	}
+}

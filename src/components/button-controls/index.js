@@ -320,7 +320,7 @@ const ButtonControls = props => {
 					{ props.onChangeHoverBackgroundColor && (
 						<ColorPaletteControl
 							label={
-								props.onChangeHoverBackgroundColor && ( props.hoverGhostToNormal || ( props.backgroundColorType === 'gradient' && showGradient ) ) ?
+								props.onChangeHoverBackgroundColor && ( ( design === 'ghost' && props.hoverGhostToNormal ) || ( props.backgroundColorType === 'gradient' && showGradient ) ) ?
 									sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button Color', i18n ), 1 ) :
 									__( 'Button Color', i18n )
 							}
@@ -328,14 +328,14 @@ const ButtonControls = props => {
 							onChange={ props.onChangeHoverBackgroundColor }
 						/>
 					) }
-					{ props.onChangeHoverBackgroundColor2 && ( props.hoverGhostToNormal || ( props.backgroundColorType === 'gradient' && showGradient ) ) && (
+					{ props.onChangeHoverBackgroundColor2 && ( ( design === 'ghost' && props.hoverGhostToNormal ) || ( props.backgroundColorType === 'gradient' && showGradient ) ) && (
 						<ColorPaletteControl
 							label={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button Color', i18n ), 2 ) }
 							value={ props.hoverBackgroundColor2 }
 							onChange={ props.onChangeHoverBackgroundColor2 }
 						/>
 					) }
-					{ props.onChangeHoverBackgroundColor2 && ( props.hoverGhostToNormal || ( props.backgroundColorType === 'gradient' && showGradient ) ) && (
+					{ props.onChangeHoverBackgroundColor2 && ( ( design === 'ghost' && props.hoverGhostToNormal ) || ( props.backgroundColorType === 'gradient' && showGradient ) ) && (
 						<RangeControl
 							label={ __( 'Gradient Direction (degrees)', i18n ) }
 							value={ props.hoverBackgroundGradientDirection }
@@ -346,7 +346,7 @@ const ButtonControls = props => {
 							allowReset={ true }
 						/>
 					) }
-					{ props.onChangeHoverTextColor && ( props.hoverGhostToNormal || showGradient ) && (
+					{ props.onChangeHoverTextColor && ( ( design === 'ghost' && props.hoverGhostToNormal ) || showGradient ) && (
 						<ColorPaletteControl
 							label={ __( 'Text Color', i18n ) }
 							value={ props.hoverTextColor }

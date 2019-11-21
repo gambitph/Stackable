@@ -1,0 +1,148 @@
+@import "common";
+
+/**
+ * Deprecated < v2
+ */
+.ugb-pricing-box.ugb-pricing-box--v2 {
+	@include baseBlock();
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	grid-gap: $box-hori-padding;
+
+	&.ugb-pricing-box--columns-3 {
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+	}
+	&.ugb-pricing-box--columns-1 {
+		grid-template-columns: minmax(0, 1fr);
+	}
+	@media screen and (max-width: $break-medium) {
+		&.ugb-pricing-box--columns-3 {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+	@media screen and (max-width: $break-small) {
+		&.ugb-pricing-box--columns-2 {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+}
+
+.ugb-pricing-box.ugb-pricing-box--v2 {
+	.ugb-pricing-box__item {
+		@include box();
+		margin-bottom: 0 !important;
+		text-align: center;
+		flex: 1;
+		.ugb-pricing-box__price {
+			font-size: 3.5em;
+			line-height: 100% !important;
+		}
+	}
+
+	.ugb-pricing-box__price-wrapper {
+		@include baseBlock();
+	}
+
+	.ugb-pricing-box__image {
+		img {
+			margin: 0 auto;
+		}
+		margin-bottom: 2em !important;
+	}
+	.ugb-pricing-box__price-line {
+		display: flex;
+		justify-content: center;
+	}
+	.ugb-pricing-box__price-prefix {
+		align-self: flex-start;
+		font-size: 1.2em;
+	}
+	.ugb-pricing-box__price-suffix {
+		align-self: flex-end;
+		font-size: 1.5em;
+	}
+
+	.ugb-pricing-box__price {
+		font-size: 3.5em;
+		line-height: 100% !important;
+	}
+	.ugb-pricing-box__subprice {
+		font-size: 0.75em;
+		opacity: 0.3;
+		text-transform: uppercase;
+		line-height: 100% !important;
+	}
+}
+
+.ugb-pricing-box.ugb-pricing-box--v2.ugb-pricing-box--design-plain {
+	.ugb-pricing-box__item {
+		@include baseBlock();
+		box-shadow: none;
+		padding: 0;
+		border-radius: 0;
+	}
+}
+.ugb-pricing-box.ugb-pricing-box--v2.ugb-pricing-box--design-basic {
+	.ugb-pricing-box__item {
+		@include baseBlock();
+		&.ugb-pricing-box--highlighted {
+			*:not(.ugb-button--inner) {
+				color: #222;
+			}
+			&.ugb-pricing-box--is-dark {
+				*:not(.ugb-button--inner) {
+					color: #fff;
+				}
+			}
+		}
+	}
+}
+
+/**
+ * Compatibility < v1.11
+ */
+.ugb-pricing-box:not([class*="ugb-pricing-box--v"]) {
+	@include baseBlock();
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0 (-$box-hori-padding / 2);
+	> div {
+		text-align: center;
+		@include baseBlock();
+		@include box();
+		flex: 1;
+		min-width: 250px;
+		&,
+		&:first-child,
+		&:last-child {
+			margin: ($box-hori-padding / 2) !important;
+		}
+	}
+	h3 {
+		line-height: 100% !important;
+	}
+	.ugb-pricing-box-pricing {
+		font-size: 3.5em;
+		line-height: 100% !important;
+	}
+	.ugb-pricing-box-per-month-label {
+		font-size: 0.75em;
+		opacity: 0.3;
+		text-transform: uppercase;
+		line-height: 100% !important;
+	}
+}
+.ugb-pricing-box.column-1 {
+	.ugb-pricing-box-column-two,
+	.ugb-pricing-box-column-three {
+		display: none;
+	}
+}
+.ugb-pricing-box.column-2 {
+	.ugb-pricing-box-column-three {
+		display: none;
+	}
+}
+.blocks-button__inline-link.pricing-box {
+	margin: 5px auto 0 auto;
+}

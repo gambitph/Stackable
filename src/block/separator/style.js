@@ -1,4 +1,14 @@
+/**
+ * External dependencies
+ */
+import { appendImportant } from '~stackable/util'
+
 export const createStyles = props => {
+	const getValue = ( attrName, format = '' ) => {
+		const value = typeof props.attributes[ attrName ] === 'undefined' ? '' : props.attributes[ attrName ]
+		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
+	}
+
 	const {
 		height,
 		tabletHeight = '',
@@ -49,7 +59,7 @@ export const createStyles = props => {
 			background: backgroundColor ? backgroundColor : undefined,
 		},
 		'.ugb-separator__svg-wrapper': {
-			height: height !== '' ? `${ height }px` : undefined,
+			height: appendImportant( getValue( 'tabletHeight', '%spx' ) ),
 		},
 		'.ugb-separator__shadow, .ugb-separator__layer-1': {
 			fill: layer1Color ? layer1Color : undefined,
@@ -63,7 +73,7 @@ export const createStyles = props => {
 		},
 		tablet: {
 			'.ugb-separator__svg-wrapper': {
-				height: tabletHeight !== '' ? `${ tabletHeight }px` : undefined,
+				height: appendImportant( getValue( 'tabletHeight', '%spx' ) ),
 			},
 			'.ugb-separator': {
 				marginTop: `${ tabletMarginTop - 1 }${ tabletMarginUnit } !important`, // -1 to prevent white lines.
@@ -78,7 +88,7 @@ export const createStyles = props => {
 		},
 		mobile: {
 			'.ugb-separator__svg-wrapper': {
-				height: mobileHeight !== '' ? `${ mobileHeight }px` : undefined,
+				height: appendImportant( getValue( 'mobileHeight', '%spx' ) ),
 			},
 			'.ugb-separator': {
 				marginTop: `${ mobileMarginTop - 1 }${ mobileMarginUnit } !important`, // -1 to prevent white lines.

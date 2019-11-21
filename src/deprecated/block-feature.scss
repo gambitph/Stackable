@@ -1,0 +1,153 @@
+@import "common";
+
+/**
+ * Deprecated < v2
+ */
+
+.ugb-feature:not([class*="ugb-feature--v"]) {
+	@include baseBlock();
+	.ugb-content-wrapper,
+	.ugb-feature-wrapper { // Old class.
+		display: flex;
+		flex-wrap: nowrap;
+		margin: 0 (-$box-hori-padding / 2);
+		> div {
+			justify-content: center;
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+			@include baseBlock();
+			margin: 0 ($box-hori-padding / 2);
+		}
+	}
+	&.ugb-feature--invert .ugb-content-wrapper,
+	&.ugb-invert .ugb-feature-wrapper { // Old class.
+		flex-direction: row-reverse;
+	}
+	.ugb-feature__image { // Fix for IE11 stretching images vertically.
+		min-height: 1px;
+	}
+	.ugb-feature__image-side,
+	.ugb-feature-image-side {
+		align-items: center;
+		img {
+			max-width: var(--image-size, 400px);
+			width: 100%;
+		}
+	}
+	&.ugb-feature--content-left,
+	&.ugb-content-left {
+		text-align: left;
+	}
+	&.ugb-feature--content-center,
+	&.ugb-content-center {
+		text-align: center;
+	}
+	&.ugb-feature--content-right,
+	&.ugb-content-right {
+		text-align: right;
+	}
+
+	&.alignfull.ugb--has-background,
+	&.alignfull.ugb-has-background {
+		border-radius: 0;
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+	.ugb-button {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+	&.alignfull {
+		border-radius: 0 !important;
+	}
+}
+
+.ugb-feature:not([class*="ugb-feature--v"]) {
+	&.ugb-feature--design-basic,
+	&.ugb-feature--design-plain {
+		.ugb-feature__image {
+			max-width: var(--image-size, 400px);
+			width: 100%;
+			object-fit: contain;
+			img {
+				margin: 0 auto;
+			}
+		}
+	}
+}
+body:not(.wp-admin) .ugb-feature:not([class*="ugb-feature--v"]).ugb-feature--design-plain {
+	.ugb-feature__image {
+		flex: 0;
+		min-height: auto;
+		height: auto;
+	}
+}
+// Fallback for IE11: Plain image display as 1px.
+@media all and (-ms-high-contrast: none) {
+	*::-ms-backdrop,
+	body:not(.wp-admin) .ugb-feature:not([class*="ugb-feature--v"]).ugb-feature--design-plain {
+		.ugb-feature__image {
+			flex: none;
+		}
+	}
+}
+.ugb-feature:not([class*="ugb-feature--v"]).ugb-feature--design-basic {
+	@include box();
+}
+.ugb-feature:not([class*="ugb-feature--v"]).alignfull.ugb-feature--design-plain {
+	padding-right: $box-hori-padding;
+	padding-left: $box-hori-padding;
+}
+
+/**
+ * Backward compatibility < 1.11
+ */
+.ugb-feature {
+	&.alignfull .ugb-feature-wrapper {
+		max-width: var(--content-width, 900px);
+		margin: 0 auto;
+	}
+	&.ugb-has-background {
+		@include box();
+	}
+}
+
+// Collapse into a single column on small screens, always put image on top.
+@media screen and (max-width: 768px) {
+	.ugb-feature {
+		.ugb-content-wrapper,
+		&.ugb-feature--invert .ugb-content-wrapper,
+		.ugb-feature-wrapper, // Old class.
+		&.ugb-invert .ugb-feature-wrapper { // Old class.
+			flex-direction: column-reverse;
+		}
+		.ugb-content-wrapper {
+			.ugb-feature__content {
+				margin-top: $box-vert-padding;
+			}
+			.ugb-feature__image-side {
+				img {
+					width: 60vw;
+				}
+			}
+		}
+
+		// Old class.
+		.ugb-feature-wrapper {
+			text-align: center;
+			> div:first-child {
+				margin-top: $box-vert-padding;
+			}
+			.ugb-feature-image-side {
+				img {
+					width: 60vw;
+				}
+			}
+		}
+
+		.ugb-button {
+			margin: 0 auto;
+		}
+	}
+}

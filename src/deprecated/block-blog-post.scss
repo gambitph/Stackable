@@ -1,0 +1,194 @@
+/**
+ * Deprecated < v2
+ */
+
+@import "common";
+
+.ugb-blog-posts:not([class*="ugb-blog-posts--v"]) {
+	@include baseBlock();
+	.ugb-blog-posts__item {
+		@include baseBlock();
+	}
+	time {
+		display: inline-block;
+	}
+	.ugb-blog-posts__title {
+		a,
+		a:hover {
+			box-shadow: none;
+			text-decoration: none;
+		}
+	}
+
+	// Last paragraph of excerpts interfere with margins.
+	.ugb-blog-posts__excerpt > *:last-child {
+		margin-bottom: 0;
+	}
+
+	&.ugb-blog-posts--align-right {
+		text-align: right;
+	}
+	&.ugb-blog-posts--align-left {
+		text-align: left;
+	}
+	&.ugb-blog-posts--align-center {
+		text-align: center;
+	}
+
+	// Add side paddings to wide & fullwidth.
+	&.alignwide,
+	&.alignfull {
+		padding-left: $box-hori-padding;
+		padding-right: $box-hori-padding;
+	}
+
+	.ugb-blog-posts__featured-image {
+		@include box();
+		padding: 0 !important;
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+	&.ugb-blog-posts--feature-image-shape-full {
+		.ugb-blog-posts__featured-image {
+			a {
+				display: block;
+			}
+			img {
+				display: block;
+				width: 100%;
+				height: auto;
+			}
+		}
+	}
+	&.ugb-blog-posts--feature-image-shape-square,
+	&.ugb-blog-posts--feature-image-shape-landscape,
+	&.ugb-blog-posts--feature-image-shape-portrait {
+		.ugb-blog-posts__featured-image {
+			a {
+				position: relative;
+				height: 0;
+				padding-bottom: 50%;
+				display: block;
+			}
+			img {
+				position: absolute;
+				max-height: none;
+				max-width: none;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				object-fit: cover;
+				height: 100%;
+				width: 100%;
+			}
+		}
+	}
+	&.ugb-blog-posts--feature-image-shape-square {
+		.ugb-blog-posts__featured-image a {
+			padding-bottom: 100%;
+		}
+	}
+	&.ugb-blog-posts--feature-image-shape-portrait {
+		.ugb-blog-posts__featured-image a {
+			padding-bottom: 150%;
+		}
+	}
+	&.ugb-blog-posts--feature-image-shape-landscape {
+		.ugb-blog-posts__featured-image a {
+			padding-bottom: 50%;
+		}
+	}
+
+	.ugb-blog-posts__category-list {
+		font-size: 0.75em;
+		text-transform: uppercase;
+		a,
+		a:hover {
+			text-decoration: none;
+			box-shadow: none;
+		}
+	}
+
+	.ugb-blog-posts__meta {
+		font-size: 0.75em;
+		text-transform: uppercase;
+		color: var(--s-accent-color, var(--s-primary-color, #2091e1));
+		> *:not(.ugb-blog-posts__sep) {
+			margin: 0;
+		}
+		> .ugb-blog-posts__sep {
+			margin: 0 0.25em;
+		}
+	}
+
+	&.ugb-blog-posts--columns-1 {
+		grid-template-columns: minmax(0, 1fr);
+	}
+	&.ugb-blog-posts--columns-2 {
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	}
+	&.ugb-blog-posts--columns-3 {
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+	}
+	&.ugb-blog-posts--columns-4 {
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+	}
+	display: grid;
+	grid-column-gap: $box-hori-padding;
+	grid-row-gap: $box-vert-padding;
+
+	@media screen and (max-width: $break-wide) {
+		&.ugb-blog-posts--columns-4 {
+			grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		}
+	}
+	@media screen and (max-width: $break-medium) {
+		&.ugb-blog-posts--columns-3 {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+	@media screen and (max-width: $break-small) {
+		&.ugb-blog-posts--columns-2,
+		&.ugb-blog-posts--columns-4 {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+
+	/**
+     * List design.
+     */
+	&.ugb-blog-posts--design-list {
+		.ugb-blog-posts__item {
+			display: grid;
+			grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+			grid-gap: $box-hori-padding;
+		}
+		.ugb-blog-posts__featured-image {
+			align-self: flex-start;
+		}
+		.ugb-blog-posts__side {
+			@include baseBlock();
+		}
+		@media screen and (max-width: $break-huge) {
+			&.ugb-blog-posts--columns-3,
+			&.ugb-blog-posts--columns-4 {
+				grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+			}
+		}
+		@media screen and (max-width: $break-large) {
+			&.ugb-blog-posts--columns-2,
+			&.ugb-blog-posts--columns-3,
+			&.ugb-blog-posts--columns-4 {
+				grid-template-columns: minmax(0, 1fr);
+			}
+		}
+		@media screen and (max-width: $break-small) {
+			.ugb-blog-posts__item {
+				grid-template-columns: minmax(0, 1fr);
+				grid-gap: 0;
+			}
+		}
+	}
+}
