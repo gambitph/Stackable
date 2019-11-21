@@ -7,6 +7,7 @@
 @import "common";
 
 .ugb-number-box.ugb-number-box--v3 {
+	text-align: center;
 	.ugb-block-content {
 		display: grid;
 		grid-auto-columns: minmax(0, 1fr);
@@ -81,7 +82,9 @@
 		width: 100%;
 	}
 
-	.ugb-number-box__number,
+	.ugb-number-box__number {
+		margin: 0 auto $text-margin-bottom;
+	}
 	.ugb-number-box__title,
 	.ugb-number-box__description {
 		margin: 0 0 $text-margin-bottom 0;

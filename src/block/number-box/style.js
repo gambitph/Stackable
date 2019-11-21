@@ -9,6 +9,7 @@ import {
 	marginRightAlign,
 	whiteIfDark,
 	whiteIfDarkBlackIfLight,
+	appendImportant,
 } from '~stackable/util'
 
 /**
@@ -38,18 +39,18 @@ export const createStyles = props => {
 	const show = showOptions( props )
 
 	// General.
-	const {
-		borderRadius = 12,
-	} = props.attributes
 	styles.push( {
 		'.ugb-number-box__item': {
-			borderRadius: design !== 'plain' && borderRadius !== 12 ? `${ borderRadius }px` : undefined,
+			borderRadius: design !== 'plain' ? getValue( 'borderRadius', '%spx !important' ) : undefined,
 		},
 	} )
 
 	// Column Background.
+	const columnBackgroundOptions = {
+		importantBackgroundColor: true,
+	}
 	styles.push( {
-		...( show.columnBackground ? createBackgroundStyleSet( 'column%s', 'ugb-number-box__item', props.attributes ) : {} ),
+		...( show.columnBackground ? createBackgroundStyleSet( 'column%s', 'ugb-number-box__item', props.attributes, columnBackgroundOptions ) : {} ),
 	} )
 
 	// Number
@@ -74,36 +75,36 @@ export const createStyles = props => {
 	if ( showNumber ) {
 		styles.push( {
 			'.ugb-number-box__number': {
-				...createTypographyStyles( 'number%s', 'desktop', props.attributes ),
-				backgroundColor: show.numberBGColor ? getValue( 'numberBGColor' ) : undefined,
-				height: show.numberBGColor ? getValue( 'numberPadding', '%sem' ) : undefined,
-				width: show.numberBGColor ? getValue( 'numberPadding', '%sem' ) : undefined,
-				lineHeight: show.numberBGColor && numberLineHeight === '' ? getValue( 'numberPadding', '%sem' ) : getValue( 'numberLineHeight', `%s${ numberLineHeightUnit }` ),
-				marginLeft: numberAlign !== '' || contentAlign !== '' ? marginLeftAlign( numberAlign || contentAlign ) : undefined,
-				marginRight: numberAlign !== '' || contentAlign !== '' ? marginRightAlign( numberAlign || contentAlign ) : undefined,
-				textAlign: show.numberBGColor ? undefined : ( getValue( 'numberAlign' ) || getValue( 'contentAlign' ) ),
-				color: whiteIfDarkBlackIfLight( numberColor, show.numberBGColor && numberBGColor ),
+				...createTypographyStyles( 'number%s', 'desktop', props.attributes, { important: true } ),
+				backgroundColor: show.numberBGColor ? appendImportant( getValue( 'numberBGColor' ) ) : undefined,
+				height: show.numberBGColor ? appendImportant( getValue( 'numberPadding', '%sem' ) ) : undefined,
+				width: show.numberBGColor ? appendImportant( getValue( 'numberPadding', '%sem' ) ) : undefined,
+				lineHeight: appendImportant( show.numberBGColor && numberLineHeight === '' ? getValue( 'numberPadding', '%sem' ) : getValue( 'numberLineHeight', `%s${ numberLineHeightUnit }` ) ),
+				marginLeft: numberAlign !== '' || contentAlign !== '' ? appendImportant( marginLeftAlign( numberAlign || contentAlign ) ) : undefined,
+				marginRight: numberAlign !== '' || contentAlign !== '' ? appendImportant( marginRightAlign( numberAlign || contentAlign ) ) : undefined,
+				textAlign: appendImportant( show.numberBGColor ? undefined : ( getValue( 'numberAlign' ) || getValue( 'contentAlign' ) ) ),
+				color: appendImportant( whiteIfDarkBlackIfLight( numberColor, show.numberBGColor && numberBGColor ) ),
 				opacity: getValue( 'numberOpacity' ),
 				// Special case for centering the text with letter-spacing.
 				textIndent: ( design === 'basic' || design === 'plain' ) ? getValue( 'numberLetterSpacing', '%spx' ) : undefined,
 			},
 			tablet: {
 				'.ugb-number-box__number': {
-					height: show.numberBGColor ? getValue( 'numberTabletPadding', '%sem' ) : undefined,
-					width: show.numberBGColor ? getValue( 'numberTabletPadding', '%sem' ) : undefined,
-					lineHeight: show.numberBGColor && numberTabletLineHeight === '' ? getValue( 'numberTabletPadding', '%sem' ) : getValue( 'numberTabletLineHeight', `%s${ numberTabletLineHeightUnit }` ),
-					marginLeft: numberTabletAlign !== '' && tabletContentAlign !== '' ? marginLeftAlign( numberTabletAlign || tabletContentAlign ) : undefined,
-					marginRight: numberTabletAlign !== '' && tabletContentAlign !== '' ? marginRightAlign( numberTabletAlign || tabletContentAlign ) : undefined,
+					height: show.numberBGColor ? appendImportant( getValue( 'numberTabletPadding', '%sem' ) ) : undefined,
+					width: show.numberBGColor ? appendImportant( getValue( 'numberTabletPadding', '%sem' ) ) : undefined,
+					lineHeight: appendImportant( show.numberBGColor && numberTabletLineHeight === '' ? getValue( 'numberTabletPadding', '%sem' ) : getValue( 'numberTabletLineHeight', `%s${ numberTabletLineHeightUnit }` ) ),
+					marginLeft: numberTabletAlign !== '' && tabletContentAlign !== '' ? appendImportant( marginLeftAlign( numberTabletAlign || tabletContentAlign ) ) : undefined,
+					marginRight: numberTabletAlign !== '' && tabletContentAlign !== '' ? appendImportant( marginRightAlign( numberTabletAlign || tabletContentAlign ) ) : undefined,
 					textAlign: show.numberBGColor ? undefined : ( getValue( 'numberTabletAlign' ) || getValue( 'tabletContentAlign' ) ),
 				},
 			},
 			mobile: {
 				'.ugb-number-box__number': {
-					height: show.numberBGColor ? getValue( 'numberMobilePadding', '%sem' ) : undefined,
-					width: show.numberBGColor ? getValue( 'numberMobilePadding', '%sem' ) : undefined,
-					lineHeight: show.numberBGColor && numberMobileLineHeight === '' ? getValue( 'numberMobilePadding', '%sem' ) : getValue( 'numberMobileLineHeight', `%s${ numberMobileLineHeightUnit }` ),
-					marginLeft: numberMobileAlign !== '' && mobileContentAlign !== '' ? marginLeftAlign( numberMobileAlign || mobileContentAlign ) : undefined,
-					marginRight: numberMobileAlign !== '' && mobileContentAlign !== '' ? marginRightAlign( numberMobileAlign || mobileContentAlign ) : undefined,
+					height: show.numberBGColor ? appendImportant( getValue( 'numberMobilePadding', '%sem' ) ) : undefined,
+					width: show.numberBGColor ? appendImportant( getValue( 'numberMobilePadding', '%sem' ) ) : undefined,
+					lineHeight: appendImportant( show.numberBGColor && numberMobileLineHeight === '' ? getValue( 'numberMobilePadding', '%sem' ) : getValue( 'numberMobileLineHeight', `%s${ numberMobileLineHeightUnit }` ) ),
+					marginLeft: numberMobileAlign !== '' && mobileContentAlign !== '' ? appendImportant( marginLeftAlign( numberMobileAlign || mobileContentAlign ) ) : undefined,
+					marginRight: numberMobileAlign !== '' && mobileContentAlign !== '' ? appendImportant( marginRightAlign( numberMobileAlign || mobileContentAlign ) ) : undefined,
 					textAlign: show.numberBGColor ? undefined : ( getValue( 'numberMobileAlign' ) || getValue( 'mobileContentAlign' ) ),
 				},
 			},

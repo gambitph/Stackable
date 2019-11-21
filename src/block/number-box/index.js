@@ -175,7 +175,7 @@ export const schema = {
 			default: '',
 		},
 		[ '1', '2', '3' ],
-		[ 'Background', 'NumberBackground', 'Number', 'Title', 'Description' ]
+		[ 'Background', 'NumberBackground' ]
 	),
 
 	// Keep the old attributes. Gutenberg issue https://github.com/WordPress/gutenberg/issues/10406
