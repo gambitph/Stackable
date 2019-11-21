@@ -89,8 +89,6 @@ export const createStyles = props => {
 		} )
 	}
 
-	console.log( props.attributes )
-
 	// Title.
 	const {
 		titleColor = '',
