@@ -53,8 +53,11 @@ export const createStyles = props => {
 	}
 
 	// Column Background.
+	const columnBackgroundOptions = {
+		importantBackgroundColor: true,
+	}
 	styles.push( {
-		...( show.columnBackground ? createBackgroundStyleSet( 'column%s', 'ugb-countup__item', props.attributes ) : {} ),
+		...( show.columnBackground ? createBackgroundStyleSet( 'column%s', 'ugb-countup__item', props.attributes, columnBackgroundOptions ) : {} ),
 	} )
 
 	// Spacing.
