@@ -144,18 +144,14 @@ class ButtonEdit extends Component {
 							}
 						</Fragment>
 					}
-					{
-						// Should be tagName="span", but div for now because of issue
-						// @see https://github.com/WordPress/gutenberg/issues/7311
-					}
 					{ ! iconButton &&
 						<RichText
-							tagName="div"
+							tagName="span"
 							className={ design === 'link' ? '' : 'ugb-button--inner' }
 							placeholder={ __( 'Button text', i18n ) }
 							value={ text }
 							onChange={ onChange }
-							formattingControls={ [ 'bold', 'italic', 'strikethrough' ] }
+							withoutInteractiveFormatting={ true }
 							keepPlaceholderOnFocus
 						/>
 					}
