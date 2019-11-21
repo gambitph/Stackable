@@ -38,9 +38,9 @@ export const createStyles = props => {
 		imageAlign = '',
 		contentAlign = '',
 		imageTabletAlign = '',
-		contentTabletAlign = '',
+		tabletContentAlign = '',
 		imageMobileAlign = '',
-		contentMobileAlign = '',
+		mobileContentAlign = '',
 	} = props.attributes
 
 	const styles = []
@@ -73,14 +73,14 @@ export const createStyles = props => {
 			},
 			tablet: {
 				'.ugb-img, .ugb-pricing-box__image': {
-					marginLeft: imageTabletAlign !== '' || contentTabletAlign !== '' ? marginLeftAlign( imageTabletAlign || contentTabletAlign ) + ' !important' : undefined,
-					marginRight: imageTabletAlign !== '' || contentTabletAlign !== '' ? marginRightAlign( imageTabletAlign || contentTabletAlign ) + ' !important' : undefined,
+					marginLeft: imageTabletAlign !== '' || tabletContentAlign !== '' ? marginLeftAlign( imageTabletAlign || tabletContentAlign ) + ' !important' : undefined,
+					marginRight: imageTabletAlign !== '' || tabletContentAlign !== '' ? marginRightAlign( imageTabletAlign || tabletContentAlign ) + ' !important' : undefined,
 				},
 			},
 			mobile: {
 				'.ugb-img, .ugb-pricing-box__image': {
-					marginLeft: imageMobileAlign !== '' || contentMobileAlign !== '' ? marginLeftAlign( imageMobileAlign || contentMobileAlign ) + ' !important' : undefined,
-					marginRight: imageMobileAlign !== '' || contentMobileAlign !== '' ? marginRightAlign( imageMobileAlign || contentMobileAlign ) + ' !important' : undefined,
+					marginLeft: imageMobileAlign !== '' || mobileContentAlign !== '' ? marginLeftAlign( imageMobileAlign || mobileContentAlign ) + ' !important' : undefined,
+					marginRight: imageMobileAlign !== '' || mobileContentAlign !== '' ? marginRightAlign( imageMobileAlign || mobileContentAlign ) + ' !important' : undefined,
 				},
 			},
 		} )
@@ -106,13 +106,13 @@ export const createStyles = props => {
 			tablet: {
 				'.ugb-pricing-box__title': {
 					...createTypographyStyles( 'title%s', 'tablet', props.attributes ),
-					textAlign: getValue( 'titleTabletAlign' ) || getValue( 'contentTabletAlign' ),
+					textAlign: getValue( 'titleTabletAlign' ) || getValue( 'tabletContentAlign' ),
 				},
 			},
 			mobile: {
 				'.ugb-pricing-box__title': {
 					...createTypographyStyles( 'title%s', 'mobile', props.attributes ),
-					textAlign: getValue( 'titleMobileAlign' ) || getValue( 'contentMobileAlign' ),
+					textAlign: getValue( 'titleMobileAlign' ) || getValue( 'mobileContentAlign' ),
 				},
 			},
 		} )
@@ -131,8 +131,8 @@ export const createStyles = props => {
 		} )
 
 		const align = getValue( 'priceAlign' ) || getValue( 'contentAlign' )
-		const alignTablet = getValue( 'priceTabletAlign' ) || getValue( 'contentTabletAlign' )
-		const alignMobile = getValue( 'priceMobileAlign' ) || getValue( 'contentMobileAlign' )
+		const alignTablet = getValue( 'priceTabletAlign' ) || getValue( 'tabletContentAlign' )
+		const alignMobile = getValue( 'priceMobileAlign' ) || getValue( 'mobileContentAlign' )
 		styles.push( {
 			'.ugb-pricing-box__price-line': {
 				...createTypographyStyles( 'price%s', 'desktop', props.attributes ),
@@ -230,13 +230,13 @@ export const createStyles = props => {
 			tablet: {
 				'.ugb-pricing-box__subprice': {
 					...createTypographyStyles( 'subPrice%s', 'tablet', props.attributes, { important: true } ),
-					textAlign: getValue( 'subPriceTabletAlign' ) || getValue( 'contentTabletAlign' ),
+					textAlign: getValue( 'subPriceTabletAlign' ) || getValue( 'tabletContentAlign' ),
 				},
 			},
 			mobile: {
 				'.ugb-pricing-box__subprice': {
 					...createTypographyStyles( 'subPrice%s', 'mobile', props.attributes, { important: true } ),
-					textAlign: getValue( 'subPriceMobileAlign' ) || getValue( 'contentMobileAlign' ),
+					textAlign: getValue( 'subPriceMobileAlign' ) || getValue( 'mobileContentAlign' ),
 				},
 			},
 		} )
@@ -256,12 +256,12 @@ export const createStyles = props => {
 			},
 			tablet: {
 				'.ugb-button-container': {
-					textAlign: appendImportant( getValue( 'buttonTabletAlign' ) || getValue( 'contentTabletAlign' ) ),
+					textAlign: appendImportant( getValue( 'buttonTabletAlign' ) || getValue( 'tabletContentAlign' ) ),
 				},
 			},
 			mobile: {
 				'.ugb-button-container': {
-					textAlign: appendImportant( getValue( 'buttonMobileAlign' ) || getValue( 'contentMobileAlign' ) ),
+					textAlign: appendImportant( getValue( 'buttonMobileAlign' ) || getValue( 'mobileContentAlign' ) ),
 				},
 			},
 		} )
@@ -282,13 +282,13 @@ export const createStyles = props => {
 			tablet: {
 				'.ugb-pricing-box__description': {
 					...createTypographyStyles( 'description%s', 'tablet', props.attributes ),
-					textAlign: appendImportant( getValue( 'descriptionTabletAlign' ) || getValue( 'contentTabletAlign' ) ),
+					textAlign: appendImportant( getValue( 'descriptionTabletAlign' ) || getValue( 'tabletContentAlign' ) ),
 				},
 			},
 			mobile: {
 				'.ugb-pricing-box__description': {
 					...createTypographyStyles( 'description%s', 'mobile', props.attributes ),
-					textAlign: appendImportant( getValue( 'descriptionMobileAlign' ) || getValue( 'contentMobileAlign' ) ),
+					textAlign: appendImportant( getValue( 'descriptionMobileAlign' ) || getValue( 'mobileContentAlign' ) ),
 				},
 			},
 		} )
