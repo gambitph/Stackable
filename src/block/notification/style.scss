@@ -71,47 +71,63 @@
 		}
 		.ugb-notification__icon,
 		.ugb-notification__title,
-		.ugb-notification__description {
+		.ugb-notification__description,
+		.ugb-button--inner {
 			color: #40ba7b;
 		}
 		.ugb-notification__close-button svg,
 		.ugb-notification__icon {
 			fill: #40ba7b;
 		}
+		.ugb-button {
+			border-color: #40ba7b !important;
+		}
 
 		&.ugb-notification--type-error {
 			.ugb-notification__icon,
 			.ugb-notification__title,
-			.ugb-notification__description {
+			.ugb-notification__description,
+			.ugb-button--inner {
 				color: #d9534f;
 			}
 			.ugb-notification__close-button svg,
 			.ugb-notification__icon {
 				fill: #d9534f;
 			}
+			.ugb-button {
+				border-color: #d9534f !important;
+			}
 		}
 
 		&.ugb-notification--type-info {
 			.ugb-notification__icon,
 			.ugb-notification__title,
-			.ugb-notification__description {
+			.ugb-notification__description,
+			.ugb-button--inner {
 				color: #2091e1;
 			}
 			.ugb-notification__close-button svg,
 			.ugb-notification__icon {
 				fill: #2091e1;
 			}
+			.ugb-button {
+				border-color: #2091e1 !important;
+			}
 		}
 
 		&.ugb-notification--type-warning {
 			.ugb-notification__icon,
 			.ugb-notification__title,
-			.ugb-notification__description {
+			.ugb-notification__description,
+			.ugb-button--inner {
 				color: #ff6f2f;
 			}
 			.ugb-notification__close-button svg,
 			.ugb-notification__icon {
 				fill: #ff6f2f;
+			}
+			.ugb-button {
+				border-color: #ff6f2f !important;
 			}
 		}
 	}
@@ -126,6 +142,7 @@
 		}
 	}
 }
+
 .ugb-notification__icon {
 	&,
 	svg {

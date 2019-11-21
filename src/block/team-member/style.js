@@ -65,9 +65,9 @@ export const createStyles = props => {
 	const {
 		imageAlign = '',
 		imageTabletAlign = '',
-		contentTabletAlign = '',
+		tabletContentAlign = '',
 		imageMobileAlign = '',
-		contentMobileAlign = '',
+		mobileContentAlign = '',
 	} = props.attributes
 	if ( ! show.imageAsBackground && showImage ) {
 		styles.push( {
@@ -82,14 +82,14 @@ export const createStyles = props => {
 			},
 			tablet: {
 				'.ugb-img, .ugb-team-member__image': {
-					marginLeft: imageTabletAlign !== '' || contentTabletAlign !== '' ? marginLeftAlign( imageTabletAlign || contentTabletAlign ) + ' !important' : undefined,
-					marginRight: imageTabletAlign !== '' || contentTabletAlign !== '' ? marginRightAlign( imageTabletAlign || contentTabletAlign ) + ' !important' : undefined,
+					marginLeft: imageTabletAlign !== '' || tabletContentAlign !== '' ? marginLeftAlign( imageTabletAlign || tabletContentAlign ) + ' !important' : undefined,
+					marginRight: imageTabletAlign !== '' || tabletContentAlign !== '' ? marginRightAlign( imageTabletAlign || tabletContentAlign ) + ' !important' : undefined,
 				},
 			},
 			mobile: {
 				'.ugb-img, .ugb-team-member__image': {
-					marginLeft: imageMobileAlign !== '' || contentMobileAlign !== '' ? marginLeftAlign( imageMobileAlign || contentMobileAlign ) + ' !important' : undefined,
-					marginRight: imageMobileAlign !== '' || contentMobileAlign !== '' ? marginRightAlign( imageMobileAlign || contentMobileAlign ) + ' !important' : undefined,
+					marginLeft: imageMobileAlign !== '' || mobileContentAlign !== '' ? marginLeftAlign( imageMobileAlign || mobileContentAlign ) + ' !important' : undefined,
+					marginRight: imageMobileAlign !== '' || mobileContentAlign !== '' ? marginRightAlign( imageMobileAlign || mobileContentAlign ) + ' !important' : undefined,
 				},
 			},
 		} )
@@ -127,13 +127,13 @@ export const createStyles = props => {
 			tablet: {
 				'.ugb-team-member__name': {
 					...createTypographyStyles( 'name%s', 'tablet', props.attributes ),
-					textAlign: appendImportant( getValue( 'nameTabletAlign' ) || getValue( 'contentTabletAlign' ) ),
+					textAlign: appendImportant( getValue( 'nameTabletAlign' ) || getValue( 'tabletContentAlign' ) ),
 				},
 			},
 			mobile: {
 				'.ugb-team-member__name': {
 					...createTypographyStyles( 'name%s', 'mobile', props.attributes ),
-					textAlign: appendImportant( getValue( 'nameMobileAlign' ) || getValue( 'contentMobileAlign' ) ),
+					textAlign: appendImportant( getValue( 'nameMobileAlign' ) || getValue( 'mobileContentAlign' ) ),
 				},
 			},
 		} )
@@ -159,13 +159,13 @@ export const createStyles = props => {
 			tablet: {
 				'.ugb-team-member__position': {
 					...createTypographyStyles( 'position%s', 'tablet', props.attributes ),
-					textAlign: appendImportant( getValue( 'positionTabletAlign' ) || getValue( 'contentTabletAlign' ) ),
+					textAlign: appendImportant( getValue( 'positionTabletAlign' ) || getValue( 'tabletContentAlign' ) ),
 				},
 			},
 			mobile: {
 				'.ugb-team-member__position': {
 					...createTypographyStyles( 'position%s', 'mobile', props.attributes ),
-					textAlign: appendImportant( getValue( 'positionMobileAlign' ) || getValue( 'contentMobileAlign' ) ),
+					textAlign: appendImportant( getValue( 'positionMobileAlign' ) || getValue( 'mobileContentAlign' ) ),
 				},
 			},
 		} )
@@ -191,13 +191,13 @@ export const createStyles = props => {
 			tablet: {
 				'.ugb-team-member__description': {
 					...createTypographyStyles( 'description%s', 'tablet', props.attributes ),
-					textAlign: appendImportant( getValue( 'descriptionTabletAlign' ) || getValue( 'contentTabletAlign' ) ),
+					textAlign: appendImportant( getValue( 'descriptionTabletAlign' ) || getValue( 'tabletContentAlign' ) ),
 				},
 			},
 			mobile: {
 				'.ugb-team-member__description': {
 					...createTypographyStyles( 'description%s', 'mobile', props.attributes ),
-					textAlign: appendImportant( getValue( 'descriptionMobileAlign' ) || getValue( 'contentMobileAlign' ) ),
+					textAlign: appendImportant( getValue( 'descriptionMobileAlign' ) || getValue( 'mobileContentAlign' ) ),
 				},
 			},
 		} )
@@ -221,12 +221,12 @@ export const createStyles = props => {
 			},
 			tablet: {
 				'.ugb-team-member__buttons': {
-					textAlign: appendImportant( getValue( 'socialTabletAlign' ) || getValue( 'contentTabletAlign' ) ),
+					textAlign: appendImportant( getValue( 'socialTabletAlign' ) || getValue( 'tabletContentAlign' ) ),
 				},
 			},
 			mobile: {
 				'.ugb-team-member__buttons': {
-					textAlign: appendImportant( getValue( 'socialMobileAlign' ) || getValue( 'contentMobileAlign' ) ),
+					textAlign: appendImportant( getValue( 'socialMobileAlign' ) || getValue( 'mobileContentAlign' ) ),
 				},
 			},
 		} )
