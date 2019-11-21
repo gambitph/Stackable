@@ -1,4 +1,7 @@
 .ugb-design-control {
+	// Fix for visual issue in Windows where the scrollbar rapidly appears/disappears when hovering over options.
+	max-height: 450px;
+
 	// Hide the radio button.
 	input {
 		opacity: 0;
