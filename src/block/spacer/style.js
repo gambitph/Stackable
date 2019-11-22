@@ -35,7 +35,7 @@ export const createStyles = props => {
 
 	// Column Background.
 	styles.push( {
-		...createBackgroundStyleSet( '%s', 'ugb-spacer', props.attributes, {
+		...createBackgroundStyleSet( '%s', 'ugb-spacer--inner', props.attributes, {
 			importantBackgroundColor: true,
 		} ),
 	} )

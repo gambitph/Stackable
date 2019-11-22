@@ -15,7 +15,7 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 } from '~stackable/higher-order'
-import { hasBackgroundOverlay } from '~stackable/util'
+import { hasBackgroundOverlay, createVideoBackground } from '~stackable/util'
 import classnames from 'classnames'
 
 /**
@@ -106,10 +106,18 @@ addFilter( 'stackable.spacer.edit.inspector.style.before', 'stackable/spacer', (
 const edit = props => {
 	const mainClasses = classnames( [
 		props.className,
+		'ugb-spacer--v2',
+	] )
+	const innerClasses = classnames( [
+		'ugb-spacer--inner',
 	], {
 		'ugb--has-background-overlay': hasBackgroundOverlay( '%s', props.attributes ),
 	} )
-	return <BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ null } />
+	return <BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
+		<div className={ innerClasses }>
+			{ createVideoBackground( '%s', props ) }
+		</div>
+	) } />
 }
 
 export default compose(

@@ -3,10 +3,16 @@
  *
  * Enqueued in the editor & frontend.
  */
-.ugb-spacer {
+.ugb-spacer.ugb-spacer--v2 {
 	height: 50px;
 	margin-top: 0 !important;
 	margin-bottom: 0 !important;
 	background-size: cover;
 	background-position: center;
+	padding: 0 !important;
+	.ugb-inner-block,
+	.ugb-block-content,
+	.ugb-spacer--inner {
+		height: 100%;
+	}
 }
