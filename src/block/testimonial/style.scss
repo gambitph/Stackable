@@ -23,7 +23,6 @@
 	.ugb-testimonial__image {
 		height: auto;
 		width: 75px;
-		margin: 0 auto;
 	}
 	.ugb-testimonial__position {
 		font-size: 0.75em;
@@ -31,8 +30,10 @@
 		color: #aaa;
 	}
 
+	.ugb-testimonial__image {
+		margin: 0 auto $text-margin-bottom;
+	}
 	.ugb-testimonial__body,
-	.ugb-testimonial__image,
 	.ugb-testimonial__name {
 		margin: 0 0 $text-margin-bottom 0;
 	}
