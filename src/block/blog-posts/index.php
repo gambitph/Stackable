@@ -49,8 +49,11 @@ if ( ! function_exists( 'stackable_attributes_default' ) ) {
  * @return string Returns the post content with latest posts added.
  */
 if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
-    function stackable_render_blog_posts_block( $attributes ) {
-		$attributes = apply_filters( 'stackable_block_migrate_attributes', $attributes, 'blog-posts' );
+    function stackable_render_blog_posts_block( $attributes, $content ) {
+		// Migrate attributes if this is an old block.
+		if ( stackable_block_blog_posts_is_deprecated( $attributes, $content ) ) {
+			$attributes = apply_filters( 'stackable_block_migrate_attributes', $attributes, 'blog-posts' );
+		}
 
 		$defaults = array(
 			'postType' => 'post',
@@ -282,7 +285,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 			}
 		}
 
-        return apply_filters( 'stackable/blog-posts/edit.output.markup', $posts_markup, $attributes );
+        return apply_filters( 'stackable/blog-posts/edit.output.markup', $posts_markup, $attributes, $content );
     }
 }
 

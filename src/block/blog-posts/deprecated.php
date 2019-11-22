@@ -10,30 +10,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! function_exists( 'stackable_block_blog_posts_is_deprecated' ) ) {
 	/**
-	 * Check whether the blog post block is deprecated based on it's attributes.
-	 * 
+	 * Check whether the blog post block is deprecated based on it's attributes & content.
+	 *
 	 * @param array $attributes Block attributes.
-	 * 
-	 * @return boolean True if deprecated.
-	 * 
+	 * @param string $content Block inner content.
+	 *
+	 * @return boolean True if the block was created in v1.
+	 *
 	 * @since 2.0
 	 */
-	function stackable_block_blog_posts_is_deprecated( $attributes ) {
-		// Only deprecated if we have any of these attributes.
-		return (bool) array_intersect( array_keys( $attributes ), array(
-			'accentColor',
-			'postsToShow',
-			'displayFeaturedImage',
-			'displayTitle',
-			'displayDate',
-			'displayCategory',
-			'displayComments',
-			'displayAuthor',
-			'displayExcerpt',
-			'displayReadMoreLink',
-			'readMoreText',
-			'categories',
-		) );
+	function stackable_block_blog_posts_is_deprecated( $attributes, $content = '' ) {
+		// If no content, then the block was created with version 1.
+		if ( empty( $content ) ) {
+			return true;
+		}
 	}
 }
 
@@ -45,16 +35,11 @@ if ( ! function_exists( 'stackable_block_blog_posts_migrate_attributes' ) ) {
 	 * @param string 	$block_name 	The name of the block.
 	 *
 	 * @return array New set of attributes.
-	 * 
+	 *
 	 * @since 2.0
 	 */
 	function stackable_block_blog_posts_migrate_attributes( $attributes, $block_name ) {
 		if ( $block_name !== 'blog-posts' ) {
-			return $attributes;
-		}
-
-		// Only do for deprecated blocks.
-		if ( ! stackable_block_blog_posts_is_deprecated( $attributes ) ) {
 			return $attributes;
 		}
 
@@ -86,6 +71,9 @@ if ( ! function_exists( 'stackable_block_blog_posts_migrate_attributes' ) ) {
 			}
 		}
 
+		$attributes['contentAlign'] = isset( $attributes['contentAlign'] ) ? $attributes['contentAlign'] : '';
+		$attributes['align'] = isset( $attributes['align'] ) ? $attributes['align'] : '';
+		$attributes['columns'] = isset( $attributes['columns'] ) ? $attributes['columns'] : 2;
 		$attributes['showImage'] = isset( $attributes['displayFeaturedImage'] ) ? $attributes['displayFeaturedImage'] : '';
 		$attributes['showTitle'] = isset( $attributes['displayTitle'] ) ? $attributes['displayTitle'] : '';
 		$attributes['showDate'] = isset( $attributes['displayDate'] ) ? $attributes['displayDate'] : '';
@@ -101,13 +89,13 @@ if ( ! function_exists( 'stackable_block_blog_posts_migrate_attributes' ) ) {
 		$attributes['taxonomy'] = ! empty( $attributes['categories'] ) ? $attributes['categories'] : '';
 
 		// Update the custom CSS since the structure has changed.
-		$css = $attributes['customCSS'];
+		$css = isset( $attributes['customCSS'] ) ? $attributes['customCSS'] : '';
 		$css = preg_replace( '/\.ugb-blog-posts__category-list/i', '.ugb-blog-posts__category', $css );
 		$css = preg_replace( '/\.ugb-blog-posts__read_more/i', '.ugb-blog-posts__readmore', $css );
 		$css = preg_replace( '/\.ugb-blog-posts__side/i', '.ugb-blog-posts__content', $css );
 		$attributes['customCSS'] = $css;
 
-		$css = $attributes['customCSSCompiled'];
+		$css = isset( $attributes['customCSSCompiled'] ) ? $attributes['customCSSCompiled'] : '';
 		$css = preg_replace( '/\.ugb-blog-posts__category-list/i', '.ugb-blog-posts__category', $css );
 		$css = preg_replace( '/\.ugb-blog-posts__read_more/i', '.ugb-blog-posts__readmore', $css );
 		$css = preg_replace( '/\.ugb-blog-posts__side/i', '.ugb-blog-posts__content', $css );
@@ -127,16 +115,17 @@ if ( ! function_exists( 'stackable_block_blog_posts_migrate_output' ) ) {
 	 * Creates a fake wrapper around the deprecated blog posts block to make it look like the new blocks.
 	 * This is required to make the migrated blocks look good while not yet edited using v2.
 	 * Used when the user just updated the plugin but didn't edit the block.
-	 * 
+	 *
 	 * @param string $output Block output.
 	 * @param array $attributes Migrated attributes.
-	 * 
+	 * @param string $content Block inner content.
+	 *
 	 * @return string Block output.
-	 * 
+	 *
 	 * @since 2.0
 	 */
-	function stackable_block_blog_posts_migrate_output( $output, $attributes ) {
-		if ( ! stackable_block_blog_posts_is_deprecated( $attributes ) ) {
+	function stackable_block_blog_posts_migrate_output( $output, $attributes, $content ) {
+		if ( ! stackable_block_blog_posts_is_deprecated( $attributes, $content ) ) {
 			return $output;
 		}
 
@@ -154,15 +143,17 @@ if ( ! function_exists( 'stackable_block_blog_posts_migrate_output' ) ) {
 			}
 		}
 
-		return sprintf( '<div class="ugb-blog-posts ugb-blog-posts-old-%s ugb-blog-posts--columns-%s ugb-blog-posts--v2 ugb-main-block ugb-blog-posts--design-%s %s" style="%s"><div class="ugb-inner-block">%s<div class="ugb-block-content">%s</div></div></div>',
+		return sprintf( '<div class="ugb-blog-posts ugb-blog-posts-old-%s ugb-blog-posts--columns-%s ugb-blog-posts--v2 ugb-main-block ugb-blog-posts--design-%s %s %s" style="%s%s"><div class="ugb-inner-block">%s<div class="ugb-block-content">%s</div></div></div>',
 			$stkbp_unique_id,
 			$attributes['columns'],
 			$attributes['design'],
+			$attributes['align'] ? 'align' . $attributes['align'] . '' : '',
 			$attributes['categoryHighlighted'] ? 'ugb-blog-posts--cat-highlighted' : '',
-			isset( $attributes['accentColor'] ) ? '--s-accent-color: ' . $attributes['accentColor'] : '',
+			isset( $attributes['accentColor'] ) ? '--s-accent-color: ' . $attributes['accentColor'] . ';' : '',
+			isset( $attributes['contentAlign'] ) ? 'text-align: ' . $attributes['contentAlign'] . ';' : '',
 			$border_radius,
 			$output
 		);
 	}
-	add_filter( 'stackable/blog-posts/edit.output.markup', 'stackable_block_blog_posts_migrate_output', 10, 2 );
+	add_filter( 'stackable/blog-posts/edit.output.markup', 'stackable_block_blog_posts_migrate_output', 10, 3 );
 }
