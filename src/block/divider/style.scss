@@ -10,6 +10,7 @@
 	padding-left: 0 !important;
 	padding-right: 0 !important;
 	hr {
+		background: none;
 		background-color: #ddd !important;
 		border: 0 !important;
 		padding: 0 !important;
@@ -17,6 +18,10 @@
 		margin: 0 auto !important;
 		width: 50%;
 		height: 1px;
+		&::before,
+		&::after {
+			display: none;
+		}
 	}
 
 	.ugb-divider__dots {
