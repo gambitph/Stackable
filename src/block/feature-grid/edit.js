@@ -378,7 +378,7 @@ const edit = props => {
 
 	const {
 		columns = 3,
-		textTag = '',
+		titleTag = '',
 		imageSize,
 		imageShape = '',
 		imageShapeStretch = false,
@@ -463,7 +463,7 @@ const edit = props => {
 							<div className="ugb-feature-grid__content">
 								{ showTitle &&
 									<RichText
-										tagName={ textTag || 'h5' }
+										tagName={ titleTag || 'h5' }
 										className="ugb-feature-grid__title"
 										value={ title }
 										onChange={ title => setAttributes( { [ `title${ i }` ]: title } ) }
