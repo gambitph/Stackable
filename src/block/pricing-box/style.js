@@ -94,7 +94,7 @@ export const createStyles = props => {
 	if ( showTitle ) {
 		styles.push( {
 			'.ugb-pricing-box__title': {
-				color: appendImportant( whiteIfDark( titleColor, show.columnBackground && columnBackgroundColor ) ),
+				color: whiteIfDark( titleColor, show.columnBackground && columnBackgroundColor ),
 			},
 		} )
 
