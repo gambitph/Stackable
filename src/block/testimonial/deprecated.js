@@ -709,6 +709,7 @@ const deprecated = [
 		attributes: deprecatedSchema_1_17_3,
 		save: deprecatedSave_1_17_3,
 		migrate: attributes => {
+			const imageWidth = [ '', 'basic', 'plain', 'basic2', 'bubble' ].includes( attributes.design ) ? 75 : undefined
 			return {
 				...attributes,
 				image1Id: attributes.mediaID1,
@@ -731,6 +732,8 @@ const deprecated = [
 				testimonial3: attributes.serif ? `<em>${ attributes.testimonial3 }</em>` : attributes.testimonial3,
 
 				bubbleBackgroundColor: attributes.design === 'bubble' ? attributes.backgroundColor : undefined,
+				imageWidth,
+				imageSquare: imageWidth ? true : undefined,
 			}
 		},
 	},

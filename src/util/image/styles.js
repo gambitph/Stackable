@@ -9,6 +9,7 @@ import SVGBlob1 from './images/blob1.svg'
  * External dependencies
  */
 import { camelCase } from 'lodash'
+import { appendImportant } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -31,21 +32,26 @@ const createImageStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAt
 	}
 
 	const shape = getValue( 'Shape' )
+	const getHeight = widthAttrName => {
+		return getValue( 'Square' ) && getValue( widthAttrName ) ? getValue( widthAttrName, '%spx' ) : 'auto'
+	}
 
 	if ( screen !== 'tablet' && screen !== 'mobile' ) { // Desktop.
 		return {
 			borderRadius: ! shape ? getValue( 'BorderRadius', '%spx' ) : undefined,
+			width: getValue( 'Width', '%spx' ),
+			height: appendImportant( getHeight( 'Width' ) ),
 		}
 	} else if ( screen === 'tablet' ) { // Tablet.
 		return {
 			width: getValue( 'TabletWidth', '%spx' ),
-			height: getValue( 'TabletWidth', 'auto' ),
+			height: appendImportant( getHeight( 'TabletWidth' ) ),
 		}
 	}
 	// Mobile.
 	return {
 		width: getValue( 'MobileWidth', '%spx' ),
-		height: getValue( 'MobileWidth', 'auto' ),
+		height: appendImportant( getHeight( 'MobileWidth' ) ),
 	}
 }
 

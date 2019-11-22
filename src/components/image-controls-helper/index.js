@@ -74,6 +74,9 @@ const ImageControlsHelper = props => {
 			onChangeTabletWidth={ value => setAttributes( { [ getAttrName( 'TabletWidth' ) ]: value } ) }
 			onChangeMobileWidth={ value => setAttributes( { [ getAttrName( 'MobileWidth' ) ]: value } ) }
 
+			square={ getAttrValue( 'Square' ) }
+			onChangeSquare={ value => setAttributes( { [ getAttrName( 'Square' ) ]: value } ) }
+
 			borderRadius={ getAttrValue( 'BorderRadius' ) }
 			onChangeBorderRadius={ value => setAttributes( { [ getAttrName( 'BorderRadius' ) ]: value } ) }
 

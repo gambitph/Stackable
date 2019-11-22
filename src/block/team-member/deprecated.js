@@ -762,6 +762,18 @@ const deprecated = [
 		attributes: deprecatedSchema_1_17_3,
 		save: deprecatedSave_1_17_3,
 		migrate: attributes => {
+			// We have definite image sizes in v1, preserve their sizes.
+			let imageWidth
+			if ( ! attributes.design || [ 'basic', 'plain' ].includes( attributes.design ) ) {
+				imageWidth = attributes.columns === 1 ? 300 :
+					attributes.columns === 3 ? 150 :
+						220
+			} else if ( attributes.design === 'horizontal' ) {
+				imageWidth = attributes.columns === 1 ? 150 :
+					attributes.columns === 3 ? 80 :
+						110
+			}
+
 			return {
 				...attributes,
 
@@ -794,6 +806,8 @@ const deprecated = [
 				descriptionColor: attributes.desColor,
 				imageShape: attributes.shapes === 'square' ? 'square' : 'circle',
 				imageColorOnHover: attributes.colorOnHover,
+				imageWidth,
+				imageSquare: imageWidth ? true : undefined,
 			}
 		},
 	},

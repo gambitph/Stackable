@@ -1,4 +1,6 @@
 .ugb-img {
+	object-fit: cover;
+	object-position: center;
 	&.ugb-img--shape {
 		mask-mode: alpha;
 		mask-repeat: no-repeat;

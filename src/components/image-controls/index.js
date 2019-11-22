@@ -22,7 +22,7 @@ import { getImageSize, cacheImageData } from '~stackable/util'
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
-import { RangeControl } from '@wordpress/components'
+import { RangeControl, ToggleControl } from '@wordpress/components'
 import { withSelect } from '@wordpress/data'
 
 const ImageControls = props => {
@@ -162,6 +162,14 @@ const ImageControls = props => {
 				</Fragment>
 			}
 
+			{ props.onChangeSquare && props.width &&
+				<ToggleControl
+					label={ __( 'Force square image', i18n ) }
+					checked={ props.square }
+					onChange={ props.onChangeSquare }
+				/>
+			}
+
 			{ props.onChangeBorderRadius && props.shape === '' &&
 				<AdvancedRangeControl
 					label={ __( 'Border Radius', i18n ) }
@@ -243,6 +251,8 @@ ImageControls.defaultProps = {
 	onChangeWidth: () => {},
 	onChangeTabletWidth: () => {},
 	onChangeMobileWidth: () => {},
+	square: '',
+	onChangeSquare: () => {},
 
 	borderRadius: '',
 	onChangeBorderRadius: () => {},
