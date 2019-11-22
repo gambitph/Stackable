@@ -72,9 +72,9 @@ const createBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 
 export const createBackgroundOverlayStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {}, options = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
-	const getValue = ( attrName = '', format = '' ) => {
+	const getValue = ( attrName = '', format = '', defaultValue = undefined ) => {
 		const value = typeof blockAttributes[ getAttrName( attrName ) ] === 'undefined' ? '' : blockAttributes[ getAttrName( attrName ) ]
-		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
+		return value !== '' ? ( format ? sprintf( format, value ) : value ) : defaultValue
 	}
 
 	const {
@@ -96,7 +96,7 @@ export const createBackgroundOverlayStyles = ( attrNameTemplate = '%s', screen =
 		return {
 			backgroundColor: appendImportant( ! isGradient && getValue( 'BackgroundColor' ) ? getValue( 'BackgroundColor' ) : undefined, importantBackgroundColor ),
 			backgroundImage: isGradient ?
-				`linear-gradient(${ getValue( 'BackgroundGradientDirection' ) || 0 }deg, ${ getValue( 'BackgroundColor' ) || defaultColor1 } ${ color1Location }, ${ getValue( 'BackgroundColor2' ) || defaultColor2 } ${ color2Location })` :
+				`linear-gradient(${ getValue( 'BackgroundGradientDirection', '%sdeg', '90deg' ) }, ${ getValue( 'BackgroundColor' ) || defaultColor1 } ${ color1Location }, ${ getValue( 'BackgroundColor2' ) || defaultColor2 } ${ color2Location })` :
 				undefined,
 			opacity: getValue( 'BackgroundMediaURL' ) ? opacity : undefined,
 			mixBlendMode: isGradient ? getValue( 'BackgroundGradientBlendMode' ) : undefined,

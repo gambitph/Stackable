@@ -99,7 +99,7 @@ const BackgroundControls = props => {
 					label={ __( 'Adv. Gradient Color Settings', i18n ) }
 					onReset={ props.onResetAdvancedGradient }
 					allowReset={
-						props.backgroundGradientDirection !== '' ||
+						( props.backgroundGradientDirection !== '' && props.backgroundGradientDirection !== 90 ) ||
 						( props.backgroundGradientLocation1 !== '' && props.backgroundGradientLocation1 !== 0 ) ||
 						( props.backgroundGradientLocation2 !== '' && props.backgroundGradientLocation2 !== 100 ) ||
 						props.backgroundGradientBlendMode
