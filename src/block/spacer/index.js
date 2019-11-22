@@ -59,6 +59,9 @@ export const settings = {
 
 	// Stackable modules.
 	modules: {
+		'block-separators': {
+			enableBringToFront: false,
+		},
 		'advanced-responsive': true,
 		'custom-css': {
 			default: applyFilters( 'stackable.spacer.custom-css.default', '' ),

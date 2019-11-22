@@ -15,4 +15,8 @@
 	.ugb-spacer--inner {
 		height: 100%;
 	}
+	.ugb-top-separator,
+	.ugb-bottom-separator {
+		z-index: 6; // This value comes from modules/block-separators/index.js
+	}
 }

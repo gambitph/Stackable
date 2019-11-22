@@ -86,7 +86,7 @@ addFilter( 'stackable.setAttributes', 'stackable/modules/block-separators/bottom
 	return attributes
 } )
 
-const addBlockSeparatorPanels = ( output, props ) => {
+const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props ) => {
 	const { setAttributes } = props
 	const {
 		showTopSeparator = false,
@@ -181,11 +181,13 @@ const addBlockSeparatorPanels = ( output, props ) => {
 					checked={ topSeparatorShadow }
 					onChange={ topSeparatorShadow => setAttributes( { topSeparatorShadow } ) }
 				/>
-				<ToggleControl
-					label={ __( 'Bring to Front', i18n ) }
-					checked={ topSeparatorBringToFront }
-					onChange={ topSeparatorBringToFront => setAttributes( { topSeparatorBringToFront } ) }
-				/>
+				{ options.enableBringToFront &&
+					<ToggleControl
+						label={ __( 'Bring to Front', i18n ) }
+						checked={ topSeparatorBringToFront }
+						onChange={ topSeparatorBringToFront => setAttributes( { topSeparatorBringToFront } ) }
+					/>
+				}
 				{ applyFilters( 'stackable.block-separators.edit.top', null, props ) }
 				{ showProNotice && <ProControlButton
 					title={ __( 'Say Hello to Gorgeous Separators 👋', i18n ) }
@@ -265,11 +267,13 @@ const addBlockSeparatorPanels = ( output, props ) => {
 					checked={ bottomSeparatorShadow }
 					onChange={ bottomSeparatorShadow => setAttributes( { bottomSeparatorShadow } ) }
 				/>
-				<ToggleControl
-					label={ __( 'Bring to Front', i18n ) }
-					checked={ bottomSeparatorBringToFront }
-					onChange={ bottomSeparatorBringToFront => setAttributes( { bottomSeparatorBringToFront } ) }
-				/>
+				{ options.enableBringToFront &&
+					<ToggleControl
+						label={ __( 'Bring to Front', i18n ) }
+						checked={ bottomSeparatorBringToFront }
+						onChange={ bottomSeparatorBringToFront => setAttributes( { bottomSeparatorBringToFront } ) }
+					/>
+				}
 				{ applyFilters( 'stackable.block-separators.edit.bottom', null, props ) }
 				{ showProNotice && <ProControlButton
 					title={ __( 'Say Hello to Gorgeous Separators 👋', i18n ) }
@@ -411,7 +415,7 @@ const addShapeOutput = ( output, design, blockProps ) => {
 	)
 }
 
-const addTopStyles = ( styleObject, props ) => {
+const addTopStyles = ( blockName, options = {} ) => ( styleObject, props ) => {
 	const {
 		showTopSeparator = false,
 		topSeparatorColor = '',
@@ -429,7 +433,7 @@ const addTopStyles = ( styleObject, props ) => {
 
 	const styles = {
 		[ `.ugb-top-separator` ]: {
-			zIndex: topSeparatorBringToFront ? 6 : undefined,
+			zIndex: options.enableBringToFront && topSeparatorBringToFront ? 6 : undefined,
 			transform: topSeparatorFlipHorizontally ? 'scale(-1)' : undefined,
 		},
 		[ `.ugb-top-separator svg` ]: {
@@ -454,7 +458,7 @@ const addTopStyles = ( styleObject, props ) => {
 	return deepmerge( styleObject, styles )
 }
 
-const addBottomStyles = ( styleObject, props ) => {
+const addBottomStyles = ( blockName, options = {} ) => ( styleObject, props ) => {
 	const {
 		showBottomSeparator = false,
 		bottomSeparatorColor = '',
@@ -472,7 +476,7 @@ const addBottomStyles = ( styleObject, props ) => {
 
 	const styles = {
 		[ `.ugb-bottom-separator` ]: {
-			zIndex: bottomSeparatorBringToFront ? 6 : undefined,
+			zIndex: options.enableBringToFront && bottomSeparatorBringToFront ? 6 : undefined,
 			transform: bottomSeparatorFlipHorizontally ? 'scaleX(-1)' : undefined,
 		},
 		[ `.ugb-bottom-separator svg` ]: {
@@ -497,13 +501,17 @@ const addBottomStyles = ( styleObject, props ) => {
 	return deepmerge( styleObject, styles )
 }
 
-const blockSeparators = blockName => {
-	addFilter( `stackable.${ blockName }.edit.inspector.style.block`, `stackable/${ blockName }/block-separators`, addBlockSeparatorPanels, 18 )
+const blockSeparators = ( blockName, options = {} ) => {
+	const optionsToPass = {
+		enableBringToFront: true,
+		...options,
+	}
+	addFilter( `stackable.${ blockName }.edit.inspector.style.block`, `stackable/${ blockName }/block-separators`, addBlockSeparatorPanels( blockName, optionsToPass ), 18 )
 	addFilter( `stackable.${ blockName }.attributes`, `stackable/${ blockName }/block-separators`, addAttributes )
 	addFilter( `stackable.${ blockName }.edit.output.outer`, `stackable/${ blockName }/block-separators`, addShapeOutput )
 	addFilter( `stackable.${ blockName }.save.output.outer`, `stackable/${ blockName }/block-separators`, addShapeOutput )
-	addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/block-separators/top`, addTopStyles )
-	addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/block-separators/bottom`, addBottomStyles )
+	addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/block-separators/top`, addTopStyles( blockName, optionsToPass ) )
+	addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/block-separators/bottom`, addBottomStyles( blockName, optionsToPass ) )
 	doAction( `stackable.module.block-separators`, blockName )
 }
 
