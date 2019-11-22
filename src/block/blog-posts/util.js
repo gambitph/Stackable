@@ -31,7 +31,7 @@ export const showOptions = blockProps => {
 		showCategory: postType === 'post',
 		imageAsBackground: [ 'portfolio', 'portfolio2', 'image-card' ].includes( design ),
 		imageOutsideContainer: [ 'list', 'vertical-card', 'horizontal-card', 'image-card' ].includes( design ),
-		imageSpacing: showImage && design !== 'portfolio' && design !== 'portfolio2',
+		imageSpacing: showImage && [ 'basic', 'list', 'vertical-card2' ].includes( design ),
 		categorySpacing: showCategory,
 		titleSpacing: showTitle,
 		excerptSpacing: showExcerpt,
