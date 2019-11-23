@@ -651,6 +651,8 @@ class Edit extends Component {
 			showDate = true,
 			showComments = true,
 			readmoreText = '',
+			columnBackgroundColor = '',
+			columnBackgroundColor2 = '',
 		} = attributes
 
 		const show = showOptions( this.props )
@@ -664,6 +666,7 @@ class Edit extends Component {
 			`ugb-blog-posts--design-${ design }`,
 		], applyFilters( 'stackable.blog-posts.mainclasses', {
 			'ugb-blog-posts--cat-highlighted': categoryHighlighted,
+			'ugb-blog-posts--has-bg-color': columnBackgroundColor || columnBackgroundColor2,
 		}, this.props ) )
 
 		// Removing posts from display should be instant.

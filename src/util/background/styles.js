@@ -95,9 +95,9 @@ export const createBackgroundOverlayStyles = ( attrNameTemplate = '%s', screen =
 	if ( screen !== 'tablet' && screen !== 'mobile' ) { // Desktop.
 		return {
 			backgroundColor: appendImportant( ! isGradient && getValue( 'BackgroundColor' ) ? getValue( 'BackgroundColor' ) : undefined, importantBackgroundColor ),
-			backgroundImage: isGradient ?
+			backgroundImage: appendImportant( isGradient ?
 				`linear-gradient(${ getValue( 'BackgroundGradientDirection', '%sdeg', '90deg' ) }, ${ getValue( 'BackgroundColor' ) || defaultColor1 } ${ color1Location }, ${ getValue( 'BackgroundColor2' ) || defaultColor2 } ${ color2Location })` :
-				undefined,
+				undefined, importantBackgroundColor ),
 			opacity: getValue( 'BackgroundMediaURL' ) ? opacity : undefined,
 			mixBlendMode: isGradient ? getValue( 'BackgroundGradientBlendMode' ) : undefined,
 		}

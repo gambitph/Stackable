@@ -22,6 +22,8 @@ const save = props => {
 		columns = 2,
 		design = 'basic',
 		categoryHighlighted = false,
+		columnBackgroundColor = '',
+		columnBackgroundColor2 = '',
 	} = attributes
 
 	const mainClasses = classnames( [
@@ -31,6 +33,7 @@ const save = props => {
 		`ugb-blog-posts--columns-${ columns }`,
 	], applyFilters( 'stackable.blog-posts.mainclasses', {
 		'ugb-blog-posts--cat-highlighted': categoryHighlighted,
+		'ugb-blog-posts--has-bg-color': columnBackgroundColor || columnBackgroundColor2,
 	}, props ) )
 
 	return (
