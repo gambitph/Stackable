@@ -43,6 +43,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 	const { setAttributes } = props
 	const {
 		align = false,
+		blockInnerWidth = '',
 
 		marginTop = '',
 		marginRight = '',
@@ -410,9 +411,9 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 				</Fragment> }
 
-				{ options.horizontalAlign &&
+				{ ( options.horizontalAlign || ( blockInnerWidth !== '' && blockInnerWidth !== 'full' ) ) &&
 					<Fragment>
-						{ blockWidth !== '' &&
+						{ ( blockWidth !== '' || ( blockInnerWidth !== '' && blockInnerWidth !== 'full' ) ) &&
 							<WhenResponsiveScreen>
 								<AdvancedToolbarControl
 									label={ __( 'Content Horizontal Align', i18n ) }
@@ -422,7 +423,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 								/>
 							</WhenResponsiveScreen>
 						}
-						{ tabletBlockWidth !== '' &&
+						{ ( tabletBlockWidth !== '' || ( blockInnerWidth !== '' && blockInnerWidth !== 'full' ) ) &&
 							<WhenResponsiveScreen screen="tablet">
 								<AdvancedToolbarControl
 									label={ __( 'Content Horizontal Align', i18n ) }
@@ -432,7 +433,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 								/>
 							</WhenResponsiveScreen>
 						}
-						{ mobileBlockWidth !== '' &&
+						{ ( mobileBlockWidth !== '' || ( blockInnerWidth !== '' && blockInnerWidth !== 'full' ) ) &&
 							<WhenResponsiveScreen screen="mobile">
 								<AdvancedToolbarControl
 									label={ __( 'Content Horizontal Align', i18n ) }
