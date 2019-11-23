@@ -17,7 +17,7 @@ import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
 
-export const deprecatedSchema_1_15_5 = {
+const deprecatedSchema_1_15_5 = {
 	buttons: {
 		type: 'number',
 		default: 1,
@@ -155,6 +155,16 @@ export const deprecatedSchema_1_15_5 = {
 	customCSSCompiled: {
 		type: 'string',
 		default: '',
+	},
+}
+
+const deprecatedSchema_1_15_5_ = {
+	...deprecatedSchema_1_15_5,
+	textColor2: {
+		type: 'string',
+	},
+	textColor3: {
+		type: 'string',
 	},
 }
 
@@ -747,86 +757,93 @@ export const deprecatedSave_1_8 = props => {
 	return <DeprecatedButtonContent_1_4 className={ mainClasses } align={ align } size={ size } url={ url } color={ textColor } text={ text } backgroundColor={ color } borderRadius={ cornerButtonRadius } />
 }
 
+const migrate_1_15_5 = attributes => {
+	// Update the custom CSS since the structure has changed.
+	const updateCSS = css => css
+		.replace( /.ugb-button-wrapper > \*:nth-child\((\d)\) .ugb-button--inner/g, '.ugb-button-wrapper .ugb-button$1 .ugb-button--inner' )
+		.replace( /.ugb-button-wrapper > \*:nth-child\((\d)\) .ugb-button([^-])/g, '.ugb-button-wrapper .ugb-button$1$2' )
+
+	return {
+		...attributes,
+		showButton2: attributes.buttons ? attributes.buttons >= 2 : false,
+		showButton3: attributes.buttons ? attributes.buttons >= 3 : false,
+		design: attributes.align === 'full' ? 'fullwidth' : undefined,
+		columns: undefined,
+		contentAlign: attributes.align !== 'full' ? attributes.align : undefined,
+		align: undefined,
+		cornerButtonRadius: undefined,
+
+		button1Url: attributes.url,
+		button1NewTab: attributes.newTab,
+		button1Text: attributes.text,
+		button1BackgroundColor: attributes.color,
+		button1TextColor: attributes.textColor,
+		button1Size: attributes.size,
+		button1BorderRadius: attributes.cornerButtonRadius,
+		button1Design: attributes.design,
+		button1Icon: attributes.icon,
+
+		url: undefined,
+		newTab: undefined,
+		text: undefined,
+		color: undefined,
+		textColor: undefined,
+		size: undefined,
+		icon: undefined,
+
+		button2Url: attributes.url2,
+		button2NewTab: attributes.newTab2,
+		button2Text: attributes.text2,
+		button2BackgroundColor: attributes.color2,
+		button2TextColor: attributes.textColor2,
+		button2Size: attributes.size2,
+		button2BorderRadius: attributes.cornerButtonRadius,
+		button2Design: attributes.design2,
+		button2Icon: attributes.icon2,
+
+		url2: undefined,
+		newTab2: undefined,
+		text2: undefined,
+		color2: undefined,
+		textColor2: undefined,
+		size2: undefined,
+		design2: undefined,
+		icon2: undefined,
+
+		button3Url: attributes.url3,
+		button3NewTab: attributes.newTab3,
+		button3Text: attributes.text3,
+		button3BackgroundColor: attributes.color3,
+		button3TextColor: attributes.textColor3,
+		button3Size: attributes.size3,
+		button3BorderRadius: attributes.cornerButtonRadius,
+		button3Design: attributes.design3,
+		button3Icon: attributes.icon3,
+
+		url3: undefined,
+		newTab3: undefined,
+		text3: undefined,
+		color3: undefined,
+		textColor3: undefined,
+		size3: undefined,
+		design3: undefined,
+		icon3: undefined,
+
+		customCSS: updateCSS( attributes.customCSS ),
+		customCSSCompiled: updateCSS( attributes.customCSSCompiled ),
+	}
+}
+
 const deprecated = [
+	{
+		attributes: deprecatedSchema_1_15_5_,
+		save: deprecatedSave_1_15_5,
+		migrate: migrate_1_15_5,
+	},
 	{
 		attributes: deprecatedSchema_1_15_5,
 		save: deprecatedSave_1_15_5,
-		migrate: attributes => {
-			// Update the custom CSS since the structure has changed.
-			const updateCSS = css => css
-				.replace( /.ugb-button-wrapper > \*:nth-child\((\d)\) .ugb-button--inner/g, '.ugb-button-wrapper .ugb-button$1 .ugb-button--inner' )
-				.replace( /.ugb-button-wrapper > \*:nth-child\((\d)\) .ugb-button([^-])/g, '.ugb-button-wrapper .ugb-button$1$2' )
-
-			return {
-				...attributes,
-				showButton2: attributes.buttons ? attributes.buttons >= 2 : false,
-				showButton3: attributes.buttons ? attributes.buttons >= 3 : false,
-				design: attributes.align === 'full' ? 'fullwidth' : undefined,
-				columns: undefined,
-				contentAlign: attributes.align !== 'full' ? attributes.align : undefined,
-				align: undefined,
-				cornerButtonRadius: undefined,
-
-				button1Url: attributes.url,
-				button1NewTab: attributes.newTab,
-				button1Text: attributes.text,
-				button1BackgroundColor: attributes.color,
-				button1TextColor: attributes.textColor,
-				button1Size: attributes.size,
-				button1BorderRadius: attributes.cornerButtonRadius,
-				button1Design: attributes.design,
-				button1Icon: attributes.icon,
-
-				url: undefined,
-				newTab: undefined,
-				text: undefined,
-				color: undefined,
-				textColor: undefined,
-				size: undefined,
-				icon: undefined,
-
-				button2Url: attributes.url2,
-				button2NewTab: attributes.newTab2,
-				button2Text: attributes.text2,
-				button2BackgroundColor: attributes.color2,
-				button2TextColor: attributes.textColor2,
-				button2Size: attributes.size2,
-				button2BorderRadius: attributes.cornerButtonRadius,
-				button2Design: attributes.design2,
-				button2Icon: attributes.icon2,
-
-				url2: undefined,
-				newTab2: undefined,
-				text2: undefined,
-				color2: undefined,
-				textColor2: undefined,
-				size2: undefined,
-				design2: undefined,
-				icon2: undefined,
-
-				button3Url: attributes.url3,
-				button3NewTab: attributes.newTab3,
-				button3Text: attributes.text3,
-				button3BackgroundColor: attributes.color3,
-				button3TextColor: attributes.textColor3,
-				button3Size: attributes.size3,
-				button3BorderRadius: attributes.cornerButtonRadius,
-				button3Design: attributes.design3,
-				button3Icon: attributes.icon3,
-
-				url3: undefined,
-				newTab3: undefined,
-				text3: undefined,
-				color3: undefined,
-				textColor3: undefined,
-				size3: undefined,
-				design3: undefined,
-				icon3: undefined,
-
-				customCSS: updateCSS( attributes.customCSS ),
-				customCSSCompiled: updateCSS( attributes.customCSSCompiled ),
-			}
-		},
+		migrate: migrate_1_15_5,
 	},
 	{
 		attributes: deprecatedSchema_1_12,
