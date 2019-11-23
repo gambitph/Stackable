@@ -10,6 +10,7 @@ import {
 	appendImportant,
 	createResponsiveStyles,
 	whiteIfDarkBlackIfLight,
+	__getValue,
 } from '~stackable/util'
 import { range } from 'lodash'
 
@@ -19,16 +20,8 @@ import { range } from 'lodash'
 import { showOptions } from './util'
 import deepmerge from 'deepmerge'
 
-/**
- * WordPress dependencies
- */
-import { sprintf } from '@wordpress/i18n'
-
 export const createStyles = props => {
-	const getValue = ( attrName, format = '' ) => {
-		const value = typeof props.attributes[ attrName ] === 'undefined' ? '' : props.attributes[ attrName ]
-		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
-	}
+	const getValue = __getValue( props.attributes )
 
 	const show = showOptions( props )
 

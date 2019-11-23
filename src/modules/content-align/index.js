@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { createAllCombinationAttributes } from '~stackable/util'
+import { createAllCombinationAttributes, __getValue } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -10,7 +10,6 @@ import { addFilter, doAction } from '@wordpress/hooks'
 import { AlignmentToolbar, BlockControls } from '@wordpress/block-editor'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
-import { sprintf } from '@wordpress/i18n'
 
 // Add contentAlign attributes
 const addAttributes = attributes => {
@@ -28,10 +27,7 @@ const addAttributes = attributes => {
 
 // Align all the block contents, including block titles.
 const addStyles = ( styleObject, props ) => {
-	const getValue = ( attrName, format = '' ) => {
-		const value = typeof props.attributes[ attrName ] === 'undefined' ? '' : props.attributes[ attrName ]
-		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
-	}
+	const getValue = __getValue( props.attributes )
 
 	const styles = [ styleObject ]
 	styles.push( {

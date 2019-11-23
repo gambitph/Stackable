@@ -9,7 +9,7 @@ import SVGBlob1 from './images/blob1.svg'
  * External dependencies
  */
 import { camelCase } from 'lodash'
-import { appendImportant } from '~stackable/util'
+import { appendImportant, __getValue } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -26,10 +26,7 @@ const SVGS = {
 
 const createImageStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
-	const getValue = ( attrName = '', format = '' ) => {
-		const value = typeof blockAttributes[ getAttrName( attrName ) ] === 'undefined' ? '' : blockAttributes[ getAttrName( attrName ) ]
-		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
-	}
+	const getValue = __getValue( blockAttributes, getAttrName )
 
 	const shape = getValue( 'Shape' )
 	const getHeight = widthAttrName => {
@@ -57,10 +54,7 @@ const createImageStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAt
 
 export const createImageMask = ( attrNameTemplate = '%s', blockAttributes = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
-	const getValue = ( attrName = '', format = '' ) => {
-		const value = typeof blockAttributes[ getAttrName( attrName ) ] === 'undefined' ? '' : blockAttributes[ getAttrName( attrName ) ]
-		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
-	}
+	const getValue = __getValue( blockAttributes, getAttrName )
 
 	const shape = getValue( 'Shape' )
 	if ( ! shape ) {

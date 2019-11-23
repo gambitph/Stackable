@@ -10,6 +10,7 @@ import {
 	whiteIfDark,
 	whiteIfDarkBlackIfLight,
 	appendImportant,
+	__getValue,
 } from '~stackable/util'
 
 /**
@@ -18,16 +19,8 @@ import {
 import { showOptions } from './util'
 import deepmerge from 'deepmerge'
 
-/**
- * WordPress dependencies
- */
-import { sprintf } from '@wordpress/i18n'
-
 export const createStyles = props => {
-	const getValue = ( attrName, format = '' ) => {
-		const value = typeof props.attributes[ attrName ] === 'undefined' ? '' : props.attributes[ attrName ]
-		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
-	}
+	const getValue = __getValue( props.attributes )
 
 	const styles = []
 

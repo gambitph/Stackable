@@ -5,7 +5,11 @@ import {
 	AdvancedRangeControl,
 	ResponsiveControl,
 } from '~stackable/components'
-import { createAllCombinationAttributes, appendImportant } from '~stackable/util'
+import {
+	createAllCombinationAttributes,
+	appendImportant,
+	__getValue,
+} from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -95,10 +99,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 }
 
 const addToStyleObject = () => ( styleObject, props ) => {
-	const getValue = ( attrName, format = '' ) => {
-		const value = typeof props.attributes[ attrName ] === 'undefined' ? '' : props.attributes[ attrName ]
-		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
-	}
+	const getValue = __getValue( props.attributes )
 
 	const blockClass = `.${ props.mainClassName }`
 

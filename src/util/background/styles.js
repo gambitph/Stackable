@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { camelCase } from 'lodash'
+import { __getValue } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -15,10 +16,7 @@ import { appendImportant, hexToRgba } from '..'
 
 const createBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {}, options = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
-	const getValue = ( attrName = '', format = '' ) => {
-		const value = typeof blockAttributes[ getAttrName( attrName ) ] === 'undefined' ? '' : blockAttributes[ getAttrName( attrName ) ]
-		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
-	}
+	const getValue = __getValue( blockAttributes, getAttrName )
 
 	const {
 		importantBackgroundColor = false,
@@ -72,10 +70,7 @@ const createBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 
 export const createBackgroundOverlayStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {}, options = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
-	const getValue = ( attrName = '', format = '', defaultValue = undefined ) => {
-		const value = typeof blockAttributes[ getAttrName( attrName ) ] === 'undefined' ? '' : blockAttributes[ getAttrName( attrName ) ]
-		return value !== '' ? ( format ? sprintf( format, value ) : value ) : defaultValue
-	}
+	const getValue = __getValue( blockAttributes, getAttrName )
 
 	const {
 		importantBackgroundColor = false,
@@ -115,10 +110,7 @@ export const createBackgroundOverlayStyles = ( attrNameTemplate = '%s', screen =
 
 export const hasBackgroundOverlay = ( attrNameTemplate = '%s', blockAttributes = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
-	const getValue = ( attrName = '', format = '' ) => {
-		const value = typeof blockAttributes[ getAttrName( attrName ) ] === 'undefined' ? '' : blockAttributes[ getAttrName( attrName ) ]
-		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
-	}
+	const getValue = __getValue( blockAttributes, getAttrName )
 
 	return getValue( 'BackgroundColorType' ) === 'gradient' ||
 		getValue( 'BackgroundMediaUrl' ) ||

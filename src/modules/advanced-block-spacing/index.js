@@ -7,17 +7,19 @@ import {
 	FourRangeControl,
 	WhenResponsiveScreen,
 } from '~stackable/components'
-import { createAllCombinationAttributes, appendImportant } from '~stackable/util'
+import {
+	__getValue,
+	createAllCombinationAttributes,
+	appendImportant,
+} from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import {
-	__, sprintf,
-} from '@wordpress/i18n'
-import {
 	addFilter, applyFilters, doAction, removeFilter,
 } from '@wordpress/hooks'
+import { __ } from '@wordpress/i18n'
 import { PanelBody } from '@wordpress/components'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
@@ -453,10 +455,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 }
 
 const addToStyleObject = blockName => ( styleObject, props ) => {
-	const getValue = ( attrName, format = '' ) => {
-		const value = typeof props.attributes[ attrName ] === 'undefined' ? '' : props.attributes[ attrName ]
-		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
-	}
+	const getValue = __getValue( props.attributes )
 
 	const {
 		blockInnerWidth = '',

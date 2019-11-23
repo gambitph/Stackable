@@ -9,6 +9,7 @@ import {
 	whiteIfDarkBlackIfLight,
 	createButtonStyleSet,
 	createResponsiveStyles,
+	__getValue,
 } from '~stackable/util'
 import deepmerge from 'deepmerge'
 
@@ -16,11 +17,6 @@ import deepmerge from 'deepmerge'
  * Internal dependencies
  */
 import { showOptions } from './util'
-
-/**
- * WordPress dependencies
- */
-import { sprintf } from '@wordpress/i18n'
 
 const NOTIFY_TEXT_COLORS = {
 	success: '#ffffff',
@@ -30,10 +26,7 @@ const NOTIFY_TEXT_COLORS = {
 }
 
 export const createStyles = props => {
-	const getValue = ( attrName, format = '' ) => {
-		const value = typeof props.attributes[ attrName ] === 'undefined' ? '' : props.attributes[ attrName ]
-		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
-	}
+	const getValue = __getValue( props.attributes )
 
 	const styles = []
 

@@ -6,7 +6,11 @@ import { appendImportant } from '../'
 /**
  * External dependencies
  */
-import { createTypographyStyles, whiteIfDarkBlackIfLight } from '~stackable/util'
+import {
+	createTypographyStyles,
+	whiteIfDarkBlackIfLight,
+	__getValue,
+} from '~stackable/util'
 import { camelCase } from 'lodash'
 import deepmerge from 'deepmerge'
 
@@ -17,10 +21,7 @@ import { sprintf } from '@wordpress/i18n'
 
 export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '', blockAttributes = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
-	const getValue = ( attrName = '', defaultValue = '' ) => {
-		const value = typeof blockAttributes[ getAttrName( attrName ) ] === 'undefined' ? '' : blockAttributes[ getAttrName( attrName ) ]
-		return value !== '' ? value : defaultValue
-	}
+	const getValue = __getValue( blockAttributes, getAttrName, '' )
 
 	const styles = []
 

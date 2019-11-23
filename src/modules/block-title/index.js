@@ -18,15 +18,16 @@ import {
 	createTypographyStyles,
 	descriptionPlaceholder,
 	whiteIfDark,
+	__getValue,
 } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n'
 import {
 	addFilter, doAction, removeFilter,
 } from '@wordpress/hooks'
+import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
@@ -307,10 +308,7 @@ const addTitleSaveOutput = ( output, design, props ) => {
 }
 
 const addStyles = ( styleObject, props ) => {
-	const getValue = ( attrName, format = '' ) => {
-		const value = typeof props.attributes[ attrName ] === 'undefined' ? '' : props.attributes[ attrName ]
-		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
-	}
+	const getValue = __getValue( props.attributes )
 
 	const {
 		showBlockTitle = false,
