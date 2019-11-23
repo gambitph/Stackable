@@ -30,12 +30,10 @@ import {
 	ControlSeparator,
 	PanelSpacingBody,
 	AdvancedRangeControl,
+	DivBackground,
 } from '~stackable/components'
 import {
-	createVideoBackground,
 	descriptionPlaceholder,
-	hasBackgroundOverlay,
-	range,
 	createResponsiveAttributeNames,
 	createTypographyAttributeNames,
 	createButtonAttributeNames,
@@ -51,6 +49,7 @@ import {
 	withBlockStyles,
 } from '~stackable/higher-order'
 import { i18n, showProNotice } from 'stackable'
+import { range } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -536,6 +535,7 @@ const edit = props => {
 	const {
 		columns = 3,
 		imageSize,
+		imageShadow = '',
 		imageShape = '',
 		imageShapeStretch = false,
 		imageWidth = '',
@@ -584,7 +584,6 @@ const edit = props => {
 						'ugb-pricing-box__item',
 						`ugb-pricing-box__item${ i }`,
 					], applyFilters( 'stackable.pricing-box.itemclasses', {
-						'ugb--has-background-overlay': show.columnBackground && hasBackgroundOverlay( 'column%s', props.attributes ),
 						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
 					}, props, i ) )
 
@@ -618,6 +617,7 @@ const edit = props => {
 										imageId={ imageId }
 										src={ imageUrl }
 										size={ imageSize }
+										shadow={ imageShadow }
 										shape={ attributes[ `image${ i }Shape` ] || imageShape }
 										shapeStretch={ attributes[ `image${ i }ShapeStretch` ] || imageShapeStretch }
 										alt={ imageAlt }
@@ -746,8 +746,13 @@ const edit = props => {
 					}
 
 					return (
-						<div className={ itemClasses } key={ i }>
-							{ show.columnBackground && createVideoBackground( 'column%s', props ) }
+						<DivBackground
+							className={ itemClasses }
+							backgroundAttrName="column%s"
+							blockProps={ props }
+							showBackground={ show.columnBackground }
+							key={ i }
+						>
 							{ applyFilters( 'stackable.pricing-box.edit.content', (
 								<Fragment>
 									{ showImage && imageComp }
@@ -758,7 +763,7 @@ const edit = props => {
 									{ showDescription && descriptionComp }
 								</Fragment>
 							), props, comps, i ) }
-						</div>
+						</DivBackground>
 					)
 				} ) }
 			</Fragment>

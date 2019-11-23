@@ -22,6 +22,8 @@ export const showOptions = blockProps => {
 
 	return applyFilters( 'stackable.blog-posts.show', {
 		columnBackground: ! [ 'basic', 'list' ].includes( design ),
+		showBackgroundInItem: design === 'vertical-card2',
+		showBackgroundInContent: [ 'vertical-card', 'horizontal-card', 'image-card' ].includes( design ),
 		borderRadius: true,
 		shadow: true,
 		imageShadow: [ 'basic', 'list' ].includes( design ),

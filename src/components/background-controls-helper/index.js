@@ -62,7 +62,7 @@ const BackgroundControlsHelper = props => {
 			onChangeFixedBackground={ value => setAttributes( { [ getAttrName( 'FixedBackground' ) ]: value } ) }
 
 			// Advanced gradient.
-			backgroundGradientDirection={ getAttrValue( 'BackgroundGradientDirection', 0 ) }
+			backgroundGradientDirection={ getAttrValue( 'BackgroundGradientDirection', 90 ) }
 			backgroundGradientBlendMode={ getAttrValue( 'BackgroundGradientBlendMode' ) }
 			backgroundGradientLocation1={ getAttrValue( 'BackgroundGradientLocation1', 0 ) }
 			backgroundGradientLocation2={ getAttrValue( 'BackgroundGradientLocation2', 100 ) }

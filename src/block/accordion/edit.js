@@ -25,6 +25,7 @@ import {
 	HeadingButtonsControl,
 	FourRangeControl,
 	PanelSpacingBody,
+	DivBackground,
 } from '~stackable/components'
 import {
 	withBlockStyles,
@@ -34,11 +35,7 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 } from '~stackable/higher-order'
-import {
-	createVideoBackground,
-	descriptionPlaceholder,
-	hasBackgroundOverlay,
-} from '~stackable/util'
+import { descriptionPlaceholder } from '~stackable/util'
 import { i18n, showProNotice } from 'stackable'
 import classnames from 'classnames'
 
@@ -323,30 +320,33 @@ const edit = props => {
 
 	const itemClasses = classnames( [
 		'ugb-accordion__item',
-	], applyFilters( 'stackable.accordion.itemclasses', {
-		'ugb--has-background-overlay': show.containerBackground && hasBackgroundOverlay( 'container%s', props.attributes ),
-	}, props ) )
+	], applyFilters( 'stackable.accordion.itemclasses', {}, props ) )
 
 	const headingClasses = classnames( [
 		'ugb-accordion__heading',
 	], applyFilters( 'stackable.accordion.headingclasses', {
 		[ `ugb--shadow-${ shadow }` ]: design === 'basic' && shadow !== 3,
-		'ugb--has-background-overlay': show.headerBackground && hasBackgroundOverlay( 'container%s', props.attributes ),
 	}, design, props ) )
 
 	return (
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				<div className={ itemClasses }>
-					{ show.containerBackground && createVideoBackground( 'container%s', props ) }
-					<div
+				<DivBackground
+					className={ itemClasses }
+					backgroundAttrName="container%s"
+					blockProps={ props }
+					showBackground={ show.containerBackground }
+				>
+					<DivBackground
 						className={ headingClasses }
+						backgroundAttrName="container%s"
+						blockProps={ props }
+						showBackground={ show.headerBackground }
 						onMouseUp={ () => props.setState( { isOpen: ! props.isOpen } ) }
 						onKeyPress={ () => props.setState( { isOpen: ! openStart } ) }
 						role="button"
 						tabIndex="0"
 					>
-						{ show.headerBackground && createVideoBackground( 'container%s', props ) }
 						<RichText
 							tagName={ titleTag || 'h4' }
 							className="ugb-accordion__title"
@@ -358,7 +358,7 @@ const edit = props => {
 						{ showArrow &&
 							<SVGArrowIcon className="ugb-accordion__arrow" width="20" height="20" />
 						}
-					</div>
+					</DivBackground>
 					<div className="ugb-accordion__content">
 						<div className="ugb-accordion__content-inner">
 							<InnerBlocks
@@ -367,7 +367,7 @@ const edit = props => {
 							/>
 						</div>
 					</div>
-				</div>
+				</DivBackground>
 			</Fragment>
 		) } />
 	)

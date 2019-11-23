@@ -16,7 +16,7 @@ import { createAllCombinationAttributes } from '~stackable/util'
  * WordPress dependencies
  */
 import {
-	addFilter, applyFilters, doAction, removeFilter,
+	addFilter, applyFilters, doAction,
 } from '@wordpress/hooks'
 import { i18n, showProNotice } from 'stackable'
 import { __ } from '@wordpress/i18n'
@@ -24,69 +24,7 @@ import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
 import { ToggleControl } from '@wordpress/components'
 
-const separatorAddedPadding = 200
-
-// Adjust the padding when the separator is added.
-removeFilter( 'stackable.setAttributes', 'stackable/modules/block-separators/top' )
-addFilter( 'stackable.setAttributes', 'stackable/modules/block-separators/top', ( attributes, blockProps ) => {
-	if ( typeof attributes.showTopSeparator === 'undefined' ) {
-		return attributes
-	}
-	if ( attributes.showTopSeparator ) {
-		if ( blockProps.attributes.paddingTop === '' ) {
-			attributes.paddingTop = separatorAddedPadding
-		}
-		if ( blockProps.attributes.tabletPaddingTop === '' ) {
-			attributes.tabletPaddingTop = separatorAddedPadding
-		}
-		if ( blockProps.attributes.mobilePaddingTop === '' ) {
-			attributes.mobilePaddingTop = separatorAddedPadding
-		}
-	} else {
-		if ( blockProps.attributes.paddingTop === separatorAddedPadding ) {
-			attributes.paddingTop = ''
-		}
-		if ( blockProps.attributes.tabletPaddingTop === separatorAddedPadding ) {
-			attributes.tabletPaddingTop = ''
-		}
-		if ( blockProps.attributes.mobilePaddingTop === separatorAddedPadding ) {
-			attributes.mobilePaddingTop = ''
-		}
-	}
-	return attributes
-} )
-
-// Adjust the padding when the separator is added.
-removeFilter( 'stackable.setAttributes', 'stackable/modules/block-separators/bottom' )
-addFilter( 'stackable.setAttributes', 'stackable/modules/block-separators/bottom', ( attributes, blockProps ) => {
-	if ( typeof attributes.showBottomSeparator === 'undefined' ) {
-		return attributes
-	}
-	if ( attributes.showBottomSeparator ) {
-		if ( blockProps.attributes.paddingBottom === '' ) {
-			attributes.paddingBottom = separatorAddedPadding
-		}
-		if ( blockProps.attributes.tabletPaddingBottom === '' ) {
-			attributes.tabletPaddingBottom = separatorAddedPadding
-		}
-		if ( blockProps.attributes.mobilePaddingBottom === '' ) {
-			attributes.mobilePaddingBottom = separatorAddedPadding
-		}
-	} else {
-		if ( blockProps.attributes.paddingBottom === separatorAddedPadding ) {
-			attributes.paddingBottom = ''
-		}
-		if ( blockProps.attributes.tabletPaddingBottom === separatorAddedPadding ) {
-			attributes.tabletPaddingBottom = ''
-		}
-		if ( blockProps.attributes.mobilePaddingBottom === separatorAddedPadding ) {
-			attributes.mobilePaddingBottom = ''
-		}
-	}
-	return attributes
-} )
-
-const addBlockSeparatorPanels = ( output, props ) => {
+const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props ) => {
 	const { setAttributes } = props
 	const {
 		showTopSeparator = false,
@@ -181,11 +119,13 @@ const addBlockSeparatorPanels = ( output, props ) => {
 					checked={ topSeparatorShadow }
 					onChange={ topSeparatorShadow => setAttributes( { topSeparatorShadow } ) }
 				/>
-				<ToggleControl
-					label={ __( 'Bring to Front', i18n ) }
-					checked={ topSeparatorBringToFront }
-					onChange={ topSeparatorBringToFront => setAttributes( { topSeparatorBringToFront } ) }
-				/>
+				{ options.enableBringToFront &&
+					<ToggleControl
+						label={ __( 'Bring to Front', i18n ) }
+						checked={ topSeparatorBringToFront }
+						onChange={ topSeparatorBringToFront => setAttributes( { topSeparatorBringToFront } ) }
+					/>
+				}
 				{ applyFilters( 'stackable.block-separators.edit.top', null, props ) }
 				{ showProNotice && <ProControlButton
 					title={ __( 'Say Hello to Gorgeous Separators 👋', i18n ) }
@@ -265,11 +205,13 @@ const addBlockSeparatorPanels = ( output, props ) => {
 					checked={ bottomSeparatorShadow }
 					onChange={ bottomSeparatorShadow => setAttributes( { bottomSeparatorShadow } ) }
 				/>
-				<ToggleControl
-					label={ __( 'Bring to Front', i18n ) }
-					checked={ bottomSeparatorBringToFront }
-					onChange={ bottomSeparatorBringToFront => setAttributes( { bottomSeparatorBringToFront } ) }
-				/>
+				{ options.enableBringToFront &&
+					<ToggleControl
+						label={ __( 'Bring to Front', i18n ) }
+						checked={ bottomSeparatorBringToFront }
+						onChange={ bottomSeparatorBringToFront => setAttributes( { bottomSeparatorBringToFront } ) }
+					/>
+				}
 				{ applyFilters( 'stackable.block-separators.edit.bottom', null, props ) }
 				{ showProNotice && <ProControlButton
 					title={ __( 'Say Hello to Gorgeous Separators 👋', i18n ) }
@@ -411,7 +353,7 @@ const addShapeOutput = ( output, design, blockProps ) => {
 	)
 }
 
-const addTopStyles = ( styleObject, props ) => {
+const addTopStyles = ( blockName, options = {} ) => ( styleObject, props ) => {
 	const {
 		showTopSeparator = false,
 		topSeparatorColor = '',
@@ -429,7 +371,7 @@ const addTopStyles = ( styleObject, props ) => {
 
 	const styles = {
 		[ `.ugb-top-separator` ]: {
-			zIndex: topSeparatorBringToFront ? 6 : undefined,
+			zIndex: options.enableBringToFront && topSeparatorBringToFront ? 6 : undefined,
 			transform: topSeparatorFlipHorizontally ? 'scale(-1)' : undefined,
 		},
 		[ `.ugb-top-separator svg` ]: {
@@ -454,7 +396,7 @@ const addTopStyles = ( styleObject, props ) => {
 	return deepmerge( styleObject, styles )
 }
 
-const addBottomStyles = ( styleObject, props ) => {
+const addBottomStyles = ( blockName, options = {} ) => ( styleObject, props ) => {
 	const {
 		showBottomSeparator = false,
 		bottomSeparatorColor = '',
@@ -472,7 +414,7 @@ const addBottomStyles = ( styleObject, props ) => {
 
 	const styles = {
 		[ `.ugb-bottom-separator` ]: {
-			zIndex: bottomSeparatorBringToFront ? 6 : undefined,
+			zIndex: options.enableBringToFront && bottomSeparatorBringToFront ? 6 : undefined,
 			transform: bottomSeparatorFlipHorizontally ? 'scaleX(-1)' : undefined,
 		},
 		[ `.ugb-bottom-separator svg` ]: {
@@ -497,13 +439,31 @@ const addBottomStyles = ( styleObject, props ) => {
 	return deepmerge( styleObject, styles )
 }
 
-const blockSeparators = blockName => {
-	addFilter( `stackable.${ blockName }.edit.inspector.style.block`, `stackable/${ blockName }/block-separators`, addBlockSeparatorPanels, 18 )
+const addSeparatorClassNames = ( mainClasses, props ) => {
+	const {
+		showTopSeparator = false,
+		showBottomSeparator = false,
+	} = props.attributes
+
+	return {
+		...mainClasses,
+		'ugb--has-top-separator': showTopSeparator,
+		'ugb--has-bottom-separator': showBottomSeparator,
+	}
+}
+
+const blockSeparators = ( blockName, options = {} ) => {
+	const optionsToPass = {
+		enableBringToFront: true,
+		...options,
+	}
+	addFilter( `stackable.${ blockName }.edit.inspector.style.block`, `stackable/${ blockName }/block-separators`, addBlockSeparatorPanels( blockName, optionsToPass ), 18 )
 	addFilter( `stackable.${ blockName }.attributes`, `stackable/${ blockName }/block-separators`, addAttributes )
 	addFilter( `stackable.${ blockName }.edit.output.outer`, `stackable/${ blockName }/block-separators`, addShapeOutput )
 	addFilter( `stackable.${ blockName }.save.output.outer`, `stackable/${ blockName }/block-separators`, addShapeOutput )
-	addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/block-separators/top`, addTopStyles )
-	addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/block-separators/bottom`, addBottomStyles )
+	addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/block-separators/top`, addTopStyles( blockName, optionsToPass ) )
+	addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/block-separators/bottom`, addBottomStyles( blockName, optionsToPass ) )
+	addFilter( `stackable.${ blockName }.main-block.classes`, `stackable/${ blockName }/block-separators`, addSeparatorClassNames )
 	doAction( `stackable.module.block-separators`, blockName )
 }
 

@@ -18,14 +18,13 @@ import {
 	ResponsiveControl,
 	TypographyControlHelper,
 	ButtonEditHelper,
+	DivBackground,
 } from '~stackable/components'
 import {
 	createButtonAttributeNames,
 	createResponsiveAttributeNames,
 	createTypographyAttributeNames,
-	createVideoBackground,
 	descriptionPlaceholder,
-	hasBackgroundOverlay,
 } from '~stackable/util'
 import {
 	withBlockStyles,
@@ -320,10 +319,7 @@ const edit = props => {
 		'ugb-cta__item',
 	], applyFilters( 'stackable.cta.boxclasses', {
 		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-		'ugb--has-background-overlay': hasBackgroundOverlay( 'column%s', props.attributes ),
 	}, design, props ) )
-
-	const show = showOptions( props )
 
 	const titleComp = showTitle &&
 		<RichText
@@ -359,8 +355,11 @@ const edit = props => {
 	return (
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				<div className={ itemClasses }>
-					{ show.columnBackground && createVideoBackground( 'column%s', props ) }
+				<DivBackground
+					className={ itemClasses }
+					backgroundAttrName="column%s"
+					blockProps={ props }
+				>
 					{ applyFilters( 'stackable.cta.edit.output', (
 						<Fragment>
 							{ titleComp }
@@ -368,7 +367,7 @@ const edit = props => {
 							{ buttonComp }
 						</Fragment>
 					), comps, props ) }
-				</div>
+				</DivBackground>
 			</Fragment>
 		) } />
 	)

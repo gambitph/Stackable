@@ -8,11 +8,7 @@ import { showOptions } from './util'
  * External dependencies
  */
 import classnames from 'classnames'
-import { BlockContainer } from '~stackable/components'
-import {
-	hasBackgroundOverlay,
-	createVideoBackground,
-} from '~stackable/util'
+import { BlockContainer, DivBackground } from '~stackable/components'
 import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
 
 /**
@@ -48,7 +44,6 @@ const save = props => {
 		`${ uniqueClass }-wrapper`,
 	], applyFilters( 'stackable.container.wrapperClasses', {
 		[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
-		'ugb--has-background-overlay': show.columnBackground && hasBackgroundOverlay( 'column%s', props.attributes ),
 		'ugb--restrict-content-width': show.restrictContent && restrictContentWidth,
 	}, props ) )
 
@@ -62,15 +57,19 @@ const save = props => {
 	return (
 		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				<div className={ wrapperClasses }>
-					{ show.columnBackground && createVideoBackground( 'column%s', props ) }
+				<DivBackground
+					className={ wrapperClasses }
+					backgroundAttrName="column%s"
+					blockProps={ props }
+					showBackground={ show.columnBackground }
+				>
 					{ applyFilters( 'stackable.container.save.wrapper.output', null, props ) }
 					<div className="ugb-container__side">
 						<div className={ contentWrapperClasses }>
 							<InnerBlocks.Content />
 						</div>
 					</div>
-				</div>
+				</DivBackground>
 			</Fragment>
 		) } />
 	)

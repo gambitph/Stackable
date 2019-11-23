@@ -99,7 +99,7 @@ const BackgroundControls = props => {
 					label={ __( 'Adv. Gradient Color Settings', i18n ) }
 					onReset={ props.onResetAdvancedGradient }
 					allowReset={
-						props.backgroundGradientDirection !== '' ||
+						( props.backgroundGradientDirection !== '' && props.backgroundGradientDirection !== 90 ) ||
 						( props.backgroundGradientLocation1 !== '' && props.backgroundGradientLocation1 !== 0 ) ||
 						( props.backgroundGradientLocation2 !== '' && props.backgroundGradientLocation2 !== 100 ) ||
 						props.backgroundGradientBlendMode
@@ -159,35 +159,35 @@ const BackgroundControls = props => {
 				<Fragment>
 					<WhenResponsiveScreen>
 						<ImageControl
-							label={ props.backgroundMediaAllowedTypes ? __( 'Background Image or Video', i18n ) : __( 'Background Image', i18n ) }
-							help={ props.backgroundMediaAllowedTypes ? __( 'Use .mp4 format for videos', i18n ) : '' }
+							label={ props.backgroundMediaAllowVideo ? __( 'Background Image or Video', i18n ) : __( 'Background Image', i18n ) }
+							help={ props.backgroundMediaAllowVideo ? __( 'Use .mp4 format for videos', i18n ) : '' }
 							onRemove={ () => props.onChangeBackgroundMedia( { url: '', id: '' } ) }
 							onChange={ props.onChangeBackgroundMedia }
 							imageID={ props.backgroundMediaID }
 							imageURL={ props.backgroundMediaURL }
-							allowedTypes={ props.backgroundMediaAllowedTypes ? [ 'image', 'video' ] : [ 'image' ] }
+							allowedTypes={ props.backgroundMediaAllowVideo ? [ 'image', 'video' ] : [ 'image' ] }
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
 						<ImageControl
-							label={ props.backgroundMediaAllowedTypes ? __( 'Background Image or Video', i18n ) : __( 'Background Image', i18n ) }
-							help={ props.backgroundMediaAllowedTypes ? __( 'Use .mp4 format for videos', i18n ) : '' }
+							label={ props.backgroundMediaAllowVideo ? __( 'Background Image or Video', i18n ) : __( 'Background Image', i18n ) }
+							help={ props.backgroundMediaAllowVideo ? __( 'Use .mp4 format for videos', i18n ) : '' }
 							onRemove={ () => props.onChangeTabletBackgroundMedia( { url: '', id: '' } ) }
 							onChange={ props.onChangeTabletBackgroundMedia }
 							imageID={ props.tabletBackgroundMediaID }
 							imageURL={ props.tabletBackgroundMediaURL }
-							allowedTypes={ props.backgroundMediaAllowedTypes ? [ 'image', 'video' ] : [ 'image' ] }
+							allowedTypes={ props.backgroundMediaAllowVideo ? [ 'image', 'video' ] : [ 'image' ] }
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
 						<ImageControl
-							label={ props.backgroundMediaAllowedTypes ? __( 'Background Image or Video', i18n ) : __( 'Background Image', i18n ) }
-							help={ props.backgroundMediaAllowedTypes ? __( 'Use .mp4 format for videos', i18n ) : '' }
+							label={ props.backgroundMediaAllowVideo ? __( 'Background Image or Video', i18n ) : __( 'Background Image', i18n ) }
+							help={ props.backgroundMediaAllowVideo ? __( 'Use .mp4 format for videos', i18n ) : '' }
 							onRemove={ () => props.onChangeMobileBackgroundMedia( { url: '', id: '' } ) }
 							onChange={ props.onChangeMobileBackgroundMedia }
 							imageID={ props.mobileBackgroundMediaID }
 							imageURL={ props.mobileBackgroundMediaURL }
-							allowedTypes={ props.backgroundMediaAllowedTypes ? [ 'image', 'video' ] : [ 'image' ] }
+							allowedTypes={ props.backgroundMediaAllowVideo ? [ 'image', 'video' ] : [ 'image' ] }
 						/>
 					</WhenResponsiveScreen>
 				</Fragment>
@@ -483,7 +483,7 @@ BackgroundControls.defaultProps = {
 
 	// Advanced background.
 	hasAdvancedBackground: true,
-	backgroundMediaAllowedTypes: true,
+	backgroundMediaAllowVideo: true,
 	backgroundPosition: '',
 	tabletBackgroundPosition: '',
 	mobileBackgroundPosition: '',

@@ -7,8 +7,8 @@ import {
 	SvgIcon,
 	BlockContainer,
 	ButtonEdit,
+	DivBackground,
 } from '~stackable/components'
-import { createVideoBackground, hasBackgroundOverlay } from '~stackable/util'
 
 /**
  * Internal dependencies
@@ -75,7 +75,6 @@ const save = props => {
 		'ugb-notification__item',
 	], {
 		[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
-		'ugb--has-background-overlay': hasBackgroundOverlay( 'column%s', props.attributes ),
 	} )
 
 	const show = showOptions( props )
@@ -83,8 +82,12 @@ const save = props => {
 	return (
 		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				<div className={ itemClasses }>
-					{ show.columnBackground && createVideoBackground( 'column%s', props ) }
+				<DivBackground
+					className={ itemClasses }
+					backgroundAttrName="column%s"
+					blockProps={ props }
+					showBackground={ show.columnBackground }
+				>
 					{ dismissible && (
 						<span
 							className="ugb-notification__close-button"
@@ -129,7 +132,7 @@ const save = props => {
 							design={ buttonDesign !== '' ? buttonDesign : 'ghost' }
 						/>
 					}
-				</div>
+				</DivBackground>
 			</Fragment>
 		) } />
 	)

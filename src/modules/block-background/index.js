@@ -192,6 +192,7 @@ const addBlockAlignClasses = ( classes, props ) => {
 		...classes,
 		[ `ugb-main-block--inner-${ blockInnerWidth }` ]: blockInnerWidth,
 		'ugb--has-block-background': showBlockBackground,
+		// Class copied from DivBackground component.
 		'ugb--has-background-overlay': hasBackgroundOverlay( 'blockBackground%s', props.attributes ),
 	}
 }
@@ -201,6 +202,7 @@ const addVideoBackgroundOutput = ( output, design, blockProps ) => {
 		return output
 	}
 
+	// Copied how DivBackground component works.
 	return (
 		<Fragment>
 			{ output }

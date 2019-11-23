@@ -8,19 +8,15 @@ import { showOptions } from './util'
  * External dependencies
  */
 import {
-	hasBackgroundOverlay,
-	range,
-	createVideoBackground,
-	SOCIAL_SITES,
-} from '~stackable/util'
-import {
 	BlockContainer,
 	Image,
 	SocialButtonEditHelper,
+	DivBackground,
 } from '~stackable/components'
 import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+import { SOCIAL_SITES } from '~stackable/util'
 import classnames from 'classnames'
-import { upperFirst } from 'lodash'
+import { range, upperFirst } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -75,13 +71,17 @@ const save = props => {
 						'ugb-team-member__item',
 						`ugb-team-member__item${ i }`,
 					], applyFilters( 'stackable.team-member.itemclasses', {
-						'ugb--has-background-overlay': show.columnBackground && hasBackgroundOverlay( 'column%s', props.attributes ),
 						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
 					}, props ) )
 
 					return (
-						<div className={ itemClasses } key={ i }>
-							{ show.columnBackground && createVideoBackground( 'column%s', props ) }
+						<DivBackground
+							className={ itemClasses }
+							backgroundAttrName="column%s"
+							blockProps={ props }
+							showBackground={ show.columnBackground }
+							key={ i }
+						>
 							{ showImage && ! show.imageAsBackground && imageUrl &&
 								<div className="ugb-team-member__image">
 									<Image
@@ -142,7 +142,7 @@ const save = props => {
 									</div>
 								}
 							</div>
-						</div>
+						</DivBackground>
 					)
 				} ) }
 			</Fragment>

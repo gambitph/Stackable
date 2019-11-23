@@ -22,12 +22,11 @@ import {
 	ColorPaletteControl,
 	TypographyControlHelper,
 	AlignButtonsControl,
+	DivBackground,
 } from '~stackable/components'
 import {
 	createResponsiveAttributeNames,
-	createVideoBackground,
 	descriptionPlaceholder,
-	hasBackgroundOverlay,
 } from '~stackable/util'
 import {
 	withBlockStyles,
@@ -280,13 +279,17 @@ const edit = props => {
 		'ugb-blockquote__item',
 	], {
 		[ `ugb--shadow-${ shadow }` ]: show.containerBackground && shadow !== 3,
-		'ugb--has-background-overlay': show.containerBackground && hasBackgroundOverlay( 'container%s', props.attributes ),
 	} )
 
 	return (
 		<BlockContainer.Edit blockTag={ blockTag || 'blockquote' } className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				<div className={ itemClasses }>
+				<DivBackground
+					className={ itemClasses }
+					backgroundAttrName="container%s"
+					blockProps={ props }
+					showBackground={ show.containerBackground }
+				>
 					{ showQuote && QUOTE_ICONS[ quoteIcon ].iconFunc( {}, {
 						className: 'ugb-blockquote__quote',
 						width: quoteSize,
@@ -301,8 +304,7 @@ const edit = props => {
 							keepPlaceholderOnFocus
 						/>
 					</div>
-					{ show.containerBackground && createVideoBackground( 'container%s', props ) }
-				</div>
+				</DivBackground>
 			</Fragment>
 		) } />
 	)

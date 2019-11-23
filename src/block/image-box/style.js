@@ -7,6 +7,7 @@ import {
 	appendImportant,
 	createBackgroundStyles,
 	createBackgroundOverlayStyles,
+	__getValue,
 } from '~stackable/util'
 import deepmerge from 'deepmerge'
 
@@ -15,16 +16,8 @@ import deepmerge from 'deepmerge'
  */
 import { showOptions } from './util'
 
-/**
- * WordPress dependencies
- */
-import { sprintf } from '@wordpress/i18n'
-
 export const createStyles = props => {
-	const getValue = ( attrName, format = '', defaultValue = undefined ) => {
-		const value = typeof props.attributes[ attrName ] === 'undefined' ? '' : props.attributes[ attrName ]
-		return value !== '' ? ( format ? sprintf( format, value ) : value ) : defaultValue
-	}
+	const getValue = __getValue( props.attributes )
 
 	const show = showOptions( props )
 

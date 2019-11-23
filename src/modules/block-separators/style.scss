@@ -6,6 +6,13 @@
 	.ugb-inner-block {
 		z-index: 5;
 	}
+	// Add some default paddings if we have a separator.
+	&.ugb--has-top-separator {
+		padding-top: 200px !important;
+	}
+	&.ugb--has-bottom-separator {
+		padding-bottom: 200px !important;
+	}
 }
 .ugb-top-separator,
 .ugb-bottom-separator {
@@ -51,5 +58,23 @@
 	.ugb-separator__layer-1,
 	.ugb-separator__shadow {
 		transform: none;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.ugb-top-separator,
+	.ugb-bottom-separator {
+		.ugb-separator-wrapper {
+			height: 23vw;
+		}
+	}
+	.ugb-main-block {
+		// Add some default paddings if we have a separator.
+		&.ugb--has-top-separator {
+			padding-top: 23vw !important;
+		}
+		&.ugb--has-bottom-separator {
+			padding-bottom: 23vw !important;
+		}
 	}
 }

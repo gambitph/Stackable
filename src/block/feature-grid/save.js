@@ -8,13 +8,11 @@ import { showOptions } from './util'
  * External dependencies
  */
 import {
-	ButtonEditHelper, BlockContainer, Image,
+	ButtonEditHelper, BlockContainer, Image, DivBackground,
 } from '~stackable/components'
-import {
-	range, hasBackgroundOverlay, createVideoBackground,
-} from '~stackable/util'
 import { withUniqueClass, withBlockStyles } from '~stackable/higher-order'
 import classnames from 'classnames'
+import { range } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -68,13 +66,17 @@ const save = props => {
 						'ugb-feature-grid__item',
 						`ugb-feature-grid__item${ i }`,
 					], applyFilters( 'stackable.feature-grid.itemclasses', {
-						'ugb--has-background-overlay': show.columnBackground && hasBackgroundOverlay( 'column%s', props.attributes ),
 						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
 					}, props, i ) )
 
 					return (
-						<div className={ itemClasses } key={ i }>
-							{ show.columnBackground && show[ `columnBackground${ i }` ] && createVideoBackground( 'column%s', props ) }
+						<DivBackground
+							className={ itemClasses }
+							backgroundAttrName="column%s"
+							blockProps={ props }
+							showBackground={ show.columnBackground && show[ `columnBackground${ i }` ] }
+							key={ i }
+						>
 							{ imageUrl && showImage &&
 								<div className="ugb-feature-grid__image">
 									<Image
@@ -116,7 +118,7 @@ const save = props => {
 									/>
 								}
 							</div>
-						</div>
+						</DivBackground>
 					)
 				} ) }
 			</Fragment>

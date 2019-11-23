@@ -7,17 +7,19 @@ import {
 	FourRangeControl,
 	WhenResponsiveScreen,
 } from '~stackable/components'
-import { createAllCombinationAttributes, appendImportant } from '~stackable/util'
+import {
+	__getValue,
+	createAllCombinationAttributes,
+	appendImportant,
+} from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import {
-	__, sprintf,
-} from '@wordpress/i18n'
-import {
 	addFilter, applyFilters, doAction, removeFilter,
 } from '@wordpress/hooks'
+import { __ } from '@wordpress/i18n'
 import { PanelBody } from '@wordpress/components'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
@@ -43,6 +45,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 	const { setAttributes } = props
 	const {
 		align = false,
+		blockInnerWidth = '',
 
 		marginTop = '',
 		marginRight = '',
@@ -124,8 +127,8 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							right={ marginRight }
 							left={ marginLeft }
 							unit={ marginUnit }
-							min={ -200 }
-							max={ 500 }
+							min={ [ -200, -50 ] }
+							max={ [ 500, 100 ] }
 							onChange={ margins => {
 								setAttributes( {
 									marginTop: ! margins.top && margins.top !== 0 ? '' : parseInt( margins.top, 10 ),
@@ -152,8 +155,8 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							right={ tabletMarginRight }
 							left={ tabletMarginLeft }
 							unit={ tabletMarginUnit }
-							min={ -200 }
-							max={ 500 }
+							min={ [ -200, -50 ] }
+							max={ [ 500, 100 ] }
 							onChange={ margins => {
 								setAttributes( {
 									tabletMarginTop: ! margins.top && margins.top !== 0 ? '' : parseInt( margins.top, 10 ),
@@ -180,8 +183,8 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							right={ mobileMarginRight }
 							left={ mobileMarginLeft }
 							unit={ mobileMarginUnit }
-							min={ -200 }
-							max={ 500 }
+							min={ [ -200, -50 ] }
+							max={ [ 500, 100 ] }
 							onChange={ margins => {
 								setAttributes( {
 									mobileMarginTop: ! margins.top && margins.top !== 0 ? '' : parseInt( margins.top, 10 ),
@@ -210,8 +213,8 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							right={ paddingRight }
 							left={ paddingLeft }
 							unit={ paddingUnit }
-							min={ 0 }
-							max={ 500 }
+							min={ [ 0, 0, 0 ] }
+							max={ [ 500, 30, 100 ] }
 							onChange={ paddings => {
 								setAttributes( {
 									paddingTop: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
@@ -238,8 +241,8 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							right={ tabletPaddingRight }
 							left={ tabletPaddingLeft }
 							unit={ tabletPaddingUnit }
-							min={ 0 }
-							max={ 500 }
+							min={ [ 0, 0, 0 ] }
+							max={ [ 500, 30, 100 ] }
 							onChange={ paddings => {
 								setAttributes( {
 									tabletPaddingTop: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
@@ -266,8 +269,8 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							right={ mobilePaddingRight }
 							left={ mobilePaddingLeft }
 							unit={ mobilePaddingUnit }
-							min={ 0 }
-							max={ 500 }
+							min={ [ 0, 0, 0 ] }
+							max={ [ 500, 30, 100 ] }
 							onChange={ paddings => {
 								setAttributes( {
 									mobilePaddingTop: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
@@ -410,9 +413,9 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					</WhenResponsiveScreen>
 				</Fragment> }
 
-				{ options.horizontalAlign &&
+				{ ( options.horizontalAlign || ( blockInnerWidth !== '' && blockInnerWidth !== 'full' ) ) &&
 					<Fragment>
-						{ blockWidth !== '' &&
+						{ ( blockWidth !== '' || ( blockInnerWidth !== '' && blockInnerWidth !== 'full' ) ) &&
 							<WhenResponsiveScreen>
 								<AdvancedToolbarControl
 									label={ __( 'Content Horizontal Align', i18n ) }
@@ -422,7 +425,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 								/>
 							</WhenResponsiveScreen>
 						}
-						{ tabletBlockWidth !== '' &&
+						{ ( tabletBlockWidth !== '' || ( blockInnerWidth !== '' && blockInnerWidth !== 'full' ) ) &&
 							<WhenResponsiveScreen screen="tablet">
 								<AdvancedToolbarControl
 									label={ __( 'Content Horizontal Align', i18n ) }
@@ -432,7 +435,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 								/>
 							</WhenResponsiveScreen>
 						}
-						{ mobileBlockWidth !== '' &&
+						{ ( mobileBlockWidth !== '' || ( blockInnerWidth !== '' && blockInnerWidth !== 'full' ) ) &&
 							<WhenResponsiveScreen screen="mobile">
 								<AdvancedToolbarControl
 									label={ __( 'Content Horizontal Align', i18n ) }
@@ -452,12 +455,11 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 }
 
 const addToStyleObject = blockName => ( styleObject, props ) => {
-	const getValue = ( attrName, format = '' ) => {
-		const value = typeof props.attributes[ attrName ] === 'undefined' ? '' : props.attributes[ attrName ]
-		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
-	}
+	const getValue = __getValue( props.attributes )
 
 	const {
+		blockInnerWidth = '',
+
 		marginUnit = 'px',
 		tabletMarginUnit = 'px',
 		mobileMarginUnit = 'px',
@@ -532,6 +534,8 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 		},
 		[ `${ blockClass } .ugb-inner-block` ]: {
 			width: appendImportant( getValue( 'blockWidth', `%s${ blockWidthUnit }` ) ),
+			// Some themes can limit min-width, preventing block width.
+			minWidth: blockInnerWidth === 'wide' && getValue( 'blockWidth' ) ? 'auto !important' : undefined,
 		},
 		tablet: {
 			[ blockClass ]: {
@@ -541,6 +545,8 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 			},
 			[ `${ blockClass } .ugb-inner-block` ]: {
 				width: appendImportant( getValue( 'tabletBlockWidth', `%s${ tabletBlockWidthUnit }` ) ),
+				// Some themes can limit min-width, preventing block width.
+				minWidth: blockInnerWidth === 'wide' && getValue( 'tabletBlockWidth' ) ? 'auto !important' : undefined,
 			},
 		},
 		mobile: {
@@ -551,6 +557,8 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 			},
 			[ `${ blockClass } .ugb-inner-block` ]: {
 				width: appendImportant( getValue( 'mobileBlockWidth', `%s${ mobileBlockWidthUnit }` ) ),
+				// Some themes can limit min-width, preventing block width.
+				minWidth: blockInnerWidth === 'wide' && getValue( 'mobileBlockWidth' ) ? 'auto !important' : undefined,
 			},
 		},
 	}

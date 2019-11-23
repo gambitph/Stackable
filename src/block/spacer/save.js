@@ -2,8 +2,7 @@
  * External dependencies
  */
 import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
-import { BlockContainer } from '~stackable/components'
-import { hasBackgroundOverlay } from '~stackable/util'
+import { BlockContainer, DivBackground } from '~stackable/components'
 import classnames from 'classnames'
 
 /**
@@ -19,11 +18,16 @@ import { compose } from '@wordpress/compose'
 const save = props => {
 	const mainClasses = classnames( [
 		props.className,
-	], {
-		'ugb--has-background-overlay': hasBackgroundOverlay( '%s', props.attributes ),
-	} )
+		'ugb-spacer--v2',
+	] )
 	return (
-		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ null } />
+		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
+			<DivBackground
+				className="ugb-spacer--inner"
+				backgroundAttrName="%s"
+				blockProps={ props }
+			/>
+		) } />
 	)
 }
 

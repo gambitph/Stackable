@@ -1,8 +1,9 @@
 /**
  * External dependencies
  */
-import { BlockContainer, ButtonEdit } from '~stackable/components'
-import { createVideoBackground, hasBackgroundOverlay } from '~stackable/util'
+import {
+	BlockContainer, ButtonEdit, DivBackground,
+} from '~stackable/components'
 import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
 import classnames from 'classnames'
 
@@ -10,7 +11,6 @@ import classnames from 'classnames'
  * Internal dependencies
  */
 import createStyles from './style'
-import { showOptions } from './util'
 
 /**
  * WordPress dependencies
@@ -62,10 +62,7 @@ const save = props => {
 		'ugb-cta__item',
 	], applyFilters( 'stackable.cta.boxclasses', {
 		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-		'ugb--has-background-overlay': hasBackgroundOverlay( 'column%s', props.attributes ),
 	}, design, props ) )
-
-	const show = showOptions( props )
 
 	const titleComp = showTitle && ! RichText.isEmpty( title ) &&
 		<RichText.Content
@@ -103,8 +100,11 @@ const save = props => {
 	return (
 		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				<div className={ itemClasses }>
-					{ show.columnBackground && createVideoBackground( 'column%s', props ) }
+				<DivBackground
+					className={ itemClasses }
+					backgroundAttrName="column%s"
+					blockProps={ props }
+				>
 					{ applyFilters( 'stackable.cta.save.output', (
 						<Fragment>
 							{ titleComp }
@@ -112,7 +112,7 @@ const save = props => {
 							{ buttonComp }
 						</Fragment>
 					), comps, props ) }
-				</div>
+				</DivBackground>
 			</Fragment>
 		) } />
 	)

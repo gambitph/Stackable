@@ -15,13 +15,12 @@ import {
 	ProControlButton,
 	ResponsiveControl,
 	TypographyControlHelper,
+	DivBackground,
 } from '~stackable/components'
 import {
 	createResponsiveAttributeNames,
 	createTypographyAttributeNames,
-	createVideoBackground,
 	descriptionPlaceholder,
-	hasBackgroundOverlay,
 	range,
 } from '~stackable/util'
 import {
@@ -421,11 +420,16 @@ const edit = props => {
 						`ugb-number-box__item${ i }`,
 					], applyFilters( 'stackable.number-box.boxclasses', {
 						[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-						'ugb--has-background-overlay': hasBackgroundOverlay( 'column%s', props.attributes ),
 					}, design, props ) )
 
 					return (
-						<div className={ boxClasses } key={ i }>
+						<DivBackground
+							className={ boxClasses }
+							backgroundAttrName="column%s"
+							blockProps={ props }
+							showBackground={ show.columnBackground }
+							key={ i }
+						>
 							{ showNumber && (
 								<RichText
 									tagName="div"
@@ -458,8 +462,7 @@ const edit = props => {
 									) }
 								</div>
 							) }
-							{ show.columnBackground && createVideoBackground( 'column%s', props ) }
-						</div>
+						</DivBackground>
 					)
 				} ) }
 			</Fragment>

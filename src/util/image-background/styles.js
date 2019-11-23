@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { camelCase } from 'lodash'
-import { appendImportant } from '~stackable/util'
+import { appendImportant, __getValue } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -11,10 +11,7 @@ import { sprintf } from '@wordpress/i18n'
 
 const createImageBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
-	const getValue = ( attrName = '', format = '', defaultValue = undefined ) => {
-		const value = typeof blockAttributes[ getAttrName( attrName ) ] === 'undefined' ? '' : blockAttributes[ getAttrName( attrName ) ]
-		return value !== '' ? ( format ? sprintf( format, value ) : value ) : defaultValue
-	}
+	const getValue = __getValue( blockAttributes, getAttrName )
 
 	if ( screen !== 'tablet' && screen !== 'mobile' ) { // Desktop.
 		return {

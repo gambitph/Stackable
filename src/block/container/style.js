@@ -5,6 +5,7 @@ import {
 	appendImportant,
 	createBackgroundStyleSet,
 	whiteIfDarkBlackIfLight,
+	__getValue,
 } from '~stackable/util'
 import deepmerge from 'deepmerge'
 
@@ -13,16 +14,8 @@ import deepmerge from 'deepmerge'
  */
 import { showOptions } from './util'
 
-/**
- * WordPress dependencies
- */
-import { sprintf } from '@wordpress/i18n'
-
 export const createStyles = props => {
-	const getValue = ( attrName, format = '', defaultValue = undefined ) => {
-		const value = typeof props.attributes[ attrName ] === 'undefined' ? '' : props.attributes[ attrName ]
-		return value !== '' ? ( format ? sprintf( format, value ) : value ) : defaultValue
-	}
+	const getValue = __getValue( props.attributes )
 
 	const styles = []
 
@@ -137,16 +130,16 @@ export const createStyles = props => {
 	const isSmallWidth = getValue( 'contentWidth' ) ? parseInt( getValue( 'contentWidth' ), 10 ) <= 50 : false
 	styles.push( {
 		[ `.${ uniqueClass }-content-wrapper.ugb-container__content-wrapper` ]: {
-			width: appendImportant( getValue( 'contentWidth', '%s%%' ) ),
+			width: appendImportant( getValue( 'contentWidth', '%s%' ) ),
 		},
 		tablet: {
 			[ `.${ uniqueClass }-content-wrapper.ugb-container__content-wrapper` ]: {
-				width: appendImportant( getValue( 'contentTabletWidth', '%s%%', isSmallWidth ? '70%' : undefined ) ),
+				width: appendImportant( getValue( 'contentTabletWidth', '%s%', isSmallWidth ? '70%' : undefined ) ),
 			},
 		},
 		mobile: {
 			[ `.${ uniqueClass }-content-wrapper.ugb-container__content-wrapper` ]: {
-				width: appendImportant( getValue( 'contentMobileWidth', '%s%%', getValue( 'contentTabletWidth', '%s%%', isSmallWidth ? '70%' : undefined ) ) ),
+				width: appendImportant( getValue( 'contentMobileWidth', '%s%', getValue( 'contentTabletWidth', '%s%', isSmallWidth ? '70%' : undefined ) ) ),
 			},
 		},
 	} )

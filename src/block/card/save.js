@@ -1,8 +1,9 @@
 /**
  * External dependencies
  */
-import { BlockContainer, ButtonEditHelper } from '~stackable/components'
-import { createVideoBackground, hasBackgroundOverlay } from '~stackable/util'
+import {
+	BlockContainer, ButtonEditHelper, DivBackground,
+} from '~stackable/components'
 import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
 import classnames from 'classnames'
 import { range } from 'lodash'
@@ -61,7 +62,6 @@ const save = props => {
 						'ugb-card__item',
 						`ugb-card__item${ i }`,
 					], applyFilters( 'stackable.card.itemclasses', {
-						'ugb--has-background-overlay': show.columnBackground && hasBackgroundOverlay( 'column%s', props.attributes ),
 						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
 					}, props ) )
 
@@ -72,11 +72,13 @@ const save = props => {
 					}, props ) )
 
 					return (
-						<div
+						<DivBackground
 							className={ itemClasses }
+							backgroundAttrName="column%s"
+							blockProps={ props }
+							showBackground={ show.columnBackground }
 							key={ i }
 						>
-							{ show.columnBackground && createVideoBackground( 'column%s', props ) }
 							{ showImage && imageUrl &&
 								<div className={ imageClasses } />
 							}
@@ -114,7 +116,7 @@ const save = props => {
 									/>
 								}
 							</div>
-						</div>
+						</DivBackground>
 					)
 				} ) }
 			</Fragment>

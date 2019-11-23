@@ -9,9 +9,8 @@ import SVGArrowIcon from './images/arrow.svg'
  * External dependencies
  */
 import classnames from 'classnames'
-import { BlockContainer } from '~stackable/components'
+import { BlockContainer, DivBackground } from '~stackable/components'
 import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
-import { createVideoBackground, hasBackgroundOverlay } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -47,27 +46,31 @@ const save = props => {
 
 	const itemClasses = classnames( [
 		'ugb-accordion__item',
-	], applyFilters( 'stackable.accordion.itemclasses', {
-		'ugb--has-background-overlay': show.containerBackground && hasBackgroundOverlay( 'container%s', props.attributes ),
-	}, props ) )
+	], applyFilters( 'stackable.accordion.itemclasses', {}, props ) )
 
 	const headingClasses = classnames( [
 		'ugb-accordion__heading',
 	], applyFilters( 'stackable.accordion.headingclasses', {
 		[ `ugb--shadow-${ shadow }` ]: show.headerBackground && shadow !== 3,
-		'ugb--has-background-overlay': show.headerBackground && hasBackgroundOverlay( 'container%s', props.attributes ),
 	}, design, props ) )
 
 	return (
 		<BlockContainer.Save className={ mainClasses } blockProps={ props } aria-expanded={ openStart ? 'true' : 'false' } render={ () => (
 			<Fragment>
-				<div className={ itemClasses }>
-					{ show.containerBackground && createVideoBackground( 'container%s', props ) }
-					<div className={ headingClasses }
+				<DivBackground
+					className={ itemClasses }
+					backgroundAttrName="container%s"
+					blockProps={ props }
+					showBackground={ show.containerBackground }
+				>
+					<DivBackground
+						className={ headingClasses }
+						backgroundAttrName="container%s"
+						blockProps={ props }
+						showBackground={ show.headerBackground }
 						role="button"
 						tabIndex="0"
 					>
-						{ show.headerBackground && createVideoBackground( 'container%s', props ) }
 						<RichText.Content
 							tagName={ titleTag || 'h4' }
 							className="ugb-accordion__title"
@@ -78,13 +81,13 @@ const save = props => {
 						{ showArrow &&
 							<SVGArrowIcon className="ugb-accordion__arrow" width="20" height="20" />
 						}
-					</div>
+					</DivBackground>
 					<div className="ugb-accordion__content" role="region">
 						<div className="ugb-accordion__content-inner">
 							<InnerBlocks.Content />
 						</div>
 					</div>
-				</div>
+				</DivBackground>
 			</Fragment>
 		) } />
 	)

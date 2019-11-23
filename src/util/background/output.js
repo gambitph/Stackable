@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { urlIsVideo } from '~stackable/util'
+import { urlIsVideo, __getValue } from '~stackable/util'
 import { camelCase } from 'lodash'
 import classnames from 'classnames'
 
@@ -13,10 +13,7 @@ import { sprintf } from '@wordpress/i18n'
 
 export const createVideoBackground = ( attrNameTemplate, blockProps ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
-	const getValue = ( attrName = '', defaultValue = '' ) => {
-		const value = typeof blockProps.attributes[ getAttrName( attrName ) ] === 'undefined' ? '' : blockProps.attributes[ getAttrName( attrName ) ]
-		return value !== '' ? value : defaultValue
-	}
+	const getValue = __getValue( blockProps.attributes, getAttrName, '' )
 
 	const mediaUrl = getValue( 'BackgroundMediaUrl' )
 	const tabletMediaUrl = getValue( 'TabletBackgroundMediaUrl' )

@@ -18,14 +18,13 @@ import {
 	ProControlButton,
 	ResponsiveControl,
 	TypographyControlHelper,
+	DivBackground,
 } from '~stackable/components'
 import {
 	createButtonAttributeNames,
 	createResponsiveAttributeNames,
 	createTypographyAttributeNames,
-	createVideoBackground,
 	descriptionPlaceholder,
-	hasBackgroundOverlay,
 } from '~stackable/util'
 import {
 	withBlockStyles,
@@ -416,7 +415,6 @@ const edit = props => {
 	], applyFilters( 'stackable.header.boxclasses', {
 		'ugb--full-height': fullHeight,
 		[ `ugb--shadow-${ shadow }` ]: show.columnBackground,
-		'ugb--has-background-overlay': hasBackgroundOverlay( 'column%s', props.attributes ),
 	}, props ) )
 
 	return (
@@ -459,8 +457,12 @@ const edit = props => {
 					}
 
 					return (
-						<div className={ itemClasses }>
-							{ show.columnBackground && createVideoBackground( 'column%s', props ) }
+						<DivBackground
+							className={ itemClasses }
+							backgroundAttrName="column%s"
+							blockProps={ props }
+							showBackground={ show.columnBackground }
+						>
 							<div className="ugb-content-wrapper">
 								{ applyFilters( 'stackable.header.edit.output', (
 									<Fragment>
@@ -475,7 +477,7 @@ const edit = props => {
 									</Fragment>
 								), design, props, comps ) }
 							</div>
-						</div>
+						</DivBackground>
 					)
 				} )() }
 			</Fragment>

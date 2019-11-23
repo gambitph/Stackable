@@ -7,6 +7,7 @@ import {
 	WhenResponsiveScreen,
 	BackgroundControlsHelper,
 	ControlSeparator,
+	DivBackground,
 } from '~stackable/components'
 import {
 	withBlockStyles,
@@ -15,7 +16,6 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 } from '~stackable/higher-order'
-import { hasBackgroundOverlay } from '~stackable/util'
 import classnames from 'classnames'
 
 /**
@@ -106,10 +106,15 @@ addFilter( 'stackable.spacer.edit.inspector.style.before', 'stackable/spacer', (
 const edit = props => {
 	const mainClasses = classnames( [
 		props.className,
-	], {
-		'ugb--has-background-overlay': hasBackgroundOverlay( '%s', props.attributes ),
-	} )
-	return <BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ null } />
+		'ugb-spacer--v2',
+	] )
+	return <BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
+		<DivBackground
+			className="ugb-spacer--inner"
+			backgroundAttrName="%s"
+			blockProps={ props }
+		/>
+	) } />
 }
 
 export default compose(

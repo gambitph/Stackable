@@ -1,9 +1,8 @@
 /**
  * External dependencies
  */
-import { createVideoBackground, hasBackgroundOverlay } from '~stackable/util'
 import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
-import { BlockContainer } from '~stackable/components'
+import { BlockContainer, DivBackground } from '~stackable/components'
 
 /**
  * Internal dependencies
@@ -58,12 +57,16 @@ const save = props => {
 						`ugb-number-box__item${ i }`,
 					], applyFilters( 'stackable.number-box.boxclasses', {
 						[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
-						'ugb--has-background-overlay': hasBackgroundOverlay( 'column%s', props.attributes ),
 					}, design, props ) )
 
 					return (
-						<div className={ boxClasses } key={ i }>
-							{ show.columnBackground && createVideoBackground( 'column%s', props ) }
+						<DivBackground
+							className={ boxClasses }
+							backgroundAttrName="column%s"
+							blockProps={ props }
+							showBackground={ show.columnBackground }
+							key={ i }
+						>
 							{ showNumber && ! RichText.isEmpty( num ) && (
 								<RichText.Content
 									tagName="span"
@@ -89,7 +92,7 @@ const save = props => {
 									) }
 								</div>
 							}
-						</div>
+						</DivBackground>
 					)
 				} ) }
 			</Fragment>

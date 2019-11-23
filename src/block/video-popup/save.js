@@ -1,9 +1,9 @@
 /**
  * External dependencies
  */
-import { createVideoBackground, hasBackgroundOverlay } from '~stackable/util'
+import { hasBackgroundOverlay } from '~stackable/util'
 import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
-import { BlockContainer } from '~stackable/components'
+import { BlockContainer, DivBackground } from '~stackable/components'
 
 /**
  * Internal dependencies
@@ -38,7 +38,6 @@ const save = props => {
 		'ugb-video-popup__wrapper',
 		`ugb--shadow-${ shadow }`,
 	], applyFilters( 'stackable.video-popup.boxclasses', {
-		'ugb--has-background-overlay': hasBackgroundOverlay( 'preview%s', props.attributes ),
 		// TODO: generate this as styles instead of using class. Also remove from style.scss
 		[ `ugb--background-opacity-${ previewBackgroundTintStrength }` ]: hasBackgroundOverlay( 'preview%s', props.attributes ),
 	}, props ) )
@@ -46,14 +45,18 @@ const save = props => {
 	return (
 		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				<div className={ boxClasses } data-video={ videoID }>
+				<DivBackground
+					className={ boxClasses }
+					backgroundAttrName="preview%s"
+					blockProps={ props }
+					data-video={ videoID }
+				>
 					{ /* eslint-disable-next-line */ }
 					<a href="#" className="ugb-video-popup__overlay" />
 					<span className="ugb-video-popup__play-button">
 						{ getPlayButton( playButtonType ) }
 					</span>
-					{ createVideoBackground( 'preview%s', props ) }
-				</div>
+				</DivBackground>
 			</Fragment>
 		) } />
 	)

@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { WhenResponsiveScreen } from '~stackable/components'
+import { __getValue } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -14,10 +15,7 @@ import { sprintf } from '@wordpress/i18n'
 
 const ResponsiveControl = props => {
 	const getAttrName = ( attrName = '' ) => camelCase( sprintf( props.attrNameTemplate, attrName ) )
-	const getValue = ( attrName = '', defaultValue = '' ) => {
-		const value = typeof props.blockAttributes[ getAttrName( attrName ) ] === 'undefined' ? '' : props.blockAttributes[ getAttrName( attrName ) ]
-		return value !== '' ? value : defaultValue
-	}
+	const getValue = __getValue( props.blockAttributes, getAttrName, '' )
 
 	return (
 		<Fragment>

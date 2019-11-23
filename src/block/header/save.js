@@ -1,9 +1,10 @@
 /**
  * External dependencies
  */
-import { BlockContainer, ButtonEditHelper } from '~stackable/components'
+import {
+	BlockContainer, ButtonEditHelper, DivBackground,
+} from '~stackable/components'
 import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
-import { createVideoBackground, hasBackgroundOverlay } from '~stackable/util'
 import classnames from 'classnames'
 
 /**
@@ -55,7 +56,6 @@ const save = props => {
 	], applyFilters( 'stackable.header.boxclasses', {
 		'ugb--full-height': fullHeight,
 		[ `ugb--shadow-${ shadow }` ]: show.columnBackground,
-		'ugb--has-background-overlay': hasBackgroundOverlay( 'column%s', props.attributes ),
 	}, props ) )
 
 	const titleComp = showTitle && ! RichText.isEmpty( title ) &&
@@ -93,8 +93,12 @@ const save = props => {
 	return (
 		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				<div className={ itemClasses }>
-					{ show.columnBackground && createVideoBackground( 'column%s', props ) }
+				<DivBackground
+					className={ itemClasses }
+					backgroundAttrName="column%s"
+					blockProps={ props }
+					showBackground={ show.columnBackground }
+				>
 					<div className="ugb-content-wrapper">
 						{ applyFilters( 'stackable.header.save.output', (
 							<Fragment>
@@ -109,7 +113,7 @@ const save = props => {
 							</Fragment>
 						), design, props, comps ) }
 					</div>
-				</div>
+				</DivBackground>
 			</Fragment>
 		) } />
 	)

@@ -106,10 +106,7 @@ export const appendImportant = ( rule, doImportant = true ) => {
  * @return {Array} Reponsive object styles.
  */
 export const createResponsiveStyles = ( selector, attrNameTemplate = '%s', styleRule = 'marginBottom', format = '%spx', attributes = {}, important = false ) => {
-	const getValue = ( attrName, format = '' ) => {
-		const value = typeof attributes[ attrName ] === 'undefined' ? '' : attributes[ attrName ]
-		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
-	}
+	const getValue = __getValue( attributes )
 
 	return [ {
 		[ selector ]: {
@@ -126,4 +123,19 @@ export const createResponsiveStyles = ( selector, attrNameTemplate = '%s', style
 			},
 		},
 	} ]
+}
+
+/**
+ * Creates a getValue function that's used for getting attributes for style generation.
+ *
+ * @param {Object} attributes Block attribbutes
+ * @param {Function} attrNameCallback Optional function where the attrName will be run through for formatting
+ * @param {Object} defaultValue_ Value to return if the attribute value is blank. Defaults to undefined.
+ *
+ * @return {Function} getValue function
+ */
+export const __getValue = ( attributes, attrNameCallback = null, defaultValue_ = undefined ) => ( attrName, format = '', defaultValue = defaultValue_ ) => {
+	const attrNameFunc = attrNameCallback !== null ? attrNameCallback : ( s => s )
+	const value = typeof attributes[ attrNameFunc( attrName ) ] === 'undefined' ? '' : attributes[ attrNameFunc( attrName ) ]
+	return value !== '' ? ( format ? sprintf( format.replace( /%$/, '%%' ), value ) : value ) : defaultValue
 }

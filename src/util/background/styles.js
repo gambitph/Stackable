@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { camelCase } from 'lodash'
+import { __getValue } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -15,10 +16,7 @@ import { appendImportant, hexToRgba } from '..'
 
 const createBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {}, options = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
-	const getValue = ( attrName = '', format = '' ) => {
-		const value = typeof blockAttributes[ getAttrName( attrName ) ] === 'undefined' ? '' : blockAttributes[ getAttrName( attrName ) ]
-		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
-	}
+	const getValue = __getValue( blockAttributes, getAttrName )
 
 	const {
 		importantBackgroundColor = false,
@@ -72,10 +70,7 @@ const createBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 
 export const createBackgroundOverlayStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {}, options = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
-	const getValue = ( attrName = '', format = '' ) => {
-		const value = typeof blockAttributes[ getAttrName( attrName ) ] === 'undefined' ? '' : blockAttributes[ getAttrName( attrName ) ]
-		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
-	}
+	const getValue = __getValue( blockAttributes, getAttrName )
 
 	const {
 		importantBackgroundColor = false,
@@ -95,9 +90,9 @@ export const createBackgroundOverlayStyles = ( attrNameTemplate = '%s', screen =
 	if ( screen !== 'tablet' && screen !== 'mobile' ) { // Desktop.
 		return {
 			backgroundColor: appendImportant( ! isGradient && getValue( 'BackgroundColor' ) ? getValue( 'BackgroundColor' ) : undefined, importantBackgroundColor ),
-			backgroundImage: isGradient ?
-				`linear-gradient(${ getValue( 'BackgroundGradientDirection' ) || 0 }deg, ${ getValue( 'BackgroundColor' ) || defaultColor1 } ${ color1Location }, ${ getValue( 'BackgroundColor2' ) || defaultColor2 } ${ color2Location })` :
-				undefined,
+			backgroundImage: appendImportant( isGradient ?
+				`linear-gradient(${ getValue( 'BackgroundGradientDirection', '%sdeg', '90deg' ) }, ${ getValue( 'BackgroundColor' ) || defaultColor1 } ${ color1Location }, ${ getValue( 'BackgroundColor2' ) || defaultColor2 } ${ color2Location })` :
+				undefined, importantBackgroundColor ),
 			opacity: getValue( 'BackgroundMediaURL' ) ? opacity : undefined,
 			mixBlendMode: isGradient ? getValue( 'BackgroundGradientBlendMode' ) : undefined,
 		}
@@ -115,10 +110,7 @@ export const createBackgroundOverlayStyles = ( attrNameTemplate = '%s', screen =
 
 export const hasBackgroundOverlay = ( attrNameTemplate = '%s', blockAttributes = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
-	const getValue = ( attrName = '', format = '' ) => {
-		const value = typeof blockAttributes[ getAttrName( attrName ) ] === 'undefined' ? '' : blockAttributes[ getAttrName( attrName ) ]
-		return value !== '' ? ( format ? sprintf( format, value ) : value ) : undefined
-	}
+	const getValue = __getValue( blockAttributes, getAttrName )
 
 	return getValue( 'BackgroundColorType' ) === 'gradient' ||
 		getValue( 'BackgroundMediaUrl' ) ||
