@@ -139,6 +139,10 @@ export const schema = {
 		type: 'string',
 		default: '',
 	},
+	...createResponsiveAttributes( 'description%sAlign', {
+		type: 'string',
+		default: '',
+	} ),
 
 	// Button.
 	showButton: {
