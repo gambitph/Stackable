@@ -9,6 +9,7 @@ import {
 	whiteIfDarkBlackIfLight,
 	createButtonStyleSet,
 	createResponsiveStyles,
+	appendImportant,
 } from '~stackable/util'
 import deepmerge from 'deepmerge'
 
@@ -109,8 +110,8 @@ export const createStyles = props => {
 		const color = whiteIfDarkBlackIfLight( iconColor, show.columnBackground && columnBackgroundColor )
 		styles.push( {
 			'.ugb-notification__icon': {
-				marginLeft: iconAlign !== '' || contentAlign !== '' ? `${ marginLeftAlign( iconAlign || contentAlign ) } !important` : undefined,
-				marginRight: iconAlign !== '' || contentAlign !== '' ? `${ marginRightAlign( iconAlign || contentAlign ) } !important` : undefined,
+				marginLeft: iconAlign !== '' || contentAlign !== '' ? appendImportant( marginLeftAlign( iconAlign || contentAlign ) ) : undefined,
+				marginRight: iconAlign !== '' || contentAlign !== '' ? appendImportant( marginRightAlign( iconAlign || contentAlign ) ) : undefined,
 				color: color ? `${ color } !important` : undefined,
 				height: getValue( 'iconSize', '%spx !important' ),
 				width: getValue( 'iconSize', '%spx !important' ),
