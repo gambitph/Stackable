@@ -31,6 +31,7 @@ const save = props => {
 		design = 'basic',
 		shadow = 3,
 		nameTag = 'h4',
+		imageShadow = '',
 		imageShape = 'circle',
 		imageShapeStretch = false,
 		imageWidth = '',
@@ -97,6 +98,7 @@ const save = props => {
 											src={ imageUrl }
 											width={ imageWidth }
 											alt={ imageAlt || ( showName && name ) }
+											shadow={ imageShadow }
 											shape={ attributes[ `image${ i }Shape` ] || imageShape }
 											shapeStretch={ attributes[ `image${ i }ShapeStretch` ] || imageShapeStretch }
 										/>

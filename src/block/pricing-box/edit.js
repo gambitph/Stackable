@@ -535,6 +535,7 @@ const edit = props => {
 	const {
 		columns = 3,
 		imageSize,
+		imageShadow = '',
 		imageShape = '',
 		imageShapeStretch = false,
 		imageWidth = '',
@@ -616,6 +617,7 @@ const edit = props => {
 										imageId={ imageId }
 										src={ imageUrl }
 										size={ imageSize }
+										shadow={ imageShadow }
 										shape={ attributes[ `image${ i }Shape` ] || imageShape }
 										shapeStretch={ attributes[ `image${ i }ShapeStretch` ] || imageShapeStretch }
 										alt={ imageAlt }
