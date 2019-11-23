@@ -1,9 +1,8 @@
 /**
  * External dependencies
  */
-import {
-	ImageBackgroundControls,
-} from '~stackable/components'
+import { ImageBackgroundControls } from '~stackable/components'
+import { __getValue } from '~stackable/util'
 import { camelCase } from 'lodash'
 
 /**
@@ -14,15 +13,12 @@ import { sprintf } from '@wordpress/i18n'
 const ImageBackgroundControlsHelper = props => {
 	const { setAttributes } = props
 	const getAttrName = attrName => camelCase( sprintf( props.attrNameTemplate, attrName ) )
-	const getAttrValue = attrName => {
-		const value = props.blockAttributes[ getAttrName( attrName ) ]
-		return value === 0 ? value : ( value || '' )
-	}
+	const getValue = __getValue( props.blockAttributes, getAttrName, '' )
 
 	return (
 		<ImageBackgroundControls
-			id={ getAttrValue( 'Id' ) }
-			url={ getAttrValue( 'Url' ) }
+			id={ getValue( 'Id' ) }
+			url={ getValue( 'Url' ) }
 			onChangeImage={ ( {
 				url,
 				id,
@@ -33,7 +29,7 @@ const ImageBackgroundControlsHelper = props => {
 				} )
 			} }
 
-			size={ getAttrValue( 'Size' ) }
+			size={ getValue( 'Size' ) }
 			onChangeSize={ ( size, url ) => {
 				setAttributes( {
 					[ getAttrName( 'Size' ) ]: size,
@@ -41,16 +37,16 @@ const ImageBackgroundControlsHelper = props => {
 				} )
 			} }
 
-			backgroundPosition={ getAttrValue( 'BackgroundPosition' ) }
+			backgroundPosition={ getValue( 'BackgroundPosition' ) }
 			onChangeBackgroundPosition={ value => setAttributes( { [ getAttrName( 'BackgroundPosition' ) ]: value } ) }
-			backgroundRepeat={ getAttrValue( 'BackgroundRepeat' ) }
+			backgroundRepeat={ getValue( 'BackgroundRepeat' ) }
 			onChangeBackgroundRepeat={ value => setAttributes( { [ getAttrName( 'BackgroundRepeat' ) ]: value } ) }
-			backgroundSize={ getAttrValue( 'BackgroundSize' ) }
+			backgroundSize={ getValue( 'BackgroundSize' ) }
 			onChangeBackgroundSize={ value => setAttributes( { [ getAttrName( 'BackgroundSize' ) ]: value } ) }
 
-			backgroundCustomSize={ getAttrValue( 'BackgroundCustomSize' ) }
+			backgroundCustomSize={ getValue( 'BackgroundCustomSize' ) }
 			onChangeBackgroundCustomSize={ value => setAttributes( { [ getAttrName( 'BackgroundCustomSize' ) ]: value } ) }
-			backgroundCustomSizeUnit={ getAttrValue( 'BackgroundCustomSizeUnit' ) || 'px' }
+			backgroundCustomSizeUnit={ getValue( 'BackgroundCustomSizeUnit' ) || 'px' }
 			onChangeBackgroundCustomSizeUnit={ value => setAttributes( { [ getAttrName( 'BackgroundCustomSizeUnit' ) ]: value } ) }
 
 			{ ...props }

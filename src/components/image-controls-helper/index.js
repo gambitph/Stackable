@@ -1,9 +1,8 @@
 /**
  * External dependencies
  */
-import {
-	ImageControls,
-} from '~stackable/components'
+import { ImageControls } from '~stackable/components'
+import { __getValue } from '~stackable/util'
 import { camelCase } from 'lodash'
 
 /**
@@ -14,15 +13,12 @@ import { sprintf } from '@wordpress/i18n'
 const ImageControlsHelper = props => {
 	const { setAttributes } = props
 	const getAttrName = attrName => camelCase( sprintf( props.attrNameTemplate, attrName ) )
-	const getAttrValue = attrName => {
-		const value = props.blockAttributes[ getAttrName( attrName ) ]
-		return value === 0 ? value : ( value || '' )
-	}
+	const getValue = __getValue( props.blockAttributes, getAttrName, '' )
 
 	return (
 		<ImageControls
-			id={ getAttrValue( 'Id' ) }
-			url={ getAttrValue( 'Url' ) }
+			id={ getValue( 'Id' ) }
+			url={ getValue( 'Url' ) }
 			onChangeImage={ ( {
 				url,
 				id,
@@ -37,10 +33,10 @@ const ImageControlsHelper = props => {
 				} )
 			} }
 
-			alt={ getAttrValue( 'Alt' ) }
+			alt={ getValue( 'Alt' ) }
 			onChangeAlt={ value => setAttributes( { [ getAttrName( 'Alt' ) ]: value } ) }
 
-			size={ getAttrValue( 'Size' ) }
+			size={ getValue( 'Size' ) }
 			onChangeSize={ ( size, url, width, height ) => {
 				setAttributes( {
 					[ getAttrName( 'Size' ) ]: size,
@@ -50,21 +46,21 @@ const ImageControlsHelper = props => {
 				} )
 			} }
 
-			shape={ getAttrValue( 'Shape' ) }
+			shape={ getValue( 'Shape' ) }
 			onChangeShape={ value => setAttributes( { [ getAttrName( 'Shape' ) ]: value } ) }
-			shapeFlipX={ getAttrValue( 'ShapeFlipX' ) }
+			shapeFlipX={ getValue( 'ShapeFlipX' ) }
 			onChangeShapeFlipX={ value => setAttributes( { [ getAttrName( 'ShapeFlipX' ) ]: value } ) }
-			shapeFlipY={ getAttrValue( 'ShapeFlipY' ) }
+			shapeFlipY={ getValue( 'ShapeFlipY' ) }
 			onChangeShapeFlipY={ value => setAttributes( { [ getAttrName( 'ShapeFlipY' ) ]: value } ) }
-			shapeStretch={ getAttrValue( 'ShapeStretch' ) }
+			shapeStretch={ getValue( 'ShapeStretch' ) }
 			onChangeShapeStretch={ value => setAttributes( { [ getAttrName( 'ShapeStretch' ) ]: value } ) }
 
-			style={ getAttrValue( 'Style' ) }
+			style={ getValue( 'Style' ) }
 			onChangeStyle={ value => setAttributes( { [ getAttrName( 'Style' ) ]: value } ) }
 
-			width={ getAttrValue( 'Width' ) }
-			tabletWidth={ getAttrValue( 'TabletWidth' ) }
-			mobileWidth={ getAttrValue( 'MobileWidth' ) }
+			width={ getValue( 'Width' ) }
+			tabletWidth={ getValue( 'TabletWidth' ) }
+			mobileWidth={ getValue( 'MobileWidth' ) }
 			onChangeWidth={ ( width, height ) => {
 				setAttributes( {
 					[ getAttrName( 'Width' ) ]: width,
@@ -74,21 +70,21 @@ const ImageControlsHelper = props => {
 			onChangeTabletWidth={ value => setAttributes( { [ getAttrName( 'TabletWidth' ) ]: value } ) }
 			onChangeMobileWidth={ value => setAttributes( { [ getAttrName( 'MobileWidth' ) ]: value } ) }
 
-			square={ getAttrValue( 'Square' ) }
+			square={ getValue( 'Square' ) }
 			onChangeSquare={ value => setAttributes( { [ getAttrName( 'Square' ) ]: value } ) }
 
-			borderRadius={ getAttrValue( 'BorderRadius' ) }
+			borderRadius={ getValue( 'BorderRadius' ) }
 			onChangeBorderRadius={ value => setAttributes( { [ getAttrName( 'BorderRadius' ) ]: value } ) }
 
-			shadow={ getAttrValue( 'Shadow' ) }
+			shadow={ getValue( 'Shadow' ) }
 			onChangeShadow={ value => setAttributes( { [ getAttrName( 'Shadow' ) ]: value } ) }
 
-			blendMode={ getAttrValue( 'BlendMode' ) }
+			blendMode={ getValue( 'BlendMode' ) }
 			onChangeBlendMode={ value => setAttributes( { [ getAttrName( 'BlendMode' ) ]: value } ) }
 
-			// linkUrl={ getAttrValue( 'LinkUrl' ) }
-			// linkNewTab={ getAttrValue( 'LinkNewTab' ) }
-			// linkNoFollow={ getAttrValue( 'LinkNoFollow' ) }
+			// linkUrl={ getValue( 'LinkUrl' ) }
+			// linkNewTab={ getValue( 'LinkNewTab' ) }
+			// linkNoFollow={ getValue( 'LinkNoFollow' ) }
 			// onChangeLinkUrl={ value => setAttributes( { [ getAttrName( 'LinkUrl' ) ]: value } ) }
 			// onChangeLinkNewTab={ value => setAttributes( { [ getAttrName( 'LinkNewTab' ) ]: value } ) }
 			// onChangeLinkNoFollow={ value => setAttributes( { [ getAttrName( 'LinkNoFollow' ) ]: value } ) }

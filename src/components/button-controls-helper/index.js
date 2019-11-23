@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { ButtonControls } from '~stackable/components'
+import { __getValue } from '~stackable/util'
 import { camelCase } from 'lodash'
 
 /**
@@ -12,10 +13,7 @@ import { sprintf } from '@wordpress/i18n'
 const ButtonControlsHelper = props => {
 	const { setAttributes } = props
 	const getAttrName = attrName => camelCase( sprintf( props.attrNameTemplate, attrName ) )
-	const getAttrValue = attrName => {
-		const value = props.blockAttributes[ getAttrName( attrName ) ]
-		return value === 0 ? value : ( value || '' )
-	}
+	const getValue = __getValue( props.blockAttributes, getAttrName, '' )
 
 	return (
 		<ButtonControls
@@ -37,7 +35,7 @@ const ButtonControlsHelper = props => {
 			backgroundColorType={ props.blockAttributes[ getAttrName( 'BackgroundColorType' ) ] || '' }
 			backgroundColor={ props.blockAttributes[ getAttrName( 'BackgroundColor' ) ] || '' }
 			backgroundColor2={ props.blockAttributes[ getAttrName( 'BackgroundColor2' ) ] || '' }
-			backgroundGradientDirection={ getAttrValue( 'BackgroundGradientDirection' ) }
+			backgroundGradientDirection={ getValue( 'BackgroundGradientDirection' ) }
 			onChangeOpacity={ value => setAttributes( { [ getAttrName( 'Opacity' ) ]: value } ) }
 			onChangeTextColor={ value => setAttributes( { [ getAttrName( 'TextColor' ) ]: value } ) }
 			onChangeBackgroundColorType={ value => setAttributes( { [ getAttrName( 'BackgroundColorType' ) ]: value } ) }
@@ -58,7 +56,7 @@ const ButtonControlsHelper = props => {
 			hoverTextColor={ props.blockAttributes[ getAttrName( 'HoverTextColor' ) ] || '' }
 			hoverBackgroundColor={ props.blockAttributes[ getAttrName( 'HoverBackgroundColor' ) ] || '' }
 			hoverBackgroundColor2={ props.blockAttributes[ getAttrName( 'HoverBackgroundColor2' ) ] || '' }
-			hoverBackgroundGradientDirection={ getAttrValue( 'HoverBackgroundGradientDirection' ) }
+			hoverBackgroundGradientDirection={ getValue( 'HoverBackgroundGradientDirection' ) }
 			hoverGhostToNormal={ props.blockAttributes[ getAttrName( 'HoverGhostToNormal' ) ] || '' }
 			onChangeHoverEffect={ value => setAttributes( { [ getAttrName( 'HoverEffect' ) ]: value } ) }
 			onChangeHoverOpacity={ value => setAttributes( { [ getAttrName( 'HoverOpacity' ) ]: value } ) }
@@ -75,10 +73,10 @@ const ButtonControlsHelper = props => {
 			onChangeBorderWidth={ value => setAttributes( { [ getAttrName( 'BorderWidth' ) ]: value } ) }
 			onChangeShadow={ value => setAttributes( { [ getAttrName( 'Shadow' ) ]: value } ) }
 
-			paddingTop={ getAttrValue( 'PaddingTop' ) }
-			paddingRight={ getAttrValue( 'PaddingRight' ) }
-			paddingBottom={ getAttrValue( 'PaddingBottom' ) }
-			paddingLeft={ getAttrValue( 'PaddingLeft' ) }
+			paddingTop={ getValue( 'PaddingTop' ) }
+			paddingRight={ getValue( 'PaddingRight' ) }
+			paddingBottom={ getValue( 'PaddingBottom' ) }
+			paddingLeft={ getValue( 'PaddingLeft' ) }
 			onChangePaddings={ paddings => {
 				const values = {}
 				if ( typeof paddings.top !== 'undefined' ) {

@@ -134,8 +134,8 @@ const ImageControls = props => {
 								// }
 								const ratio = heightMax / widthMax
 								props.onChangeWidth(
-									width ? width : '',
-									width ? parseInt( ratio * width, 10 ) : ''
+									typeof width === 'number' ? width : '',
+									typeof width === 'number' ? parseInt( ratio * width, 10 ) : ''
 								)
 							} }
 							allowReset={ true }
@@ -162,7 +162,7 @@ const ImageControls = props => {
 				</Fragment>
 			}
 
-			{ props.onChangeSquare && props.width &&
+			{ props.onChangeSquare && ( typeof props.width === 'number' || props.width ) &&
 				<ToggleControl
 					label={ __( 'Force square image', i18n ) }
 					checked={ props.square }
