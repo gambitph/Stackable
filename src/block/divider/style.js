@@ -31,7 +31,7 @@ export const createStyles = props => {
 			'hr.ugb-divider__hr': {
 				backgroundColor: appendImportant( getValue( 'color' ) ),
 				height: appendImportant( getValue( 'height', '%spx' ) ),
-				width: appendImportant( getValue( 'width', '%s%%' ) ),
+				width: appendImportant( getValue( 'width', '%s%' ) ),
 
 				marginLeft: appendImportant( marginLeftAlign( contentAlign ) ),
 				marginRight: appendImportant( marginRightAlign( contentAlign ) ),
@@ -44,7 +44,7 @@ export const createStyles = props => {
 	if ( design === 'dots' || design === 'asterisks' ) {
 		styles.push( {
 			'.ugb-divider__dots': {
-				width: appendImportant( getValue( 'width', '%s%%' ) ),
+				width: appendImportant( getValue( 'width', '%s%' ) ),
 				marginLeft: appendImportant( marginLeftAlign( contentAlign ) ),
 				marginRight: appendImportant( marginRightAlign( contentAlign ) ),
 			},
