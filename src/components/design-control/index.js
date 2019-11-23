@@ -22,7 +22,7 @@ function DesignControl( props ) {
 	const fixedOptions = options.map( option => {
 		return {
 			...option,
-			label: <DesignPanelItem imageFile={ option.image } imageHoverFile={ option.hoverImage } isPro={ option.isPro } label={ option.label } />,
+			label: <DesignPanelItem imageFile={ option.image } imageHoverFile={ option.hoverImage } imageWidth={ option.imageWidth } imageHeight={ option.imageHeight } isPro={ option.isPro } label={ option.label } />,
 			title: option.label,
 			value: option.value,
 		}

@@ -4,7 +4,11 @@
 import { srcUrl } from 'stackable'
 
 function DesignPanelItem( {
-	imageFile, imageHoverFile, label,
+	imageFile,
+	imageHoverFile,
+	imageWidth = '',
+	imageHeight = '',
+	label,
 } ) {
 	const src = ! imageFile ? '' :
 	            imageFile.match( /https?:/i ) ? imageFile :
@@ -19,10 +23,10 @@ function DesignPanelItem( {
 	return (
 		<span className="ugb-design-panel-item">
 			{ srcHover &&
-				<img className="ugb-design-panel-item__hover-image" src={ srcHover } alt={ label } />
+				<img className="ugb-design-panel-item__hover-image" src={ srcHover } alt={ label } width={ imageWidth } height={ imageHeight } />
 			}
 			{ src &&
-				<img className="ugb-design-panel-item__image" src={ src } alt={ label } />
+				<img className="ugb-design-panel-item__image" src={ src } alt={ label } width={ imageWidth } height={ imageHeight } />
 			}
 			<span className="design-label">
 				{ label }

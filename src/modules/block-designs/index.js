@@ -29,6 +29,7 @@ const addDesignPanel = ( blockName, options ) => output => {
 			<DesignPanelBody
 				title={ __( 'Designs', i18n ) }
 				initialOpen={ true }
+				className="ugb-block-design-panel"
 				options={ Object.keys( designs ).map( value => {
 					const {
 						label,
@@ -38,6 +39,8 @@ const addDesignPanel = ( blockName, options ) => output => {
 						label,
 						value,
 						image,
+						imageHeight: 400,
+						imageWidth: 600,
 					}
 				} ) }
 				onChange={ design => {
