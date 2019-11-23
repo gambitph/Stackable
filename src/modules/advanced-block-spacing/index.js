@@ -533,6 +533,7 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 		},
 		[ `${ blockClass } .ugb-inner-block` ]: {
 			width: appendImportant( getValue( 'blockWidth', `%s${ blockWidthUnit }` ) ),
+			minWidth: appendImportant( getValue( 'blockWidth', `%s${ blockWidthUnit }` ) ),
 		},
 		tablet: {
 			[ blockClass ]: {
@@ -542,6 +543,7 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 			},
 			[ `${ blockClass } .ugb-inner-block` ]: {
 				width: appendImportant( getValue( 'tabletBlockWidth', `%s${ tabletBlockWidthUnit }` ) ),
+				minWidth: appendImportant( getValue( 'tabletBlockWidth', `%s${ tabletBlockWidthUnit }` ) ),
 			},
 		},
 		mobile: {
@@ -552,6 +554,7 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 			},
 			[ `${ blockClass } .ugb-inner-block` ]: {
 				width: appendImportant( getValue( 'mobileBlockWidth', `%s${ mobileBlockWidthUnit }` ) ),
+				minWidth: appendImportant( getValue( 'mobileBlockWidth', `%s${ mobileBlockWidthUnit }` ) ),
 			},
 		},
 	}
