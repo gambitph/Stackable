@@ -10,9 +10,12 @@ import {
 	PanelSpacingBody,
 	ResponsiveControl,
 	WhenResponsiveScreen,
+	DivBackground,
 } from '~stackable/components'
 import {
-	createVideoBackground, getVideoProviderFromURL, hasBackgroundOverlay, urlIsVideo,
+	getVideoProviderFromURL,
+	hasBackgroundOverlay,
+	urlIsVideo,
 } from '~stackable/util'
 
 /**
@@ -237,7 +240,6 @@ const edit = props => {
 		'ugb-video-popup__wrapper',
 		`ugb--shadow-${ shadow }`,
 	], applyFilters( 'stackable.video-popup.boxclasses', {
-		'ugb--has-background-overlay': hasBackgroundOverlay( 'preview%s', props.attributes ),
 		// TODO: generate this as styles instead of using class. Also remove from style.scss
 		[ `ugb--background-opacity-${ previewBackgroundTintStrength }` ]: hasBackgroundOverlay( 'preview%s', props.attributes ),
 	}, props ) )
@@ -245,12 +247,15 @@ const edit = props => {
 	return (
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				<div className={ boxClasses }>
+				<DivBackground
+					className={ boxClasses }
+					backgroundAttrName="preview%s"
+					blockProps={ props }
+				>
 					<span className="ugb-video-popup__play-button">
 						{ getPlayButton( playButtonType ) }
 					</span>
-					{ createVideoBackground( 'preview%s', props ) }
-				</div>
+				</DivBackground>
 			</Fragment>
 		) } />
 	)

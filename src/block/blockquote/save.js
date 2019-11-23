@@ -16,9 +16,8 @@ import { Fragment } from '@wordpress/element'
 /**
  * External dependencies
  */
-import { BlockContainer } from '~stackable/components'
+import { BlockContainer, DivBackground } from '~stackable/components'
 import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
-import { createVideoBackground, hasBackgroundOverlay } from '~stackable/util'
 import classnames from 'classnames'
 
 const save = props => {
@@ -48,13 +47,17 @@ const save = props => {
 		'ugb-blockquote__item',
 	], {
 		[ `ugb--shadow-${ shadow }` ]: show.containerBackground && shadow !== 3,
-		'ugb--has-background-overlay': show.containerBackground && hasBackgroundOverlay( 'container%s', props.attributes ),
 	} )
 
 	return (
 		<BlockContainer.Save blockTag={ blockTag || 'blockquote' } className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				<div className={ itemClasses }>
+				<DivBackground
+					className={ itemClasses }
+					backgroundAttrName="container%s"
+					blockProps={ props }
+					showBackground={ show.containerBackground }
+				>
 					{ showQuote && QUOTE_ICONS[ quoteIcon ].iconFunc( {}, {
 						className: 'ugb-blockquote__quote',
 						width: quoteSize,
@@ -67,8 +70,7 @@ const save = props => {
 							value={ text }
 						/>
 					</div>
-					{ show.containerBackground && createVideoBackground( 'container%s', props ) }
-				</div>
+				</DivBackground>
 			</Fragment>
 		) } />
 	)

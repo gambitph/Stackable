@@ -21,14 +21,13 @@ import {
 	PanelSpacingBody,
 	AdvancedRangeControl,
 	ButtonEditHelper,
+	DivBackground,
 } from '~stackable/components'
 import {
 	descriptionPlaceholder,
 	createTypographyAttributeNames,
 	createResponsiveAttributeNames,
 	createButtonAttributeNames,
-	createVideoBackground,
-	hasBackgroundOverlay,
 	cacheImageData,
 	getImageUrlFromCache,
 } from '~stackable/util'
@@ -418,13 +417,17 @@ const edit = props => {
 						'ugb-feature-grid__item',
 						`ugb-feature-grid__item${ i }`,
 					], applyFilters( 'stackable.feature-grid.itemclasses', {
-						'ugb--has-background-overlay': show.columnBackground && hasBackgroundOverlay( 'column%s', props.attributes ),
 						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
 					}, props, i ) )
 
 					return (
-						<div className={ itemClasses } key={ i }>
-							{ show.columnBackground && show[ `columnBackground${ i }` ] && createVideoBackground( 'column%s', props ) }
+						<DivBackground
+							className={ itemClasses }
+							backgroundAttrName="column%s"
+							blockProps={ props }
+							showBackground={ show.columnBackground && show[ `columnBackground${ i }` ] }
+							key={ i }
+						>
 							{ showImage &&
 								<div className="ugb-feature-grid__image">
 									<ImageUploadPlaceholder
@@ -500,7 +503,7 @@ const edit = props => {
 									/>
 								}
 							</div>
-						</div>
+						</DivBackground>
 					)
 				} ) }
 			</Fragment>

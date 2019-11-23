@@ -21,14 +21,13 @@ import {
 	ButtonEditHelper,
 	ImageBackgroundControlsHelper,
 	WhenResponsiveScreen,
+	DivBackground,
 } from '~stackable/components'
 import {
 	descriptionPlaceholder,
 	createTypographyAttributeNames,
 	createResponsiveAttributeNames,
 	createButtonAttributeNames,
-	createVideoBackground,
-	hasBackgroundOverlay,
 	cacheImageData,
 	getImageUrlFromCache,
 	createImageBackgroundAttributeNames,
@@ -510,7 +509,6 @@ const edit = props => {
 						'ugb-card__item',
 						`ugb-card__item${ i }`,
 					], applyFilters( 'stackable.card.itemclasses', {
-						'ugb--has-background-overlay': show.columnBackground && hasBackgroundOverlay( 'column%s', props.attributes ),
 						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
 					}, props ) )
 
@@ -521,11 +519,13 @@ const edit = props => {
 					}, props ) )
 
 					return (
-						<div
+						<DivBackground
 							className={ itemClasses }
+							backgroundAttrName="column%s"
+							blockProps={ props }
+							showBackground={ show.columnBackground }
 							key={ i }
 						>
-							{ show.columnBackground && createVideoBackground( 'column%s', props ) }
 							{ showImage &&
 								<ImageUploadPlaceholder
 									imageID={ imageId }
@@ -595,7 +595,7 @@ const edit = props => {
 									/>
 								}
 							</div>
-						</div>
+						</DivBackground>
 					)
 				} ) }
 			</Fragment>

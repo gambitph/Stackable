@@ -8,16 +8,13 @@ import { showOptions } from './util'
  * External dependencies
  */
 import {
-	hasBackgroundOverlay,
-	range,
-	createVideoBackground,
-} from '~stackable/util'
-import {
 	BlockContainer,
 	Image,
+	DivBackground,
 } from '~stackable/components'
 import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
 import classnames from 'classnames'
+import { range } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -68,7 +65,6 @@ const save = props => {
 						'ugb-testimonial__item',
 						`ugb-testimonial__item${ i }`,
 					], applyFilters( 'stackable.testimonial.itemclasses', {
-						'ugb--has-background-overlay': show.columnBackground && hasBackgroundOverlay( 'column%s', props.attributes ),
 						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
 					}, props, i ) )
 
@@ -77,8 +73,13 @@ const save = props => {
 					], applyFilters( 'stackable.testimonial.bodywrapperclasses', {}, props, i ) )
 
 					return (
-						<div className={ itemClasses } key={ i }>
-							{ show.columnBackground && createVideoBackground( 'column%s', props ) }
+						<DivBackground
+							className={ itemClasses }
+							backgroundAttrName="column%s"
+							blockProps={ props }
+							showBackground={ show.columnBackground }
+							key={ i }
+						>
 							<div className={ bodyWrapperClasses }>
 								{ showTestimonial &&
 									<RichText.Content
@@ -119,7 +120,7 @@ const save = props => {
 									/>
 								}
 							</div>
-						</div>
+						</DivBackground>
 					)
 				} ) }
 			</Fragment>

@@ -23,14 +23,13 @@ import {
 	Image,
 	ImageBackgroundControlsHelper,
 	ButtonEditHelper,
+	DivBackground,
 } from '~stackable/components'
 import {
 	descriptionPlaceholder,
 	createTypographyAttributeNames,
 	createResponsiveAttributeNames,
 	createButtonAttributeNames,
-	createVideoBackground,
-	hasBackgroundOverlay,
 	cacheImageData,
 } from '~stackable/util'
 import {
@@ -423,14 +422,12 @@ const edit = props => {
 		'ugb-feature__item',
 	], applyFilters( 'stackable.feature.itemclasses', {
 		[ `ugb--shadow-${ shadow }` ]: show.columnBackground && ( design === 'basic' || design === 'half' ) && shadow !== 3,
-		'ugb--has-background-overlay': show.columnBackground && design === 'basic' && hasBackgroundOverlay( 'column%s', props.attributes ),
 	}, props ) )
 
 	const contentClasses = classnames( [
 		'ugb-feature__content',
 	], applyFilters( 'stackable.feature.contentclasses', {
 		[ `ugb--shadow-${ shadow }` ]: show.columnBackground && design !== 'basic' && design !== 'half' && shadow !== 3,
-		'ugb--has-background-overlay': show.columnBackground && design !== 'basic' && hasBackgroundOverlay( 'column%s', props.attributes ),
 	}, props ) )
 
 	const imageClasses = classnames( [
@@ -443,10 +440,18 @@ const edit = props => {
 	return (
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				<div className={ itemClasses }>
-					{ show.columnBackground && design === 'basic' && createVideoBackground( 'column%s', props ) }
-					<div className={ contentClasses }>
-						{ show.columnBackground && design !== 'basic' && createVideoBackground( 'column%s', props ) }
+				<DivBackground
+					className={ itemClasses }
+					backgroundAttrName="column%s"
+					blockProps={ props }
+					showBackground={ show.columnBackground && design === 'basic' }
+				>
+					<DivBackground
+						className={ contentClasses }
+						backgroundAttrName="column%s"
+						blockProps={ props }
+						showBackground={ show.columnBackground && design !== 'basic' }
+					>
 						{ showTitle &&
 							<RichText
 								tagName={ titleTag || 'h2' }
@@ -474,7 +479,7 @@ const edit = props => {
 								blockAttributes={ props.attributes }
 							/>
 						}
-					</div>
+					</DivBackground>
 					{ ! show.featuredImageAsBackground &&
 						<div className="ugb-feature__image-side">
 							<ImageUploadPlaceholder
@@ -542,7 +547,7 @@ const edit = props => {
 							} }
 						/>
 					}
-				</div>
+				</DivBackground>
 			</Fragment>
 		) } />
 	)

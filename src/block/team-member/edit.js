@@ -22,14 +22,13 @@ import {
 	SocialControlsHelper,
 	Image,
 	SocialButtonEditHelper,
+	DivBackground,
 } from '~stackable/components'
 import {
 	descriptionPlaceholder,
 	createTypographyAttributeNames,
 	createResponsiveAttributeNames,
 	createButtonAttributeNames,
-	createVideoBackground,
-	hasBackgroundOverlay,
 	cacheImageData,
 	getImageUrlFromCache,
 	SOCIAL_SITES,
@@ -549,13 +548,17 @@ const edit = props => {
 						'ugb-team-member__item',
 						`ugb-team-member__item${ i }`,
 					], applyFilters( 'stackable.team-member.itemclasses', {
-						'ugb--has-background-overlay': show.columnBackground && hasBackgroundOverlay( 'column%s', props.attributes ),
 						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
 					}, props ) )
 
 					return (
-						<div className={ itemClasses } key={ i }>
-							{ show.columnBackground && createVideoBackground( 'column%s', props ) }
+						<DivBackground
+							className={ itemClasses }
+							backgroundAttrName="column%s"
+							blockProps={ props }
+							showBackground={ show.columnBackground }
+							key={ i }
+						>
 							{ showImage && ! show.imageAsBackground &&
 								<div className="ugb-team-member__image">
 									<ImageUploadPlaceholder
@@ -669,7 +672,7 @@ const edit = props => {
 									</div>
 								}
 							</div>
-						</div>
+						</DivBackground>
 					)
 				} ) }
 			</Fragment>

@@ -30,9 +30,13 @@ import {
 	FourRangeControl,
 	SvgIconPlaceholder,
 	ButtonEditHelper,
+	DivBackground,
 } from '~stackable/components'
 import {
-	descriptionPlaceholder, createTypographyAttributeNames, createResponsiveAttributeNames, createButtonAttributeNames, createVideoBackground, hasBackgroundOverlay,
+	descriptionPlaceholder,
+	createTypographyAttributeNames,
+	createResponsiveAttributeNames,
+	createButtonAttributeNames,
 } from '~stackable/util'
 import { i18n, showProNotice } from 'stackable'
 import {
@@ -510,7 +514,6 @@ const edit = props => {
 		'ugb-notification__item',
 	], {
 		[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
-		'ugb--has-background-overlay': hasBackgroundOverlay( 'column%s', props.attributes ),
 	} )
 
 	const show = showOptions( props )
@@ -518,8 +521,12 @@ const edit = props => {
 	return (
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				<div className={ itemClasses }>
-					{ show.columnBackground && createVideoBackground( 'column%s', props ) }
+				<DivBackground
+					className={ itemClasses }
+					backgroundAttrName="column%s"
+					blockProps={ props }
+					showBackground={ show.columnBackground }
+				>
 					{ dismissible && (
 						<span
 							className="ugb-notification__close-button"
@@ -565,7 +572,7 @@ const edit = props => {
 							} }
 						/>
 					}
-				</div>
+				</DivBackground>
 			</Fragment>
 		) } />
 	)

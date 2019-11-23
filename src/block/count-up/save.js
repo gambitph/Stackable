@@ -1,11 +1,11 @@
 /**
  * External dependencies
  */
-import { BlockContainer, SvgIcon } from '~stackable/components'
 import {
-	createVideoBackground, hasBackgroundOverlay, range,
-} from '~stackable/util'
+	BlockContainer, SvgIcon, DivBackground,
+} from '~stackable/components'
 import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+import { range } from 'lodash'
 
 /**
  * Internal dependencies
@@ -90,29 +90,27 @@ const save = props => {
 					const boxClasses = classnames( [
 						'ugb-countup__item',
 						`ugb-countup__item${ i }`,
-					], applyFilters( 'stackable.count-up.boxclasses', {
-						'ugb--has-background-overlay': hasBackgroundOverlay( 'column%s', props.attributes ),
-					}, design, props ) )
+					], applyFilters( 'stackable.count-up.boxclasses', {}, design, props ) )
 
-					if ( design === 'plain-2' ) {
-						return applyFilters( 'stackable.count-up.save.output', (
-							<div className={ boxClasses } key={ i }>
-								{ iconComp }
-								{ countComp }
-								{ titleComp }
-								{ descriptionComp }
-							</div>
-						), comps, i, props )
-					}
-					return applyFilters( 'stackable.count-up.save.output', (
-						<div className={ boxClasses } key={ i }>
-							{ show.columnBackground && createVideoBackground( 'column%s', props ) }
-							{ iconComp }
-							{ titleComp }
-							{ countComp }
-							{ descriptionComp }
-						</div>
-					), comps, i, props )
+					return (
+						<DivBackground
+							className={ boxClasses }
+							backgroundAttrName="column%s"
+							blockProps={ props }
+							showBackground={ show.columnBackground }
+							key={ i }
+						>
+							{ applyFilters( 'stackable.count-up.save.output', (
+								<Fragment>
+									{ iconComp }
+									{ design === 'plain-2' && countComp }
+									{ titleComp }
+									{ design !== 'plain-2' && countComp }
+									{ descriptionComp }
+								</Fragment>
+							), comps, i, props ) }
+						</DivBackground>
+					)
 				} ) }
 			</Fragment>
 		) } />

@@ -27,13 +27,12 @@ import {
 	HeadingButtonsControl,
 	PanelSpacingBody,
 	AdvancedRangeControl,
+	DivBackground,
 } from '~stackable/components'
 import {
 	descriptionPlaceholder,
-	hasBackgroundOverlay,
 	createTypographyAttributeNames,
 	createResponsiveAttributeNames,
-	createVideoBackground,
 	cacheImageData,
 	getImageUrlFromCache,
 } from '~stackable/util'
@@ -422,7 +421,6 @@ const edit = props => {
 						'ugb-testimonial__item',
 						`ugb-testimonial__item${ i }`,
 					], applyFilters( 'stackable.testimonial.itemclasses', {
-						'ugb--has-background-overlay': show.columnBackground && hasBackgroundOverlay( 'column%s', props.attributes ),
 						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
 					}, props, i ) )
 
@@ -431,8 +429,13 @@ const edit = props => {
 					], applyFilters( 'stackable.testimonial.bodywrapperclasses', {}, props, i ) )
 
 					return (
-						<div className={ itemClasses } key={ i }>
-							{ show.columnBackground && createVideoBackground( 'column%s', props ) }
+						<DivBackground
+							className={ itemClasses }
+							backgroundAttrName="column%s"
+							blockProps={ props }
+							showBackground={ show.columnBackground }
+							key={ i }
+						>
 							<div className={ bodyWrapperClasses }>
 								{ showTestimonial &&
 									<RichText
@@ -531,7 +534,7 @@ const edit = props => {
 									/>
 								}
 							</div>
-						</div>
+						</DivBackground>
 					)
 				} ) }
 			</Fragment>

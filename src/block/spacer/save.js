@@ -2,8 +2,7 @@
  * External dependencies
  */
 import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
-import { hasBackgroundOverlay, createVideoBackground } from '~stackable/util'
-import { BlockContainer } from '~stackable/components'
+import { BlockContainer, DivBackground } from '~stackable/components'
 import classnames from 'classnames'
 
 /**
@@ -21,16 +20,13 @@ const save = props => {
 		props.className,
 		'ugb-spacer--v2',
 	] )
-	const innerClasses = classnames( [
-		'ugb-spacer--inner',
-	], {
-		'ugb--has-background-overlay': hasBackgroundOverlay( '%s', props.attributes ),
-	} )
 	return (
 		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
-			<div className={ innerClasses }>
-				{ createVideoBackground( '%s', props ) }
-			</div>
+			<DivBackground
+				className="ugb-spacer--inner"
+				backgroundAttrName="%s"
+				blockProps={ props }
+			/>
 		) } />
 	)
 }

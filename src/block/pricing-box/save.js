@@ -7,15 +7,12 @@ import { showOptions } from './util'
 /**
  * External dependencies
  */
-import {
-	hasBackgroundOverlay,
-	range,
-	createVideoBackground,
-} from '~stackable/util'
+import { range } from 'lodash'
 import {
 	BlockContainer,
 	Image,
 	ButtonEditHelper,
+	DivBackground,
 } from '~stackable/components'
 import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
 import classnames from 'classnames'
@@ -78,7 +75,6 @@ const save = props => {
 						'ugb-pricing-box__item',
 						`ugb-pricing-box__item${ i }`,
 					], applyFilters( 'stackable.pricing-box.itemclasses', {
-						'ugb--has-background-overlay': show.columnBackground && hasBackgroundOverlay( 'column%s', props.attributes ),
 						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
 					}, props, i ) )
 
@@ -168,8 +164,13 @@ const save = props => {
 					}
 
 					return (
-						<div className={ itemClasses } key={ i }>
-							{ show.columnBackground && createVideoBackground( 'column%s', props ) }
+						<DivBackground
+							className={ itemClasses }
+							backgroundAttrName="column%s"
+							blockProps={ props }
+							showBackground={ show.columnBackground }
+							key={ i }
+						>
 							{ applyFilters( 'stackable.pricing-box.save.output', (
 								<Fragment>
 									{ showImage && imageComp }
@@ -180,7 +181,7 @@ const save = props => {
 									{ showDescription && descriptionComp }
 								</Fragment>
 							), props, comps, i ) }
-						</div>
+						</DivBackground>
 					)
 				} ) }
 			</Fragment>

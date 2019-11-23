@@ -2,9 +2,8 @@
  * External dependencies
  */
 import {
-	ButtonEdit, BlockContainer, Image,
+	ButtonEdit, BlockContainer, Image, DivBackground,
 } from '~stackable/components'
-import { createVideoBackground, hasBackgroundOverlay } from '~stackable/util'
 import { withUniqueClass, withBlockStyles } from '~stackable/higher-order'
 
 /**
@@ -75,14 +74,12 @@ const save = props => {
 		'ugb-feature__item',
 	], applyFilters( 'stackable.feature.itemclasses', {
 		[ `ugb--shadow-${ shadow }` ]: show.columnBackground && ( design === 'basic' || design === 'half' ) && shadow !== 3,
-		'ugb--has-background-overlay': show.columnBackground && design === 'basic' && hasBackgroundOverlay( 'column%s', props.attributes ),
 	}, props ) )
 
 	const contentClasses = classnames( [
 		'ugb-feature__content',
 	], applyFilters( 'stackable.feature.contentclasses', {
 		[ `ugb--shadow-${ shadow }` ]: show.columnBackground && design !== 'basic' && design !== 'half' && shadow !== 3,
-		'ugb--has-background-overlay': show.columnBackground && design !== 'basic' && hasBackgroundOverlay( 'column%s', props.attributes ),
 	}, props ) )
 
 	const imageClasses = classnames( [
@@ -95,10 +92,18 @@ const save = props => {
 	return (
 		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				<div className={ itemClasses }>
-					{ show.columnBackground && design === 'basic' && createVideoBackground( 'column%s', props ) }
-					<div className={ contentClasses }>
-						{ show.columnBackground && design !== 'basic' && createVideoBackground( 'column%s', props ) }
+				<DivBackground
+					className={ itemClasses }
+					backgroundAttrName="column%s"
+					blockProps={ props }
+					showBackground={ show.columnBackground && design === 'basic' }
+				>
+					<DivBackground
+						className={ contentClasses }
+						backgroundAttrName="column%s"
+						blockProps={ props }
+						showBackground={ show.columnBackground && design !== 'basic' }
+					>
 						{ showTitle && ! RichText.isEmpty( title ) &&
 							<RichText.Content
 								tagName={ titleTag || 'h2' }
@@ -128,7 +133,7 @@ const save = props => {
 								design={ buttonDesign !== '' ? buttonDesign : 'basic' }
 							/>
 						}
-					</div>
+					</DivBackground>
 					{ ! show.featuredImageAsBackground &&
 						<div className="ugb-feature__image-side">
 							<Image
@@ -149,7 +154,7 @@ const save = props => {
 							// style={ imageStyles }
 						/>
 					}
-				</div>
+				</DivBackground>
 			</Fragment>
 		) } />
 	)

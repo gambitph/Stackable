@@ -111,27 +111,6 @@ $box-vert-padding: 60px;
 	margin: 0 auto;
 }
 
-// Background overlay. Any block / item that has a background/gradient/overlay should have this class.
-.ugb--has-background-overlay {
-	position: relative;
-	z-index: 1;
-	background-size: cover;
-	background-position: center;
-	&.ugb--has-background-overlay::before {
-		content: "";
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		z-index: 2;
-	}
-	> * {
-		position: relative;
-		z-index: 3;
-	}
-}
-
 // Different box shadows for the shadow setting.
 $shadows: ( none )
 	( 0 0 0 1px rgba(120, 120, 120, 0.1) )

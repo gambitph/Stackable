@@ -22,12 +22,8 @@ import {
 	ControlSeparator,
 	BackgroundControlsHelper,
 	ColorPaletteControl,
+	DivBackground,
 } from '~stackable/components'
-import {
-	createVideoBackground,
-	hasBackgroundOverlay,
-	cacheImageData,
-} from '~stackable/util'
 import {
 	withUniqueClass,
 	withSetAttributeHook,
@@ -36,6 +32,7 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 } from '~stackable/higher-order'
+import { cacheImageData } from '~stackable/util'
 import classnames from 'classnames'
 
 /**
@@ -318,7 +315,6 @@ const edit = props => {
 		`${ uniqueClass }-wrapper`,
 	], applyFilters( 'stackable.container.wrapperClasses', {
 		[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
-		'ugb--has-background-overlay': show.columnBackground && hasBackgroundOverlay( 'column%s', props.attributes ),
 		'ugb--restrict-content-width': show.restrictContent && restrictContentWidth,
 	}, props ) )
 
@@ -332,8 +328,12 @@ const edit = props => {
 	return (
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				<div className={ wrapperClasses }>
-					{ show.columnBackground && createVideoBackground( 'column%s', props ) }
+				<DivBackground
+					className={ wrapperClasses }
+					backgroundAttrName="column%s"
+					blockProps={ props }
+					showBackground={ show.columnBackground }
+				>
 					{ applyFilters( 'stackable.container.edit.wrapper.output', null, props ) }
 					<div className="ugb-container__side">
 						<div className={ contentWrapperClasses }>
@@ -343,7 +343,7 @@ const edit = props => {
 							/>
 						</div>
 					</div>
-				</div>
+				</DivBackground>
 			</Fragment>
 		) } />
 	)
