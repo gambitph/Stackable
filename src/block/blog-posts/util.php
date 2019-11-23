@@ -31,7 +31,7 @@ if ( ! function_exists( 'stackable_blog_posts_util_show_options' ) ) {
 			'showCategory' => $attributes['postType'] === 'post',
 			'imageAsBackground' => in_array( $design, array( 'portfolio', 'portfolio2', 'image-card' ) ),
 			'imageOutsideContainer' => in_array( $design, array( 'list', 'vertical-card', 'horizontal-card', 'image-card' ) ),
-			'imageSpacing' => $attributes['showImage'],
+			'imageSpacing' => $attributes['showImage'] && in_array( $design, array( 'basic', 'list', 'vertical-card2' ) ),
 			'categorySpacing' => $attributes['showCategory'],
 			'titleSpacing' => $attributes['showTitle'],
 			'excerptSpacing' => $attributes['showExcerpt'],
