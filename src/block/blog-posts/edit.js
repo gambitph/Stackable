@@ -239,7 +239,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					title={ __( 'Column Background', i18n ) }
 					initialOpen={ false }
 				>
-					{ ! show.imageAsBackground &&
+					{ ( show.showBackgroundInItem || show.showBackgroundInContent ) &&
 						<BackgroundControlsHelper
 							attrNameTemplate="column%s"
 							setAttributes={ setAttributes }
@@ -247,7 +247,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 							backgroundMediaAllowVideo={ false }
 						/>
 					}
-					{ show.imageAsBackground &&
+					{ ! ( show.showBackgroundInItem || show.showBackgroundInContent ) && show.columnBackground &&
 						<BackgroundControlsHelper
 							attrNameTemplate="column%s"
 							setAttributes={ setAttributes }
