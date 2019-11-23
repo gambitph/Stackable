@@ -26,6 +26,7 @@ import {
 	PanelSpacingBody,
 	AdvancedRangeControl,
 	AdvancedSelectControl,
+	DivBackground,
 } from '~stackable/components'
 import {
 	createTypographyAttributeNames,
@@ -243,6 +244,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 							attrNameTemplate="column%s"
 							setAttributes={ setAttributes }
 							blockAttributes={ props.attributes }
+							backgroundMediaAllowVideo={ false }
 						/>
 					}
 					{ show.imageAsBackground &&
@@ -674,7 +676,7 @@ class Edit extends Component {
 			posts.slice( 0, numberOfItems ) :
 			posts
 
-		const featuredItemClasses = classnames( [
+		const itemClasses = classnames( [
 			'ugb-blog-posts__item',
 		], {
 			[ `ugb--shadow-${ shadow }` ]: ! show.imageShadow,
@@ -763,7 +765,7 @@ class Edit extends Component {
 							</aside>
 
 						const output = applyFilters( 'stackable.blog-posts.edit.output', null, this.props, {
-							featuredItemClasses,
+							itemClasses,
 							featuredImageBackground,
 							featuredImage,
 							category,
@@ -781,18 +783,32 @@ class Edit extends Component {
 						}
 
 						return (
-							<article className={ featuredItemClasses } key={ i }>
+							<DivBackground
+								tagName="article"
+								className={ itemClasses }
+								backgroundAttrName="column%s"
+								blockProps={ this.props }
+								showBackground={ show.showBackgroundInItem }
+								showBackgroundVideo={ false }
+								key={ i }
+							>
 								{ showImage && show.imageAsBackground && featuredImageBackground }
 								{ showImage && ! show.imageAsBackground && show.imageOutsideContainer && featuredImage }
-								<div className="ugb-blog-posts__content">
+								<DivBackground
+									className="ugb-blog-posts__content"
+									backgroundAttrName="column%s"
+									blockProps={ this.props }
+									showBackground={ show.showBackgroundInContent }
+									showBackgroundVideo={ false }
+								>
 									{ showImage && ! show.imageAsBackground && ! show.imageOutsideContainer && featuredImage }
 									{ showCategory && category }
 									{ showTitle && title }
 									{ showMeta && meta }
 									{ showExcerpt && excerpt }
 									{ showReadmore && readmore }
-								</div>
-							</article>
+								</DivBackground>
+							</DivBackground>
 						)
 					} ) }
 				</Fragment>

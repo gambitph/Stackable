@@ -23,6 +23,8 @@ if ( ! function_exists( 'stackable_blog_posts_util_show_options' ) ) {
 
 		return array(
 			'columnBackground' => ! in_array( $design, array( 'basic', 'list' ) ),
+			'showBackgroundInItem' => $design === 'vertical-card2',
+			'showBackgroundInContent' => in_array( $design, array( 'vertical-card', 'horizontal-card', 'image-card' ) ),
 			'borderRadius' => true,
 			'shadow' => true,
 			'imageShadow' => in_array( $design, array( 'basic', 'list' ) ),

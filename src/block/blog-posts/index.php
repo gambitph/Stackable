@@ -108,17 +108,38 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 		$show = stackable_blog_posts_util_show_options( $attributes );
 		$props = array( 'attributes' => array() );
 
-		// Classes.
-		$featured_item_classes = array( 'ugb-blog-posts__item' );
+		/**
+		 * Classes.
+		 */
+
+		// Item classes.
+		$item_classes = array( 'ugb-blog-posts__item' );
 		if ( ! $show['imageShadow'] && (int) $attributes['shadow'] !== 0 ) {
-			$featured_item_classes[] = 'ugb--shadow-' . $attributes['shadow'];
+			$item_classes[] = 'ugb--shadow-' . $attributes['shadow'];
 		}
-		$featured_item_classes = implode( ' ', $featured_item_classes );
+		// Add background gradient class.
+		if ( $show['showBackgroundInItem'] && $attributes['columnBackgroundColorType'] === 'gradient' ) {
+			$item_classes[] = 'ugb--has-background-overlay';
+		}
+		$item_classes = implode( ' ', $item_classes );
+
+		$content_classes = array( 'ugb-blog-posts__content' );
+		// Add background gradient class.
+		if ( $show['showBackgroundInContent'] && $attributes['columnBackgroundColorType'] === 'gradient' ) {
+			$content_classes[] = 'ugb--has-background-overlay';
+		}
+		$content_classes = implode( ' ', $content_classes );
+
+		// Image classes.
 		$featured_image_classes = array( 'ugb-blog-posts__featured-image' );
 		if ( $show['imageShadow'] && (int) $attributes['shadow'] !== 0 ) {
 			$featured_image_classes[] = 'ugb--shadow-' . $attributes['shadow'];
 		}
 		$featured_image_classes = implode( ' ', $featured_image_classes );
+
+		/**
+		 * END Classes.
+		 */
 
 		// Meta separators.
 		$meta_separators = array(
@@ -253,7 +274,8 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 			}
 
 			$output = apply_filters( 'stackable/blog-posts/edit.output', null, $attributes, array(
-				'featuredItemClasses' => $featured_item_classes,
+				'itemClasses' => $item_classes,
+				'contentClasses' => $content_classes,
 				'featuredImageBackground' => $featured_image_background,
 				'featuredImage' => $featured_image,
 				'category' => $category,
@@ -271,10 +293,11 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 				$posts_markup .= $output;
 			} else {
 				$posts_markup .= sprintf(
-					'<article class="%s">%s%s<div class="ugb-blog-posts__content">%s%s%s%s%s%s</div></article>',
-					$featured_item_classes,
+					'<article class="%s">%s%s<div class="%s">%s%s%s%s%s%s</div></article>',
+					$item_classes,
 					$attributes['showImage'] && $show['imageAsBackground'] ? $featured_image_background : '',
 					$attributes['showImage'] && ! $show['imageAsBackground'] && $show['imageOutsideContainer'] ? $featured_image : '',
+					$content_classes,
 					$attributes['showImage'] && ! $show['imageAsBackground'] && ! $show['imageOutsideContainer'] ? $featured_image : '',
 					$attributes['showCategory'] ? $category : '',
 					$attributes['showTitle'] ? $title : '',
