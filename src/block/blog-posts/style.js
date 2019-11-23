@@ -28,7 +28,7 @@ export const createStyles = props => {
 
 	const styles = []
 
-	if ( ! show.columnBackground && ! show.imageOutsideContainer ) {
+	if ( ! show.columnBackground ) {
 		styles.push( {
 			'.ugb-blog-posts__featured-image': {
 				borderRadius: appendImportant( getValue( 'borderRadius', '%spx' ) ),
