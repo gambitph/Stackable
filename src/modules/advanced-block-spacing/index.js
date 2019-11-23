@@ -459,6 +459,8 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 	}
 
 	const {
+		blockInnerWidth = '',
+
 		marginUnit = 'px',
 		tabletMarginUnit = 'px',
 		mobileMarginUnit = 'px',
@@ -533,7 +535,8 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 		},
 		[ `${ blockClass } .ugb-inner-block` ]: {
 			width: appendImportant( getValue( 'blockWidth', `%s${ blockWidthUnit }` ) ),
-			minWidth: appendImportant( getValue( 'blockWidth', `%s${ blockWidthUnit }` ) ),
+			// Some themes can limit min-width, preventing block width.
+			minWidth: blockInnerWidth === 'wide' && getValue( 'blockWidth' ) ? 'auto !important' : undefined,
 		},
 		tablet: {
 			[ blockClass ]: {
@@ -543,7 +546,8 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 			},
 			[ `${ blockClass } .ugb-inner-block` ]: {
 				width: appendImportant( getValue( 'tabletBlockWidth', `%s${ tabletBlockWidthUnit }` ) ),
-				minWidth: appendImportant( getValue( 'tabletBlockWidth', `%s${ tabletBlockWidthUnit }` ) ),
+				// Some themes can limit min-width, preventing block width.
+				minWidth: blockInnerWidth === 'wide' && getValue( 'tabletBlockWidth' ) ? 'auto !important' : undefined,
 			},
 		},
 		mobile: {
@@ -554,7 +558,8 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 			},
 			[ `${ blockClass } .ugb-inner-block` ]: {
 				width: appendImportant( getValue( 'mobileBlockWidth', `%s${ mobileBlockWidthUnit }` ) ),
-				minWidth: appendImportant( getValue( 'mobileBlockWidth', `%s${ mobileBlockWidthUnit }` ) ),
+				// Some themes can limit min-width, preventing block width.
+				minWidth: blockInnerWidth === 'wide' && getValue( 'mobileBlockWidth' ) ? 'auto !important' : undefined,
 			},
 		},
 	}
