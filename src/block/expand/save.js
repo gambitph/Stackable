@@ -62,20 +62,22 @@ const save = props => {
 						/>
 					) }
 				</div>
-				{ /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
-				<a className="ugb-expand__toggle" href="#">
-					<RichText.Content
-						className="ugb-expand__more-toggle-text"
-						tagName="span"
-						value={ moreLabel }
-					/>
-					<RichText.Content
-						className="ugb-expand__less-toggle-text"
-						tagName="span"
-						value={ lessLabel }
-						style={ { display: 'none' } }
-					/>
-				</a>
+				<div className="ugb-expand__toggle-wrapper">
+					{ /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
+					<a className="ugb-expand__toggle" href="#">
+						<RichText.Content
+							className="ugb-expand__more-toggle-text"
+							tagName="span"
+							value={ moreLabel }
+						/>
+						<RichText.Content
+							className="ugb-expand__less-toggle-text"
+							tagName="span"
+							value={ lessLabel }
+							style={ { display: 'none' } }
+						/>
+					</a>
+				</div>
 			</Fragment>
 		) } />
 	)
