@@ -6,6 +6,7 @@ import {
 	createResponsiveStyles,
 	createTypographyStyles,
 	whiteIfDark,
+	appendImportant,
 } from '~stackable/util'
 
 /**
@@ -90,12 +91,12 @@ export const createStyles = props => {
 	if ( showIcon ) {
 		styles.push( {
 			'.ugb-countup__icon': {
-				textAlign: getValue( 'iconAlign' ),
+				textAlign: appendImportant( getValue( 'iconAlign' ) ),
 			},
 			'.ugb-countup__icon svg': {
 				color: whiteIfDark( iconColor, show.columnBackground ? columnBackgroundColor : ( showBlockBackground ? blockBackgroundBackgroundColor : '' ) ),
-				height: getValue( 'iconSize', '%spx' ),
-				width: getValue( 'iconSize', '%spx' ),
+				height: appendImportant( getValue( 'iconSize', '%spx' ) ),
+				width: appendImportant( getValue( 'iconSize', '%spx' ) ),
 			},
 			tablet: {
 				'.ugb-countup__icon svg': {
