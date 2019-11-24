@@ -102,7 +102,7 @@
 	.ugb-blog-posts__meta {
 		font-size: 11px;
 		text-transform: uppercase;
-		color: var(--s-accent-color, var(--s-primary-color, #2091e1));
+		color: var(--s-primary-color, #2091e1);
 		> *:not(.ugb-blog-posts__sep) {
 			margin: 0;
 		}
@@ -117,7 +117,7 @@
 			margin-left: -3px;
 			margin-right: -3px;
 			a {
-				background-color: var(--s-accent-color, var(--s-primary-color, #2091e1));
+				background-color: var(--s-primary-color, #2091e1);
 				color: #fff;
 				display: inline-block;
 				padding: 3px 10px;
