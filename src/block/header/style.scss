@@ -46,8 +46,10 @@
 
 // Full width
 .ugb-header.ugb-header--v3.ugb-main-block.alignfull {
-	padding: 0;
-	.ugb-header__item {
-		border-radius: 0;
+	&:not(.ugb-main-block--inner-center):not(.ugb-main-block--inner-wide) {
+		padding: 0;
+		.ugb-header__item {
+			border-radius: 0;
+		}
 	}
 }
