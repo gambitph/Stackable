@@ -141,6 +141,11 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 
 	const show = showOptions( props )
 
+	const labelCategory = __( 'Category', i18n )
+	const labelTitle = __( 'Title', i18n )
+	const labelMeta = __( 'Meta', i18n )
+	const labelExcerpt = __( 'Excerpt', i18n )
+
 	return (
 		<Fragment>
 			{ output }
@@ -176,12 +181,12 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					label={ __( 'Content Order', i18n ) }
 					options={ [
 						{ label: __( 'Default', i18n ), value: '' },
-						{ label: __( 'Category → Title → Meta → Excerpt', i18n ), value: 'category,title,meta,excerpt' },
-						{ label: __( 'Category → Title → Excerpt → Meta', i18n ), value: 'category,title,excerpt,meta' },
-						{ label: __( 'Title → Meta → Excerpt → Category', i18n ), value: 'title,meta,excerpt,category' },
-						{ label: __( 'Title → Category → Excerpt → Meta', i18n ), value: 'title,category,excerpt,meta' },
-						{ label: __( 'Meta → Title → Excerpt → Category', i18n ), value: 'meta,title,excerpt,category' },
-						{ label: __( 'Meta → Title → Category → Excerpt', i18n ), value: 'meta,title,category,excerpt' },
+						{ label: `${ labelCategory } → ${ labelTitle } → ${ labelMeta } → ${ labelExcerpt }`, value: 'category,title,meta,excerpt' },
+						{ label: `${ labelCategory } → ${ labelTitle } → ${ labelExcerpt } → ${ labelMeta }`, value: 'category,title,excerpt,meta' },
+						{ label: `${ labelTitle } → ${ labelMeta } → ${ labelExcerpt } → ${ labelCategory }`, value: 'title,meta,excerpt,category' },
+						{ label: `${ labelTitle } → ${ labelCategory } → ${ labelExcerpt } → ${ labelMeta }`, value: 'title,category,excerpt,meta' },
+						{ label: `${ labelMeta } → ${ labelTitle } → ${ labelExcerpt } → ${ labelCategory }`, value: 'meta,title,excerpt,category' },
+						{ label: `${ labelMeta } → ${ labelTitle } → ${ labelCategory } → ${ labelExcerpt }`, value: 'meta,title,category,excerpt' },
 					] }
 					value={ contentOrder }
 					onChange={ contentOrder => setAttributes( { contentOrder } ) }
