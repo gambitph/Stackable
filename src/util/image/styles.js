@@ -37,18 +37,18 @@ const createImageStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAt
 		return {
 			borderRadius: ! shape ? getValue( 'BorderRadius', '%spx' ) : undefined,
 			width: getValue( 'Width', '%spx' ),
-			height: appendImportant( getHeight( 'Width' ) ),
+			height: getValue( 'Width' ) ? appendImportant( getHeight( 'Width' ) ) : undefined,
 		}
 	} else if ( screen === 'tablet' ) { // Tablet.
 		return {
 			width: getValue( 'TabletWidth', '%spx' ),
-			height: appendImportant( getHeight( 'TabletWidth' ) ),
+			height: getValue( 'TabletWidth' ) ? appendImportant( getHeight( 'TabletWidth' ) ) : undefined,
 		}
 	}
 	// Mobile.
 	return {
 		width: getValue( 'MobileWidth', '%spx' ),
-		height: appendImportant( getHeight( 'MobileWidth' ) ),
+		height: getValue( 'MobileWidth' ) ? appendImportant( getHeight( 'MobileWidth' ) ) : undefined,
 	}
 }
 
