@@ -8,6 +8,8 @@ import {
 	whiteIfDark,
 	appendImportant,
 	__getValue,
+	marginLeftAlign,
+	marginRightAlign,
 } from '~stackable/util'
 
 /**
@@ -80,6 +82,12 @@ export const createStyles = props => {
 		columnBackgroundColor = '',
 		showBlockBackground = false,
 		blockBackgroundBackgroundColor = '',
+		iconAlign = '',
+		contentAlign = '',
+		iconTabletAlign = '',
+		tabletContentAlign = '',
+		iconMobileAlign = '',
+		mobileContentAlign = '',
 	} = props.attributes
 	if ( showIcon ) {
 		styles.push( {
@@ -90,17 +98,29 @@ export const createStyles = props => {
 				color: whiteIfDark( iconColor, show.columnBackground ? columnBackgroundColor : ( showBlockBackground ? blockBackgroundBackgroundColor : '' ) ),
 				height: appendImportant( getValue( 'iconSize', '%spx' ) ),
 				width: appendImportant( getValue( 'iconSize', '%spx' ) ),
+				marginLeft: iconAlign !== '' || contentAlign !== '' ? appendImportant( marginLeftAlign( iconAlign || contentAlign ) ) : undefined,
+				marginRight: iconAlign !== '' || contentAlign !== '' ? appendImportant( marginRightAlign( iconAlign || contentAlign ) ) : undefined,
 			},
 			tablet: {
+				'.ugb-countup__icon': {
+					textAlign: appendImportant( iconTabletAlign ),
+				},
 				'.ugb-countup__icon svg': {
 					height: getValue( 'iconTabletSize', '%spx' ),
 					width: getValue( 'iconTabletSize', '%spx' ),
+					marginLeft: iconTabletAlign !== '' || tabletContentAlign !== '' ? appendImportant( marginLeftAlign( iconTabletAlign || tabletContentAlign ) ) : undefined,
+					marginRight: iconTabletAlign !== '' || tabletContentAlign !== '' ? appendImportant( marginRightAlign( iconTabletAlign || tabletContentAlign ) ) : undefined,
 				},
 			},
 			mobile: {
+				'.ugb-countup__icon': {
+					textAlign: appendImportant( iconMobileAlign ),
+				},
 				'.ugb-countup__icon svg': {
 					height: getValue( 'iconMobileSize', '%spx' ),
 					width: getValue( 'iconMobileSize', '%spx' ),
+					marginLeft: iconMobileAlign !== '' || mobileContentAlign !== '' ? appendImportant( marginLeftAlign( iconMobileAlign || mobileContentAlign ) ) : undefined,
+					marginRight: iconMobileAlign !== '' || mobileContentAlign !== '' ? appendImportant( marginRightAlign( iconMobileAlign || mobileContentAlign ) ) : undefined,
 				},
 			},
 		} )
