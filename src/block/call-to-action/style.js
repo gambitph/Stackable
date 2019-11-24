@@ -8,6 +8,7 @@ import {
 	createTypographyStyles,
 	whiteIfDark,
 	__getValue,
+	appendImportant,
 } from '~stackable/util'
 import deepmerge from 'deepmerge'
 
@@ -30,7 +31,7 @@ export const createStyles = props => {
 
 	styles.push( {
 		'.ugb-cta__title, .ugb-cta__description, .ugb-button-container': {
-			textAlign: getValue( 'contentAlign' ),
+			textAlign: appendImportant( getValue( 'contentAlign' ) ),
 		},
 		tablet: {
 			'.ugb-cta__title, .ugb-cta__description, .ugb-button-container': {
