@@ -76,7 +76,7 @@ export const createBackgroundOverlayStyles = ( attrNameTemplate = '%s', screen =
 		importantBackgroundColor = false,
 	} = options
 
-	const opacity = parseInt( getValue( 'BackgroundTintStrength' ) || 5, 10 ) / 10
+	const opacity = parseInt( getValue( 'BackgroundTintStrength', '', 5 ) || 0, 10 ) / 10
 	const isGradient = getValue( 'BackgroundColorType' ) === 'gradient'
 
 	// The default color is the same as the other one but transparent. Same so that there won't be a weird transition to transparent.

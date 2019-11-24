@@ -29,7 +29,7 @@ const BackgroundControlsHelper = props => {
 			tabletBackgroundMediaURL={ props.blockAttributes[ getAttrName( 'TabletBackgroundMediaURL' ) ] || '' }
 			mobileBackgroundMediaID={ props.blockAttributes[ getAttrName( 'MobileBackgroundMediaID' ) ] || '' }
 			mobileBackgroundMediaURL={ props.blockAttributes[ getAttrName( 'MobileBackgroundMediaURL' ) ] || '' }
-			backgroundTintStrength={ props.blockAttributes[ getAttrName( 'BackgroundTintStrength' ) ] || '' }
+			backgroundTintStrength={ props.blockAttributes[ getAttrName( 'BackgroundTintStrength' ) ] }
 			fixedBackground={ props.blockAttributes[ getAttrName( 'FixedBackground' ) ] || '' }
 			onChangeBackgroundColorType={ value => setAttributes( { [ getAttrName( 'BackgroundColorType' ) ]: value } ) }
 			onChangeBackgroundColor={ value => setAttributes( { [ getAttrName( 'BackgroundColor' ) ]: value } ) }
