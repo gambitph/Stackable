@@ -30,7 +30,7 @@ const save = props => {
 	const {
 		design = 'basic',
 		columns = 2,
-		shadow = 3,
+		shadow = '',
 		imageShape = '',
 		imageShapeStretch = false,
 		showImage = true,
@@ -75,7 +75,7 @@ const save = props => {
 						'ugb-pricing-box__item',
 						`ugb-pricing-box__item${ i }`,
 					], applyFilters( 'stackable.pricing-box.itemclasses', {
-						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
+						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== '',
 					}, props, i ) )
 
 					const imageComp = imageUrl &&

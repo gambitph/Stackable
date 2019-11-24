@@ -85,8 +85,8 @@ addFilter( 'stackable.blockquote.edit.inspector.layout.before', 'stackable/block
 addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockquote', ( output, props ) => {
 	const { setAttributes } = props
 	const {
-		borderRadius = 12,
-		shadow = 3,
+		borderRadius = '',
+		shadow = '',
 		showQuote = true,
 		quoteIcon = 'round-thin',
 		quoteColor = '',
@@ -258,7 +258,7 @@ const edit = props => {
 	const {
 		blockTag = '',
 		design = 'plain',
-		shadow = 3,
+		shadow = '',
 		text = '',
 		showQuote = true,
 		quoteIcon = 'round-thin',
@@ -278,7 +278,7 @@ const edit = props => {
 	const itemClasses = classnames( [
 		'ugb-blockquote__item',
 	], {
-		[ `ugb--shadow-${ shadow }` ]: show.containerBackground && shadow !== 3,
+		[ `ugb--shadow-${ shadow }` ]: show.containerBackground && shadow !== '',
 	} )
 
 	return (

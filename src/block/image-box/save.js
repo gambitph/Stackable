@@ -28,7 +28,7 @@ const save = props => {
 		contentAlign = '',
 		design = 'basic',
 		titleTag = '',
-		shadow = 3,
+		shadow = '',
 		showOverlay = false,
 		showOverlayHover = true,
 		showSubtitle = true,
@@ -64,7 +64,7 @@ const save = props => {
 						`ugb-image-box__item${ i }`,
 						'ugb-image-box__box',
 					], applyFilters( 'stackable.image-box.itemclasses', {
-						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
+						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== '',
 					}, props, i ) )
 
 					const rel = []

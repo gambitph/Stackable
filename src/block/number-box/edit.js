@@ -96,8 +96,8 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 		descriptionColor,
 		numberBGColor,
 		design = 'basic',
-		borderRadius = 12,
-		shadow = 3,
+		borderRadius = '',
+		shadow = '',
 		showNumber = true,
 		showTitle = true,
 		showDescription = true,
@@ -389,7 +389,7 @@ const edit = props => {
 		columns,
 		design = 'basic',
 		titleTag = '',
-		shadow = 3,
+		shadow = '',
 		showNumber = true,
 		showTitle = true,
 		showDescription = true,
@@ -419,7 +419,7 @@ const edit = props => {
 						'ugb-number-box__item',
 						`ugb-number-box__item${ i }`,
 					], applyFilters( 'stackable.number-box.boxclasses', {
-						[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
+						[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== '',
 					}, design, props ) )
 
 					return (

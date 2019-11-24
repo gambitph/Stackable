@@ -82,8 +82,8 @@ addFilter( 'stackable.container.edit.inspector.layout.before', 'stackable/contai
 addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/container', ( output, props ) => {
 	const { setAttributes } = props
 	const {
-		borderRadius = 12,
-		shadow = 3,
+		borderRadius = '',
+		shadow = '',
 		restrictContentWidth = false,
 
 		height = '',
@@ -294,7 +294,7 @@ const edit = props => {
 
 	const {
 		design = 'basic',
-		shadow = 3,
+		shadow = '',
 		contentWidth = 100,
 		restrictContentWidth = false,
 		uniqueClass = '',
@@ -314,7 +314,7 @@ const edit = props => {
 		'ugb-container__wrapper',
 		`${ uniqueClass }-wrapper`,
 	], applyFilters( 'stackable.container.wrapperClasses', {
-		[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
+		[ `ugb--shadow-${ shadow }` ]: shadow !== '',
 		'ugb--restrict-content-width': show.restrictContent && restrictContentWidth,
 	}, props ) )
 

@@ -8,6 +8,7 @@
 
 .ugb-video-popup--v3 {
 	.ugb-video-popup__wrapper {
+		@include box();
 		margin-left: auto;
 		margin-right: auto;
 		padding: 0;

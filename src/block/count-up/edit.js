@@ -89,8 +89,8 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 	const { setAttributes } = props
 	const {
 		columns,
-		borderRadius = 12,
-		shadow = 3,
+		borderRadius = '',
+		shadow = '',
 		showNumber = true,
 		showTitle = true,
 		showDescription = true,

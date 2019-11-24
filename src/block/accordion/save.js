@@ -25,7 +25,7 @@ const save = props => {
 	const { className } = props
 	const {
 		design = 'basic',
-		shadow = 3,
+		shadow = '',
 		titleTag = '',
 		title = '',
 		openStart = false,
@@ -51,7 +51,7 @@ const save = props => {
 	const headingClasses = classnames( [
 		'ugb-accordion__heading',
 	], applyFilters( 'stackable.accordion.headingclasses', {
-		[ `ugb--shadow-${ shadow }` ]: show.headerBackground && shadow !== 3,
+		[ `ugb--shadow-${ shadow }` ]: show.headerBackground && shadow !== '',
 	}, design, props ) )
 
 	return (

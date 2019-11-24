@@ -102,8 +102,8 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 	const { setAttributes } = props
 	const {
 		columns,
-		borderRadius = 12,
-		shadow = 3,
+		borderRadius = '',
+		shadow = '',
 		showImage = true,
 		showName = true,
 		showDescription = true,
@@ -510,7 +510,7 @@ const edit = props => {
 	const {
 		columns = 2,
 		design = 'basic',
-		shadow = 3,
+		shadow = '',
 		imageSize = '',
 		imageShadow = '',
 		imageShape = '',
@@ -549,7 +549,7 @@ const edit = props => {
 						'ugb-team-member__item',
 						`ugb-team-member__item${ i }`,
 					], applyFilters( 'stackable.team-member.itemclasses', {
-						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
+						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== '',
 					}, props ) )
 
 					return (

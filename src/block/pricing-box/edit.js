@@ -105,8 +105,8 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 		columns,
 		titleColor,
 		descriptionColor,
-		borderRadius = 12,
-		shadow = 3,
+		borderRadius = '',
+		shadow = '',
 		showImage = true,
 		showTitle = true,
 		showPricePrefix = true,
@@ -540,7 +540,7 @@ const edit = props => {
 		imageShapeStretch = false,
 		imageWidth = '',
 		design = 'basic',
-		shadow = 3,
+		shadow = '',
 		titleTag = '',
 		showImage = true,
 		showTitle = true,
@@ -584,7 +584,7 @@ const edit = props => {
 						'ugb-pricing-box__item',
 						`ugb-pricing-box__item${ i }`,
 					], applyFilters( 'stackable.pricing-box.itemclasses', {
-						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
+						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== '',
 					}, props, i ) )
 
 					const imageComp = (

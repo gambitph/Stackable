@@ -24,7 +24,7 @@ const save = props => {
 	const { className } = props
 	const {
 		design = 'basic',
-		shadow = 3,
+		shadow = '',
 
 		// Title.
 		showTitle = true,
@@ -61,7 +61,7 @@ const save = props => {
 	const itemClasses = classnames( [
 		'ugb-cta__item',
 	], applyFilters( 'stackable.cta.boxclasses', {
-		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
+		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== '',
 	}, design, props ) )
 
 	const titleComp = showTitle && ! RichText.isEmpty( title ) &&

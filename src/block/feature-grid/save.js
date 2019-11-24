@@ -33,7 +33,7 @@ const save = props => {
 		imageWidth = '',
 		imageShadow = '',
 		titleTag = '',
-		shadow = 3,
+		shadow = '',
 		showImage = true,
 		showTitle = true,
 		showDescription = true,
@@ -66,7 +66,7 @@ const save = props => {
 						'ugb-feature-grid__item',
 						`ugb-feature-grid__item${ i }`,
 					], applyFilters( 'stackable.feature-grid.itemclasses', {
-						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
+						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== '',
 					}, props, i ) )
 
 					return (

@@ -100,8 +100,8 @@ addFilter( 'stackable.feature-grid.edit.inspector.style.before', 'stackable/feat
 	const { setAttributes } = props
 	const {
 		columns,
-		borderRadius = 12,
-		shadow = 3,
+		borderRadius = '',
+		shadow = '',
 		showTitle = true,
 		showDescription = true,
 		titleTag = '',
@@ -384,7 +384,7 @@ const edit = props => {
 		imageWidth = '',
 		imageShadow = '',
 		design = 'basic',
-		shadow = 3,
+		shadow = '',
 		showImage = true,
 		showTitle = true,
 		showDescription = true,
@@ -417,7 +417,7 @@ const edit = props => {
 						'ugb-feature-grid__item',
 						`ugb-feature-grid__item${ i }`,
 					], applyFilters( 'stackable.feature-grid.itemclasses', {
-						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
+						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== '',
 					}, props, i ) )
 
 					return (

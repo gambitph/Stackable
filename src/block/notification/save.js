@@ -32,7 +32,7 @@ const save = props => {
 		design = 'basic',
 		notifType,
 		dismissible,
-		shadow = 3,
+		shadow = '',
 
 		// Icon.
 		showIcon = false,
@@ -74,7 +74,7 @@ const save = props => {
 	const itemClasses = classnames( [
 		'ugb-notification__item',
 	], {
-		[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
+		[ `ugb--shadow-${ shadow }` ]: shadow !== '',
 	} )
 
 	const show = showOptions( props )

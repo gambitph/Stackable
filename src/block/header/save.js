@@ -26,7 +26,7 @@ const save = props => {
 	const {
 		restrictContentWidth = 'center',
 		fullHeight = false,
-		shadow = 3,
+		shadow = '',
 		design = 'basic',
 		titleTag = '',
 		title,

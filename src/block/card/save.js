@@ -27,7 +27,7 @@ const save = props => {
 	const {
 		columns = 2,
 		design = 'basic',
-		shadow = 3,
+		shadow = '',
 
 		titleTag = 'h4',
 		showImage = true,
@@ -62,7 +62,7 @@ const save = props => {
 						'ugb-card__item',
 						`ugb-card__item${ i }`,
 					], applyFilters( 'stackable.card.itemclasses', {
-						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
+						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== '',
 					}, props ) )
 
 					const imageClasses = classnames( [

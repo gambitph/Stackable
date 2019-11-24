@@ -29,7 +29,7 @@ const save = props => {
 	const {
 		columns = 2,
 		design = 'basic',
-		shadow = 3,
+		shadow = '',
 		nameTag = 'h4',
 		imageShadow = '',
 		imageShape = 'circle',
@@ -66,7 +66,7 @@ const save = props => {
 						'ugb-testimonial__item',
 						`ugb-testimonial__item${ i }`,
 					], applyFilters( 'stackable.testimonial.itemclasses', {
-						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
+						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== '',
 					}, props, i ) )
 
 					const bodyWrapperClasses = classnames( [

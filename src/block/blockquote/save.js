@@ -26,7 +26,7 @@ const save = props => {
 	const {
 		blockTag = '',
 		design = 'plain',
-		shadow = 3,
+		shadow = '',
 		text = '',
 		showQuote = true,
 		quoteIcon = 'round-thin',
@@ -46,7 +46,7 @@ const save = props => {
 	const itemClasses = classnames( [
 		'ugb-blockquote__item',
 	], {
-		[ `ugb--shadow-${ shadow }` ]: show.containerBackground && shadow !== 3,
+		[ `ugb--shadow-${ shadow }` ]: show.containerBackground && shadow !== '',
 	} )
 
 	return (

@@ -100,8 +100,8 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 	const { setAttributes } = props
 	const {
 		columns,
-		borderRadius = 12,
-		shadow = 3,
+		borderRadius = '',
+		shadow = '',
 		showImage = true,
 		showTitle = true,
 		showSubtitle = true,
@@ -473,7 +473,7 @@ const edit = props => {
 	const {
 		columns = 2,
 		design = 'basic',
-		shadow = 3,
+		shadow = '',
 		imageSize = '',
 		titleTag = 'h4',
 		showImage = true,
@@ -509,7 +509,7 @@ const edit = props => {
 						'ugb-card__item',
 						`ugb-card__item${ i }`,
 					], applyFilters( 'stackable.card.itemclasses', {
-						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
+						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== '',
 					}, props ) )
 
 					const imageClasses = classnames( [

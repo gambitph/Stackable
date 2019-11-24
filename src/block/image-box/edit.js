@@ -101,8 +101,8 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 		columns = 3,
 		titleColor,
 		descriptionColor,
-		borderRadius = 12,
-		shadow = 3,
+		borderRadius = '',
+		shadow = '',
 		showTitle = true,
 		showDescription = true,
 		titleTag = '',
@@ -544,7 +544,7 @@ class Edit extends Component {
 			columns = 3,
 			contentAlign = '',
 			design = 'basic',
-			shadow = 3,
+			shadow = '',
 			imageSize = 'large',
 			imageHoverEffect = '',
 			showSubtitle = true,
@@ -578,7 +578,7 @@ class Edit extends Component {
 							`ugb-image-box__item${ i }`,
 							'ugb-image-box__box',
 						], applyFilters( 'stackable.image-box.itemclasses', {
-							[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
+							[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== '',
 						}, this.props, i ) )
 
 						return (

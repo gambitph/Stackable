@@ -97,8 +97,8 @@ addFilter( 'stackable.feature.edit.inspector.layout.before', 'stackable/feature'
 addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature', ( output, props ) => {
 	const { setAttributes } = props
 	const {
-		borderRadius = 12,
-		shadow = 3,
+		borderRadius = '',
+		shadow = '',
 		showTitle = true,
 		titleTag = '',
 		titleColor = '',
@@ -386,7 +386,7 @@ const edit = props => {
 	const {
 		title,
 		design = 'basic',
-		shadow = 3,
+		shadow = '',
 		invert = false,
 		showTitle = true,
 		titleTag = '',
@@ -421,13 +421,13 @@ const edit = props => {
 	const itemClasses = classnames( [
 		'ugb-feature__item',
 	], applyFilters( 'stackable.feature.itemclasses', {
-		[ `ugb--shadow-${ shadow }` ]: show.columnBackground && ( design === 'basic' || design === 'half' ) && shadow !== 3,
+		[ `ugb--shadow-${ shadow }` ]: show.columnBackground && ( design === 'basic' || design === 'half' ) && shadow !== '',
 	}, props ) )
 
 	const contentClasses = classnames( [
 		'ugb-feature__content',
 	], applyFilters( 'stackable.feature.contentclasses', {
-		[ `ugb--shadow-${ shadow }` ]: show.columnBackground && design !== 'basic' && design !== 'half' && shadow !== 3,
+		[ `ugb--shadow-${ shadow }` ]: show.columnBackground && design !== 'basic' && design !== 'half' && shadow !== '',
 	}, props ) )
 
 	const imageClasses = classnames( [

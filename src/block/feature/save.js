@@ -29,7 +29,7 @@ const save = props => {
 	const {
 		title,
 		design = 'basic',
-		shadow = 3,
+		shadow = '',
 		invert = false,
 		showTitle = true,
 		titleTag = '',
@@ -73,13 +73,13 @@ const save = props => {
 	const itemClasses = classnames( [
 		'ugb-feature__item',
 	], applyFilters( 'stackable.feature.itemclasses', {
-		[ `ugb--shadow-${ shadow }` ]: show.columnBackground && ( design === 'basic' || design === 'half' ) && shadow !== 3,
+		[ `ugb--shadow-${ shadow }` ]: show.columnBackground && ( design === 'basic' || design === 'half' ) && shadow !== '',
 	}, props ) )
 
 	const contentClasses = classnames( [
 		'ugb-feature__content',
 	], applyFilters( 'stackable.feature.contentclasses', {
-		[ `ugb--shadow-${ shadow }` ]: show.columnBackground && design !== 'basic' && design !== 'half' && shadow !== 3,
+		[ `ugb--shadow-${ shadow }` ]: show.columnBackground && design !== 'basic' && design !== 'half' && shadow !== '',
 	}, props ) )
 
 	const imageClasses = classnames( [

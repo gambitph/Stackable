@@ -87,8 +87,8 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 	const {
 		design = 'basic',
 		titleColor,
-		borderRadius = 12,
-		shadow = 3,
+		borderRadius = '',
+		shadow = '',
 		onlyOnePanelOpen = false,
 		openStart = false,
 		reverseArrow = false,
@@ -301,7 +301,7 @@ const edit = props => {
 
 	const {
 		design = 'basic',
-		shadow = 3,
+		shadow = '',
 		titleTag = '',
 		title = '',
 		openStart = false,
@@ -325,7 +325,7 @@ const edit = props => {
 	const headingClasses = classnames( [
 		'ugb-accordion__heading',
 	], applyFilters( 'stackable.accordion.headingclasses', {
-		[ `ugb--shadow-${ shadow }` ]: design === 'basic' && shadow !== 3,
+		[ `ugb--shadow-${ shadow }` ]: design === 'basic' && shadow !== '',
 	}, design, props ) )
 
 	return (

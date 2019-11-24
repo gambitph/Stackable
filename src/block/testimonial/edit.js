@@ -98,8 +98,8 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 	const { setAttributes } = props
 	const {
 		columns = 2,
-		borderRadius = 12,
-		shadow = 3,
+		borderRadius = '',
+		shadow = '',
 		nameTag = 'h4',
 		testimonialColor = '',
 		nameColor = '',
@@ -384,7 +384,7 @@ const edit = props => {
 	const {
 		columns = 2,
 		design = 'basic',
-		shadow = 3,
+		shadow = '',
 		nameTag = 'h4',
 		imageSize = 'thumbnail',
 		imageShadow = '',
@@ -422,7 +422,7 @@ const edit = props => {
 						'ugb-testimonial__item',
 						`ugb-testimonial__item${ i }`,
 					], applyFilters( 'stackable.testimonial.itemclasses', {
-						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
+						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== '',
 					}, props, i ) )
 
 					const bodyWrapperClasses = classnames( [

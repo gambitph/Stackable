@@ -32,7 +32,7 @@ const save = props => {
 	const {
 		columns = 2,
 		design = 'basic',
-		shadow = 3,
+		shadow = '',
 		imageShape = '',
 		imageShapeStretch = false,
 		imageShadow = '',
@@ -71,7 +71,7 @@ const save = props => {
 						'ugb-team-member__item',
 						`ugb-team-member__item${ i }`,
 					], applyFilters( 'stackable.team-member.itemclasses', {
-						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== 3,
+						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== '',
 					}, props ) )
 
 					return (

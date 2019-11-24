@@ -23,7 +23,7 @@ const save = props => {
 	const { className } = props
 	const {
 		design = '',
-		shadow = 3,
+		shadow = '',
 		contentWidth = 100,
 		restrictContentWidth = false,
 		uniqueClass = '',
@@ -43,7 +43,7 @@ const save = props => {
 		'ugb-container__wrapper',
 		`${ uniqueClass }-wrapper`,
 	], applyFilters( 'stackable.container.wrapperClasses', {
-		[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
+		[ `ugb--shadow-${ shadow }` ]: shadow !== '',
 		'ugb--restrict-content-width': show.restrictContent && restrictContentWidth,
 	}, props ) )
 

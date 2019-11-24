@@ -105,8 +105,8 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 	const { setAttributes } = props
 	const {
 		columns = 2,
-		borderRadius = 12,
-		shadow = 3,
+		borderRadius = '',
+		shadow = '',
 		contentOrder = '',
 		numberOfItems = 6,
 		showImage = true,
@@ -636,7 +636,7 @@ class Edit extends Component {
 		const {
 			columns = 2,
 			design = 'basic',
-			shadow = 3,
+			shadow = '',
 			numberOfItems = 6,
 			titleTag = '',
 			imageSize = 'large',

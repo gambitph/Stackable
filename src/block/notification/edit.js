@@ -105,8 +105,8 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 		titleColor,
 		descriptionColor,
 		design = 'basic',
-		borderRadius = 12,
-		shadow = 3,
+		borderRadius = '',
+		shadow = '',
 		showTitle = true,
 		showDescription = true,
 		titleTag = '',
@@ -481,7 +481,7 @@ const edit = props => {
 		design = 'basic',
 		notifType,
 		dismissible,
-		shadow = 3,
+		shadow = '',
 
 		// Icon.
 		showIcon = false,
@@ -513,7 +513,7 @@ const edit = props => {
 	const itemClasses = classnames( [
 		'ugb-notification__item',
 	], {
-		[ `ugb--shadow-${ shadow }` ]: shadow !== 3,
+		[ `ugb--shadow-${ shadow }` ]: shadow !== '',
 	} )
 
 	const show = showOptions( props )

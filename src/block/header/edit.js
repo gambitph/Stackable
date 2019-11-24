@@ -94,8 +94,8 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 	const { setAttributes } = props
 	const {
 		design = 'basic',
-		borderRadius = 12,
-		shadow = 3,
+		borderRadius = '',
+		shadow = '',
 		showTitle = true,
 		showSubtitle = true,
 		titleTag = '',
@@ -387,7 +387,7 @@ const edit = props => {
 		title,
 		subtitle,
 		design = 'basic',
-		shadow = 3,
+		shadow = '',
 		restrictContentWidth = false,
 		invert = false,
 		fullHeight = false,

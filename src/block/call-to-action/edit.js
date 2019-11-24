@@ -90,8 +90,8 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 	const {
 		titleColor,
 		descriptionColor,
-		borderRadius = 12,
-		shadow = 3,
+		borderRadius = '',
+		shadow = '',
 		showTitle = true,
 		showDescription = true,
 		showButton = true,
@@ -292,7 +292,7 @@ const edit = props => {
 
 	const {
 		design = 'basic',
-		shadow = 3,
+		shadow = '',
 
 		// Title.
 		showTitle = true,
@@ -318,7 +318,7 @@ const edit = props => {
 	const itemClasses = classnames( [
 		'ugb-cta__item',
 	], applyFilters( 'stackable.cta.boxclasses', {
-		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
+		[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== '',
 	}, design, props ) )
 
 	const titleComp = showTitle &&

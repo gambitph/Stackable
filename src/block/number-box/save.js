@@ -26,7 +26,7 @@ const save = props => {
 		columns = 2,
 		design = 'basic',
 		titleTag = '',
-		shadow = 3,
+		shadow = '',
 		numberStyle = '',
 		showNumber = true,
 		showTitle = true,
@@ -56,7 +56,7 @@ const save = props => {
 						'ugb-number-box__item',
 						`ugb-number-box__item${ i }`,
 					], applyFilters( 'stackable.number-box.boxclasses', {
-						[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== 3,
+						[ `ugb--shadow-${ shadow }` ]: design !== 'plain' && shadow !== '',
 					}, design, props ) )
 
 					return (
