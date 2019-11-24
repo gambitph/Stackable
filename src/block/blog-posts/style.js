@@ -165,8 +165,10 @@ export const createStyles = props => {
 	} = props.attributes
 	if ( showExcerpt ) {
 		styles.push( {
-			'.ugb-blog-posts__excerpt': {
+			'.ugb-blog-posts__excerpt, .ugb-blog-posts__excerpt p': {
 				...createTypographyStyles( 'excerpt%s', 'desktop', props.attributes, { importantSize: true } ),
+			},
+			'.ugb-blog-posts__excerpt': {
 				color: appendImportant( whiteIfDarkBlackIfLight( excerptColor, show.columnBackground && columnBackgroundColor ) ),
 				textAlign: getValue( 'excerptAlign', '%s !important' ),
 			},
