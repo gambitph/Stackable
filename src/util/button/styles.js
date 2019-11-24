@@ -45,7 +45,7 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 			[ `.${ mainClassName }` ]: {
 				backgroundColor: getValue( 'BackgroundColor' ) !== '' ? getValue( 'BackgroundColor' ) : undefined,
 				backgroundImage: getValue( 'BackgroundColorType' ) === 'gradient' ?
-					`linear-gradient(${ blockAttributes[ getAttrName( 'BackgroundGradientDirection' ) ] !== '' ? getValue( 'BackgroundGradientDirection', 0 ) : '90' }deg, ${ getValue( 'BackgroundColor', defaultColor1 ) }, ${ getValue( 'BackgroundColor2', defaultColor2 ) })` :
+					`linear-gradient(${ blockAttributes[ getAttrName( 'BackgroundGradientDirection' ) ] !== '' ? getValue( 'BackgroundGradientDirection', '%sdeg', '0deg' ) : '90deg' }, ${ getValue( 'BackgroundColor' ) || defaultColor1 }, ${ getValue( 'BackgroundColor2' ) || defaultColor2 })` :
 					undefined,
 				paddingTop: getValue( 'PaddingTop' ) !== '' ? `${ getValue( 'PaddingTop' ) }px` : undefined,
 				paddingRight: getValue( 'PaddingRight' ) !== '' ? `${ getValue( 'PaddingRight' ) }px` : undefined,
@@ -71,7 +71,7 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 			[ `.${ mainClassName }:before` ]: {
 				content: hasHoverGradientEffect ? '""' : undefined,
 				backgroundImage: hasHoverGradientEffect ?
-					`linear-gradient(${ getValue( 'HoverBackgroundGradientDirection', getValue( 'BackgroundGradientDirection', 90 ) ) }deg, ${ getValue( 'HoverBackgroundColor', getValue( 'BackgroundColor', defaultColor1 ) ) }, ${ getValue( 'HoverBackgroundColor2', getValue( 'BackgroundColor2', defaultColor2 ) ) })` :
+					`linear-gradient(${ getValue( 'HoverBackgroundGradientDirection', '%sdeg' ) || getValue( 'BackgroundGradientDirection', '%sdeg', '90deg' ) }, ${ getValue( 'HoverBackgroundColor' ) || getValue( 'BackgroundColor' ) || defaultColor1 }, ${ getValue( 'HoverBackgroundColor2' ) || getValue( 'BackgroundColor2' ) || defaultColor2 })` :
 					undefined,
 			},
 		} )
@@ -90,17 +90,29 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 				paddingBottom: getValue( 'PaddingBottom' ) !== '' ? `${ getValue( 'PaddingBottom' ) }px` : undefined,
 				paddingLeft: getValue( 'PaddingLeft' ) !== '' ? `${ getValue( 'PaddingLeft' ) }px` : undefined,
 			},
-			[ `.${ mainClassName } .ugb-button--inner, .${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon svg` ]: {
+			[ `.${ mainClassName } .ugb-button--inner` ]: {
 				color: getValue( 'BackgroundColor' ) !== '' ? getValue( 'BackgroundColor' ) : undefined,
 			},
 			[ `.${ mainClassName }:hover` ]: {
 				borderColor: getValue( 'HoverBackgroundColor' ) !== '' ? getValue( 'HoverBackgroundColor' ) : undefined,
 			},
-			[ `.${ mainClassName }:hover .ugb-button--inner, .${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon:hover svg` ]: {
+			[ `.${ mainClassName }:hover .ugb-button--inner` ]: {
 				color: getValue( 'HoverBackgroundColor' ) !== '' ? getValue( 'HoverBackgroundColor' ) :
 					( getValue( 'BackgroundColor' ) !== '' ? getValue( 'BackgroundColor' ) : undefined ),
 			},
 		} )
+
+		if ( getValue( 'Icon' ) !== '' ) {
+			styles.push( {
+				[ `.${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon svg` ]: {
+					color: getValue( 'BackgroundColor' ) !== '' ? getValue( 'BackgroundColor' ) : undefined,
+				},
+				[ `.${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon:hover svg` ]: {
+					color: getValue( 'HoverBackgroundColor' ) !== '' ? getValue( 'HoverBackgroundColor' ) :
+						( getValue( 'BackgroundColor' ) !== '' ? getValue( 'BackgroundColor' ) : undefined ),
+				},
+			} )
+		}
 
 		cancelHoverOpacity = getValue( 'HoverBackgroundColor' ) !== ''
 
@@ -110,16 +122,27 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 			styles.push( {
 				[ `.${ mainClassName }:before` ]: {
 					content: '""',
-					backgroundImage: `linear-gradient(${ getValue( 'HoverBackgroundGradientDirection', 90 ) }deg, ${ getValue( 'HoverBackgroundColor', getValue( 'BackgroundColor' ) ) }, ${ getValue( 'HoverBackgroundColor2', getValue( 'HoverBackgroundColor', getValue( 'BackgroundColor' ) ) ) })`,
+					backgroundImage: `linear-gradient(${ getValue( 'HoverBackgroundGradientDirection', '%sdeg', '90deg' ) }, ${ getValue( 'HoverBackgroundColor' ) || getValue( 'BackgroundColor' ) }, ${ getValue( 'HoverBackgroundColor2' ) || getValue( 'HoverBackgroundColor' ) || getValue( 'BackgroundColor' ) })`,
 					top: getValue( 'BorderWidth' ) !== '' ? `-${ getValue( 'BorderWidth' ) }px` : undefined,
 					right: getValue( 'BorderWidth' ) !== '' ? `-${ getValue( 'BorderWidth' ) }px` : undefined,
 					bottom: getValue( 'BorderWidth' ) !== '' ? `-${ getValue( 'BorderWidth' ) }px` : undefined,
 					left: getValue( 'BorderWidth' ) !== '' ? `-${ getValue( 'BorderWidth' ) }px` : undefined,
 				},
-				[ `.${ mainClassName }:hover .ugb-button--inner, .${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon:hover svg` ]: {
-					color: appendImportant( whiteIfDarkBlackIfLight( getValue( 'HoverTextColor' ), getValue( 'HoverBackgroundColor', getValue( 'BackgroundColor' ) ) ) ),
+				[ `.${ mainClassName }:hover` ]: {
+					backgroundColor: appendImportant( getValue( 'HoverBackgroundColor' ) !== '' ? getValue( 'HoverBackgroundColor' ) : getValue( 'BackgroundColor' ) ),
+				},
+				[ `.${ mainClassName }:hover .ugb-button--inner` ]: {
+					color: appendImportant( whiteIfDarkBlackIfLight( getValue( 'HoverTextColor' ), getValue( 'HoverBackgroundColor' ) || getValue( 'BackgroundColor' ) ) ),
 				},
 			} )
+
+			if ( getValue( 'Icon' ) !== '' ) {
+				styles.push( {
+					[ `.${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon:hover svg` ]: {
+						color: appendImportant( whiteIfDarkBlackIfLight( getValue( 'HoverTextColor' ), getValue( 'HoverBackgroundColor' ) || getValue( 'BackgroundColor' ) ) ),
+					},
+				} )
+			}
 
 			cancelHoverOpacity = true
 		}
@@ -127,19 +150,30 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 
 	if ( getValue( 'Design' ) === 'plain' ) {
 		styles.push( {
-			[ `.${ mainClassName } .ugb-button--inner, .${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon svg` ]: {
+			[ `.${ mainClassName } .ugb-button--inner` ]: {
 				color: getValue( 'BackgroundColor' ) !== '' ? getValue( 'BackgroundColor' ) : undefined,
 			},
-			[ `.${ mainClassName }:hover .ugb-button--inner, .${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon:hover svg` ]: {
+			[ `.${ mainClassName }:hover .ugb-button--inner` ]: {
 				color: getValue( 'HoverBackgroundColor' ) !== '' ? getValue( 'HoverBackgroundColor' ) : undefined,
 			},
 		} )
+
+		if ( getValue( 'Icon' ) !== '' ) {
+			styles.push( {
+				[ `.${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon svg` ]: {
+					color: getValue( 'BackgroundColor' ) !== '' ? getValue( 'BackgroundColor' ) : undefined,
+				},
+				[ `.${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon:hover svg` ]: {
+					color: getValue( 'HoverBackgroundColor' ) !== '' ? getValue( 'HoverBackgroundColor' ) : undefined,
+				},
+			} )
+		}
 
 		cancelHoverOpacity = getValue( 'HoverBackgroundColor' ) !== ''
 	}
 
 	if ( getValue( 'Design' ) !== 'link' ) {
-		const iconSpacingRule = blockAttributes[ getAttrName( 'IconSpacing' ) ] !== '' && typeof blockAttributes[ getAttrName( 'IconSpacing' ) ] !== 'undefined' ? `${ getValue( 'IconSpacing', 0 ) }px` : undefined
+		const iconSpacingRule = blockAttributes[ getAttrName( 'IconSpacing' ) ] !== '' && typeof blockAttributes[ getAttrName( 'IconSpacing' ) ] !== 'undefined' ? `${ getValue( 'IconSpacing', '%spx', 0 ) }` : undefined
 		const borderRadius = blockAttributes[ getAttrName( 'BorderRadius' ) ]
 		styles.push( {
 			[ `.${ mainClassName }` ]: {
