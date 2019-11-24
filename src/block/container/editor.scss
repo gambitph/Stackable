@@ -37,27 +37,6 @@
 	max-width: none !important;
 }
 
-// Force color
-body.wp-admin {
-	.ugb-container[style*="--ugb-text-color"] {
-		.editor-block-list__block-edit [data-block] {
-			> *:not(.wp-block-html) { // Do not include HTML block code.
-				&,
-				p,
-				h1,
-				h2,
-				h3,
-				h4,
-				h5,
-				h6,
-				* {
-					color: var(--ugb-text-color);
-				}
-			}
-		}
-	}
-}
-
 // Make sure our first & last contents (visually) in the editor don't have margins.
 .ugb-container__content-wrapper > .editor-inner-blocks > .editor-block-list__layout {
 	> .editor-block-list__block:first-child > .editor-block-list__block-edit {
