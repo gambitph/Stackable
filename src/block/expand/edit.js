@@ -237,16 +237,18 @@ const edit = props => {
 					placeholder={ __( 'Some short text that can be expanded to show more details.', i18n ) }
 					keepPlaceholderOnFocus
 				/>
-				<a>{ /* eslint-disable-line */ /* Workaround to get around RichText not allowing inlines. */ }
-					<RichText
-						tagName="div"
-						className="ugb-expand__more-toggle-text"
-						value={ moreLabel }
-						onChange={ text => setAttributes( { moreLabel: text } ) }
-						placeholder={ __( 'Show more', i18n ) }
-						keepPlaceholderOnFocus
-					/>
-				</a>
+				<div className="ugb-expand__toggle-wrapper">
+					<a>{ /* eslint-disable-line */ /* Workaround to get around RichText not allowing inlines. */ }
+						<RichText
+							tagName="div"
+							className="ugb-expand__more-toggle-text"
+							value={ moreLabel }
+							onChange={ text => setAttributes( { moreLabel: text } ) }
+							placeholder={ __( 'Show more', i18n ) }
+							keepPlaceholderOnFocus
+						/>
+					</a>
+				</div>
 				{ /* eslint-disable-next-line jsx-a11y/label-has-for */ }
 				{ isSelected && <label className="ugb-expand__label">{ __( 'More text', i18n ) }</label> }
 				{
@@ -261,16 +263,18 @@ const edit = props => {
 					/>
 				}
 				{ isSelected &&
-					<a>{ /* eslint-disable-line */ /* Workaround to get around RichText not allowing inlines. */ }
-						<RichText
-							tagName="div"
-							className="ugb-expand__less-toggle-text"
-							value={ lessLabel }
-							onChange={ text => setAttributes( { lessLabel: text } ) }
-							placeholder={ __( 'Show less', i18n ) }
-							keepPlaceholderOnFocus
-						/>
-					</a>
+					<div className="ugb-expand__toggle-wrapper">
+						<a>{ /* eslint-disable-line */ /* Workaround to get around RichText not allowing inlines. */ }
+							<RichText
+								tagName="div"
+								className="ugb-expand__less-toggle-text"
+								value={ lessLabel }
+								onChange={ text => setAttributes( { lessLabel: text } ) }
+								placeholder={ __( 'Show less', i18n ) }
+								keepPlaceholderOnFocus
+							/>
+						</a>
+					</div>
 				}
 			</Fragment>
 		) } />

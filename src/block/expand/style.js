@@ -5,6 +5,7 @@ import {
 	createTypographyStyles,
 	createResponsiveStyles,
 	__getValue,
+	appendImportant,
 } from '~stackable/util'
 
 /**
@@ -67,21 +68,27 @@ export const createStyles = props => {
 
 	// Link.
 	styles.push( {
+		'.ugb-expand__toggle-wrapper': {
+			textAlign: appendImportant( getValue( 'linkAlign' ) ),
+		},
 		'.ugb-expand__more-toggle-text, .ugb-expand__less-toggle-text': {
 			...createTypographyStyles( 'link%s', 'desktop', props.attributes ),
 			color: getValue( 'linkColor' ),
-			textAlign: getValue( 'linkAlign' ),
 		},
 		tablet: {
+			'.ugb-expand__toggle-wrapper': {
+				textAlign: appendImportant( getValue( 'linkTabletAlign' ) ),
+			},
 			'.ugb-expand__more-toggle-text, .ugb-expand__less-toggle-text': {
 				...createTypographyStyles( 'link%s', 'tablet', props.attributes ),
-				textAlign: getValue( 'linkTabletAlign' ),
 			},
 		},
 		mobile: {
+			'.ugb-expand__toggle-wrapper': {
+				textAlign: appendImportant( getValue( 'linkMobileAlign' ) ),
+			},
 			'.ugb-expand__more-toggle-text, .ugb-expand__less-toggle-text': {
 				...createTypographyStyles( 'link%s', 'mobile', props.attributes ),
-				textAlign: getValue( 'linkMobileAlign' ),
 			},
 		},
 	} )

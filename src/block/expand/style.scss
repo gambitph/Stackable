@@ -23,7 +23,9 @@
 	.ugb-expand__more-toggle-text {
 		display: none;
 	}
-	.ugb-expand__more-text,
+	.ugb-expand__more-text {
+		display: block !important;
+	}
 	.ugb-expand__less-toggle-text {
 		display: inline-block !important;
 	}
