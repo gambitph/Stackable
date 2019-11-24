@@ -72,6 +72,21 @@ export const createStyles = props => {
 		...createBackgroundStyleSet( 'preview%s', 'ugb-video-popup__wrapper', props.attributes ),
 	} )
 
+	const {
+		previewBackgroundTintStrength = '',
+		previewBackgroundColor = '',
+	} = props.attributes
+	if ( previewBackgroundTintStrength || previewBackgroundColor ) {
+		styles.push( {
+			'.ugb-video-popup__wrapper:hover:before': {
+				opacity: previewBackgroundColor && previewBackgroundTintStrength === '' ? 0.2 :
+					previewBackgroundTintStrength >= 5 ? ( previewBackgroundTintStrength / 10 ) - 0.3 :
+						( previewBackgroundTintStrength / 10 ) + 0.3,
+
+			},
+		} )
+	}
+
 	return deepmerge.all( styles )
 }
 

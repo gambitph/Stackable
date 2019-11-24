@@ -1,7 +1,6 @@
 /**
  * External dependencies
  */
-import { hasBackgroundOverlay } from '~stackable/util'
 import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
 import { BlockContainer, DivBackground } from '~stackable/components'
 
@@ -25,7 +24,6 @@ const save = props => {
 		videoID,
 		playButtonType,
 		shadow = '',
-		previewBackgroundTintStrength = 5,
 	} = props.attributes
 
 	const mainClasses = classnames( [
@@ -37,8 +35,6 @@ const save = props => {
 	const boxClasses = classnames( [
 		'ugb-video-popup__wrapper',
 	], applyFilters( 'stackable.video-popup.boxclasses', {
-		// TODO: generate this as styles instead of using class. Also remove from style.scss
-		[ `ugb--background-opacity-${ previewBackgroundTintStrength }` ]: hasBackgroundOverlay( 'preview%s', props.attributes ),
 		[ `ugb--shadow-${ shadow }` ]: shadow !== '',
 	}, props ) )
 
