@@ -67,6 +67,10 @@ export const schema = {
 	},
 
 	...createBackgroundAttributes( 'preview%s' ),
+	previewBackgroundColor: {
+		type: 'string',
+		default: '#000000',
+	},
 
 	hoverEffect: {
 		type: 'string',
