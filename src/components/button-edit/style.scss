@@ -117,8 +117,8 @@
 .ugb-button.ugb-button--size-tiny {
 	padding-left: 1em;
 	padding-right: 1em;
-	padding-top: calc(0.3em - var(--s-border, 0px));
-	padding-bottom: calc(0.3em - var(--s-border, 0px));
+	padding-top: 0.3em;
+	padding-bottom: 0.3em;
 	.ugb-button--inner {
 		font-size: 0.7em;
 	}
@@ -129,8 +129,8 @@
 .ugb-button.ugb-button--size-medium {
 	padding-left: 1.5em;
 	padding-right: 1.5em;
-	padding-top: calc(0.6em - var(--s-border, 0px));
-	padding-bottom: calc(0.6em - var(--s-border, 0px));
+	padding-top: 0.6em;
+	padding-bottom: 0.6em;
 	.ugb-button--inner {
 		font-size: 1.075em;
 	}
@@ -138,8 +138,8 @@
 .ugb-button.ugb-button--size-large {
 	padding-left: 1.75em;
 	padding-right: 1.75em;
-	padding-top: calc(0.8em - var(--s-border, 0px));
-	padding-bottom: calc(0.8em - var(--s-border, 0px));
+	padding-top: 0.8em;
+	padding-bottom: 0.8em;
 	.ugb-button--inner {
 		font-size: 1.15em;
 	}
@@ -169,8 +169,7 @@
 // Ghost button design.
 .ugb-button.ugb-button--design-ghost {
 	background-color: transparent;
-	--s-border: 2px;
-	border: var(--s-border, 0px) solid var(--s-primary-color, #2091e1);
+	border: 2px solid var(--s-primary-color, #2091e1);
 	.ugb-button--inner {
 		color: var(--s-primary-color, #2091e1);
 	}
