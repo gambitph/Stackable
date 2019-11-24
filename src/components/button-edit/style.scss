@@ -8,8 +8,7 @@
 	border-radius: 4px;
 	display: inline-block;
 	cursor: pointer;
-	.ugb-button--inner,
-	.ugb-button-inner { // Old style.
+	.ugb-button--inner {
 		text-decoration: none !important;
 		display: block;
 		color: #fff;
@@ -111,63 +110,51 @@
 		transform: scale(1.13) translateY(-10%);
 	}
 }
-.ugb-button .ugb-button--inner:hover,
-.ugb-button .ugb-button-inner:hover { // Old style.
+.ugb-button .ugb-button--inner:hover {
 	color: #fff;
 }
 
-.ugb-button.ugb-button--size-tiny,
-.ugb-button-tiny.ugb-button { // Old style.
+.ugb-button.ugb-button--size-tiny {
 	padding-left: 1em;
 	padding-right: 1em;
 	padding-top: calc(0.3em - var(--s-border, 0px));
 	padding-bottom: calc(0.3em - var(--s-border, 0px));
-	.ugb-button--inner,
-	.ugb-button-inner { // Old style.
+	.ugb-button--inner {
 		font-size: 0.7em;
 	}
 }
-.ugb-button.ugb-button--size-small .ugb-button--inner,
-.ugb-button-small.ugb-button .ugb-button-inner { // Old style.
+.ugb-button.ugb-button--size-small .ugb-button--inner {
 	font-size: 0.85em;
 }
-.ugb-button.ugb-button--size-medium,
-.ugb-button-medium.ugb-button { // Old style.
+.ugb-button.ugb-button--size-medium {
 	padding-left: 1.5em;
 	padding-right: 1.5em;
 	padding-top: calc(0.6em - var(--s-border, 0px));
 	padding-bottom: calc(0.6em - var(--s-border, 0px));
-	.ugb-button--inner,
-	.ugb-button-inner { // Old style.
+	.ugb-button--inner {
 		font-size: 1.075em;
 	}
 }
-.ugb-button.ugb-button--size-large,
-.ugb-button-large.ugb-button { // Old style.
+.ugb-button.ugb-button--size-large {
 	padding-left: 1.75em;
 	padding-right: 1.75em;
 	padding-top: calc(0.8em - var(--s-border, 0px));
 	padding-bottom: calc(0.8em - var(--s-border, 0px));
-	.ugb-button--inner,
-	.ugb-button-inner { // Old style.
+	.ugb-button--inner {
 		font-size: 1.15em;
 	}
 }
-.ugb-button--align-left,
-.ugb-button-left { // Old style.
+.ugb-button--align-left {
 	margin-right: auto;
 }
-.ugb-button--align-center,
-.ugb-button-center { // Old style.
+.ugb-button--align-center {
 	margin-left: auto;
 	margin-right: auto;
 }
-.ugb-button--align-right,
-.ugb-button-right { // Old style.
+.ugb-button--align-right {
 	margin-left: auto;
 }
-.ugb-button--align-full,
-.ugb-button-full { // Old style.
+.ugb-button--align-full {
 	text-align: center;
 }
 
@@ -180,20 +167,17 @@
 }
 
 // Ghost button design.
-.ugb-button.ugb-button--design-ghost,
-.ugb-button.ugb-ghost-button { // Old style.
+.ugb-button.ugb-button--design-ghost {
 	background-color: transparent;
 	--s-border: 2px;
 	border: var(--s-border, 0px) solid var(--s-primary-color, #2091e1);
-	.ugb-button--inner,
-	.ugb-button-inner { // Old style.
+	.ugb-button--inner {
 		color: var(--s-primary-color, #2091e1);
 	}
 	&:hover {
 		opacity: 0.85;
 		box-shadow: none !important;
-		.ugb-button--inner,
-		.ugb-button-inner { // Old style.
+		.ugb-button--inner {
 			color: var(--s-primary-color, #2091e1);
 		}
 	}
@@ -207,36 +191,31 @@
 }
 
 // Link design.
-.ugb-button.ugb-button--design-plain,
-.ugb-button.ugb-plain-button {
+.ugb-button.ugb-button--design-plain {
 	background-color: transparent;
 	border: none;
 	padding-left: 0;
 	padding-right: 0;
-	.ugb-button--inner,
-	.ugb-button-inner { // Old style.
+	.ugb-button--inner {
 		color: var(--s-primary-color, #2091e1);
 	}
 	&:hover {
 		opacity: 0.85;
 		box-shadow: none !important;
-		.ugb-button--inner,
-		.ugb-button-inner { // Old style.
+		.ugb-button--inner {
 			color: var(--s-primary-color, #2091e1);
 		}
 	}
 }
 
 // Just a link
-.ugb-button.ugb-button--design-link,
-.ugb-button.ugb-link-button { // Old style.
+.ugb-button.ugb-button--design-link {
 	background: transparent;
 	padding: 0;
 	border-radius: 0 !important;
 }
 
-.ugb-button.ugb-button--has-icon,
-.ugb-button.ugb-has-icon { // Old style.
+.ugb-button.ugb-button--has-icon {
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
@@ -256,30 +235,24 @@
 	}
 }
 .ugb-button.ugb-button--has-icon.ugb-button--design-ghost,
-.ugb-button.ugb-button--has-icon.ugb-button--design-plain,
-.ugb-button.ugb-has-icon.ugb-ghost-button, // Old style.
-.ugb-button.ugb-has-icon.ugb-plain-button { // Old style.
+.ugb-button.ugb-button--has-icon.ugb-button--design-plain {
 	svg {
 		color: var(--s-primary-color, #2091e1);
 	}
 }
-.ugb-button.ugb-button--size-tiny.ugb-button--has-icon svg,
-.ugb-button-tiny.ugb-button.ugb-has-icon svg { // Old style.
+.ugb-button.ugb-button--size-tiny.ugb-button--has-icon svg {
 	width: 0.75em;
 	height: 0.75em;
 }
-.ugb-button.ugb-button--size-small.ugb-button--has-icon svg,
-.ugb-button-small.ugb-button.ugb-has-icon svg { // Old style.
+.ugb-button.ugb-button--size-small.ugb-button--has-icon svg {
 	width: 0.75em;
 	height: 0.75em;
 }
-.ugb-button.ugb-button--size-medium.ugb-button--has-icon svg,
-.ugb-button-medium.ugb-button.ugb-has-icon svg { // Old style.
+.ugb-button.ugb-button--size-medium.ugb-button--has-icon svg {
 	width: 1.25em;
 	height: 1.25em;
 }
-.ugb-button.ugb-button--size-large.ugb-button--has-icon svg,
-.ugb-button-large.ugb-button.ugb-has-icon svg { // Old style.
+.ugb-button.ugb-button--size-large.ugb-button--has-icon svg {
 	width: 1.5em;
 	height: 1.5em;
 }
