@@ -41,7 +41,7 @@ const createTypographyAttributes = attrNameTemplate => {
 			[ 'FontSizeUnit', 'TabletFontSizeUnit', 'MobileFontSizeUnit' ]
 		),
 		...createAllCombinationAttributes(
-			'title%sLineHeightUnit',
+			attrNameTemplate,
 			{
 				type: 'string',
 				default: 'em',
