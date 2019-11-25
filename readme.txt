@@ -1,28 +1,74 @@
 === Stackable - Gutenberg Blocks ===
 Contributors: bfintal, gambitph, freemius
 Tags: gutenberg, block, blocks, block editor, gutenberg blocks, page builder, editor, wordpress 5.0
-Requires at least: 4.8
-Tested up to: 5.2.2
+Requires at least: 5.0
+Tested up to: 5.3
 Requires PHP: 5.3
 Stable tag: 2.0.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-An Amazing Block Collection to Put Some Swag to the New WordPress Editor
+An Amazing Block Collection That Lets You Reimagine the Way You Use the WordPress Block Editor (Gutenberg).
 
 == Description ==
 
-Stackable is a collection of beautiful ready-to-use custom blocks that builds on and supercharges the new WordPress block editor (Gutenberg). Stackable’s blocks give you the capability to easily create great websites with just a few clicks.
+**Reimagine the Way You Use the WordPress Block Editor**
 
-Visit our [website](https://wpstackable.com) (made with Gutenberg + Stackable blocks) to learn more about Stackable.
+[Stackable](https://wpstackable.com) is one of the first and most expansive block collections made specially for the new WordPress Block Editor (Gutenberg). It adds essential custom blocks to Gutenberg’s arsenal to achieve a smooth page building experience. With its latest iteration, Stackable brings a suite of high quality blocks for page building, with precision design tools that let you build the perfect website and landing page that you want.
 
-Stackable provides feature-rich blocks that gives you more design options for your site. Stackable’s blocks look great out of the box, and will make website building a breeze.
+With Stackable, you get:
 
-Stackable’s custom blocks come with multiple block layouts that you can use to build your perfect site without writing a single line of code. Stackable blocks are also responsive and will look great even in small screens.
+- 23 Quality Page Building Blocks for Gutenberg
+- 50+ Block Layouts and Pre-set Section / Block Designs that can be switched with just one click
+- Advanced and diverse web design options,
+- Responsive customization controls to precisely design your blocks for tablet and mobile visitors
+- Built-in Section / Background controls for the easiest way to build page sections using only a single block
+- Versatile image and color options, hover effects and separators / shape dividers
+- Detailed responsiveness options
 
-Want to see it in action? Check out our [block demos](https://wpstackable.com/container-block/).
+Whether you are a DIYer, business owner, graphic artist or a web agency, Stackable is just the WordPress custom block collection you’ve been waiting for.
 
-## Stackable blocks
+See Stackable in action by checking out our demo. Visit our [website](https://wpstackable.com) (made with Gutenberg + Stackable blocks) to learn even more about Stackable.
+
+## The Easiest and Most Straightforward Way to Build Page Sections
+
+Stackable lets you reimagine the way you use the WordPress Block Editor for a truly easy and intuitive way of building stunning web pages. With Stackable, you can build entire page sections by using a single block with the built-in section / background controls. There’s really nothing like it.
+
+Stackable blocks are designed to be highly versatile and usable either as:
+
+1. units that can be combined with other blocks, or
+2. stand-alone sections, which can easily be achieved by turning on the block background settings (a uniquely Stackable feature).
+
+Having this flexibility makes Stackable an all-in-one tool for building your website.
+
+## Stunning Layouts and Pre-set Section / Block Designs
+
+Together with this new way of building sections, we’ll start you off with great built-in multiple block layouts and pre-set section / block designs. All our designs are stunning, professionally-made and ready-to-use.
+
+Unlike any other block collection, our pre-set section / block designs are **cohesive across almost all blocks, making them truly useable for building full websites**. Gain access to a very diverse collection of pre-set designs and layouts which are all **interchangeable with one click!**
+
+We have absolutely the best and most expansive design collection with 120 block layouts and 200+ pre-set design sections (with more on the way!).
+
+## Design with Powerful Precision Controls in an Intuitive UI
+
+Stackable now offers the most advanced block design controls with the widest range of design settings. With this block collection, enjoy:
+
+- Intuitive and easy to use block design settings for the easiest page building experience for casual users like entrepreneurs, bloggers, and DIYers
+- Highly advanced precision options for professionals and advanced users
+- Detailed block settings include:
+  - Highly adjustable column and block background options including single tint, gradient tint, image and video
+  - Flexible typography options including text highlight options
+  - Cutting-edge color settings including built-in gradient tint and gradient blend mode options
+  - Advanced image settings and responsive image loading
+  - Precision controls for block dimensions, spacing and alignment
+  - Highly detailed responsiveness block options for pixel perfect tablet and mobile designs
+  - Built-in separators / shape dividers for each block
+
+All of Stackable's powerful options are easily managed in an intuitive UI for a smooth block editing experience. This is achieved by our three-tab configuration, easy toggle on/off for block elements, and streamlined settings.
+
+## A Truly Useful Block Collection with 23 Quality Gutenberg Blocks
+
+We’ve come up with page building blocks that are all functional and stunning. We’ve put in the design effort so you can enjoy a truly usable and quality block collection for the new WordPress block editor (Gutenberg).
 
 **Container Block** — [View Block](https://wpstackable.com/container-block/)
 
@@ -116,19 +162,19 @@ The Divider block is a simple but flexible block to differentiate between sectio
 
 The Spacer block is a great to make your site look less cluttered. Add spaces between any two blocks to make sure your layout looks great.
 
-## Stackable Effects & Features
-
-Stackable also comes with **great effects and features**. Enjoy different background options - image or video backgrounds, fixed images, single and gradient tinted background effects. You can also make use of different image box hover effects to add a little something extra to your pages.
-
-Check out the Stackable demos to see what Stackable can do.
-
 ## Stackable WordPress Theme
 
 Get our WordPress theme that's beautiful & flexible, Gutenberg-ready and made especially for Stackable blocks and the new WordPress editor. [Download the Stackable Theme now](http://eepurl.com/dJY9xI).
 
 ## Stackable Premium
 
-Stackable Premium extends the capabilities of Stackable and the new WordPress editor to give you the smoothest page building experience. Using the core Stackable Philosophy of balancing utility and great design, Stackable Premium offers premium design layouts and effects, premium functionality and focused one-on-one customer care.
+Stackable Premium extends the capabilities of Stackable and the new WordPress editor to give you the smoothest page building experience. Using the core Stackable Philosophy of balancing utility and great design, Stackable Premium offers:
+
+- Premium Block Layouts and Pre-Set Section / Block Designs
+- Premium hover and image box effects
+- Three-layer separators
+- Premium functionality and design options with guided CSS customizer, 50+ blob image shape options, option to use different image shapes for different columns, advanced settings for column spacing, and custom post types for Posts Block
+- Premium updates and focused one-on-one customer care (1 year)
 
 While you can create great pages with Stackable, Stackable Premium lets you do so much more.
 
@@ -162,6 +208,7 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com/blog-pos
 
 ### News Article Updates
 
+- [v2.0 Version 2 is Out!](https://wpstackable.com/version-2-is-out)
 - [v1.17 Text Color and Text Highlight](https://wpstackable.com/blog/text-color-and-text-highlight)
 - [v1.16 Translations: Stackable in Your Language](https://wpstackable.com/blog/translations-stackable-in-your-language/)
 - [v1.15 Separators Are Here](https://wpstackable.com/blog/separators-are-here/)
@@ -178,27 +225,21 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com/blog-pos
 
 ### Learn More About Stackable - Gutenberg Blocks
 
+- [Join the Stackable Community in Facebook](https://www.facebook.com/groups/wpstackable/)
+
+- [Visit us in wpstackable.com](https://wpstackable.com)
 - [Twitter @wpstackable](https://twitter.com/wpstackable)
 - [Facebook Page WPStackable](https://www.facebook.com/Stackable-870555573068267/)
 - [What is Stackable?](https://wpstackable.com/blog/welcome-to-stackable/)
-- [Visit us in wpstackable.com](https://wpstackable.com)
 - [Subscribe to our newsletter](http://eepurl.com/dJY9xI)
 
 == Installation ==
 
 = Minimum Requirements =
 
-You’ll need WordPress version 5.0 or higher for this to work. For versions below 5.0, you'll need to use the Gutenberg plugin.
+You’ll need WordPress version 5.0 or higher for this to work.
 
 == Frequently Asked Questions ==
-
-**What is Gutenberg? Why WordPress 5.0?**
-
-Gutenberg is what the cool kids call the new content editor that came out in WordPress 5.0.
-
-The new content editor replaces the old text editor, and it gives you a more visual way of creating your content.
-
-With WordPress 5.0 & Gutenberg, you build your pages using *blocks*, and Stackable provides you with lots of cool ones.
 
 **What are blocks?**
 
@@ -226,33 +267,45 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Upgrade Notice ==
 
-= 2.0 =
-* Custom CSS of some blocks might fail to upgrade to a newer format and might stop working after editing existing blocks. Here are the affected blocks and how to manually fix your custom CSS:
-	* Icon List block - Change all selectors `.ugb-icon-list-wrapper` to `.ugb-icon-list`
-	* Count Up block - Change the main selector `.ugb-countup` to `.ugb-count-up`
-	* Call to Action block - Change the box selector `.ugb-content-wrapper` to `.ugb-cta__item`
-	* Video Popup block - Change the container selector `.ugb-video-popup` to `.ugb-video-popup__wrapper`
-	* Header block - Change the container selector `ugb-header` to `.ugb-header`
-	* Notification block - Change the container selector `.ugb-notification` to `.ugb-notification__item`
-* Count Up Block: We have replaced the Basic layout, with a new "Plain 2" layout since the Basic layout can be similarly achieved with the new Block Background options.
-* Icon List block: By default the multi-column lists will now collapse to 1 column on mobile.
-
-= 1.11 =
-* Video Popup block - if you are using this block, existing ones may occupy the entire available width after editing. To bring back the old alignment where the block occupies only a small area in the middle, choose `center` align in the toolbar.
-* Heading block - the top and bottom paddings are now a little bit larger
-
-= 1.0 =
-You will have to redo all your blocks
+[Version 2](https://wpstackable.com/version-2-is-out) is a major update! To be on the safe side, please back up your site first, and create a staging/test site and try updating Stackable from there to check if everything looks fine.
 
 == Changelog ==
 
 = 2.0 =
-* New: Additional options for the Separator block
-* New: Standardized block margins and paddings
-* Fixed: Some values in Custom CSS can mess up the rendered block CSS.
-* Fixed: Editor error shows up when no latest posts are found.
-* Fixed: Number box plain layouts now don't have a background
-* Fixed: The Separator block in the editor has top & bottom margins that makes placing separators hard.
+[Version 2 is Out!](https://wpstackable.com/version-2-is-out)
+
+* New: Improved user interface to manage section building tools
+* New: Cutting-edge design options for typography, colors, images & videos
+* New: Precision controls for spacing, alignment & responsiveness options
+* New: New Block Layouts and Pre-set Section Designs
+* New: Built-in section/block background options for easier section building
+* New: 3-tab configuration for layouts, style & advanced settings
+* New: Toggle on/off section background, title, description, & block elements
+* New: Streamlined settings panels for each block element
+* New:  New background settings including advanced image settings and advanced gradient settings
+* New: Built-in top & bottom separators for every block
+* New: Z-index for custom block positioning
+* New: Detailed typography settings including font families, font size, font color, font weight, font cases, line height and letter spacing
+* New: Ability to set headings to specific HTML tags
+* New: Multiple image shape options like circle, square and 50+ blob shapes
+* New: Adaptable settings for image size, image positions & image repeat
+* New: Advanced gradient color and blend mode options
+* New: Custom settings for block dimensions (height and width), paddings & margins
+* New: Spacing options between each block element (title, description, image, etc.)
+* New: Toggle on/off blocks for desktop, tablet & mobile
+* New: Detailed responsiveness settings for font sizes & image displays
+* New: Responsive image loading for different device types
+* New: 26 additional block layouts
+* New: Cohesive pre-set designs across multiple blocks
+* New: Change block layouts and pre-set section designs with just one click
+
+= 1.17.3 =
+* New: Added Facebook community group link
+* New: Revamped icon picker controls
+* Fixed: Flashing overlay outside border-radius in Image Boxes in Edge
+* Fixed: Selecting the custom color field resets the highlight color
+* Fixed: Video Popup block opens on mobile when scrolling
+* Fixed: IE11 forEach error
 
 = 1.17.2 =
 * New: Rebranded welcome & settings page design
