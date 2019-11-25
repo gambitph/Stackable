@@ -45,7 +45,7 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 			[ `.${ mainClassName }` ]: {
 				backgroundColor: getValue( 'BackgroundColor' ) !== '' ? getValue( 'BackgroundColor' ) : undefined,
 				backgroundImage: getValue( 'BackgroundColorType' ) === 'gradient' ?
-					`linear-gradient(${ blockAttributes[ getAttrName( 'BackgroundGradientDirection' ) ] !== '' ? getValue( 'BackgroundGradientDirection', '%sdeg', '0deg' ) : '90deg' }, ${ getValue( 'BackgroundColor' ) || defaultColor1 }, ${ getValue( 'BackgroundColor2' ) || defaultColor2 })` :
+					`linear-gradient(${ blockAttributes[ getAttrName( 'BackgroundGradientDirection' ) ] !== '' ? getValue( 'BackgroundGradientDirection', '%sdeg', '90deg' ) : '90deg' }, ${ getValue( 'BackgroundColor' ) || defaultColor1 }, ${ getValue( 'BackgroundColor2' ) || defaultColor2 })` :
 					undefined,
 				paddingTop: getValue( 'PaddingTop' ) !== '' ? `${ getValue( 'PaddingTop' ) }px` : undefined,
 				paddingRight: getValue( 'PaddingRight' ) !== '' ? `${ getValue( 'PaddingRight' ) }px` : undefined,
@@ -173,7 +173,7 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 	}
 
 	if ( getValue( 'Design' ) !== 'link' ) {
-		const iconSpacingRule = blockAttributes[ getAttrName( 'IconSpacing' ) ] !== '' && typeof blockAttributes[ getAttrName( 'IconSpacing' ) ] !== 'undefined' ? `${ getValue( 'IconSpacing', '%spx', 0 ) }` : undefined
+		const iconSpacingRule = blockAttributes[ getAttrName( 'IconSpacing' ) ] !== '' && typeof blockAttributes[ getAttrName( 'IconSpacing' ) ] !== 'undefined' ? `${ getValue( 'IconSpacing', '%spx', 16 ) }` : undefined
 		const borderRadius = blockAttributes[ getAttrName( 'BorderRadius' ) ]
 		styles.push( {
 			[ `.${ mainClassName }` ]: {
