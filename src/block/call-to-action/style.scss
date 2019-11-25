@@ -22,6 +22,9 @@
 			@include box();
 		}
 	}
+	&.ugb-cta--design-plain .ugb-cta__item {
+		padding: 0 $box-hori-padding;
+	}
 }
 
 // Full width
