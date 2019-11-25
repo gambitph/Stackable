@@ -19,7 +19,6 @@ import { urlIsVideo } from '~stackable/util'
  */
 import {
 	BaseControl,
-	RangeControl,
 	ToggleControl,
 } from '@wordpress/components'
 import {
@@ -75,7 +74,7 @@ const BackgroundControls = props => {
 			) }
 			{ props.onChangeBackgroundColorOpacity && props.backgroundColorType !== 'gradient' &&
 				( ! props.backgroundMediaURL && ! props.tabletBackgroundMediaURL && ! props.mobileBackgroundMediaURL ) && (
-				<RangeControl
+				<AdvancedRangeControl
 					label={ __( 'Background Color Opacity', i18n ) }
 					value={ props.backgroundColorOpacity }
 					onChange={ props.onChangeBackgroundColorOpacity }
@@ -83,6 +82,7 @@ const BackgroundControls = props => {
 					max={ 1 }
 					step={ 0.1 }
 					allowReset={ true }
+					placeholder="1.0"
 				/>
 			) }
 
@@ -106,7 +106,7 @@ const BackgroundControls = props => {
 					}
 				>
 					{ props.onChangeBackgroundGradientDirection && (
-						<RangeControl
+						<AdvancedRangeControl
 							label={ __( 'Gradient Direction (degrees)', i18n ) }
 							value={ props.backgroundGradientDirection }
 							onChange={ props.onChangeBackgroundGradientDirection }
@@ -114,11 +114,12 @@ const BackgroundControls = props => {
 							max={ 360 }
 							step={ 10 }
 							allowReset={ true }
+							placeholder="90"
 						/>
 					) }
 
 					{ props.onChangeBackgroundGradientLocation1 && (
-						<RangeControl
+						<AdvancedRangeControl
 							label={ sprintf( __( 'Color %d Location', i18n ), 1 ) }
 							value={ props.backgroundGradientLocation1 }
 							onChange={ props.onChangeBackgroundGradientLocation1 }
@@ -126,11 +127,12 @@ const BackgroundControls = props => {
 							max={ 100 }
 							step={ 1 }
 							allowReset={ true }
+							placeholder="0"
 						/>
 					) }
 
 					{ props.onChangeBackgroundGradientLocation2 && (
-						<RangeControl
+						<AdvancedRangeControl
 							label={ sprintf( __( 'Color %d Location', i18n ), 2 ) }
 							value={ props.backgroundGradientLocation2 }
 							onChange={ props.onChangeBackgroundGradientLocation2 }
@@ -138,6 +140,7 @@ const BackgroundControls = props => {
 							max={ 100 }
 							step={ 1 }
 							allowReset={ true }
+							placeholder="100"
 						/>
 					) }
 
@@ -195,7 +198,7 @@ const BackgroundControls = props => {
 
 			{ props.onChangeBackgroundTintStrength && props.onChangeBackgroundMedia &&
 				( props.backgroundMediaURL || props.tabletBackgroundMediaURL || props.mobileBackgroundMediaURL ) && (
-				<RangeControl
+				<AdvancedRangeControl
 					label={ __( 'Background Media Tint Strength', i18n ) }
 					value={ props.backgroundTintStrength }
 					onChange={ value => {
@@ -214,6 +217,7 @@ const BackgroundControls = props => {
 					max={ 10 }
 					step={ 1 }
 					allowReset={ true }
+					placeholder={ props.backgroundColor ? '5' : '0' }
 				/>
 			) }
 

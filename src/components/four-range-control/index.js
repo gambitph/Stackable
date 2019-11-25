@@ -128,6 +128,8 @@ class FourRangeControl extends Component {
 			min: this.props.min,
 			max: this.props.max,
 			step: this.props.step,
+			placeholder: this.props.placeholder,
+			initialPosition: this.props.initialPosition,
 		}
 
 		// Change the min, max & step values depending on the unit used.
@@ -140,6 +142,12 @@ class FourRangeControl extends Component {
 		}
 		if ( Array.isArray( this.props.step ) ) {
 			propsToPass.step = this.props.step[ i ]
+		}
+		if ( Array.isArray( this.props.placeholder ) ) {
+			propsToPass.placeholder = this.props.placeholder[ i ]
+		}
+		if ( Array.isArray( this.props.initialPosition ) ) {
+			propsToPass.initialPosition = this.props.initialPosition[ i ]
 		}
 
 		const lockClassNames = classnames( [
@@ -281,6 +289,8 @@ FourRangeControl.defaultProps = {
 	min: 0,
 	max: 50,
 	step: 1,
+	placeholder: '',
+	initialPosition: '',
 }
 
 export default FourRangeControl

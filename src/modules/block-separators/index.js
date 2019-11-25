@@ -98,6 +98,7 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 						min="30"
 						max="400"
 						allowReset={ true }
+						placeholder="200"
 					/>
 				</ResponsiveControl>
 				<AdvancedRangeControl
@@ -108,6 +109,7 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 					value={ topSeparatorWidth }
 					onChange={ topSeparatorWidth => setAttributes( { topSeparatorWidth } ) }
 					allowReset={ true }
+					placeholder="1.0"
 				/>
 				<ToggleControl
 					label={ __( 'Flip Horizontally', i18n ) }
@@ -184,6 +186,7 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 						min="30"
 						max="400"
 						allowReset={ true }
+						placeholder="200"
 					/>
 				</ResponsiveControl>
 				<AdvancedRangeControl
@@ -194,6 +197,7 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 					value={ bottomSeparatorWidth }
 					onChange={ bottomSeparatorWidth => setAttributes( { bottomSeparatorWidth } ) }
 					allowReset={ true }
+					placeholder="1.0"
 				/>
 				<ToggleControl
 					label={ __( 'Flip Horizontally', i18n ) }

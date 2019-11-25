@@ -54,7 +54,7 @@ import classnames from 'classnames'
  */
 import { RichText } from '@wordpress/block-editor'
 import {
-	PanelBody, RangeControl, SelectControl,
+	PanelBody, SelectControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters, addFilter } from '@wordpress/hooks'
@@ -143,23 +143,25 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 					} }
 				/>
 				{ show.borderRadius &&
-					<RangeControl
+					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
 						onChange={ borderRadius => setAttributes( { borderRadius } ) }
 						min={ 0 }
 						max={ 50 }
 						allowReset={ true }
+						placeholder="12"
 					/>
 				}
 				{ show.shadow &&
-					<RangeControl
+					<AdvancedRangeControl
 						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
 						onChange={ shadow => setAttributes( { shadow } ) }
 						min={ 0 }
 						max={ 9 }
 						allowReset={ true }
+						placeholder="3"
 					/>
 				}
 				<ContentAlignControl
@@ -178,13 +180,14 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 						onChange={ columnBorderColor => setAttributes( { columnBorderColor } ) }
 						label={ __( 'Border Color', i18n ) }
 					/>
-					<RangeControl
+					<AdvancedRangeControl
 						label={ __( 'Border Thickness', i18n ) }
 						value={ columnBorderThickness }
 						onChange={ columnBorderThickness => setAttributes( { columnBorderThickness } ) }
 						min={ 0 }
 						max={ 20 }
 						allowReset={ true }
+						placeholder={ design === 'bordered' ? 5 : 3 }
 					/>
 				</PanelAdvancedSettings>
 			}
@@ -222,6 +225,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 						min={ 5 }
 						max={ 50 }
 						allowReset={ true }
+						placeholder="16"
 					/>
 				</ResponsiveControl>
 				<ColorPaletteControl
@@ -266,9 +270,10 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 						max={ design !== 'large-icon' ? 200 : 400 }
 						step={ 1 }
 						allowReset={ true }
+						placeholder="30"
 					/>
 				</ResponsiveControl>
-				<RangeControl
+				<AdvancedRangeControl
 					label={ __( 'Icon Opacity', i18n ) }
 					value={ iconOpacity }
 					onChange={ iconOpacity => setAttributes( { iconOpacity } ) }
@@ -276,8 +281,9 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 					max={ 1 }
 					step={ 0.1 }
 					allowReset={ true }
+					placeholder="1"
 				/>
-				<RangeControl
+				<AdvancedRangeControl
 					label={ __( 'Icon Rotation', i18n ) }
 					value={ iconRotation }
 					onChange={ iconRotation => setAttributes( { iconRotation } ) }
@@ -285,6 +291,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 					max={ 360 }
 					step={ 1 }
 					allowReset={ true }
+					placeholder={ design === 'large-icon' ? -20 : 0 }
 				/>
 				{ show.iconLocation &&
 					<FourRangeControl

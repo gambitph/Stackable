@@ -39,11 +39,7 @@ import classnames from 'classnames'
  * WordPress dependencies
  */
 import { i18n, showProNotice } from 'stackable'
-import {
-	PanelBody,
-	RangeControl,
-	ToggleControl,
-} from '@wordpress/components'
+import { PanelBody, ToggleControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
@@ -180,6 +176,7 @@ addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/contain
 						min={ 10 }
 						max={ 100 }
 						allowReset={ true }
+						placeholder="100"
 					/>
 				</ResponsiveControl>
 
@@ -217,23 +214,25 @@ addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/contain
 				<ControlSeparator />
 
 				{ show.borderRadius &&
-					<RangeControl
+					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
 						onChange={ borderRadius => setAttributes( { borderRadius } ) }
 						min={ 0 }
 						max={ 50 }
 						allowReset={ true }
+						placeholder="12"
 					/>
 				}
 				{ show.columnBackground &&
-					<RangeControl
+					<AdvancedRangeControl
 						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
 						onChange={ shadow => setAttributes( { shadow } ) }
 						min={ 0 }
 						max={ 9 }
 						allowReset={ true }
+						placeholder="3"
 					/>
 				}
 				<ContentAlignControl

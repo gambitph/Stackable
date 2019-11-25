@@ -25,7 +25,7 @@ import createStyles from './style'
  */
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import {
-	PanelBody, RangeControl, ToggleControl,
+	PanelBody, ToggleControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
@@ -97,7 +97,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 					value={ layer1Color }
 					onChange={ layer1Color => setAttributes( { layer1Color } ) }
 				/>
-				<RangeControl
+				<AdvancedRangeControl
 					label={ __( 'Separator Width', i18n ) }
 					value={ layer1Width }
 					min="1"
@@ -105,6 +105,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 					step="0.1"
 					onChange={ layer1Width => setAttributes( { layer1Width } ) }
 					allowReset={ true }
+					placeholder="1"
 				/>
 				<ToggleControl
 					label={ __( 'Flip Horizontally', i18n ) }
@@ -130,6 +131,8 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						onChange={ height => {
 							props.setAttributes( { height } )
 						} }
+						allowReset={ true }
+						placeholder="200"
 					/>
 				</WhenResponsiveScreen>
 				<WhenResponsiveScreen screen="tablet">
@@ -141,6 +144,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						onChange={ tabletHeight => {
 							props.setAttributes( { tabletHeight } )
 						} }
+						allowReset={ true }
 					/>
 				</WhenResponsiveScreen>
 				<WhenResponsiveScreen screen="mobile">
@@ -152,6 +156,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						onChange={ mobileHeight => {
 							props.setAttributes( { mobileHeight } )
 						} }
+						allowReset={ true }
 					/>
 				</WhenResponsiveScreen>
 				<ToggleControl
@@ -185,6 +190,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						unit={ paddingUnit }
 						onChangeUnit={ paddingUnit => setAttributes( { paddingUnit } ) }
 						allowReset={ true }
+						placeholder="0"
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Padding Bottom', i18n ) }
@@ -196,6 +202,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						unit={ paddingUnit }
 						onChangeUnit={ paddingUnit => setAttributes( { paddingUnit } ) }
 						allowReset={ true }
+						placeholder="0"
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Margin Top', i18n ) }
@@ -208,6 +215,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						unit={ marginUnit }
 						onChangeUnit={ marginUnit => setAttributes( { marginUnit } ) }
 						allowReset={ true }
+						placeholder="0"
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Margin Bottom', i18n ) }
@@ -220,6 +228,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						unit={ marginUnit }
 						onChangeUnit={ marginUnit => setAttributes( { marginUnit } ) }
 						allowReset={ true }
+						placeholder="0"
 					/>
 				</WhenResponsiveScreen>
 				<WhenResponsiveScreen screen="tablet">

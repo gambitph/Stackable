@@ -98,6 +98,7 @@ addFilter( 'stackable.image-box.edit.inspector.layout.before', 'stackable/image-
 addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-box', ( output, props ) => {
 	const { setAttributes } = props
 	const {
+		design = 'basic',
 		columns = 3,
 		titleColor,
 		descriptionColor,
@@ -150,26 +151,29 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 						min="100"
 						max="700"
 						allowReset={ true }
+						placeholder="350"
 					/>
 				</ResponsiveControl>
 				{ show.borderRadius &&
-					<RangeControl
+					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
 						onChange={ borderRadius => setAttributes( { borderRadius } ) }
 						min={ 0 }
 						max={ 50 }
 						allowReset={ true }
+						placeholder="12"
 					/>
 				}
 				{ show.shadow &&
-					<RangeControl
+					<AdvancedRangeControl
 						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
 						onChange={ shadow => setAttributes( { shadow } ) }
 						min={ 0 }
 						max={ 9 }
 						allowReset={ true }
+						placeholder="3"
 					/>
 				}
 				<ResponsiveControl
@@ -229,7 +233,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					onChangeBackgroundMedia={ null }
 					onChangeBackgroundColorOpacity={ null }
 				/>
-				<RangeControl
+				<AdvancedRangeControl
 					label={ __( 'Opacity', i18n ) }
 					value={ overlayOpacity }
 					onChange={ overlayOpacity => setAttributes( { overlayOpacity } ) }
@@ -237,6 +241,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					max={ 1 }
 					step={ 0.1 }
 					allowReset={ true }
+					placeholder="0.7"
 				/>
 			</PanelAdvancedSettings>
 
@@ -260,7 +265,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					onChangeBackgroundMedia={ null }
 					onChangeBackgroundColorOpacity={ null }
 				/>
-				<RangeControl
+				<AdvancedRangeControl
 					label={ __( 'Opacity', i18n ) }
 					value={ overlayHoverOpacity }
 					onChange={ overlayHoverOpacity => setAttributes( { overlayHoverOpacity } ) }
@@ -268,6 +273,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					max={ 1 }
 					step={ 0.1 }
 					allowReset={ true }
+					placeholder="0.7"
 				/>
 			</PanelAdvancedSettings>
 
@@ -306,6 +312,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 						value={ lineSize }
 						onChange={ lineSize => setAttributes( { lineSize } ) }
 						allowReset={ true }
+						placeholder={ design === 'box' ? 1 : 12 }
 					/>
 				</PanelAdvancedSettings>
 			}

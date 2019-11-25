@@ -37,6 +37,7 @@ const ResponsiveControl = props => {
 				{ Children.toArray( props.children ).map( child => {
 					return cloneElement( child, {
 						value: getValue( 'Tablet' ),
+						placeholder: getValue() || child.props.placeholder,
 						onChange: value => {
 							if ( props.onChange ) {
 								props.onChange( getAttrName( 'Tablet' ), value, 'Tablet' )
@@ -51,6 +52,7 @@ const ResponsiveControl = props => {
 				{ Children.toArray( props.children ).map( child => {
 					return cloneElement( child, {
 						value: getValue( 'Mobile' ),
+						placeholder: getValue( 'Tablet' ) || getValue() || child.props.placeholder,
 						onChange: value => {
 							if ( props.onChange ) {
 								props.onChange( getAttrName( 'Mobile' ), value, 'Mobile' )
@@ -70,6 +72,7 @@ ResponsiveControl.defaultProps = {
 	setAttributes: () => {},
 	blockAttributes: {},
 	onChange: null,
+	placeholder: '',
 }
 
 export default ResponsiveControl

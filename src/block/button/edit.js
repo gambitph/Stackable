@@ -9,6 +9,7 @@ import {
 	PanelAdvancedSettings,
 	ProControlButton,
 	ButtonEditHelper,
+	AdvancedRangeControl,
 } from '~stackable/components'
 import {
 	withBlockStyles,
@@ -37,7 +38,7 @@ import { Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 import classnames from 'classnames'
 import {
-	PanelBody, RangeControl, SelectControl,
+	PanelBody, SelectControl,
 } from '@wordpress/components'
 import {
 	__, _x, sprintf,
@@ -95,7 +96,7 @@ addFilter( 'stackable.button.edit.inspector.style.before', 'stackable/button', (
 		<Fragment>
 			{ output }
 			<PanelBody title={ __( 'General', i18n ) } initialOpen={ false }>
-				<RangeControl
+				<AdvancedRangeControl
 					label={ __( 'Border Radius', i18n ) }
 					value={ borderRadius }
 					min="0"
@@ -114,6 +115,7 @@ addFilter( 'stackable.button.edit.inspector.style.before', 'stackable/button', (
 						setAttributes( attrs )
 					} }
 					allowReset={ true }
+					placeholder="12"
 				/>
 				<ContentAlignControl
 					setAttributes={ setAttributes }

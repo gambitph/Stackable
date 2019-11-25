@@ -2,6 +2,7 @@
  * External dependencies
  */
 import {
+	AdvancedRangeControl,
 	ButtonIconPopoverControl,
 	ColorPaletteControl,
 	ControlSeparator,
@@ -124,13 +125,14 @@ const ButtonControls = props => {
 			}
 
 			{ props.onChangeBorderRadius && design !== 'link' && design !== 'plain' &&
-				<RangeControl
+				<AdvancedRangeControl
 					label={ __( 'Border Radius', i18n ) }
 					value={ props.borderRadius }
 					min="0"
 					max="100"
 					onChange={ props.onChangeBorderRadius }
 					allowReset={ true }
+					placeholder="4"
 				/>
 			}
 
@@ -142,6 +144,7 @@ const ButtonControls = props => {
 					onChange={ props.onChangePaddings }
 					enableLeft={ false }
 					enableRight={ false }
+					placeholder={ [ 8, 8 ] }
 				/>
 			}
 			{ props.onChangePaddings && design !== 'link' && design !== 'plain' &&
@@ -153,28 +156,31 @@ const ButtonControls = props => {
 					enableTop={ false }
 					enableBottom={ false }
 					max={ 100 }
+					placeholder={ [ 26, 26 ] }
 				/>
 			}
 
 			{ props.onChangeBorderWidth && design === 'ghost' &&
-				<RangeControl
+				<AdvancedRangeControl
 					label={ __( 'Border Width', i18n ) }
 					value={ props.borderWidth }
 					min="1"
 					max="6"
 					onChange={ props.onChangeBorderWidth }
 					allowReset={ true }
+					placeholder="2"
 				/>
 			}
 
 			{ props.onChangeShadow && ( design === '' || design === 'basic' ) &&
-				<RangeControl
+				<AdvancedRangeControl
 					label={ __( 'Shadow', i18n ) }
 					value={ props.shadow }
 					onChange={ props.onChangeShadow }
 					min={ 0 }
 					max={ 9 }
 					allowReset={ true }
+					placeholder="0"
 				/>
 			}
 
@@ -235,7 +241,7 @@ const ButtonControls = props => {
 					) }
 
 					{ props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' && showGradient && (
-						<RangeControl
+						<AdvancedRangeControl
 							label={ __( 'Gradient Direction (degrees)', i18n ) }
 							value={ props.backgroundGradientDirection }
 							onChange={ props.onChangeBackgroundGradientDirection }
@@ -243,6 +249,7 @@ const ButtonControls = props => {
 							max={ 360 }
 							step={ 10 }
 							allowReset={ true }
+							placeholder="90"
 						/>
 					) }
 
@@ -257,7 +264,7 @@ const ButtonControls = props => {
 			}
 
 			{ props.onChangeOpacity && (
-				<RangeControl
+				<AdvancedRangeControl
 					label={ __( 'Opacity', i18n ) }
 					value={ props.opacity }
 					onChange={ props.onChangeOpacity }
@@ -265,6 +272,7 @@ const ButtonControls = props => {
 					max={ 1 }
 					step={ 0.1 }
 					allowReset={ true }
+					placeholder="1.0"
 				/>
 			) }
 
@@ -336,7 +344,7 @@ const ButtonControls = props => {
 						/>
 					) }
 					{ props.onChangeHoverBackgroundColor2 && ( ( design === 'ghost' && props.hoverGhostToNormal ) || ( props.backgroundColorType === 'gradient' && showGradient ) ) && (
-						<RangeControl
+						<AdvancedRangeControl
 							label={ __( 'Gradient Direction (degrees)', i18n ) }
 							value={ props.hoverBackgroundGradientDirection }
 							onChange={ props.onChangeHoverBackgroundGradientDirection }
@@ -344,6 +352,7 @@ const ButtonControls = props => {
 							max={ 360 }
 							step={ 10 }
 							allowReset={ true }
+							placeholder="90"
 						/>
 					) }
 					{ props.onChangeHoverTextColor && ( ( design === 'ghost' && props.hoverGhostToNormal ) || showGradient ) && (
@@ -403,6 +412,7 @@ const ButtonControls = props => {
 							max={ 50 }
 							step={ 1 }
 							allowReset={ true }
+							placeholder="16"
 						/>
 					) }
 				</ButtonIconPopoverControl>

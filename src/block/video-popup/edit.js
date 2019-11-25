@@ -38,7 +38,7 @@ import createStyles from './style'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 
 import {
-	PanelBody, RangeControl, SelectControl, TextControl,
+	PanelBody, SelectControl, TextControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
@@ -145,25 +145,28 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 						min={ 100 }
 						max={ 1000 }
 						allowReset={ true }
+						placeholder="400"
 					/>
 				</ResponsiveControl>
 				{ show.borderRadius &&
-					<RangeControl
+					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
 						onChange={ borderRadius => setAttributes( { borderRadius } ) }
 						min={ 0 }
 						max={ 50 }
 						allowReset={ true }
+						placeholder="12"
 					/>
 				}
-				<RangeControl
+				<AdvancedRangeControl
 					label={ __( 'Shadow / Outline', i18n ) }
 					value={ shadow }
 					onChange={ shadow => setAttributes( { shadow } ) }
 					min={ 0 }
 					max={ 9 }
 					allowReset={ true }
+					placeholder="3"
 				/>
 			</PanelBody>
 
@@ -197,6 +200,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 						min={ 10 }
 						max={ 200 }
 						allowReset={ true }
+						placeholder="40"
 					/>
 				</ResponsiveControl>
 				<ColorPaletteControl
@@ -204,7 +208,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 					value={ playButtonColor }
 					onChange={ playButtonColor => setAttributes( { playButtonColor } ) }
 				/>
-				<RangeControl
+				<AdvancedRangeControl
 					label={ __( 'Opacity', i18n ) }
 					min={ 0 }
 					max={ 1 }
@@ -212,6 +216,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 					value={ playButtonOpacity }
 					onChange={ playButtonOpacity => setAttributes( { playButtonOpacity } ) }
 					allowReset={ true }
+					placeholder="1.0"
 				/>
 			</PanelBody>
 

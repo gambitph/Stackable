@@ -139,23 +139,25 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					max={ 3 }
 				/>
 				{ show.borderRadius &&
-					<RangeControl
+					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
 						onChange={ borderRadius => setAttributes( { borderRadius } ) }
 						min={ 0 }
 						max={ 50 }
 						allowReset={ true }
+						placeholder="12"
 					/>
 				}
 				{ show.shadow &&
-					<RangeControl
+					<AdvancedRangeControl
 						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
 						onChange={ shadow => setAttributes( { shadow } ) }
 						min={ 0 }
 						max={ 9 }
 						allowReset={ true }
+						placeholder="3"
 					/>
 				}
 				<ContentAlignControl

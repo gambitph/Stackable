@@ -73,6 +73,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							max={ 1.0 }
 							step={ 0.1 }
 							allowReset={ true }
+							placeholder="1.0"
 						/>
 					</ResponsiveControl>
 				}
@@ -88,6 +89,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							min={ -100 }
 							max={ 1000 }
 							allowReset={ true }
+							placeholder="1"
 						/>
 					</ResponsiveControl>
 				}

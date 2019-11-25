@@ -223,13 +223,13 @@
 		width: 1em;
 		height: 1em;
 		margin-bottom: 0 !important;
-		margin-right: 0.75em;
+		margin-right: 16px;
 	}
 	&.ugb-button--icon-position-right {
 		flex-direction: row-reverse;
 		svg {
 			margin-right: 0;
-			margin-left: 0.75em;
+			margin-left: 16px;
 		}
 	}
 }

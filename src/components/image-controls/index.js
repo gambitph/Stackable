@@ -22,7 +22,7 @@ import { getImageSize, cacheImageData } from '~stackable/util'
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
-import { RangeControl, ToggleControl } from '@wordpress/components'
+import { ToggleControl } from '@wordpress/components'
 import { withSelect } from '@wordpress/data'
 
 const ImageControls = props => {
@@ -178,17 +178,19 @@ const ImageControls = props => {
 					min={ 0 }
 					max={ 100 }
 					allowReset={ true }
+					placeholder="0"
 				/>
 			}
 
 			{ props.onChangeShadow && props.shape === '' &&
-				<RangeControl
+				<AdvancedRangeControl
 					label={ __( 'Shadow / Outline', i18n ) }
 					value={ props.shadow }
 					onChange={ props.onChangeShadow }
 					min={ 0 }
 					max={ 9 }
 					allowReset={ true }
+					placeholder="0"
 				/>
 			}
 

@@ -15,7 +15,7 @@ import classnames from 'classnames'
 import { omit } from 'lodash'
 
 const AdvancedRangeControl = props => {
-	const propsToPass = { ...omit( props, [ 'className', 'help', 'label', 'units', 'unit', 'onChangeUnit', 'screens' ] ) }
+	const propsToPass = { ...omit( props, [ 'className', 'help', 'label', 'units', 'unit', 'onChangeUnit', 'screens', 'placeholder', 'initialPosition' ] ) }
 
 	// Change the min, max & step values depending on the unit used.
 	const i = props.units.indexOf( props.unit ) < 0 ? 0 : props.units.indexOf( props.unit )
@@ -27,6 +27,14 @@ const AdvancedRangeControl = props => {
 	}
 	if ( Array.isArray( props.step ) ) {
 		propsToPass.step = props.step[ i ]
+	}
+	propsToPass.initialPosition = props.initialPosition !== '' ? props.initialPosition : props.placeholder
+	if ( Array.isArray( props.placeholder ) ) {
+		propsToPass.placeholder = props.placeholder[ i ] || ''
+		propsToPass.initialPosition = props.placeholder[ i ] || ''
+	}
+	if ( Array.isArray( props.initialPosition ) ) {
+		propsToPass.initialPosition = props.initialPosition[ i ] || ''
 	}
 
 	return (
@@ -41,7 +49,11 @@ const AdvancedRangeControl = props => {
 				onChangeUnit={ props.onChangeUnit }
 				screens={ props.screens }
 			/>
-			<RangeControl { ...propsToPass } />
+			<RangeControl
+				placeholder={ props.placeholder }
+				initialPosition={ props.initialPosition }
+				{ ...propsToPass }
+			/>
 		</BaseControl>
 	)
 }
@@ -54,6 +66,8 @@ AdvancedRangeControl.defaultProps = {
 	units: [ 'px' ],
 	unit: 'px',
 	screens: [ 'desktop' ],
+	placeholder: '',
+	initialPosition: '',
 }
 
 export default AdvancedRangeControl

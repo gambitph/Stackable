@@ -49,10 +49,7 @@ $box-vert-padding: 60px;
 }
 
 @mixin baseButton() {
-	padding-bottom: 0.375em;
-	padding-left: 1.25em;
-	padding-right: 1.25em;
-	padding-top: 0.375em;
+	padding: 8px 26px;
 	font-size: 1em;
 	line-height: 1.5 !important;
 	align-items: center;

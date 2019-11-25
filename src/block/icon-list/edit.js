@@ -34,7 +34,7 @@ import createStyles from './style'
  */
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import {
-	BaseControl, PanelBody, RangeControl, ToggleControl, Toolbar,
+	BaseControl, PanelBody, ToggleControl, Toolbar,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
@@ -117,13 +117,14 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 					value={ iconColor }
 					onChange={ iconColor => setAttributes( { iconColor } ) }
 				/>
-				<RangeControl
+				<AdvancedRangeControl
 					label={ __( 'Icon Size', i18n ) }
 					value={ iconSize }
 					onChange={ iconSize => setAttributes( { iconSize } ) }
 					min={ 8 }
 					max={ 50 }
 					allowReset={ true }
+					placeholder="20"
 				/>
 			</PanelBody>
 
@@ -141,13 +142,14 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 			</PanelBody>
 
 			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
-				<RangeControl
+				<AdvancedRangeControl
 					label={ __( 'List Gap', i18n ) }
 					value={ gap }
 					onChange={ gap => setAttributes( { gap } ) }
 					min={ 0 }
 					max={ 30 }
 					allowReset={ true }
+					placeholder="16"
 				/>
 			</PanelSpacingBody>
 		</Fragment>

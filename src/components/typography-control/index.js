@@ -121,6 +121,7 @@ const TypographyControl = props => {
 								onChange={ props.onChangeLineHeight }
 								unit={ props.lineHeightUnit }
 								onChangeUnit={ props.onChangeLineHeightUnit }
+								initialPosition={ [ 37, 1.8 ] }
 							/>
 						</WhenResponsiveScreen>
 						<WhenResponsiveScreen screen="tablet">
@@ -135,6 +136,7 @@ const TypographyControl = props => {
 								onChange={ props.onChangeTabletLineHeight }
 								unit={ props.tabletLineHeightUnit }
 								onChangeUnit={ props.onChangeTabletLineHeightUnit }
+								initialPosition={ [ 37, 1.8 ] }
 							/>
 						</WhenResponsiveScreen>
 						<WhenResponsiveScreen screen="mobile">
@@ -149,6 +151,7 @@ const TypographyControl = props => {
 								onChange={ props.onChangeMobileLineHeight }
 								unit={ props.mobileLineHeightUnit }
 								onChangeUnit={ props.onChangeMobileLineHeightUnit }
+								initialPosition={ [ 37, 1.8 ] }
 							/>
 						</WhenResponsiveScreen>
 					</Fragment>
@@ -162,6 +165,7 @@ const TypographyControl = props => {
 						allowReset={ true }
 						onChange={ props.onChangeLetterSpacing }
 						value={ props.letterSpacing }
+						placeholder="0"
 					/>
 				) }
 			</ButtonIconPopoverControl>

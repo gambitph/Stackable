@@ -54,7 +54,7 @@ import { showOptions } from './util'
  * WordPress dependencies
  */
 import {
-	PanelBody, RangeControl, ToggleControl,
+	PanelBody, ToggleControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters, addFilter } from '@wordpress/hooks'
@@ -125,6 +125,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 							min={ 0 }
 							max={ 100 }
 							allowReset={ true }
+							placeholder="50"
 						/>
 					</ResponsiveControl>
 				}
@@ -164,23 +165,25 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 					/>
 				}
 				{ show.borderRadius &&
-					<RangeControl
+					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
 						onChange={ borderRadius => setAttributes( { borderRadius } ) }
 						min={ 0 }
 						max={ 50 }
 						allowReset={ true }
+						placeholder="12"
 					/>
 				}
 				{ show.columnBackground &&
-					<RangeControl
+					<AdvancedRangeControl
 						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
 						onChange={ shadow => setAttributes( { shadow } ) }
 						min={ 0 }
 						max={ 9 }
 						allowReset={ true }
+						placeholder="3"
 					/>
 				}
 				<ContentAlignControl

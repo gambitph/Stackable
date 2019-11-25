@@ -142,6 +142,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							enableRight={ align !== 'full' && options.enableMarginRight }
 							enableBottom={ options.enableMarginBottom }
 							enableLeft={ align !== 'full' && options.enableMarginLeft }
+							initialPosition="0"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
@@ -170,6 +171,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							enableRight={ align !== 'full' && options.enableMarginRight }
 							enableBottom={ options.enableMarginBottom }
 							enableLeft={ align !== 'full' && options.enableMarginLeft }
+							initialPosition="0"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
@@ -198,6 +200,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							enableRight={ align !== 'full' && options.enableMarginRight }
 							enableBottom={ options.enableMarginBottom }
 							enableLeft={ align !== 'full' && options.enableMarginLeft }
+							initialPosition="0"
 						/>
 					</WhenResponsiveScreen>
 				</Fragment> }
@@ -228,6 +231,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							enableRight={ options.enablePaddingRight }
 							enableBottom={ options.enablePaddingBottom }
 							enableLeft={ options.enablePaddingLeft }
+							initialPosition="0"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
@@ -301,6 +305,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ blockHeightUnit }
 							onChange={ blockHeight => setAttributes( { blockHeight } ) }
 							onChangeUnit={ blockHeightUnit => setAttributes( { blockHeightUnit } ) }
+							initialPosition="100"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
@@ -381,6 +386,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ blockWidthUnit }
 							onChange={ blockWidth => setAttributes( { blockWidth } ) }
 							onChangeUnit={ blockWidthUnit => setAttributes( { blockWidthUnit } ) }
+							initialPosition="2000"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">

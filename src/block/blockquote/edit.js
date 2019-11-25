@@ -43,7 +43,6 @@ import {
 import {
 	BaseControl,
 	PanelBody,
-	RangeControl,
 	Toolbar,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
@@ -101,23 +100,25 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 			{ output }
 			<PanelBody title={ __( 'General', i18n ) }>
 				{ show.borderRadius &&
-					<RangeControl
+					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
 						onChange={ borderRadius => setAttributes( { borderRadius } ) }
 						min={ 0 }
 						max={ 50 }
 						allowReset={ true }
+						placeholder="12"
 					/>
 				}
 				{ show.shadow &&
-					<RangeControl
+					<AdvancedRangeControl
 						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
 						onChange={ shadow => setAttributes( { shadow } ) }
 						min={ 0 }
 						max={ 9 }
 						allowReset={ true }
+						placeholder="3"
 					/>
 				}
 				<ContentAlignControl
@@ -186,9 +187,10 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 						min={ 0 }
 						max={ 400 }
 						allowReset={ true }
+						placeholder="70"
 					/>
 				</ResponsiveControl>
-				<RangeControl
+				<AdvancedRangeControl
 					label={ __( 'Opacity', i18n ) }
 					value={ quoteOpacity }
 					onChange={ quoteOpacity => setAttributes( { quoteOpacity } ) }
@@ -196,6 +198,7 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 					max={ 1 }
 					step={ 0.1 }
 					allowReset={ true }
+					placeholder="1"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="quote%sX"
@@ -207,6 +210,7 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 						min={ -400 }
 						max={ 400 }
 						allowReset={ true }
+						placeholder="0"
 					/>
 				</ResponsiveControl>
 				<ResponsiveControl
@@ -219,6 +223,7 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 						min={ -400 }
 						max={ 400 }
 						allowReset={ true }
+						placeholder="0"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>

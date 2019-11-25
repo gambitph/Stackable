@@ -50,7 +50,7 @@ import { showOptions } from './util'
  */
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import {
-	PanelBody, RangeControl, ToggleControl,
+	PanelBody, ToggleControl,
 } from '@wordpress/components'
 import {
 	__, _x, sprintf,
@@ -136,23 +136,25 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 					/>
 				}
 				{ show.borderRadius &&
-					<RangeControl
+					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
 						onChange={ borderRadius => setAttributes( { borderRadius } ) }
 						min={ 0 }
 						max={ 50 }
 						allowReset={ true }
+						placeholder="12"
 					/>
 				}
 				{ show.columnBackground &&
-					<RangeControl
+					<AdvancedRangeControl
 						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
 						onChange={ shadow => setAttributes( { shadow } ) }
 						min={ 0 }
 						max={ 9 }
 						allowReset={ true }
+						placeholder="3"
 					/>
 				}
 				<ContentAlignControl
@@ -184,7 +186,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 						value={ overlayColor }
 						onChange={ overlayColor => setAttributes( { overlayColor } ) }
 					/>
-					<RangeControl
+					<AdvancedRangeControl
 						label={ __( 'Background Color Opacity', i18n ) }
 						value={ overlayOpacity }
 						onChange={ overlayOpacity => setAttributes( { overlayOpacity } ) }
@@ -192,6 +194,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 						max={ 1 }
 						step={ 0.1 }
 						allowReset={ true }
+						placeholder="1"
 					/>
 				</PanelBody>
 			}

@@ -123,23 +123,25 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					max={ 3 }
 				/>
 				{ show.borderRadius &&
-					<RangeControl
+					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
 						onChange={ borderRadius => setAttributes( { borderRadius } ) }
 						min={ 0 }
 						max={ 50 }
 						allowReset={ true }
+						placeholder="12"
 					/>
 				}
 				{ show.shadow &&
-					<RangeControl
+					<AdvancedRangeControl
 						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
 						onChange={ shadow => setAttributes( { shadow } ) }
 						min={ 0 }
 						max={ 9 }
 						allowReset={ true }
+						placeholder="3"
 					/>
 				}
 				<ContentAlignControl
@@ -230,6 +232,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 							max={ 5 }
 							step={ 0.1 }
 							allowReset={ true }
+							placeholder="2.5"
 						/>
 					</ResponsiveControl>
 				) }
@@ -255,6 +258,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					value={ numberOpacity }
 					onChange={ numberOpacity => setAttributes( { numberOpacity } ) }
 					allowReset={ true }
+					placeholder="1.0"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Number%sAlign"

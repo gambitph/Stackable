@@ -136,23 +136,25 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					max={ 3 }
 				/>
 				{ show.borderRadius &&
-					<RangeControl
+					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
 						onChange={ borderRadius => setAttributes( { borderRadius } ) }
 						min={ 0 }
 						max={ 50 }
 						allowReset={ true }
+						placeholder="12"
 					/>
 				}
 				{ show.shadow &&
-					<RangeControl
+					<AdvancedRangeControl
 						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
 						onChange={ shadow => setAttributes( { shadow } ) }
 						min={ 0 }
 						max={ 9 }
 						allowReset={ true }
+						placeholder="3"
 					/>
 				}
 				<ContentAlignControl
@@ -210,6 +212,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 							min={ 50 }
 							max={ 1000 }
 							allowReset={ true }
+							placeholder="300"
 						/>
 					</ResponsiveControl>
 				}
@@ -227,6 +230,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 								unit={ imageBackgroundWidthUnit }
 								onChange={ imageBackgroundWidth => setAttributes( { imageBackgroundWidth } ) }
 								onChangeUnit={ imageBackgroundWidthUnit => setAttributes( { imageBackgroundWidthUnit } ) }
+								placeholder="50"
 							/>
 						</WhenResponsiveScreen>
 						<WhenResponsiveScreen screen="tablet">
@@ -241,6 +245,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 								unit={ imageBackgroundTabletWidthUnit }
 								onChange={ imageBackgroundTabletWidth => setAttributes( { imageBackgroundTabletWidth } ) }
 								onChangeUnit={ imageBackgroundTabletWidthUnit => setAttributes( { imageBackgroundTabletWidthUnit } ) }
+								placeholder="50"
 							/>
 						</WhenResponsiveScreen>
 						<WhenResponsiveScreen screen="mobile">
@@ -255,6 +260,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 								unit={ imageBackgroundMobileWidthUnit }
 								onChange={ imageBackgroundMobileWidth => setAttributes( { imageBackgroundMobileWidth } ) }
 								onChangeUnit={ imageBackgroundMobileWidthUnit => setAttributes( { imageBackgroundMobileWidthUnit } ) }
+								placeholder="50"
 							/>
 						</WhenResponsiveScreen>
 					</Fragment>

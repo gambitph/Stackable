@@ -16,6 +16,7 @@ const FontSizeControl = props => {
 			max={ [ 100, 3 ] }
 			step={ [ 1, 0.05 ] }
 			units={ [ 'px', 'em' ] }
+			initialPosition="21" // Some typical value of a font so that changing it will not jump the font size.
 			{ ...props }
 			onChangeUnit={ value => {
 				// Change font-size so as not to surprise the user.

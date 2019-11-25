@@ -158,23 +158,25 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					max={ 4 }
 				/>
 				{ show.borderRadius &&
-					<RangeControl
+					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
 						onChange={ borderRadius => setAttributes( { borderRadius } ) }
 						min={ 0 }
 						max={ 50 }
 						allowReset={ true }
+						placeholder="12"
 					/>
 				}
 				{ show.shadow &&
-					<RangeControl
+					<AdvancedRangeControl
 						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
 						onChange={ shadow => setAttributes( { shadow } ) }
 						min={ 0 }
 						max={ 9 }
 						allowReset={ true }
+						placeholder="3"
 					/>
 				}
 				<AdvancedSelectControl
@@ -208,6 +210,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					allowReset={ true }
 					value={ numberOfItems }
 					onChange={ numberOfItems => setAttributes( { numberOfItems } ) }
+					placeholder="6"
 				/>
 				<AdvancedSelectControl
 					label={ __( 'Order by', i18n ) }
@@ -406,13 +409,14 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 				] }
 				toggleAttributeName="showExcerpt"
 			>
-				<RangeControl
+				<AdvancedRangeControl
 					label={ __( 'Excerpt Length', i18n ) }
 					value={ excerptLength }
 					onChange={ excerptLength => setAttributes( { excerptLength } ) }
 					min={ 1 }
 					max={ 100 }
 					allowReset={ true }
+					placeholder="55"
 				/>
 				<TypographyControlHelper
 					attrNameTemplate="excerpt%s"

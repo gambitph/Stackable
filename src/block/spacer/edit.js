@@ -60,6 +60,7 @@ addFilter( 'stackable.spacer.edit.inspector.style.before', 'stackable/spacer', (
 						unit={ heightUnit }
 						onChange={ height => setAttributes( { height } ) }
 						onChangeUnit={ heightUnit => setAttributes( { heightUnit } ) }
+						placeholder={ [ 50 ] }
 					/>
 				</WhenResponsiveScreen>
 				<WhenResponsiveScreen screen="tablet">
