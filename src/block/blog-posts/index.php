@@ -118,14 +118,22 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 			$item_classes[] = 'ugb--shadow-' . $attributes['shadow'];
 		}
 		// Add background gradient class.
-		if ( $show['showBackgroundInItem'] && $attributes['columnBackgroundColorType'] === 'gradient' ) {
+		if ( $show['showBackgroundInItem'] && 
+			( $attributes['columnBackgroundColorType'] === 'gradient' ||
+			  $attributes['columnBackgroundMediaUrl' ] ||
+			  $attributes['columnTabletBackgroundMediaUrl' ] ||
+			  $attributes['columnMobileBackgroundMediaUrl' ] ) ) {
 			$item_classes[] = 'ugb--has-background-overlay';
 		}
 		$item_classes = implode( ' ', $item_classes );
 
 		$content_classes = array( 'ugb-blog-posts__content' );
 		// Add background gradient class.
-		if ( $show['showBackgroundInContent'] && $attributes['columnBackgroundColorType'] === 'gradient' ) {
+		if ( $show['showBackgroundInContent'] && 
+			( $attributes['columnBackgroundColorType'] === 'gradient' ||
+			  $attributes['columnBackgroundMediaUrl' ] ||
+			  $attributes['columnTabletBackgroundMediaUrl' ] ||
+			  $attributes['columnMobileBackgroundMediaUrl' ] ) ) {
 			$content_classes[] = 'ugb--has-background-overlay';
 		}
 		$content_classes = implode( ' ', $content_classes );
