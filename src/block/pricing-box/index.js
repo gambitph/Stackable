@@ -206,7 +206,7 @@ const schema = {
 			type: 'string',
 			source: 'html',
 			selector: '.ugb-pricing-box__item%d .ugb-pricing-box__subprice',
-			default: __( 'Description', i18n ),
+			default: __( 'Sub Price', i18n ),
 		},
 		[ '1', '2', '3' ]
 	),
