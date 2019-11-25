@@ -1,3 +1,23 @@
+// Fix for buttons giong left align when migrating from v1 to v2.
+.wp-block-ugb-button.ugb-button-wrapper:not(.ugb-main-block) {
+	margin-left: auto;
+	margin-right: auto;
+	.ugb-button--align-center {
+		text-align: center;
+	}
+	.ugb-button--align-left {
+		text-align: left;
+	}
+	.ugb-button--align-right {
+		text-align: right;
+	}
+	.ugb-button--align-full {
+		.ugb-button {
+			width: 100%;
+		}
+	}
+}
+
 // Deprecated < v2
 .ugb-button-wrapper:not(.ugb-main-block) {
 	margin-top: 1.5em;
