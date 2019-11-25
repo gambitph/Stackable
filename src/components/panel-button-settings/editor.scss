@@ -1,7 +1,0 @@
-// Move the design control to the top.
-.components-panel__body.ugb-has-designs {
-	display: grid;
-	.ugb-design-control {
-		grid-row: 2 / 3;
-	}
-}
