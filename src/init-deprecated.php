@@ -55,7 +55,7 @@ if ( ! function_exists( 'stackable_auto_on_deprecated_styles' ) ) {
 
 	/**
 	 * When upgrading from v1 to v2, turn on the loading of deprecated styles.
-	 * 
+	 *
 	 * @since 2.0
 	 */
 	function stackable_auto_on_deprecated_styles( $old_version, $new_version ) {
@@ -70,7 +70,7 @@ if ( ! function_exists( 'stackable_ajax_update_load_v1_styles_option' ) ) {
 
 	/**
 	 * Ajax handler for saving the setting for loading V1 styles for backward compatibility.
-	 * 
+	 *
 	 * @since 2.0
 	 */
 	function stackable_ajax_update_load_v1_styles_option() {
@@ -93,7 +93,7 @@ if ( ! function_exists( 'stackable_load_v1_styles_nonce' ) ) {
 	 * Create a nonce for show/hide Go Premium notice.
 	 *
 	 * @return String
-	 * 
+	 *
 	 * @since 2.0
 	 */
 	function stackable_load_v1_styles_nonce() {
@@ -107,7 +107,7 @@ if ( ! function_exists( 'stackable_should_load_v1_styles' ) ) {
 	 * Should we load v1 styles
 	 *
 	 * @return Boolean
-	 * 
+	 *
 	 * @since 2.0
 	 */
 	function stackable_should_load_v1_styles() {
@@ -117,4 +117,29 @@ if ( ! function_exists( 'stackable_should_load_v1_styles' ) ) {
 
 /********************************************************************************************
  * END Version 1 frontend styles backward compatibility.
+ ********************************************************************************************/
+
+/********************************************************************************************
+ * Version 1 & TwentyTwenty frontend styles backward compatibility.
+ ********************************************************************************************/
+
+if ( ! function_exists( 'stackable_twentytwenty_body_class' ) ) {
+	/**
+	 * Adds a twentytwenty class name to the body if the twentytwenty is used.
+	 */
+	function stackable_twentytwenty_body_class( $classes ) {
+		$classes[] = 'ugb--twentytwentytwenty-compat';
+		return $classes;
+	}
+
+	function stackable_twentytwenty_compat() {
+		if ( function_exists( 'twentytwenty_theme_support' ) && stackable_should_load_v1_styles() ) {
+			add_filter( 'body_class','stackable_twentytwenty_body_class' );
+		}
+	}
+	add_action( 'wp', 'stackable_twentytwenty_compat' );
+}
+
+/********************************************************************************************
+ * END Version 1 & TwentyTwenty frontend styles backward compatibility.
  ********************************************************************************************/

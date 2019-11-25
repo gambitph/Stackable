@@ -564,10 +564,6 @@ const deprecated = [
 				customCSS: updateCSS( attributes.customCSS ),
 				customCSSCompiled: updateCSS( attributes.customCSSCompiled ),
 
-				// Margins are on by default in the old block.
-				marginRight: attributes.design === 'basic' && attributes.align === 'full' ? undefined : 35,
-				marginLeft: attributes.design === 'basic' && attributes.align === 'full' ? undefined : 35,
-
 				showQuote: true,
 				quoteIcon: attributes.quotationMark,
 				quoteSize: attributes.quotationSize,

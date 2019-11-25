@@ -1,0 +1,10 @@
+// There is a problem with TwentyTwenty / 2020 and migrated blocks.
+// Because of how we define the migrated selector rules, it's overriding
+// and adding margin-left and margin-right and prevents the blocks
+// from centering. This is a fix for TwentyTwenty only.
+body.ugb--twentytwentytwenty-compat {
+	[class*="wp-block-ugb-"]:not(.ugb-main-block) {
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
