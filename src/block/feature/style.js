@@ -43,16 +43,16 @@ export const createStyles = props => {
 	if ( show.imageColumnWidth ) {
 		styles.push( {
 			'.ugb-feature__item': {
-				gridTemplateColumns: props.attributes.imageColumnWidth !== '' ? computeGridFraction2( props.attributes.imageColumnWidth, ! invert ) + ' !important' : undefined,
+				gridTemplateColumns: getValue( 'imageColumnWidth' ) ? computeGridFraction2( getValue( 'imageColumnWidth' ), ! invert ) + ' !important' : undefined,
 			},
 			tablet: {
 				'.ugb-feature__item': {
-					gridTemplateColumns: props.attributes.imageColumnTabletWidth !== '' ? computeGridFraction2( props.attributes.imageColumnTabletWidth, ! invert ) + ' !important' : undefined,
+					gridTemplateColumns: getValue( 'imageColumnTabletWidth' ) ? computeGridFraction2( getValue( 'imageColumnTabletWidth' ), ! invert ) + ' !important' : undefined,
 				},
 			},
 			mobile: {
 				'.ugb-feature__item': {
-					gridTemplateColumns: props.attributes.imageColumnMobileWidth !== '' ? computeGridFraction2( props.attributes.imageColumnMobileWidth, ! invert ) + ' !important' : undefined,
+					gridTemplateColumns: getValue( 'imageColumnMobileWidth' ) ? computeGridFraction2( getValue( 'imageColumnMobileWidth' ), ! invert ) + ' !important' : undefined,
 				},
 			},
 		} )
