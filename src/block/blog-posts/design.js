@@ -21,7 +21,7 @@ addFilter( 'stackable.blog-posts.edit.designs', 'stackable/blog-posts', designs 
 		corporateLight1: {
 			label: __( 'Corporate Light 1', i18n ),
 			image: "https://gambitph.github.io/Stackable/assets/block-design-previews/stack-posts-design-corporate-light-01.jpg"
-			attributes: {
+			attributes: 
 				{
     "borderRadius": 0,
     "showCategory": false,
@@ -65,8 +65,7 @@ addFilter( 'stackable.blog-posts.edit.designs', 'stackable/blog-posts', designs 
 		corporateLight2: {
 			label: __( 'Corporate Light 2', i18n ),
 			image: "https://gambitph.github.io/Stackable/assets/block-design-previews/stack-posts-design-corporate-light-02.jpg"
-			attributes: {
-				{
+			attributes: 
     {
     "borderRadius": 0,
     "showCategory": false,
@@ -112,8 +111,7 @@ addFilter( 'stackable.blog-posts.edit.designs', 'stackable/blog-posts', designs 
 		corporateDark1: {
 			label: __( 'Corporate Dark 1', i18n ),
 			image: "https://gambitph.github.io/Stackable/assets/block-design-previews/stack-posts-design-corporate-dark-01.jpg"
-			attributes: {
-				{
+			attributes: 
     {
     "borderRadius": 0,
     "showCategory": false,
@@ -157,8 +155,7 @@ addFilter( 'stackable.blog-posts.edit.designs', 'stackable/blog-posts', designs 
 		corporateDark2: {
 			label: __( 'Corporate Dark 2', i18n ),
 			image: "https://gambitph.github.io/Stackable/assets/block-design-previews/stack-posts-design-corporate-dark-02.jpg"
-			attributes: {
-				{
+			attributes: 
     {
     "borderRadius": 0,
     "showCategory": false,
@@ -196,8 +193,7 @@ addFilter( 'stackable.blog-posts.edit.designs', 'stackable/blog-posts', designs 
     "blockDescriptionColor": "#ffffff",
     "contentAlign": "center"
 },
-			
-			},
 		},
+	},
 	}
 } )
