@@ -15,11 +15,11 @@ import { ConvertToContainerButton, GetBlockAttributesButton } from '~stackable/c
 import { devMode } from 'stackable'
 
 registerPlugin( 'stackable-convert-to-container-button', { render: ConvertToContainerButton } )
-registerPlugin( 'stackable-block-tester', {
-	icon: 'clipboard',
-	render: DebugSidebar,
-} )
 
 if ( devMode ) {
+	registerPlugin( 'stackable-block-tester', {
+		icon: 'clipboard',
+		render: DebugSidebar,
+	} )
 	registerPlugin( 'stackable-block-attributes-get-button', { render: GetBlockAttributesButton } )
 }
