@@ -21,8 +21,7 @@ addFilter( 'stackable.blockquote.edit.designs', 'stackable/blockquote', designs 
 		corporateLight1: {
 			label: __( 'Corporate Light 1', i18n ),
 			image: "https://gambitph.github.io/Stackable/assets/block-design-previews/stack-blockquote-design-corporate-light-01.jpg"
-			attributes: {
-				{
+			attributes: 
     {
     "quoteIcon": "square",
     "quoteOpacity": 0.3,
@@ -40,17 +39,13 @@ addFilter( 'stackable.blockquote.edit.designs', 'stackable/blockquote', designs 
     "align": "full",
     "blockBackgroundBackgroundColor": "#ffffff",
     "showBottomSeparator": false
-}
+},
 
-			},
 		},
 		corporateLight2: {
 			label: __( 'Corporate Light 2', i18n ),
 			image: "https://gambitph.github.io/Stackable/assets/block-design-previews/stack-blockquote-design-corporate-light-02.jpg"
 			attributes: {
-				{
-    {
-    {
     "quoteIcon": "square",
     "quoteOpacity": 0.3,
     "quoteColor": "#c49732",
@@ -67,17 +62,12 @@ addFilter( 'stackable.blockquote.edit.designs', 'stackable/blockquote', designs 
     "align": "full",
     "blockBackgroundBackgroundColor": "#ffffff",
     "showBottomSeparator": false
-}
-
 			},
 		},
 		corporateDark1: {
 			label: __( 'Corporate Dark 1', i18n ),
 			image: "https://gambitph.github.io/Stackable/assets/block-design-previews/stack-blockquote-design-corporate-dark-01.jpg"
 			attributes: {
-				{
-    {
-    {
     "quoteIcon": "square",
     "quoteOpacity": 0.3,
     "quoteColor": "#1785cb",
@@ -94,7 +84,7 @@ addFilter( 'stackable.blockquote.edit.designs', 'stackable/blockquote', designs 
     "align": "full",
     "blockBackgroundBackgroundColor": "#081831",
     "showBottomSeparator": false
-}
+
 
 			},
 		},
@@ -102,9 +92,6 @@ addFilter( 'stackable.blockquote.edit.designs', 'stackable/blockquote', designs 
 			label: __( 'Corporate Dark 2', i18n ),
 			image: "https://gambitph.github.io/Stackable/assets/block-design-previews/stack-blockquote-design-corporate-dark-02.jpg"
 			attributes: {
-				{
-    {
-    {
     "quoteIcon": "square",
     "quoteOpacity": 0.3,
     "quoteColor": "#2f2f2f",
@@ -121,7 +108,7 @@ addFilter( 'stackable.blockquote.edit.designs', 'stackable/blockquote', designs 
     "align": "full",
     "blockBackgroundBackgroundColor": "#707070",
     "showBottomSeparator": false
-}
+
 
 			},
 		},
