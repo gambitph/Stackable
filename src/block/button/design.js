@@ -33,7 +33,7 @@ addFilter( 'stackable.button.edit.designs', 'stackable/button', designs => {
 		corporateLight1: {
 			label: __( 'Corporate Light 1', i18n ),
 			image: "https://gambitph.github.io/Stackable/assets/block-design-previews/stack-button-design-corporate-light-01.jpg"
-			attributes: {
+			attributes: 
 {
     "showButton2": true,
     "showButton3": true,
@@ -67,14 +67,14 @@ addFilter( 'stackable.button.edit.designs', 'stackable/button', designs => {
     "blockInnerWidth": "center",
     "align": "full",
     "blockBackgroundBackgroundColor": "#ffd781"
-}
+
 
 			},
 		},
 		corporateLight2: {
 			label: __( 'Corporate Light 2', i18n ),
 			image: "https://gambitph.github.io/Stackable/assets/block-design-previews/stack-button-design-corporate-light-02.jpg"
-			attributes: {
+			attributes: 
 {
     "showButton2": true,
     "showButton3": true,
@@ -108,14 +108,14 @@ addFilter( 'stackable.button.edit.designs', 'stackable/button', designs => {
     "blockInnerWidth": "center",
     "align": "full",
     "blockBackgroundBackgroundColor": "#1e55d3"
-}
+
 
 			},
 		},
 		corporateDark1: {
 			label: __( 'Corporate Dark 1', i18n ),
 			image: "https://gambitph.github.io/Stackable/assets/block-design-previews/stack-button-design-corporate-dark-01.jpg"
-			attributes: {
+			attributes: 
 {
     "showButton2": true,
     "showButton3": true,
@@ -149,14 +149,14 @@ addFilter( 'stackable.button.edit.designs', 'stackable/button', designs => {
     "blockInnerWidth": "center",
     "align": "full",
     "blockBackgroundBackgroundColor": "#062a65"
-}
+
 
 			},
 		},
 		corporateDark2: {
 			label: __( 'Corporate Dark 2', i18n ),
 			image: "https://gambitph.github.io/Stackable/assets/block-design-previews/stack-button-design-corporate-dark-02.jpg"
-			attributes: {
+			attributes: 
 {
     "showButton2": true,
     "showButton3": true,
@@ -190,7 +190,7 @@ addFilter( 'stackable.button.edit.designs', 'stackable/button', designs => {
     "blockInnerWidth": "center",
     "align": "full",
     "blockBackgroundBackgroundColor": "#707070"
-}
+
 
 			},
 		},
