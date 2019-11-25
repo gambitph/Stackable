@@ -5,6 +5,9 @@
  */
 @import "common";
 
+.ugb-separator .ugb-block-content .ugb-separator__svg-wrapper {
+	height: 200px;
+}
 @media (max-width: 1024px) {
 	.ugb-separator .ugb-block-content .ugb-separator__svg-wrapper {
 		height: 175px;
