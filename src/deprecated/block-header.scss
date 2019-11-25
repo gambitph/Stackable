@@ -1,5 +1,17 @@
 @import "common";
 
+.ugb-header__buttons {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: -0.5em;
+	margin-right: -0.5em;
+}
+
+.ugb-header__buttons > * {
+	margin: 0 0.5em 0.5em;
+}
+
 /**
  * Deprecated < v2
  */
