@@ -223,10 +223,41 @@ addFilter( 'stackable.notification.setAttributes', 'stackable/notification/notif
 	return {
 		...attributes,
 		columnBackgroundColor: '',
+		columnBackgroundColorOpacity: '',
 		iconColor: '',
 		titleColor: '',
 		descriptionColor: '',
 		buttonBackgroundColor: '',
 		columnBorderColor: '',
+	}
+} )
+
+// When background opacity is set or when the background color is reset, revert background color to notification color.
+addFilter( 'stackable.notification.setAttributes', 'stackable/notification/opacity', ( attributes, blockProps ) => {
+	const setColumnBackgroundColor = attributes.hasOwnProperty( 'columnBackgroundColor' )
+	if ( typeof attributes.columnBackgroundColorOpacity === 'undefined' && ! setColumnBackgroundColor ) {
+		return attributes
+	}
+
+	// If a new background color is set, do not revert to notification color.
+	if ( setColumnBackgroundColor && typeof attributes.columnBackgroundColor !== 'undefined' ) {
+		return attributes
+	}
+
+	const {
+		notifType = 'success',
+		columnBackgroundColor = '',
+	} = blockProps.attributes
+
+	const NOTIFY_BACKGROUND_COLORS = {
+		success: '#40ba7b',
+		error: '#d9534f',
+		info: '#2091e1',
+		warning: '#ffdd57',
+	}
+
+	return {
+		...attributes,
+		columnBackgroundColor: columnBackgroundColor && ! setColumnBackgroundColor ? columnBackgroundColor : NOTIFY_BACKGROUND_COLORS[ notifType ],
 	}
 } )

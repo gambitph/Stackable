@@ -705,7 +705,7 @@ const edit = props => {
 							className="ugb-pricing-box__subprice"
 							value={ subPrice }
 							onChange={ value => setAttributes( { [ `subPrice${ i }` ]: value } ) }
-							placeholder={ __( 'Description', i18n ) }
+							placeholder={ __( 'Sub Price', i18n ) }
 							keepPlaceholderOnFocus
 						/>
 					const buttonComp = (
