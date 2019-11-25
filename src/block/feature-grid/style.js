@@ -47,11 +47,13 @@ export const createStyles = props => {
 
 	// Column Background.
 	const columnBackgroundSelector = applyFilters( 'stackable.feature-grid.styles.column-background', 'ugb-feature-grid__item', props.attributes )
-	styles.push( {
-		...( show.columnBackground ? createBackgroundStyleSet( 'column%s', columnBackgroundSelector, props.attributes, {
-			importantBackgroundColor: true,
-		} ) : {} ),
-	} )
+	if ( columnBackgroundSelector ) {
+		styles.push( {
+			...( show.columnBackground ? createBackgroundStyleSet( 'column%s', columnBackgroundSelector, props.attributes, {
+				importantBackgroundColor: true,
+			} ) : {} ),
+		} )
+	}
 
 	// Image.
 	const {
