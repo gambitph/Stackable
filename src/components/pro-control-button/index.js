@@ -42,6 +42,7 @@ class ProControlButton extends Component {
 						title={ this.props.title }
 						description={ this.props.description }
 						button={ this.props.button }
+						showButton={ this.props.showButton }
 					/>
 				</div>
 			</div>
