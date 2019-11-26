@@ -271,7 +271,9 @@ export const settings = {
 	modules: {
 		'advanced-general': true,
 		'advanced-block-spacing': true,
-		'advanced-column-spacing': true,
+		'advanced-column-spacing': {
+			verticalContentAlign: false,
+		},
 		'advanced-responsive': true,
 		'block-background': true,
 		'block-separators': true,
