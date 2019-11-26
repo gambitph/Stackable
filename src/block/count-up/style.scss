@@ -8,6 +8,10 @@
 
 .ugb-count-up.ugb-countup--v4 {
 	text-align: center;
+	.ugb-countup__item {
+		display: flex;
+		flex-direction: column;
+	}
 	.ugb-countup--hide,
 	.ugb-countup-hide {
 		visibility: hidden;
