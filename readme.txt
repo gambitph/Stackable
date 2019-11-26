@@ -210,7 +210,7 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com/v2/)
 
 ### News Article Updates
 
-- [v2.0 Version 2 is Out!](https://wpstackable.com/version-2-is-out)
+- [v2.0 Version 2 is Out!](https://wpstackable.com/blog/version-2-is-out)
 - [v1.17 Text Color and Text Highlight](https://wpstackable.com/blog/text-color-and-text-highlight)
 - [v1.16 Translations: Stackable in Your Language](https://wpstackable.com/blog/translations-stackable-in-your-language/)
 - [v1.15 Separators Are Here](https://wpstackable.com/blog/separators-are-here/)
@@ -269,12 +269,12 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Upgrade Notice ==
 
-[Version 2](https://wpstackable.com/version-2-is-out) is a major update, make sure you're backed up in case of any hiccups.
+[Version 2](https://wpstackable.com/blog/version-2-is-out) is a major update, make sure you're backed up in case of any hiccups.
 
 == Changelog ==
 
 = 2.0 =
-[Version 2 is Out!](https://wpstackable.com/version-2-is-out)
+[Version 2 is Out!](https://wpstackable.com/blog/version-2-is-out)
 
 * New: Improved user interface to manage section building tools
 * New: Cutting-edge design options for typography, colors, images & videos
