@@ -17,6 +17,9 @@
 			margin-bottom: 0;
 		}
 	}
+	.ugb-feature-grid__content {
+		z-index: 2;
+	}
 	.ugb-feature-grid__item {
 		display: flex;
 		flex-direction: column;
