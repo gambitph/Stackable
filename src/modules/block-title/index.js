@@ -20,6 +20,7 @@ import {
 	whiteIfDark,
 	__getValue,
 } from '~stackable/util'
+import { omit } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -376,11 +377,14 @@ const addStyles = ( styleObject, props ) => {
 
 // Remove the content from exports for designs.
 const removeAttributesFromDesignAttributeExport = attributes => {
-	return {
+	return omit( {
 		...attributes,
-		blockTitle: attributes.blockTitle ? __( 'Title for This Block', i18n ) : undefined,
-		blockDescription: attributes.blockDescription ? descriptionPlaceholder() : undefined,
-	}
+		blockTitle: __( 'Title for This Block', i18n ),
+		blockDescription: descriptionPlaceholder(),
+	}, [
+		attributes.showBlockTitle ? 'blockTitle' : '',
+		attributes.showBlockDescription ? 'blockDescription' : '',
+	] )
 }
 
 // Include the block title & description with the content align reset.
