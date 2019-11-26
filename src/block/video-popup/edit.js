@@ -270,6 +270,6 @@ export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
 	withGoogleFont,
-	withTabbedInspector( [ 'style', 'advanced' ] ),
+	withTabbedInspector(),
 	withBlockStyles( createStyles, { editorMode: true } ),
 )( edit )
