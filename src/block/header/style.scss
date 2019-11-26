@@ -47,7 +47,7 @@
 .ugb-header.ugb-header--v3 {
 	@media screen and (max-width: $break-small) {
 		.ugb-header__buttons {
-			display: block;
+			flex-wrap: wrap;
 		}
 	}
 }
