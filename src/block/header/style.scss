@@ -44,6 +44,15 @@
 	}
 }
 
+.ugb-header.ugb-header--v3 {
+	@media screen and (max-width: $break-small) {
+		.ugb-header__buttons {
+			display: block;
+		}
+	}
+}
+
+
 // Full width
 .ugb-header.ugb-header--v3.ugb-main-block.alignfull {
 	&:not(.ugb-main-block--inner-center):not(.ugb-main-block--inner-wide) {
