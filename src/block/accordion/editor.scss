@@ -49,6 +49,12 @@
 	z-index: 0;
 }
 
+// Fix not clickable if there's a color overlay.
+#editor .ugb-accordion.ugb-accordion--v2 .ugb-accordion__item.ugb--has-background-overlay::before,
+#editor .ugb-accordion.ugb-accordion--v2 .ugb-accordion__item.ugb--has-background-overlay .ugb-video-background {
+	z-index: -1 !important;
+}
+
 // Fix Gutenberg 6.9.0 visual error. a new blank div gets added when editing.
 .ugb-accordion__heading > div:empty {
 	display: none;
