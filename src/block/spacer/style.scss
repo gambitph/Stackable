@@ -19,4 +19,8 @@
 	.ugb-bottom-separator {
 		z-index: 6; // This value comes from modules/block-separators/index.js
 	}
+	&.ugb--has-top-separator,
+	&.ugb--has-bottom-separator {
+		padding: 0 !important;
+	}
 }
