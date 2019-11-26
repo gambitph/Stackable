@@ -97,6 +97,7 @@ addFilter( 'stackable.testimonial.edit.inspector.layout.before', 'stackable/test
 addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testimonial', ( output, props ) => {
 	const { setAttributes } = props
 	const {
+		design = 'basic',
 		columns = 2,
 		borderRadius = '',
 		shadow = '',
@@ -145,7 +146,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 						min={ 0 }
 						max={ 9 }
 						allowReset={ true }
-						placeholder="3"
+						placeholder={ design !== 'basic2' ? 3 : '' }
 					/>
 				}
 				<ContentAlignControl
