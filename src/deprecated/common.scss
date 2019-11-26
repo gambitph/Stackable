@@ -79,3 +79,9 @@ $box-vert-padding: 60px;
 		}
 	}
 }
+
+// Fixed background images.
+.ugb--has-background-image {
+	background-size: cover;
+	background-position: center;
+}
