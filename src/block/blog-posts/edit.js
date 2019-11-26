@@ -688,13 +688,13 @@ class Edit extends Component {
 		const itemClasses = classnames( [
 			'ugb-blog-posts__item',
 		], {
-			[ `ugb--shadow-${ shadow }` ]: ! show.imageShadow,
+			[ `ugb--shadow-${ shadow || 3 }` ]: ! show.imageShadow,
 		} )
 
 		const featuredImageClasses = classnames( [
 			'ugb-blog-posts__featured-image',
 		], {
-			[ `ugb--shadow-${ shadow }` ]: show.imageShadow,
+			[ `ugb--shadow-${ shadow || 3 }` ]: show.imageShadow,
 		} )
 
 		if ( ! hasPosts ) {
