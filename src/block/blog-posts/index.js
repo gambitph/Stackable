@@ -272,6 +272,7 @@ export const settings = {
 		'advanced-general': true,
 		'advanced-block-spacing': true,
 		'advanced-column-spacing': {
+			verticalColumnAlign: true,
 			verticalContentAlign: false,
 		},
 		'advanced-responsive': true,
