@@ -197,7 +197,7 @@ export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
 	withGoogleFont,
-	withTabbedInspector( [ 'style', 'advanced' ] ),
+	withTabbedInspector(),
 	withContentAlignReseter(),
 	withBlockStyles( createStyles, { editorMode: true } ),
 )( edit )
