@@ -2,11 +2,11 @@
 /**
  * Plugin Name: Stackable - Gutenberg Blocks
  * Plugin URI: https://wpstackable.com
- * Description: Blocks for everyone
+ * Description: An Amazing Block Collection That Lets You Reimagine the Way You Use the WordPress Block Editor (Gutenberg).
  * Author: Gambit Technologies, Inc
  * Author URI: http://gambit.ph
  * Text Domain: stackable-ultimate-gutenberg-blocks
- * Version: 2.0.0-dev9
+ * Version: 2.0.0
  *
  * @package Stackable
  */
@@ -23,7 +23,7 @@ if ( function_exists( 'sugb_fs' ) ) {
 }
 
 defined( 'STACKABLE_SHOW_PRO_NOTICES' ) || define( 'STACKABLE_SHOW_PRO_NOTICES', true );
-defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '2.0.0-dev9' );
+defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '2.0.0' );
 defined( 'STACKABLE_FILE' ) || define( 'STACKABLE_FILE', __FILE__ );
 defined( 'STACKABLE_I18N' ) || define( 'STACKABLE_I18N', 'stackable-ultimate-gutenberg-blocks' ); // Plugin slug.
 
@@ -78,7 +78,7 @@ if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
 
 /**
  * Always keep note of the Stackable version.
- * 
+ *
  * @since 2.0
  */
 if ( ! function_exists( 'stackable_version_upgrade_check' ) ) {
