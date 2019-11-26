@@ -180,7 +180,7 @@ Stackable Premium extends the capabilities of Stackable and the new WordPress ed
 
 While you can create great pages with Stackable, Stackable Premium lets you do so much more.
 
-Try out a [live demo of Stackable Premium](https://demo.wpstackable.com/blog-posts/)
+Try out a [live demo of Stackable Premium](https://demo.wpstackable.com/v2/)
 
 ## Stackable Blocks
 
@@ -269,7 +269,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Upgrade Notice ==
 
-[Version 2](https://wpstackable.com/version-2-is-out) is a major update! To be on the safe side, please back up your site first, and create a staging/test site and try updating Stackable from there to check if everything looks fine.
+[Version 2](https://wpstackable.com/version-2-is-out) is a major update, make sure you're backed up in case of any hiccups.
 
 == Changelog ==
 
@@ -284,7 +284,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * New: 3-tab configuration for layouts, style & advanced settings
 * New: Toggle on/off section background, title, description, & block elements
 * New: Streamlined settings panels for each block element
-* New:  New background settings including advanced image settings and advanced gradient settings
+* New: New background settings including advanced image settings and advanced gradient settings
 * New: Built-in top & bottom separators for every block
 * New: Z-index for custom block positioning
 * New: Detailed typography settings including font families, font size, font color, font weight, font cases, line height and letter spacing
