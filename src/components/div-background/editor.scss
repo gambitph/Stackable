@@ -1,0 +1,9 @@
+// Background overlay. Any block / item that has a background/gradient/overlay should have this class.
+#editor .ugb--has-background-overlay {
+	&.ugb--has-background-overlay {
+		&::before,
+		.ugb-video-background {
+			pointer-events: none;
+		}
+	}
+}
