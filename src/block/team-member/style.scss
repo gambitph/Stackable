@@ -21,8 +21,13 @@
 		flex-direction: column;
 		text-align: center;
 	}
+	&.ugb-team-member--design-half,
+	&.ugb-team-member--design-horizontal {
+		.ugb-team-member__content {
+			flex: 1;
+		}
+	}
 	.ugb-team-member__content {
-		flex: 1;
 		display: flex;
 		flex-direction: column;
 		background-size: cover;
