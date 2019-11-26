@@ -11,7 +11,7 @@ import { addFilter } from '@wordpress/hooks'
 addFilter( 'stackable.testimonial.design.apply-block-attributes', 'stackable/testimonial', ( attributes, blockAttributes = null ) => {
 	return omit( attributes, [
 		'testimonial1',
-		'testimonial1',
+		'testimonial2',
 		'testimonial3',
 		'image1Id',
 		...( blockAttributes && blockAttributes.image1Id ? [ 'image1Url' ] : [] ),
