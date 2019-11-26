@@ -143,7 +143,6 @@ export const settings = {
 		'advanced-block-spacing': true,
 		'advanced-column-spacing': {
 			columnGap: false,
-			verticalColumnAlign: true,
 		},
 		'advanced-responsive': true,
 		'block-background': true,

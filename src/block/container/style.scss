@@ -17,14 +17,11 @@
 
 	.ugb-container__wrapper {
 		@include box();
-	}
-	.ugb-container__wrapper {
 		display: flex;
 		flex-direction: column;
-		justify-items: stretch;
+		justify-content: center;
 	}
 	.ugb-container__side {
-		flex: 1;
 		display: flex;
 		flex-direction: column;
 		align-items: center;

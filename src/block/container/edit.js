@@ -86,9 +86,9 @@ addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/contain
 		tabletHeight = '',
 		mobileHeight = '',
 
-		contentVerticalAlign = '',
-		contentTabletVerticalAlign = '',
-		contentMobileVerticalAlign = '',
+		columnContentVerticalAlign = '',
+		tabletColumnContentVerticalAlign = '',
+		mobileColumnContentVerticalAlign = '',
 
 		contentWidth = '',
 		contentTabletWidth = '',
@@ -132,8 +132,8 @@ addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/contain
 						<AdvancedToolbarControl
 							label={ __( 'Content Vertical Align', i18n ) }
 							controls="flex-vertical"
-							value={ contentVerticalAlign }
-							onChange={ value => setAttributes( { contentVerticalAlign: value } ) }
+							value={ columnContentVerticalAlign }
+							onChange={ value => setAttributes( { columnContentVerticalAlign: value } ) }
 						/>
 					</WhenResponsiveScreen>
 				}
@@ -142,8 +142,8 @@ addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/contain
 						<AdvancedToolbarControl
 							label={ __( 'Content Vertical Align', i18n ) }
 							controls="flex-vertical"
-							value={ contentTabletVerticalAlign }
-							onChange={ value => setAttributes( { contentTabletVerticalAlign: value } ) }
+							value={ tabletColumnContentVerticalAlign }
+							onChange={ value => setAttributes( { tabletColumnContentVerticalAlign: value } ) }
 						/>
 					</WhenResponsiveScreen>
 				}
@@ -153,8 +153,8 @@ addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/contain
 						<AdvancedToolbarControl
 							label={ __( 'Content Vertical Align', i18n ) }
 							controls="flex-vertical"
-							value={ contentMobileVerticalAlign }
-							onChange={ value => setAttributes( { contentMobileVerticalAlign: value } ) }
+							value={ mobileColumnContentVerticalAlign }
+							onChange={ value => setAttributes( { mobileColumnContentVerticalAlign: value } ) }
 						/>
 					</WhenResponsiveScreen>
 				}
