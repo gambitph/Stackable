@@ -49,6 +49,11 @@
         private $_is_network_storage;
 
         /**
+         * @var bool|null
+         */
+        private $_autoload;
+
+        /**
          * @var array[string]FS_Option_Manager {
          * @key   string
          * @value FS_Option_Manager
@@ -60,11 +65,17 @@
          * @author Vova Feldman (@svovaf)
          * @since  1.0.3
          *
-         * @param string   $id
-         * @param bool     $load
-         * @param bool|int $network_level_or_blog_id Since 2.0.0
+         * @param string    $id
+         * @param bool      $load
+         * @param bool|int  $network_level_or_blog_id Since 2.0.0
+         * @param bool|null $autoload
          */
-        private function __construct( $id, $load = false, $network_level_or_blog_id = false ) {
+        private function __construct(
+            $id,
+            $load = false,
+            $network_level_or_blog_id = false,
+            $autoload = null
+        ) {
             $id = strtolower( $id );
 
             $this->_logger = FS_Logger::get_logger( WP_FS__SLUG . '_opt_mngr_' . $id, WP_FS__DEBUG_SDK, WP_FS__ECHO_DEBUG_SDK );
@@ -73,6 +84,8 @@
             $this->_logger->log( 'id = ' . $id );
 
             $this->_id = $id;
+
+            $this->_autoload = $autoload;
 
             if ( is_multisite() ) {
                 $this->_is_network_storage = ( true === $network_level_or_blog_id );
@@ -93,13 +106,19 @@
          * @author Vova Feldman (@svovaf)
          * @since  1.0.3
          *
-         * @param string   $id
-         * @param bool     $load
-         * @param bool|int $network_level_or_blog_id Since 2.0.0
+         * @param string    $id
+         * @param bool      $load
+         * @param bool|int  $network_level_or_blog_id Since 2.0.0
+         * @param bool|null $autoload
          *
-         * @return FS_Option_Manager
+         * @return \FS_Option_Manager
          */
-        static function get_manager( $id, $load = false, $network_level_or_blog_id = false ) {
+        static function get_manager(
+            $id,
+            $load = false,
+            $network_level_or_blog_id = false,
+            $autoload = null
+        ) {
             $key = strtolower( $id );
 
             if ( is_multisite() ) {
@@ -115,7 +134,12 @@
             }
 
             if ( ! isset( self::$_MANAGERS[ $key ] ) ) {
-                self::$_MANAGERS[ $key ] = new FS_Option_Manager( $id, $load, $network_level_or_blog_id );
+                self::$_MANAGERS[ $key ] = new FS_Option_Manager(
+                    $id,
+                    $load,
+                    $network_level_or_blog_id,
+                    $autoload
+                );
             } // If load required but not yet loaded, load.
             else if ( $load && ! self::$_MANAGERS[ $key ]->is_loaded() ) {
                 self::$_MANAGERS[ $key ]->load();
@@ -410,7 +434,7 @@
             } else if ( $this->_blog_id > 0 ) {
                 update_blog_option( $this->_blog_id, $option_name, $this->_options );
             } else {
-                update_option( $option_name, $this->_options );
+                update_option( $option_name, $this->_options, $this->_autoload );
             }
 
             if ( ! WP_FS__DEBUG_SDK ) {

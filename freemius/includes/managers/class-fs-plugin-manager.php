@@ -83,12 +83,12 @@
 			$option_manager = $this->get_option_manager();
 
 			if ( false !== $module_type ) {
-				return $option_manager->get_option( $module_type . 's', array() );
+				return fs_get_entities( $option_manager->get_option( $module_type . 's', array() ), FS_Plugin::get_class_name() );
 			}
 
 			return array(
-				self::OPTION_NAME_PLUGINS => $option_manager->get_option( self::OPTION_NAME_PLUGINS, array() ),
-				self::OPTION_NAME_THEMES  => $option_manager->get_option( self::OPTION_NAME_THEMES, array() ),
+				self::OPTION_NAME_PLUGINS => fs_get_entities( $option_manager->get_option( self::OPTION_NAME_PLUGINS, array() ), FS_Plugin::get_class_name() ),
+				self::OPTION_NAME_THEMES  => fs_get_entities( $option_manager->get_option( self::OPTION_NAME_THEMES, array() ), FS_Plugin::get_class_name() ),
 			);
 		}
 

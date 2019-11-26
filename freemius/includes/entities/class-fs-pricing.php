@@ -34,6 +34,13 @@
 		 * @var null|float
 		 */
 		public $lifetime_price;
+        /**
+         * @author Leo Fajardo (@leorw)
+         * @since 2.3.1
+         *
+         * @var string One of the following: `usd`, `gbp`, `eur`.
+         */
+        public $currency;
 
 		#endregion Properties
 
@@ -138,4 +145,13 @@
 			return ( $this->monthly_price * 12 - $this->annual_price ) * ( $this->is_unlimited() ? 1 : $this->licenses );
 		}
 
+        /**
+         * @author Leo Fajardo (@leorw)
+         * @since  2.3.1
+         *
+         * @return bool
+         */
+        function is_usd() {
+            return ( 'usd' === $this->currency );
+        }
 	}

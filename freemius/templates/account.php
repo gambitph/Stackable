@@ -44,19 +44,25 @@
     $site                   = $fs->get_site();
     $name                   = $user->get_name();
     $license                = $fs->_get_license();
+    $is_data_debug_mode     = $fs->is_data_debug_mode();
+    $is_whitelabeled        = $fs->is_whitelabeled();
     $subscription           = ( is_object( $license ) ?
                                   $fs->_get_subscription( $license->id ) :
                                   null );
     $plan                   = $fs->get_plan();
     $is_active_subscription = ( is_object( $subscription ) && $subscription->is_active() );
     $is_paid_trial          = $fs->is_paid_trial();
-    $has_paid_plan          = $fs->has_paid_plan();
-    $show_upgrade           = ( $has_paid_plan && ! $is_paying && ! $is_paid_trial );
+    $has_paid_plan          = $fs->apply_filters( 'has_paid_plan_account', $fs->has_paid_plan() );
+    $show_upgrade           = ( ! $is_whitelabeled && $has_paid_plan && ! $is_paying && ! $is_paid_trial );
     $trial_plan             = $fs->get_trial_plan();
 
 	if ( $has_paid_plan ) {
         $fs->_add_license_activation_dialog_box();
 	}
+
+    if ( $fs->is_whitelabeled( true ) || $fs->is_data_debug_mode() ) {
+        $fs->_add_data_debug_mode_dialog_box();
+    }
 
 	if ( fs_request_get_bool( 'auto_install' ) ) {
 		$fs->_add_auto_installation_dialog_box();
@@ -72,7 +78,7 @@
 
 	$payments = $fs->_fetch_payments();
 
-	$show_billing = ( is_array( $payments ) && 0 < count( $payments ) );
+    $show_billing = ( ! $is_whitelabeled && is_array( $payments ) && 0 < count( $payments ) );
 
 
 	$has_tabs = $fs->_add_tabs_before_content();
@@ -196,89 +202,102 @@
 							<h3><span class="dashicons dashicons-businessman"></span> <?php fs_esc_html_echo_inline( 'Account Details', 'account-details', $slug ) ?></h3>
 							<div class="fs-header-actions">
 								<ul>
+                                    <?php if ( $fs->is_whitelabeled( true ) ) : ?>
+                                        <li>
+                                            <a href="#" class="debug-license-trigger"><i class="dashicons dashicons-<?php echo $is_whitelabeled ? 'editor-code' : 'controls-pause' ?>"></i> <span><?php
+                                                if ( $is_whitelabeled ) {
+                                                    fs_esc_html_echo_inline( 'Start Debug', 'start-debug-license', $slug );
+                                                } else {
+                                                    fs_esc_html_echo_inline( 'Stop Debug', 'stop-debug-license', $slug );
+                                                }
+                                            ?></span></a>
+                                        </li>
+                                        <li>&nbsp;&bull;&nbsp;</li>
+                                    <?php endif ?>
 									<?php if ( $show_billing ) : ?>
 										<li><a href="#fs_billing"><i class="dashicons dashicons-portfolio"></i> <?php fs_esc_html_echo_inline( 'Billing & Invoices', 'billing-invoices', $slug ) ?></li>
 										<li>&nbsp;&bull;&nbsp;</li>
 									<?php endif ?>
-									<?php if ( ! $is_paying ) : ?>
-										<li>
-											<form action="<?php echo $fs->_get_admin_page_url( 'account' ) ?>" method="POST">
-												<input type="hidden" name="fs_action" value="delete_account">
-												<?php wp_nonce_field( 'delete_account' ) ?>
-												<a class="fs-delete-account" href="#" onclick="if (confirm('<?php
-													if ( $is_active_subscription ) {
-														echo esc_attr( sprintf( fs_text_inline( 'Deleting the account will automatically deactivate your %s plan license so you can use it on other sites. If you want to terminate the recurring payments as well, click the "Cancel" button, and first "Downgrade" your account. Are you sure you would like to continue with the deletion?', 'delete-account-x-confirm', $slug ), $plan->title ) );
-													} else {
-														echo esc_attr( sprintf( fs_text_inline( 'Deletion is not temporary. Only delete if you no longer want to use this %s anymore. Are you sure you would like to continue with the deletion?', 'delete-account-confirm', $slug ), $fs->get_module_label( true ) ) );
-													}
-												?>'))  this.parentNode.submit(); return false;"><i
-														class="dashicons dashicons-no"></i> <?php fs_esc_html_echo_inline( 'Delete Account', 'delete-account', $slug ) ?></a>
-											</form>
-										</li>
-										<li>&nbsp;&bull;&nbsp;</li>
-									<?php endif ?>
-									<?php if ( $is_paying ) : ?>
-                                        <?php if ( ! fs_is_network_admin() ) : ?>
-										<li>
-											<form action="<?php echo $fs->_get_admin_page_url( 'account' ) ?>" method="POST">
-												<input type="hidden" name="fs_action" value="deactivate_license">
-												<?php wp_nonce_field( 'deactivate_license' ) ?>
-												<a href="#" class="fs-deactivate-license"><i
-														class="dashicons dashicons-admin-network"></i> <?php fs_echo_inline( 'Deactivate License', 'deactivate-license', $slug ) ?>
-												</a>
-											</form>
-										</li>
-										<li>&nbsp;&bull;&nbsp;</li>
+                                    <?php if ( ! $is_whitelabeled ) : ?>
+                                        <?php if ( ! $is_paying ) : ?>
+                                            <li>
+                                                <form action="<?php echo $fs->_get_admin_page_url( 'account' ) ?>" method="POST">
+                                                    <input type="hidden" name="fs_action" value="delete_account">
+                                                    <?php wp_nonce_field( 'delete_account' ) ?>
+                                                    <a class="fs-delete-account" href="#" onclick="if (confirm('<?php
+                                                        if ( $is_active_subscription ) {
+                                                            echo esc_attr( sprintf( fs_text_inline( 'Deleting the account will automatically deactivate your %s plan license so you can use it on other sites. If you want to terminate the recurring payments as well, click the "Cancel" button, and first "Downgrade" your account. Are you sure you would like to continue with the deletion?', 'delete-account-x-confirm', $slug ), $plan->title ) );
+                                                        } else {
+                                                            echo esc_attr( sprintf( fs_text_inline( 'Deletion is not temporary. Only delete if you no longer want to use this %s anymore. Are you sure you would like to continue with the deletion?', 'delete-account-confirm', $slug ), $fs->get_module_label( true ) ) );
+                                                        }
+                                                    ?>'))  this.parentNode.submit(); return false;"><i
+                                                            class="dashicons dashicons-no"></i> <?php fs_esc_html_echo_inline( 'Delete Account', 'delete-account', $slug ) ?></a>
+                                                </form>
+                                            </li>
+                                            <li>&nbsp;&bull;&nbsp;</li>
                                         <?php endif ?>
-										<?php if ( ! $license->is_lifetime() &&
-										           $is_active_subscription
-										) : ?>
-											<li>
-												<form action="<?php echo $fs->_get_admin_page_url( 'account' ) ?>" method="POST">
-													<input type="hidden" name="fs_action" value="downgrade_account">
-													<?php wp_nonce_field( 'downgrade_account' ) ?>
-													<a href="#"
-													   onclick="if ( confirm('<?php echo esc_attr( sprintf(
-													   	   $downgrade_x_confirm_text,
-														   ( $fs->is_only_premium()  ? $cancelling_subscription_text : $downgrading_plan_text ),
-														   $plan->title,
-														   human_time_diff( time(), strtotime( $license->expiration ) )
-													   ) ) ?> <?php if ( ! $license->is_block_features ) {
-														   echo esc_attr( sprintf( $after_downgrade_non_blocking_text, $plan->title, $fs->get_module_label( true ) ) );
-													   } else {
-                                                           echo esc_attr( sprintf( $after_downgrade_blocking_text, $plan->title ) );
-													   }?> <?php echo esc_attr( $prices_increase_text ) ?> <?php fs_esc_attr_echo_inline( 'Are you sure you want to proceed?', 'proceed-confirmation', $slug ) ?>') ) this.parentNode.submit(); return false;"><i class="dashicons dashicons-download"></i> <?php echo esc_html( $fs->is_only_premium() ? fs_text_inline( 'Cancel Subscription', 'cancel-subscription', $slug ) : $downgrade_text ) ?></a>
-												</form>
-											</li>
-											<li>&nbsp;&bull;&nbsp;</li>
-										<?php endif ?>
-										<?php if ( ! $fs->is_single_plan() ) : ?>
-											<li>
-												<a href="<?php echo $fs->get_upgrade_url() ?>"><i
-														class="dashicons dashicons-grid-view"></i> <?php echo esc_html( $change_plan_text ) ?></a>
-											</li>
-											<li>&nbsp;&bull;&nbsp;</li>
-										<?php endif ?>
-									<?php elseif ( $is_paid_trial ) : ?>
-										<li>
-											<form action="<?php echo $fs->_get_admin_page_url( 'account' ) ?>" method="POST">
-												<input type="hidden" name="fs_action" value="cancel_trial">
-												<?php wp_nonce_field( 'cancel_trial' ) ?>
-												<a href="#" class="fs-cancel-trial"><i
-														class="dashicons dashicons-download"></i> <?php echo esc_html( $cancel_trial_text ) ?></a>
-											</form>
-										</li>
-										<li>&nbsp;&bull;&nbsp;</li>
-									<?php endif ?>
-									<li>
-										<form action="<?php echo $fs->_get_admin_page_url( 'account' ) ?>" method="POST">
-											<input type="hidden" name="fs_action" value="<?php echo $fs->get_unique_affix() ?>_sync_license">
-											<?php wp_nonce_field( $fs->get_unique_affix() . '_sync_license' ) ?>
-											<a href="#" onclick="this.parentNode.submit(); return false;"><i
-													class="dashicons dashicons-image-rotate"></i> <?php fs_esc_html_echo_x_inline( 'Sync', 'as synchronize', 'sync', $slug ) ?></a>
-										</form>
-									</li>
-
+                                        <?php if ( $is_paying ) : ?>
+                                            <?php if ( ! fs_is_network_admin() ) : ?>
+                                            <li>
+                                                <form action="<?php echo $fs->_get_admin_page_url( 'account' ) ?>" method="POST">
+                                                    <input type="hidden" name="fs_action" value="deactivate_license">
+                                                    <?php wp_nonce_field( 'deactivate_license' ) ?>
+                                                    <a href="#" class="fs-deactivate-license"><i
+                                                            class="dashicons dashicons-admin-network"></i> <?php fs_echo_inline( 'Deactivate License', 'deactivate-license', $slug ) ?>
+                                                    </a>
+                                                </form>
+                                            </li>
+                                            <li>&nbsp;&bull;&nbsp;</li>
+                                            <?php endif ?>
+                                            <?php if ( ! $license->is_lifetime() &&
+                                                       $is_active_subscription
+                                            ) : ?>
+                                                <li>
+                                                    <form action="<?php echo $fs->_get_admin_page_url( 'account' ) ?>" method="POST">
+                                                        <input type="hidden" name="fs_action" value="downgrade_account">
+                                                        <?php wp_nonce_field( 'downgrade_account' ) ?>
+                                                        <a href="#"
+                                                           onclick="if ( confirm('<?php echo esc_attr( sprintf(
+                                                               $downgrade_x_confirm_text,
+                                                               ( $fs->is_only_premium()  ? $cancelling_subscription_text : $downgrading_plan_text ),
+                                                               $plan->title,
+                                                               human_time_diff( time(), strtotime( $license->expiration ) )
+                                                           ) ) ?> <?php if ( ! $license->is_block_features ) {
+                                                               echo esc_attr( sprintf( $after_downgrade_non_blocking_text, $plan->title, $fs->get_module_label( true ) ) );
+                                                           } else {
+                                                               echo esc_attr( sprintf( $after_downgrade_blocking_text, $plan->title ) );
+                                                           }?> <?php echo esc_attr( $prices_increase_text ) ?> <?php fs_esc_attr_echo_inline( 'Are you sure you want to proceed?', 'proceed-confirmation', $slug ) ?>') ) this.parentNode.submit(); return false;"><i class="dashicons dashicons-download"></i> <?php echo esc_html( $fs->is_only_premium() ? fs_text_inline( 'Cancel Subscription', 'cancel-subscription', $slug ) : $downgrade_text ) ?></a>
+                                                    </form>
+                                                </li>
+                                                <li>&nbsp;&bull;&nbsp;</li>
+                                            <?php endif ?>
+                                            <?php if ( ! $fs->is_single_plan() ) : ?>
+                                                <li>
+                                                    <a href="<?php echo $fs->get_upgrade_url() ?>"><i
+                                                            class="dashicons dashicons-grid-view"></i> <?php echo esc_html( $change_plan_text ) ?></a>
+                                                </li>
+                                                <li>&nbsp;&bull;&nbsp;</li>
+                                            <?php endif ?>
+                                        <?php elseif ( $is_paid_trial ) : ?>
+                                            <li>
+                                                <form action="<?php echo $fs->_get_admin_page_url( 'account' ) ?>" method="POST">
+                                                    <input type="hidden" name="fs_action" value="cancel_trial">
+                                                    <?php wp_nonce_field( 'cancel_trial' ) ?>
+                                                    <a href="#" class="fs-cancel-trial"><i
+                                                            class="dashicons dashicons-download"></i> <?php echo esc_html( $cancel_trial_text ) ?></a>
+                                                </form>
+                                            </li>
+                                            <li>&nbsp;&bull;&nbsp;</li>
+                                        <?php endif ?>
+                                    <?php endif ?>
+                                    <li>
+                                        <form action="<?php echo $fs->_get_admin_page_url( 'account' ) ?>" method="POST">
+                                            <input type="hidden" name="fs_action" value="<?php echo $fs->get_unique_affix() ?>_sync_license">
+                                            <?php wp_nonce_field( $fs->get_unique_affix() . '_sync_license' ) ?>
+                                            <a href="#" onclick="this.parentNode.submit(); return false;"><i
+                                                    class="dashicons dashicons-image-rotate"></i> <?php fs_esc_html_echo_x_inline( 'Sync', 'as synchronize', 'sync', $slug ) ?></a>
+                                        </form>
+                                    </li>
 								</ul>
 							</div>
 							<div class="inside">
@@ -287,25 +306,28 @@
 										$hide_license_key = ( ! $show_license_row || $fs->apply_filters( 'hide_license_key', false ) );
 
 										$profile   = array();
-										$profile[] = array(
-											'id'    => 'user_name',
-											'title' => fs_text_inline( 'Name', 'name', $slug ),
-											'value' => $name
-										);
-										//					if (isset($user->email) && false !== strpos($user->email, '@'))
-										$profile[] = array(
-											'id'    => 'email',
-											'title' => fs_text_inline( 'Email', 'email', $slug ),
-											'value' => $user->email
-										);
 
-										if ( is_numeric( $user->id ) ) {
-											$profile[] = array(
-												'id'    => 'user_id',
-												'title' => fs_text_inline( 'User ID', 'user-id', $slug ),
-												'value' => $user->id
-											);
-										}
+										if ( ! $is_whitelabeled ) {
+                                            $profile[] = array(
+                                                'id'    => 'user_name',
+                                                'title' => fs_text_inline( 'Name', 'name', $slug ),
+                                                'value' => $name
+                                            );
+                                            //					if (isset($user->email) && false !== strpos($user->email, '@'))
+                                            $profile[] = array(
+                                                'id'    => 'email',
+                                                'title' => fs_text_inline( 'Email', 'email', $slug ),
+                                                'value' => $user->email
+                                            );
+
+                                            if ( is_numeric( $user->id ) ) {
+                                                $profile[] = array(
+                                                    'id'    => 'user_id',
+                                                    'title' => fs_text_inline( 'User ID', 'user-id', $slug ),
+                                                    'value' => $user->id
+                                                );
+                                            }
+                                        }
 
 										$profile[] = array(
 											'id'    => 'product',
@@ -354,7 +376,7 @@
 											'value' => $fs->get_plugin_version()
 										);
 
-										if ( $is_premium ) {
+										if ( $is_premium && ! $is_whitelabeled ) {
 										    $profile[] = array(
                                                 'id'    => 'beta_program',
                                                 'title' => '',
@@ -420,9 +442,11 @@
 												</td>
 												<td<?php if ( 'plan' === $p['id'] || 'bundle_plan' === $p['id'] ) { echo ' colspan="2"'; }?>>
 													<?php if ( in_array( $p['id'], array( 'license_key', 'site_secret_key' ) ) ) : ?>
-														<code><?php echo htmlspecialchars( substr( $p['value'], 0, 6 ) ) . str_pad( '', 23 * 6, '&bull;' ) . htmlspecialchars( substr( $p['value'], - 3 ) ) ?></code>
-														<input type="text" value="<?php echo htmlspecialchars( $p['value'] ) ?>" style="display: none"
+														<code><?php echo FS_Plugin_License::mask_secret_key_for_html( $p['value'] ) ?></code>
+														<?php if ( ! $is_whitelabeled ) : ?>
+                                                        <input type="text" value="<?php echo htmlspecialchars( $p['value'] ) ?>" style="display: none"
 														       readonly/>
+                                                        <?php endif ?>
                                                     <?php elseif ( 'beta_program' === $p['id'] ) : ?>
                                                         <label>
                                                             <input type="checkbox" class="fs-toggle-beta-mode" <?php checked( true, $p['value'] ) ?>/><span><?php
@@ -452,6 +476,7 @@
 														<?php elseif ( $fs->is_trial() ) : ?>
 															<label class="fs-tag fs-warn"><?php echo esc_html( sprintf( $expires_in_text, human_time_diff( time(), strtotime( $site->trial_ends ) ) ) ) ?></label>
 														<?php endif ?>
+                                                        <?php if ( ! $is_whitelabeled ) : ?>
 														<div class="button-group">
 															<?php $available_license = $fs->is_free_plan() && ! fs_is_network_admin() ? $fs->_get_available_premium_license( $site->is_localhost() ) : false ?>
                                                             <?php if ( is_object( $available_license ) ) : ?>
@@ -489,6 +514,7 @@
 																</form>
 															<?php endif ?>
 														</div>
+                                                        <?php endif ?>
 													<?php elseif ( 'bundle_plan' === $p['id'] ) : ?>
 														<?php if ( is_object( $bundle_subscription ) ) : ?>
 															<?php if ( $is_active_bundle_subscription && ! $license->is_first_payment_pending() ) : ?>
@@ -538,10 +564,12 @@
 															<?php endif ?>
 															<?php
 														elseif ( in_array( $p['id'], array( 'license_key', 'site_secret_key' ) ) ) : ?>
-															<button class="button button-small fs-toggle-visibility"><?php fs_esc_html_echo_x_inline( 'Show', 'verb', 'show', $slug ) ?></button>
-															<?php if ('license_key' === $p['id']) : ?>
-																<button class="button button-small activate-license-trigger <?php echo $fs->get_unique_affix() ?>"><?php fs_esc_html_echo_inline( 'Change License', 'change-license', $slug ) ?></button>
-															<?php endif ?>
+                                                            <?php if ( ! $is_whitelabeled ) : ?>
+                                                                <button class="button button-small fs-toggle-visibility"><?php fs_esc_html_echo_x_inline( 'Show', 'verb', 'show', $slug ) ?></button>
+                                                            <?php endif ?>
+                                                            <?php if ('license_key' === $p['id']) : ?>
+                                                                <button class="button button-small activate-license-trigger <?php echo $fs->get_unique_affix() ?>"><?php fs_esc_html_echo_inline( 'Change License', 'change-license', $slug ) ?></button>
+                                                            <?php endif ?>
 															<?php
 														elseif (/*in_array($p['id'], array('site_secret_key', 'site_id', 'site_public_key')) ||*/
 														( is_string( $user->secret_key ) && in_array( $p['id'], array(
@@ -587,18 +615,19 @@
 						<div id="fs_sites" class="postbox">
 							<h3><span class="dashicons dashicons-networking"></span> <?php fs_esc_html_echo_inline( 'Sites', 'sites', $slug ) ?></h3>
 							<div class="fs-header-actions">
-                                <?php $has_license = is_object( $license ) ?>
-                                <?php if ( $has_license || ( $show_upgrade && $is_premium ) ) : ?>
-                                    <?php
-                                        $activate_license_button_text = $has_license ?
-                                            fs_esc_html_inline( 'Change License', 'change-license', $slug ) :
-                                            fs_esc_html_inline( 'Activate License', 'activate-license', $slug );
-                                    ?>
-                                    <a class="button<?php echo ( ! $has_license ? ' button-primary' : '' ) ?> activate-license-trigger <?php echo $fs->get_unique_affix() ?>" href="#"><?php echo $activate_license_button_text ?></a>
+                                <?php if ( ! $is_whitelabeled ) : ?>
+                                    <?php $has_license = is_object( $license ) ?>
+                                    <?php if ( $has_license || ( $show_upgrade && $is_premium ) ) : ?>
+                                        <?php
+                                            $activate_license_button_text = $has_license ?
+                                                fs_esc_html_inline( 'Change License', 'change-license', $slug ) :
+                                                fs_esc_html_inline( 'Activate License', 'activate-license', $slug );
+                                        ?>
+                                        <a class="button<?php echo ( ! $has_license ? ' button-primary' : '' ) ?> activate-license-trigger <?php echo $fs->get_unique_affix() ?>" href="#"><?php echo $activate_license_button_text ?></a>
+                                    <?php endif ?>
                                 <?php endif ?>
 								<input class="fs-search" type="text" placeholder="<?php fs_esc_attr_echo_inline( 'Search by address', 'search-by-address', $slug ) ?>..."><span class="dashicons dashicons-search"></span>
 							</div>
-
 							<div class="inside">
                                 <div id="" class="fs-scrollable-table">
                                     <div class="fs-table-head">
@@ -666,8 +695,47 @@
 
                                             $installed_addons_ids_map = array_flip( $installed_addons_ids );
 
+                                            $addon_info_by_id     = array();
+                                            $hide_all_addons_data = false;
+
+                                            if ( $fs->is_whitelabeled_by_flag() ) {
+                                                $hide_all_addons_data = true;
+
+                                                foreach ( $addons_to_show as $addon_id ) {
+                                                    $is_addon_installed = isset( $installed_addons_ids_map[ $addon_id ] );
+                                                    $addon_info         = $fs->_get_addon_info( $addon_id, $is_addon_installed );
+                                                    $is_addon_connected = $addon_info['is_connected'];
+
+                                                    $fs_addon = ( $is_addon_connected && $is_addon_installed ) ?
+                                                        freemius( $addon_id ) :
+                                                        null;
+
+                                                    $is_whitelabeled = is_object( $fs_addon ) ?
+                                                        $fs_addon->is_whitelabeled( true ) :
+                                                        $addon_info['is_whitelabeled'];
+
+                                                    if ( ! $is_whitelabeled ) {
+                                                        $hide_all_addons_data = false;
+                                                    }
+
+                                                    if ( $is_data_debug_mode ) {
+                                                        $is_whitelabeled = false;
+                                                    }
+
+                                                    $addon_info_by_id[ $addon_id ] = $addon_info;
+                                                }
+                                            }
+
 											foreach ( $addons_to_show as $addon_id ) {
 											    $is_addon_installed = isset( $installed_addons_ids_map[ $addon_id ] );
+
+											    if (
+                                                    $hide_all_addons_data &&
+                                                    ! $is_addon_installed &&
+                                                    ! file_exists( fs_normalize_path( WP_PLUGIN_DIR . '/' . $fs->get_addon_basename( $addon_id ) ) )
+                                                ) {
+											        continue;
+                                                }
 
 												$addon_view_params = array(
 													'parent_fs'                      => $fs,
@@ -676,7 +744,10 @@
 													'fs_blog_id'                     => $fs_blog_id,
                                                     'active_plugins_directories_map' => &$active_plugins_directories_map,
                                                     'is_addon_installed'             => $is_addon_installed,
-                                                    'addon_info'                     => $fs->_get_addon_info( $addon_id, $is_addon_installed )
+                                                    'addon_info'                     => isset( $addon_info_by_id[ $addon_id ] ) ?
+                                                        $addon_info_by_id[ $addon_id ] :
+                                                        $fs->_get_addon_info( $addon_id, $is_addon_installed ),
+                                                    'is_whitelabeled'                => ( $is_whitelabeled && ! $is_data_debug_mode )
 												);
 
 												fs_require_template(

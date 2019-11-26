@@ -58,8 +58,12 @@
 				$this->fs->get_trial_url() :
 				$this->fs->get_upgrade_url();
 
+			$api = FS_Plugin::is_valid_id( $this->fs->get_bundle_id() ) ?
+				$this->fs->get_api_bundle_scope() :
+				$this->fs->get_api_plugin_scope();
+
 			// Load features.
-			$pricing = $this->fs->get_api_plugin_scope()->get( $this->fs->add_show_pending( "pricing.json" ) );
+			$pricing = $api->get( $this->fs->add_show_pending( "pricing.json" ) );
 
 			if ( $this->fs->is_api_result_object( $pricing, 'plans' ) ) {
 				// Add support features.

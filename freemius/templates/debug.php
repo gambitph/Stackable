@@ -229,7 +229,7 @@
 ?>
 
 <?php foreach ( $module_types as $module_type ) : ?>
-    <?php $modules = $fs_options->get_option( $module_type . 's' ) ?>
+    <?php $modules = fs_get_entities( $fs_options->get_option( $module_type . 's' ), FS_Plugin::get_class_name() ) ?>
     <?php if ( is_array( $modules ) && count( $modules ) > 0 ) : ?>
         <h2><?php echo esc_html( ( WP_FS__MODULE_TYPE_PLUGIN == $module_type ) ? fs_text_inline( 'Plugins', 'plugins' ) : fs_text_inline( 'Themes', 'themes' ) ) ?></h2>
         <table id="fs_<?php echo $module_type ?>" class="widefat">
@@ -352,7 +352,6 @@
 
     $is_multisite = is_multisite();
     $all_plans    = false;
-    $plans        = false;
     ?>
     <?php if ( is_array( $sites_map ) && count( $sites_map ) > 0 ) : ?>
         <h2><?php echo esc_html( sprintf(
@@ -370,6 +369,7 @@
                 <?php endif ?>
                 <th><?php fs_esc_html_echo_inline( 'Slug' ) ?></th>
                 <th><?php fs_esc_html_echo_inline( 'User ID' ) ?></th>
+                <th><?php fs_esc_html_echo_inline( 'License ID' ) ?></th>
                 <th><?php fs_esc_html_echo_x_inline( 'Plan', 'as product pricing plan', 'plan' ) ?></th>
                 <th><?php fs_esc_html_echo_inline( 'Public Key' ) ?></th>
                 <th><?php fs_esc_html_echo_inline( 'Secret Key' ) ?></th>
@@ -390,6 +390,7 @@
                         <?php endif ?>
                         <td><?php echo $slug ?></td>
                         <td><?php echo $site->user_id ?></td>
+                        <td><?php echo !empty($site->license_id) ? $site->license_id : '' ?></td>
                         <td><?php
                                 $plan_name = '';
                                 if ( FS_Plugin_Plan::is_valid_id( $site->plan_id ) ) {
@@ -399,14 +400,10 @@
                                             $option_name = $module_type . '_' . $option_name;
                                         }
 
-                                        $all_plans = $fs_options->get_option( $option_name, array() );
+                                        $all_plans = fs_get_entities( $fs_options->get_option( $option_name, array() ), FS_Plugin_Plan::get_class_name() );
                                     }
 
-                                    if ( false === $plans ) {
-                                        $plans = $all_plans[ $slug ];
-                                    }
-
-                                    foreach ( $plans as $plan ) {
+                                    foreach ( $all_plans[ $slug ] as $plan ) {
                                         $plan_id = Freemius::_decrypt( $plan->id );
 
                                         if ( $site->plan_id == $plan_id ) {
@@ -419,7 +416,13 @@
                                 echo $plan_name;
                             ?></td>
                         <td><?php echo $site->public_key ?></td>
-                        <td><?php echo esc_html( $site->secret_key ) ?></td>
+                        <td><?php
+                                $plugin_storage = FS_Storage::instance( $module_type, $slug );
+
+                                echo $plugin_storage->is_whitelabeled ?
+                                    FS_Plugin_License::mask_secret_key_for_html( $site->secret_key ) :
+                                    esc_html( $site->secret_key );
+                        ?></td>
                         <td>
                             <form action="" method="POST">
                                 <input type="hidden" name="fs_action" value="delete_install">
@@ -478,7 +481,22 @@
     /**
      * @var FS_User[] $users
      */
-    $users = $VARS['users'];
+    $users                              = $VARS['users'];
+    $users_with_developer_license_by_id = array();
+
+    foreach ( $module_types as $module_type ) {
+        /**
+         * @var FS_Plugin_License[] $licenses
+         */
+        $licenses = $VARS[ $module_type . '_licenses' ];
+
+        foreach ( $licenses as $license ) {
+            if ( $license->is_whitelabeled ) {
+                $users_with_developer_license_by_id[ $license->user_id ] = true;
+            }
+        }
+    }
+
 ?>
 <?php if ( is_array( $users ) && 0 < count( $users ) ) : ?>
     <h2><?php fs_esc_html_echo_inline( 'Users' ) ?></h2>
@@ -496,20 +514,27 @@
         </thead>
         <tbody>
         <?php foreach ( $users as $user_id => $user ) : ?>
+            <?php $has_developer_license = isset( $users_with_developer_license_by_id[ $user_id ] ) ?>
             <tr>
                 <td><?php echo $user->id ?></td>
-                <td><?php echo $user->get_name() ?></td>
-                <td><a href="mailto:<?php echo esc_attr( $user->email ) ?>"><?php echo $user->email ?></a></td>
-                <td><?php echo json_encode( $user->is_verified ) ?></td>
-                <td><?php echo $user->public_key ?></td>
-                <td><?php echo esc_html( $user->secret_key ) ?></td>
+                <td><?php echo $has_developer_license ? '' : $user->get_name() ?></td>
                 <td>
+                    <?php if ( ! $has_developer_license ) : ?>
+                    <a href="mailto:<?php echo esc_attr( $user->email ) ?>"><?php echo $user->email ?></a>
+                    <?php endif ?>
+                </td>
+                <td><?php echo $has_developer_license ? '' : json_encode( $user->is_verified ) ?></td>
+                <td><?php echo $user->public_key ?></td>
+                <td><?php echo $has_developer_license ? FS_Plugin_License::mask_secret_key_for_html($user->secret_key) : esc_html( $user->secret_key ) ?></td>
+                <td>
+                    <?php if ( ! $has_developer_license ) : ?>
                     <form action="" method="POST">
                         <input type="hidden" name="fs_action" value="delete_user">
                         <?php wp_nonce_field( 'delete_user' ) ?>
                         <input type="hidden" name="user_id" value="<?php echo $user->id ?>">
                         <button type="submit" class="button"><?php fs_esc_html_echo_x_inline( 'Delete', 'verb', 'delete' ) ?></button>
                     </form>
+                    <?php endif ?>
                 </td>
             </tr>
         <?php endforeach ?>
@@ -517,7 +542,11 @@
     </table>
 <?php endif ?>
 <?php foreach ( $module_types as $module_type ) : ?>
-    <?php $licenses = $VARS[ $module_type . '_licenses' ] ?>
+    <?php
+    /**
+     * @var FS_Plugin_License[] $licenses
+     */
+    $licenses = $VARS[ $module_type . '_licenses' ] ?>
     <?php if ( is_array( $licenses ) && count( $licenses ) > 0 ) : ?>
         <h2><?php echo esc_html( sprintf( fs_text_inline( '%s Licenses', 'module-licenses' ), ( WP_FS__MODULE_TYPE_PLUGIN === $module_type ? fs_text_inline( 'Plugin', 'plugin' ) : fs_text_inline( 'Theme', 'theme' ) ) ) ) ?></h2>
         <table id="fs_<?php echo $module_type ?>_licenses" class="widefat">
@@ -544,7 +573,11 @@
                     <td><?php echo $license->is_unlimited() ? 'Unlimited' : ( $license->is_single_site() ? 'Single Site' : $license->quota ) ?></td>
                     <td><?php echo $license->activated ?></td>
                     <td><?php echo $license->is_block_features ? 'Blocking' : 'Flexible' ?></td>
-                    <td><?php echo esc_html( $license->secret_key ) ?></td>
+                    <td><?php
+                            echo $license->is_whitelabeled ?
+                                $license->get_html_escaped_masked_secret_key() :
+                                esc_html( $license->secret_key );
+                    ?></td>
                     <td><?php echo $license->expiration ?></td>
                 </tr>
             <?php endforeach ?>

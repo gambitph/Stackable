@@ -22,6 +22,9 @@
 
 	$open_addon = false;
 
+    $is_data_debug_mode = $fs->is_data_debug_mode();
+    $is_whitelabeled    = $fs->is_whitelabeled();
+
 	/**
 	 * @var FS_Plugin[]
 	 */
@@ -52,7 +55,7 @@
 				<h3><?php echo esc_html( sprintf(
 						'%s... %s',
 						fs_text_x_inline( 'Oops', 'exclamation', 'oops', $slug ),
-						fs_text_inline( 'We could\'nt load the add-ons list. It\'s probably an issue on our side, please try to come back in few minutes.', 'add-ons-missing', $slug )
+						fs_text_inline( 'We couldn\'t load the add-ons list. It\'s probably an issue on our side, please try to come back in few minutes.', 'add-ons-missing', $slug )
 					) ) ?></h3>
 			<?php endif ?>
 			<ul class="fs-cards-list">
@@ -62,11 +65,52 @@
 
                     $active_plugins_directories_map = Freemius::get_active_plugins_directories_map( $fs_blog_id );
 					?>
+                    <?php
+                        $hide_all_addons_data = false;
+
+                        if ( $fs->is_whitelabeled_by_flag() ) {
+                            $hide_all_addons_data = true;
+
+                            $addon_ids        = $fs->get_updated_account_addons();
+                            $installed_addons = $fs->get_installed_addons();
+                            foreach ( $installed_addons as $fs_addon ) {
+                                $addon_ids[] = $fs_addon->get_id();
+                            }
+
+                            if ( ! empty( $addon_ids ) ) {
+                                $addon_ids = array_unique( $addon_ids );
+                            }
+
+                            foreach ( $addon_ids as $addon_id ) {
+                                $addon = $fs->get_addon( $addon_id );
+
+                                if ( ! is_object( $addon ) ) {
+                                    continue;
+                                }
+
+                                $addon_storage = FS_Storage::instance( WP_FS__MODULE_TYPE_PLUGIN, $addon->slug );
+
+                                if ( ! $addon_storage->is_whitelabeled ) {
+                                    $hide_all_addons_data = false;
+                                    break;
+                                }
+
+                                if ( $is_data_debug_mode ) {
+                                    $is_whitelabeled = false;
+                                }
+                            }
+                        }
+                    ?>
 					<?php foreach ( $addons as $addon ) : ?>
 						<?php
                         $basename = $fs->get_addon_basename( $addon->id );
 
                         $is_addon_installed = file_exists( fs_normalize_path( WP_PLUGIN_DIR . '/' . $basename ) );
+
+                        if ( ! $is_addon_installed && $hide_all_addons_data ) {
+                            continue;
+                        }
+
                         $is_addon_activated = $is_addon_installed ?
                             $fs->is_addon_activated( $addon->id ) :
                             false;
@@ -103,9 +147,21 @@
 
 									$min_price = 999999;
 									foreach ( $plan->pricing as $pricing ) {
-										if ( ! is_null( $pricing->annual_price ) && $pricing->annual_price > 0 ) {
+                                        $pricing = new FS_Pricing( $pricing );
+
+                                        if ( ! $pricing->is_usd() ) {
+                                            /**
+                                             * Skip non-USD pricing.
+                                             *
+                                             * @author Leo Fajardo (@leorw)
+                                             * @since 2.3.1
+                                             */
+                                            continue;
+                                        }
+
+                                        if ( $pricing->has_annual() ) {
 											$min_price = min( $min_price, $pricing->annual_price );
-										} else if ( ! is_null( $pricing->monthly_price ) && $pricing->monthly_price > 0 ) {
+										} else if ( $pricing->has_monthly() ) {
 											$min_price = min( $min_price, 12 * $pricing->monthly_price );
 										}
 									}
@@ -181,6 +237,9 @@
 									<li class="fs-offer">
 									<span
 										class="fs-price"><?php
+                                        if ( $is_whitelabeled ) {
+                                            echo '&nbsp;';
+                                        } else {
 											$descriptors = array();
 
 											if ($has_free_plan)
@@ -190,7 +249,9 @@
 											if ($has_trial)
 												$descriptors[] = fs_text_x_inline( 'Trial', 'trial period',  'trial', $slug );
 
-											echo implode(' - ', $descriptors) ?></span>
+											echo implode(' - ', $descriptors);
+
+                                        } ?></span>
 									</li>
 									<li class="fs-description"><?php echo ! empty( $addon->info->short_description ) ? $addon->info->short_description : 'SHORT DESCRIPTION' ?></li>
                                     <?php

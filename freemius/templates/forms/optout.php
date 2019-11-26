@@ -238,7 +238,7 @@ HTML;
 			 * @since 1.2.2.7
 			 */
 			$('.theme-overlay').contentChange(function () {
-				if (!$(this).find('.theme-overlay').hasClass('active')) {
+				if (0 === $('.theme-overlay.active').length) {
 					// Add opt-in/out button only to the currently active theme.
 					return;
 				}
@@ -259,7 +259,9 @@ HTML;
 
 				$('.theme-wrap .theme-actions .active-theme').append($actionLink);
 
-				registerActionLinkClick();
+				if ('' === href) {
+					registerActionLinkClick();
+				}
 			});
 			<?php endif ?>
 		});

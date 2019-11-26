@@ -11,6 +11,8 @@
 	}
 
 	/**
+     * @var array $VARS
+     *
 	 * @var Freemius $fs
 	 */
 	$fs           = freemius( $VARS['id'] );
@@ -29,9 +31,9 @@
 		$activate_button_text = $header_title;
 	} else {
 		$freemius_site_url = $fs->has_paid_plan() ?
-			'https://freemius.com/wordpress/' :
+			'https://freemius.com/' :
 			// Insights platform information.
-			'https://freemius.com/wordpress/usage-tracking/';
+			$fs->get_usage_tracking_terms_url();
 
 		$freemius_link = '<a href="' . $freemius_site_url . '" target="_blank" tabindex="0">freemius.com</a>';
 
@@ -115,14 +117,12 @@ HTML;
             foreach ( $available_licenses as $license ) {
                 $label = sprintf(
                     "%s-Site %s License - %s",
-                     ( 1 == $license->quota ?
-                         'Single' :
-                         ( $license->is_unlimited() ? 'Unlimited' : $license->quota )
-                     ),
-                     $fs->_get_plan_by_id( $license->plan_id )->title,
-                     ( htmlspecialchars( substr( $license->secret_key, 0, 6 ) ) .
-                        str_pad( '', 23 * 6, '&bull;' ) .
-                        htmlspecialchars( substr( $license->secret_key, - 3 ) ) )
+                    ( 1 == $license->quota ?
+                        'Single' :
+                        ( $license->is_unlimited() ? 'Unlimited' : $license->quota )
+                    ),
+                    $fs->_get_plan_by_id( $license->plan_id )->title,
+                    $license->get_html_escaped_masked_secret_key()
                 );
 
                 $license_input_html .= "<option data-id='{$license->id}' value='{$license->secret_key}' data-left='{$license->left()}'>{$label}</option>";
@@ -140,12 +140,10 @@ HTML;
                 "%s-Site %s License - %s",
                 ( 1 == $available_license->quota ?
                     'Single' :
-                    $available_license->quota
+                    ( $available_license->is_unlimited() ? 'Unlimited' : $available_license->quota )
                 ),
                 $fs->_get_plan_by_id( $available_license->plan_id )->title,
-                ( htmlspecialchars( substr( $available_license->secret_key, 0, 6 ) ) .
-                    str_pad( '', 23 * 6, '&bull;' ) .
-                    htmlspecialchars( substr( $available_license->secret_key, - 3 ) ) )
+                $available_license->get_html_escaped_masked_secret_key()
             );
 
             $license_input_html .= <<< HTML

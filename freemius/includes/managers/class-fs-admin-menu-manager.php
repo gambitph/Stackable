@@ -430,41 +430,62 @@
 				$this->get_raw_slug();
 		}
 
-		/**
-		 * Is user on plugin's admin activation page.
-		 *
-		 * @author Vova Feldman (@svovaf)
-		 * @since  1.0.8
-		 *
-		 * @return bool
-		 */
-		function is_main_settings_page() {
-			if ( $this->_menu_exists &&
-			     ( fs_is_plugin_page( $this->_menu_slug ) || fs_is_plugin_page( $this->_module_unique_affix ) )
-			) {
-				/**
-				 * Module has a settings menu and the context page is the main settings page, so assume it's in
-				 * activation (doesn't really check if already opted-in/skipped or not).
-				 *
-				 * @since 1.2.2
-				 */
-				return true;
-			}
+        /**
+         * Is user on plugin's admin activation page.
+         *
+         * @author Vova Feldman (@svovaf)
+         * @since  1.0.8
+         *
+         * @param bool $show_opt_in_on_themes_page Since 2.3.1
+         *
+         * @return bool
+         *
+         * @deprecated Please use is_activation_page() instead.
+         */
+        function is_main_settings_page( $show_opt_in_on_themes_page = false ) {
+            return $this->is_activation_page( $show_opt_in_on_themes_page );
+        }
 
-			global $pagenow;
-			if ( ( WP_FS__MODULE_TYPE_THEME === $this->_module_type ) && Freemius::is_themes_page() ) {
-				/**
-				 * In activation only when show_optin query string param is given.
-				 *
-				 * @since 1.2.2
-				 */
-				return fs_request_get_bool( $this->_module_unique_affix . '_show_optin' );
-			}
+        /**
+         * Is user on product's admin activation page.
+         *
+         * @author Vova Feldman (@svovaf)
+         * @since  2.3.1
+         *
+         * @param bool $show_opt_in_on_themes_page Since 2.3.1
+         *
+         * @return bool
+         */
+        function is_activation_page( $show_opt_in_on_themes_page = false ) {
+            if ( $show_opt_in_on_themes_page ) {
+                /**
+                 * In activation only when show_optin query string param is given.
+                 *
+                 * @since 1.2.2
+                 */
+                return (
+                    ( WP_FS__MODULE_TYPE_THEME === $this->_module_type ) &&
+                    Freemius::is_themes_page() &&
+                    fs_request_get_bool( $this->_module_unique_affix . '_show_optin' )
+                );
+            }
 
-			return false;
-		}
+            if ( $this->_menu_exists &&
+                 ( fs_is_plugin_page( $this->_menu_slug ) || fs_is_plugin_page( $this->_module_unique_affix ) )
+            ) {
+                /**
+                 * Module has a settings menu and the context page is the main settings page, so assume it's in
+                 * activation (doesn't really check if already opted-in/skipped or not).
+                 *
+                 * @since 1.2.2
+                 */
+                return true;
+            }
 
-		#region Submenu Override
+            return false;
+        }
+
+        #region Submenu Override
 
 		/**
 		 * Override submenu's action.

@@ -40,8 +40,8 @@
 
 	$freemius_site_www = 'https://freemius.com';
 
-	$freemius_usage_tracking_url = $freemius_site_www . '/wordpress/usage-tracking/' . $fs->get_id() . "/{$slug}/";
-	$freemius_plugin_terms_url   = $freemius_site_www . '/terms/' . $fs->get_id() . "/{$slug}/";
+	$freemius_usage_tracking_url = $fs->get_usage_tracking_terms_url();
+	$freemius_plugin_terms_url   = $fs->get_eula_url();
 
 	$freemius_site_url = $fs->is_premium() ?
 		$freemius_site_www :
@@ -72,7 +72,7 @@
 	$is_optin_dialog = (
 		$fs->is_theme() &&
 		$fs->is_themes_page() &&
-		( ! $fs->has_settings_menu() || $fs->is_free_wp_org_theme() )
+		$fs->show_opt_in_on_themes_page()
 	);
 
 	if ( $is_optin_dialog ) {

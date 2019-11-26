@@ -38,7 +38,6 @@
     $renews_in_text = fs_text_inline( 'Auto renews in %s', 'renews-in', $slug );
     /* translators: %s: Time period (e.g. Expires in "2 months") */
     $expires_in_text   = fs_text_inline( 'Expires in %s', 'expires-in', $slug );
-    $sync_license_text = fs_text_x_inline( 'Sync License', 'as synchronize license', 'sync-license', $slug );
     $cancel_trial_text = fs_text_inline( 'Cancel Trial', 'cancel-trial', $slug );
     $change_plan_text  = fs_text_inline( 'Change Plan', 'change-plan', $slug );
     $upgrade_text      = fs_text_x_inline( 'Upgrade', 'verb', 'upgrade', $slug );
@@ -61,6 +60,7 @@
     $subscription           = null;
     $is_paying              = false;
     $show_upgrade           = false;
+    $is_whitelabeled        = $VARS['is_whitelabeled'];
 
     if ( is_object( $fs_addon ) ) {
         $is_paying                  = $fs_addon->is_paying();
@@ -74,8 +74,18 @@
         $plan_name                  = $plan->name;
         $plan_title                 = $plan->title;
         $is_paid_trial              = $fs_addon->is_paid_trial();
-        $show_upgrade               = ( $fs_addon->has_paid_plan() && ! $is_paying && ! $is_paid_trial && ! $fs_addon->_has_premium_license() );
         $version                    = $fs_addon->get_plugin_version();
+        $is_whitelabeled            = (
+            $fs_addon->is_whitelabeled( true ) &&
+            ! $fs_addon->get_parent_instance()->is_data_debug_mode()
+        );
+        $show_upgrade               = (
+            ! $is_whitelabeled &&
+            $fs_addon->has_paid_plan() &&
+            ! $is_paying &&
+            ! $is_paid_trial &&
+            ! $fs_addon->_has_premium_license()
+        );
     } else if ( $is_addon_connected ) {
         if (
             empty( $addon_info ) ||
@@ -116,10 +126,19 @@
                 $has_valid_and_active_license &&
                 ( $site->trial_plan_id == $license->plan_id )
             );
+
+            $is_whitelabeled = $addon_info['is_whitelabeled'];
         }
     }
 
+    $has_feature_enabled_license = (
+        is_object( $license ) &&
+        $license->is_features_enabled()
+    );
+
     $is_active_subscription = ( is_object( $subscription ) && $subscription->is_active() );
+
+    $show_delete_install_button = ( ! $is_paying && WP_FS__DEV_MODE && ! $is_whitelabeled );
 ?>
 <tr<?php if ( $odd ) {
     echo ' class="alternate"';
@@ -141,10 +160,9 @@
         <td><?php echo strtoupper( is_string( $plan_name ) ? $plan_title : $free_text ) ?></td>
         <!--/ Plan Title -->
 
-        <?php if ( $site->is_trial() || is_object( $license ) ) : ?>
-
         <!-- Expiration -->
         <td>
+        <?php if ( $site->is_trial() || is_object( $license ) ) : ?>
             <?php
                 $tags = array();
 
@@ -195,118 +213,138 @@
                     printf( '<label class="fs-tag fs-%s">%s</label>' . "\n", $t['type'], $t['label'] );
                 }
             ?>
+        <?php endif ?>
         </td>
         <!--/ Expiration -->
 
-        <?php endif ?>
-
         <?php
         $buttons = array();
+        $is_license_activation_added = false;
+
         if ( $is_addon_activated ) {
-            if ( $is_paying ) {
-                $buttons[] = fs_ui_get_action_button(
-                    $fs->get_id(),
-                    'account',
-                    'deactivate_license',
-                    fs_text_inline( 'Deactivate License', 'deactivate-license', $slug ),
-                    '',
-                    array( 'plugin_id' => $addon_id ),
-                    false
-                );
-
-                $human_readable_license_expiration = human_time_diff( time(), strtotime( $license->expiration ) );
-                $downgrade_confirmation_message    = sprintf(
-                    $downgrade_x_confirm_text,
-                    ( $fs_addon->is_only_premium() ? $cancelling_subscription_text : $downgrading_plan_text ),
-                    $plan->title,
-                    $human_readable_license_expiration
-                );
-
-                $after_downgrade_message = ! $license->is_block_features ?
-                    sprintf( $after_downgrade_non_blocking_text, $plan->title, $fs_addon->get_module_label( true ) ) :
-                    sprintf( $after_downgrade_blocking_text, $plan->title );
-
-                if ( ! $license->is_lifetime() && $is_active_subscription ) {
+            if ( ! $is_whitelabeled ) {
+                if ( $is_paying ) {
                     $buttons[] = fs_ui_get_action_button(
                         $fs->get_id(),
                         'account',
-                        'downgrade_account',
-                        esc_html( $fs_addon->is_only_premium() ? fs_text_inline( 'Cancel Subscription', 'cancel-subscription', $slug ) : $downgrade_text ),
+                        'deactivate_license',
+                        fs_text_inline( 'Deactivate License', 'deactivate-license', $slug ),
+                        '',
+                        array( 'plugin_id' => $addon_id ),
+                        false,
+                        true
+                    );
+
+                    $human_readable_license_expiration = human_time_diff( time(), strtotime( $license->expiration ) );
+                    $downgrade_confirmation_message    = sprintf(
+                        $downgrade_x_confirm_text,
+                        ( $fs_addon->is_only_premium() ? $cancelling_subscription_text : $downgrading_plan_text ),
+                        $plan->title,
+                        $human_readable_license_expiration
+                    );
+
+                    $after_downgrade_message = ! $license->is_block_features ?
+                        sprintf( $after_downgrade_non_blocking_text, $plan->title, $fs_addon->get_module_label( true ) ) :
+                        sprintf( $after_downgrade_blocking_text, $plan->title );
+
+                    if ( ! $license->is_lifetime() && $is_active_subscription ) {
+                        $buttons[] = fs_ui_get_action_button(
+                            $fs->get_id(),
+                            'account',
+                            'downgrade_account',
+                            esc_html( $fs_addon->is_only_premium() ? fs_text_inline( 'Cancel Subscription', 'cancel-subscription', $slug ) : $downgrade_text ),
+                            '',
+                            array( 'plugin_id' => $addon_id ),
+                            false,
+                            false,
+                            false,
+                            ( $downgrade_confirmation_message . ' ' . $after_downgrade_message . ' ' . $prices_increase_text ),
+                            'POST'
+                        );
+                    }
+                } else if ( $is_paid_trial ) {
+                    $buttons[] = fs_ui_get_action_button(
+                        $fs->get_id(),
+                        'account',
+                        'cancel_trial',
+                        esc_html( $cancel_trial_text ),
                         '',
                         array( 'plugin_id' => $addon_id ),
                         false,
                         false,
-                        false,
-                        ( $downgrade_confirmation_message . ' ' . $after_downgrade_message . ' ' . $prices_increase_text ),
+                        'dashicons dashicons-download',
+                        $cancel_trial_confirm_text,
                         'POST'
                     );
-                }
-            } else if ( $is_paid_trial ) {
-                $buttons[] = fs_ui_get_action_button(
-                    $fs->get_id(),
-                    'account',
-                    'cancel_trial',
-                    esc_html( $cancel_trial_text ),
-                    '',
-                    array( 'plugin_id' => $addon_id ),
-                    false,
-                    false,
-                    'dashicons dashicons-download',
-                    $cancel_trial_confirm_text,
-                    'POST'
-                );
-            } else if ( ! is_object( $license ) || ! $license->is_features_enabled() ) {
-                $premium_license = $fs_addon->_get_available_premium_license();
+                } else if ( ! $has_feature_enabled_license ) {
+                    $premium_licenses = $fs_addon->get_available_premium_licenses();
 
-                if ( is_object( $premium_license ) ) {
-                    $premium_plan = $fs_addon->_get_plan_by_id( $premium_license->plan_id );
-                    $site         = $fs_addon->get_site();
+                    if ( ! empty( $premium_licenses ) ) {
+                        $premium_license               = $premium_licenses[0];
+                        $has_multiple_premium_licenses = ( 1 < count( $premium_licenses ) );
 
-                    $buttons[] = fs_ui_get_action_button(
-                        $fs->get_id(),
-                        'account',
-                        'activate_license',
-                        esc_html( sprintf( $activate_plan_text, $premium_plan->title, ( $site->is_localhost() && $premium_license->is_free_localhost ) ? '[localhost]' : ( 1 < $premium_license->left() ? $premium_license->left() . ' left' : '' ) ) ),
-                        '',
-                        array(
-                            'plugin_id'  => $addon_id,
-                            'license_id' => $premium_license->id,
-                        )
-                    );
+                        if ( ! $has_multiple_premium_licenses ) {
+                            $premium_plan = $fs_addon->_get_plan_by_id( $premium_license->plan_id );
+                            $site         = $fs_addon->get_site();
+
+                            $buttons[] = fs_ui_get_action_button(
+                                $fs->get_id(),
+                                'account',
+                                'activate_license',
+                                esc_html( sprintf( $activate_plan_text, $premium_plan->title, ( $site->is_localhost() && $premium_license->is_free_localhost ) ? '[localhost]' : ( 1 < $premium_license->left() ? $premium_license->left() . ' left' : '' ) ) ),
+                                ($has_multiple_premium_licenses ?
+                                    'activate-license-trigger ' . $fs_addon->get_unique_affix() :
+                                    ''),
+                                array(
+                                    'plugin_id'  => $addon_id,
+                                    'license_id' => $premium_license->id,
+                                ),
+                                true,
+                                true
+                            );
+
+                            $is_license_activation_added = true;
+                        }
+                    }
                 }
             }
 
-            if ( 0 == count( $buttons ) ) {
-                if ( $show_upgrade && $fs_addon->is_premium() ) {
+//            if ( 0 == count( $buttons ) ) {
+                if ( $fs_addon->is_premium() && ! $is_license_activation_added ) {
                     $fs_addon->_add_license_activation_dialog_box();
 
                     $buttons[] = fs_ui_get_action_button(
                         $fs->get_id(),
                         'account',
                         'activate_license',
-                        fs_esc_html_inline( 'Activate License', 'activate-license', $slug ),
+                        ( ! $has_feature_enabled_license ) ?
+                            fs_esc_html_inline( 'Activate License', 'activate-license', $slug ) :
+                            fs_esc_html_inline( 'Change License', 'change-license', $slug ),
                         'activate-license-trigger ' . $fs_addon->get_unique_affix(),
                         array(
                             'plugin_id' => $addon_id,
                         ),
+                        (! $has_feature_enabled_license),
+                        true
+                    );
+
+                    $is_license_activation_added = true;
+                }
+
+                if ( $fs_addon->has_paid_plan() ) {
+                    // Add sync license only if non of the other CTAs are visible.
+                    $buttons[] = fs_ui_get_action_button(
+                        $fs->get_id(),
+                        'account',
+                        $fs->get_unique_affix() . '_sync_license',
+                        fs_esc_html_x_inline( 'Sync', 'as synchronize', 'sync', $slug ),
+                        '',
+                        array( 'plugin_id' => $addon_id ),
                         false,
                         true
                     );
                 }
-
-                // Add sync license only if non of the other CTAs are visible.
-                $buttons[] = fs_ui_get_action_button(
-                    $fs->get_id(),
-                    'account',
-                    $fs->get_unique_affix() . '_sync_license',
-                    esc_html( $sync_license_text ),
-                    '',
-                    array( 'plugin_id' => $addon_id ),
-                    false,
-                    true
-                );
-
-            }
+//            }
         } else if ( ! $show_upgrade ) {
             if ( $fs->is_addon_installed( $addon_id ) ) {
                 $addon_file = $fs->get_addon_basename( $addon_id );
@@ -362,10 +400,11 @@
 
     <?php else : ?>
         <?php // Add-on NOT Installed or was never connected.
+            $is_addon_installed_by_filesystem = $fs->is_addon_installed( $addon_id );
         ?>
         <!-- Action -->
-        <td colspan="4">
-            <?php if ( $fs->is_addon_installed( $addon_id ) ) : ?>
+        <td colspan="<?php echo ( $is_addon_installed_by_filesystem || $show_delete_install_button ) ? '5' : '4' ?>">
+            <?php if ( $is_addon_installed_by_filesystem ) : ?>
                 <?php $addon_file = $fs->get_addon_basename( $addon_id ) ?>
                 <?php if ( ! isset( $active_plugins_directories_map[ dirname( $addon_file ) ] ) ) : ?>
                 <a class="button button-primary"
@@ -385,8 +424,8 @@
         </td>
         <!--/ Action -->
     <?php endif ?>
-    <?php if ( ! $is_paying && WP_FS__DEV_MODE ) : ?>
-        <!-- Optional Delete Action -->
+    <?php if ( $show_delete_install_button ) : ?>
+    <!-- Optional Delete Action -->
         <td>
             <?php
                 if ( $is_addon_activated ) {

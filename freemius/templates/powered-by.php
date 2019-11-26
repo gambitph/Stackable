@@ -31,12 +31,14 @@
 
 	$VARS = isset($VARS) ? $VARS : array();
 
+    $fs = freemius( $VARS['module_id'] );
+
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'json2' );
 	fs_enqueue_local_script( 'postmessage', 'nojquery.ba-postmessage.min.js' );
 	fs_enqueue_local_script( 'fs-postmessage', 'postmessage.js' );
 ?>
-
+<?php if ( ! $fs->is_whitelabeled() ) : ?>
 <div id="pframe"></div>
 <script type="text/javascript">
 	(function ($) {
@@ -56,3 +58,4 @@
 		});
 	})(jQuery);
 </script>
+<?php endif ?>
