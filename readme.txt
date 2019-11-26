@@ -16,6 +16,8 @@ An Amazing Block Collection That Lets You Reimagine the Way You Use the WordPres
 
 [Stackable](https://wpstackable.com) is one of the first and most expansive block collections made specially for the new WordPress Block Editor (Gutenberg). It adds essential custom blocks to Gutenberg’s arsenal to achieve a smooth page building experience. With its latest iteration, Stackable brings a suite of high quality blocks for page building, with precision design tools that let you build the perfect website and landing page that you want.
 
+[youtube https://www.youtube.com/watch?v=m2I-pCYPezk]
+
 With Stackable, you get:
 
 - 23 Quality Page Building Blocks for Gutenberg
