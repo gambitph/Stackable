@@ -41,7 +41,7 @@ export const applyBlockDesign = ( attributes, clientId = null ) => {
 		return
 	}
 
-	const currentBlockAttributes = getBlockAttributes( clientId )
+	const currentBlockAttributes = getBlockAttributes( blockClientId )
 	const blockName = getBlockName( blockClientId ).replace( /^\w+\//g, '' )
 	const attributeDefinition = getBlockType( getBlockName( blockClientId ) ).attributes
 	const defaultAttributes = Object.keys( attributeDefinition ).reduce( ( attrs, attrName ) => {
