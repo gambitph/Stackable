@@ -231,7 +231,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							enableRight={ options.enablePaddingRight }
 							enableBottom={ options.enablePaddingBottom }
 							enableLeft={ options.enablePaddingLeft }
-							initialPosition="0"
+							initialPosition="10"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
