@@ -129,6 +129,9 @@
 }
 
 .ugb-blog-posts.ugb-blog-posts--v2.ugb-blog-posts--design-basic {
+	.ugb-blog-posts__item {
+		overflow: visible;
+	}
 	.ugb-blog-posts__category {
 		order: 1;
 	}
@@ -146,6 +149,7 @@
 
 .ugb-blog-posts.ugb-blog-posts--v2.ugb-blog-posts--design-list {
 	.ugb-blog-posts__item {
+		overflow: visible;
 		display: grid;
 		grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
 		align-items: flex-start;
