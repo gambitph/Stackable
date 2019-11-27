@@ -49,7 +49,7 @@ Together with this new way of building sections, we’ll start you off with grea
 
 Unlike any other block collection, our pre-set section / block designs are **cohesive across almost all blocks, making them truly useable for building full websites**. Gain access to a very diverse collection of pre-set designs and layouts which are all **interchangeable with one click!**
 
-We have absolutely the best and most expansive design collection with 120 block layouts and 200+ pre-set design sections (with more on the way!).
+We have absolutely the best and most expansive design collection with 50+ block layouts and 60+ pre-set design sections (with more on the way!).
 
 ## Design with Powerful Precision Controls in an Intuitive UI
 
@@ -175,7 +175,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 2.0.1 =
-* Fixed: Possible posts block migration error 
+* Fixed: Possible posts block migration error
 
 = 2.0 =
 [Version 2 is Out!](https://wpstackable.com/blog/version-2-is-out)
