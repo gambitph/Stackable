@@ -501,7 +501,7 @@ const deprecated = [
 		save: deprecatedSave_1_15_6,
 		migrate: attributes => {
 			// Update the custom CSS since the structure has changed.
-			const updateCSS = css => css.replace( /\.ugb-video-popup([\s\{\[\.\#\:])/g, '.ugb-video-popup__wrapper$1' )
+			const updateCSS = css => ( css || '' ).replace( /\.ugb-video-popup([\s\{\[\.\#\:])/g, '.ugb-video-popup__wrapper$1' )
 
 			return {
 				...attributes,

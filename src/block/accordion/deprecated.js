@@ -429,7 +429,7 @@ const deprecated = [
 		save: deprecatedSave_1_17_3,
 		migrate: attributes => {
 			// Update the custom CSS since the structure has changed.
-			const updateCSS = css => css
+			const updateCSS = css => ( css || '' )
 				.replace( /\n\.ugb-accordion__heading h4(\s*{)/g, '\n.ugb-accordion__title$1' )
 				.replace( /\.ugb-accordion__text/g, '.ugb-accordion__content' )
 				.replace( /\.ugb-accordion__heading svg/g, '.ugb-accordion__arrow' )

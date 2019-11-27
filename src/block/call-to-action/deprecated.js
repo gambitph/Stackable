@@ -1022,7 +1022,7 @@ const deprecated = [
 		save: deprecatedSave_1_15_5,
 		migrate: attributes => {
 			// Update the custom CSS since the structure has changed.
-			const updateCSS = css => css
+			const updateCSS = css => ( css || '' )
 				.replace( /\n\.ugb-cta(\s*{)/g, '\n.ugb-cta__item$1' )
 				.replace( /\.ugb-content-wrapper/g, '.ugb-cta__item' )
 

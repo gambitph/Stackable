@@ -797,7 +797,7 @@ const deprecated = [
 		save: deprecatedSave_1_17_2,
 		migrate: attributes => {
 			// Update the custom CSS since the structure has changed.
-			const updateCSS = css => css
+			const updateCSS = css => ( css || '' )
 				.replace( /\n\.ugb-feature(\s*{)/g, '\n.ugb-feature__item$1' )
 
 			const portDesigns = {

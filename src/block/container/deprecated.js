@@ -377,7 +377,7 @@ const deprecated = [
 		save: deprecatedSave_1_17_3,
 		migrate: attributes => {
 			// Update the custom CSS since the structure has changed.
-			const updateCSS = css => css.replace( /\.ugb-container(\s*\{)/g, '.ugb-container__wrapper$1' )
+			const updateCSS = css => ( css || '' ).replace( /\.ugb-container(\s*\{)/g, '.ugb-container__wrapper$1' )
 
 			return {
 				...attributes,

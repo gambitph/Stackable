@@ -546,7 +546,7 @@ const deprecated = [
 		migrate: attributes => {
 			// Update the custom CSS since the structure has changed.
 			const updateCSS = css => {
-				let newCss = css
+				let newCss = ( css || '' )
 					.replace( /\.ugb-content-wrapper/g, '.ugb-blockquote__item' )
 					.replace( /svg(\s*\{)/g, '.ugb-blockquote__quote$1' )
 

@@ -336,7 +336,7 @@ const deprecated = [
 		save: deprecatedSave_1_17,
 		migrate: attributes => {
 			// Update the custom CSS since the structure has changed.
-			const updateCSS = css => css
+			const updateCSS = css => ( css || '' )
 				.replace( /\n\.ugb-notification(\s*{)/g, '\n.ugb-notification__item$1' )
 				.replace( /\n\.ugb-notification p(\s*{)/g, '\n.ugb-notification__description$1' )
 

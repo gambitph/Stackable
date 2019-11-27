@@ -187,7 +187,7 @@ export const compileCSS = ( css, mainClass, uniqueID ) => {
 	// Connect the unique ID and the main class:
 	// 		".ugb-accordion" -> ".uniqueID.ugb-accordion"
 	// 		".ugb-accordion__title" -> ".uniqueID .ugb-accordion__title"
-	return css.replace( /\/\*[\s\S]*?\*\//g, '' )
+	return ( css || '' ).replace( /\/\*[\s\S]*?\*\//g, '' )
 		.replace( /\/\/(.*)?\n/g, '' )
 		.replace( /([^}]+)({)/g, ( match, selector, paren ) => {
 			// Ignore media queries (re-add them after fixing the classes)

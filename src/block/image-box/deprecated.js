@@ -751,7 +751,7 @@ export const deprecatedSave_1_1_2 = props => {
 
 const migrate_1_17_3 = attributes => {
 	// Update the custom CSS since the structure has changed.
-	const updateCSS = css => css
+	const updateCSS = css => ( css || '' )
 		.replace( /\.ugb-image-box__overlay(\s*{)/g, '.ugb-image-box__overlay-hover$1' )
 
 	// try and get full image url & dimensions.

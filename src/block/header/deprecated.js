@@ -1259,7 +1259,7 @@ const deprecated = [
 		save: deprecatedSave_1_15_6,
 		migrate: attributes => {
 			// Update the custom CSS since the structure has changed.
-			const updateCSS = css => css.replace( /\.ugb-header(\s*\{)/g, '.ugb-header__item$1' )
+			const updateCSS = css => ( css || '' ).replace( /\.ugb-header(\s*\{)/g, '.ugb-header__item$1' )
 
 			const additonalAttributes = {}
 			if ( attributes.design === 'half-overlay' && attributes.fullHeight ) {

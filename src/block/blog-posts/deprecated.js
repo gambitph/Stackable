@@ -117,7 +117,7 @@ const deprecated = [
 			}
 
 			// Update the custom CSS since the structure has changed.
-			const updateCSS = css => css
+			const updateCSS = css => ( css || '' )
 				.replace( /\.ugb-blog-posts__category-list/g, '.ugb-blog-posts__category' )
 				.replace( /\.ugb-blog-posts__read_more/g, '.ugb-blog-posts__readmore' )
 				.replace( /\.ugb-blog-posts__side/g, '.ugb-blog-posts__content' )

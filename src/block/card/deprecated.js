@@ -928,7 +928,8 @@ const deprecated = [
 		save: deprecatedSave_1_17_3,
 		migrate: attributes => {
 			// Update the custom CSS since the structure has changed.
-			const updateCSS = css => css.replace( /\.ugb-card([\s\{\[\.\#\:])/g, '.ugb-card__item$1' )
+			const updateCSS = css => ( css || '' )
+				.replace( /\.ugb-card([\s\{\[\.\#\:])/g, '.ugb-card__item$1' )
 				.replace( /\.ugb-card__tagline([\s\{\[\.\#\:])/g, '.ugb-card__subtitle$1' )
 				.replace( /\.ugb-card__image-container([\s\{\[\.\#\:])/g, '.ugb-card__image$1' )
 

@@ -759,7 +759,7 @@ export const deprecatedSave_1_8 = props => {
 
 const migrate_1_15_5 = attributes => {
 	// Update the custom CSS since the structure has changed.
-	const updateCSS = css => css
+	const updateCSS = css => ( css || '' )
 		.replace( /.ugb-button-wrapper > \*:nth-child\((\d)\) .ugb-button--inner/g, '.ugb-button-wrapper .ugb-button$1 .ugb-button--inner' )
 		.replace( /.ugb-button-wrapper > \*:nth-child\((\d)\) .ugb-button([^-])/g, '.ugb-button-wrapper .ugb-button$1$2' )
 

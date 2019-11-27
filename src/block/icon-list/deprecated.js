@@ -309,7 +309,7 @@ const deprecated = [
 		save: deprecatedSave_1_15_4,
 		migrate: attributes => {
 			// Update the custom CSS since the structure has changed.
-			const updateCSS = css => css
+			const updateCSS = css => ( css || '' )
 				.replace( /.ugb-icon-list-wrapper .ugb-icon-list li/g, '.ugb-icon-list li' )
 				.replace( /.ugb-icon-list-wrapper .ugb-icon-list/g, '.ugb-icon-list ul' )
 				.replace( /.ugb-icon-list-wrapper/g, '.ugb-icon-list' )

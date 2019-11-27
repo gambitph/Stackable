@@ -829,7 +829,7 @@ const deprecated = [
 		save: deprecatedSave_1_15_4,
 		migrate: attributes => {
 			// Update the custom CSS since the structure has changed.
-			const updateCSS = css => css.replace( /\.ugb-countup([\s\{\[\.\#\:])/g, '.ugb-count-up$1' )
+			const updateCSS = css => ( css || '' ).replace( /\.ugb-countup([\s\{\[\.\#\:])/g, '.ugb-count-up$1' )
 
 			return {
 				...attributes,
