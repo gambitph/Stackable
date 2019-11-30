@@ -15,7 +15,8 @@
 		}
 	}
 
-	.ugb-container__wrapper {
+	// We need to write this the specific way so that we don't affect nested containers.
+	> .ugb-inner-block > .ugb-block-content > .ugb-container__wrapper {
 		@include box();
 		display: flex;
 		flex-direction: column;
