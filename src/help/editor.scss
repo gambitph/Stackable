@@ -1,0 +1,88 @@
+// Visible feedback that there's a tooltip for Inspector Controls.
+[class*="ugb--help-tip-"] .components-base-control__label,
+[class*="ugb--help-tip-"] .components-toggle-control__label {
+	cursor: help;
+	border-bottom: 1px solid transparent;
+	&:hover {
+		border-color: #8c33da;
+		color: #8c33da;
+		border-bottom-style: solid !important;
+	}
+}
+.components-base-control[class*="ugb--help-tip-"]:hover {
+	.components-base-control__label,
+	.components-toggle-control__label {
+		border-color: #a683c5;
+		border-bottom-style: dashed;
+	}
+}
+
+// Visible feedback that there's a tooltip for Panel titles.
+[class*="ugb--help-tip-"] .components-panel__body-toggle {
+	cursor: pointer;
+	&::after {
+		content: "\f223";
+		margin-left: 10px;
+		font-family: dashicons;
+		font-size: 20px;
+		line-height: 16px;
+		text-shadow: 0 0 1px #000;
+		color: #fafafa;
+	}
+	&:hover {
+		color: #8c33da !important;
+		&::after {
+			cursor: help;
+		}
+	}
+}
+
+// Tooltip.
+.ugb-help-tooltip-video {
+	margin-left: -30px !important;
+	.components-popover__content {
+		min-width: 220px !important;
+		width: 220px !important;
+	}
+	video {
+		width: 100%;
+		height: auto;
+		position: relative;
+		z-index: 2;
+	}
+	.ugb-help-tooltip-video__link {
+		text-align: right;
+		cursor: pointer;
+		svg {
+			vertical-align: bottom;
+		}
+	}
+	.components-spinner {
+		position: absolute;
+		left: calc(50% - 9px);
+		text-align: center;
+		top: 82px;
+		margin: 0;
+		z-index: 1;
+	}
+	.ugb-help-tooltip-video__remove {
+		background: none !important;
+		color: #999;
+		border: none;
+		position: absolute;
+		top: 10px;
+		right: 4px;
+		cursor: pointer;
+		z-index: 9 !important;
+		svg {
+			max-width: none;
+		}
+		&:hover {
+			color: #444;
+		}
+	}
+	h4,
+	video {
+		margin: 0 0 8px 0;
+	}
+}

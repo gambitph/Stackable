@@ -13,6 +13,7 @@
 		"rule-empty-line-before": null,
 		"selector-class-pattern": null,
 		"value-keyword-case": null,
-		"length-zero-no-unit": null
+		"length-zero-no-unit": null,
+		"font-family-no-missing-generic-family-keyword": null
 	}
 }
