@@ -56,7 +56,7 @@
 // Make overflow visible, but also do some tweaks so that the background gradients & videos
 // Still follow the border radius of the Container block.
 .ugb-container > .ugb-inner-block > .ugb-block-content > .ugb-container__wrapper {
-	overflow: visible;
+	overflow: visible !important;
 	> .ugb-video-background {
 		overflow: hidden;
 	}
