@@ -39,7 +39,9 @@ if ( ! function_exists( 'stackable_block_editor_assets_deprecated' ) ) {
 	 * @since 2.0
 	 */
 	function stackable_block_editor_assets_deprecated() {
-		if ( stackable_should_load_v1_styles() ) {
+		$enqueue_styles_in_frontend = apply_filters( 'stackable_enqueue_styles', ! is_admin() );
+
+		if ( stackable_should_load_v1_styles() && $enqueue_styles_in_frontend ) {
 			wp_enqueue_style(
 				'ugb-style-css-deprecated',
 				plugins_url( 'dist/frontend_blocks_deprecated.css', STACKABLE_FILE ),
