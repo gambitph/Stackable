@@ -1,7 +1,7 @@
 const externals = require( './externals' )
 const rules = require( './rules' )
 const path = require( 'path' )
-const ImageminPlugin = require( 'imagemin-webpack' )
+const plugins = require( './plugins' )
 
 module.exports = [ {
 
@@ -47,7 +47,9 @@ module.exports = [ {
 	module: {
         strictExportPresence: true,
         rules,
-    }
+	},
+	
+	plugins,
 },
 {
 
@@ -83,16 +85,7 @@ module.exports = [ {
 	module: {
         strictExportPresence: true,
         rules,
-    },
-	plugins: [
-		new ImageminPlugin( {
-			bail: false,
-			cache: true,
-			imageminOptions: {
-				plugins: [
-					[ "pngquant", { quality: [ 0.5, 0.5 ] } ],
-				]
-			}
-		} )
-	],
+	},
+	
+	plugins,
 } ]

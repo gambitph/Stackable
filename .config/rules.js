@@ -40,4 +40,18 @@ module.exports = [
 			},
 		],
 	},
+	{
+		test: /\.(mp4)$/,
+		use: [
+			{
+				loader: 'file-loader',
+				options: {
+					outputPath: 'videos', // Dump images in dist/images.
+					publicPath: 'dist/videos', // URLs point to dist/images.
+					regExp: /\/([^\/]+)\/([^\/]+)\/videos\/(.+)\.(.*)?$/, // Gather strings for the output filename.
+					name: '[2]-[3].[hash:hex:7].[ext]', // Filename e.g. help-borders.1b659fc.mp4
+				},
+			},
+		],
+	},
 ]
