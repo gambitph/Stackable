@@ -162,6 +162,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 						label={ __( 'Reverse Horizontally', i18n ) }
 						checked={ invert }
 						onChange={ invert => setAttributes( { invert } ) }
+						className="ugb--help-tip-general-shadows"
 					/>
 				}
 				{ show.borderRadius &&
