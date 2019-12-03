@@ -53,6 +53,7 @@
     "@wordpress/i18n": "^3.1.1",
     "@wordpress/jest-preset-default": "^3.0.3",
     "@wordpress/scripts": "^3.4.0",
+    "acorn": "^6.4.0",
     "autoprefixer": "^9.4.5",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^24.0.0",
@@ -89,6 +90,7 @@
     "replace-in-file": "^3.4.3",
     "request": "^2.88.0",
     "rimraf": "^3.0.0",
+    "s3-deploy": "^1.4.0",
     "sprintf-js": "^1.1.2",
     "stylelint": "^10.1.0",
     "stylelint-config-wordpress": "^14.0.0",
@@ -108,7 +110,7 @@
     "build:test": "node ./tools/generate-deprecated-json.js",
     "build:dummy-registration": "node ./tools/generate-dummy-register-blocks.js",
     "build:sub-builds": "node ./tools/run-src-build-scripts.js",
-    "prebuild": "node ./tools/ensure-version-number",
+    "prebuild": "node ./tools/ensure-version-number && node ./tools/ensure-cloudfront-domain",
     "build": "npm run clean && concurrently --raw \"npm:build:js\" \"npm:build:css\" \"npm:build:test\" \"npm:build:sub-builds\" \"npm:build:dummy-registration\" && npm run package",
     "test": "npm run clean:build && jest --coverage --silent",
     "test:fast": "npm run clean:build && jest",
@@ -119,7 +121,9 @@
     "lint-js:fix": "wp-scripts lint-js --fix",
     "lint-css": "stylelint './src/**/*.scss'",
     "lint-css:fix": "stylelint './src/**/*.scss' --fix",
-    "check-licenses": "concurrently \"wp-scripts check-licenses --prod --gpl2 --ignore=stackable\" \"wp-scripts check-licenses --dev --ignore=stackable\""
+    "check-licenses": "concurrently \"wp-scripts check-licenses --prod --gpl2 --ignore=stackable\" \"wp-scripts check-licenses --dev --ignore=stackable\"",
+    "deploy:help-videos": "s3-deploy './dist/videos/*.mp4' --cwd './' --bucket $npm_package_cloudfront_bucket --distId $npm_package_cloudfront_distributionId --invalidate '/videos/*'",
+    "deploy": "npm run build && concurrently --raw \"npm:deploy:help-videos\""
   },
   "lint-staged": {
     "*.scss": [
@@ -136,5 +140,10 @@
   },
   "browserslist": [
     "extends @wordpress/browserslist-config"
-  ]
+  ],
+  "cloudfront": {
+    "distributionId": "E3P03AR1H1JIWG",
+    "domain": "d3gt1urn7320t9.cloudfront.net",
+    "bucket": "stackable-assets"
+  }
 }

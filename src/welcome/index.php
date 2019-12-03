@@ -59,6 +59,7 @@ SVG;
 					'srcUrl' => untrailingslashit( plugins_url( '/', STACKABLE_FILE ) ),
 					'welcomeSrcUrl' => untrailingslashit( plugins_url( '/', __FILE__ ) ),
 					'i18n' => STACKABLE_I18N,
+					'cdnUrl' => STACKABLE_CLOUDFRONT_URL,
 					'isPro' => sugb_fs()->can_use_premium_code(),
 					'showProNotice' => stackable_should_show_pro_notices(),
 					'pricingURL' => sugb_fs()->get_upgrade_url(),
