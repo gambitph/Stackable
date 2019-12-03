@@ -46,11 +46,12 @@ const AlignButtonsControl = props => {
 		onChange,
 		justified,
 		screens,
+		className,
 	} = props
 
 	return (
 		<BaseControl
-			className="ugb-align-buttons-control"
+			className={ `ugb-align-buttons-control ${ className }` }
 			help={ help }
 		>
 			<BaseControlMultiLabel
@@ -76,6 +77,7 @@ const AlignButtonsControl = props => {
 }
 
 AlignButtonsControl.defaultProps = {
+	className: '',
 	label: __( 'Align', i18n ),
 	help: '',
 	value: ALIGN_OPTIONS[ 0 ].value,
