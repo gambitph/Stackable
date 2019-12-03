@@ -10,9 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once( 'deprecated.php' );
-require_once( 'attributes.php' );
-require_once( 'util.php' );
+require_once( dirname( __FILE__ ) . '/deprecated.php' );
+require_once( dirname( __FILE__ ) . '/attributes.php' );
+require_once( dirname( __FILE__ ) . '/util.php' );
 
 if ( ! function_exists( 'stackable_attributes_default' ) ) {
 	/**
