@@ -4,7 +4,7 @@ Tags: gutenberg, block, blocks, block editor, gutenberg blocks, page builder, ed
 Requires at least: 5.0
 Tested up to: 5.3
 Requires PHP: 5.3
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -173,6 +173,14 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 [Version 2](https://wpstackable.com/blog/version-2-is-out) is a major update, make sure you're backed up in case of any hiccups.
 
 == Changelog ==
+
+= 2.0.2 =
+* Fixed: Container child block toolbars being cut off when editing
+* Fixed: Container block background should not affect styles of nested container blocks
+* Fixed: WP_Privacy_Data_Export_Requests_List_Table not found error
+* Added: stackable_enqueue_styles PHP filter
+* Added: stackable_enqueue_scripts PHP filter
+* Added: stackable_enqueue_fonts PHP filter
 
 = 2.0.1 =
 * Fixed: Possible posts block migration error

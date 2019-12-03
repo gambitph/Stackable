@@ -22,16 +22,21 @@ if ( ! function_exists( 'stackable_block_assets' ) ) {
 	*/
 	function stackable_block_assets() {
 
+		$enqueue_styles_in_frontend = apply_filters( 'stackable_enqueue_styles', ! is_admin() );
+		$enqueue_scripts_in_frontend = apply_filters( 'stackable_enqueue_scripts', ! is_admin() );
+
 		// Frontend block styles.
-		wp_enqueue_style(
-			'ugb-style-css',
-			plugins_url( 'dist/frontend_blocks.css', STACKABLE_FILE ),
-			array(),
-			STACKABLE_VERSION
-		);
+		if ( is_admin() || $enqueue_styles_in_frontend ) {
+			wp_enqueue_style(
+				'ugb-style-css',
+				plugins_url( 'dist/frontend_blocks.css', STACKABLE_FILE ),
+				array(),
+				STACKABLE_VERSION
+			);
+		}
 
 		// Frontend only scripts.
-		if ( ! is_admin() ) {
+		if ( $enqueue_scripts_in_frontend ) {
 			wp_enqueue_script(
 				'ugb-block-frontend-js',
 				plugins_url( 'dist/frontend_blocks.js', STACKABLE_FILE ),
