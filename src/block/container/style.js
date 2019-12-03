@@ -30,6 +30,14 @@ export const createStyles = props => {
 			[ `.${ uniqueClass }-wrapper.ugb-container__wrapper` ]: {
 				borderRadius: getValue( 'borderRadius', '%spx !important' ),
 			},
+			// Block editor only styles. This is needed since in the editor, we don't hide overflow
+			// so that the block controls wouldn't be cut off from view.
+			editor: {
+				[ `.${ uniqueClass }-wrapper.ugb-container__wrapper > .ugb-video-background, ` +
+				  `.${ uniqueClass }-wrapper.ugb-container__wrapper:before` ]: {
+					borderRadius: getValue( 'borderRadius', '%spx !important' ) || '12px !important',
+				},
+			},
 		} )
 	}
 

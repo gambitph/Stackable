@@ -51,3 +51,17 @@
 .ugb-container .wp-block-columns .editor-inner-blocks {
 	width: 100%;
 }
+
+// Containers have overflow and cut off the block editor's controls (toolbar and drag handles).
+// Make overflow visible, but also do some tweaks so that the background gradients & videos
+// Still follow the border radius of the Container block.
+.ugb-container > .ugb-inner-block > .ugb-block-content > .ugb-container__wrapper {
+	overflow: visible;
+	> .ugb-video-background {
+		overflow: hidden;
+	}
+	&::before {
+		// Add transition since our pseudo element doesn't have it and it looks bad.
+		transition: border-radius 0.2s ease-in-out;
+	}
+}
