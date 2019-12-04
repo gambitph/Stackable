@@ -223,7 +223,7 @@ if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
 	 * @return array Modified HTML tags & attributes.
 	 */
 	function stackable_allow_wp_kses_allowed_html( $tags, $context ) {
-		$tags['style'] = true;
+		$tags['style'] = array();
 
 		// Used by Separators & Icons.
 		$tags['svg'] = array(
@@ -251,12 +251,12 @@ if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
 			'in' => true,
 			'stddeviation' => true,
 		);
-		$tags['fecomponenttransfer'] = true;
+		$tags['fecomponenttransfer'] = array();
 		$tags['fefunca'] = array(
 			'type' => true,
 			'slope' => true,
 		);
-		$tags['femerge'] = true;
+		$tags['femerge'] = array();
 		$tags['femergenode'] = array(
 			'in' => true,
 		);
