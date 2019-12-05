@@ -5,13 +5,13 @@ import { addFilter, removeFilter } from '@wordpress/hooks'
 import {
 	BaseControl, IconButton, PanelBody, Popover, ToggleControl,
 } from '@wordpress/components'
+import { Component, createRef } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 /**
  * External dependencies
  */
 import classnames from 'classnames'
-import { Component } from '@wordpress/element'
 import { i18n } from 'stackable'
 
 // Keep the instance ID.
@@ -26,6 +26,7 @@ class ButtonIconPopoverControl extends Component {
 		this.handleOpen = this.handleOpen.bind( this )
 		this.handleClose = this.handleClose.bind( this )
 		this.handleOnClickOutside = this.handleOnClickOutside.bind( this )
+		this.buttonRef = createRef()
 		this.instanceId = buttonInstance++
 	}
 
@@ -72,9 +73,7 @@ class ButtonIconPopoverControl extends Component {
 	}
 
 	handleOpen() {
-		if ( ! this.state.open ) {
-			this.setState( { open: true } )
-		}
+		this.setState( { open: ! this.state.open } )
 	}
 
 	handleClose() {
@@ -88,7 +87,7 @@ class ButtonIconPopoverControl extends Component {
 	 * @param {Event} ev Click event
 	 */
 	handleOnClickOutside( ev ) {
-		if ( ! ev.target.closest( '.components-popover' ) ) {
+		if ( ! ev.relatedTarget.closest( '.components-popover' ) && ev.relatedTarget !== this.buttonRef.current ) {
 			this.handleClose()
 		}
 	}
@@ -124,23 +123,24 @@ class ButtonIconPopoverControl extends Component {
 						isDefault
 						icon="edit"
 						id={ `ugb-button-icon-control__edit-${ this.instanceId }` }
-					>
-						{ this.state.open && (
-							<Popover
-								className="ugb-button-icon-control__popover"
-								focusOnMount="container"
-								onClose={ this.handleClose }
-								onClickOutside={ this.handleOnClickOutside }
-							>
-								<PanelBody>
-									{ ( this.props.label || this.props.popoverLabel ) &&
-										<h2 className="components-panel__body-title">{ this.props.popoverLabel || this.props.label }</h2>
-									}
-									{ this.props.children }
-								</PanelBody>
-							</Popover>
-						) }
-					</IconButton>
+						ref={ this.buttonRef }
+					/>
+					{ this.state.open && (
+						<Popover
+							className="ugb-button-icon-control__popover"
+							focusOnMount="container"
+							onClose={ this.handleClose }
+							onFocusOutside={ this.handleOnClickOutside }
+							anchorRef={ this.buttonRef }
+						>
+							<PanelBody>
+								{ ( this.props.label || this.props.popoverLabel ) &&
+									<h2 className="components-panel__body-title">{ this.props.popoverLabel || this.props.label }</h2>
+								}
+								{ this.props.children }
+							</PanelBody>
+						</Popover>
+					) }
 				</div>
 			</BaseControl>
 		)
