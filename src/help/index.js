@@ -77,6 +77,7 @@ class HelpToolTipVideo extends Component {
 		this.hideHelp = this.hideHelp.bind( this )
 		this.startHelpTimeout = this.startHelpTimeout.bind( this )
 		this.stopHelpTimeout = this.stopHelpTimeout.bind( this )
+		this.calculateRect = this.calculateRect.bind( this )
 	}
 
 	startHelpTimeout( el ) {
@@ -104,19 +105,21 @@ class HelpToolTipVideo extends Component {
 	}
 
 	showHelp( el ) {
-		// Get the position, but change the X & width to match the whole inspector area.
-		const elRect = el.getBoundingClientRect()
-		const inspectorRect = document.querySelector( '.edit-post-sidebar' ).getBoundingClientRect()
-		elRect.x = inspectorRect.x
-		elRect.width = inspectorRect.width
-
 		this.setState( {
 			target: el,
 			controlEl: el.closest( '[class*="ugb--help-tip-"]' ),
 			helpId: getHelpId( el ),
-			rect: elRect,
 			show: true,
 		} )
+	}
+
+	// Get the position on where to place the tooltip, but change the X & width to match the whole inspector area.
+	calculateRect() {
+		const elRect = this.state.target.getBoundingClientRect()
+		const inspectorRect = document.querySelector( '.edit-post-sidebar' ).getBoundingClientRect()
+		elRect.x = inspectorRect.x
+		elRect.width = inspectorRect.width
+		return elRect
 	}
 
 	hideHelp() {
@@ -124,6 +127,12 @@ class HelpToolTipVideo extends Component {
 		this.setState( {
 			show: false,
 		} )
+
+		// If there are other popovers open, most likely we came from there, focus on those so that the auto-close when focus outside would work.
+		const currentPopover = document.querySelector( '.components-popover' )
+		if ( currentPopover ) {
+			currentPopover.focus()
+		}
 	}
 
 	/**
@@ -184,16 +193,16 @@ class HelpToolTipVideo extends Component {
 				focusOnMount="container"
 				className="ugb-help-tooltip-video"
 				position="middle left"
-				anchorRect={ this.state.rect }
+				getAnchorRect={ this.calculateRect }
 			>
 				<PanelBody>
-					{ title && <h4>{ title }</h4> }
 					<button className="ugb-help-tooltip-video__remove" onClick={ this.hideHelp }><Dashicon icon="no" /></button>
 					<video width="600" autoPlay loop muted>
 						<source src={ videoUrl( video ) } type="video/mp4" />
 					</video>
 					<Spinner />
 					<div className="ugb-help-tooltip-video__description">
+						{ title && <h4>{ title }</h4> }
 						{ description }
 						{ learnMore &&
 							<div className="ugb-help-tooltip-video__link">
