@@ -41,6 +41,24 @@ export const createStyles = props => {
 		} )
 	}
 
+	// Define the column vertical align here since it doesn't work.
+	// The default way of doing "column vertical align" is disabled in `index.js`
+	styles.push( {
+		'> .ugb-inner-block > .ugb-block-content > *': {
+			justifyContent: appendImportant( getValue( 'columnContentVerticalAlign' ) ),
+		},
+		tablet: {
+			'> .ugb-inner-block > .ugb-block-content > *': {
+				justifyContent: appendImportant( getValue( 'tabletColumnContentVerticalAlign' ) ),
+			},
+		},
+		mobile: {
+			'> .ugb-inner-block > .ugb-block-content > *': {
+				justifyContent: appendImportant( getValue( 'mobileColumnContentVerticalAlign' ) ),
+			},
+		},
+	} )
+
 	// Height.
 	const {
 		height = '',
