@@ -15,7 +15,7 @@ const BlendModeControl = props => {
 			label={ props.label }
 			value={ props.value }
 			help={ props.help }
-			className={ props.className }
+			className={ `ugb--help-tip-background-blend-mode ${ props.className }` }
 			options={ [
 				{ value: '', label: __( 'None', i18n ) },
 				{ value: 'normal', label: __( 'Normal', i18n ) },

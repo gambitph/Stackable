@@ -145,6 +145,7 @@ const ButtonControls = props => {
 					enableLeft={ false }
 					enableRight={ false }
 					placeholder={ [ 8, 8 ] }
+					className="ugb--help-tip-button-padding"
 				/>
 			}
 			{ props.onChangePaddings && design !== 'link' && design !== 'plain' &&
@@ -157,6 +158,7 @@ const ButtonControls = props => {
 					enableBottom={ false }
 					max={ 100 }
 					placeholder={ [ 26, 26 ] }
+					className="ugb--help-tip-button-padding"
 				/>
 			}
 

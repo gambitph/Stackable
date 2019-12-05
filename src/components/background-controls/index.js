@@ -218,6 +218,7 @@ const BackgroundControls = props => {
 					step={ 1 }
 					allowReset={ true }
 					placeholder={ props.backgroundColor ? '5' : '0' }
+					className="ugb--help-tip-background-tint"
 				/>
 			) }
 
@@ -228,6 +229,7 @@ const BackgroundControls = props => {
 					label={ __( 'Fixed Background', i18n ) }
 					checked={ props.fixedBackground }
 					onChange={ props.onChangeFixedBackground }
+					className="ugb--help-tip-background-fixed"
 				/>
 			) }
 
@@ -261,6 +263,7 @@ const BackgroundControls = props => {
 							] }
 							value={ props.backgroundPosition }
 							onChange={ props.onChangeBackgroundPosition }
+							className="ugb--help-tip-background-image-position"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
@@ -280,6 +283,7 @@ const BackgroundControls = props => {
 							] }
 							value={ props.tabletBackgroundPosition }
 							onChange={ props.onChangeTabletBackgroundPosition }
+							className="ugb--help-tip-background-image-position"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
@@ -299,6 +303,7 @@ const BackgroundControls = props => {
 							] }
 							value={ props.mobileBackgroundPosition }
 							onChange={ props.onChangeMobileBackgroundPosition }
+							className="ugb--help-tip-background-image-position"
 						/>
 					</WhenResponsiveScreen>
 
