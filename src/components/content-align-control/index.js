@@ -16,12 +16,16 @@ const ContentAlignControl = props => {
 			setAttributes={ props.setAttributes }
 			blockAttributes={ props.blockAttributes }
 		>
-			<AlignButtonsControl label={ __( 'Align', i18n ) } />
+			<AlignButtonsControl
+				label={ __( 'Align', i18n ) }
+				className={ props.className }
+			/>
 		</ResponsiveControl>
 	)
 }
 
 ContentAlignControl.defaultProps = {
+	className: '',
 	setAttributes: () => {},
 	blockAttributes: {},
 }

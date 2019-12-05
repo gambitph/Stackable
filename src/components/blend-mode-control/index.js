@@ -15,6 +15,7 @@ const BlendModeControl = props => {
 			label={ props.label }
 			value={ props.value }
 			help={ props.help }
+			className={ props.className }
 			options={ [
 				{ value: '', label: __( 'None', i18n ) },
 				{ value: 'normal', label: __( 'Normal', i18n ) },
@@ -43,6 +44,7 @@ const BlendModeControl = props => {
 }
 
 BlendModeControl.defaultProps = {
+	className: '',
 	onChange: () => {},
 	value: '',
 	label: __( 'Mix Blend Mode', i18n ),
