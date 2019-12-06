@@ -612,10 +612,10 @@ const deprecated = [
 		migrate: attributes => {
 			// Compute for the imageWidth. We are assuming some widths here.
 			let imageWidth
-			if ( attributes.imageSize ) {
+			if ( attributes.imageSize && attributes.design !== 'horizontal' ) {
 				const maxContentWidth = attributes.align !== 'wide' ? ( contentWidth || 900 ) : 1200
 				const columnGap = 35 // V1 has this as a fixed value.
-				const columnPaddings = 70 // V1 has this as a fixed value.
+				const columnPaddings = attributes.design === 'plain' ? 0 : 70 // V1 has this as a fixed value.
 				const columnContentWidth = attributes.columns === 1 ? maxContentWidth - columnPaddings :
 					attributes.columns === 2 ? ( ( maxContentWidth - columnGap ) / 2 ) - columnPaddings :
 						( ( maxContentWidth - ( columnGap * 2 ) ) / 3 ) - columnPaddings
