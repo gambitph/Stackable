@@ -410,6 +410,10 @@ const deprecated = [
 							undefined,
 
 				contentVerticalAlign: attributes.verticalAlign,
+
+				// Full-width blocks before had 0 margin-top and margin-bottom.
+				marginTop: attributes.align === 'full' ? 0 : undefined,
+				marginBottom: attributes.align === 'full' ? 0 : undefined,
 			}
 		},
 	},

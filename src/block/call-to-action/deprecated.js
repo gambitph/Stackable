@@ -1057,6 +1057,10 @@ const deprecated = [
 				columnBackgroundMediaUrl: attributes.backgroundImageURL,
 				columnBackgroundTintStrength: attributes.backgroundOpacity,
 				columnFixedBackground: attributes.fixedBackground ? attributes.fixedBackground : undefined,
+
+				// Full-width blocks before had 0 margin-top and margin-bottom.
+				marginTop: attributes.align === 'full' ? 0 : undefined,
+				marginBottom: attributes.align === 'full' ? 0 : undefined,
 			}
 		},
 	},
