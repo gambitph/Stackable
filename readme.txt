@@ -4,7 +4,7 @@ Tags: gutenberg, block, blocks, block editor, gutenberg blocks, page builder, ed
 Requires at least: 5.0
 Tested up to: 5.3
 Requires PHP: 5.3
-Stable tag: 2.0.2
+Stable tag: 2.0.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -173,6 +173,15 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 [Version 2](https://wpstackable.com/blog/version-2-is-out) is a major update, make sure you're backed up in case of any hiccups.
 
 == Changelog ==
+
+= 2.0.3 =
+* Fixed: Jetpack Search compatibility may show an error
+* Fixed: Top/bottom margins of full-width Separator blocks (and other full-width blocks) when migrating from v1
+* Fixed: Testimonial basic 2 layout from v1 suddenly have shadows
+* Fixed: Feature Grid block now estimates a closer image size when migrating from v1
+* Fixed: Container block's vertical align option wasn't being followed
+* Fixed: Blog Posts block strips out strings with a dollar sign followed by a number
+* New: Decrease minimum block margins to -500px and -100%
 
 = 2.0.2 =
 * Fixed: Container child block toolbars being cut off when editing
