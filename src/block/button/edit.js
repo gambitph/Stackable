@@ -18,6 +18,7 @@ import {
 	withSetAttributeHook,
 	withTabbedInspector,
 	withUniqueClass,
+	withClickOpenInspector,
 } from '~stackable/higher-order'
 import { createButtonAttributeNames } from '~stackable/util'
 
@@ -132,15 +133,20 @@ addFilter( 'stackable.button.edit.inspector.style.before', 'stackable/button', (
 					onChange={ collapseOn => setAttributes( { collapseOn } ) }
 				/>
 			</PanelBody>
-			<PanelBody title={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button', i18n ), 1 ) } initialOpen={ true }>
+			<PanelAdvancedSettings
+				title={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button', i18n ), 1 ) }
+				initialOpen={ true }
+				id="button1"
+			>
 				<ButtonControlsHelper
 					attrNameTemplate="button1%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 			<PanelAdvancedSettings
 				title={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button', i18n ), 2 ) }
+				id="button2"
 				checked={ showButton2 }
 				onChange={ showButton2 => setAttributes( { showButton2 } ) }
 				toggleOnSetAttributes={ createButtonAttributeNames( 'button2%s' ) }
@@ -154,6 +160,7 @@ addFilter( 'stackable.button.edit.inspector.style.before', 'stackable/button', (
 			</PanelAdvancedSettings>
 			<PanelAdvancedSettings
 				title={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button', i18n ), 3 ) }
+				id="button3"
 				checked={ showButton3 }
 				onChange={ showButton3 => setAttributes( { showButton3 } ) }
 				toggleOnSetAttributes={ createButtonAttributeNames( 'button3%s' ) }
@@ -228,4 +235,9 @@ export default compose(
 	withTabbedInspector(),
 	withContentAlignReseter(),
 	withBlockStyles( createStyles, { editorMode: true } ),
+	withClickOpenInspector( [
+		[ 'ugb-button1', 'button1' ],
+		[ 'ugb-button2', 'button2' ],
+		[ 'ugb-button3', 'button3' ],
+	] )
 )( edit )
