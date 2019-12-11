@@ -6,7 +6,7 @@ import {
 } from '~stackable/components/button-edit'
 import { descriptionPlaceholder, range } from '~stackable/util'
 import classnames from 'classnames'
-import { i18n } from 'stackable'
+import { i18n, contentWidth } from 'stackable'
 import striptags from 'striptags'
 
 /**
@@ -610,6 +610,18 @@ const deprecated = [
 		attributes: deprecatedSchema_1_17_2,
 		save: deprecatedSave_1_17_2,
 		migrate: attributes => {
+			// Compute for the imageWidth. We are assuming some widths here.
+			let imageWidth
+			if ( attributes.imageSize && attributes.design !== 'horizontal' ) {
+				const maxContentWidth = attributes.align !== 'wide' ? ( contentWidth || 900 ) : 1200
+				const columnGap = 35 // V1 has this as a fixed value.
+				const columnPaddings = attributes.design === 'plain' ? 0 : 70 // V1 has this as a fixed value.
+				const columnContentWidth = attributes.columns === 1 ? maxContentWidth - columnPaddings :
+					attributes.columns === 2 ? ( ( maxContentWidth - columnGap ) / 2 ) - columnPaddings :
+						( ( maxContentWidth - ( columnGap * 2 ) ) / 3 ) - columnPaddings
+				imageWidth = parseInt( ( parseInt( attributes.imageSize, 10 ) || 100 ) / 100 * columnContentWidth, 10 )
+			}
+
 			return {
 				...attributes,
 				image1Id: attributes.imageID1,
@@ -631,6 +643,7 @@ const deprecated = [
 				button2Text: attributes.linkText2,
 				button3Text: attributes.linkText3,
 				buttonBackgroundColor: attributes.buttonColor,
+				imageWidth,
 			}
 		},
 	},

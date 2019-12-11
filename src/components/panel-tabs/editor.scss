@@ -90,10 +90,10 @@
 }
 .ugb--fixed-tabs {
 	position: fixed;
-	top: 120px; // This is recomputed in JS for accuracy.
+	top: 136px; // This is recomputed in JS for accuracy.
 	width: 279px; // This is recomputed in JS for accuracy.
 	background: #fff;
 	z-index: 2;
 	box-shadow: 0 20px 30px -20px rgba(0, 0, 0, 0.1);
-	margin-top: -16px !important;
+	margin-top: 0 !important;
 }

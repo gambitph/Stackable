@@ -556,7 +556,19 @@ if ( ! function_exists( 'stackable_render_block_blog_posts' ) ) {
 		 *
 		 * We need to place the contents inside ".ugb-block-content"
 		 */
-		return preg_replace( '/(ugb-block-content[\'"]\s*>)/', '$1' . $block_content, preg_replace( '/&lt;/', '<', $block['innerHTML'] ) );
+
+		// The innerHTML contains the HTML created by the save JS method.
+		// Fix the tags or else they will print out escaped.
+		$new_content = preg_replace( '/&lt;/', '<', $block['innerHTML'] );
+
+		// Split the content into parts, so that we can place the contents in the correct position.
+		// This is better than doing a straight preg_replace since the content may contain '$1' that would affect
+		// the replacement https://github.com/gambitph/Stackable/issues/505
+		$parts = preg_split( '/(ugb-block-content[\'"]\s*>)/', $new_content, -1, PREG_SPLIT_DELIM_CAPTURE );
+		if ( count( $parts ) < 3 ) {
+			return $block_content;
+		}
+		return $parts[0] . $parts[1] . $block_content . $parts[2];
 	}
 	add_filter( 'render_block', 'stackable_render_block_blog_posts', 10, 2 );
 }

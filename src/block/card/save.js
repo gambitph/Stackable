@@ -104,7 +104,7 @@ const save = props => {
 										value={ description }
 									/>
 								}
-								{ showButton && !! buttonText.length &&
+								{ showButton && ! RichText.isEmpty( buttonText ) &&
 									<ButtonEditHelper.Content
 										attrNameTemplate={ `button%s` }
 										blockAttributes={ props.attributes }

@@ -19,7 +19,10 @@
 	}
 	opacity: 1;
 	background: var(--s-primary-color, #2091e1);
-	transition: all 0.2s ease-in-out;
+	&,
+	svg {
+		transition: all 0.2s ease-in-out;
+	}
 	@include baseButton();
 	font-size: 1em;
 	&:hover {
@@ -167,7 +170,7 @@
 }
 
 // Ghost button design.
-.ugb-button.ugb-button--design-ghost {
+.ugb-button--design-ghost {
 	background-color: transparent;
 	border: 2px solid var(--s-primary-color, #2091e1);
 	.ugb-button--inner {
@@ -190,7 +193,7 @@
 }
 
 // Link design.
-.ugb-button.ugb-button--design-plain {
+.ugb-button--design-plain {
 	background-color: transparent;
 	border: none;
 	padding-left: 0;
@@ -208,7 +211,7 @@
 }
 
 // Just a link
-.ugb-button.ugb-button--design-link {
+.ugb-button--design-link {
 	background: transparent;
 	padding: 0;
 	border-radius: 0 !important;
@@ -233,25 +236,25 @@
 		}
 	}
 }
-.ugb-button.ugb-button--has-icon.ugb-button--design-ghost,
-.ugb-button.ugb-button--has-icon.ugb-button--design-plain {
+.ugb-button--has-icon.ugb-button--design-ghost,
+.ugb-button--has-icon.ugb-button--design-plain {
 	svg {
 		color: var(--s-primary-color, #2091e1);
 	}
 }
-.ugb-button.ugb-button--size-tiny.ugb-button--has-icon svg {
+.ugb-button--size-tiny.ugb-button--has-icon svg {
 	width: 0.75em;
 	height: 0.75em;
 }
-.ugb-button.ugb-button--size-small.ugb-button--has-icon svg {
+.ugb-button--size-small.ugb-button--has-icon svg {
 	width: 0.75em;
 	height: 0.75em;
 }
-.ugb-button.ugb-button--size-medium.ugb-button--has-icon svg {
+.ugb-button--size-medium.ugb-button--has-icon svg {
 	width: 1.25em;
 	height: 1.25em;
 }
-.ugb-button.ugb-button--size-large.ugb-button--has-icon svg {
+.ugb-button--size-large.ugb-button--has-icon svg {
 	width: 1.5em;
 	height: 1.5em;
 }

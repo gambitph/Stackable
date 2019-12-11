@@ -127,7 +127,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							right={ marginRight }
 							left={ marginLeft }
 							unit={ marginUnit }
-							min={ [ -200, -50 ] }
+							min={ [ -500, -100 ] }
 							max={ [ 500, 100 ] }
 							onChange={ margins => {
 								setAttributes( {
@@ -156,7 +156,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							right={ tabletMarginRight }
 							left={ tabletMarginLeft }
 							unit={ tabletMarginUnit }
-							min={ [ -200, -50 ] }
+							min={ [ -500, -100 ] }
 							max={ [ 500, 100 ] }
 							onChange={ margins => {
 								setAttributes( {
@@ -185,7 +185,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							right={ mobileMarginRight }
 							left={ mobileMarginLeft }
 							unit={ mobileMarginUnit }
-							min={ [ -200, -50 ] }
+							min={ [ -500, -100 ] }
 							max={ [ 500, 100 ] }
 							onChange={ margins => {
 								setAttributes( {

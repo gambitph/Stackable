@@ -22,7 +22,7 @@ export const createSocialButtonStyleSet = ( attrNameTemplate = '%s', mainClassNa
 	const styles = []
 
 	// We use the button styles and override them since social buttons are based on them.
-	styles.push( { ...createButtonStyleSet( attrNameTemplate, mainClassName, blockAttributes ) } )
+	styles.push( { ...createButtonStyleSet( attrNameTemplate, mainClassName, blockAttributes, true ) } )
 
 	if ( ! getValue( 'UseSocialColors' ) ) {
 		return deepmerge.all( styles )

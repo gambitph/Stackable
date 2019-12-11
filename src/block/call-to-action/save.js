@@ -76,7 +76,7 @@ const save = props => {
 			className="ugb-cta__description"
 			value={ description }
 		/>
-	const buttonComp = showButton && !! buttonText.length &&
+	const buttonComp = showButton && ! RichText.isEmpty( buttonText ) &&
 		<ButtonEdit.Content
 			size={ buttonSize !== '' ? buttonSize : 'normal' }
 			text={ buttonText }

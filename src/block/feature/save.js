@@ -118,7 +118,7 @@ const save = props => {
 								value={ description }
 							/>
 						}
-						{ showButton && !! buttonText.length &&
+						{ showButton && ! RichText.isEmpty( buttonText ) &&
 							<ButtonEdit.Content
 								size={ buttonSize !== '' ? buttonSize : 'normal' }
 								text={ buttonText }

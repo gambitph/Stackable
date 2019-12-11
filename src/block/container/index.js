@@ -25,7 +25,7 @@ import save from './save'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
+import { addFilter, applyFilters } from '@wordpress/hooks'
 import { createBlock } from '@wordpress/blocks'
 
 export const schema = {
@@ -198,3 +198,6 @@ export const settings = {
 		],
 	},
 }
+
+// Remove the default way of how the column spacing -> vertical align works since we are using another method in `style.js`
+addFilter( 'stackable.container.advanced-column-spacing.vertical-align', 'stackable/container', () => ( {} ) )

@@ -731,6 +731,7 @@ const deprecated = [
 				testimonial2: attributes.serif ? `<em>${ attributes.testimonial2 }</em>` : attributes.testimonial2,
 				testimonial3: attributes.serif ? `<em>${ attributes.testimonial3 }</em>` : attributes.testimonial3,
 
+				shadow: attributes.design === 'basic2' ? undefined : attributes.shadow,
 				bubbleBackgroundColor: attributes.design === 'bubble' ? attributes.backgroundColor : undefined,
 				imageWidth,
 				imageSquare: imageWidth ? true : undefined,

@@ -21,38 +21,38 @@ const withSticky = createHigherOrderComponent(
 
 			this.sidebarEl = null
 			this.tabTop = 0
+			this.styleTop = 0
+			this.styleWidth = 0
 			this.state = {
 				fixedTabs: false,
 			}
-			this.styleTop = 120
-			this.styleWidth = 280
-		}
-
-		calcStyleTop() {
-			const card = document.querySelector( '.block-editor-block-card' )
-			if ( card ) {
-				return card.getBoundingClientRect().top
-			}
-			return 120
-		}
-
-		calcStyleWidth() {
-			const sidebar = document.querySelector( '.components-panel' )
-			if ( sidebar ) {
-				return sidebar.getBoundingClientRect().width
-			}
-			return 279
 		}
 
 		onSidebarScroll() {
+			// Calculate the top for scroll checking.
 			if ( ! this.tabTop ) {
 				const inspectorCard = document.querySelector( '.block-editor-block-card' )
-				if ( inspectorCard ) {
-					this.tabTop = inspectorCard ? inspectorCard.getBoundingClientRect().height + 32 : 75
-					this.styleTop = this.calcStyleTop()
-					this.styleWidth = this.calcStyleWidth()
+				this.tabTop = inspectorCard ? inspectorCard.getBoundingClientRect().height + 32 : 75
+			}
+
+			// Calculate the sticky location.
+			if ( ! this.styleWidth ) {
+				const sidebarHeader = document.querySelector( '.edit-post-sidebar-header' )
+				if ( sidebarHeader ) {
+					const rect = sidebarHeader.getBoundingClientRect()
+					this.styleTop = rect.bottom - 2 // This has a 1px top & bottom border
+					this.styleWidth = rect.width
+				} else {
+					// Fallback if there's no header, for sure there's a sidebar.
+					const sidebarSidebar = document.querySelector( '.edit-post-sidebar' )
+					if ( sidebarSidebar ) {
+						const rect = sidebarSidebar.getBoundingClientRect()
+						this.styleTop = rect.top
+						this.styleWidth = rect.width
+					}
 				}
 			}
+
 			if ( this.sidebarEl && this.tabTop ) {
 				this.setState( {
 					fixedTabs: this.sidebarEl.scrollTop >= this.tabTop,

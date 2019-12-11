@@ -582,6 +582,10 @@ const deprecated = [
 				showBlockBackground: attributes.design === 'basic' && attributes.align === 'full' ? true : undefined,
 				blockInnerWidth: attributes.align !== 'full' ? undefined : ( attributes.design === 'basic' && attributes.contentWidth === true ? 'center' : 'full' ),
 				blockBackgroundBackgroundColor: attributes.design === 'basic' && attributes.align === 'full' ? attributes.backgroundColor : undefined,
+
+				// Full-width blocks before had 0 margin-top and margin-bottom.
+				marginTop: attributes.align === 'full' ? 0 : undefined,
+				marginBottom: attributes.align === 'full' ? 0 : undefined,
 			}
 		},
 	},
