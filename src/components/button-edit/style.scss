@@ -19,7 +19,10 @@
 	}
 	opacity: 1;
 	background: var(--s-primary-color, #2091e1);
-	transition: all 0.2s ease-in-out;
+	&,
+	svg {
+		transition: all 0.2s ease-in-out;
+	}
 	@include baseButton();
 	font-size: 1em;
 	&:hover {
