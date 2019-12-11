@@ -70,13 +70,13 @@ const save = props => {
 			className="ugb-header__subtitle"
 			value={ subtitle }
 		/>
-	const buttonComp = showButton && !! buttonText.length &&
+	const buttonComp = showButton && ! RichText.isEmpty( buttonText ) &&
 		<ButtonEditHelper.Content
 			className="ugb-button1"
 			attrNameTemplate="button%s"
 			blockAttributes={ props.attributes }
 		/>
-	const button2Comp = showButton2 && //!! button2Text.length &&
+	const button2Comp = showButton2 && //! RichText.isEmpty( button2Text ) &&
 		<ButtonEditHelper.Content
 			className="ugb-button2"
 			attrNameTemplate="button2%s"

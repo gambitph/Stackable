@@ -176,6 +176,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 = 2.1 =
 * Fixed: Better sticky tabs detection and placement
+* Fixed: Possible migration error if v1 button label is blank
 
 = 2.0.3 =
 * Fixed: Jetpack Search compatibility may show an error

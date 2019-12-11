@@ -133,7 +133,7 @@ const save = props => {
 							className="ugb-pricing-box__subprice"
 							value={ subPrice }
 						/>
-					const buttonComp = buttonText && !! buttonText.length && (
+					const buttonComp = buttonText && ! RichText.isEmpty( buttonText ) && (
 						<div className="ugb-pricing-box__button">
 							<ButtonEditHelper.Content
 								attrNameTemplate={ `button%s` }
