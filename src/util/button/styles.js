@@ -19,7 +19,17 @@ import deepmerge from 'deepmerge'
  */
 import { sprintf } from '@wordpress/i18n'
 
-export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '', blockAttributes = {} ) => {
+/**
+ * Generates button styles
+ *
+ * @param {string} attrNameTemplate Template name where to get the attributes from
+ * @param {string} mainClassName The classname that will be used for the CSS generation
+ * @param {Object} blockAttributes The attributes of the block
+ * @param {boolean} hasIcon If true, then the styles rendered will include styles for icons even if there's no detected icon from the blockAttributes
+ *
+ * @return {Object} CSS Styles object
+ */
+export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '', blockAttributes = {}, hasIcon = false ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
 	const getValue = __getValue( blockAttributes, getAttrName, '' )
 
@@ -102,7 +112,7 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 			},
 		} )
 
-		if ( getValue( 'Icon' ) !== '' ) {
+		if ( getValue( 'Icon' ) !== '' || hasIcon ) {
 			styles.push( {
 				[ `.${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon svg` ]: {
 					color: getValue( 'BackgroundColor' ) !== '' ? getValue( 'BackgroundColor' ) : undefined,
@@ -136,7 +146,7 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 				},
 			} )
 
-			if ( getValue( 'Icon' ) !== '' ) {
+			if ( getValue( 'Icon' ) !== '' || hasIcon ) {
 				styles.push( {
 					[ `.${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon:hover svg` ]: {
 						color: appendImportant( whiteIfDarkBlackIfLight( getValue( 'HoverTextColor' ), getValue( 'HoverBackgroundColor' ) || getValue( 'BackgroundColor' ) ) ),
@@ -158,7 +168,7 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 			},
 		} )
 
-		if ( getValue( 'Icon' ) !== '' ) {
+		if ( getValue( 'Icon' ) !== '' || hasIcon ) {
 			styles.push( {
 				[ `.${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon svg` ]: {
 					color: getValue( 'BackgroundColor' ) !== '' ? getValue( 'BackgroundColor' ) : undefined,
@@ -187,10 +197,10 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 				opacity: getValue( 'HoverOpacity' ) !== '' ? getValue( 'HoverOpacity' ) : ( cancelHoverOpacity ? 1 : undefined ),
 			},
 			[ `.${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon svg` ]: {
-				marginLeft: getValue( 'Icon' ) !== '' ? ( getValue( 'IconPosition' ) === 'right' ? iconSpacingRule : undefined ) : undefined,
-				marginRight: getValue( 'Icon' ) !== '' ? ( getValue( 'IconPosition' ) !== 'right' ? iconSpacingRule : undefined ) : undefined,
-				width: getValue( 'IconSize' ) !== '' ? `${ getValue( 'IconSize' ) }px` : undefined,
-				height: getValue( 'IconSize' ) !== '' ? `${ getValue( 'IconSize' ) }px` : undefined,
+				marginLeft: getValue( 'Icon' ) !== '' || hasIcon ? ( getValue( 'IconPosition' ) === 'right' ? iconSpacingRule : undefined ) : undefined,
+				marginRight: getValue( 'Icon' ) !== '' || hasIcon ? ( getValue( 'IconPosition' ) !== 'right' ? iconSpacingRule : undefined ) : undefined,
+				width: getValue( 'IconSize' ) !== '' || hasIcon ? `${ getValue( 'IconSize' ) }px` : undefined,
+				height: getValue( 'IconSize' ) !== '' || hasIcon ? `${ getValue( 'IconSize' ) }px` : undefined,
 			},
 		} )
 	}

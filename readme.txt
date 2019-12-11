@@ -4,7 +4,7 @@ Tags: gutenberg, block, blocks, block editor, gutenberg blocks, page builder, ed
 Requires at least: 5.0
 Tested up to: 5.3
 Requires PHP: 5.3
-Stable tag: 2.0.3
+Stable tag: 2.0.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -174,8 +174,13 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
-= 2.1 =
+= 2.0.4 =
 * Fixed: Better sticky tabs detection and placement
+* Fixed: Possible migration error if v1 button label is blank
+* Fixed: Button block is not centered properly
+* Fixed: Ghost button color sometimes aren't followed
+* Fixed: Added smooth transition to button icons
+* Fixed: Social button icons colors not being applied in Team Member block
 
 = 2.0.3 =
 * Fixed: Jetpack Search compatibility may show an error

@@ -103,21 +103,21 @@ const save = props => {
 							value={ icon }
 						/>
 					}
-					{ showTitle && !! title.length &&
+					{ showTitle && ! RichText.isEmpty( title ) &&
 						<RichText.Content
 							tagName={ titleTag || 'h5' }
 							className="ugb-notification__title"
 							value={ title }
 						/>
 					}
-					{ showDescription && !! description.length &&
+					{ showDescription && ! RichText.isEmpty( description ) &&
 						<RichText.Content
 							tagName="p"
 							className="ugb-notification__description"
 							value={ description }
 						/>
 					}
-					{ showButton && !! buttonText.length &&
+					{ showButton && ! RichText.isEmpty( buttonText ) &&
 						<ButtonEdit.Content
 							size={ buttonSize !== '' ? buttonSize : 'normal' }
 							text={ buttonText }
