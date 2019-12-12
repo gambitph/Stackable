@@ -4,10 +4,10 @@ With Click Open Inspector
 Usage:
 ```js
 withClickOpenInspector( [
-	// [ 'classname', 'panelId' ],
-	[ 'ugb-cta__title', 'title' ],
-	[ 'ugb-cta__description', 'description' ],
-	[ 'ugb-button', 'button' ],
+	// [ 'selector that will match the clicked element', 'panelId' ],
+	[ '.ugb-cta__title', 'title' ],
+	[ '.ugb-cta__description', 'description' ],
+	[ '.ugb-button', 'button' ],
 ] )
 ```
 

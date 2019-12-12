@@ -386,8 +386,8 @@ export default compose(
 	withContentAlignReseter( [ 'Title%sAlign', 'Description%sAlign', 'Button%sAlign' ] ),
 	withBlockStyles( createStyles, { editorMode: true } ),
 	withClickOpenInspector( [
-		[ 'ugb-cta__title', 'title' ],
-		[ 'ugb-cta__description', 'description' ],
-		[ 'ugb-button', 'button' ],
+		[ '.ugb-cta__title', 'title' ],
+		[ '.ugb-cta__description', 'description' ],
+		[ '.ugb-button', 'button' ],
 	] )
 )( edit )

@@ -39,6 +39,7 @@ import {
 	withTabbedInspector,
 	withContentAlignReseter,
 	withBlockStyles,
+	withClickOpenInspector,
 } from '~stackable/higher-order'
 import {
 	i18n, showProNotice,
@@ -270,6 +271,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 
 			<PanelAdvancedSettings
 				title={ __( 'Featured Image', i18n ) }
+				id="image"
 				checked={ showImage }
 				onChange={ showImage => setAttributes( { showImage } ) }
 				toggleOnSetAttributes={ [
@@ -316,6 +318,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 
 			<PanelAdvancedSettings
 				title={ __( 'Category', i18n ) }
+				id="category"
 				checked={ showCategory }
 				onChange={ showCategory => setAttributes( { showCategory } ) }
 				toggleOnSetAttributes={ [
@@ -358,6 +361,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 
 			<PanelAdvancedSettings
 				title={ __( 'Title', i18n ) }
+				id="title"
 				checked={ showTitle }
 				onChange={ showTitle => setAttributes( { showTitle } ) }
 				toggleOnSetAttributes={ [
@@ -399,6 +403,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 
 			<PanelAdvancedSettings
 				title={ __( 'Excerpt', i18n ) }
+				id="excerpt"
 				checked={ showExcerpt }
 				onChange={ showExcerpt => setAttributes( { showExcerpt } ) }
 				toggleOnSetAttributes={ [
@@ -439,6 +444,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 
 			<PanelAdvancedSettings
 				title={ __( 'Meta', i18n ) }
+				id="meta"
 				checked={ showMeta }
 				onChange={ showMeta => setAttributes( { showMeta } ) }
 				toggleOnSetAttributes={ [
@@ -500,6 +506,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 
 			<PanelAdvancedSettings
 				title={ __( 'Read More Link', i18n ) }
+				id="readmore"
 				checked={ showReadmore }
 				onChange={ showReadmore => setAttributes( { showReadmore } ) }
 				toggleOnSetAttributes={ [
@@ -734,7 +741,7 @@ class Edit extends Component {
 						</TitleTag>
 
 						const category = post.category_list &&
-							<div className="ugb-blog-posts__category" dangerouslySetInnerHTML={ { __html: post.category_list } } />
+							<div className="ugb-blog-posts__category" dangerouslySetInnerHTML={ { __html: post.category_list.replace( /href=['"].*?['"]/, '' ) } } />
 
 						const separator = <span className="ugb-blog-posts__sep">{ META_SEPARATORS[ metaSeparator || 'dot' ] }</span>
 
@@ -833,6 +840,14 @@ export default compose(
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Category%sAlign', 'Title%sAlign', 'Excerpt%sAlign', 'Meta%sAlign', 'Readmore%sAlign' ] ),
 	withBlockStyles( createStyles, { editorMode: true } ),
+	withClickOpenInspector( [
+		[ '.ugb-blog-posts__featured-image', 'image' ],
+		[ '.ugb-blog-posts__category', 'category' ],
+		[ '.ugb-blog-posts__title', 'title' ],
+		[ '.ugb-blog-posts__excerpt', 'excerpt' ],
+		[ '.ugb-blog-posts__meta', 'meta' ],
+		[ '.ugb-blog-posts__readmore', 'readmore' ],
+	] ),
 	withSelect( ( select, props ) => {
 		const {
 			postType = 'post',
@@ -858,3 +873,23 @@ export default compose(
 		}
 	} ),
 )( Edit )
+
+addFilter( 'stackable.click-open-inspector.listener-override', 'stackable/blog-posts', override => {
+	return {
+		...override,
+		'[data-type="ugb/blog-posts"]': [
+			'div',
+			'p',
+			'h1',
+			'h2',
+			'h3',
+			'h4',
+			'h5',
+			'h6',
+			'span',
+			'time',
+			'aside',
+			'figure',
+		],
+	}
+} )

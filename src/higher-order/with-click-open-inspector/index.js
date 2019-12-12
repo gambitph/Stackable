@@ -22,8 +22,9 @@ const withClickOpenInspector = ( matchers = [] ) => createHigherOrderComponent(
 	WrappedComponent => class extends Component {
 		constructor() {
 			super( ...arguments )
+			const { blockName } = this.props
 			matchers.forEach( value => {
-				addMatcher( value[ 0 ], value[ 1 ] )
+				addMatcher( blockName, value[ 0 ], value[ 1 ] )
 			} )
 		}
 

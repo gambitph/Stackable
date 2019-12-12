@@ -34,6 +34,7 @@ import {
 	withTabbedInspector,
 	withContentAlignReseter,
 	withBlockStyles,
+	withClickOpenInspector,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
 import { i18n, showProNotice } from 'stackable'
@@ -319,6 +320,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 
 			<PanelAdvancedSettings
 				title={ __( 'Subtitle', i18n ) }
+				id="subtitle"
 				checked={ showSubtitle }
 				onChange={ showSubtitle => setAttributes( { showSubtitle } ) }
 				toggleOnSetAttributes={ [
@@ -349,6 +351,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 
 			<PanelAdvancedSettings
 				title={ __( 'Title', i18n ) }
+				id="title"
 				checked={ showTitle }
 				onChange={ showTitle => setAttributes( { showTitle } ) }
 				toggleOnSetAttributes={ [
@@ -384,6 +387,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 
 			<PanelAdvancedSettings
 				title={ __( 'Description', i18n ) }
+				id="description"
 				checked={ showDescription }
 				onChange={ showDescription => setAttributes( { showDescription } ) }
 				toggleOnSetAttributes={ [
@@ -695,6 +699,11 @@ export default compose(
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Line%sAlign', 'Subtitle%sAlign', 'Title%sAlign', 'Description%sAlign', 'Arrow%sAlign' ] ),
 	withBlockStyles( createStyles, { editorMode: true } ),
+	withClickOpenInspector( [
+		[ '.ugb-image-box__title', 'title' ],
+		[ '.ugb-image-box__subtitle', 'subtitle' ],
+		[ '.ugb-image-box__description', 'description' ],
+	] ),
 	withSelect( ( select, props ) => {
 		// Once the editor is loaded, cache the other sizes of the image.
 		cacheImageData( props.attributes.image1Id, select )

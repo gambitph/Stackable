@@ -34,6 +34,7 @@ import {
 	withSetAttributeHook,
 	withTabbedInspector,
 	withUniqueClass,
+	withClickOpenInspector,
 } from '~stackable/higher-order'
 import { descriptionPlaceholder } from '~stackable/util'
 import { i18n, showProNotice } from 'stackable'
@@ -177,6 +178,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 
 			<PanelAdvancedSettings
 				title={ __( 'Title', i18n ) }
+				id="title"
 				hasToggle={ false }
 			>
 				<TypographyControlHelper
@@ -204,6 +206,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 
 			<PanelAdvancedSettings
 				title={ __( 'Arrow', i18n ) }
+				id="arrow"
 				checked={ showArrow }
 				onChange={ showArrow => setAttributes( { showArrow } ) }
 				toggleOnSetAttributes={ [
@@ -347,8 +350,26 @@ const edit = props => {
 						backgroundAttrName="container%s"
 						blockProps={ props }
 						showBackground={ show.headerBackground }
-						onMouseUp={ () => props.setState( { isOpen: ! props.isOpen } ) }
-						onKeyPress={ () => props.setState( { isOpen: ! openStart } ) }
+						onClick={ () => {
+							if ( props.openTimeout ) {
+								clearTimeout( props.openTimeout )
+							}
+							const newOpenTimeout = setTimeout( () => {
+								props.setState( { isOpen: ! props.isOpen } )
+							}, 150 )
+							props.setState( { openTimeout: newOpenTimeout } )
+						} }
+						onDoubleClick={ () => {
+							if ( props.openTimeout ) {
+								clearTimeout( props.openTimeout )
+							}
+						} }
+						onKeyPress={ () => {
+							if ( props.openTimeout ) {
+								clearTimeout( props.openTimeout )
+							}
+							props.setState( { isOpen: ! openStart } )
+						} }
 						role="button"
 						tabIndex="0"
 					>
@@ -385,6 +406,10 @@ export default compose(
 	withTabbedInspector(),
 	withContentAlignReseter(),
 	withBlockStyles( createStyles, { editorMode: true } ),
+	withClickOpenInspector( [
+		[ '.ugb-accordion__title', 'title' ],
+		[ '.ugb-accordion__arrow', 'arrow' ],
+	] ),
 	withSelect( ( select, { clientId } ) => {
 		const {
 			getBlock,
@@ -397,6 +422,7 @@ export default compose(
 		}
 	} ),
 	withState( {
+		openTimeout: null,
 		isOpen: null,
 	} )
 )( edit )

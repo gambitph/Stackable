@@ -236,8 +236,8 @@ export default compose(
 	withContentAlignReseter(),
 	withBlockStyles( createStyles, { editorMode: true } ),
 	withClickOpenInspector( [
-		[ 'ugb-button1', 'button1' ],
-		[ 'ugb-button2', 'button2' ],
-		[ 'ugb-button3', 'button3' ],
+		[ '.ugb-button1', 'button1' ],
+		[ '.ugb-button2', 'button2' ],
+		[ '.ugb-button3', 'button3' ],
 	] )
 )( edit )

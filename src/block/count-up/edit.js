@@ -30,6 +30,7 @@ import {
 	withSetAttributeHook,
 	withTabbedInspector,
 	withUniqueClass,
+	withClickOpenInspector,
 } from '~stackable/higher-order'
 
 /**
@@ -144,8 +145,9 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 			</PanelBody>
 
 			{ show.columnBackground &&
-				<PanelBody
+				<PanelAdvancedSettings
 					title={ __( 'Column Background', i18n ) }
+					id="column-background"
 					initialOpen={ false }
 				>
 					<BackgroundControlsHelper
@@ -153,11 +155,12 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 						setAttributes={ setAttributes }
 						blockAttributes={ props.attributes }
 					/>
-				</PanelBody>
+				</PanelAdvancedSettings>
 			}
 
 			<PanelAdvancedSettings
 				title={ __( 'Icon', i18n ) }
+				id="icon"
 				checked={ showIcon }
 				onChange={ showIcon => setAttributes( { showIcon } ) }
 				toggleOnSetAttributes={ [
@@ -210,6 +213,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 
 			<PanelAdvancedSettings
 				title={ __( 'Title', i18n ) }
+				id="title"
 				checked={ showTitle }
 				onChange={ showTitle => setAttributes( { showTitle } ) }
 				toggleOnSetAttributes={ [
@@ -245,6 +249,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 
 			<PanelAdvancedSettings
 				title={ __( 'Number', i18n ) }
+				id="number"
 				checked={ showNumber }
 				onChange={ showNumber => setAttributes( { showNumber } ) }
 				toggleOnSetAttributes={ [
@@ -278,6 +283,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 
 			<PanelAdvancedSettings
 				title={ __( 'Description', i18n ) }
+				id="description"
 				checked={ showDescription }
 				onChange={ showDescription => setAttributes( { showDescription } ) }
 				toggleOnSetAttributes={ [
@@ -478,4 +484,11 @@ export default compose(
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Icon%sAlign', 'Number%sAlign', 'Title%sAlign', 'Description%sAlign' ] ),
 	withBlockStyles( createStyles, { editorMode: true } ),
+	withClickOpenInspector( [
+		[ '.ugb-container__wrapper', 'column-background' ],
+		[ 'svg', 'icon' ],
+		[ '.ugb-countup__title', 'title' ],
+		[ '.ugb-countup__counter', 'number' ],
+		[ '.ugb-countup__description', 'description' ],
+	] ),
 )( edit )

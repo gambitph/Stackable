@@ -23,6 +23,7 @@ import {
 	BackgroundControlsHelper,
 	ColorPaletteControl,
 	DivBackground,
+	PanelAdvancedSettings,
 } from '~stackable/components'
 import {
 	withUniqueClass,
@@ -31,6 +32,7 @@ import {
 	withTabbedInspector,
 	withContentAlignReseter,
 	withBlockStyles,
+	withClickOpenInspector,
 } from '~stackable/higher-order'
 import { cacheImageData } from '~stackable/util'
 import classnames from 'classnames'
@@ -242,8 +244,9 @@ addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/contain
 			</PanelBody>
 
 			{ show.columnBackground &&
-				<PanelBody
+				<PanelAdvancedSettings
 					title={ __( 'Container Background', i18n ) }
+					id="column-background"
 					initialOpen={ false }
 				>
 					<BackgroundControlsHelper
@@ -251,7 +254,7 @@ addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/contain
 						setAttributes={ setAttributes }
 						blockAttributes={ props.attributes }
 					/>
-				</PanelBody>
+				</PanelAdvancedSettings>
 			}
 
 			{ applyFilters( 'stackable.container.edit.inspector.style.column-background.after', null, props ) }
@@ -355,6 +358,9 @@ export default compose(
 	withTabbedInspector(),
 	withContentAlignReseter(),
 	withBlockStyles( createStyles, { editorMode: true } ),
+	withClickOpenInspector( [
+		[ '.ugb-container__wrapper', 'column-background' ],
+	] ),
 	withSelect( ( select, { clientId } ) => {
 		const {
 			getBlock,

@@ -30,6 +30,7 @@ import {
 	withSetAttributeHook,
 	withTabbedInspector,
 	withUniqueClass,
+	withClickOpenInspector,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
 import { i18n, showProNotice } from 'stackable'
@@ -151,8 +152,9 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 			</PanelBody>
 
 			{ show.columnBackground &&
-				<PanelBody
+				<PanelAdvancedSettings
 					title={ __( 'Column Background', i18n ) }
+					id="column-background"
 					initialOpen={ false }
 				>
 					<BackgroundControlsHelper
@@ -160,11 +162,12 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 						setAttributes={ setAttributes }
 						blockAttributes={ props.attributes }
 					/>
-				</PanelBody>
+				</PanelAdvancedSettings>
 			}
 
 			<PanelAdvancedSettings
 				title={ __( 'Number', i18n ) }
+				id="number"
 				checked={ showNumber }
 				onChange={ showNumber => setAttributes( { showNumber } ) }
 				toggleOnSetAttributes={ [
@@ -271,6 +274,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 
 			<PanelAdvancedSettings
 				title={ __( 'Title', i18n ) }
+				id="title"
 				checked={ showTitle }
 				onChange={ showTitle => setAttributes( { showTitle } ) }
 				toggleOnSetAttributes={ [
@@ -306,6 +310,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 
 			<PanelAdvancedSettings
 				title={ __( 'Description', i18n ) }
+				id="description"
 				checked={ showDescription }
 				onChange={ showDescription => setAttributes( { showDescription } ) }
 				toggleOnSetAttributes={ [
@@ -481,4 +486,10 @@ export default compose(
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Number%sAlign', 'Title%sAlign', 'Description%sAlign' ] ),
 	withBlockStyles( createStyles, { editorMode: true } ),
+	withClickOpenInspector( [
+		[ '.ugb-number-box__item', 'column-background' ],
+		[ '.ugb-number-box__number', 'number' ],
+		[ '.ugb-number-box__title', 'title' ],
+		[ '.ugb-number-box__description', 'description' ],
+	] ),
 )( edit )

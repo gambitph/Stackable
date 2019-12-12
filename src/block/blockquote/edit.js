@@ -35,6 +35,7 @@ import {
 	withSetAttributeHook,
 	withTabbedInspector,
 	withUniqueClass,
+	withClickOpenInspector,
 } from '~stackable/higher-order'
 
 /**
@@ -142,6 +143,7 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 
 			<PanelAdvancedSettings
 				title={ __( 'Quotation Mark', i18n ) }
+				id="quotation"
 				checked={ showQuote }
 				onChange={ showQuote => setAttributes( { showQuote } ) }
 				toggleOnSetAttributes={ [
@@ -230,6 +232,7 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 
 			<PanelAdvancedSettings
 				title={ __( 'Text', i18n ) }
+				id="text"
 				hasToggle={ false }
 			>
 				<TypographyControlHelper
@@ -322,4 +325,8 @@ export default compose(
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Text%sAlign' ] ),
 	withBlockStyles( createStyles, { editorMode: true } ),
+	withClickOpenInspector( [
+		[ '.ugb-blockquote__quote', 'quotation' ],
+		[ '.ugb-blockquote__text', 'text' ],
+	] ),
 )( edit )
