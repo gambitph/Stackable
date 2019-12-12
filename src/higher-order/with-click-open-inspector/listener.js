@@ -10,12 +10,12 @@ import domReady from '@wordpress/dom-ready'
 
 let init = false
 const commonMatchers = {
-	'ugb-top-separator': 'top-separator',
-	'ugb-bottom-separator': 'bottom-separator',
-	'ugb-inner-block': 'column-background',
-	'ugb-block-title': 'block-title',
-	'ugb-block-description': 'block-description',
-	'ugb--has-block-background': 'block-background',
+	'.ugb-top-separator': 'top-separator',
+	'.ugb-bottom-separator': 'bottom-separator',
+	'.ugb-inner-block': 'column-background',
+	'.ugb-block-title': 'block-title',
+	'.ugb-block-description': 'block-description',
+	'.ugb--has-block-background': 'block-background',
 }
 const MATCHERS = {}
 
