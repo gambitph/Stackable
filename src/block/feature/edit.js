@@ -39,6 +39,7 @@ import {
 	withTabbedInspector,
 	withContentAlignReseter,
 	withBlockStyles,
+	withClickOpenInspector,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
 
@@ -194,8 +195,9 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 			</PanelBody>
 
 			{ show.columnBackground &&
-				<PanelBody
+				<PanelAdvancedSettings
 					title={ __( 'Background', i18n ) }
+					id="column-background"
 					initialOpen={ false }
 				>
 					<BackgroundControlsHelper
@@ -203,7 +205,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 						setAttributes={ setAttributes }
 						blockAttributes={ props.attributes }
 					/>
-				</PanelBody>
+				</PanelAdvancedSettings>
 			}
 
 			<PanelBody
@@ -243,6 +245,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 
 			<PanelAdvancedSettings
 				title={ __( 'Title', i18n ) }
+				id="title"
 				checked={ showTitle }
 				onChange={ showTitle => setAttributes( { showTitle } ) }
 				toggleOnSetAttributes={ [
@@ -278,6 +281,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 
 			<PanelAdvancedSettings
 				title={ __( 'Description', i18n ) }
+				id="description"
 				checked={ showDescription }
 				onChange={ showDescription => setAttributes( { showDescription } ) }
 				toggleOnSetAttributes={ [
@@ -308,6 +312,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 
 			<PanelAdvancedSettings
 				title={ __( 'Button', i18n ) }
+				id="button"
 				checked={ showButton }
 				onChange={ showButton => setAttributes( { showButton } ) }
 				toggleOnSetAttributes={ [
@@ -564,6 +569,12 @@ export default compose(
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Title%sAlign', 'Description%sAlign', 'Button%sAlign' ] ),
 	withBlockStyles( createStyles, { editorMode: true } ),
+	withClickOpenInspector( [
+		[ '.ugb-feature__item', 'column-background' ],
+		[ '.ugb-feature__title', 'title' ],
+		[ '.ugb-feature__description', 'description' ],
+		[ '.ugb-button', 'button' ],
+	] ),
 	withSelect( ( select, props ) => {
 		// Once the editor is loaded, cache the other sizes of the image.
 		cacheImageData( props.attributes.imageId, select )

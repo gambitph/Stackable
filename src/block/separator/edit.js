@@ -14,9 +14,10 @@ import {
 	DesignSeparatorControl,
 	Separator,
 	WhenResponsiveScreen,
+	PanelAdvancedSettings,
 } from '~stackable/components'
 import {
-	withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass,
+	withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass, withClickOpenInspector,
 } from '~stackable/higher-order'
 import createStyles from './style'
 
@@ -89,8 +90,9 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody
+			<PanelAdvancedSettings
 				title={ __( 'Separator', i18n ) }
+				id="separator"
 			>
 				<ColorPaletteControl
 					label={ __( 'Separator Color', i18n ) }
@@ -117,7 +119,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 					checked={ layer1Shadow }
 					onChange={ layer1Shadow => setAttributes( { layer1Shadow } ) }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 			<PanelBody
 				title={ __( 'General', i18n ) }
 				initialOpen={ false }
@@ -375,4 +377,7 @@ export default compose(
 	withGoogleFont,
 	withTabbedInspector(),
 	withBlockStyles( createStyles, { editorMode: true } ),
+	withClickOpenInspector( [
+		[ '.ugb-separator__layer-1', 'separator' ],
+	] ),
 )( edit )

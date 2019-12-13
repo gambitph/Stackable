@@ -9,3 +9,8 @@
 .ugb-image-box__image:hover {
 	opacity: 1 !important;
 }
+
+// Used for double-click-to-open.
+.ugb-image-box__arrow {
+	pointer-events: all !important;
+}

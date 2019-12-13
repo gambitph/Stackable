@@ -33,6 +33,7 @@ import {
 	withSetAttributeHook,
 	withTabbedInspector,
 	withUniqueClass,
+	withClickOpenInspector,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
 import { i18n, showProNotice } from 'stackable'
@@ -164,21 +165,23 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 			</PanelBody>
 
 			{ show.columnBackground &&
-				<PanelBody
+				<PanelAdvancedSettings
 					title={ __( 'Column Background', i18n ) }
 					initialOpen={ false }
+					id="column-background"
 				>
 					<BackgroundControlsHelper
 						attrNameTemplate="column%s"
 						setAttributes={ setAttributes }
 						blockAttributes={ props.attributes }
 					/>
-				</PanelBody>
+				</PanelAdvancedSettings>
 			}
 
 			{ show.overlayBackground &&
-				<PanelBody
+				<PanelAdvancedSettings
 					title={ __( 'Overlay Background', i18n ) }
+					id="overlay-background"
 					initialOpen={ false }
 				>
 					<ColorPaletteControl
@@ -196,11 +199,12 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 						allowReset={ true }
 						placeholder="1"
 					/>
-				</PanelBody>
+				</PanelAdvancedSettings>
 			}
 
 			<PanelAdvancedSettings
 				title={ __( 'Title', i18n ) }
+				id="title"
 				checked={ showTitle }
 				onChange={ showTitle => setAttributes( { showTitle } ) }
 				toggleOnSetAttributes={ [
@@ -236,6 +240,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 
 			<PanelAdvancedSettings
 				title={ __( 'Subtitle', i18n ) }
+				id="subtitle"
 				checked={ showSubtitle }
 				onChange={ showSubtitle => setAttributes( { showSubtitle } ) }
 				toggleOnSetAttributes={ [
@@ -266,6 +271,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 
 			<PanelAdvancedSettings
 				title={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button', i18n ), 1 ) }
+				id="button1"
 				checked={ showButton }
 				onChange={ showButton => setAttributes( { showButton } ) }
 				toggleOnSetAttributes={ [
@@ -294,6 +300,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 
 			<PanelAdvancedSettings
 				title={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button', i18n ), 2 ) }
+				id="button2"
 				checked={ showButton2 }
 				onChange={ showButton2 => setAttributes( { showButton2 } ) }
 				toggleOnSetAttributes={ [
@@ -495,4 +502,12 @@ export default compose(
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Title%sAlign', 'Subtitle%sAlign', 'Button%sAlign' ] ),
 	withBlockStyles( createStyles, { editorMode: true } ),
+	withClickOpenInspector( [
+		[ '.ugb-content-wrapper', 'overlay-background' ],
+		[ '.ugb-header__item', 'column-background' ],
+		[ '.ugb-header__title', 'title' ],
+		[ '.ugb-header__subtitle', 'subtitle' ],
+		[ '.ugb-button1', 'button1' ],
+		[ '.ugb-button2', 'button2' ],
+	] ),
 )( edit )

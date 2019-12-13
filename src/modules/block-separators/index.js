@@ -48,6 +48,7 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 			{ output }
 			<PanelAdvancedSettings
 				title={ __( 'Top Separator', i18n ) }
+				id="top-separator"
 				checked={ showTopSeparator }
 				onChange={ showTopSeparator => setAttributes( { showTopSeparator } ) }
 				className="ugb-top-block-separator-panel"
@@ -136,6 +137,7 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 			</PanelAdvancedSettings>
 			<PanelAdvancedSettings
 				title={ __( 'Bottom Separator', i18n ) }
+				id="bottom-separator"
 				checked={ showBottomSeparator }
 				onChange={ showBottomSeparator => setAttributes( { showBottomSeparator } ) }
 				className="ugb-bottom-block-separator-panel"

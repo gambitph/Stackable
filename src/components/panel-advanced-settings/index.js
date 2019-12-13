@@ -87,6 +87,7 @@ class PanelAdvancedSettings extends Component {
 			'ugb-toggle-panel-body',
 		], {
 			'ugb-toggle-panel-body--advanced': this.state.showAdvanced,
+			[ `ugb-panel--${ this.props.id }` ]: this.props.id,
 		} )
 
 		return (
@@ -97,7 +98,7 @@ class PanelAdvancedSettings extends Component {
 				opened={ this.state.opened }
 				title={
 					<Fragment>
-						{ this.props.hasToggle && (
+						{ this.props.hasToggle && this.props.toggleAttributeName && (
 							<span className={ `editor-panel-toggle-settings__panel-title` }>
 								<FormToggle
 									className="ugb-toggle-panel-form-toggle"
@@ -120,7 +121,7 @@ class PanelAdvancedSettings extends Component {
 								{ this.props.title }
 							</span>
 						) }
-						{ ! this.props.hasToggle && this.props.title }
+						{ ! ( this.props.hasToggle && this.props.toggleAttributeName ) && this.props.title }
 					</Fragment>
 				}
 			>
@@ -138,6 +139,7 @@ class PanelAdvancedSettings extends Component {
 }
 
 PanelAdvancedSettings.defaultProps = {
+	id: '',
 	className: '',
 	title: __( 'Settings', i18n ),
 	checked: false,
