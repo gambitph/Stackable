@@ -138,7 +138,11 @@ class PanelTabs extends Component {
 							<button
 								key={ i }
 								onClick={ () => this.select( value ) }
-								className={ classnames( [ 'edit-post-sidebar__panel-tab' ],
+								className={ classnames(
+									[
+										'edit-post-sidebar__panel-tab',
+										`ugb-tab--${ value }`,
+									],
 									{
 										'is-active': this.state.activeTab === value,
 									}

@@ -47,6 +47,7 @@ import {
 	withTabbedInspector,
 	withContentAlignReseter,
 	withBlockStyles,
+	withClickOpenInspector,
 } from '~stackable/higher-order'
 import { i18n, showProNotice } from 'stackable'
 import { range } from 'lodash'
@@ -169,8 +170,9 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 			{ applyFilters( 'stackable.pricing-box.edit.inspector.style.general.after', null, props ) }
 
 			{ show.columnBackground &&
-				<PanelBody
+				<PanelAdvancedSettings
 					title={ __( 'Column Background', i18n ) }
+					id="column-background"
 					initialOpen={ false }
 				>
 					<BackgroundControlsHelper
@@ -178,7 +180,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 						setAttributes={ setAttributes }
 						blockAttributes={ props.attributes }
 					/>
-				</PanelBody>
+				</PanelAdvancedSettings>
 			}
 
 			{ applyFilters( 'stackable.pricing-box.edit.inspector.style.column.after', null, props ) }
@@ -231,6 +233,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 
 			<PanelAdvancedSettings
 				title={ __( 'Title', i18n ) }
+				id="title"
 				checked={ showTitle }
 				onChange={ showTitle => setAttributes( { showTitle } ) }
 				toggleOnSetAttributes={ [
@@ -266,6 +269,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 
 			<PanelAdvancedSettings
 				title={ __( 'Price', i18n ) }
+				id="price"
 				checked={ showPrice }
 				onChange={ showPrice => setAttributes( { showPrice } ) }
 				toggleOnSetAttributes={ [
@@ -297,6 +301,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 			{ showPrice &&
 				<PanelAdvancedSettings
 					title={ __( 'Price Prefix', i18n ) }
+					id="price-prefix"
 					checked={ showPricePrefix }
 					onChange={ showPricePrefix => setAttributes( { showPricePrefix } ) }
 					toggleOnSetAttributes={ [
@@ -324,6 +329,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 			{ showPrice &&
 				<PanelAdvancedSettings
 					title={ __( 'Price Suffix', i18n ) }
+					id="price-suffix"
 					checked={ showPriceSuffix }
 					onChange={ showPriceSuffix => setAttributes( { showPriceSuffix } ) }
 					toggleOnSetAttributes={ [
@@ -350,6 +356,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 
 			<PanelAdvancedSettings
 				title={ __( 'Sub Price', i18n ) }
+				id="subprice"
 				checked={ showSubPrice }
 				onChange={ showSubPrice => setAttributes( { showSubPrice } ) }
 				toggleOnSetAttributes={ [
@@ -380,6 +387,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 
 			<PanelAdvancedSettings
 				title={ __( 'Button', i18n ) }
+				id="button"
 				checked={ showButton }
 				onChange={ showButton => setAttributes( { showButton } ) }
 				toggleOnSetAttributes={ [
@@ -409,6 +417,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 
 			<PanelAdvancedSettings
 				title={ __( 'Description', i18n ) }
+				id="description"
 				checked={ showDescription }
 				onChange={ showDescription => setAttributes( { showDescription } ) }
 				toggleOnSetAttributes={ [
@@ -780,6 +789,17 @@ export default compose(
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Image%sAlign', 'Title%sAlign', 'Price%sAlign', 'SubPrice%sAlign', 'Button%sAlign', 'Description%sAlign' ] ),
 	withBlockStyles( createStyles, { editorMode: true } ),
+	withClickOpenInspector( [
+		[ '.ugb-pricing-box__header', 'column-header' ],
+		[ '.ugb-pricing-box__item', 'column-background' ],
+		[ '.ugb-pricing-box__title', 'title' ],
+		[ '.ugb-pricing-box__price-prefix', 'price-prefix' ],
+		[ '.ugb-pricing-box__price', 'price' ],
+		[ '.ugb-pricing-box__price-suffix', 'price-suffix' ],
+		[ '.ugb-pricing-box__subprice', 'subprice' ],
+		[ '.ugb-button', 'button' ],
+		[ '.ugb-pricing-box__description', 'description' ],
+	] ),
 	withSelect( ( select, props ) => {
 		// Once the editor is loaded, cache the other sizes of the image.
 		cacheImageData( props.attributes.image1Id, select )

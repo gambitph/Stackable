@@ -31,6 +31,7 @@ import {
 	withTabbedInspector,
 	withContentAlignReseter,
 	withBlockStyles,
+	withClickOpenInspector,
 } from '~stackable/higher-order'
 
 /**
@@ -68,6 +69,7 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 
 			<PanelAdvancedSettings
 				title={ __( 'Title', i18n ) }
+				id="title"
 				checked={ showTitle }
 				onChange={ showTitle => setAttributes( { showTitle } ) }
 				toggleOnSetAttributes={ [
@@ -101,8 +103,9 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
-			<PanelBody
+			<PanelAdvancedSettings
 				title={ __( 'Text', i18n ) }
+				id="text"
 				initialOpen={ false }
 			>
 				<TypographyControlHelper
@@ -122,10 +125,11 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 				>
 					<AlignButtonsControl label={ __( 'Align', i18n ) } />
 				</ResponsiveControl>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
-			<PanelBody
+			<PanelAdvancedSettings
 				title={ __( 'Link', i18n ) }
+				id="link"
 				initialOpen={ false }
 			>
 				<TypographyControlHelper
@@ -145,7 +149,7 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 				>
 					<AlignButtonsControl label={ __( 'Align', i18n ) } />
 				</ResponsiveControl>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
 				{ showTitle &&
@@ -288,4 +292,9 @@ export default compose(
 	withTabbedInspector( [ 'style', 'advanced' ] ),
 	withContentAlignReseter( [ 'Title%sAlign', 'Text%sAlign', 'Link%sAlign' ] ),
 	withBlockStyles( createStyles, { editorMode: true } ),
+	withClickOpenInspector( [
+		[ '.ugb-expand__title', 'title' ],
+		[ '.ugb-expand__less-text, .ugb-expand__more-text', 'text' ],
+		[ '.ugb-expand__more-toggle-text, .ugb-expand__less-toggle-text', 'link' ],
+	] ),
 )( edit )

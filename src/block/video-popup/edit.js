@@ -11,6 +11,7 @@ import {
 	ResponsiveControl,
 	WhenResponsiveScreen,
 	DivBackground,
+	PanelAdvancedSettings,
 } from '~stackable/components'
 import {
 	getVideoProviderFromURL,
@@ -29,6 +30,7 @@ import {
 	withSetAttributeHook,
 	withTabbedInspector,
 	withUniqueClass,
+	withClickOpenInspector,
 } from '~stackable/higher-order'
 import createStyles from './style'
 
@@ -100,7 +102,10 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 				/>
 			</PanelBody>
 
-			<PanelBody title={ __( 'Container', i18n ) } initialOpen={ false }>
+			<PanelAdvancedSettings
+				title={ __( 'Container', i18n ) }
+				initialOpen={ false }
+			>
 				{ show.containerWidth &&
 					<Fragment>
 						<WhenResponsiveScreen screen="desktop">
@@ -168,17 +173,25 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 					allowReset={ true }
 					placeholder="3"
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
-			<PanelBody title={ __( 'Background', i18n ) } initialOpen={ false }>
+			<PanelAdvancedSettings
+				title={ __( 'Background', i18n ) }
+				id="background"
+				initialOpen={ false }
+			>
 				<BackgroundControlsHelper
 					attrNameTemplate="preview%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
-			<PanelBody title={ __( 'Play Button', i18n ) } initialOpen={ false }>
+			<PanelAdvancedSettings
+				title={ __( 'Play Button', i18n ) }
+				id="play-button"
+				initialOpen={ false }
+			>
 				<SelectControl
 					label={ __( 'Button Style', i18n ) }
 					value={ playButtonType }
@@ -218,7 +231,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 					allowReset={ true }
 					placeholder="1.0"
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			{ ( showBlockTitle || showBlockDescription ) &&
 				<PanelSpacingBody initialOpen={ false } blockProps={ props }>
@@ -272,4 +285,8 @@ export default compose(
 	withGoogleFont,
 	withTabbedInspector(),
 	withBlockStyles( createStyles, { editorMode: true } ),
+	withClickOpenInspector( [
+		[ '.ugb-video-popup__wrapper', 'background' ],
+		[ '.ugb-video-popup__play-button svg', 'play-button' ],
+	] ),
 )( edit )

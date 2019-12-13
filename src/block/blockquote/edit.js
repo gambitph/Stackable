@@ -35,6 +35,7 @@ import {
 	withSetAttributeHook,
 	withTabbedInspector,
 	withUniqueClass,
+	withClickOpenInspector,
 } from '~stackable/higher-order'
 
 /**
@@ -128,8 +129,9 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 			</PanelBody>
 
 			{ show.containerBackground &&
-				<PanelBody
+				<PanelAdvancedSettings
 					title={ __( 'Container Background', i18n ) }
+					id="column-background"
 					initialOpen={ false }
 				>
 					<BackgroundControlsHelper
@@ -137,11 +139,12 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 						setAttributes={ setAttributes }
 						blockAttributes={ props.attributes }
 					/>
-				</PanelBody>
+				</PanelAdvancedSettings>
 			}
 
 			<PanelAdvancedSettings
 				title={ __( 'Quotation Mark', i18n ) }
+				id="quotation"
 				checked={ showQuote }
 				onChange={ showQuote => setAttributes( { showQuote } ) }
 				toggleOnSetAttributes={ [
@@ -230,6 +233,7 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 
 			<PanelAdvancedSettings
 				title={ __( 'Text', i18n ) }
+				id="text"
 				hasToggle={ false }
 			>
 				<TypographyControlHelper
@@ -322,4 +326,9 @@ export default compose(
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Text%sAlign' ] ),
 	withBlockStyles( createStyles, { editorMode: true } ),
+	withClickOpenInspector( [
+		[ '.ugb-blockquote__item', 'column-background' ],
+		[ '.ugb-blockquote__quote', 'quotation' ],
+		[ '.ugb-blockquote__text', 'text' ],
+	] ),
 )( edit )

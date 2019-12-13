@@ -8,6 +8,7 @@ import {
 	withSetAttributeHook,
 	withTabbedInspector,
 	withUniqueClass,
+	withClickOpenInspector,
 } from '~stackable/higher-order'
 import {
 	AdvancedRangeControl,
@@ -17,6 +18,7 @@ import {
 	PanelSpacingBody,
 	ResponsiveControl,
 	TypographyControlHelper,
+	PanelAdvancedSettings,
 } from '~stackable/components'
 
 /**
@@ -128,7 +130,11 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 				/>
 			</PanelBody>
 
-			<PanelBody title={ __( 'List Text', i18n ) } initialOpen={ false }>
+			<PanelAdvancedSettings
+				title={ __( 'List Text', i18n ) }
+				id="text"
+				initialOpen={ false }
+			>
 				<TypographyControlHelper
 					attrNameTemplate="listText%s"
 					setAttributes={ setAttributes }
@@ -139,7 +145,7 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 					onChange={ listTextColor => setAttributes( { listTextColor } ) }
 					label={ __( 'Color', i18n ) }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
 				<AdvancedRangeControl
@@ -200,4 +206,7 @@ export default compose(
 	withTabbedInspector(),
 	withContentAlignReseter(),
 	withBlockStyles( createStyles, { editorMode: true } ),
+	withClickOpenInspector( [
+		[ 'ul, ul li', 'text' ],
+	] ),
 )( edit )

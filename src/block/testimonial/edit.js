@@ -46,6 +46,7 @@ import {
 	withTabbedInspector,
 	withContentAlignReseter,
 	withBlockStyles,
+	withClickOpenInspector,
 } from '~stackable/higher-order'
 
 /**
@@ -158,8 +159,9 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 			{ applyFilters( 'stackable.testimonial.edit.inspector.style.general.after', null, props ) }
 
 			{ show.columnBackground &&
-				<PanelBody
+				<PanelAdvancedSettings
 					title={ __( 'Column Background', i18n ) }
+					id="column-background"
 					initialOpen={ false }
 				>
 					<BackgroundControlsHelper
@@ -167,11 +169,12 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 						setAttributes={ setAttributes }
 						blockAttributes={ props.attributes }
 					/>
-				</PanelBody>
+				</PanelAdvancedSettings>
 			}
 
 			<PanelAdvancedSettings
 				title={ __( 'Testimonial', i18n ) }
+				id="testimonial"
 				checked={ showTestimonial }
 				onChange={ showTestimonial => setAttributes( { showTestimonial } ) }
 				toggleOnSetAttributes={ [
@@ -251,6 +254,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 
 			<PanelAdvancedSettings
 				title={ __( 'Name', i18n ) }
+				id="name"
 				checked={ showName }
 				onChange={ showName => setAttributes( { showName } ) }
 				toggleOnSetAttributes={ [
@@ -287,6 +291,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 
 			<PanelAdvancedSettings
 				title={ __( 'Position', i18n ) }
+				id="position"
 				checked={ showPosition }
 				onChange={ showPosition => setAttributes( { showPosition } ) }
 				toggleOnSetAttributes={ [
@@ -554,6 +559,12 @@ export default compose(
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Testimonial%sAlign', 'Image%sAlign', 'Name%sAlign', 'Position%sAlign' ] ),
 	withBlockStyles( createStyles, { editorMode: true } ),
+	withClickOpenInspector( [
+		[ '.ugb-testimonial__item', 'column-background' ],
+		[ '.ugb-testimonial__body', 'testimonial' ],
+		[ '.ugb-testimonial__name', 'name' ],
+		[ '.ugb-testimonial__position', 'position' ],
+	] ),
 	withSelect( ( select, props ) => {
 		// Once the editor is loaded, cache the other sizes of the image.
 		cacheImageData( props.attributes.image1Id, select )

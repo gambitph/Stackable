@@ -42,6 +42,7 @@ import {
 	withTabbedInspector,
 	withContentAlignReseter,
 	withBlockStyles,
+	withClickOpenInspector,
 } from '~stackable/higher-order'
 
 /**
@@ -160,16 +161,17 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 			</PanelBody>
 
 			{ show.columnBackground &&
-				<PanelBody
+				<PanelAdvancedSettings
 					title={ __( 'Column Background', i18n ) }
 					initialOpen={ false }
+					id="column-background"
 				>
 					<BackgroundControlsHelper
 						attrNameTemplate="column%s"
 						setAttributes={ setAttributes }
 						blockAttributes={ props.attributes }
 					/>
-				</PanelBody>
+				</PanelAdvancedSettings>
 			}
 
 			<PanelAdvancedSettings
@@ -275,6 +277,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 
 			<PanelAdvancedSettings
 				title={ __( 'Name', i18n ) }
+				id="name"
 				checked={ showName }
 				onChange={ showName => setAttributes( { showName } ) }
 				toggleOnSetAttributes={ [
@@ -310,6 +313,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 
 			<PanelAdvancedSettings
 				title={ __( 'Position', i18n ) }
+				id="position"
 				checked={ showPosition }
 				onChange={ showPosition => setAttributes( { showPosition } ) }
 				toggleOnSetAttributes={ [
@@ -340,6 +344,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 
 			<PanelAdvancedSettings
 				title={ __( 'Description', i18n ) }
+				id="description"
 				checked={ showDescription }
 				onChange={ showDescription => setAttributes( { showDescription } ) }
 				toggleOnSetAttributes={ [
@@ -371,6 +376,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 			{ show.social &&
 				<PanelAdvancedSettings
 					title={ __( 'Social', i18n ) }
+					id="social"
 					checked={ showSocial }
 					onChange={ showSocial => setAttributes( { showSocial } ) }
 					toggleOnSetAttributes={ [
@@ -692,6 +698,13 @@ export default compose(
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Image%sAlign', 'Name%sAlign', 'Position%sAlign', 'Description%sAlign', 'Social%sAlign' ] ),
 	withBlockStyles( createStyles, { editorMode: true } ),
+	withClickOpenInspector( [
+		[ '.ugb-team-member__item', 'column-background' ],
+		[ '.ugb-team-member__name', 'name' ],
+		[ '.ugb-team-member__position', 'position' ],
+		[ '.ugb-team-member__description', 'description' ],
+		[ '.ugb-button', 'social' ],
+	] ),
 	withSelect( ( select, props ) => {
 		// Once the editor is loaded, cache the other sizes of the image.
 		cacheImageData( props.attributes.image1Id, select )

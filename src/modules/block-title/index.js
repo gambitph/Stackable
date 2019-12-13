@@ -51,6 +51,7 @@ const addInspectorPanel = ( output, props ) => {
 			{ output }
 			<PanelAdvancedSettings
 				title={ __( 'Block Title', i18n ) }
+				id="block-title"
 				className="ugb-panel-block-title-module"
 				checked={ showBlockTitle }
 				onChange={ showBlockTitle => {
@@ -93,6 +94,7 @@ const addInspectorPanel = ( output, props ) => {
 			</PanelAdvancedSettings>
 			<PanelAdvancedSettings
 				title={ __( 'Block Description', i18n ) }
+				id="block-description"
 				checked={ showBlockDescription }
 				onChange={ showBlockDescription => {
 					const attrs = { showBlockDescription }

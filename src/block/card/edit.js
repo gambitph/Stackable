@@ -41,6 +41,7 @@ import {
 	withTabbedInspector,
 	withContentAlignReseter,
 	withBlockStyles,
+	withClickOpenInspector,
 } from '~stackable/higher-order'
 
 /**
@@ -164,8 +165,9 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 			</PanelBody>
 
 			{ show.columnBackground &&
-				<PanelBody
+				<PanelAdvancedSettings
 					title={ __( 'Column Background', i18n ) }
+					id="column-background"
 					initialOpen={ false }
 				>
 					<BackgroundControlsHelper
@@ -173,7 +175,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 						setAttributes={ setAttributes }
 						blockAttributes={ props.attributes }
 					/>
-				</PanelBody>
+				</PanelAdvancedSettings>
 			}
 
 			<PanelAdvancedSettings
@@ -269,6 +271,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 
 			<PanelAdvancedSettings
 				title={ __( 'Title', i18n ) }
+				id="title"
 				checked={ showTitle }
 				onChange={ showTitle => setAttributes( { showTitle } ) }
 				toggleOnSetAttributes={ [
@@ -304,6 +307,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 
 			<PanelAdvancedSettings
 				title={ __( 'Subtitle', i18n ) }
+				id="subtitle"
 				checked={ showSubtitle }
 				onChange={ showSubtitle => setAttributes( { showSubtitle } ) }
 				toggleOnSetAttributes={ [
@@ -334,6 +338,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 
 			<PanelAdvancedSettings
 				title={ __( 'Description', i18n ) }
+				id="description"
 				checked={ showDescription }
 				onChange={ showDescription => setAttributes( { showDescription } ) }
 				toggleOnSetAttributes={ [
@@ -364,6 +369,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 
 			<PanelAdvancedSettings
 				title={ __( 'Button', i18n ) }
+				id="button"
 				checked={ showButton }
 				onChange={ showButton => setAttributes( { showButton } ) }
 				toggleOnSetAttributes={ [
@@ -616,6 +622,13 @@ export default compose(
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Title%sAlign', 'Subtitle%sAlign', 'Description%sAlign', 'Button%sAlign' ] ),
 	withBlockStyles( createStyles, { editorMode: true } ),
+	withClickOpenInspector( [
+		[ '.ugb-card__title', 'title' ],
+		[ '.ugb-card__subtitle', 'subtitle' ],
+		[ '.ugb-card__description', 'description' ],
+		[ '.ugb-button', 'button' ],
+		[ '.ugb-card__item', 'column-background' ],
+	] ),
 	withSelect( ( select, props ) => {
 		// Once the editor is loaded, cache the other sizes of the image.
 		cacheImageData( props.attributes.image1Id, select )

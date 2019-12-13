@@ -59,6 +59,7 @@ const addInspectorPanel = ( output, props ) => {
 			{ output }
 			<PanelAdvancedSettings
 				title={ __( 'Block Background', i18n ) }
+				id="block-background"
 				checked={ showBlockBackground }
 				onChange={ showBlockBackground => setAttributes( { showBlockBackground } ) }
 				toggleOnSetAttributes={ createBackgroundAttributeNames( 'blockBackground%s' ) }

@@ -11,3 +11,7 @@
 	display: block;
 	float: none;
 }
+// Used for double click to open controls.
+.ugb-blog-posts__item::after {
+	pointer-events: none;
+}
