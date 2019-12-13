@@ -157,8 +157,9 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 			</PanelBody>
 
 			{ ( show.headerBackground || show.containerBackground ) &&
-				<PanelBody
+				<PanelAdvancedSettings
 					title={ __( 'Container Background', i18n ) }
+					id="column-background"
 					initialOpen={ false }
 				>
 					<BackgroundControlsHelper
@@ -173,7 +174,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 							label={ __( 'Closed State Background Color', i18n ) }
 						/>
 					}
-				</PanelBody>
+				</PanelAdvancedSettings>
 			}
 
 			<PanelAdvancedSettings

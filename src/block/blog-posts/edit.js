@@ -244,8 +244,9 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 			</PanelBody>
 
 			{ show.columnBackground &&
-				<PanelBody
+				<PanelAdvancedSettings
 					title={ __( 'Column Background', i18n ) }
+					id="column-background"
 					initialOpen={ false }
 				>
 					{ ( show.showBackgroundInItem || show.showBackgroundInContent ) &&
@@ -266,7 +267,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 							onChangeBackgroundGradientBlendMode={ false }
 						/>
 					}
-				</PanelBody>
+				</PanelAdvancedSettings>
 			}
 
 			<PanelAdvancedSettings
@@ -741,7 +742,7 @@ class Edit extends Component {
 						</TitleTag>
 
 						const category = post.category_list &&
-							<div className="ugb-blog-posts__category" dangerouslySetInnerHTML={ { __html: post.category_list.replace( /href=['"].*?['"]/, '' ) } } />
+							<div className="ugb-blog-posts__category" dangerouslySetInnerHTML={ { __html: post.category_list.replace( /href=['"].*?['"]/g, '' ) } } />
 
 						const separator = <span className="ugb-blog-posts__sep">{ META_SEPARATORS[ metaSeparator || 'dot' ] }</span>
 
@@ -842,11 +843,13 @@ export default compose(
 	withBlockStyles( createStyles, { editorMode: true } ),
 	withClickOpenInspector( [
 		[ '.ugb-blog-posts__featured-image', 'image' ],
+		[ '.ugb-blog-posts__featured-image img', 'image' ],
 		[ '.ugb-blog-posts__category', 'category' ],
 		[ '.ugb-blog-posts__title', 'title' ],
 		[ '.ugb-blog-posts__excerpt', 'excerpt' ],
 		[ '.ugb-blog-posts__meta', 'meta' ],
 		[ '.ugb-blog-posts__readmore', 'readmore' ],
+		[ '.ugb-blog-posts__item', 'column-background' ],
 	] ),
 	withSelect( ( select, props ) => {
 		const {
@@ -878,7 +881,7 @@ addFilter( 'stackable.click-open-inspector.listener-override', 'stackable/blog-p
 	return {
 		...override,
 		'[data-type="ugb/blog-posts"]': [
-			'div',
+			'img',
 			'p',
 			'h1',
 			'h2',
@@ -890,6 +893,7 @@ addFilter( 'stackable.click-open-inspector.listener-override', 'stackable/blog-p
 			'time',
 			'aside',
 			'figure',
+			'div',
 		],
 	}
 } )

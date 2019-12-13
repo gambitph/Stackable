@@ -179,8 +179,9 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 			}
 
 			{ show.overlayBackground &&
-				<PanelBody
+				<PanelAdvancedSettings
 					title={ __( 'Overlay Background', i18n ) }
+					id="overlay-background"
 					initialOpen={ false }
 				>
 					<ColorPaletteControl
@@ -198,7 +199,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 						allowReset={ true }
 						placeholder="1"
 					/>
-				</PanelBody>
+				</PanelAdvancedSettings>
 			}
 
 			<PanelAdvancedSettings
@@ -502,6 +503,7 @@ export default compose(
 	withContentAlignReseter( [ 'Title%sAlign', 'Subtitle%sAlign', 'Button%sAlign' ] ),
 	withBlockStyles( createStyles, { editorMode: true } ),
 	withClickOpenInspector( [
+		[ '.ugb-content-wrapper', 'overlay-background' ],
 		[ '.ugb-header__item', 'column-background' ],
 		[ '.ugb-header__title', 'title' ],
 		[ '.ugb-header__subtitle', 'subtitle' ],

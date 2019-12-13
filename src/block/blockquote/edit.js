@@ -129,8 +129,9 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 			</PanelBody>
 
 			{ show.containerBackground &&
-				<PanelBody
+				<PanelAdvancedSettings
 					title={ __( 'Container Background', i18n ) }
+					id="column-background"
 					initialOpen={ false }
 				>
 					<BackgroundControlsHelper
@@ -138,7 +139,7 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 						setAttributes={ setAttributes }
 						blockAttributes={ props.attributes }
 					/>
-				</PanelBody>
+				</PanelAdvancedSettings>
 			}
 
 			<PanelAdvancedSettings
@@ -326,6 +327,7 @@ export default compose(
 	withContentAlignReseter( [ 'Text%sAlign' ] ),
 	withBlockStyles( createStyles, { editorMode: true } ),
 	withClickOpenInspector( [
+		[ '.ugb-blockquote__item', 'column-background' ],
 		[ '.ugb-blockquote__quote', 'quotation' ],
 		[ '.ugb-blockquote__text', 'text' ],
 	] ),

@@ -790,6 +790,7 @@ export default compose(
 	withContentAlignReseter( [ 'Image%sAlign', 'Title%sAlign', 'Price%sAlign', 'SubPrice%sAlign', 'Button%sAlign', 'Description%sAlign' ] ),
 	withBlockStyles( createStyles, { editorMode: true } ),
 	withClickOpenInspector( [
+		[ '.ugb-pricing-box__header', 'column-header' ],
 		[ '.ugb-pricing-box__item', 'column-background' ],
 		[ '.ugb-pricing-box__title', 'title' ],
 		[ '.ugb-pricing-box__price-prefix', 'price-prefix' ],

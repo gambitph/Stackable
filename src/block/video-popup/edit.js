@@ -287,6 +287,6 @@ export default compose(
 	withBlockStyles( createStyles, { editorMode: true } ),
 	withClickOpenInspector( [
 		[ '.ugb-video-popup__wrapper', 'background' ],
-		[ 'svg', 'play-button' ],
+		[ '.ugb-video-popup__play-button svg', 'play-button' ],
 	] ),
 )( edit )

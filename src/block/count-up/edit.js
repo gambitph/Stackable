@@ -486,7 +486,7 @@ export default compose(
 	withBlockStyles( createStyles, { editorMode: true } ),
 	withClickOpenInspector( [
 		[ '.ugb-container__wrapper', 'column-background' ],
-		[ 'svg', 'icon' ],
+		[ '.ugb-countup__icon svg', 'icon' ],
 		[ '.ugb-countup__title', 'title' ],
 		[ '.ugb-countup__counter', 'number' ],
 		[ '.ugb-countup__description', 'description' ],

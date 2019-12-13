@@ -418,6 +418,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 
 			<PanelAdvancedSettings
 				title={ __( 'Arrow', i18n ) }
+				id="arrow"
 				checked={ showArrow }
 				onChange={ showArrow => setAttributes( { showArrow } ) }
 				toggleOnSetAttributes={ [
@@ -703,6 +704,7 @@ export default compose(
 		[ '.ugb-image-box__title', 'title' ],
 		[ '.ugb-image-box__subtitle', 'subtitle' ],
 		[ '.ugb-image-box__description', 'description' ],
+		[ '.ugb-image-box__arrow svg', 'arrow' ],
 	] ),
 	withSelect( ( select, props ) => {
 		// Once the editor is loaded, cache the other sizes of the image.

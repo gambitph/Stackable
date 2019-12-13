@@ -9,7 +9,7 @@ import { applyFilters } from '@wordpress/hooks'
 import domReady from '@wordpress/dom-ready'
 
 let init = false
-const commonMatchers = {
+const COMMON_MATCHERS = {
 	'.ugb-top-separator': 'top-separator',
 	'.ugb-bottom-separator': 'bottom-separator',
 	'.ugb-inner-block': 'column-background',
@@ -28,7 +28,9 @@ const CLICK_LISTENER_CLASSES = [
 	'figure',
 	'.ugb-button',
 	'[role="button"]',
+	'.ugb-block-content > * > *',
 	'.ugb-block-content > *',
+	'.ugb-content-wrapper',
 	'.ugb-top-separator',
 	'.ugb-bottom-separator',
 	'.ugb-inner-block',
@@ -37,7 +39,8 @@ const CLICK_LISTENER_CLASSES = [
 
 export const addMatcher = ( blockName, clickedClass, targetPanelId ) => {
 	if ( typeof MATCHERS[ blockName ] === 'undefined' ) {
-		MATCHERS[ blockName ] = { ...commonMatchers }
+		// MATCHERS[ blockName ] = { ...commonMatchers }
+		MATCHERS[ blockName ] = {}
 	}
 	MATCHERS[ blockName ][ clickedClass ] = targetPanelId
 }
@@ -127,7 +130,11 @@ domReady( () => {
 		if ( ! blockName ) {
 			return
 		}
-		const matchers = MATCHERS[ blockName ]
+
+		const matchers = {
+			...MATCHERS[ blockName ],
+			...COMMON_MATCHERS,
+		}
 		if ( ! matchers ) {
 			return
 		}
