@@ -159,6 +159,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					title={ __( 'Column Background', i18n ) }
 					id="column-background"
 					initialOpen={ false }
+					className="ugb--help-tip-column-background-on-off"
 				>
 					<BackgroundControlsHelper
 						attrNameTemplate="column%s"

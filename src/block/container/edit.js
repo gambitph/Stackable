@@ -251,6 +251,7 @@ addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/contain
 					title={ __( 'Container Background', i18n ) }
 					id="column-background"
 					initialOpen={ false }
+					className="ugb--help-tip-column-background-on-off"
 				>
 					<BackgroundControlsHelper
 						attrNameTemplate="column%s"

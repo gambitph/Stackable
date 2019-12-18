@@ -150,6 +150,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 					title={ __( 'Column Background', i18n ) }
 					id="column-background"
 					initialOpen={ false }
+					className="ugb--help-tip-column-background-on-off"
 				>
 					<BackgroundControlsHelper
 						attrNameTemplate="column%s"

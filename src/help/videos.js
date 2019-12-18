@@ -7,6 +7,7 @@ import generalBorderRadius from './videos/general-border-radius.mp4'
 import generalShadow from './videos/general-shadow.mp4'
 import alignmentAll from './videos/alignment-all.mp4'
 import generalColumns from './videos/general-columns.mp4'
+import columnBackgroundOnOff from './videos/column-background-on-off.mp4'
 import imageShape from './videos/image-shape.mp4'
 import imageSize from './videos/image-size.mp4'
 import imageSizeNoCrop from './videos/image-size-no-crop.mp4'
@@ -158,6 +159,11 @@ const VIDEOS = {
 		video: generalColumns,
 		title: __( 'Columns', i18n ),
 		description: __( 'Sets the number of columns', i18n ),
+	},
+	columnBackgroundOnOff: {
+		video: columnBackgroundOnOff,
+		title: __( 'Column / Container Background', i18n ),
+		description: __( 'Background settings for the container or columns.', i18n ),
 	},
 	imageShape: {
 		video: imageShape,

@@ -251,6 +251,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					title={ __( 'Column Background', i18n ) }
 					id="column-background"
 					initialOpen={ false }
+					className="ugb--help-tip-column-background-on-off"
 				>
 					{ ( show.showBackgroundInItem || show.showBackgroundInContent ) &&
 						<BackgroundControlsHelper

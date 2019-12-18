@@ -138,6 +138,7 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 					title={ __( 'Column Background', i18n ) }
 					initialOpen={ false }
 					id="column-background"
+					className="ugb--help-tip-column-background-on-off"
 				>
 					<BackgroundControlsHelper
 						attrNameTemplate="column%s"

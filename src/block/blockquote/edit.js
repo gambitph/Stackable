@@ -135,6 +135,7 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 					title={ __( 'Container Background', i18n ) }
 					id="column-background"
 					initialOpen={ false }
+					className="ugb--help-tip-column-background-on-off"
 				>
 					<BackgroundControlsHelper
 						attrNameTemplate="container%s"

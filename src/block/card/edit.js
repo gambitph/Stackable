@@ -169,6 +169,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					title={ __( 'Column Background', i18n ) }
 					id="column-background"
 					initialOpen={ false }
+					className="ugb--help-tip-column-background-on-off"
 				>
 					<BackgroundControlsHelper
 						attrNameTemplate="column%s"
