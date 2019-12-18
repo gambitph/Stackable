@@ -142,7 +142,7 @@ class HelpToolTipVideo extends Component {
 		} )
 
 		// If there are other popovers open, most likely we came from there, focus on those so that the auto-close when focus outside would work.
-		const currentPopover = document.querySelector( '.components-popover' )
+		const currentPopover = document.querySelector( '.components-popover .components-popover__content' )
 		if ( currentPopover ) {
 			currentPopover.focus()
 		}
