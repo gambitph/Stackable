@@ -65,7 +65,7 @@ const openPanel = panelEl => {
 	scrollPanelIntoView( panelEl )
 }
 
-const scrollPanelIntoView = panelEl => {
+export const scrollPanelIntoView = panelEl => {
 	const tabs = document.querySelector( '.ugb-panel-tabs' )
 	const sidebarHeader = document.querySelector( '.edit-post-sidebar-header' )
 	const sidebar = document.querySelector( '.edit-post-sidebar' )

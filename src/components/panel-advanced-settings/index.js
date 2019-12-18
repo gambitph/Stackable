@@ -4,8 +4,12 @@
 /**
  * WordPress dependencies
  */
+import {
+	Component,
+	Fragment,
+	createRef,
+} from '@wordpress/element'
 import { addFilter, removeFilter } from '@wordpress/hooks'
-import { Component, Fragment } from '@wordpress/element'
 import { FormToggle, PanelBody } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 
@@ -14,6 +18,7 @@ import { __ } from '@wordpress/i18n'
  */
 import classnames from 'classnames'
 import { i18n } from 'stackable'
+import { scrollPanelIntoView } from '~stackable/higher-order/with-click-open-inspector/listener'
 
 let instanceId = 1
 
@@ -27,6 +32,7 @@ class PanelAdvancedSettings extends Component {
 		this.onToggle = this.onToggle.bind( this )
 		this.onAdvancedToggle = this.onAdvancedToggle.bind( this )
 		this.instanceId = instanceId++
+		this.panelRef = createRef()
 	}
 
 	checkIfAttributeShouldToggleOn( attributes, blockProps ) {
@@ -75,6 +81,18 @@ class PanelAdvancedSettings extends Component {
 
 	onToggle() {
 		this.setState( { opened: ! this.state.opened } )
+
+		// If the Panel was opened, check whether it scrolled outside of our view. If it does, bring it in view.
+		if ( ! this.state.opened && this.panelRef.current ) {
+			const panelTitle = this.panelRef.current.querySelector( '.components-panel__body-title' )
+			const tabs = document.querySelector( '.ugb-panel-tabs' )
+			const sidebar = document.querySelector( '.edit-post-sidebar' )
+			if ( tabs && panelTitle.getBoundingClientRect().top < tabs.getBoundingClientRect().bottom ) {
+				scrollPanelIntoView( this.panelRef.current )
+			} else if ( sidebar && sidebar.getBoundingClientRect().bottom < panelTitle.getBoundingClientRect().top ) {
+				scrollPanelIntoView( this.panelRef.current )
+			}
+		}
 	}
 
 	onAdvancedToggle() {
@@ -96,6 +114,7 @@ class PanelAdvancedSettings extends Component {
 				initialOpen={ this.props.initialOpen }
 				onToggle={ this.onToggle }
 				opened={ this.state.opened }
+				ref={ this.panelRef }
 				title={
 					<Fragment>
 						{ this.props.hasToggle && this.props.toggleAttributeName && (
