@@ -55,7 +55,6 @@ import { showOptions } from './util'
 import { RichText } from '@wordpress/block-editor'
 import {
 	PanelBody,
-	RangeControl,
 	SelectControl,
 	withFocusOutside,
 } from '@wordpress/components'
@@ -131,12 +130,13 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 		<Fragment>
 			{ output }
 			<PanelBody title={ __( 'General', i18n ) }>
-				<RangeControl
+				<AdvancedRangeControl
 					label={ __( 'Columns', i18n ) }
 					value={ columns }
 					onChange={ columns => setAttributes( { columns } ) }
 					min={ 1 }
 					max={ 4 }
+					className="ugb--help-tip-general-columns"
 				/>
 				{ /**
 				* The "height" option is really the "columnHeight" option. @see edit.js
@@ -153,6 +153,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 						max="700"
 						allowReset={ true }
 						placeholder="350"
+						className="ugb--help-tip-image-box-height"
 					/>
 				</ResponsiveControl>
 				{ show.borderRadius &&
@@ -164,6 +165,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 						max={ 50 }
 						allowReset={ true }
 						placeholder="12"
+						className="ugb--help-tip-general-border-radius"
 					/>
 				}
 				{ show.shadow &&
@@ -175,6 +177,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 						max={ 9 }
 						allowReset={ true }
 						placeholder="3"
+						className="ugb--help-tip-general-shadow"
 					/>
 				}
 				<ResponsiveControl
@@ -185,6 +188,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					<AdvancedToolbarControl
 						label={ __( 'Content Vertical Align', i18n ) }
 						controls="flex-vertical"
+						className="ugb--help-tip-advanced-column-content-vertical-align"
 					/>
 				</ResponsiveControl>
 				<ContentAlignControl
@@ -223,6 +227,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					'overlayOpacity',
 				] }
 				toggleAttributeName="showOverlay"
+				className="ugb--help-tip-image-box-overlay"
 			>
 				<BackgroundControlsHelper
 					attrNameTemplate="overlay%s"
@@ -243,6 +248,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					step={ 0.1 }
 					allowReset={ true }
 					placeholder="0.7"
+					className="ugb--help-tip-background-color-opacity"
 				/>
 			</PanelAdvancedSettings>
 
@@ -255,6 +261,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					'overlayHoverOpacity',
 				] }
 				toggleAttributeName="showOverlayHover"
+				className="ugb--help-tip-image-box-overlay-hover"
 			>
 				<BackgroundControlsHelper
 					attrNameTemplate="overlayHover%s"
@@ -275,6 +282,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					step={ 0.1 }
 					allowReset={ true }
 					placeholder="0.7"
+					className="ugb--help-tip-background-color-opacity"
 				/>
 			</PanelAdvancedSettings>
 
@@ -291,6 +299,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					] ) }
 					value={ imageHoverEffect }
 					onChange={ imageHoverEffect => setAttributes( { imageHoverEffect } ) }
+					className="ugb--help-tip-image-box-hover-effect"
 				/>
 				{ applyFilters( 'stackable.image-box.edit.panel.image-hover-effects', null, props ) }
 				{ showProNotice && <ProControlButton type="effect" /> }
@@ -345,7 +354,10 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-image-box-subtitle-align"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
@@ -381,7 +393,10 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-image-box-title-align"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
@@ -412,7 +427,10 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-image-box-description-align"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
@@ -450,7 +468,10 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-image-box-arrow-align"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
@@ -466,6 +487,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-image-box-subtitle-spacing"
 						/>
 					</ResponsiveControl>
 				) }
@@ -480,6 +502,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-image-box-title-spacing"
 						/>
 					</ResponsiveControl>
 				) }
@@ -494,6 +517,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-image-box-line-spacing"
 						/>
 					</ResponsiveControl>
 				) }
@@ -508,6 +532,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-image-box-description-spacing"
 						/>
 					</ResponsiveControl>
 				) }
@@ -522,6 +547,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-image-box-arrow-spacing"
 						/>
 					</ResponsiveControl>
 				) }

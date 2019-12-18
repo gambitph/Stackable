@@ -109,6 +109,7 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 						max={ 50 }
 						allowReset={ true }
 						placeholder="12"
+						className="ugb--help-tip-general-border-radius"
 					/>
 				}
 				{ show.shadow &&
@@ -120,6 +121,7 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 						max={ 9 }
 						allowReset={ true }
 						placeholder="3"
+						className="ugb--help-tip-general-shadow"
 					/>
 				}
 				<ContentAlignControl
@@ -251,7 +253,10 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-alignment-description"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 		</Fragment>

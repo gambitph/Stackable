@@ -49,9 +49,7 @@ import {
 } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { i18n, showProNotice } from 'stackable'
-import {
-	PanelBody, RangeControl,
-} from '@wordpress/components'
+import { PanelBody } from '@wordpress/components'
 import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
@@ -109,12 +107,13 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 		<Fragment>
 			{ output }
 			<PanelBody title={ __( 'General', i18n ) }>
-				<RangeControl
+				<AdvancedRangeControl
 					label={ __( 'Columns', i18n ) }
 					value={ columns }
 					onChange={ columns => setAttributes( { columns } ) }
 					min={ 1 }
 					max={ 4 }
+					className="ugb--help-tip-general-columns"
 				/>
 				{ show.columnBackground &&
 					<AdvancedRangeControl
@@ -125,6 +124,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 						max={ 50 }
 						allowReset={ true }
 						placeholder="12"
+						className="ugb--help-tip-general-border-radius"
 					/>
 				}
 				{ show.columnBackground &&
@@ -136,6 +136,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 						max={ 9 }
 						allowReset={ true }
 						placeholder="3"
+						className="ugb--help-tip-general-shadow"
 					/>
 				}
 				<ContentAlignControl
@@ -207,7 +208,10 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-alignment-icon"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
@@ -243,7 +247,10 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-alignment-title"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
@@ -277,7 +284,10 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-alignment-description"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
@@ -308,7 +318,10 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-alignment-description"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
@@ -324,6 +337,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-spacing-icon"
 						/>
 					</ResponsiveControl>
 				) }
@@ -338,6 +352,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-spacing-title"
 						/>
 					</ResponsiveControl>
 				) }
@@ -352,6 +367,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-spacing-description"
 						/>
 					</ResponsiveControl>
 				) }
@@ -366,6 +382,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-spacing-description"
 						/>
 					</ResponsiveControl>
 				) }

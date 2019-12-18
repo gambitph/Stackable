@@ -1,12 +1,14 @@
 /**
  * This is the file that Webpack is compiling into editor_blocks.js
  */
+
 /**
  * Internal dependencies
  */
 import './fontawesome'
 import './format-types'
 import './plugins'
+import './help'
 
 /**
  * External dependencies

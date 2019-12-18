@@ -99,6 +99,7 @@ addFilter( 'stackable.divider.edit.inspector.style.before', 'stackable/divider',
 					onChange={ ( { top, bottom } ) => setAttributes( { hrMarginTop: top, hrMarginBottom: bottom } ) }
 					enableLeft={ false }
 					enableRight={ false }
+					className="ugb--help-tip-divider-margin"
 				/>
 				<AdvancedRangeControl
 					label={ __( 'Height', i18n ) + ' / ' + __( 'Size', i18n ) }

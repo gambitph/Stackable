@@ -29,11 +29,11 @@ function DesignControl( props ) {
 	} )
 
 	return (
-		<div className="ugb-design-control-wrapper components-base-control">
+		<div className={ classnames( className, 'ugb-design-control-wrapper components-base-control' ) }>
 			<div className="components-base-control__label">{ props.label }</div>
 			<RadioControl
 				{ ...omit( props, [ 'label' ] ) }
-				className={ classnames( className, 'ugb-design-control' ) }
+				className="ugb-design-control"
 				selected={ selected }
 				options={ fixedOptions }
 				onChange={ onChange }

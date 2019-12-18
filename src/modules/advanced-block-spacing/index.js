@@ -6,6 +6,7 @@ import {
 	AdvancedToolbarControl,
 	FourRangeControl,
 	WhenResponsiveScreen,
+	PanelAdvancedSettings,
 } from '~stackable/components'
 import {
 	__getValue,
@@ -20,7 +21,6 @@ import {
 	addFilter, applyFilters, doAction, removeFilter,
 } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
-import { PanelBody } from '@wordpress/components'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
@@ -109,9 +109,10 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody
+			<PanelAdvancedSettings
 				title={ __( 'Block Spacing', i18n ) }
 				initialOpen={ false }
+				className="ugb--help-tip-advanced-block-spacing"
 			>
 				{ applyFilters( `stackable.${ blockName }.edit.advanced.block-spacing.before`, null, props ) }
 
@@ -143,6 +144,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							enableBottom={ options.enableMarginBottom }
 							enableLeft={ align !== 'full' && options.enableMarginLeft }
 							initialPosition="0"
+							className="ugb--help-tip-advanced-block-margins"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
@@ -172,6 +174,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							enableBottom={ options.enableMarginBottom }
 							enableLeft={ align !== 'full' && options.enableMarginLeft }
 							initialPosition="0"
+							className="ugb--help-tip-advanced-block-margins"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
@@ -201,6 +204,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							enableBottom={ options.enableMarginBottom }
 							enableLeft={ align !== 'full' && options.enableMarginLeft }
 							initialPosition="0"
+							className="ugb--help-tip-advanced-block-margins"
 						/>
 					</WhenResponsiveScreen>
 				</Fragment> }
@@ -232,6 +236,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							enableBottom={ options.enablePaddingBottom }
 							enableLeft={ options.enablePaddingLeft }
 							initialPosition="10"
+							className="ugb--help-tip-advanced-block-paddings"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
@@ -260,6 +265,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							enableRight={ options.enablePaddingRight }
 							enableBottom={ options.enablePaddingBottom }
 							enableLeft={ options.enablePaddingLeft }
+							className="ugb--help-tip-advanced-block-paddings"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
@@ -288,6 +294,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							enableRight={ options.enablePaddingRight }
 							enableBottom={ options.enablePaddingBottom }
 							enableLeft={ options.enablePaddingLeft }
+							className="ugb--help-tip-advanced-block-paddings"
 						/>
 					</WhenResponsiveScreen>
 				</Fragment> }
@@ -306,6 +313,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							onChange={ blockHeight => setAttributes( { blockHeight } ) }
 							onChangeUnit={ blockHeightUnit => setAttributes( { blockHeightUnit } ) }
 							initialPosition="100"
+							className="ugb--help-tip-advanced-block-height"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
@@ -320,6 +328,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ tabletBlockHeightUnit }
 							onChange={ tabletBlockHeight => setAttributes( { tabletBlockHeight } ) }
 							onChangeUnit={ tabletBlockHeightUnit => setAttributes( { tabletBlockHeightUnit } ) }
+							className="ugb--help-tip-advanced-block-height"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
@@ -334,6 +343,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ mobileBlockHeightUnit }
 							onChange={ mobileBlockHeight => setAttributes( { mobileBlockHeight } ) }
 							onChangeUnit={ mobileBlockHeightUnit => setAttributes( { mobileBlockHeightUnit } ) }
+							className="ugb--help-tip-advanced-block-height"
 						/>
 					</WhenResponsiveScreen>
 				</Fragment> }
@@ -347,6 +357,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 									controls="flex-vertical"
 									value={ blockVerticalAlign }
 									onChange={ value => setAttributes( { blockVerticalAlign: blockVerticalAlign !== value ? value : '' } ) }
+									className="ugb--help-tip-advanced-block-vertical-align"
 								/>
 							</WhenResponsiveScreen>
 						}
@@ -357,6 +368,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 									controls="flex-vertical"
 									value={ tabletBlockVerticalAlign }
 									onChange={ value => setAttributes( { tabletBlockVerticalAlign: tabletBlockVerticalAlign !== value ? value : '' } ) }
+									className="ugb--help-tip-advanced-block-vertical-align"
 								/>
 							</WhenResponsiveScreen>
 						}
@@ -367,6 +379,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 									controls="flex-vertical"
 									value={ mobileBlockVerticalAlign }
 									onChange={ value => setAttributes( { mobileBlockVerticalAlign: mobileBlockVerticalAlign !== value ? value : '' } ) }
+									className="ugb--help-tip-advanced-block-vertical-align"
 								/>
 							</WhenResponsiveScreen>
 						}
@@ -387,6 +400,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							onChange={ blockWidth => setAttributes( { blockWidth } ) }
 							onChangeUnit={ blockWidthUnit => setAttributes( { blockWidthUnit } ) }
 							initialPosition="2000"
+							className="ugb--help-tip-advanced-block-content-width"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
@@ -401,6 +415,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ tabletBlockWidthUnit }
 							onChange={ tabletBlockWidth => setAttributes( { tabletBlockWidth } ) }
 							onChangeUnit={ tabletBlockWidthUnit => setAttributes( { tabletBlockWidthUnit } ) }
+							className="ugb--help-tip-advanced-block-content-width"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
@@ -415,6 +430,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ mobileBlockWidthUnit }
 							onChange={ mobileBlockWidth => setAttributes( { mobileBlockWidth } ) }
 							onChangeUnit={ mobileBlockWidthUnit => setAttributes( { mobileBlockWidthUnit } ) }
+							className="ugb--help-tip-advanced-block-content-width"
 						/>
 					</WhenResponsiveScreen>
 				</Fragment> }
@@ -428,6 +444,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 									controls="flex-horizontal"
 									value={ blockHorizontalAlign }
 									onChange={ value => setAttributes( { blockHorizontalAlign: blockHorizontalAlign !== value ? value : '' } ) }
+									className="ugb--help-tip-advanced-block-horizontal-align"
 								/>
 							</WhenResponsiveScreen>
 						}
@@ -438,6 +455,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 									controls="flex-horizontal"
 									value={ tabletBlockHorizontalAlign }
 									onChange={ value => setAttributes( { tabletBlockHorizontalAlign: tabletBlockHorizontalAlign !== value ? value : '' } ) }
+									className="ugb--help-tip-advanced-block-horizontal-align"
 								/>
 							</WhenResponsiveScreen>
 						}
@@ -448,6 +466,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 									controls="flex-horizontal"
 									value={ mobileBlockHorizontalAlign }
 									onChange={ value => setAttributes( { mobileBlockHorizontalAlign: mobileBlockHorizontalAlign !== value ? value : '' } ) }
+									className="ugb--help-tip-advanced-block-horizontal-align"
 								/>
 							</WhenResponsiveScreen>
 						}
@@ -455,7 +474,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 				}
 
 				{ applyFilters( `stackable.${ blockName }.edit.advanced.block-spacing.after`, null, props ) }
-			</PanelBody>
+			</PanelAdvancedSettings>
 		</Fragment>
 	)
 }

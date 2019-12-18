@@ -103,6 +103,7 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 			'disabledBlocks' => stackable_get_disabled_blocks(),
 			'nonce' => wp_create_nonce( 'stackable' ),
 			'devMode' => defined( 'WP_ENV' ) ? WP_ENV === 'development' : false,
+			'cdnUrl' => STACKABLE_CLOUDFRONT_URL,
 
 			// Fonts.
 			'locale' => get_locale(),

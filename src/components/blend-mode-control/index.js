@@ -7,14 +7,23 @@ import { __ } from '@wordpress/i18n'
  * External dependencies
  */
 import { i18n } from 'stackable'
+import classnames from 'classnames'
 import { SelectControl } from '@wordpress/components'
 
 const BlendModeControl = props => {
+	const hasHelpTip = props.className.match( /ugb--help-tip/ )
+	const mainClasses = classnames( [
+		props.className,
+	], {
+		'ugb--help-tip-background-blend-mode': ! hasHelpTip,
+	} )
+
 	return (
 		<SelectControl
 			label={ props.label }
 			value={ props.value }
 			help={ props.help }
+			className={ mainClasses }
 			options={ [
 				{ value: '', label: __( 'None', i18n ) },
 				{ value: 'normal', label: __( 'Normal', i18n ) },
@@ -43,6 +52,7 @@ const BlendModeControl = props => {
 }
 
 BlendModeControl.defaultProps = {
+	className: '',
 	onChange: () => {},
 	value: '',
 	label: __( 'Mix Blend Mode', i18n ),

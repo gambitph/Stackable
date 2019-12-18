@@ -152,6 +152,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 						max={ 50 }
 						allowReset={ true }
 						placeholder="12"
+						className="ugb--help-tip-general-border-radius"
 					/>
 				}
 				{ show.shadow &&
@@ -163,6 +164,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 						max={ 9 }
 						allowReset={ true }
 						placeholder="3"
+						className="ugb--help-tip-general-shadow"
 					/>
 				}
 				<ContentAlignControl
@@ -217,6 +219,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 					'dismissibleIconColor',
 				] }
 				toggleAttributeName="dismissible"
+				className="ugb--help-tip-notification-dismissible"
 			>
 				<ResponsiveControl
 					attrNameTemplate="dismissibleIcon%sSize"
@@ -320,7 +323,10 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 						setAttributes={ setAttributes }
 						blockAttributes={ props.attributes }
 					>
-						<AlignButtonsControl label={ __( 'Align', i18n ) } />
+						<AlignButtonsControl
+							label={ __( 'Align', i18n ) }
+							className="ugb--help-tip-alignment-icon"
+						/>
 					</ResponsiveControl>
 				}
 			</PanelAdvancedSettings>
@@ -357,7 +363,10 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-alignment-title"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
@@ -388,7 +397,10 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-alignment-description"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
@@ -414,7 +426,10 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-alignment-button"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
@@ -434,6 +449,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 								min={ -50 }
 								max={ 100 }
 								allowReset={ true }
+								className="ugb--help-tip-spacing-icon"
 							/>
 						</ResponsiveControl>
 					}
@@ -448,6 +464,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 								min={ -50 }
 								max={ 100 }
 								allowReset={ true }
+								className="ugb--help-tip-spacing-title"
 							/>
 						</ResponsiveControl>
 					}
@@ -462,6 +479,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 								min={ -50 }
 								max={ 100 }
 								allowReset={ true }
+								className="ugb--help-tip-spacing-description"
 							/>
 						</ResponsiveControl>
 					}
@@ -476,6 +494,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 								min={ -50 }
 								max={ 100 }
 								allowReset={ true }
+								className="ugb--help-tip-spacing-button"
 							/>
 						</ResponsiveControl>
 					}

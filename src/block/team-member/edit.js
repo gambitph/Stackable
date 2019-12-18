@@ -59,7 +59,6 @@ import { showOptions } from './util'
  */
 import {
 	PanelBody,
-	RangeControl,
 	ToggleControl,
 } from '@wordpress/components'
 import {
@@ -125,12 +124,13 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 		<Fragment>
 			{ output }
 			<PanelBody title={ __( 'General', i18n ) }>
-				<RangeControl
+				<AdvancedRangeControl
 					label={ __( 'Columns', i18n ) }
 					value={ columns }
 					onChange={ columns => setAttributes( { columns } ) }
 					min={ 1 }
 					max={ 3 }
+					className="ugb--help-tip-general-columns"
 				/>
 				{ show.borderRadius &&
 					<AdvancedRangeControl
@@ -141,6 +141,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 						max={ 50 }
 						allowReset={ true }
 						placeholder="12"
+						className="ugb--help-tip-general-border-radius"
 					/>
 				}
 				{ show.shadow &&
@@ -152,6 +153,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 						max={ 9 }
 						allowReset={ true }
 						placeholder="3"
+						className="ugb--help-tip-general-shadow"
 					/>
 				}
 				<ContentAlignControl
@@ -222,7 +224,10 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 							setAttributes={ setAttributes }
 							blockAttributes={ props.attributes }
 						>
-							<AlignButtonsControl label={ __( 'Align', i18n ) } />
+							<AlignButtonsControl
+								label={ __( 'Align', i18n ) }
+								className="ugb--help-tip-alignment-image"
+							/>
 						</ResponsiveControl>
 					</Fragment>
 				}
@@ -253,6 +258,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 									min={ 150 }
 									max={ 800 }
 									allowReset={ true }
+									className="ugb--help-tip-image-height-crop"
 								/>
 							</ResponsiveControl>
 						}
@@ -268,6 +274,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 									max={ 90 }
 									allowReset={ true }
 									placeholder="50"
+									className="ugb--help-tip-image-width-crop"
 								/>
 							</ResponsiveControl>
 						}
@@ -307,7 +314,10 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-alignment-name"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
@@ -338,7 +348,10 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-alignment-name"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
@@ -369,7 +382,10 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-alignment-description"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
@@ -411,7 +427,10 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 						setAttributes={ setAttributes }
 						blockAttributes={ props.attributes }
 					>
-						<AlignButtonsControl label={ __( 'Align', i18n ) } />
+						<AlignButtonsControl
+							label={ __( 'Align', i18n ) }
+							className="ugb--help-tip-alignment-button"
+						/>
 					</ResponsiveControl>
 				</PanelAdvancedSettings>
 			}
@@ -431,6 +450,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-spacing-image"
 						/>
 					</ResponsiveControl>
 				}
@@ -445,6 +465,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-spacing-name"
 						/>
 					</ResponsiveControl>
 				}
@@ -459,6 +480,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-spacing-name"
 						/>
 					</ResponsiveControl>
 				}
@@ -473,6 +495,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-spacing-description"
 						/>
 					</ResponsiveControl>
 				}
@@ -487,6 +510,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-spacing-button"
 						/>
 					</ResponsiveControl>
 				}
@@ -501,6 +525,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 							min={ -20 }
 							max={ 30 }
 							allowReset={ true }
+							className="ugb--help-tip-spacing-button-gap"
 						/>
 					</ResponsiveControl>
 				}
