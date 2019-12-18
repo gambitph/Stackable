@@ -118,7 +118,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 			$item_classes[] = 'ugb--shadow-' . $attributes['shadow'];
 		}
 		// Add background gradient class.
-		if ( $show['showBackgroundInItem'] && 
+		if ( $show['showBackgroundInItem'] &&
 			( $attributes['columnBackgroundColorType'] === 'gradient' ||
 			  $attributes['columnBackgroundMediaUrl' ] ||
 			  $attributes['columnTabletBackgroundMediaUrl' ] ||
@@ -129,7 +129,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 
 		$content_classes = array( 'ugb-blog-posts__content' );
 		// Add background gradient class.
-		if ( $show['showBackgroundInContent'] && 
+		if ( $show['showBackgroundInContent'] &&
 			( $attributes['columnBackgroundColorType'] === 'gradient' ||
 			  $attributes['columnBackgroundMediaUrl' ] ||
 			  $attributes['columnTabletBackgroundMediaUrl' ] ||
