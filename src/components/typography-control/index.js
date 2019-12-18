@@ -27,7 +27,7 @@ const TypographyControl = props => {
 					props.lineHeight || props.tabletLineHeight || props.mobileLineHeight ||
 					props.letterSpacing
 				}
-				className="ugb--help-tip-typography-family"
+				className="ugb--help-tip-typography"
 			>
 				{ props.onChangeFontFamily && (
 					<FontFamilyControl

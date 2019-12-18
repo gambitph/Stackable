@@ -205,6 +205,11 @@ const VIDEOS = {
 		title: __( 'Shadow (of image)', i18n ),
 		description: __( 'Adjusts the intensity of the image shadow', i18n ),
 	},
+	typography: {
+		video: typographyFamily,
+		title: __( 'Typography', i18n ),
+		description: __( 'Change the font family, size, weight and spacing of the font of this text', i18n ),
+	},
 	typographyFamily: {
 		video: typographyFamily,
 		title: __( 'Font family', i18n ),
