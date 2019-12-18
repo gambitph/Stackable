@@ -38,6 +38,7 @@ import buttonBorderRadius from './videos/button-border-radius.mp4'
 import buttonColorType from './videos/button-color-type.mp4'
 import buttonToNormal from './videos/button-to-normal.mp4'
 import buttonCollapse from './videos/button-collapse.mp4'
+import spacing from './videos/spacing.mp4'
 import spacingImage from './videos/spacing-image.mp4'
 import spacingTitle from './videos/spacing-title.mp4'
 import spacingDescription from './videos/spacing-description.mp4'
@@ -334,6 +335,11 @@ const VIDEOS = {
 		video: buttonCollapse,
 		title: __( 'Collapse buttons on', i18n ),
 		description: __( 'Sets when buttons will be triggered to arrange vertically', i18n ),
+	},
+	spacing: {
+		video: spacing,
+		title: __( 'Spacing', i18n ),
+		description: __( 'Adjusts the space between block elements', i18n ),
 	},
 	spacingImage: {
 		video: spacingImage,
