@@ -39,6 +39,8 @@ import buttonColorType from './videos/button-color-type.mp4'
 import buttonToNormal from './videos/button-to-normal.mp4'
 import buttonCollapse from './videos/button-collapse.mp4'
 import spacing from './videos/spacing.mp4'
+import spacingBlockTitle from './videos/spacing-block-title.mp4'
+import spacingBlockDescription from './videos/spacing-block-description.mp4'
 import spacingImage from './videos/spacing-image.mp4'
 import spacingTitle from './videos/spacing-title.mp4'
 import spacingDescription from './videos/spacing-description.mp4'
@@ -340,6 +342,16 @@ const VIDEOS = {
 		video: spacing,
 		title: __( 'Spacing', i18n ),
 		description: __( 'Adjusts the space between block elements', i18n ),
+	},
+	spacingBlockTitle: {
+		video: spacingBlockTitle,
+		title: __( 'Block title spacing', i18n ),
+		description: __( 'Adjusts the space below the block title', i18n ),
+	},
+	spacingBlockDescription: {
+		video: spacingBlockDescription,
+		title: __( 'Block description spacing', i18n ),
+		description: __( 'Adjusts the space below the block description', i18n ),
 	},
 	spacingImage: {
 		video: spacingImage,

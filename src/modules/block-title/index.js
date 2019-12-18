@@ -259,6 +259,7 @@ const addTitleSpacing = ( output, props ) => {
 						min={ -50 }
 						max={ 100 }
 						allowReset={ true }
+						className="ugb--help-tip-spacing-block-title"
 					/>
 				</ResponsiveControl>
 			) }
@@ -273,6 +274,7 @@ const addTitleSpacing = ( output, props ) => {
 						min={ -50 }
 						max={ 100 }
 						allowReset={ true }
+						className="ugb--help-tip-spacing-block-description"
 					/>
 				</ResponsiveControl>
 			) }
