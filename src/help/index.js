@@ -105,6 +105,12 @@ class HelpToolTipVideo extends Component {
 	}
 
 	showHelp( el ) {
+		// If there's a currently focused element, blur it since closing the popover
+		// can trigger a scroll to the previously focused element that can confuse the user.
+		if ( document.activeElement ) {
+			document.activeElement.blur()
+		}
+
 		const scroll = document.querySelector( '.edit-post-sidebar' ).scrollTop
 		this.setState( {
 			target: el,
