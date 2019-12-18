@@ -426,7 +426,7 @@ if ( ! function_exists( 'stackable_featured_image_urls' ) ) {
      * @since 1.7
      */
     function stackable_featured_image_urls( $object, $field_name, $request ) {
-		return stackable_featured_image_urls_from_url( $object['featured_media'] );
+		return stackable_featured_image_urls_from_url( ! empty( $object['featured_media'] ) ? $object['featured_media'] : '' );
 	}
 }
 
