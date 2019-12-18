@@ -87,7 +87,7 @@ class ButtonIconPopoverControl extends Component {
 	 * @param {Event} ev Click event
 	 */
 	handleOnClickOutside( ev ) {
-		if ( ! ev.relatedTarget.closest( '.components-popover' ) && ev.relatedTarget !== this.buttonRef.current ) {
+		if ( ev.relatedTarget && ! ev.relatedTarget.closest( '.components-popover' ) && ev.relatedTarget !== this.buttonRef.current ) {
 			this.handleClose()
 		}
 	}
