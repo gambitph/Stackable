@@ -25,7 +25,8 @@ if ( ! function_exists( 'sugb_fs' ) ) {
 				'is_premium'          => true,
 				'has_premium_version' => true,
 	            'has_addons'          => false,
-	            'has_paid_plans'      => true,
+				'has_paid_plans'      => true,
+				'has_affiliation'     => 'selected',
 				'menu'                => array(
 					'slug'       => 'stackable',
 					'first-path' => 'admin.php?page=stackable',
