@@ -131,7 +131,7 @@ class ButtonIconPopoverControl extends Component {
 							focusOnMount="container"
 							onClose={ this.handleClose }
 							onFocusOutside={ this.handleOnClickOutside }
-							anchorRef={ this.buttonRef }
+							anchorRef={ this.buttonRef.current }
 						>
 							<PanelBody>
 								{ ( this.props.label || this.props.popoverLabel ) &&
