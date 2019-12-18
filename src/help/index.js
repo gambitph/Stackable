@@ -105,12 +105,19 @@ class HelpToolTipVideo extends Component {
 	}
 
 	showHelp( el ) {
+		const scroll = document.querySelector( '.edit-post-sidebar' ).scrollTop
 		this.setState( {
 			target: el,
 			controlEl: el.closest( '[class*="ugb--help-tip-"]' ),
 			helpId: getHelpId( el ),
 			show: true,
 		} )
+
+		// Sometimes, the scroll position might change (not sure what triggers it)
+		// Bring it back to old position.
+		if ( scroll !== document.querySelector( '.edit-post-sidebar' ).scrollTop ) {
+			document.querySelector( '.edit-post-sidebar' ).scrollTop = scroll
+		}
 	}
 
 	// Get the position on where to place the tooltip, but change the X & width to match the whole inspector area.
@@ -140,13 +147,13 @@ class HelpToolTipVideo extends Component {
 	 */
 	componentDidMount() {
 		// If hovered long enough on a control label, show the tooltip.
-		onHover( '[class*="ugb--help-tip-"] .components-base-control__label, [class*="ugb--help-tip-"] .components-toggle-control__label, [class*="ugb--help-tip-"] .components-panel__body-toggle',
+		onHover( '[class*="ugb--help-tip-"].components-base-control .components-base-control__label, [class*="ugb--help-tip-"].components-base-control .components-toggle-control__label, [class*="ugb--help-tip-"].components-panel__body .components-panel__body-toggle',
 			el => this.startHelpTimeout( el ),
 			() => this.stopHelpTimeout()
 		)
 
 		// When a control label is clicked, show the tooltip.
-		onClick( '[class*="ugb--help-tip-"] .components-base-control__label, [class*="ugb--help-tip-"] .components-toggle-control__label', el => {
+		onClick( '[class*="ugb--help-tip-"].components-base-control .components-base-control__label, [class*="ugb--help-tip-"].components-base-control .components-toggle-control__label', el => {
 			// Show the tooltip if nothing's shown yet.
 			if ( ! this.state.show ) {
 				return this.showHelp( el )

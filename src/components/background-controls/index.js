@@ -41,6 +41,7 @@ const BackgroundControls = props => {
 				<BaseControl
 					label={ props.labelBackgroundColorType }
 					id="ugb-background-color-type"
+					className="ugb--help-tip-background-color-type"
 				>
 					<TextToolbar
 						controls={ [
@@ -83,6 +84,7 @@ const BackgroundControls = props => {
 					step={ 0.1 }
 					allowReset={ true }
 					placeholder="1.0"
+					className="ugb--help-tip-background-color-opacity"
 				/>
 			) }
 
@@ -115,6 +117,7 @@ const BackgroundControls = props => {
 							step={ 10 }
 							allowReset={ true }
 							placeholder="90"
+							className="ugb--help-tip-gradient-direction"
 						/>
 					) }
 
@@ -128,6 +131,7 @@ const BackgroundControls = props => {
 							step={ 1 }
 							allowReset={ true }
 							placeholder="0"
+							className="ugb--help-tip-gradient-location"
 						/>
 					) }
 
@@ -141,6 +145,7 @@ const BackgroundControls = props => {
 							step={ 1 }
 							allowReset={ true }
 							placeholder="100"
+							className="ugb--help-tip-gradient-location"
 						/>
 					) }
 
@@ -149,6 +154,7 @@ const BackgroundControls = props => {
 							label={ __( 'Background Gradient Blend Mode', i18n ) }
 							value={ props.backgroundGradientBlendMode }
 							onChange={ props.onChangeBackgroundGradientBlendMode }
+							className="ugb--help-tip-background-blend-mode"
 						/>
 					) }
 				</ButtonIconPopoverControl>
@@ -319,6 +325,7 @@ const BackgroundControls = props => {
 							] }
 							value={ props.backgroundRepeat }
 							onChange={ props.onChangeBackgroundRepeat }
+							className="ugb--help-tip-background-image-repeat"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
@@ -333,6 +340,7 @@ const BackgroundControls = props => {
 							] }
 							value={ props.tabletBackgroundRepeat }
 							onChange={ props.onChangeTabletBackgroundRepeat }
+							className="ugb--help-tip-background-image-repeat"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
@@ -347,6 +355,7 @@ const BackgroundControls = props => {
 							] }
 							value={ props.mobileBackgroundRepeat }
 							onChange={ props.onChangeMobileBackgroundRepeat }
+							className="ugb--help-tip-background-image-repeat"
 						/>
 					</WhenResponsiveScreen>
 
@@ -362,6 +371,7 @@ const BackgroundControls = props => {
 							] }
 							value={ props.backgroundSize }
 							onChange={ props.onChangeBackgroundSize }
+							className="ugb--help-tip-background-image-size"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="tablet">
@@ -376,6 +386,7 @@ const BackgroundControls = props => {
 							] }
 							value={ props.tabletBackgroundSize }
 							onChange={ props.onChangeTabletBackgroundSize }
+							className="ugb--help-tip-background-image-size"
 						/>
 					</WhenResponsiveScreen>
 					<WhenResponsiveScreen screen="mobile">
@@ -390,6 +401,7 @@ const BackgroundControls = props => {
 							] }
 							value={ props.mobileBackgroundSize }
 							onChange={ props.onChangeMobileBackgroundSize }
+							className="ugb--help-tip-background-image-size"
 						/>
 					</WhenResponsiveScreen>
 
@@ -444,6 +456,7 @@ const BackgroundControls = props => {
 							label={ __( 'Image Blend Mode', i18n ) }
 							value={ props.backgroundImageBlendMode }
 							onChange={ props.onChangeBackgroundImageBlendMode }
+							className="ugb--help-tip-background-blend-mode"
 						/>
 					) }
 				</ButtonIconPopoverControl>

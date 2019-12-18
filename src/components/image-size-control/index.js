@@ -5,6 +5,7 @@ import {
 	isEmpty,
 	map,
 } from 'lodash'
+import classnames from 'classnames'
 
 /**
  * WordPress dependencies
@@ -28,10 +29,12 @@ const ImageSizeControl = props => {
 	return <SelectControl
 		{ ...props }
 		options={ imageSizeOptions }
+		className={ classnames( props.className, [ 'ugb--help-tip-image-size' ] ) }
 	/>
 }
 
 ImageSizeControl.defaultProps = {
+	className: '',
 	label: __( 'Image Size' ),
 	value: 'large',
 	onChange: () => {},

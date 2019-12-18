@@ -57,6 +57,7 @@ const ImageBackgroundControls = props => {
 							getImageUrlFromCache( props.id, size || 'full' ),
 						)
 					} }
+					className="ugb--help-tip-image-size"
 				/>
 			}
 
@@ -77,6 +78,7 @@ const ImageBackgroundControls = props => {
 					] }
 					value={ props.backgroundPosition }
 					onChange={ props.onChangeBackgroundPosition }
+					className="ugb--help-tip-background-image-position"
 				/>
 			}
 
@@ -92,6 +94,7 @@ const ImageBackgroundControls = props => {
 					] }
 					value={ props.backgroundRepeat }
 					onChange={ props.onChangeBackgroundRepeat }
+					className="ugb--help-tip-background-image-repeat"
 				/>
 			}
 
@@ -107,6 +110,7 @@ const ImageBackgroundControls = props => {
 					] }
 					value={ props.backgroundSize }
 					onChange={ props.onChangeBackgroundSize }
+					className="ugb--help-tip-background-image-size"
 				/>
 			}
 

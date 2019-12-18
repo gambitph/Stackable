@@ -1,6 +1,6 @@
 // Visible feedback that there's a tooltip for Inspector Controls.
-[class*="ugb--help-tip-"] .components-base-control__label,
-[class*="ugb--help-tip-"] .components-toggle-control__label {
+[class*="ugb--help-tip-"].components-base-control .components-base-control__label,
+[class*="ugb--help-tip-"].components-base-control .components-toggle-control__label {
 	cursor: help;
 	border-bottom: 1px solid transparent;
 	&:hover {
@@ -18,7 +18,7 @@
 }
 
 // Visible feedback that there's a tooltip for Panel titles.
-[class*="ugb--help-tip-"] .components-panel__body-toggle {
+[class*="ugb--help-tip-"].components-panel__body .components-panel__body-toggle {
 	cursor: pointer;
 	&::after {
 		content: "\f223";

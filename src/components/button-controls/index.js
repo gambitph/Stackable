@@ -121,6 +121,7 @@ const ButtonControls = props => {
 						{ value: 'large', label: __( 'Large', i18n ) },
 					] }
 					onChange={ props.onChangeSize }
+					className="ugb--help-tip-button-size"
 				/>
 			}
 
@@ -133,6 +134,7 @@ const ButtonControls = props => {
 					onChange={ props.onChangeBorderRadius }
 					allowReset={ true }
 					placeholder="4"
+					className="ugb--help-tip-button-border-radius"
 				/>
 			}
 
@@ -145,7 +147,7 @@ const ButtonControls = props => {
 					enableLeft={ false }
 					enableRight={ false }
 					placeholder={ [ 8, 8 ] }
-					className="ugb--help-tip-button-padding"
+					className="ugb--help-tip-button-vertical-padding"
 				/>
 			}
 			{ props.onChangePaddings && design !== 'link' && design !== 'plain' &&
@@ -158,7 +160,7 @@ const ButtonControls = props => {
 					enableBottom={ false }
 					max={ 100 }
 					placeholder={ [ 26, 26 ] }
-					className="ugb--help-tip-button-padding"
+					className="ugb--help-tip-button-horizontal-padding"
 				/>
 			}
 
@@ -183,6 +185,7 @@ const ButtonControls = props => {
 					max={ 9 }
 					allowReset={ true }
 					placeholder="0"
+					className="ugb--help-tip-button-shadow"
 				/>
 			}
 
@@ -202,6 +205,7 @@ const ButtonControls = props => {
 						<BaseControl
 							label={ __( 'Button Color Type', i18n ) }
 							id="button-color-type"
+							className="ugb--help-tip-button-color-type"
 						>
 							<TextToolbar
 								controls={ [
@@ -252,6 +256,7 @@ const ButtonControls = props => {
 							step={ 10 }
 							allowReset={ true }
 							placeholder="90"
+							className="ugb--help-tip-gradient-direction"
 						/>
 					) }
 
@@ -285,6 +290,7 @@ const ButtonControls = props => {
 					label={ __( 'Change to Normal Button on Hover', i18n ) }
 					checked={ props.hoverGhostToNormal }
 					onChange={ props.onChangeHoverGhostToNormal }
+					className="ugb--help-tip-button-to-normal"
 				/>
 			) }
 
@@ -301,11 +307,12 @@ const ButtonControls = props => {
 						{ value: 'scale-more', label: __( 'Scale More', i18n ) },
 						{ value: 'lift-scale-more', label: __( 'Lift & Scale More', i18n ) },
 					] }
+					className="ugb--help-tip-button-hover-effect"
 				/>
 			) }
 
 			{ props.onChangeOpacity && (
-				<RangeControl
+				<AdvancedRangeControl
 					label={ __( 'Hover Opacity', i18n ) }
 					value={ props.hoverOpacity }
 					onChange={ props.onChangeHoverOpacity }
@@ -313,6 +320,7 @@ const ButtonControls = props => {
 					max={ 1 }
 					step={ 0.1 }
 					allowReset={ true }
+					className="ugb--help-tip-button-hover-opacity"
 				/>
 			) }
 
@@ -326,6 +334,7 @@ const ButtonControls = props => {
 						props.hoverBackgroundGradientDirection ||
 						props.hoverTextColor
 					}
+					className="ugb--help-tip-button-hover-color"
 				>
 					{ props.onChangeHoverBackgroundColor && (
 						<ColorPaletteControl
@@ -336,6 +345,7 @@ const ButtonControls = props => {
 							}
 							value={ props.hoverBackgroundColor }
 							onChange={ props.onChangeHoverBackgroundColor }
+							className="ugb--help-tip-button-hover-color"
 						/>
 					) }
 					{ props.onChangeHoverBackgroundColor2 && ( ( design === 'ghost' && props.hoverGhostToNormal ) || ( props.backgroundColorType === 'gradient' && showGradient ) ) && (
@@ -355,6 +365,7 @@ const ButtonControls = props => {
 							step={ 10 }
 							allowReset={ true }
 							placeholder="90"
+							className="ugb--help-tip-gradient-direction"
 						/>
 					) }
 					{ props.onChangeHoverTextColor && ( ( design === 'ghost' && props.hoverGhostToNormal ) || showGradient ) && (

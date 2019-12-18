@@ -162,6 +162,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 						max={ 50 }
 						allowReset={ true }
 						placeholder="12"
+						className="ugb--help-tip-general-border-radius"
 					/>
 				}
 				<AdvancedRangeControl
@@ -172,6 +173,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 					max={ 9 }
 					allowReset={ true }
 					placeholder="3"
+					className="ugb--help-tip-general-shadow"
 				/>
 			</PanelAdvancedSettings>
 

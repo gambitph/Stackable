@@ -117,6 +117,7 @@ addFilter( 'stackable.button.edit.inspector.style.before', 'stackable/button', (
 					} }
 					allowReset={ true }
 					placeholder="12"
+					className="ugb--help-tip-button-border-radius"
 				/>
 				<ContentAlignControl
 					setAttributes={ setAttributes }
@@ -131,6 +132,7 @@ addFilter( 'stackable.button.edit.inspector.style.before', 'stackable/button', (
 						{ value: 'mobile', label: __( 'Mobile', i18n ) },
 					] }
 					onChange={ collapseOn => setAttributes( { collapseOn } ) }
+					className="ugb--help-tip-button-collapse"
 				/>
 			</PanelBody>
 			<PanelAdvancedSettings

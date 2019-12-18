@@ -99,7 +99,10 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-alignment-title"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
@@ -123,7 +126,10 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-alignment-description"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
@@ -147,7 +153,10 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-alignment-button"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
@@ -163,6 +172,7 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-spacing-title"
 						/>
 					</ResponsiveControl>
 				}
@@ -176,6 +186,7 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 						min={ -50 }
 						max={ 100 }
 						allowReset={ true }
+						className="ugb--help-tip-spacing-description"
 					/>
 				</ResponsiveControl>
 				<ResponsiveControl
@@ -188,6 +199,7 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 						min={ -50 }
 						max={ 100 }
 						allowReset={ true }
+						className="ugb--help-tip-spacing-button"
 					/>
 				</ResponsiveControl>
 			</PanelSpacingBody>

@@ -64,6 +64,7 @@ const addInspectorPanel = ( output, props ) => {
 				onChange={ showBlockBackground => setAttributes( { showBlockBackground } ) }
 				toggleOnSetAttributes={ createBackgroundAttributeNames( 'blockBackground%s' ) }
 				toggleAttributeName="showBlockBackground"
+				className="ugb--help-tip-background-on-off"
 			>
 				<BackgroundControlsHelper
 					attrNameTemplate="blockBackground%s"

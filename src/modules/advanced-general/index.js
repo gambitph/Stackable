@@ -74,6 +74,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							step={ 0.1 }
 							allowReset={ true }
 							placeholder="1.0"
+							className="ugb--help-tip-advanced-opacity"
 						/>
 					</ResponsiveControl>
 				}
@@ -90,6 +91,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							max={ 1000 }
 							allowReset={ true }
 							placeholder="1"
+							className="ugb--help-tip-advanced-zindex"
 						/>
 					</ResponsiveControl>
 				}

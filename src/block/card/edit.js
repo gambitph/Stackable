@@ -57,13 +57,10 @@ import { showOptions } from './util'
  * WordPress dependencies
  */
 import {
-	PanelBody,
-	RangeControl,
-} from '@wordpress/components'
-import {
 	__,
 } from '@wordpress/i18n'
 import { applyFilters, addFilter } from '@wordpress/hooks'
+import { PanelBody } from '@wordpress/components'
 import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
@@ -129,12 +126,13 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 		<Fragment>
 			{ output }
 			<PanelBody title={ __( 'General', i18n ) }>
-				<RangeControl
+				<AdvancedRangeControl
 					label={ __( 'Columns', i18n ) }
 					value={ columns }
 					onChange={ columns => setAttributes( { columns } ) }
 					min={ 1 }
 					max={ 3 }
+					className="ugb--help-tip-general-columns"
 				/>
 				{ show.borderRadius &&
 					<AdvancedRangeControl
@@ -145,6 +143,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 						max={ 50 }
 						allowReset={ true }
 						placeholder="12"
+						className="ugb--help-tip-general-border-radius"
 					/>
 				}
 				{ show.shadow &&
@@ -156,6 +155,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 						max={ 9 }
 						allowReset={ true }
 						placeholder="3"
+						className="ugb--help-tip-general-shadow"
 					/>
 				}
 				<ContentAlignControl
@@ -215,6 +215,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 							max={ 1000 }
 							allowReset={ true }
 							placeholder="300"
+							className="ugb--help-tip-image-height-crop"
 						/>
 					</ResponsiveControl>
 				}
@@ -233,6 +234,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 								onChange={ imageBackgroundWidth => setAttributes( { imageBackgroundWidth } ) }
 								onChangeUnit={ imageBackgroundWidthUnit => setAttributes( { imageBackgroundWidthUnit } ) }
 								placeholder="50"
+								className="ugb--help-tip-image-width-crop"
 							/>
 						</WhenResponsiveScreen>
 						<WhenResponsiveScreen screen="tablet">
@@ -248,6 +250,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 								onChange={ imageBackgroundTabletWidth => setAttributes( { imageBackgroundTabletWidth } ) }
 								onChangeUnit={ imageBackgroundTabletWidthUnit => setAttributes( { imageBackgroundTabletWidthUnit } ) }
 								placeholder="50"
+								className="ugb--help-tip-image-width-crop"
 							/>
 						</WhenResponsiveScreen>
 						<WhenResponsiveScreen screen="mobile">
@@ -263,6 +266,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 								onChange={ imageBackgroundMobileWidth => setAttributes( { imageBackgroundMobileWidth } ) }
 								onChangeUnit={ imageBackgroundMobileWidthUnit => setAttributes( { imageBackgroundMobileWidthUnit } ) }
 								placeholder="50"
+								className="ugb--help-tip-image-width-crop"
 							/>
 						</WhenResponsiveScreen>
 					</Fragment>
@@ -301,7 +305,10 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-alignment-title"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
@@ -332,7 +339,10 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-alignment-title"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
@@ -363,7 +373,10 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-alignment-description"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
@@ -392,7 +405,10 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-alignment-button"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
@@ -411,6 +427,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-spacing-image"
 						/>
 					</ResponsiveControl>
 				}
@@ -425,6 +442,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-spacing-title"
 						/>
 					</ResponsiveControl>
 				}
@@ -439,6 +457,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-spacing-title"
 						/>
 					</ResponsiveControl>
 				}
@@ -453,6 +472,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-spacing-description"
 						/>
 					</ResponsiveControl>
 				}
@@ -467,6 +487,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-spacing-button"
 						/>
 					</ResponsiveControl>
 				}

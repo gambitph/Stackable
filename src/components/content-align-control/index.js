@@ -8,6 +8,7 @@ import { AlignButtonsControl, ResponsiveControl } from '~stackable/components'
  */
 import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
+import classnames from 'classnames'
 
 const ContentAlignControl = props => {
 	return (
@@ -18,7 +19,7 @@ const ContentAlignControl = props => {
 		>
 			<AlignButtonsControl
 				label={ __( 'Align', i18n ) }
-				className={ props.className }
+				className={ classnames( [ props.className, 'ugb--help-tip-alignment-all' ] ) }
 			/>
 		</ResponsiveControl>
 	)

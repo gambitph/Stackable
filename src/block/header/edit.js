@@ -128,12 +128,14 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 					label={ __( 'Full Height', i18n ) }
 					checked={ fullHeight }
 					onChange={ fullHeight => setAttributes( { fullHeight } ) }
+					className="ugb--help-tip-full-height"
 				/>
 				{ show.restrictContent &&
 					<ToggleControl
 						label={ __( 'Restrict to Content Width', i18n ) }
 						checked={ restrictContentWidth }
 						onChange={ restrictContentWidth => setAttributes( { restrictContentWidth } ) }
+						className="ugb--help-tip-general-restrict-content"
 					/>
 				}
 				{ show.borderRadius &&
@@ -145,6 +147,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 						max={ 50 }
 						allowReset={ true }
 						placeholder="12"
+						className="ugb--help-tip-general-border-radius"
 					/>
 				}
 				{ show.columnBackground &&
@@ -156,6 +159,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 						max={ 9 }
 						allowReset={ true }
 						placeholder="3"
+						className="ugb--help-tip-general-shadow"
 					/>
 				}
 				<ContentAlignControl
@@ -198,6 +202,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 						step={ 0.1 }
 						allowReset={ true }
 						placeholder="1"
+						className="ugb--help-tip-background-color-opacity"
 					/>
 				</PanelAdvancedSettings>
 			}
@@ -234,7 +239,10 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-alignment-title"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
@@ -265,7 +273,10 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-alignment-title"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
@@ -294,6 +305,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
 						help={ __( 'This affects other buttons in this block', i18n ) }
+						className="ugb--help-tip-alignment-button"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -321,6 +333,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
 						help={ __( 'This affects other buttons in this block', i18n ) }
+						className="ugb--help-tip-alignment-button"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -337,6 +350,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-spacing-title"
 						/>
 					</ResponsiveControl>
 				) }
@@ -351,6 +365,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-spacing-title"
 						/>
 					</ResponsiveControl>
 				) }
@@ -365,6 +380,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-spacing-button"
 						/>
 					</ResponsiveControl>
 				) }
@@ -379,6 +395,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 							min={ 0 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-spacing-button-gap"
 						/>
 					</ResponsiveControl>
 				) }

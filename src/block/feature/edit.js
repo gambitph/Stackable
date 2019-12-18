@@ -127,6 +127,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 							max={ 100 }
 							allowReset={ true }
 							placeholder="50"
+							className="ugb--help-tip-image-column-width"
 						/>
 					</ResponsiveControl>
 				}
@@ -141,6 +142,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 							min={ 300 }
 							max={ 1000 }
 							allowReset={ true }
+							className="ugb--help-tip-feature-container-width"
 						/>
 					</ResponsiveControl>
 				}
@@ -155,6 +157,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 							min={ 0 }
 							max={ 300 }
 							allowReset={ true }
+							className="ugb--help-tip-feature-container-offset"
 						/>
 					</ResponsiveControl>
 				}
@@ -163,7 +166,6 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 						label={ __( 'Reverse Horizontally', i18n ) }
 						checked={ invert }
 						onChange={ invert => setAttributes( { invert } ) }
-						className="ugb--help-tip-general-shadows"
 					/>
 				}
 				{ show.borderRadius &&
@@ -175,6 +177,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 						max={ 50 }
 						allowReset={ true }
 						placeholder="12"
+						className="ugb--help-tip-general-border-radius"
 					/>
 				}
 				{ show.columnBackground &&
@@ -186,6 +189,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 						max={ 9 }
 						allowReset={ true }
 						placeholder="3"
+						className="ugb--help-tip-general-shadow"
 					/>
 				}
 				<ContentAlignControl
@@ -237,6 +241,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 								min={ 400 }
 								max={ 1000 }
 								allowReset={ true }
+								className="ugb--help-tip-image-height-crop"
 							/>
 						</ResponsiveControl>
 					</Fragment>
@@ -275,7 +280,10 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-alignment-title"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
@@ -306,7 +314,10 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
-					<AlignButtonsControl label={ __( 'Align', i18n ) } />
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-alignment-description"
+					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
@@ -334,6 +345,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 				>
 					<AlignButtonsControl
 						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-alignment-button"
 					/>
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
@@ -350,6 +362,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-spacing-title"
 						/>
 					</ResponsiveControl>
 				}
@@ -364,6 +377,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-spacing-description"
 						/>
 					</ResponsiveControl>
 				}
@@ -378,6 +392,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 							min={ -50 }
 							max={ 100 }
 							allowReset={ true }
+							className="ugb--help-tip-spacing-button"
 						/>
 					</ResponsiveControl>
 				}

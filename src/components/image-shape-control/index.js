@@ -12,6 +12,7 @@ import ImageShapeBlob1 from './images/blob1.png'
  */
 import { i18n, showProNotice } from 'stackable'
 import { DesignControl, ProControlButton } from '~stackable/components'
+import classnames from 'classnames'
 
 /**
  * WordPress dependencies
@@ -24,8 +25,8 @@ const ImageShapeControl = props => {
 	return (
 		<Fragment>
 			<DesignControl
-				className="ugb-image-shape-control"
 				{ ...props }
+				className={ classnames( props.className, [ 'ugb-image-shape-control', 'ugb--help-tip-image-shape' ] ) }
 				options={ [
 					{
 						label: __( 'Default', i18n ), value: '', image: ImageShapeDefault,
@@ -48,6 +49,7 @@ const ImageShapeControl = props => {
 }
 
 ImageShapeControl.defaultProps = {
+	className: '',
 	label: __( 'Shape', i18n ),
 	selected: '',
 }

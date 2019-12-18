@@ -19,6 +19,7 @@ import { Fragment } from '@wordpress/element'
  * External dependencies
  */
 import { i18n } from 'stackable'
+import classnames from 'classnames'
 
 // translators: first %s: The type of color (e.g. background color), second %s: the color name or value (e.g. red or #ff0000)
 const colorIndicatorAriaLabel = __( '(current %s: %s)', i18n )
@@ -29,6 +30,7 @@ const ColorPaletteControl = ( {
 	label,
 	onChange,
 	value,
+	className = '',
 } ) => {
 	const colorObject = getColorObjectByColorValue( colors, value )
 	const colorName = colorObject && colorObject.name
@@ -48,7 +50,7 @@ const ColorPaletteControl = ( {
 
 	return (
 		<BaseControl
-			className="editor-color-palette-control"
+			className={ classnames( [ className, 'editor-color-palette-control' ] ) }
 			id="editor-color-palette-control"
 			label={ labelElement }>
 			<ColorPalette

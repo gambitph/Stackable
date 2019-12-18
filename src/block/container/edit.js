@@ -166,6 +166,7 @@ addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/contain
 						label={ __( 'Restrict to Content Width', i18n ) }
 						checked={ restrictContentWidth }
 						onChange={ restrictContentWidth => setAttributes( { restrictContentWidth } ) }
+						className="ugb--help-tip-general-restrict-content"
 					/>
 				}
 				<ResponsiveControl
@@ -224,6 +225,7 @@ addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/contain
 						max={ 50 }
 						allowReset={ true }
 						placeholder="12"
+						className="ugb--help-tip-general-border-radius"
 					/>
 				}
 				{ show.columnBackground &&
@@ -235,6 +237,7 @@ addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/contain
 						max={ 9 }
 						allowReset={ true }
 						placeholder="3"
+						className="ugb--help-tip-general-shadow"
 					/>
 				}
 				<ContentAlignControl

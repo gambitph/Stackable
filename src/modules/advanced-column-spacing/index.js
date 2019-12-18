@@ -1,7 +1,10 @@
 /**
  * External dependencies
  */
-import { ProControl } from '~stackable/components'
+import {
+	ProControl,
+	PanelAdvancedSettings,
+} from '~stackable/components'
 import { createAllCombinationAttributes } from '~stackable/util'
 import { i18n, showProNotice } from 'stackable'
 
@@ -13,18 +16,18 @@ import {
 } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
-import { PanelBody } from '@wordpress/components'
 
 const fineGrainedProPanel = output => {
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody
+			<PanelAdvancedSettings
 				title={ __( 'Column Spacing & More', i18n ) }
 				initialOpen={ false }
+				className="ugb--help-tip-advanced-column-spacing"
 			>
 				{ <ProControl type="advanced" /> }
-			</PanelBody>
+			</PanelAdvancedSettings>
 		</Fragment>
 	)
 }
