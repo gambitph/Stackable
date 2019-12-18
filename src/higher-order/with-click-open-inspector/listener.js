@@ -101,7 +101,7 @@ const openTab = tabEl => {
 	}
 }
 
-const getBlockName = el => {
+export const getBlockName = el => {
 	const blockEl = el.closest( '[data-type]' )
 	if ( blockEl ) {
 		if ( ! blockEl.getAttribute( 'data-type' ).match( /^ugb\//i ) ) {
