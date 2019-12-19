@@ -878,6 +878,7 @@ export default compose(
 		[ '.ugb-blog-posts__excerpt', 'excerpt' ],
 		[ '.ugb-blog-posts__meta', 'meta' ],
 		[ '.ugb-blog-posts__readmore', 'readmore' ],
+		[ '.ugb-blog-posts--design-image-card .ugb-blog-posts__header', 'image' ],
 		[ '.ugb-blog-posts__item', 'column-background' ],
 	] ),
 	withSelect( ( select, props ) => {
