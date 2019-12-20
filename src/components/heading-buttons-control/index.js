@@ -12,11 +12,11 @@ import SVGH6 from './images/heading6.svg'
  * External dependencies
  */
 import { i18n } from 'stackable'
+import { AdvancedToolbarControl } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import { BaseControl, Toolbar } from '@wordpress/components'
 import {
 	__, _x, sprintf,
 } from '@wordpress/i18n'
@@ -55,38 +55,18 @@ const TAG_OPTIONS = [
 ]
 
 const HeadingButtonsControl = props => {
-	const {
-		label,
-		value,
-		onChange,
-	} = props
-
 	return (
-		<BaseControl
-			label={ label }
-			id="ugb-heading-buttons-control"
+		<AdvancedToolbarControl
+			{ ...props }
 			className="ugb-heading-buttons-control"
-		>
-			<Toolbar
-				className="ugb-toolbar-full-width"
-				controls={
-					TAG_OPTIONS.map( option => {
-						return {
-							...option,
-							onClick: () => onChange( value !== option.value ? option.value : '' ),
-							isActive: value === option.value,
-						}
-					} )
-				}
-			/>
-		</BaseControl>
+			controls={ TAG_OPTIONS }
+		/>
 	)
 }
 
 HeadingButtonsControl.defaultProps = {
 	label: sprintf( _x( '%s HTML Tag', 'component' ), __( 'Title', i18n ) ),
 	value: TAG_OPTIONS[ 0 ].value,
-	onChange: () => {},
 }
 
 export default HeadingButtonsControl

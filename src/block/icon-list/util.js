@@ -125,18 +125,11 @@ export const getIconSVGBase64 = ( icon, iconShape, iconColor ) => {
  *
  * @return {Array} An array of objects that can be used for the `controls` attribute of a Toolbar Component
  */
-export const getIconToolbarList = props => {
-	const {
-		isActive = () => {},
-		onChange = () => {},
-	} = props
-
+export const getIconToolbarList = () => {
 	return Object.keys( BLOCK_ICONS ).map( value => {
 		return {
 			...BLOCK_ICONS[ value ],
 			icon: getIconSVG( value ),
-			isActive: isActive( value ),
-			onClick: onChange( value ),
 		}
 	} )
 }
@@ -149,17 +142,12 @@ export const getIconToolbarList = props => {
  *
  * @return {Array} An array of objects that can be used for the `controls` attribute of a Toolbar Component
  */
-export const getIconShapeToolbarList = ( icon, props ) => {
-	const {
-		isActive = () => {},
-		onChange = () => {},
-	} = props
+export const getIconShapeToolbarList = icon => {
 	return [ '', 'circle', 'outline' ].map( value => {
 		return {
 			...BLOCK_ICONS[ icon ],
 			icon: getIconSVG( icon, value ),
-			isActive: isActive( value ),
-			onClick: onChange( value ),
+			value,
 		}
 	} )
 }

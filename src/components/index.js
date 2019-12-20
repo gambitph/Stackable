@@ -7,8 +7,6 @@ export {
 	default as SocialButtonEdit,
 	SocialButtonEditHelper,
 } from './social-button-edit'
-export { default as HorizontalAlignmentToolbar } from './horizontal-alignment-toolbar'
-export { default as VerticalAlignmentToolbar } from './vertical-alignment-toolbar'
 export { default as ImageUploadPlaceholder } from './image-upload-placeholder'
 export { default as URLInputControl } from './url-input-control'
 export { default as UrlInputPopover } from './url-input-popover'
@@ -73,8 +71,6 @@ export { default as HeadingButtonsControl } from './heading-buttons-control'
 export { default as AlignButtonsControl } from './align-buttons-control'
 export { default as BlockContainer } from './block-container'
 export { default as CodeTextarea } from './code-textarea'
-export { default as TextToolbar } from './text-toolbar'
-export { default as TextToolbarControl } from './text-toolbar-control'
 export { default as Separator } from './separator'
 export { default as Image } from './image'
 export { default as ConvertToContainerButton } from './convert-to-container-buttons'

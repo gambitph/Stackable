@@ -9,7 +9,7 @@ import {
 	DesignControl,
 	FourRangeControl,
 	IconControl,
-	TextToolbar,
+	AdvancedToolbarControl,
 	TypographyControlHelper,
 	URLInputControl,
 } from '~stackable/components'
@@ -207,21 +207,19 @@ const ButtonControls = props => {
 							id="button-color-type"
 							className="ugb--help-tip-button-color-type"
 						>
-							<TextToolbar
+							<AdvancedToolbarControl
 								controls={ [
 									{
 										value: '',
 										title: __( 'Single', i18n ),
-										isActive: props.backgroundColorType === '',
-										onClick: () => props.onChangeBackgroundColorType( '' ),
 									},
 									{
 										value: 'gradient',
 										title: __( 'Gradient', i18n ),
-										isActive: props.backgroundColorType === 'gradient',
-										onClick: () => props.onChangeBackgroundColorType( 'gradient' ),
 									},
 								] }
+								value={ props.backgroundColorType }
+								onChange={ props.onChangeBackgroundColorType }
 							/>
 						</BaseControl>
 					) }

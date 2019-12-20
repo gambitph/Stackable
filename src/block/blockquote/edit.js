@@ -23,6 +23,7 @@ import {
 	TypographyControlHelper,
 	AlignButtonsControl,
 	DivBackground,
+	AdvancedToolbarControl,
 } from '~stackable/components'
 import {
 	createResponsiveAttributeNames,
@@ -41,14 +42,10 @@ import {
 /**
  * WordPress dependencies
  */
-import {
-	BaseControl,
-	PanelBody,
-	Toolbar,
-} from '@wordpress/components'
+import { addFilter, applyFilters } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
 import { RichText } from '@wordpress/block-editor'
-import { addFilter, applyFilters } from '@wordpress/hooks'
+import { PanelBody } from '@wordpress/components'
 import { Fragment } from '@wordpress/element'
 import { i18n, showProNotice } from 'stackable'
 import { compose } from '@wordpress/compose'
@@ -159,25 +156,14 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 				] }
 				toggleAttributeName="showQuote"
 			>
-				<BaseControl
+				<AdvancedToolbarControl
 					label={ __( 'Icon', i18n ) }
-					id="ugb-icon-control"
-				>
-					<Toolbar
-						className="ugb-blockquote__inspector__icon"
-						icon={ QUOTE_ICONS[ quoteIcon ].icon }
-						controls={
-							Object.keys( QUOTE_ICONS ).map( key => {
-								const value = QUOTE_ICONS[ key ].value
-								return {
-									...QUOTE_ICONS[ key ],
-									onClick: () => setAttributes( { quoteIcon: value } ),
-									isActive: quoteIcon === value,
-								}
-							} )
-						}
-					/>
-				</BaseControl>
+					multiline={ true }
+					className="ugb-blockquote__inspector__icon"
+					controls={ Object.values( QUOTE_ICONS ) }
+					value={ quoteIcon }
+					onChange={ value => setAttributes( { quoteIcon: value } ) }
+				/>
 				<ColorPaletteControl
 					value={ quoteColor }
 					onChange={ quoteColor => setAttributes( { quoteColor } ) }

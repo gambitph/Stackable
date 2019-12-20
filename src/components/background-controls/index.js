@@ -8,7 +8,7 @@ import {
 	ButtonIconPopoverControl,
 	ColorPaletteControl,
 	ImageControl,
-	TextToolbar,
+	AdvancedToolbarControl,
 	WhenResponsiveScreen,
 	ControlSeparator,
 } from '~stackable/components'
@@ -43,21 +43,19 @@ const BackgroundControls = props => {
 					id="ugb-background-color-type"
 					className="ugb--help-tip-background-color-type"
 				>
-					<TextToolbar
+					<AdvancedToolbarControl
 						controls={ [
 							{
 								value: '',
 								title: __( 'Single', i18n ),
-								isActive: props.backgroundColorType === '',
-								onClick: () => props.onChangeBackgroundColorType( '' ),
 							},
 							{
 								value: 'gradient',
 								title: __( 'Gradient', i18n ),
-								isActive: props.backgroundColorType === 'gradient',
-								onClick: () => props.onChangeBackgroundColorType( 'gradient' ),
 							},
 						] }
+						value={ props.backgroundColorType }
+						onChange={ props.onChangeBackgroundColorType }
 					/>
 				</BaseControl>
 			) }

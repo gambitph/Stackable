@@ -1,20 +1,16 @@
 /**
- * Internal dependencies
- */
-import BaseControlMultiLabel from '../base-control-multi-label'
-
-/**
  * WordPress dependencies
  */
-import { BaseControl, Toolbar } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 
 /**
  * External dependencies
  */
 import { i18n } from 'stackable'
+import { AdvancedToolbarControl } from '~stackable/components'
+import { omit } from 'lodash'
+import classnames from 'classnames'
 
-// TODO: Change to AdvancedToolbarControl
 const ALIGN_OPTIONS = [
 	{
 		value: 'left',
@@ -40,50 +36,28 @@ const ALIGN_OPTIONS = [
 
 const AlignButtonsControl = props => {
 	const {
-		label,
-		help,
-		value,
-		onChange,
 		justified,
-		screens,
 		className,
 	} = props
 
 	return (
-		<BaseControl
-			className={ `ugb-align-buttons-control ${ className }` }
-			help={ help }
-		>
-			<BaseControlMultiLabel
-				label={ label }
-				screens={ screens }
-			/>
-			<Toolbar
-				className="ugb-toolbar-full-width"
-				controls={
-					ALIGN_OPTIONS.filter( option => {
-						return ! justified ? option.value !== 'justify' : true
-					} ).map( option => {
-						return {
-							...option,
-							onClick: () => onChange( value !== option.value ? option.value : '' ),
-							isActive: value === option.value,
-						}
-					} )
-				}
-			/>
-		</BaseControl>
+		<AdvancedToolbarControl
+			{ ...omit( props, [ 'justified' ] ) }
+			className={ classnames( [ className, 'ugb-align-buttons-control' ] ) }
+			controls={
+				ALIGN_OPTIONS.filter( option => {
+					return ! justified ? option.value !== 'justify' : true
+				} )
+			}
+		/>
 	)
 }
 
 AlignButtonsControl.defaultProps = {
 	className: '',
 	label: __( 'Align', i18n ),
-	help: '',
 	value: ALIGN_OPTIONS[ 0 ].value,
-	onChange: () => {},
 	justified: false,
-	screens: [ 'desktop' ],
 }
 
 export default AlignButtonsControl

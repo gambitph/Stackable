@@ -89,17 +89,11 @@ const CONTROLS = {
 }
 
 const AdvancedToolbarControl = props => {
-	let controls = typeof props.controls === 'string' ? CONTROLS[ props.controls ] : props.controls
+	const controls = typeof props.controls === 'string' ? CONTROLS[ props.controls ] : props.controls
 
-	// If no icon is given and a label is given, make the button a label.
-	controls = controls.map( button => {
-		if ( ! button.icon && button.label ) {
-			return {
-				...button,
-				icon: <span className="ugb-advanced-toolbar-control__text-button">{ button.label }</span>,
-			}
-		}
-		return button
+	const toolbarClasses = classnames( {
+		'ugb-toolbar--full-width': props.fullwidth,
+		'ugb-toolbar--multiline': props.multiline,
 	} )
 
 	return (
@@ -121,8 +115,12 @@ const AdvancedToolbarControl = props => {
 						...option,
 						onClick: () => props.onChange( option.value !== props.value ? option.value : '' ),
 						isActive: props.value === option.value,
+						extraProps: {
+							 ...( ! option.icon ? { children: <span className="ugb-advanced-toolbar-control__text-button">{ option.title }</span> } : {} ),
+						},
 					}
 				} ) }
+				className={ toolbarClasses }
 			/>
 		</BaseControl>
 	)
@@ -138,6 +136,8 @@ AdvancedToolbarControl.defaultProps = {
 	screens: [ 'desktop' ],
 	value: '',
 	controls: [],
+	multiline: false,
+	fullwidth: true,
 }
 
 export default AdvancedToolbarControl
