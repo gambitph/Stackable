@@ -415,8 +415,8 @@ const VIDEOS = {
 	},
 	backgroundColorType: {
 		video: backgroundColorType,
-		title: __( 'Background color type (single or gradient)', i18n ),
-		description: __( 'Sets the background color type to single or gradient', i18n ),
+		title: __( 'Color type', i18n ),
+		description: __( 'Sets the color to either a single color or a gradient', i18n ),
 	},
 	backgroundFixed: {
 		video: backgroundFixed,
