@@ -121,6 +121,10 @@ import imageBoxSubtitleAlign from './videos/image-box-subtitle-align.mp4'
 import imageBoxTitleAlign from './videos/image-box-title-align.mp4'
 import imageBoxDescriptionAlign from './videos/image-box-description-align.mp4'
 import imageBoxArrowAlign from './videos/image-box-arrow-align.mp4'
+import videoPopupWidth from './videos/video-popup-width.mp4'
+import videoPopupHeight from './videos/video-popup-height.mp4'
+import containerImageWidth from './videos/container-image-width.mp4'
+import containerImageHeight from './videos/container-image-height.mp4'
 
 /**
  * External dependencies
@@ -782,6 +786,26 @@ const VIDEOS = {
 		video: imageBoxArrowAlign,
 		title: __( 'Arrow Align', i18n ),
 		description: __( 'Adjusts the placement of the arrow to align left, center or right', i18n ),
+	},
+	videoPopupWidth: {
+		video: videoPopupWidth,
+		title: __( 'Video popup width', i18n ),
+		description: __( 'Adjusts the width of the video popup container', i18n ),
+	},
+	videoPopupHeight: {
+		video: videoPopupHeight,
+		title: __( 'Video popup height', i18n ),
+		description: __( 'Adjusts the height of the video popup container', i18n ),
+	},
+	containerImageWidth: {
+		video: containerImageWidth,
+		title: __( 'Image width', i18n ),
+		description: __( 'Adjusts the image width', i18n ),
+	},
+	containerImageHeight: {
+		video: containerImageHeight,
+		title: __( 'Image height', i18n ),
+		description: __( 'Adjusts the image height', i18n ),
 	},
 }
 

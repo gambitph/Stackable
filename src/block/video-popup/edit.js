@@ -116,6 +116,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 								max="2000"
 								allowReset={ true }
 								onChange={ width => props.setAttributes( { width } ) }
+								className="ugb--help-tip-video-popup-width"
 							/>
 						</WhenResponsiveScreen>
 						<WhenResponsiveScreen screen="tablet">
@@ -126,6 +127,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 								max="1000"
 								allowReset={ true }
 								onChange={ tabletWidth => props.setAttributes( { tabletWidth } ) }
+								className="ugb--help-tip-video-popup-width"
 							/>
 						</WhenResponsiveScreen>
 						<WhenResponsiveScreen screen="mobile">
@@ -136,6 +138,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 								max="700"
 								allowReset={ true }
 								onChange={ mobileWidth => props.setAttributes( { mobileWidth } ) }
+								className="ugb--help-tip-video-popup-width"
 							/>
 						</WhenResponsiveScreen>
 					</Fragment>
@@ -151,6 +154,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 						max={ 1000 }
 						allowReset={ true }
 						placeholder="400"
+						className="ugb--help-tip-video-popup-height"
 					/>
 				</ResponsiveControl>
 				{ show.borderRadius &&
