@@ -2,25 +2,19 @@
  * Internal dependencies
  */
 import VIDEOS from './videos'
+import HelpTooltip from './help-tooltip'
 
 /**
  * External dependencies
  */
 import {
-	i18n, srcUrl, cdnUrl,
+	srcUrl, cdnUrl,
 } from 'stackable'
 import { camelCase } from 'lodash'
 
 /**
  * WordPress dependencies
  */
-import {
-	PanelBody,
-	Popover,
-	Spinner,
-	Dashicon,
-} from '@wordpress/components'
-import { __ } from '@wordpress/i18n'
 import domReady from '@wordpress/dom-ready'
 import { Component, render } from '@wordpress/element'
 
@@ -111,19 +105,12 @@ class HelpToolTipVideo extends Component {
 			document.activeElement.blur()
 		}
 
-		const scroll = document.querySelector( '.edit-post-sidebar' ).scrollTop
 		this.setState( {
 			target: el,
 			controlEl: el.closest( '[class*="ugb--help-tip-"]' ),
 			helpId: getHelpId( el ),
 			show: true,
 		} )
-
-		// Sometimes, the scroll position might change (not sure what triggers it)
-		// Bring it back to old position.
-		if ( scroll !== document.querySelector( '.edit-post-sidebar' ).scrollTop ) {
-			document.querySelector( '.edit-post-sidebar' ).scrollTop = scroll
-		}
 	}
 
 	// Get the position on where to place the tooltip, but change the X & width to match the whole inspector area.
@@ -201,33 +188,19 @@ class HelpToolTipVideo extends Component {
 		} = VIDEOS[ this.state.helpId ]
 
 		return (
-			<Popover
-				title={ title || __( 'Help', i18n ) }
-				focusOnMount="container"
-				className="ugb-help-tooltip-video"
-				position="middle left"
+			<HelpTooltip
+				onClickClose={ this.hideHelp }
 				getAnchorRect={ this.calculateRect }
-			>
-				<PanelBody>
-					<button className="ugb-help-tooltip-video__remove" onClick={ this.hideHelp }><Dashicon icon="no" /></button>
-					<video width="600" autoPlay loop muted>
-						<source src={ videoUrl( video ) } type="video/mp4" />
-					</video>
-					<Spinner />
-					<div className="ugb-help-tooltip-video__description">
-						{ title && <h4>{ title }</h4> }
-						{ description }
-						{ learnMore &&
-							<div className="ugb-help-tooltip-video__link">
-								<a href={ learnMore } target="_learn">{ __( 'Learn more', i18n ) } <Dashicon icon="external" /></a>
-							</div>
-						}
-					</div>
-				</PanelBody>
-			</Popover>
+				title={ title }
+				description={ description }
+				videoUrl={ videoUrl( video ) }
+				learnMoreUrl={ learnMore }
+			/>
 		)
 	}
 }
+
+export default HelpToolTipVideo
 
 domReady( () => {
 	// Don't do this for old browsers.

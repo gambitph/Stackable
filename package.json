@@ -125,7 +125,7 @@
     "lint-css": "stylelint './src/**/*.scss'",
     "lint-css:fix": "stylelint './src/**/*.scss' --fix",
     "check-licenses": "concurrently \"wp-scripts check-licenses --prod --gpl2 --ignore=stackable\" \"wp-scripts check-licenses --dev --ignore=stackable\"",
-    "deploy:help-videos": "s3-deploy './dist/videos/*.mp4' --cwd './' --bucket $npm_package_cloudfront_bucket --distId $npm_package_cloudfront_distributionId --invalidate '/videos/*'",
+    "deploy:help-videos": "s3-deploy './dist/videos/**/*.mp4' --cwd './' --bucket $npm_package_cloudfront_bucket --distId $npm_package_cloudfront_distributionId --invalidate '/videos/*'",
     "deploy": "npm run build && concurrently --raw \"npm:deploy:help-videos\""
   },
   "lint-staged": {
