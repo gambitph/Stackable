@@ -220,7 +220,7 @@ The tests for this reside in `__test__/frontend.test.js` and handles all the fro
 
 If a block has a `frontend.js` script that runs when the post is loaded, then we'll need to test everything in that script.
 
-Testing frontend code is done using Vanilla JS + [dom-testing-library](https://github.com/kentcdodds/dom-testing-library).
+Testing frontend code is done using Vanilla JS + [@testing-library/dom](https://github.com/testing-library/dom-testing-library).
 
 No React / Enzyme here since the we assume here that the HTML code already exists and the frontend code simply attaches to the already present HTML - just like how it is in actual webpages.
 

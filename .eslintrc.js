@@ -51,6 +51,8 @@ module.exports = {
 
 		// Off since returning false positives.
 		'@wordpress/no-unused-vars-before-return': 'off',
+
+		'@wordpress/no-unguarded-get-range-at': 'off',
 	},
 	globals: {
 		localStorage: true,
