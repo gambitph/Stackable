@@ -454,7 +454,6 @@ const BackgroundControls = props => {
 							label={ __( 'Image Blend Mode', i18n ) }
 							value={ props.backgroundImageBlendMode }
 							onChange={ props.onChangeBackgroundImageBlendMode }
-							className="ugb--help-tip-background-blend-mode"
 						/>
 					) }
 				</ButtonIconPopoverControl>
