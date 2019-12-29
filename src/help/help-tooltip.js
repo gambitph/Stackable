@@ -26,6 +26,13 @@ const HelpTooltip = props => {
 		learnMore,
 	} = props
 
+	// Testing <video muted> throws an error.
+	// @see https://github.com/testing-library/react-testing-library/issues/470#issuecomment-528308230
+	const testProps = {}
+	if ( process.env.NODE_ENV === 'test' ) {
+		testProps.muted = undefined
+	}
+
 	return (
 		<Popover
 			title={ title }
@@ -38,7 +45,15 @@ const HelpTooltip = props => {
 				<button className="ugb-help-tooltip-video__remove" data-testid="close-button" onClick={ props.onClickClose }><Dashicon icon="no" /></button>
 				{ videoUrl &&
 					<Fragment>
-						<video width="600" autoPlay loop muted role="img" aria-labelledby="ugb-help-tooltip-video__description">
+						<video
+							width="600"
+							autoPlay
+							loop
+							muted
+							role="img"
+							aria-labelledby="ugb-help-tooltip-video__description"
+							{ ...testProps }
+						>
 							<source src={ videoUrl } type="video/mp4" />
 						</video>
 						<Spinner />

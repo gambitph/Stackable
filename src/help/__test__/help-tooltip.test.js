@@ -13,21 +13,6 @@ import { shallow } from 'enzyme'
 
 jest.useFakeTimers()
 
-// Testing <video muted> throws an error.
-// @see https://github.com/testing-library/react-testing-library/issues/470#issuecomment-528308230
-const renderIgnoringUnstableFlushDiscreteUpdates = component => {
-	/* eslint-disable no-console */
-	const originalError = console.error
-	const error = jest.fn()
-	console.error = error
-	const result = render( component )
-	expect( error ).toHaveBeenCalledTimes( 1 )
-	expect( error ).toHaveBeenCalledWith( 'Warning: unstable_flushDiscreteUpdates: Cannot flush updates when React is already rendering.%s', expect.any( String ) )
-	console.error = originalError
-	/* eslint-enable no-console */
-	return result
-}
-
 describe( '<HelpToolTip/>', () => {
 	it( 'basic rendering', () => {
 		act( () => {
@@ -66,7 +51,7 @@ describe( '<HelpToolTip/>', () => {
 
 	it( 'renders video', () => {
 		act( () => {
-			const tooltip = renderIgnoringUnstableFlushDiscreteUpdates( <HelpTooltip videoUrl="https://test.com/video.mp4" /> )
+			const tooltip = render( <HelpTooltip videoUrl="https://test.com/video.mp4" /> )
 			jest.advanceTimersByTime( 1 )
 			expect( tooltip.queryByRole( 'img' ) ).toBeTruthy()
 		} )

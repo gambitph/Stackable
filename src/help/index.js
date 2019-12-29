@@ -3,6 +3,7 @@
  */
 import VIDEOS from './videos'
 import HelpTooltip from './help-tooltip'
+import { startListening } from './events-show'
 
 /**
  * External dependencies
@@ -16,77 +17,27 @@ import { camelCase } from 'lodash'
  * WordPress dependencies
  */
 import domReady from '@wordpress/dom-ready'
+import { addAction, removeAction } from '@wordpress/hooks'
 import { Component, render } from '@wordpress/element'
-
-const HOVER_TIMEOUT = 1500
 
 // Provides the URL of the video. If during development, use the local copies; if production, use the CDN.
 const videoUrl = video => `${ process.env.NODE_ENV === 'development' ? srcUrl : cdnUrl }/${ video }`
 
 // Gets the Help ID from the class.
-const getHelpId = el => camelCase( ( el.closest( '[class*="ugb--help-tip-"]' ).getAttribute( 'class' ).match( /ugb--help-tip-([\w\d-_]+)/ ) || [ '', '' ] )[ 1 ] )
-
-let currentElement = null
-const onHover = ( selector, hoverCallback = () => {}, hoverOutCallback = () => {} ) => {
-	document.body.addEventListener( 'mouseover', ev => {
-		const matchingElement = ev.target.closest( selector )
-		if ( matchingElement && currentElement !== matchingElement ) {
-			currentElement = matchingElement
-			hoverCallback( matchingElement )
-		}
-	} )
-	document.body.addEventListener( 'mouseout', ev => {
-		const matchingElement = ev.target.closest( selector )
-		if ( ev.relatedTarget && matchingElement === ev.relatedTarget.closest( selector ) ) {
-			return
-		}
-		if ( matchingElement && currentElement === matchingElement ) {
-			hoverOutCallback( currentElement )
-			currentElement = null
-		}
-	} )
-}
-
-const onClick = ( selector, callback = () => {} ) => {
-	document.body.addEventListener( 'click', ev => {
-		const matchingElement = ev.target.closest( selector )
-		if ( matchingElement ) {
-			callback( matchingElement )
-		}
-	} )
-}
+export const getHelpId = el => el && el.closest( '[class*="ugb--help-tip-"]' ) && camelCase( ( el.closest( '[class*="ugb--help-tip-"]' ).getAttribute( 'class' ).match( /ugb--help-tip-([\w\d-_]+)/ ) || [ '', '' ] )[ 1 ] )
 
 class HelpToolTipVideo extends Component {
 	constructor() {
 		super( ...arguments )
 		this.state = {
 			target: null,
-			controlEl: null,
 			show: false,
 			helpId: '',
 			rect: {},
-			showTimeout: null,
 		}
 		this.showHelp = this.showHelp.bind( this )
 		this.hideHelp = this.hideHelp.bind( this )
-		this.startHelpTimeout = this.startHelpTimeout.bind( this )
-		this.stopHelpTimeout = this.stopHelpTimeout.bind( this )
 		this.calculateRect = this.calculateRect.bind( this )
-	}
-
-	startHelpTimeout( el ) {
-		this.setState( {
-			helpTimeout: setTimeout( () => {
-				this.showHelp( el )
-			}, HOVER_TIMEOUT ),
-		} )
-	}
-
-	stopHelpTimeout() {
-		if ( this.state.helpTimeout ) {
-			clearTimeout( this.state.helpTimeout )
-		}
-		this.setState( { helpTimeout: null } )
 	}
 
 	componentDidUpdate( prevProps, prevState ) {
@@ -98,32 +49,40 @@ class HelpToolTipVideo extends Component {
 		}
 	}
 
-	showHelp( el ) {
+	showHelp( elORString ) {
 		// If there's a currently focused element, blur it since closing the popover
 		// can trigger a scroll to the previously focused element that can confuse the user.
 		if ( document.activeElement ) {
 			document.activeElement.blur()
 		}
 
+		const target = typeof elORString !== 'string' && elORString
+		const helpId = elORString && typeof elORString !== 'string' ? getHelpId( elORString ) : elORString
+
 		this.setState( {
-			target: el,
-			controlEl: el.closest( '[class*="ugb--help-tip-"]' ),
-			helpId: getHelpId( el ),
+			target,
+			helpId,
 			show: true,
 		} )
 	}
 
 	// Get the position on where to place the tooltip, but change the X & width to match the whole inspector area.
 	calculateRect() {
+		if ( ! this.state.target ) {
+			return null
+		}
+
 		const elRect = this.state.target.getBoundingClientRect()
-		const inspectorRect = document.querySelector( '.edit-post-sidebar' ).getBoundingClientRect()
-		elRect.x = inspectorRect.x
-		elRect.width = inspectorRect.width
+		const sidebar = document.querySelector( '.edit-post-sidebar' )
+		if ( sidebar ) {
+			const inspectorRect = sidebar.getBoundingClientRect()
+			elRect.x = inspectorRect.x
+			elRect.width = inspectorRect.width
+		}
 		return elRect
 	}
 
 	hideHelp() {
-		this.stopHelpTimeout()
 		this.setState( {
 			show: false,
 		} )
@@ -136,47 +95,23 @@ class HelpToolTipVideo extends Component {
 	}
 
 	/**
-	 * Contains all the tooptip show/hide logic.
+	 * Tooptips are shown/hidden only through these triggers.
 	 */
 	componentDidMount() {
-		// If hovered long enough on a control label, show the tooltip.
-		onHover( '[class*="ugb--help-tip-"].components-base-control .components-base-control__label, [class*="ugb--help-tip-"].components-base-control .components-toggle-control__label, [class*="ugb--help-tip-"].components-panel__body .components-panel__body-toggle',
-			el => this.startHelpTimeout( el ),
-			() => this.stopHelpTimeout()
-		)
+		addAction( 'stackable.help-video.show', 'stackable/help', this.showHelp )
+		addAction( 'stackable.help-video.hide', 'stackable/help', this.hideHelp )
+	}
 
-		// When a control label is clicked, show the tooltip.
-		onClick( '[class*="ugb--help-tip-"].components-base-control .components-base-control__label, [class*="ugb--help-tip-"].components-base-control .components-toggle-control__label', el => {
-			// Show the tooltip if nothing's shown yet.
-			if ( ! this.state.show ) {
-				return this.showHelp( el )
-			}
-
-			if ( el === this.state.target ) {
-				// If the label of the open tooltip is clicked, close the tooltip.
-				this.hideHelp()
-			} else {
-				// If the another label is clicked, show that one instead.
-				this.showHelp( el )
-			}
-		} )
-
-		// Track clicks outside the tooltip and outside the current control which the tooltip belongs to.
-		// Close the tooltip if clicked outside these areas.
-		document.body.addEventListener( 'click', ev => {
-			if ( this.state.show ) {
-				if ( ! ev.target.closest( '.ugb-help-tooltip-video' ) && ev.target.closest( '[class*="ugb--help-tip-"]' ) !== this.state.controlEl ) {
-					this.hideHelp()
-				}
-			}
-		} )
+	componentWillUnmount() {
+		removeAction( 'stackable.help-video.show', 'stackable/help' )
+		removeAction( 'stackable.help-video.hide', 'stackable/help' )
 	}
 
 	render() {
 		if ( ! this.state.show ) {
 			return null
 		}
-		if ( typeof VIDEOS[ this.state.helpId ] === 'undefined' ) {
+		if ( typeof this.props.tooltipData[ this.state.helpId ] === 'undefined' ) {
 			return null
 		}
 
@@ -185,7 +120,7 @@ class HelpToolTipVideo extends Component {
 			video,
 			description,
 			learnMore,
-		} = VIDEOS[ this.state.helpId ]
+		} = this.props.tooltipData[ this.state.helpId ]
 
 		return (
 			<HelpTooltip
@@ -200,6 +135,10 @@ class HelpToolTipVideo extends Component {
 	}
 }
 
+HelpToolTipVideo.defaultProps = {
+	tooltipData: VIDEOS,
+}
+
 export default HelpToolTipVideo
 
 domReady( () => {
@@ -208,6 +147,7 @@ domReady( () => {
 		return
 	}
 
+	startListening()
 	const helpContainer = document.createElement( 'DIV' )
 	document.querySelector( 'body' ).appendChild( helpContainer )
 	render( <HelpToolTipVideo />, helpContainer )
