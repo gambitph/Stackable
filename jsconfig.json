@@ -8,5 +8,10 @@
 	},
 	"include": [
 		"./src/**/*"
-	]
+	],
+	"typeAcquisition": {
+        "include": [
+            "jest"
+        ]
+    }
 }

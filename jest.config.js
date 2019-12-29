@@ -31,7 +31,7 @@ module.exports = {
 
 	// All relevant code should be included in coverage.
 	collectCoverageFrom: [
-		'src/(block|components|icons|welcome)/**/*.js',
+		'src/(block|components|icons|welcome|help|format-types|higher-order)/**/*.js',
 		'!src/block/ghost-button/**/*', // Deprecated block, don't test anymore.
 		'!src/block/pullquote/**/*', // Deprecated block, don't test anymore.
 		'!**/__test__/**/*',
