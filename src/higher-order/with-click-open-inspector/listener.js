@@ -1,11 +1,12 @@
 /**
- * WordPress dependencies
+ * Internal dependencies
  */
-import { applyFilters } from '@wordpress/hooks'
+import { openPanelId } from './util'
 
 /**
  * WordPress dependencies
  */
+import { applyFilters } from '@wordpress/hooks'
 import domReady from '@wordpress/dom-ready'
 
 let init = false
@@ -39,65 +40,15 @@ const CLICK_LISTENER_CLASSES = [
 
 export const addMatcher = ( blockName, clickedClass, targetPanelId ) => {
 	if ( typeof MATCHERS[ blockName ] === 'undefined' ) {
-		// MATCHERS[ blockName ] = { ...commonMatchers }
 		MATCHERS[ blockName ] = {}
 	}
 	MATCHERS[ blockName ][ clickedClass ] = targetPanelId
 }
 
-const getPanel = panelId => {
-	return document.querySelector( `.ugb-panel--${ panelId }` )
-}
-
-const openPanel = panelEl => {
-	if ( ! panelEl ) {
-		return
-	}
-
-	// Don't do anything if panel is already open.
-	if ( ! panelEl.classList.contains( 'is-opened' ) ) {
-		const panelButton = panelEl.querySelector( 'button' )
-		// Open the panel if it's not yet open.
-		if ( panelButton ) {
-			panelButton.click()
-		}
-	}
-	scrollPanelIntoView( panelEl )
-}
-
-export const scrollPanelIntoView = panelEl => {
-	const tabs = document.querySelector( '.ugb-panel-tabs' )
-	const sidebarHeader = document.querySelector( '.edit-post-sidebar-header' )
-	const sidebar = document.querySelector( '.edit-post-sidebar' )
-
-	// Adjust the scroll manually instead of scrollIntoView since we have sticky tabs.
-	document.querySelector( '.edit-post-sidebar' ).scrollTop =
-		document.querySelector( '.edit-post-sidebar' ).scrollTop +
-		(
-			panelEl.getBoundingClientRect().top -
-			( sidebarHeader ? sidebarHeader.getBoundingClientRect().bottom - 2 : sidebar.getBoundingClientRect().top ) -
-			( tabs ? tabs.getBoundingClientRect().height : 0 )
-		)
-}
-
-const getTabOfPanel = panelEl => {
-	const panelContainer = panelEl.closest( '.ugb-inspector-panel-controls' )
-	if ( ! panelContainer ) {
-		return null
-	}
-	const panelTabMatch = panelContainer.getAttribute( 'class' ).match( /ugb-panel-(\w+)/ )
-	if ( panelTabMatch ) {
-		const panelTabName = panelTabMatch[ 1 ]
-		return document.querySelector( `.ugb-tab--${ panelTabName }` )
-	}
-	return null
-}
-
-const openTab = tabEl => {
-	if ( tabEl ) {
-		if ( ! tabEl.classList.contains( 'is-active' ) ) {
-			tabEl.click()
-		}
+export const getMatchers = blockName => {
+	return {
+		...MATCHERS[ blockName ],
+		...COMMON_MATCHERS,
 	}
 }
 
@@ -131,10 +82,7 @@ domReady( () => {
 			return
 		}
 
-		const matchers = {
-			...MATCHERS[ blockName ],
-			...COMMON_MATCHERS,
-		}
+		const matchers = getMatchers( blockName )
 		if ( ! matchers ) {
 			return
 		}
@@ -161,15 +109,9 @@ domReady( () => {
 				if ( target.matches( matchSelector ) ) {
 					// Get the panel that we need to open.
 					const panelId = matchers[ matchSelector ]
-					const panelToOpen = getPanel( panelId )
-					if ( panelToOpen ) {
-						const tab = getTabOfPanel( panelToOpen )
-						openTab( tab )
-						openPanel( panelToOpen )
-					}
 
 					// Don't continue to other matchers.
-					return !! panelToOpen
+					return openPanelId( panelId )
 				}
 
 				return false

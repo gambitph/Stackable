@@ -18,7 +18,7 @@ import { __ } from '@wordpress/i18n'
  */
 import classnames from 'classnames'
 import { i18n } from 'stackable'
-import { scrollPanelIntoView } from '~stackable/higher-order/with-click-open-inspector/listener'
+import { scrollPanelIntoView } from '~stackable/higher-order/with-click-open-inspector/util'
 
 let instanceId = 1
 
