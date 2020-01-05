@@ -60,6 +60,14 @@
         $fs->_add_license_activation_dialog_box();
 	}
 
+    $ids_of_installs_activated_with_foreign_licenses = $fs->should_handle_user_change() ?
+        $fs->get_installs_ids_with_foreign_licenses() :
+        array();
+
+    if ( ! empty( $ids_of_installs_activated_with_foreign_licenses ) ) {
+        $fs->_add_user_change_dialog_box( $ids_of_installs_activated_with_foreign_licenses );
+    }
+
     if ( $fs->is_whitelabeled( true ) || $fs->is_data_debug_mode() ) {
         $fs->_add_data_debug_mode_dialog_box();
     }
@@ -547,11 +555,33 @@
 																<div class="button-group">
 																	<?php if ( $is_paying || $fs->is_trial() ) : ?>
 																		<?php if ( ! $fs->is_allowed_to_install() ) : ?>
-																			<a target="_blank" class="button button-primary"
-																			   href="<?php echo $fs->_get_latest_download_local_url() ?>"><?php echo sprintf(
-																			       /* translators: %s: plan name (e.g. Download "Professional" Version) */
-																			       fs_text_inline( 'Download %s Version', 'download-x-version', $slug ),
-                                                                                                                                                                                                                                     ( $fs->is_trial() ? $trial_plan->title : $plan->title ) ) . ( is_object( $update ) ? ' [' . $update->version . ']' : '' ) ?></a>
+                                                                            <a target="_blank" class="button button-primary"
+                                                                                href="<?php echo $fs->_get_latest_download_local_url() ?>"><?php
+                                                                                $download_version_text_suffix = ( is_object( $update ) ? ' [' . $update->version . ']' : '' );
+
+                                                                                $download_version_text = sprintf(
+                                                                                    /* translators: %s: plan name (e.g. Download "Professional" Version) */
+                                                                                    fs_text_inline( 'Download %s Version', 'download-x-version', $slug ),
+                                                                                    ( $fs->is_trial() ? $trial_plan->title : $plan->title )
+                                                                                ) .
+                                                                                $download_version_text_suffix;
+
+                                                                                $download_version_text_length = function_exists( 'mb_strlen' ) ?
+                                                                                    mb_strlen( $download_version_text ) :
+                                                                                    strlen( $download_version_text );
+
+                                                                                if ( $download_version_text_length > 31 ) {
+                                                                                    /**
+                                                                                     * Try to limit the number of characters to 31 for now.
+                                                                                     *
+                                                                                     * @author Leo Fajardo (@leorw)
+                                                                                     * @aince 2.3.2
+                                                                                     */
+                                                                                    $download_version_text = fs_text_inline( 'Download Paid Version', 'download-paid-version', $slug ) . $download_version_text_suffix;
+                                                                                }
+
+                                                                                echo $download_version_text;
+                                                                            ?></a>
 																		<?php elseif ( is_object( $update ) ) : ?>
 																			<?php
 																			$module_type = $fs->get_module_type();
@@ -590,6 +620,9 @@
 																<input type="submit" class="button button-small"
 																       value="<?php echo fs_esc_attr_x_inline( 'Edit', 'verb', 'edit', $slug ) ?>">
 															</form>
+                                                        <?php elseif ( 'user_id' === $p['id'] && ! empty( $ids_of_installs_activated_with_foreign_licenses ) ) : ?>
+                                                                <input id="fs_change_user" type="submit" class="button button-small"
+                                                                       value="<?php echo fs_esc_attr_inline( 'Change User', 'change-user', $slug ) ?>">
 														<?php endif ?>
 													</td>
 												<?php endif ?>

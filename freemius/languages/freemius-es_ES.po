@@ -1,14 +1,14 @@
 # Copyright (C) 2019 freemius
 # This file is distributed under the same license as the freemius package.
 # Translators:
-# Carlos Longarela <carlos@longarela.eu>, 2017-2018
+# Carlos Longarela <carlos@longarela.eu>, 2017-2019
 msgid ""
 msgstr ""
 "Project-Id-Version: WordPress SDK\n"
 "Report-Msgid-Bugs-To: https://github.com/Freemius/wordpress-sdk/issues\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2019-10-07 15:33+0000\n"
-"Last-Translator: Vova Feldman <vova@freemius.com>\n"
+"PO-Revision-Date: 2019-11-10 01:59+0000\n"
+"Last-Translator: Carlos Longarela <carlos@longarela.eu>\n"
 "Language: es_ES\n"
 "Language-Team: Spanish (Spain) (http://www.transifex.com/freemius/wordpress-sdk/language/es_ES/)\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,11 +23,11 @@ msgstr ""
 
 #: includes/class-freemius.php1880, templates/account.php:840
 msgid "An update to a Beta version will replace your installed version of %s with the latest Beta release - use with caution, and not on production sites. You have been warned."
-msgstr "An update to a Beta version will replace your installed version of %s with the latest Beta release - use with caution, and not on production sites. You have been warned."
+msgstr "Una actualización a una versión Beta reemplazará tu versión instalada de %s con la última versión Beta - úsalo con precaución, y no en sitios de producción. Te hemos avisado."
 
 #: includes/class-freemius.php:1887
 msgid "Would you like to proceed with the update?"
-msgstr "Would you like to proceed with the update?"
+msgstr "¿Deseas continuar con la actualización?"
 
 #: includes/class-freemius.php:2095
 msgid "Freemius SDK couldn't find the plugin's main file. Please contact sdk@freemius.com with the current error."
@@ -275,7 +275,7 @@ msgstr "Tema"
 
 #: includes/class-freemius.php:12596
 msgid "An unknown error has occurred while trying to set the user's beta mode."
-msgstr "An unknown error has occurred while trying to set the user's beta mode."
+msgstr "Se ha producido un error desconocido al intentar establecer el modo beta del usuario."
 
 #: includes/class-freemius.php:13020
 msgid "Invalid site details collection."
@@ -331,7 +331,7 @@ msgstr "Por favor contáctanos con el siguiente mensaje:"
 
 #: includes/class-freemius.php16641, templates/forms/data-debug-mode.php:162
 msgid "An unknown error has occurred."
-msgstr "An unknown error has occurred."
+msgstr "Se ha producido un error desconocido."
 
 #: includes/class-freemius.php17168, includes/class-freemius.php:22082
 msgid "Upgrade"
@@ -396,11 +396,11 @@ msgstr "Bien hecho"
 
 #: includes/class-freemius.php:19041
 msgid "seems like the key you entered doesn't match our records."
-msgstr "seems like the key you entered doesn't match our records."
+msgstr "parece que la clave que has introducido no coincide con nuestros registros."
 
 #: includes/class-freemius.php:19065
 msgid "Debug mode was successfully enabled and will be automatically disabled in 60 min. You can also disable it earlier by clicking the \"Stop Debug\" link."
-msgstr "Debug mode was successfully enabled and will be automatically disabled in 60 min. You can also disable it earlier by clicking the \"Stop Debug\" link."
+msgstr "El modo de depuración se ha activado con éxito y se desactivará automáticamente en 60 minutos. También puedes desactivarlo antes haciendo clic en el enlace \"Detener depuración\"."
 
 #: includes/class-freemius.php:19283
 msgid "Your %s Add-on plan was successfully upgraded."
@@ -416,7 +416,7 @@ msgstr "Descargar la última versión"
 
 #: includes/class-freemius.php:19374
 msgid "Your server is blocking the access to Freemius' API, which is crucial for %1$s synchronization. Please contact your host to whitelist %2$s"
-msgstr "Your server is blocking the access to Freemius' API, which is crucial for %1$s synchronization. Please contact your host to whitelist %2$s"
+msgstr "Tu servidor está bloqueando el acceso al API  de Freemius, que es crucial para sincronizar %1$s. Por favor, contacta a tu proveedor de hosting para permitir el acceso de %2$s"
 
 #: includes/class-freemius.php19380, includes/class-freemius.php19390,
 #: includes/class-freemius.php19835, includes/class-freemius.php:19924
@@ -453,7 +453,7 @@ msgstr "Contacta aquí con nosotros"
 
 #: includes/class-freemius.php:19638
 msgid "Your plan was successfully activated."
-msgstr "Your plan was successfully activated."
+msgstr "Tu plan se activó con éxito."
 
 #: includes/class-freemius.php:19639
 msgid "Your plan was successfully upgraded."
@@ -708,7 +708,7 @@ msgstr "Inscribirse"
 
 #: includes/class-freemius.php:22453
 msgid " The paid version of %1$s is already installed. Please activate it to start benefiting the %2$s features. %3$s"
-msgstr " The paid version of %1$s is already installed. Please activate it to start benefiting the %2$s features. %3$s"
+msgstr "La versión de pago de %1$s ya está instalada. Por favor, actívala para empezar a beneficiarte de las características de %2$s. %3$s"
 
 #: includes/class-freemius.php:22461
 msgid "Activate %s features"
@@ -810,7 +810,7 @@ msgstr "%sNO%s me envíes actualizaciones de seguridad y nuevas funcionalidades,
 
 #: includes/class-freemius.php:23563
 msgid "Due to the new %sEU General Data Protection Regulation (GDPR)%s compliance requirements it is required that you provide your explicit consent, again, confirming that you are onboard :-)"
-msgstr "Due to the new %sEU General Data Protection Regulation (GDPR)%s compliance requirements it is required that you provide your explicit consent, again, confirming that you are onboard :-)"
+msgstr "Debido al nuevo %sEU Reglamento General de Protección de Datos (RGPD)%s los requisitos de obligado cumplimiento requieren que proporciones tu consentimiento explícito, una vez más, confirmando que estás de acuerdo :-)"
 
 #: includes/class-freemius.php23565, templates/connect.php:287
 msgid "Please let us know if you'd like us to contact you for security & feature updates, educational content, and occasional offers:"
@@ -838,7 +838,7 @@ msgstr "Hay una %s de %s disponible."
 #: includes/class-fs-plugin-updater.php323,
 #: includes/class-fs-plugin-updater.php:359
 msgid "new Beta version"
-msgstr "new Beta version"
+msgstr "nueva versión Beta"
 
 #: includes/class-fs-plugin-updater.php324,
 #: includes/class-fs-plugin-updater.php:360
@@ -863,7 +863,7 @@ msgstr "El paquete de plugin remoto no contiene una carpeta con el Slug deseado 
 
 #: includes/fs-plugin-info-dialog.php:535
 msgid "Purchase More"
-msgstr "Purchase More"
+msgstr "Comprar más"
 
 #: includes/fs-plugin-info-dialog.php536,
 #: templates/account/partials/addon.php:385
@@ -1195,7 +1195,7 @@ msgstr "Cancelando la suscripción"
 #: templates/account.php95, templates/forms/subscription-cancellation.php99,
 #: templates/account/partials/site.php:314
 msgid "%1$s will immediately stop all future recurring payments and your %2$s plan license will expire in %3$s."
-msgstr "%1$s will immediately stop all future recurring payments and your %2$s plan license will expire in %3$s."
+msgstr "%1$s detendrá inmediatamente todos los pagos recurrentes futuros y tu licencia del plan %2$s caducará en %3$s."
 
 #: templates/account.php96, templates/forms/subscription-cancellation.php100,
 #: templates/account/partials/addon.php30,
@@ -1279,7 +1279,7 @@ msgstr "Plan"
 
 #: templates/account.php:117
 msgid "Bundle Plan"
-msgstr "Bundle Plan"
+msgstr "Plan combinado"
 
 #: templates/account.php:191
 msgid "Free Trial"
@@ -1291,15 +1291,15 @@ msgstr "Detalles de la cuenta"
 
 #: templates/account.php209, templates/forms/data-debug-mode.php:33
 msgid "Start Debug"
-msgstr "Start Debug"
+msgstr "Iniciar Depuración"
 
 #: templates/account.php:211
 msgid "Stop Debug"
-msgstr "Stop Debug"
+msgstr "Detener la depuración"
 
 #: templates/account.php:218
 msgid "Billing & Invoices"
-msgstr "Billing & Invoices"
+msgstr "Facturación y facturas"
 
 #: templates/account.php:229
 msgid "Deleting the account will automatically deactivate your %s plan license so you can use it on other sites. If you want to terminate the recurring payments as well, click the \"Cancel\" button, and first \"Downgrade\" your account. Are you sure you would like to continue with the deletion?"
@@ -1387,7 +1387,7 @@ msgstr "Clave de licencia"
 
 #: templates/account.php:453
 msgid "Join the Beta program"
-msgstr "Join the Beta program"
+msgstr "Únase al programa Beta"
 
 #: templates/account.php:459
 msgid "not verified"
@@ -1465,7 +1465,7 @@ msgstr "Procesando"
 
 #: templates/account.php:839
 msgid "Get updates for bleeding edge Beta versions of %s."
-msgstr "Get updates for bleeding edge Beta versions of %s."
+msgstr "Obten actualizaciones para las versiones Beta de vanguardia de %s."
 
 #: templates/account.php:897
 msgid "Cancelling %s"
@@ -1500,7 +1500,7 @@ msgstr "Complementos para %s"
 
 #: templates/add-ons.php:58
 msgid "We couldn't load the add-ons list. It's probably an issue on our side, please try to come back in few minutes."
-msgstr "We couldn't load the add-ons list. It's probably an issue on our side, please try to come back in few minutes."
+msgstr "No pudimos cargar la lista de complementos. Probablemente sea un problema por nuestra parte, por favor, inténtalo de nuevo en unos minutos."
 
 #: templates/add-ons.php:229
 msgctxt "active add-on"
@@ -1510,7 +1510,7 @@ msgstr "Activo"
 #: templates/add-ons.php:230
 msgctxt "installed add-on"
 msgid "Installed"
-msgstr "Installed"
+msgstr "Instalado"
 
 #: templates/admin-notice.php13, templates/forms/license-activation.php207,
 #: templates/forms/resend-key.php:77
@@ -1861,7 +1861,7 @@ msgstr "ID del blog"
 
 #: templates/debug.php:372
 msgid "License ID"
-msgstr "License ID"
+msgstr "ID de licencia"
 
 #: templates/debug.php436, templates/debug.php535,
 #: templates/account/partials/addon.php:435
@@ -2284,19 +2284,19 @@ msgstr "Hacerse afiliado"
 
 #: templates/forms/data-debug-mode.php:25
 msgid "Please enter the license key to enable the debug mode:"
-msgstr "Please enter the license key to enable the debug mode:"
+msgstr "Por favor, introduce la clave de licencia para activar el modo de depuración:"
 
 #: templates/forms/data-debug-mode.php:27
 msgid "To enter the debug mode, please enter the secret key of the license owner (UserID = %d), which you can find in your \"My Profile\" section of your User Dashboard:"
-msgstr "To enter the debug mode, please enter the secret key of the license owner (UserID = %d), which you can find in your \"My Profile\" section of your User Dashboard:"
+msgstr "Para entrar en el modo de depuración, introduce la clave secreta del propietario de la licencia (UserID = %d), que puedes encontrar en la sección \"Mi perfil\" de tu panel de control de usuario:"
 
 #: templates/forms/data-debug-mode.php:32
 msgid "Submit"
-msgstr "Submit"
+msgstr "Enviar"
 
 #: templates/forms/data-debug-mode.php:36
 msgid "User key"
-msgstr "User key"
+msgstr "Clave de usuario"
 
 #: templates/forms/license-activation.php:23
 msgid "Please enter the license key that you received in the email right after the purchase:"
@@ -2459,7 +2459,7 @@ msgstr "Última licencia"
 #. subscription'
 #: templates/account/partials/addon.php:29
 msgid "%1$s will immediately stop all future recurring payments and your %s plan license will expire in %s."
-msgstr "%1$s will immediately stop all future recurring payments and your %s plan license will expire in %s."
+msgstr "%1$s detendrá inmediatamente todos los pagos recurrentes futuros y tu licencia del plan caducará en %s."
 
 #: templates/account/partials/addon.php:185
 msgid "Cancelled"

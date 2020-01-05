@@ -21,27 +21,25 @@
 <div>
     <!-- Debugging Switch -->
     <?php //$debug_mode = get_option( 'fs_debug_mode', null ) ?>
-    <span class="switch-label"><?php fs_esc_html_echo_x_inline( 'Debugging', 'as code debugging' ) ?></span>
+    <span class="fs-switch-label"><?php fs_esc_html_echo_x_inline( 'Debugging', 'as code debugging' ) ?></span>
 
-    <div class="switch <?php echo WP_FS__DEBUG_SDK ? 'off' : 'on' ?>">
-        <div class="toggle"></div>
-        <span class="on"><?php echo esc_html( $on_text ) ?></span>
-        <span class="off"><?php echo esc_html( $off_text ) ?></span>
+    <div class="fs-switch fs-round <?php echo WP_FS__DEBUG_SDK ? 'fs-on' : 'fs-off' ?>">
+        <div class="fs-toggle"></div>
     </div>
     <script type="text/javascript">
         (function ($) {
             $(document).ready(function () {
                 // Switch toggle
-                $('.switch').click(function () {
-                    $(this)
-                        .toggleClass('on')
-                        .toggleClass('off');
+                $( '.fs-switch' ).click( function () {
+                    $( this )
+                        .toggleClass( 'fs-on' )
+                        .toggleClass( 'fs-off' );
 
-                    $.post(ajaxurl, {
+                    $.post( ajaxurl, {
                         action: 'fs_toggle_debug_mode',
-                        is_on : ($(this).hasClass('off') ? 1 : 0)
-                    }, function (response) {
-                        if (1 == response) {
+                        is_on : ($(this).hasClass( 'fs-on' ) ? 1 : 0)
+                    }, function ( response ) {
+                        if ( 1 == response ) {
                             // Refresh page on success.
                             location.reload();
                         }
@@ -559,6 +557,7 @@
                 <th><?php fs_esc_html_echo_inline( 'Quota' ) ?></th>
                 <th><?php fs_esc_html_echo_inline( 'Activated' ) ?></th>
                 <th><?php fs_esc_html_echo_inline( 'Blocking' ) ?></th>
+                <th><?php fs_esc_html_echo_inline( 'Type' ) ?></th>
                 <th><?php fs_esc_html_echo_inline( 'License Key' ) ?></th>
                 <th><?php fs_esc_html_echo_x_inline( 'Expiration', 'as expiration date' ) ?></th>
             </tr>
@@ -573,6 +572,7 @@
                     <td><?php echo $license->is_unlimited() ? 'Unlimited' : ( $license->is_single_site() ? 'Single Site' : $license->quota ) ?></td>
                     <td><?php echo $license->activated ?></td>
                     <td><?php echo $license->is_block_features ? 'Blocking' : 'Flexible' ?></td>
+                    <td><?php echo $license->is_whitelabeled ? 'Whitelabeled' : 'Normal' ?></td>
                     <td><?php
                             echo $license->is_whitelabeled ?
                                 $license->get_html_escaped_masked_secret_key() :

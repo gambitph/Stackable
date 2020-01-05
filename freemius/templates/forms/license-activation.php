@@ -178,6 +178,9 @@ HTML;
         $license_input_html = "<input class='fs-license-key' type='text' placeholder='{$license_key_text}' tabindex='1' />";
     }
 
+    $ownership_change_option_text = fs_text_inline( "Associate with the license owner's account.", 'associate-account-with-license-owner', $slug );
+    $ownership_change_option_html = "<div class='ownership-change-option-container' style='display: none'><label><input type='checkbox' /> <strong>{$ownership_change_option_text}</strong></label></div>";
+
 	/**
 	 * IMPORTANT:
 	 *  DO NOT ADD MAXLENGTH OR LIMIT THE LICENSE KEY LENGTH SINCE
@@ -191,7 +194,17 @@ HTML;
 	<a class="show-license-resend-modal show-license-resend-modal-{$fs->get_unique_affix()}" href="!#" tabindex="2">{$cant_find_license_key_text}</a>
 	{$network_activation_html}
 	<p>{$message_below_input_field}</p>
+    {$ownership_change_option_html}
 HTML;
+
+    /**
+     * Handle the ownership change option if not an add-on or if no license yet is activated for the
+     * parent product in case of an add-on.
+     *
+     * @author Leo Fajardo (@leorw)
+     * @since 2.3.2
+     */
+	$is_user_change_supported = ( ! $fs->is_addon() || ! $fs->get_parent_instance()->has_active_valid_license() );
 
 	fs_enqueue_local_style( 'fs_dialog_boxes', '/admin/dialog-boxes.css' );
 ?>
@@ -216,11 +229,14 @@ HTML;
 				+ '	</div>'
 				+ '</div>',
 			$modal = $(modalHtml),
-			$activateLicenseLink      = $('span.activate-license.<?php echo $unique_affix ?> a, .activate-license-trigger.<?php echo $unique_affix ?>'),
-			$activateLicenseButton    = $modal.find('.button-activate-license'),
-			$licenseKeyInput          = $modal.find( 'input.fs-license-key' ),
-			$licenseActivationMessage = $modal.find( '.license-activation-message' ),
-            isNetworkActivation       = <?php echo $is_network_activation ? 'true' : 'false' ?>;
+			$activateLicenseLink            = $('span.activate-license.<?php echo $unique_affix ?> a, .activate-license-trigger.<?php echo $unique_affix ?>'),
+			$activateLicenseButton          = $modal.find('.button-activate-license'),
+			$licenseKeyInput                = $modal.find( 'input.fs-license-key' ),
+			$licenseActivationMessage       = $modal.find( '.license-activation-message' ),
+            isNetworkActivation             = <?php echo $is_network_activation ? 'true' : 'false' ?>,
+            isUserChangeSupported           = <?php echo $is_user_change_supported ? 'true' : 'false' ?>,
+            isSingleSiteActivation          = false,
+            $ownershipChangeOptionContainer = $modal.find( '.ownership-change-option-container' );
 
 		$modal.appendTo($('body'));
 
@@ -238,6 +254,113 @@ HTML;
             maxSitesListHeight   = null,
             totalSites           = <?php echo count( $sites_details ) ?>,
             singleBlogID         = null;
+
+        var
+            previousLicenseKey  = null,
+            otherLicenseOwnerID = null,
+            /**
+             * @author Leo Fajardo (@leorw)
+             * @since 2.3.2
+             */
+            resetLoadingMode = function () {
+                // Reset loading mode.
+                $activateLicenseButton.text( <?php echo json_encode( $activate_button_text ) ?> );
+                $activateLicenseButton.prop( 'disabled', false );
+                $( document.body ).css( { 'cursor': 'auto' } );
+                $( '.fs-loading' ).removeClass( 'fs-loading' );
+
+                console.log( 'resetLoadingMode - Primary button was enabled' );
+            },
+            /**
+             * @author Leo Fajardo (@leorw)
+             * @since 2.3.2
+             */
+            setLoadingMode = function () {
+                $( document.body ).css( { 'cursor': 'wait' } );
+            },
+            /**
+             * @author Leo Fajardo (@leorw)
+             * @since 2.3.2
+             */
+            afterLicenseUserDataLoaded = function () {
+                if (
+                    null !== otherLicenseOwnerID &&
+                    otherLicenseOwnerID != <?php echo $fs->is_registered() ? $fs->get_user()->id : 'null' ?>
+                ) {
+                    $ownershipChangeOptionContainer.show();
+                } else {
+                    $ownershipChangeOptionContainer.hide();
+                    $activateLicenseButton.focus();
+                }
+            },
+            /**
+             * @author Leo Fajardo (@leorw)
+             * @since 2.3.2
+             */
+            fetchLicenseUserData = function () {
+                var hideAndUncheckUserChangeCheckbox = ( ! isUserChangeSupported ),
+                    otherLicenseKeyIsSelected      = isOtherLicenseKeySelected();
+
+                if ( ! hideAndUncheckUserChangeCheckbox ) {
+                    // User change is supported only on the site level.
+                    hideAndUncheckUserChangeCheckbox = ( isNetworkActivation || isSingleSiteActivation );
+                }
+
+                if ( ! hideAndUncheckUserChangeCheckbox ) {
+                    hideAndUncheckUserChangeCheckbox = ( hasLicenseTypes && ! otherLicenseKeyIsSelected );
+                }
+
+                var licenseKey = $licenseKeyInput.val().trim();
+
+                if ( ! hideAndUncheckUserChangeCheckbox && otherLicenseKeyIsSelected ) {
+                    hideAndUncheckUserChangeCheckbox = ( licenseKey.length < 32 );
+                }
+
+                if ( licenseKey !== previousLicenseKey ) {
+                    // If the license key has not been changed, keep the owner ID in order to prevent another API call.
+                    otherLicenseOwnerID = null;
+                }
+
+                if ( hideAndUncheckUserChangeCheckbox ) {
+                    $ownershipChangeOptionContainer.hide().find( 'input' ).attr( 'checked', false );
+
+                    return;
+                }
+
+                if ( null !== otherLicenseOwnerID ) {
+                    afterLicenseUserDataLoaded();
+                    return;
+                }
+
+                setLoadingMode();
+
+                $activateLicenseButton.addClass( 'fs-loading' );
+                $activateLicenseButton.attr( 'disabled', 'disabled' );
+                $activateLicenseButton.html( '<?php fs_esc_js_echo_inline( 'Please wait', 'please-wait', $slug ) ?>...' );
+
+                $.ajax( {
+                    url    : ajaxurl,
+                    method : 'POST',
+                    data   : {
+                        action     : '<?php echo $fs->get_ajax_action( 'fetch_is_marketing_required_flag_value' ) ?>',
+                        security   : '<?php echo $fs->get_ajax_security( 'fetch_is_marketing_required_flag_value' ) ?>',
+                        license_key: licenseKey,
+                        module_id  : '<?php echo $fs->get_id() ?>'
+                    },
+                    success: function ( result ) {
+                        resetLoadingMode();
+
+                        if ( result.success ) {
+                            result = result.data;
+
+                            // Cache license owner's ID.
+                            otherLicenseOwnerID = result.license_owner_id;
+                        }
+
+                        afterLicenseUserDataLoaded();
+                    }
+                } );
+            };
 
 		function registerEventHandlers() {
             var
@@ -308,6 +431,10 @@ HTML;
                         disableActivateLicenseButton();
                     }
 
+                    if ( '' !== licenseKey ) {
+                        fetchLicenseUserData();
+                    }
+
                     if ( ! isNetworkActivation ) {
                         return;
                     }
@@ -337,6 +464,42 @@ HTML;
 
 				showModal( evt );
 			});
+
+            var licenseTimeout = null;
+
+            /**
+             * Disable activation button when license key is empty.
+             *
+             * @author Leo Fajardo (@leorw)
+             * @since 2.3.2
+             */
+            $modal.on( 'keyup paste delete cut', 'input.fs-license-key', function () {
+                clearTimeout(licenseTimeout);
+
+                licenseTimeout = setTimeout( function () {
+                    var licenseKey = $licenseKeyInput.val().trim();
+
+                    if ( licenseKey == previousLicenseKey ) {
+                        afterLicenseUserDataLoaded();
+                        return;
+                    }
+
+                    if ( '' === licenseKey ) {
+                        disableActivateLicenseButton();
+                        $ownershipChangeOptionContainer.hide();
+                    } else {
+                        enableActivateLicenseButton();
+
+                        if ( 32 <= licenseKey.length ) {
+                            fetchLicenseUserData();
+                        } else {
+                            $ownershipChangeOptionContainer.hide();
+                        }
+                    }
+
+                    previousLicenseKey = licenseKey;
+                }, 200 );
+            } ).focus();
 
 			$modal.on('input propertychange', 'input.fs-license-key', function () {
 
@@ -435,6 +598,10 @@ HTML;
                     }
 
                     data.sites = sites;
+                }
+
+                if ( $ownershipChangeOptionContainer.find( 'input:checked' ).length > 0 ) {
+                    data.user_id = otherLicenseOwnerID;
                 }
 
 				$.ajax({
