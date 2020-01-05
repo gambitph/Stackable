@@ -28,24 +28,24 @@ const withTabbedInspector = ( tabs = null ) => createHigherOrderComponent(
 
 					<InspectorControls>
 						<PanelTabs tabs={ tabs } blockProps={ this.props } />
+
+						<InspectorPanelControls>
+							{ applyFilters( `stackable.${ blockName }.edit.inspector.layout.before`, null, this.props ) }
+							{ applyFilters( `stackable.${ blockName }.edit.inspector.layout.after`, null, this.props ) }
+						</InspectorPanelControls>
+
+						<InspectorPanelControls tab="style">
+							{ applyFilters( `stackable.${ blockName }.edit.inspector.style.before`, null, this.props ) }
+							{ applyFilters( `stackable.${ blockName }.edit.inspector.style.after`, null, this.props ) }
+							{ blockStyleControls && <div className="ugb-panel-controls-separator" role="presentation">— — —</div> }
+							{ blockStyleControls }
+						</InspectorPanelControls>
+
+						<InspectorPanelControls tab="advanced">
+							{ applyFilters( `stackable.${ blockName }.edit.inspector.advanced.before`, null, this.props ) }
+							{ applyFilters( `stackable.${ blockName }.edit.inspector.advanced.after`, null, this.props ) }
+						</InspectorPanelControls>
 					</InspectorControls>
-
-					<InspectorPanelControls>
-						{ applyFilters( `stackable.${ blockName }.edit.inspector.layout.before`, null, this.props ) }
-						{ applyFilters( `stackable.${ blockName }.edit.inspector.layout.after`, null, this.props ) }
-					</InspectorPanelControls>
-
-					<InspectorPanelControls tab="style">
-						{ applyFilters( `stackable.${ blockName }.edit.inspector.style.before`, null, this.props ) }
-						{ applyFilters( `stackable.${ blockName }.edit.inspector.style.after`, null, this.props ) }
-						{ blockStyleControls && <div className="ugb-panel-controls-separator" role="presentation">— — —</div> }
-						{ blockStyleControls }
-					</InspectorPanelControls>
-
-					<InspectorPanelControls tab="advanced">
-						{ applyFilters( `stackable.${ blockName }.edit.inspector.advanced.before`, null, this.props ) }
-						{ applyFilters( `stackable.${ blockName }.edit.inspector.advanced.after`, null, this.props ) }
-					</InspectorPanelControls>
 
 					<WrappedComponent { ...this.props } />
 				</Fragment>
