@@ -1,10 +1,10 @@
 === Stackable - Gutenberg Blocks ===
 Contributors: bfintal, gambitph, freemius
 Tags: gutenberg, block, blocks, block editor, gutenberg blocks, page builder, editor, wordpress 5.0
-Requires at least: 5.0
-Tested up to: 5.3
+Requires at least: 5.2
+Tested up to: 5.3.2
 Requires PHP: 5.3
-Stable tag: 2.0.4
+Stable tag: 2.1.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -118,6 +118,7 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com/v2/)
 
 ### News Article Updates
 
+- [v2.1 Help Video Snippets and Auto-Expand Settings](https://wpstackable.com/blog/help-video-snippets-auto-expand-settings/)
 - [v2.0 Version 2 is Out!](https://wpstackable.com/blog/version-2-is-out)
 - [v1.17 Text Color and Text Highlight](https://wpstackable.com/blog/text-color-and-text-highlight)
 - [v1.16 Translations: Stackable in Your Language](https://wpstackable.com/blog/translations-stackable-in-your-language/)
@@ -170,9 +171,19 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Upgrade Notice ==
 
-[Version 2](https://wpstackable.com/blog/version-2-is-out) is a major update, make sure you're backed up in case of any hiccups.
-
 == Changelog ==
+
+= 2.1.0 =
+[Help Video Snippets and Auto-Expand Settings](https://wpstackable.com/blog/help-video-snippets-auto-expand-settings/)
+
+* New: Added help tooltip video snippets for block options
+* New: Double-click a block component to open inspector settings
+* New: Now brings opened inspector panels into view
+* New: Affiliation menu, become a Stackable Affiliate!
+* Fixed: Changed arrangement of some advanced block settings
+* Fixed: PHP Notice undefined index featured_media in Posts block
+* Fixed: Corrected typo in Advanced Column settings to "Column Paddings"
+* Fixed: Toolbar control compatibility with Gutenberg 7.1.0
 
 = 2.0.4 =
 * Fixed: Better sticky tabs detection and placement
