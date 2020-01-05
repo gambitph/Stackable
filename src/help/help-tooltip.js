@@ -14,7 +14,9 @@ import {
 	Dashicon,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
-import { Fragment } from '@wordpress/element'
+import {
+	Fragment, useEffect, useRef,
+} from '@wordpress/element'
 
 const HelpTooltip = props => {
 	const {
@@ -26,12 +28,26 @@ const HelpTooltip = props => {
 		learnMore,
 	} = props
 
-	// Testing <video muted> throws an error.
-	// @see https://github.com/testing-library/react-testing-library/issues/470#issuecomment-528308230
-	const testProps = {}
-	if ( process.env.NODE_ENV === 'test' ) {
-		testProps.muted = undefined
-	}
+	// React doesn't add the muted attribute, we need to add it ourselves.
+	// @see https://github.com/facebook/react/issues/6544
+	const videoRef = useRef()
+	useEffect( () => {
+		const { current: video } = videoRef
+
+		// Testing <video muted> throws an error.
+		// @see https://github.com/testing-library/react-testing-library/issues/470#issuecomment-528308230
+		if ( process.env.NODE_ENV !== 'test' ) {
+			video.muted = true
+		}
+		if ( ! video.playing ) {
+			video.play()
+		}
+	}, [] )
+
+	// Force Popover to update its location when the videoUrl is changed.
+	useEffect( () => {
+		window.dispatchEvent( new window.Event( 'resize' ) )
+	}, [ props.videoUrl ] )
 
 	return (
 		<Popover
@@ -44,19 +60,18 @@ const HelpTooltip = props => {
 			<PanelBody>
 				<button className="ugb-help-tooltip-video__remove" data-testid="close-button" onClick={ props.onClickClose }><Dashicon icon="no" /></button>
 				{ videoUrl &&
-					<Fragment>
+					<Fragment >
 						<video
+							ref={ videoRef }
 							width="600"
 							autoPlay
 							loop
 							muted
 							role="img"
 							aria-labelledby="ugb-help-tooltip-video__description"
-							{ ...testProps }
-						>
-							<source src={ videoUrl } type="video/mp4" />
-						</video>
-						<Spinner />
+							src={ videoUrl }
+						/>
+						{ ( ! videoRef.current || ! videoRef.current.playing ) && <Spinner /> }
 					</Fragment>
 				}
 				<div className="ugb-help-tooltip-video__description" id="ugb-help-tooltip-video__description">

@@ -40,15 +40,6 @@ class HelpToolTipVideo extends Component {
 		this.calculateRect = this.calculateRect.bind( this )
 	}
 
-	componentDidUpdate( prevProps, prevState ) {
-		if ( this.state.helpId !== prevState.helpId && this.state.show ) {
-			// We need to do this 2 steps or else the video won't load. We can also force the video
-			// to load with video.load() but that will flicker the Spinner.
-			this.setState( { show: false } )
-			setTimeout( () => this.setState( { show: true } ), 1 )
-		}
-	}
-
 	showHelp( elORString ) {
 		// If there's a currently focused element, blur it since closing the popover
 		// can trigger a scroll to the previously focused element that can confuse the user.
