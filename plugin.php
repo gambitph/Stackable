@@ -118,6 +118,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/fonts.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/block/blog-posts/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/pro.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/help/welcome-tutorial-video.php' );
 
 /**
  * Welcome screen.

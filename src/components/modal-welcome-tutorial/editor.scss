@@ -1,0 +1,18 @@
+.ugb-modal-welcome-video {
+	p {
+		width: 470px;
+		margin: 16px auto;
+		text-align: center;
+	}
+	.components-modal__content {
+		padding-bottom: 20px;
+	}
+	.components-modal__header {
+		margin-bottom: 30px;
+	}
+}
+.ugb-modal-welcome-video,
+.ugb-modal-welcome-video__overlay {
+	animation-duration: 0.6s !important;
+	transition-duration: 0.6s !important;
+}

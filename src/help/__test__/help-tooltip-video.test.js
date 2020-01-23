@@ -2,7 +2,7 @@ import {
 	render, act,
 } from '@testing-library/react'
 import { getByText } from '@testing-library/dom'
-import HelpToolTipVideo, { getHelpId } from '../index'
+import HelpToolTipVideo, { getHelpId } from '../help-tooltip-video'
 import { doAction } from '@wordpress/hooks'
 
 jest.useFakeTimers()

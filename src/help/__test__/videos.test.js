@@ -28,7 +28,6 @@ describe( 'Videos', () => {
 			const response = await fetch( `https://${ getDomain() }/dist/videos/help/${ video }`, {
 				method: 'HEAD',
 			} )
-
 			expect( response.ok ).toBe( true )
 		}
 	} )

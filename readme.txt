@@ -173,6 +173,10 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.1.1 =
+* New: Welcome to Stackable modal popup
+* Change: Updated video in settings screen
+
 = 2.1.0 =
 [Help Video Snippets and Auto-Expand Settings](https://wpstackable.com/blog/help-video-snippets-auto-expand-settings/)
 

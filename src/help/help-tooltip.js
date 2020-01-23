@@ -39,7 +39,7 @@ const HelpTooltip = props => {
 		if ( process.env.NODE_ENV !== 'test' ) {
 			video.muted = true
 		}
-		if ( ! video.playing ) {
+		if ( video && ! video.playing ) {
 			video.play()
 		}
 	}, [] )

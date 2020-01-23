@@ -294,7 +294,7 @@ class HelpTabs extends Component {
 							title={ __( 'Video Tutorial', i18n ) }
 							width="560"
 							height="315"
-							src="https://www.youtube.com/embed/OR6wNum6mUg"
+							src="https://www.youtube.com/embed/UW0Rg96aATA"
 							frameBorder="0"
 							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
 							allowFullScreen
@@ -319,7 +319,7 @@ class HelpTabs extends Component {
 							title={ __( 'Video Tutorial', i18n ) }
 							width="560"
 							height="315"
-							src="https://www.youtube.com/embed/OR6wNum6mUg"
+							src="https://www.youtube.com/embed/UW0Rg96aATA"
 							frameBorder="0"
 							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
 							allowFullScreen
