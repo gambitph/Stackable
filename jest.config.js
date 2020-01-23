@@ -21,7 +21,7 @@ module.exports = {
 
 	transform: {
 		'^.+\\.[jt]sx?$': '<rootDir>/node_modules/babel-jest',
-		'\\.mp4$': '<rootDir>/src/test/file-transformer.js',
+		'^.+\\.mp4$': '<rootDir>/src/test/file-transformer.js',
 	},
 
 	// Ignore Unexpected identifiers in node_modules/simple-html-tokenizer/dist/es6/tokenizer.js

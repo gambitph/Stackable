@@ -30,3 +30,7 @@ global.window.localStorage = {
 	getItem: key => key in storage ? storage[ key ] : null,
 	setItem: ( key, value ) => storage[ key ] = value,
 }
+
+// Fix for Error: Not implemented: HTMLMediaElement.prototype.play
+// @see https://github.com/jsdom/jsdom/issues/2155
+global.window.HTMLMediaElement.prototype.play = () => { /* do nothing */ }
