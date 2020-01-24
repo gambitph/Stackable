@@ -43,6 +43,9 @@ if ( ! function_exists( 'stackable_display_welcome_video' ) ) {
 	 * @return Boolean True if the welcome video should be shown.
 	 */
 	function stackable_display_welcome_video() {
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			return false;
+		}
 		return ! get_user_meta( get_current_user_id(), 'stackable_welcome_video_closed', true );
 	}
 }
