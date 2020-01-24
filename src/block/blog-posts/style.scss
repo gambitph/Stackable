@@ -29,7 +29,7 @@
 		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
 	}
 
-	@media screen and (max-width: $break-wide) {
+	@media screen and (min-width: $break-small) and (max-width: $break-wide) {
 		&.ugb-blog-posts--columns-4 .ugb-block-content {
 			grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 		}
