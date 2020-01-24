@@ -133,9 +133,9 @@ if ( ! function_exists( 'stackable_block_blog_posts_migrate_output' ) ) {
 		$stkbp_unique_id++;
 
 		$border_radius = '';
-		if ( ! empty( $attributes['borderRadius'] ) ) {
+		if ( isset( $attributes['borderRadius'] ) && $attributes['borderRadius'] !== 12 ) {
 			if ( $attributes['design'] === '' || $attributes['design'] === 'basic' || $attributes['design'] === 'list' ) {
-				$border_radius = '<style>.ugb-blog-posts-old-' . $stkbp_unique_id . ' .ugb-blog-posts__featured-image img { border-radius: ' . $attributes['borderRadius'] . 'px !important; }</style>';
+				$border_radius = '<style>.ugb-blog-posts-old-' . $stkbp_unique_id . ' .ugb-blog-posts__featured-image { border-radius: ' . $attributes['borderRadius'] . 'px !important; }</style>';
 			} else if ( $attributes['design'] === 'vertical-card2' ) {
 				$border_radius = '<style>.ugb-blog-posts-old-' . $stkbp_unique_id . ' .ugb-blog-posts__item, .ugb-blog-posts-old-' . $stkbp_unique_id . ' .ugb-blog-posts__featured-image { border-radius: ' . $attributes['borderRadius'] . 'px !important; }</style>';
 			} else {
