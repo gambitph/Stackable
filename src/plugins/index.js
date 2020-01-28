@@ -1,6 +1,7 @@
 /**
  * Internal dependencies
  */
+import './auto-block-recovery'
 import { default as DebugSidebar } from './debug-sidebar'
 
 /**
