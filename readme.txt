@@ -175,9 +175,11 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 = 2.1.1 =
 * New: Welcome to Stackable modal popup
+* New: Auto-block recovery functionality for styling block errors and block update errors
 * Change: Updated video in settings screen
 * Fixed: Border radius not being followed for blog posts block when updating from v1
 * Fixed: Fixed mobile responsiveness of blog posts block when using 4 columns
+* Fixed: Centered the image in Overlap Shape 4 and Overlap Shape 5 layouts
 
 = 2.1.0 =
 [Help Video Snippets and Auto-Expand Settings](https://wpstackable.com/blog/help-video-snippets-auto-expand-settings/)
