@@ -52,7 +52,7 @@ export const createStyles = props => {
 			background: backgroundColor ? backgroundColor : undefined,
 		},
 		'.ugb-separator__svg-wrapper': {
-			height: appendImportant( getValue( 'height', '%spx' ) ),
+			height: getValue( 'height' ) !== 200 ? appendImportant( getValue( 'height', '%spx' ) ) : undefined,
 		},
 		'.ugb-separator__shadow, .ugb-separator__layer-1': {
 			fill: layer1Color ? layer1Color : undefined,
