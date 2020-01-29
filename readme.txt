@@ -176,6 +176,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 = 2.1.1 =
 * New: Welcome to Stackable modal popup
 * New: Auto-block recovery functionality for styling block errors and block update errors
+* New: Support for Jetpack's Site Accelerator for background images
 * Change: Updated video in settings screen
 * Fixed: Border radius not being followed for blog posts block when updating from v1
 * Fixed: Fixed mobile responsiveness of blog posts block when using 4 columns
@@ -183,6 +184,11 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Feature block responsiveness for image column width option
 * Fixed: Feature block responsiveness issues for overlap layouts
 * Fixed: Only apply default z-index to Stackable blocks
+* Fixed: Compatibility with Slides & Presentations plugin
+* Fixed: Native text block colors now work properly inside Container blocks with background colors
+* Fixed: Fixed font size for tablet and mobile in multiple blocks not being applied
+* Fixed: Removed left and right margins in the editor for some themes
+* Fixed: Separator block default height is too big in tablet and mobile
 
 = 2.1.0 =
 [Help Video Snippets and Auto-Expand Settings](https://wpstackable.com/blog/help-video-snippets-auto-expand-settings/)
