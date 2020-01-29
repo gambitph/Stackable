@@ -40,9 +40,18 @@ class WhenResponsiveScreen extends Component {
 			return cloneElement( child, { screens: this.props.screens } )
 		} )
 
+		// If this is the currently selected screen.
+		const isCurrentScreen = this.state.screen === this.props.screen
+
+		// If there is no screen available, then just show the desktop. For
+		// example, if only desktop & tablet are assigned to the screens prop,
+		// and we're currently showing the mobile screen option, since there's
+		// no option available, then just show the desktop screen option.
+		const isNoScreen = ! this.props.screens.includes( this.state.screen ) && ! isCurrentScreen && this.props.screen === 'desktop'
+
 		return (
 			<Fragment>
-				{ this.state.screen === this.props.screen && children }
+				{ ( isCurrentScreen || isNoScreen ) && children }
 			</Fragment>
 		)
 	}
