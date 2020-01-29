@@ -4,6 +4,12 @@
  * Enqueued in the editor only.
  */
 
+// Some themes like Stackable adds left/right margins on the block on the backend.
+.ugb-blockquote {
+	margin-left: 0;
+	margin-right: 0;
+}
+
 .ugb-blockquote__inspector__icon {
 	flex-wrap: wrap;
 }
