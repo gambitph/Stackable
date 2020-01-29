@@ -65,7 +65,7 @@ export const combineStyleRules = styleObject => {
 const generateStyles = ( styleObject, blockMainClassName = '', blockUniqueClassName = '', breakTablet = 1025, breakMobile = 768, editorMode = false ) => {
 	const styleStrings = []
 
-	const desktopStyles = omit( styleObject, [ 'tablet', 'mobile', 'editor' ] )
+	const desktopStyles = omit( styleObject, [ 'desktopTablet', 'desktopOnly', 'tablet', 'tabletOnly', 'mobile', 'editor' ] )
 	if ( Object.keys( desktopStyles ).length ) {
 		const cleanedStyles = addBlockClassNames( desktopStyles, blockMainClassName, blockUniqueClassName, editorMode )
 		styleStrings.push( combineStyleRules( cleanedStyles ) )
