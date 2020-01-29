@@ -120,6 +120,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 						attrNameTemplate="imageColumn%sWidth"
 						setAttributes={ setAttributes }
 						blockAttributes={ props.attributes }
+						screens={ [ 'desktop', 'tablet' ] }
 					>
 						<AdvancedRangeControl
 							label={ __( 'Image Column Width', i18n ) }

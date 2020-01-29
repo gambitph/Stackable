@@ -180,6 +180,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Border radius not being followed for blog posts block when updating from v1
 * Fixed: Fixed mobile responsiveness of blog posts block when using 4 columns
 * Fixed: Centered the image in Overlap Shape 4 and Overlap Shape 5 layouts
+* Fixed: Feature block responsiveness for image column width option
 
 = 2.1.0 =
 [Help Video Snippets and Auto-Expand Settings](https://wpstackable.com/blog/help-video-snippets-auto-expand-settings/)

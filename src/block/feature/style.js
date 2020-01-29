@@ -42,19 +42,17 @@ export const createStyles = props => {
 	}
 	if ( show.imageColumnWidth ) {
 		styles.push( {
-			'.ugb-feature__item': {
-				gridTemplateColumns: getValue( 'imageColumnWidth' ) ? computeGridFraction2( getValue( 'imageColumnWidth' ), ! invert ) + ' !important' : undefined,
+			desktopTablet: {
+				'.ugb-feature__item': {
+					gridTemplateColumns: getValue( 'imageColumnWidth' ) ? computeGridFraction2( getValue( 'imageColumnWidth' ), ! invert ) + ' !important' : undefined,
+				},
 			},
-			tablet: {
+			tabletOnly: {
 				'.ugb-feature__item': {
 					gridTemplateColumns: getValue( 'imageColumnTabletWidth' ) ? computeGridFraction2( getValue( 'imageColumnTabletWidth' ), ! invert ) + ' !important' : undefined,
 				},
 			},
-			mobile: {
-				'.ugb-feature__item': {
-					gridTemplateColumns: getValue( 'imageColumnMobileWidth' ) ? computeGridFraction2( getValue( 'imageColumnMobileWidth' ), ! invert ) + ' !important' : undefined,
-				},
-			},
+			// No mobile here since the mobile design would stack vertically.
 		} )
 	}
 	if ( show.borderRadius ) {
