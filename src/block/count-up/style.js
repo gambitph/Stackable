@@ -165,13 +165,13 @@ export const createStyles = props => {
 			},
 			tablet: {
 				'.ugb-countup__counter': {
-					...createTypographyStyles( 'number%s', 'tablet', props.attributes ),
+					...createTypographyStyles( 'number%s', 'tablet', props.attributes, { importantSize: true } ),
 					textAlign: getValue( 'numberTabletAlign' ),
 				},
 			},
 			mobile: {
 				'.ugb-countup__counter': {
-					...createTypographyStyles( 'number%s', 'mobile', props.attributes ),
+					...createTypographyStyles( 'number%s', 'mobile', props.attributes, { importantSize: true } ),
 					textAlign: getValue( 'numberMobileAlign' ),
 				},
 			},

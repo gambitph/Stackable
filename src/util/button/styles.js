@@ -39,6 +39,16 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 		[ `.${ mainClassName } .ugb-button--inner` ]: {
 			...createTypographyStyles( attrNameTemplate, 'desktop', blockAttributes ),
 		},
+		tablet: {
+			[ `.${ mainClassName } .ugb-button--inner` ]: {
+				...createTypographyStyles( attrNameTemplate, 'tablet', blockAttributes ),
+			},
+		},
+		mobile: {
+			[ `.${ mainClassName } .ugb-button--inner` ]: {
+				...createTypographyStyles( attrNameTemplate, 'mobile', blockAttributes ),
+			},
+		},
 	} )
 
 	// The default color is the same as the other one but transparent. Same so that there won't be a weird transition to transparent.

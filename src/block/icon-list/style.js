@@ -40,6 +40,16 @@ export const createStyles = props => {
 			...createTypographyStyles( 'listText%s', 'desktop', props.attributes ),
 			color: whiteIfDark( listTextColor, showBlockBackground && blockBackgroundBackgroundColor ),
 		},
+		tablet: {
+			li: {
+				...createTypographyStyles( 'listText%s', 'tablet', props.attributes ),
+			},
+		},
+		mobile: {
+			li: {
+				...createTypographyStyles( 'listText%s', 'mobile', props.attributes ),
+			},
+		},
 	} )
 
 	// Icon.

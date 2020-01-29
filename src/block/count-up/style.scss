@@ -49,7 +49,7 @@
 	@media screen and (max-width: $break-large) {
 		// Resize numbers to make them smaller in small screens.
 		.ugb-countup__counter {
-			font-size: calc(1rem + 4vw) !important;
+			font-size: calc(1rem + 4vw);
 		}
 	}
 }

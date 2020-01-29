@@ -152,19 +152,19 @@ export const createStyles = props => {
 	if ( showPosition ) {
 		styles.push( {
 			'.ugb-testimonial__position': {
-				...createTypographyStyles( 'position%s', 'desktop', props.attributes ),
+				...createTypographyStyles( 'position%s', 'desktop', props.attributes, { importantSize: true } ),
 				color: appendImportant( whiteIfDarkBlackIfLight( positionColor, ( show.columnBackground || design === 'background' ) && columnBackgroundColor ) ),
 				textAlign: getValue( 'positionAlign' ) || getValue( 'contentAlign' ),
 			},
 			tablet: {
 				'.ugb-testimonial__position': {
-					...createTypographyStyles( 'position%s', 'tablet', props.attributes ),
+					...createTypographyStyles( 'position%s', 'tablet', props.attributes, { importantSize: true } ),
 					textAlign: getValue( 'positionTabletAlign' ) || getValue( 'mobileTabletAlign' ),
 				},
 			},
 			mobile: {
 				'.ugb-testimonial__position': {
-					...createTypographyStyles( 'position%s', 'mobile', props.attributes ),
+					...createTypographyStyles( 'position%s', 'mobile', props.attributes, { importantSize: true } ),
 					textAlign: getValue( 'positionMobileAlign' ) || getValue( 'mobileContentAlign' ),
 				},
 			},

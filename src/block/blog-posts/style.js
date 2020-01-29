@@ -173,14 +173,18 @@ export const createStyles = props => {
 				textAlign: getValue( 'excerptAlign', '%s !important' ),
 			},
 			tablet: {
-				'.ugb-blog-posts__excerpt': {
+				'.ugb-blog-posts__excerpt, .ugb-blog-posts__excerpt p': {
 					...createTypographyStyles( 'excerpt%s', 'tablet', props.attributes, { importantSize: true } ),
+				},
+				'.ugb-blog-posts__excerpt': {
 					textAlign: getValue( 'excerptTabletAlign', '%s !important' ),
 				},
 			},
 			mobile: {
-				'.ugb-blog-posts__excerpt': {
+				'.ugb-blog-posts__excerpt, .ugb-blog-posts__excerpt p': {
 					...createTypographyStyles( 'excerpt%s', 'mobile', props.attributes, { importantSize: true } ),
+				},
+				'.ugb-blog-posts__excerpt': {
 					textAlign: getValue( 'excerptMobileAlign', '%s !important' ),
 				},
 			},
