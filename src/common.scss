@@ -116,7 +116,7 @@ $shadows: ( none )
 }
 
 // Make sure all our blocks are at the same level. Mainly for our separator to work.
-div[class^="wp-block-"] {
+div[class^="wp-block-ugb-"] {
 	z-index: 1;
 }
 
