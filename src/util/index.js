@@ -206,6 +206,7 @@ export const compileCSS = ( css, mainClass, uniqueID ) => {
 /**
  * Ensures the cssSelector is only applied to the uniqueClassName element.
  * Wraps the cssSelector with a uniqueClassName, and takes into account the mainClassName.
+ * If the cssSelector is already using the uniqueClassName, a new class isn't added anymore.
  *
  * For example:
  * .title-block -> .my-title-be8d9a.title-block
@@ -225,6 +226,8 @@ export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassNam
 		.map( s => {
 			let newSelector = ''
 			if ( ! uniqueClassName || ! mainClassName ) {
+				newSelector = s
+			} else if ( s.includes( uniqueClassName ) ) {
 				newSelector = s
 			} else if ( uniqueClassName && ! mainClassName ) {
 				newSelector = `.${ uniqueClassName } ${ s.trim() }`
