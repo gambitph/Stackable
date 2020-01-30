@@ -4,17 +4,17 @@ Tags: gutenberg, block, blocks, block editor, gutenberg blocks, page builder, ed
 Requires at least: 5.2
 Tested up to: 5.3.2
 Requires PHP: 5.3
-Stable tag: 2.1.0
+Stable tag: 2.2.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-An Amazing Block Collection That Lets You Reimagine the Way You Use the WordPress Block Editor (Gutenberg).
+An Amazing Block Library That Lets You Reimagine the Way You Use the WordPress Block Editor (Gutenberg).
 
 == Description ==
 
 **Reimagine the Way You Use the WordPress Block Editor**
 
-[Stackable](https://wpstackable.com) is one of the first and most expansive block collections made specially for the new WordPress Block Editor (Gutenberg). It adds essential custom blocks to Gutenberg’s arsenal to achieve a smooth page building experience. With its latest iteration, Stackable brings a suite of high quality blocks for page building, with precision design tools that let you build the perfect website and landing page that you want.
+[Stackable](https://wpstackable.com) is one of the first and most expansive block library made specially for the new WordPress Block Editor (Gutenberg). It adds essential custom blocks to Gutenberg’s arsenal to achieve a smooth page building experience. With its latest iteration, Stackable brings a suite of high quality blocks for page building, with precision design tools that let you build the perfect website and landing page that you want.
 
 [youtube https://www.youtube.com/watch?v=m2I-pCYPezk]
 
@@ -47,7 +47,7 @@ Having this flexibility makes Stackable an all-in-one tool for building your web
 
 Together with this new way of building sections, we’ll start you off with great built-in multiple block layouts and pre-set section / block designs. All our designs are stunning, professionally-made and ready-to-use.
 
-Unlike any other block collection, our pre-set section / block designs are **cohesive across almost all blocks, making them truly useable for building full websites**. Gain access to a very diverse collection of pre-set designs and layouts which are all **interchangeable with one click!**
+Unlike any other block library, our pre-set section / block designs are **cohesive across almost all blocks, making them truly useable for building full websites**. Gain access to a very diverse collection of pre-set designs and layouts which are all **interchangeable with one click!**
 
 We have absolutely the best and most expansive design collection with 50+ block layouts and 60+ pre-set design sections (with more on the way!).
 
@@ -68,7 +68,7 @@ Stackable now offers the most advanced block design controls with the widest ran
 
 All of Stackable's powerful options are easily managed in an intuitive UI for a smooth block editing experience. This is achieved by our three-tab configuration, easy toggle on/off for block elements, and streamlined settings.
 
-## A Truly Useful Block Collection with 23 Quality Gutenberg Blocks
+## A Truly Useful Block Library with 23 Quality Gutenberg Blocks
 
 We’ve come up with page building blocks that are all functional and stunning. We’ve put in the design effort so you can enjoy a truly usable and quality block collection for the new WordPress block editor (Gutenberg).
 
@@ -78,7 +78,7 @@ Get our WordPress theme that's beautiful & flexible, Gutenberg-ready and made es
 
 ## Stackable Premium
 
-Stackable Premium extends the capabilities of Stackable and the new WordPress editor to give you the smoothest page building experience. Using the core Stackable Philosophy of balancing utility and great design, Stackable Premium offers:
+[Stackable Premium](https://wpstackable.com/premium) extends the capabilities of Stackable and the new WordPress editor to give you the smoothest page building experience. Using the core Stackable Philosophy of balancing utility and great design, Stackable Premium offers:
 
 - Premium Block Layouts and Pre-Set Section / Block Designs
 - Premium hover and image box effects
@@ -118,6 +118,7 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com/v2/)
 
 ### News Article Updates
 
+- [v2.2 Welcome Video, Better Separators and Auto-Block Recovery](https://wpstackable.com/blog/welcome-video-better-separators-and-auto-block-recovery/)
 - [v2.1 Help Video Snippets and Auto-Expand Settings](https://wpstackable.com/blog/help-video-snippets-auto-expand-settings/)
 - [v2.0 Version 2 is Out!](https://wpstackable.com/blog/version-2-is-out)
 - [v1.17 Text Color and Text Highlight](https://wpstackable.com/blog/text-color-and-text-highlight)
@@ -173,10 +174,14 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
-= 2.1.1 =
+= 2.2.0 =
+[Welcome Video, Better Separators and Auto-Block Recovery](https://wpstackable.com/blog/welcome-video-better-separators-and-auto-block-recovery/)
+
 * New: Welcome to Stackable modal popup
 * New: Auto-block recovery functionality for styling block errors and block update errors
 * New: Support for Jetpack's Site Accelerator for background images
+* New: Added 2 new separators: Rounded 3 and Wave 4
+* New: Added vertical flip for top and bottom separators
 * Change: Updated video in settings screen
 * Fixed: Border radius not being followed for blog posts block when updating from v1
 * Fixed: Fixed mobile responsiveness of blog posts block when using 4 columns
@@ -187,8 +192,10 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Compatibility with Slides & Presentations plugin
 * Fixed: Native text block colors now work properly inside Container blocks with background colors
 * Fixed: Fixed font size for tablet and mobile in multiple blocks not being applied
-* Fixed: Removed left and right margins in the editor for some themes
+* Fixed: Removed left and right margins in Blockquote blocks in the editor for some themes
 * Fixed: Separator block default height is too big in tablet and mobile
+* Fixed: Better generation of excerpts for posts. Prevent WPBakery from overriding post excerpts
+* Fixed: Bottom Separator layout images are now oriented correctly
 
 = 2.1.0 =
 [Help Video Snippets and Auto-Expand Settings](https://wpstackable.com/blog/help-video-snippets-auto-expand-settings/)
