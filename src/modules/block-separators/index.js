@@ -170,7 +170,7 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 					'bottomSeparatorLayer3FlipHorizontally',
 				] }
 				toggleAttributeName="showBottomSeparator"
-				className="ugb-top-block-separator-panel ugb--help-tip-separator-bottom-on"
+				className="ugb-bottom-block-separator-panel ugb--help-tip-separator-bottom-on"
 			>
 				<DesignSeparatorControl
 					label={ __( 'Design', i18n ) }
