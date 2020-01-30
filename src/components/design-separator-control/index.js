@@ -11,12 +11,14 @@ import ImageDesignCurve2 from './images/curve-2.png'
 import ImageDesignCurve3 from './images/curve-3.png'
 import ImageDesignRounded1 from './images/rounded-1.png'
 import ImageDesignRounded2 from './images/rounded-2.png'
+import ImageDesignRounded3 from './images/rounded-3.png'
 import ImageDesignSlant1 from './images/slant-1.png'
 import ImageDesignSlant2 from './images/slant-2.png'
 import ImageDesignStraight1 from './images/straight-1.png'
 import ImageDesignWave1 from './images/wave-1.png'
 import ImageDesignWave2 from './images/wave-2.png'
 import ImageDesignWave3 from './images/wave-3.png'
+import ImageDesignWave4 from './images/wave-4.png'
 import { i18n } from 'stackable'
 
 /**
@@ -42,6 +44,9 @@ const designs = {
 	'wave-3': {
 		image: ImageDesignWave3, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Wave', i18n ), 3 ), value: 'wave-3',
 	},
+	'wave-4': {
+		image: ImageDesignWave4, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Wave', i18n ), 4 ), value: 'wave-4',
+	},
 	'slant-1': {
 		image: ImageDesignSlant1, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Slant', i18n ), 1 ), value: 'slant-1',
 	},
@@ -62,6 +67,9 @@ const designs = {
 	},
 	'rounded-2': {
 		image: ImageDesignRounded2, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Rounded', i18n ), 2 ), value: 'rounded-2',
+	},
+	'rounded-3': {
+		image: ImageDesignRounded3, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Rounded', i18n ), 3 ), value: 'rounded-3',
 	},
 }
 

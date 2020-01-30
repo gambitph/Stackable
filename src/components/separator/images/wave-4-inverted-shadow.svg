@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Curve_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1600 200" style="enable-background:new 0 0 1600 200;" xml:space="preserve" filter="url(#dropShadow)">
+	<filter id="dropShadow">
+		<feGaussianBlur in="SourceAlpha" stdDeviation="4" />
+		<feComponentTransfer>
+			<feFuncA type="linear" slope="0.4"/>
+		</feComponentTransfer>
+		<feMerge>
+			<feMergeNode />
+			<feMergeNode in="SourceGraphic" />
+		</feMerge>
+	</filter>
+<path d="M1368.6,102.3c-157.4-10-247.9-49.6-340.9-49.4c-93.1,0.1-121,14.6-174.2,33.6c-75.7,27.1-166.9,27.2-185.5,25.1
+	c-18.7-2.1-67.8-5.5-106,19.3c-38.2,24.7-94.8,55.4-209.2,43.1C238.1,161.4,80,125.9-10,182v10c90-56.1,248.1-20.6,362.8-8
+	c114.4,12.3,171-18.4,209.2-43.1c38.2-24.8,87.3-21.4,106-19.3c18.6,2.1,109.8,2,185.5-25.1c53.2-19,81.1-33.5,174.2-33.6
+	c93-0.2,183.5,39.4,340.9,49.4c160,10.2,241.4-23.1,241.4-23.1v-10C1610,79.2,1528.6,112.5,1368.6,102.3z"/>
+</svg>

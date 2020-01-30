@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { separators, shadows } from './separators'
+import { separators } from './separators'
 
 /**
  * External dependencies
@@ -9,8 +9,7 @@ import { separators, shadows } from './separators'
 import classnames from 'classnames'
 
 const Separator = props => {
-	const SeparatorComp = separators[ props.design ]
-	const ShadowComp = shadows[ props.design ]
+	const { shape: SeparatorComp, shadow: ShadowComp } = separators[ props.design ][ ! props.inverted ? 'default' : 'inverted' ]
 
 	const mainClasses = classnames( [
 		props.className,
@@ -40,6 +39,7 @@ Separator.defaultProps = {
 	className: '',
 	design: 'wave-1',
 	shadow: false,
+	inverted: false,
 }
 
 Separator.Save = props => <Separator { ...props } />

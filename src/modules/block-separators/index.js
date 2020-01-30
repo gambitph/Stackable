@@ -32,6 +32,7 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 		topSeparatorColor = '',
 		topSeparatorWidth = '',
 		topSeparatorFlipHorizontally = false,
+		topSeparatorFlipVertically = false,
 		topSeparatorShadow = true,
 		topSeparatorBringToFront = false,
 		showBottomSeparator = false,
@@ -39,6 +40,7 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 		bottomSeparatorColor = '',
 		bottomSeparatorWidth = '',
 		bottomSeparatorFlipHorizontally = false,
+		bottomSeparatorFlipVertically = false,
 		bottomSeparatorShadow = true,
 		bottomSeparatorBringToFront = false,
 	} = props.attributes
@@ -59,6 +61,7 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 					'topSeparatorMobileHeight',
 					'topSeparatorWidth',
 					'topSeparatorFlipHorizontally',
+					'topSeparatorFlipVertically',
 					'topSeparatorShadow',
 					'topSeparatorBringToFront',
 					'showTopSeparatorLayer2',
@@ -120,6 +123,11 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 					onChange={ topSeparatorFlipHorizontally => setAttributes( { topSeparatorFlipHorizontally } ) }
 				/>
 				<ToggleControl
+					label={ __( 'Flip Vertically', i18n ) }
+					checked={ topSeparatorFlipVertically }
+					onChange={ topSeparatorFlipVertically => setAttributes( { topSeparatorFlipVertically } ) }
+				/>
+				<ToggleControl
 					label={ __( 'Shadow', i18n ) }
 					checked={ topSeparatorShadow }
 					onChange={ topSeparatorShadow => setAttributes( { topSeparatorShadow } ) }
@@ -152,6 +160,7 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 					'bottomSeparatorMobileHeight',
 					'bottomSeparatorWidth',
 					'bottomSeparatorFlipHorizontally',
+					'bottomSeparatorFlipVertically',
 					'bottomSeparatorShadow',
 					'bottomSeparatorBringToFront',
 					'showBottomSeparatorLayer2',
@@ -211,6 +220,11 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 					label={ __( 'Flip Horizontally', i18n ) }
 					checked={ bottomSeparatorFlipHorizontally }
 					onChange={ bottomSeparatorFlipHorizontally => setAttributes( { bottomSeparatorFlipHorizontally } ) }
+				/>
+				<ToggleControl
+					label={ __( 'Flip Vertically', i18n ) }
+					checked={ bottomSeparatorFlipVertically }
+					onChange={ bottomSeparatorFlipVertically => setAttributes( { bottomSeparatorFlipVertically } ) }
 				/>
 				<ToggleControl
 					label={ __( 'Shadow', i18n ) }
@@ -281,7 +295,7 @@ const addAttributes = attributes => {
 				default: '',
 			},
 			[ 'Top', 'Bottom' ],
-			[ 'FlipHorizontally', 'BringToFront' ],
+			[ 'FlipHorizontally', 'FlipVertically', 'BringToFront' ],
 		),
 		...createAllCombinationAttributes(
 			'%sSeparatorShadow',
@@ -336,9 +350,11 @@ const addShapeOutput = ( output, design, blockProps ) => {
 	const {
 		showTopSeparator = false,
 		topSeparatorDesign = 'wave-1',
+		topSeparatorFlipVertically = false,
 		topSeparatorShadow = true,
 		showBottomSeparator = false,
 		bottomSeparatorDesign = 'wave-1',
+		bottomSeparatorFlipVertically = false,
 		bottomSeparatorShadow = true,
 	} = blockProps.attributes
 
@@ -348,7 +364,7 @@ const addShapeOutput = ( output, design, blockProps ) => {
 			{ showTopSeparator && (
 				<Fragment>
 					<div className="ugb-top-separator">
-						<Separator design={ topSeparatorDesign } shadow={ topSeparatorShadow }>
+						<Separator design={ topSeparatorDesign } shadow={ topSeparatorShadow } inverted={ topSeparatorFlipVertically }>
 							{ applyFilters( 'stackable.module.block-separator.output.top.after', null, blockProps ) }
 						</Separator>
 					</div>
@@ -357,7 +373,7 @@ const addShapeOutput = ( output, design, blockProps ) => {
 			{ showBottomSeparator && (
 				<Fragment>
 					<div className="ugb-bottom-separator">
-						<Separator design={ bottomSeparatorDesign } shadow={ bottomSeparatorShadow }>
+						<Separator design={ bottomSeparatorDesign } shadow={ bottomSeparatorShadow } inverted={ bottomSeparatorFlipVertically }>
 							{ applyFilters( 'stackable.module.block-separator.output.bottom.after', null, blockProps ) }
 						</Separator>
 					</div>
