@@ -129,3 +129,9 @@ div[class^="wp-block-ugb-"] {
 		background-attachment: scroll !important;
 	}
 }
+
+// Some themes may force pseudo elements on our blocks and this will destroy our column layouts.
+.ugb-block-content::before,
+.ugb-block-content::after {
+	content: none !important;
+}

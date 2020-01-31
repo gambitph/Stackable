@@ -174,6 +174,10 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.2.1 =
+
+* Fixed: Some themes may force pseudo elements on our blocks and this will destroy our column layouts.
+
 = 2.2.0 =
 [Welcome Video, Better Separators and Auto-Block Recovery](https://wpstackable.com/blog/welcome-video-better-separators-and-auto-block-recovery/)
 
