@@ -12,7 +12,7 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
     class Stackable_Google_Fonts {
 
         function __construct() {
-            add_action( 'wp_head', array( $this, 'enqueue_frontend_block_fonts' ), 100 );
+            add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_frontend_block_fonts' ), 100 );
 		}
 
 		public function enqueue_frontend_block_fonts() {
