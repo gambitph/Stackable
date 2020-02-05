@@ -120,6 +120,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/block/blog-posts/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/pro.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/help/welcome-tutorial-video.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/jetpack.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/design-library/init.php' );
 
 /**
  * Welcome screen.

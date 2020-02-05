@@ -1,10 +1,7 @@
 /**
  * External dependencies
  */
-import {
-	DesignPanelBody,
-	ProControlButton,
-} from '~stackable/components'
+import { ProControlButton, DesignLibraryList } from '~stackable/components'
 import { applyBlockDesign } from '~stackable/util'
 import { i18n } from 'stackable'
 
@@ -12,44 +9,28 @@ import { i18n } from 'stackable'
  * WordPress dependencies
  */
 import {
-	addFilter, applyFilters, doAction,
+	addFilter, doAction,
 } from '@wordpress/hooks'
+import { PanelBody } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 
 const addDesignPanel = ( blockName, options ) => output => {
-	const designs = applyFilters( `stackable.${ blockName }.edit.designs`, {} )
-	if ( ! Object.keys( designs ).length ) {
-		return output
-	}
-
 	return (
 		<Fragment>
 			{ output }
-			<DesignPanelBody
+			<PanelBody
 				title={ __( 'Designs', i18n ) }
 				initialOpen={ true }
-				className="ugb-block-design-panel"
-				options={ Object.keys( designs ).map( value => {
-					const {
-						label,
-						image,
-					} = designs[ value ]
-					return {
-						label,
-						value,
-						image,
-						imageHeight: 400,
-						imageWidth: 600,
-					}
-				} ) }
-				onChange={ design => {
-					if ( designs[ design ] ) {
-						applyBlockDesign( designs[ design ].attributes )
-					}
-				} }
 			>
-				{ /* { options.hasPremiumDesigns && showProNotice && <ProControlButton type="design" /> } */ }
+				<DesignLibraryList
+					// hasSearch={ true }
+					block={ blockName }
+					onSelect={ designData => {
+						applyBlockDesign( designData.attributes )
+					} }
+				/>
+
 				{ /* // TODO: Remove this when we have more designs/ */ }
 				{ options.hasPremiumDesigns &&
 					<ProControlButton
@@ -58,7 +39,7 @@ const addDesignPanel = ( blockName, options ) => output => {
 						showButton={ false }
 					/>
 				}
-			</DesignPanelBody>
+			</PanelBody>
 		</Fragment>
 	)
 }
