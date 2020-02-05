@@ -32,11 +32,13 @@
 		justify-content: space-between;
 	}
 	&.ugb--is-busy {
-		.components-spinner {
+		.ugb-design-library-item__spinner {
 			position: absolute;
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%) translateY(-10px);
+		}
+		.components-spinner {
 			margin: 0;
 		}
 		img {

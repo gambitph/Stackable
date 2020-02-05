@@ -15,7 +15,7 @@ import { __ } from '@wordpress/i18n'
 
 const DesignLibraryListItem = props => {
 	const {
-		designId, image, label, onClick, plan,
+		designId, image, label, onClick, plan, isPro,
 	} = props
 
 	const [ isBusy, setIsBusy ] = useState( false )
@@ -35,8 +35,8 @@ const DesignLibraryListItem = props => {
 			onMouseEnter={ () => setIsHovered( true ) }
 			onMouseLeave={ () => setIsHovered( false ) }
 		>
-			{ isBusy && <Spinner /> }
-			{ ! isPro && plan !== 'free' && <span className="ugb-design-library-item__premium">{ __( 'PREMIUM', i18n ) }</span> }
+			{ isBusy && <span className="ugb-design-library-item__spinner" data-testid="spinner"><Spinner /></span> }
+			{ ! isPro && plan !== 'free' && <span className="ugb-design-library-item__premium" data-testid="premium-tag">{ plan }</span> }
 			<button
 				className="ugb-design-library-item--image"
 				onClick={ () => {
@@ -61,7 +61,8 @@ const DesignLibraryListItem = props => {
 						buttonClassName="ugb-design-library-item__premium-link"
 						button={
 							<Fragment>
-								<Dashicon icon="external" />{ __( 'Go Premium', i18n ) }
+								<Dashicon icon="external" />
+								{ props.premiumLabel }
 							</Fragment>
 						} />
 				) }
@@ -76,10 +77,9 @@ DesignLibraryListItem.defaultProps = {
 	image: '',
 	label: '',
 	onClick: () => {},
-	type: 'block',
-	block: '',
-	template: '',
 	plan: 'free',
+	isPro,
+	premiumLabel: __( 'Go Premium', i18n ),
 	// isFavorite: false,
 }
 

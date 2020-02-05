@@ -5,36 +5,37 @@ import classnames from 'classnames'
 
 const FavoriteButton = props => {
 	const [ isFavorite, setIsFavorite ] = useState( props.isFavorite )
-	const [ isBusy, setIsBusy ] = useState( true )
+	// const [ isBusy, setIsBusy ] = useState( true )
 
 	const mainClasses = classnames( [
 		'ugb-design-library-item__favorite',
 	], {
 		'ugb--is-favorite': isFavorite,
-		'ugb--is-busy': isBusy,
+		// 'ugb--is-busy': isBusy,
 	} )
 
 	return (
 		<button
 			className={ mainClasses }
 			onClick={ () => {
-				setIsBusy( true )
+				// setIsBusy( true )
 				setIsFavorite( ! isFavorite )
 				props.onClick( ! isFavorite )
-					.finally( () => {
-						setIsBusy( false )
-					} )
+				// .finally( () => {
+				// 	setIsBusy( false )
+				// } )
 			} }
 		>
-			{ ! isFavorite && <SVGHeart /> }
-			{ isFavorite && <SVGHeartFill /> }
+			{ ! isFavorite && <span role="img" data-testid="empty-icon"><SVGHeart /></span> }
+			{ isFavorite && <span role="img" data-testid="filled-icon"><SVGHeartFill /></span> }
 		</button>
 	)
 }
 
 FavoriteButton.defaultProps = {
 	isFavorite: false,
-	onClick: () => new Promise( resolve => setTimeout( resolve, 2000 ) ),
+	// onClick: () => new Promise( resolve => setTimeout( resolve, 2000 ) ),
+	onClick: () => {},
 }
 
 export default FavoriteButton
