@@ -6,8 +6,11 @@
 		text-align: center;
 		font-style: italic;
 	}
-	.components-spinner {
-		margin: 0 auto;
+	.ugb-design-library-search__spinner {
+		display: flex;
+		.components-spinner {
+			margin: 0 auto;
+		}
 	}
 }
 .ugb-design-library-item {

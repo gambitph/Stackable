@@ -32,18 +32,18 @@ const DesignLibraryList = props => {
 		{ props.hasSearch && (
 			<TextControl
 				className="ugb-design-library-search"
-				placeholder={ __( 'Search designs...', i18n ) }
-				autocomplete="off"
+				placeholder={ props.searchPlaceholder }
+				autoComplete="off"
 				value={ search }
 				onChange={ search => setSearch( search ) }
 			/>
 		) }
 
 		<div className="ugb-design-library-items">
-			{ designs.map( design => {
+			{ designs.map( ( design, i ) => {
 				return (
 					<DesignLibraryListItem
-						key={ design }
+						key={ i }
 						type={ design.type }
 						block={ design.block }
 						template={ design.template }
@@ -58,10 +58,10 @@ const DesignLibraryList = props => {
 				)
 			} ) }
 
-			{ isBusy && <Spinner /> }
+			{ isBusy && <div className="ugb-design-library-search__spinner" data-testid="spinner"><Spinner /></div> }
 
 			{ ! isBusy && ! designs.length &&
-				<p className="components-base-control__help">{ __( 'No designs found', i18n ) }</p>
+				<p className="components-base-control__help" data-testid="nothing-found-note">{ __( 'No designs found', i18n ) }</p>
 			}
 		</div>
 	</Fragment>
@@ -69,9 +69,10 @@ const DesignLibraryList = props => {
 
 DesignLibraryList.defaultProps = {
 	hasSearch: false,
+	searchPlaceholder: __( 'Search designs...', i18n ),
+	search: '',
 	type: 'block',
 	block: '',
-	search: '',
 	onSelect: () => {},
 }
 
