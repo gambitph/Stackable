@@ -1,7 +1,18 @@
 .ugb-design-library-items {
-	display: grid;
-	grid-gap: 18px;
-	margin-bottom: 18px;
+	page-break-inside: avoid;
+	break-inside: avoid;
+	column-count: 1;
+	column-gap: 18px;
+	&.ugb-design-library-items--columns-2 {
+		column-count: 2;
+	}
+	&.ugb-design-library-items--columns-3 {
+		column-count: 3;
+	}
+	&.ugb-design-library-items--columns-4 {
+		column-count: 4;
+	}
+
 	.components-base-control__help {
 		text-align: center;
 		font-style: italic;
@@ -13,19 +24,33 @@
 		}
 	}
 }
+.ugb-modal-design-library__wrapper {
+	overflow: hidden;
+}
+.ugb-modal-design-library__designs {
+	overflow: auto;
+}
 .ugb-design-library-item {
 	border-radius: 4px;
 	box-shadow: 0px 2px 15px rgba(153, 153, 153, 0.3);
 	overflow: hidden;
 	transition: all 0.3s ease-in-out;
 	position: relative;
+	margin-bottom: 12px;
+	display: block; // Block or else the list will display a few results in a single vertical line.
+	transform: translateZ(0); // Fixes box shadow being cut by columns.
+	break-inside: avoid;
+	width: 100%;
+	will-change: transform; // This fixes the flickering during hover transition.
 	&:hover {
-		transform: translateY(-4px);
-		box-shadow: 0 6px 25px rgba(153, 153, 153, 0.2);
+		transform: translateY(-4px) scale(1.03);
+		box-shadow: 0 6px 25px rgba(153, 153, 153, 0.3);
 	}
 	img {
 		display: block;
 		pointer-events: none; // Prevent dragging the image.
+		width: 100%;
+		height: auto;
 	}
 	footer {
 		padding: 8px 12px;
@@ -49,7 +74,7 @@
 		}
 	}
 }
-.ugb-design-library-item--image {
+.ugb-design-library-item__image {
 	padding: 0 !important;
 	border: 0 !important;
 	text-align: start !important;
@@ -57,6 +82,7 @@
 	margin: 0 !important;
 	outline: none !important;
 	cursor: pointer;
+	display: block;
 }
 
 .ugb-design-library-item__premium {

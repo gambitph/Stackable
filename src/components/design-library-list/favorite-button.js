@@ -1,7 +1,18 @@
-import { useState } from '@wordpress/element'
+/**
+ * Internal dependencies
+ */
 import SVGHeart from './images/heart.svg'
 import SVGHeartFill from './images/heart-fill.svg'
+
+/**
+ * External dependencies
+ */
 import classnames from 'classnames'
+
+/**
+ * WordPress dependencies
+ */
+import { useState } from '@wordpress/element'
 
 const FavoriteButton = props => {
 	const [ isFavorite, setIsFavorite ] = useState( props.isFavorite )

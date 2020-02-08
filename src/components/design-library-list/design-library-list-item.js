@@ -38,7 +38,7 @@ const DesignLibraryListItem = props => {
 			{ isBusy && <span className="ugb-design-library-item__spinner" data-testid="spinner"><Spinner /></span> }
 			{ ! isPro && plan !== 'free' && <span className="ugb-design-library-item__premium" data-testid="premium-tag">{ plan }</span> }
 			<button
-				className="ugb-design-library-item--image"
+				className="ugb-design-library-item__image"
 				onClick={ () => {
 					if ( ! isPro && plan !== 'free' ) {
 						return

@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import StackableIcon from './images/stackable-icon.svg'
+import SVGStackableIconTextured from './images/stackable-icon-textured.svg'
 import SVGAccordionIcon from './images/accordion-icon.svg'
 import SVGBlockquoteIcon from './images/blockquote-icon.svg'
 import SVGBlogPostsIcon from './images/blog-posts-icon.svg'
@@ -44,7 +44,7 @@ export const colorizeIcon = SvgIcon => {
 // Add an icon to our block category.
 if ( typeof window.wp.blocks !== 'undefined' && typeof window.wp.blocks.updateCategory !== 'undefined' ) {
 	updateCategory( 'stackable', {
-		icon: colorizeIcon( <StackableIcon className="components-panel__icon" width="20" height="20" /> ),
+		icon: colorizeIcon( <SVGStackableIconTextured className="components-panel__icon" width="20" height="20" /> ),
 	} )
 }
 
@@ -70,6 +70,14 @@ domReady( () => {
 		stackableGradient
 	)
 } )
+
+export const SVGStackableIcon = () => {
+	return <SVGStackableIconTextured width="20" height="20" />
+}
+
+export const StackableIcon = () => {
+	return colorizeIcon( <SVGStackableIconTextured width="20" height="20" /> )
+}
 
 export const AccordionIcon = () => {
 	return colorizeIcon( <SVGAccordionIcon width="20" height="20" /> )

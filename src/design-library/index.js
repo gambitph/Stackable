@@ -7,10 +7,10 @@ const designs = []
 
 export const getBlockName = block => block.replace( /^[\w-]+\//, '' )
 
-export const fetchDesignLibrary = async () => {
-	if ( ! designLibrary ) {
+export const fetchDesignLibrary = async ( forceReset = false ) => {
+	if ( ! designLibrary || forceReset ) {
 		const results = await apiFetch( {
-			path: `/wp/v2/stk_design_library`,
+			path: `/wp/v2/stk_design_library${ forceReset ? '/reset' : '' }`,
 			method: 'GET',
 		} )
 		designLibrary = await results
@@ -54,8 +54,9 @@ export const getDesigns = async ( {
 	colors: hasColors = [],
 	categories: hasCategories = [],
 	search = '',
+	reset = false,
 } ) => {
-	let library = Object.values( await fetchDesignLibrary() )
+	let library = Object.values( await fetchDesignLibrary( reset ) )
 
 	if ( isType ) {
 		library = library.filter( ( { type } ) => type === isType )
@@ -119,4 +120,19 @@ export const getDesign = async designId => {
 	}
 
 	return null
+}
+
+/**
+ * Gets the list of blocks available in the design library.
+ */
+export const getAllBlocks = async () => {
+	const library = Object.values( await fetchDesignLibrary() )
+
+	return library.reduce( ( blocks, design ) => {
+		const { block, type } = design
+		if ( ! blocks.includes( block ) && type === 'block' ) {
+			blocks.push( block )
+		}
+		return blocks
+	}, [] )
 }

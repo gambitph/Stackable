@@ -1,32 +1,57 @@
+/**
+ * Internal dependencies
+ */
+import DesignLibraryListItem from './design-library-list-item'
+
+/**
+ * External dependencies
+ */
+import { getDesigns } from '~stackable/design-library'
+import { i18n } from 'stackable'
+import classnames from 'classnames'
+
+/**
+ * WordPress dependencies
+ */
 import {
 	Fragment, useEffect, useState,
 } from '@wordpress/element'
 import { TextControl, Spinner } from '@wordpress/components'
-import { getDesigns } from '~stackable/design-library'
-import DesignLibraryListItem from './design-library-list-item'
 import { __ } from '@wordpress/i18n'
-import { i18n } from 'stackable'
 
 const DesignLibraryList = props => {
 	const {
 		type, block, onSelect,
 	} = props
 
-	const [ designs, setDesigns ] = useState( [] )
-	const [ search, setSearch ] = useState( props.search )
-	const [ isBusy, setIsBusy ] = useState( true )
+	const [ designs, setDesigns ] = useState()
+	const [ search, setSearch ] = useState()
+	const [ isBusy, setIsBusy ] = useState()
+
+	// Update state if props change.
+	useEffect( () => setIsBusy( props.busy !== null ? props.busy : ! props.designs ), [ props.busy ] )
+	useEffect( () => setSearch( props.search ), [ props.search ] )
+	useEffect( () => setDesigns( props.designs || [] ), [ props.designs ] )
 
 	useEffect( () => {
-		getDesigns( {
-			type,
-			block,
-			search,
-		} ).then( designs => {
-			setDesigns( designs )
-		} ).finally( () => {
-			setIsBusy( false )
-		} )
-	}, [ block, search ] )
+		if ( ! props.designs ) {
+			getDesigns( {
+				type,
+				block,
+				search,
+			} ).then( designs => {
+				setDesigns( designs )
+			} ).finally( () => {
+				setIsBusy( false )
+			} )
+		}
+	}, [ type, block, search ] )
+
+	const listClasses = classnames( [
+		'ugb-design-library-items',
+	], {
+		[ `ugb-design-library-items--columns-${ props.columns }` ]: ! isBusy && props.columns,
+	} )
 
 	return <Fragment>
 		{ props.hasSearch && (
@@ -39,8 +64,8 @@ const DesignLibraryList = props => {
 			/>
 		) }
 
-		<div className="ugb-design-library-items">
-			{ designs.map( ( design, i ) => {
+		<div className={ listClasses }>
+			{ ( designs || [] ).map( ( design, i ) => {
 				return (
 					<DesignLibraryListItem
 						key={ i }
@@ -60,7 +85,7 @@ const DesignLibraryList = props => {
 
 			{ isBusy && <div className="ugb-design-library-search__spinner" data-testid="spinner"><Spinner /></div> }
 
-			{ ! isBusy && ! designs.length &&
+			{ ! isBusy && ! ( designs || [] ).length &&
 				<p className="components-base-control__help" data-testid="nothing-found-note">{ __( 'No designs found', i18n ) }</p>
 			}
 		</div>
@@ -68,12 +93,15 @@ const DesignLibraryList = props => {
 }
 
 DesignLibraryList.defaultProps = {
+	designs: null, // If provided, the component will not load its own
 	hasSearch: false,
 	searchPlaceholder: __( 'Search designs...', i18n ),
 	search: '',
 	type: 'block',
 	block: '',
 	onSelect: () => {},
+	columns: 1,
+	busy: null, // If not null, the list will show this busy state.
 }
 
 export default DesignLibraryList
