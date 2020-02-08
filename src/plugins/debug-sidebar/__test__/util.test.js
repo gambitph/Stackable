@@ -64,11 +64,14 @@ describe( 'Utility functions', () => {
 		} )
 
 		test( 'should handle invalid html blocks', () => {
+			console.warn = jest.fn() // eslint-disable-line no-console
+			console.error = jest.fn() // eslint-disable-line no-console
+
 			expect( validateBlockHTML( `<!-- wp:test-block -->
 <span>Test Block</span>
 <!-- /wp:test-block -->` ) ).toBe( false )
-			expect( console ).toHaveWarned()
-			expect( console ).toHaveErrored()
+			expect( console.warn ).toHaveBeenCalled() // eslint-disable-line no-console
+			expect( console.error ).toHaveBeenCalled() // eslint-disable-line no-console
 		} )
 	} )
 } )
