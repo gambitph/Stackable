@@ -1,5 +1,9 @@
 .ugb-control-separator {
-	height: 1px;
-	background: #ddd;
-	margin: 24px -16px;
+	height: 1px !important;
+	background: #ddd !important;
+	margin: 24px -16px !important;
+	border: 0 !important;
+	padding: 0 !important;
+	width: calc(100% + 32px) !important;
+	box-shadow: none !important;
 }
