@@ -2,34 +2,16 @@
  * Internal dependencies
  */
 import CodeTextarea from '../'
+import { render } from '@testing-library/react'
 
 describe( 'Code Textarea', () => {
 	test( 'should render correctly', () => {
-		expect( shallow( <CodeTextarea /> ) ).toMatchSnapshot()
-	} )
-
-	test( 'should display default props', () => {
-		const wrapper = shallow( <CodeTextarea /> )
-		expect( wrapper.find( 'textarea' ).props().value ).toBe( '' )
+		const { getByRole } = render( <CodeTextarea /> )
+		expect( getByRole( 'textbox' ) ).toHaveTextContent( '' )
 	} )
 
 	test( 'should display value', () => {
-		const props = {
-			value: `abc
-line2`,
-		}
-		const wrapper = shallow( <CodeTextarea { ...props } /> )
-		expect( wrapper.find( 'textarea' ).props().value ).toBe( props.value )
-	} )
-
-	test( 'should trigger onChange callback', () => {
-		const onChange = jest.fn()
-		const props = {
-			value: 'testing',
-			onChange,
-		}
-		const wrapper = shallow( <CodeTextarea { ...props } /> )
-		wrapper.find( 'textarea' ).simulate( 'change', 'New value' )
-		expect( onChange ).toHaveBeenCalledWith( 'New value' )
+		const { getByRole } = render( <CodeTextarea value="abc" /> )
+		expect( getByRole( 'textbox' ) ).toHaveTextContent( 'abc' )
 	} )
 } )
