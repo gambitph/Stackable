@@ -24,6 +24,11 @@ const SAMPLE_DATA = {
 }
 
 describe( 'Help Video Snippets', () => {
+	beforeEach( () => {
+		console.warn = jest.fn() // eslint-disable-line no-console
+		console.error = jest.fn() // eslint-disable-line no-console
+	} )
+
 	it( 'should show on trigger', () => {
 		const tooltip = render( <HelpToolTipVideo tooltipData={ SAMPLE_DATA } /> )
 		expect( tooltip.queryByText( 'Sample Title' ) ).toBeFalsy()
