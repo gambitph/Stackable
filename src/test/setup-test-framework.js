@@ -4,6 +4,7 @@
 import '@babel/polyfill' // Fixes: ReferenceError: regeneratorRuntime is not defined
 
 import React from 'react'
+import '@testing-library/jest-dom'
 
 global.React = React
 

@@ -39,5 +39,10 @@ module.exports = {
 
 	testMatch: [ '**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)' ],
 
-	testPathIgnorePatterns: [ '/node_modules/', '<rootDir>/pro__premium_only/' ],
+	testPathIgnorePatterns: [
+		'/node_modules/',
+		'<rootDir>/pro__premium_only/',
+		'/src/block',
+		'/help/__test__/videos.test.js',
+	],
 }
