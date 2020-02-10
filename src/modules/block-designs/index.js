@@ -1,7 +1,9 @@
 /**
  * External dependencies
  */
-import { ProControlButton, DesignLibraryList } from '~stackable/components'
+import {
+	ProControlButton, DesignLibraryControl,
+} from '~stackable/components'
 import { applyBlockDesign } from '~stackable/util'
 import { i18n } from 'stackable'
 
@@ -23,9 +25,8 @@ const addDesignPanel = ( blockName, options ) => output => {
 				title={ __( 'Designs', i18n ) }
 				initialOpen={ true }
 			>
-				<DesignLibraryList
-					// hasSearch={ true }
-					block={ blockName }
+				<DesignLibraryControl
+					block={ `ugb/${ blockName }` }
 					onSelect={ designData => {
 						applyBlockDesign( designData.attributes )
 					} }

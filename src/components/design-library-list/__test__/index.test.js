@@ -2,29 +2,25 @@ import DesignLibraryList from '../'
 import {
 	render, fireEvent, wait,
 } from '@testing-library/react'
-import { getDesigns, getDesign } from '~stackable/design-library'
+import { getDesign } from '~stackable/design-library'
 
 jest.mock( '~stackable/design-library' )
 
 describe( 'DesignLibraryList', () => {
-	it( 'renders', async () => {
-		getDesigns.mockReturnValue( Promise.resolve( [ {
+	it( 'renders', () => {
+		const designs = [ {
 			image: 'https://test.com/img.jpg',
 			label: 'My Design',
 		}, {
 			image: 'https://test.com/img2.jpg',
 			label: 'My Other Design',
-		} ] ) )
+		} ]
 
 		const {
-			getByText, getAllByRole, getByTestId, queryByTestId,
-		} = render( <DesignLibraryList /> )
+			getByText, getAllByRole, queryByTestId,
+		} = render( <DesignLibraryList designs={ designs } /> )
 
-		// Display a spinner when loading data.
-		expect( getByTestId( 'spinner' ) ).toBeTruthy()
-		await wait()
-
-		// Data has loaded, remove spinner.
+		// Spinner
 		expect( queryByTestId( 'spinner' ) ).toBeNull()
 
 		// Images.
@@ -37,56 +33,36 @@ describe( 'DesignLibraryList', () => {
 		expect( getByText( 'My Other Design' ) ).toBeTruthy()
 	} )
 
-	it( 'shows a no designs found note', async () => {
-		// No designs available.
-		getDesigns.mockReturnValue( Promise.resolve( [] ) )
-
-		const { getByTestId } = render( <DesignLibraryList /> )
-
-		await wait()
+	it( 'shows a no designs found note', () => {
+		const { getByTestId } = render( <DesignLibraryList designs={ [] } /> )
 
 		// Data has loaded, remove spinner.
 		expect( getByTestId( 'nothing-found-note' ) ).toBeTruthy()
 	} )
 
-	it( 'no search field by default', async () => {
-		const { queryByPlaceholderText } = render(
-			<DesignLibraryList searchPlaceholder="Search" />
-		)
-		expect( queryByPlaceholderText( 'Search' ) ).toBeNull()
-		await wait()
-	} )
+	it( 'shows a spinner if busy', () => {
+		const { getByTestId } = render( <DesignLibraryList isBusy={ true } /> )
 
-	it( 'shows search field', async () => {
-		const { getByPlaceholderText, getByDisplayValue } = render(
-			<DesignLibraryList
-				hasSearch={ true }
-				searchPlaceholder="Search"
-				search="Search term" />
-		)
-		expect( getByPlaceholderText( 'Search' ) ).toBeTruthy()
-		expect( getByDisplayValue( 'Search term' ) ).toBeTruthy()
-		await wait()
+		// Data has loaded, remove spinner.
+		expect( getByTestId( 'spinner' ) ).toBeTruthy()
 	} )
 
 	it( 'triggers onSelect', async () => {
-		getDesigns.mockReturnValue( Promise.resolve( [ {
+		const designs = [ {
 			image: 'https://test.com/img.jpg',
 			label: 'My Design',
 		}, {
 			image: 'https://test.com/img2.jpg',
 			label: 'My Other Design',
-		} ] ) )
-
-		getDesign.mockReturnValueOnce( Promise.resolve( 'design-1' ) )
-		getDesign.mockReturnValueOnce( Promise.resolve( 'design-2' ) )
+		} ]
 
 		const onSelect = jest.fn()
 		const {
 			getAllByRole,
-		} = render( <DesignLibraryList onSelect={ onSelect } /> )
+		} = render( <DesignLibraryList designs={ designs } onSelect={ onSelect } /> )
 
-		await wait()
+		getDesign.mockReturnValueOnce( Promise.resolve( 'design-1' ) )
+		getDesign.mockReturnValueOnce( Promise.resolve( 'design-2' ) )
 
 		// Images.
 		expect( onSelect ).toHaveBeenCalledTimes( 0 )

@@ -1,9 +1,18 @@
+/**
+ * External dependencies
+ */
+import { orderBy } from 'lodash'
+import { ControlSeparator } from '~stackable/components'
+import { getAllBlocks, getDesigns } from '~stackable/design-library'
+import { i18n } from 'stackable'
+import classnames from 'classnames'
+
+/**
+ * WordPress dependencies
+ */
 import { useEffect, useState } from '@wordpress/element'
 import { select } from '@wordpress/data'
-import { orderBy } from 'lodash'
-import { getAllBlocks, getDesigns } from '~stackable/design-library'
 import { __ } from '@wordpress/i18n'
-import { i18n } from 'stackable'
 
 const BlockList = props => {
 	const [ blockDesignList, setBlockDesignList ] = useState( [] )
@@ -69,54 +78,35 @@ const BlockList = props => {
 		} )
 	}, [ blockList, props.type, props.search, props.mood, props.colors ] )
 
-	// useEffect( () => {
-	// 	if ( ! Object.keys( blockList ).length || ! props.designs.length ) {
-	// 		return
-	// 	}
-
-	// 	// We need to create a blank list first.
-	// 	const initBlocks = Object.keys( blockList ).reduce( ( blocks, name ) => {
-	// 		blocks[ name ] = { ...blockList[ name ] }
-	// 		return blocks
-	// 	}, {} )
-
-	// 	// Count the number of designs per block.
-	// 	const blocks = props.designs.reduce( ( blocks, design ) => {
-	// 		const { block, type } = design
-	// 		if ( type === 'block' && blocks[ block ] ) {
-	// 			blocks[ block ].count++
-	// 		}
-	// 		return blocks
-	// 	}, { ...initBlocks } )
-
-	// 	setBlockDesignList( orderBy( blocks, [ 'title' ], [ 'asc' ] ) )
-	// }, [ blockList, props.designs ] )
-
 	return (
 		<ul className="ugb-block-list">
-			<li>
-				<div
-					className={ selected === '' ? 'is-active' : '' }
-					onClick={ () => {
-						setSelected( '' )
-						props.onSelect( { block: '', plan: '' } )
-					} }
-					onKeyPress={ e => {
-						if ( e.keyCode === 13 ) {
-							this.click()
-						}
-					} }
-					role="button"
-					tabIndex={ 0 }
-				>
-					<span>{ __( 'All Block Designs', i18n ) }</span>
-					<span className="ugb-block-list__count" data-count={ totalDesigns }>{ totalDesigns }</span>
-				</div>
-			</li>
-			{ props.showFree &&
+			{ ! props.forceBlock &&
+				<li>
+					<div
+						className={ selected === '' ? 'is-active' : '' }
+						data-count={ totalDesigns }
+						onClick={ () => {
+							setSelected( '' )
+							props.onSelect( { block: '', plan: '' } )
+						} }
+						onKeyPress={ e => {
+							if ( e.keyCode === 13 ) {
+								this.click()
+							}
+						} }
+						role="button"
+						tabIndex={ 0 }
+					>
+						<span>{ __( 'All Block Designs', i18n ) }</span>
+						<span className="ugb-block-list__count">{ totalDesigns }</span>
+					</div>
+				</li>
+			}
+			{ ! props.forceBlock && props.showFree && totalDesigns !== totalFree &&
 				<li>
 					<div
 						className={ selected === 'free' ? 'is-active' : '' }
+						data-count={ totalFree }
 						onClick={ () => {
 							setSelected( 'free' )
 							props.onSelect( { block: '', plan: 'free' } )
@@ -130,18 +120,27 @@ const BlockList = props => {
 						tabIndex={ 0 }
 					>
 						<span>{ __( 'Free Designs', i18n ) }</span>
-						<span className="ugb-block-list__count" data-count={ totalFree }>{ totalFree }</span>
+						<span className="ugb-block-list__count">{ totalFree }</span>
 					</div>
 				</li>
 			}
+			{ ! props.forceBlock && <ControlSeparator /> }
 			{ blockDesignList.map( ( block, i ) => {
+				const classes = classnames( {
+					'is-active': selected === block.name || block.name === props.forceBlock,
+					'is-disabled': props.forceBlock && block.name !== props.forceBlock,
+				} )
+
 				return (
 					<li key={ i }>
 						<div
-							className={ selected === block.name ? 'is-active' : '' }
+							className={ classes }
+							data-count={ block.count }
 							onClick={ () => {
-								setSelected( block.name )
-								props.onSelect( { block: block.name, plan: '' } )
+								if ( ! props.forceBlock ) {
+									setSelected( block.name )
+									props.onSelect( { block: block.name, plan: '' } )
+								}
 						 } }
 							onKeyPress={ e => {
 							 if ( e.keyCode === 13 ) {
@@ -152,7 +151,7 @@ const BlockList = props => {
 							tabIndex={ 0 }
 						>
 							<span>{ block.label }</span>
-							<span className="ugb-block-list__count" data-count={ block.count }>{ block.count }</span>
+							<span className="ugb-block-list__count">{ block.count }</span>
 						</div>
 					</li>
 				)
@@ -162,7 +161,6 @@ const BlockList = props => {
 }
 
 BlockList.defaultProps = {
-	// designs: [],
 	type: 'block',
 	search: '',
 	mood: '',
@@ -170,6 +168,7 @@ BlockList.defaultProps = {
 	colors: [],
 	onSelect: () => {},
 	showFree: true,
+	forceBlock: '',
 }
 
 export default BlockList

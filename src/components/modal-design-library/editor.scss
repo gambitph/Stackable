@@ -26,6 +26,11 @@
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
+
+		.ugb-control-separator {
+			margin: 8px 0 !important;
+			width: 100% !important;
+		}
 	}
 	.ugb-modal-design-library__topbar {
 		display: flex;
@@ -83,11 +88,14 @@
 	.is-active {
 		font-weight: bold;
 	}
+	.is-disabled {
+		opacity: 0.3;
+	}
 }
 .ugb-block-list .ugb-block-list__count {
 	float: right;
 }
-.ugb-block-list .ugb-block-list__count[data-count="0"] {
+.ugb-block-list [data-count="0"] {
 	opacity: 0.3;
 }
 

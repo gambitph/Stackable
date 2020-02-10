@@ -42,8 +42,10 @@ const edit = ( { replaceBlock } ) => {
 					onClose={ () => {
 						setIsLibraryOpen( false )
 					} }
-					onSelect={ designData => {
-						replaceBlock( designData.name, designData.attributes, designData.innerBlocks )
+					onSelect={ ( {
+						name, attributes, innerBlocks,
+					} ) => {
+						replaceBlock( name, attributes, innerBlocks )
 					} }
 				/>
 			}

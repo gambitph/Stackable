@@ -1,20 +1,33 @@
-import {
-	Modal, TextControl, IconButton,
-} from '@wordpress/components'
-import { useEffect, useState } from '@wordpress/element'
-import { __ } from '@wordpress/i18n'
-import { i18n } from 'stackable'
-import { DesignLibraryList, AdvancedToolbarControl } from '~stackable/components'
+/**
+ * Internal deprendencies
+ */
 import SVGViewSingle from './images/view-single.svg'
 import SVGViewMany from './images/view-many.svg'
 import SVGViewFew from './images/view-few.svg'
-import { getDesigns } from '~stackable/design-library'
 import BlockList from './block-list'
 import ColorList from './color-list'
 
+/**
+ * External deprendencies
+ */
+import { DesignLibraryList, AdvancedToolbarControl } from '~stackable/components'
+import { getDesigns } from '~stackable/design-library'
+import { i18n } from 'stackable'
+
+/**
+ * WordPress deprendencies
+ */
+import {
+	Modal, TextControl, IconButton,
+} from '@wordpress/components'
+import {
+	useEffect, useState,
+} from '@wordpress/element'
+import { __ } from '@wordpress/i18n'
+
 const ModalDesignLibrary = props => {
-	const [ search, setSearch ] = useState( '' )
-	const [ block, setBlock ] = useState( '' )
+	const [ search, setSearch ] = useState( props.search )
+	const [ block, setBlock ] = useState()
 	const [ plan, setPlan ] = useState( '' )
 	const [ mood, setMood ] = useState( '' )
 	const [ colors, setColors ] = useState( [] )
@@ -22,6 +35,8 @@ const ModalDesignLibrary = props => {
 	const [ designs, setDesigns ] = useState( [] )
 	const [ isBusy, setIsBusy ] = useState( true )
 	const [ doReset, setDoReset ] = useState( false )
+
+	useEffect( () => setBlock( props.selectedBlock ), [ props.selectedBlock ] )
 
 	const [ searchDebounced, setSearchDebounced ] = useState( search )
 	const [ debounceTimeout, setDebounceTimeout ] = useState( null )
@@ -34,7 +49,15 @@ const ModalDesignLibrary = props => {
 			setSearchDebounced( search )
 		}, 500 ) )
 	}, [ search ] )
-	// const [ searchDebounced ] = useDebounce( search, 1000 )
+
+	// Select the input field on open.
+	// Use this method since useRef isn't working.
+	useEffect( () => {
+		const input = document.querySelector( '.ugb-modal-design-library__search input' )
+		if ( input ) {
+			input.focus()
+		}
+	}, [] )
 
 	useEffect( () => {
 		if ( doReset ) {
@@ -80,6 +103,10 @@ const ModalDesignLibrary = props => {
 						<AdvancedToolbarControl
 							controls={ [
 								{
+									value: '',
+									title: __( 'All', i18n ),
+								},
+								{
 									value: 'light',
 									title: __( 'Light', i18n ),
 								},
@@ -95,6 +122,7 @@ const ModalDesignLibrary = props => {
 							search={ search }
 							mood={ mood }
 							colors={ colors }
+							forceBlock={ props.selectedBlock }
 							onSelect={ ( { block, plan } ) => {
 								setBlock( block )
 								setPlan( plan )
@@ -135,7 +163,7 @@ const ModalDesignLibrary = props => {
 					<DesignLibraryList
 						columns={ columns }
 						onSelect={ props.onSelect }
-						busy={ isBusy }
+						isBusy={ isBusy }
 						designs={ designs }
 					/>
 				</div>
@@ -145,6 +173,8 @@ const ModalDesignLibrary = props => {
 }
 
 ModalDesignLibrary.defaultProps = {
+	search: '',
+	selectedBlock: '',
 	onClose: () => {},
 	onSelect: () => {},
 }
