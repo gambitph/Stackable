@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { ResponsiveToggle } from '~stackable/components'
+import ResponsiveToggle from '~stackable/components/responsive-toggle'
 
 const BaseControlMultiLabel = props => {
 	return (
