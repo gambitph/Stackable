@@ -9,7 +9,6 @@ import HelpTooltip from '../help-tooltip'
 import {
 	render, fireEvent, act,
 } from '@testing-library/react'
-import { shallow } from 'enzyme'
 
 jest.useFakeTimers()
 
@@ -18,14 +17,6 @@ describe( '<HelpToolTip/>', () => {
 		act( () => {
 			const tooltip = render( <HelpTooltip /> )
 			expect( tooltip ).not.toBeNull()
-		} )
-	} )
-
-	it( 'pass getAnchorRect if provided', async () => {
-		act( () => {
-			const rectFunc = jest.fn( () => {} )
-			const wrapper = shallow( <HelpTooltip getAnchorRect={ rectFunc } /> )
-			expect( wrapper.find( 'Popover' ).prop( 'getAnchorRect' ) ).toBe( rectFunc )
 		} )
 	} )
 

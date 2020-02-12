@@ -14,7 +14,7 @@ import {
 	registerBlockType,
 	unregisterBlockType,
 } from '@wordpress/blocks'
-import { render } from 'enzyme'
+import { render } from '@testing-library/react'
 
 // TODO: cleanup, remove unused functions here
 
@@ -23,7 +23,8 @@ export const blockSaveRender = ( name, settings, attributes = null ) => {
 		registerStackableBlock( name, { ...settings, category: 'common' } )
 	}
 	const attributesToRender = getBlockModifiedAttributes( name, settings, attributes )
-	return render( getSaveElement( name, attributesToRender ) )
+	const { baseElement } = render( getSaveElement( name, attributesToRender ) )
+	return baseElement.querySelector( `.wp-block-${ name.replace( '/', '-' ) }` )
 }
 
 /**

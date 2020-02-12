@@ -11,11 +11,6 @@ global.React = React
 // Some may refer to wp.*, just prevent errors.
 global.wp = {}
 
-// Configure Enzyme adapter
-import { configure } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
-configure( { adapter: new Adapter() } )
-
 global.window.requestAnimationFrame = setTimeout
 global.window.cancelAnimationFrame = clearTimeout
 
