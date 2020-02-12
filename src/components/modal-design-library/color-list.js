@@ -1,4 +1,4 @@
-import { useEffect, useState } from '@wordpress/element'
+import { useState } from '@wordpress/element'
 import { BaseControl, ColorPalette } from '@wordpress/components'
 
 const COLORS = {
@@ -51,10 +51,6 @@ const COLORS = {
 const ColorList = props => {
 	const [ selectedColors, setSelectedColors ] = useState( [] )
 
-	useEffect( () => {
-		props.onSelect( selectedColors )
-	}, [ selectedColors ] )
-
 	return (
 		<BaseControl className="ugb-modal-design-library__color-list" id="design-colors">
 			<div className="ugb-modal-design-library__color-list-wrapper">
@@ -65,11 +61,14 @@ const ColorList = props => {
 						value={ selectedColors.includes( name ) ? color : '' } // Mimic active state.
 						colors={ [ { color, name } ] }
 						onChange={ color => {
+							let newColors
 							if ( ! color ) {
-								setSelectedColors( selectedColors.filter( n => n !== name ) )
+								newColors = selectedColors.filter( n => n !== name )
 							} else {
-								setSelectedColors( [ ...selectedColors, name ] )
+								newColors = [ ...selectedColors, name ]
 							}
+							setSelectedColors( newColors )
+							props.onSelect( newColors )
 						} }
 						clearable={ false }
 						disableCustomColors={ true }

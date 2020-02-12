@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { orderBy } from 'lodash'
-import { ControlSeparator } from '~stackable/components'
+import ControlSeparator from '../control-separator'
 import { getAllBlocks, getDesigns } from '~stackable/design-library'
 import { i18n } from 'stackable'
 import classnames from 'classnames'
@@ -35,7 +35,6 @@ const BlockList = props => {
 
 				return blocks
 			}, {} )
-
 			setBlockList( blockList )
 		} )
 	}, [] )
@@ -46,7 +45,7 @@ const BlockList = props => {
 		}
 
 		getDesigns( {
-			type: props.type,
+			type: 'block',
 			search: props.search,
 			mood: props.mood,
 			colors: props.colors,
@@ -76,7 +75,7 @@ const BlockList = props => {
 			setTotalFree( freeDesigns )
 			setBlockDesignList( orderBy( blocks, [ 'title' ], [ 'asc' ] ) )
 		} )
-	}, [ blockList, props.type, props.search, props.mood, props.colors ] )
+	}, [ blockList, props.search, props.mood, props.colors ] )
 
 	return (
 		<ul className="ugb-block-list">
@@ -96,13 +95,17 @@ const BlockList = props => {
 						} }
 						role="button"
 						tabIndex={ 0 }
+						aria-pressed={ selected === '' ? 'true' : 'false' }
 					>
-						<span>{ __( 'All Block Designs', i18n ) }</span>
-						<span className="ugb-block-list__count">{ totalDesigns }</span>
+						{ __( 'All Block Designs', i18n ) }
+						<span
+							className="ugb-block-list__count"
+							data-testid="all-count"
+						>{ totalDesigns }</span>
 					</div>
 				</li>
 			}
-			{ ! props.forceBlock && props.showFree && totalDesigns !== totalFree &&
+			{ ! props.forceBlock && totalDesigns !== totalFree &&
 				<li>
 					<div
 						className={ selected === 'free' ? 'is-active' : '' }
@@ -118,16 +121,21 @@ const BlockList = props => {
 						} }
 						role="button"
 						tabIndex={ 0 }
+						aria-pressed={ selected === 'free' ? 'true' : 'false' }
 					>
-						<span>{ __( 'Free Designs', i18n ) }</span>
-						<span className="ugb-block-list__count">{ totalFree }</span>
+						{ __( 'Free Designs', i18n ) }
+						<span
+							className="ugb-block-list__count"
+							data-testid="free-count"
+						>{ totalFree }</span>
 					</div>
 				</li>
 			}
 			{ ! props.forceBlock && <ControlSeparator /> }
 			{ blockDesignList.map( ( block, i ) => {
+				const isSelected = selected === block.name || block.name === props.forceBlock
 				const classes = classnames( {
-					'is-active': selected === block.name || block.name === props.forceBlock,
+					'is-active': isSelected,
 					'is-disabled': props.forceBlock && block.name !== props.forceBlock,
 				} )
 
@@ -149,9 +157,13 @@ const BlockList = props => {
 						 } }
 							role="button"
 							tabIndex={ 0 }
+							aria-pressed={ isSelected ? 'true' : 'false' }
 						>
-							<span>{ block.label }</span>
-							<span className="ugb-block-list__count">{ block.count }</span>
+							{ block.label }
+							<span
+								className="ugb-block-list__count"
+								data-testid={ `${ block.name }-count` }
+							>{ block.count }</span>
 						</div>
 					</li>
 				)
@@ -161,13 +173,10 @@ const BlockList = props => {
 }
 
 BlockList.defaultProps = {
-	type: 'block',
 	search: '',
 	mood: '',
-	plan: '',
 	colors: [],
 	onSelect: () => {},
-	showFree: true,
 	forceBlock: '',
 }
 

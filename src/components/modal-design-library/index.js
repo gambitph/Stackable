@@ -10,7 +10,8 @@ import ColorList from './color-list'
 /**
  * External deprendencies
  */
-import { DesignLibraryList, AdvancedToolbarControl } from '~stackable/components'
+import AdvancedToolbarControl from '~stackable/components/advanced-toolbar-control'
+import DesignLibraryList from '~stackable/components/design-library-list'
 import { getDesigns } from '~stackable/design-library'
 import { i18n } from 'stackable'
 
@@ -40,6 +41,7 @@ const ModalDesignLibrary = props => {
 
 	const [ searchDebounced, setSearchDebounced ] = useState( search )
 	const [ debounceTimeout, setDebounceTimeout ] = useState( null )
+
 	useEffect( () => {
 		if ( debounceTimeout ) {
 			clearTimeout( debounceTimeout )
@@ -93,6 +95,7 @@ const ModalDesignLibrary = props => {
 						placeholder={ __( 'Search designs...', i18n ) }
 						value={ search }
 						onChange={ search => setSearch( search ) }
+						data-testid="input-search"
 					/>
 					<div className="ugb-modal-design-library__filters">
 						<ColorList

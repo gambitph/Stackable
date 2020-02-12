@@ -2,7 +2,7 @@
  * External dependencies.
  */
 import { getDesign } from '~stackable/design-library'
-import { ProModal } from '~stackable/components'
+import ProModal from '../pro-modal'
 import { isPro, i18n } from 'stackable'
 import classnames from 'classnames'
 
