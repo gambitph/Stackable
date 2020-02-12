@@ -41,11 +41,10 @@ describe( '<HelpToolTip/>', () => {
 	} )
 
 	it( 'renders video', () => {
-		act( () => {
-			const tooltip = render( <HelpTooltip videoUrl="https://test.com/video.mp4" /> )
-			jest.advanceTimersByTime( 1 )
-			expect( tooltip.queryByRole( 'img' ) ).toBeTruthy()
-		} )
+		// Prevent video tag errors, they don't mean anything
+		console.error = jest.fn() // eslint-disable-line no-console
+		const tooltip = render( <HelpTooltip videoUrl="https://test.com/video.mp4" /> )
+		expect( tooltip.queryByRole( 'img' ) ).toBeTruthy()
 	} )
 
 	it( 'on click close is called', () => {
