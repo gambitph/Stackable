@@ -138,10 +138,13 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					max={ 4 }
 					className="ugb--help-tip-general-columns"
 				/>
-				{ /**
-				* The "height" option is really the "columnHeight" option. @see edit.js
-				* But we need to use height instead of min-height. @see index.js
-				*/ }
+				{
+
+				/**
+				 * The "height" option is really the "columnHeight" option. @see edit.js
+				 * But we need to use height instead of min-height. @see index.js
+				 */
+				}
 				<ResponsiveControl
 					attrNameTemplate="%sColumnHeight"
 					setAttributes={ setAttributes }
