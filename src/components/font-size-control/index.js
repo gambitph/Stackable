@@ -12,10 +12,6 @@ import { i18n } from 'stackable'
 const FontSizeControl = props => {
 	return (
 		<AdvancedRangeControl
-			min={ [ 10, 0.1 ] }
-			max={ [ 100, 3 ] }
-			step={ [ 1, 0.05 ] }
-			units={ [ 'px', 'em' ] }
 			initialPosition="21" // Some typical value of a font so that changing it will not jump the font size.
 			{ ...props }
 			onChangeUnit={ value => {
@@ -40,6 +36,10 @@ FontSizeControl.defaultProps = {
 	onChange: () => {},
 	unit: 'px',
 	onChangeUnit: () => {},
+	min: [ 10, 0.1 ],
+	max: [ 100, 3 ],
+	step: [ 1, 0.05 ],
+	units: [ 'px', 'em' ],
 }
 
 export default FontSizeControl
