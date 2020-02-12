@@ -24,7 +24,7 @@ const ModalWelcomeTutorial = props => {
 				allowFullScreen
 			/>
 			<p>
-				<Button className="button-primary" onClick={ props.onRequestClose }>
+				<Button className="button-primary" onClick={ props.onRequestClose } data-testid="button-close">
 					{ __( 'Close it, I\'m good', i18n ) }
 				</Button>
 			</p>
