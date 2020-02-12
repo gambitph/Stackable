@@ -62,7 +62,7 @@ export const combineStyleRules = styleObject => {
  *
  * @return {string} Minified CSS string
  */
-const generateStyles = ( styleObject, blockMainClassName = '', blockUniqueClassName = '', breakTablet = 1025, breakMobile = 768, editorMode = false ) => {
+export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqueClassName = '', breakTablet = 1025, breakMobile = 768, editorMode = false ) => {
 	const styleStrings = []
 
 	const desktopStyles = omit( styleObject, [ 'desktopTablet', 'desktopOnly', 'tablet', 'tabletOnly', 'mobile', 'editor' ] )

@@ -1,7 +1,10 @@
 /**
  * Internal dependencies
  */
-import { addBlockClassNames, combineStyleRules } from '../'
+import BlockStyles, {
+	addBlockClassNames, combineStyleRules, generateStyles,
+} from '../'
+import { render } from '@testing-library/react'
 
 describe( 'Add Block Class Names', () => {
 	test( 'should work', () => {
@@ -75,5 +78,138 @@ describe( 'Combine Style Rules', () => {
 				'--customProp': 0,
 			},
 		} ) ).toBe( '.class{margin-right:0;padding:0;border-top-radius:0;--custom-prop:0}' )
+	} )
+} )
+
+describe( 'generateStyles', () => {
+	it( 'should render basic styles', () => {
+		const styles = {
+			'.test': { color: 'red' },
+		}
+		expect( generateStyles( styles ) ).toEqual( '.test{color:red}' )
+	} )
+
+	it( 'should render desktop only styles', () => {
+		const styles = {
+			desktopOnly: { '.test': { color: 'red' } },
+		}
+
+		const results = generateStyles( styles, '', '', 900, 400 )
+		expect( results ).toEqual( expect.stringMatching( /@media[^\{]+min-width:900px[^\{]+\{\.test{color:red/ ) )
+	} )
+
+	it( 'should render desktop and tablet only styles', () => {
+		const styles = {
+			desktopTablet: { '.test': { color: 'red' } },
+		}
+
+		const results = generateStyles( styles, '', '', 900, 400 )
+		expect( results ).toEqual( expect.stringMatching( /@media[^\{]+min-width:400px[^\{]+\{\.test{color:red/ ) )
+	} )
+
+	it( 'should render tablet and mobile', () => {
+		const styles = {
+			tablet: { '.test': { color: 'red' } },
+		}
+
+		const results = generateStyles( styles, '', '', 900, 400 )
+		expect( results ).toEqual( expect.stringMatching( /@media[^\{]+max-width:900px[^\{]+\{\.test{color:red/ ) )
+	} )
+
+	it( 'should render tablet only', () => {
+		const styles = {
+			tabletOnly: { '.test': { color: 'red' } },
+		}
+
+		const results = generateStyles( styles, '', '', 900, 400 )
+		expect( results ).toEqual( expect.stringMatching( /@media[^\{]+max-width:900px[^\{]+\{\.test{color:red/ ) )
+		expect( results ).toEqual( expect.stringMatching( /@media[^\{]+min-width:400px[^\{]+\{\.test{color:red/ ) )
+	} )
+
+	it( 'should render mobile only', () => {
+		const styles = {
+			mobile: { '.test': { color: 'red' } },
+		}
+
+		const results = generateStyles( styles, '', '', 900, 400 )
+		expect( results ).toEqual( expect.stringMatching( /@media[^\{]+max-width:400px[^\{]+\{\.test{color:red/ ) )
+	} )
+
+	it( 'should render editor only styles', () => {
+		const styles = {
+			editor: { '.test': { color: 'red' } },
+		}
+
+		const results = generateStyles( styles, '', '', 900, 400, true )
+		expect( results ).toContain( '.test{color:red' )
+		expect( results ).toContain( '#editor' )
+	} )
+} )
+
+describe( 'BlockStyles', () => {
+	it( 'should render styles', () => {
+		const { container } = render( <BlockStyles style={ { '.test': { color: 'red' } } } /> )
+		expect( container.querySelector( 'style' ).innerHTML ).toBe( '.test{color:red}' )
+	} )
+
+	it( 'should render nothing when there are no styles given', () => {
+		const { container } = render( <BlockStyles style={ {} } /> )
+		expect( container.querySelector( 'style' ) ).toBeFalsy()
+	} )
+
+	it( 'should render breakpoints', () => {
+		const styles = {
+			'.desktop': {
+				color: 'yellow',
+			},
+			tablet: {
+				'.tablet': {
+					color: 'red',
+				},
+			},
+			mobile: {
+				'.mobile': {
+					color: 'blue',
+				},
+			},
+		}
+		const { container } = render( <BlockStyles style={ styles } breakTablet="900" breakMobile="400" /> )
+		const results = container.querySelector( 'style' ).innerHTML
+
+		expect( results ).toEqual( expect.stringMatching( /.desktop\{color:yellow/ ) )
+		expect( results ).toEqual( expect.stringMatching( /@media[^\{]+900px[^\}]+.tablet\{color:red/ ) )
+		expect( results ).toEqual( expect.stringMatching( /@media[^\{]+400px[^\}]+.mobile\{color:blue/ ) )
+	} )
+
+	it( 'should render block classnames', () => {
+		const style = {
+			'.test': { color: 'red' },
+			'.main': { color: 'blue' },
+		}
+		const { container } = render( <BlockStyles style={ style } blockMainClassName="main" blockUniqueClassName="unique" /> )
+		expect( container.querySelector( 'style' ).innerHTML ).toBe( '.unique .test{color:red}.unique.main{color:blue}' )
+	} )
+
+	it( 'should not render editor styles', () => {
+		const style = {
+			'.test': { color: 'red' },
+			editor: {
+				'.editor': { color: 'blue' },
+			},
+		}
+		const { container } = render( <BlockStyles style={ style } editorMode={ false } /> )
+		expect( container.querySelector( 'style' ).innerHTML ).not.toEqual( expect.stringMatching( /.editor/ ) )
+	} )
+
+	it( 'should render editor styles', () => {
+		const style = {
+			'.test': { color: 'red' },
+			editor: {
+				'.editor': { color: 'blue' },
+			},
+		}
+		const { container } = render( <BlockStyles style={ style } editorMode={ true } /> )
+		expect( container.querySelector( 'style' ).innerHTML ).toEqual( expect.stringMatching( /.editor/ ) )
+		expect( container.querySelector( 'style' ).innerHTML ).toEqual( expect.stringMatching( /#editor/ ) )
 	} )
 } )
