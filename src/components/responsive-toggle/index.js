@@ -45,11 +45,6 @@ class ResponsiveToggle extends Component {
 		}
 	}
 
-	onChangeUnit( value ) {
-		this.props.onChangeUnit( value )
-		this.setState( { unit: value } )
-	}
-
 	onChangeScreen( value ) {
 		const firstScreenOption = this.props.screens[ 0 ]
 		if ( ! this.state.isScreenPickerOpen && this.state.screen === firstScreenOption && value === firstScreenOption ) {
