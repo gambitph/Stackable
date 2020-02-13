@@ -1,6 +1,4 @@
-language: node_js
-node_js:
-  - 8
+language: generic
 cache:
   directories:
     - node_modules
