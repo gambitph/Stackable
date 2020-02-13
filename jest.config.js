@@ -8,6 +8,11 @@ module.exports = {
 		'<rootDir>/src/test/setup-test-framework.js',
 	],
 
+	modulePathIgnorePatterns: [
+		'<rootDir>/freemius',
+		'<rootDir>/build',
+	],
+
 	// Custom mappers.
 	moduleNameMapper: {
 		'^~stackable(.*)$': '<rootDir>/src$1',
