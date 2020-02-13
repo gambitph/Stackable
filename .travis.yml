@@ -8,4 +8,4 @@ install:
   - npm ci
 script:
   - npm run build
-  - npm test
+  - npm test -- --watchAll=false
