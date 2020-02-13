@@ -42,7 +42,7 @@ module.exports = {
 	testPathIgnorePatterns: [
 		'/node_modules/',
 		'<rootDir>/pro__premium_only/',
-		'/src/block',
+		//'/src/block',
 		'/help/__test__/videos.test.js',
 	],
 }
