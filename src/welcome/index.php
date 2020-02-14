@@ -63,7 +63,7 @@ SVG;
 					'isPro' => sugb_fs()->can_use_premium_code(),
 					'showProNotice' => stackable_should_show_pro_notices(),
 					'pricingURL' => sugb_fs()->get_upgrade_url(),
-					'contactURL' => sugb_fs()->contact_url( 'technical_support' ),
+					'contactURL' => ! sugb_fs()->is_whitelabeled() ? sugb_fs()->contact_url( 'technical_support' ) : '',
 					'planName' => sugb_fs()->get_plan_name(),
 					'disabledBlocks' => stackable_get_disabled_blocks(),
 					'nonce' => stackable_get_disabled_blocks_nonce(),

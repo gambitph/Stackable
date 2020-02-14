@@ -257,7 +257,7 @@ const knowledgeBaseList = () => {
 				<br />
 				<span>{ __( 'Documentation & tutorials for building your site with Stackable.', i18n ) }</span>
 			</li>
-			{ isPro &&
+			{ isPro && contactURL &&
 				<li>
 					<span role="img" aria-label="envelope">✉️</span> <a href={ contactURL }><strong>{ __( 'Contact Email Support', i18n ) }</strong></a>
 					<br />
