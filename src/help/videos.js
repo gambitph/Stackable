@@ -406,6 +406,7 @@ const VIDEOS = {
 		video: backgroundOnOff,
 		title: __( 'Background Toggle On/Off', i18n ),
 		description: __( 'Turns the block background on/off. Turn on to enable different background settings.', i18n ),
+		learnMore: 'https://wpstackable.com/blog/column-backgrounds-and-block-backgrounds/?utm_medium=Help%20Tooltip&utm_campaign=Help%20Tooltip&utm_source=Plugin',
 	},
 	backgroundColorOpacity: {
 		video: backgroundColorOpacity,
