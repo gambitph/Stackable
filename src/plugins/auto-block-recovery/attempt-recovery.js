@@ -6,7 +6,11 @@ import { isInvalid } from './is-invalid'
 
 // Runs an auto-attempt recovery on all the blocks.
 export const autoAttemptRecovery = () => {
-	const blocks = select( 'core/editor' ).getEditorBlocks()
+	autoAttemptRecoveryRecursive( select( 'core/editor' ).getEditorBlocks() )
+}
+
+// Recursive fixing of all blocks.
+export const autoAttemptRecoveryRecursive = blocks => {
 	blocks.forEach( block => {
 		if ( isInvalid( block ) ) {
 			// Replace the block with a newly generated one.
@@ -14,6 +18,11 @@ export const autoAttemptRecovery = () => {
 				name, attributes, innerBlocks,
 			} ) => createBlock( name, attributes, innerBlocks )
 			dispatch( 'core/block-editor' ).replaceBlock( block.clientId, recoverBlock( block ) )
+		}
+
+		// Also fix the inner blocks.
+		if ( block.innerBlocks && block.innerBlocks.length ) {
+			autoAttemptRecoveryRecursive( block.innerBlocks )
 		}
 	} )
 }
