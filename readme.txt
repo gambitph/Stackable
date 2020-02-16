@@ -1,10 +1,10 @@
-=== Stackable - Gutenberg Blocks ===
+=== Stackable - Page Builder Gutenberg Blocks ===
 Contributors: bfintal, gambitph, freemius
-Tags: gutenberg, block, blocks, block editor, gutenberg blocks, page builder, editor, wordpress 5.0
+Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.2
 Tested up to: 5.3.2
 Requires PHP: 5.3
-Stable tag: 2.2.0
+Stable tag: 2.2.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -176,7 +176,11 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 = 2.2.1 =
 
+* Change: Added "Learn more" link for block background help tooltip
+* Fixed: Block auto-recovery did not take effect for blocks inside columns
 * Fixed: Some themes may force pseudo elements on our blocks and this will destroy our column layouts.
+* Fixed: Removed "Contact Us" for white labelled sites
+* Fixed: Removed "Edit as HTML" for Container blocks
 
 = 2.2.0 =
 [Welcome Video, Better Separators and Auto-Block Recovery](https://wpstackable.com/blog/welcome-video-better-separators-and-auto-block-recovery/)
