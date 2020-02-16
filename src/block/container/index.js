@@ -128,6 +128,7 @@ export const settings = {
 	supports: {
 		anchor: true,
 		align: [ 'center', 'wide', 'full' ],
+		html: false,
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
 		// Add EditorsKit block navigator toolbar.
 		editorsKitBlockNavigator: true,
