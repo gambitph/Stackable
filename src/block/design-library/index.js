@@ -38,6 +38,7 @@ export const settings = {
 	attributes: schema,
 
 	supports: {
+		customClassName: false,
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
 	},
 
