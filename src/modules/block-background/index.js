@@ -13,6 +13,7 @@ import {
 	createVideoBackground,
 	hasBackgroundOverlay,
 } from '~stackable/util'
+import { omit } from 'lodash'
 
 /**
  * Internal dependencies
@@ -246,6 +247,11 @@ const addStyles = ( styleObject, props ) => {
 	return deepmerge( styleObject, styles )
 }
 
+// Remove the content from exports for designs.
+const removeAttributesFromDesignAttributeExport = attributes => {
+	return omit( attributes, [ 'blockBackgroundBackgroundMediaId' ] )
+}
+
 const blockBackground = blockName => {
 	addFilter( `stackable.${ blockName }.edit.inspector.style.block`, `stackable/${ blockName }/block-background`, addInspectorPanel, 18 )
 	addFilter( `stackable.${ blockName }.attributes`, `stackable/${ blockName }/block-background`, addAttributes )
@@ -255,6 +261,7 @@ const blockBackground = blockName => {
 	addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/block-background`, addStyles )
 	addFilter( `stackable.${ blockName }.edit.output.outer`, `stackable/${ blockName }/block-separators`, addVideoBackgroundOutput )
 	addFilter( `stackable.${ blockName }.save.output.outer`, `stackable/${ blockName }/block-separators`, addVideoBackgroundOutput )
+	addFilter( `stackable.${ blockName }.design.apply-block-attributes`, `stackable/${ blockName }/block-separators`, removeAttributesFromDesignAttributeExport )
 	doAction( `stackable.module.block-background`, blockName )
 
 	// Mimic align functionality.
