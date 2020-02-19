@@ -12,12 +12,12 @@ import {
 	Button, Placeholder,
 } from '@wordpress/components'
 import { compose } from '@wordpress/compose'
-import { createBlock } from '@wordpress/blocks'
+import { createBlock, parse } from '@wordpress/blocks'
 import { withDispatch } from '@wordpress/data'
 import { useState } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
-const edit = ( { replaceBlock } ) => {
+const edit = ( { replaceBlockWithAttributes, replaceBlocWithContent } ) => {
 	const [ isLibraryOpen, setIsLibraryOpen ] = useState( false ) // eslint-disable-line react-hooks/rules-of-hooks
 
 	return (
@@ -42,10 +42,18 @@ const edit = ( { replaceBlock } ) => {
 					onClose={ () => {
 						setIsLibraryOpen( false )
 					} }
-					onSelect={ ( {
-						name, attributes, innerBlocks,
-					} ) => {
-						replaceBlock( name, attributes, innerBlocks )
+					onSelect={ designData => {
+						const {
+							name, attributes, serialized,
+						} = designData
+
+						if ( name && attributes ) {
+							replaceBlockWithAttributes( name, attributes, [] )
+						} else if ( serialized ) {
+							replaceBlocWithContent( serialized )
+						} else {
+							console.error( 'Design library selection failed: No block data found' ) // eslint-disable-line no-console
+						}
 					} }
 				/>
 			}
@@ -55,11 +63,17 @@ const edit = ( { replaceBlock } ) => {
 
 export default compose( [
 	withDispatch( ( dispatch, { clientId } ) => {
-		const { replaceBlock } = dispatch( 'core/block-editor' )
+		const { replaceBlock, replaceBlocks } = dispatch( 'core/block-editor' )
 		return {
-			replaceBlock: ( blockName, attributes, innerBlocks ) => {
+			// Replaces the current block with a block made out of attributes.
+			replaceBlockWithAttributes: ( blockName, attributes, innerBlocks ) => {
 				const block = createBlock( blockName, attributes, innerBlocks )
 				replaceBlock( clientId, block )
+			},
+			// Replaces the current block with one or more blocks from a string.
+			replaceBlocWithContent: serializedBlock => {
+				const block = parse( serializedBlock )
+				replaceBlocks( clientId, block )
 			},
 		}
 	} ),
