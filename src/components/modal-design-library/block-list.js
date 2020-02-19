@@ -29,7 +29,7 @@ const BlockList = props => {
 					blocks[ name ] = {
 						count: 0,
 						name,
-						label: select( 'core/blocks' ).getBlockType( name ).title,
+						label: name ? select( 'core/blocks' ).getBlockType( name ).title : '',
 					}
 				}
 

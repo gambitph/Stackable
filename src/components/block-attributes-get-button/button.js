@@ -62,7 +62,7 @@ export default compose( [
 		const { getBlockName } = select( 'core/block-editor' )
 
 		return {
-			blockName: clientId ? getBlockName( clientId ).replace( /^\w+\//g, '' ) : '',
+			blockName: clientId && getBlockName( clientId ) ? getBlockName( clientId ).replace( /^\w+\//g, '' ) : '',
 			getJSONBlockAttributes: () => {
 				const { getBlockName } = select( 'core/block-editor' )
 				const { getBlockType } = select( 'core/blocks' )
