@@ -2,8 +2,8 @@ import domReady from '@wordpress/dom-ready'
 import apiFetch from '@wordpress/api-fetch'
 
 let designLibrary = null
-const blockDesigns = {}
-const designs = []
+let blockDesigns = {}
+let designs = []
 
 export const getBlockName = block => block.replace( /^[\w-]+\//, '' )
 
@@ -14,6 +14,12 @@ export const fetchDesignLibrary = async ( forceReset = false ) => {
 			method: 'GET',
 		} )
 		designLibrary = await results
+
+		// Reset all designs that we already have cached.
+		if ( forceReset ) {
+			blockDesigns = {}
+			designs = []
+		}
 	}
 	return designLibrary
 }
@@ -39,6 +45,17 @@ export const fetchDesign = async designId => {
 		designs[ designId ] = await results
 	}
 	return designs[ designId ]
+}
+
+export const setDevModeDesignLibrary = async ( devMode = false ) => {
+	const results = await apiFetch( {
+		path: `/wp/v2/stk_design_library_dev_mode/`,
+		method: 'POST',
+		data: {
+			devmode: devMode,
+		},
+	} )
+	return await results
 }
 
 domReady( () => {

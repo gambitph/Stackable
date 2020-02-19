@@ -22,6 +22,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 		 */
 		public function __construct() {
 			add_action( 'rest_api_init', array( $this, 'register_route' ) );
+			add_filter( 'stackable_design_library_retreive_body', array( $this, 'replace_dev_mode_urls' ) );
 		}
 
 		public static function validate_string( $value = '', $request, $param ) {
@@ -63,6 +64,16 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 					),
 				),
 			) );
+
+			register_rest_route( 'wp/v2', '/stk_design_library_dev_mode', array(
+				'methods' => 'POST',
+				'callback' => array( $this, 'set_dev_mode' ),
+				'args' => array(
+					'devmode' => array(
+						'validate_callback' => 'is_boolean'
+					),
+				),
+			) );
 		}
 
 		/**
@@ -99,9 +110,9 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 
 			// Fetch designs.
 			if ( empty( $designs ) ) {
-
-				$response = wp_remote_get( trailingslashit( STACKABLE_CLOUDFRONT_URL ) . 'library/library.json' );
+				$response = wp_remote_get( $this->get_cdn_url() . 'library/library.json' );
 				$content = wp_remote_retrieve_body( $response );
+				$content = apply_filters( 'stackable_design_library_retreive_body', $content );
 				$designs = json_decode( $content, true );
 
 				// Cache results.
@@ -130,8 +141,9 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			// Fetch designs.
 			if ( empty( $designs ) ) {
 
-				$response = wp_remote_get( trailingslashit( STACKABLE_CLOUDFRONT_URL ) . 'library/block-' . $block . '.json' );
+				$response = wp_remote_get( $this->get_cdn_url() . 'library/block-' . $block . '.json' );
 				$content = wp_remote_retrieve_body( $response );
+				$content = apply_filters( 'stackable_design_library_retreive_body', $content );
 				$designs = json_decode( $content, true );
 
 				// Cache results.
@@ -157,6 +169,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 
 				$response = wp_remote_get( $template_url );
 				$content = wp_remote_retrieve_body( $response );
+				$content = apply_filters( 'stackable_design_library_retreive_body', $content );
 				$design = json_decode( $content, true );
 
 				// Cache results.
@@ -166,6 +179,49 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			$design = apply_filters( 'stackable_design_' . $design_id, $design );
 
 			return rest_ensure_response( $design );
+		}
+
+		/**
+		 * Replaces all the URLs that use the CDN with local ones if dev mode is turned on.
+		 */
+		public function replace_dev_mode_urls( $content ) {
+			if ( $this->is_dev_mode() ) {
+				$content = str_replace(
+					trailingslashit( STACKABLE_CLOUDFRONT_URL ),
+					trailingslashit( plugin_dir_url( STACKABLE_DLH_LIBRARY_FILE ) ),
+					$content
+				);
+			}
+			return $content;
+		}
+
+		/**
+		 * Gets the URL of the CDN where to load our design library data.  When
+		 * developer mode for the design library is turned on, the URL of the
+		 * design library internal exporter tool will be used instead.
+		 */
+		public function get_cdn_url() {
+			if ( $this->is_dev_mode() ) {
+				return trailingslashit( plugin_dir_url( STACKABLE_DLH_LIBRARY_FILE ) );
+			} else {
+				return trailingslashit( STACKABLE_CLOUDFRONT_URL );
+			}
+		}
+
+		public function is_dev_mode() {
+			return !! get_option( 'stackable_library_dev_mode' ) && defined( 'STACKABLE_DLH_LIBRARY_FILE' );
+		}
+
+		/**
+		 * Set developer mode for the design library. When in developer mode,
+		 * the library that will be loaded will be from the design library
+		 * internal exporter tool.
+		 */
+		public function set_dev_mode( $request ) {
+			$dev_mode = $request->get_param( 'devmode' );
+			update_option( 'stackable_library_dev_mode', $dev_mode );
+
+			return rest_ensure_response( true );
 		}
 	}
 

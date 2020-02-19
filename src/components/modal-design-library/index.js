@@ -12,14 +12,15 @@ import ColorList from './color-list'
  */
 import AdvancedToolbarControl from '~stackable/components/advanced-toolbar-control'
 import DesignLibraryList from '~stackable/components/design-library-list'
-import { getDesigns } from '~stackable/design-library'
-import { i18n } from 'stackable'
+import { getDesigns, setDevModeDesignLibrary } from '~stackable/design-library'
+import { i18n, devMode } from 'stackable'
+import { useLocalStorage } from '~stackable/util'
 
 /**
  * WordPress deprendencies
  */
 import {
-	Modal, TextControl, IconButton,
+	Modal, TextControl, IconButton, ToggleControl,
 } from '@wordpress/components'
 import {
 	useEffect, useState,
@@ -36,6 +37,7 @@ const ModalDesignLibrary = props => {
 	const [ designs, setDesigns ] = useState( [] )
 	const [ isBusy, setIsBusy ] = useState( true )
 	const [ doReset, setDoReset ] = useState( false )
+	const [ isDevMode, setIsDevMode ] = useLocalStorage( 'stk__design_library_dev_mode', false )
 
 	useEffect( () => setBlock( props.selectedBlock ), [ props.selectedBlock ] )
 
@@ -135,6 +137,20 @@ const ModalDesignLibrary = props => {
 				</aside>
 
 				<aside className="ugb-modal-design-library__topbar">
+					{ devMode &&
+						<ToggleControl
+							className="ugb-modal-design-library__dev-mode"
+							label="Dev Mode"
+							checked={ isDevMode }
+							onChange={ value => {
+								setDevModeDesignLibrary( value ).then( () => {
+									setDoReset( true )
+								} )
+								setIsDevMode( value )
+							} }
+						/>
+					}
+
 					<IconButton
 						icon="image-rotate"
 						label={ __( 'Refresh Library', i18n ) }

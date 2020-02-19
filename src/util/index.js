@@ -9,6 +9,7 @@ export * from './styles'
 export * from './social'
 export * from './blocks'
 export * from './svg'
+export * from './hooks'
 
 /**
  * WordPress dependencies
