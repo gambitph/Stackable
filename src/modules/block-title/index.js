@@ -415,7 +415,7 @@ const blockTitle = blockName => {
 	addFilter( `stackable.${ blockName }.save.output.before`, `stackable/${ blockName }/block-title`, addTitleSaveOutput )
 	addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/block-title`, addStyles )
 	addFilter( 'stackable.with-content-align-reseter.attributeNamesToReset', `stackable/${ blockName }/block-title`, centerBlockTitle )
-	addFilter( `stackable.${ blockName }.design.apply-block-attributes`, `stackable/${ blockName }/block-title`, removeAttributesFromDesignAttributeExport )
+	addFilter( `stackable.${ blockName }.design.filtered-block-attributes`, `stackable/${ blockName }/block-title`, removeAttributesFromDesignAttributeExport )
 	doAction( `stackable.module.block-title`, blockName )
 }
 

@@ -261,7 +261,7 @@ const blockBackground = blockName => {
 	addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/block-background`, addStyles )
 	addFilter( `stackable.${ blockName }.edit.output.outer`, `stackable/${ blockName }/block-separators`, addVideoBackgroundOutput )
 	addFilter( `stackable.${ blockName }.save.output.outer`, `stackable/${ blockName }/block-separators`, addVideoBackgroundOutput )
-	addFilter( `stackable.${ blockName }.design.apply-block-attributes`, `stackable/${ blockName }/block-separators`, removeAttributesFromDesignAttributeExport )
+	addFilter( `stackable.${ blockName }.design.filtered-block-attributes`, `stackable/${ blockName }/block-separators`, removeAttributesFromDesignAttributeExport )
 	doAction( `stackable.module.block-background`, blockName )
 
 	// Mimic align functionality.

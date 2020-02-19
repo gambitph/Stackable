@@ -10,14 +10,21 @@ import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
-addFilter( 'stackable.feature.design.apply-block-attributes', 'stackable/feature', ( attributes, blockAttributes = null ) => {
+// Remove text from block designs being applied.
+addFilter( 'stackable.feature.design.no-text-attributes', 'stackable/feature', attributes => {
+	return omit( attributes, [
+		'title',
+		'description',
+		'buttonText',
+	] )
+} )
+
+// Ignore these attributes when exporting / applying designs.
+addFilter( 'stackable.feature.design.filtered-block-attributes', 'stackable/feature', ( attributes, blockAttributes = null ) => {
 	return omit( attributes, [
 		'imageId',
 		...( blockAttributes && blockAttributes.imageId ? [ 'imageUrl' ] : [] ),
 		'imageAlt',
-		'title',
-		'description',
-		'buttonText',
 		'buttonUrl',
 		'buttonNewTab',
 		'buttonNoFollow',

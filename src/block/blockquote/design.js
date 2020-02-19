@@ -10,7 +10,8 @@ import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
-addFilter( 'stackable.blockquote.design.apply-block-attributes', 'stackable/blockquote', attributes => {
+// Remove text from block designs being applied.
+addFilter( 'stackable.blockquote.design.no-text-attributes', 'stackable/blockquote', attributes => {
 	return omit( attributes, [
 		'text',
 	] )

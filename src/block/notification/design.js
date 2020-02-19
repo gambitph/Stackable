@@ -10,11 +10,18 @@ import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
-addFilter( 'stackable.notification.design.apply-block-attributes', 'stackable/notification', attributes => {
+// Remove text from block designs being applied.
+addFilter( 'stackable.notification.design.no-text-attributes', 'stackable/notification', attributes => {
 	return omit( attributes, [
 		'title',
 		'description',
 		'buttonText',
+	] )
+} )
+
+// Ignore these attributes when exporting / applying designs.
+addFilter( 'stackable.notification.design.filtered-block-attributes', 'stackable/notification', attributes => {
+	return omit( attributes, [
 		'buttonUrl',
 		'buttonNewTab',
 		'buttonNoFollow',

@@ -8,7 +8,8 @@ import { omit } from 'lodash'
  */
 import { addFilter } from '@wordpress/hooks'
 
-addFilter( 'stackable.accordion.design.apply-block-attributes', 'stackable/accordion', attributes => {
+// Remove text from block designs being applied.
+addFilter( 'stackable.accordion.design.no-text-attributes', 'stackable/accordion', attributes => {
 	return omit( attributes, [
 		'title',
 	] )

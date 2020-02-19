@@ -50,9 +50,14 @@ export const applyBlockDesign = ( attributes, clientId = null ) => {
 			[ attrName ]: attributeDefinition[ attrName ] ? attributeDefinition[ attrName ].default : '',
 		}
 	}, {} )
+	// Omit the attributes which should not be overridden, for example: urls,
+	// media ids, open in new tabs, etc.
+	const blockAttributesFiltered = applyFilters( `stackable.${ blockName }.design.filtered-block-attributes`, { ...defaultAttributes, ...attributes }, currentBlockAttributes )
 
-	// The filter should omit attributes which should not be overridden. For example, text titles.
-	const blockAttributes = applyFilters( `stackable.${ blockName }.design.apply-block-attributes`, { ...defaultAttributes, ...attributes }, currentBlockAttributes )
+	// When applying attributes to a block, we assume that there's already text
+	// inputted in the block, so we shouldn't apply all the text attributes of
+	// the design.
+	const blockAttributes = applyFilters( `stackable.${ blockName }.design.no-text-attributes`, blockAttributesFiltered, currentBlockAttributes )
 
 	// Check for any Fonts that we need to load.
 	loadGoogleFontInAttributes( blockAttributes )

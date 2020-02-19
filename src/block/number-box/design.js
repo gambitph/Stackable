@@ -10,7 +10,8 @@ import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
-addFilter( 'stackable.number-box.design.apply-block-attributes', 'stackable/number-box', attributes => {
+// Remove text from block designs being applied.
+addFilter( 'stackable.number-box.design.no-text-attributes', 'stackable/number-box', attributes => {
 	return omit( attributes, [
 		'num1',
 		'num2',

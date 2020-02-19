@@ -10,7 +10,8 @@ import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
-addFilter( 'stackable.video-popup.design.apply-block-attributes', 'stackable/video-popup', ( attributes, blockAttributes = null ) => {
+// Ignore these attributes when exporting / applying designs.
+addFilter( 'stackable.video-popup.design.filtered-block-attributes', 'stackable/video-popup', ( attributes, blockAttributes = null ) => {
 	return omit( attributes, [
 		'videoLink',
 		'videoID',

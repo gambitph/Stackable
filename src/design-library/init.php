@@ -209,7 +209,10 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 		}
 
 		public function is_dev_mode() {
-			return !! get_option( 'stackable_library_dev_mode' ) && defined( 'STACKABLE_DLH_LIBRARY_FILE' );
+			$dev_env = defined( 'WP_ENV' ) ? WP_ENV === 'development' : false;
+			$export_tool_installed = defined( 'STACKABLE_DLH_LIBRARY_FILE' );
+			$library_dev_mode_toggled = !! get_option( 'stackable_library_dev_mode' );
+			return $dev_env && $export_tool_installed && $library_dev_mode_toggled;
 		}
 
 		/**

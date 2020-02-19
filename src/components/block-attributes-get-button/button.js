@@ -87,7 +87,7 @@ export default compose( [
 				cleanedAttributes.uniqueClass = undefined
 
 				// The filter should omit attributes which should not be overridden. For example, text titles.
-				return JSON.stringify( applyFilters( `stackable.${ blockName }.design.apply-block-attributes`, cleanedAttributes ), null, 4 )
+				return JSON.stringify( applyFilters( `stackable.${ blockName }.design.filtered-block-attributes`, cleanedAttributes ), null, 4 )
 			},
 		}
 	} ),

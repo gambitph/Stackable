@@ -10,7 +10,8 @@ import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
-addFilter( 'stackable.blog-posts.design.apply-block-attributes', 'stackable/blog-posts', attributes => {
+// Remove text from block designs being applied.
+addFilter( 'stackable.blog-posts.design.no-text-attributes', 'stackable/blog-posts', attributes => {
 	return omit( attributes, [
 		'text',
 	] )

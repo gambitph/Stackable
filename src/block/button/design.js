@@ -10,17 +10,24 @@ import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
-addFilter( 'stackable.button.design.apply-block-attributes', 'stackable/button', attributes => {
+// Remove text from block designs being applied.
+addFilter( 'stackable.button.design.no-text-attributes', 'stackable/button', attributes => {
 	return omit( attributes, [
 		'button1Text',
+		'button2Text',
+		'button3Text',
+	] )
+} )
+
+// Ignore these attributes when exporting / applying designs.
+addFilter( 'stackable.button.design.filtered-block-attributes', 'stackable/button', attributes => {
+	return omit( attributes, [
 		'button1Url',
 		'button1NewTab',
 		'button1NoFollow',
-		'button2Text',
 		'button2Url',
 		'button2NewTab',
 		'button2NoFollow',
-		'button3Text',
 		'button3Url',
 		'button3NewTab',
 		'button3NoFollow',

@@ -10,7 +10,26 @@ import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
-addFilter( 'stackable.image-box.design.apply-block-attributes', 'stackable/image-box', ( attributes, blockAttributes = null ) => {
+// Remove text from block designs being applied.
+addFilter( 'stackable.image-box.design.no-text-attributes', 'stackable/image-box', attributes => {
+	return omit( attributes, [
+		'subtitle1',
+		'subtitle2',
+		'subtitle3',
+		'subtitle4',
+		'title1',
+		'title2',
+		'title3',
+		'title4',
+		'description1',
+		'description2',
+		'description3',
+		'description4',
+	] )
+} )
+
+// Ignore these attributes when exporting / applying designs.
+addFilter( 'stackable.image-box.design.filtered-block-attributes', 'stackable/image-box', ( attributes, blockAttributes = null ) => {
 	return omit( attributes, [
 		'link1Url',
 		'link2Url',
@@ -32,18 +51,6 @@ addFilter( 'stackable.image-box.design.apply-block-attributes', 'stackable/image
 		...( blockAttributes && blockAttributes.image3Id ? [ 'image3Url' ] : [] ),
 		'image4Id',
 		...( blockAttributes && blockAttributes.image4Id ? [ 'image4Url' ] : [] ),
-		'subtitle1',
-		'subtitle2',
-		'subtitle3',
-		'subtitle4',
-		'title1',
-		'title2',
-		'title3',
-		'title4',
-		'description1',
-		'description2',
-		'description3',
-		'description4',
 	] )
 } )
 

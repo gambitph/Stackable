@@ -10,7 +10,23 @@ import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
-addFilter( 'stackable.team-member.design.apply-block-attributes', 'stackable/team-member', ( attributes, blockAttributes = null ) => {
+// Remove text from block designs being applied.
+addFilter( 'stackable.team-member.design.no-text-attributes', 'stackable/team-member', attributes => {
+	return omit( attributes, [
+		'name1',
+		'name2',
+		'name3',
+		'position1',
+		'position2',
+		'position3',
+		'description1',
+		'description2',
+		'description3',
+	] )
+} )
+
+// Ignore these attributes when exporting / applying designs.
+addFilter( 'stackable.team-member.design.filtered-block-attributes', 'stackable/team-member', ( attributes, blockAttributes = null ) => {
 	return omit( attributes, [
 		'image1Id',
 		...( blockAttributes && blockAttributes.image1Id ? [ 'image1Url' ] : [] ),
@@ -21,15 +37,6 @@ addFilter( 'stackable.team-member.design.apply-block-attributes', 'stackable/tea
 		'image1Alt',
 		'image2Alt',
 		'image3Alt',
-		'name1',
-		'name2',
-		'name3',
-		'position1',
-		'position2',
-		'position3',
-		'description1',
-		'description2',
-		'description3',
 		'social1FacebookUrl',
 		'social1TwitterUrl',
 		'social1InstagramUrl',

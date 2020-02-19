@@ -10,17 +10,9 @@ import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { addFilter } from '@wordpress/hooks'
 
-addFilter( 'stackable.pricing-box.design.apply-block-attributes', 'stackable/pricing-box', ( attributes, blockAttributes = null ) => {
+// Remove text from block designs being applied.
+addFilter( 'stackable.pricing-box.design.no-text-attributes', 'stackable/pricing-box', attributes => {
 	return omit( attributes, [
-		'image1Id',
-		...( blockAttributes && blockAttributes.image1Id ? [ 'image1Url' ] : [] ),
-		'image2Id',
-		...( blockAttributes && blockAttributes.image2Id ? [ 'image2Url' ] : [] ),
-		'image3Id',
-		...( blockAttributes && blockAttributes.image3Id ? [ 'image3Url' ] : [] ),
-		'image1Alt',
-		'image2Alt',
-		'image3Alt',
 		'title1',
 		'title2',
 		'title3',
@@ -37,20 +29,35 @@ addFilter( 'stackable.pricing-box.design.apply-block-attributes', 'stackable/pri
 		'subPrice2',
 		'subPrice3',
 		'button1Text',
-		'button1Url',
-		'button1NewTab',
-		'button1NoFollow',
 		'button2Text',
-		'button2Url',
-		'button2NewTab',
-		'button2NoFollow',
 		'button3Text',
-		'button3Url',
-		'button3NewTab',
-		'button3NoFollow',
 		'description1',
 		'description2',
 		'description3',
+	] )
+} )
+
+// Ignore these attributes when exporting / applying designs.
+addFilter( 'stackable.pricing-box.design.filtered-block-attributes', 'stackable/pricing-box', ( attributes, blockAttributes = null ) => {
+	return omit( attributes, [
+		'image1Id',
+		...( blockAttributes && blockAttributes.image1Id ? [ 'image1Url' ] : [] ),
+		'image2Id',
+		...( blockAttributes && blockAttributes.image2Id ? [ 'image2Url' ] : [] ),
+		'image3Id',
+		...( blockAttributes && blockAttributes.image3Id ? [ 'image3Url' ] : [] ),
+		'image1Alt',
+		'image2Alt',
+		'image3Alt',
+		'button1Url',
+		'button1NewTab',
+		'button1NoFollow',
+		'button2Url',
+		'button2NewTab',
+		'button2NoFollow',
+		'button3Url',
+		'button3NewTab',
+		'button3NoFollow',
 	] )
 } )
 
