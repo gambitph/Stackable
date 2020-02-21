@@ -86,9 +86,9 @@ export const createStyles = props => {
 					height: show.numberBGColor ? appendImportant( getValue( 'numberTabletPadding', '%sem' ) ) : undefined,
 					width: show.numberBGColor ? appendImportant( getValue( 'numberTabletPadding', '%sem' ) ) : undefined,
 					lineHeight: appendImportant( show.numberBGColor && numberTabletLineHeight === '' ? getValue( 'numberTabletPadding', '%sem' ) : getValue( 'numberTabletLineHeight', `%s${ numberTabletLineHeightUnit }` ) ),
-					marginLeft: numberTabletAlign !== '' && tabletContentAlign !== '' ? appendImportant( marginLeftAlign( numberTabletAlign || tabletContentAlign ) ) : undefined,
-					marginRight: numberTabletAlign !== '' && tabletContentAlign !== '' ? appendImportant( marginRightAlign( numberTabletAlign || tabletContentAlign ) ) : undefined,
-					textAlign: show.numberBGColor ? undefined : ( getValue( 'numberTabletAlign' ) || getValue( 'tabletContentAlign' ) ),
+					marginLeft: numberTabletAlign !== '' || tabletContentAlign !== '' ? appendImportant( marginLeftAlign( numberTabletAlign || tabletContentAlign ) ) : undefined,
+					marginRight: numberTabletAlign !== '' || tabletContentAlign !== '' ? appendImportant( marginRightAlign( numberTabletAlign || tabletContentAlign ) ) : undefined,
+					textAlign: appendImportant( show.numberBGColor ? undefined : ( getValue( 'numberTabletAlign' ) || getValue( 'tabletContentAlign' ) ) ),
 				},
 			},
 			mobile: {
@@ -96,9 +96,9 @@ export const createStyles = props => {
 					height: show.numberBGColor ? appendImportant( getValue( 'numberMobilePadding', '%sem' ) ) : undefined,
 					width: show.numberBGColor ? appendImportant( getValue( 'numberMobilePadding', '%sem' ) ) : undefined,
 					lineHeight: appendImportant( show.numberBGColor && numberMobileLineHeight === '' ? getValue( 'numberMobilePadding', '%sem' ) : getValue( 'numberMobileLineHeight', `%s${ numberMobileLineHeightUnit }` ) ),
-					marginLeft: numberMobileAlign !== '' && mobileContentAlign !== '' ? appendImportant( marginLeftAlign( numberMobileAlign || mobileContentAlign ) ) : undefined,
-					marginRight: numberMobileAlign !== '' && mobileContentAlign !== '' ? appendImportant( marginRightAlign( numberMobileAlign || mobileContentAlign ) ) : undefined,
-					textAlign: show.numberBGColor ? undefined : ( getValue( 'numberMobileAlign' ) || getValue( 'mobileContentAlign' ) ),
+					marginLeft: numberMobileAlign !== '' || mobileContentAlign !== '' ? appendImportant( marginLeftAlign( numberMobileAlign || mobileContentAlign ) ) : undefined,
+					marginRight: numberMobileAlign !== '' || mobileContentAlign !== '' ? appendImportant( marginRightAlign( numberMobileAlign || mobileContentAlign ) ) : undefined,
+					textAlign: appendImportant( show.numberBGColor ? undefined : ( getValue( 'numberMobileAlign' ) || getValue( 'mobileContentAlign' ) ) ),
 				},
 			},
 		} )
@@ -118,13 +118,13 @@ export const createStyles = props => {
 			tablet: {
 				'.ugb-number-box__title': {
 					...createTypographyStyles( 'title%s', 'tablet', props.attributes ),
-					textAlign: getValue( 'titleTabletAlign' ),
+					textAlign: getValue( 'titleTabletAlign' ) || getValue( 'tabletContentAlign' ),
 				},
 			},
 			mobile: {
 				'.ugb-number-box__title': {
 					...createTypographyStyles( 'title%s', 'mobile', props.attributes ),
-					textAlign: getValue( 'titleMobileAlign' ),
+					textAlign: getValue( 'titleMobileAlign' ) || getValue( 'mobileContentAlign' ),
 				},
 			},
 		} )
@@ -144,13 +144,13 @@ export const createStyles = props => {
 			tablet: {
 				'.ugb-number-box__description': {
 					...createTypographyStyles( 'description%s', 'tablet', props.attributes ),
-					textAlign: getValue( 'descriptionTabletAlign' ),
+					textAlign: appendImportant( getValue( 'descriptionTabletAlign' ) || getValue( 'tabletContentAlign' ) ),
 				},
 			},
 			mobile: {
 				'.ugb-number-box__description': {
 					...createTypographyStyles( 'description%s', 'mobile', props.attributes ),
-					textAlign: getValue( 'descriptionMobileAlign' ),
+					textAlign: appendImportant( getValue( 'descriptionMobileAlign' ) || getValue( 'mobileContentAlign' ) ),
 				},
 			},
 		} )
