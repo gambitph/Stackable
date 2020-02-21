@@ -51,3 +51,9 @@ svg.ugb-stackable-icon-gradient {
 		margin-bottom: 0;
 	}
 }
+
+// Hide the additional Panels of EditorsKit for Stackable blocks, since we have
+// duplicate functionality.
+.ugb--has-panel-tabs .ugb-panel-tabs ~ .editorskit-panel {
+	display: none;
+}
