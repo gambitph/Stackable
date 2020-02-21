@@ -112,7 +112,7 @@ export const createStyles = props => {
 	if ( showName ) {
 		styles.push( {
 			'.ugb-team-member__name': {
-				color: whiteIfDarkBlackIfLight( nameColor, show.columnBackground && columnBackgroundColor ),
+				color: appendImportant( whiteIfDarkBlackIfLight( nameColor, show.columnBackground && columnBackgroundColor ) ),
 			},
 		} )
 
