@@ -212,4 +212,24 @@ describe( 'BlockStyles', () => {
 		expect( container.querySelector( 'style' ).innerHTML ).toEqual( expect.stringMatching( /.editor/ ) )
 		expect( container.querySelector( 'style' ).innerHTML ).toEqual( expect.stringMatching( /#editor/ ) )
 	} )
+
+	it( 'should render editor responsive styles', () => {
+		const style = {
+			'.test': { color: 'red' },
+			editor: {
+				'.editor': { color: 'blue' },
+				tablet: {
+					'.tablet': { color: 'yellow' },
+				},
+				mobile: {
+					'.mobile': { color: 'green' },
+				},
+			},
+		}
+		const { container } = render( <BlockStyles style={ style } editorMode={ true } breakTablet="900" breakMobile="400" /> )
+		expect( container.querySelector( 'style' ).innerHTML ).toEqual( expect.stringMatching( /.editor/ ) )
+		expect( container.querySelector( 'style' ).innerHTML ).toEqual( expect.stringMatching( /#editor .editor\{color:blue/ ) )
+		expect( container.querySelector( 'style' ).innerHTML ).toEqual( expect.stringMatching( /@media[^\{]+900px[^\}]+#editor .tablet\{color:yellow/ ) )
+		expect( container.querySelector( 'style' ).innerHTML ).toEqual( expect.stringMatching( /@media[^\{]+400px[^\}]+#editor .mobile\{color:green/ ) )
+	} )
 } )

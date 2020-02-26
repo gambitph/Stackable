@@ -59,10 +59,11 @@ export const combineStyleRules = styleObject => {
  * @param {number} breakTablet max-width for tablets
  * @param {number} breakMobile max-width for mobile
  * @param {boolean} editorMode If true, the styles generated will be wrapped in the `#editor` selector
+ * @param {boolean} recursiveCalls Used only for editors styles. Number of times this function was called recursively
  *
  * @return {string} Minified CSS string
  */
-export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqueClassName = '', breakTablet = 1025, breakMobile = 768, editorMode = false ) => {
+export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqueClassName = '', breakTablet = 1025, breakMobile = 768, editorMode = false, recursiveCalls = 0 ) => {
 	const styleStrings = []
 
 	const desktopStyles = omit( styleObject, [ 'desktopTablet', 'desktopOnly', 'tablet', 'tabletOnly', 'mobile', 'editor' ] )
@@ -112,11 +113,8 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 	}
 
 	// CSS that will only be rendered while editing.
-	if ( editorMode ) {
-		if ( typeof styleObject.editor !== 'undefined' ) {
-			const cleanedStyles = addBlockClassNames( styleObject.editor, blockMainClassName, blockUniqueClassName, editorMode )
-			styleStrings.push( combineStyleRules( cleanedStyles ) )
-		}
+	if ( editorMode && typeof styleObject.editor !== 'undefined' && ! recursiveCalls ) {
+		styleStrings.push( generateStyles( styleObject.editor, blockMainClassName, blockUniqueClassName, breakTablet, breakMobile, editorMode, recursiveCalls++ ) )
 	}
 
 	return minifyCSS( styleStrings.join( '' ) )
