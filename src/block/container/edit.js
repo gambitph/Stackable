@@ -365,15 +365,12 @@ export default compose(
 	withClickOpenInspector( [
 		[ '.ugb-container__wrapper', 'column-background' ],
 	] ),
-	withSelect( ( select, { clientId } ) => {
-		const {
-			getBlock,
-		} = select( 'core/block-editor' )
-
-		const block = getBlock( clientId )
+	withSelect( ( select, ownProps ) => {
+		const { clientId } = ownProps
+		const { getBlockOrder } = select( 'core/block-editor' )
 
 		return {
-			hasInnerBlocks: !! ( block && block.innerBlocks.length ),
+			hasInnerBlocks: getBlockOrder( clientId ).length > 0,
 		}
 	} ),
 	withSelect( ( select, props ) => {
