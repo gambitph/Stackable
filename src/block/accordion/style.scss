@@ -57,8 +57,6 @@
 	}
 
 	.ugb-accordion__content {
-		max-height: 800px;
-		max-height: var(--max-height, none); // Dynamic max-height set by JS.
 		transition: max-height 0.3s ease-in-out, transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 		transform: translateY(0);
 		opacity: 1;
