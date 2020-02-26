@@ -25,6 +25,7 @@ const addDesignPanel = ( blockName, options ) => output => {
 				title={ __( 'Designs', i18n ) }
 				initialOpen={ true }
 			>
+				<p className="components-base-control__help">{ __( 'You will not lose your block content when changing designs.', i18n ) }</p>
 				<DesignLibraryControl
 					block={ `ugb/${ blockName }` }
 					onSelect={ designData => {
