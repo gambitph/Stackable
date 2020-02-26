@@ -4,6 +4,7 @@
 import {
 	BackgroundControlsHelper,
 	PanelAdvancedSettings,
+	ControlSeparator,
 } from '~stackable/components'
 import {
 	createBackgroundAttributeNames,
@@ -12,6 +13,7 @@ import {
 	createBackgroundStyles,
 	createVideoBackground,
 	hasBackgroundOverlay,
+	__getValue,
 } from '~stackable/util'
 import { omit } from 'lodash'
 
@@ -31,7 +33,7 @@ import { __ } from '@wordpress/i18n'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
-import { Toolbar } from '@wordpress/components'
+import { Toolbar, ToggleControl } from '@wordpress/components'
 
 // When block background is turned on, change the ailgnment and block inner width also.
 removeFilter( 'stackable.setAttributes', 'stackable/module/block-background/show' )
@@ -54,6 +56,7 @@ const addInspectorPanel = ( output, props ) => {
 	const { setAttributes } = props
 	const {
 		showBlockBackground = false,
+		noPaddings = '',
 	} = props.attributes
 	return (
 		<Fragment>
@@ -67,6 +70,12 @@ const addInspectorPanel = ( output, props ) => {
 				toggleAttributeName="showBlockBackground"
 				className="ugb--help-tip-background-on-off"
 			>
+				<ControlSeparator />
+				<ToggleControl
+					label={ __( 'No Paddings', i18n ) }
+					checked={ noPaddings }
+					onChange={ noPaddings => setAttributes( { noPaddings } ) }
+				/>
 				<BackgroundControlsHelper
 					attrNameTemplate="blockBackground%s"
 					setAttributes={ setAttributes }
@@ -177,6 +186,10 @@ const addAttributes = attributes => {
 		align: {
 			type: 'string',
 		},
+		noPaddings: {
+			type: 'boolean',
+			default: '',
+		},
 		...createBackgroundAttributes( 'blockBackground%s' ),
 	}
 }
@@ -215,6 +228,8 @@ const addVideoBackgroundOutput = ( output, design, blockProps ) => {
 }
 
 const addStyles = ( styleObject, props ) => {
+	const getValue = __getValue( props.attributes )
+
 	if ( ! props.attributes.showBlockBackground ) {
 		return styleObject
 	}
@@ -222,6 +237,9 @@ const addStyles = ( styleObject, props ) => {
 	const styles = {
 		[ `.${ props.mainClassName }` ]: {
 			...createBackgroundStyles( 'blockBackground%s', 'desktop', props.attributes ),
+		},
+		'': { // We use the blank selector so that other styling (such as the block paddings) can still override the paddings.
+			padding: getValue( 'noPaddings' ) ? '0 !important' : undefined,
 		},
 		[ `.${ props.mainClassName }:before` ]: {
 			...createBackgroundOverlayStyles( 'blockBackground%s', 'desktop', props.attributes ),
