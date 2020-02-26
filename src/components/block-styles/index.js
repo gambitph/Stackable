@@ -65,7 +65,7 @@ export const combineStyleRules = styleObject => {
 export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqueClassName = '', breakTablet = 1025, breakMobile = 768, editorMode = false ) => {
 	const styleStrings = []
 
-	const desktopStyles = omit( styleObject, [ 'desktopTablet', 'desktopOnly', 'tablet', 'tabletOnly', 'mobile', 'editor' ] )
+	const desktopStyles = omit( styleObject, [ 'desktopTablet', 'desktopOnly', 'tablet', 'tabletOnly', 'mobile', 'ie11', 'editor' ] )
 	if ( Object.keys( desktopStyles ).length ) {
 		const cleanedStyles = addBlockClassNames( desktopStyles, blockMainClassName, blockUniqueClassName, editorMode )
 		styleStrings.push( combineStyleRules( cleanedStyles ) )
@@ -108,6 +108,14 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 		const styleString = combineStyleRules( cleanedStyles )
 		if ( styleString ) {
 			styleStrings.push( `\n@media screen and (max-width: ${ breakMobile }px) {\n${ styleString } }` )
+		}
+	}
+
+	if ( typeof styleObject.ie11 !== 'undefined' ) {
+		const cleanedStyles = addBlockClassNames( styleObject.ie11, blockMainClassName, blockUniqueClassName, editorMode )
+		const styleString = combineStyleRules( cleanedStyles )
+		if ( styleString ) {
+			styleStrings.push( `\n@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {\n${ styleString } }` )
 		}
 	}
 
