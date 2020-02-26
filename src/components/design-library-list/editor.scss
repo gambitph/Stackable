@@ -2,7 +2,7 @@
 	page-break-inside: avoid;
 	break-inside: avoid;
 	column-count: 1;
-	column-gap: 18px;
+	column-gap: 38px;
 	&.ugb-design-library-items--columns-2 {
 		column-count: 2;
 	}
@@ -36,7 +36,7 @@
 	overflow: hidden;
 	transition: all 0.3s ease-in-out;
 	position: relative;
-	margin-bottom: 12px;
+	margin-bottom: 38px;
 	display: block; // Block or else the list will display a few results in a single vertical line.
 	transform: translateZ(0); // Fixes box shadow being cut by columns.
 	break-inside: avoid;
