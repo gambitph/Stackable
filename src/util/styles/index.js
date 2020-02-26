@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { default as _isDarkColor } from 'is-dark-color'
+import { camelCase } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -135,7 +136,7 @@ export const createResponsiveStyles = ( selector, attrNameTemplate = '%s', style
  * @return {Function} getValue function
  */
 export const __getValue = ( attributes, attrNameCallback = null, defaultValue_ = undefined ) => ( attrName, format = '', defaultValue = defaultValue_ ) => {
-	const attrNameFunc = attrNameCallback !== null ? attrNameCallback : ( s => s )
+	const attrNameFunc = attrNameCallback !== null ? attrNameCallback : ( s => camelCase( s ) )
 	const value = typeof attributes[ attrNameFunc( attrName ) ] === 'undefined' ? '' : attributes[ attrNameFunc( attrName ) ]
 	return value !== '' ? ( format ? sprintf( format.replace( /%$/, '%%' ), value ) : value ) : defaultValue
 }
