@@ -53,6 +53,7 @@
 	}
 
 	.ugb-number-box__number {
+		background-color: #ddd;
 		background-color: var(--s-primary-color, #ddd);
 		color: #fff;
 		border-radius: 100%;
@@ -76,6 +77,7 @@
 		display: block;
 		background: none;
 		border-radius: 0;
+		color: #222;
 		color: var(--s-primary-color, #222);
 		line-height: 1em;
 		height: auto;
