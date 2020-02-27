@@ -51,4 +51,8 @@ describe( '__getValue', () => {
 		expect( __getValue( { attr1: 9 } )( 'attr1', '%s%' ) ).toBe( '9%' )
 		expect( __getValue( { attr1: 9 } )( 'attr1', 'hello' ) ).toBe( 'hello' )
 	} )
+	it( 'should handle different cased attribute names and inputs', () => {
+		expect( __getValue( { attrBGColor: 'red' } )( 'attrBGColor' ) ).toBe( 'red' )
+		expect( __getValue( { attrBGColor: 'red' } )( 'AttrBGColor' ) ).toBe( 'red' )
+	} )
 } )
