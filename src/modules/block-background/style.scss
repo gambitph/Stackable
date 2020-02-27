@@ -11,6 +11,7 @@
 	&.ugb-main-block--inner-center {
 		@media screen and (min-width: $break-large) {
 			.ugb-inner-block {
+				max-width: 580px;
 				max-width: var(--content-width);
 			}
 		}
