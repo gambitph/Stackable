@@ -1,0 +1,37 @@
+@import "common";
+
+.ugb-column {
+	.ugb-column__item {
+		// @include box();
+		> *:first-child {
+			margin-top: 0;
+		}
+		> *:last-child {
+			margin-bottom: 0;
+		}
+	}
+	&.ugb-main-block {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+
+	// Columns need to occupy all the available height provided by the columns
+	// block.
+	&,
+	> .ugb-inner-block,
+	> .ugb-inner-block > .ugb-block-content,
+	.ugb-column__item {
+		height: 100%;
+	}
+}
+
+// The default style is centered, but stretched columns should default to flex-start.
+.ugb-columns .ugb-column {
+	align-items: flex-start;
+}
+
+.ugb-column.ugb-column--design-basic {
+	.ugb-column__item {
+		@include box();
+	}
+}

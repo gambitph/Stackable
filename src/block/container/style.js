@@ -212,6 +212,7 @@ export const createStyles = props => {
 		},
 		[ 'p, ' +
 		  'li, ' +
+		  'label, ' +
 		  'table' ]: {
 			color: getValue( 'bodyTextColor' ),
 		},

@@ -1,0 +1,34 @@
+// Containers have overflow and cut off the block editor's controls (toolbar and
+// drag handles).  Make overflow visible, but also do some tweaks so that the
+// background gradients & videos Still follow the border radius of the Container
+// block.
+.ugb-column > .ugb-inner-block > .ugb-block-content > .ugb-column__item {
+	overflow: visible !important;
+}
+
+// Allow our columns to look like they span more than one row.
+[data-type="ugb/column"] > .editor-block-list__block-edit {
+	height: 100%;
+	> [data-block] {
+		display: flex;
+		flex-direction: column;
+	}
+}
+
+// WP sets a maximum width for blocks in the editor view, remove them to let
+// them occupy the entire column.
+.wp-block[data-type="ugb/column"] {
+	&,
+	.wp-block {
+		max-width: none;
+	}
+}
+
+// Columns need to occupy all the available height provided by the columns
+// block.
+[data-type="ugb/column"] > .editor-block-list__block-edit > [data-block] {
+	&,
+	> .ugb-column {
+		height: 100%;
+	}
+}

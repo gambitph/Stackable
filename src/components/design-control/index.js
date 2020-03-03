@@ -30,7 +30,7 @@ function DesignControl( props ) {
 
 	return (
 		<div className={ classnames( className, 'ugb-design-control-wrapper components-base-control' ) }>
-			<div className="components-base-control__label">{ props.label }</div>
+			{ props.label && <div className="components-base-control__label">{ props.label }</div> }
 			<RadioControl
 				{ ...omit( props, [ 'label' ] ) }
 				className="ugb-design-control"

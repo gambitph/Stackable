@@ -1,0 +1,136 @@
+@import "common";
+
+// Required styles for non-plain columns so we can set their locations.
+.ugb-columns:not(.ugb-columns--design-plain) {
+	> .ugb-inner-block > .ugb-block-content > .ugb-columns__item {
+		> *:nth-child(1) {
+			grid-area: one;
+		}
+		> *:nth-child(2) {
+			grid-area: two;
+		}
+		> *:nth-child(3) {
+			grid-area: three;
+		}
+		> *:nth-child(4) {
+			grid-area: four;
+		}
+		> *:nth-child(5) {
+			grid-area: five;
+		}
+		> *:nth-child(6) {
+			grid-area: six;
+		}
+		> *:nth-child(7) {
+			grid-area: seven;
+		}
+		> *:nth-child(8) {
+			grid-area: eight;
+		}
+	}
+
+	&:not(.ugb-columns--design-plain) {
+		> .ugb-inner-block > .ugb-block-content > .ugb-columns__item {
+			grid-auto-columns: auto;
+			grid-auto-flow: row;
+		}
+	}
+}
+
+/**
+ * Plain columns
+ */
+@mixin columns-grid() {
+	display: grid;
+	grid-auto-columns: minmax(0, 1fr);
+	grid-auto-flow: column;
+	grid-gap: $box-hori-padding;
+	> div {
+		// This is for the editor.
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
+
+.ugb-columns {
+	> .ugb-inner-block > .ugb-block-content > .ugb-columns__item {
+		@include columns-grid();
+	}
+	.ugb-columns__item {
+		align-items: stretch;
+	}
+}
+
+/**
+ * Grid columns
+ */
+@mixin columns-grid-grid( $columns: 2 ) {
+	@if $columns == 2 {
+		grid-template-areas:
+			"one two";
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: auto;
+	}
+
+	@if $columns == 3 {
+		grid-template-areas:
+			"one   two"
+			"three three";
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: auto auto;
+	}
+
+	@if $columns == 4 {
+		grid-template-areas:
+			"one   two"
+			"three four";
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: auto auto;
+	}
+
+	@if $columns == 5 {
+		grid-template-areas:
+			"one   two"
+			"three four"
+			"five  five";
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: auto auto auto;
+	}
+
+	@if $columns == 6 {
+		grid-template-areas:
+			"one  two  three"
+			"four five six";
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-rows: auto auto;
+	}
+
+	@if $columns == 7 {
+		grid-template-areas:
+			"one   two   three"
+			"four  five  six"
+			"seven seven seven";
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-rows: auto auto auto;
+	}
+
+	@if $columns == 8 {
+		grid-template-areas:
+			"one  two three four"
+			"five six seven eight";
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-template-rows: auto auto;
+	}
+}
+
+.ugb-columns {
+	&.ugb-columns--design-grid {
+		@for $i from 2 through 8 {
+			&.ugb-columns--columns-#{ $i } {
+				> .ugb-inner-block > .ugb-block-content > .ugb-columns__item {
+					@include columns-grid-grid( $i );
+				}
+			}
+		}
+	}
+}

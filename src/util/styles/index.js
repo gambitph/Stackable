@@ -127,6 +127,24 @@ export const createResponsiveStyles = ( selector, attrNameTemplate = '%s', style
 }
 
 /**
+ * Creates a set of responsive styles for the editor.
+ *
+ * @param {string} selector
+ * @param {string} attrNameTemplate
+ * @param {string} styleRule
+ * @param {string} format
+ * @param {Object} attributes
+ * @param {boolean} important
+ *
+ * @return {Array} Reponsive object styles.
+ */
+export const createResponsiveEditorStyles = ( selector, attrNameTemplate = '%s', styleRule = 'marginBottom', format = '%spx', attributes = {}, important = false ) => {
+	return [ {
+		editor: createResponsiveStyles( selector, attrNameTemplate, styleRule, format, attributes, important )[ 0 ],
+	} ]
+}
+
+/**
  * Creates a getValue function that's used for getting attributes for style generation.
  *
  * @param {Object} attributes Block attribbutes
