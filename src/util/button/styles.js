@@ -73,7 +73,7 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 				paddingLeft: getValue( 'PaddingLeft' ) !== '' ? `${ getValue( 'PaddingLeft' ) }px` : undefined,
 			},
 			[ `.${ mainClassName } .ugb-button--inner, .${ mainClassName } svg` ]: {
-				color: whiteIfDarkBlackIfLight( getValue( 'TextColor' ), getValue( 'BackgroundColor' ) ),
+				color: appendImportant( whiteIfDarkBlackIfLight( getValue( 'TextColor' ), getValue( 'BackgroundColor' ) ) ),
 			},
 			[ `.${ mainClassName }:hover .ugb-button--inner, .${ mainClassName }:hover svg` ]: {
 				color: whiteIfDarkBlackIfLight( getValue( 'HoverTextColor' ), getValue( 'HoverBackgroundColor' ) ),
@@ -103,7 +103,7 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 	if ( getValue( 'Design' ) === 'ghost' ) {
 		styles.push( {
 			[ `.${ mainClassName }` ]: {
-				borderColor: getValue( 'BackgroundColor' ) !== '' ? getValue( 'BackgroundColor' ) : undefined,
+				borderColor: getValue( 'BackgroundColor' ) !== '' ? appendImportant( getValue( 'BackgroundColor' ) ) : undefined,
 				borderWidth: getValue( 'BorderWidth' ) !== '' ? `${ getValue( 'BorderWidth' ) }px` : undefined,
 				paddingTop: getValue( 'PaddingTop' ) !== '' ? `${ getValue( 'PaddingTop' ) }px` : undefined,
 				paddingRight: getValue( 'PaddingRight' ) !== '' ? `${ getValue( 'PaddingRight' ) }px` : undefined,
@@ -111,7 +111,7 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 				paddingLeft: getValue( 'PaddingLeft' ) !== '' ? `${ getValue( 'PaddingLeft' ) }px` : undefined,
 			},
 			[ `.${ mainClassName } .ugb-button--inner` ]: {
-				color: getValue( 'BackgroundColor' ) !== '' ? getValue( 'BackgroundColor' ) : undefined,
+				color: getValue( 'BackgroundColor' ) !== '' ? appendImportant( getValue( 'BackgroundColor' ) ) : undefined,
 			},
 			[ `.${ mainClassName }:hover` ]: {
 				borderColor: getValue( 'HoverBackgroundColor' ) !== '' ? getValue( 'HoverBackgroundColor' ) : undefined,
@@ -171,7 +171,7 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 	if ( getValue( 'Design' ) === 'plain' ) {
 		styles.push( {
 			[ `.${ mainClassName } .ugb-button--inner` ]: {
-				color: getValue( 'BackgroundColor' ) !== '' ? getValue( 'BackgroundColor' ) : undefined,
+				color: getValue( 'BackgroundColor' ) !== '' ? appendImportant( getValue( 'BackgroundColor' ) ) : undefined,
 			},
 			[ `.${ mainClassName }:hover .ugb-button--inner` ]: {
 				color: getValue( 'HoverBackgroundColor' ) !== '' ? getValue( 'HoverBackgroundColor' ) : undefined,
