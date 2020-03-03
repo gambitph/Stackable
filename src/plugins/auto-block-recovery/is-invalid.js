@@ -6,6 +6,7 @@ import {
 import {
 	DecodeEntityParser, getNextNonWhitespaceToken, isClosedByToken, isEqualTokensOfType,
 } from '@wordpress/blocks/build/api/validation'
+import { isEqual } from 'lodash'
 
 // We will auto-recover if there are errors encountered in these tags.
 const ALLOWED_ERROR_TAGS = [ 'style', 'svg' ]
@@ -71,7 +72,8 @@ export const isMissingStackableClass = issue => {
 	if ( issue.args[ 1 ] !== 'class' ) {
 		return false
 	}
-	return issue.args[ 2 ].split( 'ugb-' ).length !== issue.args[ 3 ].split( 'ugb-' ).length
+
+	return ! isEqual( issue.args[ 2 ].match( /ugb-[^\s]+/g ), issue.args[ 3 ].match( /ugb-[^\s]+/g ) )
 }
 
 /**
