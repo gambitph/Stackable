@@ -69,18 +69,18 @@ export const createStyles = props => {
 			'.ugb-header__title': {
 				...createTypographyStyles( 'title%s', 'desktop', props.attributes ),
 				color: whiteIfDark( titleColor, show.columnBackground && columnBackgroundColor ),
-				textAlign: appendImportant( getValue( 'contentAlign' ) || getValue( 'titleAlign' ) ),
+				textAlign: appendImportant( getValue( 'titleAlign' ) || getValue( 'contentAlign' ) ),
 			},
 			tablet: {
 				'.ugb-header__title': {
 					...createTypographyStyles( 'title%s', 'tablet', props.attributes ),
-					textAlign: appendImportant( getValue( 'tabletContentAlign' ) || getValue( 'titleTabletAlign' ) ),
+					textAlign: appendImportant( getValue( 'titleTabletAlign' ) || getValue( 'tabletContentAlign' ) ),
 				},
 			},
 			mobile: {
 				'.ugb-header__title': {
 					...createTypographyStyles( 'title%s', 'mobile', props.attributes ),
-					textAlign: appendImportant( getValue( 'mobileContentAlign' ) || getValue( 'titleMobileAlign' ) ),
+					textAlign: appendImportant( getValue( 'titleMobileAlign' ) || getValue( 'mobileContentAlign' ) ),
 				},
 			},
 		} )
