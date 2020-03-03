@@ -135,6 +135,15 @@ describe( 'generateStyles', () => {
 		expect( results ).toEqual( expect.stringMatching( /@media[^\{]+max-width:400px[^\{]+\{\.test{color:red/ ) )
 	} )
 
+	it( 'should render ie11 styles', () => {
+		const styles = {
+			ie11: { '.test': { color: 'red' } },
+		}
+
+		const results = generateStyles( styles, '', '', 900, 400 )
+		expect( results ).toEqual( expect.stringMatching( /@media screen and [^\{]+-ms-high-contrast:active[^\{]+,screen and [^\{]+-ms-high-contrast:none[^\{]+\{\.test{color:red/ ) )
+	} )
+
 	it( 'should render editor only styles', () => {
 		const styles = {
 			editor: { '.test': { color: 'red' } },
