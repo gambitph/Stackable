@@ -33,6 +33,11 @@ export const isInvalid = ( block, allowedTags = ALLOWED_ERROR_TAGS ) => {
 		return true
 	}
 
+	// Check whether we're missing a style tag.
+	if ( isMissingStyleTag( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
 	// Get which HTML tags the error occurred.
 	const tags = getInvalidationTags( block )
 	if ( ! tags ) {
@@ -67,6 +72,35 @@ export const isMissingStackableClass = issue => {
 		return false
 	}
 	return issue.args[ 2 ].split( 'ugb-' ).length !== issue.args[ 3 ].split( 'ugb-' ).length
+}
+
+/**
+ * Checks whether the validation error is because of a missing / additional Style tag.
+ *
+ * @param {Array} issue The invalidation object
+ *
+ * @return {boolean} True or false
+ */
+export const isMissingStyleTag = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 3 ) {
+		return false
+	}
+
+	// Style tag was missing.
+	if ( issue.args[ 1 ] === 'style' && issue.args[ 2 ] !== 'style' ) {
+		return true
+	}
+
+	// Style tag was present but shouldn't.
+	if ( issue.args[ 1 ] !== 'style' && issue.args[ 2 ] === 'style' ) {
+		return true
+	}
+
+	return false
 }
 
 /**
