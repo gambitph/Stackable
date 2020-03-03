@@ -320,7 +320,7 @@ const edit = props => {
 		'ugb-container__wrapper',
 		`${ uniqueClass }-wrapper`,
 	], applyFilters( 'stackable.container.wrapperClasses', {
-		[ `ugb--shadow-${ shadow }` ]: shadow !== '',
+		[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== '',
 		'ugb--restrict-content-width': show.restrictContent && restrictContentWidth,
 	}, props ) )
 
