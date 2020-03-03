@@ -29,8 +29,11 @@
 
 // Full width
 .ugb-cta.ugb-main-block.alignfull {
-	padding: 0;
-	.ugb-cta__item {
-		border-radius: 0;
+	&:not(.ugb--has-block-background),
+	&.ugb-main-block--inner-full {
+		padding: 0;
+		.ugb-cta__item {
+			border-radius: 0;
+		}
 	}
 }
