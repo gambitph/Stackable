@@ -283,6 +283,57 @@ describe( 'isInvalid', () => {
 
 		unregisterBlockType( 'ugb/dummy' )
 	} )
+
+	it( 'should detect missing image classes', () => {
+		const blockSettings = {
+			category: 'common',
+			save: () => <div className="ugb-image wp-image-123"><p attr="value">test</p></div>,
+			title: 'Test Block',
+		}
+
+		registerBlockType( 'ugb/dummy', blockSettings )
+
+		const block1 = createBlockWithFallback( {
+			blockName: 'ugb/dummy',
+			innerHTML: '<div class="ugb-image wp-image-123"><p attr="value">test</p></div>',
+			attrs: {},
+			innerBlocks: [],
+		} )
+
+		expect( isInvalid( block1 ) ).toBe( false )
+
+		const block2 = createBlockWithFallback( {
+			blockName: 'ugb/dummy',
+			innerHTML: '<div class="ugb-image"><p attr="value">test</p></div>',
+			attrs: {},
+			innerBlocks: [],
+		} )
+
+		expect( isInvalid( block2 ) ).toBe( true )
+
+		unregisterBlockType( 'ugb/dummy' )
+	} )
+
+	it( 'should detect added image classes', () => {
+		const blockSettings = {
+			category: 'common',
+			save: () => <div className="ugb-image"><p attr="value">test</p></div>,
+			title: 'Test Block',
+		}
+
+		registerBlockType( 'ugb/dummy', blockSettings )
+
+		const block1 = createBlockWithFallback( {
+			blockName: 'ugb/dummy',
+			innerHTML: '<div class="ugb-image wp-image-123"><p attr="value">test</p></div>',
+			attrs: {},
+			innerBlocks: [],
+		} )
+
+		expect( isInvalid( block1 ) ).toBe( true )
+
+		unregisterBlockType( 'ugb/dummy' )
+	} )
 } )
 
 describe( 'getInequivalentHTMLError', () => {

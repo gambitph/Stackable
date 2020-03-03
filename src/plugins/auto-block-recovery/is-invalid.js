@@ -39,6 +39,11 @@ export const isInvalid = ( block, allowedTags = ALLOWED_ERROR_TAGS ) => {
 		return true
 	}
 
+	// Check whether we're missing an image class.
+	if ( isMissingWPImageClass( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
 	// Get which HTML tags the error occurred.
 	const tags = getInvalidationTags( block )
 	if ( ! tags ) {
@@ -74,6 +79,34 @@ export const isMissingStackableClass = issue => {
 	}
 
 	return ! isEqual( issue.args[ 2 ].match( /ugb-[^\s]+/g ), issue.args[ 3 ].match( /ugb-[^\s]+/g ) )
+}
+
+/**
+ * Checks whether the validation error is because of a missing image classname.
+ *
+ * @param {Array} issue The invalidation object
+ *
+ * @return {boolean} True or false
+ */
+export const isMissingWPImageClass = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 4 ) {
+		return false
+	}
+
+	if ( typeof issue.args[ 1 ] !== 'string' || typeof issue.args[ 2 ] !== 'string' || typeof issue.args[ 3 ] !== 'string' ) {
+		return false
+	}
+
+	if ( issue.args[ 1 ] !== 'class' ) {
+		return false
+	}
+
+	return ( issue.args[ 2 ].match( /wp-image-\d+/ ) && ! issue.args[ 3 ].match( /wp-image-\d+/ ) ) ||
+		( ! issue.args[ 2 ].match( /wp-image-\d+/ ) && issue.args[ 3 ].match( /wp-image-\d+/ ) )
 }
 
 /**
