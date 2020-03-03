@@ -28,6 +28,11 @@ export const isInvalid = ( block, allowedTags = ALLOWED_ERROR_TAGS ) => {
 		return false
 	}
 
+	// Check whether we're missing a Stackable class.
+	if ( isMissingStackableClass( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
 	// Get which HTML tags the error occurred.
 	const tags = getInvalidationTags( block )
 	if ( ! tags ) {
@@ -36,6 +41,32 @@ export const isInvalid = ( block, allowedTags = ALLOWED_ERROR_TAGS ) => {
 
 	// If the error comes from SVG tags or the Style tag, then we can repair this invalid block.
 	return tags.some( tag => allowedTags.includes( tag ) )
+}
+
+/**
+ * Checks whether the validation error is because of a missing / additional Stackable classname.
+ *
+ * @param {Array} issue The invalidation object
+ *
+ * @return {boolean} True or false
+ */
+export const isMissingStackableClass = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 4 ) {
+		return false
+	}
+
+	if ( typeof issue.args[ 1 ] !== 'string' || typeof issue.args[ 2 ] !== 'string' || typeof issue.args[ 3 ] !== 'string' ) {
+		return false
+	}
+
+	if ( issue.args[ 1 ] !== 'class' ) {
+		return false
+	}
+	return issue.args[ 2 ].split( 'ugb-' ).length !== issue.args[ 3 ].split( 'ugb-' ).length
 }
 
 /**
