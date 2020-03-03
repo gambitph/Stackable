@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.2
 Tested up to: 5.3.2
 Requires PHP: 5.3
-Stable tag: 2.2.1
+Stable tag: 2.3.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -173,6 +173,29 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 2.3.0 =
+* New: Design Library
+* New: No paddings option in the Block Background area
+* Change: Added note that block contents won't change when switching designs
+* Fixed: You can now add dynamically changing blocks inside Accordion blocks (e.g. blocks that change height)
+* Fixed: Removed unwanted margins on the Separator block present in some themes
+* Fixed: Header block's title won't follow alignment
+* Fixed: Name color won't change in some Team Member block layouts
+* Fixed: Number alignment of the Number Box block not followed in smaller screens
+* Fixed: Number color of the Number Box block not working
+* Fixed: Border radius being applied incorrectly in some layouts in Team Member blocks
+* Fixed: Better auto-block recovery methods
+* Fixed: Shadow is now removed in plain Container block layouts
+* Fixed: PHP 7.4 parenthesis ternary experssion warning
+* Fixed: Button center alignment in IE11
+* Fixed: Columns now display properly in IE11
+* Fixed: Default colors now show properly in IE11
+* Fixed: Corrected border radius to show only when not in full-width for the CTA block
+* Fixed: Some text colors not showing correctly in some Blog Posts block layouts
+* Fixed: Image now has the correct width in Team Member blocks in small screens
+* Fixed: Responsiveness of some layouts of the Feature block
+* Fixed: Don't show empty advanced panels in the Count Up block
 
 = 2.2.1 =
 
