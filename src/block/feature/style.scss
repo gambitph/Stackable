@@ -66,7 +66,7 @@
 		&.ugb-feature--design-basic,
 		&.ugb-feature--design-plain {
 			.ugb-feature__item {
-				grid-template-columns: 1fr;
+				grid-template-columns: 1fr !important;
 			}
 			.ugb-feature__content {
 				grid-row: 2;
