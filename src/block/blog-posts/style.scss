@@ -236,8 +236,10 @@
 				}
 			}
 
-			.ugb-blog-posts__content {
-				flex: 1 1 auto;
+			&:not(.ugb-blog-posts--design-horizontal-card) {
+				.ugb-blog-posts__content {
+					flex: 1 1 auto;
+				}
 			}
 		}
 	}
