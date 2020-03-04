@@ -67,3 +67,80 @@
 		}
 	}
 }
+
+
+// IE 11 grid styles
+.ugb-feature-grid.ugb-feature-grid--v2 {
+	.ugb-feature-grid__image {
+		min-height: 1px;
+	}
+	&.ugb-feature-grid--columns-4 {
+		.ugb-block-content {
+			-ms-grid-columns: 1fr 35px 1fr 35px 1fr 35px 1fr;
+			display: -ms-grid;
+		}
+		.ugb-feature-grid__item:nth-child(2) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+		.ugb-feature-grid__item:nth-child(3) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 5;
+		}
+		.ugb-feature-grid__item:nth-child(4) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 7;
+		}
+	}
+	&.ugb-feature-grid--columns-3 {
+		.ugb-block-content {
+			-ms-grid-columns: 1fr 35px 1fr 35px 1fr;
+			display: -ms-grid;
+		}
+		.ugb-feature-grid__item:nth-child(2) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+		.ugb-feature-grid__item:nth-child(3) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 5;
+		}
+	}
+	&.ugb-feature-grid--columns-2 {
+		.ugb-block-content {
+			-ms-grid-columns: 1fr 35px 1fr;
+			display: -ms-grid;
+		}
+		.ugb-feature-grid__item:nth-child(2) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+	}
+
+	&.ugb-feature-grid--design-horizontal {
+		.ugb-feature-grid__item {
+			display: -ms-grid;
+			-ms-grid-columns: 1fr 35px 1fr;
+		}
+		.ugb-feature-grid__content {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+		.ugb-feature-grid__item > *:first-child:last-child {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 1 !important;
+			-ms-grid-column-span: 3;
+		}
+	}
+
+	@media screen and (max-width: $break-small) {
+		@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+			.ugb-block-content {
+				display: block !important;
+			}
+			.ugb-feature-grid__item {
+				margin-bottom: 35px;
+			}
+		}
+	}
+}
