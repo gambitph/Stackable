@@ -1,9 +1,7 @@
 /**
  * External dependencies
  */
-import {
-	ProControlButton, DesignLibraryControl,
-} from '~stackable/components'
+import { DesignLibraryControl } from '~stackable/components'
 import { applyBlockDesign } from '~stackable/util'
 import { i18n } from 'stackable'
 
@@ -17,7 +15,7 @@ import { PanelBody } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 
-const addDesignPanel = ( blockName, options ) => output => {
+const addDesignPanel = blockName => output => {
 	return (
 		<Fragment>
 			{ output }
@@ -32,15 +30,6 @@ const addDesignPanel = ( blockName, options ) => output => {
 						applyBlockDesign( designData.attributes )
 					} }
 				/>
-
-				{ /* // TODO: Remove this when we have more designs/ */ }
-				{ options.hasPremiumDesigns &&
-					<ProControlButton
-						title={ __( 'More Designs Coming Soon 👋', i18n ) }
-						description={ __( 'We\'ll be adding more pre-set sections / designs for this block soon.', i18n ) }
-						showButton={ false }
-					/>
-				}
 			</PanelBody>
 		</Fragment>
 	)
@@ -48,7 +37,6 @@ const addDesignPanel = ( blockName, options ) => output => {
 
 const blockDesigns = ( blockName, options = {} ) => {
 	const optionsToPass = {
-		hasPremiumDesigns: true,
 		...options,
 	}
 
