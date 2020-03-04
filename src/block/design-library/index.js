@@ -47,6 +47,10 @@ export const settings = {
 }
 
 domReady( () => {
+	if ( disabledBlocks.includes( name ) ) {
+		return
+	}
+
 	const toolbar = document.querySelector( '.edit-post-header-toolbar' )
 	if ( ! toolbar ) {
 		return
