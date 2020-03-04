@@ -75,6 +75,33 @@
 			opacity: 0.15;
 		}
 	}
+	.ugb-design-library-item__image {
+		svg {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -40%);
+			opacity: 0;
+			fill: #000;
+			height: 35px;
+			width: 35px;
+		}
+		img,
+		svg {
+			transition: all 0.3s ease-in-out;
+		}
+	}
+	&[class*="ugb--is-premium"]:hover {
+		.ugb-design-library-item__image {
+			img {
+				opacity: 0.2;
+			}
+			svg {
+				transform: translate(-50%, -50%);
+				opacity: 1;
+			}
+		}
+	}
 }
 .ugb-design-library-item__image {
 	padding: 0 !important;
