@@ -8,7 +8,7 @@ Stable tag: 2.3.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-An Amazing Block Library That Lets You Reimagine the Way You Use the WordPress Block Editor (Gutenberg).
+Stackable is a Library of Page Builder Gutenberg Blocks which will reimagine the way you use the WordPress Block Editor.
 
 == Description ==
 
@@ -118,6 +118,7 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com/v2/)
 
 ### News Article Updates
 
+- [v2.3 Introducing the Design Library and New Block Designs](https://wpstackable.com/blog/introducing-the-design-library-and-new-block-designs/)
 - [v2.2 Welcome Video, Better Separators and Auto-Block Recovery](https://wpstackable.com/blog/welcome-video-better-separators-and-auto-block-recovery/)
 - [v2.1 Help Video Snippets and Auto-Expand Settings](https://wpstackable.com/blog/help-video-snippets-auto-expand-settings/)
 - [v2.0 Version 2 is Out!](https://wpstackable.com/blog/version-2-is-out)
@@ -175,6 +176,8 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 2.3.0 =
+[Introducing the Design Library and New Block Designs](https://wpstackable.com/blog/introducing-the-design-library-and-new-block-designs/)
+
 * New: Design Library
 * New: No paddings option in the Block Background area
 * Change: Added note that block contents won't change when switching designs
@@ -196,6 +199,9 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Image now has the correct width in Team Member blocks in small screens
 * Fixed: Responsiveness of some layouts of the Feature block
 * Fixed: Don't show empty advanced panels in the Count Up block
+* Fixed: Notification block button sometimes won't change colors
+* Fixed: Responsiveness issues in horizontal layout in Posts block
+* Fixed: Responsiveness issues in horizontal layout in Card block
 
 = 2.2.1 =
 
