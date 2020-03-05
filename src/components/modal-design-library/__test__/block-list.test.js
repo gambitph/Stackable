@@ -65,6 +65,33 @@ describe( 'BlockList', () => {
 
 		// Free should not show up since all our designs are free.
 		expect( queryByText( 'Free Designs' ) ).toBeNull()
+		expect( queryByText( 'Premium Designs' ) ).toBeNull()
+	} )
+
+	it( 'should show correct premium design counts', async () => {
+		getAllBlocks.mockReturnValue( Promise.resolve( [ 'ugb/header', 'ugb/feature' ] ) )
+		getDesigns.mockReturnValue( Promise.resolve( [ {
+			block: 'ugb/header',
+			type: 'block',
+			plan: 'premium',
+		}, {
+			block: 'ugb/feature',
+			type: 'block',
+			plan: 'premium',
+		}, {
+			block: 'ugb/feature',
+			type: 'block',
+			plan: 'premium',
+		} ] ) )
+
+		const { getByText, getByTestId } = render( <BlockList /> )
+		await wait()
+
+		// Free should not show up since all our designs are premium.
+		expect( getByText( 'Free Designs' ) ).toBeTruthy()
+		expect( getByText( 'Premium Designs' ) ).toBeTruthy()
+		expect( getByTestId( 'free-count' ).textContent ).toEqual( '0' )
+		expect( getByTestId( 'premium-count' ).textContent ).toEqual( '3' )
 	} )
 
 	it( 'should show "free" if we have premium designs', async () => {
@@ -87,7 +114,9 @@ describe( 'BlockList', () => {
 		await wait()
 
 		expect( getByText( 'Free Designs' ) ).toBeTruthy()
+		expect( getByText( 'Premium Designs' ) ).toBeTruthy()
 		expect( getByTestId( 'free-count' ).textContent ).toEqual( '2' )
+		expect( getByTestId( 'premium-count' ).textContent ).toEqual( '1' )
 	} )
 
 	it( 'should call getDesigns with correct params', async () => {
@@ -121,6 +150,7 @@ describe( 'BlockList', () => {
 
 		expect( getByText( 'All Block Designs' ) ).toHaveClass( 'is-active' )
 		expect( getByText( 'Free Designs' ) ).not.toHaveClass( 'is-active' )
+		expect( getByText( 'Premium Designs' ) ).not.toHaveClass( 'is-active' )
 		expect( getByText( 'My ugb/header Design' ) ).not.toHaveClass( 'is-active' )
 		expect( getByText( 'My ugb/feature Design' ) ).not.toHaveClass( 'is-active' )
 
@@ -128,6 +158,15 @@ describe( 'BlockList', () => {
 
 		expect( getByText( 'All Block Designs' ) ).not.toHaveClass( 'is-active' )
 		expect( getByText( 'Free Designs' ) ).toHaveClass( 'is-active' )
+		expect( getByText( 'Premium Designs' ) ).not.toHaveClass( 'is-active' )
+		expect( getByText( 'My ugb/header Design' ) ).not.toHaveClass( 'is-active' )
+		expect( getByText( 'My ugb/feature Design' ) ).not.toHaveClass( 'is-active' )
+
+		fireEvent.click( getByText( 'Premium Designs' ) )
+
+		expect( getByText( 'All Block Designs' ) ).not.toHaveClass( 'is-active' )
+		expect( getByText( 'Free Designs' ) ).not.toHaveClass( 'is-active' )
+		expect( getByText( 'Premium Designs' ) ).toHaveClass( 'is-active' )
 		expect( getByText( 'My ugb/header Design' ) ).not.toHaveClass( 'is-active' )
 		expect( getByText( 'My ugb/feature Design' ) ).not.toHaveClass( 'is-active' )
 
@@ -135,6 +174,7 @@ describe( 'BlockList', () => {
 
 		expect( getByText( 'All Block Designs' ) ).not.toHaveClass( 'is-active' )
 		expect( getByText( 'Free Designs' ) ).not.toHaveClass( 'is-active' )
+		expect( getByText( 'Premium Designs' ) ).not.toHaveClass( 'is-active' )
 		expect( getByText( 'My ugb/header Design' ) ).toHaveClass( 'is-active' )
 		expect( getByText( 'My ugb/feature Design' ) ).not.toHaveClass( 'is-active' )
 
@@ -142,6 +182,7 @@ describe( 'BlockList', () => {
 
 		expect( getByText( 'All Block Designs' ) ).toHaveClass( 'is-active' )
 		expect( getByText( 'Free Designs' ) ).not.toHaveClass( 'is-active' )
+		expect( getByText( 'Premium Designs' ) ).not.toHaveClass( 'is-active' )
 		expect( getByText( 'My ugb/header Design' ) ).not.toHaveClass( 'is-active' )
 		expect( getByText( 'My ugb/feature Design' ) ).not.toHaveClass( 'is-active' )
 	} )
@@ -178,8 +219,9 @@ describe( 'BlockList', () => {
 		const { getByText, queryByText } = render( <BlockList onSelect={ onSelect } forceBlock={ 'ugb/header' } /> )
 		await wait()
 
-		expect( queryByText( 'All Block Designs' ) ).toBeNull()
+		expect( getByText( 'All Block Designs' ) ).toHaveClass( 'is-active' )
 		expect( queryByText( 'Free Designs' ) ).toBeNull()
+		expect( queryByText( 'Premium Designs' ) ).toBeNull()
 
 		expect( getByText( 'My ugb/header Design' ) ).toHaveClass( 'is-active' )
 		expect( getByText( 'My ugb/feature Design' ) ).not.toHaveClass( 'is-active' )
