@@ -94,7 +94,8 @@
 	&[class*="ugb--is-premium"]:hover {
 		.ugb-design-library-item__image {
 			img {
-				opacity: 0.2;
+				opacity: 0.4;
+				filter: blur(3px);
 			}
 			svg {
 				transform: translate(-50%, -50%);
