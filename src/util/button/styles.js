@@ -76,7 +76,7 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 				color: appendImportant( whiteIfDarkBlackIfLight( getValue( 'TextColor' ), getValue( 'BackgroundColor' ) ) ),
 			},
 			[ `.${ mainClassName }:hover .ugb-button--inner, .${ mainClassName }:hover svg` ]: {
-				color: whiteIfDarkBlackIfLight( getValue( 'HoverTextColor' ), getValue( 'HoverBackgroundColor' ) ),
+				color: appendImportant( whiteIfDarkBlackIfLight( getValue( 'HoverTextColor' ), getValue( 'HoverBackgroundColor' ) ) ),
 			},
 			[ `.${ mainClassName }:hover` ]: {
 				backgroundColor: getValue( 'HoverBackgroundColor' ) !== '' ? getValue( 'HoverBackgroundColor' ) : undefined,
@@ -114,11 +114,11 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 				color: getValue( 'BackgroundColor' ) !== '' ? appendImportant( getValue( 'BackgroundColor' ) ) : undefined,
 			},
 			[ `.${ mainClassName }:hover` ]: {
-				borderColor: getValue( 'HoverBackgroundColor' ) !== '' ? getValue( 'HoverBackgroundColor' ) : undefined,
+				borderColor: getValue( 'HoverBackgroundColor' ) !== '' ? appendImportant( getValue( 'HoverBackgroundColor' ) ) : undefined,
 			},
 			[ `.${ mainClassName }:hover .ugb-button--inner` ]: {
-				color: getValue( 'HoverBackgroundColor' ) !== '' ? getValue( 'HoverBackgroundColor' ) :
-					( getValue( 'BackgroundColor' ) !== '' ? getValue( 'BackgroundColor' ) : undefined ),
+				color: getValue( 'HoverBackgroundColor' ) !== '' ? appendImportant( getValue( 'HoverBackgroundColor' ) ) :
+					( getValue( 'BackgroundColor' ) !== '' ? appendImportant( getValue( 'BackgroundColor' ) ) : undefined ),
 			},
 		} )
 
@@ -174,7 +174,7 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 				color: getValue( 'BackgroundColor' ) !== '' ? appendImportant( getValue( 'BackgroundColor' ) ) : undefined,
 			},
 			[ `.${ mainClassName }:hover .ugb-button--inner` ]: {
-				color: getValue( 'HoverBackgroundColor' ) !== '' ? getValue( 'HoverBackgroundColor' ) : undefined,
+				color: getValue( 'HoverBackgroundColor' ) !== '' ? appendImportant( getValue( 'HoverBackgroundColor' ) ) : undefined,
 			},
 		} )
 
