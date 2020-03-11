@@ -14,14 +14,17 @@ Stackable is a Library of Page Builder Gutenberg Blocks which will reimagine the
 
 **Reimagine the Way You Use the WordPress Block Editor**
 
-[Stackable](https://wpstackable.com) is one of the first and most expansive block library made specially for the new WordPress Block Editor (Gutenberg). It adds essential custom blocks to Gutenberg’s arsenal to achieve a smooth page building experience. With its latest iteration, Stackable brings a suite of high quality blocks for page building, with precision design tools that let you build the perfect website and landing page that you want.
+[Stackable](https://wpstackable.com) is a block library that is one of the first, most expansive, and highly rated plugins made specially for the new WordPress Block Editor (Gutenberg).
+
+Stackable adds essential custom blocks to give you a true page builder experience inside the Block Editor. Stackable gives you a suite of high quality blocks, each with their own precise page builder options that let you build the perfect website and landing page that you envision.
 
 [youtube https://www.youtube.com/watch?v=m2I-pCYPezk]
 
 With Stackable, you get:
 
 - 23 Quality Page Building Blocks for Gutenberg
-- 50+ Block Layouts and Pre-set Section / Block Designs that can be switched with just one click
+- 50+ Block Layouts and 70+ Pre-set Section / Block Designs that can be switched with just one click
+- Page Builder-like tabbed options
 - Advanced and diverse web design options,
 - Responsive customization controls to precisely design your blocks for tablet and mobile visitors
 - Built-in Section / Background controls for the easiest way to build page sections using only a single block
