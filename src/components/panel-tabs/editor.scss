@@ -97,3 +97,11 @@
 	box-shadow: 0 20px 30px -20px rgba(0, 0, 0, 0.1);
 	margin-top: 0 !important;
 }
+
+// Make the sidebar header stick to the top.
+.edit-post-sidebar__panel-tabs {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	z-index: 1;
+}
