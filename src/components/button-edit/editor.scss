@@ -6,3 +6,7 @@
 .ugb-button.ugb-button--icon-only .ugb-svg-icon-placeholder__button {
 	display: block;
 }
+// Resize the button when its icon is resized
+.ugb-button.ugb-button--has-icon .ugb-svg-icon-placeholder__button {
+	height: auto;
+}
