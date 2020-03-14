@@ -29,8 +29,9 @@ const edit = ( { replaceBlockWithAttributes, replaceBlocWithContent } ) => {
 				instructions={ __( 'Open the Design Library and select a pre-designed block or layout.', i18n ) }
 			>
 				<Button
-					isPrimary
+					isSecondary
 					isLarge
+					hasIcon
 					className="ugb-design-library-block__button"
 					onClick={ () => {
 						setIsLibraryOpen( true )
