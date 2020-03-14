@@ -58,7 +58,7 @@ export const settings = {
 	title: __( 'Button', i18n ),
 	description: __( 'Add a customizable button.', i18n ),
 	icon: ButtonIcon,
-	category: 'stackable',
+	category: 'layout',
 	keywords: [
 		__( 'Button', i18n ),
 		__( 'Stackable', i18n ),

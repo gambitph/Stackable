@@ -136,29 +136,6 @@ if ( ! function_exists( 'stackable_load_plugin_textdomain' ) ) {
 	add_action( 'plugins_loaded', 'stackable_load_plugin_textdomain' );
 }
 
-
-
-if ( ! function_exists( 'stackable_block_category' ) ) {
-
-	/**
-	 * Add our custom block category for Stackable blocks.
-	 *
-	 * @since 0.6
-	 */
-	function stackable_block_category( $categories, $post ) {
-		return array_merge(
-			$categories,
-			array(
-				array(
-					'slug' => 'stackable',
-					'title' => __( 'Stackable', STACKABLE_I18N ),
-				),
-			)
-		);
-	}
-	add_filter( 'block_categories', 'stackable_block_category', 10, 2 );
-}
-
 if ( ! function_exists( 'stackable_add_required_block_styles' ) ) {
 
 	/**

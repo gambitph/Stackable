@@ -309,7 +309,7 @@ export const settings = {
 	title: __( 'Pricing Box', i18n ),
 	description: __( 'Display the different pricing tiers of your business.', i18n ),
 	icon: PricingBoxIcon,
-	category: 'stackable',
+	category: 'layout',
 	keywords: [
 		__( 'Pricing Box', i18n ),
 		__( 'Stackable', i18n ),

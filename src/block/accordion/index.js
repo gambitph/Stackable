@@ -137,7 +137,7 @@ export const settings = {
 	title: __( 'Accordion', i18n ),
 	description: __( 'A title that your visitors can toggle to view more text. Use as FAQs or multiple ones for an Accordion.', i18n ),
 	icon: AccordionIcon,
-	category: 'stackable',
+	category: 'common',
 	keywords: [
 		__( 'Accordion', i18n ),
 		__( 'Toggle', i18n ),

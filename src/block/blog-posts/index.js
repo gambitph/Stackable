@@ -252,7 +252,7 @@ export const settings = {
 	title: __( 'Posts', i18n ),
 	description: __( 'Your latest blog posts. Use this to showcase a few of your posts in your landing pages.', i18n ),
 	icon: BlogPostsIcon,
-	category: 'stackable',
+	category: 'layout',
 	keywords: [
 		__( 'Blog Posts', i18n ),
 		__( 'Stackable', i18n ),

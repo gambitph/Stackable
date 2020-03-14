@@ -184,7 +184,7 @@ export const settings = {
 	title: __( 'Notification', i18n ),
 	description: __( 'Show a notice to your readers. People can dismiss the notice to permanently hide it.', i18n ),
 	icon: NotificationIcon,
-	category: 'stackable',
+	category: 'formatting',
 	keywords: [
 		__( 'Notification', i18n ),
 		__( 'Stackable', i18n ),

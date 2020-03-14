@@ -125,7 +125,7 @@ export const settings = {
 	title: __( 'Call to Action', i18n ),
 	description: __( 'A small section you can use to call the attention of your visitors. Great for calling attention to your products or deals.', i18n ),
 	icon: CTAIcon,
-	category: 'stackable',
+	category: 'layout',
 	keywords: [
 		__( 'Call to Action', i18n ),
 		__( 'Stackable', i18n ),

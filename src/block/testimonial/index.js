@@ -247,7 +247,7 @@ export const settings = {
 	title: __( 'Testimonial', i18n ),
 	description: __( 'Showcase what your users say about your product or service.', i18n ),
 	icon: TestimonialIcon,
-	category: 'stackable',
+	category: 'layout',
 	keywords: [
 		__( 'Testimonial', i18n ),
 		__( 'Stackable', i18n ),

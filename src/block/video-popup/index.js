@@ -84,7 +84,7 @@ export const settings = {
 	title: __( 'Video Popup', i18n ),
 	description: __( 'Display a large thumbnail that your users can click to play a video full-screen. Great for introductory or tutorial videos.', i18n ),
 	icon: VideoPopupIcon,
-	category: 'stackable',
+	category: 'common',
 	keywords: [
 		__( 'Video Popup', i18n ),
 		__( 'Stackable', i18n ),

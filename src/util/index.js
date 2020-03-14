@@ -10,6 +10,7 @@ export * from './social'
 export * from './blocks'
 export * from './svg'
 export * from './hooks'
+export * from './collections'
 
 /**
  * WordPress dependencies

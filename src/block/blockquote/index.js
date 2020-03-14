@@ -101,7 +101,7 @@ export const settings = {
 	title: __( 'Blockquote', i18n ),
 	description: __( 'Display a quote in style.', i18n ),
 	icon: BlockquoteIcon,
-	category: 'stackable',
+	category: 'common',
 	keywords: [
 		__( 'Blockquote', i18n ),
 		__( 'Stackable', i18n ),

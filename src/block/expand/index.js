@@ -110,7 +110,7 @@ export const settings = {
 	title: __( 'Expand / Show More', i18n ),
 	description: __( 'Display a small snippet of text. Your readers can toggle it to show more information.', i18n ),
 	icon: ExpandIcon,
-	category: 'stackable',
+	category: 'layout',
 	keywords: [
 		__( 'Expand', i18n ),
 		__( 'Show more/less', i18n ),
