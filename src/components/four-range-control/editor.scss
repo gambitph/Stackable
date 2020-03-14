@@ -18,8 +18,13 @@
 }
 .ugb-four-range-control {
 	.ugb-four-range-control__lock {
+		height: auto;
 		color: #555d66;
 		box-shadow: none !important;
 		margin-left: 5px;
+		svg {
+			height: 16px;
+			width: 16px;
+		}
 	}
 }
