@@ -7,6 +7,11 @@
 	display: block;
 }
 
+// Resize the button when its icon is resized
+.ugb-button.ugb-button--has-icon .ugb-svg-icon-placeholder__button {
+	height: auto;
+}
+
 // Add this to force the svg transition to follow the button.
 .ugb-button {
 	svg {
