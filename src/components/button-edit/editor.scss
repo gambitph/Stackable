@@ -6,3 +6,10 @@
 .ugb-button.ugb-button--icon-only .ugb-svg-icon-placeholder__button {
 	display: block;
 }
+
+// Add this to force the svg transition to follow the button.
+.ugb-button {
+	svg {
+		transition: initial !important;
+	}
+}
