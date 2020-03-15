@@ -1,3 +1,5 @@
+import { supportsInspectorPositionSticky } from '~stackable/util'
+
 export const openPanelId = panelId => {
 	const panelToOpen = getPanel( panelId )
 	if ( panelToOpen ) {
@@ -52,15 +54,16 @@ const openPanel = panelEl => {
 
 export const scrollPanelIntoView = panelEl => {
 	const tabs = document.querySelector( '.ugb-panel-tabs' )
-	const sidebarHeader = document.querySelector( '.edit-post-sidebar-header' )
 	const sidebar = document.querySelector( '.edit-post-sidebar' )
 
-	// Adjust the scroll manually instead of scrollIntoView since we have sticky tabs.
-	document.querySelector( '.edit-post-sidebar' ).scrollTop =
-		document.querySelector( '.edit-post-sidebar' ).scrollTop +
-		(
-			panelEl.getBoundingClientRect().top -
-			( sidebarHeader ? sidebarHeader.getBoundingClientRect().bottom - 2 : sidebar.getBoundingClientRect().top ) -
-			( tabs ? tabs.getBoundingClientRect().height : 0 )
-		)
+	let offset = panelEl.getBoundingClientRect().top + 2
+	offset -= tabs ? tabs.getBoundingClientRect().height : 0
+	offset -= sidebar.getBoundingClientRect().top
+
+	if ( ! supportsInspectorPositionSticky() ) {
+		const sidebarHeader = document.querySelector( '.edit-post-sidebar-header' )
+		offset -= sidebarHeader ? sidebarHeader.getBoundingClientRect().height - 1 : 0
+	}
+
+	document.querySelector( '.edit-post-sidebar' ).scrollTop += offset
 }

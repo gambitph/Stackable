@@ -17,6 +17,7 @@ import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 import { Icon } from '@wordpress/components'
+import { supportsInspectorPositionSticky } from '~stackable/util'
 
 const TABS = [
 	{
@@ -174,4 +175,11 @@ PanelTabs.defaultProps = {
 	tabs: null,
 }
 
-export default withSticky( withMemory( PanelTabs ) )
+let _PanelTabs = withMemory( PanelTabs )
+
+// Sticky inspector code is only needed WP <= 5.3.
+if ( ! supportsInspectorPositionSticky() ) {
+	_PanelTabs = withSticky( _PanelTabs )
+}
+
+export default _PanelTabs
