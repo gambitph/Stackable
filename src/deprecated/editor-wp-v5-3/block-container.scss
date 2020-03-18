@@ -1,0 +1,43 @@
+[data-type="ugb/container"].has-child-selected,
+[data-type="ugb/container"].is-selected {
+	> .editor-block-list__block-edit > [data-block] > .ugb-container > .ugb-inner-block > .ugb-block-content > .ugb-container__wrapper > .ugb-container__content-wrapper > .editor-inner-blocks > .editor-block-list__layout > .wp-block > .editor-block-list__block-edit::before {
+		border: 1px dashed rgba(123, 134, 162, 0.3);
+	}
+	.is-selected > .editor-block-list__block-edit::before {
+		border: 1px solid rgba(66, 88, 99, 0.4);
+	}
+}
+
+// Make sure our first & last contents (visually) in the editor don't have margins.
+.ugb-container__content-wrapper > .editor-inner-blocks > .editor-block-list__layout {
+	> .editor-block-list__block:first-child > .editor-block-list__block-edit {
+		margin-top: 0 !important;
+	}
+	> *:empty:last-child {
+		margin-bottom: -32px !important;
+	}
+}
+
+// Inner blocks are always restricted to the content width.
+.ugb-container .editor-block-list__block {
+	max-width: none !important;
+}
+
+// Containers have overflow and cut off the block editor's controls (toolbar and drag handles).
+// Make overflow visible, but also do some tweaks so that the background gradients & videos
+// Still follow the border radius of the Container block.
+.ugb-container > .ugb-inner-block > .ugb-block-content > .ugb-container__wrapper {
+	overflow: visible !important;
+	> .ugb-video-background {
+		overflow: hidden;
+	}
+	&::before {
+		// Add transition since our pseudo element doesn't have it and it looks bad.
+		transition: border-radius 0.2s ease-in-out;
+	}
+}
+
+// Fix: Make Columns placed inside Container blocks occupy the entire Container width
+.ugb-container .wp-block-columns .editor-inner-blocks {
+	width: 100%;
+}

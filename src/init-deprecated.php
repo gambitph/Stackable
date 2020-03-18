@@ -11,6 +11,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( ! function_exists( 'stackable_get_wp_version' ) ) {
+
+	/**
+	 * Gets the current WordPress version, but just the numerical value. Strips
+	 * out the dash version descriptors.
+	 *
+	 * @param string $version The version number, if supplied this is used
+	 * instead of the detected one. Used for testing.
+	 *
+	 * @return string The version number.
+	 */
+	function stackable_get_wp_version( $version = '' ) {
+		$version = $version ? $version : get_bloginfo( 'version' );
+		// Remove the non numeric version such as "-RC1".
+		$version = preg_replace( '/-.*$/', '', $version );
+		return $version;
+	}
+}
+
 if ( ! function_exists( 'stackable_gutenberg_blockeditor_5_1_backward_compatibility' ) ) {
 
 	/**
@@ -145,3 +164,24 @@ if ( ! function_exists( 'stackable_twentytwenty_body_class' ) ) {
 /********************************************************************************************
  * END Version 1 & TwentyTwenty frontend styles backward compatibility.
  ********************************************************************************************/
+
+if ( ! function_exists( 'stackable_enqueue_wp_5_3_compatibility' ) ) {
+
+	/**
+	 * Enqueues the editor styles for WordPress <= 5.3
+	 *
+	 * @since 2.3.2
+	 */
+	function stackable_enqueue_wp_5_3_compatibility() {
+		wp_enqueue_style(
+			'ugb-block-editor-css-wp-5-3',
+			plugins_url( 'dist/editor_blocks_wp_v5_3.css', STACKABLE_FILE ),
+			array( 'ugb-block-editor-css' ),
+			STACKABLE_VERSION
+		);
+	}
+
+	if ( version_compare( stackable_get_wp_version(), '5.4', '<' ) ) {
+		add_action( 'enqueue_block_editor_assets', 'stackable_enqueue_wp_5_3_compatibility', 19 );
+	}
+}

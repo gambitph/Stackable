@@ -12,7 +12,7 @@
 		left: calc(50% - 2.5em / 2); // Prevent transitions.
 	}
 	// Ensure the number is behind.
-	.ugb-number-box__item > .editor-rich-text {
+	.ugb-number-box__item > *:not(.ugb-number-box__content) {
 		z-index: 3 !important;
 	}
 	.ugb-number-box__item > .ugb-number-box__content {
