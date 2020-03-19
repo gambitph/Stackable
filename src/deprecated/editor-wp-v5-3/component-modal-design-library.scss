@@ -1,0 +1,42 @@
+.ugb-modal-design-library {
+	.ugb-modal-design-library__topbar .is-active {
+		background: #555;
+		color: #fff;
+	}
+
+	.ugb-advanced-toolbar-control {
+		.components-button.components-toolbar__control.has-text .is-active {
+			background: transparent;
+		}
+	}
+}
+
+.ugb-modal-design-library__color-list {
+	// Color indicator.
+	.components-color-palette {
+		width: 24px;
+		flex: 0;
+		margin: 0 10px 10px;
+	}
+	.components-color-palette__item-wrapper {
+		height: 22px;
+		width: 22px;
+		margin: 0;
+	}
+
+	// Check mark when color is active.
+	.components-color-palette__item.is-active + .dashicons-saved {
+		left: 3px;
+		top: 3px;
+		width: 16px;
+		height: 16px;
+	}
+
+	// Gray focus outline.
+	.components-color-palette__item:focus::after {
+		width: 28px;
+		height: 28px;
+		top: -3px;
+		left: -3px;
+	}
+}
