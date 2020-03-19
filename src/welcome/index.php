@@ -125,9 +125,11 @@ SVG;
 							<p><?php _e( 'If you are ready for even more, upgrade to Premium and get:', STACKABLE_I18N ) ?></p>
 								<ul class="s-check-list">
 									<li><?php _e( '50+ Premium Layouts', STACKABLE_I18N ) ?></li>
-									<li><?php _e( 'Seamless Layout Switching', STACKABLE_I18N ) ?></li>
-									<li><?php _e( 'All Premium Effects', STACKABLE_I18N ) ?></li>
+									<li><?php _e( '130+ Premium Block Designs', STACKABLE_I18N ) ?></li>
+									<li><?php _e( 'One-Click Switchable Designs', STACKABLE_I18N ) ?></li>
+									<li><?php _e( 'Additional Block Options', STACKABLE_I18N ) ?></li>
 									<li><?php _e( '3-Layer Separators', STACKABLE_I18N ) ?></li>
+									<li><?php _e( 'All Premium Effects', STACKABLE_I18N ) ?></li>
 									<li><?php _e( 'Custom CSS', STACKABLE_I18N ) ?></li>
 									<li><?php _e( 'No Ads', STACKABLE_I18N ) ?></li>
 									<li><?php _e( 'Customer Email Support', STACKABLE_I18N ) ?></li>
