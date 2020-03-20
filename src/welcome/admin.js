@@ -346,10 +346,12 @@ class HelpTabs extends Component {
 					<p>{ __( 'Upgrade to Premium and our support team will be there to answer any questions you might have about the usage of Stackable.', i18n ) }</p>
 					<p>{ __( 'Here are the other features you\'ll by going Premium:', i18n ) }</p>
 					<ul className="s-check-list">
-						<li>{ __( '50+ Premium Layouts', i18n ) }</li>
-						<li>{ __( 'Seamless Layout Switching', i18n ) }</li>
-						<li>{ __( 'All Premium Effects', i18n ) }</li>
+						<li>{ __( '60+ Premium Layouts', i18n ) }</li>
+						<li>{ __( '130+ Premium Block Designs', i18n ) }</li>
+						<li>{ __( 'One-Click Switchable Designs', i18n ) }</li>
+						<li>{ __( 'Additional Block Options', i18n ) }</li>
 						<li>{ __( '3-Layer Separators', i18n ) }</li>
+						<li>{ __( 'All Premium Effects', i18n ) }</li>
 						<li>{ __( 'Custom CSS', i18n ) }</li>
 						<li>{ __( 'No Ads', i18n ) }</li>
 						<li>{ __( 'Lifetime Use', i18n ) }</li>
