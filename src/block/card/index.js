@@ -213,7 +213,7 @@ export const settings = {
 	title: __( 'Card', i18n ),
 	description: __( 'Describe a single subject in a small card. You can use this to describe your product, service or a person.', i18n ),
 	icon: CardIcon,
-	category: 'stackable',
+	category: 'layout',
 	keywords: [
 		__( 'Card', i18n ),
 		__( 'Stackable', i18n ),

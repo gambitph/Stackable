@@ -32,19 +32,11 @@ import SVGUngroupContainerIcon from './images/ungroup-container-icon.svg'
  */
 import { cloneElement, render } from '@wordpress/element'
 import domReady from '@wordpress/dom-ready'
-import { updateCategory } from '@wordpress/blocks'
 
 export const colorizeIcon = SvgIcon => {
 	return cloneElement( SvgIcon, {
 		fill: 'url(#stackable-gradient)',
-		className: 'ugb-stackable-icon-gradient',
-	} )
-}
-
-// Add an icon to our block category.
-if ( typeof window.wp.blocks !== 'undefined' && typeof window.wp.blocks.updateCategory !== 'undefined' ) {
-	updateCategory( 'stackable', {
-		icon: colorizeIcon( <SVGStackableIconTextured className="components-panel__icon" width="20" height="20" /> ),
+		className: `ugb-stackable-icon-gradient ${ SvgIcon.props.className || '' }`,
 	} )
 }
 
@@ -70,6 +62,10 @@ domReady( () => {
 		stackableGradient
 	)
 } )
+
+export const SVGStackableCategoryIcon = () => {
+	return colorizeIcon( <SVGStackableIconTextured width="20" height="20" className="components-panel__icon" /> )
+}
 
 export const SVGStackableIcon = () => {
 	return <SVGStackableIconTextured width="20" height="20" />

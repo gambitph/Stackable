@@ -226,3 +226,60 @@
 		}
 	}
 }
+
+// IE 11 grid styles
+.ugb-image-box.ugb-image-box--v4 {
+	&.ugb-image-box--columns-4 {
+		.ugb-block-content {
+			-ms-grid-columns: 1fr 35px 1fr 35px 1fr 35px 1fr;
+			display: -ms-grid;
+		}
+		.ugb-image-box__item:nth-child(2) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+		.ugb-image-box__item:nth-child(3) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 5;
+		}
+		.ugb-image-box__item:nth-child(4) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 7;
+		}
+	}
+	&.ugb-image-box--columns-3 {
+		.ugb-block-content {
+			-ms-grid-columns: 1fr 35px 1fr 35px 1fr;
+			display: -ms-grid;
+		}
+		.ugb-image-box__item:nth-child(2) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+		.ugb-image-box__item:nth-child(3) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 5;
+		}
+	}
+	&.ugb-image-box--columns-2 {
+		.ugb-block-content {
+			-ms-grid-columns: 1fr 35px 1fr;
+			display: -ms-grid;
+		}
+		.ugb-image-box__item:nth-child(2) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+	}
+
+	@media screen and (max-width: $break-small) {
+		@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+			.ugb-block-content {
+				display: block !important;
+			}
+			.ugb-image-box__item {
+				margin-bottom: 35px;
+			}
+		}
+	}
+}

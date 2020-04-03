@@ -51,7 +51,7 @@
 		pointer-events: none; // Prevent dragging the image.
 		width: 100%;
 		height: auto;
-		min-height: 100px;
+		min-height: 50px;
 		background: #f1f1f1;
 	}
 	footer {
@@ -73,6 +73,34 @@
 		}
 		img {
 			opacity: 0.15;
+		}
+	}
+	.ugb-design-library-item__image {
+		svg {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -40%);
+			opacity: 0;
+			fill: #000;
+			height: 35px;
+			width: 35px;
+		}
+		img,
+		svg {
+			transition: all 0.3s ease-in-out;
+		}
+	}
+	&[class*="ugb--is-premium"]:hover {
+		.ugb-design-library-item__image {
+			img {
+				opacity: 0.4;
+				filter: blur(3px);
+			}
+			svg {
+				transform: translate(-50%, -50%);
+				opacity: 1;
+			}
 		}
 	}
 }

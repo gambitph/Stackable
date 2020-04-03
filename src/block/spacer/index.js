@@ -42,7 +42,7 @@ export const settings = {
 	title: __( 'Spacer', i18n ),
 	description: __( 'Sometimes you just need some space.', i18n ),
 	icon: SpacerIcon,
-	category: 'stackable',
+	category: 'layout',
 	keywords: [
 		__( 'Spacer', i18n ),
 		__( 'Stackable', i18n ),

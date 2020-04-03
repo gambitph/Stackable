@@ -184,7 +184,7 @@ export const settings = {
 	title: __( 'Separator', i18n ),
 	description: __( 'A fancy separator to be placed between containers and content.', i18n ),
 	icon: SeparatorIcon,
-	category: 'stackable',
+	category: 'layout',
 	keywords: [
 		__( 'Separator', i18n ),
 		__( 'SVG Divider', i18n ),

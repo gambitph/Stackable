@@ -58,7 +58,7 @@ export const settings = {
 	title: __( 'Divider', i18n ),
 	description: __( 'Add a pause between your content.', i18n ),
 	icon: DividerIcon,
-	category: 'stackable',
+	category: 'layout',
 	keywords: [
 		__( 'Divider', i18n ),
 		__( 'Stackable', i18n ),

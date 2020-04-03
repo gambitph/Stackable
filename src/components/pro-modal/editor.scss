@@ -1,55 +1,7 @@
 .ugb-pro-modal {
 	overflow: hidden !important;
-	.ugb-pro-modal__carousel {
-		width: 1000px;
-		height: 500px;
-		max-width: 100%;
-		overflow: hidden;
-		position: relative;
-		user-select: none;
-	}
-	.ugb-pro-modal__carousel-wrapper {
-		width: 500%;
-		height: 100%;
-		transition: all 0.5s ease-in-out;
-	}
-	@for $i from 0 through 4 {
-		.ugb-pro-modal__carousel--slide-#{ $i } .ugb-pro-modal__carousel-wrapper {
-			transform: translateX($i / 5 * -100%);
-		}
-	}
-	.ugb-pro-modal__carousel-left,
-	.ugb-pro-modal__carousel-right {
-		position: absolute;
-		left: 0;
-		top: 0;
-		bottom: 0;
-		width: 50%;
-		padding: 10px;
-		display: flex;
-		justify-content: flex-start;
-		align-items: center;
-		cursor: pointer;
-		svg {
-			width: 20px;
-		}
-		&:hover {
-			svg {
-				opacity: 0.7;
-			}
-		}
-	}
-	.ugb-pro-modal__carousel-right {
-		left: auto;
-		right: 0;
-		justify-content: flex-end;
-	}
-	@media screen and (max-width: 900px) {
-		.ugb-pro-modal__carousel {
-			width: 700px;
-			height: 350px;
-		}
-	}
+	border: 0 !important;
+	background: #000;
 	.components-modal__header {
 		position: absolute;
 		top: 0;
@@ -57,18 +9,25 @@
 		z-index: 3;
 		border: 0;
 		background: transparent;
+		.components-button {
+			svg {
+				fill: #fff;
+			}
+			&:hover {
+				background-color: rgba(0, 0, 0, 0.4) !important;
+			}
+		}
 	}
 	.components-modal__content {
 		padding: 0;
 		img {
 			max-width: 1000px;
-			height: 100%;
+			height: auto;
 			width: auto !important;
 		}
 	}
 	.ugb-pro-modal__footer {
 		padding: 30px;
-		background: #fafafa;
 		text-align: center;
 		display: flex;
 		justify-content: center;
@@ -80,11 +39,18 @@
 			color: #fff;
 			background: linear-gradient(90deg, #ab5af1 -50%, #fb6874);
 			border: 0;
-			padding: 5px 15px;
 			height: auto;
 			font-size: 14px;
-			text-transform: uppercase;
-			font-weight: bold;
+			font-weight: 500;
+			display: flex;
+			align-items: center;
+			margin: 0 15px;
+			border-radius: 40px;
+			padding: 5px 25px;
+			svg {
+				fill: #fff;
+				margin: 0 10px 0 0;
+			}
 			&:hover {
 				background: linear-gradient(90deg, #ab5af1 -50%, #fb6874 50%);
 			}

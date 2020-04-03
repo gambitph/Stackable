@@ -1,11 +1,16 @@
 /**
- * Externak dependencies
+ * Internal dependencies
+ */
+import AdvancedToolbarControl from '../advanced-toolbar-control'
+
+/**
+ * External dependencies
  */
 import {
 	DesignLibraryList, ModalDesignLibrary,
 } from '~stackable/components'
 import { getDesigns } from '~stackable/design-library'
-import { i18n } from 'stackable'
+import { isPro, i18n } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -21,6 +26,7 @@ const DesignLibraryControl = props => {
 	const [ search, setSearch ] = useState( '' )
 	const [ designs, setDesigns ] = useState( [] )
 	const [ isBusy, setIsBusy ] = useState( true )
+	const [ plan, setPlan ] = useState( '' )
 
 	useEffect( () => {
 		getDesigns( {
@@ -49,8 +55,28 @@ const DesignLibraryControl = props => {
 				value={ search }
 				onChange={ search => setSearch( search ) }
 			/>
+			{ ! isPro &&
+				<AdvancedToolbarControl
+					controls={ [
+						{
+							value: '',
+							custom: <span className="ugb-advanced-toolbar-control__text-button ugb-design-library-control__open-library__toolbar">{ __( 'All', i18n ) }<span>{ designs.length }</span></span>,
+						},
+						{
+							value: 'free',
+							custom: <span className="ugb-advanced-toolbar-control__text-button ugb-design-library-control__open-library__toolbar">{ __( 'Free', i18n ) }<span>{ designs.reduce( ( sum, { plan } ) => sum + ( plan === 'free' ? 1 : 0 ), 0 ) }</span></span>,
+						},
+						{
+							value: 'premium',
+							custom: <span className="ugb-advanced-toolbar-control__text-button ugb-design-library-control__open-library__toolbar">{ __( 'Premium', i18n ) }<span>{ designs.reduce( ( sum, { plan } ) => sum + ( plan !== 'free' ? 1 : 0 ), 0 ) }</span></span>,
+						},
+					] }
+					value={ plan }
+					onChange={ plan => setPlan( plan ) }
+				/>
+			}
 			<DesignLibraryList
-				designs={ designs }
+				designs={ designs.filter( ( { plan: designPlan } ) => plan ? designPlan === plan : true ) }
 				isBusy={ isBusy }
 				onSelect={ props.onSelect }
 			/>

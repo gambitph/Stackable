@@ -100,3 +100,45 @@
 		}
 	}
 }
+
+// IE 11 grid styles
+.ugb-pricing-box.ugb-pricing-box--v3 {
+	.ugb-pricing-box__image {
+		min-height: 1px;
+	}
+	&.ugb-pricing-box--columns-3 {
+		.ugb-block-content {
+			-ms-grid-columns: 1fr 35px 1fr 35px 1fr;
+			display: -ms-grid;
+		}
+		.ugb-pricing-box__item:nth-child(2) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+		.ugb-pricing-box__item:nth-child(3) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 5;
+		}
+	}
+	&.ugb-pricing-box--columns-2 {
+		.ugb-block-content {
+			-ms-grid-columns: 1fr 35px 1fr;
+			display: -ms-grid;
+		}
+		.ugb-pricing-box__item:nth-child(2) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+	}
+
+	@media screen and (max-width: $break-small) {
+		@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+			.ugb-block-content {
+				display: block !important;
+			}
+			.ugb-pricing-box__item {
+				margin-bottom: 35px;
+			}
+		}
+	}
+}

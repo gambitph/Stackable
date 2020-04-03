@@ -78,7 +78,7 @@ export const settings = {
 	title: __( 'Icon List', i18n ),
 	description: __( 'An unordered list with icons. You can use this as a list of features or benefits.', i18n ),
 	icon: IconListIcon,
-	category: 'stackable',
+	category: 'common',
 	keywords: [
 		__( 'Icon List', i18n ),
 		__( 'Stackable', i18n ),

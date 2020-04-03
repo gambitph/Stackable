@@ -6,7 +6,7 @@
 
 @import "common";
 
-#editor [data-type="ugb/video-popup"][data-align="full"] > .editor-block-list__block-edit > [data-block] > .ugb-video-popup.ugb-main-block {
+#editor [data-type="ugb/video-popup"][data-align="full"] .ugb-video-popup {
 	&.ugb-main-block--inner-full.ugb--has-block-background,
 	&:not(.ugb--has-block-background) {
 		.ugb-video-popup__wrapper {

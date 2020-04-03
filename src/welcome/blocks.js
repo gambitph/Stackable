@@ -52,6 +52,10 @@ const blocks = {
 		description: __( 'Showcase your stats. Display how many customers you have or the number of downloads of your app.', i18n ),
 		sDemoURL: 'https://wpstackable.com/count-up-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
 	},
+	'ugb/design-library': {
+		title: __( 'Design Library', i18n ),
+		description: __( 'Choose from over a hundred block designs from the Stackable Design Library.', i18n ),
+	},
 	'ugb/expand': {
 		title: __( 'Expand / Show More', i18n ),
 		description: __( 'Display a small snippet of text. Your readers can toggle it to show more information.', i18n ),

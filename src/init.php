@@ -117,7 +117,7 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 			'showProNotice' => stackable_should_show_pro_notices(),
 			'pricingURL' => sugb_fs()->get_upgrade_url(),
 			'planName' => sugb_fs()->is_plan( 'starter', true ) ? 'starter' :
-			              sugb_fs()->is_plan( 'professional', true ) ? 'professional' : 'business',
+			              ( sugb_fs()->is_plan( 'professional', true ) ? 'professional' : 'business' ),
 		) );
 	}
 
@@ -134,29 +134,6 @@ if ( ! function_exists( 'stackable_load_plugin_textdomain' ) ) {
 		load_plugin_textdomain( 'stackable-ultimate-gutenberg-blocks' );
 	}
 	add_action( 'plugins_loaded', 'stackable_load_plugin_textdomain' );
-}
-
-
-
-if ( ! function_exists( 'stackable_block_category' ) ) {
-
-	/**
-	 * Add our custom block category for Stackable blocks.
-	 *
-	 * @since 0.6
-	 */
-	function stackable_block_category( $categories, $post ) {
-		return array_merge(
-			$categories,
-			array(
-				array(
-					'slug' => 'stackable',
-					'title' => __( 'Stackable', STACKABLE_I18N ),
-				),
-			)
-		);
-	}
-	add_filter( 'block_categories', 'stackable_block_category', 10, 2 );
 }
 
 if ( ! function_exists( 'stackable_add_required_block_styles' ) ) {

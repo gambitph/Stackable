@@ -42,7 +42,7 @@ export const createStyles = props => {
 
 	const styles = []
 
-	if ( show.columnBackground ) {
+	if ( show.borderRadius ) {
 		styles.push( {
 			'.ugb-team-member__item': {
 				borderRadius: getValue( 'borderRadius', '%spx !important' ),
@@ -112,7 +112,7 @@ export const createStyles = props => {
 	if ( showName ) {
 		styles.push( {
 			'.ugb-team-member__name': {
-				color: whiteIfDarkBlackIfLight( nameColor, show.columnBackground && columnBackgroundColor ),
+				color: appendImportant( whiteIfDarkBlackIfLight( nameColor, show.columnBackground && columnBackgroundColor ) ),
 			},
 		} )
 

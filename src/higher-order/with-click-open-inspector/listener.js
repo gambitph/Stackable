@@ -23,7 +23,8 @@ const MATCHERS = {}
 // These selectors will be listened to in this order.
 // If a selector is matched, the succeeding selectors are skipped.
 const CLICK_LISTENER_CLASSES = [
-	'.editor-rich-text__editable',
+	'.block-editor-rich-text__editable', // >= 5.4 rich text.
+	'.editor-rich-text__editable', // <= 5.3 rich text.
 	'svg',
 	'img',
 	'figure',

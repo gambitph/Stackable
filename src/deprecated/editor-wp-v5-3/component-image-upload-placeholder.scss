@@ -1,0 +1,9 @@
+// Only display the X button when selected/hovered.
+.editor-block-list__block {
+	&.is-selected,
+	&.is-hovered {
+		.ugb-image-upload-remove {
+			display: block;
+		}
+	}
+}

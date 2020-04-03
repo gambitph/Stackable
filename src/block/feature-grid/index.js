@@ -218,7 +218,7 @@ export const settings = {
 	title: __( 'Feature Grid', i18n ),
 	description: __( 'Display multiple product features or services. You can use Feature Grids one after another.', i18n ),
 	icon: FeatureGridIcon,
-	category: 'stackable',
+	category: 'layout',
 	keywords: [
 		__( 'Feature Grid', i18n ),
 		__( 'Stackable', i18n ),

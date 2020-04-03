@@ -119,7 +119,7 @@ export const settings = {
 	title: __( 'Container', i18n ),
 	description: __( 'A styled container that you can add other blocks inside. Use this to create unique layouts.', i18n ),
 	icon: ContainerIcon,
-	category: 'stackable',
+	category: 'layout',
 	keywords: [
 		__( 'Container Layout', i18n ),
 		__( 'Row', i18n ),

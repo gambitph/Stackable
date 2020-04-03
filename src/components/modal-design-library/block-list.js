@@ -19,6 +19,7 @@ const BlockList = props => {
 	const [ blockList, setBlockList ] = useState( {} )
 	const [ totalDesigns, setTotalDesigns ] = useState( 0 )
 	const [ totalFree, setTotalFree ] = useState( 0 )
+	const [ totalPremium, setTotalPremium ] = useState( 0 )
 	const [ selected, setSelected ] = useState( '' )
 
 	// Create our block list.
@@ -58,6 +59,7 @@ const BlockList = props => {
 
 			// Count the number of designs per block.
 			let freeDesigns = 0
+			let allDesigns = 0
 			const blocks = designs.reduce( ( blocks, design ) => {
 				const {
 					block, type, plan,
@@ -65,47 +67,49 @@ const BlockList = props => {
 				if ( type === 'block' && blocks[ block ] ) {
 					blocks[ block ].count++
 				}
-				if ( plan === 'free' ) {
-					freeDesigns++
+				if ( ! props.forceBlock || props.forceBlock === design.block ) {
+					allDesigns++
+					if ( plan === 'free' ) {
+						freeDesigns++
+					}
 				}
 				return blocks
 			}, { ...initBlocks } )
 
-			setTotalDesigns( designs.length )
+			setTotalDesigns( allDesigns )
 			setTotalFree( freeDesigns )
+			setTotalPremium( allDesigns - freeDesigns )
 			setBlockDesignList( orderBy( blocks, [ 'title' ], [ 'asc' ] ) )
 		} )
 	}, [ blockList, props.search, props.mood, props.colors ] )
 
 	return (
 		<ul className="ugb-block-list">
-			{ ! props.forceBlock &&
-				<li>
-					<div
-						className={ selected === '' ? 'is-active' : '' }
-						data-count={ totalDesigns }
-						onClick={ () => {
-							setSelected( '' )
-							props.onSelect( { block: '', plan: '' } )
-						} }
-						onKeyPress={ e => {
-							if ( e.keyCode === 13 ) {
-								this.click()
-							}
-						} }
-						role="button"
-						tabIndex={ 0 }
-						aria-pressed={ selected === '' ? 'true' : 'false' }
-					>
-						{ __( 'All Block Designs', i18n ) }
-						<span
-							className="ugb-block-list__count"
-							data-testid="all-count"
-						>{ totalDesigns }</span>
-					</div>
-				</li>
-			}
-			{ ! props.forceBlock && totalDesigns !== totalFree &&
+			<li>
+				<div
+					className={ selected === '' ? 'is-active' : '' }
+					data-count={ totalDesigns }
+					onClick={ () => {
+						setSelected( '' )
+						props.onSelect( { block: '', plan: '' } )
+					} }
+					onKeyPress={ e => {
+						if ( e.keyCode === 13 ) {
+							this.click()
+						}
+					} }
+					role="button"
+					tabIndex={ 0 }
+					aria-pressed={ selected === '' ? 'true' : 'false' }
+				>
+					{ __( 'All Block Designs', i18n ) }
+					<span
+						className="ugb-block-list__count"
+						data-testid="all-count"
+					>{ totalDesigns }</span>
+				</div>
+			</li>
+			{ totalDesigns !== totalFree &&
 				<li>
 					<div
 						className={ selected === 'free' ? 'is-active' : '' }
@@ -129,9 +133,31 @@ const BlockList = props => {
 							data-testid="free-count"
 						>{ totalFree }</span>
 					</div>
+					<div
+						className={ selected === 'premium' ? 'is-active' : '' }
+						data-count={ totalPremium }
+						onClick={ () => {
+							setSelected( 'premium' )
+							props.onSelect( { block: '', plan: 'premium' } )
+						} }
+						onKeyPress={ e => {
+							if ( e.keyCode === 13 ) {
+								this.click()
+							}
+						} }
+						role="button"
+						tabIndex={ 0 }
+						aria-pressed={ selected === 'premium' ? 'true' : 'false' }
+					>
+						{ __( 'Premium Designs', i18n ) }
+						<span
+							className="ugb-block-list__count"
+							data-testid="premium-count"
+						>{ totalPremium }</span>
+					</div>
 				</li>
 			}
-			{ ! props.forceBlock && <ControlSeparator /> }
+			<ControlSeparator />
 			{ blockDesignList.map( ( block, i ) => {
 				const isSelected = selected === block.name || block.name === props.forceBlock
 				const classes = classnames( {

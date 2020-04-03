@@ -5,7 +5,8 @@
 	button {
 		height: 11px;
 		width: 11px;
-		padding: 3px;
+		padding: 3px !important; // Force override for Gutenberg 7.7.
+		min-width: 11px !important; // Force override for Gutenberg 7.7.
 		box-sizing: content-box;
 		background: #eee;
 		border-radius: 100%;

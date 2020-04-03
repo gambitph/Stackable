@@ -157,7 +157,7 @@ export const settings = {
 	title: __( 'Feature', i18n ),
 	description: __( 'Display a product feature or a service in a large area.', i18n ),
 	icon: FeatureIcon,
-	category: 'stackable',
+	category: 'layout',
 	keywords: [
 		__( 'Feature', i18n ),
 		__( 'Stackable', i18n ),

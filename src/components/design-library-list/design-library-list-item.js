@@ -50,7 +50,8 @@ const DesignLibraryListItem = props => {
 					} )
 				} }
 			>
-				<img src={ image } alt={ label } />
+				{ ! isPro && plan !== 'free' && <Dashicon icon="lock" /> }
+				<img src={ image } alt={ label } loading="lazy" />
 			</button>
 
 			<footer>

@@ -48,24 +48,6 @@ describe( 'isInvalid', () => {
 
 		expect( isInvalid( block3, [ 'style', 'svg' ] ) ).toBe( false )
 
-		const block4 = createBlockWithFallback( {
-			blockName: 'ugb/dummy',
-			innerHTML: '<div><p attr="value2">test</p></div>',
-			attrs: {},
-			innerBlocks: [],
-		} )
-
-		expect( isInvalid( block4, [ 'style', 'svg' ] ) ).toBe( false )
-
-		const block5 = createBlockWithFallback( {
-			blockName: 'ugb/dummy',
-			innerHTML: '<div><aside></aside><style>test</style><p attr="value2">test</p></div>',
-			attrs: {},
-			innerBlocks: [],
-		} )
-
-		expect( isInvalid( block5, [ 'style', 'svg' ] ) ).toBe( false )
-
 		unregisterBlockType( 'ugb/dummy' )
 	} )
 
@@ -190,6 +172,165 @@ describe( 'isInvalid', () => {
 
 		expect( isInvalid( block2, [ 'aside' ] ) ).toBe( true )
 		expect( isInvalid( block2, [ 'div' ] ) ).toBe( true )
+
+		unregisterBlockType( 'ugb/dummy' )
+	} )
+
+	it( 'should detect missing style tags', () => {
+		const blockSettings = {
+			category: 'common',
+			save: () => <div><style>test</style><p attr="value">test</p></div>,
+			title: 'Test Block',
+		}
+
+		registerBlockType( 'ugb/dummy', blockSettings )
+
+		const block1 = createBlockWithFallback( {
+			blockName: 'ugb/dummy',
+			innerHTML: '<div><p attr="value2">test</p></div>',
+			attrs: {},
+			innerBlocks: [],
+		} )
+
+		expect( isInvalid( block1, [ 'style', 'svg' ] ) ).toBe( true )
+
+		const block2 = createBlockWithFallback( {
+			blockName: 'ugb/dummy',
+			innerHTML: '<div><aside></aside><style>test</style><p attr="value2">test</p></div>',
+			attrs: {},
+			innerBlocks: [],
+		} )
+
+		expect( isInvalid( block2, [ 'style', 'svg' ] ) ).toBe( true )
+
+		unregisterBlockType( 'ugb/dummy' )
+	} )
+
+	it( 'should detect added style tags', () => {
+		const blockSettings = {
+			category: 'common',
+			save: () => <div><p attr="value">test</p></div>,
+			title: 'Test Block',
+		}
+
+		registerBlockType( 'ugb/dummy', blockSettings )
+
+		const block1 = createBlockWithFallback( {
+			blockName: 'ugb/dummy',
+			innerHTML: '<div><style>test</style><p attr="value2">test</p></div>',
+			attrs: {},
+			innerBlocks: [],
+		} )
+
+		expect( isInvalid( block1, [ 'style', 'svg' ] ) ).toBe( true )
+
+		unregisterBlockType( 'ugb/dummy' )
+	} )
+
+	it( 'should detect missing ugb- classes', () => {
+		const blockSettings = {
+			category: 'common',
+			save: () => <div className="test ugb-class1 ugb-class2"><p attr="value">test</p></div>,
+			title: 'Test Block',
+		}
+
+		registerBlockType( 'ugb/dummy', blockSettings )
+
+		const block1 = createBlockWithFallback( {
+			blockName: 'ugb/dummy',
+			innerHTML: '<div class="test ugb-class1"><p attr="value">test</p></div>',
+			attrs: {},
+			innerBlocks: [],
+		} )
+
+		expect( isInvalid( block1 ) ).toBe( true )
+
+		const block2 = createBlockWithFallback( {
+			blockName: 'ugb/dummy',
+			innerHTML: '<div class="test ugb-class1 ugb-class2 ugb-class3"><p attr="value">test</p></div>',
+			attrs: {},
+			innerBlocks: [],
+		} )
+
+		expect( isInvalid( block2 ) ).toBe( true )
+
+		const block3 = createBlockWithFallback( {
+			blockName: 'ugb/dummy',
+			innerHTML: '<div class="test ugb-class1 ugb-class-new"><p attr="value">test</p></div>',
+			attrs: {},
+			innerBlocks: [],
+		} )
+
+		expect( isInvalid( block3 ) ).toBe( true )
+
+		const block4 = createBlockWithFallback( {
+			blockName: 'ugb/dummy',
+			innerHTML: '<div class="test ugb-class1 ugb-class2 added-class"><p attr="value">test</p></div>',
+			attrs: {},
+			innerBlocks: [],
+		} )
+
+		expect( isInvalid( block4 ) ).toBe( false )
+
+		const block5 = createBlockWithFallback( {
+			blockName: 'ugb/dummy',
+			innerHTML: '<div class="test ugb-class1 ugb-class2"><p attr="value">test</p></div>',
+			attrs: {},
+			innerBlocks: [],
+		} )
+
+		expect( isInvalid( block5 ) ).toBe( false )
+
+		unregisterBlockType( 'ugb/dummy' )
+	} )
+
+	it( 'should detect missing image classes', () => {
+		const blockSettings = {
+			category: 'common',
+			save: () => <div className="ugb-image wp-image-123"><p attr="value">test</p></div>,
+			title: 'Test Block',
+		}
+
+		registerBlockType( 'ugb/dummy', blockSettings )
+
+		const block1 = createBlockWithFallback( {
+			blockName: 'ugb/dummy',
+			innerHTML: '<div class="ugb-image wp-image-123"><p attr="value">test</p></div>',
+			attrs: {},
+			innerBlocks: [],
+		} )
+
+		expect( isInvalid( block1 ) ).toBe( false )
+
+		const block2 = createBlockWithFallback( {
+			blockName: 'ugb/dummy',
+			innerHTML: '<div class="ugb-image"><p attr="value">test</p></div>',
+			attrs: {},
+			innerBlocks: [],
+		} )
+
+		expect( isInvalid( block2 ) ).toBe( true )
+
+		unregisterBlockType( 'ugb/dummy' )
+	} )
+
+	it( 'should detect added image classes', () => {
+		const blockSettings = {
+			category: 'common',
+			save: () => <div className="ugb-image"><p attr="value">test</p></div>,
+			title: 'Test Block',
+		}
+
+		registerBlockType( 'ugb/dummy', blockSettings )
+
+		const block1 = createBlockWithFallback( {
+			blockName: 'ugb/dummy',
+			innerHTML: '<div class="ugb-image wp-image-123"><p attr="value">test</p></div>',
+			attrs: {},
+			innerBlocks: [],
+		} )
+
+		expect( isInvalid( block1 ) ).toBe( true )
 
 		unregisterBlockType( 'ugb/dummy' )
 	} )

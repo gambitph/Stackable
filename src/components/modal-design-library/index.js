@@ -183,7 +183,7 @@ const ModalDesignLibrary = props => {
 						columns={ columns }
 						onSelect={ props.onSelect }
 						isBusy={ isBusy }
-						designs={ designs }
+						designs={ ! props.selectedBlock ? designs : designs.filter( design => design.block === props.selectedBlock ) }
 					/>
 				</div>
 			</div>

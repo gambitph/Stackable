@@ -29,7 +29,7 @@ export const settings = {
 	title: __( 'Design Library', i18n ),
 	description: __( 'Choose a layout or block from the Stackable Design Library.', i18n ),
 	icon: StackableIcon,
-	category: 'stackable',
+	category: 'layout',
 	keywords: [
 		__( 'Design Library', i18n ),
 		__( 'Element Layouts', i18n ),
@@ -47,6 +47,10 @@ export const settings = {
 }
 
 domReady( () => {
+	if ( disabledBlocks.includes( name ) ) {
+		return
+	}
+
 	const toolbar = document.querySelector( '.edit-post-header-toolbar' )
 	if ( ! toolbar ) {
 		return

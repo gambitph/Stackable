@@ -323,7 +323,7 @@ export const settings = {
 	title: __( 'Team Member', i18n ),
 	description: __( 'Display members of your team or your office. Use multiple Team Member blocks if you have a large team.', i18n ),
 	icon: TeamMemberIcon,
-	category: 'stackable',
+	category: 'layout',
 	keywords: [
 		__( 'Team Member', i18n ),
 		__( 'Stackable', i18n ),

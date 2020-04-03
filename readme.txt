@@ -2,26 +2,29 @@
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.2
-Tested up to: 5.3.2
+Tested up to: 5.4
 Requires PHP: 5.3
-Stable tag: 2.2.1
+Stable tag: 2.3.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-An Amazing Block Library That Lets You Reimagine the Way You Use the WordPress Block Editor (Gutenberg).
+Stackable is a Library of Page Builder Gutenberg Blocks which will reimagine the way you use the WordPress Block Editor.
 
 == Description ==
 
 **Reimagine the Way You Use the WordPress Block Editor**
 
-[Stackable](https://wpstackable.com) is one of the first and most expansive block library made specially for the new WordPress Block Editor (Gutenberg). It adds essential custom blocks to Gutenberg’s arsenal to achieve a smooth page building experience. With its latest iteration, Stackable brings a suite of high quality blocks for page building, with precision design tools that let you build the perfect website and landing page that you want.
+[Stackable](https://wpstackable.com) is a block library that is one of the first, most expansive, and highly rated plugins made specially for the new WordPress Block Editor (Gutenberg).
+
+Stackable adds essential custom blocks to give you a true page builder experience inside the Block Editor. Stackable gives you a suite of high quality blocks, each with their own precise page builder options that let you build the perfect website and landing page that you envision.
 
 [youtube https://www.youtube.com/watch?v=m2I-pCYPezk]
 
 With Stackable, you get:
 
 - 23 Quality Page Building Blocks for Gutenberg
-- 50+ Block Layouts and Pre-set Section / Block Designs that can be switched with just one click
+- 50+ Block Layouts and 70+ Pre-set Section / Block Designs that can be switched with just one click
+- Page Builder-like tabbed options
 - Advanced and diverse web design options,
 - Responsive customization controls to precisely design your blocks for tablet and mobile visitors
 - Built-in Section / Background controls for the easiest way to build page sections using only a single block
@@ -118,6 +121,7 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com/v2/)
 
 ### News Article Updates
 
+- [v2.3 Introducing the Design Library and New Block Designs](https://wpstackable.com/blog/introducing-the-design-library-and-new-block-designs/)
 - [v2.2 Welcome Video, Better Separators and Auto-Block Recovery](https://wpstackable.com/blog/welcome-video-better-separators-and-auto-block-recovery/)
 - [v2.1 Help Video Snippets and Auto-Expand Settings](https://wpstackable.com/blog/help-video-snippets-auto-expand-settings/)
 - [v2.0 Version 2 is Out!](https://wpstackable.com/blog/version-2-is-out)
@@ -173,6 +177,41 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 2.3.2 =
+* Fixed: WordPress 5.4 compatibility
+* Fixed: Mobile responsiveness of the Horizontal layout of the Feature Grid block
+
+= 2.3.1 =
+* Fixed: Button text hover color styling issue
+
+= 2.3.0 =
+[Introducing the Design Library and New Block Designs](https://wpstackable.com/blog/introducing-the-design-library-and-new-block-designs/)
+
+* New: Design Library
+* New: No paddings option in the Block Background area
+* Change: Added note that block contents won't change when switching designs
+* Fixed: You can now add dynamically changing blocks inside Accordion blocks (e.g. blocks that change height)
+* Fixed: Removed unwanted margins on the Separator block present in some themes
+* Fixed: Header block's title won't follow alignment
+* Fixed: Name color won't change in some Team Member block layouts
+* Fixed: Number alignment of the Number Box block not followed in smaller screens
+* Fixed: Number color of the Number Box block not working
+* Fixed: Border radius being applied incorrectly in some layouts in Team Member blocks
+* Fixed: Better auto-block recovery methods
+* Fixed: Shadow is now removed in plain Container block layouts
+* Fixed: PHP 7.4 parenthesis ternary experssion warning
+* Fixed: Button center alignment in IE11
+* Fixed: Columns now display properly in IE11
+* Fixed: Default colors now show properly in IE11
+* Fixed: Corrected border radius to show only when not in full-width for the CTA block
+* Fixed: Some text colors not showing correctly in some Blog Posts block layouts
+* Fixed: Image now has the correct width in Team Member blocks in small screens
+* Fixed: Responsiveness of some layouts of the Feature block
+* Fixed: Don't show empty advanced panels in the Count Up block
+* Fixed: Notification block button sometimes won't change colors
+* Fixed: Responsiveness issues in horizontal layout in Posts block
+* Fixed: Responsiveness issues in horizontal layout in Card block
 
 = 2.2.1 =
 

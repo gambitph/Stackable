@@ -18,11 +18,9 @@
 		transition: all 0.2s ease-in-out;
 	}
 	opacity: 1;
+	background: #2091e1;
 	background: var(--s-primary-color, #2091e1);
-	&,
-	svg {
-		transition: all 0.2s ease-in-out;
-	}
+	transition: all 0.2s ease-in-out;
 	@include baseButton();
 	font-size: 1em;
 	&:hover {
@@ -172,18 +170,22 @@
 // Ghost button design.
 .ugb-button--design-ghost {
 	background-color: transparent;
+	border: 2px solid #2091e1;
 	border: 2px solid var(--s-primary-color, #2091e1);
 	.ugb-button--inner {
+		color: #2091e1;
 		color: var(--s-primary-color, #2091e1);
 	}
 	&:hover {
 		opacity: 0.85;
 		box-shadow: none !important;
 		.ugb-button--inner {
+			color: #2091e1;
 			color: var(--s-primary-color, #2091e1);
 		}
 	}
 	&.ugb-button--ghost-to-normal-effect:hover {
+		background-color: #2091e1;
 		background-color: var(--s-primary-color, #2091e1);
 		svg,
 		.ugb-button--inner {
@@ -199,12 +201,14 @@
 	padding-left: 0;
 	padding-right: 0;
 	.ugb-button--inner {
+		color: #2091e1;
 		color: var(--s-primary-color, #2091e1);
 	}
 	&:hover {
 		opacity: 0.85;
 		box-shadow: none !important;
 		.ugb-button--inner {
+			color: #2091e1;
 			color: var(--s-primary-color, #2091e1);
 		}
 	}
@@ -239,6 +243,7 @@
 .ugb-button--has-icon.ugb-button--design-ghost,
 .ugb-button--has-icon.ugb-button--design-plain {
 	svg {
+		color: #2091e1;
 		color: var(--s-primary-color, #2091e1);
 	}
 }

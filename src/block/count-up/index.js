@@ -220,7 +220,7 @@ export const settings = {
 	title: __( 'Count Up', i18n ),
 	description: __( 'Showcase your stats. Display how many customers you have or the number of downloads of your app.', i18n ),
 	icon: CountUpIcon,
-	category: 'stackable',
+	category: 'common',
 	keywords: [
 		__( 'Statistics', i18n ),
 		__( 'Count Up', i18n ),

@@ -10,21 +10,22 @@
 
 	&.ugb-main-block--inner-center {
 		@media screen and (min-width: $break-large) {
-			.ugb-inner-block {
+			> .ugb-inner-block {
+				max-width: 900px;
 				max-width: var(--content-width);
 			}
 		}
 	}
 	&.ugb-main-block--inner-wide {
 		@media screen and (min-width: $break-wide) {
-			.ugb-inner-block {
+			> .ugb-inner-block {
 				width: 75vw;
 				min-width: 1200px;
 			}
 		}
 	}
 	&.ugb-main-block--inner-full {
-		.ugb-inner-block {
+		> .ugb-inner-block {
 			width: 100%;
 		}
 	}

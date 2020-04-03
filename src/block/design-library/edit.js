@@ -16,6 +16,7 @@ import { createBlock, parse } from '@wordpress/blocks'
 import { withDispatch } from '@wordpress/data'
 import { useState } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 
 const edit = ( { replaceBlockWithAttributes, replaceBlocWithContent } ) => {
 	const [ isLibraryOpen, setIsLibraryOpen ] = useState( false ) // eslint-disable-line react-hooks/rules-of-hooks
@@ -28,8 +29,9 @@ const edit = ( { replaceBlockWithAttributes, replaceBlocWithContent } ) => {
 				instructions={ __( 'Open the Design Library and select a pre-designed block or layout.', i18n ) }
 			>
 				<Button
-					isPrimary
+					isSecondary
 					isLarge
+					hasIcon
 					className="ugb-design-library-block__button"
 					onClick={ () => {
 						setIsLibraryOpen( true )
@@ -67,7 +69,10 @@ export default compose( [
 		return {
 			// Replaces the current block with a block made out of attributes.
 			replaceBlockWithAttributes: ( blockName, attributes, innerBlocks ) => {
-				const block = createBlock( blockName, attributes, innerBlocks )
+				const shortBlockName = blockName.replace( /^\w+\//g, '' )
+				const blockAttributes = applyFilters( `stackable.${ shortBlockName }.design.filtered-block-attributes`, attributes )
+
+				const block = createBlock( blockName, blockAttributes, innerBlocks )
 				replaceBlock( clientId, block )
 			},
 			// Replaces the current block with one or more blocks from a string.

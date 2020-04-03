@@ -586,6 +586,11 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 				minWidth: blockInnerWidth === 'wide' && getValue( 'mobileBlockWidth' ) ? 'auto !important' : undefined,
 			},
 		},
+		ie11: {
+			[ blockClass ]: {
+				height: getValue( 'blockHeight', `%s${ blockHeightUnit }` ),
+			},
+		},
 	}
 
 	return deepmerge.all( [ styleObject, margins, paddings, others ] )

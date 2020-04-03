@@ -226,7 +226,7 @@ export const settings = {
 	title: __( 'Number Box', i18n ),
 	description: __( 'Display steps or methods that your users will do in your service. For example, "Get started in just 3 easy steps: 1, 2 and 3!"', i18n ),
 	icon: NumberBoxIcon,
-	category: 'stackable',
+	category: 'layout',
 	keywords: [
 		__( 'Number Box', i18n ),
 		__( 'Stackable', i18n ),
