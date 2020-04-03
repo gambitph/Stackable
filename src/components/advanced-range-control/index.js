@@ -37,6 +37,11 @@ const AdvancedRangeControl = props => {
 		propsToPass.initialPosition = props.initialPosition[ i ] || ''
 	}
 
+	// Initial position needs to be an actual number.
+	if ( propsToPass.initialPosition !== '' && typeof propsToPass.initialPosition === 'string' ) {
+		propsToPass.initialPosition = propsToPass.initialPosition.includes( '.' ) ? parseFloat( propsToPass.initialPosition ) : parseInt( propsToPass.initialPosition, 10 )
+	}
+
 	return (
 		<BaseControl
 			help={ props.help }
