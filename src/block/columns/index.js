@@ -67,7 +67,7 @@ export const settings = {
 	title: __( 'Advanced Columns & Grid', i18n ),
 	description: __( 'Add a block that displays content in multiple columns. Get advanced options on how you want your columns to look.', i18n ),
 	icon: StackableIcon,
-	category: 'stackable',
+	category: 'layout',
 	keywords: [
 		__( 'Advanced Columns', i18n ),
 		__( 'section rows', i18n ),

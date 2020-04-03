@@ -5,7 +5,7 @@
  * External dependencies
  */
 import { StackableIcon } from '~stackable/icons'
-import { disabledBlocks, i18n } from 'stackable'
+import { i18n } from 'stackable'
 
 /**
  * Internal dependencies
@@ -33,7 +33,7 @@ export const settings = {
 	description: __( 'A single column within an advanced columns block. Get advanced options on how you want your column to look.', i18n ),
 	icon: StackableIcon,
 	parent: [ 'ugb/columns' ],
-	category: 'stackable',
+	category: 'layout',
 	keywords: [
 		__( 'Advanced Columns', i18n ),
 		__( 'section rows', i18n ),

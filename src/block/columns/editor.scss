@@ -4,7 +4,7 @@
 
 // Required styles for non-plain columns so we can set their locations.
 .ugb-columns:not(.ugb-columns--design-plain) {
-	> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .editor-inner-blocks > .editor-block-list__layout {
+	> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
 		> *:nth-child(1) {
 			grid-area: one;
 		}
@@ -32,7 +32,7 @@
 	}
 
 	&:not(.ugb-columns--design-plain) {
-		> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .editor-inner-blocks > .editor-block-list__layout {
+		> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
 			grid-auto-columns: auto;
 			grid-auto-flow: row;
 		}
@@ -47,10 +47,10 @@
 
 
 .ugb-columns {
-	> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .editor-inner-blocks > .editor-block-list__layout {
+	> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
 		@include columns-grid();
 	}
-	// .editor-block-list__layout {
+	// .block-editor-block-list__layout {
 	// 	margin-left: 0;
 	// 	margin-right: 0;
 	// }
@@ -61,14 +61,14 @@
 	&.ugb-columns--design-grid {
 		@for $i from 2 through 8 {
 			&.ugb-columns--columns-#{ $i } {
-				> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .editor-inner-blocks > .editor-block-list__layout {
+				> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
 					@include columns-grid-grid( $i );
 				}
 			}
 		}
 	}
 
-	> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .editor-inner-blocks > .editor-block-list__layout > .editor-block-list__block > .editor-block-list__block-edit {
+	> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout > .block-editor-block-list__block > .block-editor-block-list__block-edit {
 		display: flex;
 		flex-direction: column;
 	}
@@ -76,18 +76,18 @@
 
 // Display the borders of columns of other columns when a column is selected.
 [data-type="ugb/columns"].has-child-selected {
-	[data-type="ugb/column"] > .editor-block-list__block-edit::before {
+	[data-type="ugb/column"] > .block-editor-block-list__block-edit::before {
 		border: 1px dashed rgba(123, 134, 162, 0.3);
 	}
 }
 // Display the borders of columns if the columns block is selected.
 [data-type="ugb/columns"].is-selected {
-	[data-type="ugb/column"] > .editor-block-list__block-edit::before {
+	[data-type="ugb/column"] > .block-editor-block-list__block-edit::before {
 		border: 1px dashed rgba(123, 134, 162, 0.3);
 	}
 }
 // Put breadcrumb behind the toolbars.
-[data-type="ugb/columns"] > .editor-block-list__block-edit {
+[data-type="ugb/columns"] > .block-editor-block-list__block-edit {
 	> .block-editor-block-list__breadcrumb {
 		z-index: 1;
 	}
@@ -95,7 +95,7 @@
 
 // Adjust the selection outline of columns, by default they're too tall and can
 // overlap against other columns.
-[data-type="ugb/column"] > .editor-block-list__block-edit::before {
+[data-type="ugb/column"] > .block-editor-block-list__block-edit::before {
 	top: 0 !important;
 	bottom: 0 !important;
 }
@@ -108,7 +108,7 @@
 }
 // Since we adjusted the size of outlines, the breadcrumbs would appear past the
 // outline. Re-attach the breadcrumb to the outline.
-[data-type="ugb/column"] > .editor-block-list__block-edit {
+[data-type="ugb/column"] > .block-editor-block-list__block-edit {
 	> .block-editor-block-list__breadcrumb {
 		top: -17px;
 	}

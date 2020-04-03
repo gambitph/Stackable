@@ -41,7 +41,7 @@ export const createStyles = props => {
 			gridTemplateColumns: columnRanges.join( ' ' ),
 		},
 		editor: {
-			'> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .editor-inner-blocks > .editor-block-list__layout': {
+			'> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout': {
 				gridTemplateColumns: columnRanges.join( ' ' ),
 			},
 		},
@@ -49,12 +49,12 @@ export const createStyles = props => {
 
 	// Horizontal gap.
 	styles.push( ...createResponsiveStyles( `.${ uniqueClass }-content-wrapper`, '%sHorizontalGap', 'gridColumnGap', '%spx', props.attributes, true ) )
-	styles.push( ...createResponsiveEditorStyles( `.${ uniqueClass }-content-wrapper > .editor-inner-blocks > .editor-block-list__layout`, '%sHorizontalGap', 'gridColumnGap', '%spx', props.attributes, true ) )
+	styles.push( ...createResponsiveEditorStyles( `.${ uniqueClass }-content-wrapper > .block-editor-inner-blocks > .block-editor-block-list__layout`, '%sHorizontalGap', 'gridColumnGap', '%spx', props.attributes, true ) )
 
 	// Vertical gap.
 	if ( show.verticalGap ) {
 		styles.push( ...createResponsiveStyles( `.${ uniqueClass }-content-wrapper`, '%sVerticalGap', 'gridRowGap', '%spx', props.attributes, true ) )
-		styles.push( ...createResponsiveEditorStyles( `.${ uniqueClass }-content-wrapper > .editor-inner-blocks > .editor-block-list__layout`, '%sVerticalGap', 'gridRowGap', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveEditorStyles( `.${ uniqueClass }-content-wrapper > .block-editor-inner-blocks > .block-editor-block-list__layout`, '%sVerticalGap', 'gridRowGap', '%spx', props.attributes, true ) )
 	}
 
 	// Height.
@@ -101,7 +101,7 @@ export const createStyles = props => {
 		tabletColumnVerticalAlign = '',
 		mobileColumnVerticalAlign = '',
 	} = props.attributes
-	const columnEditorSelector = `.${ uniqueClass }-content-wrapper > .editor-inner-blocks > .editor-block-list__layout > .editor-block-list__block > .editor-block-list__block-edit > [data-block]`
+	const columnEditorSelector = `.${ uniqueClass }-content-wrapper > .block-editor-inner-blocks > .block-editor-block-list__layout > .block-editor-block-list__block > .block-editor-block-list__block-edit > [data-block]`
 	styles.push( {
 		editor: {
 			[ `${ columnEditorSelector } > .ugb-column` ]: {

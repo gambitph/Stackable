@@ -7,7 +7,7 @@
 }
 
 // Allow our columns to look like they span more than one row.
-[data-type="ugb/column"] > .editor-block-list__block-edit {
+[data-type="ugb/column"] > .block-editor-block-list__block-edit {
 	height: 100%;
 	> [data-block] {
 		display: flex;
@@ -26,7 +26,7 @@
 
 // Columns need to occupy all the available height provided by the columns
 // block.
-[data-type="ugb/column"] > .editor-block-list__block-edit > [data-block] {
+[data-type="ugb/column"] > .block-editor-block-list__block-edit > [data-block] {
 	&,
 	> .ugb-column {
 		height: 100%;
