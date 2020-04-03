@@ -27,7 +27,7 @@ export const getColumnCountFromDesign = ( columns, design ) => {
 	} else if ( design === 'tiled' ) {
 		return columns <= 3 ? 2 :
 			columns === 4 ? 3 :
-				columns === 5 ? 4 : 6
+				columns === 5 ? 4 : 5
 	}
 	return columns
 }
