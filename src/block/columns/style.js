@@ -101,7 +101,7 @@ export const createStyles = props => {
 		tabletColumnVerticalAlign = '',
 		mobileColumnVerticalAlign = '',
 	} = props.attributes
-	const columnEditorSelector = `.${ uniqueClass }-content-wrapper > .block-editor-inner-blocks > .block-editor-block-list__layout > .block-editor-block-list__block > .block-editor-block-list__block-edit > [data-block]`
+	const columnEditorSelector = `.${ uniqueClass }-content-wrapper > .block-editor-inner-blocks > .block-editor-block-list__layout > .block-editor-block-list__block`
 	styles.push( {
 		editor: {
 			[ `${ columnEditorSelector } > .ugb-column` ]: {

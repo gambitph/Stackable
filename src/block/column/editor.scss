@@ -26,7 +26,7 @@
 
 // Columns need to occupy all the available height provided by the columns
 // block.
-[data-type="ugb/column"] > .block-editor-block-list__block-edit > [data-block] {
+[data-type="ugb/column"] {
 	&,
 	> .ugb-column {
 		height: 100%;

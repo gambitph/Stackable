@@ -68,7 +68,7 @@
 		}
 	}
 
-	> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout > .block-editor-block-list__block > .block-editor-block-list__block-edit {
+	> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout > .block-editor-block-list__block {
 		display: flex;
 		flex-direction: column;
 	}
@@ -76,40 +76,30 @@
 
 // Display the borders of columns of other columns when a column is selected.
 [data-type="ugb/columns"].has-child-selected {
-	[data-type="ugb/column"] > .block-editor-block-list__block-edit::before {
+	[data-type="ugb/column"]:not(.has-child-selected)::before {
 		border: 1px dashed rgba(123, 134, 162, 0.3);
 	}
 }
 // Display the borders of columns if the columns block is selected.
 [data-type="ugb/columns"].is-selected {
-	[data-type="ugb/column"] > .block-editor-block-list__block-edit::before {
+	[data-type="ugb/column"]:not(.has-child-selected)::before {
 		border: 1px dashed rgba(123, 134, 162, 0.3);
-	}
-}
-// Put breadcrumb behind the toolbars.
-[data-type="ugb/columns"] > .block-editor-block-list__block-edit {
-	> .block-editor-block-list__breadcrumb {
-		z-index: 1;
 	}
 }
 
 // Adjust the selection outline of columns, by default they're too tall and can
 // overlap against other columns.
-[data-type="ugb/column"] > .block-editor-block-list__block-edit::before {
+[data-type="ugb/column"]::before {
 	top: 0 !important;
 	bottom: 0 !important;
+	left: 0 !important;
+	right: 0 !important;
 }
 // Since we adjusted the size of outlines, the toolbars would appear past the
 // outline. Re-attach the toolbar to the outline.
 @media (min-width: 600px) {
-	[data-type="ugb/column"].block-editor-block-list__block .block-editor-block-contextual-toolbar {
-		transform: translateY(-38px);
-	}
-}
-// Since we adjusted the size of outlines, the breadcrumbs would appear past the
-// outline. Re-attach the breadcrumb to the outline.
-[data-type="ugb/column"] > .block-editor-block-list__block-edit {
-	> .block-editor-block-list__breadcrumb {
-		top: -17px;
+	[data-type="ugb/column"].block-editor-block-contextual-toolbar {
+		margin-bottom: 0 !important;
+		margin-left: 0 !important;
 	}
 }
