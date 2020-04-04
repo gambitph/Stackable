@@ -1,8 +1,8 @@
 import {
-	Slider, Handles, Tracks, Ticks, Rail,
+	Slider, Handles, Rail,
 } from 'react-compound-slider'
 import {
-	SliderRail, KeyboardHandle, Track, Tick,
+	SliderRail, Handle,
 } from './slider-components'
 import { isEqual } from 'lodash'
 import { fixColumnWidths } from './util'
@@ -69,33 +69,6 @@ const fixValues = ( values, changedIndex, direction ) => {
 	const columns = convertValuesToColumns( values )
 
 	const fixedColumns = fixColumnWidths( columns, direction )
-	// if ( direction === 'left' ) {
-	// 	for ( let i = columns.length - 1; i >= 1; i-- ) {
-	// 		if ( columns[ i ] < MIN ) {
-	// 			const extra = MIN - columns[ i ]
-	// 			columns[ i ] = MIN
-	// 			columns[ i - 1 ] -= extra
-	// 		}
-	// 	}
-	// }
-
-	// for ( let i = 0; i < columns.length - 1; i++ ) {
-	// 	if ( columns[ i ] < MIN ) {
-	// 		const extra = MIN - columns[ i ]
-	// 		columns[ i ] = MIN
-	// 		columns[ i + 1 ] -= extra
-	// 	}
-	// }
-
-	// if ( direction === 'right' ) {
-	// 	for ( let i = columns.length - 1; i >= 1; i-- ) {
-	// 		if ( columns[ i ] < MIN ) {
-	// 			const extra = MIN - columns[ i ]
-	// 			columns[ i ] = MIN
-	// 			columns[ i - 1 ] -= extra
-	// 		}
-	// 	}
-	// }
 
 	return convertColumnsToValues( fixedColumns )
 }
@@ -105,8 +78,6 @@ const ColumnSlider = props => {
 		<Slider
 			className="ugb-column-widths-control__columns-slider"
 			rootStyle={ sliderStyle }
-			// mode={ 3 }
-			// mode={ 1 }
 			mode={ ( oldValuesObj, newValuesObj ) => {
 				const oldValues = oldValuesObj.map( o => o.val )
 				const newValues = newValuesObj.map( o => o.val )
@@ -121,15 +92,11 @@ const ColumnSlider = props => {
 						newValuesObj[ i ].val = value
 					} )
 				}
-				// newValues[ 1 ].val = 80
+
 				return newValuesObj
 			} }
 			step={ 1 }
-			onUpdate={ values => {
-				// console.log( 'output:', values )
-				// console.log( 'output converted to:', convertValuesToColumns( values ) )
-				props.onChange( convertValuesToColumns( values ) )
-			} }
+			onUpdate={ values => props.onChange( convertValuesToColumns( values ) ) }
 			domain={ domain } // [min, max]
 			values={ convertColumnsToValues( props.value ) } // slider values
 		>
@@ -140,7 +107,7 @@ const ColumnSlider = props => {
 				{ ( { handles, getHandleProps } ) => (
 					<div className="slider-handles">
 						{ handles.map( handle => (
-							<KeyboardHandle
+							<Handle
 								key={ handle.id }
 								handle={ handle }
 								domain={ domain }
@@ -150,31 +117,6 @@ const ColumnSlider = props => {
 					</div>
 				) }
 			</Handles>
-			{ /* <Tracks left={ false } right={ false }>
-				{ ( { tracks, getTrackProps } ) => (
-					<div className="slider-tracks">
-						{ tracks.map( ( {
-							id, source, target,
-						} ) => (
-							<Track
-								key={ id }
-								source={ source }
-								target={ target }
-								getTrackProps={ getTrackProps }
-							/>
-						) ) }
-					</div>
-				) }
-			</Tracks> */ }
-			{ /* <Ticks count={ 10 }>
-				{ ( { ticks } ) => (
-					<div className="slider-ticks">
-						{ ticks.map( tick => (
-							<Tick key={ tick.id } tick={ tick } count={ ticks.length } />
-						) ) }
-					</div>
-				) }
-			</Ticks> */ }
 		</Slider>
 	)
 }
