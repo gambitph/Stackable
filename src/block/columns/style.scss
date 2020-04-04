@@ -62,11 +62,15 @@
 	}
 
 	// Plain responsive
-	&.ugb-columns > .ugb-inner-block > .ugb-block-content > .ugb-columns__item {
+	&.ugb-columns.ugb-columns.ugb-columns > .ugb-inner-block > .ugb-block-content > .ugb-columns__item {
 		@media screen and (max-width: $break-js-mobile) {
 			grid-auto-flow: row;
 			grid-template-columns: 1fr !important;
 			grid-template-areas: inherit !important;
+		}
+	}
+	> .ugb-inner-block > .ugb-block-content > .ugb-columns__item {
+		@media screen and (max-width: $break-js-mobile) {
 			> .ugb-column {
 				grid-area: inherit !important;
 			}
