@@ -7,11 +7,13 @@ export const showOptions = blockProps => {
 	const {
 		design = 'basic',
 		columns = 2,
+		align = '',
 	} = blockProps.attributes
 
 	return applyFilters( 'stackable.feature-grid.show', {
 		reverseColumns: design !== 'grid' && design !== 'plain',
 		verticalGap: design !== 'plain' && columns > 2,
+		noPaddings: align === 'full',
 	}, blockProps )
 }
 

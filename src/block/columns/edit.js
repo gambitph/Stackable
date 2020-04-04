@@ -11,7 +11,6 @@ import ImageDesignPlain from './images/plain.png'
  */
 import {
 	BlockContainer,
-	DesignPanelBody,
 	ProControlButton,
 	ContentAlignControl,
 	ResponsiveControl,
@@ -20,9 +19,7 @@ import {
 	WhenResponsiveScreen,
 	AdvancedRangeControl,
 	ControlSeparator,
-	BackgroundControlsHelper,
 	ColorPaletteControl,
-	PanelAdvancedSettings,
 	DesignControl,
 	ColumnsWidthControl,
 } from '~stackable/components'
@@ -33,17 +30,14 @@ import {
 	withTabbedInspector,
 	withContentAlignReseter,
 	withBlockStyles,
-	withClickOpenInspector,
 } from '~stackable/higher-order'
-// import { cacheImageData } from '~stackable/util'
 import classnames from 'classnames'
 import { range } from 'lodash'
+import { i18n, showProNotice } from 'stackable'
 
 /**
  * WordPress dependencies
  */
-import { i18n, showProNotice } from 'stackable'
-import { faTextHeight } from '@fortawesome/free-solid-svg-icons'
 import { PanelBody, ToggleControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
@@ -195,24 +189,11 @@ addFilter( 'stackable.columns.edit.inspector.style.before', 'stackable/columns',
 	const {
 		design = 'plain',
 		columns = 2,
-		noPaddings = '',
 		headingColor = '',
 		bodyTextColor = '',
 		linkColor = '',
 		linkHoverColor = '',
-		borderRadius = '',
-		shadow = '',
-		showTitle = true,
-		showDescription = true,
-		titleTag = '',
-		titleColor = '',
-		descriptionColor = '',
-		showImage = true,
-		showButton = true,
-		image1Id = '',
-		image2Id = '',
-		image3Id = '',
-		image4Id = '',
+		noPaddings = false,
 	} = props.attributes
 
 	const show = showOptions( props )
@@ -276,35 +257,16 @@ addFilter( 'stackable.columns.edit.inspector.style.before', 'stackable/columns',
 
 				<ControlSeparator />
 
-				<ResponsiveControl
-					attrNameTemplate="%sHorizontalGap"
-					setAttributes={ setAttributes }
-					blockAttributes={ props.attributes }
-				>
-					<AdvancedRangeControl
-						label={ __( 'Column Gap', i18n ) }
-						min={ 0 }
-						max={ 500 }
-						allowReset={ true }
-						placeholder="35"
-						className="ugb--help-tip-advanced-column-gap"
+				{ show.noPaddings &&
+					<ToggleControl
+						label={ __( 'No Paddings', i18n ) }
+						checked={ noPaddings }
+						onChange={ noPaddings => setAttributes( { noPaddings } ) }
 					/>
-				</ResponsiveControl>
-				{ show.verticalGap &&
-					<ResponsiveControl
-						attrNameTemplate="%sVerticalGap"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Row Gap', i18n ) }
-							min={ 0 }
-							max={ 500 }
-							allowReset={ true }
-							placeholder="35"
-						/>
-					</ResponsiveControl>
 				}
+
+				{ applyFilters( 'stackable.columns.edit.inspector.style.column-widths.after', null, props ) }
+
 				<ResponsiveControl
 					attrNameTemplate="%sHeight"
 					setAttributes={ setAttributes }
@@ -334,6 +296,10 @@ addFilter( 'stackable.columns.edit.inspector.style.before', 'stackable/columns',
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
+				{ showProNotice && <ProControlButton
+					title={ __( 'Say Hello to More Column Options 👋', i18n ) }
+					description={ __( 'Swap columns and adjust column gaps. This feature is only available on Stackable Premium', i18n ) }
+				/> }
 			</PanelBody>
 
 			<PanelBody
@@ -366,6 +332,18 @@ addFilter( 'stackable.columns.edit.inspector.style.before', 'stackable/columns',
 	)
 } )
 
+addFilter( 'stackable.columns.edit.advanced.responsive.after', 'stackable/columns', output => {
+	return (
+		<Fragment>
+			{ output }
+			{ showProNotice && <ProControlButton
+				title={ __( 'Say Hello to More Responsive Options 👋', i18n ) }
+				description={ __( 'Adjust the arrangement of your columns when collapsed on mobile. This feature is only available on Stackable Premium', i18n ) }
+			/> }
+		</Fragment>
+	)
+} )
+
 const edit = props => {
 	const {
 		className,
@@ -375,9 +353,6 @@ const edit = props => {
 		design = 'plain',
 		columns = 2,
 		reverseColumns = '',
-		// shadow = '',
-		// contentWidth = 100,
-		// restrictContentWidth = false,
 		uniqueClass = '',
 	} = props.attributes
 
@@ -389,7 +364,6 @@ const edit = props => {
 		`ugb-columns--columns-${ columns }`,
 	], applyFilters( 'stackable.columns.mainclasses', {
 		'ugb-columns--reverse': show.reverseColumns && reverseColumns,
-		// 'ugb-container--width-small': contentWidth <= 50,
 	}, props ) )
 
 	const wrapperClasses = classnames( [
