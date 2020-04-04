@@ -62,7 +62,7 @@
 	}
 
 	// Plain responsive
-	> .ugb-inner-block > .ugb-block-content > .ugb-columns__item {
+	&.ugb-columns > .ugb-inner-block > .ugb-block-content > .ugb-columns__item {
 		@media screen and (max-width: $break-js-mobile) {
 			grid-auto-flow: row;
 			grid-template-columns: 1fr !important;

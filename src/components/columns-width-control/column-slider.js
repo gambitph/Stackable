@@ -101,8 +101,6 @@ const fixValues = ( values, changedIndex, direction ) => {
 }
 
 const ColumnSlider = props => {
-	// console.log( 'got:', props.value )
-	// console.log( 'converted to:', convertColumnsToValues( props.value ) )
 	return (
 		<Slider
 			className="ugb-column-widths-control__columns-slider"

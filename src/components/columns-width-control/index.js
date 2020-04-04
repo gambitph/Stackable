@@ -177,6 +177,8 @@ const adjustColumns = ( newColumnWidth, column, columnWidths, adjustRightFirst =
 	return columnWidths
 }
 
+const isBlank = columns => columns.every( column => ! column )
+
 const ColumnsWidthControl = props => {
 	const [ lastColumnAdjusted, setLastColumnAdjusted ] = useState( -1 )
 	const [ adjustRightFirst, setAdjustRightFirst ] = useState( true )
@@ -194,10 +196,14 @@ const ColumnsWidthControl = props => {
 	const resetButton = (
 		<Button
 			className="ugb-columns-width-control__reset"
-			disabled={ isEqual( props.values, COLUMN_PRESETS[ selectedPreset || `${ props.columns }-1` ] ) }
+			disabled={ ! props.forceBlank ? isEqual( props.values, COLUMN_PRESETS[ selectedPreset || `${ props.columns }-1` ] ) : isBlank( props.values ) }
 			onClick={ () => {
 				setSelectedPreset( '' )
-				props.onChange( COLUMN_PRESETS[ selectedPreset || `${ props.columns }-1` ] )
+				if ( ! props.forceBlank ) {
+					props.onChange( COLUMN_PRESETS[ selectedPreset || `${ props.columns }-1` ] )
+				} else {
+					props.onChange( [ '', '', '', '', '', '' ] )
+				}
 			} }
 			isSmall
 			isSecondary
@@ -215,6 +221,7 @@ const ColumnsWidthControl = props => {
 				<BaseControlMultiLabel
 					label={ props.label }
 					afterButton={ props.hasIndividualControls ? resetButton : null }
+					screens={ props.screens }
 				/>
 			}
 			{ columnPresetOptions[ props.columns ] &&
@@ -231,17 +238,15 @@ const ColumnsWidthControl = props => {
 			{ props.hasIndividualControls &&
 				<Fragment>
 					<ColumnSlider
-						value={ isEqual( props.values, [ '', '' ] ) ? COLUMN_PRESETS[ `${ props.columns }-1` ] : props.values }
+						value={ isBlank( props.values ) ? COLUMN_PRESETS[ `${ props.columns }-1` ] : props.values }
 						onChange={ value => {
 							props.onChange( value )
-							// console.log( value )
 						} }
 					/>
 					<ColumnsInputs
-						value={ isEqual( props.values, [ '', '' ] ) ? COLUMN_PRESETS[ `${ props.columns }-1` ] : props.values }
+						value={ isBlank( props.values ) ? ( props.forceBlank ? props.values : COLUMN_PRESETS[ `${ props.columns }-1` ] ) : props.values }
 						onChange={ value => {
 							props.onChange( value )
-							// console.log( value )
 						} }
 					/>
 					{ false && range( props.columns ).map( i => {
@@ -289,6 +294,8 @@ ColumnsWidthControl.defaultProps = {
 	label: __( 'Column Widths', i18n ),
 	className: '',
 	hasIndividualControls: true,
+	screens: [ 'desktop' ],
+	forceBlank: false, // If true, the value will be blank by default and can be reset to blank. Used for mobile/desktop options.
 }
 
 export default ColumnsWidthControl

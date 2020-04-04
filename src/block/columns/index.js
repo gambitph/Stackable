@@ -34,7 +34,7 @@ export const schema = {
 			type: 'number',
 			default: '',
 		},
-		[ '', 'Tablet', 'Mobile' ],
+		[ '', 'Tablet' ],
 		[ '1', '2', '3', '4', '5', '6' ]
 	),
 

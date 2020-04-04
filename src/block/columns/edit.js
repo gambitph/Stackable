@@ -119,6 +119,9 @@ addFilter( 'stackable.columns.edit.inspector.layout.before', 'stackable/columns'
 						setAttributes( {
 							columns,
 							...COLUMN_DEFAULTS[ columnCount ],
+							...range( 6 ).reduce( ( cols, i ) => {
+								return { ...cols, [ `tabletCoumns${ i + 1 }` ]: '' }
+							}, {} ),
 						} )
 					} }
 					min={ 2 }
@@ -126,12 +129,12 @@ addFilter( 'stackable.columns.edit.inspector.layout.before', 'stackable/columns'
 					placeholder="2"
 					className="ugb--help-tip-general-columns"
 				/>
-				<WhenResponsiveScreen>
+				<WhenResponsiveScreen screens={ [ 'desktop', 'tablet' ] }>
 					<ColumnsWidthControl
 						columns={ columnCount }
 						design={ design }
 						values={ range( columnCount ).map( i => {
-							return props.attributes[ `columns${ i + 1 }` ] //|| Math.floor( 100 / columnCount )
+							return props.attributes[ `columns${ i + 1 }` ]
 						} ) }
 						onChange={ columnWidths => {
 							const atts = columnWidths.reduce( ( atts, width, i ) => {
@@ -139,9 +142,24 @@ addFilter( 'stackable.columns.edit.inspector.layout.before', 'stackable/columns'
 								return atts
 							}, {} )
 							setAttributes( atts )
-							console.log( atts )
-							// console.log( column, columnNum )
 						} }
+					/>
+				</WhenResponsiveScreen>
+				<WhenResponsiveScreen screen="tablet" screens={ [ 'desktop', 'tablet' ] }>
+					<ColumnsWidthControl
+						columns={ columnCount }
+						design={ design }
+						values={ range( columnCount ).map( i => {
+							return props.attributes[ `tabletColumns${ i + 1 }` ]
+						} ) }
+						onChange={ columnWidths => {
+							const atts = columnWidths.reduce( ( atts, width, i ) => {
+								atts[ `tabletColumns${ i + 1 }` ] = width
+								return atts
+							}, {} )
+							setAttributes( atts )
+						} }
+						forceBlank={ true }
 					/>
 				</WhenResponsiveScreen>
 				<ControlSeparator />
@@ -220,12 +238,12 @@ addFilter( 'stackable.columns.edit.inspector.style.before', 'stackable/columns',
 
 				{ applyFilters( 'stackable.columns.edit.inspector.style.general.columns.after', null, props ) }
 
-				<WhenResponsiveScreen>
+				<WhenResponsiveScreen screens={ [ 'desktop', 'tablet' ] }>
 					<ColumnsWidthControl
 						columns={ columnCount }
 						design={ design }
 						values={ range( columnCount ).map( i => {
-							return props.attributes[ `columns${ i + 1 }` ] //|| Math.floor( 100 / columnCount )
+							return props.attributes[ `columns${ i + 1 }` ]
 						} ) }
 						onChange={ columnWidths => {
 							const atts = columnWidths.reduce( ( atts, width, i ) => {
@@ -234,6 +252,23 @@ addFilter( 'stackable.columns.edit.inspector.style.before', 'stackable/columns',
 							}, {} )
 							setAttributes( atts )
 						} }
+					/>
+				</WhenResponsiveScreen>
+				<WhenResponsiveScreen screen="tablet" screens={ [ 'desktop', 'tablet' ] }>
+					<ColumnsWidthControl
+						columns={ columnCount }
+						design={ design }
+						values={ range( columnCount ).map( i => {
+							return props.attributes[ `tabletColumns${ i + 1 }` ]
+						} ) }
+						onChange={ columnWidths => {
+							const atts = columnWidths.reduce( ( atts, width, i ) => {
+								atts[ `tabletColumns${ i + 1 }` ] = width
+								return atts
+							}, {} )
+							setAttributes( atts )
+						} }
+						forceBlank={ true }
 					/>
 				</WhenResponsiveScreen>
 

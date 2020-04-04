@@ -36,13 +36,22 @@ export const createStyles = props => {
 		const width = parseInt( getValue( `columns${ i + 1 }` ), 10 )
 		return ( width / 100 * columns ).toFixed( 2 ) + 'fr' // Fraction.
 	} )
+	const tabletColumnRanges = range( numColumns ).map( i => {
+		const width = parseInt( getValue( `tabletColumns${ i + 1 }` ), 10 )
+		return ( width / 100 * columns ).toFixed( 2 ) + 'fr' // Fraction.
+	} )
 	styles.push( {
 		'> .ugb-inner-block > .ugb-block-content > .ugb-columns__item': {
-			gridTemplateColumns: columnRanges.join( ' ' ),
+			gridTemplateColumns: appendImportant( columnRanges.join( ' ' ) ),
+		},
+		tablet: {
+			'> .ugb-inner-block > .ugb-block-content > .ugb-columns__item': {
+				gridTemplateColumns: getValue( `tabletColumns1` ) ? appendImportant( tabletColumnRanges.join( ' ' ) ) : undefined,
+			},
 		},
 		editor: {
 			'> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout': {
-				gridTemplateColumns: columnRanges.join( ' ' ),
+				gridTemplateColumns: appendImportant( columnRanges.join( ' ' ) ),
 			},
 		},
 	} )

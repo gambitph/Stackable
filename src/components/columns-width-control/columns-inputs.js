@@ -6,9 +6,13 @@ const gridTemplateColumns = columns => {
 	} ).join( ' ' )
 }
 
+const isBlank = columns => columns.every( column => ! column )
+
 const ColumnsInputs = props => {
 	const style = {
 		gridTemplateColumns: gridTemplateColumns( props.value ),
+		gridAutoFlow: isBlank( props.value ) ? 'column' : undefined,
+		justifyContent: isBlank( props.value ) ? 'space-around' : undefined,
 	}
 	return (
 		<div className="ugb-column-widths-control__columns-input" style={ style }>
