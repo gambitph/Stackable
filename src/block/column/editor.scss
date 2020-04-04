@@ -37,3 +37,13 @@
 [data-type="ugb/column"] {
 	transition: none !important;
 }
+
+// Remove margins from first and last child blocks.
+.ugb-column__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	> [data-block]:first-child {
+		margin-top: 0 !important;
+	}
+	> .block-list-appender:not(:first-child) {
+		margin-bottom: -28px !important;
+	}
+}
