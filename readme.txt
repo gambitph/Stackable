@@ -178,6 +178,10 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.4.0 =
+* Fixed: Inspector may get a horizontal scrollbar
+* Fixed: Initial position of range controls now position correctly again
+
 = 2.3.2 =
 * Fixed: WordPress 5.4 compatibility
 * Fixed: Mobile responsiveness of the Horizontal layout of the Feature Grid block
