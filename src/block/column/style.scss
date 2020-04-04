@@ -32,6 +32,7 @@
 
 .ugb-column.ugb-column--design-basic {
 	.ugb-column__item {
-		@include box();
+		@include boxNoPadding();
+		padding: $box-hori-padding;
 	}
 }
