@@ -33,12 +33,14 @@ import ImageUneven3_4 from './images/3-4-uneven.png'
 import ImageUneven4_1 from './images/4-1-uneven.png'
 import ImageUneven4_2 from './images/4-2-uneven.png'
 import ImageUneven4_3 from './images/4-3-uneven.png'
+import ColumnSlider from './column-slider'
+import ColumnsInputs from './columns-inputs'
 
 /**
  * WordPress dependencies
  */
 import {
-	BaseControl, RangeControl, Button,
+	BaseControl, Button,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import {
@@ -51,8 +53,7 @@ import {
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 import { range, isEqual } from 'lodash'
-import ColumnSlider from './column-slider'
-import ColumnsInputs from './columns-inputs'
+import { AdvancedRangeControl } from '~stackable/components'
 
 const MIN = 10
 
@@ -253,7 +254,7 @@ const ColumnsWidthControl = props => {
 						return (
 							<div key={ i } className="ugb-columns-width-control__range">
 								<span className="ugb-columns-width-control__icon">{ i + 1 }</span>
-								<RangeControl
+								<AdvancedRangeControl
 									value={ props.values[ i ] }
 									onChange={ value => {
 										// Check whether we need to adjust the

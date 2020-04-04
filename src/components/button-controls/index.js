@@ -27,7 +27,6 @@ import ImageDesignPlain from './images/plain.png'
  */
 import {
 	BaseControl,
-	RangeControl,
 	SelectControl,
 	ToggleControl,
 } from '@wordpress/components'
@@ -393,7 +392,7 @@ const ButtonControls = props => {
 					allowReset={ props.iconPosition || props.iconSize !== '' || props.iconSpacing !== '' }
 				>
 					{ props.onChangeIconSize && (
-						<RangeControl
+						<AdvancedRangeControl
 							label={ __( 'Icon Size', i18n ) }
 							value={ props.iconSize }
 							onChange={ props.onChangeIconSize }
@@ -415,7 +414,7 @@ const ButtonControls = props => {
 						/>
 					}
 					{ props.onChangeIconSpacing && (
-						<RangeControl
+						<AdvancedRangeControl
 							label={ __( 'Icon Spacing', i18n ) }
 							value={ props.iconSpacing }
 							onChange={ props.onChangeIconSpacing }

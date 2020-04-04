@@ -14,6 +14,13 @@ import { BaseControl, RangeControl } from '@wordpress/components'
 import classnames from 'classnames'
 import { omit } from 'lodash'
 
+export const convertToNumber = value => {
+	if ( typeof value === 'string' && value !== '' && value.match( /^[\d.]+$/ ) ) {
+		return value.includes( '.' ) ? parseFloat( value ) : parseInt( value, 10 )
+	}
+	return value
+}
+
 const AdvancedRangeControl = props => {
 	const propsToPass = { ...omit( props, [ 'className', 'help', 'label', 'units', 'unit', 'onChangeUnit', 'screens', 'placeholder', 'initialPosition' ] ) }
 
@@ -38,9 +45,7 @@ const AdvancedRangeControl = props => {
 	}
 
 	// Initial position needs to be an actual number.
-	if ( propsToPass.initialPosition !== '' && typeof propsToPass.initialPosition === 'string' ) {
-		propsToPass.initialPosition = propsToPass.initialPosition.includes( '.' ) ? parseFloat( propsToPass.initialPosition ) : parseInt( propsToPass.initialPosition, 10 )
-	}
+	propsToPass.initialPosition = convertToNumber( propsToPass.initialPosition )
 
 	return (
 		<BaseControl

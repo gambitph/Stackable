@@ -13,7 +13,7 @@ import SVGTopImage from './images/top.svg'
  * WordPress dependencies
  */
 import {
-	BaseControl, Dashicon, IconButton, RangeControl, Tooltip,
+	BaseControl, Dashicon, IconButton, Tooltip,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { Component, Fragment } from '@wordpress/element'
@@ -24,6 +24,7 @@ import { Component, Fragment } from '@wordpress/element'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 import { pick } from 'lodash'
+import { AdvancedRangeControl } from '~stackable/components'
 
 class FourRangeControl extends Component {
 	constructor() {
@@ -179,7 +180,7 @@ class FourRangeControl extends Component {
 		return (
 			<BaseControl
 				help={ this.props.help }
-				className={ classnames( 'ugb-four-range-control', this.props.className ) }
+				className={ classnames( 'ugb-four-range-control', this.props.className, { 'ugb--locked': this.state.locked } ) }
 			>
 				<BaseControlMultiLabel
 					label={ this.props.label }
@@ -197,7 +198,7 @@ class FourRangeControl extends Component {
 								<span className="ugb-four-range-control__icon">{ allIcon }</span>
 							</Tooltip> */
 						}
-						<RangeControl
+						<AdvancedRangeControl
 							id={ `${ id }-all` }
 							value={ this.firstValue() }
 							onChange={ this.onChangeAll }
@@ -213,7 +214,7 @@ class FourRangeControl extends Component {
 								<Tooltip text={ __( 'Top', i18n ) }>
 									<span className="ugb-four-range-control__icon"><SVGTopImage /></span>
 								</Tooltip>
-								<RangeControl
+								<AdvancedRangeControl
 									id={ `${ id }-top` }
 									value={ this.props.top }
 									onChange={ this.onChangeTop }
@@ -227,7 +228,7 @@ class FourRangeControl extends Component {
 								<Tooltip text={ __( 'Right', i18n ) }>
 									<span className="ugb-four-range-control__icon"><SVGRightImage /></span>
 								</Tooltip>
-								<RangeControl
+								<AdvancedRangeControl
 									id={ `${ id }-right` }
 									value={ this.props.right }
 									onChange={ this.onChangeRight }
@@ -241,7 +242,7 @@ class FourRangeControl extends Component {
 								<Tooltip text={ __( 'Bottom', i18n ) }>
 									<span className="ugb-four-range-control__icon"><SVGBottomImage /></span>
 								</Tooltip>
-								<RangeControl
+								<AdvancedRangeControl
 									id={ `${ id }-bottom` }
 									value={ this.props.bottom }
 									onChange={ this.onChangeBottom }
@@ -255,7 +256,7 @@ class FourRangeControl extends Component {
 								<Tooltip text={ __( 'Left', i18n ) }>
 									<span className="ugb-four-range-control__icon"><SVGLeftImage /></span>
 								</Tooltip>
-								<RangeControl
+								<AdvancedRangeControl
 									id={ `${ id }-left` }
 									value={ this.props.left }
 									onChange={ this.onChangeLeft }
