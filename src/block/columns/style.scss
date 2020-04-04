@@ -98,8 +98,7 @@
  */
 @mixin columns-grid-grid( $columns: 2 ) {
 	@if $columns == 2 {
-		grid-template-areas:
-			"one two";
+		grid-template-areas: "one two";
 		grid-template-columns: 1fr 1fr;
 		grid-template-rows: auto;
 	}

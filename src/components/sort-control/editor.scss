@@ -1,0 +1,32 @@
+.ugb-sort-control {
+	.ugb-sort-control__container {
+		display: flex;
+		flex-direction: row;
+	}
+	&.ugb-sort-control--axis-y {
+		.ugb-sort-control__container {
+			flex-direction: column;
+			max-width: 150px;
+			margin: 0 auto;
+		}
+	}
+	.ugb-sort-control__item {
+		box-shadow: none;
+	}
+}
+.ugb-sort-control__item {
+	border-radius: 4px;
+	background: #fafafa;
+	width: 100%;
+	text-align: center;
+	padding: 4px;
+	border: 1px solid #ddd;
+	margin: 2px;
+	display: block;
+	cursor: grab !important;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+	&:hover {
+		background: #fff;
+		box-shadow: inset 0 0 0 1px #ddd;
+	}
+}

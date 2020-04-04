@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { omit } from 'lodash'
-import { loadGoogleFontInAttributes } from '~stackable/util'
+import { loadGoogleFontInAttributes, moveArrayIndex } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -63,4 +63,20 @@ export const applyBlockDesign = ( attributes, clientId = null ) => {
 	loadGoogleFontInAttributes( blockAttributes )
 
 	updateBlockAttributes( blockClientId, omit( blockAttributes, [ 'uniqueClass' ] ) )
+}
+
+/**
+ * Moves an innerBlock to a new index.
+ *
+ * @param {string} clientId The block to modify
+ * @param {number} fromIndex innerBlock old index
+ * @param {number} toIndex innerBlock new index
+ */
+export const moveInnerBlock = ( clientId, fromIndex, toIndex ) => {
+	const { getBlock } = select( 'core/block-editor' )
+	const { replaceInnerBlocks } = dispatch( 'core/block-editor' )
+	const currentBlock = getBlock( clientId )
+	const newInnerBlocks = moveArrayIndex( currentBlock.innerBlocks, fromIndex, toIndex )
+
+	replaceInnerBlocks( clientId, newInnerBlocks, false )
 }

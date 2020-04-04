@@ -37,6 +37,10 @@ export const schema = {
 		[ '', 'Tablet' ],
 		[ '1', '2', '3', '4', '5', '6' ]
 	),
+	collapsedColumnsOrder: {
+		type: 'string',
+		default: '',
+	},
 
 	reverseColumns: {
 		type: 'boolean',

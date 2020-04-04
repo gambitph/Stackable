@@ -24,6 +24,7 @@ export { default as AdvancedAutosuggestControl } from './advanced-autosuggest-co
 export { default as AdvancedToolbarControl } from './advanced-toolbar-control'
 export { default as FontSizeControl } from './font-size-control'
 export { default as FontFamilyControl } from './font-family-control'
+export { default as SortControl } from './sort-control'
 export { default as PanelAdvancedSettings } from './panel-advanced-settings'
 export { default as PanelDesignLibrary } from './panel-design-library'
 export { default as PanelSpacingBody } from './panel-spacing-body'

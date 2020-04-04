@@ -50,7 +50,6 @@ import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
-import { withSelect } from '@wordpress/data'
 
 const COLUMN_DEFAULTS = {
 	2: {
@@ -129,6 +128,9 @@ addFilter( 'stackable.columns.edit.inspector.layout.before', 'stackable/columns'
 					placeholder="2"
 					className="ugb--help-tip-general-columns"
 				/>
+
+				{ applyFilters( 'stackable.columns.edit.inspector.columns.after', null, props ) }
+
 				<WhenResponsiveScreen screens={ [ 'desktop', 'tablet' ] }>
 					<ColumnsWidthControl
 						columns={ columnCount }
@@ -236,7 +238,7 @@ addFilter( 'stackable.columns.edit.inspector.style.before', 'stackable/columns',
 					className="ugb--help-tip-general-columns"
 				/>
 
-				{ applyFilters( 'stackable.columns.edit.inspector.style.general.columns.after', null, props ) }
+				{ applyFilters( 'stackable.columns.edit.inspector.columns.after', null, props ) }
 
 				<WhenResponsiveScreen screens={ [ 'desktop', 'tablet' ] }>
 					<ColumnsWidthControl

@@ -32,7 +32,7 @@
 		.components-base-control__field {
 			margin-bottom: 0 !important;
 			display: flex;
-    		justify-content: space-evenly;
+			justify-content: space-evenly;
 		}
 	}
 	.ugb-design-panel-item__image {
@@ -72,7 +72,6 @@
 }
 .ugb-column-widths-control__columns-input {
 	display: grid;
-    // grid-template-columns: 1fr 1fr 1fr;
 	input {
 		min-width: 40px !important;
 		width: 40px;

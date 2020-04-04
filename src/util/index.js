@@ -255,3 +255,16 @@ export const setSelectedScreen = value => _currentSelectedScreen = value
 let _currentScreenPickerIsOpen = false
 export const isScreenPickerOpen = () => _currentScreenPickerIsOpen
 export const setIsScreenPickerOpen = value => _currentScreenPickerIsOpen = value
+
+/**
+ * Moves an array value to a new index.
+ *
+ * @param {Array} values The array to manipulate
+ * @param {number} oldIndex Index to move from
+ * @param {number} newIndex Index to move to
+ */
+export const moveArrayIndex = ( values, oldIndex, newIndex ) => {
+	values.splice( oldIndex < newIndex ? newIndex + 1 : newIndex, 0, values[ oldIndex ] ) // Add the value in new position.
+	values.splice( oldIndex < newIndex ? oldIndex : oldIndex + 1, 1 ) // Remove value in old position.
+	return values
+}

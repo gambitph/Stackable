@@ -32,3 +32,8 @@
 		height: 100%;
 	}
 }
+
+// Smoothen the transition of moving columns around.
+[data-type="ugb/column"] {
+	transition: none !important;
+}
