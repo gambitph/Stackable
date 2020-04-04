@@ -282,7 +282,7 @@ addFilter( 'stackable.columns.edit.inspector.style.before', 'stackable/columns',
 					blockAttributes={ props.attributes }
 				>
 					<AdvancedRangeControl
-						label={ __( 'Column Horizontal Gap', i18n ) }
+						label={ __( 'Column Gap', i18n ) }
 						min={ 0 }
 						max={ 500 }
 						allowReset={ true }
@@ -297,7 +297,7 @@ addFilter( 'stackable.columns.edit.inspector.style.before', 'stackable/columns',
 						blockAttributes={ props.attributes }
 					>
 						<AdvancedRangeControl
-							label={ __( 'Column Vertical Gap', i18n ) }
+							label={ __( 'Row Gap', i18n ) }
 							min={ 0 }
 							max={ 500 }
 							allowReset={ true }
