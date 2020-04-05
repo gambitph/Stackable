@@ -37,14 +37,14 @@ export const schema = {
 		[ '', 'Tablet' ],
 		[ '1', '2', '3', '4', '5', '6' ]
 	),
-	...createAllCombinationAttributes(
-		'%sHeight%s', {
-			type: 'number',
-			default: '',
-		},
-		[ '', 'Tablet', 'Mobile' ],
-		[ '', 'Num' ]
-	),
+	...createResponsiveAttributes( '%sHeight', {
+		type: 'string',
+		default: '',
+	} ),
+	...createResponsiveAttributes( '%sHeightNum', {
+		type: 'number',
+		default: '',
+	} ),
 	...createResponsiveAttributes( '%sHeightNumUnit', {
 		type: 'string',
 		default: 'px',
