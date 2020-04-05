@@ -23,10 +23,10 @@ const save = props => {
 	const { className } = props
 	const {
 		design = 'plain',
-		// shadow = '',
+		shadow = '',
 		// contentWidth = 100,
 		// restrictContentWidth = false,
-		// uniqueClass = '',
+		uniqueClass = '',
 	} = props.attributes
 
 	// const show = showOptions( props )
@@ -40,8 +40,9 @@ const save = props => {
 
 	const itemClasses = classnames( [
 		'ugb-column__item',
+		`${ uniqueClass }-column-wrapper`,
 	], {
-		// [ `ugb--shadow-${ shadow }` ]: shadow !== '',
+		[ `ugb--shadow-${ shadow }` ]: shadow !== '',
 	} )
 
 	// const wrapperClasses = classnames( [
@@ -67,7 +68,9 @@ const save = props => {
 					backgroundAttrName="column%s"
 					blockProps={ props }
 				>
-					<InnerBlocks.Content />
+					<div className="ugb-column__content-wrapper">
+						<InnerBlocks.Content />
+					</div>
 				</DivBackground>
 			</Fragment>
 		) } />

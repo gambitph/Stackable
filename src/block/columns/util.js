@@ -12,7 +12,7 @@ export const showOptions = blockProps => {
 
 	return applyFilters( 'stackable.feature-grid.show', {
 		reverseColumns: design !== 'grid' && design !== 'plain',
-		verticalGap: design !== 'plain' && columns > 2,
+		rowGap: design !== 'plain' && columns > 2,
 		noPaddings: align === 'full',
 	}, blockProps )
 }

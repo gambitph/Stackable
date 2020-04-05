@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import createStyles from './style'
-// import { showOptions } from './util'
+import { showOptions } from './util'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
 
@@ -11,11 +11,8 @@ import ImageDesignPlain from './images/plain.png'
  */
 import {
 	BlockContainer,
-	DesignPanelBody,
-	ProControlButton,
 	ContentAlignControl,
 	ResponsiveControl,
-	AdvancedSelectControl,
 	AdvancedToolbarControl,
 	WhenResponsiveScreen,
 	AdvancedRangeControl,
@@ -33,16 +30,14 @@ import {
 	withTabbedInspector,
 	withContentAlignReseter,
 	withBlockStyles,
-	withClickOpenInspector,
 } from '~stackable/higher-order'
-// import { cacheImageData } from '~stackable/util'
 import classnames from 'classnames'
 
 /**
  * WordPress dependencies
  */
-import { i18n, showProNotice } from 'stackable'
-import { PanelBody, ToggleControl } from '@wordpress/components'
+import { i18n } from 'stackable'
+import { PanelBody } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
@@ -54,7 +49,6 @@ addFilter( 'stackable.column.edit.inspector.layout.before', 'stackable/column', 
 	const { setAttributes } = props
 	const {
 		design = 'plain',
-		columns = 2,
 	} = props.attributes
 
 	return (
@@ -64,15 +58,6 @@ addFilter( 'stackable.column.edit.inspector.layout.before', 'stackable/column', 
 				initialOpen={ true }
 				title={ __( 'Layout', i18n ) }
 			>
-				<AdvancedRangeControl
-					label={ __( 'Columns', i18n ) }
-					value={ columns }
-					onChange={ columns => setAttributes( { columns } ) }
-					min={ 2 }
-					max={ design !== 'grid' ? 6 : 8 }
-					placeholder="2"
-					className="ugb--help-tip-general-columns"
-				/>
 				<DesignControl
 					selected={ design }
 					options={ applyFilters( 'stackable.column.edit.layouts', [
@@ -85,7 +70,200 @@ addFilter( 'stackable.column.edit.inspector.layout.before', 'stackable/column', 
 					] ) }
 					onChange={ design => setAttributes( { design } ) }
 				 />
-				{ showProNotice && <ProControlButton /> }
+			</PanelBody>
+		</Fragment>
+	)
+} )
+
+addFilter( 'stackable.column.edit.inspector.style.before', 'stackable/column', ( output, props ) => {
+	const { setAttributes } = props
+	const {
+		contentWidth = '',
+		contentWidthUnit = '%',
+		contentTabletWidth = '',
+		contentTabletWidthUnit = '%',
+		contentMobileWidth = '',
+		contentMobileWidthUnit = '%',
+
+		contentHorizontalAlign = '',
+		contentTabletHorizontalAlign = '',
+		contentMobileHorizontalAlign = '',
+
+		borderRadius = '',
+		shadow = '',
+
+		headingColor = '',
+		bodyTextColor = '',
+		linkColor = '',
+		linkHoverColor = '',
+	} = props.attributes
+
+	const show = showOptions( props )
+
+	return (
+		<Fragment>
+			{ output }
+			<PanelBody title={ __( 'General', i18n ) }>
+				<ResponsiveControl
+					attrNameTemplate="%sColumnContentVerticalAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AdvancedToolbarControl
+						label={ __( 'Content Vertical Align', i18n ) }
+						controls="flex-vertical"
+					/>
+				</ResponsiveControl>
+
+				<WhenResponsiveScreen>
+					<AdvancedRangeControl
+						label={ __( 'Content Width', i18n ) }
+						allowReset={ true }
+						placeholder="100"
+						units={ [ '%', 'px' ] }
+						min={ [ 0, 0 ] }
+						max={ [ 100, 1000 ] }
+						step={ [ 1, 1 ] }
+						value={ contentWidth }
+						unit={ contentWidthUnit }
+						onChange={ contentWidth => setAttributes( { contentWidth } ) }
+						onChangeUnit={ contentWidthUnit => setAttributes( { contentWidthUnit } ) }
+					/>
+				</WhenResponsiveScreen>
+				<WhenResponsiveScreen screen="tablet">
+					<AdvancedRangeControl
+						label={ __( 'Content Width', i18n ) }
+						allowReset={ true }
+						placeholder="100"
+						units={ [ '%', 'px' ] }
+						min={ [ 0, 0 ] }
+						max={ [ 100, 1000 ] }
+						step={ [ 1, 1 ] }
+						value={ contentTabletWidth }
+						unit={ contentTabletWidthUnit }
+						onChange={ contentTabletWidth => setAttributes( { contentTabletWidth } ) }
+						onChangeUnit={ contentTabletWidthUnit => setAttributes( { contentTabletWidthUnit } ) }
+					/>
+				</WhenResponsiveScreen>
+				<WhenResponsiveScreen screen="mobile">
+					<AdvancedRangeControl
+						label={ __( 'Content Width', i18n ) }
+						allowReset={ true }
+						placeholder="100"
+						units={ [ '%', 'px' ] }
+						min={ [ 0, 0 ] }
+						max={ [ 100, 1000 ] }
+						step={ [ 1, 1 ] }
+						value={ contentMobileWidth }
+						unit={ contentMobileWidthUnit }
+						onChange={ contentMobileWidth => setAttributes( { contentMobileWidth } ) }
+						onChangeUnit={ contentMobileWidthUnit => setAttributes( { contentMobileWidthUnit } ) }
+					/>
+				</WhenResponsiveScreen>
+
+				{ contentWidth &&
+					<WhenResponsiveScreen>
+						<AdvancedToolbarControl
+							label={ __( 'Content Horizontal Align', i18n ) }
+							controls="flex-horizontal"
+							value={ contentHorizontalAlign }
+							onChange={ value => setAttributes( { contentHorizontalAlign: value } ) }
+						/>
+					</WhenResponsiveScreen>
+				}
+				{ ( contentWidth || contentTabletWidth ) &&
+					<WhenResponsiveScreen screen="tablet">
+						<AdvancedToolbarControl
+							label={ __( 'Content Horizontal Align', i18n ) }
+							controls="flex-horizontal"
+							value={ contentTabletHorizontalAlign }
+							onChange={ value => setAttributes( { contentTabletHorizontalAlign: value } ) }
+						/>
+					</WhenResponsiveScreen>
+				}
+				{ ( contentWidth || contentTabletWidth || contentMobileWidth ) &&
+					<WhenResponsiveScreen screen="mobile">
+						<AdvancedToolbarControl
+							label={ __( 'Content Horizontal Align', i18n ) }
+							controls="flex-horizontal"
+							value={ contentMobileHorizontalAlign }
+							onChange={ value => setAttributes( { contentMobileHorizontalAlign: value } ) }
+						/>
+					</WhenResponsiveScreen>
+				}
+
+				<ControlSeparator />
+
+				{ show.borderRadius &&
+					<AdvancedRangeControl
+						label={ __( 'Border Radius', i18n ) }
+						value={ borderRadius }
+						onChange={ borderRadius => setAttributes( { borderRadius } ) }
+						min={ 0 }
+						max={ 50 }
+						allowReset={ true }
+						placeholder="12"
+						className="ugb--help-tip-general-border-radius"
+					/>
+				}
+				{ show.columnBackground &&
+					<AdvancedRangeControl
+						label={ __( 'Shadow / Outline', i18n ) }
+						value={ shadow }
+						onChange={ shadow => setAttributes( { shadow } ) }
+						min={ 0 }
+						max={ 9 }
+						allowReset={ true }
+						placeholder="3"
+						className="ugb--help-tip-general-shadow"
+					/>
+				}
+				<ContentAlignControl
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+			</PanelBody>
+
+			{ show.columnBackground &&
+				<PanelAdvancedSettings
+					title={ __( 'Container Background', i18n ) }
+					id="column-background"
+					initialOpen={ false }
+					className="ugb--help-tip-column-background-on-off"
+				>
+					<BackgroundControlsHelper
+						attrNameTemplate="column%s"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					/>
+				</PanelAdvancedSettings>
+			}
+
+			<PanelBody
+				title={ __( 'Text Colors', i18n ) }
+				initialOpen={ false }
+			>
+				<ColorPaletteControl
+					value={ headingColor }
+					onChange={ headingColor => setAttributes( { headingColor } ) }
+					label={ __( 'Heading Color', i18n ) }
+				/>
+				<ColorPaletteControl
+					value={ bodyTextColor }
+					onChange={ bodyTextColor => setAttributes( { bodyTextColor } ) }
+					label={ __( 'Text Color', i18n ) }
+				/>
+				<ColorPaletteControl
+					value={ linkColor }
+					onChange={ linkColor => setAttributes( { linkColor } ) }
+					label={ __( 'Link Color', i18n ) }
+				/>
+				<ColorPaletteControl
+					value={ linkHoverColor }
+					onChange={ linkHoverColor => setAttributes( { linkHoverColor } ) }
+					label={ __( 'Link Hover Color', i18n ) }
+				/>
+				<p className="components-base-control__help">{ __( 'The colors above might not apply to some nested blocks.', i18n ) }</p>
 			</PanelBody>
 		</Fragment>
 	)
@@ -99,10 +277,10 @@ const edit = props => {
 
 	const {
 		design = 'plain',
-		// shadow = '',
+		shadow = '',
 		// contentWidth = 100,
 		// restrictContentWidth = false,
-		// uniqueClass = '',
+		uniqueClass = '',
 	} = props.attributes
 
 	// const show = showOptions( props )
@@ -111,13 +289,13 @@ const edit = props => {
 		className,
 		`ugb-column--design-${ design }`,
 	], applyFilters( 'stackable.columns.mainclasses', {
-		// 'ugb-container--width-small': contentWidth <= 50,
 	}, props ) )
 
 	const itemClasses = classnames( [
 		'ugb-column__item',
+		`${ uniqueClass }-column-wrapper`,
 	], {
-		// [ `ugb--shadow-${ shadow }` ]: shadow !== '',
+		[ `ugb--shadow-${ shadow }` ]: shadow !== '',
 	} )
 
 	return (
@@ -128,14 +306,16 @@ const edit = props => {
 					backgroundAttrName="column%s"
 					blockProps={ props }
 				>
-					<InnerBlocks
-						templateLock={ false }
-						renderAppender={
-							hasInnerBlocks ?
-								undefined :
-								() => <InnerBlocks.ButtonBlockAppender />
-						}
-					/>
+					<div className="ugb-column__content-wrapper">
+						<InnerBlocks
+							templateLock={ false }
+							renderAppender={
+								hasInnerBlocks ?
+									undefined :
+									() => <InnerBlocks.ButtonBlockAppender />
+							}
+						/>
+					</div>
 				</DivBackground>
 			</Fragment>
 		) } />

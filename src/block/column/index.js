@@ -6,6 +6,9 @@
  */
 import { StackableIcon } from '~stackable/icons'
 import { i18n } from 'stackable'
+import {
+	createBackgroundAttributes, createResponsiveAttributes, createAllCombinationAttributes,
+} from '~stackable/util'
 
 /**
  * Internal dependencies
@@ -24,6 +27,44 @@ export const schema = {
 		type: 'string',
 		default: 'plain',
 	},
+
+	...createResponsiveAttributes( '%sColumnContentVerticalAlign', {
+		type: 'string',
+		default: '',
+	} ),
+	...createResponsiveAttributes( 'content%sWidth', {
+		type: 'number',
+		default: '',
+	} ),
+	...createResponsiveAttributes( 'content%sWidthUnit', {
+		type: 'string',
+		default: '',
+	} ),
+	...createResponsiveAttributes( 'content%sHorizontalAlign', {
+		type: 'string',
+		default: '',
+	} ),
+
+	borderRadius: {
+		type: 'number',
+		default: '',
+	},
+	shadow: {
+		type: 'number',
+		default: '',
+	},
+
+	// Column Background
+	...createBackgroundAttributes( 'column%s' ),
+
+	// Text Colors
+	...createAllCombinationAttributes(
+		'%sColor', {
+			type: 'string',
+			default: '',
+		},
+		[ 'Heading', 'BodyText', 'Link', 'LinkHover' ]
+	),
 }
 
 export const name = 'ugb/column'
@@ -52,7 +93,7 @@ export const settings = {
 
 	modules: {
 		'advanced-general': true,
-		// 'advanced-block-spacing': true,
+		'advanced-block-spacing': true,
 		'advanced-column-spacing': {
 			columnGap: false,
 		},

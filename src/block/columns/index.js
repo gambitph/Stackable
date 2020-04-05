@@ -49,6 +49,10 @@ export const schema = {
 		type: 'string',
 		default: 'px',
 	} ),
+	collapsedRowGap: {
+		type: 'number',
+		default: '',
+	},
 	collapsedColumnsOrder: {
 		type: 'string',
 		default: '',
@@ -58,7 +62,11 @@ export const schema = {
 		type: 'boolean',
 		default: '',
 	},
-	...createResponsiveAttributes( '%sVerticalGap', {
+	...createResponsiveAttributes( '%sColumnGap', {
+		type: 'number',
+		default: '',
+	} ),
+	...createResponsiveAttributes( '%sRowGap', {
 		type: 'number',
 		default: '',
 	} ),

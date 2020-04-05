@@ -23,6 +23,12 @@
 	.ugb-column__item {
 		height: 100%;
 	}
+
+	// Make vertical alignment work.
+	.ugb-column__item {
+		display: flex;
+		flex-direction: column;
+	}
 }
 
 // The default style is centered, but stretched columns should default to flex-start.

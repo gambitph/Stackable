@@ -158,7 +158,9 @@ addFilter( 'stackable.columns.edit.inspector.layout.before', 'stackable/columns'
 						forceBlank={ true }
 					/>
 				</WhenResponsiveScreen>
+
 				<ControlSeparator />
+
 				<DesignControl
 					selected={ design }
 					label={ __( 'Layouts', i18n ) }
