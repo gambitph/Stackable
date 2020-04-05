@@ -194,6 +194,17 @@ addFilter( 'stackable.columns.edit.inspector.style.before', 'stackable/columns',
 		linkColor = '',
 		linkHoverColor = '',
 		noPaddings = false,
+
+		height = '',
+		tabletHeight = '',
+		mobileHeight = '',
+
+		heightNum = '',
+		heightNumUnit = 'px',
+		tabletHeightNum = '',
+		tabletHeightNumUnit = 'px',
+		mobileHeightNum = '',
+		mobileHeightNumUnit = 'px',
 	} = props.attributes
 
 	const show = showOptions( props )
@@ -276,12 +287,65 @@ addFilter( 'stackable.columns.edit.inspector.style.before', 'stackable/columns',
 						label={ __( 'Height', i18n ) }
 						options={ [
 							{ label: __( 'Normal', i18n ), value: '' },
-							{ label: __( 'Tall', i18n ), value: 'tall' },
 							{ label: __( 'Half-screen height', i18n ), value: 'half' },
 							{ label: __( 'Full-screen height', i18n ), value: 'full' },
+							{ label: __( 'Custom height', i18n ), value: 'custom' },
 						] }
 					/>
 				</ResponsiveControl>
+
+				{ height === 'custom' &&
+					<WhenResponsiveScreen>
+						<AdvancedRangeControl
+							label={ __( 'Custom Height', i18n ) }
+							units={ [ 'px', 'vh' ] }
+							min={ [ 0, 0 ] }
+							max={ [ 1500, 100 ] }
+							step={ [ 1, 1 ] }
+							allowReset={ true }
+							placeholder="50"
+							value={ heightNum }
+							unit={ heightNumUnit }
+							onChange={ heightNum => setAttributes( { heightNum } ) }
+							onChangeUnit={ heightNumUnit => setAttributes( { heightNumUnit } ) }
+						/>
+					</WhenResponsiveScreen>
+				}
+				{ tabletHeight === 'custom' &&
+					<WhenResponsiveScreen screen="tablet">
+						<AdvancedRangeControl
+							label={ __( 'Custom Height', i18n ) }
+							units={ [ 'px', 'vh' ] }
+							min={ [ 0, 0 ] }
+							max={ [ 1500, 100 ] }
+							step={ [ 1, 1 ] }
+							allowReset={ true }
+							placeholder="50"
+							value={ tabletHeightNum }
+							unit={ tabletHeightNumUnit }
+							onChange={ tabletHeightNum => setAttributes( { tabletHeightNum } ) }
+							onChangeUnit={ tabletHeightNumUnit => setAttributes( { tabletHeightNumUnit } ) }
+						/>
+					</WhenResponsiveScreen>
+				}
+				{ mobileHeight === 'custom' &&
+					<WhenResponsiveScreen screen="mobile">
+						<AdvancedRangeControl
+							label={ __( 'Custom Height', i18n ) }
+							units={ [ 'px', 'vh' ] }
+							min={ [ 0, 0 ] }
+							max={ [ 1500, 100 ] }
+							step={ [ 1, 1 ] }
+							allowReset={ true }
+							placeholder="50"
+							value={ mobileHeightNum }
+							unit={ mobileHeightNumUnit }
+							onChange={ mobileHeightNum => setAttributes( { mobileHeightNum } ) }
+							onChangeUnit={ mobileHeightNumUnit => setAttributes( { mobileHeightNumUnit } ) }
+						/>
+					</WhenResponsiveScreen>
+				}
+
 				<ResponsiveControl
 					attrNameTemplate="%sColumnVerticalAlign"
 					setAttributes={ setAttributes }

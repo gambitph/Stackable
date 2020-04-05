@@ -30,25 +30,31 @@ export const createStyles = props => {
 	// Columns.
 	const numColumns = getColumnCountFromDesign( columns, design )
 	const columnRanges = range( numColumns ).map( i => {
+		if ( ! getValue( `columns${ i + 1 }` ) ) {
+			return '1.00fr'
+		}
 		const width = parseInt( getValue( `columns${ i + 1 }` ), 10 )
 		return ( width / 100 * columns ).toFixed( 2 ) + 'fr' // Fraction.
 	} )
 	const tabletColumnRanges = range( numColumns ).map( i => {
+		if ( ! getValue( `tabletColumns${ i + 1 }` ) ) {
+			return '1.00fr'
+		}
 		const width = parseInt( getValue( `tabletColumns${ i + 1 }` ), 10 )
 		return ( width / 100 * columns ).toFixed( 2 ) + 'fr' // Fraction.
 	} )
 	styles.push( {
 		'> .ugb-inner-block > .ugb-block-content > .ugb-columns__item': {
-			gridTemplateColumns: appendImportant( columnRanges.join( ' ' ) ),
+			gridTemplateColumns: ! columnRanges.every( c => c === '1.00fr' ) ? appendImportant( columnRanges.join( ' ' ) ) : undefined,
 		},
 		tablet: {
 			'> .ugb-inner-block > .ugb-block-content > .ugb-columns__item': {
-				gridTemplateColumns: getValue( `tabletColumns1` ) ? appendImportant( tabletColumnRanges.join( ' ' ) ) : undefined,
+				gridTemplateColumns: getValue( `tabletColumns1` ) && ! tabletColumnRanges.every( c => c === '1.00fr' ) ? appendImportant( tabletColumnRanges.join( ' ' ) ) : undefined,
 			},
 		},
 		editor: {
 			'> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout': {
-				gridTemplateColumns: appendImportant( columnRanges.join( ' ' ) ),
+				gridTemplateColumns: ! columnRanges.every( c => c === '1.00fr' ) ? appendImportant( columnRanges.join( ' ' ) ) : undefined,
 			},
 		},
 	} )
@@ -73,29 +79,26 @@ export const createStyles = props => {
 		mobileHeight = '',
 	} = props.attributes
 	styles.push( {
-		[ `` ]: {
-			paddingTop: height === 'tall' ? '110px !important' : undefined,
-			paddingBottom: height === 'tall' ? '110px !important' : undefined,
-			minHeight: height === 'half' ? '50vh' :
-				height === 'full' ? '100vh' :
-					undefined,
+		[ `.${ uniqueClass }-content-wrapper` ]: {
+			minHeight: height === 'half' ? '50vh !important' :
+				height === 'full' ? '100vh !important' :
+					height === 'custom' ? appendImportant( getValue( 'heightNum', '%s' + getValue( 'heightNumUnit', 'px' ) ) ) :
+						undefined,
 		},
 		tablet: {
-			[ `` ]: {
-				paddingTop: tabletHeight === 'tall' ? '110px !important' : undefined,
-				paddingBottom: tabletHeight === 'tall' ? '110px !important' : undefined,
-				minHeight: tabletHeight === 'half' ? '50vh' :
-					tabletHeight === 'full' ? '100vh' :
-						undefined,
+			[ `.${ uniqueClass }-content-wrapper` ]: {
+				minHeight: tabletHeight === 'half' ? '50vh !important' :
+					tabletHeight === 'full' ? '100vh !important' :
+						tabletHeight === 'custom' ? appendImportant( getValue( 'tabletHeightNum', '%s' + getValue( 'tabletHeightNumUnit', 'px' ) ) ) :
+							undefined,
 			},
 		},
 		mobile: {
-			[ `` ]: {
-				paddingTop: mobileHeight === 'tall' ? '110px !important' : undefined,
-				paddingBottom: mobileHeight === 'tall' ? '110px !important' : undefined,
-				minHeight: mobileHeight === 'half' ? '50vh' :
-					mobileHeight === 'full' ? '100vh' :
-						undefined,
+			[ `.${ uniqueClass }-content-wrapper` ]: {
+				minHeight: mobileHeight === 'half' ? '50vh !important' :
+					mobileHeight === 'full' ? '100vh !important' :
+						mobileHeight === 'custom' ? appendImportant( getValue( 'mobileHeightNum', '%s' + getValue( 'mobileHeightNumUnit', 'px' ) ) ) :
+							undefined,
 			},
 		},
 	} )

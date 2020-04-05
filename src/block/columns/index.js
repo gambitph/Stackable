@@ -37,6 +37,18 @@ export const schema = {
 		[ '', 'Tablet' ],
 		[ '1', '2', '3', '4', '5', '6' ]
 	),
+	...createAllCombinationAttributes(
+		'%sHeight%s', {
+			type: 'number',
+			default: '',
+		},
+		[ '', 'Tablet', 'Mobile' ],
+		[ '', 'Num' ]
+	),
+	...createResponsiveAttributes( '%sHeightNumUnit', {
+		type: 'string',
+		default: 'px',
+	} ),
 	collapsedColumnsOrder: {
 		type: 'string',
 		default: '',

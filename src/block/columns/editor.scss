@@ -41,8 +41,17 @@
 
 .ugb-columns {
 	> .ugb-inner-block > .ugb-block-content > .ugb-columns__item {
-		display: block !important;
+		display: flex !important;
+		justify-content: stretch;
+		align-items: stretch;
+		height: 100%;
+		> .block-editor-inner-blocks > .block-editor-block-list__layout {
+			height: 100%;
+		}
 	}
+}
+.ugb-columns__item > .block-editor-inner-blocks {
+	width: 100%;
 }
 
 
