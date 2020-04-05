@@ -7,6 +7,7 @@ import SVGBlockquoteIcon from './images/blockquote-icon.svg'
 import SVGBlogPostsIcon from './images/blog-posts-icon.svg'
 import SVGButtonIcon from './images/button-icon.svg'
 import SVGCardIcon from './images/card-icon.svg'
+import SVGColumnsIcon from './images/columns-icon.svg'
 import SVGContainerIcon from './images/container-icon.svg'
 import SVGCountUpIcon from './images/count-up-icon.svg'
 import SVGCTAIcon from './images/cta-icon.svg'
@@ -92,6 +93,10 @@ export const ButtonIcon = () => {
 
 export const CardIcon = () => {
 	return colorizeIcon( <SVGCardIcon width="20" height="20" /> )
+}
+
+export const ColumnsIcon = () => {
+	return colorizeIcon( <SVGColumnsIcon width="20" height="20" /> )
 }
 
 export const ContainerIcon = () => {

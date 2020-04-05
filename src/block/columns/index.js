@@ -4,7 +4,7 @@
 /**
  * External dependencies
  */
-import { StackableIcon } from '~stackable/icons'
+import { ColumnsIcon } from '~stackable/icons'
 import { disabledBlocks, i18n } from 'stackable'
 
 /**
@@ -90,7 +90,7 @@ export const name = 'ugb/columns'
 export const settings = {
 	title: __( 'Advanced Columns & Grid', i18n ),
 	description: __( 'Add a block that displays content in multiple columns. Get advanced options on how you want your columns to look.', i18n ),
-	icon: StackableIcon,
+	icon: ColumnsIcon,
 	category: 'layout',
 	keywords: [
 		__( 'Advanced Columns', i18n ),

@@ -4,7 +4,7 @@
 /**
  * External dependencies
  */
-import { StackableIcon } from '~stackable/icons'
+import { ColumnsIcon } from '~stackable/icons'
 import { i18n } from 'stackable'
 import {
 	createBackgroundAttributes, createResponsiveAttributes, createAllCombinationAttributes,
@@ -72,7 +72,7 @@ export const name = 'ugb/column'
 export const settings = {
 	title: __( 'Advanced Column', i18n ),
 	description: __( 'A single column within an advanced columns block. Get advanced options on how you want your column to look.', i18n ),
-	icon: StackableIcon,
+	icon: ColumnsIcon,
 	parent: [ 'ugb/columns' ],
 	category: 'layout',
 	keywords: [
