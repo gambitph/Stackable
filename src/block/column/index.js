@@ -93,7 +93,9 @@ export const settings = {
 
 	modules: {
 		'advanced-general': true,
-		'advanced-block-spacing': true,
+		'advanced-block-spacing': {
+			verticalAlign: false,
+		},
 		'advanced-column-spacing': {
 			columnGap: false,
 		},
