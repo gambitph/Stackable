@@ -2,7 +2,6 @@
 
 .ugb-column {
 	.ugb-column__item {
-		// @include box();
 		> *:first-child {
 			margin-top: 0;
 		}
@@ -36,9 +35,8 @@
 	align-items: flex-start;
 }
 
-.ugb-column.ugb-column--design-basic {
-	.ugb-column__item {
-		@include boxNoPadding();
-		padding: $box-hori-padding;
-	}
+// Boxed style. Don't affect other nested columns.
+.ugb-column.ugb-column--design-basic > .ugb-inner-block > .ugb-block-content > .ugb-column__item {
+	@include boxNoPadding();
+	padding: $box-hori-padding;
 }
