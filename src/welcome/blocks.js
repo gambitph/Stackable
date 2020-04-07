@@ -42,6 +42,11 @@ const blocks = {
 		description: __( 'Describe a single subject in a small card. You can use this to describe your product, service or a person.', i18n ),
 		sDemoURL: 'https://wpstackable.com/card-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
 	},
+	'ugb/columns': {
+		title: __( 'Columns', i18n ),
+		description: __( 'Add a block that displays content in multiple columns. Get advanced options on how you want your columns to look.', i18n ),
+		sDemoURL: 'https://wpstackable.com/columns-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+	},
 	'ugb/container': {
 		title: __( 'Container', i18n ),
 		description: __( 'A styled container that you can add other blocks inside. Use this to create unique layouts.', i18n ),
