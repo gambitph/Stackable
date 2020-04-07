@@ -161,7 +161,7 @@ addFilter( 'stackable.column.edit.inspector.style.before', 'stackable/column', (
 					/>
 				</WhenResponsiveScreen>
 
-				{ contentWidth &&
+				{ contentWidth !== '' &&
 					<WhenResponsiveScreen>
 						<AdvancedToolbarControl
 							label={ __( 'Content Horizontal Align', i18n ) }
@@ -171,7 +171,7 @@ addFilter( 'stackable.column.edit.inspector.style.before', 'stackable/column', (
 						/>
 					</WhenResponsiveScreen>
 				}
-				{ ( contentWidth || contentTabletWidth ) &&
+				{ ( contentWidth !== '' || contentTabletWidth ) &&
 					<WhenResponsiveScreen screen="tablet">
 						<AdvancedToolbarControl
 							label={ __( 'Content Horizontal Align', i18n ) }
@@ -181,7 +181,7 @@ addFilter( 'stackable.column.edit.inspector.style.before', 'stackable/column', (
 						/>
 					</WhenResponsiveScreen>
 				}
-				{ ( contentWidth || contentTabletWidth || contentMobileWidth ) &&
+				{ ( contentWidth !== '' || contentTabletWidth || contentMobileWidth ) &&
 					<WhenResponsiveScreen screen="mobile">
 						<AdvancedToolbarControl
 							label={ __( 'Content Horizontal Align', i18n ) }
