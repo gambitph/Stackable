@@ -82,14 +82,14 @@ export const createStyles = props => {
 		[ `.${ uniqueClass }-content-wrapper` ]: {
 			minHeight: height === 'half' ? '50vh !important' :
 				height === 'full' ? '100vh !important' :
-					height === 'custom' ? appendImportant( getValue( 'heightNum', '%s' + getValue( 'heightNumUnit', 'px' ) ) ) :
+					height === 'custom' ? appendImportant( getValue( 'heightNum', '%s' + getValue( 'heightNumUnit', '%s', 'px' ) ) ) :
 						undefined,
 		},
 		tablet: {
 			[ `.${ uniqueClass }-content-wrapper` ]: {
 				minHeight: tabletHeight === 'half' ? '50vh !important' :
 					tabletHeight === 'full' ? '100vh !important' :
-						tabletHeight === 'custom' ? appendImportant( getValue( 'tabletHeightNum', '%s' + getValue( 'tabletHeightNumUnit', 'px' ) ) ) :
+						tabletHeight === 'custom' ? appendImportant( getValue( 'tabletHeightNum', '%s' + getValue( 'tabletHeightNumUnit', '%s', 'px' ) ) ) :
 							undefined,
 			},
 		},
@@ -97,7 +97,7 @@ export const createStyles = props => {
 			[ `.${ uniqueClass }-content-wrapper` ]: {
 				minHeight: mobileHeight === 'half' ? '50vh !important' :
 					mobileHeight === 'full' ? '100vh !important' :
-						mobileHeight === 'custom' ? appendImportant( getValue( 'mobileHeightNum', '%s' + getValue( 'mobileHeightNumUnit', 'px' ) ) ) :
+						mobileHeight === 'custom' ? appendImportant( getValue( 'mobileHeightNum', '%s' + getValue( 'mobileHeightNumUnit', '%s', 'px' ) ) ) :
 							undefined,
 			},
 		},
