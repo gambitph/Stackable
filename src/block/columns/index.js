@@ -10,6 +10,7 @@ import { disabledBlocks, i18n } from 'stackable'
 /**
  * Internal dependencies
  */
+import './auto-select'
 import edit from './edit'
 import save from './save'
 
