@@ -557,7 +557,7 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 			justifyContent: getValue( 'blockHorizontalAlign' ),
 			alignItems: getValue( 'blockVerticalAlign' ),
 		},
-		[ `${ blockClass } .ugb-inner-block` ]: {
+		[ `${ blockClass } > .ugb-inner-block` ]: {
 			width: appendImportant( getValue( 'blockWidth', `%s${ blockWidthUnit }` ) ),
 			// Some themes can limit min-width, preventing block width.
 			minWidth: blockInnerWidth === 'wide' && getValue( 'blockWidth' ) ? 'auto !important' : undefined,
@@ -568,7 +568,7 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 				justifyContent: getValue( 'tabletBlockHorizontalAlign' ),
 				alignItems: getValue( 'tabletBlockVerticalAlign' ),
 			},
-			[ `${ blockClass } .ugb-inner-block` ]: {
+			[ `${ blockClass } > .ugb-inner-block` ]: {
 				width: appendImportant( getValue( 'tabletBlockWidth', `%s${ tabletBlockWidthUnit }` ) ),
 				// Some themes can limit min-width, preventing block width.
 				minWidth: blockInnerWidth === 'wide' && getValue( 'tabletBlockWidth' ) ? 'auto !important' : undefined,
@@ -580,7 +580,7 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 				justifyContent: getValue( 'mobileBlockHorizontalAlign' ),
 				alignItems: getValue( 'mobileBlockVerticalAlign' ),
 			},
-			[ `${ blockClass } .ugb-inner-block` ]: {
+			[ `${ blockClass } > .ugb-inner-block` ]: {
 				width: appendImportant( getValue( 'mobileBlockWidth', `%s${ mobileBlockWidthUnit }` ) ),
 				// Some themes can limit min-width, preventing block width.
 				minWidth: blockInnerWidth === 'wide' && getValue( 'mobileBlockWidth' ) ? 'auto !important' : undefined,
