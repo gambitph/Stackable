@@ -6,7 +6,6 @@ import { BaseControlMultiLabel } from '~stackable/components'
 import { sortableContainer, sortableElement } from 'react-sortable-hoc'
 import { i18n } from 'stackable'
 import { omit, range } from 'lodash'
-import { useState } from '@wordpress/element'
 
 /**
  * WordPress dependencies
@@ -30,9 +29,16 @@ const applySort = ( values, oldIndex, newIndex ) => {
 	return values
 }
 
+// Use a variable here instead of useState. react-sortable-hoc somehow behaves incorrectly
+// when using states.
+let isSorting = false
+
 const SortControl = props => {
 	const values = props.values ? props.values.splice( 0, props.num ) : range( props.num ).map( i => i + 1 )
-	const [ isSorting, setIsSorting ] = useState( false )
+	// If a number was added outside our sorter.
+	while ( values.length < props.num ) {
+		values.push( values.length + 1 )
+	}
 	return (
 		<BaseControl
 			help={ props.help }
@@ -53,13 +59,12 @@ const SortControl = props => {
 				) }
 			/>
 			<SortableContainer
-				transitionDuration={ 0 }
-				onSortStart={ () => setIsSorting( true ) }
+				onSortStart={ () => isSorting = true }
 				onSortOver={ ( { newIndex } ) => {
 					props.onHover( newIndex )
 				} }
 				onSortEnd={ ( { oldIndex, newIndex } ) => {
-					setIsSorting( false )
+					isSorting = false
 					const newValues = applySort( values, oldIndex, newIndex )
 					props.onChange( newValues, { oldIndex, newIndex } )
 				} }
