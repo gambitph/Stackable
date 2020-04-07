@@ -43,7 +43,7 @@ import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { InnerBlocks } from '@wordpress/block-editor'
-import { compose } from '@wordpress/compose'
+import { compose, withState } from '@wordpress/compose'
 
 const COLUMN_DEFAULTS = {
 	2: {
@@ -413,6 +413,7 @@ addFilter( 'stackable.columns.edit.advanced.responsive.after', 'stackable/column
 const edit = props => {
 	const {
 		className,
+		sortColumnHighlight,
 	} = props
 
 	const {
@@ -430,6 +431,7 @@ const edit = props => {
 		`ugb-columns--columns-${ columns }`,
 	], applyFilters( 'stackable.columns.mainclasses', {
 		'ugb-columns--reverse': show.reverseColumns && reverseColumns,
+		[ `ugb-columns--highlight-${ sortColumnHighlight + 1 }` ]: sortColumnHighlight !== null,
 	}, props ) )
 
 	const wrapperClasses = classnames( [
@@ -455,6 +457,7 @@ const edit = props => {
 }
 
 export default compose(
+	withState( { sortColumnHighlight: null } ),
 	withUniqueClass,
 	withSetAttributeHook,
 	withGoogleFont,

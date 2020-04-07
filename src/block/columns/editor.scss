@@ -117,3 +117,21 @@
 [data-type="ugb/columns"]:not(.is-selected)::before {
 	border: 1px dashed rgba(243, 73, 87, 0.6) !important;
 }
+
+/**
+ * Rearranging columns.
+ */
+// Smoothly animate lifting of columns when mousing over rearranging.
+[data-type="ugb/column"] {
+	transition: all 0.3s ease-in-out !important;
+}
+// Set to no transition to let the sorter do its own animation.
+[data-type="ugb/column"][style*="transform: tra"] {
+	transition: none !important;
+}
+// Lift the column for rearranging visual feedback.
+@for $i from 1 through 8 {
+	.ugb-columns--highlight-#{ $i } > .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="ugb/column"]:nth-child(#{ $i }) {
+		transform: translateY(-20px) !important;
+	}
+}
