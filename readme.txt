@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.2
 Tested up to: 5.4
 Requires PHP: 5.3
-Stable tag: 2.3.2
+Stable tag: 2.4.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -18,11 +18,11 @@ Stackable is a Library of Page Builder Gutenberg Blocks which will reimagine the
 
 Stackable adds essential custom blocks to give you a true page builder experience inside the Block Editor. Stackable gives you a suite of high quality blocks, each with their own precise page builder options that let you build the perfect website and landing page that you envision.
 
-[youtube https://www.youtube.com/watch?v=m2I-pCYPezk]
+[youtube https://www.youtube.com/watch?v=idv-1cDz61g]
 
 With Stackable, you get:
 
-- 23 Quality Page Building Blocks for Gutenberg
+- 24 Quality Page Building Blocks for Gutenberg
 - 50+ Block Layouts and 70+ Pre-set Section / Block Designs that can be switched with just one click
 - Page Builder-like tabbed options
 - Advanced and diverse web design options,
@@ -95,6 +95,7 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com/v2/)
 
 ## Stackable Blocks
 
+- Advanced Columns & Grid Block — [View Block](http://wpstackable.com/columns-block)
 - Container Block — [View Block](https://wpstackable.com/container-block/)
 - Separator Block — [View Block](https://wpstackable.com/separator-block/)
 - Posts Block — [View Block](https://wpstackable.com/blog-posts-block/)
