@@ -112,3 +112,8 @@
 		margin-left: 0 !important;
 	}
 }
+
+// Add some borders to our columns block so people know that they're clickable.
+[data-type="ugb/columns"]:not(.is-selected)::before {
+	border: 1px dashed rgba(243, 73, 87, 0.6) !important;
+}
