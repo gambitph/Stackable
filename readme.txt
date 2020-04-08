@@ -71,7 +71,7 @@ Stackable now offers the most advanced block design controls with the widest ran
 
 All of Stackable's powerful options are easily managed in an intuitive UI for a smooth block editing experience. This is achieved by our three-tab configuration, easy toggle on/off for block elements, and streamlined settings.
 
-## A Truly Useful Block Library with 23 Quality Gutenberg Blocks
+## A Truly Useful Block Library with 24 Quality Gutenberg Blocks
 
 We’ve come up with page building blocks that are all functional and stunning. We’ve put in the design effort so you can enjoy a truly usable and quality block collection for the new WordPress block editor (Gutenberg).
 
@@ -122,6 +122,7 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com/v2/)
 
 ### News Article Updates
 
+- [v2.4 Introducing the Advanced Columns & Grid Block](https://wpstackable.com/blog/introducing-the-advanced-columns-and-grid-block/)
 - [v2.3 Introducing the Design Library and New Block Designs](https://wpstackable.com/blog/introducing-the-design-library-and-new-block-designs/)
 - [v2.2 Welcome Video, Better Separators and Auto-Block Recovery](https://wpstackable.com/blog/welcome-video-better-separators-and-auto-block-recovery/)
 - [v2.1 Help Video Snippets and Auto-Expand Settings](https://wpstackable.com/blog/help-video-snippets-auto-expand-settings/)
@@ -180,7 +181,9 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 2.4.0 =
-* New: Advanced Columns Block
+[Introducing the Advanced Columns & Grid Block](https://wpstackable.com/blog/introducing-the-advanced-columns-and-grid-block/)
+
+* New: Advanced Columns & Grid Block
 * Fixed: Inspector may get a horizontal scrollbar
 * Fixed: Initial position of range controls now position correctly again
 * Fixed: Container Advanced > Block Spacing > Max. Content Width also affects nested blocks
