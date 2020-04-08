@@ -187,6 +187,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Inspector may get a horizontal scrollbar
 * Fixed: Initial position of range controls now position correctly again
 * Fixed: Container Advanced > Block Spacing > Max. Content Width also affects nested blocks
+* Fixed: Wide widths with block background turned on would also make their nested blocks go wide in the editor
 
 = 2.3.2 =
 * Fixed: WordPress 5.4 compatibility

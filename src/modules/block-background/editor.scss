@@ -10,20 +10,20 @@
 
 			&.ugb-main-block--inner-center {
 				@media screen and (min-width: $break-large) {
-					.ugb-inner-block {
+					> .ugb-inner-block {
 						max-width: var(--content-width); // TODO: Make this configurable
 					}
 				}
 			}
 			&.ugb-main-block--inner-wide {
 				@media screen and (min-width: $break-wide) {
-					.ugb-inner-block {
+					> .ugb-inner-block {
 						width: 1080px; // TODO: Make this configurable
 					}
 				}
 			}
 			&.ugb-main-block--inner-full {
-				.ugb-inner-block {
+				> .ugb-inner-block {
 					width: 100%;
 				}
 			}
