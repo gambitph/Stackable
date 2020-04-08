@@ -27,7 +27,7 @@ const autoSelectColumnsBlock = () => {
 	const {
 		getBlockOrder, getSelectedBlock, getBlockParents,
 	} = select( 'core/block-editor' )
-	const { selectBlock } = dispatch( 'core/block-editor' )
+	const { selectBlock, clearSelectedBlock } = dispatch( 'core/block-editor' )
 
 	let blocks = getBlockOrder()
 
@@ -38,6 +38,7 @@ const autoSelectColumnsBlock = () => {
 			setTimeout( () => {
 				const selectedBlock = getSelectedBlock()
 				if ( selectedBlock && selectedBlock.name === 'ugb/column' ) {
+					clearSelectedBlock() // Clear first or else our inspector will show all options.
 					const columnsBlockClientIds = getBlockParents( selectedBlock.clientId )
 					if ( columnsBlockClientIds.length ) {
 						selectBlock( columnsBlockClientIds[ 0 ] )
