@@ -170,11 +170,11 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Screenshots ==
 
-1. Feature Grid block
-2. Call to Action Block
-3. Icon List block
-4. Image Box block
-5. Pricing Box block
+1. How Stackable Page Builder Blocks for Gutenberg Works
+2. Easily switch between different Pre-Set Block Designs in our Design Library / Templates
+3. Tweak the spacing and alignments of your blocks
+4. Advanced Columns and Grid block
+5. Create more elaborate background effects for your content
 
 == Upgrade Notice ==
 
