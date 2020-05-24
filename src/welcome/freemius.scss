@@ -1,0 +1,101 @@
+/**
+ * Freemius Customization styles used by freemius.php
+ */
+
+// Hide account fields which are not really used by the user.
+#fs_account_details {
+	.fs-field-product,
+	.fs-field-product_id,
+	.fs-field-site_id,
+	.fs-field-site_public_key,
+	.fs-field-site_secret_key {
+		display: none;
+	}
+}
+
+// Remove the Freemius tabs.
+.fs-section .nav-tab-wrapper {
+	display: none;
+}
+
+@import "common";
+
+/**
+ * Affiliation.
+ */
+#fs_affiliation_content_wrapper {
+	.postbox {
+		@include box();
+		box-shadow: nth($shadows, 6);
+		border: 0;
+		padding: 35px;
+	}
+	.button {
+		border: none;
+		border-radius: 35px;
+		box-shadow: none !important;
+		cursor: pointer;
+		opacity: 1;
+		background: #8c33da;
+		background: linear-gradient(90deg, #8c33da -30%, #f34957 130%);
+		transition: opacity 0.2s ease-in-out;
+		box-shadow: none !important;
+		color: #fff;
+		text-decoration: none;
+		padding: 0.75em 1.25em;
+		// display: block;
+		line-height: 1em !important;
+		margin: 0 auto;
+		// max-width: 200px;
+		text-align: center;
+		&:hover {
+			opacity: 0.85;
+			box-shadow: none !important;
+		}
+		&.button-cancel {
+			background: #888;
+		}
+	}
+}
+
+/**
+ * Account Page
+ */
+#fs_account {
+	.postbox {
+		@include box();
+		box-shadow: nth($shadows, 6);
+		border: 0;
+		padding: 16px;
+	}
+}
+
+/**
+ * Contact Page
+ */
+#fs_contact {
+	width: 100%;
+	max-width: 850px;
+	margin: 0 !important;
+	padding: 0 !important;
+	@include box();
+	box-shadow: nth($shadows, 6);
+	border: 0;
+	padding: 16px;
+}
+
+/**
+ * Contact and pricing/checkout pages have an SSL banner on the top, add more space.
+ */
+body.stackable_page_stackable-contact {
+	.s-header {
+		padding-top: 65px !important;
+		padding-bottom: 100px !important;
+	}
+}
+body.stackable_page_stackable-pricing {
+	.s-header {
+		padding-top: 85px !important;
+		padding-bottom: 50px !important;
+	}
+}

@@ -33,7 +33,7 @@ if ( ! function_exists( 'sugb_fs' ) ) {
 					'account'    => true,
 					'pricing'    => true,
 					'contact'    => true,
-					'support'    => true,
+					'support'    => false,
 				),
 	        ) );
 	    }
@@ -45,4 +45,5 @@ if ( ! function_exists( 'sugb_fs' ) ) {
 	sugb_fs();
 	// Signal that SDK was initiated.
 	do_action( 'sugb_fs_loaded' );
+
 }

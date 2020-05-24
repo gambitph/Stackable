@@ -3,63 +3,73 @@
  */
 
 // Clear out the margins of the admin page.
-body.toplevel_page_stackable {
+body[class*="page_stackable"] {
 	#wpcontent {
 		padding-left: 0;
 	}
-	.wrap {
+	#wpbody-content > .wrap {
 		margin: 0;
+		padding: 0 50px;
 	}
 }
 
 @import "common";
 
 // Actual page styles.
-body.toplevel_page_stackable {
-	.s-header,
-	.s-body-container {
-		padding: 50px;
-	}
-	.s-header {
-		background: #111;
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
-		padding-bottom: 100px;
-		img {
-			height: 50px;
-		}
-	}
-	.s-separator {
-		height: 200px;
-		width: 100%;
-		position: relative;
-		transform: scaleY(-1);
-		z-index: -1;
-		margin-top: -50px;
-		svg {
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			z-index: 1;
-			height: 100%;
-			width: 100%;
-			&:first-child {
-				z-index: 3;
-			}
-		}
-	}
-
-	img {
-		max-width: 100%;
-	}
+.s-header {
+	padding: 50px;
+}
+.s-header {
+	background: #111;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	padding-bottom: 100px;
 	h1 {
 		color: #fff;
 		font-size: 2.5em;
 		font-weight: bold;
+	}
+	img {
+		height: 50px;
+	}
+	img:first-child:last-child {
+		margin: 0 auto;
+	}
+}
+.s-header,
+.s-separator {
+	margin-left: -50px;
+	margin-right: -50px;
+}
+.s-separator {
+	width: calc(100% + 100px);
+	height: 200px;
+	position: relative;
+	transform: scaleY(-1);
+	z-index: -1;
+	margin-top: -50px;
+	margin-bottom: -200px;
+	svg {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 1;
+		height: 100%;
+		width: 100%;
+		&:first-child {
+			z-index: 3;
+		}
+	}
+}
+body.toplevel_page_stackable,
+body.stackable_page_stackable-settings {
+
+	img {
+		max-width: 100%;
 	}
 	h2 {
 		font-size: 2em;
@@ -75,10 +85,23 @@ body.toplevel_page_stackable {
 	}
 	.s-box {
 		@include box();
+		box-shadow: nth($shadows, 6);
+		border: 0;
 		margin-bottom: 30px;
 		transition: all 0.3s ease;
 		&.s-is-disabled:not(:hover) {
 			opacity: 0.6;
+		}
+		&.s-box-spaced {
+			padding-left: 4vw;
+			padding-right: 4vw;
+		}
+		&.s-box-small {
+			padding-left: 15px;
+			padding-right: 15px;
+			h3 {
+				color: #f34957;
+			}
 		}
 	}
 	.s-button {
@@ -104,11 +127,17 @@ body.toplevel_page_stackable {
 		}
 	}
 	.s-body-container {
-		display: grid;
-		grid-template-columns: 1fr 350px;
-		grid-gap: 30px;
 		padding-top: 0;
-		margin-top: -200px;
+		&.s-narrow {
+			max-width: 1200px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		&.s-body-container-center {
+			align-items: center;
+			display: flex;
+			flex-direction: column;
+		}
 		*:first-child {
 			margin-top: 0 !important;
 		}
@@ -123,6 +152,11 @@ body.toplevel_page_stackable {
 		li {
 			margin-bottom: 0.6em;
 		}
+	}
+	.s-body-container-grid {
+		display: grid;
+		grid-template-columns: 1fr 350px;
+		grid-gap: 30px;
 	}
 	.s-side {
 		h2,
@@ -404,9 +438,23 @@ body.toplevel_page_stackable {
 	}
 }
 
+.s-3-column,
+.s-4-column {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	grid-gap: 35px;
+	> * {
+		margin: 0 !important;
+	}
+}
+.s-3-column {
+	grid-template-columns: 1fr 1fr 1fr;
+}
+
 // Collapse to a single column for mobile.
 @media screen and (max-width: $break-large) {
-	body.toplevel_page_stackable {
+	body.toplevel_page_stackable,
+	body.stackable_page_stackable-settings {
 		.s-body-container {
 			grid-template-columns: 1fr;
 		}
@@ -415,3 +463,5 @@ body.toplevel_page_stackable {
 
 @import "news";
 @import "../components/pro-modal/editor";
+@import "getting-started";
+@import "freemius";

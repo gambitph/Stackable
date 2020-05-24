@@ -1,0 +1,96 @@
+/**
+ * Styles used by the Getting Started section.
+ */
+
+@import url(https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@700&display=swap);
+
+.getting-started .s-header h1 {
+	margin: 0 auto;
+}
+.s-tabs {
+	display: inline-block !important;
+	background: #fff;
+	padding: 8px 0 8px 8px !important;
+	border-radius: 8px;
+	margin-bottom: 30px !important;
+}
+.s-tab {
+	display: inline-block;
+	padding: 10px 15px;
+	margin: 0 8px 0 0 !important;
+	border-radius: 4px;
+	font-size: 15px;
+	cursor: pointer;
+	color: #444;
+	text-decoration: none;
+	&:hover {
+		background: #eee;
+		color: #444;
+	}
+	&.s-active {
+		background: linear-gradient(to right, #8c33da -10%, #f34957 110%);
+		color: #fff;
+	}
+}
+.s-tab-premium {
+	&,
+	&:hover {
+		color: #f34957;
+	}
+}
+.s-title {
+	font-family: "Source Sans Pro", sans-serif;
+	text-align: center;
+	margin-bottom: 30px;
+	font-size: 3em !important;
+}
+.s-spacer {
+	height: 50px;
+}
+.s-center {
+	text-align: center;
+}
+.s-getting-started-body {
+	display: grid;
+	grid-template-columns: 1fr 1.2fr;
+	grid-gap: 35px;
+	align-items: center;
+	margin-bottom: 35px;
+	&.s-reverse {
+		grid-template-columns: 1.2fr 1fr;
+	}
+}
+.s-tip {
+	margin: 1.5em 40px 1em;
+	text-indent: -25px;
+	color: #da5e68;
+	line-height: 1.3em;
+}
+.s-video {
+	max-width: 100%;
+	margin: 0 auto;
+	display: block;
+}
+.s-buttons {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: flex-start;
+	> * {
+		margin: 0 15px;
+	}
+}
+.s-button-plain {
+	background: none !important;
+	color: #f34957 !important;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+	.dashicons {
+		vertical-align: text-top;
+	}
+}
+.s-button-small {
+	padding: 0.3em 1em !important;
+	font-size: 14px !important;
+	display: inline-block !important;
+}
