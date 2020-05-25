@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.2
 Tested up to: 5.4
 Requires PHP: 5.3
-Stable tag: 2.4.0
+Stable tag: 2.5.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -122,6 +122,7 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com/v2/)
 
 ### News Article Updates
 
+- [v2.5 Better Onboarding for First Time Users](https://wpstackable.com/blog/better-onboarding-for-first-time-users)
 - [v2.4 Introducing the Advanced Columns & Grid Block](https://wpstackable.com/blog/introducing-the-advanced-columns-and-grid-block/)
 - [v2.3 Introducing the Design Library and New Block Designs](https://wpstackable.com/blog/introducing-the-design-library-and-new-block-designs/)
 - [v2.2 Welcome Video, Better Separators and Auto-Block Recovery](https://wpstackable.com/blog/welcome-video-better-separators-and-auto-block-recovery/)
@@ -180,6 +181,11 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.5.0 =
+[Better Onboarding for First Time Users](https://wpstackable.com/blog/better-onboarding-for-first-time-users)
+
+* New: Better onboarding for first time users
+* New: Updated admin page styling
 * New: Added help tooltip videos for "No padding", "Column Arrangemnet", "Column Widths" and "Column Row Gap"
 * New: Added ability to turn help tooltips off
 * Fixed: Turning on "no paddings" will now enable the block background
