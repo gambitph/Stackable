@@ -216,7 +216,7 @@ const ColumnsWidthControl = props => {
 	return (
 		<BaseControl
 			help={ props.help }
-			className={ classnames( 'ugb-columns-width-control', props.className ) }
+			className={ classnames( [ 'ugb-columns-width-control', 'ugb--help-tip-column-width', props.className ] ) }
 		>
 			{ ( props.hasIndividualControls || ( ! props.hasIndividualControls && columnPresetOptions[ props.columns ] ) ) &&
 				<BaseControlMultiLabel

@@ -78,6 +78,7 @@ const addInspectorPanel = ( output, props ) => {
 					label={ __( 'No Paddings', i18n ) }
 					checked={ noPaddings }
 					onChange={ noPaddings => setAttributes( { noPaddings } ) }
+					className="ugb--help-tip-no-padding"
 				/>
 				<BackgroundControlsHelper
 					attrNameTemplate="blockBackground%s"

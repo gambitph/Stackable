@@ -42,7 +42,7 @@ const SortControl = props => {
 	return (
 		<BaseControl
 			help={ props.help }
-			className={ classnames( 'ugb-sort-control', props.className, `ugb-sort-control--axis-${ props.axis }` ) }
+			className={ classnames( [ 'ugb-sort-control', props.className, `ugb-sort-control--axis-${ props.axis }` ] ) }
 		>
 			<BaseControlMultiLabel
 				label={ props.label }

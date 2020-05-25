@@ -125,6 +125,10 @@ import videoPopupWidth from './videos/video-popup-width.mp4'
 import videoPopupHeight from './videos/video-popup-height.mp4'
 import containerImageWidth from './videos/container-image-width.mp4'
 import containerImageHeight from './videos/container-image-height.mp4'
+import columnRowGap from './videos/column-row-gap.mp4'
+import noPadding from './videos/no-padding.mp4'
+import columnWidth from './videos/column-width.mp4'
+import columnArrangement from './videos/column-arrangement.mp4'
 
 /**
  * External dependencies
@@ -807,6 +811,26 @@ const VIDEOS = {
 		video: containerImageHeight,
 		title: __( 'Image height', i18n ),
 		description: __( 'Adjusts the image height', i18n ),
+	},
+	columnRowGap: {
+		video: columnRowGap,
+		title: __( 'Row gap', i18n ),
+		description: __( 'Adjusts the vertical row gap between columns', i18n ),
+	},
+	noPadding: {
+		video: noPadding,
+		title: __( 'No paddings', i18n ),
+		description: __( 'Removes all outer paddings of the block', i18n ),
+	},
+	columnWidth: {
+		video: columnWidth,
+		title: __( 'Column widths', i18n ),
+		description: __( 'Adjust the individual widths of each column', i18n ),
+	},
+	columnArrangement: {
+		video: columnArrangement,
+		title: __( 'Column arrangement', i18n ),
+		description: __( 'Rearrange and move columns around by dragging each handle', i18n ),
 	},
 }
 

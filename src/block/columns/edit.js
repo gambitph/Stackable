@@ -275,6 +275,7 @@ addFilter( 'stackable.columns.edit.inspector.style.before', 'stackable/columns',
 						label={ __( 'No Paddings', i18n ) }
 						checked={ noPaddings }
 						onChange={ noPaddings => setAttributes( { noPaddings } ) }
+						className="ugb--help-tip-no-padding"
 					/>
 				}
 
