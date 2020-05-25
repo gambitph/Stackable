@@ -16,7 +16,9 @@ import { camelCase } from 'lodash'
  * WordPress dependencies
  */
 import { addAction, removeAction } from '@wordpress/hooks'
-import { Component } from '@wordpress/element'
+import { loadPromise, models } from '@wordpress/api'
+import { useEffect, useState } from '@wordpress/element'
+import { startListening, stopListening } from './events-show'
 
 // Provides the URL of the video. If during development, use the local copies; if production, use the CDN.
 const videoUrl = video => `${ process.env.NODE_ENV === 'development' ? srcUrl : cdnUrl }/${ video }`
@@ -24,21 +26,21 @@ const videoUrl = video => `${ process.env.NODE_ENV === 'development' ? srcUrl : 
 // Gets the Help ID from the class.
 export const getHelpId = el => el && el.closest( '[class*="ugb--help-tip-"]' ) && camelCase( ( el.closest( '[class*="ugb--help-tip-"]' ).getAttribute( 'class' ).match( /ugb--help-tip-([\w\d-_]+)/ ) || [ '', '' ] )[ 1 ] )
 
-class HelpToolTipVideo extends Component {
-	constructor() {
-		super( ...arguments )
-		this.state = {
-			target: null,
-			show: false,
-			helpId: '',
-			rect: {},
-		}
-		this.showHelp = this.showHelp.bind( this )
-		this.hideHelp = this.hideHelp.bind( this )
-		this.calculateRect = this.calculateRect.bind( this )
-	}
+/**
+ * Get settings.
+ */
+let settings
+loadPromise.then( () => {
+	settings = new models.Settings()
+} )
 
-	showHelp( elORString ) {
+const HelpToolTipVideo = props => {
+	const [ target, setTarget ] = useState( null )
+	const [ show, setShow ] = useState( false )
+	const [ helpId, setHelpId ] = useState( '' )
+	const [ tooltipsEnabled, setTooltipsEnabled ] = useState( false )
+
+	const showHelp = elORString => {
 		// If there's a currently focused element, blur it since closing the popover
 		// can trigger a scroll to the previously focused element that can confuse the user.
 		if ( document.activeElement ) {
@@ -48,20 +50,28 @@ class HelpToolTipVideo extends Component {
 		const target = typeof elORString !== 'string' && elORString
 		const helpId = elORString && typeof elORString !== 'string' ? getHelpId( elORString ) : elORString
 
-		this.setState( {
-			target,
-			helpId,
-			show: true,
-		} )
+		setTarget( target )
+		setHelpId( helpId )
+		setShow( true )
+	}
+
+	const hideHelp = () => {
+		setShow( false )
+
+		// If there are other popovers open, most likely we came from there, focus on those so that the auto-close when focus outside would work.
+		const currentPopover = document.querySelector( '.components-popover .components-popover__content' )
+		if ( currentPopover ) {
+			currentPopover.focus()
+		}
 	}
 
 	// Get the position on where to place the tooltip, but change the X & width to match the whole inspector area.
-	calculateRect() {
-		if ( ! this.state.target ) {
+	const calculateRect = () => {
+		if ( ! target ) {
 			return null
 		}
 
-		const elRect = this.state.target.getBoundingClientRect()
+		const elRect = target.getBoundingClientRect()
 		const sidebar = document.querySelector( '.edit-post-sidebar' )
 		if ( sidebar ) {
 			const inspectorRect = sidebar.getBoundingClientRect()
@@ -71,57 +81,68 @@ class HelpToolTipVideo extends Component {
 		return elRect
 	}
 
-	hideHelp() {
-		this.setState( {
-			show: false,
+	const updateTooltipDisabled = enabled => {
+		const model = new models.Settings( {
+			stackable_help_tooltip_disabled: enabled ? '' : '1', // eslint-disable-line
 		} )
 
-		// If there are other popovers open, most likely we came from there, focus on those so that the auto-close when focus outside would work.
-		const currentPopover = document.querySelector( '.components-popover .components-popover__content' )
-		if ( currentPopover ) {
-			currentPopover.focus()
+		model.save()
+	}
+
+	useEffect( () => {
+		// Get settings.
+		settings.fetch().then( response => {
+			setTooltipsEnabled( ! response.stackable_help_tooltip_disabled )
+		} )
+
+		// Tooptips are shown/hidden only through these triggers.
+		addAction( 'stackable.help-video.show', 'stackable/help', showHelp )
+		addAction( 'stackable.help-video.hide', 'stackable/help', hideHelp )
+
+		return () => {
+			removeAction( 'stackable.help-video.show', 'stackable/help' )
+			removeAction( 'stackable.help-video.hide', 'stackable/help' )
 		}
-	}
+	}, [] )
 
-	/**
-	 * Tooptips are shown/hidden only through these triggers.
-	 */
-	componentDidMount() {
-		addAction( 'stackable.help-video.show', 'stackable/help', this.showHelp )
-		addAction( 'stackable.help-video.hide', 'stackable/help', this.hideHelp )
-	}
-
-	componentWillUnmount() {
-		removeAction( 'stackable.help-video.show', 'stackable/help' )
-		removeAction( 'stackable.help-video.hide', 'stackable/help' )
-	}
-
-	render() {
-		if ( ! this.state.show ) {
-			return null
+	useEffect( () => {
+		if ( tooltipsEnabled ) {
+			startListening()
+		} else {
+			stopListening()
 		}
-		if ( typeof this.props.tooltipData[ this.state.helpId ] === 'undefined' ) {
-			return null
-		}
+	}, [ tooltipsEnabled ] )
 
-		const {
-			title,
-			video,
-			description,
-			learnMore,
-		} = this.props.tooltipData[ this.state.helpId ]
-
-		return (
-			<HelpTooltip
-				onClickClose={ this.hideHelp }
-				getAnchorRect={ this.calculateRect }
-				title={ title }
-				description={ description }
-				videoUrl={ videoUrl( video ) }
-				learnMoreUrl={ learnMore }
-			/>
-		)
+	if ( ! show ) {
+		return null
 	}
+
+	if ( typeof props.tooltipData[ helpId ] === 'undefined' ) {
+		return null
+	}
+
+	const {
+		title,
+		video,
+		description,
+		learnMore,
+	} = props.tooltipData[ helpId ]
+
+	return (
+		<HelpTooltip
+			onClickClose={ hideHelp }
+			getAnchorRect={ calculateRect }
+			title={ title }
+			description={ description }
+			videoUrl={ videoUrl( video ) }
+			learnMoreUrl={ learnMore }
+			tooltipsEnabled={ tooltipsEnabled }
+			onTooltipsEnabledChange={ enabled => {
+				updateTooltipDisabled( enabled )
+				setTooltipsEnabled( enabled )
+			} }
+		/>
+	)
 }
 
 HelpToolTipVideo.defaultProps = {

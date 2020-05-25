@@ -12,6 +12,7 @@ import {
 	Popover,
 	Spinner,
 	Dashicon,
+	CheckboxControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import {
@@ -82,6 +83,12 @@ const HelpTooltip = props => {
 							<a href={ learnMoreUrl } target="_learn">{ learnMore } <Dashicon icon="external" /></a>
 						</div>
 					}
+					<CheckboxControl
+						label={ __( 'Stop showing tooltips', i18n ) }
+						className="ugb-help-tooltip__checkbox"
+						checked={ ! props.tooltipsEnabled }
+						onChange={ checked => props.onTooltipsEnabledChange( ! checked ) }
+					/>
 				</div>
 			</PanelBody>
 		</Popover>
@@ -96,6 +103,8 @@ HelpTooltip.defaultProps = {
 	videoUrl: '',
 	learnMoreUrl: '',
 	learnMore: __( 'Learn more', i18n ),
+	tooltipsEnabled: true,
+	onTooltipsEnabledChange: () => {},
 }
 
 export default HelpTooltip

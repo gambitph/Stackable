@@ -87,39 +87,27 @@ if ( ! function_exists( 'stackable_auto_on_deprecated_styles' ) ) {
 	add_action( 'stackable_version_upgraded', 'stackable_auto_on_deprecated_styles', 10, 2 );
 }
 
-if ( ! function_exists( 'stackable_ajax_update_load_v1_styles_option' ) ) {
+if ( ! function_exists( 'stackable_register_load_v1_styles_option' ) ) {
 
 	/**
 	 * Ajax handler for saving the setting for loading V1 styles for backward compatibility.
 	 *
 	 * @since 2.0
 	 */
-	function stackable_ajax_update_load_v1_styles_option() {
-		$nonce = isset( $_POST['nonce'] ) ? sanitize_key( $_POST['nonce'] ) : '';
-
-		if ( ! wp_verify_nonce( $nonce, 'stackable_load_v1_styles' ) ) {
-			wp_send_json_error( __( 'Security error, please refresh the page and try again.', STACKABLE_I18N ) );
-		}
-
-		$checked_show_notices = isset( $_POST['checked'] ) ? $_POST['checked'] === 'true' : false;
-		update_option( 'stackable_load_v1_styles', $checked_show_notices ? '1' : '0' );
-		wp_send_json_success();
+	function stackable_register_load_v1_styles_option() {
+		register_setting(
+			'stackable_load_v1_styles',
+			'stackable_load_v1_styles',
+			array(
+				'type' => 'string',
+				'description' => __( 'Load version 1 styles for backward compatibility', 'block-options' ),
+				'sanitize_callback' => 'sanitize_text_field',
+				'show_in_rest' => true,
+				'default' => '',
+			)
+		);
 	}
-	add_action( 'wp_ajax_stackable_update_load_v1_styles_option', 'stackable_ajax_update_load_v1_styles_option' );
-}
-
-if ( ! function_exists( 'stackable_load_v1_styles_nonce' ) ) {
-
-	/**
-	 * Create a nonce for show/hide Go Premium notice.
-	 *
-	 * @return String
-	 *
-	 * @since 2.0
-	 */
-	function stackable_load_v1_styles_nonce() {
-		return wp_create_nonce( 'stackable_load_v1_styles' );
-	}
+	add_action( 'init', 'stackable_register_load_v1_styles_option' );
 }
 
 if ( ! function_exists( 'stackable_should_load_v1_styles' ) ) {

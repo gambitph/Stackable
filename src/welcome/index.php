@@ -80,7 +80,7 @@ SVG;
 				wp_enqueue_script( 'wp-components' ); // Need Spinner.
 				wp_enqueue_style( 'wp-components' ); // Need Spinner.
 
-				wp_enqueue_script( 'stackable-welcome', plugins_url( 'dist/admin_welcome.js', STACKABLE_FILE ), array( 'wp-i18n', 'wp-element', 'wp-hooks', 'wp-util', 'wp-components' ) );
+				wp_enqueue_script( 'stackable-welcome', plugins_url( 'dist/admin_welcome.js', STACKABLE_FILE ), array( 'wp-i18n', 'wp-element', 'wp-hooks', 'wp-util', 'wp-components', 'wp-api' ) );
 
 				wp_localize_script( 'stackable-welcome', 'stackable', array(
 					'srcUrl' => untrailingslashit( plugins_url( '/', STACKABLE_FILE ) ),
@@ -94,11 +94,8 @@ SVG;
 					'planName' => sugb_fs()->get_plan_name(),
 					'disabledBlocks' => stackable_get_disabled_blocks(),
 					'nonce' => stackable_get_disabled_blocks_nonce(),
-					'showProNoticesOption' => stackable_show_pro_notices_option(),
-					'nonceProNotice' => stackable_show_pro_notices_option_nonce(),
+					'showProNoticesOption' => STACKABLE_SHOW_PRO_NOTICES && ! sugb_fs()->can_use_premium_code(),
 					'nonceNews' => stackable_get_news_feed_nonce(),
-					'loadV1Styles' => stackable_should_load_v1_styles(),
-					'nonceLoadV1Styles' => stackable_load_v1_styles_nonce(),
 				) );
             }
         }
@@ -178,10 +175,8 @@ SVG;
 							<!-- We put all the block controls here. -->
                             <div class="s-settings-wrapper" />
 						</article>
-						<aside class="s-backward-compatibility-control-wrapper"></aside>
-						<?php if ( STACKABLE_SHOW_PRO_NOTICES && ! sugb_fs()->can_use_premium_code() ): ?>
-							<aside class="s-pro-control-wrapper"></aside>
-						<?php endif; ?>
+						<!-- We put all the other options here. -->
+						<aside class="s-other-options-wrapper"></aside>
                     </div>
                     <div class="s-side">
 						<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>

@@ -8,10 +8,13 @@ import blockData from './blocks'
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n'
-import { Component, render } from '@wordpress/element'
+import {
+	Component, render, useEffect, useState,
+} from '@wordpress/element'
 import { send as ajaxSend } from '@wordpress/ajax'
 import domReady from '@wordpress/dom-ready'
-import { Spinner } from '@wordpress/components'
+import { Spinner, CheckboxControl } from '@wordpress/components'
+import { loadPromise, models } from '@wordpress/api'
 
 /**
  * External dependencies
@@ -20,13 +23,18 @@ import {
 	disabledBlocks,
 	i18n,
 	nonce,
-	nonceProNotice,
 	showProNoticesOption,
 	welcomeSrcUrl,
-	loadV1Styles,
-	nonceLoadV1Styles,
 } from 'stackable'
 import classnames from 'classnames'
+
+/**
+ * Get settings.
+ */
+let settings
+loadPromise.then( () => {
+	settings = new models.Settings()
+} )
 
 class BlockToggler extends Component {
 	constructor() {
@@ -133,114 +141,64 @@ class BlockToggler extends Component {
 	}
 }
 
-class ProNoticeToggler extends Component {
-	constructor() {
-		super( ...arguments )
-		this.toggle = this.toggle.bind( this )
-		this.ajaxTimeout = null
-		this.state = {
-			checked: this.props.checked,
-			isSaving: false,
-		}
+const AdditionalOptions = props => {
+	const [ helpTooltipsDisabled, setHelpTooltipsDisabled ] = useState( false )
+	const [ v1BackwardCompatibility, setV1BackwardCompatibility ] = useState( false )
+	const [ showPremiumNotices, setShowPremiumNotices ] = useState( false )
+	const [ isBusy, setIsBusy ] = useState( false )
+
+	useEffect( () => {
+		settings.fetch().then( response => {
+			setHelpTooltipsDisabled( !! response.stackable_help_tooltip_disabled )
+			setV1BackwardCompatibility( response.stackable_load_v1_styles === '1' )
+			setShowPremiumNotices( response.stackable_show_pro_notices === '1' )
+		} )
+	}, [] )
+
+	const updateSetting = ( setting, value ) => {
+		setIsBusy( true )
+		const model = new models.Settings( { [ setting ]: value } )
+		model.save().then( () => setIsBusy( false ) )
 	}
 
-	componentDidUpdate( prevProps, prevState ) {
-		if ( this.state.checked === prevState.checked ) {
-			return
-		}
-
-		clearTimeout( this.ajaxTimeout )
-		this.ajaxTimeout = setTimeout( () => {
-			ajaxSend( 'stackable_update_show_pro_notice_option', {
-				success: () => {
-					this.setState( { isSaving: false } )
-				},
-				error: message => {
-					this.setState( { isSaving: false } )
-					alert( message ) // eslint-disable-line no-alert
-				},
-				data: {
-					nonce: nonceProNotice,
-					checked: this.state.checked,
-				},
-			} )
-			this.setState( { isSaving: true } )
-		}, 600 )
-	}
-
-	toggle() {
-		this.setState( { checked: ! this.state.checked } )
-	}
-
-	render() {
-		return (
-			<label className="s-input-checkbox" htmlFor="s-input-go-premium">
-				<input
-					type="checkbox"
-					id="s-input-go-premium"
-					checked={ this.state.checked }
-					onChange={ this.toggle }
+	return (
+		<div>
+			<h4>{ __( 'Additional Options', i18n ) }</h4>
+			{ props.showProNoticesOption &&
+				<CheckboxControl
+					label={ __( 'Show "Go premium" notices', i18n ) }
+					checked={ showPremiumNotices }
+					onChange={ checked => {
+						updateSetting( 'stackable_show_pro_notices', checked ? '1' : '' )
+						setShowPremiumNotices( checked )
+					} }
 				/>
-				{ __( 'Show "Go premium" notices', i18n ) }
-				{ this.state.isSaving && <Spinner /> }
-			</label>
-		)
-	}
+			}
+			<CheckboxControl
+				label={ __( 'Load version 1 block stylesheet for backward compatibility', i18n ) }
+				checked={ v1BackwardCompatibility }
+				onChange={ checked => {
+					updateSetting( 'stackable_load_v1_styles', checked ? '1' : '' )
+					setV1BackwardCompatibility( checked )
+				} }
+			/>
+			<CheckboxControl
+				label={ __( 'Don\'t show help video tooltips', i18n ) }
+				checked={ helpTooltipsDisabled }
+				onChange={ checked => {
+					updateSetting( 'stackable_help_tooltip_disabled', checked ? '1' : '' )
+					setHelpTooltipsDisabled( checked )
+				} }
+			/>
+			<div className="ugb--saving-wrapper">
+				{ isBusy && <Spinner /> }
+			</div>
+		</div>
+	)
 }
 
-class BackwardCompatibilityToggler extends Component {
-	constructor() {
-		super( ...arguments )
-		this.toggle = this.toggle.bind( this )
-		this.ajaxTimeout = null
-		this.state = {
-			checked: this.props.checked,
-			isSaving: false,
-		}
-	}
-
-	componentDidUpdate( prevProps, prevState ) {
-		if ( this.state.checked === prevState.checked ) {
-			return
-		}
-
-		clearTimeout( this.ajaxTimeout )
-		this.ajaxTimeout = setTimeout( () => {
-			ajaxSend( 'stackable_update_load_v1_styles_option', {
-				success: () => {
-					this.setState( { isSaving: false } )
-				},
-				error: message => {
-					this.setState( { isSaving: false } )
-					alert( message ) // eslint-disable-line no-alert
-				},
-				data: {
-					nonce: nonceLoadV1Styles,
-					checked: this.state.checked,
-				},
-			} )
-			this.setState( { isSaving: true } )
-		}, 600 )
-	}
-
-	toggle() {
-		this.setState( { checked: ! this.state.checked } )
-	}
-
-	render() {
-		return (
-			<label className="s-input-checkbox" htmlFor="s-input-v1-backward-compat">
-				<input
-					type="checkbox"
-					id="s-input-v1-backward-compat"
-					checked={ this.state.checked }
-					onChange={ this.toggle }
-				/>
-				{ __( 'Load version 1 block stylesheet for backward compatibility', i18n ) }
-				{ this.state.isSaving && <Spinner /> }
-			</label>
-		)
-	}
+AdditionalOptions.defaultProps = {
+	showProNoticesOption: false,
 }
 
 // Load all the options into the UI.
@@ -250,15 +208,10 @@ domReady( () => {
 		document.querySelector( '.s-settings-wrapper' )
 	)
 
-	if ( document.querySelector( '.s-pro-control-wrapper' ) ) {
-		render(
-			<ProNoticeToggler checked={ showProNoticesOption } />,
-			document.querySelector( '.s-pro-control-wrapper' )
-		)
-	}
-
 	render(
-		<BackwardCompatibilityToggler checked={ loadV1Styles } />,
-		document.querySelector( '.s-backward-compatibility-control-wrapper' )
+		<AdditionalOptions
+			showProNoticesOption={ showProNoticesOption }
+		/>,
+		document.querySelector( '.s-other-options-wrapper' )
 	)
 } )

@@ -1,40 +1,42 @@
-// Visible feedback that there's a tooltip for Inspector Controls.
-[class*="ugb--help-tip-"].components-base-control .components-base-control__label,
-[class*="ugb--help-tip-"].components-base-control .components-toggle-control__label {
-	cursor: help;
-	border-bottom: 1px solid transparent;
-	&:hover {
-		border-color: #8c33da;
-		color: #8c33da;
-		border-bottom-style: solid !important;
+body.ugb--help-tips-enabled {
+	// Visible feedback that there's a tooltip for Inspector Controls.
+	[class*="ugb--help-tip-"].components-base-control .components-base-control__label,
+	[class*="ugb--help-tip-"].components-base-control .components-toggle-control__label {
+		cursor: help;
+		border-bottom: 1px solid transparent;
+		&:hover {
+			border-color: #8c33da;
+			color: #8c33da;
+			border-bottom-style: solid !important;
+		}
 	}
-}
-.components-base-control[class*="ugb--help-tip-"]:hover {
-	.components-base-control__label,
-	.components-toggle-control__label {
-		border-color: #a683c5;
-		border-bottom-style: dashed;
+	.components-base-control[class*="ugb--help-tip-"]:hover {
+		.components-base-control__label,
+		.components-toggle-control__label {
+			border-color: #a683c5;
+			border-bottom-style: dashed;
+		}
 	}
-}
 
-// Visible feedback that there's a tooltip for Panel titles.
-[class*="ugb--help-tip-"].components-panel__body .components-panel__body-toggle {
-	cursor: pointer;
-	&::after {
-		content: "\f223";
-		margin-left: 10px;
-		font-family: dashicons;
-		font-size: 20px;
-		line-height: 16px;
-		text-shadow: 0 0 1px #000;
-		color: #fafafa;
-	}
-	&:hover {
-		color: #8c33da !important;
+	// Visible feedback that there's a tooltip for Panel titles.
+	[class*="ugb--help-tip-"].components-panel__body .components-panel__body-toggle {
+		cursor: pointer;
 		&::after {
-			cursor: help;
-			color: #b266f4;
-			text-shadow: none;
+			content: "\f223";
+			margin-left: 10px;
+			font-family: dashicons;
+			font-size: 20px;
+			line-height: 16px;
+			text-shadow: 0 0 1px #000;
+			color: #fafafa;
+		}
+		&:hover {
+			color: #8c33da !important;
+			&::after {
+				cursor: help;
+				color: #b266f4;
+				text-shadow: none;
+			}
 		}
 	}
 }
@@ -95,5 +97,16 @@
 	h4 {
 		margin: 0 0 8px 0;
 		font-size: 1em;
+	}
+}
+
+// Disable checkbox.
+.ugb-help-tooltip__checkbox {
+	font-size: 11px;
+	margin: 20px 0 -10px;
+	color: #777;
+	font-style: italic;
+	.components-checkbox-control__input-container {
+		margin-right: 8px;
 	}
 }

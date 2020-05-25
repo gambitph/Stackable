@@ -21,6 +21,7 @@ const camelCaseDash = string => string.replace(
  * Define externals to load components through the wp global.
  */
 const externals = [
+	'api',
 	'api-fetch',
 	'block-editor',
 	'blocks',

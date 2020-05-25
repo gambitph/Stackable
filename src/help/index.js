@@ -1,7 +1,6 @@
 /**
  * Internal dependencies
  */
-import { startListening } from './events-show'
 import HelpToolTipVideo from './help-tooltip-video'
 import withWelcomeTutorialModal from './welcome-tutorial-video'
 
@@ -23,7 +22,6 @@ domReady( () => {
 		return
 	}
 
-	startListening()
 	const helpContainer = document.createElement( 'DIV' )
 	document.querySelector( 'body' ).appendChild( helpContainer )
 	render( <HelpToolTipVideo />, helpContainer )

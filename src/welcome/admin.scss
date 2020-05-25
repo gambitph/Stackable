@@ -461,6 +461,20 @@ body.stackable_page_stackable-settings {
 	}
 }
 
+// Save spinner for the additional options.
+.ugb--saving-wrapper {
+	height: 40px;
+	margin-top: 16px;
+	.components-spinner {
+		margin: 0 !important;
+	}
+}
+
+// Additional options.
+.s-other-options-wrapper .components-base-control {
+	margin-bottom: 8px;
+}
+
 @import "news";
 @import "../components/pro-modal/editor";
 @import "getting-started";

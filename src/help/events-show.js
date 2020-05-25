@@ -48,6 +48,9 @@ const hideHelp = () => {
 export const startListening = () => {
 	startListeningMouseEvents()
 
+	// Turn on help tip styling.
+	document.body.classList.add( 'ugb--help-tips-enabled' )
+
 	// If hovered long enough on a control label, show the tooltip.
 	addAction( 'stackable.help-video.control.hover.in', 'stackable/help/hoverin', startHelpTimeout )
 	addAction( 'stackable.help-video.control.hover.out', 'stackable/help/hoverout', stopHelpTimeout )
@@ -80,6 +83,9 @@ export const startListening = () => {
 }
 
 export const stopListening = () => {
+	// Turn off help tip styling.
+	document.body.classList.remove( 'ugb--help-tips-enabled' )
+
 	stopListeningMouseEvents()
 	removeAction( 'stackable.help-video.control.hover.in', 'stackable/help/hoverin' )
 	removeAction( 'stackable.help-video.control.hover.out', 'stackable/help/hoverout' )
