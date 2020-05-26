@@ -70,12 +70,12 @@ describe( 'Help Video Snippets', () => {
 			</h2>
 		</div>`
 
+		const title = getByText( panel, 'Panel title' )
+		const tooltip = render( <HelpToolTipVideo tooltipData={ SAMPLE_DATA } /> )
+		expect( tooltip.queryByText( 'Sample Title' ) ).toBeFalsy()
+		doAction( 'stackable.help-video.show', title )
+		jest.advanceTimersByTime( 1 )
 		act( () => {
-			const title = getByText( panel, 'Panel title' )
-			const tooltip = render( <HelpToolTipVideo tooltipData={ SAMPLE_DATA } /> )
-			expect( tooltip.queryByText( 'Sample Title' ) ).toBeFalsy()
-			doAction( 'stackable.help-video.show', title )
-			jest.advanceTimersByTime( 1 )
 			expect( tooltip.getByText( 'Sample Title' ) ).toBeTruthy()
 		} )
 	} )

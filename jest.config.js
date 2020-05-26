@@ -22,6 +22,7 @@ module.exports = {
 		stackable: '<rootDir>/src/test/stackable-mock.js',
 		'@wordpress/ajax': '<rootDir>/src/test/ajax-stub.js',
 		'@wordpress/codeEditor': '<rootDir>/src/test/ajax-stub.js',
+		'@wordpress/api': '<rootDir>/src/test/wp-api-stub.js',
 	},
 
 	transform: {
