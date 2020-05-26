@@ -67,6 +67,17 @@ body[class*="page_stackable"] {
 }
 body.toplevel_page_stackable,
 body[class*="page_stackable-settings"] {
+	// Hide admin notices to not mess up the welcome screen.
+	.s-header > *:not(h1):not(img) {
+		display: none !important;
+	}
+	// Hide admin notices in the Getting Started screen.
+	.s-body-container .updated {
+		display: none !important;
+	}
+}
+body.toplevel_page_stackable,
+body[class*="page_stackable-settings"] {
 
 	img {
 		max-width: 100%;
@@ -306,11 +317,6 @@ body[class*="page_stackable-settings"] {
 		@media screen and (max-width: $break-wide) {
 			grid-template-columns: 1fr;
 		}
-	}
-
-	// Hide admin notices to not mess up the welcome screen.
-	.s-header > *:not(h1):not(img) {
-		display: none !important;
 	}
 
 	.s-demo-url {
