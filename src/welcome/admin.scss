@@ -66,7 +66,7 @@ body[class*="page_stackable"] {
 	}
 }
 body.toplevel_page_stackable,
-body.stackable_page_stackable-settings {
+body[class*="page_stackable-settings"] {
 
 	img {
 		max-width: 100%;

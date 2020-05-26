@@ -42,8 +42,8 @@ SVG;
 			// Our getting started page.
 			add_submenu_page(
 				'stackable', // Parent slug.
-				'Submenu Page Title', // Page title.
-				'Getting Started', // Menu title.
+				__( 'Getting Started', STACKABLE_I18N ), // Page title.
+				__( 'Getting Started', STACKABLE_I18N ), // Menu title.
 				'manage_options', // Capability.
 				'stackable', // Menu slug.
 				array( $this, 'stackable_getting_started_content' ), // Callback function.
@@ -53,8 +53,8 @@ SVG;
 			// Our settings page.
 			add_submenu_page(
 				'stackable', // Parent slug.
-				'Settings', // Page title.
-				'Settings', // Menu title.
+				__( 'Settings', STACKABLE_I18N ), // Page title.
+				__( 'Settings', STACKABLE_I18N ) . ' ' . stackable_notification_count(), // Menu title.
 				'manage_options', // Capability.
 				'stackable-settings', // Menu slug.
 				array( $this, 'stackable_settings_content' ), // Callback function.
@@ -64,12 +64,12 @@ SVG;
 
         public function enqueue_dashboard_script( $hook ) {
 			// For stackable pages, show our admin css.
-            if ( 'toplevel_page_stackable' === $hook || stripos( $hook, 'stackable_page_stackable' ) !== false ) {
+            if ( 'toplevel_page_stackable' === $hook || stripos( $hook, 'page_stackable' ) !== false ) {
 				wp_enqueue_style( 'stackable-welcome', plugins_url( 'dist/admin_welcome.css', STACKABLE_FILE ), array() );
 			}
 
 			// For the options page, load our options script.
-            if ( in_array( $hook, array( 'toplevel_page_stackable', 'stackable_page_stackable-settings' ) ) ) {
+			if ( 'toplevel_page_stackable' === $hook || stripos( $hook, 'page_stackable-settings' ) !== false ) {
 				// Add translations.
 				wp_set_script_translations( 'stackable-welcome', STACKABLE_I18N );
 

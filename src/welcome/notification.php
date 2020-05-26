@@ -113,21 +113,23 @@ if ( ! function_exists( 'stackable_welcome_notification' ) ) {
                             jQuery( '.stackable_notice_wrapper' ).remove();
                         }
 
-                        // Decrement the top level menu indicator
-                        var indicator = jQuery( 'li.toplevel_page_stackable .wp-menu-name .update-plugins' );
-                        var n = parseInt( indicator.attr( 'class' ).match( /count-(\d*)/ )[1], 10 );
-                        // Decrement the class.
-                        indicator.removeClass( 'count-' + n ).addClass( 'count-' + ( n - 1 ) );
-                        // Decrement the text.
-                        indicator.find( '> *' ).each( function ( i, el ) {
-                            jQuery( el ).html( jQuery( el ).html().replace( /\d+/, ( n - 1 ) ) )
-                        } )
+                        // Decrement the menu indicators.
+						jQuery( 'li.toplevel_page_stackable .update-plugins' ).each( function( i, el ) {
+							var indicator = jQuery( el )
+							var n = parseInt( indicator.attr( 'class' ).match( /count-(\d*)/ )[1], 10 );
+							// Decrement the class.
+							indicator.removeClass( 'count-' + n ).addClass( 'count-' + ( n - 1 ) );
+							// Decrement the text.
+							indicator.find( '> *' ).each( function ( i, el ) {
+								jQuery( el ).html( jQuery( el ).html().replace( /\d+/, ( n - 1 ) ) )
+							} )
+						} )
                     }
                 )
             }
         </script>
         <aside class="stackable_notice_wrapper s-box">
-            <h3><?php esc_html_e( '⚠️ Notifications', STACKABLE_I18N ) ?></h3>
+            <h3><?php esc_html_e( '👉 Notifications', STACKABLE_I18N ) ?></h3>
             <?php
             foreach ( $stackable_notifications as $notification ) {
                 ?>
