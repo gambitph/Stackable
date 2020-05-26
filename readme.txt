@@ -189,6 +189,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * New: Added help tooltip videos for "No padding", "Column Arrangemnet", "Column Widths" and "Column Row Gap"
 * New: Added ability to turn help tooltips off
 * Fixed: Turning on "no paddings" will now enable the block background
+* Fixed: Added missing blocks in the block settings area
 
 = 2.4.0 =
 [Introducing the Advanced Columns & Grid Block](https://wpstackable.com/blog/introducing-the-advanced-columns-and-grid-block/)
