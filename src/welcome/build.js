@@ -7,7 +7,7 @@ const glob = require( 'glob' )
 const path = require( 'path' )
 
 // Create folder if it doesn't exist yet.
-fs.mkdir( './dist/videos/welcome/', { recursive: true }, err => {
+fs.mkdir( path.resolve( './dist/videos/welcome/' ), { recursive: true }, err => {
 	if ( err ) {
 		throw err
 	}
