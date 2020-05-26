@@ -227,8 +227,7 @@ SVG;
 		 * if in an actual site, use the one in the CDN.
 		 */
 		private function get_video_url( $video_file ) {
-			$dev_mode = defined( 'WP_ENV' ) ? WP_ENV === 'development' : false;
-			if ( $dev_mode ) {
+			if ( file_exists( untrailingslashit( plugin_dir_path( __FILE__ ) ) . '/videos/' . $video_file ) ) {
 				return untrailingslashit( plugins_url( '/', STACKABLE_FILE ) ) . '/src/welcome/videos/' . $video_file;
 			}
 			return untrailingslashit( STACKABLE_CLOUDFRONT_URL ) . '/dist/videos/welcome/' . $video_file;
