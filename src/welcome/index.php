@@ -47,7 +47,7 @@ SVG;
 				'manage_options', // Capability.
 				'stackable', // Menu slug.
 				array( $this, 'stackable_getting_started_content' ), // Callback function.
-				1, // Position
+				1 // Position
 			);
 
 			// Our settings page.
@@ -58,7 +58,7 @@ SVG;
 				'manage_options', // Capability.
 				'stackable-settings', // Menu slug.
 				array( $this, 'stackable_settings_content' ), // Callback function.
-				2, // Position
+				2 // Position
 			);
 		}
 
