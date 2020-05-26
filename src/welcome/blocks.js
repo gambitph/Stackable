@@ -61,6 +61,10 @@ const blocks = {
 		title: __( 'Design Library', i18n ),
 		description: __( 'Choose from over a hundred block designs from the Stackable Design Library.', i18n ),
 	},
+	'ugb/divider': {
+		title: __( 'Divider', i18n ),
+		description: __( 'Add a pause between your content.', i18n ),
+	},
 	'ugb/expand': {
 		title: __( 'Expand / Show More', i18n ),
 		description: __( 'Display a small snippet of text. Your readers can toggle it to show more information.', i18n ),
@@ -110,6 +114,10 @@ const blocks = {
 		title: __( 'Separator', i18n ),
 		description: __( 'A fancy separator to be placed between containers and content.', i18n ),
 		sDemoURL: 'https://wpstackable.com/separator-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+	},
+	'ugb/spacer': {
+		title: __( 'Spacer', i18n ),
+		description: __( 'Sometimes you just need some space.', i18n ),
 	},
 	'ugb/team-member': {
 		title: __( 'Team Member', i18n ),
