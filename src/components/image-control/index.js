@@ -18,7 +18,7 @@ import { i18n } from 'stackable'
 import { MediaUpload } from '@wordpress/block-editor'
 
 const ImageControl = props => {
-	const type = props.imageURL && props.imageURL.match( /(mp4|webm|ogg)/i ) ? 'video' : 'image'
+	const type = props.imageURL && props.imageURL.match( /(mp4|webm|ogg)$/i ) ? 'video' : 'image'
 	const onRemove = () => {
 		if ( props.onRemove ) {
 			props.onRemove()

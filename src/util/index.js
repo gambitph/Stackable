@@ -45,7 +45,7 @@ export const range = ( start, end ) => {
  *
  * @return {boolean} True if a video.
  */
-export const urlIsVideo = url => url.match( /(mp4|webm|ogg)/i )
+export const urlIsVideo = url => url.match( /(mp4|webm|ogg)$/i )
 
 /**
  * From a URL, get the video ID and provider: YouTube or Vimeo.

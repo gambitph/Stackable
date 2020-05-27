@@ -44,6 +44,11 @@ export const isInvalid = ( block, allowedTags = ALLOWED_ERROR_TAGS ) => {
 		return true
 	}
 
+	// Check whether we're missing an image class.
+	if ( isMissingVideoTag( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
 	// Get which HTML tags the error occurred.
 	const tags = getInvalidationTags( block )
 	if ( ! tags ) {
@@ -132,6 +137,37 @@ export const isMissingStyleTag = issue => {
 
 	// Style tag was present but shouldn't.
 	if ( issue.args[ 1 ] !== 'style' && issue.args[ 2 ] === 'style' ) {
+		return true
+	}
+
+	return false
+}
+
+/**
+ * Checks whether the validation error is because of a missing Video tag.
+ * There was a bug where depends on the URL, an image could be detected as a video
+ * if there was an "mp4", "webm" or "ogg" anywhere in the URL.
+ *
+ * @param {Array} issue The invalidation object
+ *
+ * @return {boolean} True or false
+ */
+export const isMissingVideoTag = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 3 ) {
+		return false
+	}
+
+	// Style tag was missing.
+	if ( issue.args[ 1 ] === 'video' && issue.args[ 2 ] !== 'video' ) {
+		return true
+	}
+
+	// Style tag was missing.
+	if ( issue.args[ 2 ] === 'video' && issue.args[ 1 ] !== 'video' ) {
 		return true
 	}
 
