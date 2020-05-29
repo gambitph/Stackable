@@ -131,9 +131,9 @@ export const hexToRgba = ( hexColor, opacity = null ) => {
 	 * Detect CSS variables in form of var(--color) and get their current
 	 * values from the :root selector.
 	 */
-	if ( hexColor.indexOf( 'var(' ) > -1 && isEditor() ) {
+	if ( hexColor.indexOf( 'var(' ) > -1 ) {
 		hexColor = window.getComputedStyle( document.documentElement )
-			.getPropertyValue( hexColor.replace( 'var(', '' ).replace( ')', '' ) )
+			.getPropertyValue( hexColor.replace( 'var(', '' ).replace( ')', '' ) ) || '#fff'
 	}
 
 	hex = hexColor.replace( /#/, '' )
