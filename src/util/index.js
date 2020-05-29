@@ -125,7 +125,19 @@ export const descriptionPlaceholder = length => {
  * @return {string} Rgba color.
  */
 export const hexToRgba = ( hexColor, opacity = null ) => {
-	let hex = hexColor.replace( /#/, '' )
+	let hex = null
+
+	/**
+	 * Detect CSS variables in form of var(--color) and get their current
+	 * values from the :root selector.
+	 */
+	if ( hexColor.indexOf( 'var(' ) > -1 && isEditor() ) {
+		hexColor = window.getComputedStyle( document.documentElement )
+			.getPropertyValue( hexColor.replace( 'var(', '' ).replace( ')', '' ) )
+	}
+
+	hex = hexColor.replace( /#/, '' )
+
 	if ( hex.length <= 4 ) {
 		hex = hex.replace( /#?(.)(.)(.)/, '$1$1$2$2$3$3' )
 	}
