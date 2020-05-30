@@ -49,6 +49,11 @@ export const isInvalid = ( block, allowedTags = ALLOWED_ERROR_TAGS ) => {
 		return true
 	}
 
+	// Check whether we're missing a video playsinline attribute v2.5.2 bug fix.
+	if ( isMissingVideoPlaysInlineTag( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
 	// Get which HTML tags the error occurred.
 	const tags = getInvalidationTags( block )
 	if ( ! tags ) {
@@ -168,6 +173,39 @@ export const isMissingVideoTag = issue => {
 
 	// Style tag was missing.
 	if ( issue.args[ 2 ] === 'video' && issue.args[ 1 ] !== 'video' ) {
+		return true
+	}
+
+	return false
+}
+
+/**
+ * Checks whether the validation error is because of a missing playsinline Video
+ * tag. Before v2.5.2, video backgrounds didn't auto-play since there was a
+ * missing playsinline attribute.
+ *
+ * @param {Array} issue The invalidation object
+ *
+ * @return {boolean} True or false
+ */
+export const isMissingVideoPlaysInlineTag = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 3 ) {
+		return false
+	}
+
+	// Attribute tags
+	if ( ! Array.isArray( issue.args[ 1 ] ) ) {
+		return false
+	}
+
+	// We are looking for an array [ 'playsinline', '', false ] or similar.
+	if ( issue.args[ 1 ].some( el => {
+		return Array.isArray( el ) && el[ 0 ] === 'playsinline'
+	} ) ) {
 		return true
 	}
 

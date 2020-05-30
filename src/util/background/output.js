@@ -46,6 +46,7 @@ export const createVideoBackground = ( attrNameTemplate, blockProps ) => {
 					autoPlay
 					muted
 					loop
+					playsinline
 					src={ mediaUrl }
 				/>
 			}
@@ -55,6 +56,7 @@ export const createVideoBackground = ( attrNameTemplate, blockProps ) => {
 					autoPlay
 					muted
 					loop
+					playsinline
 					src={ tabletMediaUrl }
 				/>
 			}
@@ -64,6 +66,7 @@ export const createVideoBackground = ( attrNameTemplate, blockProps ) => {
 					autoPlay
 					muted
 					loop
+					playsinline
 					src={ mobileMediaUrl }
 				/>
 			}

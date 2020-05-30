@@ -68,6 +68,7 @@ const HelpTooltip = props => {
 							autoPlay
 							loop
 							muted
+							playsinline
 							role="img"
 							aria-labelledby="ugb-help-tooltip-video__description"
 							src={ videoUrl }

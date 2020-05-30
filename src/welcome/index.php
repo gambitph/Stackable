@@ -257,6 +257,7 @@ SVG;
 									autoPlay
 									loop
 									muted
+									playsinline
 									role="img"
 									src="<?php echo $this->get_video_url( 'getting-started-step1.mp4' ) ?>"
 								/>
@@ -268,6 +269,7 @@ SVG;
 									autoPlay
 									loop
 									muted
+									playsinline
 									role="img"
 									src="<?php echo $this->get_video_url( 'getting-started-step2.mp4' ) ?>"
 								/>
@@ -298,6 +300,7 @@ SVG;
 									autoPlay
 									loop
 									muted
+									playsinline
 									role="img"
 									src="<?php echo $this->get_video_url( 'getting-started-step3.mp4' ) ?>"
 								/>
