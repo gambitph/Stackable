@@ -181,6 +181,9 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.5.2 =
+* Fixed: Added missing playsinline to background videos, there's a chance they do not play on mobile
+
 = 2.5.1 =
 * Fixed: Images with paths containing "mp4", "webm" or "ogg" are wrongly detected as videos
 
