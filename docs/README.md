@@ -1,24 +1,28 @@
-# Getting Started with Stackable
+---
+description: >-
+  Hello! Welcome to the documentation area for Stackable. This area is meant to
+  be an area where you can find everything you need to know about how to use
+  Stackable.
+---
 
-Hello! Welcome to the documentation area for Stackable. This area is meant to be an area where you can find all the guides, tutorials, how-tos, answers to frequently asked questions and troubleshooting tips for Stackable.
+# Start Here
 
-Use the 🧭 navigation on the left to browse through the different areas of the documentation. You can use the 🔍search field on the upper right of the screen if you're looking for something specific.
+{% hint style="info" %}
+Use the 🧭navigation on the left to browse through the different areas.   
+Use the 🔍 search field on the upper right of the screen if you're looking for something specific.
+{% endhint %}
 
-Here are a few quick tutorials to help you build a beautiful website.
+Here are some of the most popular articles in here:
 
-### 1. Intro to Stackable
+### Using Stackable
 
-With this quick tour of Stackable, you'll be able to create you first page in just a few minutes.
+{% page-ref page="starting-out/intro-to-stackable.md" %}
 
-{% embed url="https://www.youtube.com/watch?v=UW0Rg96aATA" %}
+{% page-ref page="troubleshooting/common-issues/" %}
 
-### 2. Build with the Design Library
+{% page-ref page="purchasing-and-licensing/purchasing-faqs.md" %}
 
-Make use of hundreds of preset designs to create amazing websites.
 
-{% embed url="https://www.youtube.com/watch?v=Xr7mQdE-5FY" %}
-
-### 3. How to Tweak Basic Elements
 
 
 
