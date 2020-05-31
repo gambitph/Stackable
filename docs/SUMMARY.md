@@ -1,8 +1,6 @@
 # Table of contents
 
-* [Initial page](README.md)
-* [Untitled](untitled.md)
-* [deprecation-tests](deprecation-tests.md)
+* [Getting Started with Stackable](README.md)
 
 ## test
 
@@ -13,5 +11,6 @@
 
 * [Untitled](test-2/untitled-1.md)
 * [Untitled](test-2/untitled/README.md)
+  * [deprecation-tests](test-2/untitled/deprecation-tests.md)
   * [Untitled](test-2/untitled/untitled.md)
 
