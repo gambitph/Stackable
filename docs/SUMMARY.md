@@ -31,6 +31,8 @@
   * [Block Layouts](stackable-guides/beginner-guides/block-layouts.md)
 * [Advanced Guides](stackable-guides/advanced-guides/README.md)
   * [Guided Custom CSS](stackable-guides/advanced-guides/guided-custom-css.md)
+  * [Translate Blocks Using WPML \(Multilingual\)](stackable-guides/advanced-guides/translate-blocks-using-wpml-multilingual.md)
+  * [Using ACF Fields in Blocks](stackable-guides/advanced-guides/using-acf-fields-in-blocks.md)
 
 ## ⭐️ Pricing & Licensing
 
@@ -67,9 +69,6 @@
 ## 💡 Tips and Tricks
 
 * [Block Editor Tips and Tricks](https://wpstackable.com/blog/wordpress-block-editor-tips-and-tricks-gutenberg/)
-* [Block Editor / Gutenberg](tips-and-tricks/block-editor-gutenberg/README.md)
-  * [Translate Your Blocks Using WPML \(Multilingual\)](https://wpstackable.com/blog/how-to-translate-your-blocks-using-wpml-multilingual/)
-  * [ACF Fields in Your Blocks](https://wpstackable.com/blog/how-to-use-acf-fields-in-your-blocks/)
 * [What Blocks to Use](tips-and-tricks/what-blocks-to-use/README.md)
   * [For Your Blog](https://wpstackable.com/blog/what-stackable-blocks-to-use-for-your-blog/)
   * [For Your Business or E-Commerce Site](https://wpstackable.com/blog/what-stackable-blocks-to-use-for-your-business-or-e-commerce-site/)
