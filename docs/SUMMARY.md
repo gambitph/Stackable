@@ -86,12 +86,7 @@
 ## 💡 Useful Tips
 
 * [Block Editor Tips and Tricks](https://wpstackable.com/blog/wordpress-block-editor-tips-and-tricks-gutenberg/)
-* [What Blocks to Use](useful-tips/what-blocks-to-use/README.md)
-  * [For Your Blog](https://wpstackable.com/blog/what-stackable-blocks-to-use-for-your-blog/)
-  * [For Your Business or E-Commerce Site](https://wpstackable.com/blog/what-stackable-blocks-to-use-for-your-business-or-e-commerce-site/)
-* [Other Tips](useful-tips/other-tips/README.md)
-  * [Make Your Landing Page Design Better](https://wpstackable.com/blog/8-easy-tips-to-make-your-landing-page-design-better/)
-  * [Improve Your Site's Credibility](https://wpstackable.com/blog/8-easy-ways-to-improve-your-websites-credibility/)
+* [More Tips in Our Blog](https://wpstackable.com/blog/category/useful-tips/)
 
 ## 📖 Resources
 
