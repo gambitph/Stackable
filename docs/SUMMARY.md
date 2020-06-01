@@ -11,16 +11,13 @@
   * [License](starting-out/installation/license.md)
   * [What Happens If I Uninstall?](starting-out/installation/what-happens-if-i-uninstall.md)
 * [Getting Started](starting-out/getting-started.md)
+* [Frequently Asked Questions](starting-out/frequently-asked-questions/README.md)
+  * [What Files, Scripts and Styles Are Loaded in the Frontend?](starting-out/frequently-asked-questions/what-files-scripts-and-styles-are-loaded-in-the-frontend.md)
+  * [How Does Stackable Affect My Page Loading Speed?](starting-out/frequently-asked-questions/how-does-stackable-affect-my-page-loading-speed.md)
+  * [What is Freemius?](starting-out/frequently-asked-questions/what-is-freemius.md)
+  * [Is Freemius Spyware?](starting-out/frequently-asked-questions/is-freemius-spyware.md)
+  * [How Do I Opt-Out of Freemius?](starting-out/frequently-asked-questions/how-do-i-opt-out-of-freemius.md)
 * [Join the Community](starting-out/join-the-community.md)
-
-## 🔧 Troubleshooting
-
-* [Common Issues](troubleshooting/common-issues/README.md)
-  * [I Can't See the Blocks](troubleshooting/common-issues/i-cant-see-the-blocks.md)
-  * [I Purchased Premium but I Can't See the Premium Features](troubleshooting/common-issues/i-purchased-premium-but-i-cant-see-the-premium-features.md)
-  * [I'm Encountering Block Editor Errors](troubleshooting/common-issues/im-encountering-block-editor-errors.md)
-  * [My Blocks Do Not Go Full-Width Properly](troubleshooting/common-issues/my-blocks-do-not-go-full-width-properly.md)
-* [Need Help?](troubleshooting/contacting-support.md)
 
 ## ✨ Stackable Guides
 
@@ -29,10 +26,26 @@
   * [Design Library](stackable-guides/beginner-guides/design-library.md)
   * [Customizing Blocks](stackable-guides/beginner-guides/customizing-blocks.md)
   * [Block Layouts](stackable-guides/beginner-guides/block-layouts.md)
+  * [Block Separators](stackable-guides/beginner-guides/block-separators.md)
+  * [Aligning Content](stackable-guides/beginner-guides/aligning-content.md)
+  * [Column Backgrounds and Block Backgrounds](stackable-guides/beginner-guides/column-backgrounds-and-block-backgrounds.md)
+  * [Enabling / Disabling Blocks](stackable-guides/beginner-guides/enabling-disabling-blocks.md)
 * [Advanced Guides](stackable-guides/advanced-guides/README.md)
   * [Guided Custom CSS](stackable-guides/advanced-guides/guided-custom-css.md)
   * [Translate Blocks Using WPML \(Multilingual\)](stackable-guides/advanced-guides/translate-blocks-using-wpml-multilingual.md)
   * [Using ACF Fields in Blocks](stackable-guides/advanced-guides/using-acf-fields-in-blocks.md)
+
+## 🔧 Troubleshooting
+
+* [Common Issues](troubleshooting/common-issues/README.md)
+  * [I Can't See the Blocks](troubleshooting/common-issues/i-cant-see-the-blocks.md)
+  * [I Purchased Premium but I Can't See the Premium Features](troubleshooting/common-issues/i-purchased-premium-but-i-cant-see-the-premium-features.md)
+  * [I'm Encountering Block Editor Errors](troubleshooting/common-issues/im-encountering-block-editor-errors.md)
+  * [My Blocks Do Not Go Full-Width Properly](troubleshooting/common-issues/my-blocks-do-not-go-full-width-properly.md)
+  * [How Do I Contact Support?](troubleshooting/common-issues/how-do-i-contact-support.md)
+  * [Can I Use the Block Editor and the Classic Editor at the Same Time?](troubleshooting/common-issues/can-i-use-the-block-editor-and-the-classic-editor-at-the-same-time.md)
+  * [I'm Getting the Error "Updating failed. The response is not a valid JSON response"](troubleshooting/common-issues/im-getting-the-error-updating-failed.-the-response-is-not-a-valid-json-response.md)
+* [Need Help?](troubleshooting/contacting-support.md)
 
 ## ⭐️ Pricing & Licensing
 
@@ -44,6 +57,8 @@
   * [What Happens to Pages Created in the Free Plugin After I Upgrade?](pricing-and-licensing/pre-sale-questions/what-happens-to-pages-created-in-the-free-plugin-after-i-upgrade.md)
   * [What Happens if I Find Out it Doesn't Work with the Theme or Plugin on my Site?](pricing-and-licensing/pre-sale-questions/what-happens-if-i-find-out-it-doesnt-work-with-the-theme-or-plugin-on-my-site.md)
   * [Why Is Stackable Premium Priced Annually? Is there a Lifetime Plan?](pricing-and-licensing/pre-sale-questions/why-is-stackable-premium-priced-annually-is-there-a-lifetime-plan.md)
+  * [Is Stackable Premium a Subscription Service?](pricing-and-licensing/pre-sale-questions/is-stackable-premium-a-subscription-service.md)
+  * [How Is Upgrade Pricing or Pricing Proration Computed?](pricing-and-licensing/pre-sale-questions/how-is-upgrade-pricing-or-pricing-proration-computed.md)
 * [License](pricing-and-licensing/license/README.md)
   * [Where Do I Download Stackable Premium?](pricing-and-licensing/license/where-do-i-download-stackable-premium.md)
   * [Activating your license key](pricing-and-licensing/license/untitled.md)
@@ -62,10 +77,12 @@
   * [What Payment Methods Do You Accept?](pricing-and-licensing/license/what-payment-methods-do-you-accept.md)
   * [What Are the License Keys Used For?](pricing-and-licensing/license/what-are-the-license-keys-used-for.md)
   * [How Can I Get An Invoice for My Purchase?](pricing-and-licensing/license/how-can-i-get-an-invoice-for-my-purchase.md)
+  * [Can I Delete the Free Version of Stackable After Installing Stackable Premium?](pricing-and-licensing/license/can-i-delete-the-free-version-of-stackable-after-installing-stackable-premium.md)
 * [Account](pricing-and-licensing/account/README.md)
   * [Where Do I Log Into My Stackable Account?](pricing-and-licensing/account/where-do-i-log-into-my-stackable-account.md)
   * [How to Transfer Account to your Client](pricing-and-licensing/account/how-to-transfer-account-to-your-client.md)
   * [How to Access Your Invoices](pricing-and-licensing/account/how-to-access-your-invoices.md)
+  * [How to Hide License Key and Account Information From Clients](pricing-and-licensing/account/how-to-hide-license-key-and-account-information-from-clients.md)
 
 ## 💡 Useful Tips
 
