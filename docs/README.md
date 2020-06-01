@@ -15,8 +15,6 @@ Here are some quick link to the most viewed articles:
 
 {% page-ref page="troubleshooting/common-issues/" %}
 
-{% page-ref page="premium-and-licensing/purchasing-faqs.md" %}
-
 
 
 

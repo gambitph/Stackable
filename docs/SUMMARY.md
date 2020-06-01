@@ -1,6 +1,7 @@
 # Table of contents
 
 * [Start Here](README.md)
+* [What's New?](whats-new.md)
 
 ## 📌 Starting Out
 
@@ -27,12 +28,12 @@
 
 * [Untitled](stackable-guides/untitled.md)
 
-## ⭐️ Premium & Licensing
+## ⭐️ Pricing & Licensing
 
-* [How Do I Upgrade?](premium-and-licensing/how-do-i-upgrade.md)
-* [Premium & Licensing FAQs](premium-and-licensing/purchasing-faqs.md)
-* [License](premium-and-licensing/license/README.md)
-  * [Untitled](premium-and-licensing/license/untitled.md)
+* [Pre Sale Questions](pricing-and-licensing/pre-sale-questions.md)
+* [License](pricing-and-licensing/license/README.md)
+  * [Untitled](pricing-and-licensing/license/untitled.md)
+* [Account](pricing-and-licensing/account.md)
 
 ## 📖 Resources
 
