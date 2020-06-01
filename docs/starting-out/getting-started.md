@@ -1,4 +1,4 @@
-# Intro to Stackable
+# Getting Started
 
 ### 1. Intro to Stackable
 

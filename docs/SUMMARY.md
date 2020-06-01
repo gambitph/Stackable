@@ -9,7 +9,7 @@
   * [Installing the Plugin](starting-out/installation/installing-the-plugin.md)
   * [Plugin Requirements](starting-out/installation/plugin-requirements.md)
   * [What Happens If I Uninstall?](starting-out/installation/what-happens-if-i-uninstall.md)
-* [Intro to Stackable](starting-out/intro-to-stackable.md)
+* [Getting Started](starting-out/getting-started.md)
 * [First Steps / How-Tos](starting-out/usage/README.md)
   * [How to Add Stackable Blocks](starting-out/usage/accessing-the-blocks.md)
   * [How to Add Content](starting-out/usage/how-to-add-content.md)

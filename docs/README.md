@@ -11,7 +11,7 @@ Here are some quick link to the most viewed articles:
 
 ### Using Stackable
 
-{% page-ref page="starting-out/intro-to-stackable.md" %}
+{% page-ref page="starting-out/getting-started.md" %}
 
 {% page-ref page="troubleshooting/common-issues/" %}
 
