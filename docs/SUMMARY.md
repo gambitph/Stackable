@@ -45,6 +45,7 @@
   * [What Happens if I Find Out it Doesn't Work with the Theme or Plugin on my Site?](pricing-and-licensing/pre-sale-questions/what-happens-if-i-find-out-it-doesnt-work-with-the-theme-or-plugin-on-my-site.md)
   * [Why Is Stackable Premium Priced Annually? Is there a Lifetime Plan?](pricing-and-licensing/pre-sale-questions/why-is-stackable-premium-priced-annually-is-there-a-lifetime-plan.md)
 * [License](pricing-and-licensing/license/README.md)
+  * [Where Do I Download Stackable Premium?](pricing-and-licensing/license/where-do-i-download-stackable-premium.md)
   * [Activating your license key](pricing-and-licensing/license/untitled.md)
   * [Can I Transfer My License Key From One Domain to Another?](pricing-and-licensing/license/can-i-transfer-my-license-key-from-one-domain-to-another.md)
   * [How Many Sites Can I Activate My License On?](pricing-and-licensing/license/how-many-sites-can-i-activate-my-license-on.md)
@@ -66,13 +67,13 @@
   * [How to Transfer Account to your Client](pricing-and-licensing/account/how-to-transfer-account-to-your-client.md)
   * [How to Access Your Invoices](pricing-and-licensing/account/how-to-access-your-invoices.md)
 
-## 💡 Tips and Tricks
+## 💡 Useful Tips
 
 * [Block Editor Tips and Tricks](https://wpstackable.com/blog/wordpress-block-editor-tips-and-tricks-gutenberg/)
-* [What Blocks to Use](tips-and-tricks/what-blocks-to-use/README.md)
+* [What Blocks to Use](useful-tips/what-blocks-to-use/README.md)
   * [For Your Blog](https://wpstackable.com/blog/what-stackable-blocks-to-use-for-your-blog/)
   * [For Your Business or E-Commerce Site](https://wpstackable.com/blog/what-stackable-blocks-to-use-for-your-business-or-e-commerce-site/)
-* [Other Tips](tips-and-tricks/other-tips/README.md)
+* [Other Tips](useful-tips/other-tips/README.md)
   * [Make Your Landing Page Design Better](https://wpstackable.com/blog/8-easy-tips-to-make-your-landing-page-design-better/)
   * [Improve Your Site's Credibility](https://wpstackable.com/blog/8-easy-ways-to-improve-your-websites-credibility/)
 

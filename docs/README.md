@@ -19,11 +19,15 @@ Here are some quick link to the most viewed articles:
 
 {% page-ref page="stackable-guides/advanced-guides/" %}
 
-{% page-ref page="pricing-and-licensing/pre-sale-questions/" %}
+### Frequently Asked Questions
 
-{% page-ref page="pricing-and-licensing/license/" %}
+{% page-ref page="pricing-and-licensing/license/where-do-i-download-stackable-premium.md" %}
 
+{% page-ref page="pricing-and-licensing/license/will-my-staging-site-count-as-a-site-activation-in-my-license.md" %}
 
+{% page-ref page="troubleshooting/common-issues/i-cant-see-the-blocks.md" %}
+
+{% page-ref page="troubleshooting/common-issues/i-purchased-premium-but-i-cant-see-the-premium-features.md" %}
 
 
 
