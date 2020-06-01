@@ -27,6 +27,7 @@
 ## ✨ Stackable Guides
 
 * [Beginner](stackable-guides/untitled/README.md)
+  * [How to Add Stackable Blocks](https://docs.wpstackable.com/starting-out/usage/how-to-add-stackable-blocks)
   * [Untitled](stackable-guides/untitled/untitled.md)
   * [Untitled](stackable-guides/untitled/untitled-1.md)
 * [Advanced](stackable-guides/advanced.md)
