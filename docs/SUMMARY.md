@@ -64,6 +64,19 @@
   * [How to Transfer Account to your Client](pricing-and-licensing/account/how-to-transfer-account-to-your-client.md)
   * [How to Access Your Invoices](pricing-and-licensing/account/how-to-access-your-invoices.md)
 
+## 💡 Tips and Tricks
+
+* [Block Editor Tips and Tricks](https://wpstackable.com/blog/wordpress-block-editor-tips-and-tricks-gutenberg/)
+* [Block Editor / Gutenberg](tips-and-tricks/block-editor-gutenberg/README.md)
+  * [Translate Your Blocks Using WPML \(Multilingual\)](https://wpstackable.com/blog/how-to-translate-your-blocks-using-wpml-multilingual/)
+  * [ACF Fields in Your Blocks](https://wpstackable.com/blog/how-to-use-acf-fields-in-your-blocks/)
+* [What Blocks to Use](tips-and-tricks/what-blocks-to-use/README.md)
+  * [For Your Blog](https://wpstackable.com/blog/what-stackable-blocks-to-use-for-your-blog/)
+  * [For Your Business or E-Commerce Site](https://wpstackable.com/blog/what-stackable-blocks-to-use-for-your-business-or-e-commerce-site/)
+* [Other Tips](tips-and-tricks/other-tips/README.md)
+  * [Make Your Landing Page Design Better](https://wpstackable.com/blog/8-easy-tips-to-make-your-landing-page-design-better/)
+  * [Improve Your Site's Credibility](https://wpstackable.com/blog/8-easy-ways-to-improve-your-websites-credibility/)
+
 ## 📖 Resources
 
 * [Branding Guidelines](resources/branding-guidelines.md)
