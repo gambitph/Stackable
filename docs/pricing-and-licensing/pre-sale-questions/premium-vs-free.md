@@ -4,7 +4,7 @@ description: Explore the differences
 
 # Premium VS Free
 
-Stackable Free gives you a lot of tools that you need to build your website. Upgrading to Stackable Premium unlocks the full potential of Stackable, adding even more options and tools.
+Stackable Free gives you a lot of tools that you need to build your website. Upgrading to Stackable Premium unlocks the full potential of Stackable, adding even more options and tools, making it easier and faster for you to create professional designs.
 
 Here are the most notable differences between Premium and Free:
 
