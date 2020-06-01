@@ -15,6 +15,14 @@ Here are some quick link to the most viewed articles:
 
 {% page-ref page="troubleshooting/common-issues/" %}
 
+{% page-ref page="stackable-guides/beginner-guides/" %}
+
+{% page-ref page="stackable-guides/advanced-guides/" %}
+
+{% page-ref page="pricing-and-licensing/pre-sale-questions/" %}
+
+{% page-ref page="pricing-and-licensing/license/" %}
+
 
 
 
