@@ -20,7 +20,7 @@ Here are some of the most popular articles in here:
 
 {% page-ref page="troubleshooting/common-issues/" %}
 
-{% page-ref page="purchasing-and-licensing/purchasing-faqs.md" %}
+{% page-ref page="premium-and-licensing/purchasing-faqs.md" %}
 
 
 

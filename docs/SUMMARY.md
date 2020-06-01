@@ -27,10 +27,14 @@
 
 * [Untitled](stackable-guides/untitled.md)
 
-## ⭐️ Purchasing & Licensing
+## ⭐️ Premium & Licensing
 
-* [Purchasing FAQs](purchasing-and-licensing/purchasing-faqs.md)
-* [Upgrading](purchasing-and-licensing/upgrading/README.md)
-  * [How Do I Upgrade?](purchasing-and-licensing/upgrading/how-do-i-upgrade.md)
-  * [Untitled](purchasing-and-licensing/upgrading/untitled.md)
+* [How Do I Upgrade?](premium-and-licensing/how-do-i-upgrade.md)
+* [Premium & Licensing FAQs](premium-and-licensing/purchasing-faqs.md)
+* [License](premium-and-licensing/license/README.md)
+  * [Untitled](premium-and-licensing/license/untitled.md)
+
+## 📖 Resources
+
+* [Branding Guidelines](resources/branding-guidelines.md)
 
