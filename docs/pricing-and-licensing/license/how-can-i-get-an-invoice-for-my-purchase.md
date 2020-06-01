@@ -1,6 +1,6 @@
 # How Can I Get An Invoice for My Purchase?
 
-Yes you can get your invoice by in your account page.
+Yes, you can get your invoice by in your account page.
 
 {% page-ref page="../account/where-do-i-log-into-my-stackable-account.md" %}
 

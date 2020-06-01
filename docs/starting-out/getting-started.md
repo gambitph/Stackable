@@ -12,5 +12,9 @@ Make use of hundreds of preset designs to create amazing websites.
 
 {% embed url="https://www.youtube.com/watch?v=Xr7mQdE-5FY" %}
 
-### 3. How to Tweak Basic Elements
+### 3. How to Customize your Blocks
+
+{% embed url="https://www.youtube.com/watch?v=jVsHt\_ic6mc" %}
+
+
 
