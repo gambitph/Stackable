@@ -1,2 +1,0 @@
-# Is Freemius Spyware?
-

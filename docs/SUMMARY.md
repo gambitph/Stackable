@@ -15,7 +15,6 @@
   * [What Files, Scripts and Styles Are Loaded in the Frontend?](starting-out/frequently-asked-questions/what-files-scripts-and-styles-are-loaded-in-the-frontend.md)
   * [How Does Stackable Affect My Page Loading Speed?](starting-out/frequently-asked-questions/how-does-stackable-affect-my-page-loading-speed.md)
   * [What is Freemius?](starting-out/frequently-asked-questions/what-is-freemius.md)
-  * [Is Freemius Spyware?](starting-out/frequently-asked-questions/is-freemius-spyware.md)
   * [How Do I Opt-Out of Freemius?](starting-out/frequently-asked-questions/how-do-i-opt-out-of-freemius.md)
 * [Join the Community](starting-out/join-the-community.md)
 
