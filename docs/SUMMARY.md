@@ -11,7 +11,7 @@
   * [What Happens If I Uninstall?](starting-out/installation/what-happens-if-i-uninstall.md)
 * [Getting Started](starting-out/getting-started.md)
 * [First Steps / How-Tos](starting-out/usage/README.md)
-  * [How to Add Stackable Blocks](starting-out/usage/accessing-the-blocks.md)
+  * [How to Add Stackable Blocks](starting-out/usage/how-to-add-stackable-blocks.md)
   * [How to Add Content](starting-out/usage/how-to-add-content.md)
   * [How to Remove Parts of a Block](starting-out/usage/how-to-remove-parts-of-a-block.md)
   * [How to Use Layouts](starting-out/usage/how-to-use-layouts.md)
@@ -26,14 +26,18 @@
 
 ## ✨ Stackable Guides
 
-* [Untitled](stackable-guides/untitled.md)
+* [Beginner](stackable-guides/untitled/README.md)
+  * [Untitled](stackable-guides/untitled/untitled.md)
+  * [Untitled](stackable-guides/untitled/untitled-1.md)
+* [Advanced](stackable-guides/advanced.md)
 
 ## ⭐️ Pricing & Licensing
 
 * [Pre Sale Questions](pricing-and-licensing/pre-sale-questions.md)
 * [License](pricing-and-licensing/license/README.md)
   * [Untitled](pricing-and-licensing/license/untitled.md)
-* [Account](pricing-and-licensing/account.md)
+* [Account](pricing-and-licensing/account/README.md)
+  * [How to Transfer Account to your Client](pricing-and-licensing/account/how-to-transfer-account-to-your-client.md)
 
 ## 📖 Resources
 
