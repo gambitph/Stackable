@@ -7,12 +7,7 @@ description: >-
 
 # Start Here
 
-{% hint style="info" %}
-Use the 🧭navigation on the left to browse through the different areas.   
-Use the 🔍 search field on the upper right of the screen if you're looking for something specific.
-{% endhint %}
-
-Here are some of the most popular articles in here:
+Here are some quick link to the most viewed articles:
 
 ### Using Stackable
 
