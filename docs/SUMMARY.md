@@ -13,7 +13,7 @@
 * [Frequently Asked Questions](starting-out/frequently-asked-questions/README.md)
   * [What Files, Scripts and Styles Are Loaded in the Frontend? \(TODO Jami\)](starting-out/frequently-asked-questions/what-files-scripts-and-styles-are-loaded-in-the-frontend.md)
   * [How Does Stackable Affect My Page Loading Speed? \(TODO Jami\)](starting-out/frequently-asked-questions/how-does-stackable-affect-my-page-loading-speed.md)
-  * [What Happens If I Uninstall? \(TODO\)](starting-out/frequently-asked-questions/what-happens-if-i-uninstall.md)
+  * [What Happens If I Uninstall?](starting-out/frequently-asked-questions/what-happens-if-i-uninstall.md)
   * [What is Freemius? \(TODO Jami\)](starting-out/frequently-asked-questions/what-is-freemius.md)
   * [How Do I Opt-Out of Freemius? \(TODO\)](starting-out/frequently-asked-questions/how-do-i-opt-out-of-freemius.md)
 * [Join the Community \(TODO Jami\)](starting-out/join-the-community.md)
@@ -21,7 +21,7 @@
 ## ✨ Stackable Guides
 
 * [Beginner Guides](stackable-guides/beginner-guides/README.md)
-  * [Adding Stackable Blocks \(TODO\)](stackable-guides/beginner-guides/adding-stackable-blocks.md)
+  * [Adding Stackable Blocks](stackable-guides/beginner-guides/adding-stackable-blocks.md)
   * [Design Library \(TODO\)](stackable-guides/beginner-guides/design-library.md)
   * [Customizing Blocks \(TODO\)](stackable-guides/beginner-guides/customizing-blocks.md)
   * [Block Layouts \(TODO\)](stackable-guides/beginner-guides/block-layouts.md)
@@ -60,7 +60,7 @@
   * [Why Is Stackable Premium Priced Annually? Is there a Lifetime Plan?](pricing-and-licensing/pre-sale-questions/why-is-stackable-premium-priced-annually-is-there-a-lifetime-plan.md)
 * [License](pricing-and-licensing/license/README.md)
   * [Where Do I Download Stackable Premium? \(TODO\)](pricing-and-licensing/license/where-do-i-download-stackable-premium.md)
-  * [Activating your license key \(TODO\)](pricing-and-licensing/license/untitled.md)
+  * [Activating your license key](pricing-and-licensing/license/untitled.md)
   * [Can I Transfer My License Key From One Domain to Another? \(TODO\)](pricing-and-licensing/license/can-i-transfer-my-license-key-from-one-domain-to-another.md)
   * [How Many Sites Can I Activate My License On? \(TODO\)](pricing-and-licensing/license/how-many-sites-can-i-activate-my-license-on.md)
   * [Can I Use Stackable Premium to Create Websites for Clients?](pricing-and-licensing/license/can-i-use-stackable-premium-to-create-websites-for-clients.md)
