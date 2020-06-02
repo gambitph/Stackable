@@ -2,7 +2,7 @@
 description: This tutorial will teach you how to easily install Stackable.
 ---
 
-# Installing the Plugin
+# Installing Stackable
 
 You can install Stackable into your WordPress site in a few ways.
 
