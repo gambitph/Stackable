@@ -21,3 +21,11 @@ description: This tutorial will teach you how to easily install Stackable.
 * Click _**Upload Plugin**_, and use the Stackable file you downloaded
 * Once uploaded, _**activate**_ the plugin
 
+Once Stackable is activated, it will be added to your admin menu and the Stackable page will appear:
+
+![](../../.gitbook/assets/firefox_fqej8eomus.png)
+
+This completes the installation of Stackable in your WordPress site. 🥳
+
+When you add new blocks to your page using the block editor, Stackable blocks will already be in the add block pop up. Enjoy! 😊
+
