@@ -1,3 +1,7 @@
+---
+description: For documentation contributors
+---
+
 # Docs Writing Guidelines
 
 This article describes the standards when writing documentation articles for Stackable. We need writing guidelines so that we can present instructions and ideas clearly and in a consistent way to our readers.
@@ -10,7 +14,8 @@ Our documentation articles should follow these guidelines:
 4. **Use quotation marks for instructions for entering text.**
 5. **Use the format: Stackable &gt; Settings \(in bold\) when specifying admin submenu items.**
 6. **Show screenshots when specifying areas on the screen that the user will need to interact with.**
-7. **Use evergreen wording or images.** As much as possible, don't use things can easily become outdated
+7. **Use evergreen wording or images.** As much as possible, don't use things can easily become outdated.
+8. **Don't show unnecessary or unrelated areas in images.** Don't show user names, license keys, pricing details in screenshots.
 
 ### **✅ Good Examples**
 
