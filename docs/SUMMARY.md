@@ -7,7 +7,7 @@
 
 * [Installation](starting-out/installation/README.md)
   * [Installing the Plugin](starting-out/installation/installing-the-plugin.md)
-  * [Plugin Requirements \(TODO\)](starting-out/installation/plugin-requirements.md)
+  * [Plugin Requirements](starting-out/installation/plugin-requirements.md)
   * [License \(TODO\)](starting-out/installation/license.md)
 * [Getting Started](starting-out/getting-started.md)
 * [Frequently Asked Questions](starting-out/frequently-asked-questions/README.md)
