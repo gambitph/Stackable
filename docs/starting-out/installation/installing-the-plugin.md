@@ -14,6 +14,8 @@ description: This tutorial will teach you how to easily install Stackable.
 
 ![](../../.gitbook/assets/stackable-install-tutorial-3-activate-02-1.jpg)
 
+
+
 **Through the Stackable Website**
 
 * Go to [**wpstackable.com**](https://wpstackable.com/) then click _**Free Download**_
@@ -21,9 +23,13 @@ description: This tutorial will teach you how to easily install Stackable.
 * Click _**Upload Plugin**_, and use the Stackable file you downloaded
 * Once uploaded, _**activate**_ the plugin
 
+
+
 Once Stackable is activated, it will be added to your admin menu and the Stackable page will appear:
 
 ![](../../.gitbook/assets/firefox_fqej8eomus.png)
+
+
 
 This completes the installation of Stackable in your WordPress site. 🥳
 
