@@ -1,7 +1,7 @@
 # Table of contents
 
 * [Start Here](README.md)
-* [What's New?](whats-new.md)
+* [What's New?](https://wpstackable.com/blog/category/updates/)
 
 ## 📌 Starting Out
 
@@ -11,12 +11,12 @@
   * [License \(TODO\)](starting-out/installation/license.md)
 * [Getting Started](starting-out/getting-started.md)
 * [Frequently Asked Questions](starting-out/frequently-asked-questions/README.md)
-  * [What Files, Scripts and Styles Are Loaded in the Frontend? \(TODO Jami\)](starting-out/frequently-asked-questions/what-files-scripts-and-styles-are-loaded-in-the-frontend.md)
-  * [How Does Stackable Affect My Page Loading Speed? \(TODO Jami\)](starting-out/frequently-asked-questions/how-does-stackable-affect-my-page-loading-speed.md)
+  * [What Files, Scripts and Styles Are Loaded in the Frontend?](starting-out/frequently-asked-questions/what-files-scripts-and-styles-are-loaded-in-the-frontend.md)
+  * [How Does Stackable Affect My Page Loading Speed?](starting-out/frequently-asked-questions/how-does-stackable-affect-my-page-loading-speed.md)
   * [What Happens If I Uninstall?](starting-out/frequently-asked-questions/what-happens-if-i-uninstall.md)
   * [What is Freemius? \(TODO Jami\)](starting-out/frequently-asked-questions/what-is-freemius.md)
   * [How Do I Opt-Out of Freemius? \(TODO\)](starting-out/frequently-asked-questions/how-do-i-opt-out-of-freemius.md)
-* [Join the Community \(TODO Jami\)](starting-out/join-the-community.md)
+* [Join the Community](starting-out/join-the-community.md)
 
 ## ✨ Stackable Guides
 
@@ -44,9 +44,10 @@
   * [I'm Encountering Block Editor Errors \(TODO Jami\)](troubleshooting/common-issues/im-encountering-block-editor-errors.md)
   * [My Blocks Do Not Go Full-Width Properly \(TODO\)](troubleshooting/common-issues/my-blocks-do-not-go-full-width-properly.md)
   * [How Do I Contact Support? \(TODO Jami\)](troubleshooting/common-issues/how-do-i-contact-support.md)
-  * [Can I Use the Block Editor and the Classic Editor at the Same Time? \(TODO Jami\)](troubleshooting/common-issues/can-i-use-the-block-editor-and-the-classic-editor-at-the-same-time.md)
+  * [Can I Use the Block Editor and the Classic Editor at the Same Time?](troubleshooting/common-issues/can-i-use-the-block-editor-and-the-classic-editor-at-the-same-time.md)
+  * [Can I Use the Block Editor and Elementor \(or other Page Builders\) at the Same Time?](troubleshooting/common-issues/can-i-use-the-block-editor-and-elementor-or-other-page-builders-at-the-same-time.md)
   * [I'm Getting the Error "Updating failed. The response is not a valid JSON response" \(TODO\)](troubleshooting/common-issues/im-getting-the-error-updating-failed.-the-response-is-not-a-valid-json-response.md)
-* [Need Help? \(TODO Jami\)](troubleshooting/contacting-support.md)
+* [Need Help?](troubleshooting/contacting-support.md)
 
 ## ⭐️ Pricing & Licensing
 
@@ -68,7 +69,7 @@
   * [Will My Staging Site Count as a Site Activation in My License? \(TODO\)](pricing-and-licensing/license/will-my-staging-site-count-as-a-site-activation-in-my-license.md)
   * [Do You Have a Refund Policy? \(TODO\)](pricing-and-licensing/license/do-you-have-a-refund-policy.md)
   * [Can I Upgrade My Current License After Purchasing One?](pricing-and-licensing/license/can-i-upgrade-my-license-after-i-have-already-purchased-one.md)
-  * [When Does my License Expire? What Happens After That? \(TODO Jami\)](pricing-and-licensing/license/when-does-my-license-expire-what-happens-after-that.md)
+  * [When Does my License Expire? What Happens After That?](pricing-and-licensing/license/when-does-my-license-expire-what-happens-after-that.md)
   * [Do I Need a License for My Subdomain?](pricing-and-licensing/license/do-i-need-a-license-for-my-subdomain.md)
   * [What License Do I Need If I'm Using Multisite?](pricing-and-licensing/license/what-license-do-i-need-if-im-using-multisite.md)
   * [Can I Include Stackable Premium in My Hosting or DIY Service?](pricing-and-licensing/license/can-i-include-stackable-premium-in-my-theme-hosting-diy-service.md)
