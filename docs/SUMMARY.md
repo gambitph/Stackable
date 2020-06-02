@@ -14,7 +14,7 @@
   * [What Files, Scripts and Styles Are Loaded in the Frontend?](starting-out/frequently-asked-questions/what-files-scripts-and-styles-are-loaded-in-the-frontend.md)
   * [How Does Stackable Affect My Page Loading Speed?](starting-out/frequently-asked-questions/how-does-stackable-affect-my-page-loading-speed.md)
   * [What Happens If I Uninstall?](starting-out/frequently-asked-questions/what-happens-if-i-uninstall.md)
-  * [What is Freemius? \(TODO Jami\)](starting-out/frequently-asked-questions/what-is-freemius.md)
+  * [What is Freemius?](starting-out/frequently-asked-questions/what-is-freemius.md)
   * [How Do I Opt-Out of Freemius? \(TODO\)](starting-out/frequently-asked-questions/how-do-i-opt-out-of-freemius.md)
 * [Join the Community](starting-out/join-the-community.md)
 
@@ -43,7 +43,7 @@
   * [I Purchased Premium but I Can't See the Premium Features \(TODO Jami\)](troubleshooting/common-issues/i-purchased-premium-but-i-cant-see-the-premium-features.md)
   * [I'm Encountering Block Editor Errors \(TODO Jami\)](troubleshooting/common-issues/im-encountering-block-editor-errors.md)
   * [My Blocks Do Not Go Full-Width Properly \(TODO\)](troubleshooting/common-issues/my-blocks-do-not-go-full-width-properly.md)
-  * [How Do I Contact Support? \(TODO Jami\)](troubleshooting/common-issues/how-do-i-contact-support.md)
+  * [How Do I Contact Support?](troubleshooting/common-issues/how-do-i-contact-support.md)
   * [Can I Use the Block Editor and the Classic Editor at the Same Time?](troubleshooting/common-issues/can-i-use-the-block-editor-and-the-classic-editor-at-the-same-time.md)
   * [Can I Use the Block Editor and Elementor \(or other Page Builders\) at the Same Time?](troubleshooting/common-issues/can-i-use-the-block-editor-and-elementor-or-other-page-builders-at-the-same-time.md)
   * [I'm Getting the Error "Updating failed. The response is not a valid JSON response" \(TODO\)](troubleshooting/common-issues/im-getting-the-error-updating-failed.-the-response-is-not-a-valid-json-response.md)

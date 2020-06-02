@@ -10,6 +10,8 @@ Discuss in the [Stackable Facebook Community](https://www.facebook.com/groups/wp
 
 If you are a Stackable Premium customer and need technical support, please send us an email at [support@wpstackable.com](mailto:support@wpstackable.com). 
 
+Alternatively, inside your site's dashboard, you can navigate to **Stackable &gt; Contact Us** and send your inquiry from there.
+
 {% hint style="info" %}
 Technical support is only available for Stackable Premium customers, so if you aren't one yet, please consider upgrading to Premium.
 {% endhint %}
