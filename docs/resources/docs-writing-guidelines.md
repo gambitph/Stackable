@@ -16,16 +16,19 @@ Our documentation articles should follow these guidelines:
 6. **Show screenshots when specifying areas on the screen that the user will need to interact with.**
 7. **Use evergreen wording or images.** As much as possible, don't use things can easily become outdated.
 8. **Don't show unnecessary or unrelated areas in images.** Don't show user names, license keys, pricing details in screenshots.
+9. **Use proper capitalization for titles.** Use a tool like: [https://capitalizemytitle.com/](https://capitalizemytitle.com/)
 
-### **✅ Good Examples**
+### **✅ Do These**
 
 * Navigate to **Stackable &gt; Settings**
 * Click on the **Activate link**
 * Enter "this string" in the text field
+* Heading: How to Install Stackable in Your Website
 
 ### ❌ Don't Do These
 
 * Navigate to **Pages** -&gt; _Add New_
 * Click on the _Activate link_
 * Enter **this string** in the text field
+* Heading: How to install Stackable in your website
 
