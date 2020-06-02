@@ -8,7 +8,7 @@
 * [Installation](starting-out/installation/README.md)
   * [Installing Stackable](starting-out/installation/installing-the-plugin.md)
   * [Plugin Requirements](starting-out/installation/plugin-requirements.md)
-  * [License \(TODO\)](starting-out/installation/license.md)
+  * [License Key](starting-out/installation/license.md)
 * [Getting Started](starting-out/getting-started.md)
 * [Frequently Asked Questions](starting-out/frequently-asked-questions/README.md)
   * [What Files, Scripts and Styles Are Loaded in the Frontend?](starting-out/frequently-asked-questions/what-files-scripts-and-styles-are-loaded-in-the-frontend.md)
