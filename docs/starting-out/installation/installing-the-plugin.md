@@ -2,7 +2,7 @@
 description: This tutorial will teach you how to easily install Stackable.
 ---
 
-# Installing the Plugin \(TODO\)
+# Installing the Plugin
 
 **Through the Dashboard**
 
