@@ -1,2 +1,2 @@
-# I Purchased Premium but I Can't See the Premium Features \(TODO Jami\)
+# I Purchased Premium but I Can't See the Premium Features \(TODO\)
 
