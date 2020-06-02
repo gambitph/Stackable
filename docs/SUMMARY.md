@@ -41,7 +41,7 @@
   * [I Can't See the Wide-Align and Full-Width Buttons in My Toolbar \(TODO\)](troubleshooting/common-issues/i-cant-see-the-wide-align-and-full-width-buttons-in-my-toolbar-todo.md)
   * [When I Set an Option, It Doesn't Get Applied to My Block \(TODO\)](troubleshooting/common-issues/when-i-set-an-option-it-doesnt-get-applied-to-my-block-todo.md)
   * [I Purchased Premium but I Can't See the Premium Features \(TODO\)](troubleshooting/common-issues/i-purchased-premium-but-i-cant-see-the-premium-features.md)
-  * [I'm Encountering Block Editor Errors \(TODO Jami\)](troubleshooting/common-issues/im-encountering-block-editor-errors.md)
+  * [I'm Encountering Block Errors](troubleshooting/common-issues/im-encountering-block-editor-errors.md)
   * [My Blocks Do Not Go Full-Width Properly \(TODO\)](troubleshooting/common-issues/my-blocks-do-not-go-full-width-properly.md)
   * [How Do I Contact Support?](troubleshooting/common-issues/how-do-i-contact-support.md)
   * [Can I Use the Block Editor and the Classic Editor at the Same Time?](troubleshooting/common-issues/can-i-use-the-block-editor-and-the-classic-editor-at-the-same-time.md)
