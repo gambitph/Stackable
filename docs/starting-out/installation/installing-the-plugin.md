@@ -4,11 +4,13 @@ description: This tutorial will teach you how to easily install Stackable.
 
 # Installing the Plugin
 
-**Through the Dashboard**
+You can install Stackable into your WordPress site in a few ways.
 
-* On your WordPress dashboard click **Plugins** &gt; _Add New_
-* Search for **Stackable** through the search box
-* Click the _**Install Now**_ button, then click _**Activate**_
+### **1. Through the Dashboard**
+
+* On your WordPress dashboard click **Plugins &gt; Add New**
+* Search for "Stackable"
+* Click the **Install Now** button, then click **Activate**
 
 ![](../../.gitbook/assets/stackable-install-tutorial-2-search-03-1.jpg)
 
@@ -16,10 +18,10 @@ description: This tutorial will teach you how to easily install Stackable.
 
 
 
-**Through the Stackable Website**
+### **2. Through the Stackable Website**
 
-* Go to [**wpstackable.com**](https://wpstackable.com/) then click _**Free Download**_
-* On your WordPress dashboard click **Plugins** &gt; _Add New_
+* Go to [**wpstackable.com**](https://wpstackable.com/) then click _**Free Download**_ to download the plugin
+* On your WordPress dashboard click **Plugins &gt;** _**Add New**_
 * Click _**Upload Plugin**_, and use the Stackable file you downloaded
 * Once uploaded, _**activate**_ the plugin
 
