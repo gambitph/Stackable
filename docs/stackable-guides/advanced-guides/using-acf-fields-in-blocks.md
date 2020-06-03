@@ -1,4 +1,4 @@
-# Using ACF Fields in Blocks \(TODO\)
+# Using ACF Fields in Blocks
 
 Learn how to use \(a few of\) your fields in Advanced Custom Fields inside your blocks.
 
@@ -37,7 +37,9 @@ If you view this in the frontend \(previewing the page won’t work\), you will 
 
 You can do this method for titles, descriptions and button text labels.
 
-Bonus tip: You can also save your block as a **Reusable Block** and it will work as expected across different posts.
+{% hint style="info" %}
+You can also save your block as a **Reusable Block** and it will work as expected across different posts.
+{% endhint %}
 
 ### Limitations
 

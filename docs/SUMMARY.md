@@ -33,7 +33,7 @@
 * [Advanced Guides](stackable-guides/advanced-guides/README.md)
   * [Guided Custom CSS](stackable-guides/advanced-guides/guided-custom-css.md)
   * [Translate Blocks Using WPML \(Multilingual\)](stackable-guides/advanced-guides/translate-blocks-using-wpml-multilingual.md)
-  * [Using ACF Fields in Blocks \(TODO\)](stackable-guides/advanced-guides/using-acf-fields-in-blocks.md)
+  * [Using ACF Fields in Blocks](stackable-guides/advanced-guides/using-acf-fields-in-blocks.md)
 
 ## 🔧 Troubleshooting
 
