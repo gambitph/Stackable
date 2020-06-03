@@ -2,7 +2,7 @@
 
 Stackable Premium is the paid version of Stackable, that unlocks more features, more options and design choices, making it easier and faster for you to create professional designs.
 
-In a nutshell, Stackable Premium unlocks...
+In a nutshell, Stackable Premium unlocks these major features...
 
 * Advanced Block Options
 * The entire Design Library
