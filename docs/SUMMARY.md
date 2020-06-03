@@ -43,7 +43,7 @@
   * [When I Set an Option, It Doesn't Get Applied to My Block](troubleshooting/common-issues/when-i-set-an-option-it-doesnt-get-applied-to-my-block-todo.md)
   * [I Purchased Premium but I Can't See the Premium Features](troubleshooting/common-issues/i-purchased-premium-but-i-cant-see-the-premium-features.md)
   * [I'm Encountering Block Errors](troubleshooting/common-issues/im-encountering-block-editor-errors.md)
-  * [My Blocks Do Not Go Full-Width Properly \(TODO\)](troubleshooting/common-issues/my-blocks-do-not-go-full-width-properly.md)
+  * [My Blocks Do Not Go Full-Width Properly](troubleshooting/common-issues/my-blocks-do-not-go-full-width-properly.md)
   * [How Do I Contact Support?](troubleshooting/common-issues/how-do-i-contact-support.md)
   * [Can I Use the Block Editor and the Classic Editor at the Same Time?](troubleshooting/common-issues/can-i-use-the-block-editor-and-the-classic-editor-at-the-same-time.md)
   * [Can I Use the Block Editor and Elementor \(or other Page Builders\) at the Same Time?](troubleshooting/common-issues/can-i-use-the-block-editor-and-elementor-or-other-page-builders-at-the-same-time.md)
