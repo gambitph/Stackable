@@ -1,2 +1,0 @@
-# Block Background \(TODO\)
-

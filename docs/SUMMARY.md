@@ -26,7 +26,6 @@
   * [Switching Block Designs](stackable-guides/beginner-guides/switching-designs-todo.md)
   * [Customizing Blocks](stackable-guides/beginner-guides/customizing-blocks.md)
   * [Block Layouts](stackable-guides/beginner-guides/block-layouts.md)
-  * [Block Background \(TODO\)](stackable-guides/beginner-guides/block-background-todo.md)
   * [Block Separators](stackable-guides/beginner-guides/block-separators.md)
   * [Aligning Content \(TODO\)](stackable-guides/beginner-guides/aligning-content.md)
   * [Column Backgrounds and Block Backgrounds](stackable-guides/beginner-guides/column-backgrounds-and-block-backgrounds.md)

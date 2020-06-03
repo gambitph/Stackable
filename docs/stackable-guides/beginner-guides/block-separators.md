@@ -18,5 +18,5 @@ To turn these on, select a block, then go to the **Style Tab** and turn on the *
 
 You can modify the different settings of top and bottom separators inside their own individual panels.
 
-{% page-ref page="block-background-todo.md" %}
+{% page-ref page="column-backgrounds-and-block-backgrounds.md" %}
 
