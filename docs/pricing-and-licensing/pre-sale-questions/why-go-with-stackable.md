@@ -1,4 +1,4 @@
-# Why Go With Stackable? \(TODO Jami\)
+# Why Go With Stackable?
 
 **Intuitive and robust block options**. We're aimed at bringing you blocks with a vast array of usable options which are flexible and easy to use for both beginners and professional designers.
 
