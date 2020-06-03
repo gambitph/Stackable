@@ -12,7 +12,7 @@ The first place to look for Stackable if in the “Thanks for Upgrading” email
 
 ### **Through your WordPress Site Admin**
 
-*  If you have the free version of Stackable installed and activated, on your WordPress dashboard, navigate to _**Stackable &gt; Account**_.
+*  If you have the free version of Stackable installed and activated, on your WordPress dashboard, navigate to **Stackable &gt; Account**.
 * Enter in your license key if you haven’t yet, and you should be able to see your account details.
 * Click the **Download Professional Version** button to download the Premium plugin
 
