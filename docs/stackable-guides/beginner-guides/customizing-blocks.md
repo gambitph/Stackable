@@ -1,5 +1,7 @@
 # Customizing Blocks
 
+{% embed url="https://www.youtube.com/watch?v=jVsHt\_ic6mc" %}
+
 ### **Adding or Changing Text**
 
 * Click on the part of the Stackable block where you want to add your text and delete the placeholder text.
