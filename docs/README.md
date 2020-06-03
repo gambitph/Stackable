@@ -1,5 +1,5 @@
 ---
-description: "Hello! \U0001F44B Welcome to the documentation area for Stackable."
+description: Hello!  Welcome to the documentation area for Stackable.
 ---
 
 # Start Here
