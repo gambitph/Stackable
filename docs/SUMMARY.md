@@ -86,7 +86,7 @@
   * [Where Do I Log Into My Stackable Account?](pricing-and-licensing/account/where-do-i-log-into-my-stackable-account.md)
   * [How to Transfer Account to your Client](pricing-and-licensing/account/how-to-transfer-account-to-your-client.md)
   * [How to Access Your Invoices](pricing-and-licensing/account/how-to-access-your-invoices.md)
-  * [How to Hide License Key and Account Information From Clients \(TODO\)](pricing-and-licensing/account/how-to-hide-license-key-and-account-information-from-clients.md)
+  * [How to Hide License Key and Account Information From Clients](pricing-and-licensing/account/how-to-hide-license-key-and-account-information-from-clients.md)
 
 ## 💡 Useful Tips
 

@@ -1,12 +1,12 @@
-# How to Hide License Key and Account Information From Clients \(TODO\)
+# How to Hide License Key and Account Information From Clients
 
-We have a **White Label** feature that hides your license and account details on your client's site.
+If you're using Stackable Premium on a client site and you want to hide your license and account details, here's how to do it.
 
-**How To Do It**
+Log in first into your Stackable Account.
 
-* Log into your Stackable account through this link: [https://wpstackable.com/account/\#!/login](https://wpstackable.com/account/#!/login)
-* Click your license
-* Click the option "This license is activated on my client sites"
+{% page-ref page="where-do-i-log-into-my-stackable-account.md" %}
+
+Navigate to **Websites**, then click on the website entry you want to hide the information on. Then on the right pane that opens, tick the checkbox that says **This license is activated on my client\(s\) site\(s\)**
 
 ![](../../.gitbook/assets/firefox_peh24tlii6.png)
 
