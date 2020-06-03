@@ -7,6 +7,10 @@ description: >-
 
 # Start Here
 
+{% hint style="info" %}
+If you're new to Stackable, be sure to go through the articles in the **Starting Out** section first, then work your way down to the **Stackable Guides**
+{% endhint %}
+
 Here are some quick link to the most viewed articles:
 
 ### Using Stackable
