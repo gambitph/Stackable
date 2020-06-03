@@ -1,8 +1,10 @@
-# Column Backgrounds and Block Backgrounds \(TODO\)
+# Column Backgrounds and Block Backgrounds
 
 This article will help you understand the column backgrounds and block backgrounds. How these two types of backgrounds are different and how to use them in your designs.
 
-TLDR: Use Column Backgrounds to change container styles, and use Block Backgrounds to turn blocks into whole sections.
+{% hint style="info" %}
+Use Column Backgrounds to change container styles, and use Block Backgrounds to turn blocks into whole sections.
+{% endhint %}
 
 {% embed url="https://youtu.be/NvoLabsbIeg" %}
 
@@ -38,7 +40,7 @@ Turning on a block’s Block Background option turns the block into an _entire s
 
 ![Block Backgrounds turn blocks into entire sections.](../../.gitbook/assets/ezgif-6-bf3e2e01c0ba.gif)
 
-Not only that, but you can still change the width of the block contents, you can still adjust the contents to be centered, wide or full-width.
+Not only that, but you can still change the width of the block contents, you can still adjust the contents to be centered, w_ide or_ full-width.
 
 ![When Block Background is turned on, alignments change the alignment of the block&#x2019;s content.](../../.gitbook/assets/ezgif-6-de44243d144f.gif)
 
