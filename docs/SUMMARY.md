@@ -27,7 +27,7 @@
   * [Customizing Blocks](stackable-guides/beginner-guides/customizing-blocks.md)
   * [Block Layouts](stackable-guides/beginner-guides/block-layouts.md)
   * [Block Separators](stackable-guides/beginner-guides/block-separators.md)
-  * [Aligning Content \(TODO\)](stackable-guides/beginner-guides/aligning-content.md)
+  * [Aligning Block Content](stackable-guides/beginner-guides/aligning-content.md)
   * [Column Backgrounds and Block Backgrounds](stackable-guides/beginner-guides/column-backgrounds-and-block-backgrounds.md)
   * [Enabling / Disabling Blocks](stackable-guides/beginner-guides/enabling-disabling-blocks.md)
 * [Advanced Guides](stackable-guides/advanced-guides/README.md)
