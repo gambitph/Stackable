@@ -69,7 +69,7 @@
   * [Can I Use Stackable Premium to Create Websites for Clients?](pricing-and-licensing/license/can-i-use-stackable-premium-to-create-websites-for-clients.md)
   * [What Happens to My Site When I Cancel Stackable Premium? \(TODO\)](pricing-and-licensing/license/what-happens-to-my-site-when-i-cancel-stackable-premium.md)
   * [Will My Staging Site Count as a Site Activation in My License? \(TODO\)](pricing-and-licensing/license/will-my-staging-site-count-as-a-site-activation-in-my-license.md)
-  * [Do You Have a Refund Policy? \(TODO\)](pricing-and-licensing/license/do-you-have-a-refund-policy.md)
+  * [Do You Offer Refunds?](pricing-and-licensing/license/do-you-have-a-refund-policy.md)
   * [Can I Upgrade My Current License After Purchasing One?](pricing-and-licensing/license/can-i-upgrade-my-license-after-i-have-already-purchased-one.md)
   * [When Does my License Expire? What Happens After That?](pricing-and-licensing/license/when-does-my-license-expire-what-happens-after-that.md)
   * [Do I Need a License for My Subdomain?](pricing-and-licensing/license/do-i-need-a-license-for-my-subdomain.md)
