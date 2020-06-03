@@ -15,7 +15,7 @@
   * [How Does Stackable Affect My Page Loading Speed?](starting-out/frequently-asked-questions/how-does-stackable-affect-my-page-loading-speed.md)
   * [What Happens If I Uninstall?](starting-out/frequently-asked-questions/what-happens-if-i-uninstall.md)
   * [What is Freemius?](starting-out/frequently-asked-questions/what-is-freemius.md)
-  * [How Do I Opt-Out of Freemius? \(TODO\)](starting-out/frequently-asked-questions/how-do-i-opt-out-of-freemius.md)
+  * [How Do I Opt-Out of Freemius?](starting-out/frequently-asked-questions/how-do-i-opt-out-of-freemius.md)
 * [Join the Community](starting-out/join-the-community.md)
 
 ## ✨ Stackable Guides
