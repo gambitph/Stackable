@@ -68,7 +68,7 @@
   * [How Do I Deactivate My License Key?](pricing-and-licensing/license/how-do-i-deactivate-my-license-key.md)
   * [How Many Sites Can I Activate My License On? \(TODO\)](pricing-and-licensing/license/how-many-sites-can-i-activate-my-license-on.md)
   * [Can I Use Stackable Premium to Create Websites for Clients?](pricing-and-licensing/license/can-i-use-stackable-premium-to-create-websites-for-clients.md)
-  * [What Happens to My Site When I Cancel Stackable Premium? \(TODO\)](pricing-and-licensing/license/what-happens-to-my-site-when-i-cancel-stackable-premium.md)
+  * [What Happens to My Site When I Cancel Stackable Premium?](pricing-and-licensing/license/what-happens-to-my-site-when-i-cancel-stackable-premium.md)
   * [Will My Staging Site Count as a Site Activation in My License?](pricing-and-licensing/license/will-my-staging-site-count-as-a-site-activation-in-my-license.md)
   * [Do You Offer Refunds?](pricing-and-licensing/license/do-you-have-a-refund-policy.md)
   * [Can I Upgrade My Current License After Purchasing One?](pricing-and-licensing/license/can-i-upgrade-my-license-after-i-have-already-purchased-one.md)
