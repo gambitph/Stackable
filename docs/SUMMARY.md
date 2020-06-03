@@ -29,7 +29,7 @@
   * [Block Separators \(TODO\)](stackable-guides/beginner-guides/block-separators.md)
   * [Aligning Content \(TODO\)](stackable-guides/beginner-guides/aligning-content.md)
   * [Column Backgrounds and Block Backgrounds \(TODO\)](stackable-guides/beginner-guides/column-backgrounds-and-block-backgrounds.md)
-  * [Enabling / Disabling Blocks \(TODO\)](stackable-guides/beginner-guides/enabling-disabling-blocks.md)
+  * [Enabling / Disabling Blocks](stackable-guides/beginner-guides/enabling-disabling-blocks.md)
 * [Advanced Guides](stackable-guides/advanced-guides/README.md)
   * [Guided Custom CSS \(TODO\)](stackable-guides/advanced-guides/guided-custom-css.md)
   * [Translate Blocks Using WPML \(Multilingual\) \(TODO\)](stackable-guides/advanced-guides/translate-blocks-using-wpml-multilingual.md)
