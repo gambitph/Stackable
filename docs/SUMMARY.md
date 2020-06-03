@@ -63,7 +63,7 @@
   * [Why Is Stackable Premium Priced Annually? Is there a Lifetime Plan?](pricing-and-licensing/pre-sale-questions/why-is-stackable-premium-priced-annually-is-there-a-lifetime-plan.md)
 * [License](pricing-and-licensing/license/README.md)
   * [Where Do I Download Stackable Premium?](pricing-and-licensing/license/where-do-i-download-stackable-premium.md)
-  * [Where Can I Find My License Key? \(TODO\)](pricing-and-licensing/license/where-can-i-find-my-license-key-todo.md)
+  * [Where Can I Find My License Key?](pricing-and-licensing/license/where-can-i-find-my-license-key-todo.md)
   * [Activating your license key](pricing-and-licensing/license/untitled.md)
   * [Can I Transfer My License Key From One Domain to Another?](pricing-and-licensing/license/can-i-transfer-my-license-key-from-one-domain-to-another.md)
   * [How Do I Deactivate My License Key?](pricing-and-licensing/license/how-do-i-deactivate-my-license-key.md)
@@ -95,6 +95,6 @@
 
 ## 📖 Resources
 
-* [Branding Guidelines \(TODO\)](resources/branding-guidelines.md)
+* [Branding Guidelines](resources/branding-guidelines.md)
 * [Docs Writing Guidelines](resources/docs-writing-guidelines.md)
 

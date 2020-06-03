@@ -1,4 +1,4 @@
-# Branding Guidelines \(TODO\)
+# Branding Guidelines
 
 ### Main Logos
 
@@ -18,7 +18,7 @@ Icons with border
 
 ![](../.gitbook/assets/firefox_uxnjswcnp2.png)
 
-{% hint style="info" %}
+{% hint style="danger" %}
 For use against backgrounds including gradient and images when the main logo tends to get drowned out against the background
 {% endhint %}
 
