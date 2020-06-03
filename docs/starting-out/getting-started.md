@@ -18,3 +18,5 @@ Make use of hundreds of preset designs to create amazing websites.
 
 {% page-ref page="../stackable-guides/beginner-guides/" %}
 
+You can view the rest of our [Video Guides here](https://www.youtube.com/playlist?list=PL-UUxpjaLlXNVi2zmYJfO5QoBxzvq_l4I)
+

@@ -95,6 +95,6 @@
 
 ## 📖 Resources
 
-* [Branding Guidelines](resources/branding-guidelines.md)
+* [Branding Guidelines \(TODO\)](resources/branding-guidelines.md)
 * [Docs Writing Guidelines](resources/docs-writing-guidelines.md)
 
