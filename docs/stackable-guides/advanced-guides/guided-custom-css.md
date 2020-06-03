@@ -1,4 +1,8 @@
-# Guided Custom CSS \(TODO\)
+# Guided Custom CSS
+
+{% hint style="warning" %}
+This feature is only available in Stackable Premium
+{% endhint %}
 
 If you are a premium user, there will be a new options panel named **Custom CSS** in your **Advanced Tab**.
 
