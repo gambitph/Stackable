@@ -1,4 +1,4 @@
-# Will My Staging Site Count as a Site Activation in My License? \(TODO\)
+# Will My Staging Site Count as a Site Activation in My License?
 
 Nope, your staging site, local development site, or tests site won’t be counted as a site in your license.
 
