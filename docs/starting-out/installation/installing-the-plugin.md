@@ -27,3 +27,7 @@ You can install Stackable into your WordPress site in a few ways.
 
 Once Stackable is activated, you should see a new item in your admin menu for **Stackable**, and you should be redirected to our welcome screen.
 
+{% page-ref page="../../pricing-and-licensing/license/where-do-i-download-stackable-premium.md" %}
+
+
+

@@ -17,6 +17,7 @@ Our documentation articles should follow these guidelines:
 7. **Use evergreen wording or images.** As much as possible, don't use things can easily become outdated.
 8. **Don't show unnecessary or unrelated areas in images.** Don't show user names, license keys, pricing details in screenshots.
 9. **Use proper capitalization for titles.** Use a tool like: [https://capitalizemytitle.com/](https://capitalizemytitle.com/)
+10. **Add Page Links to relevant pages.**
 
 ### **✅ Do These**
 
