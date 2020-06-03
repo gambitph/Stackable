@@ -1,4 +1,4 @@
-# Translate Blocks Using WPML \(Multilingual\) \(TODO\)
+# Translate Blocks Using WPML \(Multilingual\)
 
 You can create multilingual sites using Stackable by using [WPML](https://wpml.org/?aid=290281&affiliate_key=vTs7d84r9UjA). This article will teach you how to use WPML’s Translation Editor to convert a page with Stackable blocks to a different language.
 
@@ -20,17 +20,17 @@ Afterwards, create a new page or post.
 
 ### Add Your Block
 
-For this example, we’ll be using a [Call to Action block](https://wpstackable.com/call-to-action-block/) and we’ll translate it to German. Here’s the block we’ll use:
+For this example, we’ll be using a Call to Action block and we’ll translate it to _German_. Here’s the block we’ll use:
 
 ![](../../.gitbook/assets/firefox_uvfklsomzx.png)
 
 ### Open the WPML Translation Editor
 
-To translate our block, open the **inspector sidebar** and click on the **Document tab**:
+To translate our block, open the inspector sidebar and click on the **Document tab**:
 
 ![](../../.gitbook/assets/screen-shot-2019-07-17-at-4.48.50-pm-768x367.jpg)
 
- Once opened, scroll down until you see the **WPML’s Languages** panel, then click on the **plus sign \(+\) button** on the language you want to translate your block/page to. This will open up the WPML’s Translation Editor.
+Once opened, scroll down until you see the **WPML’s Languages** panel, then click on the **plus sign \(+\) button** on the language you want to translate your block/page to. This will open up the WPML’s Translation Editor.
 
 ![](../../.gitbook/assets/screen-shot-2019-07-17-at-4.11.11-pm.jpg)
 
