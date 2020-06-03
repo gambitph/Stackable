@@ -16,3 +16,9 @@ You need to upload the Stackable Premium in your plugins. After uploading, you n
 
 After the activation, the Stackable premium will be ready to use! Afterwards, all the Stackable blocks that you've already used will now have premium options. 👍
 
+{% page-ref page="where-do-i-download-stackable-premium.md" %}
+
+{% page-ref page="can-i-delete-the-free-version-of-stackable-after-installing-stackable-premium.md" %}
+
+
+
