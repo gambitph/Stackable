@@ -66,7 +66,7 @@
   * [Activating your license key](pricing-and-licensing/license/untitled.md)
   * [Can I Transfer My License Key From One Domain to Another?](pricing-and-licensing/license/can-i-transfer-my-license-key-from-one-domain-to-another.md)
   * [How Do I Deactivate My License Key?](pricing-and-licensing/license/how-do-i-deactivate-my-license-key.md)
-  * [How Many Sites Can I Activate My License On? \(TODO\)](pricing-and-licensing/license/how-many-sites-can-i-activate-my-license-on.md)
+  * [How Many Sites Can I Activate My License On?](pricing-and-licensing/license/how-many-sites-can-i-activate-my-license-on.md)
   * [Can I Use Stackable Premium to Create Websites for Clients?](pricing-and-licensing/license/can-i-use-stackable-premium-to-create-websites-for-clients.md)
   * [What Happens to My Site When I Cancel Stackable Premium?](pricing-and-licensing/license/what-happens-to-my-site-when-i-cancel-stackable-premium.md)
   * [Will My Staging Site Count as a Site Activation in My License?](pricing-and-licensing/license/will-my-staging-site-count-as-a-site-activation-in-my-license.md)
