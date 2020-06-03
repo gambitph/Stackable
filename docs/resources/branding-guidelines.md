@@ -1,5 +1,7 @@
 # Branding Guidelines
 
+If you're writing an article about Stackable you can grab our logos and colors here.
+
 ### Main Logos
 
 Icon with name
@@ -36,21 +38,14 @@ Icon only \(White\)
 For use in black and white displays or printing
 {% endhint %}
 
-### Colors and Typography
-
-Typeface
+### Typeface
 
 ![](../.gitbook/assets/firefox_cgerh1bfhw.png)
 
-Main Colors
+### Main Colors
 
-![](../.gitbook/assets/stackable-branding-guidelines-colors-main5.png)
-
-Gradient Colors
-
-![](../.gitbook/assets/stackable-branding-guidelines-colors-gradient5.png)
-
-Other Colors \(Logo Icon\)
-
-![](../.gitbook/assets/stackable-branding-guidelines-colors-logo7.png)
+* Black: \#111111
+* Purple: \#8C33DA
+* Red: \#F34957
+* Gradients: \#8C33DA to \#F34957
 
