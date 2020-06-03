@@ -1,4 +1,4 @@
-# I'm Getting the Error "Updating failed. The response is not a valid JSON response" \(TODO\)
+# I'm Getting the Error "Updating failed. The response is not a valid JSON response"
 
 ![](../../.gitbook/assets/screen-shot-2020-05-22-at-1.51.51-pm-1-scaled.jpg)
 

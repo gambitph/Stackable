@@ -47,7 +47,7 @@
   * [How Do I Contact Support?](troubleshooting/common-issues/how-do-i-contact-support.md)
   * [Can I Use the Block Editor and the Classic Editor at the Same Time?](troubleshooting/common-issues/can-i-use-the-block-editor-and-the-classic-editor-at-the-same-time.md)
   * [Can I Use the Block Editor and Elementor \(or other Page Builders\) at the Same Time?](troubleshooting/common-issues/can-i-use-the-block-editor-and-elementor-or-other-page-builders-at-the-same-time.md)
-  * [I'm Getting the Error "Updating failed. The response is not a valid JSON response" \(TODO\)](troubleshooting/common-issues/im-getting-the-error-updating-failed.-the-response-is-not-a-valid-json-response.md)
+  * [I'm Getting the Error "Updating failed. The response is not a valid JSON response"](troubleshooting/common-issues/im-getting-the-error-updating-failed.-the-response-is-not-a-valid-json-response.md)
 * [Need Help?](troubleshooting/contacting-support.md)
 
 ## ⭐️ Pricing & Licensing
