@@ -2,6 +2,10 @@
 
 {% embed url="https://www.youtube.com/watch?v=jVsHt\_ic6mc" %}
 
+{% embed url="https://www.youtube.com/watch?v=yOJ9LPgC3tg" %}
+
+
+
 ### **Adding or Changing Text**
 
 * Click on the part of the Stackable block where you want to add your text and delete the placeholder text.

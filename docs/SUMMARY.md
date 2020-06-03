@@ -23,7 +23,7 @@
 * [Beginner Guides](stackable-guides/beginner-guides/README.md)
   * [Adding Stackable Blocks](stackable-guides/beginner-guides/adding-stackable-blocks.md)
   * [Design Library](stackable-guides/beginner-guides/design-library.md)
-  * [Switching Designs \(TODO\)](stackable-guides/beginner-guides/switching-designs-todo.md)
+  * [Switching Block Designs](stackable-guides/beginner-guides/switching-designs-todo.md)
   * [Customizing Blocks](stackable-guides/beginner-guides/customizing-blocks.md)
   * [Block Layouts](stackable-guides/beginner-guides/block-layouts.md)
   * [Block Separators \(TODO\)](stackable-guides/beginner-guides/block-separators.md)
