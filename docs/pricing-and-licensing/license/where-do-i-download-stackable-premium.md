@@ -18,7 +18,7 @@ The first place to look for Stackable if in the “Thanks for Upgrading” email
 * Enter in your license key if you haven’t yet, and you should be able to see your account details.
 * Click the **Download Professional Version** button to download the Premium plugin
 
-![](../../.gitbook/assets/firefox_0vxo69wrlu.png)
+![](../../.gitbook/assets/firefox_ukdq6oiqt1.png)
 
 ### **3. Through the Site**
 
