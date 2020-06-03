@@ -5,7 +5,7 @@ description: Hello!  Welcome to the documentation area for Stackable.
 # Start Here
 
 {% hint style="info" %}
-If you're new to Stackable, be sure to go through the articles in the **Starting Out** section first, then work your way down to the **Stackable Guides**
+If you're new to Stackable, be sure to go through the articles in the **Starting Out** section on the left sidebar first, then work your way down to the **Stackable Guides**
 {% endhint %}
 
 Here are some quick link to the most viewed articles:
