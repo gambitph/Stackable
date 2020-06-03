@@ -1,14 +1,21 @@
 # Design Library
 
- You should see on the top of your screen the Stackable **“Design Library” button**. Click it to bring up the Design Library popup which as of this writing contains **290 block designs**.
+Click on the **Design Library** button on the top of the Block Editor. This will open the Stackable Design Library, this contains hundreds of pre-made designs that you can easily use in your pages.
 
-![](../../.gitbook/assets/ezgif-6-add68618454c.gif)
+![](../../.gitbook/assets/screen-shot-2020-06-03-at-12.40.11-pm.jpg)
 
-Once you have the Design Library open, you can use the left pane to filter out the different designs. You can search for specific colors, blocks, light or dark designs and design names.
+In the Design Library, you can use the left pane to filter out the different designs. You can filter and search for:
 
-![](../../.gitbook/assets/ezgif-6-19e95ff5c01e.gif)
+* block type \(e.g. call to action\)
+* colors \(e.g. blue\)
+* light or dark
+* design name \(e.g. minimalist\)
 
-You can also toggle between viewing larger, normal or smaller design previews as well.
+You can also toggle between viewing larger, normal or smaller design previews using the buttons on the upper right.
 
-![](../../.gitbook/assets/ezgif-6-51147d60764c.gif)
+![](../../.gitbook/assets/screen-shot-2020-06-03-at-12.46.27-pm-copy.jpg)
+
+The Design Library refreshes the library once a day. When release new designs, you can get these right away by clicking on the refresh button.
+
+![](../../.gitbook/assets/screen-shot-2020-06-03-at-12.46.27-pm.jpg)
 
