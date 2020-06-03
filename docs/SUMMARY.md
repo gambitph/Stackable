@@ -20,6 +20,7 @@
 
 ## ✨ Stackable Guides
 
+* [Watch All Video Guides](https://www.youtube.com/playlist?list=PL-UUxpjaLlXNVi2zmYJfO5QoBxzvq_l4I)
 * [Beginner Guides](stackable-guides/beginner-guides/README.md)
   * [Adding Stackable Blocks](stackable-guides/beginner-guides/adding-stackable-blocks.md)
   * [Design Library](stackable-guides/beginner-guides/design-library.md)
