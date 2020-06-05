@@ -27,7 +27,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 
 		public static function validate_string( $value = '', $request, $param ) {
 			if ( ! is_string( $value ) ) {
-				return new WP_Error( 'invalid_param', sprintf( esc_html__( '%s must be a string.', 'jetpack' ), $param ) );
+				return new WP_Error( 'invalid_param', sprintf( esc_html__( '%s must be a string.', STACKABLE_I18N ), $param ) );
 			}
 			return true;
 		}
