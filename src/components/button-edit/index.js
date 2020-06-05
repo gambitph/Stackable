@@ -116,11 +116,17 @@ class ButtonEdit extends Component {
 			[ `ugb-button--icon-position-${ iconPosition }` ]: iconPosition,
 		} )
 
+		const containerClassName = classnames( [
+			'ugb-button-container',
+			`ugb-button-container-${ this.buttonInstanceId }`,
+			this.props.containerClassName,
+		] )
+
 		const openUrlPopover = ( isSelected !== null ? isSelected : true ) && this.state.openPopup
 
 		return (
 			<div
-				className={ `ugb-button-container ugb-button-container-${ this.buttonInstanceId }` }
+				className={ containerClassName }
 				onClick={ this.onButtonClickHandler }
 				onKeyPress={ this.onKeyPressHandler }
 				role="button"
@@ -175,6 +181,7 @@ class ButtonEdit extends Component {
 ButtonEdit.defaultProps = {
 	iconButton: false,
 	disableSuggestions: false,
+	containerClassName: '',
 	className: '',
 	size: 'normal',
 	text: '',
@@ -214,6 +221,7 @@ ButtonEdit.Content = props => {
 		noFollow = false,
 		ghostToNormalEffect = false,
 		target = '',
+		role = '',
 	} = props
 
 	const mainClasses = classnames( [
@@ -239,6 +247,11 @@ ButtonEdit.Content = props => {
 		rel.push( 'nofollow' )
 	}
 
+	const propsToPass = {}
+	if ( role ) {
+		propsToPass.role = role
+	}
+
 	return (
 		<div className="ugb-button-container">
 			{ ( text || iconButton ) &&
@@ -247,6 +260,7 @@ ButtonEdit.Content = props => {
 					href={ url }
 					target={ ( target || newTab ) ? ( target || '_blank' ) : undefined }
 					rel={ props.rel || rel.join( ' ' ) }
+					{ ...propsToPass }
 				>
 					{ icon && design !== 'link' &&
 						<SvgIcon.Content value={ icon } />

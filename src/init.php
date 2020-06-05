@@ -43,6 +43,10 @@ if ( ! function_exists( 'stackable_block_assets' ) ) {
 				array(),
 				STACKABLE_VERSION
 			);
+
+			wp_localize_script( 'ugb-block-frontend-js', 'stackable', array(
+				'restUrl' => get_rest_url(),
+			) );
 		}
 	}
 	add_action( 'enqueue_block_assets', 'stackable_block_assets' );

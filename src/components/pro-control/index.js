@@ -42,7 +42,7 @@ const LABELS = {
 	},
 	postsBlock: {
 		title: __( 'Say Hello to More Post Controls 👋', i18n ),
-		description: __( 'Get pagination, more post options and Custom Post Types. This feature is only available on Stackable Premium.', i18n ),
+		description: __( 'Get a load more button, more post options and Custom Post Types. This feature is only available on Stackable Premium.', i18n ),
 		button: __( 'Learn More', i18n ),
 	},
 }

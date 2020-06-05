@@ -13,6 +13,7 @@ import TaxonomyControl from './taxonomy-control'
 import {
 	DesignPanelBody,
 	ProControlButton,
+	ProControl,
 	BlockContainer,
 	ContentAlignControl,
 	BackgroundControlsHelper,
@@ -27,6 +28,7 @@ import {
 	AdvancedRangeControl,
 	AdvancedSelectControl,
 	DivBackground,
+	ButtonEditHelper,
 } from '~stackable/components'
 import {
 	createTypographyAttributeNames,
@@ -572,6 +574,21 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
+			{ showProNotice && (
+				<PanelAdvancedSettings
+					title={ __( 'Load More Button', i18n ) }
+					id="loadmore"
+					initialOpen={ false }
+				>
+					<ProControl
+						title={ __( 'Say Hello to More Options 👋', i18n ) }
+						description={ __( 'Get a load more button, more post options and Custom Post Types. This feature is only available on Stackable Premium', i18n ) }
+					/>
+				</PanelAdvancedSettings>
+			) }
+
+			{ applyFilters( 'stackable.blog-posts.edit.inspector.style.read-more.after', null, props ) }
+
 			<PanelSpacingBody
 				initialOpen={ false }
 				blockProps={ props }
@@ -674,6 +691,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 class Edit extends Component {
 	render() {
 		const {
+			setAttributes,
 			className,
 			attributes,
 			posts,
@@ -701,6 +719,7 @@ class Edit extends Component {
 			readmoreText = '',
 			columnBackgroundColor = '',
 			columnBackgroundColor2 = '',
+			showLoadMoreButton = false,
 		} = attributes
 
 		const show = showOptions( this.props )
@@ -857,6 +876,15 @@ class Edit extends Component {
 							</DivBackground>
 						)
 					} ) }
+					{ showLoadMoreButton &&
+						<ButtonEditHelper
+							containerClassName="ugb-blog-posts__load-more-button"
+							attrNameTemplate="loadMoreButton%s"
+							setAttributes={ setAttributes }
+							blockAttributes={ attributes }
+							isSelected={ false }
+						/>
+					}
 				</Fragment>
 			) } />
 		)
@@ -880,6 +908,7 @@ export default compose(
 		[ '.ugb-blog-posts__readmore', 'readmore' ],
 		[ '.ugb-blog-posts--design-image-card .ugb-blog-posts__header', 'image' ],
 		[ '.ugb-blog-posts__item', 'column-background' ],
+		[ '.ugb-blog-posts__load-more-button', 'loadmore' ],
 	] ),
 	withSelect( ( select, props ) => {
 		const {

@@ -39,22 +39,8 @@ if ( ! function_exists( 'stackable_attributes_default' ) ) {
 	}
 }
 
-/**
- * Renders the `ugb/blog-posts` block on server.
- *
- * @since 1.7
- *
- * @param array $attributes The block attributes.
- *
- * @return string Returns the post content with latest posts added.
- */
-if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
-    function stackable_render_blog_posts_block( $attributes, $content ) {
-		// Migrate attributes if this is an old block.
-		if ( stackable_block_blog_posts_is_deprecated( $attributes, $content ) ) {
-			$attributes = apply_filters( 'stackable_block_migrate_attributes', $attributes, 'blog-posts' );
-		}
-
+if ( ! function_exists( 'stackable_blog_posts_block_default_attributes' ) ) {
+	function stackable_blog_posts_block_default_attributes( $attributes ) {
 		$defaults = array(
 			'postType' => 'post',
 			'numberOfItems' => 6,
@@ -86,9 +72,13 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 			'columns' => 2,
 		);
 
-		$attributes = stackable_attributes_default( $attributes, $defaults );
+		return stackable_attributes_default( $attributes, $defaults );
+	}
+}
 
-		$post_query = apply_filters( 'stakckable/blog-post/post_query',
+if ( ! function_exists( 'stackable_blog_posts_post_query' ) ) {
+	function stackable_blog_posts_post_query( $attributes ) {
+		return apply_filters( 'stakckable/blog-post/post_query',
 			array(
 				'post_type' => $attributes['postType'],
 				'post_status' => 'publish',
@@ -101,6 +91,27 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 			),
 			$attributes
 		);
+	}
+}
+
+/**
+ * Renders the `ugb/blog-posts` block on server.
+ *
+ * @since 1.7
+ *
+ * @param array $attributes The block attributes.
+ *
+ * @return string Returns the post content with latest posts added.
+ */
+if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
+    function stackable_render_blog_posts_block( $attributes, $content ) {
+		// Migrate attributes if this is an old block.
+		if ( stackable_block_blog_posts_is_deprecated( $attributes, $content ) ) {
+			$attributes = apply_filters( 'stackable_block_migrate_attributes', $attributes, 'blog-posts' );
+		}
+
+		$attributes = stackable_blog_posts_block_default_attributes( $attributes );
+		$post_query = stackable_blog_posts_post_query( $attributes );
 
 		$recent_posts = wp_get_recent_posts( $post_query );
 
@@ -315,6 +326,8 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 				);
 			}
 		}
+
+		do_action( 'stackable/blog-posts/render', $attributes, $content );
 
         return apply_filters( 'stackable/blog-posts/edit.output.markup', $posts_markup, $attributes, $content );
     }

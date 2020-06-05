@@ -17,6 +17,7 @@ import {
 	createAllCombinationAttributes,
 	createTypographyAttributes,
 	createResponsiveAttributes,
+	createButtonAttributes,
 } from '~stackable/util'
 import { BlogPostsIcon } from '~stackable/icons'
 import { disabledBlocks, i18n } from 'stackable'
@@ -231,6 +232,31 @@ const schema = {
 		default: '',
 	},
 	...createResponsiveAttributes( 'Readmore%sAlign', {
+		type: 'string',
+		default: '',
+	} ),
+
+	// Button.
+	showLoadMoreButton: {
+		type: 'boolean',
+		default: false,
+	},
+	loadMoreItems: {
+		type: 'number',
+		default: '',
+	},
+	...createButtonAttributes( 'loadMoreButton%s', {
+		exclude: [
+			'Url',
+			'NewTab',
+			'NoFollow',
+		],
+	} ),
+	loadMoreButtonText: {
+		type: 'string',
+		default: __( 'Load More', i18n ),
+	},
+	...createResponsiveAttributes( 'loadMoreButton%sAlign', {
 		type: 'string',
 		default: '',
 	} ),

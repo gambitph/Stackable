@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { BlockContainer } from '~stackable/components'
+import { BlockContainer, ButtonEditHelper } from '~stackable/components'
 import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
 import classnames from 'classnames'
 
@@ -15,15 +15,19 @@ import createStyles from './style'
  */
 import { applyFilters } from '@wordpress/hooks'
 import { compose } from '@wordpress/compose'
+import { Fragment } from '@wordpress/element'
 
 const save = props => {
 	const { className, attributes } = props
 	const {
+		uniqueClass = '',
 		columns = 2,
 		design = 'basic',
 		categoryHighlighted = false,
 		columnBackgroundColor = '',
 		columnBackgroundColor2 = '',
+		showLoadMoreButton = false,
+		loadMoreItems = '',
 	} = attributes
 
 	const mainClasses = classnames( [
@@ -36,8 +40,28 @@ const save = props => {
 		'ugb-blog-posts--has-bg-color': columnBackgroundColor || columnBackgroundColor2,
 	}, props ) )
 
+	const propsToPass = {}
+	if ( showLoadMoreButton ) {
+		propsToPass[ 'data-load-items' ] = loadMoreItems
+		propsToPass[ 'data-id' ] = uniqueClass
+	}
+
 	return (
-		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => null } />
+		<BlockContainer.Save className={ mainClasses } blockProps={ props } { ...propsToPass } render={ () => {
+			return (
+				<Fragment>
+					{ showLoadMoreButton && (
+						<ButtonEditHelper.Content
+							className="ugb-blog-posts__load-more-button"
+							attrNameTemplate={ `loadMoreButton%s` }
+							blockAttributes={ props.attributes }
+							url="#0"
+							role="button"
+						/>
+					) }
+				</Fragment>
+			)
+		} } />
 	)
 }
 
