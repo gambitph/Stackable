@@ -55,6 +55,10 @@ $box-vert-padding: 60px;
 	align-items: center;
 }
 
+@mixin transition() {
+	transition: all 0.7s cubic-bezier(0.2, 0.6, 0.4, 1);
+}
+
 // New standardized block styles.
 .ugb-main-block {
 	margin-top: 35px;
