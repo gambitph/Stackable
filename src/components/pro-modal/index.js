@@ -59,7 +59,7 @@ class ProModal extends Component {
 						className="ugb-pro-modal"
 						onRequestClose={ this.close }
 					>
-						<img src="https://gambitph.github.io/Stackable/assets/premium-popup/premium.jpg" alt={ __( 'Premium features', i18n ) } />
+						<img src="https://da4bu55kgdxvv.cloudfront.net/premium-popup.jpg" alt={ __( 'Premium features', i18n ) } />
 						<div className="ugb-pro-modal__footer">
 							<a href="https://rebrand.ly/plugin-slider-premium"
 								className="button button-secondary"
