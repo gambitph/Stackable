@@ -1,0 +1,19 @@
+/**
+ * Editor styles for the New Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+@import "common";
+
+.editor-styles-wrapper {
+	.ugb-heading {
+		.ugb-heading__top-line,
+		.ugb-heading__subtitle {
+			margin-bottom: 16px;
+		}
+		.ugb-heading__title {
+			margin-bottom: 8px;
+		}
+	}
+}

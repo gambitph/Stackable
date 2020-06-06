@@ -127,6 +127,50 @@ export const createResponsiveStyles = ( selector, attrNameTemplate = '%s', style
 }
 
 /**
+ * Creates a set of margin left and margin right for alignment.
+ *
+ * @param {string} selector
+ * @param {string} attrNameTemplate
+ * @param {Object} attributes
+ *
+ * @return {Array} Reponsive object styles.
+ */
+export const createResponsiveMarginAlign = ( selector, attrNameTemplate = '%s', attributes = {} ) => {
+	const getValue = __getValue( attributes )
+
+	// Overall content alignment option of the block.
+	// This is followed first by the block.
+	const contentAlign = getValue( 'contentAlign' )
+	const tabletContentAlign = getValue( 'TabletContentAlign' )
+	const mobileContentAlign = getValue( 'MobileContentAlign' )
+
+	// Alignment option of the block element.
+	// This is followed if provided.
+	const align = getValue( sprintf( attrNameTemplate, '' ) )
+	const tabletAlign = getValue( sprintf( attrNameTemplate, 'Tablet' ) )
+	const mobileAlign = getValue( sprintf( attrNameTemplate, 'Mobile' ) )
+
+	return [ {
+		[ selector ]: appendImportantAll( {
+			marginLeft: align || contentAlign ? marginLeftAlign( align || contentAlign ) : undefined,
+			marginRight: align || contentAlign ? marginRightAlign( align || contentAlign ) : undefined,
+		} ),
+		tablet: {
+			[ selector ]: appendImportantAll( {
+				marginLeft: tabletAlign || tabletContentAlign ? marginLeftAlign( tabletAlign || tabletContentAlign ) : undefined,
+				marginRight: tabletAlign || tabletContentAlign ? marginRightAlign( tabletAlign || tabletContentAlign ) : undefined,
+			} ),
+		},
+		mobile: {
+			[ selector ]: appendImportantAll( {
+				marginLeft: mobileAlign || mobileContentAlign ? marginLeftAlign( mobileAlign || mobileContentAlign ) : undefined,
+				marginRight: mobileAlign || mobileContentAlign ? marginRightAlign( mobileAlign || mobileContentAlign ) : undefined,
+			} ),
+		},
+	} ]
+}
+
+/**
  * Creates a set of responsive styles for the editor.
  *
  * @param {string} selector
