@@ -683,6 +683,21 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 						/>
 					</ResponsiveControl>
 				}
+				{ show.loadMoreSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="loadMoreButton%sTopMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Load More', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+							className="ugb--help-tip-alignment-button"
+						/>
+					</ResponsiveControl>
+				}
 			</PanelSpacingBody>
 		</Fragment>
 	)

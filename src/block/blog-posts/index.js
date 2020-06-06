@@ -270,6 +270,10 @@ const schema = {
 		[ 'Image', 'Category', 'Title', 'Excerpt', 'Meta', 'Readmore' ],
 		[ '', 'Tablet', 'Mobile' ]
 	),
+	...createResponsiveAttributes( 'LoadMoreButton%sTopMargin', {
+		type: 'number',
+		default: '',
+	} ),
 }
 
 export const name = 'ugb/blog-posts'
