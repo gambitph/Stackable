@@ -179,10 +179,10 @@ export const minifyCSS = ( css, important = false ) => {
  * @param {string} css
  * @param {string} mainClass
  * @param {string} uniqueID
- *
+ * @param {boolean} isEditor If true, will preppend '#editor' to all selectors.
  * @return {string} CSS
  */
-export const compileCSS = ( css, mainClass, uniqueID ) => {
+export const compileCSS = ( css, mainClass, uniqueID, isEditor = false ) => {
 	// Regex steps:
 	// Add the unique ID:
 	// 		".ugb-accordion" -> ".uniqueID .ugb-accordion"
@@ -202,7 +202,7 @@ export const compileCSS = ( css, mainClass, uniqueID ) => {
 			}
 
 			const newSelector = prependCSSClass( selector, mainClass, uniqueID )
-			return `${ newSelector } ${ paren }`
+			return ( isEditor ? '#editor ' : '' ) + `${ newSelector } ${ paren }`
 		} ).trim()
 }
 
