@@ -361,7 +361,7 @@ export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
 	withGoogleFont,
-	withTabbedInspector(),
+	withTabbedInspector( [ 'style', 'advanced' ] ),
 	withContentAlignReseter( [ 'Title%sAlign', 'Subtitle%sAlign', 'TopLine%sAlign', 'BottomLine%sAlign' ] ),
 	withBlockStyles( createStyles, { editorMode: true } ),
 	withClickOpenInspector( [
