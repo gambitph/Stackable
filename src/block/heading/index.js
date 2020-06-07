@@ -153,7 +153,6 @@ export const settings = {
 		'advanced-block-spacing': true,
 		'advanced-responsive': true,
 		'content-align': true,
-		'block-designs': true,
 		'custom-css': {
 			default: applyFilters( 'stackable.heading.custom-css.default', '' ),
 		},
