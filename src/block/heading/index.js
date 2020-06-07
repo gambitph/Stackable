@@ -22,7 +22,7 @@ import deprecated from './deprecated'
 import { applyFilters } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
 import {
-	descriptionPlaceholder, createTypographyAttributes, createAllCombinationAttributes,
+	createTypographyAttributes, createAllCombinationAttributes,
 } from '~stackable/util'
 
 const schema = {
@@ -35,7 +35,7 @@ const schema = {
 	title: {
 		source: 'html',
 		selector: '.ugb-heading__title',
-		default: descriptionPlaceholder( 'short' ),
+		default: __( 'Title for This Block', i18n ),
 	},
 	...createTypographyAttributes( 'title%s' ),
 	titleColor: {
@@ -47,7 +47,7 @@ const schema = {
 	subtitle: {
 		source: 'html',
 		selector: '.ugb-heading__subtitle',
-		default: descriptionPlaceholder( 'short' ),
+		default: __( 'Subtitle for this block', i18n ),
 	},
 	showSubtitle: {
 		type: 'boolean',
