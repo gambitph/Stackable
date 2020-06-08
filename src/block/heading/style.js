@@ -65,6 +65,33 @@ export const createStyles = props => {
 		} )
 	}
 
+	// Subtitle.
+	const {
+		subtitleColor = '',
+		showSubtitle = true,
+	} = props.attributes
+	if ( showSubtitle ) {
+		styles.push( {
+			'.ugb-heading__subtitle': {
+				...createTypographyStyles( 'subtitle%s', 'desktop', props.attributes ),
+				color: whiteIfDark( subtitleColor, show.columnBackground && columnBackgroundColor ),
+				textAlign: getValue( 'subtitleAlign' ),
+			},
+			tablet: {
+				'.ugb-heading__subtitle': {
+					...createTypographyStyles( 'subtitle%s', 'tablet', props.attributes ),
+					textAlign: getValue( 'subtitleTabletAlign' ),
+				},
+			},
+			mobile: {
+				'.ugb-heading__subtitle': {
+					...createTypographyStyles( 'subtitle%s', 'mobile', props.attributes ),
+					textAlign: getValue( 'subtitleMobileAlign' ),
+				},
+			},
+		} )
+	}
+
 	// Top line.
 	const {
 		showTopLine = false,
