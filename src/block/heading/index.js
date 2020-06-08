@@ -1,5 +1,5 @@
 /**
- * BLOCK: New Block.
+ * BLOCK: Heading Block.
  */
 
 /**
