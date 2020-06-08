@@ -73,6 +73,7 @@
   * [Will My Staging Site Count as a Site Activation in My License?](pricing-and-licensing/license/will-my-staging-site-count-as-a-site-activation-in-my-license.md)
   * [Do You Offer Refunds?](pricing-and-licensing/license/do-you-have-a-refund-policy.md)
   * [Can I Upgrade My Current License After Purchasing One?](pricing-and-licensing/license/can-i-upgrade-my-license-after-i-have-already-purchased-one.md)
+  * [How to Upgrade My Current Plan?](pricing-and-licensing/license/how-to-upgrade-my-current-plan.md)
   * [When Does my License Expire? What Happens After That?](pricing-and-licensing/license/when-does-my-license-expire-what-happens-after-that.md)
   * [Do I Need a License for My Subdomain?](pricing-and-licensing/license/do-i-need-a-license-for-my-subdomain.md)
   * [What License Do I Need If I'm Using Multisite?](pricing-and-licensing/license/what-license-do-i-need-if-im-using-multisite.md)
