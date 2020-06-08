@@ -17,6 +17,16 @@ const blocks = {
 		description: __( 'A title that your visitors can toggle to view more text. Use as FAQs or multiple ones for an Accordion.', i18n ),
 		sDemoURL: 'https://wpstackable.com/accordion-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
 	},
+	'ugb/text': {
+		title: __( 'Advanced Text', i18n ),
+		description: __( 'Start with the building block of all page layouts.', i18n ),
+		sDemoURL: 'https://wpstackable.com/advanced-text-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+	},
+	'ugb/heading': {
+		title: __( 'Advanced Heading', i18n ),
+		description: __( 'Introduce new sections of your content in style.', i18n ),
+		sDemoURL: 'https://wpstackable.com/advanced-heading-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+	},
 	'ugb/blockquote': {
 		title: __( 'Blockquote', i18n ),
 		description: __( 'Display a quote in style.', i18n ),
