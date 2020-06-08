@@ -37,6 +37,10 @@ const schema = {
 		selector: '.ugb-heading__title',
 		default: __( 'Title for This Block', i18n ),
 	},
+	titleTag: {
+		type: 'string',
+		defualt: '',
+	},
 	...createTypographyAttributes( 'title%s' ),
 	titleColor: {
 		type: 'string',
