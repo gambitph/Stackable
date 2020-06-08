@@ -4,7 +4,7 @@ description: >-
   buttons, images and the like.
 ---
 
-# Removing the Block Elements
+# Removing Block Elements
 
 ### Removing Block Components
 

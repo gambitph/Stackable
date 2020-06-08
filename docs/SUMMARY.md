@@ -31,7 +31,7 @@
   * [Aligning Block Content](stackable-guides/beginner-guides/aligning-content.md)
   * [Column Backgrounds and Block Backgrounds](stackable-guides/beginner-guides/column-backgrounds-and-block-backgrounds.md)
   * [Enabling / Disabling Blocks](stackable-guides/beginner-guides/enabling-disabling-blocks.md)
-  * [Removing the Block Elements](stackable-guides/beginner-guides/removing-the-block-elements.md)
+  * [Removing Block Elements](stackable-guides/beginner-guides/removing-the-block-elements.md)
 * [Advanced Guides](stackable-guides/advanced-guides/README.md)
   * [Guided Custom CSS](stackable-guides/advanced-guides/guided-custom-css.md)
   * [Translate Blocks Using WPML \(Multilingual\)](stackable-guides/advanced-guides/translate-blocks-using-wpml-multilingual.md)
