@@ -1,0 +1,159 @@
+/**
+ * Frontend styles for the Text Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+
+@import "common";
+
+.ugb-text__text {
+	column-gap: #{ $box-hori-padding };
+}
+.ugb-text--design-side-title-1,
+.ugb-text--design-side-title-2 {
+	.ugb-block-content {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-gap: #{ $box-hori-padding };
+		grid-row-gap: 0;
+	}
+}
+
+/**
+ * For side title 1, we have equal lengths of columns.  Since our title is in
+ * another grid, and our text uses the CSS column rule, we modify the grid to
+ * make them even.
+ */
+.ugb-text--design-side-title-1 {
+	&.ugb-text--columns-2 {
+		.ugb-block-content {
+			grid-template-columns: 1fr 2fr;
+		}
+	}
+	&.ugb-text--columns-3 {
+		.ugb-block-content {
+			grid-template-columns: 1fr 3fr;
+		}
+	}
+	&.ugb-text--columns-4 {
+		.ugb-block-content {
+			grid-template-columns: 1fr 4fr;
+		}
+	}
+	// Reverse title.
+	&.ugb-text--reverse-title {
+		&.ugb-text--columns-2 {
+			.ugb-block-content {
+				grid-template-columns: 2fr 1fr;
+			}
+		}
+		&.ugb-text--columns-3 {
+			.ugb-block-content {
+				grid-template-columns: 3fr 1fr;
+			}
+		}
+		&.ugb-text--columns-4 {
+			.ugb-block-content {
+				grid-template-columns: 4fr 1fr;
+			}
+		}
+	}
+}
+
+.ugb-text--design-side-title-2 {
+	.ugb-block-content {
+		grid-template-columns: max-content 1fr;
+	}
+	// Reverse title.
+	&.ugb-text--reverse-title {
+		.ugb-block-content {
+			grid-template-columns: 1fr max-content;
+		}
+	}
+}
+
+/**
+ * Reverse title.
+ */
+.ugb-text--reverse-title {
+	.ugb-text__title-wrapper {
+		grid-column: 2 / 3;
+		grid-row: 1;
+	}
+	.ugb-text__text-wrapper {
+		grid-column: 1 / 2;
+		grid-row: 1;
+	}
+}
+
+// We need this so make the column spacing work.
+.ugb-text__text-wrapper,
+.ugb-text__title-wrapper {
+	display: flex;
+	flex-direction: column;
+}
+
+.ugb-text {
+	.ugb-text__title {
+		margin: 0 0 #{ $text-margin-bottom / 2 } 0;
+	}
+	.ugb-text__subtitle {
+		margin: 0 0 $text-margin-bottom 0;
+	}
+	.ugb-text__subtitle {
+		font-size: 0.85em;
+	}
+}
+
+/**
+ * Column rule
+ */
+.ugb-text--has-rule {
+	.ugb-text__text {
+		column-rule: 1px solid #ddd;
+		column-gap: #{ $box-hori-padding * 1.5 };
+	}
+}
+
+/**
+ * Responsive.
+ */
+.ugb-text {
+	&:not(.ugb-text--design-plain) {
+		@media screen and (max-width: $break-large) and (min-width: $break-mobile) {
+			&.ugb-text--columns-3,
+			&.ugb-text--columns-4 {
+				.ugb-text__text {
+					column-count: 2;
+				}
+			}
+		}
+		@media screen and (max-width: $break-mobile) {
+			.ugb-text__text {
+				column-count: 1;
+			}
+			.ugb-block-content {
+				display: block;
+			}
+		}
+	}
+
+	// Plain
+	&.ugb-text--design-plain {
+		@media screen and (max-width: $break-medium) and (min-width: $break-mobile) {
+			&.ugb-text--columns-3,
+			&.ugb-text--columns-4 {
+				.ugb-text__text {
+					column-count: 2;
+				}
+			}
+		}
+
+		@media screen and (max-width: $break-mobile) {
+			.ugb-text__text {
+				column-count: 1;
+			}
+		}
+	}
+
+}
