@@ -9,3 +9,7 @@ For example, if your initial purchase of Stackable Premium was in January, then 
 * your license's expiration date would now be on July the next year \(originally it was January\),
 * since you still have half a year left from your previous plan,  half of the price of your original plan would get deducted from price of the plan you're updating to.
 
+{% page-ref page="how-to-upgrade-my-current-plan.md" %}
+
+
+
