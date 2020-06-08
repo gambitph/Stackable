@@ -35,7 +35,7 @@ const toggleAccordion = ( el, skipAdjacent = false ) => {
 	}
 
 	// Set the accordion classes.
-	el.setAttribute( 'aria-expanded', isPanelOpen( el ) ? 'true' : 'false' )
+	el.setAttribute( 'aria-expanded', ! isPanelOpen( el ) ? 'true' : 'false' )
 	el.classList.toggle( 'ugb-accordion--open' )
 
 	// This is true if called by an adjacent close.
