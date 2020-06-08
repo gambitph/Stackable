@@ -13,3 +13,5 @@ If you wish to upgrade from a Single License to an Unlimited License here are th
 You should get a prorated discount if you upgrade your license.
 {% endhint %}
 
+{% page-ref page="can-i-upgrade-my-license-after-i-have-already-purchased-one.md" %}
+
