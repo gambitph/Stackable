@@ -105,30 +105,25 @@ export const createStyles = props => {
 	}
 
 	// Text.
-	const {
-		textColor = '',
-	} = props.attributes
-	if ( showSubtitle ) {
-		styles.push( {
+	styles.push( {
+		'.ugb-text__text': {
+			...createTypographyStyles( 'text%s', 'desktop', props.attributes ),
+			color: getValue( 'textColor' ),
+			textAlign: getValue( 'textAlign' ),
+		},
+		tablet: {
 			'.ugb-text__text': {
-				...createTypographyStyles( 'text%s', 'desktop', props.attributes ),
-				color: textColor,
-				textAlign: getValue( 'textAlign' ),
+				...createTypographyStyles( 'text%s', 'tablet', props.attributes ),
+				textAlign: getValue( 'textTabletAlign' ),
 			},
-			tablet: {
-				'.ugb-text__text': {
-					...createTypographyStyles( 'text%s', 'tablet', props.attributes ),
-					textAlign: getValue( 'textTabletAlign' ),
-				},
+		},
+		mobile: {
+			'.ugb-text__text': {
+				...createTypographyStyles( 'text%s', 'mobile', props.attributes ),
+				textAlign: getValue( 'textMobileAlign' ),
 			},
-			mobile: {
-				'.ugb-text__text': {
-					...createTypographyStyles( 'text%s', 'mobile', props.attributes ),
-					textAlign: getValue( 'textMobileAlign' ),
-				},
-			},
-		} )
-	}
+		},
+	} )
 
 	// Spacing.
 	if ( show.titleSpacing ) {
