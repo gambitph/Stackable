@@ -6,9 +6,40 @@
 
 @import "common";
 
-.ugb-text__text {
-	column-gap: #{ $box-hori-padding };
+.ugb-text__text-wrapper {
+	display: grid;
+	grid-auto-columns: minmax(0, 1fr);
+	grid-auto-flow: column;
+	grid-column-gap: #{ $box-hori-padding };
 }
+
+/**
+ * Template grid for column rules.
+ */
+.ugb-text--has-rule {
+	&.ugb-text--columns-2 {
+		.ugb-text__text-wrapper {
+			grid-template-columns: 1fr 1px 1fr;
+		}
+	}
+	&.ugb-text--columns-3 {
+		.ugb-text__text-wrapper {
+			grid-template-columns: 1fr 1px 1fr 1px 1fr;
+		}
+	}
+	&.ugb-text--columns-4 {
+		.ugb-text__text-wrapper {
+			grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr;
+		}
+	}
+}
+.ugb-text__rule {
+	width: 1px;
+	background: #ddd;
+	height: 100%;
+	margin: auto;
+}
+
 .ugb-text--design-side-title-1,
 .ugb-text--design-side-title-2 {
 	.ugb-block-content {
@@ -87,7 +118,7 @@
 }
 
 // We need this so make the column spacing work.
-.ugb-text__text-wrapper,
+// .ugb-text__text-wrapper,
 .ugb-text__title-wrapper {
 	display: flex;
 	flex-direction: column;
@@ -120,38 +151,99 @@
  */
 .ugb-text {
 	&:not(.ugb-text--design-plain) {
-		@media screen and (max-width: $break-large) and (min-width: $break-mobile) {
+		@media screen and (max-width: $break-large) {
 			&.ugb-text--columns-3,
 			&.ugb-text--columns-4 {
-				.ugb-text__text {
-					column-count: 2;
+				.ugb-block-content {
+					display: block;
+				}
+			}
+		}
+		@media screen and (max-width: $break-small) {
+			&.ugb-text--columns-3 {
+				.ugb-text__text-wrapper {
+					grid-template-columns: 1fr;
+					grid-auto-flow: row;
+				}
+				.ugb-text__rule {
+					display: none !important;
+				}
+			}
+			&.ugb-text--columns-2 {
+				.ugb-block-content {
+					display: block;
+				}
+			}
+		}
+		@media screen and (max-width: $break-medium) {
+			&.ugb-text--columns-4 {
+				.ugb-text__text-wrapper {
+					grid-template-columns: 1fr 1fr;
+					grid-auto-flow: row;
+				}
+				&.ugb-text--has-rule {
+					.ugb-text__text-wrapper {
+						grid-template-columns: 1fr 1px 1fr;
+						grid-auto-flow: row;
+					}
+					.ugb-text__rule-2 {
+						display: none !important;
+					}
 				}
 			}
 		}
 		@media screen and (max-width: $break-mobile) {
-			.ugb-text__text {
-				column-count: 1;
-			}
 			.ugb-block-content {
 				display: block;
+			}
+			.ugb-text__text-wrapper {
+				grid-template-columns: 1fr !important;
+				grid-auto-flow: row;
+			}
+			.ugb-text__rule {
+				display: none !important;
 			}
 		}
 	}
 
 	// Plain
 	&.ugb-text--design-plain {
-		@media screen and (max-width: $break-medium) and (min-width: $break-mobile) {
-			&.ugb-text--columns-3,
+		@media screen and (max-width: $break-large) and (min-width: $break-mobile) {
 			&.ugb-text--columns-4 {
-				.ugb-text__text {
-					column-count: 2;
+				.ugb-text__text-wrapper {
+					grid-template-columns: 1fr 1fr;
+					grid-auto-flow: row;
+				}
+				&.ugb-text--has-rule {
+					.ugb-text__text-wrapper {
+						grid-template-columns: 1fr 1px 1fr;
+						grid-auto-flow: row;
+					}
+					.ugb-text__rule-2 {
+						display: none !important;
+					}
+				}
+			}
+		}
+		@media screen and (max-width: $break-small) {
+			&.ugb-text--columns-3 {
+				.ugb-text__text-wrapper {
+					grid-template-columns: 1fr;
+					grid-auto-flow: row;
+				}
+				.ugb-text__rule {
+					display: none !important;
 				}
 			}
 		}
 
 		@media screen and (max-width: $break-mobile) {
-			.ugb-text__text {
-				column-count: 1;
+			.ugb-text__text-wrapper {
+				grid-template-columns: 1fr;
+				grid-auto-flow: row;
+			}
+			.ugb-text__rule {
+				display: none !important;
 			}
 		}
 	}

@@ -5,7 +5,6 @@ import {
 	createTypographyStyles,
 	createResponsiveStyles,
 	__getValue,
-	appendImportant,
 	appendImportantAll,
 } from '~stackable/util'
 
@@ -22,32 +21,16 @@ export const createStyles = props => {
 
 	const styles = []
 
-	// Columns.
-	styles.push( {
-		'.ugb-text__text': {
-			columnCount: getValue( 'columns' ),
-		},
-		tablet: {
-			'.ugb-text__text': {
-				columnCount: appendImportant( getValue( 'tabletColumns' ) ),
-			},
-		},
-		mobile: {
-			'.ugb-text__text': {
-				columnCount: appendImportant( getValue( 'mobileColumns' ) ),
-			},
-		},
-	} )
-
 	// Column rule.
 	const {
 		showColumnRule = false,
 	} = props.attributes
 	if ( showColumnRule ) {
 		styles.push( {
-			'.ugb-text__text': appendImportantAll( {
-				columnRuleColor: getValue( 'columnRuleColor' ),
-				columnRuleWidth: getValue( 'columnRuleWidth', '%spx' ),
+			'.ugb-text__rule': appendImportantAll( {
+				background: getValue( 'columnRuleColor' ),
+				width: getValue( 'columnRuleWidth', '%spx' ),
+				height: getValue( 'columnRuleHeight', '%s%' ),
 			} ),
 		} )
 	}

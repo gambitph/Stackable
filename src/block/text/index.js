@@ -59,6 +59,10 @@ const schema = {
 		type: 'number',
 		default: '',
 	},
+	columnRuleHeight: {
+		type: 'number',
+		default: '',
+	},
 
 	// Title.
 	showTitle: {
@@ -98,10 +102,28 @@ const schema = {
 	},
 
 	// Text.
-	text: {
+	text1: {
 		type: 'string',
 		source: 'html',
-		selector: '.ugb-text__text',
+		selector: '.ugb-text__text-1',
+		default: descriptionPlaceholder( 'medium' ),
+	},
+	text2: {
+		type: 'string',
+		source: 'html',
+		selector: '.ugb-text__text-2',
+		default: descriptionPlaceholder( 'medium' ),
+	},
+	text3: {
+		type: 'string',
+		source: 'html',
+		selector: '.ugb-text__text-3',
+		default: descriptionPlaceholder( 'medium' ),
+	},
+	text4: {
+		type: 'string',
+		source: 'html',
+		selector: '.ugb-text__text-4',
 		default: descriptionPlaceholder( 'medium' ),
 	},
 	...createTypographyAttributes( 'text%s' ),

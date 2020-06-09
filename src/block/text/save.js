@@ -10,6 +10,7 @@ import { showOptions } from './util'
 import { BlockContainer } from '~stackable/components'
 import { withUniqueClass, withBlockStyles } from '~stackable/higher-order'
 import classnames from 'classnames'
+import { range } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -26,7 +27,6 @@ const save = props => {
 		columns = 1,
 		design = 'plain',
 		reverseTitle = false,
-		text = '',
 		title = '',
 		showTitle = false,
 		titleTag = '',
@@ -68,11 +68,23 @@ const save = props => {
 					</div>
 				}
 				<div className="ugb-text__text-wrapper">
-					<RichText.Content
-						tagName="p"
-						className="ugb-text__text"
-						value={ text }
-					/>
+					{ range( columns || 1 ).map( i => {
+						const index = i + 1
+						return (
+							<Fragment key={ i }>
+								<div className="ugb-text__text">
+									<RichText.Content
+										tagName="p"
+										className={ `ugb-text__text-${ index }` }
+										value={ attributes[ `text${ index }` ] }
+									/>
+								</div>
+								{ showColumnRule && i !== columns - 1 &&
+									<div className={ `ugb-text__rule ugb-text__rule-${ index }` } role="presentation" />
+								}
+							</Fragment>
+						)
+					} ) }
 				</div>
 			</Fragment>
 		) } />

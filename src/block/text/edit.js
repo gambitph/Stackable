@@ -38,6 +38,7 @@ import {
 	createResponsiveAttributeNames,
 } from '~stackable/util'
 import classnames from 'classnames'
+import { range } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -91,6 +92,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 		showColumnRule = false,
 		columnRuleColor = '',
 		columnRuleWidth = '',
+		columnRuleHeight = '',
 		showTitle = false,
 		titleTag = '',
 		titleColor = '',
@@ -153,6 +155,15 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 						value={ columnRuleWidth }
 						onChange={ columnRuleWidth => setAttributes( { columnRuleWidth } ) }
 						placeholder="1"
+					/>
+					<AdvancedRangeControl
+						label={ __( 'Height', i18n ) }
+						min={ 1 }
+						max={ 100 }
+						allowReset={ true }
+						value={ columnRuleHeight }
+						onChange={ columnRuleHeight => setAttributes( { columnRuleHeight } ) }
+						placeholder="100"
 					/>
 				</PanelAdvancedSettings>
 			}
@@ -318,7 +329,6 @@ const edit = props => {
 		columns = 1,
 		design = 'plain',
 		reverseTitle = false,
-		text = '',
 		title = '',
 		showTitle = false,
 		titleTag = '',
@@ -366,14 +376,26 @@ const edit = props => {
 					</div>
 				}
 				<div className="ugb-text__text-wrapper">
-					<RichText
-						tagName="p"
-						className="ugb-text__text"
-						value={ text }
-						onChange={ text => setAttributes( { text } ) }
-						placeholder={ descriptionPlaceholder( 'medium' ) }
-						keepPlaceholderOnFocus
-					/>
+					{ range( columns || 1 ).map( i => {
+						const index = i + 1
+						return (
+							<Fragment key={ i }>
+								<div className="ugb-text__text">
+									<RichText
+										tagName="p"
+										className={ `ugb-text__text-${ index }` }
+										value={ props.attributes[ `text${ index }` ] }
+										onChange={ text => setAttributes( { [ `text${ index }` ]: text } ) }
+										placeholder={ descriptionPlaceholder( 'medium' ) }
+										keepPlaceholderOnFocus
+									/>
+								</div>
+								{ showColumnRule && i !== columns - 1 &&
+									<div className={ `ugb-text__rule ugb-text__rule-${ index }` } role="presentation" />
+								}
+							</Fragment>
+						)
+					} ) }
 				</div>
 			</Fragment>
 		) } />
