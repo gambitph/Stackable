@@ -341,16 +341,18 @@ const edit = props => {
 	return (
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				{ showTitle &&
+				{ ( showTitle || showSubtitle ) &&
 					<div className="ugb-text__title-wrapper">
-						<RichText
-							tagName={ titleTag || 'h2' }
-							className="ugb-text__title"
-							value={ title }
-							onChange={ title => setAttributes( { title } ) }
-							placeholder={ __( 'Block Title', i18n ) }
-							keepPlaceholderOnFocus
-						/>
+						{ showTitle &&
+							<RichText
+								tagName={ titleTag || 'h2' }
+								className="ugb-text__title"
+								value={ title }
+								onChange={ title => setAttributes( { title } ) }
+								placeholder={ __( 'Block Title', i18n ) }
+								keepPlaceholderOnFocus
+							/>
+						}
 						{ showSubtitle &&
 							<RichText
 								tagName="p"

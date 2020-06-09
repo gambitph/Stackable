@@ -49,13 +49,15 @@ const save = props => {
 	return (
 		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				{ showTitle && ! RichText.isEmpty( title ) &&
+				{ ( ( showTitle && ! RichText.isEmpty( title ) ) || ( showSubtitle && ! RichText.isEmpty( subtitle ) ) ) &&
 					<div className="ugb-text__title-wrapper">
-						<RichText.Content
-							tagName={ titleTag || 'h2' }
-							className="ugb-text__title"
-							value={ title }
-						/>
+						{ showTitle && ! RichText.isEmpty( title ) &&
+							<RichText.Content
+								tagName={ titleTag || 'h2' }
+								className="ugb-text__title"
+								value={ title }
+							/>
+						}
 						{ showSubtitle && ! RichText.isEmpty( subtitle ) &&
 							<RichText.Content
 								tagName="p"
