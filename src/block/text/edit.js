@@ -114,6 +114,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 						label={ __( 'Columns', i18n ) }
 						min={ 1 }
 						max={ 4 }
+						placeholder="1"
 						className="ugb--help-tip-general-columns"
 					/>
 				</ResponsiveControl>
