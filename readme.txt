@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.2
 Tested up to: 5.4
 Requires PHP: 5.3
-Stable tag: 2.5.1
+Stable tag: 2.6.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -22,7 +22,7 @@ Stackable adds essential custom blocks to give you a true page builder experienc
 
 With Stackable, you get:
 
-- 24 Quality Page Building Blocks for Gutenberg
+- 26 Quality Page Building Blocks for Gutenberg
 - 50+ Block Layouts and 70+ Pre-set Section / Block Designs that can be switched with just one click
 - Page Builder-like tabbed options
 - Advanced and diverse web design options,
@@ -71,7 +71,7 @@ Stackable now offers the most advanced block design controls with the widest ran
 
 All of Stackable's powerful options are easily managed in an intuitive UI for a smooth block editing experience. This is achieved by our three-tab configuration, easy toggle on/off for block elements, and streamlined settings.
 
-## A Truly Useful Block Library with 24 Quality Gutenberg Blocks
+## A Truly Useful Block Library with 26 Quality Gutenberg Blocks
 
 We’ve come up with page building blocks that are all functional and stunning. We’ve put in the design effort so you can enjoy a truly usable and quality block collection for the new WordPress block editor (Gutenberg).
 
@@ -97,6 +97,8 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com/v2/)
 
 - Advanced Columns & Grid Block — [View Block](http://wpstackable.com/columns-block)
 - Container Block — [View Block](https://wpstackable.com/container-block/)
+- Advanced Heading Block - [View Block](https://wpstackable.com/advanced-heading-block/)
+- Advanced Text Block - [View Block](https://wpstackable.com/advanced-text-block/)
 - Separator Block — [View Block](https://wpstackable.com/separator-block/)
 - Posts Block — [View Block](https://wpstackable.com/blog-posts-block/)
 - Feature Grid Block — [View Block](https://wpstackable.com/feature-grid-block/)
@@ -122,6 +124,7 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com/v2/)
 
 ### News Article Updates
 
+- [v2.6 New Advanced Blocks and Load More Blog Posts Button](https://wpstackable.com/blog/new-advanced-blocks-and-load-more-blog-posts-button)
 - [v2.5 Better Onboarding for First Time Users](https://wpstackable.com/blog/better-onboarding-for-first-time-users)
 - [v2.4 Introducing the Advanced Columns & Grid Block](https://wpstackable.com/blog/introducing-the-advanced-columns-and-grid-block/)
 - [v2.3 Introducing the Design Library and New Block Designs](https://wpstackable.com/blog/introducing-the-design-library-and-new-block-designs/)
@@ -181,8 +184,16 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
-= 2.5.2 =
+= 2.6.0 =
+[New Advanced Blocks and Load More Blog Posts Button](https://wpstackable.com/blog/new-advanced-blocks-and-load-more-blog-posts-button)
+
+* New: Advanced Heading Block
+* New: Advanced Text Block
+* New: Load More option for Blog Posts Block (Premium)
 * Fixed: Added missing playsinline to background videos, there's a chance they do not play on mobile
+* Fixed: Accordion aria-expanded was inverse
+* Fixed: Removed obsolete design code
+* Fixed: Don't show hidden blocks in the Design Library
 
 = 2.5.1 =
 * Fixed: Images with paths containing "mp4", "webm" or "ogg" are wrongly detected as videos
