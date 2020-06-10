@@ -27,6 +27,16 @@ const BlockList = props => {
 		getAllBlocks().then( blocks => {
 			const blockList = blocks.reduce( ( blocks, name ) => {
 				if ( ! blocks[ name ] ) {
+					// Ignore if block is hidden from the Block Manager.
+					if ( select( 'core/edit-post' ).getPreference( 'hiddenBlockTypes' ).includes( name ) ) {
+						return blocks
+					}
+
+					// Ignore if block is not implemented (probably a new block).
+					if ( ! select( 'core/blocks' ).getBlockType( name ) ) {
+						return blocks
+					}
+
 					blocks[ name ] = {
 						count: 0,
 						name,
