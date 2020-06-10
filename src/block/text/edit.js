@@ -22,6 +22,7 @@ import {
 	ResponsiveControl,
 	AlignButtonsControl,
 	PanelSpacingBody,
+	AdvancedToolbarControl,
 } from '~stackable/components'
 import {
 	withUniqueClass,
@@ -96,6 +97,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 		showTitle = false,
 		titleTag = '',
 		titleColor = '',
+		titleVerticalAlign = '',
 		showSubtitle = false,
 		subtitleColor = '',
 		textColor = '',
@@ -222,6 +224,12 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 					value={ titleColor }
 					onChange={ titleColor => setAttributes( { titleColor } ) }
 					label={ __( 'Title Color', i18n ) }
+				/>
+				<AdvancedToolbarControl
+					label={ __( 'Vertical Align', i18n ) }
+					controls="flex-vertical"
+					value={ titleVerticalAlign }
+					onChange={ titleVerticalAlign => setAttributes( { titleVerticalAlign } ) }
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Title%sAlign"

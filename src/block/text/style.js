@@ -5,6 +5,7 @@ import {
 	createTypographyStyles,
 	createResponsiveStyles,
 	__getValue,
+	appendImportant,
 	appendImportantAll,
 } from '~stackable/util'
 
@@ -41,6 +42,9 @@ export const createStyles = props => {
 	} = props.attributes
 	if ( showTitle ) {
 		styles.push( {
+			'.ugb-text__title-wrapper': {
+				justifyContent: appendImportant( getValue( 'titleVerticalAlign' ) ),
+			},
 			'.ugb-text__title': {
 				color: getValue( 'titleColor' ),
 				...createTypographyStyles( 'title%s', 'desktop', props.attributes ),

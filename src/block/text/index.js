@@ -71,7 +71,7 @@ const schema = {
 	},
 	titleTag: {
 		type: 'string',
-		defualt: '',
+		default: '',
 	},
 	title: {
 		source: 'html',
@@ -81,7 +81,11 @@ const schema = {
 	...createTypographyAttributes( 'title%s' ),
 	titleColor: {
 		type: 'string',
-		defualt: '',
+		default: '',
+	},
+	titleVerticalAlign: {
+		type: 'string',
+		default: '',
 	},
 
 	// Subtitle.
@@ -98,7 +102,7 @@ const schema = {
 	...createTypographyAttributes( 'subtitle%s' ),
 	subtitleColor: {
 		type: 'string',
-		defualt: '',
+		default: '',
 	},
 
 	// Text.
@@ -129,7 +133,7 @@ const schema = {
 	...createTypographyAttributes( 'text%s' ),
 	textColor: {
 		type: 'string',
-		defualt: '',
+		default: '',
 	},
 
 	// Alignments.
