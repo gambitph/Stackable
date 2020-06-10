@@ -12,6 +12,10 @@
 	grid-auto-flow: column;
 	grid-column-gap: #{ $box-hori-padding };
 }
+.ugb-text__text {
+	display: flex;
+	flex-direction: column;
+}
 
 /**
  * Template grid for column rules.
