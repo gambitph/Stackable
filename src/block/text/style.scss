@@ -98,11 +98,13 @@
 .ugb-text--design-side-title-2 {
 	.ugb-block-content {
 		grid-template-columns: max-content 1fr;
+		grid-template-columns: fit-content(75%) 1fr;
 	}
 	// Reverse title.
 	&.ugb-text--reverse-title {
 		.ugb-block-content {
 			grid-template-columns: 1fr max-content;
+			grid-template-columns: 1fr fit-content(75%);
 		}
 	}
 }
