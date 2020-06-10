@@ -1,3 +1,7 @@
+---
+description: This article will help you learn more about block layouts and how to use them.
+---
+
 # Block Layouts
 
 One of the unique features of Stackable is having the option of choosing between different layouts for each block. Learn more about the basics of Stackable layouts and how you can maximize the benefits of this very cool feature.
