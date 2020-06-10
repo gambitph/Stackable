@@ -13,6 +13,9 @@ addFilter( 'stackable.text.design.no-text-attributes', 'stackable/text', attribu
 	return omit( attributes, [
 		'title',
 		'subtitle',
-		'text',
+		'text1',
+		'text2',
+		'text3',
+		'text4',
 	] )
 } )
