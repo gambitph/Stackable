@@ -2,3 +2,4 @@ build
 dist
 node_modules
 freemius
+src/_BLOCK_TEMPLATE
