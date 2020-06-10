@@ -20,7 +20,7 @@ Each Stackable block already comes with two layouts for free – **basic** and *
 
 ### Can I get more layout options?
 
-If you want even more layout options than the basic and plain, [Stackable Premium](https://wpstackable.com/premium/) will let you choose from more than **hundreds of layout options** across all Stackable blocks. Here are some premium layouts for the feature block:
+If you want even more layout options than the basic and plain, [Stackable Premium](https://wpstackable.com/premium/) will let you choose from more than **a hundred of layout options** across all Stackable blocks. Here are some premium layouts for the feature block:
 
 ![](../../.gitbook/assets/firefox_pkl975jqmn.png)
 
