@@ -15,6 +15,9 @@ describe( 'ModalDesignLibrary', () => {
 						title: `My ${ name } Design`,
 					}
 				},
+				getPreference: () => {
+					return []
+				},
 			}
 		} )
 		getAllBlocks.mockReturnValue( Promise.resolve( [ 'ugb/header', 'ugb/feature' ] ) )
