@@ -104,6 +104,10 @@ const schema = {
 		type: 'string',
 		default: '',
 	},
+	subtitleOnTop: {
+		type: 'boolean',
+		default: false,
+	},
 
 	// Text.
 	text1: {

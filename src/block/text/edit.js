@@ -90,6 +90,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 	const {
 		design = 'plain',
 		reverseTitle = false,
+		subtitleOnTop = false,
 		showColumnRule = false,
 		columnRuleColor = '',
 		columnRuleWidth = '',
@@ -256,6 +257,11 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 				] }
 				toggleAttributeName="showSubtitle"
 			>
+				<ToggleControl
+					label={ __( 'Subtitle on Top', i18n ) }
+					checked={ subtitleOnTop }
+					onChange={ subtitleOnTop => setAttributes( { subtitleOnTop } ) }
+				/>
 				<TypographyControlHelper
 					attrNameTemplate="subtitle%s"
 					setAttributes={ setAttributes }
@@ -343,6 +349,7 @@ const edit = props => {
 		showSubtitle = false,
 		subtitle = '',
 		showColumnRule = false,
+		subtitleOnTop = false,
 	} = props.attributes
 
 	const show = showOptions( props )
@@ -354,6 +361,7 @@ const edit = props => {
 	], applyFilters( 'stackable.text.mainclasses', {
 		'ugb-text--reverse-title': show.reverseTitle && reverseTitle,
 		'ugb-text--has-rule': showColumnRule,
+		'ugb-text--subtitle-top': subtitleOnTop,
 	}, props ) )
 
 	return (

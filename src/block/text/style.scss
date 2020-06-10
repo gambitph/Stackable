@@ -123,6 +123,18 @@
 	}
 }
 
+/**
+ * Subtitle on top of title.
+ */
+.ugb-text--subtitle-top {
+	.ugb-text__subtitle {
+		order: 1;
+	}
+	.ugb-text__title {
+		order: 2;
+	}
+}
+
 // We need this so make the column spacing work.
 // .ugb-text__text-wrapper,
 .ugb-text__title-wrapper {

@@ -33,6 +33,7 @@ const save = props => {
 		showSubtitle = false,
 		subtitle = '',
 		showColumnRule = false,
+		subtitleOnTop = false,
 	} = attributes
 
 	const show = showOptions( props )
@@ -44,6 +45,7 @@ const save = props => {
 	], applyFilters( 'stackable.text.mainclasses', {
 		'ugb-text--reverse-title': show.reverseTitle && reverseTitle,
 		'ugb-text--has-rule': showColumnRule,
+		'ugb-text--subtitle-top': subtitleOnTop,
 	}, props ) )
 
 	return (
