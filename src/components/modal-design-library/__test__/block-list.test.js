@@ -17,6 +17,9 @@ describe( 'BlockList', () => {
 						title: `My ${ name } Design`,
 					}
 				},
+				getPreference: () => {
+					return []
+				},
 			}
 		} )
 	} )
@@ -37,6 +40,74 @@ describe( 'BlockList', () => {
 		await wait()
 
 		expect( getByText( 'My ugb/header Design' ) ).toBeTruthy()
+		expect( getByText( 'My ugb/feature Design' ) ).toBeTruthy()
+	} )
+
+	it( 'does not show hidden blocks', async () => {
+		getAllBlocks.mockReturnValue( Promise.resolve( [ 'ugb/header', 'ugb/feature' ] ) )
+		select.mockImplementation( () => {
+			return {
+				getBlockType: name => {
+					return {
+						title: `My ${ name } Design`,
+					}
+				},
+				getPreference: setting => {
+					if ( setting === 'hiddenBlockTypes' ) {
+						return [ 'ugb/header' ]
+					}
+					return []
+				},
+			}
+		} )
+		getDesigns.mockReturnValue( Promise.resolve( [ {
+			block: 'ugb/header',
+			type: 'block',
+			plan: 'free',
+		}, {
+			block: 'ugb/feature',
+			type: 'block',
+			plan: 'free',
+		} ] ) )
+
+		const { getByText, queryByText } = render( <BlockList /> )
+		await wait()
+
+		expect( queryByText( 'My ugb/header Design' ) ).toBeNull()
+		expect( getByText( 'My ugb/feature Design' ) ).toBeTruthy()
+	} )
+
+	it( 'does not show non-existent blocks', async () => {
+		getAllBlocks.mockReturnValue( Promise.resolve( [ 'ugb/feature' ] ) )
+		select.mockImplementation( () => {
+			return {
+				getBlockType: name => {
+					if ( name === 'ugb/header' ) {
+						return undefined
+					}
+					return {
+						title: `My ${ name } Design`,
+					}
+				},
+				getPreference: () => {
+					return []
+				},
+			}
+		} )
+		getDesigns.mockReturnValue( Promise.resolve( [ {
+			block: 'ugb/header',
+			type: 'block',
+			plan: 'free',
+		}, {
+			block: 'ugb/feature',
+			type: 'block',
+			plan: 'free',
+		} ] ) )
+
+		const { getByText, queryByText } = render( <BlockList /> )
+		await wait()
+
+		expect( queryByText( 'My ugb/header Design' ) ).toBeNull()
 		expect( getByText( 'My ugb/feature Design' ) ).toBeTruthy()
 	} )
 
