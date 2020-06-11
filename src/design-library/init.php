@@ -110,7 +110,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 
 			// Fetch designs.
 			if ( empty( $designs ) ) {
-				$response = wp_remote_get( $this->get_cdn_url() . 'library/library.json' );
+				$response = wp_remote_get( $this->get_cdn_url() . 'library/library-v2.json' );
 				$content = wp_remote_retrieve_body( $response );
 				$content = apply_filters( 'stackable_design_library_retreive_body', $content );
 				$designs = json_decode( $content, true );
