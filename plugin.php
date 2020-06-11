@@ -7,6 +7,7 @@
  * Author URI: http://gambit.ph
  * Text Domain: stackable-ultimate-gutenberg-blocks
  * Version: 2.6.0
+ *
  * @package Stackable
  */
 
