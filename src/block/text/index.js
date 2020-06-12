@@ -11,7 +11,6 @@ import {
 	descriptionPlaceholder,
 	createTypographyAttributes,
 	createAllCombinationAttributes,
-	createResponsiveAttributes,
 } from '~stackable/util'
 
 /**
@@ -33,10 +32,10 @@ const schema = {
 		type: 'string',
 		default: 'plain',
 	},
-	...createResponsiveAttributes( '%sColumns', {
+	columns: {
 		type: 'number',
-		default: '',
-	} ),
+		default: 1,
+	},
 	reverseTitle: {
 		type: 'boolean',
 		default: false,

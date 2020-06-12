@@ -89,6 +89,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 	const { setAttributes } = props
 	const {
 		design = 'plain',
+		columns = 1,
 		reverseTitle = false,
 		subtitleOnTop = false,
 		showColumnRule = false,
@@ -110,19 +111,15 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 		<Fragment>
 			{ output }
 			<PanelBody title={ __( 'General', i18n ) }>
-				<ResponsiveControl
-					attrNameTemplate="%sColumns"
-					setAttributes={ setAttributes }
-					blockAttributes={ props.attributes }
-				>
-					<AdvancedRangeControl
-						label={ __( 'Columns', i18n ) }
-						min={ 1 }
-						max={ 4 }
-						placeholder="1"
-						className="ugb--help-tip-general-columns"
-					/>
-				</ResponsiveControl>
+				<AdvancedRangeControl
+					label={ __( 'Columns', i18n ) }
+					min={ 1 }
+					max={ 4 }
+					value={ columns }
+					onChange={ columns => setAttributes( { columns } ) }
+					placeholder="1"
+					className="ugb--help-tip-general-columns"
+				/>
 				{ show.reverseTitle &&
 					<ToggleControl
 						label={ __( 'Reverse Title', i18n ) }
