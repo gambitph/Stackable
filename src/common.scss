@@ -125,11 +125,8 @@ div[class^="wp-block-ugb-"] {
 }
 
 // Fix for iOS fixed background attachments do not convert to scroll.
-@supports (-webkit-overflow-scrolling: touch) {
-	[class*="ugb-"][style*="background-attachment:fixed"] {
-		background-attachment: scroll !important;
-	}
-	[class*="ugb-"][style*="background-attachment: fixed"] {
+@supports (-webkit-touch-callout: inherit) {
+	[class*="ugb-"] {
 		background-attachment: scroll !important;
 	}
 }
