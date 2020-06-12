@@ -184,6 +184,12 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.6.1 =
+* Fixed: Some buttons aligning to center
+* Fixed: Disabled fixed backgrounds in iOS due to image zooming issue in iOS
+* Fixed: Ensured bottom margin for text paragraphs in Advanced Text block
+* Fixed: Removed unused responsive controls for Advanced Text block columns
+
 = 2.6.0 =
 [New Advanced Blocks and Load More Blog Posts Button](https://wpstackable.com/blog/new-advanced-blocks-and-load-more-blog-posts-button)
 
