@@ -15,6 +15,9 @@
 .ugb-text__text {
 	display: flex;
 	flex-direction: column;
+	> p {
+		margin-bottom: $text-margin-bottom;
+	}
 }
 
 /**
