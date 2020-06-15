@@ -36,7 +36,7 @@ const save = props => {
 		'ugb-container--v2',
 		`ugb-container--design-${ design }`,
 	], applyFilters( 'stackable.container.mainclasses', {
-		'ugb-container--width-small': contentWidth <= 50,
+		'ugb-container--width-small': contentWidth !== '' && contentWidth <= 50,
 	}, props ) )
 
 	const wrapperClasses = classnames( [
