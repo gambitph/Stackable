@@ -189,6 +189,8 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Disabled fixed backgrounds in iOS due to image zooming issue in iOS
 * Fixed: Ensured bottom margin for text paragraphs in Advanced Text block
 * Fixed: Removed unused responsive controls for Advanced Text block columns
+* Fixed: Native table columns jump around
+* Fixed: Video popup block opens after dragging in mobile
 
 = 2.6.0 =
 [New Advanced Blocks and Load More Blog Posts Button](https://wpstackable.com/blog/new-advanced-blocks-and-load-more-blog-posts-button)
@@ -200,6 +202,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Accordion aria-expanded was inverse
 * Fixed: Removed obsolete design code
 * Fixed: Don't show hidden blocks in the Design Library
+* Fixed: Container gets left and right paddings on mobile. If upgrading, you'll need to remove the custom class "ugb-container--width-small" in the advanced tab.
 
 = 2.5.1 =
 * Fixed: Images with paths containing "mp4", "webm" or "ogg" are wrongly detected as videos
