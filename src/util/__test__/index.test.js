@@ -17,6 +17,10 @@ describe( 'hexToRgba', () => {
 		expect( hexToRgba( '#ab5af1' ) ).toBe( 'rgba(171, 90, 241, 1)' )
 		expect( hexToRgba( '#ab5af1', 0.4 ) ).toBe( 'rgba(171, 90, 241, 0.4)' )
 	} )
+
+	it( 'defaults to white when variable is missing', () => {
+		expect( hexToRgba( 'var(--color)', 1 ) ).toBe( 'rgba(255, 255, 255, 1)' )
+	} )
 } )
 
 describe( 'prependCSSClass', () => {
