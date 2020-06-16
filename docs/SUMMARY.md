@@ -42,6 +42,7 @@
 
 * [Common Issues](troubleshooting/common-issues/README.md)
   * [I Can't See the Blocks](troubleshooting/common-issues/i-cant-see-the-blocks.md)
+  * [I Got the Error "Your site doesn't include support for this block"](troubleshooting/common-issues/i-got-the-error-your-site-doesnt-include-support-for-this-block.md)
   * [I Can't See the Wide Width and Full Width Buttons in My Toolbar](troubleshooting/common-issues/i-cant-see-the-wide-align-and-full-width-buttons-in-my-toolbar-todo.md)
   * [When I Set an Option, It Doesn't Get Applied to My Block](troubleshooting/common-issues/when-i-set-an-option-it-doesnt-get-applied-to-my-block-todo.md)
   * [I Purchased Premium but I Can't See the Premium Features](troubleshooting/common-issues/i-purchased-premium-but-i-cant-see-the-premium-features.md)
