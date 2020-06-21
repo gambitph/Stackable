@@ -65,6 +65,99 @@ body[class*="page_stackable"] {
 		}
 	}
 }
+.s-settings-subtitle {
+	width: 75%;
+}
+.s-settings-field {
+	margin-bottom: 16px;
+	label {
+		.s-settings-field__title {
+			width: 200px;
+			display: inline-block;
+			font-weight: bold;
+			color: #666;
+			padding-right: 15px;
+			box-sizing: border-box;
+		}
+		.s-settings-field__status {
+			width: 40px;
+			display: inline-block;
+			vertical-align: middle;
+			svg {
+				width: 18px;
+				height: 18px;
+				margin: 5px 11px 0;
+			}
+			.s-settings-field__status--check {
+				color: #27de6c;
+			}
+			.s-settings-field__status--cross {
+				color: #ff5a7f;
+			}
+		}
+	}
+	[type="text"] {
+		padding: 0.5em 1em;
+		width: calc(100% - 300px);
+		box-shadow: 0 5px 30px -10px rgba(18, 63, 82, 0.1);
+		border: 1px solid rgba(0, 0, 0, 0.1);
+		margin: 0;
+	}
+	p {
+		margin-left: 240px;
+		font-size: 14px !important;
+		font-style: italic;
+		margin-top: 4px;
+	}
+}
+.s-settings-error {
+	color: #ff5a7f;
+}
+.s-notice-good {
+	padding: 30px;
+	border-radius: 12px;
+	background: linear-gradient(to left, #e4f5ef, #ccf3cd);
+	margin-bottom: 1em;
+}
+.s-notice-bad {
+	color: #ff5a7f;
+}
+.s-notice--with-icon {
+	margin: 2em 0;
+	padding-left: 60px;
+	position: relative;
+	> svg {
+		height: 36px;
+		width: 36px;
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+	path {
+		fill: #f5305c;
+		opacity: 1;
+	}
+	path:first-child {
+		fill: #ffda00;
+		opacity: 0.6;
+	}
+}
+.s-notice-em {
+	color: #888;
+	margin-bottom: 1em;
+}
+.s-button-set {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	.s-button {
+		margin-right: 16px !important;
+	}
+	.components-spinner {
+		margin-top: 0;
+	}
+}
+
 body.toplevel_page_stackable,
 body[class*="page_stackable-settings"] {
 	// Hide admin notices to not mess up the welcome screen.
@@ -132,9 +225,17 @@ body[class*="page_stackable-settings"] {
 		margin: 0 auto;
 		max-width: 200px;
 		text-align: center;
+		outline: none;
 		&:hover {
 			opacity: 0.85;
 			box-shadow: none !important;
+		}
+		&:disabled {
+			background: #888;
+			opacity: 0.4;
+		}
+		&.s-button-left {
+			margin-left: 0;
 		}
 	}
 	.s-body-container {

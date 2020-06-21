@@ -52,6 +52,8 @@ module.exports = {
 		// Off since returning false positives.
 		'@wordpress/no-unused-vars-before-return': 'off',
 
+		'jsdoc/no-undefined-types': 'off',
+
 		'@wordpress/no-unguarded-get-range-at': 'off',
 	},
 	globals: {
