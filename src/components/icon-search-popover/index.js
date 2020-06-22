@@ -16,6 +16,7 @@ import { i18n } from 'stackable'
 import { FontAwesomeIcon } from '~stackable/components'
 
 import { searchFontAwesomeIconName } from './search'
+import { faGetSVGIcon } from '~stackable/util'
 
 let searchTimeout = null
 
@@ -77,7 +78,11 @@ const IconSearchPopover = props => {
 							key={ i }
 							className={ `components-button ugb-prefix--${ prefix } ugb-icon--${ iconName }` }
 							onClick={ () => {
-								props.onChange( iconValue, prefix, iconName )
+								if ( props.returnSVGValue ) {
+									props.onChange( faGetSVGIcon( prefix, iconName ) )
+								} else {
+									props.onChange( iconValue, prefix, iconName )
+								}
 								props.onClose()
 							} }
 						>
@@ -97,6 +102,7 @@ IconSearchPopover.defaultProps = {
 	onChange: () => {},
 	onClose: () => {},
 	onClickOutside: () => {},
+	returnSVGValue: true, // If true, the value provided in onChange will be the SVG markup of the icon. If false, the value will be a prefix-iconName value.
 	allowReset: true,
 }
 

@@ -10,10 +10,6 @@ export const faGetIcon = ( prefix, iconName ) => {
 	return window.FontAwesome.icon( { prefix, iconName } )
 }
 
-// export const faIsIconLoaded = ( prefix, iconName ) => {
-// 	return !! faGetIcon( prefix, iconName )
-// }
-
 export const faIsAPILoaded = () => {
 	return !! window.FontAwesome
 }

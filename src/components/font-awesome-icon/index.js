@@ -1,13 +1,13 @@
 import SVGSpinner from './images/spinner.svg'
+import {
+	faAPILoaded,
+	faIsAPILoaded,
+	faGetSVGIcon,
+} from '~stackable/util'
 
 import {
 	RawHTML, useEffect, useState,
 } from '@wordpress/element'
-import {
-	faGetSVGIcon,
-	faAPILoaded,
-	faIsAPILoaded,
-} from '~stackable/util'
 import { omit } from 'lodash'
 
 const Spinner = () => {

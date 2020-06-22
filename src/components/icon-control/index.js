@@ -12,7 +12,6 @@ import SVGIconControl from './images/smile.svg'
 import { i18n } from 'stackable'
 import { omit } from 'lodash'
 import { IconSearchPopover, SvgIcon } from '~stackable/components'
-import { faGetSVGIcon } from '~stackable/util'
 
 const IconControl = withInstanceId( withState( {
 	openPopover: false,
@@ -68,13 +67,8 @@ const IconControl = withInstanceId( withState( {
 								} )
 							} }
 							onClose={ () => setState( { openPopover: false } ) }
-							onChange={ ( iconValue, iconPrefix, iconName ) => {
-								if ( props.valueType === 'svg' ) {
-									props.onChange( faGetSVGIcon( iconPrefix, iconName ) )
-								} else {
-									props.onChange( iconValue )
-								}
-							} }
+							returnSVGValue={ props.returnSVGValue }
+							onChange={ props.onChange }
 						/>
 					}
 				</div>
@@ -97,7 +91,7 @@ const IconControl = withInstanceId( withState( {
 IconControl.defaultProps = {
 	label: __( 'Icon', i18n ),
 	value: '',
-	valueType: 'iconName', // This can either be iconName or svg. If SVG, the value returned will be an svg.
+	returnSVGValue: true, // If true, the value provided in onChange will be the SVG markup of the icon. If false, the value will be a prefix-iconName value.
 	onChange: () => {},
 }
 
