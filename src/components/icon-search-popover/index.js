@@ -2,42 +2,44 @@
  * WordPress dependencies
  */
 import {
-	Button, Popover, PanelBody, TextControl,
+	Button, Popover, PanelBody, TextControl, Spinner,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
-import { withState } from '@wordpress/compose'
+import {
+	useState, useEffect,
+} from '@wordpress/element'
 
 /**
  * External dependencies
  */
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { fab } from '@fortawesome/free-brands-svg-icons'
-import { far } from '@fortawesome/free-regular-svg-icons'
-import { fas } from '@fortawesome/free-solid-svg-icons'
 import { i18n } from 'stackable'
+import { FontAwesomeIcon } from '~stackable/components'
 
-// Limit to 100 searches as not to stall the browser.
-const MAX_SEARCH_ICONS = 100
+import { searchFontAwesomeIconName } from './search'
 
-export const searchIconName = search => {
-	const lowerSearch = search && search.toLowerCase()
-	const results = [
-		...Object.values( fab ).filter( icon => icon.iconName.includes( lowerSearch ) ).slice( 0, MAX_SEARCH_ICONS ),
-		...Object.values( far ).filter( icon => icon.iconName.includes( lowerSearch ) ).slice( 0, MAX_SEARCH_ICONS ),
-		...Object.values( fas ).filter( icon => icon.iconName.includes( lowerSearch ) ).slice( 0, MAX_SEARCH_ICONS ),
-	]
+let searchTimeout = null
 
-	return results.slice( 0, MAX_SEARCH_ICONS )
-}
+const IconSearchPopover = props => {
+	const [ value, setValue ] = useState( '' )
+	const [ results, setResults ] = useState( [] )
+	const [ isBusy, setIsBusy ] = useState( false )
 
-const IconSearchPopover = withState( {
-	value: '',
-} )( props => {
-	const {
-		value,
-		setState,
-	} = props
-	const results = searchIconName( value )
+	// Debounce search.
+	useEffect( () => {
+		clearTimeout( searchTimeout )
+		searchTimeout = setTimeout( () => {
+			setIsBusy( true )
+			searchFontAwesomeIconName( value )
+				.then( results => {
+					setResults( results )
+				} )
+				.finally( () => {
+					setIsBusy( false )
+				} )
+		}, 500 )
+
+		return () => clearTimeout( searchTimeout )
+	}, [ value ] )
 
 	return (
 		<Popover
@@ -50,9 +52,7 @@ const IconSearchPopover = withState( {
 					<TextControl
 						className="ugb-icon-popover__input"
 						value={ value }
-						onChange={ value => {
-							setState( { value } )
-						} }
+						onChange={ setValue }
 						placeholder={ __( 'Type to search icon', i18n ) }
 					/>
 					{ props.allowReset &&
@@ -70,27 +70,28 @@ const IconSearchPopover = withState( {
 					}
 				</div>
 				<div className="ugb-icon-popover__iconlist">
-					{ results.map( ( { prefix, iconName }, i ) => {
+					{ isBusy && <Spinner /> }
+					{ ! isBusy && results.map( ( { prefix, iconName }, i ) => {
 						const iconValue = `${ prefix }-${ iconName }`
 						return <button
 							key={ i }
-							className="components-button"
+							className={ `components-button ugb-prefix--${ prefix } ugb-icon--${ iconName }` }
 							onClick={ () => {
-								props.onChange( iconValue )
+								props.onChange( iconValue, prefix, iconName )
 								props.onClose()
 							} }
 						>
-							<FontAwesomeIcon icon={ [ prefix, iconName ] } />
+							<FontAwesomeIcon prefix={ prefix } iconName={ iconName } />
 						</button>
 					} ) }
-					{ ! results.length &&
+					{ ! isBusy && ! results.length &&
 						<p className="components-base-control__help">{ __( 'No matches found', i18n ) }</p>
 					}
 				</div>
 			</PanelBody>
 		</Popover>
 	)
-} )
+}
 
 IconSearchPopover.defaultProps = {
 	onChange: () => {},

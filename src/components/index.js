@@ -80,3 +80,4 @@ export { default as GetBlockAttributesButton } from './block-attributes-get-butt
 export { default as DivBackground } from './div-background'
 export { default as ModalWelcomeTutorial } from './modal-welcome-tutorial'
 export { default as ModalDesignLibrary } from './modal-design-library'
+export { default as FontAwesomeIcon } from './font-awesome-icon'

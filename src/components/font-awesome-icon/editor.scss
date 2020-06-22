@@ -1,0 +1,30 @@
+.ugb-icon-control,
+.ugb-icon-popover {
+	svg .fa-secondary {
+		fill: var(--fa-secondary-color, currentColor);
+		opacity: 0.4;
+		opacity: var(--fa-secondary-opacity, 0.4);
+	}
+}
+.ugb-icon-is-loading {
+	animation: icon-loading 1.3s infinite linear;
+	height: 12px !important;
+	width: 12px !important;
+}
+@keyframes icon-loading {
+	0% {
+		opacity: 0.8;
+		transform: rotate(0deg);
+	}
+	25%,
+	75% {
+		opacity: 0.4;
+	}
+	50% {
+		opacity: 0.8;
+	}
+	100% {
+		opacity: 0.8;
+		transform: rotate(360deg);
+	}
+}

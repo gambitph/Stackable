@@ -1,0 +1,12 @@
+.ugb-main-block {
+	svg .fa-secondary {
+		fill: var(--fa-secondary-color, currentColor);
+		opacity: 0.4;
+		opacity: var(--fa-secondary-opacity, 0.4);
+	}
+	svg .fa-primary {
+		fill: var(--fa-primary-color, currentColor);
+		opacity: 1;
+		opacity: var(--fa-primary-opacity, 1);
+	}
+}

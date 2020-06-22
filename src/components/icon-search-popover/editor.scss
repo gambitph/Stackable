@@ -1,3 +1,9 @@
+.ugb-icon-popover {
+	.components-popover__content {
+		overflow: hidden;
+	}
+}
+
 // Icon search list.
 .ugb-icon-popover__iconlist {
 	display: flex;
@@ -11,9 +17,10 @@
 	button {
 		background: none;
 		padding: 5px;
-		height: auto;
 		border-color: transparent;
 		box-shadow: none;
+		width: 40px;
+		height: 40px;
 	}
 	svg {
 		width: 30px !important;

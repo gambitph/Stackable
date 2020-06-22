@@ -4,56 +4,15 @@
 import { __ } from '@wordpress/i18n'
 import { BaseControl, Button } from '@wordpress/components'
 import { withInstanceId, withState } from '@wordpress/compose'
+import SVGIconControl from './images/smile.svg'
 
 /**
  * External dependencies
  */
-import { fab } from '@fortawesome/free-brands-svg-icons'
-import { far } from '@fortawesome/free-regular-svg-icons'
-import { fas } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { i18n } from 'stackable'
 import { omit } from 'lodash'
-import { IconSearchPopover } from '~stackable/components'
-
-/**
- * Check whether the string value is a valid icon.
- *
- * @param {string} value The string value to check.
- *
- * @return {boolean} True if the value is a valid icon.
- */
-export const isValidIconValue = value => {
-	const iconArray = getIconArray( value )
-	if ( ! iconArray ) {
-		return false
-	}
-
-	const prefix = value.match( /^\w*/ )[ 0 ]
-	if ( ! [ 'fab', 'far', 'fas' ].includes( prefix ) ) {
-		return false
-	}
-
-	const icons = {
-		fab, far, fas,
-	}
-	const matches = Object.values( icons[ prefix ] ).filter( icon => icon.iconName === iconArray[ 1 ] )
-	return matches.length > 0
-}
-
-export const getIconArray = value => {
-	if ( typeof value !== 'string' ) {
-		return null
-	}
-	if ( ! value.match( /\w*-/ ) ) {
-		return null
-	}
-	return [
-		value.match( /\w*/ ), // Prefix.
-		// value.match( /\w*/ )[ 0 ], // Prefix.
-		value.match( /\w+-(.*)$/ )[ 1 ], // Icon name.
-	]
-}
+import { IconSearchPopover, SvgIcon } from '~stackable/components'
+import { faGetSVGIcon } from '~stackable/util'
 
 const IconControl = withInstanceId( withState( {
 	openPopover: false,
@@ -66,9 +25,6 @@ const IconControl = withInstanceId( withState( {
 		setState,
 	} = props
 
-	const selectedIcon = getIconArray( props.value )
-	const isValidIcon = isValidIconValue( props.value )
-
 	return (
 		<BaseControl
 			className={ `ugb-icon-control ugb-icon-control-${ instanceId }` }
@@ -77,7 +33,6 @@ const IconControl = withInstanceId( withState( {
 			<div className="ugb-icon-control__wrapper">
 				<div className="ugb-icon-control__button-wrapper">
 					<Button
-						// className="ugb-icon-control__button components-button is-button is-default"
 						isDefault
 						className="ugb-icon-control__icon-button"
 						onClick={ () => {
@@ -93,8 +48,8 @@ const IconControl = withInstanceId( withState( {
 							}
 						} }
 					>
-						{ isValidIcon && <FontAwesomeIcon icon={ selectedIcon } /> }
-						{ ! isValidIcon && <FontAwesomeIcon icon={ [ 'far', 'smile' ] } style={ { opacity: 0.3 } } /> }
+						{ props.value && <SvgIcon value={ props.value } /> }
+						{ ! props.value && <SVGIconControl style={ { opacity: 0.3 } } /> }
 					</Button>
 					{ openPopover &&
 						<IconSearchPopover
@@ -113,7 +68,13 @@ const IconControl = withInstanceId( withState( {
 								} )
 							} }
 							onClose={ () => setState( { openPopover: false } ) }
-							onChange={ props.onChange }
+							onChange={ ( iconValue, iconPrefix, iconName ) => {
+								if ( props.valueType === 'svg' ) {
+									props.onChange( faGetSVGIcon( iconPrefix, iconName ) )
+								} else {
+									props.onChange( iconValue )
+								}
+							} }
 						/>
 					}
 				</div>
@@ -136,6 +97,7 @@ const IconControl = withInstanceId( withState( {
 IconControl.defaultProps = {
 	label: __( 'Icon', i18n ),
 	value: '',
+	valueType: 'iconName', // This can either be iconName or svg. If SVG, the value returned will be an svg.
 	onChange: () => {},
 }
 
