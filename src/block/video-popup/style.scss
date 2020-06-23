@@ -89,3 +89,7 @@
 		background: none !important;
 	}
 }
+// Fix some theme may interfere with the placement of our popup video.
+#bp_sv {
+	margin: auto !important;
+}
