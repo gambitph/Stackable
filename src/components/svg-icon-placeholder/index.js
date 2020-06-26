@@ -2,23 +2,23 @@
  * WordPress dependencies
  */
 import { Button } from '@wordpress/components'
-import { withInstanceId, withState } from '@wordpress/compose'
+import { withInstanceId } from '@wordpress/compose'
+import { useState } from '@wordpress/element'
 
 /**
  * External dependencies
  */
 import { IconSearchPopover, SvgIcon } from '~stackable/components'
 
-const SvgIconPlaceholder = withInstanceId( withState( {
-	openPopover: false,
-	clickedOnButton: false,
-} )( props => {
+const SvgIconPlaceholder = withInstanceId( ( props => {
+	const [ openPopover, setOpenPopover ] = useState( false )
+	const [ clickedOnButton, setClickedOnButton ] = useState( false )
+
 	const {
 		instanceId,
-		openPopover,
-		clickedOnButton,
-		setState,
 		isOpen,
+		onChange,
+		...propsToPass
 	} = props
 
 	return (
@@ -27,23 +27,16 @@ const SvgIconPlaceholder = withInstanceId( withState( {
 				className="ugb-svg-icon-placeholder__button"
 				onClick={ () => {
 					if ( ! clickedOnButton ) {
-						setState( { openPopover: true } )
+						setOpenPopover( true )
 					} else {
 						// If the popup closed because this button was clicked (while the popup was open) ensure the popup is closed.
 						// This is needed or else the popup will always open when spam clicking the button.
-						setState( {
-							openPopover: false,
-							clickedOnButton: false,
-						} )
+						setOpenPopover( false )
+						setClickedOnButton( false )
 					}
 				} }
 			>
-				<SvgIcon
-					className={ props.className }
-					color={ props.color }
-					style={ props.style }
-					value={ props.value }
-				/>
+				<SvgIcon { ...propsToPass } />
 			</Button>
 			{ ( ( isOpen !== null && isOpen ) || ( isOpen === null && openPopover ) ) &&
 				<IconSearchPopover
@@ -52,17 +45,15 @@ const SvgIconPlaceholder = withInstanceId( withState( {
 						// This is needed or else the popup will always open when spam clicking the button.
 						if ( event.target ) {
 							if ( event.target.closest( `.ugb-svg-icon-placeholder-${ instanceId }` ) ) {
-								setState( { clickedOnButton: true } )
+								setClickedOnButton( true )
 								return
 							}
 						}
-						setState( {
-							openPopover: false,
-							clickedOnButton: false,
-						} )
+						setOpenPopover( false )
+						setClickedOnButton( false )
 					} }
-					onClose={ () => setState( { openPopover: false } ) }
-					onChange={ props.onChange }
+					onClose={ () => setOpenPopover( false ) }
+					onChange={ onChange }
 				/>
 			}
 		</div>
@@ -72,9 +63,7 @@ const SvgIconPlaceholder = withInstanceId( withState( {
 SvgIconPlaceholder.defaultProps = {
 	isOpen: null,
 	className: '',
-	color: '',
 	value: '',
-	style: {},
 	onChange: () => {},
 }
 
