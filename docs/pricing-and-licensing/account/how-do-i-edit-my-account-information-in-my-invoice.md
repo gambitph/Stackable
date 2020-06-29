@@ -10,5 +10,5 @@ To modify your account details, you can change it in **My Profile**.
 
 After updating your profile, your invoice should automatically get updated with the new details.
 
-
+{% page-ref page="how-can-i-get-an-invoice-for-my-purchase.md" %}
 
