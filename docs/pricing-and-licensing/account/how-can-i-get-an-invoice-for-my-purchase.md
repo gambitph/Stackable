@@ -14,3 +14,5 @@ On the right hand side, click on the **Invoice** button to view the PDF of your 
 
 If you need to change the details in your invoice, you can edit your details in **My Profile**.
 
+{% page-ref page="how-do-i-edit-my-account-information-in-my-invoice.md" %}
+
