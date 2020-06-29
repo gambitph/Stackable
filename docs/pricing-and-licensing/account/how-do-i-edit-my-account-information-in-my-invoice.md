@@ -1,8 +1,10 @@
-# How Do I Edit My Account Information in My Invoice?
+# Can I Edit My Account Information in My Invoice?
 
-If you need to change the details in your invoice, you can edit your details in **My Profile** in your account.
+Yes, you can edit your account information in your invoice by changing it in your account.
 
 {% page-ref page="where-do-i-log-into-my-stackable-account.md" %}
+
+To modify your account details, you can change it in **My Profile**.
 
 ![](../../.gitbook/assets/firefox_bdke2a1hsq.png)
 
