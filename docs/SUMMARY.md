@@ -86,12 +86,11 @@
   * [Can I Cancel My Auto-Renewal?](pricing-and-licensing/license/can-i-cancel-my-auto-renewal.md)
   * [What Payment Methods Do You Accept?](pricing-and-licensing/license/what-payment-methods-do-you-accept.md)
   * [What Are the License Keys Used For?](pricing-and-licensing/license/what-are-the-license-keys-used-for.md)
-  * [How Can I Get An Invoice for My Purchase?](pricing-and-licensing/license/how-can-i-get-an-invoice-for-my-purchase.md)
   * [Can I Delete the Free Version of Stackable After Installing Stackable Premium?](pricing-and-licensing/license/can-i-delete-the-free-version-of-stackable-after-installing-stackable-premium.md)
 * [Account](pricing-and-licensing/account/README.md)
   * [Where Do I Log Into My Stackable Account?](pricing-and-licensing/account/where-do-i-log-into-my-stackable-account.md)
   * [How to Transfer Account to your Client](pricing-and-licensing/account/how-to-transfer-account-to-your-client.md)
-  * [How to Access Your Invoices](pricing-and-licensing/account/how-to-access-your-invoices.md)
+  * [How Can I Get An Invoice for My Purchase?](pricing-and-licensing/account/how-can-i-get-an-invoice-for-my-purchase.md)
   * [How Do I Edit My Account Information in My Invoice?](pricing-and-licensing/account/how-do-i-edit-my-account-information-in-my-invoice.md)
   * [How to Hide License Key and Account Information From Clients](pricing-and-licensing/account/how-to-hide-license-key-and-account-information-from-clients.md)
 
