@@ -40,8 +40,15 @@ const FontAwesomeIcon = props => {
 	const prefix = props.value ? props.value.replace( /-.*$/, '' ) : props.prefix
 	const iconName = props.value ? props.value.replace( /^.*?-/, '' ) : props.iconName
 
-	const iconHTML = faGetSVGIcon( prefix, iconName )
-	return <RawHTML { ...propsToPass }>{ iconHTML }</RawHTML>
+	// Display the icon.
+	if ( prefix && iconName ) {
+		const iconHTML = faGetSVGIcon( prefix, iconName )
+		return <RawHTML { ...propsToPass }>{ iconHTML }</RawHTML>
+	}
+
+	// If no value, just display a smiley placeholder.
+	const iconHTML = faGetSVGIcon( 'far', 'smile' )
+	return <RawHTML { ...propsToPass } className={ `${ props.className } ugb-icon--faded` }>{ iconHTML }</RawHTML>
 }
 
 FontAwesomeIcon.Content = props => {

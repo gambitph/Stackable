@@ -28,3 +28,9 @@
 		transform: rotate(360deg);
 	}
 }
+
+// This is used when the icon displayed has no value and we're only displaying a
+// placeholder icon.
+.ugb-icon--faded {
+	opacity: 0.4;
+}
