@@ -118,6 +118,44 @@ const IconControls = props => {
 			{ showBackground && props.onChangeBackgroundColor &&
 				<Fragment>
 
+					{ showProNotice && props.onChangeBackgroundColorType && props.design !== 'outlined' &&
+						<BaseControl
+							label={ __( 'Icon Shape / Outline Color', i18n ) }
+							id="icon-shape-color-type"
+						>
+							<AdvancedToolbarControl
+								controls={ [
+									{
+										value: '',
+										title: __( 'Single', i18n ),
+									},
+									{
+										value: 'gradient',
+										title: __( 'Gradient', i18n ),
+										className: 'ugb--is-premium',
+										isDisabled: true,
+									},
+								] }
+								value=""
+							/>
+						</BaseControl>
+					}
+
+					{ applyFilters( 'stackable.icon-controls.edit.background-color', ( () => {
+						return (
+							<Fragment>
+
+								{ props.onChangeBackgroundColor &&
+									<ColorPaletteControl
+										label={ __( 'Icon Shape / Outline Color', i18n ) }
+										value={ props.backgroundColor }
+										onChange={ props.onChangeBackgroundColor }
+									/>
+								}
+							</Fragment>
+						)
+					} )(), props ) }
+
 					{ props.onChangeBorderRadius &&
 						<AdvancedRangeControl
 							label={ props.design === 'shaped' ? __( 'Icon Shape Border Radius', i18n ) : __( 'Outline Border Radius', i18n ) }
@@ -156,44 +194,6 @@ const IconControls = props => {
 							placeholder="3"
 						/>
 					}
-
-					{ showProNotice && props.onChangeBackgroundColorType && props.design !== 'outlined' &&
-						<BaseControl
-							label={ __( 'Icon Shape / Outline Color', i18n ) }
-							id="icon-shape-color-type"
-						>
-							<AdvancedToolbarControl
-								controls={ [
-									{
-										value: '',
-										title: __( 'Single', i18n ),
-									},
-									{
-										value: 'gradient',
-										title: __( 'Gradient', i18n ),
-										className: 'ugb--is-premium',
-										isDisabled: true,
-									},
-								] }
-								value=""
-							/>
-						</BaseControl>
-					}
-
-					{ applyFilters( 'stackable.icon-controls.edit.background-color', ( () => {
-						return (
-							<Fragment>
-
-								{ props.onChangeBackgroundColor &&
-									<ColorPaletteControl
-										label={ __( 'Icon Shape / Outline Color', i18n ) }
-										value={ props.backgroundColor }
-										onChange={ props.onChangeBackgroundColor }
-									/>
-								}
-							</Fragment>
-						)
-					} )(), props ) }
 
 					{ props.onChangeBackgroundColorType &&
 						<ControlSeparator />
