@@ -1,3 +1,5 @@
+@import "common";
+
 .ugb-icon-popover {
 	.components-popover__content {
 		overflow: hidden;
@@ -46,5 +48,66 @@
 	}
 	.components-range-control__reset {
 		margin-left: 8px;
+	}
+}
+
+.ugb-icon-popover__drop-area {
+	font-size: 12px;
+	font-style: italic;
+	color: #aaa;
+	text-align: center;
+	margin: 12px 0 -4px;
+}
+
+/**
+ * When dragging an SVG file over the area.
+ */
+.file-drop-dragging-over-frame {
+	> .ugb-icon-popover__iconlist {
+		pointer-events: none;
+	}
+}
+
+.ugb-icon-popover__drop-indicator {
+	pointer-events: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: rgba(255, 255, 255, 0.9);
+	flex-direction: column;
+	transition: background 0.3s ease-in-out;
+	svg {
+		margin-bottom: 8px;
+		transform-origin: bottom;
+		animation: 1.8s ease infinite ugb-icon-popover__drop-indicator;
+	}
+}
+
+// Effect when hovering over the drop area.
+.file-drop-dragging-over-target {
+	> .ugb-icon-popover__drop-indicator {
+		background: rgba(255, 255, 255, 1);
+		outline-offset: -10px;
+		outline-style: dashed;
+		outline-width: 3px;
+		outline-color: #11a0d2;
+	}
+}
+
+// Drop arrow animation.
+@keyframes ugb-icon-popover__drop-indicator {
+	10% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-8px);
+	}
+	60% {
+		transform: translateY(0);
 	}
 }

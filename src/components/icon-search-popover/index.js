@@ -1,4 +1,9 @@
 /**
+ * Internal dependencies
+ */
+import SVGDrop from './images/drop.svg'
+
+/**
  * WordPress dependencies
  */
 import {
@@ -18,12 +23,18 @@ import { FontAwesomeIcon } from '~stackable/components'
 import { searchFontAwesomeIconName } from './search'
 import { faGetSVGIcon } from '~stackable/util'
 
+import { FileDrop } from 'react-file-drop'
+
 let searchTimeout = null
+let tempMediaUpload = null
 
 const IconSearchPopover = props => {
 	const [ value, setValue ] = useState( '' )
 	const [ results, setResults ] = useState( [] )
 	const [ isBusy, setIsBusy ] = useState( false )
+	const [ isDropping, setIsDropping ] = useState( false )
+
+	const allowSVGUpload = props.returnSVGValue
 
 	// Debounce search.
 	useEffect( () => {
@@ -42,6 +53,21 @@ const IconSearchPopover = props => {
 		return () => clearTimeout( searchTimeout )
 	}, [ value ] )
 
+	// Workaround for Gutenberg. When dropping files on the editor, even
+	// if dragging on a popup, the editor thinks you're dropping a file
+	// to insert it. A workaround is to temporarily disable media uploading
+	// to trick the DropZone into doing nothing when the file is dropped.
+	useEffect( () => {
+		if ( ! tempMediaUpload ) {
+			tempMediaUpload = wp.data.select( 'core/block-editor' ).getSettings().mediaUpload
+		}
+		if ( isDropping ) {
+			wp.data.dispatch( 'core/block-editor' ).updateSettings( { mediaUpload: null } )
+		} else if ( wp.data.select( 'core/block-editor' ).getSettings().mediaUpload !== tempMediaUpload ) {
+			wp.data.dispatch( 'core/block-editor' ).updateSettings( { mediaUpload: tempMediaUpload } )
+		}
+	}, [ isDropping ] )
+
 	return (
 		<Popover
 			className="ugb-icon-popover"
@@ -49,14 +75,41 @@ const IconSearchPopover = props => {
 			onClickOutside={ props.onClickOutside }
 		>
 			<PanelBody>
-				<div className="ugb-icon-popover__label-container">
-					<TextControl
-						className="ugb-icon-popover__input"
-						value={ value }
-						onChange={ setValue }
-						placeholder={ __( 'Type to search icon', i18n ) }
-					/>
-					{ props.allowReset &&
+				<FileDrop
+					onFrameDragEnter={ () => setIsDropping( true ) }
+					onFrameDragLeave={ () => setIsDropping( false ) }
+					onFrameDrop={ () => setIsDropping( false ) }
+					onDrop={ files => {
+						if ( ! allowSVGUpload || ! files.length ) {
+							setIsDropping( false )
+							return
+						}
+
+						// Only SVGs are allowed.
+						if ( files[ 0 ].type !== 'image/svg+xml' ) {
+							setIsDropping( false )
+							return
+						}
+
+						// Read the SVG,
+						const fr = new FileReader()
+						fr.onload = function( e ) {
+							setIsDropping( false )
+							props.onChange( e.target.result )
+							props.onClose()
+						}
+
+						fr.readAsText( files[ 0 ] )
+					} }
+				>
+					<div className="ugb-icon-popover__label-container">
+						<TextControl
+							className="ugb-icon-popover__input"
+							value={ value }
+							onChange={ setValue }
+							placeholder={ __( 'Type to search icon', i18n ) }
+						/>
+						{ props.allowReset &&
 						<Button
 							onClick={ () => {
 								props.onChange( '' )
@@ -68,31 +121,43 @@ const IconSearchPopover = props => {
 						>
 							{ __( 'Remove', i18n ) }
 						</Button>
-					}
-				</div>
-				<div className="ugb-icon-popover__iconlist">
-					{ isBusy && <Spinner /> }
-					{ ! isBusy && results.map( ( { prefix, iconName }, i ) => {
-						const iconValue = `${ prefix }-${ iconName }`
-						return <button
-							key={ i }
-							className={ `components-button ugb-prefix--${ prefix } ugb-icon--${ iconName }` }
-							onClick={ () => {
-								if ( props.returnSVGValue ) {
-									props.onChange( faGetSVGIcon( prefix, iconName ) )
-								} else {
-									props.onChange( iconValue, prefix, iconName )
-								}
-								props.onClose()
-							} }
-						>
-							<FontAwesomeIcon prefix={ prefix } iconName={ iconName } />
-						</button>
-					} ) }
-					{ ! isBusy && ! results.length &&
+						}
+					</div>
+					<div className="ugb-icon-popover__iconlist">
+						{ isBusy && <Spinner /> }
+						{ ! isBusy && results.map( ( { prefix, iconName }, i ) => {
+							const iconValue = `${ prefix }-${ iconName }`
+							return <button
+								key={ i }
+								className={ `components-button ugb-prefix--${ prefix } ugb-icon--${ iconName }` }
+								onClick={ () => {
+									if ( props.returnSVGValue ) {
+										props.onChange( faGetSVGIcon( prefix, iconName ) )
+									} else {
+										props.onChange( iconValue, prefix, iconName )
+									}
+									props.onClose()
+								} }
+							>
+								<FontAwesomeIcon prefix={ prefix } iconName={ iconName } />
+							</button>
+						} ) }
+						{ ! isBusy && ! results.length &&
 						<p className="components-base-control__help">{ __( 'No matches found', i18n ) }</p>
+						}
+					</div>
+					{ allowSVGUpload &&
+						<div className="ugb-icon-popover__drop-area">
+							{ __( 'You can also drop an SVG file here', i18n ) }
+						</div>
 					}
-				</div>
+					{ allowSVGUpload && isDropping &&
+						<div className="ugb-icon-popover__drop-indicator">
+							<SVGDrop height="40" width="40" />
+							{ __( 'Drop your SVG here', i18n ) }
+						</div>
+					}
+				</FileDrop>
 			</PanelBody>
 		</Popover>
 	)

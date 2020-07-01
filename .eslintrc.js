@@ -64,5 +64,6 @@ module.exports = {
 		btoa: true,
 		alert: true,
 		Element: true,
+		FileReader: true,
 	},
 };
