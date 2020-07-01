@@ -54,6 +54,10 @@ export const createIconStyleSet = ( attrNameTemplate = '%s', mainClassName = '',
 			color: appendImportant( getValue( 'Color' ) ),
 			transform: appendImportant( getValue( 'Rotation', 'rotate(%sdeg)' ) ),
 		},
+		[ `.${ mainClassName } .ugb-icon-inner-svg, .${ mainClassName } .ugb-icon-inner-svg svg *` ]: {
+			color: appendImportant( getValue( 'Color' ) ),
+			fill: appendImportant( getValue( 'Color' ) ),
+		},
 		[ `.${ mainClassName }` ]: {
 			opacity: appendImportant( getValue( 'Opacity' ) ),
 		},
