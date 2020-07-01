@@ -785,7 +785,7 @@ class Edit extends Component {
 		return (
 			<BlockContainer.Edit className={ mainClasses } blockProps={ this.props } render={ () => (
 				<Fragment>
-					{ displayPosts.map( ( post, i ) => {
+					{ ( displayPosts || [] ).map( ( post, i ) => {
 						const featuredImageSrc = ( ( post.featured_image_urls && post.featured_image_urls[ imageSize || 'large' ] ) || [] )[ 0 ]
 						const featuredImage = featuredImageSrc &&
 							<figure className={ featuredImageClasses }>
