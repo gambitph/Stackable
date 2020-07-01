@@ -24,6 +24,11 @@ const SVGS = {
 	blob1: SVGBlob1,
 }
 
+export const getShapeSVG = shape => {
+	const svgs = applyFilters( 'stackable.image.shape.svgs', SVGS )
+	return ! svgs[ shape ] ? null : svgs[ shape ]
+}
+
 const createImageStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
 	const getValue = __getValue( blockAttributes, getAttrName )
@@ -64,7 +69,7 @@ export const createImageMask = ( attrNameTemplate = '%s', blockAttributes = {} )
 	const shapeStretch = getValue( 'ShapeStretch' )
 	const shapeFlipX = getValue( 'ShapeFlipX' )
 	const shapeFlipY = getValue( 'ShapeFlipY' )
-	const MaskImage = applyFilters( 'stackable.image.shape.svgs', SVGS )[ shape ]
+	const MaskImage = getShapeSVG( shape )
 	const MaskComp = <MaskImage
 		preserveAspectRatio={ ! [ '', 'square' ].includes( shape ) && shapeStretch ? 'none' : undefined }
 		transform={ ! shapeFlipX && ! shapeFlipY ? undefined : `scale(${ shapeFlipX ? -1 : 1 },${ shapeFlipY ? -1 : 1 })` }

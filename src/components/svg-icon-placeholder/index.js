@@ -8,7 +8,7 @@ import { useState } from '@wordpress/element'
 /**
  * External dependencies
  */
-import { IconSearchPopover, SvgIcon } from '~stackable/components'
+import { IconSearchPopover, SvgIconHelper } from '~stackable/components'
 
 const SvgIconPlaceholder = withInstanceId( ( props => {
 	const [ openPopover, setOpenPopover ] = useState( false )
@@ -36,7 +36,7 @@ const SvgIconPlaceholder = withInstanceId( ( props => {
 					}
 				} }
 			>
-				<SvgIcon { ...propsToPass } />
+				<SvgIconHelper { ...propsToPass } />
 			</Button>
 			{ ( ( isOpen !== null && isOpen ) || ( isOpen === null && openPopover ) ) &&
 				<IconSearchPopover

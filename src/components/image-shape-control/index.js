@@ -28,9 +28,9 @@ const ImageShapeControl = props => {
 				{ ...props }
 				className={ classnames( props.className, [ 'ugb-image-shape-control', 'ugb--help-tip-image-shape' ] ) }
 				options={ [
-					{
+					...( props.hasDefault ? [ {
 						label: __( 'Default', i18n ), value: '', image: ImageShapeDefault,
-					},
+					} ] : [] ),
 					{
 						label: __( 'Square', i18n ), value: 'square', image: ImageShapeSquare,
 					},
@@ -52,6 +52,7 @@ ImageShapeControl.defaultProps = {
 	className: '',
 	label: __( 'Shape', i18n ),
 	selected: '',
+	hasDefault: true,
 }
 
 export default ImageShapeControl

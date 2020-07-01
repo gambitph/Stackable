@@ -8,7 +8,7 @@ import {
 import {
 	RawHTML, useEffect, useState,
 } from '@wordpress/element'
-import { omit } from 'lodash'
+import { pick } from 'lodash'
 
 const Spinner = () => {
 	return <SVGSpinner className="ugb-icon-is-loading" />
@@ -25,7 +25,7 @@ const FontAwesomeIcon = props => {
 		faAPILoaded().then( forceUpdate )
 	}, [] )
 
-	const propsToPass = omit( props, [ 'prefix', 'iconName', 'value' ] )
+	const propsToPass = pick( props, [ 'className', 'color', 'fill', 'style' ] )
 
 	// If given an svg, just display it.
 	if ( props.value.match( /^<svg/ ) ) {
@@ -45,7 +45,7 @@ const FontAwesomeIcon = props => {
 }
 
 FontAwesomeIcon.Content = props => {
-	const propsToPass = omit( props, [ 'prefix', 'iconName', 'value' ] )
+	const propsToPass = pick( props, [ 'className', 'color', 'fill', 'style' ] )
 
 	// If given an svg, just display it.
 	if ( typeof props.value === 'string' ) {

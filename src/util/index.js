@@ -12,6 +12,7 @@ export * from './svg'
 export * from './hooks'
 export * from './collections'
 export * from './inspector'
+export * from './icon'
 export * from './fontawesome'
 
 /**

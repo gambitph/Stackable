@@ -121,8 +121,6 @@ export const getIconSVGBase64 = ( icon, iconShape, iconColor ) => {
 /**
  * Gets a list of toolbars for picking an icon for the Icon List block.
  *
- * @param {Object} props
- *
  * @return {Array} An array of objects that can be used for the `controls` attribute of a Toolbar Component
  */
 export const getIconToolbarList = () => {
@@ -138,7 +136,6 @@ export const getIconToolbarList = () => {
  * Gets a list of toolbars for picking an icon shape based on the given icon.
  *
  * @param {string} icon The name of the icon to show the shapes for.
- * @param {Object} props
  *
  * @return {Array} An array of objects that can be used for the `controls` attribute of a Toolbar Component
  */

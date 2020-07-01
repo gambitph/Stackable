@@ -247,6 +247,20 @@ if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
 		$tags['femergenode'] = array(
 			'in' => true,
 		);
+		// SVG gradients.
+		$tags['stop'] = array(
+			'offset' => true,
+			'style' => true,
+			'stop-color' => true,
+			'stop-opacity' => true,
+		);
+		$tags['linearGradient'] = array(
+			'id' => true,
+			'x1' => true,
+			'x2' => true,
+			'y1' => true,
+			'y2' => true,
+		);
 
 		_stackable_common_attributes( $tags, 'div' );
 		_stackable_common_attributes( $tags, 'h1' );

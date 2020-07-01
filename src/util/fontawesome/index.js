@@ -7,6 +7,9 @@ export const faGetSVGIcon = ( prefix, iconName ) => {
 }
 
 export const faGetIcon = ( prefix, iconName ) => {
+	if ( ! window.FontAwesome ) {
+		return null
+	}
 	return window.FontAwesome.icon( { prefix, iconName } )
 }
 
