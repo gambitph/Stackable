@@ -3,6 +3,7 @@
 .ugb-icon-popover {
 	.components-popover__content {
 		overflow: hidden;
+		width: 330px;
 	}
 }
 
@@ -54,9 +55,15 @@
 .ugb-icon-popover__drop-area {
 	font-size: 12px;
 	font-style: italic;
-	color: #aaa;
+	color: #999;
 	text-align: center;
 	margin: 12px 0 -4px;
+	display: block;
+	text-decoration: none;
+	outline: none;
+	&:hover {
+		text-decoration: underline;
+	}
 }
 
 /**

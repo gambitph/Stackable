@@ -68,6 +68,33 @@ const IconSearchPopover = props => {
 		}
 	}, [ isDropping ] )
 
+	// Open the upload dialog and let the user pick an SVG.
+	const uploadSvg = event => {
+		event.preventDefault()
+
+		const input = document.createElement( 'input' )
+		input.accept = 'image/svg+xml'
+		input.type = 'file'
+		input.onchange = e => {
+			const files = e.target.files
+			if ( ! files.length ) {
+				setIsDropping( false )
+				return
+			}
+
+			// Read the SVG,
+			const fr = new FileReader()
+			fr.onload = function( e ) {
+				setIsDropping( false )
+				props.onChange( e.target.result )
+				props.onClose()
+			}
+
+			fr.readAsText( files[ 0 ] )
+		 }
+		input.click()
+	}
+
 	return (
 		<Popover
 			className="ugb-icon-popover"
@@ -147,9 +174,9 @@ const IconSearchPopover = props => {
 						}
 					</div>
 					{ allowSVGUpload &&
-						<div className="ugb-icon-popover__drop-area">
-							{ __( 'You can also drop an SVG file here', i18n ) }
-						</div>
+						<a href="#0" className="ugb-icon-popover__drop-area" onClick={ uploadSvg }>
+							{ __( 'Drop an SVG file or click here to upload', i18n ) }
+						</a>
 					}
 					{ allowSVGUpload && isDropping &&
 						<div className="ugb-icon-popover__drop-indicator">
