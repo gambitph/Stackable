@@ -28,8 +28,13 @@ const FontAwesomeIcon = props => {
 	const propsToPass = pick( props, [ 'className', 'color', 'fill', 'style' ] )
 
 	// If given an svg, just display it.
-	if ( props.value.match( /^<svg/ ) ) {
-		return <RawHTML { ...propsToPass }>{ props.value }</RawHTML>
+	if ( typeof props.value === 'string' ) {
+		if ( props.value.match( /^<svg(.*?)<\/svg>$/g ) ) {
+			return <RawHTML { ...propsToPass }>{ props.value }</RawHTML>
+		} else if ( props.value.match( /<svg/ ) ) {
+			const svgString = ( props.value.match( /<svg.*?<\/svg>/g ) || [ props.value ] )[ 0 ]
+			return <RawHTML { ...propsToPass }>{ svgString }</RawHTML>
+		}
 	}
 
 	// There's a chance that the Font Awesome library hasn't loaded yet, wait for it.
@@ -56,8 +61,11 @@ FontAwesomeIcon.Content = props => {
 
 	// If given an svg, just display it.
 	if ( typeof props.value === 'string' ) {
-		if ( props.value.match( /^<svg/ ) ) {
+		if ( props.value.match( /^<svg(.*?)<\/svg>$/g ) ) {
 			return <RawHTML { ...propsToPass }>{ props.value }</RawHTML>
+		} else if ( props.value.match( /<svg/ ) ) {
+			const svgString = ( props.value.match( /<svg.*?<\/svg>/g ) || [ props.value ] )[ 0 ]
+			return <RawHTML { ...propsToPass }>{ svgString }</RawHTML>
 		}
 	}
 

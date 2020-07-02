@@ -24,19 +24,20 @@ import {
 	AlignButtonsControl,
 	ButtonControlsHelper,
 	ControlSeparator,
-	IconControl,
 	PanelSpacingBody,
 	AdvancedRangeControl,
 	FourRangeControl,
 	SvgIconPlaceholder,
 	ButtonEditHelper,
 	DivBackground,
+	IconControlsHelper,
 } from '~stackable/components'
 import {
 	descriptionPlaceholder,
 	createTypographyAttributeNames,
 	createResponsiveAttributeNames,
 	createButtonAttributeNames,
+	createIconAttributeNames,
 } from '~stackable/util'
 import { i18n, showProNotice } from 'stackable'
 import {
@@ -118,10 +119,6 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 		columnBorderThickness = '',
 		showButton = true,
 		showIcon = true,
-		icon = '',
-		iconColor = '',
-		iconOpacity = '',
-		iconRotation = '',
 		iconTop = '',
 		iconLeft = '',
 	} = props.attributes
@@ -249,57 +246,20 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 				onChange={ showIcon => setAttributes( { showIcon } ) }
 				toggleOnSetAttributes={ [
 					'icon',
-					'iconColor',
-					...createResponsiveAttributeNames( 'icon%sSize' ),
-					'iconOpacity',
-					'iconRotation',
+					...createIconAttributeNames( 'icon%s' ),
 					...createResponsiveAttributeNames( 'icon%sAlign' ),
 				] }
 				toggleAttributeName="showIcon"
 			>
-				<IconControl
-					label={ __( 'Icon', i18n ) }
-					value={ icon }
-					onChange={ icon => setAttributes( { icon } ) }
-				/>
-				<ColorPaletteControl
-					value={ iconColor }
-					onChange={ iconColor => setAttributes( { iconColor } ) }
-					label={ __( 'Icon Color', i18n ) }
-				/>
-				<ResponsiveControl
-					attrNameTemplate="icon%sSize"
+				<IconControlsHelper
+					attrNameTemplate="icon%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-				>
-					<AdvancedRangeControl
-						label={ __( 'Icon Size', i18n ) }
-						min={ 5 }
-						max={ design !== 'large-icon' ? 200 : 400 }
-						step={ 1 }
-						allowReset={ true }
-						placeholder="30"
-					/>
-				</ResponsiveControl>
-				<AdvancedRangeControl
-					label={ __( 'Icon Opacity', i18n ) }
-					value={ iconOpacity }
-					onChange={ iconOpacity => setAttributes( { iconOpacity } ) }
-					min={ 0 }
-					max={ 1 }
-					step={ 0.1 }
-					allowReset={ true }
-					placeholder="1"
-				/>
-				<AdvancedRangeControl
-					label={ __( 'Icon Rotation', i18n ) }
-					value={ iconRotation }
-					onChange={ iconRotation => setAttributes( { iconRotation } ) }
-					min={ 0 }
-					max={ 360 }
-					step={ 1 }
-					allowReset={ true }
-					placeholder={ design === 'large-icon' ? -20 : 0 }
+					icon={ props.attributes.icon }
+					onChangeIcon={ icon => setAttributes( { icon } ) }
+					sizeMax={ design !== 'large-icon' ? 300 : 500 }
+					onChangeDesign={ false }
+					onChangeShowBackgroundShape={ false }
 				/>
 				{ show.iconLocation &&
 					<FourRangeControl
@@ -546,6 +506,7 @@ const edit = props => {
 
 	const itemClasses = classnames( [
 		'ugb-notification__item',
+		'ugb-notification--new-icon', // For backward compatibility < 2.6 for new icon.
 	], {
 		[ `ugb--shadow-${ shadow }` ]: shadow !== '',
 	} )
@@ -570,11 +531,14 @@ const edit = props => {
 						</span>
 					) }
 					{ showIcon &&
-						<SvgIconPlaceholder
-							className="ugb-notification__icon"
-							value={ icon }
-							onChange={ icon => setAttributes( { icon } ) }
-						/>
+						<div className="ugb-notification__icon">
+							<SvgIconPlaceholder
+								attrNameTemplate="icon%s"
+								blockAttributes={ props.attributes }
+								value={ icon }
+								onChange={ icon => setAttributes( { icon } ) }
+							/>
+						</div>
 					}
 					{ showTitle &&
 						<RichText
@@ -622,7 +586,7 @@ export default compose(
 	withClickOpenInspector( [
 		[ '.ugb-notification__item', 'column-background' ],
 		[ '.ugb-notification__close-button', 'dismissible' ],
-		[ '.ugb-notification__icon', 'icon' ],
+		[ '.ugb-notification__icon svg', 'icon' ],
 		[ '.ugb-notification__title', 'title' ],
 		[ '.ugb-notification__description', 'description' ],
 		[ '.ugb-button', 'button' ],

@@ -11,6 +11,7 @@ import {
 	createResponsiveStyles,
 	appendImportant,
 	__getValue,
+	createIconStyleSet,
 } from '~stackable/util'
 import deepmerge from 'deepmerge'
 
@@ -108,8 +109,6 @@ export const createStyles = props => {
 				color: color ? `${ color } !important` : undefined,
 				height: getValue( 'iconSize', '%spx !important' ),
 				width: getValue( 'iconSize', '%spx !important' ),
-				opacity: getValue( 'iconOpacity', '%s !important' ),
-				transform: getValue( 'iconRotation', 'rotate(%sdeg) !important' ),
 			},
 			tablet: {
 				'.ugb-notification__icon': {
@@ -128,6 +127,7 @@ export const createStyles = props => {
 				},
 			},
 		} )
+		styles.push( { ...createIconStyleSet( 'icon%s', 'ugb-notification__icon', props.attributes ) } )
 	}
 
 	// Title.

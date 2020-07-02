@@ -4,7 +4,7 @@
 import classnames from 'classnames'
 import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
 import {
-	SvgIcon,
+	SvgIconHelper,
 	BlockContainer,
 	ButtonEdit,
 	DivBackground,
@@ -73,6 +73,7 @@ const save = props => {
 
 	const itemClasses = classnames( [
 		'ugb-notification__item',
+		'ugb-notification--new-icon', // For backward compatibility < 2.6 for new icon.
 	], {
 		[ `ugb--shadow-${ shadow }` ]: shadow !== '',
 	} )
@@ -98,10 +99,13 @@ const save = props => {
 						</span>
 					) }
 					{ showIcon &&
-						<SvgIcon.Content
-							className="ugb-notification__icon"
-							value={ icon }
-						/>
+						<div className="ugb-notification__icon">
+							<SvgIconHelper.Content
+								attrNameTemplate="icon%s"
+								blockAttributes={ props.attributes }
+								value={ icon }
+							/>
+						</div>
 					}
 					{ showTitle && ! RichText.isEmpty( title ) &&
 						<RichText.Content
