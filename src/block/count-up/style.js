@@ -90,9 +90,9 @@ export const createStyles = props => {
 		mobileContentAlign = '',
 	} = props.attributes
 	if ( showIcon ) {
-		styles.push( { ...createIconStyleSet( 'icon%s', 'ugb-countup__icon', props.attributes ) } )
 		styles.push( {
 			'.ugb-countup__icon': {
+				color: whiteIfDark( getValue( 'iconColor' ), show.columnBackground ? columnBackgroundColor : ( showBlockBackground ? blockBackgroundBackgroundColor : '' ) ),
 				marginLeft: iconAlign !== '' || contentAlign !== '' ? appendImportant( marginLeftAlign( iconAlign || contentAlign ) ) : undefined,
 				marginRight: iconAlign !== '' || contentAlign !== '' ? appendImportant( marginRightAlign( iconAlign || contentAlign ) ) : undefined,
 			},
@@ -109,6 +109,7 @@ export const createStyles = props => {
 				},
 			},
 		} )
+		styles.push( { ...createIconStyleSet( 'icon%s', 'ugb-countup__icon', props.attributes ) } )
 	}
 
 	// Title.
