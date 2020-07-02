@@ -284,7 +284,7 @@ IconControls.defaultProps = {
 
 	// The number of color & opacity options to show for the multicolor option.
 	// This typically should be based on the number of <path> tags in the SVG.
-	numPaths: 3,
+	numPaths: '',
 	color3: '',
 	onChangeColor3: () => {},
 	color4: '',
