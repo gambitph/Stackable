@@ -422,7 +422,7 @@ const edit = props => {
 					const description = attributes[ `description${ i }` ]
 					const countText = attributes[ `countText${ i }` ]
 
-					const iconComp = showIcon && <div className="ugb-countup__icon">
+					const iconComp = showIcon && <div className="ugb-countup__icon ugb-countup__icon--v2">
 						<SvgIconPlaceholder
 							attrNameTemplate="icon%s"
 							blockAttributes={ props.attributes }

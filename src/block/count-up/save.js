@@ -53,7 +53,8 @@ const save = props => {
 					const description = attributes[ `description${ i }` ]
 					const countText = attributes[ `countText${ i }` ]
 
-					const iconComp = showIcon && <div className="ugb-countup__icon">
+					// The ugb-countup__icon--v2 class is for backward compatibility
+					const iconComp = showIcon && <div className="ugb-countup__icon ugb-countup__icon--v2">
 						<SvgIconHelper.Content
 							attrNameTemplate="icon%s"
 							blockAttributes={ props.attributes }

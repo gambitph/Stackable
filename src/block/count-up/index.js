@@ -136,25 +136,33 @@ export const schema = {
 	icon1: {
 		type: 'string',
 		source: 'html',
-		selector: '.ugb-countup__item1 .ugb-countup__icon .ugb-icon-inner-svg',
+		selector: '.ugb-countup__item1 .ugb-icon-inner-svg,' +
+			// This one is for backward compatibility <= 2.6.
+			'.ugb-countup__item1 .ugb-countup__icon:not(.ugb-countup__icon--v2)',
 		default: 'fas-cogs',
 	},
 	icon2: {
 		type: 'string',
 		source: 'html',
-		selector: '.ugb-countup__item2 .ugb-countup__icon .ugb-icon-inner-svg',
+		selector: '.ugb-countup__item2 .ugb-icon-inner-svg,' +
+			// This one is for backward compatibility <= 2.6.
+			'.ugb-countup__item2 .ugb-countup__icon:not(.ugb-countup__icon--v2)',
 		default: 'fas-hands-helping',
 	},
 	icon3: {
 		type: 'string',
 		source: 'html',
-		selector: '.ugb-countup__item3 .ugb-countup__icon .ugb-icon-inner-svg',
+		selector: '.ugb-countup__item3 .ugb-icon-inner-svg,' +
+			// This one is for backward compatibility <= 2.6.
+			'.ugb-countup__item3 .ugb-countup__icon:not(.ugb-countup__icon--v2)',
 		default: 'fas-envelope',
 	},
 	icon4: {
 		type: 'string',
 		source: 'html',
-		selector: '.ugb-countup__item4 .ugb-countup__icon .ugb-icon-inner-svg',
+		selector: '.ugb-countup__item4 .ugb-icon-inner-svg,' +
+			// This one is for backward compatibility <= 2.6.
+			'.ugb-countup__item4 .ugb-countup__icon:not(.ugb-countup__icon--v2)',
 		default: 'fas-globe-americas',
 	},
 	...createIconAttributes( 'icon%s' ),
