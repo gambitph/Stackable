@@ -111,7 +111,7 @@ const IconControls = props => {
 				)
 			} )(), props ) }
 
-			{ props.onChangeColor &&
+			{ props.onChangeColor && props.onChangeDesign &&
 				<ControlSeparator />
 			}
 
