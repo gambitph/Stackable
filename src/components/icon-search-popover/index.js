@@ -171,6 +171,11 @@ const IconSearchPopover = props => {
 						</Button>
 						}
 					</div>
+					{ allowSVGUpload &&
+						<a href="#0" className="ugb-icon-popover__drop-area" onClick={ uploadSvg }>
+							{ __( 'Drop your own SVG icon or click upload', i18n ) }
+						</a>
+					}
 					<div className="ugb-icon-popover__iconlist">
 						{ isBusy && <Spinner /> }
 						{ ! isBusy && results.map( ( { prefix, iconName }, i ) => {
@@ -194,11 +199,6 @@ const IconSearchPopover = props => {
 						<p className="components-base-control__help">{ __( 'No matches found', i18n ) }</p>
 						}
 					</div>
-					{ allowSVGUpload &&
-						<a href="#0" className="ugb-icon-popover__drop-area" onClick={ uploadSvg }>
-							{ __( 'Drop an SVG file or click here to upload', i18n ) }
-						</a>
-					}
 					{ allowSVGUpload && isDropping &&
 						<div className="ugb-icon-popover__drop-indicator">
 							<SVGDrop height="40" width="40" />
