@@ -72,10 +72,10 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 				paddingBottom: getValue( 'PaddingBottom' ) !== '' ? `${ getValue( 'PaddingBottom' ) }px` : undefined,
 				paddingLeft: getValue( 'PaddingLeft' ) !== '' ? `${ getValue( 'PaddingLeft' ) }px` : undefined,
 			},
-			[ `.${ mainClassName } .ugb-button--inner, .${ mainClassName } svg` ]: {
+			[ `.${ mainClassName } .ugb-button--inner, .${ mainClassName } svg:not(.ugb-custom-icon)` ]: {
 				color: appendImportant( whiteIfDarkBlackIfLight( getValue( 'TextColor' ), getValue( 'BackgroundColor' ) ) ),
 			},
-			[ `.${ mainClassName }:hover .ugb-button--inner, .${ mainClassName }:hover svg` ]: {
+			[ `.${ mainClassName }:hover .ugb-button--inner, .${ mainClassName }:hover svg:not(.ugb-custom-icon)` ]: {
 				color: appendImportant( whiteIfDarkBlackIfLight( getValue( 'HoverTextColor' ), getValue( 'HoverBackgroundColor' ) ) ),
 			},
 			[ `.${ mainClassName }:hover` ]: {
@@ -124,10 +124,10 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 
 		if ( getValue( 'Icon' ) !== '' || hasIcon ) {
 			styles.push( {
-				[ `.${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon svg` ]: {
+				[ `.${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon svg:not(.ugb-custom-icon)` ]: {
 					color: getValue( 'BackgroundColor' ) !== '' ? getValue( 'BackgroundColor' ) : undefined,
 				},
-				[ `.${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon:hover svg` ]: {
+				[ `.${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon:hover svg:not(.ugb-custom-icon)` ]: {
 					color: getValue( 'HoverBackgroundColor' ) !== '' ? getValue( 'HoverBackgroundColor' ) :
 						( getValue( 'BackgroundColor' ) !== '' ? getValue( 'BackgroundColor' ) : undefined ),
 				},
@@ -158,7 +158,7 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 
 			if ( getValue( 'Icon' ) !== '' || hasIcon ) {
 				styles.push( {
-					[ `.${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon:hover svg` ]: {
+					[ `.${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon:hover svg:not(.ugb-custom-icon)` ]: {
 						color: appendImportant( whiteIfDarkBlackIfLight( getValue( 'HoverTextColor' ), getValue( 'HoverBackgroundColor' ) || getValue( 'BackgroundColor' ) ) ),
 					},
 				} )
@@ -180,10 +180,10 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 
 		if ( getValue( 'Icon' ) !== '' || hasIcon ) {
 			styles.push( {
-				[ `.${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon svg` ]: {
+				[ `.${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon svg:not(.ugb-custom-icon)` ]: {
 					color: getValue( 'BackgroundColor' ) !== '' ? getValue( 'BackgroundColor' ) : undefined,
 				},
-				[ `.${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon:hover svg` ]: {
+				[ `.${ mainClassName }.ugb-button--has-icon.ugb-button--has-icon:hover svg:not(.ugb-custom-icon)` ]: {
 					color: getValue( 'HoverBackgroundColor' ) !== '' ? getValue( 'HoverBackgroundColor' ) : undefined,
 				},
 			} )

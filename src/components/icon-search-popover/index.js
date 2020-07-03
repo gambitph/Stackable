@@ -174,10 +174,10 @@ const IconSearchPopover = props => {
 									props.onClose()
 								} }
 								isSmall
-								isDefault
+								isTertiary
 								className="components-range-control__reset"
 							>
-								{ __( 'Remove', i18n ) }
+								{ __( 'Clear', i18n ) }
 							</Button>
 						}
 					</div>
