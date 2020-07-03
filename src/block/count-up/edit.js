@@ -197,7 +197,9 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 						Math.max(
 							...Object.values(
 								pick( props.attributes, [ 'icon1', 'icon2', 'icon3', 'icon4' ] )
-							).map( numShapesInSvg )
+							).map( icon => {
+								return numShapesInSvg( icon ) || 1
+							} )
 						)
 					}
 				/>
