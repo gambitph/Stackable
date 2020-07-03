@@ -28,6 +28,25 @@ import { FileDrop } from 'react-file-drop'
 let searchTimeout = null
 let tempMediaUpload = null
 
+/**
+ * Adds a new class "ugb-custom-icon" to an SVG string.
+ *
+ * @param {string} svgString The SVG in string form
+ * @param {string} customClass Class to add
+ *
+ * @return {string} The modified SVG
+ */
+export const addCustomIconClass = ( svgString, customClass = 'ugb-custom-icon' ) => {
+	if ( svgString.match( /(<svg[^>]*class=["'])/ ) ) {
+		// Svg with an existing class attribute.
+		return svgString.replace( /(<svg[^>]*class=["'])/, `$1${ customClass } ` )
+	} else if ( svgString.match( /(<svg)/ ) ) {
+		// Svg without a class attribute.
+		return svgString.replace( /(<svg)/, `$1 class="${ customClass }"` )
+	}
+	return svgString
+}
+
 const IconSearchPopover = props => {
 	const [ value, setValue ] = useState( '' )
 	const [ results, setResults ] = useState( [] )
@@ -86,7 +105,8 @@ const IconSearchPopover = props => {
 			const fr = new FileReader()
 			fr.onload = function( e ) {
 				setIsDropping( false )
-				props.onChange( e.target.result )
+				const svgString = addCustomIconClass( e.target.result )
+				props.onChange( svgString )
 				props.onClose()
 			}
 
@@ -122,7 +142,8 @@ const IconSearchPopover = props => {
 						const fr = new FileReader()
 						fr.onload = function( e ) {
 							setIsDropping( false )
-							props.onChange( e.target.result )
+							const svgString = addCustomIconClass( e.target.result )
+							props.onChange( svgString )
 							props.onClose()
 						}
 

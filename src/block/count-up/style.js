@@ -91,8 +91,10 @@ export const createStyles = props => {
 	} = props.attributes
 	if ( showIcon ) {
 		styles.push( {
-			'.ugb-countup__icon': {
+			'.ugb-countup__icon svg:not(.ugb-custom-icon)': {
 				color: whiteIfDark( getValue( 'iconColor' ), show.columnBackground ? columnBackgroundColor : ( showBlockBackground ? blockBackgroundBackgroundColor : '' ) ),
+			},
+			'.ugb-countup__icon': {
 				marginLeft: iconAlign !== '' || contentAlign !== '' ? appendImportant( marginLeftAlign( iconAlign || contentAlign ) ) : undefined,
 				marginRight: iconAlign !== '' || contentAlign !== '' ? appendImportant( marginRightAlign( iconAlign || contentAlign ) ) : undefined,
 			},

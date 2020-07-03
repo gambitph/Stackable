@@ -103,10 +103,12 @@ export const createStyles = props => {
 	if ( showIcon ) {
 		const color = whiteIfDarkBlackIfLight( iconColor, show.columnBackground && columnBackgroundColor )
 		styles.push( {
+			'.ugb-notification__icon svg:not(.ugb-custom-icon)': {
+				color: color ? `${ color } !important` : undefined,
+			},
 			'.ugb-notification__icon': {
 				marginLeft: iconAlign !== '' || contentAlign !== '' ? appendImportant( marginLeftAlign( iconAlign || contentAlign ) ) : undefined,
 				marginRight: iconAlign !== '' || contentAlign !== '' ? appendImportant( marginRightAlign( iconAlign || contentAlign ) ) : undefined,
-				color: color ? `${ color } !important` : undefined,
 				height: getValue( 'iconSize', '%spx !important' ),
 				width: getValue( 'iconSize', '%spx !important' ),
 			},
