@@ -184,6 +184,19 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.7.0 =
+* New: New Icon Block!
+* New: You can now upload your own SVG icons!
+* New: Improved icons, add backgrounds, shapes, outlines and more!
+* New: Updated Font Awesome icons!
+* New: Better searching of icons!
+* New: Font Awesome Pro integration (premium)
+* New: Smaller plugin filesize, now less than 2mb!
+* Change: Removed 1.12 backward compatiblity (version more than a year ago)
+* Fixed: Icon gets disabled when switching layouts in the notification block
+* Fixed: Possible error when encountering an error fetching blog posts
+* Fixed: Better handling for themes which may interfere with the placement of the popup video
+
 = 2.6.1 =
 * Fixed: Some buttons aligning to center
 * Fixed: Disabled fixed backgrounds in iOS due to image zooming issue in iOS
