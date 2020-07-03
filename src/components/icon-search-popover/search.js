@@ -1,6 +1,6 @@
-import { fontAwesomeSearchProIcons as isPro } from 'stackable'
+import { fontAwesomeSearchProIcons } from 'stackable'
 
-export const searchFontAwesomeIconName = async ( name = 'icon' ) => {
+export const searchFontAwesomeIconName = async ( name = 'icon', isPro = fontAwesomeSearchProIcons ) => {
 	const query =
 		`{ search(version: "latest", first: 50, query: "${ ( name || 'info' ).replace( /["'\\]/g, '' ) }") {
 			id

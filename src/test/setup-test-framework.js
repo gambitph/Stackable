@@ -5,6 +5,7 @@ import '@babel/polyfill' // Fixes: ReferenceError: regeneratorRuntime is not def
 
 import React from 'react'
 import '@testing-library/jest-dom'
+import fetch from 'node-fetch'
 
 global.React = React
 
@@ -30,3 +31,6 @@ global.window.localStorage = {
 // Fix for Error: Not implemented: HTMLMediaElement.prototype.play
 // @see https://github.com/jsdom/jsdom/issues/2155
 global.window.HTMLMediaElement.prototype.play = () => { /* do nothing */ }
+
+// Fix for window.fetch not available
+global.fetch = fetch
