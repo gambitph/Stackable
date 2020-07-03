@@ -55,15 +55,11 @@
 .ugb-icon-popover__drop-area {
 	font-size: 12px;
 	font-style: italic;
-	color: #999;
+	color: #888;
 	text-align: center;
 	margin: 0 0 24px;
 	display: block;
-	text-decoration: none;
 	outline: none;
-	&:hover {
-		text-decoration: underline;
-	}
 }
 
 /**

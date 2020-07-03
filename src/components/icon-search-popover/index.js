@@ -157,24 +157,34 @@ const IconSearchPopover = props => {
 							onChange={ setValue }
 							placeholder={ __( 'Type to search icon', i18n ) }
 						/>
+						{ allowSVGUpload &&
+							<Button
+								onClick={ uploadSvg }
+								isSmall
+								isDefault
+								className="components-range-control__reset"
+							>
+								{ __( 'Upload SVG', i18n ) }
+							</Button>
+						}
 						{ props.allowReset &&
-						<Button
-							onClick={ () => {
-								props.onChange( '' )
-								props.onClose()
-							} }
-							isSmall
-							isDefault
-							className="components-range-control__reset"
-						>
-							{ __( 'Remove', i18n ) }
-						</Button>
+							<Button
+								onClick={ () => {
+									props.onChange( '' )
+									props.onClose()
+								} }
+								isSmall
+								isDefault
+								className="components-range-control__reset"
+							>
+								{ __( 'Remove', i18n ) }
+							</Button>
 						}
 					</div>
 					{ allowSVGUpload &&
-						<a href="#0" className="ugb-icon-popover__drop-area" onClick={ uploadSvg }>
-							{ __( 'Drop your own SVG icon or click upload', i18n ) }
-						</a>
+						<div className="ugb-icon-popover__drop-area">
+							{ __( 'You can also drop your own SVG icon here', i18n ) }
+						</div>
 					}
 					<div className="ugb-icon-popover__iconlist">
 						{ isBusy && <Spinner /> }
