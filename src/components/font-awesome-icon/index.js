@@ -3,6 +3,7 @@ import {
 	faAPILoaded,
 	faIsAPILoaded,
 	faGetSVGIcon,
+	faIconLoaded,
 } from '~stackable/util'
 
 import {
@@ -29,11 +30,8 @@ const FontAwesomeIcon = props => {
 
 	// If given an svg, just display it.
 	if ( typeof props.value === 'string' ) {
-		if ( props.value.match( /^<svg(.*?)<\/svg>$/g ) ) {
+		if ( props.value.match( /^<svg/ ) ) {
 			return <RawHTML { ...propsToPass }>{ props.value }</RawHTML>
-		} else if ( props.value.match( /<svg/ ) ) {
-			const svgString = ( props.value.match( /<svg.*?<\/svg>/g ) || [ props.value ] )[ 0 ]
-			return <RawHTML { ...propsToPass }>{ svgString }</RawHTML>
 		}
 	}
 
@@ -48,6 +46,13 @@ const FontAwesomeIcon = props => {
 	// Display the icon.
 	if ( prefix && iconName ) {
 		const iconHTML = faGetSVGIcon( prefix, iconName )
+
+		// Just in case the icon hasn't loaded yet, wait for it.
+		if ( ! iconHTML ) {
+			faIconLoaded( prefix, iconName ).then( forceUpdate )
+			return <Spinner />
+		}
+
 		return <RawHTML { ...propsToPass }>{ iconHTML }</RawHTML>
 	}
 
@@ -61,11 +66,8 @@ FontAwesomeIcon.Content = props => {
 
 	// If given an svg, just display it.
 	if ( typeof props.value === 'string' ) {
-		if ( props.value.match( /^<svg(.*?)<\/svg>$/g ) ) {
+		if ( props.value.match( /^<svg/ ) ) {
 			return <RawHTML { ...propsToPass }>{ props.value }</RawHTML>
-		} else if ( props.value.match( /<svg/ ) ) {
-			const svgString = ( props.value.match( /<svg.*?<\/svg>/g ) || [ props.value ] )[ 0 ]
-			return <RawHTML { ...propsToPass }>{ svgString }</RawHTML>
 		}
 	}
 

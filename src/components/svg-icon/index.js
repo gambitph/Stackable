@@ -24,9 +24,29 @@ const wrapBackgroundShape = ( icon, shape ) => {
 	)
 }
 
+/**
+ * Extracts the first SVG tag it could find in an HTML string.
+ *
+ * @param {string} _htmlString String to extract the svg.
+ */
+const extractSvg = _htmlString => {
+	const htmlString = applyFilters( 'stackable.svg-icon.extract-svg', _htmlString )
+	if ( htmlString.match( /^<svg(.*?)<\/svg>$/g ) ) {
+		return htmlString
+	} else if ( htmlString.match( /<svg/ ) ) {
+		return ( htmlString.match( /<svg.*?<\/svg>/g ) || [ htmlString ] )[ 0 ]
+	}
+	return htmlString
+}
+
 const SvgIcon = props => {
+	const propsToPass = {
+		...props,
+		value: typeof props.value === 'string' ? extractSvg( props.value ) : props.value,
+	}
+
 	let ret = (
-		<FontAwesomeIcon { ...props } className={ classnames( [ 'ugb-icon-inner-svg', props.className ] ) } />
+		<FontAwesomeIcon { ...propsToPass } className={ classnames( [ 'ugb-icon-inner-svg', props.className ] ) } />
 	)
 
 	if ( props.design === 'shaped' || props.design === 'outlined' ) {
@@ -37,7 +57,7 @@ const SvgIcon = props => {
 		ret = wrapBackgroundShape( ret, props.backgroundShape )
 	}
 
-	ret = applyFilters( 'stackable.component.svg-icon', ret, props )
+	ret = applyFilters( 'stackable.component.svg-icon', ret, propsToPass )
 
 	return ret
 }
@@ -60,7 +80,12 @@ SvgIcon.defaultProps = {
 }
 
 SvgIcon.Content = props => {
-	let ret = <FontAwesomeIcon.Content { ...props } className={ classnames( [ 'ugb-icon-inner-svg', props.className ] ) } />
+	const propsToPass = {
+		...props,
+		value: typeof props.value === 'string' ? extractSvg( props.value ) : props.value,
+	}
+
+	let ret = <FontAwesomeIcon.Content { ...propsToPass } className={ classnames( [ 'ugb-icon-inner-svg', props.className ] ) } />
 
 	if ( props.design === 'shaped' || props.design === 'outlined' ) {
 		ret = <div className={ `ugb-icon__design-wrapper ugb-icon__design-${ props.design }` } >{ ret }</div>
@@ -70,7 +95,7 @@ SvgIcon.Content = props => {
 		ret = wrapBackgroundShape( ret, props.backgroundShape )
 	}
 
-	ret = applyFilters( 'stackable.component.svg-icon', ret, props )
+	ret = applyFilters( 'stackable.component.svg-icon', ret, propsToPass )
 
 	return ret
 }

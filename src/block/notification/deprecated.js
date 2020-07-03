@@ -12,7 +12,7 @@ import classnames from 'classnames'
 /**
  * WordPress dependencies
  */
-import { applyFilters } from '@wordpress/hooks'
+import { applyFilters, addFilter } from '@wordpress/hooks'
 import { RichText } from '@wordpress/block-editor'
 
 const deprecatedSchema_1_17 = {
@@ -134,3 +134,10 @@ const deprecated = [
 ]
 
 export default deprecated
+
+// Backward compatibility with < 2.6. With our new Icons, the dismissible icon
+// can be detected as the notification icon. Strip it out during the svg
+// extraction process.
+addFilter( 'stackable.svg-icon.extract-svg', 'stackable/notification-2.6', htmlString => {
+	return htmlString.replace( /<span[^>]*ugb-notification__close-button.*?<svg.*?\/svg>.*?<\/span>/, '' )
+} )
