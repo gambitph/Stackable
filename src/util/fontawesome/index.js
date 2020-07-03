@@ -20,7 +20,7 @@ export const faIsAPILoaded = () => {
 export const faAPILoaded = () => {
 	if ( ! window.FontAwesome ) {
 		return new Promise( ( resolve, reject ) => {
-			let timeoutCounter = 30
+			let timeoutCounter = 240
 			const interval = setInterval( () => {
 				if ( window.FontAwesome ) {
 					clearInterval( interval )
@@ -33,4 +33,24 @@ export const faAPILoaded = () => {
 		} )
 	}
 	return Promise.resolve( true )
+}
+
+export const faIconLoaded = ( prefix, iconName ) => {
+	const icon = faGetIcon( prefix, iconName )
+	if ( ! icon ) {
+		return new Promise( ( resolve, reject ) => {
+			let timeoutCounter = 240
+			const interval = setInterval( () => {
+				const icon = faGetIcon( prefix, iconName )
+				if ( window.FontAwesome ) {
+					clearInterval( interval )
+					resolve( icon )
+				} else if ( timeoutCounter-- < 0 ) {
+					clearInterval( interval )
+					reject( false )
+				}
+			}, 250 )
+		} )
+	}
+	return Promise.resolve( icon )
 }
