@@ -10,10 +10,16 @@ Multicolor is only available for 1\) custom uploaded icons that have multiple pa
 
 #### For Custom SVG Icons
 
-If you uploaded a custom SVG icon, Stackable tries to detect the different SVG elements that it can apply multiple colors to. These elements are SVG child tags such as `<path>`, `<shape>`, `<rectangle>`, `<circle>`, etc.
+If you uploaded a custom SVG icon, Stackable tries to detect the different SVG elements that it can apply multiple colors to. These elements are SVG child tags such as `<path>`, `<shape>`, `<rect>`, `<circle>`, etc.
+
+For each of the detected tags, you will be able to modify the color and opacity of that area.
 
 {% hint style="danger" %}
-The detection isn't perfect and it can show you the wrong number of color pickers if your SVG contains multiple nested shapes and groups or `<g>` tags. 
+The detection isn't perfect and the number of areas you can re-color depend mostly on how the SVG was constructed. If your SVG groups together items that can be colored separately, then Stackable should be able to handle it well. But if your SVG contains a lot of nested shapes and groups or `<g>` tags, then the number of color pickers shown might be inaccurate.
+{% endhint %}
+
+{% hint style="success" %}
+For best results, upload simple SVGs which have cleanly grouped together shapes.
 {% endhint %}
 
 #### For Font Awesome Pro Duotones
