@@ -1,3 +1,4 @@
+// Font Awesome Duotone styles.
 .ugb-icon-control,
 .ugb-icon-popover {
 	svg .fa-secondary {
@@ -6,6 +7,7 @@
 		opacity: var(--fa-secondary-opacity, 0.4);
 	}
 }
+
 .ugb-icon-is-loading {
 	animation: icon-loading 1.3s infinite linear;
 	height: 12px !important;

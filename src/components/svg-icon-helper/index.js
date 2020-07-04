@@ -18,9 +18,9 @@ const SvgIconHelper = props => {
 		<SvgIcon
 			value={ getValue( 'Value' ) }
 			design={ getValue( 'Design' ) }
+			colorType={ getValue( 'ColorType' ) }
 			showBackgroundShape={ getValue( 'ShowBackgroundShape' ) }
 			backgroundShape={ getValue( 'BackgroundShape' ) }
-			useGradient={ getValue( 'ColorType' ) === 'gradient' }
 			gradientColor1={ getValue( 'Color' ) }
 			gradientColor2={ getValue( 'Color2' ) }
 			gradientDirection={ getValue( 'ColorGradientDirection' ) }
@@ -43,9 +43,9 @@ SvgIconHelper.Content = props => {
 		<SvgIcon.Content
 			value={ getValue( 'Value' ) }
 			design={ getValue( 'Design' ) }
+			colorType={ getValue( 'ColorType' ) }
 			showBackgroundShape={ getValue( 'ShowBackgroundShape' ) }
 			backgroundShape={ getValue( 'BackgroundShape' ) }
-			useGradient={ getValue( 'ColorType' ) === 'gradient' }
 			gradientColor1={ getValue( 'Color' ) }
 			gradientColor2={ getValue( 'Color2' ) }
 			gradientDirection={ getValue( 'ColorGradientDirection' ) }

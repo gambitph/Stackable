@@ -45,8 +45,15 @@ const SvgIcon = props => {
 		value: typeof props.value === 'string' ? extractSvg( props.value ) : props.value,
 	}
 
+	const classNames = classnames( [
+		'ugb-icon-inner-svg',
+		props.className,
+	], {
+		[ `ugb-icon--${ props.colorType }` ]: props.colorType && props.colorType !== 'single',
+	} )
+
 	let ret = (
-		<FontAwesomeIcon { ...propsToPass } className={ classnames( [ 'ugb-icon-inner-svg', props.className ] ) } />
+		<FontAwesomeIcon { ...propsToPass } className={ classNames } />
 	)
 
 	if ( props.design === 'shaped' || props.design === 'outlined' ) {
@@ -68,12 +75,13 @@ SvgIcon.defaultProps = {
 	value: '', // The icon name or icon SVG.
 	design: '', // Can be plain, shaped or outlined
 
+	colorType: '', // Blank/single, gradient or multicolor.
+
 	// Show background shape.
 	showBackgroundShape: false,
 	backgroundShape: '', // An SVG to add as a background
 
 	// The icon has a gradient color.
-	useGradient: false,
 	gradientColor1: '',
 	gradientColor2: '',
 	gradientDirection: 0, // Only supports every 45 degrees.
@@ -85,7 +93,14 @@ SvgIcon.Content = props => {
 		value: typeof props.value === 'string' ? extractSvg( props.value ) : props.value,
 	}
 
-	let ret = <FontAwesomeIcon.Content { ...propsToPass } className={ classnames( [ 'ugb-icon-inner-svg', props.className ] ) } />
+	const classNames = classnames( [
+		'ugb-icon-inner-svg',
+		props.className,
+	], {
+		[ `ugb-icon--${ props.colorType }` ]: props.colorType && props.colorType !== 'single',
+	} )
+
+	let ret = <FontAwesomeIcon.Content { ...propsToPass } className={ classNames } />
 
 	if ( props.design === 'shaped' || props.design === 'outlined' ) {
 		ret = <div className={ `ugb-icon__design-wrapper ugb-icon__design-${ props.design }` } >{ ret }</div>
