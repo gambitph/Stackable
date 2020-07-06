@@ -88,6 +88,35 @@ const schema = {
 	},
 	...createIconAttributes( 'icon%s' ),
 
+	// Links.
+	...createAllCombinationAttributes(
+		'Url%s', {
+			type: 'string',
+			source: 'attribute',
+			selector: '.ugb-icon__item%s .ugb-icon__icon',
+			attribute: 'href',
+			default: '',
+		},
+		[ '1', '2', '3', '4', '5', '6', '7', '8' ]
+	),
+	...createAllCombinationAttributes(
+		'NewTab%s', {
+			type: 'boolean',
+			source: 'attribute',
+			selector: '.ugb-icon__item%s .ugb-icon__icon',
+			attribute: 'target',
+			default: '',
+		},
+		[ '1', '2', '3', '4', '5', '6', '7', '8' ]
+	),
+	...createAllCombinationAttributes(
+		'NoFollow%s', {
+			type: 'boolean',
+			default: '',
+		},
+		[ '1', '2', '3', '4', '5', '6', '7', '8' ]
+	),
+
 	// Title.
 	showTitle: {
 		type: 'boolean',
@@ -135,6 +164,11 @@ const schema = {
 		[ 'Icon', 'Title' ],
 		[ '', 'Tablet', 'Mobile' ]
 	),
+
+	hoverEffect: {
+		type: 'string',
+		default: '',
+	},
 }
 
 export const name = 'ugb/icon'

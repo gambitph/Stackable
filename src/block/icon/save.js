@@ -50,20 +50,38 @@ const save = props => {
 				{ range( 1, columns + 1 ).map( i => {
 					const icon = attributes[ `icon${ i }` ]
 					const title = attributes[ `title${ i }` ]
+					const url = attributes[ `url${ i }` ]
+					const newTab = attributes[ `newTab${ i }` ]
+					const noFollow = attributes[ `noFollow${ i }` ]
 
 					const boxClasses = classnames( [
 						'ugb-icon__item',
 						`ugb-icon__item${ i }`,
-					], applyFilters( 'stackable.icon.boxclasses', {}, design, props ) )
+					], applyFilters( 'stackable.icon.boxclasses', {}, props ) )
+
+					const IconTag = url ? 'a' : 'div'
+					const linkProps = {}
+					if ( url ) {
+						linkProps.href = url
+					}
+					if ( newTab ) {
+						linkProps.target = '_blank'
+						linkProps.rel = 'noopener noreferrer'
+						if ( noFollow ) {
+							linkProps.rel += ' nofollow'
+						}
+					} else if ( noFollow ) {
+						linkProps.rel = 'nofollow'
+					}
 
 					const iconComp = (
-						<div className="ugb-icon__icon">
+						<IconTag className="ugb-icon__icon" { ...linkProps }>
 							<SvgIconHelper.Content
 								attrNameTemplate="icon%s"
 								blockAttributes={ props.attributes }
 								value={ icon }
 							/>
-						</div>
+						</IconTag>
 					)
 
 					const titleComp = showTitle && ! RichText.isEmpty( title ) && (

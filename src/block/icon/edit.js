@@ -22,6 +22,7 @@ import {
 	AlignButtonsControl,
 	ControlSeparator,
 	PanelSpacingBody,
+	UrlInputPopover,
 } from '~stackable/components'
 import {
 	withUniqueClass,
@@ -49,7 +50,7 @@ import {
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import { Fragment } from '@wordpress/element'
+import { Fragment, useState } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 import { RichText } from '@wordpress/block-editor'
 
@@ -196,11 +197,12 @@ addFilter( 'stackable.icon.edit.inspector.style.before', 'stackable/icon', ( out
 	)
 } )
 
-const edit = props => {
+const Edit = props => {
 	const {
 		className,
 		setAttributes,
 		attributes,
+		isSelected,
 	} = props
 
 	const {
@@ -210,6 +212,8 @@ const edit = props => {
 		titleTop = false,
 		titleTag = '',
 	} = props.attributes
+
+	const [ selected, setSelected ] = useState( false )
 
 	const show = showOptions( props )
 
@@ -229,7 +233,7 @@ const edit = props => {
 					const boxClasses = classnames( [
 						'ugb-icon__item',
 						`ugb-icon__item${ i }`,
-					], applyFilters( 'stackable.icon.boxclasses', {}, design, props ) )
+					], applyFilters( 'stackable.icon.boxclasses', {}, props ) )
 
 					const iconComp = (
 						<div className="ugb-icon__icon">
@@ -263,9 +267,20 @@ const edit = props => {
 							backgroundAttrName="column%s"
 							blockProps={ props }
 							showBackground={ show.columnBackground }
+							onClick={ () => setSelected( i ) }
 							key={ i }
 						>
 							{ comps }
+							{ isSelected && selected === i &&
+								<UrlInputPopover
+									value={ attributes[ `url${ i }` ] }
+									onChange={ value => setAttributes( { [ `url${ i }` ]: value } ) }
+									newTab={ attributes[ `newTab${ i }` ] }
+									noFollow={ attributes[ `noFollow${ i }` ] }
+									onChangeNewTab={ value => setAttributes( { [ `newTab${ i }` ]: value } ) }
+									onChangeNoFollow={ value => setAttributes( { [ `noFollow${ i }` ]: value } ) }
+								/>
+							}
 						</DivBackground>
 					)
 				} ) }
@@ -286,4 +301,4 @@ export default compose(
 		[ '.ugb-icon-inner-svg svg', 'icon' ],
 		[ '.ugb-icon__title', 'title' ],
 	] ),
-)( edit )
+)( Edit )
