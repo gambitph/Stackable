@@ -196,6 +196,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Icon gets disabled when switching layouts in the notification block
 * Fixed: Possible error when encountering an error fetching blog posts
 * Fixed: Better handling for themes which may interfere with the placement of the popup video
+* Fixed: Text alignment in Adv. Text Block sometimes wasn't followed.
 
 = 2.6.1 =
 * Fixed: Some buttons aligning to center
