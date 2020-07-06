@@ -95,6 +95,11 @@ const blocks = {
 		description: __( 'A large header title area. Typically used at the very top of a page.', i18n ),
 		sDemoURL: 'https://wpstackable.com/header-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
 	},
+	'ugb/icon': {
+		title: __( 'Icon', i18n ),
+		description: __( 'Pick an icon or upload your own SVG icon to decorate your content.', i18n ),
+		sDemoURL: 'https://wpstackable.com/icon-block/?utm_source=welcome&utm_medium=settings&utm_campaign=view_demo&utm_content=demolink',
+	},
 	'ugb/icon-list': {
 		title: __( 'Icon List', i18n ),
 		description: __( 'An unordered list with icons. You can use this as a list of features or benefits.', i18n ),
