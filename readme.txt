@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.2
 Tested up to: 5.4
 Requires PHP: 5.3
-Stable tag: 2.6.1
+Stable tag: 2.7.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -22,7 +22,7 @@ Stackable adds essential custom blocks to give you a true page builder experienc
 
 With Stackable, you get:
 
-- 26 Quality Page Building Blocks for Gutenberg
+- 27 Quality Page Building Blocks for Gutenberg
 - 50+ Block Layouts and 70+ Pre-set Section / Block Designs that can be switched with just one click
 - Page Builder-like tabbed options
 - Advanced and diverse web design options,
@@ -71,7 +71,7 @@ Stackable now offers the most advanced block design controls with the widest ran
 
 All of Stackable's powerful options are easily managed in an intuitive UI for a smooth block editing experience. This is achieved by our three-tab configuration, easy toggle on/off for block elements, and streamlined settings.
 
-## A Truly Useful Block Library with 26 Quality Gutenberg Blocks
+## A Truly Useful Block Library with 27 Quality Gutenberg Blocks
 
 We’ve come up with page building blocks that are all functional and stunning. We’ve put in the design effort so you can enjoy a truly usable and quality block collection for the new WordPress block editor (Gutenberg).
 
@@ -99,6 +99,7 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com/v2/)
 - Container Block — [View Block](https://wpstackable.com/container-block/)
 - Advanced Heading Block - [View Block](https://wpstackable.com/advanced-heading-block/)
 - Advanced Text Block - [View Block](https://wpstackable.com/advanced-text-block/)
+- Icon Block — [View Block](https://wpstackable.com/icon-block/)
 - Separator Block — [View Block](https://wpstackable.com/separator-block/)
 - Posts Block — [View Block](https://wpstackable.com/blog-posts-block/)
 - Feature Grid Block — [View Block](https://wpstackable.com/feature-grid-block/)
@@ -192,7 +193,9 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * New: Better searching of icons!
 * New: Font Awesome Pro integration (premium)
 * New: Smaller plugin filesize, now less than 2mb!
+* New: 3 subtle hover effects (premium)
 * Change: Removed 1.12 backward compatiblity (version more than a year ago)
+* Change: Blocks will get a class `ugb--has-custom-content-width` when a block uses a Max Custom Width
 * Fixed: Icon gets disabled when switching layouts in the notification block
 * Fixed: Possible error when encountering an error fetching blog posts
 * Fixed: Better handling for themes which may interfere with the placement of the popup video
