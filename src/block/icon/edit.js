@@ -50,7 +50,9 @@ import {
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import { Fragment, useState } from '@wordpress/element'
+import {
+	Fragment, useState, useEffect,
+} from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 import { RichText } from '@wordpress/block-editor'
 
@@ -214,6 +216,8 @@ const Edit = props => {
 	} = props.attributes
 
 	const [ selected, setSelected ] = useState( false )
+	const [ urlPopupPosition, setUrlPopupPosition ] = useState( 'bottom center' )
+	const [ refreshPositionInterval, setRefreshPositionInterval ] = useState( null )
 
 	const show = showOptions( props )
 
@@ -222,6 +226,56 @@ const Edit = props => {
 		`ugb-icon--design-${ design }`,
 	], applyFilters( 'stackable.icon.mainclasses', {
 	}, props ) )
+
+	// Updates the position of the url popup to be opposite of the icon popup.
+	const refreshPosition = () => {
+		const popover = document.querySelector( '.ugb-icon-popover' )
+		if ( popover ) {
+			if ( popover.classList.contains( 'is-from-top' ) ) {
+				setUrlPopupPosition( 'top center' )
+			} else if ( popover.classList.contains( 'is-from-bottom' ) ) {
+				setUrlPopupPosition( 'bottom center' )
+			}
+		}
+	}
+
+	// Always try and check for the popup position changes since. We do it this
+	// way since we may miss scroll events.
+	useEffect( () => {
+		if ( isSelected && ! refreshPositionInterval ) {
+			setRefreshPositionInterval( setInterval( refreshPosition, 500 ) )
+		} else if ( ! isSelected && refreshPositionInterval ) {
+			clearInterval( refreshPositionInterval )
+			setRefreshPositionInterval( null )
+		}
+		return () => {
+			if ( refreshPositionInterval ) {
+				clearInterval( refreshPositionInterval )
+			}
+		}
+	}, [ isSelected ] )
+
+	// Check if the icon popover's position is top or bottom then adjust
+	// the url popup's position.
+	const onIconPopupToggle = isOpen => {
+		if ( isOpen ) {
+			const popover = document.querySelector( '.ugb-icon-popover' )
+
+			// We need to use mutation observer here because the is-from-top
+			// class is added afterwards and there's no way to detect it in JS.
+			const observer = new MutationObserver( () => {
+				if ( popover.classList.contains( 'is-from-top' ) ) {
+					setUrlPopupPosition( 'top center' )
+					observer.disconnect()
+				} else if ( popover.classList.contains( 'is-from-bottom' ) ) {
+					setUrlPopupPosition( 'bottom center' )
+					observer.disconnect()
+				}
+			} )
+
+			observer.observe( popover, { attributes: true } )
+		}
+	}
 
 	return (
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
@@ -242,6 +296,7 @@ const Edit = props => {
 								blockAttributes={ props.attributes }
 								value={ icon }
 								onChange={ value => setAttributes( { [ `icon${ i }` ]: value } ) }
+								onToggle={ onIconPopupToggle }
 							/>
 						</div>
 					)
@@ -279,6 +334,7 @@ const Edit = props => {
 									noFollow={ attributes[ `noFollow${ i }` ] }
 									onChangeNewTab={ value => setAttributes( { [ `newTab${ i }` ]: value } ) }
 									onChangeNoFollow={ value => setAttributes( { [ `noFollow${ i }` ]: value } ) }
+									position={ urlPopupPosition }
 								/>
 							}
 						</DivBackground>

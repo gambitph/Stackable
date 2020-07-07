@@ -3,7 +3,7 @@
  */
 import { Button } from '@wordpress/components'
 import { withInstanceId } from '@wordpress/compose'
-import { useState } from '@wordpress/element'
+import { useState, useEffect } from '@wordpress/element'
 
 /**
  * External dependencies
@@ -20,6 +20,11 @@ const SvgIconPlaceholder = withInstanceId( ( props => {
 		onChange,
 		...propsToPass
 	} = props
+
+	// Trigger on toggle event.
+	useEffect( () => {
+		props.onToggle( openPopover )
+	}, [ openPopover ] )
 
 	return (
 		<div className={ `ugb-svg-icon-placeholder ugb-svg-icon-placeholder-${ instanceId }` }>
@@ -65,6 +70,7 @@ SvgIconPlaceholder.defaultProps = {
 	className: '',
 	value: '',
 	onChange: () => {},
+	onToggle: () => {},
 }
 
 export default SvgIconPlaceholder

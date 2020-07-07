@@ -65,5 +65,6 @@ module.exports = {
 		alert: true,
 		Element: true,
 		FileReader: true,
+		MutationObserver: true,
 	},
 };
