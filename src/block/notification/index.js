@@ -14,7 +14,13 @@ import save from './save'
  * External dependencies
  */
 import {
-	descriptionPlaceholder, createBackgroundAttributes, createResponsiveAttributes, createTypographyAttributes, createButtonAttributes, createAllCombinationAttributes,
+	descriptionPlaceholder,
+	createBackgroundAttributes,
+	createResponsiveAttributes,
+	createTypographyAttributes,
+	createButtonAttributes,
+	createAllCombinationAttributes,
+	createIconAttributes,
 } from '~stackable/util'
 import { NotificationIcon } from '~stackable/icons'
 import { disabledBlocks, i18n } from 'stackable'
@@ -77,16 +83,13 @@ export const schema = {
 	},
 	icon: {
 		type: 'string',
+		source: 'html',
+		selector: '.ugb-notification__icon .ugb-icon-inner-svg,' +
+			// This one is for backward compatibility <= 2.6.
+			'.ugb-notification__item:not(.ugb-notification--new-icon)',
 		default: 'fas-exclamation-triangle',
 	},
-	iconColor: {
-		type: 'string',
-		default: '',
-	},
-	...createResponsiveAttributes( 'icon%sSize', {
-		type: 'number',
-		default: '',
-	} ),
+	...createIconAttributes( 'icon%s' ),
 	...createResponsiveAttributes( 'icon%sAlign', {
 		type: 'string',
 		default: '',
@@ -97,7 +100,7 @@ export const schema = {
 			type: 'number',
 			default: '',
 		},
-		[ 'Opacity', 'Rotation', 'Top', 'Left' ]
+		[ 'Top', 'Left' ]
 	),
 
 	// Title.

@@ -80,9 +80,11 @@ SVG;
 				wp_enqueue_script( 'wp-components' ); // Need Spinner.
 				wp_enqueue_style( 'wp-components' ); // Need Spinner.
 
+				do_action( 'stackable_settings_admin_enqueue_scripts' );
+
 				wp_enqueue_script( 'stackable-welcome', plugins_url( 'dist/admin_welcome.js', STACKABLE_FILE ), array( 'wp-i18n', 'wp-element', 'wp-hooks', 'wp-util', 'wp-components', 'wp-api' ) );
 
-				wp_localize_script( 'stackable-welcome', 'stackable', array(
+				$args = apply_filters( 'stackable_localize_settings_script', array(
 					'srcUrl' => untrailingslashit( plugins_url( '/', STACKABLE_FILE ) ),
 					'welcomeSrcUrl' => untrailingslashit( plugins_url( '/', __FILE__ ) ),
 					'i18n' => STACKABLE_I18N,
@@ -97,6 +99,7 @@ SVG;
 					'showProNoticesOption' => STACKABLE_SHOW_PRO_NOTICES && ! sugb_fs()->can_use_premium_code(),
 					'nonceNews' => stackable_get_news_feed_nonce(),
 				) );
+				wp_localize_script( 'stackable-welcome', 'stackable', $args );
             }
         }
 
@@ -168,10 +171,11 @@ SVG;
 				<?php echo $this->print_tabs() ?>
                 <section class="s-body-container s-body-container-grid">
                     <div class="s-body">
-                        <?php stackable_welcome_notification() ?>
+						<?php stackable_welcome_notification() ?>
+						<?php do_action( 'stackable_settings_page' ) ?>
                         <article class="s-box">
                             <h2><?php _e( '🎛 Enable & Disable Blocks', STACKABLE_I18N ) ?></h2>
-                            <p><?php _e( 'We have a lot of awesome blocks. But if you\'re overwhelmed with awesomeness, you can hide some of them.' , STACKABLE_I18N ) ?><br /><em><?php _e( '(If your post contains a disabled block, it will still continue to work. You won\'t just be able to add the disabled blocks.)' , STACKABLE_I18N ) ?></em></p>
+                            <p class="s-settings-subtitle"><?php _e( 'We have a lot of awesome blocks. But if you\'re overwhelmed with awesomeness, you can hide some of them.' , STACKABLE_I18N ) ?> <em><?php _e( '(If your post contains a disabled block, it will still continue to work. You won\'t just be able to add the disabled blocks.)' , STACKABLE_I18N ) ?></em></p>
 							<!-- We put all the block controls here. -->
                             <div class="s-settings-wrapper" />
 						</article>

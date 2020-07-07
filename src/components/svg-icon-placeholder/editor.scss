@@ -16,3 +16,11 @@
 		}
 	}
 }
+.ugb-svg-icon-placeholder__button {
+	height: auto;
+	// This is needed for background shapes to go outside the bounds of the icon.
+	overflow: visible;
+	&:hover {
+		color: inherit !important;
+	}
+}

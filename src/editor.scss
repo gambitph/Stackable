@@ -53,3 +53,46 @@ svg.ugb-stackable-icon-gradient {
 .ugb--has-panel-tabs .ugb-panel-tabs ~ .editorskit-panel {
 	display: none;
 }
+
+// Styling for inspector toolbars which are Premium only.
+// This adds a lock icon when hovering over the option.
+.components-toolbar__control.ugb--is-premium {
+	position: relative;
+	&::after {
+		position: absolute;
+		z-index: 1;
+		background: none;
+		line-height: 18px;
+		padding: 0 6px;
+		border-radius: 2px;
+		left: 0;
+		right: 0;
+		text-transform: uppercase;
+		background-size: 100%;
+		background-repeat: no-repeat;
+		font-family: dashicons;
+		content: "\f160";
+		color: #888;
+		font-size: 20px;
+		opacity: 0;
+	}
+	*,
+	&::after {
+		transition: all 0.2s ease-in-out;
+	}
+	// Adjust opacity since a disabled toolbar changes the opacity of the whole thing.
+	&:disabled {
+		opacity: 1;
+		* {
+			opacity: 0.3;
+		}
+	}
+	&:hover {
+		* {
+			opacity: 0;
+		}
+		&::after {
+			opacity: 1;
+		}
+	}
+}

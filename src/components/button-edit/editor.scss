@@ -14,3 +14,8 @@
 		transition: initial !important;
 	}
 }
+
+// For custom icons, override the currentColor fill given by Gutenberg.
+.ugb-button.ugb-button--has-icon .ugb-icon-inner-svg svg.ugb-custom-icon {
+	fill: initial;
+}

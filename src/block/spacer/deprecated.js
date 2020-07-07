@@ -66,21 +66,6 @@ export const deprecatedSchema_1_15_4 = {
 	},
 }
 
-export const deprecatedSave_1_3 = props => {
-	const { height } = props.attributes
-
-	return (
-		<div style={ { height: height + 'px' } }></div>
-	)
-}
-
-export const deprecatedSchema_1_3 = {
-	height: {
-		default: 50,
-		type: 'number',
-	},
-}
-
 const deprecated = [
 	{
 		attributes: deprecatedSave_1_15_4_err,
@@ -89,10 +74,6 @@ const deprecated = [
 	{
 		attributes: deprecatedSchema_1_15_4,
 		save: deprecatedSave_1_15_4,
-	},
-	{
-		attributes: deprecatedSchema_1_3,
-		save: deprecatedSave_1_3,
 	},
 ]
 

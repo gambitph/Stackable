@@ -1,0 +1,43 @@
+.ugb-icon__bg-shape-wrapper {
+	position: relative;
+	> *:not(.ugb-icon__bg-shape) {
+		position: relative;
+		z-index: 2;
+	}
+	.ugb-icon__bg-shape {
+		position: absolute;
+		z-index: 1;
+		top: 50%;
+		left: 50%;
+		transform: translateX(-50%) translateY(-50%);
+		height: 100%;
+		width: 100%;
+		color: #cde;
+		fill: #cde;
+	}
+}
+
+.ugb-icon__design-wrapper {
+	padding: 20px;
+}
+.ugb-icon__design-wrapper.ugb-icon__design-shaped {
+	background-color: #ddd;
+}
+.ugb-icon__design-wrapper.ugb-icon__design-outlined {
+	border: 3px solid #ddd;
+}
+
+// Hide the icon gradient color.
+.ugb-icon__gradient {
+	opacity: 0 !important;
+	height: 0 !important;
+	width: 0 !important;
+	visibility: hidden !important;
+	overflow: hidden !important;
+	position: absolute !important;
+	z-index: -99999 !important;
+	max-height: 0 !important;
+	max-width: 0 !important;
+	min-height: 0 !important;
+	min-width: 0 !important;
+}

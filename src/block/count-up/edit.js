@@ -18,10 +18,13 @@ import {
 	TypographyControlHelper,
 	SvgIconPlaceholder,
 	DivBackground,
+	IconControlsHelper,
 } from '~stackable/components'
 import {
 	createResponsiveAttributeNames,
 	createTypographyAttributeNames,
+	createIconAttributeNames,
+	numShapesInSvg,
 } from '~stackable/util'
 import {
 	withBlockStyles,
@@ -32,6 +35,7 @@ import {
 	withUniqueClass,
 	withClickOpenInspector,
 } from '~stackable/higher-order'
+import { pick, range } from 'lodash'
 
 /**
  * Internal dependencies
@@ -53,7 +57,6 @@ import { PanelBody } from '@wordpress/components'
 import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
-import { range } from 'lodash'
 import { RichText } from '@wordpress/block-editor'
 
 addFilter( 'stackable.count-up.edit.inspector.layout.before', 'stackable/count-up', ( output, props ) => {
@@ -98,7 +101,6 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 		titleTag = '',
 		titleColor = '',
 		descriptionColor = '',
-		iconColor = '',
 	} = props.attributes
 
 	const show = showOptions( props )
@@ -170,8 +172,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 					'icon2',
 					'icon3',
 					'icon4',
-					'iconColor',
-					...createResponsiveAttributeNames( 'icon%sSize' ),
+					...createIconAttributeNames( 'icon%s' ),
 					...createResponsiveAttributeNames( 'icon%sAlign' ),
 				] }
 				toggleAttributeName="showIcon"
@@ -186,24 +187,22 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 						/>
 					)
 				} ) }
-				<ColorPaletteControl
-					value={ iconColor }
-					onChange={ iconColor => setAttributes( { iconColor } ) }
-					label={ __( 'Icon Color', i18n ) }
-				/>
-				<ResponsiveControl
-					attrNameTemplate="icon%sSize"
+				<IconControlsHelper
+					attrNameTemplate="icon%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-				>
-					<AdvancedRangeControl
-						label={ __( 'Icon Size', i18n ) }
-						min={ 10 }
-						max={ 200 }
-						allowReset={ true }
-						placeholder="50"
-					/>
-				</ResponsiveControl>
+					onChangeIcon={ false }
+					numPaths={
+						// Get the most number of shapes in the SVG.
+						Math.max(
+							...Object.values(
+								pick( props.attributes, [ 'icon1', 'icon2', 'icon3', 'icon4' ] )
+							).map( icon => {
+								return numShapesInSvg( icon ) || 1
+							} )
+						)
+					}
+				/>
 				<ResponsiveControl
 					attrNameTemplate="Icon%sAlign"
 					setAttributes={ setAttributes }
@@ -425,8 +424,11 @@ const edit = props => {
 					const description = attributes[ `description${ i }` ]
 					const countText = attributes[ `countText${ i }` ]
 
-					const iconComp = showIcon && <div className="ugb-countup__icon">
+					// The ugb-countup__icon--v2 class is for backward compatibility < 2.6 for our old icons.
+					const iconComp = showIcon && <div className="ugb-countup__icon ugb-countup__icon--v2">
 						<SvgIconPlaceholder
+							attrNameTemplate="icon%s"
+							blockAttributes={ props.attributes }
 							value={ icon }
 							onChange={ value => setAttributes( { [ `icon${ i }` ]: value } ) }
 						/>

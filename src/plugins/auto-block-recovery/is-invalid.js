@@ -39,6 +39,11 @@ export const isInvalid = ( block, allowedTags = ALLOWED_ERROR_TAGS ) => {
 		return true
 	}
 
+	// Check whether we're missing an svg tag.
+	if ( isMissingSvgTag( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
 	// Check whether we're missing an image class.
 	if ( isMissingWPImageClass( validationIssues[ 0 ] ) ) {
 		return true
@@ -142,6 +147,35 @@ export const isMissingStyleTag = issue => {
 
 	// Style tag was present but shouldn't.
 	if ( issue.args[ 1 ] !== 'style' && issue.args[ 2 ] === 'style' ) {
+		return true
+	}
+
+	return false
+}
+
+/**
+ * Checks whether the validation error is because of a missing / additional Svg tag.
+ *
+ * @param {Array} issue The invalidation object
+ *
+ * @return {boolean} True or false
+ */
+export const isMissingSvgTag = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 3 ) {
+		return false
+	}
+
+	// Svg tag was missing.
+	if ( issue.args[ 1 ] === 'svg' && issue.args[ 2 ] !== 'svg' ) {
+		return true
+	}
+
+	// Svg tag was present but shouldn't.
+	if ( issue.args[ 1 ] !== 'svg' && issue.args[ 2 ] === 'svg' ) {
 		return true
 	}
 

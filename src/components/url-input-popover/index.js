@@ -50,7 +50,7 @@ const UrlInputPopover = withState( {
 		<Popover
 			className={ mainClassName }
 			focusOnMount={ false }
-			position="bottom center"
+			position={ props.position }
 		>
 			<PanelBody>
 				<div className="ugb-url-input-popover__input-wrapper">
@@ -105,6 +105,7 @@ UrlInputPopover.defaultProps = {
 	value: '',
 	disableSuggestions: false,
 	onChange: null,
+	position: 'bottom center',
 
 	newTab: false,
 	noFollow: false,

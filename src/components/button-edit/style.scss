@@ -187,7 +187,7 @@
 	&.ugb-button--ghost-to-normal-effect:hover {
 		background-color: #2091e1;
 		background-color: var(--s-primary-color, #2091e1);
-		svg,
+		svg:not(.ugb-custom-icon),
 		.ugb-button--inner {
 			color: #fff;
 		}
@@ -225,8 +225,11 @@
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
-	svg {
+	// Don't add color by default to custom icons.
+	svg:not(.ugb-custom-icon) {
 		color: #fff;
+	}
+	svg {
 		width: 1em;
 		height: 1em;
 		margin-bottom: 0 !important;
@@ -242,7 +245,7 @@
 }
 .ugb-button--has-icon.ugb-button--design-ghost,
 .ugb-button--has-icon.ugb-button--design-plain {
-	svg {
+	svg:not(.ugb-custom-icon) {
 		color: #2091e1;
 		color: var(--s-primary-color, #2091e1);
 	}

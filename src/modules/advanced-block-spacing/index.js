@@ -686,6 +686,21 @@ const addAttributes = attributes => {
 	}
 }
 
+const addCustomWidthClassName = ( mainClasses, props ) => {
+	const {
+		blockWidth = '',
+		tabletBlockWidth = '',
+		mobileBlockWidth = '',
+	} = props.attributes
+
+	return {
+		...mainClasses,
+		'ugb--has-custom-content-width': blockWidth !== '',
+		'ugb--has-custom-content-width-tablet': tabletBlockWidth !== '',
+		'ugb--has-custom-content-width-mobile': mobileBlockWidth !== '',
+	}
+}
+
 const advancedBlockSpacing = ( blockName, options = {} ) => {
 	const optionsToPass = {
 		margins: true,
@@ -711,6 +726,7 @@ const advancedBlockSpacing = ( blockName, options = {} ) => {
 		addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/advanced-block-spacing`, addToStyleObject( blockName, optionsToPass ) )
 	}
 	addFilter( `stackable.${ blockName }.attributes`, `stackable/${ blockName }/advanced-block-spacing`, addAttributes )
+	addFilter( `stackable.${ blockName }.main-block.classes`, `stackable/${ blockName }/advanced-block-spacing`, addCustomWidthClassName )
 	doAction( `stackable.module.advanced-block-spacing`, blockName )
 }
 

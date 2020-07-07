@@ -1,37 +1,122 @@
 /**
  * Internal dependencies
  */
-import { getIconArray } from '../icon-control'
+import { FontAwesomeIcon } from '~stackable/components'
+import { getShapeSVG } from '~stackable/util'
+import classnames from 'classnames'
 
 /**
- * External dependencies
+ * WordPress dependencies
  */
-import { fab } from '@fortawesome/free-brands-svg-icons'
-import { far } from '@fortawesome/free-regular-svg-icons'
-import { fas } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core'
+import { applyFilters } from '@wordpress/hooks'
 
-export { SvgIcon_1_17_3 } from './deprecated'
+const wrapBackgroundShape = ( icon, shape ) => {
+	const ShapeComp = getShapeSVG( shape || 'blob1' )
+	if ( ! ShapeComp ) {
+		return icon
+	}
 
-library.add( fab, far, fas )
-
-const SvgIcon = props => {
-	const {
-		value, color, style = {}, className = '',
-	} = props
-	const selectedIcon = getIconArray( value )
 	return (
-		selectedIcon && <FontAwesomeIcon color={ color } style={ style } icon={ selectedIcon } className={ className } />
+		<div className="ugb-icon__bg-shape-wrapper">
+			{ icon }
+			<ShapeComp className="ugb-icon__bg-shape" />
+		</div>
 	)
 }
 
-SvgIcon.Content = props => {
-	const { value, ...propsToPass } = props
-	const selectedIcon = getIconArray( value )
-	return (
-		selectedIcon && <FontAwesomeIcon focusable={ undefined } icon={ selectedIcon } { ...propsToPass } />
+/**
+ * Extracts the first SVG tag it could find in an HTML string.
+ *
+ * @param {string} _htmlString String to extract the svg.
+ */
+const extractSvg = _htmlString => {
+	const htmlString = applyFilters( 'stackable.svg-icon.extract-svg', _htmlString )
+	if ( htmlString.match( /^<svg(.*?)<\/svg>$/g ) ) {
+		return htmlString
+	} else if ( htmlString.match( /<svg/ ) ) {
+		return ( htmlString.match( /<svg.*?<\/svg>/g ) || [ htmlString ] )[ 0 ]
+	}
+	return htmlString
+}
+
+const SvgIcon = props => {
+	const propsToPass = {
+		...props,
+		value: typeof props.value === 'string' ? extractSvg( props.value ) : props.value,
+	}
+
+	const classNames = classnames( [
+		'ugb-icon-inner-svg',
+		props.className,
+	], {
+		[ `ugb-icon--${ props.colorType }` ]: props.colorType && props.colorType !== 'single',
+	} )
+
+	let ret = (
+		<FontAwesomeIcon { ...propsToPass } className={ classNames } />
 	)
+
+	if ( props.design === 'shaped' || props.design === 'outlined' ) {
+		ret = <div className={ `ugb-icon__design-wrapper ugb-icon__design-${ props.design }` } >{ ret }</div>
+	}
+
+	if ( props.showBackgroundShape ) {
+		ret = wrapBackgroundShape( ret, props.backgroundShape )
+	}
+
+	ret = applyFilters( 'stackable.component.svg-icon', ret, propsToPass )
+
+	return ret
+}
+
+SvgIcon.defaultProps = {
+	className: '',
+
+	value: '', // The icon name or icon SVG.
+	design: '', // Can be plain, shaped or outlined
+
+	colorType: '', // Blank/single, gradient or multicolor.
+
+	// Show background shape.
+	showBackgroundShape: false,
+	backgroundShape: '', // An SVG to add as a background
+
+	// The icon has a gradient color.
+	gradientColor1: '',
+	gradientColor2: '',
+	gradientDirection: 0, // Only supports every 45 degrees.
+}
+
+SvgIcon.Content = props => {
+	const propsToPass = {
+		...props,
+		value: typeof props.value === 'string' ? extractSvg( props.value ) : props.value,
+	}
+
+	const classNames = classnames( [
+		'ugb-icon-inner-svg',
+		props.className,
+	], {
+		[ `ugb-icon--${ props.colorType }` ]: props.colorType && props.colorType !== 'single',
+	} )
+
+	let ret = <FontAwesomeIcon.Content { ...propsToPass } className={ classNames } />
+
+	if ( props.design === 'shaped' || props.design === 'outlined' ) {
+		ret = <div className={ `ugb-icon__design-wrapper ugb-icon__design-${ props.design }` } >{ ret }</div>
+	}
+
+	if ( props.showBackgroundShape ) {
+		ret = wrapBackgroundShape( ret, props.backgroundShape )
+	}
+
+	ret = applyFilters( 'stackable.component.svg-icon', ret, propsToPass )
+
+	return ret
+}
+
+SvgIcon.Content.defaultProps = {
+	...SvgIcon.defaultProps,
 }
 
 export default SvgIcon

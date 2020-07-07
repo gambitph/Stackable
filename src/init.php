@@ -79,12 +79,13 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 		);
 
 		// Backend editor scripts: blocks.
+		$dependencies = array( 'ugb-block-js-vendor', 'code-editor', 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'wp-util', 'wp-plugins', 'wp-edit-post', 'wp-i18n', 'wp-api' );
 		wp_enqueue_script(
 			'ugb-block-js',
 			plugins_url( 'dist/editor_blocks.js', STACKABLE_FILE ),
 			// wp-util for wp.ajax.
 			// wp-plugins & wp-edit-post for Gutenberg plugins.
-			array( 'ugb-block-js-vendor', 'code-editor', 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'wp-util', 'wp-plugins', 'wp-edit-post', 'wp-i18n', 'wp-api' ),
+			apply_filters( 'stackable_editor_blocks_dependencies', $dependencies ),
 			STACKABLE_VERSION
 		);
 
@@ -121,7 +122,10 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 			'showProNotice' => stackable_should_show_pro_notices(),
 			'pricingURL' => sugb_fs()->get_upgrade_url(),
 			'planName' => sugb_fs()->is_plan( 'starter', true ) ? 'starter' :
-			              ( sugb_fs()->is_plan( 'professional', true ) ? 'professional' : 'business' ),
+						  ( sugb_fs()->is_plan( 'professional', true ) ? 'professional' : 'business' ),
+
+			// Icons.
+			'fontAwesomeSearchProIcons' => stackable_search_fontawesome_pro_icons(),
 		) );
 	}
 
@@ -242,6 +246,20 @@ if ( ! function_exists( 'stackable_allow_wp_kses_allowed_html' ) ) {
 		$tags['femerge'] = array();
 		$tags['femergenode'] = array(
 			'in' => true,
+		);
+		// SVG gradients.
+		$tags['stop'] = array(
+			'offset' => true,
+			'style' => true,
+			'stop-color' => true,
+			'stop-opacity' => true,
+		);
+		$tags['linearGradient'] = array(
+			'id' => true,
+			'x1' => true,
+			'x2' => true,
+			'y1' => true,
+			'y2' => true,
 		);
 
 		_stackable_common_attributes( $tags, 'div' );

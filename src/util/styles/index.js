@@ -32,6 +32,12 @@ export const marginRightAlign = align => {
 	return align === 'right' ? 0 : 'auto'
 }
 
+export const leftRightToFlex = align => {
+	return align === 'left' ? 'flex-start' :
+		align === 'right' ? 'flex-end' :
+			align
+}
+
 /**
  * Returns white if the background color is dark.
  *

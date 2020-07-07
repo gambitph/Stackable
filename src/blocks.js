@@ -5,7 +5,6 @@
 /**
  * Internal dependencies
  */
-import './fontawesome'
 import './format-types'
 import './plugins'
 import './help'

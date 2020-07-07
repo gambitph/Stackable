@@ -2,7 +2,7 @@
  * External dependencies
  */
 import {
-	BlockContainer, SvgIcon, DivBackground,
+	BlockContainer, SvgIconHelper, DivBackground,
 } from '~stackable/components'
 import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
 import { range } from 'lodash'
@@ -53,8 +53,13 @@ const save = props => {
 					const description = attributes[ `description${ i }` ]
 					const countText = attributes[ `countText${ i }` ]
 
-					const iconComp = showIcon && <div className="ugb-countup__icon">
-						<SvgIcon.Content value={ icon } />
+					// The ugb-countup__icon--v2 class is for backward compatibility < 2.6 for our old icons.
+					const iconComp = showIcon && <div className="ugb-countup__icon ugb-countup__icon--v2">
+						<SvgIconHelper.Content
+							attrNameTemplate="icon%s"
+							blockAttributes={ props.attributes }
+							value={ icon }
+						/>
 					</div>
 					const titleComp = showTitle && ! RichText.isEmpty( title ) && (
 						<RichText.Content

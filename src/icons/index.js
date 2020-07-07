@@ -17,6 +17,7 @@ import SVGFeatureGridIcon from './images/feature-grid-icon.svg'
 import SVGFeatureIcon from './images/feature-icon.svg'
 import SVGHeaderIcon from './images/header-icon.svg'
 import SVGHeadingIcon from './images/heading-icon.svg'
+import SVGIconIcon from './images/icon-icon.svg'
 import SVGIconListIcon from './images/icon-list-icon.svg'
 import SVGImageBoxIcon from './images/image-box-icon.svg'
 import SVGNotificationIcon from './images/notification-icon.svg'
@@ -135,6 +136,10 @@ export const HeaderIcon = () => {
 
 export const HeadingIcon = () => {
 	return colorizeIcon( <SVGHeadingIcon width="20" height="20" /> )
+}
+
+export const IconIcon = () => {
+	return colorizeIcon( <SVGIconIcon width="20" height="20" /> )
 }
 
 export const IconListIcon = () => {
