@@ -1,5 +1,10 @@
 .ugb-advanced-toolbar-control .components-toolbar {
 	&.ugb-toolbar--full-width {
+		width: 100%;
+		flex-wrap: nowrap;
+		svg {
+			height: 30px !important;
+		}
 		> div,
 		> div > button,
 		> div > button > svg {
