@@ -18,7 +18,7 @@
 			&.ugb-main-block--inner-wide {
 				@media screen and (min-width: $break-wide) {
 					> .ugb-inner-block {
-						width: 1080px; // TODO: Make this configurable
+						max-width: 1200px; // TODO: Make this configurable
 					}
 				}
 			}
