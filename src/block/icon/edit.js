@@ -108,17 +108,21 @@ addFilter( 'stackable.icon.edit.inspector.style.before', 'stackable/icon', ( out
 						)
 					}
 				/>
-				<ControlSeparator />
-				<ResponsiveControl
-					attrNameTemplate="Icon%sAlign"
-					setAttributes={ setAttributes }
-					blockAttributes={ props.attributes }
-				>
-					<AlignButtonsControl
-						label={ __( 'Align', i18n ) }
-						className="ugb--help-tip-alignment-icon"
-					/>
-				</ResponsiveControl>
+				{ show.iconAlign &&
+					<ControlSeparator />
+				}
+				{ show.iconAlign &&
+					<ResponsiveControl
+						attrNameTemplate="Icon%sAlign"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AlignButtonsControl
+							label={ __( 'Align', i18n ) }
+							className="ugb--help-tip-alignment-icon"
+						/>
+					</ResponsiveControl>
+				}
 			</PanelAdvancedSettings>
 
 			<PanelAdvancedSettings

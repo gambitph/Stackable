@@ -42,21 +42,23 @@ export const createStyles = props => {
 
 	// Icon.
 	styles.push( { ...createIconStyleSet( 'icon%s', 'ugb-icon__item', props.attributes ) } )
-	styles.push( {
-		'.ugb-icon__icon': appendImportantAll( {
-			alignSelf: leftRightToFlex( getValue( 'iconAlign' ) ),
-		} ),
-		tablet: {
+	if ( show.iconAlign ) {
+		styles.push( {
 			'.ugb-icon__icon': appendImportantAll( {
-				alignSelf: leftRightToFlex( getValue( 'tabletIconAlign' ) ),
+				alignSelf: leftRightToFlex( getValue( 'iconAlign' ) ),
 			} ),
-		},
-		mobile: {
-			'.ugb-icon__icon': appendImportantAll( {
-				alignSelf: leftRightToFlex( getValue( 'mobileIconAlign' ) ),
-			} ),
-		},
-	} )
+			tablet: {
+				'.ugb-icon__icon': appendImportantAll( {
+					alignSelf: leftRightToFlex( getValue( 'tabletIconAlign' ) ),
+				} ),
+			},
+			mobile: {
+				'.ugb-icon__icon': appendImportantAll( {
+					alignSelf: leftRightToFlex( getValue( 'mobileIconAlign' ) ),
+				} ),
+			},
+		} )
+	}
 
 	// Title.
 	const {
