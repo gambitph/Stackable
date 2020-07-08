@@ -55,7 +55,6 @@ module.exports = {
 		'jsdoc/no-undefined-types': 'off',
 
 		'@wordpress/no-unguarded-get-range-at': 'off',
-
 	},
 	globals: {
 		localStorage: true,

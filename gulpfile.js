@@ -142,7 +142,7 @@ const watchFuncs = ( basePath = '.' ) => {
 	)
 }
 
-gulp.task( 'watch', gulp.series( 'build-process', () => watchFuncs() ) )
+gulp.task( 'watch', gulp.series( 'build-process', watchFuncs ) )
 
 module.exports = {
 	buildInclude,
