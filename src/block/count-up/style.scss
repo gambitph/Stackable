@@ -36,6 +36,12 @@
 			height: 50px;
 			width: 50px;
 		}
+
+		&.ugb-countup__icon--v2 {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
 	}
 
 	.ugb-countup__icon,

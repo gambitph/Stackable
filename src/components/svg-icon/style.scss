@@ -17,6 +17,11 @@
 	}
 }
 
+// Get rid of the small gap below the icon.
+.ugb-icon-inner-svg svg {
+	display: block;
+}
+
 .ugb-icon__design-wrapper {
 	padding: 20px;
 }
