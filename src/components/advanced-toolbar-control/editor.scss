@@ -1,5 +1,5 @@
-.ugb-advanced-button-control .components-button-group {
-	&.ugb-button--full-width {
+.ugb-advanced-toolbar-control .components-button-group {
+	&.ugb-toolbar--full-width {
 		width: 100%;
 		display: flex;
 		flex-wrap: nowrap;
@@ -11,7 +11,7 @@
 			height: 30px !important;
 		}
 	}
-	&.ugb-button--multiline {
+	&.ugb-toolbar--multiline {
 		flex-wrap: wrap;
 		justify-content: flex-start;
 		align-items: flex-start;
@@ -29,7 +29,7 @@
 	}
 }
 
-.ugb-advanced-button-control__text-button {
+.ugb-advanced-toolbar-control__text-button {
 	height: 30px;
 	width: 100%;
 	justify-content: center;
@@ -39,7 +39,7 @@
 	padding: 3px;
 }
 
-.ugb-advanced-button-control .components-button-group {
+.ugb-advanced-toolbar-control .components-button-group {
 	.components-button {
 		&.is-primary,
 		&.is-pressed {
@@ -47,7 +47,7 @@
 			&:hover {
 				background: #555d66 !important;
 			}
-			.ugb-advanced-button-control__text-button {
+			.ugb-advanced-toolbar-control__text-button {
 				outline: none;
 				color: #fff;
 				box-shadow: none;

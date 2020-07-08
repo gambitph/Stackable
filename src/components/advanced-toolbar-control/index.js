@@ -93,15 +93,15 @@ const CONTROLS = {
 const AdvancedToolbarControl = props => {
 	const controls = typeof props.controls === 'string' ? CONTROLS[ props.controls ] : props.controls
 
-	const buttonClasses = classnames( {
-		'ugb-button--full-width': props.fullwidth,
-		'ugb-button--multiline': props.multiline,
+	const toolbarClasses = classnames( {
+		'ugb-toolbar--full-width': props.fullwidth,
+		'ugb-toolbar--multiline': props.multiline,
 	} )
 
 	return (
 		<BaseControl
 			help={ props.help }
-			className={ classnames( 'ugb-advanced-button-control', props.className ) }
+			className={ classnames( 'ugb-advanced-toolbar-control', props.className ) }
 		>
 			<BaseControlMultiLabel
 				label={ props.label }
@@ -118,12 +118,12 @@ const AdvancedToolbarControl = props => {
 							...option,
 							onClick: () => props.onChange( option.value !== props.value ? option.value : '' ),
 							isPrimary: props.value === option.value,
-							children: ! option.icon ? option.custom || <span className="ugb-advanced-button-control__text-button">{ option.title }</span> : '',
+							children: ! option.icon ? option.custom || <span className="ugb-advanced-toolbar-control__text-button">{ option.title }</span> : '',
 						}
 						return <Button key={ index } { ...controlProps } />
 					} )
 				}
-				className={ buttonClasses }
+				className={ toolbarClasses }
 			>
 			</ButtonGroup>
 		</BaseControl>
