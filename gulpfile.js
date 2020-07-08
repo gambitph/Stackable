@@ -130,13 +130,14 @@ gulp.task( 'zip', function() {
 		.pipe( gulp.dest( 'build' ) )
 } )
 
-const watchFuncs = () => {
+const watchFuncs = ( basePath = '.' ) => {
 	gulp.watch(
-		[ path.resolve( __dirname, './src/**/*.scss' ) ],
+		[ `${ basePath }/src/**/*.scss` ],
 		gulp.parallel( [ 'style', 'style-editor', 'welcome-styles', 'style-deprecated' ] )
 	)
+
 	gulp.watch(
-		[ path.resolve( __dirname, './src/welcome/**/*.scss' ) ],
+		[ `${ basePath }/src/welcome/**/*.scss` ],
 		gulp.parallel( [ 'welcome-styles' ] )
 	)
 }
