@@ -47,7 +47,8 @@ const ImageUploadPlaceholder = props => {
 					url, width, height,
 				} = image
 				const currentSelectedSize = props.imageSize || 'full'
-				if ( image.sizes[ currentSelectedSize ] ) {
+
+				if ( image.sizes && image.sizes[ currentSelectedSize ] ) {
 					url = image.sizes[ currentSelectedSize ].url
 					width = image.sizes[ currentSelectedSize ].width
 					height = image.sizes[ currentSelectedSize ].height
