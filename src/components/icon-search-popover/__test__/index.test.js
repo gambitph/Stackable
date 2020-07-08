@@ -1,4 +1,4 @@
-import { addCustomIconClass } from '..'
+import { addCustomIconClass, cleanSvgString } from '..'
 
 describe( 'addCustomIconClass', () => {
 	it( 'should add class', () => {
@@ -10,5 +10,14 @@ describe( 'addCustomIconClass', () => {
 		expect( addCustomIconClass( '<svg><g class="another"></g></svg>', 'my-class' ) ).toBe( '<svg class="my-class"><g class="another"></g></svg>' )
 		expect( addCustomIconClass( '<div><svg></svg></div>', 'my-class' ) ).toBe( '<div><svg class="my-class"></svg></div>' )
 		expect( addCustomIconClass( '<div>not an svg</div>', 'my-class' ) ).toBe( '<div>not an svg</div>' )
+	} )
+} )
+
+describe( 'cleanSvgString', () => {
+	it( 'sould strip beginning of SVG', () => {
+		expect( cleanSvgString( '<svg></svg>' ) ).toBe( '<svg></svg>' )
+		expect( cleanSvgString( '<?xml ?><svg></svg>' ) ).toBe( '<svg></svg>' )
+		expect( cleanSvgString( '<?xml ?><!-- Generator: Adobe Illustrator --><svg></svg>' ) ).toBe( '<svg></svg>' )
+		expect( cleanSvgString( '<!-- Generator: Adobe Illustrator --><svg></svg>' ) ).toBe( '<svg></svg>' )
 	} )
 } )

@@ -47,6 +47,16 @@ export const addCustomIconClass = ( svgString, customClass = 'ugb-custom-icon' )
 	return svgString
 }
 
+/**
+ * Cleans up the SVG, removes the <?xml> tag and comments
+ *
+ * @param {string} svgString The SVG in string form
+ */
+export const cleanSvgString = svgString => {
+	return svgString.replace( /(^[\s\S]*?)(<svg)/gm, '$2' )
+		.replace( /(<\/svg>)([\s\S]*)/g, '$1' )
+}
+
 const IconSearchPopover = props => {
 	const [ value, setValue ] = useState( '' )
 	const [ results, setResults ] = useState( [] )
@@ -105,13 +115,13 @@ const IconSearchPopover = props => {
 			const fr = new FileReader()
 			fr.onload = function( e ) {
 				setIsDropping( false )
-				const svgString = addCustomIconClass( e.target.result )
+				const svgString = cleanSvgString( addCustomIconClass( e.target.result ) )
 				props.onChange( svgString )
 				props.onClose()
 			}
 
 			fr.readAsText( files[ 0 ] )
-		 }
+		}
 		input.click()
 	}
 
@@ -142,7 +152,7 @@ const IconSearchPopover = props => {
 						const fr = new FileReader()
 						fr.onload = function( e ) {
 							setIsDropping( false )
-							const svgString = addCustomIconClass( e.target.result )
+							const svgString = cleanSvgString( addCustomIconClass( e.target.result ) )
 							props.onChange( svgString )
 							props.onClose()
 						}
@@ -195,7 +205,7 @@ const IconSearchPopover = props => {
 								className={ `components-button ugb-prefix--${ prefix } ugb-icon--${ iconName }` }
 								onClick={ () => {
 									if ( props.returnSVGValue ) {
-										props.onChange( faGetSVGIcon( prefix, iconName ) )
+										props.onChange( cleanSvgString( faGetSVGIcon( prefix, iconName ) ) )
 									} else {
 										props.onChange( iconValue, prefix, iconName )
 									}
