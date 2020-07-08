@@ -19,7 +19,9 @@ import classnames from 'classnames'
 /**
  * WordPress dependencies
  */
-import { BaseControl, Toolbar } from '@wordpress/components'
+import {
+	BaseControl, ButtonGroup, Button,
+} from '@wordpress/components'
 import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 
@@ -91,15 +93,15 @@ const CONTROLS = {
 const AdvancedToolbarControl = props => {
 	const controls = typeof props.controls === 'string' ? CONTROLS[ props.controls ] : props.controls
 
-	const toolbarClasses = classnames( {
-		'ugb-toolbar--full-width': props.fullwidth,
-		'ugb-toolbar--multiline': props.multiline,
+	const buttonClasses = classnames( {
+		'ugb-button--full-width': props.fullwidth,
+		'ugb-button--multiline': props.multiline,
 	} )
 
 	return (
 		<BaseControl
 			help={ props.help }
-			className={ classnames( 'ugb-advanced-toolbar-control', props.className ) }
+			className={ classnames( 'ugb-advanced-button-control', props.className ) }
 		>
 			<BaseControlMultiLabel
 				label={ props.label }
@@ -108,20 +110,22 @@ const AdvancedToolbarControl = props => {
 				onChangeUnit={ props.onChangeUnit }
 				screens={ props.screens }
 			/>
-			<Toolbar
+			<ButtonGroup
 				{ ...omit( props, [ 'className', 'help', 'label', 'units', 'unit', 'onChangeUnit', 'screens' ] ) }
-				controls={ controls.map( option => {
-					return {
-						...option,
-						onClick: () => props.onChange( option.value !== props.value ? option.value : '' ),
-						isActive: props.value === option.value,
-						extraProps: {
-							 ...( ! option.icon ? { children: option.custom || <span className="ugb-advanced-toolbar-control__text-button">{ option.title }</span> } : {} ),
-						},
-					}
-				} ) }
-				className={ toolbarClasses }
-			/>
+				children={
+					controls.map( ( option, index ) => {
+						const controlProps = {
+							...option,
+							onClick: () => props.onChange( option.value !== props.value ? option.value : '' ),
+							isPrimary: props.value === option.value,
+							children: ! option.icon ? option.custom || <span className="ugb-advanced-button-control__text-button">{ option.title }</span> : '',
+						}
+						return <Button key={ index } { ...controlProps } />
+					} )
+				}
+				className={ buttonClasses }
+			>
+			</ButtonGroup>
 		</BaseControl>
 	)
 }

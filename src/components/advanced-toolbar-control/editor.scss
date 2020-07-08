@@ -1,28 +1,27 @@
-.ugb-advanced-toolbar-control .components-toolbar {
-	&.ugb-toolbar--full-width {
+.ugb-advanced-button-control .components-button-group {
+	&.ugb-button--full-width {
 		width: 100%;
+		display: flex;
 		flex-wrap: nowrap;
+		> button,
+		> button > svg {
+			width: 100% !important;
+		}
 		svg {
 			height: 30px !important;
 		}
-		> div,
-		> div > button,
-		> div > button > svg {
-			width: 100% !important;
-		}
 	}
-	&.ugb-toolbar--multiline {
+	&.ugb-button--multiline {
 		flex-wrap: wrap;
 		justify-content: flex-start;
 		align-items: flex-start;
-		> div,
-		> div > button,
-		> div > button > svg {
+		> button,
+		> button > svg {
 			width: auto !important;
 			margin: 0;
 		}
 	}
-	.components-toolbar__control {
+	.components-button__control {
 		justify-content: center;
 		svg {
 			height: 100%;
@@ -30,7 +29,7 @@
 	}
 }
 
-.ugb-advanced-toolbar-control__text-button {
+.ugb-advanced-button-control__text-button {
 	height: 30px;
 	width: 100%;
 	justify-content: center;
@@ -40,24 +39,24 @@
 	padding: 3px;
 }
 
-.ugb-advanced-toolbar-control .components-toolbar {
-	.components-toolbar__control {
-		&.has-text {
-			padding: 3px;
-			&:hover {
-				background-color: #fff;
-				color: #191e23;
-				box-shadow: inset 0 0 0 1px #555d66, inset 0 0 0 2px #fff;
-			}
-		}
-		&.is-active,
+.ugb-advanced-button-control .components-button-group {
+	.components-button {
+		&.is-primary,
 		&.is-pressed {
-			.ugb-advanced-toolbar-control__text-button {
+			background: #555d66 !important;
+			&:hover {
+				background: #555d66 !important;
+			}
+			.ugb-advanced-button-control__text-button {
 				outline: none;
 				color: #fff;
 				box-shadow: none;
 				background: #555d66;
 			}
+		}
+		&:hover {
+			background: #555d66;
+			color: #fff;
 		}
 		&.has-icon {
 			padding: 3px;
