@@ -31,6 +31,10 @@ BlockContainer.Edit = props => {
 		'ugb-main-block': mainClass,
 	}, blockProps ) )
 
+	const innerClasses = classnames( [
+		'ugb-inner-block',
+	], applyFilters( `stackable.${ blockName }.main-block.inner-classes`, {}, blockProps ) )
+
 	const BlockTag = blockTag || blockTagProp || 'div' // Allow the advanced block settings to override the HTML Tag.
 	// TODO Remove `design` from the filters below.
 	return (
@@ -38,7 +42,7 @@ BlockContainer.Edit = props => {
 			{ blockProps.styles }
 			{ applyFilters( `stackable.${ blockName }.edit.output.outer`, null, design, blockProps ) }
 			{ render &&
-				<div className="ugb-inner-block">
+				<div className={ innerClasses }>
 					{ applyFilters( `stackable.${ blockName }.edit.output.before`, null, design, blockProps ) }
 					<div className="ugb-block-content">
 						{ render( blockProps ) }
@@ -76,6 +80,10 @@ BlockContainer.Save = props => {
 		'ugb-main-block': mainClass,
 	}, blockProps ) )
 
+	const innerClasses = classnames( [
+		'ugb-inner-block',
+	], applyFilters( `stackable.${ blockName }.main-block.inner-classes`, {}, blockProps ) )
+
 	// TODO Remove `design` from the filters below.
 	const BlockTag = blockTag || blockTagProp || 'div' // Allow the advanced block settings to override the HTML Tag.
 	return (
@@ -83,7 +91,7 @@ BlockContainer.Save = props => {
 			{ blockProps.styles }
 			{ applyFilters( `stackable.${ blockName }.save.output.outer`, null, design, blockProps ) }
 			{ render &&
-				<div className="ugb-inner-block">
+				<div className={ innerClasses }>
 					{ applyFilters( `stackable.${ blockName }.save.output.before`, null, design, blockProps ) }
 					<div className="ugb-block-content">
 						{ render( blockProps ) }
