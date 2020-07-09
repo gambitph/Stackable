@@ -124,8 +124,7 @@ const AdvancedToolbarControl = props => {
 					} )
 				}
 				className={ toolbarClasses }
-			>
-			</ButtonGroup>
+			/>
 		</BaseControl>
 	)
 }
