@@ -10,7 +10,7 @@ import {
 	ResponsiveControl,
 	Separator,
 } from '~stackable/components'
-import { createAllCombinationAttributes } from '~stackable/util'
+import { createAllCombinationAttributes, getGlobalStyleAttribute } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -405,7 +405,7 @@ const addTopStyles = ( blockName, options = {} ) => ( styleObject, props ) => {
 			transform: topSeparatorFlipHorizontally ? 'scale(-1)' : undefined,
 		},
 		[ `.ugb-top-separator svg` ]: {
-			fill: topSeparatorColor !== '' ? topSeparatorColor : undefined,
+			fill: topSeparatorColor !== '' ? topSeparatorColor : getGlobalStyleAttribute( 'background-color' ),
 		},
 		[ `.ugb-top-separator .ugb-separator-wrapper` ]: {
 			height: topSeparatorHeight !== '' ? `${ topSeparatorHeight }px` : undefined,
@@ -448,7 +448,7 @@ const addBottomStyles = ( blockName, options = {} ) => ( styleObject, props ) =>
 			transform: bottomSeparatorFlipHorizontally ? 'scaleX(-1)' : undefined,
 		},
 		[ `.ugb-bottom-separator svg` ]: {
-			fill: bottomSeparatorColor !== '' ? bottomSeparatorColor : undefined,
+			fill: bottomSeparatorColor !== '' ? bottomSeparatorColor : getGlobalStyleAttribute( 'background-color' ),
 		},
 		[ `.ugb-bottom-separator .ugb-separator-wrapper` ]: {
 			height: bottomSeparatorHeight !== '' ? `${ bottomSeparatorHeight }px` : undefined,

@@ -282,3 +282,19 @@ export const moveArrayIndex = ( values, oldIndex, newIndex ) => {
 	values.splice( oldIndex < newIndex ? oldIndex : oldIndex + 1, 1 ) // Remove value in old position.
 	return values
 }
+
+/**
+ *
+ * Used to determine the default style of the page
+ *
+ * @param {string} attribute The attribute to fetch.
+ *
+ * @return {string} The attribute value
+ */
+export const getGlobalStyleAttribute = ( attribute = '' ) => {
+	const parentPageDivElement = document.querySelector( '.edit-post-visual-editor' )
+	if ( ! attribute ) {
+		return getComputedStyle( parentPageDivElement ) // eslint-disable-line no-undef
+	}
+	return getComputedStyle( parentPageDivElement )[ attribute ] // eslint-disable-line no-undef
+}
