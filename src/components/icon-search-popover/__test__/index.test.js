@@ -14,10 +14,20 @@ describe( 'addCustomIconClass', () => {
 } )
 
 describe( 'cleanSvgString', () => {
-	it( 'sould strip beginning of SVG', () => {
+	it( 'sould extract the SVG only', () => {
 		expect( cleanSvgString( '<svg></svg>' ) ).toBe( '<svg></svg>' )
 		expect( cleanSvgString( '<?xml ?><svg></svg>' ) ).toBe( '<svg></svg>' )
 		expect( cleanSvgString( '<?xml ?><!-- Generator: Adobe Illustrator --><svg></svg>' ) ).toBe( '<svg></svg>' )
 		expect( cleanSvgString( '<!-- Generator: Adobe Illustrator --><svg></svg>' ) ).toBe( '<svg></svg>' )
+		expect( cleanSvgString( 'something<svg></svg>something' ) ).toBe( '<svg></svg>' )
+	} )
+
+	it( 'should remove simple SVG groupings', () => {
+		expect( cleanSvgString( '<svg><g><path /></g></svg>' ) ).toBe( '<svg><path /></svg>' )
+		expect( cleanSvgString( '<svg><g><g></g><g><path /></g></g><g></g></svg>' ) ).toBe( '<svg><path /></svg>' )
+	} )
+
+	it( 'should not remove complex SVG groupings', () => {
+		expect( cleanSvgString( '<svg><g id="id"><path /></g></svg>' ) ).toBe( '<svg><g id="id"><path /></g></svg>' )
 	} )
 } )

@@ -15,7 +15,7 @@ export const numShapesInSvg = svgString => {
 
 	return range( 10 ).reduce( ( numPaths, i ) => {
 		const num = i + 1
-		if ( ( new RegExp( `(<(circle|ellipse|line|polygon|polyline|rect|shape|path)[^>]*(\/>|><\/\\w+>)){${ num }}` ) ).test( svgString ) ) {
+		if ( ( new RegExp( `(<(circle|ellipse|line|polygon|polyline|rect|shape|path)[^>]*(\/>|>[\s\S]*?<\/\\w+>)[ \t\r\n\v\f]*){${ num }}`, 'gm' ) ).test( svgString ) ) {
 			return num
 		}
 		return numPaths

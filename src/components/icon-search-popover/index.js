@@ -53,8 +53,16 @@ export const addCustomIconClass = ( svgString, customClass = 'ugb-custom-icon' )
  * @param {string} svgString The SVG in string form
  */
 export const cleanSvgString = svgString => {
-	return svgString.replace( /(^[\s\S]*?)(<svg)/gm, '$2' )
+	// Get the SVG only
+	let newSvg = svgString.replace( /(^[\s\S]*?)(<svg)/gm, '$2' )
 		.replace( /(<\/svg>)([\s\S]*)/g, '$1' )
+
+	// Remove simple grouping so that we can color SVGs.
+	for ( let i = 0; i < 2; i++ ) {
+		newSvg = newSvg.replace( /\s*<g\s*>([\s\S]*?)<\/g>\s*/gm, '$1' )
+	}
+
+	return newSvg
 }
 
 const IconSearchPopover = props => {
