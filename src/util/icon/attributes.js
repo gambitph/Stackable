@@ -74,6 +74,7 @@ const createIconAttributes = ( attrNameTemplate, options = {} ) => {
 				'TabletSize',
 				'MobileSize',
 				'BorderRadius',
+				'Shadow',
 				'Opacity',
 				'Rotation',
 				'BackgroundShapeOpacity',
