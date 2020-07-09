@@ -288,11 +288,12 @@ export const moveArrayIndex = ( values, oldIndex, newIndex ) => {
  * Used to determine the default style of the page
  *
  * @param {string} attribute The attribute to fetch.
+ * @param {string} queryName Custom query to pass
  *
  * @return {string} The attribute value
  */
-export const getGlobalStyleAttribute = ( attribute = '' ) => {
-	const parentPageDivElement = document.querySelector( '.edit-post-visual-editor' )
+export const getGlobalStyleAttribute = ( attribute = '', queryName = '.edit-post-visual-editor' ) => {
+	const parentPageDivElement = document.querySelector( queryName )
 	if ( ! attribute ) {
 		return getComputedStyle( parentPageDivElement ) // eslint-disable-line no-undef
 	}
