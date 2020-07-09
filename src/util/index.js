@@ -293,7 +293,10 @@ export const moveArrayIndex = ( values, oldIndex, newIndex ) => {
  * @return {string} The attribute value
  */
 export const getGlobalStyleAttribute = ( attribute = '', queryName = '.edit-post-visual-editor' ) => {
-	const parentPageDivElement = document.querySelector( queryName )
+	const parentPageDivElement = document ? document.querySelector( queryName ) : null
+	if ( ! parentPageDivElement ) {
+		return ''
+	}
 	if ( ! attribute ) {
 		return getComputedStyle( parentPageDivElement ) // eslint-disable-line no-undef
 	}

@@ -52,10 +52,9 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 				title={ __( 'Top Separator', i18n ) }
 				id="top-separator"
 				checked={ showTopSeparator }
-				onChange={ showTopSeparator => setAttributes( { showTopSeparator } ) }
+				onChange={ showTopSeparator => setAttributes( { showTopSeparator, topSeparatorColor: topSeparatorColor || getGlobalStyleAttribute( 'background-color' ) } ) }
 				toggleOnSetAttributes={ [
 					'topSeparatorDesign',
-					'topSeparatorColor',
 					'topSeparatorHeight',
 					'topSeparatorTabletHeight',
 					'topSeparatorMobileHeight',
@@ -151,10 +150,9 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 				title={ __( 'Bottom Separator', i18n ) }
 				id="bottom-separator"
 				checked={ showBottomSeparator }
-				onChange={ showBottomSeparator => setAttributes( { showBottomSeparator } ) }
+				onChange={ showBottomSeparator => setAttributes( { showBottomSeparator, bottomSeparatorColor: bottomSeparatorColor || getGlobalStyleAttribute( 'background-color' ) } ) }
 				toggleOnSetAttributes={ [
 					'bottomSeparatorDesign',
-					'bottomSeparatorColor',
 					'bottomSeparatorHeight',
 					'bottomSeparatorTabletHeight',
 					'bottomSeparatorMobileHeight',
@@ -405,7 +403,7 @@ const addTopStyles = ( blockName, options = {} ) => ( styleObject, props ) => {
 			transform: topSeparatorFlipHorizontally ? 'scale(-1)' : undefined,
 		},
 		[ `.ugb-top-separator svg` ]: {
-			fill: topSeparatorColor !== '' ? topSeparatorColor : getGlobalStyleAttribute( 'background-color' ),
+			fill: topSeparatorColor !== '' ? topSeparatorColor : undefined,
 		},
 		[ `.ugb-top-separator .ugb-separator-wrapper` ]: {
 			height: topSeparatorHeight !== '' ? `${ topSeparatorHeight }px` : undefined,
@@ -448,7 +446,7 @@ const addBottomStyles = ( blockName, options = {} ) => ( styleObject, props ) =>
 			transform: bottomSeparatorFlipHorizontally ? 'scaleX(-1)' : undefined,
 		},
 		[ `.ugb-bottom-separator svg` ]: {
-			fill: bottomSeparatorColor !== '' ? bottomSeparatorColor : getGlobalStyleAttribute( 'background-color' ),
+			fill: bottomSeparatorColor !== '' ? bottomSeparatorColor : undefined,
 		},
 		[ `.ugb-bottom-separator .ugb-separator-wrapper` ]: {
 			height: bottomSeparatorHeight !== '' ? `${ bottomSeparatorHeight }px` : undefined,
