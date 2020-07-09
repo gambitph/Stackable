@@ -76,6 +76,7 @@ const createIconAttributes = ( attrNameTemplate, options = {} ) => {
 				'BorderRadius',
 				'Shadow',
 				'Opacity',
+				'Padding',
 				'Rotation',
 				'BackgroundShapeOpacity',
 				'BackgroundShapeSize',
