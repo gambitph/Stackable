@@ -284,66 +284,68 @@ const Edit = props => {
 	return (
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				{ range( 1, columns + 1 ).map( i => {
-					const icon = attributes[ `icon${ i }` ]
-					const title = attributes[ `title${ i }` ]
+				<div className="ugb-icon__content-wrapper">
+					{ range( 1, columns + 1 ).map( i => {
+						const icon = attributes[ `icon${ i }` ]
+						const title = attributes[ `title${ i }` ]
 
-					const boxClasses = classnames( [
-						'ugb-icon__item',
-						`ugb-icon__item${ i }`,
-					], applyFilters( 'stackable.icon.boxclasses', {}, props ) )
+						const boxClasses = classnames( [
+							'ugb-icon__item',
+							`ugb-icon__item${ i }`,
+						], applyFilters( 'stackable.icon.boxclasses', {}, props ) )
 
-					const iconComp = (
-						<div className="ugb-icon__icon">
-							<SvgIconPlaceholder
-								attrNameTemplate="icon%s"
-								blockAttributes={ props.attributes }
-								value={ icon }
-								onChange={ value => setAttributes( { [ `icon${ i }` ]: value } ) }
-								onToggle={ onIconPopupToggle }
-							/>
-						</div>
-					)
-
-					const titleComp = showTitle &&
-						<RichText
-							tagName={ titleTag || 'h5' }
-							className="ugb-icon__title"
-							value={ title }
-							placeholder={ __( 'Title', i18n ) }
-							onChange={ value => setAttributes( { [ `title${ i }` ]: value } ) }
-							keepPlaceholderOnFocus
-						/>
-
-					let comps = [ iconComp, titleComp ]
-					if ( titleTop ) {
-						comps = [ titleComp, iconComp ]
-					}
-
-					return (
-						<DivBackground
-							className={ boxClasses }
-							backgroundAttrName="column%s"
-							blockProps={ props }
-							showBackground={ show.columnBackground }
-							onClick={ () => setSelected( i ) }
-							key={ i }
-						>
-							{ comps }
-							{ isSelected && selected === i &&
-								<UrlInputPopover
-									value={ attributes[ `url${ i }` ] }
-									onChange={ value => setAttributes( { [ `url${ i }` ]: value } ) }
-									newTab={ attributes[ `newTab${ i }` ] }
-									noFollow={ attributes[ `noFollow${ i }` ] }
-									onChangeNewTab={ value => setAttributes( { [ `newTab${ i }` ]: value } ) }
-									onChangeNoFollow={ value => setAttributes( { [ `noFollow${ i }` ]: value } ) }
-									position={ urlPopupPosition }
+						const iconComp = (
+							<div className="ugb-icon__icon">
+								<SvgIconPlaceholder
+									attrNameTemplate="icon%s"
+									blockAttributes={ props.attributes }
+									value={ icon }
+									onChange={ value => setAttributes( { [ `icon${ i }` ]: value } ) }
+									onToggle={ onIconPopupToggle }
 								/>
-							}
-						</DivBackground>
-					)
-				} ) }
+							</div>
+						)
+
+						const titleComp = showTitle &&
+							<RichText
+								tagName={ titleTag || 'h5' }
+								className="ugb-icon__title"
+								value={ title }
+								placeholder={ __( 'Title', i18n ) }
+								onChange={ value => setAttributes( { [ `title${ i }` ]: value } ) }
+								keepPlaceholderOnFocus
+							/>
+
+						let comps = [ iconComp, titleComp ]
+						if ( titleTop ) {
+							comps = [ titleComp, iconComp ]
+						}
+
+						return (
+							<DivBackground
+								className={ boxClasses }
+								backgroundAttrName="column%s"
+								blockProps={ props }
+								showBackground={ show.columnBackground }
+								onClick={ () => setSelected( i ) }
+								key={ i }
+							>
+								{ comps }
+								{ isSelected && selected === i &&
+									<UrlInputPopover
+										value={ attributes[ `url${ i }` ] }
+										onChange={ value => setAttributes( { [ `url${ i }` ]: value } ) }
+										newTab={ attributes[ `newTab${ i }` ] }
+										noFollow={ attributes[ `noFollow${ i }` ] }
+										onChangeNewTab={ value => setAttributes( { [ `newTab${ i }` ]: value } ) }
+										onChangeNoFollow={ value => setAttributes( { [ `noFollow${ i }` ]: value } ) }
+										position={ urlPopupPosition }
+									/>
+								}
+							</DivBackground>
+						)
+					} ) }
+				</div>
 			</Fragment>
 		) } />
 	)
