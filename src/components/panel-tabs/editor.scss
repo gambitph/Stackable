@@ -8,6 +8,14 @@
 		background: #fff;
 		box-shadow: none;
 		flex-wrap: nowrap;
+		> button {
+			display: flex !important;
+			transition: all 0.3s ease-in-out;
+			background: #fff;
+			box-shadow: none;
+			border: 0;
+			flex-wrap: nowrap;
+		}
 	}
 	button {
 		outline: none !important;
