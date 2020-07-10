@@ -1,4 +1,4 @@
-# How to Use Font Awesome Pro with Stackable
+# How to Use Your Font Awesome Pro Icons
 
 If you have an active **Font Awesome Pro subscription**, then you can easily start using your Pro icons inside your Stackable blocks.
 
