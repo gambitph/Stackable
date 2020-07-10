@@ -35,8 +35,9 @@
   * [Removing Block Elements](stackable-guides/beginner-guides/removing-the-block-elements.md)
   * [Image Sizes](stackable-guides/beginner-guides/image-sizes.md)
 * [Advanced Guides](stackable-guides/advanced-guides/README.md)
-  * [How to Use Multicolor for Icons](stackable-guides/advanced-guides/how-to-use-multicolor-for-icons.md)
   * [Guided Custom CSS](stackable-guides/advanced-guides/guided-custom-css.md)
+  * [How to Use Your Font Awesome Pro Icons](stackable-guides/advanced-guides/how-to-use-your-font-awesome-pro-icons.md)
+  * [How to Use Multicolor for Icons](stackable-guides/advanced-guides/how-to-use-multicolor-for-icons.md)
   * [Translate Blocks Using WPML \(Multilingual\)](stackable-guides/advanced-guides/translate-blocks-using-wpml-multilingual.md)
   * [Using ACF Fields in Blocks](stackable-guides/advanced-guides/using-acf-fields-in-blocks.md)
 
