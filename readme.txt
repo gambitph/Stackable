@@ -125,6 +125,7 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com/v2/)
 
 ### News Article Updates
 
+- [v2.7 New Icon Block, Amazing Icons and Font Awesome Pro](https://wpstackable.com/blog/new-icon-block-amazing-icons-and-font-awesome-pro)
 - [v2.6 New Advanced Blocks and Load More Blog Posts Button](https://wpstackable.com/blog/new-advanced-blocks-and-load-more-blog-posts-button)
 - [v2.5 Better Onboarding for First Time Users](https://wpstackable.com/blog/better-onboarding-for-first-time-users)
 - [v2.4 Introducing the Advanced Columns & Grid Block](https://wpstackable.com/blog/introducing-the-advanced-columns-and-grid-block/)
@@ -186,6 +187,8 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 2.7.0 =
+[New Icon Block, Amazing Icons and Font Awesome Pro](https://wpstackable.com/blog/new-icon-block-amazing-icons-and-font-awesome-pro)
+
 * New: New Icon Block!
 * New: You can now upload your own SVG icons!
 * New: Improved icons, add backgrounds, shapes, outlines and more!
@@ -194,6 +197,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * New: Font Awesome Pro integration (premium)
 * New: Smaller plugin filesize, now less than 2mb!
 * New: 3 subtle hover effects (premium)
+* New: Block Title and Description Width options
 * Change: Removed 1.12 backward compatiblity (version more than a year ago)
 * Change: Blocks will get a class `ugb--has-custom-content-width` when a block uses a Max Custom Width
 * Change: Max Content Width option now changes max-width instead of width
