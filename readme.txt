@@ -196,10 +196,14 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * New: 3 subtle hover effects (premium)
 * Change: Removed 1.12 backward compatiblity (version more than a year ago)
 * Change: Blocks will get a class `ugb--has-custom-content-width` when a block uses a Max Custom Width
+* Change: Max Content Width option now changes max-width instead of width
+* Change: Updated the size of wide blocks visually in the editor
 * Fixed: Icon gets disabled when switching layouts in the notification block
 * Fixed: Possible error when encountering an error fetching blog posts
 * Fixed: Better handling for themes which may interfere with the placement of the popup video
 * Fixed: Text alignment in Adv. Text Block sometimes wasn't followed.
+* Fixed: Error when uploading SVG images in the inspector.
+* Fixed: Image size option can show "thumbnail" even though it's not
 
 = 2.6.1 =
 * Fixed: Some buttons aligning to center
