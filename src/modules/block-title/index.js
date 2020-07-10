@@ -9,6 +9,8 @@ import {
 	PanelAdvancedSettings,
 	ResponsiveControl,
 	TypographyControlHelper,
+	WhenResponsiveScreen,
+	AdvancedToolbarControl,
 } from '~stackable/components'
 import {
 	createResponsiveAttributeNames,
@@ -19,6 +21,9 @@ import {
 	descriptionPlaceholder,
 	whiteIfDark,
 	__getValue,
+	appendImportant,
+	marginLeftAlign,
+	marginRightAlign,
 } from '~stackable/util'
 import { omit } from 'lodash'
 
@@ -45,6 +50,23 @@ const addInspectorPanel = ( output, props ) => {
 		blockDescriptionColor = '',
 		blockTitle = '',
 		blockDescription = '',
+
+		blockTitleWidth = '',
+		blockTitleTabletWidth = '',
+		blockTitleMobileWidth = '',
+		blockTitleWidthUnit = 'px',
+		blockTitleTabletWidthUnit = 'px',
+		blockTitleMobileWidthUnit = 'px',
+
+		blockDescriptionWidth = '',
+		blockDescriptionTabletWidth = '',
+		blockDescriptionMobileWidth = '',
+		blockDescriptionWidthUnit = 'px',
+		blockDescriptionTabletWidthUnit = 'px',
+		blockDescriptionMobileWidthUnit = 'px',
+
+		blockTitleHorizontalAlign = '',
+		blockDescriptionHorizontalAlign = '',
 	} = props.attributes
 	return (
 		<Fragment>
@@ -84,13 +106,63 @@ const addInspectorPanel = ( output, props ) => {
 					onChange={ blockTitleColor => setAttributes( { blockTitleColor } ) }
 					label={ __( 'Title Color', i18n ) }
 				/>
+				<WhenResponsiveScreen>
+					<AdvancedRangeControl
+						label={ __( 'Max Width', i18n ) }
+						units={ [ 'px', '%' ] }
+						min={ [ 100, 10 ] }
+						max={ [ 1000, 100 ] }
+						step={ [ 1, 1 ] }
+						allowReset={ true }
+						value={ blockTitleWidth }
+						unit={ blockTitleWidthUnit || 'px' }
+						onChange={ blockTitleWidth => setAttributes( { blockTitleWidth } ) }
+						onChangeUnit={ blockTitleWidthUnit => setAttributes( { blockTitleWidthUnit } ) }
+					/>
+				</WhenResponsiveScreen>
+				<WhenResponsiveScreen screen="tablet">
+					<AdvancedRangeControl
+						label={ __( 'Max Width', i18n ) }
+						units={ [ 'px', '%' ] }
+						min={ [ 100, 10 ] }
+						max={ [ 1000, 100 ] }
+						step={ [ 1, 1 ] }
+						allowReset={ true }
+						value={ blockTitleTabletWidth }
+						unit={ blockTitleTabletWidthUnit || 'px' }
+						onChange={ blockTitleTabletWidth => setAttributes( { blockTitleTabletWidth } ) }
+						onChangeUnit={ blockTitleTabletWidthUnit => setAttributes( { blockTitleTabletWidthUnit } ) }
+					/>
+				</WhenResponsiveScreen>
+				<WhenResponsiveScreen screen="mobile">
+					<AdvancedRangeControl
+						label={ __( 'Max Width', i18n ) }
+						units={ [ 'px', '%' ] }
+						min={ [ 100, 10 ] }
+						max={ [ 1000, 100 ] }
+						step={ [ 1, 1 ] }
+						allowReset={ true }
+						value={ blockTitleMobileWidth }
+						unit={ blockTitleMobileWidthUnit || 'px' }
+						onChange={ blockTitleMobileWidth => setAttributes( { blockTitleMobileWidth } ) }
+						onChangeUnit={ blockTitleMobileWidthUnit => setAttributes( { blockTitleMobileWidthUnit } ) }
+					/>
+				</WhenResponsiveScreen>
+				{ ( blockTitleWidth || blockTitleTabletWidth || blockTitleMobileWidth ) &&
+					<AdvancedToolbarControl
+						label={ __( 'Horizontal Align', i18n ) }
+						controls="flex-horizontal"
+						value={ blockTitleHorizontalAlign }
+						onChange={ blockTitleHorizontalAlign => setAttributes( { blockTitleHorizontalAlign } ) }
+					/>
+				}
 				<ResponsiveControl
 					attrNameTemplate="BlockTitle%sAlign"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
 					<AlignButtonsControl
-						label={ __( 'Align', i18n ) }
+						label={ __( 'Text Align', i18n ) }
 						className="ugb--help-tip-alignment-title"
 					/>
 				</ResponsiveControl>
@@ -125,13 +197,63 @@ const addInspectorPanel = ( output, props ) => {
 					onChange={ blockDescriptionColor => setAttributes( { blockDescriptionColor } ) }
 					label={ __( 'Description Color', i18n ) }
 				/>
+				<WhenResponsiveScreen>
+					<AdvancedRangeControl
+						label={ __( 'Max Width', i18n ) }
+						units={ [ 'px', '%' ] }
+						min={ [ 100, 10 ] }
+						max={ [ 1000, 100 ] }
+						step={ [ 1, 1 ] }
+						allowReset={ true }
+						value={ blockDescriptionWidth }
+						unit={ blockDescriptionWidthUnit || 'px' }
+						onChange={ blockDescriptionWidth => setAttributes( { blockDescriptionWidth } ) }
+						onChangeUnit={ blockDescriptionWidthUnit => setAttributes( { blockDescriptionWidthUnit } ) }
+					/>
+				</WhenResponsiveScreen>
+				<WhenResponsiveScreen screen="tablet">
+					<AdvancedRangeControl
+						label={ __( 'Max Width', i18n ) }
+						units={ [ 'px', '%' ] }
+						min={ [ 100, 10 ] }
+						max={ [ 1000, 100 ] }
+						step={ [ 1, 1 ] }
+						allowReset={ true }
+						value={ blockDescriptionTabletWidth }
+						unit={ blockDescriptionTabletWidthUnit || 'px' }
+						onChange={ blockDescriptionTabletWidth => setAttributes( { blockDescriptionTabletWidth } ) }
+						onChangeUnit={ blockDescriptionTabletWidthUnit => setAttributes( { blockDescriptionTabletWidthUnit } ) }
+					/>
+				</WhenResponsiveScreen>
+				<WhenResponsiveScreen screen="mobile">
+					<AdvancedRangeControl
+						label={ __( 'Max Width', i18n ) }
+						units={ [ 'px', '%' ] }
+						min={ [ 100, 10 ] }
+						max={ [ 1000, 100 ] }
+						step={ [ 1, 1 ] }
+						allowReset={ true }
+						value={ blockDescriptionMobileWidth }
+						unit={ blockDescriptionMobileWidthUnit || 'px' }
+						onChange={ blockDescriptionMobileWidth => setAttributes( { blockDescriptionMobileWidth } ) }
+						onChangeUnit={ blockDescriptionMobileWidthUnit => setAttributes( { blockDescriptionMobileWidthUnit } ) }
+					/>
+				</WhenResponsiveScreen>
+				{ ( blockDescriptionWidth || blockDescriptionTabletWidth || blockDescriptionMobileWidth ) &&
+					<AdvancedToolbarControl
+						label={ __( 'Horizontal Align', i18n ) }
+						controls="flex-horizontal"
+						value={ blockDescriptionHorizontalAlign }
+						onChange={ blockDescriptionHorizontalAlign => setAttributes( { blockDescriptionHorizontalAlign } ) }
+					/>
+				}
 				<ResponsiveControl
 					attrNameTemplate="BlockDescription%sAlign"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				>
 					<AlignButtonsControl
-						label={ __( 'Align', i18n ) }
+						label={ __( 'Text Align', i18n ) }
 						className="ugb--help-tip-alignment-description"
 					/>
 				</ResponsiveControl>
@@ -151,6 +273,18 @@ const addAttributes = attributes => {
 			source: 'html',
 			selector: '.ugb-block-title',
 			default: __( 'Title for This Block', i18n ),
+		},
+		...createResponsiveAttributes( 'blockTitle%sWidth', {
+			type: 'number',
+			default: '',
+		} ),
+		...createResponsiveAttributes( 'blockTitle%sWidthUnit', {
+			type: 'string',
+			default: '',
+		} ),
+		blockTitleHorizontalAlign: {
+			type: 'string',
+			default: '',
 		},
 		...createResponsiveAttributes( 'blockTitle%sBottomMargin', {
 			type: 'number',
@@ -178,6 +312,18 @@ const addAttributes = attributes => {
 			source: 'html',
 			selector: '.ugb-block-description',
 			default: descriptionPlaceholder(),
+		},
+		...createResponsiveAttributes( 'blockDescription%sWidth', {
+			type: 'number',
+			default: '',
+		} ),
+		...createResponsiveAttributes( 'blockDescription%sWidthUnit', {
+			type: 'string',
+			default: '',
+		} ),
+		blockDescriptionHorizontalAlign: {
+			type: 'string',
+			default: '',
 		},
 		...createResponsiveAttributes( 'blockDescription%sBottomMargin', {
 			type: 'number',
@@ -332,6 +478,8 @@ const addStyles = ( styleObject, props ) => {
 
 	const styles = [ styleObject ]
 
+	const hasTitleHorizontalAlign = getValue( 'blockTitleWidth' ) || getValue( 'blockTitleTabletWidth' ) || getValue( 'blockTitleMobileWidth' )
+
 	if ( showBlockTitle ) {
 		styles.push( {
 			'.ugb-block-title': {
@@ -339,12 +487,16 @@ const addStyles = ( styleObject, props ) => {
 				color: whiteIfDark( blockTitleColor, showBlockBackground && blockBackgroundBackgroundColor ),
 				textAlign: getValue( 'blockTitleAlign' ),
 				marginBottom: getValue( 'blockTitleBottomMargin', '%spx' ),
+				maxWidth: appendImportant( getValue( 'blockTitleWidth', '%s' + getValue( 'blockTitleWidthUnit', '%s', 'px' ) ) ),
+				marginLeft: hasTitleHorizontalAlign ? appendImportant( marginLeftAlign( getValue( 'blockTitleHorizontalAlign' ) ) ) : undefined,
+				marginRight: hasTitleHorizontalAlign ? appendImportant( marginRightAlign( getValue( 'blockTitleHorizontalAlign' ) ) ) : undefined,
 			},
 			tablet: {
 				'.ugb-block-title': {
 					...createTypographyStyles( 'BlockTitle%s', 'tablet', props.attributes ),
 					textAlign: getValue( 'blockTitleTabletAlign' ),
 					marginBottom: getValue( 'blockTitleTabletBottomMargin', '%spx' ),
+					maxWidth: appendImportant( getValue( 'blockTitleTabletWidth', '%s' + getValue( 'blockTitleTabletWidthUnit', '%s', 'px' ) ) ),
 				},
 			},
 			mobile: {
@@ -352,10 +504,13 @@ const addStyles = ( styleObject, props ) => {
 					...createTypographyStyles( 'BlockTitle%s', 'mobile', props.attributes ),
 					textAlign: getValue( 'blockTitleMobileAlign' ),
 					marginBottom: getValue( 'blockTitleMobileBottomMargin', '%spx' ),
+					maxWidth: appendImportant( getValue( 'blockTitleMobileWidth', '%s' + getValue( 'blockTitleMobileWidthUnit', '%s', 'px' ) ) ),
 				},
 			},
 		} )
 	}
+
+	const hasDescriptionHorizontalAlign = getValue( 'blockDescriptionWidth' ) || getValue( 'blockDescriptionTabletWidth' ) || getValue( 'blockDescriptionMobileWidth' )
 
 	if ( showBlockDescription ) {
 		styles.push( {
@@ -364,12 +519,16 @@ const addStyles = ( styleObject, props ) => {
 				color: whiteIfDark( blockDescriptionColor, showBlockBackground && blockBackgroundBackgroundColor ),
 				textAlign: getValue( 'blockDescriptionAlign' ),
 				marginBottom: getValue( 'blockDescriptionBottomMargin', '%spx' ),
+				maxWidth: appendImportant( getValue( 'blockDescriptionWidth', '%s' + getValue( 'blockDescriptionWidthUnit', '%s', 'px' ) ) ),
+				marginLeft: hasDescriptionHorizontalAlign ? appendImportant( marginLeftAlign( getValue( 'blockDescriptionHorizontalAlign' ) ) ) : undefined,
+				marginRight: hasDescriptionHorizontalAlign ? appendImportant( marginRightAlign( getValue( 'blockDescriptionHorizontalAlign' ) ) ) : undefined,
 			},
 			tablet: {
 				'.ugb-block-description': {
 					...createTypographyStyles( 'BlockDescription%s', 'tablet', props.attributes ),
 					textAlign: getValue( 'blockDescriptionTabletAlign' ),
 					marginBottom: getValue( 'blockDescriptionTabletBottomMargin', '%spx' ),
+					maxWidth: appendImportant( getValue( 'blockDescriptionTabletWidth', '%s' + getValue( 'blockDescriptionTabletWidthUnit', '%s', 'px' ) ) ),
 				},
 			},
 			mobile: {
@@ -377,6 +536,7 @@ const addStyles = ( styleObject, props ) => {
 					...createTypographyStyles( 'BlockDescription%s', 'mobile', props.attributes ),
 					textAlign: getValue( 'blockDescriptionMobileAlign' ),
 					marginBottom: getValue( 'blockDescriptionMobileBottomMargin', '%spx' ),
+					maxWidth: appendImportant( getValue( 'blockDescriptionMobileWidth', '%s' + getValue( 'blockDescriptionMobileWidthUnit', '%s', 'px' ) ) ),
 				},
 			},
 		} )
