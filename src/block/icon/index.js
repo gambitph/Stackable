@@ -17,6 +17,7 @@ import { IconIcon } from '~stackable/icons'
 /**
  * Internal dependencies
  */
+import './design'
 import edit from './edit'
 import save from './save'
 import deprecated from './deprecated'

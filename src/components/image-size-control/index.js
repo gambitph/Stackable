@@ -28,6 +28,7 @@ const ImageSizeControl = props => {
 
 	return <SelectControl
 		{ ...props }
+		value={ props.value || 'large' }
 		options={ imageSizeOptions }
 		className={ classnames( props.className, [ 'ugb--help-tip-image-size' ] ) }
 	/>

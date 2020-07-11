@@ -11,6 +11,9 @@
 	.ugb-countup__item {
 		display: flex;
 		flex-direction: column;
+		> * {
+			z-index: 2;
+		}
 	}
 	.ugb-countup--hide,
 	.ugb-countup-hide {
@@ -31,10 +34,17 @@
 	}
 
 	.ugb-countup__icon {
+		z-index: 1;
 		svg {
 			margin: 0 auto;
 			height: 50px;
 			width: 50px;
+		}
+
+		&.ugb-countup__icon--v2 {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
 		}
 	}
 

@@ -21,4 +21,12 @@ describe( 'numShapesInSvg', () => {
 		expect( numShapesInSvg( '<svg><g><g><shape/><shape></shape></g></g><g><shape></shape><circle></circle></g></svg>' ) ).toBe( 2 )
 		expect( numShapesInSvg( '<svg><g><g><shape/><shape></shape></g></g><g><shape></shape><circle></circle><rect></rect></g></svg>' ) ).toBe( 3 )
 	} )
+	it( 'should handle multiple lines and spaces', () => {
+		expect( numShapesInSvg( `<svg><shape/>
+<shape/></svg>` ) ).toBe( 2 )
+		expect( numShapesInSvg( `<svg><shape></shape>
+<shape></shape></svg>` ) ).toBe( 2 )
+		expect( numShapesInSvg( `<svg><shape></shape>
+	<shape></shape></svg>` ) ).toBe( 2 )
+	} )
 } )

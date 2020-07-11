@@ -17,8 +17,18 @@
 	}
 }
 
+// Get rid of the small gap below the icon.
+.ugb-icon-inner-svg svg {
+	display: block;
+}
+
 .ugb-icon__design-wrapper {
 	padding: 20px;
+
+	// Shadow 9 isn't visible.
+	&.ugb--shadow-9 {
+		box-shadow: 0 25px 60px -15px rgba(72, 73, 121, 0.38) !important;
+	}
 }
 .ugb-icon__design-wrapper.ugb-icon__design-shaped {
 	background-color: #ddd;

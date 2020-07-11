@@ -57,7 +57,13 @@ const SvgIcon = props => {
 	)
 
 	if ( props.design === 'shaped' || props.design === 'outlined' ) {
-		ret = <div className={ `ugb-icon__design-wrapper ugb-icon__design-${ props.design }` } >{ ret }</div>
+		const wrapperClasses = classnames( [
+			'ugb-icon__design-wrapper',
+			`ugb-icon__design-${ props.design }`,
+		], {
+			[ `ugb--shadow-${ props.shadow }` ]: props.shadow && props.design === 'shaped',
+		} )
+		ret = <div className={ wrapperClasses } >{ ret }</div>
 	}
 
 	if ( props.showBackgroundShape ) {
@@ -80,6 +86,7 @@ SvgIcon.defaultProps = {
 	// Show background shape.
 	showBackgroundShape: false,
 	backgroundShape: '', // An SVG to add as a background
+	shadow: '', // For shaped only
 
 	// The icon has a gradient color.
 	gradientColor1: '',
@@ -103,7 +110,13 @@ SvgIcon.Content = props => {
 	let ret = <FontAwesomeIcon.Content { ...propsToPass } className={ classNames } />
 
 	if ( props.design === 'shaped' || props.design === 'outlined' ) {
-		ret = <div className={ `ugb-icon__design-wrapper ugb-icon__design-${ props.design }` } >{ ret }</div>
+		const wrapperClasses = classnames( [
+			'ugb-icon__design-wrapper',
+			`ugb-icon__design-${ props.design }`,
+		], {
+			[ `ugb--shadow-${ props.shadow }` ]: props.shadow && props.design === 'shaped',
+		} )
+		ret = <div className={ wrapperClasses } >{ ret }</div>
 	}
 
 	if ( props.showBackgroundShape ) {

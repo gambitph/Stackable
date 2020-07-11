@@ -55,6 +55,9 @@ module.exports = {
 		'jsdoc/no-undefined-types': 'off',
 
 		'@wordpress/no-unguarded-get-range-at': 'off',
+
+		// LF style line breaks.
+		'linebreak-style': ["error", "unix"],
 	},
 	globals: {
 		localStorage: true,

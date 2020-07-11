@@ -10,5 +10,6 @@ export const showOptions = blockProps => {
 
 	return applyFilters( 'stackable.icon.show', {
 		titleSpacing: showTitle,
+		iconAlign: showTitle,
 	}, blockProps )
 }

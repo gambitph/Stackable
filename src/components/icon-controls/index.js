@@ -182,6 +182,19 @@ const IconControls = props => {
 						/>
 					}
 
+					{ design === 'shaped' && props.onChangeShadow &&
+						<AdvancedRangeControl
+							label={ __( 'Shadow / Outline', i18n ) }
+							value={ props.shadow }
+							onChange={ props.onChangeShadow }
+							min={ 0 }
+							max={ 9 }
+							allowReset={ true }
+							placeholder="0"
+							className="ugb--help-tip-general-shadow"
+						/>
+					}
+
 					{ design === 'outlined' && props.onChangeOutlineWidth &&
 						<AdvancedRangeControl
 							label={ __( 'Outline Width', i18n ) }
@@ -326,6 +339,8 @@ IconControls.defaultProps = {
 	onChangeBorderRadius: () => {},
 	padding: '',
 	onChangePadding: () => {},
+	shadow: '',
+	onChangeShadow: () => {},
 	outlineWidth: '',
 	onChangeOutlineWidth: () => {},
 	backgroundColorType: '',

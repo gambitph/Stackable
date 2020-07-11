@@ -76,6 +76,8 @@ const IconControlsHelper = props => {
 			onChangePadding={ value => setAttributes( { [ getAttrName( 'Padding' ) ]: value } ) }
 			outlineWidth={ getValue( 'OutlineWidth' ) }
 			onChangeOutlineWidth={ value => setAttributes( { [ getAttrName( 'OutlineWidth' ) ]: value } ) }
+			shadow={ getValue( 'Shadow' ) }
+			onChangeShadow={ value => setAttributes( { [ getAttrName( 'Shadow' ) ]: value } ) }
 			backgroundColorType={ getValue( 'BackgroundColorType' ) }
 			onChangeBackgroundColorType={ value => setAttributes( { [ getAttrName( 'BackgroundColorType' ) ]: value } ) }
 			backgroundColor={ getValue( 'BackgroundColor' ) }

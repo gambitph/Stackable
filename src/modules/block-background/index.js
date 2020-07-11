@@ -217,6 +217,22 @@ const addBlockAlignClasses = ( classes, props ) => {
 	}
 }
 
+const addBlockAlignInnerClasses = ( classes, props ) => {
+	const {
+		showBlockBackground = false,
+		blockInnerWidth = '',
+	} = props.attributes
+
+	if ( ! showBlockBackground ) {
+		return classes
+	}
+
+	return {
+		...classes,
+		[ `ugb-inner-block--${ blockInnerWidth || 'center' }` ]: true,
+	}
+}
+
 const addVideoBackgroundOutput = ( output, design, blockProps ) => {
 	if ( ! blockProps.attributes.showBlockBackground ) {
 		return output
@@ -280,6 +296,7 @@ const blockBackground = blockName => {
 	addFilter( `stackable.${ blockName }.edit.inspector.before`, `stackable/${ blockName }/block-background`, addAlignmentToolbar )
 	addFilter( `stackable.${ blockName }.settings`, `stackable/${ blockName }/block-background`, addAlignSupport )
 	addFilter( `stackable.${ blockName }.main-block.classes`, `stackable/${ blockName }/block-background`, addBlockAlignClasses )
+	addFilter( `stackable.${ blockName }.main-block.inner-classes`, `stackable/${ blockName }/block-background`, addBlockAlignInnerClasses )
 	addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/block-background`, addStyles )
 	addFilter( `stackable.${ blockName }.edit.output.outer`, `stackable/${ blockName }/block-separators`, addVideoBackgroundOutput )
 	addFilter( `stackable.${ blockName }.save.output.outer`, `stackable/${ blockName }/block-separators`, addVideoBackgroundOutput )

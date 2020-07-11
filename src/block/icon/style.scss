@@ -10,7 +10,7 @@
 	.ugb-inner-block {
 		width: auto;
 	}
-	.ugb-block-content {
+	.ugb-icon__content-wrapper {
 		display: grid;
 		grid-auto-columns: minmax(0, 1fr);
 		grid-auto-flow: column;
@@ -23,7 +23,7 @@
 		align-items: center;
 	}
 	// Default icon dimensions.
-	&.ugb-main-block svg {
+	&.ugb-main-block .ugb-icon-inner-svg svg {
 		height: 50px;
 		width: 50px;
 	}
@@ -36,6 +36,21 @@
 	}
 	.ugb-icon__icon:first-child,
 	.ugb-icon__title:first-child {
-		margin-bottom: $text-margin-bottom !important;
+		margin-bottom: $text-margin-bottom;
+	}
+
+	@media screen and (max-width: $break-large) {
+		.ugb-icon__content-wrapper {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+		.ugb-icon__item {
+			flex: 1;
+			white-space: nowrap;
+			min-width: fit-content;
+			flex-shrink: 0;
+			margin: $text-margin-bottom #{$box-hori-padding / 2};
+		}
 	}
 }

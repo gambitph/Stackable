@@ -47,68 +47,70 @@ const save = props => {
 	return (
 		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				{ range( 1, columns + 1 ).map( i => {
-					const icon = attributes[ `icon${ i }` ]
-					const title = attributes[ `title${ i }` ]
-					const url = attributes[ `url${ i }` ]
-					const newTab = attributes[ `newTab${ i }` ]
-					const noFollow = attributes[ `noFollow${ i }` ]
+				<div className="ugb-icon__content-wrapper">
+					{ range( 1, columns + 1 ).map( i => {
+						const icon = attributes[ `icon${ i }` ]
+						const title = attributes[ `title${ i }` ]
+						const url = attributes[ `url${ i }` ]
+						const newTab = attributes[ `newTab${ i }` ]
+						const noFollow = attributes[ `noFollow${ i }` ]
 
-					const boxClasses = classnames( [
-						'ugb-icon__item',
-						`ugb-icon__item${ i }`,
-					], applyFilters( 'stackable.icon.boxclasses', {}, props ) )
+						const boxClasses = classnames( [
+							'ugb-icon__item',
+							`ugb-icon__item${ i }`,
+						], applyFilters( 'stackable.icon.boxclasses', {}, props ) )
 
-					const IconTag = url ? 'a' : 'div'
-					const linkProps = {}
-					if ( url ) {
-						linkProps.href = url
-					}
-					if ( newTab ) {
-						linkProps.target = '_blank'
-						linkProps.rel = 'noopener noreferrer'
-						if ( noFollow ) {
-							linkProps.rel += ' nofollow'
+						const IconTag = url ? 'a' : 'div'
+						const linkProps = {}
+						if ( url ) {
+							linkProps.href = url
 						}
-					} else if ( noFollow ) {
-						linkProps.rel = 'nofollow'
-					}
+						if ( newTab ) {
+							linkProps.target = '_blank'
+							linkProps.rel = 'noopener noreferrer'
+							if ( noFollow ) {
+								linkProps.rel += ' nofollow'
+							}
+						} else if ( noFollow ) {
+							linkProps.rel = 'nofollow'
+						}
 
-					const iconComp = (
-						<IconTag className="ugb-icon__icon" { ...linkProps }>
-							<SvgIconHelper.Content
-								attrNameTemplate="icon%s"
-								blockAttributes={ props.attributes }
-								value={ icon }
+						const iconComp = (
+							<IconTag className="ugb-icon__icon" { ...linkProps }>
+								<SvgIconHelper.Content
+									attrNameTemplate="icon%s"
+									blockAttributes={ props.attributes }
+									value={ icon }
+								/>
+							</IconTag>
+						)
+
+						const titleComp = showTitle && ! RichText.isEmpty( title ) && (
+							<RichText.Content
+								tagName={ titleTag || 'h5' }
+								className="ugb-icon__title"
+								value={ title }
 							/>
-						</IconTag>
-					)
+						)
 
-					const titleComp = showTitle && ! RichText.isEmpty( title ) && (
-						<RichText.Content
-							tagName={ titleTag || 'h5' }
-							className="ugb-icon__title"
-							value={ title }
-						/>
-					)
+						let comps = [ iconComp, titleComp ]
+						if ( titleTop ) {
+							comps = [ titleComp, iconComp ]
+						}
 
-					let comps = [ iconComp, titleComp ]
-					if ( titleTop ) {
-						comps = [ titleComp, iconComp ]
-					}
-
-					return (
-						<DivBackground
-							key={ i }
-							className={ boxClasses }
-							backgroundAttrName="column%s"
-							blockProps={ props }
-							showBackground={ show.columnBackground }
-						>
-							{ comps }
-						</DivBackground>
-					)
-				} ) }
+						return (
+							<DivBackground
+								key={ i }
+								className={ boxClasses }
+								backgroundAttrName="column%s"
+								blockProps={ props }
+								showBackground={ show.columnBackground }
+							>
+								{ comps }
+							</DivBackground>
+						)
+					} ) }
+				</div>
 			</Fragment>
 		) } />
 	)

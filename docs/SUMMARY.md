@@ -35,8 +35,9 @@
   * [Removing Block Elements](stackable-guides/beginner-guides/removing-the-block-elements.md)
   * [Image Sizes](stackable-guides/beginner-guides/image-sizes.md)
 * [Advanced Guides](stackable-guides/advanced-guides/README.md)
-  * [How to Use Multicolor for Icons](stackable-guides/advanced-guides/how-to-use-multicolor-for-icons.md)
   * [Guided Custom CSS](stackable-guides/advanced-guides/guided-custom-css.md)
+  * [How to Use Your Font Awesome Pro Icons](stackable-guides/advanced-guides/how-to-use-your-font-awesome-pro-icons.md)
+  * [How to Use Multicolor for Icons](stackable-guides/advanced-guides/how-to-use-multicolor-for-icons.md)
   * [Translate Blocks Using WPML \(Multilingual\)](stackable-guides/advanced-guides/translate-blocks-using-wpml-multilingual.md)
   * [Using ACF Fields in Blocks](stackable-guides/advanced-guides/using-acf-fields-in-blocks.md)
 
@@ -51,6 +52,7 @@
   * [I'm Encountering Block Errors](troubleshooting/common-issues/im-encountering-block-editor-errors.md)
   * [My Blocks Do Not Go Full-Width Properly](troubleshooting/common-issues/my-blocks-do-not-go-full-width-properly.md)
   * [How Do I Contact Support?](troubleshooting/common-issues/how-do-i-contact-support.md)
+  * [When I Pick an Image Size, It Always Shows the Full Image](troubleshooting/common-issues/when-i-pick-an-image-size-it-always-shows-the-full-image.md)
   * [Can I Use the Block Editor and the Classic Editor at the Same Time?](troubleshooting/common-issues/can-i-use-the-block-editor-and-the-classic-editor-at-the-same-time.md)
   * [Can I Use the Block Editor and Elementor \(or other Page Builders\) at the Same Time?](troubleshooting/common-issues/can-i-use-the-block-editor-and-elementor-or-other-page-builders-at-the-same-time.md)
   * [I'm Getting the Error "Updating failed. The response is not a valid JSON response"](troubleshooting/common-issues/im-getting-the-error-updating-failed.-the-response-is-not-a-valid-json-response.md)
