@@ -118,7 +118,7 @@ const AdvancedToolbarControl = props => {
 							...option,
 							onClick: () => props.onChange( option.value !== props.value ? option.value : '' ),
 							isPrimary: props.value === option.value,
-							children: ! option.icon ? option.custom || <span className="ugb-advanced-toolbar-control__text-button">{ option.title }</span> : '',
+							children: ! option.icon ? option.custom || <span className="ugb-advanced-toolbar-control__text-button">{ option.title }</span> : null,
 						}
 						return <Button key={ index } { ...controlProps } />
 					} )
