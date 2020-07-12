@@ -1,77 +1,40 @@
 .ugb-advanced-toolbar-control .components-button-group {
+	width: 100%;
 	&.ugb-toolbar--full-width {
-		border: 1px solid #e2e4e7;
-		width: 100%;
 		display: flex;
 		flex-wrap: nowrap;
 		> button,
 		> button > svg {
 			width: 100% !important;
-			padding: 5px !important;
 		}
-		svg {
-			height: 30px !important;
-			border-radius: 4px !important;
-		}
+	}
+	svg {
+		height: 20px !important;
+		width: auto;
 	}
 	&.ugb-toolbar--multiline {
 		flex-wrap: wrap;
-		justify-content: flex-start;
-		align-items: flex-start;
+		> button {
+			margin-top: -1px !important;
+			margin-left: -1px !important;
+		}
 		> button,
 		> button > svg {
 			width: auto !important;
-			margin: 0;
-		}
-	}
-	.components-toolbar__control {
-		justify-content: center;
-		svg {
-			height: 100%;
 		}
 	}
 }
 
 .ugb-advanced-toolbar-control__text-button {
-	height: 30px;
+	align-self: center;
 	width: 100%;
-	justify-content: center;
-	align-items: center;
-	display: flex;
-	border-radius: 4px;
 }
 
-.ugb-advanced-toolbar-control .components-button-group {
-	.components-button {
-		box-shadow: none !important;
-		&.is-primary,
-		&.is-pressed {
-			background: #fff !important;
-			box-shadow: inset 0 0 0 1px #555d66, inset 0 0 0 2px #fff !important;
-			.ugb-advanced-toolbar-control__text-button {
-				outline: none;
-				color: #fff;
-				box-shadow: none;
-				background: #555d66;
-			}
-			> svg {
-				color: #fff !important;
-				background: #555d66 !important;
-			}
-		}
-		&:hover {
-			box-shadow: inset 0 0 0 1px #555d66, inset 0 0 0 2px #fff !important;
-			color: #000;
-		}
-		&.has-icon {
-			&:hover {
-				> svg {
-					color: #000;
-				}
-			}
-			> svg {
-				color: #555d66;
-			}
-		}
+/**
+ * backward compatibility v5.4
+ */
+body.branch-5-4 {
+	.ugb-advanced-toolbar-control .components-button-group {
+		border: 1px solid #e2e4e7;
 	}
 }
