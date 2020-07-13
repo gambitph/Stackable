@@ -51,7 +51,7 @@ domReady( () => {
 		return
 	}
 
-	const toolbar = document.querySelector( '.edit-post-header__toolbar' )
+	const toolbar = document.querySelector( '.edit-post-header-toolbar' )
 	if ( ! toolbar ) {
 		return
 	}
