@@ -107,7 +107,7 @@ const TypographyControl = props => {
 							{ label: __( 'Uppercase', i18n ), value: 'uppercase' },
 							{ label: __( 'Lowercase', i18n ), value: 'lowercase' },
 							{ label: __( 'Capitalize', i18n ), value: 'capitalize' },
-							{ label: __( 'Normal', i18n ), value: 'none' },
+							{ label: __( 'None', i18n ), value: 'none' },
 						] }
 						onChange={ props.onChangeTextTransform }
 						value={ props.textTransform }
