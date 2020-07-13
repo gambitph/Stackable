@@ -10,7 +10,7 @@ import {
 	ResponsiveControl,
 	Separator,
 } from '~stackable/components'
-import { createAllCombinationAttributes, getGlobalStyleAttribute } from '~stackable/util'
+import { createAllCombinationAttributes } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -52,9 +52,10 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 				title={ __( 'Top Separator', i18n ) }
 				id="top-separator"
 				checked={ showTopSeparator }
-				onChange={ showTopSeparator => setAttributes( { showTopSeparator, topSeparatorColor: topSeparatorColor || getGlobalStyleAttribute( 'background-color' ) } ) }
+				onChange={ showTopSeparator => setAttributes( { showTopSeparator } ) }
 				toggleOnSetAttributes={ [
 					'topSeparatorDesign',
+					'topSeparatorColor',
 					'topSeparatorHeight',
 					'topSeparatorTabletHeight',
 					'topSeparatorMobileHeight',
@@ -150,9 +151,10 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 				title={ __( 'Bottom Separator', i18n ) }
 				id="bottom-separator"
 				checked={ showBottomSeparator }
-				onChange={ showBottomSeparator => setAttributes( { showBottomSeparator, bottomSeparatorColor: bottomSeparatorColor || getGlobalStyleAttribute( 'background-color' ) } ) }
+				onChange={ showBottomSeparator => setAttributes( { showBottomSeparator } ) }
 				toggleOnSetAttributes={ [
 					'bottomSeparatorDesign',
+					'bottomSeparatorColor',
 					'bottomSeparatorHeight',
 					'bottomSeparatorTabletHeight',
 					'bottomSeparatorMobileHeight',
