@@ -4,13 +4,12 @@
 	z-index: 2;
 	.ugb-panel-tabs__wrapper {
 		display: flex !important;
-		transition: all 0.3s ease-in-out;
-		background: #fff;
-		box-shadow: none;
 		flex-wrap: nowrap;
+		&,
 		> button {
 			transition: all 0.3s ease-in-out;
 			background: #fff;
+			box-shadow: none;
 			border: 0;
 		}
 	}
