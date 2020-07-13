@@ -7,11 +7,6 @@
 		flex-shrink: 0;
 		margin-right: 10px;
 	}
-	.components-base-control {
-		&.ugb-advanced-range-control {
-			width: 100%;
-		}
-	}
 	.components-base-control.components-range-control,
 	.components-base-control__field {
 		margin-bottom: 0 !important;
@@ -39,7 +34,6 @@
 	&:not(.ugb--locked) {
 		.ugb-advanced-range-control {
 			margin-bottom: 0;
-			width: 100%;
 		}
 	}
 }
