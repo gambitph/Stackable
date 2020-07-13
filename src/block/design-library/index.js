@@ -46,7 +46,7 @@ export const settings = {
 	save,
 }
 
-domReady( () => {
+const mountDesignLibrary = () => {
 	if ( disabledBlocks.includes( name ) ) {
 		return
 	}
@@ -55,8 +55,17 @@ domReady( () => {
 	if ( ! toolbar ) {
 		return
 	}
-	const buttonDiv = document.createElement( 'div' )
-	toolbar.appendChild( buttonDiv )
 
+	const buttonDiv = document.createElement( 'div' )
 	render( <InsertLibraryButton />, buttonDiv )
+	toolbar.appendChild( buttonDiv )
+}
+
+domReady( () => {
+	mountDesignLibrary()
+
+	// Fix Design Library hidden in WP 5.5
+	setTimeout( () => {
+		mountDesignLibrary()
+	}, 1 )
 } )
