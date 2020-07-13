@@ -62,9 +62,6 @@ const mountDesignLibrary = () => {
 }
 
 domReady( () => {
-	mountDesignLibrary()
-
-	// Fix Design Library hidden in WP 5.5
 	setTimeout( () => {
 		mountDesignLibrary()
 	}, 1 )
