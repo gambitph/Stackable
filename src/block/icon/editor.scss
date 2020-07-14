@@ -5,3 +5,8 @@
  */
 
 @import "common";
+
+// Fix inconsistent column-margin in WP5.5
+.ugb-icon__content-wrapper {
+	grid-gap: normal !important;
+}
