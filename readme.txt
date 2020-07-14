@@ -186,6 +186,9 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.7.1 =
+* Fixed: Responsive breakpoint for hiding in desktop.
+
 = 2.7.0 =
 [New Icon Block, Amazing Icons and Font Awesome Pro](https://wpstackable.com/blog/new-icon-block-amazing-icons-and-font-awesome-pro)
 

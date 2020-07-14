@@ -1,7 +1,7 @@
 @import "common";
 
 // Desktop only.
-@media screen and (min-width: $break-medium) {
+@media screen and (min-width: $break-large) {
 	.ugb--hide-desktop {
 		display: none !important;
 	}
