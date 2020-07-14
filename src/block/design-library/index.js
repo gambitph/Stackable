@@ -57,11 +57,17 @@ const mountDesignLibrary = () => {
 	}
 
 	const buttonDiv = document.createElement( 'div' )
-	render( <InsertLibraryButton />, buttonDiv )
-	toolbar.appendChild( buttonDiv )
+	buttonDiv.classList.add( 'ugb-insert-library-button__wrapper' )
+
+	if ( ! toolbar.querySelector( '.ugb-insert-library-button__wrapper' ) ) {
+		render( <InsertLibraryButton />, buttonDiv )
+		toolbar.appendChild( buttonDiv )
+	}
 }
 
 domReady( () => {
+	mountDesignLibrary()
+
 	setTimeout( () => {
 		mountDesignLibrary()
 	}, 1 )
