@@ -148,6 +148,7 @@ const UrlInputPopover = withState( {
 							noFollowLink: props.onChangeNoFollow,
 
 						}
+
 						// Gets only the changed values to update
 						 const changedValues = _.omitBy( _.omit( option, 'id', 'title', 'type' ), ( value, key ) => {
 							return urlOptions[ key ] === value
