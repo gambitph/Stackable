@@ -654,6 +654,8 @@ class Edit extends Component {
 												[ `image${ i }FullUrl` ]: image.sizes.full.url,
 											} )
 										} }
+										aria-label={ attributes[ `description${ i }` ] }
+										role="img"
 									/>
 								</div>
 								{ showOverlay &&
