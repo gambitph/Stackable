@@ -72,7 +72,7 @@ const schema = {
 	},
 	titleTag: {
 		type: 'string',
-		defualt: '',
+		default: '',
 	},
 	...createTypographyAttributes( 'title%s' ),
 	titleColor: {
@@ -91,7 +91,7 @@ const schema = {
 	},
 	arrowColor: {
 		type: 'string',
-		defualt: '',
+		default: '',
 	},
 
 	// Border.
@@ -105,7 +105,7 @@ const schema = {
 	},
 	borderColor: {
 		type: 'string',
-		defualt: '',
+		default: '',
 	},
 
 	// Alignment.
