@@ -22,9 +22,12 @@ class ButtonIconPopoverControl extends Component {
 		super( ...arguments )
 		this.state = {
 			open: false,
+			isMouseOutside: false,
 		}
 		this.handleOpen = this.handleOpen.bind( this )
 		this.handleClose = this.handleClose.bind( this )
+		this.handleMouseLeave = this.handleMouseLeave.bind( this )
+		this.handleMouseEnter = this.handleMouseEnter.bind( this )
 		this.handleOnClickOutside = this.handleOnClickOutside.bind( this )
 		this.buttonRef = createRef()
 		this.instanceId = buttonInstance++
@@ -80,6 +83,14 @@ class ButtonIconPopoverControl extends Component {
 		this.setState( { open: false } )
 	}
 
+	handleMouseLeave() {
+		this.setState( { isMouseOutside: true } )
+	}
+
+	handleMouseEnter() {
+		this.setState( { isMouseOutside: false } )
+	}
+
 	/**
 	 * Use our own click/close handler. Don't close when a popover (e.g. a colorpicker) is clicked.
 	 * If this is not used, the popover will close when a color control's custom color field (when inside the popover) is clicked.
@@ -87,7 +98,7 @@ class ButtonIconPopoverControl extends Component {
 	 * @param {Event} ev Click event
 	 */
 	handleOnClickOutside( ev ) {
-		if ( ev.relatedTarget && ! ev.relatedTarget.closest( '.components-popover' ) && ev.relatedTarget !== this.buttonRef.current ) {
+		if ( ev.relatedTarget !== this.buttonRef.current && this.state.isMouseOutside ) {
 			this.handleClose()
 		}
 	}
@@ -132,6 +143,8 @@ class ButtonIconPopoverControl extends Component {
 							onClose={ this.handleClose }
 							onFocusOutside={ this.handleOnClickOutside }
 							anchorRef={ this.buttonRef.current }
+							onMouseLeave={ this.handleMouseLeave }
+							onMouseEnter={ this.handleMouseEnter }
 						>
 							<PanelBody>
 								{ ( this.props.label || this.props.popoverLabel ) &&
