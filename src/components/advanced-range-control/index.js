@@ -47,6 +47,9 @@ const AdvancedRangeControl = props => {
 	// Initial position needs to be an actual number.
 	propsToPass.initialPosition = convertToNumber( propsToPass.initialPosition )
 
+	// Sets the default value to the value of the initialPosition if value is an empty string
+	propsToPass.value = ! props.value ? propsToPass.initialPosition : props.value
+
 	return (
 		<BaseControl
 			help={ props.help }
