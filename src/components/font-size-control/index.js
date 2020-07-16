@@ -10,9 +10,15 @@ import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
 
 const FontSizeControl = props => {
+	const initialPosition = '21'
+	const extraProps = {
+		initialPosition,
+		placeholder: props.value === '' ? initialPosition : props.value,
+	}
+
 	return (
 		<AdvancedRangeControl
-			initialPosition="21" // Some typical value of a font so that changing it will not jump the font size.
+			{ ...extraProps }
 			{ ...props }
 			onChangeUnit={ value => {
 				// Change font-size so as not to surprise the user.

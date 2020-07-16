@@ -123,6 +123,7 @@ const TypographyControl = props => {
 								min={ [ 1, 0.1 ] }
 								max={ [ 100, 10 ] }
 								step={ [ 1, 0.1 ] }
+								placeholder={ [ 30, 1.5 ] }
 								allowReset={ true }
 								value={ props.lineHeight }
 								onChange={ props.onChangeLineHeight }
@@ -139,6 +140,7 @@ const TypographyControl = props => {
 								min={ [ 1, 0.1 ] }
 								max={ [ 100, 10 ] }
 								step={ [ 1, 0.1 ] }
+								placeholder={ [ 30, 1.5 ] }
 								allowReset={ true }
 								value={ props.tabletLineHeight }
 								onChange={ props.onChangeTabletLineHeight }
@@ -155,6 +157,7 @@ const TypographyControl = props => {
 								min={ [ 1, 0.1 ] }
 								max={ [ 100, 10 ] }
 								step={ [ 1, 0.1 ] }
+								placeholder={ [ 30, 1.5 ] }
 								allowReset={ true }
 								value={ props.mobileLineHeight }
 								onChange={ props.onChangeMobileLineHeight }
