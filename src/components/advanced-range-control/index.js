@@ -44,8 +44,6 @@ const AdvancedRangeControl = props => {
 		propsToPass.initialPosition = props.initialPosition[ i ] || ''
 	}
 
-	propsToPass.value = props.value === '' ? propsToPass.initialPosition : props.value
-
 	// Initial position needs to be an actual number.
 	propsToPass.initialPosition = convertToNumber( propsToPass.initialPosition )
 
