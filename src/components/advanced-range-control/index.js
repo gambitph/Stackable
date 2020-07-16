@@ -48,7 +48,7 @@ const AdvancedRangeControl = props => {
 	propsToPass.initialPosition = convertToNumber( propsToPass.initialPosition )
 
 	// Sets the default value to the value of the initialPosition if value is an empty string
-	propsToPass.value = ! props.value ? propsToPass.initialPosition : props.value
+	propsToPass.value = props.value === '' ? propsToPass.initialPosition : props.value
 
 	return (
 		<BaseControl
