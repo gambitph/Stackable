@@ -113,6 +113,7 @@ const addInspectorPanel = ( output, props ) => {
 						min={ [ 100, 10 ] }
 						max={ [ 1000, 100 ] }
 						step={ [ 1, 1 ] }
+						placeholder={ [ 1000, 100 ] }
 						allowReset={ true }
 						value={ blockTitleWidth }
 						unit={ blockTitleWidthUnit || 'px' }
@@ -127,6 +128,7 @@ const addInspectorPanel = ( output, props ) => {
 						min={ [ 100, 10 ] }
 						max={ [ 1000, 100 ] }
 						step={ [ 1, 1 ] }
+						placeholder={ [ 1000, 100 ] }
 						allowReset={ true }
 						value={ blockTitleTabletWidth }
 						unit={ blockTitleTabletWidthUnit || 'px' }
@@ -141,6 +143,7 @@ const addInspectorPanel = ( output, props ) => {
 						min={ [ 100, 10 ] }
 						max={ [ 1000, 100 ] }
 						step={ [ 1, 1 ] }
+						placeholder={ [ 1000, 100 ] }
 						allowReset={ true }
 						value={ blockTitleMobileWidth }
 						unit={ blockTitleMobileWidthUnit || 'px' }
@@ -204,6 +207,7 @@ const addInspectorPanel = ( output, props ) => {
 						min={ [ 100, 10 ] }
 						max={ [ 1000, 100 ] }
 						step={ [ 1, 1 ] }
+						placeholder={ [ 1000, 100 ] }
 						allowReset={ true }
 						value={ blockDescriptionWidth }
 						unit={ blockDescriptionWidthUnit || 'px' }
@@ -218,6 +222,7 @@ const addInspectorPanel = ( output, props ) => {
 						min={ [ 100, 10 ] }
 						max={ [ 1000, 100 ] }
 						step={ [ 1, 1 ] }
+						placeholder={ [ 1000, 100 ] }
 						allowReset={ true }
 						value={ blockDescriptionTabletWidth }
 						unit={ blockDescriptionTabletWidthUnit || 'px' }
@@ -232,6 +237,7 @@ const addInspectorPanel = ( output, props ) => {
 						min={ [ 100, 10 ] }
 						max={ [ 1000, 100 ] }
 						step={ [ 1, 1 ] }
+						placeholder={ [ 1000, 100 ] }
 						allowReset={ true }
 						value={ blockDescriptionMobileWidth }
 						unit={ blockDescriptionMobileWidthUnit || 'px' }
@@ -404,6 +410,7 @@ const addTitleSpacing = ( output, props ) => {
 						label={ __( 'Block Title', i18n ) }
 						min={ -50 }
 						max={ 100 }
+						placeholder="16"
 						allowReset={ true }
 						className="ugb--help-tip-spacing-block-title"
 					/>
@@ -419,6 +426,7 @@ const addTitleSpacing = ( output, props ) => {
 						label={ __( 'Block Description', i18n ) }
 						min={ -50 }
 						max={ 100 }
+						placeholder="50"
 						allowReset={ true }
 						className="ugb--help-tip-spacing-block-description"
 					/>

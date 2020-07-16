@@ -336,6 +336,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 							label={ __( 'Icon', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-icon"
 						/>
@@ -351,6 +352,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 							label={ __( 'Title', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-title"
 						/>
@@ -366,6 +368,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 							label={ __( 'Number', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-description"
 						/>
@@ -381,6 +384,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 							label={ __( 'Description', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="0"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-description"
 						/>

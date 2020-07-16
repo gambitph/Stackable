@@ -179,6 +179,7 @@ addFilter( 'stackable.icon.edit.inspector.style.before', 'stackable/icon', ( out
 						label={ __( 'Icon', i18n ) }
 						min={ -50 }
 						max={ 100 }
+						placeholder="0"
 						allowReset={ true }
 						className="ugb--help-tip-spacing-icon"
 					/>
@@ -193,6 +194,7 @@ addFilter( 'stackable.icon.edit.inspector.style.before', 'stackable/icon', ( out
 							label={ __( 'Title', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="0"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-title"
 						/>

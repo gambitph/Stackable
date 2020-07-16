@@ -450,6 +450,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 							label={ __( 'Image', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="24"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-image"
 						/>
@@ -465,6 +466,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 							label={ __( 'Name', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="8"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-name"
 						/>
@@ -480,6 +482,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 							label={ __( 'Position', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-name"
 						/>
@@ -495,6 +498,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 							label={ __( 'Description', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-description"
 						/>
@@ -510,6 +514,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 							label={ __( 'Social', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="4"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-button"
 						/>
@@ -525,6 +530,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 							label={ __( 'Social Button Gap', i18n ) }
 							min={ -20 }
 							max={ 30 }
+							placeholder="0"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-button-gap"
 						/>
