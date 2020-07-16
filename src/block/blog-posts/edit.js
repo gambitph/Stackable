@@ -320,6 +320,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 							label={ __( 'Image Height', i18n ) }
 							min={ 100 }
 							max={ 1000 }
+							placeholder="500"
 							allowReset={ true }
 							className="ugb--help-tip-image-height-crop"
 						/>

@@ -125,6 +125,7 @@ const ImageControls = props => {
 						<AdvancedRangeControl
 							label={ __( 'Image Width', i18n ) }
 							value={ props.width }
+							placeholder="500"
 							max={ widthMax }
 							onChange={ width => {
 								// Reset back to default.
