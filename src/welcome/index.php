@@ -173,6 +173,14 @@ SVG;
                     <div class="s-body">
 						<?php stackable_welcome_notification() ?>
 						<?php do_action( 'stackable_settings_page' ) ?>
+						<article class="s-box <?php echo apply_filters( 'stackable_fa_settings_class', '' ) ?>">
+							<h2><?php _e( '🧰 Icon Library Settings', STACKABLE_I18N ) ?></h2>
+							<p class="s-settings-subtitle"><?php printf( __( 'If you have a %sFontAwesome Pro%s subscription, you can use your FontAwesome Pro Icons in Stackable by inputting your Pro Kit code below.' , STACKABLE_I18N ), '<a href="https://fontawesome.com/" target="_fontawesome">', '</a>' ) ?></em></p>
+							<div class="s-icon-settings"></div>
+							<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
+								<p class="s-settings-pro"><?php _e( 'This is only available in Stackable Premium.', STACKABLE_I18N ) ?> <a href="https://wpstackable.com/premium/?utm_source=wp-settings-icons&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a></p>
+							<?php endif; ?>
+						</article>
                         <article class="s-box">
                             <h2><?php _e( '🎛 Enable & Disable Blocks', STACKABLE_I18N ) ?></h2>
                             <p class="s-settings-subtitle"><?php _e( 'We have a lot of awesome blocks. But if you\'re overwhelmed with awesomeness, you can hide some of them.' , STACKABLE_I18N ) ?> <em><?php _e( '(If your post contains a disabled block, it will still continue to work. You won\'t just be able to add the disabled blocks.)' , STACKABLE_I18N ) ?></em></p>
