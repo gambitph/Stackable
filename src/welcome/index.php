@@ -33,7 +33,7 @@ SVG;
             add_menu_page(
                 __( 'Stackable', STACKABLE_I18N ), // Page Title.
                 __( 'Stackable', STACKABLE_I18N ) . ' ' . stackable_notification_count(), // Menu Title.
-                'edit_posts', // Capability.
+                'manage_options', // Capability.
                 'stackable', // Menu slug.
                 array( $this, 'stackable_getting_started_content' ), // Action.
                 'data:image/svg+xml;base64,' . base64_encode( $svg ) // Stackable icon.
