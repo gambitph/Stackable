@@ -50,10 +50,7 @@ const UrlInputPopover = props => {
 		'ugb-url-input-popover',
 	] )
 
-	const i18nUrlOptions = urlLabels.map( ( { id, title } ) => ( {
-		id,
-		title: __( title, i18n ), // eslint-disable-line no-restricted-syntax
-	} ) ).filter( ( { id } ) => {
+	const i18nUrlOptions = urlLabels.filter( ( { id } ) => {
 		// Filters the options based on existing onChange props
 		switch ( id ) {
 			case 'opensInNewTab': return props.onChangeNewTab
