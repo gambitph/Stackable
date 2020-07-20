@@ -39,12 +39,12 @@ const schema = {
 	},
 	titleTag: {
 		type: 'string',
-		defualt: '',
+		default: '',
 	},
 	...createTypographyAttributes( 'title%s' ),
 	titleColor: {
 		type: 'string',
-		defualt: '',
+		default: '',
 	},
 
 	// Subtitle.
@@ -60,7 +60,7 @@ const schema = {
 	...createTypographyAttributes( 'subtitle%s' ),
 	subtitleColor: {
 		type: 'string',
-		defualt: '',
+		default: '',
 	},
 
 	// Top Line.
@@ -70,19 +70,19 @@ const schema = {
 	},
 	topLineColor: {
 		type: 'string',
-		defualt: '',
+		default: '',
 	},
 	topLineHeight: {
 		type: 'number',
-		defualt: '',
+		default: '',
 	},
 	topLineWidth: {
 		type: 'number',
-		defualt: '',
+		default: '',
 	},
 	topLineWidthUnit: {
 		type: 'string',
-		defualt: '',
+		default: '',
 	},
 
 	// Bottom Line.
@@ -92,19 +92,19 @@ const schema = {
 	},
 	bottomLineColor: {
 		type: 'string',
-		defualt: '',
+		default: '',
 	},
 	bottomLineHeight: {
 		type: 'number',
-		defualt: '',
+		default: '',
 	},
 	bottomLineWidth: {
 		type: 'number',
-		defualt: '',
+		default: '',
 	},
 	bottomLineWidthUnit: {
 		type: 'string',
-		defualt: '',
+		default: '',
 	},
 
 	// Alignments.

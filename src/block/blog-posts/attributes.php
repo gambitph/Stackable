@@ -390,7 +390,7 @@ if ( ! function_exists( 'stackable_blog_posts_attributes' ) ) {
 			),
 			'titleTag' => array(
 				'type' => 'string',
-				'defualt' => '',
+				'default' => '',
 			),
 			'titleColor' => array(
 				'type' => 'string',
