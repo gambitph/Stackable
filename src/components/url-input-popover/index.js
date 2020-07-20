@@ -63,7 +63,8 @@ const UrlInputPopover = props => {
 		<Popover
 			className={ mainClassName }
 			focusOnMount={ false }
-			position={ props.position }>
+			position={ props.position }
+		>
 			<LinkControl
 				value={ urlOptions }
 				settings={ i18nUrlOptions }
