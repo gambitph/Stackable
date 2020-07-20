@@ -21,7 +21,7 @@ import {
 import { __ } from '@wordpress/i18n'
 import { Component } from '@wordpress/element'
 import { i18n } from 'stackable'
-import { IconButton } from '@wordpress/components'
+import { Button } from '@wordpress/components'
 import { withInstanceId } from '@wordpress/compose'
 
 const responsiveIcons = {
@@ -103,7 +103,7 @@ class ResponsiveToggle extends Component {
 							return null
 						}
 						return (
-							<IconButton
+							<Button
 								key={ i }
 								className={ this.state.screen === screen ? 'is-active' : '' }
 								onClick={ () => this.onChangeScreen( screen ) }

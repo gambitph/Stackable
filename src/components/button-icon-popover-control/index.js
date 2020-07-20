@@ -3,7 +3,7 @@
  */
 import { addFilter, removeFilter } from '@wordpress/hooks'
 import {
-	BaseControl, IconButton, PanelBody, Popover, ToggleControl,
+	BaseControl, Button, PanelBody, Popover, ToggleControl,
 } from '@wordpress/components'
 import { Component, createRef } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
@@ -109,14 +109,14 @@ class ButtonIconPopoverControl extends Component {
 				) }
 				<div className="ugb-button-icon-control__wrapper">
 					{ this.props.allowReset && (
-						<IconButton
+						<Button
 							onClick={ this.props.onReset }
 							className="ugb-button-icon-control__reset"
 							label={ __( 'Reset', i18n ) }
 							icon="image-rotate"
 						/>
 					) }
-					<IconButton
+					<Button
 						onClick={ this.handleOpen }
 						className="ugb-button-icon-control__edit"
 						label={ __( 'Edit', i18n ) }

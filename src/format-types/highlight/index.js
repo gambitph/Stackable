@@ -9,7 +9,7 @@ import { i18n } from 'stackable'
  * WordPress dependencies
  */
 import {
-	IconButton, ToggleControl, Toolbar, Popover,
+	Button, ToggleControl, Toolbar, Popover,
 } from '@wordpress/components'
 import {
 	applyFormat, registerFormatType, removeFormat,
@@ -97,7 +97,7 @@ const HighlightButton = props => {
 	return (
 		<BlockControls>
 			<Toolbar className="stackable-components-toolbar">
-				<IconButton
+				<Button
 					className="components-button components-icon-button components-toolbar__control"
 					icon="editor-textcolor"
 					aria-haspopup="true"
@@ -105,7 +105,7 @@ const HighlightButton = props => {
 					onClick={ () => setIsOpen( ! isOpen ) }
 				>
 					<span className="components-stackable-highlight-color__indicator" style={ { backgroundColor: currentColor } } />
-				</IconButton>
+				</Button>
 				{ isOpen &&
 				<Popover
 					position="bottom center"
