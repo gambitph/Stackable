@@ -7,7 +7,7 @@ import BaseControlMultiLabel from '../base-control-multi-label'
  * WordPress dependencies
  */
 import {
-	BaseControl, Dashicon, IconButton,
+	BaseControl, Dashicon, Button,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 
@@ -203,7 +203,7 @@ class FourNumberControl extends Component {
 						/>
 						<span>{ __( 'Left', i18n ) }</span>
 					</label>
-					<IconButton
+					<Button
 						className={ this.state.locked ? 'ugb--is-locked' : '' }
 						onClick={ this.onToggleLock }
 						icon={ (
@@ -212,8 +212,7 @@ class FourNumberControl extends Component {
 								size="16"
 							/>
 						) }
-					>
-					</IconButton>
+					/>
 				</div>
 			</BaseControl>
 		)
