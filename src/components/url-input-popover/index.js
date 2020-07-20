@@ -25,7 +25,7 @@ const urlLabels = [
 	},
 	{
 		id: 'noFollowLink',
-		title: 'Nofollow link',
+		title: __( 'Nofollow link', i18n ),
 	},
 ]
 
