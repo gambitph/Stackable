@@ -19,7 +19,9 @@ import classnames from 'classnames'
 /**
  * WordPress dependencies
  */
-import { BaseControl, Toolbar } from '@wordpress/components'
+import {
+	BaseControl, ButtonGroup, Button,
+} from '@wordpress/components'
 import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 
@@ -108,18 +110,19 @@ const AdvancedToolbarControl = props => {
 				onChangeUnit={ props.onChangeUnit }
 				screens={ props.screens }
 			/>
-			<Toolbar
+			<ButtonGroup
 				{ ...omit( props, [ 'className', 'help', 'label', 'units', 'unit', 'onChangeUnit', 'screens' ] ) }
-				controls={ controls.map( option => {
-					return {
-						...option,
-						onClick: () => props.onChange( option.value !== props.value ? option.value : '' ),
-						isActive: props.value === option.value,
-						extraProps: {
-							 ...( ! option.icon ? { children: option.custom || <span className="ugb-advanced-toolbar-control__text-button">{ option.title }</span> } : {} ),
-						},
-					}
-				} ) }
+				children={
+					controls.map( ( option, index ) => {
+						const controlProps = {
+							...option,
+							onClick: () => props.onChange( option.value !== props.value ? option.value : '' ),
+							isPrimary: props.value === option.value,
+							children: ! option.icon ? option.custom || <span className="ugb-advanced-toolbar-control__text-button">{ option.title }</span> : null,
+						}
+						return <Button key={ index } { ...controlProps } />
+					} )
+				}
 				className={ toolbarClasses }
 			/>
 		</BaseControl>

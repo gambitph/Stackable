@@ -25,11 +25,11 @@ export const isDarkColor = color => {
 }
 
 export const marginLeftAlign = align => {
-	return align === 'left' ? 0 : 'auto'
+	return align === 'left' || align === 'flex-start' ? 0 : 'auto'
 }
 
 export const marginRightAlign = align => {
-	return align === 'right' ? 0 : 'auto'
+	return align === 'right' || align === 'flex-end' ? 0 : 'auto'
 }
 
 export const leftRightToFlex = align => {

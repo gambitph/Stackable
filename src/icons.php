@@ -75,17 +75,3 @@ if ( ! class_exists( 'Stackable_Icons' ) ) {
 
 	new Stackable_Icons();
 }
-
-if ( ! function_exists( 'stackable_search_fontawesome_pro_icons' ) ) {
-
-	/**
-	 * Enable searching of pro FA Icons. This enables querying of Pro icons, but
-	 * it still depends on the Kit / CDN on whether fetching Pro icons are
-	 * allowed.
-	 *
-	 * @return boolean
-	 */
-	function stackable_search_fontawesome_pro_icons() {
-		return apply_filters( 'stackable_search_fontawesome_pro_icons', false );
-	}
-}

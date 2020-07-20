@@ -189,6 +189,7 @@ body[class*="page_stackable-settings"] {
 	}
 	.s-box {
 		@include box();
+		overflow: visible;
 		box-shadow: nth($shadows, 6);
 		border: 0;
 		margin-bottom: 30px;
@@ -542,6 +543,30 @@ body[class*="page_stackable-settings"] {
 		.components-spinner {
 			margin-top: 0;
 		}
+	}
+
+	.s-text-field {
+		display: flex;
+		align-items: center;
+	}
+}
+
+.s-settings-pro {
+	font-style: italic;
+	font-size: 15px;
+	padding: 12px 24px;
+	display: inline-block;
+	border-radius: 6px;
+	box-shadow: 0 5px 17px -4px rgba(18, 63, 82, 0.2);
+	opacity: 0.7;
+	transition: all 0.3s ease-in-out;
+	&:hover {
+		opacity: 1;
+	}
+}
+.s-box:hover {
+	.s-settings-pro {
+		opacity: 1;
 	}
 }
 
