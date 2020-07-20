@@ -187,8 +187,10 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 2.7.1 =
+* New: User Role Manager (premium)
 * Fixed: Responsive breakpoint for hiding in desktop.
 * Fixed: Missing guided CSS rules for Card Block (premium).
+* Fixed: Only show Stackable menu for users that have the manage_options capability
 
 = 2.7.0 =
 [New Icon Block, Amazing Icons and Font Awesome Pro](https://wpstackable.com/blog/new-icon-block-amazing-icons-and-font-awesome-pro)
