@@ -3,17 +3,10 @@
  */
 import { withState } from '@wordpress/compose'
 import {
-	Dashicon,
-	IconButton,
 	Popover,
-	PanelBody,
-	ToggleControl,
-	TextControl,
 	Button,
 } from '@wordpress/components'
-import {
-	URLInput, __experimentalLinkControl as LinkControl,
-} from '@wordpress/block-editor'
+import { __experimentalLinkControl as LinkControl } from '@wordpress/block-editor'
 import { keyboardReturn } from '@wordpress/icons'
 import { __ } from '@wordpress/i18n'
 
@@ -22,10 +15,9 @@ import { __ } from '@wordpress/i18n'
  */
 import { i18n } from 'stackable'
 import classnames from 'classnames'
-import _ from 'lodash'
-
-const ariaClosed = __( 'Show more tools & options', i18n )
-const ariaOpen = __( 'Hide more tools & options', i18n )
+import {
+	omit, omitBy, keys,
+} from 'lodash'
 
 const urlLabels = [
 	{
@@ -42,11 +34,9 @@ const UrlInputPopover = withState( {
 	openAdvanced: false,
 } )( props => {
 	const {
-		openAdvanced,
 		value,
 		newTab,
 		noFollow,
-		setState,
 	} = props
 
 	const urlOptions = {
@@ -61,76 +51,19 @@ const UrlInputPopover = withState( {
 
 	const mainClassName = classnames( [
 		'ugb-url-input-popover',
-	], {
-		'ugb--show-advanced': openAdvanced,
-	} )
-
-	const moreButtonClasses = classnames( [
-		'ugb-url-input-control__more-button',
-	], {
-		'ugb--active': props.newTab || props.noFollow,
-	} )
+	] )
 
 	const i18nUrlOptions = urlLabels.map( ( { id, title } ) => ( {
 		id,
 		title: __( title, i18n ), // eslint-disable-line no-restricted-syntax
-	} ) )
-
-	if ( ! LinkControl ) {
-		return (
-			<Popover
-				className={ mainClassName }
-				focusOnMount={ false }
-				position={ props.position }
-			>
-				<PanelBody>
-					<div className="ugb-url-input-popover__input-wrapper">
-						<Dashicon className="ugb-url-input-control__icon" icon="admin-links" />
-						{ props.onChange && ! props.disableSuggestions && // Auto-suggestions for inputting url.
-						<URLInput
-							className="ugb-url-input-control__input"
-							value={ props.value }
-							onChange={ props.onChange }
-							autoFocus={ false } // eslint-disable-line
-						/>
-						}
-						{ props.onChange && props.disableSuggestions && // Plain text control for inputting url.
-						<TextControl
-							className="ugb-url-input-control__input ugb-url-input-control__input--plain"
-							value={ props.value }
-							onChange={ props.onChange }
-							autoFocus={ false } // eslint-disable-line
-							placeholder={ __( 'Paste or type URL', i18n ) }
-						/>
-						}
-						{ ( props.onChangeNewTab || props.onChangeNoFollow ) &&
-						<IconButton
-							className={ moreButtonClasses }
-							icon="ellipsis"
-							label={ openAdvanced ? ariaOpen : ariaClosed }
-							onClick={ () => setState( { openAdvanced: ! openAdvanced } ) }
-							aria-expanded={ openAdvanced }
-						/>
-						}
-					</div>
-					{ props.onChangeNewTab && openAdvanced &&
-					<ToggleControl
-						label={ __( 'Open link in new tab', i18n ) }
-						checked={ props.newTab }
-						onChange={ props.onChangeNewTab }
-					/>
-					}
-					{ props.onChangeNoFollow && openAdvanced &&
-					<ToggleControl
-						label={ __( 'Nofollow link', i18n ) }
-						checked={ props.noFollow }
-						onChange={ props.onChangeNoFollow }
-					/>
-					}
-				</PanelBody>
-			</Popover>
-		)
-	}
+	} ) ).filter( ( { id } ) => {
+		// Filters the options based on existing onChange props
+		switch ( id ) {
+			case 'opensInNewTab': return props.onChangeNewTab
+			case 'noFollowLink': return props.onChangeNoFollow
+			default: return true
+		}
+	} )
 
 	return (
 		<Popover
@@ -140,6 +73,7 @@ const UrlInputPopover = withState( {
 			<LinkControl
 				value={ urlOptions }
 				settings={ i18nUrlOptions }
+				showSuggestions={ ! props.disableSuggestions }
 				onChange={
 					option => {
 						const onChangeKeys = {
@@ -150,12 +84,12 @@ const UrlInputPopover = withState( {
 						}
 
 						// Gets only the changed values to update
-						 const changedValues = _.omitBy( _.omit( option, 'id', 'title', 'type' ), ( value, key ) => {
+						 const changedValues = omitBy( omit( option, 'id', 'title', 'type' ), ( value, key ) => {
 							return urlOptions[ key ] === value
 						} )
 
 						// Trigger onChange only to changed values
-						_.keys( changedValues ).map( value => (
+						keys( changedValues ).map( value => (
 							onChangeKeys[ value ]( changedValues[ value ] )
 						) )
 					}
@@ -178,7 +112,6 @@ UrlInputPopover.defaultProps = {
 	disableSuggestions: false,
 	onChange: null,
 	position: 'bottom center',
-
 	newTab: false,
 	noFollow: false,
 	onChangeNewTab: null,
