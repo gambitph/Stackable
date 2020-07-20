@@ -14,6 +14,7 @@ export * from './collections'
 export * from './inspector'
 export * from './icon'
 export * from './fontawesome'
+export * from './user'
 
 /**
  * WordPress dependencies
