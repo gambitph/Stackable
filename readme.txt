@@ -1,10 +1,10 @@
 === Stackable - Page Builder Gutenberg Blocks ===
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
-Requires at least: 5.2
-Tested up to: 5.4
+Requires at least: 5.4
+Tested up to: 5.5
 Requires PHP: 5.3
-Stable tag: 2.7.0
+Stable tag: 2.8.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -188,9 +188,13 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 = 2.7.1 =
 * New: User Role Manager (premium)
+* New: Updated URL picker
+* Fixed: WordPress 5.5 compatibility
 * Fixed: Responsive breakpoint for hiding in desktop.
 * Fixed: Missing guided CSS rules for Card Block (premium).
 * Fixed: Only show Stackable menu for users that have the manage_options capability
+* Fixed: Text transform "normal" was not working as expected.
+* Fixed: IconButton deprecation warnings.
 
 = 2.7.0 =
 [New Icon Block, Amazing Icons and Font Awesome Pro](https://wpstackable.com/blog/new-icon-block-amazing-icons-and-font-awesome-pro)
