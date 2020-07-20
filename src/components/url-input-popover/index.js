@@ -74,7 +74,6 @@ const UrlInputPopover = props => {
 							url: props.onChange,
 							opensInNewTab: props.onChangeNewTab,
 							noFollowLink: props.onChangeNoFollow,
-
 						}
 
 						// Gets only the changed values to update
