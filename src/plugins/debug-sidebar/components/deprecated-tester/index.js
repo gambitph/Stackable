@@ -159,6 +159,7 @@ class DeprecatedTester extends Component {
 								</span>
 								<span className={ numTests === numPassed ? 'ugb--green' : '' }>
 									{ sprintf( __( '%d / %d Tests', i18n ), numPassed, numTests ) }
+									<Button isDefault={ false } onClick={ () => this.onRunTest( blockName ) } icon="controls-play" />
 								</span>
 							</div>
 							{ this.state.show.includes( blockName ) && (
