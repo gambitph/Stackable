@@ -4,7 +4,7 @@
 import { withState } from '@wordpress/compose'
 import {
 	Dashicon,
-	IconButton,
+	Button,
 	Popover,
 	PanelBody,
 	ToggleControl,
@@ -73,7 +73,7 @@ const UrlInputPopover = withState( {
 						/>
 					}
 					{ ( props.onChangeNewTab || props.onChangeNoFollow ) &&
-						<IconButton
+						<Button
 							className={ moreButtonClasses }
 							icon="ellipsis"
 							label={ openAdvanced ? ariaOpen : ariaClosed }
