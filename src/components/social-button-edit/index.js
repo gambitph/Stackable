@@ -78,14 +78,14 @@ SocialButtonEdit.Content = props => {
 					'ugb-social-button--social-colors': props.useSocialColors,
 				} )
 
-				return ( props[ `${ socialId }Url` ] && props[ `show${ upperFirst( socialId ) }` ] !== false &&
+				return ( props[ `show${ upperFirst( socialId ) }` ] !== false &&
 					<ButtonEdit.Content
 						key={ socialId }
 						className={ buttonClasses }
 						iconButton={ true }
 						rel="noopener noreferrer nofollow"
 						icon={ SOCIAL_SITES[ socialId ].icon }
-						url={ props[ `${ socialId }Url` ] }
+						url={ props[ `${ socialId }Url` ] || '#' }
 
 						{ ...props }
 					/>
