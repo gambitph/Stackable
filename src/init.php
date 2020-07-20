@@ -126,6 +126,9 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 
 			// Icons.
 			'fontAwesomeSearchProIcons' => apply_filters( 'stackable_search_fontawesome_pro_icons', false ),
+
+			// Editor Role.
+			'isContentOnlyMode' => apply_filters( 'stackable_editor_role_is_content_only', false ),
 		) );
 	}
 

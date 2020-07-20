@@ -5,7 +5,9 @@
  * External dependencies
  */
 import { StackableIcon } from '~stackable/icons'
-import { disabledBlocks, i18n } from 'stackable'
+import {
+	disabledBlocks, i18n, isContentOnlyMode,
+} from 'stackable'
 
 /**
  * Internal dependencies
@@ -47,6 +49,11 @@ export const settings = {
 }
 
 domReady( () => {
+	// Content only editing mode shouldn't have a button.
+	if ( isContentOnlyMode ) {
+		return
+	}
+
 	if ( disabledBlocks.includes( name ) ) {
 		return
 	}
