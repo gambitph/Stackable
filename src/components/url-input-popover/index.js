@@ -1,7 +1,6 @@
 /**
  * WordPress dependencies
  */
-import { withState } from '@wordpress/compose'
 import {
 	Popover,
 	Button,
@@ -30,9 +29,7 @@ const urlLabels = [
 	},
 ]
 
-const UrlInputPopover = withState( {
-	openAdvanced: false,
-} )( props => {
+const UrlInputPopover = props => {
 	const {
 		value,
 		newTab,
@@ -105,7 +102,7 @@ const UrlInputPopover = withState( {
 			</LinkControl>
 		</Popover>
 	)
-} )
+}
 
 UrlInputPopover.defaultProps = {
 	value: '',
