@@ -51,7 +51,7 @@ const mountDesignLibrary = () => {
 		return
 	}
 
-	const toolbar = document.querySelector( '.edit-post-header-toolbar' )
+	const toolbar = document.querySelector( '.edit-post-header__toolbar' )
 	if ( ! toolbar ) {
 		return
 	}
@@ -65,10 +65,4 @@ const mountDesignLibrary = () => {
 	}
 }
 
-domReady( () => {
-	mountDesignLibrary()
-
-	setTimeout( () => {
-		mountDesignLibrary()
-	}, 1 )
-} )
+domReady( mountDesignLibrary )
