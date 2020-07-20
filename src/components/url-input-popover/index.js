@@ -21,7 +21,7 @@ import {
 const urlLabels = [
 	{
 		id: 'opensInNewTab',
-		title: 'Opens in new tab',
+		title: __( 'Opens in new tab', i18n ),
 	},
 	{
 		id: 'noFollowLink',
