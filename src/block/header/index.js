@@ -81,11 +81,11 @@ const schema = {
 	},
 	titleTag: {
 		type: 'string',
-		defualt: '',
+		default: '',
 	},
 	titleColor: {
 		type: 'string',
-		defualt: '',
+		default: '',
 	},
 	...createTypographyAttributes( 'title%s' ),
 
@@ -102,7 +102,7 @@ const schema = {
 	...createTypographyAttributes( 'subtitle%s' ),
 	subtitleColor: {
 		type: 'string',
-		defualt: '',
+		default: '',
 	},
 
 	// Button 1.

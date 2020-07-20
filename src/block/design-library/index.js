@@ -48,7 +48,7 @@ export const settings = {
 	save,
 }
 
-domReady( () => {
+const mountDesignLibrary = () => {
 	// Content only editing mode shouldn't have a button.
 	if ( isContentOnlyMode ) {
 		return
@@ -58,12 +58,18 @@ domReady( () => {
 		return
 	}
 
-	const toolbar = document.querySelector( '.edit-post-header-toolbar' )
+	const toolbar = document.querySelector( '.edit-post-header__toolbar' )
 	if ( ! toolbar ) {
 		return
 	}
-	const buttonDiv = document.createElement( 'div' )
-	toolbar.appendChild( buttonDiv )
 
-	render( <InsertLibraryButton />, buttonDiv )
-} )
+	const buttonDiv = document.createElement( 'div' )
+	buttonDiv.classList.add( 'ugb-insert-library-button__wrapper' )
+
+	if ( ! toolbar.querySelector( '.ugb-insert-library-button__wrapper' ) ) {
+		render( <InsertLibraryButton />, buttonDiv )
+		toolbar.appendChild( buttonDiv )
+	}
+}
+
+domReady( mountDesignLibrary )

@@ -167,7 +167,7 @@ export const schema = {
 	...createTypographyAttributes( 'subtitle%s' ),
 	subtitleColor: {
 		type: 'string',
-		defualt: '',
+		default: '',
 	},
 
 	// Title.
@@ -186,7 +186,7 @@ export const schema = {
 	},
 	titleTag: {
 		type: 'string',
-		defualt: '',
+		default: '',
 	},
 	...createTypographyAttributes( 'title%s' ),
 	titleColor: {

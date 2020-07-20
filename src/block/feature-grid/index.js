@@ -123,7 +123,7 @@ export const schema = {
 	),
 	titleTag: {
 		type: 'string',
-		defualt: '',
+		default: '',
 	},
 	...createTypographyAttributes( 'title%s' ),
 	titleColor: {
@@ -148,7 +148,7 @@ export const schema = {
 	...createTypographyAttributes( 'description%s' ),
 	descriptionColor: {
 		type: 'string',
-		defualt: '',
+		default: '',
 	},
 
 	// Button.
