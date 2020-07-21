@@ -17,6 +17,7 @@
 	}
 }
 .ugb-svg-icon-placeholder__button {
+	font-size: inherit !important;
 	height: auto;
 	// This is needed for background shapes to go outside the bounds of the icon.
 	overflow: visible;
