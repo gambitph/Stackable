@@ -69,10 +69,22 @@ class ButtonIconPopoverControl extends Component {
 	componentDidMount() {
 		// Watch for attribute changes.
 		addFilter( 'stackable.setAttributes', `stackable/button-icon-popover-control-${ this.instanceId }`, this.checkIfAttributeShouldToggleOn.bind( this ), 9 )
+
+		/**
+		 * Added event listener for mousedown
+		 *
+		 * Dragging text input in RangeControl component triggers onBlur in Popover in WP5.5.
+		 * To fix this, an event listener is added which only triggers whenever a user
+		 * clicks outside the Popover.
+		 */
+		document.addEventListener( 'mousedown', this.handleOnClickOutside )
 	}
 
 	componentWillUnmount() {
 		removeFilter( 'stackable.setAttributes', `stackable/button-icon-popover-control-${ this.instanceId }` )
+
+		// Remove event listener for moousedown
+		document.removeEventListener( 'mousedown', this.handleOnClickOutside )
 	}
 
 	handleOpen() {
@@ -95,10 +107,9 @@ class ButtonIconPopoverControl extends Component {
 	 * Use our own click/close handler. Don't close when a popover (e.g. a colorpicker) is clicked.
 	 * If this is not used, the popover will close when a color control's custom color field (when inside the popover) is clicked.
 	 *
-	 * @param {Event} ev Click event
 	 */
-	handleOnClickOutside( ev ) {
-		if ( ev.relatedTarget !== this.buttonRef.current && this.state.isMouseOutside ) {
+	handleOnClickOutside() {
+		if ( this.state.isMouseOutside ) {
 			this.handleClose()
 		}
 	}
@@ -140,8 +151,6 @@ class ButtonIconPopoverControl extends Component {
 						<Popover
 							className="ugb-button-icon-control__popover"
 							focusOnMount="container"
-							onClose={ this.handleClose }
-							onFocusOutside={ this.handleOnClickOutside }
 							anchorRef={ this.buttonRef.current }
 							onMouseLeave={ this.handleMouseLeave }
 							onMouseEnter={ this.handleMouseEnter }
