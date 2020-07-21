@@ -27,16 +27,29 @@ In Content Only Editing mode, the user will only see this when a block is select
 
 ## How Content Only Editing Works
 
-Content Only Editing works by locking out the inspector in order to prevent the user from editing the styles of blocks.
+Content Only Editing works by locking out the inspector, and hiding some parts of the interface in order to prevent the user from editing the styles of blocks.
 
 {% hint style="danger" %}
-In this mode, the inspector is locked. It does not however, prevent the user from editing styles outside the inspector. This means that advanced methods of editing blocks, like through the Block Editor's Code Editor mode, or editing blocks via HTML are still possible.
+In this mode, the inspector is locked and some interface elements are hidden. This is not however a bullet-proof way of preventing someone from changing only the content.
+
+Shortcut keys like delete, copy and pasting blocks; and advanced methods of editing blocks, like through the Block Editor's Code Editor mode are still possible.
 {% endhint %}
 
-When the inspector is locked, users can still perform the following functions:
+The interface is changed in a few ways when Content Only Editing is enabled:
+
+* The inspector options are hidden
+* Adding of non-text blocks are disabled
+* The block moving buttons are hidden
+* The block width/wide/full toolbar is hidden
+* The edit as HTML option is hidden
+* Reusable blocks are hidden
+* The remove button is hidden \(except for text blocks\)
+* The patterns tab is hidden
+
+Users can perform the following functions:
 
 * Editing block text, images, icons and links
-* Adding and removing blocks
+* Adding text and heading blocks
 * Functions that blocks allow you to perform on the block itself \(for example adjusting size of the native image block\)
 
 This also affects other non-Stackable blocks \(even third-party blocks!\)
