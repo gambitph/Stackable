@@ -50,23 +50,30 @@ const observerCallback = () => {
 	stylesheetIndices.forEach( index => {
 		const mediaIndices = {}
 
-		Array.from( styleSheets[ index ].cssRules ).forEach( ( { cssText, media }, mediaIndex ) => {
-			if ( media && cssText.includes( '.ugb' ) && ! new RegExp( excludedCssSelector.join( '|' ) ).test( cssText ) ) {
-				const maxWidth = media.mediaText.match( /\(max-width:([^)]+)\)/ )
-				const minWidth = media.mediaText.match( /\(min-width:([^)]+)\)/ )
+		if ( styleSheets[ index ].cssRules ) {
+			Array.from( styleSheets[ index ].cssRules ).forEach( ( { cssText, media }, mediaIndex ) => {
+				if ( media && cssText.includes( '.ugb' ) && ! new RegExp( excludedCssSelector.join( '|' ) ).test( cssText ) ) {
+					const maxWidth = media.mediaText.match( /\(max-width:([^)]+)\)/ )
+					const minWidth = media.mediaText.match( /\(min-width:([^)]+)\)/ )
 
-				const max = maxWidth ? parseInt( maxWidth[ 1 ].replace( /px/, '' ) ) : 0
-				const min = minWidth ? parseInt( minWidth[ 1 ].replace( /px/, '' ) ) : 0
+					let max = maxWidth ? parseInt( maxWidth[ 1 ].replace( /px/, '' ) ) : 9999
+					const min = minWidth ? parseInt( minWidth[ 1 ].replace( /px/, '' ) ) : 0
 
-				// Memoize existing values
-				mediaIndices[ mediaIndex ] = ( cssObject && cssObject[ index ] && cssObject[ index ][ mediaIndex ] ) ? { ...cssObject[ index ][ mediaIndex ] } : {
-					mediaText: media.mediaText,
-					min,
-					max,
-					cssText,
+					// This is to ensure that media queries with no min-width and max-width will both have zero min and max values
+					if ( max === 9999 && min === 0 ) {
+						max = 0
+					}
+
+					// Memoize existing values
+					mediaIndices[ mediaIndex ] = ( cssObject && cssObject[ index ] && cssObject[ index ][ mediaIndex ] ) ? { ...cssObject[ index ][ mediaIndex ] } : {
+						mediaText: media.mediaText,
+						min,
+						max,
+						cssText,
+					}
 				}
-			}
-		} )
+			} )
+		}
 
 		cssObject[ index ] = { ...mediaIndices }
 	} )
@@ -75,7 +82,7 @@ const observerCallback = () => {
 		// If Preview is in Tablet or Mobile Mode, modify media queries for Tablet or Mobile.
 		keys( cssObject ).forEach( styleSheetIndex => {
 			keys( cssObject[ styleSheetIndex ] ).forEach( index => {
-				const { min, max } = cssObject[ styleSheetIndex ][ index ]
+				const {	min, max } = cssObject[ styleSheetIndex ][ index ]
 				if ( inRange( parseInt( width.replace( /px/, '' ) ), min, max ) ) {
 					document.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText = 'screen and (max-width: 5000px)'
 				} else {
