@@ -22,11 +22,6 @@ const includesCss = [
 	'/dist/editor_blocks',
 ]
 
-// CSS classNames to not be included in media query
-const excludedCssSelector = [
-	'.ugb-insert-library-button',
-]
-
 const cssObject = {}
 
 const observerCallback = () => {
@@ -52,7 +47,7 @@ const observerCallback = () => {
 
 		if ( styleSheets[ index ].cssRules ) {
 			Array.from( styleSheets[ index ].cssRules ).forEach( ( { cssText, media }, mediaIndex ) => {
-				if ( media && cssText.includes( '.ugb' ) && ! new RegExp( excludedCssSelector.join( '|' ) ).test( cssText ) ) {
+				if ( media && cssText.includes( '.ugb' ) ) {
 					const maxWidth = media.mediaText.match( /\(max-width:([^)]+)\)/ )
 					const minWidth = media.mediaText.match( /\(min-width:([^)]+)\)/ )
 
