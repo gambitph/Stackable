@@ -96,6 +96,7 @@ addFilter( 'stackable.divider.edit.inspector.style.before', 'stackable/divider',
 					top={ hrMarginTop }
 					bottom={ hrMarginBottom }
 					max={ 100 }
+					placeholder="0"
 					onChange={ ( { top, bottom } ) => setAttributes( { hrMarginTop: top, hrMarginBottom: bottom } ) }
 					enableLeft={ false }
 					enableRight={ false }
@@ -105,6 +106,7 @@ addFilter( 'stackable.divider.edit.inspector.style.before', 'stackable/divider',
 					label={ __( 'Height', i18n ) + ' / ' + __( 'Size', i18n ) }
 					min={ 1 }
 					max={ 100 }
+					placeholder="1"
 					allowReset={ true }
 					value={ height }
 					onChange={ height => setAttributes( { height } ) }
@@ -113,6 +115,7 @@ addFilter( 'stackable.divider.edit.inspector.style.before', 'stackable/divider',
 					label={ __( 'Width', i18n ) + ' (%)' }
 					min={ 1 }
 					max={ 100 }
+					placeholder="50"
 					allowReset={ true }
 					value={ width }
 					onChange={ width => setAttributes( { width } ) }

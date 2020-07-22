@@ -350,6 +350,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 							label={ __( 'Title', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-title"
 						/>
@@ -365,6 +366,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 							label={ __( 'Subtitle', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-title"
 						/>
@@ -380,6 +382,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 							label={ __( 'Button', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="10"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-button"
 						/>
@@ -395,6 +398,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 							label={ __( 'Button Gap', i18n ) }
 							min={ 0 }
 							max={ 100 }
+							placeholder="0"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-button-gap"
 						/>
