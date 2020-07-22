@@ -22,9 +22,12 @@ class ButtonIconPopoverControl extends Component {
 		super( ...arguments )
 		this.state = {
 			open: false,
+			isMouseOutside: false,
 		}
 		this.handleOpen = this.handleOpen.bind( this )
 		this.handleClose = this.handleClose.bind( this )
+		this.handleMouseLeave = this.handleMouseLeave.bind( this )
+		this.handleMouseEnter = this.handleMouseEnter.bind( this )
 		this.handleOnClickOutside = this.handleOnClickOutside.bind( this )
 		this.buttonRef = createRef()
 		this.instanceId = buttonInstance++
@@ -66,10 +69,22 @@ class ButtonIconPopoverControl extends Component {
 	componentDidMount() {
 		// Watch for attribute changes.
 		addFilter( 'stackable.setAttributes', `stackable/button-icon-popover-control-${ this.instanceId }`, this.checkIfAttributeShouldToggleOn.bind( this ), 9 )
+
+		/**
+		 * Added event listener for mousedown
+		 *
+		 * Dragging text input in RangeControl component triggers onBlur in Popover in WP5.5.
+		 * To fix this, an event listener is added which only triggers whenever a user
+		 * clicks outside the Popover.
+		 */
+		document.addEventListener( 'mousedown', this.handleOnClickOutside )
 	}
 
 	componentWillUnmount() {
 		removeFilter( 'stackable.setAttributes', `stackable/button-icon-popover-control-${ this.instanceId }` )
+
+		// Remove event listener for moousedown
+		document.removeEventListener( 'mousedown', this.handleOnClickOutside )
 	}
 
 	handleOpen() {
@@ -80,14 +95,22 @@ class ButtonIconPopoverControl extends Component {
 		this.setState( { open: false } )
 	}
 
+	handleMouseLeave() {
+		this.setState( { isMouseOutside: true } )
+	}
+
+	handleMouseEnter() {
+		this.setState( { isMouseOutside: false } )
+	}
+
 	/**
 	 * Use our own click/close handler. Don't close when a popover (e.g. a colorpicker) is clicked.
-	 * If this is not used, the popover will close when a color control's custom color field (when inside the popover) is clicked.
+If this is not used, the popover will close when a color control's custom color field (when inside the popover) is clicked.
 	 *
-	 * @param {Event} ev Click event
+	 * @param ev
 	 */
 	handleOnClickOutside( ev ) {
-		if ( ev.relatedTarget && ! ev.relatedTarget.closest( '.components-popover' ) && ev.relatedTarget !== this.buttonRef.current ) {
+		if ( this.state.isMouseOutside && ev.target.closest( 'button' ) !== this.buttonRef.current ) {
 			this.handleClose()
 		}
 	}
@@ -129,9 +152,9 @@ class ButtonIconPopoverControl extends Component {
 						<Popover
 							className="ugb-button-icon-control__popover"
 							focusOnMount="container"
-							onClose={ this.handleClose }
-							onFocusOutside={ this.handleOnClickOutside }
 							anchorRef={ this.buttonRef.current }
+							onMouseLeave={ this.handleMouseLeave }
+							onMouseEnter={ this.handleMouseEnter }
 						>
 							<PanelBody>
 								{ ( this.props.label || this.props.popoverLabel ) &&
