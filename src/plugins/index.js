@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import './auto-block-recovery'
-import './editor-mode'
+import './responsive-preview'
 import { default as DebugSidebar } from './debug-sidebar'
 
 /**
