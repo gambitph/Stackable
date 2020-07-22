@@ -105,11 +105,13 @@ class ButtonIconPopoverControl extends Component {
 
 	/**
 	 * Use our own click/close handler. Don't close when a popover (e.g. a colorpicker) is clicked.
-	 * If this is not used, the popover will close when a color control's custom color field (when inside the popover) is clicked.
+If this is not used, the popover will close when a color control's custom color field (when inside the popover) is clicked.
 	 *
+	 * @param ev
 	 */
-	handleOnClickOutside() {
-		if ( this.state.isMouseOutside ) {
+	handleOnClickOutside( ev ) {
+		const clickedElements = ev.path.filter( elements => elements.outerHTML === this.buttonRef.current.outerHTML )
+		if ( this.state.isMouseOutside && clickedElements.length === 0 ) {
 			this.handleClose()
 		}
 	}
