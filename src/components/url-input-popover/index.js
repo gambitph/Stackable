@@ -1,16 +1,12 @@
 /**
  * WordPress dependencies
  */
-import { withState } from '@wordpress/compose'
 import {
-	Dashicon,
-	IconButton,
 	Popover,
-	PanelBody,
-	ToggleControl,
-	TextControl,
+	Button,
 } from '@wordpress/components'
-import { URLInput } from '@wordpress/block-editor'
+import { __experimentalLinkControl as LinkControl } from '@wordpress/block-editor'
+import { keyboardReturn } from '@wordpress/icons'
 import { __ } from '@wordpress/i18n'
 
 /**
@@ -18,17 +14,33 @@ import { __ } from '@wordpress/i18n'
  */
 import { i18n } from 'stackable'
 import classnames from 'classnames'
+import {
+	omit, omitBy, keys,
+} from 'lodash'
 
-const ariaClosed = __( 'Show more tools & options', i18n )
-const ariaOpen = __( 'Hide more tools & options', i18n )
+const urlLabels = [
+	{
+		id: 'opensInNewTab',
+		title: __( 'Opens in new tab', i18n ),
+	},
+	{
+		id: 'noFollowLink',
+		title: __( 'Nofollow link', i18n ),
+	},
+]
 
-const UrlInputPopover = withState( {
-	openAdvanced: false,
-} )( props => {
+const UrlInputPopover = props => {
 	const {
-		openAdvanced,
-		setState,
+		value,
+		newTab,
+		noFollow,
 	} = props
+
+	const urlOptions = {
+		url: value,
+		opensInNewTab: newTab,
+		noFollowLink: noFollow,
+	}
 
 	if ( ! props.onChange && ! props.onChangeNewTab && ! props.onChangeNoFollow ) {
 		return null
@@ -36,14 +48,15 @@ const UrlInputPopover = withState( {
 
 	const mainClassName = classnames( [
 		'ugb-url-input-popover',
-	], {
-		'ugb--show-advanced': openAdvanced,
-	} )
+	] )
 
-	const moreButtonClasses = classnames( [
-		'ugb-url-input-control__more-button',
-	], {
-		'ugb--active': props.newTab || props.noFollow,
+	const i18nUrlOptions = urlLabels.filter( ( { id } ) => {
+		// Filters the options based on existing onChange props
+		switch ( id ) {
+			case 'opensInNewTab': return props.onChangeNewTab
+			case 'noFollowLink': return props.onChangeNoFollow
+			default: return true
+		}
 	} )
 
 	return (
@@ -52,61 +65,47 @@ const UrlInputPopover = withState( {
 			focusOnMount={ false }
 			position={ props.position }
 		>
-			<PanelBody>
-				<div className="ugb-url-input-popover__input-wrapper">
-					<Dashicon className="ugb-url-input-control__icon" icon="admin-links" />
-					{ props.onChange && ! props.disableSuggestions && // Auto-suggestions for inputting url.
-						<URLInput
-							className="ugb-url-input-control__input"
-							value={ props.value }
-							onChange={ props.onChange }
-							autoFocus={ false } // eslint-disable-line
-						/>
+			<LinkControl
+				value={ urlOptions }
+				settings={ i18nUrlOptions }
+				showSuggestions={ ! props.disableSuggestions }
+				onChange={
+					option => {
+						const onChangeKeys = {
+							url: props.onChange,
+							opensInNewTab: props.onChangeNewTab,
+							noFollowLink: props.onChangeNoFollow,
+						}
+
+						// Gets only the changed values to update
+						 const changedValues = omitBy( omit( option, 'id', 'title', 'type' ), ( value, key ) => {
+							return urlOptions[ key ] === value
+						} )
+
+						// Trigger onChange only to changed values
+						keys( changedValues ).map( value => (
+							onChangeKeys[ value ]( changedValues[ value ] )
+						) )
 					}
-					{ props.onChange && props.disableSuggestions && // Plain text control for inputting url.
-						<TextControl
-							className="ugb-url-input-control__input ugb-url-input-control__input--plain"
-							value={ props.value }
-							onChange={ props.onChange }
-							autoFocus={ false } // eslint-disable-line
-							placeholder={ __( 'Paste or type URL', i18n ) }
-						/>
-					}
-					{ ( props.onChangeNewTab || props.onChangeNoFollow ) &&
-						<IconButton
-							className={ moreButtonClasses }
-							icon="ellipsis"
-							label={ openAdvanced ? ariaOpen : ariaClosed }
-							onClick={ () => setState( { openAdvanced: ! openAdvanced } ) }
-							aria-expanded={ openAdvanced }
-						/>
-					}
-				</div>
-				{ props.onChangeNewTab && openAdvanced &&
-					<ToggleControl
-						label={ __( 'Open link in new tab', i18n ) }
-						checked={ props.newTab }
-						onChange={ props.onChangeNewTab }
-					/>
 				}
-				{ props.onChangeNoFollow && openAdvanced &&
-					<ToggleControl
-						label={ __( 'Nofollow link', i18n ) }
-						checked={ props.noFollow }
-						onChange={ props.onChangeNoFollow }
+			>
+				<form>
+					<input placeholder={ __( 'Search or type url', i18n ) } value={ value } />
+					<Button
+						icon={ keyboardReturn }
+						type="submit"
 					/>
-				}
-			</PanelBody>
+				</form>
+			</LinkControl>
 		</Popover>
 	)
-} )
+}
 
 UrlInputPopover.defaultProps = {
 	value: '',
 	disableSuggestions: false,
 	onChange: null,
 	position: 'bottom center',
-
 	newTab: false,
 	noFollow: false,
 	onChangeNewTab: null,

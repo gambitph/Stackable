@@ -33,7 +33,7 @@ SVG;
             add_menu_page(
                 __( 'Stackable', STACKABLE_I18N ), // Page Title.
                 __( 'Stackable', STACKABLE_I18N ) . ' ' . stackable_notification_count(), // Menu Title.
-                'edit_posts', // Capability.
+                'manage_options', // Capability.
                 'stackable', // Menu slug.
                 array( $this, 'stackable_getting_started_content' ), // Action.
                 'data:image/svg+xml;base64,' . base64_encode( $svg ) // Stackable icon.
@@ -66,6 +66,8 @@ SVG;
 			// For stackable pages, show our admin css.
             if ( 'toplevel_page_stackable' === $hook || stripos( $hook, 'page_stackable' ) !== false ) {
 				wp_enqueue_style( 'stackable-welcome', plugins_url( 'dist/admin_welcome.css', STACKABLE_FILE ), array() );
+				wp_enqueue_style( 'ugb-block-editor-css', plugins_url( 'dist/editor_blocks.css', STACKABLE_FILE ), array() );
+				do_action( 'stackable_settings_admin_enqueue_styles' );
 			}
 
 			// For the options page, load our options script.
@@ -173,6 +175,22 @@ SVG;
                     <div class="s-body">
 						<?php stackable_welcome_notification() ?>
 						<?php do_action( 'stackable_settings_page' ) ?>
+						<article class="s-box <?php echo apply_filters( 'stackable_fa_settings_class', '' ) ?>">
+							<h2><?php _e( '🧰 Icon Library Settings', STACKABLE_I18N ) ?></h2>
+							<p class="s-settings-subtitle"><?php printf( __( 'If you have a %sFont Awesome Pro%s subscription, you can use your FontAwesome Pro Icons in Stackable by inputting your Pro Kit code below. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://fontawesome.com/" target="_fontawesome">', '</a>', '<a href="https://docs.wpstackable.com/stackable-guides/advanced-guides/how-to-use-your-font-awesome-pro-icons?utm_source=wp-settings-icons&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
+							<div class="s-icon-settings"></div>
+							<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
+								<p class="s-settings-pro"><?php _e( 'This is only available in Stackable Premium.', STACKABLE_I18N ) ?> <a href="https://wpstackable.com/premium/?utm_source=wp-settings-icons&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a></p>
+							<?php endif; ?>
+						</article>
+						<article class="s-box">
+							<h2><?php _e( '📰 Role Manager', STACKABLE_I18N ) ?></h2>
+							<p class="s-settings-subtitle"><?php printf( __( 'You can lock the Block Editor\'s inspector for different user roles and give them edit access to only images and content. Content Editing Mode affects all blocks. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/stackable-guides/advanced-guides/role-manager-and-content-editing-mode?utm_source=wp-settings-role-manager&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
+							<div class="s-editing-mode-settings"></div>
+							<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
+								<p class="s-settings-pro"><?php _e( 'This is only available in Stackable Premium.', STACKABLE_I18N ) ?> <a href="https://wpstackable.com/premium/?utm_source=wp-settings-role-manager&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a></p>
+							<?php endif; ?>
+						</article>
                         <article class="s-box">
                             <h2><?php _e( '🎛 Enable & Disable Blocks', STACKABLE_I18N ) ?></h2>
                             <p class="s-settings-subtitle"><?php _e( 'We have a lot of awesome blocks. But if you\'re overwhelmed with awesomeness, you can hide some of them.' , STACKABLE_I18N ) ?> <em><?php _e( '(If your post contains a disabled block, it will still continue to work. You won\'t just be able to add the disabled blocks.)' , STACKABLE_I18N ) ?></em></p>

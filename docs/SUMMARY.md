@@ -38,6 +38,7 @@
   * [Guided Custom CSS](stackable-guides/advanced-guides/guided-custom-css.md)
   * [How to Use Your Font Awesome Pro Icons](stackable-guides/advanced-guides/how-to-use-your-font-awesome-pro-icons.md)
   * [How to Use Multicolor for Icons](stackable-guides/advanced-guides/how-to-use-multicolor-for-icons.md)
+  * [Role Manager and Content Editing Mode](stackable-guides/advanced-guides/role-manager-and-content-editing-mode.md)
   * [Translate Blocks Using WPML \(Multilingual\)](stackable-guides/advanced-guides/translate-blocks-using-wpml-multilingual.md)
   * [Using ACF Fields in Blocks](stackable-guides/advanced-guides/using-acf-fields-in-blocks.md)
 

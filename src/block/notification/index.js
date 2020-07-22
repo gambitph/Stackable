@@ -115,7 +115,7 @@ export const schema = {
 	},
 	titleTag: {
 		type: 'string',
-		defualt: '',
+		default: '',
 	},
 	...createTypographyAttributes( 'title%s' ),
 	titleColor: {

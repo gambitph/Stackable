@@ -125,7 +125,10 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 						  ( sugb_fs()->is_plan( 'professional', true ) ? 'professional' : 'business' ),
 
 			// Icons.
-			'fontAwesomeSearchProIcons' => stackable_search_fontawesome_pro_icons(),
+			'fontAwesomeSearchProIcons' => apply_filters( 'stackable_search_fontawesome_pro_icons', false ),
+
+			// Editor Role.
+			'isContentOnlyMode' => apply_filters( 'stackable_editor_role_is_content_only', false ),
 		) );
 	}
 
