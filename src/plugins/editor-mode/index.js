@@ -7,14 +7,14 @@ import domReady from '@wordpress/dom-ready'
  * External dependencies
  */
 import {
-	keys, inRange,
+	keys, inRange, throttle,
 } from 'lodash'
+import { addAction } from '@wordpress/hooks'
 
 const query = '.edit-post-visual-editor'
 
 // Preview Mode responsive width
-const TABLET_MODE_WIDTH = '780px'
-const MOBILE_MODE_WIDTH = '360px'
+const TABLET_MODE_WIDTH = 600
 
 // CSS files to compare
 const includesCss = [
@@ -22,19 +22,23 @@ const includesCss = [
 	'/dist/editor_blocks',
 ]
 
-// CSS classNames to not be included in media query
-const excludedCssSelector = [
-	'.ugb-insert-library-button',
-]
-
 const cssObject = {}
+let previousMode = 'desktop'
 
 const observerCallback = () => {
 	// Gets the element of visual editor wrapper
 	const visualEditorEl = document.querySelector( query )
 
+	// Only call when switching to desktop, or in responsive mode.
+	if ( ! visualEditorEl.getAttribute( 'style' ) && previousMode === 'desktop' ) {
+		return
+	}
+
 	// Gets the current width of the visual editor
-	const { width } = getComputedStyle( visualEditorEl ) //eslint-disable-line no-undef
+	const width = parseInt( getComputedStyle( visualEditorEl ).width, 10 ) //eslint-disable-line no-undef
+	previousMode = visualEditorEl.getAttribute( 'style' ) ? 'responsive' : 'desktop'
+	const previewMode = ! visualEditorEl.getAttribute( 'style' ) ? 'desktop' :
+		width > TABLET_MODE_WIDTH ? 'tablet' : 'mobile'
 
 	// Stores the indices of needed styleSheets
 	const stylesheetIndices = []
@@ -42,7 +46,11 @@ const observerCallback = () => {
 	const styleSheets = Array.from( document.styleSheets )
 
 	styleSheets.forEach( ( { href }, index ) => {
-		if ( ( href && new RegExp( includesCss.join( '|' ) ).test( href ) ) || href === null ) {
+		// Only do this for our own css files.
+		if ( href && new RegExp( includesCss.join( '|' ) ).test( href ) ) {
+			stylesheetIndices.push( index )
+		// Also do this for style tags.
+		} else if ( href === null ) {
 			stylesheetIndices.push( index )
 		}
 	} )
@@ -52,19 +60,19 @@ const observerCallback = () => {
 
 		if ( styleSheets[ index ].cssRules ) {
 			Array.from( styleSheets[ index ].cssRules ).forEach( ( { cssText, media }, mediaIndex ) => {
-				if ( media && cssText.includes( '.ugb' ) && ! new RegExp( excludedCssSelector.join( '|' ) ).test( cssText ) ) {
-					const maxWidth = media.mediaText.match( /\(max-width:([^)]+)\)/ )
-					const minWidth = media.mediaText.match( /\(min-width:([^)]+)\)/ )
+				if ( media && cssText.includes( '.ugb' ) ) {
+					const maxWidth = media.mediaText.match( /max-width:\s*(\d+)px/ )
+					const minWidth = media.mediaText.match( /min-width:\s*(\d+)px/ )
 
-					let max = maxWidth ? parseInt( maxWidth[ 1 ].replace( /px/, '' ) ) : 9999
-					const min = minWidth ? parseInt( minWidth[ 1 ].replace( /px/, '' ) ) : 0
+					let max = maxWidth ? parseInt( maxWidth[ 1 ], 10 ) : 9999
+					const min = minWidth ? parseInt( minWidth[ 1 ], 10 ) : 0
 
 					// This is to ensure that media queries with no min-width and max-width will both have zero min and max values
 					if ( max === 9999 && min === 0 ) {
 						max = 0
 					}
 
-					// Memoize existing values
+					// Memorize existing values
 					mediaIndices[ mediaIndex ] = ( cssObject && cssObject[ index ] && cssObject[ index ][ mediaIndex ] ) ? { ...cssObject[ index ][ mediaIndex ] } : {
 						mediaText: media.mediaText,
 						min,
@@ -78,12 +86,12 @@ const observerCallback = () => {
 		cssObject[ index ] = { ...mediaIndices }
 	} )
 
-	  if ( width === TABLET_MODE_WIDTH || width === MOBILE_MODE_WIDTH ) {
+	if ( previewMode === 'tablet' || previewMode === 'mobile' ) {
 		// If Preview is in Tablet or Mobile Mode, modify media queries for Tablet or Mobile.
 		keys( cssObject ).forEach( styleSheetIndex => {
 			keys( cssObject[ styleSheetIndex ] ).forEach( index => {
 				const {	min, max } = cssObject[ styleSheetIndex ][ index ]
-				if ( inRange( parseInt( width.replace( /px/, '' ) ), min, max ) ) {
+				if ( inRange( width, min, max ) ) {
 					document.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText = 'screen and (max-width: 5000px)'
 				} else {
 					document.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText = 'screen and (min-width: 5000px)'
@@ -100,7 +108,12 @@ const observerCallback = () => {
 	}
 }
 
-const __experimentalEditorPreviewMode = () => {
+// Update the responsive preview when an attribute is changed.
+addAction( 'stackable.setAttributes.after', 'stackable/responsive-preview', () => {
+	setTimeout( observerCallback, 0 )
+} )
+
+const responsivePreview = () => {
 	const visualEditorEl = document.querySelector( query )
 
 	// Observes only the attribute changes of the element
@@ -113,11 +126,9 @@ const __experimentalEditorPreviewMode = () => {
      * in visualEditorEl.
      * @see https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
      */
-	const visualEditorElObserver = new MutationObserver( observerCallback )
+	const visualEditorElObserver = new MutationObserver( throttle( observerCallback, 500 ) )
 
 	visualEditorElObserver.observe( visualEditorEl, config )
 }
 
-const editorPreviewMode = __experimentalEditorPreviewMode
-
-domReady( editorPreviewMode )
+domReady( responsivePreview )

@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { applyFilters } from '@wordpress/hooks'
+import { applyFilters, doAction } from '@wordpress/hooks'
 import { Component } from '@wordpress/element'
 import { createHigherOrderComponent } from '@wordpress/compose'
 
@@ -28,6 +28,7 @@ const withSetAttributeHook = createHigherOrderComponent(
 			let attributesToSet = applyFilters( 'stackable.setAttributes', attributes, this.props )
 			attributesToSet = applyFilters( `stackable.${ blockName }.setAttributes`, attributesToSet, this.props )
 			this.props.setAttributes( attributesToSet )
+			doAction( 'stackable.setAttributes.after', attributes, this.props )
 		}
 
 		render() {
