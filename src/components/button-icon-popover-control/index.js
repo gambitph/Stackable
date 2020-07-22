@@ -110,8 +110,7 @@ If this is not used, the popover will close when a color control's custom color 
 	 * @param ev
 	 */
 	handleOnClickOutside( ev ) {
-		const clickedElements = ev.path.filter( elements => elements.outerHTML === this.buttonRef.current.outerHTML )
-		if ( this.state.isMouseOutside && clickedElements.length === 0 ) {
+		if ( this.state.isMouseOutside && ev.target.closest( 'button' ) !== this.buttonRef.current ) {
 			this.handleClose()
 		}
 	}
