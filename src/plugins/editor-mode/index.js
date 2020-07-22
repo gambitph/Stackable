@@ -22,6 +22,11 @@ const includesCss = [
 	'/dist/editor_blocks',
 ]
 
+// CSS classNames to not be included in media query
+const excludedCssSelector = [
+	'.ugb-insert-library-button',
+]
+
 const cssObject = {}
 
 const observerCallback = () => {
@@ -46,7 +51,7 @@ const observerCallback = () => {
 		const mediaIndices = {}
 
 		Array.from( styleSheets[ index ].cssRules ).forEach( ( { cssText, media }, mediaIndex ) => {
-			if ( media ) {
+			if ( media && cssText.includes( '.ugb' ) && ! new RegExp( excludedCssSelector.join( '|' ) ).test( cssText ) ) {
 				const maxWidth = media.mediaText.match( /\(max-width:([^)]+)\)/ )
 				const minWidth = media.mediaText.match( /\(min-width:([^)]+)\)/ )
 
@@ -71,12 +76,10 @@ const observerCallback = () => {
 		keys( cssObject ).forEach( styleSheetIndex => {
 			keys( cssObject[ styleSheetIndex ] ).forEach( index => {
 				const { min, max } = cssObject[ styleSheetIndex ][ index ]
-				if ( document.styleSheets[ styleSheetIndex ].cssRules[ index ] ) {
-					if ( inRange( parseInt( width.replace( /px/, '' ) ), min, max ) ) {
-						document.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText = 'screen and (max-width: 5000px)'
-					} else {
-						document.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText = 'screen and (min-width: 5000px)'
-					}
+				if ( inRange( parseInt( width.replace( /px/, '' ) ), min, max ) ) {
+					document.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText = 'screen and (max-width: 5000px)'
+				} else {
+					document.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText = 'screen and (min-width: 5000px)'
 				}
 			} )
 		} )
