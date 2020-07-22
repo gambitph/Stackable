@@ -58,6 +58,10 @@ const save = props => {
 					const subtitle = attributes[ `subtitle${ i }` ]
 					const title = attributes[ `title${ i }` ]
 					const description = attributes[ `description${ i }` ]
+					const ariaLabel = ( showTitle && ! RichText.isEmpty( title ) ) ? title :
+						( showSubtitle && ! RichText.isEmpty( subtitle ) ) ? subtitle :
+							( showDescription && ! RichText.isEmpty( description ) ) ? description :
+								''
 
 					const itemClasses = classnames( [
 						'ugb-image-box__item',
@@ -83,7 +87,7 @@ const save = props => {
 						>
 							{ attributes[ `image${ i }Url` ] &&
 								<div className="ugb-image-box__box ugb-image-box__image-wrapper">
-									<div className="ugb-image-box__box ugb-image-box__image" role="img" aria-label={ title || description }></div>
+									<div className="ugb-image-box__box ugb-image-box__image" role="img" aria-label={ ariaLabel }></div>
 								</div>
 							}
 							{ showOverlay &&
@@ -130,8 +134,8 @@ const save = props => {
 									href={ attributes[ `link${ i }Url` ] }
 									target={ attributes[ `link${ i }NewTab` ] ? '_blank' : undefined }
 									rel={ rel.join( ' ' ) || undefined }
-									title={ attributes[ `title${ i }` ] }
-									aria-label={ attributes[ `title${ i }` ] }
+									title={ ariaLabel }
+									aria-label={ ariaLabel }
 								>{ null }</a>
 							}
 						</div>
