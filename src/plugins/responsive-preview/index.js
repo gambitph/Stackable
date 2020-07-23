@@ -167,9 +167,6 @@ const observerCallback = () => {
 	updateMediaQuery( mode, widthsDetected[ mode ] )
 }
 
-// Initialize the observer as null.
-let visualEditorElObserver = null
-
 // Update the responsive preview when an attribute is changed.
 addAction( 'stackable.setAttributes.after', 'stackable/responsive-preview', observerCallback )
 
@@ -179,17 +176,13 @@ const responsivePreview = () => {
 		return
 	}
 
-	// Observes only the attribute changes of the element
+	// Observe all changes of the element
 	const config = {
 		attributes: true, childList: true, subtree: true,
 	}
 
-	/*
-     * Creates an observer instance based on attribute changes
-     * in visualEditorEl.
-     * @see https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
-     */
-	visualEditorElObserver = new MutationObserver( throttle( observerCallback, 500 ) )
+	// Listen to changes in the editor.
+	const visualEditorElObserver = new MutationObserver( throttle( observerCallback, 500 ) )
 
 	visualEditorElObserver.observe( visualEditorEl, config )
 }
