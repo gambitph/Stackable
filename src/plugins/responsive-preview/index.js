@@ -38,7 +38,7 @@ const TABLET_MODE_WIDTH = 600
 let previousMode = 'desktop'
 
 /**
- * Populate the cssObject with media queries
+ * Populates the cssObject with media queries.
  */
 export const cacheCssObject = () => {
 	// Stores the indices of needed styleSheets
@@ -105,24 +105,14 @@ export const cacheCssObject = () => {
 	} )
 }
 
-const observerCallback = () => {
-	// Gets the element of visual editor wrapper
-	const visualEditorEl = document.querySelector( query )
-
-	// Only call when switching to desktop, or in responsive mode.
-	if ( ! visualEditorEl.getAttribute( 'style' ) && previousMode === 'desktop' ) {
-		return
-	}
-
-	// Gets the current width of the visual editor
-	const width = parseInt( getComputedStyle( visualEditorEl ).width, 10 ) //eslint-disable-line no-undef
-	previousMode = visualEditorEl.getAttribute( 'style' ) ? 'responsive' : 'desktop'
-	const previewMode = ! visualEditorEl.getAttribute( 'style' ) ? 'desktop' :
-		width > TABLET_MODE_WIDTH ? 'tablet' : 'mobile'
-
-	// Populate the cssObject with media queries and cache values if necessary.
-	cacheCssObject()
-
+/**
+ * Updates the current media query based
+ * on Preview Mode.
+ *
+ * @param previewMode the current Preview Mode of the editor.
+ * @param width the editor's current width
+ */
+const updateMediaQuery = ( previewMode = 'desktop', width = 0 ) => {
 	if ( previewMode === 'tablet' || previewMode === 'mobile' ) {
 		// If Preview is in Tablet or Mobile Mode, modify media queries for Tablet or Mobile.
 		keys( cssObject ).forEach( styleSheetIndex => {
@@ -147,6 +137,28 @@ const observerCallback = () => {
 			} )
 		} )
 	}
+}
+
+const observerCallback = () => {
+	// Gets the element of visual editor wrapper
+	const visualEditorEl = document.querySelector( query )
+
+	// Only call when switching to desktop, or in responsive mode.
+	if ( ! visualEditorEl.getAttribute( 'style' ) && previousMode === 'desktop' ) {
+		return
+	}
+
+	// Gets the current width of the visual editor
+	const width = parseInt( getComputedStyle( visualEditorEl ).width, 10 ) //eslint-disable-line no-undef
+	previousMode = visualEditorEl.getAttribute( 'style' ) ? 'responsive' : 'desktop'
+	const previewMode = ! visualEditorEl.getAttribute( 'style' ) ? 'desktop' :
+		width > TABLET_MODE_WIDTH ? 'tablet' : 'mobile'
+
+	// Populate the cssObject with media queries and cache values if necessary.
+	cacheCssObject()
+
+	// Update the media query
+	updateMediaQuery( previewMode, width )
 }
 
 // Initialize the observer as null.
