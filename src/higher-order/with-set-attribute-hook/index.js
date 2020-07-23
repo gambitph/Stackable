@@ -30,6 +30,8 @@ const withSetAttributeHook = createHigherOrderComponent(
 		 * in Tablet or Mobile mode.
 		 *
 		 * @param {Object} prevProps previous props
+		 *
+		 * @see src/plugins/responsive-preview/index.js
 		 */
 		componentDidUpdate( prevProps ) {
 			if ( ! isEqual( prevProps.attributes, this.props.attributes ) ) {
