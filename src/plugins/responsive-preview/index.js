@@ -165,15 +165,7 @@ const observerCallback = () => {
 let visualEditorElObserver = null
 
 // Update the responsive preview when an attribute is changed.
-addAction( 'stackable.setAttributes.after', 'stackable/responsive-preview', () => {
-	if ( visualEditorElObserver ) {
-		// Unsubscribe to the observer temporarily everytime an attribute is changed to avoid performance issues
-		visualEditorElObserver.disconnect()
-	}
-
-	observerCallback()
-	responsivePreview()
-} )
+addAction( 'stackable.setAttributes.after', 'stackable/responsive-preview', observerCallback )
 
 const responsivePreview = () => {
 	const visualEditorEl = document.querySelector( query )
