@@ -177,6 +177,9 @@ addAction( 'stackable.setAttributes.after', 'stackable/responsive-preview', () =
 
 const responsivePreview = () => {
 	const visualEditorEl = document.querySelector( query )
+	if ( ! visualEditorEl ) {
+		return
+	}
 
 	// Observes only the attribute changes of the element
 	const config = {
