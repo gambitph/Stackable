@@ -4,17 +4,18 @@
 import './auto-change-responsive-preview'
 
 /**
- * Wordpress dependencies
- */
-import domReady from '@wordpress/dom-ready'
-
-/**
  * External dependencies
  */
 import {
 	keys, inRange, throttle,
 } from 'lodash'
+
+/**
+ * Wordpress dependencies
+ */
+import domReady from '@wordpress/dom-ready'
 import { addAction } from '@wordpress/hooks'
+import { select } from '@wordpress/data'
 
 const query = '.edit-post-visual-editor'
 
@@ -32,10 +33,8 @@ const includesCss = [
 
 const cssObject = {}
 
-// Preview Mode responsive width
-const TABLET_MODE_WIDTH = 600
-
-let previousMode = 'desktop'
+// The previous mode.
+let previousMode = 'Desktop'
 
 /**
  * Populates the cssObject with media queries.
@@ -109,11 +108,11 @@ export const cacheCssObject = () => {
  * Updates the current media query based
  * on Preview Mode.
  *
- * @param previewMode the current Preview Mode of the editor.
- * @param width the editor's current width
+ * @param {string} previewMode the current Preview Mode of the editor.
+ * @param {number} width the editor's current width
  */
-const updateMediaQuery = ( previewMode = 'desktop', width = 0 ) => {
-	if ( previewMode === 'tablet' || previewMode === 'mobile' ) {
+const updateMediaQuery = ( previewMode = 'Desktop', width = 0 ) => {
+	if ( previewMode === 'Tablet' || previewMode === 'Mobile' ) {
 		// If Preview is in Tablet or Mobile Mode, modify media queries for Tablet or Mobile.
 		keys( cssObject ).forEach( styleSheetIndex => {
 			keys( cssObject[ styleSheetIndex ] ).forEach( index => {
@@ -140,25 +139,26 @@ const updateMediaQuery = ( previewMode = 'desktop', width = 0 ) => {
 }
 
 const observerCallback = () => {
-	// Gets the element of visual editor wrapper
-	const visualEditorEl = document.querySelector( query )
+	const {
+		__experimentalGetPreviewDeviceType: getPreviewDeviceType,
+	} = select( 'core/edit-post' )
+	const mode = getPreviewDeviceType()
 
 	// Only call when switching to desktop, or in responsive mode.
-	if ( ! visualEditorEl.getAttribute( 'style' ) && previousMode === 'desktop' ) {
+	if ( mode === 'Desktop' && previousMode === 'Desktop' ) {
 		return
 	}
 
 	// Gets the current width of the visual editor
-	const width = parseInt( getComputedStyle( visualEditorEl ).width, 10 ) //eslint-disable-line no-undef
-	previousMode = visualEditorEl.getAttribute( 'style' ) ? 'responsive' : 'desktop'
-	const previewMode = ! visualEditorEl.getAttribute( 'style' ) ? 'desktop' :
-		width > TABLET_MODE_WIDTH ? 'tablet' : 'mobile'
+	const visualEditorEl = document.querySelector( query )
+	const width = parseInt( window.getComputedStyle( visualEditorEl ).width, 10 )
+	previousMode = mode
 
 	// Populate the cssObject with media queries and cache values if necessary.
 	cacheCssObject()
 
 	// Update the media query
-	updateMediaQuery( previewMode, width )
+	updateMediaQuery( mode, width )
 }
 
 // Initialize the observer as null.
