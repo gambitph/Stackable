@@ -36,6 +36,9 @@ const cssObject = {}
 // The previous mode.
 let previousMode = 'Desktop'
 
+// Cache the responsive widths of the preview.
+const widthsDetected = {}
+
 /**
  * Populates the cssObject with media queries.
  */
@@ -148,17 +151,20 @@ const observerCallback = () => {
 	if ( mode === 'Desktop' && previousMode === 'Desktop' ) {
 		return
 	}
+	previousMode = mode
 
 	// Gets the current width of the visual editor
-	const visualEditorEl = document.querySelector( query )
-	const width = parseInt( window.getComputedStyle( visualEditorEl ).width, 10 )
-	previousMode = mode
+	// Cache the width since it's expensive to perform getComputedStyle
+	if ( ! widthsDetected[ mode ] ) {
+		const visualEditorEl = document.querySelector( query )
+		widthsDetected[ mode ] = parseInt( window.getComputedStyle( visualEditorEl ).width, 10 )
+	}
 
 	// Populate the cssObject with media queries and cache values if necessary.
 	cacheCssObject()
 
 	// Update the media query
-	updateMediaQuery( mode, width )
+	updateMediaQuery( mode, widthsDetected[ mode ] )
 }
 
 // Initialize the observer as null.
