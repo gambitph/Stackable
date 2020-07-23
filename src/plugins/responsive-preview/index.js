@@ -13,10 +13,11 @@ import { addAction } from '@wordpress/hooks'
 
 const query = '.edit-post-visual-editor'
 
-// Preview Mode responsive width
-const TABLET_MODE_WIDTH = 600
-
-// CSS files to compare
+/**
+ * CSS files to cache
+ *
+ * It includes Stackable custom css files and inline styles for blocks.
+ */
 const includesCss = [
 	'/dist/frontend_blocks__premium_only.css',
 	'/dist/frontend_blocks.css',
@@ -25,23 +26,16 @@ const includesCss = [
 ]
 
 const cssObject = {}
+
+// Preview Mode responsive width
+const TABLET_MODE_WIDTH = 600
+
 let previousMode = 'desktop'
 
-const observerCallback = () => {
-	// Gets the element of visual editor wrapper
-	const visualEditorEl = document.querySelector( query )
-
-	// Only call when switching to desktop, or in responsive mode.
-	if ( ! visualEditorEl.getAttribute( 'style' ) && previousMode === 'desktop' ) {
-		return
-	}
-
-	// Gets the current width of the visual editor
-	const width = parseInt( getComputedStyle( visualEditorEl ).width, 10 ) //eslint-disable-line no-undef
-	previousMode = visualEditorEl.getAttribute( 'style' ) ? 'responsive' : 'desktop'
-	const previewMode = ! visualEditorEl.getAttribute( 'style' ) ? 'desktop' :
-		width > TABLET_MODE_WIDTH ? 'tablet' : 'mobile'
-
+/**
+ * Populate the cssObject with media queries
+ */
+export const cacheCssObject = () => {
 	// Stores the indices of needed styleSheets
 	const stylesheetIndices = []
 
@@ -69,12 +63,34 @@ const observerCallback = () => {
 					const max = maxWidth ? parseInt( maxWidth[ 1 ], 10 ) : 9999
 					const min = minWidth ? parseInt( minWidth[ 1 ], 10 ) : 0
 
-					// Memorize existing values
-					mediaIndices[ mediaIndex ] = ( cssObject && cssObject[ index ] && cssObject[ index ][ mediaIndex ] ) ? { ...cssObject[ index ][ mediaIndex ] } : {
-						mediaText: media.mediaText,
-						min,
-						max,
-						cssText,
+					if ( cssObject && cssObject[ index ] && cssObject[ index ][ mediaIndex ] ) {
+						const {
+							min: currentMin, max: currentMax,
+						} = cssObject[ index ][ mediaIndex ]
+
+						if ( min === 5000 || max === 5000 ) {
+							// Store the cached value of media query has already been modified.
+							mediaIndices[ mediaIndex ] = { ...cssObject[ index ][ mediaIndex ] }
+						} else if ( currentMin !== min || currentMax !== max ) {
+							// Store the new media query if custom CSS is modified.
+							mediaIndices[ mediaIndex ] = {
+								mediaText: media.mediaText,
+								min,
+								max,
+								cssText,
+							}
+						} else {
+							// Store the cached value if nothing is modified.
+							mediaIndices[ mediaIndex ] = { ...cssObject[ index ][ mediaIndex ] }
+						}
+					} else {
+					// Store the new media query if the value is not found in cached media queries.
+					 mediaIndices[ mediaIndex ] = {
+							mediaText: media.mediaText,
+							min,
+							max,
+							cssText,
+					 }
 					}
 				}
 			} )
@@ -82,6 +98,25 @@ const observerCallback = () => {
 
 		cssObject[ index ] = { ...mediaIndices }
 	} )
+}
+
+const observerCallback = () => {
+	// Gets the element of visual editor wrapper
+	const visualEditorEl = document.querySelector( query )
+
+	// Only call when switching to desktop, or in responsive mode.
+	if ( ! visualEditorEl.getAttribute( 'style' ) && previousMode === 'desktop' ) {
+		return
+	}
+
+	// Gets the current width of the visual editor
+	const width = parseInt( getComputedStyle( visualEditorEl ).width, 10 ) //eslint-disable-line no-undef
+	previousMode = visualEditorEl.getAttribute( 'style' ) ? 'responsive' : 'desktop'
+	const previewMode = ! visualEditorEl.getAttribute( 'style' ) ? 'desktop' :
+		width > TABLET_MODE_WIDTH ? 'tablet' : 'mobile'
+
+	// Populate the cssObject with media queries and cache values if necessary.
+	cacheCssObject()
 
 	if ( previewMode === 'tablet' || previewMode === 'mobile' ) {
 		// If Preview is in Tablet or Mobile Mode, modify media queries for Tablet or Mobile.
@@ -109,9 +144,18 @@ const observerCallback = () => {
 	}
 }
 
+// Initialize the observer as null.
+let visualEditorElObserver = null
+
 // Update the responsive preview when an attribute is changed.
 addAction( 'stackable.setAttributes.after', 'stackable/responsive-preview', () => {
-	setTimeout( observerCallback, 0 )
+	if ( visualEditorElObserver ) {
+		// Unsubscribe to the observer temporarily everytime an attribute is changed to avoid performance issues
+		visualEditorElObserver.disconnect()
+	}
+
+	observerCallback()
+	responsivePreview()
 } )
 
 const responsivePreview = () => {
@@ -127,7 +171,7 @@ const responsivePreview = () => {
      * in visualEditorEl.
      * @see https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
      */
-	const visualEditorElObserver = new MutationObserver( throttle( observerCallback, 500 ) )
+	visualEditorElObserver = new MutationObserver( throttle( observerCallback, 500 ) )
 
 	visualEditorElObserver.observe( visualEditorEl, config )
 }
