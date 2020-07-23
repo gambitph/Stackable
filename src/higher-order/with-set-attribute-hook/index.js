@@ -9,6 +9,7 @@ import { createHigherOrderComponent } from '@wordpress/compose'
  * External dependencies
  */
 import PropTypes from 'prop-types'
+import { isEqual } from 'lodash'
 
 export const createUniqueClass = uid => `ugb-${ uid.substring( 0, 7 ) }`
 
@@ -27,9 +28,13 @@ const withSetAttributeHook = createHigherOrderComponent(
 		 * Triggers the observerCallback in responsive-preview.
 		 * This allows the editor mode to update based on attribute changes
 		 * in Tablet or Mobile mode.
+		 *
+		 * @param {Object} prevProps previous props
 		 */
-		componentDidUpdate() {
-			doAction( 'stackable.setAttributes.after' )
+		componentDidUpdate( prevProps ) {
+			if ( ! isEqual( prevProps.attributes, this.props.attributes ) ) {
+				doAction( 'stackable.setAttributes.after' )
+			}
 		}
 
 		setAttributes( attributes ) {
