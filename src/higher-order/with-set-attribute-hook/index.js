@@ -23,6 +23,11 @@ const withSetAttributeHook = createHigherOrderComponent(
 			this.setAttributes = this.setAttributes.bind( this )
 		}
 
+		/**
+		 * Triggers the observerCallback in responsive-preview.
+		 * This allows the editor mode to update based on attribute changes
+		 * in Tablet or Mobile mode.
+		 */
 		componentDidUpdate() {
 			doAction( 'stackable.setAttributes.after' )
 		}
