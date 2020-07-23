@@ -78,4 +78,7 @@ const ResponsiveToggle = () => {
 	return null
 }
 
-registerPlugin( 'stackable-responsive-toggle-change', { render: ResponsiveToggle } )
+// Only do this for WP 5.5
+if ( select( 'core/edit-post' ).__experimentalGetPreviewDeviceType ) {
+	registerPlugin( 'stackable-responsive-toggle-change', { render: ResponsiveToggle } )
+}
