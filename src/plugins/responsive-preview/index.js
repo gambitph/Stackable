@@ -1,4 +1,9 @@
 /**
+ * Internal dependencies
+ */
+import './auto-change-responsive-preview'
+
+/**
  * Wordpress dependencies
  */
 import domReady from '@wordpress/dom-ready'
