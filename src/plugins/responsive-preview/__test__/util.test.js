@@ -99,23 +99,12 @@ describe( 'cacheCssObject', () => {
 
 describe( 'getIncludedIndices', () => {
 	const styleSheets = [
-		{
-			href: null,
-		},
-		{
-			href: 'style1.css',
-		},
-		{
-			href: 'style2.css',
-		},
-		{
-			href: 'style3.css',
-		},
+		{ href: null },
+		{ href: 'style1.css' },
+		{ href: 'style2.css' },
+		{ href: 'style3.css' },
 	]
-	const includeCss = [
-		'style1.css',
-		'style2.css',
-	]
+	const includeCss = [ 'style1.css', 'style2.css' ]
 	const includeCss2 = [ 'style3.css' ]
 	const includeCss3 = []
 	it( 'should return an empty string if some arguments are invalid or undefined', () => {
