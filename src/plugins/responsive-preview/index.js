@@ -51,9 +51,8 @@ export const cacheCssObject = () => {
 
 	const styleSheets = Array.from( document.styleSheets )
 
-	styleSheets.forEach( ( styleSheet, index ) => {
+	styleSheets.forEach( ( { href }, index ) => {
 		// Only do this for our own css files.
-		const { href } = styleSheet
 		if ( href && includesCss.some( url => href.includes( url ) ) ) {
 			stylesheetIndices.push( index )
 		} else if ( href === null ) {
@@ -67,7 +66,7 @@ export const cacheCssObject = () => {
 
 		const cssRules = Array.from( styleSheets[ index ].cssRules ).filter( cssRule => cssRule.media )
 
-		// Checks if the current index is cached or the cache has already been initialized.
+		// Checks if the current cssObject should not be cached.
 		if ( ! cssRulesCache[ index ] || ( cssRulesCache[ index ] && ! isEqual( cssRulesCache[ index ], cssRules ) ) ) {
 			cssRulesCache[ index ] = ! isEmpty( cssRules ) && [ ...cssRules ]
 			Array.from( styleSheets[ index ].cssRules ).forEach( ( { cssText, media }, mediaIndex ) => {
