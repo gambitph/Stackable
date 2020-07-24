@@ -109,7 +109,7 @@ on Preview Mode.
  */
 export const updateMediaQuery = ( currentDocument = null, cssObject = null, previewMode = 'Desktop', width = 0 ) => {
 	// Checks if a document is passed.
-	if ( ! currentDocument || ! cssObject || previewMode || width === 0 ) {
+	if ( ! currentDocument || ! cssObject || ! previewMode || width === 0 ) {
 		return
 	}
 
