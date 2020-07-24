@@ -7,7 +7,7 @@ import './auto-change-responsive-preview'
  * External dependencies
  */
 import {
-	keys, inRange, throttle,
+	keys, inRange, throttle, isEqual, isEmpty,
 } from 'lodash'
 
 /**
@@ -31,7 +31,10 @@ const includesCss = [
 	'/dist/editor_blocks.css',
 ]
 
+// Cache the cssObject
 const cssObject = {}
+// Cache the cssRules
+const cssRulesCache = {}
 
 // The previous mode.
 let previousMode = 'Desktop'
@@ -40,7 +43,7 @@ let previousMode = 'Desktop'
 const widthsDetected = {}
 
 /**
- * Populates the cssObject with media queries.
+ * Handles the caching of cssObjects.
  */
 export const cacheCssObject = () => {
 	// Stores the indices of needed styleSheets
@@ -48,12 +51,13 @@ export const cacheCssObject = () => {
 
 	const styleSheets = Array.from( document.styleSheets )
 
-	styleSheets.forEach( ( { href }, index ) => {
+	styleSheets.forEach( ( styleSheet, index ) => {
 		// Only do this for our own css files.
+		const { href } = styleSheet
 		if ( href && includesCss.some( url => href.includes( url ) ) ) {
 			stylesheetIndices.push( index )
-		// Also do this for style tags.
 		} else if ( href === null ) {
+			// Also do this for style tags.
 			stylesheetIndices.push( index )
 		}
 	} )
@@ -61,7 +65,11 @@ export const cacheCssObject = () => {
 	stylesheetIndices.forEach( index => {
 		const mediaIndices = {}
 
-		if ( styleSheets[ index ].cssRules ) {
+		const cssRules = Array.from( styleSheets[ index ].cssRules ).filter( cssRule => cssRule.media )
+
+		// Checks if the current index is cached or the cache has already been initialized.
+		if ( ! cssRulesCache[ index ] || ( cssRulesCache[ index ] && ! isEqual( cssRulesCache[ index ], cssRules ) ) ) {
+			cssRulesCache[ index ] = ! isEmpty( cssRules ) && [ ...cssRules ]
 			Array.from( styleSheets[ index ].cssRules ).forEach( ( { cssText, media }, mediaIndex ) => {
 				if ( media && cssText.includes( '.ugb' ) && media.mediaText.match( /(max|min)-width/ ) ) {
 					const maxWidth = media.mediaText.match( /max-width:\s*(\d+)px/ )
@@ -74,10 +82,10 @@ export const cacheCssObject = () => {
 						const { previousMediaText } = cssObject[ index ][ mediaIndex ]
 
 						if ( previousMediaText === media.mediaText ) {
-							// Store the cached value of media query has already been modified.
+						// Store the cached value of media query has already been modified.
 							mediaIndices[ mediaIndex ] = { ...cssObject[ index ][ mediaIndex ] }
 						} else {
-							// Store the new media query if custom CSS is modified.
+						// Store the new media query if custom CSS is modified.
 							mediaIndices[ mediaIndex ] = {
 								mediaText: media.mediaText,
 								min,
@@ -94,9 +102,9 @@ export const cacheCssObject = () => {
 					}
 				}
 			} )
-		}
 
-		cssObject[ index ] = { ...mediaIndices }
+			cssObject[ index ] = { ...mediaIndices }
+		}
 	} )
 }
 
