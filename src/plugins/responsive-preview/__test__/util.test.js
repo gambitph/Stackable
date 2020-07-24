@@ -2,6 +2,11 @@ import {
 	cacheCssObject, updateMediaQuery, getIncludedIndices,
 } from '../util'
 
+/**
+ * External dependencies
+ */
+import { cloneDeep } from 'lodash'
+
 const dummyStyleSheets = [
 	{
 		href: null,
@@ -85,7 +90,7 @@ describe( 'cacheCssObject', () => {
 	} )
 
 	it( 'should populate the cssObject and cssRulesCache with media queries in document', () => {
-		const document = { styleSheets: [ ...dummyStyleSheets ] }
+		const document = { styleSheets: cloneDeep( dummyStyleSheets ) }
 		const cssObject = {}
 		const cssRulesCache = {}
 		const includeCss = []
@@ -131,9 +136,9 @@ describe( 'updateMediaQuery', () => {
 	} )
 
 	it( 'should modify media queries for tablet mode', () => {
-		const document = { styleSheets: [ ...dummyStyleSheets ] }
+		const document = { styleSheets: cloneDeep( dummyStyleSheets ) }
 		const previewMode = 'Tablet'
-		const cssObject = { ...dummyCssObject }
+		const cssObject = cloneDeep( dummyCssObject )
 		const width = 700
 
 		updateMediaQuery( document, cssObject, previewMode, width )
@@ -171,9 +176,9 @@ describe( 'updateMediaQuery', () => {
 	} )
 
 	it( 'should modify media queries for mobile mode', () => {
-		const document = { styleSheets: [ ...dummyStyleSheets ] }
+		const document = { styleSheets: cloneDeep( dummyStyleSheets ) }
 		const previewMode = 'Mobile'
-		const cssObject = { ...dummyCssObject }
+		const cssObject = cloneDeep( dummyCssObject )
 		const width = 250
 
 		updateMediaQuery( document, cssObject, previewMode, width )
@@ -240,11 +245,11 @@ describe( 'updateMediaQuery', () => {
 				} ],
 		}
 		const previewMode = 'Desktop'
-		const cssObject = { ...dummyCssObject }
+		const cssObject = cloneDeep( dummyCssObject )
 		const width = 1920
 
 		updateMediaQuery( document, cssObject, previewMode, width )
 
-		expect( document ).toEqual( { styleSheets: [ ...dummyStyleSheets ] } )
+		expect( document ).toEqual( { styleSheets: cloneDeep( dummyStyleSheets ) } )
 	} )
 } )
