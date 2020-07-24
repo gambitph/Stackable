@@ -71,24 +71,18 @@ export const cacheCssObject = () => {
 					const min = minWidth ? parseInt( minWidth[ 1 ], 10 ) : 0
 
 					if ( cssObject && cssObject[ index ] && cssObject[ index ][ mediaIndex ] ) {
-						const {
-							min: currentMin, max: currentMax,
-						} = cssObject[ index ][ mediaIndex ]
+						const { previousMediaText } = cssObject[ index ][ mediaIndex ]
 
-						if ( min === 5000 || max === 5000 ) {
+						if ( previousMediaText === media.mediaText ) {
 							// Store the cached value of media query has already been modified.
 							mediaIndices[ mediaIndex ] = { ...cssObject[ index ][ mediaIndex ] }
-						} else if ( currentMin !== min || currentMax !== max ) {
+						} else {
 							// Store the new media query if custom CSS is modified.
 							mediaIndices[ mediaIndex ] = {
 								mediaText: media.mediaText,
 								min,
 								max,
-								cssText,
 							}
-						} else {
-							// Store the cached value if nothing is modified.
-							mediaIndices[ mediaIndex ] = { ...cssObject[ index ][ mediaIndex ] }
 						}
 					} else {
 					// Store the new media query if the value is not found in cached media queries.
@@ -96,7 +90,6 @@ export const cacheCssObject = () => {
 							mediaText: media.mediaText,
 							min,
 							max,
-							cssText,
 					 }
 					}
 				}
@@ -125,7 +118,12 @@ const updateMediaQuery = ( previewMode = 'Desktop', width = 0 ) => {
 						document.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText = 'screen and (max-width: 5000px)'
 					}
 				} else if ( document.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText !== 'screen and (min-width: 5000px)' ) {
+					cssObject[ styleSheetIndex ][ index ].previousMediaText = document.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText
 					document.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText = 'screen and (min-width: 5000px)'
+				}
+				// Gets the previous value of the media query
+				if ( cssObject[ styleSheetIndex ][ index ].previousMediaText !== document.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText ) {
+					cssObject[ styleSheetIndex ][ index ].previousMediaText = document.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText
 				}
 			} )
 		} )
@@ -134,7 +132,12 @@ const updateMediaQuery = ( previewMode = 'Desktop', width = 0 ) => {
 		keys( cssObject ).forEach( styleSheetIndex => {
 			keys( cssObject[ styleSheetIndex ] ).forEach( index => {
 				if ( document.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText !== cssObject[ styleSheetIndex ][ index ].mediaText ) {
+					cssObject[ styleSheetIndex ][ index ].previousMediaText = document.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText
 					document.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText = cssObject[ styleSheetIndex ][ index ].mediaText
+				}
+				// Gets the previous value of the media query
+				if ( cssObject[ styleSheetIndex ][ index ].previousMediaText !== document.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText ) {
+					cssObject[ styleSheetIndex ][ index ].previousMediaText = document.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText
 				}
 			} )
 		} )
@@ -145,6 +148,12 @@ const observerCallback = () => {
 	const {
 		__experimentalGetPreviewDeviceType: getPreviewDeviceType,
 	} = select( 'core/edit-post' )
+
+	// Only call when getPreviewDeviceType is defined. Only in WP >= 5.5
+	if ( ! getPreviewDeviceType ) {
+		return
+	}
+
 	const mode = getPreviewDeviceType()
 
 	// Only call when switching to desktop, or in responsive mode.
