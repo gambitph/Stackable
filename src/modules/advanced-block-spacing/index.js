@@ -40,6 +40,14 @@ const defaultValues = {
 	 */
 	leftBlockMargin: 'auto',
 	rightBlockMargin: 'auto',
+
+	/**
+	 * Default paddings for blocks
+	 */
+	topBlockPadding: '0px',
+	bottomBlockPadding: '0px',
+	leftBlockPadding: '0px',
+	rightBlockPadding: '0px',
 }
 
 removeFilter( 'stackable.setAttributes', 'stackable/module/block-spacing' )
@@ -519,7 +527,7 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 	} = props.attributes
 
 	const {
-		minBlockHeight, maxContentWidth, leftBlockMargin, rightBlockMargin,
+		minBlockHeight, maxContentWidth, leftBlockMargin, rightBlockMargin, topBlockPadding, bottomBlockPadding, leftBlockPadding, rightBlockPadding,
 	} = defaultValues
 
 	const blockClass = `.${ props.mainClassName }`
@@ -549,25 +557,25 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 	} )
 	const paddings = applyFilters( `stackable.${ blockName }.advanced-block-spacing.paddings`, {
 		[ blockClass ]: {
-			paddingTop: appendImportant( getValue( 'paddingTop', `%s${ paddingUnit }` ) ),
-			paddingRight: appendImportant( getValue( 'paddingRight', `%s${ paddingUnit }` ) ),
-			paddingBottom: appendImportant( getValue( 'paddingBottom', `%s${ paddingUnit }` ) ),
-			paddingLeft: appendImportant( getValue( 'paddingLeft', `%s${ paddingUnit }` ) ),
+			paddingTop: appendImportant( getValue( 'paddingTop', `%s${ paddingUnit }` ) || topBlockPadding ),
+			paddingRight: appendImportant( getValue( 'paddingRight', `%s${ paddingUnit }` ) || rightBlockPadding ),
+			paddingBottom: appendImportant( getValue( 'paddingBottom', `%s${ paddingUnit }` ) || bottomBlockPadding ),
+			paddingLeft: appendImportant( getValue( 'paddingLeft', `%s${ paddingUnit }` ) || leftBlockPadding ),
 		},
 		tablet: {
 			[ blockClass ]: {
-				paddingTop: appendImportant( getValue( 'tabletPaddingTop', `%s${ tabletPaddingUnit }` ) ),
-				paddingRight: appendImportant( getValue( 'tabletPaddingRight', `%s${ tabletPaddingUnit }` ) ),
-				paddingBottom: appendImportant( getValue( 'tabletPaddingBottom', `%s${ tabletPaddingUnit }` ) ),
-				paddingLeft: appendImportant( getValue( 'tabletPaddingLeft', `%s${ tabletPaddingUnit }` ) ),
+				paddingTop: appendImportant( getValue( 'tabletPaddingTop', `%s${ tabletPaddingUnit }` ) || topBlockPadding ),
+				paddingRight: appendImportant( getValue( 'tabletPaddingRight', `%s${ tabletPaddingUnit }` ) || rightBlockPadding ),
+				paddingBottom: appendImportant( getValue( 'tabletPaddingBottom', `%s${ tabletPaddingUnit }` ) || bottomBlockPadding ),
+				paddingLeft: appendImportant( getValue( 'tabletPaddingLeft', `%s${ tabletPaddingUnit }` ) || leftBlockPadding ),
 			},
 		},
 		mobile: {
 			[ blockClass ]: {
-				paddingTop: appendImportant( getValue( 'mobilePaddingTop', `%s${ mobilePaddingUnit }` ) ),
-				paddingRight: appendImportant( getValue( 'mobilePaddingRight', `%s${ mobilePaddingUnit }` ) ),
-				paddingBottom: appendImportant( getValue( 'mobilePaddingBottom', `%s${ mobilePaddingUnit }` ) ),
-				paddingLeft: appendImportant( getValue( 'mobilePaddingLeft', `%s${ mobilePaddingUnit }` ) ),
+				paddingTop: appendImportant( getValue( 'mobilePaddingTop', `%s${ mobilePaddingUnit }` ) || topBlockPadding ),
+				paddingRight: appendImportant( getValue( 'mobilePaddingRight', `%s${ mobilePaddingUnit }` ) || rightBlockPadding ),
+				paddingBottom: appendImportant( getValue( 'mobilePaddingBottom', `%s${ mobilePaddingUnit }` ) || bottomBlockPadding ),
+				paddingLeft: appendImportant( getValue( 'mobilePaddingLeft', `%s${ mobilePaddingUnit }` ) || leftBlockPadding ),
 			},
 		},
 	} )
