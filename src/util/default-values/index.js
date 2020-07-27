@@ -22,5 +22,6 @@ export const inheritDesktopAttribute = ( attribute = '', unit = 'px', maxValue =
 			}
 			return appendImportant( `${ maxValue }${ unit || 'px' }`, doImportant )
 		}
+		return appendImportant( `${ attribute }${ unit || 'px' }`, doImportant )
 	}
 }
