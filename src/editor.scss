@@ -35,16 +35,20 @@ svg.ugb-stackable-icon-gradient {
 }
 
 // Gutenberg v5.9 adds top & bottom margins in the editor, get rid of them.
-.editor-styles-wrapper [data-type^="ugb/"] {
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6,
-	p {
-		margin-top: 0;
-		margin-bottom: 0;
+.editor-styles-wrapper {
+	// Removed the default padding in editor wrapper in WP 5.5
+	padding: 0 !important;
+	&[data-type^="ugb/"] {
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6,
+		p {
+			margin-top: 0;
+			margin-bottom: 0;
+		}
 	}
 }
 
