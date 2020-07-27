@@ -28,7 +28,9 @@ import { ToggleControl } from '@wordpress/components'
  * Default top and bottom separator values if
  * not value is passed.
  */
-const defaultHeight = '200px'
+const defaultValues = {
+	separatorHeight: '200px',
+}
 
 const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props ) => {
 	const { setAttributes } = props
@@ -405,6 +407,8 @@ const addTopStyles = ( blockName, options = {} ) => ( styleObject, props ) => {
 		return styleObject
 	}
 
+	const { separatorHeight } = defaultValues
+
 	const styles = {
 		[ `.ugb-top-separator` ]: {
 			zIndex: options.enableBringToFront && topSeparatorBringToFront ? 6 : undefined,
@@ -414,17 +418,17 @@ const addTopStyles = ( blockName, options = {} ) => ( styleObject, props ) => {
 			fill: topSeparatorColor !== '' ? topSeparatorColor : undefined,
 		},
 		[ `.ugb-top-separator .ugb-separator-wrapper` ]: {
-			height: topSeparatorHeight !== '' ? `${ topSeparatorHeight }px` : defaultHeight,
+			height: topSeparatorHeight !== '' ? `${ topSeparatorHeight }px` : separatorHeight,
 			transform: topSeparatorWidth !== '' ? `scaleX(${ topSeparatorWidth })` : undefined,
 		},
 		tablet: {
 			[ `.ugb-top-separator .ugb-separator-wrapper` ]: {
-				height: topSeparatorTabletHeight !== '' ? `${ topSeparatorTabletHeight }px` : defaultHeight,
+				height: topSeparatorTabletHeight !== '' ? `${ topSeparatorTabletHeight }px` : separatorHeight,
 			},
 		},
 		mobile: {
 			[ `.ugb-top-separator .ugb-separator-wrapper` ]: {
-				height: topSeparatorMobileHeight !== '' ? `${ topSeparatorMobileHeight }px` : defaultHeight,
+				height: topSeparatorMobileHeight !== '' ? `${ topSeparatorMobileHeight }px` : separatorHeight,
 			},
 		},
 	}
@@ -448,6 +452,8 @@ const addBottomStyles = ( blockName, options = {} ) => ( styleObject, props ) =>
 		return styleObject
 	}
 
+	const { separatorHeight } = defaultValues
+
 	const styles = {
 		[ `.ugb-bottom-separator` ]: {
 			zIndex: options.enableBringToFront && bottomSeparatorBringToFront ? 6 : undefined,
@@ -457,17 +463,17 @@ const addBottomStyles = ( blockName, options = {} ) => ( styleObject, props ) =>
 			fill: bottomSeparatorColor !== '' ? bottomSeparatorColor : undefined,
 		},
 		[ `.ugb-bottom-separator .ugb-separator-wrapper` ]: {
-			height: bottomSeparatorHeight !== '' ? `${ bottomSeparatorHeight }px` : defaultHeight,
+			height: bottomSeparatorHeight !== '' ? `${ bottomSeparatorHeight }px` : separatorHeight,
 			transform: bottomSeparatorWidth !== '' ? `scaleX(${ bottomSeparatorWidth })` : undefined,
 		},
 		tablet: {
 			[ `.ugb-bottom-separator .ugb-separator-wrapper` ]: {
-				height: bottomSeparatorTabletHeight !== '' ? `${ bottomSeparatorTabletHeight }px` : defaultHeight,
+				height: bottomSeparatorTabletHeight !== '' ? `${ bottomSeparatorTabletHeight }px` : separatorHeight,
 			},
 		},
 		mobile: {
 			[ `.ugb-bottom-separator .ugb-separator-wrapper` ]: {
-				height: bottomSeparatorMobileHeight !== '' ? `${ bottomSeparatorMobileHeight }px` : defaultHeight,
+				height: bottomSeparatorMobileHeight !== '' ? `${ bottomSeparatorMobileHeight }px` : separatorHeight,
 			},
 		},
 	}
