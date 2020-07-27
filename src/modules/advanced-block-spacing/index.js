@@ -32,6 +32,8 @@ import { i18n } from 'stackable'
 const defaultValues = {
 	minBlockHeight: '100px',
 	maxContentWidth: '2000px',
+	leftBlockMargin: '0px',
+	rightBlockMargin: '0px',
 }
 
 removeFilter( 'stackable.setAttributes', 'stackable/module/block-spacing' )
@@ -510,30 +512,32 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 		mobileBlockWidthUnit = 'px',
 	} = props.attributes
 
-	const { minBlockHeight, maxContentWidth } = defaultValues
+	const {
+		minBlockHeight, maxContentWidth, leftBlockMargin, rightBlockMargin,
+	} = defaultValues
 
 	const blockClass = `.${ props.mainClassName }`
 	const margins = applyFilters( `stackable.${ blockName }.advanced-block-spacing.margins`, {
 		[ blockClass ]: {
 			marginTop: appendImportant( getValue( 'marginTop', `%s${ marginUnit }` ) ),
-			marginRight: appendImportant( getValue( 'marginRight', `%s${ marginUnit }` ) ),
+			marginRight: appendImportant( getValue( 'marginRight', `%s${ marginUnit }` ) || rightBlockMargin ),
 			marginBottom: appendImportant( getValue( 'marginBottom', `%s${ marginUnit }` ) ),
-			marginLeft: appendImportant( getValue( 'marginLeft', `%s${ marginUnit }` ) ),
+			marginLeft: appendImportant( getValue( 'marginLeft', `%s${ marginUnit }` ) || leftBlockMargin ),
 		},
 		tablet: {
 			[ blockClass ]: {
 				marginTop: appendImportant( getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ),
-				marginRight: appendImportant( getValue( 'tabletMarginRight', `%s${ tabletMarginUnit }` ) ),
+				marginRight: appendImportant( getValue( 'tabletMarginRight', `%s${ tabletMarginUnit }` ) || rightBlockMargin ),
 				marginBottom: appendImportant( getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ),
-				marginLeft: appendImportant( getValue( 'tabletMarginLeft', `%s${ tabletMarginUnit }` ) ),
+				marginLeft: appendImportant( getValue( 'tabletMarginLeft', `%s${ tabletMarginUnit }` ) || leftBlockMargin ),
 			},
 		},
 		mobile: {
 			[ blockClass ]: {
 				marginTop: appendImportant( getValue( 'mobileMarginTop', `%s${ mobileMarginUnit }` ) ),
-				marginRight: appendImportant( getValue( 'mobileMarginRight', `%s${ mobileMarginUnit }` ) ),
+				marginRight: appendImportant( getValue( 'mobileMarginRight', `%s${ mobileMarginUnit }` ) || rightBlockMargin ),
 				marginBottom: appendImportant( getValue( 'mobileMarginBottom', `%s${ mobileMarginUnit }` ) ),
-				marginLeft: appendImportant( getValue( 'mobileMarginLeft', `%s${ mobileMarginUnit }` ) ),
+				marginLeft: appendImportant( getValue( 'mobileMarginLeft', `%s${ mobileMarginUnit }` ) || leftBlockMargin ),
 			},
 		},
 	} )
