@@ -24,6 +24,12 @@ import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
 import { ToggleControl } from '@wordpress/components'
 
+/**
+ * Default top and bottom separator values if
+ * not value is passed.
+ */
+const defaultHeight = '200px'
+
 const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props ) => {
 	const { setAttributes } = props
 	const {
@@ -408,17 +414,17 @@ const addTopStyles = ( blockName, options = {} ) => ( styleObject, props ) => {
 			fill: topSeparatorColor !== '' ? topSeparatorColor : undefined,
 		},
 		[ `.ugb-top-separator .ugb-separator-wrapper` ]: {
-			height: topSeparatorHeight !== '' ? `${ topSeparatorHeight }px` : undefined,
+			height: topSeparatorHeight !== '' ? `${ topSeparatorHeight }px` : defaultHeight,
 			transform: topSeparatorWidth !== '' ? `scaleX(${ topSeparatorWidth })` : undefined,
 		},
 		tablet: {
 			[ `.ugb-top-separator .ugb-separator-wrapper` ]: {
-				height: topSeparatorTabletHeight !== '' ? `${ topSeparatorTabletHeight }px` : undefined,
+				height: topSeparatorTabletHeight !== '' ? `${ topSeparatorTabletHeight }px` : defaultHeight,
 			},
 		},
 		mobile: {
 			[ `.ugb-top-separator .ugb-separator-wrapper` ]: {
-				height: topSeparatorMobileHeight !== '' ? `${ topSeparatorMobileHeight }px` : undefined,
+				height: topSeparatorMobileHeight !== '' ? `${ topSeparatorMobileHeight }px` : defaultHeight,
 			},
 		},
 	}
@@ -451,17 +457,17 @@ const addBottomStyles = ( blockName, options = {} ) => ( styleObject, props ) =>
 			fill: bottomSeparatorColor !== '' ? bottomSeparatorColor : undefined,
 		},
 		[ `.ugb-bottom-separator .ugb-separator-wrapper` ]: {
-			height: bottomSeparatorHeight !== '' ? `${ bottomSeparatorHeight }px` : undefined,
+			height: bottomSeparatorHeight !== '' ? `${ bottomSeparatorHeight }px` : defaultHeight,
 			transform: bottomSeparatorWidth !== '' ? `scaleX(${ bottomSeparatorWidth })` : undefined,
 		},
 		tablet: {
 			[ `.ugb-bottom-separator .ugb-separator-wrapper` ]: {
-				height: bottomSeparatorTabletHeight !== '' ? `${ bottomSeparatorTabletHeight }px` : undefined,
+				height: bottomSeparatorTabletHeight !== '' ? `${ bottomSeparatorTabletHeight }px` : defaultHeight,
 			},
 		},
 		mobile: {
 			[ `.ugb-bottom-separator .ugb-separator-wrapper` ]: {
-				height: bottomSeparatorMobileHeight !== '' ? `${ bottomSeparatorMobileHeight }px` : undefined,
+				height: bottomSeparatorMobileHeight !== '' ? `${ bottomSeparatorMobileHeight }px` : defaultHeight,
 			},
 		},
 	}

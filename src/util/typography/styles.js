@@ -25,8 +25,8 @@ import { sprintf } from '@wordpress/i18n'
  * @return {*} the passed font size rule
  */
 const inheritTypographyFontSize = ( fontSize = null, fontSizeUnit = 'px', importantSize = null ) => {
-	if ( ! fontSize || ! importantSize ) {
-		return undefined
+	if ( fontSize === null || importantSize === null ) {
+		return null
 	}
 
 	/**
@@ -39,6 +39,7 @@ const inheritTypographyFontSize = ( fontSize = null, fontSizeUnit = 'px', import
 		}
 		return appendImportant( `50${ fontSizeUnit }`, importantSize )
 	}
+	return null
 }
 
 const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {}, options = {} ) => {
@@ -63,28 +64,28 @@ const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 		}
 	} else if ( screen === 'tablet' ) { // Tablet.
 		// Checks if the font size for tablet is not defined.
-		let fontSize
+		let tabletFontSize = null
 		if ( getValue( 'TabletFontSize' ) === '' ) {
-			fontSize = inheritTypographyFontSize( getValue( 'FontSize' ), getValue( 'FontSizeUnit' ), importantSize )
+			tabletFontSize = inheritTypographyFontSize( getValue( 'FontSize' ), getValue( 'FontSizeUnit' ), importantSize )
 		} else {
-			fontSize = appendImportant( `${ getValue( 'TabletFontSize' ) }${ getValue( 'TabletFontSizeUnit' ) || 'px' }`, importantSize )
+			tabletFontSize = appendImportant( `${ getValue( 'TabletFontSize' ) }${ getValue( 'TabletFontSizeUnit' ) || 'px' }`, importantSize )
 		}
 
 		styles = {
-			fontSize,
+			fontSize: tabletFontSize || undefined,
 			lineHeight: getValue( 'TabletLineHeight' ) !== '' ? `${ getValue( 'TabletLineHeight' ) }${ getValue( 'TabletLineHeightUnit' ) || 'em' }` : undefined,
 		}
 	} else { // Mobile.
 		// Checks if the font size for mobile is not defined.
-		let fontSize
+		let mobileFontSize
 		if ( getValue( 'MobileFontSize' ) === '' ) {
-			fontSize = inheritTypographyFontSize( getValue( 'FontSize' ), getValue( 'FontSizeUnit' ), importantSize )
+			mobileFontSize = inheritTypographyFontSize( getValue( 'FontSize' ), getValue( 'FontSizeUnit' ), importantSize )
 		} else {
-			fontSize = appendImportant( `${ getValue( 'MobileFontSize' ) }${ getValue( 'MobileFontSizeUnit' ) || 'px' }`, importantSize )
+			mobileFontSize = appendImportant( `${ getValue( 'MobileFontSize' ) }${ getValue( 'MobileFontSizeUnit' ) || 'px' }`, importantSize )
 		}
 
 		styles = {
-			fontSize,
+			fontSize: mobileFontSize || undefined,
 			lineHeight: getValue( 'MobileLineHeight' ) !== '' ? `${ getValue( 'MobileLineHeight' ) }${ getValue( 'MobileLineHeightUnit' ) || 'em' }` : undefined,
 		}
 	}
