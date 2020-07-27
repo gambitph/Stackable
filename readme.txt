@@ -190,7 +190,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * New: User Role Manager (premium)
 * New: Updated URL picker
 * New: Added alt text for image using title and subtitle in Image Box block.
-* Fixed: WordPress 5.5 compatibility
+* Fixed: Partial WordPress 5.5 compatibility
 * Fixed: Responsive breakpoint for hiding in desktop.
 * Fixed: Missing guided CSS rules for Card Block (premium).
 * Fixed: Only show Stackable menu for users that have the manage_options capability
