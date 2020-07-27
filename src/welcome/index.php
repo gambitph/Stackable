@@ -133,7 +133,7 @@ SVG;
 					</a>
 				<?php } ?>
 
-				<a class="s-tab" href="https://wpstackable.com/documentation" target="_docs"><?php _e( 'Documentation', STACKABLE_I18N ) ?></a>
+				<a class="s-tab" href="https://docs.wpstackable.com" target="_docs"><?php _e( 'Documentation', STACKABLE_I18N ) ?></a>
 
 				<a class="s-tab <?php echo $screen->base === 'stackable_page_stackable-contact' ? 's-active' : '' ?>"
 					href="<?php echo admin_url( 'admin.php?page=stackable-contact' ) ?>">
@@ -223,7 +223,7 @@ SVG;
 								<a href="<?php echo esc_url( sugb_fs()->get_upgrade_url() ) ?>" class="s-button" title="<?php esc_attr_e( 'Get Stackable Premium', STACKABLE_I18N ) ?>"><?php esc_attr_e( 'Get Stackable Premium', STACKABLE_I18N ) ?></a>
 							</p>
 							<p>
-								<a href="https://rebrand.ly/plugin-learn-premium-side" title="<?php esc_attr_e( 'Learn More', STACKABLE_I18N ) ?>" target="_blank" rel="noopener noreferrer"><?php esc_attr_e( 'Learn More', STACKABLE_I18N ) ?> →</a>
+								<a href="https://wpstackable.com/premium/?utm_source=wp-settings-sidebar&utm_campaign=learnmore&utm_medium=wp-dashboard" title="<?php esc_attr_e( 'Learn More', STACKABLE_I18N ) ?>" target="_blank" rel="noopener noreferrer"><?php esc_attr_e( 'Learn More', STACKABLE_I18N ) ?> →</a>
 							</p>
 						</aside>
 						<?php endif; ?>
@@ -331,7 +331,7 @@ SVG;
 						<div class="s-spacer"></div>
 						<div class="s-buttons">
 							<p><a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=page&stackable_show_intro=true' ) ) ?>" class="s-button" title="<?php esc_attr_e( 'Create New Page', STACKABLE_I18N ) ?>"><?php _e( 'Create New Page', STACKABLE_I18N ) ?></a></p>
-							<p><a href="https://wpstackable.com/blog/how-to-add-content-using-stackable" class="s-button s-button-plain" title="<?php esc_attr_e( 'Read Full Guide', STACKABLE_I18N ) ?>" target="_tutorial"><?php _e( 'Read Full Guide', STACKABLE_I18N ) ?> <span class="dashicons dashicons-arrow-right-alt"></span></a></p>
+							<p><a href="https://wpstackable.com/blog/how-to-add-content-using-stackable/" class="s-button s-button-plain" title="<?php esc_attr_e( 'Read Full Guide', STACKABLE_I18N ) ?>" target="_tutorial"><?php _e( 'Read Full Guide', STACKABLE_I18N ) ?> <span class="dashicons dashicons-arrow-right-alt"></span></a></p>
 						</div>
 						<div class="s-spacer"></div>
 						<h2 class="s-title"><?php _e( '📹 3-Minute Introduction Video', STACKABLE_I18N ) ?></h2>
@@ -348,7 +348,7 @@ SVG;
 						<div class="s-spacer"></div>
 						<div class="s-buttons">
 							<p><a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=page&stackable_show_intro=true' ) ) ?>" class="s-button" title="<?php esc_attr_e( 'Create New Page', STACKABLE_I18N ) ?>"><?php _e( 'Create New Page', STACKABLE_I18N ) ?></a></p>
-							<p><a href="https://wpstackable.com/blog/how-to-add-content-using-stackable" class="s-button s-button-plain" title="<?php esc_attr_e( 'Read Full Guide', STACKABLE_I18N ) ?>" target="_tutorial"><?php _e( 'Read Full Guide', STACKABLE_I18N ) ?> <span class="dashicons dashicons-arrow-right-alt"></span></a></p>
+							<p><a href="https://wpstackable.com/blog/how-to-add-content-using-stackable/" class="s-button s-button-plain" title="<?php esc_attr_e( 'Read Full Guide', STACKABLE_I18N ) ?>" target="_tutorial"><?php _e( 'Read Full Guide', STACKABLE_I18N ) ?> <span class="dashicons dashicons-arrow-right-alt"></span></a></p>
 						</div>
 						<div class="s-spacer"></div>
 						<h2 class="s-title"><?php _e( '🤔 Want to Learn More?', STACKABLE_I18N ) ?></h2>
@@ -356,17 +356,17 @@ SVG;
 							<div class="s-box s-center s-box-small">
 								<h3><?php _e( 'Community', STACKABLE_I18N ) ?></h3>
 								<p><?php _e( 'Join like-minded people who help each other do amazing things.', STACKABLE_I18N ) ?></p>
-								<p><a href="https://rebrand.ly/getting-started-footer-community" class="s-button s-button-small" title="<?php esc_attr_e( 'Join Now', STACKABLE_I18N ) ?>" target="_blank" rel="noopener noreferrer"><?php _e( 'Join Now', STACKABLE_I18N ) ?></a></p>
+								<p><a href="https://wpstackable.com/community/?utm_source=wp-settings-footer&utm_campaign=joincommunity&utm_medium=wp-dashboard" class="s-button s-button-small" title="<?php esc_attr_e( 'Join Now', STACKABLE_I18N ) ?>" target="_blank" rel="noopener noreferrer"><?php _e( 'Join Now', STACKABLE_I18N ) ?></a></p>
 							</div>
 							<div class="s-box s-center s-box-small">
 								<h3><?php _e( 'Documentation', STACKABLE_I18N ) ?></h3>
 								<p><?php _e( 'Learn how to use Stackable\'s powerful page building tools', STACKABLE_I18N ) ?></p>
-								<p><a href="https://rebrand.ly/getting-started-footer-documentation" class="s-button s-button-small" title="<?php esc_attr_e( 'Visit Docs', STACKABLE_I18N ) ?>" target="_blank" rel="noopener noreferrer"><?php _e( 'Visit Docs', STACKABLE_I18N ) ?></a></p>
+								<p><a href="https://docs.wpstackable.com/?utm_source=wp-settings-footer&utm_campaign=docs&utm_medium=wp-dashboard" class="s-button s-button-small" title="<?php esc_attr_e( 'Visit Docs', STACKABLE_I18N ) ?>" target="_blank" rel="noopener noreferrer"><?php _e( 'Visit Docs', STACKABLE_I18N ) ?></a></p>
 							</div>
 							<div class="s-box s-center s-box-small">
 								<h3><?php _e( 'Blog', STACKABLE_I18N ) ?></h3>
 								<p><?php _e( 'Browse through our articles and find what you\'re looking for', STACKABLE_I18N ) ?></p>
-								<p><a href="https://rebrand.ly/getting-started-footer-blog" class="s-button s-button-small" title="<?php esc_attr_e( 'Read More', STACKABLE_I18N ) ?>" target="_blank" rel="noopener noreferrer"><?php _e( 'Read More', STACKABLE_I18N ) ?></a></p>
+								<p><a href="https://wpstackable.com/blog/?utm_source=wp-settings-footer&utm_campaign=blog&utm_medium=wp-dashboard" class="s-button s-button-small" title="<?php esc_attr_e( 'Read More', STACKABLE_I18N ) ?>" target="_blank" rel="noopener noreferrer"><?php _e( 'Read More', STACKABLE_I18N ) ?></a></p>
 							</div>
 							<?php if ( ! sugb_fs()->is_whitelabeled() ) { ?>
 								<div class="s-box s-center s-box-small">
@@ -375,7 +375,7 @@ SVG;
 										?>
 										<h3><?php _e( 'Get Support', STACKABLE_I18N ) ?></h3>
 										<p><?php _e( 'Upgrade to Premium and our support team can help you out.', STACKABLE_I18N ) ?></p>
-										<p><a href="https://rebrand.ly/getting-started-footer-support" class="s-button s-button-small" title="<?php esc_attr_e( 'Learn More', STACKABLE_I18N ) ?>" target="_blank" rel="noopener noreferrer"><?php _e( 'Learn More', STACKABLE_I18N ) ?></a></p>
+										<p><a href="https://wpstackable.com/upgrade/?utm_source=wp-settings-footer&utm_campaign=support&utm_medium=wp-dashboard" class="s-button s-button-small" title="<?php esc_attr_e( 'Learn More', STACKABLE_I18N ) ?>" target="_blank" rel="noopener noreferrer"><?php _e( 'Learn More', STACKABLE_I18N ) ?></a></p>
 										<?php
 									} else {
 										?>

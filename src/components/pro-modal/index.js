@@ -47,7 +47,7 @@ class ProModal extends Component {
 
 		return (
 			<Tag>
-				<a href="https://rebrand.ly/plugin-inspector-more"
+				<a href="https://wpstackable.com/upgrade/?utm_source=editor-learn-more&utm_campaign=learnmore&utm_medium=gutenberg"
 					target="_premium"
 					onClick={ this.open }
 					className={ this.props.buttonClassName }
@@ -61,7 +61,7 @@ class ProModal extends Component {
 					>
 						<img src="https://da4bu55kgdxvv.cloudfront.net/premium-popup.jpg" alt={ __( 'Premium features', i18n ) } />
 						<div className="ugb-pro-modal__footer">
-							<a href="https://rebrand.ly/plugin-slider-premium"
+							<a href="https://wpstackable.com/upgrade/?utm_source=editor-modal-popup&utm_campaign=upgrade&utm_medium=gutenberg"
 								className="button button-secondary"
 								target="_premium"
 								title={ __( 'Upgrade to Premium', i18n ) }
@@ -69,7 +69,7 @@ class ProModal extends Component {
 								<SVGStackableIcon />
 								{ __( 'Upgrade to Premium', i18n ) }
 							</a>
-							<a href="https://rebrand.ly/plugin-premium-demo"
+							<a href="https://demo.wpstackable.com/?utm_source=editor-modal-popup&utm_campaign=trydemo&utm_medium=gutenberg"
 								target="_premium"
 								title={ __( 'Try Premium Demo', i18n ) }
 							>

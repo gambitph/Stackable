@@ -33,7 +33,7 @@ const VIDEOS = {
 		video: generalBorderRadius,
 		title: __( 'Border Radius', i18n ),
 		description: __( 'Adjusts the radius of block corners to make them more rounded', i18n ),
-		learnMore: 'https://wpstackable.com/blog',
+		learnMore: 'https://wpstackable.com/blog/',
 	},
 }
 ```
