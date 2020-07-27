@@ -210,6 +210,8 @@ SVG;
 									<li><?php _e( '220+ Premium Block Designs', STACKABLE_I18N ) ?></li>
 									<li><?php _e( 'One-Click Switchable Designs', STACKABLE_I18N ) ?></li>
 									<li><?php _e( 'Additional Block Options', STACKABLE_I18N ) ?></li>
+									<li><?php _e( 'User Role Manager', STACKABLE_I18N ) ?></li>
+									<li><?php _e( 'Font Awesome Pro Integration', STACKABLE_I18N ) ?></li>
 									<li><?php _e( '3-Layer Separators', STACKABLE_I18N ) ?></li>
 									<li><?php _e( 'All Premium Effects', STACKABLE_I18N ) ?></li>
 									<li><?php _e( 'Custom CSS', STACKABLE_I18N ) ?></li>
