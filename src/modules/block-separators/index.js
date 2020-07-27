@@ -26,7 +26,7 @@ import { ToggleControl } from '@wordpress/components'
 
 /**
  * Default top and bottom separator values if
- * not value is passed.
+ * no value is passed.
  */
 const defaultValues = {
 	separatorHeight: '200px',

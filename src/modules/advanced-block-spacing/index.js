@@ -25,6 +25,15 @@ import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
 
+/**
+ * Default advanced block spacing attribute values if
+ * no value is passed.
+ */
+const defaultValues = {
+	minBlockHeight: '100px',
+	maxContentWidth: '2000px',
+}
+
 removeFilter( 'stackable.setAttributes', 'stackable/module/block-spacing' )
 addFilter( 'stackable.setAttributes', 'stackable/module/block-spacing', ( attributes, blockProps ) => {
 	if ( typeof attributes.align === 'undefined' ) {
@@ -501,6 +510,8 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 		mobileBlockWidthUnit = 'px',
 	} = props.attributes
 
+	const { minBlockHeight, maxContentWidth } = defaultValues
+
 	const blockClass = `.${ props.mainClassName }`
 	const margins = applyFilters( `stackable.${ blockName }.advanced-block-spacing.margins`, {
 		[ blockClass ]: {
@@ -553,42 +564,42 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 
 	const others = {
 		[ blockClass ]: {
-			minHeight: getValue( 'blockHeight', `%s${ blockHeightUnit }` ),
+			minHeight: getValue( 'blockHeight', `%s${ blockHeightUnit }` ) || minBlockHeight,
 			justifyContent: getValue( 'blockHorizontalAlign' ),
 			alignItems: getValue( 'blockVerticalAlign' ),
 		},
 		[ `${ blockClass } > .ugb-inner-block` ]: {
-			maxWidth: appendImportant( getValue( 'blockWidth', `%s${ blockWidthUnit }` ) ),
+			maxWidth: appendImportant( getValue( 'blockWidth', `%s${ blockWidthUnit }` ) || maxContentWidth ),
 			// Some themes can limit min-width, preventing block width.
 			minWidth: blockInnerWidth === 'wide' && getValue( 'blockWidth' ) ? 'auto !important' : undefined,
 		},
 		tablet: {
 			[ blockClass ]: {
-				minHeight: getValue( 'tabletBlockHeight', `%s${ tabletBlockHeightUnit }` ),
+				minHeight: getValue( 'tabletBlockHeight', `%s${ tabletBlockHeightUnit }` ) || minBlockHeight,
 				justifyContent: getValue( 'tabletBlockHorizontalAlign' ),
 				alignItems: getValue( 'tabletBlockVerticalAlign' ),
 			},
 			[ `${ blockClass } > .ugb-inner-block` ]: {
-				maxWidth: appendImportant( getValue( 'tabletBlockWidth', `%s${ tabletBlockWidthUnit }` ) ),
+				maxWidth: appendImportant( getValue( 'tabletBlockWidth', `%s${ tabletBlockWidthUnit }` ) || maxContentWidth ),
 				// Some themes can limit min-width, preventing block width.
 				minWidth: blockInnerWidth === 'wide' && getValue( 'tabletBlockWidth' ) ? 'auto !important' : undefined,
 			},
 		},
 		mobile: {
 			[ blockClass ]: {
-				minHeight: appendImportant( getValue( 'mobileBlockHeight', `%s${ mobileBlockHeightUnit }` ) ),
+				minHeight: appendImportant( getValue( 'mobileBlockHeight', `%s${ mobileBlockHeightUnit }` ) ) || minBlockHeight,
 				justifyContent: getValue( 'mobileBlockHorizontalAlign' ),
 				alignItems: getValue( 'mobileBlockVerticalAlign' ),
 			},
 			[ `${ blockClass } > .ugb-inner-block` ]: {
-				maxWidth: appendImportant( getValue( 'mobileBlockWidth', `%s${ mobileBlockWidthUnit }` ) ),
+				maxWidth: appendImportant( getValue( 'mobileBlockWidth', `%s${ mobileBlockWidthUnit }` ) || maxContentWidth ),
 				// Some themes can limit min-width, preventing block width.
 				minWidth: blockInnerWidth === 'wide' && getValue( 'mobileBlockWidth' ) ? 'auto !important' : undefined,
 			},
 		},
 		ie11: {
 			[ blockClass ]: {
-				height: getValue( 'blockHeight', `%s${ blockHeightUnit }` ),
+				height: getValue( 'blockHeight', `%s${ blockHeightUnit }` ) || minBlockHeight,
 			},
 		},
 	}
