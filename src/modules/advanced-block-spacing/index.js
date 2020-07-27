@@ -12,6 +12,7 @@ import {
 	__getValue,
 	createAllCombinationAttributes,
 	appendImportant,
+	inheritDesktopAttribute,
 } from '~stackable/util'
 
 /**
@@ -32,8 +33,13 @@ import { i18n } from 'stackable'
 const defaultValues = {
 	minBlockHeight: '100px',
 	maxContentWidth: '2000px',
-	leftBlockMargin: '0px',
-	rightBlockMargin: '0px',
+
+	/**
+	 * Default left and right margin is auto
+	 * to center the content by default
+	 */
+	leftBlockMargin: 'auto',
+	rightBlockMargin: 'auto',
 }
 
 removeFilter( 'stackable.setAttributes', 'stackable/module/block-spacing' )
@@ -526,17 +532,17 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 		},
 		tablet: {
 			[ blockClass ]: {
-				marginTop: appendImportant( getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ),
+				marginTop: getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ? appendImportant( getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ) : inheritDesktopAttribute( getValue( 'marginTop' ), marginUnit, 100 ),
 				marginRight: appendImportant( getValue( 'tabletMarginRight', `%s${ tabletMarginUnit }` ) || rightBlockMargin ),
-				marginBottom: appendImportant( getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ),
+				marginBottom: getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ? appendImportant( getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ) : inheritDesktopAttribute( getValue( 'marginBottom' ), marginUnit, 100 ),
 				marginLeft: appendImportant( getValue( 'tabletMarginLeft', `%s${ tabletMarginUnit }` ) || leftBlockMargin ),
 			},
 		},
 		mobile: {
 			[ blockClass ]: {
-				marginTop: appendImportant( getValue( 'mobileMarginTop', `%s${ mobileMarginUnit }` ) ),
+				marginTop: getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ? appendImportant( getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ) : inheritDesktopAttribute( getValue( 'marginTop' ), marginUnit, 100 ),
 				marginRight: appendImportant( getValue( 'mobileMarginRight', `%s${ mobileMarginUnit }` ) || rightBlockMargin ),
-				marginBottom: appendImportant( getValue( 'mobileMarginBottom', `%s${ mobileMarginUnit }` ) ),
+				marginBottom: getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ? appendImportant( getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ) : inheritDesktopAttribute( getValue( 'marginBottom' ), marginUnit, 100 ),
 				marginLeft: appendImportant( getValue( 'mobileMarginLeft', `%s${ mobileMarginUnit }` ) || leftBlockMargin ),
 			},
 		},
@@ -591,7 +597,7 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 		},
 		mobile: {
 			[ blockClass ]: {
-				minHeight: appendImportant( getValue( 'mobileBlockHeight', `%s${ mobileBlockHeightUnit }` ) ) || minBlockHeight,
+				minHeight: appendImportant( getValue( 'mobileBlockHeight', `%s${ mobileBlockHeightUnit }` ) || minBlockHeight ),
 				justifyContent: getValue( 'mobileBlockHorizontalAlign' ),
 				alignItems: getValue( 'mobileBlockVerticalAlign' ),
 			},

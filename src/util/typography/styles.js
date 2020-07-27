@@ -6,41 +6,15 @@ import { appendImportant, appendImportantAll } from '../'
 /**
  * External dependencies
  */
-import { getFontFamily, __getValue } from '~stackable/util'
+import {
+	getFontFamily, __getValue, inheritDesktopAttribute,
+} from '~stackable/util'
 import { camelCase } from 'lodash'
 
 /**
  * WordPress dependencies
  */
 import { sprintf } from '@wordpress/i18n'
-
-/**
- * Handles the responsive font size if the value
- * is not yet defined.
- *
- * @param {number} fontSize the font size
- * @param {string} fontSizeUnit
- * @param {boolean} importantSize
- *
- * @return {*} the passed font size rule
- */
-const inheritTypographyFontSize = ( fontSize = null, fontSizeUnit = 'px', importantSize = null ) => {
-	if ( fontSize === null || importantSize === null ) {
-		return null
-	}
-
-	/**
-	 * When tablet font size is undefined and desktop font size is defined, inherit the desktop's value
-	 * if size <= 50. If desktop font size is > 50, keep the value as 50px.
-	 */
-	if ( fontSize !== '' ) {
-		if ( fontSize <= 50 ) {
-			return appendImportant( `${ fontSize }${ fontSizeUnit }`, importantSize )
-		}
-		return appendImportant( `50${ fontSizeUnit }`, importantSize )
-	}
-	return null
-}
 
 const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {}, options = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
@@ -66,7 +40,7 @@ const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 		// Checks if the font size for tablet is not defined.
 		let tabletFontSize = null
 		if ( getValue( 'TabletFontSize' ) === '' ) {
-			tabletFontSize = inheritTypographyFontSize( getValue( 'FontSize' ), getValue( 'FontSizeUnit' ), importantSize )
+			tabletFontSize = inheritDesktopAttribute( getValue( 'FontSize' ), getValue( 'FontSizeUnit' ), 50, importantSize )
 		} else {
 			tabletFontSize = appendImportant( `${ getValue( 'TabletFontSize' ) }${ getValue( 'TabletFontSizeUnit' ) || 'px' }`, importantSize )
 		}
@@ -79,7 +53,7 @@ const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 		// Checks if the font size for mobile is not defined.
 		let mobileFontSize
 		if ( getValue( 'MobileFontSize' ) === '' ) {
-			mobileFontSize = inheritTypographyFontSize( getValue( 'FontSize' ), getValue( 'FontSizeUnit' ), importantSize )
+			mobileFontSize = inheritDesktopAttribute( getValue( 'FontSize' ), getValue( 'FontSizeUnit' ), 50, importantSize )
 		} else {
 			mobileFontSize = appendImportant( `${ getValue( 'MobileFontSize' ) }${ getValue( 'MobileFontSizeUnit' ) || 'px' }`, importantSize )
 		}
