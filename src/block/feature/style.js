@@ -19,7 +19,6 @@ import {
 import { showOptions } from './util'
 import deepmerge from 'deepmerge'
 
-// General.
 const computeGridFraction2 = ( percentage, rightColumn = true ) => {
 	const right = 2 * ( ( typeof percentage !== 'number' ? 50 : percentage ) / 100 )
 	const left = 2 - right
@@ -52,6 +51,7 @@ export const createStyles = props => {
 
 	const { imageColumnWidth } = defaultValues
 
+	// General.
 	if ( show.imageColumnWidth ) {
 		styles.push( {
 			desktopTablet: {
