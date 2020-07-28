@@ -27,6 +27,9 @@ const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 
 	let styles = {}
 
+	// Sets the maximum font size the Mobile and Tablet mode can only get.
+	const maxResponsiveSize = 50
+
 	if ( screen !== 'tablet' && screen !== 'mobile' ) { // Desktop.
 		styles = {
 			fontFamily: getValue( 'FontFamily' ) !== '' ? appendImportant( getFontFamily( getValue( 'FontFamily' ) ) ) : undefined,
@@ -40,7 +43,7 @@ const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 		// Checks if the font size for tablet is not defined.
 		let tabletFontSize = null
 		if ( getValue( 'TabletFontSize' ) === '' ) {
-			tabletFontSize = inheritDesktopAttribute( getValue( 'FontSize' ), getValue( 'FontSizeUnit' ), 50, importantSize )
+			tabletFontSize = inheritDesktopAttribute( getValue( 'FontSize' ), getValue( 'FontSizeUnit' ), maxResponsiveSize, importantSize )
 		} else {
 			tabletFontSize = appendImportant( `${ getValue( 'TabletFontSize' ) }${ getValue( 'TabletFontSizeUnit' ) || 'px' }`, importantSize )
 		}
@@ -53,7 +56,7 @@ const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 		// Checks if the font size for mobile is not defined.
 		let mobileFontSize
 		if ( getValue( 'MobileFontSize' ) === '' ) {
-			mobileFontSize = inheritDesktopAttribute( getValue( 'FontSize' ), getValue( 'FontSizeUnit' ), 50, importantSize )
+			mobileFontSize = inheritDesktopAttribute( getValue( 'FontSize' ), getValue( 'FontSizeUnit' ), maxResponsiveSize, importantSize )
 		} else {
 			mobileFontSize = appendImportant( `${ getValue( 'MobileFontSize' ) }${ getValue( 'MobileFontSizeUnit' ) || 'px' }`, importantSize )
 		}
