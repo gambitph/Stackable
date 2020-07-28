@@ -40,29 +40,13 @@ const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 			lineHeight: getValue( 'LineHeight' ) !== '' ? `${ getValue( 'LineHeight' ) }${ getValue( 'LineHeightUnit' ) || 'em' }` : undefined,
 		}
 	} else if ( screen === 'tablet' ) { // Tablet.
-		// Checks if the font size for tablet is not defined.
-		let tabletFontSize = null
-		if ( getValue( 'TabletFontSize' ) === '' ) {
-			tabletFontSize = inheritDesktopAttribute( getValue( 'FontSize' ), getValue( 'FontSizeUnit' ), maxResponsiveSize, importantSize )
-		} else {
-			tabletFontSize = appendImportant( `${ getValue( 'TabletFontSize' ) }${ getValue( 'TabletFontSizeUnit' ) || 'px' }`, importantSize )
-		}
-
 		styles = {
-			fontSize: tabletFontSize || undefined,
+			fontSize: getValue( 'TabletFontSize' ) !== '' ? appendImportant( `${ getValue( 'TabletFontSize' ) }${ getValue( 'TabletFontSizeUnit' ) || 'px' }`, importantSize ) : inheritDesktopAttribute( getValue( 'FontSize' ), getValue( 'FontSizeUnit' ), maxResponsiveSize, importantSize ),
 			lineHeight: getValue( 'TabletLineHeight' ) !== '' ? `${ getValue( 'TabletLineHeight' ) }${ getValue( 'TabletLineHeightUnit' ) || 'em' }` : undefined,
 		}
 	} else { // Mobile.
-		// Checks if the font size for mobile is not defined.
-		let mobileFontSize
-		if ( getValue( 'MobileFontSize' ) === '' ) {
-			mobileFontSize = inheritDesktopAttribute( getValue( 'FontSize' ), getValue( 'FontSizeUnit' ), maxResponsiveSize, importantSize )
-		} else {
-			mobileFontSize = appendImportant( `${ getValue( 'MobileFontSize' ) }${ getValue( 'MobileFontSizeUnit' ) || 'px' }`, importantSize )
-		}
-
 		styles = {
-			fontSize: mobileFontSize || undefined,
+			fontSize: getValue( 'MobileFontSize' ) !== '' ? appendImportant( `${ getValue( 'MobileFontSize' ) }${ getValue( 'MobileFOntSizeUnit' ) || 'px' }`, importantSize ) : inheritDesktopAttribute( getValue( 'FontSize' ), getValue( 'FontSizeUnit' ), maxResponsiveSize, importantSize ),
 			lineHeight: getValue( 'MobileLineHeight' ) !== '' ? `${ getValue( 'MobileLineHeight' ) }${ getValue( 'MobileLineHeightUnit' ) || 'em' }` : undefined,
 		}
 	}
