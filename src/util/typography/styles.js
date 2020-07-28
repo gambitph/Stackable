@@ -46,7 +46,7 @@ const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 		}
 	} else { // Mobile.
 		styles = {
-			fontSize: getValue( 'MobileFontSize' ) !== '' ? appendImportant( `${ getValue( 'MobileFontSize' ) }${ getValue( 'MobileFOntSizeUnit' ) || 'px' }`, importantSize ) : inheritDesktopAttribute( getValue( 'FontSize' ), getValue( 'FontSizeUnit' ), maxResponsiveSize, importantSize ),
+			fontSize: getValue( 'MobileFontSize' ) !== '' ? appendImportant( `${ getValue( 'MobileFontSize' ) }${ getValue( 'MobileFontSizeUnit' ) || 'px' }`, importantSize ) : inheritDesktopAttribute( getValue( 'FontSize' ), getValue( 'FontSizeUnit' ), maxResponsiveSize, importantSize ),
 			lineHeight: getValue( 'MobileLineHeight' ) !== '' ? `${ getValue( 'MobileLineHeight' ) }${ getValue( 'MobileLineHeightUnit' ) || 'em' }` : undefined,
 		}
 	}
