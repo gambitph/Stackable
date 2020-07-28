@@ -14,7 +14,7 @@ Once in there, click on **Deactivate License**.
 This is useful if you don't have access to the website where you have Stackable Premium activated anymore.
 {% endhint %}
 
-You can also log into your account in [wpstackable.com](https://wpstackable.com) and perform the License Key deactivation from there.
+You can also log into your account in [wpstackable.com](https://wpstackable.com/) and perform the License Key deactivation from there.
 
 {% page-ref page="../account/where-do-i-log-into-my-stackable-account.md" %}
 

@@ -1,6 +1,6 @@
 # Where Do I Log Into My Stackable Account?
 
-Stackable Premium customers can log into their accounts by visiting our website [wpstackable.com](https://wpstackable.com) and clicking on the **Account** link on the top right corner of our site.
+Stackable Premium customers can log into their accounts by visiting our website [wpstackable.com](https://wpstackable.com/) and clicking on the **Account** link on the top right corner of our site.
 
 {% hint style="info" %}
 This link will take you directly to the log in page: [https://wpstackable.com/account/](https://wpstackable.com/account/)

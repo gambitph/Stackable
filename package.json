@@ -10,7 +10,7 @@
 		"Stackable",
 		"blocks"
 	],
-	"homepage": "https://wpstackable.com",
+	"homepage": "https://wpstackable.com/",
 	"repository": "git+https://github.com/gambitph/Stackable.git",
 	"bugs": "https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks",
 	"dependencies": {
