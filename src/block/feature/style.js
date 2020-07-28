@@ -9,6 +9,7 @@ import {
 	createImageStyleSet,
 	createResponsiveStyles,
 	createImageBackgroundStyleSet,
+	appendImportant,
 	__getValue,
 } from '~stackable/util'
 
@@ -17,6 +18,24 @@ import {
  */
 import { showOptions } from './util'
 import deepmerge from 'deepmerge'
+
+// General.
+const computeGridFraction2 = ( percentage, rightColumn = true ) => {
+	const right = 2 * ( ( typeof percentage !== 'number' ? 50 : percentage ) / 100 )
+	const left = 2 - right
+	if ( rightColumn ) {
+		return `${ left.toFixed( 2 ) }fr ${ right.toFixed( 2 ) }fr`
+	}
+	return `${ right.toFixed( 2 ) }fr ${ left.toFixed( 2 ) }fr`
+}
+
+/**
+ * Default advanced block spacing attribute values if
+ * no value is passed.
+ */
+const defaultValues = {
+	imageColumnWidth: appendImportant( computeGridFraction2( 50, false ) ),
+}
 
 export const createStyles = props => {
 	const getValue = __getValue( props.attributes )
@@ -31,25 +50,18 @@ export const createStyles = props => {
 
 	const styles = []
 
-	// General.
-	const computeGridFraction2 = ( percentage, rightColumn = true ) => {
-		const right = 2 * ( ( typeof percentage !== 'number' ? 50 : percentage ) / 100 )
-		const left = 2 - right
-		if ( rightColumn ) {
-			return `${ left.toFixed( 2 ) }fr ${ right.toFixed( 2 ) }fr`
-		}
-		return `${ right.toFixed( 2 ) }fr ${ left.toFixed( 2 ) }fr`
-	}
+	const { imageColumnWidth } = defaultValues
+
 	if ( show.imageColumnWidth ) {
 		styles.push( {
 			desktopTablet: {
 				'.ugb-feature__item': {
-					gridTemplateColumns: getValue( 'imageColumnWidth' ) ? computeGridFraction2( getValue( 'imageColumnWidth' ), ! invert ) + ' !important' : undefined,
+					gridTemplateColumns: getValue( 'imageColumnWidth' ) ? appendImportant( computeGridFraction2( getValue( 'imageColumnWidth' ), ! invert ) ) : imageColumnWidth,
 				},
 			},
 			tabletOnly: {
 				'.ugb-feature__item': {
-					gridTemplateColumns: getValue( 'imageColumnTabletWidth' ) ? computeGridFraction2( getValue( 'imageColumnTabletWidth' ), ! invert ) + ' !important' : undefined,
+					gridTemplateColumns: getValue( 'imageColumnTabletWidth' ) ? appendImportant( computeGridFraction2( getValue( 'imageColumnTabletWidth' ), ! invert ) ) : imageColumnWidth,
 				},
 			},
 			// No mobile here since the mobile design would stack vertically.
