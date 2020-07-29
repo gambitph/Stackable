@@ -7,6 +7,7 @@ import {
 	appendImportant,
 	createBackgroundStyles,
 	createBackgroundOverlayStyles,
+	inheritDesktopAttribute,
 	__getValue,
 } from '~stackable/util'
 import deepmerge from 'deepmerge'
@@ -23,6 +24,9 @@ export const createStyles = props => {
 
 	const styles = []
 
+	// Sets the maximum image height the Mobile and Tablet mode can only get.
+	const maxResponsiveSize = 300
+
 	if ( show.borderRadius ) {
 		styles.push( {
 			'.ugb-image-box__box': {
@@ -38,12 +42,12 @@ export const createStyles = props => {
 		},
 		tablet: {
 			'.ugb-image-box__item': {
-				height: appendImportant( getValue( 'tabletColumnHeight', '%spx' ) ),
+				height: appendImportant( getValue( 'tabletColumnHeight', '%spx' ) || inheritDesktopAttribute( getValue( 'columnHeight' ), 'px', maxResponsiveSize, false ) ),
 			},
 		},
 		mobile: {
 			'.ugb-image-box__item': {
-				height: appendImportant( getValue( 'mobileColumnHeight', '%spx' ) ),
+				height: appendImportant( getValue( 'mobileColumnHeight', '%spx' ) || inheritDesktopAttribute( getValue( 'columnHeight' ), 'px', maxResponsiveSize, false ) ),
 			},
 		},
 	} )
