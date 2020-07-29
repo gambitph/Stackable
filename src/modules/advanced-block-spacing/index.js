@@ -42,12 +42,22 @@ const defaultValues = {
 	rightBlockMargin: 'auto',
 
 	/**
-	 * Default paddings for blocks
+	 * Default paddings for blocks with block
+	 * background
 	 */
 	topBlockPadding: '60px',
 	bottomBlockPadding: '60px',
 	leftBlockPadding: '30px',
 	rightBlockPadding: '30px',
+
+	/**
+	 * Default paddings for blocks with
+	 * no block background
+	 */
+	topBlockPadding2: '0px',
+	bottomBlockPadding2: '0px',
+	leftBlockPadding2: '0px',
+	rightBlockPadding2: '0px',
 }
 
 removeFilter( 'stackable.setAttributes', 'stackable/module/block-spacing' )
@@ -504,6 +514,26 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 	)
 }
 
+const getDefaultPadding = ( showBlockBackground = false ) => {
+	const {
+		topBlockPadding, topBlockPadding2, bottomBlockPadding, bottomBlockPadding2, leftBlockPadding, leftBlockPadding2, rightBlockPadding, rightBlockPadding2,
+	} = defaultValues
+	if ( showBlockBackground ) {
+		return {
+			topBlockPadding,
+			bottomBlockPadding,
+			leftBlockPadding,
+			rightBlockPadding,
+		}
+	}
+	return {
+		topBlockPadding: topBlockPadding2,
+		bottomBlockPadding: bottomBlockPadding2,
+		leftBlockPadding: leftBlockPadding2,
+		rightBlockPadding: rightBlockPadding2,
+	}
+}
+
 const addToStyleObject = blockName => ( styleObject, props ) => {
 	const getValue = __getValue( props.attributes )
 
@@ -524,11 +554,17 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 		blockWidthUnit = 'px',
 		tabletBlockWidthUnit = 'px',
 		mobileBlockWidthUnit = 'px',
+
+		showBlockBackground = false,
 	} = props.attributes
 
 	const {
-		minBlockHeight, maxContentWidth, leftBlockMargin, rightBlockMargin, topBlockPadding, bottomBlockPadding, leftBlockPadding, rightBlockPadding,
+		minBlockHeight, maxContentWidth, leftBlockMargin, rightBlockMargin,
 	} = defaultValues
+
+	const {
+		topBlockPadding, bottomBlockPadding, leftBlockPadding, rightBlockPadding,
+	} = getDefaultPadding( showBlockBackground )
 
 	const blockClass = `.${ props.mainClassName }`
 	const margins = applyFilters( `stackable.${ blockName }.advanced-block-spacing.margins`, {

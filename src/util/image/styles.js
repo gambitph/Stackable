@@ -29,7 +29,7 @@ const SVGS = {
  * no value is passed.
  */
 const defaultValues = {
-	imageWidth: '580px',
+	// imageWidth: '580px',
 }
 
 export const getShapeSVG = shape => {
