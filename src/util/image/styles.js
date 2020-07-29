@@ -57,13 +57,13 @@ const createImageStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAt
 	} else if ( screen === 'tablet' ) { // Tablet.
 		return {
 			width: getValue( 'TabletWidth', '%spx' ) || imageWidth,
-			height: getValue( 'TabletWidth' ) ? appendImportant( getHeight( 'TabletWidth' ) ) : undefined,
+			height: getValue( 'TabletWidth' ) ? appendImportant( getHeight( 'TabletWidth' ) ) : imageWidth,
 		}
 	}
 	// Mobile.
 	return {
 		width: getValue( 'MobileWidth', '%spx' ) || imageWidth,
-		height: getValue( 'MobileWidth' ) ? appendImportant( getHeight( 'MobileWidth' ) ) : undefined,
+		height: getValue( 'MobileWidth' ) ? appendImportant( getHeight( 'MobileWidth' ) ) : imageWidth,
 	}
 }
 
