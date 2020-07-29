@@ -17,12 +17,26 @@ import deepmerge from 'deepmerge'
  */
 import { showOptions } from './util'
 
+/**
+ * Default attribute values if
+ * no value is passed.
+ */
+const defaultValues = {
+
+	/**
+	 * Default arrow size value
+	 */
+	arrowSize: '30px',
+}
+
 export const createStyles = props => {
 	const getValue = __getValue( props.attributes )
 
 	const show = showOptions( props )
 
 	const styles = []
+
+	const { arrowSize } = defaultValues
 
 	// Sets the maximum image height the Mobile and Tablet mode can only get.
 	const maxResponsiveSize = 300
@@ -210,7 +224,21 @@ export const createStyles = props => {
 				fill: appendImportant( getValue( 'arrowColor' ) ),
 			},
 		} )
-		styles.push( ...createResponsiveStyles( '.ugb-image-box__arrow svg', 'arrow%sSize', 'width', '%spx', props.attributes, true ) )
+		styles.push( {
+			'.ugb-image-box__arrow svg': {
+				width: appendImportant( getValue( 'arrowSize', '%spx' )	),
+			},
+			tablet: {
+				'.ugb-image-box__arrow svg': {
+					width: appendImportant( getValue( 'arrowTabletSize', '%spx' ) || arrowSize ),
+				},
+			},
+			mobile: {
+				'.ugb-image-box__arrow svg': {
+					width: appendImportant( getValue( 'arrowSize', '%spx' )	|| arrowSize ),
+				},
+			},
+		} )
 		styles.push( ...createResponsiveStyles( '.ugb-image-box__arrow', 'arrow%sAlign', 'textAlign', '%s', props.attributes, true ) )
 	}
 
