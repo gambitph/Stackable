@@ -18,6 +18,14 @@ import deepmerge from 'deepmerge'
  */
 import { showOptions } from './util'
 
+/**
+ * Default attribute values if
+ * no value is passed.
+ */
+const defaultValues = {
+	imageHeight: '200px',
+}
+
 export const createStyles = props => {
 	const getValue = __getValue( props.attributes )
 
@@ -28,6 +36,8 @@ export const createStyles = props => {
 	const show = showOptions( props )
 
 	const styles = []
+
+	const { imageHeight } = defaultValues
 
 	styles.push( {
 		'.ugb-card__title, .ugb-card__subtitle, .ugb-card__description, .ugb-button-container': {
@@ -78,7 +88,21 @@ export const createStyles = props => {
 		...createImageBackgroundStyleSet( 'image%s', 'ugb-card__image', props.attributes ),
 	} )
 	if ( show.imageHeight ) {
-		styles.push( ...createResponsiveStyles( '.ugb-card__image', 'imageBackground%sHeight', 'height', '%spx', props.attributes, true ) )
+		styles.push( {
+			'.ugb-card__image': {
+				height: appendImportant( getValue( 'imageBackgroundHeight', '%spx' ) ),
+			},
+			tablet: {
+				'.ugb-card__image': {
+					height: appendImportant( getValue( 'imageBackgroundTabletHeight', '%spx' ) || imageHeight ),
+				},
+			},
+			mobile: {
+				'.ugb-card__image': {
+					height: appendImportant( getValue( 'imageBackgroundMobileHeight', '%spx' ) || imageHeight ),
+				},
+			},
+		} )
 	}
 	if ( show.imageWidth ) {
 		styles.push( {
