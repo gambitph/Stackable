@@ -19,6 +19,16 @@ import {
 import { showOptions } from './util'
 import deepmerge from 'deepmerge'
 
+/**
+ * Default attribute values if
+ * no value is passed.
+ */
+const defaultValues = {
+
+	// Default number box shape size.
+	numberPadding: '2.5em',
+}
+
 export const createStyles = props => {
 	const getValue = __getValue( props.attributes )
 
@@ -65,6 +75,8 @@ export const createStyles = props => {
 		showNumber = true,
 	} = props.attributes
 
+	const { numberPadding } = defaultValues
+
 	if ( showNumber ) {
 		styles.push( {
 			'.ugb-number-box__number': {
@@ -83,9 +95,9 @@ export const createStyles = props => {
 			},
 			tablet: {
 				'.ugb-number-box__number': {
-					height: show.numberBGColor ? appendImportant( getValue( 'numberTabletPadding', '%sem' ) ) : undefined,
-					width: show.numberBGColor ? appendImportant( getValue( 'numberTabletPadding', '%sem' ) ) : undefined,
-					lineHeight: appendImportant( show.numberBGColor && numberTabletLineHeight === '' ? getValue( 'numberTabletPadding', '%sem' ) : getValue( 'numberTabletLineHeight', `%s${ numberTabletLineHeightUnit }` ) ),
+					height: show.numberBGColor ? appendImportant( getValue( 'numberTabletPadding', '%sem' ) || numberPadding ) : undefined,
+					width: show.numberBGColor ? appendImportant( getValue( 'numberTabletPadding', '%sem' ) || numberPadding ) : undefined,
+					lineHeight: appendImportant( show.numberBGColor && numberTabletLineHeight === '' ? getValue( 'numberTabletPadding', '%sem' ) || numberPadding : getValue( 'numberTabletLineHeight', `%s${ numberTabletLineHeightUnit }` ) ),
 					marginLeft: numberTabletAlign !== '' || tabletContentAlign !== '' ? appendImportant( marginLeftAlign( numberTabletAlign || tabletContentAlign ) ) : undefined,
 					marginRight: numberTabletAlign !== '' || tabletContentAlign !== '' ? appendImportant( marginRightAlign( numberTabletAlign || tabletContentAlign ) ) : undefined,
 					textAlign: appendImportant( show.numberBGColor ? undefined : ( getValue( 'numberTabletAlign' ) || getValue( 'tabletContentAlign' ) ) ),
@@ -93,9 +105,9 @@ export const createStyles = props => {
 			},
 			mobile: {
 				'.ugb-number-box__number': {
-					height: show.numberBGColor ? appendImportant( getValue( 'numberMobilePadding', '%sem' ) ) : undefined,
-					width: show.numberBGColor ? appendImportant( getValue( 'numberMobilePadding', '%sem' ) ) : undefined,
-					lineHeight: appendImportant( show.numberBGColor && numberMobileLineHeight === '' ? getValue( 'numberMobilePadding', '%sem' ) : getValue( 'numberMobileLineHeight', `%s${ numberMobileLineHeightUnit }` ) ),
+					height: show.numberBGColor ? appendImportant( getValue( 'numberMobilePadding', '%sem' ) || numberPadding ) : undefined,
+					width: show.numberBGColor ? appendImportant( getValue( 'numberMobilePadding', '%sem' ) || numberPadding ) : undefined,
+					lineHeight: appendImportant( show.numberBGColor && numberMobileLineHeight === '' ? getValue( 'numberMobilePadding', '%sem' ) || numberPadding : getValue( 'numberMobileLineHeight', `%s${ numberMobileLineHeightUnit }` ) ),
 					marginLeft: numberMobileAlign !== '' || mobileContentAlign !== '' ? appendImportant( marginLeftAlign( numberMobileAlign || mobileContentAlign ) ) : undefined,
 					marginRight: numberMobileAlign !== '' || mobileContentAlign !== '' ? appendImportant( marginRightAlign( numberMobileAlign || mobileContentAlign ) ) : undefined,
 					textAlign: appendImportant( show.numberBGColor ? undefined : ( getValue( 'numberMobileAlign' ) || getValue( 'mobileContentAlign' ) ) ),
