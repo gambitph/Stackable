@@ -15,7 +15,7 @@ import deepmerge from 'deepmerge'
 import { showOptions } from './util'
 
 /**
- * Default advanced block spacing attribute values if
+ * Default attribute values if
  * no value is passed.
  */
 const defaultValues = {

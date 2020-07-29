@@ -27,7 +27,7 @@ import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
 
 /**
- * Default advanced block spacing attribute values if
+ * Default attribute values if
  * no value is passed.
  */
 const defaultValues = {

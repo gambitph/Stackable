@@ -19,6 +19,14 @@ import { sprintf } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
 /**
+ * Default attribute values if
+ * no value is passed.
+ */
+const defaultValues = {
+	size: '50px',
+}
+
+/**
  * Generates button styles
  *
  * @param {string} attrNameTemplate Template name where to get the attributes from
@@ -33,6 +41,8 @@ export const createIconStyleSet = ( attrNameTemplate = '%s', mainClassName = '',
 
 	const styles = []
 
+	const { size } = defaultValues
+
 	styles.push( {
 		[ `.${ mainClassName } .ugb-icon-inner-svg, .${ mainClassName } .ugb-icon-inner-svg svg` ]: {
 			width: appendImportant( getValue( 'Size', '%spx' ) ),
@@ -40,14 +50,14 @@ export const createIconStyleSet = ( attrNameTemplate = '%s', mainClassName = '',
 		},
 		tablet: {
 			[ `.${ mainClassName } .ugb-icon-inner-svg, .${ mainClassName } .ugb-icon-inner-svg svg` ]: {
-				width: appendImportant( getValue( 'TabletSize', '%spx' ) ),
-				height: appendImportant( getValue( 'TabletSize', '%spx' ) ),
+				width: appendImportant( getValue( 'TabletSize', '%spx' ) || size ),
+				height: appendImportant( getValue( 'TabletSize', '%spx' ) || size ),
 			},
 		},
 		mobile: {
 			[ `.${ mainClassName } .ugb-icon-inner-svg, .${ mainClassName } .ugb-icon-inner-svg svg` ]: {
-				width: appendImportant( getValue( 'MobileSize', '%spx' ) ),
-				height: appendImportant( getValue( 'MobileSize', '%spx' ) ),
+				width: appendImportant( getValue( 'MobileSize', '%spx' ) || size ),
+				height: appendImportant( getValue( 'MobileSize', '%spx' ) || size ),
 			},
 		},
 		[ `.${ mainClassName } .ugb-icon-inner-svg` ]: {
