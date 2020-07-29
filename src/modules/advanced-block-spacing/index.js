@@ -43,13 +43,11 @@ const defaultValues = {
 
 	/**
 	 * Default paddings for blocks
-	 * inherits the paddings from the
-	 * default styles
 	 */
-	topBlockPadding: 'inherit',
-	bottomBlockPadding: 'inherit',
-	leftBlockPadding: 'inherit',
-	rightBlockPadding: 'inherit',
+	topBlockPadding: '60px',
+	bottomBlockPadding: '60px',
+	leftBlockPadding: '30px',
+	rightBlockPadding: '30px',
 }
 
 removeFilter( 'stackable.setAttributes', 'stackable/module/block-spacing' )
