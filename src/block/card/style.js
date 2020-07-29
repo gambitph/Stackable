@@ -9,6 +9,7 @@ import {
 	whiteIfDarkBlackIfLight,
 	appendImportant,
 	createImageBackgroundStyleSet,
+	inheritDesktopAttribute,
 	__getValue,
 } from '~stackable/util'
 import deepmerge from 'deepmerge'
@@ -17,14 +18,6 @@ import deepmerge from 'deepmerge'
  * Internal dependencies
  */
 import { showOptions } from './util'
-
-/**
- * Default attribute values if
- * no value is passed.
- */
-const defaultValues = {
-	imageHeight: '200px',
-}
 
 export const createStyles = props => {
 	const getValue = __getValue( props.attributes )
@@ -37,7 +30,8 @@ export const createStyles = props => {
 
 	const styles = []
 
-	const { imageHeight } = defaultValues
+	// Sets the maximum image height size the Mobile and Tablet mode can only get.
+	const maxResponsiveSize = 300
 
 	styles.push( {
 		'.ugb-card__title, .ugb-card__subtitle, .ugb-card__description, .ugb-button-container': {
@@ -94,12 +88,12 @@ export const createStyles = props => {
 			},
 			tablet: {
 				'.ugb-card__image': {
-					height: appendImportant( getValue( 'imageBackgroundTabletHeight', '%spx' ) || imageHeight ),
+					height: appendImportant( getValue( 'imageBackgroundTabletHeight', '%spx' ) || inheritDesktopAttribute( getValue( 'imageBackgroundHeight' ), 'px', maxResponsiveSize, false ) ),
 				},
 			},
 			mobile: {
 				'.ugb-card__image': {
-					height: appendImportant( getValue( 'imageBackgroundMobileHeight', '%spx' ) || imageHeight ),
+					height: appendImportant( getValue( 'imageBackgroundMobileHeight', '%spx' ) || inheritDesktopAttribute( getValue( 'imageBackgroundHeight' ), 'px', maxResponsiveSize, false ) ),
 				},
 			},
 		} )
