@@ -7,7 +7,7 @@ import { appendImportant } from '../'
  * External dependencies
  */
 import {
-	__getValue,
+	__getValue, inheritDesktopAttribute,
 } from '~stackable/util'
 import { camelCase } from 'lodash'
 import deepmerge from 'deepmerge'
@@ -17,14 +17,6 @@ import deepmerge from 'deepmerge'
  */
 import { sprintf } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
-
-/**
- * Default attribute values if
- * no value is passed.
- */
-const defaultValues = {
-	size: '50px',
-}
 
 /**
  * Generates button styles
@@ -41,7 +33,8 @@ export const createIconStyleSet = ( attrNameTemplate = '%s', mainClassName = '',
 
 	const styles = []
 
-	const { size } = defaultValues
+	// Sets the maximum icon size the Mobile and Tablet mode can only get
+	const maxResponsizeSize = 200
 
 	styles.push( {
 		[ `.${ mainClassName } .ugb-icon-inner-svg, .${ mainClassName } .ugb-icon-inner-svg svg` ]: {
@@ -50,14 +43,14 @@ export const createIconStyleSet = ( attrNameTemplate = '%s', mainClassName = '',
 		},
 		tablet: {
 			[ `.${ mainClassName } .ugb-icon-inner-svg, .${ mainClassName } .ugb-icon-inner-svg svg` ]: {
-				width: appendImportant( getValue( 'TabletSize', '%spx' ) || size ),
-				height: appendImportant( getValue( 'TabletSize', '%spx' ) || size ),
+				width: appendImportant( getValue( 'TabletSize', '%spx' ) || inheritDesktopAttribute( getValue( 'Size' ), 'px', maxResponsizeSize, false ) ),
+				height: appendImportant( getValue( 'TabletSize', '%spx' ) || inheritDesktopAttribute( getValue( 'Size' ), 'px', maxResponsizeSize, false ) ),
 			},
 		},
 		mobile: {
 			[ `.${ mainClassName } .ugb-icon-inner-svg, .${ mainClassName } .ugb-icon-inner-svg svg` ]: {
-				width: appendImportant( getValue( 'MobileSize', '%spx' ) || size ),
-				height: appendImportant( getValue( 'MobileSize', '%spx' ) || size ),
+				width: appendImportant( getValue( 'MobileSize', '%spx' ) || inheritDesktopAttribute( getValue( 'Size' ), 'px', maxResponsizeSize, false ) ),
+				height: appendImportant( getValue( 'MobileSize', '%spx' ) || inheritDesktopAttribute( getValue( 'Size' ), 'px', maxResponsizeSize, false ) ),
 			},
 		},
 		[ `.${ mainClassName } .ugb-icon-inner-svg` ]: {
