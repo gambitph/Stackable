@@ -190,6 +190,10 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.8.1 =
+
+* Fixed: PHP Rest API notice about register_setting used incorrectly.
+
 = 2.8.0 =
 [Introducing: Role Manager for Gutenberg](https://wpstackable.com/blog/introducing-role-manager-for-gutenberg/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
