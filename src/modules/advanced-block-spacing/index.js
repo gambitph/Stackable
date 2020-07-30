@@ -31,7 +31,6 @@ import { i18n } from 'stackable'
  * no value is passed.
  */
 const defaultValues = {
-	minBlockHeight: '100px',
 	maxContentWidth: '2000px',
 
 	/**
@@ -559,7 +558,7 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 	} = props.attributes
 
 	const {
-		minBlockHeight, maxContentWidth, leftBlockMargin, rightBlockMargin,
+		maxContentWidth, leftBlockMargin, rightBlockMargin,
 	} = defaultValues
 
 	const {
@@ -618,7 +617,6 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 
 	const others = {
 		[ blockClass ]: {
-			minHeight: getValue( 'blockHeight', `%s${ blockHeightUnit }` ) || minBlockHeight,
 			justifyContent: getValue( 'blockHorizontalAlign' ),
 			alignItems: getValue( 'blockVerticalAlign' ),
 		},
@@ -627,9 +625,12 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 			// Some themes can limit min-width, preventing block width.
 			minWidth: blockInnerWidth === 'wide' && getValue( 'blockWidth' ) ? 'auto !important' : undefined,
 		},
+		desktopOnly: {
+			minHeight: getValue( 'blockHeight', `%s${ blockHeightUnit }` ) || undefined,
+		},
 		tablet: {
 			[ blockClass ]: {
-				minHeight: getValue( 'tabletBlockHeight', `%s${ tabletBlockHeightUnit }` ) || minBlockHeight,
+				minHeight: getValue( 'tabletBlockHeight', `%s${ tabletBlockHeightUnit }` ) || undefined,
 				justifyContent: getValue( 'tabletBlockHorizontalAlign' ),
 				alignItems: getValue( 'tabletBlockVerticalAlign' ),
 			},
@@ -641,7 +642,7 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 		},
 		mobile: {
 			[ blockClass ]: {
-				minHeight: appendImportant( getValue( 'mobileBlockHeight', `%s${ mobileBlockHeightUnit }` ) || minBlockHeight ),
+				minHeight: getValue( 'mobileBlockHeight', `%s${ mobileBlockHeightUnit }` ) || undefined,
 				justifyContent: getValue( 'mobileBlockHorizontalAlign' ),
 				alignItems: getValue( 'mobileBlockVerticalAlign' ),
 			},
@@ -653,7 +654,7 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 		},
 		ie11: {
 			[ blockClass ]: {
-				height: getValue( 'blockHeight', `%s${ blockHeightUnit }` ) || minBlockHeight,
+				height: getValue( 'blockHeight', `%s${ blockHeightUnit }` ) || undefined,
 			},
 		},
 	}
