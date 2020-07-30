@@ -292,6 +292,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 							label={ __( 'Title', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-title"
 						/>
@@ -307,6 +308,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 							label={ __( 'Subtitle', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-title"
 						/>

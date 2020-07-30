@@ -171,6 +171,7 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 							label={ __( 'Title', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-title"
 						/>
@@ -185,6 +186,7 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 						label={ __( 'Text', i18n ) }
 						min={ -50 }
 						max={ 100 }
+						placeholder="16"
 						allowReset={ true }
 						className="ugb--help-tip-spacing-description"
 					/>
@@ -198,6 +200,7 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 						label={ __( 'Link', i18n ) }
 						min={ -50 }
 						max={ 100 }
+						placeholder="0"
 						allowReset={ true }
 						className="ugb--help-tip-spacing-button"
 					/>

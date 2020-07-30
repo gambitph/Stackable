@@ -474,6 +474,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 							label={ __( 'Image', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-pricing-image-spacing"
 						/>
@@ -489,6 +490,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 							label={ __( 'Title', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-pricing-title-spacing"
 						/>
@@ -504,6 +506,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 							label={ __( 'Price', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-pricing-price-spacing"
 						/>
@@ -519,6 +522,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 							label={ __( 'Sub Price', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-pricing-subprice-spacing"
 						/>
@@ -534,6 +538,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 							label={ __( 'Button', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="32"
 							allowReset={ true }
 							className="ugb--help-tip-pricing-button-spacing"
 						/>
@@ -549,6 +554,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 							label={ __( 'Description', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-pricing-description-spacing"
 						/>

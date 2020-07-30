@@ -345,6 +345,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 							label={ __( 'Testimonial', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-description"
 						/>
@@ -360,6 +361,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 							label={ __( 'Image', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-image"
 						/>
@@ -375,6 +377,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 							label={ __( 'Name', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-name"
 						/>
@@ -390,6 +393,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 							label={ __( 'Position', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="0"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-name"
 						/>

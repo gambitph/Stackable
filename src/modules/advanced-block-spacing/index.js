@@ -146,6 +146,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ tabletBlockHeightUnit }
 							onChange={ tabletBlockHeight => setAttributes( { tabletBlockHeight } ) }
 							onChangeUnit={ tabletBlockHeightUnit => setAttributes( { tabletBlockHeightUnit } ) }
+							initialPosition="100"
 							className="ugb--help-tip-advanced-block-height"
 						/>
 					</WhenResponsiveScreen>
@@ -161,6 +162,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ mobileBlockHeightUnit }
 							onChange={ mobileBlockHeight => setAttributes( { mobileBlockHeight } ) }
 							onChangeUnit={ mobileBlockHeightUnit => setAttributes( { mobileBlockHeightUnit } ) }
+							initialPosition="100"
 							className="ugb--help-tip-advanced-block-height"
 						/>
 					</WhenResponsiveScreen>
@@ -233,6 +235,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ tabletBlockWidthUnit }
 							onChange={ tabletBlockWidth => setAttributes( { tabletBlockWidth } ) }
 							onChangeUnit={ tabletBlockWidthUnit => setAttributes( { tabletBlockWidthUnit } ) }
+							initialPosition="2000"
 							className="ugb--help-tip-advanced-block-content-width"
 						/>
 					</WhenResponsiveScreen>
@@ -248,6 +251,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ mobileBlockWidthUnit }
 							onChange={ mobileBlockWidth => setAttributes( { mobileBlockWidth } ) }
 							onChangeUnit={ mobileBlockWidthUnit => setAttributes( { mobileBlockWidthUnit } ) }
+							initialPosition="2000"
 							className="ugb--help-tip-advanced-block-content-width"
 						/>
 					</WhenResponsiveScreen>
@@ -440,6 +444,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							enableRight={ options.enablePaddingRight }
 							enableBottom={ options.enablePaddingBottom }
 							enableLeft={ options.enablePaddingLeft }
+							initialPosition="10"
 							className="ugb--help-tip-advanced-block-paddings"
 						/>
 					</WhenResponsiveScreen>
@@ -469,6 +474,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							enableRight={ options.enablePaddingRight }
 							enableBottom={ options.enablePaddingBottom }
 							enableLeft={ options.enablePaddingLeft }
+							initialPosition="10"
 							className="ugb--help-tip-advanced-block-paddings"
 						/>
 					</WhenResponsiveScreen>
