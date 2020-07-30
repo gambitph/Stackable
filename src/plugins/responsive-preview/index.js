@@ -93,4 +93,7 @@ const responsivePreview = () => {
 	visualEditorElObserver.observe( visualEditorEl, config )
 }
 
-domReady( responsivePreview )
+// Only do this when WP version is >=5.5
+if ( select( 'core/edit-post' ).__experimentalGetPreviewDeviceType ) {
+	domReady( responsivePreview )
+}
