@@ -407,8 +407,6 @@ const addTopStyles = ( blockName, options = {} ) => ( styleObject, props ) => {
 		return styleObject
 	}
 
-	const { separatorHeight } = defaultValues
-
 	const styles = {
 		[ `.ugb-top-separator` ]: {
 			zIndex: options.enableBringToFront && topSeparatorBringToFront ? 6 : undefined,
@@ -418,17 +416,21 @@ const addTopStyles = ( blockName, options = {} ) => ( styleObject, props ) => {
 			fill: topSeparatorColor !== '' ? topSeparatorColor : undefined,
 		},
 		[ `.ugb-top-separator .ugb-separator-wrapper` ]: {
-			height: topSeparatorHeight !== '' ? `${ topSeparatorHeight }px` : separatorHeight,
 			transform: topSeparatorWidth !== '' ? `scaleX(${ topSeparatorWidth })` : undefined,
+		},
+		desktopOnly: {
+			[ `.ugb-top-separator .ugb-separator-wrapper` ]: {
+				height: topSeparatorHeight !== '' ? `${ topSeparatorHeight }px` : undefined,
+			},
 		},
 		tablet: {
 			[ `.ugb-top-separator .ugb-separator-wrapper` ]: {
-				height: topSeparatorTabletHeight !== '' ? `${ topSeparatorTabletHeight }px` : separatorHeight,
+				height: topSeparatorTabletHeight !== '' ? `${ topSeparatorTabletHeight }px` : undefined,
 			},
 		},
 		mobile: {
 			[ `.ugb-top-separator .ugb-separator-wrapper` ]: {
-				height: topSeparatorMobileHeight !== '' ? `${ topSeparatorMobileHeight }px` : separatorHeight,
+				height: topSeparatorMobileHeight !== '' ? `${ topSeparatorMobileHeight }px` : undefined,
 			},
 		},
 	}
