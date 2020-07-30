@@ -26,39 +26,6 @@ import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
 
-/**
- * Default attribute values if
- * no value is passed.
- */
-const defaultValues = {
-	maxContentWidth: '2000px',
-
-	/**
-	 * Default left and right margin is auto
-	 * to center the content by default
-	 */
-	leftBlockMargin: 'auto',
-	rightBlockMargin: 'auto',
-
-	/**
-	 * Default paddings for blocks with block
-	 * background
-	 */
-	topBlockPadding: '60px',
-	bottomBlockPadding: '60px',
-	leftBlockPadding: '30px',
-	rightBlockPadding: '30px',
-
-	/**
-	 * Default paddings for blocks with
-	 * no block background
-	 */
-	topBlockPadding2: '0px',
-	bottomBlockPadding2: '0px',
-	leftBlockPadding2: '0px',
-	rightBlockPadding2: '0px',
-}
-
 removeFilter( 'stackable.setAttributes', 'stackable/module/block-spacing' )
 addFilter( 'stackable.setAttributes', 'stackable/module/block-spacing', ( attributes, blockProps ) => {
 	if ( typeof attributes.align === 'undefined' ) {
@@ -513,26 +480,6 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 	)
 }
 
-const getDefaultPadding = ( showBlockBackground = false ) => {
-	const {
-		topBlockPadding, topBlockPadding2, bottomBlockPadding, bottomBlockPadding2, leftBlockPadding, leftBlockPadding2, rightBlockPadding, rightBlockPadding2,
-	} = defaultValues
-	if ( showBlockBackground ) {
-		return {
-			topBlockPadding,
-			bottomBlockPadding,
-			leftBlockPadding,
-			rightBlockPadding,
-		}
-	}
-	return {
-		topBlockPadding: topBlockPadding2,
-		bottomBlockPadding: bottomBlockPadding2,
-		leftBlockPadding: leftBlockPadding2,
-		rightBlockPadding: rightBlockPadding2,
-	}
-}
-
 const addToStyleObject = blockName => ( styleObject, props ) => {
 	const getValue = __getValue( props.attributes )
 
@@ -553,64 +500,60 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 		blockWidthUnit = 'px',
 		tabletBlockWidthUnit = 'px',
 		mobileBlockWidthUnit = 'px',
-
-		showBlockBackground = false,
 	} = props.attributes
-
-	const {
-		maxContentWidth, leftBlockMargin, rightBlockMargin,
-	} = defaultValues
-
-	const {
-		topBlockPadding, bottomBlockPadding, leftBlockPadding, rightBlockPadding,
-	} = getDefaultPadding( showBlockBackground )
 
 	const blockClass = `.${ props.mainClassName }`
 	const margins = applyFilters( `stackable.${ blockName }.advanced-block-spacing.margins`, {
 		[ blockClass ]: {
 			marginTop: appendImportant( getValue( 'marginTop', `%s${ marginUnit }` ) ),
-			marginRight: appendImportant( getValue( 'marginRight', `%s${ marginUnit }` ) || rightBlockMargin ),
 			marginBottom: appendImportant( getValue( 'marginBottom', `%s${ marginUnit }` ) ),
-			marginLeft: appendImportant( getValue( 'marginLeft', `%s${ marginUnit }` ) || leftBlockMargin ),
+		},
+		desktopOnly: {
+			[ blockClass ]: {
+				marginRight: appendImportant( getValue( 'marginRight', `%s${ marginUnit }` ) ),
+				marginLeft: appendImportant( getValue( 'marginLeft', `%s${ marginUnit }` ) ),
+			},
 		},
 		tablet: {
 			[ blockClass ]: {
 				marginTop: getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ? appendImportant( getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ) : inheritDesktopAttribute( getValue( 'marginTop' ), marginUnit, 100 ),
-				marginRight: appendImportant( getValue( 'tabletMarginRight', `%s${ tabletMarginUnit }` ) || rightBlockMargin ),
+				marginRight: appendImportant( getValue( 'tabletMarginRight', `%s${ tabletMarginUnit }` ) ),
 				marginBottom: getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ? appendImportant( getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ) : inheritDesktopAttribute( getValue( 'marginBottom' ), marginUnit, 100 ),
-				marginLeft: appendImportant( getValue( 'tabletMarginLeft', `%s${ tabletMarginUnit }` ) || leftBlockMargin ),
+				marginLeft: appendImportant( getValue( 'tabletMarginLeft', `%s${ tabletMarginUnit }` ) ),
 			},
 		},
 		mobile: {
 			[ blockClass ]: {
 				marginTop: getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ? appendImportant( getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ) : inheritDesktopAttribute( getValue( 'marginTop' ), marginUnit, 100 ),
-				marginRight: appendImportant( getValue( 'mobileMarginRight', `%s${ mobileMarginUnit }` ) || rightBlockMargin ),
+				marginRight: appendImportant( getValue( 'mobileMarginRight', `%s${ mobileMarginUnit }` ) ),
 				marginBottom: getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ? appendImportant( getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ) : inheritDesktopAttribute( getValue( 'marginBottom' ), marginUnit, 100 ),
-				marginLeft: appendImportant( getValue( 'mobileMarginLeft', `%s${ mobileMarginUnit }` ) || leftBlockMargin ),
+				marginLeft: appendImportant( getValue( 'mobileMarginLeft', `%s${ mobileMarginUnit }` ) ),
 			},
 		},
 	} )
 	const paddings = applyFilters( `stackable.${ blockName }.advanced-block-spacing.paddings`, {
-		[ blockClass ]: {
-			paddingTop: appendImportant( getValue( 'paddingTop', `%s${ paddingUnit }` ) || topBlockPadding ),
-			paddingRight: appendImportant( getValue( 'paddingRight', `%s${ paddingUnit }` ) || rightBlockPadding ),
-			paddingBottom: appendImportant( getValue( 'paddingBottom', `%s${ paddingUnit }` ) || bottomBlockPadding ),
-			paddingLeft: appendImportant( getValue( 'paddingLeft', `%s${ paddingUnit }` ) || leftBlockPadding ),
+		desktopOnly: {
+			[ blockClass ]: {
+				paddingTop: appendImportant( getValue( 'paddingTop', `%s${ paddingUnit }` ) ),
+				paddingRight: appendImportant( getValue( 'paddingRight', `%s${ paddingUnit }` ) ),
+				paddingBottom: appendImportant( getValue( 'paddingBottom', `%s${ paddingUnit }` ) ),
+				paddingLeft: appendImportant( getValue( 'paddingLeft', `%s${ paddingUnit }` ) ),
+			},
 		},
 		tablet: {
 			[ blockClass ]: {
-				paddingTop: appendImportant( getValue( 'tabletPaddingTop', `%s${ tabletPaddingUnit }` ) || topBlockPadding ),
-				paddingRight: appendImportant( getValue( 'tabletPaddingRight', `%s${ tabletPaddingUnit }` ) || rightBlockPadding ),
-				paddingBottom: appendImportant( getValue( 'tabletPaddingBottom', `%s${ tabletPaddingUnit }` ) || bottomBlockPadding ),
-				paddingLeft: appendImportant( getValue( 'tabletPaddingLeft', `%s${ tabletPaddingUnit }` ) || leftBlockPadding ),
+				paddingTop: appendImportant( getValue( 'tabletPaddingTop', `%s${ tabletPaddingUnit }` ) ),
+				paddingRight: appendImportant( getValue( 'tabletPaddingRight', `%s${ tabletPaddingUnit }` ) ),
+				paddingBottom: appendImportant( getValue( 'tabletPaddingBottom', `%s${ tabletPaddingUnit }` ) ),
+				paddingLeft: appendImportant( getValue( 'tabletPaddingLeft', `%s${ tabletPaddingUnit }` ) ),
 			},
 		},
 		mobile: {
 			[ blockClass ]: {
-				paddingTop: appendImportant( getValue( 'mobilePaddingTop', `%s${ mobilePaddingUnit }` ) || topBlockPadding ),
-				paddingRight: appendImportant( getValue( 'mobilePaddingRight', `%s${ mobilePaddingUnit }` ) || rightBlockPadding ),
-				paddingBottom: appendImportant( getValue( 'mobilePaddingBottom', `%s${ mobilePaddingUnit }` ) || bottomBlockPadding ),
-				paddingLeft: appendImportant( getValue( 'mobilePaddingLeft', `%s${ mobilePaddingUnit }` ) || leftBlockPadding ),
+				paddingTop: appendImportant( getValue( 'mobilePaddingTop', `%s${ mobilePaddingUnit }` ) ),
+				paddingRight: appendImportant( getValue( 'mobilePaddingRight', `%s${ mobilePaddingUnit }` ) ),
+				paddingBottom: appendImportant( getValue( 'mobilePaddingBottom', `%s${ mobilePaddingUnit }` ) ),
+				paddingLeft: appendImportant( getValue( 'mobilePaddingLeft', `%s${ mobilePaddingUnit }` ) ),
 			},
 		},
 	} )
@@ -621,12 +564,16 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 			alignItems: getValue( 'blockVerticalAlign' ),
 		},
 		[ `${ blockClass } > .ugb-inner-block` ]: {
-			maxWidth: appendImportant( getValue( 'blockWidth', `%s${ blockWidthUnit }` ) || maxContentWidth ),
 			// Some themes can limit min-width, preventing block width.
 			minWidth: blockInnerWidth === 'wide' && getValue( 'blockWidth' ) ? 'auto !important' : undefined,
 		},
 		desktopOnly: {
-			minHeight: getValue( 'blockHeight', `%s${ blockHeightUnit }` ) || undefined,
+			[ blockClass ]: {
+				minHeight: getValue( 'blockHeight', `%s${ blockHeightUnit }` ) || undefined,
+			},
+			[ `${ blockClass } > .ugb-inner-block` ]: {
+				maxWidth: getValue( 'blockWidth' ) !== '' ? appendImportant( getValue( 'blockWidth', `%s${ blockWidthUnit }` ) ) : undefined,
+			},
 		},
 		tablet: {
 			[ blockClass ]: {
@@ -635,7 +582,7 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 				alignItems: getValue( 'tabletBlockVerticalAlign' ),
 			},
 			[ `${ blockClass } > .ugb-inner-block` ]: {
-				maxWidth: appendImportant( getValue( 'tabletBlockWidth', `%s${ tabletBlockWidthUnit }` ) || maxContentWidth ),
+				maxWidth: getValue( 'tabletBlockWidth' ) !== '' ? appendImportant( getValue( 'tabletBlockWidth', `%s${ tabletBlockWidthUnit }` ) ) : undefined,
 				// Some themes can limit min-width, preventing block width.
 				minWidth: blockInnerWidth === 'wide' && getValue( 'tabletBlockWidth' ) ? 'auto !important' : undefined,
 			},
@@ -647,7 +594,7 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 				alignItems: getValue( 'mobileBlockVerticalAlign' ),
 			},
 			[ `${ blockClass } > .ugb-inner-block` ]: {
-				maxWidth: appendImportant( getValue( 'mobileBlockWidth', `%s${ mobileBlockWidthUnit }` ) || maxContentWidth ),
+				maxWidth: getValue( 'mobileBlockWidth' ) !== '' ? appendImportant( getValue( 'mobileBlockWidth', `%s${ mobileBlockWidthUnit }` ) ) : undefined,
 				// Some themes can limit min-width, preventing block width.
 				minWidth: blockInnerWidth === 'wide' && getValue( 'mobileBlockWidth' ) ? 'auto !important' : undefined,
 			},
