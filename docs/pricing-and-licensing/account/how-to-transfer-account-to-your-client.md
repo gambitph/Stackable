@@ -1,4 +1,4 @@
-# How to Transfer Account to your Client
+# How to Transfer Billing to your Client
 
 If you have created a website for your client and you have purchased Stackable Premium on their behalf, you can transfer the ownership and billing of Stackable Premium to your client.
 
