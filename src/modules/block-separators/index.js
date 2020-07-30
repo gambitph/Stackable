@@ -24,14 +24,6 @@ import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
 import { ToggleControl } from '@wordpress/components'
 
-/**
- * Default top and bottom separator values if
- * no value is passed.
- */
-const defaultValues = {
-	separatorHeight: '200px',
-}
-
 const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props ) => {
 	const { setAttributes } = props
 	const {
@@ -454,8 +446,6 @@ const addBottomStyles = ( blockName, options = {} ) => ( styleObject, props ) =>
 		return styleObject
 	}
 
-	const { separatorHeight } = defaultValues
-
 	const styles = {
 		[ `.ugb-bottom-separator` ]: {
 			zIndex: options.enableBringToFront && bottomSeparatorBringToFront ? 6 : undefined,
@@ -465,17 +455,19 @@ const addBottomStyles = ( blockName, options = {} ) => ( styleObject, props ) =>
 			fill: bottomSeparatorColor !== '' ? bottomSeparatorColor : undefined,
 		},
 		[ `.ugb-bottom-separator .ugb-separator-wrapper` ]: {
-			height: bottomSeparatorHeight !== '' ? `${ bottomSeparatorHeight }px` : separatorHeight,
 			transform: bottomSeparatorWidth !== '' ? `scaleX(${ bottomSeparatorWidth })` : undefined,
+		},
+		desktopOnly: {
+			height: bottomSeparatorHeight !== '' ? `${ bottomSeparatorHeight }px` : undefined,
 		},
 		tablet: {
 			[ `.ugb-bottom-separator .ugb-separator-wrapper` ]: {
-				height: bottomSeparatorTabletHeight !== '' ? `${ bottomSeparatorTabletHeight }px` : separatorHeight,
+				height: bottomSeparatorTabletHeight !== '' ? `${ bottomSeparatorTabletHeight }px` : undefined,
 			},
 		},
 		mobile: {
 			[ `.ugb-bottom-separator .ugb-separator-wrapper` ]: {
-				height: bottomSeparatorMobileHeight !== '' ? `${ bottomSeparatorMobileHeight }px` : separatorHeight,
+				height: bottomSeparatorMobileHeight !== '' ? `${ bottomSeparatorMobileHeight }px` : undefined,
 			},
 		},
 	}
