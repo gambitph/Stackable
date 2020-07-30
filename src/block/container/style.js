@@ -14,16 +14,6 @@ import deepmerge from 'deepmerge'
  */
 import { showOptions } from './util'
 
-/**
- * Default attribute values if
- * no value is passed.
- */
-const defaultValues = {
-
-	// Default content width for container block.
-	contentWidth: '100%',
-}
-
 export const createStyles = props => {
 	const getValue = __getValue( props.attributes )
 
@@ -34,8 +24,6 @@ export const createStyles = props => {
 	} = props.attributes
 
 	const show = showOptions( props )
-
-	const { contentWidth } = defaultValues
 
 	if ( show.borderRadius ) {
 		styles.push( {
@@ -164,17 +152,19 @@ export const createStyles = props => {
 
 	// Content width.
 	styles.push( {
-		[ `.${ uniqueClass }-content-wrapper.ugb-container__content-wrapper` ]: {
-			width: appendImportant( getValue( 'contentWidth', '%s%' ) ),
+		desktopOnly: {
+			[ `.${ uniqueClass }-content-wrapper.ugb-container__content-wrapper` ]: {
+				width: appendImportant( getValue( 'contentWidth', '%s%' ) ),
+			},
 		},
 		tablet: {
 			[ `.${ uniqueClass }-content-wrapper.ugb-container__content-wrapper` ]: {
-				width: appendImportant( getValue( 'contentTabletWidth', '%s%' ) || contentWidth ),
+				width: appendImportant( getValue( 'contentTabletWidth', '%s%' ) ),
 			},
 		},
 		mobile: {
 			[ `.${ uniqueClass }-content-wrapper.ugb-container__content-wrapper` ]: {
-				width: appendImportant( getValue( 'contentMobileWidth', '%s%' ) || contentWidth ),
+				width: appendImportant( getValue( 'contentMobileWidth', '%s%' ) ),
 			},
 		},
 	} )

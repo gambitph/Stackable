@@ -24,14 +24,6 @@ const SVGS = {
 	blob1: SVGBlob1,
 }
 
-/**
- * Default attribute values if
- * no value is passed.
- */
-const defaultValues = {
-	// imageWidth: '580px',
-}
-
 export const getShapeSVG = shape => {
 	const svgs = applyFilters( 'stackable.image.shape.svgs', SVGS )
 	return ! svgs[ shape ] ? null : svgs[ shape ]
@@ -40,8 +32,6 @@ export const getShapeSVG = shape => {
 const createImageStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
 	const getValue = __getValue( blockAttributes, getAttrName )
-
-	const { imageWidth } = defaultValues
 
 	const shape = getValue( 'Shape' )
 	const getHeight = widthAttrName => {
@@ -56,14 +46,14 @@ const createImageStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAt
 		}
 	} else if ( screen === 'tablet' ) { // Tablet.
 		return {
-			width: getValue( 'TabletWidth', '%spx' ) || imageWidth,
-			height: getValue( 'TabletWidth' ) ? appendImportant( getHeight( 'TabletWidth' ) ) : imageWidth,
+			width: getValue( 'TabletWidth', '%spx' ),
+			height: getValue( 'TabletWidth' ) ? appendImportant( getHeight( 'TabletWidth' ) ) : undefined,
 		}
 	}
 	// Mobile.
 	return {
-		width: getValue( 'MobileWidth', '%spx' ) || imageWidth,
-		height: getValue( 'MobileWidth' ) ? appendImportant( getHeight( 'MobileWidth' ) ) : imageWidth,
+		width: getValue( 'MobileWidth', '%spx' ),
+		height: getValue( 'MobileWidth' ) ? appendImportant( getHeight( 'MobileWidth' ) ) : undefined,
 	}
 }
 

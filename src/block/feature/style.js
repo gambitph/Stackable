@@ -28,14 +28,6 @@ const computeGridFraction2 = ( percentage, rightColumn = true ) => {
 	return `${ right.toFixed( 2 ) }fr ${ left.toFixed( 2 ) }fr`
 }
 
-/**
- * Default attribute values if
- * no value is passed.
- */
-const defaultValues = {
-	imageColumnWidth: appendImportant( computeGridFraction2( 50, false ) ),
-}
-
 export const createStyles = props => {
 	const getValue = __getValue( props.attributes )
 
@@ -49,19 +41,17 @@ export const createStyles = props => {
 
 	const styles = []
 
-	const { imageColumnWidth } = defaultValues
-
 	// General.
 	if ( show.imageColumnWidth ) {
 		styles.push( {
-			desktopTablet: {
+			desktopOnly: {
 				'.ugb-feature__item': {
-					gridTemplateColumns: getValue( 'imageColumnWidth' ) ? appendImportant( computeGridFraction2( getValue( 'imageColumnWidth' ), ! invert ) ) : imageColumnWidth,
+					gridTemplateColumns: getValue( 'imageColumnWidth' ) ? appendImportant( computeGridFraction2( getValue( 'imageColumnWidth' ), ! invert ) ) : undefined,
 				},
 			},
 			tabletOnly: {
 				'.ugb-feature__item': {
-					gridTemplateColumns: getValue( 'imageColumnTabletWidth' ) ? appendImportant( computeGridFraction2( getValue( 'imageColumnTabletWidth' ), ! invert ) ) : imageColumnWidth,
+					gridTemplateColumns: getValue( 'imageColumnTabletWidth' ) ? appendImportant( computeGridFraction2( getValue( 'imageColumnTabletWidth' ), ! invert ) ) : undefined,
 				},
 			},
 			// No mobile here since the mobile design would stack vertically.
