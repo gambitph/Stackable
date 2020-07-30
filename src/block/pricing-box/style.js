@@ -6,7 +6,7 @@ import {
 	createButtonStyleSet,
 	createTypographyStyles,
 	whiteIfDark,
-	createImageStyleSet,
+	createImageStyleSetDesktopOnly,
 	marginLeftAlign,
 	marginRightAlign,
 	appendImportant,
@@ -56,7 +56,7 @@ export const createStyles = props => {
 	// Image.
 	if ( showImage ) {
 		styles.push( {
-			...createImageStyleSet( 'image%s', 'ugb-img', props.attributes ),
+			...createImageStyleSetDesktopOnly( 'image%s', 'ugb-img', props.attributes ),
 		} )
 
 		styles.push( {

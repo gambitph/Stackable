@@ -4,7 +4,7 @@
 import {
 	createBackgroundStyleSet,
 	createTypographyStyles,
-	createImageStyleSet,
+	createImageStyleSetDesktopOnly,
 	marginLeftAlign,
 	marginRightAlign,
 	appendImportant,
@@ -85,9 +85,24 @@ export const createStyles = props => {
 	// Image.
 	if ( ! show.imageAsBackground && showImage ) {
 		styles.push( {
-			...createImageStyleSet( 'image%s', 'ugb-img', props.attributes ),
+			...createImageStyleSetDesktopOnly( 'image%s', 'ugb-img', props.attributes ),
 		} )
-		styles.push( ...createResponsiveStyles( '.ugb-testimonial__image', 'image%sWidth', 'width', '%spx', props.attributes, true ) )
+
+		styles.push( {
+			desktopOnly: {
+				[ `.ugb-testimonial__image` ]: {
+					width: appendImportant( getValue( 'imageWidth', '%spx' ) ),
+				},
+			}, tablet: {
+				[ `.ugb-testimonial__image` ]: {
+					width: appendImportant( getValue( 'imageTabletWidth', '%spx' ) ),
+				},
+			}, mobile: {
+				[ `.ugb-testimonial__image` ]: {
+					width: appendImportant( getValue( 'imageMobileWidth', '%spx' ) ),
+				},
+			},
+		} )
 
 		styles.push( {
 			'.ugb-img, .ugb-testimonial__image': {

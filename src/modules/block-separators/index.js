@@ -458,7 +458,9 @@ const addBottomStyles = ( blockName, options = {} ) => ( styleObject, props ) =>
 			transform: bottomSeparatorWidth !== '' ? `scaleX(${ bottomSeparatorWidth })` : undefined,
 		},
 		desktopOnly: {
-			height: bottomSeparatorHeight !== '' ? `${ bottomSeparatorHeight }px` : undefined,
+			[ `.ugb-bottom-separator .ugb-separator-wrapper` ]: {
+				height: bottomSeparatorHeight !== '' ? `${ bottomSeparatorHeight }px` : undefined,
+			},
 		},
 		tablet: {
 			[ `.ugb-bottom-separator .ugb-separator-wrapper` ]: {

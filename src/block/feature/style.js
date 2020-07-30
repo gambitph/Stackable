@@ -6,7 +6,7 @@ import {
 	createButtonStyleSet,
 	createTypographyStyles,
 	whiteIfDark,
-	createImageStyleSet,
+	createImageStyleSetDesktopOnly,
 	createResponsiveStyles,
 	createImageBackgroundStyleSet,
 	appendImportant,
@@ -76,11 +76,10 @@ export const createStyles = props => {
 			} ) : {} ),
 		} )
 	}
-
 	// Image.
 	if ( ! show.featuredImageAsBackground ) {
 		styles.push( {
-			...( ! show.featuredImageAsBackground ? createImageStyleSet( 'image%s', 'ugb-img', props.attributes ) : {} ),
+			...( ! show.featuredImageAsBackground ? createImageStyleSetDesktopOnly( 'image%s', 'ugb-img', props.attributes ) : {} ),
 		} )
 	} else {
 		styles.push( {

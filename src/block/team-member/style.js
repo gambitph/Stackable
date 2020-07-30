@@ -4,7 +4,7 @@
 import {
 	createBackgroundStyleSet,
 	createTypographyStyles,
-	createImageStyleSet,
+	createImageStyleSetDesktopOnly,
 	marginLeftAlign,
 	marginRightAlign,
 	createImageMask,
@@ -68,9 +68,24 @@ export const createStyles = props => {
 	} = props.attributes
 	if ( ! show.imageAsBackground && showImage ) {
 		styles.push( {
-			...createImageStyleSet( 'image%s', 'ugb-img', props.attributes ),
+			...createImageStyleSetDesktopOnly( 'image%s', 'ugb-img', props.attributes ),
 		} )
-		styles.push( ...createResponsiveStyles( '.ugb-team-member__image', 'image%sWidth', 'width', '%spx', props.attributes, true ) )
+
+		styles.push( {
+			desktopOnly: {
+				[ `.ugb-team-member__image` ]: {
+					width: appendImportant( getValue( 'imageWidth', '%spx' ) ),
+				},
+			}, tablet: {
+				[ `.ugb-team-member__image` ]: {
+					width: appendImportant( getValue( 'imageTabletWidth', '%spx' ) ),
+				},
+			}, mobile: {
+				[ `.ugb-team-member__image` ]: {
+					width: appendImportant( getValue( 'imageMobileWidth', '%spx' ) ),
+				},
+			},
+		} )
 
 		styles.push( {
 			'.ugb-img, .ugb-team-member__image': {

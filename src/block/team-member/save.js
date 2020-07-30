@@ -36,7 +36,6 @@ const save = props => {
 		imageShape = '',
 		imageShapeStretch = false,
 		imageShadow = '',
-		imageWidth = '',
 		nameTag = 'h4',
 		showImage = true,
 		showName = true,
@@ -87,7 +86,6 @@ const save = props => {
 									<Image
 										imageId={ imageId }
 										src={ imageUrl }
-										width={ imageWidth }
 										alt={ imageAlt || ( showName && name ) }
 										shadow={ imageShadow }
 										shape={ attributes[ `image${ i }Shape` ] || imageShape }

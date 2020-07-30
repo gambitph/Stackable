@@ -42,7 +42,6 @@ const save = props => {
 		showButton = true,
 		showDescription = true,
 		imageShadow = '',
-		imageWidth = '',
 		titleTag = '',
 		buttonIcon = '',
 	} = attributes
@@ -83,7 +82,6 @@ const save = props => {
 							<Image
 								imageId={ imageId }
 								src={ imageUrl }
-								width={ imageWidth }
 								alt={ imageAlt || ( showTitle && title ) }
 								shadow={ imageShadow }
 								shape={ attributes[ `image${ i }Shape` ] || imageShape }

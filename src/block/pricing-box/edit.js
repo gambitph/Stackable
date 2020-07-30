@@ -572,7 +572,6 @@ const edit = props => {
 		imageShadow = '',
 		imageShape = '',
 		imageShapeStretch = false,
-		imageWidth = '',
 		design = 'basic',
 		shadow = '',
 		titleTag = '',
@@ -655,7 +654,6 @@ const edit = props => {
 										shape={ attributes[ `image${ i }Shape` ] || imageShape }
 										shapeStretch={ attributes[ `image${ i }ShapeStretch` ] || imageShapeStretch }
 										alt={ imageAlt }
-										width={ imageWidth }
 									/>
 								}
 							/>

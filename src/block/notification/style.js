@@ -70,12 +70,14 @@ export const createStyles = props => {
 			'.ugb-notification__item': {
 				paddingRight: dismissibleIconSize && dismissibleIconSize > 40 ? '100px !important' : undefined,
 			},
-			'.ugb-notification__close-button': {
-				width: dismissibleIconSize ? `${ dismissibleIconSize }px` : undefined,
-				height: dismissibleIconSize ? `${ dismissibleIconSize }px` : undefined,
-			},
 			'.ugb-notification__close-button svg': {
 				fill: dismissibleIconColor ? `${ dismissibleIconColor } !important` : undefined,
+			},
+			desktopOnly: {
+				'.ugb-notification__close-button': {
+					width: dismissibleIconSize ? `${ dismissibleIconSize }px` : undefined,
+					height: dismissibleIconSize ? `${ dismissibleIconSize }px` : undefined,
+				},
 			},
 			tablet: {
 				'.ugb-notification__close-button': {

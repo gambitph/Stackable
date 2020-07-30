@@ -426,7 +426,6 @@ const edit = props => {
 		imageSize = 'large',
 		imageShape = '',
 		imageShapeStretch = false,
-		imageWidth = '',
 		imageHeight = '',
 		imageShadow = '',
 
@@ -539,7 +538,6 @@ const edit = props => {
 										shape={ imageShape }
 										shapeStretch={ imageShapeStretch }
 										alt={ imageAlt }
-										width={ imageWidth }
 										height={ imageHeight }
 										shadow={ imageShadow }
 									/>

@@ -5,7 +5,7 @@ export { default as createImageAttributes } from './attributes'
 export { createImageAttributeNames } from './attributes'
 export { default as createImageStyles } from './styles'
 export {
-	createImageStyleSet, createImageMask, getShapeSVG,
+	createImageStyleSet, createImageMask, getShapeSVG, createImageStyleSetDesktopOnly,
 } from './styles'
 
 /**
