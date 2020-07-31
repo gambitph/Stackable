@@ -7,14 +7,14 @@ import { SVGStackableIcon } from '~stackable/icons'
 /**
  * WordPress dependencies
  */
-import { IconButton } from '@wordpress/components'
+import { Button } from '@wordpress/components'
 import { createBlock } from '@wordpress/blocks'
 import { dispatch } from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
 
 const InsertLibraryButton = () => {
 	return (
-		<IconButton
+		<Button
 			onClick={ () => {
 				// Insert a design library block.
 				const block = createBlock( 'ugb/design-library' )
@@ -31,7 +31,7 @@ const InsertLibraryButton = () => {
 			className="ugb-insert-library-button"
 			label={ __( 'Open Design Library', i18n ) }
 			icon={ <SVGStackableIcon /> }
-		>{ __( 'Design Library', i18n ) }</IconButton>
+		>{ __( 'Design Library', i18n ) }</Button>
 	)
 }
 

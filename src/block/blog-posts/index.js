@@ -148,7 +148,7 @@ const schema = {
 	...createTypographyAttributes( 'title%s' ),
 	titleTag: {
 		type: 'string',
-		defualt: '',
+		default: '',
 	},
 	titleColor: {
 		type: 'string',

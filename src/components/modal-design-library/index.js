@@ -20,7 +20,7 @@ import { useLocalStorage } from '~stackable/util'
  * WordPress deprendencies
  */
 import {
-	Modal, TextControl, IconButton, ToggleControl,
+	Modal, TextControl, Button, ToggleControl,
 } from '@wordpress/components'
 import {
 	useEffect, useState,
@@ -151,26 +151,26 @@ const ModalDesignLibrary = props => {
 						/>
 					}
 
-					<IconButton
+					<Button
 						icon="image-rotate"
 						label={ __( 'Refresh Library', i18n ) }
 						className="ugb-modal-design-library__refresh"
 						onClick={ () => setDoReset( true ) }
 					/>
 
-					<IconButton
+					<Button
 						icon={ <SVGViewSingle width="18" height="18" /> }
 						className={ columns === 2 ? 'is-active' : '' }
 						label={ __( 'Large preview', i18n ) }
 						onClick={ () => setColumns( 2 ) }
 					/>
-					<IconButton
+					<Button
 						icon={ <SVGViewFew width="18" height="18" /> }
 						className={ columns === 3 ? 'is-active' : '' }
 						label={ __( 'Medium preview', i18n ) }
 						onClick={ () => setColumns( 3 ) }
 					/>
-					<IconButton
+					<Button
 						icon={ <SVGViewMany width="18" height="18" /> }
 						className={ columns === 4 ? 'is-active' : '' }
 						label={ __( 'Small preview', i18n ) }

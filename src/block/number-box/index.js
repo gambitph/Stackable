@@ -149,7 +149,7 @@ export const schema = {
 	},
 	titleTag: {
 		type: 'string',
-		defualt: '',
+		default: '',
 	},
 	...createResponsiveAttributes( 'title%sBottomMargin', {
 		type: 'number',

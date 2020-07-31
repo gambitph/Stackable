@@ -156,7 +156,7 @@ export const schema = {
 	),
 	nameTag: {
 		type: 'string',
-		defualt: '',
+		default: '',
 	},
 	...createTypographyAttributes( 'name%s' ),
 	nameColor: {

@@ -138,6 +138,7 @@ const IconSearchPopover = props => {
 			className="ugb-icon-popover"
 			onClose={ props.onClose }
 			onClickOutside={ props.onClickOutside }
+			position="center"
 		>
 			<PanelBody>
 				<FileDrop
