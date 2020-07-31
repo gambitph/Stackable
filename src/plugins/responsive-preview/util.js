@@ -103,8 +103,8 @@ export const cacheCssObject = ( currentDocument = null, cssObject = null, cssRul
 on Preview Mode.
  *
  * @param {Object} currentDocument current document properties
- * @param {string} previewMode the current Preview Mode of the editor.
  * @param {Object} cssObject
+ * @param {string} previewMode the current Preview Mode of the editor.
  * @param {number} width the editor's current width
  */
 export const updateMediaQuery = ( currentDocument = null, cssObject = null, previewMode = 'Desktop', width = 0 ) => {
