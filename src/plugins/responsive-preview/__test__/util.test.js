@@ -93,7 +93,7 @@ describe( 'cacheCssObject', () => {
 		const document = { styleSheets: cloneDeep( dummyStyleSheets ) }
 		const cssObject = {}
 		const cssRulesCache = {}
-		const includeCss = []
+		const includeCss = [ null ]
 		cacheCssObject( document, cssObject, cssRulesCache, includeCss )
 
 		expect( cssObject ).toEqual( dummyCssObject )
@@ -105,21 +105,29 @@ describe( 'cacheCssObject', () => {
 describe( 'getIncludedIndices', () => {
 	const styleSheets = [
 		{ href: null },
-		{ href: 'style1.css' },
-		{ href: 'style2.css' },
-		{ href: 'style3.css' },
+		{ href: 'http://dummy/css/style1.css' },
+		{ href: 'http://dummy/css/style2.css' },
+		{ href: 'http://dummy/css/style3.css' },
+		{ href: 'http://dummy/css/another2.css' },
+		{ href: 'http://dummy/css/style4.css' },
+		{ href: null },
 	]
 	const includeCss = [ 'style1.css', 'style2.css' ]
-	const includeCss2 = [ 'style3.css' ]
-	const includeCss3 = []
+	const includeCss2 = [ null, 'style3.css' ]
+	const includeCss3 = [ null, 'style' ]
+	const includeCss4 = [ null, 'css/another' ]
+	const includeCss5 = [ '2.css' ]
 	it( 'should return an empty string if some arguments are invalid or undefined', () => {
-		expect( getIncludedIndices( null, includeCss ) ).toEqual( [] )
-		expect( getIncludedIndices( styleSheets, null ) ).toEqual( [] )
+		expect( getIncludedIndices( [], includeCss ) ).toEqual( [] )
+		expect( getIncludedIndices( styleSheets ) ).toEqual( [] )
+		expect( getIncludedIndices( styleSheets, [] ) ).toEqual( [] )
 	} )
 	it( 'should get all indices that matches an entry in includeCss', () => {
-		expect( getIncludedIndices( styleSheets, includeCss ) ).toEqual( [ 0, 1, 2 ] )
-		expect( getIncludedIndices( styleSheets, includeCss2 ) ).toEqual( [ 0, 3 ] )
-		expect( getIncludedIndices( styleSheets, includeCss3 ) ).toEqual( [ 0 ] )
+		expect( getIncludedIndices( styleSheets, includeCss ) ).toEqual( [ 1, 2 ] )
+		expect( getIncludedIndices( styleSheets, includeCss2 ) ).toEqual( [ 0, 3, 6 ] )
+		expect( getIncludedIndices( styleSheets, includeCss3 ) ).toEqual( [ 0, 1, 2, 3, 5, 6 ] )
+		expect( getIncludedIndices( styleSheets, includeCss4 ) ).toEqual( [ 0, 4, 6 ] )
+		expect( getIncludedIndices( styleSheets, includeCss5 ) ).toEqual( [ 2, 4 ] )
 	} )
 } )
 

@@ -23,7 +23,8 @@ const query = '.edit-post-visual-editor'
  *
  * It includes Stackable custom css files and inline styles for blocks.
  */
-const includeCss = [
+const matchingCSSFiles = [
+	null, // Include style tags.
 	'/dist/frontend_blocks__premium_only.css',
 	'/dist/frontend_blocks.css',
 	'/dist/editor_blocks__premium_only.css',
@@ -67,7 +68,7 @@ const observerCallback = () => {
 	}
 
 	// Populate the cssObject with media queries and cache values if necessary.
-	cacheCssObject( document, cssObject, cssRulesCache, includeCss )
+	cacheCssObject( document, cssObject, cssRulesCache, matchingCSSFiles )
 
 	// Update the media query
 	updateMediaQuery( document, cssObject, mode, widthsDetected[ mode ] )

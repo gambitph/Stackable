@@ -8,29 +8,33 @@ import {
 /**
  * Gets all the indices containing an entry in includeCss
  *
- * @param {Object} styleSheets current styleSheets array
- * @param {Object} includeCss
+ * @param {Array} styleSheets current styleSheets array
+ * @param {Array} matchingFilenames array of filenames
  *
- * @return {Object} array of indices
+ * @return {Array} array of indices
  */
-export const getIncludedIndices = ( styleSheets = null, includeCss = null ) => {
-	if ( ! includeCss || ! styleSheets ) {
+export const getIncludedIndices = ( styleSheets = null, matchingFilenames = [] ) => {
+	if ( ! styleSheets ) {
 		return []
 	}
 
 	const styleSheetIndices = []
 
 	styleSheets.forEach( ( { href }, index ) => {
-		// Only do this for our own css files.
-		if ( href && includeCss.some( url => href.includes( url ) ) ) {
-			styleSheetIndices.push( index )
-		} else if ( href === null ) {
-			// Also do this for style tags.
-			styleSheetIndices.push( index )
-		}
+		// Only do this if the filename matches.
+		matchingFilenames.some( url => {
+			// Style tags in the page will have a null href.
+			if ( ! url && href === null ) {
+				return styleSheetIndices.push( index )
+			// Check if it matches what we're looking for.
+			} else if ( href && url && href.includes( url ) ) {
+				return styleSheetIndices.push( index )
+			}
+			return false
+		} )
 	} )
 
-	return [ ...styleSheetIndices ]
+	return styleSheetIndices
 }
 
 /**
