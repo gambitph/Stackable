@@ -25,7 +25,7 @@ We want the Stackable community to be an open, welcoming and friendly place for 
 Link | Description
 ---|---
 [WordPress Plugin](https://wordpress.org/plugins/stackable-ultimate-gutenberg-blocks/) | The actual plugin that you install in your WordPress site
-[WPStackable.com](https://wpstackable.com/) | Main site, blog
+[WPStackable.com](https://wpstackable.com) | Main site, blog
 [Newsletter](http://eepurl.com/dJY9xI) | Get email news updates
 [Community Support Forum](https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks/) | General help and discussion,
 [Github Issues](https://github.com/gambitph/Stackable/issues) | Bug reports, development discussion

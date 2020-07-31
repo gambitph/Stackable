@@ -14,7 +14,7 @@ Stackable is a Library of Page Builder Gutenberg Blocks which will reimagine the
 
 **Reimagine the Way You Use the WordPress Block Editor**
 
-[Stackable](https://wpstackable.com/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is a block library that is one of the first, most expansive, and highly rated plugins made specially for the new WordPress Block Editor (Gutenberg).
+[Stackable](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is a block library that is one of the first, most expansive, and highly rated plugins made specially for the new WordPress Block Editor (Gutenberg).
 
 Stackable adds essential custom blocks to give you a true page builder experience inside the Block Editor. Stackable gives you a suite of high quality blocks, each with their own precise page builder options that let you build the perfect website and landing page that you envision.
 
@@ -33,7 +33,7 @@ With Stackable, you get:
 
 Whether you are a DIYer, business owner, graphic artist or a web agency, Stackable is just the WordPress custom block collection you’ve been waiting for.
 
-See Stackable in action by checking out our demo. Visit our [website](https://wpstackable.com/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) (made with Gutenberg + Stackable blocks) to learn even more about Stackable.
+See Stackable in action by checking out our demo. Visit our [website](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) (made with Gutenberg + Stackable blocks) to learn even more about Stackable.
 
 ## The Easiest and Most Straightforward Way to Build Page Sections
 
@@ -91,7 +91,7 @@ Get our WordPress theme that's beautiful & flexible, Gutenberg-ready and made es
 
 While you can create great pages with Stackable, Stackable Premium lets you do so much more.
 
-Try out a [live demo of Stackable Premium](https://demo.wpstackable.com/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+Try out a [live demo of Stackable Premium](https://demo.wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 ## Stackable Blocks
 
@@ -144,8 +144,8 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com/?utm_sou
 
 ### Learn More About Stackable - Gutenberg Blocks
 
-- Read our [documentation and tutorials](https://docs.wpstackable.com/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- Visit our [site wpstackable.com](https://wpstackable.com/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Read our [documentation and tutorials](https://docs.wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Visit our [site wpstackable.com](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Subscribe to our [newsletter](http://eepurl.com/dJY9xI)
 
 ### Enjoying Stackable Blocks?

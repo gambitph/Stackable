@@ -363,7 +363,7 @@ SVG;
 							<div class="s-box s-center s-box-small">
 								<h3><?php _e( 'Documentation', STACKABLE_I18N ) ?></h3>
 								<p><?php _e( 'Learn how to use Stackable\'s powerful page building tools', STACKABLE_I18N ) ?></p>
-								<p><a href="https://docs.wpstackable.com/?utm_source=wp-settings-footer&utm_campaign=docs&utm_medium=wp-dashboard" class="s-button s-button-small" title="<?php esc_attr_e( 'Visit Docs', STACKABLE_I18N ) ?>" target="_blank" rel="noopener noreferrer"><?php _e( 'Visit Docs', STACKABLE_I18N ) ?></a></p>
+								<p><a href="https://docs.wpstackable.com?utm_source=wp-settings-footer&utm_campaign=docs&utm_medium=wp-dashboard" class="s-button s-button-small" title="<?php esc_attr_e( 'Visit Docs', STACKABLE_I18N ) ?>" target="_blank" rel="noopener noreferrer"><?php _e( 'Visit Docs', STACKABLE_I18N ) ?></a></p>
 							</div>
 							<div class="s-box s-center s-box-small">
 								<h3><?php _e( 'Blog', STACKABLE_I18N ) ?></h3>
