@@ -69,7 +69,7 @@ class ProModal extends Component {
 								<SVGStackableIcon />
 								{ __( 'Upgrade to Premium', i18n ) }
 							</a>
-							<a href="https://demo.wpstackable.com/?utm_source=editor-modal-popup&utm_campaign=trydemo&utm_medium=gutenberg"
+							<a href="https://demo.wpstackable.com?utm_source=editor-modal-popup&utm_campaign=trydemo&utm_medium=gutenberg"
 								target="_premium"
 								title={ __( 'Try Premium Demo', i18n ) }
 							>
