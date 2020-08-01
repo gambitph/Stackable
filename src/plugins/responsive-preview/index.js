@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import './auto-change-responsive-preview'
-import { cacheCssObject, updateMediaQuery } from './util'
+import { updateMediaQuery } from './util'
 
 /**
  * External dependencies
@@ -30,11 +30,6 @@ const matchingCSSFiles = [
 	'/dist/editor_blocks__premium_only.css',
 	'/dist/editor_blocks.css',
 ]
-
-// Cache the cssObject
-const cssObject = {}
-// Cache the cssRules
-const cssRulesCache = {}
 
 // The previous mode.
 let previousMode = 'Desktop'
@@ -67,11 +62,8 @@ const observerCallback = () => {
 		widthsDetected[ mode ] = parseInt( window.getComputedStyle( visualEditorEl ).width, 10 )
 	}
 
-	// Populate the cssObject with media queries and cache values if necessary.
-	cacheCssObject( document, cssObject, cssRulesCache, matchingCSSFiles )
-
-	// Update the media query
-	updateMediaQuery( document, cssObject, mode, widthsDetected[ mode ] )
+	// Update our media queries.
+	updateMediaQuery( matchingCSSFiles, mode, widthsDetected[ mode ] )
 }
 
 // Update the responsive preview when an attribute is changed.

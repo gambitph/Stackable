@@ -37,24 +37,23 @@ export const getIncludedIndices = ( styleSheets = null, matchingFilenames = [] )
 	return styleSheetIndices
 }
 
+// Cache the cssObject
+const cssObject = {}
+// Cache the cssRules
+const cssRulesCache = {}
+
 /**
  * Handles the caching of cssObjects.
  *
- * @param {Object} currentDocument current document properties
- * @param {Object} cssObject
- * @param {Object} cssRulesCache
- * @param {Object} includeCss array of custom css files to cache
+ * @param {Array} matchingFilenames array of custom css files to cache
+ * @param {Object} documentStyleSheets document.styleSheets to use (mainly used for testing)
+ *
+ * @return {Object} An object containing the indices of stylesheets of matchingFilenames
  */
-export const cacheCssObject = ( currentDocument = null, cssObject = null, cssRulesCache = null, includeCss = null ) => {
-	// Checks if a document is passed.
-	if ( ! currentDocument || ! cssObject || ! cssRulesCache || ! includeCss ) {
-		return
-	}
-
-	const styleSheets = Array.from( currentDocument.styleSheets )
-
+export const getCssObject = ( matchingFilenames = [], documentStyleSheets = document.styleSheets ) => {
 	// Stores the indices of needed styleSheets
-	const stylesheetIndices = getIncludedIndices( styleSheets, includeCss )
+	const styleSheets = Array.from( documentStyleSheets )
+	const stylesheetIndices = getIncludedIndices( styleSheets, matchingFilenames )
 
 	stylesheetIndices.forEach( index => {
 		const mediaIndices = {}
@@ -100,22 +99,22 @@ export const cacheCssObject = ( currentDocument = null, cssObject = null, cssRul
 			cssObject[ index ] = { ...mediaIndices }
 		}
 	} )
+
+	return { ...cssObject }
 }
 
 /**
- * Updates the current media query based
-on Preview Mode.
+ * Updates the current media query based on Preview Mode.
  *
- * @param {Object} currentDocument current document properties
- * @param {Object} cssObject
+ * @param {Array} matchingFilenames array of custom css files with media queries
+  to update
  * @param {string} previewMode the current Preview Mode of the editor.
  * @param {number} width the editor's current width
+ * @param {Object} documentStyleSheets document.styleSheets to use (mainly used
+  for testing)
  */
-export const updateMediaQuery = ( currentDocument = null, cssObject = null, previewMode = 'Desktop', width = 0 ) => {
-	// Checks if a document is passed.
-	if ( ! currentDocument || ! cssObject || ! previewMode || width === 0 ) {
-		return
-	}
+export const updateMediaQuery = ( matchingFilenames = [], previewMode = 'Desktop', width = 0, documentStyleSheets = document.styleSheets ) => {
+	const cssObject = getCssObject( matchingFilenames, documentStyleSheets )
 
 	if ( previewMode === 'Tablet' || previewMode === 'Mobile' ) {
 		// If Preview is in Tablet or Mobile Mode, modify media queries for Tablet or Mobile.
@@ -123,16 +122,16 @@ export const updateMediaQuery = ( currentDocument = null, cssObject = null, prev
 			keys( cssObject[ styleSheetIndex ] ).forEach( index => {
 				const {	min, max } = cssObject[ styleSheetIndex ][ index ]
 				if ( inRange( width, min, max ) ) {
-					if ( currentDocument.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText !== 'screen and (max-width: 5000px)' ) {
-						currentDocument.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText = 'screen and (max-width: 5000px)'
+					if ( documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText !== 'screen and (max-width: 5000px)' ) {
+						documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText = 'screen and (max-width: 5000px)'
 					}
-				} else if ( currentDocument.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText !== 'screen and (min-width: 5000px)' ) {
-					cssObject[ styleSheetIndex ][ index ].previousMediaText = currentDocument.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText
-					currentDocument.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText = 'screen and (min-width: 5000px)'
+				} else if ( documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText !== 'screen and (min-width: 5000px)' ) {
+					cssObject[ styleSheetIndex ][ index ].previousMediaText = documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText
+					documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText = 'screen and (min-width: 5000px)'
 				}
 				// Gets the previous value of the media query
-				if ( cssObject[ styleSheetIndex ][ index ].previousMediaText !== currentDocument.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText ) {
-					cssObject[ styleSheetIndex ][ index ].previousMediaText = currentDocument.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText
+				if ( cssObject[ styleSheetIndex ][ index ].previousMediaText !== documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText ) {
+					cssObject[ styleSheetIndex ][ index ].previousMediaText = documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText
 				}
 			} )
 		} )
@@ -140,13 +139,13 @@ export const updateMediaQuery = ( currentDocument = null, cssObject = null, prev
 		// If Preview is in Desktop Mode, revert all media queries
 		keys( cssObject ).forEach( styleSheetIndex => {
 			keys( cssObject[ styleSheetIndex ] ).forEach( index => {
-				if ( currentDocument.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText !== cssObject[ styleSheetIndex ][ index ].mediaText ) {
-					cssObject[ styleSheetIndex ][ index ].previousMediaText = currentDocument.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText
-					currentDocument.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText = cssObject[ styleSheetIndex ][ index ].mediaText
+				if ( documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText !== cssObject[ styleSheetIndex ][ index ].mediaText ) {
+					cssObject[ styleSheetIndex ][ index ].previousMediaText = documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText
+					documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText = cssObject[ styleSheetIndex ][ index ].mediaText
 				}
 				// Gets the previous value of the media query
-				if ( cssObject[ styleSheetIndex ][ index ].previousMediaText !== currentDocument.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText ) {
-					cssObject[ styleSheetIndex ][ index ].previousMediaText = currentDocument.styleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText
+				if ( cssObject[ styleSheetIndex ][ index ].previousMediaText !== documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText ) {
+					cssObject[ styleSheetIndex ][ index ].previousMediaText = documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText
 				}
 			} )
 		} )

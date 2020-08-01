@@ -1,5 +1,5 @@
 import {
-	cacheCssObject, updateMediaQuery, getIncludedIndices,
+	getCssObject, updateMediaQuery, getIncludedIndices,
 } from '../util'
 
 /**
@@ -52,53 +52,17 @@ const dummyCssObject = {
 	},
 }
 
-const dummyCssRulesCache = 	{
-	0: [
-		{
-			cssText: '@media screen and (max-width: 600px) { .ugb-sample.block { display: block; } }',
-			media: { mediaText: 'screen and (max-width: 600px)' },
-		},
-		{
-			cssText: '@media screen { .block-editor { display: block; } }',
-			media: { mediaText: 'screen' },
-		},
-		{
-			cssText: '@media screen and (min-width: 760px) { .ugb-sample.block { display: block; } }',
-			media: { mediaText: 'screen and (min-width: 760px)' },
-		},
-		{
-			cssText: '@media screen and (min-width: 480px) and (max-width: 1025px) { .ugb-sample.block { display: block; } }',
-			media: { mediaText: 'screen and (min-width: 480px) and (max-width: 1025px)' },
-		},
-		{
-			cssText: '@media screen and (max-width: 1025px) .ugb-sample.block { display: block; }',
-			media: { mediaText: 'screen and (min-width: 1025px)' },
-		},
-	],
-}
-
-describe( 'cacheCssObject', () => {
+describe( 'getCssObject', () => {
 	it( 'should not cache values if some arguments are invalid or undefined', () => {
-		const document = {}
-		const cssObject = {}
-		const cssRulesCache = {}
-		const includeCss = []
-		expect( cacheCssObject( null, cssObject, cssRulesCache, includeCss ) ).toBe( undefined )
-		expect( cacheCssObject( document, null, cssRulesCache, includeCss ) ).toBe( undefined )
-		expect( cacheCssObject( document, cssObject, null, includeCss ) ).toBe( undefined )
-		expect( cacheCssObject( document, cssObject, cssRulesCache, null ) ).toBe( undefined )
+		const documentStyleSheets = []
+		const matchingFilenames = []
+		expect( getCssObject( matchingFilenames, documentStyleSheets ) ).toEqual( {} )
 	} )
 
 	it( 'should populate the cssObject and cssRulesCache with media queries in document', () => {
-		const document = { styleSheets: cloneDeep( dummyStyleSheets ) }
-		const cssObject = {}
-		const cssRulesCache = {}
-		const includeCss = [ null ]
-		cacheCssObject( document, cssObject, cssRulesCache, includeCss )
-
-		expect( cssObject ).toEqual( dummyCssObject )
-
-		expect( cssRulesCache ).toEqual( dummyCssRulesCache )
+		const documentStyleSheets = dummyStyleSheets
+		const matchingFilenames = [ null ]
+		expect( getCssObject( matchingFilenames, documentStyleSheets ) ).toEqual( dummyCssObject )
 	} )
 } )
 
