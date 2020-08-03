@@ -68,10 +68,10 @@ export const createStyles = props => {
 		showImage = true,
 	} = props.attributes
 	if ( showImage && show.imageHeight ) {
-		styles.push( ...createResponsiveStyles( '.ugb-blog-posts__featured-image img', 'image%sHeight', 'height', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-blog-posts__featured-image img', 'image%sHeight', 'height', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( showImage && show.imageWidth && design === 'list' ) {
-		styles.push( ...createResponsiveStyles( '.ugb-blog-posts__item', 'image%sWidth', 'gridTemplateColumns', '%spx minmax(0, 1fr)', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-blog-posts__item', 'image%sWidth', 'gridTemplateColumns', '%spx minmax(0, 1fr)', props.attributes, { important: true } ) )
 	}
 
 	// Category.
@@ -255,22 +255,22 @@ export const createStyles = props => {
 
 	// Spacing.
 	if ( show.imageSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-blog-posts__featured-image', 'image%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-blog-posts__featured-image', 'image%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.categorySpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-blog-posts__category', 'category%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-blog-posts__category', 'category%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.titleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-blog-posts__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-blog-posts__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.excerptSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-blog-posts__excerpt', 'excerpt%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-blog-posts__excerpt', 'excerpt%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.metaSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-blog-posts__meta', 'meta%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-blog-posts__meta', 'meta%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.readmoreSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-blog-posts__readmore', 'readmore%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-blog-posts__readmore', 'readmore%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 
 	return deepmerge.all( styles )

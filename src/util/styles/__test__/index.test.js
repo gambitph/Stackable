@@ -1,7 +1,9 @@
 /**
  * Internal dependencies
  */
-import { isDarkColor, __getValue } from '../'
+import {
+	isDarkColor, __getValue, createResponsiveStyles,
+} from '../'
 
 describe( 'isDarkColor', () => {
 	it( 'should work', () => {
@@ -54,5 +56,53 @@ describe( '__getValue', () => {
 	it( 'should handle different cased attribute names and inputs', () => {
 		expect( __getValue( { attrBGColor: 'red' } )( 'attrBGColor' ) ).toBe( 'red' )
 		expect( __getValue( { attrBGColor: 'red' } )( 'AttrBGColor' ) ).toBe( 'red' )
+	} )
+} )
+
+describe( 'createResponsiveStyles', () => {
+	it( 'should generate responsive styles', () => {
+		const selector = '.ugb-sample-block'
+		const attrNameTemplate = 'sample%sAttribute'
+		const styleRule = 'sampleStyleRule'
+		const format = '%spx'
+		const attributes1 = {
+			sampleAttribute: 30,
+			sampleTabletAttribute: '',
+			sampleMobileAttribute: '',
+		}
+		expect( createResponsiveStyles( selector, attrNameTemplate, styleRule, format, attributes1, { important: false } ) ).toEqual( [ {
+			'.ugb-sample-block': { sampleStyleRule: '30px' }, mobile: { '.ugb-sample-block': {} }, tabletOnly: { '.ugb-sample-block': {} },
+		} ] )
+		expect( createResponsiveStyles( selector, attrNameTemplate, styleRule, format, attributes1, { important: true } ) ).toEqual( [ {
+			'.ugb-sample-block': { sampleStyleRule: '30px !important' }, mobile: { '.ugb-sample-block': {} }, tabletOnly: { '.ugb-sample-block': {} },
+		} ] )
+		expect( createResponsiveStyles( selector, attrNameTemplate, styleRule, format, attributes1, { important: true, inherit: false } ) ).toEqual( [ {
+			desktopOnly: { '.ugb-sample-block': { sampleStyleRule: '30px !important' } }, mobile: { '.ugb-sample-block': {} }, tabletOnly: { '.ugb-sample-block': {} },
+		} ] )
+		expect( createResponsiveStyles( selector, attrNameTemplate, styleRule, format, attributes1, {
+			important: true, inheritTabletMax: 25, inheritTabletMin: 20,
+		} ) ).toEqual( [ {
+			'.ugb-sample-block': { sampleStyleRule: '30px !important' }, mobile: { '.ugb-sample-block': {} }, tabletOnly: { '.ugb-sample-block': { sampleStyleRule: '25px !important' } },
+		} ] )
+		expect( createResponsiveStyles( selector, attrNameTemplate, styleRule, format, attributes1, {
+			important: true, inheritMobileMax: 25, inheritMobileMin: 20,
+		} ) ).toEqual( [ {
+			'.ugb-sample-block': { sampleStyleRule: '30px !important' }, mobile: { '.ugb-sample-block': { sampleStyleRule: '25px !important' } }, tabletOnly: { '.ugb-sample-block': {} },
+		} ] )
+		expect( createResponsiveStyles( selector, attrNameTemplate, styleRule, format, attributes1, {
+			important: true, inheritMobileMax: 60, inheritMobileMin: 20,
+		} ) ).toEqual( [ {
+			'.ugb-sample-block': { sampleStyleRule: '30px !important' }, mobile: { '.ugb-sample-block': {} }, tabletOnly: { '.ugb-sample-block': {} },
+		} ] )
+		expect( createResponsiveStyles( selector, attrNameTemplate, styleRule, format, attributes1, {
+			important: true, inheritTabletMax: 60, inheritTabletMin: 20,
+		} ) ).toEqual( [ {
+			'.ugb-sample-block': { sampleStyleRule: '30px !important' }, mobile: { '.ugb-sample-block': {} }, tabletOnly: { '.ugb-sample-block': {} },
+		} ] )
+		expect( createResponsiveStyles( selector, attrNameTemplate, styleRule, format, attributes1, {
+			important: true, inheritMobileMax: 25, inheritMobileMin: 20, inheritTabletMax: 50, inheritTabletMin: 35,
+		} ) ).toEqual( [ {
+			'.ugb-sample-block': { sampleStyleRule: '30px !important' }, mobile: { '.ugb-sample-block': { sampleStyleRule: '25px !important' } }, tabletOnly: { '.ugb-sample-block': { sampleStyleRule: '35px !important' } },
+		} ] )
 	} )
 } )

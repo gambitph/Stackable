@@ -284,3 +284,22 @@ export const moveArrayIndex = ( values, oldIndex, newIndex ) => {
 	values.splice( oldIndex < newIndex ? oldIndex : oldIndex + 1, 1 ) // Remove value in old position.
 	return values
 }
+
+/**
+ * Clamps the value based on given min and max
+ *
+ * @param {*} value
+ * @param {Object} options
+ */
+export const clampValue = ( value, { min = Number.NEGATIVE_INFINITY, max = Number.POSITIVE_INFINITY } ) => {
+	if ( value ) {
+		const clampedValue = Math.min(
+			Math.max( parseFloat( value ), parseFloat( min ) ),
+			parseFloat( max )
+		)
+
+		return parseFloat( clampedValue ) !== parseFloat( value ) ?
+			clampedValue :
+			undefined
+	}
+}

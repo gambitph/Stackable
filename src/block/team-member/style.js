@@ -4,7 +4,7 @@
 import {
 	createBackgroundStyleSet,
 	createTypographyStyles,
-	createImageStyleSetDesktopOnly,
+	createImageStyleSet,
 	marginLeftAlign,
 	marginRightAlign,
 	createImageMask,
@@ -68,7 +68,7 @@ export const createStyles = props => {
 	} = props.attributes
 	if ( ! show.imageAsBackground && showImage ) {
 		styles.push( {
-			...createImageStyleSetDesktopOnly( 'image%s', 'ugb-img', props.attributes ),
+			...createImageStyleSet( 'image%s', 'ugb-img', props.attributes, { inherit: false } ),
 		} )
 
 		styles.push( {
@@ -246,21 +246,21 @@ export const createStyles = props => {
 
 	// Spacing.
 	if ( show.imageSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-team-member__image', 'image%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-team-member__image', 'image%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.nameSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-team-member__name', 'name%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-team-member__name', 'name%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.positionSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-team-member__position', 'position%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-team-member__position', 'position%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.descriptionSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-team-member__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-team-member__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.socialSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'social%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
-		styles.push( ...createResponsiveStyles( '.ugb-button', 'social%sGap', 'marginLeft', '%spx', props.attributes, true ) )
-		styles.push( ...createResponsiveStyles( '.ugb-button', 'social%sGap', 'marginRight', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'social%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
+		styles.push( ...createResponsiveStyles( '.ugb-button', 'social%sGap', 'marginLeft', '%spx', props.attributes, { important: true } ) )
+		styles.push( ...createResponsiveStyles( '.ugb-button', 'social%sGap', 'marginRight', '%spx', props.attributes, { important: true } ) )
 	}
 
 	// Advanced image.

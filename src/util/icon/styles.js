@@ -7,7 +7,7 @@ import { appendImportant } from '../'
  * External dependencies
  */
 import {
-	__getValue, inheritDesktopAttribute,
+	__getValue, clampValue,
 } from '~stackable/util'
 import { camelCase } from 'lodash'
 import deepmerge from 'deepmerge'
@@ -33,24 +33,24 @@ export const createIconStyleSet = ( attrNameTemplate = '%s', mainClassName = '',
 
 	const styles = []
 
-	// Sets the maximum icon size the Mobile and Tablet mode can only get
-	const maxResponsizeSize = 200
+	const clampedTabletSize = clampValue( getValue( 'Size' ), { max: 200 } )
+	const clampedMobileSize = clampValue( getValue( 'Size' ), { max: 200 } )
 
 	styles.push( {
 		[ `.${ mainClassName } .ugb-icon-inner-svg, .${ mainClassName } .ugb-icon-inner-svg svg` ]: {
 			width: appendImportant( getValue( 'Size', '%spx' ) ),
 			height: appendImportant( getValue( 'Size', '%spx' ) ),
 		},
-		tablet: {
+		tabletOnly: {
 			[ `.${ mainClassName } .ugb-icon-inner-svg, .${ mainClassName } .ugb-icon-inner-svg svg` ]: {
-				width: appendImportant( getValue( 'TabletSize', '%spx' ) || inheritDesktopAttribute( getValue( 'Size' ), 'px', maxResponsizeSize, false ) ),
-				height: appendImportant( getValue( 'TabletSize', '%spx' ) || inheritDesktopAttribute( getValue( 'Size' ), 'px', maxResponsizeSize, false ) ),
+				width: appendImportant( getValue( 'TabletSize', '%spx' ) || `${ clampedTabletSize }px` ),
+				height: appendImportant( getValue( 'TabletSize', '%spx' ) || `${ clampedMobileSize }px` ),
 			},
 		},
 		mobile: {
 			[ `.${ mainClassName } .ugb-icon-inner-svg, .${ mainClassName } .ugb-icon-inner-svg svg` ]: {
-				width: appendImportant( getValue( 'MobileSize', '%spx' ) || inheritDesktopAttribute( getValue( 'Size' ), 'px', maxResponsizeSize, false ) ),
-				height: appendImportant( getValue( 'MobileSize', '%spx' ) || inheritDesktopAttribute( getValue( 'Size' ), 'px', maxResponsizeSize, false ) ),
+				width: appendImportant( getValue( 'MobileSize', '%spx' ) || `${ clampedTabletSize }px` ),
+				height: appendImportant( getValue( 'MobileSize', '%spx' ) || `${ clampedMobileSize }px` ),
 			},
 		},
 		[ `.${ mainClassName } .ugb-icon-inner-svg` ]: {

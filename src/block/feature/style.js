@@ -6,7 +6,7 @@ import {
 	createButtonStyleSet,
 	createTypographyStyles,
 	whiteIfDark,
-	createImageStyleSetDesktopOnly,
+	createImageStyleSet,
 	createResponsiveStyles,
 	createImageBackgroundStyleSet,
 	appendImportant,
@@ -79,7 +79,7 @@ export const createStyles = props => {
 	// Image.
 	if ( ! show.featuredImageAsBackground ) {
 		styles.push( {
-			...( ! show.featuredImageAsBackground ? createImageStyleSetDesktopOnly( 'image%s', 'ugb-img', props.attributes ) : {} ),
+			...( ! show.featuredImageAsBackground ? createImageStyleSet( 'image%s', 'ugb-img', props.attributes, { inherit: false } ) : {} ),
 		} )
 	} else {
 		styles.push( {
@@ -183,13 +183,13 @@ export const createStyles = props => {
 
 	// Spacing.
 	if ( show.titleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-feature__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-feature__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.descriptionSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-feature__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-feature__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.buttonSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'button%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'button%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 
 	return deepmerge.all( styles )

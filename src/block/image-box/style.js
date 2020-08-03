@@ -7,7 +7,7 @@ import {
 	appendImportant,
 	createBackgroundStyles,
 	createBackgroundOverlayStyles,
-	inheritDesktopAttribute,
+	clampValue,
 	__getValue,
 } from '~stackable/util'
 import deepmerge from 'deepmerge'
@@ -24,9 +24,6 @@ export const createStyles = props => {
 
 	const styles = []
 
-	// Sets the maximum image height the Mobile and Tablet mode can only get.
-	const maxResponsiveSize = 300
-
 	if ( show.borderRadius ) {
 		styles.push( {
 			'.ugb-image-box__box': {
@@ -35,19 +32,21 @@ export const createStyles = props => {
 		} )
 	}
 
+	const clampedImageHeight = clampValue( getValue( 'columnHeight' ), { max: 300 } )
+
 	// Height.
 	styles.push( {
 		'.ugb-image-box__item': {
 			height: appendImportant( getValue( 'columnHeight', '%spx' ) ),
 		},
-		tablet: {
+		tabletOnly: {
 			'.ugb-image-box__item': {
-				height: appendImportant( getValue( 'tabletColumnHeight', '%spx' ) || inheritDesktopAttribute( getValue( 'columnHeight' ), 'px', maxResponsiveSize, false ) ),
+				height: appendImportant( getValue( 'tabletColumnHeight', '%spx' ) || ( clampedImageHeight && `${ clampedImageHeight }px` ) ),
 			},
 		},
 		mobile: {
 			'.ugb-image-box__item': {
-				height: appendImportant( getValue( 'mobileColumnHeight', '%spx' ) || inheritDesktopAttribute( getValue( 'columnHeight' ), 'px', maxResponsiveSize, false ) ),
+				height: appendImportant( getValue( 'mobileColumnHeight', '%spx' ) || ( clampedImageHeight && `${ clampedImageHeight }px` ) ),
 			},
 		},
 	} )
@@ -216,7 +215,7 @@ export const createStyles = props => {
 					width: appendImportant( getValue( 'arrowSize', '%spx' )	),
 				},
 			},
-			tablet: {
+			tabletOnly: {
 				'.ugb-image-box__arrow svg': {
 					width: appendImportant( getValue( 'arrowTabletSize', '%spx' ) ),
 				},
@@ -227,21 +226,21 @@ export const createStyles = props => {
 				},
 			},
 		} )
-		styles.push( ...createResponsiveStyles( '.ugb-image-box__arrow', 'arrow%sAlign', 'textAlign', '%s', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-image-box__arrow', 'arrow%sAlign', 'textAlign', '%s', props.attributes, { important: true } ) )
 	}
 
 	// Spacing.
 	if ( show.subtitleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-image-box__subtitle', 'subtitle%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-image-box__subtitle', 'subtitle%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.titleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-image-box__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-image-box__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.descriptionSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-image-box__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-image-box__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.arrowSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-image-box__arrow', 'arrow%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-image-box__arrow', 'arrow%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 
 	return deepmerge.all( styles )

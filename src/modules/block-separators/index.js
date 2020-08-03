@@ -415,7 +415,7 @@ const addTopStyles = ( blockName, options = {} ) => ( styleObject, props ) => {
 				height: topSeparatorHeight !== '' ? `${ topSeparatorHeight }px` : undefined,
 			},
 		},
-		tablet: {
+		tabletOnly: {
 			[ `.ugb-top-separator .ugb-separator-wrapper` ]: {
 				height: topSeparatorTabletHeight !== '' ? `${ topSeparatorTabletHeight }px` : undefined,
 			},
@@ -462,7 +462,7 @@ const addBottomStyles = ( blockName, options = {} ) => ( styleObject, props ) =>
 				height: bottomSeparatorHeight !== '' ? `${ bottomSeparatorHeight }px` : undefined,
 			},
 		},
-		tablet: {
+		tabletOnly: {
 			[ `.ugb-bottom-separator .ugb-separator-wrapper` ]: {
 				height: bottomSeparatorTabletHeight !== '' ? `${ bottomSeparatorTabletHeight }px` : undefined,
 			},

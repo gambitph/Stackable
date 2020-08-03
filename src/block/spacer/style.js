@@ -15,7 +15,7 @@ export const createStyles = props => {
 				height: getValue( 'height', `%s${ getValue( 'heightUnit' ) || 'px' }` ),
 			},
 		},
-		tablet: {
+		tabletOnly: {
 			'.ugb-spacer': {
 				height: getValue( 'tabletHeight', `%s${ getValue( 'tabletHeightUnit' ) || 'px' }` ),
 			},

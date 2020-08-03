@@ -79,7 +79,7 @@ export const createStyles = props => {
 					height: dismissibleIconSize ? `${ dismissibleIconSize }px` : undefined,
 				},
 			},
-			tablet: {
+			tabletOnly: {
 				'.ugb-notification__close-button': {
 					width: dismissibleIconTabletSize ? `${ dismissibleIconTabletSize }px` : undefined,
 					height: dismissibleIconTabletSize ? `${ dismissibleIconTabletSize }px` : undefined,
@@ -283,16 +283,16 @@ export const createStyles = props => {
 
 	// Spacing.
 	if ( show.iconSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-notification__icon', 'icon%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-notification__icon', 'icon%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.titleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-notification__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-notification__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.descriptionSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-notification__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-notification__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.buttonSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'button%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'button%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 
 	// return deepmerge.all( applyFilters( 'stackable.notification.styles', styles, props, show ) )

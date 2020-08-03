@@ -81,38 +81,15 @@ export const createImageMask = ( attrNameTemplate = '%s', blockAttributes = {} )
 	}
 }
 
-export const createImageStyleSetDesktopOnly = ( attrNameTemplate = '%s', mainClassName = '', blockAttributes = {}, options = {} ) => {
-	return {
-		[ `.${ mainClassName }` ]: {
-			...createImageMask( attrNameTemplate, blockAttributes, options ),
-		},
-		desktopOnly: {
-			[ `.${ mainClassName }` ]: {
-				...createImageStyles( attrNameTemplate, 'desktop', blockAttributes, options ),
-			},
-		},
-		tablet: {
-			[ `.${ mainClassName }` ]: {
-				...createImageStyles( attrNameTemplate, 'tablet', blockAttributes, options ),
-			},
-		},
-		mobile: {
-			[ `.${ mainClassName }` ]: {
-				...createImageStyles( attrNameTemplate, 'mobile', blockAttributes, options ),
-			},
-		},
-	}
-}
-
 export default createImageStyles
 
 export const createImageStyleSet = ( attrNameTemplate = '%s', mainClassName = '', blockAttributes = {}, options = {} ) => {
-	return {
-		[ `.${ mainClassName }` ]: {
-			...createImageStyles( attrNameTemplate, 'desktop', blockAttributes, options ),
-			...createImageMask( attrNameTemplate, blockAttributes, options ),
-		},
-		tablet: {
+	const {
+		inherit = true,
+	} = options
+
+	const style = {
+		tabletOnly: {
 			[ `.${ mainClassName }` ]: {
 				...createImageStyles( attrNameTemplate, 'tablet', blockAttributes, options ),
 			},
@@ -123,5 +100,21 @@ export const createImageStyleSet = ( attrNameTemplate = '%s', mainClassName = ''
 			},
 		},
 	}
+
+	if ( inherit ) {
+		style[ `.${ mainClassName }` ] = {
+			...createImageStyles( attrNameTemplate, 'desktop', blockAttributes, options ),
+			...createImageMask( attrNameTemplate, blockAttributes, options ),
+		}
+	} else {
+		style[ `.${ mainClassName }` ] = {
+			...createImageMask( attrNameTemplate, blockAttributes, options ),
+		}
+		style.desktopOnly = {
+			...createImageStyles( attrNameTemplate, 'desktop', blockAttributes, options ),
+		}
+	}
+
+	return style
 }
 

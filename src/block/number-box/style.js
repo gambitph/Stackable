@@ -85,10 +85,14 @@ export const createStyles = props => {
 					width: show.numberBGColor ? appendImportant( getValue( 'numberPadding', '%sem' ) ) : undefined,
 				},
 			},
-			tablet: {
+			tabletOnly: {
 				'.ugb-number-box__number': {
 					height: show.numberBGColor ? appendImportant( getValue( 'numberTabletPadding', '%sem' ) ) : undefined,
 					width: show.numberBGColor ? appendImportant( getValue( 'numberTabletPadding', '%sem' ) ) : undefined,
+				},
+			},
+			tablet: {
+				'.ugb-number-box__number': {
 					lineHeight: appendImportant( show.numberBGColor && numberTabletLineHeight === '' ? getValue( 'numberTabletPadding', '%sem' ) : getValue( 'numberTabletLineHeight', `%s${ numberTabletLineHeightUnit }` ) ),
 					marginLeft: numberTabletAlign !== '' || tabletContentAlign !== '' ? appendImportant( marginLeftAlign( numberTabletAlign ) ) : undefined,
 					marginRight: numberTabletAlign !== '' || tabletContentAlign !== '' ? appendImportant( marginRightAlign( numberTabletAlign ) ) : undefined,
@@ -162,13 +166,13 @@ export const createStyles = props => {
 
 	// Number spacing.
 	if ( show.numberSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-number-box__number', 'number%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-number-box__number', 'number%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.titleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-number-box__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-number-box__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.descriptionSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-number-box__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-number-box__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 
 	return deepmerge.all( styles )

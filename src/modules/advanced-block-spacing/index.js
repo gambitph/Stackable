@@ -12,7 +12,7 @@ import {
 	__getValue,
 	createAllCombinationAttributes,
 	appendImportant,
-	inheritDesktopAttribute,
+	clampValue,
 } from '~stackable/util'
 
 /**
@@ -509,6 +509,10 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 	} = props.attributes
 
 	const blockClass = `.${ props.mainClassName }`
+
+	const clampedMarginTop = clampValue( getValue( 'marginTop' ), { max: 100 } )
+	const clampedMarginBottom = clampValue( getValue( 'marginBottom' ), { max: 100 } )
+
 	const margins = applyFilters( `stackable.${ blockName }.advanced-block-spacing.margins`, {
 		[ blockClass ]: {
 			marginTop: appendImportant( getValue( 'marginTop', `%s${ marginUnit }` ) ),
@@ -520,20 +524,20 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 				marginLeft: appendImportant( getValue( 'marginLeft', `%s${ marginUnit }` ) ),
 			},
 		},
-		tablet: {
+		tabletOnly: {
 			[ blockClass ]: {
-				marginTop: getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ? appendImportant( getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ) : inheritDesktopAttribute( getValue( 'marginTop' ), marginUnit, 100 ),
 				marginRight: appendImportant( getValue( 'tabletMarginRight', `%s${ tabletMarginUnit }` ) ),
-				marginBottom: getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ? appendImportant( getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ) : inheritDesktopAttribute( getValue( 'marginBottom' ), marginUnit, 100 ),
 				marginLeft: appendImportant( getValue( 'tabletMarginLeft', `%s${ tabletMarginUnit }` ) ),
+				marginTop: getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ? appendImportant( getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ) : appendImportant( clampedMarginTop, `%s${ marginUnit }` ),
+				marginBottom: getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ? appendImportant( getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ) : appendImportant( clampedMarginBottom, `%s${ marginUnit }` ),
 			},
 		},
 		mobile: {
 			[ blockClass ]: {
-				marginTop: getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ? appendImportant( getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ) : inheritDesktopAttribute( getValue( 'marginTop' ), marginUnit, 100 ),
 				marginRight: appendImportant( getValue( 'mobileMarginRight', `%s${ mobileMarginUnit }` ) ),
-				marginBottom: getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ? appendImportant( getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ) : inheritDesktopAttribute( getValue( 'marginBottom' ), marginUnit, 100 ),
 				marginLeft: appendImportant( getValue( 'mobileMarginLeft', `%s${ mobileMarginUnit }` ) ),
+				marginTop: getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ? appendImportant( getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ) : appendImportant( clampedMarginTop, `%s${ marginUnit }` ),
+				marginBottom: getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ? appendImportant( getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ) : appendImportant( clampedMarginBottom, `%s${ marginUnit }` ),
 			},
 		},
 	} )
@@ -546,7 +550,7 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 				paddingLeft: appendImportant( getValue( 'paddingLeft', `%s${ paddingUnit }` ) ),
 			},
 		},
-		tablet: {
+		tabletOnly: {
 			[ blockClass ]: {
 				paddingTop: appendImportant( getValue( 'tabletPaddingTop', `%s${ tabletPaddingUnit }` ) ),
 				paddingRight: appendImportant( getValue( 'tabletPaddingRight', `%s${ tabletPaddingUnit }` ) ),
@@ -581,14 +585,20 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 				maxWidth: getValue( 'blockWidth' ) !== '' ? appendImportant( getValue( 'blockWidth', `%s${ blockWidthUnit }` ) ) : undefined,
 			},
 		},
-		tablet: {
+		tabletOnly: {
 			[ blockClass ]: {
 				minHeight: getValue( 'tabletBlockHeight', `%s${ tabletBlockHeightUnit }` ) || undefined,
+			},
+			[ `${ blockClass } > .ugb-inner-block` ]: {
+				maxWidth: getValue( 'tabletBlockWidth' ) !== '' ? appendImportant( getValue( 'tabletBlockWidth', `%s${ tabletBlockWidthUnit }` ) ) : undefined,
+			},
+		},
+		tablet: {
+			[ blockClass ]: {
 				justifyContent: getValue( 'tabletBlockHorizontalAlign' ),
 				alignItems: getValue( 'tabletBlockVerticalAlign' ),
 			},
 			[ `${ blockClass } > .ugb-inner-block` ]: {
-				maxWidth: getValue( 'tabletBlockWidth' ) !== '' ? appendImportant( getValue( 'tabletBlockWidth', `%s${ tabletBlockWidthUnit }` ) ) : undefined,
 				// Some themes can limit min-width, preventing block width.
 				minWidth: blockInnerWidth === 'wide' && getValue( 'tabletBlockWidth' ) ? 'auto !important' : undefined,
 			},

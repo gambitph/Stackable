@@ -3,6 +3,7 @@
  */
 import { default as _isDarkColor } from 'is-dark-color'
 import { lowerFirst } from 'lodash'
+import { clampValue } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -108,18 +109,53 @@ export const appendImportant = ( rule, doImportant = true ) => {
  * @param {string} styleRule
  * @param {string} format
  * @param {Object} attributes
- * @param {boolean} important
+ * @param {Object} options
  *
  * @return {Array} Reponsive object styles.
  */
-export const createResponsiveStyles = ( selector, attrNameTemplate = '%s', styleRule = 'marginBottom', format = '%spx', attributes = {}, important = false ) => {
+export const createResponsiveStyles = ( selector, attrNameTemplate = '%s', styleRule = 'marginBottom', format = '%spx', attributes = {}, options = {} ) => {
+	 const {
+		important = false,
+		inherit = true, // If false, desktop styles will only be applied to desktop, etc.
+		inheritTabletMax, // If provided & inherit is true, clamp the inherited value in tablet to this.
+		inheritTabletMin,
+		inheritMobileMax, // If provided & inherit is true, clamp the inherited value in mobile to this.
+		inheritMobileMin,
+	} = options
 	const getValue = __getValue( attributes )
 
+	if ( inherit ) {
+		const desktopValue = getValue( sprintf( attrNameTemplate, '' ), format )
+		const tabletValue = getValue( sprintf( attrNameTemplate, 'Tablet' ), format )
+		const mobileValue = getValue( sprintf( attrNameTemplate, 'Mobile' ), format )
+
+		const clampTabletValue = clampValue( desktopValue, { min: inheritTabletMin, max: inheritTabletMax } )
+		const clampMobileValue = clampValue( desktopValue, { min: inheritMobileMin, max: inheritMobileMax } )
+
+		return [ {
+			[ selector ]: {
+				[ styleRule ]: appendImportant( desktopValue, important ),
+			},
+			tabletOnly: {
+				[ selector ]: {
+					[ styleRule ]: tabletValue ? appendImportant( tabletValue, important ) : appendImportant( clampTabletValue && sprintf( format, clampTabletValue ), important ),
+				},
+			},
+			mobile: {
+				[ selector ]: {
+					[ styleRule ]: mobileValue ? appendImportant( mobileValue, important ) : appendImportant( clampMobileValue && sprintf( format, clampMobileValue ), important ),
+				},
+			},
+		} ]
+	}
+
 	return [ {
-		[ selector ]: {
-			[ styleRule ]: appendImportant( getValue( sprintf( attrNameTemplate, '' ), format ), important ),
+		desktopOnly: {
+			[ selector ]: {
+				[ styleRule ]: appendImportant( getValue( sprintf( attrNameTemplate, '' ), format ), important ),
+			},
 		},
-		tablet: {
+		tabletOnly: {
 			[ selector ]: {
 				[ styleRule ]: appendImportant( getValue( sprintf( attrNameTemplate, 'Tablet' ), format ), important ),
 			},
@@ -190,7 +226,7 @@ export const createResponsiveMarginAlign = ( selector, attrNameTemplate = '%s', 
  */
 export const createResponsiveEditorStyles = ( selector, attrNameTemplate = '%s', styleRule = 'marginBottom', format = '%spx', attributes = {}, important = false ) => {
 	return [ {
-		editor: createResponsiveStyles( selector, attrNameTemplate, styleRule, format, attributes, important )[ 0 ],
+		editor: createResponsiveStyles( selector, attrNameTemplate, styleRule, format, attributes, { important } )[ 0 ],
 	} ]
 }
 

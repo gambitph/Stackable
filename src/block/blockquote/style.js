@@ -47,10 +47,10 @@ export const createStyles = props => {
 				opacity: getValue( 'quoteOpacity' ),
 			},
 		} )
-		styles.push( ...createResponsiveStyles( '.ugb-blockquote__quote', 'quote%sSize', 'width', '%spx', props.attributes, true ) )
-		styles.push( ...createResponsiveStyles( '.ugb-blockquote__quote', 'quote%sSize', 'height', '%spx', props.attributes, true ) )
-		styles.push( ...createResponsiveStyles( '.ugb-blockquote__quote', 'quote%sX', 'left', '%spx', props.attributes, true ) )
-		styles.push( ...createResponsiveStyles( '.ugb-blockquote__quote', 'quote%sY', 'top', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-blockquote__quote', 'quote%sSize', 'width', '%spx', props.attributes, { important: true } ) )
+		styles.push( ...createResponsiveStyles( '.ugb-blockquote__quote', 'quote%sSize', 'height', '%spx', props.attributes, { important: true } ) )
+		styles.push( ...createResponsiveStyles( '.ugb-blockquote__quote', 'quote%sX', 'left', '%spx', props.attributes, { important: true } ) )
+		styles.push( ...createResponsiveStyles( '.ugb-blockquote__quote', 'quote%sY', 'top', '%spx', props.attributes, { important: true } ) )
 	}
 
 	// Text.

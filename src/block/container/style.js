@@ -157,7 +157,7 @@ export const createStyles = props => {
 				width: appendImportant( getValue( 'contentWidth', '%s%' ) ),
 			},
 		},
-		tablet: {
+		tabletOnly: {
 			[ `.${ uniqueClass }-content-wrapper.ugb-container__content-wrapper` ]: {
 				width: appendImportant( getValue( 'contentTabletWidth', '%s%' ) ),
 			},

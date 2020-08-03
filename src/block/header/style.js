@@ -192,16 +192,16 @@ export const createStyles = props => {
 
 	// Spacing.
 	if ( show.titleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-header__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-header__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.subtitleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-header__subtitle', 'subtitle%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-header__subtitle', 'subtitle%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.buttonSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'button%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'button%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.buttonGap ) {
-		styles.push( ...createResponsiveStyles( '.ugb-button1', 'buttonGap%s', 'marginRight', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-button1', 'buttonGap%s', 'marginRight', '%spx', props.attributes, { important: true } ) )
 	}
 
 	return deepmerge.all( styles )

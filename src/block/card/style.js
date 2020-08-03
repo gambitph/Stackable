@@ -9,8 +9,8 @@ import {
 	whiteIfDarkBlackIfLight,
 	appendImportant,
 	createImageBackgroundStyleSet,
-	inheritDesktopAttribute,
 	__getValue,
+	clampValue,
 } from '~stackable/util'
 import deepmerge from 'deepmerge'
 
@@ -29,9 +29,6 @@ export const createStyles = props => {
 	const show = showOptions( props )
 
 	const styles = []
-
-	// Sets the maximum image height size the Mobile and Tablet mode can only get.
-	const maxResponsiveSize = 300
 
 	styles.push( {
 		'.ugb-card__title, .ugb-card__subtitle, .ugb-card__description, .ugb-button-container': {
@@ -81,19 +78,22 @@ export const createStyles = props => {
 	styles.push( {
 		...createImageBackgroundStyleSet( 'image%s', 'ugb-card__image', props.attributes ),
 	} )
+
+	const clampedImageHeight = clampValue( getValue( 'imageBackgroundHeight' ), { max: 300 } )
+
 	if ( show.imageHeight ) {
 		styles.push( {
 			'.ugb-card__image': {
 				height: appendImportant( getValue( 'imageBackgroundHeight', '%spx' ) ),
 			},
-			tablet: {
+			tabletOnly: {
 				'.ugb-card__image': {
-					height: appendImportant( getValue( 'imageBackgroundTabletHeight', '%spx' ) || inheritDesktopAttribute( getValue( 'imageBackgroundHeight' ), 'px', maxResponsiveSize, false ) ),
+					height: appendImportant( getValue( 'imageBackgroundTabletHeight', '%spx' ) || ( clampedImageHeight && `${ clampedImageHeight }px` ) ),
 				},
 			},
 			mobile: {
 				'.ugb-card__image': {
-					height: appendImportant( getValue( 'imageBackgroundMobileHeight', '%spx' ) || inheritDesktopAttribute( getValue( 'imageBackgroundHeight' ), 'px', maxResponsiveSize, false ) ),
+					height: appendImportant( getValue( 'imageBackgroundMobileHeight', '%spx' ) || ( clampedImageHeight && `${ clampedImageHeight }px` ) ),
 				},
 			},
 		} )
@@ -205,24 +205,24 @@ export const createStyles = props => {
 		styles.push( {
 			...createButtonStyleSet( 'button%s', 'ugb-button', props.attributes ),
 		} )
-		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'button%sAlign', 'textAlign', '%s', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'button%sAlign', 'textAlign', '%s', props.attributes, { important: true } ) )
 	}
 
 	// Spacing.
 	if ( show.imageSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-card__image', 'image%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-card__image', 'image%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.titleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-card__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-card__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.subtitleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-card__subtitle', 'subtitle%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-card__subtitle', 'subtitle%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.descriptionSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-card__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-card__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.buttonSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'button%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'button%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 
 	return deepmerge.all( styles )

@@ -52,7 +52,7 @@ export const createStyles = props => {
 	} )
 
 	// Content Vertical Align
-	styles.push( ...createResponsiveStyles( '> .ugb-inner-block > .ugb-block-content > *', '%sColumnContentVerticalAlign', 'justifyContent', '%s', props.attributes, true ) )
+	styles.push( ...createResponsiveStyles( '> .ugb-inner-block > .ugb-block-content > *', '%sColumnContentVerticalAlign', 'justifyContent', '%s', props.attributes, { important: true } ) )
 
 	// Content Width
 	styles.push( {
