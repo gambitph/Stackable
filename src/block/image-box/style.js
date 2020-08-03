@@ -209,23 +209,7 @@ export const createStyles = props => {
 				fill: appendImportant( getValue( 'arrowColor' ) ),
 			},
 		} )
-		styles.push( {
-			desktopOnly: {
-				'.ugb-image-box__arrow svg': {
-					width: appendImportant( getValue( 'arrowSize', '%spx' )	),
-				},
-			},
-			tabletOnly: {
-				'.ugb-image-box__arrow svg': {
-					width: appendImportant( getValue( 'arrowTabletSize', '%spx' ) ),
-				},
-			},
-			mobile: {
-				'.ugb-image-box__arrow svg': {
-					width: appendImportant( getValue( 'arrowSize', '%spx' )	),
-				},
-			},
-		} )
+		styles.push( ...createResponsiveStyles( '.ugb-image-box__arrow svg', 'arrow%sSize', 'width', '%spx', props.attributes, { important: true, inherit: false } ) )
 		styles.push( ...createResponsiveStyles( '.ugb-image-box__arrow', 'arrow%sAlign', 'textAlign', '%s', props.attributes, { important: true } ) )
 	}
 
