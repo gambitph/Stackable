@@ -71,21 +71,7 @@ export const createStyles = props => {
 			...createImageStyleSet( 'image%s', 'ugb-img', props.attributes, { inherit: false } ),
 		} )
 
-		styles.push( {
-			desktopOnly: {
-				[ `.ugb-team-member__image` ]: {
-					width: appendImportant( getValue( 'imageWidth', '%spx' ) ),
-				},
-			}, tablet: {
-				[ `.ugb-team-member__image` ]: {
-					width: appendImportant( getValue( 'imageTabletWidth', '%spx' ) ),
-				},
-			}, mobile: {
-				[ `.ugb-team-member__image` ]: {
-					width: appendImportant( getValue( 'imageMobileWidth', '%spx' ) ),
-				},
-			},
-		} )
+		styles.push( ...createResponsiveStyles( '.ugb-team-member__image', 'image%sWidth', 'width', '%spx', props.attributes, { important: true, inherit: false } ) )
 
 		styles.push( {
 			'.ugb-img, .ugb-team-member__image': {

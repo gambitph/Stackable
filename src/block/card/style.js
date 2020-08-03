@@ -10,7 +10,6 @@ import {
 	appendImportant,
 	createImageBackgroundStyleSet,
 	__getValue,
-	clampValue,
 } from '~stackable/util'
 import deepmerge from 'deepmerge'
 
@@ -79,23 +78,11 @@ export const createStyles = props => {
 		...createImageBackgroundStyleSet( 'image%s', 'ugb-card__image', props.attributes ),
 	} )
 
-	const clampedImageHeight = clampValue( getValue( 'imageBackgroundHeight' ), { max: 300 } )
-
 	if ( show.imageHeight ) {
 		styles.push( {
-			'.ugb-card__image': {
-				height: appendImportant( getValue( 'imageBackgroundHeight', '%spx' ) ),
-			},
-			tabletOnly: {
-				'.ugb-card__image': {
-					height: appendImportant( getValue( 'imageBackgroundTabletHeight', '%spx' ) || ( clampedImageHeight && `${ clampedImageHeight }px` ) ),
-				},
-			},
-			mobile: {
-				'.ugb-card__image': {
-					height: appendImportant( getValue( 'imageBackgroundMobileHeight', '%spx' ) || ( clampedImageHeight && `${ clampedImageHeight }px` ) ),
-				},
-			},
+			...createResponsiveStyles( '.ugb-card__image', 'imageBackground%sHeight', 'height', '%spx', props.attributes, {
+				inherit: true, inheritTabletMax: 300, inheritMobileMax: 300, important: true,
+			} ),
 		} )
 	}
 	if ( show.imageWidth ) {
