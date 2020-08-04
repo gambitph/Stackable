@@ -5,7 +5,6 @@ import { appendImportant, __getValue } from '~stackable/util'
 
 export const createStyles = props => {
 	const getValue = __getValue( props.attributes )
-
 	const {
 		backgroundColor = '',
 		layer1Color = '',
@@ -51,9 +50,6 @@ export const createStyles = props => {
 			height: paddingTop !== '' ? `${ paddingTop }${ paddingUnit }` : undefined,
 			background: backgroundColor ? backgroundColor : undefined,
 		},
-		'.ugb-separator__svg-wrapper': {
-			height: getValue( 'height' ) !== 200 ? appendImportant( getValue( 'height', '%spx' ) ) : undefined,
-		},
 		'.ugb-separator__shadow, .ugb-separator__layer-1': {
 			fill: layer1Color ? layer1Color : undefined,
 			transform: ( () => {
@@ -64,10 +60,17 @@ export const createStyles = props => {
 				return transform
 			} )(),
 		},
-		tablet: {
+		desktopOnly: {
 			'.ugb-separator__svg-wrapper': {
-				height: appendImportant( getValue( 'tabletHeight', '%spx' ) ),
+				height: getValue( 'height' ) !== '' ? appendImportant( getValue( 'height', '%spx' ) ) : undefined,
 			},
+		},
+		tabletOnly: {
+			'.ugb-separator__svg-wrapper': {
+				height: getValue( 'tabletHeight' ) !== '' ? appendImportant( getValue( 'tabletHeight', '%spx' ) ) : undefined,
+			},
+		},
+		tablet: {
 			'.ugb-separator': {
 				marginTop: `${ tabletMarginTop - 1 }${ tabletMarginUnit } !important`, // -1 to prevent white lines.
 				marginBottom: `${ tabletMarginBottom - 1 }${ tabletMarginUnit } !important`, // -1 to prevent white lines.
@@ -81,7 +84,7 @@ export const createStyles = props => {
 		},
 		mobile: {
 			'.ugb-separator__svg-wrapper': {
-				height: appendImportant( getValue( 'mobileHeight', '%spx' ) ),
+				height: getValue( 'mobileHeight' ) !== '' ? appendImportant( getValue( 'mobileHeight', '%spx' ) ) : undefined,
 			},
 			'.ugb-separator': {
 				marginTop: `${ mobileMarginTop - 1 }${ mobileMarginUnit } !important`, // -1 to prevent white lines.
