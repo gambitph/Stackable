@@ -56,6 +56,11 @@ export const createStyles = props => {
 			'> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout': {
 				gridTemplateColumns: ! columnRanges.every( c => c === '1.00fr' ) ? appendImportant( columnRanges.join( ' ' ) ) : undefined,
 			},
+			tablet: {
+				'> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout': {
+					gridTemplateColumns: getValue( `tabletColumns1` ) && ! tabletColumnRanges.every( c => c === '1.00fr' ) ? appendImportant( tabletColumnRanges.join( ' ' ) ) : undefined,
+				},
+			}
 		},
 	} )
 
