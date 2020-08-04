@@ -14,7 +14,7 @@ Stackable is a Library of Page Builder Gutenberg Blocks which will reimagine the
 
 **Reimagine the Way You Use the WordPress Block Editor**
 
-[Stackable](https://wpstackable.com) is a block library that is one of the first, most expansive, and highly rated plugins made specially for the new WordPress Block Editor (Gutenberg).
+[Stackable](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is a block library that is one of the first, most expansive, and highly rated plugins made specially for the new WordPress Block Editor (Gutenberg).
 
 Stackable adds essential custom blocks to give you a true page builder experience inside the Block Editor. Stackable gives you a suite of high quality blocks, each with their own precise page builder options that let you build the perfect website and landing page that you envision.
 
@@ -33,7 +33,7 @@ With Stackable, you get:
 
 Whether you are a DIYer, business owner, graphic artist or a web agency, Stackable is just the WordPress custom block collection you’ve been waiting for.
 
-See Stackable in action by checking out our demo. Visit our [website](https://wpstackable.com) (made with Gutenberg + Stackable blocks) to learn even more about Stackable.
+See Stackable in action by checking out our demo. Visit our [website](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) (made with Gutenberg + Stackable blocks) to learn even more about Stackable.
 
 ## The Easiest and Most Straightforward Way to Build Page Sections
 
@@ -81,7 +81,7 @@ Get our WordPress theme that's beautiful & flexible, Gutenberg-ready and made es
 
 ## Stackable Premium
 
-[Stackable Premium](https://wpstackable.com/premium) extends the capabilities of Stackable and the new WordPress editor to give you the smoothest page building experience. Using the core Stackable Philosophy of balancing utility and great design, Stackable Premium offers:
+[Stackable Premium](https://wpstackable.com/premium/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) extends the capabilities of Stackable and the new WordPress editor to give you the smoothest page building experience. Using the core Stackable Philosophy of balancing utility and great design, Stackable Premium offers:
 
 - Premium Block Layouts and Pre-Set Section / Block Designs
 - Premium hover and image box effects
@@ -91,64 +91,68 @@ Get our WordPress theme that's beautiful & flexible, Gutenberg-ready and made es
 
 While you can create great pages with Stackable, Stackable Premium lets you do so much more.
 
-Try out a [live demo of Stackable Premium](https://demo.wpstackable.com/v2/)
+Try out a [live demo of Stackable Premium](https://demo.wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 ## Stackable Blocks
 
-- Advanced Columns & Grid Block — [View Block](http://wpstackable.com/columns-block)
-- Container Block — [View Block](https://wpstackable.com/container-block/)
-- Advanced Heading Block - [View Block](https://wpstackable.com/advanced-heading-block/)
-- Advanced Text Block - [View Block](https://wpstackable.com/advanced-text-block/)
-- Icon Block — [View Block](https://wpstackable.com/icon-block/)
-- Separator Block — [View Block](https://wpstackable.com/separator-block/)
-- Posts Block — [View Block](https://wpstackable.com/blog-posts-block/)
-- Feature Grid Block — [View Block](https://wpstackable.com/feature-grid-block/)
-- Accordion Block — [View Block](https://wpstackable.com/accordion-block/)
-- Image Box Block — [View Block](https://wpstackable.com/image-box-block/)
-- Feature Block — [View Block](https://wpstackable.com/feature-block/)
-- Icon List Block — [View Block](https://wpstackable.com/icon-list-block/)
-- Call to Action Block — [View Block](https://wpstackable.com/call-to-action-block/)
-- Card Block — [View Block](https://wpstackable.com/card-block/)
-- Header Block — [View Block](https://wpstackable.com/header-block/)
-- Count Up Block — [View Block](https://wpstackable.com/count-up-block/)
-- Video Popup Block — [View Block](https://wpstackable.com/video-popup-block/)
-- Pricing Box Block — [View Block](https://wpstackable.com/pricing-table-block/)
-- Testimonial Block — [View Block](https://wpstackable.com/testimonial-block/)
-- Team Members Block — [View Block](https://wpstackable.com/team-member-block/)
-- Notification Block — [View Block](https://wpstackable.com/notification-block/)
-- Number Box Block — [View Block](https://wpstackable.com/number-box-block/)
-- Expand / Show More Block — [View Block](https://wpstackable.com/expand-block/)
-- Button Block — [View Block](https://wpstackable.com/button-block/)
-- Blockquote Block — [View Block](https://wpstackable.com/blockquote-block/)
+- Advanced Columns & Grid Block — [View Block](https://wpstackable.com/columns-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Container Block — [View Block](https://wpstackable.com/container-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Advanced Heading Block - [View Block](https://wpstackable.com/advanced-heading-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Advanced Text Block - [View Block](https://wpstackable.com/advanced-text-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Icon Block — [View Block](https://wpstackable.com/icon-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Separator Block — [View Block](https://wpstackable.com/separator-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Posts Block — [View Block](https://wpstackable.com/blog-posts-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Feature Grid Block — [View Block](https://wpstackable.com/feature-grid-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Accordion Block — [View Block](https://wpstackable.com/accordion-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Image Box Block — [View Block](https://wpstackable.com/image-box-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Feature Block — [View Block](https://wpstackable.com/feature-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Icon List Block — [View Block](https://wpstackable.com/icon-list-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Call to Action Block — [View Block](https://wpstackable.com/call-to-action-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Card Block — [View Block](https://wpstackable.com/card-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Header Block — [View Block](https://wpstackable.com/header-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Count Up Block — [View Block](https://wpstackable.com/count-up-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Video Popup Block — [View Block](https://wpstackable.com/video-popup-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Pricing Box Block — [View Block](https://wpstackable.com/pricing-table-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Testimonial Block — [View Block](https://wpstackable.com/testimonial-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Team Members Block — [View Block](https://wpstackable.com/team-member-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Notification Block — [View Block](https://wpstackable.com/notification-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Number Box Block — [View Block](https://wpstackable.com/number-box-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Expand / Show More Block — [View Block](https://wpstackable.com/expand-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Button Block — [View Block](https://wpstackable.com/button-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Blockquote Block — [View Block](https://wpstackable.com/blockquote-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Divider Block
 - Spacer Block
 
 ### News Article Updates
 
-- [v2.7 New Icon Block, Amazing Icons and Font Awesome Pro](https://wpstackable.com/blog/new-icon-block-amazing-icons-and-font-awesome-pro)
-- [v2.6 New Advanced Blocks and Load More Blog Posts Button](https://wpstackable.com/blog/new-advanced-blocks-and-load-more-blog-posts-button)
-- [v2.5 Better Onboarding for First Time Users](https://wpstackable.com/blog/better-onboarding-for-first-time-users)
-- [v2.4 Introducing the Advanced Columns & Grid Block](https://wpstackable.com/blog/introducing-the-advanced-columns-and-grid-block/)
-- [v2.3 Introducing the Design Library and New Block Designs](https://wpstackable.com/blog/introducing-the-design-library-and-new-block-designs/)
-- [v2.2 Welcome Video, Better Separators and Auto-Block Recovery](https://wpstackable.com/blog/welcome-video-better-separators-and-auto-block-recovery/)
-- [v2.1 Help Video Snippets and Auto-Expand Settings](https://wpstackable.com/blog/help-video-snippets-auto-expand-settings/)
-- [v2.0 Version 2 is Out!](https://wpstackable.com/blog/version-2-is-out)
-- [v1.17 Text Color and Text Highlight](https://wpstackable.com/blog/text-color-and-text-highlight)
-- [v1.16 Translations: Stackable in Your Language](https://wpstackable.com/blog/translations-stackable-in-your-language/)
-- [v1.15 Separators Are Here](https://wpstackable.com/blog/separators-are-here/)
-- [v1.14 Video Backgrounds & Background Gradients](https://wpstackable.com/blog/video-backgrounds-background-gradients/)
-- [v1.13 Introducing Stackable Premium](https://wpstackable.com/blog/introducing-stackable-premium/)
-- [v1.12 Stackable Is Now in GitHub](https://wpstackable.com/blog/stackable-is-now-in-github/)
-- [v1.11 Huge Updates Across All Blocks](https://wpstackable.com/blog/huge-updates-across-all-blocks/)
+- [v2.8 Introducing: Role Manager for Gutenberg](https://wpstackable.com/blog/introducing-role-manager-for-gutenberg/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v2.7 New Icon Block, Amazing Icons and Font Awesome Pro](https://wpstackable.com/blog/new-icon-block-amazing-icons-and-font-awesome-pro/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v2.6 New Advanced Blocks and Load More Blog Posts Button](https://wpstackable.com/blog/new-advanced-blocks-and-load-more-blog-posts-button/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v2.5 Better Onboarding for First Time Users](https://wpstackable.com/blog/better-onboarding-for-first-time-users/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v2.4 Introducing the Advanced Columns & Grid Block](https://wpstackable.com/blog/introducing-the-advanced-columns-and-grid-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v2.3 Introducing the Design Library and New Block Designs](https://wpstackable.com/blog/introducing-the-design-library-and-new-block-designs/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v2.2 Welcome Video, Better Separators and Auto-Block Recovery](https://wpstackable.com/blog/welcome-video-better-separators-and-auto-block-recovery/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v2.1 Help Video Snippets and Auto-Expand Settings](https://wpstackable.com/blog/help-video-snippets-auto-expand-settings/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v2.0 Version 2 is Out!](https://wpstackable.com/blog/version-2-is-out/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v1.17 Text Color and Text Highlight](https://wpstackable.com/blog/text-color-and-text-highlight/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v1.16 Translations: Stackable in Your Language](https://wpstackable.com/blog/translations-stackable-in-your-language/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v1.15 Separators Are Here](https://wpstackable.com/blog/separators-are-here/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v1.14 Video Backgrounds & Background Gradients](https://wpstackable.com/blog/video-backgrounds-background-gradients/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v1.13 Introducing Stackable Premium](https://wpstackable.com/blog/introducing-stackable-premium/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v1.12 Stackable Is Now in GitHub](https://wpstackable.com/blog/stackable-is-now-in-github/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- [v1.11 Huge Updates Across All Blocks](https://wpstackable.com/blog/huge-updates-across-all-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 ### Learn More About Stackable - Gutenberg Blocks
 
-- [Join the Stackable Community in Facebook](https://www.facebook.com/groups/wpstackable/)
-- [Visit us in wpstackable.com](https://wpstackable.com)
-- [Twitter @wpstackable](https://twitter.com/wpstackable)
-- [Facebook Page WPStackable](https://www.facebook.com/Stackable-870555573068267/)
-- [What is Stackable?](https://wpstackable.com/blog/welcome-to-stackable/)
-- [Subscribe to our newsletter](http://eepurl.com/dJY9xI)
+- Read our [documentation and tutorials](https://docs.wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Visit our [site wpstackable.com](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+- Subscribe to our [newsletter](http://eepurl.com/dJY9xI)
+
+### Enjoying Stackable Blocks?
+
+- Join the [Stackable Community in Facebook](https://www.facebook.com/groups/wpstackable/)
+- Follow us in [Twitter @wpstackable](https://twitter.com/wpstackable)
+- [Leave us a rating](https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks/reviews/?rate=5#new-post)
 
 == Installation ==
 
@@ -186,11 +190,17 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
-= 2.7.1 =
+= 2.8.1 =
+
+* Fixed: PHP Rest API notice about register_setting used incorrectly.
+
+= 2.8.0 =
+[Introducing: Role Manager for Gutenberg](https://wpstackable.com/blog/introducing-role-manager-for-gutenberg/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
 * New: User Role Manager (premium)
 * New: Updated URL picker
 * New: Added alt text for image using title and subtitle in Image Box block.
-* Fixed: WordPress 5.5 compatibility
+* Fixed: Partial WordPress 5.5 compatibility
 * Fixed: Responsive breakpoint for hiding in desktop.
 * Fixed: Missing guided CSS rules for Card Block (premium).
 * Fixed: Only show Stackable menu for users that have the manage_options capability
@@ -200,7 +210,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Social buttons give block errors in Team Member blocks.
 
 = 2.7.0 =
-[New Icon Block, Amazing Icons and Font Awesome Pro](https://wpstackable.com/blog/new-icon-block-amazing-icons-and-font-awesome-pro)
+[New Icon Block, Amazing Icons and Font Awesome Pro](https://wpstackable.com/blog/new-icon-block-amazing-icons-and-font-awesome-pro/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 * New: New Icon Block!
 * New: You can now upload your own SVG icons!
@@ -231,7 +241,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Video popup block opens after dragging in mobile
 
 = 2.6.0 =
-[New Advanced Blocks and Load More Blog Posts Button](https://wpstackable.com/blog/new-advanced-blocks-and-load-more-blog-posts-button)
+[New Advanced Blocks and Load More Blog Posts Button](https://wpstackable.com/blog/new-advanced-blocks-and-load-more-blog-posts-button/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 * New: Advanced Heading Block
 * New: Advanced Text Block
@@ -246,7 +256,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Images with paths containing "mp4", "webm" or "ogg" are wrongly detected as videos
 
 = 2.5.0 =
-[Better Onboarding for First Time Users](https://wpstackable.com/blog/better-onboarding-for-first-time-users)
+[Better Onboarding for First Time Users](https://wpstackable.com/blog/better-onboarding-for-first-time-users/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 * New: Better onboarding for first time users
 * New: Updated admin page styling
@@ -256,7 +266,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Added missing blocks in the block settings area
 
 = 2.4.0 =
-[Introducing the Advanced Columns & Grid Block](https://wpstackable.com/blog/introducing-the-advanced-columns-and-grid-block/)
+[Introducing the Advanced Columns & Grid Block](https://wpstackable.com/blog/introducing-the-advanced-columns-and-grid-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 * New: Advanced Columns & Grid Block
 * Fixed: Inspector may get a horizontal scrollbar
@@ -272,7 +282,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Button text hover color styling issue
 
 = 2.3.0 =
-[Introducing the Design Library and New Block Designs](https://wpstackable.com/blog/introducing-the-design-library-and-new-block-designs/)
+[Introducing the Design Library and New Block Designs](https://wpstackable.com/blog/introducing-the-design-library-and-new-block-designs/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 * New: Design Library
 * New: No paddings option in the Block Background area
@@ -308,7 +318,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Removed "Edit as HTML" for Container blocks
 
 = 2.2.0 =
-[Welcome Video, Better Separators and Auto-Block Recovery](https://wpstackable.com/blog/welcome-video-better-separators-and-auto-block-recovery/)
+[Welcome Video, Better Separators and Auto-Block Recovery](https://wpstackable.com/blog/welcome-video-better-separators-and-auto-block-recovery/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 * New: Welcome to Stackable modal popup
 * New: Auto-block recovery functionality for styling block errors and block update errors
@@ -331,7 +341,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Bottom Separator layout images are now oriented correctly
 
 = 2.1.0 =
-[Help Video Snippets and Auto-Expand Settings](https://wpstackable.com/blog/help-video-snippets-auto-expand-settings/)
+[Help Video Snippets and Auto-Expand Settings](https://wpstackable.com/blog/help-video-snippets-auto-expand-settings/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 * New: Added help tooltip video snippets for block options
 * New: Double-click a block component to open inspector settings
@@ -371,7 +381,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Possible posts block migration error
 
 = 2.0 =
-[Version 2 is Out!](https://wpstackable.com/blog/version-2-is-out)
+[Version 2 is Out!](https://wpstackable.com/blog/version-2-is-out/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 * New: Improved user interface to manage section building tools
 * New: Cutting-edge design options for typography, colors, images & videos
@@ -421,7 +431,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Regex error in Firefox
 
 = 1.17.0 =
-[Text Color and Text Highlight](https://wpstackable.com/blog/text-color-and-text-highlight)
+[Text Color and Text Highlight](https://wpstackable.com/blog/text-color-and-text-highlight/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 * New: Color & highlight formatting toolbar (⌘+h or Ctrl+h)
 * Fixed: Support for media queries in Custom CSS
@@ -431,7 +441,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Squished images in Feature block when image size is adjusted
 
 = 1.16.0 =
-[Translations: Stackable in Your Language](https://wpstackable.com/blog/translations-stackable-in-your-language/)
+[Translations: Stackable in Your Language](https://wpstackable.com/blog/translations-stackable-in-your-language/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 * New: Translation ready
 * New: Updated FontAwesome to v5.9: more icons!
