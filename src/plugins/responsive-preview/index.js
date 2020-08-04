@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import './auto-change-responsive-preview'
-import { updateMediaQuery } from './util'
+import { updateMediaQueries } from './util'
 
 /**
  * External dependencies
@@ -17,19 +17,6 @@ import { addAction } from '@wordpress/hooks'
 import { select } from '@wordpress/data'
 
 const query = '.edit-post-visual-editor'
-
-/**
- * CSS files to cache
- *
- * It includes Stackable custom css files and inline styles for blocks.
- */
-const matchingCSSFiles = [
-	null, // Include style tags.
-	'/dist/frontend_blocks__premium_only.css',
-	'/dist/frontend_blocks.css',
-	'/dist/editor_blocks__premium_only.css',
-	'/dist/editor_blocks.css',
-]
 
 // The previous mode.
 let previousMode = 'Desktop'
@@ -62,7 +49,7 @@ const observerCallback = () => {
 		widthsDetected[ mode ] = parseInt( window.getComputedStyle( visualEditorEl ).width, 10 )
 	}
 
-	updateMediaQuery( matchingCSSFiles, mode, widthsDetected[ mode ] )
+	updateMediaQueries( mode, widthsDetected[ mode ] )
 }
 
 // Update the responsive preview when an attribute is changed.

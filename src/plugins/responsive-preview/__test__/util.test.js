@@ -1,5 +1,5 @@
 import {
-	getCssObject, updateMediaQuery, getIncludedIndices,
+	getCssObject, updateMediaQueries, getIncludedIndices,
 } from '../util'
 
 /**
@@ -95,14 +95,14 @@ describe( 'getIncludedIndices', () => {
 	} )
 } )
 
-describe( 'updateMediaQuery', () => {
+describe( 'updateMediaQueries', () => {
 	it( 'should modify media queries for tablet mode', () => {
 		const document = { styleSheets: cloneDeep( dummyStyleSheets ) }
 		const previewMode = 'Tablet'
 		const matchingFilenames = [ null ]
 		const width = 700
 
-		expect( updateMediaQuery( matchingFilenames, previewMode, width, document.styleSheets ) ).toEqual(
+		expect( updateMediaQueries( previewMode, width, matchingFilenames, document.styleSheets ) ).toEqual(
 			[
 				{
 					href: null,
@@ -139,7 +139,7 @@ describe( 'updateMediaQuery', () => {
 		const matchingFilenames = [ null ]
 		const width = 250
 
-		expect( updateMediaQuery( matchingFilenames, previewMode, width, document.styleSheets ) ).toEqual(
+		expect( updateMediaQueries( previewMode, width, matchingFilenames, document.styleSheets ) ).toEqual(
 			 [
 				{
 					href: null,
@@ -178,8 +178,8 @@ describe( 'updateMediaQuery', () => {
 		const width = 1920
 
 		// Transform the media queries to mobile first.
-		updateMediaQuery( matchingFilenames, 'Mobile', 250, document.styleSheets, cssObject )
+		updateMediaQueries( 'Mobile', 250, matchingFilenames, document.styleSheets, cssObject )
 
-		expect( updateMediaQuery( matchingFilenames, previewMode, width, document.styleSheets, cssObject ) ).toEqual( cloneDeep( dummyStyleSheets ) )
+		expect( updateMediaQueries( previewMode, width, matchingFilenames, document.styleSheets, cssObject ) ).toEqual( cloneDeep( dummyStyleSheets ) )
 	} )
 } )
