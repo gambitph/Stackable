@@ -528,16 +528,16 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 			[ blockClass ]: {
 				marginRight: appendImportant( getValue( 'tabletMarginRight', `%s${ tabletMarginUnit }` ) ),
 				marginLeft: appendImportant( getValue( 'tabletMarginLeft', `%s${ tabletMarginUnit }` ) ),
-				marginTop: getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ? appendImportant( getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ) : appendImportant( clampedMarginTop, `%s${ marginUnit }` ),
-				marginBottom: getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ? appendImportant( getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ) : appendImportant( clampedMarginBottom, `%s${ marginUnit }` ),
+				marginTop: getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ? appendImportant( getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ) : appendImportant( `${ clampedMarginTop }${ marginUnit }`),
+				marginBottom: getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ? appendImportant( getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ) : appendImportant( `${ clampedMarginBottom }${ marginUnit }`),
 			},
 		},
 		mobile: {
 			[ blockClass ]: {
 				marginRight: appendImportant( getValue( 'mobileMarginRight', `%s${ mobileMarginUnit }` ) ),
 				marginLeft: appendImportant( getValue( 'mobileMarginLeft', `%s${ mobileMarginUnit }` ) ),
-				marginTop: getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ? appendImportant( getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ) : appendImportant( clampedMarginTop, `%s${ marginUnit }` ),
-				marginBottom: getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ? appendImportant( getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ) : appendImportant( clampedMarginBottom, `%s${ marginUnit }` ),
+				marginTop: getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ? appendImportant( getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) ) : appendImportant( `${ clampedMarginTop }${ marginUnit }`),
+				marginBottom: getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ? appendImportant( getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) ) : appendImportant( `${ clampedMarginBottom }${ marginUnit }`),
 			},
 		},
 	} )
