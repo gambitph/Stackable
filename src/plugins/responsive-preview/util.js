@@ -47,10 +47,11 @@ const cssRulesCache = {}
  *
  * @param {Array} matchingFilenames array of custom css files to cache
  * @param {Object} documentStyleSheets document.styleSheets to use (mainly used for testing)
+ * @param {Object} cachedCssObject cssObject (mainly used for testing)
  *
  * @return {Object} An object containing the indices of stylesheets of matchingFilenames
  */
-export const getCssObject = ( matchingFilenames = [], documentStyleSheets = document.styleSheets ) => {
+export const getCssObject = ( matchingFilenames = [], documentStyleSheets = document.styleSheets, cachedCssObject = cssObject ) => {
 	// Stores the indices of needed styleSheets
 	const styleSheets = Array.from( documentStyleSheets )
 	const stylesheetIndices = getIncludedIndices( styleSheets, matchingFilenames )
@@ -71,12 +72,12 @@ export const getCssObject = ( matchingFilenames = [], documentStyleSheets = docu
 					const max = maxWidth ? parseInt( maxWidth[ 1 ], 10 ) : 9999
 					const min = minWidth ? parseInt( minWidth[ 1 ], 10 ) : 0
 
-					if ( cssObject && cssObject[ index ] && cssObject[ index ][ mediaIndex ] ) {
-						const { previousMediaText } = cssObject[ index ][ mediaIndex ]
+					if ( cachedCssObject && cachedCssObject[ index ] && cachedCssObject[ index ][ mediaIndex ] ) {
+						const { previousMediaText } = cachedCssObject[ index ][ mediaIndex ]
 
 						if ( previousMediaText === media.mediaText ) {
 						// Store the cached value of media query has already been modified.
-							mediaIndices[ mediaIndex ] = { ...cssObject[ index ][ mediaIndex ] }
+							mediaIndices[ mediaIndex ] = { ...cachedCssObject[ index ][ mediaIndex ] }
 						} else {
 						// Store the new media query if custom CSS is modified.
 							mediaIndices[ mediaIndex ] = {
@@ -96,11 +97,11 @@ export const getCssObject = ( matchingFilenames = [], documentStyleSheets = docu
 				}
 			} )
 
-			cssObject[ index ] = { ...mediaIndices }
+			cachedCssObject[ index ] = { ...mediaIndices }
 		}
 	} )
 
-	return { ...cssObject }
+	return { ...cachedCssObject }
 }
 
 /**
@@ -111,10 +112,11 @@ export const getCssObject = ( matchingFilenames = [], documentStyleSheets = docu
  * @param {string} previewMode the current Preview Mode of the editor.
  * @param {number} width the editor's current width
  * @param {Object} documentStyleSheets document.styleSheets to use (mainly used
+ * @param {Object} cachedCssObject the global cssObject (mainly used for testing)
   for testing)
  */
-export const updateMediaQuery = ( matchingFilenames = [], previewMode = 'Desktop', width = 0, documentStyleSheets = document.styleSheets ) => {
-	const cssObject = getCssObject( matchingFilenames, documentStyleSheets )
+export const updateMediaQuery = ( matchingFilenames = [], previewMode = 'Desktop', width = 0, documentStyleSheets = document.styleSheets, cachedCssObject = cssObject ) => {
+	const cssObject = getCssObject( matchingFilenames, documentStyleSheets, cachedCssObject )
 
 	if ( previewMode === 'Tablet' || previewMode === 'Mobile' ) {
 		// If Preview is in Tablet or Mobile Mode, modify media queries for Tablet or Mobile.
@@ -150,4 +152,6 @@ export const updateMediaQuery = ( matchingFilenames = [], previewMode = 'Desktop
 			} )
 		} )
 	}
+
+	return documentStyleSheets
 }

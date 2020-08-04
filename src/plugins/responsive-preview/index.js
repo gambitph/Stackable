@@ -37,6 +37,8 @@ let previousMode = 'Desktop'
 // Cache the responsive widths of the preview.
 const widthsDetected = {}
 
+// Initialize debounced updateMediaQuery function
+
 const observerCallback = () => {
 	const {
 		__experimentalGetPreviewDeviceType: getPreviewDeviceType,
@@ -62,8 +64,7 @@ const observerCallback = () => {
 		widthsDetected[ mode ] = parseInt( window.getComputedStyle( visualEditorEl ).width, 10 )
 	}
 
-	// Update our media queries.
-	updateMediaQuery( matchingCSSFiles, mode, widthsDetected[ mode ] )
+	throttle( updateMediaQuery , 300)( matchingCSSFiles, mode, widthsDetected[ mode ] )
 }
 
 // Update the responsive preview when an attribute is changed.

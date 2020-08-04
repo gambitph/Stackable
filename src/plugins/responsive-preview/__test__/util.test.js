@@ -96,27 +96,14 @@ describe( 'getIncludedIndices', () => {
 } )
 
 describe( 'updateMediaQuery', () => {
-	it( 'should not update media queries if some arguments are invalid or undefined', () => {
-		const document = {}
-		const previewMode = 'Desktop'
-		const cssObject = {}
-		const width = 720
-		expect( updateMediaQuery( null, cssObject, previewMode, width ) ).toBe( undefined )
-		expect( updateMediaQuery( document, null, previewMode, width ) ).toBe( undefined )
-		expect( updateMediaQuery( document, cssObject, null, width ) ).toBe( undefined )
-		expect( updateMediaQuery( document, cssObject, previewMode, null ) ).toBe( undefined )
-	} )
-
 	it( 'should modify media queries for tablet mode', () => {
 		const document = { styleSheets: cloneDeep( dummyStyleSheets ) }
 		const previewMode = 'Tablet'
-		const cssObject = cloneDeep( dummyCssObject )
+		const matchingFilenames = [ null ]
 		const width = 700
 
-		updateMediaQuery( document, cssObject, previewMode, width )
-
-		expect( document ).toEqual( {
-			styleSheets: [
+		expect( updateMediaQuery( matchingFilenames, previewMode, width, document.styleSheets ) ).toEqual(
+			[
 				{
 					href: null,
 					cssRules: [
@@ -143,20 +130,17 @@ describe( 'updateMediaQuery', () => {
 					],
 				},
 			],
-		}
 		)
 	} )
 
 	it( 'should modify media queries for mobile mode', () => {
 		const document = { styleSheets: cloneDeep( dummyStyleSheets ) }
 		const previewMode = 'Mobile'
-		const cssObject = cloneDeep( dummyCssObject )
+		const matchingFilenames = [ null ]
 		const width = 250
 
-		updateMediaQuery( document, cssObject, previewMode, width )
-
-		expect( document ).toEqual( {
-			styleSheets: [
+		expect( updateMediaQuery( matchingFilenames, previewMode, width, document.styleSheets ) ).toEqual(
+			 [
 				{
 					href: null,
 					cssRules: [
@@ -183,45 +167,19 @@ describe( 'updateMediaQuery', () => {
 					],
 				},
 			],
-		}
 		)
 	} )
 
 	it( 'should modify media queries for desktop mode', () => {
-		const document = {
-			styleSheets: [
-				{
-					href: null,
-					cssRules: [
-						{
-							cssText: '@media screen and (max-width: 600px) { .ugb-sample.block { display: block; } }',
-							media: { mediaText: 'screen and (max-width: 5000px)' },
-						},
-						{
-							cssText: '@media screen { .block-editor { display: block; } }',
-							media: { mediaText: 'screen' },
-						},
-						{
-							cssText: '@media screen and (min-width: 760px) { .ugb-sample.block { display: block; } }',
-							media: { mediaText: 'screen and (min-width: 5000px)' },
-						},
-						{
-							cssText: '@media screen and (min-width: 480px) and (max-width: 1025px) { .ugb-sample.block { display: block; } }',
-							media: { mediaText: 'screen and (min-width: 5000px)' },
-						},
-						{
-							cssText: '@media screen and (max-width: 1025px) .ugb-sample.block { display: block; }',
-							media: { mediaText: 'screen and (min-width: 5000px)' },
-						},
-					],
-				} ],
-		}
+		const document = { styleSheets: cloneDeep( dummyStyleSheets ) }
 		const previewMode = 'Desktop'
-		const cssObject = cloneDeep( dummyCssObject )
+		const cssObject = {}
+		const matchingFilenames = [ null ]
 		const width = 1920
 
-		updateMediaQuery( document, cssObject, previewMode, width )
+		// Transform the media queries to mobile first.
+		updateMediaQuery( matchingFilenames, 'Mobile', 250, document.styleSheets, cssObject )
 
-		expect( document ).toEqual( { styleSheets: cloneDeep( dummyStyleSheets ) } )
+		expect( updateMediaQuery( matchingFilenames, previewMode, width, document.styleSheets, cssObject ) ).toEqual( cloneDeep( dummyStyleSheets ) )
 	} )
 } )

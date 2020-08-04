@@ -18,7 +18,7 @@ const SortableContainer = sortableContainer( ( { children } ) => {
 } )
 
 const SortableItem = sortableElement( ( {
-	value, key, index, ...props, // eslint-disable-line
+	value, key, index, ...props // eslint-disable-line
 } ) => {
 	return <div className="ugb-sort-control__item" { ...props } >{ value }</div>
 } )
