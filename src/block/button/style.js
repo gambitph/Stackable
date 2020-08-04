@@ -65,9 +65,17 @@ export const createStyles = props => {
 	// styles.push( createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '', blockAttributes = {} ) )
 	styles.push( {
 		...createButtonStyleSet( 'button1%s', 'ugb-button1', props.attributes ),
-		...( showButton2 ? createButtonStyleSet( 'button2%s', 'ugb-button2', props.attributes ) : {} ),
-		...( showButton3 ? createButtonStyleSet( 'button3%s', 'ugb-button3', props.attributes ) : {} ),
 	} )
+	if ( showButton2 ) {
+		styles.push( {
+			...createButtonStyleSet( 'button2%s', 'ugb-button2', props.attributes ),
+		} )
+	}
+	if ( showButton3 ) {
+		styles.push( {
+			...createButtonStyleSet( 'button3%s', 'ugb-button3', props.attributes ),
+		} )
+	}
 
 	return deepmerge.all( styles )
 }

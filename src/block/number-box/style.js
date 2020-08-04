@@ -87,6 +87,7 @@ export const createStyles = props => {
 			},
 			tabletOnly: {
 				'.ugb-number-box__number': {
+					...createTypographyStyles( 'number%s', 'tablet', props.attributes, { important: true } ),
 					height: show.numberBGColor ? appendImportant( getValue( 'numberTabletPadding', '%sem' ) ) : undefined,
 					width: show.numberBGColor ? appendImportant( getValue( 'numberTabletPadding', '%sem' ) ) : undefined,
 				},
@@ -101,6 +102,7 @@ export const createStyles = props => {
 			},
 			mobile: {
 				'.ugb-number-box__number': {
+					...createTypographyStyles( 'number%s', 'mobile', props.attributes, { important: true } ),
 					height: show.numberBGColor ? appendImportant( getValue( 'numberMobilePadding', '%sem' ) ) : undefined,
 					width: show.numberBGColor ? appendImportant( getValue( 'numberMobilePadding', '%sem' ) ) : undefined,
 					lineHeight: appendImportant( show.numberBGColor && numberMobileLineHeight === '' ? getValue( 'numberMobilePadding', '%sem' ) : getValue( 'numberMobileLineHeight', `%s${ numberMobileLineHeightUnit }` ) ),
