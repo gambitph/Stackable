@@ -32,11 +32,6 @@ svg.ugb-stackable-icon-gradient {
 	}
 }
 
-[data-type^="ugb/"] > .wp-block[data-align="full"] {
-	margin-left: -10px;
-	margin-right: -10px;
-}
-
 // Hide the additional Panels of EditorsKit for Stackable blocks, since we have
 // duplicate functionality.
 .ugb--has-panel-tabs .ugb-panel-tabs ~ .editorskit-panel {
