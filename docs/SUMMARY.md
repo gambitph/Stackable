@@ -93,7 +93,7 @@
   * [Can I Delete the Free Version of Stackable After Installing Stackable Premium?](pricing-and-licensing/license/can-i-delete-the-free-version-of-stackable-after-installing-stackable-premium.md)
 * [Account](pricing-and-licensing/account/README.md)
   * [Where Do I Log Into My Stackable Account?](pricing-and-licensing/account/where-do-i-log-into-my-stackable-account.md)
-  * [How to Transfer Account to your Client](pricing-and-licensing/account/how-to-transfer-account-to-your-client.md)
+  * [How to Transfer Billing to your Client](pricing-and-licensing/account/how-to-transfer-account-to-your-client.md)
   * [How Can I Get An Invoice for My Purchase?](pricing-and-licensing/account/how-can-i-get-an-invoice-for-my-purchase.md)
   * [Can I Edit My Account Information in My Invoice?](pricing-and-licensing/account/how-do-i-edit-my-account-information-in-my-invoice.md)
   * [How to Hide License Key and Account Information From Clients](pricing-and-licensing/account/how-to-hide-license-key-and-account-information-from-clients.md)

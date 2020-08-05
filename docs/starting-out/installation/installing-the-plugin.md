@@ -20,7 +20,7 @@ You can install Stackable into your WordPress site in a few ways.
 
 ### **2. Through the Stackable Website**
 
-* Go to [**wpstackable.com**](https://wpstackable.com/) then click **Free Download** to download the plugin
+* Go to [**wpstackable.com**](https://wpstackable.com) then click **Free Download** to download the plugin
 * On your WordPress dashboard click **Plugins &gt; Add New**
 * Click **Upload Plugin**, and use the Stackable file you downloaded
 * Once uploaded, click on **Activate** to activate the plugin

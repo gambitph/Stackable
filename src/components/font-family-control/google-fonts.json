@@ -9193,6 +9193,7 @@
       "900italic"
     ],
     "subsets": [
+      "devanagari",
       "latin",
       "latin-ext"
     ]
@@ -9690,6 +9691,22 @@
     "subsets": [
       "latin",
       "telugu"
+    ]
+  },
+  {
+    "family": "Recursive",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "vietnamese"
     ]
   },
   {
