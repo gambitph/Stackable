@@ -94,6 +94,7 @@ export const getCssObject = ( matchingFilenames = stackableCSSFiles, documentSty
 						} else {
 						// Store the new media query if custom CSS is modified.
 							mediaIndices[ mediaIndex ] = {
+								cssText,
 								mediaText: media.mediaText,
 								min,
 								max,
@@ -102,6 +103,7 @@ export const getCssObject = ( matchingFilenames = stackableCSSFiles, documentSty
 					} else {
 					// Store the new media query if the value is not found in cached media queries.
 					 mediaIndices[ mediaIndex ] = {
+							cssText,
 							mediaText: media.mediaText,
 							min,
 							max,
@@ -129,17 +131,44 @@ export const getCssObject = ( matchingFilenames = stackableCSSFiles, documentSty
 export const updateMediaQueries = ( previewMode = 'Desktop', width = 0, matchingFilenames = stackableCSSFiles, documentStyleSheets = document.styleSheets, cachedCssObject = cssObject ) => {
 	const cssObject = getCssObject( matchingFilenames, documentStyleSheets, cachedCssObject )
 
+	const replaceVwToPx = match => {
+		const [ value ] = 	match.split( 'vw' )
+		const pxValue = ( parseFloat( value ) / 100 ) * width
+		return `${ pxValue }px`
+	}
+
+	const modifyCssTextWithVw = cssText => cssText.replace( /(-?[.0-9]+)vw/g , replaceVwToPx )
+
+	const updateStylesheetWithVw = ( styleSheetIndex, index, newCssText ) => {
+		// Delete the current styleSheet
+		documentStyleSheets[ styleSheetIndex ].deleteRule( index )
+
+		// Initialize a new one with modified viewport width rules
+		documentStyleSheets[ styleSheetIndex ].insertRule( newCssText, index )	
+	}
+	
+
 	if ( previewMode === 'Tablet' || previewMode === 'Mobile' ) {
 		// If Preview is in Tablet or Mobile Mode, modify media queries for Tablet or Mobile.
 		keys( cssObject ).forEach( styleSheetIndex => {
 			keys( cssObject[ styleSheetIndex ] ).forEach( index => {
-				const {	min, max } = cssObject[ styleSheetIndex ][ index ]
+				const {	
+					min,
+					max,
+					cssText
+				} = cssObject[ styleSheetIndex ][ index ]
+
 				if ( inRange( width, min, max ) ) {
-					if ( documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText !== 'screen and (max-width: 5000px)' ) {
-						documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText = 'screen and (max-width: 5000px)'
+					// Checks if the cssText has viewport width
+					if ( cssText && cssText.match( /(-?[.0-9]+)vw/g ) ) {
+						updateStylesheetWithVw( styleSheetIndex, index, modifyCssTextWithVw( cssText ) )
 					}
-				} else if ( documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText !== 'screen and (min-width: 5000px)' ) {
-					cssObject[ styleSheetIndex ][ index ].previousMediaText = documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText
+					documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText = 'screen and (max-width: 5000px)'
+				} else {
+					// Checks if the cssText has viewport width
+					if ( cssText && cssText.match( /(-?[.0-9]+)vw/g ) ) {
+						updateStylesheetWithVw( styleSheetIndex, index, modifyCssTextWithVw( cssText ) )
+					}
 					documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText = 'screen and (min-width: 5000px)'
 				}
 				// Gets the previous value of the media query
@@ -152,9 +181,11 @@ export const updateMediaQueries = ( previewMode = 'Desktop', width = 0, matching
 		// If Preview is in Desktop Mode, revert all media queries
 		keys( cssObject ).forEach( styleSheetIndex => {
 			keys( cssObject[ styleSheetIndex ] ).forEach( index => {
+				const {	cssText } = cssObject[ styleSheetIndex ][ index ]
+
 				if ( documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText !== cssObject[ styleSheetIndex ][ index ].mediaText ) {
 					cssObject[ styleSheetIndex ][ index ].previousMediaText = documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText
-					documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText = cssObject[ styleSheetIndex ][ index ].mediaText
+					updateStylesheetWithVw( styleSheetIndex, index, cssText )
 				}
 				// Gets the previous value of the media query
 				if ( cssObject[ styleSheetIndex ][ index ].previousMediaText !== documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText ) {
