@@ -462,18 +462,29 @@ const edit = props => {
 // Change the number of columns. This is needed since in WP 5.5, the template
 // argument can't be dynamically changed anymore.
 addFilter( 'stackable.columns.setAttributes', 'stackable/columns/columns-change', ( attributes, blockProps ) => {
-	if ( typeof attributes.columns === 'undefined' ) {
+	if ( typeof attributes.columns === 'undefined' && typeof attributes.design === 'undefined' ) {
 		return attributes
 	}
 
-	// Only do this when there's a change in number
-	if ( attributes.columns === blockProps.attributes.columns ) {
-		return attributes
+	let columns = blockProps.attributes.columns
+
+	// Only do this when there's a change in column number.
+	if ( typeof attributes.columns !== 'undefined' ) {
+		if ( attributes.columns !== blockProps.attributes.columns ) {
+			columns = attributes.columns
+		}
+	}
+
+	// Only do this when there's a change in the design.
+	if ( typeof attributes.design !== 'undefined' ) {
+		if ( blockProps.attributes.design === 'grid' && attributes.design !== 'grid' && blockProps.attributes.columns > 6 ) {
+			columns = 6
+		}
 	}
 
 	// Form the new innerBlock list.
 	const currentInnerBlocks = select( 'core/block-editor' ).getBlock( blockProps.clientId ).innerBlocks
-	const newInnerBlocks = range( attributes.columns || 2 ).map( i => {
+	const newInnerBlocks = range( columns || 2 ).map( i => {
 		return currentInnerBlocks[ i ] || createBlock( 'ugb/column', {}, [] )
 	} )
 
