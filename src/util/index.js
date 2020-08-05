@@ -297,8 +297,8 @@ export const clampValue = ( value, { min = Number.NEGATIVE_INFINITY, max = Numbe
 			parseFloat( max )
 		)
 
-		return parseFloat( clampedValue ) !== parseFloat( value )
-			? clampedValue
-			: undefined
+		return parseFloat( clampedValue ) !== parseFloat( value ) ?
+			clampedValue :
+			undefined
 	}
 }
