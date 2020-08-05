@@ -57,7 +57,11 @@ const withMemory = createHigherOrderComponent(
 			if ( panelIndex === -1 ) {
 				return null
 			}
-			return this.getActiveTabPanelContainer().querySelector( `.components-panel__body:nth-child(${ panelIndex + 1 }):not(.is-opened) .components-panel__body-toggle` )
+			const container = this.getActiveTabPanelContainer()
+			if ( container ) {
+				return container.querySelector( `.components-panel__body:nth-child(${ panelIndex + 1 }):not(.is-opened) .components-panel__body-toggle` )
+			}
+			return null
 		}
 
 		getPanelIndex( panel ) {
