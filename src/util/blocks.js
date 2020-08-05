@@ -31,10 +31,18 @@ export function isUnmodifiedBlock( block ) {
 
 export const applyBlockDesign = ( attributes, clientId = null ) => {
 	const {
-		getBlockName, getSelectedBlockClientId, getBlockAttributes,
+		getBlockName, getSelectedBlockClientId, getBlockAttributes, hasMultiSelection, getMultiSelectedBlockClientIds,
 	} = select( 'core/block-editor' )
 	const { updateBlockAttributes } = dispatch( 'core/block-editor' )
 	const { getBlockType } = select( 'core/blocks' )
+
+	// If multiple blocks are selected, apply the block design to them all.
+	if ( ! clientId && hasMultiSelection() ) {
+		getMultiSelectedBlockClientIds().forEach( clientId => {
+			applyBlockDesign( attributes, clientId )
+		} )
+		return
+	}
 
 	const blockClientId = clientId ? clientId : getSelectedBlockClientId()
 	if ( ! blockClientId ) {
