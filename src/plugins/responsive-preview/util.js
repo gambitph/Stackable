@@ -6,6 +6,19 @@ import {
 } from 'lodash'
 
 /**
+ * CSS files to cache
+ *
+ * It includes Stackable custom css files and inline styles for blocks.
+ */
+const stackableCSSFiles = [
+	null, // Include style tags.
+	'/dist/frontend_blocks__premium_only.css',
+	'/dist/frontend_blocks.css',
+	'/dist/editor_blocks__premium_only.css',
+	'/dist/editor_blocks.css',
+]
+
+/**
  * Gets all the indices containing an entry in includeCss
  *
  * @param {Array} styleSheets current styleSheets array
@@ -45,13 +58,13 @@ const cssRulesCache = {}
 /**
  * Handles the caching of cssObjects.
  *
- * @param {Array} matchingFilenames array of custom css files to cache
+ * @param {Array} matchingFilenames array of custom css files to cache (mainly used for testing)
  * @param {Object} documentStyleSheets document.styleSheets to use (mainly used for testing)
  * @param {Object} cachedCssObject cssObject (mainly used for testing)
  *
  * @return {Object} An object containing the indices of stylesheets of matchingFilenames
  */
-export const getCssObject = ( matchingFilenames = [], documentStyleSheets = document.styleSheets, cachedCssObject = cssObject ) => {
+export const getCssObject = ( matchingFilenames = stackableCSSFiles, documentStyleSheets = document.styleSheets, cachedCssObject = cssObject ) => {
 	// Stores the indices of needed styleSheets
 	const styleSheets = Array.from( documentStyleSheets )
 	const stylesheetIndices = getIncludedIndices( styleSheets, matchingFilenames )
@@ -107,15 +120,13 @@ export const getCssObject = ( matchingFilenames = [], documentStyleSheets = docu
 /**
  * Updates the current media query based on Preview Mode.
  *
- * @param {Array} matchingFilenames array of custom css files with media queries
-  to update
  * @param {string} previewMode the current Preview Mode of the editor.
  * @param {number} width the editor's current width
- * @param {Object} documentStyleSheets document.styleSheets to use (mainly used
+ * @param {Array} matchingFilenames array of custom css files with media queries (mainly used for testing)
+ * @param {Object} documentStyleSheets document.styleSheets to use (mainly used for testing)
  * @param {Object} cachedCssObject the global cssObject (mainly used for testing)
-  for testing)
  */
-export const updateMediaQuery = ( matchingFilenames = [], previewMode = 'Desktop', width = 0, documentStyleSheets = document.styleSheets, cachedCssObject = cssObject ) => {
+export const updateMediaQueries = ( previewMode = 'Desktop', width = 0, matchingFilenames = stackableCSSFiles, documentStyleSheets = document.styleSheets, cachedCssObject = cssObject ) => {
 	const cssObject = getCssObject( matchingFilenames, documentStyleSheets, cachedCssObject )
 
 	if ( previewMode === 'Tablet' || previewMode === 'Mobile' ) {
