@@ -44,6 +44,8 @@ import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { compose, withState } from '@wordpress/compose'
+import { select, dispatch } from '@wordpress/data'
+import { createBlock } from '@wordpress/blocks'
 
 const COLUMN_DEFAULTS = {
 	2: {
@@ -456,6 +458,30 @@ const edit = props => {
 		) } />
 	)
 }
+
+// Change the number of columns. This is needed since in WP 5.5, the template
+// argument can't be dynamically changed anymore.
+addFilter( 'stackable.columns.setAttributes', 'stackable/columns/columns-change', ( attributes, blockProps ) => {
+	if ( typeof attributes.columns === 'undefined' ) {
+		return attributes
+	}
+
+	// Only do this when there's a change in number
+	if ( attributes.columns === blockProps.attributes.columns ) {
+		return attributes
+	}
+
+	// Form the new innerBlock list.
+	const currentInnerBlocks = select( 'core/block-editor' ).getBlock( blockProps.clientId ).innerBlocks
+	const newInnerBlocks = range( attributes.columns || 2 ).map( i => {
+		return currentInnerBlocks[ i ] || createBlock( 'ugb/column', {}, [] )
+	} )
+
+	// Replace the current list of inner blocks.
+	dispatch( 'core/block-editor' ).replaceInnerBlocks( blockProps.clientId, newInnerBlocks, false )
+
+	return attributes
+} )
 
 export default compose(
 	withState( { sortColumnHighlight: null } ),
