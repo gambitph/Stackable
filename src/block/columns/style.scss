@@ -43,7 +43,6 @@
 @mixin columns-grid() {
 	display: grid;
 	grid-auto-columns: minmax(0, 1fr);
-	grid-template-columns: initial;
 	grid-auto-flow: column;
 	grid-gap: $box-hori-padding;
 	> div {

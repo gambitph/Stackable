@@ -44,40 +44,42 @@
 		display: flex !important;
 		justify-content: stretch;
 		align-items: stretch;
+		height: 100%;
+		> .block-editor-inner-blocks > .block-editor-block-list__layout {
+			height: 100%;
+		}
 	}
 }
 .ugb-columns__item > .block-editor-inner-blocks {
 	width: 100%;
 }
 
-// We need to add a media query to avoid unnecessary styling for mobile/tablet.
-@media screen and (min-width: $break-js-mobile) {
-	.ugb-columns {
-		> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
-			@include columns-grid();
-		}
-		// .block-editor-block-list__layout {
-		// 	margin-left: 0;
-		// 	margin-right: 0;
-		// }
 
-		/**
-		 * Grid design.
-		 */
-		&.ugb-columns--design-grid {
-			@for $i from 2 through 8 {
-				&.ugb-columns--columns-#{ $i } {
-					> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
-						@include columns-grid-grid( $i );
-					}
+.ugb-columns {
+	> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
+		@include columns-grid();
+	}
+	// .block-editor-block-list__layout {
+	// 	margin-left: 0;
+	// 	margin-right: 0;
+	// }
+
+	/**
+	 * Grid design.
+	 */
+	&.ugb-columns--design-grid {
+		@for $i from 2 through 8 {
+			&.ugb-columns--columns-#{ $i } {
+				> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
+					@include columns-grid-grid( $i );
 				}
 			}
 		}
+	}
 
-		> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout > .block-editor-block-list__block {
-			display: flex;
-			flex-direction: column;
-		}
+	> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout > .block-editor-block-list__block {
+		display: flex;
+		flex-direction: column;
 	}
 }
 
