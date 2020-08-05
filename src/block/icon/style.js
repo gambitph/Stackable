@@ -92,6 +92,9 @@ export const createStyles = props => {
 		styles.push( ...createResponsiveStyles( '.ugb-icon__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
 	}
 
+	// Advanced Column Gap
+	styles.push( ...createResponsiveStyles( '.ugb-icon__content-wrapper', '%scolumnGap', 'columnGap', '%spx', props.attributes, true ) )
+
 	return deepmerge.all( styles )
 }
 
