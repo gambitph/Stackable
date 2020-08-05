@@ -8,7 +8,6 @@ import {
 	createIconStyleSet,
 	appendImportantAll,
 	leftRightToFlex,
-	appendImportant
 } from '~stackable/util'
 
 /**
@@ -94,21 +93,7 @@ export const createStyles = props => {
 	}
 
 	// Advanced Column Gap
-	styles.push( {
-		'.ugb-icon__content-wrapper': {
-			columnGap: appendImportant( getValue( 'columnGap', '%spx' ) ),
-		},
-		tablet: {
-			'.ugb-icon__content-wrapper': {
-				columnGap: appendImportant( getValue( 'tabletColumnGap', '%spx' ) ),
-			},
-		},
-		mobile: {
-			'.ugb-icon__content-wrapper': {
-				columnGap: appendImportant( getValue( 'mobileColumnGap', '%spx' ) ),
-			},
-		},
-	} )
+	styles.push( ...createResponsiveStyles( '.ugb-icon__content-wrapper', '%scolumnGap', 'columnGap', '%spx', props.attributes, true ) )
 
 	return deepmerge.all( styles )
 }
