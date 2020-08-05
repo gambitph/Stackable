@@ -147,7 +147,6 @@ export const updateMediaQueries = ( previewMode = 'Desktop', width = 0, matching
 		documentStyleSheets[ styleSheetIndex ].insertRule( newCssText, index )	
 	}
 	
-
 	if ( previewMode === 'Tablet' || previewMode === 'Mobile' ) {
 		// If Preview is in Tablet or Mobile Mode, modify media queries for Tablet or Mobile.
 		keys( cssObject ).forEach( styleSheetIndex => {
