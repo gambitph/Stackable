@@ -38,6 +38,7 @@
   * [Guided Custom CSS](stackable-guides/advanced-guides/guided-custom-css.md)
   * [How to Use Your Font Awesome Pro Icons](stackable-guides/advanced-guides/how-to-use-your-font-awesome-pro-icons.md)
   * [How to Use Multicolor for Icons](stackable-guides/advanced-guides/how-to-use-multicolor-for-icons.md)
+  * [Role Manager and Content Editing Mode](stackable-guides/advanced-guides/role-manager-and-content-editing-mode.md)
   * [Translate Blocks Using WPML \(Multilingual\)](stackable-guides/advanced-guides/translate-blocks-using-wpml-multilingual.md)
   * [Using ACF Fields in Blocks](stackable-guides/advanced-guides/using-acf-fields-in-blocks.md)
 
@@ -92,7 +93,7 @@
   * [Can I Delete the Free Version of Stackable After Installing Stackable Premium?](pricing-and-licensing/license/can-i-delete-the-free-version-of-stackable-after-installing-stackable-premium.md)
 * [Account](pricing-and-licensing/account/README.md)
   * [Where Do I Log Into My Stackable Account?](pricing-and-licensing/account/where-do-i-log-into-my-stackable-account.md)
-  * [How to Transfer Account to your Client](pricing-and-licensing/account/how-to-transfer-account-to-your-client.md)
+  * [How to Transfer Billing to your Client](pricing-and-licensing/account/how-to-transfer-account-to-your-client.md)
   * [How Can I Get An Invoice for My Purchase?](pricing-and-licensing/account/how-can-i-get-an-invoice-for-my-purchase.md)
   * [Can I Edit My Account Information in My Invoice?](pricing-and-licensing/account/how-do-i-edit-my-account-information-in-my-invoice.md)
   * [How to Hide License Key and Account Information From Clients](pricing-and-licensing/account/how-to-hide-license-key-and-account-information-from-clients.md)
@@ -106,4 +107,5 @@
 
 * [Branding Guidelines](resources/branding-guidelines.md)
 * [Docs Writing Guidelines](resources/docs-writing-guidelines.md)
+* [Theme Integration Guide](resources/theme-integration-guide.md)
 

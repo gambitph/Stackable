@@ -3630,6 +3630,34 @@
     ]
   },
   {
+    "family": "Epilogue",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Erica One",
     "variants": [
       "regular"
@@ -4773,11 +4801,12 @@
   {
     "family": "Harmattan",
     "variants": [
-      "regular"
+      "regular",
+      "700"
     ],
     "subsets": [
-      "arabic",
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -7732,7 +7761,7 @@
     ]
   },
   {
-    "family": "Muli",
+    "family": "Mulish",
     "variants": [
       "200",
       "300",
@@ -9429,7 +9458,9 @@
       "regular"
     ],
     "subsets": [
-      "latin"
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -9518,27 +9549,30 @@
     "family": "Raleway",
     "variants": [
       "100",
-      "100italic",
       "200",
-      "200italic",
       "300",
-      "300italic",
       "regular",
-      "italic",
       "500",
-      "500italic",
       "600",
-      "600italic",
       "700",
-      "700italic",
       "800",
-      "800italic",
       "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
       "900italic"
     ],
     "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -9660,6 +9694,22 @@
     ]
   },
   {
+    "family": "Recursive",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Red Hat Display",
     "variants": [
       "regular",
@@ -9689,6 +9739,19 @@
     "subsets": [
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Red Rose",
+    "variants": [
+      "300",
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -9972,6 +10035,19 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Rowdies",
+    "variants": [
+      "300",
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -10615,12 +10691,14 @@
     "variants": [
       "300",
       "regular",
+      "500",
       "600",
       "700"
     ],
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -10827,6 +10905,23 @@
     ]
   },
   {
+    "family": "Sora",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Sorts Mill Goudy",
     "variants": [
       "regular",
@@ -10893,13 +10988,26 @@
   {
     "family": "Source Serif Pro",
     "variants": [
+      "200",
+      "200italic",
+      "300",
+      "300italic",
       "regular",
+      "italic",
       "600",
-      "700"
+      "600italic",
+      "700",
+      "700italic",
+      "900",
+      "900italic"
     ],
     "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -11828,6 +11936,21 @@
     ],
     "subsets": [
       "hebrew",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Varta",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
       "latin",
       "latin-ext",
       "vietnamese"

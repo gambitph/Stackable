@@ -28,14 +28,6 @@ import {
 } from 'stackable'
 import classnames from 'classnames'
 
-/**
- * Get settings.
- */
-let settings
-loadPromise.then( () => {
-	settings = new models.Settings()
-} )
-
 class BlockToggler extends Component {
 	constructor() {
 		super( ...arguments )
@@ -148,10 +140,14 @@ const AdditionalOptions = props => {
 	const [ isBusy, setIsBusy ] = useState( false )
 
 	useEffect( () => {
-		settings.fetch().then( response => {
-			setHelpTooltipsDisabled( !! response.stackable_help_tooltip_disabled )
-			setV1BackwardCompatibility( response.stackable_load_v1_styles === '1' )
-			setShowPremiumNotices( response.stackable_show_pro_notices === '1' )
+		setIsBusy( true )
+		loadPromise.then( () => {
+			const settings = new models.Settings()
+			settings.fetch().then( response => {
+				setHelpTooltipsDisabled( !! response.stackable_help_tooltip_disabled )
+				setV1BackwardCompatibility( response.stackable_load_v1_styles === '1' )
+				setShowPremiumNotices( response.stackable_show_pro_notices === '1' )
+			} )
 		} )
 	}, [] )
 

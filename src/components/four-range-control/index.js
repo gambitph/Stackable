@@ -13,7 +13,7 @@ import SVGTopImage from './images/top.svg'
  * WordPress dependencies
  */
 import {
-	BaseControl, Dashicon, IconButton, Tooltip,
+	BaseControl, Dashicon, Button, Tooltip,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { Component, Fragment } from '@wordpress/element'
@@ -157,7 +157,7 @@ class FourRangeControl extends Component {
 			'ugb--is-locked': this.state.locked,
 		} )
 
-		const lockButton = <IconButton
+		const lockButton = <Button
 			className={ lockClassNames }
 			onClick={ this.onToggleLock }
 			icon={ (
@@ -166,8 +166,7 @@ class FourRangeControl extends Component {
 					size="16"
 				/>
 			) }
-		>
-		</IconButton>
+		/>
 
 		// The ALL option can either be 'all', 'vertical', or 'horizontal'.
 		// const allLabel = this.props.enableTop && this.props.enableBottom && ! this.props.enableRight && ! this.props.enableLeft ? __( 'Vertical', i18n ) :

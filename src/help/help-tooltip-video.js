@@ -26,14 +26,6 @@ const videoUrl = video => `${ process.env.NODE_ENV === 'development' ? srcUrl : 
 // Gets the Help ID from the class.
 export const getHelpId = el => el && el.closest( '[class*="ugb--help-tip-"]' ) && camelCase( ( el.closest( '[class*="ugb--help-tip-"]' ).getAttribute( 'class' ).match( /ugb--help-tip-([\w\d-_]+)/ ) || [ '', '' ] )[ 1 ] )
 
-/**
- * Get settings.
- */
-let settings
-loadPromise.then( () => {
-	settings = new models.Settings()
-} )
-
 const HelpToolTipVideo = props => {
 	const [ target, setTarget ] = useState( null )
 	const [ show, setShow ] = useState( false )
@@ -91,8 +83,11 @@ const HelpToolTipVideo = props => {
 
 	useEffect( () => {
 		// Get settings.
-		settings.fetch().then( response => {
-			setTooltipsEnabled( ! response.stackable_help_tooltip_disabled )
+		loadPromise.then( () => {
+			const settings = new models.Settings()
+			settings.fetch().then( response => {
+				setTooltipsEnabled( ! response.stackable_help_tooltip_disabled )
+			} )
 		} )
 
 		// Tooptips are shown/hidden only through these triggers.

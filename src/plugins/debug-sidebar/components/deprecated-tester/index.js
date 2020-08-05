@@ -13,7 +13,7 @@ import { validateBlockHTML } from '../../util'
  */
 import { __, sprintf } from '@wordpress/i18n'
 import {
-	BaseControl, Button, ClipboardButton, Dashicon, IconButton,
+	BaseControl, Button, ClipboardButton, Dashicon,
 } from '@wordpress/components'
 import { Component, Fragment } from '@wordpress/element'
 import { i18n, srcUrl } from 'stackable'
@@ -155,11 +155,11 @@ class DeprecatedTester extends Component {
 							<div key={ i } className="ugb-deprecated-tester--row">
 								<span className="ugb-deprecated-tester--name">
 									{ blockName }
-									<IconButton isDefault={ false } icon="editor-help" onClick={ () => this.onShowToggle( blockName ) } />
+									<Button isDefault={ false } icon="editor-help" onClick={ () => this.onShowToggle( blockName ) } />
 								</span>
 								<span className={ numTests === numPassed ? 'ugb--green' : '' }>
 									{ sprintf( __( '%d / %d Tests', i18n ), numPassed, numTests ) }
-									<IconButton isDefault={ false } onClick={ () => this.onRunTest( blockName ) } icon="controls-play" />
+									<Button isDefault={ false } onClick={ () => this.onRunTest( blockName ) } icon="controls-play" />
 								</span>
 							</div>
 							{ this.state.show.includes( blockName ) && (

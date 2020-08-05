@@ -5,7 +5,9 @@
  * External dependencies
  */
 import { StackableIcon } from '~stackable/icons'
-import { disabledBlocks, i18n } from 'stackable'
+import {
+	disabledBlocks, i18n, isContentOnlyMode,
+} from 'stackable'
 
 /**
  * Internal dependencies
@@ -46,7 +48,12 @@ export const settings = {
 	save,
 }
 
-domReady( () => {
+const mountDesignLibrary = () => {
+	// Content only editing mode shouldn't have a button.
+	if ( isContentOnlyMode ) {
+		return
+	}
+
 	if ( disabledBlocks.includes( name ) ) {
 		return
 	}
@@ -55,8 +62,14 @@ domReady( () => {
 	if ( ! toolbar ) {
 		return
 	}
-	const buttonDiv = document.createElement( 'div' )
-	toolbar.appendChild( buttonDiv )
 
-	render( <InsertLibraryButton />, buttonDiv )
-} )
+	const buttonDiv = document.createElement( 'div' )
+	buttonDiv.classList.add( 'ugb-insert-library-button__wrapper' )
+
+	if ( ! toolbar.querySelector( '.ugb-insert-library-button__wrapper' ) ) {
+		render( <InsertLibraryButton />, buttonDiv )
+		toolbar.appendChild( buttonDiv )
+	}
+}
+
+domReady( mountDesignLibrary )

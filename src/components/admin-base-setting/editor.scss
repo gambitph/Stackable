@@ -1,0 +1,23 @@
+.ugb-admin-setting {
+	margin-bottom: 16px;
+}
+.ugb-admin-setting__label-wrapper {
+	display: flex;
+	align-items: center;
+}
+.ugb-admin-setting__label {
+	width: 200px;
+	display: inline-block;
+	font-weight: 700;
+	color: #666;
+	padding-right: 15px;
+	box-sizing: border-box;
+}
+.ugb-admin-setting--small {
+	.ugb-admin-setting__label {
+		width: 130px;
+	}
+}
+.ugb-admin-setting__field {
+	flex: 1;
+}

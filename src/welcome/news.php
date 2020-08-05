@@ -25,7 +25,7 @@ if ( ! function_exists( 'stackable_news_feed_links' ) ) {
 
 		include_once( ABSPATH . WPINC . '/feed.php' );
 
-		$rss = fetch_feed( 'https://wpstackable.com/feed' );
+		$rss = fetch_feed( 'https://wpstackable.com/feed/' );
 
 		if ( is_wp_error( $rss ) ) {
 			return;
