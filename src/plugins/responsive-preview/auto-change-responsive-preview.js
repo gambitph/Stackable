@@ -7,7 +7,9 @@
 /**
  * External dependencies
  */
-import { getSelectedScreen, setSelectedScreen } from '~stackable/util'
+import {
+	getSelectedScreen, setSelectedScreen, setIsScreenPickerOpen,
+} from '~stackable/util'
 import { findKey } from 'lodash'
 
 /**
@@ -68,8 +70,10 @@ const ResponsiveToggle = () => {
 
 		// Open the responsive toggle area.
 		if ( value !== 'desktop' ) {
+			setIsScreenPickerOpen( true )
 			doAction( 'stackable.responsive-toggle.screen.open' )
 		} else {
+			setIsScreenPickerOpen( false )
 			doAction( 'stackable.responsive-toggle.screen.close' )
 		}
 	}, 0 )
