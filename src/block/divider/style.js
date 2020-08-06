@@ -17,6 +17,8 @@ export const createStyles = props => {
 	const {
 		design = 'basic',
 		contentAlign = '',
+		tabletContentAlign = '',
+		mobileContentAlign = '',
 	} = props.attributes
 
 	styles.push( {
@@ -32,11 +34,21 @@ export const createStyles = props => {
 				backgroundColor: appendImportant( getValue( 'color' ) ),
 				height: appendImportant( getValue( 'height', '%spx' ) ),
 				width: appendImportant( getValue( 'width', '%s%' ) ),
-
 				marginLeft: appendImportant( marginLeftAlign( contentAlign ) ),
 				marginRight: appendImportant( marginRightAlign( contentAlign ) ),
-
 				borderRadius: design === 'bar' ? appendImportant( getValue( 'height', 'calc(%spx / 2)' ) ) : undefined,
+			},
+			tablet: {
+				'hr.ugb-divider__hr': {
+					marginLeft: appendImportant( tabletContentAlign !== '' ? marginLeftAlign( tabletContentAlign ) : undefined ),
+					marginRight: appendImportant( tabletContentAlign !== '' ? marginRightAlign( tabletContentAlign ) : undefined ),
+				},
+			},
+			mobile: {
+				'hr.ugb-divider__hr': {
+					marginLeft: appendImportant( mobileContentAlign !== '' ? marginLeftAlign( mobileContentAlign ) : undefined ),
+					marginRight: appendImportant( mobileContentAlign !== '' ? marginRightAlign( mobileContentAlign ) : undefined ),
+				},
 			},
 		} )
 	}
@@ -52,6 +64,18 @@ export const createStyles = props => {
 				backgroundColor: design === 'dots' ? appendImportant( getValue( 'color' ) ) : undefined,
 				height: appendImportant( getValue( 'height', '%spx' ) ),
 				width: appendImportant( getValue( 'height', '%spx' ) ),
+			},
+			tablet: {
+				'.ugb-divider__dots': {
+					marginLeft: appendImportant( tabletContentAlign !== '' ? marginLeftAlign( tabletContentAlign ) : undefined ),
+					marginRight: appendImportant( tabletContentAlign !== '' ? marginRightAlign( tabletContentAlign ) : undefined ),
+				},
+			},
+			mobile: {
+				'.ugb-divider__dots': {
+					marginLeft: appendImportant( mobileContentAlign !== '' ? marginLeftAlign( mobileContentAlign ) : undefined ),
+					marginRight: appendImportant( mobileContentAlign !== '' ? marginRightAlign( mobileContentAlign ) : undefined ),
+				},
 			},
 		} )
 	}

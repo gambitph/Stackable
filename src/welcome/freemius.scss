@@ -18,15 +18,27 @@
 	display: none;
 }
 
+.fs-section {
+	margin: 0;
+	#poststuff {
+		padding: 0;
+	}
+}
+
 @import "common";
 
 /**
  * Affiliation.
  */
 #fs_affiliation_content_wrapper {
+	margin: 0;
+	#poststuff {
+		padding: 0;
+	}
+
 	.postbox {
 		@include box();
-		box-shadow: nth($shadows, 6);
+		box-shadow: 0 18px 35px -15px rgba(18, 63, 82, 0.25);
 		border: 0;
 		padding: 35px;
 	}
@@ -43,10 +55,8 @@
 		color: #fff;
 		text-decoration: none;
 		padding: 0.75em 1.25em;
-		// display: block;
 		line-height: 1em !important;
-		margin: 0 auto;
-		// max-width: 200px;
+		margin: 10px auto 0;
 		text-align: center;
 		&:hover {
 			opacity: 0.85;
@@ -56,15 +66,34 @@
 			background: #888;
 		}
 	}
+	ul {
+		padding-left: 10px;
+		li {
+			// font-size: 0.9rem !important;
+			margin-bottom: 3px !important;
+			list-style-type: none;
+			&::before {
+				font-weight: bold;
+				font-size: 1rem;
+				content: "✓";
+				color: #8c33da;
+				margin-right: 0.5rem;
+			}
+		}
+	}
 }
 
 /**
  * Account Page
  */
 #fs_account {
+	margin: 0;
+	#poststuff {
+		padding: 0;
+	}
 	.postbox {
 		@include box();
-		box-shadow: nth($shadows, 6);
+		box-shadow: 0 18px 35px -15px rgba(18, 63, 82, 0.25);
 		border: 0;
 		padding: 16px;
 	}
@@ -79,7 +108,7 @@
 	margin: 0 !important;
 	padding: 0 !important;
 	@include box();
-	box-shadow: nth($shadows, 6);
+	box-shadow: 0 18px 35px -15px rgba(18, 63, 82, 0.25);
 	border: 0;
 	padding: 16px;
 }

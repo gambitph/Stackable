@@ -109,25 +109,25 @@ SVG;
 			$screen = get_current_screen();
 			?>
 			<div class="s-body s-tabs">
-				<a class="s-tab <?php echo $screen->base === 'toplevel_page_stackable' ? 's-active' : '' ?>"
+				<a class="s-tab <?php echo preg_match( '/^toplevel(.*)page_stackable$/', $screen->base ) ? 's-active' : '' ?>"
 					href="<?php echo admin_url( 'admin.php?page=stackable' ) ?>">
 					<?php _e( 'Getting Started', STACKABLE_I18N ) ?>
 				</a>
 
-				<a class="s-tab <?php echo $screen->base === 'stackable_page_stackable-settings' ? 's-active' : '' ?>"
+				<a class="s-tab <?php echo preg_match( '/^stackable(.*)page_stackable-settings$/', $screen->base ) ? 's-active' : '' ?>"
 					href="<?php echo admin_url( 'admin.php?page=stackable-settings' ) ?>">
 					<?php _e( 'Settings', STACKABLE_I18N ) ?>
 				</a>
 
 				<?php if ( sugb_fs()->get_user() ) { ?>
-					<a class="s-tab <?php echo $screen->base === 'stackable_page_stackable-account' ? 's-active' : '' ?>"
+					<a class="s-tab <?php echo preg_match( '/^stackable(.*)page_stackable-account$/', $screen->base ) ? 's-active' : '' ?>"
 						href="<?php echo sugb_fs()->get_account_url() ?>">
 						<?php _e( 'Account', STACKABLE_I18N ) ?>
 					</a>
 				<?php } ?>
 
 				<?php if ( sugb_fs()->has_affiliate_program() ) { ?>
-					<a class="s-tab <?php echo $screen->base === 'stackable_page_stackable-affiliation' ? 's-active' : '' ?>"
+					<a class="s-tab <?php echo preg_match( '/^stackable(.*)page_stackable-affiliation$/', $screen->base ) ? 's-active' : '' ?>"
 						href="<?php echo admin_url( 'admin.php?page=stackable-affiliation' ) ?>">
 						<?php _e( 'Affiliation', STACKABLE_I18N ) ?>
 					</a>
@@ -135,7 +135,7 @@ SVG;
 
 				<a class="s-tab" href="https://docs.wpstackable.com" target="_docs"><?php _e( 'Documentation', STACKABLE_I18N ) ?></a>
 
-				<a class="s-tab <?php echo $screen->base === 'stackable_page_stackable-contact' ? 's-active' : '' ?>"
+				<a class="s-tab <?php echo preg_match( '/^stackable(.*)page_stackable-contact$/', $screen->base ) ? 's-active' : '' ?>"
 					href="<?php echo admin_url( 'admin.php?page=stackable-contact' ) ?>">
 					<?php _e( 'Contact Us', STACKABLE_I18N ) ?>
 				</a>
@@ -150,26 +150,21 @@ SVG;
 			<?php
 		}
 
-		public static function print_header( $title = '' ) {
+		public static function print_header( $title = '', $image = 'icon' ) {
 			?>
-			<header class="s-header">
-				<?php if ( ! empty( $title ) ) { ?>
-					<h1><?php echo $title ?></h1>
-				<?php } ?>
-				<img src="<?php echo esc_url( plugins_url( 'images/stackable-logo.png', __FILE__ ) ) ?>" alt="<?php esc_attr_e( 'Stackable', STACKABLE_I18N ) ?>"/>
+			<header class="s-header s-logo-<?php echo $image ?>">
+				<h1>
+					<img src="<?php echo esc_url( plugins_url( 'images/stackable-' . $image . '.png', __FILE__ ) ) ?>" alt="<?php esc_attr_e( 'Stackable', STACKABLE_I18N ) ?>"/>
+					<?php echo $title ?>
+				</h1>
 			</header>
-			<div class="s-separator">
-				<svg viewBox="0 0 1600 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="fill:#111111;transform:scaleX(1)"><path class="wave-1_svg__st2" d="M1341.4 48.9c-182.4 0-254.2 80.4-429.4 80.4-117.8 0-209.7-67.5-393.5-67.5-142.2 0-212.6 38.8-324.6 38.8S-10 64.7-10 64.7V210h1620V102c-110.6-40.2-181-53.1-268.6-53.1z"></path></svg>
-				<svg viewBox="0 0 1600 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" class="ugb-separator__layer-2" style="transform: scaleX(1) scaleY(1);fill:#8c33da;opacity:0.5"><path d="M1361.5 65.9c-63.2 0-93.4-27.3-186.7-27.3-83.3 0-127.8 44.5-238.4 44.5-116.3 0-127.8-51.7-234.1-51.7S542.9 84.6 471.1 84.6c-129.3 0-178.1-79-337.5-83.3C60.2-.7-10 14.2-10 14.2l-.9 185.8h1620l.9-162.8c-57.5 0-137.9 28.7-248.5 28.7z"></path></svg>
-				<svg viewBox="0 0 1600 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" class="ugb-separator__layer-3" style="transform: scaleX(1) scaleY(1);fill:#f34957;opacity:0.5"><path d="M1476.4 15.9c-146.5 0-146.5 64.6-285.8 64.6-119.2 0-106.3-53.1-271.4-53.1-93.4 0-125 41.6-231.3 41.6-93.3 0-114.9-43.1-248.4-43.1S183.8 129.3 96.2 129.3H-10V206h1620V37.4s-43.1-21.5-133.6-21.5z"></path></svg>
-			</div>
 			<?php
 		}
 
         public function stackable_settings_content() {
             ?>
             <div class="wrap">
-				<?php $this->print_header( __( 'Settings', STACKABLE_I18N ) ) ?>
+				<?php $this->print_header( __( 'Stackable Settings', STACKABLE_I18N ) ) ?>
 				<?php echo $this->print_tabs() ?>
                 <section class="s-body-container s-body-container-grid">
                     <div class="s-body">
@@ -263,11 +258,11 @@ SVG;
 		public function stackable_getting_started_content() {
             ?>
             <div class="wrap getting-started">
-				<?php $this->print_header() ?>
+				<?php $this->print_header( '', 'logo' ) ?>
 				<section class="s-body-container s-narrow s-body-container-center">
 					<?php $this->print_tabs() ?>
 					<div class="s-body s-box s-box-spaced">
-						<h2 class="s-title"><?php _e( '🚀 Getting Started', STACKABLE_I18N ) ?></h2>
+						<h2 class="s-title"><?php _e( 'Getting Started With Stackable', STACKABLE_I18N ) ?></h2>
 						<div class="s-spacer"></div>
 						<div class="s-getting-started-body">
 							<div>
@@ -332,8 +327,8 @@ SVG;
 						</div>
 						<div class="s-spacer"></div>
 						<div class="s-buttons">
-							<p><a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=page&stackable_show_intro=true' ) ) ?>" class="s-button" title="<?php esc_attr_e( 'Create New Page', STACKABLE_I18N ) ?>"><?php _e( 'Create New Page', STACKABLE_I18N ) ?></a></p>
-							<p><a href="https://wpstackable.com/blog/how-to-add-content-using-stackable/" class="s-button s-button-plain" title="<?php esc_attr_e( 'Read Full Guide', STACKABLE_I18N ) ?>" target="_tutorial"><?php _e( 'Read Full Guide', STACKABLE_I18N ) ?> <span class="dashicons dashicons-arrow-right-alt"></span></a></p>
+							<p><a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=page&stackable_show_intro=true' ) ) ?>" class="s-button s-button-small" title="<?php esc_attr_e( 'Create New Page', STACKABLE_I18N ) ?>"><?php _e( 'Create New Page', STACKABLE_I18N ) ?></a></p>
+							<p><a href="https://wpstackable.com/blog/how-to-add-content-using-stackable/" title="<?php esc_attr_e( 'Read Full Guide', STACKABLE_I18N ) ?>" target="_tutorial"><?php _e( 'Read Full Guide', STACKABLE_I18N ) ?></a></p>
 						</div>
 						<div class="s-spacer"></div>
 						<h2 class="s-title"><?php _e( '📹 3-Minute Introduction Video', STACKABLE_I18N ) ?></h2>
@@ -347,11 +342,6 @@ SVG;
 							frameBorder="0"
 							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
 							allowFullScreen></iframe>
-						<div class="s-spacer"></div>
-						<div class="s-buttons">
-							<p><a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=page&stackable_show_intro=true' ) ) ?>" class="s-button" title="<?php esc_attr_e( 'Create New Page', STACKABLE_I18N ) ?>"><?php _e( 'Create New Page', STACKABLE_I18N ) ?></a></p>
-							<p><a href="https://wpstackable.com/blog/how-to-add-content-using-stackable/" class="s-button s-button-plain" title="<?php esc_attr_e( 'Read Full Guide', STACKABLE_I18N ) ?>" target="_tutorial"><?php _e( 'Read Full Guide', STACKABLE_I18N ) ?> <span class="dashicons dashicons-arrow-right-alt"></span></a></p>
-						</div>
 						<div class="s-spacer"></div>
 						<h2 class="s-title"><?php _e( '🤔 Want to Learn More?', STACKABLE_I18N ) ?></h2>
 						<div class="<?php echo sugb_fs()->is_whitelabeled() ? 's-3-column' : 's-4-column' ?>">
