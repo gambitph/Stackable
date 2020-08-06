@@ -60,7 +60,7 @@
 	}
 	@media screen and (max-width: $break-small) {
 		&.ugb-icon-list.ugb-icon-list ul { // Ensure our columns get applied.
-			columns: 1;
+			columns: 1 !important;
 		}
 	}
 	// @from https://css-tricks.com/almanac/properties/b/break-inside/
