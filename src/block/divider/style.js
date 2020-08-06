@@ -40,14 +40,14 @@ export const createStyles = props => {
 			},
 			tablet: {
 				'hr.ugb-divider__hr': {
-					marginLeft: appendImportant( marginLeftAlign( tabletContentAlign ) ),
-					marginRight: appendImportant( marginRightAlign( tabletContentAlign ) ),
+					marginLeft: appendImportant( tabletContentAlign !== '' ? marginLeftAlign( tabletContentAlign ) : undefined ),
+					marginRight: appendImportant( tabletContentAlign !== '' ? marginRightAlign( tabletContentAlign ) : undefined ),
 				},
 			},
 			mobile: {
 				'hr.ugb-divider__hr': {
-					marginLeft: appendImportant( marginLeftAlign( mobileContentAlign ) ),
-					marginRight: appendImportant( marginRightAlign( mobileContentAlign ) ),
+					marginLeft: appendImportant( mobileContentAlign !== '' ? marginLeftAlign( mobileContentAlign ) : undefined ),
+					marginRight: appendImportant( mobileContentAlign !== '' ? marginRightAlign( mobileContentAlign ) : undefined ),
 				},
 			},
 		} )
@@ -67,14 +67,14 @@ export const createStyles = props => {
 			},
 			tablet: {
 				'.ugb-divider__dots': {
-					marginLeft: appendImportant( marginLeftAlign( tabletContentAlign ) ),
-					marginRight: appendImportant( marginRightAlign( tabletContentAlign ) ),
+					marginLeft: appendImportant( tabletContentAlign !== '' ? marginLeftAlign( tabletContentAlign ) : undefined ),
+					marginRight: appendImportant( tabletContentAlign !== '' ? marginRightAlign( tabletContentAlign ) : undefined ),
 				},
 			},
 			mobile: {
 				'.ugb-divider__dots': {
-					marginLeft: appendImportant( marginLeftAlign( mobileContentAlign ) ),
-					marginRight: appendImportant( marginRightAlign( mobileContentAlign ) ),
+					marginLeft: appendImportant( mobileContentAlign !== '' ? marginLeftAlign( mobileContentAlign ) : undefined ),
+					marginRight: appendImportant( mobileContentAlign !== '' ? marginRightAlign( mobileContentAlign ) : undefined ),
 				},
 			},
 		} )
