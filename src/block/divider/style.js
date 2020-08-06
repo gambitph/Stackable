@@ -17,6 +17,8 @@ export const createStyles = props => {
 	const {
 		design = 'basic',
 		contentAlign = '',
+		tabletContentAlign = '',
+		mobileContentAlign = '',
 	} = props.attributes
 
 	styles.push( {
@@ -32,11 +34,21 @@ export const createStyles = props => {
 				backgroundColor: appendImportant( getValue( 'color' ) ),
 				height: appendImportant( getValue( 'height', '%spx' ) ),
 				width: appendImportant( getValue( 'width', '%s%' ) ),
-
 				marginLeft: appendImportant( marginLeftAlign( contentAlign ) ),
 				marginRight: appendImportant( marginRightAlign( contentAlign ) ),
-
 				borderRadius: design === 'bar' ? appendImportant( getValue( 'height', 'calc(%spx / 2)' ) ) : undefined,
+			},
+			tablet: {
+				'hr.ugb-divider__hr': {
+					marginLeft: appendImportant( marginLeftAlign( tabletContentAlign ) ),
+					marginRight: appendImportant( marginRightAlign( tabletContentAlign ) ),
+				}
+			},
+			mobile: {
+				'hr.ugb-divider__hr': {
+					marginLeft: appendImportant( marginLeftAlign( mobileContentAlign ) ),
+					marginRight: appendImportant( marginRightAlign( mobileContentAlign ) ),
+				}
 			},
 		} )
 	}
@@ -52,6 +64,18 @@ export const createStyles = props => {
 				backgroundColor: design === 'dots' ? appendImportant( getValue( 'color' ) ) : undefined,
 				height: appendImportant( getValue( 'height', '%spx' ) ),
 				width: appendImportant( getValue( 'height', '%spx' ) ),
+			},
+			tablet: {
+				'.ugb-divider__dots': {
+					marginLeft: appendImportant( marginLeftAlign( tabletContentAlign ) ),
+					marginRight: appendImportant( marginRightAlign( tabletContentAlign ) ),
+				},
+			},
+			mobile: {
+				'.ugb-divider__dots': {
+					marginLeft: appendImportant( marginLeftAlign( mobileContentAlign ) ),
+					marginRight: appendImportant( marginRightAlign( mobileContentAlign ) ),
+				},
 			},
 		} )
 	}
