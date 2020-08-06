@@ -238,7 +238,7 @@ const edit = props => {
 			<Fragment>
 				{ showTitle &&
 					<RichText
-						tagName={ titleTag || 'h2' }
+						tagName={ titleTag || 'h4' }
 						className="ugb-expand__title"
 						value={ title }
 						onChange={ title => setAttributes( { title } ) }

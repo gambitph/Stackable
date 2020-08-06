@@ -74,7 +74,7 @@ export const createStyles = props => {
 			},
 		},
 	} )
-	styles.push( ...createResponsiveStyles( '.ugb-blockquote__item', 'text%sAlign', 'textAlign', '%s', props.attributes, true ) )
+	styles.push( ...createResponsiveStyles( '.ugb-blockquote__item', 'text%sAlign', 'textAlign', '%s', props.attributes, { important: true } ) )
 
 	return deepmerge.all( styles )
 }

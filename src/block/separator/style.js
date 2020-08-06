@@ -62,12 +62,12 @@ export const createStyles = props => {
 		},
 		desktopOnly: {
 			'.ugb-separator__svg-wrapper': {
-				height: getValue( 'height' ) !== '' ? appendImportant( getValue( 'height', '%spx' ) ) : undefined,
+				height: appendImportant( getValue( 'height', '%spx' ) ),
 			},
 		},
 		tabletOnly: {
 			'.ugb-separator__svg-wrapper': {
-				height: getValue( 'tabletHeight' ) !== '' ? appendImportant( getValue( 'tabletHeight', '%spx' ) ) : undefined,
+				height: appendImportant( getValue( 'tabletHeight', '%spx' ) ),
 			},
 		},
 		tablet: {
@@ -84,7 +84,7 @@ export const createStyles = props => {
 		},
 		mobile: {
 			'.ugb-separator__svg-wrapper': {
-				height: getValue( 'mobileHeight' ) !== '' ? appendImportant( getValue( 'mobileHeight', '%spx' ) ) : undefined,
+				height: appendImportant( getValue( 'mobileHeight', '%spx' ) ),
 			},
 			'.ugb-separator': {
 				marginTop: `${ mobileMarginTop - 1 }${ mobileMarginUnit } !important`, // -1 to prevent white lines.
