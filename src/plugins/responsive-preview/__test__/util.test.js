@@ -28,10 +28,32 @@ const dummyStyleSheets = [
 				media: { mediaText: 'screen and (min-width: 480px) and (max-width: 1025px)' },
 			},
 			{
-				cssText: '@media screen and (max-width: 1025px) .ugb-sample.block { display: block; }',
-				media: { mediaText: 'screen and (min-width: 1025px)' },
+				cssText: '@media screen and (max-width: 1025px) { .ugb-sample.block { display: block; } }',
+				media: { mediaText: 'screen and (max-width: 1025px)' },
 			},
+			{
+				cssText: '@media screen and (min-width: 480px) { .ugb-sample.block { width: 50vw; } }',
+				media: { mediaText: 'screen and (min-width: 480px)' }
+			}
 		],
+		deleteRule( index = null ) {
+			if ( index === null || ( index >= this.cssRules.length || index < 0 ) ) {
+				return null
+			}
+
+			this.cssRules.splice( index, 1 )
+			return index
+		},
+		insertRule( cssText = '', index = 0 ) {
+			if ( index > this.cssRules.length || index < 0 ) {
+				return null
+			}
+
+			const mediaText = cssText.split( "{" )[ 0 ].split( '@media' )[ 1 ].trim() || ""
+
+			this.cssRules.splice( index, 0, { cssText, media: { mediaText } } )
+			return index
+		},
 	},
 ]
 
@@ -39,15 +61,23 @@ const dummyCssObject = {
 	0: {
 		0: {
 			mediaText: 'screen and (max-width: 600px)', min: 0, max: 600,
+			cssText: '@media screen and (max-width: 600px) { .ugb-sample.block { display: block; } }',
 		},
 		2: {
 			mediaText: 'screen and (min-width: 760px)', min: 760, max: 9999,
+			cssText: '@media screen and (min-width: 760px) { .ugb-sample.block { display: block; } }',
 		},
 		3: {
 			mediaText: 'screen and (min-width: 480px) and (max-width: 1025px)', min: 480, max: 1025,
+			cssText: '@media screen and (min-width: 480px) and (max-width: 1025px) { .ugb-sample.block { display: block; } }',
 		},
 		4: {
-			mediaText: 'screen and (min-width: 1025px)', min: 1025, max: 9999,
+			mediaText: 'screen and (max-width: 1025px)', min: 0, max: 1025,
+			cssText: '@media screen and (max-width: 1025px) { .ugb-sample.block { display: block; } }',
+		},
+		5: {
+			mediaText: 'screen and (min-width: 480px)', min: 480, max: 9999,
+			cssText: '@media screen and (min-width: 480px) { .ugb-sample.block { width: 50vw; } }'
 		},
 	},
 }
@@ -102,32 +132,31 @@ describe( 'updateMediaQueries', () => {
 		const matchingFilenames = [ null ]
 		const width = 700
 
-		expect( updateMediaQueries( previewMode, width, matchingFilenames, document.styleSheets ) ).toEqual(
+		expect( updateMediaQueries( previewMode, width, matchingFilenames, document.styleSheets )[ 0 ].cssRules ).toEqual(
 			[
 				{
-					href: null,
-					cssRules: [
-						{
-							cssText: '@media screen and (max-width: 600px) { .ugb-sample.block { display: block; } }',
-							media: { mediaText: 'screen and (min-width: 5000px)' },
-						},
-						{
-							cssText: '@media screen { .block-editor { display: block; } }',
-							media: { mediaText: 'screen' },
-						},
-						{
-							cssText: '@media screen and (min-width: 760px) { .ugb-sample.block { display: block; } }',
-							media: { mediaText: 'screen and (min-width: 5000px)' },
-						},
-						{
-							cssText: '@media screen and (min-width: 480px) and (max-width: 1025px) { .ugb-sample.block { display: block; } }',
-							media: { mediaText: 'screen and (max-width: 5000px)' },
-						},
-						{
-							cssText: '@media screen and (max-width: 1025px) .ugb-sample.block { display: block; }',
-							media: { mediaText: 'screen and (min-width: 5000px)' },
-						},
-					],
+					cssText: '@media screen and (max-width: 600px) { .ugb-sample.block { display: block; } }',
+					media: { mediaText: 'screen and (min-width: 5000px)' },
+				},
+				{
+					cssText: '@media screen { .block-editor { display: block; } }',
+					media: { mediaText: 'screen' },
+				},
+				{
+					cssText: '@media screen and (min-width: 760px) { .ugb-sample.block { display: block; } }',
+					media: { mediaText: 'screen and (min-width: 5000px)' },
+				},
+				{
+					cssText: '@media screen and (min-width: 480px) and (max-width: 1025px) { .ugb-sample.block { display: block; } }',
+					media: { mediaText: 'screen and (max-width: 5000px)' },
+				},
+				{
+					cssText: '@media screen and (max-width: 1025px) { .ugb-sample.block { display: block; } }',
+					media: { mediaText: 'screen and (max-width: 5000px)' },
+				},
+				{
+					cssText: '@media screen and (min-width: 480px) { .ugb-sample.block { width: 350px; } }',
+					media: { mediaText: 'screen and (max-width: 5000px)' }
 				},
 			],
 		)
@@ -139,32 +168,31 @@ describe( 'updateMediaQueries', () => {
 		const matchingFilenames = [ null ]
 		const width = 250
 
-		expect( updateMediaQueries( previewMode, width, matchingFilenames, document.styleSheets ) ).toEqual(
+		expect( updateMediaQueries( previewMode, width, matchingFilenames, document.styleSheets )[ 0 ].cssRules ).toEqual(
 			 [
 				{
-					href: null,
-					cssRules: [
-						{
-							cssText: '@media screen and (max-width: 600px) { .ugb-sample.block { display: block; } }',
-							media: { mediaText: 'screen and (max-width: 5000px)' },
-						},
-						{
-							cssText: '@media screen { .block-editor { display: block; } }',
-							media: { mediaText: 'screen' },
-						},
-						{
-							cssText: '@media screen and (min-width: 760px) { .ugb-sample.block { display: block; } }',
-							media: { mediaText: 'screen and (min-width: 5000px)' },
-						},
-						{
-							cssText: '@media screen and (min-width: 480px) and (max-width: 1025px) { .ugb-sample.block { display: block; } }',
-							media: { mediaText: 'screen and (min-width: 5000px)' },
-						},
-						{
-							cssText: '@media screen and (max-width: 1025px) .ugb-sample.block { display: block; }',
-							media: { mediaText: 'screen and (min-width: 5000px)' },
-						},
-					],
+					cssText: '@media screen and (max-width: 600px) { .ugb-sample.block { display: block; } }',
+					media: { mediaText: 'screen and (max-width: 5000px)' },
+				},
+				{
+					cssText: '@media screen { .block-editor { display: block; } }',
+					media: { mediaText: 'screen' },
+				},
+				{
+					cssText: '@media screen and (min-width: 760px) { .ugb-sample.block { display: block; } }',
+					media: { mediaText: 'screen and (min-width: 5000px)' },
+				},
+				{
+					cssText: '@media screen and (min-width: 480px) and (max-width: 1025px) { .ugb-sample.block { display: block; } }',
+					media: { mediaText: 'screen and (min-width: 5000px)' },
+				},
+				{
+					cssText: '@media screen and (max-width: 1025px) { .ugb-sample.block { display: block; } }',
+					media: { mediaText: 'screen and (max-width: 5000px)' },
+				},
+				{
+					cssText: '@media screen and (min-width: 480px) { .ugb-sample.block { width: 125px; } }',
+					media: { mediaText: 'screen and (min-width: 5000px)' }
 				},
 			],
 		)
@@ -178,8 +206,8 @@ describe( 'updateMediaQueries', () => {
 		const width = 1920
 
 		// Transform the media queries to mobile first.
-		updateMediaQueries( 'Mobile', 250, matchingFilenames, document.styleSheets, cssObject )
+		 updateMediaQueries( 'Mobile', 250, matchingFilenames, document.styleSheets, cssObject )
 
-		expect( updateMediaQueries( previewMode, width, matchingFilenames, document.styleSheets, cssObject ) ).toEqual( cloneDeep( dummyStyleSheets ) )
+		expect( updateMediaQueries( previewMode, width, matchingFilenames, document.styleSheets, cssObject )[ 0 ].cssRules ).toEqual( cloneDeep( dummyStyleSheets )[ 0 ].cssRules )
 	} )
 } )
