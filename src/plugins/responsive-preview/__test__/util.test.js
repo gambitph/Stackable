@@ -9,6 +9,7 @@ import { cloneDeep } from 'lodash'
 
 const dummyStyleSheets = [
 	{
+		__id: 0,
 		href: null,
 		cssRules: [
 			{
