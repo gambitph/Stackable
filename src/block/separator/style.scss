@@ -75,6 +75,8 @@
 	.ugb-separator__bottom-pad {
 		height: 0;
 		width: 100%;
+		z-index: 2; // Ensure that our paddings are on top to prevent a thin line from showing.
+		position: relative;
 	}
 	.ugb-separator__top-pad {
 		margin-bottom: -1px; // Prevent white lines.

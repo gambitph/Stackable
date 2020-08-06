@@ -114,14 +114,17 @@ export const appendImportant = ( rule, doImportant = true ) => {
  * @return {Array} Reponsive object styles.
  */
 export const createResponsiveStyles = ( selector, attrNameTemplate = '%s', styleRule = 'marginBottom', format = '%spx', attributes = {}, options = {} ) => {
-	 const {
+	// Backward support, we previously had an "important" boolean argument instead of an options object.
+	const _options = typeof options === 'boolean' ? { important: options } : options
+
+	const {
 		important = false,
 		inherit = true, // If false, desktop styles will only be applied to desktop, etc.
 		inheritTabletMax, // If provided & inherit is true, clamp the inherited value in tablet to this.
 		inheritTabletMin,
 		inheritMobileMax, // If provided & inherit is true, clamp the inherited value in mobile to this.
 		inheritMobileMin,
-	} = options
+	} = _options
 	const getValue = __getValue( attributes )
 
 	if ( inherit ) {
@@ -220,13 +223,13 @@ export const createResponsiveMarginAlign = ( selector, attrNameTemplate = '%s', 
  * @param {string} styleRule
  * @param {string} format
  * @param {Object} attributes
+ * @param options
  * @param {boolean} important
- *
  * @return {Array} Reponsive object styles.
  */
-export const createResponsiveEditorStyles = ( selector, attrNameTemplate = '%s', styleRule = 'marginBottom', format = '%spx', attributes = {}, important = false ) => {
+export const createResponsiveEditorStyles = ( selector, attrNameTemplate = '%s', styleRule = 'marginBottom', format = '%spx', attributes = {}, options = {} ) => {
 	return [ {
-		editor: createResponsiveStyles( selector, attrNameTemplate, styleRule, format, attributes, { important } )[ 0 ],
+		editor: createResponsiveStyles( selector, attrNameTemplate, styleRule, format, attributes, options )[ 0 ],
 	} ]
 }
 

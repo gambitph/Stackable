@@ -13,6 +13,7 @@ import { BaseControl, RangeControl } from '@wordpress/components'
  */
 import classnames from 'classnames'
 import { omit } from 'lodash'
+import { getSelectedScreen } from '~stackable/util'
 
 export const convertToNumber = value => {
 	if ( typeof value === 'string' && value !== '' && value.match( /^[\d.]+$/ ) ) {
@@ -36,9 +37,31 @@ const AdvancedRangeControl = props => {
 		propsToPass.step = props.step[ i ]
 	}
 	propsToPass.initialPosition = props.initialPosition !== '' ? props.initialPosition : props.placeholder
-	if ( Array.isArray( props.placeholder ) ) {
-		propsToPass.placeholder = props.placeholder[ i ] || ''
-		propsToPass.initialPosition = props.placeholder[ i ] || ''
+
+	propsToPass.placeholder = '20'
+	let placeholder = props.placeholder
+
+	// Different placeholders can be used for different screens.
+	// Placeholders can be an object like:
+	// { desktop: 20, tablet: 30, mobile: 40 }
+	// or for different units
+	// { desktop: [ 21, 22 ], tablet: [ 31, 32 ], mobile: [ 41, 42 ] }
+	if ( ! Array.isArray( placeholder ) && typeof placeholder === 'object' ) {
+		const screenSize = getSelectedScreen() || 'desktop'
+		if ( typeof placeholder[ screenSize ] !== 'undefined' ) {
+			placeholder = placeholder[ screenSize ]
+		} else {
+			placeholder = Object.keys( placeholder )[ 0 ]
+		}
+	}
+
+	// Placeholder can be an array for different units.
+	if ( Array.isArray( placeholder ) ) {
+		propsToPass.placeholder = placeholder[ i ] || ''
+		propsToPass.initialPosition = placeholder[ i ] || ''
+	} else {
+		propsToPass.placeholder = placeholder || ''
+		propsToPass.initialPosition = placeholder || ''
 	}
 	if ( Array.isArray( props.initialPosition ) ) {
 		propsToPass.initialPosition = props.initialPosition[ i ] || ''
