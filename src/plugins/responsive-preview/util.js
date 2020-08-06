@@ -76,7 +76,7 @@ export const getCssObject = ( matchingFilenames = stackableCSSFiles, documentSty
 	stylesheetIndices.forEach( index => {
 		if ( ! documentStyleSheets[ index ].__id ) {
 			const __id = md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 10 )
-			documentStyleSheets[ index ].__id = __id 
+			documentStyleSheets[ index ].__id = __id
 			uniqueIDs.push( __id )
 		} else {
 			uniqueIDs.push( documentStyleSheets[ index ].__id )
@@ -90,7 +90,7 @@ export const getCssObject = ( matchingFilenames = stackableCSSFiles, documentSty
 		const cssRules = Array.from( styleSheets[ index ].cssRules ).filter( cssRule => cssRule.media )
 
 		// Checks if the current cssObject should not be cached.
-		if ( ! cssRulesCache[ __id ] || ( cssRulesCache[  __id ] && ! isEqual( cssRulesCache[ __id ], cssRules ) ) ) {
+		if ( ! cssRulesCache[ __id ] || ( cssRulesCache[ __id ] && ! isEqual( cssRulesCache[ __id ], cssRules ) ) ) {
 			cssRulesCache[ __id ] = ! isEmpty( cssRules ) && [ ...cssRules ]
 			Array.from( styleSheets[ index ].cssRules ).forEach( ( { cssText, media }, mediaIndex ) => {
 				if ( media && cssText.includes( '.ugb' ) && media.mediaText.match( /(max|min)-width/ ) ) {
@@ -152,26 +152,26 @@ export const updateMediaQueries = ( previewMode = 'Desktop', width = 0, matching
 		return `${ pxValue }px`
 	}
 
-	const modifyCssTextWithVw = cssText => cssText.replace( /(-?[.0-9]+)vw/g , replaceVwToPx )
+	const modifyCssTextWithVw = cssText => cssText.replace( /(-?[.0-9]+)vw/g, replaceVwToPx )
 
 	const updateStylesheetWithVw = ( styleSheetIndex, index, newCssText ) => {
 		// Delete the current styleSheet
 		documentStyleSheets[ styleSheetIndex ].deleteRule( index )
 
 		// Initialize a new one with modified viewport width rules
-		documentStyleSheets[ styleSheetIndex ].insertRule( newCssText, index )	
+		documentStyleSheets[ styleSheetIndex ].insertRule( newCssText, index )
 	}
-	
+
 	if ( previewMode === 'Tablet' || previewMode === 'Mobile' ) {
 		// If Preview is in Tablet or Mobile Mode, modify media queries for Tablet or Mobile.
 		keys( cssObject ).forEach( __id => {
 			const styleSheetIndex = Array.from( documentStyleSheets ).findIndex( styleSheet => styleSheet.__id === __id )
 			keys( cssObject[ __id ] ).forEach( index => {
 				if ( documentStyleSheets[ styleSheetIndex ] && documentStyleSheets[ styleSheetIndex ].cssRules[ index ] ) {
-					const {	
+					const {
 						min,
 						max,
-						cssText
+						cssText,
 					} = cssObject[ __id ][ index ]
 
 					if ( inRange( width, min, max ) ) {

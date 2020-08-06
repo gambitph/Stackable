@@ -9,7 +9,7 @@ import { cloneDeep } from 'lodash'
 
 const dummyStyleSheets = [
 	{
-		__id: "sampleID",
+		__id: 'sampleID',
 		href: null,
 		cssRules: [
 			{
@@ -34,8 +34,8 @@ const dummyStyleSheets = [
 			},
 			{
 				cssText: '@media screen and (min-width: 480px) { .ugb-sample.block { width: 50vw; } }',
-				media: { mediaText: 'screen and (min-width: 480px)' }
-			}
+				media: { mediaText: 'screen and (min-width: 480px)' },
+			},
 		],
 		deleteRule( index = null ) {
 			if ( index === null || ( index >= this.cssRules.length || index < 0 ) ) {
@@ -50,7 +50,7 @@ const dummyStyleSheets = [
 				return null
 			}
 
-			const mediaText = cssText.split( "{" )[ 0 ].split( '@media' )[ 1 ].trim() || ""
+			const mediaText = cssText.split( '{' )[ 0 ].split( '@media' )[ 1 ].trim() || ''
 
 			this.cssRules.splice( index, 0, { cssText, media: { mediaText } } )
 			return index
@@ -59,7 +59,7 @@ const dummyStyleSheets = [
 ]
 
 const dummyCssObject = {
-	"sampleID": {
+	sampleID: {
 		0: {
 			mediaText: 'screen and (max-width: 600px)', min: 0, max: 600,
 			cssText: '@media screen and (max-width: 600px) { .ugb-sample.block { display: block; } }',
@@ -78,7 +78,7 @@ const dummyCssObject = {
 		},
 		5: {
 			mediaText: 'screen and (min-width: 480px)', min: 480, max: 9999,
-			cssText: '@media screen and (min-width: 480px) { .ugb-sample.block { width: 50vw; } }'
+			cssText: '@media screen and (min-width: 480px) { .ugb-sample.block { width: 50vw; } }',
 		},
 	},
 }
@@ -157,7 +157,7 @@ describe( 'updateMediaQueries', () => {
 				},
 				{
 					cssText: '@media screen and (min-width: 480px) { .ugb-sample.block { width: 350px; } }',
-					media: { mediaText: 'screen and (max-width: 5000px)' }
+					media: { mediaText: 'screen and (max-width: 5000px)' },
 				},
 			],
 		)
@@ -193,7 +193,7 @@ describe( 'updateMediaQueries', () => {
 				},
 				{
 					cssText: '@media screen and (min-width: 480px) { .ugb-sample.block { width: 125px; } }',
-					media: { mediaText: 'screen and (min-width: 5000px)' }
+					media: { mediaText: 'screen and (min-width: 5000px)' },
 				},
 			],
 		)
