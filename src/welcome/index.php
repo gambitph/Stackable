@@ -180,7 +180,12 @@ SVG;
 						</article>
 						<article class="s-box">
 							<h2><?php _e( '📰 Role Manager', STACKABLE_I18N ) ?></h2>
-							<p class="s-settings-subtitle"><?php printf( __( 'You can lock the Block Editor\'s inspector for different user roles and give them edit access to only images and content. Content Editing Mode affects all blocks. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/stackable-guides/advanced-guides/role-manager-and-content-editing-mode/?utm_source=wp-settings-role-manager&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
+							<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
+								<p class="s-settings-subtitle"><?php printf( __( 'You can lock the Block Editor\'s inspector for different user roles and give them edit access to only images and content. Content Editing Mode affects all blocks. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://wpstackable.com/blog/introducing-role-manager-for-gutenberg/?utm_source=wp-settings-role-manager&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
+							<?php endif; ?>
+							<?php if ( sugb_fs()->can_use_premium_code() ) : ?>
+								<p class="s-settings-subtitle"><?php printf( __( 'You can lock the Block Editor\'s inspector for different user roles and give them edit access to only images and content. Content Editing Mode affects all blocks. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/stackable-guides/advanced-guides/role-manager-and-content-editing-mode/?utm_source=wp-settings-role-manager&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
+							<?php endif; ?>
 							<div class="s-editing-mode-settings"></div>
 							<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
 								<p class="s-settings-pro"><?php _e( 'This is only available in Stackable Premium.', STACKABLE_I18N ) ?> <a href="https://wpstackable.com/premium/?utm_source=wp-settings-role-manager&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a></p>
