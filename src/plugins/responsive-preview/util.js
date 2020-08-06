@@ -156,7 +156,7 @@ export const updateMediaQueries = ( previewMode = 'Desktop', width = 0, matching
 	const cssObject = getCssObject( matchingFilenames, documentStyleSheets, cachedCssObject )
 
 	const replaceVwToPx = match => {
-		const [ value ] = 	match.split( 'vw' )
+		const [ value ] = match.split( 'vw' )
 		const pxValue = ( parseFloat( value ) / 100 ) * width
 		return `${ pxValue }px`
 	}
