@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.4
 Tested up to: 5.5
 Requires PHP: 5.3
-Stable tag: 2.8.0
+Stable tag: 2.9.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -190,8 +190,16 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
-= 2.8.1 =
+= 2.9.0 =
 
+* New: Responsive Preview and Editing!
+* New: Multi-block editing support
+* New: Improved styling for the admin settings
+* New: Complete WordPress 5.5 support
+* Fixed: Separator can show a thin white line sometimes
+* Fixed: Divider block alignment not being applied
+* Fixed: Column gap option not working in Icon Block
+* Fixed: Expand block showed wrong heading tag in the editor
 * Fixed: PHP Rest API notice about register_setting used incorrectly.
 
 = 2.8.0 =
