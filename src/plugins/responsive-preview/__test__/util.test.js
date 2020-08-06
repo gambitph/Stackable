@@ -206,7 +206,7 @@ describe( 'updateMediaQueries', () => {
 		const width = 1920
 
 		// Transform the media queries to mobile first.
-		 updateMediaQueries( 'Mobile', 250, matchingFilenames, document.styleSheets, cssObject )
+		updateMediaQueries( 'Mobile', 250, matchingFilenames, document.styleSheets, cssObject )
 
 		expect( updateMediaQueries( previewMode, width, matchingFilenames, document.styleSheets, cssObject )[ 0 ].cssRules ).toEqual( cloneDeep( dummyStyleSheets )[ 0 ].cssRules )
 	} )
