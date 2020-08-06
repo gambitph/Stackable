@@ -59,11 +59,46 @@
 	> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
 		@include columns-grid();
 	}
-	// .block-editor-block-list__layout {
-	// 	margin-left: 0;
-	// 	margin-right: 0;
-	// }
+}
 
+#editor .ugb-columns {
+	// Plain responsive
+	&.ugb-columns.ugb-columns.ugb-columns > .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
+		@media screen and (max-width: $break-js-mobile) {
+			grid-auto-flow: row;
+			grid-template-columns: 1fr !important;
+			grid-template-areas: inherit !important;
+		}
+	}
+	> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
+		@media screen and (max-width: $break-js-mobile) {
+			> .ugb-column {
+				grid-area: inherit !important;
+			}
+		}
+	}
+	&.ugb-columns--design-plain.ugb-columns--columns-4 {
+		> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
+			@media screen and (max-width: $break-js-mobile) {
+				grid-auto-flow: row;
+				grid-template-columns: 1fr 1fr !important;
+			}
+		}
+	}
+	&.ugb-columns--design-plain.ugb-columns--columns-6 {
+		> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
+			@media screen and (min-width: $break-js-mobile) and (max-width: $break-js-tablet) {
+				grid-auto-flow: row;
+				grid-template-columns: 1fr 1fr 1fr !important;
+			}
+			@media screen and (max-width: $break-js-mobile) {
+				grid-template-columns: 1fr !important;
+			}
+		}
+	}
+}
+
+.ugb-columns {
 	/**
 	 * Grid design.
 	 */
@@ -76,7 +111,21 @@
 			}
 		}
 	}
+}
 
+// Grid Responsive.
+#editor .ugb-columns.ugb-columns--design-grid {
+	> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
+		@media screen and (max-width: $break-js-mobile) {
+			grid-template-areas: inherit !important;
+			> .block-editor-block-list__block {
+				grid-area: inherit;
+			}
+		}
+	}
+}
+
+.ugb-columns {
 	> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout > .block-editor-block-list__block {
 		display: flex;
 		flex-direction: column;
