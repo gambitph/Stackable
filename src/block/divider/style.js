@@ -42,13 +42,13 @@ export const createStyles = props => {
 				'hr.ugb-divider__hr': {
 					marginLeft: appendImportant( marginLeftAlign( tabletContentAlign ) ),
 					marginRight: appendImportant( marginRightAlign( tabletContentAlign ) ),
-				}
+				},
 			},
 			mobile: {
 				'hr.ugb-divider__hr': {
 					marginLeft: appendImportant( marginLeftAlign( mobileContentAlign ) ),
 					marginRight: appendImportant( marginRightAlign( mobileContentAlign ) ),
-				}
+				},
 			},
 		} )
 	}
