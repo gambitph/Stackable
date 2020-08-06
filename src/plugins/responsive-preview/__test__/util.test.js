@@ -9,7 +9,7 @@ import { cloneDeep } from 'lodash'
 
 const dummyStyleSheets = [
 	{
-		__id: 0,
+		__id: "sampleID",
 		href: null,
 		cssRules: [
 			{
@@ -59,7 +59,7 @@ const dummyStyleSheets = [
 ]
 
 const dummyCssObject = {
-	0: {
+	"sampleID": {
 		0: {
 			mediaText: 'screen and (max-width: 600px)', min: 0, max: 600,
 			cssText: '@media screen and (max-width: 600px) { .ugb-sample.block { display: block; } }',
