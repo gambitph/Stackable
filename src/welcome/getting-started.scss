@@ -5,31 +5,6 @@
 .getting-started .s-header h1 {
 	margin: 0 auto;
 }
-.s-tabs {
-	display: inline-block !important;
-	background: #fff;
-	padding: 8px 0 8px 8px !important;
-	border-radius: 8px;
-	margin-bottom: 30px !important;
-}
-.s-tab {
-	display: inline-block;
-	padding: 10px 15px;
-	margin: 0 8px 0 0 !important;
-	border-radius: 4px;
-	font-size: 15px;
-	cursor: pointer;
-	color: #444;
-	text-decoration: none;
-	&:hover {
-		background: #eee;
-		color: #444;
-	}
-	&.s-active {
-		background: linear-gradient(to right, #8c33da -10%, #f34957 110%);
-		color: #fff;
-	}
-}
 .s-tab-premium {
 	&,
 	&:hover {
@@ -39,7 +14,6 @@
 .s-title {
 	text-align: center;
 	margin-bottom: 30px;
-	font-size: 3em !important;
 }
 .s-spacer {
 	height: 50px;
@@ -72,7 +46,7 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	align-items: flex-start;
+	align-items: center;
 	> * {
 		margin: 0 15px;
 	}
@@ -87,7 +61,6 @@
 	}
 }
 .s-button-small {
-	padding: 0.3em 1em !important;
-	font-size: 14px !important;
+	padding: 8px 23px !important;
 	display: inline-block !important;
 }

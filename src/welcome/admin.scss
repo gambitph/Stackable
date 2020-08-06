@@ -20,22 +20,34 @@ body[class*="page_stackable"] {
 	padding: 50px;
 }
 .s-header {
-	background: #111;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-	padding-bottom: 100px;
+	background: #fff;
+	padding-bottom: 80px;
 	h1 {
-		color: #fff;
-		font-size: 2.5em;
-		font-weight: bold;
+		padding: 0;
+		display: flex;
+		align-items: center;
+		// Admin notices should appear a little bit below the title.
+		&:not(:last-child) {
+			margin-bottom: 24px;
+		}
 	}
-	img {
-		height: 50px;
+	&.s-logo-icon {
+		img {
+			height: 34px;
+			margin-right: 15px;
+		}
 	}
-	img:first-child:last-child {
-		margin: 0 auto;
+	&.s-logo-logo {
+		h1 {
+			justify-content: center;
+		}
+		img {
+			height: 50px;
+		}
+		// Hide all admin notices in the getting started area.
+		h1 ~ * {
+			display: none !important;
+		}
 	}
 }
 .s-header,
@@ -43,30 +55,9 @@ body[class*="page_stackable"] {
 	margin-left: -50px;
 	margin-right: -50px;
 }
-.s-separator {
-	width: calc(100% + 100px);
-	height: 200px;
-	position: relative;
-	transform: scaleY(-1);
-	z-index: -1;
-	margin-top: -50px;
-	margin-bottom: -200px;
-	svg {
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		z-index: 1;
-		height: 100%;
-		width: 100%;
-		&:first-child {
-			z-index: 3;
-		}
-	}
-}
 .s-settings-subtitle {
 	width: 75%;
+	margin-bottom: 2em;
 }
 .s-settings-field {
 	margin-bottom: 16px;
@@ -105,7 +96,6 @@ body[class*="page_stackable"] {
 	}
 	p {
 		margin-left: 240px;
-		font-size: 14px !important;
 		font-style: italic;
 		margin-top: 4px;
 	}
@@ -158,6 +148,46 @@ body[class*="page_stackable"] {
 	}
 }
 
+.s-tabs {
+	transform: translateY(-100%);
+	padding: 0;
+	display: flex;
+	justify-content: flex-start;
+	.s-tab {
+		padding: 14px 18px;
+		list-style: none;
+		margin: 0 !important;
+		display: inline-block;
+		cursor: pointer;
+		color: #444 !important;
+		text-decoration: none !important;
+		&[aria-selected="true"],
+		&.s-active {
+			position: relative;
+			font-weight: bold;
+			&::before {
+				content: "";
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				height: 3px;
+				background: linear-gradient(90deg, #8c33da -100%, #f34957 200%);
+			}
+		}
+		&:hover {
+			background: #eee;
+			color: #444;
+		}
+		&.s-tab-premium {
+			color: #bd2f9a !important;
+		}
+	}
+}
+.s-logo-logo + * > .s-tabs {
+	justify-content: center;
+}
+
 body.toplevel_page_stackable,
 body[class*="page_stackable-settings"] {
 	// Hide admin notices to not mess up the welcome screen.
@@ -175,14 +205,6 @@ body[class*="page_stackable-settings"] {
 	img {
 		max-width: 100%;
 	}
-	h2 {
-		font-size: 2em;
-		line-height: 1.1em;
-	}
-	h3 {
-		font-size: 1.5em;
-		line-height: 1.1em;
-	}
 	ul {
 		padding-left: 2em;
 		list-style-type: circle;
@@ -190,7 +212,7 @@ body[class*="page_stackable-settings"] {
 	.s-box {
 		@include box();
 		overflow: visible;
-		box-shadow: nth($shadows, 6);
+		box-shadow: 0 18px 35px -15px rgba(18, 63, 82, 0.25);
 		border: 0;
 		margin-bottom: 30px;
 		transition: all 0.3s ease;
@@ -204,6 +226,7 @@ body[class*="page_stackable-settings"] {
 		&.s-box-small {
 			padding-left: 15px;
 			padding-right: 15px;
+			box-shadow: 0 25px 15px -15px rgba(18, 63, 82, 0.15), 0 2px 7px 0 rgba(18, 63, 82, 0.15);
 			h3 {
 				color: #f34957;
 			}
@@ -216,7 +239,7 @@ body[class*="page_stackable-settings"] {
 		cursor: pointer;
 		opacity: 1;
 		background: #8c33da;
-		background: linear-gradient(90deg, #8c33da -30%, #f34957 130%);
+		background: linear-gradient(90deg, #8c33da -100%, #f34957 200%);
 		transition: opacity 0.2s ease-in-out;
 		box-shadow: none !important;
 		color: #fff;
@@ -259,7 +282,6 @@ body[class*="page_stackable-settings"] {
 		}
 		p,
 		li {
-			font-size: calc(13px + 0.2vw); //18px;
 			line-height: 1.6em;
 		}
 		li {
@@ -325,51 +347,28 @@ body[class*="page_stackable-settings"] {
 			display: flex;
 			flex-direction: column;
 			.s-block-icon {
-				max-width: 70px;
+				max-width: 60px;
 				margin: 0 auto;
-			}
-			p {
-				font-size: 13px;
 			}
 			> *:not(:last-child) {
 				margin-bottom: 1em;
 			}
+			.s-block-description {
+				margin-bottom: 1.5em;
+			}
 			> * {
 				margin-top: 0 !important;
 			}
-		}
-	}
-	.s-tabs {
-		padding: 0;
-		margin-bottom: 32px;
-		display: flex;
-		justify-content: center;
-		box-shadow: 0 3px rgba(0, 0, 0, 0.1);
-		li {
-			list-style: none;
-			padding: 0.5em 2em;
-			margin: 0 !important;
-			cursor: pointer;
-			&[aria-selected="true"] {
-				position: relative;
-				color: #f34957;
-				&::before {
-					content: "";
-					position: absolute;
-					bottom: -3px;
-					left: 0;
-					right: 0;
-					height: 3px;
-					background: linear-gradient(90deg, #8c33da -30%, #f34957 130%);
+			// Align all the toggles on the bottom.
+			.s-toggle-button {
+				margin-top: auto !important;
+			}
+			.s-demo-url:nth-last-child(2) {
+				margin-top: auto !important;
+				+ .s-toggle-button {
+					margin-top: 0 !important;
 				}
 			}
-		}
-	}
-	.s-tabs-list {
-		list-style-type: disc;
-		li span {
-			font-size: 0.9rem;
-			color: #999;
 		}
 	}
 	.s-video-tutorial-wrapper {
@@ -387,7 +386,6 @@ body[class*="page_stackable-settings"] {
 	.s-check-list {
 		padding-left: 10px;
 		li {
-			font-size: 0.9rem !important;
 			margin-bottom: 3px !important;
 			list-style-type: none;
 			&::before {
@@ -446,6 +444,7 @@ body[class*="page_stackable-settings"] {
 		transition: all 0.4s ease;
 		display: inline-block;
 		background: #e4f5e4;
+		margin-top: 0;
 
 		&::after,
 		&::before {
@@ -553,7 +552,6 @@ body[class*="page_stackable-settings"] {
 
 .s-settings-pro {
 	font-style: italic;
-	font-size: 15px;
 	padding: 12px 24px;
 	display: inline-block;
 	border-radius: 6px;

@@ -104,6 +104,7 @@ class BlockToggler extends Component {
 						const isDisabled = this.state.disabledBlocks.includes( blockName )
 						const mainClasses = classnames( [
 							's-box',
+							's-box-small',
 						], {
 							's-is-disabled': isDisabled,
 						} )
@@ -112,8 +113,11 @@ class BlockToggler extends Component {
 						return (
 							<div key={ i + 1 } className={ mainClasses }>
 								<img src={ `${ welcomeSrcUrl }/images/block-${ blockNameTrim }.svg` } alt={ `${ block.title } icon` } className="s-block-icon" />
-								<h3>{ block.title }</h3>
-								<p>{ block.description }</p>
+								<h4>{ block.title }</h4>
+								<p className="s-block-description">{ block.description }</p>
+								{ block.sDemoURL && (
+									<p className="s-demo-url"><small><a href={ block.sDemoURL } target="stackable_demo" title={ sprintf( __( 'View %s Demo', i18n ), block.title ) } >{ __( 'View Block Demo', i18n ) }</a></small></p>
+								) }
 								<button
 									className="s-toggle-button"
 									onClick={ () => this.toggleBlock( blockName ) }
@@ -121,9 +125,6 @@ class BlockToggler extends Component {
 									<span>{ __( 'Disabled', i18n ) }</span>
 									<span>{ __( 'Enabled', i18n ) }</span>
 								</button>
-								{ block.sDemoURL && (
-									<p className="s-demo-url"><small><a href={ block.sDemoURL } target="stackable_demo" title={ sprintf( __( 'View %s Demo', i18n ), block.title ) } >{ __( 'View Block Demo', i18n ) }</a></small></p>
-								) }
 							</div>
 						)
 					} ) }

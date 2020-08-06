@@ -14,7 +14,7 @@ add_filter( 'fs_templates/account.php_stackable-ultimate-gutenberg-blocks', func
 	?>
 	<div class="wrap">
 		<?php
-		Stackable_Welcome_Screen::print_header( __( 'Account', STACKABLE_I18N ) );
+		Stackable_Welcome_Screen::print_header( __( 'Stackable Account', STACKABLE_I18N ) );
 		Stackable_Welcome_Screen::print_tabs();
 		echo $output;
 		?>
@@ -31,7 +31,7 @@ add_filter( 'fs_/forms/affiliation.php_stackable-ultimate-gutenberg-blocks', fun
 	?>
 	<div class="wrap">
 		<?php
-		Stackable_Welcome_Screen::print_header( __( 'Affiliation', STACKABLE_I18N ) );
+		Stackable_Welcome_Screen::print_header( __( 'Become an Affiliate', STACKABLE_I18N ) );
 		Stackable_Welcome_Screen::print_tabs();
 		echo $output;
 		?>
@@ -65,7 +65,6 @@ add_filter( 'fs_templates/pricing.php_stackable-ultimate-gutenberg-blocks', func
 	?>
 	<div class="wrap">
 		<?php
-		Stackable_Welcome_Screen::print_header();
 		echo $output;
 		?>
 		</div>
@@ -81,7 +80,6 @@ add_filter( 'fs_templates/checkout.php_stackable-ultimate-gutenberg-blocks', fun
 	?>
 	<div class="wrap">
 		<?php
-		Stackable_Welcome_Screen::print_header();
 		echo $output;
 		?>
 		</div>
