@@ -4,6 +4,7 @@
 import {
 	isEmpty, isEqual, inRange, keys,
 } from 'lodash'
+import md5 from 'md5'
 
 /**
  * CSS files to cache
@@ -69,22 +70,12 @@ export const getCssObject = ( matchingFilenames = stackableCSSFiles, documentSty
 	const styleSheets = Array.from( documentStyleSheets )
 	const stylesheetIndices = getIncludedIndices( styleSheets, matchingFilenames )
 
-	const generateID = ( length = 10 ) => {
-		let result = ''
-		const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-		const charactersLength = characters.length
-		for ( let i = 0; i < length; i = i + 1 ) {
-			result = result + characters.charAt( Math.floor( Math.random() * charactersLength ) )
-		}
-		return result
-	}
-
 	// Store the unique IDs of all styleSheets.
 	const uniqueIDs = []
 
 	stylesheetIndices.forEach( index => {
 		if ( ! documentStyleSheets[ index ].__id ) {
-			const __id = generateID()
+			const __id = md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 10 )
 			documentStyleSheets[ index ].__id = __id 
 			uniqueIDs.push( __id )
 		} else {
