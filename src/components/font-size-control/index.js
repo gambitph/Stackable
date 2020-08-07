@@ -22,7 +22,7 @@ const FontSizeControl = props => {
 			{ ...props }
 			onChangeUnit={ value => {
 				// Change font-size so as not to surprise the user.
-				if ( props.value ) {
+				if ( props.value !== '' ) {
 					if ( value === 'em' || value === 'rem' ) {
 						props.onChange( 1.0 )
 					} else if ( value === 'px' ) {
