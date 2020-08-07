@@ -125,6 +125,7 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com?utm_sour
 
 ### News Article Updates
 
+- [v2.9 Introducing: Live Responsive Editing](https://wpstackable.com/blog/introducing-live-responsive-editing/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.8 Introducing: Role Manager for Gutenberg](https://wpstackable.com/blog/introducing-role-manager-for-gutenberg/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.7 New Icon Block, Amazing Icons and Font Awesome Pro](https://wpstackable.com/blog/new-icon-block-amazing-icons-and-font-awesome-pro/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.6 New Advanced Blocks and Load More Blog Posts Button](https://wpstackable.com/blog/new-advanced-blocks-and-load-more-blog-posts-button/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -191,6 +192,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 2.9.0 =
+[Introducing: Live Responsive Editing](https://wpstackable.com/blog/introducing-live-responsive-editing/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 * New: Responsive Preview and Editing!
 * New: Multi-block editing support
