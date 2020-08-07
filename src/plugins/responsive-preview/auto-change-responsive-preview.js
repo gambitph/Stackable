@@ -57,11 +57,6 @@ addAction( 'stackable.responsive-toggle.screen.change', `stackable/responsive-pr
 	const value = PREVIEW_MODES_MAP[ mode ]
 	if ( value !== getPreviewDeviceType() ) {
 		setPreviewDeviceType( value )
-		if ( value !== 'Desktop' ) {
-			scrollToSelectedElement( '.edit-post-visual-editor', 200 )
-		} else {
-			scrollToSelectedElement( '.interface-interface-skeleton__content' )
-		}
 	}
 } )
 
@@ -89,9 +84,11 @@ const ResponsiveToggle = () => {
 		if ( value !== 'desktop' ) {
 			setIsScreenPickerOpen( true )
 			doAction( 'stackable.responsive-toggle.screen.open' )
+			scrollToSelectedElement( '.edit-post-visual-editor', 200 )
 		} else {
 			setIsScreenPickerOpen( false )
 			doAction( 'stackable.responsive-toggle.screen.close' )
+			scrollToSelectedElement( '.interface-interface-skeleton__content', 200 )
 		}
 	}, 0 )
 
