@@ -235,7 +235,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ tabletBlockWidthUnit }
 							onChange={ tabletBlockWidth => setAttributes( { tabletBlockWidth } ) }
 							onChangeUnit={ tabletBlockWidthUnit => setAttributes( { tabletBlockWidthUnit } ) }
-							initialPosition="2000"
+							placeholder="2000"
 							className="ugb--help-tip-advanced-block-content-width"
 						/>
 					</WhenResponsiveScreen>
@@ -251,7 +251,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ mobileBlockWidthUnit }
 							onChange={ mobileBlockWidth => setAttributes( { mobileBlockWidth } ) }
 							onChangeUnit={ mobileBlockWidthUnit => setAttributes( { mobileBlockWidthUnit } ) }
-							initialPosition="2000"
+							placeholder="2000"
 							className="ugb--help-tip-advanced-block-content-width"
 						/>
 					</WhenResponsiveScreen>
@@ -322,7 +322,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							enableRight={ align !== 'full' && options.enableMarginRight }
 							enableBottom={ options.enableMarginBottom }
 							enableLeft={ align !== 'full' && options.enableMarginLeft }
-							initialPosition="0"
+							placeholder="0"
 							className="ugb--help-tip-advanced-block-margins"
 						/>
 					</WhenResponsiveScreen>
@@ -352,7 +352,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							enableRight={ align !== 'full' && options.enableMarginRight }
 							enableBottom={ options.enableMarginBottom }
 							enableLeft={ align !== 'full' && options.enableMarginLeft }
-							initialPosition="0"
+							placeholder="0"
 							className="ugb--help-tip-advanced-block-margins"
 						/>
 					</WhenResponsiveScreen>
@@ -382,7 +382,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							enableRight={ align !== 'full' && options.enableMarginRight }
 							enableBottom={ options.enableMarginBottom }
 							enableLeft={ align !== 'full' && options.enableMarginLeft }
-							initialPosition="0"
+							placeholder="0"
 							className="ugb--help-tip-advanced-block-margins"
 						/>
 					</WhenResponsiveScreen>
@@ -414,7 +414,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							enableRight={ options.enablePaddingRight }
 							enableBottom={ options.enablePaddingBottom }
 							enableLeft={ options.enablePaddingLeft }
-							initialPosition="10"
+							placeholder="10"
 							className="ugb--help-tip-advanced-block-paddings"
 						/>
 					</WhenResponsiveScreen>
@@ -444,7 +444,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							enableRight={ options.enablePaddingRight }
 							enableBottom={ options.enablePaddingBottom }
 							enableLeft={ options.enablePaddingLeft }
-							initialPosition="10"
+							placeholder="10"
 							className="ugb--help-tip-advanced-block-paddings"
 						/>
 					</WhenResponsiveScreen>
@@ -474,7 +474,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							enableRight={ options.enablePaddingRight }
 							enableBottom={ options.enablePaddingBottom }
 							enableLeft={ options.enablePaddingLeft }
-							initialPosition="10"
+							placeholder="10"
 							className="ugb--help-tip-advanced-block-paddings"
 						/>
 					</WhenResponsiveScreen>

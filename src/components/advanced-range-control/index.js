@@ -70,7 +70,7 @@ const AdvancedRangeControl = props => {
 	// Initial position needs to be an actual number.
 	propsToPass.initialPosition = convertToNumber( propsToPass.initialPosition )
 
-	// Sets the default value to the value of the initialPosition if value is an empty string
+	// Sets the default value to the value of the initlaPosition if value is an empty string
 	propsToPass.value = props.value === '' ? propsToPass.initialPosition : props.value
 
 	return (
@@ -86,8 +86,6 @@ const AdvancedRangeControl = props => {
 				screens={ props.screens }
 			/>
 			<RangeControl
-				placeholder={ props.placeholder }
-				initialPosition={ props.initialPosition }
 				{ ...propsToPass }
 			/>
 		</BaseControl>
