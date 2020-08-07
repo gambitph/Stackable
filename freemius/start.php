@@ -15,7 +15,7 @@
 	 *
 	 * @var string
 	 */
-	$this_sdk_version = '2.3.2';
+	$this_sdk_version = '2.4.0.1';
 
 	#region SDK Selection Logic --------------------------------------------------------------------
 
@@ -109,6 +109,14 @@
 			foreach ( $fs_active_plugins->plugins as $sdk_path => $data ) {
                 if ( ! file_exists( ( isset( $data->type ) && 'theme' === $data->type ? $themes_directory : WP_PLUGIN_DIR ) . '/' . $sdk_path ) ) {
 					unset( $fs_active_plugins->plugins[ $sdk_path ] );
+
+                    if (
+                        ! empty( $fs_active_plugins->newest ) &&
+                        $sdk_path === $fs_active_plugins->newest->sdk_path
+                    ) {
+                        unset( $fs_active_plugins->newest );
+                    }
+
 					$has_changes = true;
 				}
 			}

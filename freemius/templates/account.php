@@ -163,18 +163,27 @@
         }
     }
 
-    $is_child_license    = ( is_object( $license ) && FS_Plugin_License::is_valid_id( $license->parent_license_id ) );
-    $bundle_subscription = null;
+    $has_bundle_license = false;
+
+    if ( is_object( $license ) &&
+        FS_Plugin_License::is_valid_id( $license->parent_license_id )
+    ) {
+        // Context license has a parent license, therefore, the account has a bundle license.
+        $has_bundle_license = true;
+    }
+
+    $bundle_subscription             = null;
+    $is_bundle_first_payment_pending = false;
 
     if (
         $show_plan_row &&
         is_object( $license ) &&
-        FS_Plugin_License::is_valid_id( $license->parent_license_id )
+        $has_bundle_license
     ) {
-        $bundle_subscription = $fs->_get_subscription( $license->parent_license_id );
+        $bundle_plan_title               = strtoupper( $license->parent_plan_title );
+        $bundle_subscription             = $fs->_get_subscription( $license->parent_license_id );
+        $is_bundle_first_payment_pending = $license->is_first_payment_pending();
     }
-
-    $is_active_bundle_subscription = ( is_object( $bundle_subscription ) && $bundle_subscription->is_active() );
 
     $fs_blog_id = ( is_multisite() && ! is_network_admin() ) ?
         get_current_blog_id() :
@@ -183,6 +192,46 @@
     $active_plugins_directories_map = Freemius::get_active_plugins_directories_map( $fs_blog_id );
 
     $is_premium = $fs->is_premium();
+
+    $account_addons       = $fs->get_updated_account_addons();
+    $installed_addons     = $fs->get_installed_addons();
+    $installed_addons_ids = array();
+
+    /**
+     * Store the installed add-ons' IDs into a collection which will be used in determining the add-ons to show on the "Account" page, and at the same time try to find an add-on that is activated with a bundle license if the core product is not.
+     *
+     * @author Leo Fajardo
+     *
+     * @since 2.4.0
+     */
+    foreach ( $installed_addons as $fs_addon ) {
+        $installed_addons_ids[] = $fs_addon->get_id();
+
+        if ( $has_bundle_license ) {
+            // We already have the context bundle license details, skip.
+            continue;
+        }
+
+        if (
+            $show_plan_row &&
+            $fs_addon->has_active_valid_license()
+        ) {
+            $addon_license = $fs_addon->_get_license();
+
+            if ( FS_Plugin_License::is_valid_id( $addon_license->parent_license_id ) ) {
+                // Add-on's license is associated with a parent/bundle license.
+                $has_bundle_license = true;
+
+                $bundle_plan_title               = strtoupper( $addon_license->parent_plan_title );
+                $bundle_subscription             = $fs_addon->_get_subscription( $addon_license->parent_license_id );
+                $is_bundle_first_payment_pending = $addon_license->is_first_payment_pending();
+            }
+        }
+    }
+
+    $addons_to_show = array_unique( array_merge( $installed_addons_ids, $account_addons ) );
+
+    $is_active_bundle_subscription = ( is_object( $bundle_subscription ) && $bundle_subscription->is_active() );
 ?>
 	<div class="wrap fs-section">
 		<?php if ( ! $has_tabs && ! $fs->apply_filters( 'hide_account_tabs', false ) ) : ?>
@@ -392,7 +441,7 @@
                                             );
                                         }
 
-										if ( $has_paid_plan ) {
+										if ( $has_paid_plan || $has_bundle_license ) {
 											if ( $fs->is_trial() ) {
 											    if ( $show_plan_row ) {
                                                     $profile[] = array(
@@ -407,18 +456,18 @@
                                                 if ( $show_plan_row ) {
                                                     $profile[] = array(
                                                         'id'    => 'plan',
-                                                        'title' => ( $is_child_license ? ucfirst( $fs->get_module_type() ) . ' ' : '' ) . $plan_text,
+                                                        'title' => ( $has_bundle_license ? ucfirst( $fs->get_module_type() ) . ' ' : '' ) . $plan_text,
                                                         'value' => strtoupper( is_string( $plan->name ) ?
                                                             $plan->title :
                                                             strtoupper( $free_text )
                                                         )
                                                     );
 
-                                                    if ( $is_child_license ) {
+                                                    if ( $has_bundle_license ) {
                                                         $profile[] = array(
                                                             'id'    => 'bundle_plan',
                                                             'title' => $bundle_plan_text,
-                                                            'value' => strtoupper( $license->parent_plan_title )
+                                                            'value' => $bundle_plan_title
                                                         );
                                                     }
                                                 }
@@ -525,7 +574,7 @@
                                                         <?php endif ?>
 													<?php elseif ( 'bundle_plan' === $p['id'] ) : ?>
 														<?php if ( is_object( $bundle_subscription ) ) : ?>
-															<?php if ( $is_active_bundle_subscription && ! $license->is_first_payment_pending() ) : ?>
+															<?php if ( $is_active_bundle_subscription && ! $is_bundle_first_payment_pending ) : ?>
 																<label class="fs-tag fs-success"><?php echo esc_html( sprintf( $renews_in_text, human_time_diff( time(), strtotime( $bundle_subscription->next_payment ) ) ) ) ?></label>
 															<?php endif ?>
                                                         <?php endif ?>
@@ -555,7 +604,7 @@
 																<div class="button-group">
 																	<?php if ( $is_paying || $fs->is_trial() ) : ?>
 																		<?php if ( ! $fs->is_allowed_to_install() ) : ?>
-                                                                            <a target="_blank" class="button button-primary"
+                                                                            <a target="_blank" rel="noopener" class="button button-primary"
                                                                                 href="<?php echo $fs->_get_latest_download_local_url() ?>"><?php
                                                                                 $download_version_text_suffix = ( is_object( $update ) ? ' [' . $update->version . ']' : '' );
 
@@ -691,18 +740,6 @@
 							</div>
 						</div>
 						<?php endif ?>
-
-						<?php
-							$account_addons = $fs->get_updated_account_addons();
-
-							$installed_addons     = $fs->get_installed_addons();
-							$installed_addons_ids = array();
-							foreach ( $installed_addons as $fs_addon ) {
-								$installed_addons_ids[] = $fs_addon->get_id();
-							}
-
-							$addons_to_show = array_unique( array_merge( $installed_addons_ids, $account_addons ) );
-						?>
 						<?php if ( 0 < count( $addons_to_show ) ) : ?>
 							<!-- Add-Ons -->
 							<div class="postbox">
