@@ -130,7 +130,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ blockHeightUnit }
 							onChange={ blockHeight => setAttributes( { blockHeight } ) }
 							onChangeUnit={ blockHeightUnit => setAttributes( { blockHeightUnit } ) }
-							initialPosition="100"
+							placeholder="100"
 							className="ugb--help-tip-advanced-block-height"
 						/>
 					</WhenResponsiveScreen>
@@ -146,7 +146,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ tabletBlockHeightUnit }
 							onChange={ tabletBlockHeight => setAttributes( { tabletBlockHeight } ) }
 							onChangeUnit={ tabletBlockHeightUnit => setAttributes( { tabletBlockHeightUnit } ) }
-							initialPosition="100"
+							placeholder="100"
 							className="ugb--help-tip-advanced-block-height"
 						/>
 					</WhenResponsiveScreen>
@@ -162,7 +162,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ mobileBlockHeightUnit }
 							onChange={ mobileBlockHeight => setAttributes( { mobileBlockHeight } ) }
 							onChangeUnit={ mobileBlockHeightUnit => setAttributes( { mobileBlockHeightUnit } ) }
-							initialPosition="100"
+							placeholder="100"
 							className="ugb--help-tip-advanced-block-height"
 						/>
 					</WhenResponsiveScreen>
@@ -219,7 +219,6 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ blockWidthUnit }
 							onChange={ blockWidth => setAttributes( { blockWidth } ) }
 							onChangeUnit={ blockWidthUnit => setAttributes( { blockWidthUnit } ) }
-							initialPosition="2000"
 							className="ugb--help-tip-advanced-block-content-width"
 						/>
 					</WhenResponsiveScreen>
@@ -235,7 +234,6 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ tabletBlockWidthUnit }
 							onChange={ tabletBlockWidth => setAttributes( { tabletBlockWidth } ) }
 							onChangeUnit={ tabletBlockWidthUnit => setAttributes( { tabletBlockWidthUnit } ) }
-							placeholder="2000"
 							className="ugb--help-tip-advanced-block-content-width"
 						/>
 					</WhenResponsiveScreen>
@@ -251,7 +249,6 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ mobileBlockWidthUnit }
 							onChange={ mobileBlockWidth => setAttributes( { mobileBlockWidth } ) }
 							onChangeUnit={ mobileBlockWidthUnit => setAttributes( { mobileBlockWidthUnit } ) }
-							placeholder="2000"
 							className="ugb--help-tip-advanced-block-content-width"
 						/>
 					</WhenResponsiveScreen>
