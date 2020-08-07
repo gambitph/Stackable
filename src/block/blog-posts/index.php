@@ -655,6 +655,9 @@ if ( ! function_exists( 'stackable_get_terms_endpoint' ) ) {
 		register_rest_route( 'wp/v2', '/stk_terms', array(
 			'methods' => 'GET',
 			'callback' => 'stackable_rest_get_terms',
+			'permission_callback' => function () {
+				return current_user_can( 'edit_posts' );
+			},
 		) );
 	}
 	add_action( 'rest_api_init', 'stackable_get_terms_endpoint' );

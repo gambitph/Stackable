@@ -39,15 +39,18 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			register_rest_route( 'wp/v2', '/stk_design_library(?:/(?P<reset>reset))?', array(
 				'methods' => 'GET',
 				'callback' => array( $this, 'get_design_library' ),
-				'args' => array( 'reset' ),
 				'permission_callback' => function () {
 					return current_user_can( 'edit_posts' );
-				}
+				},
+				'args' => array( 'reset' ),
 			) );
 
 			register_rest_route( 'wp/v2', '/stk_block_designs/(?P<block>[\w\d-]+)', array(
 				'methods' => 'GET',
 				'callback' => array( $this, 'get_block_designs' ),
+				'permission_callback' => function () {
+					return current_user_can( 'edit_posts' );
+				},
 				'args' => array(
 					'block' => array(
 						'validate_callback' => __CLASS__ . '::validate_string'
@@ -58,6 +61,9 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			register_rest_route( 'wp/v2', '/stk_design/(?P<design>[\w\d-]+)', array(
 				'methods' => 'GET',
 				'callback' => array( $this, 'get_design' ),
+				'permission_callback' => function () {
+					return current_user_can( 'edit_posts' );
+				},
 				'args' => array(
 					'design' => array(
 						'validate_callback' => __CLASS__ . '::validate_string'
@@ -68,6 +74,9 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			register_rest_route( 'wp/v2', '/stk_design_library_dev_mode', array(
 				'methods' => 'POST',
 				'callback' => array( $this, 'set_dev_mode' ),
+				'permission_callback' => function () {
+					return current_user_can( 'edit_posts' );
+				},
 				'args' => array(
 					'devmode' => array(
 						'validate_callback' => 'is_boolean'

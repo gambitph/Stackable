@@ -30,6 +30,9 @@ if ( ! class_exists( 'Stackable_Post_Picker' ) ) {
 			register_rest_route( 'wp/v2', '/stk_editor_mode_get_all_posts', array(
 				'methods' => 'GET',
 				'callback' => array( $this, 'editor_mode_get_all_posts' ),
+				'permission_callback' => function () {
+					return current_user_can( 'edit_posts' );
+				},
 				'args' => array(
 					'search' => array(
 						'sanitize_callback' => 'sanitize_text_field',
