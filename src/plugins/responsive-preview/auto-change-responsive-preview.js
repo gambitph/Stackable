@@ -28,6 +28,18 @@ const PREVIEW_MODES_MAP = {
 	mobile: 'Mobile',
 }
 
+// Scroll the editor to the selected element
+const scrollToSelectedElement = ( query, offset = 0 ) => {
+	setTimeout( () => {
+		const selectedElement = document.querySelector( '.is-selected' )
+		const visualEditor = document.querySelector( query )
+		if ( selectedElement ) {
+			const topPos = selectedElement.offsetTop
+			visualEditor.scrollTop = topPos + offset
+		}
+	}, 300 )
+}
+
 // Change the preview mode in the editor when Stackable responsive toggles are
 // changed.
 addAction( 'stackable.responsive-toggle.screen.change', `stackable/responsive-preview`, mode => {
@@ -45,6 +57,11 @@ addAction( 'stackable.responsive-toggle.screen.change', `stackable/responsive-pr
 	const value = PREVIEW_MODES_MAP[ mode ]
 	if ( value !== getPreviewDeviceType() ) {
 		setPreviewDeviceType( value )
+		if ( value !== 'Desktop' ) {
+			scrollToSelectedElement( '.edit-post-visual-editor', 200 )
+		} else {
+			scrollToSelectedElement( '.interface-interface-skeleton__content' )
+		}
 	}
 } )
 
@@ -86,3 +103,4 @@ const ResponsiveToggle = () => {
 if ( select( 'core/edit-post' ).__experimentalGetPreviewDeviceType ) {
 	registerPlugin( 'stackable-responsive-toggle-change', { render: ResponsiveToggle } )
 }
+
