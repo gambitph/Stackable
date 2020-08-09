@@ -194,6 +194,8 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 = 2.9.1 =
 * Fixed: Columns Block uneven columns
 * Fixed: PHP Rest API notice about register_rest_route used incorrectly.
+* Change: Removed affiliate page
+* Change: Removed main menu notification for a more unobtrusive experience
 
 = 2.9.0 =
 [Introducing: Live Responsive Editing](https://wpstackable.com/blog/introducing-live-responsive-editing/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
