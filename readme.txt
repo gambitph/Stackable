@@ -192,6 +192,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 2.9.1 =
+* Fixed: Columns Block uneven columns
 * Fixed: PHP Rest API notice about register_rest_route used incorrectly.
 
 = 2.9.0 =

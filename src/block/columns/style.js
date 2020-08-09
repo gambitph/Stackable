@@ -29,20 +29,36 @@ export const createStyles = props => {
 
 	// Columns.
 	const numColumns = getColumnCountFromDesign( columns, design )
-	const columnRanges = range( numColumns ).map( i => {
+	let columnRanges = range( numColumns ).map( i => {
 		if ( ! getValue( `columns${ i + 1 }` ) ) {
 			return '1.00fr'
 		}
 		const width = parseInt( getValue( `columns${ i + 1 }` ), 10 )
 		return ( width / 100 * columns ).toFixed( 2 ) + 'fr' // Fraction.
 	} )
-	const tabletColumnRanges = range( numColumns ).map( i => {
+
+	// Fix column ranges for uneven columns that should be even, e.g. 33, 33, 34.
+	if ( numColumns === 3 && range( numColumns ).every( i => [ 33, 34 ].includes( getValue( `columns${ i + 1 }` ) ) ) ) {
+		columnRanges = [ '1.00fr', '1.00fr', '1.00fr' ]
+	} else if ( numColumns === 6 && range( numColumns ).every( i => [ 16, 17 ].includes( getValue( `columns${ i + 1 }` ) ) ) ) {
+		columnRanges = [ '1.00fr', '1.00fr', '1.00fr', '1.00fr', '1.00fr', '1.00fr' ]
+	}
+
+	let tabletColumnRanges = range( numColumns ).map( i => {
 		if ( ! getValue( `tabletColumns${ i + 1 }` ) ) {
 			return '1.00fr'
 		}
 		const width = parseInt( getValue( `tabletColumns${ i + 1 }` ), 10 )
 		return ( width / 100 * columns ).toFixed( 2 ) + 'fr' // Fraction.
 	} )
+
+	// Fix column ranges for uneven columns that should be even, e.g. 33, 33, 34.
+	if ( numColumns === 3 && range( numColumns ).every( i => [ 33, 34 ].includes( getValue( `tabletColumns${ i + 1 }` ) ) ) ) {
+		tabletColumnRanges = [ '1.00fr', '1.00fr', '1.00fr' ]
+	} else if ( numColumns === 6 && range( numColumns ).every( i => [ 16, 17 ].includes( getValue( `tabletColumns${ i + 1 }` ) ) ) ) {
+		tabletColumnRanges = [ '1.00fr', '1.00fr', '1.00fr', '1.00fr', '1.00fr', '1.00fr' ]
+	}
+
 	styles.push( {
 		'> .ugb-inner-block > .ugb-block-content > .ugb-columns__item': {
 			gridTemplateColumns: ! columnRanges.every( c => c === '1.00fr' ) ? appendImportant( columnRanges.join( ' ' ) ) : undefined,
