@@ -37,7 +37,7 @@ class WhenResponsiveScreen extends Component {
 
 	render() {
 		const children = Children.toArray( this.props.children ).map( child => {
-			return cloneElement( child, { screens: this.props.screens } )
+			return cloneElement( child, { screens: this.props.screens, screen: this.state.screen } )
 		} )
 
 		// If this is the currently selected screen.

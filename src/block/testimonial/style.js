@@ -69,13 +69,13 @@ export const createStyles = props => {
 			},
 			tablet: {
 				'.ugb-testimonial__body': {
-					...createTypographyStyles( 'testimonial%s', 'tablet', props.attributes ),
+					...createTypographyStyles( 'testimonial%s', 'tablet', props.attributes, { important: true } ),
 					textAlign: appendImportant( getValue( 'testimonialTabletAlign' ) || getValue( 'mobileTabletAlign' ) ),
 				},
 			},
 			mobile: {
 				'.ugb-testimonial__body': {
-					...createTypographyStyles( 'testimonial%s', 'mobile', props.attributes ),
+					...createTypographyStyles( 'testimonial%s', 'mobile', props.attributes, { important: true } ),
 					textAlign: appendImportant( getValue( 'testimonialMobileAlign' ) || getValue( 'mobileContentAlign' ) ),
 				},
 			},
