@@ -225,6 +225,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="48"
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h2' }
@@ -263,6 +264,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 					attrNameTemplate="subtitle%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ subtitleColor }
@@ -296,6 +298,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 					attrNameTemplate="button%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ControlSeparator />
 				<ResponsiveControl
@@ -325,6 +328,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 					attrNameTemplate="button2%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="button%sAlign"
