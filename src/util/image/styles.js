@@ -106,6 +106,7 @@ export const createImageStyleSet = ( attrNameTemplate = '%s', mainClassName = ''
 
 	if ( inherit ) {
 		style[ `.${ mainClassName }` ] = {
+			...style[ `.${ mainClassName }` ],
 			...createImageStyles( attrNameTemplate, 'desktop', blockAttributes, options ),
 		}
 	} else {
