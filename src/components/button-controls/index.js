@@ -105,6 +105,7 @@ const ButtonControls = props => {
 					// onChangeFontSize={ null }
 					onChangeLineHeight={ null }
 					showSecondFontSize={ false }
+					placeholder={ props.placeholder }
 				/>
 			) }
 

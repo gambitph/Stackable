@@ -346,6 +346,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					attrNameTemplate="category%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="11"
 				/>
 				<ToggleControl
 					label={ __( 'Highlighted', i18n ) }
@@ -392,6 +393,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="40"
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h3' }
@@ -445,6 +447,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					attrNameTemplate="excerpt%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ excerptColor }
@@ -498,6 +501,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					attrNameTemplate="meta%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="11"
 				/>
 				<ColorPaletteControl
 					value={ metaColor }
@@ -553,6 +557,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					attrNameTemplate="readmore%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ readmoreColor }

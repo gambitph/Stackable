@@ -96,6 +96,7 @@ const addInspectorPanel = ( output, props ) => {
 					attrNameTemplate="blockTitle%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="48"
 				/>
 				<HeadingButtonsControl
 					value={ blockTitleTag || 'h2' }
@@ -194,6 +195,7 @@ const addInspectorPanel = ( output, props ) => {
 					attrNameTemplate="blockDescription%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ blockDescriptionColor }
