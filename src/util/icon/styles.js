@@ -43,14 +43,14 @@ export const createIconStyleSet = ( attrNameTemplate = '%s', mainClassName = '',
 		},
 		tabletOnly: {
 			[ `.${ mainClassName } .ugb-icon-inner-svg, .${ mainClassName } .ugb-icon-inner-svg svg` ]: {
-				width: appendImportant( getValue( 'TabletSize', '%spx' ) || `${ clampedTabletSize }px` ),
-				height: appendImportant( getValue( 'TabletSize', '%spx' ) || `${ clampedMobileSize }px` ),
+				width: appendImportant( getValue( 'TabletSize', '%spx' ) || ( clampedTabletSize && `${ clampedTabletSize }px` ) ),
+				height: appendImportant( getValue( 'TabletSize', '%spx' ) || ( clampedMobileSize && `${ clampedMobileSize }px` ) ),
 			},
 		},
 		mobile: {
 			[ `.${ mainClassName } .ugb-icon-inner-svg, .${ mainClassName } .ugb-icon-inner-svg svg` ]: {
-				width: appendImportant( getValue( 'MobileSize', '%spx' ) || `${ clampedTabletSize }px` ),
-				height: appendImportant( getValue( 'MobileSize', '%spx' ) || `${ clampedMobileSize }px` ),
+				width: appendImportant( getValue( 'MobileSize', '%spx' ) || ( clampedTabletSize && `${ clampedTabletSize }px` ) ),
+				height: appendImportant( getValue( 'MobileSize', '%spx' ) || ( clampedMobileSize && `${ clampedMobileSize }px` ) ),
 			},
 		},
 		[ `.${ mainClassName } .ugb-icon-inner-svg` ]: {
