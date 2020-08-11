@@ -291,12 +291,12 @@ export const moveArrayIndex = ( values, oldIndex, newIndex ) => {
  * @param {*} value
  * @param {Object} options
  */
-export const clampValue = ( value, { min = Number.NEGATIVE_INFINITY, max = Number.POSITIVE_INFINITY } ) => {
-	if ( value ) {
-		const clampedValue = clamp( value, parseFloat( min ), parseFloat( max ) )
+export const clampValue = ( value, options = {} ) => {
+	const {
+		min = Number.NEGATIVE_INFINITY,
+		max = Number.POSITIVE_INFINITY,
+	} = options
 
-		return parseFloat( clampedValue ) !== parseFloat( value ) ?
-			clampedValue :
-			undefined
-	}
+	const clampedValue = clamp( value, parseFloat( min ), parseFloat( max ) )
+	return ! isNaN( clampedValue ) ? clampedValue : undefined
 }
