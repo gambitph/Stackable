@@ -2,7 +2,7 @@
  * Internal dependencies
  */
 import {
-	hexToRgba, prependCSSClass, clampValue,
+	hexToRgba, prependCSSClass,
 } from '../'
 
 describe( 'hexToRgba', () => {
@@ -53,44 +53,5 @@ describe( 'prependCSSClass', () => {
 		expect( prependCSSClass( '.test', 'main', 'unique', '.wrap' ) ).toBe( '.wrap .unique .test' )
 		expect( prependCSSClass( '.test, .main .test2', 'main', 'unique', '.wrap' ) ).toBe( '.wrap .unique .test, .wrap .unique.main .test2' )
 		expect( prependCSSClass( '.test', '', '', '.wrap' ) ).toBe( '.wrap .test' )
-	} )
-} )
-
-describe( 'clampValue', () => {
-	it( 'should return the correct value', () => {
-		expect( clampValue( undefined ) ).toBe( undefined )
-		expect( clampValue( undefined, { min: 100 } ) ).toBe( undefined )
-		expect( clampValue( undefined, { max: 200 } ) ).toBe( undefined )
-		expect( clampValue( undefined, { min: 100, max: 200 } ) ).toBe( undefined )
-
-		expect( clampValue( 100 ) ).toBe( 100 )
-		expect( clampValue( '100' ) ).toBe( 100 )
-		expect( clampValue( 100.1 ) ).toBe( 100.1 )
-		expect( clampValue( '100.1' ) ).toBe( 100.1 )
-
-		expect( clampValue( 100, { min: 200 } ) ).toBe( 200 )
-		expect( clampValue( '100', { min: 200 } ) ).toBe( 200 )
-		expect( clampValue( 100, { min: 100 } ) ).toBe( 100 )
-		expect( clampValue( 100, { min: 50 } ) ).toBe( 100 )
-
-		expect( clampValue( 100, { max: 50 } ) ).toBe( 50 )
-		expect( clampValue( '100', { max: 50 } ) ).toBe( 50 )
-		expect( clampValue( 100, { max: 100 } ) ).toBe( 100 )
-		expect( clampValue( 100, { max: 200 } ) ).toBe( 100 )
-
-		expect( clampValue( 100, { min: 200, max: 300 } ) ).toBe( 200 )
-		expect( clampValue( '100', { min: 200, max: 300 } ) ).toBe( 200 )
-		expect( clampValue( 100, { min: 0, max: 50 } ) ).toBe( 50 )
-		expect( clampValue( '100', { min: 0, max: 50 } ) ).toBe( 50 )
-		expect( clampValue( 100, { min: 0, max: 200 } ) ).toBe( 100 )
-		expect( clampValue( '100', { min: 0, max: 200 } ) ).toBe( 100 )
-		expect( clampValue( 100, { min: -100, max: 100 } ) ).toBe( 100 )
-		expect( clampValue( 99.99, { min: -100, max: 99.98 } ) ).toBe( 99.98 )
-		expect( clampValue( 99.99, { min: -100, max: 99.99 } ) ).toBe( 99.99 )
-		expect( clampValue( 100, { min: -100, max: 99.99 } ) ).toBe( 99.99 )
-		expect( clampValue( 0, { min: -100, max: 99.99 } ) ).toBe( 0 )
-		expect( clampValue( 0.00001, { min: -100, max: 99.99 } ) ).toBe( 0.00001 )
-		expect( clampValue( -0.00001, { min: 0, max: 99.99 } ) ).toBe( 0 )
-		expect( clampValue( -100, { min: -0.5, max: 99.99 } ) ).toBe( -0.5 )
 	} )
 } )

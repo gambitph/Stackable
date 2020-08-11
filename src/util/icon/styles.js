@@ -7,7 +7,7 @@ import { appendImportant } from '../'
  * External dependencies
  */
 import {
-	__getValue, clampValue,
+	__getValue, clampInheritedStyle,
 } from '~stackable/util'
 import { camelCase } from 'lodash'
 import deepmerge from 'deepmerge'
@@ -33,8 +33,8 @@ export const createIconStyleSet = ( attrNameTemplate = '%s', mainClassName = '',
 
 	const styles = []
 
-	const clampedTabletSize = clampValue( getValue( 'Size' ), { max: 200 } )
-	const clampedMobileSize = clampValue( getValue( 'Size' ), { max: 200 } )
+	const clampedTabletSize = clampInheritedStyle( getValue( 'Size' ), { max: 200 } )
+	const clampedMobileSize = clampInheritedStyle( getValue( 'Size' ), { max: 200 } )
 
 	styles.push( {
 		[ `.${ mainClassName } .ugb-icon-inner-svg, .${ mainClassName } .ugb-icon-inner-svg svg` ]: {

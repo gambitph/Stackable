@@ -26,7 +26,6 @@ import { __ } from '@wordpress/i18n'
  */
 import { i18n } from 'stackable'
 import rgba from 'color-rgba'
-import { clamp } from 'lodash'
 
 /**
  * Returns an array range of numbers.
@@ -283,20 +282,4 @@ export const moveArrayIndex = ( values, oldIndex, newIndex ) => {
 	values.splice( oldIndex < newIndex ? newIndex + 1 : newIndex, 0, values[ oldIndex ] ) // Add the value in new position.
 	values.splice( oldIndex < newIndex ? oldIndex : oldIndex + 1, 1 ) // Remove value in old position.
 	return values
-}
-
-/**
- * Clamps the value based on given min and max
- *
- * @param {*} value
- * @param {Object} options
- */
-export const clampValue = ( value, options = {} ) => {
-	const {
-		min = Number.NEGATIVE_INFINITY,
-		max = Number.POSITIVE_INFINITY,
-	} = options
-
-	const clampedValue = clamp( value, parseFloat( min ), parseFloat( max ) )
-	return ! isNaN( clampedValue ) ? clampedValue : undefined
 }

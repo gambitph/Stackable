@@ -7,7 +7,7 @@ import { appendImportant, appendImportantAll } from '../'
  * External dependencies
  */
 import {
-	getFontFamily, __getValue, clampValue,
+	getFontFamily, __getValue, clampInheritedStyle,
 } from '~stackable/util'
 import { camelCase } from 'lodash'
 
@@ -50,7 +50,7 @@ const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 			lineHeight: getValue( 'TabletLineHeight' ) !== '' ? `${ getValue( 'TabletLineHeight' ) }${ getValue( 'TabletLineHeightUnit' ) || 'em' }` : undefined,
 		}
 		if ( inherit ) {
-			const clampTabletValue = clampValue( desktopFontSize, { min: inheritTabletMin, max: inheritTabletMax } )
+			const clampTabletValue = clampInheritedStyle( desktopFontSize, { min: inheritTabletMin, max: inheritTabletMax } )
 
 			styles.fontSize = tabletFontSize !== '' ? appendImportant( `${ tabletFontSize }${ getValue( 'TabletFontSizeUnit' ) || 'px' }`, importantSize ) : appendImportant( clampTabletValue && `${ clampTabletValue }${ getValue( 'TabletFontSizeUnit' ) || 'px' }`, importantSize )
 		} else {
@@ -61,7 +61,7 @@ const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 			lineHeight: getValue( 'MobileLineHeight' ) !== '' ? `${ getValue( 'MobileLineHeight' ) }${ getValue( 'MobileLineHeightUnit' ) || 'em' }` : undefined,
 		}
 		if ( inherit ) {
-			const clampMobileValue = clampValue( desktopFontSize, { min: inheritMobileMin, max: inheritMobileMax } )
+			const clampMobileValue = clampInheritedStyle( desktopFontSize, { min: inheritMobileMin, max: inheritMobileMax } )
 
 			styles.fontSize = mobileFontSize !== '' ? appendImportant( `${ mobileFontSize }${ getValue( 'MobileFontSizeUnit' ) || 'px' }`, importantSize ) : appendImportant( clampMobileValue && `${ clampMobileValue }${ getValue( 'MobileFontSizeUnit' ) || 'px' }`, importantSize )
 		} else {

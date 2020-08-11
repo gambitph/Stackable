@@ -7,7 +7,7 @@ import {
 	appendImportant,
 	createBackgroundStyles,
 	createBackgroundOverlayStyles,
-	clampValue,
+	clampInheritedStyle,
 	__getValue,
 } from '~stackable/util'
 import deepmerge from 'deepmerge'
@@ -32,7 +32,7 @@ export const createStyles = props => {
 		} )
 	}
 
-	const clampedImageHeight = clampValue( getValue( 'columnHeight' ), { max: 300 } )
+	const clampedImageHeight = clampInheritedStyle( getValue( 'columnHeight' ), { max: 300 } )
 
 	// Height.
 	styles.push( {

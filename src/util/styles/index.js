@@ -2,8 +2,7 @@
  * External dependencies
  */
 import { default as _isDarkColor } from 'is-dark-color'
-import { lowerFirst } from 'lodash'
-import { clampValue } from '~stackable/util'
+import { lowerFirst, clamp } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -102,6 +101,39 @@ export const appendImportant = ( rule, doImportant = true ) => {
 }
 
 /**
+ * Creates a getValue function that's used for getting attributes for style generation.
+ *
+ * @param {Object} attributes Block attribbutes
+ * @param {Function} attrNameCallback Optional function where the attrName will be run through for formatting
+ * @param {Object} defaultValue_ Value to return if the attribute value is blank. Defaults to undefined.
+ *
+ * @return {Function} getValue function
+ */
+export const __getValue = ( attributes, attrNameCallback = null, defaultValue_ = undefined ) => ( attrName, format = '', defaultValue = defaultValue_ ) => {
+	const attrNameFunc = attrNameCallback !== null ? attrNameCallback : ( s => lowerFirst( s ) )
+	const value = typeof attributes[ attrNameFunc( attrName ) ] === 'undefined' ? '' : attributes[ attrNameFunc( attrName ) ]
+	return value !== '' ? ( format ? sprintf( format.replace( /%$/, '%%' ), value ) : value ) : defaultValue
+}
+
+/**
+ * Clamps the desktop value based on given min and max
+ *
+ * @param {*} value
+ * @param {Object} options
+ */
+export const clampInheritedStyle = ( value, options = {} ) => {
+	const {
+		min = Number.NEGATIVE_INFINITY,
+		max = Number.POSITIVE_INFINITY,
+	} = options
+
+	const clampedValue = clamp( value, parseFloat( min ), parseFloat( max ) )
+	if ( ! isNaN( clampedValue ) ) {
+		return parseFloat( clampedValue ) !== parseFloat( value ) ? clampedValue : undefined
+	}
+}
+
+/**
  * Creates a set of responsive styles.
  *
  * @param {string} selector
@@ -132,8 +164,8 @@ export const createResponsiveStyles = ( selector, attrNameTemplate = '%s', style
 		const tabletValue = getValue( sprintf( attrNameTemplate, 'Tablet' ), format )
 		const mobileValue = getValue( sprintf( attrNameTemplate, 'Mobile' ), format )
 
-		const clampTabletValue = clampValue( desktopValue, { min: inheritTabletMin, max: inheritTabletMax } )
-		const clampMobileValue = clampValue( desktopValue, { min: inheritMobileMin, max: inheritMobileMax } )
+		const clampTabletValue = clampInheritedStyle( desktopValue, { min: inheritTabletMin, max: inheritTabletMax } )
+		const clampMobileValue = clampInheritedStyle( desktopValue, { min: inheritMobileMin, max: inheritMobileMax } )
 
 		return [ {
 			[ selector ]: {
@@ -231,19 +263,4 @@ export const createResponsiveEditorStyles = ( selector, attrNameTemplate = '%s',
 	return [ {
 		editor: createResponsiveStyles( selector, attrNameTemplate, styleRule, format, attributes, options )[ 0 ],
 	} ]
-}
-
-/**
- * Creates a getValue function that's used for getting attributes for style generation.
- *
- * @param {Object} attributes Block attribbutes
- * @param {Function} attrNameCallback Optional function where the attrName will be run through for formatting
- * @param {Object} defaultValue_ Value to return if the attribute value is blank. Defaults to undefined.
- *
- * @return {Function} getValue function
- */
-export const __getValue = ( attributes, attrNameCallback = null, defaultValue_ = undefined ) => ( attrName, format = '', defaultValue = defaultValue_ ) => {
-	const attrNameFunc = attrNameCallback !== null ? attrNameCallback : ( s => lowerFirst( s ) )
-	const value = typeof attributes[ attrNameFunc( attrName ) ] === 'undefined' ? '' : attributes[ attrNameFunc( attrName ) ]
-	return value !== '' ? ( format ? sprintf( format.replace( /%$/, '%%' ), value ) : value ) : defaultValue
 }

@@ -12,7 +12,7 @@ import {
 	__getValue,
 	createAllCombinationAttributes,
 	appendImportant,
-	clampValue,
+	clampInheritedStyle,
 } from '~stackable/util'
 
 /**
@@ -502,8 +502,8 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 
 	const blockClass = `.${ props.mainClassName }`
 
-	const clampedMarginTop = clampValue( getValue( 'marginTop' ), { max: 100 } )
-	const clampedMarginBottom = clampValue( getValue( 'marginBottom' ), { max: 100 } )
+	const clampedMarginTop = clampInheritedStyle( getValue( 'marginTop' ), { max: 100 } )
+	const clampedMarginBottom = clampInheritedStyle( getValue( 'marginBottom' ), { max: 100 } )
 
 	const margins = applyFilters( `stackable.${ blockName }.advanced-block-spacing.margins`, {
 		[ blockClass ]: {
