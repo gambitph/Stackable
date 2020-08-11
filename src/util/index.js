@@ -293,7 +293,7 @@ export const moveArrayIndex = ( values, oldIndex, newIndex ) => {
  */
 export const clampValue = ( value, { min = Number.NEGATIVE_INFINITY, max = Number.POSITIVE_INFINITY } ) => {
 	if ( value ) {
-		const clampedValue = clamp( value, parseFloat( min ), parseFloat( max ) )
+		const clampedValue = clamp( parseFloat( value ), parseFloat( min ), parseFloat( max ) )
 
 		return parseFloat( clampedValue ) !== parseFloat( value ) ?
 			clampedValue :
