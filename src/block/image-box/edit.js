@@ -421,7 +421,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					attrNameTemplate="description%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					placaeholder="21"
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ descriptionColor }

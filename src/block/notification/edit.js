@@ -309,6 +309,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="24"
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h5' }
@@ -347,6 +348,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 					attrNameTemplate="description%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ descriptionColor }
@@ -380,6 +382,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 					attrNameTemplate="button%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ControlSeparator />
 				<ResponsiveControl
