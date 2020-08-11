@@ -10,11 +10,7 @@ import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
 
 const FontSizeControl = props => {
-	const {
-		placeholder = '',
-	} = props
-
-	let passedPlaceholder = placeholder
+	let passedPlaceholder = props.placeholder
 
 	const pxToEm = ( value = '', baseValue = 21 ) => {
 		if ( value === '' ) {
@@ -67,6 +63,7 @@ FontSizeControl.defaultProps = {
 	max: [ 100, 3 ],
 	step: [ 1, 0.05 ],
 	units: [ 'px', 'em' ],
+	placeholder: '',
 }
 
 export default FontSizeControl
