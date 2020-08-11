@@ -190,6 +190,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 					attrNameTemplate="testimonial%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ testimonialColor }
@@ -277,6 +278,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 					attrNameTemplate="name%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="32"
 				/>
 				<HeadingButtonsControl
 					label={ sprintf( _x( '%s HTML Tag', 'component' ), __( 'Name', i18n ) ) }
@@ -316,6 +318,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 					attrNameTemplate="position%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="16"
 				/>
 				<ColorPaletteControl
 					value={ positionColor }
