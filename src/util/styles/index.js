@@ -164,8 +164,8 @@ export const createResponsiveStyles = ( selector, attrNameTemplate = '%s', style
 		const tabletValue = getValue( sprintf( attrNameTemplate, 'Tablet' ), format )
 		const mobileValue = getValue( sprintf( attrNameTemplate, 'Mobile' ), format )
 
-		const clampTabletValue = clampInheritedStyle( desktopValue, { min: inheritTabletMin, max: inheritTabletMax } )
-		const clampMobileValue = clampInheritedStyle( desktopValue, { min: inheritMobileMin, max: inheritMobileMax } )
+		const clampTabletValue = clampInheritedStyle( getValue( sprintf( attrNameTemplate, '' ) ), { min: inheritTabletMin, max: inheritTabletMax } )
+		const clampMobileValue = clampInheritedStyle( getValue( sprintf( attrNameTemplate, '' ) ), { min: inheritMobileMin, max: inheritMobileMax } )
 
 		return [ {
 			[ selector ]: {
