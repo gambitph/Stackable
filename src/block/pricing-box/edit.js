@@ -252,6 +252,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="40"
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h3' }
@@ -290,6 +291,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					attrNameTemplate="price%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ priceColor }
@@ -327,6 +329,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 						onChangeFontFamily={ false }
 						onChangeTextTransform={ false }
 						onChangeLetterSpacing={ false }
+						placeholder="25"
 					/>
 					<ColorPaletteControl
 						value={ pricePrefixColor }
@@ -355,6 +358,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 						onChangeFontFamily={ false }
 						onChangeTextTransform={ false }
 						onChangeLetterSpacing={ false }
+						placeholder="32"
 					/>
 					<ColorPaletteControl
 						value={ priceSuffixColor }
@@ -380,6 +384,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					attrNameTemplate="subPrice%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="16"
 				/>
 				<ColorPaletteControl
 					value={ subPriceColor }
@@ -415,6 +420,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					onChangeUrl={ false }
 					onChangeNewTab={ false }
 					onChangeNoFollow={ false }
+					placeholder="21"
 				/>
 				<ControlSeparator />
 				<ResponsiveControl
@@ -445,6 +451,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					attrNameTemplate="description%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ descriptionColor }
