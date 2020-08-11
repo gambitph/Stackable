@@ -236,6 +236,7 @@ addFilter( 'stackable.feature-grid.edit.inspector.style.before', 'stackable/feat
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="24"
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h2' }
@@ -274,6 +275,7 @@ addFilter( 'stackable.feature-grid.edit.inspector.style.before', 'stackable/feat
 					attrNameTemplate="description%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ descriptionColor }
@@ -310,6 +312,7 @@ addFilter( 'stackable.feature-grid.edit.inspector.style.before', 'stackable/feat
 					onChangeUrl={ false }
 					onChangeNewTab={ false }
 					onChangeNoFollow={ false }
+					placeholder="21"
 				/>
 				<ControlSeparator />
 				<ResponsiveControl
