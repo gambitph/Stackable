@@ -246,6 +246,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 								image3Url: getImageUrlFromCache( image3Id, size || 'medium' ),
 							} )
 						} }
+						placeholder="75"
 					/>
 					<ControlSeparator />
 					<ResponsiveControl
