@@ -291,6 +291,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="32"
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h4' }
@@ -329,6 +330,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					attrNameTemplate="subtitle%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="18"
 				/>
 				<ColorPaletteControl
 					value={ subtitleColor }
@@ -363,6 +365,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					attrNameTemplate="description%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ descriptionColor }
@@ -399,6 +402,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					onChangeUrl={ false }
 					onChangeNewTab={ false }
 					onChangeNoFollow={ false }
+					placeholder="21"
 				/>
 				<ControlSeparator />
 				<ResponsiveControl
