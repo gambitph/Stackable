@@ -89,6 +89,9 @@ export const createImageStyleSet = ( attrNameTemplate = '%s', mainClassName = ''
 	} = options
 
 	const style = {
+		[ `.${ mainClassName }` ]: {
+			...createImageMask( attrNameTemplate, blockAttributes, options ),
+		},
 		tabletOnly: {
 			[ `.${ mainClassName }` ]: {
 				...createImageStyles( attrNameTemplate, 'tablet', blockAttributes, options ),
@@ -104,16 +107,12 @@ export const createImageStyleSet = ( attrNameTemplate = '%s', mainClassName = ''
 	if ( inherit ) {
 		style[ `.${ mainClassName }` ] = {
 			...createImageStyles( attrNameTemplate, 'desktop', blockAttributes, options ),
-			...createImageMask( attrNameTemplate, blockAttributes, options ),
 		}
 	} else {
-		style[ `.${ mainClassName }` ] = {
-			...createImageMask( attrNameTemplate, blockAttributes, options ),
-		}
 		style.desktopOnly = {
 			[ `${ mainClassName }` ]: {
 				...createImageStyles( attrNameTemplate, 'desktop', blockAttributes, options ),
-			}
+			},
 		}
 	}
 
