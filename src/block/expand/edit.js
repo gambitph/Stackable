@@ -84,6 +84,7 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="32"
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h4' }
@@ -115,6 +116,7 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 					attrNameTemplate="text%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ textColor }
@@ -142,6 +144,7 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 					attrNameTemplate="link%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					plaecholder="21"
 				/>
 				<ColorPaletteControl
 					value={ linkColor }
