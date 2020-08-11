@@ -300,6 +300,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 					attrNameTemplate="name%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="32"
 				/>
 				<HeadingButtonsControl
 					value={ nameTag || 'h4' }
@@ -338,6 +339,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 					attrNameTemplate="position%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ positionColor }
@@ -372,6 +374,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 					attrNameTemplate="description%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ descriptionColor }
