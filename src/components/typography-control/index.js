@@ -14,6 +14,9 @@ import { i18n } from 'stackable'
 import { SelectControl } from '@wordpress/components'
 
 const TypographyControl = props => {
+	const {
+		placeholder = '21',
+	} = props
 	return (
 		<Fragment>
 			<ButtonIconPopoverControl
@@ -48,7 +51,7 @@ const TypographyControl = props => {
 								unit={ props.fontSizeUnit }
 								onChangeUnit={ props.onChangeFontSizeUnit }
 								{ ...props.fontSizeProps }
-								placeholder={ props.placeholder }
+								placeholder={ placeholder }
 								className="ugb--help-tip-typography-size"
 							/>
 						</WhenResponsiveScreen>
@@ -61,7 +64,7 @@ const TypographyControl = props => {
 								unit={ props.tabletfontSizeUnit }
 								onChangeUnit={ props.onChangeTabletFontSizeUnit }
 								{ ...props.fontSizeProps }
-								placeholder={ props.placeholder }
+								placeholder={ placeholder }
 								className="ugb--help-tip-typography-size"
 							/>
 						</WhenResponsiveScreen>
@@ -74,7 +77,7 @@ const TypographyControl = props => {
 								unit={ props.mobilefontSizeUnit }
 								onChangeUnit={ props.onChangeMobileFontSizeUnit }
 								{ ...props.fontSizeProps }
-								placeholder={ props.placeholder }
+								placeholder={ placeholder }
 								className="ugb--help-tip-typography-size"
 							/>
 						</WhenResponsiveScreen>

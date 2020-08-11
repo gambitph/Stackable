@@ -177,6 +177,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 					attrNameTemplate="text%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ textColor }
@@ -213,6 +214,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="48"
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h2' }
@@ -263,6 +265,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 					attrNameTemplate="subtitle%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="18"
 				/>
 				<ColorPaletteControl
 					value={ subtitleColor }
