@@ -191,6 +191,9 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.9.2 =
+* Fixed: Blog Posts Block doesn't detect category and tag taxonomies for custom post types
+
 = 2.9.1 =
 * Fixed: Columns Block uneven columns
 * Fixed: PHP Rest API notice about register_rest_route used incorrectly.
