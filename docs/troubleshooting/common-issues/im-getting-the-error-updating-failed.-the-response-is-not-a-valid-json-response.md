@@ -8,7 +8,7 @@ When this error pops up, it’s a bit of a challenge to understand what’s goin
 
 Here are some tried and tested solutions that you can easily do to fix the error, and I’ll also let you know why they happen:
 
-### Solution \#1
+### Solution \#1: Refresh your Permalinks
 
 Head over to **Settings &gt; Permalinks**, then click on **Save Changes**. Afterwards, check whether the saving error still occurs.
 
@@ -18,7 +18,7 @@ WordPress uses [URL rewriting](https://en.wikipedia.org/wiki/Rewrite_engine) for
 
 There’s a chance that when URL rewriting is adjusted in your site, the changes don’t get reflect right away. By saving your permalink changes, it forces the URL rewriting rules to be updated.
 
-### Solution \#2
+### Solution \#2: Turn off Performance Metrics
 
 Turn off debugging or performance display metrics such as “Peak Memory Usage” or the number of “SQL Queries”
 
@@ -28,7 +28,7 @@ Some debugging or performance plugins occasionally prints out performance metric
 
 Sometimes, these metrics gets placed also in some areas that may cause some normal WordPress functions to result in an error – such as when saving posts.
 
-### Solution \#3
+### Solution \#3: Don't Serve Mixed Content
 
 If you’re using SSL \(your site URL shows “http**s**” and not “http”\), make sure your site serves all HTTPS content.
 
@@ -44,7 +44,7 @@ When you’re site is using SSL \(when the URL shows “https”\) and if your s
 
 When this happens, some essential WordPress URLs may become inaccessible and might also affect the saving process.
 
-### Solution \#4
+### Solution \#4: Fix your .htaccess File
 
 Make sure that your .htaccess rules are correctly set up.
 
@@ -53,6 +53,24 @@ Hostinger has a great article on how the [.htaccess file should normally look li
 **Cause / Reason**
 
 This is similar to the cause of the previous solution. What happens is that since your .htaccess file isn’t correctly set up, then some essential WordPress URLs may become inaccessible.
+
+### Solution \#5: Adjust your Security Plugin
+
+Check whether an installed security plugin is preventing certain actions or ajax calls from continuing.
+
+**Cause / Reason**
+
+Security plugins that provide firewall protection like WordFence can prevent some actions from being performed on your website, especially if you have them active on your website for some time. For these plugins, you may need to put them in "learning mode" again, or whitelist the action you're performing.
+
+### Solution \#5: Ask your Web Hosting Provider
+
+Ask the support team of your Web Hosting provider.
+
+**Cause / Reason**
+
+There's a chance your host has some security measure or firewall that's preventing your content from being saved.
+
+For example, GoDaddy's Managed WordPress hosting prevents SVGs from being being saved in page contents, so you may have to contact technical support whether they can do something about this.
 
 ### If None of the Solutions Above Work
 

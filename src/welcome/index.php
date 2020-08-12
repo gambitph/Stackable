@@ -32,7 +32,7 @@ SVG;
 			// Our main menu.
             add_menu_page(
                 __( 'Stackable', STACKABLE_I18N ), // Page Title.
-                __( 'Stackable', STACKABLE_I18N ) . ' ' . stackable_notification_count(), // Menu Title.
+                __( 'Stackable', STACKABLE_I18N ), // Menu Title.
                 'manage_options', // Capability.
                 'stackable', // Menu slug.
                 array( $this, 'stackable_getting_started_content' ), // Action.

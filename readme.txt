@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.4
 Tested up to: 5.5
 Requires PHP: 5.3
-Stable tag: 2.9.0
+Stable tag: 2.9.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -125,6 +125,7 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com?utm_sour
 
 ### News Article Updates
 
+- [v2.9 Introducing: Live Responsive Editing](https://wpstackable.com/blog/introducing-live-responsive-editing/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.8 Introducing: Role Manager for Gutenberg](https://wpstackable.com/blog/introducing-role-manager-for-gutenberg/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.7 New Icon Block, Amazing Icons and Font Awesome Pro](https://wpstackable.com/blog/new-icon-block-amazing-icons-and-font-awesome-pro/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.6 New Advanced Blocks and Load More Blog Posts Button](https://wpstackable.com/blog/new-advanced-blocks-and-load-more-blog-posts-button/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -190,7 +191,14 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.9.1 =
+* Fixed: Columns Block uneven columns
+* Fixed: PHP Rest API notice about register_rest_route used incorrectly.
+* Change: Removed affiliate page
+* Change: Removed main menu notification for a more unobtrusive experience
+
 = 2.9.0 =
+[Introducing: Live Responsive Editing](https://wpstackable.com/blog/introducing-live-responsive-editing/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 * New: Responsive Preview and Editing!
 * New: Multi-block editing support

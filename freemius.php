@@ -26,14 +26,14 @@ if ( ! function_exists( 'sugb_fs' ) ) {
 				'has_premium_version' => true,
 	            'has_addons'          => false,
 				'has_paid_plans'      => true,
-				'has_affiliation'     => 'selected',
 				'menu'                => array(
 					'slug'       => 'stackable',
-					'first-path' => 'admin.php?page=stackable',
+					'first-path'  => 'admin.php?page=stackable',
 					'account'    => true,
 					'pricing'    => true,
 					'contact'    => true,
-					'support'    => false,
+                    'support'    => false,
+                    'affiliation' => false,
 				),
 	        ) );
 	    }
