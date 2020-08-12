@@ -127,9 +127,11 @@ export const clampInheritedStyle = ( value, options = {} ) => {
 		max = Number.POSITIVE_INFINITY,
 	} = options
 
-	const clampedValue = clamp( value, parseFloat( min ), parseFloat( max ) )
-	if ( ! isNaN( clampedValue ) ) {
-		return parseFloat( clampedValue ) !== parseFloat( value ) ? clampedValue : undefined
+	if ( value !== '' ) {
+		const clampedValue = clamp( value, parseFloat( min ), parseFloat( max ) )
+		if ( ! isNaN( clampedValue ) ) {
+			return parseFloat( clampedValue ) !== parseFloat( value ) ? clampedValue : undefined
+		}
 	}
 }
 
