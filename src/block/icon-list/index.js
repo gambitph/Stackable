@@ -27,7 +27,7 @@ import { applyFilters } from '@wordpress/hooks'
 export const schema = {
 	icon: {
 		type: 'string',
-		default: '',
+		default: 'check',
 	},
 	iconShape: {
 		type: 'string',

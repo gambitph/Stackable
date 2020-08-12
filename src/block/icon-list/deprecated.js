@@ -290,6 +290,18 @@ const deprecated = [
 				icon: updatedIcon,
 			}
 		},
+		isEligible: attributes => {
+			const { icon } = attributes
+			const ICON_TEST = {
+				check: true,
+				plus: true,
+				arrow: true,
+				cross: true,
+				star: true,
+			}
+
+			return ICON_TEST[ icon ]
+		},
 	},
 	{
 		attributes: deprecatedSchema_1_15_4,
