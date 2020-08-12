@@ -26,7 +26,7 @@ export const createStyles = props => {
 		listTextColor = '',
 	} = props.attributes
 
-	const base64IconString = convertSVGTagToBase64( icon, iconColor || whiteIfDark( iconColor, showBlockBackground && blockBackgroundBackgroundColor ) )
+	const base64IconString = convertSVGTagToBase64( icon, whiteIfDark( iconColor, showBlockBackground && blockBackgroundBackgroundColor ) )
 
 	const styles = []
 
