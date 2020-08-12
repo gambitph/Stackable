@@ -58,7 +58,7 @@ const deprecatedSave_2_9_1 = props => {
 		className,
 		'ugb-icon-list--v2',
 		`ugb-icon--icon-${ icon }`,
-	], applyFilters( 'stackable.icon-list.mainclasses', {
+	], applyFilters( 'stackable.icon-list.mainclasses_2_9_1', {
 		'ugb-icon-list--display-grid': displayAsGrid,
 	}, design, props ) )
 
