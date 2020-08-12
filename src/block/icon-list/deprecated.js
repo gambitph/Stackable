@@ -262,35 +262,17 @@ const deprecatedSchema_1_13_3 = {
 	},
 	columns: {
 		type: 'number',
-		default: 2,
-	},
-	tabletColumns: {
-		type: 'number',
-		default: '',
-	},
-	mobileColumns: {
-		type: 'number',
-		default: '',
+		default: 1,
 	},
 	text: {
 		source: 'html',
 		selector: 'ul',
 		multiline: 'li',
-		default: range( 1, 7 ).map( i => sprintf( __( 'Line %d', i18n ), i ) ).map( s => `<li>${ s }</li>` ).join( '' ),
-	},
-	displayAsGrid: {
-		type: 'boolean',
-		default: false,
 	},
 	gap: {
 		type: 'number',
 		default: 16,
 	},
-	listTextColor: {
-		type: 'string',
-		default: '',
-	},
-	...createTypographyAttributes( 'listText%s' ),
 }
 const deprecated = [
 	{
