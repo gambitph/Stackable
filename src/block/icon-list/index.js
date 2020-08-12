@@ -8,6 +8,7 @@
 import { createTypographyAttributes } from '~stackable/util'
 import { IconListIcon } from '~stackable/icons'
 import { range } from 'lodash'
+import { disabledBlocks, i18n } from 'stackable'
 
 /**
  * Internal dependencies
@@ -21,16 +22,12 @@ import save from './save'
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n'
-import { disabledBlocks, i18n } from 'stackable'
 import { applyFilters } from '@wordpress/hooks'
 
 export const schema = {
 	icon: {
 		type: 'string',
 		default: 'check',
-	},
-	iconShape: {
-		type: 'string',
 	},
 	iconColor: {
 		type: 'string',

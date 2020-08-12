@@ -19,16 +19,13 @@ import {
 	ResponsiveControl,
 	TypographyControlHelper,
 	PanelAdvancedSettings,
-	AdvancedToolbarControl,
+	ControlSeparator,
+	IconControl,
 } from '~stackable/components'
 
 /**
  * Internal dependencies
  */
-import {
-	getIconShapeToolbarList,
-	getIconToolbarList,
-} from './util'
 import createStyles from './style'
 
 /**
@@ -50,7 +47,6 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 
 	const {
 		icon,
-		iconShape,
 		iconColor,
 		iconSize,
 		gap,
@@ -59,6 +55,8 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 		columns = '',
 		tabletColumns = '',
 		mobileColumns = '',
+		opacity = '',
+		rotation = '',
 	} = props.attributes
 
 	return (
@@ -91,25 +89,18 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 			</PanelBody>
 
 			<PanelBody title={ __( 'Icon', i18n ) } initialOpen={ false }>
-				<AdvancedToolbarControl
+				<IconControl
 					label={ __( 'Icon', i18n ) }
-					controls={ getIconToolbarList() }
 					value={ icon }
 					onChange={ icon => setAttributes( { icon } ) }
-					fullwidth={ false }
 				/>
-				<AdvancedToolbarControl
-					label={ __( 'Icon Shape', i18n ) }
-					controls={ getIconShapeToolbarList( icon ) }
-					value={ iconShape }
-					onChange={ iconShape => setAttributes( { iconShape } ) }
-					fullwidth={ false }
-				/>
+				<ControlSeparator />
 				<ColorPaletteControl
 					label={ __( 'Icon Color', i18n ) }
 					value={ iconColor }
 					onChange={ iconColor => setAttributes( { iconColor } ) }
 				/>
+				<ControlSeparator />
 				<AdvancedRangeControl
 					label={ __( 'Icon Size', i18n ) }
 					value={ iconSize }
@@ -118,6 +109,25 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 					max={ 50 }
 					allowReset={ true }
 					placeholder="20"
+				/>
+				<AdvancedRangeControl
+					label={ __( 'Icon Opacity', i18n ) }
+					value={ opacity }
+					min={ 0 }
+					max={ 1 }
+					step={ 0.1 }
+					onChange={ opacity => setAttributes( { opacity } ) }
+					allowReset={ true }
+					placeholder="1.0"
+				/>
+				<AdvancedRangeControl
+					label={ __( 'Icon Rotation', i18n ) }
+					value={ rotation }
+					min={ 0 }
+					max={ 360 }
+					onChange={ rotation => setAttributes( { rotation } ) }
+					allowReset={ true }
+					placeholder="0"
 				/>
 			</PanelBody>
 

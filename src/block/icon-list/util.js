@@ -148,3 +148,49 @@ export const getIconShapeToolbarList = icon => {
 		}
 	} )
 }
+
+/**
+ * Create a DOM Element based on HTML string
+ *
+ * @param {string} htmlString
+ *
+ * @return {*} DOM Element
+ */
+export const createElementFromHTMLString = htmlString => {
+	const parentElement = document.createElement( 'div' )
+	parentElement.innerHTML = htmlString
+
+	return parentElement.firstChild
+}
+
+/**
+ * Convert SVG tag to base64 string
+ *
+ * @param {string} svgTag
+ * @param color
+ * @return {string} base64 string
+ */
+export const convertSVGTagToBase64 = ( svgTag = '', color = '#000' ) => {
+	if ( ! svgTag || ! svgTag.match( /svg/ ) ) {
+		return
+	}
+
+	const svgEl = createElementFromHTMLString( svgTag )
+
+	if ( svgEl.querySelector( 'path' ) ) {
+		svgEl.querySelector( 'path' ).setAttribute( 'fill', color )
+	}
+
+	if ( svgEl.querySelector( 'g' ) ) {
+		svgEl.querySelector( 'g' ).setAttribute( 'fill', color )
+	}
+
+	/**
+	 * Use XMLSerializer to create XML string from DOM Element
+	 *
+	 * @see https://developer.mozilla.org/en-US/docs/Web/API/XMLSerializer
+	 */
+	const serializedString = new XMLSerializer().serializeToString( svgEl ) //eslint-disable-line no-undef
+
+	return window.btoa( serializedString )
+}
