@@ -1,5 +1,5 @@
 /**
- * Internal Dependencies
+ * Internal dependencies
  */
 import { deprecatedIcon_2_9_1 } from './deprecated'
 
