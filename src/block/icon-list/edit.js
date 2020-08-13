@@ -41,6 +41,18 @@ import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
+import { updateIconAttribute } from './util'
+
+// Change the icon attributes from Icon List Blocks in <=2.9.1
+addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-list/icon', ( output, props ) => {
+	const {
+		icon,
+		iconShape,
+	} = props.attributes
+
+	props.attributes.icon = updateIconAttribute( icon, iconShape )
+	return output
+} )
 
 addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-list', ( output, props ) => {
 	const { setAttributes } = props

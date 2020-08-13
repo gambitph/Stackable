@@ -11,8 +11,7 @@ import {
 /**
  * Internal dependencies
  */
-import { convertSVGTagToBase64 } from './util'
-import { deprecatedIcon_2_9_1 } from './deprecated'
+import { convertSVGStringToBase64 } from './util'
 import deepmerge from 'deepmerge'
 
 export const createStyles = props => {
@@ -20,7 +19,6 @@ export const createStyles = props => {
 
 	const {
 		icon,
-		iconShape,
 		iconColor,
 		iconSize,
 		showBlockBackground = '',
@@ -28,13 +26,7 @@ export const createStyles = props => {
 		listTextColor = '',
 	} = props.attributes
 
-	/**
-	 * This is added to handle deprecation of icon attribute in 2.9.1
-	 *
-	 * @since 2.9.1
-	 */
-	const updatedIcon = deprecatedIcon_2_9_1( icon, iconShape )
-	const base64IconString = convertSVGTagToBase64( updatedIcon, whiteIfDark( iconColor, showBlockBackground && blockBackgroundBackgroundColor ) )
+	const base64IconString = convertSVGStringToBase64( icon, whiteIfDark( iconColor, showBlockBackground && blockBackgroundBackgroundColor ) )
 
 	const styles = []
 
