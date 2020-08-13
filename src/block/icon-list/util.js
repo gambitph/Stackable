@@ -21,7 +21,7 @@ export const createElementFromHTMLString = htmlString => {
  * Convert SVG tag to base64 string
  *
  * @param {string} svgTag
- * @param color
+ * @param {string} color
  * @return {string} base64 string
  */
 export const convertSVGStringToBase64 = ( svgTag = '', color = '#000' ) => {
