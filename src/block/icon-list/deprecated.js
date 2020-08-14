@@ -26,11 +26,13 @@ import { i18n } from 'stackable'
 export const deprecatedIcon_2_9_1 = ( () => {
 	const returnObject = {}
 	const icons = [ 'check', 'plus', 'arrow', 'cross', 'star' ]
+
 	icons.forEach( icon => {
 		[ '', 'circle', 'outline' ].forEach( iconShape => {
 			returnObject[ `${ icon }-${ iconShape || 'default' }` ] = svgRenderToString( getIconSVG( icon, iconShape ) )
 		} )
 	} )
+
 	return returnObject
 } )()
 
