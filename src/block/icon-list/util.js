@@ -81,6 +81,8 @@ export const createIconListIconAttributes = ( attrNameTemplate = 'icon%d', numbe
 	const createIconListIconAttribute = ( index = 1 ) => ( {
 		[ `${ attrNameFormat( index ) }` ]: {
 			type: 'string',
+			source: 'html',
+			selector: `.ugb-icon-list--icon${ index }`,
 			default: 'check',
 		},
 	} )

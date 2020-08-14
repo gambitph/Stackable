@@ -195,6 +195,7 @@ const edit = props => {
 				key={ index }
 			>
 				<SvgIconPlaceholder
+					className={ `ugb-icon-list--icon${ index }` }
 					attrNameTemplate="icon%s"
 					blockAttributes={ props.attributes }
 					value={ icon }

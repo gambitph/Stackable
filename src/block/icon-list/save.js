@@ -42,6 +42,7 @@ const save = props => {
 				key={ index }
 			>
 				<SvgIconHelper.Content
+					className={ `ugb-icon-list--icon${ index }` }
 					attrNameTemplate="icon%s"
 					blockAttributes={ props.attributes }
 					value={ icon }
