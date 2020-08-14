@@ -16,7 +16,7 @@ import { range } from 'lodash'
 /**
  * HOC for changing the icon attributes for Icon List Blocks in <=2.9.1
  *
- * @since 2.9.1
+ * @since 2.10.0
  */
 const withTransformOldIconAttributes = createHigherOrderComponent(
 	WrappedComponent => props => {
