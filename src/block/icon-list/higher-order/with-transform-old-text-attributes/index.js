@@ -13,12 +13,14 @@ const withTransformOldTextAttributes = createHigherOrderComponent(
 
 		if ( text ) {
 			const textRegex = /<li>(.*?)<\/li>/g
-			const texts = text.match( textRegex ).map( value => value.replace( /<\/?li>/g, '' ) )
+			const texts = text.match( textRegex ) ? text.match( textRegex ).map( value => value.replace( /<\/?li>/g, '' ) ) : []
 
-			// get all texts in text attribute and store it to attributes text1-text6
-			texts.forEach( ( text, index ) => {
-				props.attributes[ `text${ index + 1 }` ] = text
-			} )
+			// Get all texts in text attribute and store it to attributes text1-text6
+			if ( Array.isArray( texts ) ) {
+				texts.forEach( ( text, index ) => {
+					props.attributes[ `text${ index + 1 }` ] = text
+				} )
+			}
 
 			// Unset the text attribute
 			props.attributes.text = undefined
