@@ -39,16 +39,6 @@ export const createIconListTextAttributes = ( attrNameTemplate = 'text%d', numbe
 		return null
 	}
 
-	if ( number === 1 ) {
-		return {
-			[ `text${ number }` ]: {
-				source: 'html',
-				selector: `.ugb-icon-list--text${ number }`,
-				default: sprintf( __( 'Line %d', i18n ), number ),
-			},
-		}
-	}
-
 	const attributes = {}
 
 	range( 1, number + 1 ).forEach( index => {
@@ -86,10 +76,6 @@ export const createIconListIconAttributes = ( attrNameTemplate = 'icon%d', numbe
 			default: '',
 		},
 	} )
-
-	if ( number === 1 ) {
-		return createIconListIconAttribute()
-	}
 
 	let attributes = {}
 
