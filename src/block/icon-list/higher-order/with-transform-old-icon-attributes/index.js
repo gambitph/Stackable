@@ -28,11 +28,9 @@ const withTransformOldIconAttributes = createHigherOrderComponent(
 		if ( icon ) {
 			props.attributes.icon = updateIconAttribute( icon, iconShape )
 			range( 1, 7 ).forEach( index => {
-				props.attributes[ `icon${ index }` ] = ! props.attributes[ `icon${ index }` ] ? updateIconAttribute( icon, iconShape ) : props.attributes[ `icon${ index }` ]
+				const iconEntry = props.attributes[ `icon${ index }` ]
+				props.attributes[ `icon${ index }` ] = ! iconEntry ? updateIconAttribute( icon, iconShape ) : updateIconAttribute( iconEntry, iconShape )
 			} )
-
-			// Unset the icon attribute
-			props.attributes.icon = undefined
 		}
 
 		return <WrappedComponent { ...props } />

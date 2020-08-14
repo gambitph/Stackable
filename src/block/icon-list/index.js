@@ -70,6 +70,14 @@ export const schema = {
 		type: 'string',
 		default: '',
 	},
+	opacity: {
+		type: 'number',
+		default: 1.0,
+	},
+	rotation: {
+		type: 'number',
+		default: 0,
+	},
 	...createTypographyAttributes( 'listText%s' ),
 	...createIconListTextAttributes(),
 	...createIconListIconAttributes(),
