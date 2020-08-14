@@ -4,7 +4,11 @@
  */
 import { createHigherOrderComponent } from '@wordpress/compose'
 
-// Change the icon attributes from Icon List Blocks in <=2.9.1
+/**
+ * HOC for changing the text attributes for Icon List Blocks in <=2.9.1
+ *
+ * @since 2.9.1
+ */
 const withTransformOldTextAttributes = createHigherOrderComponent(
 	WrappedComponent => props => {
 		const {

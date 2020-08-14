@@ -13,7 +13,11 @@ import { updateIconAttribute } from '../../util'
  */
 import { range } from 'lodash'
 
-// Change the icon attributes from Icon List Blocks in <=2.9.1
+/**
+ * HOC for changing the icon attributes for Icon List Blocks in <=2.9.1
+ *
+ * @since 2.9.1
+ */
 const withTransformOldIconAttributes = createHigherOrderComponent(
 	WrappedComponent => props => {
 		const {
