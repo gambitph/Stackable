@@ -4,50 +4,11 @@
 import { deprecatedIcon_2_9_1 } from './deprecated'
 
 /**
- * Create a DOM Element based on HTML string
- *
- * @param {string} htmlString
- *
- * @return {*} DOM Element
+ * External dependencies
  */
-export const createElementFromHTMLString = htmlString => {
-	const parentElement = document.createElement( 'div' )
-	parentElement.innerHTML = htmlString
-
-	return parentElement.firstChild
-}
-
-/**
- * Convert SVG tag to base64 string
- *
- * @param {string} svgTag
- * @param {string} color
- * @return {string} base64 string
- */
-export const convertSVGStringToBase64 = ( svgTag = '', color = '#000' ) => {
-	if ( ! svgTag || ! svgTag.match( /svg/ ) ) {
-		return
-	}
-
-	const svgEl = createElementFromHTMLString( svgTag )
-
-	if ( svgEl.querySelector( 'path' ) ) {
-		svgEl.querySelector( 'path' ).setAttribute( 'fill', color )
-	}
-
-	if ( svgEl.querySelector( 'g' ) ) {
-		svgEl.querySelector( 'g' ).setAttribute( 'fill', color )
-	}
-
-	/**
-	 * Use XMLSerializer to create XML string from DOM Element
-	 *
-	 * @see https://developer.mozilla.org/en-US/docs/Web/API/XMLSerializer
-	 */
-	const serializedString = new XMLSerializer().serializeToString( svgEl ) //eslint-disable-line no-undef
-
-	return window.btoa( serializedString )
-}
+import { range } from 'lodash'
+import { sprintf, __ } from '@wordpress/i18n'
+import { i18n } from 'stackable'
 
 /**
  * Handles icon atttribute deprecation in 2.9.1
@@ -63,4 +24,79 @@ export const updateIconAttribute = ( icon = '', iconShape = 'default' ) => {
 	}
 	const updatedIcon = deprecatedIcon_2_9_1[ `${ icon }-${ iconShape || 'default' }` ]
 	return updatedIcon ? updatedIcon : icon
+}
+
+/**
+ * Creates text attributes for Icon List Block
+ *
+ * @since 2.10.0
+ * @param {string} attrNameTemplate
+ * @param {number} number of text attributes
+ * @return {Object} Generated attributes
+ */
+export const createIconListTextAttributes = ( attrNameTemplate = 'text%d', number = 6 ) => {
+	if ( number < 1 ) {
+		return null
+	}
+
+	if ( number === 1 ) {
+		return {
+			[ `text${ number }` ]: {
+				source: 'html',
+				selector: `.ugb-icon-list--text${ number }`,
+				default: sprintf( __( 'Line %d', i18n ), number ),
+			},
+		}
+	}
+
+	const attributes = {}
+
+	range( 1, number + 1 ).forEach( index => {
+		attributes[ sprintf( attrNameTemplate, index ) ] = {
+			source: 'html',
+			selector: `.ugb-icon-list--text${ index }`,
+			default: sprintf( __( 'Line %d', i18n ), index ),
+		}
+	} )
+
+	return attributes
+}
+
+/**
+ * Creates icon attributes for Icon List Block
+ *
+ * @since 2.10.0
+ * @param {string} attrNameTemplate
+ * @param {number} number of icon attributes
+ * @return {Object} Generated attributes
+ *
+ */
+export const createIconListIconAttributes = ( attrNameTemplate = 'icon%d', number = 6 ) => {
+	if ( number < 1 ) {
+		return null
+	}
+
+	const attrNameFormat = ( index = 1 ) => sprintf( attrNameTemplate, index )
+
+	const createIconListIconAttribute = ( index = 1 ) => ( {
+		[ `${ attrNameFormat( index ) }` ]: {
+			type: 'string',
+			default: 'check',
+		},
+	} )
+
+	if ( number === 1 ) {
+		return createIconListIconAttribute()
+	}
+
+	let attributes = {}
+
+	range( 1, number + 1 ).forEach( index => {
+		attributes = {
+			...attributes,
+			...createIconListIconAttribute( index ),
+		}
+	} )
+
+	return attributes
 }

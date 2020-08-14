@@ -21,13 +21,15 @@ import {
 	PanelAdvancedSettings,
 	ControlSeparator,
 	IconControl,
+	SvgIconPlaceholder,
 } from '~stackable/components'
+import { range } from 'lodash'
 
 /**
  * Internal dependencies
  */
 import createStyles from './style'
-import withTransformOldIconAttributes from './higher-order/with-transform-old-icon-attributes'
+import { withTransformOldIconAttributes, withTransformOldTextAttributes } from './higher-order'
 
 /**
  * WordPress dependencies
@@ -169,11 +171,10 @@ const edit = props => {
 	const {
 		className,
 		setAttributes,
+		attributes,
 	} = props
 
 	const {
-		icon,
-		text,
 		design = '',
 		displayAsGrid = false,
 	} = props.attributes
@@ -181,22 +182,41 @@ const edit = props => {
 	const mainClasses = classnames( [
 		className,
 		'ugb-icon-list--v2',
-		`ugb-icon--icon-${ icon }`,
 	], applyFilters( 'stackable.icon-list.mainclasses', {
 		'ugb-icon-list--display-grid': displayAsGrid,
 	}, design, props ) )
 
+	const ListItem = range( 1, 7 ).map( index => {
+		const icon = attributes[ `icon${ index }` ]
+		const text = attributes[ `text${ index }` ]
+		return (
+			<li
+				className={ `ugb-icon-list--item${ index }` }
+				key={ index }
+			>
+				<SvgIconPlaceholder
+					attrNameTemplate="icon%s"
+					blockAttributes={ props.attributes }
+					value={ icon }
+					onChange={ value => setAttributes( { [ `icon${ index }` ]: value } ) }
+				/>
+				<RichText
+					className={ `ugb-icon-list--text${ index }` }
+					tagName="p"
+					placeholder={ __( 'Text for this block', i18n ) }
+					value={ text }
+					onChange={ value => setAttributes( { [ `text${ index }` ]: value } ) }
+					keepPlaceholderOnFocus
+				/>
+			</li> )
+	 } )
+
 	return (
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				<RichText
-					tagName="ul"
-					multiline="li"
-					value={ text }
-					onChange={ text => setAttributes( { text } ) }
-					placeholder={ __( 'Text for this block', i18n ) }
-					keepPlaceholderOnFocus
-				/>
+				 <ul>
+					{ ListItem }
+				</ul>
 			</Fragment>
 		) } />
 	)
@@ -207,6 +227,7 @@ export default compose(
 	withSetAttributeHook,
 	withGoogleFont,
 	withTransformOldIconAttributes,
+	withTransformOldTextAttributes,
 	withTabbedInspector(),
 	withContentAlignReseter(),
 	withBlockStyles( createStyles, { editorMode: true } ),

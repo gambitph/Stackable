@@ -7,8 +7,8 @@
  */
 import { createTypographyAttributes } from '~stackable/util'
 import { IconListIcon } from '~stackable/icons'
-import { range } from 'lodash'
 import { disabledBlocks, i18n } from 'stackable'
+import { range } from 'lodash'
 
 /**
  * Internal dependencies
@@ -22,7 +22,8 @@ import save from './save'
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
+import { applyFilters, addFilter } from '@wordpress/hooks'
+import { createIconListTextAttributes, createIconListIconAttributes } from './util'
 
 export const schema = {
 	icon: {
@@ -70,6 +71,8 @@ export const schema = {
 		default: '',
 	},
 	...createTypographyAttributes( 'listText%s' ),
+	...createIconListTextAttributes(),
+	...createIconListIconAttributes(),
 }
 
 export const name = 'ugb/icon-list'
@@ -108,3 +111,19 @@ export const settings = {
 		},
 	},
 }
+
+// When changing the icon in the inspector, change all icons.
+addFilter( 'stackable.icon-list.setAttributes', 'stackable/icon-list/icon', attributes => {
+	if ( attributes.icon ) {
+		return {
+			...attributes,
+			icon1: attributes.icon,
+			icon2: attributes.icon,
+			icon3: attributes.icon,
+			icon4: attributes.icon,
+			icon5: attributes.icon,
+			icon6: attributes.icon,
+		}
+	}
+	return attributes
+} )

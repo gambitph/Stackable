@@ -11,22 +11,17 @@ import {
 /**
  * Internal dependencies
  */
-import { convertSVGStringToBase64 } from './util'
 import deepmerge from 'deepmerge'
 
 export const createStyles = props => {
 	const getValue = __getValue( props.attributes )
 
 	const {
-		icon,
 		iconColor,
-		iconSize,
 		showBlockBackground = '',
 		blockBackgroundBackgroundColor = '',
 		listTextColor = '',
 	} = props.attributes
-
-	const base64IconString = convertSVGStringToBase64( icon, whiteIfDark( iconColor, showBlockBackground && blockBackgroundBackgroundColor ) )
 
 	const styles = []
 
@@ -49,16 +44,23 @@ export const createStyles = props => {
 
 	// Icon.
 	styles.push( {
-		// This is for the text-indend & padding-left trick (see style.scss for details).
-		li: {
-			'--icon-size': iconSize ? `${ iconSize }px` : undefined,
-		},
-		'li::before': {
+		'.ugb-icon-inner-svg': {
 			height: appendImportant( getValue( 'iconSize', '%spx' ) ),
 			width: appendImportant( getValue( 'iconSize', '%spx' ) ),
-			backgroundImage: base64IconString ? `url('data:image/svg+xml;base64,${ base64IconString }')` : undefined,
+		},
+		'.ugb-icon-inner-svg > svg': {
+			height: appendImportant( getValue( 'iconSize', '%spx' ) ),
+			width: appendImportant( getValue( 'iconSize', '%spx' ) ),
 			opacity: appendImportant( getValue( 'opacity' ) ),
 			transform: appendImportant( getValue( 'Rotation', 'rotate(%sdeg)' ) ),
+			fill: appendImportant( whiteIfDark( iconColor, showBlockBackground && blockBackgroundBackgroundColor ) ),
+			color: appendImportant( whiteIfDark( iconColor, showBlockBackground && blockBackgroundBackgroundColor ) ),
+		},
+		editor: {
+			'.ugb-svg-icon-placeholder': {
+				height: appendImportant( getValue( 'iconSize', '%spx' ) ),
+				width: appendImportant( getValue( 'iconSize', '%spx' ) ),
+			},
 		},
 	} )
 

@@ -12,30 +12,13 @@
 		padding: 0 !important;
 		list-style: none !important;
 	}
-	li::before {
-		content: "";
-		display: inline-block;
-		vertical-align: middle;
-		height: 20px;
-		width: 20px;
-		margin-right: 1em;
-		background-size: contain !important;
-		background-repeat: no-repeat;
-		background-position: center;
-		// Large icons get their tops cut because of
-		margin-bottom: 5px;
-	}
+
 	li {
 		margin-top: 0 !important;
 		margin-bottom: 16px;
 
 		// Force this for compatibility with others like Genesis themes.
 		list-style: none !important;
-
-		// text-indent here plus the padding-left in the container makes sure our text doesn't wrap below the bullet.
-		text-indent: calc(var(--icon-size, 20px) * -1 - 1em) !important;
-		padding-left: calc(var(--icon-size, 20px) + 1em) !important;
-
 	}
 	li:last-child {
 		margin-bottom: 0 !important;
@@ -68,5 +51,21 @@
 	li {
 		page-break-inside: avoid; /* Firefox */
 		break-inside: avoid;
+	}
+
+	.ugb-icon-inner-svg {
+		display: inline-block;
+		vertical-align: middle;
+		height: 20px;
+		width: 20px;
+		margin-right: 1em;
+		display: inline-block;
+		vertical-align: middle;
+		// Large icons get their tops cut because of
+		margin-bottom: 5px;
+	}
+
+	li > p {
+		display: inline;
 	}
 }

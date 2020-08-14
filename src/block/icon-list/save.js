@@ -2,7 +2,8 @@
  * External dependencies
  */
 import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
-import { BlockContainer } from '~stackable/components'
+import { BlockContainer, SvgIconHelper } from '~stackable/components'
+import { range } from 'lodash'
 
 /**
  * Internal dependencies
@@ -19,10 +20,8 @@ import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
 
 const save = props => {
-	const { className } = props
+	const { className, attributes } = props
 	const {
-		icon,
-		text,
 		design = '',
 		displayAsGrid = false,
 	} = props.attributes
@@ -30,18 +29,37 @@ const save = props => {
 	const mainClasses = classnames( [
 		className,
 		'ugb-icon-list--v2',
-		`ugb-icon--icon-${ icon }`,
 	], applyFilters( 'stackable.icon-list.mainclasses', {
 		'ugb-icon-list--display-grid': displayAsGrid,
 	}, design, props ) )
 
+	const ListItem = range( 1, 7 ).map( index => {
+		const icon = attributes[ `icon${ index }` ]
+		const text = attributes[ `text${ index }` ]
+		return (
+			<li
+				className={ `ugb-icon-list--item${ index }` }
+				key={ index }
+			>
+				<SvgIconHelper.Content
+					attrNameTemplate="icon%s"
+					blockAttributes={ props.attributes }
+					value={ icon }
+				/>
+				<RichText.Content
+					className={ `ugb-icon-list--text${ index }` }
+					tagName="p"
+					value={ text }
+				/>
+			</li> )
+	 } )
+
 	return (
 		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				<RichText.Content
-					tagName="ul"
-					value={ text }
-				/>
+				<ul>
+					{ ListItem }
+				</ul>
 			</Fragment>
 		) } />
 	)

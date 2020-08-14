@@ -2,26 +2,18 @@
  * Internal dependencies
  */
 import { getIconSVGBase64, getIconSVG } from './deprecated-util'
-import createStyles from './deprecated-style'
 
 /**
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
 import { RichText } from '@wordpress/block-editor'
-import { Fragment } from '@wordpress/element'
-import { __, sprintf } from '@wordpress/i18n'
-import { compose } from '@wordpress/compose'
 
 /**
  * External dependencies
  */
 import classnames from 'classnames'
-import { BlockContainer } from '~stackable/components'
-import { range } from 'lodash'
-import { createTypographyAttributes, svgRenderToString } from '~stackable/util'
-import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
-import { i18n } from 'stackable'
+import { svgRenderToString } from '~stackable/util'
 
 export const deprecatedIcon_2_9_1 = ( () => {
 	const returnObject = {}
@@ -35,83 +27,6 @@ export const deprecatedIcon_2_9_1 = ( () => {
 
 	return returnObject
 } )()
-
-const deprecatedSave_2_9_1 = props => {
-	const { className } = props
-	const {
-		icon,
-		text,
-		design = '',
-		displayAsGrid = false,
-	} = props.attributes
-
-	const mainClasses = classnames( [
-		className,
-		'ugb-icon-list--v2',
-		`ugb-icon--icon-${ icon }`,
-	], applyFilters( 'stackable.icon-list.mainclasses', {
-		'ugb-icon-list--display-grid': displayAsGrid,
-	}, design, props ) )
-
-	return (
-		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
-			<Fragment>
-				<RichText.Content
-					tagName="ul"
-					value={ text }
-				/>
-			</Fragment>
-		) } />
-	)
-}
-
-const deprecatedSchema_2_9_1 = {
-	icon: {
-		type: 'string',
-		default: 'check',
-	},
-	iconShape: {
-		type: 'string',
-	},
-	iconColor: {
-		type: 'string',
-	},
-	iconSize: {
-		type: 'number',
-		default: 20,
-	},
-	columns: {
-		type: 'number',
-		default: 2,
-	},
-	tabletColumns: {
-		type: 'number',
-		default: '',
-	},
-	mobileColumns: {
-		type: 'number',
-		default: '',
-	},
-	text: {
-		source: 'html',
-		selector: 'ul',
-		multiline: 'li',
-		default: range( 1, 7 ).map( i => sprintf( __( 'Line %d', i18n ), i ) ).map( s => `<li>${ s }</li>` ).join( '' ),
-	},
-	displayAsGrid: {
-		type: 'boolean',
-		default: false,
-	},
-	gap: {
-		type: 'number',
-		default: 16,
-	},
-	listTextColor: {
-		type: 'string',
-		default: '',
-	},
-	...createTypographyAttributes( 'listText%s' ),
-}
 
 const deprecatedSave_1_15_4 = props => {
 	const { className } = props
@@ -269,13 +184,6 @@ const deprecatedSchema_1_13_3 = {
 	},
 }
 const deprecated = [
-	{
-		attributes: deprecatedSchema_2_9_1,
-		save: compose( withUniqueClass, withBlockStyles( createStyles ) )( deprecatedSave_2_9_1 ),
-		isEligible: () => {
-			return false
-		},
-	},
 	{
 		attributes: deprecatedSchema_1_15_4,
 		save: deprecatedSave_1_15_4,

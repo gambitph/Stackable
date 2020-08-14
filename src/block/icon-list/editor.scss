@@ -13,3 +13,10 @@
 #editor .ugb-icon-list.ugb-icon-list li:last-child {
 	margin-bottom: 0 !important;
 }
+
+#editor li > .ugb-svg-icon-placeholder {
+	display: inline-block;
+	vertical-align: middle;
+	margin-bottom: 5px;
+	margin-right: 1em;
+}
