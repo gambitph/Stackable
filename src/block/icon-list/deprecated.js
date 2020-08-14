@@ -2,17 +2,26 @@
  * Internal dependencies
  */
 import { getIconSVGBase64 } from './deprecated-util'
+import createStyles from './deprecated-style'
 
 /**
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
 import { RichText } from '@wordpress/block-editor'
+import { Fragment } from '@wordpress/element'
+import { __, sprintf } from '@wordpress/i18n'
+import { compose } from '@wordpress/compose'
 
 /**
  * External dependencies
  */
 import classnames from 'classnames'
+import { BlockContainer } from '~stackable/components'
+import { range } from 'lodash'
+import { createTypographyAttributes } from '~stackable/util'
+import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+import { i18n } from 'stackable'
 
 export const deprecatedIcon_2_9_1 = {
 	'check-default': '<svg data-prefix="fas" data-icon="check" class="svg-inline--fa fa-check fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path></svg>',
@@ -30,6 +39,83 @@ export const deprecatedIcon_2_9_1 = {
 	'star-default': '<svg data-prefix="fas" data-icon="star-of-life" class="svg-inline--fa fa-star-of-life fa-w-15" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path fill="currentColor" d="M471.99 334.43L336.06 256l135.93-78.43c7.66-4.42 10.28-14.2 5.86-21.86l-32.02-55.43c-4.42-7.65-14.21-10.28-21.87-5.86l-135.93 78.43V16c0-8.84-7.17-16-16.01-16h-64.04c-8.84 0-16.01 7.16-16.01 16v156.86L56.04 94.43c-7.66-4.42-17.45-1.79-21.87 5.86L2.15 155.71c-4.42 7.65-1.8 17.44 5.86 21.86L143.94 256 8.01 334.43c-7.66 4.42-10.28 14.21-5.86 21.86l32.02 55.43c4.42 7.65 14.21 10.27 21.87 5.86l135.93-78.43V496c0 8.84 7.17 16 16.01 16h64.04c8.84 0 16.01-7.16 16.01-16V339.14l135.93 78.43c7.66 4.42 17.45 1.8 21.87-5.86l32.02-55.43c4.42-7.65 1.8-17.43-5.86-21.85z"></path></svg>',
 	'star-circle': '<svg data-prefix="fas" data-icon="star" class="svg-inline--fa fa-star fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path></svg>',
 	'star-outline': '<svg data-prefix="far" data-icon="star" class="svg-inline--fa fa-star fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M528.1 171.5L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6zM388.6 312.3l23.7 138.4L288 385.4l-124.3 65.3 23.7-138.4-100.6-98 139-20.2 62.2-126 62.2 126 139 20.2-100.6 98z"></path></svg>',
+}
+
+const deprecatedSave_2_9_1 = props => {
+	const { className } = props
+	const {
+		icon,
+		text,
+		design = '',
+		displayAsGrid = false,
+	} = props.attributes
+
+	const mainClasses = classnames( [
+		className,
+		'ugb-icon-list--v2',
+		`ugb-icon--icon-${ icon }`,
+	], applyFilters( 'stackable.icon-list.mainclasses', {
+		'ugb-icon-list--display-grid': displayAsGrid,
+	}, design, props ) )
+
+	return (
+		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
+			<Fragment>
+				<RichText.Content
+					tagName="ul"
+					value={ text }
+				/>
+			</Fragment>
+		) } />
+	)
+}
+
+const deprecatedSchema_2_9_1 = {
+	icon: {
+		type: 'string',
+		default: 'check',
+	},
+	iconShape: {
+		type: 'string',
+	},
+	iconColor: {
+		type: 'string',
+	},
+	iconSize: {
+		type: 'number',
+		default: 20,
+	},
+	columns: {
+		type: 'number',
+		default: 2,
+	},
+	tabletColumns: {
+		type: 'number',
+		default: '',
+	},
+	mobileColumns: {
+		type: 'number',
+		default: '',
+	},
+	text: {
+		source: 'html',
+		selector: 'ul',
+		multiline: 'li',
+		default: range( 1, 7 ).map( i => sprintf( __( 'Line %d', i18n ), i ) ).map( s => `<li>${ s }</li>` ).join( '' ),
+	},
+	displayAsGrid: {
+		type: 'boolean',
+		default: false,
+	},
+	gap: {
+		type: 'number',
+		default: 16,
+	},
+	listTextColor: {
+		type: 'string',
+		default: '',
+	},
+	...createTypographyAttributes( 'listText%s' ),
 }
 
 const deprecatedSave_1_15_4 = props => {
@@ -188,6 +274,13 @@ const deprecatedSchema_1_13_3 = {
 	},
 }
 const deprecated = [
+	{
+		attributes: deprecatedSchema_2_9_1,
+		save: compose( withUniqueClass, withBlockStyles( createStyles ) )( deprecatedSave_2_9_1 ),
+		isEligible: () => {
+			return false
+		},
+	},
 	{
 		attributes: deprecatedSchema_1_15_4,
 		save: deprecatedSave_1_15_4,
