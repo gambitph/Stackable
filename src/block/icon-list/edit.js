@@ -202,7 +202,7 @@ const edit = props => {
 					onChange={ value => setAttributes( { [ `icon${ index }` ]: value } ) }
 				/>
 				<RichText
-					className={ `ugb-icon-list--text${ index }` }
+					className={ `ugb-icon-list__text${ index }` }
 					tagName="p"
 					placeholder={ __( 'Text for this block', i18n ) }
 					value={ text }
