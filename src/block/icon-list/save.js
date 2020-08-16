@@ -38,17 +38,17 @@ const save = props => {
 		const text = attributes[ `text${ index }` ]
 		return (
 			<li
-				className={ `ugb-icon-list--item${ index }` }
+				className={ `ugb-icon-list__item${ index }` }
 				key={ index }
 			>
 				<SvgIconHelper.Content
-					className={ `ugb-icon-list--icon${ index }` }
+					className={ `ugb-icon-list__icon${ index }` }
 					attrNameTemplate="icon%s"
 					blockAttributes={ props.attributes }
 					value={ icon }
 				/>
 				<RichText.Content
-					className={ `ugb-icon-list--text${ index }` }
+					className={ `ugb-icon-list__${ index }` }
 					tagName="p"
 					value={ text }
 				/>

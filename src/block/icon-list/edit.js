@@ -191,7 +191,7 @@ const edit = props => {
 		const text = attributes[ `text${ index }` ]
 		return (
 			<li
-				className={ `ugb-icon-list--item${ index }` }
+				className={ `ugb-icon-list__item${ index }` }
 				key={ index }
 			>
 				<SvgIconPlaceholder
