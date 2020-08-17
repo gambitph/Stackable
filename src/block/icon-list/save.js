@@ -48,7 +48,7 @@ const save = props => {
 					value={ icon }
 				/>
 				<RichText.Content
-					className={ `ugb-icon-list__${ index }` }
+					className={ `ugb-icon-list__text${ index }` }
 					tagName="p"
 					value={ text }
 				/>

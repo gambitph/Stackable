@@ -44,7 +44,7 @@ export const createIconListTextAttributes = ( attrNameTemplate = 'text%d', numbe
 	range( 1, number + 1 ).forEach( index => {
 		attributes[ sprintf( attrNameTemplate, index ) ] = {
 			source: 'html',
-			selector: `.ugb-icon-list--text${ index }`,
+			selector: `.ugb-icon-list__text${ index }`,
 			default: sprintf( __( 'Line %d', i18n ), index ),
 		}
 	} )
@@ -72,7 +72,7 @@ export const createIconListIconAttributes = ( attrNameTemplate = 'icon%d', numbe
 		[ `${ attrNameFormat( index ) }` ]: {
 			type: 'string',
 			source: 'html',
-			selector: `.ugb-icon-list--icon${ index }`,
+			selector: `.ugb-icon-list__icon${ index }`,
 			default: '',
 		},
 	} )
