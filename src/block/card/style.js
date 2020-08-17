@@ -79,11 +79,9 @@ export const createStyles = props => {
 	} )
 
 	if ( show.imageHeight ) {
-		styles.push( {
-			...createResponsiveStyles( '.ugb-card__image', 'imageBackground%sHeight', 'height', '%spx', props.attributes, {
-				inherit: true, inheritTabletMax: 300, inheritMobileMax: 300, important: true,
-			} ),
-		} )
+		styles.push( ...createResponsiveStyles( '.ugb-card__image', 'imageBackground%sHeight', 'height', '%spx', props.attributes, {
+			inherit: true, inheritTabletMax: 300, inheritMobileMax: 300, important: true,
+		} ) )
 	}
 	if ( show.imageWidth ) {
 		styles.push( {
