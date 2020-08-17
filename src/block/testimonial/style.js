@@ -93,7 +93,7 @@ export const createStyles = props => {
 				[ `.ugb-testimonial__image` ]: {
 					width: appendImportant( getValue( 'imageWidth', '%spx' ) ),
 				},
-			}, tablet: {
+			}, tabletOnly: {
 				[ `.ugb-testimonial__image` ]: {
 					width: appendImportant( getValue( 'imageTabletWidth', '%spx' ) ),
 				},
