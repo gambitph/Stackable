@@ -193,6 +193,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 = 2.9.2 =
 * Fixed: Blog Posts Block doesn't detect category and tag taxonomies for custom post types
+* Fixed: When in white label mode, the pricing tab still appears in the settings page
 
 = 2.9.1 =
 * Fixed: Columns Block uneven columns
