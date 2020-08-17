@@ -111,7 +111,7 @@ export const createImageStyleSet = ( attrNameTemplate = '%s', mainClassName = ''
 		}
 	} else {
 		style.desktopOnly = {
-			[ `${ mainClassName }` ]: {
+			[ `.${ mainClassName }` ]: {
 				...createImageStyles( attrNameTemplate, 'desktop', blockAttributes, options ),
 			},
 		}
