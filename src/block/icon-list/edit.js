@@ -20,6 +20,7 @@ import {
 	TypographyControlHelper,
 	PanelAdvancedSettings,
 	AdvancedToolbarControl,
+	IconSearchPopover,
 } from '~stackable/components'
 
 /**
@@ -34,13 +35,16 @@ import createStyles from './style'
 /**
  * WordPress dependencies
  */
+import {
+	Fragment, createRef, useEffect, useState,
+} from '@wordpress/element'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import {
 	PanelBody, ToggleControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
-import { Fragment } from '@wordpress/element'
+import { select } from '@wordpress/data'
 import { RichText } from '@wordpress/block-editor'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
@@ -154,10 +158,11 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 	)
 } )
 
-const edit = props => {
+const Edit = props => {
 	const {
 		className,
 		setAttributes,
+		isSelected,
 	} = props
 
 	const {
@@ -175,6 +180,49 @@ const edit = props => {
 		'ugb-icon-list--display-grid': displayAsGrid,
 	}, design, props ) )
 
+	const textRef = createRef()
+	const isTyping = select( 'core/block-editor' ).isTyping()
+	const [ isOpenIconSearch, setIsOpenIconSearch ] = useState( false )
+	const [ iconSearchAnchor, setIconSearchAnchor ] = useState( null )
+	const [ selectedIconIndex, setSelectedIconIndex ] = useState( null )
+
+	const iconClickHandler = event => {
+		// If li isn't clicked, close the icon search.
+		if ( event.target.tagName !== 'LI' ) {
+			return setIsOpenIconSearch( false )
+		}
+
+		// Check if the click is on the icon.
+		if ( event.offsetX <= ( props.attributes.iconSize || 20 ) ) {
+			// Get the selected li and show the icon picker on it.
+			const index = Array.from( event.target.parentElement.children ).indexOf( event.target ) + 1
+			setSelectedIconIndex( index )
+			setIconSearchAnchor( event.target )
+			setIsOpenIconSearch( true )
+		} else {
+			// Hide the icon picker.
+			setIconSearchAnchor( null )
+			setIsOpenIconSearch( false )
+		}
+	}
+
+	// Create the click listeners to open the icon picker.
+	useEffect( () => {
+		textRef.current.addEventListener( 'click', iconClickHandler )
+		return () => {
+			if ( textRef.current ) {
+				textRef.current.removeEventListener( 'click', iconClickHandler )
+			}
+		}
+	}, [] )
+
+	// Hide the icon search when the block gets blurred.
+	useEffect( () => {
+		if ( ! isSelected ) {
+			setIsOpenIconSearch( false )
+		}
+	}, [ isSelected ] )
+
 	return (
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
@@ -185,7 +233,18 @@ const edit = props => {
 					onChange={ text => setAttributes( { text } ) }
 					placeholder={ __( 'Text for this block', i18n ) }
 					keepPlaceholderOnFocus
+					ref={ textRef }
 				/>
+				{ ! isTyping && isSelected && isOpenIconSearch &&
+					<IconSearchPopover
+						position="bottom left"
+						anchorRef={ iconSearchAnchor }
+						onClose={ () => setIsOpenIconSearch( false ) }
+						onChange={ icon => {
+							console.log( icon, 'for icon #', selectedIconIndex )
+						} }
+					/>
+				}
 			</Fragment>
 		) } />
 	)
@@ -201,4 +260,4 @@ export default compose(
 	withClickOpenInspector( [
 		[ 'ul, ul li', 'text' ],
 	] ),
-)( edit )
+)( Edit )
