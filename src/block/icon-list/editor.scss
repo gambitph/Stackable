@@ -7,6 +7,9 @@
 // UL is a child when in block form, remove the bullets.
 .ugb-icon-list ul {
 	list-style: none !important;
+	li::before {
+		cursor: pointer;
+	}
 }
 
 // Last in the list should have no margin bottom.

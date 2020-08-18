@@ -4,6 +4,16 @@
 import { deprecatedIcon_2_9_1 } from './deprecated'
 
 /**
+ * External dependencies
+ */
+import { range } from 'lodash'
+
+/**
+ * Wordpress dependencies
+ */
+import { sprintf } from '@wordpress/i18n'
+
+/**
  * Create a DOM Element based on HTML string
  *
  * @param {string} htmlString
@@ -63,4 +73,40 @@ export const updateIconAttribute = ( icon = '', iconShape = 'default' ) => {
 	}
 	const updatedIcon = deprecatedIcon_2_9_1[ `${ icon }-${ iconShape || 'default' }` ]
 	return updatedIcon ? updatedIcon : icon
+}
+
+/**
+ * Creates icon attributes for Icon List Block
+ *
+ * @since 2.10.0
+ * @param {string} attrNameTemplate
+ * @param {number} number of icon attributes
+ * @return {Object} Generated attributes
+ */
+export const createIconListIconAttributes = ( attrNameTemplate = 'icon%d', number = 20 ) => {
+	if ( number < 1 ) {
+		return null
+	}
+
+	const attrNameFormat = ( index = 1 ) => sprintf( attrNameTemplate, index )
+
+	const createIconListIconAttribute = ( index = 1 ) => ( {
+		[ `${ attrNameFormat( index ) }` ]: {
+			type: 'string',
+			source: 'html',
+			selector: `.ugb-icon-list__icon${ index }`,
+			default: '',
+		},
+	} )
+
+	let attributes = {}
+
+	range( 1, number + 1 ).forEach( index => {
+		attributes = {
+			...attributes,
+			...createIconListIconAttribute( index ),
+		}
+	} )
+
+	return attributes
 }

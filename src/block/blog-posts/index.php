@@ -628,17 +628,18 @@ if ( ! function_exists( 'stackable_rest_get_terms' ) ) {
 		}
 
 		foreach ( $taxonomies as $taxonomy_slug => $taxonomy ) {
-			$post_type = $taxonomy->object_type[0];
+			foreach ( $taxonomy->object_type as $post_type ) {
 
-			// Don't include post formats.
-			if ( $post_type === 'post' && $taxonomy_slug === 'post_format' ) {
-				continue;
+				// Don't include post formats.
+				if ( $post_type === 'post' && $taxonomy_slug === 'post_format' ) {
+					continue;
+				}
+
+				$return[ $post_type ]['taxonomies'][ $taxonomy_slug ] = array(
+					'label' => $taxonomy->label,
+					'terms' => get_terms( $taxonomy->name ),
+				);
 			}
-
-			$return[ $post_type ]['taxonomies'][ $taxonomy_slug ] = array(
-				'label' => $taxonomy->label,
-				'terms' => get_terms( $taxonomy->name ),
-			);
 		}
 
 		return new WP_REST_Response( $return, 200 );

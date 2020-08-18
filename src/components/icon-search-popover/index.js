@@ -138,7 +138,8 @@ const IconSearchPopover = props => {
 			className="ugb-icon-popover"
 			onClose={ props.onClose }
 			onClickOutside={ props.onClickOutside }
-			position="center"
+			position={ props.position }
+			anchorRef={ props.anchorRef }
 		>
 			<PanelBody>
 				<FileDrop
@@ -246,6 +247,8 @@ IconSearchPopover.defaultProps = {
 	onClickOutside: () => {},
 	returnSVGValue: true, // If true, the value provided in onChange will be the SVG markup of the icon. If false, the value will be a prefix-iconName value.
 	allowReset: true,
+	anchorRef: undefined,
+	position: 'center',
 }
 
 export default IconSearchPopover

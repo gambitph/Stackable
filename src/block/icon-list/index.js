@@ -23,6 +23,7 @@ import save from './save'
  */
 import { __, sprintf } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
+import { createIconListIconAttributes } from './util'
 
 export const schema = {
 	icon: {
@@ -69,7 +70,16 @@ export const schema = {
 		type: 'string',
 		default: '',
 	},
+	opacity: {
+		type: 'number',
+		default: 1.0,
+	},
+	rotation: {
+		type: 'number',
+		default: 0,
+	},
 	...createTypographyAttributes( 'listText%s' ),
+	...createIconListIconAttributes(),
 }
 
 export const name = 'ugb/icon-list'
