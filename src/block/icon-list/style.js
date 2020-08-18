@@ -7,6 +7,7 @@ import {
 	appendImportant,
 	__getValue,
 } from '~stackable/util'
+import { range } from 'lodash'
 
 /**
  * Internal dependencies
@@ -48,6 +49,19 @@ export const createStyles = props => {
 	} )
 
 	// Icon.
+	const generateIconStyles = () => {
+		const iconStyle = {}
+		range( 1, 21 ).forEach( index => {
+			if ( getValue( `icon${ index }` ) ) {
+				const iconBase64 = convertSVGStringToBase64( getValue( `icon${ index }` ), whiteIfDark( iconColor, showBlockBackground && blockBackgroundBackgroundColor ) )
+				iconStyle[ `li:nth-child(${ index }):before` ] = {
+					backgroundImage: `url('data:image/svg+xml;base64,${ getValue( `icon${ index }` ) ? iconBase64 : base64IconString }')`,
+				}
+			}
+		} )
+		return iconStyle
+	}
+
 	styles.push( {
 		// This is for the text-indend & padding-left trick (see style.scss for details).
 		li: {
@@ -56,10 +70,11 @@ export const createStyles = props => {
 		'li::before': {
 			height: appendImportant( getValue( 'iconSize', '%spx' ) ),
 			width: appendImportant( getValue( 'iconSize', '%spx' ) ),
-			backgroundImage: base64IconString ? `url('data:image/svg+xml;base64,${ base64IconString }')` : undefined,
 			opacity: appendImportant( getValue( 'opacity' ) ),
 			transform: appendImportant( getValue( 'Rotation', 'rotate(%sdeg)' ) ),
+			backgroundImage: base64IconString ? `url('data:image/svg+xml;base64,${ base64IconString }')` : undefined,
 		},
+		...generateIconStyles(),
 	} )
 
 	// Spacing.

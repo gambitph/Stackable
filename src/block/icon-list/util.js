@@ -20,12 +20,14 @@ import { sprintf } from '@wordpress/i18n'
  *
  * @return {*} DOM Element
  */
-export const createElementFromHTMLString = htmlString => {
+const createElementFromHTMLString = htmlString => {
 	const parentElement = document.createElement( 'div' )
 	parentElement.innerHTML = htmlString
 
 	return parentElement.firstChild
 }
+
+// This function is resource heavy. We have to memoize this to improve performance.
 
 /**
  * Convert SVG tag to base64 string
@@ -58,6 +60,8 @@ export const convertSVGStringToBase64 = ( svgTag = '', color = '#000' ) => {
 
 	return window.btoa( serializedString )
 }
+
+// This function is resource heavy. We have to memoize this to improve performance.
 
 /**
  * Handles icon atttribute deprecation in 2.9.1
@@ -93,8 +97,6 @@ export const createIconListIconAttributes = ( attrNameTemplate = 'icon%d', numbe
 	const createIconListIconAttribute = ( index = 1 ) => ( {
 		[ `${ attrNameFormat( index ) }` ]: {
 			type: 'string',
-			source: 'html',
-			selector: `.ugb-icon-list__icon${ index }`,
 			default: '',
 		},
 	} )

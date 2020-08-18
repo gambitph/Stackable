@@ -21,7 +21,6 @@ import { RichText } from '@wordpress/block-editor'
 const save = props => {
 	const { className } = props
 	const {
-		icon,
 		text,
 		design = '',
 		displayAsGrid = false,
@@ -30,7 +29,6 @@ const save = props => {
 	const mainClasses = classnames( [
 		className,
 		'ugb-icon-list--v2',
-		`ugb-icon--icon-${ icon }`,
 	], applyFilters( 'stackable.icon-list.mainclasses', {
 		'ugb-icon-list--display-grid': displayAsGrid,
 	}, design, props ) )
