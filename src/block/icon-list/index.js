@@ -22,7 +22,7 @@ import save from './save'
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
+import { applyFilters, addFilter } from '@wordpress/hooks'
 import { createIconListIconAttributes } from './util'
 
 export const schema = {
@@ -118,3 +118,18 @@ export const settings = {
 		},
 	},
 }
+
+// If the user changes the icon in the inspector, change all icons
+addFilter( 'stackable.icon-list.setAttributes', 'stackable/icon-list/icon', attributes => {
+	if ( typeof attributes.icon === 'undefined' ) {
+		return attributes
+	}
+
+	range( 1, 21 ).forEach( index => {
+		if ( attributes[ `icon${ index }` ] ) {
+			attributes[ `icon${ index }` ] = undefined
+		}
+	} )
+
+	return attributes
+} )
