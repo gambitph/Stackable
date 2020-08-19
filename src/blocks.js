@@ -8,6 +8,7 @@
 import './format-types'
 import './plugins'
 import './help'
+import './compatibility'
 import { SVGStackableCategoryIcon } from './icons'
 import { supportsBlockCollections } from './util'
 

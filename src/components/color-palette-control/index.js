@@ -14,6 +14,7 @@ import {
 import { compose, ifCondition } from '@wordpress/compose'
 import { getColorObjectByColorValue, withColorContext } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
+import { applyFilters } from '@wordpress/hooks'
 
 /**
  * External dependencies
@@ -56,7 +57,11 @@ const ColorPaletteControl = ( {
 			<ColorPalette
 				className="editor-color-palette-control__color-palette"
 				value={ value }
-				onChange={ onChange }
+				onChange={ value => {
+					// Allow the selected color to be overridden.
+					const colorObject = getColorObjectByColorValue( colors, value )
+					onChange( applyFilters( 'stackable.color-palette-control.change', value, colorObject ) )
+				} }
 				{ ... { colors, disableCustomColors } }
 			/>
 		</BaseControl>
