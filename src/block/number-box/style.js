@@ -70,10 +70,6 @@ export const createStyles = props => {
 			'.ugb-number-box__number': {
 				...createTypographyStyles( 'number%s', 'desktop', props.attributes, { important: true } ),
 				backgroundColor: show.numberBGColor ? appendImportant( getValue( 'numberBGColor' ) ) : undefined,
-				lineHeight: appendImportant( show.numberBGColor && numberLineHeight === '' ? getValue( 'numberPadding', '%sem' ) : getValue( 'numberLineHeight', `%s${ numberLineHeightUnit }` ) ),
-				marginLeft: numberAlign !== '' || contentAlign !== '' ? appendImportant( marginLeftAlign( numberAlign || contentAlign ) ) : undefined,
-				marginRight: numberAlign !== '' || contentAlign !== '' ? appendImportant( marginRightAlign( numberAlign || contentAlign ) ) : undefined,
-				textAlign: appendImportant( show.numberBGColor ? undefined : ( getValue( 'numberAlign' ) || getValue( 'contentAlign' ) ) ),
 				color: appendImportant( whiteIfDarkBlackIfLight( numberColor, show.numberBGColor && numberBGColor ) ),
 				opacity: getValue( 'numberOpacity' ),
 				// Special case for centering the text with letter-spacing.
@@ -83,21 +79,21 @@ export const createStyles = props => {
 				'.ugb-number-box__number': {
 					height: show.numberBGColor ? appendImportant( getValue( 'numberPadding', '%sem' ) ) : undefined,
 					width: show.numberBGColor ? appendImportant( getValue( 'numberPadding', '%sem' ) ) : undefined,
+					lineHeight: appendImportant( show.numberBGColor && numberLineHeight === '' ? getValue( 'numberPadding', '%sem' ) : getValue( 'numberLineHeight', `%s${ numberLineHeightUnit }` ) ),
+					marginLeft: numberAlign !== '' || contentAlign !== '' ? appendImportant( marginLeftAlign( numberAlign || contentAlign ) ) : undefined,
+					marginRight: numberAlign !== '' || contentAlign !== '' ? appendImportant( marginRightAlign( numberAlign || contentAlign ) ) : undefined,
+					textAlign: appendImportant( show.numberBGColor ? undefined : ( getValue( 'numberAlign' ) || getValue( 'contentAlign' ) ) ),
 				},
 			},
 			tabletOnly: {
 				'.ugb-number-box__number': {
 					...createTypographyStyles( 'number%s', 'tablet', props.attributes, { important: true } ),
-					height: show.numberBGColor ? appendImportant( getValue( 'numberTabletPadding', '%sem' ) ) : undefined,
-					width: show.numberBGColor ? appendImportant( getValue( 'numberTabletPadding', '%sem' ) ) : undefined,
-				},
-			},
-			tablet: {
-				'.ugb-number-box__number': {
 					lineHeight: appendImportant( show.numberBGColor && numberTabletLineHeight === '' ? getValue( 'numberTabletPadding', '%sem' ) : getValue( 'numberTabletLineHeight', `%s${ numberTabletLineHeightUnit }` ) ),
 					marginLeft: numberTabletAlign !== '' || tabletContentAlign !== '' ? appendImportant( marginLeftAlign( numberTabletAlign ) ) : undefined,
 					marginRight: numberTabletAlign !== '' || tabletContentAlign !== '' ? appendImportant( marginRightAlign( numberTabletAlign ) ) : undefined,
 					textAlign: appendImportant( show.numberBGColor ? undefined : ( getValue( 'numberTabletAlign' ) || getValue( 'tabletContentAlign' ) ) ),
+					height: show.numberBGColor ? appendImportant( getValue( 'numberTabletPadding', '%sem' ) ) : undefined,
+					width: show.numberBGColor ? appendImportant( getValue( 'numberTabletPadding', '%sem' ) ) : undefined,
 				},
 			},
 			mobile: {
