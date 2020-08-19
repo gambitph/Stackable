@@ -44,8 +44,32 @@ import {
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
-import { select, useSelect } from '@wordpress/data'
+import { select } from '@wordpress/data'
 import { RichText } from '@wordpress/block-editor'
+
+const includeEditorContentAlignClassName = attributes => {
+	const {
+		contentAlign,
+		tabletContentAlign,
+		mobileContentAlign,
+	} = attributes
+	const { __experimentalGetPreviewDeviceType: getPreviewDeviceType } = select( 'core/edit-post' )
+
+	const addedAlignmentClass = {}
+
+	if ( getPreviewDeviceType ) {
+		const previewDeviceType = getPreviewDeviceType()
+		if ( previewDeviceType === 'Desktop' ) {
+			addedAlignmentClass[ `ugb-icon-list__${ contentAlign || 'left' }-align` ] = contentAlign || 'left'
+		} else if ( previewDeviceType === 'Tablet' ) {
+			addedAlignmentClass[ `ugb-icon-list__${ tabletContentAlign || 'left' }-align` ] = tabletContentAlign || 'left'
+		} else {
+			addedAlignmentClass[ `ugb-icon-list__${ mobileContentAlign || 'left' }-align` ] = mobileContentAlign || 'left'
+		}
+	}
+
+	return addedAlignmentClass
+}
 
 addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-list', ( output, props ) => {
 	const { setAttributes } = props
@@ -180,40 +204,12 @@ const Edit = props => {
 		text,
 		design = '',
 		displayAsGrid = false,
-		contentAlign,
-		tabletContentAlign,
-		mobileContentAlign,
 	} = props.attributes
-
-	const { getPreviewDeviceType } = useSelect( select => ( { getPreviewDeviceType: select( 'core/edit-post' ).__experimentalGetPreviewDeviceType } ) )
-
-	const shouldAddAlignmentClass = {}
-
-	if ( getPreviewDeviceType ) {
-		const previewDeviceType = getPreviewDeviceType()
-		if ( previewDeviceType === 'Desktop' ) {
-			shouldAddAlignmentClass.right = contentAlign === 'right'
-			shouldAddAlignmentClass.center = contentAlign === 'center'
-			shouldAddAlignmentClass.left = ! contentAlign || contentAlign === 'left'
-		} else if ( previewDeviceType === 'Tablet' ) {
-			shouldAddAlignmentClass.right = tabletContentAlign === 'right'
-			shouldAddAlignmentClass.center = tabletContentAlign === 'center'
-			shouldAddAlignmentClass.left = ! tabletContentAlign || tabletContentAlign === 'left'
-		} else {
-			shouldAddAlignmentClass.right = mobileContentAlign === 'right'
-			shouldAddAlignmentClass.center = mobileContentAlign === 'center'
-			shouldAddAlignmentClass.left = ! mobileContentAlign || mobileContentAlign === 'left'
-		}
-	}
 
 	const mainClasses = classnames( [
 		className,
 		'ugb-icon-list--v2',
-		{
-			'ugb-icon-list__right-align': shouldAddAlignmentClass.right,
-			'ugb-icon-list__center-align': shouldAddAlignmentClass.center,
-			'ugb-icon-list__left-align': shouldAddAlignmentClass.left,
-		},
+		includeEditorContentAlignClassName( props.attributes ),
 	], applyFilters( 'stackable.icon-list.mainclasses', {
 		'ugb-icon-list--display-grid': displayAsGrid,
 	}, design, props ) )
@@ -234,14 +230,21 @@ const Edit = props => {
 		if ( event.offsetX <= ( props.attributes.iconSize || 20 ) ) {
 			// Get the selected li and show the icon picker on it.
 			const index = Array.from( event.target.parentElement.children ).indexOf( event.target ) + 1
+			const { currentlyOpenIndex } = event.target.parentElement
+
+			if ( currentlyOpenIndex && currentlyOpenIndex === index ) {
+				event.target.parentElement.currentlyOpenIndex = undefined
+				return setIsOpenIconSearch( false )
+			}
+
+			event.target.parentElement.currentlyOpenIndex = index
 			setSelectedIconIndex( index )
 			setIconSearchAnchor( event.target )
-			setIsOpenIconSearch( true )
-		} else {
-			// Hide the icon picker.
-			setIconSearchAnchor( null )
-			setIsOpenIconSearch( false )
+			return setIsOpenIconSearch( true )
 		}
+		// Hide the icon picker.
+		setIconSearchAnchor( null )
+		return setIsOpenIconSearch( false )
 	}
 
 	// Create the click listeners to open the icon picker.
