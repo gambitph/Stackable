@@ -84,6 +84,8 @@ const createImageAttributes = ( attrNameTemplate, options = {} ) => {
 				'ShapeFlipX',
 				'ShapeFlipY',
 				'Square',
+				'TabletSquare',
+				'MobileSquare',
 			]
 		),
 		...createAllCombinationAttributes(
