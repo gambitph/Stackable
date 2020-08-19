@@ -23,11 +23,14 @@ import {
 	IconControl,
 	IconSearchPopover,
 } from '~stackable/components'
+import classnames from 'classnames'
+import { i18n } from 'stackable'
 
 /**
  * Internal dependencies
  */
 import createStyles from './style'
+import { withTransformOldIconAttributes } from './higher-order'
 
 /**
  * WordPress dependencies
@@ -41,22 +44,8 @@ import {
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
-import { select } from '@wordpress/data'
+import { select, useSelect } from '@wordpress/data'
 import { RichText } from '@wordpress/block-editor'
-import classnames from 'classnames'
-import { i18n } from 'stackable'
-import { updateIconAttribute } from './util'
-
-// Change the icon attributes from Icon List Blocks in <=2.9.1
-addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-list/icon', ( output, props ) => {
-	const {
-		icon,
-		iconShape,
-	} = props.attributes
-
-	props.attributes.icon = updateIconAttribute( icon, iconShape )
-	return output
-} )
 
 addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-list', ( output, props ) => {
 	const { setAttributes } = props
@@ -191,11 +180,36 @@ const Edit = props => {
 		text,
 		design = '',
 		displayAsGrid = false,
+		contentAlign,
+		tabletContentAlign,
+		mobileContentAlign,
 	} = props.attributes
+
+	const { getPreviewDeviceType } = useSelect( select => ( { getPreviewDeviceType: select( 'core/edit-post' ).__experimentalGetPreviewDeviceType } ) )
+
+	const shouldAddAlignmentClass = {}
+
+	if ( getPreviewDeviceType ) {
+		const previewDeviceType = getPreviewDeviceType()
+		if ( previewDeviceType === 'Desktop' ) {
+			shouldAddAlignmentClass.right = contentAlign === 'right'
+			shouldAddAlignmentClass.center = contentAlign === 'center'
+		} else if ( previewDeviceType === 'Tablet' ) {
+			shouldAddAlignmentClass.right = tabletContentAlign === 'right'
+			shouldAddAlignmentClass.center = tabletContentAlign === 'center'
+		} else {
+			shouldAddAlignmentClass.right = mobileContentAlign === 'right'
+			shouldAddAlignmentClass.center = mobileContentAlign === 'center'
+		}
+	}
 
 	const mainClasses = classnames( [
 		className,
 		'ugb-icon-list--v2',
+		{
+			'ugb-icon-list__right-align': shouldAddAlignmentClass.right,
+			'ugb-icon-list__center-align': shouldAddAlignmentClass.center,
+		},
 	], applyFilters( 'stackable.icon-list.mainclasses', {
 		'ugb-icon-list--display-grid': displayAsGrid,
 	}, design, props ) )
@@ -246,16 +260,16 @@ const Edit = props => {
 	return (
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				<RichText
-					tagName="ul"
-					multiline="li"
-					value={ text }
-					onChange={ text => setAttributes( { text } ) }
-					placeholder={ __( 'Text for this block', i18n ) }
-					keepPlaceholderOnFocus
-					ref={ textRef }
-				/>
-				{ ! isTyping && isSelected && isOpenIconSearch &&
+				<div ref={ textRef }>
+					<RichText
+						tagName="ul"
+						multiline="li"
+						value={ text }
+						onChange={ text => setAttributes( { text } ) }
+						placeholder={ __( 'Text for this block', i18n ) }
+						keepPlaceholderOnFocus
+					/>
+					{ ! isTyping && isSelected && isOpenIconSearch &&
 					<IconSearchPopover
 						position="bottom left"
 						anchorRef={ iconSearchAnchor }
@@ -264,7 +278,8 @@ const Edit = props => {
 							setAttributes( { [ `icon${ selectedIconIndex }` ]: icon } )
 						} }
 					/>
-				}
+					}
+				</div>
 			</Fragment>
 		) } />
 	)
@@ -274,6 +289,7 @@ export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
 	withGoogleFont,
+	withTransformOldIconAttributes,
 	withTabbedInspector(),
 	withContentAlignReseter(),
 	withBlockStyles( createStyles, { editorMode: true } ),

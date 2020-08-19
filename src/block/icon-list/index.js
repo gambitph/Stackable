@@ -120,13 +120,13 @@ export const settings = {
 }
 
 // If the user changes the icon in the inspector, change all icons
-addFilter( 'stackable.icon-list.setAttributes', 'stackable/icon-list/icon', attributes => {
+addFilter( 'stackable.icon-list.setAttributes', 'stackable/icon-list/icon', ( attributes, blockProps ) => {
 	if ( typeof attributes.icon === 'undefined' ) {
 		return attributes
 	}
 
 	range( 1, 21 ).forEach( index => {
-		if ( attributes[ `icon${ index }` ] ) {
+		if ( blockProps.attributes[ `icon${ index }` ] ) {
 			attributes[ `icon${ index }` ] = undefined
 		}
 	} )

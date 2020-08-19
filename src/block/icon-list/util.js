@@ -6,7 +6,7 @@ import { deprecatedIcon_2_9_1 } from './deprecated'
 /**
  * External dependencies
  */
-import { range } from 'lodash'
+import { range, keys } from 'lodash'
 
 /**
  * Wordpress dependencies
@@ -43,12 +43,19 @@ export const convertSVGStringToBase64 = ( svgTag = '', color = '#000' ) => {
 
 	const svgEl = createElementFromHTMLString( svgTag )
 
+	const pathElements = svgEl.querySelectorAll( 'path' )
+	const gElements = svgEl.querySelectorAll( 'g' )
+
 	if ( svgEl.querySelector( 'path' ) ) {
-		svgEl.querySelector( 'path' ).setAttribute( 'fill', color )
+		keys( pathElements ).forEach( key => {
+			pathElements[ key ].setAttribute( 'fill', color )
+		} )
 	}
 
 	if ( svgEl.querySelector( 'g' ) ) {
-		svgEl.querySelector( 'g' ).setAttribute( 'fill', color )
+		keys( gElements ).forEach( key => {
+			gElements[ key ].setAttribute( 'fill', color )
+		} )
 	}
 
 	/**
