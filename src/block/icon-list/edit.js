@@ -194,12 +194,15 @@ const Edit = props => {
 		if ( previewDeviceType === 'Desktop' ) {
 			shouldAddAlignmentClass.right = contentAlign === 'right'
 			shouldAddAlignmentClass.center = contentAlign === 'center'
+			shouldAddAlignmentClass.left = ! contentAlign || contentAlign === 'left'
 		} else if ( previewDeviceType === 'Tablet' ) {
 			shouldAddAlignmentClass.right = tabletContentAlign === 'right'
 			shouldAddAlignmentClass.center = tabletContentAlign === 'center'
+			shouldAddAlignmentClass.left = ! tabletContentAlign || tabletContentAlign === 'left'
 		} else {
 			shouldAddAlignmentClass.right = mobileContentAlign === 'right'
 			shouldAddAlignmentClass.center = mobileContentAlign === 'center'
+			shouldAddAlignmentClass.left = ! mobileContentAlign || mobileContentAlign === 'left'
 		}
 	}
 
@@ -209,6 +212,7 @@ const Edit = props => {
 		{
 			'ugb-icon-list__right-align': shouldAddAlignmentClass.right,
 			'ugb-icon-list__center-align': shouldAddAlignmentClass.center,
+			'ugb-icon-list__left-align': shouldAddAlignmentClass.left,
 		},
 	], applyFilters( 'stackable.icon-list.mainclasses', {
 		'ugb-icon-list--display-grid': displayAsGrid,
