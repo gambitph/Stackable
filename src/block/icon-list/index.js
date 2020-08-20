@@ -28,7 +28,7 @@ import { createIconListIconAttributes } from './util'
 export const schema = {
 	icon: {
 		type: 'string',
-		default: 'check',
+		default: 'fa-check',
 	},
 	iconShape: {
 		type: 'string',
