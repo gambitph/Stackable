@@ -3,6 +3,7 @@
  *
  * Enqueued in the editor only.
  */
+@import "common";
 
 // UL is a child when in block form, remove the bullets.
 .ugb-icon-list ul {
@@ -34,4 +35,16 @@
 .ugb-icon-list__left-align li {
 	width: max-content !important;
 	margin-right: auto !important;
+}
+
+// Ensure columns collapse in the editor.
+@media screen and (max-width: $break-small) {
+	.ugb-icon-list.ugb-icon-list--display-grid ul { // Ensure our columns get applied.
+		grid-template-columns: 1fr !important;
+	}
+}
+@media screen and (max-width: $break-small) {
+	.ugb-icon-list.ugb-icon-list ul { // Ensure our columns get applied.
+		columns: 1 !important;
+	}
 }

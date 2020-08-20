@@ -192,6 +192,10 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 2.9.2 =
+* New: Now compatible with Kadence Theme color palette
+* New: Added half-highlight text formatting style
+* New: You can now select a text color for highlighted text styles
+* Fixed: Icon list block didn't follow tablet and mobile column counts.
 * Fixed: Blog Posts Block doesn't detect category and tag taxonomies for custom post types
 * Fixed: When in white label mode, the pricing tab still appears in the settings page
 
