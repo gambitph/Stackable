@@ -51,6 +51,8 @@ export const convertSVGStringToBase64 = ( svgTag = '', color = '' ) => {
 				if ( child && ! [ 'DEFS', 'TITLE', 'DESC' ].includes( child.tagName ) ) {
 					child.setAttribute( 'fill', color )
 					child.setAttribute( 'stroke', color )
+					child.style.fill = color
+					child.style.stroke = color
 				}
 			} )
 			svgEl.setAttribute( 'style', `fill: ${ color } !important; color: ${ color } !important` )
