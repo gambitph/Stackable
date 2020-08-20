@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.4
 Tested up to: 5.5
 Requires PHP: 5.3
-Stable tag: 2.9.1
+Stable tag: 2.10.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -191,9 +191,13 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
-= 2.9.2 =
-* New: Now compatible with Kadence Theme color palette
+= 2.10.0 =
+* New: Better responsiveness controls: some tablet and mobile options do not automatically inherit desktop styles
+* New: You can now pick any icon for the Icon List block
+* New: You can now have different icons per line in the Icon List block
+* New: Additional icon options in the Icon List block
 * New: Added half-highlight text formatting style
+* New: Now compatible with Kadence Theme color palette
 * New: You can now select a text color for highlighted text styles
 * Fixed: Icon list block didn't follow tablet and mobile column counts.
 * Fixed: Blog Posts Block doesn't detect category and tag taxonomies for custom post types
