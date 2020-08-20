@@ -1,18 +1,32 @@
 /**
  * Internal dependencies
  */
-import { getIconSVGBase64 } from './util'
+import { getIconSVGBase64, getIconSVG } from './util'
 
 /**
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
+import { RichText } from '@wordpress/block-editor'
+import { svgRenderToString } from '~stackable/util'
 
 /**
  * External dependencies
  */
 import classnames from 'classnames'
-import { RichText } from '@wordpress/block-editor'
+
+export const deprecatedIcon_2_9_1 = ( () => {
+	const returnObject = {}
+	const icons = [ 'check', 'plus', 'arrow', 'cross', 'star' ]
+
+	icons.forEach( icon => {
+		[ '', 'circle', 'outline' ].forEach( iconShape => {
+			returnObject[ `${ icon }-${ iconShape || 'default' }` ] = svgRenderToString( getIconSVG( icon, iconShape ) )
+		} )
+	} )
+
+	return returnObject
+} )()
 
 const deprecatedSave_1_15_4 = props => {
 	const { className } = props
@@ -195,3 +209,4 @@ const deprecated = [
 ]
 
 export default deprecated
+

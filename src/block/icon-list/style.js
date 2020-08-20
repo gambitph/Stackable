@@ -7,11 +7,12 @@ import {
 	appendImportant,
 	__getValue,
 } from '~stackable/util'
+import { range } from 'lodash'
 
 /**
  * Internal dependencies
  */
-import { getIconSVGBase64 } from './util'
+import { convertSVGStringToBase64 } from './util'
 import deepmerge from 'deepmerge'
 
 export const createStyles = props => {
@@ -19,7 +20,6 @@ export const createStyles = props => {
 
 	const {
 		icon,
-		iconShape,
 		iconColor,
 		iconSize,
 		showBlockBackground = '',
@@ -27,11 +27,7 @@ export const createStyles = props => {
 		listTextColor = '',
 	} = props.attributes
 
-	const iconSVGString = getIconSVGBase64(
-		icon,
-		iconShape,
-		whiteIfDark( iconColor, showBlockBackground && blockBackgroundBackgroundColor )
-	)
+	const base64IconString = convertSVGStringToBase64( icon, whiteIfDark( iconColor, showBlockBackground && blockBackgroundBackgroundColor ) )
 
 	const styles = []
 
@@ -53,6 +49,19 @@ export const createStyles = props => {
 	} )
 
 	// Icon.
+	const generateIconStyles = () => {
+		const iconStyle = {}
+		range( 1, 21 ).forEach( index => {
+			if ( getValue( `icon${ index }` ) ) {
+				const iconBase64 = convertSVGStringToBase64( getValue( `icon${ index }` ), whiteIfDark( iconColor, showBlockBackground && blockBackgroundBackgroundColor ) )
+				iconStyle[ `li:nth-child(${ index }):before` ] = {
+					backgroundImage: `url('data:image/svg+xml;base64,${ getValue( `icon${ index }` ) ? iconBase64 : base64IconString }')`,
+				}
+			}
+		} )
+		return iconStyle
+	}
+
 	styles.push( {
 		// This is for the text-indend & padding-left trick (see style.scss for details).
 		li: {
@@ -61,8 +70,11 @@ export const createStyles = props => {
 		'li::before': {
 			height: appendImportant( getValue( 'iconSize', '%spx' ) ),
 			width: appendImportant( getValue( 'iconSize', '%spx' ) ),
-			backgroundImage: 'url(\'data:image/svg+xml;base64,' + iconSVGString + '\')',
+			opacity: appendImportant( getValue( 'opacity' ) ),
+			transform: appendImportant( getValue( 'Rotation', 'rotate(%sdeg)' ) ),
+			backgroundImage: base64IconString ? `url('data:image/svg+xml;base64,${ base64IconString }')` : undefined,
 		},
+		...generateIconStyles(),
 	} )
 
 	// Spacing.

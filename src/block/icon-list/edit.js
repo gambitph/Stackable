@@ -19,38 +19,65 @@ import {
 	ResponsiveControl,
 	TypographyControlHelper,
 	PanelAdvancedSettings,
-	AdvancedToolbarControl,
+	ControlSeparator,
+	IconControl,
+	IconSearchPopover,
 } from '~stackable/components'
+import classnames from 'classnames'
+import { i18n } from 'stackable'
 
 /**
  * Internal dependencies
  */
-import {
-	getIconShapeToolbarList,
-	getIconToolbarList,
-} from './util'
 import createStyles from './style'
+import { withTransformOldIconAttributes } from './higher-order'
 
 /**
  * WordPress dependencies
  */
+import {
+	Fragment, createRef, useEffect, useState,
+} from '@wordpress/element'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import {
 	PanelBody, ToggleControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
-import { Fragment } from '@wordpress/element'
+import { select } from '@wordpress/data'
 import { RichText } from '@wordpress/block-editor'
-import classnames from 'classnames'
-import { i18n } from 'stackable'
+
+// We need to add a class depending on the block alignment to make the
+// individual icon picker work.
+const includeEditorContentAlignClassName = attributes => {
+	const {
+		contentAlign,
+		tabletContentAlign,
+		mobileContentAlign,
+	} = attributes
+	const { __experimentalGetPreviewDeviceType: getPreviewDeviceType } = select( 'core/edit-post' )
+
+	const addedAlignmentClass = {}
+
+	if ( getPreviewDeviceType ) {
+		const previewDeviceType = getPreviewDeviceType()
+		const alignment = (
+			previewDeviceType === 'Desktop' ? contentAlign :
+				previewDeviceType === 'Tablet' ? tabletContentAlign :
+					mobileContentAlign
+		) || 'left'
+
+		addedAlignmentClass[ `ugb-icon-list__${ alignment }-align` ] = alignment
+	}
+
+	return addedAlignmentClass
+}
 
 addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-list', ( output, props ) => {
 	const { setAttributes } = props
 
 	const {
 		icon,
-		iconShape,
 		iconColor,
 		iconSize,
 		gap,
@@ -59,6 +86,8 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 		columns = '',
 		tabletColumns = '',
 		mobileColumns = '',
+		opacity = '',
+		rotation = '',
 	} = props.attributes
 
 	return (
@@ -91,25 +120,19 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 			</PanelBody>
 
 			<PanelBody title={ __( 'Icon', i18n ) } initialOpen={ false }>
-				<AdvancedToolbarControl
+				<IconControl
 					label={ __( 'Icon', i18n ) }
-					controls={ getIconToolbarList() }
 					value={ icon }
 					onChange={ icon => setAttributes( { icon } ) }
-					fullwidth={ false }
+					help={ __( 'You can click on each icon in the Icon List block to change them individually.', i18n ) }
 				/>
-				<AdvancedToolbarControl
-					label={ __( 'Icon Shape', i18n ) }
-					controls={ getIconShapeToolbarList( icon ) }
-					value={ iconShape }
-					onChange={ iconShape => setAttributes( { iconShape } ) }
-					fullwidth={ false }
-				/>
+				<ControlSeparator />
 				<ColorPaletteControl
 					label={ __( 'Icon Color', i18n ) }
 					value={ iconColor }
 					onChange={ iconColor => setAttributes( { iconColor } ) }
 				/>
+				<ControlSeparator />
 				<AdvancedRangeControl
 					label={ __( 'Icon Size', i18n ) }
 					value={ iconSize }
@@ -118,6 +141,25 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 					max={ 50 }
 					allowReset={ true }
 					placeholder="20"
+				/>
+				<AdvancedRangeControl
+					label={ __( 'Icon Opacity', i18n ) }
+					value={ opacity }
+					min={ 0 }
+					max={ 1 }
+					step={ 0.1 }
+					onChange={ opacity => setAttributes( { opacity } ) }
+					allowReset={ true }
+					placeholder="1.0"
+				/>
+				<AdvancedRangeControl
+					label={ __( 'Icon Rotation', i18n ) }
+					value={ rotation }
+					min={ 0 }
+					max={ 360 }
+					onChange={ rotation => setAttributes( { rotation } ) }
+					allowReset={ true }
+					placeholder="0"
 				/>
 			</PanelBody>
 
@@ -154,14 +196,14 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 	)
 } )
 
-const edit = props => {
+const Edit = props => {
 	const {
 		className,
 		setAttributes,
+		isSelected,
 	} = props
 
 	const {
-		icon,
 		text,
 		design = '',
 		displayAsGrid = false,
@@ -170,22 +212,97 @@ const edit = props => {
 	const mainClasses = classnames( [
 		className,
 		'ugb-icon-list--v2',
-		`ugb-icon--icon-${ icon }`,
+		includeEditorContentAlignClassName( props.attributes ),
 	], applyFilters( 'stackable.icon-list.mainclasses', {
 		'ugb-icon-list--display-grid': displayAsGrid,
 	}, design, props ) )
 
+	const textRef = createRef()
+	const isTyping = select( 'core/block-editor' ).isTyping()
+	const [ isOpenIconSearch, setIsOpenIconSearch ] = useState( false )
+	const [ iconSearchAnchor, setIconSearchAnchor ] = useState( null )
+	const [ selectedIconIndex, setSelectedIconIndex ] = useState( null )
+	const [ selectedEvent, setSelectedEvent ] = useState( null )
+
+	// Click handler to detect whether an icon is clicked, and open the icon
+	// picker for that icon.
+	const iconClickHandler = event => {
+		// If li isn't clicked, close the icon search.
+		setSelectedEvent( event )
+		if ( event.target.tagName !== 'LI' ) {
+			return setIsOpenIconSearch( false )
+		}
+
+		// Check if the click is on the icon.
+		if ( event.offsetX <= ( props.attributes.iconSize || 20 ) ) {
+			// Get the selected li and show the icon picker on it.
+			const index = Array.from( event.target.parentElement.children ).indexOf( event.target ) + 1
+			const { currentlyOpenIndex } = event.target.parentElement
+
+			if ( currentlyOpenIndex && currentlyOpenIndex === index ) {
+				event.target.parentElement.currentlyOpenIndex = undefined
+				return setIsOpenIconSearch( false )
+			}
+
+			event.target.parentElement.currentlyOpenIndex = index
+			setSelectedIconIndex( index )
+			setIconSearchAnchor( event.target )
+			return setIsOpenIconSearch( true )
+		}
+		// Hide the icon picker.
+		event.target.parentElement.currentlyOpenIndex = undefined
+		setIconSearchAnchor( null )
+		return setIsOpenIconSearch( false )
+	}
+
+	// Create the click listeners to open the icon picker.
+	useEffect( () => {
+		textRef.current.addEventListener( 'click', iconClickHandler )
+		return () => {
+			if ( textRef.current ) {
+				textRef.current.removeEventListener( 'click', iconClickHandler )
+			}
+		}
+	}, [] )
+
+	// Hide the icon search when the block gets blurred.
+	useEffect( () => {
+		if ( ! isSelected ) {
+			setIsOpenIconSearch( false )
+			if ( selectedEvent ) {
+				selectedEvent.target.parentElement.currentlyOpenIndex = undefined
+			}
+		}
+	}, [ isSelected ] )
+
 	return (
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				<RichText
-					tagName="ul"
-					multiline="li"
-					value={ text }
-					onChange={ text => setAttributes( { text } ) }
-					placeholder={ __( 'Text for this block', i18n ) }
-					keepPlaceholderOnFocus
-				/>
+				<div ref={ textRef }>
+					<RichText
+						tagName="ul"
+						multiline="li"
+						value={ text }
+						onChange={ text => setAttributes( { text } ) }
+						placeholder={ __( 'Text for this block', i18n ) }
+						keepPlaceholderOnFocus
+					/>
+					{ ! isTyping && isSelected && isOpenIconSearch &&
+					<IconSearchPopover
+						position="bottom left"
+						anchorRef={ iconSearchAnchor }
+						onClose={ () => {
+							if ( selectedEvent ) {
+								selectedEvent.target.parentElement.currentlyOpenIndex = undefined
+							}
+							setIsOpenIconSearch( false )
+						} }
+						onChange={ icon => {
+							setAttributes( { [ `icon${ selectedIconIndex }` ]: icon } )
+						} }
+					/>
+					}
+				</div>
 			</Fragment>
 		) } />
 	)
@@ -195,10 +312,11 @@ export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
 	withGoogleFont,
+	withTransformOldIconAttributes,
 	withTabbedInspector(),
 	withContentAlignReseter(),
 	withBlockStyles( createStyles, { editorMode: true } ),
 	withClickOpenInspector( [
 		[ 'ul, ul li', 'text' ],
 	] ),
-)( edit )
+)( Edit )

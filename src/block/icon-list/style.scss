@@ -19,7 +19,8 @@
 		height: 20px;
 		width: 20px;
 		margin-right: 1em;
-		background-size: cover;
+		background-size: contain !important;
+		background-repeat: no-repeat;
 		background-position: center;
 		// Large icons get their tops cut because of
 		margin-bottom: 5px;

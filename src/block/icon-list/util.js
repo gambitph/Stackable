@@ -1,150 +1,102 @@
 /**
- * Internal dependencies
- */
-import {
-	ArrowCircleIcon,
-	ArrowIcon,
-	ArrowOutlineIcon,
-	CheckCircleIcon,
-	CheckIcon,
-	CheckOutlineIcon,
-	CrossCircleIcon,
-	CrossIcon,
-	CrossOutlineIcon,
-	PlusCircleIcon,
-	PlusIcon,
-	PlusOutlineIcon,
-	StarCircleIcon,
-	StarIcon,
-	StarOutlineIcon,
-} from './icons'
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n'
-
-/**
  * External dependencies
  */
-import { i18n } from 'stackable'
-import { svgRenderToString } from '~stackable/util'
+import { range } from 'lodash'
+import { faGetSVGIcon } from '~stackable/util'
 
 /**
- * The list of available icons for the Icon List block.
+ * Wordpress dependencies
  */
-const BLOCK_ICONS = {
-	check: {
-		iconFunc: CheckIcon,
-		circleFunc: CheckCircleIcon,
-		outlineFunc: CheckOutlineIcon,
-		title: __( 'Check', i18n ),
-		value: 'check',
-	},
-	plus: {
-		iconFunc: PlusIcon,
-		circleFunc: PlusCircleIcon,
-		outlineFunc: PlusOutlineIcon,
-		title: __( 'Plus', i18n ),
-		value: 'plus',
-	},
-	arrow: {
-		iconFunc: ArrowIcon,
-		circleFunc: ArrowCircleIcon,
-		outlineFunc: ArrowOutlineIcon,
-		title: __( 'Arrow', i18n ),
-		value: 'arrow',
-	},
-	cross: {
-		iconFunc: CrossIcon,
-		circleFunc: CrossCircleIcon,
-		outlineFunc: CrossOutlineIcon,
-		title: __( 'Cross', i18n ),
-		value: 'cross',
-	},
-	star: {
-		iconFunc: StarIcon,
-		circleFunc: StarCircleIcon,
-		outlineFunc: StarOutlineIcon,
-		title: __( 'Star', i18n ),
-		value: 'star',
-	},
+import { sprintf } from '@wordpress/i18n'
+
+/**
+ * Create a DOM Element based on HTML string
+ *
+ * @param {string} htmlString
+ *
+ * @return {*} DOM Element
+ */
+const createElementFromHTMLString = htmlString => {
+	const parentElement = document.createElement( 'div' )
+	parentElement.innerHTML = htmlString
+
+	return parentElement.firstChild
 }
 
 /**
- * Gets the name of the shape function in the `BLOCK_ICONS` object.
+ * Convert SVG tag to base64 string
  *
- * @param {string} iconShape The name of the shape.
- *
- * @return {string} The name of the icon function in the `BLOCK_ICONS` that can be called.
+ * @param {string} svgTag
+ * @param {string} color
+ * @return {string} base64 string
  */
-const getIconShapeFunction = iconShape => {
-	if ( iconShape === 'circle' || iconShape === 'outline' ) {
-		return `${ iconShape }Func`
+export const convertSVGStringToBase64 = ( svgTag = '', color = '' ) => {
+	let svgTagString = svgTag
+
+	if ( ! svgTag ) {
+		svgTagString = faGetSVGIcon( 'fa', 'check' )
 	}
-	return 'iconFunc'
+
+	if ( typeof svgTag === 'string' && svgTag.split( '-' ).length === 2 ) {
+		const [ prefix, iconName ] = svgTag.split( '-' )
+		svgTagString = faGetSVGIcon( prefix, iconName )
+	}
+
+	const svgEl = createElementFromHTMLString( svgTagString )
+	if ( svgEl ) {
+		const svgChildElements = svgEl.querySelectorAll( '*' )
+
+		if ( color ) {
+			svgChildElements.forEach( child => {
+				if ( child && ! [ 'DEFS', 'TITLE', 'DESC' ].includes( child.tagName ) ) {
+					child.setAttribute( 'fill', color )
+					child.setAttribute( 'stroke', color )
+				}
+			} )
+			svgEl.setAttribute( 'style', `fill: ${ color } !important; color: ${ color } !important` )
+		}
+
+		/**
+		 * Use XMLSerializer to create XML string from DOM Element
+		 *
+		 * @see https://developer.mozilla.org/en-US/docs/Web/API/XMLSerializer
+		 */
+		const serializedString = new XMLSerializer().serializeToString( svgEl ) //eslint-disable-line no-undef
+
+		return window.btoa( serializedString )
+	}
 }
 
 /**
- * Gets the SVG component for the given icon and shape.
+ * Creates icon attributes for Icon List Block
  *
- * @param {string} icon The name of the icon e.g. `star`
- * @param {string} shape The shape of the icon e.g. `` or `circle`
- *
- * @return {Object} An svg component.
+ * @since 2.10.0
+ * @param {string} attrNameTemplate
+ * @param {number} number of icon attributes
+ * @return {Object} Generated attributes
  */
-export const getIconSVG = ( icon, shape = '' ) => {
-	if ( ! BLOCK_ICONS[ icon ] ) {
+export const createIconListIconAttributes = ( attrNameTemplate = 'icon%d', number = 20 ) => {
+	if ( number < 1 ) {
 		return null
 	}
-	return BLOCK_ICONS[ icon ][ getIconShapeFunction( shape ) ]()
-}
 
-/**
- * Gets the SVG string for the given icon and shape that's based64 encoded for use inside styles.
- *
- * @param {string} icon The name of the icon e.g. `star`
- * @param {string} iconShape The shape of the icon e.g. `` or `circle`
- * @param {string} iconColor
- *
- * @return {string} A base64 encoded SVG component to be used inside style attributes.
- */
-export const getIconSVGBase64 = ( icon, iconShape, iconColor ) => {
-	const shapeFunc = getIconShapeFunction( iconShape )
-	if ( ! BLOCK_ICONS[ icon ] ) {
-		return ''
-	}
-	const iconString = svgRenderToString( BLOCK_ICONS[ icon ][ shapeFunc ]( iconColor ), false )
-	return btoa( iconString )
-}
+	const attrNameFormat = ( index = 1 ) => sprintf( attrNameTemplate, index )
 
-/**
- * Gets a list of toolbars for picking an icon for the Icon List block.
- *
- * @return {Array} An array of objects that can be used for the `controls` attribute of a Toolbar Component
- */
-export const getIconToolbarList = () => {
-	return Object.keys( BLOCK_ICONS ).map( value => {
-		return {
-			...BLOCK_ICONS[ value ],
-			icon: getIconSVG( value ),
+	const createIconListIconAttribute = ( index = 1 ) => ( {
+		[ `${ attrNameFormat( index ) }` ]: {
+			type: 'string',
+			default: '',
+		},
+	} )
+
+	let attributes = {}
+
+	range( 1, number + 1 ).forEach( index => {
+		attributes = {
+			...attributes,
+			...createIconListIconAttribute( index ),
 		}
 	} )
-}
 
-/**
- * Gets a list of toolbars for picking an icon shape based on the given icon.
- *
- * @param {string} icon The name of the icon to show the shapes for.
- *
- * @return {Array} An array of objects that can be used for the `controls` attribute of a Toolbar Component
- */
-export const getIconShapeToolbarList = icon => {
-	return [ '', 'circle', 'outline' ].map( value => {
-		return {
-			...BLOCK_ICONS[ icon ],
-			icon: getIconSVG( icon, value ),
-			value,
-		}
-	} )
+	return attributes
 }

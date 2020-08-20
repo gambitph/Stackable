@@ -8,11 +8,33 @@
 // UL is a child when in block form, remove the bullets.
 .ugb-icon-list ul {
 	list-style: none !important;
+	li::before {
+		cursor: pointer;
+	}
 }
 
 // Last in the list should have no margin bottom.
-#editor .ugb-icon-list.ugb-icon-list li:last-child {
+.ugb-icon-list.ugb-icon-list li:last-child {
 	margin-bottom: 0 !important;
+}
+
+// Apply this class for textAlign right
+.ugb-icon-list__right-align li {
+	width: max-content !important;
+	margin-left: auto !important;
+}
+
+// Apply this class for textAlign center
+.ugb-icon-list__center-align li {
+	width: max-content !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+}
+
+// Apply this class for textAlign center
+.ugb-icon-list__left-align li {
+	width: max-content !important;
+	margin-right: auto !important;
 }
 
 // Ensure columns collapse in the editor.

@@ -74,7 +74,11 @@ const IconControl = withInstanceId( withState( {
 				</div>
 				<Button
 					onClick={ () => {
-						props.onChange( '' )
+						if ( props.onReset ) {
+							props.onReset()
+						} else {
+							props.onChange( '' )
+						}
 						setState( { openPopover: false } )
 					} }
 					isSmall

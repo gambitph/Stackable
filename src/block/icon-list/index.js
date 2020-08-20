@@ -8,6 +8,7 @@
 import { createTypographyAttributes } from '~stackable/util'
 import { IconListIcon } from '~stackable/icons'
 import { range } from 'lodash'
+import { disabledBlocks, i18n } from 'stackable'
 
 /**
  * Internal dependencies
@@ -21,13 +22,13 @@ import save from './save'
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n'
-import { disabledBlocks, i18n } from 'stackable'
-import { applyFilters } from '@wordpress/hooks'
+import { applyFilters, addFilter } from '@wordpress/hooks'
+import { createIconListIconAttributes } from './util'
 
 export const schema = {
 	icon: {
 		type: 'string',
-		default: 'check',
+		default: 'fa-check',
 	},
 	iconShape: {
 		type: 'string',
@@ -69,7 +70,16 @@ export const schema = {
 		type: 'string',
 		default: '',
 	},
+	opacity: {
+		type: 'number',
+		default: 1.0,
+	},
+	rotation: {
+		type: 'number',
+		default: 0,
+	},
 	...createTypographyAttributes( 'listText%s' ),
+	...createIconListIconAttributes(),
 }
 
 export const name = 'ugb/icon-list'
@@ -108,3 +118,18 @@ export const settings = {
 		},
 	},
 }
+
+// If the user changes the icon in the inspector, change all icons
+addFilter( 'stackable.icon-list.setAttributes', 'stackable/icon-list/icon', ( attributes, blockProps ) => {
+	if ( typeof attributes.icon === 'undefined' ) {
+		return attributes
+	}
+
+	range( 1, 21 ).forEach( index => {
+		if ( blockProps.attributes[ `icon${ index }` ] ) {
+			attributes[ `icon${ index }` ] = undefined
+		}
+	} )
+
+	return attributes
+} )
