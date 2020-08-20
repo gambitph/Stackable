@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { getIconSVGBase64, getIconSVG } from './deprecated-files/util'
+import { getIconSVGBase64, getIconSVG } from './util'
 
 /**
  * WordPress dependencies
