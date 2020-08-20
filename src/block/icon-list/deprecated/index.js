@@ -183,6 +183,7 @@ const deprecatedSchema_1_13_3 = {
 		default: 16,
 	},
 }
+
 const deprecated = [
 	{
 		attributes: deprecatedSchema_1_15_4,

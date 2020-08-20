@@ -31,6 +31,7 @@ import { i18n } from 'stackable'
  */
 import createStyles from './style'
 import { withTransformOldIconAttributes } from './higher-order'
+import { DEFAULT_CHECK_SVG } from './util'
 
 /**
  * WordPress dependencies
@@ -122,7 +123,7 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 			<PanelBody title={ __( 'Icon', i18n ) } initialOpen={ false }>
 				<IconControl
 					label={ __( 'Icon', i18n ) }
-					value={ icon }
+					value={ icon || DEFAULT_CHECK_SVG }
 					onChange={ icon => setAttributes( { icon } ) }
 					help={ __( 'You can click on each icon in the Icon List block to change them individually.', i18n ) }
 				/>

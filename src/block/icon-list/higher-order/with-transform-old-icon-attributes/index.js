@@ -16,11 +16,8 @@ import { deprecatedIcon_2_9_1 } from '../../deprecated'
  *
  * @return {string} SVG String
  */
-const updateIconAttribute = ( icon = '', iconShape = 'default' ) => {
-	if ( ! icon ) {
-		return 'fa-check'
-	}
-	const updatedIcon = deprecatedIcon_2_9_1[ `${ icon }-${ iconShape || 'default' }` ]
+const updateIconAttribute = ( icon = '', iconShape = '' ) => {
+	const updatedIcon = deprecatedIcon_2_9_1[ `${ icon }-${ iconShape || 'default' }` ] || deprecatedIcon_2_9_1[ `check-${ iconShape || 'default' }` ]
 	return updatedIcon ? updatedIcon : icon
 }
 
@@ -31,7 +28,12 @@ const withTransformOldIconAttributes = createHigherOrderComponent(
 			iconShape,
 		} = props.attributes
 
-		props.attributes.icon = updateIconAttribute( icon, iconShape )
+		// Only transform old icon attributes if we can see old values:
+		// The icon is a name, and the iconShape may be present.
+		if ( ( icon && ! icon.match( /^</ ) ) || iconShape ) {
+			props.attributes.icon = updateIconAttribute( icon, iconShape )
+			props.attributes.iconShape = undefined
+		}
 
 		return <WrappedComponent { ...props } />
 	},

@@ -23,12 +23,12 @@ import save from './save'
  */
 import { __, sprintf } from '@wordpress/i18n'
 import { applyFilters, addFilter } from '@wordpress/hooks'
-import { createIconListIconAttributes } from './util'
+import { DEFAULT_CHECK_SVG, createIconListIconAttributes } from './util'
 
 export const schema = {
 	icon: {
 		type: 'string',
-		default: 'fa-check',
+		default: DEFAULT_CHECK_SVG,
 	},
 	iconShape: {
 		type: 'string',
@@ -38,7 +38,7 @@ export const schema = {
 	},
 	iconSize: {
 		type: 'number',
-		default: 20,
+		default: '',
 	},
 	columns: {
 		type: 'number',
@@ -64,7 +64,7 @@ export const schema = {
 	},
 	gap: {
 		type: 'number',
-		default: 16,
+		default: '',
 	},
 	listTextColor: {
 		type: 'string',
@@ -72,11 +72,11 @@ export const schema = {
 	},
 	opacity: {
 		type: 'number',
-		default: 1.0,
+		default: '',
 	},
 	rotation: {
 		type: 'number',
-		default: 0,
+		default: '',
 	},
 	...createTypographyAttributes( 'listText%s' ),
 	...createIconListIconAttributes(),
