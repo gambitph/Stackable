@@ -28,17 +28,17 @@ describe( 'extractColors', () => {
 			highlightColor: '#abcdef',
 		} )
 		expect( extractColors( 'background:linear-gradient( to bottom , transparent 50%, #abcdef 50%); color:#123456;' ) ).toEqual( {
-			colorType: 'half',
+			colorType: 'low',
 			textColor: '#123456',
 			highlightColor: '#abcdef',
 		} )
 		expect( extractColors( 'background:linear-gradient(to bottom,transparent 60%,#abcdef 60%);color:#123456;' ) ).toEqual( {
-			colorType: 'half',
+			colorType: 'low',
 			textColor: '#123456',
 			highlightColor: '#abcdef',
 		} )
 		expect( extractColors( 'color:#123456;background:linear-gradient(to bottom,transparent 60%,#abcdef 60%)' ) ).toEqual( {
-			colorType: 'half',
+			colorType: 'low',
 			textColor: '#123456',
 			highlightColor: '#abcdef',
 		} )
@@ -71,17 +71,17 @@ describe( 'extractColors', () => {
 			highlightColor: 'var(--highlight-color123)',
 		} )
 		expect( extractColors( 'background:linear-gradient( to bottom , transparent 50%, var(--highlight-color123) 50%); color:var(--text-color123);' ) ).toEqual( {
-			colorType: 'half',
+			colorType: 'low',
 			textColor: 'var(--text-color123)',
 			highlightColor: 'var(--highlight-color123)',
 		} )
 		expect( extractColors( 'background:linear-gradient(to bottom,transparent 60%,var(--highlight-color123) 60%);color:var(--text-color123);' ) ).toEqual( {
-			colorType: 'half',
+			colorType: 'low',
 			textColor: 'var(--text-color123)',
 			highlightColor: 'var(--highlight-color123)',
 		} )
 		expect( extractColors( 'color:var(--text-color123);background:linear-gradient(to bottom,transparent 60%,var(--highlight-color123) 60%)' ) ).toEqual( {
-			colorType: 'half',
+			colorType: 'low',
 			textColor: 'var(--text-color123)',
 			highlightColor: 'var(--highlight-color123)',
 		} )
@@ -111,17 +111,17 @@ describe( 'extractColors', () => {
 			highlightColor: 'var(--highlight-color123, #123456)',
 		} )
 		expect( extractColors( 'background:linear-gradient( to bottom , transparent 50%, var(--highlight-color123, #123456) 50%); color:var(--text-color123, #123456);' ) ).toEqual( {
-			colorType: 'half',
+			colorType: 'low',
 			textColor: 'var(--text-color123, #123456)',
 			highlightColor: 'var(--highlight-color123, #123456)',
 		} )
 		expect( extractColors( 'background:linear-gradient(to bottom,transparent 60%,var(--highlight-color123, #123456) 60%);color:var(--text-color123, #123456);' ) ).toEqual( {
-			colorType: 'half',
+			colorType: 'low',
 			textColor: 'var(--text-color123, #123456)',
 			highlightColor: 'var(--highlight-color123, #123456)',
 		} )
 		expect( extractColors( 'color:var(--text-color123, #123456);background:linear-gradient(to bottom,transparent 60%,var(--highlight-color123, #123456) 60%)' ) ).toEqual( {
-			colorType: 'half',
+			colorType: 'low',
 			textColor: 'var(--text-color123, #123456)',
 			highlightColor: 'var(--highlight-color123, #123456)',
 		} )
@@ -154,17 +154,17 @@ describe( 'extractColors', () => {
 			highlightColor: 'rgba(123, 123, 123, 0.50)',
 		} )
 		expect( extractColors( 'background:linear-gradient( to bottom , transparent 50%, rgba(123, 123, 123, 0.50) 50%); color:rgb(1, 2, 256);' ) ).toEqual( {
-			colorType: 'half',
+			colorType: 'low',
 			textColor: 'rgb(1, 2, 256)',
 			highlightColor: 'rgba(123, 123, 123, 0.50)',
 		} )
 		expect( extractColors( 'background:linear-gradient(to bottom,transparent 60%,rgba(123, 123, 123, 0.50) 60%);color:rgb(1, 2, 256);' ) ).toEqual( {
-			colorType: 'half',
+			colorType: 'low',
 			textColor: 'rgb(1, 2, 256)',
 			highlightColor: 'rgba(123, 123, 123, 0.50)',
 		} )
 		expect( extractColors( 'color:rgb(1, 2, 256);background:linear-gradient(to bottom,transparent 60%,rgba(123, 123, 123, 0.50) 60%)' ) ).toEqual( {
-			colorType: 'half',
+			colorType: 'low',
 			textColor: 'rgb(1, 2, 256)',
 			highlightColor: 'rgba(123, 123, 123, 0.50)',
 		} )
