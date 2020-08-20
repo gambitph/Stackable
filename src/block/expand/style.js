@@ -95,10 +95,10 @@ export const createStyles = props => {
 
 	// Spacing.
 	if ( showTitle ) {
-		styles.push( ...createResponsiveStyles( '.ugb-expand__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-expand__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
-	styles.push( ...createResponsiveStyles( '.ugb-expand__less-text, .ugb-expand__more-text', 'text%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
-	styles.push( ...createResponsiveStyles( '.ugb-expand__more-toggle-text, .ugb-expand__less-toggle-text', 'link%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+	styles.push( ...createResponsiveStyles( '.ugb-expand__less-text, .ugb-expand__more-text', 'text%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
+	styles.push( ...createResponsiveStyles( '.ugb-expand__more-toggle-text, .ugb-expand__less-toggle-text', 'link%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 
 	return deepmerge.all( styles )
 }

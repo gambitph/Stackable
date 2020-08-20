@@ -408,10 +408,14 @@ const addTopStyles = ( blockName, options = {} ) => ( styleObject, props ) => {
 			fill: topSeparatorColor !== '' ? topSeparatorColor : undefined,
 		},
 		[ `.ugb-top-separator .ugb-separator-wrapper` ]: {
-			height: topSeparatorHeight !== '' ? `${ topSeparatorHeight }px` : undefined,
 			transform: topSeparatorWidth !== '' ? `scaleX(${ topSeparatorWidth })` : undefined,
 		},
-		tablet: {
+		desktopOnly: {
+			[ `.ugb-top-separator .ugb-separator-wrapper` ]: {
+				height: topSeparatorHeight !== '' ? `${ topSeparatorHeight }px` : undefined,
+			},
+		},
+		tabletOnly: {
 			[ `.ugb-top-separator .ugb-separator-wrapper` ]: {
 				height: topSeparatorTabletHeight !== '' ? `${ topSeparatorTabletHeight }px` : undefined,
 			},
@@ -451,10 +455,14 @@ const addBottomStyles = ( blockName, options = {} ) => ( styleObject, props ) =>
 			fill: bottomSeparatorColor !== '' ? bottomSeparatorColor : undefined,
 		},
 		[ `.ugb-bottom-separator .ugb-separator-wrapper` ]: {
-			height: bottomSeparatorHeight !== '' ? `${ bottomSeparatorHeight }px` : undefined,
 			transform: bottomSeparatorWidth !== '' ? `scaleX(${ bottomSeparatorWidth })` : undefined,
 		},
-		tablet: {
+		desktopOnly: {
+			[ `.ugb-bottom-separator .ugb-separator-wrapper` ]: {
+				height: bottomSeparatorHeight !== '' ? `${ bottomSeparatorHeight }px` : undefined,
+			},
+		},
+		tabletOnly: {
 			[ `.ugb-bottom-separator .ugb-separator-wrapper` ]: {
 				height: bottomSeparatorTabletHeight !== '' ? `${ bottomSeparatorTabletHeight }px` : undefined,
 			},

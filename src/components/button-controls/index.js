@@ -105,6 +105,7 @@ const ButtonControls = props => {
 					// onChangeFontSize={ null }
 					onChangeLineHeight={ null }
 					showSecondFontSize={ false }
+					placeholder={ props.placeholder }
 				/>
 			) }
 
@@ -316,6 +317,7 @@ const ButtonControls = props => {
 					min={ 0.1 }
 					max={ 1 }
 					step={ 0.1 }
+					placeholder="0.8"
 					allowReset={ true }
 					className="ugb--help-tip-button-hover-opacity"
 				/>

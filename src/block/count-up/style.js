@@ -65,16 +65,16 @@ export const createStyles = props => {
 		showDescription = true,
 	} = props.attributes
 	if ( showIcon ) {
-		styles.push( ...createResponsiveStyles( '.ugb-countup__icon', 'icon%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-countup__icon', 'icon%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( showNumber ) {
-		styles.push( ...createResponsiveStyles( '.ugb-countup__counter', 'number%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-countup__counter', 'number%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( showTitle ) {
-		styles.push( ...createResponsiveStyles( '.ugb-countup__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-countup__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( showDescription ) {
-		styles.push( ...createResponsiveStyles( '.ugb-countup__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-countup__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 
 	// Icon

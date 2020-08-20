@@ -151,21 +151,20 @@ export const createStyles = props => {
 	}
 
 	// Content width.
-	// If the width is small, we need to use a 70% width in smaller screens to make the width be manageable if not smaller widths are used.
-	// We do the responsiveness here since doing it in style.scss is a headache with the !important rules.
-	const isSmallWidth = getValue( 'contentWidth' ) ? parseInt( getValue( 'contentWidth' ), 10 ) <= 50 : false
 	styles.push( {
-		[ `.${ uniqueClass }-content-wrapper.ugb-container__content-wrapper` ]: {
-			width: appendImportant( getValue( 'contentWidth', '%s%' ) ),
-		},
-		tablet: {
+		desktopOnly: {
 			[ `.${ uniqueClass }-content-wrapper.ugb-container__content-wrapper` ]: {
-				width: appendImportant( getValue( 'contentTabletWidth', '%s%', isSmallWidth ? '70%' : undefined ) ),
+				width: appendImportant( getValue( 'contentWidth', '%s%' ) ),
+			},
+		},
+		tabletOnly: {
+			[ `.${ uniqueClass }-content-wrapper.ugb-container__content-wrapper` ]: {
+				width: appendImportant( getValue( 'contentTabletWidth', '%s%' ) ),
 			},
 		},
 		mobile: {
 			[ `.${ uniqueClass }-content-wrapper.ugb-container__content-wrapper` ]: {
-				width: appendImportant( getValue( 'contentMobileWidth', '%s%', getValue( 'contentTabletWidth', '%s%', isSmallWidth ? '70%' : undefined ) ) ),
+				width: appendImportant( getValue( 'contentMobileWidth', '%s%' ) ),
 			},
 		},
 	} )

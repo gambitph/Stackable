@@ -9,6 +9,7 @@ import {
 	createImageStyleSet,
 	createResponsiveStyles,
 	createImageBackgroundStyleSet,
+	appendImportant,
 	__getValue,
 } from '~stackable/util'
 
@@ -17,6 +18,15 @@ import {
  */
 import { showOptions } from './util'
 import deepmerge from 'deepmerge'
+
+const computeGridFraction2 = ( percentage, rightColumn = true ) => {
+	const right = 2 * ( ( typeof percentage !== 'number' ? 50 : percentage ) / 100 )
+	const left = 2 - right
+	if ( rightColumn ) {
+		return `${ left.toFixed( 2 ) }fr ${ right.toFixed( 2 ) }fr`
+	}
+	return `${ right.toFixed( 2 ) }fr ${ left.toFixed( 2 ) }fr`
+}
 
 export const createStyles = props => {
 	const getValue = __getValue( props.attributes )
@@ -32,24 +42,16 @@ export const createStyles = props => {
 	const styles = []
 
 	// General.
-	const computeGridFraction2 = ( percentage, rightColumn = true ) => {
-		const right = 2 * ( ( typeof percentage !== 'number' ? 50 : percentage ) / 100 )
-		const left = 2 - right
-		if ( rightColumn ) {
-			return `${ left.toFixed( 2 ) }fr ${ right.toFixed( 2 ) }fr`
-		}
-		return `${ right.toFixed( 2 ) }fr ${ left.toFixed( 2 ) }fr`
-	}
 	if ( show.imageColumnWidth ) {
 		styles.push( {
-			desktopTablet: {
+			desktopOnly: {
 				'.ugb-feature__item': {
-					gridTemplateColumns: getValue( 'imageColumnWidth' ) ? computeGridFraction2( getValue( 'imageColumnWidth' ), ! invert ) + ' !important' : undefined,
+					gridTemplateColumns: getValue( 'imageColumnWidth' ) ? appendImportant( computeGridFraction2( getValue( 'imageColumnWidth' ), ! invert ) ) : undefined,
 				},
 			},
 			tabletOnly: {
 				'.ugb-feature__item': {
-					gridTemplateColumns: getValue( 'imageColumnTabletWidth' ) ? computeGridFraction2( getValue( 'imageColumnTabletWidth' ), ! invert ) + ' !important' : undefined,
+					gridTemplateColumns: getValue( 'imageColumnTabletWidth' ) ? appendImportant( computeGridFraction2( getValue( 'imageColumnTabletWidth' ), ! invert ) ) : undefined,
 				},
 			},
 			// No mobile here since the mobile design would stack vertically.
@@ -74,11 +76,10 @@ export const createStyles = props => {
 			} ) : {} ),
 		} )
 	}
-
 	// Image.
 	if ( ! show.featuredImageAsBackground ) {
 		styles.push( {
-			...( ! show.featuredImageAsBackground ? createImageStyleSet( 'image%s', 'ugb-img', props.attributes ) : {} ),
+			...( ! show.featuredImageAsBackground ? createImageStyleSet( 'image%s', 'ugb-img', props.attributes, { inherit: false } ) : {} ),
 		} )
 	} else {
 		styles.push( {
@@ -182,13 +183,13 @@ export const createStyles = props => {
 
 	// Spacing.
 	if ( show.titleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-feature__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-feature__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.descriptionSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-feature__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-feature__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.buttonSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'button%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'button%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 
 	return deepmerge.all( styles )

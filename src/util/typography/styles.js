@@ -6,7 +6,9 @@ import { appendImportant, appendImportantAll } from '../'
 /**
  * External dependencies
  */
-import { getFontFamily, __getValue } from '~stackable/util'
+import {
+	getFontFamily, __getValue, clampInheritedStyle,
+} from '~stackable/util'
 import { camelCase } from 'lodash'
 
 /**
@@ -21,14 +23,23 @@ const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 	const {
 		importantSize = false,
 		important = false,
+		inherit = true, // If false, desktop styles will only be applied to desktop, etc.
+		inheritTabletMax = 50, // If provided & inherit is true, clamp the inherited value in tablet to this.
+		inheritTabletMin,
+		inheritMobileMax = 50, // If provided & inherit is true, clamp the inherited value in mobile to this.
+		inheritMobileMin,
 	} = options
 
 	let styles = {}
 
+	const desktopFontSize = getValue( 'FontSize' )
+	const tabletFontSize = getValue( 'TabletFontSize' )
+	const mobileFontSize = getValue( 'MobileFontSize' )
+
 	if ( screen !== 'tablet' && screen !== 'mobile' ) { // Desktop.
 		styles = {
 			fontFamily: getValue( 'FontFamily' ) !== '' ? appendImportant( getFontFamily( getValue( 'FontFamily' ) ) ) : undefined,
-			fontSize: getValue( 'FontSize' ) !== '' ? appendImportant( `${ getValue( 'FontSize' ) }${ getValue( 'FontSizeUnit' ) || 'px' }`, importantSize ) : undefined,
+			fontSize: desktopFontSize !== '' ? appendImportant( `${ desktopFontSize }${ getValue( 'FontSizeUnit' ) || 'px' }`, importantSize ) : undefined,
 			fontWeight: getValue( 'FontWeight' ) !== '' ? getValue( 'FontWeight' ) : undefined,
 			textTransform: getValue( 'TextTransform' ) !== '' ? getValue( 'TextTransform' ) : undefined,
 			letterSpacing: getValue( 'LetterSpacing' ) !== '' ? `${ getValue( 'LetterSpacing' ) }px` : undefined,
@@ -36,13 +47,25 @@ const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 		}
 	} else if ( screen === 'tablet' ) { // Tablet.
 		styles = {
-			fontSize: getValue( 'TabletFontSize' ) !== '' ? appendImportant( `${ getValue( 'TabletFontSize' ) }${ getValue( 'TabletFontSizeUnit' ) || 'px' }`, importantSize ) : undefined,
 			lineHeight: getValue( 'TabletLineHeight' ) !== '' ? `${ getValue( 'TabletLineHeight' ) }${ getValue( 'TabletLineHeightUnit' ) || 'em' }` : undefined,
+		}
+		if ( inherit ) {
+			const clampTabletValue = clampInheritedStyle( desktopFontSize, { min: inheritTabletMin, max: inheritTabletMax } )
+
+			styles.fontSize = tabletFontSize !== '' ? appendImportant( `${ tabletFontSize }${ getValue( 'TabletFontSizeUnit' ) || 'px' }`, importantSize ) : appendImportant( clampTabletValue && `${ clampTabletValue }${ getValue( 'TabletFontSizeUnit' ) || 'px' }`, importantSize )
+		} else {
+			styles.fontSize = tabletFontSize !== '' ? appendImportant( `${ tabletFontSize }${ getValue( 'TabletFontSizeUnit' ) || 'px' }`, importantSize ) : undefined
 		}
 	} else { // Mobile.
 		styles = {
-			fontSize: getValue( 'MobileFontSize' ) !== '' ? appendImportant( `${ getValue( 'MobileFontSize' ) }${ getValue( 'MobileFontSizeUnit' ) || 'px' }`, importantSize ) : undefined,
 			lineHeight: getValue( 'MobileLineHeight' ) !== '' ? `${ getValue( 'MobileLineHeight' ) }${ getValue( 'MobileLineHeightUnit' ) || 'em' }` : undefined,
+		}
+		if ( inherit ) {
+			const clampMobileValue = clampInheritedStyle( desktopFontSize, { min: inheritMobileMin, max: inheritMobileMax } )
+
+			styles.fontSize = mobileFontSize !== '' ? appendImportant( `${ mobileFontSize }${ getValue( 'MobileFontSizeUnit' ) || 'px' }`, importantSize ) : appendImportant( clampMobileValue && `${ clampMobileValue }${ getValue( 'MobileFontSizeUnit' ) || 'px' }`, importantSize )
+		} else {
+			styles.fontSize = mobileFontSize !== '' ? appendImportant( `${ mobileFontSize }${ getValue( 'TabletFontSizeUnit' ) || 'px' }`, importantSize ) : undefined
 		}
 	}
 

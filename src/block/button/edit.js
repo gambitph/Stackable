@@ -144,6 +144,7 @@ addFilter( 'stackable.button.edit.inspector.style.before', 'stackable/button', (
 					attrNameTemplate="button1%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 			</PanelAdvancedSettings>
 			<PanelAdvancedSettings
@@ -158,6 +159,7 @@ addFilter( 'stackable.button.edit.inspector.style.before', 'stackable/button', (
 					attrNameTemplate="button2%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 			</PanelAdvancedSettings>
 			<PanelAdvancedSettings
@@ -172,6 +174,7 @@ addFilter( 'stackable.button.edit.inspector.style.before', 'stackable/button', (
 					attrNameTemplate="button3%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 			</PanelAdvancedSettings>
 		</Fragment>

@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { default as _isDarkColor } from 'is-dark-color'
-import { lowerFirst } from 'lodash'
+import { lowerFirst, clamp } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -101,6 +101,41 @@ export const appendImportant = ( rule, doImportant = true ) => {
 }
 
 /**
+ * Creates a getValue function that's used for getting attributes for style generation.
+ *
+ * @param {Object} attributes Block attribbutes
+ * @param {Function} attrNameCallback Optional function where the attrName will be run through for formatting
+ * @param {Object} defaultValue_ Value to return if the attribute value is blank. Defaults to undefined.
+ *
+ * @return {Function} getValue function
+ */
+export const __getValue = ( attributes, attrNameCallback = null, defaultValue_ = undefined ) => ( attrName, format = '', defaultValue = defaultValue_ ) => {
+	const attrNameFunc = attrNameCallback !== null ? attrNameCallback : ( s => lowerFirst( s ) )
+	const value = typeof attributes[ attrNameFunc( attrName ) ] === 'undefined' ? '' : attributes[ attrNameFunc( attrName ) ]
+	return value !== '' ? ( format ? sprintf( format.replace( /%$/, '%%' ), value ) : value ) : defaultValue
+}
+
+/**
+ * Clamps the desktop value based on given min and max
+ *
+ * @param {*} value
+ * @param {Object} options
+ */
+export const clampInheritedStyle = ( value, options = {} ) => {
+	const {
+		min = Number.NEGATIVE_INFINITY,
+		max = Number.POSITIVE_INFINITY,
+	} = options
+
+	if ( value !== '' ) {
+		const clampedValue = clamp( value, parseFloat( min ), parseFloat( max ) )
+		if ( ! isNaN( clampedValue ) ) {
+			return parseFloat( clampedValue ) !== parseFloat( value ) ? clampedValue : undefined
+		}
+	}
+}
+
+/**
  * Creates a set of responsive styles.
  *
  * @param {string} selector
@@ -108,18 +143,56 @@ export const appendImportant = ( rule, doImportant = true ) => {
  * @param {string} styleRule
  * @param {string} format
  * @param {Object} attributes
- * @param {boolean} important
+ * @param {Object} options
  *
  * @return {Array} Reponsive object styles.
  */
-export const createResponsiveStyles = ( selector, attrNameTemplate = '%s', styleRule = 'marginBottom', format = '%spx', attributes = {}, important = false ) => {
+export const createResponsiveStyles = ( selector, attrNameTemplate = '%s', styleRule = 'marginBottom', format = '%spx', attributes = {}, options = {} ) => {
+	// Backward support, we previously had an "important" boolean argument instead of an options object.
+	const _options = typeof options === 'boolean' ? { important: options } : options
+
+	const {
+		important = false,
+		inherit = true, // If false, desktop styles will only be applied to desktop, etc.
+		inheritTabletMax, // If provided & inherit is true, clamp the inherited value in tablet to this.
+		inheritTabletMin,
+		inheritMobileMax, // If provided & inherit is true, clamp the inherited value in mobile to this.
+		inheritMobileMin,
+	} = _options
 	const getValue = __getValue( attributes )
 
+	if ( inherit ) {
+		const desktopValue = getValue( sprintf( attrNameTemplate, '' ), format )
+		const tabletValue = getValue( sprintf( attrNameTemplate, 'Tablet' ), format )
+		const mobileValue = getValue( sprintf( attrNameTemplate, 'Mobile' ), format )
+
+		const clampTabletValue = clampInheritedStyle( getValue( sprintf( attrNameTemplate, '' ) ), { min: inheritTabletMin, max: inheritTabletMax } )
+		const clampMobileValue = clampInheritedStyle( getValue( sprintf( attrNameTemplate, '' ) ), { min: inheritMobileMin, max: inheritMobileMax } )
+
+		return [ {
+			[ selector ]: {
+				[ styleRule ]: appendImportant( desktopValue, important ),
+			},
+			tabletOnly: {
+				[ selector ]: {
+					[ styleRule ]: tabletValue ? appendImportant( tabletValue, important ) : appendImportant( clampTabletValue && sprintf( format, clampTabletValue ), important ),
+				},
+			},
+			mobile: {
+				[ selector ]: {
+					[ styleRule ]: mobileValue ? appendImportant( mobileValue, important ) : appendImportant( clampMobileValue && sprintf( format, clampMobileValue ), important ),
+				},
+			},
+		} ]
+	}
+
 	return [ {
-		[ selector ]: {
-			[ styleRule ]: appendImportant( getValue( sprintf( attrNameTemplate, '' ), format ), important ),
+		desktopOnly: {
+			[ selector ]: {
+				[ styleRule ]: appendImportant( getValue( sprintf( attrNameTemplate, '' ), format ), important ),
+			},
 		},
-		tablet: {
+		tabletOnly: {
 			[ selector ]: {
 				[ styleRule ]: appendImportant( getValue( sprintf( attrNameTemplate, 'Tablet' ), format ), important ),
 			},
@@ -184,27 +257,12 @@ export const createResponsiveMarginAlign = ( selector, attrNameTemplate = '%s', 
  * @param {string} styleRule
  * @param {string} format
  * @param {Object} attributes
+ * @param options
  * @param {boolean} important
- *
  * @return {Array} Reponsive object styles.
  */
-export const createResponsiveEditorStyles = ( selector, attrNameTemplate = '%s', styleRule = 'marginBottom', format = '%spx', attributes = {}, important = false ) => {
+export const createResponsiveEditorStyles = ( selector, attrNameTemplate = '%s', styleRule = 'marginBottom', format = '%spx', attributes = {}, options = {} ) => {
 	return [ {
-		editor: createResponsiveStyles( selector, attrNameTemplate, styleRule, format, attributes, important )[ 0 ],
+		editor: createResponsiveStyles( selector, attrNameTemplate, styleRule, format, attributes, options )[ 0 ],
 	} ]
-}
-
-/**
- * Creates a getValue function that's used for getting attributes for style generation.
- *
- * @param {Object} attributes Block attribbutes
- * @param {Function} attrNameCallback Optional function where the attrName will be run through for formatting
- * @param {Object} defaultValue_ Value to return if the attribute value is blank. Defaults to undefined.
- *
- * @return {Function} getValue function
- */
-export const __getValue = ( attributes, attrNameCallback = null, defaultValue_ = undefined ) => ( attrName, format = '', defaultValue = defaultValue_ ) => {
-	const attrNameFunc = attrNameCallback !== null ? attrNameCallback : ( s => lowerFirst( s ) )
-	const value = typeof attributes[ attrNameFunc( attrName ) ] === 'undefined' ? '' : attributes[ attrNameFunc( attrName ) ]
-	return value !== '' ? ( format ? sprintf( format.replace( /%$/, '%%' ), value ) : value ) : defaultValue
 }

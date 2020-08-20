@@ -252,6 +252,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="40"
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h3' }
@@ -290,6 +291,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					attrNameTemplate="price%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ priceColor }
@@ -327,6 +329,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 						onChangeFontFamily={ false }
 						onChangeTextTransform={ false }
 						onChangeLetterSpacing={ false }
+						placeholder="25"
 					/>
 					<ColorPaletteControl
 						value={ pricePrefixColor }
@@ -355,6 +358,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 						onChangeFontFamily={ false }
 						onChangeTextTransform={ false }
 						onChangeLetterSpacing={ false }
+						placeholder="32"
 					/>
 					<ColorPaletteControl
 						value={ priceSuffixColor }
@@ -380,6 +384,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					attrNameTemplate="subPrice%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="16"
 				/>
 				<ColorPaletteControl
 					value={ subPriceColor }
@@ -415,6 +420,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					onChangeUrl={ false }
 					onChangeNewTab={ false }
 					onChangeNoFollow={ false }
+					placeholder="21"
 				/>
 				<ControlSeparator />
 				<ResponsiveControl
@@ -445,6 +451,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					attrNameTemplate="description%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ descriptionColor }
@@ -474,6 +481,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 							label={ __( 'Image', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-pricing-image-spacing"
 						/>
@@ -489,6 +497,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 							label={ __( 'Title', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-pricing-title-spacing"
 						/>
@@ -504,6 +513,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 							label={ __( 'Price', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-pricing-price-spacing"
 						/>
@@ -519,6 +529,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 							label={ __( 'Sub Price', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-pricing-subprice-spacing"
 						/>
@@ -534,6 +545,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 							label={ __( 'Button', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="32"
 							allowReset={ true }
 							className="ugb--help-tip-pricing-button-spacing"
 						/>
@@ -549,6 +561,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 							label={ __( 'Description', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-pricing-description-spacing"
 						/>
@@ -572,7 +585,6 @@ const edit = props => {
 		imageShadow = '',
 		imageShape = '',
 		imageShapeStretch = false,
-		imageWidth = '',
 		design = 'basic',
 		shadow = '',
 		titleTag = '',
@@ -655,7 +667,6 @@ const edit = props => {
 										shape={ attributes[ `image${ i }Shape` ] || imageShape }
 										shapeStretch={ attributes[ `image${ i }ShapeStretch` ] || imageShapeStretch }
 										alt={ imageAlt }
-										width={ imageWidth }
 									/>
 								}
 							/>

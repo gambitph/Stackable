@@ -1,7 +1,9 @@
 /**
  * Internal dependencies
  */
-import { hexToRgba, prependCSSClass } from '../'
+import {
+	hexToRgba, prependCSSClass,
+} from '../'
 
 describe( 'hexToRgba', () => {
 	it( 'should work', () => {

@@ -77,8 +77,11 @@ export const createStyles = props => {
 	styles.push( {
 		...createImageBackgroundStyleSet( 'image%s', 'ugb-card__image', props.attributes ),
 	} )
+
 	if ( show.imageHeight ) {
-		styles.push( ...createResponsiveStyles( '.ugb-card__image', 'imageBackground%sHeight', 'height', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-card__image', 'imageBackground%sHeight', 'height', '%spx', props.attributes, {
+			inherit: true, inheritTabletMax: 300, inheritMobileMax: 300, important: true,
+		} ) )
 	}
 	if ( show.imageWidth ) {
 		styles.push( {
@@ -187,24 +190,24 @@ export const createStyles = props => {
 		styles.push( {
 			...createButtonStyleSet( 'button%s', 'ugb-button', props.attributes ),
 		} )
-		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'button%sAlign', 'textAlign', '%s', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'button%sAlign', 'textAlign', '%s', props.attributes, { important: true } ) )
 	}
 
 	// Spacing.
 	if ( show.imageSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-card__image', 'image%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-card__image', 'image%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.titleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-card__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-card__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.subtitleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-card__subtitle', 'subtitle%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-card__subtitle', 'subtitle%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.descriptionSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-card__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-card__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.buttonSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'button%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'button%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 
 	return deepmerge.all( styles )

@@ -190,6 +190,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 					attrNameTemplate="testimonial%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ testimonialColor }
@@ -245,6 +246,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 								image3Url: getImageUrlFromCache( image3Id, size || 'medium' ),
 							} )
 						} }
+						placeholder="75"
 					/>
 					<ControlSeparator />
 					<ResponsiveControl
@@ -277,6 +279,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 					attrNameTemplate="name%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="32"
 				/>
 				<HeadingButtonsControl
 					label={ sprintf( _x( '%s HTML Tag', 'component' ), __( 'Name', i18n ) ) }
@@ -316,6 +319,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 					attrNameTemplate="position%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="16"
 				/>
 				<ColorPaletteControl
 					value={ positionColor }
@@ -345,6 +349,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 							label={ __( 'Testimonial', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-description"
 						/>
@@ -360,6 +365,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 							label={ __( 'Image', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-image"
 						/>
@@ -375,6 +381,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 							label={ __( 'Name', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-name"
 						/>
@@ -390,6 +397,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 							label={ __( 'Position', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="0"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-name"
 						/>
@@ -416,7 +424,6 @@ const edit = props => {
 		imageShadow = '',
 		imageShape = 'circle',
 		imageShapeStretch = false,
-		imageWidth = '',
 		showTestimonial = true,
 		showImage = true,
 		showName = true,
@@ -509,7 +516,6 @@ const edit = props => {
 													shape={ attributes[ `image${ i }Shape` ] || imageShape }
 													shapeStretch={ attributes[ `image${ i }ShapeStretch` ] || imageShapeStretch }
 													alt={ imageAlt }
-													width={ imageWidth }
 												/>
 											}
 										/>

@@ -166,6 +166,7 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 					className="ugb--help-tip-typography-family"
+					placeholder="40"
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h3' }
@@ -204,6 +205,7 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 					attrNameTemplate="description%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ descriptionColor }
@@ -237,6 +239,7 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 					attrNameTemplate="button%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ControlSeparator />
 				<ResponsiveControl
@@ -265,6 +268,7 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 							label={ __( 'Title', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-title"
 						/>
@@ -280,6 +284,7 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 							label={ __( 'Description', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-description"
 						/>
@@ -295,6 +300,7 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 							label={ __( 'Button', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="0"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-button"
 						/>

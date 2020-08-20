@@ -123,15 +123,15 @@ export const createStyles = props => {
 	}
 
 	// Spacing.
-	styles.push( ...createResponsiveStyles( '.ugb-heading__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+	styles.push( ...createResponsiveStyles( '.ugb-heading__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	if ( show.subtitleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-heading__subtitle', 'subtitle%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-heading__subtitle', 'subtitle%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.topLineSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-heading__top-line', 'topLine%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-heading__top-line', 'topLine%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.bottomLineSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-heading__bottom-line', 'bottomLine%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-heading__bottom-line', 'bottomLine%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 
 	return deepmerge.all( styles )

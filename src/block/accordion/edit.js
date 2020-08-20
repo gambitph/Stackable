@@ -190,6 +190,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="32"
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h4' }
@@ -287,6 +288,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 							containerPaddingLeft: paddings.left,
 						} ) }
 						max={ 200 }
+						placeholder="18"
 						className="ugb--help-tip-accordion-padding"
 					/>
 				}

@@ -140,7 +140,7 @@ export const createStyles = props => {
 		} )
 	}
 	if ( show.titleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-accordion.ugb-accordion--open .ugb-accordion__heading', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-accordion.ugb-accordion--open .ugb-accordion__heading', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 
 	return deepmerge.all( styles )

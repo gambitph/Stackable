@@ -70,14 +70,16 @@ export const createStyles = props => {
 			'.ugb-notification__item': {
 				paddingRight: dismissibleIconSize && dismissibleIconSize > 40 ? '100px !important' : undefined,
 			},
-			'.ugb-notification__close-button': {
-				width: dismissibleIconSize ? `${ dismissibleIconSize }px` : undefined,
-				height: dismissibleIconSize ? `${ dismissibleIconSize }px` : undefined,
-			},
 			'.ugb-notification__close-button svg': {
 				fill: dismissibleIconColor ? `${ dismissibleIconColor } !important` : undefined,
 			},
-			tablet: {
+			desktopOnly: {
+				'.ugb-notification__close-button': {
+					width: dismissibleIconSize ? `${ dismissibleIconSize }px` : undefined,
+					height: dismissibleIconSize ? `${ dismissibleIconSize }px` : undefined,
+				},
+			},
+			tabletOnly: {
 				'.ugb-notification__close-button': {
 					width: dismissibleIconTabletSize ? `${ dismissibleIconTabletSize }px` : undefined,
 					height: dismissibleIconTabletSize ? `${ dismissibleIconTabletSize }px` : undefined,
@@ -281,16 +283,16 @@ export const createStyles = props => {
 
 	// Spacing.
 	if ( show.iconSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-notification__icon', 'icon%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-notification__icon', 'icon%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.titleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-notification__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-notification__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.descriptionSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-notification__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-notification__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.buttonSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'button%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-button-container', 'button%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 
 	// return deepmerge.all( applyFilters( 'stackable.notification.styles', styles, props, show ) )

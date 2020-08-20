@@ -309,6 +309,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="24"
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h5' }
@@ -347,6 +348,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 					attrNameTemplate="description%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ descriptionColor }
@@ -380,6 +382,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 					attrNameTemplate="button%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ControlSeparator />
 				<ResponsiveControl
@@ -409,6 +412,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 								label={ __( 'Icon', i18n ) }
 								min={ -50 }
 								max={ 100 }
+								placeholder="16"
 								allowReset={ true }
 								className="ugb--help-tip-spacing-icon"
 							/>
@@ -424,6 +428,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 								label={ __( 'Title', i18n ) }
 								min={ -50 }
 								max={ 100 }
+								placeholder="16"
 								allowReset={ true }
 								className="ugb--help-tip-spacing-title"
 							/>
@@ -439,6 +444,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 								label={ __( 'Description', i18n ) }
 								min={ -50 }
 								max={ 100 }
+								placeholder="16"
 								allowReset={ true }
 								className="ugb--help-tip-spacing-description"
 							/>
@@ -454,6 +460,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 								label={ __( 'Button', i18n ) }
 								min={ -50 }
 								max={ 100 }
+								placeholder="0"
 								allowReset={ true }
 								className="ugb--help-tip-spacing-button"
 							/>

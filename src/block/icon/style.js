@@ -87,13 +87,13 @@ export const createStyles = props => {
 	}
 
 	// Spacing.
-	styles.push( ...createResponsiveStyles( '.ugb-icon__icon', 'icon%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+	styles.push( ...createResponsiveStyles( '.ugb-icon__icon', 'icon%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	if ( show.titleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-icon__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-icon__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 
 	// Advanced Column Gap
-	styles.push( ...createResponsiveStyles( '.ugb-icon__content-wrapper', '%scolumnGap', 'columnGap', '%spx', props.attributes, true ) )
+	styles.push( ...createResponsiveStyles( '.ugb-icon__content-wrapper', '%scolumnGap', 'columnGap', '%spx', props.attributes, { important: true } ) )
 
 	return deepmerge.all( styles )
 }

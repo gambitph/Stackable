@@ -346,6 +346,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					attrNameTemplate="subtitle%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="17"
 				/>
 				<ColorPaletteControl
 					value={ subtitleColor }
@@ -381,6 +382,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="32"
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h4' }
@@ -419,6 +421,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					attrNameTemplate="description%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ descriptionColor }
@@ -463,6 +466,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 						label={ __( 'Size', i18n ) }
 						min="0"
 						max="50"
+						placeholder="30"
 						allowReset={ true }
 					/>
 				</ResponsiveControl>
@@ -489,6 +493,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 							label={ __( 'Subtitle', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="6"
 							allowReset={ true }
 							className="ugb--help-tip-image-box-subtitle-spacing"
 						/>
@@ -504,6 +509,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 							label={ __( 'Title', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-image-box-title-spacing"
 						/>
@@ -519,6 +525,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 							label={ __( 'Line', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="0"
 							allowReset={ true }
 							className="ugb--help-tip-image-box-line-spacing"
 						/>
@@ -534,6 +541,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 							label={ __( 'Description', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="0"
 							allowReset={ true }
 							className="ugb--help-tip-image-box-description-spacing"
 						/>

@@ -114,6 +114,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 								value={ width }
 								min="200"
 								max="2000"
+								placeholder="2000"
 								allowReset={ true }
 								onChange={ width => props.setAttributes( { width } ) }
 								className="ugb--help-tip-video-popup-width"
@@ -125,6 +126,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 								value={ tabletWidth }
 								min="200"
 								max="1000"
+								placeholder="1000"
 								allowReset={ true }
 								onChange={ tabletWidth => props.setAttributes( { tabletWidth } ) }
 								className="ugb--help-tip-video-popup-width"
@@ -136,6 +138,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 								value={ mobileWidth }
 								min="200"
 								max="700"
+								placeholder="700"
 								allowReset={ true }
 								onChange={ mobileWidth => props.setAttributes( { mobileWidth } ) }
 								className="ugb--help-tip-video-popup-width"

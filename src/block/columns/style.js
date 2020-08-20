@@ -125,8 +125,8 @@ export const createStyles = props => {
 	} )
 
 	// Column Vertical Align.
-	styles.push( ...createResponsiveStyles( `.${ uniqueClass }-content-wrapper > .ugb-column`, '%sColumnVerticalAlign', 'alignItems', '%s', props.attributes, true ) )
-	styles.push( ...createResponsiveStyles( `.${ uniqueClass }-content-wrapper > .ugb-column > .ugb-inner-block`, '%sColumnVerticalAlign', 'height', 'auto', props.attributes, true ) )
+	styles.push( ...createResponsiveStyles( `.${ uniqueClass }-content-wrapper > .ugb-column`, '%sColumnVerticalAlign', 'alignItems', '%s', props.attributes, { important: true } ) )
+	styles.push( ...createResponsiveStyles( `.${ uniqueClass }-content-wrapper > .ugb-column > .ugb-inner-block`, '%sColumnVerticalAlign', 'height', 'auto', props.attributes, { important: true } ) )
 
 	// Column Vertical Align editor only.
 	const {

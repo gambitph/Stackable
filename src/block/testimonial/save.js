@@ -34,7 +34,6 @@ const save = props => {
 		imageShadow = '',
 		imageShape = 'circle',
 		imageShapeStretch = false,
-		imageWidth = '',
 		showTestimonial = true,
 		showImage = true,
 		showName = true,
@@ -96,7 +95,6 @@ const save = props => {
 										<Image
 											imageId={ imageId }
 											src={ imageUrl }
-											width={ imageWidth }
 											alt={ imageAlt || ( showName && name ) }
 											shadow={ imageShadow }
 											shape={ attributes[ `image${ i }Shape` ] || imageShape }

@@ -7,7 +7,7 @@ import { appendImportant } from '../'
  * External dependencies
  */
 import {
-	__getValue,
+	__getValue, clampInheritedStyle,
 } from '~stackable/util'
 import { camelCase } from 'lodash'
 import deepmerge from 'deepmerge'
@@ -33,21 +33,24 @@ export const createIconStyleSet = ( attrNameTemplate = '%s', mainClassName = '',
 
 	const styles = []
 
+	const clampedTabletSize = clampInheritedStyle( getValue( 'Size' ), { max: 200 } )
+	const clampedMobileSize = clampInheritedStyle( getValue( 'Size' ), { max: 200 } )
+
 	styles.push( {
 		[ `.${ mainClassName } .ugb-icon-inner-svg, .${ mainClassName } .ugb-icon-inner-svg svg` ]: {
 			width: appendImportant( getValue( 'Size', '%spx' ) ),
 			height: appendImportant( getValue( 'Size', '%spx' ) ),
 		},
-		tablet: {
+		tabletOnly: {
 			[ `.${ mainClassName } .ugb-icon-inner-svg, .${ mainClassName } .ugb-icon-inner-svg svg` ]: {
-				width: appendImportant( getValue( 'TabletSize', '%spx' ) ),
-				height: appendImportant( getValue( 'TabletSize', '%spx' ) ),
+				width: appendImportant( getValue( 'TabletSize', '%spx' ) || ( clampedTabletSize && `${ clampedTabletSize }px` ) ),
+				height: appendImportant( getValue( 'TabletSize', '%spx' ) || ( clampedMobileSize && `${ clampedMobileSize }px` ) ),
 			},
 		},
 		mobile: {
 			[ `.${ mainClassName } .ugb-icon-inner-svg, .${ mainClassName } .ugb-icon-inner-svg svg` ]: {
-				width: appendImportant( getValue( 'MobileSize', '%spx' ) ),
-				height: appendImportant( getValue( 'MobileSize', '%spx' ) ),
+				width: appendImportant( getValue( 'MobileSize', '%spx' ) || ( clampedTabletSize && `${ clampedTabletSize }px` ) ),
+				height: appendImportant( getValue( 'MobileSize', '%spx' ) || ( clampedMobileSize && `${ clampedMobileSize }px` ) ),
 			},
 		},
 		[ `.${ mainClassName } .ugb-icon-inner-svg` ]: {

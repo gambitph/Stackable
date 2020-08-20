@@ -69,13 +69,13 @@ export const createStyles = props => {
 			},
 			tablet: {
 				'.ugb-testimonial__body': {
-					...createTypographyStyles( 'testimonial%s', 'tablet', props.attributes ),
+					...createTypographyStyles( 'testimonial%s', 'tablet', props.attributes, { important: true } ),
 					textAlign: appendImportant( getValue( 'testimonialTabletAlign' ) || getValue( 'mobileTabletAlign' ) ),
 				},
 			},
 			mobile: {
 				'.ugb-testimonial__body': {
-					...createTypographyStyles( 'testimonial%s', 'mobile', props.attributes ),
+					...createTypographyStyles( 'testimonial%s', 'mobile', props.attributes, { important: true } ),
 					textAlign: appendImportant( getValue( 'testimonialMobileAlign' ) || getValue( 'mobileContentAlign' ) ),
 				},
 			},
@@ -85,9 +85,24 @@ export const createStyles = props => {
 	// Image.
 	if ( ! show.imageAsBackground && showImage ) {
 		styles.push( {
-			...createImageStyleSet( 'image%s', 'ugb-img', props.attributes ),
+			...createImageStyleSet( 'image%s', 'ugb-img', props.attributes, { inherit: false } ),
 		} )
-		styles.push( ...createResponsiveStyles( '.ugb-testimonial__image', 'image%sWidth', 'width', '%spx', props.attributes, true ) )
+
+		styles.push( {
+			desktopOnly: {
+				[ `.ugb-testimonial__image` ]: {
+					width: appendImportant( getValue( 'imageWidth', '%spx' ) ),
+				},
+			}, tabletOnly: {
+				[ `.ugb-testimonial__image` ]: {
+					width: appendImportant( getValue( 'imageTabletWidth', '%spx' ) ),
+				},
+			}, mobile: {
+				[ `.ugb-testimonial__image` ]: {
+					width: appendImportant( getValue( 'imageMobileWidth', '%spx' ) ),
+				},
+			},
+		} )
 
 		styles.push( {
 			'.ugb-img, .ugb-testimonial__image': {
@@ -174,19 +189,19 @@ export const createStyles = props => {
 	// Spacing.
 	if ( show.testimonialSpacing ) {
 		if ( design !== 'bubble' ) {
-			styles.push( ...createResponsiveStyles( '.ugb-testimonial__body', 'testimonial%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+			styles.push( ...createResponsiveStyles( '.ugb-testimonial__body', 'testimonial%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 		} else {
-			styles.push( ...createResponsiveStyles( '.ugb-testimonial__body-wrapper', 'testimonial%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+			styles.push( ...createResponsiveStyles( '.ugb-testimonial__body-wrapper', 'testimonial%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 		}
 	}
 	if ( show.imageSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-testimonial__image', 'image%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-testimonial__image', 'image%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.nameSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-testimonial__name', 'name%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-testimonial__name', 'name%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.positionSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-testimonial__position', 'position%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-testimonial__position', 'position%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 
 	return deepmerge.all( styles )

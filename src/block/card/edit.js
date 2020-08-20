@@ -291,6 +291,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="32"
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h4' }
@@ -329,6 +330,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					attrNameTemplate="subtitle%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="18"
 				/>
 				<ColorPaletteControl
 					value={ subtitleColor }
@@ -363,6 +365,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					attrNameTemplate="description%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ descriptionColor }
@@ -399,6 +402,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					onChangeUrl={ false }
 					onChangeNewTab={ false }
 					onChangeNoFollow={ false }
+					placeholder="21"
 				/>
 				<ControlSeparator />
 				<ResponsiveControl
@@ -427,6 +431,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 							label={ __( 'Image', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="0"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-image"
 						/>
@@ -442,6 +447,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 							label={ __( 'Title', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="8"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-title"
 						/>
@@ -457,6 +463,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 							label={ __( 'Subtitle', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-title"
 						/>
@@ -472,6 +479,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 							label={ __( 'Description', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-description"
 						/>
@@ -487,6 +495,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 							label={ __( 'Button', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="0"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-button"
 						/>

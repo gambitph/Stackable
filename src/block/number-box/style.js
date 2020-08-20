@@ -70,34 +70,40 @@ export const createStyles = props => {
 			'.ugb-number-box__number': {
 				...createTypographyStyles( 'number%s', 'desktop', props.attributes, { important: true } ),
 				backgroundColor: show.numberBGColor ? appendImportant( getValue( 'numberBGColor' ) ) : undefined,
-				height: show.numberBGColor ? appendImportant( getValue( 'numberPadding', '%sem' ) ) : undefined,
-				width: show.numberBGColor ? appendImportant( getValue( 'numberPadding', '%sem' ) ) : undefined,
-				lineHeight: appendImportant( show.numberBGColor && numberLineHeight === '' ? getValue( 'numberPadding', '%sem' ) : getValue( 'numberLineHeight', `%s${ numberLineHeightUnit }` ) ),
-				marginLeft: numberAlign !== '' || contentAlign !== '' ? appendImportant( marginLeftAlign( numberAlign || contentAlign ) ) : undefined,
-				marginRight: numberAlign !== '' || contentAlign !== '' ? appendImportant( marginRightAlign( numberAlign || contentAlign ) ) : undefined,
-				textAlign: appendImportant( show.numberBGColor ? undefined : ( getValue( 'numberAlign' ) || getValue( 'contentAlign' ) ) ),
 				color: appendImportant( whiteIfDarkBlackIfLight( numberColor, show.numberBGColor && numberBGColor ) ),
 				opacity: getValue( 'numberOpacity' ),
 				// Special case for centering the text with letter-spacing.
 				textIndent: ( design === 'basic' || design === 'plain' ) ? getValue( 'numberLetterSpacing', '%spx' ) : undefined,
 			},
-			tablet: {
+			desktopOnly: {
 				'.ugb-number-box__number': {
+					height: show.numberBGColor ? appendImportant( getValue( 'numberPadding', '%sem' ) ) : undefined,
+					width: show.numberBGColor ? appendImportant( getValue( 'numberPadding', '%sem' ) ) : undefined,
+					lineHeight: appendImportant( show.numberBGColor && numberLineHeight === '' ? getValue( 'numberPadding', '%sem' ) : getValue( 'numberLineHeight', `%s${ numberLineHeightUnit }` ) ),
+					marginLeft: numberAlign !== '' || contentAlign !== '' ? appendImportant( marginLeftAlign( numberAlign || contentAlign ) ) : undefined,
+					marginRight: numberAlign !== '' || contentAlign !== '' ? appendImportant( marginRightAlign( numberAlign || contentAlign ) ) : undefined,
+					textAlign: appendImportant( show.numberBGColor ? undefined : ( getValue( 'numberAlign' ) || getValue( 'contentAlign' ) ) ),
+				},
+			},
+			tabletOnly: {
+				'.ugb-number-box__number': {
+					...createTypographyStyles( 'number%s', 'tablet', props.attributes, { important: true } ),
+					lineHeight: appendImportant( show.numberBGColor && numberTabletLineHeight === '' ? getValue( 'numberTabletPadding', '%sem' ) : getValue( 'numberTabletLineHeight', `%s${ numberTabletLineHeightUnit }` ) ),
+					marginLeft: numberTabletAlign !== '' || tabletContentAlign !== '' ? appendImportant( marginLeftAlign( numberTabletAlign ) ) : undefined,
+					marginRight: numberTabletAlign !== '' || tabletContentAlign !== '' ? appendImportant( marginRightAlign( numberTabletAlign ) ) : undefined,
+					textAlign: appendImportant( show.numberBGColor ? undefined : ( getValue( 'numberTabletAlign' ) || getValue( 'tabletContentAlign' ) ) ),
 					height: show.numberBGColor ? appendImportant( getValue( 'numberTabletPadding', '%sem' ) ) : undefined,
 					width: show.numberBGColor ? appendImportant( getValue( 'numberTabletPadding', '%sem' ) ) : undefined,
-					lineHeight: appendImportant( show.numberBGColor && numberTabletLineHeight === '' ? getValue( 'numberTabletPadding', '%sem' ) : getValue( 'numberTabletLineHeight', `%s${ numberTabletLineHeightUnit }` ) ),
-					marginLeft: numberTabletAlign !== '' || tabletContentAlign !== '' ? appendImportant( marginLeftAlign( numberTabletAlign || tabletContentAlign ) ) : undefined,
-					marginRight: numberTabletAlign !== '' || tabletContentAlign !== '' ? appendImportant( marginRightAlign( numberTabletAlign || tabletContentAlign ) ) : undefined,
-					textAlign: appendImportant( show.numberBGColor ? undefined : ( getValue( 'numberTabletAlign' ) || getValue( 'tabletContentAlign' ) ) ),
 				},
 			},
 			mobile: {
 				'.ugb-number-box__number': {
+					...createTypographyStyles( 'number%s', 'mobile', props.attributes, { important: true } ),
 					height: show.numberBGColor ? appendImportant( getValue( 'numberMobilePadding', '%sem' ) ) : undefined,
 					width: show.numberBGColor ? appendImportant( getValue( 'numberMobilePadding', '%sem' ) ) : undefined,
 					lineHeight: appendImportant( show.numberBGColor && numberMobileLineHeight === '' ? getValue( 'numberMobilePadding', '%sem' ) : getValue( 'numberMobileLineHeight', `%s${ numberMobileLineHeightUnit }` ) ),
-					marginLeft: numberMobileAlign !== '' || mobileContentAlign !== '' ? appendImportant( marginLeftAlign( numberMobileAlign || mobileContentAlign ) ) : undefined,
-					marginRight: numberMobileAlign !== '' || mobileContentAlign !== '' ? appendImportant( marginRightAlign( numberMobileAlign || mobileContentAlign ) ) : undefined,
+					marginLeft: numberMobileAlign !== '' || mobileContentAlign !== '' ? appendImportant( marginLeftAlign( numberMobileAlign ) ) : undefined,
+					marginRight: numberMobileAlign !== '' || mobileContentAlign !== '' ? appendImportant( marginRightAlign( numberMobileAlign ) ) : undefined,
 					textAlign: appendImportant( show.numberBGColor ? undefined : ( getValue( 'numberMobileAlign' ) || getValue( 'mobileContentAlign' ) ) ),
 				},
 			},
@@ -158,13 +164,13 @@ export const createStyles = props => {
 
 	// Number spacing.
 	if ( show.numberSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-number-box__number', 'number%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-number-box__number', 'number%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.titleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-number-box__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-number-box__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.descriptionSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-number-box__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-number-box__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 
 	return deepmerge.all( styles )

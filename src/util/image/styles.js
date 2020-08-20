@@ -34,26 +34,26 @@ const createImageStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAt
 	const getValue = __getValue( blockAttributes, getAttrName )
 
 	const shape = getValue( 'Shape' )
-	const getHeight = widthAttrName => {
-		return getValue( 'Square' ) && getValue( widthAttrName ) ? getValue( widthAttrName, '%spx' ) : 'auto'
+	const getHeight = ( widthAttrName, square ) => {
+		return getValue( square ) && getValue( widthAttrName ) ? getValue( widthAttrName, '%spx' ) : 'auto'
 	}
 
 	if ( screen !== 'tablet' && screen !== 'mobile' ) { // Desktop.
 		return {
 			borderRadius: ! shape ? getValue( 'BorderRadius', '%spx' ) : undefined,
 			width: getValue( 'Width', '%spx' ),
-			height: getValue( 'Width' ) ? appendImportant( getHeight( 'Width' ) ) : undefined,
+			height: getValue( 'Width' ) ? appendImportant( getHeight( 'Width', 'Square' ) ) : undefined,
 		}
 	} else if ( screen === 'tablet' ) { // Tablet.
 		return {
 			width: getValue( 'TabletWidth', '%spx' ),
-			height: getValue( 'TabletWidth' ) ? appendImportant( getHeight( 'TabletWidth' ) ) : undefined,
+			height: getValue( 'TabletWidth' ) ? appendImportant( getHeight( 'TabletWidth', 'TabletSquare' ) ) : undefined,
 		}
 	}
 	// Mobile.
 	return {
 		width: getValue( 'MobileWidth', '%spx' ),
-		height: getValue( 'MobileWidth' ) ? appendImportant( getHeight( 'MobileWidth' ) ) : undefined,
+		height: getValue( 'MobileWidth' ) ? appendImportant( getHeight( 'MobileWidth', 'MobileSquare' ) ) : undefined,
 	}
 }
 
@@ -84,12 +84,15 @@ export const createImageMask = ( attrNameTemplate = '%s', blockAttributes = {} )
 export default createImageStyles
 
 export const createImageStyleSet = ( attrNameTemplate = '%s', mainClassName = '', blockAttributes = {}, options = {} ) => {
-	return {
+	const {
+		inherit = true,
+	} = options
+
+	const style = {
 		[ `.${ mainClassName }` ]: {
-			...createImageStyles( attrNameTemplate, 'desktop', blockAttributes, options ),
 			...createImageMask( attrNameTemplate, blockAttributes, options ),
 		},
-		tablet: {
+		tabletOnly: {
 			[ `.${ mainClassName }` ]: {
 				...createImageStyles( attrNameTemplate, 'tablet', blockAttributes, options ),
 			},
@@ -100,4 +103,20 @@ export const createImageStyleSet = ( attrNameTemplate = '%s', mainClassName = ''
 			},
 		},
 	}
+
+	if ( inherit ) {
+		style[ `.${ mainClassName }` ] = {
+			...style[ `.${ mainClassName }` ],
+			...createImageStyles( attrNameTemplate, 'desktop', blockAttributes, options ),
+		}
+	} else {
+		style.desktopOnly = {
+			[ `.${ mainClassName }` ]: {
+				...createImageStyles( attrNameTemplate, 'desktop', blockAttributes, options ),
+			},
+		}
+	}
+
+	return style
 }
+

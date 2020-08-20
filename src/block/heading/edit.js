@@ -85,6 +85,7 @@ addFilter( 'stackable.heading.edit.inspector.style.before', 'stackable/heading',
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="48"
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h2' }
@@ -123,6 +124,7 @@ addFilter( 'stackable.heading.edit.inspector.style.before', 'stackable/heading',
 					attrNameTemplate="subtitle%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ subtitleColor }
@@ -256,6 +258,7 @@ addFilter( 'stackable.heading.edit.inspector.style.before', 'stackable/heading',
 							label={ __( 'Top Line', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing"
 						/>
@@ -270,6 +273,7 @@ addFilter( 'stackable.heading.edit.inspector.style.before', 'stackable/heading',
 						label={ __( 'Title', i18n ) }
 						min={ -50 }
 						max={ 100 }
+						placeholder="8"
 						allowReset={ true }
 						className="ugb--help-tip-spacing-title"
 					/>
@@ -284,6 +288,7 @@ addFilter( 'stackable.heading.edit.inspector.style.before', 'stackable/heading',
 							label={ __( 'Subtitle', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-title"
 						/>
@@ -299,6 +304,7 @@ addFilter( 'stackable.heading.edit.inspector.style.before', 'stackable/heading',
 							label={ __( 'Bottom Line', i18n ) }
 							min={ 0 }
 							max={ 100 }
+							placeholder="0"
 							allowReset={ true }
 							className="ugb--help-tip-spacing"
 						/>

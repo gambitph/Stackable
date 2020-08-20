@@ -7,6 +7,7 @@ import {
 	appendImportant,
 	createBackgroundStyles,
 	createBackgroundOverlayStyles,
+	clampInheritedStyle,
 	__getValue,
 } from '~stackable/util'
 import deepmerge from 'deepmerge'
@@ -31,19 +32,21 @@ export const createStyles = props => {
 		} )
 	}
 
+	const clampedImageHeight = clampInheritedStyle( getValue( 'columnHeight' ), { max: 300 } )
+
 	// Height.
 	styles.push( {
 		'.ugb-image-box__item': {
 			height: appendImportant( getValue( 'columnHeight', '%spx' ) ),
 		},
-		tablet: {
+		tabletOnly: {
 			'.ugb-image-box__item': {
-				height: appendImportant( getValue( 'tabletColumnHeight', '%spx' ) ),
+				height: appendImportant( getValue( 'tabletColumnHeight', '%spx' ) || ( clampedImageHeight && `${ clampedImageHeight }px` ) ),
 			},
 		},
 		mobile: {
 			'.ugb-image-box__item': {
-				height: appendImportant( getValue( 'mobileColumnHeight', '%spx' ) ),
+				height: appendImportant( getValue( 'mobileColumnHeight', '%spx' ) || ( clampedImageHeight && `${ clampedImageHeight }px` ) ),
 			},
 		},
 	} )
@@ -206,22 +209,22 @@ export const createStyles = props => {
 				fill: appendImportant( getValue( 'arrowColor' ) ),
 			},
 		} )
-		styles.push( ...createResponsiveStyles( '.ugb-image-box__arrow svg', 'arrow%sSize', 'width', '%spx', props.attributes, true ) )
-		styles.push( ...createResponsiveStyles( '.ugb-image-box__arrow', 'arrow%sAlign', 'textAlign', '%s', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-image-box__arrow svg', 'arrow%sSize', 'width', '%spx', props.attributes, { important: true, inherit: false } ) )
+		styles.push( ...createResponsiveStyles( '.ugb-image-box__arrow', 'arrow%sAlign', 'textAlign', '%s', props.attributes, { important: true } ) )
 	}
 
 	// Spacing.
 	if ( show.subtitleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-image-box__subtitle', 'subtitle%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-image-box__subtitle', 'subtitle%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.titleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-image-box__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-image-box__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.descriptionSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-image-box__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-image-box__description', 'description%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.arrowSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-image-box__arrow', 'arrow%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-image-box__arrow', 'arrow%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 
 	return deepmerge.all( styles )

@@ -10,17 +10,40 @@ import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
 
 const FontSizeControl = props => {
+	let passedPlaceholder = props.placeholder
+
+	const pxToEm = ( value = '', baseValue = 21 ) => {
+		if ( value === '' ) {
+			return 1
+		}
+
+		return Math.round( ( parseFloat( value ) / parseFloat( baseValue ) ) * 10 ) / 10
+	}
+
+	const emToPx = ( value = '', baseValue = 21 ) => {
+		if ( value === '' ) {
+			return 21
+		}
+
+		return Math.round( parseFloat( value ) * baseValue )
+	}
+
+	if ( typeof passedPlaceholder === 'string' ) {
+		// Add a converted EM unit whenever the user changes the unit.
+		passedPlaceholder = [ passedPlaceholder, pxToEm( passedPlaceholder ) ]
+	}
+
 	return (
 		<AdvancedRangeControl
-			initialPosition="21" // Some typical value of a font so that changing it will not jump the font size.
 			{ ...props }
+			placeholder={ passedPlaceholder }
 			onChangeUnit={ value => {
 				// Change font-size so as not to surprise the user.
-				if ( props.value ) {
+				if ( props.value !== '' ) {
 					if ( value === 'em' || value === 'rem' ) {
-						props.onChange( 1.0 )
+						props.onChange( pxToEm( props.value ) )
 					} else if ( value === 'px' ) {
-						props.onChange( 20 )
+						props.onChange( emToPx( props.value ) )
 					}
 				}
 
@@ -40,6 +63,7 @@ FontSizeControl.defaultProps = {
 	max: [ 100, 3 ],
 	step: [ 1, 0.05 ],
 	units: [ 'px', 'em' ],
+	placeholder: '',
 }
 
 export default FontSizeControl

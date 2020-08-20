@@ -214,6 +214,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 						max: design === 'basic' || design === 'plain' ? [ 150, 7 ] : [ 500, 15 ],
 						min: [ 40, 1 ],
 					} }
+					placeholder="63"
 				/>
 				{ show.numberStyle && (
 					<SelectControl
@@ -296,6 +297,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="32"
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h4' }
@@ -334,6 +336,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					attrNameTemplate="description%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ descriptionColor }
@@ -363,6 +366,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 							label={ __( 'Number', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-number"
 						/>
@@ -378,6 +382,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 							label={ __( 'Title', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-title"
 						/>
@@ -393,6 +398,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 							label={ __( 'Description', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-description"
 						/>

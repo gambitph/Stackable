@@ -114,12 +114,12 @@ export const createStyles = props => {
 
 	// Spacing.
 	if ( show.titleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-text__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-text__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 	if ( show.subtitleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-text__subtitle', 'subtitle%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+		styles.push( ...createResponsiveStyles( '.ugb-text__subtitle', 'subtitle%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
-	styles.push( ...createResponsiveStyles( '.ugb-text__text', 'text%sBottomMargin', 'marginBottom', '%spx', props.attributes, true ) )
+	styles.push( ...createResponsiveStyles( '.ugb-text__text', 'text%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 
 	return deepmerge.all( styles )
 }

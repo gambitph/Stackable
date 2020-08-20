@@ -125,6 +125,7 @@ const ImageControls = props => {
 						<AdvancedRangeControl
 							label={ __( 'Image Width', i18n ) }
 							value={ props.width }
+							placeholder={ props.placeholder }
 							max={ widthMax }
 							onChange={ width => {
 								// Reset back to default.
@@ -165,13 +166,39 @@ const ImageControls = props => {
 				</Fragment>
 			}
 
-			{ props.onChangeSquare && ( typeof props.width === 'number' || props.width ) &&
-				<ToggleControl
-					label={ __( 'Force square image', i18n ) }
-					checked={ props.square }
-					onChange={ props.onChangeSquare }
-					className="ugb--help-tip-image-square"
-				/>
+			{ props.onChangeSquare &&
+			<Fragment>
+				{ ( typeof props.width === 'number' || props.width ) &&
+					<WhenResponsiveScreen>
+						<ToggleControl
+							label={ __( 'Force square image', i18n ) }
+							checked={ props.square }
+							onChange={ props.onChangeSquare }
+							className="ugb--help-tip-image-square"
+						/>
+					</WhenResponsiveScreen>
+				}
+				{ ( typeof props.tabletWidth === 'number' || props.tabletWidth ) &&
+					<WhenResponsiveScreen screen="tablet">
+						<ToggleControl
+							label={ __( 'Force square image', i18n ) }
+							checked={ props.tabletSquare }
+							onChange={ props.onChangeTabletSquare }
+							className="ugb--help-tip-image-square"
+						/>
+					</WhenResponsiveScreen>
+				}
+				{ ( typeof props.mobileWidth === 'number' || props.mobileWidth ) &&
+					<WhenResponsiveScreen screen="mobile">
+						<ToggleControl
+							label={ __( 'Force square image', i18n ) }
+							checked={ props.mobileSquare }
+							onChange={ props.onChangeMobileSquare }
+							className="ugb--help-tip-image-square"
+						/>
+					</WhenResponsiveScreen>
+				}
+			</Fragment>
 			}
 
 			{ props.onChangeBorderRadius && props.shape === '' &&
@@ -260,7 +287,11 @@ ImageControls.defaultProps = {
 	onChangeTabletWidth: () => {},
 	onChangeMobileWidth: () => {},
 	square: '',
+	tabletSquare: '',
+	mobileSquare: '',
 	onChangeSquare: () => {},
+	onChangeTabletSquare: () => {},
+	onChangeMobileSquare: () => {},
 
 	borderRadius: '',
 	onChangeBorderRadius: () => {},

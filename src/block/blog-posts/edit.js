@@ -304,6 +304,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 							label={ __( 'Image Width', i18n ) }
 							min={ 100 }
 							max={ 600 }
+							placeholder="100"
 							allowReset={ true }
 							className="ugb--help-tip-image-width-crop"
 						/>
@@ -319,6 +320,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 							label={ __( 'Image Height', i18n ) }
 							min={ 100 }
 							max={ 1000 }
+							placeholder="500"
 							allowReset={ true }
 							className="ugb--help-tip-image-height-crop"
 						/>
@@ -344,6 +346,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					attrNameTemplate="category%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="11"
 				/>
 				<ToggleControl
 					label={ __( 'Highlighted', i18n ) }
@@ -390,6 +393,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="40"
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h3' }
@@ -443,6 +447,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					attrNameTemplate="excerpt%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ excerptColor }
@@ -496,6 +501,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					attrNameTemplate="meta%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="11"
 				/>
 				<ColorPaletteControl
 					value={ metaColor }
@@ -551,6 +557,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					attrNameTemplate="readmore%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ readmoreColor }
@@ -603,6 +610,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 							label={ __( 'Image', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-alignment-image"
 						/>
@@ -618,6 +626,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 							label={ __( 'Category', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-alignment-description"
 						/>
@@ -633,6 +642,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 							label={ __( 'Title', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-alignment-title"
 						/>
@@ -648,6 +658,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 							label={ __( 'Excerpt', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-alignment-description"
 						/>
@@ -663,6 +674,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 							label={ __( 'Meta', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-alignment-description"
 						/>
@@ -678,6 +690,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 							label={ __( 'Read More', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-alignment-button"
 						/>
@@ -693,6 +706,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 							label={ __( 'Load More', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-alignment-button"
 						/>

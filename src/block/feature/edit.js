@@ -267,6 +267,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="48"
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h2' }
@@ -305,6 +306,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 					attrNameTemplate="description%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ descriptionColor }
@@ -338,6 +340,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 					attrNameTemplate="button%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
+					placeholder="21"
 				/>
 				<ControlSeparator />
 				<ResponsiveControl
@@ -363,6 +366,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 							label={ __( 'Title', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-title"
 						/>
@@ -378,6 +382,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 							label={ __( 'Description', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="16"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-description"
 						/>
@@ -393,6 +398,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 							label={ __( 'Button', i18n ) }
 							min={ -50 }
 							max={ 100 }
+							placeholder="0"
 							allowReset={ true }
 							className="ugb--help-tip-spacing-button"
 						/>
@@ -426,7 +432,6 @@ const edit = props => {
 		imageSize = 'large',
 		imageShape = '',
 		imageShapeStretch = false,
-		imageWidth = '',
 		imageHeight = '',
 		imageShadow = '',
 
@@ -539,7 +544,6 @@ const edit = props => {
 										shape={ imageShape }
 										shapeStretch={ imageShapeStretch }
 										alt={ imageAlt }
-										width={ imageWidth }
 										height={ imageHeight }
 										shadow={ imageShadow }
 									/>

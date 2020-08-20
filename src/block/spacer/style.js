@@ -10,10 +10,12 @@ export const createStyles = props => {
 	const styles = []
 
 	styles.push( {
-		'.ugb-spacer': {
-			height: getValue( 'height', `%s${ getValue( 'heightUnit' ) || 'px' }` ),
+		desktopOnly: {
+			'.ugb-spacer': {
+				height: getValue( 'height', `%s${ getValue( 'heightUnit' ) || 'px' }` ),
+			},
 		},
-		tablet: {
+		tabletOnly: {
 			'.ugb-spacer': {
 				height: getValue( 'tabletHeight', `%s${ getValue( 'tabletHeightUnit' ) || 'px' }` ),
 			},
