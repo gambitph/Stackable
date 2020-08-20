@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { range, keys } from 'lodash'
+import { range } from 'lodash'
 
 /**
  * Wordpress dependencies
@@ -29,26 +29,22 @@ const createElementFromHTMLString = htmlString => {
  * @param {string} color
  * @return {string} base64 string
  */
-export const convertSVGStringToBase64 = ( svgTag = '', color = '#000' ) => {
+export const convertSVGStringToBase64 = ( svgTag = '', color = '' ) => {
 	if ( ! svgTag || ! svgTag.match( /svg/ ) ) {
 		return
 	}
 
 	const svgEl = createElementFromHTMLString( svgTag )
+	const svgChildElements = svgEl.querySelectorAll( '*' )
 
-	const pathElements = svgEl.querySelectorAll( 'path' )
-	const gElements = svgEl.querySelectorAll( 'g' )
-
-	if ( svgEl.querySelector( 'path' ) ) {
-		keys( pathElements ).forEach( key => {
-			pathElements[ key ].setAttribute( 'fill', color )
+	if ( color ) {
+		svgChildElements.forEach( child => {
+			if ( child && ! [ 'DEFS', 'TITLE', 'DESC' ].includes( child.tagName ) ) {
+				child.setAttribute( 'fill', color )
+				child.setAttribute( 'stroke', color )
+			}
 		} )
-	}
-
-	if ( svgEl.querySelector( 'g' ) ) {
-		keys( gElements ).forEach( key => {
-			gElements[ key ].setAttribute( 'fill', color )
-		} )
+		svgEl.setAttribute( 'style', `fill: ${ color } !important; color: ${ color } !important` )
 	}
 
 	/**

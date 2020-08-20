@@ -219,9 +219,11 @@ const Edit = props => {
 	const [ isOpenIconSearch, setIsOpenIconSearch ] = useState( false )
 	const [ iconSearchAnchor, setIconSearchAnchor ] = useState( null )
 	const [ selectedIconIndex, setSelectedIconIndex ] = useState( null )
+	const [ selectedEvent, setSelectedEvent ] = useState( null )
 
 	const iconClickHandler = event => {
 		// If li isn't clicked, close the icon search.
+		setSelectedEvent( event )
 		if ( event.target.tagName !== 'LI' ) {
 			return setIsOpenIconSearch( false )
 		}
@@ -243,6 +245,7 @@ const Edit = props => {
 			return setIsOpenIconSearch( true )
 		}
 		// Hide the icon picker.
+		event.target.parentElement.currentlyOpenIndex = undefined
 		setIconSearchAnchor( null )
 		return setIsOpenIconSearch( false )
 	}
@@ -261,6 +264,9 @@ const Edit = props => {
 	useEffect( () => {
 		if ( ! isSelected ) {
 			setIsOpenIconSearch( false )
+			if ( selectedEvent ) {
+				selectedEvent.target.parentElement.currentlyOpenIndex = undefined
+			}
 		}
 	}, [ isSelected ] )
 
@@ -280,7 +286,12 @@ const Edit = props => {
 					<IconSearchPopover
 						position="bottom left"
 						anchorRef={ iconSearchAnchor }
-						onClose={ () => setIsOpenIconSearch( false ) }
+						onClose={ () => {
+							if ( selectedEvent ) {
+								selectedEvent.target.parentElement.currentlyOpenIndex = undefined
+							}
+							setIsOpenIconSearch( false )
+						} }
 						onChange={ icon => {
 							setAttributes( { [ `icon${ selectedIconIndex }` ]: icon } )
 						} }
