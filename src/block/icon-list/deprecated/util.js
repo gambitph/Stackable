@@ -17,7 +17,7 @@ import {
 	StarCircleIcon,
 	StarIcon,
 	StarOutlineIcon,
-} from './deprecated-icons'
+} from './icons'
 
 /**
  * WordPress dependencies

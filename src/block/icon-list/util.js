@@ -1,9 +1,4 @@
 /**
- * Internal dependencies
- */
-import { deprecatedIcon_2_9_1 } from './deprecated'
-
-/**
  * External dependencies
  */
 import { range, keys } from 'lodash'
@@ -26,8 +21,6 @@ const createElementFromHTMLString = htmlString => {
 
 	return parentElement.firstChild
 }
-
-// This function is resource heavy. We have to memoize this to improve performance.
 
 /**
  * Convert SVG tag to base64 string
@@ -66,24 +59,6 @@ export const convertSVGStringToBase64 = ( svgTag = '', color = '#000' ) => {
 	const serializedString = new XMLSerializer().serializeToString( svgEl ) //eslint-disable-line no-undef
 
 	return window.btoa( serializedString )
-}
-
-// This function is resource heavy. We have to memoize this to improve performance.
-
-/**
- * Handles icon atttribute deprecation in 2.9.1
- *
- * @param {string} icon
- * @param {string} iconShape
- *
- * @return {string} SVG String
- */
-export const updateIconAttribute = ( icon = '', iconShape = 'default' ) => {
-	if ( ! icon ) {
-		return deprecatedIcon_2_9_1[ `check-default` ]
-	}
-	const updatedIcon = deprecatedIcon_2_9_1[ `${ icon }-${ iconShape || 'default' }` ]
-	return updatedIcon ? updatedIcon : icon
 }
 
 /**

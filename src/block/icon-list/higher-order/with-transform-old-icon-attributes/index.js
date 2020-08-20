@@ -6,7 +6,23 @@ import { createHigherOrderComponent } from '@wordpress/compose'
 /**
  * Internal dependencies
  */
-import { updateIconAttribute } from '../../util'
+import { deprecatedIcon_2_9_1 } from '../../deprecated'
+
+/**
+ * Handles icon atttribute deprecation in 2.9.1
+ *
+ * @param {string} icon
+ * @param {string} iconShape
+ *
+ * @return {string} SVG String
+ */
+const updateIconAttribute = ( icon = '', iconShape = 'default' ) => {
+	if ( ! icon ) {
+		return deprecatedIcon_2_9_1[ `check-default` ]
+	}
+	const updatedIcon = deprecatedIcon_2_9_1[ `${ icon }-${ iconShape || 'default' }` ]
+	return updatedIcon ? updatedIcon : icon
+}
 
 const withTransformOldIconAttributes = createHigherOrderComponent(
 	WrappedComponent => props => {

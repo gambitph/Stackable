@@ -4,21 +4,21 @@
 /**
  * Internal dependencies
  */
-import SVGArrowCircleIcon from './deprecated-images/arrow-circle-icon.svg'
-import SVGArrowIcon from './deprecated-images/arrow-icon.svg'
-import SVGArrowOutlineIcon from './deprecated-images/arrow-outline-icon.svg'
-import SVGCheckCircleIcon from './deprecated-images/check-circle-icon.svg'
-import SVGCheckIcon from './deprecated-images/check-icon.svg'
-import SVGCheckOutlineIcon from './deprecated-images/check-outline-icon.svg'
-import SVGCrossCircleIcon from './deprecated-images/cross-circle-icon.svg'
-import SVGCrossIcon from './deprecated-images/cross-icon.svg'
-import SVGCrossOutlineIcon from './deprecated-images/cross-outline-icon.svg'
-import SVGPlusCircleIcon from './deprecated-images/plus-circle-icon.svg'
-import SVGPlusIcon from './deprecated-images/plus-icon.svg'
-import SVGPlusOutlineIcon from './deprecated-images/plus-outline-icon.svg'
-import SVGStarCircleIcon from './deprecated-images/star-circle-icon.svg'
-import SVGStarIcon from './deprecated-images/star-icon.svg'
-import SVGStarOutlineIcon from './deprecated-images/star-outline-icon.svg'
+import SVGArrowCircleIcon from './images/arrow-circle-icon.svg'
+import SVGArrowIcon from './images/arrow-icon.svg'
+import SVGArrowOutlineIcon from './images/arrow-outline-icon.svg'
+import SVGCheckCircleIcon from './images/check-circle-icon.svg'
+import SVGCheckIcon from './images/check-icon.svg'
+import SVGCheckOutlineIcon from './images/check-outline-icon.svg'
+import SVGCrossCircleIcon from './images/cross-circle-icon.svg'
+import SVGCrossIcon from './images/cross-icon.svg'
+import SVGCrossOutlineIcon from './images/cross-outline-icon.svg'
+import SVGPlusCircleIcon from './images/plus-circle-icon.svg'
+import SVGPlusIcon from './images/plus-icon.svg'
+import SVGPlusOutlineIcon from './images/plus-outline-icon.svg'
+import SVGStarCircleIcon from './images/star-circle-icon.svg'
+import SVGStarIcon from './images/star-icon.svg'
+import SVGStarOutlineIcon from './images/star-outline-icon.svg'
 
 export const ArrowIcon = ( fill = undefined ) => <SVGArrowIcon style={ { fill } } />
 export const CheckIcon = ( fill = undefined ) => <SVGCheckIcon style={ { fill } } />
