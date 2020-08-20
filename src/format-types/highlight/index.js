@@ -58,7 +58,7 @@ const createApplyFormat = ( textValue, colorType, textColor, highlightColor ) =>
 		)
 	}
 
-	// Half Highlight.
+	// Low Highlight.
 	return applyFormat(
 		textValue,
 		{
@@ -79,7 +79,7 @@ export const extractColors = styleString => {
 
 	// Detect the current colors based on the styles applied on the text.
 	if ( styleString.match( /linear-gradient\(/ ) ) {
-		colorType = 'half'
+		colorType = 'low'
 		// Color is of the format: linear-gradient(to bottom, transparent 50%, #123456 50%)
 		const color = styleString.match( /linear-gradient\(\s*to bottom\s*,\s*transparent \d+%\s*,\s*(.*?)\s\d+%\)/ )
 		if ( color ) {
@@ -192,8 +192,8 @@ const HighlightButton = props => {
 									title: __( 'Highlight', i18n ),
 								},
 								{
-									value: 'half',
-									title: __( 'Half', i18n ),
+									value: 'low',
+									title: __( 'Low', i18n ),
 								},
 							] }
 							value={ colorType }
@@ -202,7 +202,7 @@ const HighlightButton = props => {
 								const defaultHighlightColor = highlightColor ? highlightColor :
 									colorType !== '' ? ( textColor || '#f34957' ) : highlightColor
 								const defaultTextColor = colorType === 'highlight' ? whiteIfDarkBlackIfLight( '', defaultHighlightColor ) :
-									colorType === 'half' ? '' :
+									colorType === 'low' ? '' :
 										highlightColor || textColor || ''
 
 								onChange( createApplyFormat( value, colorType, defaultTextColor, defaultHighlightColor ), { withoutHistory: true } )
