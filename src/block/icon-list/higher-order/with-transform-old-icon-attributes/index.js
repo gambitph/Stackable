@@ -18,7 +18,7 @@ import { deprecatedIcon_2_9_1 } from '../../deprecated'
  */
 const updateIconAttribute = ( icon = '', iconShape = 'default' ) => {
 	if ( ! icon ) {
-		return deprecatedIcon_2_9_1[ `check-default` ]
+		return 'fa-check'
 	}
 	const updatedIcon = deprecatedIcon_2_9_1[ `${ icon }-${ iconShape || 'default' }` ]
 	return updatedIcon ? updatedIcon : icon

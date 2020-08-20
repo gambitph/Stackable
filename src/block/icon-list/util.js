@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { range } from 'lodash'
+import { faGetSVGIcon } from '~stackable/util'
 
 /**
  * Wordpress dependencies
@@ -30,31 +31,40 @@ const createElementFromHTMLString = htmlString => {
  * @return {string} base64 string
  */
 export const convertSVGStringToBase64 = ( svgTag = '', color = '' ) => {
-	if ( ! svgTag || ! svgTag.match( /svg/ ) ) {
-		return
+	let svgTagString = svgTag
+
+	if ( ! svgTag ) {
+		svgTagString = faGetSVGIcon( 'fa', 'check' )
 	}
 
-	const svgEl = createElementFromHTMLString( svgTag )
-	const svgChildElements = svgEl.querySelectorAll( '*' )
-
-	if ( color ) {
-		svgChildElements.forEach( child => {
-			if ( child && ! [ 'DEFS', 'TITLE', 'DESC' ].includes( child.tagName ) ) {
-				child.setAttribute( 'fill', color )
-				child.setAttribute( 'stroke', color )
-			}
-		} )
-		svgEl.setAttribute( 'style', `fill: ${ color } !important; color: ${ color } !important` )
+	if ( typeof svgTag === 'string' && svgTag.split( '-' ).length === 2 ) {
+		const [ prefix, iconName ] = svgTag.split( '-' )
+		svgTagString = faGetSVGIcon( prefix, iconName )
 	}
 
-	/**
-	 * Use XMLSerializer to create XML string from DOM Element
-	 *
-	 * @see https://developer.mozilla.org/en-US/docs/Web/API/XMLSerializer
-	 */
-	const serializedString = new XMLSerializer().serializeToString( svgEl ) //eslint-disable-line no-undef
+	const svgEl = createElementFromHTMLString( svgTagString )
+	if ( svgEl ) {
+		const svgChildElements = svgEl.querySelectorAll( '*' )
 
-	return window.btoa( serializedString )
+		if ( color ) {
+			svgChildElements.forEach( child => {
+				if ( child && ! [ 'DEFS', 'TITLE', 'DESC' ].includes( child.tagName ) ) {
+					child.setAttribute( 'fill', color )
+					child.setAttribute( 'stroke', color )
+				}
+			} )
+			svgEl.setAttribute( 'style', `fill: ${ color } !important; color: ${ color } !important` )
+		}
+
+		/**
+		 * Use XMLSerializer to create XML string from DOM Element
+		 *
+		 * @see https://developer.mozilla.org/en-US/docs/Web/API/XMLSerializer
+		 */
+		const serializedString = new XMLSerializer().serializeToString( svgEl ) //eslint-disable-line no-undef
+
+		return window.btoa( serializedString )
+	}
 }
 
 /**
