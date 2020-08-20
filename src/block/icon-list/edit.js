@@ -47,6 +47,8 @@ import { compose } from '@wordpress/compose'
 import { select } from '@wordpress/data'
 import { RichText } from '@wordpress/block-editor'
 
+// We need to add a class depending on the block alignment to make the
+// individual icon picker work.
 const includeEditorContentAlignClassName = attributes => {
 	const {
 		contentAlign,
@@ -59,13 +61,13 @@ const includeEditorContentAlignClassName = attributes => {
 
 	if ( getPreviewDeviceType ) {
 		const previewDeviceType = getPreviewDeviceType()
-		if ( previewDeviceType === 'Desktop' ) {
-			addedAlignmentClass[ `ugb-icon-list__${ contentAlign || 'left' }-align` ] = contentAlign || 'left'
-		} else if ( previewDeviceType === 'Tablet' ) {
-			addedAlignmentClass[ `ugb-icon-list__${ tabletContentAlign || 'left' }-align` ] = tabletContentAlign || 'left'
-		} else {
-			addedAlignmentClass[ `ugb-icon-list__${ mobileContentAlign || 'left' }-align` ] = mobileContentAlign || 'left'
-		}
+		const alignment = (
+			previewDeviceType === 'Desktop' ? contentAlign :
+				previewDeviceType === 'Tablet' ? tabletContentAlign :
+					mobileContentAlign
+		) || 'left'
+
+		addedAlignmentClass[ `ugb-icon-list__${ alignment }-align` ] = alignment
 	}
 
 	return addedAlignmentClass
@@ -123,6 +125,7 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 					value={ icon }
 					onChange={ icon => setAttributes( { icon } ) }
 					onReset={ () => setAttributes( { icon: '<svg data-prefix="fas" data-icon="check" class="svg-inline--fa fa-check fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path></svg>' } ) }
+					help={ __( 'You can click on each icon in the Icon List block to change them individually.', i18n ) }
 				/>
 				<ControlSeparator />
 				<ColorPaletteControl
@@ -222,6 +225,8 @@ const Edit = props => {
 	const [ selectedIconIndex, setSelectedIconIndex ] = useState( null )
 	const [ selectedEvent, setSelectedEvent ] = useState( null )
 
+	// Click handler to detect whether an icon is clicked, and open the icon
+	// picker for that icon.
 	const iconClickHandler = event => {
 		// If li isn't clicked, close the icon search.
 		setSelectedEvent( event )
