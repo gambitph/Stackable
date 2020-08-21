@@ -202,6 +202,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Icon list block didn't follow tablet and mobile column counts.
 * Fixed: Blog Posts Block doesn't detect category and tag taxonomies for custom post types
 * Fixed: When in white label mode, the pricing tab still appears in the settings page
+* Fixed: Container blocks with small content widths have large paddings in mobile
 
 = 2.9.1 =
 * Fixed: Columns Block uneven columns
