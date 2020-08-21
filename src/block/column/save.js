@@ -35,7 +35,6 @@ const save = props => {
 		className,
 		`ugb-column--design-${ design }`,
 	], applyFilters( 'stackable.columns.mainclasses', {
-		// 'ugb-container--width-small': contentWidth <= 50,
 	}, props ) )
 
 	const itemClasses = classnames( [

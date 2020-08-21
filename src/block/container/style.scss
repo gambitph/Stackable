@@ -41,14 +41,6 @@
 		margin-bottom: 0;
 	}
 
-	&.ugb-container--width-small {
-		@media screen and (max-width: $break-small) {
-			.ugb-container__content-wrapper {
-				width: 70%;
-			}
-		}
-	}
-
 	// Disallow nested Stackable blocks to become full-width.
 	.ugb-main-block.alignfull,
 	.ugb--has-block-background {

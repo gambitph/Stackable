@@ -301,7 +301,6 @@ const edit = props => {
 	const {
 		design = 'basic',
 		shadow = '',
-		contentWidth = 100,
 		restrictContentWidth = false,
 		uniqueClass = '',
 	} = props.attributes
@@ -313,7 +312,6 @@ const edit = props => {
 		'ugb-container--v2',
 		`ugb-container--design-${ design }`,
 	], applyFilters( 'stackable.container.mainclasses', {
-		'ugb-container--width-small': contentWidth !== '' && contentWidth <= 50,
 	}, props ) )
 
 	const wrapperClasses = classnames( [
