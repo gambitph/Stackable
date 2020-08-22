@@ -3,6 +3,7 @@
  */
 import {
 	createTypographyStyles,
+	createResponsiveStyles,
 	whiteIfDark,
 	appendImportant,
 	__getValue,
@@ -21,7 +22,6 @@ export const createStyles = props => {
 	const {
 		icon,
 		iconColor,
-		iconSize,
 		showBlockBackground = '',
 		blockBackgroundBackgroundColor = '',
 		listTextColor = '',
@@ -62,14 +62,15 @@ export const createStyles = props => {
 		return iconStyle
 	}
 
+	// This is for the text-indend & padding-left trick (see style.scss for details).
+	styles.push( ...createResponsiveStyles( 'li', 'icon%sSize', '--icon-size', '%spx', props.attributes, { important: true } ) )
+	// Icon size.
+	styles.push( ...createResponsiveStyles( 'li::before', 'icon%sSize', 'width', '%spx', props.attributes, { important: true } ) )
+	styles.push( ...createResponsiveStyles( 'li::before', 'icon%sSize', 'height', '%spx', props.attributes, { important: true } ) )
+
+	// Icon styles.
 	styles.push( {
-		// This is for the text-indend & padding-left trick (see style.scss for details).
-		li: {
-			'--icon-size': iconSize ? `${ iconSize }px` : undefined,
-		},
 		'li::before': {
-			height: appendImportant( getValue( 'iconSize', '%spx' ) ),
-			width: appendImportant( getValue( 'iconSize', '%spx' ) ),
 			opacity: appendImportant( getValue( 'opacity' ) ),
 			transform: appendImportant( getValue( 'Rotation', 'rotate(%sdeg)' ) ),
 			backgroundImage: base64IconString ? `url('data:image/svg+xml;base64,${ base64IconString }')` : undefined,

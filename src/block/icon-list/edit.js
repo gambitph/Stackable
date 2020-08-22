@@ -80,7 +80,6 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 	const {
 		icon,
 		iconColor,
-		iconSize,
 		gap,
 		listTextColor = '',
 		displayAsGrid = false,
@@ -134,15 +133,19 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 					onChange={ iconColor => setAttributes( { iconColor } ) }
 				/>
 				<ControlSeparator />
-				<AdvancedRangeControl
-					label={ __( 'Icon Size', i18n ) }
-					value={ iconSize }
-					onChange={ iconSize => setAttributes( { iconSize } ) }
-					min={ 8 }
-					max={ 50 }
-					allowReset={ true }
-					placeholder="20"
-				/>
+				<ResponsiveControl
+					attrNameTemplate="icon%sSize"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AdvancedRangeControl
+						label={ __( 'Icon Size', i18n ) }
+						min={ 8 }
+						max={ 50 }
+						allowReset={ true }
+						placeholder="20"
+					/>
+				</ResponsiveControl>
 				<AdvancedRangeControl
 					label={ __( 'Icon Opacity', i18n ) }
 					value={ opacity }
@@ -235,8 +238,21 @@ const Edit = props => {
 			return setIsOpenIconSearch( false )
 		}
 
-		// Check if the click is on the icon.
-		if ( event.offsetX <= ( props.attributes.iconSize || 20 ) ) {
+		/**
+		 * Check if the click is on the icon.
+		 */
+
+		// Different icon sizes per device preview.
+		const { __experimentalGetPreviewDeviceType: getPreviewDeviceType } = select( 'core/edit-post' )
+		const previewDeviceType = getPreviewDeviceType()
+		const currentIconSize = (
+			previewDeviceType === 'Desktop' ? props.attributes.iconSize :
+				previewDeviceType === 'Tablet' ? ( props.attributes.iconTabletSize || props.attributes.iconSize ) :
+					( props.attributes.iconMobileSize || props.attributes.iconTabletSize || props.attributes.iconSize )
+		) || 20
+
+		// Check if the click location if it's estimated to be on the icon.
+		if ( event.offsetX <= currentIconSize ) {
 			// Get the selected li and show the icon picker on it.
 			const index = Array.from( event.target.parentElement.children ).indexOf( event.target ) + 1
 			const { currentlyOpenIndex } = event.target.parentElement
@@ -251,6 +267,7 @@ const Edit = props => {
 			setIconSearchAnchor( event.target )
 			return setIsOpenIconSearch( true )
 		}
+
 		// Hide the icon picker.
 		event.target.parentElement.currentlyOpenIndex = undefined
 		setIconSearchAnchor( null )

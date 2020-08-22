@@ -5,7 +5,7 @@
 /**
  * External dependencies
  */
-import { createTypographyAttributes } from '~stackable/util'
+import { createTypographyAttributes, createResponsiveAttributes } from '~stackable/util'
 import { IconListIcon } from '~stackable/icons'
 import { range } from 'lodash'
 import { disabledBlocks, i18n } from 'stackable'
@@ -36,10 +36,10 @@ export const schema = {
 	iconColor: {
 		type: 'string',
 	},
-	iconSize: {
+	...createResponsiveAttributes( 'icon%sSize', {
 		type: 'number',
 		default: '',
-	},
+	} ),
 	columns: {
 		type: 'number',
 		default: 2,

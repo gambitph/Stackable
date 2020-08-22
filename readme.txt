@@ -196,9 +196,10 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * New: You can now pick any icon for the Icon List block
 * New: You can now have different icons per line in the Icon List block
 * New: Additional icon options in the Icon List block
-* New: Added half-highlight text formatting style
-* New: Now compatible with Kadence Theme color palette
-* New: You can now select a text color for highlighted text styles
+* New: Icon size is now responsive in the Icon List block
+* New: Added low-highlight text formatting style
+* New: Now compatible with Kadence Theme global color palette
+* New: You can now select the text color for highlighted text styles
 * Fixed: Icon list block didn't follow tablet and mobile column counts.
 * Fixed: Blog Posts Block doesn't detect category and tag taxonomies for custom post types
 * Fixed: When in white label mode, the pricing tab still appears in the settings page
