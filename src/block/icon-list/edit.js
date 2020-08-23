@@ -140,7 +140,7 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 				>
 					<AdvancedRangeControl
 						label={ __( 'Icon Size', i18n ) }
-						min={ 8 }
+						min={ 0 }
 						max={ 50 }
 						allowReset={ true }
 						placeholder="20"

@@ -153,7 +153,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 				>
 					<AdvancedRangeControl
 						label={ __( 'Height', i18n ) }
-						min={ 100 }
+						min={ 0 }
 						max={ 1000 }
 						allowReset={ true }
 						placeholder="400"

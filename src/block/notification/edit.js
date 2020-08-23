@@ -226,7 +226,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 				>
 					<AdvancedRangeControl
 						label={ __( 'Icon Size', i18n ) }
-						min={ 5 }
+						min={ 0 }
 						max={ 50 }
 						allowReset={ true }
 						placeholder="16"

@@ -226,7 +226,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 			>
 				<AdvancedRangeControl
 					label={ __( 'Size', i18n ) }
-					min={ 10 }
+					min={ 0 }
 					max={ 100 }
 					allowReset={ true }
 					value={ arrowSize }

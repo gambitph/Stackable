@@ -273,7 +273,7 @@ const ButtonControls = props => {
 					label={ __( 'Opacity', i18n ) }
 					value={ props.opacity }
 					onChange={ props.onChangeOpacity }
-					min={ 0.1 }
+					min={ 0 }
 					max={ 1 }
 					step={ 0.1 }
 					allowReset={ true }
@@ -314,7 +314,7 @@ const ButtonControls = props => {
 					label={ __( 'Hover Opacity', i18n ) }
 					value={ props.hoverOpacity }
 					onChange={ props.onChangeHoverOpacity }
-					min={ 0.1 }
+					min={ 0 }
 					max={ 1 }
 					step={ 0.1 }
 					placeholder="0.8"

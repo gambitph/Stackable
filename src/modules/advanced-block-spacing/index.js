@@ -122,7 +122,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 						<AdvancedRangeControl
 							label={ __( 'Min. Block Height', i18n ) }
 							units={ [ 'px', 'vh' ] }
-							min={ [ 100, 10 ] }
+							min={ [ 0, 0 ] }
 							max={ [ 1000, 100 ] }
 							step={ [ 1, 1 ] }
 							allowReset={ true }
@@ -130,7 +130,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ blockHeightUnit }
 							onChange={ blockHeight => setAttributes( { blockHeight } ) }
 							onChangeUnit={ blockHeightUnit => setAttributes( { blockHeightUnit } ) }
-							placeholder="100"
+							placeholder="0"
 							className="ugb--help-tip-advanced-block-height"
 						/>
 					</WhenResponsiveScreen>
@@ -138,7 +138,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 						<AdvancedRangeControl
 							label={ __( 'Min. Block Height', i18n ) }
 							units={ [ 'px', 'vh' ] }
-							min={ [ 100, 10 ] }
+							min={ [ 0, 0 ] }
 							max={ [ 1000, 100 ] }
 							step={ [ 1, 1 ] }
 							allowReset={ true }
@@ -153,7 +153,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 						<AdvancedRangeControl
 							label={ __( 'Min. Block Height', i18n ) }
 							units={ [ 'px', 'vh' ] }
-							min={ [ 100, 10 ] }
+							min={ [ 0, 0 ] }
 							max={ [ 1000, 100 ] }
 							step={ [ 1, 1 ] }
 							allowReset={ true }
@@ -209,15 +209,15 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 						<AdvancedRangeControl
 							label={ __( 'Max. Content Width', i18n ) }
 							units={ [ 'px', '%' ] }
-							min={ [ 100, 10 ] }
-							max={ [ 2000, 100 ] }
+							min={ [ 0, 0 ] }
+							max={ [ 2500, 100 ] }
 							step={ [ 1, 1 ] }
 							allowReset={ true }
 							value={ blockWidth }
 							unit={ blockWidthUnit }
 							onChange={ blockWidth => setAttributes( { blockWidth } ) }
 							onChangeUnit={ blockWidthUnit => setAttributes( { blockWidthUnit } ) }
-							placeholder="2000"
+							placeholder="2500"
 							className="ugb--help-tip-advanced-block-content-width"
 						/>
 					</WhenResponsiveScreen>
@@ -225,7 +225,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 						<AdvancedRangeControl
 							label={ __( 'Max. Content Width', i18n ) }
 							units={ [ 'px', '%' ] }
-							min={ [ 100, 10 ] }
+							min={ [ 0, 0 ] }
 							max={ [ 1500, 100 ] }
 							step={ [ 1, 1 ] }
 							allowReset={ true }
@@ -240,7 +240,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 						<AdvancedRangeControl
 							label={ __( 'Max. Content Width', i18n ) }
 							units={ [ 'px', '%' ] }
-							min={ [ 100, 10 ] }
+							min={ [ 0, 0 ] }
 							max={ [ 1000, 100 ] }
 							step={ [ 1, 1 ] }
 							allowReset={ true }
@@ -408,7 +408,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							enableRight={ options.enablePaddingRight }
 							enableBottom={ options.enablePaddingBottom }
 							enableLeft={ options.enablePaddingLeft }
-							placeholder="10"
+							placeholder="0"
 							className="ugb--help-tip-advanced-block-paddings"
 						/>
 					</WhenResponsiveScreen>

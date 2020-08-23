@@ -176,7 +176,7 @@ addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/contain
 				>
 					<AdvancedRangeControl
 						label={ __( 'Content Width', i18n ) + ' (%)' }
-						min={ 10 }
+						min={ 0 }
 						max={ 100 }
 						allowReset={ true }
 						placeholder="100"

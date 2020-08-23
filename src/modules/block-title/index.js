@@ -111,7 +111,7 @@ const addInspectorPanel = ( output, props ) => {
 					<AdvancedRangeControl
 						label={ __( 'Max Width', i18n ) }
 						units={ [ 'px', '%' ] }
-						min={ [ 100, 10 ] }
+						min={ [ 0, 0 ] }
 						max={ [ 1000, 100 ] }
 						step={ [ 1, 1 ] }
 						placeholder={ [ 1000, 100 ] }
@@ -126,7 +126,7 @@ const addInspectorPanel = ( output, props ) => {
 					<AdvancedRangeControl
 						label={ __( 'Max Width', i18n ) }
 						units={ [ 'px', '%' ] }
-						min={ [ 100, 10 ] }
+						min={ [ 0, 0 ] }
 						max={ [ 1000, 100 ] }
 						step={ [ 1, 1 ] }
 						placeholder={ [ 1000, 100 ] }
@@ -141,7 +141,7 @@ const addInspectorPanel = ( output, props ) => {
 					<AdvancedRangeControl
 						label={ __( 'Max Width', i18n ) }
 						units={ [ 'px', '%' ] }
-						min={ [ 100, 10 ] }
+						min={ [ 0, 0 ] }
 						max={ [ 1000, 100 ] }
 						step={ [ 1, 1 ] }
 						placeholder={ [ 1000, 100 ] }
@@ -206,7 +206,7 @@ const addInspectorPanel = ( output, props ) => {
 					<AdvancedRangeControl
 						label={ __( 'Max Width', i18n ) }
 						units={ [ 'px', '%' ] }
-						min={ [ 100, 10 ] }
+						min={ [ 0, 0 ] }
 						max={ [ 1000, 100 ] }
 						step={ [ 1, 1 ] }
 						placeholder={ [ 1000, 100 ] }
@@ -221,7 +221,7 @@ const addInspectorPanel = ( output, props ) => {
 					<AdvancedRangeControl
 						label={ __( 'Max Width', i18n ) }
 						units={ [ 'px', '%' ] }
-						min={ [ 100, 10 ] }
+						min={ [ 0, 0 ] }
 						max={ [ 1000, 100 ] }
 						step={ [ 1, 1 ] }
 						placeholder={ [ 1000, 100 ] }
@@ -236,7 +236,7 @@ const addInspectorPanel = ( output, props ) => {
 					<AdvancedRangeControl
 						label={ __( 'Max Width', i18n ) }
 						units={ [ 'px', '%' ] }
-						min={ [ 100, 10 ] }
+						min={ [ 0, 0 ] }
 						max={ [ 1000, 100 ] }
 						step={ [ 1, 1 ] }
 						placeholder={ [ 1000, 100 ] }

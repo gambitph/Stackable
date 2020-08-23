@@ -302,7 +302,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					>
 						<AdvancedRangeControl
 							label={ __( 'Image Width', i18n ) }
-							min={ 100 }
+							min={ 0 }
 							max={ 600 }
 							placeholder="100"
 							allowReset={ true }
@@ -318,7 +318,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					>
 						<AdvancedRangeControl
 							label={ __( 'Image Height', i18n ) }
-							min={ 100 }
+							min={ 0 }
 							max={ 1000 }
 							placeholder="500"
 							allowReset={ true }

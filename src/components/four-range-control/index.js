@@ -219,6 +219,7 @@ class FourRangeControl extends Component {
 									onChange={ this.onChangeTop }
 									allowReset={ true }
 									{ ...propsToPass }
+									placeholder={ this.props.placeholderTop || propsToPass.placeholder }
 								/>
 							</div>
 						}
@@ -233,6 +234,7 @@ class FourRangeControl extends Component {
 									onChange={ this.onChangeRight }
 									allowReset={ true }
 									{ ...propsToPass }
+									placeholder={ this.props.placeholderRight || propsToPass.placeholder }
 								/>
 							</div>
 						}
@@ -247,6 +249,7 @@ class FourRangeControl extends Component {
 									onChange={ this.onChangeBottom }
 									allowReset={ true }
 									{ ...propsToPass }
+									placeholder={ this.props.placeholderBottom || propsToPass.placeholder }
 								/>
 							</div>
 						}
@@ -261,6 +264,7 @@ class FourRangeControl extends Component {
 									onChange={ this.onChangeLeft }
 									allowReset={ true }
 									{ ...propsToPass }
+									placeholder={ this.props.placeholderLeft || propsToPass.placeholder }
 								/>
 							</div>
 						}
@@ -290,6 +294,10 @@ FourRangeControl.defaultProps = {
 	max: 50,
 	step: 1,
 	placeholder: '',
+	placeholderTop: '',
+	placeholderRight: '',
+	placeholderBottom: '',
+	placeholderLeft: '',
 	initialPosition: '',
 }
 

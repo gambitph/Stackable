@@ -260,7 +260,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 				) }
 				<AdvancedRangeControl
 					label={ __( 'Opacity', i18n ) }
-					min={ 0.1 }
+					min={ 0 }
 					max={ 1.0 }
 					step={ 0.1 }
 					value={ numberOpacity }

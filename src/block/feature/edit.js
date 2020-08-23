@@ -140,7 +140,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 					>
 						<AdvancedRangeControl
 							label={ __( 'Container Width', i18n ) }
-							min={ 300 }
+							min={ 0 }
 							max={ 1000 }
 							allowReset={ true }
 							className="ugb--help-tip-feature-container-width"
@@ -240,7 +240,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 						>
 							<AdvancedRangeControl
 								label={ __( 'Image Height', i18n ) }
-								min={ 400 }
+								min={ 0 }
 								max={ 1000 }
 								allowReset={ true }
 								className="ugb--help-tip-image-height-crop"

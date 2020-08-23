@@ -212,7 +212,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					>
 						<AdvancedRangeControl
 							label={ __( 'Image Height', i18n ) }
-							min={ 50 }
+							min={ 0 }
 							max={ 1000 }
 							allowReset={ true }
 							placeholder="300"
@@ -226,7 +226,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 							<AdvancedRangeControl
 								label={ __( 'Image Width', i18n ) }
 								units={ [ 'px', '%' ] }
-								min={ [ 50, 10 ] }
+								min={ [ 0, 0 ] }
 								max={ [ 1000, 90 ] }
 								step={ [ 1, 1 ] }
 								allowReset={ true }
@@ -242,7 +242,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 							<AdvancedRangeControl
 								label={ __( 'Image Width', i18n ) }
 								units={ [ 'px', '%' ] }
-								min={ [ 50, 10 ] }
+								min={ [ 0, 0 ] }
 								max={ [ 1000, 90 ] }
 								step={ [ 1, 1 ] }
 								allowReset={ true }
@@ -258,7 +258,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 							<AdvancedRangeControl
 								label={ __( 'Image Width', i18n ) }
 								units={ [ 'px', '%' ] }
-								min={ [ 50, 10 ] }
+								min={ [ 0, 0 ] }
 								max={ [ 1000, 90 ] }
 								step={ [ 1, 1 ] }
 								allowReset={ true }

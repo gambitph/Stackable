@@ -256,7 +256,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 							>
 								<AdvancedRangeControl
 									label={ __( 'Image Height', i18n ) }
-									min={ 150 }
+									min={ 0 }
 									max={ 800 }
 									allowReset={ true }
 									className="ugb--help-tip-image-height-crop"
@@ -271,7 +271,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 							>
 								<AdvancedRangeControl
 									label={ __( 'Image Width', i18n ) + ' (%)' }
-									min={ 10 }
+									min={ 0 }
 									max={ 90 }
 									allowReset={ true }
 									placeholder="50"
