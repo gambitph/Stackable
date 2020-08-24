@@ -125,6 +125,7 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com?utm_sour
 
 ### News Article Updates
 
+- [v2.10 Better Responsive Controls, Better List Block Icons and Low-Highlight Effect](https://wpstackable.com/blog/better-responsive-controls-better-list-block-icons-low-highlight-effect/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.9 Introducing: Live Responsive Editing](https://wpstackable.com/blog/introducing-live-responsive-editing/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.8 Introducing: Role Manager for Gutenberg](https://wpstackable.com/blog/introducing-role-manager-for-gutenberg/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.7 New Icon Block, Amazing Icons and Font Awesome Pro](https://wpstackable.com/blog/new-icon-block-amazing-icons-and-font-awesome-pro/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -192,6 +193,8 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 2.10.0 =
+[Better Responsive Controls, Better List Block Icons and Low-Highlight Effect](https://wpstackable.com/blog/better-responsive-controls-better-list-block-icons-low-highlight-effect/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
 * New: Better responsiveness controls: some tablet and mobile options do not automatically inherit desktop styles
 * New: You can now pick any icon for the Icon List block
 * New: You can now have different icons per line in the Icon List block
