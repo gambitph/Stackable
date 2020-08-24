@@ -2510,7 +2510,10 @@
     "family": "Cinzel",
     "variants": [
       "regular",
+      "500",
+      "600",
       "700",
+      "800",
       "900"
     ],
     "subsets": [
@@ -7279,17 +7282,23 @@
     "family": "Merriweather Sans",
     "variants": [
       "300",
-      "300italic",
       "regular",
-      "italic",
+      "500",
+      "600",
       "700",
-      "700italic",
       "800",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
       "800italic"
     ],
     "subsets": [
+      "cyrillic-ext",
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -10102,18 +10111,23 @@
     "family": "Rubik",
     "variants": [
       "300",
-      "300italic",
       "regular",
-      "italic",
       "500",
-      "500italic",
+      "600",
       "700",
-      "700italic",
+      "800",
       "900",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
       "900italic"
     ],
     "subsets": [
       "cyrillic",
+      "cyrillic-ext",
       "hebrew",
       "latin",
       "latin-ext"
