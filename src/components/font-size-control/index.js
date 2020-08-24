@@ -60,7 +60,7 @@ FontSizeControl.defaultProps = {
 	unit: 'px',
 	onChangeUnit: () => {},
 	min: [ 0, 0 ],
-	max: [ 100, 3 ],
+	max: [ 150, 7 ],
 	step: [ 1, 0.05 ],
 	units: [ 'px', 'em' ],
 	placeholder: '',

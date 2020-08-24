@@ -212,9 +212,9 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					blockAttributes={ props.attributes }
 					fontSizeProps={ {
 						max: design === 'basic' || design === 'plain' ? [ 150, 7 ] : [ 500, 15 ],
-						min: [ 40, 1 ],
+						min: [ 0, 1 ],
 					} }
-					placeholder="63"
+					placeholder={ size => size * 3 } // 3em.
 				/>
 				{ show.numberStyle && (
 					<SelectControl
@@ -297,7 +297,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					placeholder="32"
+					htmlTag={ titleTag || 'h4' }
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h4' }
@@ -336,7 +336,6 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					attrNameTemplate="description%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ descriptionColor }

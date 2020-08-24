@@ -346,7 +346,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					attrNameTemplate="subtitle%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					placeholder="17"
+					placeholder={ size => size * 0.8 } // 0.8em
 				/>
 				<ColorPaletteControl
 					value={ subtitleColor }
@@ -382,7 +382,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					placeholder="32"
+					htmlTag={ titleTag || 'h4' }
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h4' }
@@ -421,7 +421,6 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					attrNameTemplate="description%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ descriptionColor }

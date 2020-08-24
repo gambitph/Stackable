@@ -393,7 +393,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					placeholder="40"
+					htmlTag={ titleTag || 'h3' }
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h3' }
@@ -447,7 +447,6 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					attrNameTemplate="excerpt%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ excerptColor }
@@ -557,7 +556,6 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					attrNameTemplate="readmore%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ readmoreColor }

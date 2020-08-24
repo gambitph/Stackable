@@ -252,7 +252,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					placeholder="40"
+					htmlTag={ titleTag || 'h3' }
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h3' }
@@ -291,7 +291,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					attrNameTemplate="price%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					placeholder="21"
+					placeholder={ size => size * 3.5 } // 3.5em
 				/>
 				<ColorPaletteControl
 					value={ priceColor }
@@ -329,7 +329,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 						onChangeFontFamily={ false }
 						onChangeTextTransform={ false }
 						onChangeLetterSpacing={ false }
-						placeholder="25"
+						placeholder={ size => size * 1.2 } // 1.2em
 					/>
 					<ColorPaletteControl
 						value={ pricePrefixColor }
@@ -358,7 +358,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 						onChangeFontFamily={ false }
 						onChangeTextTransform={ false }
 						onChangeLetterSpacing={ false }
-						placeholder="32"
+						placeholder={ size => size * 1.5 } // 1.5em
 					/>
 					<ColorPaletteControl
 						value={ priceSuffixColor }
@@ -384,7 +384,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					attrNameTemplate="subPrice%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					placeholder="16"
+					placeholder={ size => size * 0.75 } // 0.75em
 				/>
 				<ColorPaletteControl
 					value={ subPriceColor }
@@ -451,7 +451,6 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					attrNameTemplate="description%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ descriptionColor }

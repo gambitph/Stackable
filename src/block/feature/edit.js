@@ -267,7 +267,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					placeholder="48"
+					htmlTag={ titleTag || 'h2' }
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h2' }
@@ -306,7 +306,6 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 					attrNameTemplate="description%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ descriptionColor }

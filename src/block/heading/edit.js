@@ -85,7 +85,7 @@ addFilter( 'stackable.heading.edit.inspector.style.before', 'stackable/heading',
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					placeholder="48"
+					htmlTag={ titleTag || 'h2' }
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h2' }
@@ -124,7 +124,6 @@ addFilter( 'stackable.heading.edit.inspector.style.before', 'stackable/heading',
 					attrNameTemplate="subtitle%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ subtitleColor }

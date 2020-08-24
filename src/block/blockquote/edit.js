@@ -229,7 +229,6 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 					attrNameTemplate="text%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ textColor }

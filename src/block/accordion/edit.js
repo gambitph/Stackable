@@ -190,7 +190,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					placeholder="32"
+					htmlTag={ titleTag || 'h4' }
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h4' }

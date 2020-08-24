@@ -166,7 +166,7 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 					className="ugb--help-tip-typography-family"
-					placeholder="40"
+					htmlTag={ titleTag || 'h3' }
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h3' }
@@ -205,7 +205,6 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 					attrNameTemplate="description%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ descriptionColor }

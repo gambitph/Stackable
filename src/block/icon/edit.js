@@ -147,7 +147,7 @@ addFilter( 'stackable.icon.edit.inspector.style.before', 'stackable/icon', ( out
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					placeholder="24"
+					htmlTag={ titleTag || 'h5' }
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h5' }

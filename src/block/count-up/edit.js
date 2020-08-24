@@ -232,7 +232,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					placeholder="32"
+					htmlTag={ titleTag || 'h4' }
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h4' }
@@ -309,7 +309,6 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 					attrNameTemplate="description%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					placeholder="21"
 				/>
 				<ColorPaletteControl
 					value={ descriptionColor }

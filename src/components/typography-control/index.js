@@ -2,8 +2,13 @@
  * External dependencies
  */
 import {
-	AdvancedRangeControl, ButtonIconPopoverControl, FontFamilyControl, FontSizeControl, WhenResponsiveScreen,
+	AdvancedRangeControl,
+	ButtonIconPopoverControl,
+	FontFamilyControl,
+	FontSizeControl,
+	WhenResponsiveScreen,
 } from '~stackable/components'
+import { getDefaultFontSize } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -14,6 +19,16 @@ import { i18n } from 'stackable'
 import { SelectControl } from '@wordpress/components'
 
 const TypographyControl = props => {
+	// Compute the font size placeholder value.
+	let placeholder
+	if ( typeof props.placeholder === 'function' ) {
+		// If the placeholder is a function, this means that it's computed based on the detected default font size.
+		placeholder = Math.round( props.placeholder( getDefaultFontSize( props.htmlTag ) ) )
+	} else {
+		// Use the given placeholder, or use the detected font size.
+		placeholder = props.placeholder || getDefaultFontSize( props.htmlTag )
+	}
+
 	return (
 		<Fragment>
 			<ButtonIconPopoverControl
@@ -48,7 +63,7 @@ const TypographyControl = props => {
 								unit={ props.fontSizeUnit }
 								onChangeUnit={ props.onChangeFontSizeUnit }
 								{ ...props.fontSizeProps }
-								placeholder={ props.placeholder }
+								placeholder={ placeholder }
 								className="ugb--help-tip-typography-size"
 							/>
 						</WhenResponsiveScreen>
@@ -61,7 +76,6 @@ const TypographyControl = props => {
 								unit={ props.tabletfontSizeUnit }
 								onChangeUnit={ props.onChangeTabletFontSizeUnit }
 								{ ...props.fontSizeProps }
-								placeholder={ props.placeholder }
 								className="ugb--help-tip-typography-size"
 							/>
 						</WhenResponsiveScreen>
@@ -74,7 +88,6 @@ const TypographyControl = props => {
 								unit={ props.mobilefontSizeUnit }
 								onChangeUnit={ props.onChangeMobileFontSizeUnit }
 								{ ...props.fontSizeProps }
-								placeholder={ props.placeholder }
 								className="ugb--help-tip-typography-size"
 							/>
 						</WhenResponsiveScreen>
@@ -198,7 +211,7 @@ const TypographyControl = props => {
 							unit={ props.fontSizeUnit }
 							onChangeUnit={ props.onChangeFontSizeUnit }
 							{ ...props.fontSizeProps }
-							placeholder={ props.placeholder }
+							placeholder={ placeholder }
 							className="ugb--help-tip-typography-size"
 						/>
 					</WhenResponsiveScreen>
@@ -211,7 +224,6 @@ const TypographyControl = props => {
 							unit={ props.tabletfontSizeUnit }
 							onChangeUnit={ props.onChangeTabletFontSizeUnit }
 							{ ...props.fontSizeProps }
-							placeholder={ props.placeholder }
 							className="ugb--help-tip-typography-size"
 						/>
 					</WhenResponsiveScreen>
@@ -224,7 +236,6 @@ const TypographyControl = props => {
 							unit={ props.mobilefontSizeUnit }
 							onChangeUnit={ props.onChangeMobileFontSizeUnit }
 							{ ...props.fontSizeProps }
-							placeholder={ props.placeholder }
 							className="ugb--help-tip-typography-size"
 						/>
 					</WhenResponsiveScreen>
@@ -254,7 +265,11 @@ TypographyControl.defaultProps = {
 	mobileLineHeightUnit: 'em',
 	letterSpacing: '',
 	fontSizeProps: {},
-	placeholder: '21', // Added default placeholder for some blocks.
+	// Font size placeholder. If not provided, the detected font size for the
+	// htmlTag is used. If a function is provided, then the detected font size
+	// is passed to the function to create the placeholder.
+	placeholder: '',
+	htmlTag: 'p', // If placeholder is blank, this is used to determine the placeholder font size.
 	onReset: () => {},
 	onChangeFontFamily: () => {},
 	onChangeFontSize: () => {},
