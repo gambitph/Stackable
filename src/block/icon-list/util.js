@@ -25,7 +25,7 @@ const createElementFromHTMLString = htmlString => {
 	const parentElement = document.createElement( 'div' )
 	parentElement.innerHTML = htmlString
 
-	return parentElement.firstChild
+	return parentElement.firstElementChild
 }
 
 /**
