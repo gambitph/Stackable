@@ -93,9 +93,11 @@ export const extractColors = styleString => {
 			highlightColor = color[ 1 ]
 		}
 	}
-	const color = styleString.match( /(?<!-)color:\s*([^;]*)?/ )
+
+	// Get the text color.
+	const color = styleString.match( /(^|[^-])color:\s*([^;]*)?/ )
 	if ( color ) {
-		textColor = color[ 1 ]
+		textColor = color[ 2 ]
 	}
 
 	return {
