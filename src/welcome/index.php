@@ -143,8 +143,6 @@ SVG;
 				<?php if ( ! sugb_fs()->is_whitelabeled() ) { ?>
 					<?php if ( ! sugb_fs()->can_use_premium_code() ) { ?>
 						<a class="s-tab s-tab-premium" href="<?php echo esc_url( sugb_fs()->get_upgrade_url() ) ?>"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a>
-					<?php } else { ?>
-						<a class="s-tab s-tab-premium" href="<?php echo esc_url( sugb_fs()->get_upgrade_url() ) ?>"><?php _e( 'Pricing', STACKABLE_I18N ) ?></a>
 					<?php } ?>
 				<?php } ?>
 
