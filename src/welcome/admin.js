@@ -148,6 +148,7 @@ const AdditionalOptions = props => {
 				setHelpTooltipsDisabled( !! response.stackable_help_tooltip_disabled )
 				setV1BackwardCompatibility( response.stackable_load_v1_styles === '1' )
 				setShowPremiumNotices( response.stackable_show_pro_notices === '1' )
+				setIsBusy( false )
 			} )
 		} )
 	}, [] )
@@ -160,7 +161,6 @@ const AdditionalOptions = props => {
 
 	return (
 		<div>
-			<h4>{ __( 'Additional Options', i18n ) }</h4>
 			{ props.showProNoticesOption &&
 				<CheckboxControl
 					label={ __( 'Show "Go premium" notices', i18n ) }
@@ -172,14 +172,6 @@ const AdditionalOptions = props => {
 				/>
 			}
 			<CheckboxControl
-				label={ __( 'Load version 1 block stylesheet for backward compatibility', i18n ) }
-				checked={ v1BackwardCompatibility }
-				onChange={ checked => {
-					updateSetting( 'stackable_load_v1_styles', checked ? '1' : '' )
-					setV1BackwardCompatibility( checked )
-				} }
-			/>
-			<CheckboxControl
 				label={ __( 'Don\'t show help video tooltips', i18n ) }
 				checked={ helpTooltipsDisabled }
 				onChange={ checked => {
@@ -187,9 +179,19 @@ const AdditionalOptions = props => {
 					setHelpTooltipsDisabled( checked )
 				} }
 			/>
-			<div className="ugb--saving-wrapper">
-				{ isBusy && <Spinner /> }
-			</div>
+			<CheckboxControl
+				label={ __( 'Load version 1 block stylesheet for backward compatibility', i18n ) }
+				checked={ v1BackwardCompatibility }
+				onChange={ checked => {
+					updateSetting( 'stackable_load_v1_styles', checked ? '1' : '' )
+					setV1BackwardCompatibility( checked )
+				} }
+			/>
+			{ isBusy &&
+				<div className="ugb--saving-wrapper">
+					<Spinner />
+				</div>
+			}
 		</div>
 	)
 }

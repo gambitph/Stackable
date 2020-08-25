@@ -200,7 +200,10 @@ SVG;
                             <div class="s-settings-wrapper" />
 						</article>
 						<!-- We put all the other options here. -->
-						<aside class="s-other-options-wrapper"></aside>
+						<article class="s-box">
+							<h2><?php _e( '🔩 Other Settings', STACKABLE_I18N ) ?></h2>
+							<aside class="s-other-options-wrapper"></aside>
+						</article>
                     </div>
                     <div class="s-side">
 						<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
