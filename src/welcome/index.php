@@ -209,19 +209,15 @@ SVG;
                             <h3><?php _e( '🚀 Stackable Premium', STACKABLE_I18N ) ?></h3>
 							<p><?php _e( 'If you are ready for even more, upgrade to Premium and get:', STACKABLE_I18N ) ?></p>
 								<ul class="s-check-list">
-									<li><?php _e( '60+ Premium Layouts', STACKABLE_I18N ) ?></li>
-									<li><?php _e( '220+ Premium Block Designs', STACKABLE_I18N ) ?></li>
-									<li><?php _e( 'One-Click Switchable Designs', STACKABLE_I18N ) ?></li>
-									<li><?php _e( 'Additional Block Options', STACKABLE_I18N ) ?></li>
+									<li><?php _e( '60+ Additional Block Layouts', STACKABLE_I18N ) ?></li>
+									<li><?php _e( '230+ Additional Block Designs', STACKABLE_I18N ) ?></li>
+									<li><?php _e( 'Additional Block Styling Options', STACKABLE_I18N ) ?></li>
 									<li><?php _e( 'User Role Manager', STACKABLE_I18N ) ?></li>
 									<li><?php _e( 'Font Awesome Pro Integration', STACKABLE_I18N ) ?></li>
-									<li><?php _e( '3-Layer Separators', STACKABLE_I18N ) ?></li>
-									<li><?php _e( 'All Premium Effects', STACKABLE_I18N ) ?></li>
-									<li><?php _e( 'Custom CSS', STACKABLE_I18N ) ?></li>
+									<li><?php _e( 'Custom Block CSS', STACKABLE_I18N ) ?></li>
+									<li><?php _e( '1 Year of Updates', STACKABLE_I18N ) ?></li>
+									<li><?php _e( '1 Year of Support', STACKABLE_I18N ) ?></li>
 									<li><?php _e( 'No Ads', STACKABLE_I18N ) ?></li>
-									<li><?php _e( 'Customer Email Support', STACKABLE_I18N ) ?></li>
-									<li><?php _e( 'Lifetime Use', STACKABLE_I18N ) ?></li>
-									<li><?php _e( '1 Year of Updates & Support', STACKABLE_I18N ) ?></li>
 								</ul>
 							</p>
 							<p>
