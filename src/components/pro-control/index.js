@@ -54,6 +54,7 @@ const ProControl = props => {
 			<h4>{ props.title || LABELS[ props.type ].title }</h4>
 			<p>{ props.description || LABELS[ props.type ].description }</p>
 			{ props.showButton && <ProModal button={ props.button || LABELS[ props.type ].button } /> }
+			<p className="ugb-design-control-pro-note__notice">{ __( 'You can hide premium hints in the settings', i18n ) }</p>
 		</div>
 	)
 }
