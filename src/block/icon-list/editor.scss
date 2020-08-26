@@ -20,20 +20,23 @@
 
 // Apply this class for textAlign right
 .ugb-icon-list__right-align li {
-	width: max-content !important;
+	width: fit-content !important;
+	width: -moz-fit-content !important;
 	margin-left: auto !important;
 }
 
 // Apply this class for textAlign center
 .ugb-icon-list__center-align li {
-	width: max-content !important;
+	width: fit-content !important;
+	width: -moz-fit-content !important;
 	margin-left: auto !important;
 	margin-right: auto !important;
 }
 
 // Apply this class for textAlign center
 .ugb-icon-list__left-align li {
-	width: max-content !important;
+	width: fit-content !important;
+	width: -moz-fit-content !important;
 	margin-right: auto !important;
 }
 
