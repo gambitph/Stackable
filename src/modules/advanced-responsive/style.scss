@@ -1,14 +1,14 @@
 @import "common";
 
 // Desktop only.
-@media screen and (min-width: $break-large) {
+@media screen and (min-width: #{ $break-large + 1 }) {
 	.ugb--hide-desktop {
 		display: none !important;
 	}
 }
 
 // Tablet only.
-@media screen and (min-width: $break-small) and (max-width: $break-large) {
+@media screen and (min-width: #{ $break-small + 1 }) and (max-width: $break-large) {
 	.ugb--hide-tablet {
 		display: none !important;
 	}
