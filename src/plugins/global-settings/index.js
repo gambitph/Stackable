@@ -22,7 +22,9 @@ import {
 
 const GlobalSettings = () => {
 	addAction( 'stackable.global-settings.inspector', 'toggle', () => {
-		const buttonEl = document.querySelector( '.ugb-global-settings-button' )
+		const buttonEl = document.querySelector( `button[aria-label="${ __( 'Stackable Global Settings', i18n ) }"]` )
+
+		// Open the global settings sidebar
 		if ( buttonEl ) {
 			buttonEl.click()
 		}
@@ -31,13 +33,14 @@ const GlobalSettings = () => {
 	return (
 		<Fragment>
 			<PluginSidebarMoreMenuItem
-				className="ugb-global-settings-button"
+				className="ugb-global-settings__button"
 				icon={ <SVGStackableIcon /> }>
 				{ __( 'Stackable Global Settings', i18n ) }
 			</PluginSidebarMoreMenuItem>
 			<PluginSidebar
-				title={ __( 'Stackable Global Settings', i18n ) }
-				icon={ SVGStackableIcon } >
+				title={ __( 'Global Settings', i18n ) }
+				className="ugb-global-settings__inspector"
+				icon={ <SVGStackableIcon /> } >
 				{ applyFilters( 'stackable.global-settings.inspector', null ) }
 			</PluginSidebar>
 		</Fragment> )

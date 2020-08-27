@@ -1,10 +1,29 @@
 /**
+ * Internal dependencies
+ */
+import { GlobalSettingsPanel, GlobalSettingsColorPicker } from '../components'
+
+/**
+ * External dependencies
+ */
+import { i18n } from 'stackable'
+
+/**
  * Wordpress dependencies
  */
-import { addFilter, doAction } from '@wordpress/hooks'
+import { addFilter } from '@wordpress/hooks'
+import { Fragment } from '@wordpress/element'
+import { __ } from '@wordpress/i18n'
 
-addFilter( 'stackable.global-settings.inspector', 'global-colors', ( ) => {
-	return <div>
-		<button onClick={ () => doAction( 'stackable.global-settings.inspector' ) }>Click</button>
-	</div>
+addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors', output => {
+	return (
+		<Fragment>
+			{ output }
+			<GlobalSettingsPanel
+				title={ __( 'Colors', i18n ) }
+				onClickAddStyle={ () => {} }>
+				<GlobalSettingsColorPicker />
+			</GlobalSettingsPanel>
+		</Fragment>
+	)
 } )
