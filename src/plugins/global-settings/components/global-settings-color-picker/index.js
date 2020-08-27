@@ -17,6 +17,7 @@ import {
 	select, dispatch, useSelect,
 } from '@wordpress/data'
 
+// Component used to add a style name field at the bottom of the ColorPicker.
 const ColorPickerTextArea = props => (
 	<div className="ugb-global-settings-color-picker__text-name components-color-picker__body">
 		<div className="components-color-picker__controls">
@@ -46,6 +47,8 @@ const ColorPickers = ( { colors } ) => {
 
 	const onChangeColor = data => {
 		const { colors: updatedColors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
+
+		// Overwrite the selected color to a new color.
 		updatedColors[ selectedIndex ].color = data.hex
 
 		dispatch( 'core/block-editor' ).updateSettings( {
@@ -55,6 +58,8 @@ const ColorPickers = ( { colors } ) => {
 
 	const onChangeStyleName = value => {
 		const { colors: updatedColors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
+
+		// Overwrite the selected style name and slug to a new style name and slug.
 		updatedColors[ selectedIndex ].name = value
 		updatedColors[ selectedIndex ].slug = value
 
@@ -78,8 +83,10 @@ const ColorPickers = ( { colors } ) => {
 							setSelectedIndex( index )
 
 							if ( currIndex === index ) {
+								// If the preview selected index is the same as the current selected index, close the Popover.
 								setIsPopOverOpen( toggle => ! toggle )
 							} else {
+								// Otherwise, open another instance of the Popover.
 								setIsPopOverOpen( true )
 							}
 						} }
