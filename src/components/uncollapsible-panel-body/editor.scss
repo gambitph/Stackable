@@ -1,0 +1,19 @@
+.ugb-uncollapsible-panel-body {
+	.ugb-uncollapsible-panel-body__wrapper {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+}
+
+.ugb-global-settings-color-picker__text-name {
+	padding-top: 0 !important;
+
+	.components-color-picker__inputs-wrapper {
+		padding-top: 0 !important;
+	}
+
+	input {
+		width: 211px;
+	}
+}
