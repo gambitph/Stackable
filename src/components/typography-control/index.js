@@ -7,6 +7,7 @@ import {
 	FontFamilyControl,
 	FontSizeControl,
 	WhenResponsiveScreen,
+	GlobalStyleControl,
 } from '~stackable/components'
 import { getDefaultFontSize } from '~stackable/util'
 
@@ -29,8 +30,21 @@ const TypographyControl = props => {
 		placeholder = props.placeholder || getDefaultFontSize( props.htmlTag )
 	}
 
+	console.log( props )
+	const stylePicker = props.onChangeStyle && (
+		<GlobalStyleControl
+			onChange={ props.onChangeStyle }
+			value={ props.style }
+		/>
+	)
+
+	if ( props.onChangeStyle && props.style ) {
+		return stylePicker
+	}
+
 	return (
 		<Fragment>
+			{ stylePicker }
 			<ButtonIconPopoverControl
 				label={ props.label }
 				onReset={ props.onReset }
@@ -248,6 +262,7 @@ const TypographyControl = props => {
 TypographyControl.defaultProps = {
 	label: __( 'Typography', i18n ),
 	showSecondFontSize: true,
+	style: '',
 	fontFamily: '',
 	fontSize: '',
 	tabletFontSize: '',
@@ -271,6 +286,7 @@ TypographyControl.defaultProps = {
 	placeholder: '',
 	htmlTag: 'p', // If placeholder is blank, this is used to determine the placeholder font size.
 	onReset: () => {},
+	onChangeStyle: () => {},
 	onChangeFontFamily: () => {},
 	onChangeFontSize: () => {},
 	onChangeTabletFontSize: () => {},

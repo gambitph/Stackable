@@ -88,11 +88,6 @@ const getLabelFromValue = ( value, options ) => {
 // input value for every given suggestion.
 const getSuggestionValue = suggestion => suggestion.value
 
-// Use your imagination to render suggestions.
-const renderSuggestion = suggestion => {
-	return <div className="ugb-autosuggest-option" data-value={ suggestion.value }>{ suggestion.label }</div>
-}
-
 const renderSectionTitle = section => {
 	return <div className="ugb--autosuggest-group">{ section.title }</div>
 }
@@ -194,7 +189,11 @@ class AdvancedAutosuggestControl extends Component {
 						onSuggestionsFetchRequested={ this.onSuggestionsFetchRequested }
 						onSuggestionsClearRequested={ this.onSuggestionsClearRequested }
 						getSuggestionValue={ getSuggestionValue }
-						renderSuggestion={ renderSuggestion }
+						renderSuggestion={ suggestion => {
+							return <div className="ugb-autosuggest-option" data-value={ suggestion.value }>
+								{ this.props.renderOption ? this.props.renderOption( suggestion ) : suggestion.label }
+							</div>
+						} }
 						renderSectionTitle={ renderSectionTitle }
 						getSectionSuggestions={ getSectionSuggestions }
 						shouldRenderSuggestions={ shouldRenderSuggestions }
@@ -215,6 +214,7 @@ AdvancedAutosuggestControl.defaultProps = {
 	options: [],
 	value: '',
 	noMatchesLabel: __( 'No matches found', i18n ),
+	renderOption: null, // If given a function, it will be called to render the option.
 }
 
 export default AdvancedAutosuggestControl
