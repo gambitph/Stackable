@@ -68,6 +68,12 @@ const ColorPickers = ( { colors } ) => {
 		} )
 	}
 
+	const onClickOutside = event => {
+		if ( event.target !== colorButtonAnchor ) {
+			setIsPopOverOpen( false )
+		}
+	}
+
 	return colors && Array.isArray( colors ) && (
 		<Fragment>
 			{ colors.map( ( color, index ) => (
@@ -94,7 +100,7 @@ const ColorPickers = ( { colors } ) => {
 				</div>
 			) ) }
 			{ isPopoverOpen && (
-				<Popover anchorRef={ colorButtonAnchor } onClose={ () => setIsPopOverOpen( false ) }>
+				<Popover anchorRef={ colorButtonAnchor } onClickOutside={ onClickOutside }>
 					<ColorPicker
 						color={ colors[ selectedIndex ].color }
 						onChangeComplete={ onChangeColor }
