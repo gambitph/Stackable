@@ -1,0 +1,59 @@
+// Control styling
+.ugb-global-style-control__item {
+	display: flex;
+	align-items: center;
+}
+.ugb-global-style-control__item-label {
+	flex-grow: 1;
+}
+
+// Show only the edit button in the suggestion list when hovered on.
+li[aria-selected="false"] .ugb-global-style-control__item-button {
+	visibility: hidden;
+}
+
+// Preview area in the suggestion list.
+.ugb-global-style-control__item-preview {
+	margin-right: 12px;
+}
+
+// Large preview area.
+.ugb-global-style-control__item--large-preview {
+	.ugb-global-style-control__item-preview {
+		margin-right: 0;
+		margin-bottom: 12px;
+		width: 100%;
+	}
+	&.ugb-global-style-control__item {
+		display: flex;
+		flex-wrap: wrap;
+	}
+}
+
+// Space out the text input and the buttons.
+.ugb-global-style-control .ugb-advanced-autosuggest-control__select {
+	display: flex;
+	// Button gaps.
+	> * {
+		margin-left: 8px;
+	}
+	.react-autosuggest__container {
+		flex: 1;
+		margin-left: 0;
+		input {
+			height: 100%;
+		}
+	}
+}
+
+// If there's a selected value, visibly separate the first value.
+.ugb-global-style-control.ugb--has-value {
+	.react-autosuggest__suggestions-list > *:first-child {
+		border-bottom: 1px solid #ddd;
+	}
+}
+
+// Ensure the dropdown is wide as possible.
+.ugb-global-style-control .react-autosuggest__suggestions-container {
+	min-width: 248px;
+}
