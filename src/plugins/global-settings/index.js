@@ -21,6 +21,22 @@ import {
 } from '@wordpress/hooks'
 
 const GlobalSettings = () => {
+	addAction( 'stackable.global-settings.open-sidebar', 'toggle', () => {
+		const buttonEl = document.querySelector( `button[aria-label="${ __( 'Stackable Global Settings', i18n ) }"]` )
+
+		// Open the global settings sidebar
+		if ( buttonEl ) {
+			buttonEl.click()
+		}
+	} )
+
+	/**
+	 * Used in ColorPaletteControl component.
+	 * Changing the Global Colors inside the Stackable Global Settings updates its fallback value ( e.g.
+	 * var(--stk-global-color-ugb12, #000000) to var(--stk-global-color-ugb12, #34aa6b) ), resulting to
+	 * unmatched fallback values between the block attribute and the global color. With this, we are
+	 * forcing the passed value to match its corresponding global color.
+	 */
 	addFilter( 'stackable.global-settings.update-color-value', 'update-value', ( value, colors ) => {
 		// If the value is an empty string or undefined, return the value.
 		if ( ! value ) {
@@ -47,15 +63,6 @@ const GlobalSettings = () => {
 		}
 
 		return newValue
-	} )
-
-	addAction( 'stackable.global-settings.open-sidebar', 'toggle', () => {
-		const buttonEl = document.querySelector( `button[aria-label="${ __( 'Stackable Global Settings', i18n ) }"]` )
-
-		// Open the global settings sidebar
-		if ( buttonEl ) {
-			buttonEl.click()
-		}
 	} )
 
 	return (
