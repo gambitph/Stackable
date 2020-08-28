@@ -21,7 +21,7 @@ import {
 } from '@wordpress/hooks'
 
 const GlobalSettings = () => {
-	addAction( 'stackable.global-settings.inspector', 'toggle', () => {
+	addAction( 'stackable.global-settings.open-sidebar', 'toggle', () => {
 		const buttonEl = document.querySelector( `button[aria-label="${ __( 'Stackable Global Settings', i18n ) }"]` )
 
 		// Open the global settings sidebar

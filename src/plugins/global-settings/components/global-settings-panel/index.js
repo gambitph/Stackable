@@ -1,27 +1,33 @@
 /**
- * External dependencies
- */
-import { UncollapsiblePanelBody } from '~stackable/components'
-
-/**
  * Wordpress dependencies
  */
-import { Button } from '@wordpress/components'
+import { useState } from '@wordpress/element'
+import { PanelAdvancedSettings } from '~stackable/components'
 
-const GlobalSettingsPanel = props => (
-	<UncollapsiblePanelBody
-		title={ props.title }
-		sideRender={
-			props.onClickAddStyle && ( <Button
-				isDefault
-				onClick={ props.onClickAddStyle }
-			>
-                Add style
-			</Button> )
-		}>
-		{ props.children }
-	</UncollapsiblePanelBody>
-)
+const GlobalSettingsPanel = props => {
+	const {
+		title,
+	} = props
+	const [ isPanelOpen, setIsPanelOpen ] = useState( false )
+
+	const handleToggle = () => {
+		setIsPanelOpen( toggle => ! toggle )
+	}
+
+	return (
+		<PanelAdvancedSettings
+			title={ title }
+			initialOpen={ false }
+			opened={ isPanelOpen }
+			onToggle={ handleToggle }>
+			{ props.children && <div>{ props.children }</div> }
+		 </PanelAdvancedSettings>
+	)
+}
+
+GlobalSettingsPanel.defaultProps = {
+	title: '',
+}
 
 export default GlobalSettingsPanel
 
