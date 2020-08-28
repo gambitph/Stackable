@@ -30,11 +30,19 @@ const TypographyControl = props => {
 		placeholder = props.placeholder || getDefaultFontSize( props.htmlTag )
 	}
 
-	console.log( props )
+	// TODO: This is only an example.
 	const stylePicker = props.onChangeStyle && (
 		<GlobalStyleControl
 			onChange={ props.onChangeStyle }
 			value={ props.style }
+			options={ [
+				{ label: '100', value: '100' },
+				{ label: '200', value: '200' },
+				{ label: '300', value: '300' },
+			] }
+			renderPreview={ () => {
+				return <div>Ab</div>
+			} }
 		/>
 	)
 
