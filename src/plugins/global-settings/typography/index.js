@@ -222,6 +222,7 @@ let saveThrottle = null
 
 addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography', output => {
 	const [ typographySettings, setTypographySettings ] = useState( [] )
+	const [ applySettingsTo, setApplySettingsTo ] = useState( '' )
 
 	useEffect( () => {
 		// Get settings.
@@ -229,6 +230,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 			const settings = new models.Settings()
 			settings.fetch().then( response => {
 				setTypographySettings( ( response.stackable_global_typography && response.stackable_global_typography[ 0 ] ) || {} )
+				setApplySettingsTo( response.stackable_global_typography_apply_to || 'blocks-stackable-native' )
 			} )
 		} )
 	}, [] )
@@ -262,6 +264,14 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		}, 500 )
 	}
 
+	const changeApplySettingsTo = value => {
+		setApplySettingsTo( value )
+		const model = new models.Settings( {
+			stackable_global_typography_apply_to: value, // eslint-disable-line
+		} )
+		model.save()
+	}
+
 	return (
 		<Fragment>
 			{ output }
@@ -284,8 +294,8 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 						{ value: 'blocks-all', label: __( 'All blocks', i18n ) },
 						{ value: 'site', label: __( 'Entire site', i18n ) },
 					] }
-					value={ 'blocks-stackable-native' }
-					onChange={ () => {} }
+					value={ applySettingsTo }
+					onChange={ changeApplySettingsTo }
 				/>
 				<ControlSeparator />
 				{ TYPOGRAPHY_TAGS.map( ( { label, tag }, index ) => {

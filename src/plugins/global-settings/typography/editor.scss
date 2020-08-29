@@ -18,9 +18,14 @@
 	.editor-styles-wrapper {
 		margin: 0 !important;
 		padding: 0 !important;
-		max-width: 200px;
-		overflow: hidden;
-		white-space: nowrap;
+		max-width: 200px !important;
+		overflow: hidden !important;
+		white-space: nowrap !important;
+		background: transparent !important;
+		&::before,
+		&::after {
+			display: none !important;
+		}
 	}
 }
 .ugb-global-typography-preview__label {
