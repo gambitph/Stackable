@@ -61,9 +61,53 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 					'show_in_rest' => array(
 						'schema' => array(
 							'type'  => 'array',
-							'items' => array(
-								'type'  => 'array',
-								'items' => array(
+							'properties' => array(
+								'fontFamily' => array(
+									'type' => 'string',
+								),
+								'fontSize' => array(
+									'type' => 'number',
+								),
+								'tabletFontSize' => array(
+									'type' => 'number',
+								),
+								'mobileFontSize' => array(
+									'type' => 'number',
+								),
+								'fontSizeUnit' => array(
+									'type' => 'string',
+								),
+								'tabletFontSizeUnit' => array(
+									'type' => 'string',
+								),
+								'mobileFontSizeUnit' => array(
+									'type' => 'string',
+								),
+								'fontWeight' => array(
+									'type' => 'string',
+								),
+								'textTransform' => array(
+									'type' => 'string',
+								),
+								'lineHeight' => array(
+									'type' => 'string',
+								),
+								'tabletLineHeight' => array(
+									'type' => 'string',
+								),
+								'mobileLineHeight' => array(
+									'type' => 'string',
+								),
+								'lineHeightUnit' => array(
+									'type' => 'string',
+								),
+								'tabletLineHeightUnit' => array(
+									'type' => 'string',
+								),
+								'mobileLineHeightUnit' => array(
+									'type' => 'string',
+								),
+								'letterSpacing' => array(
 									'type' => 'string',
 								),
 							),

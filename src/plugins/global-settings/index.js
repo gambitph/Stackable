@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import './global-colors'
+import './typography'
 
 /**
  * External dependencies

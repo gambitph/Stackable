@@ -1,0 +1,41 @@
+// Fix the alignment of the preview.
+.ugb-global-settings-typography-control {
+	> .components-base-control__field {
+		margin-bottom: 16px;
+		> .components-base-control__label {
+			width: 100%;
+			margin-bottom: 0 !important;
+		}
+	}
+	&.ugb-global-settings-typography-control--with-description {
+		> .components-base-control__field {
+			margin-bottom: 32px;
+		}
+	}
+}
+.ugb-global-typography-preview {
+	position: relative;
+	.editor-styles-wrapper {
+		margin: 0 !important;
+		padding: 0 !important;
+		max-width: 200px;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+}
+.ugb-global-typography-preview__label {
+	margin: 0 !important;
+	padding: 0 !important;
+	line-height: 1.4 !important;
+}
+.ugb-global-typography-preview__description {
+	margin: 0 !important;
+	padding: 0 !important;
+	font-size: 12px !important;
+	position: absolute;
+	top: 100%;
+	width: 270px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}

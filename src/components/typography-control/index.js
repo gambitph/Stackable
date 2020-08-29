@@ -55,6 +55,7 @@ const TypographyControl = props => {
 			{ stylePicker }
 			<ButtonIconPopoverControl
 				label={ props.label }
+				popoverLabel={ props.popoverLabel }
 				onReset={ props.onReset }
 				allowReset={
 					props.fontFamily ||
@@ -64,7 +65,7 @@ const TypographyControl = props => {
 					props.lineHeight || props.tabletLineHeight || props.mobileLineHeight ||
 					props.letterSpacing
 				}
-				className="ugb--help-tip-typography"
+				className={ props.className }
 			>
 				{ props.onChangeFontFamily && (
 					<FontFamilyControl
@@ -269,6 +270,8 @@ const TypographyControl = props => {
 
 TypographyControl.defaultProps = {
 	label: __( 'Typography', i18n ),
+	popoverLabel: undefined,
+	className: 'ugb--help-tip-typography',
 	showSecondFontSize: true,
 	style: '',
 	fontFamily: '',

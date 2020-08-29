@@ -104,10 +104,11 @@ class ButtonIconPopoverControl extends Component {
 	}
 
 	/**
-	 * Use our own click/close handler. Don't close when a popover (e.g. a colorpicker) is clicked.
-If this is not used, the popover will close when a color control's custom color field (when inside the popover) is clicked.
+	 * Use our own click/close handler. Don't close when a popover (e.g. a
+	 * colorpicker) is clicked.  If this is not used, the popover will close when
+	 * a color control's custom color field (when inside the popover) is clicked.
 	 *
-	 * @param ev
+	 * @param {Event} ev Click event
 	 */
 	handleOnClickOutside( ev ) {
 		if ( this.state.isMouseOutside && ev.target.closest( 'button' ) !== this.buttonRef.current ) {
@@ -157,7 +158,7 @@ If this is not used, the popover will close when a color control's custom color 
 							onMouseEnter={ this.handleMouseEnter }
 						>
 							<PanelBody>
-								{ ( this.props.label || this.props.popoverLabel ) &&
+								{ ( typeof this.props.popoverLabel !== 'undefined' ? this.props.popoverLabel : this.props.label ) &&
 									<h2 className="components-panel__body-title">{ this.props.popoverLabel || this.props.label }</h2>
 								}
 								{ this.props.children }
@@ -173,7 +174,7 @@ If this is not used, the popover will close when a color control's custom color 
 ButtonIconPopoverControl.defaultProps = {
 	help: '',
 	label: '',
-	popoverLabel: '',
+	popoverLabel: undefined,
 	className: '',
 	allowReset: false,
 	onReset: () => {},

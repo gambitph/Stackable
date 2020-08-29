@@ -257,8 +257,7 @@ export const createResponsiveMarginAlign = ( selector, attrNameTemplate = '%s', 
  * @param {string} styleRule
  * @param {string} format
  * @param {Object} attributes
- * @param options
- * @param {boolean} important
+ * @param {Object} options
  * @return {Array} Reponsive object styles.
  */
 export const createResponsiveEditorStyles = ( selector, attrNameTemplate = '%s', styleRule = 'marginBottom', format = '%spx', attributes = {}, options = {} ) => {
