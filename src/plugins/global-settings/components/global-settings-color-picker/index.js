@@ -4,6 +4,7 @@
 import classnames from 'classnames'
 import { cloneDeep, inRange } from 'lodash'
 import md5 from 'md5'
+import { i18n } from 'stackable'
 
 /**
  * Wordpress dependencies
@@ -19,6 +20,7 @@ import {
 } from '@wordpress/data'
 import { loadPromise, models } from '@wordpress/api'
 import { doAction } from '@wordpress/hooks'
+import { __ } from '@wordpress/i18n'
 
 // Component used to add a style name field at the bottom of the ColorPicker.
 const ColorPickerTextArea = props => (
@@ -52,7 +54,7 @@ const DeleteButton = props => (
 				isLink
 				onClick={ props.onClick }
 			>
-				Delete Style
+				{ __( 'Delete Style', i18n ) }
 			</Button>
 		</div>
 	</div>
