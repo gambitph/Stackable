@@ -3,6 +3,7 @@
  */
 import './global-colors'
 import './typography'
+import './typography-styles'
 
 /**
  * External dependencies
@@ -71,10 +72,10 @@ const GlobalSettings = () => {
 			<PluginSidebarMoreMenuItem
 				className="ugb-global-settings__button"
 				icon={ <SVGStackableIcon /> }>
-				{ __( 'Stackable Global Settings', i18n ) }
+				{ __( 'Stackable Settings', i18n ) }
 			</PluginSidebarMoreMenuItem>
 			<PluginSidebar
-				title={ __( 'Global Settings', i18n ) }
+				title={ __( 'Stackable Settings', i18n ) }
 				className="ugb-global-settings__inspector"
 				icon={ <SVGStackableIcon /> } >
 				{ applyFilters( 'stackable.global-settings.inspector', null ) }

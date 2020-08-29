@@ -45,6 +45,11 @@ const LABELS = {
 		description: __( 'Get a load more button, more post options and Custom Post Types. This feature is only available on Stackable Premium.', i18n ),
 		button: __( 'Learn More', i18n ),
 	},
+	typographyStyles: {
+		title: __( 'Say Hello to Typography Styles 👋', i18n ),
+		description: __( 'Save your typography styles, assign them to your blocks and adjust them globally. This feature is only available on Stackable Premium.', i18n ),
+		button: __( 'Learn More', i18n ),
+	},
 }
 
 const ProControl = props => {

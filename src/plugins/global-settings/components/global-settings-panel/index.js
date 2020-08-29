@@ -17,7 +17,7 @@ const GlobalSettingsPanel = props => {
 	return (
 		<PanelAdvancedSettings
 			title={ title }
-			initialOpen={ false }
+			initialOpen={ true }
 			opened={ isPanelOpen }
 			onToggle={ handleToggle }>
 			{ props.children && <div>{ props.children }</div> }

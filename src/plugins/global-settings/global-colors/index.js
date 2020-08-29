@@ -26,7 +26,7 @@ addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors
 		<Fragment>
 			{ output }
 			<GlobalSettingsPanel
-				title={ __( 'Colors', i18n ) }
+				title={ __( 'Global Color Palette', i18n ) }
 			>
 				<p className="components-base-control__help">
 					{ __( 'Change your color palette for all your blocks across your site.', i18n ) }

@@ -266,7 +266,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		<Fragment>
 			{ output }
 			<PanelAdvancedSettings
-				title={ __( 'Typography', i18n ) }
+				title={ __( 'Global Typography', i18n ) }
 				initialOpen={ false }
 			>
 				<p className="components-base-control__help">
