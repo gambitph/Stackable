@@ -2,7 +2,7 @@
  * External dependencies
  */
 import {
-	PanelAdvancedSettings, TypographyControl,
+	PanelAdvancedSettings, TypographyControl, AdvancedSelectControl, ControlSeparator,
 } from '~stackable/components'
 import { generateStyles } from '~stackable/components/block-styles'
 import {
@@ -270,12 +270,24 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 				initialOpen={ false }
 			>
 				<p className="components-base-control__help">
-					{ __( 'Change the typography of your headings across all your blocks.', i18n ) }
+					{ __( 'Change the typography of your headings for all your blocks in your site.', i18n ) }
 					&nbsp;
 					<a href="https://docs.wpstackable.com/stackable-guides/advanced-guides/how-to-use-global-typography/?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
 						{ __( 'Learn more about Global Typography', i18n ) }
 					</a>
 				</p>
+				<AdvancedSelectControl
+					label={ __( 'Apply Typography Styles to', i18n ) }
+					options={ [
+						{ value: 'blocks-stackable-native', label: __( 'Stackable and native blocks only', i18n ) },
+						{ value: 'blocks-stackable', label: __( 'Stackable blocks only', i18n ) },
+						{ value: 'blocks-all', label: __( 'All blocks', i18n ) },
+						{ value: 'site', label: __( 'Entire site', i18n ) },
+					] }
+					value={ 'blocks-stackable-native' }
+					onChange={ () => {} }
+				/>
+				<ControlSeparator />
 				{ TYPOGRAPHY_TAGS.map( ( { label, tag }, index ) => {
 					return (
 						<TypographyPicker
