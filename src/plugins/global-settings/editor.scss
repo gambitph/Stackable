@@ -1,5 +1,22 @@
-.ugb-global-settings__inspector {
-	.components-panel__header {
-		padding-top: 21px;
+.ugb-global-settings-color-picker__text-name {
+	padding-top: 0 !important;
+
+	.components-color-picker__inputs-wrapper {
+		padding-top: 0 !important;
 	}
+
+	input {
+		width: 211px;
+	}
+}
+
+.ugb-global-settings-color-picker__add-icon {
+	min-width: 30px !important;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+}
+
+.ugb-global-settings-color-picker__delete-button {
+	color: #aa2121 !important;
 }

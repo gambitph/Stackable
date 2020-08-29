@@ -2,7 +2,8 @@
  * External dependencies
  */
 import classnames from 'classnames'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, inRange } from 'lodash'
+import md5 from 'md5'
 
 /**
  * Wordpress dependencies
@@ -11,11 +12,13 @@ import {
 	Button, ColorPicker, Popover, BaseControl,
 } from '@wordpress/components'
 import {
-	Fragment, useState,
+	Fragment, useState, useEffect,
 } from '@wordpress/element'
 import {
 	select, dispatch, useSelect,
 } from '@wordpress/data'
+import { loadPromise, models } from '@wordpress/api'
+import { doAction } from '@wordpress/hooks'
 
 // Component used to add a style name field at the bottom of the ColorPicker.
 const ColorPickerTextArea = props => (
@@ -40,6 +43,21 @@ const ColorPickerTextArea = props => (
 	</div>
 )
 
+// Component used to add a Delete Style button at the bottom of the COlorPicker.
+const DeleteButton = props => (
+	<div className="ugb-global-settings-color-picker__text-name components-color-picker__body">
+		<div className="components-color-picker__controls">
+			<Button
+				className="ugb-global-settings-color-picker__delete-button"
+				isLink
+				onClick={ props.onClick }
+			>
+				Delete Style
+			</Button>
+		</div>
+	</div>
+)
+
 const ColorPickers = ( { colors } ) => {
 	const [ selectedIndex, setSelectedIndex ] = useState( null )
 	const [ isPopoverOpen, setIsPopOverOpen ] = useState( false )
@@ -47,13 +65,23 @@ const ColorPickers = ( { colors } ) => {
 
 	const onChangeColor = data => {
 		const { colors: updatedColors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
+		const { colorVar: existingColorVar } = updatedColors[ selectedIndex ]
+		const colorVar = `--stk-global-color-${ md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 ) }`
 
 		// Overwrite the selected color to a new color.
-		updatedColors[ selectedIndex ].color = data.hex
+		updatedColors[ selectedIndex ].color = existingColorVar ? `var(${ existingColorVar }, ${ data.hex })` : `var(${ colorVar }, ${ data.hex })`
+		updatedColors[ selectedIndex ].fallback = data.hex
+
+		// Add a fallback and colorVar if not exists.
+		updatedColors[ selectedIndex ].colorVar = existingColorVar || colorVar
+		updatedColors[ selectedIndex ].fallback = data.hex
 
 		dispatch( 'core/block-editor' ).updateSettings( {
 			colors: updatedColors,
 		} )
+
+		// Update the global style variable values
+		doAction( 'stackable.global-settings.global-styles', updatedColors )
 	}
 
 	const onChangeStyleName = value => {
@@ -73,6 +101,33 @@ const ColorPickers = ( { colors } ) => {
 			setIsPopOverOpen( false )
 		}
 	}
+
+	const onColorDelete = () => {
+		const { colors: updatedColors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
+
+		// Delete the specific color based on the selected index.
+		updatedColors.splice( selectedIndex, 1 )
+
+		dispatch( 'core/block-editor' ).updateSettings( {
+			colors: updatedColors,
+		} )
+
+		setIsPopOverOpen( false )
+	}
+
+	const AddIcon = props => (
+		<Button
+			{ ...props }
+			isDefault
+			className="ugb-global-settings-color-picker__add-icon"
+			label="Add New Color"
+			icon={
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 190">
+					<polygon points="181.9,87.6 102.6,87.6 102.6,8.4 87.6,8.4 87.6,87.6 8.4,87.6 8.4,102.6 87.6,102.6 87.6,181.8 102.6,181.8 102.6,102.6 181.9,102.6 " />
+				</svg>
+			}
+		/>
+	)
 
 	return colors && Array.isArray( colors ) && (
 		<Fragment>
@@ -99,10 +154,33 @@ const ColorPickers = ( { colors } ) => {
 					/>
 				</div>
 			) ) }
+			<AddIcon
+				onClick={ () => {
+					const newIndex = ( colors && Array.isArray( colors ) ) ? colors.length + 1 : 1
+					const colorVar = `--stk-global-color-${ md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 ) }`
+
+					dispatch( 'core/block-editor' ).updateSettings( {
+						colors: [
+							...select( 'core/block-editor' ).getSettings().colors,
+							{
+								name: `Custom Color ${ newIndex }`, slug: `Custom Color ${ newIndex }`, color: `--var(${ colorVar }, #000000)`, colorVar, fallback: '#000000',
+							},
+						],
+					} )
+
+					// Update the global style variable values
+					doAction( 'stackable.global-settings.global-styles', [
+						...select( 'core/block-editor' ).getSettings().colors,
+						{
+							name: `Custom Color ${ newIndex }`, slug: `Custom Color ${ newIndex }`, color: `--var(${ colorVar }, #000000)`, colorVar, fallback: '#000000',
+						},
+					] )
+				} }
+			/>
 			{ isPopoverOpen && (
 				<Popover anchorRef={ colorButtonAnchor } onClickOutside={ onClickOutside }>
 					<ColorPicker
-						color={ colors[ selectedIndex ].color }
+						color={ colors[ selectedIndex ].fallback || colors[ selectedIndex ].color }
 						onChangeComplete={ onChangeColor }
 					/>
 					<ColorPickerTextArea
@@ -110,6 +188,11 @@ const ColorPickers = ( { colors } ) => {
 						onChange={ onChangeStyleName }
 						value={ colors[ selectedIndex ].name }
 					/>
+					{ ! inRange( selectedIndex, 0, 5 ) && (
+						<DeleteButton
+							onClick={ onColorDelete }
+						/>
+					) }
 				</Popover>
 			) }
 		</Fragment>
@@ -125,6 +208,19 @@ const GlobalSettingsColorPicker = props => {
 	)
 
 	const { colors } = useSelect( select => select( 'core/block-editor' ).getSettings() )
+
+	useEffect( () => {
+		const timeout = setTimeout( () => {
+			loadPromise.then( () => {
+				const model = new models.Settings( { stackable_global_colors: colors } ) // eslint-disable-line camelcase
+				model.save()
+			} )
+		}, 1000 )
+
+		return () => {
+			clearTimeout( timeout )
+		}
+	}, [ colors ] )
 
 	return (
 		<div className={ classNames }>

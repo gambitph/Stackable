@@ -33,19 +33,31 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				'stackable_global_settings',
 				'stackable_global_colors',
 				array(
-					'type' => 'string',
+					'type' => 'array',
 					'description' => __( 'Stackable global color palette', STACKABLE_I18N ),
 					'sanitize_callback' => array( $this, 'sanitize_array_setting' ),
 					'show_in_rest' => array(
-						'schema' => array(
-							'type'  => 'array',
-							'items' => array(
-								'type'  => 'array',
-								'items' => array(
+						'type' => 'array',
+						'items' => array(
+							'type' => 'object',
+							'properties' => array(
+								'name' => array(
 									'type' => 'string',
 								),
-							),
-						),
+								'slug' => array(
+									'type' => 'string',
+								),
+								'colorVar' => array(
+									'type' => 'string',
+								),
+								'color' => array(
+									'type' => 'string',
+								),
+								'fallback' => array(
+									'type' => 'string',
+								),
+							)
+						)
 					),
 					'default' => '',
 				)
