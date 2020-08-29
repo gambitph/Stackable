@@ -12,7 +12,7 @@ import {
  * WordPress dependencies
  */
 import { Fragment } from '@wordpress/element'
-import { addFilter } from '@wordpress/hooks'
+import { addFilter, applyFilters } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
 
 addFilter( 'stackable.global-settings.inspector', 'stackable/typography-styles', output => {
@@ -36,7 +36,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/typography-styles',
 					</a>
 				</p>
 				{ showProNotice && <ProControl type="typographyStyles" /> }
-				{ addFilter( 'stackable.global-settings.typography-styles', null ) }
+				{ applyFilters( 'stackable.global-settings.typography-styles', null ) }
 			</PanelAdvancedSettings>
 		</Fragment>
 	)
