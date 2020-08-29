@@ -1,4 +1,9 @@
 /**
+ * Internal dependencies
+ */
+import './editor-loader'
+
+/**
  * External dependencies
  */
 import {
@@ -19,7 +24,7 @@ import {
 	Fragment, useEffect, useState,
 } from '@wordpress/element'
 import { loadPromise, models } from '@wordpress/api'
-import { addFilter } from '@wordpress/hooks'
+import { addFilter, doAction } from '@wordpress/hooks'
 import { __, sprintf } from '@wordpress/i18n'
 import { select } from '@wordpress/data'
 
@@ -234,6 +239,11 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 			} )
 		} )
 	}, [] )
+
+	// When typography styles are changed, trigger our editor style generator to update.
+	useEffect( () => {
+		doAction( 'stackable.global-settings.typography.update-trigger', typographySettings, applySettingsTo )
+	}, [ typographySettings, applySettingsTo ] )
 
 	const changeStyles = ( tag, styles ) => {
 		const newSettings = {
