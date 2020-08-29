@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { GlobalSettingsPanel, GlobalSettingsColorPicker } from '../components'
+import { GlobalSettingsColorPicker } from '../components'
 
 /**
  * External dependencies
@@ -15,18 +15,28 @@ import md5 from 'md5'
 import {
 	addFilter, addAction, doAction,
 } from '@wordpress/hooks'
-import { Fragment } from '@wordpress/element'
+import { Fragment, useState } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import domReady from '@wordpress/dom-ready'
 import { loadPromise, models } from '@wordpress/api'
 import { dispatch, select } from '@wordpress/data'
+import { PanelAdvancedSettings } from '~stackable/components'
 
 addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors', output => {
+	const [ isPanelOpen, setIsPanelOpen ] = useState( false )
+
+	const handleToggle = () => {
+		setIsPanelOpen( toggle => ! toggle )
+	}
+
 	return (
 		<Fragment>
 			{ output }
-			<GlobalSettingsPanel
+			<PanelAdvancedSettings
 				title={ __( 'Global Color Palette', i18n ) }
+				initialOpen={ false }
+				opened={ isPanelOpen }
+				onToggle={ handleToggle }
 			>
 				<p className="components-base-control__help">
 					{ __( 'Change your color palette for all your blocks across your site.', i18n ) }
@@ -36,7 +46,7 @@ addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors
 					</a>
 				</p>
 				<GlobalSettingsColorPicker />
-			</GlobalSettingsPanel>
+			</PanelAdvancedSettings>
 		</Fragment>
 	)
 } )
