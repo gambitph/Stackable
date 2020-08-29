@@ -273,7 +273,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 					{ __( 'Change the typography of your headings across all your blocks.', i18n ) }
 					&nbsp;
 					<a href="https://docs.wpstackable.com/stackable-guides/advanced-guides/how-to-use-global-typography/?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
-						{ __( 'Learn more about Global Typography.', i18n ) }
+						{ __( 'Learn more about Global Typography', i18n ) }
 					</a>
 				</p>
 				{ TYPOGRAPHY_TAGS.map( ( { label, tag }, index ) => {
