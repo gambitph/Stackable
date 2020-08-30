@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import './global-colors'
+import './colors'
 import './typography'
 import './typography-styles'
 
