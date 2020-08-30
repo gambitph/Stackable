@@ -16,7 +16,7 @@ import { camelCase } from 'lodash'
  */
 import { sprintf } from '@wordpress/i18n'
 
-const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {}, options = {} ) => {
+export const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {}, options = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
 	const getValue = __getValue( blockAttributes, getAttrName, '' )
 
@@ -24,10 +24,8 @@ const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 		importantSize = false,
 		important = false,
 		inherit = true, // If false, desktop styles will only be applied to desktop, etc.
-		inheritTabletMax = 50, // If provided & inherit is true, clamp the inherited value in tablet to this.
-		inheritTabletMin,
-		inheritMobileMax = 50, // If provided & inherit is true, clamp the inherited value in mobile to this.
-		inheritMobileMin,
+		inheritMax = 50, // If provided & inherit is true, clamp the inherited value in tablet and mobile to this.
+		inheritMin,
 	} = options
 
 	let styles = {}
@@ -49,23 +47,37 @@ const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 		styles = {
 			lineHeight: getValue( 'TabletLineHeight' ) !== '' ? `${ getValue( 'TabletLineHeight' ) }${ getValue( 'TabletLineHeightUnit' ) || 'em' }` : undefined,
 		}
-		if ( inherit ) {
-			const clampTabletValue = clampInheritedStyle( desktopFontSize, { min: inheritTabletMin, max: inheritTabletMax } )
 
-			styles.fontSize = tabletFontSize !== '' ? appendImportant( `${ tabletFontSize }${ getValue( 'TabletFontSizeUnit' ) || 'px' }`, importantSize ) : appendImportant( clampTabletValue && `${ clampTabletValue }${ getValue( 'TabletFontSizeUnit' ) || 'px' }`, importantSize )
-		} else {
-			styles.fontSize = tabletFontSize !== '' ? appendImportant( `${ tabletFontSize }${ getValue( 'TabletFontSizeUnit' ) || 'px' }`, importantSize ) : undefined
+		if ( inherit ) {
+			const clampDesktopValue = clampInheritedStyle( desktopFontSize, { min: inheritMin, max: inheritMax } )
+			if ( clampDesktopValue ) {
+				styles.fontSize = `${ clampDesktopValue }${ getValue( 'FontSizeUnit' ) || 'px' }`
+			}
+		}
+		if ( tabletFontSize ) {
+			styles.fontSize = getValue( 'TabletFontSize', `%s${ getValue( 'TabletFontSizeUnit' ) || 'px' }` )
 		}
 	} else { // Mobile.
 		styles = {
 			lineHeight: getValue( 'MobileLineHeight' ) !== '' ? `${ getValue( 'MobileLineHeight' ) }${ getValue( 'MobileLineHeightUnit' ) || 'em' }` : undefined,
 		}
-		if ( inherit ) {
-			const clampMobileValue = clampInheritedStyle( desktopFontSize, { min: inheritMobileMin, max: inheritMobileMax } )
 
-			styles.fontSize = mobileFontSize !== '' ? appendImportant( `${ mobileFontSize }${ getValue( 'MobileFontSizeUnit' ) || 'px' }`, importantSize ) : appendImportant( clampMobileValue && `${ clampMobileValue }${ getValue( 'MobileFontSizeUnit' ) || 'px' }`, importantSize )
-		} else {
-			styles.fontSize = mobileFontSize !== '' ? appendImportant( `${ mobileFontSize }${ getValue( 'TabletFontSizeUnit' ) || 'px' }`, importantSize ) : undefined
+		if ( inherit ) {
+			const clampDesktopValue = clampInheritedStyle( desktopFontSize, { min: inheritMin, max: inheritMax } )
+			if ( clampDesktopValue ) {
+				styles.fontSize = `${ clampDesktopValue }${ getValue( 'FontSizeUnit' ) || 'px' }`
+			}
+
+			const clampTabletValue = clampInheritedStyle( tabletFontSize, { min: inheritMin, max: inheritMax } )
+			if ( clampTabletValue ) {
+				styles.fontSize = `${ clampTabletValue }${ getValue( 'TabletFontSizeUnit' ) || 'px' }`
+			} else if ( clampDesktopValue || tabletFontSize ) {
+				// If we have a desktop value clamped, and there's a tablet value, don't do anything.
+				styles.fontSize = undefined
+			}
+		}
+		if ( mobileFontSize ) {
+			styles.fontSize = getValue( 'MobileFontSize', `%s${ getValue( 'MobileFontSizeUnit' ) || 'px' }` )
 		}
 	}
 
