@@ -188,11 +188,14 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				$selectors = array( '.ugb-main-block' );
 			} else if ( $this->get_apply_typography_to() === 'blocks-all' ) {
 				$selectors = array( '[data-block-type="core"]', '[class*="wp-block-"]' );
-			} else { // Entire site.
+			} else if ( $this->get_apply_typography_to() === 'content' ) {
 				$selectors = array( '.entry-content' );
+			} else { // Entire site.
+				$selectors = array( 'body' );
 			}
 
 			$css = array();
+			$google_fonts = array();
 
 			// $tags = array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' );
 			foreach ( $active_typography as $tag => $styles ) {
@@ -200,8 +203,18 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				$heading_selector = array();
 
 				foreach ( $selectors as $selector ) {
-					// Headings inside blocks.
+					// Headings which are children of the selector.
 					$heading_selector[] = $selector . ' ' . $tag;
+
+					// Only proceed if we're targeting blocks.
+					if ( $this->get_apply_typography_to() === 'content' || $this->get_apply_typography_to() === 'site' ) {
+						continue;
+					}
+
+					// Stackable blocks for sure only have headings as children.
+					if ( $selector === '.ugb-main-block' ) {
+						continue;
+					}
 
 					// Handle native blocks that don't have a wrapper element and just output heading tags right away.
 					if ( $selector === '[data-block-type="core"]' || $selector === '[class*="wp-block-"]' ) {
@@ -210,7 +223,19 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				}
 
 				$css[] = $this->generate_typography_styles( implode( ', ', $heading_selector ), $styles );
+
+				// Gather the Google Fonts.
+				if ( array_key_exists( 'fontFamily', $styles ) ) {
+					if ( Stackable_Google_Fonts::is_web_font( $styles['fontFamily'] ) ) {
+						if ( ! in_array( $styles['fontFamily'], $google_fonts ) ) {
+							$google_fonts[] = $styles['fontFamily'];
+						}
+					}
+				}
 			}
+
+			// Load the Google Font.
+			Stackable_Google_Fonts::enqueue_google_fonts( $google_fonts, 'stackable-global-typography-google-fonts' );
 
 			wp_add_inline_style( 'ugb-style-css', implode( "\n", $css ) );
 		}
@@ -219,6 +244,9 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 * Generates typography CSS for the $selector based on the styles given
 		 * in the $styles object. This also generates media queries.
 		 *
+		 * Mimic how createTypographyStyles does it
+		 * @see src/util/typography/styles.js createTypographyStyles function
+		 *
 		 * @param string $selector The CSS selector to use.
 		 * @param Array $styles An array containing the styles defined by the
 		 *                      global typography styles
@@ -226,8 +254,154 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 * @return string A CSS string
 		 */
 		public function generate_typography_styles( $selector, $styles ) {
-			// TODO: generate typography styles.
-			return $selector . ' {}';
+			$inherit = true;
+			$inherit_max = 50;
+			$tablet_breakpoint = 1025;
+			$mobile_breakpoint = 768;
+
+			// Create desktop styles.
+			$css = array(
+				'desktop' => array(),
+				'tablet' => array(),
+				'mobile' => array(),
+			);
+
+			/**
+			 * Desktop styles.
+			 */
+			if ( array_key_exists( 'fontFamily', $styles ) ) {
+				$css['desktop'][] = 'font-family: ' . $this->get_font_family( $styles['fontFamily'] ) . ';';
+			}
+			if ( array_key_exists( 'fontSize', $styles ) ) {
+				$css['desktop'][] = 'font-size: ' . $styles['fontSize'] . ( $styles['fontSizeUnit'] ?: 'px' ) . ';';
+			}
+			if ( array_key_exists( 'fontWeight', $styles ) ) {
+				$css['desktop'][] = 'font-weight: ' . $styles['fontWeight'] . ';';
+			}
+			if ( array_key_exists( 'textTransform', $styles ) ) {
+				$css['desktop'][] = 'text-transform: ' . $styles['textTransform'] . ';';
+			}
+			if ( array_key_exists( 'lineHeight', $styles ) ) {
+				$css['desktop'][] = 'line-height: ' . $styles['lineHeight'] . ( $styles['lineHeightUnit'] ?: 'em' ) . ';';
+			}
+
+			/**
+			 * Tablet styles.
+			 */
+			if ( array_key_exists( 'tabletLineHeight', $styles ) ) {
+				$css['tablet'][] = 'line-height: ' . $styles['tabletLineHeight'] . ( $styles['tabletLineHeightUnit'] ?: 'em' ) . ';';
+			}
+			$font_size = '';
+			if ( $inherit ) {
+				if ( array_key_exists( 'fontSize', $styles ) ) {
+					$clamp_desktop_value = $this->clamp_inherited_style( $styles['fontSize'], $inherit_max );
+					if ( $clamp_desktop_value ) {
+						$font_size = 'font-size: ' . $clamp_desktop_value . ( $styles['fontSizeUnit'] ?: 'px' ) . ';';
+					}
+				}
+			}
+			if ( array_key_exists( 'tabletFontSize', $styles ) ) {
+				$font_size = 'font-size: ' . $styles['tabletFontSize'] . ( $styles['tabletFontSizeUnit'] ?: 'px' ) . ';';
+			}
+			if ( $font_size ) {
+				$css['tablet'][] = $font_size;
+			}
+
+			/**
+			 * Mobile styles.
+			 */
+			if ( array_key_exists( 'mobileLineHeight', $styles ) ) {
+				$css['mobile'][] = 'line-height: ' . $styles['mobileLineHeight'] . ( $styles['mobileLineHeightUnit'] ?: 'em' ) . ';';
+			}
+
+			$font_size = '';
+			if ( $inherit ) {
+				$clamp_desktop_value = null;
+				$has_clamped_font_size = false;
+				if ( array_key_exists( 'fontSize', $styles ) ) {
+					$clamp_desktop_value = $this->clamp_inherited_style( $styles['fontSize'], $inherit_max );
+					if ( $clamp_desktop_value ) {
+						$font_size = 'font-size: ' . $clamp_desktop_value . ( $styles['fontSizeUnit'] ?: 'px' ) . ';';
+					}
+				}
+
+				$clamp_tablet_value = null;
+				if ( array_key_exists( 'tabletFontSize', $styles ) ) {
+					$clamp_tablet_value = $this->clamp_inherited_style( $style['tabletFontSize'], $inherit_max );
+					if ( $clamp_tablet_value ) {
+						$font_size = 'font-size: ' . $clamp_tablet_value . ( $styles['tabletFontSizeUnit'] ?: 'px' ) . ';';
+					}
+				}
+				if ( ! $clamp_tablet_value ) {
+					if ( $clamp_desktop_value || array_key_exists( 'tabletFontSize', $styles ) ) {
+						// If we have a desktop value clamped, and there's a tablet value, don't do anything.
+						if ( $has_clamped_font_size ) {
+							$font_size = '';
+						}
+					}
+				}
+			}
+			if ( array_key_exists( 'mobileFontSize', $styles ) ) {
+				$font_size = 'font-size: ' . $styles['mobileFontSize'] . ( $styles['mobileFontSizeUnit'] ?: 'px' ) . ';';
+			}
+			if ( $font_size ) {
+				$css['mobile'][] = $font_size;
+			}
+
+			// Convert to actual CSS.
+			$generated_css = '';
+			if ( ! empty( $css['desktop'] ) ) {
+				$generated_css .= $selector . ' { ' . implode( '', $css['desktop'] ) . ' }';
+			}
+			if ( ! empty( $css['tablet'] ) ) {
+				$generated_css .= '@media screen and (max-width: ' . $tablet_breakpoint . 'px) {';
+				$generated_css .= $selector . ' { ' . implode( '', $css['tablet'] ) . ' }';
+				$generated_css .= '}';
+			}
+			if ( ! empty( $css['mobile'] ) ) {
+				$generated_css .= '@media screen and (max-width: ' . $mobile_breakpoint . 'px) {';
+				$generated_css .= $selector . ' { ' . implode( '', $css['mobile'] ) . ' }';
+				$generated_css .= '}';
+			}
+
+			return $generated_css;
+		}
+
+		/**
+		 * @see src/util/font.js getFontFamily function
+		 */
+		public function get_font_family( $font_name ) {
+			$lower_font_name = strtolower( $font_name );
+			// System fonts.
+			if ( $lower_font_name === 'serif' ) {
+				return '"Palatino Linotype", Palatino, Palladio, "URW Palladio L", "Book Antiqua", Baskerville, "Bookman Old Style", "Bitstream Charter", "Nimbus Roman No9 L", Garamond, "Apple Garamond", "ITC Garamond Narrow", "New Century Schoolbook", "Century Schoolbook", "Century Schoolbook L", Georgia, serif';
+			} else if ( $lower_font_name === 'serif-alt' ) {
+				return 'Constantia, Lucida Bright, Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif';
+			} else if ( $lower_font_name === 'monospace' ) {
+				return 'SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace';
+			} else if ( $lower_font_name === 'sans-serif' ) {
+				return '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"';
+			}
+
+			// Google font.
+			return '"' . $font_name . '", sans-serif';
+		}
+
+		/**
+		 * Clamps the desktop value based on given min and max
+		 *
+		 * @see src/util/styles/index.js clampInheritedStyle
+		 *
+		 * @param {*} value
+		 * @param {Object} options
+		 */
+		public function clamp_inherited_style( $value, $max = 999999, $min = -999999 ) {
+			if ( isset( $value ) ) {
+				$clamped_value = max( $min, min( $max, $value ) );
+				return $clamped_value !== $value ? $clamped_value : null;
+			}
+
+			return null;
 		}
 
 		/**

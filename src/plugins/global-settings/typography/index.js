@@ -296,6 +296,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 						{ value: 'blocks-stackable-native', label: __( 'Stackable and native blocks only', i18n ) },
 						{ value: 'blocks-stackable', label: __( 'Stackable blocks only', i18n ) },
 						{ value: 'blocks-all', label: __( 'All blocks', i18n ) },
+						{ value: 'content', label: __( 'All content', i18n ) },
 						{ value: 'site', label: __( 'Entire site', i18n ) },
 					] }
 					value={ applySettingsTo }
