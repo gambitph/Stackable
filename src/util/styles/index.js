@@ -76,14 +76,15 @@ export const whiteIfDarkBlackIfLight = ( textColor, backgroundColor = '', white 
  * Adds !important to the end of every rule in a style object.
  *
  * @param {Object} styleObject A style object.
+ * @param {boolean} doImportant If false, !important will not be appended.
  *
  * @return {Object} New style object.
  */
-export const appendImportantAll = styleObject => {
+export const appendImportantAll = ( styleObject, doImportant = true ) => {
 	return Object.keys( styleObject ).reduce( ( newStyleObject, key ) => {
 		return {
 			...newStyleObject,
-			[ key ]: appendImportant( styleObject[ key ] ),
+			[ key ]: appendImportant( styleObject[ key ], doImportant ),
 		}
 	}, {} )
 }

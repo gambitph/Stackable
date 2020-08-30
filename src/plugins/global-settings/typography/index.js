@@ -26,14 +26,15 @@ import {
 import { loadPromise, models } from '@wordpress/api'
 import { addFilter, doAction } from '@wordpress/hooks'
 import { __, sprintf } from '@wordpress/i18n'
-import { select } from '@wordpress/data'
+import { useSelect } from '@wordpress/data'
 
 /**
  * Creates a summary description of what the current font is.
  *
  * @param {Object} styleObject Our font styles
+ * @param {string} device The current device to create the typography description for
  */
-const createDescription = styleObject => {
+const createDescription = ( styleObject, device = 'desktop' ) => {
 	const description = []
 	if ( styleObject.fontFamily ) {
 		description.push( styleObject.fontFamily )
@@ -43,14 +44,12 @@ const createDescription = styleObject => {
 	}
 
 	// Show the correct font size when in tablet or mobile previews.
-	const { __experimentalGetPreviewDeviceType: getPreviewDeviceType } = select( 'core/edit-post' )
-	const device = getPreviewDeviceType()
-	if ( device === 'Tablet' && styleObject.tabletFontSize ) {
+	if ( device === 'tablet' && styleObject.tabletFontSize ) {
 		if ( styleObject.fontSize ) {
 			description.pop()
 		}
 		description.push( `${ styleObject.tabletFontSize }${ styleObject.tabletFontSizeUnit || 'px' }` )
-	} else if ( device === 'Mobile' && ( styleObject.tabletFontSize || styleObject.mobileFontSize ) ) {
+	} else if ( device === 'mobile' && ( styleObject.tabletFontSize || styleObject.mobileFontSize ) ) {
 		if ( styleObject.fontSize ) {
 			description.pop()
 		}
@@ -73,27 +72,21 @@ const createDescription = styleObject => {
 
 const TypographyPreview = props => {
 	const Tag = props.tag
-	const description = createDescription( props.styles )
+	const { device } = useSelect(
+		select => ( {
+			device: select(
+				'core/edit-post'
+			).__experimentalGetPreviewDeviceType().toLowerCase(),
+		} ),
+		[]
+	)
+	const description = createDescription( props.styles, device )
 
 	// Generate our preview styles.
 	const styles = {
-		[ `.ugb-global-typography-preview__label[data-tag="${ props.tag }"]` ]: createTypographyStyles( '%s', 'desktop', props.styles ),
-		tablet: {
-			[ `.ugb-global-typography-preview__label[data-tag="${ props.tag }"]` ]: createTypographyStyles( '%s', 'tablet', props.styles ),
-		},
-		mobile: {
-			[ `.ugb-global-typography-preview__label[data-tag="${ props.tag }"]` ]: createTypographyStyles( '%s', 'mobile', props.styles ),
-		},
-	}
-
-	// Apply the styles directly to our preview if we're previewing from tablet or mobile mode.
-	const { __experimentalGetPreviewDeviceType: getPreviewDeviceType } = select( 'core/edit-post' )
-	const device = getPreviewDeviceType()
-	if ( device === 'Tablet' || device === 'Mobile' ) {
-		styles[ `.ugb-global-typography-preview__label[data-tag="${ props.tag }"]` ] = {
-			...createTypographyStyles( '%s', 'desktop', props.styles ),
-			...createTypographyStyles( '%s', device.toLowerCase(), props.styles ),
-		}
+		[ `.ugb-global-typography-preview__label[data-tag="${ props.tag }"]` ]: createTypographyStyles( '%s', 'desktop', props.styles, { important: true } ),
+		[ `.ugb-global-typography-preview__label[data-tag="${ props.tag }"]:not([data-device="desktop"])` ]: createTypographyStyles( '%s', 'tablet', props.styles, { important: true } ),
+		[ `.ugb-global-typography-preview__label[data-tag="${ props.tag }"][data-device="mobile"]` ]: createTypographyStyles( '%s', 'mobile', props.styles, { important: true } ),
 	}
 
 	// Load our Google Font is necessary.
@@ -106,7 +99,7 @@ const TypographyPreview = props => {
 			<div className="editor-styles-wrapper">
 				<div className="wp-block">
 					<style>{ generateStyles( styles ) }</style>
-					<Tag className="ugb-global-typography-preview__label" data-tag={ props.tag }>{ props.children }</Tag>
+					<Tag className="ugb-global-typography-preview__label" data-tag={ props.tag } data-device={ device }>{ props.children }</Tag>
 				</div>
 			</div>
 			{ description && <p className="ugb-global-typography-preview__description">{ description }</p> }
