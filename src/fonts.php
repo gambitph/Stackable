@@ -41,7 +41,7 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 			self::enqueue_google_fonts( $google_fonts );
 		}
 
-		public function is_web_font( $font_name ) {
+		public static function is_web_font( $font_name ) {
 			return ! in_array( strtolower( $font_name ), [ 'serif', 'sans-serif', 'monospace', 'serif-alt' ] );
 		}
 
@@ -58,7 +58,7 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 				if ( $this->is_stackable_block( $block['blockName'] ) ) {
 					foreach ( $block['attrs'] as $attr_name => $font_name ) {
 						if ( preg_match( '/fontFamily$/i', $attr_name ) ) {
-							if ( ! $this->is_web_font( $font_name ) ) {
+							if ( ! self::is_web_font( $font_name ) ) {
 								continue;
 							}
 							if ( ! in_array( $font_name, $google_fonts ) ) {
