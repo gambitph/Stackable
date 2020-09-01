@@ -180,9 +180,27 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			  }
 
 			  $css = array();
+			  $core_css = array();
 
 			  foreach( $colors as $color  ) {
-				  array_push( $css, $color['colorVar'] . ': ' . $color[ 'fallback' ] . ';' );
+				  $color_name = strtolower( $color['slug'] );
+
+				  // Convert the name to kebab casing,
+				  $color_typography_name = '.has-' . implode( '-', explode( ' ', $color_name ) ) . '-color';
+				  $color_background_name = '.has-' . implode( '-', explode( ' ', $color_name ) ) . '-background-color';
+
+				  if ( $color['fallback']){
+				  	// Add the custom css property.
+					array_push( $css, $color['colorVar'] . ': ' . $color['fallback'] . ';' );
+
+					  
+					// Add custom css class rule for other blocks.
+					// For typography colors.
+					 array_push( $core_css, $color_typography_name . ' { color: ' . $color['fallback'] . ' !important; }');
+
+					 // For background colors.
+					 array_push( $core_css, $color_background_name . ' { background-color: ' . $color['fallback'] . ' !important; }');
+				  }
 			  }
 			  
 			  $generated_color_css = ':root {
@@ -190,6 +208,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			  }';
 
 			  wp_add_inline_style( 'ugb-style-css', $generated_color_css );
+			  wp_add_inline_style( 'ugb-style-css', implode( ' ', $core_css ) );
 		  }
 
 		/**-----------------------------------------------------------------------------

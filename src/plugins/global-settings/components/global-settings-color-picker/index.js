@@ -91,7 +91,6 @@ const ColorPickers = ( { colors } ) => {
 
 		// Overwrite the selected style name and slug to a new style name and slug.
 		updatedColors[ selectedIndex ].name = value
-		updatedColors[ selectedIndex ].slug = value
 
 		dispatch( 'core/block-editor' ).updateSettings( {
 			colors: updatedColors,
@@ -159,13 +158,15 @@ const ColorPickers = ( { colors } ) => {
 			<AddIcon
 				onClick={ () => {
 					const newIndex = ( colors && Array.isArray( colors ) ) ? colors.length + 1 : 1
-					const colorVar = `--stk-global-color-${ md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 ) }`
+					const __id = md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 )
+					const slugId = Math.floor( Math.random() * new Date().getTime() )
+					const colorVar = `--stk-global-color-${ __id }`
 
 					dispatch( 'core/block-editor' ).updateSettings( {
 						colors: [
 							...select( 'core/block-editor' ).getSettings().colors,
 							{
-								name: `Custom Color ${ newIndex }`, slug: `Custom Color ${ newIndex }`, color: `--var(${ colorVar })`, colorVar, fallback: '#000000',
+								name: `Custom Color ${ newIndex }`, slug: `stk-global-color-${ slugId }`, color: `--var(${ colorVar })`, colorVar, fallback: '#000000',
 							},
 						],
 					} )
@@ -174,7 +175,7 @@ const ColorPickers = ( { colors } ) => {
 					doAction( 'stackable.global-settings.global-styles', [
 						...select( 'core/block-editor' ).getSettings().colors,
 						{
-							name: `Custom Color ${ newIndex }`, slug: `Custom Color ${ newIndex }`, color: `--var(${ colorVar })`, colorVar, fallback: '#000000',
+							name: `Custom Color ${ newIndex }`, slug: `stk-global-color-${ slugId }`, color: `--var(${ colorVar })`, colorVar, fallback: '#000000',
 						},
 					] )
 				} }
