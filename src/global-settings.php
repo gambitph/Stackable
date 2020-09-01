@@ -189,7 +189,8 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				  $color_typography_name = '.has-' . implode( '-', explode( ' ', $color_name ) ) . '-color';
 				  $color_background_name = '.has-' . implode( '-', explode( ' ', $color_name ) ) . '-background-color';
 
-				  if ( $color['fallback']){
+				  // Only do this for our global colors.
+				  if ( $color['fallback'] && $color['colorVar']){
 				  	// Add the custom css property.
 					array_push( $css, $color['colorVar'] . ': ' . $color['fallback'] . ';' );
 
