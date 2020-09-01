@@ -71,7 +71,7 @@ const ColorPickers = ( { colors } ) => {
 		const colorVar = `--stk-global-color-${ md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 ) }`
 
 		// Overwrite the selected color to a new color.
-		updatedColors[ selectedIndex ].color = existingColorVar ? `var(${ existingColorVar }, ${ data.hex })` : `var(${ colorVar }, ${ data.hex })`
+		updatedColors[ selectedIndex ].color = existingColorVar ? `var(${ existingColorVar })` : `var(${ colorVar })`
 		updatedColors[ selectedIndex ].fallback = data.hex
 
 		// Add a fallback and colorVar if not exists.
@@ -165,7 +165,7 @@ const ColorPickers = ( { colors } ) => {
 						colors: [
 							...select( 'core/block-editor' ).getSettings().colors,
 							{
-								name: `Custom Color ${ newIndex }`, slug: `Custom Color ${ newIndex }`, color: `--var(${ colorVar }, #000000)`, colorVar, fallback: '#000000',
+								name: `Custom Color ${ newIndex }`, slug: `Custom Color ${ newIndex }`, color: `--var(${ colorVar })`, colorVar, fallback: '#000000',
 							},
 						],
 					} )
@@ -174,7 +174,7 @@ const ColorPickers = ( { colors } ) => {
 					doAction( 'stackable.global-settings.global-styles', [
 						...select( 'core/block-editor' ).getSettings().colors,
 						{
-							name: `Custom Color ${ newIndex }`, slug: `Custom Color ${ newIndex }`, color: `--var(${ colorVar }, #000000)`, colorVar, fallback: '#000000',
+							name: `Custom Color ${ newIndex }`, slug: `Custom Color ${ newIndex }`, color: `--var(${ colorVar })`, colorVar, fallback: '#000000',
 						},
 					] )
 				} }
