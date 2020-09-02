@@ -251,7 +251,7 @@ const Edit = props => {
 		) || 20
 
 		// Check if the click location if it's estimated to be on the icon.
-		if ( event.offsetX <= currentIconSize ) {
+		if ( event.offsetX <= currentIconSize + 21 ) {
 			// Get the selected li and show the icon picker on it.
 			const index = Array.from( event.target.parentElement.children ).indexOf( event.target ) + 1
 			const { currentlyOpenIndex } = event.target.parentElement
