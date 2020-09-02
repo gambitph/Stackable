@@ -1,3 +1,5 @@
+import './responsive-color-palette-change'
+
 /**
  * Internal dependencies
  */
