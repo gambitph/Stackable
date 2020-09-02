@@ -14,6 +14,9 @@ import { loadPromise, models } from '@wordpress/api'
 import { useEffect } from '@wordpress/element'
 import { registerPlugin } from '@wordpress/plugins'
 
+// Initialize the current screen of the editor.
+let currentScreen = 'Desktop'
+
 // Dispatch the color palette from the settings when the preview mode
 // in the editor is changed.
 const ResponsiveColorPalette = () => {
@@ -32,11 +35,13 @@ const ResponsiveColorPalette = () => {
 			settings.fetch().then( res => {
 				const { stackable_global_colors: stackableGlobalColors } = res // eslint-disable-line camelcase
 
-				if ( stackableGlobalColors && Array.isArray( stackableGlobalColors ) && deviceType !== 'Desktop' ) {
+				if ( stackableGlobalColors && Array.isArray( stackableGlobalColors ) && deviceType !== currentScreen ) {
 					// Update the color palette.
 					dispatch( 'core/block-editor' ).updateSettings( {
 						colors: stackableGlobalColors,
 					} )
+
+					currentScreen = deviceType
 				}
 			} )
 		} )

@@ -65,7 +65,7 @@ const DeleteButton = props => {
 			<div className="components-color-picker__controls">
 				<Button
 					ref={ deleteButtonRef }
-					className="ugb-global-settings-color-picker__delete-button"
+					className="ugb-global-settings-color-picker__delete-button-text"
 					isLink
 					onClick={ handleDelete }
 				>
@@ -75,12 +75,34 @@ const DeleteButton = props => {
 					<Popover
 						anchorRef={ deleteButtonRef.current }
 						onClickOutside={ onClickOutside }
-						position="top center"
+						position="bottom center"
 					>
-						<ButtonGroup>
-							<Button onClick={ props.onClick }>Delete</Button>
-							<Button onClick={ () => setIsDeletePopoverOpen( false ) }>Cancel</Button>
-						</ButtonGroup>
+						<div className="components-color-picker__body">
+							<div className="ugb-global-settings-color-picker__delete-popover-text is-red">
+								{ __( 'Delete', i18n ) } { ` "${ props.name }"` }
+							</div>
+							<div className="ugb-global-settings-color-picker__delete-popover-text">
+								{ __( 'Any blocks that use this color will become unlinked with this global color. Delete this color?', i18n ) }
+							</div>
+							<div className="components-color-picker__controls">
+								<ButtonGroup>
+									<Button
+										className="ugb-global-settings-color-picker__delete-button"
+										onClick={ props.onClick }
+										isDestructive
+										isSmall
+									>
+										{ __( 'Delete', i18n ) }
+									</Button>
+									<Button
+										onClick={ () => setIsDeletePopoverOpen( false ) }
+										isSmall
+									>
+										{ __( 'Cancel', i18n ) }
+									</Button>
+								</ButtonGroup>
+							</div>
+						</div>
 					</Popover>
 				) }
 			</div>
@@ -245,6 +267,7 @@ const ColorPickers = ( { colors } ) => {
 					/>
 					{ ! inRange( selectedIndex, 0, 5 ) && (
 						<DeleteButton
+							name={ colors[ selectedIndex ] && colors[ selectedIndex ].name }
 							onClick={ onColorDelete }
 						/>
 					) }
