@@ -165,18 +165,18 @@ const ColorPickers = ( { colors } ) => {
 
 	// Show reset button if necessary.
 	useEffect( () => {
-		if ( ! showReset ) {
-			const { defaultColors } = select( 'core/block-editor' ).getSettings()
-			loadPromise.then( () => {
-				const settings = new models.Settings()
-				settings.fetch().then( res => {
-					const { stackable_global_colors } = res // eslint-disable-line camelcase
-					if ( ! isEqual( defaultColors, stackable_global_colors ) ) {
-						setShowReset( true )
-					}
-				} )
+		const { defaultColors } = select( 'core/block-editor' ).getSettings()
+		loadPromise.then( () => {
+			const settings = new models.Settings()
+			settings.fetch().then( res => {
+				const { stackable_global_colors } = res // eslint-disable-line camelcase
+				if ( ! isEqual( defaultColors, stackable_global_colors ) ) {
+					setShowReset( true )
+				} else {
+					setShowReset( false )
+				}
 			} )
-		}
+		} )
 	}, [ colors ] )
 
 	const onChangeColor = data => {
@@ -238,7 +238,11 @@ const ColorPickers = ( { colors } ) => {
 			colors: defaultColors,
 		} )
 
-		setShowReset( false )
+		// Reset the colors in stackable_global_colors
+		loadPromise.then( () => {
+			const settings = new models.Settings( { stackable_global_colors: [] } ) // eslint-disable-line camelcase
+			settings.save()
+		} )
 	}
 
 	return colors && Array.isArray( colors ) && (
