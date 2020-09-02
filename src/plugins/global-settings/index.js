@@ -20,6 +20,7 @@ import { __ } from '@wordpress/i18n'
 import {
 	applyFilters, addAction, addFilter,
 } from '@wordpress/hooks'
+import { dispatch, select } from '@wordpress/data'
 
 /**
  * Used in ColorPaletteControl component.
@@ -56,29 +57,15 @@ addFilter( 'stackable.global-settings.update-color-value', 'update-value', ( val
 	return newValue
 } )
 
-// Action used to open the global settings panel.
-addAction( 'stackable.global-settings.open-sidebar', 'toggle', () => {
-	const menuToggleEl = document.querySelector( '.components-dropdown-menu__toggle' )
+// Action used to toggle the global settings panel.
+addAction( 'stackable.global-settings.toggle-sidebar', 'toggle', () => {
+	const stackableSidebar = 'stackable-global-settings/sidebar'
+	const currentlyOpenedSidebar = select( 'core/edit-post' ).getActiveGeneralSidebarName()
 
-	/**
-	 * Trigger the sidebar toggle.
-	 * With this, we can still toggle the sidebar
-	 * even if the Stackable logo at the top is hidden.
-	 */
-	if ( menuToggleEl ) {
-		menuToggleEl.click()
-		setTimeout( () => {
-			const menuTogglePopoverEl = document.querySelector( '.edit-post-more-menu__content' )
-			const stackableGlobalSettingsButtonEl = document.querySelector( '.ugb-global-settings__button' )
-
-			if ( menuTogglePopoverEl ) {
-				menuTogglePopoverEl.style.opacity = '0'
-
-				if ( stackableGlobalSettingsButtonEl ) {
-					stackableGlobalSettingsButtonEl.click()
-				}
-			}
-		}, 0 )
+	if ( currentlyOpenedSidebar === stackableSidebar ) {
+		dispatch( 'core/edit-post' ).closeGeneralSidebar( stackableSidebar )
+	} else {
+		dispatch( 'core/edit-post' ).openGeneralSidebar( stackableSidebar )
 	}
 } )
 
@@ -92,6 +79,7 @@ const GlobalSettings = () => {
 				{ __( 'Stackable Settings', i18n ) }
 			</PluginSidebarMoreMenuItem>
 			<PluginSidebar
+				name="sidebar"
 				title={ __( 'Stackable Settings', i18n ) }
 				className="ugb-global-settings__inspector"
 				icon={ <SVGStackableIcon /> } >

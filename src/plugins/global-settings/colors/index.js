@@ -9,6 +9,8 @@ import { GlobalSettingsColorPicker } from '../components'
  * External dependencies
  */
 import { i18n } from 'stackable'
+import { PanelAdvancedSettings } from '~stackable/components'
+import { isEqual } from 'lodash'
 
 /**
  * Wordpress dependencies
@@ -16,19 +18,36 @@ import { i18n } from 'stackable'
 import {
 	addFilter, addAction, doAction,
 } from '@wordpress/hooks'
-import { Fragment, useState } from '@wordpress/element'
+import {
+	Fragment, useState, useEffect,
+} from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import domReady from '@wordpress/dom-ready'
 import { loadPromise, models } from '@wordpress/api'
-import { dispatch, select } from '@wordpress/data'
-import { PanelAdvancedSettings } from '~stackable/components'
+import {
+	dispatch, useSelect, select,
+} from '@wordpress/data'
 
 addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors', output => {
 	const [ isPanelOpen, setIsPanelOpen ] = useState( false )
+	const [ showReset, setShowReset ] = useState( false )
+
+	// We make sure that we are getting the latest state for default colors.
+	const { defaultColors } = useSelect( select => select( 'core/block-editor' ).getSettings() )
 
 	const handleToggle = () => {
 		setIsPanelOpen( toggle => ! toggle )
 	}
+
+	// Show reset button if necessary.
+	useEffect( () => {
+		if ( ! showReset ) {
+			const { colors } = select( 'core/block-editor' ).getSettings()
+			if ( defaultColors && ! isEqual( defaultColors, colors ) ) {
+				setShowReset( true )
+			}
+		}
+	}, [ defaultColors ] )
 
 	return (
 		<Fragment>
@@ -46,7 +65,10 @@ addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors
 						{ __( 'Learn more about Global Colors', i18n ) }
 					</a>
 				</p>
-				<GlobalSettingsColorPicker />
+				<GlobalSettingsColorPicker
+					showReset={ showReset }
+					setShowReset={ setShowReset }
+				/>
 			</PanelAdvancedSettings>
 		</Fragment>
 	)

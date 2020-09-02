@@ -2,9 +2,7 @@
  * External dependencies
  */
 import classnames from 'classnames'
-import {
-	cloneDeep, inRange, isEqual,
-} from 'lodash'
+import { cloneDeep, inRange } from 'lodash'
 import md5 from 'md5'
 import { i18n } from 'stackable'
 
@@ -80,10 +78,10 @@ const DeleteButton = props => {
 						position="bottom center"
 					>
 						<div className="components-color-picker__body">
-							<div className="ugb-global-settings-color-picker__delete-popover-text is-red">
+							<div className="ugb-global-settings-color-picker__popover-text is-red">
 								{ __( 'Delete', i18n ) } { ` "${ props.name }"` }
 							</div>
-							<div className="ugb-global-settings-color-picker__delete-popover-text">
+							<div className="ugb-global-settings-color-picker__popover-text">
 								{ __( 'Any blocks that use this color will become unlinked with this global color. Delete this color?', i18n ) }
 							</div>
 							<div className="components-color-picker__controls">
@@ -128,26 +126,81 @@ const AddIcon = props => (
 )
 
 // Component used to add a reset icon button.
-const ResetIcon = props => (
-	<div className="ugb-global-settings-color-picker__reset-button">
-		<Button
-			{ ...props }
-			isDefault
-			isSmall
-		>
-			{ __( 'Reset', i18n ) }
-		</Button>
-	</div>
-)
+const ResetButton = props => {
+	const [ isResetPopoverOpen, setIsResetPopoverOpen ] = useState( false )
+	const resetButtonRef = useRef( null )
 
-const ColorPickers = ( { colors } ) => {
+	const handleReset = () => {
+		setIsResetPopoverOpen( toggle => ! toggle )
+	}
+
+	const onClickOutside = event => {
+		if ( resetButtonRef && event.target !== resetButtonRef.current ) {
+			setIsResetPopoverOpen( false )
+		}
+	}
+	return (
+		<div className="ugb-global-settings-color-picker__reset-button">
+			<Button
+				ref={ resetButtonRef }
+				onClick={ handleReset }
+				isDefault
+				isSmall
+			>
+				{ __( 'Reset', i18n ) }
+			</Button>
+			{ isResetPopoverOpen && (
+				<Popover
+					anchorRef={ resetButtonRef.current }
+					onClickOutside={ onClickOutside }
+					position="bottom center"
+				>
+					<div className="components-color-picker__body">
+						<div className="ugb-global-settings-color-picker__popover-text is-red">
+							{ __( 'Reset Color Palette', i18n ) }
+						</div>
+						<div className="ugb-global-settings-color-picker__popover-text">
+							{ __( 'Resetting the global colors will revert all colors to its original color palette. Proceed?', i18n ) }
+						</div>
+						<div className="components-color-picker__controls">
+							<ButtonGroup>
+								<Button
+									onClick={ props.onClick }
+									isDefault
+									isSmall
+								>
+									{ __( 'Reset', i18n ) }
+								</Button>
+								<Button
+									onClick={ () => setIsResetPopoverOpen( false ) }
+									isSmall
+								>
+									{ __( 'Cancel', i18n ) }
+								</Button>
+							</ButtonGroup>
+						</div>
+					</div>
+				</Popover>
+			) }
+		</div>
+	)
+}
+
+const ColorPickers = ( {
+	colors,
+	showReset,
+	setShowReset,
+} ) => {
+	// State used to determine the clicked index in the color picker.
 	const [ selectedIndex, setSelectedIndex ] = useState( null )
+	// State used to control the popover when clicking a color.
 	const [ isPopoverOpen, setIsPopOverOpen ] = useState( false )
+	// State used to control the anchorRef of the Popover.
 	const [ colorButtonAnchor, setColorButtonAnchor ] = useState( null )
+	// State used to determine if a new color is added.
 	const [ hasAddedNewColor, setHasAddedNewColor ] = useState( false )
-	const [ showReset, setShowReset ] = useState( false )
 
-	// Open the PopOver for the newly added color.
+	// If a new color is added, set the anchorRef to the new color element and open the Popover.
 	useEffect( () => {
 		if ( hasAddedNewColor ) {
 			const colorPickerEl = document.querySelector( '.ugb-global-settings-color-picker' )
@@ -163,22 +216,29 @@ const ColorPickers = ( { colors } ) => {
 		}
 	}, [ hasAddedNewColor ] )
 
-	// Show reset button if necessary.
-	useEffect( () => {
-		const { defaultColors } = select( 'core/block-editor' ).getSettings()
+	/**
+	 * Function used to update the colors in: (1) the wp setting stackable_global_colors, (2) in @wordpress/data,
+     " and in (3) the :root css of the editor page.
+	 *
+	 * @param {Array} updatedColors colors passed.
+	 */
+	const updateColors = updatedColors => {
 		loadPromise.then( () => {
-			const settings = new models.Settings()
-			settings.fetch().then( res => {
-				const { stackable_global_colors } = res // eslint-disable-line camelcase
-				if ( ! isEqual( defaultColors, stackable_global_colors ) ) {
-					setShowReset( true )
-				} else {
-					setShowReset( false )
-				}
-			} )
+			const settings = new models.Settings( { stackable_global_colors: updatedColors } ) // eslint-disable-line camelcase
+			settings.save()
 		} )
-	}, [ colors ] )
 
+		dispatch( 'core/block-editor' ).updateSettings( {
+			colors: updatedColors,
+		} )
+
+		// Update the global style variable values
+		doAction( 'stackable.global-settings.global-styles', updatedColors )
+
+		setShowReset( true )
+	}
+
+	// Called when updating a color.
 	const onChangeColor = data => {
 		const { colors: updatedColors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
 		const { colorVar: existingColorVar } = updatedColors[ selectedIndex ]
@@ -192,114 +252,114 @@ const ColorPickers = ( { colors } ) => {
 		updatedColors[ selectedIndex ].colorVar = existingColorVar || colorVar
 		updatedColors[ selectedIndex ].fallback = data.hex
 
-		dispatch( 'core/block-editor' ).updateSettings( {
-			colors: updatedColors,
-		} )
-
-		// Update the global style variable values
-		doAction( 'stackable.global-settings.global-styles', updatedColors )
+		// Update the colors.
+		updateColors( updatedColors )
 	}
 
+	// Called when updating a style name.
 	const onChangeStyleName = value => {
 		const { colors: updatedColors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
 
 		// Overwrite the selected style name and slug to a new style name and slug.
 		updatedColors[ selectedIndex ].name = value
 
-		dispatch( 'core/block-editor' ).updateSettings( {
-			colors: updatedColors,
-		} )
+		// Update the colors.
+		updateColors( updatedColors )
 	}
 
+	// When the Popover is open, this handles the onClickOutside.
 	const onClickOutside = event => {
 		if ( event.target !== colorButtonAnchor ) {
 			setIsPopOverOpen( false )
 		}
 	}
 
+	// Called when deleting a color.
 	const onColorDelete = () => {
 		const { colors: updatedColors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
 
 		// Delete the specific color based on the selected index.
 		updatedColors.splice( selectedIndex, 1 )
 
-		dispatch( 'core/block-editor' ).updateSettings( {
-			colors: updatedColors,
-		} )
+		// Update the colors.
+		updateColors( updatedColors )
 
 		setIsPopOverOpen( false )
 	}
 
+	// Called when the user decided to reset the color palette.
 	const onColorPaletteReset = () => {
 		const { defaultColors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
-
-		// Revert all the colors.
-		dispatch( 'core/block-editor' ).updateSettings( {
-			colors: defaultColors,
-		} )
 
 		// Reset the colors in stackable_global_colors
 		loadPromise.then( () => {
 			const settings = new models.Settings( { stackable_global_colors: [] } ) // eslint-disable-line camelcase
 			settings.save()
+
+			// Revert all the colors.
+			dispatch( 'core/block-editor' ).updateSettings( {
+				colors: defaultColors,
+			} )
+
+			setShowReset( false )
+
+			// Update the global style variable values
+			doAction( 'stackable.global-settings.global-styles', [] )
 		} )
+	}
+
+	// Called when adding a new color.
+	const handleAddIcon = () => {
+		const newIndex = ( colors && Array.isArray( colors ) ) ? colors.length + 1 : 1
+		const __id = md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 )
+		const slugId = Math.floor( Math.random() * new Date().getTime() )
+		const colorVar = `--stk-global-color-${ __id }`
+
+		const updatedColors = [
+			...select( 'core/block-editor' ).getSettings().colors,
+			{
+				name: `Custom Color ${ newIndex }`, slug: `stk-global-color-${ slugId }`, color: `--var(${ colorVar })`, colorVar, fallback: '#000000',
+			},
+		]
+
+		// Update the colors.
+		updateColors( updatedColors )
+
+		setIsPopOverOpen( false )
+		setSelectedIndex( newIndex - 1 )
+		setHasAddedNewColor( true )
+	}
+
+	// Called when clicking a color.
+	const handleOpenColorPicker = ( event, index ) => {
+		const currIndex = selectedIndex
+
+		setColorButtonAnchor( event.target )
+		setSelectedIndex( index )
+
+		if ( currIndex === index ) {
+			// If the preview selected index is the same as the current selected index, close the Popover.
+			setIsPopOverOpen( toggle => ! toggle )
+		} else {
+			// Otherwise, open another instance of the Popover.
+			setIsPopOverOpen( true )
+		}
 	}
 
 	return colors && Array.isArray( colors ) && (
 		<Fragment>
-			{ showReset && <ResetIcon onClick={ onColorPaletteReset } /> }
+			{ showReset && <ResetButton onClick={ onColorPaletteReset } /> }
 			{ colors.map( ( color, index ) => (
 				<div className="components-circular-option-picker__option-wrapper" key={ index }>
 					<Button
 						className="components-circular-option-picker__option"
 						label={ color.slug }
 						style={ { backgroundColor: color.color, color: color.color } }
-						onClick={ event => {
-							const currIndex = selectedIndex
-
-							setColorButtonAnchor( event.target )
-							setSelectedIndex( index )
-
-							if ( currIndex === index ) {
-								// If the preview selected index is the same as the current selected index, close the Popover.
-								setIsPopOverOpen( toggle => ! toggle )
-							} else {
-								// Otherwise, open another instance of the Popover.
-								setIsPopOverOpen( true )
-							}
-						} }
+						onClick={ event => handleOpenColorPicker( event, index ) }
 					/>
 				</div>
 			) ) }
-			<AddIcon
-				onClick={ () => {
-					const newIndex = ( colors && Array.isArray( colors ) ) ? colors.length + 1 : 1
-					const __id = md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 )
-					const slugId = Math.floor( Math.random() * new Date().getTime() )
-					const colorVar = `--stk-global-color-${ __id }`
-
-					dispatch( 'core/block-editor' ).updateSettings( {
-						colors: [
-							...select( 'core/block-editor' ).getSettings().colors,
-							{
-								name: `Custom Color ${ newIndex }`, slug: `stk-global-color-${ slugId }`, color: `--var(${ colorVar })`, colorVar, fallback: '#000000',
-							},
-						],
-					} )
-
-					// Update the global style variable values
-					doAction( 'stackable.global-settings.global-styles', [
-						...select( 'core/block-editor' ).getSettings().colors,
-						{
-							name: `Custom Color ${ newIndex }`, slug: `stk-global-color-${ slugId }`, color: `--var(${ colorVar })`, colorVar, fallback: '#000000',
-						},
-					] )
-
-					setIsPopOverOpen( false )
-					setSelectedIndex( newIndex - 1 )
-					setHasAddedNewColor( true )
-				} }
-			/>
+			<AddIcon onClick={ handleAddIcon } />
 			{ isPopoverOpen && (
 				<Popover
 					anchorRef={ colorButtonAnchor }
@@ -336,28 +396,21 @@ const GlobalSettingsColorPicker = props => {
 
 	const { colors } = useSelect( select => select( 'core/block-editor' ).getSettings() )
 
-	useEffect( () => {
-		const timeout = setTimeout( () => {
-			loadPromise.then( () => {
-				const model = new models.Settings( { stackable_global_colors: colors } ) // eslint-disable-line camelcase
-				model.save()
-			} )
-		}, 1000 )
-
-		return () => {
-			clearTimeout( timeout )
-		}
-	}, [ colors ] )
-
 	return (
 		<div className={ classNames }>
-			<ColorPickers colors={ colors } />
+			<ColorPickers
+				colors={ colors }
+				showReset={ props.showReset }
+				setShowReset={ props.setShowReset }
+			/>
 		</div>
 	)
 }
 
 GlobalSettingsColorPicker.defaultProps = {
 	className: '',
+	showReset: false,
+	setShowReset: () => {},
 }
 
 export default GlobalSettingsColorPicker
