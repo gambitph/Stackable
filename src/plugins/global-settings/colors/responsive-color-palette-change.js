@@ -1,7 +1,7 @@
 /**
  * Changing the preview mode resets the color palette in the editor.
  * With this, we are dispatching the color palette from the
- * stackable_global_colors.
+ * stackable_global_colors everytime the preview mode changes.
  */
 
 /**
