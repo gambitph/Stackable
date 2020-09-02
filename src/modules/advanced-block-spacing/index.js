@@ -319,6 +319,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							enableBottom={ options.enableMarginBottom }
 							enableLeft={ align !== 'full' && options.enableMarginLeft }
 							placeholder="0"
+							placeholderBottom="35"
 							className="ugb--help-tip-advanced-block-margins"
 						/>
 					</WhenResponsiveScreen>
