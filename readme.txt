@@ -198,6 +198,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Responsive hiding doesn't show blocks on exactly 600px and 960px widths
 * Fixed: Load more button in Blog Posts block wasn't centered correctly
 * Fixed: Typography mobile font size issue when inheriting clipped desktop values
+* Fixed: Group into Container was producing an error
 
 = 2.10.0 =
 [Better Responsive Controls, Better List Block Icons and Low-Highlight Effect](https://wpstackable.com/blog/better-responsive-controls-better-list-block-icons-low-highlight-effect/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
