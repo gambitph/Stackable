@@ -53,6 +53,7 @@
   * [I'm Encountering Block Errors](troubleshooting/common-issues/im-encountering-block-editor-errors.md)
   * [My Blocks Do Not Go Full-Width Properly](troubleshooting/common-issues/my-blocks-do-not-go-full-width-properly.md)
   * [I Can See Errors in AMP Pages](troubleshooting/common-issues/i-can-see-errors-in-amp-pages.md)
+  * [The Blog Posts Block Doesn't Show my Custom Post Type](troubleshooting/common-issues/the-blog-posts-block-doesnt-show-my-custom-post-type.md)
   * [How Do I Contact Support?](troubleshooting/common-issues/how-do-i-contact-support.md)
   * [When I Pick an Image Size, It Always Shows the Full Image](troubleshooting/common-issues/when-i-pick-an-image-size-it-always-shows-the-full-image.md)
   * [Can I Use the Block Editor and the Classic Editor at the Same Time?](troubleshooting/common-issues/can-i-use-the-block-editor-and-the-classic-editor-at-the-same-time.md)
