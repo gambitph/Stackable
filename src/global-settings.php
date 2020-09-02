@@ -198,8 +198,8 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				  $color_name = strtolower( $color['slug'] );
 
 				  // Convert the name to kebab casing,
-				  $color_typography_name = '.has-' . implode( '-', explode( ' ', $color_name ) ) . '-color';
-				  $color_background_name = '.has-' . implode( '-', explode( ' ', $color_name ) ) . '-background-color';
+				  $color_typography_name = 'body .has-' . implode( '-', explode( ' ', $color_name ) ) . '-color';
+				  $color_background_name = 'body .has-' . implode( '-', explode( ' ', $color_name ) ) . '-background-color';
 
 				  // Only do this for our global colors.
 				  if ( $color['fallback'] && $color['colorVar']){

@@ -144,6 +144,7 @@ const ResetButton = props => {
 			<Button
 				ref={ resetButtonRef }
 				onClick={ handleReset }
+				disabled={ props.disabled }
 				isDefault
 				isSmall
 			>
@@ -160,12 +161,16 @@ const ResetButton = props => {
 							{ __( 'Reset Color Palette', i18n ) }
 						</div>
 						<div className="ugb-global-settings-color-picker__popover-text">
-							{ __( 'Resetting the global colors will revert all colors to its original color palette. Proceed?', i18n ) }
+							{ __( 'Resetting the global colors will revert all colors to its original color palette. Any added colors will be deleted and will become unlinked. Proceed?', i18n ) }
 						</div>
 						<div className="components-color-picker__controls">
 							<ButtonGroup>
 								<Button
-									onClick={ props.onClick }
+									onClick={ () => {
+										setIsResetPopoverOpen( false )
+										props.onClick()
+									} }
+									disabled={ props.disabled }
 									isDefault
 									isSmall
 								>
@@ -188,8 +193,8 @@ const ResetButton = props => {
 
 const ColorPickers = ( {
 	colors,
-	showReset,
-	setShowReset,
+	disableReset,
+	setDisableReset,
 } ) => {
 	// State used to determine the clicked index in the color picker.
 	const [ selectedIndex, setSelectedIndex ] = useState( null )
@@ -235,7 +240,7 @@ const ColorPickers = ( {
 		// Update the global style variable values
 		doAction( 'stackable.global-settings.global-styles', updatedColors )
 
-		setShowReset( true )
+		setDisableReset( false )
 	}
 
 	// Called when updating a color.
@@ -245,7 +250,7 @@ const ColorPickers = ( {
 		const colorVar = `--stk-global-color-${ md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 ) }`
 
 		// Overwrite the selected color to a new color.
-		updatedColors[ selectedIndex ].color = existingColorVar ? `var(${ existingColorVar })` : `var(${ colorVar })`
+		updatedColors[ selectedIndex ].color = existingColorVar ? `var(${ existingColorVar }, ${ data.hex })` : `var(${ colorVar }, ${ data.hex })`
 		updatedColors[ selectedIndex ].fallback = data.hex
 
 		// Add a fallback and colorVar if not exists.
@@ -301,7 +306,7 @@ const ColorPickers = ( {
 				colors: defaultColors,
 			} )
 
-			setShowReset( false )
+			setDisableReset( true )
 
 			// Update the global style variable values
 			doAction( 'stackable.global-settings.global-styles', [] )
@@ -318,7 +323,7 @@ const ColorPickers = ( {
 		const updatedColors = [
 			...select( 'core/block-editor' ).getSettings().colors,
 			{
-				name: `Custom Color ${ newIndex }`, slug: `stk-global-color-${ slugId }`, color: `--var(${ colorVar })`, colorVar, fallback: '#000000',
+				name: `Custom Color ${ newIndex }`, slug: `stk-global-color-${ slugId }`, color: `--var(${ colorVar }, #000000)`, colorVar, fallback: '#000000',
 			},
 		]
 
@@ -348,7 +353,7 @@ const ColorPickers = ( {
 
 	return colors && Array.isArray( colors ) && (
 		<Fragment>
-			{ showReset && <ResetButton onClick={ onColorPaletteReset } /> }
+			<ResetButton onClick={ onColorPaletteReset } disabled={ disableReset } />
 			{ colors.map( ( color, index ) => (
 				<div className="components-circular-option-picker__option-wrapper" key={ index }>
 					<Button
@@ -400,8 +405,8 @@ const GlobalSettingsColorPicker = props => {
 		<div className={ classNames }>
 			<ColorPickers
 				colors={ colors }
-				showReset={ props.showReset }
-				setShowReset={ props.setShowReset }
+				disableReset={ props.disableReset }
+				setDisableReset={ props.setDisableReset }
 			/>
 		</div>
 	)
@@ -409,8 +414,8 @@ const GlobalSettingsColorPicker = props => {
 
 GlobalSettingsColorPicker.defaultProps = {
 	className: '',
-	showReset: false,
-	setShowReset: () => {},
+	disableReset: true,
+	setDisableReset: () => {},
 }
 
 export default GlobalSettingsColorPicker
