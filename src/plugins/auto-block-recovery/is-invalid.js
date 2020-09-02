@@ -59,6 +59,11 @@ export const isInvalid = ( block, allowedTags = ALLOWED_ERROR_TAGS ) => {
 		return true
 	}
 
+	// Check whether an image label or aria label was changed, this was an issue < 2.10.0
+	if ( isImageLabel( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
 	// Get which HTML tags the error occurred.
 	const tags = getInvalidationTags( block )
 	if ( ! tags ) {
@@ -147,6 +152,33 @@ export const isMissingStyleTag = issue => {
 
 	// Style tag was present but shouldn't.
 	if ( issue.args[ 1 ] !== 'style' && issue.args[ 2 ] === 'style' ) {
+		return true
+	}
+
+	return false
+}
+
+/**
+ * Check whether an image label or aria label was changed, this was an issue < 2.10.0
+ *
+ * @param {Array} issue The invalidation object
+ *
+ * @return {boolean} True or false
+ */
+export const isImageLabel = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 4 ) {
+		return false
+	}
+
+	if ( typeof issue.args[ 1 ] !== 'string' ) {
+		return false
+	}
+
+	if ( issue.args[ 1 ] === 'aria-label' || issue.args[ 1 ] === 'title' || issue.args[ 1 ] === 'alt' ) {
 		return true
 	}
 

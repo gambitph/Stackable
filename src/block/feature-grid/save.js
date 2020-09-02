@@ -13,6 +13,7 @@ import {
 import { withUniqueClass, withBlockStyles } from '~stackable/higher-order'
 import classnames from 'classnames'
 import { range } from 'lodash'
+import striptags from 'striptags'
 
 /**
  * WordPress dependencies
@@ -83,7 +84,7 @@ const save = props => {
 										imageId={ imageId }
 										src={ imageUrl }
 										width={ imageWidth }
-										alt={ imageAlt || ( showTitle && title ) }
+										alt={ striptags( imageAlt || ( showTitle && title ) ) }
 										shadow={ imageShadow }
 										shape={ attributes[ `image${ i }Shape` ] || imageShape }
 										shapeStretch={ attributes[ `image${ i }ShapeStretch` ] || imageShapeStretch }

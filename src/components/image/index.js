@@ -2,6 +2,7 @@
  * External dependencies
  */
 import classnames from 'classnames'
+import striptags from 'striptags'
 
 const Image = props => {
 	const imageClasses = classnames( [
@@ -25,7 +26,7 @@ const Image = props => {
 		<img
 			className={ imageClasses }
 			src={ props.src || undefined }
-			alt={ props.alt || undefined }
+			alt={ striptags( props.alt || undefined ) }
 			width={ props.width || undefined }
 			height={ props.height || undefined }
 		/>

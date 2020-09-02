@@ -3,6 +3,8 @@
  */
 import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
 import { BlockContainer, DivBackground } from '~stackable/components'
+import classnames from 'classnames'
+import striptags from 'striptags'
 
 /**
  * Internal dependencies
@@ -14,7 +16,6 @@ import { getPlayButton } from './util'
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
-import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 
@@ -45,7 +46,7 @@ const save = props => {
 					className={ boxClasses }
 					backgroundAttrName="preview%s"
 					blockProps={ props }
-					data-video={ videoID }
+					data-video={ striptags( videoID ) }
 				>
 					{ /* eslint-disable-next-line */ }
 					<a href="#" className="ugb-video-popup__overlay" />

@@ -4,6 +4,7 @@
 import {
 	SvgIcon, SvgIconPlaceholder, UrlInputPopover,
 } from '~stackable/components'
+import striptags from 'striptags'
 
 /**
  * WordPress dependencies
@@ -222,6 +223,7 @@ ButtonEdit.Content = props => {
 		ghostToNormalEffect = false,
 		target = '',
 		role = '',
+		title = '',
 	} = props
 
 	const mainClasses = classnames( [
@@ -260,6 +262,7 @@ ButtonEdit.Content = props => {
 					href={ url }
 					target={ ( target || newTab ) ? ( target || '_blank' ) : undefined }
 					rel={ props.rel || rel.join( ' ' ) }
+					title={ striptags( title ) }
 					{ ...propsToPass }
 				>
 					{ icon && design !== 'link' &&

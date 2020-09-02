@@ -5,12 +5,13 @@ import {
 	ButtonEdit, BlockContainer, Image, DivBackground,
 } from '~stackable/components'
 import { withUniqueClass, withBlockStyles } from '~stackable/higher-order'
+import classnames from 'classnames'
+import striptags from 'striptags'
 
 /**
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
-import classnames from 'classnames'
 import { RichText } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
@@ -140,7 +141,7 @@ const save = props => {
 								className={ imageClasses }
 								src={ imageUrl }
 								height={ imageHeight }
-								alt={ imageAlt }
+								alt={ striptags( imageAlt ) }
 								shape={ imageShape }
 								shadow={ imageShadow }
 							/>

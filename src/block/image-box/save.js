@@ -5,6 +5,7 @@ import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
 import { BlockContainer } from '~stackable/components'
 import classnames from 'classnames'
 import { range } from 'lodash'
+import striptags from 'striptags'
 
 /**
  * Internal dependencies
@@ -58,10 +59,12 @@ const save = props => {
 					const subtitle = attributes[ `subtitle${ i }` ]
 					const title = attributes[ `title${ i }` ]
 					const description = attributes[ `description${ i }` ]
-					const ariaLabel = ( showTitle && ! RichText.isEmpty( title ) ) ? title :
-						( showSubtitle && ! RichText.isEmpty( subtitle ) ) ? subtitle :
-							( showDescription && ! RichText.isEmpty( description ) ) ? description :
-								''
+					const ariaLabel = striptags(
+						( showTitle && ! RichText.isEmpty( title ) ) ? title :
+							( showSubtitle && ! RichText.isEmpty( subtitle ) ) ? subtitle :
+								( showDescription && ! RichText.isEmpty( description ) ) ? description :
+									''
+					)
 
 					const itemClasses = classnames( [
 						'ugb-image-box__item',
