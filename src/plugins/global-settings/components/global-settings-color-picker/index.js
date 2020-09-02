@@ -10,10 +10,10 @@ import { i18n } from 'stackable'
  * Wordpress dependencies
  */
 import {
-	Button, ColorPicker, Popover, BaseControl,
+	Button, ColorPicker, Popover, BaseControl, ButtonGroup,
 } from '@wordpress/components'
 import {
-	Fragment, useState, useEffect,
+	Fragment, useState, useEffect, useRef,
 } from '@wordpress/element'
 import {
 	select, dispatch, useSelect,
@@ -46,19 +46,47 @@ const ColorPickerTextArea = props => (
 )
 
 // Component used to add a Delete Style button at the bottom of the COlorPicker.
-const DeleteButton = props => (
-	<div className="ugb-global-settings-color-picker__text-name components-color-picker__body">
-		<div className="components-color-picker__controls">
-			<Button
-				className="ugb-global-settings-color-picker__delete-button"
-				isLink
-				onClick={ props.onClick }
-			>
-				{ __( 'Delete Style', i18n ) }
-			</Button>
+const DeleteButton = props => {
+	const [ isDeletePopoverOpen, setIsDeletePopoverOpen ] = useState( false )
+	const deleteButtonRef = useRef( null )
+
+	const handleDelete = () => {
+		setIsDeletePopoverOpen( toggle => ! toggle )
+	}
+
+	const onClickOutside = event => {
+		if ( deleteButtonRef && event.target !== deleteButtonRef.current ) {
+			setIsDeletePopoverOpen( false )
+		}
+	}
+
+	return (
+		<div className="ugb-global-settings-color-picker__text-name components-color-picker__body">
+			<div className="components-color-picker__controls">
+				<Button
+					ref={ deleteButtonRef }
+					className="ugb-global-settings-color-picker__delete-button"
+					isLink
+					onClick={ handleDelete }
+				>
+					{ __( 'Delete Style', i18n ) }
+				</Button>
+				{ isDeletePopoverOpen && (
+					<Popover
+						anchorRef={ deleteButtonRef.current }
+						onClickOutside={ onClickOutside }
+						position="top center"
+					>
+						<ButtonGroup>
+							<Button onClick={ props.onClick }>Delete</Button>
+							<Button onClick={ () => setIsDeletePopoverOpen( false ) }>Cancel</Button>
+						</ButtonGroup>
+					</Popover>
+				) }
+			</div>
 		</div>
-	</div>
-)
+	)
+}
 
 const ColorPickers = ( { colors } ) => {
 	const [ selectedIndex, setSelectedIndex ] = useState( null )
@@ -202,7 +230,10 @@ const ColorPickers = ( { colors } ) => {
 				} }
 			/>
 			{ isPopoverOpen && (
-				<Popover anchorRef={ colorButtonAnchor } onClickOutside={ onClickOutside }>
+				<Popover
+					anchorRef={ colorButtonAnchor }
+					onClickOutside={ onClickOutside }
+				>
 					<ColorPicker
 						color={ colors[ selectedIndex ] && ( colors[ selectedIndex ].fallback || colors[ selectedIndex ].color ) }
 						onChangeComplete={ onChangeColor }
