@@ -47,11 +47,11 @@ import {
 	RichText, InnerBlocks,
 } from '@wordpress/block-editor'
 import {
-	PanelBody, ToggleControl, Button,
+	PanelBody, ToggleControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import {
-	addFilter, applyFilters, doAction,
+	addFilter, applyFilters,
 } from '@wordpress/hooks'
 import { compose, withState } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
@@ -115,9 +115,6 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 		<Fragment>
 			{ output }
 			<PanelBody title={ __( 'General', i18n ) }>
-				<Button onClick={ () => {
-					doAction( 'stackable.global-settings.open-sidebar' )
-				} }>Click test</Button>
 				<ToggleControl
 					label={ __( 'Close adjacent on open', i18n ) }
 					checked={ onlyOnePanelOpen }
