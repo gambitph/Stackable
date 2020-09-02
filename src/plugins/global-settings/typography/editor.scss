@@ -5,6 +5,7 @@
 		> .components-base-control__label {
 			width: 100%;
 			margin-bottom: 0 !important;
+			pointer-events: none;
 		}
 	}
 	&.ugb-global-settings-typography-control--with-description {

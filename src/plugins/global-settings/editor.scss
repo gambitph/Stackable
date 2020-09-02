@@ -17,6 +17,18 @@
 	border-radius: 50%;
 }
 
-.ugb-global-settings-color-picker__delete-button {
+.ugb-global-settings-color-picker__delete-button-text {
 	color: #aa2121 !important;
+}
+
+.ugb-global-settings-color-picker__delete-popover-text {
+	margin-bottom: 12px;
+	&.is-red {
+		color: #aa2121;
+	}
+}
+
+.ugb-global-settings-color-picker__delete-button {
+	background-color: #aa2121;
+	color: #fff !important;
 }

@@ -1,3 +1,5 @@
+import './responsive-color-palette-change'
+
 /**
  * Internal dependencies
  */
@@ -86,7 +88,7 @@ domReady( () => {
 				const { name, slug } = color
 				const newColor = { name, slug }
 				newColor.colorVar = `--stk-global-color-${ md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 ) }`
-				newColor.color = `var(${ newColor.colorVar }, ${ color.color })`
+				newColor.color = `var(${ newColor.colorVar })`
 				newColor.fallback = color.color
 				return newColor
 			} )

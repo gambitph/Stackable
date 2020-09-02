@@ -27,6 +27,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			 */
 
 			// TODO: add color hooks here.
+			add_action( 'wp_enqueue_scripts', array( $this, 'color_add_global_styles' ) );
 
 			/**
 			 * Typography hooks
@@ -173,6 +174,56 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			return ! is_array( $input ) ? array( array() ) : $input;
 		}
 
+
+		/**-----------------------------------------------------------------------------
+		 * Color functions
+		 *-----------------------------------------------------------------------------*/
+
+		 /**
+		  * Add our global color styles in the frontend.
+		  * 
+		  * @return void
+		  */
+		  public function color_add_global_styles() {
+			  // Don't do anything if we doon't have any global color.
+			  $colors = get_option( 'stackable_global_colors' );
+			  if ( ! $colors || ! is_array( $colors ) ) {
+				  return;
+			  }
+
+			  $css = array();
+			  $core_css = array();
+
+			  foreach( $colors as $color  ) {
+				  $color_name = strtolower( $color['slug'] );
+
+				  // Convert the name to kebab casing,
+				  $color_typography_name = '.has-' . implode( '-', explode( ' ', $color_name ) ) . '-color';
+				  $color_background_name = '.has-' . implode( '-', explode( ' ', $color_name ) ) . '-background-color';
+
+				  // Only do this for our global colors.
+				  if ( $color['fallback'] && $color['colorVar']){
+				  	// Add the custom css property.
+					array_push( $css, $color['colorVar'] . ': ' . $color['fallback'] . ';' );
+
+					  
+					// Add custom css class rule for other blocks.
+					// For typography colors.
+					 array_push( $core_css, $color_typography_name . ' { color: ' . $color['fallback'] . ' !important; }');
+
+					 // For background colors.
+					 array_push( $core_css, $color_background_name . ' { background-color: ' . $color['fallback'] . ' !important; }');
+				  }
+			  }
+			  
+			  $generated_color_css = ':root {
+				  ' . implode( ' ', $css ) . '
+			  }';
+
+			  wp_add_inline_style( 'ugb-style-css', $generated_color_css );
+			  wp_add_inline_style( 'ugb-style-css', implode( ' ', $core_css ) );
+		  }
+
 		/**-----------------------------------------------------------------------------
 		 * Typography functions
 		 *-----------------------------------------------------------------------------*/
@@ -185,7 +236,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		public function typography_add_global_styles() {
 			// Don't do anything if we don't have any global typography.
 			$typography = get_option( 'stackable_global_typography' );
-			if ( ! $typography && ! is_array( $typography ) ) {
+			if ( ! $typography || ! is_array( $typography ) ) {
 				return;
 			}
 			$active_typography = $typography[0];

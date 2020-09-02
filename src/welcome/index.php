@@ -84,7 +84,7 @@ SVG;
 
 				do_action( 'stackable_settings_admin_enqueue_scripts' );
 
-				wp_enqueue_script( 'stackable-welcome', plugins_url( 'dist/admin_welcome.js', STACKABLE_FILE ), array( 'wp-i18n', 'wp-element', 'wp-hooks', 'wp-util', 'wp-components', 'wp-api' ) );
+				wp_enqueue_script( 'stackable-welcome', plugins_url( 'dist/admin_welcome.js', STACKABLE_FILE ), array( 'wp-i18n', 'wp-element', 'wp-hooks', 'wp-util', 'wp-components', 'wp-api', 'wp-editor' ) );
 
 				$args = apply_filters( 'stackable_localize_settings_script', array(
 					'srcUrl' => untrailingslashit( plugins_url( '/', STACKABLE_FILE ) ),
@@ -190,6 +190,11 @@ SVG;
 							<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
 								<p class="s-settings-pro"><?php _e( 'This is only available in Stackable Premium.', STACKABLE_I18N ) ?> <a href="https://wpstackable.com/premium/?utm_source=wp-settings-role-manager&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a></p>
 							<?php endif; ?>
+						</article>
+						<article class="s-box">
+							<h2><?php _e( '🌏 Global Settings', STACKABLE_I18N ) ?></h2>
+							<p class="s-settings-subtitle"><?php printf( __( 'Each WordPress theme is unique, so if your global settings are not working correctly with your theme, here are a few options that might make them work. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/stackable-guides/advanced-guides/how-to-use-global-settings/?utm_source=wp-settings-global-settings&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
+							<div class="s-global-settings"></div>
 						</article>
                         <article class="s-box">
                             <h2><?php _e( '🎛 Enable & Disable Blocks', STACKABLE_I18N ) ?></h2>

@@ -10,10 +10,10 @@ import { i18n } from 'stackable'
  * Wordpress dependencies
  */
 import {
-	Button, ColorPicker, Popover, BaseControl,
+	Button, ColorPicker, Popover, BaseControl, ButtonGroup,
 } from '@wordpress/components'
 import {
-	Fragment, useState, useEffect,
+	Fragment, useState, useEffect, useRef,
 } from '@wordpress/element'
 import {
 	select, dispatch, useSelect,
@@ -46,24 +46,91 @@ const ColorPickerTextArea = props => (
 )
 
 // Component used to add a Delete Style button at the bottom of the COlorPicker.
-const DeleteButton = props => (
-	<div className="ugb-global-settings-color-picker__text-name components-color-picker__body">
-		<div className="components-color-picker__controls">
-			<Button
-				className="ugb-global-settings-color-picker__delete-button"
-				isLink
-				onClick={ props.onClick }
-			>
-				{ __( 'Delete Style', i18n ) }
-			</Button>
+const DeleteButton = props => {
+	const [ isDeletePopoverOpen, setIsDeletePopoverOpen ] = useState( false )
+	const deleteButtonRef = useRef( null )
+
+	const handleDelete = () => {
+		setIsDeletePopoverOpen( toggle => ! toggle )
+	}
+
+	const onClickOutside = event => {
+		if ( deleteButtonRef && event.target !== deleteButtonRef.current ) {
+			setIsDeletePopoverOpen( false )
+		}
+	}
+
+	return (
+		<div className="ugb-global-settings-color-picker__text-name components-color-picker__body">
+			<div className="components-color-picker__controls">
+				<Button
+					ref={ deleteButtonRef }
+					className="ugb-global-settings-color-picker__delete-button-text"
+					isLink
+					onClick={ handleDelete }
+				>
+					{ __( 'Delete Style', i18n ) }
+				</Button>
+				{ isDeletePopoverOpen && (
+					<Popover
+						anchorRef={ deleteButtonRef.current }
+						onClickOutside={ onClickOutside }
+						position="bottom center"
+					>
+						<div className="components-color-picker__body">
+							<div className="ugb-global-settings-color-picker__delete-popover-text is-red">
+								{ __( 'Delete', i18n ) } { ` "${ props.name }"` }
+							</div>
+							<div className="ugb-global-settings-color-picker__delete-popover-text">
+								{ __( 'Any blocks that use this color will become unlinked with this global color. Delete this color?', i18n ) }
+							</div>
+							<div className="components-color-picker__controls">
+								<ButtonGroup>
+									<Button
+										className="ugb-global-settings-color-picker__delete-button"
+										onClick={ props.onClick }
+										isDestructive
+										isSmall
+									>
+										{ __( 'Delete', i18n ) }
+									</Button>
+									<Button
+										onClick={ () => setIsDeletePopoverOpen( false ) }
+										isSmall
+									>
+										{ __( 'Cancel', i18n ) }
+									</Button>
+								</ButtonGroup>
+							</div>
+						</div>
+					</Popover>
+				) }
+			</div>
 		</div>
-	</div>
-)
+	)
+}
 
 const ColorPickers = ( { colors } ) => {
 	const [ selectedIndex, setSelectedIndex ] = useState( null )
 	const [ isPopoverOpen, setIsPopOverOpen ] = useState( false )
 	const [ colorButtonAnchor, setColorButtonAnchor ] = useState( null )
+	const [ hasAddedNewColor, setHasAddedNewColor ] = useState( false )
+
+	// Open the PopOver for the newly added color.
+	useEffect( () => {
+		if ( hasAddedNewColor ) {
+			const colorPickerEl = document.querySelector( '.ugb-global-settings-color-picker' )
+			if ( colorPickerEl ) {
+				// Get the newly created color element/
+				const newButtonAnchor = colorPickerEl.children[ selectedIndex - 1 ]
+				if ( newButtonAnchor ) {
+					setColorButtonAnchor( newButtonAnchor )
+					setIsPopOverOpen( true )
+					setHasAddedNewColor( false )
+				}
+			}
+		}
+	}, [ hasAddedNewColor ] )
 
 	const onChangeColor = data => {
 		const { colors: updatedColors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
@@ -71,7 +138,7 @@ const ColorPickers = ( { colors } ) => {
 		const colorVar = `--stk-global-color-${ md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 ) }`
 
 		// Overwrite the selected color to a new color.
-		updatedColors[ selectedIndex ].color = existingColorVar ? `var(${ existingColorVar }, ${ data.hex })` : `var(${ colorVar }, ${ data.hex })`
+		updatedColors[ selectedIndex ].color = existingColorVar ? `var(${ existingColorVar })` : `var(${ colorVar })`
 		updatedColors[ selectedIndex ].fallback = data.hex
 
 		// Add a fallback and colorVar if not exists.
@@ -91,7 +158,6 @@ const ColorPickers = ( { colors } ) => {
 
 		// Overwrite the selected style name and slug to a new style name and slug.
 		updatedColors[ selectedIndex ].name = value
-		updatedColors[ selectedIndex ].slug = value
 
 		dispatch( 'core/block-editor' ).updateSettings( {
 			colors: updatedColors,
@@ -159,13 +225,15 @@ const ColorPickers = ( { colors } ) => {
 			<AddIcon
 				onClick={ () => {
 					const newIndex = ( colors && Array.isArray( colors ) ) ? colors.length + 1 : 1
-					const colorVar = `--stk-global-color-${ md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 ) }`
+					const __id = md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 )
+					const slugId = Math.floor( Math.random() * new Date().getTime() )
+					const colorVar = `--stk-global-color-${ __id }`
 
 					dispatch( 'core/block-editor' ).updateSettings( {
 						colors: [
 							...select( 'core/block-editor' ).getSettings().colors,
 							{
-								name: `Custom Color ${ newIndex }`, slug: `Custom Color ${ newIndex }`, color: `--var(${ colorVar }, #000000)`, colorVar, fallback: '#000000',
+								name: `Custom Color ${ newIndex }`, slug: `stk-global-color-${ slugId }`, color: `--var(${ colorVar })`, colorVar, fallback: '#000000',
 							},
 						],
 					} )
@@ -174,24 +242,32 @@ const ColorPickers = ( { colors } ) => {
 					doAction( 'stackable.global-settings.global-styles', [
 						...select( 'core/block-editor' ).getSettings().colors,
 						{
-							name: `Custom Color ${ newIndex }`, slug: `Custom Color ${ newIndex }`, color: `--var(${ colorVar }, #000000)`, colorVar, fallback: '#000000',
+							name: `Custom Color ${ newIndex }`, slug: `stk-global-color-${ slugId }`, color: `--var(${ colorVar })`, colorVar, fallback: '#000000',
 						},
 					] )
+
+					setIsPopOverOpen( false )
+					setSelectedIndex( newIndex - 1 )
+					setHasAddedNewColor( true )
 				} }
 			/>
 			{ isPopoverOpen && (
-				<Popover anchorRef={ colorButtonAnchor } onClickOutside={ onClickOutside }>
+				<Popover
+					anchorRef={ colorButtonAnchor }
+					onClickOutside={ onClickOutside }
+				>
 					<ColorPicker
-						color={ colors[ selectedIndex ].fallback || colors[ selectedIndex ].color }
+						color={ colors[ selectedIndex ] && ( colors[ selectedIndex ].fallback || colors[ selectedIndex ].color ) }
 						onChangeComplete={ onChangeColor }
 					/>
 					<ColorPickerTextArea
 						id="color-picker-text-name"
 						onChange={ onChangeStyleName }
-						value={ colors[ selectedIndex ].name }
+						value={ colors[ selectedIndex ] && colors[ selectedIndex ].name }
 					/>
 					{ ! inRange( selectedIndex, 0, 5 ) && (
 						<DeleteButton
+							name={ colors[ selectedIndex ] && colors[ selectedIndex ].name }
 							onClick={ onColorDelete }
 						/>
 					) }
