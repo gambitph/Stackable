@@ -92,6 +92,18 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 
 			register_setting(
 				'stackable_global_settings',
+				'stackable_global_force_typography',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Stackable global typography add important to global styles', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => '',
+				)
+			);
+
+			register_setting(
+				'stackable_global_settings',
 				'stackable_global_typography',
 				array(
 					'type' => 'array',
@@ -188,8 +200,6 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				$selectors = array( '.ugb-main-block' );
 			} else if ( $this->get_apply_typography_to() === 'blocks-all' ) {
 				$selectors = array( '[data-block-type="core"]', '[class*="wp-block-"]' );
-			} else if ( $this->get_apply_typography_to() === 'content' ) {
-				$selectors = array( '.entry-content' );
 			} else { // Entire site.
 				$selectors = array( 'body' );
 			}
