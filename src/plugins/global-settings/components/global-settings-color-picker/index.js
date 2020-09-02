@@ -2,7 +2,9 @@
  * External dependencies
  */
 import classnames from 'classnames'
-import { cloneDeep, inRange } from 'lodash'
+import {
+	cloneDeep, inRange, isEqual,
+} from 'lodash'
 import md5 from 'md5'
 import { i18n } from 'stackable'
 
@@ -45,7 +47,7 @@ const ColorPickerTextArea = props => (
 	</div>
 )
 
-// Component used to add a Delete Style button at the bottom of the COlorPicker.
+// Component used to add a Delete Style button at the bottom of the ColorPicker.
 const DeleteButton = props => {
 	const [ isDeletePopoverOpen, setIsDeletePopoverOpen ] = useState( false )
 	const deleteButtonRef = useRef( null )
@@ -110,11 +112,40 @@ const DeleteButton = props => {
 	)
 }
 
+// Component used to add am add icon button.
+const AddIcon = props => (
+	<Button
+		{ ...props }
+		isDefault
+		className="ugb-global-settings-color-picker__add-icon"
+		label="Add New Color"
+		icon={
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 190">
+				<polygon points="181.9,87.6 102.6,87.6 102.6,8.4 87.6,8.4 87.6,87.6 8.4,87.6 8.4,102.6 87.6,102.6 87.6,181.8 102.6,181.8 102.6,102.6 181.9,102.6 " />
+			</svg>
+		}
+	/>
+)
+
+// Component used to add a reset icon button.
+const ResetIcon = props => (
+	<div className="ugb-global-settings-color-picker__reset-button">
+		<Button
+			{ ...props }
+			isDefault
+			isSmall
+		>
+			{ __( 'Reset', i18n ) }
+		</Button>
+	</div>
+)
+
 const ColorPickers = ( { colors } ) => {
 	const [ selectedIndex, setSelectedIndex ] = useState( null )
 	const [ isPopoverOpen, setIsPopOverOpen ] = useState( false )
 	const [ colorButtonAnchor, setColorButtonAnchor ] = useState( null )
 	const [ hasAddedNewColor, setHasAddedNewColor ] = useState( false )
+	const [ showReset, setShowReset ] = useState( false )
 
 	// Open the PopOver for the newly added color.
 	useEffect( () => {
@@ -131,6 +162,22 @@ const ColorPickers = ( { colors } ) => {
 			}
 		}
 	}, [ hasAddedNewColor ] )
+
+	// Show reset button if necessary.
+	useEffect( () => {
+		if ( ! showReset ) {
+			const { defaultColors } = select( 'core/block-editor' ).getSettings()
+			loadPromise.then( () => {
+				const settings = new models.Settings()
+				settings.fetch().then( res => {
+					const { stackable_global_colors } = res // eslint-disable-line camelcase
+					if ( ! isEqual( defaultColors, stackable_global_colors ) ) {
+						setShowReset( true )
+					}
+				} )
+			} )
+		}
+	}, [ colors ] )
 
 	const onChangeColor = data => {
 		const { colors: updatedColors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
@@ -183,22 +230,20 @@ const ColorPickers = ( { colors } ) => {
 		setIsPopOverOpen( false )
 	}
 
-	const AddIcon = props => (
-		<Button
-			{ ...props }
-			isDefault
-			className="ugb-global-settings-color-picker__add-icon"
-			label="Add New Color"
-			icon={
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 190">
-					<polygon points="181.9,87.6 102.6,87.6 102.6,8.4 87.6,8.4 87.6,87.6 8.4,87.6 8.4,102.6 87.6,102.6 87.6,181.8 102.6,181.8 102.6,102.6 181.9,102.6 " />
-				</svg>
-			}
-		/>
-	)
+	const onColorPaletteReset = () => {
+		const { defaultColors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
+
+		// Revert all the colors.
+		dispatch( 'core/block-editor' ).updateSettings( {
+			colors: defaultColors,
+		} )
+
+		setShowReset( false )
+	}
 
 	return colors && Array.isArray( colors ) && (
 		<Fragment>
+			{ showReset && <ResetIcon onClick={ onColorPaletteReset } /> }
 			{ colors.map( ( color, index ) => (
 				<div className="components-circular-option-picker__option-wrapper" key={ index }>
 					<Button

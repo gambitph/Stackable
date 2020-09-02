@@ -9,7 +9,6 @@ import { GlobalSettingsColorPicker } from '../components'
  * External dependencies
  */
 import { i18n } from 'stackable'
-import md5 from 'md5'
 
 /**
  * Wordpress dependencies
@@ -82,37 +81,16 @@ domReady( () => {
 	loadPromise.then( () => {
 		const settings = new models.Settings()
 
-		const updateToStackableGlobalColors = () => {
-			const { colors } = select( 'core/block-editor' ).getSettings()
-			const newColors = colors.map( color => {
-				const { name, slug } = color
-				const newColor = { name, slug }
-				newColor.colorVar = `--stk-global-color-${ md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 ) }`
-				newColor.color = `var(${ newColor.colorVar })`
-				newColor.fallback = color.color
-				return newColor
-			} )
-
-			// Dispatch the newColors to the current colors
-			dispatch( 'core/block-editor' ).updateSettings( {
-				colors: newColors,
-			} )
-
-			// Save the settings
-			loadPromise.then( () => {
-				const model = new models.Settings( { stackable_global_colors: newColors } ) // eslint-disable-line camelcase
-				model.save()
-			} )
-
-			doAction( 'stackable.global-settings.global-styles', newColors )
-		}
-
 		settings.fetch().then( response => {
 			const { stackable_global_colors: globalColors } = response
+			const { colors } = select( 'core/block-editor' ).getSettings()
 
 			if ( Array.isArray( globalColors ) ) {
 				if ( globalColors.length === 0 ) {
-					updateToStackableGlobalColors()
+					// Get the initial editor colors on load.
+					dispatch( 'core/block-editor' ).updateSettings( {
+						defaultColors: colors,
+					} )
 				} else {
 					// Fetch stackable global settings and dispatch to the curent colors
 					loadPromise.then( () => {
@@ -121,6 +99,7 @@ domReady( () => {
 							// Dispatch the global colors to the current colors
 							dispatch( 'core/block-editor' ).updateSettings( {
 								colors: response.stackable_global_colors,
+								defaultColors: colors,
 							} )
 						} )
 
@@ -128,7 +107,10 @@ domReady( () => {
 					} )
 				}
 			} else {
-				updateToStackableGlobalColors()
+				// Get the initial editor colors on load.
+				dispatch( 'core/block-editor' ).updateSettings( {
+					defaultColors: colors,
+				} )
 			}
 		} )
 	} )

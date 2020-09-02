@@ -22,54 +22,72 @@ import {
 	applyFilters, addAction, addFilter,
 } from '@wordpress/hooks'
 
-const GlobalSettings = () => {
-	addAction( 'stackable.global-settings.open-sidebar', 'toggle', () => {
-		const buttonEl = document.querySelector( `button[aria-label="${ __( 'Stackable Global Settings', i18n ) }"]` )
+/**
+ * Used in ColorPaletteControl component.
+ * Changing the Global Colors inside the Stackable Global Settings updates its fallback value ( e.g.
+ * var(--stk-global-color-ugb12, #000000) to var(--stk-global-color-ugb12, #34aa6b) ), resulting to
+ * unmatched fallback values between the block attribute and the global color. With this, we are
+ * forcing the passed value to match its corresponding global color.
+ */
+addFilter( 'stackable.global-settings.update-color-value', 'update-value', ( value, colors ) => {
+	// If the value is an empty string or undefined, return the value.
+	if ( ! value ) {
+		return value
+	}
 
-		// Open the global settings sidebar
-		if ( buttonEl ) {
-			buttonEl.click()
-		}
-	} )
+	// If the value does not contain any global color variable, return the value.
+	if ( value && typeof value === 'string' && ! value.match( /--stk-global-color-/ ) ) {
+		return value
+	}
+
+	let newValue = value
+
+	if ( colors && Array.isArray( colors ) && colors.length !== 0 ) {
+		colors.forEach( color => {
+			const colorVarID = value.match( /--stk-global-color-(\S*),/ )[ 1 ]
+			if ( colorVarID ) {
+				const colorVarRegex = new RegExp( `--stk-global-color-${ colorVarID }` )
+				if ( color.color.match( colorVarRegex ) ) {
+					newValue = color.color
+				}
+			}
+		} )
+	}
+
+	return newValue
+} )
+
+// Action used to open the global settings panel.
+addAction( 'stackable.global-settings.open-sidebar', 'toggle', () => {
+	const menuToggleEl = document.querySelector( '.components-dropdown-menu__toggle' )
 
 	/**
-	 * Used in ColorPaletteControl component.
-	 * Changing the Global Colors inside the Stackable Global Settings updates its fallback value ( e.g.
-	 * var(--stk-global-color-ugb12, #000000) to var(--stk-global-color-ugb12, #34aa6b) ), resulting to
-	 * unmatched fallback values between the block attribute and the global color. With this, we are
-	 * forcing the passed value to match its corresponding global color.
+	 * Trigger the sidebar toggle.
+	 * With this, we can still toggle the sidebar
+	 * even if the Stackable logo at the top is hidden.
 	 */
-	addFilter( 'stackable.global-settings.update-color-value', 'update-value', ( value, colors ) => {
-		// If the value is an empty string or undefined, return the value.
-		if ( ! value ) {
-			return value
-		}
+	if ( menuToggleEl ) {
+		menuToggleEl.click()
+		setTimeout( () => {
+			const menuTogglePopoverEl = document.querySelector( '.edit-post-more-menu__content' )
+			const stackableGlobalSettingsButtonEl = document.querySelector( '.ugb-global-settings__button' )
 
-		// If the value does not contain any global color variable, return the value.
-		if ( value && typeof value === 'string' && ! value.match( /--stk-global-color-/ ) ) {
-			return value
-		}
+			if ( menuTogglePopoverEl ) {
+				menuTogglePopoverEl.style.opacity = '0'
 
-		let newValue = value
-
-		if ( colors && Array.isArray( colors ) && colors.length !== 0 ) {
-			colors.forEach( color => {
-				const colorVarID = value.match( /--stk-global-color-(\S*),/ )[ 1 ]
-				if ( colorVarID ) {
-					const colorVarRegex = new RegExp( `--stk-global-color-${ colorVarID }` )
-					if ( color.color.match( colorVarRegex ) ) {
-						newValue = color.color
-					}
+				if ( stackableGlobalSettingsButtonEl ) {
+					stackableGlobalSettingsButtonEl.click()
 				}
-			} )
-		}
+			}
+		}, 0 )
+	}
+} )
 
-		return newValue
-	} )
-
+const GlobalSettings = () => {
 	return (
 		<Fragment>
 			<PluginSidebarMoreMenuItem
+				// ref={ globalSettingsButtenRef }
 				className="ugb-global-settings__button"
 				icon={ <SVGStackableIcon /> }>
 				{ __( 'Stackable Settings', i18n ) }
