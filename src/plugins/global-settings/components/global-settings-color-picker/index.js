@@ -197,7 +197,7 @@ const ColorPickers = ( { colors } ) => {
 					] )
 
 					setIsPopOverOpen( false )
-					setSelectedIndex( newIndex )
+					setSelectedIndex( newIndex - 1 )
 					setHasAddedNewColor( true )
 				} }
 			/>
