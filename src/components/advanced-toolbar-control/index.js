@@ -13,7 +13,6 @@ import SVGIconVerticalCenter from './images/vertical-center.svg'
 /**
  * External dependencies
  */
-import { omit } from 'lodash'
 import classnames from 'classnames'
 
 /**
@@ -111,7 +110,6 @@ const AdvancedToolbarControl = props => {
 				screens={ props.screens }
 			/>
 			<ButtonGroup
-				{ ...omit( props, [ 'className', 'help', 'label', 'units', 'unit', 'onChangeUnit', 'screens' ] ) }
 				children={
 					controls.map( ( option, index ) => {
 						const controlProps = {

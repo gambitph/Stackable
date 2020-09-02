@@ -13,7 +13,9 @@ import { i18n } from 'stackable'
  */
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { setGroupingBlockName, switchToBlockType } from '@wordpress/blocks'
+import {
+	createBlock, cloneBlock,
+} from '@wordpress/blocks'
 import {
 	select, withSelect, withDispatch,
 } from '@wordpress/data'
@@ -98,7 +100,9 @@ export default compose( [
 		}
 	} ),
 	withDispatch( ( dispatch, {
-		clientIds, onToggle = noop, blocksSelection = [], groupingBlockName,
+		clientIds,
+		onToggle = noop,
+		blocksSelection = [],
 	} ) => {
 		const {
 			replaceBlocks,
@@ -110,24 +114,15 @@ export default compose( [
 					return
 				}
 
-				// `switchToBlockType` won't allow different-type blocks to group into a Container block.
-				// @see https://github.com/WordPress/gutenberg/issues/17837
-				// Workaround is to set my own grouping block name temporarily.
-				const currentGroupingName = select( 'core/blocks' ).getGroupingBlockName()
-				setGroupingBlockName( 'ugb/container' )
+				// Clone the blocks, we'll use them as the inner blocks of the new Container block.
+				const innerBlocks = blocksSelection.map( block => cloneBlock( block ) )
+				const containerBlock = createBlock( 'ugb/container', {}, innerBlocks )
 
-				// Activate the `transform` on the Grouping Block which does the conversion
-				const newBlocks = switchToBlockType( blocksSelection, groupingBlockName )
-				if ( newBlocks ) {
-					replaceBlocks(
-						clientIds,
-						newBlocks
-					)
-				}
-
-				// Bring back the original grouping block name.
-				// @see https://github.com/WordPress/gutenberg/issues/17837
-				setGroupingBlockName( currentGroupingName )
+				// Replace the existing blocks with the new Container block.
+				replaceBlocks(
+					clientIds,
+					containerBlock
+				)
 
 				onToggle()
 			},

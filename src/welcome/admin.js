@@ -27,6 +27,7 @@ import {
 	welcomeSrcUrl,
 } from 'stackable'
 import classnames from 'classnames'
+import { AdminToggleSetting } from '~stackable/components'
 
 class BlockToggler extends Component {
 	constructor() {
@@ -134,6 +135,33 @@ class BlockToggler extends Component {
 	}
 }
 
+const GlobalSettings = () => {
+	const [ forceTypography, setForceTypography ] = useState( false )
+
+	useEffect( () => {
+		loadPromise.then( () => {
+			const settings = new models.Settings()
+			settings.fetch().then( response => {
+				setForceTypography( !! response.stackable_global_force_typography )
+			} )
+		} )
+	}, [] )
+
+	const updateSetting = value => {
+		const model = new models.Settings( { stackable_global_force_typography: value } ) // eslint-disable-line camelcase
+		model.save()
+		setForceTypography( value )
+	}
+
+	return <AdminToggleSetting
+		label={ __( 'Force Typography Styles', i18n ) }
+		value={ forceTypography }
+		onChange={ updateSetting }
+		disabled={ __( 'Not forced', i18n ) }
+		enabled={ __( 'Force styles', i18n ) }
+	/>
+}
+
 const AdditionalOptions = props => {
 	const [ helpTooltipsDisabled, setHelpTooltipsDisabled ] = useState( false )
 	const [ v1BackwardCompatibility, setV1BackwardCompatibility ] = useState( false )
@@ -212,5 +240,10 @@ domReady( () => {
 			showProNoticesOption={ showProNoticesOption }
 		/>,
 		document.querySelector( '.s-other-options-wrapper' )
+	)
+
+	render(
+		<GlobalSettings />,
+		document.querySelector( '.s-global-settings' )
 	)
 } )

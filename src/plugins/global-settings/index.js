@@ -3,7 +3,6 @@
  */
 import './colors'
 import './typography'
-import './typography-styles'
 
 /**
  * External dependencies

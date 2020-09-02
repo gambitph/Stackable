@@ -26,7 +26,6 @@ import save from './save'
  */
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import { createBlock } from '@wordpress/blocks'
 
 export const schema = {
 	restrictContentWidth: {
@@ -153,50 +152,6 @@ export const settings = {
 		'custom-css': {
 			default: applyFilters( 'stackable.container.custom-css.default', '' ),
 		},
-	},
-
-	/**
-	 * For grouping & ungrouping blocks into Container blocks.
-	 * Based on the Group block.
-	 *
-	 * @see https://github.com/WordPress/gutenberg/blob/a78fddd06e016ef43eb420b2c82b2cdebbdb0c3c/packages/block-library/src/group/index.js
-	 */
-	transforms: {
-		from: [
-			{
-				type: 'block',
-				isMultiBlock: true,
-				blocks: [ '*' ],
-				__experimentalConvert( blocks ) {
-					// Avoid transforming a single `ugb/container` Block
-					if ( blocks.length === 1 && blocks[ 0 ].name === 'ugb/container' ) {
-						return
-					}
-
-					const alignments = [ 'wide', 'full' ]
-
-					// Determine the widest setting of all the blocks to be grouped
-					const widestAlignment = blocks.reduce( ( result, block ) => {
-						const { align } = block.attributes
-						return alignments.indexOf( align ) > alignments.indexOf( result ) ? align : result
-					}, undefined )
-
-					// Clone the Blocks to be Grouped
-					// Failing to create new block references causes the original blocks
-					// to be replaced in the switchToBlockType call thereby meaning they
-					// are removed both from their original location and within the
-					// new group block.
-					const groupInnerBlocks = blocks.map( block => {
-						return createBlock( block.name, block.attributes, block.innerBlocks )
-					} )
-
-					return createBlock( 'ugb/container', {
-						align: widestAlignment,
-					}, groupInnerBlocks )
-				},
-			},
-
-		],
 	},
 }
 
