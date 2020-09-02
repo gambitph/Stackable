@@ -64,6 +64,23 @@ const ColorPickers = ( { colors } ) => {
 	const [ selectedIndex, setSelectedIndex ] = useState( null )
 	const [ isPopoverOpen, setIsPopOverOpen ] = useState( false )
 	const [ colorButtonAnchor, setColorButtonAnchor ] = useState( null )
+	const [ hasAddedNewColor, setHasAddedNewColor ] = useState( false )
+
+	// Open the PopOver for the newly added color.
+	useEffect( () => {
+		if ( hasAddedNewColor ) {
+			const colorPickerEl = document.querySelector( '.ugb-global-settings-color-picker' )
+			if ( colorPickerEl ) {
+				// Get the newly created color element/
+				const newButtonAnchor = colorPickerEl.children[ selectedIndex - 1 ]
+				if ( newButtonAnchor ) {
+					setColorButtonAnchor( newButtonAnchor )
+					setIsPopOverOpen( true )
+					setHasAddedNewColor( false )
+				}
+			}
+		}
+	}, [ hasAddedNewColor ] )
 
 	const onChangeColor = data => {
 		const { colors: updatedColors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
@@ -178,18 +195,22 @@ const ColorPickers = ( { colors } ) => {
 							name: `Custom Color ${ newIndex }`, slug: `stk-global-color-${ slugId }`, color: `--var(${ colorVar })`, colorVar, fallback: '#000000',
 						},
 					] )
+
+					setIsPopOverOpen( false )
+					setSelectedIndex( newIndex )
+					setHasAddedNewColor( true )
 				} }
 			/>
 			{ isPopoverOpen && (
 				<Popover anchorRef={ colorButtonAnchor } onClickOutside={ onClickOutside }>
 					<ColorPicker
-						color={ colors[ selectedIndex ].fallback || colors[ selectedIndex ].color }
+						color={ colors[ selectedIndex ] && ( colors[ selectedIndex ].fallback || colors[ selectedIndex ].color ) }
 						onChangeComplete={ onChangeColor }
 					/>
 					<ColorPickerTextArea
 						id="color-picker-text-name"
 						onChange={ onChangeStyleName }
-						value={ colors[ selectedIndex ].name }
+						value={ colors[ selectedIndex ] && colors[ selectedIndex ].name }
 					/>
 					{ ! inRange( selectedIndex, 0, 5 ) && (
 						<DeleteButton

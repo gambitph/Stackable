@@ -32,7 +32,7 @@ const ResponsiveColorPalette = () => {
 			settings.fetch().then( res => {
 				const { stackable_global_colors: stackableGlobalColors } = res // eslint-disable-line camelcase
 
-				if ( stackableGlobalColors && Array.isArray( stackableGlobalColors ) ) {
+				if ( stackableGlobalColors && Array.isArray( stackableGlobalColors ) && deviceType !== 'Desktop' ) {
 					// Update the color palette.
 					dispatch( 'core/block-editor' ).updateSettings( {
 						colors: stackableGlobalColors,
