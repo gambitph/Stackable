@@ -181,7 +181,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 
 		 /**
 		  * Add our global color styles in the frontend.
-		  * 
+		  *
 		  * @return void
 		  */
 		  public function color_add_global_styles() {
@@ -206,7 +206,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				  	// Add the custom css property.
 					array_push( $css, $color['colorVar'] . ': ' . $color['fallback'] . ';' );
 
-					  
+
 					// Add custom css class rule for other blocks.
 					// For typography colors.
 					 array_push( $core_css, $color_typography_name . ' { color: ' . $color['fallback'] . ' !important; }');
@@ -215,7 +215,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 					 array_push( $core_css, $color_background_name . ' { background-color: ' . $color['fallback'] . ' !important; }');
 				  }
 			  }
-			  
+
 			  $generated_color_css = ':root {
 				  ' . implode( ' ', $css ) . '
 			  }';
@@ -302,6 +302,24 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		}
 
 		/**
+		 * Creates a CSS style rule with an added !important if necessary.
+		 *
+		 * @param strying $style e.g. font-size
+		 * @param string $value e.g. 10px
+		 *
+		 * @return string
+		 */
+		public function create_style( $style, $value ) {
+			$imp = get_option( 'stackable_global_force_typography' ) ? ' !important' : '';
+
+			return sprintf( '%s: %s%s;',
+				$style,
+				$value,
+				$imp
+			);
+		}
+
+		/**
 		 * Generates typography CSS for the $selector based on the styles given
 		 * in the $styles object. This also generates media queries.
 		 *
@@ -331,38 +349,38 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			 * Desktop styles.
 			 */
 			if ( array_key_exists( 'fontFamily', $styles ) ) {
-				$css['desktop'][] = 'font-family: ' . $this->get_font_family( $styles['fontFamily'] ) . ';';
+				$css['desktop'][] = $this->create_style( 'font-family', $this->get_font_family( $styles['fontFamily'] ) );
 			}
 			if ( array_key_exists( 'fontSize', $styles ) ) {
-				$css['desktop'][] = 'font-size: ' . $styles['fontSize'] . ( $styles['fontSizeUnit'] ?: 'px' ) . ';';
+				$css['desktop'][] = $this->create_style( 'font-size', $styles['fontSize'] . ( $styles['fontSizeUnit'] ?: 'px' ) );
 			}
 			if ( array_key_exists( 'fontWeight', $styles ) ) {
-				$css['desktop'][] = 'font-weight: ' . $styles['fontWeight'] . ';';
+				$css['desktop'][] = $this->create_style( 'font-weight', $styles['fontWeight'] );
 			}
 			if ( array_key_exists( 'textTransform', $styles ) ) {
-				$css['desktop'][] = 'text-transform: ' . $styles['textTransform'] . ';';
+				$css['desktop'][] = $this->create_style( 'text-transform', $styles['textTransform'] );
 			}
 			if ( array_key_exists( 'lineHeight', $styles ) ) {
-				$css['desktop'][] = 'line-height: ' . $styles['lineHeight'] . ( $styles['lineHeightUnit'] ?: 'em' ) . ';';
+				$css['desktop'][] = $this->create_style( 'line-height', $styles['lineHeight'] . ( $styles['lineHeightUnit'] ?: 'em' ) );
 			}
 
 			/**
 			 * Tablet styles.
 			 */
 			if ( array_key_exists( 'tabletLineHeight', $styles ) ) {
-				$css['tablet'][] = 'line-height: ' . $styles['tabletLineHeight'] . ( $styles['tabletLineHeightUnit'] ?: 'em' ) . ';';
+				$css['tablet'][] = $this->create_style( 'line-height', $styles['tabletLineHeight'] . ( $styles['tabletLineHeightUnit'] ?: 'em' ) );
 			}
 			$font_size = '';
 			if ( $inherit ) {
 				if ( array_key_exists( 'fontSize', $styles ) ) {
 					$clamp_desktop_value = $this->clamp_inherited_style( $styles['fontSize'], $inherit_max );
 					if ( $clamp_desktop_value ) {
-						$font_size = 'font-size: ' . $clamp_desktop_value . ( $styles['fontSizeUnit'] ?: 'px' ) . ';';
+						$font_size = $this->create_style( 'font-size', $clamp_desktop_value . ( $styles['fontSizeUnit'] ?: 'px' ) );
 					}
 				}
 			}
 			if ( array_key_exists( 'tabletFontSize', $styles ) ) {
-				$font_size = 'font-size: ' . $styles['tabletFontSize'] . ( $styles['tabletFontSizeUnit'] ?: 'px' ) . ';';
+				$font_size = $this->create_style( 'font-size', $styles['tabletFontSize'] . ( $styles['tabletFontSizeUnit'] ?: 'px' ) );
 			}
 			if ( $font_size ) {
 				$css['tablet'][] = $font_size;
@@ -372,7 +390,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			 * Mobile styles.
 			 */
 			if ( array_key_exists( 'mobileLineHeight', $styles ) ) {
-				$css['mobile'][] = 'line-height: ' . $styles['mobileLineHeight'] . ( $styles['mobileLineHeightUnit'] ?: 'em' ) . ';';
+				$css['mobile'][] = $this->create_style( 'line-height', $styles['mobileLineHeight'] . ( $styles['mobileLineHeightUnit'] ?: 'em' ) );
 			}
 
 			$font_size = '';
@@ -382,7 +400,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				if ( array_key_exists( 'fontSize', $styles ) ) {
 					$clamp_desktop_value = $this->clamp_inherited_style( $styles['fontSize'], $inherit_max );
 					if ( $clamp_desktop_value ) {
-						$font_size = 'font-size: ' . $clamp_desktop_value . ( $styles['fontSizeUnit'] ?: 'px' ) . ';';
+						$font_size = $this->create_style( 'font-size', $clamp_desktop_value . ( $styles['fontSizeUnit'] ?: 'px' ) );
 					}
 				}
 
@@ -390,7 +408,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				if ( array_key_exists( 'tabletFontSize', $styles ) ) {
 					$clamp_tablet_value = $this->clamp_inherited_style( $style['tabletFontSize'], $inherit_max );
 					if ( $clamp_tablet_value ) {
-						$font_size = 'font-size: ' . $clamp_tablet_value . ( $styles['tabletFontSizeUnit'] ?: 'px' ) . ';';
+						$font_size = $this->create_style( 'font-size', $clamp_tablet_value . ( $styles['tabletFontSizeUnit'] ?: 'px' ) );
 					}
 				}
 				if ( ! $clamp_tablet_value ) {
@@ -403,7 +421,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				}
 			}
 			if ( array_key_exists( 'mobileFontSize', $styles ) ) {
-				$font_size = 'font-size: ' . $styles['mobileFontSize'] . ( $styles['mobileFontSizeUnit'] ?: 'px' ) . ';';
+				$font_size = $this->create_style( 'font-size', $styles['mobileFontSize'] . ( $styles['mobileFontSizeUnit'] ?: 'px' ) );
 			}
 			if ( $font_size ) {
 				$css['mobile'][] = $font_size;
