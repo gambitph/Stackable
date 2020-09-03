@@ -87,7 +87,7 @@ addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors
 addAction( 'stackable.global-settings.global-styles', 'update', ( colors = [] ) => {
 	const styleRules = colors.map( color => {
 		if ( color.colorVar && color.fallback ) {
-			return `${ color.colorVar }: ${ color.fallback };`
+			return `${ color.colorVar || '' }: ${ color.fallback || '' };`
 		}
 
 		return ''
