@@ -569,21 +569,16 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 		[ `${ blockClass } > .ugb-inner-block` ]: {
 			// Some themes can limit min-width, preventing block width.
 			minWidth: blockInnerWidth === 'wide' && getValue( 'blockWidth' ) ? 'auto !important' : undefined,
+			maxWidth: appendImportant( getValue( 'blockWidth', `%s${ blockWidthUnit || 'px' }` ) ),
 		},
 		desktopOnly: {
 			[ blockClass ]: {
 				minHeight: getValue( 'blockHeight', `%s${ blockHeightUnit }` ) || undefined,
 			},
-			[ `${ blockClass } > .ugb-inner-block` ]: {
-				maxWidth: getValue( 'blockWidth' ) !== '' ? appendImportant( getValue( 'blockWidth', `%s${ blockWidthUnit }` ) ) : undefined,
-			},
 		},
 		tabletOnly: {
 			[ blockClass ]: {
 				minHeight: getValue( 'tabletBlockHeight', `%s${ tabletBlockHeightUnit }` ) || undefined,
-			},
-			[ `${ blockClass } > .ugb-inner-block` ]: {
-				maxWidth: getValue( 'tabletBlockWidth' ) !== '' ? appendImportant( getValue( 'tabletBlockWidth', `%s${ tabletBlockWidthUnit }` ) ) : undefined,
 			},
 		},
 		tablet: {
@@ -594,6 +589,7 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 			[ `${ blockClass } > .ugb-inner-block` ]: {
 				// Some themes can limit min-width, preventing block width.
 				minWidth: blockInnerWidth === 'wide' && getValue( 'tabletBlockWidth' ) ? 'auto !important' : undefined,
+				maxWidth: appendImportant( getValue( 'tabletBlockWidth', `%s${ tabletBlockWidthUnit || 'px' }` ) ),
 			},
 		},
 		mobile: {
@@ -603,9 +599,9 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 				alignItems: getValue( 'mobileBlockVerticalAlign' ),
 			},
 			[ `${ blockClass } > .ugb-inner-block` ]: {
-				maxWidth: getValue( 'mobileBlockWidth' ) !== '' ? appendImportant( getValue( 'mobileBlockWidth', `%s${ mobileBlockWidthUnit }` ) ) : undefined,
 				// Some themes can limit min-width, preventing block width.
 				minWidth: blockInnerWidth === 'wide' && getValue( 'mobileBlockWidth' ) ? 'auto !important' : undefined,
+				maxWidth: appendImportant( getValue( 'mobileBlockWidth', `%s${ mobileBlockWidthUnit || 'px' }` ) ),
 			},
 		},
 		ie11: {
