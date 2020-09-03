@@ -151,11 +151,14 @@ addFilter( 'stackable.global-settings.update-color-value', 'update-value', ( val
 
 	if ( colors && Array.isArray( colors ) && colors.length !== 0 ) {
 		colors.forEach( color => {
-			const colorVarID = value.match( /--stk-global-color-(\S*),/ )[ 1 ]
-			if ( colorVarID ) {
-				const colorVarRegex = new RegExp( `--stk-global-color-${ colorVarID }` )
-				if ( color.color.match( colorVarRegex ) ) {
-					newValue = color.color
+			const colorVarMatch = value.match( /--stk-global-color-(\S*),/ )
+			if ( colorVarMatch && Array.isArray( colorVarMatch ) && colorVarMatch.length >= 2 ) {
+				const colorVarID = colorVarMatch[ 1 ]
+				if ( colorVarID ) {
+					const colorVarRegex = new RegExp( `--stk-global-color-${ colorVarID }` )
+					if ( color.color.match( colorVarRegex ) ) {
+						newValue = color.color
+					}
 				}
 			}
 		} )
