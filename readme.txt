@@ -203,6 +203,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Block bottom margin placeholder now correctly shows 35 instead of 0
 * Fixed: Images with labels can produce invalid block html output
 * Fixed: Console warning for alignRight when displaying block designs in the inspector
+* Fixed: Added aria-label "Play" in Video Popup block
 
 = 2.10.0 =
 [Better Responsive Controls, Better List Block Icons and Low-Highlight Effect](https://wpstackable.com/blog/better-responsive-controls-better-list-block-icons-low-highlight-effect/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)

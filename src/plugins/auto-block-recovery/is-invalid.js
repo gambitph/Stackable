@@ -6,7 +6,7 @@ import {
 import {
 	DecodeEntityParser, getNextNonWhitespaceToken, isClosedByToken, isEqualTokensOfType,
 } from '@wordpress/blocks/build/api/validation'
-import { isEqual } from 'lodash'
+import { isEqual, difference } from 'lodash'
 
 // We will auto-recover if there are errors encountered in these tags.
 const ALLOWED_ERROR_TAGS = [ 'style', 'svg' ]
@@ -61,6 +61,9 @@ export const isInvalid = ( block, allowedTags = ALLOWED_ERROR_TAGS ) => {
 
 	// Check whether an image label or aria label was changed, this was an issue < 2.10.0
 	if ( isImageLabel( validationIssues[ 0 ] ) ) {
+		return true
+	}
+	if ( isLabelAttribute( validationIssues[ 0 ] ) ) {
 		return true
 	}
 
@@ -179,6 +182,40 @@ export const isImageLabel = issue => {
 	}
 
 	if ( issue.args[ 1 ] === 'aria-label' || issue.args[ 1 ] === 'title' || issue.args[ 1 ] === 'alt' ) {
+		return true
+	}
+
+	return false
+}
+
+/**
+ * Check whether an image label or aria label was changed, this was an issue < 2.10.0
+ *
+ * @param {Array} issue The invalidation object
+ *
+ * @return {boolean} True or false
+ */
+export const isLabelAttribute = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 3 ) {
+		return false
+	}
+
+	if ( typeof issue.args[ 1 ] !== 'object' || typeof issue.args[ 2 ] !== 'object' ) {
+		return false
+	}
+	if ( ! Array.isArray( issue.args[ 1 ] ) || ! Array.isArray( issue.args[ 2 ] ) ) {
+		return false
+	}
+
+	const attributes1 = issue.args[ 1 ].map( attributePair => attributePair[ 0 ] )
+	const attributes2 = issue.args[ 2 ].map( attributePair => attributePair[ 0 ] )
+	const diffAttributes = difference( attributes1, attributes2 )
+
+	if ( diffAttributes.includes( 'aria-label' ) || diffAttributes.includes( 'title' ) || diffAttributes.includes( 'alt' ) ) {
 		return true
 	}
 
