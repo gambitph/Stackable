@@ -46,7 +46,6 @@ const DesignLibraryControl = props => {
 				className="ugb-design-library-control__open-library"
 				label={ __( 'Open Design Library', i18n ) }
 				isSmall
-				alignRight
 				isLink
 				onClick={ () => setIsLibraryOpen( true ) }
 			>{ __( 'Open Design Library', i18n ) }</Button>
