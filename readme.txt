@@ -206,6 +206,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Added aria-label "Play" in Video Popup block
 * Fixed: Max. Content Width option now gets inherited in tablet and mobile
 * Fixed: Min. Block Height option now gets inherited in tablet and mobile
+* FIxed: Block and column margins and paddings now get inherited in tablets
 
 = 2.10.0 =
 [Better Responsive Controls, Better List Block Icons and Low-Highlight Effect](https://wpstackable.com/blog/better-responsive-controls-better-list-block-icons-low-highlight-effect/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)

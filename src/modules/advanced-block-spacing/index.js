@@ -12,7 +12,7 @@ import {
 	__getValue,
 	createAllCombinationAttributes,
 	appendImportant,
-	clampInheritedStyle,
+	appendImportantAll,
 } from '~stackable/util'
 
 /**
@@ -503,61 +503,57 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 
 	const blockClass = `.${ props.mainClassName }`
 
-	const clampedMarginTop = clampInheritedStyle( getValue( 'marginTop' ), { max: 100 } )
-	const clampedMarginBottom = clampInheritedStyle( getValue( 'marginBottom' ), { max: 100 } )
-
 	const margins = applyFilters( `stackable.${ blockName }.advanced-block-spacing.margins`, {
-		[ blockClass ]: {
-			marginTop: appendImportant( getValue( 'marginTop', `%s${ marginUnit }` ) ),
-			marginBottom: appendImportant( getValue( 'marginBottom', `%s${ marginUnit }` ) ),
-		},
-		desktopOnly: {
-			[ blockClass ]: {
-				marginRight: appendImportant( getValue( 'marginRight', `%s${ marginUnit }` ) ),
-				marginLeft: appendImportant( getValue( 'marginLeft', `%s${ marginUnit }` ) ),
-			},
+		desktopTablet: {
+			[ blockClass ]: appendImportantAll( {
+				marginTop: getValue( 'marginTop', `%s${ marginUnit }` ),
+				marginBottom: getValue( 'marginBottom', `%s${ marginUnit }` ),
+				marginRight: getValue( 'marginRight', `%s${ marginUnit }` ),
+				marginLeft: getValue( 'marginLeft', `%s${ marginUnit }` ),
+			} ),
 		},
 		tabletOnly: {
-			[ blockClass ]: {
-				marginRight: appendImportant( getValue( 'tabletMarginRight', `%s${ tabletMarginUnit }` ) ),
-				marginLeft: appendImportant( getValue( 'tabletMarginLeft', `%s${ tabletMarginUnit }` ) ),
-				marginTop: appendImportant( getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ) || ( clampedMarginTop && `${ clampedMarginTop }${ marginUnit }` ) ),
-				marginBottom: appendImportant( getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ) || ( clampedMarginBottom && `${ clampedMarginBottom }${ marginUnit }` ) ),
-			},
+			[ blockClass ]: appendImportantAll( {
+				marginRight: getValue( 'tabletMarginRight', `%s${ tabletMarginUnit }` ),
+				marginLeft: getValue( 'tabletMarginLeft', `%s${ tabletMarginUnit }` ),
+				marginTop: getValue( 'tabletMarginTop', `%s${ tabletMarginUnit }` ),
+				marginBottom: getValue( 'tabletMarginBottom', `%s${ tabletMarginUnit }` ),
+			} ),
 		},
 		mobile: {
-			[ blockClass ]: {
-				marginRight: appendImportant( getValue( 'mobileMarginRight', `%s${ mobileMarginUnit }` ) ),
-				marginLeft: appendImportant( getValue( 'mobileMarginLeft', `%s${ mobileMarginUnit }` ) ),
-				marginTop: appendImportant( getValue( 'mobileMarginTop', `%s${ mobileMarginUnit }` ) || ( clampedMarginTop && `${ clampedMarginTop }${ marginUnit }` ) ),
-				marginBottom: appendImportant( getValue( 'mobileMarginBottom', `%s${ mobileMarginUnit }` ) || ( clampedMarginBottom && `${ clampedMarginBottom }${ marginUnit }` ) ),
-			},
+			[ blockClass ]: appendImportantAll( {
+				marginRight: getValue( 'mobileMarginRight', `%s${ mobileMarginUnit }` ),
+				marginLeft: getValue( 'mobileMarginLeft', `%s${ mobileMarginUnit }` ),
+				marginTop: getValue( 'mobileMarginTop', `%s${ mobileMarginUnit }` ),
+				marginBottom: getValue( 'mobileMarginBottom', `%s${ mobileMarginUnit }` ),
+			} ),
 		},
 	} )
+
 	const paddings = applyFilters( `stackable.${ blockName }.advanced-block-spacing.paddings`, {
-		desktopOnly: {
-			[ blockClass ]: {
-				paddingTop: appendImportant( getValue( 'paddingTop', `%s${ paddingUnit }` ) ),
-				paddingRight: appendImportant( getValue( 'paddingRight', `%s${ paddingUnit }` ) ),
-				paddingBottom: appendImportant( getValue( 'paddingBottom', `%s${ paddingUnit }` ) ),
-				paddingLeft: appendImportant( getValue( 'paddingLeft', `%s${ paddingUnit }` ) ),
-			},
+		desktopTablet: {
+			[ blockClass ]: appendImportantAll( {
+				paddingTop: getValue( 'paddingTop', `%s${ paddingUnit }` ),
+				paddingRight: getValue( 'paddingRight', `%s${ paddingUnit }` ),
+				paddingBottom: getValue( 'paddingBottom', `%s${ paddingUnit }` ),
+				paddingLeft: getValue( 'paddingLeft', `%s${ paddingUnit }` ),
+			} ),
 		},
 		tabletOnly: {
-			[ blockClass ]: {
-				paddingTop: appendImportant( getValue( 'tabletPaddingTop', `%s${ tabletPaddingUnit }` ) ),
-				paddingRight: appendImportant( getValue( 'tabletPaddingRight', `%s${ tabletPaddingUnit }` ) ),
-				paddingBottom: appendImportant( getValue( 'tabletPaddingBottom', `%s${ tabletPaddingUnit }` ) ),
-				paddingLeft: appendImportant( getValue( 'tabletPaddingLeft', `%s${ tabletPaddingUnit }` ) ),
-			},
+			[ blockClass ]: appendImportantAll( {
+				paddingTop: getValue( 'tabletPaddingTop', `%s${ tabletPaddingUnit }` ),
+				paddingRight: getValue( 'tabletPaddingRight', `%s${ tabletPaddingUnit }` ),
+				paddingBottom: getValue( 'tabletPaddingBottom', `%s${ tabletPaddingUnit }` ),
+				paddingLeft: getValue( 'tabletPaddingLeft', `%s${ tabletPaddingUnit }` ),
+			} ),
 		},
 		mobile: {
-			[ blockClass ]: {
-				paddingTop: appendImportant( getValue( 'mobilePaddingTop', `%s${ mobilePaddingUnit }` ) ),
-				paddingRight: appendImportant( getValue( 'mobilePaddingRight', `%s${ mobilePaddingUnit }` ) ),
-				paddingBottom: appendImportant( getValue( 'mobilePaddingBottom', `%s${ mobilePaddingUnit }` ) ),
-				paddingLeft: appendImportant( getValue( 'mobilePaddingLeft', `%s${ mobilePaddingUnit }` ) ),
-			},
+			[ blockClass ]: appendImportantAll( {
+				paddingTop: getValue( 'mobilePaddingTop', `%s${ mobilePaddingUnit }` ),
+				paddingRight: getValue( 'mobilePaddingRight', `%s${ mobilePaddingUnit }` ),
+				paddingBottom: getValue( 'mobilePaddingBottom', `%s${ mobilePaddingUnit }` ),
+				paddingLeft: getValue( 'mobilePaddingLeft', `%s${ mobilePaddingUnit }` ),
+			} ),
 		},
 	} )
 
