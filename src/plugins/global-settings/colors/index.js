@@ -4,6 +4,7 @@ import './responsive-color-palette-change'
  * Internal dependencies
  */
 import { GlobalSettingsColorPicker } from '../components'
+import { replaceGlobalColorAttributes } from './util'
 
 /**
  * External dependencies
@@ -166,7 +167,7 @@ addFilter( 'stackable.global-settings.update-color-value', 'update-value', ( val
 /**
  * Used for attributes compatibility when resetting the global colors.
  */
-addAction( 'stackable.global-settings.reset-compatibility', 'color-reset', ( blocks, colors, updatedColors ) => {
+addAction( 'stackable.global-settings.reset-compatibility', 'color-reset', ( blocks, colorsBeforeReset, colorsAfterReset ) => {
 	const stringifiedBlocks = JSON.stringify( blocks )
 	const parsedClientIds = stringifiedBlocks.match( /"clientId":".+?(?=\")"/g )
 	if ( ! parsedClientIds || ( parsedClientIds && ! Array.isArray( parsedClientIds ) ) ) {
@@ -176,7 +177,6 @@ addAction( 'stackable.global-settings.reset-compatibility', 'color-reset', ( blo
 		const { clientId } = JSON.parse( `{${ parsedClientId }}` )
 		return clientId
 	} )
-	const colorVars = colors.map( color => color.colorVar )
 
 	const { getBlock } = select( 'core/block-editor' )
 	const { updateBlockAttributes } = dispatch( 'core/block-editor' )
@@ -203,22 +203,10 @@ addAction( 'stackable.global-settings.reset-compatibility', 'color-reset', ( blo
 			 * the deleted global color. Otherwise, reset its color
 			 * as well.
 			 */
-			let stringifiedAttributes = JSON.stringify( block.attributes )
-			colorVars.forEach( colorVar => {
-				const colorVarRegExp = new RegExp( `var\\(${ colorVar },(.*)\\)`, 'g' )
-				stringifiedAttributes = stringifiedAttributes.replace( colorVarRegExp, () => {
-					const defaultColor = find( updatedColors, updatedColor => updatedColor.colorVar === colorVar )
-					if ( ! defaultColor ) {
-						// Retain the color.
-						return find( colors, color => color.colorVar === colorVar ).fallback
-					}
-					// Revert the color to the default color.
-					return defaultColor.color
-				} )
-			} )
+			const updatedAttributes = replaceGlobalColorAttributes( block.attributes, colorsBeforeReset, colorsAfterReset )
 
 			// Update the block attributes.
-			updateBlockAttributes( clientId, JSON.parse( stringifiedAttributes ) )
+			updateBlockAttributes( clientId, updatedAttributes )
 		} else if ( name.includes( 'core/' ) ) {
 			//
 			/**
@@ -228,7 +216,7 @@ addAction( 'stackable.global-settings.reset-compatibility', 'color-reset', ( blo
 			 * Otherwise, textColor will be undefined and instead will add a style attribute
 			 * (e.g. core/heading style: { color: "#123abc"}).
 			 */
-			if ( name.includes( 'heading' ) ) {
+			if ( name.includes( 'heading' ) || name.includes( 'paragraph' ) ) {
 				const newAttributes = { style: { color: {} } }
 				const { backgroundColor, textColor } = block.attributes
 				if ( backgroundColor ) {
@@ -236,7 +224,7 @@ addAction( 'stackable.global-settings.reset-compatibility', 'color-reset', ( blo
 						// Retain the color
 						const colorVarID = backgroundColor.match( /stk-global-color-(\S*)/ )[ 1 ]
 						newAttributes.backgroundColor = undefined
-						newAttributes.style.color.background = find( colors, color => color.slug === `stk-global-color-${ colorVarID }` ).fallback
+						newAttributes.style.color.background = find( colorsBeforeReset, color => color.slug === `stk-global-color-${ colorVarID }` ).fallback
 					}
 				}
 
@@ -245,12 +233,29 @@ addAction( 'stackable.global-settings.reset-compatibility', 'color-reset', ( blo
 						// Retain the color
 						const colorVarID = textColor.match( /stk-global-color-(\S*)/ )[ 1 ]
 						newAttributes.textColor = undefined
-						newAttributes.style.color.text = find( colors, color => color.slug === `stk-global-color-${ colorVarID }` ).fallback
+						newAttributes.style.color.text = find( colorsBeforeReset, color => color.slug === `stk-global-color-${ colorVarID }` ).fallback
 					}
 				}
 
 				// Update the block attributes.
 				updateBlockAttributes( clientId, newAttributes )
+			} else {
+				const updatedAttributes = replaceGlobalColorAttributes( block.attributes, colorsBeforeReset, colorsAfterReset )
+
+				// This is used for pullquote compatibility.
+				if ( updatedAttributes.textColor ) {
+					const defaultColor = find( colorsAfterReset, updatedColor => updatedColor.slug === updatedAttributes.textColor )
+					if ( ! defaultColor ) {
+						updatedAttributes.customTextColor = find( colorsBeforeReset, color => color.slug === updatedAttributes.textColor ).fallback
+						updatedAttributes.textColor = undefined
+					} else {
+						updatedAttributes.customTextColor = defaultColor.color
+						updatedAttributes.textColor = undefined
+					}
+				}
+
+				// Update the block attributes.
+				updateBlockAttributes( clientId, updatedAttributes )
 			}
 		} else if ( name.includes( 'kadence/' ) ) {
 			//
@@ -264,8 +269,22 @@ addAction( 'stackable.global-settings.reset-compatibility', 'color-reset', ( blo
 			 * for that block. So in some cases, we have to set the colorClass
 			 * attribute to an empty string to avoid adding it to front end.
 			 */
+			const updatedAttributes = replaceGlobalColorAttributes( block.attributes, colorsBeforeReset, colorsAfterReset )
+
+			// Some kadence blocks e.g. Advanced Heading has colorClass attribute which will be appended to the h1 tag.
+			// Remove this to apply the hex color.
+			if ( updatedAttributes.colorClass ) {
+				updatedAttributes.colorClass = ''
+			}
+
+			// Update the block attributes.
+			updateBlockAttributes( clientId, updatedAttributes )
 		} else {
-			// Default attributes adjustment.
+			// Default attributes adjustment. We can add more compatibility adjustments here.
+			const updatedAttributes = replaceGlobalColorAttributes( block.attributes, colorsBeforeReset, colorsAfterReset )
+
+			// Update the block attributes.
+			updateBlockAttributes( clientId, updatedAttributes )
 		}
 	} )
 } )
