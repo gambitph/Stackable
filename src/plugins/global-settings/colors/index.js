@@ -10,7 +10,9 @@ import { GlobalSettingsColorPicker } from '../components'
  */
 import { i18n } from 'stackable'
 import { PanelAdvancedSettings } from '~stackable/components'
-import { isEqual } from 'lodash'
+import {
+	isEqual, find,
+} from 'lodash'
 import md5 from 'md5'
 
 /**
@@ -159,6 +161,75 @@ addFilter( 'stackable.global-settings.update-color-value', 'update-value', ( val
 	}
 
 	return newValue
+} )
+
+/**
+ * Used for attributes compatibility when resetting the global colors.
+ */
+addAction( 'stackable.global-settings.reset-compatibility', 'color-reset', ( blocks, colors, updatedColors, updateBlockAttributes ) => {
+	const colorVars = colors.map( color => color.colorVar )
+
+	/**
+	 * Compatibility adjustments for stackable and other blocks.
+	 */
+
+	// Iterate through all blocks and update existing color attributes.
+	blocks.forEach( block => {
+		const { clientId, name } = block
+		const newAttributes = {}
+
+		if ( name.includes( 'ugb/' ) ) {
+			//
+			/**
+			 * For stackable blocks.
+			 * We are retaining the color of blocks that uses
+			 * the deleted global color. Otherwise, reset its color
+			 * as well.
+			 */
+			let stringifiedAttributes = JSON.stringify( block.attributes )
+			colorVars.forEach( colorVar => {
+				const colorVarRegExp = new RegExp( `var\\(${ colorVar },(.*)\\)`, 'g' )
+				stringifiedAttributes = stringifiedAttributes.replace( colorVarRegExp, () => {
+					const defaultColor = find( updatedColors, updatedColor => updatedColor.colorVar === colorVar )
+					if ( ! defaultColor ) {
+						// Retain the color.
+						return find( colors, color => color.colorVar === colorVar ).fallback
+					}
+					// Revert the color to the default color.
+					return defaultColor.color
+				} )
+			} )
+
+			updateBlockAttributes( clientId, JSON.parse( stringifiedAttributes ) )
+		} else if ( name.includes( 'core/' ) ) {
+			//
+			/**
+			 * For core blocks.
+			 * If a core block uses a color palette included in the theme,
+			 * it uses the slug name as its attribute (e.g. textColor: "accent").
+			 * Otherwise, textColor will be undefined and instead will add a style attribute
+			 * (e.g. core/heading style: { color: "#123abc"}).
+			 */
+
+		} else if ( name.includes( 'kadence/' ) ) {
+			//
+			/**
+			 * For kadence blocks.
+			 * Similar to core blocks. If a kadence block uses a
+			 * color palette included in the theme or one of their
+			 * global palette, it uses the slug name as its attribute
+			 * (e.g. color: "kb-palette-1") and also adding a colorClass
+			 * attribute which will be applied as a custom css class
+			 * for that block. So in some cases, we have to set the colorClass
+			 * attribute to an empty string to avoid adding it to front end.
+			 */
+		} else {
+			// Default attributes adjustment.
+		}
+
+		// Update block attributes
+		updateBlockAttributes( clientId, newAttributes )
+	} )
 } )
 
 domReady( () => {

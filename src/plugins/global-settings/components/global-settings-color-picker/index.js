@@ -301,6 +301,8 @@ const ColorPickers = ( {
 	const onColorPaletteReset = ( setIsResetPopoverOpen, setIsBusyResetButton ) => {
 		setIsBusyResetButton( true )
 		const { defaultColors, colors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
+		const { updateBlockAttributes } = dispatch( 'core/block-editor' )
+		const blocks = select( 'core/block-editor' ).getBlocks()
 		// Map through defaultColors and update its callback and colorVar
 		const updatedColors = defaultColors.map( defaultColor => {
 			const {
@@ -321,10 +323,18 @@ const ColorPickers = ( {
 			return defaultColor
 		} )
 
+		/**
+		 * Compability adjustment for stackable and other blocks.
+		 *
+		 * @see global-settings/colors
+		 */
+		doAction( 'stackable.global-settings.reset-compatibility', blocks, colors, updatedColors, updateBlockAttributes )
+
 		// Update the colors
 		updateColors( updatedColors )
-		setIsBusyResetButton( false )
 		setIsResetPopoverOpen( false )
+		setDisableReset( true )
+		setIsBusyResetButton( false )
 	}
 
 	// Called when adding a new color.
