@@ -2,7 +2,9 @@
  * External dependencies
  */
 import classnames from 'classnames'
-import { cloneDeep, inRange } from 'lodash'
+import {
+	cloneDeep, inRange, findIndex,
+} from 'lodash'
 import md5 from 'md5'
 import { i18n } from 'stackable'
 
@@ -128,6 +130,9 @@ const AddIcon = props => (
 // Component used to add a reset icon button.
 const ResetButton = props => {
 	const [ isResetPopoverOpen, setIsResetPopoverOpen ] = useState( false )
+	// State used to control the busy indicator in the reset button.
+	const [ isBusyResetButton, setIsBusyResetButton ] = useState( false )
+
 	const resetButtonRef = useRef( null )
 
 	const handleReset = () => {
@@ -167,10 +172,10 @@ const ResetButton = props => {
 							<ButtonGroup>
 								<Button
 									onClick={ () => {
-										setIsResetPopoverOpen( false )
-										props.onClick()
+										props.onClick( setIsResetPopoverOpen, setIsBusyResetButton )
 									} }
 									disabled={ props.disabled }
+									isBusy={ isBusyResetButton }
 									isDefault
 									isSmall
 								>
@@ -293,24 +298,33 @@ const ColorPickers = ( {
 	}
 
 	// Called when the user decided to reset the color palette.
-	const onColorPaletteReset = () => {
-		const { defaultColors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
-
-		// Reset the colors in stackable_global_colors
-		loadPromise.then( () => {
-			const settings = new models.Settings( { stackable_global_colors: [] } ) // eslint-disable-line camelcase
-			settings.save()
-
-			// Revert all the colors.
-			dispatch( 'core/block-editor' ).updateSettings( {
-				colors: defaultColors,
-			} )
-
-			setDisableReset( true )
-
-			// Update the global style variable values
-			doAction( 'stackable.global-settings.global-styles', [] )
+	const onColorPaletteReset = ( setIsResetPopoverOpen, setIsBusyResetButton ) => {
+		setIsBusyResetButton( true )
+		const { defaultColors, colors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
+		// Map through defaultColors and update its callback and colorVar
+		const updatedColors = defaultColors.map( defaultColor => {
+			const {
+				name, slug, color: fallback,
+			} = defaultColor
+			const index = findIndex( colors, color => color.slug === defaultColor.slug )
+			if ( index !== -1 ) {
+				const { colorVar } = colors[ index ]
+				const color = `var(${ colorVar }, ${ fallback })`
+				return {
+					name,
+					slug,
+					colorVar,
+					fallback,
+					color,
+				}
+			}
+			return defaultColor
 		} )
+
+		// Update the colors
+		updateColors( updatedColors )
+		setIsBusyResetButton( false )
+		setIsResetPopoverOpen( false )
 	}
 
 	// Called when adding a new color.
