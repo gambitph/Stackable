@@ -301,7 +301,6 @@ const ColorPickers = ( {
 	const onColorPaletteReset = ( setIsResetPopoverOpen, setIsBusyResetButton ) => {
 		setIsBusyResetButton( true )
 		const { defaultColors, colors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
-		const { updateBlockAttributes } = dispatch( 'core/block-editor' )
 		const blocks = select( 'core/block-editor' ).getBlocks()
 		// Map through defaultColors and update its callback and colorVar
 		const updatedColors = defaultColors.map( defaultColor => {
@@ -328,7 +327,7 @@ const ColorPickers = ( {
 		 *
 		 * @see global-settings/colors
 		 */
-		doAction( 'stackable.global-settings.reset-compatibility', blocks, colors, updatedColors, updateBlockAttributes )
+		doAction( 'stackable.global-settings.reset-compatibility', blocks, colors, updatedColors )
 
 		// Update the colors
 		updateColors( updatedColors )
