@@ -563,6 +563,7 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 
 	const others = {
 		[ blockClass ]: {
+			minHeight: getValue( 'blockHeight', `%s${ blockHeightUnit || 'px' }` ),
 			justifyContent: getValue( 'blockHorizontalAlign' ),
 			alignItems: getValue( 'blockVerticalAlign' ),
 		},
@@ -571,18 +572,9 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 			minWidth: blockInnerWidth === 'wide' && getValue( 'blockWidth' ) ? 'auto !important' : undefined,
 			maxWidth: appendImportant( getValue( 'blockWidth', `%s${ blockWidthUnit || 'px' }` ) ),
 		},
-		desktopOnly: {
-			[ blockClass ]: {
-				minHeight: getValue( 'blockHeight', `%s${ blockHeightUnit }` ) || undefined,
-			},
-		},
-		tabletOnly: {
-			[ blockClass ]: {
-				minHeight: getValue( 'tabletBlockHeight', `%s${ tabletBlockHeightUnit }` ) || undefined,
-			},
-		},
 		tablet: {
 			[ blockClass ]: {
+				minHeight: getValue( 'tabletBlockHeight', `%s${ tabletBlockHeightUnit || 'px' }` ),
 				justifyContent: getValue( 'tabletBlockHorizontalAlign' ),
 				alignItems: getValue( 'tabletBlockVerticalAlign' ),
 			},
@@ -594,7 +586,7 @@ const addToStyleObject = blockName => ( styleObject, props ) => {
 		},
 		mobile: {
 			[ blockClass ]: {
-				minHeight: getValue( 'mobileBlockHeight', `%s${ mobileBlockHeightUnit }` ) || undefined,
+				minHeight: getValue( 'mobileBlockHeight', `%s${ mobileBlockHeightUnit || 'px' }` ),
 				justifyContent: getValue( 'mobileBlockHorizontalAlign' ),
 				alignItems: getValue( 'mobileBlockVerticalAlign' ),
 			},
