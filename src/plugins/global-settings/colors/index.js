@@ -220,23 +220,31 @@ addAction( 'stackable.global-settings.reset-compatibility', 'color-reset', ( blo
 			 * (e.g. core/heading style: { color: "#123abc"}).
 			 */
 			if ( name.includes( 'heading' ) || name.includes( 'paragraph' ) ) {
-				const newAttributes = { style: { color: {} } }
+				const newAttributes = { style: { ...block.attributes.style } }
 				const { backgroundColor, textColor } = block.attributes
 				if ( backgroundColor ) {
 					if ( backgroundColor.includes( 'stk-global-color-' ) ) {
 						// Retain the color
-						const colorVarID = backgroundColor.match( /stk-global-color-(\S*)/ )[ 1 ]
-						newAttributes.backgroundColor = undefined
-						newAttributes.style.color.background = find( colorsBeforeReset, color => color.slug === `stk-global-color-${ colorVarID }` ).fallback
+						const colorVarMatch = backgroundColor.match( /stk-global-color-(\S*)/ )
+						if ( colorVarMatch && Array.isArray( colorVarMatch ) && colorVarMatch.length >= 2 ) {
+							const colorVarID = colorVarMatch[ 1 ]
+							newAttributes.backgroundColor = undefined
+							const appliedColor = find( colorsBeforeReset, color => color.slug === `stk-global-color-${ colorVarID }` )
+							newAttributes.style.color.background = appliedColor ? appliedColor.fallback || '#000000' : '#000000'
+						}
 					}
 				}
 
 				if ( textColor ) {
 					if ( textColor.includes( 'stk-global-color-' ) ) {
 						// Retain the color
-						const colorVarID = textColor.match( /stk-global-color-(\S*)/ )[ 1 ]
-						newAttributes.textColor = undefined
-						newAttributes.style.color.text = find( colorsBeforeReset, color => color.slug === `stk-global-color-${ colorVarID }` ).fallback
+						const colorVarMatch = backgroundColor.match( /stk-global-color-(\S*)/ )
+						if ( colorVarMatch && Array.isArray( colorVarMatch ) && colorVarMatch.length >= 2 ) {
+							const colorVarID = colorVarMatch[ 1 ]
+							newAttributes.textColor = undefined
+							const appliedColor = find( colorsBeforeReset, color => color.slug === `stk-global-color-${ colorVarID }` )
+							newAttributes.style.color.text = appliedColor ? appliedColor.fallback || '#000000' : '#000000'
+						}
 					}
 				}
 
@@ -249,10 +257,11 @@ addAction( 'stackable.global-settings.reset-compatibility', 'color-reset', ( blo
 				if ( updatedAttributes.textColor ) {
 					const defaultColor = find( colorsAfterReset, updatedColor => updatedColor.slug === updatedAttributes.textColor )
 					if ( ! defaultColor ) {
-						updatedAttributes.customTextColor = find( colorsBeforeReset, color => color.slug === updatedAttributes.textColor ).fallback
+						const appliedColor = find( colorsBeforeReset, color => color.slug === updatedAttributes.textColor )
+						updatedAttributes.customTextColor = appliedColor ? appliedColor.fallback || '#000000' : '#000000'
 						updatedAttributes.textColor = undefined
 					} else {
-						updatedAttributes.customTextColor = defaultColor.color
+						updatedAttributes.customTextColor = defaultColor.color || '#000000'
 						updatedAttributes.textColor = undefined
 					}
 				}

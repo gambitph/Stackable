@@ -22,10 +22,11 @@ export const replaceGlobalColorAttributes = ( attributes = {}, colorsBeforeReset
 			const defaultColor = find( colorsAfterReset, updatedColor => updatedColor.colorVar === colorVar )
 			if ( ! defaultColor ) {
 				// Retain the color.
-				return find( colorsBeforeReset, color => color.colorVar === colorVar ).fallback
+				const appliedColor = find( colorsBeforeReset, color => color.colorVar === colorVar )
+				return appliedColor ? appliedColor.fallback || '#000000' : '#000000'
 			}
 			// Revert the color to the default color.
-			return defaultColor.color
+			return defaultColor.color || '#000000'
 		} )
 	} )
 
