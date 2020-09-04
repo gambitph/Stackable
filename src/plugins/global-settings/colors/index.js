@@ -15,6 +15,7 @@ import {
 	isEqual, find, omit,
 } from 'lodash'
 import md5 from 'md5'
+import { hexToRgba } from '~stackable/util'
 
 /**
  * Wordpress dependencies
@@ -87,7 +88,8 @@ addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors
 addAction( 'stackable.global-settings.global-styles', 'update', ( colors = [] ) => {
 	const styleRules = colors.map( color => {
 		if ( color.colorVar && color.fallback ) {
-			return `${ color.colorVar || '' }: ${ color.fallback || '' };`
+			const rgbaColor = hexToRgba( color.fallback ).match( /[0-9]*?(?=,).*(?=,).*(?=,)/g )[ 0 ]
+			return `${ color.colorVar || '' }: ${ color.fallback || '' }; ${ color.colorVar || '' }-rgba: ${ rgbaColor };`
 		}
 
 		return ''
@@ -305,9 +307,9 @@ domReady( () => {
 	// Mount a style in the document
 	const globalStyleEl = document.createElement( 'style' )
 	globalStyleEl.setAttribute( 'id', 'stackable-global-colors' )
-	const editorEl = document.querySelector( '.edit-post-visual-editor' )
+	const editorEl = document.querySelector( 'head' )
 	if ( editorEl ) {
-		editorEl.insertBefore( globalStyleEl, editorEl.firstChild )
+		editorEl.appendChild( globalStyleEl )
 	}
 
 	loadPromise.then( () => {
