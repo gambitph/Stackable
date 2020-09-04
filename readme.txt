@@ -192,6 +192,9 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.11.0 =
+* Change: Moved Stackable admin settings inside Settings menu
+
 = 2.10.1 =
 * Change: Added "Other" options on the bottom of the admin settings
 * Fixed: Icon list text were flowing over the other lines in the editor
