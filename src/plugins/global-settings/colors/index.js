@@ -127,6 +127,8 @@ const updateToStackableGlobalColors = () => {
 		return newColor
 	} )
 
+	doAction( 'stackable.global-settings.global-styles', newColors )
+
 	// Dispatch the newColors to the current colors
 	dispatch( 'core/block-editor' ).updateSettings( {
 		colors: newColors,
@@ -138,8 +140,6 @@ const updateToStackableGlobalColors = () => {
 		const model = new models.Settings( { stackable_global_colors: newColors } ) // eslint-disable-line camelcase
 		model.save()
 	} )
-
-	doAction( 'stackable.global-settings.global-styles', newColors )
 }
 
 /**

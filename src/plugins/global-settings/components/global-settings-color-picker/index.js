@@ -233,11 +233,6 @@ const ColorPickers = ( {
 	 * @param {Array} updatedColors colors passed.
 	 */
 	const updateColors = updatedColors => {
-		loadPromise.then( () => {
-			const settings = new models.Settings( { stackable_global_colors: updatedColors } ) // eslint-disable-line camelcase
-			settings.save()
-		} )
-
 		dispatch( 'core/block-editor' ).updateSettings( {
 			colors: updatedColors,
 		} )
@@ -423,6 +418,17 @@ const GlobalSettingsColorPicker = props => {
 	)
 
 	const { colors } = useSelect( select => select( 'core/block-editor' ).getSettings() )
+
+	useEffect( () => {
+		// We don't need to always set the settings. Debounce the loadPromise.
+		const saveSettings = setTimeout( () => {
+			loadPromise.then( () => {
+				const settings = new models.Settings( { stackable_global_colors: colors } ) // eslint-disable-line camelcase
+				settings.save()
+			} )
+		}, 1000 )
+		return () => clearTimeout( saveSettings )
+	}, [ colors ] )
 
 	return (
 		<div className={ classNames }>
