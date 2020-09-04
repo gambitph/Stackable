@@ -207,7 +207,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Max. Content Width option now gets inherited in tablet and mobile
 * Fixed: Min. Block Height option now gets inherited in tablet and mobile
 * FIxed: Block and column margins and paddings now get inherited in tablets
-* FIxed: Separator heights now get inherited in tablets
+* FIxed: Some styles will now get inherited in tablets also
 * Fixed: Block errors may appear and not auto-recover when using the Gutenberg plugin
 
 = 2.10.0 =

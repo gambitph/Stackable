@@ -152,7 +152,7 @@ export const createStyles = props => {
 
 	// Content width.
 	styles.push( {
-		desktopOnly: {
+		desktopTablet: {
 			[ `.${ uniqueClass }-content-wrapper.ugb-container__content-wrapper` ]: {
 				width: appendImportant( getValue( 'contentWidth', '%s%' ) ),
 			},

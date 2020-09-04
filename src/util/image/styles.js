@@ -110,7 +110,7 @@ export const createImageStyleSet = ( attrNameTemplate = '%s', mainClassName = ''
 			...createImageStyles( attrNameTemplate, 'desktop', blockAttributes, options ),
 		}
 	} else {
-		style.desktopOnly = {
+		style.desktopTablet = {
 			[ `.${ mainClassName }` ]: {
 				...createImageStyles( attrNameTemplate, 'desktop', blockAttributes, options ),
 			},

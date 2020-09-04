@@ -60,7 +60,7 @@ export const createStyles = props => {
 				return transform
 			} )(),
 		},
-		desktopOnly: {
+		desktopTablet: {
 			'.ugb-separator__svg-wrapper': {
 				height: appendImportant( getValue( 'height', '%spx' ) ),
 			},

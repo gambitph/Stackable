@@ -75,7 +75,7 @@ export const createStyles = props => {
 				// Special case for centering the text with letter-spacing.
 				textIndent: ( design === 'basic' || design === 'plain' ) ? getValue( 'numberLetterSpacing', '%spx' ) : undefined,
 			},
-			desktopOnly: {
+			desktopTablet: {
 				'.ugb-number-box__number': {
 					height: show.numberBGColor ? appendImportant( getValue( 'numberPadding', '%sem' ) ) : undefined,
 					width: show.numberBGColor ? appendImportant( getValue( 'numberPadding', '%sem' ) ) : undefined,
