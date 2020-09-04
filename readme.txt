@@ -194,6 +194,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 = 2.11.0 =
 * Change: Moved Stackable admin settings inside Settings menu
+* Fixed: Background color and image in Video Popup won't apply
 
 = 2.10.1 =
 * Change: Added "Other" options on the bottom of the admin settings
@@ -210,8 +211,8 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Added aria-label "Play" in Video Popup block
 * Fixed: Max. Content Width option now gets inherited in tablet and mobile
 * Fixed: Min. Block Height option now gets inherited in tablet and mobile
-* FIxed: Block and column margins and paddings now get inherited in tablets
-* FIxed: Some styles will now get inherited in tablets also
+* Fixed: Block and column margins and paddings now get inherited in tablets
+* Fixed: Some styles will now get inherited in tablets also
 * Fixed: Block errors may appear and not auto-recover when using the Gutenberg plugin
 
 = 2.10.0 =
