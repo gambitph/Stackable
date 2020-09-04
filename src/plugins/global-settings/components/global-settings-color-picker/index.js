@@ -340,7 +340,7 @@ const ColorPickers = ( {
 		const updatedColors = [
 			...select( 'core/block-editor' ).getSettings().colors,
 			{
-				name: `Custom Color ${ newIndex }`, slug: `stk-global-color-${ slugId }`, color: `--var(${ colorVar }, #000000)`, colorVar, fallback: '#000000',
+				name: `Custom Color ${ newIndex }`, slug: `stk-global-color-${ slugId }`, color: `var(${ colorVar }, #000000)`, colorVar, fallback: '#000000',
 			},
 		]
 
