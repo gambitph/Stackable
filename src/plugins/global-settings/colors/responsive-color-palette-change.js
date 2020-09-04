@@ -5,7 +5,7 @@
  */
 
 /**
- * External dependencies
+ * Wordpress dependencies
  */
 import {
 	dispatch, select, useSelect,
