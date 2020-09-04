@@ -14,17 +14,17 @@ import { loadPromise, models } from '@wordpress/api'
 import { useEffect } from '@wordpress/element'
 import { registerPlugin } from '@wordpress/plugins'
 
-// Initialize the current screen of the editor.
-let currentScreen = 'Desktop'
-
-// Dispatch the color palette from the settings when the preview mode
-// in the editor is changed.
+/**
+ * Dispatch the color palette from the settings when the preview mode
+ * or the editor view mode has changed.
+ */
 const ResponsiveColorPalette = () => {
-	const { deviceType } = useSelect(
+	const { deviceType, preferences } = useSelect(
 		select => ( {
 			deviceType: select(
 				'core/edit-post'
 			).__experimentalGetPreviewDeviceType(),
+			preferences: select( 'core/edit-post' ).getPreferences(),
 		} ),
 		[]
 	)
@@ -35,17 +35,15 @@ const ResponsiveColorPalette = () => {
 			settings.fetch().then( res => {
 				const { stackable_global_colors: stackableGlobalColors } = res // eslint-disable-line camelcase
 
-				if ( stackableGlobalColors && Array.isArray( stackableGlobalColors ) && deviceType !== currentScreen ) {
+				if ( stackableGlobalColors && Array.isArray( stackableGlobalColors ) && stackableGlobalColors.length !== 0 ) {
 					// Update the color palette.
 					dispatch( 'core/block-editor' ).updateSettings( {
 						colors: stackableGlobalColors,
 					} )
-
-					currentScreen = deviceType
 				}
 			} )
 		} )
-	}, [ deviceType ] )
+	}, [ deviceType, preferences ] )
 
 	return null
 }
