@@ -236,9 +236,6 @@ const ColorPickers = ( {
 			colors: updatedColors,
 		} )
 
-		// Update the global style variable values
-		doAction( 'stackable.global-settings.global-styles', updatedColors )
-
 		setDisableReset( false )
 	}
 
@@ -422,6 +419,12 @@ const GlobalSettingsColorPicker = props => {
 		// We don't need to always set the settings. Debounce the loadPromise.
 		const saveSettings = setTimeout( () => doAction( 'stackable.global-settings.save-model-settings', colors ), 1000 )
 		return () => clearTimeout( saveSettings )
+	}, [ colors ] )
+
+	useEffect( () => {
+		// Debouncing the update root css property values.
+		const updateRootCss = setTimeout( () => doAction( 'stackable.global-settings.global-styles', colors ), 100 )
+		return () => clearTimeout( updateRootCss )
 	}, [ colors ] )
 
 	return (
