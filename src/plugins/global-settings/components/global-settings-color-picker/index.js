@@ -20,7 +20,6 @@ import {
 import {
 	select, dispatch, useSelect,
 } from '@wordpress/data'
-import { loadPromise, models } from '@wordpress/api'
 import { doAction } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
 
@@ -421,12 +420,7 @@ const GlobalSettingsColorPicker = props => {
 
 	useEffect( () => {
 		// We don't need to always set the settings. Debounce the loadPromise.
-		const saveSettings = setTimeout( () => {
-			loadPromise.then( () => {
-				const settings = new models.Settings( { stackable_global_colors: colors } ) // eslint-disable-line camelcase
-				settings.save()
-			} )
-		}, 1000 )
+		const saveSettings = setTimeout( () => doAction( 'stackable.global-settings.save-model-settings', colors ), 1000 )
 		return () => clearTimeout( saveSettings )
 	}, [ colors ] )
 

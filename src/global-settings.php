@@ -72,6 +72,9 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 								'fallback' => array(
 									'type' => 'string',
 								),
+								'rgb' => array(
+									'type' => 'string',
+								),
 							)
 						)
 					),
@@ -205,6 +208,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				  if ( $color['fallback'] && $color['colorVar']){
 				  	// Add the custom css property.
 					array_push( $css, $color['colorVar'] . ': ' . $color['fallback'] . ';' );
+					array_push( $css, $color['colorVar'] . '-rgba: ' . $color['rgb'] . ';' );
 
 
 					// Add custom css class rule for other blocks.

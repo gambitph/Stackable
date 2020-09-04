@@ -116,6 +116,20 @@ addAction( 'stackable.global-settings.global-styles', 'update', ( colors = [] ) 
 	}
 } )
 
+addAction( 'stackable.global-settings.save-model-settings', 'global-colors', newColors => {
+	const updatedColors = newColors.map( newColor => {
+		const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( newColor.colorVar ).trim() )
+		rgbaColor.splice( 3, 1 )
+		newColor.rgb = rgbaColor.join( ', ' )
+		return newColor
+	} )
+
+	loadPromise.then( () => {
+		const settings = new models.Settings( { stackable_global_colors: updatedColors } ) // eslint-disable-line camelcase
+		settings.save()
+	} )
+} )
+
 const updateToStackableGlobalColors = () => {
 	const { colors } = select( 'core/block-editor' ).getSettings()
 	const newColors = colors.map( color => {
@@ -136,10 +150,7 @@ const updateToStackableGlobalColors = () => {
 	} )
 
 	// Save the settings
-	loadPromise.then( () => {
-		const model = new models.Settings( { stackable_global_colors: newColors } ) // eslint-disable-line camelcase
-		model.save()
-	} )
+	doAction( 'stackable.global-settings.save-model-settings', newColors )
 }
 
 /**
