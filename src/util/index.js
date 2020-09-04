@@ -132,15 +132,6 @@ export const hexToRgba = ( hexColor, opacity = null ) => {
 	let newHexColor = hexColor
 
 	/**
-	 * Detect CSS variables in form of var(--color) and get their current
-	 * values from the :root selector.
-	 */
-	if ( hexColor.indexOf( 'var(' ) > -1 ) {
-		newHexColor = window.getComputedStyle( document.documentElement )
-			.getPropertyValue( hexColor.replace( 'var(', '' ).replace( ')', '' ) ) || '#fff'
-	}
-
-	/**
 	 * Compatibility for stackable global colors.
 	 */
 	if ( hexColor.includes( '--stk-global-color' ) ) {
@@ -155,6 +146,18 @@ export const hexToRgba = ( hexColor, opacity = null ) => {
 			const newColor = rgba( `#${ hex }ff` )
 			newColor.splice( 2, 1 )
 			return `rgba(var(--stk-global-color-${ colorVarID[ 1 ] }-rgba, ${ newColor.join( ', ' ) }), ${ opacity !== null ? opacity : 1 })`
+		}
+	}
+
+	/**
+	 * Detect CSS variables in form of var(--color) and get their current
+	 * values from the :root selector.
+	 */
+	if ( hexColor.indexOf( 'var(' ) > -1 ) {
+		newHexColor = window.getComputedStyle( document.documentElement )
+			.getPropertyValue( newHexColor.replace( 'var(', '' ).replace( ')', '' ) )
+		if ( ! newHexColor ) {
+
 		}
 	}
 
