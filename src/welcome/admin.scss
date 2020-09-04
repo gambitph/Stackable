@@ -18,6 +18,10 @@ body[class*="page_stackable"] {
 // Actual page styles.
 .s-header {
 	padding: 50px;
+	// Hide Freemius tabs.
+	.nav-tab-wrapper {
+		display: none;
+	}
 }
 .s-header {
 	background: #fff;
@@ -188,8 +192,8 @@ body[class*="page_stackable"] {
 	justify-content: center;
 }
 
-body.toplevel_page_stackable,
-body[class*="page_stackable-settings"] {
+body.settings_page_stackable,
+body.settings_page_stackable-getting-started {
 	// Hide admin notices to not mess up the welcome screen.
 	.s-header > *:not(h1):not(img) {
 		display: none !important;
@@ -199,8 +203,8 @@ body[class*="page_stackable-settings"] {
 		display: none !important;
 	}
 }
-body.toplevel_page_stackable,
-body[class*="page_stackable-settings"] {
+body.settings_page_stackable,
+body.settings_page_stackable-getting-started {
 
 	img {
 		max-width: 100%;
@@ -583,7 +587,7 @@ body[class*="page_stackable-settings"] {
 
 // Collapse to a single column for mobile.
 @media screen and (max-width: $break-large) {
-	body.toplevel_page_stackable,
+	body.settings_page_stackable,
 	body.stackable_page_stackable-settings {
 		.s-body-container {
 			grid-template-columns: 1fr;
