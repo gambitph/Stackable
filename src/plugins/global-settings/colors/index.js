@@ -362,12 +362,13 @@ domReady( () => {
 		editorEl.appendChild( globalStyleEl )
 	}
 
+	const { colors } = select( 'core/block-editor' ).getSettings()
+
 	loadPromise.then( () => {
 		const settings = new models.Settings()
 
 		settings.fetch().then( response => {
 			const { stackable_global_colors: globalColors } = response
-			const { colors } = select( 'core/block-editor' ).getSettings()
 
 			if ( Array.isArray( globalColors ) ) {
 				if ( globalColors.length === 0 ) {
