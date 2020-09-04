@@ -55,15 +55,15 @@ export const GlobalTypographyStyles = () => {
 	// The selector will depend on what blocks are allowed to have the global styles.
 	const selectors = []
 	if ( applySettingsTo === 'blocks-stackable-native' ) {
-		selectors.push( '.wp-block[data-type^="core/"]' )
-		selectors.push( '.wp-block[data-type^="ugb/"]' )
+		selectors.push( '[data-type^="core/"]' )
+		selectors.push( '[data-type^="ugb/"]' )
 	} else if ( applySettingsTo === 'blocks-stackable' ) {
-		selectors.push( '.wp-block[data-type^="ugb/"]' )
+		selectors.push( '[data-type^="ugb/"]' )
 	} else if ( applySettingsTo === 'blocks-all' ) {
-		selectors.push( '.wp-block[data-type]' )
+		selectors.push( '[data-type]' )
 	} else { // Entire site.
 		// It's just the editor since we're in Gutenberg.
-		selectors.push( '.wp-block[data-type]' )
+		selectors.push( '[data-type]' )
 	}
 
 	// Generate all the typography styles.
