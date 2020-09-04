@@ -4,7 +4,7 @@ import './responsive-color-palette-change'
  * Internal dependencies
  */
 import { GlobalSettingsColorPicker } from '../components'
-import { replaceGlobalColorAttributes } from './util'
+import { replaceGlobalColorAttributes, updateFallbackColorAttributes } from './util'
 
 /**
  * External dependencies
@@ -117,11 +117,36 @@ addAction( 'stackable.global-settings.global-styles', 'update', ( colors = [] ) 
 } )
 
 addAction( 'stackable.global-settings.save-model-settings', 'global-colors', newColors => {
+	const { getBlock, getBlocks } = select( 'core/block-editor' )
+	const { updateBlockAttributes } = dispatch( 'core/block-editor' )
+
+	const stringifiedBlocks = JSON.stringify( getBlocks() )
+	const parsedClientIds = stringifiedBlocks.match( /"clientId":".+?(?=\")"/g )
+	if ( ! parsedClientIds || ( parsedClientIds && ! Array.isArray( parsedClientIds ) ) ) {
+		return
+	}
+	const clientIds = parsedClientIds.map( parsedClientId => {
+		const { clientId } = JSON.parse( `{${ parsedClientId }}` )
+		return clientId
+	} )
+
+	// Include innerBlocks.
+	const allBlocks = clientIds.map( clientID => {
+		const block = omit( getBlock( clientID ), 'innerBlocks' )
+		return block
+	} )
+
 	const updatedColors = newColors.map( newColor => {
 		const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( newColor.colorVar ).trim() )
 		rgbaColor.splice( 3, 1 )
 		newColor.rgb = rgbaColor.join( ', ' )
 		return newColor
+	} )
+
+	allBlocks.forEach( block => {
+		const { clientId } = block
+		const newAttributes = updateFallbackColorAttributes( block.attributes, updatedColors )
+		updateBlockAttributes( clientId, newAttributes )
 	} )
 
 	loadPromise.then( () => {

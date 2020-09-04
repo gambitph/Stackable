@@ -28,7 +28,7 @@ export const replaceGlobalColorAttributes = ( attributes = {}, colorsBeforeReset
 		const colorVars = colorsBeforeReset.map( color => color.colorVar )
 		colorVars.forEach( colorVar => {
 			const colorVarRegExp = new RegExp( `var\\(${ colorVar },(.*)\\)`, 'g' )
-			updatedStringifiedAttributes = updatedStringifiedAttributes.replace( colorVarRegExp, () => {
+			updatedStringifiedAttributes = updatedStringifiedAttributes.replace( colorVarRegExp, colorAttribute => {
 				const defaultColor = find( colorsAfterReset, updatedColor => updatedColor.colorVar === colorVar )
 				if ( ! defaultColor ) {
 				// Retain the color.
@@ -36,7 +36,7 @@ export const replaceGlobalColorAttributes = ( attributes = {}, colorsBeforeReset
 					return appliedColor ? appliedColor.fallback || '#000000' : '#000000'
 				}
 				// Revert the color to the default color.
-				return defaultColor.color || '#000000'
+				return defaultColor.color || colorAttribute
 			} )
 		} )
 	}
@@ -56,3 +56,32 @@ export const replaceGlobalColorAttributes = ( attributes = {}, colorsBeforeReset
 	return JSON.parse( updatedStringifiedAttributes )
 }
 
+/**
+ * Used to update the fallback values in attributes object
+ *
+ * @param {Object} attributes
+ * @param {Array} colors
+ *
+ * @return {Object} modified attribute
+ */
+export const updateFallbackColorAttributes = ( attributes = {}, colors = [] ) => {
+	if ( ! Array.isArray( colors ) ) {
+		return attributes
+	}
+
+	let updatedStringifiedAttributes = JSON.stringify( attributes )
+
+	const colorVars = colors.map( color => color.colorVar )
+	colorVars.forEach( colorVar => {
+		const colorVarRegExp = new RegExp( `var\\(${ colorVar },(.*)\\)`, 'g' )
+		updatedStringifiedAttributes = updatedStringifiedAttributes.replace( colorVarRegExp, colorAttribute => {
+			const newColor = find( colors, updatedColor => updatedColor.colorVar === colorVar )
+			if ( newColor ) {
+				return newColor.color || '#000000'
+			}
+			return colorAttribute
+		} )
+	} )
+
+	return JSON.parse( updatedStringifiedAttributes )
+}
