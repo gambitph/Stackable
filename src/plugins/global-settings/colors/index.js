@@ -15,7 +15,7 @@ import {
 	isEqual, find, omit,
 } from 'lodash'
 import md5 from 'md5'
-import { hexToRgba } from '~stackable/util'
+import rgba from 'color-rgba'
 
 /**
  * Wordpress dependencies
@@ -88,8 +88,7 @@ addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors
 addAction( 'stackable.global-settings.global-styles', 'update', ( colors = [] ) => {
 	const styleRules = colors.map( color => {
 		if ( color.colorVar && color.fallback ) {
-			const rgbaColor = hexToRgba( color.fallback ).match( /[0-9]*?(?=,).*(?=,).*(?=,)/g )[ 0 ]
-			return `${ color.colorVar || '' }: ${ color.fallback || '' }; ${ color.colorVar || '' }-rgba: ${ rgbaColor };`
+			return `${ color.colorVar || '' }: ${ color.fallback || '' };`
 		}
 
 		return ''
@@ -99,6 +98,21 @@ addAction( 'stackable.global-settings.global-styles', 'update', ( colors = [] ) 
 	if ( globalStyleEl ) {
 		// Overwrite all the global styles inside this style tag.
 		globalStyleEl.innerHTML = `:root { ${ styleRules.join( ' ' ) } }`
+	}
+
+	// Appending global css properties using rgb.
+	const rgbaStyleRules = colors.map( color => {
+		if ( color.colorVar ) {
+			const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( color.colorVar ).trim() )
+			rgbaColor.splice( 3, 1 )
+			return `${ color.colorVar || '' }-rgba: ${ rgbaColor.join( ', ' ) };`
+		}
+
+		return ''
+	} )
+
+	if ( globalStyleEl ) {
+		globalStyleEl.innerHTML = globalStyleEl.innerHTML + `:root { ${ rgbaStyleRules.join( ' ' ) } }`
 	}
 } )
 
