@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.4
 Tested up to: 5.5
 Requires PHP: 5.3
-Stable tag: 2.10.0
+Stable tag: 2.10.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -194,6 +194,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 = 2.10.1 =
 * Change: Added "Other" options on the bottom of the admin settings
+* Fixed: Icon list text were flowing over the other lines in the editor
 * Fixed: Admin spinner was always visible
 * Fixed: Responsive hiding doesn't show blocks on exactly 600px and 960px widths
 * Fixed: Load more button in Blog Posts block wasn't centered correctly

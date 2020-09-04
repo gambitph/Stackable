@@ -1985,12 +1985,12 @@
     "family": "Cabin",
     "variants": [
       "regular",
-      "italic",
       "500",
-      "500italic",
       "600",
-      "600italic",
       "700",
+      "italic",
+      "500italic",
+      "600italic",
       "700italic"
     ],
     "subsets": [
@@ -4607,6 +4607,34 @@
     ]
   },
   {
+    "family": "Grandstander",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Gravitas One",
     "variants": [
       "regular"
@@ -4826,6 +4854,7 @@
       "700"
     ],
     "subsets": [
+      "arabic",
       "latin",
       "latin-ext"
     ]
@@ -6103,6 +6132,29 @@
     ]
   },
   {
+    "family": "Kufam",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "arabic",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Kulim Park",
     "variants": [
       "200",
@@ -6139,6 +6191,18 @@
     ],
     "subsets": [
       "gujarati",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Kumbh Sans",
+    "variants": [
+      "300",
+      "regular",
+      "700"
+    ],
+    "subsets": [
       "latin",
       "latin-ext"
     ]
@@ -6563,17 +6627,26 @@
   {
     "family": "Literata",
     "variants": [
+      "200",
+      "300",
       "regular",
       "500",
       "600",
       "700",
+      "800",
+      "900",
+      "200italic",
+      "300italic",
       "italic",
       "500italic",
       "600italic",
-      "700italic"
+      "700italic",
+      "800italic",
+      "900italic"
     ],
     "subsets": [
       "cyrillic",
+      "cyrillic-ext",
       "greek",
       "greek-ext",
       "latin",
@@ -11447,6 +11520,20 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Syne",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {
