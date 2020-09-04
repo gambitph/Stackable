@@ -1,9 +1,9 @@
 // Editor only: Smooth changes.
-$effect-transition: color 0.2s ease-in-out, opacity 0.2s ease-in-out, background-color 0.2s ease-in-out, height 0.2s ease-in-out, width 0.2s ease-in-out, transform 0.2s ease-in-out, padding 0.2s ease-in-out, border-radius 0.2s ease-in-out, fill 0.2s ease-in-out, top 0.2s ease-in-out, left 0.2s ease-in-out;
-.wp-admin .wp-block [class*="ugb-"],
-.wp-admin .wp-block [class*="ugb-"] * {
-	transition: $effect-transition;
-}
+// $effect-transition: color 0.2s ease-in-out, opacity 0.2s ease-in-out, background-color 0.2s ease-in-out, height 0.2s ease-in-out, width 0.2s ease-in-out, transform 0.2s ease-in-out, padding 0.2s ease-in-out, border-radius 0.2s ease-in-out, fill 0.2s ease-in-out, top 0.2s ease-in-out, left 0.2s ease-in-out;
+// .wp-admin .wp-block [class*="ugb-"],
+// .wp-admin .wp-block [class*="ugb-"] * {
+// 	transition: $effect-transition;
+// }
 
 // Stackable gradient fill. Works in tandem with icons.js
 svg.ugb-stackable-icon-gradient {
