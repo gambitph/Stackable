@@ -44,7 +44,7 @@ export const createStyles = props => {
 	// General.
 	if ( show.imageColumnWidth ) {
 		styles.push( {
-			desktopOnly: {
+			desktopTablet: {
 				'.ugb-feature__item': {
 					gridTemplateColumns: getValue( 'imageColumnWidth' ) ? appendImportant( computeGridFraction2( getValue( 'imageColumnWidth' ), ! invert ) ) : undefined,
 				},

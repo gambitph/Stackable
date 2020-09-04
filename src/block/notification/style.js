@@ -73,7 +73,7 @@ export const createStyles = props => {
 			'.ugb-notification__close-button svg': {
 				fill: dismissibleIconColor ? `${ dismissibleIconColor } !important` : undefined,
 			},
-			desktopOnly: {
+			desktopTablet: {
 				'.ugb-notification__close-button': {
 					width: dismissibleIconSize ? `${ dismissibleIconSize }px` : undefined,
 					height: dismissibleIconSize ? `${ dismissibleIconSize }px` : undefined,

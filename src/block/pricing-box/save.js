@@ -16,6 +16,7 @@ import {
 } from '~stackable/components'
 import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
 import classnames from 'classnames'
+import striptags from 'striptags'
 
 /**
  * WordPress dependencies
@@ -82,7 +83,7 @@ const save = props => {
 							<Image
 								imageId={ imageId }
 								src={ imageUrl }
-								alt={ imageAlt || ( showTitle && title ) }
+								alt={ striptags( imageAlt || ( showTitle && title ) ) }
 								shadow={ imageShadow }
 								shape={ attributes[ `image${ i }Shape` ] || imageShape }
 								shapeStretch={ attributes[ `image${ i }ShapeStretch` ] || imageShapeStretch }

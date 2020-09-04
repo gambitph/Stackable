@@ -89,7 +89,7 @@ export const createStyles = props => {
 		} )
 
 		styles.push( {
-			desktopOnly: {
+			desktopTablet: {
 				[ `.ugb-testimonial__image` ]: {
 					width: appendImportant( getValue( 'imageWidth', '%spx' ) ),
 				},

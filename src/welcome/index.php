@@ -20,58 +20,39 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
         public function add_dashboard_page() {
 
-			// @see images/stackable-icon.svg
-			$svg = <<< SVG
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" style="fill: #ffffff;">
-	<path d="M64.08,136L23,176.66a4.75,4.75,0,0,0,3.53,8.15l86.91,0.14Z"/>
-	<path d="M177.91,128.39a17,17,0,0,0-5-12.07L71.39,14.72h0L26.61,59.5a17,17,0,0,0-5,12.05h0a17,17,0,0,0,5,12.05L128.16,185.2v-0.07l0,0,44.76-44.76a17,17,0,0,0,5-12h0Z"/>
-	<path d="M172.95,14.69l-86.83,0,49.42,49.62,40.92-41.16A5,5,0,0,0,172.95,14.69Z"/>
-</svg>
-SVG;
-
-			// Our main menu.
-            add_menu_page(
-                __( 'Stackable', STACKABLE_I18N ), // Page Title.
-                __( 'Stackable', STACKABLE_I18N ), // Menu Title.
-                'manage_options', // Capability.
-                'stackable', // Menu slug.
-                array( $this, 'stackable_getting_started_content' ), // Action.
-                'data:image/svg+xml;base64,' . base64_encode( $svg ) // Stackable icon.
-            );
+			// Our settings page.
+			add_submenu_page(
+				'options-general.php', // Parent slug.
+				__( 'Stackable', STACKABLE_I18N ), // Page title.
+				__( 'Stackable', STACKABLE_I18N ), // Menu title.
+				'manage_options', // Capability.
+				'stackable', // Menu slug.
+				array( $this, 'stackable_settings_content' ), // Callback function.
+				null // Position
+			);
 
 			// Our getting started page.
 			add_submenu_page(
-				'stackable', // Parent slug.
-				__( 'Getting Started', STACKABLE_I18N ), // Page title.
-				__( 'Getting Started', STACKABLE_I18N ), // Menu title.
+				$_GET['page'] === 'stackable-getting-started' ? 'options-general.php' : null, // Parent slug. Only show when in the page.
+				__( 'Get Started', STACKABLE_I18N ), // Page title.
+				'<span class="fs-submenu-item fs-sub"></span>' . __( 'Get Started', STACKABLE_I18N ), // Menu title.
 				'manage_options', // Capability.
-				'stackable', // Menu slug.
+				'stackable-getting-started', // Menu slug.
 				array( $this, 'stackable_getting_started_content' ), // Callback function.
-				1 // Position
-			);
-
-			// Our settings page.
-			add_submenu_page(
-				'stackable', // Parent slug.
-				__( 'Settings', STACKABLE_I18N ), // Page title.
-				__( 'Settings', STACKABLE_I18N ) . ' ' . stackable_notification_count(), // Menu title.
-				'manage_options', // Capability.
-				'stackable-settings', // Menu slug.
-				array( $this, 'stackable_settings_content' ), // Callback function.
-				2 // Position
+				null // Position
 			);
 		}
 
         public function enqueue_dashboard_script( $hook ) {
 			// For stackable pages, show our admin css.
-            if ( 'toplevel_page_stackable' === $hook || stripos( $hook, 'page_stackable' ) !== false ) {
+            if ( 'settings_page_stackable' === $hook || stripos( $hook, 'page_stackable' ) !== false ) {
 				wp_enqueue_style( 'stackable-welcome', plugins_url( 'dist/admin_welcome.css', STACKABLE_FILE ), array() );
 				wp_enqueue_style( 'ugb-block-editor-css', plugins_url( 'dist/editor_blocks.css', STACKABLE_FILE ), array() );
 				do_action( 'stackable_settings_admin_enqueue_styles' );
 			}
 
 			// For the options page, load our options script.
-			if ( 'toplevel_page_stackable' === $hook || stripos( $hook, 'page_stackable-settings' ) !== false ) {
+			if ( 'settings_page_stackable' === $hook || stripos( $hook, 'page_stackable-settings' ) !== false ) {
 				// Add translations.
 				wp_set_script_translations( 'stackable-welcome', STACKABLE_I18N );
 
@@ -109,34 +90,34 @@ SVG;
 			$screen = get_current_screen();
 			?>
 			<div class="s-body s-tabs">
-				<a class="s-tab <?php echo preg_match( '/^toplevel(.*)page_stackable$/', $screen->base ) ? 's-active' : '' ?>"
-					href="<?php echo admin_url( 'admin.php?page=stackable' ) ?>">
+				<a class="s-tab <?php echo $screen->base === 'settings_page_stackable-getting-started' ? 's-active' : '' ?>"
+					href="<?php echo admin_url( 'options-general.php?page=stackable-getting-started' ) ?>">
 					<?php _e( 'Getting Started', STACKABLE_I18N ) ?>
 				</a>
 
-				<a class="s-tab <?php echo preg_match( '/^stackable(.*)page_stackable-settings$/', $screen->base ) ? 's-active' : '' ?>"
-					href="<?php echo admin_url( 'admin.php?page=stackable-settings' ) ?>">
+				<a class="s-tab <?php echo $screen->base === 'settings_page_stackable' ? 's-active' : '' ?>"
+					href="<?php echo admin_url( 'options-general.php?page=stackable' ) ?>">
 					<?php _e( 'Settings', STACKABLE_I18N ) ?>
 				</a>
 
 				<?php if ( sugb_fs()->get_user() ) { ?>
-					<a class="s-tab <?php echo preg_match( '/^stackable(.*)page_stackable-account$/', $screen->base ) ? 's-active' : '' ?>"
+					<a class="s-tab <?php echo $screen->base === 'settings_page_stackable-account' ? 's-active' : '' ?>"
 						href="<?php echo sugb_fs()->get_account_url() ?>">
 						<?php _e( 'Account', STACKABLE_I18N ) ?>
 					</a>
 				<?php } ?>
 
 				<?php if ( sugb_fs()->has_affiliate_program() ) { ?>
-					<a class="s-tab <?php echo preg_match( '/^stackable(.*)page_stackable-affiliation$/', $screen->base ) ? 's-active' : '' ?>"
-						href="<?php echo admin_url( 'admin.php?page=stackable-affiliation' ) ?>">
+					<a class="s-tab <?php echo $screen->base === 'settings_page_stackable-affiliation' ? 's-active' : '' ?>"
+						href="<?php echo admin_url( 'options-general.php?page=stackable-affiliation' ) ?>">
 						<?php _e( 'Affiliation', STACKABLE_I18N ) ?>
 					</a>
 				<?php } ?>
 
 				<a class="s-tab" href="https://docs.wpstackable.com" target="_docs"><?php _e( 'Documentation', STACKABLE_I18N ) ?></a>
 
-				<a class="s-tab <?php echo preg_match( '/^stackable(.*)page_stackable-contact$/', $screen->base ) ? 's-active' : '' ?>"
-					href="<?php echo admin_url( 'admin.php?page=stackable-contact' ) ?>">
+				<a class="s-tab <?php echo $screen->base === 'settings_page_stackable-contact' ? 's-active' : '' ?>"
+					href="<?php echo admin_url( 'options-general.php?page=stackable-contact' ) ?>">
 					<?php _e( 'Contact Us', STACKABLE_I18N ) ?>
 				</a>
 
@@ -409,7 +390,7 @@ SVG;
         public function redirect_to_welcome_page() {
             if ( get_option( 'stackable_redirect_to_welcome' ) ) {
                 delete_option( 'stackable_redirect_to_welcome' );
-                wp_redirect( esc_url( admin_url( 'admin.php?page=stackable' ) ) );
+                wp_redirect( esc_url( admin_url( 'options-general.php?page=stackable-getting-started' ) ) );
                 die();
             }
         }

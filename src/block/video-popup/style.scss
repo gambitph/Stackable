@@ -7,25 +7,6 @@
 @import "common";
 
 .ugb-video-popup--v3 {
-	.ugb-video-popup__wrapper {
-		@include box();
-		margin-left: auto;
-		margin-right: auto;
-		padding: 0;
-		overflow: hidden;
-		position: relative;
-		width: 100%;
-		height: 400px;
-		padding: 0;
-		background: #000;
-		background-size: cover;
-		background-position: center;
-		border-radius: 12px;
-		&::before {
-			transition: all 0.3s ease-in-out;
-		}
-	}
-
 	.ugb-video-popup__play-button {
 		position: absolute;
 		svg {
@@ -33,6 +14,26 @@
 		}
 	}
 }
+
+.ugb-video-popup__wrapper {
+	@include box();
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	height: 400px;
+	padding: 0;
+	background-color: #000;
+	background-size: cover;
+	background-position: center;
+	border-radius: 12px;
+	&::before {
+		transition: all 0.3s ease-in-out;
+	}
+}
+
 .ugb-video-popup.ugb-video-popup--v3.alignfull {
 	&.ugb-main-block--inner-full.ugb--has-block-background,
 	&:not(.ugb--has-block-background) {

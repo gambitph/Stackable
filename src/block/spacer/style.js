@@ -10,7 +10,7 @@ export const createStyles = props => {
 	const styles = []
 
 	styles.push( {
-		desktopOnly: {
+		desktopTablet: {
 			'.ugb-spacer': {
 				height: getValue( 'height', `%s${ getValue( 'heightUnit' ) || 'px' }` ),
 			},

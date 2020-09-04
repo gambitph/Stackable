@@ -410,7 +410,7 @@ const addTopStyles = ( blockName, options = {} ) => ( styleObject, props ) => {
 		[ `.ugb-top-separator .ugb-separator-wrapper` ]: {
 			transform: topSeparatorWidth !== '' ? `scaleX(${ topSeparatorWidth })` : undefined,
 		},
-		desktopOnly: {
+		desktopTablet: {
 			[ `.ugb-top-separator .ugb-separator-wrapper` ]: {
 				height: topSeparatorHeight !== '' ? `${ topSeparatorHeight }px` : undefined,
 			},
@@ -457,7 +457,7 @@ const addBottomStyles = ( blockName, options = {} ) => ( styleObject, props ) =>
 		[ `.ugb-bottom-separator .ugb-separator-wrapper` ]: {
 			transform: bottomSeparatorWidth !== '' ? `scaleX(${ bottomSeparatorWidth })` : undefined,
 		},
-		desktopOnly: {
+		desktopTablet: {
 			[ `.ugb-bottom-separator .ugb-separator-wrapper` ]: {
 				height: bottomSeparatorHeight !== '' ? `${ bottomSeparatorHeight }px` : undefined,
 			},
