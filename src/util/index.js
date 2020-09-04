@@ -147,10 +147,7 @@ export const hexToRgba = ( hexColor, opacity = null ) => {
 	 */
 	if ( hexColor.indexOf( 'var(' ) > -1 ) {
 		newHexColor = window.getComputedStyle( document.documentElement )
-			.getPropertyValue( newHexColor.replace( 'var(', '' ).replace( ')', '' ) )
-		if ( ! newHexColor ) {
-
-		}
+			.getPropertyValue( hexColor.replace( 'var(', '' ).replace( ')', '' ) ) || '#fff'
 	}
 
 	hex = newHexColor.replace( /#/, '' )
