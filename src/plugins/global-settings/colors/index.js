@@ -374,19 +374,11 @@ domReady( () => {
 				if ( globalColors.length === 0 ) {
 					updateToStackableGlobalColors()
 				} else {
-					// Fetch stackable global settings and dispatch to the curent colors
-					loadPromise.then( () => {
-						const settings = new models.Settings()
-						settings.fetch().then( response => {
-							// Dispatch the global colors to the current colors
-							dispatch( 'core/block-editor' ).updateSettings( {
-								colors: response.stackable_global_colors,
-								defaultColors: colors,
-							} )
-						} )
-
-						doAction( 'stackable.global-settings.global-styles', globalColors )
+					dispatch( 'core/block-editor' ).updateSettings( {
+						colors: globalColors,
+						defaultColors: colors,
 					} )
+					doAction( 'stackable.global-settings.global-styles', globalColors )
 				}
 			} else {
 				updateToStackableGlobalColors()
