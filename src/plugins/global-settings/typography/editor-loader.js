@@ -61,46 +61,52 @@ export const GlobalTypographyStyles = () => {
 		selectors.push( '[data-type^="ugb/"]' )
 	} else if ( applySettingsTo === 'blocks-all' ) {
 		selectors.push( '[data-type]' )
+		selectors.push( '[data-type^="core/"]' )
+		selectors.push( '[data-type^="ugb/"]' )
 	} else { // Entire site.
 		// It's just the editor since we're in Gutenberg.
 		selectors.push( '[data-type]' )
+		selectors.push( '[data-type^="core/"]' )
+		selectors.push( '[data-type^="ugb/"]' )
 	}
 
 	// Generate all the typography styles.
 	const styles = Object.keys( typographySettings ).map( tag => {
 		// Build our selector, target h2.block or .block h2.
 		// Some blocks may output the heading tag right away.
-		const selector = selectors.map( selector => {
-			return `${ selector } ${ tag }, ${ tag }${ selector }`
-		} ).join( ',' )
+		return deepmerge.all( selectors.map( selector => {
+			const typographyStyles = typographySettings[ tag ]
 
-		const typographyStyles = typographySettings[ tag ]
-
-		// Load our Google Font is necessary.
-		if ( typographyStyles.fontFamily ) {
-			loadGoogleFont( typographyStyles.fontFamily )
-		}
-
-		// Generate our styles for this tag.
-		const tagStyles = {
-			[ selector ]: createTypographyStyles( '%s', 'desktop', typographyStyles ),
-			tablet: {
-				[ selector ]: createTypographyStyles( '%s', 'tablet', typographyStyles ),
-			},
-			mobile: {
-				[ selector ]: createTypographyStyles( '%s', 'mobile', typographyStyles ),
-			},
-		}
-
-		// If the device preview is not a desktop, render our styles for that preview.
-		if ( device === 'Tablet' || device === 'Mobile' ) {
-			tagStyles[ selector ] = {
-				...tagStyles[ selector ],
-				...createTypographyStyles( '%s', device.toLowerCase(), typographyStyles ),
+			// Load our Google Font is necessary.
+			if ( typographyStyles.fontFamily ) {
+				loadGoogleFont( typographyStyles.fontFamily )
 			}
-		}
 
-		return tagStyles
+			// Force styles only for Stackable blocks.
+			const important = selector === '[data-type^="ugb/"]'
+
+			// Generate our styles for this tag.
+			const fullSelector = `${ selector } ${ tag }, ${ tag }${ selector }`
+			const tagStyles = {
+				[ fullSelector ]: createTypographyStyles( '%s', 'desktop', typographyStyles, { important } ),
+				tablet: {
+					[ fullSelector ]: createTypographyStyles( '%s', 'tablet', typographyStyles, { important } ),
+				},
+				mobile: {
+					[ fullSelector ]: createTypographyStyles( '%s', 'mobile', typographyStyles, { important } ),
+				},
+			}
+
+			// If the device preview is not a desktop, render our styles for that preview.
+			if ( device === 'Tablet' || device === 'Mobile' ) {
+				tagStyles[ fullSelector ] = {
+					...tagStyles[ fullSelector ],
+					...createTypographyStyles( '%s', device.toLowerCase(), typographyStyles, { important } ),
+				}
+			}
+
+			return tagStyles
+		} ) )
 	} )
 
 	return <style>{ generateStyles( deepmerge.all( styles ) ) }</style>

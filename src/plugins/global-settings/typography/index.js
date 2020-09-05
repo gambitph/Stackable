@@ -82,11 +82,14 @@ const TypographyPreview = props => {
 	)
 	const description = createDescription( props.styles, device )
 
+	// Don't include the line-height since it can ruin our control.
+	const stylesToRender = omit( props.styles, [ 'lineHeight', 'tabletLineHeight', 'mobileLineHeight' ] )
+
 	// Generate our preview styles.
 	const styles = {
-		[ `.ugb-global-typography-preview__label[data-tag="${ props.tag }"]` ]: createTypographyStyles( '%s', 'desktop', props.styles, { important: true } ),
-		[ `.ugb-global-typography-preview__label[data-tag="${ props.tag }"]:not([data-device="desktop"])` ]: createTypographyStyles( '%s', 'tablet', props.styles, { important: true } ),
-		[ `.ugb-global-typography-preview__label[data-tag="${ props.tag }"][data-device="mobile"]` ]: createTypographyStyles( '%s', 'mobile', props.styles, { important: true } ),
+		[ `.ugb-global-typography-preview__label[data-tag="${ props.tag }"]` ]: createTypographyStyles( '%s', 'desktop', stylesToRender, { important: true } ),
+		[ `.ugb-global-typography-preview__label[data-tag="${ props.tag }"]:not([data-device="desktop"])` ]: createTypographyStyles( '%s', 'tablet', stylesToRender, { important: true } ),
+		[ `.ugb-global-typography-preview__label[data-tag="${ props.tag }"][data-device="mobile"]` ]: createTypographyStyles( '%s', 'mobile', stylesToRender, { important: true } ),
 	}
 
 	// Load our Google Font is necessary.

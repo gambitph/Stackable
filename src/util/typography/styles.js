@@ -22,7 +22,7 @@ export const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'deskt
 
 	const {
 		importantSize = false,
-		important = false,
+		important = true,
 		inherit = true, // If false, desktop styles will only be applied to desktop, etc.
 		inheritMax = 50, // If provided & inherit is true, clamp the inherited value in tablet and mobile to this.
 		inheritMin,
@@ -36,7 +36,7 @@ export const createTypographyStyles = ( attrNameTemplate = '%s', screen = 'deskt
 
 	if ( screen !== 'tablet' && screen !== 'mobile' ) { // Desktop.
 		styles = {
-			fontFamily: getValue( 'FontFamily' ) !== '' ? appendImportant( getFontFamily( getValue( 'FontFamily' ) ) ) : undefined,
+			fontFamily: getValue( 'FontFamily' ) !== '' ? getFontFamily( getValue( 'FontFamily' ) ) : undefined,
 			fontSize: desktopFontSize !== '' ? appendImportant( `${ desktopFontSize }${ getValue( 'FontSizeUnit' ) || 'px' }`, importantSize ) : undefined,
 			fontWeight: getValue( 'FontWeight' ) !== '' ? getValue( 'FontWeight' ) : undefined,
 			textTransform: getValue( 'TextTransform' ) !== '' ? getValue( 'TextTransform' ) : undefined,

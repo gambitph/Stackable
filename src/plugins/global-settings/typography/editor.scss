@@ -3,7 +3,8 @@
 	> .components-base-control__field {
 		margin-bottom: 16px;
 		> .components-base-control__label {
-			width: 100%;
+			min-height: 25px;
+			width: calc(100% - 88px);
 			margin-bottom: 0 !important;
 			pointer-events: none;
 		}
@@ -19,7 +20,6 @@
 	.editor-styles-wrapper {
 		margin: 0 !important;
 		padding: 0 !important;
-		max-width: 200px !important;
 		overflow: hidden !important;
 		white-space: nowrap !important;
 		background: transparent !important;
