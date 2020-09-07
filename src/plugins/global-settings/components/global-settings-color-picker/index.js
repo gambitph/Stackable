@@ -417,11 +417,11 @@ const GlobalSettingsColorPicker = props => {
 
 	useEffect( () => {
 		const saveSettings = setTimeout( () => {
-			// We don't need to always set the settings. Debounce the loadPromise.
-			doAction( 'stackable.global-settings.save-model-settings', colors )
-
 			// Debouncing the update root css property values.
 			 doAction( 'stackable.global-settings.global-styles', colors )
+
+			// We don't need to always set the settings. Debounce the loadPromise.
+			doAction( 'stackable.global-settings.save-model-settings', colors )
 		}, 100 )
 		return () => clearTimeout( saveSettings )
 	}, [ colors ] )

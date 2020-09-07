@@ -3,6 +3,7 @@
  */
 import { default as _isDarkColor } from 'is-dark-color'
 import { lowerFirst, clamp } from 'lodash'
+import rgba from 'color-rgba'
 
 /**
  * WordPress dependencies
@@ -10,7 +11,17 @@ import { lowerFirst, clamp } from 'lodash'
 import { sprintf } from '@wordpress/i18n'
 
 export const isDarkColor = color => {
+	const rgbToHex = ( r, g, b ) => '#' + ( ( 1 << 24 ) + ( r << 16 ) + ( g << 8 ) + b ).toString( 16 ).slice( 1 ) // eslint-disable-line no-bitwise
 	try {
+		// Compatibility for global colors.
+		if ( color.match( /--stk-global-color/ ) ) {
+			const colorVarID = color.match( /--stk-global-color-(\S*?(?=,))/ )
+			if ( colorVarID ) {
+				const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( `--stk-global-color-${ colorVarID[ 1 ] }` ).trim() )
+				rgbaColor.splice( 3, 1 )
+				return _isDarkColor( rgbToHex( ...rgbaColor ) )
+			}
+		}
 		if ( ! color.match( /^#/ ) ) {
 			return _isDarkColor( color )
 		}
