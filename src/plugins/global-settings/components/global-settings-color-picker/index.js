@@ -311,7 +311,14 @@ const ColorPickers = ( {
 					color,
 				}
 			}
-			return defaultColor
+			const colorVar = `--stk-global-color-${ md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 ) }`
+			return {
+				name,
+				slug,
+				colorVar,
+				fallback,
+				color: `var(${ colorVar }, ${ fallback })`,
+			}
 		} )
 
 		/**
