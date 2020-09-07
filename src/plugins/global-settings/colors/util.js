@@ -25,7 +25,7 @@ export const replaceGlobalColorAttributes = ( attributes = {}, colorsBeforeReset
 	let updatedStringifiedAttributes = JSON.stringify( attributes )
 
 	if ( includeColorVar ) {
-		const colorVars = colorsBeforeReset.map( color => color.colorVar )
+		const colorVars = colorsBeforeReset.filter( color => color.colorVar ).map( color => color.colorVar )
 		colorVars.forEach( colorVar => {
 			if ( colorVar ) {
 				const colorVarRegExp = new RegExp( `var\\(${ colorVar },(.*?(?=\\"))`, 'g' )
@@ -44,15 +44,13 @@ export const replaceGlobalColorAttributes = ( attributes = {}, colorsBeforeReset
 	}
 
 	if ( includeSlugNames ) {
-		const stackableSlugNames = updatedStringifiedAttributes.match( /stk-global-color-(\S*)/g )
-		if ( stackableSlugNames && Array.isArray( stackableSlugNames ) ) {
-			stackableSlugNames.forEach( stackableSlugName => {
-				const foundColor = find( colorsBeforeReset, color => color.slug === stackableSlugName )
-				if ( foundColor ) {
-					updatedStringifiedAttributes = updatedStringifiedAttributes.replace( stackableSlugName, foundColor.fallback || '#000000' )
-				}
-			} )
-		}
+		const stackableSlugNames = colorsBeforeReset.filter( color => color.slug && color.slug.includes( 'stk-global-color' ) ).map( color => color.slug )
+		stackableSlugNames.forEach( stackableSlugName => {
+			const foundColor = find( colorsBeforeReset, color => color.slug === stackableSlugName )
+			if ( foundColor ) {
+				updatedStringifiedAttributes = updatedStringifiedAttributes.replace( stackableSlugName, foundColor.fallback || '#000000' )
+			}
+		} )
 	}
 
 	return JSON.parse( updatedStringifiedAttributes )
