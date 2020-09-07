@@ -148,7 +148,9 @@ addAction( 'stackable.global-settings.save-model-settings', 'global-colors', new
 	allBlocks.forEach( block => {
 		const { clientId } = block
 		const newAttributes = updateFallbackColorAttributes( block.attributes, updatedColors )
-		updateBlockAttributes( clientId, newAttributes )
+		if ( ! isEqual( newAttributes, block.attributes ) ) {
+			updateBlockAttributes( clientId, newAttributes )
+		}
 	} )
 
 	// Make sure that we are saving the colors with colorVars.
@@ -182,47 +184,6 @@ const updateToStackableGlobalColors = () => {
 	// Save the settings
 	doAction( 'stackable.global-settings.save-model-settings', newColors )
 }
-
-/**
- * Used in ColorPaletteControl component.
- * Changing the Global Colors inside the Stackable Global Settings updates its fallback value ( e.g.
- * var(--stk-global-color-ugb12, #000000) to var(--stk-global-color-ugb12, #34aa6b) ), resulting to
- * unmatched fallback values between the block attribute and the global color. With this, we are
- * forcing the passed value to match its corresponding global color.
- * Trigger the sidebar toggle.
- * With this, we can still toggle the sidebar
- * even if the Stackable logo at the top is hidden.
- */
-addFilter( 'stackable.global-settings.update-color-value', 'update-value', ( value, colors ) => {
-	// If the value is an empty string or undefined, return the value.
-	if ( ! value ) {
-		return value
-	}
-
-	// If the value does not contain any global color variable, return the value.
-	if ( value && typeof value === 'string' && ! value.match( /--stk-global-color-/ ) ) {
-		return value
-	}
-
-	let newValue = value
-
-	if ( colors && Array.isArray( colors ) && colors.length !== 0 ) {
-		colors.forEach( color => {
-			const colorVarMatch = value.match( /--stk-global-color-(\S*),/ )
-			if ( colorVarMatch && Array.isArray( colorVarMatch ) && colorVarMatch.length >= 2 ) {
-				const colorVarID = colorVarMatch[ 1 ]
-				if ( colorVarID ) {
-					const colorVarRegex = new RegExp( `--stk-global-color-${ colorVarID }` )
-					if ( color.color.match( colorVarRegex ) ) {
-						newValue = color.color
-					}
-				}
-			}
-		} )
-	}
-
-	return newValue
-} )
 
 /**
  * Used for attributes compatibility when resetting the global colors.
@@ -266,7 +227,9 @@ addAction( 'stackable.global-settings.reset-compatibility', 'color-reset', ( blo
 			const updatedAttributes = replaceGlobalColorAttributes( block.attributes, colorsBeforeReset, colorsAfterReset )
 
 			// Update the block attributes.
-			updateBlockAttributes( clientId, updatedAttributes )
+			if ( ! isEqual( updatedAttributes, block.attributes ) ) {
+				updateBlockAttributes( clientId, updatedAttributes )
+			}
 		} else if ( name.includes( 'core/' ) ) {
 			//
 			/**
@@ -324,7 +287,9 @@ addAction( 'stackable.global-settings.reset-compatibility', 'color-reset', ( blo
 				}
 
 				// Update the block attributes.
-				updateBlockAttributes( clientId, updatedAttributes )
+				if ( ! isEqual( updatedAttributes, block.attributes ) ) {
+					updateBlockAttributes( clientId, updatedAttributes )
+				}
 			}
 		} else if ( name.includes( 'kadence/' ) ) {
 			//
@@ -347,13 +312,17 @@ addAction( 'stackable.global-settings.reset-compatibility', 'color-reset', ( blo
 			}
 
 			// Update the block attributes.
-			updateBlockAttributes( clientId, updatedAttributes )
+			if ( ! isEqual( updatedAttributes, block.attributes ) ) {
+				updateBlockAttributes( clientId, updatedAttributes )
+			}
 		} else {
 			// Default attributes adjustment. We can add more compatibility adjustments here.
 			const updatedAttributes = replaceGlobalColorAttributes( block.attributes, colorsBeforeReset, colorsAfterReset )
 
 			// Update the block attributes.
-			updateBlockAttributes( clientId, updatedAttributes )
+			if ( ! isEqual( updatedAttributes, block.attributes ) ) {
+				updateBlockAttributes( clientId, updatedAttributes )
+			}
 		}
 	} )
 } )
