@@ -416,15 +416,14 @@ const GlobalSettingsColorPicker = props => {
 	const { colors } = useSelect( select => select( 'core/block-editor' ).getSettings() )
 
 	useEffect( () => {
-		// We don't need to always set the settings. Debounce the loadPromise.
-		const saveSettings = setTimeout( () => doAction( 'stackable.global-settings.save-model-settings', colors ), 1000 )
-		return () => clearTimeout( saveSettings )
-	}, [ colors ] )
+		const saveSettings = setTimeout( () => {
+			// We don't need to always set the settings. Debounce the loadPromise.
+			doAction( 'stackable.global-settings.save-model-settings', colors )
 
-	useEffect( () => {
-		// Debouncing the update root css property values.
-		const updateRootCss = setTimeout( () => doAction( 'stackable.global-settings.global-styles', colors ), 100 )
-		return () => clearTimeout( updateRootCss )
+			// Debouncing the update root css property values.
+			 doAction( 'stackable.global-settings.global-styles', colors )
+		}, 100 )
+		return () => clearTimeout( saveSettings )
 	}, [ colors ] )
 
 	return (
