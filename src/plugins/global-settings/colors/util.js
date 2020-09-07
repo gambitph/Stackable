@@ -25,16 +25,13 @@ export const replaceGlobalColorAttributes = ( attributes = {}, colorsBeforeReset
 	let updatedStringifiedAttributes = JSON.stringify( attributes )
 
 	if ( includeColorVar ) {
-		const colorVars = colorsBeforeReset.filter( color => color.colorVar ).map( color => color.colorVar )
-		colorVars.forEach( colorVar => {
-			if ( colorVar ) {
-				const colorVarRegExp = new RegExp( `var\\(${ colorVar },(.*?(?=\\"))`, 'g' )
-				updatedStringifiedAttributes = updatedStringifiedAttributes.replace( colorVarRegExp, colorAttribute => {
-					const defaultColor = find( colorsAfterReset, updatedColor => updatedColor.colorVar === colorVar )
+		colorsBeforeReset.forEach( colorBeforeReset => {
+			if ( colorBeforeReset.colorVar ) {
+				updatedStringifiedAttributes = updatedStringifiedAttributes.replace( colorBeforeReset.color, colorAttribute => {
+					const defaultColor = find( colorsAfterReset, updatedColor => updatedColor.colorVar === colorBeforeReset.colorVar )
 					if ( ! defaultColor ) {
 						// Retain the color.
-						const appliedColor = find( colorsBeforeReset, color => color.colorVar === colorVar )
-						return appliedColor ? appliedColor.fallback || '#000000' : '#000000'
+						return colorBeforeReset ? colorBeforeReset.fallback || '#000000' : '#000000'
 					}
 					// Revert the color to the default color.
 					return defaultColor.color || colorAttribute
@@ -74,7 +71,7 @@ export const updateFallbackColorAttributes = ( attributes = {}, colors = [] ) =>
 	const colorVars = colors.map( color => color.colorVar )
 	colorVars.forEach( colorVar => {
 		if ( colorVar ) {
-			const colorVarRegExp = new RegExp( `var\\(${ colorVar },(.*?(?=\\"))`, 'g' )
+			const colorVarRegExp = new RegExp( `var\\(${ colorVar },(.?)#(.?(?=\\)))`, 'g' )
 			updatedStringifiedAttributes = updatedStringifiedAttributes.replace( colorVarRegExp, colorAttribute => {
 				const newColor = find( colors, updatedColor => updatedColor.colorVar === colorVar )
 				if ( newColor ) {
