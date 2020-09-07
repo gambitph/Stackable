@@ -226,8 +226,7 @@ const ColorPickers = ( {
 	}, [ hasAddedNewColor ] )
 
 	/**
-	 * Function used to update the colors in: (1) the wp setting stackable_global_colors, (2) in @wordpress/data,
-     " and in (3) the :root css of the editor page.
+	 * Function used to update the colors in @wordpress/data,
 	 *
 	 * @param {Array} updatedColors colors passed.
 	 */
