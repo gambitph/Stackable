@@ -27,17 +27,19 @@ export const replaceGlobalColorAttributes = ( attributes = {}, colorsBeforeReset
 	if ( includeColorVar ) {
 		const colorVars = colorsBeforeReset.map( color => color.colorVar )
 		colorVars.forEach( colorVar => {
-			const colorVarRegExp = new RegExp( `var\\(${ colorVar },(.*)\\)`, 'g' )
-			updatedStringifiedAttributes = updatedStringifiedAttributes.replace( colorVarRegExp, colorAttribute => {
-				const defaultColor = find( colorsAfterReset, updatedColor => updatedColor.colorVar === colorVar )
-				if ( ! defaultColor ) {
-				// Retain the color.
-					const appliedColor = find( colorsBeforeReset, color => color.colorVar === colorVar )
-					return appliedColor ? appliedColor.fallback || '#000000' : '#000000'
-				}
-				// Revert the color to the default color.
-				return defaultColor.color || colorAttribute
-			} )
+			if ( colorVar ) {
+				const colorVarRegExp = new RegExp( `var\\(${ colorVar },(.*?(?=\\"))`, 'g' )
+				updatedStringifiedAttributes = updatedStringifiedAttributes.replace( colorVarRegExp, colorAttribute => {
+					const defaultColor = find( colorsAfterReset, updatedColor => updatedColor.colorVar === colorVar )
+					if ( ! defaultColor ) {
+						// Retain the color.
+						const appliedColor = find( colorsBeforeReset, color => color.colorVar === colorVar )
+						return appliedColor ? appliedColor.fallback || '#000000' : '#000000'
+					}
+					// Revert the color to the default color.
+					return defaultColor.color || colorAttribute
+				} )
+			}
 		} )
 	}
 
@@ -73,14 +75,16 @@ export const updateFallbackColorAttributes = ( attributes = {}, colors = [] ) =>
 
 	const colorVars = colors.map( color => color.colorVar )
 	colorVars.forEach( colorVar => {
-		const colorVarRegExp = new RegExp( `var\\(${ colorVar },(.*)\\)`, 'g' )
-		updatedStringifiedAttributes = updatedStringifiedAttributes.replace( colorVarRegExp, colorAttribute => {
-			const newColor = find( colors, updatedColor => updatedColor.colorVar === colorVar )
-			if ( newColor ) {
-				return newColor.color || '#000000'
-			}
-			return colorAttribute
-		} )
+		if ( colorVar ) {
+			const colorVarRegExp = new RegExp( `var\\(${ colorVar },(.*?(?=\\"))`, 'g' )
+			updatedStringifiedAttributes = updatedStringifiedAttributes.replace( colorVarRegExp, colorAttribute => {
+				const newColor = find( colors, updatedColor => updatedColor.colorVar === colorVar )
+				if ( newColor ) {
+					return newColor.color || '#000000'
+				}
+				return colorAttribute
+			} )
+		}
 	} )
 
 	return JSON.parse( updatedStringifiedAttributes )
