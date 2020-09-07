@@ -226,8 +226,7 @@ const ColorPickers = ( {
 	}, [ hasAddedNewColor ] )
 
 	/**
-	 * Function used to update the colors in: (1) the wp setting stackable_global_colors, (2) in @wordpress/data,
-     " and in (3) the :root css of the editor page.
+	 * Function used to update the colors in @wordpress/data,
 	 *
 	 * @param {Array} updatedColors colors passed.
 	 */
@@ -300,7 +299,9 @@ const ColorPickers = ( {
 			} = defaultColor
 			const index = findIndex( colors, color => color.slug === defaultColor.slug )
 			if ( index !== -1 ) {
-				const { colorVar } = colors[ index ]
+				const {
+					colorVar = `--stk-global-color-${ md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 ) }`,
+				} = colors[ index ]
 				const color = `var(${ colorVar }, ${ fallback })`
 				return {
 					name,
@@ -310,7 +311,14 @@ const ColorPickers = ( {
 					color,
 				}
 			}
-			return defaultColor
+			const colorVar = `--stk-global-color-${ md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 ) }`
+			return {
+				name,
+				slug,
+				colorVar,
+				fallback,
+				color: `var(${ colorVar }, ${ fallback })`,
+			}
 		} )
 
 		/**
@@ -393,7 +401,7 @@ const ColorPickers = ( {
 						onChange={ onChangeStyleName }
 						value={ colors[ selectedIndex ] && colors[ selectedIndex ].name }
 					/>
-					{ ! inRange( selectedIndex, 0, 5 ) && (
+					{ ! inRange( selectedIndex, 0, 6 ) && (
 						<DeleteButton
 							name={ colors[ selectedIndex ] && colors[ selectedIndex ].name }
 							onClick={ onColorDelete }

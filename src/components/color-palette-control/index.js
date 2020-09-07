@@ -33,19 +33,16 @@ const ColorPaletteControl = ( {
 	value,
 	className = '',
 } ) => {
-	// Overwrite the passed value inside the ColorPaletteControl to match the global css property name
-	const passedValue = applyFilters( 'stackable.global-settings.update-color-value', value, colors )
-
-	const colorObject = getColorObjectByColorValue( colors, passedValue )
+	const colorObject = getColorObjectByColorValue( colors, value )
 	const colorName = colorObject && colorObject.name
-	const ariaLabel = sprintf( colorIndicatorAriaLabel, label.toLowerCase(), colorName || passedValue )
+	const ariaLabel = sprintf( colorIndicatorAriaLabel, label.toLowerCase(), colorName || value )
 
 	const labelElement = (
 		<Fragment>
 			{ label }
-			{ passedValue && (
+			{ value && (
 				<ColorIndicator
-					colorValue={ passedValue }
+					colorValue={ value }
 					aria-label={ ariaLabel }
 				/>
 			) }
@@ -59,7 +56,7 @@ const ColorPaletteControl = ( {
 			label={ labelElement }>
 			<ColorPalette
 				className="editor-color-palette-control__color-palette"
-				value={ passedValue }
+				value={ value }
 				onChange={ value => {
 					// Allow the selected color to be overridden.
 					const colorObject = getColorObjectByColorValue( colors, value )

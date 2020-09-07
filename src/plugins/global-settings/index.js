@@ -38,7 +38,7 @@ const GlobalSettings = () => {
 	return (
 		<Fragment>
 			<PluginSidebarMoreMenuItem
-				// ref={ globalSettingsButtenRef }
+				name="sidebar"
 				className="ugb-global-settings__button"
 				icon={ <SVGStackableIcon /> }>
 				{ __( 'Stackable Settings', i18n ) }

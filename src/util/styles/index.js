@@ -18,9 +18,12 @@ export const isDarkColor = color => {
 			const colorVarID = color.match( /--stk-global-color-(\S*?(?=,))/ )
 			if ( colorVarID ) {
 				const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( `--stk-global-color-${ colorVarID[ 1 ] }` ).trim() )
-				rgbaColor.splice( 3, 1 )
-				return _isDarkColor( rgbToHex( ...rgbaColor ) )
+				if ( Array.isArray( rgbaColor ) && rgbaColor.length !== 0 ) {
+					rgbaColor.splice( 3, 1 )
+					return _isDarkColor( rgbToHex( ...rgbaColor ) )
+				}
 			}
+			return false
 		}
 		if ( ! color.match( /^#/ ) ) {
 			return _isDarkColor( color )
