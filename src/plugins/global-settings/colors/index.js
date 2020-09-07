@@ -154,12 +154,10 @@ addAction( 'stackable.global-settings.save-model-settings', 'global-colors', new
 	} )
 
 	// Make sure that we are saving the colors with colorVars.
-	if ( updatedColors.every( updatedColor => updatedColor.colorVar ) ) {
-		loadPromise.then( () => {
-			const settings = new models.Settings( { stackable_global_colors: updatedColors } ) // eslint-disable-line camelcase
-			settings.save()
-		} )
-	}
+	loadPromise.then( () => {
+		const settings = new models.Settings( { stackable_global_colors: updatedColors } ) // eslint-disable-line camelcase
+		settings.save()
+	} )
 } )
 
 const updateToStackableGlobalColors = () => {

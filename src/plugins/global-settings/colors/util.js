@@ -71,7 +71,7 @@ export const updateFallbackColorAttributes = ( attributes = {}, colors = [] ) =>
 	const colorVars = colors.map( color => color.colorVar )
 	colorVars.forEach( colorVar => {
 		if ( colorVar ) {
-			const colorVarRegExp = new RegExp( `var\\(${ colorVar },(.?)#(.*?(?=\\)))`, 'g' )
+			const colorVarRegExp = new RegExp( `var\\(${ colorVar },(.?)#(.*?(?=\\)))\\)`, 'g' )
 			updatedStringifiedAttributes = updatedStringifiedAttributes.replace( colorVarRegExp, colorAttribute => {
 				const newColor = find( colors, updatedColor => updatedColor.colorVar === colorVar )
 				if ( newColor ) {

@@ -299,7 +299,9 @@ const ColorPickers = ( {
 			} = defaultColor
 			const index = findIndex( colors, color => color.slug === defaultColor.slug )
 			if ( index !== -1 ) {
-				const { colorVar } = colors[ index ]
+				const {
+					colorVar = `--stk-global-color-${ md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 ) }`,
+				} = colors[ index ]
 				const color = `var(${ colorVar }, ${ fallback })`
 				return {
 					name,
@@ -392,7 +394,7 @@ const ColorPickers = ( {
 						onChange={ onChangeStyleName }
 						value={ colors[ selectedIndex ] && colors[ selectedIndex ].name }
 					/>
-					{ ! inRange( selectedIndex, 0, 5 ) && (
+					{ ! inRange( selectedIndex, 0, 6 ) && (
 						<DeleteButton
 							name={ colors[ selectedIndex ] && colors[ selectedIndex ].name }
 							onClick={ onColorDelete }
