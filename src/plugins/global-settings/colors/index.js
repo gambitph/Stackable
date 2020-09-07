@@ -105,7 +105,9 @@ addAction( 'stackable.global-settings.global-styles', 'update', ( colors = [] ) 
 		if ( color.colorVar ) {
 			const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( color.colorVar ).trim() )
 			rgbaColor.splice( 3, 1 )
-			return `${ color.colorVar || '' }-rgba: ${ rgbaColor.join( ', ' ) };`
+			if ( Array.isArray( rgbaColor ) && rgbaColor.length !== 0 ) {
+				return `${ color.colorVar || '' }-rgba: ${ rgbaColor.join( ', ' ) };`
+			}
 		}
 
 		return ''
