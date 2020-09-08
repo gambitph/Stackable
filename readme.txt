@@ -195,6 +195,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 = 2.11.0 =
 * Change: Moved Stackable admin settings inside Settings menu
 * Fixed: Background color and image in Video Popup won't apply
+* Fixed: Force removal of pseudo elements in the Blockquote block
 
 = 2.10.1 =
 * Change: Added "Other" options on the bottom of the admin settings
