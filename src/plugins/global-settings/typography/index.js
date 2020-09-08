@@ -100,9 +100,11 @@ const TypographyPreview = props => {
 	return (
 		<div className="ugb-global-typography-preview">
 			<div className="editor-styles-wrapper">
-				<div className="wp-block">
-					<style>{ generateStyles( styles ) }</style>
-					<Tag className="ugb-global-typography-preview__label" data-tag={ props.tag } data-device={ device }>{ props.children }</Tag>
+				<div className="block-editor-block-list__layout">
+					<div className="wp-block block-editor-block-list__block">
+						<style>{ generateStyles( styles ) }</style>
+						<Tag className="ugb-global-typography-preview__label" data-tag={ props.tag } data-device={ device }>{ props.children }</Tag>
+					</div>
 				</div>
 			</div>
 			{ description && <p className="ugb-global-typography-preview__description">{ description }</p> }
@@ -218,6 +220,10 @@ const TYPOGRAPHY_TAGS = [
 		label: sprintf( __( 'Heading %d', i18n ), 6 ),
 		tag: 'h6',
 	},
+	{
+		label: __( 'Body Text', i18n ),
+		tag: 'p',
+	},
 ]
 
 let saveThrottle = null
@@ -299,7 +305,6 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 						{ value: 'blocks-stackable-native', label: __( 'Stackable and native blocks only', i18n ) },
 						{ value: 'blocks-stackable', label: __( 'Stackable blocks only', i18n ) },
 						{ value: 'blocks-all', label: __( 'Stackable and all other blocks', i18n ) },
-						{ value: 'site', label: __( 'Entire Site (All blocks, header & footer)', i18n ) },
 					] }
 					value={ applySettingsTo }
 					onChange={ changeApplySettingsTo }

@@ -52,26 +52,10 @@ export const GlobalTypographyStyles = () => {
 		}
 	}, [] )
 
-	// The selector will depend on what blocks are allowed to have the global styles.
-	const selectors = []
-	if ( applySettingsTo === 'blocks-stackable-native' ) {
-		selectors.push( '[data-type^="core/"]' )
-		selectors.push( '[data-type^="ugb/"]' )
-	} else if ( applySettingsTo === 'blocks-stackable' ) {
-		selectors.push( '[data-type^="ugb/"]' )
-	} else if ( applySettingsTo === 'blocks-all' ) {
-		selectors.push( '[data-type]' )
-		selectors.push( '[data-type^="core/"]' )
-		selectors.push( '[data-type^="ugb/"]' )
-	} else { // Entire site.
-		// It's just the editor since we're in Gutenberg.
-		selectors.push( '[data-type]' )
-		selectors.push( '[data-type^="core/"]' )
-		selectors.push( '[data-type^="ugb/"]' )
-	}
-
 	// Generate all the typography styles.
 	const styles = Object.keys( typographySettings ).map( tag => {
+		const selectors = formSelectors( tag, applySettingsTo )
+
 		// Build our selector, target h2.block or .block h2.
 		// Some blocks may output the heading tag right away.
 		return deepmerge.all( selectors.map( selector => {
@@ -83,24 +67,23 @@ export const GlobalTypographyStyles = () => {
 			}
 
 			// Force styles only for Stackable blocks.
-			const important = selector === '[data-type^="ugb/"]'
+			const important = selector.match( /ugb\// )
 
 			// Generate our styles for this tag.
-			const fullSelector = `${ selector } ${ tag }, ${ tag }${ selector }`
 			const tagStyles = {
-				[ fullSelector ]: createTypographyStyles( '%s', 'desktop', typographyStyles, { important } ),
+				[ selector ]: createTypographyStyles( '%s', 'desktop', typographyStyles, { important } ),
 				tablet: {
-					[ fullSelector ]: createTypographyStyles( '%s', 'tablet', typographyStyles, { important } ),
+					[ selector ]: createTypographyStyles( '%s', 'tablet', typographyStyles, { important } ),
 				},
 				mobile: {
-					[ fullSelector ]: createTypographyStyles( '%s', 'mobile', typographyStyles, { important } ),
+					[ selector ]: createTypographyStyles( '%s', 'mobile', typographyStyles, { important } ),
 				},
 			}
 
 			// If the device preview is not a desktop, render our styles for that preview.
 			if ( device === 'Tablet' || device === 'Mobile' ) {
-				tagStyles[ fullSelector ] = {
-					...tagStyles[ fullSelector ],
+				tagStyles[ selector ] = {
+					...tagStyles[ selector ],
 					...createTypographyStyles( '%s', device.toLowerCase(), typographyStyles, { important } ),
 				}
 			}
@@ -110,6 +93,45 @@ export const GlobalTypographyStyles = () => {
 	} )
 
 	return <style>{ generateStyles( deepmerge.all( styles ) ) }</style>
+}
+
+export const formSelectors = ( tag, applyTo ) => {
+	if ( [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ].includes( tag ) ) {
+		return formTagSelectors( tag, applyTo )
+	}
+	return formParagraphSelectors( applyTo )
+}
+
+export const formTagSelectors = ( tag, applyTo ) => {
+	const selectors = []
+
+	// Include Stackable blocks.
+	selectors.push( `[data-type^="ugb/"] ${ tag }` )
+
+	// Include native blocks.
+	if ( applyTo !== 'blocks-stackable' ) {
+		selectors.push( `.editor-styles-wrapper [data-type^="core/"] ${ tag }` )
+		selectors.push( `.editor-styles-wrapper ${ tag }[data-type^="core/"]` )
+	}
+
+	// Include all other blocks.
+	if ( applyTo === 'blocks-all' ) {
+		selectors.push( `.editor-styles-wrapper [data-type] ${ tag }` )
+		selectors.push( `.editor-styles-wrapper ${ tag }[data-type]` )
+	}
+
+	return selectors
+}
+
+export const formParagraphSelectors = applyTo => {
+	return [
+		...formTagSelectors( 'p', applyTo ),
+		...formTagSelectors( 'li', applyTo ),
+		`.editor-styles-wrapper p.block-editor-block-list__block[data-type^="core/"]`,
+		`.editor-styles-wrapper .block-editor-block-list__block[data-type^="core/"] p`,
+		`.editor-styles-wrapper .block-editor-block-list__block[data-type^="core/"] li`,
+		`.editor-styles-wrapper .block-editor-block-list__block[data-type^="core/"] td`,
+	]
 }
 
 domReady( () => {

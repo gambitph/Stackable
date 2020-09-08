@@ -243,20 +243,11 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			if ( ! $typography || ! is_array( $typography ) ) {
 				return;
 			}
+
+			// We can have multiple entries in the future, use the first one.
 			$active_typography = $typography[0];
 			if ( empty( $active_typography ) ) {
 				return;
-			}
-
-			// The selector will depend on what blocks are allowed to have the global styles.
-			if ( $this->get_apply_typography_to() === 'blocks-stackable-native' ) {
-				$selectors = array( '[data-block-type="core"]', '.ugb-main-block' );
-			} else if ( $this->get_apply_typography_to() === 'blocks-stackable' ) {
-				$selectors = array( '.ugb-main-block' );
-			} else if ( $this->get_apply_typography_to() === 'blocks-all' ) {
-				$selectors = array( '[data-block-type="core"]', '[class*="wp-block-"]' );
-			} else { // Entire site.
-				$selectors = array( 'body' );
 			}
 
 			$css = array();
@@ -265,29 +256,8 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			// $tags = array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' );
 			foreach ( $active_typography as $tag => $styles ) {
 
-				$heading_selector = array();
-
-				foreach ( $selectors as $selector ) {
-					// Headings which are children of the selector.
-					$heading_selector[] = $selector . ' ' . $tag;
-
-					// Only proceed if we're targeting blocks.
-					if ( $this->get_apply_typography_to() === 'content' || $this->get_apply_typography_to() === 'site' ) {
-						continue;
-					}
-
-					// Stackable blocks for sure only have headings as children.
-					if ( $selector === '.ugb-main-block' ) {
-						continue;
-					}
-
-					// Handle native blocks that don't have a wrapper element and just output heading tags right away.
-					if ( $selector === '[data-block-type="core"]' || $selector === '[class*="wp-block-"]' ) {
-						$heading_selector[] = $tag . $selector;
-					}
-				}
-
-				$css[] = $this->generate_typography_styles( implode( ', ', $heading_selector ), $styles );
+				$selectors = $this->form_selectors( $tag );
+				$css[] = $this->generate_typography_styles( implode( ', ', $selectors ), $styles );
 
 				// Gather the Google Fonts.
 				if ( array_key_exists( 'fontFamily', $styles ) ) {
@@ -303,6 +273,44 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			Stackable_Google_Fonts::enqueue_google_fonts( $google_fonts, 'stackable-global-typography-google-fonts' );
 
 			wp_add_inline_style( 'ugb-style-css', implode( "\n", $css ) );
+		}
+
+		public function form_selectors( $tag ) {
+			if ( in_array( $tag, array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ) ) ) {
+				return $this->form_tag_selector( $tag );
+			}
+			return $this->form_paragraph_selector();
+		}
+
+		public function form_tag_selector( $tag ) {
+			$content_selector = '.entry-content';
+
+			$selectors = array();
+
+			// Include Stackable blocks.
+			$selectors[] = $content_selector . ' .ugb-main-block ' . $tag;
+
+			// Include native blocks.
+			if ( $this->get_apply_typography_to() !== 'blocks-stackable' ) {
+				$selectors[] = $content_selector . ' [data-block-type="core"] ' . $tag;
+				$selectors[] = $content_selector . ' ' . $tag . '[data-block-type="core"]';
+			}
+
+			// Include all other blocks.
+			if ( $this->get_apply_typography_to() === 'blocks-all' ) {
+				$selectors[] = $content_selector . ' [class*="wp-block-"] ' . $tag;
+				$selectors[] = $content_selector . ' ' . $tag . '[class*="wp-block-"]';
+			}
+
+			return $selectors;
+		}
+
+		public function form_paragraph_selector() {
+			return array_merge(
+				$this->form_tag_selector( 'p' ), // Core text.
+				$this->form_tag_selector( 'li' ), // Core lists.
+				$this->form_tag_selector( 'td' ) // Core table cells.
+			);
 		}
 
 		/**
