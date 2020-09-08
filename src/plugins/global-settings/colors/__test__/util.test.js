@@ -16,7 +16,7 @@ describe( 'replaceGlobalColorAttributes', () => {
 				{
 					level2Attribute4: {
 						level3Attribute1: 'stk-global-color-111112',
-						level3Attribute2: 'var(--stk-global-olor-111abc, #123abc)',
+						level3Attribute2: 'var(--stk-global-color-111abc, #123abc)',
 						level3Attribute3: '<span style="color: var(--stk-global-color-111abe, #123abc); background-color: #123456;">Dummy Text</span>',
 						level3Attribute4: {
 							level4Attribute1: 'stk-global-color-111114',
@@ -65,8 +65,8 @@ describe( 'replaceGlobalColorAttributes', () => {
 				{
 					level2Attribute4: {
 						level3Attribute1: 'stk-global-color-111112',
-						level3Attribute2: 'var(--stk-global-olor-111abc, #123abc)',
-						level3Attribute3: '<span style="color: var(--stk-global-color-111abe, #123abc); background-color: #123456;">Dummy Text</span>',
+						level3Attribute2: 'var(--stk-global-color-111abc, #ffffff)',
+						level3Attribute3: '<span style="color: var(--stk-global-color-111abe, #cccf11); background-color: #123456;">Dummy Text</span>',
 						level3Attribute4: {
 							level4Attribute1: 'stk-global-color-111114',
 							level4Attribute2: '#123abc',
@@ -87,8 +87,8 @@ describe( 'replaceGlobalColorAttributes', () => {
 				{
 					level2Attribute4: {
 						level3Attribute1: 'var(--dummy-style, #123abc)',
-						level3Attribute2: 'var(--stk-global-olor-111abc, #123abc)',
-						level3Attribute3: '<span style="color: var(--stk-global-color-111abe, #123abc); background-color: #123456;">Dummy Text</span>',
+						level3Attribute2: 'var(--stk-global-color-111abc, #ffffff)',
+						level3Attribute3: '<span style="color: var(--stk-global-color-111abe, #cccf11); background-color: #123456;">Dummy Text</span>',
 						level3Attribute4: {
 							level4Attribute1: '#123abc',
 							level4Attribute2: '#123abc',
@@ -109,7 +109,7 @@ describe( 'replaceGlobalColorAttributes', () => {
 				{
 					level2Attribute4: {
 						level3Attribute1: 'var(--dummy-style, #123abc)',
-						level3Attribute2: 'var(--stk-global-olor-111abc, #123abc)',
+						level3Attribute2: 'var(--stk-global-color-111abc, #123abc)',
 						level3Attribute3: '<span style="color: var(--stk-global-color-111abe, #123abc); background-color: #123456;">Dummy Text</span>',
 						level3Attribute4: {
 							level4Attribute1: '#123abc',
@@ -135,7 +135,7 @@ describe( 'updateFallbackCOlorAttributes', () => {
 				{
 					level2Attribute4: {
 						level3Attribute1: 'stk-global-color-111112',
-						level3Attribute2: 'var(--stk-global-olor-111abc, #463dea)',
+						level3Attribute2: 'var(--stk-global-color-111abc, #463dea)',
 						level3Attribute3: '<span style="color: var(--stk-global-color-111abe, #1da342); background-color: #123456;">Dummy Text</span>',
 						level3Attribute4: {
 							level4Attribute1: 'stk-global-color-111114',
@@ -173,7 +173,7 @@ describe( 'updateFallbackCOlorAttributes', () => {
 					{
 						level2Attribute4: {
 							level3Attribute1: 'stk-global-color-111112',
-							level3Attribute2: 'var(--stk-global-olor-111abc, #463dea)',
+							level3Attribute2: 'var(--stk-global-color-111abc, #123abc)',
 							level3Attribute3: '<span style="color: var(--stk-global-color-111abe, #123abc); background-color: #123456;">Dummy Text</span>',
 							level3Attribute4: {
 								level4Attribute1: 'stk-global-color-111114',
