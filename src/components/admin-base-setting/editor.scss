@@ -21,3 +21,8 @@
 .ugb-admin-setting__field {
 	flex: 1;
 }
+body .ugb-admin-setting .ugb-admin-setting__label-wrapper + .ugb-admin-setting__help {
+	margin-left: 200px;
+	margin-bottom: 24px !important;
+	margin-top: 8px !important;
+}

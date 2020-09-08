@@ -8,8 +8,9 @@ const AdminTextSetting = props => {
 				type={ props.type }
 				value={ props.value }
 				placeholder={ props.placeholder }
-				onChange={ props.onChange }
+				onChange={ event => props.onChange( event.target.value ) }
 			/>
+			{ props.children }
 		</AdminBaseSetting>
 	)
 }
