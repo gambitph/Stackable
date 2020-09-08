@@ -43,9 +43,12 @@ export const replaceGlobalColorAttributes = ( attributes = {}, colorsBeforeReset
 	if ( includeSlugNames ) {
 		const stackableSlugNames = colorsBeforeReset.filter( color => color.slug && color.slug.includes( 'stk-global-color' ) ).map( color => color.slug )
 		stackableSlugNames.forEach( stackableSlugName => {
-			const foundColor = find( colorsBeforeReset, color => color.slug === stackableSlugName )
+			const foundColor = find( colorsAfterReset, color => color.slug === stackableSlugName )
 			if ( foundColor ) {
 				updatedStringifiedAttributes = updatedStringifiedAttributes.replace( stackableSlugName, foundColor.fallback || '#000000' )
+			} else {
+				const foundColorBeforeReset = find( colorsBeforeReset, color => color.slug === stackableSlugName )
+				updatedStringifiedAttributes = updatedStringifiedAttributes.replace( stackableSlugName, foundColorBeforeReset ? foundColorBeforeReset.fallback || '#000000' : '#000000' )
 			}
 		} )
 	}
