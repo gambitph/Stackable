@@ -391,6 +391,9 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			if ( array_key_exists( 'lineHeight', $styles ) ) {
 				$css['desktop'][] = $this->create_style( 'line-height', $styles['lineHeight'] . ( $styles['lineHeightUnit'] ?: 'em' ) );
 			}
+			if ( array_key_exists( 'letterSpacing', $styles ) ) {
+				$css['desktop'][] = $this->create_style( 'letter-spacing', $styles['letterSpacing'] . 'px' );
+			}
 
 			/**
 			 * Tablet styles.
