@@ -27,7 +27,7 @@ export const GlobalTypographyStyles = () => {
 		select => ( {
 			device: select(
 				'core/edit-post'
-			).__experimentalGetPreviewDeviceType(),
+			).__experimentalGetPreviewDeviceType && select( 'core/edit-post' ).__experimentalGetPreviewDeviceType(),
 		} ),
 		[]
 	)
@@ -81,7 +81,7 @@ export const GlobalTypographyStyles = () => {
 			}
 
 			// If the device preview is not a desktop, render our styles for that preview.
-			if ( device === 'Tablet' || device === 'Mobile' ) {
+			if ( device && ( device === 'Tablet' || device === 'Mobile' ) ) {
 				tagStyles[ selector ] = {
 					...tagStyles[ selector ],
 					...createTypographyStyles( '%s', device.toLowerCase(), typographyStyles, { important } ),
