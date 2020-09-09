@@ -290,7 +290,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 			{ output }
 			<PanelAdvancedSettings
 				title={ __( 'Global Typography', i18n ) }
-				initialOpen={ false }
+				initialOpen={ true }
 			>
 				<p className="components-base-control__help">
 					{ __( 'Change the typography of your headings for all your blocks in your site.', i18n ) }
