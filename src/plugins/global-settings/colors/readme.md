@@ -24,7 +24,7 @@ const colors = [
 doAction( 'stackable-global-settings.global-styles', colors )
 ```
 
-will generate this css rule in the editor:
+will generate these css rules in the editor:
 ```html
 <style id="stackable-global-colors">
 :root: {
@@ -53,7 +53,7 @@ const colors = [
 doAction( 'stackable-global-settings.save-model-settings', colors )
 ```
 
-will save the ```colors``` in ```stackable_global_colors``` and will update the block attributes with the most updated fallback value. We are constantly updating the fallback values since we don't want their color styles to break if they removed Stackable in their list of plugins.
+will save the ```colors``` in ```stackable_global_colors``` and will update the block attributes with the most updated fallback values. We are constantly updating the fallback values since we don't want their color styles to break if they removed Stackable in their list of plugins.
 
 ### ```stackable.global-settings.reset-compatibility```
 Action for handling the reset button in the Stackable Global Colors Sidebar. Resetting the color palette will revert to its original colors.
@@ -65,7 +65,7 @@ All added custom global colors will be removed. And all block attributes using c
 
 ### ```stackable.global-settings.inspector```
 
-This includes all the component rendered in the Global Settings sidebar.  
+This includes all the components rendered in the Global Settings sidebar.  
 
 
 
