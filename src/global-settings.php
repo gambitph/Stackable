@@ -26,7 +26,6 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			 * Color hooks
 			 */
 
-			// TODO: add color hooks here.
 			add_action( 'wp_enqueue_scripts', array( $this, 'color_add_global_styles' ) );
 
 			/**
