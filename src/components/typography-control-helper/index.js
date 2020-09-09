@@ -15,7 +15,6 @@ const TypographyControlHelper = props => {
 
 	return (
 		<TypographyControl
-			style={ props.blockAttributes[ getAttrName( 'Style' ) ] || '' }
 			fontFamily={ props.blockAttributes[ getAttrName( 'FontFamily' ) ] || '' }
 			fontSize={ props.blockAttributes[ getAttrName( 'FontSize' ) ] || '' }
 			tabletFontSize={ props.blockAttributes[ getAttrName( 'TabletFontSize' ) ] || '' }
@@ -32,7 +31,6 @@ const TypographyControlHelper = props => {
 			lineHeightUnit={ props.blockAttributes[ getAttrName( 'LineHeightUnit' ) ] || 'em' }
 			tabletLineHeightUnit={ props.blockAttributes[ getAttrName( 'TabletLineHeightUnit' ) ] || 'em' }
 			mobileLineHeightUnit={ props.blockAttributes[ getAttrName( 'MobileLineHeightUnit' ) ] || 'em' }
-			onChangeStyle={ value => setAttributes( { [ getAttrName( 'Style' ) ]: value } ) }
 			onChangeFontFamily={ value => setAttributes( { [ getAttrName( 'FontFamily' ) ]: value } ) }
 			onChangeFontSize={ value => setAttributes( { [ getAttrName( 'FontSize' ) ]: value } ) }
 			onChangeTabletFontSize={ value => setAttributes( { [ getAttrName( 'TabletFontSize' ) ]: value } ) }
@@ -51,7 +49,6 @@ const TypographyControlHelper = props => {
 			onChangeMobileLineHeightUnit={ value => setAttributes( { [ getAttrName( 'MobileLineHeightUnit' ) ]: value } ) }
 			onReset={ () => {
 				setAttributes( {
-					[ getAttrName( 'Style' ) ]: '',
 					[ getAttrName( 'FontFamily' ) ]: '',
 					[ getAttrName( 'FontSize' ) ]: '',
 					[ getAttrName( 'TabletFontSize' ) ]: '',
