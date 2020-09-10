@@ -19,7 +19,7 @@ addFilter( 'stackable.color-palette-control.change', 'stackable/compatibility/ka
 	}
 
 	// Check if the color is part
-	if ( colorObject.slug.match( /^theme-palette\d+/ ) ) {
+	if ( colorObject && colorObject.slug.match( /^theme-palette\d+/ ) ) {
 		return colorObject.slug.replace( /^[\w-]*(\d+)/, `var(--global-palette$1, ${ value })` )
 	}
 
