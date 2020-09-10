@@ -4,8 +4,8 @@ import './editor-loader'
 /**
  * Internal dependencies
  */
-import { GlobalSettingsColorPicker } from '../components'
 import { replaceGlobalColorAttributes } from './util'
+import ColorPicker from './color-picker'
 
 /**
  * External dependencies
@@ -96,7 +96,7 @@ addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors
 					{ __( 'Learn more about Global Colors', i18n ) }
 				</a>
 			</p>
-			<GlobalSettingsColorPicker />
+			<ColorPicker />
 		</PanelAdvancedSettings>
 	</Fragment>
 ) )

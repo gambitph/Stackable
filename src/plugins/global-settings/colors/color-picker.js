@@ -446,7 +446,7 @@ const ColorPickers = ( {
 	)
 }
 
-const GlobalSettingsColorPicker = props => {
+const ColorPickerContainer = props => {
 	const classNames = classnames(
 		'ugb-global-settings-color-picker',
 		'components-circular-option-picker',
@@ -465,8 +465,8 @@ const GlobalSettingsColorPicker = props => {
 	)
 }
 
-GlobalSettingsColorPicker.defaultProps = {
+ColorPickerContainer.defaultProps = {
 	className: '',
 }
 
-export default GlobalSettingsColorPicker
+export default ColorPickerContainer
