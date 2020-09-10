@@ -196,6 +196,9 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Change: Moved Stackable admin settings inside Settings menu
 * Fixed: Background color and image in Video Popup won't apply
 * Fixed: Force removal of pseudo elements in the Blockquote block
+* Fixed: Column blocks and other blocks that use innerBlocks do not auto-recover
+* Fixed: WordPress 5.4 compatibility
+* Fixed: Kadence Theme color picker issue
 
 = 2.10.1 =
 * Change: Added "Other" options on the bottom of the admin settings
