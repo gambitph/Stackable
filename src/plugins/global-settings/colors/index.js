@@ -1,10 +1,11 @@
 import './responsive-color-palette-change'
+import './editor-loader'
 
 /**
  * Internal dependencies
  */
 import { GlobalSettingsColorPicker } from '../components'
-import { replaceGlobalColorAttributes, updateFallbackColorAttributes } from './util'
+import { replaceGlobalColorAttributes } from './util'
 
 /**
  * External dependencies
@@ -14,174 +15,33 @@ import { PanelAdvancedSettings } from '~stackable/components'
 import {
 	isEqual, find, omit,
 } from 'lodash'
-import md5 from 'md5'
-import rgba from 'color-rgba'
 
 /**
  * Wordpress dependencies
  */
-import {
-	addFilter, addAction, doAction,
-} from '@wordpress/hooks'
-import {
-	Fragment, useState, useEffect,
-} from '@wordpress/element'
+import { addFilter, addAction } from '@wordpress/hooks'
+import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import domReady from '@wordpress/dom-ready'
-import { loadPromise, models } from '@wordpress/api'
-import {
-	dispatch, useSelect, select,
-} from '@wordpress/data'
+import { dispatch, select } from '@wordpress/data'
 
-addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors', output => {
-	const [ isPanelOpen, setIsPanelOpen ] = useState( true )
-	const [ disableReset, setDisableReset ] = useState( true )
-
-	// We make sure that we are getting the latest state for default colors.
-	const { defaultColors } = useSelect( select => select( 'core/block-editor' ).getSettings() )
-
-	const handleToggle = () => {
-		setIsPanelOpen( toggle => ! toggle )
-	}
-
-	// Show reset button if necessary.
-	useEffect( () => {
-		if ( disableReset ) {
-			const { colors } = select( 'core/block-editor' ).getSettings()
-			if ( Array.isArray( defaultColors ) && Array.isArray( colors ) ) {
-				// Get only the slug and colors.
-				const compareDefaultColors = defaultColors.map( defaultColor => ( { color: defaultColor.color, slug: defaultColor.slug } ) )
-				const compareColors = colors.map( color => ( { color: color.fallback || color.color, slug: color.slug } ) )
-				if ( ! isEqual( compareDefaultColors, compareColors ) ) {
-					setDisableReset( false )
-				}
-			}
-		}
-	}, [ defaultColors ] )
-
-	return (
-		<Fragment>
-			{ output }
-			<PanelAdvancedSettings
-				title={ __( 'Global Color Palette', i18n ) }
-				initialOpen={ true }
-				opened={ isPanelOpen }
-				onToggle={ handleToggle }
-			>
-				<p className="components-base-control__help">
-					{ __( 'Change your color palette for all your blocks across your site.', i18n ) }
+addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors', output => (
+	<Fragment>
+		{ output }
+		<PanelAdvancedSettings
+			title={ __( 'Global Color Palette', i18n ) }
+			initialOpen={ true }
+		>
+			<p className="components-base-control__help">
+				{ __( 'Change your color palette for all your blocks across your site.', i18n ) }
 					&nbsp;
-					<a href="https://docs.wpstackable.com/stackable-guides/advanced-guides/how-to-use-global-colors/?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
-						{ __( 'Learn more about Global Colors', i18n ) }
-					</a>
-				</p>
-				<GlobalSettingsColorPicker
-					disableReset={ disableReset }
-					setDisableReset={ setDisableReset }
-				/>
-			</PanelAdvancedSettings>
-		</Fragment>
-	)
-} )
-
-// Update the global style values
-addAction( 'stackable.global-settings.global-styles', 'update', ( colors = [] ) => {
-	const styleRules = colors.map( color => {
-		if ( color.colorVar && color.fallback ) {
-			return `${ color.colorVar || '' }: ${ color.fallback || '' };`
-		}
-
-		return ''
-	} )
-
-	const globalStyleEl = document.querySelector( '#stackable-global-colors' )
-	if ( globalStyleEl ) {
-		// Overwrite all the global styles inside this style tag.
-		globalStyleEl.innerHTML = `:root { ${ styleRules.join( ' ' ) } }`
-	}
-
-	// Appending global css properties using rgb.
-	const rgbaStyleRules = colors.map( color => {
-		if ( color.colorVar ) {
-			const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( color.colorVar ).trim() )
-			rgbaColor.splice( 3, 1 )
-			if ( Array.isArray( rgbaColor ) && rgbaColor.length !== 0 ) {
-				return `${ color.colorVar || '' }-rgba: ${ rgbaColor.join( ', ' ) };`
-			}
-		}
-
-		return ''
-	} )
-
-	if ( globalStyleEl ) {
-		globalStyleEl.innerHTML = globalStyleEl.innerHTML + `:root { ${ rgbaStyleRules.join( ' ' ) } }`
-	}
-} )
-
-addAction( 'stackable.global-settings.save-model-settings', 'global-colors', newColors => {
-	const { getBlock, getBlocks } = select( 'core/block-editor' )
-	const { updateBlockAttributes } = dispatch( 'core/block-editor' )
-
-	const stringifiedBlocks = JSON.stringify( getBlocks() )
-	const parsedClientIds = stringifiedBlocks.match( /"clientId":".+?(?=\")"/g )
-	if ( ! parsedClientIds || ( parsedClientIds && ! Array.isArray( parsedClientIds ) ) ) {
-		return
-	}
-	const clientIds = parsedClientIds.map( parsedClientId => {
-		const { clientId } = JSON.parse( `{${ parsedClientId }}` )
-		return clientId
-	} )
-
-	// Include innerBlocks.
-	const allBlocks = clientIds.map( clientID => {
-		const block = omit( getBlock( clientID ), 'innerBlocks' )
-		return block
-	} )
-
-	const updatedColors = newColors.map( newColor => {
-		const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( newColor.colorVar ).trim() )
-		rgbaColor.splice( 3, 1 )
-		newColor.rgb = rgbaColor.join( ', ' )
-		return newColor
-	} )
-
-	allBlocks.forEach( block => {
-		const { clientId } = block
-		const newAttributes = updateFallbackColorAttributes( block.attributes, updatedColors )
-		if ( ! isEqual( newAttributes, block.attributes ) ) {
-			updateBlockAttributes( clientId, newAttributes )
-		}
-	} )
-
-	// Make sure that we are saving the colors with colorVars.
-	loadPromise.then( () => {
-		const settings = new models.Settings( { stackable_global_colors: updatedColors } ) // eslint-disable-line camelcase
-		settings.save()
-	} )
-} )
-
-const updateToStackableGlobalColors = () => {
-	const { colors } = select( 'core/block-editor' ).getSettings()
-	const newColors = colors.map( color => {
-		const { name, slug } = color
-		const newColor = { name, slug }
-		newColor.colorVar = `--stk-global-color-${ md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 ) }`
-		newColor.color = `var(${ newColor.colorVar }, ${ color.color })`
-		newColor.fallback = color.color
-		return newColor
-	} )
-
-	doAction( 'stackable.global-settings.global-styles', newColors )
-
-	// Dispatch the newColors to the current colors
-	dispatch( 'core/block-editor' ).updateSettings( {
-		colors: newColors,
-		defaultColors: colors,
-	} )
-
-	// Save the settings
-	doAction( 'stackable.global-settings.save-model-settings', newColors )
-}
+				<a href="https://docs.wpstackable.com/stackable-guides/advanced-guides/how-to-use-global-colors/?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
+					{ __( 'Learn more about Global Colors', i18n ) }
+				</a>
+			</p>
+			<GlobalSettingsColorPicker />
+		</PanelAdvancedSettings>
+	</Fragment>
+) )
 
 /**
  * Used for attributes compatibility when resetting the global colors.
@@ -322,39 +182,5 @@ addAction( 'stackable.global-settings.reset-compatibility', 'color-reset', ( blo
 				updateBlockAttributes( clientId, updatedAttributes )
 			}
 		}
-	} )
-} )
-
-domReady( () => {
-	// Mount a style in the document
-	const globalStyleEl = document.createElement( 'style' )
-	globalStyleEl.setAttribute( 'id', 'stackable-global-colors' )
-	const editorEl = document.querySelector( 'head' )
-	if ( editorEl ) {
-		editorEl.appendChild( globalStyleEl )
-	}
-
-	const { colors } = select( 'core/block-editor' ).getSettings()
-
-	loadPromise.then( () => {
-		const settings = new models.Settings()
-
-		settings.fetch().then( response => {
-			const { stackable_global_colors: globalColors } = response
-
-			if ( Array.isArray( globalColors ) ) {
-				if ( globalColors.length === 0 ) {
-					updateToStackableGlobalColors()
-				} else {
-					dispatch( 'core/block-editor' ).updateSettings( {
-						colors: globalColors,
-						defaultColors: colors,
-					} )
-					doAction( 'stackable.global-settings.global-styles', globalColors )
-				}
-			} else {
-				updateToStackableGlobalColors()
-			}
-		} )
 	} )
 } )

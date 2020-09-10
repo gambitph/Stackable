@@ -3,7 +3,7 @@
  */
 import classnames from 'classnames'
 import {
-	cloneDeep, inRange, findIndex,
+	cloneDeep, inRange, findIndex, isEqual,
 } from 'lodash'
 import md5 from 'md5'
 import { i18n } from 'stackable'
@@ -197,9 +197,9 @@ const ResetButton = props => {
 
 const ColorPickers = ( {
 	colors,
-	disableReset,
-	setDisableReset,
 } ) => {
+	// We make sure that we are getting the latest state for default colors.
+	const { defaultColors } = useSelect( select => select( 'core/block-editor' ).getSettings() )
 	// State used to determine the clicked index in the color picker.
 	const [ selectedIndex, setSelectedIndex ] = useState( null )
 	// State used to control the popover when clicking a color.
@@ -208,6 +208,23 @@ const ColorPickers = ( {
 	const [ colorButtonAnchor, setColorButtonAnchor ] = useState( null )
 	// State used to determine if a new color is added.
 	const [ hasAddedNewColor, setHasAddedNewColor ] = useState( false )
+	// State used to control the reset button.
+	const [ disableReset, setDisableReset ] = useState( true )
+
+	// Show reset button if necessary.
+	useEffect( () => {
+		if ( disableReset ) {
+			const { colors } = select( 'core/block-editor' ).getSettings()
+			if ( Array.isArray( defaultColors ) && Array.isArray( colors ) ) {
+				// Get only the slug and colors.
+				const compareDefaultColors = defaultColors.map( defaultColor => ( { color: defaultColor.color, slug: defaultColor.slug } ) )
+				const compareColors = colors.map( color => ( { color: color.fallback || color.color, slug: color.slug } ) )
+				if ( ! isEqual( compareDefaultColors, compareColors ) ) {
+					setDisableReset( false )
+				}
+			}
+		}
+	}, [ defaultColors ] )
 
 	// If a new color is added, set the anchorRef to the new color element and open the Popover.
 	useEffect( () => {
@@ -423,23 +440,10 @@ const GlobalSettingsColorPicker = props => {
 
 	const { colors } = useSelect( select => select( 'core/block-editor' ).getSettings() )
 
-	useEffect( () => {
-		const saveSettings = setTimeout( () => {
-			// Debouncing the update root css property values.
-			 doAction( 'stackable.global-settings.global-styles', colors )
-
-			// We don't need to always set the settings. Debounce the loadPromise.
-			doAction( 'stackable.global-settings.save-model-settings', colors )
-		}, 100 )
-		return () => clearTimeout( saveSettings )
-	}, [ colors ] )
-
 	return (
 		<div className={ classNames }>
 			<ColorPickers
 				colors={ colors }
-				disableReset={ props.disableReset }
-				setDisableReset={ props.setDisableReset }
 			/>
 		</div>
 	)
@@ -447,8 +451,6 @@ const GlobalSettingsColorPicker = props => {
 
 GlobalSettingsColorPicker.defaultProps = {
 	className: '',
-	disableReset: true,
-	setDisableReset: () => {},
 }
 
 export default GlobalSettingsColorPicker

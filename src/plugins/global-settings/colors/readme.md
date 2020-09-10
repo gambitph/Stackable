@@ -3,30 +3,26 @@
 It allows users to create their own set of global color palette which
 can be applied to all blocks.
 
-## List of Action Hooks
-### ```stackable.global-settings.global-styles``` 
-Action for updating the global custom css variables in the editor.
+## List of Action Hooks / Functions
+### ```renderGlobalStyles``` 
+Function for updating the global custom css variables in the editor.
 
 Doing this:
 
 ```js
-const colors = [ 
-        { 
-            name: 'Stackable Global Color 1',
-            slug: 'stk-global-color-2532351235',
-            color: 'var(--stk-global-color-aeb2rd, #ffffff)',
-            colorVar: '--stk-global-color-aeb2rd',
-            fallback: '#ffffff',
-            rgb: '255, 255, 255',
-        } 
-    ]
+const { colors } = useSelect( select => ( { colors: select('core/block-editor').getSettings().colors } ) )
+const [ styles, setStyles ] = useState( '' )
 
-doAction( 'stackable-global-settings.global-styles', colors )
+useEffect( () => {
+    renderGlobalStyles( colors )
+}, [ colors ] )
+
+return <style>{ styles }</style>
 ```
 
 will generate these css rules in the editor:
 ```html
-<style id="stackable-global-colors">
+<style>
 :root: {
     --stk-global-color-aeb2rd: #ffffff;
     --stk-global-color-aeb2rd-rgba: 255, 255, 255;
@@ -34,23 +30,19 @@ will generate these css rules in the editor:
 </style>
 ```
  
-### ```stackable.global-settings.save-model-settings``` 
-Action for saving/updating the global colors in models settings and fallback values in existing blocks using the global color.
+### ```saveModelSettings``` 
+Function for saving/updating the global colors in models settings and fallback values in existing blocks using the global color.
 
 Doing this:
 ```js
-const colors = [ 
-        { 
-            name: 'Stackable Global Color 1',
-            slug: 'stk-global-color-2532351235',
-            color: 'var(--stk-global-color-aeb2rd, #ffffff)',
-            colorVar: '--stk-global-color-aeb2rd',
-            fallback: '#ffffff',
-            rgb: '255, 255, 255',
-        } 
-    ]
+const { colors } = useSelect( select => ( { colors: select('core/block-editor').getSettings().colors } ) )
+const [ styles, setStyles ] = useState( '' )
 
-doAction( 'stackable-global-settings.save-model-settings', colors )
+useEffect( () => {
+    saveModelSettings( colors )
+}, [ colors ] )
+
+return <style>{ styles }</style>
 ```
 
 will save the ```colors``` in ```stackable_global_colors``` and will update the block attributes with the most updated fallback values. We are constantly updating the fallback values since we don't want their color styles to break if they removed Stackable in their list of plugins.
