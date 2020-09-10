@@ -507,7 +507,7 @@ const ColorPickers = ( {
 				<div className="components-circular-option-picker__option-wrapper" key={ index }>
 					<Button
 						className="components-circular-option-picker__option"
-						label={ color.name }
+						label={ color.name || 'Untitled Color' }
 						style={ { backgroundColor: color.color, color: color.color } }
 						onClick={ event => handleOpenColorPicker( event, index ) }
 					/>
