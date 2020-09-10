@@ -38,12 +38,9 @@ export const autoAttemptRecovery = () => {
 // Recursive fixing of all blocks.
 export const autoAttemptRecoveryRecursive = blocks => {
 	blocks.forEach( block => {
+		// Auto recover the block.
 		if ( isInvalid( block ) ) {
-			// Replace the block with a newly generated one.
-			const recoverBlock = ( {
-				name, attributes, innerBlocks,
-			} ) => createBlock( name, attributes, innerBlocks )
-			dispatch( 'core/block-editor' ).replaceBlock( block.clientId, recoverBlock( block ) )
+			recoverBlock( block )
 		}
 
 		// Also fix the inner blocks.
@@ -51,4 +48,42 @@ export const autoAttemptRecoveryRecursive = blocks => {
 			autoAttemptRecoveryRecursive( block.innerBlocks )
 		}
 	} )
+}
+
+// Recover an invalid block.
+export const recoverBlock = block => {
+	const {
+		name, attributes, innerBlocks, clientId,
+	} = block
+
+	const {
+		getBlockParents,
+		getBlock,
+		getTemplateLock,
+	} = wp.data.select( 'core/block-editor' )
+
+	// Check if an innerBlock, Innerblocks with a templateLock cannot be
+	// replaced via replaceBlock, so we need to replace the parent also.
+	const parents = getBlockParents( clientId )
+	if ( parents && parents.length ) {
+		const parentClientId = parents[ parents.length - 1 ] // The last parent is the immediate one.
+		const parentBlock = getBlock( parentClientId )
+		const templateLock = getTemplateLock( parentClientId )
+
+		if ( templateLock && parentBlock.innerBlocks.includes( block ) ) {
+			// Create a new set of innerBlocks but replace the one we want to recover.
+			const innerBlockIndex = parentBlock.innerBlocks.indexOf( block )
+			const newBlock = createBlock( name, attributes, innerBlocks )
+			const newInnerBlocks = [ ...parentBlock.innerBlocks ]
+			newInnerBlocks[ innerBlockIndex ] = newBlock
+
+			const newParentBlock = createBlock( parentBlock.name, parentBlock.attributes, newInnerBlocks )
+			dispatch( 'core/block-editor' ).replaceBlock( parentClientId, newParentBlock )
+			return
+		}
+	}
+
+	// Regular replacing of the block.
+	const newBlock = createBlock( name, attributes, innerBlocks )
+	dispatch( 'core/block-editor' ).replaceBlock( clientId, newBlock )
 }
