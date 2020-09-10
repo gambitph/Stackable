@@ -48,8 +48,11 @@ const GlobalColorStyles = () => {
 
 		const updatedColors = newColors.map( newColor => {
 			const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( newColor.colorVar ).trim() )
-			rgbaColor.splice( 3, 1 )
-			newColor.rgb = rgbaColor.join( ', ' )
+			if ( Array.isArray( rgbaColor ) && rgbaColor.length !== 0 ) {
+				rgbaColor.splice( 3, 1 )
+				newColor.rgb = rgbaColor.join( ', ' )
+				return newColor
+			}
 			return newColor
 		} )
 

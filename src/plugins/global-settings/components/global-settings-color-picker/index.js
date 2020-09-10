@@ -7,6 +7,7 @@ import {
 } from 'lodash'
 import md5 from 'md5'
 import { i18n } from 'stackable'
+import rgba from 'color-rgba'
 
 /**
  * Wordpress dependencies
@@ -32,7 +33,7 @@ const ColorPickerTextArea = props => (
 					<BaseControl
 						id={ props.id || 'text-area' }
 						className="components-color-picker__input-field"
-						label="Style name">
+						label={ __( 'Style name', i18n ) }>
 						<input
 							className="components-text-control__input"
 							{ ...props }
@@ -263,7 +264,6 @@ const ColorPickers = ( {
 
 		// Overwrite the selected color to a new color.
 		updatedColors[ selectedIndex ].color = existingColorVar ? `var(${ existingColorVar }, ${ data.hex })` : `var(${ colorVar }, ${ data.hex })`
-		updatedColors[ selectedIndex ].fallback = data.hex
 
 		// Add a fallback and colorVar if not exists.
 		updatedColors[ selectedIndex ].colorVar = existingColorVar || colorVar
@@ -390,6 +390,21 @@ const ColorPickers = ( {
 		}
 	}
 
+	// Used to determine the computed color to be displayed in the ColorPicker
+	const colorPlaceholder = color => {
+		if ( color && color.color.includes( 'var' ) ) {
+			const colorVarMatch = color.color.match( /--(.*?(?=,))/g )
+			if ( colorVarMatch ) {
+				const computedColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( colorVarMatch[ 0 ] ).trim() )
+				if ( Array.isArray( computedColor ) && computedColor.length ) {
+					return `rgba(${ computedColor.join( ', ' ) })`
+				}
+			}
+		}
+
+		return color.color
+	}
+
 	return colors && Array.isArray( colors ) && (
 		<Fragment>
 			<ResetButton onClick={ onColorPaletteReset } disabled={ disableReset } />
@@ -397,7 +412,7 @@ const ColorPickers = ( {
 				<div className="components-circular-option-picker__option-wrapper" key={ index }>
 					<Button
 						className="components-circular-option-picker__option"
-						label={ color.slug }
+						label={ color.name }
 						style={ { backgroundColor: color.color, color: color.color } }
 						onClick={ event => handleOpenColorPicker( event, index ) }
 					/>
@@ -410,8 +425,9 @@ const ColorPickers = ( {
 					onClickOutside={ onClickOutside }
 				>
 					<ColorPicker
-						color={ colors[ selectedIndex ] && ( colors[ selectedIndex ].fallback || colors[ selectedIndex ].color ) }
+						color={ colorPlaceholder( colors[ selectedIndex ] ) }
 						onChangeComplete={ onChangeColor }
+						disableAlpha
 					/>
 					<ColorPickerTextArea
 						id="color-picker-text-name"
