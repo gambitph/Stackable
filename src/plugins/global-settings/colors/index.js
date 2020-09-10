@@ -15,6 +15,7 @@ import { PanelAdvancedSettings } from '~stackable/components'
 import {
 	isEqual, find, omit,
 } from 'lodash'
+import rgba from 'color-rgba'
 
 /**
  * Wordpress dependencies
@@ -23,6 +24,63 @@ import { addFilter, addAction } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { dispatch, select } from '@wordpress/data'
+
+addFilter( 'stackable.util.hex-to-rgba', 'global-settings/colors', ( hexColor, opacity ) => {
+	const colorVarID = hexColor.match( /--stk-global-color-(\S*?(?=,))/ )
+	if ( colorVarID ) {
+		const colorRegex = /( )(.*)/g
+		const colorMatch = hexColor.match( colorRegex )[ 0 ].trim().slice( 0, -1 )
+		if ( colorMatch[ 0 ] === '#' ) {
+			const rgbaColor = rgba( colorMatch )
+			rgbaColor.splice( 3, 1 )
+			return `rgba(var(--stk-global-color-${ colorVarID[ 1 ] }-rgba, ${ rgbaColor.join( ', ' ) }), ${ opacity !== null ? opacity : 1 })`
+		}
+
+		if ( colorMatch.includes( 'var' ) ) {
+			if ( colorMatch.match( /--(.*?(?=,))/g ) ) {
+				const cssVar = colorMatch.match( /--(.*?(?=,))/g )[ 0 ]
+				const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( cssVar ).trim() )
+				rgbaColor.splice( 3, 1 )
+				return `rgba(var(--stk-global-color-${ colorVarID[ 1 ] }-rgba, ${ rgbaColor.join( ', ' ) }), ${ opacity !== null ? opacity : 1 })`
+			} else if ( colorMatch.match( /--(.*?(?=\)))/g ) ) {
+				const cssVar = colorMatch.match( /--(.*?(?=\)))/g )[ 0 ]
+				const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( cssVar ).trim() )
+				rgbaColor.splice( 3, 1 )
+				return `rgba(var(--stk-global-color-${ colorVarID[ 1 ] }-rgba, ${ rgbaColor.join( ', ' ) }), ${ opacity !== null ? opacity : 1 })`
+			}
+		}
+	}
+} )
+
+addFilter( 'stackable.util.is-dark-color', 'global-settings/colors', color => {
+	const rgbToHex = ( r, g, b ) => '#' + ( ( 1 << 24 ) + ( r << 16 ) + ( g << 8 ) + b ).toString( 16 ).slice( 1 ) // eslint-disable-line no-bitwise
+	if ( color.match( /--stk-global-color/ ) ) {
+		const colorVarID = color.match( /--stk-global-color-(\S*?(?=,))/ )
+		if ( colorVarID ) {
+			const colorRegex = /( )(.*)/g
+			const colorMatch = color.match( colorRegex )[ 0 ].trim().slice( 0, -1 )
+			if ( colorMatch[ 0 ] === '#' ) {
+				return colorMatch
+			}
+
+			if ( colorMatch.includes( 'var' ) ) {
+				if ( colorMatch.match( /--(.*?(?=,))/g ) ) {
+					const cssVar = colorMatch.match( /--(.*?(?=,))/g )[ 0 ]
+					const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( cssVar ).trim() )
+					rgbaColor.splice( 3, 1 )
+					return rgbToHex( ...rgbaColor )
+				} else if ( colorMatch.match( /--(.*?(?=\)))/g ) ) {
+					const cssVar = colorMatch.match( /--(.*?(?=\)))/g )[ 0 ]
+					const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( cssVar ).trim() )
+					rgbaColor.splice( 3, 1 )
+					return rgbToHex( ...rgbaColor )
+				}
+			}
+		}
+	}
+
+	return color
+} )
 
 addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors', output => (
 	<Fragment>

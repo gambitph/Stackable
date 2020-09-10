@@ -20,6 +20,7 @@ export * from './user'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 
 /**
  * External dependencies
@@ -135,10 +136,7 @@ export const hexToRgba = ( hexColor, opacity = null ) => {
 	 * Compatibility for stackable global colors.
 	 */
 	if ( hexColor.includes( '--stk-global-color' ) ) {
-		const colorVarID = hexColor.match( /--stk-global-color-(\S*?(?=,))/ )
-		if ( colorVarID ) {
-			return `rgba(var(--stk-global-color-${ colorVarID[ 1 ] }-rgba), ${ opacity !== null ? opacity : 1 })`
-		}
+		return applyFilters( 'stackable.util.hex-to-rgba', hexColor, opacity )
 	}
 
 	/**
