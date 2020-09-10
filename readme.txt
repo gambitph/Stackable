@@ -199,6 +199,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Column blocks and other blocks that use innerBlocks do not auto-recover
 * Fixed: WordPress 5.4 compatibility
 * Fixed: Kadence Theme color picker issue
+* Fixed: CORS error when editing in mobile or tablet if Stackable's CSS files are located in a another domain. When it happens now, live responsive editing will just not work.
 
 = 2.10.1 =
 * Change: Added "Other" options on the bottom of the admin settings
