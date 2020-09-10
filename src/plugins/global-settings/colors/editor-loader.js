@@ -96,8 +96,19 @@ const GlobalColorStyles = () => {
 
 	useEffect( () => {
 		const timeout = setTimeout( () => {
-			renderGlobalStyles( colors )
-			saveModelSettings( colors )
+			const newColors = colors.map( color => {
+				const { name, slug } = color
+				const newColor = { name, slug }
+				if ( ! color.colorVar || ! color.fallback ) {
+					newColor.colorVar = `--stk-global-color-${ md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 ) }`
+					newColor.color = `var(${ newColor.colorVar }, ${ color.color })`
+					newColor.fallback = color.color
+					return newColor
+				}
+				return color
+			} )
+			renderGlobalStyles( newColors )
+			saveModelSettings( newColors )
 		}, 100 )
 		return () => clearTimeout( timeout )
 	}, [ colors ] )
@@ -125,9 +136,6 @@ const updateToStackableGlobalColors = () => {
 
 domReady( () => {
 	const { colors } = select( 'core/block-editor' ).getSettings()
-	const wrapper = document.createElement( 'div' )
-	document.body.appendChild( wrapper )
-	render( <GlobalColorStyles />, wrapper )
 
 	loadPromise.then( () => {
 		const settings = new models.Settings()
@@ -143,6 +151,9 @@ domReady( () => {
 					defaultColors: colors,
 				} )
 			}
+			const wrapper = document.createElement( 'div' )
+			document.body.appendChild( wrapper )
+			render( <GlobalColorStyles />, wrapper )
 		} )
 	} )
 } )
