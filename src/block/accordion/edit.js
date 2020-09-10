@@ -50,9 +50,7 @@ import {
 	PanelBody, ToggleControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
-import {
-	addFilter, applyFilters,
-} from '@wordpress/hooks'
+import { addFilter, applyFilters } from '@wordpress/hooks'
 import { compose, withState } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { withSelect } from '@wordpress/data'
