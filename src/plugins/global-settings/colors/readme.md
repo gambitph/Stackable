@@ -59,6 +59,14 @@ All added custom global colors will be removed. And all block attributes using c
 
 This includes all the components rendered in the Global Settings sidebar.  
 
+### ```stackable.util.hex-to-rgba```
+
+Filter used in hexToRgba utility function. It serves as a compatibility filter for global colors.
+
+### ```stackable.util.is-dark-color```
+
+Filter used in isDarkColor utility function. It serves as a compatibility filter for global colors.
+
 
 
 
