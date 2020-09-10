@@ -60,12 +60,10 @@ const includeEditorContentAlignClassName = attributes => {
 
 	const addedAlignmentClass = {}
 
-	const previewDeviceType = getPreviewDeviceType && getPreviewDeviceType()
+	const previewDeviceType = getPreviewDeviceType ? getPreviewDeviceType() : 'Desktop'
 	const alignment = (
-		previewDeviceType && (	previewDeviceType === 'Desktop' ? contentAlign :
-			previewDeviceType === 'Tablet' ? tabletContentAlign :
-				mobileContentAlign )
-	) || contentAlign || 'left'
+		previewDeviceType === 'Desktop' ? contentAlign : previewDeviceType === 'Tablet' ? tabletContentAlign : mobileContentAlign
+	) || 'left'
 
 	addedAlignmentClass[ `ugb-icon-list__${ alignment }-align` ] = alignment
 
@@ -241,12 +239,12 @@ const Edit = props => {
 
 		// Different icon sizes per device preview.
 		const { __experimentalGetPreviewDeviceType: getPreviewDeviceType } = select( 'core/edit-post' )
-		const previewDeviceType = getPreviewDeviceType && getPreviewDeviceType()
+		const previewDeviceType = getPreviewDeviceType ? getPreviewDeviceType() : 'Desktop'
 		const currentIconSize = (
-			previewDeviceType && ( previewDeviceType === 'Desktop' ? props.attributes.iconSize :
+			previewDeviceType === 'Desktop' ? props.attributes.iconSize :
 				previewDeviceType === 'Tablet' ? ( props.attributes.iconTabletSize || props.attributes.iconSize ) :
-					( props.attributes.iconMobileSize || props.attributes.iconTabletSize || props.attributes.iconSize ) )
-		) || props.attributes.iconSize || 20
+					( props.attributes.iconMobileSize || props.attributes.iconTabletSize || props.attributes.iconSize ) ) ||
+		 20
 
 		// Check if the click location if it's estimated to be on the icon.
 		if ( event.offsetX <= currentIconSize + 21 ) {
