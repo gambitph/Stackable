@@ -47,6 +47,73 @@ const ColorPickerTextArea = props => (
 	</div>
 )
 
+// Component used to add a Reset Button for Individual Colors
+const ResetColorButton = props => {
+	const [ isResetPopoverOpen, setIsResetPopoverOpen ] = useState( false )
+	const resetButtonRef = useRef( null )
+
+	const handleReset = () => {
+		setIsResetPopoverOpen( toggle => ! toggle )
+	}
+
+	const onClickOutside = event => {
+		if ( resetButtonRef && event.target !== resetButtonRef.current ) {
+			setIsResetPopoverOpen( false )
+		}
+	}
+
+	return (
+		<Fragment>
+			<Button
+				ref={ resetButtonRef }
+				onClick={ handleReset }
+				isDefault
+				isSmall
+				disabled={ props.disabled }
+			>
+				{ __( 'Reset', i18n ) }
+			</Button>
+			{ isResetPopoverOpen && (
+				<Popover
+					anchorRef={ resetButtonRef.current }
+					onClickOutside={ onClickOutside }
+					position="bottom center"
+				>
+					<div className="components-color-picker__body">
+						<div className="ugb-global-settings-color-picker__popover-text is-red">
+							{ __( 'Reset', i18n ) } { ` ${ props.name }` }
+						</div>
+						<div className="ugb-global-settings-color-picker__popover-text">
+							{ __( 'This color will revert to its default color. Proceed?', i18n ) }
+						</div>
+						<div className="components-color-picker__controls">
+							<ButtonGroup>
+								<Button
+									onClick={ () => {
+										props.onClick()
+										setIsResetPopoverOpen( false )
+									} }
+									disabled={ props.disabled }
+									isDefault
+									isSmall
+								>
+									{ __( 'Reset', i18n ) }
+								</Button>
+								<Button
+									onClick={ () => setIsResetPopoverOpen( false ) }
+									isSmall
+								>
+									{ __( 'Cancel', i18n ) }
+								</Button>
+							</ButtonGroup>
+						</div>
+					</div>
+				</Popover>
+			) }
+		</Fragment>
+	)
+}
+
 // Component used to add a Delete Style button at the bottom of the ColorPicker.
 const DeleteButton = props => {
 	const [ isDeletePopoverOpen, setIsDeletePopoverOpen ] = useState( false )
@@ -63,52 +130,51 @@ const DeleteButton = props => {
 	}
 
 	return (
-		<div className="ugb-global-settings-color-picker__text-name components-color-picker__body">
-			<div className="components-color-picker__controls">
-				<Button
-					ref={ deleteButtonRef }
-					className="ugb-global-settings-color-picker__delete-button-text"
-					isLink
-					onClick={ handleDelete }
+		<Fragment>
+			<Button
+				ref={ deleteButtonRef }
+				className="ugb-global-settings-color-picker__delete-button-text"
+				isLink
+				onClick={ handleDelete }
+				disabled={ props.disabled }
+			>
+				{ __( 'Delete Style', i18n ) }
+			</Button>
+			{ isDeletePopoverOpen && (
+				<Popover
+					anchorRef={ deleteButtonRef.current }
+					onClickOutside={ onClickOutside }
+					position="bottom center"
 				>
-					{ __( 'Delete Style', i18n ) }
-				</Button>
-				{ isDeletePopoverOpen && (
-					<Popover
-						anchorRef={ deleteButtonRef.current }
-						onClickOutside={ onClickOutside }
-						position="bottom center"
-					>
-						<div className="components-color-picker__body">
-							<div className="ugb-global-settings-color-picker__popover-text is-red">
-								{ __( 'Delete', i18n ) } { ` "${ props.name }"` }
-							</div>
-							<div className="ugb-global-settings-color-picker__popover-text">
-								{ __( 'Any blocks that use this color will become unlinked with this global color. Delete this color?', i18n ) }
-							</div>
-							<div className="components-color-picker__controls">
-								<ButtonGroup>
-									<Button
-										className="ugb-global-settings-color-picker__delete-button"
-										onClick={ props.onClick }
-										isDestructive
-										isSmall
-									>
-										{ __( 'Delete', i18n ) }
-									</Button>
-									<Button
-										onClick={ () => setIsDeletePopoverOpen( false ) }
-										isSmall
-									>
-										{ __( 'Cancel', i18n ) }
-									</Button>
-								</ButtonGroup>
-							</div>
+					<div className="components-color-picker__body">
+						<div className="ugb-global-settings-color-picker__popover-text is-red">
+							{ __( 'Delete', i18n ) } { ` "${ props.name }"` }
 						</div>
-					</Popover>
-				) }
-			</div>
-		</div>
+						<div className="ugb-global-settings-color-picker__popover-text">
+							{ __( 'Any blocks that use this color will become unlinked with this global color. Delete this color?', i18n ) }
+						</div>
+						<div className="components-color-picker__controls">
+							<ButtonGroup>
+								<Button
+									className="ugb-global-settings-color-picker__delete-button"
+									onClick={ props.onClick }
+									isDestructive
+									isSmall
+								>
+									{ __( 'Delete', i18n ) }
+								</Button>
+								<Button
+									onClick={ () => setIsDeletePopoverOpen( false ) }
+									isSmall
+								>
+									{ __( 'Cancel', i18n ) }
+								</Button>
+							</ButtonGroup>
+						</div>
+					</div>
+				</Popover>
+			) }
+		</Fragment>
 	)
 }
 
@@ -214,18 +280,18 @@ const ColorPickers = ( {
 
 	// Show reset button if necessary.
 	useEffect( () => {
-		if ( disableReset ) {
-			const { colors } = select( 'core/block-editor' ).getSettings()
-			if ( Array.isArray( defaultColors ) && Array.isArray( colors ) ) {
-				// Get only the slug and colors.
-				const compareDefaultColors = defaultColors.map( defaultColor => ( { color: defaultColor.color, slug: defaultColor.slug } ) )
-				const compareColors = colors.map( color => ( { color: color.fallback || color.color, slug: color.slug } ) )
-				if ( ! isEqual( compareDefaultColors, compareColors ) ) {
-					setDisableReset( false )
-				}
+		const { colors } = select( 'core/block-editor' ).getSettings()
+		if ( Array.isArray( defaultColors ) && Array.isArray( colors ) ) {
+			// Get only the slug and colors.
+			const compareDefaultColors = defaultColors.map( defaultColor => ( { color: defaultColor.color, slug: defaultColor.slug } ) )
+			const compareColors = colors.map( color => ( { color: color.fallback || color.color, slug: color.slug } ) )
+			if ( ! isEqual( compareDefaultColors, compareColors ) ) {
+				setDisableReset( false )
+			} else {
+				setDisableReset( true )
 			}
 		}
-	}, [ defaultColors ] )
+	}, [ defaultColors, colors ] )
 
 	// If a new color is added, set the anchorRef to the new color element and open the Popover.
 	useEffect( () => {
@@ -252,8 +318,6 @@ const ColorPickers = ( {
 		dispatch( 'core/block-editor' ).updateSettings( {
 			colors: updatedColors,
 		} )
-
-		setDisableReset( false )
 	}
 
 	// Called when updating a color.
@@ -348,8 +412,29 @@ const ColorPickers = ( {
 		// Update the colors
 		updateColors( updatedColors )
 		setIsResetPopoverOpen( false )
-		setDisableReset( true )
 		setIsBusyResetButton( false )
+	}
+
+	// Called when the user decided to reset a color.
+	const onColorReset = () => {
+		const defaultColorIndex = findIndex( defaultColors, color => color.slug === colors[ selectedIndex ].slug )
+		if ( defaultColorIndex !== -1 ) {
+			const { color: defaultColor } = defaultColors[ defaultColorIndex ]
+			const { colors: updatedColors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
+			const { colorVar: existingColorVar } = updatedColors[ selectedIndex ]
+			const colorVar = `--stk-global-color-${ md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 ) }`
+
+			// Overwrite the selected color to a new color.
+			updatedColors[ selectedIndex ].color = existingColorVar ? `var(${ existingColorVar }, ${ defaultColor })` : `var(${ colorVar }, ${ defaultColor })`
+
+			// Add a fallback and colorVar if not exists.
+			updatedColors[ selectedIndex ].colorVar = existingColorVar || colorVar
+			updatedColors[ selectedIndex ].fallback = defaultColor
+
+			// Update the colors.
+			updateColors( updatedColors )
+			setIsPopOverOpen( false )
+		}
 	}
 
 	// Called when adding a new color.
@@ -405,6 +490,16 @@ const ColorPickers = ( {
 		return color.color
 	}
 
+	const isResetDisabled = () => {
+		const defaultColorIndex = findIndex( defaultColors, color => color.slug === colors[ selectedIndex ].slug )
+		if ( defaultColorIndex !== -1 ) {
+			if ( colors[ selectedIndex ].fallback !== defaultColors[ defaultColorIndex ].color ) {
+				return false
+			}
+		}
+		return true
+	}
+
 	return colors && Array.isArray( colors ) && (
 		<Fragment>
 			<ResetButton onClick={ onColorPaletteReset } disabled={ disableReset } />
@@ -434,12 +529,20 @@ const ColorPickers = ( {
 						onChange={ onChangeStyleName }
 						value={ colors[ selectedIndex ] && colors[ selectedIndex ].name }
 					/>
-					{ ! inRange( selectedIndex, 0, 6 ) && (
-						<DeleteButton
-							name={ colors[ selectedIndex ] && colors[ selectedIndex ].name }
-							onClick={ onColorDelete }
-						/>
-					) }
+					<div className="ugb-global-settings-color-picker__text-name components-color-picker__body">
+						<div className="components-color-picker__controls">
+							<DeleteButton
+								name={ colors[ selectedIndex ] && colors[ selectedIndex ].name }
+								onClick={ onColorDelete }
+								disabled={ inRange( selectedIndex, 0, 6 ) }
+							/>
+							<ResetColorButton
+								name={ colors[ selectedIndex ] && colors[ selectedIndex ].name }
+								onClick={ onColorReset }
+								disabled={ isResetDisabled() }
+							/>
+						</div>
+					</div>
 				</Popover>
 			) }
 		</Fragment>

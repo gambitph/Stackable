@@ -1,6 +1,10 @@
 .ugb-global-settings-color-picker__text-name {
 	padding-top: 0 !important;
 
+	.components-color-picker__controls {
+		justify-content: space-between;
+	}
+
 	.components-color-picker__inputs-wrapper {
 		padding-top: 0 !important;
 	}
