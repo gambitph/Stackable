@@ -36,6 +36,12 @@ const ColorPaletteControl = ( {
 	const colorObject = getColorObjectByColorValue( colors, value )
 	const colorName = colorObject && colorObject.name
 	const ariaLabel = sprintf( colorIndicatorAriaLabel, label.toLowerCase(), colorName || value )
+	const updatedColors = colors.map( color => {
+		if ( ! color.name ) {
+			return { ...color, name: 'Untitled Color' }
+		}
+		return color
+	} )
 
 	const labelElement = (
 		<Fragment>
@@ -62,7 +68,7 @@ const ColorPaletteControl = ( {
 					const colorObject = getColorObjectByColorValue( colors, value )
 					onChange( applyFilters( 'stackable.color-palette-control.change', value, colorObject ) )
 				} }
-				{ ... { colors, disableCustomColors } }
+				{ ... { colors: updatedColors, disableCustomColors } }
 			/>
 		</BaseControl>
 	)
