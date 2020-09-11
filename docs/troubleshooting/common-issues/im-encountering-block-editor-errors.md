@@ -60,6 +60,8 @@ It's possible that the error only resides within the Block Editor and doesn't af
 
 If you think we have a bug and that's the reason the block error happened, please contact us so we can issue a fix. If it is indeed a bug, you can just ignore the block for now \(don't touch it\), and it should get fixed by the time we release an update.
 
+{% page-ref page="im-encountering-block-editor-errors.md" %}
+
 {% page-ref page="how-do-i-contact-support.md" %}
 
 #### 
