@@ -51,6 +51,7 @@
   * [When I Set an Option, It Doesn't Get Applied to My Block](troubleshooting/common-issues/when-i-set-an-option-it-doesnt-get-applied-to-my-block-todo.md)
   * [I Purchased Premium but I Can't See the Premium Features](troubleshooting/common-issues/i-purchased-premium-but-i-cant-see-the-premium-features.md)
   * [I'm Encountering Block Errors](troubleshooting/common-issues/im-encountering-block-editor-errors.md)
+  * [How To Report Block Errors](troubleshooting/common-issues/how-to-report-block-errors.md)
   * [My Blocks Do Not Go Full-Width Properly](troubleshooting/common-issues/my-blocks-do-not-go-full-width-properly.md)
   * [I Can See Errors in AMP Pages](troubleshooting/common-issues/i-can-see-errors-in-amp-pages.md)
   * [The Blog Posts Block Doesn't Show my Custom Post Type](troubleshooting/common-issues/the-blog-posts-block-doesnt-show-my-custom-post-type.md)
