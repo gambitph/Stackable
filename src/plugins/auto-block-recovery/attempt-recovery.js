@@ -40,7 +40,7 @@ export const autoAttemptRecoveryRecursive = blocks => {
 	blocks.forEach( block => {
 		// Auto recover the block.
 		if ( isInvalid( block ) ) {
-			recoverBlock( block )
+			recoverBlock()( block )
 		}
 
 		// Also fix the inner blocks.
@@ -51,7 +51,7 @@ export const autoAttemptRecoveryRecursive = blocks => {
 }
 
 // Recover an invalid block.
-export const recoverBlock = block => {
+export const recoverBlock = ( selectFunctions = null ) => block => {
 	const {
 		name, attributes, innerBlocks, clientId,
 	} = block
@@ -60,7 +60,7 @@ export const recoverBlock = block => {
 		getBlockParents,
 		getBlock,
 		getTemplateLock,
-	} = wp.data.select( 'core/block-editor' )
+	} = selectFunctions || wp.data.select( 'core/block-editor' )
 
 	// Check if an innerBlock, Innerblocks with a templateLock cannot be
 	// replaced via replaceBlock, so we need to replace the parent also.
