@@ -144,76 +144,80 @@ export const getCssObject = ( matchingFilenames = stackableCSSFiles, documentSty
  * @param {Object} cachedCssObject the global cssObject (mainly used for testing)
  */
 export const updateMediaQueries = ( previewMode = 'Desktop', width = 0, matchingFilenames = stackableCSSFiles, documentStyleSheets = document.styleSheets, cachedCssObject = cssObject ) => {
-	const cssObject = getCssObject( matchingFilenames, documentStyleSheets, cachedCssObject )
+	try {
+		const cssObject = getCssObject( matchingFilenames, documentStyleSheets, cachedCssObject )
 
-	const replaceVwToPx = match => {
-		const [ value ] = match.split( 'vw' )
-		const pxValue = ( parseFloat( value ) / 100 ) * width
-		return `${ pxValue }px`
-	}
+		const replaceVwToPx = match => {
+			const [ value ] = match.split( 'vw' )
+			const pxValue = ( parseFloat( value ) / 100 ) * width
+			return `${ pxValue }px`
+		}
 
-	const modifyCssTextWithVw = cssText => cssText.replace( /(-?[.0-9]+)vw/g, replaceVwToPx )
+		const modifyCssTextWithVw = cssText => cssText.replace( /(-?[.0-9]+)vw/g, replaceVwToPx )
 
-	const updateStylesheetWithVw = ( styleSheetIndex, index, newCssText ) => {
-		// Delete the current styleSheet
-		documentStyleSheets[ styleSheetIndex ].deleteRule( index )
+		const updateStylesheetWithVw = ( styleSheetIndex, index, newCssText ) => {
+			// Delete the current styleSheet
+			documentStyleSheets[ styleSheetIndex ].deleteRule( index )
 
-		// Initialize a new one with modified viewport width rules
-		documentStyleSheets[ styleSheetIndex ].insertRule( newCssText, index )
-	}
+			// Initialize a new one with modified viewport width rules
+			documentStyleSheets[ styleSheetIndex ].insertRule( newCssText, index )
+		}
 
-	if ( previewMode === 'Tablet' || previewMode === 'Mobile' ) {
-		// If Preview is in Tablet or Mobile Mode, modify media queries for Tablet or Mobile.
-		keys( cssObject ).forEach( __id => {
-			const styleSheetIndex = Array.from( documentStyleSheets ).findIndex( styleSheet => styleSheet.__id === __id )
-			keys( cssObject[ __id ] ).forEach( index => {
-				if ( documentStyleSheets[ styleSheetIndex ] && documentStyleSheets[ styleSheetIndex ].cssRules[ index ] ) {
-					const {
-						min,
-						max,
-						cssText,
-					} = cssObject[ __id ][ index ]
+		if ( previewMode === 'Tablet' || previewMode === 'Mobile' ) {
+			// If Preview is in Tablet or Mobile Mode, modify media queries for Tablet or Mobile.
+			keys( cssObject ).forEach( __id => {
+				const styleSheetIndex = Array.from( documentStyleSheets ).findIndex( styleSheet => styleSheet.__id === __id )
+				keys( cssObject[ __id ] ).forEach( index => {
+					if ( documentStyleSheets[ styleSheetIndex ] && documentStyleSheets[ styleSheetIndex ].cssRules[ index ] ) {
+						const {
+							min,
+							max,
+							cssText,
+						} = cssObject[ __id ][ index ]
 
-					if ( inRange( width, min, max ) ) {
-						// Checks if the cssText has viewport width
-						if ( cssText && cssText.match( /(-?[.0-9]+)vw/g ) ) {
-							updateStylesheetWithVw( styleSheetIndex, index, modifyCssTextWithVw( cssText ) )
+						if ( inRange( width, min, max ) ) {
+							// Checks if the cssText has viewport width
+							if ( cssText && cssText.match( /(-?[.0-9]+)vw/g ) ) {
+								updateStylesheetWithVw( styleSheetIndex, index, modifyCssTextWithVw( cssText ) )
+							}
+							documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText = 'screen and (max-width: 5000px)'
+						} else {
+							// Checks if the cssText has viewport width
+							if ( cssText && cssText.match( /(-?[.0-9]+)vw/g ) ) {
+								updateStylesheetWithVw( styleSheetIndex, index, modifyCssTextWithVw( cssText ) )
+							}
+							documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText = 'screen and (min-width: 5000px)'
 						}
-						documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText = 'screen and (max-width: 5000px)'
-					} else {
-						// Checks if the cssText has viewport width
-						if ( cssText && cssText.match( /(-?[.0-9]+)vw/g ) ) {
-							updateStylesheetWithVw( styleSheetIndex, index, modifyCssTextWithVw( cssText ) )
+						// Gets the previous value of the media query
+						if ( cssObject[ __id ][ index ].previousMediaText !== documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText ) {
+							cssObject[ __id ][ index ].previousMediaText = documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText
 						}
-						documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText = 'screen and (min-width: 5000px)'
 					}
-					// Gets the previous value of the media query
-					if ( cssObject[ __id ][ index ].previousMediaText !== documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText ) {
-						cssObject[ __id ][ index ].previousMediaText = documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText
-					}
-				}
+				} )
 			} )
-		} )
-	} else {
-		// If Preview is in Desktop Mode, revert all media queries
-		keys( cssObject ).forEach( __id => {
-			const styleSheetIndex = Array.from( documentStyleSheets ).findIndex( styleSheet => styleSheet.__id === __id )
-			keys( cssObject[ __id ] ).forEach( index => {
-				if ( documentStyleSheets[ styleSheetIndex ] && documentStyleSheets[ styleSheetIndex ].cssRules[ index ] ) {
-					const {	cssText } = cssObject[ __id ][ index ]
+		} else {
+			// If Preview is in Desktop Mode, revert all media queries
+			keys( cssObject ).forEach( __id => {
+				const styleSheetIndex = Array.from( documentStyleSheets ).findIndex( styleSheet => styleSheet.__id === __id )
+				keys( cssObject[ __id ] ).forEach( index => {
+					if ( documentStyleSheets[ styleSheetIndex ] && documentStyleSheets[ styleSheetIndex ].cssRules[ index ] ) {
+						const {	cssText } = cssObject[ __id ][ index ]
 
-					if ( documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText !== cssObject[ __id ][ index ].mediaText ) {
-						cssObject[ __id ][ index ].previousMediaText = documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText
-						updateStylesheetWithVw( styleSheetIndex, index, cssText )
+						if ( documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText !== cssObject[ __id ][ index ].mediaText ) {
+							cssObject[ __id ][ index ].previousMediaText = documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText
+							updateStylesheetWithVw( styleSheetIndex, index, cssText )
+						}
+						// Gets the previous value of the media query
+						if ( cssObject[ __id ][ index ].previousMediaText !== documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText ) {
+							cssObject[ __id ][ index ].previousMediaText = documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText
+						}
 					}
-					// Gets the previous value of the media query
-					if ( cssObject[ __id ][ index ].previousMediaText !== documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText ) {
-						cssObject[ __id ][ index ].previousMediaText = documentStyleSheets[ styleSheetIndex ].cssRules[ index ].media.mediaText
-					}
-				}
+				} )
 			} )
-		} )
+		}
+
+		return documentStyleSheets
+	} catch ( e ) {
+		console.warn( 'Stackable error: plugin stylesheet is hosted in a remote location, responsive live editing is disabled. To enable it, please don\'t use a CDN while using Gutenberg' ) // eslint-disable-line no-console
 	}
-
-	return documentStyleSheets
 }

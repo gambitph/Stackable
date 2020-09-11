@@ -15,9 +15,10 @@
 	background-color: transparent;
 	position: relative;
 	overflow: visible;
+	&::before,
 	&::after {
 		content: "";
-		display: none;
+		display: none !important;
 	}
 
 	.ugb-blockquote__item {
