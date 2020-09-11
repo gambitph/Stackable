@@ -79,6 +79,7 @@
   * [Activating your license key](pricing-and-licensing/license/untitled.md)
   * [I Activated My License Key but It Still Shows Stackable as Free](pricing-and-licensing/license/i-activated-my-license-key-but-it-still-shows-stackable-as-free.md)
   * [Can I Transfer My License Key From One Domain to Another?](pricing-and-licensing/license/can-i-transfer-my-license-key-from-one-domain-to-another.md)
+  * [How Do I Change My License Key?](pricing-and-licensing/license/how-do-i-change-my-license-key.md)
   * [How Do I Deactivate My License Key?](pricing-and-licensing/license/how-do-i-deactivate-my-license-key.md)
   * [How Many Sites Can I Activate My License On?](pricing-and-licensing/license/how-many-sites-can-i-activate-my-license-on.md)
   * [Can I Use Stackable Premium to Create Websites for Clients?](pricing-and-licensing/license/can-i-use-stackable-premium-to-create-websites-for-clients.md)
