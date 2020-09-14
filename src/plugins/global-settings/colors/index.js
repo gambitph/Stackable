@@ -26,6 +26,11 @@ import { __ } from '@wordpress/i18n'
 import { dispatch, select } from '@wordpress/data'
 
 addFilter( 'stackable.util.hex-to-rgba', 'global-settings/colors', ( hexColor, opacity ) => {
+	// Only do this for Stackable global colors.
+	if ( ! hexColor.includes( '--stk-global-color' ) ) {
+		return hexColor
+	}
+
 	const colorVarID = hexColor.match( /--stk-global-color-(\S*?(?=,))/ )
 	if ( colorVarID ) {
 		const colorRegex = /( )(.*)/g

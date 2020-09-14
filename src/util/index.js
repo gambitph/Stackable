@@ -129,26 +129,18 @@ export const descriptionPlaceholder = length => {
  * @return {string} Rgba color.
  */
 export const hexToRgba = ( hexColor, opacity = null ) => {
-	let hex = null
-	let newHexColor = hexColor
-
-	/**
-	 * Compatibility for stackable global colors.
-	 */
-	if ( hexColor.includes( '--stk-global-color' ) ) {
-		return applyFilters( 'stackable.util.hex-to-rgba', hexColor, opacity )
-	}
+	let hex = applyFilters( 'stackable.util.hex-to-rgba', hexColor, opacity )
 
 	/**
 	 * Detect CSS variables in form of var(--color) and get their current
 	 * values from the :root selector.
 	 */
-	if ( hexColor.indexOf( 'var(' ) > -1 ) {
-		newHexColor = window.getComputedStyle( document.documentElement )
-			.getPropertyValue( hexColor.replace( 'var(', '' ).replace( ')', '' ) ) || '#fff'
+	if ( hex.indexOf( 'var(' ) > -1 ) {
+		hex = window.getComputedStyle( document.documentElement )
+			.getPropertyValue( hex.replace( 'var(', '' ).replace( ')', '' ) ) || '#fff'
 	}
 
-	hex = newHexColor.replace( /#/, '' )
+	hex = hex.replace( /#/, '' )
 
 	if ( hex.length <= 4 ) {
 		hex = hex.replace( /#?(.)(.)(.)/, '$1$1$2$2$3$3' )
