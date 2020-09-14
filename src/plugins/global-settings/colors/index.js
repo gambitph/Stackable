@@ -1,9 +1,8 @@
-import './responsive-color-palette-change'
-import './editor-loader'
-
 /**
  * Internal dependencies
  */
+import './responsive-color-palette-change'
+import './editor-loader'
 import { replaceGlobalColorAttributes } from './util'
 import ColorPicker from './color-picker'
 
