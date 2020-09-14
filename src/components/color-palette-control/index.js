@@ -37,10 +37,10 @@ const ColorPaletteControl = ( {
 	const colorName = colorObject && colorObject.name
 	const ariaLabel = sprintf( colorIndicatorAriaLabel, label.toLowerCase(), colorName || value )
 	const updatedColors = colors.map( color => {
-		if ( ! color.name ) {
-			return { ...color, name: 'Untitled Color' }
+		return {
+			...color,
+			name: color.name || color.fallback || color.color || __( 'Untitled Color', i18n ),
 		}
-		return color
 	} )
 
 	const labelElement = (
