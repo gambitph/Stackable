@@ -71,7 +71,9 @@ const GlobalColorStyles = () => {
 		} )
 	}
 
+	// Renders all the global colors for the Block Editor.
 	const renderGlobalStyles = newColors => {
+		// Output all our --stk-global-colors.
 		const styleRules = newColors.map( color => {
 			if ( color.colorVar && color.fallback ) {
 				return `${ color.colorVar || '' }: ${ color.fallback || '' };`
@@ -82,6 +84,7 @@ const GlobalColorStyles = () => {
 
 		setStyles( `:root { ${ styleRules.join( '' ) }}` )
 
+		// Output all the rgba colors, detect the actual color values.
 		const rgbaStyleRules = newColors.map( color => {
 			if ( color.colorVar ) {
 				const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( color.colorVar ).trim() )
@@ -99,6 +102,7 @@ const GlobalColorStyles = () => {
 
 	useEffect( () => {
 		const timeout = setTimeout( () => {
+			// Make sure colors have fallbacks.
 			const newColors = colors.map( color => {
 				const { name, slug } = color
 				const newColor = { name, slug }
@@ -110,7 +114,10 @@ const GlobalColorStyles = () => {
 				}
 				return color
 			} )
+
+			// Generate the styles for the global colors.
 			renderGlobalStyles( newColors )
+
 			saveModelSettings( newColors )
 		}, 100 )
 		return () => clearTimeout( timeout )
@@ -147,6 +154,7 @@ domReady( () => {
 			const { stackable_global_colors: globalColors } = response
 
 			if ( ! Array.isArray( globalColors ) || ! globalColors.length ) {
+				// If there are no global colors yet, convert the default colors to global colors.
 				updateToStackableGlobalColors()
 			} else {
 				dispatch( 'core/block-editor' ).updateSettings( {
