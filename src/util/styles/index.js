@@ -10,14 +10,14 @@ import { lowerFirst, clamp } from 'lodash'
 import { sprintf } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
-export const isDarkColor = color => {
+export const isDarkColor = _color => {
 	try {
-		// Compatibility for global colors.
-		const newColor = applyFilters( 'stackable.util.is-dark-color', color )
-		if ( ! newColor.match( /^#/ ) ) {
+		// Allow others to modify the received color.
+		const color = applyFilters( 'stackable.util.is-dark-color', _color )
+		if ( ! color.match( /^#/ ) ) {
 			return _isDarkColor( color )
 		}
-		let colorTest = newColor.replace( /#/g, '' )
+		let colorTest = color.replace( /#/g, '' )
 		if ( colorTest.length === 3 ) {
 			colorTest = colorTest.replace( /(.)(.)(.)/, '$1$1$2$2$3$3' )
 		}
