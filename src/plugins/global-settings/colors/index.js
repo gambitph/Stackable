@@ -25,10 +25,10 @@ import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { dispatch, select } from '@wordpress/data'
 
-addFilter( 'stackable.util.hex-to-rgba', 'global-settings/colors', ( hexColor, opacity ) => {
+addFilter( 'stackable.util.hex-to-rgba', 'global-settings/colors', ( output, hexColor, opacity ) => {
 	// Only do this for Stackable global colors.
 	if ( ! hexColor.includes( '--stk-global-color' ) ) {
-		return hexColor
+		return output
 	}
 
 	const colorVarID = hexColor.match( /--stk-global-color-(\S*?(?=,))/ )
@@ -55,6 +55,8 @@ addFilter( 'stackable.util.hex-to-rgba', 'global-settings/colors', ( hexColor, o
 			}
 		}
 	}
+
+	return output
 } )
 
 addFilter( 'stackable.util.is-dark-color', 'global-settings/colors', color => {

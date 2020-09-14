@@ -129,7 +129,13 @@ export const descriptionPlaceholder = length => {
  * @return {string} Rgba color.
  */
 export const hexToRgba = ( hexColor, opacity = null ) => {
-	let hex = applyFilters( 'stackable.util.hex-to-rgba', hexColor, opacity )
+	// Allow others to change the conversion.
+	const overrideOutput = applyFilters( 'stackable.util.hex-to-rgba', null, hexColor, opacity )
+	if ( overrideOutput ) {
+		return overrideOutput
+	}
+
+	let hex = applyFilters( 'stackable.util.hex-to-rgba.hex', hexColor, opacity )
 
 	/**
 	 * Detect CSS variables in form of var(--color) and get their current
