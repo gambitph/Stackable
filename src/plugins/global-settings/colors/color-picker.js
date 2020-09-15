@@ -21,7 +21,7 @@ import {
 	select, dispatch, useSelect,
 } from '@wordpress/data'
 import { doAction } from '@wordpress/hooks'
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 
 /**
  * Internal dependencies
@@ -323,7 +323,7 @@ const ColorPickers = ( {
 		const updatedColors = [
 			...select( 'core/block-editor' ).getSettings().colors,
 			{
-				name: `Custom Color ${ newIndex }`, slug: `stk-global-color-${ slugId }`, color: '#000000', colorVar,
+				name: sprintf( __( 'Custom Color %s', i18n ), newIndex ), slug: `stk-global-color-${ slugId }`, color: '#000000', colorVar,
 			},
 		]
 
