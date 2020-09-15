@@ -206,17 +206,9 @@ const ColorPickers = ( {
 	const [ colorButtonAnchor, setColorButtonAnchor ] = useState( null )
 	// State used to determine if a new color is added.
 	const [ hasAddedNewColor, setHasAddedNewColor ] = useState( false )
-	// State used to control the reset button.
-	const [ disableReset, setDisableReset ] = useState( true )
 
-	// Show reset button if necessary.
-	useEffect( () => {
-		if ( Array.isArray( colors ) && colors.some( color => color.slug && color.slug.includes( 'stk-global-color' ) ) ) {
-			setDisableReset( false )
-		} else {
-			setDisableReset( true )
-		}
-	}, [ colors ] )
+	// Enable reset if there are Stackable global colors.
+	const disableReset = ! colors.some( color => color.slug && color.slug.includes( 'stk-global-color' ) )
 
 	// If a new color is added, set the anchorRef to the new color element and open the Popover.
 	useEffect( () => {
@@ -422,6 +414,10 @@ const ColorPickers = ( {
 	)
 }
 
+ColorPickers.defaultProps = {
+	colors: [],
+}
+
 const ColorPickerContainer = props => {
 	const classNames = classnames(
 		'ugb-global-settings-color-picker',
@@ -435,7 +431,7 @@ const ColorPickerContainer = props => {
 	return (
 		<div className={ classNames }>
 			<ColorPickers
-				colors={ colors }
+				colors={ colors || [] }
 			/>
 		</div>
 	)
