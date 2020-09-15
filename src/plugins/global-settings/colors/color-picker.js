@@ -139,7 +139,7 @@ const DeleteButton = props => {
 				onClick={ handleDelete }
 				disabled={ props.disabled }
 			>
-				{ __( 'Delete Style', i18n ) }
+				{ __( 'Delete color', i18n ) }
 			</Button>
 			{ isDeletePopoverOpen && (
 				<Popover
