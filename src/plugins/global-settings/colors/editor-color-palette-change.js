@@ -2,6 +2,7 @@
  * Changing the preview mode or editor view mode resets the color palette in the editor.
  * With this, we are dispatching the color palette from the
  * stackable_global_colors everytime these data have been modified.
+ *
  */
 
 /**
@@ -18,7 +19,7 @@ import { registerPlugin } from '@wordpress/plugins'
  * Dispatch the color palette from the settings when the preview mode
  * or the editor view mode has changed.
  */
-const ResponsiveColorPalette = () => {
+const EditorColorPaletteChange = () => {
 	const { deviceType, preferences } = useSelect(
 		select => ( {
 			deviceType: select(
@@ -45,11 +46,12 @@ const ResponsiveColorPalette = () => {
 		} )
 	}, [ deviceType, preferences ] )
 
+	// We don't want to render anything here.
 	return null
 }
 
 // Only do this for WP 5.5
 if ( select( 'core/edit-post' ).__experimentalGetPreviewDeviceType ) {
-	registerPlugin( 'stackable-responsive-color-palette-change', { render: ResponsiveColorPalette } )
+	registerPlugin( 'stackable-editor-color-palette-change', { render: EditorColorPaletteChange } )
 }
 

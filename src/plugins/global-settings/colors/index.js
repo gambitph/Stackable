@@ -1,5 +1,6 @@
-import './responsive-color-palette-change'
+import './editor-color-palette-change'
 import './editor-loader'
+import './save-model-settings'
 
 /**
  * Internal dependencies
@@ -13,9 +14,10 @@ import ColorPicker from './color-picker'
 import { i18n } from 'stackable'
 import { PanelAdvancedSettings } from '~stackable/components'
 import {
-	isEqual, find, omit,
+	isEqual, find, omit, cloneDeep,
 } from 'lodash'
 import rgba from 'color-rgba'
+import md5 from 'md5'
 
 /**
  * Wordpress dependencies
@@ -24,6 +26,8 @@ import { addFilter, addAction } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { dispatch, select } from '@wordpress/data'
+import domReady from '@wordpress/dom-ready'
+import { loadPromise, models } from '@wordpress/api'
 
 addFilter( 'stackable.util.hex-to-rgba', 'global-settings/colors', ( output, hexColor, opacity ) => {
 	// Only do this for Stackable global colors.
@@ -214,38 +218,43 @@ addAction( 'stackable.global-settings.reset-compatibility', 'color-reset', ( blo
 					updateBlockAttributes( clientId, updatedAttributes )
 				}
 			}
-		} else if ( name.includes( 'kadence/' ) ) {
-			//
-			/**
-			 * For kadence blocks.
-			 * Similar to core blocks. If a kadence block uses a
-			 * color palette included in the theme or one of their
-			 * global palette, it uses the slug name as its attribute
-			 * (e.g. color: "kb-palette-1") and also adding a colorClass
-			 * attribute which will be applied as a custom css class
-			 * for that block. So in some cases, we have to set the colorClass
-			 * attribute to an empty string to avoid adding it to front end.
-			 */
-			const updatedAttributes = replaceGlobalColorAttributes( block.attributes, colorsBeforeReset, colorsAfterReset )
-
-			// Some kadence blocks e.g. Advanced Heading has colorClass attribute which will be appended to the h1 tag.
-			// Remove this to apply the hex color.
-			if ( updatedAttributes.colorClass ) {
-				updatedAttributes.colorClass = ''
-			}
-
-			// Update the block attributes.
-			if ( ! isEqual( updatedAttributes, block.attributes ) ) {
-				updateBlockAttributes( clientId, updatedAttributes )
-			}
-		} else {
-			// Default attributes adjustment. We can add more compatibility adjustments here.
-			const updatedAttributes = replaceGlobalColorAttributes( block.attributes, colorsBeforeReset, colorsAfterReset )
-
-			// Update the block attributes.
-			if ( ! isEqual( updatedAttributes, block.attributes ) ) {
-				updateBlockAttributes( clientId, updatedAttributes )
-			}
 		}
+	} )
+} )
+
+const updateToStackableGlobalColors = colors => {
+	const newColors = colors.map( color => {
+		const { name, slug } = color
+		const newColor = { name, slug }
+		newColor.colorVar = `--stk-global-color-${ md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 ) }`
+		newColor.color = `var(${ newColor.colorVar }, ${ color.color })`
+		newColor.fallback = color.color
+		return newColor
+	} )
+
+	// Dispatch the newColors to the current colors
+	dispatch( 'core/block-editor' ).updateSettings( {
+		colors: newColors,
+		defaultColors: colors,
+	} )
+}
+
+domReady( () => {
+	const { colors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
+	loadPromise.then( () => {
+		const settings = new models.Settings()
+
+		settings.fetch().then( response => {
+			const { stackable_global_colors: globalColors, stackable_global_colors_has_modified: hasModified } = response
+
+			if ( ! Array.isArray( globalColors ) || ! globalColors.length || ! hasModified ) {
+				updateToStackableGlobalColors( colors )
+			} else {
+				dispatch( 'core/block-editor' ).updateSettings( {
+					colors: globalColors,
+					defaultColors: colors,
+				} )
+			}
+		} )
 	} )
 } )

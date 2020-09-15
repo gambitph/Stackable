@@ -23,6 +23,7 @@ import {
 } from '@wordpress/data'
 import { doAction } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
+import { loadPromise, models } from '@wordpress/api'
 
 // Component used to add a style name field at the bottom of the ColorPicker.
 const ColorPickerTextArea = props => (
@@ -292,6 +293,17 @@ const ColorPickers = ( {
 			}
 		}
 	}, [ defaultColors, colors ] )
+
+	// Set stackable_global_colors_has_modified to true if modified. Otherwise, false.
+	useEffect( () => {
+		const saveHasModified = setTimeout( () => {
+			loadPromise.then( () => {
+				const settings = new models.Settings( { stackable_global_colors_has_modified: ! disableReset } ) // eslint-disable-line camelcase
+				settings.save()
+			} )
+		}, 100 )
+		return () => clearTimeout( saveHasModified )
+	}, [ disableReset ] )
 
 	// If a new color is added, set the anchorRef to the new color element and open the Popover.
 	useEffect( () => {
