@@ -28,6 +28,8 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 
 			add_action( 'wp_enqueue_scripts', array( $this, 'color_add_global_styles' ) );
 
+			add_action( 'after_setup_theme', array( $this, 'color_add_global_color_palette' ), 9999 );
+
 			/**
 			 * Typography hooks
 			 */
@@ -189,6 +191,29 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		/**-----------------------------------------------------------------------------
 		 * Color functions
 		 *-----------------------------------------------------------------------------*/
+
+		 /**
+		  * Add our global colors in the editor.
+		  *
+		  * @return void
+		  */
+		public function color_add_global_color_palette() {
+			$global_colors = get_option( 'stackable_global_colors' );
+			if ( ! empty( $global_colors ) ) {
+
+				// Get the current set of colors.
+				$colors = get_theme_support( 'editor-color-palette' );
+				if ( isset( $colors[0] ) ) {
+					$colors = $colors[0];
+				} else if ( empty( $colors ) ) {
+					$colors = array();
+				}
+
+				// Append our global colors with the theme/default ones.
+				$colors = array_merge( $colors, $global_colors );
+				add_theme_support( 'editor-color-palette', $colors );
+			}
+		}
 
 		 /**
 		  * Add our global color styles in the frontend.

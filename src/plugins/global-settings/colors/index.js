@@ -13,9 +13,7 @@ import ColorPicker from './color-picker'
  */
 import { i18n } from 'stackable'
 import { PanelAdvancedSettings } from '~stackable/components'
-import {
-	isEqual, omit, cloneDeep, uniqBy,
-} from 'lodash'
+import { isEqual, omit } from 'lodash'
 import rgba from 'color-rgba'
 
 /**
@@ -26,7 +24,6 @@ import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { dispatch, select } from '@wordpress/data'
 import domReady from '@wordpress/dom-ready'
-import { loadPromise, models } from '@wordpress/api'
 
 addFilter( 'stackable.util.hex-to-rgba', 'global-settings/colors', ( output, hexColor, opacity ) => {
 	// Only do this for Stackable global colors.
@@ -170,17 +167,17 @@ addFilter( 'stackable.color-palette-control.change', 'stackable/global-settings/
 } )
 
 domReady( () => {
-	const { colors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
-	loadPromise.then( () => {
-		const settings = new models.Settings()
+	// Keep note of all the default colors.
+	const colors = select( 'core/block-editor' ).getSettings().colors
+	const defaultColors = ( colors || [] ).reduce( ( colors, colorObject ) => {
+		if ( ! colorObject.slug.match( /^stk-/ ) ) {
+			colors.push( colorObject )
+		 }
+		 return colors
+	}, [] )
 
-		settings.fetch().then( response => {
-			const { stackable_global_colors: globalColors } = response
-
-			dispatch( 'core/block-editor' ).updateSettings( {
-				colors: uniqBy( [ ...colors, ...globalColors ], 'slug' ),
-				defaultColors: colors,
-			} )
-		} )
+	dispatch( 'core/block-editor' ).updateSettings( {
+		colors,
+		defaultColors,
 	} )
 } )
