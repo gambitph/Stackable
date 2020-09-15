@@ -372,7 +372,7 @@ const ColorPickers = ( {
 			{ colors.map( ( color, index ) => {
 				if ( ! color.colorVar ) {
 					return (
-						<div className="components-circular-option-picker__option-wrapper" style={ { opacity: '0.8' } }>
+						<div className="components-circular-option-picker__option-wrapper ugb-global-settings__color-picker-wrapper">
 							<div className="components-circular-option-picker__option ugb-global-settings__color-picker-disabled-color" style={ { backgroundColor: color.color, color: color.color } }>
 								<LockIcon color={ whiteIfDark( null, color.color ) || '#222222' } />
 							</div>
