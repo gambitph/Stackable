@@ -6,6 +6,7 @@ import { cloneDeep } from 'lodash'
 import md5 from 'md5'
 import { i18n } from 'stackable'
 import rgba from 'color-rgba'
+import { whiteIfDark } from '~stackable/util'
 
 /**
  * Wordpress dependencies
@@ -21,6 +22,11 @@ import {
 } from '@wordpress/data'
 import { doAction } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
+
+/**
+ * Internal dependencies
+ */
+import { AddIcon, LockIcon } from './icons'
 
 // Component used to add a style name field at the bottom of the ColorPicker.
 const ColorPickerTextArea = props => (
@@ -110,17 +116,13 @@ const DeleteButton = props => {
 }
 
 // Component used to add am add icon button.
-const AddIcon = props => (
+const AddButton = props => (
 	<Button
 		{ ...props }
 		isDefault
 		className="ugb-global-settings-color-picker__add-icon"
 		label="Add New Color"
-		icon={
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 190">
-				<polygon points="181.9,87.6 102.6,87.6 102.6,8.4 87.6,8.4 87.6,87.6 8.4,87.6 8.4,102.6 87.6,102.6 87.6,181.8 102.6,181.8 102.6,102.6 181.9,102.6 " />
-			</svg>
-		}
+		icon={ <AddIcon /> }
 	/>
 )
 
@@ -367,18 +369,29 @@ const ColorPickers = ( {
 	return colors && Array.isArray( colors ) && (
 		<Fragment>
 			<ResetButton onClick={ onColorPaletteReset } disabled={ disableReset } />
-			{ colors.map( ( color, index ) => (
-				<div className="components-circular-option-picker__option-wrapper" key={ index }>
-					<Button
-						className="components-circular-option-picker__option"
-						label={ color.name || 'Untitled Color' }
-						style={ { backgroundColor: color.color, color: color.color } }
-						onClick={ event => handleOpenColorPicker( event, index ) }
-						disabled={ ! color.colorVar }
-					/>
-				</div>
-			) ) }
-			<AddIcon onClick={ handleAddIcon } />
+			{ colors.map( ( color, index ) => {
+				if ( ! color.colorVar ) {
+					return (
+						<div className="components-circular-option-picker__option-wrapper">
+							<div className="components-circular-option-picker__option ugb-global-settings__color-picker-disabled-color" style={ { backgroundColor: color.color, color: color.color } }>
+								<LockIcon color={ whiteIfDark( null, color.color ) || '#222222' } />
+							</div>
+						</div>
+					)
+				}
+				return (
+					<div className="components-circular-option-picker__option-wrapper" key={ index }>
+						 <Button
+							className="components-circular-option-picker__option"
+							label={ color.name || 'Untitled Color' }
+							style={ { backgroundColor: color.color, color: color.color } }
+							onClick={ event => handleOpenColorPicker( event, index ) }
+							disabled={ ! color.colorVar }
+						/>
+					</div>
+				)
+			} ) }
+			<AddButton onClick={ handleAddIcon } />
 			{ isPopoverOpen && (
 				<Popover
 					anchorRef={ colorButtonAnchor }
