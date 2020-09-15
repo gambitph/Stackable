@@ -5,7 +5,6 @@ import classnames from 'classnames'
 import { cloneDeep } from 'lodash'
 import md5 from 'md5'
 import { i18n } from 'stackable'
-import rgba from 'color-rgba'
 import { whiteIfDark } from '~stackable/util'
 
 /**
@@ -331,22 +330,7 @@ const ColorPickers = ( {
 		setSelectedIndex( newIndex - 1 )
 	}
 
-	// Used to determine the computed color to be displayed in the ColorPicker
-	const colorPlaceholder = color => {
-		if ( color && color.color.includes( 'var' ) ) {
-			const colorVarMatch = color.color.match( /--(.*?(?=,))/g )
-			if ( colorVarMatch ) {
-				const computedColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( colorVarMatch[ 0 ] ).trim() )
-				if ( Array.isArray( computedColor ) && computedColor.length ) {
-					return `rgba(${ computedColor.join( ', ' ) })`
-				}
-			}
-		}
-
-		return color.color
-	}
-
-	return colors && Array.isArray( colors ) && (
+	return (
 		<Fragment>
 			<ResetButton onClick={ onColorPaletteReset } disabled={ disableReset } />
 			{ colors.map( ( color, index ) => {
@@ -360,10 +344,11 @@ const ColorPickers = ( {
 					>
 						{ selectedIndex === index &&
 							<Popover
+								className="ugb-global-settings-color-picker__popup components-dropdown__content"
 								onFocusOutside={ () => setSelectedIndex( null ) }
 							>
 								<ColorPicker
-									color={ colorPlaceholder( color ) }
+									color={ color.color }
 									onChangeComplete={ onChangeColor }
 									disableAlpha
 								/>
