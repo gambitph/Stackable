@@ -24,11 +24,14 @@ import rgba from 'color-rgba'
  */
 import { updateFallbackColorAttributes } from './util'
 
+// List of blocks which will be updated.
+const blocksToUpdate = [
+	'core',
+	'ugb',
+]
+
 const SaveModelSettings = () => {
-	const { colors, defaultColors } = useSelect( select => ( {
-		 colors: select( 'core/block-editor' ).getSettings().colors,
-		 defaultColors: select( 'core/block-editor' ).getSettings().defaultColors,
-	} ) )
+	const { colors, defaultColors } = useSelect( select => select( 'core/block-editor' ).getSettings() )
 
 	const saveModelSettings = newColors => {
 		const { getBlock, getBlocks } = select( 'core/block-editor' )
@@ -62,7 +65,7 @@ const SaveModelSettings = () => {
 
 		allBlocks.forEach( block => {
 			const { clientId, name } = block
-			if ( name && name.includes( 'ugb/' ) ) {
+			if ( name && new RegExp( blocksToUpdate.map( block => `${ block }/` ).join( '|' ) ).test( name ) ) {
 				const newAttributes = updateFallbackColorAttributes( block.attributes, updatedColors )
 				if ( ! isEqual( newAttributes, block.attributes ) ) {
 					updateBlockAttributes( clientId, newAttributes )
@@ -92,6 +95,6 @@ const SaveModelSettings = () => {
 
 // Only do this for WP 5.5
 if ( select( 'core/edit-post' ).__experimentalGetPreviewDeviceType ) {
-	registerPlugin( 'stackable-global-color-save-model-settings', { render: SaveModelSettings } )
+	registerPlugin( 'stackable-global-colors-save-model-settings', { render: SaveModelSettings } )
 }
 

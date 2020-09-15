@@ -13,7 +13,9 @@ import ColorPicker from './color-picker'
  */
 import { i18n } from 'stackable'
 import { PanelAdvancedSettings } from '~stackable/components'
-import { isEqual, omit } from 'lodash'
+import {
+	isEqual, omit, uniqBy, find,
+} from 'lodash'
 import rgba from 'color-rgba'
 
 /**
@@ -22,8 +24,12 @@ import rgba from 'color-rgba'
 import { addFilter, addAction } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { dispatch, select } from '@wordpress/data'
+import {
+	dispatch, select, useSelect,
+} from '@wordpress/data'
 import domReady from '@wordpress/dom-ready'
+import { loadPromise, models } from '@wordpress/api'
+import { ToggleControl } from '@wordpress/components'
 
 addFilter( 'stackable.util.hex-to-rgba', 'global-settings/colors', ( output, hexColor, opacity ) => {
 	// Only do this for Stackable global colors.
@@ -89,24 +95,49 @@ addFilter( 'stackable.util.is-dark-color', 'global-settings/colors', color => {
 	return color
 } )
 
-addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors', output => (
-	<Fragment>
-		{ output }
-		<PanelAdvancedSettings
-			title={ __( 'Global Color Palette', i18n ) }
-			initialOpen={ true }
-		>
-			<p className="components-base-control__help">
-				{ __( 'Change your color palette for all your blocks across your site.', i18n ) }
+addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors', output => {
+	const { useStackableColorsOnly } = useSelect( select => ( { useStackableColorsOnly: select( 'core/block-editor' ).getSettings().useStackableColorsOnly } ) )
+
+	const onChangeUseStackableColorsOnly = value => {
+		loadPromise.then( () => {
+			const model = new models.Settings()
+			model.fetch().then( res => {
+				const { defaultColors } = select( 'core/block-editor' ).getSettings()
+				const settings = new models.Settings( { stackable_global_colors_palette_only: value } ) // eslint-disable-line camelcase
+				settings.save()
+
+				dispatch( 'core/block-editor' ).updateSettings( {
+					useStackableColorsOnly: value,
+					colors: value ? res.stackable_global_colors : uniqBy( [ ...defaultColors, ...res.stackable_global_colors ], 'slug' ),
+				} )
+			} )
+		} )
+	}
+
+	return (
+		<Fragment>
+			{ output }
+			<PanelAdvancedSettings
+				title={ __( 'Global Color Palette', i18n ) }
+				initialOpen={ true }
+			>
+				<p className="components-base-control__help">
+					{ __( 'Change your color palette for all your blocks across your site.', i18n ) }
 					&nbsp;
-				<a href="https://docs.wpstackable.com/stackable-guides/advanced-guides/how-to-use-global-colors/?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
-					{ __( 'Learn more about Global Colors', i18n ) }
-				</a>
-			</p>
-			<ColorPicker />
-		</PanelAdvancedSettings>
-	</Fragment>
-) )
+					<a href="https://docs.wpstackable.com/stackable-guides/advanced-guides/how-to-use-global-colors/?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
+						{ __( 'Learn more about Global Colors', i18n ) }
+					</a>
+				</p>
+				<ColorPicker />
+				<ToggleControl
+					label={ __( 'Use only Stackable colors', i18n ) }
+					checked={ useStackableColorsOnly }
+					onChange={ onChangeUseStackableColorsOnly }
+				/>
+			</PanelAdvancedSettings>
+		</Fragment>
+	)
+} )
 
 /**
  * Used for attributes compatibility when resetting the global colors.
@@ -153,6 +184,67 @@ addAction( 'stackable.global-settings.reset-compatibility', 'color-reset', ( blo
 			if ( ! isEqual( updatedAttributes, block.attributes ) ) {
 				updateBlockAttributes( clientId, updatedAttributes )
 			}
+		} else if ( name.includes( 'core/' ) ) {
+			//
+			/**
+			 * For core blocks.
+			 * If a core block uses a color palette included in the theme,
+			 * it uses the slug name as its attribute (e.g. textColor: "accent").
+			 * Otherwise, textColor will be undefined and instead will add a style attribute
+			 * (e.g. core/heading style: { color: "#123abc"}).
+			 */
+			if ( name.includes( 'heading' ) || name.includes( 'paragraph' ) ) {
+				const newAttributes = { style: { color: {}, ...block.attributes.style } }
+				const { backgroundColor, textColor } = block.attributes
+				if ( backgroundColor ) {
+					if ( backgroundColor.includes( 'stk-global-color-' ) ) {
+						// Retain the color
+						const colorVarMatch = backgroundColor.match( /stk-global-color-(\S*)/ )
+						if ( colorVarMatch && Array.isArray( colorVarMatch ) && colorVarMatch.length >= 2 ) {
+							const colorVarID = colorVarMatch[ 1 ]
+							newAttributes.backgroundColor = undefined
+							const appliedColor = find( colorsBeforeReset, color => color.slug === `stk-global-color-${ colorVarID }` )
+							newAttributes.style.color.background = appliedColor ? appliedColor.color || '#000000' : '#000000'
+						}
+					}
+				}
+
+				if ( textColor ) {
+					if ( textColor.includes( 'stk-global-color-' ) ) {
+						// Retain the color
+						const colorVarMatch = textColor.match( /stk-global-color-(\S*)/ )
+						if ( colorVarMatch && Array.isArray( colorVarMatch ) && colorVarMatch.length >= 2 ) {
+							const colorVarID = colorVarMatch[ 1 ]
+							newAttributes.textColor = undefined
+							const appliedColor = find( colorsBeforeReset, color => color.slug === `stk-global-color-${ colorVarID }` )
+							newAttributes.style.color.text = appliedColor ? appliedColor.color || '#000000' : '#000000'
+						}
+					}
+				}
+
+				// Update the block attributes.
+				updateBlockAttributes( clientId, newAttributes )
+			} else {
+				const updatedAttributes = replaceGlobalColorAttributes( block.attributes, colorsBeforeReset )
+
+				// This is used for pullquote compatibility.
+				if ( updatedAttributes.textColor ) {
+					const defaultColor = find( colorsAfterReset, updatedColor => updatedColor.slug === updatedAttributes.textColor )
+					if ( ! defaultColor ) {
+						const appliedColor = find( colorsBeforeReset, color => color.slug === updatedAttributes.textColor )
+						updatedAttributes.customTextColor = appliedColor ? appliedColor.fallback || '#000000' : '#000000'
+						updatedAttributes.textColor = undefined
+					} else {
+						updatedAttributes.customTextColor = defaultColor.color || '#000000'
+						updatedAttributes.textColor = undefined
+					}
+				}
+
+				// Update the block attributes.
+				if ( ! isEqual( updatedAttributes, block.attributes ) ) {
+					updateBlockAttributes( clientId, updatedAttributes )
+				}
+			}
 		}
 	} )
 } )
@@ -176,8 +268,16 @@ domReady( () => {
 		 return colors
 	}, [] )
 
-	dispatch( 'core/block-editor' ).updateSettings( {
-		colors,
-		defaultColors,
+	loadPromise.then( () => {
+		const settings = new models.Settings()
+
+		settings.fetch().then( response => {
+			const { stackable_global_colors_palette_only: useStackableColorsOnly } = response
+
+			dispatch( 'core/block-editor' ).updateSettings( {
+				defaultColors,
+				useStackableColorsOnly,
+			} )
+		} )
 	} )
 } )

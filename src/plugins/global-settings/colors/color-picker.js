@@ -6,6 +6,7 @@ import { cloneDeep } from 'lodash'
 import md5 from 'md5'
 import { i18n } from 'stackable'
 import rgba from 'color-rgba'
+import { whiteIfDark } from '~stackable/util'
 
 /**
  * Wordpress dependencies
@@ -21,6 +22,11 @@ import {
 } from '@wordpress/data'
 import { doAction } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
+
+/**
+ * Internal dependencies
+ */
+import { AddIcon, LockIcon } from './icons'
 
 // Component used to add a style name field at the bottom of the ColorPicker.
 const ColorPickerTextArea = props => (
@@ -110,17 +116,13 @@ const DeleteButton = props => {
 }
 
 // Component used to add am add icon button.
-const AddIcon = props => (
+const AddButton = props => (
 	<Button
 		{ ...props }
 		isDefault
 		className="ugb-global-settings-color-picker__add-icon"
 		label="Add New Color"
-		icon={
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 190">
-				<polygon points="181.9,87.6 102.6,87.6 102.6,8.4 87.6,8.4 87.6,87.6 8.4,87.6 8.4,102.6 87.6,102.6 87.6,181.8 102.6,181.8 102.6,102.6 181.9,102.6 " />
-			</svg>
-		}
+		icon={ <AddIcon /> }
 	/>
 )
 
@@ -219,10 +221,10 @@ const ColorPickers = ( {
 	// If a new color is added, set the anchorRef to the new color element and open the Popover.
 	useEffect( () => {
 		if ( hasAddedNewColor ) {
-			const colorPickerEl = document.querySelector( '.ugb-global-settings-color-picker' )
+			const colorPickerEl = document.querySelectorAll( '.ugb-global-settings-color-picker>.components-circular-option-picker__option-wrapper' )
 			if ( colorPickerEl ) {
 				// Get the newly created color element/
-				const newButtonAnchor = colorPickerEl.children[ selectedIndex - 1 ]
+				const newButtonAnchor = colorPickerEl[ selectedIndex ]
 				if ( newButtonAnchor ) {
 					setColorButtonAnchor( newButtonAnchor )
 					setIsPopOverOpen( true )
@@ -293,7 +295,9 @@ const ColorPickers = ( {
 	// Called when the user decided to reset the color palette.
 	const onColorPaletteReset = ( setIsResetPopoverOpen, setIsBusyResetButton ) => {
 		setIsBusyResetButton( true )
-		const { defaultColors, colors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
+		const {
+			defaultColors, colors, useStackableColorsOnly,
+		} = cloneDeep( select( 'core/block-editor' ).getSettings() )
 		const blocks = select( 'core/block-editor' ).getBlocks()
 
 		/**
@@ -304,7 +308,7 @@ const ColorPickers = ( {
 		doAction( 'stackable.global-settings.reset-compatibility', blocks, colors )
 
 		// Update the colors
-		updateColors( defaultColors )
+		updateColors( useStackableColorsOnly ? [] : defaultColors )
 		setIsResetPopoverOpen( false )
 		setIsBusyResetButton( false )
 	}
@@ -365,18 +369,29 @@ const ColorPickers = ( {
 	return colors && Array.isArray( colors ) && (
 		<Fragment>
 			<ResetButton onClick={ onColorPaletteReset } disabled={ disableReset } />
-			{ colors.map( ( color, index ) => (
-				<div className="components-circular-option-picker__option-wrapper" key={ index }>
-					<Button
-						className="components-circular-option-picker__option"
-						label={ color.name || 'Untitled Color' }
-						style={ { backgroundColor: color.color, color: color.color } }
-						onClick={ event => handleOpenColorPicker( event, index ) }
-						disabled={ ! color.colorVar }
-					/>
-				</div>
-			) ) }
-			<AddIcon onClick={ handleAddIcon } />
+			{ colors.map( ( color, index ) => {
+				if ( ! color.colorVar ) {
+					return (
+						<div className="components-circular-option-picker__option-wrapper ugb-global-settings__color-picker-wrapper">
+							<div className="components-circular-option-picker__option ugb-global-settings__color-picker-disabled-color" style={ { backgroundColor: color.color, color: color.color } }>
+								<LockIcon color={ whiteIfDark( null, color.color ) || '#222222' } />
+							</div>
+						</div>
+					)
+				}
+				return (
+					<div className="components-circular-option-picker__option-wrapper" key={ index }>
+						 <Button
+							className="components-circular-option-picker__option"
+							label={ color.name || 'Untitled Color' }
+							style={ { backgroundColor: color.color, color: color.color } }
+							onClick={ event => handleOpenColorPicker( event, index ) }
+							disabled={ ! color.colorVar }
+						/>
+					</div>
+				)
+			} ) }
+			<AddButton onClick={ handleAddIcon } />
 			{ isPopoverOpen && (
 				<Popover
 					anchorRef={ colorButtonAnchor }

@@ -14,11 +14,18 @@
 	}
 }
 
+.ugb-global-settings-color-picker {
+	margin-bottom: 12px;
+}
+
 .ugb-global-settings-color-picker__add-icon {
 	min-width: 30px !important;
 	width: 30px;
 	height: 30px;
 	border-radius: 50%;
+	svg {
+		width: 20px;
+	}
 }
 
 .ugb-global-settings-color-picker__delete-button-text {
@@ -43,3 +50,16 @@
 	margin-right: 0 !important;
 	margin-bottom: 12px;
 }
+
+.ugb-global-settings__color-picker-wrapper {
+	opacity: 0.8;
+
+	.ugb-global-settings__color-picker-disabled-color {
+		display: flex;
+		justify-content: center;
+		svg {
+			width: 12px;
+		}
+	}
+}
+

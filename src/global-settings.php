@@ -82,6 +82,18 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 
 			register_setting(
 				'stackable_global_settings',
+				'stackable_global_colors_palette_only',
+				array(
+					'type' => 'boolean',
+					'description' => __( 'Stackable global colors display only global colors', STACKABLE_I18N ),
+					'sanitize_callback' => 'sanitize_text_field',
+					'show_in_rest' => true,
+					'default' => '',
+				)
+			);
+
+			register_setting(
+				'stackable_global_settings',
 				'stackable_global_typography_apply_to',
 				array(
 					'type' => 'string',
