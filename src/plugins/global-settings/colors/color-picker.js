@@ -59,7 +59,7 @@ const DeleteButton = props => {
 		setIsDeletePopoverOpen( toggle => ! toggle )
 	}
 
-	const onClickOutside = event => {
+	const onFocusOutside = event => {
 		if ( deleteButtonRef && event.target !== deleteButtonRef.current ) {
 			setIsDeletePopoverOpen( false )
 		}
@@ -79,7 +79,7 @@ const DeleteButton = props => {
 			{ isDeletePopoverOpen && (
 				<Popover
 					anchorRef={ deleteButtonRef.current }
-					onClickOutside={ onClickOutside }
+					onFocusOutside={ onFocusOutside }
 					position="bottom center"
 				>
 					<div className="components-color-picker__body">
@@ -137,7 +137,7 @@ const ResetButton = props => {
 		setIsResetPopoverOpen( toggle => ! toggle )
 	}
 
-	const onClickOutside = event => {
+	const onFocusOutside = event => {
 		if ( resetButtonRef && event.target !== resetButtonRef.current ) {
 			setIsResetPopoverOpen( false )
 		}
@@ -148,7 +148,7 @@ const ResetButton = props => {
 				ref={ resetButtonRef }
 				onClick={ handleReset }
 				disabled={ props.disabled }
-				isDefault
+				isSecondary
 				isSmall
 			>
 				{ __( 'Reset', i18n ) }
@@ -156,7 +156,7 @@ const ResetButton = props => {
 			{ isResetPopoverOpen && (
 				<Popover
 					anchorRef={ resetButtonRef.current }
-					onClickOutside={ onClickOutside }
+					onFocusOutside={ onFocusOutside }
 					position="bottom center"
 				>
 					<div className="components-color-picker__body">
@@ -174,7 +174,7 @@ const ResetButton = props => {
 									} }
 									disabled={ props.disabled }
 									isBusy={ isBusyResetButton }
-									isDefault
+									isSecondary
 									isSmall
 								>
 									{ __( 'Reset', i18n ) }
