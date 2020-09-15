@@ -261,18 +261,20 @@ addFilter( 'stackable.color-palette-control.change', 'stackable/global-settings/
 domReady( () => {
 	// Keep note of all the default colors.
 	const colors = select( 'core/block-editor' ).getSettings().colors
-	const defaultColors = ( colors || [] ).reduce( ( colors, colorObject ) => {
-		if ( ! colorObject.slug.match( /^stk-/ ) ) {
-			colors.push( colorObject )
-		 }
-		 return colors
-	}, [] )
+	const defaultColors = colors.filter( ( { slug } ) => ! slug.match( /^stk-/ ) )
+	const stackableColors = colors.filter( ( { slug } ) => slug.match( /^stk-/ ) )
 
 	loadPromise.then( () => {
 		const settings = new models.Settings()
 
 		settings.fetch().then( response => {
 			const { stackable_global_colors_palette_only: useStackableColorsOnly } = response
+
+			if ( useStackableColorsOnly ) {
+				dispatch( 'core/block-editor' ).updateSettings( {
+					colors: stackableColors,
+				} )
+			}
 
 			dispatch( 'core/block-editor' ).updateSettings( {
 				defaultColors,
