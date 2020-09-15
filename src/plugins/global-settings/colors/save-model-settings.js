@@ -31,10 +31,7 @@ const blocksToUpdate = [
 ]
 
 const SaveModelSettings = () => {
-	const { colors, defaultColors } = useSelect( select => ( {
-		 colors: select( 'core/block-editor' ).getSettings().colors,
-		 defaultColors: select( 'core/block-editor' ).getSettings().defaultColors,
-	} ) )
+	const { colors, defaultColors } = useSelect( select => select( 'core/block-editor' ).getSettings() )
 
 	const saveModelSettings = newColors => {
 		const { getBlock, getBlocks } = select( 'core/block-editor' )
@@ -98,6 +95,6 @@ const SaveModelSettings = () => {
 
 // Only do this for WP 5.5
 if ( select( 'core/edit-post' ).__experimentalGetPreviewDeviceType ) {
-	registerPlugin( 'stackable-global-color-save-model-settings', { render: SaveModelSettings } )
+	registerPlugin( 'stackable-global-colors-save-model-settings', { render: SaveModelSettings } )
 }
 

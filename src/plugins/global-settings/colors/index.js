@@ -24,9 +24,12 @@ import rgba from 'color-rgba'
 import { addFilter, addAction } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { dispatch, select } from '@wordpress/data'
+import {
+	dispatch, select, useSelect,
+} from '@wordpress/data'
 import domReady from '@wordpress/dom-ready'
 import { loadPromise, models } from '@wordpress/api'
+import { ToggleControl } from '@wordpress/components'
 
 addFilter( 'stackable.util.hex-to-rgba', 'global-settings/colors', ( output, hexColor, opacity ) => {
 	// Only do this for Stackable global colors.
@@ -92,24 +95,49 @@ addFilter( 'stackable.util.is-dark-color', 'global-settings/colors', color => {
 	return color
 } )
 
-addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors', output => (
-	<Fragment>
-		{ output }
-		<PanelAdvancedSettings
-			title={ __( 'Global Color Palette', i18n ) }
-			initialOpen={ true }
-		>
-			<p className="components-base-control__help">
-				{ __( 'Change your color palette for all your blocks across your site.', i18n ) }
+addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors', output => {
+	const { useStackableColorsOnly } = useSelect( select => ( { useStackableColorsOnly: select( 'core/block-editor' ).getSettings().useStackableColorsOnly } ) )
+
+	const onChangeUseStackableColorsOnly = value => {
+		loadPromise.then( () => {
+			const model = new models.Settings()
+			model.fetch().then( res => {
+				const { defaultColors } = select( 'core/block-editor' ).getSettings()
+				const settings = new models.Settings( { stackable_global_colors_palette_only: value } ) // eslint-disable-line camelcase
+				settings.save()
+
+				dispatch( 'core/block-editor' ).updateSettings( {
+					useStackableColorsOnly: value,
+					colors: value ? res.stackable_global_colors : uniqBy( [ ...defaultColors, ...res.stackable_global_colors ], 'slug' ),
+				} )
+			} )
+		} )
+	}
+
+	return (
+		<Fragment>
+			{ output }
+			<PanelAdvancedSettings
+				title={ __( 'Global Color Palette', i18n ) }
+				initialOpen={ true }
+			>
+				<p className="components-base-control__help">
+					{ __( 'Change your color palette for all your blocks across your site.', i18n ) }
 					&nbsp;
-				<a href="https://docs.wpstackable.com/stackable-guides/advanced-guides/how-to-use-global-colors/?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
-					{ __( 'Learn more about Global Colors', i18n ) }
-				</a>
-			</p>
-			<ColorPicker />
-		</PanelAdvancedSettings>
-	</Fragment>
-) )
+					<a href="https://docs.wpstackable.com/stackable-guides/advanced-guides/how-to-use-global-colors/?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
+						{ __( 'Learn more about Global Colors', i18n ) }
+					</a>
+				</p>
+				<ColorPicker />
+				<ToggleControl
+					label={ __( 'Use only Stackable colors', i18n ) }
+					checked={ useStackableColorsOnly }
+					onChange={ onChangeUseStackableColorsOnly }
+				/>
+			</PanelAdvancedSettings>
+		</Fragment>
+	)
+} )
 
 /**
  * Used for attributes compatibility when resetting the global colors.
@@ -236,11 +264,12 @@ domReady( () => {
 		const settings = new models.Settings()
 
 		settings.fetch().then( response => {
-			const { stackable_global_colors: globalColors } = response
+			const { stackable_global_colors: globalColors, stackable_global_colors_palette_only: useStackableColorsOnly } = response
 
 			dispatch( 'core/block-editor' ).updateSettings( {
-				colors: uniqBy( [ ...colors, ...globalColors ], 'slug' ),
+				colors: useStackableColorsOnly ? globalColors : uniqBy( [ ...colors, ...globalColors ], 'slug' ),
 				defaultColors: colors,
+				useStackableColorsOnly,
 			} )
 		} )
 	} )
