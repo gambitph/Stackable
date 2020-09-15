@@ -19,6 +19,7 @@ export * from './user'
 /**
  * WordPress dependencies
  */
+
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
@@ -142,9 +143,8 @@ export const hexToRgba = ( hexColor, opacity = null ) => {
 	 * values from the :root selector.
 	 */
 	if ( hex.indexOf( 'var(' ) > -1 ) {
-		const colorVar = hex.match( /--(.*?(?=,))/g )
 		hex = window.getComputedStyle( document.documentElement )
-			.getPropertyValue( colorVar[ 0 ] ) || '#fff'
+			.getPropertyValue( hex.replace( 'var(', '' ).replace( ')', '' ) ) || '#fff'
 	}
 
 	hex = hex.replace( /#/, '' )
