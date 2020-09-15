@@ -15,7 +15,7 @@ import {
 	Button, ColorPicker, Popover, BaseControl, ButtonGroup,
 } from '@wordpress/components'
 import {
-	Fragment, useState, useEffect, useRef,
+	Fragment, useState, useRef,
 } from '@wordpress/element'
 import {
 	select, dispatch, useSelect,
@@ -119,7 +119,7 @@ const DeleteButton = props => {
 const AddButton = props => (
 	<Button
 		{ ...props }
-		isDefault
+		isSecondary
 		className="ugb-global-settings-color-picker__add-icon"
 		label="Add New Color"
 		icon={ <AddIcon /> }
@@ -195,36 +195,51 @@ const ResetButton = props => {
 	)
 }
 
+const ColorOption = props => {
+	const {
+		color,
+	} = props
+
+	if ( props.locked ) {
+		return (
+			<div className="components-circular-option-picker__option-wrapper ugb-global-settings__color-picker-wrapper">
+				<div className="components-circular-option-picker__option ugb-global-settings__color-picker-disabled-color" style={ { backgroundColor: color, color } }>
+					<LockIcon color={ whiteIfDark( null, color ) || '#222222' } />
+				</div>
+			</div>
+		)
+	}
+
+	return (
+		<Fragment>
+			<div className="components-circular-option-picker__option-wrapper">
+				<Button
+					className="components-circular-option-picker__option"
+					label={ color.name }
+					style={ { backgroundColor: color, color } }
+					onMouseDown={ () => props.onClick( color ) }
+				/>
+				{ props.children }
+			</div>
+		</Fragment>
+	)
+}
+
+ColorOption.defaultProps = {
+	color: '#222222',
+	name: __( 'Untitled Color', i18n ),
+	locked: false,
+	onClick: () => {},
+}
+
 const ColorPickers = ( {
 	colors,
 } ) => {
 	// State used to determine the clicked index in the color picker.
 	const [ selectedIndex, setSelectedIndex ] = useState( null )
-	// State used to control the popover when clicking a color.
-	const [ isPopoverOpen, setIsPopOverOpen ] = useState( false )
-	// State used to control the anchorRef of the Popover.
-	const [ colorButtonAnchor, setColorButtonAnchor ] = useState( null )
-	// State used to determine if a new color is added.
-	const [ hasAddedNewColor, setHasAddedNewColor ] = useState( false )
 
 	// Enable reset if there are Stackable global colors.
 	const disableReset = ! colors.some( color => color.slug && color.slug.includes( 'stk-global-color' ) )
-
-	// If a new color is added, set the anchorRef to the new color element and open the Popover.
-	useEffect( () => {
-		if ( hasAddedNewColor ) {
-			const colorPickerEl = document.querySelectorAll( '.ugb-global-settings-color-picker>.components-circular-option-picker__option-wrapper' )
-			if ( colorPickerEl ) {
-				// Get the newly created color element/
-				const newButtonAnchor = colorPickerEl[ selectedIndex ]
-				if ( newButtonAnchor ) {
-					setColorButtonAnchor( newButtonAnchor )
-					setIsPopOverOpen( true )
-					setHasAddedNewColor( false )
-				}
-			}
-		}
-	}, [ hasAddedNewColor ] )
 
 	/**
 	 * Function used to update the colors in @wordpress/data,
@@ -264,13 +279,6 @@ const ColorPickers = ( {
 		updateColors( updatedColors )
 	}
 
-	// When the Popover is open, this handles the onClickOutside.
-	const onClickOutside = event => {
-		if ( event.target !== colorButtonAnchor ) {
-			setIsPopOverOpen( false )
-		}
-	}
-
 	// Called when deleting a color.
 	const onColorDelete = () => {
 		const { colors: updatedColors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
@@ -280,8 +288,6 @@ const ColorPickers = ( {
 
 		// Update the colors.
 		updateColors( updatedColors )
-
-		setIsPopOverOpen( false )
 	}
 
 	// Called when the user decided to reset the color palette.
@@ -322,25 +328,7 @@ const ColorPickers = ( {
 		// Update the colors.
 		updateColors( updatedColors )
 
-		setIsPopOverOpen( false )
 		setSelectedIndex( newIndex - 1 )
-		setHasAddedNewColor( true )
-	}
-
-	// Called when clicking a color.
-	const handleOpenColorPicker = ( event, index ) => {
-		const currIndex = selectedIndex
-
-		setColorButtonAnchor( event.target )
-		setSelectedIndex( index )
-
-		if ( currIndex === index ) {
-			// If the preview selected index is the same as the current selected index, close the Popover.
-			setIsPopOverOpen( toggle => ! toggle )
-		} else {
-			// Otherwise, open another instance of the Popover.
-			setIsPopOverOpen( true )
-		}
 	}
 
 	// Used to determine the computed color to be displayed in the ColorPicker
@@ -362,54 +350,42 @@ const ColorPickers = ( {
 		<Fragment>
 			<ResetButton onClick={ onColorPaletteReset } disabled={ disableReset } />
 			{ colors.map( ( color, index ) => {
-				if ( ! color.colorVar ) {
-					return (
-						<div className="components-circular-option-picker__option-wrapper ugb-global-settings__color-picker-wrapper">
-							<div className="components-circular-option-picker__option ugb-global-settings__color-picker-disabled-color" style={ { backgroundColor: color.color, color: color.color } }>
-								<LockIcon color={ whiteIfDark( null, color.color ) || '#222222' } />
-							</div>
-						</div>
-					)
-				}
 				return (
-					<div className="components-circular-option-picker__option-wrapper" key={ index }>
-						 <Button
-							className="components-circular-option-picker__option"
-							label={ color.name || __( 'Untitled Color', i18n ) }
-							style={ { backgroundColor: color.color, color: color.color } }
-							onClick={ event => handleOpenColorPicker( event, index ) }
-							disabled={ ! color.colorVar }
-						/>
-					</div>
+					<ColorOption
+						key={ index }
+						color={ color.color }
+						name={ color.name }
+						locked={ ! color.slug.match( /^stk-/ ) }
+						onClick={ () => setSelectedIndex( index ) }
+					>
+						{ selectedIndex === index &&
+							<Popover
+								onFocusOutside={ () => setSelectedIndex( null ) }
+							>
+								<ColorPicker
+									color={ colorPlaceholder( color ) }
+									onChangeComplete={ onChangeColor }
+									disableAlpha
+								/>
+								<ColorPickerTextArea
+									id="color-picker-text-name"
+									onChange={ onChangeStyleName }
+									value={ color.name || '' }
+								/>
+								<div className="ugb-global-settings-color-picker__text-name components-color-picker__body">
+									<div className="components-color-picker__controls">
+										<DeleteButton
+											name={ color.name }
+											onClick={ onColorDelete }
+										/>
+									</div>
+								</div>
+							</Popover>
+						}
+					</ColorOption>
 				)
 			} ) }
 			<AddButton onClick={ handleAddIcon } />
-			{ isPopoverOpen && (
-				<Popover
-					anchorRef={ colorButtonAnchor }
-					onClickOutside={ onClickOutside }
-				>
-					<ColorPicker
-						color={ colorPlaceholder( colors[ selectedIndex ] ) }
-						onChangeComplete={ onChangeColor }
-						disableAlpha
-					/>
-					<ColorPickerTextArea
-						id="color-picker-text-name"
-						onChange={ onChangeStyleName }
-						value={ colors[ selectedIndex ] && colors[ selectedIndex ].name }
-					/>
-					<div className="ugb-global-settings-color-picker__text-name components-color-picker__body">
-						<div className="components-color-picker__controls">
-							<DeleteButton
-								name={ colors[ selectedIndex ] && colors[ selectedIndex ].name }
-								onClick={ onColorDelete }
-								disabled={ colors[ selectedIndex ] && ! colors[ selectedIndex ].slug.includes( 'stk-global-color' ) }
-							/>
-						</div>
-					</div>
-				</Popover>
-			) }
 		</Fragment>
 	)
 }
