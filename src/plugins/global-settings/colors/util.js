@@ -9,13 +9,12 @@ import { find } from 'lodash'
  *
  * @param {string} attributes the attributes object of the block.
  * @param {Array} colorsBeforeReset set of colors before clicking reset button.
- * @param {Array} colorsAfterReset set of colors after clicking the reset button.
  * @param {Object} options additional function options
  *
  * @return {string} generated modified stringified attributes object.
  */
-export const replaceGlobalColorAttributes = ( attributes = {}, colorsBeforeReset = [], colorsAfterReset = [], options = {} ) => {
-	if ( ! Array.isArray( colorsBeforeReset ) || ! Array.isArray( colorsAfterReset ) ) {
+export const replaceGlobalColorAttributes = ( attributes = {}, colorsBeforeReset = [], options = {} ) => {
+	if ( ! Array.isArray( colorsBeforeReset ) ) {
 		return attributes
 	}
 	const {
@@ -27,14 +26,9 @@ export const replaceGlobalColorAttributes = ( attributes = {}, colorsBeforeReset
 	if ( includeColorVar ) {
 		colorsBeforeReset.forEach( colorBeforeReset => {
 			if ( colorBeforeReset.colorVar ) {
-				updatedStringifiedAttributes = updatedStringifiedAttributes.replace( new RegExp( `var\\(${ colorBeforeReset.colorVar }, ${ colorBeforeReset.fallback }\\)`, 'g' ), colorAttribute => {
-					const defaultColor = find( colorsAfterReset, updatedColor => updatedColor.colorVar === colorBeforeReset.colorVar )
-					if ( ! defaultColor ) {
-						// Retain the color.
-						return colorBeforeReset ? colorBeforeReset.fallback || '#000000' : '#000000'
-					}
-					// Revert the color to the default color.
-					return defaultColor.color || colorAttribute
+				updatedStringifiedAttributes = updatedStringifiedAttributes.replace( new RegExp( `var\\(${ colorBeforeReset.colorVar }, ${ colorBeforeReset.color.replace( ')', '\\)' ).replace( '(', '\\(' ) }\\)`, 'g' ), colorAttribute => {
+					// Retain the color.
+					return colorBeforeReset ? colorBeforeReset.color || '#000000' : colorAttribute
 				} )
 			}
 		} )
@@ -43,13 +37,8 @@ export const replaceGlobalColorAttributes = ( attributes = {}, colorsBeforeReset
 	if ( includeSlugNames ) {
 		const stackableSlugNames = colorsBeforeReset.filter( color => color.slug && color.slug.includes( 'stk-global-color' ) ).map( color => color.slug )
 		stackableSlugNames.forEach( stackableSlugName => {
-			const foundColor = find( colorsAfterReset, color => color.slug === stackableSlugName )
-			if ( foundColor ) {
-				updatedStringifiedAttributes = updatedStringifiedAttributes.replace( new RegExp( stackableSlugName, 'g' ), foundColor.fallback || '#000000' )
-			} else {
-				const foundColorBeforeReset = find( colorsBeforeReset, color => color.slug === stackableSlugName )
-				updatedStringifiedAttributes = updatedStringifiedAttributes.replace( new RegExp( stackableSlugName, 'g' ), foundColorBeforeReset ? foundColorBeforeReset.fallback || '#000000' : '#000000' )
-			}
+			const foundColorBeforeReset = find( colorsBeforeReset, color => color.slug === stackableSlugName )
+			updatedStringifiedAttributes = updatedStringifiedAttributes.replace( new RegExp( stackableSlugName, 'g' ), foundColorBeforeReset ? foundColorBeforeReset.color || '#000000' : '#000000' )
 		} )
 	}
 
@@ -78,7 +67,7 @@ export const updateFallbackColorAttributes = ( attributes = {}, colors = [] ) =>
 			updatedStringifiedAttributes = updatedStringifiedAttributes.replace( colorVarRegExp, colorAttribute => {
 				const newColor = find( colors, updatedColor => updatedColor.colorVar === colorVar )
 				if ( newColor ) {
-					return newColor.color || '#000000'
+					return `var(${ colorVar }, ${ newColor.color })`
 				}
 				return colorAttribute
 			} )

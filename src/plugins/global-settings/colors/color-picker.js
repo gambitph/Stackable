@@ -2,9 +2,7 @@
  * External dependencies
  */
 import classnames from 'classnames'
-import {
-	cloneDeep, inRange, findIndex, isEqual,
-} from 'lodash'
+import { cloneDeep } from 'lodash'
 import md5 from 'md5'
 import { i18n } from 'stackable'
 import rgba from 'color-rgba'
@@ -23,7 +21,6 @@ import {
 } from '@wordpress/data'
 import { doAction } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
-import { loadPromise, models } from '@wordpress/api'
 
 // Component used to add a style name field at the bottom of the ColorPicker.
 const ColorPickerTextArea = props => (
@@ -47,73 +44,6 @@ const ColorPickerTextArea = props => (
 		</div>
 	</div>
 )
-
-// Component used to add a Reset Button for Individual Colors
-const ResetColorButton = props => {
-	const [ isResetPopoverOpen, setIsResetPopoverOpen ] = useState( false )
-	const resetButtonRef = useRef( null )
-
-	const handleReset = () => {
-		setIsResetPopoverOpen( toggle => ! toggle )
-	}
-
-	const onClickOutside = event => {
-		if ( resetButtonRef && event.target !== resetButtonRef.current ) {
-			setIsResetPopoverOpen( false )
-		}
-	}
-
-	return (
-		<Fragment>
-			<Button
-				ref={ resetButtonRef }
-				onClick={ handleReset }
-				isDefault
-				isSmall
-				disabled={ props.disabled }
-			>
-				{ __( 'Reset', i18n ) }
-			</Button>
-			{ isResetPopoverOpen && (
-				<Popover
-					anchorRef={ resetButtonRef.current }
-					onClickOutside={ onClickOutside }
-					position="bottom center"
-				>
-					<div className="components-color-picker__body">
-						<div className="ugb-global-settings-color-picker__popover-text is-red">
-							{ __( 'Reset', i18n ) } { ` ${ props.name }` }
-						</div>
-						<div className="ugb-global-settings-color-picker__popover-text">
-							{ __( 'This color will revert to its default color. Proceed?', i18n ) }
-						</div>
-						<div className="components-color-picker__controls">
-							<ButtonGroup>
-								<Button
-									onClick={ () => {
-										props.onClick()
-										setIsResetPopoverOpen( false )
-									} }
-									disabled={ props.disabled }
-									isDefault
-									isSmall
-								>
-									{ __( 'Reset', i18n ) }
-								</Button>
-								<Button
-									onClick={ () => setIsResetPopoverOpen( false ) }
-									isSmall
-								>
-									{ __( 'Cancel', i18n ) }
-								</Button>
-							</ButtonGroup>
-						</div>
-					</div>
-				</Popover>
-			) }
-		</Fragment>
-	)
-}
 
 // Component used to add a Delete Style button at the bottom of the ColorPicker.
 const DeleteButton = props => {
@@ -266,8 +196,6 @@ const ResetButton = props => {
 const ColorPickers = ( {
 	colors,
 } ) => {
-	// We make sure that we are getting the latest state for default colors.
-	const { defaultColors } = useSelect( select => select( 'core/block-editor' ).getSettings() )
 	// State used to determine the clicked index in the color picker.
 	const [ selectedIndex, setSelectedIndex ] = useState( null )
 	// State used to control the popover when clicking a color.
@@ -281,29 +209,12 @@ const ColorPickers = ( {
 
 	// Show reset button if necessary.
 	useEffect( () => {
-		const { colors } = select( 'core/block-editor' ).getSettings()
-		if ( Array.isArray( defaultColors ) && Array.isArray( colors ) ) {
-			// Get only the slug and colors.
-			const compareDefaultColors = defaultColors.map( defaultColor => ( { color: defaultColor.color, slug: defaultColor.slug } ) )
-			const compareColors = colors.map( color => ( { color: color.fallback || color.color, slug: color.slug } ) )
-			if ( ! isEqual( compareDefaultColors, compareColors ) ) {
-				setDisableReset( false )
-			} else {
-				setDisableReset( true )
-			}
+		if ( Array.isArray( colors ) && colors.some( color => color.slug && color.slug.includes( 'stk-global-color' ) ) ) {
+			setDisableReset( false )
+		} else {
+			setDisableReset( true )
 		}
-	}, [ defaultColors, colors ] )
-
-	// Set stackable_global_colors_has_modified to true if modified. Otherwise, false.
-	useEffect( () => {
-		const saveHasModified = setTimeout( () => {
-			loadPromise.then( () => {
-				const settings = new models.Settings( { stackable_global_colors_has_modified: ! disableReset } ) // eslint-disable-line camelcase
-				settings.save()
-			} )
-		}, 100 )
-		return () => clearTimeout( saveHasModified )
-	}, [ disableReset ] )
+	}, [ colors ] )
 
 	// If a new color is added, set the anchorRef to the new color element and open the Popover.
 	useEffect( () => {
@@ -339,11 +250,10 @@ const ColorPickers = ( {
 		const colorVar = `--stk-global-color-${ md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 ) }`
 
 		// Overwrite the selected color to a new color.
-		updatedColors[ selectedIndex ].color = existingColorVar ? `var(${ existingColorVar }, ${ data.hex })` : `var(${ colorVar }, ${ data.hex })`
+		updatedColors[ selectedIndex ].color = data.hex
 
 		// Add a fallback and colorVar if not exists.
 		updatedColors[ selectedIndex ].colorVar = existingColorVar || colorVar
-		updatedColors[ selectedIndex ].fallback = data.hex
 
 		// Update the colors.
 		updateColors( updatedColors )
@@ -385,68 +295,18 @@ const ColorPickers = ( {
 		setIsBusyResetButton( true )
 		const { defaultColors, colors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
 		const blocks = select( 'core/block-editor' ).getBlocks()
-		// Map through defaultColors and update its callback and colorVar
-		const updatedColors = defaultColors.map( defaultColor => {
-			const {
-				name, slug, color: fallback,
-			} = defaultColor
-			const index = findIndex( colors, color => color.slug === defaultColor.slug )
-			if ( index !== -1 ) {
-				const {
-					colorVar = `--stk-global-color-${ md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 ) }`,
-				} = colors[ index ]
-				const color = `var(${ colorVar }, ${ fallback })`
-				return {
-					name,
-					slug,
-					colorVar,
-					fallback,
-					color,
-				}
-			}
-			const colorVar = `--stk-global-color-${ md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 ) }`
-			return {
-				name,
-				slug,
-				colorVar,
-				fallback,
-				color: `var(${ colorVar }, ${ fallback })`,
-			}
-		} )
 
 		/**
 		 * Compability adjustment for stackable and other blocks.
 		 *
 		 * @see global-settings/colors
 		 */
-		doAction( 'stackable.global-settings.reset-compatibility', blocks, colors, updatedColors )
+		doAction( 'stackable.global-settings.reset-compatibility', blocks, colors )
 
 		// Update the colors
-		updateColors( updatedColors )
+		updateColors( defaultColors )
 		setIsResetPopoverOpen( false )
 		setIsBusyResetButton( false )
-	}
-
-	// Called when the user decided to reset a color.
-	const onColorReset = () => {
-		const defaultColorIndex = findIndex( defaultColors, color => color.slug === colors[ selectedIndex ].slug )
-		if ( defaultColorIndex !== -1 ) {
-			const { color: defaultColor } = defaultColors[ defaultColorIndex ]
-			const { colors: updatedColors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
-			const { colorVar: existingColorVar } = updatedColors[ selectedIndex ]
-			const colorVar = `--stk-global-color-${ md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 ) }`
-
-			// Overwrite the selected color to a new color.
-			updatedColors[ selectedIndex ].color = existingColorVar ? `var(${ existingColorVar }, ${ defaultColor })` : `var(${ colorVar }, ${ defaultColor })`
-
-			// Add a fallback and colorVar if not exists.
-			updatedColors[ selectedIndex ].colorVar = existingColorVar || colorVar
-			updatedColors[ selectedIndex ].fallback = defaultColor
-
-			// Update the colors.
-			updateColors( updatedColors )
-			setIsPopOverOpen( false )
-		}
 	}
 
 	// Called when adding a new color.
@@ -459,7 +319,7 @@ const ColorPickers = ( {
 		const updatedColors = [
 			...select( 'core/block-editor' ).getSettings().colors,
 			{
-				name: `Custom Color ${ newIndex }`, slug: `stk-global-color-${ slugId }`, color: `var(${ colorVar }, #000000)`, colorVar, fallback: '#000000',
+				name: `Custom Color ${ newIndex }`, slug: `stk-global-color-${ slugId }`, color: '#000000', colorVar,
 			},
 		]
 
@@ -502,16 +362,6 @@ const ColorPickers = ( {
 		return color.color
 	}
 
-	const isResetDisabled = () => {
-		const defaultColorIndex = findIndex( defaultColors, color => color.slug === colors[ selectedIndex ].slug )
-		if ( defaultColorIndex !== -1 ) {
-			if ( colors[ selectedIndex ].fallback !== defaultColors[ defaultColorIndex ].color ) {
-				return false
-			}
-		}
-		return true
-	}
-
 	return colors && Array.isArray( colors ) && (
 		<Fragment>
 			<ResetButton onClick={ onColorPaletteReset } disabled={ disableReset } />
@@ -546,12 +396,7 @@ const ColorPickers = ( {
 							<DeleteButton
 								name={ colors[ selectedIndex ] && colors[ selectedIndex ].name }
 								onClick={ onColorDelete }
-								disabled={ inRange( selectedIndex, 0, 6 ) }
-							/>
-							<ResetColorButton
-								name={ colors[ selectedIndex ] && colors[ selectedIndex ].name }
-								onClick={ onColorReset }
-								disabled={ isResetDisabled() }
+								disabled={ colors[ selectedIndex ] && ! colors[ selectedIndex ].slug.includes( 'stk-global-color' ) }
 							/>
 						</div>
 					</div>

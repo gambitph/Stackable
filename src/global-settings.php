@@ -68,27 +68,12 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 								'color' => array(
 									'type' => 'string',
 								),
-								'fallback' => array(
-									'type' => 'string',
-								),
 								'rgb' => array(
 									'type' => 'string',
 								),
 							)
 						)
 					),
-					'default' => '',
-				)
-			);
-
-			register_setting(
-				'stackable_global_settings',
-				'stackable_global_colors_has_modified',
-				array(
-					'type' => 'boolean',
-					'description' => __( 'Stackable global colors if color has modified', STACKABLE_I18N ),
-					'sanitize_callback' => 'sanitize_text_field',
-					'show_in_rest' => true,
 					'default' => '',
 				)
 			);
@@ -228,18 +213,18 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				  $color_background_name = 'body .has-' . implode( '-', explode( ' ', $color_name ) ) . '-background-color';
 
 				  // Only do this for our global colors.
-				  if ( $color['fallback'] && $color['colorVar']){
+				  if ( $color['color'] && $color['colorVar']){
 				  	// Add the custom css property.
-					array_push( $css, $color['colorVar'] . ': ' . $color['fallback'] . ';' );
+					array_push( $css, $color['colorVar'] . ': ' . $color['color'] . ';' );
 					array_push( $css, $color['colorVar'] . '-rgba: ' . $color['rgb'] . ';' );
 
 
 					// Add custom css class rule for other blocks.
 					// For typography colors.
-					 array_push( $core_css, $color_typography_name . ' { color: ' . $color['fallback'] . ' !important; }');
+					 array_push( $core_css, $color_typography_name . ' { color: ' . $color['color'] . ' !important; }');
 
 					 // For background colors.
-					 array_push( $core_css, $color_background_name . ' { background-color: ' . $color['fallback'] . ' !important; }');
+					 array_push( $core_css, $color_background_name . ' { background-color: ' . $color['color'] . ' !important; }');
 				  }
 			  }
 

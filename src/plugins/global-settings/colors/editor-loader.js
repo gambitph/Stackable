@@ -2,7 +2,7 @@
  * Wordpress dependencies
  */
 import {
-	useSelect, dispatch,
+	useSelect,
 } from '@wordpress/data'
 import {
 	useEffect, useState, render,
@@ -13,7 +13,6 @@ import domReady from '@wordpress/dom-ready'
  * External dependencies
  */
 import rgba from 'color-rgba'
-import md5 from 'md5'
 
 const GlobalColorStyles = () => {
 	const { colors, defaultColors } = useSelect( select => ( {
@@ -25,8 +24,8 @@ const GlobalColorStyles = () => {
 	const renderGlobalStyles = newColors => {
 		// Output all our --stk-global-colors.
 		const styleRules = newColors.map( color => {
-			if ( color.colorVar && color.fallback ) {
-				return `${ color.colorVar || '' }: ${ color.fallback || '' };`
+			if ( color.colorVar && color.color ) {
+				return `${ color.colorVar || '' }: ${ color.color || '' };`
 			}
 
 			return ''
@@ -53,25 +52,7 @@ const GlobalColorStyles = () => {
 	useEffect( () => {
 		const timeout = setTimeout( () => {
 			if ( defaultColors && Array.isArray( defaultColors ) && defaultColors.length ) {
-				if ( colors.some( color => ! color.colorVar || ! color.fallback ) ) {
-					// Handle the addition of other colors in other plugin global color settings.
-					const newColors = colors.map( color => {
-						const { name, slug } = color
-						const newColor = { name, slug }
-						if ( ! color.colorVar || ! color.fallback ) {
-							newColor.colorVar = `--stk-global-color-${ md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 ) }`
-							newColor.color = `var(${ newColor.colorVar }, ${ color.color })`
-							newColor.fallback = color.color
-							return newColor
-						}
-						return color
-					} )
-					dispatch( 'core/block-editor' ).updateSettings( {
-						colors: newColors,
-					} )
-				} else {
-					renderGlobalStyles( colors )
-				}
+				renderGlobalStyles( colors )
 			}
 		}, 100 )
 		return () => clearTimeout( timeout )

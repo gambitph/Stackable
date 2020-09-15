@@ -50,7 +50,7 @@ const SaveModelSettings = () => {
 			return block
 		} )
 
-		const updatedColors = newColors.map( newColor => {
+		const updatedColors = newColors.filter( color => color.colorVar ).map( newColor => {
 			const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( newColor.colorVar ).trim() )
 			if ( Array.isArray( rgbaColor ) && rgbaColor.length !== 0 ) {
 				rgbaColor.splice( 3, 1 )
@@ -62,7 +62,7 @@ const SaveModelSettings = () => {
 
 		allBlocks.forEach( block => {
 			const { clientId, name } = block
-			if ( name && ( name.includes( 'core/' ) || name.includes( 'ugb/' ) ) ) {
+			if ( name && name.includes( 'ugb/' ) ) {
 				const newAttributes = updateFallbackColorAttributes( block.attributes, updatedColors )
 				if ( ! isEqual( newAttributes, block.attributes ) ) {
 					updateBlockAttributes( clientId, newAttributes )
@@ -80,10 +80,7 @@ const SaveModelSettings = () => {
 	useEffect( () => {
 		const saveModelSettingsTimeout = setTimeout( () => {
 			if ( defaultColors && Array.isArray( defaultColors ) && defaultColors.length ) {
-			    // Make sure that we are saving the global color palette.
-				if ( colors.every( color => color.colorVar && color.fallback ) ) {
-					saveModelSettings( colors )
-				}
+				saveModelSettings( colors )
 			}
 		}, 100 )
 		return () => clearTimeout( saveModelSettingsTimeout )
