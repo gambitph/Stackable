@@ -221,10 +221,10 @@ const ColorPickers = ( {
 	// If a new color is added, set the anchorRef to the new color element and open the Popover.
 	useEffect( () => {
 		if ( hasAddedNewColor ) {
-			const colorPickerEl = document.querySelector( '.ugb-global-settings-color-picker' )
+			const colorPickerEl = document.querySelectorAll( '.ugb-global-settings-color-picker>.components-circular-option-picker__option-wrapper' )
 			if ( colorPickerEl ) {
 				// Get the newly created color element/
-				const newButtonAnchor = colorPickerEl.children[ selectedIndex - 1 ]
+				const newButtonAnchor = colorPickerEl[ selectedIndex ]
 				if ( newButtonAnchor ) {
 					setColorButtonAnchor( newButtonAnchor )
 					setIsPopOverOpen( true )
