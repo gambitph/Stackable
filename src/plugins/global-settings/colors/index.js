@@ -14,7 +14,7 @@ import ColorPicker from './color-picker'
 import { i18n } from 'stackable'
 import { PanelAdvancedSettings } from '~stackable/components'
 import {
-	isEqual, omit, cloneDeep,
+	isEqual, omit, cloneDeep, uniqBy,
 } from 'lodash'
 import rgba from 'color-rgba'
 
@@ -160,6 +160,15 @@ addAction( 'stackable.global-settings.reset-compatibility', 'color-reset', ( blo
 	} )
 } )
 
+// Convert hex colors to global colors in Stackable blocks.
+addFilter( 'stackable.color-palette-control.change', 'stackable/global-settings/colors', ( value, colorObject ) => {
+	if ( colorObject && colorObject.slug.match( /stk-global-color/ ) ) {
+		return `var(${ colorObject.colorVar }, ${ colorObject.color })`
+	}
+
+	return value
+} )
+
 domReady( () => {
 	const { colors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
 	loadPromise.then( () => {
@@ -169,7 +178,7 @@ domReady( () => {
 			const { stackable_global_colors: globalColors } = response
 
 			dispatch( 'core/block-editor' ).updateSettings( {
-				colors: [ ...colors, ...globalColors ],
+				colors: uniqBy( [ ...colors, ...globalColors ], 'slug' ),
 				defaultColors: colors,
 			} )
 		} )

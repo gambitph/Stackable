@@ -372,6 +372,7 @@ const ColorPickers = ( {
 						label={ color.name || 'Untitled Color' }
 						style={ { backgroundColor: color.color, color: color.color } }
 						onClick={ event => handleOpenColorPicker( event, index ) }
+						disabled={ ! color.colorVar }
 					/>
 				</div>
 			) ) }
