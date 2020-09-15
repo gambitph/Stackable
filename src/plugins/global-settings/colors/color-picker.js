@@ -383,7 +383,7 @@ const ColorPickers = ( {
 					<div className="components-circular-option-picker__option-wrapper" key={ index }>
 						 <Button
 							className="components-circular-option-picker__option"
-							label={ color.name || 'Untitled Color' }
+							label={ color.name || __( 'Untitled Color', i18n ) }
 							style={ { backgroundColor: color.color, color: color.color } }
 							onClick={ event => handleOpenColorPicker( event, index ) }
 							disabled={ ! color.colorVar }
