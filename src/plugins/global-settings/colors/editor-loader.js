@@ -23,6 +23,7 @@ const GlobalColorStyles = () => {
 	const [ styles, setStyles ] = useState( '' )
 
 	const renderGlobalStyles = newColors => {
+		// Output all our --stk-global-colors.
 		const styleRules = newColors.map( color => {
 			if ( color.colorVar && color.fallback ) {
 				return `${ color.colorVar || '' }: ${ color.fallback || '' };`
@@ -33,6 +34,7 @@ const GlobalColorStyles = () => {
 
 		setStyles( `:root { ${ styleRules.join( '' ) }}` )
 
+		// Output all the rgba colors, detect the actual color values.
 		const rgbaStyleRules = newColors.map( color => {
 			if ( color.colorVar ) {
 				const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( color.colorVar ).trim() )
