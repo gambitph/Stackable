@@ -24,6 +24,12 @@ import rgba from 'color-rgba'
  */
 import { updateFallbackColorAttributes } from './util'
 
+// List of blocks which will be updated.
+const blocksToUpdate = [
+	'core',
+	'ugb',
+]
+
 const SaveModelSettings = () => {
 	const { colors, defaultColors } = useSelect( select => ( {
 		 colors: select( 'core/block-editor' ).getSettings().colors,
@@ -62,7 +68,7 @@ const SaveModelSettings = () => {
 
 		allBlocks.forEach( block => {
 			const { clientId, name } = block
-			if ( name && name.includes( 'ugb/' ) ) {
+			if ( name && new RegExp( blocksToUpdate.map( block => `${ block }/` ).join( '|' ) ).test( name ) ) {
 				const newAttributes = updateFallbackColorAttributes( block.attributes, updatedColors )
 				if ( ! isEqual( newAttributes, block.attributes ) ) {
 					updateBlockAttributes( clientId, newAttributes )

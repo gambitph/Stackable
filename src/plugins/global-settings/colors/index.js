@@ -14,7 +14,7 @@ import ColorPicker from './color-picker'
 import { i18n } from 'stackable'
 import { PanelAdvancedSettings } from '~stackable/components'
 import {
-	isEqual, omit, cloneDeep, uniqBy,
+	isEqual, omit, cloneDeep, uniqBy, find,
 } from 'lodash'
 import rgba from 'color-rgba'
 
@@ -155,6 +155,67 @@ addAction( 'stackable.global-settings.reset-compatibility', 'color-reset', ( blo
 			// Update the block attributes.
 			if ( ! isEqual( updatedAttributes, block.attributes ) ) {
 				updateBlockAttributes( clientId, updatedAttributes )
+			}
+		} else if ( name.includes( 'core/' ) ) {
+			//
+			/**
+			 * For core blocks.
+			 * If a core block uses a color palette included in the theme,
+			 * it uses the slug name as its attribute (e.g. textColor: "accent").
+			 * Otherwise, textColor will be undefined and instead will add a style attribute
+			 * (e.g. core/heading style: { color: "#123abc"}).
+			 */
+			if ( name.includes( 'heading' ) || name.includes( 'paragraph' ) ) {
+				const newAttributes = { style: { color: {}, ...block.attributes.style } }
+				const { backgroundColor, textColor } = block.attributes
+				if ( backgroundColor ) {
+					if ( backgroundColor.includes( 'stk-global-color-' ) ) {
+						// Retain the color
+						const colorVarMatch = backgroundColor.match( /stk-global-color-(\S*)/ )
+						if ( colorVarMatch && Array.isArray( colorVarMatch ) && colorVarMatch.length >= 2 ) {
+							const colorVarID = colorVarMatch[ 1 ]
+							newAttributes.backgroundColor = undefined
+							const appliedColor = find( colorsBeforeReset, color => color.slug === `stk-global-color-${ colorVarID }` )
+							newAttributes.style.color.background = appliedColor ? appliedColor.color || '#000000' : '#000000'
+						}
+					}
+				}
+
+				if ( textColor ) {
+					if ( textColor.includes( 'stk-global-color-' ) ) {
+						// Retain the color
+						const colorVarMatch = textColor.match( /stk-global-color-(\S*)/ )
+						if ( colorVarMatch && Array.isArray( colorVarMatch ) && colorVarMatch.length >= 2 ) {
+							const colorVarID = colorVarMatch[ 1 ]
+							newAttributes.textColor = undefined
+							const appliedColor = find( colorsBeforeReset, color => color.slug === `stk-global-color-${ colorVarID }` )
+							newAttributes.style.color.text = appliedColor ? appliedColor.color || '#000000' : '#000000'
+						}
+					}
+				}
+
+				// Update the block attributes.
+				updateBlockAttributes( clientId, newAttributes )
+			} else {
+				const updatedAttributes = replaceGlobalColorAttributes( block.attributes, colorsBeforeReset )
+
+				// This is used for pullquote compatibility.
+				if ( updatedAttributes.textColor ) {
+					const defaultColor = find( colorsAfterReset, updatedColor => updatedColor.slug === updatedAttributes.textColor )
+					if ( ! defaultColor ) {
+						const appliedColor = find( colorsBeforeReset, color => color.slug === updatedAttributes.textColor )
+						updatedAttributes.customTextColor = appliedColor ? appliedColor.fallback || '#000000' : '#000000'
+						updatedAttributes.textColor = undefined
+					} else {
+						updatedAttributes.customTextColor = defaultColor.color || '#000000'
+						updatedAttributes.textColor = undefined
+					}
+				}
+
+				// Update the block attributes.
+				if ( ! isEqual( updatedAttributes, block.attributes ) ) {
+					updateBlockAttributes( clientId, updatedAttributes )
+				}
 			}
 		}
 	} )
