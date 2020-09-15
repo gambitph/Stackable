@@ -26,7 +26,7 @@ import { uniqBy } from 'lodash'
  */
 const EditorColorPaletteChange = () => {
 	const {
-		deviceType, preferences, defaultColors,
+		deviceType, preferences, defaultColors, useStackableColorsOnly,
 	} = useSelect(
 		select => ( {
 			deviceType: select(
@@ -34,6 +34,7 @@ const EditorColorPaletteChange = () => {
 			).__experimentalGetPreviewDeviceType(),
 			preferences: select( 'core/edit-post' ).getPreferences(),
 			defaultColors: select( 'core/block-editor' ).getSettings().defaultColors,
+			useStackableColorsOnly: select( 'core/block-editor' ).getSettings().useStackableColorsOnly,
 		} ),
 		[]
 	)
@@ -47,7 +48,7 @@ const EditorColorPaletteChange = () => {
 
 				if ( defaultColors && Array.isArray( defaultColors ) && defaultColors.length ) {
 					dispatch( 'core/block-editor' ).updateSettings( {
-						colors: uniqBy( [ ...colors, ...stackableGlobalColors ], 'slug' ),
+						colors: useStackableColorsOnly ? [ ...stackableGlobalColors ] : uniqBy( [ ...colors, ...stackableGlobalColors ], 'slug' ),
 					} )
 				}
 			} )
