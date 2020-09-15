@@ -202,8 +202,8 @@ const ColorOption = props => {
 
 	if ( props.locked ) {
 		return (
-			<div className="components-circular-option-picker__option-wrapper ugb-global-settings__color-picker-wrapper">
-				<div className="components-circular-option-picker__option ugb-global-settings__color-picker-disabled-color" style={ { backgroundColor: color, color } }>
+			<div className="components-circular-option-picker__option-wrapper ugb-global-settings__color-picker-disabled-color">
+				<div className="components-circular-option-picker__option" style={ { backgroundColor: color, color } }>
 					<LockIcon color={ whiteIfDark( null, color ) || '#222222' } />
 				</div>
 			</div>
