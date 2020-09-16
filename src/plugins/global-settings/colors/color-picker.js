@@ -14,7 +14,7 @@ import {
 	Button, ColorPicker, Popover, BaseControl, ButtonGroup,
 } from '@wordpress/components'
 import {
-	Fragment, useState, useRef,
+	Fragment, useState,
 } from '@wordpress/element'
 import {
 	select, dispatch, useSelect,
@@ -53,33 +53,20 @@ const ColorPickerTextArea = props => (
 // Component used to add a Delete Style button at the bottom of the ColorPicker.
 const DeleteButton = props => {
 	const [ isDeletePopoverOpen, setIsDeletePopoverOpen ] = useState( false )
-	const deleteButtonRef = useRef( null )
-
-	const handleDelete = () => {
-		setIsDeletePopoverOpen( toggle => ! toggle )
-	}
-
-	const onFocusOutside = event => {
-		if ( deleteButtonRef && event.target !== deleteButtonRef.current ) {
-			setIsDeletePopoverOpen( false )
-		}
-	}
 
 	return (
 		<Fragment>
 			<Button
-				ref={ deleteButtonRef }
 				className="ugb-global-settings-color-picker__delete-button-text"
 				isLink
-				onClick={ handleDelete }
+				onClick={ () => setIsDeletePopoverOpen( toggle => ! toggle ) }
 				disabled={ props.disabled }
 			>
 				{ __( 'Delete color', i18n ) }
 			</Button>
 			{ isDeletePopoverOpen && (
 				<Popover
-					anchorRef={ deleteButtonRef.current }
-					onFocusOutside={ onFocusOutside }
+					onFocusOutside={ () => setIsDeletePopoverOpen( false ) }
 					position="bottom center"
 				>
 					<div className="components-color-picker__body">
@@ -93,7 +80,10 @@ const DeleteButton = props => {
 							<ButtonGroup>
 								<Button
 									className="ugb-global-settings-color-picker__delete-button"
-									onClick={ props.onClick }
+									onClick={ () => {
+										setIsDeletePopoverOpen( false )
+										props.onClick()
+									} }
 									isDestructive
 									isSmall
 								>
