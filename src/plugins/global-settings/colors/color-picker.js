@@ -281,9 +281,17 @@ const ColorPickers = ( {
 	// Called when deleting a color.
 	const onColorDelete = () => {
 		const { colors: updatedColors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
+		const blocks = select( 'core/block-editor' ).getBlocks()
 
 		// Delete the specific color based on the selected index.
 		updatedColors.splice( selectedIndex, 1 )
+
+		/**
+		 * Revert the global color attributes to hex color.
+		 *
+		 * @see global-settings/colors
+		 */
+		doAction( 'stackable.global-settings.reset-compatibility', blocks, [ colors[ selectedIndex ] ] )
 
 		// Update the colors.
 		updateColors( updatedColors )
@@ -298,7 +306,7 @@ const ColorPickers = ( {
 		const blocks = select( 'core/block-editor' ).getBlocks()
 
 		/**
-		 * Compability adjustment for stackable and other blocks.
+		 * Compability adjustment for stackable and native blocks.
 		 *
 		 * @see global-settings/colors
 		 */
@@ -317,10 +325,13 @@ const ColorPickers = ( {
 		const slugId = Math.floor( Math.random() * new Date().getTime() )
 		const colorVar = `--stk-global-color-${ __id }`
 
+		// Generate a new random color since having 2 same colors in the color picker messes up the selection.
+		const color = `#${ ( ( 1 << 24 ) * Math.random() | 0 ).toString( 16 ) }` // eslint-disable-line no-bitwise
+
 		const updatedColors = [
 			...select( 'core/block-editor' ).getSettings().colors,
 			{
-				name: sprintf( __( 'Custom Color %s', i18n ), newIndex ), slug: `stk-global-color-${ slugId }`, color: '#000000', colorVar,
+				name: sprintf( __( 'Custom Color %s', i18n ), newIndex ), slug: `stk-global-color-${ slugId }`, color, colorVar,
 			},
 		]
 
