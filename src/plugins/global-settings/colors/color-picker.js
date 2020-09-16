@@ -34,14 +34,14 @@ const ColorPickerTextArea = props => (
 			<div className="components-color-picker__inputs-wrapper">
 				<div className="components-color-picker__inputs-fields">
 					<BaseControl
-						id={ props.id || 'text-area' }
+						id="color-picker-text-name"
 						className="components-color-picker__input-field"
 						label={ __( 'Style name', i18n ) }>
 						<input
 							className="components-text-control__input"
-							{ ...props }
-							id={ props.id || 'text-area' }
-							onChange={ event => props.onChange && props.onChange( event.target.value ) }
+							id="color-picker-text-name"
+							onChange={ event => props.onChange( event.target.value ) }
+							value={ props.value }
 						/>
 					</BaseControl>
 				</div>
@@ -49,6 +49,11 @@ const ColorPickerTextArea = props => (
 		</div>
 	</div>
 )
+
+ColorPickerTextArea.defaultProps = {
+	value: '',
+	onChange: () => {},
+}
 
 // Component used to add a Delete Style button at the bottom of the ColorPicker.
 const DeleteButton = props => {
@@ -339,7 +344,6 @@ const ColorPickers = ( {
 									disableAlpha
 								/>
 								<ColorPickerTextArea
-									id="color-picker-text-name"
 									onChange={ onChangeStyleName }
 									value={ color.name || '' }
 								/>
