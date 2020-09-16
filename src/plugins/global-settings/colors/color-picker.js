@@ -36,7 +36,8 @@ const ColorPickerTextArea = props => (
 					<BaseControl
 						id="color-picker-text-name"
 						className="components-color-picker__input-field"
-						label={ __( 'Style name', i18n ) }>
+						label={ __( 'Style name', i18n ) }
+					>
 						<input
 							className="components-text-control__input"
 							id="color-picker-text-name"
