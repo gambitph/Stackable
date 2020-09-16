@@ -250,9 +250,9 @@ addFilter( 'stackable.color-palette-control.change', 'stackable/global-settings/
 
 /**
  * Function used for updating the fallback values of
-blocks in the editor using global colors.
+ * blocks in the editor using global colors.
  *
- * @param updatedColors
+ * @param {{color: string, slug: string, name: string, colorVar: ?string, rgb: ?string}[]} updatedColors
  */
 const updateFallbackBlockAttributesInEditor = updatedColors => {
 	const { getBlock, getBlocks } = select( 'core/block-editor' )
