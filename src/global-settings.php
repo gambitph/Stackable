@@ -227,51 +227,51 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			}
 		}
 
-		 /**
-		  * Add our global color styles in the frontend.
-		  *
-		  * @return void
-		  */
-		  public function color_add_global_styles() {
-			  // Don't do anything if we doon't have any global color.
-			  $colors = get_option( 'stackable_global_colors' );
-			  if ( ! $colors || ! is_array( $colors ) ) {
-				  return;
-			  }
+		/**
+		 * Add our global color styles in the frontend.
+		 *
+		 * @return void
+		 */
+		public function color_add_global_styles() {
+			// Don't do anything if we doon't have any global color.
+			$colors = get_option( 'stackable_global_colors' );
+			if ( ! $colors || ! is_array( $colors ) ) {
+				return;
+			}
 
-			  $css = array();
-			  $core_css = array();
+			$css = array();
+			$core_css = array();
 
-			  foreach( $colors as $color  ) {
-				  $color_name = strtolower( $color['slug'] );
+			foreach( $colors as $color  ) {
+				$color_name = strtolower( $color['slug'] );
 
-				  // Convert the name to kebab casing,
-				  $color_typography_name = 'body .has-' . implode( '-', explode( ' ', $color_name ) ) . '-color';
-				  $color_background_name = 'body .has-' . implode( '-', explode( ' ', $color_name ) ) . '-background-color';
+				// Convert the name to kebab casing,
+				$color_typography_name = 'body .has-' . implode( '-', explode( ' ', $color_name ) ) . '-color';
+				$color_background_name = 'body .has-' . implode( '-', explode( ' ', $color_name ) ) . '-background-color';
 
-				  // Only do this for our global colors.
-				  if ( $color['color'] && $color['colorVar']){
-				  	// Add the custom css property.
-					array_push( $css, $color['colorVar'] . ': ' . $color['color'] . ';' );
-					array_push( $css, $color['colorVar'] . '-rgba: ' . $color['rgb'] . ';' );
+				// Only do this for our global colors.
+				if ( $color['color'] && $color['colorVar']){
+				// Add the custom css property.
+				array_push( $css, $color['colorVar'] . ': ' . $color['color'] . ';' );
+				array_push( $css, $color['colorVar'] . '-rgba: ' . $color['rgb'] . ';' );
 
 
-					// Add custom css class rule for other blocks.
-					// For typography colors.
-					 array_push( $core_css, $color_typography_name . ' { color: ' . $color['color'] . ' !important; }');
+				// Add custom css class rule for other blocks.
+				// For typography colors.
+					array_push( $core_css, $color_typography_name . ' { color: ' . $color['color'] . ' !important; }');
 
-					 // For background colors.
-					 array_push( $core_css, $color_background_name . ' { background-color: ' . $color['color'] . ' !important; }');
-				  }
-			  }
+					// For background colors.
+					array_push( $core_css, $color_background_name . ' { background-color: ' . $color['color'] . ' !important; }');
+				}
+			}
 
-			  $generated_color_css = ':root {
-				  ' . implode( ' ', $css ) . '
-			  }';
+			$generated_color_css = ':root {
+				' . implode( ' ', $css ) . '
+			}';
 
-			  wp_add_inline_style( 'ugb-style-css', $generated_color_css );
-			  wp_add_inline_style( 'ugb-style-css', implode( ' ', $core_css ) );
-		  }
+			wp_add_inline_style( 'ugb-style-css', $generated_color_css );
+			wp_add_inline_style( 'ugb-style-css', implode( ' ', $core_css ) );
+		}
 
 		/**-----------------------------------------------------------------------------
 		 * Typography functions
