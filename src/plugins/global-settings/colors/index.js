@@ -249,24 +249,17 @@ addFilter( 'stackable.color-palette-control.change', 'stackable/global-settings/
 } )
 
 /**
- * Action for saving the colors in models settings.
+ * Function used for updating the fallback values of
+blocks in the editor using global colors.
+ *
+ * @param updatedColors
  */
-addAction( 'stackable.global-colors.save-model-settings', 'color-save-settings', newColors => {
+const updateFallbackBlockAttributesInEditor = updatedColors => {
 	const { getBlock, getBlocks } = select( 'core/block-editor' )
 	const { updateBlockAttributes } = dispatch( 'core/block-editor' )
 
 	const stringifiedBlocks = JSON.stringify( getBlocks() )
 	const parsedClientIds = stringifiedBlocks.match( /"clientId":".+?(?=\")"/g )
-
-	const updatedColors = newColors.filter( color => color.colorVar ).map( newColor => {
-		const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( newColor.colorVar ).trim() )
-		if ( Array.isArray( rgbaColor ) && rgbaColor.length !== 0 ) {
-			rgbaColor.splice( 3, 1 )
-			newColor.rgb = rgbaColor.join( ', ' )
-			return newColor
-		}
-		return newColor
-	} )
 
 	if ( parsedClientIds && Array.isArray( parsedClientIds ) && parsedClientIds.length ) {
 		const clientIds = parsedClientIds.map( parsedClientId => {
@@ -290,6 +283,23 @@ addAction( 'stackable.global-colors.save-model-settings', 'color-save-settings',
 			}
 		} )
 	}
+}
+
+/**
+ * Action for saving the colors in models settings.
+ */
+addAction( 'stackable.global-colors.save-model-settings', 'color-save-settings', newColors => {
+	const updatedColors = newColors.filter( color => color.colorVar ).map( newColor => {
+		const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( newColor.colorVar ).trim() )
+		if ( Array.isArray( rgbaColor ) && rgbaColor.length !== 0 ) {
+			rgbaColor.splice( 3, 1 )
+			newColor.rgb = rgbaColor.join( ', ' )
+			return newColor
+		}
+		return newColor
+	} )
+
+	updateFallbackBlockAttributesInEditor( updatedColors )
 
 	// Make sure that we are saving the colors with colorVars.
 	loadPromise.then( () => {
