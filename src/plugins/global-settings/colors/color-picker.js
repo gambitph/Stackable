@@ -76,7 +76,7 @@ const DeleteButton = props => {
 				>
 					<div className="components-color-picker__body">
 						<div className="ugb-global-settings-color-picker__popover-text is-red">
-							{ __( 'Delete', i18n ) } { ` "${ props.name }"` }
+							{ sprintf( __( 'Delete "%s"', i18n ), props.name ) }
 						</div>
 						<div className="ugb-global-settings-color-picker__popover-text">
 							{ __( 'Any blocks that use this color will become unlinked with this global color. Delete this color?', i18n ) }
