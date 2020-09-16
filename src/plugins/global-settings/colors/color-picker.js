@@ -287,6 +287,7 @@ const ColorPickers = ( {
 
 		// Update the colors.
 		updateColors( updatedColors )
+		setSelectedIndex( null )
 	}
 
 	// Called when the user decided to reset the color palette.
