@@ -192,6 +192,9 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.10.4 =
+* Fixed: Some responsive font-sizes won't apply
+
 = 2.10.3 =
 * Fixed: Block errors in nested blocks
 * Fixed: PHP warning undefined index page
