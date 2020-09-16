@@ -36,7 +36,6 @@ import { ToggleControl } from '@wordpress/components'
  * the Global Colors are modified (changing the fallback values).
  */
 const blocksToUpdate = [
-	'core',
 	'ugb',
 ]
 
@@ -289,7 +288,7 @@ const updateFallbackBlockAttributesInEditor = updatedColors => {
  * Action for saving the colors in models settings.
  */
 addAction( 'stackable.global-colors.save-model-settings', 'color-save-settings', newColors => {
-	const updatedColors = newColors.filter( color => color.colorVar ).map( newColor => {
+	const updatedColors = newColors.filter( color => color.slug.match( /^stk-global-color/ ) ).map( newColor => {
 		const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( newColor.colorVar ).trim() )
 		if ( Array.isArray( rgbaColor ) && rgbaColor.length !== 0 ) {
 			rgbaColor.splice( 3, 1 )
