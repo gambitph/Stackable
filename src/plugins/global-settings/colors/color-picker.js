@@ -128,25 +128,11 @@ const AddButton = props => (
 // Component used to add a reset icon button.
 const ResetButton = props => {
 	const [ isResetPopoverOpen, setIsResetPopoverOpen ] = useState( false )
-	// State used to control the busy indicator in the reset button.
-	const [ isBusyResetButton, setIsBusyResetButton ] = useState( false )
 
-	const resetButtonRef = useRef( null )
-
-	const handleReset = () => {
-		setIsResetPopoverOpen( toggle => ! toggle )
-	}
-
-	const onFocusOutside = event => {
-		if ( resetButtonRef && event.target !== resetButtonRef.current ) {
-			setIsResetPopoverOpen( false )
-		}
-	}
 	return (
 		<div className="ugb-global-settings-color-picker__reset-button">
 			<Button
-				ref={ resetButtonRef }
-				onClick={ handleReset }
+				onMouseDown={ () => setIsResetPopoverOpen( toggle => ! toggle ) }
 				disabled={ props.disabled }
 				isSecondary
 				isSmall
@@ -155,8 +141,7 @@ const ResetButton = props => {
 			</Button>
 			{ isResetPopoverOpen && (
 				<Popover
-					anchorRef={ resetButtonRef.current }
-					onFocusOutside={ onFocusOutside }
+					onFocusOutside={ () => setIsResetPopoverOpen( false ) }
 					position="bottom center"
 				>
 					<div className="components-color-picker__body">
@@ -170,10 +155,10 @@ const ResetButton = props => {
 							<ButtonGroup>
 								<Button
 									onClick={ () => {
-										props.onClick( setIsResetPopoverOpen, setIsBusyResetButton )
+										props.onClick()
+										setIsResetPopoverOpen( false )
 									} }
 									disabled={ props.disabled }
-									isBusy={ isBusyResetButton }
 									isSecondary
 									isSmall
 								>
@@ -299,8 +284,7 @@ const ColorPickers = ( {
 	}
 
 	// Called when the user decided to reset the color palette.
-	const onColorPaletteReset = ( setIsResetPopoverOpen, setIsBusyResetButton ) => {
-		setIsBusyResetButton( true )
+	const onColorPaletteReset = () => {
 		const {
 			defaultColors, colors, useStackableColorsOnly,
 		} = cloneDeep( select( 'core/block-editor' ).getSettings() )
@@ -315,8 +299,6 @@ const ColorPickers = ( {
 
 		// Update the colors
 		updateColors( useStackableColorsOnly ? [] : defaultColors )
-		setIsResetPopoverOpen( false )
-		setIsBusyResetButton( false )
 	}
 
 	// Called when adding a new color.
