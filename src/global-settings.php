@@ -64,9 +64,6 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 								'slug' => array(
 									'type' => 'string',
 								),
-								'colorVar' => array(
-									'type' => 'string',
-								),
 								'color' => array(
 									'type' => 'string',
 								),
@@ -250,10 +247,10 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				$color_background_name = 'body .has-' . implode( '-', explode( ' ', $color_name ) ) . '-background-color';
 
 				// Only do this for our global colors.
-				if ( $color['color'] && $color['colorVar']){
+				if ( $color['color'] && $color['slug']){
 				// Add the custom css property.
-				array_push( $css, $color['colorVar'] . ': ' . $color['color'] . ';' );
-				array_push( $css, $color['colorVar'] . '-rgba: ' . $color['rgb'] . ';' );
+				array_push( $css, '--' . $color['slug'] . ': ' . $color['color'] . ';' );
+				array_push( $css, '--' . $color['slug'] . '-rgba: ' . $color['rgb'] . ';' );
 
 
 				// Add custom css class rule for other blocks.

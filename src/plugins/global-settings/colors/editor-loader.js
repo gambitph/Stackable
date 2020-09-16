@@ -17,8 +17,8 @@ import rgba from 'color-rgba'
 const renderGlobalStyles = ( newColors, setStyles ) => {
 	// Output all our --stk-global-colors.
 	const styleRules = newColors.map( color => {
-		if ( color.colorVar && color.color ) {
-			return `${ color.colorVar || '' }: ${ color.color || '' };`
+		if ( color.slug.match( /^stk-global-color/ ) ) {
+			return `--${ color.slug || '' }: ${ color.color || '' };`
 		}
 
 		return ''
@@ -28,11 +28,11 @@ const renderGlobalStyles = ( newColors, setStyles ) => {
 
 	// Output all the rgba colors, detect the actual color values.
 	const rgbaStyleRules = newColors.map( color => {
-		if ( color.colorVar ) {
-			const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( color.colorVar ).trim() )
+		if ( color.slug.match( /^stk-global-color/ ) ) {
+			const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( `--${ color.slug }` ).trim() )
 			if ( Array.isArray( rgbaColor ) && rgbaColor.length !== 0 ) {
 				rgbaColor.splice( 3, 1 )
-				return `${ color.colorVar || '' }-rgba: ${ rgbaColor.join( ', ' ) };`
+				return `--${ color.slug || '' }-rgba: ${ rgbaColor.join( ', ' ) };`
 			}
 		}
 

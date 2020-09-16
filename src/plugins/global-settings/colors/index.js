@@ -241,7 +241,7 @@ addAction( 'stackable.global-colors.reset-compatibility', 'color-reset', ( block
 // Convert hex colors to global colors in Stackable blocks.
 addFilter( 'stackable.color-palette-control.change', 'stackable/global-settings/colors', ( value, colorObject ) => {
 	if ( colorObject && colorObject.slug.match( /stk-global-color/ ) ) {
-		return `var(${ colorObject.colorVar }, ${ colorObject.color })`
+		return `var(--${ colorObject.slug }, ${ colorObject.color })`
 	}
 
 	return value
@@ -251,7 +251,7 @@ addFilter( 'stackable.color-palette-control.change', 'stackable/global-settings/
  * Function used for updating the fallback values of
  * blocks in the editor using global colors.
  *
- * @param {{color: string, slug: string, name: string, colorVar: ?string, rgb: ?string}[]} updatedColors
+ * @param {{color: string, slug: string, name: string, rgb: ?string}[]} updatedColors
  */
 const updateFallbackBlockAttributesInEditor = updatedColors => {
 	const { getBlock, getBlocks } = select( 'core/block-editor' )
@@ -289,7 +289,7 @@ const updateFallbackBlockAttributesInEditor = updatedColors => {
  */
 addAction( 'stackable.global-colors.save-model-settings', 'color-save-settings', newColors => {
 	const updatedColors = newColors.filter( color => color.slug.match( /^stk-global-color/ ) ).map( newColor => {
-		const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( newColor.colorVar ).trim() )
+		const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( `--${ newColor.slug }` ).trim() )
 		if ( Array.isArray( rgbaColor ) && rgbaColor.length !== 0 ) {
 			rgbaColor.splice( 3, 1 )
 			newColor.rgb = rgbaColor.join( ', ' )
@@ -300,7 +300,6 @@ addAction( 'stackable.global-colors.save-model-settings', 'color-save-settings',
 
 	updateFallbackBlockAttributesInEditor( updatedColors )
 
-	// Make sure that we are saving the colors with colorVars.
 	loadPromise.then( () => {
 		const settings = new models.Settings( { stackable_global_colors: updatedColors } ) // eslint-disable-line camelcase
 		settings.save()

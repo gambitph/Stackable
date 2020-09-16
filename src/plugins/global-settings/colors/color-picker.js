@@ -3,7 +3,6 @@
  */
 import classnames from 'classnames'
 import { cloneDeep, debounce } from 'lodash'
-import md5 from 'md5'
 import { i18n } from 'stackable'
 import { whiteIfDark } from '~stackable/util'
 
@@ -232,14 +231,9 @@ const ColorPickers = ( {
 	// Called when updating a color.
 	const onChangeColor = data => {
 		const { colors: updatedColors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
-		const { colorVar: existingColorVar } = updatedColors[ selectedIndex ]
-		const colorVar = `--stk-global-color-${ md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 ) }`
 
 		// Overwrite the selected color to a new color.
 		updatedColors[ selectedIndex ].color = data.hex
-
-		// Add a fallback and colorVar if not exists.
-		updatedColors[ selectedIndex ].colorVar = existingColorVar || colorVar
 
 		// Update the colors.
 		updateColors( updatedColors )
@@ -298,9 +292,7 @@ const ColorPickers = ( {
 	// Called when adding a new color.
 	const handleAddIcon = () => {
 		const newIndex = ( colors && Array.isArray( colors ) ) ? colors.length + 1 : 1
-		const __id = md5( Math.floor( Math.random() * new Date().getTime() ) ).substr( 0, 5 )
-		const slugId = Math.floor( Math.random() * new Date().getTime() )
-		const colorVar = `--stk-global-color-${ __id }`
+		const slugId = Math.floor( Math.random() * new Date().getTime() ) % 100000
 
 		// Generate a new random color since having 2 same colors in the color picker messes up the selection.
 		const color = `#${ ( ( 1 << 24 ) * Math.random() | 0 ).toString( 16 ) }` // eslint-disable-line no-bitwise
@@ -308,7 +300,7 @@ const ColorPickers = ( {
 		const updatedColors = [
 			...select( 'core/block-editor' ).getSettings().colors,
 			{
-				name: sprintf( __( 'Custom Color %s', i18n ), newIndex ), slug: `stk-global-color-${ slugId }`, color, colorVar,
+				name: sprintf( __( 'Custom Color %s', i18n ), newIndex ), slug: `stk-global-color-${ slugId }`, color,
 			},
 		]
 
