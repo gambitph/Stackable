@@ -109,7 +109,7 @@ describe( 'replaceGlobalColorAttributes', () => {
 	} )
 } )
 
-describe( 'updateFallbackCOlorAttributes', () => {
+describe( 'updateFallbackColorAttributes', () => {
 	it( 'should update all global color fallbak color attributes', () => {
 		const dummyAttributes = {
 			level1Attribute1: 'var(--stk-global-color-111111, #444abc)',

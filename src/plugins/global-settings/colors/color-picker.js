@@ -253,7 +253,6 @@ const ColorPickers = ( {
 	// Called when deleting a color.
 	const onColorDelete = () => {
 		const { colors: updatedColors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
-		const blocks = select( 'core/block-editor' ).getBlocks()
 
 		// Delete the specific color based on the selected index.
 		updatedColors.splice( selectedIndex, 1 )
@@ -263,7 +262,7 @@ const ColorPickers = ( {
 		 *
 		 * @see global-settings/colors
 		 */
-		doAction( 'stackable.global-colors.reset-compatibility', blocks, [ colors[ selectedIndex ] ] )
+		doAction( 'stackable.global-colors.reset-compatibility', [ colors[ selectedIndex ] ] )
 
 		// Update the colors.
 		updateColors( updatedColors )
@@ -276,14 +275,13 @@ const ColorPickers = ( {
 			 colors,
 		} = cloneDeep( select( 'core/block-editor' ).getSettings() )
 		const { defaultColors, useStackableColorsOnly } = cloneDeep( select( 'stackable/global-colors' ).getSettings() )
-		const blocks = select( 'core/block-editor' ).getBlocks()
 
 		/**
 		 * Compability adjustment for stackable and native blocks.
 		 *
 		 * @see global-settings/colors
 		 */
-		doAction( 'stackable.global-colors.reset-compatibility', blocks, colors )
+		doAction( 'stackable.global-colors.reset-compatibility', colors )
 
 		// Update the colors
 		updateColors( useStackableColorsOnly ? [] : defaultColors )

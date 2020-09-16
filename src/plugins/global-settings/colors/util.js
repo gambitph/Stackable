@@ -1,7 +1,12 @@
 /**
  * External dependencies
  */
-import { find } from 'lodash'
+import { find, isEqual } from 'lodash'
+
+/**
+ * WordPress dependencies
+ */
+import { select, dispatch } from '@wordpress/data'
 
 /**
  * Function used to update an attribute based on the matched
@@ -45,6 +50,97 @@ export const replaceGlobalColorAttributes = ( attributes = {}, colorsBeforeReset
 	return JSON.parse( updatedStringifiedAttributes )
 }
 
+export const resetBlockColorAttributes = ( block, colorObjects ) => {
+	const { clientId, name } = block
+	const { updateBlockAttributes } = dispatch( 'core/block-editor' )
+
+	if ( name.includes( 'ugb/' ) ) {
+		//
+		/**
+		 * For stackable blocks.
+		 * We are retaining the color of blocks that uses
+		 * the deleted global color. Otherwise, reset its color
+		 * as well.
+		 */
+		const updatedAttributes = replaceGlobalColorAttributes( block.attributes, colorObjects )
+
+		// Update the block attributes.
+		if ( ! isEqual( updatedAttributes, block.attributes ) ) {
+			updateBlockAttributes( clientId, updatedAttributes )
+		}
+	} else if ( name.includes( 'core/' ) ) {
+		//
+		/**
+		 * For core blocks.
+		 * If a core block uses a color palette included in the theme,
+		 * it uses the slug name as its attribute (e.g. textColor: "accent").
+		 * Otherwise, textColor will be undefined and instead will add a style attribute
+		 * (e.g. core/heading style: { color: "#123abc"}).
+		 */
+		if ( name.includes( 'heading' ) || name.includes( 'paragraph' ) ) {
+			const newAttributes = { style: { color: {}, ...block.attributes.style } }
+			const { backgroundColor, textColor } = block.attributes
+			if ( backgroundColor ) {
+				if ( backgroundColor.includes( 'stk-global-color-' ) ) {
+					// Retain the color
+					const colorVarMatch = backgroundColor.match( /stk-global-color-(\S*)/ )
+					if ( colorVarMatch && Array.isArray( colorVarMatch ) && colorVarMatch.length >= 2 ) {
+						const colorVarID = colorVarMatch[ 1 ]
+						newAttributes.backgroundColor = undefined
+						const appliedColor = find( colorObjects, color => color.slug === `stk-global-color-${ colorVarID }` )
+						newAttributes.style.color.background = appliedColor ? appliedColor.color || '#000000' : '#000000'
+					}
+				}
+			}
+
+			if ( textColor ) {
+				if ( textColor.includes( 'stk-global-color-' ) ) {
+					// Retain the color
+					const colorVarMatch = textColor.match( /stk-global-color-(\S*)/ )
+					if ( colorVarMatch && Array.isArray( colorVarMatch ) && colorVarMatch.length >= 2 ) {
+						const colorVarID = colorVarMatch[ 1 ]
+						newAttributes.textColor = undefined
+						const appliedColor = find( colorObjects, color => color.slug === `stk-global-color-${ colorVarID }` )
+						newAttributes.style.color.text = appliedColor ? appliedColor.color || '#000000' : '#000000'
+					}
+				}
+			}
+
+			// Update the block attributes.
+			updateBlockAttributes( clientId, newAttributes )
+		}
+	}
+}
+
+/**
+ * Function used for updating the fallback values of
+ * blocks in the editor using global colors.
+ *
+ * @param {{color: string, slug: string, name: string, colorVar: ?string, rgb: ?string}[]} updatedColors
+ */
+export const updateFallbackBlockAttributes = updatedColors => {
+	const { updateBlockAttributes } = dispatch( 'core/block-editor' )
+
+	const updateFallbackAttributesRecursive = blocks => {
+		blocks.forEach( block => {
+			const { clientId, name } = block
+			if ( name.match( /^ugb\// ) ) {
+				const newAttributes = updateFallbackColorAttributes( block.attributes, updatedColors )
+				if ( ! isEqual( newAttributes, block.attributes ) ) {
+					updateBlockAttributes( clientId, newAttributes )
+				}
+			}
+
+			// Also adjust the inner blocks.
+			if ( block.innerBlocks && block.innerBlocks.length ) {
+				updateFallbackAttributesRecursive( block.innerBlocks )
+			}
+		} )
+	}
+
+	updateFallbackAttributesRecursive( select( 'core/block-editor' ).getBlocks() )
+}
+
 /**
  * Used to update the fallback values in attributes object
  *
@@ -68,6 +164,7 @@ export const updateFallbackColorAttributes = ( attributes = {}, colors = [] ) =>
 			if ( newColor ) {
 				return `var(${ colorVar }, ${ newColor.color })`
 			}
+
 			return colorAttribute
 		} )
 	} )
