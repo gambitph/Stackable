@@ -36,7 +36,7 @@ const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
 	}
 }
 
-registerStore( 'stackable-global-colors', {
+registerStore( 'stackable/global-colors', {
 	reducer: STORE_REDUCER,
 	actions: STORE_ACTIONS,
 	selectors: STORE_SELECTORS,
