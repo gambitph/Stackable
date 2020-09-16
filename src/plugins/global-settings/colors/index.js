@@ -257,19 +257,6 @@ addAction( 'stackable.global-colors.save-model-settings', 'color-save-settings',
 
 	const stringifiedBlocks = JSON.stringify( getBlocks() )
 	const parsedClientIds = stringifiedBlocks.match( /"clientId":".+?(?=\")"/g )
-	if ( ! parsedClientIds || ( parsedClientIds && ! Array.isArray( parsedClientIds ) ) ) {
-		return
-	}
-	const clientIds = parsedClientIds.map( parsedClientId => {
-		const { clientId } = JSON.parse( `{${ parsedClientId }}` )
-		return clientId
-	} )
-
-	// Include innerBlocks.
-	const allBlocks = clientIds.map( clientID => {
-		const block = omit( getBlock( clientID ), 'innerBlocks' )
-		return block
-	} )
 
 	const updatedColors = newColors.filter( color => color.colorVar ).map( newColor => {
 		const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( newColor.colorVar ).trim() )
@@ -281,15 +268,28 @@ addAction( 'stackable.global-colors.save-model-settings', 'color-save-settings',
 		return newColor
 	} )
 
-	allBlocks.forEach( block => {
-		const { clientId, name } = block
-		if ( name && new RegExp( blocksToUpdate.map( block => `${ block }/` ).join( '|' ) ).test( name ) ) {
-			const newAttributes = updateFallbackColorAttributes( block.attributes, updatedColors )
-			if ( ! isEqual( newAttributes, block.attributes ) ) {
-				updateBlockAttributes( clientId, newAttributes )
+	if ( parsedClientIds && Array.isArray( parsedClientIds ) && parsedClientIds.length ) {
+		const clientIds = parsedClientIds.map( parsedClientId => {
+			const { clientId } = JSON.parse( `{${ parsedClientId }}` )
+			return clientId
+		} )
+
+		// Include innerBlocks.
+		const allBlocks = clientIds.map( clientID => {
+			const block = omit( getBlock( clientID ), 'innerBlocks' )
+			return block
+		} )
+
+		allBlocks.forEach( block => {
+			const { clientId, name } = block
+			if ( name && new RegExp( blocksToUpdate.map( block => `${ block }/` ).join( '|' ) ).test( name ) ) {
+				const newAttributes = updateFallbackColorAttributes( block.attributes, updatedColors )
+				if ( ! isEqual( newAttributes, block.attributes ) ) {
+					updateBlockAttributes( clientId, newAttributes )
+				}
 			}
-		}
-	} )
+		} )
+	}
 
 	// Make sure that we are saving the colors with colorVars.
 	loadPromise.then( () => {
