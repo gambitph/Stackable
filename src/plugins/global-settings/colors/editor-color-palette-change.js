@@ -33,7 +33,7 @@ const EditorColorPaletteChange = () => {
 				'core/edit-post'
 			).__experimentalGetPreviewDeviceType(),
 			preferences: select( 'core/edit-post' ).getPreferences(),
-			useStackableColorsOnly: select( 'stackable-global-colors' ).getSettings().useStackableColorsOnly,
+			useStackableColorsOnly: select( 'stackable/global-colors' ).getSettings().useStackableColorsOnly,
 		} ),
 		[]
 	)

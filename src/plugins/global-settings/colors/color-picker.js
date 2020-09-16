@@ -2,7 +2,7 @@
  * External dependencies
  */
 import classnames from 'classnames'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, debounce } from 'lodash'
 import md5 from 'md5'
 import { i18n } from 'stackable'
 import { whiteIfDark } from '~stackable/util'
@@ -269,7 +269,7 @@ const ColorPickers = ( {
 		 *
 		 * @see global-settings/colors
 		 */
-		doAction( 'stackable.global-settings.reset-compatibility', blocks, [ colors[ selectedIndex ] ] )
+		doAction( 'stackable.global-colors.reset-compatibility', blocks, [ colors[ selectedIndex ] ] )
 
 		// Update the colors.
 		updateColors( updatedColors )
@@ -281,7 +281,7 @@ const ColorPickers = ( {
 		const {
 			 colors,
 		} = cloneDeep( select( 'core/block-editor' ).getSettings() )
-		const { defaultColors, useStackableColorsOnly } = cloneDeep( select( 'stackable-global-colors' ).getSettings() )
+		const { defaultColors, useStackableColorsOnly } = cloneDeep( select( 'stackable/global-colors' ).getSettings() )
 		const blocks = select( 'core/block-editor' ).getBlocks()
 
 		/**
@@ -289,7 +289,7 @@ const ColorPickers = ( {
 		 *
 		 * @see global-settings/colors
 		 */
-		doAction( 'stackable.global-settings.reset-compatibility', blocks, colors )
+		doAction( 'stackable.global-colors.reset-compatibility', blocks, colors )
 
 		// Update the colors
 		updateColors( useStackableColorsOnly ? [] : defaultColors )
@@ -366,6 +366,8 @@ ColorPickers.defaultProps = {
 	colors: [],
 }
 
+const debouncedDoAction = debounce( doAction, 100 )
+
 const ColorPickerContainer = props => {
 	const classNames = classnames(
 		'ugb-global-settings-color-picker',
@@ -375,6 +377,9 @@ const ColorPickerContainer = props => {
 	)
 
 	const { colors } = useSelect( select => select( 'core/block-editor' ).getSettings() )
+
+	// Update the global colors in the models settings.
+	debouncedDoAction( 'stackable.global-colors.save-model-settings', colors )
 
 	return (
 		<div className={ classNames }>

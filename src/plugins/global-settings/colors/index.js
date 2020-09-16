@@ -1,12 +1,11 @@
 import './editor-color-palette-change'
 import './editor-loader'
-import './save-model-settings'
 import './store'
 
 /**
  * Internal dependencies
  */
-import { replaceGlobalColorAttributes } from './util'
+import { replaceGlobalColorAttributes, updateFallbackColorAttributes } from './util'
 import ColorPicker from './color-picker'
 
 /**
@@ -31,6 +30,15 @@ import {
 import domReady from '@wordpress/dom-ready'
 import { loadPromise, models } from '@wordpress/api'
 import { ToggleControl } from '@wordpress/components'
+
+/**
+ * We will update the block attributes of these blocks whenever
+ * the Global Colors are modified (changing the fallback values).
+ */
+const blocksToUpdate = [
+	'core',
+	'ugb',
+]
 
 addFilter( 'stackable.util.hex-to-rgba', 'global-settings/colors', ( output, hexColor, opacity ) => {
 	// Only do this for Stackable global colors.
@@ -97,10 +105,10 @@ addFilter( 'stackable.util.is-dark-color', 'global-settings/colors', color => {
 } )
 
 addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors', output => {
-	const { useStackableColorsOnly } = useSelect( select => select( 'stackable-global-colors' ).getSettings() )
+	const { useStackableColorsOnly } = useSelect( select => select( 'stackable/global-colors' ).getSettings() )
 
 	const onChangeUseStackableColorsOnly = value => {
-		dispatch( 'stackable-global-colors' ).updateSettings( {
+		dispatch( 'stackable/global-colors' ).updateSettings( {
 			useStackableColorsOnly: value,
 		} )
 		loadPromise.then( () => {
@@ -108,7 +116,7 @@ addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors
 			model.fetch().then( res => {
 				const settings = new models.Settings( { stackable_global_colors_palette_only: value } ) // eslint-disable-line camelcase
 				settings.save()
-				const { defaultColors } = select( 'stackable-global-colors' ).getSettings()
+				const { defaultColors } = select( 'stackable/global-colors' ).getSettings()
 				dispatch( 'core/block-editor' ).updateSettings( {
 					colors: value ? res.stackable_global_colors : uniqBy( [ ...defaultColors, ...res.stackable_global_colors ], 'slug' ),
 				} )
@@ -144,7 +152,7 @@ addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors
 /**
  * Used for attributes compatibility when resetting the global colors.
  */
-addAction( 'stackable.global-settings.reset-compatibility', 'color-reset', ( blocks, colorsBeforeReset, colorsAfterReset ) => {
+addAction( 'stackable.global-colors.reset-compatibility', 'color-reset', ( blocks, colorsBeforeReset, colorsAfterReset ) => {
 	const stringifiedBlocks = JSON.stringify( blocks )
 	const parsedClientIds = stringifiedBlocks.match( /"clientId":".+?(?=\")"/g )
 	if ( ! parsedClientIds || ( parsedClientIds && ! Array.isArray( parsedClientIds ) ) ) {
@@ -240,6 +248,66 @@ addFilter( 'stackable.color-palette-control.change', 'stackable/global-settings/
 	return value
 } )
 
+/**
+ * Function used for updating the fallback values of
+ * blocks in the editor using global colors.
+ *
+ * @param {{color: string, slug: string, name: string, colorVar: ?string, rgb: ?string}[]} updatedColors
+ */
+const updateFallbackBlockAttributesInEditor = updatedColors => {
+	const { getBlock, getBlocks } = select( 'core/block-editor' )
+	const { updateBlockAttributes } = dispatch( 'core/block-editor' )
+
+	const stringifiedBlocks = JSON.stringify( getBlocks() )
+	const parsedClientIds = stringifiedBlocks.match( /"clientId":".+?(?=\")"/g )
+
+	if ( parsedClientIds && Array.isArray( parsedClientIds ) && parsedClientIds.length ) {
+		const clientIds = parsedClientIds.map( parsedClientId => {
+			const { clientId } = JSON.parse( `{${ parsedClientId }}` )
+			return clientId
+		} )
+
+		// Include innerBlocks.
+		const allBlocks = clientIds.map( clientID => {
+			const block = omit( getBlock( clientID ), 'innerBlocks' )
+			return block
+		} )
+
+		allBlocks.forEach( block => {
+			const { clientId, name } = block
+			if ( name && new RegExp( blocksToUpdate.map( block => `${ block }/` ).join( '|' ) ).test( name ) ) {
+				const newAttributes = updateFallbackColorAttributes( block.attributes, updatedColors )
+				if ( ! isEqual( newAttributes, block.attributes ) ) {
+					updateBlockAttributes( clientId, newAttributes )
+				}
+			}
+		} )
+	}
+}
+
+/**
+ * Action for saving the colors in models settings.
+ */
+addAction( 'stackable.global-colors.save-model-settings', 'color-save-settings', newColors => {
+	const updatedColors = newColors.filter( color => color.colorVar ).map( newColor => {
+		const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( newColor.colorVar ).trim() )
+		if ( Array.isArray( rgbaColor ) && rgbaColor.length !== 0 ) {
+			rgbaColor.splice( 3, 1 )
+			newColor.rgb = rgbaColor.join( ', ' )
+			return newColor
+		}
+		return newColor
+	} )
+
+	updateFallbackBlockAttributesInEditor( updatedColors )
+
+	// Make sure that we are saving the colors with colorVars.
+	loadPromise.then( () => {
+		const settings = new models.Settings( { stackable_global_colors: updatedColors } ) // eslint-disable-line camelcase
+		settings.save()
+	} )
+} )
+
 domReady( () => {
 	// Keep note of all the default colors.
 	const colors = select( 'core/block-editor' ).getSettings().colors
@@ -258,7 +326,7 @@ domReady( () => {
 				} )
 			}
 
-			dispatch( 'stackable-global-colors' ).updateSettings( {
+			dispatch( 'stackable/global-colors' ).updateSettings( {
 				defaultColors,
 				useStackableColorsOnly,
 			} )
