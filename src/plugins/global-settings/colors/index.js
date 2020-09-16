@@ -224,26 +224,6 @@ addAction( 'stackable.global-settings.reset-compatibility', 'color-reset', ( blo
 
 				// Update the block attributes.
 				updateBlockAttributes( clientId, newAttributes )
-			} else {
-				const updatedAttributes = replaceGlobalColorAttributes( block.attributes, colorsBeforeReset )
-
-				// This is used for pullquote compatibility.
-				if ( updatedAttributes.textColor ) {
-					const defaultColor = find( colorsAfterReset, updatedColor => updatedColor.slug === updatedAttributes.textColor )
-					if ( ! defaultColor ) {
-						const appliedColor = find( colorsBeforeReset, color => color.slug === updatedAttributes.textColor )
-						updatedAttributes.customTextColor = appliedColor ? appliedColor.fallback || '#000000' : '#000000'
-						updatedAttributes.textColor = undefined
-					} else {
-						updatedAttributes.customTextColor = defaultColor.color || '#000000'
-						updatedAttributes.textColor = undefined
-					}
-				}
-
-				// Update the block attributes.
-				if ( ! isEqual( updatedAttributes, block.attributes ) ) {
-					updateBlockAttributes( clientId, updatedAttributes )
-				}
 			}
 		}
 	} )
