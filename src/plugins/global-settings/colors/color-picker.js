@@ -301,8 +301,9 @@ const ColorPickers = ( {
 	const onColorPaletteReset = ( setIsResetPopoverOpen, setIsBusyResetButton ) => {
 		setIsBusyResetButton( true )
 		const {
-			defaultColors, colors, useStackableColorsOnly,
+			 colors,
 		} = cloneDeep( select( 'core/block-editor' ).getSettings() )
+		const { defaultColors, useStackableColorsOnly } = cloneDeep( select( 'stackable-global-colors' ).getSettings() )
 		const blocks = select( 'core/block-editor' ).getBlocks()
 
 		/**
