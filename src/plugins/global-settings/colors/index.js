@@ -5,7 +5,9 @@ import './store'
 /**
  * Internal dependencies
  */
-import { replaceGlobalColorAttributes, updateFallbackColorAttributes } from './util'
+import {
+	updateFallbackBlockAttributes, resetBlockColorAttributes,
+} from './util'
 import ColorPicker from './color-picker'
 
 /**
@@ -13,9 +15,7 @@ import ColorPicker from './color-picker'
  */
 import { i18n } from 'stackable'
 import { PanelAdvancedSettings } from '~stackable/components'
-import {
-	isEqual, omit, uniqBy, find,
-} from 'lodash'
+import { uniqBy } from 'lodash'
 import rgba from 'color-rgba'
 
 /**
@@ -30,15 +30,6 @@ import {
 import domReady from '@wordpress/dom-ready'
 import { loadPromise, models } from '@wordpress/api'
 import { ToggleControl } from '@wordpress/components'
-
-/**
- * We will update the block attributes of these blocks whenever
- * the Global Colors are modified (changing the fallback values).
- */
-const blocksToUpdate = [
-	'core',
-	'ugb',
-]
 
 addFilter( 'stackable.util.hex-to-rgba', 'global-settings/colors', ( output, hexColor, opacity ) => {
 	// Only do this for Stackable global colors.
@@ -150,93 +141,22 @@ addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors
 } )
 
 /**
- * Used for attributes compatibility when resetting the global colors.
+ * When a color is deleted, iterate through all blocks and update the color
+ * attribute affected, turn them from slugs into the hex equivalent.
  */
-addAction( 'stackable.global-colors.reset-compatibility', 'color-reset', ( blocks, colorsBeforeReset ) => {
-	const stringifiedBlocks = JSON.stringify( blocks )
-	const parsedClientIds = stringifiedBlocks.match( /"clientId":".+?(?=\")"/g )
-	if ( ! parsedClientIds || ( parsedClientIds && ! Array.isArray( parsedClientIds ) ) ) {
-		return
+addAction( 'stackable.global-colors.reset-compatibility', 'stackable/global-colors/reset', colorsBeforeReset => {
+	const resetBlockColorAttributesRecursive = blocks => {
+		blocks.forEach( block => {
+			resetBlockColorAttributes( block, colorsBeforeReset )
+
+			// Also adjust the inner blocks.
+			if ( block.innerBlocks && block.innerBlocks.length ) {
+				resetBlockColorAttributesRecursive( block.innerBlocks )
+			}
+		} )
 	}
-	const clientIds = parsedClientIds.map( parsedClientId => {
-		const { clientId } = JSON.parse( `{${ parsedClientId }}` )
-		return clientId
-	} )
 
-	const { getBlock } = select( 'core/block-editor' )
-	const { updateBlockAttributes } = dispatch( 'core/block-editor' )
-
-	// Include innerBlocks.
-	const allBlocks = clientIds.map( clientID => {
-		const block = omit( getBlock( clientID ), 'innerBlocks' )
-		return block
-	} )
-
-	/**
-	 * Compatibility adjustments for stackable and other blocks.
-	 */
-
-	// Iterate through all blocks and update existing color attributes.
-	allBlocks.forEach( block => {
-		const { clientId, name } = block
-
-		if ( name.includes( 'ugb/' ) ) {
-			//
-			/**
-			 * For stackable blocks.
-			 * We are retaining the color of blocks that uses
-			 * the deleted global color. Otherwise, reset its color
-			 * as well.
-			 */
-			const updatedAttributes = replaceGlobalColorAttributes( block.attributes, colorsBeforeReset )
-
-			// Update the block attributes.
-			if ( ! isEqual( updatedAttributes, block.attributes ) ) {
-				updateBlockAttributes( clientId, updatedAttributes )
-			}
-		} else if ( name.includes( 'core/' ) ) {
-			//
-			/**
-			 * For core blocks.
-			 * If a core block uses a color palette included in the theme,
-			 * it uses the slug name as its attribute (e.g. textColor: "accent").
-			 * Otherwise, textColor will be undefined and instead will add a style attribute
-			 * (e.g. core/heading style: { color: "#123abc"}).
-			 */
-			if ( name.includes( 'heading' ) || name.includes( 'paragraph' ) ) {
-				const newAttributes = { style: { color: {}, ...block.attributes.style } }
-				const { backgroundColor, textColor } = block.attributes
-				if ( backgroundColor ) {
-					if ( backgroundColor.includes( 'stk-global-color-' ) ) {
-						// Retain the color
-						const colorVarMatch = backgroundColor.match( /stk-global-color-(\S*)/ )
-						if ( colorVarMatch && Array.isArray( colorVarMatch ) && colorVarMatch.length >= 2 ) {
-							const colorVarID = colorVarMatch[ 1 ]
-							newAttributes.backgroundColor = undefined
-							const appliedColor = find( colorsBeforeReset, color => color.slug === `stk-global-color-${ colorVarID }` )
-							newAttributes.style.color.background = appliedColor ? appliedColor.color || '#000000' : '#000000'
-						}
-					}
-				}
-
-				if ( textColor ) {
-					if ( textColor.includes( 'stk-global-color-' ) ) {
-						// Retain the color
-						const colorVarMatch = textColor.match( /stk-global-color-(\S*)/ )
-						if ( colorVarMatch && Array.isArray( colorVarMatch ) && colorVarMatch.length >= 2 ) {
-							const colorVarID = colorVarMatch[ 1 ]
-							newAttributes.textColor = undefined
-							const appliedColor = find( colorsBeforeReset, color => color.slug === `stk-global-color-${ colorVarID }` )
-							newAttributes.style.color.text = appliedColor ? appliedColor.color || '#000000' : '#000000'
-						}
-					}
-				}
-
-				// Update the block attributes.
-				updateBlockAttributes( clientId, newAttributes )
-			}
-		}
-	} )
+	resetBlockColorAttributesRecursive( select( 'core/block-editor' ).getBlocks() )
 } )
 
 // Convert hex colors to global colors in Stackable blocks.
@@ -247,43 +167,6 @@ addFilter( 'stackable.color-palette-control.change', 'stackable/global-settings/
 
 	return value
 } )
-
-/**
- * Function used for updating the fallback values of
- * blocks in the editor using global colors.
- *
- * @param {{color: string, slug: string, name: string, colorVar: ?string, rgb: ?string}[]} updatedColors
- */
-const updateFallbackBlockAttributesInEditor = updatedColors => {
-	const { getBlock, getBlocks } = select( 'core/block-editor' )
-	const { updateBlockAttributes } = dispatch( 'core/block-editor' )
-
-	const stringifiedBlocks = JSON.stringify( getBlocks() )
-	const parsedClientIds = stringifiedBlocks.match( /"clientId":".+?(?=\")"/g )
-
-	if ( parsedClientIds && Array.isArray( parsedClientIds ) && parsedClientIds.length ) {
-		const clientIds = parsedClientIds.map( parsedClientId => {
-			const { clientId } = JSON.parse( `{${ parsedClientId }}` )
-			return clientId
-		} )
-
-		// Include innerBlocks.
-		const allBlocks = clientIds.map( clientID => {
-			const block = omit( getBlock( clientID ), 'innerBlocks' )
-			return block
-		} )
-
-		allBlocks.forEach( block => {
-			const { clientId, name } = block
-			if ( name && new RegExp( blocksToUpdate.map( block => `${ block }/` ).join( '|' ) ).test( name ) ) {
-				const newAttributes = updateFallbackColorAttributes( block.attributes, updatedColors )
-				if ( ! isEqual( newAttributes, block.attributes ) ) {
-					updateBlockAttributes( clientId, newAttributes )
-				}
-			}
-		} )
-	}
-}
 
 /**
  * Action for saving the colors in models settings.
@@ -299,7 +182,7 @@ addAction( 'stackable.global-colors.save-model-settings', 'color-save-settings',
 		return newColor
 	} )
 
-	updateFallbackBlockAttributesInEditor( updatedColors )
+	updateFallbackBlockAttributes( updatedColors )
 
 	// Make sure that we are saving the colors with colorVars.
 	loadPromise.then( () => {
