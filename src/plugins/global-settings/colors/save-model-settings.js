@@ -31,7 +31,8 @@ const blocksToUpdate = [
 ]
 
 const SaveModelSettings = () => {
-	const { colors, defaultColors } = useSelect( select => select( 'core/block-editor' ).getSettings() )
+	const { colors } = useSelect( select => select( 'core/block-editor' ).getSettings() )
+	const { defaultColors } = useSelect( select => select( 'stackable-global-colors' ).getSettings() )
 
 	const saveModelSettings = newColors => {
 		const { getBlock, getBlocks } = select( 'core/block-editor' )

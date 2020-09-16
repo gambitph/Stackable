@@ -17,7 +17,7 @@ import rgba from 'color-rgba'
 const GlobalColorStyles = () => {
 	const { colors, defaultColors } = useSelect( select => ( {
 		 colors: select( 'core/block-editor' ).getSettings().colors,
-		 defaultColors: select( 'core/block-editor' ).getSettings().defaultColors,
+		 defaultColors: select( 'stackable-global-colors' ).getSettings().defaultColors,
 	} ) )
 	const [ styles, setStyles ] = useState( '' )
 

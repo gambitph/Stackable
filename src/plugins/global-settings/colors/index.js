@@ -1,6 +1,7 @@
 import './editor-color-palette-change'
 import './editor-loader'
 import './save-model-settings'
+import './store'
 
 /**
  * Internal dependencies
@@ -96,18 +97,19 @@ addFilter( 'stackable.util.is-dark-color', 'global-settings/colors', color => {
 } )
 
 addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors', output => {
-	const { useStackableColorsOnly } = useSelect( select => ( { useStackableColorsOnly: select( 'core/block-editor' ).getSettings().useStackableColorsOnly } ) )
+	const { useStackableColorsOnly } = useSelect( select => select( 'stackable-global-colors' ).getSettings() )
 
 	const onChangeUseStackableColorsOnly = value => {
+		dispatch( 'stackable-global-colors' ).updateSettings( {
+			useStackableColorsOnly: value,
+		} )
 		loadPromise.then( () => {
 			const model = new models.Settings()
 			model.fetch().then( res => {
-				const { defaultColors } = select( 'core/block-editor' ).getSettings()
 				const settings = new models.Settings( { stackable_global_colors_palette_only: value } ) // eslint-disable-line camelcase
 				settings.save()
-
+				const { defaultColors } = select( 'stackable-global-colors' ).getSettings()
 				dispatch( 'core/block-editor' ).updateSettings( {
-					useStackableColorsOnly: value,
 					colors: value ? res.stackable_global_colors : uniqBy( [ ...defaultColors, ...res.stackable_global_colors ], 'slug' ),
 				} )
 			} )
@@ -256,7 +258,7 @@ domReady( () => {
 				} )
 			}
 
-			dispatch( 'core/block-editor' ).updateSettings( {
+			dispatch( 'stackable-global-colors' ).updateSettings( {
 				defaultColors,
 				useStackableColorsOnly,
 			} )

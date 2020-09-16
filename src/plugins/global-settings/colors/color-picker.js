@@ -286,8 +286,9 @@ const ColorPickers = ( {
 	// Called when the user decided to reset the color palette.
 	const onColorPaletteReset = () => {
 		const {
-			defaultColors, colors, useStackableColorsOnly,
+			 colors,
 		} = cloneDeep( select( 'core/block-editor' ).getSettings() )
+		const { defaultColors, useStackableColorsOnly } = cloneDeep( select( 'stackable-global-colors' ).getSettings() )
 		const blocks = select( 'core/block-editor' ).getBlocks()
 
 		/**
