@@ -28,20 +28,8 @@
 	}
 }
 
-.ugb-global-settings-color-picker__delete-button-text {
-	color: #aa2121 !important;
-}
-
-.ugb-global-settings-color-picker__popover-text {
-	margin-bottom: 12px;
-	&.is-red {
-		color: #aa2121;
-	}
-}
-
-.ugb-global-settings-color-picker__delete-button {
-	background-color: #aa2121;
-	color: #fff !important;
+.ugb-global-settings-color-picker__title {
+	margin: 0 0 1em 0 !important;
 }
 
 .ugb-global-settings-color-picker__reset-button {

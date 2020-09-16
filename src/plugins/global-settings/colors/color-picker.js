@@ -63,8 +63,8 @@ const DeleteButton = props => {
 	return (
 		<Fragment>
 			<Button
-				className="ugb-global-settings-color-picker__delete-button-text"
 				isLink
+				isDestructive
 				onClick={ () => setIsDeletePopoverOpen( toggle => ! toggle ) }
 				disabled={ props.disabled }
 			>
@@ -72,38 +72,36 @@ const DeleteButton = props => {
 			</Button>
 			{ isDeletePopoverOpen && (
 				<Popover
+					className="components-dropdown__content"
+					focusOnMount={ false }
 					onFocusOutside={ () => setIsDeletePopoverOpen( false ) }
 					position="bottom center"
 				>
-					<div className="components-color-picker__body">
-						<div className="ugb-global-settings-color-picker__popover-text is-red">
-							{ sprintf( __( 'Delete "%s"', i18n ), props.name ) }
-						</div>
-						<div className="ugb-global-settings-color-picker__popover-text">
-							{ __( 'Any blocks that use this color will become unlinked with this global color. Delete this color?', i18n ) }
-						</div>
-						<div className="components-color-picker__controls">
-							<ButtonGroup>
-								<Button
-									className="ugb-global-settings-color-picker__delete-button"
-									onClick={ () => {
-										setIsDeletePopoverOpen( false )
-										props.onClick()
-									} }
-									isDestructive
-									isSmall
-								>
-									{ __( 'Delete', i18n ) }
-								</Button>
-								<Button
-									onClick={ () => setIsDeletePopoverOpen( false ) }
-									isSmall
-								>
-									{ __( 'Cancel', i18n ) }
-								</Button>
-							</ButtonGroup>
-						</div>
-					</div>
+					<h4 className="ugb-global-settings-color-picker__title">
+						{ sprintf( __( 'Delete "%s"', i18n ), props.name ) }
+					</h4>
+					<p className="components-base-control__help">
+						{ __( 'Any blocks that use this color will become unlinked with this global color. Delete this color?', i18n ) }
+					</p>
+					<ButtonGroup>
+						<Button
+							onClick={ () => {
+								setIsDeletePopoverOpen( false )
+								props.onClick()
+							} }
+							isDestructive
+							isSecondary
+							isSmall
+						>
+							{ __( 'Delete', i18n ) }
+						</Button>
+						<Button
+							onClick={ () => setIsDeletePopoverOpen( false ) }
+							isSmall
+						>
+							{ __( 'Cancel', i18n ) }
+						</Button>
+					</ButtonGroup>
 				</Popover>
 			) }
 		</Fragment>
@@ -137,38 +135,36 @@ const ResetButton = props => {
 			</Button>
 			{ isResetPopoverOpen && (
 				<Popover
+					className="components-dropdown__content"
+					focusOnMount={ false }
 					onFocusOutside={ () => setIsResetPopoverOpen( false ) }
 					position="bottom center"
 				>
-					<div className="components-color-picker__body">
-						<div className="ugb-global-settings-color-picker__popover-text is-red">
-							{ __( 'Reset Color Palette', i18n ) }
-						</div>
-						<div className="ugb-global-settings-color-picker__popover-text">
-							{ __( 'Resetting the global colors will revert all colors to its original color palette. Any added colors will be deleted and will become unlinked. Proceed?', i18n ) }
-						</div>
-						<div className="components-color-picker__controls">
-							<ButtonGroup>
-								<Button
-									onClick={ () => {
-										props.onClick()
-										setIsResetPopoverOpen( false )
-									} }
-									disabled={ props.disabled }
-									isSecondary
-									isSmall
-								>
-									{ __( 'Reset', i18n ) }
-								</Button>
-								<Button
-									onClick={ () => setIsResetPopoverOpen( false ) }
-									isSmall
-								>
-									{ __( 'Cancel', i18n ) }
-								</Button>
-							</ButtonGroup>
-						</div>
-					</div>
+					<h4 className="ugb-global-settings-color-picker__title">
+						{ __( 'Reset Color Palette', i18n ) }
+					</h4>
+					<p className="components-base-control__help">
+						{ __( 'Resetting the global colors will revert all colors to its original color palette. Any added colors will be deleted and will become unlinked. Proceed?', i18n ) }
+					</p>
+					<ButtonGroup>
+						<Button
+							onClick={ () => {
+								props.onClick()
+								setIsResetPopoverOpen( false )
+							} }
+							isDestructive
+							isSecondary
+							isSmall
+						>
+							{ __( 'Reset', i18n ) }
+						</Button>
+						<Button
+							onClick={ () => setIsResetPopoverOpen( false ) }
+							isSmall
+						>
+							{ __( 'Cancel', i18n ) }
+						</Button>
+					</ButtonGroup>
 				</Popover>
 			) }
 		</div>
@@ -323,7 +319,7 @@ const ColorPickers = ( {
 	}
 
 	return (
-		<Fragment>
+		<BaseControl>
 			<ResetButton onClick={ onColorPaletteReset } disabled={ disableReset } />
 			{ colors.map( ( color, index ) => {
 				return (
@@ -336,7 +332,7 @@ const ColorPickers = ( {
 					>
 						{ selectedIndex === index &&
 							<Popover
-								className="ugb-global-settings-color-picker__popup components-dropdown__content"
+								className="components-dropdown__content"
 								onFocusOutside={ () => setSelectedIndex( null ) }
 							>
 								<ColorPicker
@@ -362,7 +358,7 @@ const ColorPickers = ( {
 				)
 			} ) }
 			<AddButton onClick={ handleAddIcon } />
-		</Fragment>
+		</BaseControl>
 	)
 }
 
