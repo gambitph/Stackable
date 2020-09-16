@@ -114,7 +114,7 @@ const AddButton = props => (
 		{ ...props }
 		isSecondary
 		className="ugb-global-settings-color-picker__add-icon"
-		label="Add New Color"
+		label={ __( 'Add New Color', i18n ) }
 		icon={ <AddIcon /> }
 	/>
 )
