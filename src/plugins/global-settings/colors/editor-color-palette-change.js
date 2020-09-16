@@ -26,14 +26,13 @@ import { uniqBy } from 'lodash'
  */
 const EditorColorPaletteChange = () => {
 	const {
-		deviceType, preferences, defaultColors, useStackableColorsOnly,
+		deviceType, preferences, useStackableColorsOnly,
 	} = useSelect(
 		select => ( {
 			deviceType: select(
 				'core/edit-post'
 			).__experimentalGetPreviewDeviceType(),
 			preferences: select( 'core/edit-post' ).getPreferences(),
-			defaultColors: select( 'stackable-global-colors' ).getSettings().defaultColors,
 			useStackableColorsOnly: select( 'stackable-global-colors' ).getSettings().useStackableColorsOnly,
 		} ),
 		[]
@@ -46,14 +45,12 @@ const EditorColorPaletteChange = () => {
 				const { stackable_global_colors: stackableGlobalColors } = res // eslint-disable-line camelcase
 				const { colors } = select( 'core/block-editor' ).getSettings()
 
-				if ( defaultColors && Array.isArray( defaultColors ) && defaultColors.length ) {
-					dispatch( 'core/block-editor' ).updateSettings( {
-						colors: useStackableColorsOnly ? [ ...stackableGlobalColors ] : uniqBy( [ ...colors, ...stackableGlobalColors ], 'slug' ),
-					} )
-				}
+				dispatch( 'core/block-editor' ).updateSettings( {
+					colors: useStackableColorsOnly ? [ ...stackableGlobalColors ] : uniqBy( [ ...colors, ...stackableGlobalColors ], 'slug' ),
+				} )
 			} )
 		} )
-	}, [ deviceType, preferences, defaultColors ] )
+	}, [ deviceType, preferences ] )
 
 	// We don't want to render anything here.
 	return null
