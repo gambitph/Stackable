@@ -194,6 +194,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 = 2.10.4 =
 * Fixed: Some responsive font-sizes won't apply
+* Fixed: Feature grid block default title tag shows as H2 in the Block Editor
 
 = 2.10.3 =
 * Fixed: Block errors in nested blocks
