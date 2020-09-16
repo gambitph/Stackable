@@ -32,7 +32,6 @@ const blocksToUpdate = [
 
 const SaveModelSettings = () => {
 	const { colors } = useSelect( select => select( 'core/block-editor' ).getSettings() )
-	const { defaultColors } = useSelect( select => select( 'stackable-global-colors' ).getSettings() )
 
 	const saveModelSettings = newColors => {
 		const { getBlock, getBlocks } = select( 'core/block-editor' )
@@ -83,12 +82,10 @@ const SaveModelSettings = () => {
 
 	useEffect( () => {
 		const saveModelSettingsTimeout = setTimeout( () => {
-			if ( defaultColors && Array.isArray( defaultColors ) && defaultColors.length ) {
-				saveModelSettings( colors )
-			}
+			saveModelSettings( colors )
 		}, 100 )
 		return () => clearTimeout( saveModelSettingsTimeout )
-	}, [ colors, defaultColors ] )
+	}, [ colors ] )
 
 	// We don't want to render anything here.
 	return null
