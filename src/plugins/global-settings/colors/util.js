@@ -154,21 +154,16 @@ export const updateFallbackColorAttributes = ( attributes = {}, colors = [] ) =>
 		return attributes
 	}
 
-	let updatedStringifiedAttributes = JSON.stringify( attributes )
-
-	const colorVars = colors.map( color => color.colorVar )
-	colorVars.forEach( colorVar => {
-		if ( colorVar ) {
-			const colorVarRegExp = new RegExp( `var\\(${ colorVar },(.?)#(.*?(?=\\)))\\)`, 'g' )
-			updatedStringifiedAttributes = updatedStringifiedAttributes.replace( colorVarRegExp, colorAttribute => {
-				const newColor = find( colors, updatedColor => updatedColor.colorVar === colorVar )
-				if ( newColor ) {
-					return `var(${ colorVar }, ${ newColor.color })`
-				}
-				return colorAttribute
-			} )
+	Object.keys( attributes ).forEach( attributeName => {
+		const value = attributes[ attributeName ]
+		if ( value && typeof value === 'string' && value.includes( 'var(--stk-global-color-' ) ) {
+			const colorVar = value.match( /--stk-global-color-([\w\d]+)/ )[ 0 ]
+			const newColor = find( colors, updatedColor => updatedColor.colorVar === colorVar )
+			if ( newColor ) {
+				attributes[ attributeName ] = `var(${ newColor.colorVar }, ${ newColor.color })`
+			}
 		}
 	} )
 
-	return JSON.parse( updatedStringifiedAttributes )
+	return attributes
 }
