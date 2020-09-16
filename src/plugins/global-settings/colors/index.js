@@ -152,7 +152,7 @@ addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors
 /**
  * Used for attributes compatibility when resetting the global colors.
  */
-addAction( 'stackable.global-colors.reset-compatibility', 'color-reset', ( blocks, colorsBeforeReset, colorsAfterReset ) => {
+addAction( 'stackable.global-colors.reset-compatibility', 'color-reset', ( blocks, colorsBeforeReset ) => {
 	const stringifiedBlocks = JSON.stringify( blocks )
 	const parsedClientIds = stringifiedBlocks.match( /"clientId":".+?(?=\")"/g )
 	if ( ! parsedClientIds || ( parsedClientIds && ! Array.isArray( parsedClientIds ) ) ) {
@@ -188,7 +188,7 @@ addAction( 'stackable.global-colors.reset-compatibility', 'color-reset', ( block
 			 * the deleted global color. Otherwise, reset its color
 			 * as well.
 			 */
-			const updatedAttributes = replaceGlobalColorAttributes( block.attributes, colorsBeforeReset, colorsAfterReset )
+			const updatedAttributes = replaceGlobalColorAttributes( block.attributes, colorsBeforeReset )
 
 			// Update the block attributes.
 			if ( ! isEqual( updatedAttributes, block.attributes ) ) {
