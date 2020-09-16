@@ -4,21 +4,21 @@ describe( 'createTypographyStyles', () => {
 	it( 'should clamp font sizes correctly', () => {
 		let attributes = {}
 		let options = {
-			inheritMax: 50,
+			important: false,
 		}
 
 		// Undefined all.
-		expect( createTypographyStyles( '%s', 'desktop', attributes ).fontSize ).toBe( undefined )
-		expect( createTypographyStyles( '%s', 'tablet', attributes ).fontSize ).toBe( undefined )
-		expect( createTypographyStyles( '%s', 'mobile', attributes ).fontSize ).toBe( undefined )
+		expect( createTypographyStyles( '%s', 'desktop', attributes, options ).fontSize ).toBe( undefined )
+		expect( createTypographyStyles( '%s', 'tablet', attributes, options ).fontSize ).toBe( undefined )
+		expect( createTypographyStyles( '%s', 'mobile', attributes, options ).fontSize ).toBe( undefined )
 
 		// No clamping.
 		attributes = {
 			fontSize: 30,
 		}
-		expect( createTypographyStyles( '%s', 'desktop', attributes ).fontSize ).toBe( '30px' )
-		expect( createTypographyStyles( '%s', 'tablet', attributes ).fontSize ).toBe( undefined )
-		expect( createTypographyStyles( '%s', 'mobile', attributes ).fontSize ).toBe( undefined )
+		expect( createTypographyStyles( '%s', 'desktop', attributes, options ).fontSize ).toBe( '30px' )
+		expect( createTypographyStyles( '%s', 'tablet', attributes, options ).fontSize ).toBe( undefined )
+		expect( createTypographyStyles( '%s', 'mobile', attributes, options ).fontSize ).toBe( undefined )
 
 		// Clamped desktop.
 		attributes = {
@@ -26,6 +26,7 @@ describe( 'createTypographyStyles', () => {
 		}
 		options = {
 			inheritMax: 50,
+			important: false,
 		}
 		expect( createTypographyStyles( '%s', 'desktop', attributes, options ).fontSize ).toBe( '100px' )
 		expect( createTypographyStyles( '%s', 'tablet', attributes, options ).fontSize ).toBe( '50px' )
@@ -89,6 +90,7 @@ describe( 'createTypographyStyles', () => {
 		}
 		options = {
 			inheritMax: 40,
+			important: false,
 		}
 		expect( createTypographyStyles( '%s', 'desktop', attributes, options ).fontSize ).toBe( '100px' )
 		expect( createTypographyStyles( '%s', 'tablet', attributes, options ).fontSize ).toBe( '40px' )
@@ -101,6 +103,7 @@ describe( 'createTypographyStyles', () => {
 		}
 		options = {
 			inheritMax: 50,
+			important: false,
 		}
 		expect( createTypographyStyles( '%s', 'desktop', attributes, options ).fontSize ).toBe( '30px' )
 		expect( createTypographyStyles( '%s', 'tablet', attributes, options ).fontSize ).toBe( '100px' )
@@ -114,6 +117,7 @@ describe( 'createTypographyStyles', () => {
 		}
 		options = {
 			inheritMax: 50,
+			important: false,
 		}
 		expect( createTypographyStyles( '%s', 'desktop', attributes, options ).fontSize ).toBe( '30px' )
 		expect( createTypographyStyles( '%s', 'tablet', attributes, options ).fontSize ).toBe( '100px' )
