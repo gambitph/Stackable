@@ -14,7 +14,7 @@ import {
 	Button, ColorPicker, Popover, BaseControl, ButtonGroup,
 } from '@wordpress/components'
 import {
-	Fragment, useState,
+	Fragment, useState, useMemo,
 } from '@wordpress/element'
 import {
 	select, dispatch, useSelect,
@@ -216,7 +216,7 @@ const ColorPickers = ( {
 	const [ selectedIndex, setSelectedIndex ] = useState( null )
 
 	// Enable reset if there are Stackable global colors.
-	const disableReset = ! colors.some( color => color.slug && color.slug.includes( 'stk-global-color' ) )
+	const disableReset = useMemo( () => ! colors.some( color => color.slug && color.slug.includes( 'stk-global-color' ) ), [ colors ] )
 
 	/**
 	 * Function used to update the colors in @wordpress/data,
