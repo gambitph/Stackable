@@ -182,6 +182,7 @@ const ResetButton = props => {
 const ColorOption = props => {
 	const {
 		color,
+		name,
 	} = props
 
 	if ( props.locked ) {
@@ -199,7 +200,7 @@ const ColorOption = props => {
 			<div className="components-circular-option-picker__option-wrapper">
 				<Button
 					className="components-circular-option-picker__option"
-					label={ color.name }
+					label={ name }
 					style={ { backgroundColor: color, color } }
 					onMouseDown={ () => props.onClick( color ) }
 				/>
