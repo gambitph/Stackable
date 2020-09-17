@@ -192,6 +192,11 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.11 =
+* New: Global Colors
+* New: Global Typography
+* Fixed: Speed improvements
+
 = 2.10.2 =
 * Change: Moved Stackable admin settings inside Settings menu
 * Fixed: Column blocks and other blocks that use innerBlocks do not auto-recover
