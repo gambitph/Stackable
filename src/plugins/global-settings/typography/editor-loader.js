@@ -5,7 +5,9 @@
 /**
  * External dependencies
  */
-import { createTypographyStyles, loadGoogleFont } from '~stackable/util'
+import {
+	createTypographyStyles, loadGoogleFont,
+} from '~stackable/util'
 import { generateStyles } from '~stackable/components/block-styles'
 import deepmerge from 'deepmerge'
 
@@ -18,7 +20,7 @@ import {
 	render, useEffect, useState,
 } from '@wordpress/element'
 import {
-	addAction, removeAction,
+	addAction, removeAction, applyFilters,
 } from '@wordpress/hooks'
 import { useSelect } from '@wordpress/data'
 
@@ -90,7 +92,8 @@ export const GlobalTypographyStyles = () => {
 				}
 			}
 
-			return tagStyles
+			// Allow others to also adjust typography styles.
+			return applyFilters( 'stackable.global-settings.typography.editor-styles', tagStyles, tag, selector, typographyStyles, important )
 		} ) )
 	} )
 
