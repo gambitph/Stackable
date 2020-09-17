@@ -27,6 +27,11 @@ import { useSelect } from '@wordpress/data'
 export const GlobalTypographyStyles = () => {
 	const [ typographySettings, setTypographySettings ] = useState( [] )
 	const [ applySettingsTo, setApplySettingsTo ] = useState( '' )
+
+	// These are for debouncing the style generation to make things faster.
+	const [ styles, setStyles ] = useState( '' )
+	const [ styleTimeout, setStyleTimeout ] = useState( null )
+
 	const { device } = useSelect(
 		select => ( {
 			device: select(
@@ -56,48 +61,56 @@ export const GlobalTypographyStyles = () => {
 		}
 	}, [] )
 
-	// Generate all the typography styles.
-	const styles = Object.keys( typographySettings ).map( tag => {
-		const selectors = formSelectors( tag, applySettingsTo )
+	// Debounced style generation.
+	useEffect( () => {
+		clearTimeout( styleTimeout )
+		setStyleTimeout( setTimeout( () => {
+			// Generate all the typography styles.
+			const styleObject = Object.keys( typographySettings ).map( tag => {
+				const selectors = formSelectors( tag, applySettingsTo )
 
-		// Build our selector, target h2.block or .block h2.
-		// Some blocks may output the heading tag right away.
-		return deepmerge.all( selectors.map( selector => {
-			const typographyStyles = typographySettings[ tag ]
+				// Build our selector, target h2.block or .block h2.
+				// Some blocks may output the heading tag right away.
+				return deepmerge.all( selectors.map( selector => {
+					const typographyStyles = typographySettings[ tag ]
 
-			// Load our Google Font is necessary.
-			if ( typographyStyles.fontFamily ) {
-				loadGoogleFont( typographyStyles.fontFamily )
-			}
+					// Load our Google Font is necessary.
+					if ( typographyStyles.fontFamily ) {
+						loadGoogleFont( typographyStyles.fontFamily )
+					}
 
-			// Force styles only for Stackable blocks.
-			const important = selector.match( /ugb\// )
+					// Force styles only for Stackable blocks.
+					const important = selector.match( /ugb\// )
 
-			// Generate our styles for this tag.
-			const tagStyles = {
-				[ selector ]: createTypographyStyles( '%s', 'desktop', typographyStyles, { important } ),
-				tablet: {
-					[ selector ]: createTypographyStyles( '%s', 'tablet', typographyStyles, { important } ),
-				},
-				mobile: {
-					[ selector ]: createTypographyStyles( '%s', 'mobile', typographyStyles, { important } ),
-				},
-			}
+					// Generate our styles for this tag.
+					const tagStyles = {
+						[ selector ]: createTypographyStyles( '%s', 'desktop', typographyStyles, { important } ),
+						tablet: {
+							[ selector ]: createTypographyStyles( '%s', 'tablet', typographyStyles, { important } ),
+						},
+						mobile: {
+							[ selector ]: createTypographyStyles( '%s', 'mobile', typographyStyles, { important } ),
+						},
+					}
 
-			// If the device preview is not a desktop, render our styles for that preview.
-			if ( device && ( device === 'Tablet' || device === 'Mobile' ) ) {
-				tagStyles[ selector ] = {
-					...tagStyles[ selector ],
-					...createTypographyStyles( '%s', device.toLowerCase(), typographyStyles, { important } ),
-				}
-			}
+					// If the device preview is not a desktop, render our styles for that preview.
+					if ( device && ( device === 'Tablet' || device === 'Mobile' ) ) {
+						tagStyles[ selector ] = {
+							...tagStyles[ selector ],
+							...createTypographyStyles( '%s', device.toLowerCase(), typographyStyles, { important } ),
+						}
+					}
 
-			// Allow others to also adjust typography styles.
-			return applyFilters( 'stackable.global-settings.typography.editor-styles', tagStyles, tag, selector, typographyStyles, important )
-		} ) )
-	} )
+					// Allow others to also adjust typography styles.
+					return applyFilters( 'stackable.global-settings.typography.editor-styles', tagStyles, tag, selector, typographyStyles, important )
+				} ) )
+			} )
 
-	return <style>{ generateStyles( deepmerge.all( styles ) ) }</style>
+			setStyles( generateStyles( deepmerge.all( styleObject ) ) )
+		}, 200 ) )
+	}, [ typographySettings, applySettingsTo, device ] )
+
+	return <style>{ styles }</style>
 }
 
 export const formSelectors = ( tag, applyTo ) => {
