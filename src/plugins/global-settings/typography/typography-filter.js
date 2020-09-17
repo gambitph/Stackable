@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { keys } from 'lodash'
+import { keys, cloneDeep } from 'lodash'
 
 /**
  * Wordpress dependencies
@@ -14,12 +14,14 @@ export const addTypographyControlFilter = settings => addFilter( 'stackable.typo
 		return props
 	}
 
+	const newProps = cloneDeep( props )
+
 	// Get the typography settings based in htmlTag
 	const typographySettings = settings[ 0 ][ props.htmlTag ]
 
 	keys( typographySettings ).forEach( attributeName => {
-		props[ attributeName ] = props[ attributeName ] || typographySettings[ attributeName ]
+		newProps[ attributeName ] = newProps[ attributeName ] || typographySettings[ attributeName ]
 	} )
 
-	return props
+	return newProps
 } )
