@@ -155,6 +155,7 @@ class ButtonIconPopoverControl extends Component {
 							{ this.state.showResetPopover && (
 								<Popover
 									onClickOutside={ () => this.setState( { showResetPopover: false } ) }
+									focusOnMount={ false }
 									position="bottom center"
 								>
 									<div className="components-color-picker__body">
@@ -169,9 +170,9 @@ class ButtonIconPopoverControl extends Component {
 												onClick={ () => {
 													this.setState( { showResetPopover: false } )
 													this.props.onReset()
-												}
-												 }
-												isDefault
+												} }
+												isDestructive
+												isSecondary
 												isSmall
 											>
 												{ __( 'Reset', i18n ) }
