@@ -17,7 +17,6 @@ import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
 import { SelectControl } from '@wordpress/components'
-import { applyFilters } from '@wordpress/hooks'
 
 const TypographyControl = props => {
 	// Compute the font size placeholder value.
@@ -29,8 +28,6 @@ const TypographyControl = props => {
 		// Use the given placeholder, or use the detected font size.
 		placeholder = props.placeholder || getDefaultFontSize( props.htmlTag )
 	}
-
-	props = applyFilters( 'stackable.typography-control', props )
 
 	return (
 		<Fragment>
@@ -46,6 +43,8 @@ const TypographyControl = props => {
 					props.lineHeight || props.tabletLineHeight || props.mobileLineHeight ||
 					props.letterSpacing
 				}
+				resetPopoverTitle={ props.resetPopoverTitle }
+				resetPopoverDescription={ props.resetPopoverDescription }
 				className={ props.className }
 			>
 				{ props.onChangeFontFamily && (
@@ -271,6 +270,8 @@ TypographyControl.defaultProps = {
 	mobileLineHeightUnit: 'em',
 	letterSpacing: '',
 	fontSizeProps: {},
+	resetPopoverTitle: '',
+	resetPopoverDescription: '',
 	// Font size placeholder. If not provided, the detected font size for the
 	// htmlTag is used. If a function is provided, then the detected font size
 	// is passed to the function to create the placeholder.
