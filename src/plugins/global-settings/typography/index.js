@@ -3,7 +3,6 @@
  */
 import './editor-loader'
 import TypographyPicker from './typography-picker'
-import { addTypographyControlFilter } from './typography-filter'
 
 /**
  * External dependencies
@@ -22,7 +21,7 @@ import {
 } from '@wordpress/element'
 import { loadPromise, models } from '@wordpress/api'
 import {
-	addFilter, doAction, removeFilter,
+	addFilter, doAction,
 } from '@wordpress/hooks'
 import { __, sprintf } from '@wordpress/i18n'
 
@@ -86,14 +85,12 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		}
 		setTypographySettings( newSettings )
 
-		removeFilter( 'stackable.typography-control', 'global-typography' )
 		clearTimeout( saveThrottle )
 		saveThrottle = setTimeout( () => {
 			const model = new models.Settings( {
 				stackable_global_typography: [ newSettings ], // eslint-disable-line
 			} )
 			model.save()
-			addTypographyControlFilter( [ newSettings ] )
 		}, 500 )
 	}
 
@@ -101,14 +98,12 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		const newSettings = omit( typographySettings, [ tag ] )
 		setTypographySettings( newSettings )
 
-		removeFilter( 'stackable.typography-control', 'global-typography' )
 		clearTimeout( saveThrottle )
 		saveThrottle = setTimeout( () => {
 			const model = new models.Settings( {
 				stackable_global_typography: [ newSettings ], // eslint-disable-line
 			} )
 			model.save()
-			addTypographyControlFilter( [ newSettings ] )
 		}, 500 )
 	}
 
