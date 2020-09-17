@@ -25,6 +25,7 @@ class ButtonIconPopoverControl extends Component {
 		this.state = {
 			open: false,
 			isMouseOutside: false,
+			showResetPopover: false,
 		}
 		this.handleOpen = this.handleOpen.bind( this )
 		this.handleClose = this.handleClose.bind( this )
