@@ -88,7 +88,7 @@ const TypographyPicker = props => {
 			onChangeMobileLineHeightUnit={ value => onChange( 'mobileLineHeightUnit', value ) }
 			onChangeLetterSpacing={ value => onChange( 'letterSpacing', value ) }
 			onReset={ () => props.onReset( props.tag ) }
-			resetPopoverTitle={ sprintf( __( 'Reset %s Global Typography Style', i18n ), props.tag && props.tag.toUpperCase() ) }
+			resetPopoverTitle={ sprintf( __( 'Reset <%s> Global Typography Style', i18n ), props.tag ) }
 			resetPopoverDescription={ __( 'Resetting this typography style will revert all typography to its original style. Proceed?', i18n ) }
 		/>
 	)
