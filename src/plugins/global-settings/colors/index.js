@@ -79,7 +79,7 @@ addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors
 				settings.save()
 				const { defaultColors } = select( 'stackable/global-colors' ).getSettings()
 				dispatch( 'core/block-editor' ).updateSettings( {
-					colors: value ? res.stackable_global_colors : uniqBy( [ ...defaultColors, ...res.stackable_global_colors ], 'slug' ),
+					colors: value ? res.stackable_global_colors[ 0 ] || [] : uniqBy( [ ...defaultColors, ...res.stackable_global_colors[ 0 ] || [] ], 'slug' ),
 				} )
 			} )
 		} )
@@ -155,7 +155,7 @@ addAction( 'stackable.global-colors.save-model-settings', 'color-save-settings',
 	updateFallbackBlockAttributes( updatedColors )
 
 	loadPromise.then( () => {
-		const settings = new models.Settings( { stackable_global_colors: updatedColors } ) // eslint-disable-line camelcase
+		const settings = new models.Settings( { stackable_global_colors: [ updatedColors ] } ) // eslint-disable-line camelcase
 		settings.save()
 	} )
 } )
@@ -174,7 +174,7 @@ domReady( () => {
 
 			if ( useStackableColorsOnly ) {
 				dispatch( 'core/block-editor' ).updateSettings( {
-					colors: stackableColors,
+					colors: stackableColors[ 0 ] || [],
 				} )
 			}
 

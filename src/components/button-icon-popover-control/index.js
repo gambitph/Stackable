@@ -166,7 +166,11 @@ class ButtonIconPopoverControl extends Component {
 										</p>
 										<ButtonGroup>
 											<Button
-												onClick={ this.props.onReset }
+												onClick={ () => {
+													this.setState( { showResetPopover: false } )
+													this.props.onReset()
+												}
+												 }
 												isDefault
 												isSmall
 											>

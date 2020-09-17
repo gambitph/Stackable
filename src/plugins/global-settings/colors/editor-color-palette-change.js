@@ -46,7 +46,7 @@ const EditorColorPaletteChange = () => {
 				const { colors } = select( 'core/block-editor' ).getSettings()
 
 				dispatch( 'core/block-editor' ).updateSettings( {
-					colors: useStackableColorsOnly ? [ ...stackableGlobalColors ] : uniqBy( [ ...colors, ...stackableGlobalColors ], 'slug' ),
+					colors: useStackableColorsOnly ? [ ...stackableGlobalColors[ 0 ] || [] ] : uniqBy( [ ...colors, ...stackableGlobalColors[ 0 ] || [] ], 'slug' ),
 				} )
 			} )
 		} )
