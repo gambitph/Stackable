@@ -17,6 +17,7 @@ import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
 import { SelectControl } from '@wordpress/components'
+import { applyFilters } from '@wordpress/hooks'
 
 const TypographyControl = props => {
 	// Compute the font size placeholder value.
@@ -28,6 +29,8 @@ const TypographyControl = props => {
 		// Use the given placeholder, or use the detected font size.
 		placeholder = props.placeholder || getDefaultFontSize( props.htmlTag )
 	}
+
+	props = applyFilters( 'stackable.typography-control', props )
 
 	return (
 		<Fragment>

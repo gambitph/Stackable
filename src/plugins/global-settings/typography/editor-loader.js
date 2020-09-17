@@ -17,8 +17,15 @@ import { loadPromise, models } from '@wordpress/api'
 import {
 	render, useEffect, useState,
 } from '@wordpress/element'
-import { addAction, removeAction } from '@wordpress/hooks'
+import {
+	addAction, removeAction, removeFilter,
+} from '@wordpress/hooks'
 import { useSelect } from '@wordpress/data'
+
+/**
+ * Internal dependencies
+ */
+import { addTypographyControlFilter } from './typography-filter'
 
 export const GlobalTypographyStyles = () => {
 	const [ typographySettings, setTypographySettings ] = useState( [] )
@@ -39,6 +46,7 @@ export const GlobalTypographyStyles = () => {
 			settings.fetch().then( response => {
 				setTypographySettings( ( response.stackable_global_typography && response.stackable_global_typography[ 0 ] ) || {} )
 				setApplySettingsTo( response.stackable_global_typography_apply_to || 'blocks-stackable-native' )
+				addTypographyControlFilter( ( response.stackable_global_typography && response.stackable_global_typography ) || [] )
 			} )
 		} )
 
@@ -49,6 +57,7 @@ export const GlobalTypographyStyles = () => {
 		} )
 		return () => {
 			removeAction( 'stackable.global-settings.typography.update-trigger', 'stackable/typography-styles' )
+			removeFilter( 'stackable.typography-control', 'global-typography' )
 		}
 	}, [] )
 
