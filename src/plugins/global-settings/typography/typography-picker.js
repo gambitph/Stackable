@@ -7,7 +7,9 @@ import {
 	createTypographyStyles, loadGoogleFont,
 } from '~stackable/util'
 import { i18n } from 'stackable'
-import { upperFirst, omit } from 'lodash'
+import {
+	upperFirst, omit,
+} from 'lodash'
 import classnames from 'classnames'
 
 /**
@@ -86,6 +88,8 @@ const TypographyPicker = props => {
 			onChangeMobileLineHeightUnit={ value => onChange( 'mobileLineHeightUnit', value ) }
 			onChangeLetterSpacing={ value => onChange( 'letterSpacing', value ) }
 			onReset={ () => props.onReset( props.tag ) }
+			resetPopoverTitle={ sprintf( __( 'Reset %s Global Typography Style', i18n ), props.tag && props.tag.toUpperCase() ) }
+			resetPopoverDescription={ __( 'Resetting this typography style will revert all typography to its original style. Proceed?', i18n ) }
 		/>
 	)
 }

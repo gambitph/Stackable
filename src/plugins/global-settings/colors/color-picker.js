@@ -135,7 +135,6 @@ const ResetButton = props => {
 			{ isResetPopoverOpen && (
 				<Popover
 					className="components-dropdown__content"
-					focusOnMount={ false }
 					onFocusOutside={ () => setIsResetPopoverOpen( false ) }
 					position="bottom center"
 				>

@@ -3,9 +3,11 @@
  */
 import { addFilter, removeFilter } from '@wordpress/hooks'
 import {
-	BaseControl, Button, PanelBody, Popover, ToggleControl,
+	BaseControl, Button, PanelBody, Popover, ToggleControl, ButtonGroup,
 } from '@wordpress/components'
-import { Component, createRef } from '@wordpress/element'
+import {
+	Component, createRef, Fragment,
+} from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 /**
@@ -29,6 +31,7 @@ class ButtonIconPopoverControl extends Component {
 		this.handleMouseLeave = this.handleMouseLeave.bind( this )
 		this.handleMouseEnter = this.handleMouseEnter.bind( this )
 		this.handleOnClickOutside = this.handleOnClickOutside.bind( this )
+		this.handleReset = this.handleReset.bind( this )
 		this.buttonRef = createRef()
 		this.instanceId = buttonInstance++
 	}
@@ -103,6 +106,14 @@ class ButtonIconPopoverControl extends Component {
 		this.setState( { isMouseOutside: false } )
 	}
 
+	handleReset() {
+		if ( this.props.resetPopoverTitle || this.props.resetPopoverDescription ) {
+			this.setState( { showResetPopover: true } )
+		} else {
+			this.props.onReset()
+		}
+	}
+
 	/**
 	 * Use our own click/close handler. Don't close when a popover (e.g. a
 	 * colorpicker) is clicked.  If this is not used, the popover will close when
@@ -133,12 +144,44 @@ class ButtonIconPopoverControl extends Component {
 				) }
 				<div className="ugb-button-icon-control__wrapper">
 					{ this.props.allowReset && (
-						<Button
-							onClick={ this.props.onReset }
-							className="ugb-button-icon-control__reset"
-							label={ __( 'Reset', i18n ) }
-							icon="image-rotate"
-						/>
+						<Fragment>
+							<Button
+								onClick={ this.handleReset }
+								className="ugb-button-icon-control__reset"
+								label={ __( 'Reset', i18n ) }
+								icon="image-rotate"
+							/>
+							{ this.state.showResetPopover && (
+								<Popover
+									onClickOutside={ () => this.setState( { showResetPopover: false } ) }
+									position="bottom center"
+								>
+									<div className="components-color-picker__body">
+										<h4 className="ugb-button-icon-control__text-title">
+											{ this.props.resetPopoverTitle }
+										</h4>
+										<p className="components-base-control__help">
+											{ this.props.resetPopoverDescription }
+										</p>
+										<ButtonGroup>
+											<Button
+												onClick={ this.props.onReset }
+												isDefault
+												isSmall
+											>
+												{ __( 'Reset', i18n ) }
+											</Button>
+											<Button
+												onClick={ () => this.setState( { showResetPopover: false } ) }
+												isSmall
+											>
+												{ __( 'Cancel', i18n ) }
+											</Button>
+										</ButtonGroup>
+									</div>
+								</Popover>
+							) }
+						</Fragment>
 					) }
 					<Button
 						onClick={ this.handleOpen }
