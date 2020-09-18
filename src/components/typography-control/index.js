@@ -24,11 +24,11 @@ const TypographyControl = props => {
 	const placeholder = useMemo( () => {
 		if ( typeof props.placeholder === 'function' ) {
 		// If the placeholder is a function, this means that it's computed based on the detected default font size.
-			return Math.round( props.placeholder( getDefaultFontSize( props.htmlTag ) ) )
+			return props.fontSize || Math.round( props.placeholder( getDefaultFontSize( props.htmlTag ) ) )
 		}
 		// Use the given placeholder, or use the detected font size.
-		 return props.placeholder || getDefaultFontSize( props.htmlTag )
-	}, [ props.htmlTag ] )
+		 return props.fontSIze || props.placeholder || getDefaultFontSize( props.htmlTag )
+	}, [ props.htmlTag, props.fontSize ] )
 
 	return (
 		<Fragment>
