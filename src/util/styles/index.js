@@ -11,13 +11,33 @@ import { sprintf } from '@wordpress/i18n'
 
 export const isDarkColor = color => {
 	try {
+		let colorTest = color
 		if ( ! color.match( /^#/ ) ) {
-			return _isDarkColor( color )
+			if ( color.indexOf( 'var(' ) > -1 ) {
+				//
+				/**
+				 * Detect CSS variables in form of var(--color) and get their current
+				 * values from the :root selector.
+				 */
+				const colorVar = color.match( /--(.*?(?=,))/g )
+				if ( ! colorVar ) {
+					colorTest = window.getComputedStyle( document.documentElement )
+						.getPropertyValue( color.replace( 'var(', '' ).replace( ')', '' ) ) || '#fff'
+				} else {
+					// Do also for CSS variables with fallback values.
+					colorTest = window.getComputedStyle( document.documentElement )
+						.getPropertyValue( colorVar[ 0 ] ) || '#fff'
+				}
+			} else {
+				return _isDarkColor( color )
+			}
 		}
-		let colorTest = color.replace( /#/g, '' )
+
+		colorTest = colorTest.replace( /#/g, '' )
 		if ( colorTest.length === 3 ) {
 			colorTest = colorTest.replace( /(.)(.)(.)/, '$1$1$2$2$3$3' )
 		}
+
 		return _isDarkColor( `#${ colorTest }` )
 	} catch ( err ) {
 		return false
