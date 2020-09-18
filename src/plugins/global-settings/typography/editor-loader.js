@@ -20,7 +20,7 @@ import {
 	render, useEffect, useState,
 } from '@wordpress/element'
 import {
-	addAction, removeAction, applyFilters,
+	addAction, removeAction, applyFilters, doAction,
 } from '@wordpress/hooks'
 import { useSelect } from '@wordpress/data'
 
@@ -63,8 +63,7 @@ export const GlobalTypographyStyles = () => {
 
 	// Debounced style generation.
 	useEffect( () => {
-		clearTimeout( styleTimeout )
-		setStyleTimeout( setTimeout( () => {
+		addAction( 'stackable.global-settings.typography-update-global-styles', 'stackable/typography-styles', typographySettings => {
 			// Generate all the typography styles.
 			const styleObject = Object.keys( typographySettings ).map( tag => {
 				const selectors = formSelectors( tag, applySettingsTo )
@@ -107,7 +106,12 @@ export const GlobalTypographyStyles = () => {
 			} )
 
 			setStyles( generateStyles( deepmerge.all( styleObject ) ) )
-		}, 200 ) )
+		} )
+
+		clearTimeout( styleTimeout )
+		setStyleTimeout( setTimeout( () => doAction( 'stackable.global-settings.typography-update-global-styles', typographySettings ), 200 ) )
+
+		return () => removeAction( 'stackable.global-settings.typography-update-global-styles', 'stackable/typography-styles' )
 	}, [ typographySettings, applySettingsTo, device ] )
 
 	return <style>{ styles }</style>

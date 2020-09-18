@@ -97,6 +97,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 	const resetStyles = tag => {
 		const newSettings = omit( typographySettings, [ tag ] )
 		setTypographySettings( newSettings )
+		doAction( 'stackable.global-settings.typography-update-global-styles', newSettings )
 
 		clearTimeout( saveThrottle )
 		saveThrottle = setTimeout( () => {
