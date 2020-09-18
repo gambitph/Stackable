@@ -54,22 +54,26 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 					'description' => __( 'Stackable global color palette', STACKABLE_I18N ),
 					'sanitize_callback' => array( $this, 'sanitize_array_setting' ),
 					'show_in_rest' => array(
-						'type' => 'array',
-						'items' => array(
-							'type' => 'object',
-							'properties' => array(
-								'name' => array(
-									'type' => 'string',
-								),
-								'slug' => array(
-									'type' => 'string',
-								),
-								'color' => array(
-									'type' => 'string',
-								),
-								'rgb' => array(
-									'type' => 'string',
-								),
+						'schema' => array(
+							'items' => array(
+								'type' => 'array',
+								'items' => array(
+									'type' => 'object',
+									'properties' => array(
+										'name' => array(
+											'type' => 'string',
+										),
+										'slug' => array(
+											'type' => 'string',
+										),
+										'color' => array(
+											'type' => 'string',
+										),
+										'rgb' => array(
+											'type' => 'string',
+										),
+									)
+								)
 							)
 						)
 					),
@@ -125,6 +129,60 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				)
 			);
 
+			$stackable_global_typography_schema = array(
+				'type' => 'object',
+				'properties' => array(
+					'fontFamily' => array(
+						'type' => 'string',
+					),
+					'fontSize' => array(
+						'type' => 'number',
+					),
+					'tabletFontSize' => array(
+						'type' => 'number',
+					),
+					'mobileFontSize' => array(
+						'type' => 'number',
+					),
+					'fontSizeUnit' => array(
+						'type' => 'string',
+					),
+					'tabletFontSizeUnit' => array(
+						'type' => 'string',
+					),
+					'mobileFontSizeUnit' => array(
+						'type' => 'string',
+					),
+					'fontWeight' => array(
+						'type' => 'string',
+					),
+					'textTransform' => array(
+						'type' => 'string',
+					),
+					'lineHeight' => array(
+						'type' => 'string',
+					),
+					'tabletLineHeight' => array(
+						'type' => 'string',
+					),
+					'mobileLineHeight' => array(
+						'type' => 'string',
+					),
+					'lineHeightUnit' => array(
+						'type' => 'string',
+					),
+					'tabletLineHeightUnit' => array(
+						'type' => 'string',
+					),
+					'mobileLineHeightUnit' => array(
+						'type' => 'string',
+					),
+					'letterSpacing' => array(
+						'type' => 'string',
+					),
+				)
+			);
+
 			register_setting(
 				'stackable_global_settings',
 				'stackable_global_typography',
@@ -134,58 +192,18 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 					'sanitize_callback' => array( $this, 'sanitize_array_setting' ),
 					'show_in_rest' => array(
 						'schema' => array(
-							'type'  => 'array',
-							'properties' => array(
-								'fontFamily' => array(
-									'type' => 'string',
-								),
-								'fontSize' => array(
-									'type' => 'number',
-								),
-								'tabletFontSize' => array(
-									'type' => 'number',
-								),
-								'mobileFontSize' => array(
-									'type' => 'number',
-								),
-								'fontSizeUnit' => array(
-									'type' => 'string',
-								),
-								'tabletFontSizeUnit' => array(
-									'type' => 'string',
-								),
-								'mobileFontSizeUnit' => array(
-									'type' => 'string',
-								),
-								'fontWeight' => array(
-									'type' => 'string',
-								),
-								'textTransform' => array(
-									'type' => 'string',
-								),
-								'lineHeight' => array(
-									'type' => 'string',
-								),
-								'tabletLineHeight' => array(
-									'type' => 'string',
-								),
-								'mobileLineHeight' => array(
-									'type' => 'string',
-								),
-								'lineHeightUnit' => array(
-									'type' => 'string',
-								),
-								'tabletLineHeightUnit' => array(
-									'type' => 'string',
-								),
-								'mobileLineHeightUnit' => array(
-									'type' => 'string',
-								),
-								'letterSpacing' => array(
-									'type' => 'string',
-								),
-							),
-						),
+							'items' => array(
+								'type' => 'object',
+								'properties' => array(
+									'h1' => $stackable_global_typography_schema,
+									'h2' => $stackable_global_typography_schema,
+									'h2' => $stackable_global_typography_schema,
+									'h3' => $stackable_global_typography_schema,
+									'h4' => $stackable_global_typography_schema,
+									'p' => $stackable_global_typography_schema,
+								)
+							)
+						)
 					),
 					'default' => '',
 				)
