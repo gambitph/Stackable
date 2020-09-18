@@ -14,20 +14,26 @@ import { getDefaultFontSize } from '~stackable/util'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { Fragment, useMemo } from '@wordpress/element'
+import {
+	Fragment, useState, useEffect,
+} from '@wordpress/element'
 import { i18n } from 'stackable'
 import { SelectControl } from '@wordpress/components'
 
 const TypographyControl = props => {
-	// Compute the font size placeholder value.
+	const [ placeholder, setPlaceholder ] = useState( '' )
 
-	const placeholder = useMemo( () => {
-		if ( typeof props.placeholder === 'function' ) {
-		// If the placeholder is a function, this means that it's computed based on the detected default font size.
-			return props.fontSize || Math.round( props.placeholder( getDefaultFontSize( props.htmlTag ) ) )
-		}
-		// Use the given placeholder, or use the detected font size.
-		 return props.fontSize || props.placeholder || getDefaultFontSize( props.htmlTag )
+	// Compute the font size placeholder value.
+	useEffect( () => {
+		const timeout = setTimeout( () => {
+			if ( typeof props.placeholder === 'function' ) {
+				// If the placeholder is a function, this means that it's computed based on the detected default font size.
+				setPlaceholder( props.fontSize || Math.round( props.placeholder( getDefaultFontSize( props.htmlTag ) ) ) )
+			}
+			// Use the given placeholder, or use the detected font size.
+		 setPlaceholder( props.fontSize || props.placeholder || getDefaultFontSize( props.htmlTag ) )
+		}, 250 )
+		return () => clearTimeout( timeout )
 	}, [ props.htmlTag, props.fontSize ] )
 
 	return (
