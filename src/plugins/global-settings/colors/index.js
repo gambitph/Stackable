@@ -15,7 +15,7 @@ import ColorPicker from './color-picker'
  */
 import { i18n } from 'stackable'
 import { PanelAdvancedSettings } from '~stackable/components'
-import { uniqBy, find } from 'lodash'
+import { uniqBy } from 'lodash'
 import rgba from 'color-rgba'
 
 /**
@@ -39,10 +39,36 @@ addFilter( 'stackable.util.hex-to-rgba', 'global-settings/colors', ( output, hex
 
 	const colorVarID = hexColor.match( /--stk-global-color-(\S*?(?=,))/ )
 	if ( colorVarID ) {
-		const { colors } = select( 'core/block-editor' ).getSettings()
-		const selectedColor = find( colors, color => color.slug === `stk-global-color-${ colorVarID[ 1 ] }` )
-		if ( selectedColor ) {
-			return `rgba(var(--${ selectedColor.slug }-rgba, ${ selectedColor.rgb || `0, 0, 0` }), ${ opacity !== null ? opacity : 1 })`
+		const colorRegex = /( )(.*)/g
+		const colorMatch = hexColor.match( colorRegex )[ 0 ].trim().slice( 0, -1 )
+		if ( colorMatch && colorMatch[ 0 ] === '#' ) {
+			const rgbaColor = rgba( colorMatch )
+			if ( rgbaColor ) {
+				rgbaColor.splice( 3, 1 )
+				return `rgba(var(--stk-global-color-${ colorVarID[ 1 ] }-rgba, ${ rgbaColor.join( ', ' ) }), ${ opacity !== null ? opacity : 1 })`
+			}
+		}
+
+		if ( colorMatch.includes( 'var' ) ) {
+			if ( colorMatch.match( /--(.*?(?=,))/g ) ) {
+				const cssVar = colorMatch.match( /--(.*?(?=,))/g )
+				if ( cssVar ) {
+					const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( cssVar[ 0 ] ).trim() )
+					if ( Array.isArray( rgbaColor ) ) {
+						rgbaColor.splice( 3, 1 )
+						return `rgba(var(--stk-global-color-${ colorVarID[ 1 ] }-rgba, ${ rgbaColor.join( ', ' ) }), ${ opacity !== null ? opacity : 1 })`
+					}
+				}
+			} else if ( colorMatch.match( /--(.*?(?=\)))/g ) ) {
+				const cssVar = colorMatch.match( /--(.*?(?=\)))/g )
+				if ( cssVar ) {
+					const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( cssVar[ 0 ] ).trim() )
+					if ( Array.isArray( rgbaColor ) ) {
+						rgbaColor.splice( 3, 1 )
+						return `rgba(var(--stk-global-color-${ colorVarID[ 1 ] }-rgba, ${ rgbaColor.join( ', ' ) }), ${ opacity !== null ? opacity : 1 })`
+					}
+				}
+			}
 		}
 	}
 
@@ -54,10 +80,32 @@ addFilter( 'stackable.util.is-dark-color', 'global-settings/colors', color => {
 	if ( color.match( /--stk-global-color/ ) ) {
 		const colorVarID = color.match( /--stk-global-color-(\S*?(?=,))/ )
 		if ( colorVarID ) {
-			const { colors } = select( 'core/block-editor' ).getSettings()
-			const selectedColor = find( colors, color => color.slug === `stk-global-color-${ colorVarID[ 1 ] }` )
-			if ( selectedColor && selectedColor.rgb ) {
-				return rgbToHex( ...selectedColor.rgb.split( ', ' ).map( value => parseInt( value ) ) )
+			const colorRegex = /( )(.*)/g
+			const colorMatch = color.match( colorRegex )[ 0 ].trim().slice( 0, -1 )
+			if ( colorMatch && colorMatch[ 0 ] === '#' ) {
+				return colorMatch
+			}
+
+			if ( colorMatch.includes( 'var' ) ) {
+				if ( colorMatch.match( /--(.*?(?=,))/g ) ) {
+					const cssVar = colorMatch.match( /--(.*?(?=,))/g )
+					if ( cssVar ) {
+						const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( cssVar[ 0 ] ).trim() )
+						if ( Array.isArray( rgbaColor ) && rgbaColor.length ) {
+							rgbaColor.splice( 3, 1 )
+							return rgbToHex( ...rgbaColor )
+						}
+					}
+				} else if ( colorMatch.match( /--(.*?(?=\)))/g ) ) {
+					const cssVar = colorMatch.match( /--(.*?(?=\)))/g )
+					if ( cssVar ) {
+						const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( cssVar[ 0 ] ).trim() )
+						if ( Array.isArray( rgbaColor ) && rgbaColor.length ) {
+							rgbaColor.splice( 3, 1 )
+							return rgbToHex( ...rgbaColor )
+						}
+					}
+				}
 			}
 		}
 	}
