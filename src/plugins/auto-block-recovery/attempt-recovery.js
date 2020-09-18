@@ -30,60 +30,50 @@ export const autoAttemptRecovery = () => {
 	// Editor might not be ready yet with the contents or might not have
 	// initialized yet.
 	setTimeout( () => {
-		autoAttemptRecoveryRecursive( select( 'core/editor' ).getEditorBlocks() )
+		// Recover all the blocks that we can find.
+		const mainBlocks = recoverBlocks( select( 'core/editor' ).getEditorBlocks() )
+		// Replace the recovered blocks with the new ones.
+		mainBlocks.forEach( block => {
+			if ( block.recovered && block.replacedClientId ) {
+				dispatch( 'core/block-editor' ).replaceBlock( block.replacedClientId, block )
+			}
+		} )
 		enableBlockWarnings()
 	}, 0 )
 }
 
-// Recursive fixing of all blocks.
-export const autoAttemptRecoveryRecursive = blocks => {
-	blocks.forEach( block => {
-		// Auto recover the block.
-		if ( isInvalid( block ) ) {
-			recoverBlock()( block )
+// Recursive fixing of all blocks. This doesn't actually fix any blocks in the
+// editor, but instead creates a new set of fixed blocks based on the given
+// blocks. The replaced blocks will have a `recovered` that's `true` and a
+// `replacedClientId` that contains the block it replaced.
+//
+// It's not the responsibility of this function to manipulate the editor.
+export const recoverBlocks = blocks => {
+	return blocks.map( block => {
+		if ( block.innerBlocks && block.innerBlocks.length ) {
+			const newInnerBlocks = recoverBlocks( block.innerBlocks )
+			if ( newInnerBlocks.some( block => block.recovered ) ) {
+				block.innerBlocks = newInnerBlocks
+				block.replacedClientId = block.clientId
+				block.recovered = true
+			}
 		}
 
-		// Also fix the inner blocks.
-		if ( block.innerBlocks && block.innerBlocks.length ) {
-			autoAttemptRecoveryRecursive( block.innerBlocks )
+		if ( isInvalid( block ) ) {
+			const newBlock = recoverBlock( block )
+			newBlock.replacedClientId = block.clientId
+			newBlock.recovered = true
+			console.log( 'Stackable notice: block ' + block.name + ' (' + block.clientId + ') was auto-recovered, you should not see this after saving your page.' ) // eslint-disable-line no-console
+			return newBlock
 		}
+
+		return block
 	} )
 }
 
-// Recover an invalid block.
-export const recoverBlock = ( selectFunctions = null ) => block => {
-	const {
-		name, attributes, innerBlocks, clientId,
-	} = block
-
-	const {
-		getBlockParents,
-		getBlock,
-		getTemplateLock,
-	} = selectFunctions || wp.data.select( 'core/block-editor' )
-
-	// Check if an innerBlock, Innerblocks with a templateLock cannot be
-	// replaced via replaceBlock, so we need to replace the parent also.
-	const parents = getBlockParents( clientId )
-	if ( parents && parents.length ) {
-		const parentClientId = parents[ parents.length - 1 ] // The last parent is the immediate one.
-		const parentBlock = getBlock( parentClientId )
-		const templateLock = getTemplateLock( parentClientId )
-
-		if ( templateLock && parentBlock.innerBlocks.includes( block ) ) {
-			// Create a new set of innerBlocks but replace the one we want to recover.
-			const innerBlockIndex = parentBlock.innerBlocks.indexOf( block )
-			const newBlock = createBlock( name, attributes, innerBlocks )
-			const newInnerBlocks = [ ...parentBlock.innerBlocks ]
-			newInnerBlocks[ innerBlockIndex ] = newBlock
-
-			const newParentBlock = createBlock( parentBlock.name, parentBlock.attributes, newInnerBlocks )
-			dispatch( 'core/block-editor' ).replaceBlock( parentClientId, newParentBlock )
-			return
-		}
-	}
-
-	// Regular replacing of the block.
-	const newBlock = createBlock( name, attributes, innerBlocks )
-	dispatch( 'core/block-editor' ).replaceBlock( clientId, newBlock )
+// Recovers one block.
+export const recoverBlock = ( {
+	name, attributes, innerBlocks,
+} ) => {
+	return createBlock( name, attributes, innerBlocks )
 }

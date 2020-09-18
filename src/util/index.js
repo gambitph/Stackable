@@ -143,8 +143,15 @@ export const hexToRgba = ( hexColor, opacity = null ) => {
 	 * values from the :root selector.
 	 */
 	if ( hex.indexOf( 'var(' ) > -1 ) {
-		hex = window.getComputedStyle( document.documentElement )
-			.getPropertyValue( hex.replace( 'var(', '' ).replace( ')', '' ) ) || '#fff'
+		const colorVar = hex.match( /--(.*?(?=,))/g )
+		if ( ! colorVar ) {
+			hex = window.getComputedStyle( document.documentElement )
+				.getPropertyValue( hex.replace( 'var(', '' ).replace( ')', '' ) ) || '#fff'
+		} else {
+			// Do also for CSS variables with fallback values.
+			hex = window.getComputedStyle( document.documentElement )
+				.getPropertyValue( colorVar[ 0 ] ) || '#fff'
+		}
 	}
 
 	hex = hex.replace( /#/, '' )

@@ -236,10 +236,10 @@ addFilter( 'stackable.feature-grid.edit.inspector.style.before', 'stackable/feat
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
-					htmlTag={ titleTag || 'h2' }
+					htmlTag={ titleTag || 'h5' }
 				/>
 				<HeadingButtonsControl
-					value={ titleTag || 'h2' }
+					value={ titleTag || 'h5' }
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
 				<ColorPaletteControl
