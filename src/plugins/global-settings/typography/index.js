@@ -85,6 +85,11 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		}
 		setTypographySettings( newSettings )
 
+		// Update the global styles immediately when reset font size is triggered.
+		if ( styles && ! styles.fontSize ) {
+			doAction( 'stackable.global-settings.typography-update-global-styles', newSettings )
+		}
+
 		clearTimeout( saveThrottle )
 		saveThrottle = setTimeout( () => {
 			const model = new models.Settings( {
