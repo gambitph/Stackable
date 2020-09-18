@@ -56,7 +56,7 @@ addFilter( 'stackable.util.is-dark-color', 'global-settings/colors', color => {
 		if ( colorVarID ) {
 			const { colors } = select( 'core/block-editor' ).getSettings()
 			const selectedColor = find( colors, color => color.slug === `stk-global-color-${ colorVarID[ 1 ] }` )
-			if ( selectedColor ) {
+			if ( selectedColor && selectedColor.rgb ) {
 				return rgbToHex( ...selectedColor.rgb.split( ', ' ).map( value => parseInt( value ) ) )
 			}
 		}
