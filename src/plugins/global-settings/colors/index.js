@@ -40,7 +40,11 @@ addFilter( 'stackable.util.hex-to-rgba', 'global-settings/colors', ( output, hex
 	const colorVarID = hexColor.match( /--stk-global-color-(\S*?(?=,))/ )
 	if ( colorVarID ) {
 		const colorRegex = /( )(.*)/g
+
+		// Get the fallback value of the global color.
 		const colorMatch = hexColor.match( colorRegex )[ 0 ].trim().slice( 0, -1 )
+
+		// If the fallback value is a hex, convert to rgba.
 		if ( colorMatch && colorMatch[ 0 ] === '#' ) {
 			const rgbaColor = rgba( colorMatch )
 			if ( rgbaColor ) {
@@ -49,7 +53,12 @@ addFilter( 'stackable.util.hex-to-rgba', 'global-settings/colors', ( output, hex
 			}
 		}
 
+		/**
+		 * If the fallback value is a global variable, get the computed style of the variable. as the fallback value of the
+		 * --stk-global-color-ID-rgba.
+		 */
 		if ( colorMatch.includes( 'var' ) ) {
+			// Handle the global variables with fallback values.
 			if ( colorMatch.match( /--(.*?(?=,))/g ) ) {
 				const cssVar = colorMatch.match( /--(.*?(?=,))/g )
 				if ( cssVar ) {
@@ -60,6 +69,7 @@ addFilter( 'stackable.util.hex-to-rgba', 'global-settings/colors', ( output, hex
 					}
 				}
 			} else if ( colorMatch.match( /--(.*?(?=\)))/g ) ) {
+				// Handle the global variables without fallback values.
 				const cssVar = colorMatch.match( /--(.*?(?=\)))/g )
 				if ( cssVar ) {
 					const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( cssVar[ 0 ] ).trim() )
@@ -81,12 +91,18 @@ addFilter( 'stackable.util.is-dark-color', 'global-settings/colors', color => {
 		const colorVarID = color.match( /--stk-global-color-(\S*?(?=,))/ )
 		if ( colorVarID ) {
 			const colorRegex = /( )(.*)/g
+			// Get the fallback value of the global color.
 			const colorMatch = color.match( colorRegex )[ 0 ].trim().slice( 0, -1 )
 			if ( colorMatch && colorMatch[ 0 ] === '#' ) {
 				return colorMatch
 			}
 
+			/**
+			 * If the fallback value is a global variable, get the computed style of the variable. as the fallback value of the
+			 * --stk-global-color-ID-rgba.
+			 */
 			if ( colorMatch.includes( 'var' ) ) {
+				// Handle the global variables with fallback values.
 				if ( colorMatch.match( /--(.*?(?=,))/g ) ) {
 					const cssVar = colorMatch.match( /--(.*?(?=,))/g )
 					if ( cssVar ) {
@@ -97,6 +113,7 @@ addFilter( 'stackable.util.is-dark-color', 'global-settings/colors', color => {
 						}
 					}
 				} else if ( colorMatch.match( /--(.*?(?=\)))/g ) ) {
+					// Handle the global variables without fallback values.
 					const cssVar = colorMatch.match( /--(.*?(?=\)))/g )
 					if ( cssVar ) {
 						const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( cssVar[ 0 ] ).trim() )
