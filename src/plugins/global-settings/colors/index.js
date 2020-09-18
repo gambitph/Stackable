@@ -52,41 +52,12 @@ addFilter( 'stackable.util.hex-to-rgba', 'global-settings/colors', ( output, hex
 				return `rgba(var(--stk-global-color-${ colorVarID[ 1 ] }-rgba, ${ rgbaColor.join( ', ' ) }), ${ opacity !== null ? opacity : 1 })`
 			}
 		}
-
-		/**
-		 * If the fallback value is a global variable, get the computed style of the variable. as the fallback value of the
-		 * --stk-global-color-ID-rgba.
-		 */
-		if ( colorMatch.includes( 'var' ) ) {
-			// Handle the global variables with fallback values.
-			if ( colorMatch.match( /--(.*?(?=,))/g ) ) {
-				const cssVar = colorMatch.match( /--(.*?(?=,))/g )
-				if ( cssVar ) {
-					const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( cssVar[ 0 ] ).trim() )
-					if ( Array.isArray( rgbaColor ) ) {
-						rgbaColor.splice( 3, 1 )
-						return `rgba(var(--stk-global-color-${ colorVarID[ 1 ] }-rgba, ${ rgbaColor.join( ', ' ) }), ${ opacity !== null ? opacity : 1 })`
-					}
-				}
-			} else if ( colorMatch.match( /--(.*?(?=\)))/g ) ) {
-				// Handle the global variables without fallback values.
-				const cssVar = colorMatch.match( /--(.*?(?=\)))/g )
-				if ( cssVar ) {
-					const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( cssVar[ 0 ] ).trim() )
-					if ( Array.isArray( rgbaColor ) ) {
-						rgbaColor.splice( 3, 1 )
-						return `rgba(var(--stk-global-color-${ colorVarID[ 1 ] }-rgba, ${ rgbaColor.join( ', ' ) }), ${ opacity !== null ? opacity : 1 })`
-					}
-				}
-			}
-		}
 	}
 
 	return output
 } )
 
 addFilter( 'stackable.util.is-dark-color', 'global-settings/colors', color => {
-	const rgbToHex = ( r, g, b ) => '#' + ( ( 1 << 24 ) + ( r << 16 ) + ( g << 8 ) + b ).toString( 16 ).slice( 1 ) // eslint-disable-line no-bitwise
 	if ( color.match( /--stk-global-color/ ) ) {
 		const colorVarID = color.match( /--stk-global-color-(\S*?(?=,))/ )
 		if ( colorVarID ) {
@@ -95,34 +66,6 @@ addFilter( 'stackable.util.is-dark-color', 'global-settings/colors', color => {
 			const colorMatch = color.match( colorRegex )[ 0 ].trim().slice( 0, -1 )
 			if ( colorMatch && colorMatch[ 0 ] === '#' ) {
 				return colorMatch
-			}
-
-			/**
-			 * If the fallback value is a global variable, get the computed style of the variable. as the fallback value of the
-			 * --stk-global-color-ID-rgba.
-			 */
-			if ( colorMatch.includes( 'var' ) ) {
-				// Handle the global variables with fallback values.
-				if ( colorMatch.match( /--(.*?(?=,))/g ) ) {
-					const cssVar = colorMatch.match( /--(.*?(?=,))/g )
-					if ( cssVar ) {
-						const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( cssVar[ 0 ] ).trim() )
-						if ( Array.isArray( rgbaColor ) && rgbaColor.length ) {
-							rgbaColor.splice( 3, 1 )
-							return rgbToHex( ...rgbaColor )
-						}
-					}
-				} else if ( colorMatch.match( /--(.*?(?=\)))/g ) ) {
-					// Handle the global variables without fallback values.
-					const cssVar = colorMatch.match( /--(.*?(?=\)))/g )
-					if ( cssVar ) {
-						const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( cssVar[ 0 ] ).trim() )
-						if ( Array.isArray( rgbaColor ) && rgbaColor.length ) {
-							rgbaColor.splice( 3, 1 )
-							return rgbToHex( ...rgbaColor )
-						}
-					}
-				}
 			}
 		}
 	}
