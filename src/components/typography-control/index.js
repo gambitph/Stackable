@@ -27,7 +27,7 @@ const TypographyControl = props => {
 			return props.fontSize || Math.round( props.placeholder( getDefaultFontSize( props.htmlTag ) ) )
 		}
 		// Use the given placeholder, or use the detected font size.
-		 return props.fontSIze || props.placeholder || getDefaultFontSize( props.htmlTag )
+		 return props.fontSize || props.placeholder || getDefaultFontSize( props.htmlTag )
 	}, [ props.htmlTag, props.fontSize ] )
 
 	return (
