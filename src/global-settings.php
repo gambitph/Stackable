@@ -232,8 +232,72 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				$colors = get_theme_support( 'editor-color-palette' );
 				if ( isset( $colors[0] ) ) {
 					$colors = $colors[0];
-				} else if ( empty( $colors ) ) {
-					$colors = array();
+				}
+
+				// If no colors, create defaults.
+				if ( empty( $colors ) ) {
+					$colors = array(
+						array(
+							'name' => __( 'Black', STACKABLE_I18N ),
+							'slug' => 'black',
+							'color' => '#000000',
+						),
+						array(
+							'name' => __( 'Cyan bluish gray', STACKABLE_I18N ),
+							'slug' => 'cyan-bluish-gray',
+							'color' => '#abb8c3',
+						),
+						array(
+							'name' => __( 'White', STACKABLE_I18N ),
+							'slug' => 'white',
+							'color' => '#ffffff',
+						),
+						array(
+							'name' => __( 'Pale pink', STACKABLE_I18N ),
+							'slug' => 'pale-pink',
+							'color' => '#f78da7',
+						),
+						array(
+							'name' => __( 'Vivid red', STACKABLE_I18N ),
+							'slug' => 'vivid-red',
+							'color' => '#cf2e2e',
+						),
+						array(
+							'name' => __( 'Luminous vivid orange', STACKABLE_I18N ),
+							'slug' => 'luminous-vivid-orange',
+							'color' => '#ff6900',
+						),
+						array(
+							'name' => __( 'Luminous vivid amber', STACKABLE_I18N ),
+							'slug' => 'luminous-vivid-amber',
+							'color' => '#fcb900',
+						),
+						array(
+							'name' => __( 'Light green cyan', STACKABLE_I18N ),
+							'slug' => 'light-green-cyan',
+							'color' => '#7bdcb5',
+						),
+						array(
+							'name' => __( 'Vivid green cyan', STACKABLE_I18N ),
+							'slug' => 'vivid-green-cyan',
+							'color' => '#00d084',
+						),
+						array(
+							'name' => __( 'Pale cyan blue', STACKABLE_I18N ),
+							'slug' => 'pale-cyan-blue',
+							'color' => '#8ed1fc',
+						),
+						array(
+							'name' => __( 'Vivid cyan blue', STACKABLE_I18N ),
+							'slug' => 'vivid-cyan-blue',
+							'color' => '#0693e3',
+						),
+						array(
+							'name' => __( 'Vivid purple', STACKABLE_I18N ),
+							'slug' => 'vivid-purple',
+							'color' => '#9b51e0',
+						),
+					);
 				}
 
 				// Append our global colors with the theme/default ones.
