@@ -423,6 +423,17 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				'mobile' => array(),
 			);
 
+			// Default units.
+			$default_units = array(
+				'fontSizeUnit' => 'px',
+				'tabletFontSizeUnit' => 'px',
+				'mobileFontSizeUnit' => 'px',
+				'lineHeightUnit' => 'em',
+				'tabletLineHeightUnit' => 'em',
+				'mobileLineHeightUnit' => 'em',
+			);
+			$styles = array_merge( $default_units, $styles );
+
 			/**
 			 * Desktop styles.
 			 */
@@ -430,7 +441,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				$css['desktop'][] = $this->create_style( 'font-family', $this->get_font_family( $styles['fontFamily'] ) );
 			}
 			if ( array_key_exists( 'fontSize', $styles ) ) {
-				$css['desktop'][] = $this->create_style( 'font-size', $styles['fontSize'] . ( $styles['fontSizeUnit'] ?: 'px' ) );
+				$css['desktop'][] = $this->create_style( 'font-size', $styles['fontSize'] . $styles['fontSizeUnit'] );
 			}
 			if ( array_key_exists( 'fontWeight', $styles ) ) {
 				$css['desktop'][] = $this->create_style( 'font-weight', $styles['fontWeight'] );
@@ -439,7 +450,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				$css['desktop'][] = $this->create_style( 'text-transform', $styles['textTransform'] );
 			}
 			if ( array_key_exists( 'lineHeight', $styles ) ) {
-				$css['desktop'][] = $this->create_style( 'line-height', $styles['lineHeight'] . ( $styles['lineHeightUnit'] ?: 'em' ) );
+				$css['desktop'][] = $this->create_style( 'line-height', $styles['lineHeight'] . $styles['lineHeightUnit'] );
 			}
 			if ( array_key_exists( 'letterSpacing', $styles ) ) {
 				$css['desktop'][] = $this->create_style( 'letter-spacing', $styles['letterSpacing'] . 'px' );
@@ -449,19 +460,19 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			 * Tablet styles.
 			 */
 			if ( array_key_exists( 'tabletLineHeight', $styles ) ) {
-				$css['tablet'][] = $this->create_style( 'line-height', $styles['tabletLineHeight'] . ( $styles['tabletLineHeightUnit'] ?: 'em' ) );
+				$css['tablet'][] = $this->create_style( 'line-height', $styles['tabletLineHeight'] . $styles['tabletLineHeightUnit'] );
 			}
 			$font_size = '';
 			if ( $inherit ) {
 				if ( array_key_exists( 'fontSize', $styles ) ) {
 					$clamp_desktop_value = $this->clamp_inherited_style( $styles['fontSize'], $inherit_max );
 					if ( $clamp_desktop_value ) {
-						$font_size = $this->create_style( 'font-size', $clamp_desktop_value . ( $styles['fontSizeUnit'] ?: 'px' ) );
+						$font_size = $this->create_style( 'font-size', $clamp_desktop_value . $styles['fontSizeUnit'] );
 					}
 				}
 			}
 			if ( array_key_exists( 'tabletFontSize', $styles ) ) {
-				$font_size = $this->create_style( 'font-size', $styles['tabletFontSize'] . ( $styles['tabletFontSizeUnit'] ?: 'px' ) );
+				$font_size = $this->create_style( 'font-size', $styles['tabletFontSize'] . $styles['tabletFontSizeUnit'] );
 			}
 			if ( $font_size ) {
 				$css['tablet'][] = $font_size;
@@ -471,7 +482,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			 * Mobile styles.
 			 */
 			if ( array_key_exists( 'mobileLineHeight', $styles ) ) {
-				$css['mobile'][] = $this->create_style( 'line-height', $styles['mobileLineHeight'] . ( $styles['mobileLineHeightUnit'] ?: 'em' ) );
+				$css['mobile'][] = $this->create_style( 'line-height', $styles['mobileLineHeight'] . $styles['mobileLineHeightUnit'] );
 			}
 
 			$font_size = '';
@@ -481,7 +492,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				if ( array_key_exists( 'fontSize', $styles ) ) {
 					$clamp_desktop_value = $this->clamp_inherited_style( $styles['fontSize'], $inherit_max );
 					if ( $clamp_desktop_value ) {
-						$font_size = $this->create_style( 'font-size', $clamp_desktop_value . ( $styles['fontSizeUnit'] ?: 'px' ) );
+						$font_size = $this->create_style( 'font-size', $clamp_desktop_value . $styles['fontSizeUnit'] );
 					}
 				}
 
@@ -489,7 +500,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				if ( array_key_exists( 'tabletFontSize', $styles ) ) {
 					$clamp_tablet_value = $this->clamp_inherited_style( $style['tabletFontSize'], $inherit_max );
 					if ( $clamp_tablet_value ) {
-						$font_size = $this->create_style( 'font-size', $clamp_tablet_value . ( $styles['tabletFontSizeUnit'] ?: 'px' ) );
+						$font_size = $this->create_style( 'font-size', $clamp_tablet_value . $styles['tabletFontSizeUnit'] );
 					}
 				}
 				if ( ! $clamp_tablet_value ) {
@@ -502,7 +513,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				}
 			}
 			if ( array_key_exists( 'mobileFontSize', $styles ) ) {
-				$font_size = $this->create_style( 'font-size', $styles['mobileFontSize'] . ( $styles['mobileFontSizeUnit'] ?: 'px' ) );
+				$font_size = $this->create_style( 'font-size', $styles['mobileFontSize'] . $styles['mobileFontSizeUnit'] );
 			}
 			if ( $font_size ) {
 				$css['mobile'][] = $font_size;
