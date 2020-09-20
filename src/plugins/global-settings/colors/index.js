@@ -182,7 +182,7 @@ domReady( () => {
 
 			if ( useStackableColorsOnly ) {
 				dispatch( 'core/block-editor' ).updateSettings( {
-					colors: stackableColors[ 0 ] || [],
+					colors: stackableColors || [],
 				} )
 			}
 
