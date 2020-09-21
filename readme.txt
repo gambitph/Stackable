@@ -197,6 +197,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * New: Global Typography
 * Fixed: Speed improvements
 * Fixed: Some popup settings close right away when clicking in Firefox
+* Fixed: Blocksy compatibility when detecting dark colors
 
 = 2.10.4 =
 * Fixed: Some responsive font-sizes won't apply
