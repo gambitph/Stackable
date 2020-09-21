@@ -31,7 +31,7 @@ import domReady from '@wordpress/dom-ready'
 import { loadPromise, models } from '@wordpress/api'
 import { ToggleControl } from '@wordpress/components'
 
-addFilter( 'stackable.util.hex-to-rgba', 'stackable/colors', ( output, hexColor, opacity ) => {
+addFilter( 'stackable.util.hex-to-rgba', 'global-settings/colors', ( output, hexColor, opacity ) => {
 	// Only do this for Stackable global colors.
 	if ( ! hexColor.includes( '--stk-global-color' ) ) {
 		return output
@@ -57,7 +57,7 @@ addFilter( 'stackable.util.hex-to-rgba', 'stackable/colors', ( output, hexColor,
 	return output
 } )
 
-addFilter( 'stackable.util.is-dark-color', 'stackable/colors', color => {
+addFilter( 'stackable.util.is-dark-color', 'global-settings/colors', color => {
 	if ( color.match( /--stk-global-color/ ) ) {
 		const colorVarID = color.match( /--stk-global-color-(\S*?(?=,))/ )
 		if ( colorVarID ) {
@@ -73,7 +73,7 @@ addFilter( 'stackable.util.is-dark-color', 'stackable/colors', color => {
 	return color
 } )
 
-addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', output => {
+addFilter( 'stackable.global-settings.inspector', 'global-settings/colors', output => {
 	const { useStackableColorsOnly } = useSelect( select => select( 'stackable/global-colors' ).getSettings() )
 
 	const onChangeUseStackableColorsOnly = ( value, updateColors = true ) => {
@@ -126,7 +126,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
  * When a color is deleted, iterate through all blocks and update the color
  * attribute affected, turn them from slugs into the hex equivalent.
  */
-addAction( 'stackable.global-colors.reset-compatibility', 'stackable/global-colors/reset', colorsBeforeReset => {
+addAction( 'stackable.global-colors.reset-compatibility', 'global-settings/colors', colorsBeforeReset => {
 	const resetBlockColorAttributesRecursive = blocks => {
 		blocks.forEach( block => {
 			resetBlockColorAttributes( block, colorsBeforeReset )
@@ -142,7 +142,7 @@ addAction( 'stackable.global-colors.reset-compatibility', 'stackable/global-colo
 } )
 
 // Convert hex colors to global colors in Stackable blocks.
-addFilter( 'stackable.color-palette-control.change', 'stackable/global-settings/colors', ( value, colorObject ) => {
+addFilter( 'stackable.color-palette-control.change', 'global-settings/colors', ( value, colorObject ) => {
 	if ( colorObject && colorObject.slug.match( /stk-global-color/ ) ) {
 		return `var(--${ colorObject.slug }, ${ colorObject.color })`
 	}
@@ -153,7 +153,7 @@ addFilter( 'stackable.color-palette-control.change', 'stackable/global-settings/
 /**
  * Action for saving the colors in models settings.
  */
-addAction( 'stackable.global-colors.save-model-settings', 'color-save-settings', newColors => {
+addAction( 'stackable.global-colors.save-model-settings', 'global-settings/colors', newColors => {
 	const updatedColors = newColors.filter( color => color.slug.match( /^stk-global-color/ ) ).map( newColor => {
 		const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( `--${ newColor.slug }` ).trim() )
 		if ( Array.isArray( rgbaColor ) && rgbaColor.length !== 0 ) {
