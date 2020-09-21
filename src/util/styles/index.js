@@ -3,6 +3,7 @@
  */
 import { default as _isDarkColor } from 'is-dark-color'
 import { lowerFirst, clamp } from 'lodash'
+import rgba from 'color-rgba'
 
 /**
  * WordPress dependencies
@@ -34,6 +35,19 @@ export const isDarkColor = _color => {
 			} else {
 				return _isDarkColor( color )
 			}
+		}
+
+		// Add compatibility to rgb/rgba colors.
+		if ( color.match( /^rgb/ ) ) {
+			const rgbToHex = ( r, g, b ) => '#' + [ r, g, b ].map( x => {
+				const hex = x.toString( 16 )
+				return hex.length === 1 ? '0' + hex : hex
+			} ).join( '' )
+
+			const rgbaColor = rgba( color )
+			rgbaColor.splice( 3, 1 )
+
+			color = rgbToHex( ...rgbaColor )
 		}
 
 		color = color.replace( /#/g, '' )
