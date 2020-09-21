@@ -99,8 +99,11 @@ class ButtonIconPopoverControl extends Component {
 		this.setState( { open: false } )
 	}
 
-	handleMouseLeave() {
-		this.setState( { isMouseOutside: true } )
+	handleMouseLeave( ev ) {
+		// Added mouseleave support for Firefox. Avoid handleMouseLeave trigger when hovering dropdown menus.
+		if ( ! ev.target.closest( 'select' ) && ! ev.target.closest( '.components-base-control__field' ) ) {
+			this.setState( { isMouseOutside: true } )
+		}
 	}
 
 	handleMouseEnter() {
