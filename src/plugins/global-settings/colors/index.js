@@ -76,7 +76,7 @@ addFilter( 'stackable.util.is-dark-color', 'global-settings/colors', color => {
 addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors', output => {
 	const { useStackableColorsOnly } = useSelect( select => select( 'stackable/global-colors' ).getSettings() )
 
-	const onChangeUseStackableColorsOnly = value => {
+	const onChangeUseStackableColorsOnly = ( value, updateColors = true ) => {
 		dispatch( 'stackable/global-colors' ).updateSettings( {
 			useStackableColorsOnly: value,
 		} )
@@ -85,10 +85,12 @@ addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors
 			model.fetch().then( res => {
 				const settings = new models.Settings( { stackable_global_colors_palette_only: value } ) // eslint-disable-line camelcase
 				settings.save()
-				const { defaultColors } = select( 'stackable/global-colors' ).getSettings()
-				dispatch( 'core/block-editor' ).updateSettings( {
-					colors: value ? res.stackable_global_colors[ 0 ] || [] : uniqBy( [ ...defaultColors, ...res.stackable_global_colors[ 0 ] || [] ], 'slug' ),
-				} )
+				if ( updateColors ) {
+					const { defaultColors } = select( 'stackable/global-colors' ).getSettings()
+					dispatch( 'core/block-editor' ).updateSettings( {
+						colors: value ? res.stackable_global_colors[ 0 ] || [] : uniqBy( [ ...defaultColors, ...res.stackable_global_colors[ 0 ] || [] ], 'slug' ),
+					} )
+				}
 			} )
 		} )
 	}
@@ -107,11 +109,13 @@ addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors
 						{ __( 'Learn more about Global Colors', i18n ) }
 					</a>
 				</p>
-				<ColorPicker />
+				<ColorPicker
+					onReset={ () => onChangeUseStackableColorsOnly( false, false ) }
+				/>
 				<ToggleControl
 					label={ __( 'Use only Stackable colors', i18n ) }
 					checked={ useStackableColorsOnly }
-					onChange={ onChangeUseStackableColorsOnly }
+					onChange={ value => onChangeUseStackableColorsOnly( value ) }
 				/>
 			</PanelAdvancedSettings>
 		</Fragment>

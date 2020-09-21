@@ -209,6 +209,7 @@ ColorOption.defaultProps = {
 
 const ColorPickers = ( {
 	colors,
+	onReset,
 } ) => {
 	// State used to determine the clicked index in the color picker.
 	const [ selectedIndex, setSelectedIndex ] = useState( null )
@@ -273,7 +274,7 @@ const ColorPickers = ( {
 		const {
 			 colors,
 		} = cloneDeep( select( 'core/block-editor' ).getSettings() )
-		const { defaultColors, useStackableColorsOnly } = cloneDeep( select( 'stackable/global-colors' ).getSettings() )
+		const { defaultColors } = cloneDeep( select( 'stackable/global-colors' ).getSettings() )
 
 		/**
 		 * Compability adjustment for stackable and native blocks.
@@ -283,7 +284,9 @@ const ColorPickers = ( {
 		doAction( 'stackable.global-colors.reset-compatibility', colors )
 
 		// Update the colors
-		updateColors( useStackableColorsOnly ? [] : defaultColors )
+		updateColors( defaultColors )
+
+		onReset()
 	}
 
 	// Called when adding a new color.
@@ -353,6 +356,7 @@ const ColorPickers = ( {
 
 ColorPickers.defaultProps = {
 	colors: [],
+	onReset: () => {},
 }
 
 const debouncedDoAction = debounce( doAction, 100 )
@@ -374,6 +378,7 @@ const ColorPickerContainer = props => {
 		<div className={ classNames }>
 			<ColorPickers
 				colors={ colors || [] }
+				onReset={ props.onReset }
 			/>
 		</div>
 	)
@@ -381,6 +386,7 @@ const ColorPickerContainer = props => {
 
 ColorPickerContainer.defaultProps = {
 	className: '',
+	onReset: () => {},
 }
 
 export default ColorPickerContainer
