@@ -3,15 +3,19 @@
  */
 import { default as _isDarkColor } from 'is-dark-color'
 import { lowerFirst, clamp } from 'lodash'
+import rgba from 'color-rgba'
 
 /**
  * WordPress dependencies
  */
 import { sprintf } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 
-export const isDarkColor = color => {
+export const isDarkColor = _color => {
 	try {
-		let colorTest = color
+		// Allow others to modify the received color.
+		let color = applyFilters( 'stackable.util.is-dark-color', _color )
+
 		if ( ! color.match( /^#/ ) ) {
 			if ( color.indexOf( 'var(' ) > -1 ) {
 				//
@@ -21,11 +25,11 @@ export const isDarkColor = color => {
 				 */
 				const colorVar = color.match( /--(.*?(?=,))/g )
 				if ( ! colorVar ) {
-					colorTest = window.getComputedStyle( document.documentElement )
+					color = window.getComputedStyle( document.documentElement )
 						.getPropertyValue( color.replace( 'var(', '' ).replace( ')', '' ) ) || '#fff'
 				} else {
 					// Do also for CSS variables with fallback values.
-					colorTest = window.getComputedStyle( document.documentElement )
+					color = window.getComputedStyle( document.documentElement )
 						.getPropertyValue( colorVar[ 0 ] ) || '#fff'
 				}
 			} else {
@@ -33,12 +37,25 @@ export const isDarkColor = color => {
 			}
 		}
 
-		colorTest = colorTest.replace( /#/g, '' )
-		if ( colorTest.length === 3 ) {
-			colorTest = colorTest.replace( /(.)(.)(.)/, '$1$1$2$2$3$3' )
+		// Add compatibility to rgb/rgba colors.
+		if ( color.match( /^rgb/ ) ) {
+			const rgbToHex = ( r, g, b ) => '#' + [ r, g, b ].map( x => {
+				const hex = x.toString( 16 )
+				return hex.length === 1 ? '0' + hex : hex
+			} ).join( '' )
+
+			const rgbaColor = rgba( color )
+			rgbaColor.splice( 3, 1 )
+
+			color = rgbToHex( ...rgbaColor )
 		}
 
-		return _isDarkColor( `#${ colorTest }` )
+		color = color.replace( /#/g, '' )
+		if ( color.length === 3 ) {
+			color = color.replace( /(.)(.)(.)/, '$1$1$2$2$3$3' )
+		}
+
+		return _isDarkColor( `#${ color }` )
 	} catch ( err ) {
 		return false
 	}
@@ -96,14 +113,15 @@ export const whiteIfDarkBlackIfLight = ( textColor, backgroundColor = '', white 
  * Adds !important to the end of every rule in a style object.
  *
  * @param {Object} styleObject A style object.
+ * @param {boolean} doImportant If false, !important will not be appended.
  *
  * @return {Object} New style object.
  */
-export const appendImportantAll = styleObject => {
+export const appendImportantAll = ( styleObject, doImportant = true ) => {
 	return Object.keys( styleObject ).reduce( ( newStyleObject, key ) => {
 		return {
 			...newStyleObject,
-			[ key ]: appendImportant( styleObject[ key ] ),
+			[ key ]: appendImportant( styleObject[ key ], doImportant ),
 		}
 	}, {} )
 }
@@ -277,8 +295,7 @@ export const createResponsiveMarginAlign = ( selector, attrNameTemplate = '%s', 
  * @param {string} styleRule
  * @param {string} format
  * @param {Object} attributes
- * @param options
- * @param {boolean} important
+ * @param {Object} options
  * @return {Array} Reponsive object styles.
  */
 export const createResponsiveEditorStyles = ( selector, attrNameTemplate = '%s', styleRule = 'marginBottom', format = '%spx', attributes = {}, options = {} ) => {

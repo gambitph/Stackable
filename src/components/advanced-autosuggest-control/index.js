@@ -88,11 +88,6 @@ const getLabelFromValue = ( value, options ) => {
 // input value for every given suggestion.
 const getSuggestionValue = suggestion => suggestion.value
 
-// Use your imagination to render suggestions.
-const renderSuggestion = suggestion => {
-	return <div className="ugb-autosuggest-option" data-value={ suggestion.value }>{ suggestion.label }</div>
-}
-
 const renderSectionTitle = section => {
 	return <div className="ugb--autosuggest-group">{ section.title }</div>
 }
@@ -130,12 +125,14 @@ class AdvancedAutosuggestControl extends Component {
 	}
 
 	onFocus() {
-		setTimeout( () => {
-			const option = this.autosuggestDiv.current.querySelector( `[data-value="${ this.state.value }"]` )
-			if ( option ) {
-				option.scrollIntoView()
-			}
-		}, 0 )
+		if ( this.props.highlightValueOnFocus ) {
+			setTimeout( () => {
+				const option = this.autosuggestDiv.current.querySelector( `[data-value="${ this.state.value }"]` )
+				if ( option ) {
+					option.scrollIntoView()
+				}
+			}, 0 )
+		}
 	}
 
 	// Autosuggest will call this function every time you need to update suggestions.
@@ -174,6 +171,7 @@ class AdvancedAutosuggestControl extends Component {
 			value: label,
 			onChange: this.onChange,
 			onFocus: this.onFocus,
+			type: 'search', // This adds a clear button inside the text input.
 		}
 
 		return (
@@ -194,13 +192,18 @@ class AdvancedAutosuggestControl extends Component {
 						onSuggestionsFetchRequested={ this.onSuggestionsFetchRequested }
 						onSuggestionsClearRequested={ this.onSuggestionsClearRequested }
 						getSuggestionValue={ getSuggestionValue }
-						renderSuggestion={ renderSuggestion }
+						renderSuggestion={ suggestion => {
+							return <div className="ugb-autosuggest-option" data-value={ suggestion.value }>
+								{ this.props.renderOption ? this.props.renderOption( suggestion ) : suggestion.label }
+							</div>
+						} }
 						renderSectionTitle={ renderSectionTitle }
 						getSectionSuggestions={ getSectionSuggestions }
 						shouldRenderSuggestions={ shouldRenderSuggestions }
 						inputProps={ inputProps }
 					/>
 					{ this.state.isEmpty && <div className="ugb--autosuggest-empty">{ this.props.noMatchesLabel }</div> }
+					{ this.props.children }
 				</div>
 			</BaseControl>
 		)
@@ -215,6 +218,8 @@ AdvancedAutosuggestControl.defaultProps = {
 	options: [],
 	value: '',
 	noMatchesLabel: __( 'No matches found', i18n ),
+	renderOption: null, // If given a function, it will be called to render the option.
+	highlightValueOnFocus: false,
 }
 
 export default AdvancedAutosuggestControl

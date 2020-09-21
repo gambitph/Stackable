@@ -3,6 +3,7 @@
  */
 import './auto-block-recovery'
 import './responsive-preview'
+import './global-settings'
 import { default as DebugSidebar } from './debug-sidebar'
 
 /**

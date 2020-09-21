@@ -25,14 +25,21 @@ import classnames from 'classnames'
 // translators: first %s: The type of color (e.g. background color), second %s: the color name or value (e.g. red or #ff0000)
 const colorIndicatorAriaLabel = __( '(current %s: %s)', i18n )
 
-const ColorPaletteControl = ( {
-	colors,
-	disableCustomColors,
-	label,
-	onChange,
-	value,
-	className = '',
-} ) => {
+const ColorPaletteControl = props => {
+	const {
+		disableCustomColors,
+		label,
+		onChange,
+		value,
+		className = '',
+	} = props
+
+	const colors = props.colors.map( color => {
+		return {
+			...color,
+			name: color.name || color.fallback || color.color || __( 'Untitled Color', i18n ),
+		}
+	} )
 	const colorObject = getColorObjectByColorValue( colors, value )
 	const colorName = colorObject && colorObject.name
 	const ariaLabel = sprintf( colorIndicatorAriaLabel, label.toLowerCase(), colorName || value )

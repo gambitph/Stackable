@@ -192,6 +192,12 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.11.0 =
+* New: Global Colors
+* New: Global Typography
+* Fixed: Speed improvements
+* Fixed: Some popup settings close right away when clicking in Firefox
+
 = 2.10.4 =
 * Fixed: Some responsive font-sizes won't apply
 * Fixed: Feature grid block default title tag shows as H2 in the Block Editor

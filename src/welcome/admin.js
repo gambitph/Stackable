@@ -9,7 +9,7 @@ import blockData from './blocks'
  */
 import { __, sprintf } from '@wordpress/i18n'
 import {
-	Component, render, useEffect, useState,
+	Component, render, useEffect, useState, Fragment,
 } from '@wordpress/element'
 import { send as ajaxSend } from '@wordpress/ajax'
 import domReady from '@wordpress/dom-ready'
@@ -27,6 +27,7 @@ import {
 	welcomeSrcUrl,
 } from 'stackable'
 import classnames from 'classnames'
+import { AdminToggleSetting, AdminTextSetting } from '~stackable/components'
 
 class BlockToggler extends Component {
 	constructor() {
@@ -134,6 +135,55 @@ class BlockToggler extends Component {
 	}
 }
 
+let saveTimeout = null
+
+const GlobalSettings = () => {
+	const [ forceTypography, setForceTypography ] = useState( false )
+	const [ contentSelector, setContentSelector ] = useState( '' )
+
+	useEffect( () => {
+		loadPromise.then( () => {
+			const settings = new models.Settings()
+			settings.fetch().then( response => {
+				setForceTypography( !! response.stackable_global_force_typography )
+				setContentSelector( response.stackable_global_content_selector )
+			} )
+		} )
+	}, [] )
+
+	const updateForceTypography = value => {
+		const model = new models.Settings( { stackable_global_force_typography: value } ) // eslint-disable-line camelcase
+		model.save()
+		setForceTypography( value )
+	}
+
+	const updateContentSelector = value => {
+		clearTimeout( saveTimeout )
+		saveTimeout = setTimeout( () => {
+			const model = new models.Settings( { stackable_global_content_selector: value } ) // eslint-disable-line camelcase
+			model.save()
+		}, 500 )
+		setContentSelector( value )
+	}
+
+	return <Fragment>
+		<AdminTextSetting
+			label={ __( 'Content Selector', i18n ) }
+			help={ __( 'The selector to the content area of your theme.', i18n ) }
+			placeholder=".entry-content"
+			value={ contentSelector }
+			onChange={ updateContentSelector }
+		/>
+		<AdminToggleSetting
+			label={ __( 'Force Typography Styles', i18n ) }
+			value={ forceTypography }
+			onChange={ updateForceTypography }
+			disabled={ __( 'Not forced', i18n ) }
+			enabled={ __( 'Force styles', i18n ) }
+		/>
+	</Fragment>
+}
+
 const AdditionalOptions = props => {
 	const [ helpTooltipsDisabled, setHelpTooltipsDisabled ] = useState( false )
 	const [ v1BackwardCompatibility, setV1BackwardCompatibility ] = useState( false )
@@ -212,5 +262,10 @@ domReady( () => {
 			showProNoticesOption={ showProNoticesOption }
 		/>,
 		document.querySelector( '.s-other-options-wrapper' )
+	)
+
+	render(
+		<GlobalSettings />,
+		document.querySelector( '.s-global-settings' )
 	)
 } )

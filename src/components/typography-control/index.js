@@ -14,25 +14,28 @@ import { getDefaultFontSize } from '~stackable/util'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { Fragment } from '@wordpress/element'
+import {
+	Fragment, useMemo,
+} from '@wordpress/element'
 import { i18n } from 'stackable'
 import { SelectControl } from '@wordpress/components'
 
 const TypographyControl = props => {
 	// Compute the font size placeholder value.
-	let placeholder
-	if ( typeof props.placeholder === 'function' ) {
-		// If the placeholder is a function, this means that it's computed based on the detected default font size.
-		placeholder = Math.round( props.placeholder( getDefaultFontSize( props.htmlTag ) ) )
-	} else {
+	const placeholder = useMemo( () => {
+		if ( typeof props.placeholder === 'function' ) {
+			// If the placeholder is a function, this means that it's computed based on the detected default font size.
+			return props.fontSize || Math.round( props.placeholder( getDefaultFontSize( props.htmlTag, true ) ) )
+		}
 		// Use the given placeholder, or use the detected font size.
-		placeholder = props.placeholder || getDefaultFontSize( props.htmlTag )
-	}
+		 return props.fontSize || props.placeholder || getDefaultFontSize( props.htmlTag, true )
+	}, [ props.htmlTag, props.fontSize ] )
 
 	return (
 		<Fragment>
 			<ButtonIconPopoverControl
 				label={ props.label }
+				popoverLabel={ props.popoverLabel }
 				onReset={ props.onReset }
 				allowReset={
 					props.fontFamily ||
@@ -42,7 +45,9 @@ const TypographyControl = props => {
 					props.lineHeight || props.tabletLineHeight || props.mobileLineHeight ||
 					props.letterSpacing
 				}
-				className="ugb--help-tip-typography"
+				resetPopoverTitle={ props.resetPopoverTitle }
+				resetPopoverDescription={ props.resetPopoverDescription }
+				className={ props.className }
 			>
 				{ props.onChangeFontFamily && (
 					<FontFamilyControl
@@ -247,6 +252,8 @@ const TypographyControl = props => {
 
 TypographyControl.defaultProps = {
 	label: __( 'Typography', i18n ),
+	popoverLabel: undefined,
+	className: 'ugb--help-tip-typography',
 	showSecondFontSize: true,
 	fontFamily: '',
 	fontSize: '',
@@ -265,6 +272,8 @@ TypographyControl.defaultProps = {
 	mobileLineHeightUnit: 'em',
 	letterSpacing: '',
 	fontSizeProps: {},
+	resetPopoverTitle: '',
+	resetPopoverDescription: '',
 	// Font size placeholder. If not provided, the detected font size for the
 	// htmlTag is used. If a function is provided, then the detected font size
 	// is passed to the function to create the placeholder.
@@ -290,3 +299,4 @@ TypographyControl.defaultProps = {
 }
 
 export default TypographyControl
+

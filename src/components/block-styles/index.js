@@ -2,7 +2,9 @@
  * External dependencies
  */
 import { minifyCSS, prependCSSClass } from '~stackable/util'
-import { kebabCase, omit } from 'lodash'
+import {
+	kebabCase, omit, isEqual, sortBy,
+} from 'lodash'
 
 /**
  * Returns an identical styleObject with all the selectors modified to be wrapped
@@ -29,25 +31,51 @@ export const addBlockClassNames = ( styleObject, blockMainClassName = '', blockU
  * Compiles the CSS style object into a CSS string.
  *
  * @param {Object} styleObject An object containing selectors and style rules
- *
+ * @param {boolean} minify If true, minify the CSS
  * @return {string} The CSS string
  */
-export const combineStyleRules = styleObject => {
-	return minifyCSS(
-		Object.keys( styleObject ).reduce( ( styleString, selector ) => {
-			const styles = Object.keys( styleObject[ selector ] ).reduce( ( rules, ruleName ) => {
-				const rule = styleObject[ selector ][ ruleName ]
-				if ( typeof rule === 'undefined' ) {
-					return rules
-				}
+export const combineStyleRules = ( styleObject, minify = true ) => {
+	const css = Object.keys( styleObject ).reduce( ( styleString, selector ) => {
+		const styles = Object.keys( styleObject[ selector ] ).reduce( ( rules, ruleName ) => {
+			const rule = styleObject[ selector ][ ruleName ]
+			if ( typeof rule === 'undefined' ) {
+				return rules
+			}
 
-				// KebabCase the style rule, but support custom CSS properties (double dashes) and vendor prefixes (one dash).
-				const cleanedRuleName = ruleName.replace( /^(--?)?(.*?$)/, ( matches, dashes, rule ) => `${ dashes || '' }${ kebabCase( rule ) }` )
-				return `${ rules }\n\t${ cleanedRuleName }: ${ rule };`
-			}, '' )
-			return `${ styleString }\n\n${ selector } {${ styles }\n}`
-		}, '' ).trim()
-	)
+			// KebabCase the style rule, but support custom CSS properties (double dashes) and vendor prefixes (one dash).
+			const cleanedRuleName = ruleName.replace( /^(--?)?(.*?$)/, ( matches, dashes, rule ) => `${ dashes || '' }${ kebabCase( rule ) }` )
+			return `${ rules }\n\t${ cleanedRuleName }: ${ rule };`
+		}, '' )
+		return `${ styleString }\n\n${ selector } {${ styles }\n}`
+	}, '' ).trim()
+
+	return minify ? minifyCSS( css ) : css
+}
+
+/**
+ * Forms a media query string for the given devices.
+ *
+ * @param {Array} _devices A list of devices: desktop, tablet or mobile
+ * @param {number} breakTablet Tablet breakpoint
+ * @param {number} breakMobile Mobile breakpoint
+ *
+ * @return {string} A media query
+ */
+export const formMediaQuery = ( _devices = [ 'desktop' ], breakTablet = 1025, breakMobile = 768 ) => {
+	const devices = sortBy( typeof _devices === 'string' ? _devices.split( ',' ).map( d => d.trim() ) : _devices )
+
+	if ( isEqual( devices, [ 'desktop', 'tablet' ] ) ) {
+		return `@media screen and (min-width: ${ breakMobile }px)`
+	} else if ( isEqual( devices, [ 'desktop' ] ) ) {
+		return `@media screen and (min-width: ${ breakTablet }px)`
+	} else if ( isEqual( devices, [ 'mobile', 'tablet' ] ) ) {
+		return `@media screen and (max-width: ${ breakTablet }px)`
+	} else if ( isEqual( devices, [ 'tablet' ] ) ) {
+		return `@media screen and (min-width: ${ breakMobile }px) and (max-width: ${ breakTablet }px)`
+	} else if ( isEqual( devices, [ 'mobile' ] ) ) {
+		return `@media screen and (max-width: ${ breakMobile }px)`
+	}
+	return null
 }
 
 /**
@@ -76,7 +104,7 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 		const cleanedStyles = addBlockClassNames( styleObject.desktopTablet, blockMainClassName, blockUniqueClassName, editorMode )
 		const styleString = combineStyleRules( cleanedStyles )
 		if ( styleString ) {
-			styleStrings.push( `\n@media screen and (min-width: ${ breakMobile }px) {\n${ styleString } }` )
+			styleStrings.push( `\n${ formMediaQuery( [ 'desktop', 'tablet' ], breakTablet, breakMobile ) } {\n${ styleString } }` )
 		}
 	}
 
@@ -84,7 +112,7 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 		const cleanedStyles = addBlockClassNames( styleObject.desktopOnly, blockMainClassName, blockUniqueClassName, editorMode )
 		const styleString = combineStyleRules( cleanedStyles )
 		if ( styleString ) {
-			styleStrings.push( `\n@media screen and (min-width: ${ breakTablet }px) {\n${ styleString } }` )
+			styleStrings.push( `\n${ formMediaQuery( [ 'desktop' ], breakTablet, breakMobile ) } {\n${ styleString } }` )
 		}
 	}
 
@@ -92,7 +120,7 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 		const cleanedStyles = addBlockClassNames( styleObject.tablet, blockMainClassName, blockUniqueClassName, editorMode )
 		const styleString = combineStyleRules( cleanedStyles )
 		if ( styleString ) {
-			styleStrings.push( `\n@media screen and (max-width: ${ breakTablet }px) {\n${ styleString } }` )
+			styleStrings.push( `\n${ formMediaQuery( [ 'mobile', 'tablet' ], breakTablet, breakMobile ) } {\n${ styleString } }` )
 		}
 	}
 
@@ -100,7 +128,7 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 		const cleanedStyles = addBlockClassNames( styleObject.tabletOnly, blockMainClassName, blockUniqueClassName, editorMode )
 		const styleString = combineStyleRules( cleanedStyles )
 		if ( styleString ) {
-			styleStrings.push( `\n@media screen and (min-width: ${ breakMobile }px) and (max-width: ${ breakTablet }px) {\n${ styleString } }` )
+			styleStrings.push( `\n${ formMediaQuery( [ 'tablet' ], breakTablet, breakMobile ) } {\n${ styleString } }` )
 		}
 	}
 
@@ -108,7 +136,7 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 		const cleanedStyles = addBlockClassNames( styleObject.mobile, blockMainClassName, blockUniqueClassName, editorMode )
 		const styleString = combineStyleRules( cleanedStyles )
 		if ( styleString ) {
-			styleStrings.push( `\n@media screen and (max-width: ${ breakMobile }px) {\n${ styleString } }` )
+			styleStrings.push( `\n${ formMediaQuery( [ 'mobile' ], breakTablet, breakMobile ) } {\n${ styleString } }` )
 		}
 	}
 

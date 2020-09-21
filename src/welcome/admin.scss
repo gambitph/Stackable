@@ -98,11 +98,19 @@ body[class*="page_stackable"] {
 		border: 1px solid rgba(0, 0, 0, 0.1);
 		margin: 0;
 	}
+	&.s-settings-field-small {
+		[type="text"] {
+			width: 300px;
+		}
+	}
 	p {
-		margin-left: 240px;
+		margin-left: 200px;
 		font-style: italic;
 		margin-top: 4px;
 	}
+}
+.s-icon-settings .s-settings-field p {
+	margin-left: 240px;
 }
 .s-settings-error {
 	color: #ff5a7f;

@@ -18,7 +18,7 @@ const ContentAlignControl = props => {
 			blockAttributes={ props.blockAttributes }
 		>
 			<AlignButtonsControl
-				label={ __( 'Align', i18n ) }
+				label={ props.label }
 				className={ classnames( [ props.className, 'ugb--help-tip-alignment-all' ] ) }
 			/>
 		</ResponsiveControl>
@@ -29,6 +29,7 @@ ContentAlignControl.defaultProps = {
 	className: '',
 	setAttributes: () => {},
 	blockAttributes: {},
+	label: __( 'Align', i18n ),
 }
 
 export default ContentAlignControl

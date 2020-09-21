@@ -19,6 +19,7 @@ const AdminBaseSetting = props => {
 					{ props.children }
 				</div>
 			</label>
+			{ props.help && <p className="ugb-admin-setting__help">{ props.help }</p> }
 		</div>
 	)
 }

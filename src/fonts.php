@@ -38,10 +38,10 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 		public function _enqueue_frontend_block_fonts( $content ) {
 			$blocks = parse_blocks( $content );
 			$google_fonts = $this->gather_google_fonts( $blocks );
-			$this->enqueue_google_fonts( $google_fonts );
+			self::enqueue_google_fonts( $google_fonts );
 		}
 
-		public function is_web_font( $font_name ) {
+		public static function is_web_font( $font_name ) {
 			return ! in_array( strtolower( $font_name ), [ 'serif', 'sans-serif', 'monospace', 'serif-alt' ] );
 		}
 
@@ -58,7 +58,7 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 				if ( $this->is_stackable_block( $block['blockName'] ) ) {
 					foreach ( $block['attrs'] as $attr_name => $font_name ) {
 						if ( preg_match( '/fontFamily$/i', $attr_name ) ) {
-							if ( ! $this->is_web_font( $font_name ) ) {
+							if ( ! self::is_web_font( $font_name ) ) {
 								continue;
 							}
 							if ( ! in_array( $font_name, $google_fonts ) ) {
@@ -80,8 +80,8 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 		/**
 		 * Based on: https://github.com/elementor/elementor/blob/bc251b81afb626c4c47029aea8a762566524a811/includes/frontend.php#L647
 		 */
-		public function enqueue_google_fonts( $google_fonts ) {
-			if ( ! count( $google_fonts) ) {
+		public static function enqueue_google_fonts( $google_fonts, $handle = 'stackable-google-fonts' ) {
+			if ( ! count( $google_fonts ) ) {
 				return;
 			}
 
@@ -108,7 +108,7 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 				$fonts_url .= '&subset=' . $subsets[ $locale ];
 			}
 
-			wp_enqueue_style( 'stackable-google-fonts', $fonts_url ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+			wp_enqueue_style( $handle, $fonts_url ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
 		}
 
 	}

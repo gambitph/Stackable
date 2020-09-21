@@ -37,6 +37,7 @@ const FontFamilyControl = props => {
 					options: fontOptions,
 				},
 			] }
+			highlightValueOnFocus={ true }
 			{ ...props }
 			onChange={ fontFamily => {
 				// Load font if it's a Google font.

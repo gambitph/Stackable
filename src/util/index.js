@@ -19,7 +19,9 @@ export * from './user'
 /**
  * WordPress dependencies
  */
+
 import { __ } from '@wordpress/i18n'
+import { applyFilters } from '@wordpress/hooks'
 
 /**
  * External dependencies
@@ -128,25 +130,31 @@ export const descriptionPlaceholder = length => {
  * @return {string} Rgba color.
  */
 export const hexToRgba = ( hexColor, opacity = null ) => {
-	let hex = null
+	// Allow others to change the conversion.
+	const overrideOutput = applyFilters( 'stackable.util.hex-to-rgba', null, hexColor, opacity )
+	if ( overrideOutput ) {
+		return overrideOutput
+	}
+
+	let hex = applyFilters( 'stackable.util.hex-to-rgba.hex', hexColor, opacity )
 
 	/**
 	 * Detect CSS variables in form of var(--color) and get their current
 	 * values from the :root selector.
 	 */
-	if ( hexColor.indexOf( 'var(' ) > -1 ) {
-		const colorVar = hexColor.match( /--(.*?(?=,))/g )
+	if ( hex.indexOf( 'var(' ) > -1 ) {
+		const colorVar = hex.match( /--(.*?(?=,))/g )
 		if ( ! colorVar ) {
-			hexColor = window.getComputedStyle( document.documentElement )
-				.getPropertyValue( hexColor.replace( 'var(', '' ).replace( ')', '' ) ) || '#fff'
+			hex = window.getComputedStyle( document.documentElement )
+				.getPropertyValue( hex.replace( 'var(', '' ).replace( ')', '' ) ) || '#fff'
 		} else {
 			// Do also for CSS variables with fallback values.
-			hexColor = window.getComputedStyle( document.documentElement )
+			hex = window.getComputedStyle( document.documentElement )
 				.getPropertyValue( colorVar[ 0 ] ) || '#fff'
 		}
 	}
 
-	hex = hexColor.replace( /#/, '' )
+	hex = hex.replace( /#/, '' )
 
 	if ( hex.length <= 4 ) {
 		hex = hex.replace( /#?(.)(.)(.)/, '$1$1$2$2$3$3' )

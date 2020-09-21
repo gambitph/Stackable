@@ -1,0 +1,52 @@
+.ugb-global-settings-color-picker__text-name {
+	padding-top: 0 !important;
+
+	.components-color-picker__controls {
+		justify-content: space-between;
+	}
+
+	.components-color-picker__inputs-wrapper {
+		padding-top: 0 !important;
+	}
+
+	input {
+		width: 211px;
+	}
+}
+
+.ugb-global-settings-color-picker {
+	margin-bottom: 12px;
+}
+
+.ugb-global-settings-color-picker__add-icon {
+	min-width: 30px !important;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	svg {
+		width: 20px;
+	}
+}
+
+.ugb-global-settings-color-picker__title {
+	margin: 0 0 1em 0 !important;
+}
+
+.ugb-global-settings-color-picker__reset-button {
+	width: max-content;
+	margin: auto;
+	margin-right: 0 !important;
+	margin-bottom: 12px;
+}
+
+.ugb-global-settings__color-picker-disabled-color {
+	pointer-events: none;
+	.components-circular-option-picker__option {
+		display: flex;
+		justify-content: center;
+		svg {
+			width: 12px;
+		}
+	}
+}
+
