@@ -31,7 +31,7 @@ import domReady from '@wordpress/dom-ready'
 import { loadPromise, models } from '@wordpress/api'
 import { ToggleControl } from '@wordpress/components'
 
-addFilter( 'stackable.util.hex-to-rgba', 'global-settings/colors', ( output, hexColor, opacity ) => {
+addFilter( 'stackable.util.hex-to-rgba', 'stackable/colors', ( output, hexColor, opacity ) => {
 	// Only do this for Stackable global colors.
 	if ( ! hexColor.includes( '--stk-global-color' ) ) {
 		return output
@@ -57,7 +57,7 @@ addFilter( 'stackable.util.hex-to-rgba', 'global-settings/colors', ( output, hex
 	return output
 } )
 
-addFilter( 'stackable.util.is-dark-color', 'global-settings/colors', color => {
+addFilter( 'stackable.util.is-dark-color', 'stackable/colors', color => {
 	if ( color.match( /--stk-global-color/ ) ) {
 		const colorVarID = color.match( /--stk-global-color-(\S*?(?=,))/ )
 		if ( colorVarID ) {
@@ -73,7 +73,7 @@ addFilter( 'stackable.util.is-dark-color', 'global-settings/colors', color => {
 	return color
 } )
 
-addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors', output => {
+addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', output => {
 	const { useStackableColorsOnly } = useSelect( select => select( 'stackable/global-colors' ).getSettings() )
 
 	const onChangeUseStackableColorsOnly = ( value, updateColors = true ) => {
@@ -114,7 +114,7 @@ addFilter( 'stackable.global-settings.inspector', 'global-settings/global-colors
 				/>
 				<ToggleControl
 					label={ __( 'Use only Stackable colors', i18n ) }
-					checked={ useStackableColorsOnly }
+					checked={ !! useStackableColorsOnly }
 					onChange={ value => onChangeUseStackableColorsOnly( value ) }
 				/>
 			</PanelAdvancedSettings>
