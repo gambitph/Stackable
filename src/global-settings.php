@@ -160,13 +160,13 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 						'type' => 'string',
 					),
 					'lineHeight' => array(
-						'type' => 'string',
+						'type' => 'number',
 					),
 					'tabletLineHeight' => array(
-						'type' => 'string',
+						'type' => 'number',
 					),
 					'mobileLineHeight' => array(
-						'type' => 'string',
+						'type' => 'number',
 					),
 					'lineHeightUnit' => array(
 						'type' => 'string',
@@ -178,7 +178,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 						'type' => 'string',
 					),
 					'letterSpacing' => array(
-						'type' => 'string',
+						'type' => 'number',
 					),
 				)
 			);
