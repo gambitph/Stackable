@@ -24,6 +24,7 @@ With Stackable, you get:
 
 - 27 Quality Page Building Blocks for Gutenberg
 - 50+ Block Layouts and 70+ Pre-set Section / Block Designs that can be switched with just one click
+- Global Colors & Global Typography
 - Page Builder-like tabbed options
 - Advanced and diverse web design options,
 - Responsive customization controls to precisely design your blocks for tablet and mobile visitors
@@ -125,6 +126,7 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com?utm_sour
 
 ### News Article Updates
 
+- [v2.11 Introducing Global Colors and Global Typography](https://wpstackable.com/blog/global-colors-and-global-typography/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.10 Better Responsive Controls, Better List Block Icons and Low-Highlight Effect](https://wpstackable.com/blog/better-responsive-controls-better-list-block-icons-low-highlight-effect/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.9 Introducing: Live Responsive Editing](https://wpstackable.com/blog/introducing-live-responsive-editing/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.8 Introducing: Role Manager for Gutenberg](https://wpstackable.com/blog/introducing-role-manager-for-gutenberg/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -193,6 +195,8 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 2.11.0 =
+[Introducing Global Colors and Global Typography](https://wpstackable.com/blog/global-colors-and-global-typography/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
 * New: Global Colors
 * New: Global Typography
 * Fixed: Speed improvements
