@@ -3,7 +3,10 @@
  */
 import { AddIcon, LockIcon } from './icons'
 import {
-	getRgb, createColor, updateFallbackBlockAttributes,
+	getRgb,
+	createColor,
+	updateFallbackBlockAttributes,
+	convertGlobalColorBlockAttributesToStatic,
 } from './util'
 
 /**
@@ -27,7 +30,6 @@ import {
 	select, dispatch, useSelect,
 } from '@wordpress/data'
 import { models } from '@wordpress/api'
-import { doAction } from '@wordpress/hooks'
 import { __, sprintf } from '@wordpress/i18n'
 
 // Component used to add a style name field at the bottom of the ColorPicker.
@@ -214,10 +216,6 @@ ColorOption.defaultProps = {
 let saveTimeout = null
 
 const ColorPickers = props => {
-	const {
-		onReset,
-	} = props
-
 	// State used to determine the clicked index in the color picker.
 	const [ selectedIndex, setSelectedIndex ] = useState( null )
 
@@ -253,7 +251,7 @@ const ColorPickers = props => {
 
 	// Called when updating a color.
 	const onChangeColor = data => {
-		const { colors: updatedColors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
+		const updatedColors = cloneDeep( colors )
 
 		// Overwrite the selected color to a new color.
 		updatedColors[ selectedIndex ].color = data.hex
@@ -265,7 +263,7 @@ const ColorPickers = props => {
 
 	// Called when updating a style name.
 	const onChangeStyleName = value => {
-		const { colors: updatedColors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
+		const updatedColors = cloneDeep( colors )
 
 		// Overwrite the selected style name and slug to a new style name and slug.
 		updatedColors[ selectedIndex ].name = value
@@ -276,17 +274,13 @@ const ColorPickers = props => {
 
 	// Called when deleting a color.
 	const onColorDelete = () => {
-		const { colors: updatedColors } = cloneDeep( select( 'core/block-editor' ).getSettings() )
+		const updatedColors = cloneDeep( colors )
 
 		// Delete the specific color based on the selected index.
 		updatedColors.splice( selectedIndex, 1 )
 
-		/**
-		 * Revert the global color attributes to hex color.
-		 *
-		 * @see global-settings/colors
-		 */
-		doAction( 'stackable.global-colors.reset-compatibility', [ colors[ selectedIndex ] ] )
+		// Revert the global color attributes to hex color.
+		convertGlobalColorBlockAttributesToStatic( [ colors[ selectedIndex ] ] )
 
 		// Update the colors.
 		updateColors( updatedColors )
@@ -295,22 +289,14 @@ const ColorPickers = props => {
 
 	// Called when the user decided to reset the color palette.
 	const onColorPaletteReset = () => {
-		const {
-			 colors,
-		} = cloneDeep( select( 'core/block-editor' ).getSettings() )
-		const { defaultColors } = cloneDeep( select( 'stackable/global-colors' ).getSettings() )
-
-		/**
-		 * Compability adjustment for stackable and native blocks.
-		 *
-		 * @see global-settings/colors
-		 */
-		doAction( 'stackable.global-colors.reset-compatibility', colors )
+		// Revert the global color attributes to hex color.
+		convertGlobalColorBlockAttributesToStatic( colors )
 
 		// Update the colors
-		updateColors( defaultColors )
+		updateColors( [] )
+		setSelectedIndex( null )
 
-		onReset()
+		props.onReset()
 	}
 
 	// Called when adding a new color.

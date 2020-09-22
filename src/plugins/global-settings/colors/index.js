@@ -5,9 +5,6 @@ import './store'
 /**
  * Internal dependencies
  */
-import {
-	resetBlockColorAttributes,
-} from './util'
 import ColorPicker from './color-picker'
 
 /**
@@ -20,11 +17,11 @@ import rgba from 'color-rgba'
 /**
  * Wordpress dependencies
  */
-import { addFilter, addAction } from '@wordpress/hooks'
+import { addFilter } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import {
-	dispatch, select, useSelect,
+	dispatch, useSelect,
 } from '@wordpress/data'
 import { models } from '@wordpress/api'
 import { ToggleControl } from '@wordpress/components'
@@ -110,28 +107,9 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 	)
 } )
 
-/**
- * When a color is deleted, iterate through all blocks and update the color
- * attribute affected, turn them from slugs into the hex equivalent.
- */
-addAction( 'stackable.global-colors.reset-compatibility', 'stackable/global-colors', colorsBeforeReset => {
-	const resetBlockColorAttributesRecursive = blocks => {
-		blocks.forEach( block => {
-			resetBlockColorAttributes( block, colorsBeforeReset )
-
-			// Also adjust the inner blocks.
-			if ( block.innerBlocks && block.innerBlocks.length ) {
-				resetBlockColorAttributesRecursive( block.innerBlocks )
-			}
-		} )
-	}
-
-	resetBlockColorAttributesRecursive( select( 'core/block-editor' ).getBlocks() )
-} )
-
 // Convert hex colors to global colors in Stackable blocks.
 addFilter( 'stackable.color-palette-control.change', 'stackable/global-colors', ( value, colorObject ) => {
-	if ( colorObject && colorObject.slug.match( /stk-global-color/ ) ) {
+	if ( colorObject && colorObject.slug.includes( 'stk-global-color' ) ) {
 		return `var(--${ colorObject.slug }, ${ colorObject.color })`
 	}
 

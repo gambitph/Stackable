@@ -173,12 +173,41 @@ export const updateFallbackColorAttributes = ( attributes = {}, colors = [] ) =>
 	return JSON.parse( updatedStringifiedAttributes )
 }
 
+/**
+ * Creates a new random color.
+ */
 export const createColor = () => {
 	return `#${ ( ( 1 << 24 ) * Math.random() | 0 ).toString( 16 ) }` // eslint-disable-line no-bitwise
 }
 
+/**
+ * Returns an rgb string of the hex color.
+ *
+ * @param {string} hex Color
+ */
 export const getRgb = hex => {
 	const rgbColor = rgba( hex.match( /^#/ ) ? hex : `#${ hex }` )
 	rgbColor.splice( 3, 1 )
 	return rgbColor.join( ', ' )
+}
+
+/**
+ * When a color is deleted, iterate through all blocks and update the color
+attribute affected, turn them from slugs into the hex equivalent.
+ *
+ * @param {Array} colorsToReset
+ */
+export const convertGlobalColorBlockAttributesToStatic = colorsToReset => {
+	const resetBlockColorAttributesRecursive = blocks => {
+		blocks.forEach( block => {
+			resetBlockColorAttributes( block, colorsToReset )
+
+			// Also adjust the inner blocks.
+			if ( block.innerBlocks && block.innerBlocks.length ) {
+				resetBlockColorAttributesRecursive( block.innerBlocks )
+			}
+		} )
+	}
+
+	resetBlockColorAttributesRecursive( select( 'core/block-editor' ).getBlocks() )
 }
