@@ -1,8 +1,16 @@
 /**
+ * Internal dependencies
+ */
+import { AddIcon, LockIcon } from './icons'
+import {
+	getRgb, createColor, updateFallbackBlockAttributes,
+} from './util'
+
+/**
  * External dependencies
  */
 import classnames from 'classnames'
-import { cloneDeep, debounce } from 'lodash'
+import { cloneDeep } from 'lodash'
 import { i18n } from 'stackable'
 import { whiteIfDark } from '~stackable/util'
 
@@ -18,13 +26,9 @@ import {
 import {
 	select, dispatch, useSelect,
 } from '@wordpress/data'
+import { models } from '@wordpress/api'
 import { doAction } from '@wordpress/hooks'
 import { __, sprintf } from '@wordpress/i18n'
-
-/**
- * Internal dependencies
- */
-import { AddIcon, LockIcon } from './icons'
 
 // Component used to add a style name field at the bottom of the ColorPicker.
 const ColorPickerTextArea = props => (
@@ -207,12 +211,17 @@ ColorOption.defaultProps = {
 	onClick: () => {},
 }
 
-const ColorPickers = ( {
-	colors,
-	onReset,
-} ) => {
+let saveTimeout = null
+
+const ColorPickers = props => {
+	const {
+		onReset,
+	} = props
+
 	// State used to determine the clicked index in the color picker.
 	const [ selectedIndex, setSelectedIndex ] = useState( null )
+
+	const colors = useSelect( select => select( 'core/block-editor' ).getSettings().colors )
 
 	// Enable reset if there are Stackable global colors.
 	const disableReset = useMemo( () => ! colors.some( color => color.slug && color.slug.includes( 'stk-global-color' ) ), [ colors ] )
@@ -220,11 +229,25 @@ const ColorPickers = ( {
 	/**
 	 * Function used to update the colors in @wordpress/data,
 	 *
-	 * @param {Array} updatedColors colors passed.
+	 * @param {Array} newColors colors passed.
 	 */
-	const updateColors = updatedColors => {
-		dispatch( 'core/block-editor' ).updateSettings( {
-			colors: updatedColors,
+	const updateColors = newColors => {
+		const updatedColors = newColors.filter( color => color.slug.match( /^stk-global-color/ ) )
+
+		// Update the blocks in our page.
+		updateFallbackBlockAttributes( updatedColors )
+
+		// Save settings.
+		// const stackableColors = updatedColors.filter( color => color.slug.match( /^stk-global-color/ ) )
+		clearTimeout( saveTimeout )
+		saveTimeout = setTimeout( () => {
+			const settings = new models.Settings( { stackable_global_colors: [ updatedColors ] } ) // eslint-disable-line camelcase
+			settings.save()
+		}, 300 )
+
+		// Update our store.
+		dispatch( 'stackable/global-colors' ).updateSettings( {
+			stackableColors: updatedColors,
 		} )
 	}
 
@@ -234,6 +257,7 @@ const ColorPickers = ( {
 
 		// Overwrite the selected color to a new color.
 		updatedColors[ selectedIndex ].color = data.hex
+		updatedColors[ selectedIndex ].rgb = getRgb( data.hex )
 
 		// Update the colors.
 		updateColors( updatedColors )
@@ -293,14 +317,15 @@ const ColorPickers = ( {
 	const handleAddIcon = () => {
 		const newIndex = ( colors && Array.isArray( colors ) ) ? colors.length + 1 : 1
 		const slugId = Math.floor( Math.random() * new Date().getTime() ) % 100000
-
-		// Generate a new random color since having 2 same colors in the color picker messes up the selection.
-		const color = `#${ ( ( 1 << 24 ) * Math.random() | 0 ).toString( 16 ) }` // eslint-disable-line no-bitwise
+		const color = createColor()
 
 		const updatedColors = [
 			...select( 'core/block-editor' ).getSettings().colors,
 			{
-				name: sprintf( __( 'Custom Color %s', i18n ), newIndex ), slug: `stk-global-color-${ slugId }`, color,
+				name: sprintf( __( 'Custom Color %s', i18n ), newIndex ),
+				slug: `stk-global-color-${ slugId }`,
+				color,
+				rgb: getRgb( color ),
 			},
 		]
 
@@ -310,8 +335,15 @@ const ColorPickers = ( {
 		setSelectedIndex( newIndex - 1 )
 	}
 
+	const classNames = classnames(
+		'ugb-global-settings-color-picker',
+		'components-circular-option-picker',
+		'editor-color-palette-control__color-palette',
+		props.className
+	)
+
 	return (
-		<BaseControl>
+		<BaseControl className={ classNames }>
 			<ResetButton onClick={ onColorPaletteReset } disabled={ disableReset } />
 			{ colors.map( ( color, index ) => {
 				return (
@@ -355,38 +387,8 @@ const ColorPickers = ( {
 }
 
 ColorPickers.defaultProps = {
-	colors: [],
-	onReset: () => {},
-}
-
-const debouncedDoAction = debounce( doAction, 100 )
-
-const ColorPickerContainer = props => {
-	const classNames = classnames(
-		'ugb-global-settings-color-picker',
-		'components-circular-option-picker',
-		'editor-color-palette-control__color-palette',
-		props.className
-	)
-
-	const { colors } = useSelect( select => select( 'core/block-editor' ).getSettings() )
-
-	// Update the global colors in the models settings.
-	debouncedDoAction( 'stackable.global-colors.save-model-settings', colors )
-
-	return (
-		<div className={ classNames }>
-			<ColorPickers
-				colors={ colors || [] }
-				onReset={ props.onReset }
-			/>
-		</div>
-	)
-}
-
-ColorPickerContainer.defaultProps = {
 	className: '',
 	onReset: () => {},
 }
 
-export default ColorPickerContainer
+export default ColorPickers

@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { find, isEqual } from 'lodash'
+import rgba from 'color-rgba'
 
 /**
  * WordPress dependencies
@@ -170,4 +171,14 @@ export const updateFallbackColorAttributes = ( attributes = {}, colors = [] ) =>
 	} )
 
 	return JSON.parse( updatedStringifiedAttributes )
+}
+
+export const createColor = () => {
+	return `#${ ( ( 1 << 24 ) * Math.random() | 0 ).toString( 16 ) }` // eslint-disable-line no-bitwise
+}
+
+export const getRgb = hex => {
+	const rgbColor = rgba( hex.match( /^#/ ) ? hex : `#${ hex }` )
+	rgbColor.splice( 3, 1 )
+	return rgbColor.join( ', ' )
 }

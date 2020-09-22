@@ -1,4 +1,4 @@
-import './editor-color-palette-change'
+import './color-palette-updater'
 import './editor-loader'
 import './store'
 
@@ -6,7 +6,7 @@ import './store'
  * Internal dependencies
  */
 import {
-	updateFallbackBlockAttributes, resetBlockColorAttributes,
+	resetBlockColorAttributes,
 } from './util'
 import ColorPicker from './color-picker'
 
@@ -15,7 +15,6 @@ import ColorPicker from './color-picker'
  */
 import { i18n } from 'stackable'
 import { PanelAdvancedSettings } from '~stackable/components'
-import { uniqBy } from 'lodash'
 import rgba from 'color-rgba'
 
 /**
@@ -27,8 +26,7 @@ import { __ } from '@wordpress/i18n'
 import {
 	dispatch, select, useSelect,
 } from '@wordpress/data'
-import domReady from '@wordpress/dom-ready'
-import { loadPromise, models } from '@wordpress/api'
+import { models } from '@wordpress/api'
 import { ToggleControl } from '@wordpress/components'
 
 addFilter( 'stackable.util.hex-to-rgba', 'stackable/global-colors', ( output, hexColor, opacity ) => {
@@ -76,23 +74,13 @@ addFilter( 'stackable.util.is-dark-color', 'stackable/global-colors', color => {
 addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', output => {
 	const { useStackableColorsOnly } = useSelect( select => select( 'stackable/global-colors' ).getSettings() )
 
-	const onChangeUseStackableColorsOnly = ( value, updateColors = true ) => {
+	const onChangeUseStackableColorsOnly = value => {
 		dispatch( 'stackable/global-colors' ).updateSettings( {
 			useStackableColorsOnly: value,
 		} )
-		loadPromise.then( () => {
-			const model = new models.Settings()
-			model.fetch().then( res => {
-				const settings = new models.Settings( { stackable_global_colors_palette_only: value } ) // eslint-disable-line camelcase
-				settings.save()
-				if ( updateColors ) {
-					const { defaultColors } = select( 'stackable/global-colors' ).getSettings()
-					dispatch( 'core/block-editor' ).updateSettings( {
-						colors: value ? res.stackable_global_colors[ 0 ] || [] : uniqBy( [ ...defaultColors, ...res.stackable_global_colors[ 0 ] || [] ], 'slug' ),
-					} )
-				}
-			} )
-		} )
+
+		const settings = new models.Settings( { stackable_global_colors_palette_only: value } ) // eslint-disable-line camelcase
+		settings.save()
 	}
 
 	return (
@@ -110,7 +98,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 					</a>
 				</p>
 				<ColorPicker
-					onReset={ () => onChangeUseStackableColorsOnly( false, false ) }
+					onReset={ () => onChangeUseStackableColorsOnly( false ) }
 				/>
 				<ToggleControl
 					label={ __( 'Use only Stackable colors', i18n ) }
@@ -148,52 +136,4 @@ addFilter( 'stackable.color-palette-control.change', 'stackable/global-colors', 
 	}
 
 	return value
-} )
-
-/**
- * Action for saving the colors in models settings.
- */
-addAction( 'stackable.global-colors.save-model-settings', 'stackable/global-colors', newColors => {
-	const updatedColors = newColors.filter( color => color.slug.match( /^stk-global-color/ ) ).map( newColor => {
-		const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( `--${ newColor.slug }` ).trim() )
-		if ( Array.isArray( rgbaColor ) && rgbaColor.length !== 0 ) {
-			rgbaColor.splice( 3, 1 )
-			newColor.rgb = rgbaColor.join( ', ' )
-			return newColor
-		}
-		return newColor
-	} )
-
-	updateFallbackBlockAttributes( updatedColors )
-
-	loadPromise.then( () => {
-		const settings = new models.Settings( { stackable_global_colors: [ updatedColors ] } ) // eslint-disable-line camelcase
-		settings.save()
-	} )
-} )
-
-domReady( () => {
-	// Keep note of all the default colors.
-	const colors = select( 'core/block-editor' ).getSettings().colors
-	const defaultColors = colors.filter( ( { slug } ) => ! slug.match( /^stk-/ ) )
-	const stackableColors = colors.filter( ( { slug } ) => slug.match( /^stk-/ ) )
-
-	loadPromise.then( () => {
-		const settings = new models.Settings()
-
-		settings.fetch().then( response => {
-			const { stackable_global_colors_palette_only: useStackableColorsOnly } = response
-
-			if ( useStackableColorsOnly ) {
-				dispatch( 'core/block-editor' ).updateSettings( {
-					colors: stackableColors || [],
-				} )
-			}
-
-			dispatch( 'stackable/global-colors' ).updateSettings( {
-				defaultColors,
-				useStackableColorsOnly,
-			} )
-		} )
-	} )
 } )
