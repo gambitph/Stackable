@@ -106,6 +106,7 @@ const addInspectorPanel = ( output, props ) => {
 					value={ blockTitleColor }
 					onChange={ blockTitleColor => setAttributes( { blockTitleColor } ) }
 					label={ __( 'Title Color', i18n ) }
+					className="ugb--help-tip-title-color"
 				/>
 				<WhenResponsiveScreen>
 					<AdvancedRangeControl
@@ -200,6 +201,7 @@ const addInspectorPanel = ( output, props ) => {
 					value={ blockDescriptionColor }
 					onChange={ blockDescriptionColor => setAttributes( { blockDescriptionColor } ) }
 					label={ __( 'Description Color', i18n ) }
+					className="ugb--help-tip-description-color"
 				/>
 				<WhenResponsiveScreen>
 					<AdvancedRangeControl

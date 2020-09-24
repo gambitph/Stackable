@@ -310,6 +310,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 					value={ nameColor }
 					onChange={ nameColor => setAttributes( { nameColor } ) }
 					label={ __( 'Name Color', i18n ) }
+					className="ugb--help-tip-name-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Name%sAlign"
@@ -344,6 +345,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 					value={ positionColor }
 					onChange={ positionColor => setAttributes( { positionColor } ) }
 					label={ __( 'Position Color', i18n ) }
+					className="ugb--help-tip-position-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="position%sAlign"
@@ -378,6 +380,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 					value={ descriptionColor }
 					onChange={ descriptionColor => setAttributes( { descriptionColor } ) }
 					label={ __( 'Description Color', i18n ) }
+					className="ugb--help-tip-description-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="description%sAlign"

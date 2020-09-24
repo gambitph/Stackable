@@ -301,6 +301,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					value={ titleColor }
 					onChange={ titleColor => setAttributes( { titleColor } ) }
 					label={ __( 'Title Color', i18n ) }
+					className="ugb--help-tip-title-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Title%sAlign"
@@ -336,6 +337,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					value={ subtitleColor }
 					onChange={ subtitleColor => setAttributes( { subtitleColor } ) }
 					label={ __( 'Subtitle Color', i18n ) }
+					className="ugb--help-tip-subtitle-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="subtitle%sAlign"
@@ -370,6 +372,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					value={ descriptionColor }
 					onChange={ descriptionColor => setAttributes( { descriptionColor } ) }
 					label={ __( 'Description Color', i18n ) }
+					className="ugb--help-tip-description-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="description%sAlign"

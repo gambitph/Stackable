@@ -176,6 +176,7 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 					value={ titleColor }
 					onChange={ titleColor => setAttributes( { titleColor } ) }
 					label={ __( 'Title Color', i18n ) }
+					className="ugb--help-tip-title-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Title%sAlign"
@@ -210,6 +211,7 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 					value={ descriptionColor }
 					onChange={ descriptionColor => setAttributes( { descriptionColor } ) }
 					label={ __( 'Description Color', i18n ) }
+					className="ugb--help-tip-description-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="description%sAlign"

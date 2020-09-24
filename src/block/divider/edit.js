@@ -90,6 +90,7 @@ addFilter( 'stackable.divider.edit.inspector.style.before', 'stackable/divider',
 					value={ color }
 					onChange={ color => setAttributes( { color } ) }
 					label={ __( 'Color', i18n ) }
+					className="ugb--help-tip-divider-color"
 				/>
 				<FourRangeControl
 					label={ __( 'Vertical Margin', i18n ) }

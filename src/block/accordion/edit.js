@@ -202,6 +202,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 					value={ titleColor }
 					onChange={ titleColor => setAttributes( { titleColor } ) }
 					label={ __( 'Title Color', i18n ) }
+					className="ugb--help-tip-title-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Title%sAlign"
@@ -239,6 +240,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 					value={ arrowColor }
 					onChange={ arrowColor => setAttributes( { arrowColor } ) }
 					label={ __( 'Color', i18n ) }
+					className="ugb--help-tip-accordion-arrow-color"
 				/>
 			</PanelAdvancedSettings>
 
@@ -268,6 +270,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 						value={ borderColor }
 						onChange={ borderColor => setAttributes( { borderColor } ) }
 						label={ __( 'Color', i18n ) }
+						className="ugb--help-tip-border-color"
 					/>
 				</PanelAdvancedSettings>
 			}

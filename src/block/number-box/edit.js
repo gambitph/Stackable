@@ -249,6 +249,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 						value={ numberBGColor }
 						onChange={ numberBGColor => setAttributes( { numberBGColor } ) }
 						label={ __( 'Number Background Color', i18n ) }
+						className="ugb--help-tip-number-bg-color"
 					/>
 				) }
 				{ show.numberColor && (
@@ -256,6 +257,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 						value={ numberColor }
 						onChange={ numberColor => setAttributes( { numberColor } ) }
 						label={ __( 'Number Color', i18n ) }
+						className="ugb--help-tip-number-color"
 					/>
 				) }
 				<AdvancedRangeControl
@@ -307,6 +309,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					value={ titleColor }
 					onChange={ titleColor => setAttributes( { titleColor } ) }
 					label={ __( 'Title Color', i18n ) }
+					className="ugb--help-tip-title-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Title%sAlign"
@@ -341,6 +344,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					value={ descriptionColor }
 					onChange={ descriptionColor => setAttributes( { descriptionColor } ) }
 					label={ __( 'Description Color', i18n ) }
+					className="ugb--help-tip-description-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="description%sAlign"

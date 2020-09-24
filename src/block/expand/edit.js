@@ -94,6 +94,7 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 					value={ titleColor }
 					onChange={ titleColor => setAttributes( { titleColor } ) }
 					label={ __( 'Title Color', i18n ) }
+					className="ugb--help-tip-title-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Title%sAlign"
@@ -121,6 +122,7 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 					value={ textColor }
 					onChange={ textColor => setAttributes( { textColor } ) }
 					label={ __( 'Text Color', i18n ) }
+					className="ugb--help-tip-text-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Text%sAlign"
@@ -148,6 +150,7 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 					value={ linkColor }
 					onChange={ linkColor => setAttributes( { linkColor } ) }
 					label={ __( 'Link Color', i18n ) }
+					className="ugb--help-tip-link-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Link%sAlign"

@@ -157,6 +157,7 @@ addFilter( 'stackable.icon.edit.inspector.style.before', 'stackable/icon', ( out
 					value={ titleColor }
 					onChange={ titleColor => setAttributes( { titleColor } ) }
 					label={ __( 'Title Color', i18n ) }
+					className="ugb--help-tip-title-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Title%sAlign"

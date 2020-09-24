@@ -146,6 +146,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 						value={ columnRuleColor }
 						onChange={ columnRuleColor => setAttributes( { columnRuleColor } ) }
 						label={ __( 'Color', i18n ) }
+						className="ugb--help-tip-column-rule-color"
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Width', i18n ) }
@@ -182,6 +183,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 					value={ textColor }
 					onChange={ textColor => setAttributes( { textColor } ) }
 					label={ __( 'Text Color', i18n ) }
+					className="ugb--help-tip-text-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Text%sAlign"
@@ -223,6 +225,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 					value={ titleColor }
 					onChange={ titleColor => setAttributes( { titleColor } ) }
 					label={ __( 'Title Color', i18n ) }
+					className="ugb--help-tip-title-color"
 				/>
 				<AdvancedToolbarControl
 					label={ __( 'Vertical Align', i18n ) }
@@ -270,6 +273,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 					value={ subtitleColor }
 					onChange={ subtitleColor => setAttributes( { subtitleColor } ) }
 					label={ __( 'Subtitle Color', i18n ) }
+					className="ugb--help-tip-subtitle-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Subtitle%sAlign"

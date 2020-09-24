@@ -247,21 +247,25 @@ addFilter( 'stackable.column.edit.inspector.style.before', 'stackable/column', (
 					value={ headingColor }
 					onChange={ headingColor => setAttributes( { headingColor } ) }
 					label={ __( 'Heading Color', i18n ) }
+					className="ugb--help-tip-heading-color"
 				/>
 				<ColorPaletteControl
 					value={ bodyTextColor }
 					onChange={ bodyTextColor => setAttributes( { bodyTextColor } ) }
 					label={ __( 'Text Color', i18n ) }
+					className="ugb--help-tip-body-text-color"
 				/>
 				<ColorPaletteControl
 					value={ linkColor }
 					onChange={ linkColor => setAttributes( { linkColor } ) }
 					label={ __( 'Link Color', i18n ) }
+					className="ugb--help-tip-link-color"
 				/>
 				<ColorPaletteControl
 					value={ linkHoverColor }
 					onChange={ linkHoverColor => setAttributes( { linkHoverColor } ) }
 					label={ __( 'Link Hover Color', i18n ) }
+					className="ugb--help-tip-link-hover-color"
 				/>
 				<p className="components-base-control__help">{ __( 'The colors above might not apply to some nested blocks.', i18n ) }</p>
 			</PanelBody>

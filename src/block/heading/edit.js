@@ -95,6 +95,7 @@ addFilter( 'stackable.heading.edit.inspector.style.before', 'stackable/heading',
 					value={ titleColor }
 					onChange={ titleColor => setAttributes( { titleColor } ) }
 					label={ __( 'Title Color', i18n ) }
+					className="ugb--help-tip-title-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Title%sAlign"
@@ -129,6 +130,7 @@ addFilter( 'stackable.heading.edit.inspector.style.before', 'stackable/heading',
 					value={ subtitleColor }
 					onChange={ subtitleColor => setAttributes( { subtitleColor } ) }
 					label={ __( 'Subtitle Color', i18n ) }
+					className="ugb--help-tip-subtitle-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="subtitle%sAlign"
@@ -159,6 +161,7 @@ addFilter( 'stackable.heading.edit.inspector.style.before', 'stackable/heading',
 					value={ topLineColor }
 					onChange={ topLineColor => setAttributes( { topLineColor } ) }
 					label={ __( 'Line Color', i18n ) }
+					className="ugb--help-tip-topline-color"
 				/>
 				<AdvancedRangeControl
 					label={ __( 'Width', i18n ) }
@@ -211,6 +214,7 @@ addFilter( 'stackable.heading.edit.inspector.style.before', 'stackable/heading',
 					value={ bottomLineColor }
 					onChange={ bottomLineColor => setAttributes( { bottomLineColor } ) }
 					label={ __( 'Line Color', i18n ) }
+					className="ugb--help-tip-bottomline-color"
 				/>
 				<AdvancedRangeControl
 					label={ __( 'Width', i18n ) }

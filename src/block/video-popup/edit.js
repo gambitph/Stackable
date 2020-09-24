@@ -229,6 +229,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 					label={ __( 'Color', i18n ) }
 					value={ playButtonColor }
 					onChange={ playButtonColor => setAttributes( { playButtonColor } ) }
+					className="ugb--help-tip-play-button-color"
 				/>
 				<AdvancedRangeControl
 					label={ __( 'Opacity', i18n ) }

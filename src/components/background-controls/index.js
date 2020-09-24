@@ -132,7 +132,7 @@ const BackgroundControls = props => {
 							step={ 1 }
 							allowReset={ true }
 							placeholder="0"
-							className="ugb--help-tip-gradient-location"
+							className="ugb--help-tip-gradient-location1"
 						/>
 					) }
 
@@ -146,7 +146,7 @@ const BackgroundControls = props => {
 							step={ 1 }
 							allowReset={ true }
 							placeholder="100"
-							className="ugb--help-tip-gradient-location"
+							className="ugb--help-tip-gradient-location2"
 						/>
 					) }
 

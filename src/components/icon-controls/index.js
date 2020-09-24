@@ -105,6 +105,7 @@ const IconControls = props => {
 								label={ __( 'Icon Color', i18n ) }
 								value={ props.color }
 								onChange={ props.onChangeColor }
+								className="ugb--help-tip-icon-color"
 							/>
 						}
 					</Fragment>
@@ -150,6 +151,7 @@ const IconControls = props => {
 										label={ __( 'Icon Shape / Outline Color', i18n ) }
 										value={ props.backgroundColor }
 										onChange={ props.onChangeBackgroundColor }
+										className="ugb--help-tip-icon-shape-color"
 									/>
 								}
 							</Fragment>

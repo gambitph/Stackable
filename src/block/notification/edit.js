@@ -179,6 +179,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 						value={ columnBorderColor }
 						onChange={ columnBorderColor => setAttributes( { columnBorderColor } ) }
 						label={ __( 'Border Color', i18n ) }
+						className="ugb--help-tip-column-border-color"
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Border Thickness', i18n ) }
@@ -236,6 +237,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 					value={ dismissibleIconColor }
 					onChange={ dismissibleIconColor => setAttributes( { dismissibleIconColor } ) }
 					label={ __( 'Icon Color', i18n ) }
+					className="ugb--help-tip-dismissible-icon-color"
 				/>
 			</PanelAdvancedSettings>
 
@@ -319,6 +321,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 					value={ titleColor }
 					onChange={ titleColor => setAttributes( { titleColor } ) }
 					label={ __( 'Title Color', i18n ) }
+					className="ugb--help-tip-title-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Title%sAlign"
@@ -353,6 +356,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 					value={ descriptionColor }
 					onChange={ descriptionColor => setAttributes( { descriptionColor } ) }
 					label={ __( 'Description Color', i18n ) }
+					className="ugb--help-tip-description-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="description%sAlign"

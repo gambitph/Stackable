@@ -168,6 +168,7 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 					value={ quoteColor }
 					onChange={ quoteColor => setAttributes( { quoteColor } ) }
 					label={ __( 'Color', i18n ) }
+					className="ugb--help-tip-quote-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="quote%sSize"
@@ -234,6 +235,7 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 					value={ textColor }
 					onChange={ textColor => setAttributes( { textColor } ) }
 					label={ __( 'Text Color', i18n ) }
+					className="ugb--help-tip-text-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Text%sAlign"

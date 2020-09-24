@@ -193,6 +193,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 						label={ __( 'Background Color', i18n ) }
 						value={ overlayColor }
 						onChange={ overlayColor => setAttributes( { overlayColor } ) }
+						className="ugb--help-tip-background-color"
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Background Color Opacity', i18n ) }
@@ -235,6 +236,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 					value={ titleColor }
 					onChange={ titleColor => setAttributes( { titleColor } ) }
 					label={ __( 'Title Color', i18n ) }
+					className="ugb--help-tip-title-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Title%sAlign"
@@ -269,6 +271,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 					value={ subtitleColor }
 					onChange={ subtitleColor => setAttributes( { subtitleColor } ) }
 					label={ __( 'Subtitle Color', i18n ) }
+					className="ugb--help-tip-subtitle-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="subtitle%sAlign"

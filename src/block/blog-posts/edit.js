@@ -357,11 +357,13 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					value={ categoryColor }
 					onChange={ categoryColor => setAttributes( { categoryColor } ) }
 					label={ __( 'Color', i18n ) }
+					className="ugb--help-tip-category-color"
 				/>
 				<ColorPaletteControl
 					value={ categoryHoverColor }
 					onChange={ categoryHoverColor => setAttributes( { categoryHoverColor } ) }
 					label={ __( 'Hover Color', i18n ) }
+					className="ugb--help-tip-hover-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Category%sAlign"
@@ -403,11 +405,13 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					value={ titleColor }
 					onChange={ titleColor => setAttributes( { titleColor } ) }
 					label={ __( 'Text Color', i18n ) }
+					className="ugb--help-tip-title-color"
 				/>
 				<ColorPaletteControl
 					value={ titleHoverColor }
 					onChange={ titleHoverColor => setAttributes( { titleHoverColor } ) }
 					label={ __( 'Hover Color', i18n ) }
+					className="ugb--help-tip-hover-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Title%sAlign"
@@ -452,6 +456,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					value={ excerptColor }
 					onChange={ excerptColor => setAttributes( { excerptColor } ) }
 					label={ __( 'Text Color', i18n ) }
+					className="ugb--help-tip-excerpt-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Excerpt%sAlign"
@@ -506,6 +511,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					value={ metaColor }
 					onChange={ metaColor => setAttributes( { metaColor } ) }
 					label={ __( 'Text Color', i18n ) }
+					className="ugb--help-tip-meta-color"
 				/>
 				<AdvancedSelectControl
 					label={ __( 'Separator', i18n ) }
@@ -561,11 +567,13 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					value={ readmoreColor }
 					onChange={ readmoreColor => setAttributes( { readmoreColor } ) }
 					label={ __( 'Text Color', i18n ) }
+					className="ugb--help-tip-readmore-color"
 				/>
 				<ColorPaletteControl
 					value={ readmoreHoverColor }
 					onChange={ readmoreHoverColor => setAttributes( { readmoreHoverColor } ) }
 					label={ __( 'Hover Color', i18n ) }
+					className="ugb--help-tip-readmore-hover-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Readmore%sAlign"

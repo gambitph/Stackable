@@ -233,6 +233,7 @@ const ButtonControls = props => {
 							}
 							value={ props.backgroundColor }
 							onChange={ props.onChangeBackgroundColor }
+							className="ugb--help-tip-button-background-color1"
 						/>
 					) }
 
@@ -241,6 +242,7 @@ const ButtonControls = props => {
 							label={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button Color', i18n ), 2 ) }
 							value={ props.backgroundColor2 }
 							onChange={ props.onChangeBackgroundColor2 }
+							className="ugb--help-tip-button-background-color2"
 						/>
 					) }
 
@@ -263,6 +265,7 @@ const ButtonControls = props => {
 							label={ __( 'Text Color', i18n ) }
 							value={ props.textColor }
 							onChange={ props.onChangeTextColor }
+							className="ugb--help-tip-text-color"
 						/>
 					) }
 				</Fragment>
@@ -344,7 +347,7 @@ const ButtonControls = props => {
 							}
 							value={ props.hoverBackgroundColor }
 							onChange={ props.onChangeHoverBackgroundColor }
-							className="ugb--help-tip-button-hover-color"
+							className="ugb--help-tip-button-hover-color1"
 						/>
 					) }
 					{ props.onChangeHoverBackgroundColor2 && ( ( design === 'ghost' && props.hoverGhostToNormal ) || ( props.backgroundColorType === 'gradient' && showGradient ) ) && (
@@ -352,6 +355,7 @@ const ButtonControls = props => {
 							label={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button Color', i18n ), 2 ) }
 							value={ props.hoverBackgroundColor2 }
 							onChange={ props.onChangeHoverBackgroundColor2 }
+							className="ugb--help-tip-button-hover-color2"
 						/>
 					) }
 					{ props.onChangeHoverBackgroundColor2 && ( ( design === 'ghost' && props.hoverGhostToNormal ) || ( props.backgroundColorType === 'gradient' && showGradient ) ) && (
@@ -372,6 +376,7 @@ const ButtonControls = props => {
 							label={ __( 'Text Color', i18n ) }
 							value={ props.hoverTextColor }
 							onChange={ props.onChangeHoverTextColor }
+							className="ugb--help-tip-hover-text-color"
 						/>
 					) }
 				</ButtonIconPopoverControl>

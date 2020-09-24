@@ -91,6 +91,7 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 					label={ __( 'Color', i18n ) }
 					value={ topSeparatorColor }
 					onChange={ topSeparatorColor => setAttributes( { topSeparatorColor } ) }
+					className="ugb--help-tip-top-separator-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="topSeparator%sHeight"
@@ -190,6 +191,7 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 					label={ __( 'Color', i18n ) }
 					value={ bottomSeparatorColor }
 					onChange={ bottomSeparatorColor => setAttributes( { bottomSeparatorColor } ) }
+					className="ugb--help-tip-bottom-separator-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="bottomSeparator%sHeight"

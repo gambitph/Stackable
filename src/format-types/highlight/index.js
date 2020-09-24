@@ -170,6 +170,7 @@ const HighlightButton = props => {
 								onChange={ textColor => {
 									onChange( createApplyFormat( value, colorType, textColor, highlightColor ), { withoutHistory: true } )
 								} }
+								classame="ugb--help-tip-inner-highlight-format-color"
 							/>
 						</div>
 						{ colorType !== '' &&
@@ -180,6 +181,7 @@ const HighlightButton = props => {
 									onChange={ highlightColor => {
 										onChange( createApplyFormat( value, colorType, textColor, highlightColor ), { withoutHistory: true } )
 									} }
+									classame="ugb--help-tip-highlight-format-color"
 								/>
 							</div>
 						}

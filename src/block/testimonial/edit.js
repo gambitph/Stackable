@@ -195,6 +195,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 					value={ testimonialColor }
 					onChange={ testimonialColor => setAttributes( { testimonialColor } ) }
 					label={ __( 'Testimonial Color', i18n ) }
+					className="ugb--help-tip-testimonial-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="testimonial%sAlign"
@@ -289,6 +290,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 					value={ nameColor }
 					onChange={ nameColor => setAttributes( { nameColor } ) }
 					label={ __( 'Name Color', i18n ) }
+					className="ugb--help-tip-name-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Name%sAlign"
@@ -324,6 +326,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 					value={ positionColor }
 					onChange={ positionColor => setAttributes( { positionColor } ) }
 					label={ __( 'Text Color', i18n ) }
+					className="ugb--help-tip-position-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="position%sAlign"

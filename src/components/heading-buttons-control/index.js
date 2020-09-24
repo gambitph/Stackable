@@ -13,6 +13,7 @@ import SVGH6 from './images/heading6.svg'
  */
 import { i18n } from 'stackable'
 import { AdvancedToolbarControl } from '~stackable/components'
+import classnames from 'classnames'
 
 /**
  * WordPress dependencies
@@ -55,10 +56,14 @@ const TAG_OPTIONS = [
 ]
 
 const HeadingButtonsControl = props => {
+	const mainClasses = classnames(
+		'ugb-heading-buttons-control',
+		'ugb--help-tip-typography-html-tag'
+	)
 	return (
 		<AdvancedToolbarControl
 			{ ...props }
-			className="ugb-heading-buttons-control"
+			className={ mainClasses }
 			controls={ TAG_OPTIONS }
 		/>
 	)

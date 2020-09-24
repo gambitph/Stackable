@@ -98,6 +98,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 					label={ __( 'Separator Color', i18n ) }
 					value={ layer1Color }
 					onChange={ layer1Color => setAttributes( { layer1Color } ) }
+					className="ugb--help-tip-separator-color"
 				/>
 				<AdvancedRangeControl
 					label={ __( 'Separator Width', i18n ) }
@@ -177,6 +178,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 					label={ __( 'Background Color', i18n ) }
 					value={ backgroundColor }
 					onChange={ backgroundColor => setAttributes( { backgroundColor } ) }
+					className="ugb--help-tip-background-color"
 				/>
 			</PanelBody>
 			<PanelBody

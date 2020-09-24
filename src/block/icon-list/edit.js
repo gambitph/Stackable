@@ -127,6 +127,7 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 					label={ __( 'Icon Color', i18n ) }
 					value={ iconColor }
 					onChange={ iconColor => setAttributes( { iconColor } ) }
+					className="ugb--help-tip-icon-color"
 				/>
 				<ControlSeparator />
 				<ResponsiveControl
@@ -177,6 +178,7 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 					value={ listTextColor }
 					onChange={ listTextColor => setAttributes( { listTextColor } ) }
 					label={ __( 'Color', i18n ) }
+					className="ugb--help-tip-list-text-color"
 				/>
 			</PanelAdvancedSettings>
 

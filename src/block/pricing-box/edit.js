@@ -262,6 +262,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					value={ titleColor }
 					onChange={ titleColor => setAttributes( { titleColor } ) }
 					label={ __( 'Title Color', i18n ) }
+					className="ugb--help-tip-title-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Title%sAlign"
@@ -297,6 +298,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					value={ priceColor }
 					onChange={ priceColor => setAttributes( { priceColor } ) }
 					label={ __( 'Text Color', i18n ) }
+					className="ugb--help-tip-price-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Price%sAlign"
@@ -335,6 +337,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 						value={ pricePrefixColor }
 						onChange={ pricePrefixColor => setAttributes( { pricePrefixColor } ) }
 						label={ __( 'Text Color', i18n ) }
+						className="ugb--help-tip-price-prefix-color"
 					/>
 				</PanelAdvancedSettings>
 			}
@@ -364,6 +367,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 						value={ priceSuffixColor }
 						onChange={ priceSuffixColor => setAttributes( { priceSuffixColor } ) }
 						label={ __( 'Text Color', i18n ) }
+						className="ugb--help-tip-price-suffix-color"
 					/>
 				</PanelAdvancedSettings>
 			}
@@ -390,6 +394,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					value={ subPriceColor }
 					onChange={ subPriceColor => setAttributes( { subPriceColor } ) }
 					label={ __( 'Text Color', i18n ) }
+					className="ugb--help-tip-subprice-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="subPrice%sAlign"
@@ -456,6 +461,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					value={ descriptionColor }
 					onChange={ descriptionColor => setAttributes( { descriptionColor } ) }
 					label={ __( 'Description Color', i18n ) }
+					className="ugb--help-tip-description-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="description%sAlign"

@@ -317,6 +317,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 						value={ lineColor }
 						onChange={ lineColor => setAttributes( { lineColor } ) }
 						label={ __( 'Color', i18n ) }
+						className="ugb--help-tip-line-color"
 					/>
 					<AdvancedRangeControl
 						label={ __( 'Size', i18n ) }
@@ -352,6 +353,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					value={ subtitleColor }
 					onChange={ subtitleColor => setAttributes( { subtitleColor } ) }
 					label={ __( 'Subtitle Color', i18n ) }
+					className="ugb--help-tip-subtitle-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="subtitle%sAlign"
@@ -392,6 +394,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					value={ titleColor }
 					onChange={ titleColor => setAttributes( { titleColor } ) }
 					label={ __( 'Title Color', i18n ) }
+					className="ugb--help-tip-title-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Title%sAlign"
@@ -426,6 +429,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					value={ descriptionColor }
 					onChange={ descriptionColor => setAttributes( { descriptionColor } ) }
 					label={ __( 'Description Color', i18n ) }
+					className="ugb--help-tip-description-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="description%sAlign"
@@ -455,6 +459,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					value={ arrowColor }
 					onChange={ arrowColor => setAttributes( { arrowColor } ) }
 					label={ __( 'Color', i18n ) }
+					className="ugb--help-tip-arrow-color"
 				/>
 				<ResponsiveControl
 					attrNameTemplate="Arrow%sSize"
