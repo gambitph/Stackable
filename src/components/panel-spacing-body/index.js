@@ -17,7 +17,7 @@ const PanelSpacingBody = props => {
 		<PanelAdvancedSettings
 			title={ __( 'Spacing', i18n ) }
 			{ ...props }
-			className={ classnames( [ 'ugb--help-tip-spacing', props.className ] ) }
+			className={ classnames( [ 'ugb-panel--spacing', props.className ] ) }
 		>
 			{ applyFilters( 'stackable.panel-spacing-body.edit.before', null, blockProps ) }
 			{ props.children }

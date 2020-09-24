@@ -235,6 +235,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 					value={ arrowSize }
 					onChange={ arrowSize => setAttributes( { arrowSize } ) }
 					placeholder="20"
+					className="ugb--help-tip-arrow-size"
 				/>
 				<ColorPaletteControl
 					value={ arrowColor }
@@ -294,7 +295,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 						} ) }
 						max={ 200 }
 						placeholder="18"
-						className="ugb--help-tip-accordion-padding"
+						className="ugb--help-tip-spacing-padding"
 					/>
 				}
 				{ show.titleSpacing &&
@@ -309,7 +310,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 							max={ 100 }
 							allowReset={ true }
 							placeholder="0"
-							className="ugb--help-tip-accordion-title-spacing"
+							className="ugb--help-tip-spacing-title"
 						/>
 					</ResponsiveControl>
 				}
