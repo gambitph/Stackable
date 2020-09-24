@@ -123,11 +123,13 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 					label={ __( 'Open at the start', i18n ) }
 					checked={ openStart }
 					onChange={ openStart => setAttributes( { openStart } ) }
+					className="ugb--help-tip-accordion-open-start"
 				/>
 				<ToggleControl
 					label={ __( 'Reverse arrow', i18n ) }
 					checked={ reverseArrow }
 					onChange={ reverseArrow => setAttributes( { reverseArrow } ) }
+					className="ugb--help-tip-accordion-reverse-arrow"
 				/>
 				{ show.borderRadius &&
 					<AdvancedRangeControl
