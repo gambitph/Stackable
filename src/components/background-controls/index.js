@@ -106,6 +106,7 @@ const BackgroundControls = props => {
 						( props.backgroundGradientLocation2 !== '' && props.backgroundGradientLocation2 !== 100 ) ||
 						props.backgroundGradientBlendMode
 					}
+					className="ugb--help-tip-gradient-color-settings"
 				>
 					{ props.onChangeBackgroundGradientDirection && (
 						<AdvancedRangeControl
