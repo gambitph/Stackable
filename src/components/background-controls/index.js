@@ -69,6 +69,7 @@ const BackgroundControls = props => {
 					}
 					value={ props.backgroundColor }
 					onChange={ props.onChangeBackgroundColor }
+					className="ugb--help-tip-background-color1"
 				/>
 			) }
 			{ props.onChangeBackgroundColorOpacity && props.backgroundColorType !== 'gradient' &&
@@ -91,6 +92,7 @@ const BackgroundControls = props => {
 					label={ sprintf( _x( '%s #%d', 'Panel title', i18n ), props.labelBackgroundColor, 2 ) }
 					value={ props.backgroundColor2 }
 					onChange={ props.onChangeBackgroundColor2 }
+					className="ugb--help-tip-background-color2"
 				/>
 			) }
 
