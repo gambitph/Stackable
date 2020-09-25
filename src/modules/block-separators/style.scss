@@ -18,7 +18,7 @@
 .ugb-bottom-separator {
 	pointer-events: none;
 	position: absolute !important;
-	top: -1px;
+	top: -2px; // Fixes the visible line in between two blocks.
 	left: -1px;
 	right: -1px;
 	bottom: -1px;
