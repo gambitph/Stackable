@@ -61,7 +61,7 @@ domReady( () => {
 				stackable_global_colors_palette_only: useStackableColorsOnly,
 				stackable_global_colors: _stackableColors,
 			} = response
-			const stackableColors = _stackableColors[ 0 ]
+			const stackableColors = _stackableColors[ 0 ] || []
 			const stackableColorSlugs = stackableColors.map( color => color.slug )
 
 			const colors = select( 'core/block-editor' ).getSettings().colors
