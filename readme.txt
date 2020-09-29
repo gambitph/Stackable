@@ -194,6 +194,10 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.11.1 =
+* Fixed: Custom HTML block can result in invalid HTML and can cause frontend display issues
+* Fixed: Global colors can possibly show a warning
+
 = 2.11.0 =
 [Introducing Global Colors and Global Typography](https://wpstackable.com/blog/global-colors-and-global-typography/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
