@@ -658,13 +658,22 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			}
 
 			// Only do this for native blocks.
-			if ( stripos( $block['blockName'], 'core/' ) === false ) {
+			if ( stripos( $block['blockName'], 'core/' ) !== 0 ) {
+				return $block_content;
+			}
+
+			// Don't do this for custom HTML blocks.
+			if ( in_array( $block['blockName'], array( 'core/html', 'core/embed' ) ) ) {
 				return $block_content;
 			}
 
 			// If a native block, let's add a new data- attribute to it so we can target it in css.
 			if ( stripos( $block_content, '>' ) !== false ) {
-				return $this->str_replace_first( '>', ' data-block-type="core">', $block_content );
+				$new_block_content = $this->str_replace_first( '>', ' data-block-type="core">', $block_content );
+				// If we encounter a comment that got converted, we can detect that.
+				if ( stripos( $new_block_content, '-- data-block-type="core">' ) === false ) {
+					return $new_block_content;
+				}
 			}
 
 			return $block_content;
