@@ -365,10 +365,15 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				}
 			}
 
-			$generated_color_css = ':root {' . implode( ' ', $css ) . '}';
+			if ( count( $css ) ) {
+				$generated_color_css = "/* Global colors */\n";
+				$generated_color_css .= ':root {' . implode( ' ', $css ) . '}';
+				wp_add_inline_style( 'ugb-style-css', $generated_color_css );
+			}
 
-			wp_add_inline_style( 'ugb-style-css', $generated_color_css );
-			wp_add_inline_style( 'ugb-style-css', implode( ' ', $core_css ) );
+			if ( count( $core_css ) ) {
+				wp_add_inline_style( 'ugb-style-css', implode( ' ', $core_css ) );
+			}
 		}
 
 		/**-----------------------------------------------------------------------------
@@ -419,7 +424,11 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			// Load the Google Font.
 			Stackable_Google_Fonts::enqueue_google_fonts( $google_fonts, 'stackable-global-typography-google-fonts' );
 
-			wp_add_inline_style( 'ugb-style-css', implode( "\n", $css ) );
+			if ( count( $css ) ) {
+				$inline_css = "/* Global typography */\n";
+				$inline_css .= implode( "\n", $css );
+				wp_add_inline_style( 'ugb-style-css', $inline_css );
+			}
 		}
 
 		public function form_selectors( $tag ) {
