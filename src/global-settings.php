@@ -302,8 +302,15 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 					);
 				}
 
+				if ( is_array( $global_colors ) ) {
+					$global_colors = $global_colors[0];
+				}
+				if ( empty( $global_colors ) ) {
+					$global_colors = array();
+				}
+
 				// Append our global colors with the theme/default ones.
-				$colors = array_merge( $colors, $global_colors[0] );
+				$colors = array_merge( $colors, $global_colors );
 				add_theme_support( 'editor-color-palette', $colors );
 			}
 		}
@@ -323,8 +330,19 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			$css = array();
 			$core_css = array();
 
-			forEach( $colors as $colorPalette ){
-				foreach( $colorPalette as $color ) {
+			foreach( $colors as $color_palette ) {
+				if ( ! is_array( $color_palette ) ) {
+					continue;
+				}
+
+				foreach( $color_palette as $color ) {
+					if ( ! is_array( $color ) ) {
+						continue;
+					}
+					if ( ! array_key_exists( 'slug', $color ) || ! array_key_exists( 'color', $color ) || ! array_key_exists( 'rgb', $color ) ) {
+						continue;
+					}
+
 					$color_name = strtolower( $color['slug'] );
 
 					// Convert the name to kebab casing,
@@ -332,25 +350,22 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 					$color_background_name = 'body .has-' . implode( '-', explode( ' ', $color_name ) ) . '-background-color';
 
 					// Only do this for our global colors.
-					if ( $color['color'] && $color['slug']){
-					// Add the custom css property.
-					array_push( $css, '--' . $color['slug'] . ': ' . $color['color'] . ';' );
-					array_push( $css, '--' . $color['slug'] . '-rgba: ' . $color['rgb'] . ';' );
+					if ( $color['color'] && $color['slug'] ) {
+						// Add the custom css property.
+						$css[] = '--' . $color['slug'] . ': ' . $color['color'] . ';';
+						$css[] = '--' . $color['slug'] . '-rgba: ' . $color['rgb'] . ';';
 
-
-					// Add custom css class rule for other blocks.
-					// For typography colors.
-						array_push( $core_css, $color_typography_name . ' { color: ' . $color['color'] . ' !important; }');
+						// Add custom css class rule for other blocks.
+						// For typography colors.
+						$core_css[] = $color_typography_name . ' { color: ' . $color['color'] . ' !important; }';
 
 						// For background colors.
-						array_push( $core_css, $color_background_name . ' { background-color: ' . $color['color'] . ' !important; }');
+						$core_css[] = $color_background_name . ' { background-color: ' . $color['color'] . ' !important; }';
 					}
 				}
 			}
 
-			$generated_color_css = ':root {
-				' . implode( ' ', $css ) . '
-			}';
+			$generated_color_css = ':root {' . implode( ' ', $css ) . '}';
 
 			wp_add_inline_style( 'ugb-style-css', $generated_color_css );
 			wp_add_inline_style( 'ugb-style-css', implode( ' ', $core_css ) );
@@ -374,7 +389,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 
 			// We can have multiple entries in the future, use the first one.
 			$active_typography = $typography[0];
-			if ( empty( $active_typography ) ) {
+			if ( empty( $active_typography ) || ! is_array( $active_typography ) ) {
 				return;
 			}
 
@@ -383,6 +398,10 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 
 			// $tags = array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' );
 			foreach ( $active_typography as $tag => $styles ) {
+
+				if ( ! is_array( $styles ) ) {
+					continue;
+				}
 
 				$selectors = $this->form_selectors( $tag );
 				$css[] = $this->generate_typography_styles( implode( ', ', $selectors ), $styles );
@@ -532,7 +551,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			if ( $inherit ) {
 				if ( array_key_exists( 'fontSize', $styles ) ) {
 					$clamp_desktop_value = $this->clamp_inherited_style( $styles['fontSize'], $inherit_max );
-					if ( $clamp_desktop_value ) {
+					if ( ! empty( $clamp_desktop_value ) ) {
 						$font_size = $this->create_style( 'font-size', $clamp_desktop_value . $styles['fontSizeUnit'] );
 					}
 				}
@@ -540,7 +559,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			if ( array_key_exists( 'tabletFontSize', $styles ) ) {
 				$font_size = $this->create_style( 'font-size', $styles['tabletFontSize'] . $styles['tabletFontSizeUnit'] );
 			}
-			if ( $font_size ) {
+			if ( ! empty( $font_size ) ) {
 				$css['tablet'][] = $font_size;
 			}
 
@@ -557,7 +576,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				$has_clamped_font_size = false;
 				if ( array_key_exists( 'fontSize', $styles ) ) {
 					$clamp_desktop_value = $this->clamp_inherited_style( $styles['fontSize'], $inherit_max );
-					if ( $clamp_desktop_value ) {
+					if ( ! empty( $clamp_desktop_value ) ) {
 						$font_size = $this->create_style( 'font-size', $clamp_desktop_value . $styles['fontSizeUnit'] );
 					}
 				}
@@ -565,12 +584,12 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				$clamp_tablet_value = null;
 				if ( array_key_exists( 'tabletFontSize', $styles ) ) {
 					$clamp_tablet_value = $this->clamp_inherited_style( $style['tabletFontSize'], $inherit_max );
-					if ( $clamp_tablet_value ) {
+					if ( ! empty( $clamp_tablet_value ) ) {
 						$font_size = $this->create_style( 'font-size', $clamp_tablet_value . $styles['tabletFontSizeUnit'] );
 					}
 				}
-				if ( ! $clamp_tablet_value ) {
-					if ( $clamp_desktop_value || array_key_exists( 'tabletFontSize', $styles ) ) {
+				if ( empty( $clamp_tablet_value ) ) {
+					if ( ! empty( $clamp_desktop_value ) || array_key_exists( 'tabletFontSize', $styles ) ) {
 						// If we have a desktop value clamped, and there's a tablet value, don't do anything.
 						if ( $has_clamped_font_size ) {
 							$font_size = '';
@@ -581,7 +600,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			if ( array_key_exists( 'mobileFontSize', $styles ) ) {
 				$font_size = $this->create_style( 'font-size', $styles['mobileFontSize'] . $styles['mobileFontSizeUnit'] );
 			}
-			if ( $font_size ) {
+			if ( ! empty( $font_size ) ) {
 				$css['mobile'][] = $font_size;
 			}
 
