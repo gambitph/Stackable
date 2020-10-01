@@ -73,7 +73,7 @@ class PanelTabs extends Component {
 		const sidebarPanel = this.containerDiv.current.closest( '.components-panel' )
 		if ( sidebarPanel ) {
 			sidebarPanel.setAttribute( 'data-ugb-tab', tab )
-			sidebarPanel.closest( '.edit-post-sidebar' ).classList.add( 'ugb--has-panel-tabs' )
+			sidebarPanel.closest( '.edit-post-sidebar' )?.classList.add( 'ugb--has-panel-tabs' )
 		}
 	}
 
