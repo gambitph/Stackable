@@ -58,6 +58,9 @@ module.exports = {
 
 		// LF style line breaks.
 		'linebreak-style': ["error", "unix"],
+
+		// Turn this off since it's showing errors when optional chaining "?."
+		'no-unused-expressions': 'off',
 	},
 	globals: {
 		localStorage: true,
