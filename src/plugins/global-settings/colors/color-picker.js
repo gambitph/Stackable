@@ -219,7 +219,7 @@ const ColorPickers = props => {
 	// State used to determine the clicked index in the color picker.
 	const [ selectedIndex, setSelectedIndex ] = useState( null )
 
-	const colors = useSelect( select => select( 'core/block-editor' ).getSettings().colors )
+	const colors = useSelect( select => select( 'core/block-editor' ).getSettings().colors ) || []
 
 	// Enable reset if there are Stackable global colors.
 	const disableReset = useMemo( () => ! colors.some( color => color.slug && color.slug.includes( 'stk-global-color' ) ), [ colors ] )

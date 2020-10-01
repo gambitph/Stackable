@@ -64,7 +64,7 @@ domReady( () => {
 			const stackableColors = _stackableColors[ 0 ] || []
 			const stackableColorSlugs = stackableColors.map( color => color.slug )
 
-			const colors = select( 'core/block-editor' ).getSettings().colors
+			const colors = select( 'core/block-editor' ).getSettings().colors || []
 			const defaultColors = colors.filter( ( { slug } ) => ! stackableColorSlugs.includes( slug ) )
 
 			dispatch( 'stackable/global-colors' ).updateSettings( {

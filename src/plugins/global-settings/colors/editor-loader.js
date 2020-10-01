@@ -49,7 +49,9 @@ const GlobalColorStyles = () => {
 	const [ styles, setStyles ] = useState( '' )
 
 	useEffect( () => {
-		renderGlobalStyles( colors, setStyles )
+		if ( colors && Array.isArray( colors ) ) {
+			renderGlobalStyles( colors, setStyles )
+		}
 	}, [ colors ] )
 
 	return <style>{ styles }</style>
