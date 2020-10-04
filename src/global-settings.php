@@ -23,6 +23,20 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		public $generated_typography_css = false;
 
 		/**
+		 * Becomes true if there are global typography heading styles generated
+		 *
+		 * @var boolean
+		 */
+		public $generated_heading_typography_css = false;
+
+		/**
+		 * Becomes true if there are global typography body text styles generated
+		 *
+		 * @var boolean
+		 */
+		public $generated_body_typography_css = false;
+
+		/**
 		 * Initialize
 		 */
         function __construct() {
@@ -426,6 +440,13 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 						}
 					}
 				}
+
+				// Note whether we have global typography.
+				if ( in_array( $tag, array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ) ) ) {
+					$this->generated_heading_typography_css = true;
+				} else if ( $tag === 'p' ) {
+					$this->generated_body_typography_css = true;
+				}
 			}
 
 			// Load the Google Font.
@@ -700,6 +721,16 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 
 			// Only do this for native blocks.
 			if ( stripos( $block['blockName'], 'core/' ) !== 0 ) {
+				return $block_content;
+			}
+
+			// Only do the native paragraph blocks only if body text is used.
+			if ( $block['blockName'] === 'core/paragraph' && ! $this->generated_body_typography_css ) {
+				return $block_content;
+			}
+
+			// Only do the native hedaing blocks only if headings is used.
+			if ( $block['blockName'] === 'core/heading' && ! $this->generated_heading_typography_css ) {
 				return $block_content;
 			}
 
