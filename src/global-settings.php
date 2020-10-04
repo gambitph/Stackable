@@ -16,6 +16,13 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
     class Stackable_Global_Settings {
 
 		/**
+		 * Becomes true if there are global typography styles generated
+		 *
+		 * @var boolean
+		 */
+		public $generated_typography_css = false;
+
+		/**
 		 * Initialize
 		 */
         function __construct() {
@@ -425,6 +432,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			Stackable_Google_Fonts::enqueue_google_fonts( $google_fonts, 'stackable-global-typography-google-fonts' );
 
 			if ( count( $css ) ) {
+				$this->generated_typography_css = true;
 				$inline_css = "/* Global typography */\n";
 				$inline_css .= implode( "\n", $css );
 				wp_add_inline_style( 'ugb-style-css', $inline_css );
@@ -682,6 +690,11 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		public function typography_detect_native_blocks( $block_content, $block ) {
 			// Only do this when we need to style native blocks.
 			if ( ! in_array( $this->get_apply_typography_to(), array( 'blocks-stackable-native', 'blocks-all' ) ) ) {
+				return $block_content;
+			}
+
+			// Only do this if we have some global typography settings to apply.
+			if ( ! $this->generated_typography_css ) {
 				return $block_content;
 			}
 
