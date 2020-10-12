@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { omit } from 'lodash'
+import { omit, compact } from 'lodash'
 
 /**
  * Wordpress dependencies
@@ -66,7 +66,7 @@ domReady( () => {
 
 			// Added compatibility from Global Settings Beta to Release Version.
 			if ( ( _stackableColors || [] ).every( color => typeof color === 'object' && ! Array.isArray( color ) && color.color ) ) {
-				stackableColors = _stackableColors.map( color => {
+				stackableColors = compact( _stackableColors.map( color => {
 					if ( color.fallback && color.colorVar ) {
 						return {
 							color: color.fallback,
@@ -75,8 +75,8 @@ domReady( () => {
 							name: color.name || 'Untitled Color',
 						}
 					}
-					return color
-				} )
+					return null
+				} ) )
 			} else {
 				stackableColors = _stackableColors[ 0 ] || []
 			}
