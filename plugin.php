@@ -99,6 +99,42 @@ if ( ! function_exists( 'stackable_version_upgrade_check' ) ) {
 	add_action( 'admin_menu', 'stackable_version_upgrade_check', 1 );
 }
 
+/**
+ * If Gutenberg plugin is activated, add a notice to disable it since it may cause issues.
+ *
+ * @since 2.11.4
+ */
+if ( ! function_exists( 'stackable_notice_gutenberg_plugin_activated' ) ) {
+	function stackable_notice_gutenberg_plugin_activated() {
+		global $wp_version;
+		if ( version_compare( $wp_version, '5.0', '>=' ) && is_plugin_active( 'gutenberg/gutenberg.php' ) ) {
+			$ignore = get_option( 'stackable_notice_gutenberg_plugin_ignore' );
+			if ( ! $ignore ) {
+				printf(
+					'<div class="notice notice-error is-dismissible stackable_notice_gutenberg_plugin"><p>%s</p>%s</div>',
+					sprintf( __( '%sStackable Notice%s: Please deactivate the %sGutenberg plugin%s! As of WordPress 5.0, this plugin is no longer required for the Block Editor to work.', STACKABLE_I18N ), '<strong>', '</strong>', '<strong>', '</strong>' ),
+					'<script>( function() {
+						document.body.addEventListener( "click", function( event ) {
+							if( event.target.matches( ".notice.stackable_notice_gutenberg_plugin button.notice-dismiss" ) ) {
+								wp.ajax.post( "stackable_notice_gutenberg_plugin_ignore" );
+							}
+						} );
+					} )();
+					</script>'
+				);
+			}
+		}
+	}
+	add_action( 'admin_notices', 'stackable_notice_gutenberg_plugin_activated' );
+}
+
+if ( ! function_exists( 'stackable_notice_gutenberg_plugin_ignore' ) ) {
+	function stackable_notice_gutenberg_plugin_ignore() {
+		update_option( 'stackable_notice_gutenberg_plugin_ignore', true );
+	}
+	add_action( 'wp_ajax_stackable_notice_gutenberg_plugin_ignore', 'stackable_notice_gutenberg_plugin_ignore' );
+}
+
 /********************************************************************************************
  * END Activation & PHP version checks.
  ********************************************************************************************/
