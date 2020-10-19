@@ -2638,6 +2638,28 @@
     ]
   },
   {
+    "family": "Commissioner",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
+      "greek",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Concert One",
     "variants": [
       "regular"
@@ -2982,8 +3004,12 @@
     "family": "Cuprum",
     "variants": [
       "regular",
-      "italic",
+      "500",
+      "600",
       "700",
+      "italic",
+      "500italic",
+      "600italic",
       "700italic"
     ],
     "subsets": [
@@ -9899,6 +9925,8 @@
     "variants": [
       "300",
       "regular",
+      "500",
+      "600",
       "700"
     ],
     "subsets": [
