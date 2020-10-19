@@ -112,7 +112,7 @@ export const GlobalTypographyStyles = () => {
 		setStyleTimeout( setTimeout( () => doAction( 'stackable.global-settings.typography-update-global-styles', typographySettings ), 200 ) )
 
 		return () => removeAction( 'stackable.global-settings.typography-update-global-styles', 'stackable/typography-styles' )
-	}, [ typographySettings, applySettingsTo, device ] )
+	}, [ JSON.stringify( typographySettings ), applySettingsTo, device ] )
 
 	return <style>{ styles }</style>
 }

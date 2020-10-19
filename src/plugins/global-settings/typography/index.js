@@ -76,7 +76,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 	// When typography styles are changed, trigger our editor style generator to update.
 	useEffect( () => {
 		doAction( 'stackable.global-settings.typography.update-trigger', typographySettings, applySettingsTo )
-	}, [ typographySettings, applySettingsTo ] )
+	}, [ JSON.stringify( typographySettings ), applySettingsTo ] )
 
 	const changeStyles = ( tag, styles ) => {
 		const newSettings = {
