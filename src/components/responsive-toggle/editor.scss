@@ -3,24 +3,30 @@
 	margin-left: 6px;
 	align-items: center;
 	button {
-		height: 11px;
-		width: 11px;
-		padding: 3px !important; // Force override for Gutenberg 7.7.
+		height: 14px;
+		width: 14px;
+		padding: 5px !important; // Force override for Gutenberg 7.7.
 		min-width: 11px !important; // Force override for Gutenberg 7.7.
 		box-sizing: content-box;
-		background: #eee;
-		border-radius: 100%;
-		margin: 0 2px 0 3px;
+		border-radius: 0 !important;
+		margin: 0;
+		border: 1px solid transparent;
 		svg {
 			height: 100%;
 			width: 100%;
 		}
 		&:hover,
 		&.is-active {
-			background: #999 !important;
-			color: #fff !important;
-			border: none !important;
+			border: 1px solid #1e1e1e !important;
 			box-shadow: none !important;
+		}
+		&.is-active:not([data-screen="desktop"]) {
+			background: var(--wp-admin-theme-color);
+			color: #fff;
+			border-color: var(--wp-admin-theme-color) !important;
+		}
+		&[data-screen="desktop"]:not(:hover) {
+			border-color: transparent !important;
 		}
 		&.is-active:not(:first-child) {
 			background: #ab5af1 !important;

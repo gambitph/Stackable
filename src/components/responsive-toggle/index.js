@@ -2,7 +2,7 @@
  * External dependencies
  */
 import {
-	getSelectedScreen, isScreenPickerOpen, setIsScreenPickerOpen, setSelectedScreen,
+	getSelectedScreen, isScreenPickerOpen, setSelectedScreen,
 } from '~stackable/util'
 
 /**
@@ -21,7 +21,7 @@ import {
 import { __ } from '@wordpress/i18n'
 import { Component } from '@wordpress/element'
 import { i18n } from 'stackable'
-import { Button } from '@wordpress/components'
+import { Button, Popover } from '@wordpress/components'
 import { withInstanceId } from '@wordpress/compose'
 
 const responsiveIcons = {
@@ -42,29 +42,16 @@ class ResponsiveToggle extends Component {
 		this.state = {
 			screen: getSelectedScreen(),
 			isScreenPickerOpen: isScreenPickerOpen(),
+			isMouseOver: false,
 		}
 	}
 
 	onChangeScreen( value ) {
-		const firstScreenOption = this.props.screens[ 0 ]
-		if ( ! this.state.isScreenPickerOpen && this.state.screen === firstScreenOption && value === firstScreenOption ) {
-			this.setState( { isScreenPickerOpen: true } )
-			if ( typeof instanceIdOwner === 'undefined' ) {
-				setIsScreenPickerOpen( true )
-				doAction( 'stackable.responsive-toggle.screen.open' )
-			}
-		} else if ( this.state.isScreenPickerOpen && value === firstScreenOption ) {
-			this.setState( { isScreenPickerOpen: false } )
-			if ( typeof instanceIdOwner === 'undefined' ) {
-				setIsScreenPickerOpen( false )
-				doAction( 'stackable.responsive-toggle.screen.close' )
-			}
-		}
-
 		this.props.onChangeScreen( value )
 		this.setState( { screen: value } )
 		setSelectedScreen( value )
 		doAction( 'stackable.responsive-toggle.screen.change', value )
+		this.setState( { isMouseOver: value } )
 	}
 
 	onOtherScreenChange( screen ) {
@@ -99,17 +86,34 @@ class ResponsiveToggle extends Component {
 			<div className="ugb-base-control-multi-label__responsive">
 				{ this.props.screens.length > 1 &&
 					this.props.screens.map( ( screen, i ) => {
-						if ( i > 0 && ! this.state.isScreenPickerOpen ) {
+						if ( i > 0 && ! this.state.isScreenPickerOpen && ! this.state.isMouseOver ) {
 							return null
 						}
 						return (
-							<Button
+							<div
 								key={ i }
-								className={ this.state.screen === screen ? 'is-active' : '' }
-								onClick={ () => this.onChangeScreen( screen ) }
-								icon={ responsiveIcons[ screen ] }
-								label={ labels[ screen ] }
-							/>
+							>
+								<Button
+									className={ this.state.screen === screen ? 'is-active' : '' }
+									onClick={ () => this.onChangeScreen( screen ) }
+									icon={ responsiveIcons[ screen ] }
+									showTooltip={ false }
+									label={ labels[ screen ] }
+									data-screen={ screen }
+									onMouseEnter={ () => this.setState( { isMouseOver: screen } ) }
+									onMouseLeave={ () => this.setState( { isMouseOver: false } ) }
+								/>
+								{ this.state.isMouseOver === screen &&
+									<Popover
+										focusOnMount={ false }
+										position="bottom center"
+										className="components-tooltip"
+										aria-hidden="true"
+									>
+										{ labels[ screen ] }
+									</Popover>
+								}
+							</div>
 						)
 					} )
 				}
