@@ -16,6 +16,9 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
             add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_dashboard_script' ) );
 
             add_action( 'admin_init', array( $this, 'redirect_to_welcome_page' ) );
+
+			$plugin = plugin_basename( STACKABLE_FILE );
+			add_filter( 'plugin_action_links_' . $plugin, array( $this, 'add_settings_link' ) );
         }
 
         public function add_dashboard_page() {
@@ -374,6 +377,33 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 				</section>
 			</div>
 			<?php
+		}
+
+		/**
+		 * Adds links to the plugins page entry.
+		 *
+		 * @param Array $links
+		 *
+		 * @return Array
+		 */
+		public function add_settings_link( $links ) {
+			// Settings link.
+			$settings_link = sprintf( '<a href="%s">%s</a>',
+				admin_url( 'options-general.php?page=stackable' ),
+				__( 'Settings', STACKABLE_I18N )
+			);
+			array_unshift( $links, $settings_link );
+
+			// Go Premium link.
+			if ( ! sugb_fs()->is_whitelabeled() && ! sugb_fs()->can_use_premium_code() ) {
+				$premium_link = sprintf( '<a href="%s" target="_blank" style="color: #93003c; text-shadow: 1px 1px 1px #eee; font-weight: bold;">%s</a>',
+					'https://wpstackable.com/premium/?utm_source=wp-plugins&utm_campaign=gopremium&utm_medium=wp-dashboard',
+					__( 'Go Premium', STACKABLE_I18N )
+				);
+				$links[] = $premium_link;
+			}
+
+			return $links;
 		}
 
         /**

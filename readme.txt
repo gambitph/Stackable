@@ -197,6 +197,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 = 2.11.4 =
 * New: Redesigned responsive toggles to make them easier to use and discover
 * New: Added deactivation notice when the Gutenberg plugin is detected to be activated
+* New: Added settings and Go Premium links to the plugins page
 * Fixed: Possible error when you previously installed the beta version and updated to the released version
 * Fixed: Global colors can possibly show a warning if a theme has invalid colors
 
