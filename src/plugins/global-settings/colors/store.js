@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { omit } from 'lodash'
+import { omit, compact } from 'lodash'
 
 /**
  * Wordpress dependencies
@@ -61,7 +61,26 @@ domReady( () => {
 				stackable_global_colors_palette_only: useStackableColorsOnly,
 				stackable_global_colors: _stackableColors,
 			} = response
-			const stackableColors = _stackableColors[ 0 ] || []
+
+			let stackableColors
+
+			// Added compatibility from Global Settings Beta to Release Version.
+			if ( ( _stackableColors || [] ).every( color => typeof color === 'object' && ! Array.isArray( color ) && color.color ) ) {
+				stackableColors = compact( _stackableColors.map( color => {
+					if ( color.fallback && color.colorVar ) {
+						return {
+							color: color.fallback,
+							slug: `stk-global-color-${ Math.floor( Math.random() * new Date().getTime() ) % 100000 }`,
+							rgb: color.rgb || '0, 0, 0',
+							name: color.name || 'Untitled Color',
+						}
+					}
+					return null
+				} ) )
+			} else {
+				stackableColors = _stackableColors[ 0 ] || []
+			}
+
 			const stackableColorSlugs = stackableColors.map( color => color.slug )
 
 			const _colors = select( 'core/block-editor' ).getSettings().colors || []
