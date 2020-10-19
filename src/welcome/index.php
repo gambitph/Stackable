@@ -388,11 +388,13 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 		 */
 		public function add_settings_link( $links ) {
 			// Settings link.
-			$settings_link = sprintf( '<a href="%s">%s</a>',
-				admin_url( 'options-general.php?page=stackable' ),
-				__( 'Settings', STACKABLE_I18N )
-			);
-			array_unshift( $links, $settings_link );
+			if ( current_user_can( 'manage_options' ) ) {
+				$settings_link = sprintf( '<a href="%s">%s</a>',
+					admin_url( 'options-general.php?page=stackable' ),
+					__( 'Settings', STACKABLE_I18N )
+				);
+				array_unshift( $links, $settings_link );
+			}
 
 			// Go Premium link.
 			if ( ! sugb_fs()->is_whitelabeled() && ! sugb_fs()->can_use_premium_code() ) {
