@@ -420,7 +420,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
          * Redirect to the welcome screen if our marker exists.
          */
         public function redirect_to_welcome_page() {
-            if ( get_option( 'stackable_redirect_to_welcome' ) ) {
+            if ( ! sugb_fs()->is_activation_mode() && get_option( 'stackable_redirect_to_welcome' ) ) {
                 delete_option( 'stackable_redirect_to_welcome' );
                 wp_redirect( esc_url( admin_url( 'options-general.php?page=stackable-getting-started' ) ) );
                 die();
