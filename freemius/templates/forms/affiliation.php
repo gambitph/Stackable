@@ -220,10 +220,12 @@
                                             <p class="description"><?php echo esc_html( sprintf( fs_text_inline( 'Please provide details on how you intend to promote %s (please be as specific as possible).', 'promotion-method-desc-field-desc', $slug ), $plugin_title ) ) ?></p>
                                         <?php endif ?>
                                     </div>
+                                    <?php if ( ! $is_affiliate ) : ?>
                                     <div>
                                         <input type="checkbox" id="legal_consent_checkbox">
                                         <label for="legal_consent_checkbox">I agree to the <a href="<?php echo $affiliate_program_terms_url ?>" target="_blank" rel="noopener">Referrer Program</a>'s terms & conditions.</label>
                                     </div>
+                                    <?php endif ?>
                                 </form>
                             </div>
                             <?php if ( ! $is_affiliate ) : ?>

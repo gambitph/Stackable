@@ -1674,6 +1674,7 @@
             $this->add_ajax_action( 'update_billing', array( &$this, '_update_billing_ajax_action' ) );
             $this->add_ajax_action( 'start_trial', array( &$this, '_start_trial_ajax_action' ) );
             $this->add_ajax_action( 'set_data_debug_mode', array( &$this, '_set_data_debug_mode' ) );
+            $this->add_ajax_action( 'toggle_whitelabel_mode', array( &$this, '_toggle_whitelabel_mode_ajax_handler' ) );
 
             if ( $this->_is_network_active && fs_is_network_admin() ) {
                 $this->add_ajax_action( 'network_activate', array( &$this, '_network_activate_ajax_action' ) );
@@ -3953,7 +3954,7 @@
             if ( $is_connected ) {
                 FS_GDPR_Manager::instance()->store_is_required( $pong->is_gdpr_required );
             }
-            
+
             $this->store_connectivity_info( $pong, $is_connected );
 
             return $this->_has_api_connection;
@@ -7354,7 +7355,7 @@
          * @since  1.1.4
          */
         function _add_connect_pointer_script() {
-            $vars            = array( 'id' => $this->_module_id );
+			$vars            = array( 'id' => $this->_module_id );
             $pointer_content = fs_get_template( 'connect.php', $vars );
             ?>
             <script type="text/javascript">// <![CDATA[
@@ -7736,7 +7737,10 @@
                  * @author Leo Fajardo (@leorw)
                  * @since  1.2.2
                  */
-                if ( is_plugin_active( $other_version_basename ) ) {
+                if (
+                    is_plugin_active( $other_version_basename ) &&
+                    $this->apply_filters( 'deactivate_on_activation', true )
+                ) {
                     deactivate_plugins( $other_version_basename );
                 }
             }
@@ -8218,7 +8222,7 @@
             $parent_licenses_endpoint = "/plugins/{$this->get_id()}/parent_licenses.json?filter=activatable";
 
             $fs = $this;
-            
+
             if ( $this->is_addon() ) {
                 $parent_instance = $this->get_parent_instance();
 
@@ -9021,12 +9025,25 @@
                         'is_uninstalled' => false,
                     );
 
-                    $plugins_update_data[]                       = $new_plugin;
                     $network_plugins_cache->plugins[ $basename ] = $new_plugin;
+
+                    $is_site_level_active = (
+                        isset( $site_active_plugins[ $basename ] ) &&
+                        $site_active_plugins[ $basename ]['is_active']
+                    );
+
+                    /**
+                     * If not network active, set the activity status based on the site-level plugin status.
+                     */
+                    if ( ! $new_plugin['is_active'] ) {
+                        $new_plugin['is_active'] = $is_site_level_active;
+                    }
+
+                    $plugins_update_data[] = $new_plugin;
 
                     if ( isset( $site_active_plugins[ $basename ] ) ) {
                         $site_active_plugins_cache->plugins[ $basename ]              = $new_plugin;
-                        $site_active_plugins_cache->plugins[ $basename ]['is_active'] = true;
+                        $site_active_plugins_cache->plugins[ $basename ]['is_active'] = $is_site_level_active;
                     }
                 }
             }
@@ -9864,7 +9881,7 @@
 
             if ( is_object( $fs ) ) {
                 $fs->remove_sdk_reference();
-                
+
                 self::require_plugin_essentials();
 
                 if ( is_plugin_active( $fs->_free_plugin_basename ) ||
@@ -10429,7 +10446,7 @@
             if ( fs_starts_with( $option_name, WP_FS__MODULE_TYPE_THEME . '_' ) ) {
                 $option_name = str_replace( WP_FS__MODULE_TYPE_THEME . '_', '', $option_name );
             }
-            
+
             switch ( $option_name ) {
                 case 'plugins':
                 case 'themes':
@@ -12928,7 +12945,7 @@
                 // Subscription cancellation dialog box is currently not supported for multisite networks.
                 return array();
             }
-            
+
             if ( $this->is_whitelabeled() ) {
                 return array();
             }
@@ -13028,7 +13045,7 @@
                 ! $this->is_premium() &&
                 /**
                  * Also handle the case when an upgrade was made using the free version.
-                 * 
+                 *
                  * @author Leo Fajardo (@leorw)
                  * @since 2.3.2
                  */
@@ -13131,6 +13148,61 @@
         }
 
         /**
+         * @author Edgar Melkonyan
+         * @since 2.4.1
+         *
+         * @throws Freemius_Exception
+         */
+        function _toggle_whitelabel_mode_ajax_handler() {
+            $this->_logger->entrance();
+
+            $this->check_ajax_referer( 'toggle_whitelabel_mode' );
+
+            if ( ! $this->is_user_admin() ) {
+                // Only for admins.
+                self::shoot_ajax_failure();
+            }
+
+            $license = $this->get_api_user_scope()->call(
+                "/licenses/{$this->_site->license_id}.json",
+                'put',
+                array( 'is_whitelabeled' => ! $this->_license->is_whitelabeled )
+            );
+
+            if ( ! $this->is_api_result_entity( $license ) ) {
+                self::shoot_ajax_failure(
+                FS_Api::is_api_error_object( $license ) ?
+                    $license->error->message :
+                    fs_text_inline( "An unknown error has occurred while trying to toggle the license's white-label mode.", 'unknown-error-occurred', $this->get_slug() )
+                );
+            }
+
+            $this->_license->is_whitelabeled = $license->is_whitelabeled;
+            $this->_store_licenses();
+
+            $this->_sync_license();
+
+            if ( ! $license->is_whitelabeled ) {
+                $this->_admin_notices->remove_sticky( 'license_whitelabeled' );
+            } else {
+                $this->_admin_notices->add_sticky(
+                    sprintf(
+                        $this->get_text_inline(
+                            'Your %s license was flagged as white-labeled to hide sensitive information from the WP Admin (e.g. your email, license key, prices, billing address & invoices). If you ever wish to revert it back, you can easily do it through your %s. If this was a mistake you can also %s.',
+                            'license_whitelabeled'
+                        ),
+                        "<strong>{$this->get_plugin_title()}</strong>",
+                        sprintf( '<a href="https://users.freemius.com" target="_blank">%s</a>', $this->get_text_inline( 'User Dashboard', 'user-dashboard' ) ),
+                        sprintf( '<a href="#" class="fs-toggle-whitelabel-mode">%s</a>', $this->get_text_inline( 'revert it now', 'revert-it-now' ) )
+                    ),
+                    'license_whitelabeled'
+                );
+            }
+
+            self::shoot_ajax_response( array( 'success' => true ) );
+        }
+
+        /**
          * @author Leo Fajardo (@leorw)
          * @since  2.3.0
          */
@@ -13200,7 +13272,7 @@
          */
         function _activate_license_ajax_action() {
             $this->_logger->entrance();
-            
+
             $this->check_ajax_referer( 'activate_license' );
 
             $license_key = trim( fs_request_get( 'license_key' ) );
@@ -13270,7 +13342,7 @@
             foreach ( $installs_info_by_slug_map as $slug => $install_info ) {
                 $install_ids[ $slug ] = $install_info['install']->id;
             }
-            
+
             $params['install_ids'] = implode( ',', array_values( $install_ids ) );
 
             $install = $this->get_api_site_scope()->call( $this->add_show_pending( '/' ), 'put', $params );
@@ -13363,7 +13435,7 @@
          *
          * @author Vova Feldman (@svovaf)
          * @since  2.3.0
-         *         
+         *
          * @param string      $license_key
          * @param null|bool   $is_marketing_allowed
          * @param null|number $plugin_id
@@ -20679,6 +20751,13 @@
             }
 
             if ( 'none' !== $plan_change ) {
+                if (
+                    ! is_object( $this->_license ) ||
+                    ! $this->_license->is_whitelabeled
+                ) {
+                    $this->_admin_notices->remove_sticky( 'license_whitelabeled' );
+                }
+
                 $this->do_action( 'after_license_change', $plan_change, $this->get_plan() );
             }
         }
@@ -22293,6 +22372,26 @@
 
             $this->_handle_account_edits();
 
+            if (
+                is_object( $this->_license ) &&
+                $this->_license->user_id == $this->_user->id &&
+                ! $this->is_whitelabeled( true )
+            ) {
+                $this->_admin_notices->add(
+                    sprintf(
+                        $this->get_text_inline( "Is this your client's site? %s if you wish to hide sensitive info like your email, license key, prices, billing address & invoices from the WP Admin.", 'license_not_whitelabeled' ),
+                        sprintf(
+                            '<a href="#" class="fs-toggle-whitelabel-mode">%s</a>',
+                            $this->get_text_inline( 'Click here', 'click-here' )
+                        )
+                    ),
+                    '',
+                    'success',
+                    false,
+                    'license_not_whitelabeled'
+                );
+            }
+
             $this->do_action( 'account_page_load_before_departure' );
         }
 
@@ -23453,10 +23552,12 @@
          * @since  1.0.3
          */
         function _redirect_on_activation_hook() {
-            $url = $this->get_after_plugin_activation_redirect_url();
+            if ( $this->apply_filters( 'redirect_on_activation', true ) ) {
+                $url = $this->get_after_plugin_activation_redirect_url();
 
-            if ( is_string( $url ) ) {
-                fs_redirect( $url );
+                if ( is_string( $url ) ) {
+                    fs_redirect( $url );
+                }
             }
         }
 

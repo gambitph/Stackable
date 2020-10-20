@@ -1056,6 +1056,29 @@
                 });
             });
 
+            $( '.fs-toggle-whitelabel-mode' ).click( function () {
+                var $toggleLink = $( this );
+
+                $.ajax( {
+                    url   : ajaxurl,
+                    method: 'POST',
+                    data  : {
+                        action   : '<?php echo $fs->get_ajax_action( 'toggle_whitelabel_mode' ) ?>',
+                        security : '<?php echo $fs->get_ajax_security( 'toggle_whitelabel_mode' ) ?>',
+                        module_id: <?php echo $fs->get_id() ?>
+                    },
+                    beforeSend: function () {
+                        $toggleLink.parent().text( '<?php
+                            $is_whitelabeled ?
+                                fs_esc_html_echo_inline( 'Disabling white-label mode', 'disabling-whitelabel-mode' ) :
+                                fs_esc_html_echo_inline( 'Enabling white-label mode', 'enabling-whitelabel-mode' )
+                        ?>' + '...' );
+                    },
+                    complete: function () {
+                        location.reload();
+                    }
+                } );
+            });
         })(jQuery);
     </script>
 <?php

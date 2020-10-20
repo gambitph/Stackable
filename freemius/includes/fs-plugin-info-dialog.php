@@ -260,14 +260,20 @@
                     if ( $has_valid_blog_id ) {
                         restore_current_blog();
                     }
+                }
 
-                    if ( is_object( $fs_addon ) ) {
-                        $data->has_purchased_license = $fs_addon->has_active_valid_license();
-                    } else {
-                        $account_addons = $this->_fs->get_account_addons();
-                        if ( ! empty( $account_addons ) && in_array( $selected_addon->id, $account_addons ) ) {
-                            $data->has_purchased_license = true;
-                        }
+                /**
+                 * Check if there's a purchased license in case the add-on can only be installed/downloaded as part of a purchased bundle.
+                 *
+                 * @author Leo Fajardo (@leorw)
+                 * @since 2.4.1
+                 */
+                if ( is_object( $fs_addon ) ) {
+                    $data->has_purchased_license = $fs_addon->has_active_valid_license();
+                } else {
+                    $account_addons = $this->_fs->get_account_addons();
+                    if ( ! empty( $account_addons ) && in_array( $selected_addon->id, $account_addons ) ) {
+                        $data->has_purchased_license = true;
                     }
                 }
 
@@ -577,7 +583,7 @@
 
             $has_installed_version = ( 'install' !== $this->status['status'] );
 
-            if ( ! $api->has_paid_plan ) {
+            if ( ! $api->has_paid_plan && ! $api->has_purchased_license ) {
                 /**
                  * Free-only add-on.
                  *
@@ -1203,7 +1209,7 @@
 
                                             $(document).ready(function () {
                                                 var $plan = $('.plugin-information-pricing .fs-plan[data-plan-id=<?php echo $plan->id ?>]');
-                                                $plan.find('input[type=radio]').live('click', function () {
+                                                $plan.find('input[type=radio]').on('click', function () {
                                                     _updateCtaUrl(
                                                         $plan.attr('data-plan-id'),
                                                         $(this).val(),

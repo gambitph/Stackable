@@ -59,6 +59,10 @@
 		}
 	}
 
+    if ( ! defined( 'FS_SDK__SSLVERIFY' ) ) {
+        define( 'FS_SDK__SSLVERIFY', false );
+    }
+
 	$curl_version = FS_SDK__HAS_CURL ?
 		curl_version() :
 		array( 'version' => '7.37' );
@@ -401,7 +405,7 @@
             }
 
 			if ( 'https' === substr( strtolower( $request_url ), 0, 5 ) ) {
-				$pWPRemoteArgs['sslverify'] = false;
+				$pWPRemoteArgs['sslverify'] = FS_SDK__SSLVERIFY;
 			}
 
 			if ( false !== $pBeforeExecutionFunction &&
