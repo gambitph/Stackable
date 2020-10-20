@@ -128,3 +128,11 @@ body.stackable_page_stackable-pricing {
 		padding-bottom: 50px !important;
 	}
 }
+
+/**
+ * The accounts page shows the footer credits and version in the middle of the page.
+ */
+body.settings_page_stackable-account {
+	position: relative;
+	height: auto;
+}
