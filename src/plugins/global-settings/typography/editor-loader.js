@@ -10,6 +10,7 @@ import {
 } from '~stackable/util'
 import { generateStyles } from '~stackable/components/block-styles'
 import deepmerge from 'deepmerge'
+import { head } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -46,7 +47,7 @@ export const GlobalTypographyStyles = () => {
 		loadPromise.then( () => {
 			const settings = new models.Settings()
 			settings.fetch().then( response => {
-				setTypographySettings( ( response.stackable_global_typography && response.stackable_global_typography[ 0 ] ) || {} )
+				setTypographySettings( ( head( response.stackable_global_typography ) ) || {} )
 				setApplySettingsTo( response.stackable_global_typography_apply_to || 'blocks-stackable-native' )
 			} )
 		} )

@@ -11,7 +11,7 @@ import {
 	PanelAdvancedSettings, AdvancedSelectControl, ControlSeparator,
 } from '~stackable/components'
 import { i18n } from 'stackable'
-import { omit } from 'lodash'
+import { omit, head } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -67,7 +67,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		loadPromise.then( () => {
 			const settings = new models.Settings()
 			settings.fetch().then( response => {
-				setTypographySettings( ( response.stackable_global_typography && response.stackable_global_typography[ 0 ] ) || {} )
+				setTypographySettings( ( head( response.stackable_global_typography ) ) || {} )
 				setApplySettingsTo( response.stackable_global_typography_apply_to || 'blocks-stackable-native' )
 			} )
 		} )

@@ -1,7 +1,9 @@
 /**
  * External dependencies
  */
-import { omit, compact } from 'lodash'
+import {
+	omit, compact, head,
+} from 'lodash'
 
 /**
  * Wordpress dependencies
@@ -78,7 +80,7 @@ domReady( () => {
 					return null
 				} ) )
 			} else {
-				stackableColors = _stackableColors[ 0 ] || []
+				stackableColors = head( _stackableColors ) || []
 			}
 
 			const stackableColorSlugs = stackableColors.map( color => color.slug )
