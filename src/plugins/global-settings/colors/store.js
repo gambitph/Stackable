@@ -68,7 +68,7 @@ domReady( () => {
 
 			// Added compatibility from Global Settings Beta to Release Version.
 			if ( ( _stackableColors || [] ).every( color => typeof color === 'object' && ! Array.isArray( color ) && color.color ) ) {
-				stackableColors = compact( _stackableColors.map( color => {
+				stackableColors = compact( ( _stackableColors || [] ).map( color => {
 					if ( color.fallback && color.colorVar ) {
 						return {
 							color: color.fallback,
