@@ -79,9 +79,9 @@ domReady( () => {
 				return color
 			} ) )
 
-			const stackableColors = head( _stackableColors ) || []
+			let stackableColors = head( _stackableColors ) || []
 
-			const stackableColorSlugs = stackableColors.map( color => color.slug )
+			let stackableColorSlugs = stackableColors.map( color => color.slug )
 
 			let colors
 
@@ -90,6 +90,8 @@ domReady( () => {
 			if ( ( _colors || [] ).some( color => color.fallback && color.colorVar ) ) {
 				colors = convertBetaStackableColorsToRelease( _colors )
 				dispatch( 'core/block-editor' ).updateSettings( { colors } )
+				stackableColors = colors.filter( ( { slug } ) => slug.match( /^stk-global-color/ ) )
+				stackableColorSlugs = stackableColors.map( color => color.slug )
 			} else {
 				colors = _colors || []
 			}
