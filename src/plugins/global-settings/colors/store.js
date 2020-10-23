@@ -65,15 +65,18 @@ domReady( () => {
 			} = response
 
 			const convertBetaStackableColorsToRelease = colors => compact( ( colors || [] ).map( color => {
-				if ( color.fallback && color.colorVar && color.slug.match( /^stk-global-color/ ) ) {
-					return {
-						color: color.fallback,
-						slug: `stk-global-color-${ Math.floor( Math.random() * new Date().getTime() ) % 100000 }`,
-						rgb: color.rgb || '0, 0, 0',
-						name: color.name || 'Untitled Color',
-					}
+				if ( color.fallback && color.colorVar ) {
+					// Let us not include global colors linked to theme colors.
+					return color.slug.match( /^stk-global-color/ ) ?
+						{
+							color: color.fallback,
+							slug: `stk-global-color-${ Math.floor( Math.random() * new Date().getTime() ) % 100000 }`,
+							rgb: color.rgb || '0, 0, 0',
+							name: color.name || 'Untitled Color',
+						} : null
 				}
-				return color.slug.match( /^stk-global-color/ ) ? color : null
+
+				return color
 			} ) )
 
 			const stackableColors = head( _stackableColors ) || []
