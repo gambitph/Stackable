@@ -324,14 +324,21 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				}
 
 				if ( is_array( $global_colors ) ) {
-					$global_colors = $global_colors[0];
+					if ( is_array( $global_colors[0] )  ) {
+						if  ( ! $global_colors[0]['color'] ){
+							$global_colors = $global_colors[0];
+						}
+					}
 				}
+
 				if ( empty( $global_colors ) ) {
 					$global_colors = array();
 				}
 
 				// Append our global colors with the theme/default ones.
 				$colors = array_merge( $colors, $global_colors );
+
+				print_r($colors);
 				add_theme_support( 'editor-color-palette', $colors );
 			}
 		}
