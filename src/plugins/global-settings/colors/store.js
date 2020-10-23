@@ -88,7 +88,7 @@ domReady( () => {
 			// Added compatibility from Global Settings Beta to Release Version.
 			const { colors: _colors } = select( 'core/block-editor' ).getSettings( )
 			if ( ( _colors || [] ).some( color => color.fallback && color.colorVar ) ) {
-				colors = convertBetaStackableColorsToRelease( select( 'core/block-editor' ).getSettings().colors )
+				colors = convertBetaStackableColorsToRelease( _colors )
 				dispatch( 'core/block-editor' ).updateSettings( { colors } )
 			} else {
 				colors = _colors || []
