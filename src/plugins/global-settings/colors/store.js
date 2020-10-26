@@ -53,6 +53,27 @@ registerStore( 'stackable/global-colors', {
 	selectors: STORE_SELECTORS,
 } )
 
+/**
+ * Function for converting stackable_global_colors beta to release version.
+ *
+ * @param {Array} colors old stackable coloas array
+ * @return {Array} new stackable global color array
+ */
+const convertBetaStackableColorsToRelease = colors => compact( ( colors || [] ).map( color => {
+	if ( color.fallback && color.colorVar ) {
+		// Let us not include global colors linked to theme colors.
+		return color.slug.match( /^stk-global-color/ ) ?
+			{
+				color: color.fallback,
+				slug: `stk-global-color-${ Math.floor( Math.random() * new Date().getTime() ) % 100000 }`,
+				rgb: color.rgb || '0, 0, 0',
+				name: color.name || 'Untitled Color',
+			} : null
+	}
+
+	return color
+} ) )
+
 // Load all our settings into our store.
 domReady( () => {
 	loadPromise.then( () => {
@@ -63,21 +84,6 @@ domReady( () => {
 				stackable_global_colors_palette_only: useStackableColorsOnly,
 				stackable_global_colors: _stackableColors,
 			} = response
-
-			const convertBetaStackableColorsToRelease = colors => compact( ( colors || [] ).map( color => {
-				if ( color.fallback && color.colorVar ) {
-					// Let us not include global colors linked to theme colors.
-					return color.slug.match( /^stk-global-color/ ) ?
-						{
-							color: color.fallback,
-							slug: `stk-global-color-${ Math.floor( Math.random() * new Date().getTime() ) % 100000 }`,
-							rgb: color.rgb || '0, 0, 0',
-							name: color.name || 'Untitled Color',
-						} : null
-				}
-
-				return color
-			} ) )
 
 			let stackableColors = head( _stackableColors ) || []
 
