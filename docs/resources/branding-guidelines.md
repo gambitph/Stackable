@@ -4,19 +4,23 @@ If you're writing an article about Stackable you can grab our logos and colors h
 
 ### Main Logos
 
-Icon with name
+[Logo with black Stackable name](https://wpstackable.com/wp-content/uploads/2019/08/stackable-logo-v2-icon-colored-with-name-dark-1.png)
 
 ![](../.gitbook/assets/firefox_pfop8j02jq.png)
 
+[Logo with white Stackable name](https://wpstackable.com/wp-content/uploads/2019/08/stackable-logo-v2-icon-colored-with-name-white-2.png)
+
 ![](../.gitbook/assets/firefox_1xcrj6lnoj.png)
 
-Icon only
+[Transparent icon only](https://wpstackable.com/wp-content/uploads/2019/08/stackable-logo-v2-icon-clear-space.png)
 
 ![](../.gitbook/assets/firefox_rwqy4dayda.png)
 
-Icons with border
+[White bordered icon](https://wpstackable.com/wp-content/uploads/2019/08/stackable-logo-v2-icon-white-space-1.png)
 
 ![](../.gitbook/assets/firefox_b21dssswhq.png)
+
+[Black bordered icon](https://wpstackable.com/wp-content/uploads/2019/08/stackable-logo-v2-icon-darkspace-1.png)
 
 ![](../.gitbook/assets/firefox_uxnjswcnp2.png)
 
@@ -26,11 +30,11 @@ For use against backgrounds including gradient and images when the main logo ten
 
 ### Secondary Logo
 
-Icon with name \(White\)
+[Full white icon with Stackable name](https://wpstackable.com/wp-content/uploads/2019/08/stackable-logo-v2-icon-white-with-name-white.png)
 
 ![](../.gitbook/assets/firefox_1l1iwgfj5b.png)
 
-Icon only \(White\)
+[Full white icon](https://wpstackable.com/wp-content/uploads/2019/08/stackable-logo-v2-icon-white-in-clear-space.png)
 
 ![](../.gitbook/assets/firefox_f7arnjgvek.png)
 
