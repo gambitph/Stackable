@@ -323,11 +323,19 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 					);
 				}
 
+				// Get the first global color set saved. Provision for future global color sets.
 				if ( is_array( $global_colors ) ) {
-					if ( is_array( $global_colors[0] )  ) {
-						if  ( ! $global_colors[0]['color'] ){
-							$global_colors = $global_colors[0];
-						}				
+					if ( is_array( $global_colors[0] ) ) {
+						$global_colors = $global_colors[0];
+					}
+				}
+
+				// Beta compatibility: if the "color" key exists, this means the
+				// color is invalid and was saved in a beta version. The beta
+				// version worked differently and shouldn't be used.
+				if ( is_array( $global_colors ) ) {
+					if ( array_key_exists( 'color', $global_colors ) ) {
+						$global_colors = array();
 					}
 				}
 
