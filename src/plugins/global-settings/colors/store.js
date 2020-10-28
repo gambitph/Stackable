@@ -53,6 +53,27 @@ registerStore( 'stackable/global-colors', {
 	selectors: STORE_SELECTORS,
 } )
 
+/**
+ * Function for converting stackable_global_colors beta to release version.
+ *
+ * @param {Array} colors old stackable coloas array
+ * @return {Array} new stackable global color array
+ */
+const convertBetaStackableColorsToRelease = colors => compact( ( colors || [] ).map( color => {
+	if ( color.fallback && color.colorVar ) {
+		// Let us not include global colors linked to theme colors.
+		return color.slug.match( /^stk-global-color/ ) ?
+			{
+				color: color.fallback,
+				slug: `stk-global-color-${ Math.floor( Math.random() * new Date().getTime() ) % 100000 }`,
+				rgb: color.rgb || '0, 0, 0',
+				name: color.name || 'Untitled Color',
+			} : null
+	}
+
+	return color
+} ) )
+
 // Load all our settings into our store.
 domReady( () => {
 	loadPromise.then( () => {
@@ -64,29 +85,22 @@ domReady( () => {
 				stackable_global_colors: _stackableColors,
 			} = response
 
-			let stackableColors
+			let stackableColors = head( _stackableColors ) || []
+
+			let stackableColorSlugs = stackableColors.map( color => color.slug )
+
+			let colors
 
 			// Added compatibility from Global Settings Beta to Release Version.
-			if ( ( _stackableColors || [] ).every( color => typeof color === 'object' && ! Array.isArray( color ) && color.color ) ) {
-				stackableColors = compact( _stackableColors.map( color => {
-					if ( color.fallback && color.colorVar ) {
-						return {
-							color: color.fallback,
-							slug: `stk-global-color-${ Math.floor( Math.random() * new Date().getTime() ) % 100000 }`,
-							rgb: color.rgb || '0, 0, 0',
-							name: color.name || 'Untitled Color',
-						}
-					}
-					return null
-				} ) )
+			const { colors: _colors } = select( 'core/block-editor' ).getSettings( )
+			if ( ( _colors || [] ).some( color => color.fallback && color.colorVar ) ) {
+				colors = convertBetaStackableColorsToRelease( _colors )
+				dispatch( 'core/block-editor' ).updateSettings( { colors } )
+				stackableColors = colors.filter( ( { slug } ) => slug.match( /^stk-global-color/ ) )
+				stackableColorSlugs = stackableColors.map( color => color.slug )
 			} else {
-				stackableColors = head( _stackableColors ) || []
+				colors = _colors || []
 			}
-
-			const stackableColorSlugs = stackableColors.map( color => color.slug )
-
-			const _colors = select( 'core/block-editor' ).getSettings().colors || []
-			const colors = Array.isArray( _colors ) ? _colors : []
 			const defaultColors = colors.filter( ( { slug } ) => ! stackableColorSlugs.includes( slug ) )
 
 			dispatch( 'stackable/global-colors' ).updateSettings( {
