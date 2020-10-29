@@ -161,6 +161,40 @@ if ( ! class_exists( 'Stackable_Icons' ) ) {
 		}
 
 		/**
+		 * Check whether the FA settings are set to Pro, returns also the
+		 * necessary message to display near the settings.
+		 *
+		 * @return array
+		 */
+		public static function has_fontawesome_plugin_pro() {
+			$settings = self::get_fontawesome_plugin_settings();
+			$error = false;
+			$message = '';
+			if ( ! empty( $settings ) ) {
+				if ( ! $settings['usePro'] && ! empty( $settings['kitToken'] ) ) {
+					// Using a free Kit.
+					$error = true;
+					$message = sprintf( __( 'Hold on! We noticed that you\'re using the Font Awesome plugin and that you\'re using a free Kit. If you have a FontAwesome Pro subscription, you can just set your Kit to use Pro Icons, and you should be able to use your Pro Icons inside your Stackable blocks. %sLearn more about this here.%s', STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/stackable-guides/advanced-guides/how-to-use-your-font-awesome-pro-icons">', '</a>' );
+				} else if ( ! $settings['usePro'] ) {
+					// Using a free CDN.
+					$error = true;
+					$message = sprintf( __( 'Hold on! We noticed that you\'re using the Font Awesome plugin and that you\'re using the free CDN. If you have a FontAwesome Pro subscription, you can just set your CDN to use Pro Icons, and you should be able to use your Pro Icons inside your Stackable blocks. %sLearn more about this here.%s', STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/stackable-guides/advanced-guides/how-to-use-your-font-awesome-pro-icons">', '</a>' );
+				} else if ( $settings['usePro'] && empty( $settings['kitToken'] ) ) {
+					// Pro but using the CDN. Warn about whitelist.
+					$message = __( 'Good news! We noticed that you\'re using the Font Awesome plugin. Your Font Awesome Pro icons are already available inside your Stackable blocks.', STACKABLE_I18N ) . ' ' .
+						sprintf( __( 'Make sure you need to add your WordPress site to the %sallowed domains for your CDN%s.', STACKABLE_I18N ), '<a href="https://fontawesome.com/account/cdn" target="_fontawesome">', '</a>' );
+				} else if ( $settings['usePro'] ) {
+					// Pro and using Kit.
+					$message = __( 'Good news! We noticed that you\'re using the Font Awesome plugin. Your Font Awesome Pro icons are already available inside your Stackable blocks.', STACKABLE_I18N );
+				}
+			}
+			return array(
+				'error' => $error,
+				'message' => $message,
+			);
+		}
+
+		/**
 		 * Load the FA Pro icons asynchronously.
 		 *
 		 * @param string $html
@@ -176,6 +210,30 @@ if ( ! class_exists( 'Stackable_Icons' ) ) {
 				$html = preg_replace( '#></script>#', ' async></script>', $html );
 			}
 			return $html;
+		}
+
+		/**
+		 * Checks whether the Font Awesome plugin is activated
+		 *
+		 * @return boolean True if the plugin is activated.
+		 */
+		public static function is_fontawesome_plugin_active() {
+			return is_plugin_active( 'font-awesome/index.php' );
+		}
+
+		/**
+		 * Check if FA Pro settings are enabled in the FA plugin.
+		 *
+		 * @return boolean
+		 */
+		public static function is_fontawesome_plugin_pro_enabled() {
+			$settings = self::get_fontawesome_plugin_settings();
+			if ( empty( $settings ) ) {
+				return false;
+			}
+
+			$has_pro = self::has_fontawesome_plugin_pro();
+			return ! $has_pro['error'];
 		}
 	}
 

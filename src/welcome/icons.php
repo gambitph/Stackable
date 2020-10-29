@@ -37,9 +37,9 @@ if ( ! class_exists( 'Stackable_Settings_Icons' ) ) {
 		 */
 		public function localize_settings( $args ) {
 			return array_merge( $args, array(
-				'iconsIsFAPluginActive' => Stackable_Premium_Icons::is_fontawesome_plugin_active(),
-				'iconsIsFAProEnabled' => Stackable_Premium_Icons::is_fontawesome_plugin_pro_enabled(),
-				'iconsFAProError' => Stackable_Premium_Icons::has_fontawesome_plugin_pro(),
+				'iconsIsFAPluginActive' => Stackable_Icons::is_fontawesome_plugin_active(),
+				'iconsIsFAProEnabled' => Stackable_Icons::is_fontawesome_plugin_pro_enabled(),
+				'iconsFAProError' => Stackable_Icons::has_fontawesome_plugin_pro(),
 				'iconsFaKit' => get_option( 'stackable_icons_fa_kit' ),
 			) );
 			return $args;
