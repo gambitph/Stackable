@@ -158,9 +158,6 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 							<h2><?php _e( '🧰 Icon Library Settings', STACKABLE_I18N ) ?></h2>
 							<p class="s-settings-subtitle"><?php printf( __( 'If you have a %sFont Awesome Pro%s subscription, you can use your FontAwesome Pro Icons in Stackable by inputting your Pro Kit code below. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://fontawesome.com/" target="_fontawesome">', '</a>', '<a href="https://docs.wpstackable.com/stackable-guides/advanced-guides/how-to-use-your-font-awesome-pro-icons/?utm_source=wp-settings-icons&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
 							<div class="s-icon-settings"></div>
-							<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
-								<p class="s-settings-pro"><?php _e( 'This is only available in Stackable Premium.', STACKABLE_I18N ) ?> <a href="https://wpstackable.com/premium/?utm_source=wp-settings-icons&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a></p>
-							<?php endif; ?>
 						</article>
 						<article class="s-box">
 							<h2><?php _e( '📰 Role Manager', STACKABLE_I18N ) ?></h2>

@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import './news'
+import './icons'
 import blockData from './blocks'
 
 /**
