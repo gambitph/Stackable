@@ -963,10 +963,9 @@ export default compose(
 		}
 
 		const categoryQuery = {
-			categories:
-      ( taxonomyFilterType === '__in' && taxonomyType === 'category' && taxonomy ) ?
-      	queryTaxonomyByType() :
-      		undefined,
+			categories: ( taxonomyFilterType === '__in' && taxonomyType === 'category' && taxonomy ) ?
+				queryTaxonomyByType() :
+				undefined,
 			categories_exclude: taxonomyFilterType === '__not_in' && taxonomyType === 'category' && taxonomy ? queryTaxonomyByType() : undefined, // eslint-disable-line camelcase
 		}
 

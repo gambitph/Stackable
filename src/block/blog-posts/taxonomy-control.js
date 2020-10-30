@@ -171,14 +171,14 @@ class TaxonomyControl extends Component {
 						suggestions={ taxonomyOptions.map( value => value.name ) }
 						value={ taxonomy.map( value => ( find( taxonomyOptions, taxonomyEntry => taxonomyEntry.value === value ) || {} ).name || '' ) }
 						onChange={ value => {
-            			const passedTaxonomyValues = value.map( selectedTaxonomy => {
-            				const { value: entry } = find( ( taxonomyOptions || [] ), taxonomyEntry => taxonomyEntry.name === selectedTaxonomy )
-            				return entry
-            			} )
+							const passedTaxonomyValues = value.map( selectedTaxonomy => {
+								const { value: entry } = find( ( taxonomyOptions || [] ), taxonomyEntry => taxonomyEntry.name === selectedTaxonomy )
+								return entry
+							} )
 
-            			this.props.onChangeTaxonomy( passedTaxonomyValues )
-            		} }
-            	/>
+							this.props.onChangeTaxonomy( passedTaxonomyValues )
+						} }
+					/>
 				</Fragment>
 				}
 			</div>
