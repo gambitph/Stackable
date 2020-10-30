@@ -67,6 +67,10 @@ if ( ! function_exists( 'stackable_blog_posts_attributes' ) ) {
 			'taxonomy' => array(
 				'type' => 'array',
       ),
+			'taxonomyFilterType' => array(
+				'type' => 'string',
+        'default' => '__in',
+      ),
 			'postOffset' => array(
 				'type' => 'number',
 				'default' => '',
