@@ -80,8 +80,8 @@ const schema = {
 		default: 'category',
 	},
 	taxonomy: {
-		type: 'string',
-		default: '',
+		type: 'array',
+		default: [],
 	},
 	postOffset: {
 		type: 'number',

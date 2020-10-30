@@ -47,7 +47,7 @@ import {
 	i18n, showProNotice,
 } from 'stackable'
 import {
-	isUndefined, pickBy, compact,
+	isUndefined, pickBy,
 } from 'lodash'
 import classnames from 'classnames'
 
@@ -952,10 +952,10 @@ export default compose(
 		const queryTaxonomyByType = () => {
 			// Handle array categories.
 			if ( typeof taxonomy === 'object' && Array.isArray( taxonomy ) ) {
-				return compact( taxonomy ).length ? compact( taxonomy ).map( value => ( { name: value } ) ) : undefined
+				return taxonomy.length ? taxonomy : undefined
 			}
 			// Handle stringified categories.
-			return [ { name: taxonomy } ]
+			return [ taxonomy ]
 		}
 
 		const postQuery = pickBy( {

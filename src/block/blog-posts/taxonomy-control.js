@@ -5,6 +5,7 @@ import {
 	i18n, isPro,
 } from 'stackable'
 import { AdvancedSelectControl } from '~stackable/components'
+import { find } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -92,7 +93,10 @@ class TaxonomyControl extends Component {
 					const noTaxonomyTypeSelected = ! this.props.taxonomyType && taxIndex === 0
 					if ( taxonomy === this.props.taxonomyType || noTaxonomyTypeSelected ) {
 						Object.keys( terms ).forEach( i => {
-							taxonomyOptions.push( terms[ i ].name )
+							taxonomyOptions.push( {
+								name: terms[ i ].name,
+								value: terms[ i ].term_id,
+							} )
 						} )
 					}
 				} )
@@ -136,7 +140,7 @@ class TaxonomyControl extends Component {
 							const taxonomyTypesAvailable = Object.keys( this.state.termList[ value ].taxonomies )
 							this.props.onChangePostType( value )
 							this.props.onChangeTaxonomyType( taxonomyTypesAvailable.length ? taxonomyTypesAvailable[ 0 ] : '' )
-							this.props.onChangeTaxonomy( '' )
+							this.props.onChangeTaxonomy( [] )
 						} }
 					/>
 				}
@@ -147,16 +151,23 @@ class TaxonomyControl extends Component {
 						value={ this.props.taxonomyType }
 						onChange={ value => {
 							this.props.onChangeTaxonomyType( value )
-							this.props.onChangeTaxonomy( '' )
+							this.props.onChangeTaxonomy( [] )
 						} }
 					/>
 				}
 				{ taxonomyTypeOptions.length > 0 &&
 				<FormTokenField
 					label={ taxonomyLabel }
-					suggestions={ taxonomyOptions }
-					value={ taxonomy }
-					onChange={ this.props.onChangeTaxonomy }
+					suggestions={ taxonomyOptions.map( value => value.name ) }
+					value={ taxonomy.map( value => ( find( taxonomyOptions, taxonomyEntry => taxonomyEntry.value === value ) || {} ).name || '' ) }
+					onChange={ value => {
+						const passedTaxonomyValues = value.map( selectedTaxonomy => {
+							const { value: entry } = find( ( taxonomyOptions || [] ), taxonomyEntry => taxonomyEntry.name === selectedTaxonomy )
+							return entry
+						} )
+
+						this.props.onChangeTaxonomy( passedTaxonomyValues )
+					} }
 				/>
 				}
 			</div>

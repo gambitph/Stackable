@@ -65,9 +65,8 @@ if ( ! function_exists( 'stackable_blog_posts_attributes' ) ) {
 				'default' => 'category',
 			),
 			'taxonomy' => array(
-				'type' => 'string',
-				'default' => '',
-			),
+				'type' => 'array',
+      ),
 			'postOffset' => array(
 				'type' => 'number',
 				'default' => '',
@@ -93,8 +92,8 @@ if ( ! function_exists( 'stackable_blog_posts_attributes' ) ) {
 				'default' => '',
 			),
 			'columnBackgroundMediaId' => array(
-				'type' => 'string',
-				'default' => '',
+        'type' => 'string',
+        'default' => '',
 			),
 			'columnBackgroundMediaUrl' => array(
 				'type' => 'string',
