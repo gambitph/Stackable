@@ -5,7 +5,7 @@ import {
 	i18n, isPro,
 } from 'stackable'
 import { AdvancedSelectControl } from '~stackable/components'
-import { find } from 'lodash'
+import { find, compact } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -172,11 +172,11 @@ class TaxonomyControl extends Component {
 						value={ taxonomy.map( value => ( find( taxonomyOptions, taxonomyEntry => taxonomyEntry.value === value ) || {} ).name || '' ) }
 						onChange={ value => {
 							const passedTaxonomyValues = value.map( selectedTaxonomy => {
-								const { value: entry } = find( ( taxonomyOptions || [] ), taxonomyEntry => taxonomyEntry.name === selectedTaxonomy )
+								const { value: entry } = find( ( taxonomyOptions || [] ), taxonomyEntry => taxonomyEntry.name === selectedTaxonomy ) || {}
 								return entry
 							} )
 
-							this.props.onChangeTaxonomy( passedTaxonomyValues )
+							this.props.onChangeTaxonomy( compact( passedTaxonomyValues ) )
 						} }
 					/>
 				</Fragment>
