@@ -150,7 +150,7 @@ class TaxonomyControl extends Component {
 						options={ taxonomyTypeOptions }
 						value={ this.props.taxonomyType }
 						onChange={ value => {
-							this.props.onChangeTaxonomyType( value )
+							this.props.onChangeTaxonomyType( '' )
 							this.props.onChangeTaxonomy( [] )
 						} }
 					/>
