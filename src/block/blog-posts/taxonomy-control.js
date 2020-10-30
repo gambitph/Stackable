@@ -10,7 +10,7 @@ import { AdvancedSelectControl } from '~stackable/components'
  * WordPress dependencies
  */
 import { Component } from '@wordpress/element'
-import { Spinner } from '@wordpress/components'
+import { Spinner, FormTokenField } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { addQueryArgs } from '@wordpress/url'
 import apiFetch from '@wordpress/api-fetch'
@@ -63,7 +63,7 @@ class TaxonomyControl extends Component {
 	render() {
 		const postTypeOptions = []
 		const taxonomyTypeOptions = []
-		const taxonomyOptions = [ { label: __( 'All', i18n ), value: '' } ]
+		const taxonomyOptions = []
 		let taxonomyLabel = ''
 
 		Object.keys( this.state.termList ).forEach( postType => {
@@ -92,15 +92,22 @@ class TaxonomyControl extends Component {
 					const noTaxonomyTypeSelected = ! this.props.taxonomyType && taxIndex === 0
 					if ( taxonomy === this.props.taxonomyType || noTaxonomyTypeSelected ) {
 						Object.keys( terms ).forEach( i => {
-							taxonomyOptions.push( {
-								label: terms[ i ].name,
-								value: terms[ i ].term_id,
-							} )
+							taxonomyOptions.push( terms[ i ].name )
 						} )
 					}
 				} )
 			}
 		} )
+
+		const taxonomy = ( () => {
+			if ( typeof this.props.taxonomy === 'string' ) {
+				if ( this.props.taxonomy === '' ) {
+					return taxonomyOptions
+				}
+				return [ this.props.taxonomy ]
+			}
+			return this.props.taxonomy
+		} )()
 
 		if ( taxonomyTypeOptions.length ) {
 			const toMatch = this.props.taxonomyType || taxonomyTypeOptions[ 0 ].value
@@ -145,12 +152,12 @@ class TaxonomyControl extends Component {
 					/>
 				}
 				{ taxonomyTypeOptions.length > 0 &&
-					<AdvancedSelectControl
-						label={ taxonomyLabel }
-						options={ taxonomyOptions }
-						value={ this.props.taxonomy }
-						onChange={ this.props.onChangeTaxonomy }
-					/>
+				<FormTokenField
+					label={ taxonomyLabel }
+					suggestions={ taxonomyOptions }
+					value={ taxonomy }
+					onChange={ this.props.onChangeTaxonomy }
+				/>
 				}
 			</div>
 		)

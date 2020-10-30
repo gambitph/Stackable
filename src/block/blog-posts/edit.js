@@ -46,7 +46,9 @@ import {
 import {
 	i18n, showProNotice,
 } from 'stackable'
-import { isUndefined, pickBy } from 'lodash'
+import {
+	isUndefined, pickBy, compact,
+} from 'lodash'
 import classnames from 'classnames'
 
 /**
@@ -124,7 +126,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 		order = 'desc',
 		postType = 'post',
 		taxonomyType = 'category',
-		taxonomy = '',
+		taxonomy = [],
 		imageSize = 'large',
 		categoryHighlighted = false,
 		categoryColor = '',
@@ -944,16 +946,24 @@ export default compose(
 			orderBy = 'date',
 			order = 'desc',
 			taxonomyType = '',
-			taxonomy = '',
+			taxonomy = [],
 		} = props.attributes
 		const { getEntityRecords } = select( 'core' )
+		const queryTaxonomyByType = () => {
+			// Handle array categories.
+			if ( typeof taxonomy === 'object' && Array.isArray( taxonomy ) ) {
+				return compact( taxonomy ).length ? compact( taxonomy ).map( value => ( { name: value } ) ) : undefined
+			}
+			// Handle stringified categories.
+			return [ { name: taxonomy } ]
+		}
 
 		const postQuery = pickBy( {
 			order,
 			orderby: orderBy,
 			per_page: numberOfItems, // eslint-disable-line camelcase
-			categories: taxonomyType === 'category' && taxonomy ? [ taxonomy ] : undefined,
-			tags: taxonomyType === 'post_tag' && taxonomy ? [ taxonomy ] : undefined,
+			categories: taxonomyType === 'category' && taxonomy ? queryTaxonomyByType() : undefined,
+			tags: taxonomyType === 'post_tag' && taxonomy ? queryTaxonomyByType() : undefined,
 			...applyFilters( 'stackable.blog-posts.postQuery', {}, props ),
 		}, value => ! isUndefined( value ) && value !== '' )
 
