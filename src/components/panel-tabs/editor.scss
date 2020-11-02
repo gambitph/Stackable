@@ -24,6 +24,7 @@
 		flex: 1;
 		margin: 0 !important;
 		cursor: pointer;
+		color: #1e1e1e;
 		svg {
 			margin: 5px;
 			height: 20px;
@@ -37,9 +38,9 @@
 			&:hover {
 				background: #f0f0f0;
 			}
-			&:not(:hover) {
-				opacity: 0.4;
-			}
+			// &:not(:hover) {
+			//	 opacity: 0.4;
+			// }
 		}
 	}
 }
