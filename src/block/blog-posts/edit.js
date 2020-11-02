@@ -389,15 +389,15 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 				] }
 				toggleAttributeName="showTitle"
 			>
+				<HeadingButtonsControl
+					value={ titleTag || 'h3' }
+					onChange={ titleTag => setAttributes( { titleTag } ) }
+				/>
 				<TypographyControlHelper
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 					htmlTag={ titleTag || 'h3' }
-				/>
-				<HeadingButtonsControl
-					value={ titleTag || 'h3' }
-					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
 				<ColorPaletteControl
 					value={ titleColor }

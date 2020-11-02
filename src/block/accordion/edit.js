@@ -186,15 +186,15 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 				id="title"
 				hasToggle={ false }
 			>
+				<HeadingButtonsControl
+					value={ titleTag || 'h4' }
+					onChange={ titleTag => setAttributes( { titleTag } ) }
+				/>
 				<TypographyControlHelper
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 					htmlTag={ titleTag || 'h4' }
-				/>
-				<HeadingButtonsControl
-					value={ titleTag || 'h4' }
-					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
 				<ColorPaletteControl
 					value={ titleColor }

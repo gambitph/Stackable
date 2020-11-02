@@ -296,15 +296,15 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 				] }
 				toggleAttributeName="showName"
 			>
+				<HeadingButtonsControl
+					value={ nameTag || 'h4' }
+					onChange={ nameTag => setAttributes( { nameTag } ) }
+				/>
 				<TypographyControlHelper
 					attrNameTemplate="name%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 					htmlTag={ nameTag || 'h4' }
-				/>
-				<HeadingButtonsControl
-					value={ nameTag || 'h4' }
-					onChange={ nameTag => setAttributes( { nameTag } ) }
 				/>
 				<ColorPaletteControl
 					value={ nameColor }

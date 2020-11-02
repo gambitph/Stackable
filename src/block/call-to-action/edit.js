@@ -161,16 +161,16 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 				] }
 				toggleAttributeName="showTitle"
 			>
+				<HeadingButtonsControl
+					value={ titleTag || 'h3' }
+					onChange={ titleTag => setAttributes( { titleTag } ) }
+				/>
 				<TypographyControlHelper
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 					className="ugb--help-tip-typography-family"
 					htmlTag={ titleTag || 'h3' }
-				/>
-				<HeadingButtonsControl
-					value={ titleTag || 'h3' }
-					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
 				<ColorPaletteControl
 					value={ titleColor }
