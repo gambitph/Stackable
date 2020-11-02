@@ -1,11 +1,11 @@
 # How to Use Your Font Awesome Pro Icons
 
-If you have an active **Font Awesome Pro subscription**, then you can easily start using your Pro icons inside your Stackable blocks.
+If you have an active [**Font Awesome Pro subscription**](https://fontawesome.com/referral?a=2c8dfc8669), then you can easily start using your Pro icons inside your Stackable blocks.
 
 {% hint style="warning" %}
 This feature is only available in Stackable Premium, 
 
-You will also need a [Font Awesome Standard subscription](https://fontawesome.com/plans) or higher to use Font Awesome Pro icons.
+You will also need a [Font Awesome Standard subscription](https://fontawesome.com/referral?a=2c8dfc8669) or higher to use Font Awesome Pro icons.
 {% endhint %}
 
 You will need to set up your Font Awesome Pro account first in order to use your Pro icons. You can set it up in 2 ways: 1\) with a Font Awesome Pro Kit code, or 2\) with the Font Awesome WordPress plugin.
