@@ -1,5 +1,10 @@
 .ugb-design-panel-item {
 	position: relative;
+	// Our inspector panels are now a bit gray, blend the white image
+	// background.
+	.ugb-design-panel-item__image {
+		mix-blend-mode: darken;
+	}
 }
 .ugb-design-panel-item__hover-image {
 	position: absolute;

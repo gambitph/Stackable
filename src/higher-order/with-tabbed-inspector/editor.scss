@@ -4,6 +4,8 @@
 	text-transform: uppercase;
 	font-size: 8px;
 	text-align: center;
-	color: #bfc8ce;
-	padding: 14px 0 0;
+	padding: 14px 0;
+	background: #fafafa;
+	border-top: 1px solid #f0f0f0;
+	color: var(--wp-admin-theme-color-darker-10, #00669b);
 }
