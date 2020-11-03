@@ -87,7 +87,7 @@ if ( ! function_exists( 'stackable_blog_posts_post_query' ) ) {
 				'numberposts' => $attributes['numberOfItems'],
 				'suppress_filters' => false,
 				'category' . $attributes['taxonomyFilterType'] => $attributes['postType'] === 'post' && $attributes['taxonomyType'] === 'category' ? explode( ',', $attributes['taxonomy'] ) : '',
-				'tag' . $attributes['taxonomyFilterType'] => $attributes['postType'] === 'post' && $attributes['taxonomyType'] === 'post_tag' ? explode( ',', $attributes['taxonomy'] ): '',
+				'tag' . $attributes['taxonomyFilterType'] => $attributes['postType'] === 'post' && $attributes['taxonomyType'] === 'post_tag' ? explode( ',', $attributes['taxonomy'] ) : '',
 			),
 			$attributes
 		);
