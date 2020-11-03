@@ -5,11 +5,20 @@
 	width: 100%;
 }
 
+.ugb-design-layout-selector {
+	max-width: 750px;
+	margin: auto !important;
+}
+
 .ugb-design-layout-selector__design-items {
 	column-count: auto;
 	column-width: 200px;
 	display: block;
 	width: 100%;
+}
+
+.ugb-design-layout-selector__item {
+	position: relative;
 }
 
 .ugb-design-layout-selector__label { 
@@ -26,11 +35,17 @@
 	cursor: pointer;
 	&:hover {
 				border-color: #888;
+				&.is-premium {
+								opacity: 0.4;
+								filter: blur(3px);
+								cursor: default !important;
+				}
 	}
 
 	&.active {
 				border-color: #888;
 	}
+
 }
 
 .ugb-design-layout-selector__design-library {

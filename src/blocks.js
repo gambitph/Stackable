@@ -20,13 +20,15 @@ import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
- */
-import {
+ */ import {
 	getCategories,
 	setCategories,
 	registerBlockCollection,
 } from '@wordpress/blocks'
 import { __ } from '@wordpress/i18n'
+import { Button } from '@wordpress/components'
+import { select } from '@wordpress/data'
+import { doAction } from '@wordpress/hooks'
 
 // Register our block collection or category (WP <= 5.3).
 if ( supportsBlockCollections() ) {
@@ -45,12 +47,30 @@ if ( supportsBlockCollections() ) {
 	] )
 }
 
+const Description = ( { description } ) => (
+	<div>
+		<div className="ugb-block-description">{ description }</div>
+		<div>
+			<Button
+				onClick={ () => {
+					doAction( `stackable.design-layout-selector.${ select( 'core/block-editor' ).getSelectedBlockClientId() }`, true )
+				} }
+				isSecondary
+				isLarge
+			>
+				{ __( 'Switch design/layout', i18n ) }
+			</Button>
+		</div>
+	</div>
+)
+
 // Import all index.js and register all the blocks found (if name & settings are exported by the script)
 const importAllAndRegister = r => {
 	r.keys().forEach( key => {
 		const { name, settings } = r( key )
 		try {
-			return name && settings && registerBlock( name, settings )
+			const description = name && settings && <Description description={ settings.description } />
+			return name && settings && registerBlock( name, { ...settings, description } )
 		} catch ( error ) {
 			console.error( `Could not register ${ name } block` ) // eslint-disable-line
 		}
