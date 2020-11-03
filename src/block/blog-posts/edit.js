@@ -955,9 +955,7 @@ export default compose(
 		const { getEntityRecords } = select( 'core' )
 
 		const categoryQuery = {
-			categories: ( taxonomyFilterType === '__in' && taxonomyType === 'category' && taxonomy ) ?
-				taxonomy :
-				undefined,
+			categories: taxonomyFilterType === '__in' && taxonomyType === 'category' && taxonomy ? taxonomy : undefined,
 			categories_exclude: taxonomyFilterType === '__not_in' && taxonomyType === 'category' && taxonomy ? taxonomy : undefined, // eslint-disable-line camelcase
 		}
 
