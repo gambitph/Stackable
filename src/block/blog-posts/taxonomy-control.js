@@ -151,7 +151,7 @@ class TaxonomyControl extends Component {
 					<AdvancedSelectControl
 						label={ __( 'Taxonomy Filter Type', i18n ) }
 						options={ [
-							{ label: 'Included In', value: '__in' },
+							{ label: __( 'Included In', i18n ), value: '__in' },
 							{ label: 'Not In', value: '__not_in' },
 						] }
 						value={ this.props.taxonomyFilterType }
