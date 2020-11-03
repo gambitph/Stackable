@@ -104,6 +104,13 @@ class TaxonomyControl extends Component {
 			}
 		} )
 
+		const taxonomySuggestionOptions = taxonomyOptions.map( value => value.name )
+		// Parse the taxonomy value to array as passed prop value.
+		const taxonomyValue = taxonomy !== '' ? taxonomy.split( ',' ).map( value => {
+			const { name } = find( taxonomyOptions, taxonomyEntry => taxonomyEntry.value === parseInt( value ) ) || {}
+			return name
+		} ) : undefined
+
 		if ( taxonomyTypeOptions.length ) {
 			const toMatch = this.props.taxonomyType || taxonomyTypeOptions[ 0 ].value
 			const matchedOption = taxonomyTypeOptions.filter( ( { value } ) => toMatch === value )
@@ -159,8 +166,8 @@ class TaxonomyControl extends Component {
 					/>
 					<FormTokenField
 						label={ taxonomyLabel }
-						suggestions={ taxonomyOptions.map( value => value.name ) }
-						value={ taxonomy !== '' ? taxonomy.split( ',' ).map( value => ( find( taxonomyOptions, taxonomyEntry => taxonomyEntry.value === parseInt( value ) ) || {} ).name || '' ) : undefined }
+						suggestions={ taxonomySuggestionOptions }
+						value={ taxonomyValue }
 						onChange={ value => {
 							const passedTaxonomyValues = value.map( selectedTaxonomy => {
 								const { value: entry } = find( ( taxonomyOptions || [] ), taxonomyEntry => taxonomyEntry.name === selectedTaxonomy ) || {}
