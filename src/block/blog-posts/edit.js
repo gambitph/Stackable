@@ -960,9 +960,7 @@ export default compose(
 		}
 
 		const tagQuery = {
-			tags: ( taxonomyFilterType === '__in' && taxonomyType === 'post_tag' && taxonomy ) ?
-				taxonomy :
-				undefined,
+			tags: taxonomyFilterType === '__in' && taxonomyType === 'post_tag' && taxonomy ? taxonomy : undefined,
 			tags_exclude: taxonomyFilterType === '__not_in' && taxonomyType === 'post_tag' && taxonomy ? taxonomy : undefined, // eslint-disable-line camelcase
 		}
 
