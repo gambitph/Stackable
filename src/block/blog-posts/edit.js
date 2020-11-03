@@ -126,7 +126,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 		order = 'desc',
 		postType = 'post',
 		taxonomyType = 'category',
-		taxonomy = [],
+		taxonomy = '',
 		taxonomyFilterType = '__in',
 		imageSize = 'large',
 		categoryHighlighted = false,
@@ -949,7 +949,7 @@ export default compose(
 			orderBy = 'date',
 			order = 'desc',
 			taxonomyType = '',
-			taxonomy = [],
+			taxonomy = '',
 			taxonomyFilterType = '__in',
 		} = props.attributes
 		const { getEntityRecords } = select( 'core' )

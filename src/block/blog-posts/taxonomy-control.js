@@ -131,7 +131,7 @@ class TaxonomyControl extends Component {
 							const taxonomyTypesAvailable = Object.keys( this.state.termList[ value ].taxonomies )
 							this.props.onChangePostType( value )
 							this.props.onChangeTaxonomyType( taxonomyTypesAvailable.length ? taxonomyTypesAvailable[ 0 ] : '' )
-							this.props.onChangeTaxonomy( [] )
+							this.props.onChangeTaxonomy( '' )
 						} }
 					/>
 				}
@@ -142,7 +142,7 @@ class TaxonomyControl extends Component {
 						value={ this.props.taxonomyType }
 						onChange={ value => {
 							this.props.onChangeTaxonomyType( value )
-							this.props.onChangeTaxonomy( [] )
+							this.props.onChangeTaxonomy( '' )
 						} }
 					/>
 				}
