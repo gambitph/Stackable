@@ -111,6 +111,7 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 			'cdnUrl' => STACKABLE_CLOUDFRONT_URL,
 			'displayWelcomeVideo' => function_exists( 'stackable_display_welcome_video' ) ? stackable_display_welcome_video() : false,
 			'currentTheme' => esc_html( get_template() ),
+			'settingsUrl' => admin_url( 'options-general.php?page=stackable' ),
 
 			// Fonts.
 			'locale' => get_locale(),

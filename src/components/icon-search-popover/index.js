@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import SVGDrop from './images/drop.svg'
+import { searchFontAwesomeIconName } from './search'
 
 /**
  * WordPress dependencies
@@ -17,13 +18,13 @@ import {
 /**
  * External dependencies
  */
-import { i18n } from 'stackable'
+import {
+	i18n, isPro, settingsUrl,
+} from 'stackable'
 import { FontAwesomeIcon } from '~stackable/components'
-
-import { searchFontAwesomeIconName } from './search'
 import { faGetSVGIcon } from '~stackable/util'
-
 import { FileDrop } from 'react-file-drop'
+import classnames from 'classnames'
 
 let searchTimeout = null
 let tempMediaUpload = null
@@ -133,6 +134,14 @@ const IconSearchPopover = props => {
 		input.click()
 	}
 
+	const labelContainerClasses = classnames( [
+		'ugb-icon-popover__label-container',
+	], {
+		'ugb-icon--has-settings': isPro,
+		'ugb-icon--has-upload': allowSVGUpload,
+		'ugb-icon--has-reset': props.allowReset,
+	} )
+
 	return (
 		<Popover
 			className="ugb-icon-popover"
@@ -170,19 +179,32 @@ const IconSearchPopover = props => {
 						fr.readAsText( files[ 0 ] )
 					} }
 				>
-					<div className="ugb-icon-popover__label-container">
+					<div className={ labelContainerClasses }>
 						<TextControl
 							className="ugb-icon-popover__input"
 							value={ value }
 							onChange={ setValue }
 							placeholder={ __( 'Type to search icon', i18n ) }
 						/>
+						{ isPro &&
+							<Button
+								className="ugb-icon-popover__settings-button"
+								icon="admin-generic"
+								href={ settingsUrl + '#icon-settings' }
+								target="_settings"
+								iconSize="16"
+								label={ __( 'Icon Settings', i18n ) }
+								showTooltip={ true }
+								isSmall
+								isDefault
+							/>
+						}
 						{ allowSVGUpload &&
 							<Button
 								onClick={ uploadSvg }
 								isSmall
-								isDefault
-								className="components-range-control__reset"
+								isPrimary
+								className="components-range-control__upload"
 							>
 								{ __( 'Upload SVG', i18n ) }
 							</Button>
@@ -194,18 +216,13 @@ const IconSearchPopover = props => {
 									props.onClose()
 								} }
 								isSmall
-								isTertiary
+								isDefault
 								className="components-range-control__reset"
 							>
-								{ __( 'Clear', i18n ) }
+								{ __( 'Clear icon', i18n ) }
 							</Button>
 						}
 					</div>
-					{ allowSVGUpload &&
-						<div className="ugb-icon-popover__drop-area">
-							{ __( 'You can also drop your own SVG icon here', i18n ) }
-						</div>
-					}
 					<div className="ugb-icon-popover__iconlist">
 						{ isBusy && <Spinner /> }
 						{ ! isBusy && results.map( ( { prefix, iconName }, i ) => {
