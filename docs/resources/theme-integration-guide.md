@@ -29,5 +29,54 @@ The inner widths are assigned different class names and you can target them via 
 }
 ```
 
+## Adding More Font Picker Entries
 
+You can modify the options of the Stackable font picker control using the JavaScript filter below.
+
+```javascript
+wp.domReady( () => {
+	wp.hooks.addFilter( 'stackable.font-family-control.options', 'my-theme', options => {
+	  // Add our theme font options
+		if ( ! options.some( option => option.id === 'theme-font' ) ) {
+			options.unshift(
+				{
+					id: 'theme-font',
+					title: __( 'Theme Fonts', i18n ),
+					options: [
+						{ label: __( 'My Value', i18n ), value: 'My CSS font family' },
+					],
+				}
+			)
+		}
+		return options
+	} )
+} )
+```
+
+The `value` parameter will be used in the CSS generated to style parts of Stackable blocks:
+
+```css
+font-family: "My CSS font family", sans-serif;
+```
+
+## Disabling Google Font Enqueuing
+
+Stackable automatically enqueues all detected Google Fonts in our blocks. If you want to opt to disable Google Font enqueuing, you can use this PHP snippet.
+
+```php
+// Disable all Google Font enqueuing
+add_filter( 'stackable_enqueue_font', '__return_false' );
+```
+
+You can also choose to disable enqueuing only for specific fonts.
+
+```php
+// Disable Google Font enqueuing for these values only
+add_filter( 'stackable_enqueue_font', function( $do_enqueue, $font_name ) {
+	if ( $font_name === 'Roboto' ) {
+		return false;
+	}
+	return $do_enqueue;
+}, 10, 2 );
+```
 
