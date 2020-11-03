@@ -54,7 +54,6 @@ import { addFilter, applyFilters } from '@wordpress/hooks'
 import { compose, withState } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { withSelect } from '@wordpress/data'
-import withLayoutDesignSelector from '~stackable/higher-order/with-design-layout-selector'
 
 addFilter( 'stackable.accordion.edit.inspector.layout.before', 'stackable/accordion', ( output, props ) => {
 	const { setAttributes } = props
@@ -415,7 +414,6 @@ const edit = props => {
 }
 
 export default compose(
-	withLayoutDesignSelector,
 	withUniqueClass,
 	withSetAttributeHook,
 	withGoogleFont,

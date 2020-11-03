@@ -20,7 +20,8 @@ import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
- */ import {
+ */
+import {
 	getCategories,
 	setCategories,
 	registerBlockCollection,
