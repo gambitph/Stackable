@@ -46,7 +46,9 @@ import {
 import {
 	i18n, showProNotice,
 } from 'stackable'
-import { isUndefined, pickBy } from 'lodash'
+import {
+	isUndefined, pickBy,
+} from 'lodash'
 import classnames from 'classnames'
 
 /**
@@ -125,6 +127,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 		postType = 'post',
 		taxonomyType = 'category',
 		taxonomy = '',
+		taxonomyFilterType = '__in',
 		imageSize = 'large',
 		categoryHighlighted = false,
 		categoryColor = '',
@@ -243,6 +246,8 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					onChangeTaxonomyType={ taxonomyType => setAttributes( { taxonomyType } ) }
 					taxonomy={ taxonomy }
 					onChangeTaxonomy={ taxonomy => setAttributes( { taxonomy } ) }
+					taxonomyFilterType={ taxonomyFilterType }
+					onChangeTaxonomyFilterType={ taxonomyFilterType => setAttributes( { taxonomyFilterType } ) }
 				/>
 				{ applyFilters( 'stackable.blog-posts.edit.inspector.style.posts.after', null, props ) }
 				{ showProNotice && <ProControlButton type="postsBlock" /> }
@@ -945,15 +950,26 @@ export default compose(
 			order = 'desc',
 			taxonomyType = '',
 			taxonomy = '',
+			taxonomyFilterType = '__in',
 		} = props.attributes
 		const { getEntityRecords } = select( 'core' )
+
+		const categoryQuery = {
+			categories: taxonomyFilterType === '__in' && taxonomyType === 'category' && taxonomy ? taxonomy : undefined,
+			categories_exclude: taxonomyFilterType === '__not_in' && taxonomyType === 'category' && taxonomy ? taxonomy : undefined, // eslint-disable-line camelcase
+		}
+
+		const tagQuery = {
+			tags: taxonomyFilterType === '__in' && taxonomyType === 'post_tag' && taxonomy ? taxonomy : undefined,
+			tags_exclude: taxonomyFilterType === '__not_in' && taxonomyType === 'post_tag' && taxonomy ? taxonomy : undefined, // eslint-disable-line camelcase
+		}
 
 		const postQuery = pickBy( {
 			order,
 			orderby: orderBy,
 			per_page: numberOfItems, // eslint-disable-line camelcase
-			categories: taxonomyType === 'category' && taxonomy ? [ taxonomy ] : undefined,
-			tags: taxonomyType === 'post_tag' && taxonomy ? [ taxonomy ] : undefined,
+			...categoryQuery,
+			...tagQuery,
 			...applyFilters( 'stackable.blog-posts.postQuery', {}, props ),
 		}, value => ! isUndefined( value ) && value !== '' )
 
