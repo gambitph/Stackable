@@ -953,27 +953,19 @@ export default compose(
 			taxonomyFilterType = '__in',
 		} = props.attributes
 		const { getEntityRecords } = select( 'core' )
-		const queryTaxonomyByType = () => {
-			// Handle array categories.
-			if ( typeof taxonomy === 'object' && Array.isArray( taxonomy ) ) {
-				return taxonomy.length ? taxonomy : undefined
-			}
-			// Handle stringified categories.
-			return [ taxonomy ]
-		}
 
 		const categoryQuery = {
 			categories: ( taxonomyFilterType === '__in' && taxonomyType === 'category' && taxonomy ) ?
-				queryTaxonomyByType() :
+				taxonomy :
 				undefined,
-			categories_exclude: taxonomyFilterType === '__not_in' && taxonomyType === 'category' && taxonomy ? queryTaxonomyByType() : undefined, // eslint-disable-line camelcase
+			categories_exclude: taxonomyFilterType === '__not_in' && taxonomyType === 'category' && taxonomy ? taxonomy : undefined, // eslint-disable-line camelcase
 		}
 
 		const tagQuery = {
 			tags: ( taxonomyFilterType === '__in' && taxonomyType === 'post_tag' && taxonomy ) ?
-				queryTaxonomyByType() :
+				taxonomy :
 				undefined,
-			tags_exclude: taxonomyFilterType === '__not_in' && taxonomyType === 'post_tag' && taxonomy ? queryTaxonomyByType() : undefined, // eslint-disable-line camelcase
+			tags_exclude: taxonomyFilterType === '__not_in' && taxonomyType === 'post_tag' && taxonomy ? taxonomy : undefined, // eslint-disable-line camelcase
 		}
 
 		const postQuery = pickBy( {

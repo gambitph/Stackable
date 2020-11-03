@@ -66,6 +66,7 @@ class TaxonomyControl extends Component {
 		const taxonomyTypeOptions = []
 		const taxonomyOptions = []
 		let taxonomyLabel = ''
+		const { taxonomy } = this.props
 
 		Object.keys( this.state.termList ).forEach( postType => {
 			const {
@@ -102,16 +103,6 @@ class TaxonomyControl extends Component {
 				} )
 			}
 		} )
-
-		const taxonomy = ( () => {
-			if ( typeof this.props.taxonomy === 'string' ) {
-				if ( this.props.taxonomy === '' ) {
-					return taxonomyOptions
-				}
-				return [ this.props.taxonomy ]
-			}
-			return this.props.taxonomy
-		} )()
 
 		if ( taxonomyTypeOptions.length ) {
 			const toMatch = this.props.taxonomyType || taxonomyTypeOptions[ 0 ].value
@@ -169,14 +160,14 @@ class TaxonomyControl extends Component {
 					<FormTokenField
 						label={ taxonomyLabel }
 						suggestions={ taxonomyOptions.map( value => value.name ) }
-						value={ taxonomy.map( value => ( find( taxonomyOptions, taxonomyEntry => taxonomyEntry.value === value ) || {} ).name || '' ) }
+						value={ taxonomy !== '' ? taxonomy.split( ',' ).map( value => ( find( taxonomyOptions, taxonomyEntry => taxonomyEntry.value === parseInt( value ) ) || {} ).name || '' ) : undefined }
 						onChange={ value => {
 							const passedTaxonomyValues = value.map( selectedTaxonomy => {
 								const { value: entry } = find( ( taxonomyOptions || [] ), taxonomyEntry => taxonomyEntry.name === selectedTaxonomy ) || {}
 								return entry
 							} )
 
-							this.props.onChangeTaxonomy( compact( passedTaxonomyValues ) )
+							this.props.onChangeTaxonomy( compact( passedTaxonomyValues ).join( ',' ) )
 						} }
 					/>
 				</Fragment>

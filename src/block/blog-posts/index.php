@@ -47,7 +47,7 @@ if ( ! function_exists( 'stackable_blog_posts_block_default_attributes' ) ) {
 			'orderBy' => 'date',
 			'order' => 'desc',
 			'taxonomyType' => 'category',
-			'taxonomy' => [],
+			'taxonomy' => '',
 			'taxonomyFilterType' => '__in',
 			'postOffset' => 0,
 			'postExclude' => '',

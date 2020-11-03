@@ -80,8 +80,8 @@ const schema = {
 		default: 'category',
 	},
 	taxonomy: {
-		type: 'array',
-		default: [],
+		type: 'string',
+		default: '',
 	},
 	taxonomyFilterType: {
 		type: 'string',
