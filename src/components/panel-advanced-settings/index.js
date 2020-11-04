@@ -127,7 +127,8 @@ class PanelAdvancedSettings extends Component {
 										ev.preventDefault()
 										const checked = this.props.checked
 										if ( checked && this.state.opened ) {
-											this.onToggle()
+											// Comment this out since it jumps the inspector.
+											// this.onToggle()
 										} else if ( ! checked && ! this.state.opened ) {
 											this.onToggle()
 										}

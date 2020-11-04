@@ -73,13 +73,13 @@ const addInspectorPanel = ( output, props ) => {
 				toggleAttributeName="showBlockBackground"
 				className="ugb--help-tip-background-on-off"
 			>
-				<ControlSeparator />
 				<ToggleControl
 					label={ __( 'No Paddings', i18n ) }
 					checked={ noPaddings }
 					onChange={ noPaddings => setAttributes( { noPaddings } ) }
 					className="ugb--help-tip-no-padding"
 				/>
+				<ControlSeparator />
 				<BackgroundControlsHelper
 					attrNameTemplate="blockBackground%s"
 					setAttributes={ setAttributes }

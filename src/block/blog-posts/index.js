@@ -83,6 +83,10 @@ const schema = {
 		type: 'string',
 		default: '',
 	},
+	taxonomyFilterType: {
+		type: 'string',
+		default: '__in',
+	},
 	postOffset: {
 		type: 'number',
 		default: '',

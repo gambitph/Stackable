@@ -10,6 +10,7 @@
 .components-stackable-highlight__popover .components-popover__content {
 	overflow: hidden;
 	padding: 16px;
+	width: 280px;
 }
 .ugb-component-inline-color-popover {
 	padding: 16px;
@@ -26,4 +27,7 @@
 	right: auto;
 	top: 50%;
 	margin: 9px 0 0;
+}
+.ugb-advanced-toolbar-control .components-base-control__field {
+	margin-bottom: 24px;
 }

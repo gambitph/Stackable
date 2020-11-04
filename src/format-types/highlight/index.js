@@ -163,31 +163,11 @@ const HighlightButton = props => {
 					useRef={ popoverEl }
 				>
 					<div className="components-stackable-highlight__inner">
-						<div className="ugb-highlight-format__color-picker">
-							<ColorPaletteControl
-								label={ __( 'Text Color', i18n ) }
-								value={ textColor }
-								onChange={ textColor => {
-									onChange( createApplyFormat( value, colorType, textColor, highlightColor ), { withoutHistory: true } )
-								} }
-							/>
-						</div>
-						{ colorType !== '' &&
-							<div className="ugb-highlight-format__color-picker">
-								<ColorPaletteControl
-									label={ __( 'Highlight Color', i18n ) }
-									value={ highlightColor }
-									onChange={ highlightColor => {
-										onChange( createApplyFormat( value, colorType, textColor, highlightColor ), { withoutHistory: true } )
-									} }
-								/>
-							</div>
-						}
 						<AdvancedToolbarControl
 							controls={ [
 								{
 									value: '',
-									title: __( 'None', i18n ),
+									title: __( 'Normal', i18n ),
 								},
 								{
 									value: 'highlight',
@@ -211,6 +191,26 @@ const HighlightButton = props => {
 							} }
 							isSmall
 						/>
+						<div className="ugb-highlight-format__color-picker">
+							<ColorPaletteControl
+								label={ __( 'Text Color', i18n ) }
+								value={ textColor }
+								onChange={ textColor => {
+									onChange( createApplyFormat( value, colorType, textColor, highlightColor ), { withoutHistory: true } )
+								} }
+							/>
+						</div>
+						{ colorType !== '' &&
+							<div className="ugb-highlight-format__color-picker">
+								<ColorPaletteControl
+									label={ __( 'Highlight Color', i18n ) }
+									value={ highlightColor }
+									onChange={ highlightColor => {
+										onChange( createApplyFormat( value, colorType, textColor, highlightColor ), { withoutHistory: true } )
+									} }
+								/>
+							</div>
+						}
 					</div>
 				</Popover>
 				}

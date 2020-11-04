@@ -1,13 +1,13 @@
 .ugb-panel-tabs {
 	position: sticky;
 	top: -1px;
-	z-index: 2;
+	z-index: 3;
 	.ugb-panel-tabs__wrapper {
 		display: flex !important;
 		flex-wrap: nowrap;
 		&,
 		> button {
-			transition: all 0.3s ease-in-out;
+			transition: all 0.1s cubic-bezier(0.2, 0.6, 0.4, 1);
 			background: #fff;
 			box-shadow: none;
 			border: 0;
@@ -23,16 +23,24 @@
 		padding: 0 !important;
 		flex: 1;
 		margin: 0 !important;
+		cursor: pointer;
+		color: #1e1e1e;
+		border: 0 !important;
 		svg {
 			margin: 5px;
 			height: 20px;
-			color: #555d66;
 		}
 		&.is-active {
-			background: #fafafa;
-			background: linear-gradient(to bottom, #fafafa, #fff 70%);
 			border-bottom: 0;
-			box-shadow: inset 0 -3px #0085ba !important;
+			// Black outline
+			box-shadow: inset 0 0 0 1px #1e1e1e;
+		}
+		&:hover {
+			background: #f0f0f0;
+		}
+		&:focus {
+			box-shadow: inset 0 0 0 1.5px #007cba;
+			box-shadow: inset 0 0 0 1.5px var(--wp-admin-theme-color, #007cba);
 		}
 	}
 }
@@ -40,13 +48,6 @@
 // Panels can become hard to decipher, separate them a bit to make things easier to see.
 .ugb-panel-tabs {
 	border-bottom: 1px solid #e2e4e7 !important;
-}
-[data-ugb-tab] > * {
-	.components-panel__body:not(.ugb-panel-tabs) {
-		box-shadow: 0 -12px 0 #f0f3f5;
-		margin-top: 12px;
-		border-bottom: 1px solid #e2e4e7;
-	}
 }
 .edit-post-sidebar.ugb--has-panel-tabs {
 	background-color: #f0f3f5;
@@ -59,6 +60,36 @@
 // when other panels further below are hidden.
 [data-ugb-tab] > * {
 	padding-bottom: 0 !important;
+}
+
+.ugb-inspector-panel-controls {
+	.components-panel__body {
+		.components-panel__body-title {
+			&:not(:hover) {
+				background: #fff;
+			}
+			// If the first control is a toggle, it will display higher and will
+			// not look nice. Make it lower a bit.
+			+ .components-toggle-control {
+				margin-top: 24px !important;
+			}
+		}
+		&.is-opened .components-panel__body-title {
+			margin-bottom: 12px;
+			border-bottom: 1px solid #e1e1e1;
+			// Sticky.
+			position: sticky;
+			top: 81px;
+			z-index: 2;
+		}
+	}
+	.components-panel__body {
+		background: #fafafa;
+		// Our tabs already have a bottom border. This will thicken it.
+		&:first-child {
+			border-top: 0 !important;
+		}
+	}
 }
 
 [data-ugb-tab="layout"] {

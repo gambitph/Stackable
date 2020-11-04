@@ -92,15 +92,15 @@ const addInspectorPanel = ( output, props ) => {
 				] }
 				toggleAttributeName="showBlockTitle"
 			>
+				<HeadingButtonsControl
+					value={ blockTitleTag || 'h2' }
+					onChange={ blockTitleTag => setAttributes( { blockTitleTag } ) }
+				/>
 				<TypographyControlHelper
 					attrNameTemplate="blockTitle%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 					htmlTag={ blockTitleTag || 'h2' }
-				/>
-				<HeadingButtonsControl
-					value={ blockTitleTag || 'h2' }
-					onChange={ blockTitleTag => setAttributes( { blockTitleTag } ) }
 				/>
 				<ColorPaletteControl
 					value={ blockTitleColor }

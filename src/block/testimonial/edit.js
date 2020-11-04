@@ -283,16 +283,16 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 				] }
 				toggleAttributeName="showName"
 			>
+				<HeadingButtonsControl
+					label={ sprintf( _x( '%s HTML Tag', 'component' ), __( 'Name', i18n ) ) }
+					value={ nameTag || 'h4' }
+					onChange={ nameTag => setAttributes( { nameTag } ) }
+				/>
 				<TypographyControlHelper
 					attrNameTemplate="name%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 					htmlTag={ nameTag || 'h4' }
-				/>
-				<HeadingButtonsControl
-					label={ sprintf( _x( '%s HTML Tag', 'component' ), __( 'Name', i18n ) ) }
-					value={ nameTag || 'h4' }
-					onChange={ nameTag => setAttributes( { nameTag } ) }
 				/>
 				<ColorPaletteControl
 					value={ nameColor }

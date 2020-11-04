@@ -16,6 +16,7 @@ import Autosuggest from 'react-autosuggest'
 import { BaseControl } from '@wordpress/components'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
+import { kebabCase } from 'lodash'
 
 // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
 const escapeRegexCharacters = str => str.replace( /[.*+?^${}()|[\]\\]/g, '\\$&' )
@@ -193,7 +194,11 @@ class AdvancedAutosuggestControl extends Component {
 						onSuggestionsClearRequested={ this.onSuggestionsClearRequested }
 						getSuggestionValue={ getSuggestionValue }
 						renderSuggestion={ suggestion => {
-							return <div className="ugb-autosuggest-option" data-value={ suggestion.value }>
+							return <div
+								className="ugb-autosuggest-option"
+								data-value={ suggestion.value }
+								id={ `ugb-autosuggest-option--${ suggestion.id || kebabCase( suggestion.value ) }` }
+							>
 								{ this.props.renderOption ? this.props.renderOption( suggestion ) : suggestion.label }
 							</div>
 						} }
