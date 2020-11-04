@@ -28,7 +28,7 @@ import {
 } from '@wordpress/blocks'
 import { __ } from '@wordpress/i18n'
 import { Button } from '@wordpress/components'
-import { select } from '@wordpress/data'
+import { useSelect } from '@wordpress/data'
 import { doAction, hasAction } from '@wordpress/hooks'
 
 // Register our block collection or category (WP <= 5.3).
@@ -49,24 +49,28 @@ if ( supportsBlockCollections() ) {
 }
 
 // Create a custom description component.
-const Description = ( { description } ) => (
-	<div>
-		<div className="ugb-block-description">{ description }</div>
-		{ hasAction( `stackable.design-layout-selector.${ select( 'core/block-editor' ).getSelectedBlockClientId() }` ) && (
-			<div>
-				<Button
-					onClick={ () => {
-						doAction( `stackable.design-layout-selector.${ select( 'core/block-editor' ).getSelectedBlockClientId() }`, true )
-					} }
-					isSecondary
-					isLarge
-				>
-					{ __( 'Switch design/layout', i18n ) }
-				</Button>
-			</div>
-		) }
-	</div>
-)
+const Description = ( { description } ) => {
+	const selectedBlockId = useSelect( select => select( 'core/block-editor' ).getSelectedBlockClientId() )
+	const block = useSelect( select => select( 'core/block-editor' ).getBlocksByClientId( selectedBlockId ) )
+
+	return (
+		<div>
+			<div className="ugb-block-description">{ description }</div>
+			{ block && hasAction( `stackable.design-layout-selector.${ selectedBlockId }` ) && (
+				<div>
+					<Button
+						onClick={ () => {
+							doAction( `stackable.design-layout-selector.${ selectedBlockId }`, true )
+						} }
+						isSecondary
+						isLarge
+					>
+						{ __( 'Switch design/layout', i18n ) }
+					</Button>
+				</div>
+			) }
+		</div> )
+}
 
 // Import all index.js and register all the blocks found (if name & settings are exported by the script)
 const importAllAndRegister = r => {
