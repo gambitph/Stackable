@@ -2,7 +2,9 @@
  * External dependencies
  */
 import { BlockContainer, Separator } from '~stackable/components'
-import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+import {
+	withBlockStyles, withDesignLayoutSelector, withUniqueClass,
+} from '~stackable/higher-order'
 
 /**
  * Internal dependencies
@@ -56,6 +58,7 @@ const save = props => {
 }
 
 export default compose(
+	withDesignLayoutSelector.Save,
 	withUniqueClass,
 	withBlockStyles( createStyles ),
 )( save )

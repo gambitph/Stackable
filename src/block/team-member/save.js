@@ -13,7 +13,9 @@ import {
 	SocialButtonEditHelper,
 	DivBackground,
 } from '~stackable/components'
-import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+import {
+	withBlockStyles, withDesignLayoutSelector, withUniqueClass,
+} from '~stackable/higher-order'
 import { SOCIAL_SITES } from '~stackable/util'
 import classnames from 'classnames'
 import { range, upperFirst } from 'lodash'
@@ -150,6 +152,7 @@ const save = props => {
 }
 
 export default compose(
+	withDesignLayoutSelector.Save,
 	withUniqueClass,
 	withBlockStyles( createStyles ),
 )( save )

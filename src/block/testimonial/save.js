@@ -12,7 +12,9 @@ import {
 	Image,
 	DivBackground,
 } from '~stackable/components'
-import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+import {
+	withBlockStyles, withDesignLayoutSelector, withUniqueClass,
+} from '~stackable/higher-order'
 import classnames from 'classnames'
 import { range } from 'lodash'
 import striptags from 'striptags'
@@ -130,6 +132,7 @@ const save = props => {
 }
 
 export default compose(
+	withDesignLayoutSelector.Save,
 	withUniqueClass,
 	withBlockStyles( createStyles ),
 )( save )

@@ -1,7 +1,9 @@
 /**
  * External dependencies
  */
-import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+import {
+	withBlockStyles, withDesignLayoutSelector, withUniqueClass,
+} from '~stackable/higher-order'
 import { BlockContainer, DivBackground } from '~stackable/components'
 
 /**
@@ -101,6 +103,7 @@ const save = props => {
 }
 
 export default compose(
+	withDesignLayoutSelector.Save,
 	withUniqueClass,
 	withBlockStyles( createStyles ),
 )( save )

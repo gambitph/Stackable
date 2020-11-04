@@ -2,7 +2,9 @@
  * External dependencies
  */
 import classnames from 'classnames'
-import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+import {
+	withBlockStyles, withDesignLayoutSelector, withUniqueClass,
+} from '~stackable/higher-order'
 import {
 	SvgIconHelper,
 	BlockContainer,
@@ -143,6 +145,7 @@ const save = props => {
 }
 
 export default compose(
+	withDesignLayoutSelector.Save,
 	withUniqueClass,
 	withBlockStyles( createStyles ),
 )( save )

@@ -4,7 +4,9 @@
 import {
 	BlockContainer, ButtonEditHelper, DivBackground,
 } from '~stackable/components'
-import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+import {
+	withBlockStyles, withDesignLayoutSelector, withUniqueClass,
+} from '~stackable/higher-order'
 import classnames from 'classnames'
 
 /**
@@ -120,6 +122,7 @@ const save = props => {
 }
 
 export default compose(
+	withDesignLayoutSelector.Save,
 	withUniqueClass,
 	withBlockStyles( createStyles ),
 )( save )

@@ -7,6 +7,7 @@ import {
 import { applyBlockDesign } from '~stackable/util'
 import { getDesigns, getDesign } from '~stackable/design-library'
 import classnames from 'classnames'
+import { ModalDesignLibrary } from '~stackable/components'
 
 /**
  * Wordpress dependencies
@@ -48,7 +49,7 @@ const LayoutDesignSelectorItem = ( {
 }
 
 // List of default layout attributes which will be applied when applying a design.
-const defaultLayouts = {
+export const defaultLayouts = {
 	[ `accordion` ]: 'basic',
 	[ `blockquote` ]: 'plain',
 	[ `blog-posts` ]: 'basic',
@@ -79,6 +80,8 @@ const DesignLayoutSelector = props => {
 	} = props
 	const [ designs, setDesigns ] = useState( [] )
 	const [ isBusy, setIsBusy ] = useState( true )
+	const [ search, setSearch ] = useState( '' )
+	const [ isModalOpen, setIsModalOpen ] = useState( false )
 	const selectedLayout = props.attributes.design
 
 	useEffect( () => {
@@ -94,90 +97,107 @@ const DesignLayoutSelector = props => {
 	const label = <Fragment><Icon icon="admin-settings" />{ __( 'Layout Options', i18n ) }</Fragment>
 	const classNames = classnames( 'ugb-design-layout-selector', { 'is-busy': isBusy } )
 
-	return (
-		<Placeholder
-			className={ classNames }
-			label={ label }
-			instructions={ !! layouts.length && __( 'Select a variation to start with.', i18n ) }
-		>
-			{ !! layouts.length && (
-				<div className="ugb-design-layout-selector__layout-items">
-					{ ( layouts || [] ).map( layout => (
-						<LayoutDesignSelectorItem
-							onClick={ () => {
-								doAction( `stackable.design-layout-selector.${ props.clientId }`, false )
-								props.setAttributes( { design: layout.value } )
-							} }
-							key={ layout.label }
-							active={ selectedLayout === layout.value }
-							{ ...layout } /> ) ) }
-				</div>
-			) }
-			{ !! designs.length && (
-				<div className="ugb-design-layout-selector__design-library">
-					<div className="components-placeholder__instructions" >
-						{ __( 'You may also select one of our preset designs from our Design Library.', i18n ) }
-					</div>
-					<div className="components-placeholder__fieldset ugb-design-layout-selector__design-container">
-						<div className="ugb-design-layout-selector__design-items">
-							{ ( designs || [] ).map( design => {
-								const passedProps = {
-									label: design.label,
-									image: design.image,
-									plan: design.plan,
-								}
-								return (
-									<LayoutDesignSelectorItem
-										onClick={ () => {
-											// Should not be selected if not premium user
-											if ( ! isPro && design.plan !== 'free' ) {
-												return
-											}
-											setIsBusy( true )
-											getDesign( design.id ).then( designData => {
-												const {
-													attributes,
-												} = designData
+	const handleSwitchDesign = designData => {
+		const {
+			attributes,
+		} = designData
 
-												// If no design attribute is set, set the default value.
-												if ( ! attributes.design ) {
-													attributes.design = defaultLayouts[ name ]
+		// If no design attribute is set, set the default value.
+		if ( ! attributes.design ) {
+			attributes.design = defaultLayouts[ name ]
+		}
+		setIsBusy( false )
+		setIsModalOpen( false )
+		doAction( `stackable.design-layout-selector.${ props.clientId }`, false )
+		applyBlockDesign( attributes )
+	}
+
+	return (
+		<Fragment>
+			<Placeholder
+				className={ classNames }
+				label={ label }
+				instructions={ !! layouts.length && __( 'Select a variation to start with.', i18n ) }
+			>
+				{ !! layouts.length && (
+					<div className="ugb-design-layout-selector__layout-items">
+						{ ( layouts || [] ).map( layout => (
+							<LayoutDesignSelectorItem
+								onClick={ () => {
+									doAction( `stackable.design-layout-selector.${ props.clientId }`, false )
+									props.setAttributes( { design: layout.value } )
+								} }
+								key={ layout.label }
+								active={ selectedLayout === layout.value }
+								{ ...layout } /> ) ) }
+					</div>
+				) }
+				{ !! designs.length && (
+					<div className="ugb-design-layout-selector__design-library">
+						<div className="components-placeholder__instructions" >
+							{ __( 'You may also select one of our preset designs from our Design Library.', i18n ) }
+						</div>
+						<div className="components-placeholder__fieldset ugb-design-layout-selector__design-container">
+							<div className="ugb-design-layout-selector__design-items">
+								{ ( designs || [] ).map( design => {
+									const passedProps = {
+										label: design.label,
+										image: design.image,
+										plan: design.plan,
+									}
+									return (
+										<LayoutDesignSelectorItem
+											onClick={ () => {
+											// Should not be selected if not premium user
+												if ( ! isPro && design.plan !== 'free' ) {
+													return
 												}
-												setIsBusy( false )
-												doAction( `stackable.design-layout-selector.${ props.clientId }`, false )
-												applyBlockDesign( attributes )
-											} ).catch( () => {
-												setIsBusy( false )
-											} )
-										} }
-										key={ design.label }
-										{ ...passedProps } />
-								)
-							} ) }
+												setIsBusy( true )
+												getDesign( design.id ).then( handleSwitchDesign ).catch( () => {
+													setIsBusy( false )
+												} )
+											} }
+											key={ design.label }
+											{ ...passedProps } />
+									)
+								} ) }
+							</div>
+						</div>
+						<div className="ugb-design-layout-selector__open-design-library">
+							<ButtonGroup>
+								<Button
+									isSecondary
+									isLarge
+									onClick={ () => setIsModalOpen( true ) }
+								>
+									{ __( 'Open Design Library', i18n ) }
+								</Button>
+								{ selectedLayout !== '' && (
+									<Button
+										isLink
+										isLarge
+										onClick={ () => doAction( `stackable.design-layout-selector.${ props.clientId }`, false ) }
+									>
+										{ __( 'Close', i18n ) }
+									</Button>
+								) }
+							</ButtonGroup>
 						</div>
 					</div>
-					<div className="ugb-design-layout-selector__open-design-library">
-						<ButtonGroup>
-							<Button
-								isSecondary
-								isLarge
-							>
-								{ __( 'Open Design Library', i18n ) }
-							</Button>
-							{ selectedLayout !== '' && (
-								<Button
-									isLink
-									isLarge
-									onClick={ () => doAction( `stackable.design-layout-selector.${ props.clientId }`, false ) }
-								>
-									{ __( 'Close', i18n ) }
-								</Button>
-							) }
-						</ButtonGroup>
-					</div>
-				</div>
+				) }
+			</Placeholder>
+			{ isModalOpen && (
+				<ModalDesignLibrary
+					search={ search }
+					onClose={ () => {
+						setIsModalOpen( false )
+						setSearch( '' )
+					} }
+					selectedBlock={ `ugb/${ name }` }
+					onSelect={ handleSwitchDesign }
+				/>
 			) }
-		</Placeholder>
+		</Fragment>
 	)
 }
 
@@ -205,6 +225,16 @@ const withDesignLayoutSelector = createHigherOrderComponent(
 		return <WrappedComponent { ...props } />
 	},
 	'withDesignLayoutSelector'
+)
+
+withDesignLayoutSelector.Save = createHigherOrderComponent(
+	WrappedComponent => props => {
+		if ( props.attributes.design === '' ) {
+			return null
+		}
+		return <WrappedComponent { ...props } />
+	},
+	'withDesignLayoutSelector.Save'
 )
 
 export default withDesignLayoutSelector

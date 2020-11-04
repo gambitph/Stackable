@@ -1,7 +1,9 @@
 /**
  * External dependencies
  */
-import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+import {
+	withBlockStyles, withDesignLayoutSelector, withUniqueClass,
+} from '~stackable/higher-order'
 import { BlockContainer } from '~stackable/components'
 import classnames from 'classnames'
 import { range } from 'lodash'
@@ -150,6 +152,7 @@ const save = props => {
 }
 
 export default compose(
+	withDesignLayoutSelector.Save,
 	withUniqueClass,
 	withBlockStyles( createStyles ),
 )( save )

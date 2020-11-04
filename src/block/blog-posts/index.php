@@ -51,8 +51,7 @@ if ( ! function_exists( 'stackable_blog_posts_block_default_attributes' ) ) {
 			'postOffset' => 0,
 			'postExclude' => '',
 			'postInclude' => '',
-
-			'design' => 'basic',
+			'design' => '',
 			'shadow' => 3,
 			'imageSize' => 'large',
 			'titleTag' => 'h3',
@@ -108,6 +107,11 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 		// Migrate attributes if this is an old block.
 		if ( stackable_block_blog_posts_is_deprecated( $attributes, $content ) ) {
 			$attributes = apply_filters( 'stackable_block_migrate_attributes', $attributes, 'blog-posts' );
+		}
+
+		// Render nothing if layout attribute is empty.
+		if ( $attributes['design'] == '' ) {
+			return;
 		}
 
 		$attributes = stackable_blog_posts_block_default_attributes( $attributes );
