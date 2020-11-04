@@ -20,7 +20,7 @@ import {
 } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
 import {
-	Placeholder, Icon, Button, ButtonGroup, Spinner,
+	Placeholder, Icon, Button, ButtonGroup,
 } from '@wordpress/components'
 
 const LayoutDesignSelectorItem = ( {
