@@ -1,11 +1,30 @@
 import { supportsInspectorPositionSticky } from '~stackable/util'
 
 export const openPanelId = panelId => {
-	const panelToOpen = getPanel( panelId )
+	let panelToOpen = getPanel( panelId )
 	if ( panelToOpen ) {
 		const tab = getTabOfPanel( panelToOpen )
 		openTab( tab )
 		openPanel( panelToOpen )
+	}
+
+	// If the panel cannot be found, that means that the tab is closed.  When
+	// this happens, assume that the panel is inside the another tab, try the
+	// other tabs and check again.
+	//
+	// We need to do this because our tabs will not render other panels if
+	// they're not open.
+	if ( ! panelToOpen ) {
+		const selectorsToTry = [ `.ugb-tab--style`, `.ugb-tab--layout`, `.ugb-tab--section`, `.ugb-tag--advanced` ]
+		selectorsToTry.some( selector => {
+			const tab = document.querySelector( selector )
+			openTab( tab )
+			panelToOpen = getPanel( panelId )
+			if ( panelToOpen ) {
+				openPanel( panelToOpen )
+			}
+			return !! panelToOpen
+		} )
 	}
 
 	return panelToOpen

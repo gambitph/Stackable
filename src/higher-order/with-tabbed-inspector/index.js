@@ -6,53 +6,66 @@ import { InspectorPanelControls, PanelTabs } from '~stackable/components'
 /**
  * WordPress dependencies
  */
-import { Component, Fragment } from '@wordpress/element'
+import {
+	Fragment, useState,
+} from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
-import { createHigherOrderComponent } from '@wordpress/compose'
 import { InspectorControls } from '@wordpress/block-editor'
 
-const withTabbedInspector = ( tabs = null ) => createHigherOrderComponent(
-	WrappedComponent => class extends Component {
-		static defaultProps = {
-			attributes: {},
-			blockName: '',
-		}
+const withTabbedInspector = ( tabs = null ) => WrappedComponent => {
+	const NewComp = props => {
+		const { blockName } = props
+		const [ activeTab, setActiveTab ] = useState( null )
+		const blockStyleControls = applyFilters( `stackable.${ blockName }.edit.inspector.style.block`, null, props )
 
-		render() {
-			const { blockName } = this.props
-			const blockStyleControls = applyFilters( `stackable.${ blockName }.edit.inspector.style.block`, null, this.props )
+		return (
+			<Fragment>
+				{ applyFilters( `stackable.${ blockName }.edit.inspector.before`, null, props ) }
 
-			return (
-				<Fragment>
-					{ applyFilters( `stackable.${ blockName }.edit.inspector.before`, null, this.props ) }
+				<InspectorControls>
+					<PanelTabs
+						tabs={ tabs }
+						blockProps={ props }
+						onTabFirstOpen={ setActiveTab }
+						onClick={ setActiveTab }
+					/>
 
-					<InspectorControls>
-						<PanelTabs tabs={ tabs } blockProps={ this.props } />
-
+					{ ( ! activeTab || activeTab === 'layout' ) &&
 						<InspectorPanelControls>
-							{ applyFilters( `stackable.${ blockName }.edit.inspector.layout.before`, null, this.props ) }
-							{ applyFilters( `stackable.${ blockName }.edit.inspector.layout.after`, null, this.props ) }
+							{ applyFilters( `stackable.${ blockName }.edit.inspector.layout.before`, null, props ) }
+							{ applyFilters( `stackable.${ blockName }.edit.inspector.layout.after`, null, props ) }
 						</InspectorPanelControls>
+					}
 
+					{ ( ! activeTab || activeTab === 'style' ) &&
 						<InspectorPanelControls tab="style">
-							{ applyFilters( `stackable.${ blockName }.edit.inspector.style.before`, null, this.props ) }
-							{ applyFilters( `stackable.${ blockName }.edit.inspector.style.after`, null, this.props ) }
+							{ applyFilters( `stackable.${ blockName }.edit.inspector.style.before`, null, props ) }
+							{ applyFilters( `stackable.${ blockName }.edit.inspector.style.after`, null, props ) }
 							{ blockStyleControls && <div className="ugb-panel-controls-separator" role="presentation">— — —</div> }
 							{ blockStyleControls }
 						</InspectorPanelControls>
+					}
 
+					{ ( ! activeTab || activeTab === 'advanced' ) &&
 						<InspectorPanelControls tab="advanced">
-							{ applyFilters( `stackable.${ blockName }.edit.inspector.advanced.before`, null, this.props ) }
-							{ applyFilters( `stackable.${ blockName }.edit.inspector.advanced.after`, null, this.props ) }
+							{ applyFilters( `stackable.${ blockName }.edit.inspector.advanced.before`, null, props ) }
+							{ applyFilters( `stackable.${ blockName }.edit.inspector.advanced.after`, null, props ) }
 						</InspectorPanelControls>
-					</InspectorControls>
+					}
+				</InspectorControls>
 
-					<WrappedComponent { ...this.props } />
-				</Fragment>
-			)
-		}
-	},
-	'withTabbedInspector'
-)
+				<WrappedComponent { ...props } />
+			</Fragment>
+		)
+	}
+
+	NewComp.defaultProps = {
+		...( WrappedComponent.defaultProps || {} ),
+		attributes: {},
+		blockName: '',
+	}
+
+	return NewComp
+}
 
 export default withTabbedInspector

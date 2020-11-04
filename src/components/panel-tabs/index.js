@@ -67,6 +67,8 @@ class PanelTabs extends Component {
 		this.updateSidebarPanelTab = this.updateSidebarPanelTab.bind( this )
 		this.select = this.select.bind( this )
 		this.containerDiv = createRef()
+
+		this.props.onTabFirstOpen( this.state.activeTab )
 	}
 
 	updateSidebarPanelTab( tab ) {
@@ -175,6 +177,7 @@ PanelTabs.defaultProps = {
 	onClickPanel: () => {},
 	onClick: () => {},
 	tabs: null,
+	onTabFirstOpen: () => {},
 }
 
 let _PanelTabs = withMemory( PanelTabs )
