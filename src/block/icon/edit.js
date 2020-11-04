@@ -32,6 +32,7 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 	withClickOpenInspector,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import {
 	createTypographyAttributeNames,
@@ -355,6 +356,7 @@ const Edit = props => {
 }
 
 export default compose(
+	withDesignLayoutSelector,
 	withUniqueClass,
 	withSetAttributeHook,
 	withGoogleFont,

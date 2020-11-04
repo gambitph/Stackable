@@ -31,6 +31,7 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 	withClickOpenInspector,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import createStyles from './style'
 
@@ -289,6 +290,7 @@ const edit = props => {
 }
 
 export default compose(
+	withDesignLayoutSelector,
 	withUniqueClass,
 	withSetAttributeHook,
 	withGoogleFont,

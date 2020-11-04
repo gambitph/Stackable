@@ -98,19 +98,21 @@ const DesignLayoutSelector = props => {
 		<Placeholder
 			className={ classNames }
 			label={ label }
-			instructions={ __( 'Select a variation to start with.', i18n ) }
+			instructions={ !! layouts.length && __( 'Select a variation to start with.', i18n ) }
 		>
-			<div className="ugb-design-layout-selector__layout-items">
-				{ ( layouts || [] ).map( layout => (
-					<LayoutDesignSelectorItem
-						onClick={ () => {
-							doAction( `stackable.design-layout-selector.${ props.clientId }`, false )
-							props.setAttributes( { design: layout.value } )
-						} }
-						key={ layout.label }
-						active={ selectedLayout === layout.value }
-						{ ...layout } /> ) ) }
-			</div>
+			{ !! layouts.length && (
+				<div className="ugb-design-layout-selector__layout-items">
+					{ ( layouts || [] ).map( layout => (
+						<LayoutDesignSelectorItem
+							onClick={ () => {
+								doAction( `stackable.design-layout-selector.${ props.clientId }`, false )
+								props.setAttributes( { design: layout.value } )
+							} }
+							key={ layout.label }
+							active={ selectedLayout === layout.value }
+							{ ...layout } /> ) ) }
+				</div>
+			) }
 			{ !! designs.length && (
 				<div className="ugb-design-layout-selector__design-library">
 					<div className="components-placeholder__instructions" >
@@ -195,7 +197,7 @@ const withDesignLayoutSelector = createHigherOrderComponent(
 			}
 		}, [] )
 
-		if ( layouts.length && ( isOpen || props.attributes.design === '' ) ) {
+		if ( isOpen || props.attributes.design === '' ) {
 			return <DesignLayoutSelector { ...{
 				...props, name, layouts,
 			} } />
