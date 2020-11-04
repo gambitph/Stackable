@@ -543,7 +543,6 @@ const deprecated = [
 		attributes: deprecatedSchema_2_11_4,
 		save: compose( withUniqueClass, withBlockStyles( createStyles ) )( deprecatedSave_2_11_4 ),
 		migrate: attributes => {
-			console.log( 'test' )
 			return attributes
 		},
 	},
