@@ -29,7 +29,7 @@ import {
 import { __ } from '@wordpress/i18n'
 import { Button } from '@wordpress/components'
 import { select } from '@wordpress/data'
-import { doAction } from '@wordpress/hooks'
+import { doAction, hasAction } from '@wordpress/hooks'
 
 // Register our block collection or category (WP <= 5.3).
 if ( supportsBlockCollections() ) {
@@ -48,20 +48,23 @@ if ( supportsBlockCollections() ) {
 	] )
 }
 
+// Create a custom description component.
 const Description = ( { description } ) => (
 	<div>
 		<div className="ugb-block-description">{ description }</div>
-		<div>
-			<Button
-				onClick={ () => {
-					doAction( `stackable.design-layout-selector.${ select( 'core/block-editor' ).getSelectedBlockClientId() }`, true )
-				} }
-				isSecondary
-				isLarge
-			>
-				{ __( 'Switch design/layout', i18n ) }
-			</Button>
-		</div>
+		{ hasAction( `stackable.design-layout-selector.${ select( 'core/block-editor' ).getSelectedBlockClientId() }` ) && (
+			<div>
+				<Button
+					onClick={ () => {
+						doAction( `stackable.design-layout-selector.${ select( 'core/block-editor' ).getSelectedBlockClientId() }`, true )
+					} }
+					isSecondary
+					isLarge
+				>
+					{ __( 'Switch design/layout', i18n ) }
+				</Button>
+			</div>
+		) }
 	</div>
 )
 

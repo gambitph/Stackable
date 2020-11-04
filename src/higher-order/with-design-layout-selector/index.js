@@ -48,31 +48,6 @@ const LayoutDesignSelectorItem = ( {
 	)
 }
 
-// List of default layout attributes which will be applied when applying a design.
-export const defaultLayouts = {
-	[ `accordion` ]: 'basic',
-	[ `blockquote` ]: 'plain',
-	[ `blog-posts` ]: 'basic',
-	[ `button` ]: 'basic',
-	[ `call-to-action` ]: 'basic',
-	[ `card` ]: 'basic',
-	[ `columns` ]: 'plain',
-	[ `container` ]: 'basic',
-	[ `count-up` ]: 'plain',
-	[ `divider` ]: 'basic',
-	[ `feature` ]: 'plain',
-	[ `feature-grid` ]: 'basic',
-	[ `header` ]: 'basic',
-	[ `image-box` ]: 'basic',
-	[ `notification` ]: 'basic',
-	[ `number-box` ]: 'basic',
-	[ `pricing-box` ]: 'basic',
-	[ `separator` ]: 'wave-1',
-	[ `team-member` ]: 'basic',
-	[ `testimonial` ]: 'basic',
-	[ `text` ]: 'plain',
-}
-
 const DesignLayoutSelector = props => {
 	const {
 		name,
@@ -100,12 +75,8 @@ const DesignLayoutSelector = props => {
 	const handleSwitchDesign = designData => {
 		const {
 			attributes,
-		} = designData
+		} = applyFilters( 'stackable.design-library.design-data', designData )
 
-		// If no design attribute is set, set the default value.
-		if ( ! attributes.design ) {
-			attributes.design = defaultLayouts[ name ]
-		}
 		setIsBusy( false )
 		setIsModalOpen( false )
 		doAction( `stackable.design-layout-selector.${ props.clientId }`, false )
@@ -208,6 +179,7 @@ const withDesignLayoutSelector = createHigherOrderComponent(
 		const layouts = applyFilters( `stackable.${ name }.edit.layouts`, [] )
 
 		useEffect( () => {
+			// Allow control of isOpen from other sources by clientId.
 			addAction( `stackable.design-layout-selector.${ props.clientId }`, 'toggle', toggle => {
 				setIsOpen( toggle )
 			} )
@@ -217,6 +189,7 @@ const withDesignLayoutSelector = createHigherOrderComponent(
 			}
 		}, [] )
 
+		// If design attribute is an empty string, open the Design Layout Selector.
 		if ( isOpen || props.attributes.design === '' ) {
 			return <DesignLayoutSelector { ...{
 				...props, name, layouts,
@@ -229,6 +202,7 @@ const withDesignLayoutSelector = createHigherOrderComponent(
 
 withDesignLayoutSelector.Save = createHigherOrderComponent(
 	WrappedComponent => props => {
+		// If design attribute is an empty string, do not render anything.
 		if ( props.attributes.design === '' ) {
 			return null
 		}
