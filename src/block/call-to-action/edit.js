@@ -34,6 +34,7 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 	withClickOpenInspector,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import { i18n, showProNotice } from 'stackable'
 import classnames from 'classnames'
@@ -56,6 +57,22 @@ import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
 
+addFilter( 'stackable.cta.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
+		},
+		{
+			label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
+
 addFilter( 'stackable.cta.edit.inspector.layout.before', 'stackable/cta', ( output, props ) => {
 	const { setAttributes } = props
 	const {
@@ -68,14 +85,7 @@ addFilter( 'stackable.cta.edit.inspector.layout.before', 'stackable/cta', ( outp
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ applyFilters( 'stackable.cta.edit.layouts', [
-					{
-						label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
-					},
-					{
-						label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
-					},
-				] ) }
+				options={ applyFilters( 'stackable.cta.edit.layouts', [] ) }
 				onChange={ design => setAttributes( { design } ) }
 			>
 				{ showProNotice && <ProControlButton /> }
@@ -400,6 +410,7 @@ const edit = props => {
 }
 
 export default compose(
+	withDesignLayoutSelector,
 	withUniqueClass,
 	withSetAttributeHook,
 	withGoogleFont,

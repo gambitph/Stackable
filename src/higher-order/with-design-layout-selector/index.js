@@ -1,10 +1,4 @@
 /**
- * Internal dependencies
- */
-import ImageDesignBasic from './images/basic.png'
-import ImageDesignPlain from './images/plain.png'
-
-/**
  * External dependencies
  */
 import {
@@ -26,7 +20,7 @@ import {
 } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
 import {
-	Placeholder, Icon, Button, Spinner, ButtonGroup,
+	Placeholder, Icon, Button, ButtonGroup, Spinner,
 } from '@wordpress/components'
 
 const LayoutDesignSelectorItem = ( {
@@ -53,8 +47,36 @@ const LayoutDesignSelectorItem = ( {
 	)
 }
 
-const LayoutDesignSelector = props => {
-	const name = props.name.split( '/' )[ 1 ]
+// List of default layout attributes which will be applied when applying a design.
+const defaultLayouts = {
+	[ `accordion` ]: 'basic',
+	[ `blockquote` ]: 'plain',
+	[ `blog-posts` ]: 'basic',
+	[ `button` ]: 'basic',
+	[ `call-to-action` ]: 'basic',
+	[ `card` ]: 'basic',
+	[ `columns` ]: 'plain',
+	[ `container` ]: 'basic',
+	[ `count-up` ]: 'plain',
+	[ `divider` ]: 'basic',
+	[ `feature` ]: 'plain',
+	[ `feature-grid` ]: 'basic',
+	[ `header` ]: 'basic',
+	[ `image-box` ]: 'basic',
+	[ `notification` ]: 'basic',
+	[ `number-box` ]: 'basic',
+	[ `pricing-box` ]: 'basic',
+	[ `separator` ]: 'wave-1',
+	[ `team-member` ]: 'basic',
+	[ `testimonial` ]: 'basic',
+	[ `text` ]: 'plain',
+}
+
+const DesignLayoutSelector = props => {
+	const {
+		name,
+		layouts,
+	} = props
 	const [ designs, setDesigns ] = useState( [] )
 	const [ isBusy, setIsBusy ] = useState( true )
 	const selectedLayout = props.attributes.design
@@ -69,20 +91,12 @@ const LayoutDesignSelector = props => {
 		} )
 	}, [ name, setDesigns ] )
 
-	const layouts = applyFilters( `stackable.${ name }.edit.layouts`, [
-		{
-			label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
-		},
-		{
-			label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
-		},
-	] )
-
 	const label = <Fragment><Icon icon="admin-settings" />{ __( 'Layout Options', i18n ) }</Fragment>
+	const classNames = classnames( 'ugb-design-layout-selector', { 'is-busy': isBusy } )
 
 	return (
 		<Placeholder
-			className="ugb-design-layout-selector"
+			className={ classNames }
 			label={ label }
 			instructions={ __( 'Select a variation to start with.', i18n ) }
 		>
@@ -97,67 +111,79 @@ const LayoutDesignSelector = props => {
 						active={ selectedLayout === layout.value }
 						{ ...layout } /> ) ) }
 			</div>
-			<div className="ugb-design-layout-selector__design-library">
-				<div className="components-placeholder__instructions" >
-					{ __( 'You may also select one of our preset designs from our Design Library.', i18n ) }
-				</div>
-				<div className="components-placeholder__fieldset ugb-design-layout-selector__design-container">
-					<div className="ugb-design-layout-selector__design-items">
-						{ isBusy && <Spinner /> }
-						{ ! isBusy && ( designs || [] ).map( design => {
-							const passedProps = {
-								label: design.label,
-								image: design.image,
-								plan: design.plan,
-							}
-							return (
-								<LayoutDesignSelectorItem
-									onClick={ () => {
-										// Should not be selected if not premium user
-										if ( ! isPro && design.plan !== 'free' ) {
-											return
-										}
-										getDesign( design.id ).then( designData => {
-											const {
-												attributes,
-											} = designData
-											doAction( `stackable.design-layout-selector.${ props.clientId }`, false )
-											applyBlockDesign( attributes )
-										} )
-									} }
-									key={ design.label }
-									{ ...passedProps } />
-							)
-						} ) }
+			{ !! designs.length && (
+				<div className="ugb-design-layout-selector__design-library">
+					<div className="components-placeholder__instructions" >
+						{ __( 'You may also select one of our preset designs from our Design Library.', i18n ) }
+					</div>
+					<div className="components-placeholder__fieldset ugb-design-layout-selector__design-container">
+						<div className="ugb-design-layout-selector__design-items">
+							{ ( designs || [] ).map( design => {
+								const passedProps = {
+									label: design.label,
+									image: design.image,
+									plan: design.plan,
+								}
+								return (
+									<LayoutDesignSelectorItem
+										onClick={ () => {
+											// Should not be selected if not premium user
+											if ( ! isPro && design.plan !== 'free' ) {
+												return
+											}
+											setIsBusy( true )
+											getDesign( design.id ).then( designData => {
+												const {
+													attributes,
+												} = designData
+
+												// If no design attribute is set, set the default value.
+												if ( ! attributes.design ) {
+													attributes.design = defaultLayouts[ name ]
+												}
+												setIsBusy( false )
+												doAction( `stackable.design-layout-selector.${ props.clientId }`, false )
+												applyBlockDesign( attributes )
+											} ).catch( () => {
+												setIsBusy( false )
+											} )
+										} }
+										key={ design.label }
+										{ ...passedProps } />
+								)
+							} ) }
+						</div>
+					</div>
+					<div className="ugb-design-layout-selector__open-design-library">
+						<ButtonGroup>
+							<Button
+								isSecondary
+								isLarge
+							>
+								{ __( 'Open Design Library', i18n ) }
+							</Button>
+							{ selectedLayout !== '' && (
+								<Button
+									isLink
+									isLarge
+									onClick={ () => doAction( `stackable.design-layout-selector.${ props.clientId }`, false ) }
+								>
+									{ __( 'Close', i18n ) }
+								</Button>
+							) }
+						</ButtonGroup>
 					</div>
 				</div>
-				<div className="ugb-design-layout-selector__open-design-library">
-					<ButtonGroup>
-						<Button
-							isSecondary
-							isLarge
-						>
-							{ __( 'Open Design Library', i18n ) }
-						</Button>
-						{ selectedLayout !== '' && (
-							<Button
-								isLink
-								isLarge
-								onClick={ () => doAction( `stackable.design-layout-selector.${ props.clientId }`, false ) }
-							>
-								{ __( 'Close', i18n ) }
-							</Button>
-						) }
-					</ButtonGroup>
-				</div>
-			</div>
+			) }
 		</Placeholder>
 	)
 }
 
-const withLayoutDesignSelector = createHigherOrderComponent(
+const withDesignLayoutSelector = createHigherOrderComponent(
 	WrappedComponent => props => {
 		const [ isOpen, setIsOpen ] = useState( false )
+		const name = props.name.split( '/' )[ 1 ]
+		const layouts = applyFilters( `stackable.${ name }.edit.layouts`, [] )
 
 		useEffect( () => {
 			addAction( `stackable.design-layout-selector.${ props.clientId }`, 'toggle', toggle => {
@@ -169,13 +195,15 @@ const withLayoutDesignSelector = createHigherOrderComponent(
 			}
 		}, [] )
 
-		if ( isOpen || props.attributes.design === '' ) {
-			return <LayoutDesignSelector { ...props } />
+		if ( layouts.length && ( isOpen || props.attributes.design === '' ) ) {
+			return <DesignLayoutSelector { ...{
+				...props, name, layouts,
+			} } />
 		}
 		return <WrappedComponent { ...props } />
 	},
-	'withLayoutDesignSelector'
+	'withDesignLayoutSelector'
 )
 
-export default withLayoutDesignSelector
+export default withDesignLayoutSelector
 

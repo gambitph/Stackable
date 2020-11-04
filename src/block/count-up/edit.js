@@ -34,6 +34,7 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 	withClickOpenInspector,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import { pick, range } from 'lodash'
 
@@ -59,6 +60,22 @@ import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
 
+addFilter( 'stackable.count-up.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
+		},
+		{
+			label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Plain', i18n ), 2 ), value: 'plain-2', image: ImageDesignPlain2,
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
+
 addFilter( 'stackable.count-up.edit.inspector.layout.before', 'stackable/count-up', ( output, props ) => {
 	const { setAttributes } = props
 	const {
@@ -71,14 +88,7 @@ addFilter( 'stackable.count-up.edit.inspector.layout.before', 'stackable/count-u
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ applyFilters( 'stackable.count-up.edit.layouts', [
-					{
-						label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
-					},
-					{
-						label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Plain', i18n ), 2 ), value: 'plain-2', image: ImageDesignPlain2,
-					},
-				] ) }
+				options={ applyFilters( 'stackable.count-up.edit.layouts', [] ) }
 				onChange={ design => setAttributes( { design } ) }
 			>
 				{ showProNotice && <ProControlButton /> }
@@ -504,6 +514,7 @@ const edit = props => {
 }
 
 export default compose(
+	withDesignLayoutSelector,
 	withUniqueClass,
 	withSetAttributeHook,
 	withGoogleFont,

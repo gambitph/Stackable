@@ -37,6 +37,7 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 	withClickOpenInspector,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 
 /**
@@ -51,6 +52,22 @@ import { i18n, showProNotice } from 'stackable'
 import { compose } from '@wordpress/compose'
 import classnames from 'classnames'
 
+addFilter( 'stackable.blockquote.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
+		},
+		{
+			label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
+
 addFilter( 'stackable.blockquote.edit.inspector.layout.before', 'stackable/blockquote', ( output, props ) => {
 	const { setAttributes } = props
 	const {
@@ -63,14 +80,7 @@ addFilter( 'stackable.blockquote.edit.inspector.layout.before', 'stackable/block
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ applyFilters( 'stackable.blockquote.edit.layouts', [
-					{
-						label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
-					},
-					{
-						label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
-					},
-				] ) }
+				options={ applyFilters( 'stackable.blockquote.edit.layouts', [] ) }
 				onChange={ design => setAttributes( { design } ) }
 			>
 				{ showProNotice && <ProControlButton /> }
@@ -312,6 +322,7 @@ const edit = props => {
 }
 
 export default compose(
+	withDesignLayoutSelector,
 	withUniqueClass,
 	withSetAttributeHook,
 	withGoogleFont,

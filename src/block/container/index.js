@@ -34,7 +34,7 @@ export const schema = {
 	},
 	design: {
 		type: 'string',
-		default: 'basic',
+		default: '',
 	},
 	...createResponsiveAttributes( '%sHeight', {
 		type: 'string',

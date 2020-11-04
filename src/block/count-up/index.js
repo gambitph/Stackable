@@ -92,7 +92,7 @@ export const schema = {
 
 	design: {
 		type: 'string',
-		default: 'plain',
+		default: '',
 	},
 	borderRadius: {
 		type: 'number',

@@ -1,13 +1,33 @@
 .ugb-design-layout-selector__layout-items {
-	column-count: auto;
-	column-width: 100px;
-	display: block;
+	transition: all 0.3s ease-in-out;
+	display: flex;
+	flex-wrap: inherit;
+	justify-content: flex-start;
+	column-gap: 30px;
 	width: 100%;
+	> div {
+		width: 117px !important;
+	}
 }
 
 .ugb-design-layout-selector {
+	transition: all 0.3s ease-in-out;
+	position: relative;
 	max-width: 750px;
 	margin: auto !important;
+	&.is-busy {
+		filter: blur(3px);
+	}
+}
+
+.ugb-design-layout-selector__spinner {
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
 }
 
 .ugb-design-layout-selector__design-items {

@@ -36,7 +36,7 @@ import { addFilter, applyFilters } from '@wordpress/hooks'
 export const schema = {
 	design: {
 		type: 'string',
-		default: 'basic',
+		default: '',
 	},
 	columns: {
 		type: 'number',

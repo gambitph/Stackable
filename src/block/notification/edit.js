@@ -48,6 +48,7 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 	withClickOpenInspector,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
 
@@ -70,6 +71,22 @@ const NOTIFICATION_TYPE = [
 	{ value: 'info', label: __( 'Information', i18n ) },
 ]
 
+addFilter( 'stackable.notification.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
+		},
+		{
+			image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
+
 addFilter( 'stackable.notification.edit.inspector.layout.before', 'stackable/notification', ( output, props ) => {
 	const { setAttributes } = props
 	const {
@@ -82,15 +99,7 @@ addFilter( 'stackable.notification.edit.inspector.layout.before', 'stackable/not
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ [
-					{
-						image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
-					},
-					{
-						image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
-					},
-					...applyFilters( 'stackable.notification.edit.layouts', [] ),
-				] }
+				options={ applyFilters( 'stackable.notification.edit.layouts', [] ) }
 				onChange={ design => {
 					setAttributes( { design } )
 				} }
@@ -583,6 +592,7 @@ const edit = props => {
 }
 
 export default compose(
+	withDesignLayoutSelector,
 	withUniqueClass,
 	withSetAttributeHook,
 	withGoogleFont,

@@ -34,6 +34,7 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 	withClickOpenInspector,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
 import { i18n, showProNotice } from 'stackable'
@@ -60,6 +61,22 @@ import { compose } from '@wordpress/compose'
 import { RichText } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
 
+addFilter( 'stackable.header.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
+		},
+		{
+			image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
+
 addFilter( 'stackable.header.edit.inspector.layout.before', 'stackable/header', ( output, props ) => {
 	const { setAttributes } = props
 	const {
@@ -72,15 +89,7 @@ addFilter( 'stackable.header.edit.inspector.layout.before', 'stackable/header', 
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ [
-					{
-						image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
-					},
-					{
-						image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
-					},
-					...applyFilters( 'stackable.header.edit.layouts', [] ),
-				] }
+				options={ applyFilters( 'stackable.header.edit.layouts', [] ) }
 				onChange={ design => {
 					setAttributes( { design } )
 				} }
@@ -521,6 +530,7 @@ const edit = props => {
 }
 
 export default compose(
+	withDesignLayoutSelector,
 	withUniqueClass,
 	withSetAttributeHook,
 	withGoogleFont,

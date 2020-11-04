@@ -35,6 +35,7 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 	withClickOpenInspector,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import { descriptionPlaceholder } from '~stackable/util'
 import { i18n, showProNotice } from 'stackable'
@@ -55,6 +56,22 @@ import { compose, withState } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { withSelect } from '@wordpress/data'
 
+addFilter( 'stackable.accordion.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
+		},
+		{
+			label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
+
 addFilter( 'stackable.accordion.edit.inspector.layout.before', 'stackable/accordion', ( output, props ) => {
 	const { setAttributes } = props
 	const {
@@ -67,14 +84,7 @@ addFilter( 'stackable.accordion.edit.inspector.layout.before', 'stackable/accord
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ applyFilters( 'stackable.accordion.edit.layouts', [
-					{
-						label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
-					},
-					{
-						label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
-					},
-				] ) }
+				options={ applyFilters( 'stackable.accordion.edit.layouts', [] ) }
 				onChange={ design => setAttributes( { design } ) }
 			>
 				{ showProNotice && <ProControlButton /> }
@@ -414,6 +424,7 @@ const edit = props => {
 }
 
 export default compose(
+	withDesignLayoutSelector,
 	withUniqueClass,
 	withSetAttributeHook,
 	withGoogleFont,

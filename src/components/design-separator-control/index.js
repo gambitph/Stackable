@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { DesignControl } from '~stackable/components'
+import { findIndex } from 'lodash'
 
 /**
  * Internal dependencies
@@ -28,55 +29,63 @@ import {
 	__, _x, sprintf,
 } from '@wordpress/i18n'
 import { BaseControl } from '@wordpress/components'
-import { applyFilters } from '@wordpress/hooks'
-import { omit } from 'lodash'
+import { applyFilters, addFilter } from '@wordpress/hooks'
+import { omit, uniqBy } from 'lodash'
 
-const designs = {
-	'wave-1': {
-		image: ImageDesignWave1, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Wave', i18n ), 1 ), value: 'wave-1',
-	},
-	'straight-1': {
-		image: ImageDesignStraight1, label: __( 'Straight', i18n ), value: 'straight-1',
-	},
-	'wave-2': {
-		image: ImageDesignWave2, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Wave', i18n ), 2 ), value: 'wave-2',
-	},
-	'wave-3': {
-		image: ImageDesignWave3, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Wave', i18n ), 3 ), value: 'wave-3',
-	},
-	'wave-4': {
-		image: ImageDesignWave4, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Wave', i18n ), 4 ), value: 'wave-4',
-	},
-	'slant-1': {
-		image: ImageDesignSlant1, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Slant', i18n ), 1 ), value: 'slant-1',
-	},
-	'slant-2': {
-		image: ImageDesignSlant2, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Slant', i18n ), 2 ), value: 'slant-2',
-	},
-	'curve-1': {
-		image: ImageDesignCurve1, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Curve', i18n ), 1 ), value: 'curve-1',
-	},
-	'curve-2': {
-		image: ImageDesignCurve2, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Curve', i18n ), 2 ), value: 'curve-2',
-	},
-	'curve-3': {
-		image: ImageDesignCurve3, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Curve', i18n ), 3 ), value: 'curve-3',
-	},
-	'rounded-1': {
-		image: ImageDesignRounded1, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Rounded', i18n ), 1 ), value: 'rounded-1',
-	},
-	'rounded-2': {
-		image: ImageDesignRounded2, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Rounded', i18n ), 2 ), value: 'rounded-2',
-	},
-	'rounded-3': {
-		image: ImageDesignRounded3, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Rounded', i18n ), 3 ), value: 'rounded-3',
-	},
-}
+addFilter( 'stackable.separator.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			image: ImageDesignWave1, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Wave', i18n ), 1 ), value: 'wave-1',
+		},
+		{
+			image: ImageDesignStraight1, label: __( 'Straight', i18n ), value: 'straight-1',
+		},
+	 {
+			image: ImageDesignWave2, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Wave', i18n ), 2 ), value: 'wave-2',
+		},
+		{
+			image: ImageDesignWave3, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Wave', i18n ), 3 ), value: 'wave-3',
+		},
+	 {
+			image: ImageDesignWave4, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Wave', i18n ), 4 ), value: 'wave-4',
+		},
+	 {
+			image: ImageDesignSlant1, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Slant', i18n ), 1 ), value: 'slant-1',
+		},
+	 {
+			image: ImageDesignSlant2, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Slant', i18n ), 2 ), value: 'slant-2',
+		},
+	 {
+			image: ImageDesignCurve1, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Curve', i18n ), 1 ), value: 'curve-1',
+		},
+	 {
+			image: ImageDesignCurve2, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Curve', i18n ), 2 ), value: 'curve-2',
+		},
+	 {
+			image: ImageDesignCurve3, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Curve', i18n ), 3 ), value: 'curve-3',
+		},
+	 {
+			image: ImageDesignRounded1, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Rounded', i18n ), 1 ), value: 'rounded-1',
+		},
+	 {
+			image: ImageDesignRounded2, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Rounded', i18n ), 2 ), value: 'rounded-2',
+		},
+	 {
+			image: ImageDesignRounded3, label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Rounded', i18n ), 3 ), value: 'rounded-3',
+		},
+	]
+
+	return uniqBy( [
+		...layouts,
+		...newLayouts,
+	], 'value' )
+} )
 
 const DesignSeparatorControl = props => {
-	const options = Object.keys( designs )
-		.filter( design => ! props.excludeDesigns.includes( design ) )
-		.map( design => designs[ design ] )
+	const options = ( applyFilters( 'stackable.separator.edit.layouts', [] ) || [] )
+		.filter( layouts =>
+			findIndex( props.excludeDesigns, layouts.value ) !== -1
+		)
 
 	return (
 		<BaseControl
@@ -86,7 +95,7 @@ const DesignSeparatorControl = props => {
 			help={ props.help }
 		>
 			<DesignControl
-				options={ applyFilters( 'stackable.separator.edit.layouts', options, props ) }
+				options={ options }
 				{ ...omit( props, [ 'label', 'help' ] ) }
 			/>
 		</BaseControl>

@@ -17,7 +17,7 @@ import {
 	PanelAdvancedSettings,
 } from '~stackable/components'
 import {
-	withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass, withClickOpenInspector,
+	withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass, withClickOpenInspector, withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import createStyles from './style'
 
@@ -374,6 +374,7 @@ const edit = props => {
 }
 
 export default compose(
+	withDesignLayoutSelector,
 	withUniqueClass,
 	withSetAttributeHook,
 	withGoogleFont,

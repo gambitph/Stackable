@@ -34,7 +34,7 @@ import { applyFilters, addFilter } from '@wordpress/hooks'
 export const schema = {
 	design: {
 		type: 'string',
-		default: 'basic',
+		default: '',
 	},
 	notifType: {
 		type: 'string',

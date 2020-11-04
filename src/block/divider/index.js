@@ -24,7 +24,7 @@ import { __ } from '@wordpress/i18n'
 const schema = {
 	design: {
 		type: 'string',
-		default: 'basic',
+		default: '',
 	},
 	color: {
 		type: 'string',

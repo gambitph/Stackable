@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n'
 export const schema = {
 	design: {
 		type: 'string',
-		default: 'basic',
+		default: '',
 	},
 	borderRadius: {
 		type: 'number',

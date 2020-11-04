@@ -32,6 +32,7 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 	withClickOpenInspector,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import {
 	descriptionPlaceholder,
@@ -56,6 +57,25 @@ import { Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 import { RichText } from '@wordpress/block-editor'
 
+addFilter( 'stackable.text.edit.layouts', 'defaults', layouts => {
+	const newLayouts = [
+		{
+			label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
+		},
+		{
+			label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Side Title', i18n ), 1 ), value: 'side-title-1', image: ImageDesignSideTitle1,
+		},
+		{
+			label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Side Title', i18n ), 2 ), value: 'side-title-2', image: ImageDesignSideTitle2,
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
+
 addFilter( 'stackable.text.edit.inspector.layout.before', 'stackable/text', ( output, props ) => {
 	const { setAttributes } = props
 	const {
@@ -68,17 +88,7 @@ addFilter( 'stackable.text.edit.inspector.layout.before', 'stackable/text', ( ou
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ applyFilters( 'stackable.text.edit.layouts', [
-					{
-						label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
-					},
-					{
-						label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Side Title', i18n ), 1 ), value: 'side-title-1', image: ImageDesignSideTitle1,
-					},
-					{
-						label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Side Title', i18n ), 2 ), value: 'side-title-2', image: ImageDesignSideTitle2,
-					},
-				] ) }
+				options={ applyFilters( 'stackable.text.edit.layouts', [] ) }
 				onChange={ design => setAttributes( { design } ) }
 			/>
 		</Fragment>
@@ -420,6 +430,7 @@ const edit = props => {
 }
 
 export default compose(
+	withDesignLayoutSelector,
 	withUniqueClass,
 	withSetAttributeHook,
 	withGoogleFont,

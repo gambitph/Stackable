@@ -24,7 +24,7 @@ import { createResponsiveAttributes, createAllCombinationAttributes } from '~sta
 export const schema = {
 	design: {
 		type: 'string',
-		default: 'plain',
+		default: '',
 	},
 	columns: {
 		type: 'number',

@@ -42,6 +42,7 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 	withClickOpenInspector,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import {
 	i18n, showProNotice,
@@ -75,6 +76,22 @@ const META_SEPARATORS = {
 	pipe: '|',
 }
 
+addFilter( 'stackable.blog-posts.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
+		},
+		{
+			label: __( 'List', i18n ), value: 'list', image: ImageDesignList,
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
+
 addFilter( 'stackable.blog-posts.edit.inspector.layout.before', 'stackable/blog-posts', ( output, props ) => {
 	const { setAttributes } = props
 	const {
@@ -87,14 +104,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.layout.before', 'stackable/blog-
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ applyFilters( 'stackable.blog-posts.edit.layouts', [
-					{
-						label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
-					},
-					{
-						label: __( 'List', i18n ), value: 'list', image: ImageDesignList,
-					},
-				] ) }
+				options={ applyFilters( 'stackable.blog-posts.edit.layouts', [] ) }
 				onChange={ design => setAttributes( { design } ) }
 			>
 				{ showProNotice && <ProControlButton /> }
@@ -919,6 +929,7 @@ class Edit extends Component {
 }
 
 export default compose(
+	withDesignLayoutSelector,
 	withUniqueClass,
 	withSetAttributeHook,
 	withGoogleFont,

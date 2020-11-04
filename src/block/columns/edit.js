@@ -30,6 +30,7 @@ import {
 	withTabbedInspector,
 	withContentAlignReseter,
 	withBlockStyles,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
 import { range } from 'lodash'
@@ -89,6 +90,22 @@ const COLUMN_DEFAULTS = {
 		columns6: 16,
 	},
 }
+
+addFilter( 'stackable.columns.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			label: __( 'Grid', i18n ), value: 'grid', image: ImageDesignGrid,
+		},
+		{
+			label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
 
 addFilter( 'stackable.columns.edit.inspector.layout.before', 'stackable/columns', ( output, props ) => {
 	const { setAttributes } = props
@@ -166,14 +183,7 @@ addFilter( 'stackable.columns.edit.inspector.layout.before', 'stackable/columns'
 				<DesignControl
 					selected={ design }
 					label={ __( 'Layouts', i18n ) }
-					options={ applyFilters( 'stackable.columns.edit.layouts', [
-						{
-							label: __( 'Grid', i18n ), value: 'grid', image: ImageDesignGrid,
-						},
-						{
-							label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
-						},
-					] ) }
+					options={ applyFilters( 'stackable.columns.edit.layouts', [] ) }
 					onChange={ design => {
 						const columnCount = getColumnCountFromDesign( columns, design )
 						setAttributes( {
@@ -495,6 +505,7 @@ addFilter( 'stackable.columns.setAttributes', 'stackable/columns/columns-change'
 } )
 
 export default compose(
+	withDesignLayoutSelector,
 	withState( { sortColumnHighlight: null } ),
 	withUniqueClass,
 	withSetAttributeHook,

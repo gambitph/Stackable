@@ -39,7 +39,7 @@ import { applyFilters } from '@wordpress/hooks'
 const schema = {
 	design: {
 		type: 'string',
-		default: 'basic',
+		default: '',
 	},
 	columns: {
 		type: 'number',
