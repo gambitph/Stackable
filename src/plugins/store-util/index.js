@@ -31,6 +31,8 @@ const DEFAULT_STATE = {
 const STORE_SELECTORS = {
 	getInitialBlocks: state => state.initialBlocks,
 	getInitialBlockClientId: ( state, clientId ) => {
+		// undefined is returned when the store is still initializing. null is returned when the store
+		// has initialized but the block is not existing.
 		if ( state.isInitializing ) {
 			return undefined
 		}
