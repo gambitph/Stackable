@@ -45,6 +45,7 @@ const DesignLibraryListItem = props => {
 					}
 					setIsBusy( true )
 					getDesign( designId ).then( designData => {
+						console.log( designData )
 						setIsBusy( false )
 						onClick( designData )
 					} )
