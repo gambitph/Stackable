@@ -108,6 +108,7 @@ const DesignLayoutSelector = props => {
 								} else {
 									props.setAttributes( { design: layout.value } )
 								}
+								dispatch( 'stackable/util' ).updateInitialBlocks()
 							} }
 							key={ layout.label }
 							active={ selectedLayout === layout.value }

@@ -48,13 +48,14 @@ const STORE_ACTIONS = {
 			blocks.forEach( block => {
 				existingBlocks.push( omit( block, 'innerBlocks' ) )
 				// Recursive innerBlocks
-				if ( blocks.innerBlocks.length ) {
+				if ( Array.isArray( block.innerBlocks ) && block.innerBlocks.length ) {
 					populateExistingBlocksRecursive( blocks.innerBlocks )
 				}
 			} )
 		}
 
 		populateExistingBlocksRecursive( payload )
+		console.log( existingBlocks )
 
 		return {
 			type: 'UPDATE_INITIAL_BLOCKS',
