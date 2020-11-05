@@ -53,25 +53,32 @@ if ( ! hasFilter( 'stackable.with-design-layout-selector.switch-design-panel', '
 }
 
 const LayoutDesignSelectorItem = ( {
-	image, active, label, ...otherProps
+	image,
+	className,
+	active,
+	label,
+	...otherProps
 } ) => {
 	const src = ! image ? '' :
 	            image.match( /https?:/i ) ? image :
 	            srcUrl ? `${ srcUrl }/${ image }` :
 	            image
 
+	const itemClassNames = classnames( 'ugb-design-layout-selector__item', {
+		[ className ]: className,
+	} )
 	const imgClassNames = classnames( 'ugb-design-layout-selector__image', {
 		active,
 		'is-premium': ! isPro && otherProps.plan === 'premium',
 	} )
 
 	return (
-		<div className={ 'ugb-design-layout-selector__item' } { ...otherProps }>
+		<div className={ itemClassNames } { ...otherProps }>
 			{ otherProps.plan && ! isPro && otherProps.plan !== 'free' && (
 				<span className="ugb-design-layout-selector__premium">{ otherProps.plan }</span>
 			) }
 			{ src && <img className={ imgClassNames } src={ src } alt={ label } /> }
-			<span className="ugb-design-layout-selector__label">{ label }</span>
+			{ label && <span className="ugb-design-layout-selector__label">{ label }</span> }
 		</div>
 	)
 }
@@ -125,6 +132,7 @@ const DesignLayoutSelector = props => {
 				<div className="ugb-design-layout-selector__layout-items">
 					{ ( layouts || [] ).map( layout => (
 						<LayoutDesignSelectorItem
+							className="ugb-design-layout-selector__layout-item"
 							onClick={ () => {
 								doAction( `stackable.design-layout-selector.${ props.clientId }`, false )
 								// Manually trigger the setAttributes filter.
@@ -140,25 +148,27 @@ const DesignLayoutSelector = props => {
 							} }
 							key={ layout.label }
 							active={ selectedLayout === layout.value }
-							{ ...layout } /> ) ) }
+							{ ...layout }
+						/>
+					) ) }
 				</div>
 			) }
 			{ !! designs.length && (
 				<div className="ugb-design-layout-selector__design-library">
 					<div className="components-placeholder__instructions" >
-						{ !! layouts.length && __( 'You may also select one of our preset designs from our Design Library.', i18n ) }
-						{ ! layouts.length && __( 'You may select one of our preset designs from our Design Library.', i18n ) }
+						{ !! layouts.length && __( 'Or pick from our Design Library.', i18n ) }
+						{ ! layouts.length && __( 'Select a design from our library to start with.', i18n ) }
 					</div>
 					<div className="components-placeholder__fieldset ugb-design-layout-selector__design-container">
 						<div className="ugb-design-layout-selector__design-items">
 							{ ( designs || [] ).map( design => {
 								const passedProps = {
-									label: design.label,
 									image: design.image,
 									plan: design.plan,
 								}
 								return (
 									<LayoutDesignSelectorItem
+										className="ugb-design-layout-selector__design-item"
 										onClick={ () => {
 											// Should not be selected if not premium user
 											if ( ! isPro && design.plan !== 'free' ) {
