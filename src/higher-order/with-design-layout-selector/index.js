@@ -99,10 +99,12 @@ const DesignLayoutSelector = props => {
 						<LayoutDesignSelectorItem
 							onClick={ () => {
 								doAction( `stackable.design-layout-selector.${ props.clientId }`, false )
+								// Manually trigger the setAttributes filter.
+								const newAttributes = applyFilters( `stackable.${ name }.setAttributes`, { ...props.attributes, design: layout.value }, props )
 
 								// Check if a custom filter exists in the block.
 								if ( hasFilter( `stackable.${ name }.edit.inspector.layout.attributes` ) ) {
-									props.setAttributes( applyFilters( `stackable.${ name }.edit.inspector.layout.attributes`, { ...props.attributes, design: layout.value } ) )
+									props.setAttributes( applyFilters( `stackable.${ name }.edit.inspector.layout.attributes`, { ...newAttributes, design: layout.value } ) )
 								} else {
 									props.setAttributes( { design: layout.value } )
 								}

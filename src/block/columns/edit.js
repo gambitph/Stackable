@@ -117,6 +117,7 @@ addFilter( 'stackable.columns.edit.inspector.layout.attributes', 'stackable/colu
 	const columnCount = getColumnCountFromDesign( columns, design )
 	return {
 		design,
+		columns,
 		...COLUMN_DEFAULTS[ columnCount ],
 	}
 } )
