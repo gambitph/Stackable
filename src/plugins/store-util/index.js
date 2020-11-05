@@ -49,17 +49,16 @@ const STORE_ACTIONS = {
 				existingBlocks.push( omit( block, 'innerBlocks' ) )
 				// Recursive innerBlocks
 				if ( Array.isArray( block.innerBlocks ) && block.innerBlocks.length ) {
-					populateExistingBlocksRecursive( blocks.innerBlocks )
+					populateExistingBlocksRecursive( block.innerBlocks )
 				}
 			} )
 		}
 
 		populateExistingBlocksRecursive( payload )
-		console.log( existingBlocks )
 
 		return {
 			type: 'UPDATE_INITIAL_BLOCKS',
-			payload,
+			payload: existingBlocks,
 		}
 	},
 	setIsInitializing: payload => ( {
