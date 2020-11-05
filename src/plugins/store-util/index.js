@@ -5,7 +5,7 @@
 /**
  * External dependencies
  */
-import { find } from 'lodash'
+import { cloneDeep, find } from 'lodash'
 
 /**
  * Wordpress dependencies
@@ -18,22 +18,27 @@ import domReady from '@wordpress/dom-ready'
 // Include all the stored state.
 const DEFAULT_STATE = {
 	initialBlocks: [],
+	isInitializing: true,
 }
 
 const STORE_SELECTORS = {
 	getInitialBlocks: state => state.initialBlocks,
 	getInitialBlockClientId: ( state, clientId ) => {
-		if ( ! state.initialBlocks.length ) {
+		if ( state.isInitializing ) {
 			return undefined
 		}
 		const block = find( state.initialBlocks, blockEntry => blockEntry.clientId === clientId )
-		return block ? block : null
+		return block ? cloneDeep( block ) : null
 	},
 }
 
 const STORE_ACTIONS = {
-	updateInitialBlocks: ( payload = [] ) => ( {
+	updateInitialBlocks: ( payload = cloneDeep( select( 'core/block-editor' ).getBlocks() ) ) => ( {
 		type: 'UPDATE_INITIAL_BLOCKS',
+		payload,
+	} ),
+	setIsInitializing: payload => ( {
+		type: 'SET_IS_INITIALIZING',
 		payload,
 	} ),
 }
@@ -44,6 +49,12 @@ const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
 			return {
 				...state,
 				initialBlocks: action.payload,
+			}
+		}
+		case 'SET_IS_INITIALIZING': {
+			return {
+				...state,
+				isInitializing: action.payload,
 			}
 		}
 		default: {
@@ -60,6 +71,6 @@ registerStore( 'stackable/util', {
 
 // Populate the initial blocks
 domReady( () => {
-	const initialBlocks = select( 'core/block-editor' ).getBlocks()
-	dispatch( 'stackable/util' ).updateInitialBlocks( initialBlocks )
+	dispatch( 'stackable/util' ).updateInitialBlocks()
+	dispatch( 'stackable/util' ).setIsInitializing( false )
 } )

@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n'
 import {
 	Placeholder, Icon, Button, ButtonGroup,
 } from '@wordpress/components'
-import { useSelect } from '@wordpress/data'
+import { dispatch, useSelect } from '@wordpress/data'
 
 const LayoutDesignSelectorItem = ( {
 	image, active, label, ...otherProps
@@ -75,9 +75,10 @@ const DesignLayoutSelector = props => {
 			attributes,
 		} = designData
 
+		dispatch( 'stackable/util' ).updateInitialBlocks()
 		setIsBusy( false )
 		doAction( `stackable.design-layout-selector.${ props.clientId }`, false )
-		applyBlockDesign( attributes )
+		applyBlockDesign( attributes, props.clientId )
 	}
 
 	return (
@@ -173,7 +174,7 @@ const withDesignLayoutSelector = createHigherOrderComponent(
 		 */
 		useEffect( () => {
 			// If the block is newly added, setIsOpen to true.
-			if ( isExistingBlock !== undefined && isExistingBlock === null ) {
+			if ( isExistingBlock === null ) {
 				setIsOpen( true )
 			}
 		}, [ JSON.stringify( isExistingBlock ) ] )
