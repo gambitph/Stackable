@@ -136,6 +136,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 		<Fragment>
 			{ output }
 			<PanelBody title={ __( 'General', i18n ) }>
+				{ applyFilters( 'stackable.with-design-layout-selector.switch-design-panel' ) }
 				<AdvancedRangeControl
 					label={ __( 'Columns', i18n ) }
 					value={ columns }

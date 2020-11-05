@@ -126,6 +126,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 				title={ __( 'General', i18n ) }
 				initialOpen={ false }
 			>
+				{ applyFilters( 'stackable.with-design-layout-selector.switch-design-panel' ) }
 				<WhenResponsiveScreen screen="desktop">
 					<AdvancedRangeControl
 						label={ __( 'Height', i18n ) }

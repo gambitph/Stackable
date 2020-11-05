@@ -73,6 +73,7 @@ addFilter( 'stackable.icon.edit.inspector.style.before', 'stackable/icon', ( out
 		<Fragment>
 			{ output }
 			<PanelBody title={ __( 'General', i18n ) }>
+				{ applyFilters( 'stackable.with-design-layout-selector.switch-design-panel' ) }
 				<AdvancedRangeControl
 					label={ __( 'Number of Icons / Columns', i18n ) }
 					value={ columns }

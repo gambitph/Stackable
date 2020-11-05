@@ -33,10 +33,15 @@ if ( ! hasFilter( 'stackable.with-design-layout-selector.switch-design-panel', '
 
 		return (
 			<BaseControl>
+				<h5 className="ugb-design-layout-selector__filter-title">{ __( 'Layouts and Preset Designs', i18n ) }</h5>
+				<div className="ugb-design-layout-selector__filter-content">
+					<Icon icon="info-outline" />
+					<p>{ __( 'You may switch your layout or choose a preset design from our Design Library here.', i18n ) }</p>
+				</div>
 				{ block && hasAction( `stackable.design-layout-selector.${ selectedBlockId }` ) && (
-					<div>
+					<div className="ugb-design-layout-selector__filter-button-group">
 						<Button
-							className="ugb-design-layout-selector__filter_button"
+							className="ugb-design-layout-selector__filter-button"
 							onClick={ () => {
 								doAction( `stackable.design-layout-selector.${ selectedBlockId }`, true )
 							} }

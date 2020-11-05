@@ -138,6 +138,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 		<Fragment>
 			{ output }
 			<PanelBody title={ __( 'General', i18n ) }>
+				{ applyFilters( 'stackable.with-design-layout-selector.switch-design-panel' ) }
 				<SelectControl
 					label={ __( 'Notification Type', i18n ) }
 					value={ notifType }

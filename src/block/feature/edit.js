@@ -124,6 +124,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 		<Fragment>
 			{ output }
 			<PanelBody title={ __( 'General', i18n ) }>
+				{ applyFilters( 'stackable.with-design-layout-selector.switch-design-panel' ) }
 				{ show.imageColumnWidth &&
 					<ResponsiveControl
 						attrNameTemplate="imageColumn%sWidth"
