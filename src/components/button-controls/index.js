@@ -203,7 +203,6 @@ const ButtonControls = props => {
 				<Fragment>
 					{ props.onChangeBackgroundColorType && showGradient && (
 						<BaseControl
-							label={ __( 'Button Color Type', i18n ) }
 							id="button-color-type"
 							className="ugb--help-tip-button-color-type"
 						>
@@ -220,6 +219,8 @@ const ButtonControls = props => {
 								] }
 								value={ props.backgroundColorType }
 								onChange={ props.onChangeBackgroundColorType }
+								fullwidth={ false }
+								isSmall={ true }
 							/>
 						</BaseControl>
 					) }

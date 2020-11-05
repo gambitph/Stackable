@@ -93,6 +93,8 @@ const IconControls = props => {
 							},
 						] }
 						value=""
+						fullwidth={ false }
+						isSmall={ true }
 					/>
 				</BaseControl>
 			}
@@ -137,6 +139,8 @@ const IconControls = props => {
 									},
 								] }
 								value=""
+								fullwidth={ false }
+								isSmall={ true }
 							/>
 						</BaseControl>
 					}
