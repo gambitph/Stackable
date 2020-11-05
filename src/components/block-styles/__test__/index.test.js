@@ -150,7 +150,7 @@ describe( 'generateStyles', () => {
 		}
 
 		const results = generateStyles( styles, '', '', 900, 400, true )
-		expect( results ).toContain( '.test{color:red' )
+		expect( results ).toMatch( /.test\s*{\s*color:\s*red/ )
 		expect( results ).toContain( '#editor' )
 	} )
 } )
@@ -237,8 +237,8 @@ describe( 'BlockStyles', () => {
 		}
 		const { container } = render( <BlockStyles style={ style } editorMode={ true } breakTablet="900" breakMobile="400" /> )
 		expect( container.querySelector( 'style' ).innerHTML ).toEqual( expect.stringMatching( /.editor/ ) )
-		expect( container.querySelector( 'style' ).innerHTML ).toEqual( expect.stringMatching( /#editor .editor\{color:blue/ ) )
-		expect( container.querySelector( 'style' ).innerHTML ).toEqual( expect.stringMatching( /@media[^\{]+900px[^\}]+#editor .tablet\{color:yellow/ ) )
-		expect( container.querySelector( 'style' ).innerHTML ).toEqual( expect.stringMatching( /@media[^\{]+400px[^\}]+#editor .mobile\{color:green/ ) )
+		expect( container.querySelector( 'style' ).innerHTML ).toEqual( expect.stringMatching( /#editor .editor\s*{\s*color:\s*blue/ ) )
+		expect( container.querySelector( 'style' ).innerHTML ).toEqual( expect.stringMatching( /@media[^\{]+900px[^\}]+#editor .tablet\s*{\s*color:\s*yellow/ ) )
+		expect( container.querySelector( 'style' ).innerHTML ).toEqual( expect.stringMatching( /@media[^\{]+400px[^\}]+#editor .mobile\s*{\s*color:\s*green/ ) )
 	} )
 } )
