@@ -29,15 +29,23 @@ const DesignLibraryControl = props => {
 	const [ plan, setPlan ] = useState( '' )
 
 	useEffect( () => {
+		let isMounted = true
 		getDesigns( {
 			type: 'block',
 			block: props.block,
 			search,
 		} ).then( designs => {
-			setDesigns( designs )
+			if ( isMounted ) {
+				setDesigns( designs )
+			}
 		} ).finally( () => {
-			setIsBusy( false )
+			if ( isMounted ) {
+				setIsBusy( false )
+			}
 		} )
+		return () => {
+			isMounted = false
+		}
 	}, [ props.block, search ] )
 
 	return (
