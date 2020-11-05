@@ -70,14 +70,20 @@ const DesignLayoutSelector = props => {
 	const label = <Fragment><Icon icon="admin-settings" />{ __( 'Pick a layout or design', i18n ) }</Fragment>
 	const classNames = classnames( 'ugb-design-layout-selector', { 'is-busy': isBusy } )
 
+	// Function for handling the switching designs.
 	const handleSwitchDesign = designData => {
 		const {
 			attributes,
 		} = designData
 
+		// Refetch the initial blocks. Include the currently added block.
 		dispatch( 'stackable/util' ).updateInitialBlocks()
 		setIsBusy( false )
+
+		// Close the layout selector
 		doAction( `stackable.design-layout-selector.${ props.clientId }`, false )
+
+		// Apply the block design.
 		applyBlockDesign( attributes, props.clientId )
 	}
 
@@ -169,11 +175,9 @@ const withDesignLayoutSelector = createHigherOrderComponent(
 			}
 		}, [] )
 
-		/**
-		 * Side effect for isExistingBlock.
-		 */
+		// Side effect for isExistingBlock.
 		useEffect( () => {
-			// If the block is newly added, setIsOpen to true.
+			// When the editor recognizes that the block is newly added, show the selector.
 			if ( isExistingBlock === null ) {
 				setIsOpen( true )
 			}

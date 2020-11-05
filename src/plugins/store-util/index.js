@@ -17,6 +17,11 @@ import domReady from '@wordpress/dom-ready'
 
 // Include all the stored state.
 const DEFAULT_STATE = {
+
+	/**
+	 * initialBlocks is not meant to be reactive. It only
+	 * contains the list of initial blocks loaded in the editor.
+	 */
 	initialBlocks: [],
 	isInitializing: true,
 }
@@ -33,6 +38,7 @@ const STORE_SELECTORS = {
 }
 
 const STORE_ACTIONS = {
+	// Action used for updating the initial blocks.
 	updateInitialBlocks: ( payload = cloneDeep( select( 'core/block-editor' ).getBlocks() ) ) => ( {
 		type: 'UPDATE_INITIAL_BLOCKS',
 		payload,
@@ -63,6 +69,7 @@ const STORE_REDUCER = ( state = DEFAULT_STATE, action ) => {
 	}
 }
 
+// Register store.
 registerStore( 'stackable/util', {
 	reducer: STORE_REDUCER,
 	actions: STORE_ACTIONS,
