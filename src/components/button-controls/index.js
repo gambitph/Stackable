@@ -92,104 +92,11 @@ const ButtonControls = props => {
 						...applyFilters( 'stackable.button.edit.layouts', [] ),
 					] }
 					onChange={ props.onChangeDesign }
+					columns={ 4 }
 				/>
 			) }
 
 			<ControlSeparator />
-
-			{ props.hasTypography && design !== 'link' && (
-				<TypographyControlHelper
-					attrNameTemplate={ props.attrNameTemplate }
-					setAttributes={ props.setAttributes }
-					blockAttributes={ props.blockAttributes }
-					// onChangeFontSize={ null }
-					onChangeLineHeight={ null }
-					showSecondFontSize={ false }
-					placeholder={ props.placeholder }
-				/>
-			) }
-
-			{ props.onChangeSize && ( props.onChangeDesign ? design !== 'link' : true ) &&
-				<SelectControl
-					label={ __( 'Button Size', i18n ) }
-					value={ size }
-					options={ [
-						{ value: 'tiny', label: __( 'Tiny', i18n ) },
-						{ value: 'small', label: __( 'Small', i18n ) },
-						{ value: 'normal', label: __( 'Normal', i18n ) },
-						{ value: 'medium', label: __( 'Medium', i18n ) },
-						{ value: 'large', label: __( 'Large', i18n ) },
-					] }
-					onChange={ props.onChangeSize }
-					className="ugb--help-tip-button-size"
-				/>
-			}
-
-			{ props.onChangeBorderRadius && design !== 'link' && design !== 'plain' &&
-				<AdvancedRangeControl
-					label={ __( 'Border Radius', i18n ) }
-					value={ props.borderRadius }
-					min="0"
-					max="100"
-					onChange={ props.onChangeBorderRadius }
-					allowReset={ true }
-					placeholder="4"
-					className="ugb--help-tip-button-border-radius"
-				/>
-			}
-
-			{ props.onChangePaddings && design !== 'link' && design !== 'plain' &&
-				<FourRangeControl
-					label={ __( 'Vertical Padding', i18n ) }
-					top={ props.paddingTop }
-					bottom={ props.paddingBottom }
-					onChange={ props.onChangePaddings }
-					enableLeft={ false }
-					enableRight={ false }
-					placeholder={ [ 8, 8 ] }
-					className="ugb--help-tip-button-vertical-padding"
-				/>
-			}
-			{ props.onChangePaddings && design !== 'link' && design !== 'plain' &&
-				<FourRangeControl
-					label={ __( 'Horizontal Padding', i18n ) }
-					right={ props.paddingRight }
-					left={ props.paddingLeft }
-					onChange={ props.onChangePaddings }
-					enableTop={ false }
-					enableBottom={ false }
-					max={ 100 }
-					placeholder={ [ 26, 26 ] }
-					className="ugb--help-tip-button-horizontal-padding"
-				/>
-			}
-
-			{ props.onChangeBorderWidth && design === 'ghost' &&
-				<AdvancedRangeControl
-					label={ __( 'Border Width', i18n ) }
-					value={ props.borderWidth }
-					min="1"
-					max="6"
-					onChange={ props.onChangeBorderWidth }
-					allowReset={ true }
-					placeholder="2"
-				/>
-			}
-
-			{ props.onChangeShadow && ( design === '' || design === 'basic' ) &&
-				<AdvancedRangeControl
-					label={ __( 'Shadow', i18n ) }
-					value={ props.shadow }
-					onChange={ props.onChangeShadow }
-					min={ 0 }
-					max={ 9 }
-					allowReset={ true }
-					placeholder="0"
-					className="ugb--help-tip-button-shadow"
-				/>
-			}
-
-			{ design !== 'link' && <ControlSeparator /> }
 
 			{ props.onChangeUseSocialColors &&
 				<ToggleControl
@@ -268,20 +175,6 @@ const ButtonControls = props => {
 					) }
 				</Fragment>
 			}
-
-			{ props.onChangeOpacity && (
-				<AdvancedRangeControl
-					label={ __( 'Opacity', i18n ) }
-					value={ props.opacity }
-					onChange={ props.onChangeOpacity }
-					min={ 0 }
-					max={ 1 }
-					step={ 0.1 }
-					allowReset={ true }
-					placeholder="1.0"
-				/>
-			) }
-
 			{ design !== 'link' && <ControlSeparator /> }
 
 			{ props.onChangeHoverGhostToNormal && design === 'ghost' && (
@@ -376,6 +269,113 @@ const ButtonControls = props => {
 						/>
 					) }
 				</ButtonIconPopoverControl>
+			) }
+
+			{ design !== 'link' && <ControlSeparator /> }
+
+			{ props.hasTypography && design !== 'link' && (
+				<TypographyControlHelper
+					attrNameTemplate={ props.attrNameTemplate }
+					setAttributes={ props.setAttributes }
+					blockAttributes={ props.blockAttributes }
+					// onChangeFontSize={ null }
+					onChangeLineHeight={ null }
+					showSecondFontSize={ false }
+					placeholder={ props.placeholder }
+				/>
+			) }
+
+			{ props.onChangeSize && ( props.onChangeDesign ? design !== 'link' : true ) &&
+				<SelectControl
+					label={ __( 'Button Size', i18n ) }
+					value={ size }
+					options={ [
+						{ value: 'tiny', label: __( 'Tiny', i18n ) },
+						{ value: 'small', label: __( 'Small', i18n ) },
+						{ value: 'normal', label: __( 'Normal', i18n ) },
+						{ value: 'medium', label: __( 'Medium', i18n ) },
+						{ value: 'large', label: __( 'Large', i18n ) },
+					] }
+					onChange={ props.onChangeSize }
+					className="ugb--help-tip-button-size"
+				/>
+			}
+
+			{ props.onChangeBorderRadius && design !== 'link' && design !== 'plain' &&
+				<AdvancedRangeControl
+					label={ __( 'Border Radius', i18n ) }
+					value={ props.borderRadius }
+					min="0"
+					max="100"
+					onChange={ props.onChangeBorderRadius }
+					allowReset={ true }
+					placeholder="4"
+					className="ugb--help-tip-button-border-radius"
+				/>
+			}
+
+			{ props.onChangePaddings && design !== 'link' && design !== 'plain' &&
+				<FourRangeControl
+					label={ __( 'Vertical Padding', i18n ) }
+					top={ props.paddingTop }
+					bottom={ props.paddingBottom }
+					onChange={ props.onChangePaddings }
+					enableLeft={ false }
+					enableRight={ false }
+					placeholder={ [ 8, 8 ] }
+					className="ugb--help-tip-button-vertical-padding"
+				/>
+			}
+			{ props.onChangePaddings && design !== 'link' && design !== 'plain' &&
+				<FourRangeControl
+					label={ __( 'Horizontal Padding', i18n ) }
+					right={ props.paddingRight }
+					left={ props.paddingLeft }
+					onChange={ props.onChangePaddings }
+					enableTop={ false }
+					enableBottom={ false }
+					max={ 100 }
+					placeholder={ [ 26, 26 ] }
+					className="ugb--help-tip-button-horizontal-padding"
+				/>
+			}
+
+			{ props.onChangeBorderWidth && design === 'ghost' &&
+				<AdvancedRangeControl
+					label={ __( 'Border Width', i18n ) }
+					value={ props.borderWidth }
+					min="1"
+					max="6"
+					onChange={ props.onChangeBorderWidth }
+					allowReset={ true }
+					placeholder="2"
+				/>
+			}
+
+			{ props.onChangeShadow && ( design === '' || design === 'basic' ) &&
+				<AdvancedRangeControl
+					label={ __( 'Shadow', i18n ) }
+					value={ props.shadow }
+					onChange={ props.onChangeShadow }
+					min={ 0 }
+					max={ 9 }
+					allowReset={ true }
+					placeholder="0"
+					className="ugb--help-tip-button-shadow"
+				/>
+			}
+
+			{ props.onChangeOpacity && (
+				<AdvancedRangeControl
+					label={ __( 'Opacity', i18n ) }
+					value={ props.opacity }
+					onChange={ props.onChangeOpacity }
+					min={ 0 }
+					max={ 1 }
+					step={ 0.1 }
+					allowReset={ true }
+					placeholder="1.0"
+				/>
 			) }
 
 			{ design !== 'link' && <ControlSeparator /> }
