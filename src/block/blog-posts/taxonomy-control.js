@@ -5,12 +5,13 @@ import {
 	i18n, isPro,
 } from 'stackable'
 import { AdvancedSelectControl } from '~stackable/components'
+import { find, compact } from 'lodash'
 
 /**
  * WordPress dependencies
  */
-import { Component } from '@wordpress/element'
-import { Spinner } from '@wordpress/components'
+import { Component, Fragment } from '@wordpress/element'
+import { Spinner, FormTokenField } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { addQueryArgs } from '@wordpress/url'
 import apiFetch from '@wordpress/api-fetch'
@@ -63,8 +64,9 @@ class TaxonomyControl extends Component {
 	render() {
 		const postTypeOptions = []
 		const taxonomyTypeOptions = []
-		const taxonomyOptions = [ { label: __( 'All', i18n ), value: '' } ]
+		const taxonomyOptions = []
 		let taxonomyLabel = ''
+		const { taxonomy } = this.props
 
 		Object.keys( this.state.termList ).forEach( postType => {
 			const {
@@ -93,7 +95,7 @@ class TaxonomyControl extends Component {
 					if ( taxonomy === this.props.taxonomyType || noTaxonomyTypeSelected ) {
 						Object.keys( terms ).forEach( i => {
 							taxonomyOptions.push( {
-								label: terms[ i ].name,
+								name: terms[ i ].name,
 								value: terms[ i ].term_id,
 							} )
 						} )
@@ -101,6 +103,13 @@ class TaxonomyControl extends Component {
 				} )
 			}
 		} )
+
+		const taxonomySuggestionOptions = taxonomyOptions.map( value => value.name )
+		// Parse the taxonomy value to array as passed prop value.
+		const taxonomyValue = taxonomy !== '' ? taxonomy.split( ',' ).map( value => {
+			const { name } = find( taxonomyOptions, taxonomyEntry => taxonomyEntry.value === parseInt( value ) ) || {}
+			return name
+		} ) : undefined
 
 		if ( taxonomyTypeOptions.length ) {
 			const toMatch = this.props.taxonomyType || taxonomyTypeOptions[ 0 ].value
@@ -145,12 +154,30 @@ class TaxonomyControl extends Component {
 					/>
 				}
 				{ taxonomyTypeOptions.length > 0 &&
+				<Fragment>
 					<AdvancedSelectControl
-						label={ taxonomyLabel }
-						options={ taxonomyOptions }
-						value={ this.props.taxonomy }
-						onChange={ this.props.onChangeTaxonomy }
+						label={ __( 'Taxonomy Filter Type', i18n ) }
+						options={ [
+							{ label: __( 'Included In', i18n ), value: '__in' },
+							{ label: __( 'Not In', i18n ), value: '__not_in' },
+						] }
+						value={ this.props.taxonomyFilterType }
+						onChange={ this.props.onChangeTaxonomyFilterType }
 					/>
+					<FormTokenField
+						label={ taxonomyLabel }
+						suggestions={ taxonomySuggestionOptions }
+						value={ taxonomyValue }
+						onChange={ value => {
+							const passedTaxonomyValues = value.map( selectedTaxonomy => {
+								const { value: entry } = find( ( taxonomyOptions || [] ), taxonomyEntry => taxonomyEntry.name === selectedTaxonomy ) || {}
+								return entry
+							} )
+
+							this.props.onChangeTaxonomy( compact( passedTaxonomyValues ).join( ',' ) )
+						} }
+					/>
+				</Fragment>
 				}
 			</div>
 		)

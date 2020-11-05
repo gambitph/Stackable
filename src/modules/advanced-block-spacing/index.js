@@ -68,8 +68,6 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 
 		paddingTop = '',
 		paddingBottom = '',
-		paddingRight = '',
-		paddingLeft = '',
 		paddingUnit = 'px',
 
 		tabletPaddingTop = '',
@@ -80,8 +78,6 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 
 		mobilePaddingTop = '',
 		mobilePaddingBottom = '',
-		mobilePaddingRight = '',
-		mobilePaddingLeft = '',
 		mobilePaddingUnit = 'px',
 
 		blockHeight = '',
@@ -106,6 +102,20 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 		tabletBlockVerticalAlign = '',
 		mobileBlockVerticalAlign = '',
 	} = props.attributes
+
+	let {
+		paddingRight = '',
+		paddingLeft = '',
+		mobilePaddingRight = '',
+		mobilePaddingLeft = '',
+	} = props.attributes
+
+	if ( align === 'full' ) {
+		paddingRight = paddingRight === '' ? 35 : paddingRight
+		paddingLeft = paddingLeft === '' ? 35 : paddingLeft
+		mobilePaddingRight = mobilePaddingRight === '' ? 18 : mobilePaddingRight
+		mobilePaddingLeft = mobilePaddingLeft === '' ? 18 : mobilePaddingLeft
+	}
 
 	return (
 		<Fragment>

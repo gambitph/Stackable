@@ -62,7 +62,10 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 								continue;
 							}
 							if ( ! in_array( $font_name, $google_fonts ) ) {
-								$google_fonts[] = $font_name;
+								// Allow themes to disable enqueuing fonts, helpful for custom fonts.
+								if ( apply_filters( 'stackable_enqueue_font', true, $font_name ) ) {
+									$google_fonts[] = $font_name;
+								}
 							}
 						}
 					}

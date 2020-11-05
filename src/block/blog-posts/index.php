@@ -48,6 +48,7 @@ if ( ! function_exists( 'stackable_blog_posts_block_default_attributes' ) ) {
 			'order' => 'desc',
 			'taxonomyType' => 'category',
 			'taxonomy' => '',
+			'taxonomyFilterType' => '__in',
 			'postOffset' => 0,
 			'postExclude' => '',
 			'postInclude' => '',
@@ -85,8 +86,8 @@ if ( ! function_exists( 'stackable_blog_posts_post_query' ) ) {
 				'orderby' => $attributes['orderBy'],
 				'numberposts' => $attributes['numberOfItems'],
 				'suppress_filters' => false,
-				'category' => $attributes['postType'] === 'post' && $attributes['taxonomyType'] === 'category' ? $attributes['taxonomy'] : '',
-				'tag_id' => $attributes['postType'] === 'post' && $attributes['taxonomyType'] === 'post_tag' ? $attributes['taxonomy'] : '',
+				'category' . $attributes['taxonomyFilterType'] => $attributes['postType'] === 'post' && $attributes['taxonomyType'] === 'category' ? explode( ',', $attributes['taxonomy'] ) : '',
+				'tag' . $attributes['taxonomyFilterType'] => $attributes['postType'] === 'post' && $attributes['taxonomyType'] === 'post_tag' ? explode( ',', $attributes['taxonomy'] ) : '',
 			),
 			$attributes
 		);

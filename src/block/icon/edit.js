@@ -144,15 +144,15 @@ addFilter( 'stackable.icon.edit.inspector.style.before', 'stackable/icon', ( out
 					checked={ titleTop }
 					onChange={ titleTop => setAttributes( { titleTop } ) }
 				/>
+				<HeadingButtonsControl
+					value={ titleTag || 'h5' }
+					onChange={ titleTag => setAttributes( { titleTag } ) }
+				/>
 				<TypographyControlHelper
 					attrNameTemplate="title%s"
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 					htmlTag={ titleTag || 'h5' }
-				/>
-				<HeadingButtonsControl
-					value={ titleTag || 'h5' }
-					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
 				<ColorPaletteControl
 					value={ titleColor }
