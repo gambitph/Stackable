@@ -94,15 +94,79 @@ export const formMediaQuery = ( _devices = [ 'desktop' ], breakTablet = 1025, br
 export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqueClassName = '', breakTablet = 1025, breakMobile = 768, editorMode = false, recursiveCalls = 0 ) => {
 	const styleStrings = []
 
+	/**
+	 * Clean the style object to lessen the amount of style generation, remove
+	 * all styles and rules that are undefined.
+	 *
+	 * styleObject structure that will be cleaned = {
+	 * 		desktopSelector1: { styleRule: value, styleRule2: value },
+	 * 		desktopSelector2: { styles },
+	 * 		...desktopSelectors: { styles },
+	 * 		tablet: {
+	 * 			tabletSelector1: { styles },
+	 * 			...tabletSelectors: { styles },
+	 * 		},
+	 * 		...otherDevicesOrModes: {
+	 * 			...selectors: { styles },
+	 * 		}
+	 * }
+	 *
+	 * For example:
+	 *
+	 * styleObject = {
+	 * 		'.ugb-card__title': {
+	 * 			color: 'red',
+	 * 		},
+	 * 		tablet: {
+	 * 			'.ugb-card__title': {
+	 * 				color: 'red',
+	 * 			},
+	 * 		},
+	 * 		mobile: {
+	 * 			'.ugb-card__title': {
+	 * 				color: 'red',
+	 * 			},
+	 * 		},
+	 * }
+	 */
+	Object.keys( styleObject ).forEach( selector => {
+		// We have deeper level object styles for non-desktop style.
+		if ( [ 'desktopTablet', 'desktopOnly', 'tablet', 'tabletOnly', 'mobile', 'ie11', 'editor' ].includes( selector ) ) {
+			const mediaQuery = selector
+			Object.keys( styleObject[ mediaQuery ] ).forEach( selector => {
+				// Remove undefined properties, undefined means we will not use the style rule.
+				Object.keys( styleObject[ mediaQuery ][ selector ] ).forEach( key =>
+					styleObject[ mediaQuery ][ selector ][ key ] === undefined ? delete styleObject[ mediaQuery ][ selector ][ key ] : {}
+				)
+				// If we end up with an empty selector (no remaining styles), remove it.
+				if ( ! Object.keys( styleObject[ mediaQuery ][ selector ] ).length ) {
+					delete styleObject[ mediaQuery ][ selector ]
+				}
+			} )
+			// If we end up with an empty style set (no remaining styles), remove it.
+			if ( ! Object.keys( styleObject[ mediaQuery ] ).length ) {
+				delete styleObject[ mediaQuery ]
+			}
+		// Desktop selectors.
+		} else {
+			// Remove undefined properties, undefined means we will not use the style rule.
+			Object.keys( styleObject[ selector ] ).forEach( key => styleObject[ selector ][ key ] === undefined ? delete styleObject[ selector ][ key ] : {} )
+			// If we end up with an empty selector (no remaining styles), remove it.
+			if ( ! Object.keys( styleObject[ selector ] ).length ) {
+				delete styleObject[ selector ]
+			}
+		}
+	} )
+
 	const desktopStyles = omit( styleObject, [ 'desktopTablet', 'desktopOnly', 'tablet', 'tabletOnly', 'mobile', 'ie11', 'editor' ] )
 	if ( Object.keys( desktopStyles ).length ) {
 		const cleanedStyles = addBlockClassNames( desktopStyles, blockMainClassName, blockUniqueClassName, editorMode )
-		styleStrings.push( combineStyleRules( cleanedStyles ) )
+		styleStrings.push( combineStyleRules( cleanedStyles, ! editorMode ) )
 	}
 
 	if ( typeof styleObject.desktopTablet !== 'undefined' ) {
 		const cleanedStyles = addBlockClassNames( styleObject.desktopTablet, blockMainClassName, blockUniqueClassName, editorMode )
-		const styleString = combineStyleRules( cleanedStyles )
+		const styleString = combineStyleRules( cleanedStyles, ! editorMode )
 		if ( styleString ) {
 			styleStrings.push( `\n${ formMediaQuery( [ 'desktop', 'tablet' ], breakTablet, breakMobile ) } {\n${ styleString } }` )
 		}
@@ -110,7 +174,7 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 
 	if ( typeof styleObject.desktopOnly !== 'undefined' ) {
 		const cleanedStyles = addBlockClassNames( styleObject.desktopOnly, blockMainClassName, blockUniqueClassName, editorMode )
-		const styleString = combineStyleRules( cleanedStyles )
+		const styleString = combineStyleRules( cleanedStyles, ! editorMode )
 		if ( styleString ) {
 			styleStrings.push( `\n${ formMediaQuery( [ 'desktop' ], breakTablet, breakMobile ) } {\n${ styleString } }` )
 		}
@@ -118,7 +182,7 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 
 	if ( typeof styleObject.tablet !== 'undefined' ) {
 		const cleanedStyles = addBlockClassNames( styleObject.tablet, blockMainClassName, blockUniqueClassName, editorMode )
-		const styleString = combineStyleRules( cleanedStyles )
+		const styleString = combineStyleRules( cleanedStyles, ! editorMode )
 		if ( styleString ) {
 			styleStrings.push( `\n${ formMediaQuery( [ 'mobile', 'tablet' ], breakTablet, breakMobile ) } {\n${ styleString } }` )
 		}
@@ -126,7 +190,7 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 
 	if ( typeof styleObject.tabletOnly !== 'undefined' ) {
 		const cleanedStyles = addBlockClassNames( styleObject.tabletOnly, blockMainClassName, blockUniqueClassName, editorMode )
-		const styleString = combineStyleRules( cleanedStyles )
+		const styleString = combineStyleRules( cleanedStyles, ! editorMode )
 		if ( styleString ) {
 			styleStrings.push( `\n${ formMediaQuery( [ 'tablet' ], breakTablet, breakMobile ) } {\n${ styleString } }` )
 		}
@@ -134,7 +198,7 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 
 	if ( typeof styleObject.mobile !== 'undefined' ) {
 		const cleanedStyles = addBlockClassNames( styleObject.mobile, blockMainClassName, blockUniqueClassName, editorMode )
-		const styleString = combineStyleRules( cleanedStyles )
+		const styleString = combineStyleRules( cleanedStyles, ! editorMode )
 		if ( styleString ) {
 			styleStrings.push( `\n${ formMediaQuery( [ 'mobile' ], breakTablet, breakMobile ) } {\n${ styleString } }` )
 		}
@@ -142,7 +206,7 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 
 	if ( typeof styleObject.ie11 !== 'undefined' ) {
 		const cleanedStyles = addBlockClassNames( styleObject.ie11, blockMainClassName, blockUniqueClassName, editorMode )
-		const styleString = combineStyleRules( cleanedStyles )
+		const styleString = combineStyleRules( cleanedStyles, ! editorMode )
 		if ( styleString ) {
 			styleStrings.push( `\n@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {\n${ styleString } }` )
 		}
@@ -153,7 +217,7 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 		styleStrings.push( generateStyles( styleObject.editor, blockMainClassName, blockUniqueClassName, breakTablet, breakMobile, editorMode, recursiveCalls++ ) )
 	}
 
-	return minifyCSS( styleStrings.join( '' ) )
+	return editorMode ? styleStrings.join( '' ) : minifyCSS( styleStrings.join( '' ) )
 }
 
 const BlockStyles = props => {
