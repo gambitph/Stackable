@@ -102,7 +102,8 @@ const DesignLayoutSelector = props => {
 			{ !! designs.length && (
 				<div className="ugb-design-layout-selector__design-library">
 					<div className="components-placeholder__instructions" >
-						{ __( 'You may also select one of our preset designs from our Design Library.', i18n ) }
+						{ !! layouts.length && __( 'You may also select one of our preset designs from our Design Library.', i18n ) }
+						{ ! layouts.length && __( 'Choose one of our preset designs from our Design Library.', i18n ) }
 					</div>
 					<div className="components-placeholder__fieldset ugb-design-layout-selector__design-container">
 						<div className="ugb-design-layout-selector__design-items">
