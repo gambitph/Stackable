@@ -12,7 +12,6 @@ import classnames from 'classnames'
 import { Fragment, useState } from '@wordpress/element'
 import { Spinner, Dashicon } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
-import { applyFilters } from '@wordpress/hooks'
 
 // List of default layout attributes which will be applied when applying a design.
 export const defaultLayouts = {
@@ -72,7 +71,7 @@ const DesignLibraryListItem = props => {
 					setIsBusy( true )
 					getDesign( designId ).then( designData => {
 						setIsBusy( false )
-						onClick( applyFilters( 'stackable.design-library.design-data', designData ) )
+						onClick( designData )
 					} )
 				} }
 			>

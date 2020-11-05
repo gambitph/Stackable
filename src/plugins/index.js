@@ -1,6 +1,7 @@
 /**
  * Internal dependencies
  */
+import './store-util'
 import './auto-block-recovery'
 import './responsive-preview'
 import './global-settings'

@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n'
 const schema = {
 	design: {
 		type: 'string',
-		default: '',
+		default: 'plain',
 	},
 	columns: {
 		type: 'number',

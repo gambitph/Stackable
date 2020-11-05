@@ -41,7 +41,7 @@ const schema = {
 	},
 	design: {
 		type: 'string',
-		default: '',
+		default: 'basic',
 	},
 	borderRadius: {
 		type: 'number',

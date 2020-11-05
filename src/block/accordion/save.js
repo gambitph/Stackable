@@ -11,7 +11,7 @@ import SVGArrowIcon from './images/arrow.svg'
 import classnames from 'classnames'
 import { BlockContainer, DivBackground } from '~stackable/components'
 import {
-	withBlockStyles, withDesignLayoutSelector, withUniqueClass,
+	withBlockStyles, withUniqueClass,
 } from '~stackable/higher-order'
 
 /**
@@ -96,7 +96,6 @@ const save = props => {
 }
 
 export default compose(
-	withDesignLayoutSelector.Save,
 	withUniqueClass,
 	withBlockStyles( createStyles ),
 )( save )

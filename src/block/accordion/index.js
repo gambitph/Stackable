@@ -30,7 +30,7 @@ import { applyFilters } from '@wordpress/hooks'
 const schema = {
 	design: {
 		type: 'string',
-		default: '',
+		default: 'basic',
 	},
 	borderRadius: {
 		type: 'number',

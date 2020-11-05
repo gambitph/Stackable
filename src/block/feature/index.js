@@ -35,7 +35,7 @@ import { applyFilters } from '@wordpress/hooks'
 export const schema = {
 	design: {
 		type: 'string',
-		default: '',
+		default: 'plain',
 	},
 	...createResponsiveAttributes( 'imageColumn%sWidth', {
 		type: 'number',

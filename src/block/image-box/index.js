@@ -33,7 +33,7 @@ import { disabledBlocks, i18n } from 'stackable'
 export const schema = {
 	design: {
 		type: 'string',
-		default: '',
+		default: 'basic',
 	},
 	columns: {
 		type: 'number',

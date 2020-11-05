@@ -5,7 +5,7 @@ import {
 	BlockContainer, ButtonEditHelper, DivBackground,
 } from '~stackable/components'
 import {
-	withBlockStyles, withDesignLayoutSelector, withUniqueClass,
+	withBlockStyles, withUniqueClass,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
 import { range } from 'lodash'
@@ -127,7 +127,6 @@ const save = props => {
 }
 
 export default compose(
-	withDesignLayoutSelector.Save,
 	withUniqueClass,
 	withBlockStyles( createStyles ),
 )( save )

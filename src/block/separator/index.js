@@ -28,7 +28,7 @@ export const schema = {
 	},
 	design: {
 		type: 'string',
-		default: '',
+		default: 'wave-1',
 	},
 	height: {
 		type: 'number',

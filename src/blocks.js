@@ -59,6 +59,7 @@ const Description = ( { description } ) => {
 			{ block && hasAction( `stackable.design-layout-selector.${ selectedBlockId }` ) && (
 				<div>
 					<Button
+						className="ugb-block-description__button"
 						onClick={ () => {
 							doAction( `stackable.design-layout-selector.${ selectedBlockId }`, true )
 						} }
