@@ -5,7 +5,9 @@
 /**
  * External dependencies
  */
-import { cloneDeep, find } from 'lodash'
+import {
+	omit, cloneDeep, find,
+} from 'lodash'
 
 /**
  * Wordpress dependencies
@@ -39,10 +41,26 @@ const STORE_SELECTORS = {
 
 const STORE_ACTIONS = {
 	// Action used for updating the initial blocks.
-	updateInitialBlocks: ( payload = cloneDeep( select( 'core/block-editor' ).getBlocks() ) ) => ( {
-		type: 'UPDATE_INITIAL_BLOCKS',
-		payload,
-	} ),
+	updateInitialBlocks: ( payload = cloneDeep( select( 'core/block-editor' ).getBlocks() ) ) => {
+		const existingBlocks = []
+
+		const populateExistingBlocksRecursive = blocks => {
+			blocks.forEach( block => {
+				existingBlocks.push( omit( block, 'innerBlocks' ) )
+				// Recursive innerBlocks
+				if ( blocks.innerBlocks.length ) {
+					populateExistingBlocksRecursive( blocks.innerBlocks )
+				}
+			} )
+		}
+
+		populateExistingBlocksRecursive( payload )
+
+		return {
+			type: 'UPDATE_INITIAL_BLOCKS',
+			payload,
+		}
+	},
 	setIsInitializing: payload => ( {
 		type: 'SET_IS_INITIALIZING',
 		payload,
