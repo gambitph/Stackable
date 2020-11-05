@@ -76,7 +76,7 @@ const save = props => {
 						}
 
 						const iconComp = (
-							<IconTag className="ugb-icon__icon" { ...linkProps }>
+							<IconTag key="icon" className="ugb-icon__icon" { ...linkProps }>
 								<SvgIconHelper.Content
 									attrNameTemplate="icon%s"
 									blockAttributes={ props.attributes }
@@ -87,6 +87,7 @@ const save = props => {
 
 						const titleComp = showTitle && ! RichText.isEmpty( title ) && (
 							<RichText.Content
+								key="title"
 								tagName={ titleTag || 'h5' }
 								className="ugb-icon__title"
 								value={ title }

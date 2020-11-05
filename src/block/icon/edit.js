@@ -298,7 +298,7 @@ const Edit = props => {
 						], applyFilters( 'stackable.icon.boxclasses', {}, props ) )
 
 						const iconComp = (
-							<div className="ugb-icon__icon">
+							<div key="icon" className="ugb-icon__icon">
 								<SvgIconPlaceholder
 									attrNameTemplate="icon%s"
 									blockAttributes={ props.attributes }
@@ -311,6 +311,7 @@ const Edit = props => {
 
 						const titleComp = showTitle &&
 							<RichText
+								key="title"
 								tagName={ titleTag || 'h5' }
 								className="ugb-icon__title"
 								value={ title }
