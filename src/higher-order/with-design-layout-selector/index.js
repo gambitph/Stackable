@@ -16,13 +16,41 @@ import {
 	Fragment, useEffect, useState,
 } from '@wordpress/element'
 import {
-	applyFilters, addAction, removeAction, doAction, hasFilter,
+	applyFilters, addAction, removeAction, doAction, hasFilter, addFilter, hasAction,
 } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
 import {
-	Placeholder, Icon, Button, ButtonGroup,
+	Placeholder, Icon, Button, ButtonGroup, BaseControl,
 } from '@wordpress/components'
-import { dispatch, useSelect } from '@wordpress/data'
+import {
+	dispatch, useSelect, select,
+} from '@wordpress/data'
+
+if ( ! hasFilter( 'stackable.with-design-layout-selector.switch-design-panel', 'switch-design-layout' ) ) {
+	addFilter( 'stackable.with-design-layout-selector.switch-design-panel', 'switch-design-layout', () => {
+		const selectedBlockId = select( 'core/block-editor' ).getSelectedBlockClientId()
+		const block = select( 'core/block-editor' ).getBlocksByClientId( selectedBlockId )
+
+		return (
+			<BaseControl>
+				{ block && hasAction( `stackable.design-layout-selector.${ selectedBlockId }` ) && (
+					<div>
+						<Button
+							className="ugb-design-layout-selector__filter_button"
+							onClick={ () => {
+								doAction( `stackable.design-layout-selector.${ selectedBlockId }`, true )
+							} }
+							isSecondary
+							isLarge
+						>
+							{ __( 'Switch design/layout', i18n ) }
+						</Button>
+					</div>
+				) }
+			</BaseControl>
+		)
+	} )
+}
 
 const LayoutDesignSelectorItem = ( {
 	image, active, label, ...otherProps

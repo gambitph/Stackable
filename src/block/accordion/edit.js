@@ -123,6 +123,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 		<Fragment>
 			{ output }
 			<PanelBody title={ __( 'General', i18n ) }>
+				{ applyFilters( 'stackable.with-design-layout-selector.switch-design-panel' ) }
 				<ToggleControl
 					label={ __( 'Close adjacent on open', i18n ) }
 					checked={ onlyOnePanelOpen }

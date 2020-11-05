@@ -85,15 +85,3 @@ svg.ugb-stackable-icon-gradient {
 		}
 	}
 }
-
-.ugb-block-description {
-	margin-bottom: 24px;
-}
-
-.ugb-block-description__button {
-	transition: all 0.3s ease-in-out;
-	&:hover {
-		background-color: var(--wp-admin-theme-color) !important;
-		color: #fff !important;
-	}
-}

@@ -94,3 +94,11 @@
 	border-radius: 2px;
 	text-transform: uppercase;
 }
+
+.ugb-design-layout-selector__filter_button {
+	transition: all 0.3s ease-in-out;
+	&:hover {
+		background-color: var(--wp-admin-theme-color) !important;
+		color: #fff !important;
+	}
+}
