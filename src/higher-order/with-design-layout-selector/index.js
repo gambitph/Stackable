@@ -16,7 +16,7 @@ import {
 	Fragment, useEffect, useState,
 } from '@wordpress/element'
 import {
-	applyFilters, addAction, removeAction, doAction,
+	applyFilters, addAction, removeAction, doAction, hasFilter,
 } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
 import {
@@ -99,7 +99,13 @@ const DesignLayoutSelector = props => {
 						<LayoutDesignSelectorItem
 							onClick={ () => {
 								doAction( `stackable.design-layout-selector.${ props.clientId }`, false )
-								props.setAttributes( { design: layout.value } )
+
+								// Check if a custom filter exists in the block.
+								if ( hasFilter( `stackable.${ name }.edit.inspector.layout.attributes` ) ) {
+									props.setAttributes( applyFilters( `stackable.${ name }.edit.inspector.layout.attributes`, { ...props.attributes, design: layout.value } ) )
+								} else {
+									props.setAttributes( { design: layout.value } )
+								}
 							} }
 							key={ layout.label }
 							active={ selectedLayout === layout.value }
@@ -110,7 +116,7 @@ const DesignLayoutSelector = props => {
 				<div className="ugb-design-layout-selector__design-library">
 					<div className="components-placeholder__instructions" >
 						{ !! layouts.length && __( 'You may also select one of our preset designs from our Design Library.', i18n ) }
-						{ ! layouts.length && __( 'Choose one of our preset designs from our Design Library.', i18n ) }
+						{ ! layouts.length && __( 'You may select one of our preset designs from our Design Library.', i18n ) }
 					</div>
 					<div className="components-placeholder__fieldset ugb-design-layout-selector__design-container">
 						<div className="ugb-design-layout-selector__design-items">
@@ -181,7 +187,7 @@ const withDesignLayoutSelector = createHigherOrderComponent(
 			if ( isExistingBlock === null ) {
 				setIsOpen( true )
 			}
-		}, [ JSON.stringify( isExistingBlock ) ] )
+		}, [ isExistingBlock ] )
 
 		if ( isOpen ) {
 			return <DesignLayoutSelector { ...{

@@ -41,7 +41,9 @@ import { i18n, showProNotice } from 'stackable'
  */
 import { PanelBody, ToggleControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
-import { addFilter, applyFilters } from '@wordpress/hooks'
+import {
+	addFilter, applyFilters,
+} from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { compose, withState } from '@wordpress/compose'
@@ -105,6 +107,18 @@ addFilter( 'stackable.columns.edit.layouts', 'default', layouts => {
 		...layouts,
 		...newLayouts,
 	]
+} )
+
+addFilter( 'stackable.columns.edit.inspector.layout.attributes', 'stackable/columns', attributes => {
+	const {
+		design,
+		columns = 2,
+	} = attributes
+	const columnCount = getColumnCountFromDesign( columns, design )
+	return {
+		design,
+		...COLUMN_DEFAULTS[ columnCount ],
+	}
 } )
 
 addFilter( 'stackable.columns.edit.inspector.layout.before', 'stackable/columns', ( output, props ) => {
@@ -185,11 +199,7 @@ addFilter( 'stackable.columns.edit.inspector.layout.before', 'stackable/columns'
 					label={ __( 'Layouts', i18n ) }
 					options={ applyFilters( 'stackable.columns.edit.layouts', [] ) }
 					onChange={ design => {
-						const columnCount = getColumnCountFromDesign( columns, design )
-						setAttributes( {
-							design,
-							...COLUMN_DEFAULTS[ columnCount ],
-						} )
+						setAttributes( applyFilters( 'stackable.columns.edit.inspector.layout.attributes', { design, columns } ) )
 					} }
 				/>
 				{ showProNotice && <ProControlButton /> }

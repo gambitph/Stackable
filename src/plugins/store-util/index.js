@@ -33,7 +33,7 @@ const STORE_SELECTORS = {
 			return undefined
 		}
 		const block = find( state.initialBlocks, blockEntry => blockEntry.clientId === clientId )
-		return block ? cloneDeep( block ) : null
+		return block ? block.clientId : null
 	},
 }
 
