@@ -76,19 +76,30 @@ const IconSearchPopover = props => {
 
 	// Debounce search.
 	useEffect( () => {
+		let isMounted = true
 		clearTimeout( searchTimeout )
 		searchTimeout = setTimeout( () => {
+			if ( ! isMounted ) {
+				return
+			}
 			setIsBusy( true )
 			searchFontAwesomeIconName( value )
 				.then( results => {
-					setResults( results )
+					if ( isMounted ) {
+						setResults( results )
+					}
 				} )
 				.finally( () => {
-					setIsBusy( false )
+					if ( isMounted ) {
+						setIsBusy( false )
+					}
 				} )
 		}, 500 )
 
-		return () => clearTimeout( searchTimeout )
+		return () => {
+			isMounted = false
+			clearTimeout( searchTimeout )
+		}
 	}, [ value ] )
 
 	// Workaround for Gutenberg. When dropping files on the editor, even
