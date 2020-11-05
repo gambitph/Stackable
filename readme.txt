@@ -197,6 +197,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 = 2.12.0 =
 * New: You can now pick multiple categories / taxonomies in the Blog Posts block
 * New: Improved UX/UI for the block inspector and popups
+* New: Speed improvements when editing block styles
 * Fixed: Now easier to set left/right paddings to zero
 * Fixed: Compatibility issue when coming from a Stackable beta build
 
