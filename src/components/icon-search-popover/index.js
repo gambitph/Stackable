@@ -207,7 +207,7 @@ const IconSearchPopover = props => {
 								label={ __( 'Icon Settings', i18n ) }
 								showTooltip={ true }
 								isSmall
-								isDefault
+								isSecondary
 							/>
 						}
 						{ allowSVGUpload &&
@@ -227,7 +227,7 @@ const IconSearchPopover = props => {
 									props.onClose()
 								} }
 								isSmall
-								isDefault
+								isSecondary
 								className="components-range-control__reset"
 							>
 								{ __( 'Clear icon', i18n ) }

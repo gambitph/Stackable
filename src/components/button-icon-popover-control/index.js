@@ -195,7 +195,7 @@ class ButtonIconPopoverControl extends Component {
 						onClick={ this.handleOpen }
 						className="ugb-button-icon-control__edit"
 						label={ __( 'Edit', i18n ) }
-						isDefault
+						isSecondary
 						icon="edit"
 						id={ `ugb-button-icon-control__edit-${ this.instanceId }` }
 						ref={ this.buttonRef }
