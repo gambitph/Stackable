@@ -140,8 +140,10 @@ const DesignLayoutSelector = props => {
 		const sidebarPanel = document.querySelector( '.block-editor-block-inspector' )
 
 		// Hide the sidebar panel and block tab.
-		blockButtonElement.style.opacity = '0'
-		sidebarPanel.style.opacity = '0'
+		if ( blockButtonElement && sidebarPanel ) {
+			blockButtonElement.style.opacity = '0'
+			sidebarPanel.style.opacity = '0'
+		}
 
 		return () => {
 			if ( blockButtonElement && sidebarPanel ) {
