@@ -93,6 +93,14 @@ const DesignLayoutSelector = props => {
 		const blockButtonElement = document.querySelector( 'button[data-label="Block"]' )
 		const sidebarPanel = document.querySelector( '.block-editor-block-inspector' )
 
+		getDesigns( {
+			type: 'block',
+			block: name,
+		} ).then( designs => {
+			setDesigns( currDesigns => [ ...currDesigns, ...designs ] )
+			setIsBusy( false )
+		} )
+
 		// Hide the sidebar panel and block tab.
 		if ( blockButtonElement && sidebarPanel ) {
 			blockButtonElement.style.opacity = '0'
@@ -114,16 +122,6 @@ const DesignLayoutSelector = props => {
 			doAction( `stackable.design-layout-selector.${ props.clientId }`, ( { isOpen: false } ) )
 		}
 	}, [ isSelectedBlock, isNewlyAddedBlock ] )
-
-	useEffect( () => {
-		getDesigns( {
-			type: 'block',
-			block: name,
-		} ).then( designs => {
-			setDesigns( currDesigns => [ ...currDesigns, ...designs ] )
-			setIsBusy( false )
-		} )
-	}, [ name, setDesigns ] )
 
 	const label = <Fragment><Icon icon="admin-settings" />{ __( 'Pick a layout or design', i18n ) }</Fragment>
 	const classNames = classnames( 'ugb-design-layout-selector', { 'is-busy': isBusy } )
