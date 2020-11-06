@@ -52,7 +52,7 @@ if ( ! function_exists( 'stackable_blog_posts_block_default_attributes' ) ) {
 			'postOffset' => 0,
 			'postExclude' => '',
 			'postInclude' => '',
-			'design' => '',
+			'design' => 'basic',
 			'shadow' => 3,
 			'imageSize' => 'large',
 			'titleTag' => 'h3',

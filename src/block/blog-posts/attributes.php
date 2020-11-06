@@ -26,7 +26,7 @@ if ( ! function_exists( 'stackable_blog_posts_attributes' ) ) {
 		return array (
 			'design' => array(
 				'type' => 'string',
-				'default' => '',
+				'default' => 'basic',
 			),
 			'columns' => array(
 				'type' => 'number',
