@@ -89,7 +89,7 @@ const withDesignLayoutSelector = createHigherOrderComponent(
 			const [ isNewlyAddedBlock, setIsNewlyAddedBlock ] = useState( false )
 
 			useEffect( () => {
-			// Allow control of isOpen from other sources by clientId.
+				// Allow control of isOpen and isNewlyAddedBlock from other sources by clientId.
 				addAction( `stackable.design-layout-selector.${ props.clientId }`, 'toggle', ( { isOpen: newSetIsOpen, isNewlyAddedBlock: newIsNewlyAddedBlock } ) => {
 					if ( newSetIsOpen !== undefined ) {
 						setIsOpen( newSetIsOpen )
