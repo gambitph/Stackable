@@ -30,6 +30,7 @@ import {
 	withTabbedInspector,
 	withContentAlignReseter,
 	withBlockStyles,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
 
@@ -44,6 +45,22 @@ import { Fragment } from '@wordpress/element'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
 import { withSelect } from '@wordpress/data'
+
+addFilter( 'stackable.column.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
+		},
+		{
+			label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
 
 addFilter( 'stackable.column.edit.inspector.layout.before', 'stackable/column', ( output, props ) => {
 	const { setAttributes } = props
@@ -60,14 +77,7 @@ addFilter( 'stackable.column.edit.inspector.layout.before', 'stackable/column', 
 			>
 				<DesignControl
 					selected={ design }
-					options={ applyFilters( 'stackable.column.edit.layouts', [
-						{
-							label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
-						},
-						{
-							label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
-						},
-					] ) }
+					options={ applyFilters( 'stackable.column.edit.layouts', [] ) }
 					onChange={ design => setAttributes( { design } ) }
 				 />
 			</PanelBody>
@@ -104,6 +114,7 @@ addFilter( 'stackable.column.edit.inspector.style.before', 'stackable/column', (
 		<Fragment>
 			{ output }
 			<PanelBody title={ __( 'General', i18n ) }>
+				{ applyFilters( 'stackable.with-design-layout-selector.switch-design-panel' ) }
 				<ResponsiveControl
 					attrNameTemplate="%sColumnContentVerticalAlign"
 					setAttributes={ setAttributes }
@@ -323,6 +334,7 @@ const edit = props => {
 }
 
 export default compose(
+	withDesignLayoutSelector,
 	withUniqueClass,
 	withSetAttributeHook,
 	withGoogleFont,

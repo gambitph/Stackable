@@ -38,6 +38,9 @@ import {
  */
 import BasicDesignImage from './images/basic.png'
 
+// When block is listed, it should not open the selector initially.
+const blocksShouldNotOpenSelectorInitially = [ 'ugb/column' ]
+
 // Filter used for adding a "Layout and Preset Designs" control inside inspector General tab.
 if ( ! hasFilter( 'stackable.with-design-layout-selector.switch-design-panel', 'switch-design-layout' ) ) {
 	addFilter( 'stackable.with-design-layout-selector.switch-design-panel', 'switch-design-layout', () => {
@@ -268,7 +271,7 @@ const withDesignLayoutSelector = createHigherOrderComponent(
 
 		// Close the selector when the block is not already selected.
 		useEffect( () => {
-			if ( ! isNewlyAddedBlock && isSelectedBlock !== props.clientId ) {
+			if ( isSelectedBlock !== props.clientId ) {
 				setIsOpen( false )
 			}
 		}, [ isSelectedBlock ] )
@@ -293,7 +296,7 @@ const withDesignLayoutSelector = createHigherOrderComponent(
 		// Side effect for isExistingBlock.
 		useEffect( () => {
 			// When the editor recognizes that the block is newly added, show the selector.
-			if ( isExistingBlock === null ) {
+			if ( isExistingBlock === null && blocksShouldNotOpenSelectorInitially.every( name => name !== props.name ) ) {
 				setIsOpen( true )
 				setIsNewlyAddedBlock( true )
 			}
