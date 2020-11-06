@@ -89,7 +89,7 @@ if ( ! function_exists( 'stackable_blog_posts_post_query' ) ) {
 
 		if ( ! empty( $attributes['taxonomy'] ) ) {
         	$passedAttributes[ 'category' . $attributes['taxonomyFilterType'] ] = $attributes['postType'] === 'post' && $attributes['taxonomyType'] === 'category' ? explode( ',', $attributes['taxonomy'] ) : '';
-        	$passedAttributes['tag' . $attributes['taxonomyFilterType']] = $attributes['postType'] === 'post' && $attributes['taxonomyType'] === 'post_tag' ? explode( ',', $attributes['taxonomy'] ) : '';
+        	$passedAttributes[ 'tag' . $attributes['taxonomyFilterType'] ] = $attributes['postType'] === 'post' && $attributes['taxonomyType'] === 'post_tag' ? explode( ',', $attributes['taxonomy'] ) : '';
     	}
 
 		return apply_filters( 'stakckable/blog-post/post_query',
