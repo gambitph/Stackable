@@ -39,7 +39,9 @@ import {
 import BasicDesignImage from './images/basic.png'
 
 // When block is listed, it should not open the selector initially.
-const blocksShouldNotOpenSelectorInitially = [ 'ugb/column' ]
+const blocksShouldNotOpenSelectorInitially = [
+	'ugb/column', // When adding a column block, don't show the layout/design selector initially.
+]
 
 // Filter used for adding a "Layout and Preset Designs" control inside inspector General tab.
 if ( ! hasFilter( 'stackable.with-design-layout-selector.switch-design-panel', 'switch-design-layout' ) ) {
