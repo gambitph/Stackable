@@ -263,48 +263,57 @@ const DesignLayoutSelector = props => {
 }
 
 const withDesignLayoutSelector = createHigherOrderComponent(
-	WrappedComponent => props => {
-		const [ isOpen, setIsOpen ] = useState( false )
-		const name = props.name.split( '/' )[ 1 ]
-		const layouts = applyFilters( `stackable.${ name }.edit.layouts`, [] )
-		const { isExistingBlock, isSelectedBlock } = useSelect( select => ( {
-			isExistingBlock: select( 'stackable/util' ).getInitialBlockClientId( props.clientId ),
-			isSelectedBlock: select( 'core/block-editor' ).getSelectedBlockClientId(),
-		} ) )
-		const [ isNewlyAddedBlock, setIsNewlyAddedBlock ] = useState( false )
+	WrappedComponent => {
+		const NewComponent = props => {
+			const [ isOpen, setIsOpen ] = useState( false )
+			const name = props.name.split( '/' )[ 1 ]
+			const layouts = applyFilters( `stackable.${ name }.edit.layouts`, [] )
+			const { isExistingBlock, isSelectedBlock } = useSelect( select => ( {
+				isExistingBlock: select( 'stackable/util' ).getInitialBlockClientId( props.clientId ),
+				isSelectedBlock: select( 'core/block-editor' ).getSelectedBlockClientId(),
+			} ) )
+			const [ isNewlyAddedBlock, setIsNewlyAddedBlock ] = useState( false )
 
-		useEffect( () => {
+			useEffect( () => {
 			// Allow control of isOpen from other sources by clientId.
-			addAction( `stackable.design-layout-selector.${ props.clientId }`, 'toggle', ( { isOpen: newSetIsOpen, isNewlyAddedBlock: newIsNewlyAddedBlock } ) => {
-				if ( newSetIsOpen !== undefined ) {
-					setIsOpen( newSetIsOpen )
+				addAction( `stackable.design-layout-selector.${ props.clientId }`, 'toggle', ( { isOpen: newSetIsOpen, isNewlyAddedBlock: newIsNewlyAddedBlock } ) => {
+					if ( newSetIsOpen !== undefined ) {
+						setIsOpen( newSetIsOpen )
+					}
+
+					if ( newIsNewlyAddedBlock !== undefined ) {
+						setIsNewlyAddedBlock( newIsNewlyAddedBlock )
+					}
+				} )
+
+				return () => {
+					removeAction( `stackable.design-layout-selector.${ props.clientId }`, 'toggle' )
 				}
+			}, [] )
 
-				if ( newIsNewlyAddedBlock !== undefined ) {
-					setIsNewlyAddedBlock( newIsNewlyAddedBlock )
-				}
-			} )
-
-			return () => {
-				removeAction( `stackable.design-layout-selector.${ props.clientId }`, 'toggle' )
-			}
-		}, [] )
-
-		// Side effect for isExistingBlock.
-		useEffect( () => {
+			// Side effect for isExistingBlock.
+			useEffect( () => {
 			// When the editor recognizes that the block is newly added, show the selector.
-			if ( isExistingBlock === null && blocksShouldNotOpenSelectorInitially.every( name => name !== props.name ) ) {
-				setIsOpen( true )
-				setIsNewlyAddedBlock( true )
-			}
-		}, [ isExistingBlock ] )
+				if ( isExistingBlock === null && blocksShouldNotOpenSelectorInitially.every( name => name !== props.name ) ) {
+					setIsOpen( true )
+					setIsNewlyAddedBlock( true )
+				}
+			}, [ isExistingBlock ] )
 
-		if ( isOpen ) {
-			return <DesignLayoutSelector { ...{
-				...props, name, layouts, isNewlyAddedBlock, isSelectedBlock,
-			} } />
+			if ( isOpen ) {
+				return <DesignLayoutSelector { ...{
+					...props, name, layouts, isNewlyAddedBlock, isSelectedBlock,
+				} } />
+			}
+			return <WrappedComponent { ...props } />
 		}
-		return <WrappedComponent { ...props } />
+
+		NewComponent.defaultProps = {
+			name: '',
+			attributes: {},
+		}
+
+		return NewComponent
 	},
 	'withDesignLayoutSelector'
 )
