@@ -47,15 +47,19 @@ const DesignLayoutSelectorItem = ( {
 		'is-premium': ! isPro && otherProps.plan === 'premium',
 	} )
 
+	const premiumTag = otherProps.plan && ! isPro && otherProps.plan !== 'free' && (
+		<span className="ugb-design-layout-selector__premium">{ otherProps.plan }</span>
+	)
+
+	const renderLabel = label && <span className="ugb-design-layout-selector__label">{ label }</span>
+
 	return (
 		<li className={ itemClassNames } { ...otherProps }>
 			<Button className="ugb-design-layout-selector__item-button">
-				{ otherProps.plan && ! isPro && otherProps.plan !== 'free' && (
-					<span className="ugb-design-layout-selector__premium">{ otherProps.plan }</span>
-				) }
+				{ premiumTag }
 				{ src && <img className={ imgClassNames } src={ src } alt={ label } /> }
 			</Button>
-			{ label && <span className="ugb-design-layout-selector__label">{ label }</span> }
+			{ renderLabel }
 		</li>
 	)
 }
@@ -66,6 +70,13 @@ DesignLayoutSelectorItem.defaultProps = {
 	className: '',
 }
 
+const basicDesign = {
+	image: BasicDesignImage,
+	plan: 'free',
+	label: 'Basic',
+	id: 'basic',
+}
+
 const DesignLayoutSelector = props => {
 	const {
 		name,
@@ -73,23 +84,10 @@ const DesignLayoutSelector = props => {
 		isNewlyAddedBlock,
 		isSelectedBlock,
 	} = props
-	const basicDesign = {
-		image: BasicDesignImage,
-		plan: 'free',
-		label: 'Basic',
-		id: 'basic',
-	}
-	const [ designs, setDesigns ] = useState( layouts.length ? [] : isNewlyAddedBlock ? [ basicDesign ] : [] )
-	const [ isBusy, setIsBusy ] = useState( true )
 	const selectedLayout = props.attributes.design
 
-	// Close the selector when the block is not already selected.
-	useEffect( () => {
-		if ( isSelectedBlock !== props.clientId ) {
-			// Close the layout selector.
-			doAction( `stackable.design-layout-selector.${ props.clientId }`, ( { isOpen: false } ) )
-		}
-	}, [ isSelectedBlock, isNewlyAddedBlock ] )
+	const [ designs, setDesigns ] = useState( layouts.length ? [] : isNewlyAddedBlock ? [ basicDesign ] : [] )
+	const [ isBusy, setIsBusy ] = useState( true )
 
 	useEffect( () => {
 		const blockButtonElement = document.querySelector( 'button[data-label="Block"]' )
@@ -109,6 +107,14 @@ const DesignLayoutSelector = props => {
 		}
 	}, [] )
 
+	// Close the selector when the block is not already selected.
+	useEffect( () => {
+		if ( isSelectedBlock !== props.clientId ) {
+			// Close the layout selector.
+			doAction( `stackable.design-layout-selector.${ props.clientId }`, ( { isOpen: false } ) )
+		}
+	}, [ isSelectedBlock, isNewlyAddedBlock ] )
+
 	useEffect( () => {
 		getDesigns( {
 			type: 'block',
@@ -122,25 +128,103 @@ const DesignLayoutSelector = props => {
 	const label = <Fragment><Icon icon="admin-settings" />{ __( 'Pick a layout or design', i18n ) }</Fragment>
 	const classNames = classnames( 'ugb-design-layout-selector', { 'is-busy': isBusy } )
 
-	// Function for handling the switching designs.
-	const handleSwitchDesign = designData => {
-		const {
-			attributes,
-		} = designData
-
-		// Refetch the initial blocks. Include the currently added block.
-		dispatch( 'stackable/util' ).updateInitialBlocks()
-		setIsBusy( false )
-
-		// Close the layout selector
-		doAction( `stackable.design-layout-selector.${ props.clientId }`, ( { isOpen: false, isNewlyAddedBlock: false } ) )
-
-		// Apply the block design.
-		applyBlockDesign( attributes, props.clientId )
-	}
-
 	const layoutInstructions = isNewlyAddedBlock ? __( 'Select a variation to start with.', i18n ) : __( 'Select a variation.', i18n )
 	const designInstructions = isNewlyAddedBlock ? __( 'Select a design from our library to start with.', i18n ) : __( 'Select a design from our library.', i18n )
+
+	const layoutItems = !! layouts.length && (
+		<ul className="ugb-design-layout-selector__layout-items">
+			{ ( layouts || [] ).map( layout => (
+				<DesignLayoutSelectorItem
+					className="ugb-design-layout-selector__layout-item"
+					onClick={ () => {
+						// Close the layout selector.
+						doAction( `stackable.design-layout-selector.${ props.clientId }`, ( { isOpen: false, isNewlyAddedBlock: false } ) )
+						// Manually trigger the setAttributes filter.
+						const newAttributes = applyFilters( `stackable.${ name }.setAttributes`, {
+							...props.attributes,
+							design: layout.value,
+						},
+						props )
+
+						// Check if a custom filter exists in the block.
+						if ( hasFilter( `stackable.${ name }.edit.inspector.layout.attributes` ) ) {
+							props.setAttributes( applyFilters( `stackable.${ name }.edit.inspector.layout.attributes`, newAttributes ) )
+						} else {
+							props.setAttributes( { design: layout.value } )
+						}
+
+						dispatch( 'stackable/util' ).updateInitialBlocks()
+					} }
+
+					key={ layout.label }
+					{ ...layout }
+				/>
+			) ) }
+		</ul>
+	)
+
+	const designItems = !! designs.length && (
+		<div className="ugb-design-layout-selector__design-library">
+			<div className="components-placeholder__instructions" >
+				{ !! layouts.length && __( 'Or pick from our Design Library.', i18n ) }
+				{ ! layouts.length && designInstructions }
+			</div>
+			<div className="components-placeholder__fieldset ugb-design-layout-selector__design-container">
+				<ul className="ugb-design-layout-selector__design-items">
+					{ ( designs || [] ).map( design => {
+						const passedProps = {
+							image: design.image,
+							plan: design.plan,
+						}
+						return (
+							<DesignLayoutSelectorItem
+								className="ugb-design-layout-selector__design-item"
+								onClick={ () => {
+									// Should not be selected if not premium user
+									if ( ! isPro && design.plan !== 'free' ) {
+										return
+									}
+
+									setIsBusy( true )
+
+									// If chosen design is basic, just close the layout selector.
+									if ( design.id === 'basic' ) {
+										setIsBusy( false )
+										// Close the layout selector
+										doAction( `stackable.design-layout-selector.${ props.clientId }`, ( { isOpen: false, isNewlyAddedBlock: false } ) )
+										return
+									}
+
+									getDesign( design.id )
+										.then( designData => {
+											const {
+												attributes,
+											} = designData
+
+											setIsBusy( false )
+
+											// Refetch the initial blocks. Include the currently added block.
+											dispatch( 'stackable/util' ).updateInitialBlocks()
+
+											// Close the layout selector
+											doAction( `stackable.design-layout-selector.${ props.clientId }`, ( { isOpen: false, isNewlyAddedBlock: false } ) )
+
+											// Apply the block design.
+											applyBlockDesign( attributes, props.clientId )
+										} )
+										.catch( () => {
+											setIsBusy( false )
+										} )
+								} }
+
+								key={ design.label }
+								{ ...passedProps } />
+						)
+					} ) }
+				</ul>
+			</div>
+		</div>
+	)
 
 	return (
 		<Placeholder
@@ -148,70 +232,8 @@ const DesignLayoutSelector = props => {
 			label={ label }
 			instructions={ !! layouts.length && layoutInstructions }
 		>
-			{ !! layouts.length && (
-				<ul className="ugb-design-layout-selector__layout-items">
-					{ ( layouts || [] ).map( layout => (
-						<DesignLayoutSelectorItem
-							className="ugb-design-layout-selector__layout-item"
-							onClick={ () => {
-								doAction( `stackable.design-layout-selector.${ props.clientId }`, ( { isOpen: false, isNewlyAddedBlock: false } ) )
-								// Manually trigger the setAttributes filter.
-								const newAttributes = applyFilters( `stackable.${ name }.setAttributes`, { ...props.attributes, design: layout.value }, props )
-
-								// Check if a custom filter exists in the block.
-								if ( hasFilter( `stackable.${ name }.edit.inspector.layout.attributes` ) ) {
-									props.setAttributes( applyFilters( `stackable.${ name }.edit.inspector.layout.attributes`, { ...newAttributes, design: layout.value } ) )
-								} else {
-									props.setAttributes( { design: layout.value } )
-								}
-								dispatch( 'stackable/util' ).updateInitialBlocks()
-							} }
-							key={ layout.label }
-							{ ...layout }
-						/>
-					) ) }
-				</ul>
-			) }
-			{ !! designs.length && (
-				<div className="ugb-design-layout-selector__design-library">
-					<div className="components-placeholder__instructions" >
-						{ !! layouts.length && __( 'Or pick from our Design Library.', i18n ) }
-						{ ! layouts.length && designInstructions }
-					</div>
-					<div className="components-placeholder__fieldset ugb-design-layout-selector__design-container">
-						<ul className="ugb-design-layout-selector__design-items">
-							{ ( designs || [] ).map( design => {
-								const passedProps = {
-									image: design.image,
-									plan: design.plan,
-								}
-								return (
-									<DesignLayoutSelectorItem
-										className="ugb-design-layout-selector__design-item"
-										onClick={ () => {
-											// Should not be selected if not premium user
-											if ( ! isPro && design.plan !== 'free' ) {
-												return
-											}
-											setIsBusy( true )
-											if ( design.id === 'basic' ) {
-												setIsBusy( false )
-												// Close the layout selector
-												doAction( `stackable.design-layout-selector.${ props.clientId }`, ( { isOpen: false, isNewlyAddedBlock: false } ) )
-												return
-											}
-											getDesign( design.id ).then( handleSwitchDesign ).catch( () => {
-												setIsBusy( false )
-											} )
-										} }
-										key={ design.label }
-										{ ...passedProps } />
-								)
-							} ) }
-						</ul>
-					</div>
-				</div>
-			) }
+			{ layoutItems }
+			{ designItems }
 			<div className="ugb-design-layout-selector__open-design-library">
 				<ButtonGroup>
 					{ selectedLayout !== '' && (

@@ -57,6 +57,7 @@ if ( ! hasFilter( 'stackable.with-design-layout-selector.switch-design-panel', '
 					<Icon icon="info-outline" />
 					<p>{ __( 'You may switch your layout or choose a preset design from our Design Library here.', i18n ) }</p>
 				</div>
+
 				{ block && hasAction( `stackable.design-layout-selector.${ selectedBlockId }` ) && (
 					<div className="ugb-design-layout-selector__filter-button-group">
 						<Button
@@ -71,6 +72,7 @@ if ( ! hasFilter( 'stackable.with-design-layout-selector.switch-design-panel', '
 						</Button>
 					</div>
 				) }
+
 			</BaseControl>
 		)
 	} )
@@ -79,14 +81,17 @@ if ( ! hasFilter( 'stackable.with-design-layout-selector.switch-design-panel', '
 const withDesignLayoutSelector = createHigherOrderComponent(
 	WrappedComponent => {
 		const NewComponent = props => {
-			const [ isOpen, setIsOpen ] = useState( false )
 			const name = props.name.split( '/' )[ 1 ]
-			const layouts = applyFilters( `stackable.${ name }.edit.layouts`, [] )
+
+			const [ isOpen, setIsOpen ] = useState( false )
+			const [ isNewlyAddedBlock, setIsNewlyAddedBlock ] = useState( false )
+
 			const { isExistingBlock, isSelectedBlock } = useSelect( select => ( {
 				isExistingBlock: select( 'stackable/util' ).getInitialBlockClientId( props.clientId ),
 				isSelectedBlock: select( 'core/block-editor' ).getSelectedBlockClientId(),
 			} ) )
-			const [ isNewlyAddedBlock, setIsNewlyAddedBlock ] = useState( false )
+
+			const layouts = applyFilters( `stackable.${ name }.edit.layouts`, [] )
 
 			useEffect( () => {
 				// Allow control of isOpen and isNewlyAddedBlock from other sources by clientId.
@@ -114,12 +119,19 @@ const withDesignLayoutSelector = createHigherOrderComponent(
 				}
 			}, [ isExistingBlock ] )
 
-			if ( isOpen ) {
-				return <DesignLayoutSelector { ...{
-					...props, name, layouts, isNewlyAddedBlock, isSelectedBlock,
-				} } />
+			if ( ! isOpen ) {
+				return <WrappedComponent { ...props } />
 			}
-			return <WrappedComponent { ...props } />
+
+			const passedProps = {
+				...props,
+				name,
+				layouts,
+				isNewlyAddedBlock,
+				isSelectedBlock,
+			}
+
+			return <DesignLayoutSelector { ...passedProps } />
 		}
 
 		NewComponent.defaultProps = {
