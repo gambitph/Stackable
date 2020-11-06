@@ -104,6 +104,12 @@ const LayoutDesignSelectorItem = ( {
 	)
 }
 
+LayoutDesignSelectorItem.defaultProps = {
+	name: '',
+	label: '',
+	className: '',
+}
+
 const DesignLayoutSelector = props => {
 	const {
 		name,
@@ -260,6 +266,13 @@ const DesignLayoutSelector = props => {
 			</div>
 		</Placeholder>
 	)
+}
+
+DesignLayoutSelector.defaultProps = {
+	name: '',
+	layouts: [],
+	isNewlyAddedBlock: false,
+	isSelectedBlock: true,
 }
 
 const withDesignLayoutSelector = createHigherOrderComponent(
