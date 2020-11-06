@@ -14,6 +14,9 @@
 // Make sure our popover is still below custom color pickers.
 .components-popover.ugb-button-icon-control__popover {
 	z-index: 100000;
+	.components-popover__content {
+		width: 290px;
+	}
 }
 .ugb-button-icon-control__popover .components-panel__body-title {
 	padding: 15px !important;

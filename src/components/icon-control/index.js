@@ -32,7 +32,7 @@ const IconControl = withInstanceId( withState( {
 			<div className="ugb-icon-control__wrapper">
 				<div className="ugb-icon-control__button-wrapper">
 					<Button
-						isDefault
+						isSecondary
 						className="ugb-icon-control__icon-button"
 						onClick={ () => {
 							if ( ! clickedOnButton ) {
@@ -82,7 +82,7 @@ const IconControl = withInstanceId( withState( {
 						setState( { openPopover: false } )
 					} }
 					isSmall
-					isDefault
+					isSecondary
 					className="components-range-control__reset"
 				>
 					{ __( 'Reset', i18n ) }

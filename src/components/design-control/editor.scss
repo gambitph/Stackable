@@ -18,18 +18,18 @@
 		text-align: center;
 	}
 	label > span {
-		padding: 5px;
+		padding: 4px;
 		display: block;
-		border-radius: 8px;
+		border-radius: 0;
 		> img {
 			border-radius: 4px;
 		}
 	}
 	input:checked + label > span {
-		box-shadow: inset 0 0 0 2px #888;
+		box-shadow: inset 0 0 0 1px #1e1e1e;
 	}
-	input:not(:checked) + label > span:hover {
-		box-shadow: inset 0 0 0 2px #f1f1f1;
+	input + label > span:hover {
+		background: #f0f0f0;
 	}
 
 	.design-label {
@@ -44,6 +44,13 @@
 	.ugb-design-control {
 		.components-radio-control__option {
 			width: 33.3%;
+		}
+	}
+}
+.ugb-design-control--columns-4 {
+	.ugb-design-control {
+		.components-radio-control__option {
+			width: 25%;
 		}
 	}
 }

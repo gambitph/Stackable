@@ -30,8 +30,6 @@ const edit = ( { replaceBlockWithAttributes, replaceBlocWithContent } ) => {
 			>
 				<Button
 					isSecondary
-					isLarge
-					hasIcon
 					className="ugb-design-library-block__button"
 					onClick={ () => {
 						setIsLibraryOpen( true )

@@ -19,18 +19,23 @@ const getImageSizeOptions = imageSizes => {
 	return map( imageSizes, ( { name, slug } ) => ( { value: slug, label: name } ) )
 }
 
-const ImageSizeControl = props => {
-	const imageSizeOptions = getImageSizeOptions( props.imageSizes )
+const ImageSizeControl = ( {
+	imageSizes,
+	value,
+	className,
+	...propsToPass
+} ) => {
+	const imageSizeOptions = getImageSizeOptions( imageSizes )
 
 	if ( isEmpty( imageSizeOptions ) ) {
 		return null
 	}
 
 	return <SelectControl
-		{ ...props }
-		value={ props.value || 'large' }
+		{ ...propsToPass }
+		value={ value || 'large' }
 		options={ imageSizeOptions }
-		className={ classnames( props.className, [ 'ugb--help-tip-image-size' ] ) }
+		className={ classnames( className, [ 'ugb--help-tip-image-size' ] ) }
 	/>
 }
 
@@ -38,6 +43,7 @@ ImageSizeControl.defaultProps = {
 	className: '',
 	label: __( 'Image Size' ),
 	value: 'large',
+	imageSizes: [],
 	onChange: () => {},
 }
 

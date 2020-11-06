@@ -39,7 +39,6 @@ const BackgroundControls = props => {
 		<Fragment>
 			{ props.onChangeBackgroundColorType && (
 				<BaseControl
-					label={ props.labelBackgroundColorType }
 					id="ugb-background-color-type"
 					className="ugb--help-tip-background-color-type"
 				>
@@ -56,6 +55,8 @@ const BackgroundControls = props => {
 						] }
 						value={ props.backgroundColorType }
 						onChange={ props.onChangeBackgroundColorType }
+						fullwidth={ false }
+						isSmall={ true }
 					/>
 				</BaseControl>
 			) }

@@ -3,7 +3,6 @@ $padding: 16px;
 .ugb-design-control {
 	max-height: 40vh;
 	overflow-y: auto;
-	padding: 0 $padding;
 	.components-base-control__label {
 		margin-left: #{ -$padding };
 		margin-right: #{ -$padding };

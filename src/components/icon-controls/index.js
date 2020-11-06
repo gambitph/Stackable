@@ -83,16 +83,18 @@ const IconControls = props => {
 								value: 'gradient',
 								title: __( 'Gradient', i18n ),
 								className: 'ugb--is-premium',
-								isDisabled: true,
+								disabled: true,
 							},
 							{
 								value: 'multicolor',
 								title: __( 'Multicolor', i18n ),
 								className: 'ugb--is-premium',
-								isDisabled: true,
+								disabled: true,
 							},
 						] }
 						value=""
+						fullwidth={ false }
+						isSmall={ true }
 					/>
 				</BaseControl>
 			}
@@ -133,10 +135,12 @@ const IconControls = props => {
 										value: 'gradient',
 										title: __( 'Gradient', i18n ),
 										className: 'ugb--is-premium',
-										isDisabled: true,
+										disabled: true,
 									},
 								] }
 								value=""
+								fullwidth={ false }
+								isSmall={ true }
 							/>
 						</BaseControl>
 					}

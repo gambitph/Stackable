@@ -127,12 +127,12 @@ class DeprecatedTester extends Component {
 					<p className="components-base-control__help">
 						{ __( 'When Stackable blocks are updated, block internal workings may change & editing existing blocks may result in errors if the changes are not backward compatible. This area tests multiple outdated blocks on whether they can migrate properly to newer versions.', i18n ) }
 					</p>
-					<Button className="ugb-deprecated-tester__load-button" isDefault={ true } onClick={ this.onClick } disabled={ this.state.isLoading }>
+					<Button className="ugb-deprecated-tester__load-button" isSecondary={ true } onClick={ this.onClick } disabled={ this.state.isLoading }>
 						<Dashicon icon="image-rotate" size="12" />
 						{ __( 'Load Tests from Server', i18n ) }
 					</Button>
 					{ process.env.NODE_ENV === 'development' && (
-						<Button className="ugb-deprecated-tester__load-button" isDefault={ true } onClick={ this.onClickLocal } disabled={ this.state.isLoading }>
+						<Button className="ugb-deprecated-tester__load-button" isSecondary={ true } onClick={ this.onClickLocal } disabled={ this.state.isLoading }>
 							<Dashicon icon="image-rotate" size="12" />
 							{ __( 'Load Tests from Local', i18n ) }
 						</Button>
@@ -155,11 +155,11 @@ class DeprecatedTester extends Component {
 							<div key={ i } className="ugb-deprecated-tester--row">
 								<span className="ugb-deprecated-tester--name">
 									{ blockName }
-									<Button isDefault={ false } icon="editor-help" onClick={ () => this.onShowToggle( blockName ) } />
+									<Button isSecondary={ false } icon="editor-help" onClick={ () => this.onShowToggle( blockName ) } />
 								</span>
 								<span className={ numTests === numPassed ? 'ugb--green' : '' }>
 									{ sprintf( __( '%d / %d Tests', i18n ), numPassed, numTests ) }
-									<Button isDefault={ false } onClick={ () => this.onRunTest( blockName ) } icon="controls-play" />
+									<Button isSecondary={ false } onClick={ () => this.onRunTest( blockName ) } icon="controls-play" />
 								</span>
 							</div>
 							{ this.state.show.includes( blockName ) && (
@@ -181,7 +181,7 @@ class DeprecatedTester extends Component {
 												<div className="ugb-deprecated-tester--test-details">
 													<small className="ugb--version">{ sprintf( __( 'v%s', i18n ), test.version ) }</small>
 													{ test.plan && <small className={ `ugb--plan ugb--plan-${ test.plan }` }>{ test.plan }</small> }
-													<ClipboardButton isDefault={ false } isLink text={ copiedHTML }>{ __( 'Copy code', i18n ) }</ClipboardButton>
+													<ClipboardButton isSecondary={ false } isLink text={ copiedHTML }>{ __( 'Copy code', i18n ) }</ClipboardButton>
 													{ test.skip && <small className="ugb--skipped-note"><span role="img" aria-label={ __( 'Note', i18n ) }>⚠️</span> { test.skip }</small> }
 												</div>
 											</div>
