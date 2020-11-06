@@ -140,6 +140,7 @@ const DesignLayoutSelector = props => {
 	}
 
 	const layoutInstructions = isNewlyAddedBlock ? __( 'Select a variation to start with.', i18n ) : __( 'Select a variation.', i18n )
+	const designInstructions = isNewlyAddedBlock ? __( 'Select a design from our library to start with.', i18n ) : __( 'Select a design from our library.', i18n )
 
 	return (
 		<Placeholder
@@ -175,8 +176,7 @@ const DesignLayoutSelector = props => {
 				<div className="ugb-design-layout-selector__design-library">
 					<div className="components-placeholder__instructions" >
 						{ !! layouts.length && __( 'Or pick from our Design Library.', i18n ) }
-						{ ! layouts.length && isNewlyAddedBlock && __( 'Select a design from our library to start with.', i18n ) }
-						{ ! layouts.length && ! isNewlyAddedBlock && __( 'Select a design from our library.', i18n ) }
+						{ ! layouts.length && designInstructions }
 					</div>
 					<div className="components-placeholder__fieldset ugb-design-layout-selector__design-container">
 						<ul className="ugb-design-layout-selector__design-items">
