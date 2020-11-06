@@ -109,6 +109,7 @@ const DesignLayoutSelector = props => {
 		name,
 		layouts,
 		isNewlyAddedBlock,
+		isSelectedBlock,
 	} = props
 	const basicDesign = {
 		image: BasicDesignImage,
@@ -120,23 +121,26 @@ const DesignLayoutSelector = props => {
 	const [ isBusy, setIsBusy ] = useState( true )
 	const selectedLayout = props.attributes.design
 
+	// Close the selector when the block is not already selected.
 	useEffect( () => {
-		// Hide the inspector tab content when selector is active.
-		const blockButtonElement = document.querySelector( 'button[aria-label="Block (selected)"]' )
-		const sidebarPanel = document.querySelector( '.block-editor-block-inspector' )
-		let blockButtonDisplay, sidebarPanelDisplay
-		if ( sidebarPanel && blockButtonElement ) {
-			blockButtonDisplay = blockButtonElement.style.display
-			sidebarPanelDisplay = sidebarPanel.style.display
-			blockButtonElement.style.display = 'none'
-			sidebarPanel.style.display = 'none'
+		if ( isSelectedBlock !== props.clientId ) {
+			// Close the layout selector.
+			doAction( `stackable.design-layout-selector.${ props.clientId }`, ( { isOpen: false } ) )
 		}
+	}, [ isSelectedBlock, isNewlyAddedBlock ] )
 
-		// Cleanup. Show the inspector panel.
+	useEffect( () => {
+		const blockButtonElement = document.querySelector( 'button[data-label="Block"]' )
+		const sidebarPanel = document.querySelector( '.block-editor-block-inspector' )
+
+		// Hide the sidebar panel and block tab.
+		blockButtonElement.style.opacity = '0'
+		sidebarPanel.style.opacity = '0'
+
 		return () => {
-			if ( sidebarPanel && blockButtonElement ) {
-				blockButtonElement.style.display = blockButtonDisplay
-				sidebarPanel.style.display = sidebarPanelDisplay
+			if ( blockButtonElement && sidebarPanel ) {
+				blockButtonElement.style.opacity = '1'
+				sidebarPanel.style.opacity = '1'
 			}
 		}
 	}, [] )
@@ -269,13 +273,6 @@ const withDesignLayoutSelector = createHigherOrderComponent(
 		} ) )
 		const [ isNewlyAddedBlock, setIsNewlyAddedBlock ] = useState( false )
 
-		// Close the selector when the block is not already selected.
-		useEffect( () => {
-			if ( isSelectedBlock !== props.clientId ) {
-				setIsOpen( false )
-			}
-		}, [ isSelectedBlock ] )
-
 		useEffect( () => {
 			// Allow control of isOpen from other sources by clientId.
 			addAction( `stackable.design-layout-selector.${ props.clientId }`, 'toggle', ( { isOpen: newSetIsOpen, isNewlyAddedBlock: newIsNewlyAddedBlock } ) => {
@@ -304,7 +301,7 @@ const withDesignLayoutSelector = createHigherOrderComponent(
 
 		if ( isOpen ) {
 			return <DesignLayoutSelector { ...{
-				...props, name, layouts, isNewlyAddedBlock,
+				...props, name, layouts, isNewlyAddedBlock, isSelectedBlock,
 			} } />
 		}
 		return <WrappedComponent { ...props } />
