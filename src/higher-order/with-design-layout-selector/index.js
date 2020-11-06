@@ -107,7 +107,7 @@ const withDesignLayoutSelector = createHigherOrderComponent(
 
 			// Side effect for isExistingBlock.
 			useEffect( () => {
-			// When the editor recognizes that the block is newly added, show the selector.
+				// When the editor recognizes that the block is newly added, show the selector.
 				if ( isExistingBlock === null && blocksShouldNotOpenSelectorInitially.every( name => name !== props.name ) ) {
 					setIsOpen( true )
 					setIsNewlyAddedBlock( true )
@@ -123,6 +123,7 @@ const withDesignLayoutSelector = createHigherOrderComponent(
 		}
 
 		NewComponent.defaultProps = {
+			...( WrappedComponent.defaultProps || {} ),
 			name: '',
 			attributes: {},
 		}
