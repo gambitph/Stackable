@@ -106,10 +106,15 @@ class TaxonomyControl extends Component {
 
 		const taxonomySuggestionOptions = taxonomyOptions.map( value => value.name )
 		// Parse the taxonomy value to array as passed prop value.
-		const taxonomyValue = taxonomy !== '' ? taxonomy.split( ',' ).map( value => {
+		let taxonomyValue = taxonomy !== '' ? taxonomy.split( ',' ).map( value => {
 			const { name } = find( taxonomyOptions, taxonomyEntry => taxonomyEntry.value === parseInt( value ) ) || {}
 			return name
 		} ) : undefined
+
+		// If the taxonomy value is not included in the list of options, force value as undefined
+		if ( ! compact( taxonomyValue ).length ) {
+			taxonomyValue = undefined
+		}
 
 		if ( taxonomyTypeOptions.length ) {
 			const toMatch = this.props.taxonomyType || taxonomyTypeOptions[ 0 ].value
