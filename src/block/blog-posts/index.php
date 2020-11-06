@@ -78,7 +78,7 @@ if ( ! function_exists( 'stackable_blog_posts_block_default_attributes' ) ) {
 
 if ( ! function_exists( 'stackable_blog_posts_post_query' ) ) {
 	function stackable_blog_posts_post_query( $attributes ) {
-		$passedAttributes = array(
+		$passed_attributes = array(
 				'post_type' => $attributes['postType'],
 				'post_status' => 'publish',
 				'order' => $attributes['order'],
@@ -88,12 +88,12 @@ if ( ! function_exists( 'stackable_blog_posts_post_query' ) ) {
     	);
 
 		if ( ! empty( $attributes['taxonomy'] ) ) {
-        	$passedAttributes[ 'category' . $attributes['taxonomyFilterType'] ] = $attributes['postType'] === 'post' && $attributes['taxonomyType'] === 'category' ? explode( ',', $attributes['taxonomy'] ) : '';
-        	$passedAttributes[ 'tag' . $attributes['taxonomyFilterType'] ] = $attributes['postType'] === 'post' && $attributes['taxonomyType'] === 'post_tag' ? explode( ',', $attributes['taxonomy'] ) : '';
+        	$passed_attributes[ 'category' . $attributes['taxonomyFilterType'] ] = $attributes['postType'] === 'post' && $attributes['taxonomyType'] === 'category' ? explode( ',', $attributes['taxonomy'] ) : '';
+        	$passed_attributes[ 'tag' . $attributes['taxonomyFilterType'] ] = $attributes['postType'] === 'post' && $attributes['taxonomyType'] === 'post_tag' ? explode( ',', $attributes['taxonomy'] ) : '';
     	}
 
-		return apply_filters( 'stakckable/blog-post/post_query',
-      		$passedAttributes,
+		return apply_filters( 'stackable/blog-post/post_query',
+      		$passed_attributes,
 			$attributes
 		);
 	}
