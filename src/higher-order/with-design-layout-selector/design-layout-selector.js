@@ -137,8 +137,12 @@ const DesignLayoutSelector = props => {
 				<DesignLayoutSelectorItem
 					className="ugb-design-layout-selector__layout-item"
 					onClick={ () => {
+						const { updateInitialBlocks } = dispatch( 'stackable/util' )
+						const { setAttributes } = props
+
 						// Close the layout selector.
 						doAction( `stackable.design-layout-selector.${ props.clientId }`, ( { isOpen: false, isNewlyAddedBlock: false } ) )
+
 						// Manually trigger the setAttributes filter.
 						const newAttributes = applyFilters( `stackable.${ name }.setAttributes`, {
 							...props.attributes,
@@ -148,12 +152,12 @@ const DesignLayoutSelector = props => {
 
 						// Check if a custom filter exists in the block.
 						if ( hasFilter( `stackable.${ name }.edit.inspector.layout.attributes` ) ) {
-							props.setAttributes( applyFilters( `stackable.${ name }.edit.inspector.layout.attributes`, newAttributes ) )
+							setAttributes( applyFilters( `stackable.${ name }.edit.inspector.layout.attributes`, newAttributes ) )
 						} else {
-							props.setAttributes( { design: layout.value } )
+							setAttributes( { design: layout.value } )
 						}
 
-						dispatch( 'stackable/util' ).updateInitialBlocks()
+						updateInitialBlocks()
 					} }
 
 					key={ layout.label }
@@ -180,6 +184,8 @@ const DesignLayoutSelector = props => {
 							<DesignLayoutSelectorItem
 								className="ugb-design-layout-selector__design-item"
 								onClick={ () => {
+									const { updateInitialBlocks } = dispatch( 'stackable/util' )
+
 									// Should not be selected if not premium user
 									if ( ! isPro && design.plan !== 'free' ) {
 										return
@@ -204,7 +210,7 @@ const DesignLayoutSelector = props => {
 											setIsBusy( false )
 
 											// Refetch the initial blocks. Include the currently added block.
-											dispatch( 'stackable/util' ).updateInitialBlocks()
+											updateInitialBlocks()
 
 											// Close the layout selector
 											doAction( `stackable.design-layout-selector.${ props.clientId }`, ( { isOpen: false, isNewlyAddedBlock: false } ) )
