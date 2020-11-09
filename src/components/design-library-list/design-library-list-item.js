@@ -13,31 +13,6 @@ import { Fragment, useState } from '@wordpress/element'
 import { Spinner, Dashicon } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 
-// List of default layout attributes which will be applied when applying a design.
-export const defaultLayouts = {
-	[ `accordion` ]: 'basic',
-	[ `blockquote` ]: 'plain',
-	[ `blog-posts` ]: 'basic',
-	[ `button` ]: 'basic',
-	[ `call-to-action` ]: 'basic',
-	[ `card` ]: 'basic',
-	[ `columns` ]: 'plain',
-	[ `container` ]: 'basic',
-	[ `count-up` ]: 'plain',
-	[ `divider` ]: 'basic',
-	[ `feature` ]: 'plain',
-	[ `feature-grid` ]: 'basic',
-	[ `header` ]: 'basic',
-	[ `image-box` ]: 'basic',
-	[ `notification` ]: 'basic',
-	[ `number-box` ]: 'basic',
-	[ `pricing-box` ]: 'basic',
-	[ `separator` ]: 'wave-1',
-	[ `team-member` ]: 'basic',
-	[ `testimonial` ]: 'basic',
-	[ `text` ]: 'plain',
-}
-
 const DesignLibraryListItem = props => {
 	const {
 		designId, image, label, onClick, plan, isPro,
