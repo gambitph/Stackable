@@ -2,6 +2,7 @@
  * External dependencies
  */
 import {
+	appendImportantAll,
 	createBackgroundStyleSet,
 	createButtonStyleSet,
 	createTypographyStyles,
@@ -76,6 +77,7 @@ export const createStyles = props => {
 			} ) : {} ),
 		} )
 	}
+
 	// Image.
 	if ( ! show.featuredImageAsBackground ) {
 		styles.push( {

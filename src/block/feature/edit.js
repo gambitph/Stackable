@@ -9,6 +9,7 @@ import {
 	BlockContainer,
 	ContentAlignControl,
 	BackgroundControlsHelper,
+	ButtonIconPopoverControl,
 	PanelAdvancedSettings,
 	TypographyControlHelper,
 	HeadingButtonsControl,
@@ -132,7 +133,54 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 						/>
 					</ResponsiveControl>
 				}
-				{ show.containerWidth &&
+				{ show.reverseHorizontally &&
+					<ToggleControl
+						label={ __( 'Reverse Horizontally', i18n ) }
+						checked={ invert }
+						onChange={ invert => setAttributes( { invert } ) }
+					/>
+				}
+				<ContentAlignControl
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+			</PanelBody>
+
+			{ show.columnBackground &&
+				<PanelAdvancedSettings
+					title={ __( 'Container', i18n ) }
+					id="column-background"
+					initialOpen={ false }
+					className="ugb--help-tip-column-background-on-off"
+				>
+					<ButtonIconPopoverControl
+						label={ __( 'Background', i18n ) }
+						popoverLabel={ __( 'Background', i18n ) }
+						onReset={ () => {
+							setAttributes( {
+								columnBackgroundColorType: '',
+								columnBackgroundColor: '',
+								columnBackgroundColor2: '',
+								columnBackgroundColorOpacity: '',
+								columnBackgroundMediaID: '',
+								columnBackgroundMediaUrl: '',
+								columnBackgroundTintStrength: '',
+								columnFixedBackground: '',
+							} )
+						} }
+						allowReset={ props.attributes.columnBackgroundColor || props.attributes.columnBackgroundMediaUrl }
+						hasColorPreview={ props.attributes.columnBackgroundColor }
+						hasImagePreview={ props.attributes.columnBackgroundMediaUrl }
+						colorPreview={ props.attributes.columnBackgroundColorType === 'gradient' ? [ props.attributes.columnBackgroundColor, props.attributes.columnBackgroundColor2 ] : props.attributes.columnBackgroundColor }
+						imageUrlPreview={ props.attributes.columnBackgroundMediaUrl }
+					>
+						<BackgroundControlsHelper
+							attrNameTemplate="column%s"
+							setAttributes={ setAttributes }
+							blockAttributes={ props.attributes }
+						/>
+					</ButtonIconPopoverControl>
+					{ show.containerWidth &&
 					<ResponsiveControl
 						attrNameTemplate="container%sWidth"
 						setAttributes={ setAttributes }
@@ -146,8 +194,8 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 							className="ugb--help-tip-feature-container-width"
 						/>
 					</ResponsiveControl>
-				}
-				{ show.containerOffset &&
+					}
+					{ show.containerOffset &&
 					<ResponsiveControl
 						attrNameTemplate="container%sOffset"
 						setAttributes={ setAttributes }
@@ -161,15 +209,8 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 							className="ugb--help-tip-feature-container-offset"
 						/>
 					</ResponsiveControl>
-				}
-				{ show.reverseHorizontally &&
-					<ToggleControl
-						label={ __( 'Reverse Horizontally', i18n ) }
-						checked={ invert }
-						onChange={ invert => setAttributes( { invert } ) }
-					/>
-				}
-				{ show.borderRadius &&
+					}
+					{ show.borderRadius &&
 					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
@@ -180,8 +221,8 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 						placeholder="12"
 						className="ugb--help-tip-general-border-radius"
 					/>
-				}
-				{ show.columnBackground &&
+					}
+					{ show.columnBackground &&
 					<AdvancedRangeControl
 						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
@@ -192,25 +233,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 						placeholder="3"
 						className="ugb--help-tip-general-shadow"
 					/>
-				}
-				<ContentAlignControl
-					setAttributes={ setAttributes }
-					blockAttributes={ props.attributes }
-				/>
-			</PanelBody>
-
-			{ show.columnBackground &&
-				<PanelAdvancedSettings
-					title={ __( 'Background', i18n ) }
-					id="column-background"
-					initialOpen={ false }
-					className="ugb--help-tip-column-background-on-off"
-				>
-					<BackgroundControlsHelper
-						attrNameTemplate="column%s"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					/>
+					}
 				</PanelAdvancedSettings>
 			}
 
