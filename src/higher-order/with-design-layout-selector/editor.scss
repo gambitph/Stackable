@@ -43,6 +43,17 @@
 	mix-blend-mode: darken;
 	position: relative;
 	margin-bottom: 10px !important;
+	&:hover {
+		.ugb-design-layout-selector__image.is-premium {
+			opacity: 0.4;
+			filter: blur(1px) !important;
+			cursor: default !important;
+		}
+
+		.ugb-design-layout-selector__lock-icon.is-premium {
+			display: block !important;
+		}
+	}
 }
 .ugb-design-layout-selector__layout-item {
 	width: 70px;
@@ -72,13 +83,6 @@
 	width: 100%;
 	border: 1px solid;
 	border-color: #888;
-	&:hover {
-		&.is-premium {
-			opacity: 0.4;
-			filter: blur(1px) !important;
-			cursor: default !important;
-		}
-	}
 }
 
 .ugb-design-layout-selector__design-library {
@@ -106,6 +110,19 @@
 	right: 5px;
 	border-radius: 2px;
 	text-transform: uppercase;
+}
+
+.ugb-design-layout-selector__lock-icon {
+	transition: all 0.3s ease-in-out;
+	display: none;
+	color: #888 !important;
+	cursor: default !important;
+	position: absolute;
+	margin: auto;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
 }
 
 .ugb-design-layout-selector__filter-button {
