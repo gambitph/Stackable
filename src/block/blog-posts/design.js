@@ -18,7 +18,6 @@ addFilter( 'stackable.blog-posts.design.no-text-attributes', 'stackable/blog-pos
 // Ignore these attributes when exporting / applying designs.
 addFilter( 'stackable.blog-posts.design.filtered-block-attributes', 'stackable/button', attributes => {
 	return omit( attributes, [
-		'numberOfItems',
 		'order',
 		'orderBy',
 		'postType',
