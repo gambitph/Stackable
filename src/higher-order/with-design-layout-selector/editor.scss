@@ -75,7 +75,7 @@
 	&:hover {
 		&.is-premium {
 			opacity: 0.4;
-			filter: blur(3px);
+			filter: blur(1px) !important;
 			cursor: default !important;
 		}
 	}
