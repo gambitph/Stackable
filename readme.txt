@@ -201,6 +201,9 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Now easier to set left/right paddings to zero
 * Fixed: Compatibility issue when coming from a Stackable beta build
 * Fixed: Some disabled toggle buttons did not display as disabled
+* Fixed: Unable to reset range controls when the value has been previously changed
+* Fixed: Do not include post attributes when importing Blog Posts block designs
+* Fixed: Some JavaScript warnings
 
 = 2.11.4 =
 * New: Redesigned responsive toggles to make them easier to use and discover
