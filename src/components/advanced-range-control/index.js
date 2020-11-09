@@ -84,7 +84,6 @@ const AdvancedRangeControl = props => {
 
 	// Sets the default value to the value of the initlaPosition if value is an empty string
 	propsToPass.value = props.value === '' ? propsToPass.initialPosition : props.value
-	propsToPass.resetFallbackValue = propsToPass.placeholder
 
 	return (
 		<BaseControl
