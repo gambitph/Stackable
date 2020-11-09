@@ -58,8 +58,6 @@ export const createStyles = props => {
 
 	// Container.
 	const {
-		design = 'basic',
-		columns = 3,
 		columnPaddingUnit = 'px',
 		tabletColumnPaddingUnit = 'px',
 		mobileColumnPaddingUnit = 'px',
