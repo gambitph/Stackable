@@ -60,7 +60,7 @@ const DesignLayoutSelectorItem = ( {
 
 	return (
 		<li className={ itemClassNames } { ...otherProps }>
-			<Button className="ugb-design-layout-selector__item-button">
+			<Button className="ugb-design-layout-selector__item-button" disabled={ ! isPro && otherProps.plan === 'premium' }>
 				{ src && <img className={ imgClassNames } src={ src } alt={ label } /> }
 				{ lockIcon }
 				{ premiumTag }
