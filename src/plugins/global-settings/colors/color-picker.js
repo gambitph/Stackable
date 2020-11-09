@@ -223,7 +223,7 @@ const ColorPickers = props => {
 	const colors = Array.isArray( _colors ) ? _colors : []
 
 	// Enable reset if there are Stackable global colors.
-	const disableReset = useMemo( () => ! colors.some( color => color.slug && color.slug.includes( 'stk-global-color' ) ), [ colors ] )
+	const disableReset = useMemo( () => ! colors.some( color => color.slug && color.slug.includes( 'stk-global-color' ) ), [ JSON.stringify( colors ) ] )
 
 	/**
 	 * Function used to update the colors in @wordpress/data,
