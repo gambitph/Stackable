@@ -225,13 +225,99 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 							className="ugb--help-tip-general-shadow"
 						/>
 					}
-					<ColumnPaddingControl
-						label={ __( 'Paddings', i18n ) }
-						setAttributes={ setAttributes }
-						attributes={ props.attributes }
-					/>
 				</PanelAdvancedSettings>
 			}
+
+			<PanelSpacingBody
+				initialOpen={ false }
+				blockProps={ props }
+			>
+				<ColumnPaddingControl
+					label={ __( 'Paddings', i18n ) }
+					setAttributes={ setAttributes }
+					attributes={ props.attributes }
+				/>
+				{ show.imageSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="image%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Image', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="0"
+							allowReset={ true }
+							className="ugb--help-tip-spacing-image"
+						/>
+					</ResponsiveControl>
+				}
+				{ show.titleSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="title%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Title', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="8"
+							allowReset={ true }
+							className="ugb--help-tip-spacing-title"
+						/>
+					</ResponsiveControl>
+				}
+				{ show.subtitleSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="subtitle%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Subtitle', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-spacing-title"
+						/>
+					</ResponsiveControl>
+				}
+				{ show.descriptionSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="description%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Description', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-spacing-description"
+						/>
+					</ResponsiveControl>
+				}
+				{ show.buttonSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="button%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Button', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="0"
+							allowReset={ true }
+							className="ugb--help-tip-spacing-button"
+						/>
+					</ResponsiveControl>
+				}
+			</PanelSpacingBody>
 
 			<PanelAdvancedSettings
 				title={ __( 'Image', i18n ) }
@@ -470,91 +556,6 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
-			<PanelSpacingBody
-				initialOpen={ false }
-				blockProps={ props }
-			>
-				{ show.imageSpacing &&
-					<ResponsiveControl
-						attrNameTemplate="image%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Image', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="0"
-							allowReset={ true }
-							className="ugb--help-tip-spacing-image"
-						/>
-					</ResponsiveControl>
-				}
-				{ show.titleSpacing &&
-					<ResponsiveControl
-						attrNameTemplate="title%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Title', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="8"
-							allowReset={ true }
-							className="ugb--help-tip-spacing-title"
-						/>
-					</ResponsiveControl>
-				}
-				{ show.subtitleSpacing &&
-					<ResponsiveControl
-						attrNameTemplate="subtitle%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Subtitle', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-spacing-title"
-						/>
-					</ResponsiveControl>
-				}
-				{ show.descriptionSpacing &&
-					<ResponsiveControl
-						attrNameTemplate="description%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Description', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-spacing-description"
-						/>
-					</ResponsiveControl>
-				}
-				{ show.buttonSpacing &&
-					<ResponsiveControl
-						attrNameTemplate="button%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Button', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="0"
-							allowReset={ true }
-							className="ugb--help-tip-spacing-button"
-						/>
-					</ResponsiveControl>
-				}
-			</PanelSpacingBody>
 		</Fragment>
 	)
 } )

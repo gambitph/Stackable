@@ -2,6 +2,7 @@
  * External dependencies
  */
 import {
+	appendImportantAll,
 	appendImportant,
 	createBackgroundStyleSet,
 	whiteIfDarkBlackIfLight,
@@ -222,6 +223,45 @@ export const createStyles = props => {
 		},
 		'a:hover': {
 			color: getValue( 'linkHoverColor' ),
+		},
+	} )
+
+	// Container.
+	const {
+		design = 'basic',
+		columnPaddingUnit = 'px',
+		tabletColumnPaddingUnit = 'px',
+		mobileColumnPaddingUnit = 'px',
+	} = props.attributes
+
+	const containerSelector = [ 'image', 'image2', 'image3' ].includes( design ) ?
+		'> .ugb-inner-block > .ugb-block-content > .ugb-container__wrapper > .ugb-container__side' :
+		'> .ugb-inner-block > .ugb-block-content > *'
+
+	styles.push( {
+		desktopTablet: {
+			[ containerSelector ]: appendImportantAll( {
+				paddingTop: getValue( 'columnPaddingTop', `%s${ columnPaddingUnit }` ),
+				paddingBottom: getValue( 'columnPaddingBottom', `%s${ columnPaddingUnit }` ),
+				paddingRight: getValue( 'columnPaddingRight', `%s${ columnPaddingUnit }` ),
+				paddingLeft: getValue( 'columnPaddingLeft', `%s${ columnPaddingUnit }` ),
+			} ),
+		},
+		tabletOnly: {
+			[ containerSelector ]: appendImportantAll( {
+				paddingTop: getValue( 'tabletColumnPaddingTop', `%s${ tabletColumnPaddingUnit }` ),
+				paddingRight: getValue( 'tabletColumnPaddingRight', `%s${ tabletColumnPaddingUnit }` ),
+				paddingBottom: getValue( 'tabletColumnPaddingBottom', `%s${ tabletColumnPaddingUnit }` ),
+				paddingLeft: getValue( 'tabletColumnPaddingLeft', `%s${ tabletColumnPaddingUnit }` ),
+			} ),
+		},
+		mobile: {
+			[ containerSelector ]: appendImportantAll( {
+				paddingTop: getValue( 'mobileColumnPaddingTop', `%s${ mobileColumnPaddingUnit }` ),
+				paddingRight: getValue( 'mobileColumnPaddingRight', `%s${ mobileColumnPaddingUnit }` ),
+				paddingBottom: getValue( 'mobileColumnPaddingBottom', `%s${ mobileColumnPaddingUnit }` ),
+				paddingLeft: getValue( 'mobileColumnPaddingLeft', `%s${ mobileColumnPaddingUnit }` ),
+			} ),
 		},
 	} )
 

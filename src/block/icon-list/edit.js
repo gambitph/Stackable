@@ -115,6 +115,19 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 				/>
 			</PanelBody>
 
+			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
+				<AdvancedRangeControl
+					label={ __( 'List Gap', i18n ) }
+					value={ gap }
+					onChange={ gap => setAttributes( { gap } ) }
+					min={ 0 }
+					max={ 30 }
+					allowReset={ true }
+					placeholder="16"
+					className="ugb--help-tip-icon-list-gap"
+				/>
+			</PanelSpacingBody>
+
 			<PanelBody title={ __( 'Icon', i18n ) } initialOpen={ false }>
 				<IconControl
 					label={ __( 'Icon', i18n ) }
@@ -180,18 +193,6 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 				/>
 			</PanelAdvancedSettings>
 
-			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
-				<AdvancedRangeControl
-					label={ __( 'List Gap', i18n ) }
-					value={ gap }
-					onChange={ gap => setAttributes( { gap } ) }
-					min={ 0 }
-					max={ 30 }
-					allowReset={ true }
-					placeholder="16"
-					className="ugb--help-tip-icon-list-gap"
-				/>
-			</PanelSpacingBody>
 		</Fragment>
 	)
 } )

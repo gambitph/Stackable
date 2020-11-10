@@ -2,6 +2,7 @@
  * External dependencies
  */
 import {
+	appendImportantAll,
 	createResponsiveStyles,
 	createTypographyStyles,
 	whiteIfDarkBlackIfLight,
@@ -62,6 +63,50 @@ export const createStyles = props => {
 			}
 		} )
 	}
+
+	// Container.
+	const {
+		columnPaddingUnit = 'px',
+		tabletColumnPaddingUnit = 'px',
+		mobileColumnPaddingUnit = 'px',
+	} = props.attributes
+
+	let columnSelector
+
+	if ( [ 'vertical-card', 'horizontal-card' ].includes( design ) ) {
+		columnSelector = '.ugb-blog-posts__content'
+	} else if ( design === 'image-card' ) {
+		columnSelector = '.ugb-blog-posts__header, .ugb-blog-posts__content'
+	} else {
+		columnSelector = '> .ugb-inner-block > .ugb-block-content > *'
+	}
+
+	styles.push( {
+		desktopTablet: {
+			[ columnSelector ]: appendImportantAll( {
+				paddingTop: getValue( 'columnPaddingTop', `%s${ columnPaddingUnit }` ),
+				paddingBottom: getValue( 'columnPaddingBottom', `%s${ columnPaddingUnit }` ),
+				paddingRight: getValue( 'columnPaddingRight', `%s${ columnPaddingUnit }` ),
+				paddingLeft: getValue( 'columnPaddingLeft', `%s${ columnPaddingUnit }` ),
+			} ),
+		},
+		tabletOnly: {
+			[ columnSelector ]: appendImportantAll( {
+				paddingTop: getValue( 'tabletColumnPaddingTop', `%s${ tabletColumnPaddingUnit }` ),
+				paddingRight: getValue( 'tabletColumnPaddingRight', `%s${ tabletColumnPaddingUnit }` ),
+				paddingBottom: getValue( 'tabletColumnPaddingBottom', `%s${ tabletColumnPaddingUnit }` ),
+				paddingLeft: getValue( 'tabletColumnPaddingLeft', `%s${ tabletColumnPaddingUnit }` ),
+			} ),
+		},
+		mobile: {
+			[ columnSelector ]: appendImportantAll( {
+				paddingTop: getValue( 'mobileColumnPaddingTop', `%s${ mobileColumnPaddingUnit }` ),
+				paddingRight: getValue( 'mobileColumnPaddingRight', `%s${ mobileColumnPaddingUnit }` ),
+				paddingBottom: getValue( 'mobileColumnPaddingBottom', `%s${ mobileColumnPaddingUnit }` ),
+				paddingLeft: getValue( 'mobileColumnPaddingLeft', `%s${ mobileColumnPaddingUnit }` ),
+			} ),
+		},
+	} )
 
 	// Image.
 	const {

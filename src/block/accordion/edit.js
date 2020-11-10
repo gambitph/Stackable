@@ -204,6 +204,46 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 				</PanelAdvancedSettings>
 			}
 
+			<PanelSpacingBody
+				initialOpen={ false }
+				blockProps={ props }
+			>
+				{ ( show.headerBackground || show.containerBackground ) &&
+					<FourRangeControl
+						label={ __( 'Padding', i18n ) }
+						top={ containerPaddingTop }
+						right={ containerPaddingRight }
+						bottom={ containerPaddingBottom }
+						left={ containerPaddingLeft }
+						onChange={ paddings => setAttributes( {
+							containerPaddingTop: paddings.top,
+							containerPaddingRight: paddings.right,
+							containerPaddingBottom: paddings.bottom,
+							containerPaddingLeft: paddings.left,
+						} ) }
+						max={ 200 }
+						placeholder="18"
+						className="ugb--help-tip-accordion-padding"
+					/>
+				}
+				{ show.titleSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="title%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Title', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+							placeholder="0"
+							className="ugb--help-tip-accordion-title-spacing"
+						/>
+					</ResponsiveControl>
+				}
+			</PanelSpacingBody>
+
 			<PanelAdvancedSettings
 				title={ __( 'Title', i18n ) }
 				id="title"
@@ -293,45 +333,6 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 				</PanelAdvancedSettings>
 			}
 
-			<PanelSpacingBody
-				initialOpen={ false }
-				blockProps={ props }
-			>
-				{ ( show.headerBackground || show.containerBackground ) &&
-					<FourRangeControl
-						label={ __( 'Padding', i18n ) }
-						top={ containerPaddingTop }
-						right={ containerPaddingRight }
-						bottom={ containerPaddingBottom }
-						left={ containerPaddingLeft }
-						onChange={ paddings => setAttributes( {
-							containerPaddingTop: paddings.top,
-							containerPaddingRight: paddings.right,
-							containerPaddingBottom: paddings.bottom,
-							containerPaddingLeft: paddings.left,
-						} ) }
-						max={ 200 }
-						placeholder="18"
-						className="ugb--help-tip-accordion-padding"
-					/>
-				}
-				{ show.titleSpacing &&
-					<ResponsiveControl
-						attrNameTemplate="title%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Title', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							allowReset={ true }
-							placeholder="0"
-							className="ugb--help-tip-accordion-title-spacing"
-						/>
-					</ResponsiveControl>
-				}
-			</PanelSpacingBody>
 		</Fragment>
 	)
 } )
