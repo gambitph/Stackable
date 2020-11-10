@@ -40,7 +40,6 @@ const externals = [
 	'ajax',
 	'codeEditor',
 	'rich-text',
-	'media',
 ].reduce( ( externals, name ) => ( {
 	...externals,
 	[ `@wordpress/${ name }` ]: `wp.${ camelCaseDash( name ) }`,

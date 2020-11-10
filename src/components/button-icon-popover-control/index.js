@@ -14,7 +14,6 @@ import {
 	Component, createRef, Fragment,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { frame } from '@wordpress/media'
 
 /**
  * External dependencies
@@ -134,7 +133,7 @@ class ButtonIconPopoverControl extends Component {
 	handleOnClickOutside( ev ) {
 		// If the Media Manager is open, do not do anything since this might
 		// interfere with how the Media Manager works.
-		if ( frame?.el?.clientHeight ) {
+		if ( window.wp?.media?.frame?.el?.clientHeight ) {
 			return
 		}
 
