@@ -31,6 +31,8 @@ import {
 	PanelSpacingBody,
 	AdvancedRangeControl,
 	DivBackground,
+	ButtonIconPopoverControl,
+	ColumnPaddingControl,
 } from '~stackable/components'
 import {
 	descriptionPlaceholder,
@@ -137,30 +139,6 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					max={ 3 }
 					className="ugb--help-tip-general-columns"
 				/>
-				{ show.borderRadius &&
-					<AdvancedRangeControl
-						label={ __( 'Border Radius', i18n ) }
-						value={ borderRadius }
-						onChange={ borderRadius => setAttributes( { borderRadius } ) }
-						min={ 0 }
-						max={ 50 }
-						allowReset={ true }
-						placeholder="12"
-						className="ugb--help-tip-general-border-radius"
-					/>
-				}
-				{ show.shadow &&
-					<AdvancedRangeControl
-						label={ __( 'Shadow / Outline', i18n ) }
-						value={ shadow }
-						onChange={ shadow => setAttributes( { shadow } ) }
-						min={ 0 }
-						max={ 9 }
-						allowReset={ true }
-						placeholder="3"
-						className="ugb--help-tip-general-shadow"
-					/>
-				}
 				<ContentAlignControl
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
@@ -171,18 +149,168 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 
 			{ show.columnBackground &&
 				<PanelAdvancedSettings
-					title={ __( 'Column Background', i18n ) }
+					title={ __( 'Container', i18n ) }
 					id="column-background"
 					initialOpen={ false }
 					className="ugb--help-tip-column-background-on-off"
 				>
-					<BackgroundControlsHelper
-						attrNameTemplate="column%s"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
+					<ButtonIconPopoverControl
+						label={ __( 'Background', i18n ) }
+						popoverLabel={ __( 'Background', i18n ) }
+						onReset={ () => {
+							setAttributes( {
+								columnBackgroundColorType: '',
+								columnBackgroundColor: '',
+								columnBackgroundColor2: '',
+								columnBackgroundColorOpacity: '',
+								columnBackgroundMediaID: '',
+								columnBackgroundMediaUrl: '',
+								columnBackgroundTintStrength: '',
+								columnFixedBackground: '',
+							} )
+						} }
+						allowReset={ props.attributes.columnBackgroundColor || props.attributes.columnBackgroundMediaUrl }
+						hasColorPreview={ props.attributes.columnBackgroundColor }
+						hasImagePreview={ props.attributes.columnBackgroundMediaUrl }
+						colorPreview={ props.attributes.columnBackgroundColorType === 'gradient' ? [ props.attributes.columnBackgroundColor, props.attributes.columnBackgroundColor2 ] : props.attributes.columnBackgroundColor }
+						imageUrlPreview={ props.attributes.columnBackgroundMediaUrl }
+					>
+						<BackgroundControlsHelper
+							attrNameTemplate="column%s"
+							setAttributes={ setAttributes }
+							blockAttributes={ props.attributes }
+						/>
+					</ButtonIconPopoverControl>
+					{ show.borderRadius &&
+					<AdvancedRangeControl
+						label={ __( 'Border Radius', i18n ) }
+						value={ borderRadius }
+						onChange={ borderRadius => setAttributes( { borderRadius } ) }
+						min={ 0 }
+						max={ 50 }
+						allowReset={ true }
+						placeholder="12"
+						className="ugb--help-tip-general-border-radius"
 					/>
+					}
+					{ show.shadow &&
+					<AdvancedRangeControl
+						label={ __( 'Shadow / Outline', i18n ) }
+						value={ shadow }
+						onChange={ shadow => setAttributes( { shadow } ) }
+						min={ 0 }
+						max={ 9 }
+						allowReset={ true }
+						placeholder="3"
+						className="ugb--help-tip-general-shadow"
+					/>
+					}
 				</PanelAdvancedSettings>
 			}
+
+			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
+				<ColumnPaddingControl
+					label={ __( 'Paddings', i18n ) }
+					setAttributes={ setAttributes }
+					attributes={ props.attributes }
+				/>
+				{ show.imageSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="image%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Image', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-pricing-image-spacing"
+						/>
+					</ResponsiveControl>
+				}
+				{ show.titleSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="title%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Title', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-pricing-title-spacing"
+						/>
+					</ResponsiveControl>
+				) }
+				{ show.priceSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="price%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Price', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-pricing-price-spacing"
+						/>
+					</ResponsiveControl>
+				) }
+				{ show.subPriceSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="subPrice%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Sub Price', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-pricing-subprice-spacing"
+						/>
+					</ResponsiveControl>
+				) }
+				{ show.buttonSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="button%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Button', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="32"
+							allowReset={ true }
+							className="ugb--help-tip-pricing-button-spacing"
+						/>
+					</ResponsiveControl>
+				) }
+				{ show.descriptionSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="description%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Description', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-pricing-description-spacing"
+						/>
+					</ResponsiveControl>
+				) }
+			</PanelSpacingBody>
 
 			{ applyFilters( 'stackable.pricing-box.edit.inspector.style.column.after', null, props ) }
 
@@ -469,104 +597,6 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
-			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
-				{ show.imageSpacing &&
-					<ResponsiveControl
-						attrNameTemplate="image%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Image', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-pricing-image-spacing"
-						/>
-					</ResponsiveControl>
-				}
-				{ show.titleSpacing && (
-					<ResponsiveControl
-						attrNameTemplate="title%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Title', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-pricing-title-spacing"
-						/>
-					</ResponsiveControl>
-				) }
-				{ show.priceSpacing && (
-					<ResponsiveControl
-						attrNameTemplate="price%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Price', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-pricing-price-spacing"
-						/>
-					</ResponsiveControl>
-				) }
-				{ show.subPriceSpacing && (
-					<ResponsiveControl
-						attrNameTemplate="subPrice%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Sub Price', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-pricing-subprice-spacing"
-						/>
-					</ResponsiveControl>
-				) }
-				{ show.buttonSpacing && (
-					<ResponsiveControl
-						attrNameTemplate="button%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Button', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="32"
-							allowReset={ true }
-							className="ugb--help-tip-pricing-button-spacing"
-						/>
-					</ResponsiveControl>
-				) }
-				{ show.descriptionSpacing && (
-					<ResponsiveControl
-						attrNameTemplate="description%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Description', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-pricing-description-spacing"
-						/>
-					</ResponsiveControl>
-				) }
-			</PanelSpacingBody>
 		</Fragment>
 	)
 } )
