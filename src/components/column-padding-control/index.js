@@ -47,8 +47,9 @@ const ColumnPaddingControl = props => {
 			label={ label }
 			className="ugb--help-tip-advanced-column-paddings"
 			defaultLocked={ true }
-			min={ 0 }
-			max={ 500 }
+			min={ [ 0, 0, 0 ] }
+			max={ [ 500, 30, 100 ] }
+			sliderMax={ [ 100, 15, 30 ] }
 			step={ 1 }
 
 			valueDesktop={ {

@@ -15,7 +15,7 @@ import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 
 const SpacingControl = props => {
-	const propsToPass = pick( props, [ 'label', 'units', 'screens', 'defaultLocked', 'enableTop', 'enableRight', 'enableBottom', 'enableLeft', 'className' ] )
+	const propsToPass = pick( props, [ 'label', 'units', 'screens', 'defaultLocked', 'enableTop', 'enableRight', 'enableBottom', 'enableLeft', 'className', 'sliderMax', 'sliderMin' ] )
 
 	// Allow different sets of min/max/step values per screen size.
 	const min = Array.isArray( props.min ) ? props.min : [ props.min, props.min, props.min ]
@@ -29,10 +29,10 @@ const SpacingControl = props => {
 				min={ min[ 0 ] }
 				max={ max[ 0 ] }
 				step={ step[ 0 ] }
-				top={ props.valueDesktop.top || '' }
-				right={ props.valueDesktop.right || '' }
-				bottom={ props.valueDesktop.bottom || '' }
-				left={ props.valueDesktop.left || '' }
+				top={ props.valueDesktop.top }
+				right={ props.valueDesktop.right }
+				bottom={ props.valueDesktop.bottom }
+				left={ props.valueDesktop.left }
 				unit={ props.valueDesktopUnit || props.units[ 0 ] }
 				onChange={
 					( {
@@ -58,10 +58,10 @@ const SpacingControl = props => {
 				min={ min[ 1 ] }
 				max={ max[ 1 ] }
 				step={ step[ 1 ] }
-				top={ props.valueTablet.top || '' }
-				right={ props.valueTablet.right || '' }
-				bottom={ props.valueTablet.bottom || '' }
-				left={ props.valueTablet.left || '' }
+				top={ props.valueTablet.top }
+				right={ props.valueTablet.right }
+				bottom={ props.valueTablet.bottom }
+				left={ props.valueTablet.left }
 				unit={ props.valueTabletUnit || props.units[ 0 ] }
 				onChange={
 					( {
@@ -83,10 +83,10 @@ const SpacingControl = props => {
 				min={ min[ 2 ] }
 				max={ max[ 2 ] }
 				step={ step[ 2 ] }
-				top={ props.valueMobile.top || '' }
-				right={ props.valueMobile.right || '' }
-				bottom={ props.valueMobile.bottom || '' }
-				left={ props.valueMobile.left || '' }
+				top={ props.valueMobile.top }
+				right={ props.valueMobile.right }
+				bottom={ props.valueMobile.bottom }
+				left={ props.valueMobile.left }
 				unit={ props.valueMobileUnit || props.units[ 0 ] }
 				onChange={
 					( {

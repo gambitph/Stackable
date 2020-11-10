@@ -227,7 +227,8 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ blockWidthUnit }
 							onChange={ blockWidth => setAttributes( { blockWidth } ) }
 							onChangeUnit={ blockWidthUnit => setAttributes( { blockWidthUnit } ) }
-							placeholder="2500"
+							placeholder=""
+							initialPosition="2500"
 							className="ugb--help-tip-advanced-block-content-width"
 						/>
 					</WhenResponsiveScreen>
@@ -315,6 +316,8 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ marginUnit }
 							min={ [ -500, -100 ] }
 							max={ [ 500, 100 ] }
+							sliderMin={ [ -200, -100 ] }
+							sliderMax={ [ 200, 100 ] }
 							onChange={ margins => {
 								setAttributes( {
 									marginTop: ! margins.top && margins.top !== 0 ? '' : parseInt( margins.top, 10 ),
@@ -346,6 +349,8 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ tabletMarginUnit }
 							min={ [ -500, -100 ] }
 							max={ [ 500, 100 ] }
+							sliderMin={ [ -200, -100 ] }
+							sliderMax={ [ 200, 100 ] }
 							onChange={ margins => {
 								setAttributes( {
 									tabletMarginTop: ! margins.top && margins.top !== 0 ? '' : parseInt( margins.top, 10 ),
@@ -375,6 +380,8 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ mobileMarginUnit }
 							min={ [ -500, -100 ] }
 							max={ [ 500, 100 ] }
+							sliderMin={ [ -200, -100 ] }
+							sliderMax={ [ 200, 100 ] }
 							onChange={ margins => {
 								setAttributes( {
 									mobileMarginTop: ! margins.top && margins.top !== 0 ? '' : parseInt( margins.top, 10 ),
@@ -406,6 +413,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ paddingUnit }
 							min={ [ 0, 0, 0 ] }
 							max={ [ 500, 30, 100 ] }
+							sliderMax={ [ 100, 15, 30 ] }
 							onChange={ paddings => {
 								setAttributes( {
 									paddingTop: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
@@ -436,6 +444,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ tabletPaddingUnit }
 							min={ [ 0, 0, 0 ] }
 							max={ [ 500, 30, 100 ] }
+							sliderMax={ [ 100, 15, 30 ] }
 							onChange={ paddings => {
 								setAttributes( {
 									tabletPaddingTop: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
@@ -465,6 +474,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ mobilePaddingUnit }
 							min={ [ 0, 0, 0 ] }
 							max={ [ 500, 30, 100 ] }
+							sliderMax={ [ 100, 15, 30 ] }
 							onChange={ paddings => {
 								setAttributes( {
 									mobilePaddingTop: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
