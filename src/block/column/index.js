@@ -98,6 +98,7 @@ export const settings = {
 		},
 		'advanced-column-spacing': {
 			columnGap: false,
+			paddings: false,
 		},
 		'advanced-responsive': true,
 		// 'block-background': true,

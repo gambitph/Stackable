@@ -326,13 +326,131 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 						className="ugb--help-tip-general-shadow"
 					/>
 					}
-					<ColumnPaddingControl
-						label={ __( 'Paddings', i18n ) }
-						setAttributes={ setAttributes }
-						attributes={ props.attributes }
-					/>
 				</PanelAdvancedSettings>
 			}
+
+			<PanelSpacingBody
+				initialOpen={ false }
+				blockProps={ props }
+			>
+				<ColumnPaddingControl
+					label={ __( 'Paddings', i18n ) }
+					setAttributes={ setAttributes }
+					attributes={ props.attributes }
+				/>
+				{ show.imageSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="image%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Image', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-alignment-image"
+						/>
+					</ResponsiveControl>
+				}
+				{ show.categorySpacing &&
+					<ResponsiveControl
+						attrNameTemplate="category%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Category', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-alignment-description"
+						/>
+					</ResponsiveControl>
+				}
+				{ show.titleSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="title%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Title', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-alignment-title"
+						/>
+					</ResponsiveControl>
+				}
+				{ show.excerptSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="excerpt%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Excerpt', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-alignment-description"
+						/>
+					</ResponsiveControl>
+				}
+				{ show.metaSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="meta%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Meta', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-alignment-description"
+						/>
+					</ResponsiveControl>
+				}
+				{ show.readmoreSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="readmore%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Read More', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-alignment-button"
+						/>
+					</ResponsiveControl>
+				}
+				{ show.loadMoreSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="loadMoreButton%sTopMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Load More', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-alignment-button"
+						/>
+					</ResponsiveControl>
+				}
+			</PanelSpacingBody>
 
 			<PanelAdvancedSettings
 				title={ __( 'Featured Image', i18n ) }
@@ -652,123 +770,6 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 
 			{ applyFilters( 'stackable.blog-posts.edit.inspector.style.read-more.after', null, props ) }
 
-			<PanelSpacingBody
-				initialOpen={ false }
-				blockProps={ props }
-			>
-				{ show.imageSpacing &&
-					<ResponsiveControl
-						attrNameTemplate="image%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Image', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-alignment-image"
-						/>
-					</ResponsiveControl>
-				}
-				{ show.categorySpacing &&
-					<ResponsiveControl
-						attrNameTemplate="category%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Category', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-alignment-description"
-						/>
-					</ResponsiveControl>
-				}
-				{ show.titleSpacing &&
-					<ResponsiveControl
-						attrNameTemplate="title%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Title', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-alignment-title"
-						/>
-					</ResponsiveControl>
-				}
-				{ show.excerptSpacing &&
-					<ResponsiveControl
-						attrNameTemplate="excerpt%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Excerpt', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-alignment-description"
-						/>
-					</ResponsiveControl>
-				}
-				{ show.metaSpacing &&
-					<ResponsiveControl
-						attrNameTemplate="meta%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Meta', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-alignment-description"
-						/>
-					</ResponsiveControl>
-				}
-				{ show.readmoreSpacing &&
-					<ResponsiveControl
-						attrNameTemplate="readmore%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Read More', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-alignment-button"
-						/>
-					</ResponsiveControl>
-				}
-				{ show.loadMoreSpacing &&
-					<ResponsiveControl
-						attrNameTemplate="loadMoreButton%sTopMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Load More', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-alignment-button"
-						/>
-					</ResponsiveControl>
-				}
-			</PanelSpacingBody>
 		</Fragment>
 	)
 } )

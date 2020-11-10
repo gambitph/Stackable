@@ -26,6 +26,7 @@ import {
 	AdvancedToolbarControl,
 	ButtonIconPopoverControl,
 	ColumnPaddingControl,
+	PanelSpacingBody,
 } from '~stackable/components'
 import {
 	createResponsiveAttributeNames,
@@ -163,13 +164,19 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 						className="ugb--help-tip-general-shadow"
 					/>
 					}
-					<ColumnPaddingControl
-						label={ __( 'Paddings', i18n ) }
-						setAttributes={ setAttributes }
-						attributes={ props.attributes }
-					/>
 				</PanelAdvancedSettings>
 			}
+
+			<PanelSpacingBody
+				initialOpen={ false }
+				blockProps={ props }
+			>
+				<ColumnPaddingControl
+					label={ __( 'Paddings', i18n ) }
+					setAttributes={ setAttributes }
+					attributes={ props.attributes }
+				/>
+			</PanelSpacingBody>
 
 			<PanelAdvancedSettings
 				title={ __( 'Quotation Mark', i18n ) }

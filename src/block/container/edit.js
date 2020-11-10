@@ -26,6 +26,7 @@ import {
 	DivBackground,
 	PanelAdvancedSettings,
 	ButtonIconPopoverControl,
+	PanelSpacingBody,
 } from '~stackable/components'
 import {
 	withUniqueClass,
@@ -282,13 +283,19 @@ addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/contain
 						className="ugb--help-tip-general-shadow"
 					/>
 					}
-					<ColumnPaddingControl
-						label={ __( 'Paddings', i18n ) }
-						setAttributes={ setAttributes }
-						attributes={ props.attributes }
-					/>
 				</PanelAdvancedSettings>
 			}
+
+			<PanelSpacingBody
+				initialOpen={ false }
+				blockProps={ props }
+			>
+				<ColumnPaddingControl
+					label={ __( 'Paddings', i18n ) }
+					setAttributes={ setAttributes }
+					attributes={ props.attributes }
+				/>
+			</PanelSpacingBody>
 
 			{ applyFilters( 'stackable.container.edit.inspector.style.column-background.after', null, props ) }
 
