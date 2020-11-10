@@ -45,8 +45,10 @@ const StackableRangeControl = props => {
 			const parsedValue = parseFloat( value )
 			if ( ! isNaN( parsedValue ) ) {
 				props.onChange( clamp( parsedValue, props.min, props.max ) )
+				return
 			}
 		}
+		props.onChange( props.resetFallbackValue )
 	}
 
 	const handleOnReset = () => {
