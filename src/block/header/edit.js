@@ -204,13 +204,80 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 						className="ugb--help-tip-general-shadow"
 					/>
 					}
-					<ColumnPaddingControl
-						label={ __( 'Paddings', i18n ) }
-						setAttributes={ setAttributes }
-						attributes={ props.attributes }
-					/>
 				</PanelAdvancedSettings>
 			}
+
+			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
+				<ColumnPaddingControl
+					label={ __( 'Paddings', i18n ) }
+					setAttributes={ setAttributes }
+					attributes={ props.attributes }
+				/>
+				{ show.titleSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="title%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Title', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-spacing-title"
+						/>
+					</ResponsiveControl>
+				) }
+				{ show.subtitleSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="subtitle%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Subtitle', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-spacing-title"
+						/>
+					</ResponsiveControl>
+				) }
+				{ show.buttonSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="button%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Button', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="10"
+							allowReset={ true }
+							className="ugb--help-tip-spacing-button"
+						/>
+					</ResponsiveControl>
+				) }
+				{ show.buttonGap && (
+					<ResponsiveControl
+						attrNameTemplate="buttonGap%s"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Button Gap', i18n ) }
+							min={ 0 }
+							max={ 100 }
+							placeholder="0"
+							allowReset={ true }
+							className="ugb--help-tip-spacing-button-gap"
+						/>
+					</ResponsiveControl>
+				) }
+			</PanelSpacingBody>
 
 			{ show.overlayBackground &&
 				<PanelAdvancedSettings
@@ -371,72 +438,6 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
-			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
-				{ show.titleSpacing && (
-					<ResponsiveControl
-						attrNameTemplate="title%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Title', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-spacing-title"
-						/>
-					</ResponsiveControl>
-				) }
-				{ show.subtitleSpacing && (
-					<ResponsiveControl
-						attrNameTemplate="subtitle%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Subtitle', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-spacing-title"
-						/>
-					</ResponsiveControl>
-				) }
-				{ show.buttonSpacing && (
-					<ResponsiveControl
-						attrNameTemplate="button%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Button', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="10"
-							allowReset={ true }
-							className="ugb--help-tip-spacing-button"
-						/>
-					</ResponsiveControl>
-				) }
-				{ show.buttonGap && (
-					<ResponsiveControl
-						attrNameTemplate="buttonGap%s"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Button Gap', i18n ) }
-							min={ 0 }
-							max={ 100 }
-							placeholder="0"
-							allowReset={ true }
-							className="ugb--help-tip-spacing-button-gap"
-						/>
-					</ResponsiveControl>
-				) }
-			</PanelSpacingBody>
 		</Fragment>
 	)
 } )
