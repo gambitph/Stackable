@@ -47,7 +47,7 @@ class ProModal extends Component {
 
 		return (
 			<Tag>
-				<a href="https://wpstackable.com/upgrade/?utm_source=editor-learn-more&utm_campaign=learnmore&utm_medium=gutenberg"
+				<a href={ `https://wpstackable.com/upgrade/?utm_source=${ this.props.buttonUtmSource }&utm_campaign=learnmore&utm_medium=gutenberg` }
 					target="_premium"
 					onClick={ this.open }
 					className={ this.props.buttonClassName }
@@ -87,5 +87,6 @@ ProModal.defaultProps = {
 	button: __( 'Learn More', i18n ),
 	buttonClassName: 'button button-secondary',
 	tag: 'div',
+	buttonUtmSource: 'editor-learn-more',
 }
 export default ProModal
