@@ -34,7 +34,12 @@
 	max-height: 800px;
 	transition: all 0.3s ease-in-out;
 	overflow: hidden;
+	margin: 0 -16px;
 	&.ugb-pro-control-button--hidden {
 		max-height: 0;
+	}
+	.ugb-design-control-pro-note {
+		margin-left: 16px;
+		margin-right: 16px;
 	}
 }

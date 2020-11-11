@@ -13,6 +13,8 @@ import { __ } from '@wordpress/i18n'
  * External dependencies
  */
 import { i18n } from 'stackable'
+import { Button } from '@wordpress/components'
+import classnames from 'classnames'
 
 const LABELS = {
 	layout: {
@@ -48,23 +50,30 @@ const LABELS = {
 }
 
 const ProControl = props => {
+	const classNames = classnames( [ 'ugb-design-control-pro-note', props.className ] )
 	return (
-		<div className="ugb-design-control-pro-note">
-			<SVGProIcon />
+		<div className={ classNames }>
+			{ props.isDismissible && <Button className="ugb-design-control-pro-note__close" icon="no-alt" isTertiary onClick={ props.onClose } /> }
+			<SVGProIcon className="ugb-design-control-pro-note__logo" />
 			<h4>{ props.title || LABELS[ props.type ].title }</h4>
 			<p>{ props.description || LABELS[ props.type ].description }</p>
-			{ props.showButton && <ProModal button={ props.button || LABELS[ props.type ].button } /> }
-			<p className="ugb-design-control-pro-note__notice">{ __( 'You can hide premium hints in the settings', i18n ) }</p>
+			{ props.showButton && <ProModal button={ props.button || LABELS[ props.type ].button } buttonUtmSource={ props.buttonUtmSource } /> }
+			{ props.showHideNote && <p className="ugb-design-control-pro-note__notice">{ __( 'You can hide premium hints in the settings', i18n ) }</p> }
 		</div>
 	)
 }
 
 ProControl.defaultProps = {
+	className: '',
 	type: 'layout',
 	title: '',
 	description: '',
 	button: '',
 	showButton: true,
+	showHideNote: true,
+	isDismissible: false,
+	onClose: () => {},
+	buttonUtmSource: undefined,
 }
 
 export default ProControl

@@ -1,14 +1,19 @@
 .ugb-design-control-pro-note {
-	margin: 1.5em 0;
-	color: #6d7882;
+	position: relative;
 	text-align: center;
-	padding: 0 30px;
+	background: #fff;
+	padding: 16px;
+	border-radius: 12px;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+	margin: 16px 0;
+	color: #1e1e1e;
 	h4 {
-		margin: 0 0 1em;
+		margin: 0 0 4px;
 		font-size: 1em;
 	}
 	p {
 		font-size: 0.9em;
+		margin-bottom: 16px;
 	}
 	a.button {
 		color: #fff;
@@ -16,27 +21,35 @@
 		text-transform: uppercase;
 		display: inline-block;
 		height: auto;
-		width: auto;
+		width: 100%;
 		margin: 0 auto;
 		transition: all 0.3s ease-in-out;
 		box-shadow: none;
-		font-size: 9px;
+		font-size: 10px;
+		letter-spacing: 1px;
 		line-height: 1.2em;
 		border-radius: 25px;
 		padding: 10px 18px;
-		background: linear-gradient(to right, #8c33da -30%, #f34957 130%);
+		background: linear-gradient(330deg, #b300be, #f00069);
+		background-color: #b300be;
 		transition-timing-function: cubic-bezier(0.81, 0.37, 0.61, 1);
 		transition-duration: 0.2s;
 		&:hover {
-			background: linear-gradient(to right, #8c33da -70%, #f34957 170%);
+			background: linear-gradient(to right, #f00069 0%, #f00069 100%);
 			color: #fff;
-			transform: scale(1.1);
+			transform: scale(1.02);
 		}
 	}
-	svg {
-		height: 35px;
-		width: 35px;
-		margin: 0 0 1em;
+	.ugb-design-control-pro-note__close {
+		position: absolute;
+		top: 0;
+		right: 0;
+		color: #777;
+	}
+	svg.ugb-design-control-pro-note__logo {
+		height: 24px;
+		width: 24px;
+		margin: 0 0 12px;
 	}
 
 	&.ugb-pro-note__small {
