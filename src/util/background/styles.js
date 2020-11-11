@@ -20,6 +20,9 @@ const createBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 
 	const {
 		importantBackgroundColor = false,
+		importantBackgroundPosition = false,
+		importantBackgroundSize = false,
+		importantBackgroundRepeat = false,
 	} = options
 
 	const customSize = getValue( 'BackgroundCustomSize' ) ? getValue( 'BackgroundCustomSize' ) + ( getValue( 'BackgroundCustomSizeUnit' ) || '%' ) : undefined
@@ -39,20 +42,20 @@ const createBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 			backgroundColor,
 			backgroundAttachment: getValue( 'FixedBackground' ) ? 'fixed' : undefined,
 			backgroundImage: getValue( 'BackgroundMediaURL', `url(%s)` ),
-			backgroundPosition: getValue( 'BackgroundPosition' ),
-			backgroundRepeat: getValue( 'BackgroundRepeat' ),
+			backgroundPosition: appendImportant( getValue( 'BackgroundPosition' ), importantBackgroundPosition ),
+			backgroundRepeat: appendImportant( getValue( 'BackgroundRepeat' ), importantBackgroundRepeat ),
 			backgroundSize: getValue( 'BackgroundSize' ) ?
-				( getValue( 'BackgroundSize' ) !== 'custom' ? getValue( 'BackgroundSize' ) : customSize ) :
+				appendImportant( ( getValue( 'BackgroundSize' ) !== 'custom' ? getValue( 'BackgroundSize' ) : customSize ), importantBackgroundSize ) :
 				undefined,
 			backgroundBlendMode: getValue( 'BackgroundImageBlendMode' ),
 		}
 	} else if ( screen === 'tablet' ) { // Tablet.
 		return {
 			backgroundImage: getValue( 'TabletBackgroundMediaURL', `url(%s)` ),
-			backgroundPosition: getValue( 'TabletBackgroundPosition' ),
-			backgroundRepeat: getValue( 'TabletBackgroundRepeat' ),
+			backgroundPosition: appendImportant( getValue( 'TabletBackgroundPosition' ), importantBackgroundPosition ),
+			backgroundRepeat: appendImportant( getValue( 'TabletBackgroundRepeat' ), importantBackgroundRepeat ),
 			backgroundSize: getValue( 'TabletBackgroundSize' ) ?
-				( getValue( 'TabletBackgroundSize' ) !== 'custom' ? getValue( 'TabletBackgroundSize' ) : tabletCustomSize ) :
+				appendImportant( ( getValue( 'TabletBackgroundSize' ) !== 'custom' ? getValue( 'TabletBackgroundSize' ) : tabletCustomSize ), importantBackgroundSize ) :
 				undefined,
 		}
 	}
@@ -60,10 +63,10 @@ const createBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 	// Mobile.
 	return {
 		backgroundImage: getValue( 'MobileBackgroundMediaURL', `url(%s)` ),
-		backgroundPosition: getValue( 'MobileBackgroundPosition' ),
-		backgroundRepeat: getValue( 'MobileBackgroundRepeat' ),
+		backgroundPosition: appendImportant( getValue( 'MobileBackgroundPosition' ), importantBackgroundPosition ),
+		backgroundRepeat: appendImportant( getValue( 'MobileBackgroundRepeat' ), importantBackgroundRepeat ),
 		backgroundSize: getValue( 'MobileBackgroundSize' ) ?
-			( getValue( 'MobileBackgroundSize' ) !== 'custom' ? getValue( 'MobileBackgroundSize' ) : mobileCustomSize ) :
+			appendImportant( ( getValue( 'MobileBackgroundSize' ) !== 'custom' ? getValue( 'MobileBackgroundSize' ) : mobileCustomSize ), importantBackgroundSize ) :
 			undefined,
 	}
 }

@@ -73,6 +73,9 @@ export const createStyles = props => {
 		styles.push( {
 			...( show.columnBackground ? createBackgroundStyleSet( 'column%s', selector, props.attributes, {
 				importantBackgroundColor: true,
+				importantBackgroundPosition: true,
+				importantBackgroundSize: true,
+				importantBackgroundRepeat: true,
 			} ) : {} ),
 		} )
 	}
