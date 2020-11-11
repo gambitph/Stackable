@@ -49,7 +49,6 @@ const ColumnPaddingControl = props => {
 			defaultLocked={ true }
 			min={ [ 0, 0, 0 ] }
 			max={ [ 500, 30, 100 ] }
-			sliderMax={ [ 100, 15, 30 ] }
 			step={ 1 }
 
 			valueDesktop={ {
