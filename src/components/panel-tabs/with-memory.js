@@ -33,15 +33,17 @@ const withMemory = createHigherOrderComponent(
 			// Create a cache for the status of this panel.
 			this.blockClientId = this.props.blockProps.clientId
 			if ( typeof panelStatus[ this.blockClientId ] === 'undefined' ) {
+				const activeTab = isUnmodifiedBlock( this.props.blockProps ) ? '' : 'style'
 				panelStatus[ this.blockClientId ] = {
 					// New/default blocks should start at the layout tab, others in the style tab.
-					tab: isUnmodifiedBlock( this.props.blockProps ) ? '' : 'style',
-					panel: 0,
+					activeTab,
+					[ `${ activeTab || 'style' }OpenedPanel` ]: 0,
 				}
 			}
 
 			this.onClickPanel = this.onClickPanel.bind( this )
 			this.onClickTab = this.onClickTab.bind( this )
+			this.updateOpenedPanel = this.updateOpenedPanel.bind( this )
 		}
 
 		getActiveTab() {
@@ -80,39 +82,56 @@ const withMemory = createHigherOrderComponent(
 		}
 
 		componentDidMount() {
+			this.updateOpenedPanel()
+		}
+
+		updateOpenedPanel( activeTab = panelStatus[ this.blockClientId ].activeTab ) {
+			// If initially opened. Don't do anything.
+			if ( ! activeTab ) {
+				return
+			}
+
 			// Or if no panel was open, make sure all panels are closed.
-			if ( panelStatus[ this.blockClientId ].panel === -1 ) {
+			if ( panelStatus[ this.blockClientId ][ `${ activeTab }openedPanel` ] === -1 ) {
 				closeAllOpenPanels()
 				return
 			}
 
 			// Open the previous panel.
-			const panel = this.getPanelFromIndex( panelStatus[ this.blockClientId ].panel )
-			if ( panel ) {
-				panel.click()
-			}
+			setTimeout( () => {
+				const panel = this.getPanelFromIndex( panelStatus[ this.blockClientId ][ `${ activeTab }OpenedPanel` ] )
+				if ( panel ) {
+					panel.click()
+				}
+			}, 0 )
 		}
 
 		// Update the cache when closing/opening panels.
 		onClickPanel( panel ) {
+			const { activeTab } = panelStatus[ this.blockClientId ]
 			panelStatus[ this.blockClientId ] = {
 				...panelStatus[ this.blockClientId ],
-				panel: ! panel.classList.contains( 'is-opened' ) ? this.getPanelIndex( panel ) : -1,
+				[ `${ activeTab }OpenedPanel` ]: ! panel.classList.contains( 'is-opened' ) ? this.getPanelIndex( panel ) : -1,
 			}
 		}
 
 		// Update the cache when changing tabs.
 		async onClickTab( tab ) {
+			const openedPanel = panelStatus[ this.blockClientId ][ `${ tab }OpenedPanel` ]
+
+			this.updateOpenedPanel( tab )
+
 			panelStatus[ this.blockClientId ] = {
-				tab,
-				panel: await this.getOpenPanelIndex( tab ),
+				...panelStatus[ this.blockClientId ],
+				activeTab: tab,
+				[ `${ tab }OpenedPanel` ]: openedPanel !== undefined ? openedPanel : await this.getOpenPanelIndex( tab ),
 			}
 		}
 
 		render() {
 			return (
 				<WrappedComponent
-					initialTab={ panelStatus[ this.blockClientId ].tab }
+					initialTab={ panelStatus[ this.blockClientId ].activeTab }
 					onClickTab={ this.onClickTab }
 					onClickPanel={ this.onClickPanel }
 					{ ...this.props }
