@@ -68,10 +68,15 @@ const withMemory = createHigherOrderComponent(
 			return panel ? Array.prototype.slice.call( panel.parentElement.children ).indexOf( panel ) : -1
 		}
 
-		getOpenPanelIndex( tab = this.getActiveTab() ) {
-			const container = this.getActiveTabPanelContainer( tab )
-			const openPanel = container.querySelector( '.components-panel__body.is-opened' )
-			return this.getPanelIndex( openPanel )
+		async getOpenPanelIndex( tab = this.getActiveTab() ) {
+			// Get the element asynchronously.
+			const container = await new window.Promise( resolve => setTimeout( resolve, 0 ) )
+				.then( () => this.getActiveTabPanelContainer( tab ) )
+
+			if ( container ) {
+				const openPanel = container.querySelector( '.components-panel__body.is-opened' )
+				return this.getPanelIndex( openPanel )
+			}
 		}
 
 		componentDidMount() {
@@ -97,10 +102,10 @@ const withMemory = createHigherOrderComponent(
 		}
 
 		// Update the cache when changing tabs.
-		onClickTab( tab ) {
+		async onClickTab( tab ) {
 			panelStatus[ this.blockClientId ] = {
 				tab,
-				panel: this.getOpenPanelIndex( tab ),
+				panel: await this.getOpenPanelIndex( tab ),
 			}
 		}
 
@@ -108,7 +113,7 @@ const withMemory = createHigherOrderComponent(
 			return (
 				<WrappedComponent
 					initialTab={ panelStatus[ this.blockClientId ].tab }
-					onClick={ this.onClickTab }
+					onClickTab={ this.onClickTab }
 					onClickPanel={ this.onClickPanel }
 					{ ...this.props }
 				/>

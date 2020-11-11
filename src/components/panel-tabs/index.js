@@ -119,6 +119,7 @@ class PanelTabs extends Component {
 	select( tab ) {
 		this.setState( { activeTab: tab } )
 		this.updateSidebarPanelTab( tab )
+		this.props.onClickTab( tab )
 		this.props.onClick( tab )
 	}
 
@@ -176,6 +177,7 @@ PanelTabs.defaultProps = {
 	initialTab: '',
 	onClickPanel: () => {},
 	onClick: () => {},
+	onClickTab: () => {},
 	tabs: null,
 	onTabFirstOpen: () => {},
 }
