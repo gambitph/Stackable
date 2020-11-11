@@ -28,6 +28,8 @@ import {
 	PanelSpacingBody,
 	AdvancedRangeControl,
 	DivBackground,
+	ButtonIconPopoverControl,
+	ColumnPaddingControl,
 } from '~stackable/components'
 import {
 	descriptionPlaceholder,
@@ -127,30 +129,6 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 					max={ 3 }
 					className="ugb--help-tip-general-columns"
 				/>
-				{ show.borderRadius &&
-					<AdvancedRangeControl
-						label={ __( 'Border Radius', i18n ) }
-						value={ borderRadius }
-						onChange={ borderRadius => setAttributes( { borderRadius } ) }
-						min={ 0 }
-						max={ 50 }
-						allowReset={ true }
-						placeholder="12"
-						className="ugb--help-tip-general-border-radius"
-					/>
-				}
-				{ show.shadow &&
-					<AdvancedRangeControl
-						label={ __( 'Shadow / Outline', i18n ) }
-						value={ shadow }
-						onChange={ shadow => setAttributes( { shadow } ) }
-						min={ 0 }
-						max={ 9 }
-						allowReset={ true }
-						placeholder={ design !== 'basic2' ? 3 : '' }
-						className="ugb--help-tip-general-shadow"
-					/>
-				}
 				<ContentAlignControl
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
@@ -161,18 +139,138 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 
 			{ show.columnBackground &&
 				<PanelAdvancedSettings
-					title={ __( 'Column Background', i18n ) }
+					title={ __( 'Container', i18n ) }
 					id="column-background"
 					initialOpen={ false }
 					className="ugb--help-tip-column-background-on-off"
 				>
-					<BackgroundControlsHelper
-						attrNameTemplate="column%s"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
+					<ButtonIconPopoverControl
+						label={ __( 'Background', i18n ) }
+						popoverLabel={ __( 'Background', i18n ) }
+						onReset={ () => {
+							setAttributes( {
+								columnBackgroundColorType: '',
+								columnBackgroundColor: '',
+								columnBackgroundColor2: '',
+								columnBackgroundColorOpacity: '',
+								columnBackgroundMediaID: '',
+								columnBackgroundMediaUrl: '',
+								columnBackgroundTintStrength: '',
+								columnFixedBackground: '',
+							} )
+						} }
+						allowReset={ props.attributes.columnBackgroundColor || props.attributes.columnBackgroundMediaUrl }
+						hasColorPreview={ props.attributes.columnBackgroundColor }
+						hasImagePreview={ props.attributes.columnBackgroundMediaUrl }
+						colorPreview={ props.attributes.columnBackgroundColorType === 'gradient' ? [ props.attributes.columnBackgroundColor, props.attributes.columnBackgroundColor2 ] : props.attributes.columnBackgroundColor }
+						imageUrlPreview={ props.attributes.columnBackgroundMediaUrl }
+					>
+						<BackgroundControlsHelper
+							attrNameTemplate="column%s"
+							setAttributes={ setAttributes }
+							blockAttributes={ props.attributes }
+						/>
+					</ButtonIconPopoverControl>
+
+					{ show.borderRadius &&
+					<AdvancedRangeControl
+						label={ __( 'Border Radius', i18n ) }
+						value={ borderRadius }
+						onChange={ borderRadius => setAttributes( { borderRadius } ) }
+						min={ 0 }
+						max={ 50 }
+						allowReset={ true }
+						placeholder="12"
+						className="ugb--help-tip-general-border-radius"
 					/>
+					}
+
+					{ show.shadow &&
+					<AdvancedRangeControl
+						label={ __( 'Shadow / Outline', i18n ) }
+						value={ shadow }
+						onChange={ shadow => setAttributes( { shadow } ) }
+						min={ 0 }
+						max={ 9 }
+						allowReset={ true }
+						placeholder={ design !== 'basic2' ? 3 : '' }
+						className="ugb--help-tip-general-shadow"
+					/>
+					}
 				</PanelAdvancedSettings>
 			}
+
+			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
+				<ColumnPaddingControl
+					label={ __( 'Paddings', i18n ) }
+					setAttributes={ setAttributes }
+					attributes={ props.attributes }
+				/>
+				{ show.testimonialSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="testimonial%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Testimonial', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-spacing-description"
+						/>
+					</ResponsiveControl>
+				}
+				{ show.imageSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="image%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Image', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-spacing-image"
+						/>
+					</ResponsiveControl>
+				}
+				{ show.nameSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="name%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Name', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-spacing-name"
+						/>
+					</ResponsiveControl>
+				) }
+				{ show.positionSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="position%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Position', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="0"
+							allowReset={ true }
+							className="ugb--help-tip-spacing-name"
+						/>
+					</ResponsiveControl>
+				) }
+			</PanelSpacingBody>
 
 			<PanelAdvancedSettings
 				title={ __( 'Testimonial', i18n ) }
@@ -337,72 +435,6 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
-			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
-				{ show.testimonialSpacing &&
-					<ResponsiveControl
-						attrNameTemplate="testimonial%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Testimonial', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-spacing-description"
-						/>
-					</ResponsiveControl>
-				}
-				{ show.imageSpacing &&
-					<ResponsiveControl
-						attrNameTemplate="image%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Image', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-spacing-image"
-						/>
-					</ResponsiveControl>
-				}
-				{ show.nameSpacing && (
-					<ResponsiveControl
-						attrNameTemplate="name%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Name', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-spacing-name"
-						/>
-					</ResponsiveControl>
-				) }
-				{ show.positionSpacing && (
-					<ResponsiveControl
-						attrNameTemplate="position%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Position', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="0"
-							allowReset={ true }
-							className="ugb--help-tip-spacing-name"
-						/>
-					</ResponsiveControl>
-				) }
-			</PanelSpacingBody>
 		</Fragment>
 	)
 } )

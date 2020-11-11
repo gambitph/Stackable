@@ -1,4 +1,9 @@
 /**
+ * Internal dependencies
+ */
+import ColorPreview from './color-preview'
+
+/**
  * WordPress dependencies
  */
 import { addFilter, removeFilter } from '@wordpress/hooks'
@@ -15,6 +20,7 @@ import { __ } from '@wordpress/i18n'
  */
 import classnames from 'classnames'
 import { i18n } from 'stackable'
+import ImagePreview from './image-preview'
 
 // Keep the instance ID.
 let buttonInstance = 1
@@ -34,6 +40,8 @@ class ButtonIconPopoverControl extends Component {
 		this.handleOnClickOutside = this.handleOnClickOutside.bind( this )
 		this.handleReset = this.handleReset.bind( this )
 		this.buttonRef = createRef()
+		this.buttonRefColorPreview = createRef()
+		this.buttonRefImagePreview = createRef()
 		this.instanceId = buttonInstance++
 	}
 
@@ -123,7 +131,18 @@ class ButtonIconPopoverControl extends Component {
 	 * @param {Event} ev Click event
 	 */
 	handleOnClickOutside( ev ) {
-		if ( this.state.isMouseOutside && ev.target.closest( 'button' ) !== this.buttonRef.current ) {
+		// If the Media Manager is open, do not do anything since this might
+		// interfere with how the Media Manager works.
+		if ( window.wp?.media?.frame?.el?.clientHeight ) {
+			return
+		}
+
+		// If the click isn't from our button, close the popup.
+		if ( this.state.isMouseOutside && (
+			ev.target.closest( 'button' ) !== this.buttonRef.current &&
+			ev.target.closest( 'button' ) !== this.buttonRefColorPreview.current &&
+			ev.target.closest( 'button' ) !== this.buttonRefImagePreview.current
+		) ) {
 			if ( ! ev.target.closest( '.ugb-button-icon-control__popover' ) ) {
 				this.handleClose()
 			}
@@ -191,6 +210,20 @@ class ButtonIconPopoverControl extends Component {
 							) }
 						</Fragment>
 					) }
+					{ this.props.hasImagePreview &&
+						<ImagePreview
+							imageUrl={ this.props.imageUrlPreview }
+							onClick={ this.handleOpen }
+							_ref={ this.buttonRefImagePreview }
+						/>
+					}
+					{ this.props.hasColorPreview &&
+						<ColorPreview
+							color={ this.props.colorPreview }
+							onClick={ this.handleOpen }
+							_ref={ this.buttonRefColorPreview }
+						/>
+					}
 					<Button
 						onClick={ this.handleOpen }
 						className="ugb-button-icon-control__edit"
@@ -233,6 +266,10 @@ ButtonIconPopoverControl.defaultProps = {
 	onToggle: undefined,
 	toggleOnSetAttributes: [],
 	toggleAttributeName: '',
+	colorPreview: null,
+	imageUrlPreview: '',
+	hasColorPreview: false,
+	hasImagePreview: false,
 }
 
 export default ButtonIconPopoverControl

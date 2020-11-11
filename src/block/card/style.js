@@ -8,6 +8,7 @@ import {
 	createTypographyStyles,
 	whiteIfDarkBlackIfLight,
 	appendImportant,
+	appendImportantAll,
 	createImageBackgroundStyleSet,
 	__getValue,
 } from '~stackable/util'
@@ -60,6 +61,39 @@ export const createStyles = props => {
 	}
 	styles.push( {
 		...( show.columnBackground ? createBackgroundStyleSet( 'column%s', 'ugb-card__item', props.attributes, columnBackgroundOptions ) : {} ),
+	} )
+
+	// Container
+	const {
+		columnPaddingUnit = 'px',
+		tabletColumnPaddingUnit = 'px',
+		mobileColumnPaddingUnit = 'px',
+	} = props.attributes
+	styles.push( {
+		desktopTablet: {
+			'.ugb-card__content': appendImportantAll( {
+				paddingTop: getValue( 'columnPaddingTop', `%s${ columnPaddingUnit }` ),
+				paddingBottom: getValue( 'columnPaddingBottom', `%s${ columnPaddingUnit }` ),
+				paddingRight: getValue( 'columnPaddingRight', `%s${ columnPaddingUnit }` ),
+				paddingLeft: getValue( 'columnPaddingLeft', `%s${ columnPaddingUnit }` ),
+			} ),
+		},
+		tabletOnly: {
+			'.ugb-card__content': appendImportantAll( {
+				paddingTop: getValue( 'tabletColumnPaddingTop', `%s${ tabletColumnPaddingUnit }` ),
+				paddingRight: getValue( 'tabletColumnPaddingRight', `%s${ tabletColumnPaddingUnit }` ),
+				paddingBottom: getValue( 'tabletColumnPaddingBottom', `%s${ tabletColumnPaddingUnit }` ),
+				paddingLeft: getValue( 'tabletColumnPaddingLeft', `%s${ tabletColumnPaddingUnit }` ),
+			} ),
+		},
+		mobile: {
+			'.ugb-card__content': appendImportantAll( {
+				paddingTop: getValue( 'mobileColumnPaddingTop', `%s${ mobileColumnPaddingUnit }` ),
+				paddingRight: getValue( 'mobileColumnPaddingRight', `%s${ mobileColumnPaddingUnit }` ),
+				paddingBottom: getValue( 'mobileColumnPaddingBottom', `%s${ mobileColumnPaddingUnit }` ),
+				paddingLeft: getValue( 'mobileColumnPaddingLeft', `%s${ mobileColumnPaddingUnit }` ),
+			} ),
+		},
 	} )
 
 	// Image.

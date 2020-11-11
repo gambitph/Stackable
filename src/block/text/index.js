@@ -186,7 +186,9 @@ export const settings = {
 	modules: {
 		'advanced-general': true,
 		'advanced-block-spacing': true,
-		'advanced-column-spacing': true,
+		'advanced-column-spacing': {
+			paddings: false,
+		},
 		'advanced-responsive': true,
 		'block-background': true,
 		'block-separators': true,

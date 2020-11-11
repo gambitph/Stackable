@@ -12,6 +12,7 @@ import {
 	WhenResponsiveScreen,
 	DivBackground,
 	PanelAdvancedSettings,
+	ButtonIconPopoverControl,
 } from '~stackable/components'
 import {
 	getVideoProviderFromURL,
@@ -106,6 +107,33 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 				title={ __( 'Container', i18n ) }
 				initialOpen={ false }
 			>
+				<ButtonIconPopoverControl
+					label={ __( 'Background', i18n ) }
+					popoverLabel={ __( 'Background', i18n ) }
+					onReset={ () => {
+						setAttributes( {
+							previewBackgroundColorType: '',
+							previewBackgroundColor: '',
+							previewBackgroundColor2: '',
+							previewBackgroundColorOpacity: '',
+							previewBackgroundMediaID: '',
+							previewBackgroundMediaUrl: '',
+							previewBackgroundTintStrength: '',
+							previewFixedBackground: '',
+						} )
+					} }
+					allowReset={ props.attributes.previewBackgroundColor || props.attributes.previewBackgroundMediaUrl }
+					hasColorPreview={ props.attributes.previewBackgroundColor }
+					hasImagePreview={ props.attributes.previewBackgroundMediaUrl }
+					colorPreview={ props.attributes.previewBackgroundColorType === 'gradient' ? [ props.attributes.previewBackgroundColor, props.attributes.previewBackgroundColor2 ] : props.attributes.previewBackgroundColor }
+					imageUrlPreview={ props.attributes.previewBackgroundMediaUrl }
+				>
+					<BackgroundControlsHelper
+						attrNameTemplate="preview%s"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					/>
+				</ButtonIconPopoverControl>
 				{ show.containerWidth &&
 					<Fragment>
 						<WhenResponsiveScreen screen="desktop">
@@ -181,18 +209,6 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 					allowReset={ true }
 					placeholder="3"
 					className="ugb--help-tip-general-shadow"
-				/>
-			</PanelAdvancedSettings>
-
-			<PanelAdvancedSettings
-				title={ __( 'Background', i18n ) }
-				id="background"
-				initialOpen={ false }
-			>
-				<BackgroundControlsHelper
-					attrNameTemplate="preview%s"
-					setAttributes={ setAttributes }
-					blockAttributes={ props.attributes }
 				/>
 			</PanelAdvancedSettings>
 

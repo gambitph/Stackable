@@ -308,6 +308,7 @@ export const settings = {
 		'advanced-column-spacing': {
 			verticalColumnAlign: true,
 			verticalContentAlign: false,
+			paddings: false,
 		},
 		'advanced-responsive': true,
 		'block-background': true,

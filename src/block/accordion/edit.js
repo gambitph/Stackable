@@ -26,6 +26,7 @@ import {
 	FourRangeControl,
 	PanelSpacingBody,
 	DivBackground,
+	ButtonIconPopoverControl,
 } from '~stackable/components'
 import {
 	withBlockStyles,
@@ -129,7 +130,46 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 					checked={ reverseArrow }
 					onChange={ reverseArrow => setAttributes( { reverseArrow } ) }
 				/>
-				{ show.borderRadius &&
+				<ContentAlignControl
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+			</PanelBody>
+
+			{ ( show.headerBackground || show.containerBackground ) &&
+				<PanelAdvancedSettings
+					title={ __( 'Container', i18n ) }
+					id="column-background"
+					initialOpen={ false }
+				>
+					<ButtonIconPopoverControl
+						label={ __( 'Background', i18n ) }
+						popoverLabel={ __( 'Background', i18n ) }
+						onReset={ () => {
+							setAttributes( {
+								containerBackgroundColorType: '',
+								containerBackgroundColor: '',
+								containerBackgroundColor2: '',
+								containerBackgroundColorOpacity: '',
+								containerBackgroundMediaID: '',
+								containerBackgroundMediaUrl: '',
+								containerBackgroundTintStrength: '',
+								containerFixedBackground: '',
+							} )
+						} }
+						allowReset={ props.attributes.containerBackgroundColor || props.attributes.containerBackgroundMediaUrl }
+						hasColorPreview={ props.attributes.containerBackgroundColor }
+						hasImagePreview={ props.attributes.containerBackgroundMediaUrl }
+						colorPreview={ props.attributes.containerBackgroundColorType === 'gradient' ? [ props.attributes.containerBackgroundColor, props.attributes.containerBackgroundColor2 ] : props.attributes.containerBackgroundColor }
+						imageUrlPreview={ props.attributes.containerBackgroundMediaUrl }
+					>
+						<BackgroundControlsHelper
+							attrNameTemplate="container%s"
+							setAttributes={ setAttributes }
+							blockAttributes={ props.attributes }
+						/>
+					</ButtonIconPopoverControl>
+					{ show.borderRadius &&
 					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
@@ -140,8 +180,8 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 						placeholder="12"
 						className="ugb--help-tip-general-border-radius"
 					/>
-				}
-				{ ( show.headerBackground || show.containerBackground ) &&
+					}
+					{ ( show.headerBackground || show.containerBackground ) &&
 					<AdvancedRangeControl
 						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
@@ -152,24 +192,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 						placeholder="3"
 						className="ugb--help-tip-general-shadow"
 					/>
-				}
-				<ContentAlignControl
-					setAttributes={ setAttributes }
-					blockAttributes={ props.attributes }
-				/>
-			</PanelBody>
-
-			{ ( show.headerBackground || show.containerBackground ) &&
-				<PanelAdvancedSettings
-					title={ __( 'Container Background', i18n ) }
-					id="column-background"
-					initialOpen={ false }
-				>
-					<BackgroundControlsHelper
-						attrNameTemplate="container%s"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					/>
+					}
 					{ design === 'colored' &&
 						<ColorPaletteControl
 							value={ containerClosedBackgroundColor }
@@ -180,6 +203,46 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 					}
 				</PanelAdvancedSettings>
 			}
+
+			<PanelSpacingBody
+				initialOpen={ false }
+				blockProps={ props }
+			>
+				{ ( show.headerBackground || show.containerBackground ) &&
+					<FourRangeControl
+						label={ __( 'Padding', i18n ) }
+						top={ containerPaddingTop }
+						right={ containerPaddingRight }
+						bottom={ containerPaddingBottom }
+						left={ containerPaddingLeft }
+						onChange={ paddings => setAttributes( {
+							containerPaddingTop: paddings.top,
+							containerPaddingRight: paddings.right,
+							containerPaddingBottom: paddings.bottom,
+							containerPaddingLeft: paddings.left,
+						} ) }
+						max={ 200 }
+						placeholder="18"
+						className="ugb--help-tip-accordion-padding"
+					/>
+				}
+				{ show.titleSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="title%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Title', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+							placeholder="0"
+							className="ugb--help-tip-accordion-title-spacing"
+						/>
+					</ResponsiveControl>
+				}
+			</PanelSpacingBody>
 
 			<PanelAdvancedSettings
 				title={ __( 'Title', i18n ) }
@@ -270,45 +333,6 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 				</PanelAdvancedSettings>
 			}
 
-			<PanelSpacingBody
-				initialOpen={ false }
-				blockProps={ props }
-			>
-				{ ( show.headerBackground || show.containerBackground ) &&
-					<FourRangeControl
-						label={ __( 'Padding', i18n ) }
-						top={ containerPaddingTop }
-						right={ containerPaddingRight }
-						bottom={ containerPaddingBottom }
-						left={ containerPaddingLeft }
-						onChange={ paddings => setAttributes( {
-							containerPaddingTop: paddings.top,
-							containerPaddingRight: paddings.right,
-							containerPaddingBottom: paddings.bottom,
-							containerPaddingLeft: paddings.left,
-						} ) }
-						max={ 200 }
-						placeholder="18"
-						className="ugb--help-tip-accordion-padding"
-					/>
-				}
-				{ show.titleSpacing &&
-					<ResponsiveControl
-						attrNameTemplate="title%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Title', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							allowReset={ true }
-							placeholder="0"
-							className="ugb--help-tip-accordion-title-spacing"
-						/>
-					</ResponsiveControl>
-				}
-			</PanelSpacingBody>
 		</Fragment>
 	)
 } )
