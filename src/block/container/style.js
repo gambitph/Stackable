@@ -15,6 +15,11 @@ import deepmerge from 'deepmerge'
  */
 import { showOptions } from './util'
 
+/**
+ * Wordpress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+
 export const createStyles = props => {
 	const getValue = __getValue( props.attributes )
 
@@ -234,9 +239,7 @@ export const createStyles = props => {
 		mobileColumnPaddingUnit = 'px',
 	} = props.attributes
 
-	const containerSelector = [ 'image', 'image2', 'image3' ].includes( design ) ?
-		'> .ugb-inner-block > .ugb-block-content > .ugb-container__wrapper > .ugb-container__side' :
-		'> .ugb-inner-block > .ugb-block-content > *'
+	const containerSelector = applyFilters( 'stackable.container.spacing-paddings.selector', '> .ugb-inner-block > .ugb-block-content > *', props )
 
 	styles.push( {
 		desktopTablet: {

@@ -16,6 +16,11 @@ import deepmerge from 'deepmerge'
  */
 import { showOptions } from './util'
 
+/**
+ * Wordpress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
+
 export const createStyles = props => {
 	const getValue = __getValue( props.attributes )
 
@@ -71,15 +76,7 @@ export const createStyles = props => {
 		mobileColumnPaddingUnit = 'px',
 	} = props.attributes
 
-	let columnSelector
-
-	if ( [ 'vertical-card', 'horizontal-card' ].includes( design ) ) {
-		columnSelector = '.ugb-blog-posts__content'
-	} else if ( design === 'image-card' ) {
-		columnSelector = '.ugb-blog-posts__header, .ugb-blog-posts__content'
-	} else {
-		columnSelector = '> .ugb-inner-block > .ugb-block-content > *'
-	}
+	const columnSelector = applyFilters( 'stackable.blog-posts.spacing-paddings.selector', '> .ugb-inner-block > .ugb-block-content > *', props )
 
 	styles.push( {
 		desktopTablet: {
