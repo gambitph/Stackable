@@ -119,7 +119,9 @@ export const createStyles = props => {
 		'.ugb-image-box__image': {
 			backgroundPosition: appendImportant( getValue( 'imageBackgroundPosition' ) ),
 			backgroundRepeat: appendImportant( getValue( 'imageBackgroundRepeat' ) ),
-			backgroundSize: appendImportant( getValue( 'imageBackgroundSize' ) ),
+			backgroundSize: appendImportant( getValue( 'imageBackgroundSize' ) === 'custom' ?
+				getValue( 'imageBackgroundCustomSize', `%s${ getValue( 'imageBackgroundCustomSizeUnit' ) || 'px' }` ) :
+				getValue( 'imagebackgroundSize' ) ),
 		},
 	} )
 
