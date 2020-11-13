@@ -4,6 +4,7 @@
 import {
 	AdvancedRangeControl,
 	ResponsiveControl,
+	PanelAdvancedSettings,
 } from '~stackable/components'
 import {
 	createAllCombinationAttributes,
@@ -20,7 +21,7 @@ import {
 import {
 	addFilter, applyFilters, doAction,
 } from '@wordpress/hooks'
-import { PanelBody, SelectControl } from '@wordpress/components'
+import { SelectControl } from '@wordpress/components'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
@@ -34,7 +35,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody
+			<PanelAdvancedSettings
 				title={ __( 'General', i18n ) }
 				initialOpen={ false }
 			>
@@ -97,7 +98,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 				}
 
 				{ applyFilters( `stackable.${ blockName }.edit.advanced.general.after`, null, props ) }
-			</PanelBody>
+			</PanelAdvancedSettings>
 		</Fragment>
 	)
 }
