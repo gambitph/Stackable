@@ -8,7 +8,7 @@ import ColorPreview from './color-preview'
  */
 import { addFilter, removeFilter } from '@wordpress/hooks'
 import {
-	BaseControl, Button, PanelBody, Popover, ToggleControl, ButtonGroup,
+	BaseControl, Button, Popover, ToggleControl, ButtonGroup, PanelBody,
 } from '@wordpress/components'
 import {
 	Component, createRef, Fragment,

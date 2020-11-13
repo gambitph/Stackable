@@ -60,7 +60,6 @@ import { showOptions } from './util'
  * WordPress dependencies
  */
 import {
-	PanelBody,
 	ToggleControl,
 } from '@wordpress/components'
 import {
@@ -125,7 +124,10 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<AdvancedRangeControl
 					label={ __( 'Columns', i18n ) }
 					value={ columns }
@@ -138,7 +140,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			{ show.columnBackground &&
 				<PanelAdvancedSettings

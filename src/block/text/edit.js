@@ -47,7 +47,7 @@ import { range } from 'lodash'
  */
 import { i18n } from 'stackable'
 import {
-	PanelBody, ToggleControl,
+	ToggleControl,
 } from '@wordpress/components'
 import {
 	__, sprintf, _x,
@@ -111,7 +111,10 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<AdvancedRangeControl
 					label={ __( 'Columns', i18n ) }
 					min={ 1 }
@@ -132,7 +135,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
 				<ColumnPaddingControl

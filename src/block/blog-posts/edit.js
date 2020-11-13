@@ -59,7 +59,6 @@ import classnames from 'classnames'
 import { Component, Fragment } from '@wordpress/element'
 import { dateI18n, format } from '@wordpress/date'
 import {
-	PanelBody,
 	Placeholder,
 	Spinner,
 	TextControl,
@@ -156,7 +155,10 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<AdvancedRangeControl
 					label={ __( 'Columns', i18n ) }
 					value={ columns }
@@ -208,9 +210,9 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
-			<PanelBody
+			<PanelAdvancedSettings
 				title={ __( 'Posts Settings', i18n ) }
 				initialOpen={ false }
 			>
@@ -253,7 +255,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 				/>
 				{ applyFilters( 'stackable.blog-posts.edit.inspector.style.posts.after', null, props ) }
 				{ showProNotice && <ProControlButton type="postsBlock" /> }
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			{ show.columnBackground &&
 				<PanelAdvancedSettings

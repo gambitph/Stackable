@@ -40,7 +40,6 @@ import classnames from 'classnames'
  * WordPress dependencies
  */
 import { i18n } from 'stackable'
-import { PanelBody } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
@@ -57,7 +56,7 @@ addFilter( 'stackable.column.edit.inspector.layout.before', 'stackable/column', 
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody
+			<PanelAdvancedSettings
 				initialOpen={ true }
 				title={ __( 'Layout', i18n ) }
 			>
@@ -73,7 +72,7 @@ addFilter( 'stackable.column.edit.inspector.layout.before', 'stackable/column', 
 					] ) }
 					onChange={ design => setAttributes( { design } ) }
 				 />
-			</PanelBody>
+			</PanelAdvancedSettings>
 		</Fragment>
 	)
 } )
@@ -106,7 +105,10 @@ addFilter( 'stackable.column.edit.inspector.style.before', 'stackable/column', (
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<ResponsiveControl
 					attrNameTemplate="%sColumnContentVerticalAlign"
 					setAttributes={ setAttributes }
@@ -201,7 +203,7 @@ addFilter( 'stackable.column.edit.inspector.style.before', 'stackable/column', (
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			{ show.columnBackground &&
 				<PanelAdvancedSettings
@@ -275,7 +277,7 @@ addFilter( 'stackable.column.edit.inspector.style.before', 'stackable/column', (
 				/>
 			</PanelSpacingBody>
 
-			<PanelBody
+			<PanelAdvancedSettings
 				title={ __( 'Text Colors', i18n ) }
 				initialOpen={ false }
 			>
@@ -300,7 +302,7 @@ addFilter( 'stackable.column.edit.inspector.style.before', 'stackable/column', (
 					label={ __( 'Link Hover Color', i18n ) }
 				/>
 				<p className="components-base-control__help">{ __( 'The colors above might not apply to some nested blocks.', i18n ) }</p>
-			</PanelBody>
+			</PanelAdvancedSettings>
 		</Fragment>
 	)
 } )

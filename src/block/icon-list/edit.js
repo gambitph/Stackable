@@ -41,7 +41,7 @@ import {
 } from '@wordpress/element'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import {
-	PanelBody, ToggleControl,
+	ToggleControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
@@ -89,7 +89,10 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<ResponsiveControl
 					attrNameTemplate="%sColumns"
 					setAttributes={ setAttributes }
@@ -113,7 +116,7 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
 				<AdvancedRangeControl
@@ -128,7 +131,9 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 				/>
 			</PanelSpacingBody>
 
-			<PanelBody title={ __( 'Icon', i18n ) } initialOpen={ false }>
+			<PanelAdvancedSettings
+				title={ __( 'Icon', i18n ) }
+				initialOpen={ false }>
 				<IconControl
 					label={ __( 'Icon', i18n ) }
 					value={ icon || DEFAULT_CHECK_SVG }
@@ -174,7 +179,7 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 					allowReset={ true }
 					placeholder="0"
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			<PanelAdvancedSettings
 				title={ __( 'List Text', i18n ) }

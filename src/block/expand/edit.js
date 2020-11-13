@@ -40,7 +40,6 @@ import {
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
-import { PanelBody } from '@wordpress/components'
 import { Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 import { RichText } from '@wordpress/block-editor'
@@ -60,12 +59,15 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<ContentAlignControl
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			<PanelAdvancedSettings
 				title={ __( 'Title', i18n ) }
