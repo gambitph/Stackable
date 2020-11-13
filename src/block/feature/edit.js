@@ -56,7 +56,7 @@ import { showOptions } from './util'
  * WordPress dependencies
  */
 import {
-	PanelBody, ToggleControl,
+	ToggleControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters, addFilter } from '@wordpress/hooks'
@@ -115,7 +115,10 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				{ show.imageColumnWidth &&
 					<ResponsiveControl
 						attrNameTemplate="imageColumn%sWidth"
@@ -144,7 +147,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			{ show.columnBackground &&
 				<PanelAdvancedSettings
@@ -288,7 +291,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 				}
 			</PanelSpacingBody>
 
-			<PanelBody
+			<PanelAdvancedSettings
 				title={ __( 'Image', i18n ) }
 				initialOpen={ false }
 			>
@@ -322,7 +325,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 						</ResponsiveControl>
 					</Fragment>
 				}
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			<PanelAdvancedSettings
 				title={ __( 'Title', i18n ) }

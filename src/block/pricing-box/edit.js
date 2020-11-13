@@ -61,7 +61,6 @@ import {
 	addFilter,
 	applyFilters,
 } from '@wordpress/hooks'
-import { PanelBody } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { RichText } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
@@ -130,7 +129,10 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<AdvancedRangeControl
 					label={ __( 'Columns', i18n ) }
 					value={ columns }
@@ -143,7 +145,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			{ applyFilters( 'stackable.pricing-box.edit.inspector.style.general.after', null, props ) }
 

@@ -17,6 +17,7 @@ import {
 	AdvancedRangeControl,
 	FourRangeControl,
 	ColorPaletteControl,
+	PanelAdvancedSettings,
 } from '~stackable/components'
 import {
 	withUniqueClass,
@@ -32,9 +33,6 @@ import classnames from 'classnames'
  * WordPress dependencies
  */
 import { i18n } from 'stackable'
-import {
-	PanelBody,
-} from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
@@ -85,7 +83,10 @@ addFilter( 'stackable.divider.edit.inspector.style.before', 'stackable/divider',
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<ColorPaletteControl
 					value={ color }
 					onChange={ color => setAttributes( { color } ) }
@@ -124,7 +125,7 @@ addFilter( 'stackable.divider.edit.inspector.style.before', 'stackable/divider',
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 		</Fragment>
 	)
 } )

@@ -47,9 +47,7 @@ import classnames from 'classnames'
 import {
 	RichText, InnerBlocks,
 } from '@wordpress/block-editor'
-import {
-	PanelBody, ToggleControl,
-} from '@wordpress/components'
+import { ToggleControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { compose, withState } from '@wordpress/compose'
@@ -113,7 +111,10 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<ToggleControl
 					label={ __( 'Close adjacent on open', i18n ) }
 					checked={ onlyOnePanelOpen }
@@ -134,7 +135,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			{ ( show.headerBackground || show.containerBackground ) &&
 				<PanelAdvancedSettings

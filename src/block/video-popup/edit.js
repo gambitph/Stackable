@@ -41,7 +41,7 @@ import createStyles from './style'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 
 import {
-	PanelBody, SelectControl, TextControl,
+	SelectControl, TextControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
@@ -71,7 +71,10 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<ImageControl
 					label={ __( 'Popup Option #1: Upload Video', i18n ) }
 					help={ __( 'Use .mp4 format for videos', i18n ) }
@@ -101,7 +104,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 					min={ 1 }
 					max={ 4 }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			<PanelAdvancedSettings
 				title={ __( 'Container', i18n ) }

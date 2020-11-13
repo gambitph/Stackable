@@ -44,7 +44,7 @@ import classnames from 'classnames'
  * WordPress dependencies
  */
 import { i18n, showProNotice } from 'stackable'
-import { PanelBody, ToggleControl } from '@wordpress/components'
+import { ToggleControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
@@ -114,7 +114,10 @@ addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/contain
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<ResponsiveControl
 					attrNameTemplate="%sHeight"
 					setAttributes={ setAttributes }
@@ -223,7 +226,7 @@ addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/contain
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			{ show.columnBackground &&
 				<PanelAdvancedSettings
@@ -299,7 +302,7 @@ addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/contain
 
 			{ applyFilters( 'stackable.container.edit.inspector.style.column-background.after', null, props ) }
 
-			<PanelBody
+			<PanelAdvancedSettings
 				title={ __( 'Text Colors', i18n ) }
 				initialOpen={ false }
 			>
@@ -324,7 +327,7 @@ addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/contain
 					label={ __( 'Link Hover Color', i18n ) }
 				/>
 				<p className="components-base-control__help">{ __( 'The colors above might not apply to some nested blocks.', i18n ) }</p>
-			</PanelBody>
+			</PanelAdvancedSettings>
 		</Fragment>
 	)
 } )

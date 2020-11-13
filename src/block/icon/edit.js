@@ -47,7 +47,7 @@ import { pick, range } from 'lodash'
  * WordPress dependencies
  */
 import {
-	PanelBody, ToggleControl,
+	 ToggleControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
@@ -72,7 +72,10 @@ addFilter( 'stackable.icon.edit.inspector.style.before', 'stackable/icon', ( out
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<AdvancedRangeControl
 					label={ __( 'Number of Icons / Columns', i18n ) }
 					value={ columns }
@@ -86,7 +89,7 @@ addFilter( 'stackable.icon.edit.inspector.style.before', 'stackable/icon', ( out
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
 				<ResponsiveControl

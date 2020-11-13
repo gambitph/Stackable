@@ -2,6 +2,11 @@
  * A Panel for selecting designs
  */
 /**
+ * Internal dependencies
+ */
+import withMemory from './with-memory'
+
+/**
  * WordPress dependencies
  */
 import {
@@ -93,6 +98,8 @@ class PanelAdvancedSettings extends Component {
 				scrollPanelIntoView( this.panelRef.current )
 			}
 		}
+
+		this.props.onToggle( ! this.state.opened, this.panelRef )
 	}
 
 	onAdvancedToggle() {
@@ -170,6 +177,7 @@ PanelAdvancedSettings.defaultProps = {
 	advancedChildren: null,
 	toggleOnSetAttributes: [],
 	toggleAttributeName: '',
+	onToggle: () => {},
 }
 
-export default PanelAdvancedSettings
+export default withMemory( PanelAdvancedSettings )

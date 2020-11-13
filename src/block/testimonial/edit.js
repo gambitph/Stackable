@@ -58,7 +58,6 @@ import {
 	__, _x, sprintf,
 } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import { PanelBody } from '@wordpress/components'
 import { Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 import { RichText } from '@wordpress/block-editor'
@@ -120,7 +119,10 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<AdvancedRangeControl
 					label={ __( 'Columns', i18n ) }
 					value={ columns }
@@ -133,7 +135,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			{ applyFilters( 'stackable.testimonial.edit.inspector.style.general.after', null, props ) }
 

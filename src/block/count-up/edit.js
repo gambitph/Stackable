@@ -55,7 +55,6 @@ import {
 } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { i18n, showProNotice } from 'stackable'
-import { PanelBody } from '@wordpress/components'
 import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
@@ -110,7 +109,10 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<AdvancedRangeControl
 					label={ __( 'Columns', i18n ) }
 					value={ columns }
@@ -123,7 +125,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			{ show.columnBackground &&
 				<PanelAdvancedSettings

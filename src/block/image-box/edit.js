@@ -55,7 +55,6 @@ import { showOptions } from './util'
  */
 import { RichText } from '@wordpress/block-editor'
 import {
-	PanelBody,
 	SelectControl,
 	withFocusOutside,
 } from '@wordpress/components'
@@ -130,7 +129,10 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<AdvancedRangeControl
 					label={ __( 'Columns', i18n ) }
 					value={ columns }
@@ -199,7 +201,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
 				<ColumnPaddingControl
@@ -288,7 +290,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 				) }
 			</PanelSpacingBody>
 
-			<PanelBody
+			<PanelAdvancedSettings
 				title={ __( 'Image', i18n ) }
 				initialOpen={ false }
 			>
@@ -307,7 +309,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 						} )
 					} }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			<PanelAdvancedSettings
 				title={ __( 'Overlay Color', i18n ) }
@@ -377,7 +379,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 				/>
 			</PanelAdvancedSettings>
 
-			<PanelBody
+			<PanelAdvancedSettings
 				title={ __( 'Effects', i18n ) }
 				initialOpen={ false }
 			>
@@ -394,7 +396,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 				/>
 				{ applyFilters( 'stackable.image-box.edit.panel.image-hover-effects', null, props ) }
 				{ showProNotice && <ProControlButton type="effect" /> }
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			{ show.line &&
 				<PanelAdvancedSettings

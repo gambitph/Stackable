@@ -53,7 +53,7 @@ import {
 } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import {
-	PanelBody, SelectControl, TextControl,
+	SelectControl, TextControl,
 } from '@wordpress/components'
 import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
@@ -117,7 +117,10 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<AdvancedRangeControl
 					label={ __( 'Columns', i18n ) }
 					value={ columns }
@@ -130,7 +133,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			{ show.columnBackground &&
 				<PanelAdvancedSettings

@@ -58,7 +58,7 @@ import classnames from 'classnames'
  */
 import { RichText } from '@wordpress/block-editor'
 import {
-	PanelBody, SelectControl,
+	SelectControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { applyFilters, addFilter } from '@wordpress/hooks'
@@ -130,7 +130,10 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<SelectControl
 					label={ __( 'Notification Type', i18n ) }
 					value={ notifType }
@@ -146,7 +149,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			{ show.columnBorder &&
 				<PanelAdvancedSettings

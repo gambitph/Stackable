@@ -8,6 +8,7 @@ import {
 	BackgroundControlsHelper,
 	ControlSeparator,
 	DivBackground,
+	PanelAdvancedSettings,
 } from '~stackable/components'
 import {
 	withBlockStyles,
@@ -31,7 +32,6 @@ import { addFilter } from '@wordpress/hooks'
 import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
-import { PanelBody } from '@wordpress/components'
 
 addFilter( 'stackable.spacer.edit.inspector.style.before', 'stackable/spacer', ( output, props ) => {
 	const { setAttributes } = props
@@ -47,7 +47,10 @@ addFilter( 'stackable.spacer.edit.inspector.style.before', 'stackable/spacer', (
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<WhenResponsiveScreen>
 					<AdvancedRangeControl
 						label={ __( 'Height', i18n ) }
@@ -99,7 +102,7 @@ addFilter( 'stackable.spacer.edit.inspector.style.before', 'stackable/spacer', (
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 		</Fragment>
 	)
 } )

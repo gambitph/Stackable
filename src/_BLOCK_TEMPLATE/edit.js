@@ -15,6 +15,7 @@ import {
 	DesignPanelBody,
 	ContentAlignControl,
 	AdvancedRangeControl,
+	PanelAdvancedSettings,
 } from '~stackable/components'
 import {
 	withUniqueClass,
@@ -81,7 +82,10 @@ addFilter( 'stackable.BLOCKSLUG.edit.inspector.style.before', 'stackable/BLOCKSL
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings 
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<AdvancedRangeControl
 					label={ __( 'Columns', i18n ) }
 					value={ columns }
@@ -118,7 +122,7 @@ addFilter( 'stackable.BLOCKSLUG.edit.inspector.style.before', 'stackable/BLOCKSL
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 			{ /* TODO: Add more edit controls. */ }
 		</Fragment>
 	)

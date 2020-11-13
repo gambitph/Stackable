@@ -53,7 +53,7 @@ import { showOptions } from './util'
  */
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import {
-	PanelBody, ToggleControl,
+	ToggleControl,
 } from '@wordpress/components'
 import {
 	__, _x, sprintf,
@@ -118,7 +118,10 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				{ ! [ 'basic', 'plain', 'center-overlay' ].includes( design ) &&
 					<ToggleControl
 						label={ __( 'Reverse Horizontally', i18n ) }
@@ -144,7 +147,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			{ show.columnBackground &&
 				<PanelAdvancedSettings

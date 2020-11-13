@@ -59,7 +59,6 @@ import { showOptions } from './util'
  */
 import { __ } from '@wordpress/i18n'
 import { applyFilters, addFilter } from '@wordpress/hooks'
-import { PanelBody } from '@wordpress/components'
 import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
@@ -120,7 +119,10 @@ addFilter( 'stackable.feature-grid.edit.inspector.style.before', 'stackable/feat
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<AdvancedRangeControl
 					label={ __( 'Columns', i18n ) }
 					value={ columns }
@@ -133,7 +135,7 @@ addFilter( 'stackable.feature-grid.edit.inspector.style.before', 'stackable/feat
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			{ show.columnBackground &&
 				<PanelAdvancedSettings
