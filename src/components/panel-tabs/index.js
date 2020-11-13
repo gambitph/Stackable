@@ -21,9 +21,9 @@ import { supportsInspectorPositionSticky } from '~stackable/util'
 
 const TABS = [
 	{
-		value: 'layout',
-		title: __( 'Layout', i18n ),
-		label: __( 'Layout Tab', i18n ),
+		value: 'section',
+		title: __( 'Section', i18n ),
+		label: __( 'Section Tab', i18n ),
 		icon: 'admin-settings',
 	},
 	{
@@ -57,7 +57,7 @@ class PanelTabs extends Component {
 	constructor() {
 		super( ...arguments )
 
-		this.tabsToUse = this.props.tabs || [ 'layout', 'style', 'advanced' ]
+		this.tabsToUse = this.props.tabs || [ 'section', 'style', 'advanced' ]
 
 		this.state = {
 			activeTab: this.props.initialTab ? this.props.initialTab : this.tabsToUse[ 0 ],

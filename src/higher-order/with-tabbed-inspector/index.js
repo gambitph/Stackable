@@ -32,8 +32,8 @@ const withTabbedInspector = ( tabs = null ) => WrappedComponent => {
 
 					{ ( ! activeTab || activeTab === 'layout' ) &&
 						<InspectorPanelControls>
-							{ applyFilters( `stackable.${ blockName }.edit.inspector.layout.before`, null, props ) }
-							{ applyFilters( `stackable.${ blockName }.edit.inspector.layout.after`, null, props ) }
+							{ applyFilters( `stackable.${ blockName }.edit.inspector.section.before`, null, props ) }
+							{ applyFilters( `stackable.${ blockName }.edit.inspector.section.after`, null, props ) }
 						</InspectorPanelControls>
 					}
 
