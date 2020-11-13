@@ -7,12 +7,14 @@ import { closeAllOpenPanels } from './'
  * External dependencies
  */
 import { isUnmodifiedBlock } from '~stackable/util'
+import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
  */
 import { Component } from '@wordpress/element'
 import { createHigherOrderComponent } from '@wordpress/compose'
+import { __ } from '@wordpress/i18n'
 import PropTypes from 'prop-types'
 
 const panelStatus = {}
@@ -38,6 +40,7 @@ const withMemory = createHigherOrderComponent(
 					// New/default blocks should start at the layout tab, others in the style tab.
 					activeTab,
 					[ `${ activeTab || 'style' }OpenedPanel` ]: 0,
+					[ `${ activeTab || 'style' }OpenedPanelTitle` ]: __( 'General', i18n ),
 				}
 			}
 
@@ -101,7 +104,7 @@ const withMemory = createHigherOrderComponent(
 			setTimeout( () => {
 				const panel = this.getPanelFromIndex( panelStatus[ this.blockClientId ][ `${ activeTab }OpenedPanel` ] )
 				if ( panel ) {
-					panel.click()
+					//panel.click()
 				}
 			}, 0 )
 		}
@@ -109,10 +112,17 @@ const withMemory = createHigherOrderComponent(
 		// Update the cache when closing/opening panels.
 		onClickPanel( panel ) {
 			const { activeTab } = panelStatus[ this.blockClientId ]
+			const {
+				textContent = __( 'General', i18n ),
+			} = panel.querySelector( 'h2' )
+
 			panelStatus[ this.blockClientId ] = {
 				...panelStatus[ this.blockClientId ],
 				[ `${ activeTab }OpenedPanel` ]: ! panel.classList.contains( 'is-opened' ) ? this.getPanelIndex( panel ) : -1,
+				[ `${ activeTab }OpenedPanelTitle` ]: ! panel.classList.contains( 'is-opened' ) ? textContent : -1,
 			}
+
+			this.props.setPanelStatus( panelStatus[ this.blockClientId ] )
 		}
 
 		// Update the cache when changing tabs.
@@ -126,6 +136,8 @@ const withMemory = createHigherOrderComponent(
 				activeTab: tab,
 				[ `${ tab }OpenedPanel` ]: openedPanel !== undefined ? openedPanel : await this.getOpenPanelIndex( tab ),
 			}
+
+			this.props.setPanelStatus( panelStatus[ this.blockClientId ] )
 		}
 
 		render() {

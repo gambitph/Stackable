@@ -36,7 +36,10 @@ import {
 	withUniqueClass,
 	withClickOpenInspector,
 } from '~stackable/higher-order'
-import { descriptionPlaceholder } from '~stackable/util'
+import {
+	descriptionPlaceholder,
+	generatePanelProps,
+} from '~stackable/util'
 import { i18n, showProNotice } from 'stackable'
 import classnames from 'classnames'
 
@@ -107,12 +110,18 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 		containerClosedBackgroundColor = '',
 	} = props.attributes
 
+	const {
+		styleOpenedPanelTitle = __( 'General', i18n ),
+	} = props.panelStatus
+
 	const show = showOptions( props )
 
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelBody
+				{ ...generatePanelProps( __( 'General', i18n ), styleOpenedPanelTitle ) }
+			>
 				<ToggleControl
 					label={ __( 'Close adjacent on open', i18n ) }
 					checked={ onlyOnePanelOpen }
@@ -130,28 +139,28 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 					onChange={ reverseArrow => setAttributes( { reverseArrow } ) }
 				/>
 				{ show.borderRadius &&
-					<AdvancedRangeControl
-						label={ __( 'Border Radius', i18n ) }
-						value={ borderRadius }
-						onChange={ borderRadius => setAttributes( { borderRadius } ) }
-						min={ 0 }
-						max={ 50 }
-						allowReset={ true }
-						placeholder="12"
-						className="ugb--help-tip-general-border-radius"
-					/>
+				<AdvancedRangeControl
+					label={ __( 'Border Radius', i18n ) }
+					value={ borderRadius }
+					onChange={ borderRadius => setAttributes( { borderRadius } ) }
+					min={ 0 }
+					max={ 50 }
+					allowReset={ true }
+					placeholder="12"
+					className="ugb--help-tip-general-border-radius"
+				/>
 				}
 				{ ( show.headerBackground || show.containerBackground ) &&
-					<AdvancedRangeControl
-						label={ __( 'Shadow / Outline', i18n ) }
-						value={ shadow }
-						onChange={ shadow => setAttributes( { shadow } ) }
-						min={ 0 }
-						max={ 9 }
-						allowReset={ true }
-						placeholder="3"
-						className="ugb--help-tip-general-shadow"
-					/>
+				<AdvancedRangeControl
+					label={ __( 'Shadow / Outline', i18n ) }
+					value={ shadow }
+					onChange={ shadow => setAttributes( { shadow } ) }
+					min={ 0 }
+					max={ 9 }
+					allowReset={ true }
+					placeholder="3"
+					className="ugb--help-tip-general-shadow"
+				/>
 				}
 				<ContentAlignControl
 					setAttributes={ setAttributes }
@@ -161,9 +170,8 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 
 			{ ( show.headerBackground || show.containerBackground ) &&
 				<PanelAdvancedSettings
-					title={ __( 'Container Background', i18n ) }
+					{ ...generatePanelProps( __( 'Container Background', i18n ), styleOpenedPanelTitle ) }
 					id="column-background"
-					initialOpen={ false }
 				>
 					<BackgroundControlsHelper
 						attrNameTemplate="container%s"
@@ -182,9 +190,9 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 			}
 
 			<PanelAdvancedSettings
-				title={ __( 'Title', i18n ) }
 				id="title"
 				hasToggle={ false }
+				{ ...generatePanelProps( __( 'Title', i18n ), styleOpenedPanelTitle ) }
 			>
 				<HeadingButtonsControl
 					value={ titleTag || 'h4' }
@@ -214,7 +222,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 			</PanelAdvancedSettings>
 
 			<PanelAdvancedSettings
-				title={ __( 'Arrow', i18n ) }
+				{ ...generatePanelProps( __( 'Arrow', i18n ), styleOpenedPanelTitle ) }
 				id="arrow"
 				checked={ showArrow }
 				onChange={ showArrow => setAttributes( { showArrow } ) }
@@ -242,7 +250,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 
 			{ show.border &&
 				<PanelAdvancedSettings
-					title={ __( 'Border', i18n ) }
+					{ ...generatePanelProps( __( 'Border', i18n ), styleOpenedPanelTitle ) }
 					checked={ showBorder }
 					onChange={ showBorder => setAttributes( { showBorder } ) }
 					toggleOnSetAttributes={ [
@@ -271,7 +279,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 			}
 
 			<PanelSpacingBody
-				initialOpen={ false }
+				{ ...generatePanelProps( __( 'Spacing', i18n ), styleOpenedPanelTitle ) }
 				blockProps={ props }
 			>
 				{ ( show.headerBackground || show.containerBackground ) &&
