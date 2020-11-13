@@ -39,10 +39,12 @@ const withMemory = WrappedComponent => {
 
 		// When a panel is opened, remember that.
 		const onToggle = ( isOpen, panelRef ) => {
-			const tab = getTab( panelRef.current )
-			const uid = `${ clientId }-${ tab }`
-			tabCache[ clientId ] = getTab( panelRef.current )
-			panelCache[ uid ] = isOpen ? props.title : null
+			if ( clientId && props.withCaching ) {
+				const tab = getTab( panelRef.current )
+				const uid = `${ clientId }-${ tab }`
+				tabCache[ clientId ] = tab
+				panelCache[ uid ] = isOpen ? props.title : null
+			}
 
 			props.onToggle( isOpen )
 		}
@@ -52,17 +54,19 @@ const withMemory = WrappedComponent => {
 			onToggle,
 		}
 
-		const currentTab = tabCache[ clientId ] || ''
-		const uid = `${ clientId }-${ currentTab }`
+		if ( clientId && props.withCaching ) {
+			const currentTab = tabCache[ clientId ] || ''
+			const uid = `${ clientId }-${ currentTab }`
 
-		// Open the last panel that was opened.
-		const lastOpenPanel = panelCache[ uid ]
-		if ( lastOpenPanel ) {
-			// Only 1 panel is open
-			propsToPass.initialOpen = lastOpenPanel === props.title
-		} else if ( lastOpenPanel === null ) {
-			// All are closed
-			propsToPass.initialOpen = false
+			// Open the last panel that was opened.
+			const lastOpenPanel = panelCache[ uid ]
+			if ( lastOpenPanel ) {
+				// Only 1 panel is open
+				propsToPass.initialOpen = lastOpenPanel === props.title
+			} else if ( lastOpenPanel === null ) {
+				// All are closed
+				propsToPass.initialOpen = false
+			}
 		}
 
 		return (
@@ -74,6 +78,7 @@ const withMemory = WrappedComponent => {
 
 	NewComp.defaultProps = {
 		...( WrappedComponent.defaultProps || {} ),
+		withCaching: true,
 	}
 
 	return NewComp
