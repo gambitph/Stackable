@@ -87,10 +87,13 @@ BlockContainer.Save = props => {
 		'ugb-inner-block',
 	], applyFilters( `stackable.${ blockName }.main-block.inner-classes`, {}, blockProps ) )
 
+	// If anchor is not defined, force id to be undefined.
+	const id = anchor !== '' ? anchor : undefined
+
 	// TODO Remove `design` from the filters below.
 	const BlockTag = blockTag || blockTagProp || 'div' // Allow the advanced block settings to override the HTML Tag.
 	return (
-		<BlockTag { ...containerProps } id={ anchor } className={ mainClasses }>
+		<BlockTag { ...containerProps } id={ id } className={ mainClasses }>
 			{ blockProps.styles }
 			{ applyFilters( `stackable.${ blockName }.save.output.outer`, null, design, blockProps ) }
 			{ render &&
