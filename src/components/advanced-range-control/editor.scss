@@ -42,28 +42,4 @@
 	.components-base-control {
 		margin-bottom: 0;
 	}
-
-	// The RangeControl has an issue where if you click on the edge of the
-	// thumb/button, it won't get dragged.
-	.components-range-control__slider {
-		position: relative;
-		&::before,
-		&::after {
-			content: "";
-			position: absolute;
-			left: -10px;
-			width: 10px;
-			top: -10px;
-			bottom: 0;
-			display: block;
-			z-index: 1;
-		}
-		&::after {
-			left: auto;
-			right: -10px;
-		}
-	}
-	.components-range-control {
-		z-index: 3;
-	}
 }
