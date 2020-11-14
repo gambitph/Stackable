@@ -126,6 +126,7 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com?utm_sour
 
 ### News Article Updates
 
+- [v2.12 Better User Interface and User Experience](https://wpstackable.com/blog/better-user-interface-and-user-experience/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.11 Introducing Global Colors and Global Typography](https://wpstackable.com/blog/global-colors-and-global-typography/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.10 Better Responsive Controls, Better List Block Icons and Low-Highlight Effect](https://wpstackable.com/blog/better-responsive-controls-better-list-block-icons-low-highlight-effect/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.9 Introducing: Live Responsive Editing](https://wpstackable.com/blog/introducing-live-responsive-editing/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -138,13 +139,6 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com?utm_sour
 - [v2.2 Welcome Video, Better Separators and Auto-Block Recovery](https://wpstackable.com/blog/welcome-video-better-separators-and-auto-block-recovery/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.1 Help Video Snippets and Auto-Expand Settings](https://wpstackable.com/blog/help-video-snippets-auto-expand-settings/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.0 Version 2 is Out!](https://wpstackable.com/blog/version-2-is-out/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- [v1.17 Text Color and Text Highlight](https://wpstackable.com/blog/text-color-and-text-highlight/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- [v1.16 Translations: Stackable in Your Language](https://wpstackable.com/blog/translations-stackable-in-your-language/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- [v1.15 Separators Are Here](https://wpstackable.com/blog/separators-are-here/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- [v1.14 Video Backgrounds & Background Gradients](https://wpstackable.com/blog/video-backgrounds-background-gradients/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- [v1.13 Introducing Stackable Premium](https://wpstackable.com/blog/introducing-stackable-premium/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- [v1.12 Stackable Is Now in GitHub](https://wpstackable.com/blog/stackable-is-now-in-github/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-- [v1.11 Huge Updates Across All Blocks](https://wpstackable.com/blog/huge-updates-across-all-blocks/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
 ### Learn More About Stackable - Gutenberg Blocks
 
@@ -195,6 +189,8 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 2.12.0 =
+[Better User Interface and User Experience](https://wpstackable.com/blog/better-user-interface-and-user-experience/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
 * New: You can now pick multiple categories / taxonomies in the Blog Posts block
 * New: Improved UX/UI for the block inspector and popups
 * New: Speed improvements when editing block styles
