@@ -29,7 +29,7 @@ const withMemory = WrappedComponent => {
 
 		const initialTab = props.initialTab || // If there's a prop, use it.
 			tabCache[ props.blockProps.clientId ] || // Or check if there's a previously selected tab.
-			( isUnmodifiedBlock( props.blockProps ) ? 'layout' : 'style' ) // Or if not, default to layout or the style tab.
+			( isUnmodifiedBlock( props.blockProps ) ? ( props.tabs || [ 'layout', 'style', 'advanced' ] )[ 0 ] : 'style' ) // Or if not, default to layout or the style tab.
 
 		doAction( 'stackable.inspector.tab.initial', props.blockProps.clientId, initialTab )
 
