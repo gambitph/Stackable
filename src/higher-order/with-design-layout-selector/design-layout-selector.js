@@ -112,7 +112,7 @@ const DesignLayoutSelector = props => {
 						if ( hasFilter( `stackable.${ name }.edit.inspector.layout.attributes` ) ) {
 							setAttributes( applyFilters( `stackable.${ name }.edit.inspector.layout.attributes`, newAttributes ) )
 						} else {
-							setAttributes( { design: layout.value } )
+							setAttributes( newAttributes )
 						}
 
 						updateInitialBlocks()

@@ -72,6 +72,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 		<Fragment>
 			{ output }
 			<PanelBody title={ __( 'General', i18n ) }>
+				{ applyFilters( 'stackable.with-design-layout-selector.switch-design-panel' ) }
 				<ImageControl
 					label={ __( 'Popup Option #1: Upload Video', i18n ) }
 					help={ __( 'Use .mp4 format for videos', i18n ) }
