@@ -170,6 +170,7 @@ export const settings = {
 	],
 	supports: {
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
+		anchor: true,
 	},
 	attributes: schema,
 
