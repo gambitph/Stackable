@@ -6,6 +6,7 @@ import SVGViewMany from './images/view-many.svg'
 import SVGViewFew from './images/view-few.svg'
 import BlockList from './block-list'
 import ColorList from './color-list'
+import ModalDesignLibrary2 from './new-index'
 
 /**
  * External deprendencies
@@ -198,4 +199,4 @@ ModalDesignLibrary.defaultProps = {
 	onSelect: () => {},
 }
 
-export default ModalDesignLibrary
+export default ModalDesignLibrary2

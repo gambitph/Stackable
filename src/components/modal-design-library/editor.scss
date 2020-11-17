@@ -32,19 +32,51 @@
 			width: 100% !important;
 		}
 	}
-	.ugb-modal-design-library__topbar {
-		display: flex;
-		justify-content: flex-end;
-		padding: 0 24px;
-		height: 50px;
+
+	.ugb-modal-design-library__content {
+    display: block;
+		justify-content: center;
 		align-items: center;
-		grid-column: 2 / 3;
-		grid-row: 1 / 2;
-	}
-	.ugb-modal-design-library__designs {
 		padding: 24px;
 		grid-column: 2 / 3;
-		grid-row: 2 / 3;
+		grid-row: 1 / 3;
+	}
+
+	.ugb-modal-design-library__cover-wrapper {
+    display: flex;
+    justify-content: center;
+    height: 250px;
+    border-radius: 24px;
+    padding: 24px;
+		text-align: center;
+		color: #fff;
+		h2 {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 32px;
+			color: #fff !important;
+			margin-bottom: 16px;
+			img {
+				height: 40px;
+				width: 40px;
+				margin-right: 8px;
+			}
+		}
+		p {
+			font-size: 16px;
+			font-weight: 200;
+		}
+		.components-base-control {
+			max-width: 600px;
+			margin: auto;
+			input {
+				height: 48px;
+				font-weight: 200px;
+				font-size: 16px;
+				border: none;
+			}
+		}
 	}
 
 	.ugb-modal-design-library__search {
@@ -52,6 +84,23 @@
 		background: #f1f1f1;
 		.components-base-control__field {
 			margin: 0;
+		}
+	}
+
+	.ugb-modal-design-library__topbar {
+		height: 80px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		span {
+			display: flex;
+			align-items: center;
+		}
+
+		.ugb-modal-design-library__topbar-options {
+			width: 40%;
+			justify-content: flex-end;
 		}
 	}
 
@@ -75,27 +124,35 @@
 
 	.ugb-modal-design-library__filters {
 		overflow-y: auto;
-		padding: 24px;
+		padding-top: 24px;
+		padding-bottom: 24px;
 	}
 }
 
-.ugb-block-list li {
+.ugb-sidebar {
+	padding-left: 24px;
+	padding-right: 24px;
+}
+
+.ugb-sidebar li {
 	margin: 0;
+	font-size: 16px;
+	margin-bottom: 8px;
 	> div {
 		padding: 6px 10px;
 		cursor: pointer;
 	}
 	[aria-pressed="true"] {
-		font-weight: bold;
+		color: #e74673;
 	}
 	.is-disabled {
 		opacity: 0.3;
 	}
 }
-.ugb-block-list .ugb-block-list__count {
+.ugb-sidebar .ugb-sidebar__count {
 	float: right;
 }
-.ugb-block-list [data-count="0"] {
+.ugb-sidebar [data-count="0"] {
 	opacity: 0.3;
 }
 
@@ -107,7 +164,6 @@
 	justify-content: center;
 }
 .ugb-modal-design-library__color-list {
-	margin-bottom: 8px !important;
 
 	// Color indicator.
 	.components-circular-option-picker {
@@ -119,6 +175,10 @@
 		height: 22px;
 		width: 22px;
 		margin: 0;
+	}
+
+	.components-base-control__field {
+		margin-bottom: 0 !important;
 	}
 
 	// Check mark when color is active.
@@ -149,3 +209,4 @@
 .ugb-modal-design-library__dev-mode .components-base-control__field {
 	margin: 2px 24px 0 !important;
 }
+
