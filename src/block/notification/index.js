@@ -195,6 +195,7 @@ export const settings = {
 	attributes: schema,
 	supports: {
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
+		anchor: true,
 	},
 
 	deprecated,

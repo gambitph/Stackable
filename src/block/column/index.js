@@ -86,6 +86,7 @@ export const settings = {
 		inserter: false,
 		reusable: false,
 		html: false,
+		anchor: true,
 	},
 
 	edit,

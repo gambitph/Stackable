@@ -103,6 +103,7 @@ export const settings = {
 	supports: {
 		html: false,
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
+		anchor: true,
 	},
 
 	edit,
