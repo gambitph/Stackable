@@ -17,11 +17,19 @@ import Logo from './images/Logo.png'
 const Cover = props => {
 	const {
 		color,
+		onChange,
+		value,
+		title,
+		description,
+		placeholder,
 	} = props
 
 	// Generate color style.
 	const wrapperStyle = {
-		backgroundColor: color,
+		backgroundColor: typeof color === 'string' ? color : undefined,
+		backgroundImage: ( Array.isArray( color ) && color.length === 2 ) ?
+			`linear-gradient(90deg, ${ color[ 0 ] }, ${ color[ 1 ] })` :
+			undefined,
 	}
 
 	return (
@@ -29,12 +37,17 @@ const Cover = props => {
 			<div className="ugb-modal-design-library__cover-inner">
 				<h2>
 					<img src={ `${ srcUrl }/${ Logo }` } alt="ugb-stk-logo" />
-					{ __( 'Stackable Block Designs', i18n ) }
+					{ title }
 				</h2>
-				<p>{ __( 'Choose from over 200 predesigned templates you can customize with Stackable.', i18n ) }</p>
+				{ description && (
+					<p>{ description }</p>
+				) }
 				<TextControl
 					className="ugb-shadow-5"
-					placeholder={ __( 'Ex: Corporate, Minimalist, Header, etc.', i18n ) }
+					placeholder={ placeholder }
+					value={ value }
+					onChange={ onChange }
+					data-test-id="input-search"
 				/>
 			</div>
 		</div>
@@ -43,6 +56,11 @@ const Cover = props => {
 
 Cover.defaultProps = {
 	color: '#e74673',
+	onChange: () => {},
+	value: '',
+	title: '',
+	description: '',
+	placeholder: '',
 }
 
 export default Cover

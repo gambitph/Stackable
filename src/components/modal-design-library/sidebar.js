@@ -1,74 +1,45 @@
-
-/**
- * External dependencies
- */
-import { orderBy } from 'lodash'
-import { getAllBlocks, getDesigns } from '~stackable/design-library'
-import { i18n } from 'stackable'
-import classnames from 'classnames'
-
-/**
- * WordPress dependencies
- */
-import { useEffect, useState } from '@wordpress/element'
-import { select } from '@wordpress/data'
-import { __ } from '@wordpress/i18n'
-
 const Sidebar = props => {
+	const {
+		onSelect,
+		options,
+		value,
+	} = props
+
 	return (
 		<ul className="ugb-sidebar">
-			<li>
-				<div
-					className="is-active"
-					role="button"
-					data-count={ 100 }
-					tabIndex={ 0 }
-					aria-pressed="true"
-				>
-					{ __( 'All Block Designs', i18n ) }
-					<span
-						className="ugb-sidebar__count"
-						data-testid="all-count"
-					>
-								100
-					</span>
-				</div>
-			</li>
-			<li>
-				<div
-					role="button"
-					data-count={ 100 }
-					tabIndex={ 0 }
-					aria-pressed="false"
-				>
-					{ __( 'All Block Designs', i18n ) }
-					<span
-						className="ugb-sidebar__count"
-						data-testid="all-count"
-					>
-								100
-					</span>
-				</div>
-			</li>
-			<li>
-				<div
-					role="button"
-					data-count={ 100 }
-					tabIndex={ 0 }
-					aria-pressed="false"
-				>
-					{ __( 'All Block Designs', i18n ) }
-					<span
-						className="ugb-sidebar__count"
-						data-testid="all-count"
-					>
-								100
-					</span>
-				</div>
-			</li>
-		</ul>
 
+			{ props.title && (
+				<h3 className="ugb-sidebar__title">{ props.title }</h3>
+			) }
+
+			{ ( options || [] ).map( option => (
+				<li key={ option.value }>
+					<div
+						className={ value === option.value ? 'is-active' : undefined }
+						role="button"
+						tabIndex={ 0 }
+						aria-pressed={ value === option.value ? 'true' : 'false' }
+						onMouseDown={ () => onSelect( option.value ) }
+						onKeyPress={ e => {
+							if ( e.keyCode === 13 ) {
+								this.click()
+							}
+						} }
+					>
+						{ option.label }
+					</div>
+				</li>
+			) ) }
+
+		</ul>
 	)
+}
+
+Sidebar.defaultProps = {
+	title: '',
+	options: [],
+	onSelect: () => {},
+	value: '',
 }
 
 export default Sidebar

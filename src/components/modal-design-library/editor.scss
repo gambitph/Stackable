@@ -4,6 +4,52 @@
 	height: 90%;
 	min-height: 500px;
 
+	.components-base-control__help {
+		text-align: center;
+		font-style: italic !important;
+	}
+
+	.ugb-design-library__modal {
+		.components-modal__header-heading-container {
+			flex-grow: unset !important;
+			height: inherit;
+			width: 276px !important;
+		}
+
+		.components-modal__header-heading-wrapper {
+			display: flex;
+			height: 100%;
+			justify-content: flex-start;
+		}
+
+		.ugb-modal-design-library__header-buttons .components-button {
+			height: 100%;
+			box-shadow: 0 0 #000;
+			padding: 24px;
+			font-size: 14px;
+			font-weight: 300;
+			color: #000;
+
+			.tag {
+				margin-left: 8px;
+				background-color: #e74673;
+				color: #fff !important;
+				font-size: 8px !important;
+				padding: 4px;
+				font-weight: 400 !important;
+			}
+
+			&.is-active {
+				background-color: #fad9e4;
+				color: #e74673 !important;
+				font-weight: 500 !important;
+			}
+		}
+
+
+	}
+
+
 	.components-modal__content {
 		padding: 0;
 		display: flex;
@@ -34,20 +80,21 @@
 	}
 
 	.ugb-modal-design-library__content {
-    display: block;
+		display: block;
 		justify-content: center;
 		align-items: center;
 		padding: 24px;
 		grid-column: 2 / 3;
 		grid-row: 1 / 3;
+		overflow-y: scroll;
 	}
 
 	.ugb-modal-design-library__cover-wrapper {
-    display: flex;
-    justify-content: center;
-    height: 250px;
-    border-radius: 24px;
-    padding: 24px;
+		display: flex;
+		justify-content: center;
+		height: 250px;
+		border-radius: 24px;
+		padding: 24px;
 		text-align: center;
 		color: #fff;
 		h2 {
@@ -57,10 +104,11 @@
 			font-size: 32px;
 			color: #fff !important;
 			margin-bottom: 16px;
+			font-weight: 400;
 			img {
 				height: 40px;
 				width: 40px;
-				margin-right: 8px;
+				margin-right: 12px;
 			}
 		}
 		p {
@@ -92,6 +140,38 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		margin-top: 16px;
+
+		.ugb-advanced-toolbar-control {
+
+			.components-button-group {
+				.is-primary {
+					color: #e74673 !important;
+					background-color: #fad9e4 !important;
+				}
+
+				.components-button {
+					box-shadow: inset 0 0 0 1px #c0bfbf !important;
+					padding: 16px !important;
+					font-weight: 400;
+
+					&:hover {
+						color: #000;
+					}
+
+					&:first-child {
+						border-top-left-radius: 5px;
+						border-bottom-left-radius: 5px;
+					}
+
+					&:last-child {
+						border-top-right-radius: 5px;
+						border-bottom-right-radius: 5px;
+					}
+				}
+			}
+
+		}
 
 		span {
 			display: flex;
@@ -132,12 +212,18 @@
 .ugb-sidebar {
 	padding-left: 24px;
 	padding-right: 24px;
+
+	.ugb-sidebar__title {
+		padding: 11px;
+		font-weight: 700;
+		text-transform: uppercase;
+	}
 }
 
 .ugb-sidebar li {
 	margin: 0;
 	font-size: 16px;
-	margin-bottom: 8px;
+	margin-bottom: 11px;
 	> div {
 		padding: 6px 10px;
 		cursor: pointer;
@@ -148,12 +234,6 @@
 	.is-disabled {
 		opacity: 0.3;
 	}
-}
-.ugb-sidebar .ugb-sidebar__count {
-	float: right;
-}
-.ugb-sidebar [data-count="0"] {
-	opacity: 0.3;
 }
 
 // Display color indicators horizontally.
@@ -170,6 +250,7 @@
 		width: 24px;
 		flex: 0;
 		margin: 0 10px 10px;
+
 	}
 	.components-circular-option-picker__option-wrapper {
 		height: 22px;
@@ -208,5 +289,94 @@
 
 .ugb-modal-design-library__dev-mode .components-base-control__field {
 	margin: 2px 24px 0 !important;
+}
+
+.ugb-design-library__featured-list {
+	.ugb-design-library__featured-list-title > h2 {
+		font-size: 24px;
+		font-weight: bold;
+	}
+
+	.components-spinner {
+		margin-left: 50%;
+	}
+
+	.ugb-design-library__featured-list-content {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		flex-wrap: wrap;
+	}
+
+	&.ugb-design-library__columns-4 .components-button {
+		width: 240px !important;
+	}
+
+	&.ugb-design-library__columns-3 .components-button {
+		width: 320px !important;
+	}
+
+	&.ugb-design-library__columns-2 .components-button {
+		width: 480px !important;
+	}
+
+	&.ugb-design-library__columns-1 {
+		.components-button {
+			width: 100% !important;
+		}
+
+		.ugb-design-library__featured-list-item {
+			width: 100%;
+		}
+	}
+
+	.ugb-design-library__featured-list-item {
+
+		.components-button {
+			height: max-content;
+			display: block !important;
+			text-align: left;
+
+			&:active,
+			&:focus {
+				border: none !important;
+				outline: 0 !important;
+			}
+
+			&:hover {
+				img {
+					transform: scale(1.05);
+				}
+			}
+		}
+
+		img {
+			transition: all 0.3s ease-in;
+			display: block;
+			width: 100%;
+			border-radius: 8px;
+			height: auto;
+			min-height: 50px;
+			background: #f1f1f1;
+			pointer-events: none;
+
+		}
+
+		h4 {
+			display: block;
+			width: 100%;
+			font-size: 16px;
+			font-weight: 500;
+			margin-bottom: 8px;
+			color: #000;
+		}
+
+		p {
+			display: block;
+			width: 100%;
+			text-transform: uppercase;
+			color: #535353;
+		}
+	}
 }
 
