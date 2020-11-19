@@ -19,6 +19,9 @@ import classnames from 'classnames'
 import { clamp } from 'lodash'
 import { i18n } from 'stackable'
 
+// NumberControl is only supported in WP 5.5
+const isNumberControlSupported = !! NumberControl
+
 export const getPercentageValue = ( value, min, max ) => {
 	const percentageValue = ( ( value - min ) / ( max - min ) ) * 100
 	return `${ clamp( percentageValue, 0, 100 ) }%`
@@ -100,7 +103,7 @@ const StackableRangeControl = props => {
 			max={ props.sliderMax || props.max }
 			min={ props.sliderMin || props.min }
 		/>
-		{ withInputField && (
+		{ withInputField && isNumberControlSupported && (
 			<NumberControl
 				disabled={ props.disabled }
 				isShiftStepEnabled={ isShiftStepEnabled }
