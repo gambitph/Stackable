@@ -127,6 +127,7 @@ const ImageControls = props => {
 							value={ props.width }
 							placeholder={ props.placeholder }
 							max={ widthMax }
+							min={ 0 }
 							onChange={ width => {
 								// Reset back to default.
 								// if ( ! width && widthMax ) {
@@ -148,6 +149,7 @@ const ImageControls = props => {
 							label={ __( 'Image Width', i18n ) }
 							value={ props.tabletWidth }
 							max={ widthMax }
+							min={ 0 }
 							onChange={ props.onChangeTabletWidth }
 							allowReset={ true }
 							className="ugb--help-tip-image-size-no-crop"
@@ -158,6 +160,7 @@ const ImageControls = props => {
 							label={ __( 'Image Width', i18n ) }
 							value={ props.mobileWidth }
 							max={ widthMax }
+							min={ 0 }
 							onChange={ props.onChangeMobileWidth }
 							allowReset={ true }
 							className="ugb--help-tip-image-size-no-crop"
