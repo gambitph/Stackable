@@ -47,7 +47,7 @@ const Cover = props => {
 					placeholder={ placeholder }
 					value={ value }
 					onChange={ onChange }
-					data-test-id="input-search"
+					data-testid="input-search"
 				/>
 			</div>
 		</div>
