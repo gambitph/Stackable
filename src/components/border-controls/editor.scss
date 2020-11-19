@@ -1,0 +1,38 @@
+.ugb-border-controls__border-type-toolbar {
+	button[value="solid"],
+	button[value="dashed"],
+	button[value="dotted"] {
+		position: relative;
+		&::before {
+			position: absolute;
+			content: "";
+			top: calc(50% - 1px);
+			left: 16px;
+			right: 16px;
+			border-top: 2px solid currentColor;
+		}
+		span {
+			visibility: hidden;
+		}
+	}
+	button[value="dashed"] {
+		&::before {
+			border-top-style: dashed;
+		}
+	}
+	button[value="dotted"] {
+		&::before {
+			top: calc(50% - 2px);
+			border-top: 4px dotted currentColor;
+		}
+	}
+}
+
+// Border preview
+.ugb-border-controls__border-preview {
+	margin-right: 12px;
+	width: 22px;
+	border-right: 0 !important;
+	border-bottom: 0 !important;
+	border-left: 0 !important;
+}

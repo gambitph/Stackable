@@ -24,6 +24,7 @@ import {
 	DivBackground,
 	ColumnPaddingControl,
 	ButtonIconPopoverControl,
+	BorderControlsHelper,
 } from '~stackable/components'
 import {
 	descriptionPlaceholder,
@@ -215,6 +216,15 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 							className="ugb--help-tip-general-border-radius"
 						/>
 					}
+
+					{ show.border &&
+						<BorderControlsHelper
+							attrNameTemplate="column%s"
+							setAttributes={ setAttributes }
+							blockAttributes={ props.attributes }
+						/>
+					}
+
 					{ show.shadow &&
 						<AdvancedRangeControl
 							label={ __( 'Shadow / Outline', i18n ) }
@@ -562,7 +572,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 	)
 } )
 
-const edit = props => {
+const Edit = props => {
 	const {
 		className,
 		setAttributes,
@@ -722,4 +732,4 @@ export default compose(
 		cacheImageData( props.attributes.image2Id, select )
 		cacheImageData( props.attributes.image3Id, select )
 	} ),
-)( edit )
+)( Edit )
