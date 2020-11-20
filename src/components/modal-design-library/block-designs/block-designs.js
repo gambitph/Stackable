@@ -75,40 +75,43 @@ const BlockDesigns = props => {
 					onChange={ setSearch }
 				/>
 
-				<Topbar
-					setColumns={ setColumns }
-					columns={ columns }
-					setIsDevMode={ setIsDevMode }
-					isDevMode={ isDevMode }
-					setDoReset={ setDoReset }
-				>
-					<AdvancedToolbarControl
-						controls={ [
-							{
-								value: '',
-								title: __( 'All', i18n ),
-							},
-							{
-								value: 'light',
-								title: __( 'Light', i18n ),
-							},
-							{
-								value: 'dark',
-								title: __( 'Dark', i18n ),
-							},
-						] }
-						value={ mood }
-						onChange={ setMood }
-					/>
-				</Topbar>
+				<div className="ugb-modal-design-library__content-body">
+					<Topbar
+						setColumns={ setColumns }
+						columns={ columns }
+						setIsDevMode={ setIsDevMode }
+						isDevMode={ isDevMode }
+						setDoReset={ setDoReset }
+					>
+						<AdvancedToolbarControl
+							controls={ [
+								{
+									value: '',
+									title: __( 'All', i18n ),
+								},
+								{
+									value: 'light',
+									title: __( 'Light', i18n ),
+								},
+								{
+									value: 'dark',
+									title: __( 'Dark', i18n ),
+								},
+							] }
+							value={ mood }
+							onChange={ setMood }
+						/>
+					</Topbar>
 
-				<FeaturedList
-					title={ contentTitle }
-					columns={ columns }
-					isBusy={ isBusy }
-					onSelect={ onDesignSelect }
-					options={ designs }
-				/>
+					<FeaturedList
+						title={ contentTitle }
+						columns={ columns }
+						isBusy={ isBusy }
+						onSelect={ onDesignSelect }
+						options={ designs }
+					/>
+				</div>
+
 			</aside>
 
 		</Fragment>

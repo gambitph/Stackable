@@ -7,11 +7,9 @@ import SVGProIcon from './images/pro-icon.svg'
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
-
-/**
- * External dependencies
- */
+import { __ } from '@wordpress/i18n' /**
+iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii * External dependencies
+iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii */
 import { i18n } from 'stackable'
 import { Button } from '@wordpress/components'
 import classnames from 'classnames'
@@ -58,6 +56,7 @@ const ProControl = props => {
 			<h4>{ props.title || LABELS[ props.type ].title }</h4>
 			<p>{ props.description || LABELS[ props.type ].description }</p>
 			{ props.showButton && <ProModal button={ props.button || LABELS[ props.type ].button } buttonUtmSource={ props.buttonUtmSource } /> }
+			{ props.showButton2 && <ProModal buttonClassName="ugb-design-control-pro-note__button2" button={ props.button2 } buttonUtmSource={ props.button2UtmSource } /> }
 			{ props.showHideNote && <p className="ugb-design-control-pro-note__notice">{ __( 'You can hide premium hints in the settings', i18n ) }</p> }
 		</div>
 	)
@@ -70,6 +69,7 @@ ProControl.defaultProps = {
 	description: '',
 	button: '',
 	showButton: true,
+	showButton2: false,
 	showHideNote: true,
 	isDismissible: false,
 	onClose: () => {},

@@ -4,6 +4,90 @@
 	height: 90%;
 	min-height: 500px;
 
+	.ugb-modal-design-library__preview-cover {
+		img {
+			width: 100%;
+		}
+	}
+
+	.ugb-modal-design-library__preview-info {
+		display: flex;
+		column-gap: 40px;
+		margin-bottom: 16px;
+
+		.ugb-modal-design-library__preview-info-item {
+			h4 {
+				text-transform: uppercase;
+				font-size: 12px;
+				font-weight: 400;
+			}
+
+			.components-circular-option-picker__option-wrapper {
+				transform: scale(1) !important;
+
+				.components-circular-option-picker__option {
+					cursor: default !important;
+				}
+			}
+		}
+
+		.ugb-modal-design-library__preview-info-typography {
+			font-size: 16px;
+			font-weight: 300;
+		}
+	}
+
+	.ugb-design-library__ui-kit-topbar-wrapper {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		height: 100%;
+
+		.components-button {
+			font-size: 16px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			height: 100%;
+			padding: 12px;
+			border-radius: 0;
+		}
+	}
+
+	.ugb-design-library__ui-kit-header-text {
+		margin-right: 40px;
+
+		h2 {
+			font-size: 30px;
+			font-weight: 600;
+			margin: 0;
+		}
+
+		p {
+			margin: 0;
+			margin-top: 16px;
+			text-transform: uppercase;
+		}
+	}
+
+	margin: 0;
+	margin-top: 0;
+	.ugb-modal-design-library__preview-sidebar {
+		display: flex;
+		flex-direction: column;
+		overflow-x: hidden;
+		height: 100%;
+		justify-content: space-between;
+	}
+
+	.ugb-design-control-pro-note {
+		box-shadow: none;
+	}
+
+	.ugb-modal-design-library__back-button {
+		margin-left: 24px;
+		outline: none !important;
+	}
+
 	.components-base-control__help {
 		text-align: center;
 		font-style: italic !important;
@@ -42,11 +126,8 @@
 			&.is-active {
 				background-color: #fad9e4;
 				color: #e74673 !important;
-				font-weight: 500 !important;
 			}
 		}
-
-
 	}
 
 
@@ -83,10 +164,14 @@
 		display: block;
 		justify-content: center;
 		align-items: center;
-		padding: 24px;
 		grid-column: 2 / 3;
 		grid-row: 1 / 3;
 		overflow-y: scroll;
+	}
+
+	.ugb-modal-design-library__content-body {
+		padding: 24px;
+		padding-top: 0;
 	}
 
 	.ugb-modal-design-library__cover-wrapper {
@@ -95,6 +180,8 @@
 		height: 250px;
 		border-radius: 24px;
 		padding: 24px;
+		margin: 24px;
+		margin-bottom: 0;
 		text-align: center;
 		color: #fff;
 		h2 {
@@ -204,6 +291,8 @@
 
 	.ugb-modal-design-library__filters {
 		overflow-y: auto;
+		overflow-x: hidden;
+		height: 100%;
 		padding-top: 24px;
 		padding-bottom: 24px;
 	}
