@@ -1,3 +1,5 @@
+@import "common";
+
 .ugb-modal-design-library {
 	width: 100%;
 	max-width: 90%;
@@ -391,26 +393,48 @@
 	}
 
 	.ugb-design-library__featured-list-content {
-		page-break-inside: avoid;
-		break-inside: avoid;
-		column-count: 1;
-		column-gap: 38px;
+		display: flex;
+		width: 100%;
+		justify-content: flex-start;
+		flex-wrap: wrap;
+		flex-direction: row;
 	}
 
-	&.ugb-design-library__columns-4 .ugb-design-library__featured-list-content {
-		column-count: 4 !important;
+	&.ugb-design-library__columns-4 .ugb-design-library__featured-list-item {
+		flex-basis: 25%;
 	}
 
-	&.ugb-design-library__columns-3 .ugb-design-library__featured-list-content {
-		column-count: 3 !important;
+	&.ugb-design-library__columns-3 .ugb-design-library__featured-list-item {
+		flex-basis: 33%;
 	}
 
-	&.ugb-design-library__columns-2 .ugb-design-library__featured-list-content {
-		column-count: 2 !important;
+	&.ugb-design-library__columns-2 .ugb-design-library__featured-list-item {
+		flex-basis: 50%;
 	}
 
-	&.ugb-design-library__columns-1 .ugb-design-library__featured-list-content {
-		column-count: 1 !important;
+	&.ugb-design-library__columns-1 .ugb-design-library__featured-list-item {
+		flex-basis: 100%;
+	}
+
+	@media screen and (min-width: $break-js-mobile) and (max-width: $break-js-tablet) {
+		&.ugb-design-library__columns-4 .ugb-design-library__featured-list-item,
+		&.ugb-design-library__columns-3 .ugb-design-library__featured-list-item {
+			flex-basis: 50%;
+		}
+
+		&.ugb-design-library__columns-2 .ugb-design-library__featured-list-item {
+			flex-basis: 100%;
+		}
+
+	}
+
+	@media screen and (max-width: $break-js-mobile) {
+		&.ugb-design-library__columns-4 .ugb-design-library__featured-list-item,
+		&.ugb-design-library__columns-3 .ugb-design-library__featured-list-item,
+		&.ugb-design-library__columns-2 .ugb-design-library__featured-list-item {
+			flex-basis: 100%;
+		}
+
 	}
 
 	.ugb-design-library__featured-list-item {
@@ -418,7 +442,7 @@
 		position: relative;
 		display: block;
 		break-inside: avoid;
-		width: 100%;
+		flex-basis: 100%;
 
 		.components-button {
 			width: 100%;
