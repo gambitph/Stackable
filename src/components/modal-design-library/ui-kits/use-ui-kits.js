@@ -21,7 +21,7 @@ const useUIKits = props => { //eslint-disable-line
 	const [ styleList, setStyleList ] = useState( [] )
 	const [ style, _setStyle ] = useState( '' )
 	const [ plan, _setPlan ] = useState( '' )
-	const [ search, _setSearch ] = useState( '' )
+	const [ search, _setSearch ] = useState( props.search )
 	const [ mood, setMood ] = useState( '' )
 	const [ columns, setColumns ] = useState( 4 )
 	const [ contentTitle, setContentTitle ] = useState( __( 'All UI Kits', i18n ) )

@@ -41,6 +41,7 @@ const BlockDesigns = props => {
 		setMood,
 		setSearch,
 		setDoReset,
+		isApplyingDesign,
 	} = props.moduleProps
 
 	return (
@@ -52,6 +53,7 @@ const BlockDesigns = props => {
 						options={ options }
 						value={ plan }
 						onSelect={ setPlan }
+						forceDisabledExcept={ props.selectedBlock ? [ 'free', 'premium' ] : null }
 					/>
 
 					<ControlSeparator />
@@ -61,6 +63,7 @@ const BlockDesigns = props => {
 						options={ blockList }
 						value={ block }
 						onSelect={ setBlock }
+						forceDisabledExcept={ props.selectedBlock ? props.selectedBlock : null }
 					/>
 
 				</div>
@@ -111,6 +114,7 @@ const BlockDesigns = props => {
 						onSelect={ onDesignSelect }
 						options={ designs }
 						itemProps={ itemProps }
+						itemIsBusy={ isApplyingDesign }
 					/>
 				</div>
 

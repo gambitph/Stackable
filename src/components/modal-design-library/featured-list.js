@@ -23,6 +23,7 @@ const FeaturedListItem = ( {
 	button1,
 	button2,
 	showLock,
+	itemIsBusy,
 	...rest
 } ) => {
 	const [ showOverlay, setShowOverlay ] = useState( false )
@@ -41,8 +42,9 @@ const FeaturedListItem = ( {
 				<div className="overlay">
 					{ showOverlay && (
 						<span>
-							{ button1 && <Button className="primary ugb-shadow-7" onClick={ onClickButton1 }>{ button1 }</Button> }
-							{ button2 && <Button className="secondary ugb-shadow-7" onClick={ onClickButton2 }>{ button2 }</Button> }
+							{ itemIsBusy && <Spinner /> }
+							{ ! itemIsBusy && button1 && <Button className="primary ugb-shadow-7" onClick={ onClickButton1 }>{ button1 }</Button> }
+							{ ! itemIsBusy && button2 && <Button className="secondary ugb-shadow-7" onClick={ onClickButton2 }>{ button2 }</Button> }
 						</span>
 					) }
 					<img className="ugb-shadow-6" src={ image } alt={ title } loading="lazy" />
@@ -71,6 +73,7 @@ const FeaturedList = props => {
 		columns,
 		title,
 		isBusy,
+		itemIsBusy,
 	} = props
 
 	const classNames = classnames( [
@@ -98,6 +101,7 @@ const FeaturedList = props => {
 
 							return (
 								<FeaturedListItem
+									itemIsBusy={ itemIsBusy }
 									key={ option.id }
 									image={ option.image }
 									title={ option.label }
@@ -126,6 +130,7 @@ FeaturedList.defaultProps = {
 	isBusy: true,
 	onSelect: () => {},
 	itemProps: () => null,
+	itemIsBusy: false,
 }
 
 export default FeaturedList

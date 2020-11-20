@@ -22,13 +22,14 @@ import { __, sprintf } from '@wordpress/i18n'
 const useBlockDesigns = props => {
 	const [ columns, setColumns ] = useState( 4 )
 	const [ plan, _setPlan ] = useState( '' )
-	const [ block, _setBlock ] = useState()
+	const [ block, _setBlock ] = useState( props.selectedBlock )
 	const [ mood, setMood ] = useState( '' )
-	const [ search, _setSearch ] = useState( '' )
+	const [ search, _setSearch ] = useState( props.search )
 	const [ isBusy, setIsBusy ] = useState( true )
 	const [ blockList, setBlockList ] = useState( [] )
 	const [ designs, setDesigns ] = useState( [] )
 	const [ doReset, setDoReset ] = useState( false )
+	const [ isApplyingDesign, setIsApplyingDesign ] = useState( false )
 	const [ contentTitle, setContentTitle ] = useState( __( 'All Block Designs', i18n ) )
 
 	const [ searchDebounced, setSearchDebounced ] = useState( search )
@@ -73,8 +74,10 @@ const useBlockDesigns = props => {
 
 	const itemProps = option => {
 		const showLock = ! isPro && option.plan !== 'free'
-		const button1 = showLock ? undefined : __( 'Add Block', i18n )
-		const button2 = showLock ? __( 'Learn More', i18n ) : __( 'View UI Kit', i18n )
+		const button1 = showLock ? undefined :
+			(	props.selectedBlock ? __( 'Switch Design', i18n ) : __( 'Add Block', i18n ) )
+		const button2 = showLock ? __( 'Learn More', i18n ) :
+			( props.selectedBlock ? undefined : __( 'View UI Kit', i18n ) )
 		const onClickButton1 = showLock ?
 			undefined :
 			onDesignSelect
@@ -95,19 +98,12 @@ const useBlockDesigns = props => {
 		if ( ! isPro && design.plan !== 'free' ) {
 			return
 		}
-		setIsBusy( true )
+		setIsApplyingDesign( true )
 		getDesign( design.id ).then( designData => {
-			setIsBusy( false )
+			setIsApplyingDesign( false )
 			props.onSelect( designData )
 		} )
 	}
-
-	useEffect( () => {
-		const input = document.querySelector( '.ugb-modal-design-library__cover-inner input' )
-		if ( input ) {
-			input.focus()
-		}
-	}, [] )
 
 	useEffect( () => {
 		if ( doReset ) {
@@ -189,6 +185,7 @@ const useBlockDesigns = props => {
 		setMood,
 		setSearch,
 		setDoReset,
+		isApplyingDesign,
 	}
 }
 

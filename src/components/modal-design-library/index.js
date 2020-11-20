@@ -15,13 +15,20 @@ import { i18n } from 'stackable'
  */
 import { __ } from '@wordpress/i18n'
 import { ButtonGroup, Button } from '@wordpress/components'
-import { useState } from '@wordpress/element'
+import { useState, useEffect } from '@wordpress/element'
 
 const ModalDesignLibrary = props => {
 	const [ activeTab, setActiveTab ] = useState( 'block-designs' )
 
 	const blockDesignsModuleProps = useBlockDesigns( props )
 	const uiKitsModuleProps = useUIKits( props )
+
+	useEffect( () => {
+		const input = document.querySelector( '.ugb-modal-design-library__cover-inner input' )
+		if ( input ) {
+			input.focus()
+		}
+	}, [ activeTab ] )
 
 	return (
 		<DesignLibraryModal
@@ -42,6 +49,7 @@ const ModalDesignLibrary = props => {
 					<Button
 						className={ activeTab === 'ui-kits' ? 'is-active' : undefined }
 						onClick={ () => setActiveTab( 'ui-kits' ) }
+						disabled={ !! props.selectedBlock }
 					>
 						{ __( 'UI Kits', i18n ) }<span className="tag">{ __( 'NEW', i18n ) }</span>
 					</Button>
@@ -60,7 +68,9 @@ const ModalDesignLibrary = props => {
 }
 
 ModalDesignLibrary.defaultProps = {
+	search: '',
 	onClose: () => {},
+	selectedBlock: '',
 }
 
 export default ModalDesignLibrary

@@ -179,7 +179,7 @@
 	.ugb-modal-design-library__cover-wrapper {
 		display: flex;
 		justify-content: center;
-		height: 250px;
+		min-height: 250px;
 		border-radius: 24px;
 		padding: 24px;
 		margin: 24px;
@@ -322,6 +322,12 @@
 	[aria-pressed="true"] {
 		color: #e74673;
 	}
+
+	[disabled=""] {
+		cursor: default !important;
+		color: #888 !important;
+	}
+
 	.is-disabled {
 		opacity: 0.3;
 	}
