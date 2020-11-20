@@ -10,7 +10,7 @@ import FeaturedList from '../featured-list'
 /**
  * External deprendencies
  */
-import { i18n, isPro } from 'stackable'
+import { i18n } from 'stackable'
 import { AdvancedToolbarControl } from '~stackable/components'
 
 /**
@@ -21,6 +21,7 @@ import { Fragment } from '@wordpress/element'
 
 const BlockDesigns = props => {
 	const {
+		itemProps,
 		options,
 		contentTitle,
 		columns,
@@ -109,25 +110,7 @@ const BlockDesigns = props => {
 						isBusy={ isBusy }
 						onSelect={ onDesignSelect }
 						options={ designs }
-						itemProps={ option => {
-							const showLock = ! isPro && option.plan !== 'free'
-							const button1 = showLock ? __( 'Go Premium', i18n ) : __( 'Add Block', i18n )
-							const button2 = showLock ? __( 'Learn More', i18n ) : __( 'View UI Kit', i18n )
-							const onClickButton1 = showLock ?
-								() => console.log( 'clicked `Go Premium`' ) : //eslint-disable-line no-console
-								onDesignSelect
-							const onClickButton2 = showLock ?
-								() => console.log( 'clicked `Learn More`' ) : //eslint-disable-line no-console
-								() => console.log( 'clicked `View UI Kit`' ) //eslint-disable-line no-console
-
-							return {
-								showLock,
-								button1,
-								button2,
-								onClickButton1,
-								onClickButton2,
-							}
-						} }
+						itemProps={ itemProps }
 					/>
 				</div>
 
