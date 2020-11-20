@@ -31,23 +31,19 @@ const TEST_UI_KIT_PREVIEW = false
 
 const UIKits = props => {
 	const {
-		columns,
-		plan,
-		block,
-		mood,
+		styleList,
+		style,
+		setStyle,
 		search,
-		isBusy,
-		blockList,
-		designs,
-		isDevMode,
-		onDesignSelect,
-		setIsDevMode,
-		setColumns,
-		setPlan,
-		setBlock,
-		setMood,
 		setSearch,
-		setDoReset,
+		setPlan,
+		plan,
+		contentTitle,
+		options,
+		mood,
+		setMood,
+		columns,
+		setColumns,
 	} = props.moduleProps
 
 	return (
@@ -58,20 +54,7 @@ const UIKits = props => {
 					{ TEST_UI_KIT_HOME && (
 						<Fragment>
 							<Sidebar
-								options={ [
-									{
-										label: __( 'All UI Kits', i18n ),
-										value: '',
-									},
-									{
-										label: __( 'Free UI Kits', i18n ),
-										value: 'free',
-									},
-									{
-										label: __( 'Premium UI Kits', i18n ),
-										value: 'premium',
-									},
-								] }
+								options={ options }
 								value={ plan }
 								onSelect={ setPlan }
 							/>
@@ -80,9 +63,9 @@ const UIKits = props => {
 
 							<Sidebar
 								title={ __( 'Browse By Style', i18n ) }
-								options={ blockList }
-								value={ block }
-								onSelect={ setBlock }
+								options={ styleList }
+								value={ style }
+								onSelect={ setStyle }
 							/>
 						</Fragment>
 					) }
@@ -125,10 +108,10 @@ const UIKits = props => {
 						<div className="ugb-modal-design-library__content-body">
 							<Topbar
 								setColumns={ setColumns }
-								columns={ columns }
-								setIsDevMode={ setIsDevMode }
-								isDevMode={ isDevMode }
-								setDoReset={ setDoReset }
+								columns={ setColumns }
+								setIsDevMode={ undefined }
+								isDevMode={ undefined }
+								setDoReset={ undefined }
 							>
 								<AdvancedToolbarControl
 									controls={ [
@@ -151,11 +134,11 @@ const UIKits = props => {
 							</Topbar>
 
 							<FeaturedList
-								title={ __( 'All UI Kits', i18n ) }
+								title={ contentTitle }
 								columns={ columns }
-								isBusy={ isBusy }
-								onSelect={ onDesignSelect }
-								options={ designs }
+								isBusy={ undefined }
+								onSelect={ undefined }
+								options={ undefined }
 							/>
 						</div>
 
@@ -172,11 +155,11 @@ const UIKits = props => {
 						<div className="ugb-modal-design-library__content-body">
 
 							<Topbar
-								setColumns={ setColumns }
-								columns={ columns }
-								setIsDevMode={ setIsDevMode }
-								isDevMode={ isDevMode }
-								setDoReset={ setDoReset }
+								setColumns={ undefined }
+								columns={ undefined }
+								setIsDevMode={ undefined }
+								isDevMode={ undefined }
+								setDoReset={ undefined }
 							>
 								<div className="ugb-design-library__ui-kit-topbar-wrapper">
 									<div className="ugb-design-library__ui-kit-header-text">
@@ -206,10 +189,10 @@ const UIKits = props => {
 							/>
 
 							<FeaturedList
-								columns={ columns }
-								isBusy={ isBusy }
-								onSelect={ onDesignSelect }
-								options={ designs }
+								columns={ undefined }
+								isBusy={ undefined }
+								onSelect={ undefined }
+								options={ undefined }
 							/>
 
 						</div>

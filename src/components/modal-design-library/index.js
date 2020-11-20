@@ -21,9 +21,7 @@ const ModalDesignLibrary = props => {
 	const [ activeTab, setActiveTab ] = useState( 'block-designs' )
 
 	const blockDesignsModuleProps = useBlockDesigns( props )
-	const uiKitsModuleProps = useBlockDesigns( props )
-
-	useUIKits( props )
+	const uiKitsModuleProps = useUIKits( props )
 
 	return (
 		<DesignLibraryModal
