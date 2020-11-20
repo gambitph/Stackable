@@ -21,7 +21,6 @@ import { sprintf } from '@wordpress/i18n'
  * @param {string} attrNameTemplate Template name where to get the attributes from
  * @param {string} mainClassName The classname that will be used for the CSS generation
  * @param {Object} blockAttributes The attributes of the block
- * @param {boolean} hasIcon If true, then the styles rendered will include styles for icons even if there's no detected icon from the blockAttributes
  *
  * @return {Object} CSS Styles object
  */
