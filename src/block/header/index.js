@@ -11,6 +11,7 @@ import {
 	createButtonAttributes,
 	createResponsiveAttributes,
 	createTypographyAttributes,
+	createBorderAttributes,
 	descriptionPlaceholder,
 } from '~stackable/util'
 import { HeaderIcon } from '~stackable/icons'
@@ -68,6 +69,9 @@ const schema = {
 		type: 'string',
 		default: '#000000',
 	},
+
+	// Border.
+	...createBorderAttributes( 'column%s' ),
 
 	// Title.
 	title: {

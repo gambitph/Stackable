@@ -28,6 +28,7 @@ export const showOptions = blockProps => {
 
 	return applyFilters( 'stackable.cta.show', {
 		columnBackground: design !== 'plain',
+		border: borderRadius,
 		borderRadius,
 		titleSpacing: showTitle,
 		descriptionSpacing: showDescription,

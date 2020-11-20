@@ -21,6 +21,7 @@ import {
 	ResponsiveControl,
 	TypographyControlHelper,
 	DivBackground,
+	BorderControlsHelper,
 } from '~stackable/components'
 import {
 	createButtonAttributeNames,
@@ -183,6 +184,15 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 							blockAttributes={ props.attributes }
 						/>
 					</ButtonIconPopoverControl>
+
+					{ show.border &&
+						<BorderControlsHelper
+							attrNameTemplate="column%s"
+							setAttributes={ setAttributes }
+							blockAttributes={ props.attributes }
+						/>
+					}
+
 					{ show.borderRadius &&
 					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }
@@ -195,6 +205,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 						className="ugb--help-tip-general-border-radius"
 					/>
 					}
+
 					{ show.columnBackground &&
 					<AdvancedRangeControl
 						label={ __( 'Shadow / Outline', i18n ) }

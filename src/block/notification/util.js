@@ -17,6 +17,7 @@ export const showOptions = blockProps => {
 		columnBackground: design !== 'plain',
 		backgroundColor: design !== 'plain',
 		borderRadius: design !== 'plain',
+		border: design !== 'plain',
 		shadow: design !== 'plain',
 		iconSpacing: showIcon,
 		titleSpacing: showTitle,

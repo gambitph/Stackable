@@ -139,6 +139,15 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					max={ 3 }
 					className="ugb--help-tip-general-columns"
 				/>
+
+				{ ( ! show.columnBackground && show.border ) &&
+				<BorderControlsHelper
+					attrNameTemplate="column%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+
+				}
 				{ ( ! show.columnBackground && show.borderRadius ) &&
 					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }

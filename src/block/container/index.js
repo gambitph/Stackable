@@ -11,6 +11,7 @@ import {
 	createAllCombinationAttributes,
 	createBackgroundAttributes,
 	createImageBackgroundAttributes,
+	createBorderAttributes,
 } from '~stackable/util'
 import { disabledBlocks, i18n } from 'stackable'
 
@@ -65,6 +66,9 @@ export const schema = {
 		type: 'number',
 		default: '',
 	},
+
+	// Border.
+	...createBorderAttributes( 'column%s' ),
 
 	// Column Background
 	...createBackgroundAttributes( 'column%s' ),

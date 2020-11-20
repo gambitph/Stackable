@@ -44,5 +44,6 @@ export const showOptions = blockProps => {
 	return applyFilters( 'stackable.video-popup.show', {
 		containerWidth: ! previewIsFullWidth,
 		borderRadius: ! previewIsFullWidth,
+		border: ! previewIsFullWidth,
 	}, blockProps )
 }

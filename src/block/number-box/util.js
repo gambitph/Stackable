@@ -15,6 +15,7 @@ export const showOptions = blockProps => {
 	return applyFilters( 'stackable.number-box.show', {
 		backgroundColor: design !== 'plain',
 		borderRadius: design !== 'plain',
+		border: design !== 'plain',
 		shadow: design !== 'plain',
 		numberColor: true,
 		numberBGColor: ( design === 'basic' || design === 'plain' ) && numberStyle !== 'none',

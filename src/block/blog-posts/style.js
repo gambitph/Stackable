@@ -5,6 +5,7 @@ import {
 	appendImportantAll,
 	createResponsiveStyles,
 	createTypographyStyles,
+	createBorderStyleSet,
 	whiteIfDarkBlackIfLight,
 	appendImportant,
 	__getValue,
@@ -26,7 +27,7 @@ export const createStyles = props => {
 
 	const {
 		columnBackgroundColor = '',
-		design = 'basc',
+		design = 'basic',
 		showReadmore = true,
 	} = props.attributes
 
