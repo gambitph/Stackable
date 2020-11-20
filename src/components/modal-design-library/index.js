@@ -1,8 +1,9 @@
 /**
  * Internal deprendencies
  */
-import { BlockDesigns, useBlockDesigns } from './block-designs/index'
-import { UIKits } from './ui-kits/index'
+import { BlockDesigns, useBlockDesigns } from './block-designs/'
+import { UIKits } from './ui-kits/'
+import DesignLibraryModal from './design-library-modal'
 
 /**
  * External deprendencies
@@ -13,7 +14,6 @@ import { i18n } from 'stackable'
  * WordPress deprendencies
  */
 import { __ } from '@wordpress/i18n'
-import DesignLibraryModal from './design-library-modal'
 import { ButtonGroup, Button } from '@wordpress/components'
 import { useState } from '@wordpress/element'
 
