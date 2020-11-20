@@ -105,7 +105,7 @@ const FeaturedList = props => {
 									key={ option.id }
 									image={ option.image }
 									title={ option.label }
-									description="Sample UI Kit"
+									description={ option.description }
 									onClickButton1={ itemProps.onClickButton1 ? () => itemProps.onClickButton1( option ) : undefined }
 									onClickButton2={ itemProps.onClickButton2 ? () => itemProps.onClickButton2( option ) : undefined }
 									{ ...omit( itemProps, [ 'key', 'title', 'description', 'image', 'onClickButton1', 'onClickButton2' ] ) }

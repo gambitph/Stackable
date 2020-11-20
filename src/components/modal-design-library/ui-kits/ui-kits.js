@@ -24,13 +24,9 @@ import { Fragment } from '@wordpress/element'
 import { Button } from '@wordpress/components'
 import ProControl from '~stackable/components/pro-control'
 
-// UI Kit Mock Home Design.
-const TEST_UI_KIT_HOME = true
-// UI Kit Mock Preview Design.
-const TEST_UI_KIT_PREVIEW = false
-
 const UIKits = props => {
 	const {
+		setColumns,
 		styleList,
 		style,
 		setStyle,
@@ -43,7 +39,18 @@ const UIKits = props => {
 		mood,
 		setMood,
 		columns,
-		setColumns,
+		UIKits,
+		isBusy,
+		isDevMode,
+		setIsDevMode,
+		setDoReset,
+		itemProps,
+		previewMode,
+		isApplyingDesign,
+		previewInnerProps,
+		onDesignSelect,
+		backbuttonLabel,
+		backButtonOnClick,
 	} = props.moduleProps
 
 	return (
@@ -51,7 +58,7 @@ const UIKits = props => {
 			<aside className="ugb-modal-design-library__sidebar">
 				<div className="ugb-modal-design-library__filters">
 
-					{ TEST_UI_KIT_HOME && (
+					{ ! previewMode && (
 						<Fragment>
 							<Sidebar
 								options={ options }
@@ -70,13 +77,14 @@ const UIKits = props => {
 						</Fragment>
 					) }
 
-					{ TEST_UI_KIT_PREVIEW && (
+					{ !! previewMode && (
 						<div className="ugb-modal-design-library__preview-sidebar">
 							<Button
 								className="ugb-modal-design-library__back-button"
 								isLink
+								onClick={ backButtonOnClick }
 							>
-								{ __( 'Back to UI Kits', i18n ) }
+								{ backbuttonLabel }
 							</Button>
 							<ProControl
 								title={ __( 'Upcoming Feature', i18n ) }
@@ -94,7 +102,7 @@ const UIKits = props => {
 
 			<aside className="ugb-modal-design-library__content">
 
-				{ TEST_UI_KIT_HOME && (
+				{ ! previewMode && (
 					<Fragment>
 						<Cover
 							title={ __( 'Stackable UI Kits', i18n ) }
@@ -109,9 +117,9 @@ const UIKits = props => {
 							<Topbar
 								setColumns={ setColumns }
 								columns={ setColumns }
-								setIsDevMode={ undefined }
-								isDevMode={ undefined }
-								setDoReset={ undefined }
+								setIsDevMode={ setIsDevMode }
+								isDevMode={ isDevMode }
+								setDoReset={ setDoReset }
 							>
 								<AdvancedToolbarControl
 									controls={ [
@@ -136,35 +144,32 @@ const UIKits = props => {
 							<FeaturedList
 								title={ contentTitle }
 								columns={ columns }
-								isBusy={ undefined }
+								isBusy={ isBusy }
 								onSelect={ undefined }
-								options={ undefined }
+								options={ UIKits }
+								itemProps={ itemProps }
 							/>
 						</div>
 
 					</Fragment>
 				) }
 
-				{ TEST_UI_KIT_PREVIEW && (
+				{ !! previewMode && (
 					<Fragment>
-
-						<PreviewCover
-							image={ 'https://beinglol.com/media/facebook-cover/Be-Yourself-facebook-covers-3141.jpeg' }
-						/>
 
 						<div className="ugb-modal-design-library__content-body">
 
 							<Topbar
-								setColumns={ undefined }
-								columns={ undefined }
-								setIsDevMode={ undefined }
-								isDevMode={ undefined }
-								setDoReset={ undefined }
+								setColumns={ setColumns }
+								columns={ columns }
+								setIsDevMode={ setIsDevMode }
+								isDevMode={ isDevMode }
+								setDoReset={ setDoReset }
 							>
 								<div className="ugb-design-library__ui-kit-topbar-wrapper">
 									<div className="ugb-design-library__ui-kit-header-text">
-										<h2>{ __( 'Peplum', i18n ) }</h2>
-										<p>{ __( '8 Block Designs', i18n ) }</p>
+										<h2>{ previewMode.label }</h2>
+										<p>{ previewMode.description }</p>
 									</div>
 									<Button
 										disabled
@@ -176,23 +181,16 @@ const UIKits = props => {
 							</Topbar>
 
 							<PreviewInfo
-								colors={ [
-									'gray',
-									'pink',
-									'black',
-									'white',
-								] }
-								typography={ [
-									'Yeseva One',
-									'Josefin Sans',
-								] }
+								colors={ previewMode.colors }
 							/>
 
 							<FeaturedList
-								columns={ undefined }
-								isBusy={ undefined }
-								onSelect={ undefined }
-								options={ undefined }
+								columns={ columns }
+								isBusy={ isBusy }
+								onSelect={ onDesignSelect }
+								options={ previewMode.blockList }
+								itemProps={ previewInnerProps }
+								itemIsBusy={ isApplyingDesign }
 							/>
 
 						</div>

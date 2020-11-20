@@ -10,7 +10,9 @@ import {
 	getDesigns, getAllBlocks, getDesign,
 } from '~stackable/design-library'
 import { useLocalStorage } from '~stackable/util'
-import { keys } from 'lodash'
+import {
+	keys, find, last,
+} from 'lodash'
 
 /**
  * WordPress deprendencies
@@ -34,7 +36,6 @@ const useBlockDesigns = props => {
 
 	const [ searchDebounced, setSearchDebounced ] = useState( search )
 	const [ debounceTimeout, setDebounceTimeout ] = useState( null )
-
 	const [ isDevMode, setIsDevMode ] = useLocalStorage( 'stk__design_library_dev_mode', false )
 
 	const options = [
@@ -53,13 +54,15 @@ const useBlockDesigns = props => {
 	]
 
 	const setPlan = plan => {
-		setContentTitle( options.find( option => option.value === plan ).label )
+		setContentTitle( sprintf( __( '%s Block Designs', i18n ),
+			options.find( option => option.value === plan ).label ) )
 		_setSearch( '' )
 		_setPlan( plan )
 	}
 
 	const setBlock = block => {
-		setContentTitle( blockList.find( option => option.value === block ).label )
+		setContentTitle( sprintf( __( '%s Block Designs', i18n ),
+			blockList.find( option => option.value === block ).label ) )
 		_setSearch( '' )
 		_setBlock( block )
 	}
@@ -83,7 +86,19 @@ const useBlockDesigns = props => {
 			onDesignSelect
 		const onClickButton2 = showLock ?
 			() => window.open( 'https://wpstackable.com/upgrade/?utm_source=design-library-learn-more&utm_campaign=learnmore&utm_medium=gutenberg' ) :
-			() => console.log( 'clicked `View UI Kit`' ) //eslint-disable-line no-console
+
+		/**
+		 * ACCESS UI KIT PROPS AND OPEN THE UI KIT
+		 */
+			_option => {
+				const { setPreviewMode, UIKits } = props.uiKitsModuleProps
+				const newPreviewMode = {
+					...find( UIKits, UIKit => last( _option.categories ) === UIKit.category ),
+					fromBlockDesigns: true,
+				}
+				setPreviewMode( newPreviewMode || null )
+				props.setActiveTab( 'ui-kits' )
+			}
 
 		return {
 			showLock,
@@ -118,8 +133,8 @@ const useBlockDesigns = props => {
 			mood,
 			search: searchDebounced,
 			reset: doReset,
-		} ).then( designs => {
-			setDesigns( designs )
+		} ).then( _designs => {
+			setDesigns( _designs )
 		} ).finally( () => {
 			setIsBusy( false )
 			setDoReset( false )
@@ -159,7 +174,10 @@ const useBlockDesigns = props => {
 				return blocks
 			}, {} )
 
-			setBlockList( keys( _blockList ).map( key => ( { label: _blockList[ key ].label, value: key } ) ) )
+			setBlockList( [
+				{ label: __( 'All', i18n ), value: '' },
+				...keys( _blockList ).map( key => ( { label: _blockList[ key ].label, value: key } ) ),
+			] )
 		} )
 	}, [] )
 

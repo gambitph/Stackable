@@ -20,8 +20,12 @@ import { useState, useEffect } from '@wordpress/element'
 const ModalDesignLibrary = props => {
 	const [ activeTab, setActiveTab ] = useState( 'block-designs' )
 
-	const blockDesignsModuleProps = useBlockDesigns( props )
-	const uiKitsModuleProps = useUIKits( props )
+	const uiKitsModuleProps = useUIKits( { ...props, setActiveTab } )
+
+	// Pass down UI Kit props to block designs. Mainly used for accessing UI kits.
+	const blockDesignsModuleProps = useBlockDesigns( {
+		...props, setActiveTab, uiKitsModuleProps,
+	} )
 
 	useEffect( () => {
 		const input = document.querySelector( '.ugb-modal-design-library__cover-inner input' )
