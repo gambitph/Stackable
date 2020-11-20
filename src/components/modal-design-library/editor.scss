@@ -455,7 +455,6 @@
 	}
 
 	.ugb-design-library__featured-list-item {
-		overflow: hidden;
 		position: relative;
 		display: block;
 		break-inside: avoid;
@@ -503,6 +502,16 @@
 			display: block !important;
 			text-align: left;
 			position: relative;
+			border-radius: 24px;
+			overflow: hidden;
+			height: 80%;
+
+			.overlay {
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							height: 100%;
+			}
 
 			svg {
 				position: absolute;
@@ -531,11 +540,8 @@
 		}
 
 		img {
-			transition: all 0.2s ease-in;
 			display: block;
 			width: 100%;
-			border-radius: 8px;
-			height: auto;
 			min-height: 50px;
 			background: #f1f1f1;
 			pointer-events: none;

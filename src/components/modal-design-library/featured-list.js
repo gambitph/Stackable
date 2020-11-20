@@ -34,7 +34,7 @@ const FeaturedListItem = ( {
 			{ ...rest }
 		>
 			<div
-				className="image-wrapper"
+				className="image-wrapper ugb-shadow-4"
 				onMouseEnter={ () => setShowOverlay( true ) }
 				onMouseLeave={ () => setShowOverlay( false ) }
 			>
@@ -47,7 +47,7 @@ const FeaturedListItem = ( {
 							{ ! itemIsBusy && button2 && <Button className="secondary ugb-shadow-7" onClick={ onClickButton2 }>{ button2 }</Button> }
 						</span>
 					) }
-					<img className="ugb-shadow-6" src={ image } alt={ title } loading="lazy" />
+					<img src={ image } alt={ title } loading="lazy" />
 				</div>
 			</div>
 			<h4>{ title }</h4>
