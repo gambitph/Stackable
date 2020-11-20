@@ -6,6 +6,17 @@
 	height: 90%;
 	min-height: 500px;
 
+	.ugb-modal-design-library__premium-tag {
+		width: max-content;
+		background-color: #e74673;
+		padding: 8px;
+		color: #fff;
+		font-size: 16px;
+		font-weight: 600;
+		text-transform: uppercase;
+		margin-top: 16px;
+	}
+
 	.ugb-modal-design-library__preview-cover {
 		img {
 			width: 100%;

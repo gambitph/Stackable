@@ -9,7 +9,9 @@ import { i18n } from 'stackable'
  */
 import { __ } from '@wordpress/i18n'
 
-const PreviewInfo = ( { typography, colors } ) => {
+const PreviewInfo = ( {
+	typography, colors,
+} ) => {
 	const stringifiedTypography = ( typography || [] ).join( ', ' )
 
 	return (

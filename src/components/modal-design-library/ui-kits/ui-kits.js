@@ -7,13 +7,12 @@ import ControlSeparator from '../../control-separator'
 import Topbar from '../topbar'
 import FeaturedList from '../featured-list'
 
-import PreviewCover from './preview-cover'
 import PreviewInfo from './preview-info'
 
 /**
  * External deprendencies
  */
-import { i18n } from 'stackable'
+import { i18n, isPro } from 'stackable'
 import { AdvancedToolbarControl } from '~stackable/components'
 
 /**
@@ -86,14 +85,14 @@ const UIKits = props => {
 							>
 								{ backbuttonLabel }
 							</Button>
-							<ProControl
-								title={ __( 'Upcoming Feature', i18n ) }
-								description={ __( 'Build your website with a few clicks with our upcoming Premium feature that will let you use our predesigned templates with ease.', i18n ) }
-								button={ __( 'Get Premium', i18n ) }
-								button2={ __( 'Learn More', i18n ) }
-								showHideNote={ false }
-								showButton2={ true }
-							/>
+							{ ! isPro && (
+								<ProControl
+									title={ __( 'Upcoming Feature', i18n ) }
+									description={ __( 'Build your website with a few clicks with our upcoming Premium feature that will let you use our predesigned templates with ease.', i18n ) }
+									button={ __( 'Get Premium', i18n ) }
+									showHideNote={ false }
+								/>
+							) }
 						</div>
 					) }
 
@@ -158,6 +157,12 @@ const UIKits = props => {
 					<Fragment>
 
 						<div className="ugb-modal-design-library__content-body">
+
+							{ previewMode.plan === 'premium' && (
+								<div className="ugb-modal-design-library__premium-tag">
+									{ __( 'Premium', i18n ) }
+								</div>
+							) }
 
 							<Topbar
 								setColumns={ setColumns }

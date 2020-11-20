@@ -108,7 +108,7 @@ export const getUIKits = async ( {
 		terms.forEach( searchTerm => {
 			library = library.filter( design => {
 				// Our search term needs to match at least one of these properties.
-				return [ 'label', 'plan', 'block', 'tags', 'categories', 'colors' ].some( designProp => {
+				return [ 'label', 'plan', 'tags', 'categories', 'colors' ].some( designProp => {
 					// Search whether the term matched.
 					return design[ designProp ].toString().toLowerCase().indexOf( searchTerm ) !== -1
 				} )
