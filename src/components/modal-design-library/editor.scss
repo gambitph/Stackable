@@ -302,37 +302,37 @@
 	}
 
 	.ugb-design-library__featured-list-content {
-					page-break-inside: avoid;
-					break-inside: avoid;
-					column-count: 1;
-					column-gap: 38px
+		page-break-inside: avoid;
+		break-inside: avoid;
+		column-count: 1;
+		column-gap: 38px;
 	}
 
 	&.ugb-design-library__columns-4 .ugb-design-library__featured-list-content {
-					column-count: 4 !important;
+		column-count: 4 !important;
 	}
 
 	&.ugb-design-library__columns-3 .ugb-design-library__featured-list-content {
-					column-count: 3 !important;
+		column-count: 3 !important;
 	}
 
 	&.ugb-design-library__columns-2 .ugb-design-library__featured-list-content {
-					column-count: 2 !important;
+		column-count: 2 !important;
 	}
 
 	&.ugb-design-library__columns-1 .ugb-design-library__featured-list-content {
-					column-count: 1 !important;
+		column-count: 1 !important;
 	}
 
 	.ugb-design-library__featured-list-item {
-					overflow: hidden;
-					position: relative;
-					display: block;
-					break-inside: avoid;
-					width: 100%;
+		overflow: hidden;
+		position: relative;
+		display: block;
+		break-inside: avoid;
+		width: 100%;
 
 		.components-button {
-						width: 100%;
+			width: 100%;
 			height: max-content;
 			display: block !important;
 			text-align: left;
