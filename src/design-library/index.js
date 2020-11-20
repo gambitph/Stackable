@@ -1,5 +1,6 @@
 import domReady from '@wordpress/dom-ready'
 import apiFetch from '@wordpress/api-fetch'
+import { uniq } from 'lodash'
 
 let designLibrary = null
 let blockDesigns = {}
@@ -152,4 +153,16 @@ export const getAllBlocks = async () => {
 		}
 		return blocks
 	}, [] )
+}
+
+/**
+ * Gets the list of categories available in the design library.
+ */
+export const getAllCategories = async () => {
+	const library = Object.values( await fetchDesignLibrary() )
+
+	return uniq( library.reduce( ( categories, designs ) => {
+		const { categories: _categories } = designs
+		return [ ...categories, ..._categories ]
+	}, [] ) )
 }

@@ -25,9 +25,9 @@ import { Button } from '@wordpress/components'
 import ProControl from '~stackable/components/pro-control'
 
 // UI Kit Mock Home Design.
-const TEST_UI_KIT_HOME = false
+const TEST_UI_KIT_HOME = true
 // UI Kit Mock Preview Design.
-const TEST_UI_KIT_PREVIEW = true
+const TEST_UI_KIT_PREVIEW = false
 
 const UIKits = props => {
 	const {

@@ -73,13 +73,13 @@ const useBlockDesigns = props => {
 
 	const itemProps = option => {
 		const showLock = ! isPro && option.plan !== 'free'
-		const button1 = showLock ? __( 'Go Premium', i18n ) : __( 'Add Block', i18n )
+		const button1 = showLock ? undefined : __( 'Add Block', i18n )
 		const button2 = showLock ? __( 'Learn More', i18n ) : __( 'View UI Kit', i18n )
 		const onClickButton1 = showLock ?
-			() => console.log( 'clicked `Go Premium`' ) : //eslint-disable-line no-console
+			undefined :
 			onDesignSelect
 		const onClickButton2 = showLock ?
-			() => console.log( 'clicked `Learn More`' ) : //eslint-disable-line no-console
+			() => window.open( 'https://wpstackable.com/upgrade/?utm_source=design-library-learn-more&utm_campaign=learnmore&utm_medium=gutenberg' ) :
 			() => console.log( 'clicked `View UI Kit`' ) //eslint-disable-line no-console
 
 		return {

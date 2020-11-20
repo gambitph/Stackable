@@ -2,7 +2,7 @@
  * Internal deprendencies
  */
 import { BlockDesigns, useBlockDesigns } from './block-designs/'
-import { UIKits } from './ui-kits/'
+import { UIKits, useUIKits } from './ui-kits/'
 import DesignLibraryModal from './design-library-modal'
 
 /**
@@ -22,6 +22,8 @@ const ModalDesignLibrary = props => {
 
 	const blockDesignsModuleProps = useBlockDesigns( props )
 	const uiKitsModuleProps = useBlockDesigns( props )
+
+	useUIKits( props )
 
 	return (
 		<DesignLibraryModal
