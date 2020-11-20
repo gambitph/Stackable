@@ -50,7 +50,7 @@
 			text-transform: uppercase;
 			letter-spacing: 1px;
 			height: 100%;
-			padding: 12px;
+			padding: 20px;
 			border-radius: 0;
 		}
 	}
@@ -443,12 +443,60 @@
 		display: block;
 		break-inside: avoid;
 		flex-basis: 100%;
+		padding: 8px;
 
-		.components-button {
+		.overlay {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+
+						span {
+										position: absolute;
+										display: flex;
+										flex-direction: column;
+										row-gap: 8px;
+										z-index: 1;
+						}
+
+						.components-button {
+										padding: 4px;
+										padding-left: 16px;
+										padding-right: 16px;
+										text-transform: uppercase;
+										border-radius: 16px;
+
+										&.primary {
+														color: #fff;
+														background-color: #e74673;
+										}
+
+										&.secondary {
+														color: #e74673;
+														background-color: #fff;
+										}
+						}
+		}
+
+		.image-button {
+						padding: 0;
+						cursor: default;
+			transition: all 0.2s ease-in;
 			width: 100%;
 			height: max-content;
 			display: block !important;
 			text-align: left;
+			position: relative;
+
+			svg {
+							position: absolute;
+							right: 16px;
+							top: 16px;
+							border-radius: 20px;
+							padding: 3px;
+							background-image: linear-gradient(180deg, #a911b9, #e74673);
+							fill: #fff;
+							z-index: 1;
+			}
 
 			&:active,
 			&:focus {
@@ -457,14 +505,16 @@
 			}
 
 			&:hover {
+				transform: scale(1.01);
+
 				img {
-					transform: scale(1.05);
+						filter: brightness(0.7) blur(1px);
 				}
 			}
 		}
 
 		img {
-			transition: all 0.3s ease-in;
+			transition: all 0.2s ease-in;
 			display: block;
 			width: 100%;
 			border-radius: 8px;
