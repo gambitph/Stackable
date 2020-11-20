@@ -30,7 +30,7 @@ const useBlockDesigns = props => {
 	const [ designs, setDesigns ] = useState( [] )
 	const [ doReset, setDoReset ] = useState( false )
 	const [ isApplyingDesign, setIsApplyingDesign ] = useState( false )
-	const [ contentTitle, setContentTitle ] = useState( __( 'All Block Designs', i18n ) )
+	const [ contentTitle, setContentTitle ] = useState( props.selectedBlock ? __( 'Switch Design', i18n ) : __( 'All Block Designs', i18n ) )
 
 	const [ searchDebounced, setSearchDebounced ] = useState( search )
 	const [ debounceTimeout, setDebounceTimeout ] = useState( null )
