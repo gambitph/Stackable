@@ -204,6 +204,14 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 						/>
 					</ButtonIconPopoverControl>
 
+					{ show.border &&
+						<BorderControlsHelper
+							attrNameTemplate="column%s"
+							setAttributes={ setAttributes }
+							blockAttributes={ props.attributes }
+						/>
+					}
+
 					{ show.borderRadius &&
 						<AdvancedRangeControl
 							label={ __( 'Border Radius', i18n ) }
@@ -214,14 +222,6 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 							allowReset={ true }
 							placeholder="12"
 							className="ugb--help-tip-general-border-radius"
-						/>
-					}
-
-					{ show.border &&
-						<BorderControlsHelper
-							attrNameTemplate="column%s"
-							setAttributes={ setAttributes }
-							blockAttributes={ props.attributes }
 						/>
 					}
 
