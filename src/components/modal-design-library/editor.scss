@@ -446,40 +446,40 @@
 		padding: 8px;
 
 		.overlay {
-						display: flex;
-						align-items: center;
-						justify-content: center;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 
-						span {
-										position: absolute;
-										display: flex;
-										flex-direction: column;
-										row-gap: 8px;
-										z-index: 1;
-						}
+			span {
+				position: absolute;
+				display: flex;
+				flex-direction: column;
+				row-gap: 8px;
+				z-index: 1;
+			}
 
-						.components-button {
-										padding: 4px;
-										padding-left: 16px;
-										padding-right: 16px;
-										text-transform: uppercase;
-										border-radius: 16px;
+			.components-button {
+				padding: 4px;
+				padding-left: 16px;
+				padding-right: 16px;
+				text-transform: uppercase;
+				border-radius: 16px;
 
-										&.primary {
-														color: #fff;
-														background-color: #e74673;
-										}
+				&.primary {
+					color: #fff;
+					background-color: #e74673;
+				}
 
-										&.secondary {
-														color: #e74673;
-														background-color: #fff;
-										}
-						}
+				&.secondary {
+					color: #e74673;
+					background-color: #fff;
+				}
+			}
 		}
 
-		.image-button {
-						padding: 0;
-						cursor: default;
+		.image-wrapper {
+			padding: 0;
+			cursor: default;
 			transition: all 0.2s ease-in;
 			width: 100%;
 			height: max-content;
@@ -488,14 +488,14 @@
 			position: relative;
 
 			svg {
-							position: absolute;
-							right: 16px;
-							top: 16px;
-							border-radius: 20px;
-							padding: 3px;
-							background-image: linear-gradient(180deg, #a911b9, #e74673);
-							fill: #fff;
-							z-index: 1;
+				position: absolute;
+				right: 16px;
+				top: 16px;
+				border-radius: 20px;
+				padding: 3px;
+				background-image: linear-gradient(180deg, #a911b9, #e74673);
+				fill: #fff;
+				z-index: 1;
 			}
 
 			&:active,
@@ -508,7 +508,7 @@
 				transform: scale(1.01);
 
 				img {
-						filter: brightness(0.7) blur(1px);
+					filter: brightness(0.7) blur(1px);
 				}
 			}
 		}

@@ -32,8 +32,8 @@ const FeaturedListItem = ( {
 			className="ugb-design-library__featured-list-item"
 			{ ...rest }
 		>
-			<Button
-				className="image-button"
+			<div
+				className="image-wrapper"
 				onMouseEnter={ () => setShowOverlay( true ) }
 				onMouseLeave={ () => setShowOverlay( false ) }
 			>
@@ -47,7 +47,7 @@ const FeaturedListItem = ( {
 					) }
 					<img className="ugb-shadow-6" src={ image } alt={ title } loading="lazy" />
 				</div>
-			</Button>
+			</div>
 			<h4>{ title }</h4>
 			<p>{ description }</p>
 		</div>
