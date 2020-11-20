@@ -1,8 +1,8 @@
 /**
  * Internal deprendencies
  */
-import BlockDesigns from './block-designs'
-import UIKits from './ui-kits'
+import { BlockDesigns, useBlockDesigns } from './block-designs/index'
+import { UIKits } from './ui-kits/index'
 
 /**
  * External deprendencies
@@ -19,6 +19,9 @@ import { useState } from '@wordpress/element'
 
 const ModalDesignLibrary = props => {
 	const [ activeTab, setActiveTab ] = useState( 'block-designs' )
+
+	const blockDesignsModuleProps = useBlockDesigns( props )
+	const uiKitsModuleProps = useBlockDesigns( props )
 
 	return (
 		<DesignLibraryModal
@@ -48,8 +51,8 @@ const ModalDesignLibrary = props => {
 		>
 
 			<div className="ugb-modal-design-library__wrapper">
-				{ activeTab === 'block-designs' && <BlockDesigns { ...props } /> }
-				{ activeTab === 'ui-kits' && <UIKits { ...props } /> }
+				{ activeTab === 'block-designs' && <BlockDesigns { ...{ ...props, moduleProps: blockDesignsModuleProps } } /> }
+				{ activeTab === 'ui-kits' && <UIKits { ...{ ...props, moduleProps: uiKitsModuleProps } } /> }
 			</div>
 
 		</DesignLibraryModal>

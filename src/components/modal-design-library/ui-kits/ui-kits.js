@@ -1,12 +1,11 @@
 /**
  * Internal deprendencies
  */
-import Sidebar from './sidebar'
-import Cover from './cover'
-import ControlSeparator from '../control-separator'
-import Topbar from './topbar'
-import FeaturedList from './featured-list'
-import useBlockDesigns from './use-block-designs'
+import Sidebar from '../sidebar'
+import Cover from '../cover'
+import ControlSeparator from '../../control-separator'
+import Topbar from '../topbar'
+import FeaturedList from '../featured-list'
 
 /**
  * External deprendencies
@@ -20,10 +19,8 @@ import { AdvancedToolbarControl } from '~stackable/components'
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 
-const BlockDesigns = props => {
+const UIKits = props => {
 	const {
-		options,
-		contentTitle,
 		columns,
 		plan,
 		block,
@@ -41,7 +38,7 @@ const BlockDesigns = props => {
 		setMood,
 		setSearch,
 		setDoReset,
-	} = useBlockDesigns( props )
+	} = props.moduleProps
 
 	return (
 		<Fragment>
@@ -49,7 +46,20 @@ const BlockDesigns = props => {
 				<div className="ugb-modal-design-library__filters">
 
 					<Sidebar
-						options={ options }
+						options={ [
+							{
+								label: __( 'All UI Kits', i18n ),
+								value: '',
+							},
+							{
+								label: __( 'Free UI Kits', i18n ),
+								value: 'free',
+							},
+							{
+								label: __( 'Premium UI Kits', i18n ),
+								value: 'premium',
+							},
+						] }
 						value={ plan }
 						onSelect={ setPlan }
 					/>
@@ -57,7 +67,7 @@ const BlockDesigns = props => {
 					<ControlSeparator />
 
 					<Sidebar
-						title={ __( 'Browse By Block', i18n ) }
+						title={ __( 'Browse By Style', i18n ) }
 						options={ blockList }
 						value={ block }
 						onSelect={ setBlock }
@@ -69,11 +79,12 @@ const BlockDesigns = props => {
 			<aside className="ugb-modal-design-library__content">
 
 				<Cover
-					title={ __( 'Stackable Block Designs', i18n ) }
-					description={ __( 'Choose from over 200 predesigned templates you can customize with Stackable.', i18n ) }
-					placeholder={ __( 'Ex: Corporate, Minimalist, Header, etc.', i18n ) }
+					title={ __( 'Stackable UI Kits', i18n ) }
+					description={ __( 'Need to design a website ASAP? We\'ve got you covered with our brand new UI Kit designs.', i18n ) }
+					placeholder={ __( 'Ex. Corporate, Minimalist, etc.', i18n ) }
 					value={ search }
 					onChange={ setSearch }
+					color={ [ '#a911b9', '#e54476' ] }
 				/>
 
 				<Topbar
@@ -104,7 +115,7 @@ const BlockDesigns = props => {
 				</Topbar>
 
 				<FeaturedList
-					title={ contentTitle }
+					title={ __( 'All UI Kits', i18n ) }
 					columns={ columns }
 					isBusy={ isBusy }
 					onSelect={ onDesignSelect }
@@ -116,4 +127,8 @@ const BlockDesigns = props => {
 	)
 }
 
-export default BlockDesigns
+UIKits.defaultProps = {
+	moduleProps: {},
+}
+
+export default UIKits
