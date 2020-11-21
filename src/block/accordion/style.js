@@ -8,6 +8,7 @@ import {
 	whiteIfDark,
 	appendImportant,
 	__getValue,
+	createBorderStyleSet,
 } from '~stackable/util'
 import deepmerge from 'deepmerge'
 
@@ -49,6 +50,23 @@ export const createStyles = props => {
 	styles.push( {
 		...( show.headerBackground ? createBackgroundStyleSet( 'container%s', 'ugb-accordion__heading', props.attributes, columnBackgroundOptions ) : {} ),
 	} )
+
+	// Container Border.
+	if ( show.containerBorder ) {
+		if ( design === 'basic' ) {
+			styles.push( {
+				...createBorderStyleSet( 'container%s', '.ugb-accordion__heading', props.attributes ),
+			} )
+		} else if ( design === 'line-colored' ) {
+			styles.push( {
+				...createBorderStyleSet( 'container%s', '.ugb-accordion.ugb-accordion--design-line-colored.ugb-accordion--open .ugb-accordion__item', props.attributes ),
+			} )
+		} else {
+			styles.push( {
+				...createBorderStyleSet( 'container%s', '.ugb-accordion__item', props.attributes ),
+			} )
+		}
+	}
 
 	// Title.
 	const {
