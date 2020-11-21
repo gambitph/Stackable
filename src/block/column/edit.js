@@ -114,7 +114,6 @@ addFilter( 'stackable.column.edit.inspector.style.before', 'stackable/column', (
 		<Fragment>
 			{ output }
 			<PanelBody title={ __( 'General', i18n ) }>
-				{ applyFilters( 'stackable.with-design-layout-selector.switch-design-panel' ) }
 				<ResponsiveControl
 					attrNameTemplate="%sColumnContentVerticalAlign"
 					setAttributes={ setAttributes }

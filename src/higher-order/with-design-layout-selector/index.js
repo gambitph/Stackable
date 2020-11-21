@@ -6,11 +6,6 @@
  */
 
 /**
- * External dependencies
- */
-import { i18n } from 'stackable'
-
-/**
  * Wordpress dependencies
  */
 import { createHigherOrderComponent } from '@wordpress/compose'
@@ -21,17 +16,9 @@ import {
 	applyFilters,
 	addAction,
 	removeAction,
-	doAction,
-	hasFilter,
-	addFilter,
-	hasAction,
 } from '@wordpress/hooks'
-import { __ } from '@wordpress/i18n'
 import {
-	Icon, Button, BaseControl,
-} from '@wordpress/components'
-import {
-	useSelect, select,
+	useSelect,
 } from '@wordpress/data'
 
 /**
@@ -43,40 +30,6 @@ import DesignLayoutSelector from './design-layout-selector'
 const blocksShouldNotOpenSelectorInitially = [
 	'ugb/column', // When adding a column block, don't show the layout/design selector initially.
 ]
-
-// Filter used for adding a "Layout and Preset Designs" control inside inspector General tab.
-if ( ! hasFilter( 'stackable.with-design-layout-selector.switch-design-panel', 'switch-design-layout' ) ) {
-	addFilter( 'stackable.with-design-layout-selector.switch-design-panel', 'switch-design-layout', () => {
-		const selectedBlockId = select( 'core/block-editor' ).getSelectedBlockClientId()
-		const block = select( 'core/block-editor' ).getBlocksByClientId( selectedBlockId )
-
-		return (
-			<BaseControl>
-				<h5 className="ugb-design-layout-selector__filter-title">{ __( 'Layouts and Preset Designs', i18n ) }</h5>
-				<div className="ugb-design-layout-selector__filter-content">
-					<Icon icon="info-outline" />
-					<p>{ __( 'You may switch your layout or choose a preset design from our Design Library here.', i18n ) }</p>
-				</div>
-
-				{ block && hasAction( `stackable.design-layout-selector.${ selectedBlockId }` ) && (
-					<div className="ugb-design-layout-selector__filter-button-group">
-						<Button
-							className="ugb-design-layout-selector__filter-button"
-							onClick={ () => {
-								doAction( `stackable.design-layout-selector.${ selectedBlockId }`, ( { isOpen: true } ) )
-							} }
-							isSecondary
-							isLarge
-						>
-							{ __( 'Switch design/layout', i18n ) }
-						</Button>
-					</div>
-				) }
-
-			</BaseControl>
-		)
-	} )
-}
 
 const withDesignLayoutSelector = createHigherOrderComponent(
 	WrappedComponent => {

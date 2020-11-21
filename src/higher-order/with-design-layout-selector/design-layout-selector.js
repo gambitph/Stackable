@@ -90,7 +90,7 @@ const DesignLayoutSelector = props => {
 	const designInstructions = isNewlyAddedBlock ? __( 'Select a design from our library to start with.', i18n ) : __( 'Select a design from our library.', i18n )
 
 	const layoutItems = !! layouts.length && (
-		<ul className="ugb-design-layout-selector__layout-items">
+		<div className="ugb-design-layout-selector__layout-items">
 			{ ( layouts || [] ).map( layout => (
 				<DesignLayoutSelectorItem
 					className="ugb-design-layout-selector__layout-item"
@@ -122,7 +122,7 @@ const DesignLayoutSelector = props => {
 					{ ...layout }
 				/>
 			) ) }
-		</ul>
+		</div>
 	)
 
 	const designItems = !! designs.length && (
@@ -132,11 +132,12 @@ const DesignLayoutSelector = props => {
 				{ ! layouts.length && designInstructions }
 			</div>
 			<div className="components-placeholder__fieldset ugb-design-layout-selector__design-container">
-				<ul className="ugb-design-layout-selector__design-items">
+				<div className="ugb-design-layout-selector__design-items">
 					{ ( designs || [] ).map( design => {
 						const passedProps = {
 							image: design.image,
 							plan: design.plan,
+							label: design.label,
 						}
 						return (
 							<DesignLayoutSelectorItem
@@ -185,7 +186,7 @@ const DesignLayoutSelector = props => {
 								{ ...passedProps } />
 						)
 					} ) }
-				</ul>
+				</div>
 			</div>
 		</div>
 	)

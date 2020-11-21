@@ -139,7 +139,6 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 		<Fragment>
 			{ output }
 			<PanelBody title={ __( 'General', i18n ) }>
-				{ applyFilters( 'stackable.with-design-layout-selector.switch-design-panel' ) }
 				<AdvancedRangeControl
 					label={ __( 'Columns', i18n ) }
 					value={ columns }

@@ -1,13 +1,17 @@
 /**
  * External dependencies
  */
-import { srcUrl, isPro } from 'stackable'
+import {
+	srcUrl, isPro, i18n,
+} from 'stackable'
 import classnames from 'classnames'
 
 /**
  * Wordpress dependencies
  */
 import { Button, Icon } from '@wordpress/components'
+import { __ } from '@wordpress/i18n'
+import { useState } from '@wordpress/element'
 
 const DesignLayoutSelectorItem = ( {
 	image,
@@ -20,33 +24,52 @@ const DesignLayoutSelectorItem = ( {
 	            srcUrl ? `${ srcUrl }/${ image }` :
 	            image
 
+	const [ showOverlay, setShowOverlay ] = useState( false )
+
 	const itemClassNames = classnames( 'ugb-design-layout-selector__item', {
 		[ className ]: className,
+		[ `is-premium` ]: otherProps.plan && ! isPro && otherProps.plan !== 'free',
 	} )
-	const imgClassNames = classnames( 'ugb-design-layout-selector__image', {
-		'is-premium': ! isPro && otherProps.plan === 'premium',
-	} )
-	const iconClassNames = classnames( 'ugb-design-layout-selector__lock-icon', {
-		'is-premium': ! isPro && otherProps.plan === 'premium',
+
+	const imageClasses = classnames( 'ugb-design-layout-selector__image', {
+		[ `is-premium-img` ]: otherProps.plan && ! isPro && otherProps.plan !== 'free',
 	} )
 
 	const premiumTag = otherProps.plan && ! isPro && otherProps.plan !== 'free' && (
-		<span className="ugb-design-layout-selector__premium">{ otherProps.plan }</span>
+		<Icon icon={ 'lock' } />
 	)
 
-	const renderLabel = label && <span className="ugb-design-layout-selector__label">{ label }</span>
-
-	const lockIcon = ! isPro && otherProps.plan === 'premium' && <Icon className={ iconClassNames } icon="lock" />
-
 	return (
-		<li className={ itemClassNames } { ...otherProps }>
-			<Button className="ugb-design-layout-selector__item-button" disabled={ ! isPro && otherProps.plan === 'premium' }>
-				{ src && <img className={ imgClassNames } src={ src } alt={ label } /> }
-				{ lockIcon }
+		<div
+			className={ itemClassNames } { ...otherProps }
+		>
+			<div className="ugb-design-layout-selector__wrapper ugb-shadow-5"
+				onMouseEnter={ () => {
+					if ( ! isPro && otherProps.plan === 'premium' ) {
+						setShowOverlay( true )
+					}
+				} }
+				onMouseLeave={ () => {
+					if ( ! isPro && otherProps.plan === 'premium' ) {
+						setShowOverlay( false )
+					}
+				} }
+			>
 				{ premiumTag }
-			</Button>
-			{ renderLabel }
-		</li>
+				<div className="overlay">
+					{ showOverlay && (
+						<span>
+							<Button
+								className="ugb-design-layout-selector__item-premium-button ugb-shadow-4"
+								onClick={ () => window.open( 'https://wpstackable.com/upgrade/?utm_source=design-library-learn-more&utm_campaign=learnmore&utm_medium=gutenberg' ) }
+							>{ __( 'Learn More', i18n ) }</Button>
+						</span>
+					) }
+					<img className={ imageClasses } src={ src } alt={ label } />
+				</div>
+			</div>
+			<h4 className="ugb-design-layout-selector__label">{ label }</h4>
+		</div>
 	)
 }
 

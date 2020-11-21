@@ -107,7 +107,6 @@ addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockq
 		<Fragment>
 			{ output }
 			<PanelBody title={ __( 'General', i18n ) }>
-				{ applyFilters( 'stackable.with-design-layout-selector.switch-design-panel' ) }
 				{ show.borderRadius &&
 					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }

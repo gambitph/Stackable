@@ -96,7 +96,6 @@ addFilter( 'stackable.divider.edit.inspector.style.before', 'stackable/divider',
 		<Fragment>
 			{ output }
 			<PanelBody title={ __( 'General', i18n ) }>
-				{ applyFilters( 'stackable.with-design-layout-selector.switch-design-panel' ) }
 				<ColorPaletteControl
 					value={ color }
 					onChange={ color => setAttributes( { color } ) }

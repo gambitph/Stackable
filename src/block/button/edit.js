@@ -107,7 +107,6 @@ addFilter( 'stackable.button.edit.inspector.style.before', 'stackable/button', (
 		<Fragment>
 			{ output }
 			<PanelBody title={ __( 'General', i18n ) } initialOpen={ false }>
-				{ applyFilters( 'stackable.with-design-layout-selector.switch-design-panel' ) }
 				<AdvancedRangeControl
 					label={ __( 'Border Radius', i18n ) }
 					value={ borderRadius }

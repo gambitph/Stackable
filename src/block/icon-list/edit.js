@@ -91,7 +91,6 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 		<Fragment>
 			{ output }
 			<PanelBody title={ __( 'General', i18n ) }>
-				{ applyFilters( 'stackable.with-design-layout-selector.switch-design-panel' ) }
 				<ResponsiveControl
 					attrNameTemplate="%sColumns"
 					setAttributes={ setAttributes }

@@ -126,7 +126,6 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 		<Fragment>
 			{ output }
 			<PanelBody title={ __( 'General', i18n ) }>
-				{ applyFilters( 'stackable.with-design-layout-selector.switch-design-panel' ) }
 				{ ! [ 'basic', 'plain', 'center-overlay' ].includes( design ) &&
 					<ToggleControl
 						label={ __( 'Reverse Horizontally', i18n ) }
