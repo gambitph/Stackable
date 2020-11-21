@@ -44,6 +44,10 @@ import { i18n, showProNotice } from 'stackable'
 import createStyles from './style'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignBackground from './images/background.png'
+import ImageDesignFaded from './images/faded.png'
+import ImageDesignHeading from './images/heading.png'
+import ImageDesignHeading2 from './images/heading2.png'
 import { showOptions } from './util'
 
 /**
@@ -67,6 +71,18 @@ addFilter( 'stackable.number-box.edit.layouts', 'default', layouts => {
 		},
 		{
 			image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
+		},
+		{
+			label: __( 'Background', i18n ), value: 'background', image: ImageDesignBackground, premium: true,
+		},
+		{
+			label: __( 'Heading', i18n ), value: 'heading', image: ImageDesignHeading, premium: true,
+		},
+		{
+			label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Heading', i18n ), 2 ), value: 'heading2', image: ImageDesignHeading2, premium: true,
+		},
+		{
+			label: __( 'Faded', i18n ), value: 'faded', image: ImageDesignFaded, premium: true,
 		},
 	]
 

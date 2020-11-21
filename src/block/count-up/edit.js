@@ -46,6 +46,9 @@ import { pick, range } from 'lodash'
 import createStyles from './style'
 import ImageDesignPlain from './images/plain.png'
 import ImageDesignPlain2 from './images/plain-2.png'
+import ImageDesignAbstract from './images/abstract.png'
+import ImageDesignBoxed from './images/boxed.png'
+import ImageDesignSide from './images/side.png'
 import { showOptions } from './util'
 
 /**
@@ -68,6 +71,15 @@ addFilter( 'stackable.count-up.edit.layouts', 'default', layouts => {
 		},
 		{
 			label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Plain', i18n ), 2 ), value: 'plain-2', image: ImageDesignPlain2,
+		},
+		{
+			label: __( 'Side', i18n ), value: 'side', image: ImageDesignSide, premium: true,
+		},
+		{
+			label: __( 'Abstract', i18n ), value: 'abstract', image: ImageDesignAbstract, premium: true,
+		},
+		{
+			label: __( 'Boxed', i18n ), value: 'boxed', image: ImageDesignBoxed, premium: true,
 		},
 	]
 

@@ -3,6 +3,9 @@
  */
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignCenteredQuote from './images/centered-quote.png'
+import ImageDesignHighlight from './images/highlight.png'
+import ImageDesignHude from './images/huge.png'
 import { QUOTE_ICONS } from './quotes'
 import { showOptions } from './util'
 import createStyles from './style'
@@ -61,6 +64,15 @@ addFilter( 'stackable.blockquote.edit.layouts', 'default', layouts => {
 		},
 		{
 			label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
+		},
+		{
+			label: __( 'Centered Quote', i18n ), value: 'centered-quote', image: ImageDesignCenteredQuote, premium: true,
+		},
+		{
+			label: __( 'Huge', i18n ), value: 'huge', image: ImageDesignHude, premium: true,
+		},
+		{
+			label: __( 'Highlight', i18n ), value: 'highlight', image: ImageDesignHighlight, premium: true,
 		},
 	]
 

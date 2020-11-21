@@ -51,6 +51,9 @@ import {
  */
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignHorizontal from './images/horizontal.png'
+import ImageDesignLargeMid from './images/large-mid.png'
+import ImageDesignZigzag from './images/zigzag.png'
 import { i18n, showProNotice } from 'stackable'
 import createStyles from './style'
 import { showOptions } from './util'
@@ -72,6 +75,15 @@ addFilter( 'stackable.feature-grid.edit.layouts', 'default', layouts => {
 		},
 		{
 			image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
+		},
+		{
+			label: __( 'Horizontal', i18n ), value: 'horizontal', image: ImageDesignHorizontal, premium: true,
+		},
+		{
+			label: __( 'Large Mid', i18n ), value: 'large-mid', image: ImageDesignLargeMid, premium: true,
+		},
+		{
+			label: __( 'Zigzag', i18n ), value: 'zigzag', image: ImageDesignZigzag, premium: true,
 		},
 	]
 

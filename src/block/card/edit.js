@@ -52,6 +52,9 @@ import {
  */
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignFaded from './images/faded.png'
+import ImageDesignFull from './images/full.png'
+import ImageDesignHorizontal from './images/horizontal.png'
 import { i18n, showProNotice } from 'stackable'
 import createStyles from './style'
 import { showOptions } from './util'
@@ -75,6 +78,15 @@ addFilter( 'stackable.card.edit.layouts', 'default', layouts => {
 		},
 		{
 			label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
+		},
+		{
+			label: __( 'Horizontal', i18n ), value: 'horizontal', image: ImageDesignHorizontal, premium: true,
+		},
+		{
+			label: __( 'Full', i18n ), value: 'full', image: ImageDesignFull, premium: true,
+		},
+		{
+			label: __( 'Faded', i18n ), value: 'faded', image: ImageDesignFaded, premium: true,
 		},
 	]
 	return [

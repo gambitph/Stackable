@@ -44,7 +44,7 @@ const withDesignLayoutSelector = createHigherOrderComponent(
 				isSelectedBlock: select( 'core/block-editor' ).getSelectedBlockClientId(),
 			} ) )
 
-			const layouts = applyFilters( `stackable.${ name }.edit.layouts`, [] )
+			const layouts = applyFilters( `stackable.${ name }.edit.layouts`, [] ).map( layout => ( { ...layout, plan: layout.premium ? 'premium' : 'free' } ) )
 
 			useEffect( () => {
 				// Allow control of isOpen and isNewlyAddedBlock from other sources by clientId.

@@ -3,6 +3,9 @@
  */
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignColored from './images/colored.png'
+import ImageDesignCompact from './images/compact.png'
+import ImageDesignSectioned from './images/sectioned.png'
 import { createStyles } from './style'
 import { showOptions } from './util'
 
@@ -75,6 +78,15 @@ addFilter( 'stackable.pricing-box.edit.layouts', 'default', layouts => {
 		},
 		{
 			image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
+		},
+		{
+			label: __( 'Compact', i18n ), value: 'compact', image: ImageDesignCompact, premium: true,
+		},
+		{
+			label: __( 'Colored', i18n ), value: 'colored', image: ImageDesignColored, premium: true,
+		},
+		{
+			label: __( 'Sectioned', i18n ), value: 'sectioned', image: ImageDesignSectioned, premium: true,
 		},
 	]
 

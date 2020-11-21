@@ -98,6 +98,10 @@ const DesignLayoutSelector = props => {
 						const { updateInitialBlocks } = dispatch( 'stackable/util' )
 						const { setAttributes } = props
 
+						if ( layout.premium && ! isPro ) {
+							return
+						}
+
 						// Close the layout selector.
 						doAction( `stackable.design-layout-selector.${ props.clientId }`, ( { isOpen: false, isNewlyAddedBlock: false } ) )
 

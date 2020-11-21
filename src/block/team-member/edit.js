@@ -53,6 +53,9 @@ import {
  */
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignHalf from './images/half.png'
+import ImageDesignHorizontal from './images/horizontal.png'
+import ImageDesignOverlay from './images/overlay.png'
 import { i18n, showProNotice } from 'stackable'
 import createStyles from './style'
 import { showOptions } from './util'
@@ -79,6 +82,18 @@ addFilter( 'stackable.team-member.edit.layouts', 'default', layouts => {
 		},
 		{
 			label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
+		},
+		{
+			label: __( 'Horizontal', i18n ), value: 'horizontal', image: ImageDesignHorizontal, premium: true,
+		},
+		{
+			label: __( 'Overlay', i18n ), value: 'overlay', image: ImageDesignOverlay, premium: true,
+		},
+		{
+			label: __( 'Overlay Simple', i18n ), value: 'overlay-simple', image: ImageDesignOverlay, premium: true,
+		},
+		{
+			label: __( 'Half', i18n ), value: 'half', image: ImageDesignHalf, premium: true,
 		},
 	]
 

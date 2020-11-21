@@ -3,6 +3,9 @@
  */
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignBordered from './images/bordered.png'
+import ImageDesignOutlined from './images/outlined.png'
+import ImageDesignLargeIcon from './images/large-icon.png'
 import SVGCloseIcon from './images/close-icon.svg'
 import createStyles from './style'
 import { showOptions } from './util'
@@ -80,6 +83,15 @@ addFilter( 'stackable.notification.edit.layouts', 'default', layouts => {
 		},
 		{
 			image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
+		},
+		{
+			label: __( 'Bordered', i18n ), value: 'bordered', image: ImageDesignBordered, premium: true,
+		},
+		{
+			label: __( 'Outlined', i18n ), value: 'outlined', image: ImageDesignOutlined, premium: true,
+		},
+		{
+			label: __( 'Large Icon', i18n ), value: 'large-icon', image: ImageDesignLargeIcon, premium: true,
 		},
 	]
 

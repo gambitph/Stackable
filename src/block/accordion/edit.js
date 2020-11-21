@@ -3,6 +3,10 @@
  */
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignColored from './images/colored.png'
+import ImageDesignColoredHover from './images/colored-hover.png'
+import ImageDesignLineColored from './images/line-colored.png'
+import ImageDesignLineColoredHover from './images/line-colored-hover.png'
 import { showOptions } from './util'
 import createStyles from './style'
 import SVGArrowIcon from './images/arrow.svg'
@@ -62,6 +66,12 @@ addFilter( 'stackable.accordion.edit.layouts', 'default', layouts => {
 		},
 		{
 			label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
+		},
+		{
+			label: __( 'Lined to Colored', i18n ), value: 'line-colored', image: ImageDesignLineColored, hoverImage: ImageDesignLineColoredHover, premium: true,
+		},
+		{
+			label: __( 'Colored', i18n ), value: 'colored', image: ImageDesignColored, hoverImage: ImageDesignColoredHover, premium: true,
 		},
 	]
 

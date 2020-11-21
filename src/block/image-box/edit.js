@@ -48,6 +48,10 @@ import { range } from 'lodash'
 import SVGArrow from './images/arrow.svg'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignBox from './images/box.png'
+import ImageDesignCaptioned from './images/captioned.png'
+import ImageDesignFade from './images/fade.png'
+import ImageDesignLine from './images/line.png'
 import createStyles from './style'
 import { showOptions } from './util'
 
@@ -72,6 +76,18 @@ addFilter( 'stackable.image-box.edit.layouts', 'default', layouts => {
 		},
 		{
 			image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
+		},
+		{
+			label: __( 'Box', i18n ), value: 'box', image: ImageDesignBox, premium: true,
+		},
+		{
+			label: __( 'Captioned', i18n ), value: 'captioned', image: ImageDesignCaptioned, premium: true,
+		},
+		{
+			label: __( 'Fade', i18n ), value: 'fade', image: ImageDesignFade, premium: true,
+		},
+		{
+			label: __( 'Line', i18n ), value: 'line', image: ImageDesignLine, premium: true,
 		},
 	]
 

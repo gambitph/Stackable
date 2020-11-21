@@ -36,12 +36,14 @@ import {
 	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
+import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
  */
-import { i18n } from 'stackable'
-import { __ } from '@wordpress/i18n'
+import {
+	__,
+} from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { InnerBlocks } from '@wordpress/block-editor'

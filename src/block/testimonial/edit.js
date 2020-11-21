@@ -3,6 +3,11 @@
  */
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignBackground from './images/background.png'
+import ImageDesignBasic2 from './images/basic2.png'
+import ImageDesignBubble from './images/bubble.png'
+import ImageDesignVertical from './images/vertical.png'
+import ImageDesignVerticalInverse from './images/vertical-inverse.png'
 import { createStyles } from './style'
 import { showOptions } from './util'
 
@@ -71,6 +76,21 @@ addFilter( 'stackable.testimonial.edit.layouts', 'default', layouts => {
 		},
 		{
 			image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
+		},
+		{
+			label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Basic', i18n ), 2 ), value: 'basic2', image: ImageDesignBasic2, premium: true,
+		},
+		{
+			label: __( 'Bubble', i18n ), value: 'bubble', image: ImageDesignBubble, premium: true,
+		},
+		{
+			label: __( 'Background', i18n ), value: 'background', image: ImageDesignBackground, premium: true,
+		},
+		{
+			label: __( 'Vertical', i18n ), value: 'vertical', image: ImageDesignVertical, premium: true,
+		},
+		{
+			label: __( 'Vertical Inverse', i18n ), value: 'vertical-inverse', image: ImageDesignVerticalInverse, premium: true,
 		},
 	]
 

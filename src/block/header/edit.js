@@ -47,6 +47,11 @@ import { i18n, showProNotice } from 'stackable'
 import createStyles from './style'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignCenterOverlay from './images/center-overlay.png'
+import ImageDesignHalf from './images/half.png'
+import ImageDesignHalfOverlay from './images/half-overlay.png'
+import ImageDesignHuge from './images/huge.png'
+import ImageDesignSideOverlay from './images/side-overlay.png'
 import { showOptions } from './util'
 
 /**
@@ -70,6 +75,21 @@ addFilter( 'stackable.header.edit.layouts', 'default', layouts => {
 		},
 		{
 			image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
+		},
+		{
+			label: __( 'Half Overlay', i18n ), value: 'half-overlay', image: ImageDesignHalfOverlay, premium: true,
+		},
+		{
+			label: __( 'Center Overlay', i18n ), value: 'center-overlay', image: ImageDesignCenterOverlay, premium: true,
+		},
+		{
+			label: __( 'Side Overlay', i18n ), value: 'side-overlay', image: ImageDesignSideOverlay, premium: true,
+		},
+		{
+			label: __( 'Half', i18n ), value: 'half', image: ImageDesignHalf, premium: true,
+		},
+		{
+			label: __( 'Huge', i18n ), value: 'huge', image: ImageDesignHuge, premium: true,
 		},
 	]
 

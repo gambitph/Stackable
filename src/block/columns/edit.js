@@ -5,6 +5,9 @@ import createStyles from './style'
 import { showOptions, getColumnCountFromDesign } from './util'
 import ImageDesignGrid from './images/grid.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignUneven from './images/uneven.png'
+import ImageDesignUneven2 from './images/uneven-2.png'
+import ImageDesignTiled from './images/tiled.png'
 
 /**
  * External dependencies
@@ -41,7 +44,9 @@ import { i18n, showProNotice } from 'stackable'
  * WordPress dependencies
  */
 import { ToggleControl } from '@wordpress/components'
-import { __ } from '@wordpress/i18n'
+import {
+	__, sprintf, _x,
+} from '@wordpress/i18n'
 import {
 	addFilter, applyFilters,
 } from '@wordpress/hooks'
@@ -101,6 +106,15 @@ addFilter( 'stackable.columns.edit.layouts', 'default', layouts => {
 		},
 		{
 			label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
+		},
+		{
+			label: __( 'Uneven', i18n ), value: 'uneven', image: ImageDesignUneven, premium: true,
+		},
+		{
+			label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Uneven', i18n ), 2 ), value: 'uneven-2', image: ImageDesignUneven2, premium: true,
+		},
+		{
+			label: __( 'Tiled', i18n ), value: 'tiled', image: ImageDesignTiled, premium: true,
 		},
 	]
 

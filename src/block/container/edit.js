@@ -5,6 +5,9 @@ import createStyles from './style'
 import { showOptions } from './util'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignImage from './images/image.png'
+import ImageDesignImage2 from './images/image2.png'
+import ImageDesignImage3 from './images/image3.png'
 
 /**
  * External dependencies
@@ -46,7 +49,9 @@ import classnames from 'classnames'
  */
 import { i18n, showProNotice } from 'stackable'
 import { ToggleControl } from '@wordpress/components'
-import { __ } from '@wordpress/i18n'
+import {
+	__, sprintf, _x,
+} from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { InnerBlocks } from '@wordpress/block-editor'
@@ -60,6 +65,15 @@ addFilter( 'stackable.container.edit.layouts', 'default', layouts => {
 		},
 		{
 			label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
+		},
+		{
+			label: __( 'Image', i18n ), value: 'image', image: ImageDesignImage, premium: true,
+		},
+		{
+			label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Image', i18n ), 2 ), value: 'image2', image: ImageDesignImage2, premium: true,
+		},
+		{
+			label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Image', i18n ), 3 ), value: 'image3', image: ImageDesignImage3, premium: true,
 		},
 	]
 
