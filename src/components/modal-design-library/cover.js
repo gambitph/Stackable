@@ -1,13 +1,12 @@
 /**
  * External dependencies
  */
-import { i18n, srcUrl } from 'stackable'
+import { srcUrl } from 'stackable'
 
 /**
  * Wordpress dependencies
  */
 import { TextControl } from '@wordpress/components'
-import { __ } from '@wordpress/i18n'
 
 /**
  * Internal dependencies
