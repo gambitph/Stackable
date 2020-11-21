@@ -105,9 +105,13 @@ const DesignLayoutSelector = props => {
 						// Close the layout selector.
 						doAction( `stackable.design-layout-selector.${ props.clientId }`, ( { isOpen: false, isNewlyAddedBlock: false } ) )
 
+						// If currently selected is the same as the newly selected layout. Don't do anything.
+						if ( props.attributes.design === layout.value ) {
+							return
+						}
+
 						// Manually trigger the setAttributes filter.
 						const newAttributes = applyFilters( `stackable.${ name }.setAttributes`, {
-							...props.attributes,
 							design: layout.value,
 						},
 						props )
