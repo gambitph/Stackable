@@ -57,14 +57,14 @@ const Topbar = props => {
 				<Button
 					icon={ <SVGViewSingle width="18" height="18" /> }
 					label={ __( 'Large preview', i18n ) }
-					className={ columns === 1 ? 'is-active' : '' }
-					onClick={ () => setColumns( 1 ) }
+					className={ columns === 2 ? 'is-active' : '' }
+					onClick={ () => setColumns( 2 ) }
 				/>
 				<Button
 					icon={ <SVGViewFew width="18" height="18" /> }
 					label={ __( 'Medium preview', i18n ) }
-					className={ columns === 2 ? 'is-active' : '' }
-					onClick={ () => setColumns( 2 ) }
+					className={ columns === 3 ? 'is-active' : '' }
+					onClick={ () => setColumns( 3 ) }
 				/>
 				<Button
 					icon={ <SVGViewMany width="18" height="18" /> }

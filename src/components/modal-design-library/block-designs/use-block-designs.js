@@ -22,7 +22,7 @@ import { select } from '@wordpress/data'
 import { __, sprintf } from '@wordpress/i18n'
 
 const useBlockDesigns = props => {
-	const [ columns, setColumns ] = useState( 4 )
+	const [ columns, setColumns ] = useState( 3 )
 	const [ plan, _setPlan ] = useState( '' )
 	const [ block, _setBlock ] = useState( props.selectedBlock )
 	const [ mood, setMood ] = useState( '' )
