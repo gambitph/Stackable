@@ -113,10 +113,11 @@ const BorderControls = props => {
 						}
 					}
 
-					placeholderTop="0"
-					placeholderLeft="0"
-					placeholderBottom="0"
-					placeholderRight="0"
+					placeholder="1"
+					placeholderTop="1"
+					placeholderLeft="1"
+					placeholderBottom="1"
+					placeholderRight="1"
 				/>
 			}
 
