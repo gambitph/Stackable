@@ -55,8 +55,7 @@ const useUIKits = props => { //eslint-disable-line
 	]
 
 	const setPlan = plan => {
-		setContentTitle( sprintf( __( '%s UI Kits', i18n ),
-			options.find( option => option.value === plan ).label ) )
+		setContentTitle( options.find( option => option.value === plan ).label )
 		_setSearch( '' )
 		_setPlan( plan )
 	}

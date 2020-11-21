@@ -54,8 +54,7 @@ const useBlockDesigns = props => {
 	]
 
 	const setPlan = plan => {
-		setContentTitle( sprintf( __( '%s Block Designs', i18n ),
-			options.find( option => option.value === plan ).label ) )
+		setContentTitle( options.find( option => option.value === plan ).label )
 		_setSearch( '' )
 		_setPlan( plan )
 	}

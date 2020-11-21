@@ -415,6 +415,7 @@
 		justify-content: flex-start;
 		flex-wrap: wrap;
 		flex-direction: row;
+		row-gap: 12px;
 	}
 
 	&.ugb-design-library__columns-4 .ugb-design-library__featured-list-item {
@@ -502,7 +503,7 @@
 			display: block !important;
 			text-align: left;
 			position: relative;
-			border-radius: 24px;
+			border-radius: 16px;
 			overflow: hidden;
 			height: 80%;
 
