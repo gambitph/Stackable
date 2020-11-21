@@ -20,6 +20,7 @@ export const showOptions = blockProps => {
 	return applyFilters( 'stackable.header.show', {
 		columnBackground: design !== 'plain',
 		borderRadius: design !== 'plain' && borderRadius,
+		border: design !== 'plain' && borderRadius,
 		titleSpacing: showTitle,
 		subtitleSpacing: showSubtitle,
 		buttonSpacing: showButton || showButton2,

@@ -12,6 +12,7 @@ import {
 	marginLeftAlign,
 	marginRightAlign,
 	createIconStyleSet,
+	createBorderStyleSet,
 } from '~stackable/util'
 
 /**
@@ -47,6 +48,12 @@ export const createStyles = props => {
 			'.ugb-countup__item': {
 				borderRadius: getValue( 'borderRadius', '%spx !important' ),
 			},
+		} )
+	}
+
+	if ( show.border ) {
+		styles.push( {
+			...createBorderStyleSet( 'column%s', '.ugb-countup__item', props.attributes ),
 		} )
 	}
 

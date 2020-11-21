@@ -14,6 +14,7 @@ import {
 	whiteIfDarkBlackIfLight,
 	appendImportant,
 	createImageBackgroundStyleSet,
+	createBorderStyleSet,
 	__getValue,
 } from '~stackable/util'
 import { range } from 'lodash'
@@ -48,6 +49,12 @@ export const createStyles = props => {
 			'.ugb-team-member__item': {
 				borderRadius: getValue( 'borderRadius', '%spx !important' ),
 			},
+		} )
+	}
+
+	if ( show.border ) {
+		styles.push( {
+			...createBorderStyleSet( 'column%s', '.ugb-team-member__item', props.attributes ),
 		} )
 	}
 

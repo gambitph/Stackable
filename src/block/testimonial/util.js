@@ -15,6 +15,7 @@ export const showOptions = blockProps => {
 	return applyFilters( 'stackable.testimonial.show', {
 		columnBackground: design !== 'plain',
 		borderRadius: design !== 'plain',
+		border: design !== 'plain',
 		shadow: design !== 'plain',
 		imageAsBackground: false,
 		testimonialSpacing: showTestimonial,

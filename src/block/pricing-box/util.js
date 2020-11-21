@@ -18,6 +18,7 @@ export const showOptions = blockProps => {
 	return applyFilters( 'stackable.pricing-box.show', {
 		columnBackground: design !== 'plain',
 		borderRadius: design !== 'plain',
+		border: design !== 'plain',
 		shadow: design !== 'plain',
 		imageSettings: design !== 'sectioned',
 		imageSpacing: showImage,

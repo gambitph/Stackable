@@ -7,6 +7,7 @@ import {
 	createButtonStyleSet,
 	createTypographyStyles,
 	createResponsiveStyles,
+	createBorderStyleSet,
 	hexToRgba,
 	whiteIfDark,
 	appendImportant,
@@ -35,6 +36,12 @@ export const createStyles = props => {
 			'.ugb-header__item': {
 				borderRadius: show.borderRadius ? getValue( 'borderRadius', '%spx !important' ) : undefined,
 			},
+		} )
+	}
+
+	if ( show.border ) {
+		styles.push( {
+			...createBorderStyleSet( 'column%s', '.ugb-header__item', props.attributes ),
 		} )
 	}
 

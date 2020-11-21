@@ -7,7 +7,10 @@
 import { ColumnsIcon } from '~stackable/icons'
 import { i18n } from 'stackable'
 import {
-	createBackgroundAttributes, createResponsiveAttributes, createAllCombinationAttributes,
+	createBackgroundAttributes,
+	createResponsiveAttributes,
+	createAllCombinationAttributes,
+	createBorderAttributes,
 } from '~stackable/util'
 
 /**
@@ -56,6 +59,9 @@ export const schema = {
 
 	// Column Background
 	...createBackgroundAttributes( 'column%s' ),
+
+	// Border.
+	...createBorderAttributes( 'column%s' ),
 
 	// Text Colors
 	...createAllCombinationAttributes(

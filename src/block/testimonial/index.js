@@ -19,6 +19,7 @@ import {
 	createAllCombinationAttributes,
 	createTypographyAttributes,
 	createImageBackgroundAttributes,
+	createBorderAttributes,
 	descriptionPlaceholder,
 } from '~stackable/util'
 import { TestimonialIcon } from '~stackable/icons'
@@ -50,6 +51,9 @@ export const schema = {
 
 	// Column.
 	...createBackgroundAttributes( 'column%s' ),
+
+	// Border.
+	...createBorderAttributes( 'column%s' ),
 
 	// Testimonial.
 	showTestimonial: {

@@ -26,6 +26,7 @@ export const showOptions = blockProps => {
 		showBackgroundInItem: design === 'vertical-card2',
 		showBackgroundInContent: [ 'vertical-card', 'horizontal-card', 'image-card' ].includes( design ),
 		borderRadius: true,
+		border: ! [ 'basic', 'list' ].includes( design ),
 		shadow: true,
 		imageShadow: [ 'basic', 'list' ].includes( design ),
 		postType: isPro,

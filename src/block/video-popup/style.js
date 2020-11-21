@@ -1,7 +1,11 @@
 /**
  * External dependencies
  */
-import { createBackgroundStyleSet, __getValue } from '~stackable/util'
+import {
+	createBackgroundStyleSet,
+	__getValue,
+	createBorderStyleSet,
+} from '~stackable/util'
 import deepmerge from 'deepmerge'
 
 /**
@@ -34,6 +38,12 @@ export const createStyles = props => {
 					maxWidth: getValue( 'mobileWidth' ) !== '' ? getValue( 'mobileWidth', '%spx' ) : undefined,
 				},
 			},
+		} )
+	}
+
+	if ( show.border ) {
+		styles.push( {
+			...createBorderStyleSet( 'column%s', '.ugb-video-popup__wrapper', props.attributes ),
 		} )
 	}
 

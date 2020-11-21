@@ -21,6 +21,7 @@ import {
 	createImageAttributes,
 	createTypographyAttributes,
 	createImageBackgroundAttributes,
+	createBorderAttributes,
 	SOCIAL_SITES,
 } from '~stackable/util'
 import { TeamMemberIcon } from '~stackable/icons'
@@ -53,6 +54,9 @@ export const schema = {
 
 	// Column.
 	...createBackgroundAttributes( 'column%s' ),
+
+	// Border.
+	...createBorderAttributes( 'column%s' ),
 
 	// Image.
 	showImage: {

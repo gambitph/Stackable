@@ -10,6 +10,7 @@ import {
 	marginRightAlign,
 	appendImportant,
 	createResponsiveStyles,
+	createBorderStyleSet,
 	whiteIfDarkBlackIfLight,
 	__getValue,
 } from '~stackable/util'
@@ -46,6 +47,12 @@ export const createStyles = props => {
 			'.ugb-testimonial__item': {
 				borderRadius: getValue( 'borderRadius', '%spx !important' ),
 			},
+		} )
+	}
+
+	if ( show.border ) {
+		styles.push( {
+			...createBorderStyleSet( 'column%s', '.ugb-testimonial__item', props.attributes ),
 		} )
 	}
 

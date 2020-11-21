@@ -46,6 +46,7 @@ const SpacingControl = props => {
 						} )
 					} }
 				onChangeUnit={ value => props.onChangeDesktopUnit( value ) }
+				placeholder={ props.placeholder }
 				placeholderTop={ props.placeholderTop }
 				placeholderLeft={ props.placeholderLeft }
 				placeholderBottom={ props.placeholderBottom }
@@ -133,6 +134,7 @@ SpacingControl.defaultProps = {
 	placeholderLeft: '35',
 	placeholderBottom: '60',
 	placeholderRight: '35',
+	placeholder: '',
 	className: 'ugb--help-tip-advanced-column-paddings',
 }
 

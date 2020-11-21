@@ -17,6 +17,7 @@ export const showOptions = blockProps => {
 		columnBackground: design !== 'plain',
 		backgroundColor: design !== 'plain',
 		borderRadius: design !== 'plain',
+		containerBorder: design === 'basic' || design === 'large-icon',
 		shadow: design !== 'plain',
 		iconSpacing: showIcon,
 		titleSpacing: showTitle,

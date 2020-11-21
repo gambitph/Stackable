@@ -6,6 +6,7 @@ import {
 	createBackgroundStyleSet,
 	createTypographyStyles,
 	createResponsiveStyles,
+	createBorderStyleSet,
 	whiteIfDark,
 	appendImportant,
 	__getValue,
@@ -34,6 +35,12 @@ export const createStyles = props => {
 			'.ugb-blockquote__item': {
 				borderRadius: show.borderRadius ? getValue( 'borderRadius', '%spx !important' ) : undefined,
 			},
+		} )
+	}
+
+	if ( show.border ) {
+		styles.push( {
+			...createBorderStyleSet( 'column%s', '.ugb-blockquote__item', props.attributes ),
 		} )
 	}
 

@@ -15,6 +15,7 @@ export const showOptions = blockProps => {
 	return applyFilters( 'stackable.image-box.show', {
 		columnBackground: true,
 		borderRadius: true,
+		border: true,
 		shadow: true,
 		line: design === 'box' || design === 'line',
 		subtitleSpacing: showSubtitle,

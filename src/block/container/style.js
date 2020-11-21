@@ -5,6 +5,7 @@ import {
 	appendImportantAll,
 	appendImportant,
 	createBackgroundStyleSet,
+	createBorderStyleSet,
 	whiteIfDarkBlackIfLight,
 	__getValue,
 } from '~stackable/util'
@@ -44,6 +45,12 @@ export const createStyles = props => {
 					borderRadius: getValue( 'borderRadius', '%spx !important' ) || '12px !important',
 				},
 			},
+		} )
+	}
+
+	if ( show.border ) {
+		styles.push( {
+			...createBorderStyleSet( 'column%s', `.${ uniqueClass }-wrapper.ugb-container__wrapper`, props.attributes ),
 		} )
 	}
 

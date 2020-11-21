@@ -25,6 +25,7 @@ import {
 	ImageBackgroundControlsHelper,
 	ButtonEditHelper,
 	DivBackground,
+	BorderControlsHelper,
 } from '~stackable/components'
 import {
 	descriptionPlaceholder,
@@ -213,6 +214,15 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 						/>
 					</ResponsiveControl>
 					}
+
+					{ show.border &&
+						<BorderControlsHelper
+							attrNameTemplate="column%s"
+							setAttributes={ setAttributes }
+							blockAttributes={ props.attributes }
+						/>
+					}
+
 					{ show.borderRadius &&
 					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }
@@ -225,6 +235,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 						className="ugb--help-tip-general-border-radius"
 					/>
 					}
+
 					{ show.columnBackground &&
 					<AdvancedRangeControl
 						label={ __( 'Shadow / Outline', i18n ) }
