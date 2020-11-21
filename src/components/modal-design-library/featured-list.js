@@ -27,6 +27,7 @@ const FeaturedListItem = ( {
 	...rest
 } ) => {
 	const [ showOverlay, setShowOverlay ] = useState( false )
+	const [ imageLoaded, setImageLoaded ] = useState( false )
 
 	return (
 		<div
@@ -40,6 +41,7 @@ const FeaturedListItem = ( {
 			>
 				{ showLock && <Icon icon="lock" /> }
 				<div className="overlay">
+					{ ! imageLoaded && <Spinner className="test" /> }
 					{ showOverlay && (
 						<span>
 							{ itemIsBusy && <Spinner /> }
@@ -47,7 +49,15 @@ const FeaturedListItem = ( {
 							{ ! itemIsBusy && button2 && <Button className="secondary ugb-shadow-7" onClick={ onClickButton2 }>{ button2 }</Button> }
 						</span>
 					) }
-					<img src={ image } alt={ title } loading="lazy" />
+					<img
+						className={ ! imageLoaded ? 'loading' : undefined }
+						src={ image }
+						alt={ title }
+						loading="lazy"
+						onLoad={ () => {
+							setImageLoaded( true )
+						} }
+					/>
 				</div>
 			</div>
 			<h4>{ title }</h4>

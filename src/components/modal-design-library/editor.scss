@@ -467,6 +467,11 @@
 			align-items: center;
 			justify-content: center;
 
+			& > .components-spinner {
+							position: absolute;
+							left: 0;
+			}
+
 			span {
 				position: absolute;
 				display: flex;
@@ -544,9 +549,12 @@
 			display: block;
 			width: 100%;
 			min-height: 50px;
-			background: #f1f1f1;
+			background: #fff;
 			pointer-events: none;
+		}
 
+		.loading {
+			min-height: 10vw;
 		}
 
 		h4 {
