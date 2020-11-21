@@ -16,7 +16,7 @@ import { supportsBlockCollections } from './util'
  * External dependencies
  */
 import registerBlock from '~stackable/register-block'
-import { i18n } from 'stackable'
+import { i18n, isContentOnlyMode } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -56,7 +56,7 @@ const Description = ( { description } ) => {
 	return (
 		<div>
 			<div className="ugb-block-description">{ description }</div>
-			{ !! block && hasAction( `stackable.design-layout-selector.${ selectedBlockId }` ) && (
+			{ !! block && ! isContentOnlyMode && hasAction( `stackable.design-layout-selector.${ selectedBlockId }` ) && (
 				<div>
 					<Button
 						onClick={ () => {
