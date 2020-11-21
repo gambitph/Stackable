@@ -13,6 +13,6 @@ export const showOptions = blockProps => {
 	return applyFilters( 'stackable.column.show', {
 		columnBackground: design !== 'plain',
 		borderRadius: design !== 'plain' && ! ( ! showBlockBackground && align === 'full' ),
-		border: design !== 'plain' && ! ( ! showBlockBackground && align === 'full' ),
+		border: design !== 'plain',
 	}, blockProps )
 }
