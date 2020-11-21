@@ -5,7 +5,6 @@ import {
 	appendImportantAll,
 	createResponsiveStyles,
 	createTypographyStyles,
-	createBorderStyleSet,
 	whiteIfDarkBlackIfLight,
 	appendImportant,
 	__getValue,

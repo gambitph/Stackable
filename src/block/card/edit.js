@@ -573,7 +573,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 	)
 } )
 
-const Edit = props => {
+const edit = props => {
 	const {
 		className,
 		setAttributes,
@@ -733,4 +733,4 @@ export default compose(
 		cacheImageData( props.attributes.image2Id, select )
 		cacheImageData( props.attributes.image3Id, select )
 	} ),
-)( Edit )
+)( edit )
