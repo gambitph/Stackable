@@ -29,7 +29,7 @@ import {
 import { __ } from '@wordpress/i18n'
 import { doAction, hasAction } from '@wordpress/hooks'
 import { Button } from '@wordpress/components'
-import { select } from '@wordpress/data'
+import { useSelect } from '@wordpress/data'
 
 // Register our block collection or category (WP <= 5.3).
 if ( supportsBlockCollections() ) {
@@ -50,12 +50,13 @@ if ( supportsBlockCollections() ) {
 
 // Create a custom description component.
 const Description = ( { description } ) => {
-	const selectedBlockId = select( 'core/block-editor' ).getSelectedBlockClientId()
+	const selectedBlockId = useSelect( select => select( 'core/block-editor' ).getSelectedBlockClientId() )
+	const block = useSelect( select => select( 'core/block-editor' ).getBlocksByClientId( selectedBlockId ) )
 
 	return (
 		<div>
 			<div className="ugb-block-description">{ description }</div>
-			{ hasAction( `stackable.design-layout-selector.${ selectedBlockId }` ) && (
+			{ !! block && hasAction( `stackable.design-layout-selector.${ selectedBlockId }` ) && (
 				<div>
 					<Button
 						onClick={ () => {
