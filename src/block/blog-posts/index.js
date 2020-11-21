@@ -294,6 +294,7 @@ export const settings = {
 	supports: {
 		align: [ 'center', 'wide', 'full' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
+		anchor: true,
 	},
 	attributes: schema,
 
@@ -308,6 +309,7 @@ export const settings = {
 		'advanced-column-spacing': {
 			verticalColumnAlign: true,
 			verticalContentAlign: false,
+			paddings: false,
 		},
 		'advanced-responsive': true,
 		'block-background': true,

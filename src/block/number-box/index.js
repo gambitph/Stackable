@@ -235,6 +235,7 @@ export const settings = {
 	supports: {
 		align: [ 'center', 'wide', 'full' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
+		anchor: true,
 	},
 	deprecated,
 	save,
@@ -246,6 +247,7 @@ export const settings = {
 		'advanced-block-spacing': true,
 		'advanced-column-spacing': {
 			verticalColumnAlign: true,
+			paddings: false,
 		},
 		'advanced-responsive': true,
 		'block-background': true,

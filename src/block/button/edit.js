@@ -40,7 +40,7 @@ import { Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 import classnames from 'classnames'
 import {
-	PanelBody, SelectControl,
+	SelectControl,
 } from '@wordpress/components'
 import {
 	__, _x, sprintf,
@@ -106,7 +106,7 @@ addFilter( 'stackable.button.edit.inspector.style.before', 'stackable/button', (
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) } initialOpen={ false }>
+			<PanelAdvancedSettings title={ __( 'General', i18n ) } initialOpen={ false }>
 				<AdvancedRangeControl
 					label={ __( 'Border Radius', i18n ) }
 					value={ borderRadius }
@@ -144,7 +144,7 @@ addFilter( 'stackable.button.edit.inspector.style.before', 'stackable/button', (
 					onChange={ collapseOn => setAttributes( { collapseOn } ) }
 					className="ugb--help-tip-button-collapse"
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 			<PanelAdvancedSettings
 				title={ sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button', i18n ), 1 ) }
 				initialOpen={ true }

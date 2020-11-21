@@ -131,6 +131,8 @@ class FourRangeControl extends Component {
 			step: this.props.step,
 			placeholder: this.props.placeholder,
 			initialPosition: this.props.initialPosition,
+			sliderMin: this.props.sliderMin,
+			sliderMax: this.props.sliderMax,
 		}
 
 		// Change the min, max & step values depending on the unit used.
@@ -140,6 +142,12 @@ class FourRangeControl extends Component {
 		}
 		if ( Array.isArray( this.props.max ) ) {
 			propsToPass.max = this.props.max[ i ]
+		}
+		if ( Array.isArray( this.props.sliderMin ) ) {
+			propsToPass.sliderMin = this.props.sliderMin[ i ]
+		}
+		if ( Array.isArray( this.props.sliderMax ) ) {
+			propsToPass.sliderMax = this.props.sliderMax[ i ]
 		}
 		if ( Array.isArray( this.props.step ) ) {
 			propsToPass.step = this.props.step[ i ]
@@ -292,6 +300,8 @@ FourRangeControl.defaultProps = {
 	enableLeft: true,
 	min: 0,
 	max: 50,
+	sliderMin: null,
+	sliderMax: null,
 	step: 1,
 	placeholder: '',
 	placeholderTop: '',

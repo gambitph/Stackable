@@ -26,7 +26,7 @@ import createStyles from './style'
  */
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import {
-	PanelBody, ToggleControl,
+	ToggleControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
@@ -122,7 +122,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 					className="ugb--help-tip-separator-shadow"
 				/>
 			</PanelAdvancedSettings>
-			<PanelBody
+			<PanelAdvancedSettings
 				title={ __( 'General', i18n ) }
 				initialOpen={ false }
 			>
@@ -178,8 +178,8 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 					value={ backgroundColor }
 					onChange={ backgroundColor => setAttributes( { backgroundColor } ) }
 				/>
-			</PanelBody>
-			<PanelBody
+			</PanelAdvancedSettings>
+			<PanelAdvancedSettings
 				title={ __( 'Spacing', i18n ) }
 				initialOpen={ false }
 			>
@@ -331,7 +331,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						allowReset={ true }
 					/>
 				</WhenResponsiveScreen>
-			</PanelBody>
+			</PanelAdvancedSettings>
 		</Fragment>
 	)
 } )

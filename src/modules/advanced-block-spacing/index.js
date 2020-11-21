@@ -227,7 +227,8 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							unit={ blockWidthUnit }
 							onChange={ blockWidth => setAttributes( { blockWidth } ) }
 							onChangeUnit={ blockWidthUnit => setAttributes( { blockWidthUnit } ) }
-							placeholder="2500"
+							placeholder=""
+							initialPosition="2500"
 							className="ugb--help-tip-advanced-block-content-width"
 						/>
 					</WhenResponsiveScreen>

@@ -6,6 +6,7 @@ import {
 	AlignButtonsControl,
 	BackgroundControlsHelper,
 	BlockContainer,
+	ButtonIconPopoverControl,
 	ColorPaletteControl,
 	ContentAlignControl,
 	DesignPanelBody,
@@ -19,6 +20,7 @@ import {
 	SvgIconPlaceholder,
 	DivBackground,
 	IconControlsHelper,
+	ColumnPaddingControl,
 } from '~stackable/components'
 import {
 	createResponsiveAttributeNames,
@@ -54,7 +56,6 @@ import {
 } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { i18n, showProNotice } from 'stackable'
-import { PanelBody } from '@wordpress/components'
 import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
@@ -118,7 +119,10 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<AdvancedRangeControl
 					label={ __( 'Columns', i18n ) }
 					value={ columns }
@@ -127,7 +131,47 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 					max={ 4 }
 					className="ugb--help-tip-general-columns"
 				/>
-				{ show.columnBackground &&
+				<ContentAlignControl
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+			</PanelAdvancedSettings>
+
+			{ show.columnBackground &&
+				<PanelAdvancedSettings
+					title={ __( 'Container', i18n ) }
+					id="column-background"
+					initialOpen={ false }
+					className="ugb--help-tip-column-background-on-off"
+				>
+					<ButtonIconPopoverControl
+						label={ __( 'Background', i18n ) }
+						popoverLabel={ __( 'Background', i18n ) }
+						onReset={ () => {
+							setAttributes( {
+								columnBackgroundColorType: '',
+								columnBackgroundColor: '',
+								columnBackgroundColor2: '',
+								columnBackgroundColorOpacity: '',
+								columnBackgroundMediaID: '',
+								columnBackgroundMediaUrl: '',
+								columnBackgroundTintStrength: '',
+								columnFixedBackground: '',
+							} )
+						} }
+						allowReset={ props.attributes.columnBackgroundColor || props.attributes.columnBackgroundMediaUrl }
+						hasColorPreview={ props.attributes.columnBackgroundColor }
+						hasImagePreview={ props.attributes.columnBackgroundMediaUrl }
+						colorPreview={ props.attributes.columnBackgroundColorType === 'gradient' ? [ props.attributes.columnBackgroundColor, props.attributes.columnBackgroundColor2 ] : props.attributes.columnBackgroundColor }
+						imageUrlPreview={ props.attributes.columnBackgroundMediaUrl }
+					>
+						<BackgroundControlsHelper
+							attrNameTemplate="column%s"
+							setAttributes={ setAttributes }
+							blockAttributes={ props.attributes }
+						/>
+					</ButtonIconPopoverControl>
+					{ show.columnBackground &&
 					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
@@ -138,8 +182,8 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 						placeholder="12"
 						className="ugb--help-tip-general-border-radius"
 					/>
-				}
-				{ show.columnBackground &&
+					}
+					{ show.columnBackground &&
 					<AdvancedRangeControl
 						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
@@ -150,27 +194,81 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 						placeholder="3"
 						className="ugb--help-tip-general-shadow"
 					/>
-				}
-				<ContentAlignControl
-					setAttributes={ setAttributes }
-					blockAttributes={ props.attributes }
-				/>
-			</PanelBody>
-
-			{ show.columnBackground &&
-				<PanelAdvancedSettings
-					title={ __( 'Column Background', i18n ) }
-					id="column-background"
-					initialOpen={ false }
-					className="ugb--help-tip-column-background-on-off"
-				>
-					<BackgroundControlsHelper
-						attrNameTemplate="column%s"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					/>
+					}
 				</PanelAdvancedSettings>
 			}
+
+			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
+				<ColumnPaddingControl
+					label={ __( 'Paddings', i18n ) }
+					setAttributes={ setAttributes }
+					attributes={ props.attributes }
+				/>
+				{ showIcon && (
+					<ResponsiveControl
+						attrNameTemplate="icon%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Icon', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-spacing-icon"
+						/>
+					</ResponsiveControl>
+				) }
+				{ showTitle && (
+					<ResponsiveControl
+						attrNameTemplate="title%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Title', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-spacing-title"
+						/>
+					</ResponsiveControl>
+				) }
+				{ showNumber && (
+					<ResponsiveControl
+						attrNameTemplate="number%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Number', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-spacing-description"
+						/>
+					</ResponsiveControl>
+				) }
+				{ showDescription && (
+					<ResponsiveControl
+						attrNameTemplate="description%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Description', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="0"
+							allowReset={ true }
+							className="ugb--help-tip-spacing-description"
+						/>
+					</ResponsiveControl>
+				) }
+			</PanelSpacingBody>
 
 			<PanelAdvancedSettings
 				title={ __( 'Icon', i18n ) }
@@ -337,72 +435,6 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
-			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
-				{ showIcon && (
-					<ResponsiveControl
-						attrNameTemplate="icon%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Icon', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-spacing-icon"
-						/>
-					</ResponsiveControl>
-				) }
-				{ showTitle && (
-					<ResponsiveControl
-						attrNameTemplate="title%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Title', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-spacing-title"
-						/>
-					</ResponsiveControl>
-				) }
-				{ showNumber && (
-					<ResponsiveControl
-						attrNameTemplate="number%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Number', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-spacing-description"
-						/>
-					</ResponsiveControl>
-				) }
-				{ showDescription && (
-					<ResponsiveControl
-						attrNameTemplate="description%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Description', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="0"
-							allowReset={ true }
-							className="ugb--help-tip-spacing-description"
-						/>
-					</ResponsiveControl>
-				) }
-			</PanelSpacingBody>
 		</Fragment>
 	)
 } )

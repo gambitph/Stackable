@@ -22,6 +22,7 @@ import {
 	ColorPaletteControl,
 	DesignControl,
 	ColumnsWidthControl,
+	PanelAdvancedSettings,
 } from '~stackable/components'
 import {
 	withUniqueClass,
@@ -39,7 +40,7 @@ import { i18n, showProNotice } from 'stackable'
 /**
  * WordPress dependencies
  */
-import { PanelBody, ToggleControl } from '@wordpress/components'
+import { ToggleControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import {
 	addFilter, applyFilters,
@@ -134,7 +135,7 @@ addFilter( 'stackable.columns.edit.inspector.layout.before', 'stackable/columns'
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody
+			<PanelAdvancedSettings
 				initialOpen={ true }
 				title={ __( 'Layout', i18n ) }
 			>
@@ -204,7 +205,7 @@ addFilter( 'stackable.columns.edit.inspector.layout.before', 'stackable/columns'
 					} }
 				/>
 				{ showProNotice && <ProControlButton /> }
-			</PanelBody>
+			</PanelAdvancedSettings>
 		</Fragment>
 	)
 } )
@@ -238,7 +239,10 @@ addFilter( 'stackable.columns.edit.inspector.style.before', 'stackable/columns',
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<AdvancedRangeControl
 					label={ __( 'Columns', i18n ) }
 					value={ columns }
@@ -390,9 +394,9 @@ addFilter( 'stackable.columns.edit.inspector.style.before', 'stackable/columns',
 					title={ __( 'Say Hello to More Column Options 👋', i18n ) }
 					description={ __( 'Swap columns and adjust column gaps. This feature is only available on Stackable Premium', i18n ) }
 				/> }
-			</PanelBody>
+			</PanelAdvancedSettings>
 
-			<PanelBody
+			<PanelAdvancedSettings
 				title={ __( 'Text Colors', i18n ) }
 				initialOpen={ false }
 			>
@@ -417,7 +421,7 @@ addFilter( 'stackable.columns.edit.inspector.style.before', 'stackable/columns',
 					label={ __( 'Link Hover Color', i18n ) }
 				/>
 				<p className="components-base-control__help">{ __( 'The colors above might not apply to some nested blocks.', i18n ) }</p>
-			</PanelBody>
+			</PanelAdvancedSettings>
 		</Fragment>
 	)
 } )

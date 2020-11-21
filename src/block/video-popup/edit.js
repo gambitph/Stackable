@@ -12,6 +12,7 @@ import {
 	WhenResponsiveScreen,
 	DivBackground,
 	PanelAdvancedSettings,
+	ButtonIconPopoverControl,
 } from '~stackable/components'
 import {
 	getVideoProviderFromURL,
@@ -41,7 +42,7 @@ import createStyles from './style'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 
 import {
-	PanelBody, SelectControl, TextControl,
+	SelectControl, TextControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
@@ -71,7 +72,10 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<ImageControl
 					label={ __( 'Popup Option #1: Upload Video', i18n ) }
 					help={ __( 'Use .mp4 format for videos', i18n ) }
@@ -101,12 +105,39 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 					min={ 1 }
 					max={ 4 }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			<PanelAdvancedSettings
 				title={ __( 'Container', i18n ) }
 				initialOpen={ false }
 			>
+				<ButtonIconPopoverControl
+					label={ __( 'Background', i18n ) }
+					popoverLabel={ __( 'Background', i18n ) }
+					onReset={ () => {
+						setAttributes( {
+							previewBackgroundColorType: '',
+							previewBackgroundColor: '',
+							previewBackgroundColor2: '',
+							previewBackgroundColorOpacity: '',
+							previewBackgroundMediaID: '',
+							previewBackgroundMediaUrl: '',
+							previewBackgroundTintStrength: '',
+							previewFixedBackground: '',
+						} )
+					} }
+					allowReset={ props.attributes.previewBackgroundColor || props.attributes.previewBackgroundMediaUrl }
+					hasColorPreview={ props.attributes.previewBackgroundColor }
+					hasImagePreview={ props.attributes.previewBackgroundMediaUrl }
+					colorPreview={ props.attributes.previewBackgroundColorType === 'gradient' ? [ props.attributes.previewBackgroundColor, props.attributes.previewBackgroundColor2 ] : props.attributes.previewBackgroundColor }
+					imageUrlPreview={ props.attributes.previewBackgroundMediaUrl }
+				>
+					<BackgroundControlsHelper
+						attrNameTemplate="preview%s"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					/>
+				</ButtonIconPopoverControl>
 				{ show.containerWidth &&
 					<Fragment>
 						<WhenResponsiveScreen screen="desktop">
@@ -182,18 +213,6 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 					allowReset={ true }
 					placeholder="3"
 					className="ugb--help-tip-general-shadow"
-				/>
-			</PanelAdvancedSettings>
-
-			<PanelAdvancedSettings
-				title={ __( 'Background', i18n ) }
-				id="background"
-				initialOpen={ false }
-			>
-				<BackgroundControlsHelper
-					attrNameTemplate="preview%s"
-					setAttributes={ setAttributes }
-					blockAttributes={ props.attributes }
 				/>
 			</PanelAdvancedSettings>
 

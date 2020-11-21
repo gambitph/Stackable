@@ -194,6 +194,7 @@ export const settings = {
 	supports: {
 		align: [ 'full' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
+		anchor: true,
 	},
 	deprecated,
 	save,

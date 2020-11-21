@@ -2,6 +2,7 @@
  * External dependencies
  */
 import {
+	appendImportantAll,
 	createBackgroundStyleSet,
 	createTypographyStyles,
 	createResponsiveStyles,
@@ -52,6 +53,39 @@ export const createStyles = props => {
 		styles.push( ...createResponsiveStyles( '.ugb-blockquote__quote', 'quote%sX', 'left', '%spx', props.attributes, { important: true } ) )
 		styles.push( ...createResponsiveStyles( '.ugb-blockquote__quote', 'quote%sY', 'top', '%spx', props.attributes, { important: true } ) )
 	}
+
+	// Container.
+	const {
+		columnPaddingUnit = 'px',
+		tabletColumnPaddingUnit = 'px',
+		mobileColumnPaddingUnit = 'px',
+	} = props.attributes
+	styles.push( {
+		desktopTablet: {
+			'> .ugb-inner-block > .ugb-block-content > *': appendImportantAll( {
+				paddingTop: getValue( 'columnPaddingTop', `%s${ columnPaddingUnit }` ),
+				paddingBottom: getValue( 'columnPaddingBottom', `%s${ columnPaddingUnit }` ),
+				paddingRight: getValue( 'columnPaddingRight', `%s${ columnPaddingUnit }` ),
+				paddingLeft: getValue( 'columnPaddingLeft', `%s${ columnPaddingUnit }` ),
+			} ),
+		},
+		tabletOnly: {
+			'> .ugb-inner-block > .ugb-block-content > *': appendImportantAll( {
+				paddingTop: getValue( 'tabletColumnPaddingTop', `%s${ tabletColumnPaddingUnit }` ),
+				paddingRight: getValue( 'tabletColumnPaddingRight', `%s${ tabletColumnPaddingUnit }` ),
+				paddingBottom: getValue( 'tabletColumnPaddingBottom', `%s${ tabletColumnPaddingUnit }` ),
+				paddingLeft: getValue( 'tabletColumnPaddingLeft', `%s${ tabletColumnPaddingUnit }` ),
+			} ),
+		},
+		mobile: {
+			'> .ugb-inner-block > .ugb-block-content > *': appendImportantAll( {
+				paddingTop: getValue( 'mobileColumnPaddingTop', `%s${ mobileColumnPaddingUnit }` ),
+				paddingRight: getValue( 'mobileColumnPaddingRight', `%s${ mobileColumnPaddingUnit }` ),
+				paddingBottom: getValue( 'mobileColumnPaddingBottom', `%s${ mobileColumnPaddingUnit }` ),
+				paddingLeft: getValue( 'mobileColumnPaddingLeft', `%s${ mobileColumnPaddingUnit }` ),
+			} ),
+		},
+	} )
 
 	// Text.
 	const {

@@ -49,7 +49,7 @@ const GlobalColorPaletteUpdater = () => {
 				colors: newColors,
 			} )
 		}
-	}, [ colors, defaultColors, stackableColors, useStackableColorsOnly, isInitializing ] )
+	}, [ JSON.stringify( colors ), JSON.stringify( defaultColors ), JSON.stringify( stackableColors ), useStackableColorsOnly, isInitializing ] )
 
 	// We don't want to render anything here.
 	return null

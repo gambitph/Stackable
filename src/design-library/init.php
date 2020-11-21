@@ -42,7 +42,11 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 				'permission_callback' => function () {
 					return current_user_can( 'edit_posts' );
 				},
-				'args' => array( 'reset' ),
+				'args' => array(
+					'reset' => array(
+						'validate_callback' => __CLASS__ . '::validate_string'
+					),
+				),
 			) );
 
 			register_rest_route( 'wp/v2', '/stk_block_designs/(?P<block>[\w\d-]+)', array(

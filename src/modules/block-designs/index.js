@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { DesignLibraryControl } from '~stackable/components'
+import { DesignLibraryControl, PanelAdvancedSettings } from '~stackable/components'
 import { applyBlockDesign } from '~stackable/util'
 import { i18n } from 'stackable'
 
@@ -11,7 +11,6 @@ import { i18n } from 'stackable'
 import {
 	addFilter, doAction,
 } from '@wordpress/hooks'
-import { PanelBody } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 
@@ -19,7 +18,7 @@ const addDesignPanel = blockName => output => {
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody
+			<PanelAdvancedSettings
 				title={ __( 'Designs', i18n ) }
 				initialOpen={ true }
 			>
@@ -30,7 +29,7 @@ const addDesignPanel = blockName => output => {
 						applyBlockDesign( designData.attributes )
 					} }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 		</Fragment>
 	)
 }

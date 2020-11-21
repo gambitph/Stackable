@@ -6,6 +6,8 @@ import {
 	ImageUploadPlaceholder,
 	ProControlButton,
 	BlockContainer,
+	ButtonIconPopoverControl,
+	ColumnPaddingControl,
 	ContentAlignControl,
 	Image,
 	BackgroundControlsHelper,
@@ -58,7 +60,6 @@ import { showOptions } from './util'
  */
 import { __ } from '@wordpress/i18n'
 import { applyFilters, addFilter } from '@wordpress/hooks'
-import { PanelBody } from '@wordpress/components'
 import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
@@ -127,7 +128,10 @@ addFilter( 'stackable.feature-grid.edit.inspector.style.before', 'stackable/feat
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<AdvancedRangeControl
 					label={ __( 'Columns', i18n ) }
 					value={ columns }
@@ -136,7 +140,47 @@ addFilter( 'stackable.feature-grid.edit.inspector.style.before', 'stackable/feat
 					max={ 4 }
 					className="ugb--help-tip-general-columns"
 				/>
-				{ show.columnBackground &&
+				<ContentAlignControl
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+			</PanelAdvancedSettings>
+
+			{ show.columnBackground &&
+				<PanelAdvancedSettings
+					title={ __( 'Container', i18n ) }
+					initialOpen={ false }
+					id="column-background"
+					className="ugb--help-tip-column-background-on-off"
+				>
+					<ButtonIconPopoverControl
+						label={ __( 'Background', i18n ) }
+						popoverLabel={ __( 'Background', i18n ) }
+						onReset={ () => {
+							setAttributes( {
+								columnBackgroundColorType: '',
+								columnBackgroundColor: '',
+								columnBackgroundColor2: '',
+								columnBackgroundColorOpacity: '',
+								columnBackgroundMediaID: '',
+								columnBackgroundMediaUrl: '',
+								columnBackgroundTintStrength: '',
+								columnFixedBackground: '',
+							} )
+						} }
+						allowReset={ props.attributes.columnBackgroundColor || props.attributes.columnBackgroundMediaUrl }
+						hasColorPreview={ props.attributes.columnBackgroundColor }
+						hasImagePreview={ props.attributes.columnBackgroundMediaUrl }
+						colorPreview={ props.attributes.columnBackgroundColorType === 'gradient' ? [ props.attributes.columnBackgroundColor, props.attributes.columnBackgroundColor2 ] : props.attributes.columnBackgroundColor }
+						imageUrlPreview={ props.attributes.columnBackgroundMediaUrl }
+					>
+						<BackgroundControlsHelper
+							attrNameTemplate="column%s"
+							setAttributes={ setAttributes }
+							blockAttributes={ props.attributes }
+						/>
+					</ButtonIconPopoverControl>
+					{ show.columnBackground &&
 					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
@@ -147,8 +191,8 @@ addFilter( 'stackable.feature-grid.edit.inspector.style.before', 'stackable/feat
 						placeholder="12"
 						className="ugb--help-tip-general-border-radius"
 					/>
-				}
-				{ show.columnBackground &&
+					}
+					{ show.columnBackground &&
 					<AdvancedRangeControl
 						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
@@ -159,27 +203,81 @@ addFilter( 'stackable.feature-grid.edit.inspector.style.before', 'stackable/feat
 						placeholder="3"
 						className="ugb--help-tip-general-shadow"
 					/>
-				}
-				<ContentAlignControl
-					setAttributes={ setAttributes }
-					blockAttributes={ props.attributes }
-				/>
-			</PanelBody>
-
-			{ show.columnBackground &&
-				<PanelAdvancedSettings
-					title={ __( 'Column Background', i18n ) }
-					initialOpen={ false }
-					id="column-background"
-					className="ugb--help-tip-column-background-on-off"
-				>
-					<BackgroundControlsHelper
-						attrNameTemplate="column%s"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					/>
+					}
 				</PanelAdvancedSettings>
 			}
+
+			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
+				<ColumnPaddingControl
+					label={ __( 'Paddings', i18n ) }
+					setAttributes={ setAttributes }
+					attributes={ props.attributes }
+				/>
+				{ show.imageSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="image%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Image', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-spacing-image"
+						/>
+					</ResponsiveControl>
+				}
+				{ show.titleSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="title%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Title', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-spacing-title"
+						/>
+					</ResponsiveControl>
+				}
+				{ show.descriptionSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="description%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Description', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-spacing-description"
+						/>
+					</ResponsiveControl>
+				}
+				{ show.buttonSpacing &&
+					<ResponsiveControl
+						attrNameTemplate="button%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Button', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="0"
+							allowReset={ true }
+							className="ugb--help-tip-spacing-button"
+						/>
+					</ResponsiveControl>
+				}
+			</PanelSpacingBody>
 
 			<PanelAdvancedSettings
 				title={ __( 'Image', i18n ) }
@@ -335,72 +433,6 @@ addFilter( 'stackable.feature-grid.edit.inspector.style.before', 'stackable/feat
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
-			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
-				{ show.imageSpacing &&
-					<ResponsiveControl
-						attrNameTemplate="image%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Image', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-spacing-image"
-						/>
-					</ResponsiveControl>
-				}
-				{ show.titleSpacing &&
-					<ResponsiveControl
-						attrNameTemplate="title%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Title', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-spacing-title"
-						/>
-					</ResponsiveControl>
-				}
-				{ show.descriptionSpacing &&
-					<ResponsiveControl
-						attrNameTemplate="description%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Description', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-spacing-description"
-						/>
-					</ResponsiveControl>
-				}
-				{ show.buttonSpacing &&
-					<ResponsiveControl
-						attrNameTemplate="button%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Button', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="0"
-							allowReset={ true }
-							className="ugb--help-tip-spacing-button"
-						/>
-					</ResponsiveControl>
-				}
-			</PanelSpacingBody>
 		</Fragment>
 	)
 } )

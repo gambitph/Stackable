@@ -42,7 +42,7 @@ import {
 } from '@wordpress/element'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import {
-	PanelBody, ToggleControl,
+	ToggleControl,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
@@ -90,7 +90,10 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<ResponsiveControl
 					attrNameTemplate="%sColumns"
 					setAttributes={ setAttributes }
@@ -114,9 +117,24 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
-			<PanelBody title={ __( 'Icon', i18n ) } initialOpen={ false }>
+			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
+				<AdvancedRangeControl
+					label={ __( 'List Gap', i18n ) }
+					value={ gap }
+					onChange={ gap => setAttributes( { gap } ) }
+					min={ 0 }
+					max={ 30 }
+					allowReset={ true }
+					placeholder="16"
+					className="ugb--help-tip-icon-list-gap"
+				/>
+			</PanelSpacingBody>
+
+			<PanelAdvancedSettings
+				title={ __( 'Icon', i18n ) }
+				initialOpen={ false }>
 				<IconControl
 					label={ __( 'Icon', i18n ) }
 					value={ icon || DEFAULT_CHECK_SVG }
@@ -162,7 +180,7 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 					allowReset={ true }
 					placeholder="0"
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			<PanelAdvancedSettings
 				title={ __( 'List Text', i18n ) }
@@ -181,18 +199,6 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 				/>
 			</PanelAdvancedSettings>
 
-			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
-				<AdvancedRangeControl
-					label={ __( 'List Gap', i18n ) }
-					value={ gap }
-					onChange={ gap => setAttributes( { gap } ) }
-					min={ 0 }
-					max={ 30 }
-					allowReset={ true }
-					placeholder="16"
-					className="ugb--help-tip-icon-list-gap"
-				/>
-			</PanelSpacingBody>
 		</Fragment>
 	)
 } )

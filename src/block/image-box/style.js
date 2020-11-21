@@ -2,6 +2,7 @@
  * External dependencies
  */
 import {
+	appendImportantAll,
 	createResponsiveStyles,
 	createTypographyStyles,
 	appendImportant,
@@ -33,6 +34,39 @@ export const createStyles = props => {
 	}
 
 	const clampedImageHeight = clampInheritedStyle( getValue( 'columnHeight' ), { max: 300 } )
+
+	// Container
+	const {
+		columnPaddingUnit = 'px',
+		tabletColumnPaddingUnit = 'px',
+		mobileColumnPaddingUnit = 'px',
+	} = props.attributes
+	styles.push( {
+		desktopTablet: {
+			'> .ugb-inner-block > .ugb-block-content > *': appendImportantAll( {
+				paddingTop: getValue( 'columnPaddingTop', `%s${ columnPaddingUnit }` ),
+				paddingBottom: getValue( 'columnPaddingBottom', `%s${ columnPaddingUnit }` ),
+				paddingRight: getValue( 'columnPaddingRight', `%s${ columnPaddingUnit }` ),
+				paddingLeft: getValue( 'columnPaddingLeft', `%s${ columnPaddingUnit }` ),
+			} ),
+		},
+		tabletOnly: {
+			'> .ugb-inner-block > .ugb-block-content > *': appendImportantAll( {
+				paddingTop: getValue( 'tabletColumnPaddingTop', `%s${ tabletColumnPaddingUnit }` ),
+				paddingRight: getValue( 'tabletColumnPaddingRight', `%s${ tabletColumnPaddingUnit }` ),
+				paddingBottom: getValue( 'tabletColumnPaddingBottom', `%s${ tabletColumnPaddingUnit }` ),
+				paddingLeft: getValue( 'tabletColumnPaddingLeft', `%s${ tabletColumnPaddingUnit }` ),
+			} ),
+		},
+		mobile: {
+			'> .ugb-inner-block > .ugb-block-content > *': appendImportantAll( {
+				paddingTop: getValue( 'mobileColumnPaddingTop', `%s${ mobileColumnPaddingUnit }` ),
+				paddingRight: getValue( 'mobileColumnPaddingRight', `%s${ mobileColumnPaddingUnit }` ),
+				paddingBottom: getValue( 'mobileColumnPaddingBottom', `%s${ mobileColumnPaddingUnit }` ),
+				paddingLeft: getValue( 'mobileColumnPaddingLeft', `%s${ mobileColumnPaddingUnit }` ),
+			} ),
+		},
+	} )
 
 	// Height.
 	styles.push( {
@@ -85,7 +119,9 @@ export const createStyles = props => {
 		'.ugb-image-box__image': {
 			backgroundPosition: appendImportant( getValue( 'imageBackgroundPosition' ) ),
 			backgroundRepeat: appendImportant( getValue( 'imageBackgroundRepeat' ) ),
-			backgroundSize: appendImportant( getValue( 'imageBackgroundSize' ) ),
+			backgroundSize: appendImportant( getValue( 'imageBackgroundSize' ) === 'custom' ?
+				getValue( 'imageBackgroundCustomSize', `%s${ getValue( 'imageBackgroundCustomSizeUnit' ) || 'px' }` ) :
+				getValue( 'imagebackgroundSize' ) ),
 		},
 	} )
 

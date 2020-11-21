@@ -52,7 +52,7 @@ const GlobalColorStyles = () => {
 		if ( colors && Array.isArray( colors ) ) {
 			renderGlobalStyles( colors, setStyles )
 		}
-	}, [ colors ] )
+	}, [ JSON.stringify( colors ) ] )
 
 	return <style>{ styles }</style>
 }

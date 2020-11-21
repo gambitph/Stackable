@@ -22,6 +22,9 @@ import {
 	DivBackground,
 	PanelAdvancedSettings,
 	DesignControl,
+	ButtonIconPopoverControl,
+	ColumnPaddingControl,
+	PanelSpacingBody,
 } from '~stackable/components'
 import {
 	withUniqueClass,
@@ -38,7 +41,6 @@ import classnames from 'classnames'
  * WordPress dependencies
  */
 import { i18n } from 'stackable'
-import { PanelBody } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
@@ -71,7 +73,7 @@ addFilter( 'stackable.column.edit.inspector.layout.before', 'stackable/column', 
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody
+			<PanelAdvancedSettings
 				initialOpen={ true }
 				title={ __( 'Layout', i18n ) }
 			>
@@ -80,7 +82,7 @@ addFilter( 'stackable.column.edit.inspector.layout.before', 'stackable/column', 
 					options={ applyFilters( 'stackable.column.edit.layouts', [] ) }
 					onChange={ design => setAttributes( { design } ) }
 				 />
-			</PanelBody>
+			</PanelAdvancedSettings>
 		</Fragment>
 	)
 } )
@@ -113,7 +115,10 @@ addFilter( 'stackable.column.edit.inspector.style.before', 'stackable/column', (
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<ResponsiveControl
 					attrNameTemplate="%sColumnContentVerticalAlign"
 					setAttributes={ setAttributes }
@@ -204,7 +209,47 @@ addFilter( 'stackable.column.edit.inspector.style.before', 'stackable/column', (
 
 				<ControlSeparator />
 
-				{ show.borderRadius &&
+				<ContentAlignControl
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+			</PanelAdvancedSettings>
+
+			{ show.columnBackground &&
+				<PanelAdvancedSettings
+					title={ __( 'Container', i18n ) }
+					id="column-background"
+					initialOpen={ false }
+					className="ugb--help-tip-column-background-on-off"
+				>
+					<ButtonIconPopoverControl
+						label={ __( 'Background', i18n ) }
+						popoverLabel={ __( 'Background', i18n ) }
+						onReset={ () => {
+							setAttributes( {
+								columnBackgroundColorType: '',
+								columnBackgroundColor: '',
+								columnBackgroundColor2: '',
+								columnBackgroundColorOpacity: '',
+								columnBackgroundMediaID: '',
+								columnBackgroundMediaUrl: '',
+								columnBackgroundTintStrength: '',
+								columnFixedBackground: '',
+							} )
+						} }
+						allowReset={ props.attributes.columnBackgroundColor || props.attributes.columnBackgroundMediaUrl }
+						hasColorPreview={ props.attributes.columnBackgroundColor }
+						hasImagePreview={ props.attributes.columnBackgroundMediaUrl }
+						colorPreview={ props.attributes.columnBackgroundColorType === 'gradient' ? [ props.attributes.columnBackgroundColor, props.attributes.columnBackgroundColor2 ] : props.attributes.columnBackgroundColor }
+						imageUrlPreview={ props.attributes.columnBackgroundMediaUrl }
+					>
+						<BackgroundControlsHelper
+							attrNameTemplate="column%s"
+							setAttributes={ setAttributes }
+							blockAttributes={ props.attributes }
+						/>
+					</ButtonIconPopoverControl>
+					{ show.borderRadius &&
 					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }
 						value={ borderRadius }
@@ -215,8 +260,8 @@ addFilter( 'stackable.column.edit.inspector.style.before', 'stackable/column', (
 						placeholder="12"
 						className="ugb--help-tip-general-border-radius"
 					/>
-				}
-				{ show.columnBackground &&
+					}
+					{ show.columnBackground &&
 					<AdvancedRangeControl
 						label={ __( 'Shadow / Outline', i18n ) }
 						value={ shadow }
@@ -227,29 +272,22 @@ addFilter( 'stackable.column.edit.inspector.style.before', 'stackable/column', (
 						placeholder="3"
 						className="ugb--help-tip-general-shadow"
 					/>
-				}
-				<ContentAlignControl
-					setAttributes={ setAttributes }
-					blockAttributes={ props.attributes }
-				/>
-			</PanelBody>
-
-			{ show.columnBackground &&
-				<PanelAdvancedSettings
-					title={ __( 'Container Background', i18n ) }
-					id="column-background"
-					initialOpen={ false }
-					className="ugb--help-tip-column-background-on-off"
-				>
-					<BackgroundControlsHelper
-						attrNameTemplate="column%s"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					/>
+					}
 				</PanelAdvancedSettings>
 			}
 
-			<PanelBody
+			<PanelSpacingBody
+				initialOpen={ false }
+				blockProps={ props }
+			>
+				<ColumnPaddingControl
+					label={ __( 'Paddings', i18n ) }
+					setAttributes={ setAttributes }
+					attributes={ props.attributes }
+				/>
+			</PanelSpacingBody>
+
+			<PanelAdvancedSettings
 				title={ __( 'Text Colors', i18n ) }
 				initialOpen={ false }
 			>
@@ -274,7 +312,7 @@ addFilter( 'stackable.column.edit.inspector.style.before', 'stackable/column', (
 					label={ __( 'Link Hover Color', i18n ) }
 				/>
 				<p className="components-base-control__help">{ __( 'The colors above might not apply to some nested blocks.', i18n ) }</p>
-			</PanelBody>
+			</PanelAdvancedSettings>
 		</Fragment>
 	)
 } )

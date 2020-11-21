@@ -19,6 +19,7 @@ import {
 	ImageBackgroundControlsHelper,
 	AdvancedToolbarControl,
 	UrlInputPopover,
+	ColumnPaddingControl,
 } from '~stackable/components'
 import {
 	createTypographyAttributeNames,
@@ -55,7 +56,6 @@ import { showOptions } from './util'
  */
 import { RichText } from '@wordpress/block-editor'
 import {
-	PanelBody,
 	SelectControl,
 	withFocusOutside,
 } from '@wordpress/components'
@@ -138,7 +138,10 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 	return (
 		<Fragment>
 			{ output }
-			<PanelBody title={ __( 'General', i18n ) }>
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
 				<AdvancedRangeControl
 					label={ __( 'Columns', i18n ) }
 					value={ columns }
@@ -207,9 +210,96 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					setAttributes={ setAttributes }
 					blockAttributes={ props.attributes }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
-			<PanelBody
+			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
+				<ColumnPaddingControl
+					label={ __( 'Paddings', i18n ) }
+					setAttributes={ setAttributes }
+					attributes={ props.attributes }
+				/>
+				{ show.subtitleSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="subtitle%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Subtitle', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="6"
+							allowReset={ true }
+							className="ugb--help-tip-image-box-subtitle-spacing"
+						/>
+					</ResponsiveControl>
+				) }
+				{ show.titleSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="title%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Title', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="16"
+							allowReset={ true }
+							className="ugb--help-tip-image-box-title-spacing"
+						/>
+					</ResponsiveControl>
+				) }
+				{ show.lineSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="line%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Line', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="0"
+							allowReset={ true }
+							className="ugb--help-tip-image-box-line-spacing"
+						/>
+					</ResponsiveControl>
+				) }
+				{ show.descriptionSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="description%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Description', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							placeholder="0"
+							allowReset={ true }
+							className="ugb--help-tip-image-box-description-spacing"
+						/>
+					</ResponsiveControl>
+				) }
+				{ show.arrowSpacing && (
+					<ResponsiveControl
+						attrNameTemplate="arrow%sBottomMargin"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Arrow', i18n ) }
+							min={ -50 }
+							max={ 100 }
+							allowReset={ true }
+							className="ugb--help-tip-image-box-arrow-spacing"
+						/>
+					</ResponsiveControl>
+				) }
+			</PanelSpacingBody>
+
+			<PanelAdvancedSettings
 				title={ __( 'Image', i18n ) }
 				initialOpen={ false }
 			>
@@ -228,7 +318,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 						} )
 					} }
 				/>
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			<PanelAdvancedSettings
 				title={ __( 'Overlay Color', i18n ) }
@@ -298,7 +388,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 				/>
 			</PanelAdvancedSettings>
 
-			<PanelBody
+			<PanelAdvancedSettings
 				title={ __( 'Effects', i18n ) }
 				initialOpen={ false }
 			>
@@ -315,7 +405,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 				/>
 				{ applyFilters( 'stackable.image-box.edit.panel.image-hover-effects', null, props ) }
 				{ showProNotice && <ProControlButton type="effect" /> }
-			</PanelBody>
+			</PanelAdvancedSettings>
 
 			{ show.line &&
 				<PanelAdvancedSettings
@@ -490,87 +580,6 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 				</ResponsiveControl>
 			</PanelAdvancedSettings>
 
-			<PanelSpacingBody initialOpen={ false } blockProps={ props }>
-				{ show.subtitleSpacing && (
-					<ResponsiveControl
-						attrNameTemplate="subtitle%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Subtitle', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="6"
-							allowReset={ true }
-							className="ugb--help-tip-image-box-subtitle-spacing"
-						/>
-					</ResponsiveControl>
-				) }
-				{ show.titleSpacing && (
-					<ResponsiveControl
-						attrNameTemplate="title%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Title', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="16"
-							allowReset={ true }
-							className="ugb--help-tip-image-box-title-spacing"
-						/>
-					</ResponsiveControl>
-				) }
-				{ show.lineSpacing && (
-					<ResponsiveControl
-						attrNameTemplate="line%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Line', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="0"
-							allowReset={ true }
-							className="ugb--help-tip-image-box-line-spacing"
-						/>
-					</ResponsiveControl>
-				) }
-				{ show.descriptionSpacing && (
-					<ResponsiveControl
-						attrNameTemplate="description%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Description', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							placeholder="0"
-							allowReset={ true }
-							className="ugb--help-tip-image-box-description-spacing"
-						/>
-					</ResponsiveControl>
-				) }
-				{ show.arrowSpacing && (
-					<ResponsiveControl
-						attrNameTemplate="arrow%sBottomMargin"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Arrow', i18n ) }
-							min={ -50 }
-							max={ 100 }
-							allowReset={ true }
-							className="ugb--help-tip-image-box-arrow-spacing"
-						/>
-					</ResponsiveControl>
-				) }
-			</PanelSpacingBody>
 		</Fragment>
 	)
 } )

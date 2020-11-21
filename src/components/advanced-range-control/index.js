@@ -2,11 +2,12 @@
  * Internal dependencies
  */
 import BaseControlMultiLabel from '../base-control-multi-label'
+import RangeControl from './range-control'
 
 /**
  * WordPress dependencies
  */
-import { BaseControl, RangeControl } from '@wordpress/components'
+import { BaseControl } from '@wordpress/components'
 
 /**
  * External dependencies
@@ -38,7 +39,7 @@ const AdvancedRangeControl = props => {
 	}
 	propsToPass.initialPosition = props.initialPosition !== '' ? props.initialPosition : props.placeholder
 
-	propsToPass.placeholder = '20'
+	propsToPass.placeholder = props.placeholder
 	let placeholder = props.placeholder
 
 	// Different placeholders can be used for different screens.
@@ -82,13 +83,15 @@ const AdvancedRangeControl = props => {
 		propsToPass.initialPosition = ''
 	}
 
-	// Sets the default value to the value of the initlaPosition if value is an empty string
-	propsToPass.value = props.value === '' ? propsToPass.initialPosition : props.value
+	const classNames = classnames( [
+		'ugb-advanced-range-control',
+		props.className,
+	] )
 
 	return (
 		<BaseControl
 			help={ props.help }
-			className={ classnames( 'ugb-advanced-range-control', props.className ) }
+			className={ classNames }
 		>
 			<BaseControlMultiLabel
 				label={ props.label }

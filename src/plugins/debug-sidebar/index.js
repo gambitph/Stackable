@@ -15,7 +15,7 @@ import { Fragment } from '@wordpress/element'
  * External dependencies
  */
 import { i18n } from 'stackable'
-import { PanelBody } from '@wordpress/components'
+import { PanelAdvancedSettings } from '~stackable/components'
 
 const DebugSidebar = () => (
 	<Fragment>
@@ -34,18 +34,18 @@ const DebugSidebar = () => (
 					{ __( 'This area contains a number of testing and debugging tools made specifically for Stackable.', i18n ) }
 				</p>
 			</div>
-			<PanelBody
+			<PanelAdvancedSettings
 				initialOpen={ false }
 				title={ __( 'Block Validity Checker', i18n ) }
 			>
 				<HTMLValidator />
-			</PanelBody>
-			<PanelBody
+			</PanelAdvancedSettings>
+			<PanelAdvancedSettings
 				initialOpen={ false }
 				title={ __( 'Block Migration Tests', i18n ) }
 			>
 				<DeprecatedTester />
-			</PanelBody>
+			</PanelAdvancedSettings>
 		</PluginSidebar>
 	</Fragment>
 )

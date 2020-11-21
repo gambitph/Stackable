@@ -221,6 +221,7 @@ export const settings = {
 	attributes: schema,
 	supports: {
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
+		anchor: true,
 	},
 
 	deprecated,
@@ -232,6 +233,7 @@ export const settings = {
 		'advanced-general': true,
 		'advanced-block-spacing': true,
 		'advanced-column-spacing': {
+			paddings: false,
 			verticalColumnAlign: true,
 		},
 		'advanced-responsive': true,
@@ -247,5 +249,4 @@ export const settings = {
 }
 
 // For column spacings, use advanced paddings & vertical align on the content area only.
-addFilter( 'stackable.card.advanced-column-spacing.paddings.selector', 'stackable/card', () => '.ugb-card__content' )
 addFilter( 'stackable.card.advanced-column-spacing.vertical-align.selector', 'stackable/card', () => '.ugb-card__content' )

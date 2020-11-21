@@ -701,7 +701,8 @@
     ],
     "subsets": [
       "arabic",
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -873,13 +874,15 @@
       "200",
       "300",
       "regular",
+      "500",
       "600",
       "700",
       "800"
     ],
     "subsets": [
       "hebrew",
-      "latin"
+      "latin",
+      "latin-ext"
     ]
   },
   {
@@ -1623,6 +1626,78 @@
     ]
   },
   {
+    "family": "Big Shoulders Inline Display",
+    "variants": [
+      "100",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Big Shoulders Inline Text",
+    "variants": [
+      "100",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Big Shoulders Stencil Display",
+    "variants": [
+      "100",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Big Shoulders Stencil Text",
+    "variants": [
+      "100",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Big Shoulders Text",
     "variants": [
       "100",
@@ -2252,6 +2327,8 @@
     "family": "Caveat",
     "variants": [
       "regular",
+      "500",
+      "600",
       "700"
     ],
     "subsets": [
@@ -4567,6 +4644,18 @@
     ]
   },
   {
+    "family": "Goldman",
+    "variants": [
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Gorditas",
     "variants": [
       "regular",
@@ -5267,10 +5356,12 @@
     "family": "Ibarra Real Nova",
     "variants": [
       "regular",
-      "italic",
+      "500",
       "600",
-      "600italic",
       "700",
+      "italic",
+      "500italic",
+      "600italic",
       "700italic"
     ],
     "subsets": [
@@ -6540,6 +6631,15 @@
     ]
   },
   {
+    "family": "Libre Barcode EAN13 Text",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin"
+    ]
+  },
+  {
     "family": "Libre Baskerville",
     "variants": [
       "regular",
@@ -6577,27 +6677,28 @@
     "family": "Libre Franklin",
     "variants": [
       "100",
-      "100italic",
       "200",
-      "200italic",
       "300",
-      "300italic",
       "regular",
-      "italic",
       "500",
-      "500italic",
       "600",
-      "600italic",
       "700",
-      "700italic",
       "800",
-      "800italic",
       "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
       "900italic"
     ],
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -11214,6 +11315,21 @@
     ]
   },
   {
+    "family": "Space Grotesk",
+    "variants": [
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Space Mono",
     "variants": [
       "regular",
@@ -11616,6 +11732,26 @@
     ]
   },
   {
+    "family": "Syne Mono",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Syne Tactile",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Tajawal",
     "variants": [
       "200",
@@ -11916,6 +12052,24 @@
       "latin",
       "latin-ext",
       "thai",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Trispace",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
       "vietnamese"
     ]
   },
@@ -12406,6 +12560,18 @@
       "700italic",
       "800italic",
       "900italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Xanh Mono",
+    "variants": [
+      "regular",
+      "italic"
     ],
     "subsets": [
       "latin",

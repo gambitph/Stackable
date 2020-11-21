@@ -1,7 +1,7 @@
 .ugb-panel-tabs {
 	position: sticky;
 	top: -1px;
-	z-index: 3;
+	z-index: 5;
 	.ugb-panel-tabs__wrapper {
 		display: flex !important;
 		flex-wrap: nowrap;
@@ -80,7 +80,7 @@
 			// Sticky.
 			position: sticky;
 			top: 81px;
-			z-index: 2;
+			z-index: 4;
 		}
 	}
 	.components-panel__body {
@@ -116,19 +116,4 @@
 	.ugb-inspector-panel-controls:not(.ugb-panel-advanced) {
 		display: none;
 	}
-}
-
-// WithSticky HOC. Make the tabs stick to the top.
-.ugb--panel-tabs-dummy {
-	height: 80px;
-	margin-top: 16px;
-}
-.ugb--fixed-tabs {
-	position: fixed;
-	top: 136px; // This is recomputed in JS for accuracy.
-	width: 279px; // This is recomputed in JS for accuracy.
-	background: #fff;
-	z-index: 2;
-	box-shadow: 0 20px 30px -20px rgba(0, 0, 0, 0.1);
-	margin-top: 0 !important;
 }

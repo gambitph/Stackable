@@ -57,3 +57,45 @@
 .ugb-button-icon-control__text-title {
 	margin: 0 0 1em 0 !important;
 }
+
+// Color preview.
+.ugb-button-icon-popover-control-color-preview,
+.ugb-button-icon-popover-control-image-preview {
+	margin: 0 12px 0 0;
+	height: 20px;
+	width: 20px;
+	.components-circular-option-picker__option {
+		color: transparent !important;
+	}
+}
+.ugb-button-icon-popover-control-color-preview {
+	.components-circular-option-picker__option {
+		padding: 0;
+		&:focus::after {
+			width: 24px;
+			height: 24px;
+		}
+	}
+	&.ugb-button-icon-popover-control-color-preview--transparent::before {
+		// 	background: linear-gradient(-45deg,transparent 12px,#e03e3e 0,#e03e3e 13px,transparent 0)!important;
+		background-size: 63px !important;
+		opacity: 0.5;
+	}
+}
+.ugb-button-icon-popover-control-image-preview {
+	&::before {
+		background: transparent !important;
+	}
+	.components-circular-option-picker__option {
+		padding: 0;
+		background-size: cover;
+		&::after {
+			display: none;
+		}
+	}
+	svg {
+		height: 100%;
+		width: 100%;
+		fill: #d1d1d1;
+	}
+}

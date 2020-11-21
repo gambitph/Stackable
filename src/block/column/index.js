@@ -86,6 +86,7 @@ export const settings = {
 		inserter: false,
 		reusable: false,
 		html: false,
+		anchor: true,
 	},
 
 	edit,
@@ -98,6 +99,7 @@ export const settings = {
 		},
 		'advanced-column-spacing': {
 			columnGap: false,
+			paddings: false,
 		},
 		'advanced-responsive': true,
 		// 'block-background': true,

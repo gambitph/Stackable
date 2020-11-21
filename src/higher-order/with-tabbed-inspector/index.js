@@ -20,6 +20,7 @@ const withTabbedInspector = ( tabs = null ) => WrappedComponent => {
 
 		return (
 			<Fragment>
+				{ applyFilters( `stackable.edit.inspector.before`, null, props ) }
 				{ applyFilters( `stackable.${ blockName }.edit.inspector.before`, null, props ) }
 
 				<InspectorControls>

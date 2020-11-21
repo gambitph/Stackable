@@ -5,7 +5,7 @@
 /**
  * External dependencies
  */
-import { DesignControl } from '~stackable/components'
+import { DesignControl, PanelAdvancedSettings } from '~stackable/components'
 
 /**
  * WordPress dependencies
@@ -14,7 +14,6 @@ import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 import { omit } from 'lodash'
-import { PanelBody } from '@wordpress/components'
 
 function DesignPanelBody( props ) {
 	const {
@@ -31,7 +30,7 @@ function DesignPanelBody( props ) {
 	const mainClasses = classnames( [ 'ugb-design-panel-body', className ] )
 
 	return (
-		<PanelBody
+		<PanelAdvancedSettings
 			title={ selectedOptionInTitle ? <span>{ panelTitle }</span> : title }
 			className={ mainClasses }
 			initialOpen={ initialOpen }
@@ -44,7 +43,7 @@ function DesignPanelBody( props ) {
 				<DesignControl { ...omit( props, [ 'help', 'title' ] ) } />
 			}
 			{ props.children }
-		</PanelBody>
+		</PanelAdvancedSettings>
 	)
 }
 
