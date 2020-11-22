@@ -6,6 +6,7 @@ import {
 	createBackgroundStyleSet,
 	createTypographyStyles,
 	createResponsiveStyles,
+	createBorderStyleSet,
 	marginLeftAlign,
 	marginRightAlign,
 	whiteIfDark,
@@ -38,6 +39,12 @@ export const createStyles = props => {
 			borderRadius: design !== 'plain' ? getValue( 'borderRadius', '%spx !important' ) : undefined,
 		},
 	} )
+
+	if ( show.border ) {
+		styles.push( {
+			...createBorderStyleSet( 'column%s', '.ugb-number-box__item', props.attributes ),
+		} )
+	}
 
 	// Column Background.
 	const columnBackgroundOptions = {

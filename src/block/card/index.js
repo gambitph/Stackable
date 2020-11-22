@@ -14,6 +14,7 @@ import {
 	createButtonAttributes,
 	createResponsiveAttributes,
 	descriptionPlaceholder,
+	createBorderAttributes,
 } from '~stackable/util'
 
 /**
@@ -51,6 +52,9 @@ export const schema = {
 
 	// Background.
 	...createBackgroundAttributes( 'column%s' ),
+
+	// Border.
+	...createBorderAttributes( 'column%s' ),
 
 	// Image.
 	showImage: {

@@ -20,6 +20,7 @@ import {
 	createTypographyAttributes,
 	createButtonAttributes,
 	createAllCombinationAttributes,
+	createBorderAttributes,
 } from '~stackable/util'
 import { FeatureGridIcon } from '~stackable/icons'
 import { disabledBlocks, i18n } from 'stackable'
@@ -50,6 +51,9 @@ export const schema = {
 
 	// Background.
 	...createBackgroundAttributes( 'column%s' ),
+
+	// Border.
+	...createBorderAttributes( 'column%s' ),
 
 	// Image.
 	showImage: {

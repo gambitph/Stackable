@@ -13,6 +13,7 @@ import {
 	DivBackground,
 	PanelAdvancedSettings,
 	ButtonIconPopoverControl,
+	BorderControlsHelper,
 } from '~stackable/components'
 import {
 	getVideoProviderFromURL,
@@ -191,6 +192,15 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 						className="ugb--help-tip-video-popup-height"
 					/>
 				</ResponsiveControl>
+
+				{ show.border &&
+				<BorderControlsHelper
+					attrNameTemplate="column%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+				}
+
 				{ show.borderRadius &&
 					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }
@@ -203,6 +213,7 @@ addFilter( 'stackable.video-popup.edit.inspector.style.before', 'stackable/video
 						className="ugb--help-tip-general-border-radius"
 					/>
 				}
+
 				<AdvancedRangeControl
 					label={ __( 'Shadow / Outline', i18n ) }
 					value={ shadow }

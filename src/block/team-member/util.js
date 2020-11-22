@@ -16,6 +16,7 @@ export const showOptions = blockProps => {
 	return applyFilters( 'stackable.team-member.show', {
 		columnBackground: design !== 'plain' && design !== 'overlay' && design !== 'overlay-simple',
 		borderRadius: design !== 'plain',
+		border: design !== 'plain',
 		shadow: design !== 'plain',
 		social: design !== 'overlay',
 		imageAsBackground: design === 'overlay' || design === 'half' || design === 'overlay-simple',

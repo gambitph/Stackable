@@ -12,6 +12,7 @@ import {
 	marginRightAlign,
 	appendImportant,
 	createResponsiveStyles,
+	createBorderStyleSet,
 	__getValue,
 } from '~stackable/util'
 
@@ -44,6 +45,12 @@ export const createStyles = props => {
 			'.ugb-pricing-box__item': {
 				borderRadius: getValue( 'borderRadius', '%spx !important' ),
 			},
+		} )
+	}
+
+	if ( show.border ) {
+		styles.push( {
+			...createBorderStyleSet( 'column%s', '.ugb-pricing-box__item', props.attributes ),
 		} )
 	}
 

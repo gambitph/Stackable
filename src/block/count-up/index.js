@@ -10,6 +10,7 @@ import {
 	createResponsiveAttributes,
 	createTypographyAttributes,
 	createIconAttributes,
+	createBorderAttributes,
 } from '~stackable/util'
 import { CountUpIcon } from '~stackable/icons'
 
@@ -109,6 +110,9 @@ export const schema = {
 
 	// Column.
 	...createBackgroundAttributes( 'column%s' ),
+
+	// Border.
+	...createBorderAttributes( 'column%s' ),
 
 	// Spacing.
 	...createResponsiveAttributes( 'icon%sBottomMargin', {

@@ -24,6 +24,7 @@ import {
 	AdvancedRangeControl,
 	ButtonEditHelper,
 	DivBackground,
+	BorderControlsHelper,
 } from '~stackable/components'
 import {
 	descriptionPlaceholder,
@@ -171,6 +172,15 @@ addFilter( 'stackable.feature-grid.edit.inspector.style.before', 'stackable/feat
 							blockAttributes={ props.attributes }
 						/>
 					</ButtonIconPopoverControl>
+
+					{ show.border &&
+						<BorderControlsHelper
+							attrNameTemplate="column%s"
+							setAttributes={ setAttributes }
+							blockAttributes={ props.attributes }
+						/>
+					}
+
 					{ show.columnBackground &&
 					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }
@@ -183,6 +193,7 @@ addFilter( 'stackable.feature-grid.edit.inspector.style.before', 'stackable/feat
 						className="ugb--help-tip-general-border-radius"
 					/>
 					}
+
 					{ show.columnBackground &&
 					<AdvancedRangeControl
 						label={ __( 'Shadow / Outline', i18n ) }

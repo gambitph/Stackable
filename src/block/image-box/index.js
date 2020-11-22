@@ -21,6 +21,7 @@ import {
 	createAllCombinationAttributes,
 	createImageAttributes,
 	createImageBackgroundAttributes,
+	createBorderAttributes,
 } from '~stackable/util'
 
 /**
@@ -47,6 +48,9 @@ export const schema = {
 		type: 'number',
 		default: '',
 	},
+
+	// Border.
+	...createBorderAttributes( 'column%s' ),
 
 	// Link.
 	...createAllCombinationAttributes(

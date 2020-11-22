@@ -11,6 +11,7 @@ import {
 	appendImportantAll,
 	createImageBackgroundStyleSet,
 	__getValue,
+	createBorderStyleSet,
 } from '~stackable/util'
 import deepmerge from 'deepmerge'
 
@@ -52,6 +53,12 @@ export const createStyles = props => {
 			[ selector ]: {
 				borderRadius: getValue( 'borderRadius', '%spx !important' ),
 			},
+		} )
+	}
+
+	if ( show.border ) {
+		styles.push( {
+			...createBorderStyleSet( 'column%s', '.ugb-card__item', props.attributes ),
 		} )
 	}
 

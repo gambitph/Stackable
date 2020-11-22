@@ -14,6 +14,7 @@ import {
 	createResponsiveAttributes,
 	createTypographyAttributes,
 	descriptionPlaceholder,
+	createBorderAttributes,
 } from '~stackable/util'
 import { CTAIcon } from '~stackable/icons'
 import { disabledBlocks, i18n } from 'stackable'
@@ -45,6 +46,9 @@ const schema = {
 		type: 'number',
 		default: '',
 	},
+
+	// Border.
+	...createBorderAttributes( 'column%s' ),
 
 	// Title.
 	title: {

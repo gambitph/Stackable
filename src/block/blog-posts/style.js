@@ -26,7 +26,7 @@ export const createStyles = props => {
 
 	const {
 		columnBackgroundColor = '',
-		design = 'basc',
+		design = 'basic',
 		showReadmore = true,
 	} = props.attributes
 

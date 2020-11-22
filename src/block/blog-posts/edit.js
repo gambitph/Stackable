@@ -31,6 +31,7 @@ import {
 	DivBackground,
 	ButtonEditHelper,
 	ButtonIconPopoverControl,
+	BorderControlsHelper,
 } from '~stackable/components'
 import {
 	createTypographyAttributeNames,
@@ -167,6 +168,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					max={ 4 }
 					className="ugb--help-tip-general-columns"
 				/>
+
 				{ ! show.columnBackground && show.borderRadius &&
 					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }
@@ -304,6 +306,15 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 						/>
 						}
 					</ButtonIconPopoverControl>
+
+					{ show.border &&
+						<BorderControlsHelper
+							attrNameTemplate="column%s"
+							setAttributes={ setAttributes }
+							blockAttributes={ props.attributes }
+						/>
+					}
+
 					{ show.borderRadius &&
 					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }
@@ -316,6 +327,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 						className="ugb--help-tip-general-border-radius"
 					/>
 					}
+
 					{ show.shadow &&
 					<AdvancedRangeControl
 						label={ __( 'Shadow / Outline', i18n ) }

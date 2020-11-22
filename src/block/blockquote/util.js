@@ -12,5 +12,6 @@ export const showOptions = blockProps => {
 		containerBackground: design === 'basic',
 		borderRadius: design === 'basic',
 		shadow: design === 'basic',
+		border: design === 'basic',
 	}, blockProps )
 }

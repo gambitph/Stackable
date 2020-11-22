@@ -22,6 +22,7 @@ import {
 	createAllCombinationAttributes,
 	createImageAttributes,
 	createImageBackgroundAttributes,
+	createBorderAttributes,
 } from '~stackable/util'
 import { FeatureIcon } from '~stackable/icons'
 
@@ -64,6 +65,9 @@ export const schema = {
 
 	// Background.
 	...createBackgroundAttributes( 'column%s' ),
+
+	// Border.
+	...createBorderAttributes( 'column%s' ),
 
 	// Image.
 	...createImageAttributes( 'image%s' ),

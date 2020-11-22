@@ -30,6 +30,7 @@ import {
 	DivBackground,
 	ButtonIconPopoverControl,
 	ColumnPaddingControl,
+	BorderControlsHelper,
 } from '~stackable/components'
 import {
 	descriptionPlaceholder,
@@ -176,17 +177,25 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 								/>
 							</ButtonIconPopoverControl>
 
+							{ show.border &&
+							<BorderControlsHelper
+								attrNameTemplate="column%s"
+								setAttributes={ setAttributes }
+								blockAttributes={ props.attributes }
+							/>
+							}
+
 							{ show.borderRadius &&
-								<AdvancedRangeControl
-									label={ __( 'Border Radius', i18n ) }
-									value={ borderRadius }
-									onChange={ borderRadius => setAttributes( { borderRadius } ) }
-									min={ 0 }
-									max={ 50 }
-									allowReset={ true }
-									placeholder="12"
-									className="ugb--help-tip-general-border-radius"
-								/>
+							<AdvancedRangeControl
+								label={ __( 'Border Radius', i18n ) }
+								value={ borderRadius }
+								onChange={ borderRadius => setAttributes( { borderRadius } ) }
+								min={ 0 }
+								max={ 50 }
+								allowReset={ true }
+								placeholder="12"
+								className="ugb--help-tip-general-border-radius"
+							/>
 							}
 
 							{ show.shadow &&
