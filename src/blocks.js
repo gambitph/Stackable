@@ -62,10 +62,9 @@ const Description = ( { description } ) => {
 						onClick={ () => {
 							doAction( `stackable.design-layout-selector.${ selectedBlockId }`, ( { isOpen: true } ) )
 						} }
-						isSecondary
-						isLarge
+						isLink
 					>
-						{ __( 'Switch design/layout', i18n ) }
+						{ __( 'Change layout', i18n ) }
 					</Button>
 				</div>
 			) }

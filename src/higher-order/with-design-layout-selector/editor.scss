@@ -3,6 +3,7 @@
 	display: flex;
 	width: 100%;
 	justify-content: flex-start;
+	align-items: center;
 	flex-wrap: wrap;
 	flex-direction: row;
 	row-gap: 12px;
@@ -22,38 +23,115 @@
 	position: relative;
 	display: block;
 	break-inside: avoid;
-	padding: 8px;
+	padding: 0 8px;
+	background: transparent;
+	border: 0;
 
-	.overlay {
+	order: 1;
+	&.is-premium {
+		order: 2;
+	}
+
+	.ugb-design-layout-selector__lock {
+		position: absolute;
+		right: 8px;
+		top: 8px;
+		border-radius: 20px;
+		padding: 3px;
+		background-image: linear-gradient(180deg, #a911b9, #e74673);
+		fill: #fff;
+		z-index: 1;
+		opacity: 1;
+		transform: none;
+		transition: all 0.15s ease-in;
+	}
+
+	.ugb-design-layout-selector__item-premium-button {
+		position: absolute;
 		display: flex;
-		align-items: center;
-		justify-content: center;
-
-		span {
-			position: absolute;
-			display: flex;
-			flex-direction: column;
-			row-gap: 8px;
-			z-index: 1;
+		flex-direction: column;
+		z-index: 3;
+		color: #fff;
+		border: 0;
+		text-transform: uppercase;
+		display: inline-block;
+		height: auto;
+		min-height: auto;
+		width: auto;
+		margin: 0 auto;
+		transition: all 0.3s ease-in-out;
+		box-shadow: none;
+		font-size: 10px;
+		letter-spacing: 1px;
+		line-height: 1em;
+		border-radius: 25px;
+		padding: 10px 15px;
+		background: linear-gradient(330deg, #b300be, #f00069);
+		background-color: #b300be;
+		transition-timing-function: cubic-bezier(0.81, 0.37, 0.61, 1);
+		transition-duration: 0.2s;
+		opacity: 0;
+		transform: translateY(-50%) translateX(-50%);
+		top: 50%;
+		left: 50%;
+		&:hover {
+			background: linear-gradient(to right, #f00069 0%, #f00069 100%);
+			color: #fff;
+			transform: translateY(-50%) translateX(-50%) scale(1.02);
 		}
+	}
 
-		.components-button {
-			padding: 4px;
-			padding-left: 16px;
-			padding-right: 16px;
-			text-transform: uppercase;
-			border-radius: 16px;
-			color: #e74673;
-			background-color: #fff;
+	.ugb-design-layout-selector__image {
+		transition: all 0.2s ease-in;
+		display: block;
+		width: 100%;
+		min-height: 70px;
+		pointer-events: none;
+		object-fit: contain;
+		pointer-events: none;
+	}
+}
+
+.ugb-design-layout-selector__wrapper {
+	padding: 0;
+	cursor: pointer;
+	transition: all 0.2s ease-in;
+	width: 100%;
+	height: max-content;
+	display: flex;
+	text-align: left;
+	position: relative;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08);
+
+	> *:not(.ugb-design-layout-selector__image) {
+		z-index: 3;
+	}
+	&::after {
+		content: "";
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: #000;
+		z-index: 2;
+		display: block;
+		position: absolute;
+		opacity: 0;
+		transition: all 0.2s ease-in;
+	}
+
+	&:hover {
+		&::after {
+			opacity: 0.1;
 		}
-
-		img {
-			display: block;
-			width: 100%;
-			min-height: 50px;
-			background: #f1f1f1;
-			pointer-events: none;
-
+		.ugb-design-layout-selector__lock {
+			opacity: 0;
+			transform: scale(0.5);
+		}
+		.ugb-design-layout-selector__item-premium-button {
+			opacity: 1;
 		}
 	}
 }
@@ -68,51 +146,6 @@
 	text-align: center;
 	margin-top: 8px !important;
 }
-.is-premium {
-	.ugb-design-layout-selector__wrapper {
-		cursor: default;
-	}
-}
-
-.ugb-design-layout-selector__wrapper {
-	padding: 0;
-	cursor: pointer;
-	transition: all 0.2s ease-in;
-	width: 100%;
-	height: max-content;
-	display: block !important;
-	text-align: left;
-	position: relative;
-	border-radius: 16px;
-	overflow: hidden;
-
-	&:hover {
-		transform: scale(1.01);
-
-		.is-premium-img {
-			cursor: default !important;
-			filter: brightness(0.7);
-		}
-	}
-
-	.overlay {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		height: 100%;
-	}
-
-	svg {
-		position: absolute;
-		right: 16px;
-		top: 16px;
-		border-radius: 20px;
-		padding: 3px;
-		background-image: linear-gradient(180deg, #a911b9, #e74673);
-		fill: #fff;
-		z-index: 1;
-	}
-}
 
 .ugb-design-layout-selector__spinner {
 	position: absolute;
@@ -125,13 +158,13 @@
 }
 
 .ugb-design-layout-selector__layout-item {
-	flex-basis: 20%;
+	flex-basis: 150px;
 
 }
 .ugb-design-layout-selector__design-item {
-	flex-basis: 33%;
+	flex-basis: 180px;
 	.ugb-design-layout-selector__wrapper {
-		height: 80% !important;
+		min-height: 100px;
 	}
 }
 
@@ -139,6 +172,7 @@
 	display: block;
 	text-align: center;
 	font-size: 12px;
+	margin-bottom: 0 !important;
 }
 
 .ugb-design-layout-selector__image {
