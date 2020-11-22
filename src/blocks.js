@@ -62,7 +62,9 @@ const Description = ( { description } ) => {
 						onClick={ () => {
 							doAction( `stackable.design-layout-selector.${ selectedBlockId }`, ( { isOpen: true } ) )
 						} }
-						isLink
+						isSmall
+						isSecondary
+						className="alignright"
 					>
 						{ __( 'Change layout', i18n ) }
 					</Button>
