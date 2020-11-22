@@ -16,7 +16,7 @@ import { i18n, isPro } from 'stackable'
  * WordPress deprendencies
  */
 import {
-	useState, useEffect,
+	useState, useEffect, useMemo, useCallback,
 } from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
 
@@ -39,7 +39,7 @@ const useUIKits = props => { //eslint-disable-line
 
 	const [ isDevMode, setIsDevMode ] = useLocalStorage( 'stk__design_library_dev_mode', false )
 
-	const options = [
+	const options = useMemo( [
 		{
 			label: __( 'All UI Kits', i18n ),
 			value: '',
@@ -52,30 +52,30 @@ const useUIKits = props => { //eslint-disable-line
 			label: __( 'Premium UI Kits', i18n ),
 			value: 'premium',
 		},
-	]
+	], [] )
 
-	const setPlan = plan => {
+	const setPlan = useCallback( plan => {
 		setContentTitle( options.find( option => option.value === plan ).label )
 		_setSearch( '' )
 		_setPlan( plan )
-	}
+	}, [ JSON.stringify( options ) ] )
 
-	const setStyle = block => {
+	const setStyle = useCallback( block => {
 		setContentTitle( sprintf( __( '%s UI Kits', i18n ),
 			styleList.find( option => option.value === block ).label ) )
 		_setSearch( '' )
 		_setStyle( block )
-	}
+	}, [ JSON.stringify( styleList ) ] )
 
-	const setSearch = search => {
+	const setSearch = useCallback( search => {
 		setContentTitle( sprintf( __( 'Search result for: "%s"', i18n ), search ) )
 		if ( search === '' ) {
 			setContentTitle( options.find( option => option.value === plan ).label )
 		}
 		_setSearch( search )
-	}
+	}, [ JSON.stringify( options ) ] )
 
-	const itemProps = option => {
+	const itemProps = useCallback( option => {
 		const showLock = ! isPro && option.plan !== 'free'
 		const button1 = __( 'View UI Kit', i18n )
 		const onClickButton1 = () => setPreviewMode( option )
@@ -86,9 +86,9 @@ const useUIKits = props => { //eslint-disable-line
 			onClickButton1,
 
 		}
-	}
+	}, [] )
 
-	const onDesignSelect = design => {
+	const onDesignSelect = useCallback( design => {
 		if ( ! isPro && design.plan !== 'free' ) {
 			return
 		}
@@ -97,19 +97,19 @@ const useUIKits = props => { //eslint-disable-line
 			setIsApplyingDesign( false )
 			props.onSelect( designData )
 		} )
-	}
+	}, [ props.onSelect ] )
 
-	const backbuttonLabel = previewMode?.fromBlockDesigns ? __( 'Back to Block Designs', i18n ) : __( 'Back to UI Kits', i18n )
+	const backbuttonLabel = useMemo( previewMode?.fromBlockDesigns ? __( 'Back to Block Designs', i18n ) : __( 'Back to UI Kits', i18n ), [ previewMode ] )
 
-	const backButtonOnClick = () => {
+	const backButtonOnClick = useCallback( () => {
 		setPreviewMode( null )
 
 		if ( previewMode?.fromBlockDesigns ) {
 			props.setActiveTab( 'block-designs' )
 		}
-	}
+	}, [ props.setActiveTab, previewMode ] )
 
-	const previewInnerProps = option => {
+	const previewInnerProps = useCallback( option => {
 		const showLock = ! isPro && option.plan !== 'free'
 		const button1 = showLock ? undefined : __( 'Add Block', i18n )
 		const button2 = showLock ? __( 'Learn More', i18n ) : undefined
@@ -127,7 +127,7 @@ const useUIKits = props => { //eslint-disable-line
 			onClickButton1,
 			onClickButton2,
 		}
-	}
+	}, [ onDesignSelect ] )
 
 	useEffect( () => {
 		getAllCategories().then( styles => {

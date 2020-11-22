@@ -14,18 +14,20 @@ import {
 } from '@wordpress/components'
 import { useState } from '@wordpress/element'
 
-const FeaturedListItem = ( {
-	image,
-	title,
-	description,
-	onClickButton1,
-	onClickButton2,
-	button1,
-	button2,
-	showLock,
-	itemIsBusy,
-	...rest
-} ) => {
+const FeaturedListItem = props => {
+	const {
+		image,
+		title,
+		description,
+		onClickButton1,
+		onClickButton2,
+		button1,
+		button2,
+		showLock,
+		itemIsBusy,
+		...rest
+	} = props
+
 	const [ showOverlay, setShowOverlay ] = useState( false )
 	const [ imageLoaded, setImageLoaded ] = useState( false )
 
@@ -54,9 +56,7 @@ const FeaturedListItem = ( {
 						src={ image }
 						alt={ title }
 						loading="lazy"
-						onLoad={ () => {
-							setImageLoaded( true )
-						} }
+						onLoad={ () => setImageLoaded( true ) }
 					/>
 				</div>
 			</div>
@@ -84,6 +84,7 @@ const FeaturedList = props => {
 		title,
 		isBusy,
 		itemIsBusy,
+		fallbackText,
 	} = props
 
 	const classNames = classnames( [
@@ -91,6 +92,7 @@ const FeaturedList = props => {
 	], {
 		[ `ugb-design-library__columns-${ columns }` ]: columns,
 	} )
+
 	return (
 		<div className={ classNames }>
 			{ title && (
@@ -106,8 +108,7 @@ const FeaturedList = props => {
 					<div className="ugb-design-library__featured-list-content">
 						{ ! isBusy && options.map( option => {
 							const itemProps = typeof props.itemProps === 'function' ?
-								( props.itemProps( option ) || {} ) :
-								{}
+								( props.itemProps( option ) || {} ) : {}
 
 							return (
 								<FeaturedListItem
@@ -126,8 +127,8 @@ const FeaturedList = props => {
 				</div>
 			) }
 
-			{ ! isBusy && ! options.length && (
-				<p className="components-base-control__help" data-testid="nothing-found-note">{ __( 'No designs found.', i18n ) }</p>
+			{ ! isBusy && ! options.length && fallbackText && (
+				<p className="components-base-control__help" data-testid="nothing-found-note">{ fallbackText }</p>
 			) }
 		</div>
 	)
@@ -141,6 +142,7 @@ FeaturedList.defaultProps = {
 	onSelect: () => {},
 	itemProps: () => null,
 	itemIsBusy: false,
+	fallbackText: __( 'No designs found.', i18n ),
 }
 
 export default FeaturedList

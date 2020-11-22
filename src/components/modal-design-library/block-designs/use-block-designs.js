@@ -17,7 +17,9 @@ import {
 /**
  * WordPress deprendencies
  */
-import { useState, useEffect } from '@wordpress/element'
+import {
+	useState, useEffect, useMemo, useCallback,
+} from '@wordpress/element'
 import { select } from '@wordpress/data'
 import { __, sprintf } from '@wordpress/i18n'
 
@@ -38,7 +40,7 @@ const useBlockDesigns = props => {
 	const [ debounceTimeout, setDebounceTimeout ] = useState( null )
 	const [ isDevMode, setIsDevMode ] = useLocalStorage( 'stk__design_library_dev_mode', false )
 
-	const options = [
+	const options = useMemo( [
 		{
 			label: __( 'All Block Designs', i18n ),
 			value: '',
@@ -51,30 +53,30 @@ const useBlockDesigns = props => {
 			label: __( 'Premium Designs', i18n ),
 			value: 'premium',
 		},
-	]
+	], [] )
 
-	const setPlan = plan => {
+	const setPlan = useCallback( plan => {
 		setContentTitle( options.find( option => option.value === plan ).label )
 		_setSearch( '' )
 		_setPlan( plan )
-	}
+	}, [ JSON.stringify( options ) ] )
 
-	const setBlock = block => {
+	const setBlock = useCallback( block => {
 		setContentTitle( sprintf( __( '%s Block Designs', i18n ),
 			blockList.find( option => option.value === block ).label ) )
 		_setSearch( '' )
 		_setBlock( block )
-	}
+	}, [ JSON.stringify( blockList ) ] )
 
-	const setSearch = search => {
+	const setSearch = useCallback( search => {
 		setContentTitle( sprintf( __( 'Search result for: "%s"', i18n ), search ) )
 		if ( search === '' ) {
 			setContentTitle( options.find( option => option.value === plan ).label )
 		}
 		_setSearch( search )
-	}
+	}, [ JSON.stringify( options ) ] )
 
-	const itemProps = option => {
+	const itemProps = useCallback( option => {
 		const showLock = ! isPro && option.plan !== 'free'
 		const button1 = showLock ? undefined :
 			(	props.selectedBlock ? __( 'Switch Design', i18n ) : __( 'Add Block', i18n ) )
@@ -90,13 +92,22 @@ const useBlockDesigns = props => {
 		 * ACCESS UI KIT PROPS AND OPEN THE UI KIT
 		 */
 			_option => {
-				const { setPreviewMode, UIKits } = props.uiKitsModuleProps
-				const newPreviewMode = {
-					...find( UIKits, UIKit => last( _option.categories ) === UIKit.category ),
-					fromBlockDesigns: true,
+				// Open UI Kit Preview when uiKitsModuleProps is defined.
+				if ( props.uiKitsModuleProps ) {
+					const {
+						setPreviewMode = () => {},
+						UIKits = {},
+					} = props.uiKitsModuleProps
+
+					const newPreviewMode = {
+						...( find( UIKits, UIKit => last( _option.categories ) === UIKit.category ) || {} ),
+						fromBlockDesigns: true,
+					}
+
+					setPreviewMode( newPreviewMode || null )
+
+					props.setActiveTab( 'ui-kits' )
 				}
-				setPreviewMode( newPreviewMode || null )
-				props.setActiveTab( 'ui-kits' )
 			}
 
 		return {
@@ -106,18 +117,20 @@ const useBlockDesigns = props => {
 			onClickButton1,
 			onClickButton2,
 		}
-	}
+	}, [ props.uiKitsModuleProps, props.setActiveTab ] )
 
-	const onDesignSelect = design => {
+	const onDesignSelect = useCallback( design => {
 		if ( ! isPro && design.plan !== 'free' ) {
 			return
 		}
+
 		setIsApplyingDesign( true )
+
 		getDesign( design.id ).then( designData => {
 			setIsApplyingDesign( false )
 			props.onSelect( designData )
 		} )
-	}
+	}, [ props.onSelect ] )
 
 	useEffect( () => {
 		if ( doReset ) {
