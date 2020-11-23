@@ -135,10 +135,6 @@ const DesignLayoutSelector = props => {
 
 	const designItems = !! designs.length && (
 		<div className="ugb-design-layout-selector__design-library">
-			<div className="components-placeholder__instructions" >
-				{ !! layouts.length && __( 'Or pick from our Design Library.', i18n ) }
-				{ ! layouts.length && designInstructions }
-			</div>
 			<div className="components-placeholder__fieldset ugb-design-layout-selector__design-container">
 				<div className="ugb-design-layout-selector__design-items">
 					{ ( designs || [] ).map( design => {
@@ -203,11 +199,21 @@ const DesignLayoutSelector = props => {
 		<Placeholder
 			className={ classNames }
 			label={ label }
-			instructions={ !! layouts.length && layoutInstructions }
 		>
-			{ layoutItems }
-			{ designItems }
-			<div className="ugb-design-layout-selector__open-design-library">
+			<div className="ugb-design-layout-selector__content">
+				{ !! layouts.length &&
+					<div className="components-placeholder__instructions">{ layoutInstructions }</div>
+				}
+				{ layoutItems }
+				{ !! designs.length &&
+					<div className="components-placeholder__instructions" >
+						{ !! layouts.length && __( 'Or pick from our Design Library.', i18n ) }
+						{ ! layouts.length && designInstructions }
+					</div>
+				}
+				{ designItems }
+			</div>
+			<div className="ugb-design-layout-selector__close-button">
 				<ButtonGroup>
 					{ selectedLayout !== '' && (
 						<Button
