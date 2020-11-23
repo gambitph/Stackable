@@ -577,7 +577,7 @@ const centerBlockTitle = attributeNamesToReset => {
 
 const blockTitle = blockName => {
 	removeFilter( 'stackable.panel-spacing-body.edit.before', 'stackable/block-title' )
-	addFilter( `stackable.${ blockName }.edit.inspector.section.block`, `stackable/${ blockName }/block-title`, addInspectorPanel, 17 )
+	addFilter( `stackable.${ blockName }.edit.inspector.style.block`, `stackable/${ blockName }/block-title`, addInspectorPanel, 17 )
 	addFilter( `stackable.${ blockName }.attributes`, `stackable/${ blockName }/block-title`, addAttributes )
 	addFilter( 'stackable.panel-spacing-body.edit.before', 'stackable/block-title', addTitleSpacing )
 	addFilter( `stackable.${ blockName }.edit.output.before`, `stackable/${ blockName }/block-title`, addTitleEditOutput )
