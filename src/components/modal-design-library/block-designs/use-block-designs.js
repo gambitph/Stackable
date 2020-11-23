@@ -40,7 +40,7 @@ const useBlockDesigns = props => {
 	const [ debounceTimeout, setDebounceTimeout ] = useState( null )
 	const [ isDevMode, setIsDevMode ] = useLocalStorage( 'stk__design_library_dev_mode', false )
 
-	const options = useMemo( [
+	const options = useMemo( () => [
 		{
 			label: __( 'All Block Designs', i18n ),
 			value: '',

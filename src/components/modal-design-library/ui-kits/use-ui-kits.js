@@ -39,7 +39,7 @@ const useUIKits = props => { //eslint-disable-line
 
 	const [ isDevMode, setIsDevMode ] = useLocalStorage( 'stk__design_library_dev_mode', false )
 
-	const options = useMemo( [
+	const options = useMemo( () => [
 		{
 			label: __( 'All UI Kits', i18n ),
 			value: '',
@@ -99,7 +99,7 @@ const useUIKits = props => { //eslint-disable-line
 		} )
 	}, [ props.onSelect ] )
 
-	const backbuttonLabel = useMemo( previewMode?.fromBlockDesigns ? __( 'Back to Block Designs', i18n ) : __( 'Back to UI Kits', i18n ), [ previewMode ] )
+	const backbuttonLabel = useMemo( () => previewMode?.fromBlockDesigns ? __( 'Back to Block Designs', i18n ) : __( 'Back to UI Kits', i18n ), [ previewMode ] )
 
 	const backButtonOnClick = useCallback( () => {
 		setPreviewMode( null )
