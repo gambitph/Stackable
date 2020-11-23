@@ -22,7 +22,6 @@ import { showOptions } from './util'
 
 export const createStyles = props => {
 	const getValue = __getValue( props.attributes )
-
 	const show = showOptions( props )
 
 	const {
