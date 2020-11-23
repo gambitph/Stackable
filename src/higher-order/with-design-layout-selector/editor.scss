@@ -34,6 +34,12 @@
 	order: 1;
 	&.is-premium {
 		order: 2;
+
+		.ugb-design-layout-selector__wrapper {
+			&::after {
+				cursor: default;
+			}
+		}
 	}
 
 	.ugb-design-layout-selector__lock {
@@ -167,7 +173,7 @@
 
 }
 .ugb-design-layout-selector__design-item {
-	flex-basis: 180px;
+	flex-basis: 170px;
 	.ugb-design-layout-selector__wrapper {
 		min-height: 100px;
 	}
