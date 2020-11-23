@@ -196,6 +196,7 @@ const UIKits = props => {
 								options={ previewMode.blockList }
 								itemProps={ previewInnerProps }
 								itemIsBusy={ isApplyingDesign }
+								fallackText={ __( 'No UI Kits found.', i18n ) }
 							/>
 
 						</div>
