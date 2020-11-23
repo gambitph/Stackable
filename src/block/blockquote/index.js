@@ -21,6 +21,7 @@ import {
 	createAllCombinationAttributes,
 	createTypographyAttributes,
 	createResponsiveAttributes,
+	createBorderAttributes,
 } from '~stackable/util'
 import { BlockquoteIcon } from '~stackable/icons'
 import { disabledBlocks, i18n } from 'stackable'
@@ -47,6 +48,9 @@ const schema = {
 
 	// Container.
 	...createBackgroundAttributes( 'container%s' ),
+
+	// Border.
+	...createBorderAttributes( 'column%s' ),
 
 	// Quote.
 	showQuote: {

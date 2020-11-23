@@ -11,6 +11,7 @@ import {
 	createImageBackgroundStyleSet,
 	appendImportant,
 	__getValue,
+	createBorderStyleSet,
 } from '~stackable/util'
 
 /**
@@ -57,13 +58,20 @@ export const createStyles = props => {
 			// No mobile here since the mobile design would stack vertically.
 		} )
 	}
+
+	const selector = design === 'basic' || design === 'half' ? '.ugb-feature__item' : '.ugb-feature__content'
 	if ( show.borderRadius ) {
 		// The border radius is applied on the item.
-		const selector = design === 'basic' || design === 'half' ? '.ugb-feature__item' : '.ugb-feature__content'
 		styles.push( {
 			[ selector ]: {
 				borderRadius: getValue( 'borderRadius', '%spx !important' ),
 			},
+		} )
+	}
+
+	if ( show.border ) {
+		styles.push( {
+			...createBorderStyleSet( 'column%s', selector, props.attributes ),
 		} )
 	}
 

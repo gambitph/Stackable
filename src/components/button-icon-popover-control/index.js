@@ -224,6 +224,7 @@ class ButtonIconPopoverControl extends Component {
 							_ref={ this.buttonRefColorPreview }
 						/>
 					}
+					{ this.props.renderCustomPreview && this.props.renderCustomPreview() }
 					<Button
 						onClick={ this.handleOpen }
 						className="ugb-button-icon-control__edit"
@@ -270,6 +271,7 @@ ButtonIconPopoverControl.defaultProps = {
 	imageUrlPreview: '',
 	hasColorPreview: false,
 	hasImagePreview: false,
+	renderCustomPreview: null,
 }
 
 export default ButtonIconPopoverControl

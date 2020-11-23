@@ -21,6 +21,7 @@ import {
 	createButtonAttributes,
 	createAllCombinationAttributes,
 	createIconAttributes,
+	createBorderAttributes,
 } from '~stackable/util'
 import { NotificationIcon } from '~stackable/icons'
 import { disabledBlocks, i18n } from 'stackable'
@@ -61,6 +62,9 @@ export const schema = {
 
 	// Background.
 	...createBackgroundAttributes( 'column%s' ),
+
+	// Border.
+	...createBorderAttributes( 'container%s' ),
 
 	// Dismissible.
 	dismissible: {

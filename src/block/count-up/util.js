@@ -10,5 +10,6 @@ export const showOptions = blockProps => {
 
 	return applyFilters( 'stackable.count-up.show', {
 		columnBackground: design === 'boxed',
+		border: design === 'boxed',
 	}, blockProps )
 }

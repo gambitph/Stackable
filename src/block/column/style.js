@@ -6,6 +6,7 @@ import {
 	appendImportant,
 	createBackgroundStyleSet,
 	createResponsiveStyles,
+	createBorderStyleSet,
 	__getValue,
 	whiteIfDarkBlackIfLight,
 } from '~stackable/util'
@@ -41,6 +42,12 @@ export const createStyles = props => {
 					borderRadius: getValue( 'borderRadius', '%spx !important' ) || '12px !important',
 				},
 			},
+		} )
+	}
+
+	if ( show.border ) {
+		styles.push( {
+			...createBorderStyleSet( 'column%s', `.${ uniqueClass }-column-wrapper`, props.attributes ),
 		} )
 	}
 

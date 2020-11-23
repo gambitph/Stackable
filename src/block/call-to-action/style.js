@@ -7,6 +7,7 @@ import {
 	createButtonStyleSet,
 	createResponsiveStyles,
 	createTypographyStyles,
+	createBorderStyleSet,
 	whiteIfDark,
 	__getValue,
 	appendImportant,
@@ -51,6 +52,12 @@ export const createStyles = props => {
 			'.ugb-cta__item': {
 				borderRadius: getValue( 'borderRadius', '%spx !important' ),
 			},
+		} )
+	}
+
+	if ( show.border ) {
+		styles.push( {
+			...createBorderStyleSet( 'column%s', '.ugb-cta__item', props.attributes ),
 		} )
 	}
 

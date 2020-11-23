@@ -31,6 +31,7 @@ import {
 	PanelSpacingBody,
 	DivBackground,
 	ButtonIconPopoverControl,
+	BorderControlsHelper,
 } from '~stackable/components'
 import {
 	withBlockStyles,
@@ -200,6 +201,13 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 						allowReset={ true }
 						placeholder="12"
 						className="ugb--help-tip-general-border-radius"
+					/>
+					}
+					{ show.containerBorder &&
+					<BorderControlsHelper
+						attrNameTemplate="container%s"
+						setAttributes={ setAttributes }
+						blockAttributes={ props.attributes }
 					/>
 					}
 					{ ( show.headerBackground || show.containerBackground ) &&
