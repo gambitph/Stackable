@@ -21,6 +21,8 @@ const FeaturedListItem = props => {
 		description,
 		onClickButton1,
 		onClickButton2,
+		button1Href,
+		button2Href,
 		button1,
 		button2,
 		showLock,
@@ -30,6 +32,14 @@ const FeaturedListItem = props => {
 
 	const [ showOverlay, setShowOverlay ] = useState( false )
 	const [ imageLoaded, setImageLoaded ] = useState( false )
+
+	const renderButton1 = button1Href ?
+		<a className="primary ugb-shadow-7" href={ button1Href }>{ button1 }</a> :
+		<Button className="primary ugb-shadow-7" onClick={ onClickButton1 }>{ button1 }</Button>
+
+	const renderButton2 = button2Href ?
+		<a className="secondary ugb-shadow-7" href={ button2Href }>{ button2 }</a> :
+		<Button className="secondary ugb-shadow-7" onClick={ onClickButton2 }>{ button2 }</Button>
 
 	return (
 		<div
@@ -47,8 +57,8 @@ const FeaturedListItem = props => {
 					{ showOverlay && (
 						<span>
 							{ itemIsBusy && <Spinner /> }
-							{ ! itemIsBusy && button1 && <Button className="primary ugb-shadow-7" onClick={ onClickButton1 }>{ button1 }</Button> }
-							{ ! itemIsBusy && button2 && <Button className="secondary ugb-shadow-7" onClick={ onClickButton2 }>{ button2 }</Button> }
+							{ ! itemIsBusy && button1 && renderButton1 }
+							{ ! itemIsBusy && button2 && renderButton2 }
 						</span>
 					) }
 					<img
@@ -73,7 +83,9 @@ FeaturedListItem.defaultProps = {
 	onClickButton1: () => {},
 	onClickButton2: () => {},
 	button1: '',
+	button1Href: '',
 	button2: '',
+	button2Href: '',
 	showLock: true,
 }
 

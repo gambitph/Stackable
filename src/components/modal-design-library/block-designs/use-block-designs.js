@@ -85,8 +85,9 @@ const useBlockDesigns = props => {
 		const onClickButton1 = showLock ?
 			undefined :
 			onDesignSelect
+		const button2Href = showLock ? 'https://wpstackable.com/upgrade/?utm_source=design-library-learn-more&utm_campaign=learnmore&utm_medium=gutenberg' : undefined
 		const onClickButton2 = showLock ?
-			() => window.open( 'https://wpstackable.com/upgrade/?utm_source=design-library-learn-more&utm_campaign=learnmore&utm_medium=gutenberg' ) :
+			undefined :
 
 		/**
 		 * ACCESS UI KIT PROPS AND OPEN THE UI KIT
@@ -116,6 +117,7 @@ const useBlockDesigns = props => {
 			button2,
 			onClickButton1,
 			onClickButton2,
+			button2Href,
 		}
 	}, [ props.uiKitsModuleProps, props.setActiveTab ] )
 

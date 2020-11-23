@@ -63,11 +63,13 @@
 			height: 100%;
 			padding: 20px;
 			border-radius: 0;
+			white-space: normal;
 		}
 	}
 
 	.ugb-design-library__ui-kit-header-text {
 		margin-right: 40px;
+		white-space: normal;
 
 		h2 {
 			font-size: 30px;
@@ -187,6 +189,56 @@
 		padding-top: 0;
 	}
 
+	@media screen and (max-width: 880px) {
+		.ugb-modal-design-library__wrapper {
+			grid-template-columns: 30vw auto;
+		}
+
+		.ugb-modal-design-library__cover-wrapper {
+			h2 {
+				flex-direction: column;
+				row-gap: 8px;
+			}
+		}
+
+		.ugb-modal-design-library__topbar {
+			flex-direction: column-reverse;
+			height: max-content;
+		}
+
+		.ugb-modal-design-library__topbar-options {
+			width: 100% !important;
+		}
+
+		.ugb-modal-design-library__topbar-children {
+			width: 100%;
+			flex-direction: unset;
+
+			.ugb-advanced-toolbar-control {
+				width: inherit;
+			}
+		}
+
+		.ugb-design-library__ui-kit-topbar-wrapper {
+			flex-direction: column;
+			width: 100%;
+			row-gap: 16px;
+
+			.components-button {
+				width: 100%;
+			}
+		}
+
+		.ugb-design-library__ui-kit-header-text {
+			width: 100%;
+			margin: 0;
+		}
+
+		.ugb-design-library__modal .components-modal__header-heading-container {
+			display: none;
+		}
+	}
+
 	.ugb-modal-design-library__cover-wrapper {
 		display: flex;
 		justify-content: center;
@@ -205,6 +257,9 @@
 			color: #fff !important;
 			margin-bottom: 16px;
 			font-weight: 400;
+			line-height: initial;
+
+
 			img {
 				height: 40px;
 				width: 40px;
@@ -276,6 +331,7 @@
 		span {
 			display: flex;
 			align-items: center;
+			justify-content: center;
 		}
 
 		.ugb-modal-design-library__topbar-options {
@@ -468,8 +524,8 @@
 			justify-content: center;
 
 			& > .components-spinner {
-							position: absolute;
-							left: 0;
+				position: absolute;
+				left: 0;
 			}
 
 			span {
@@ -480,12 +536,13 @@
 				z-index: 1;
 			}
 
-			.components-button {
+			.components-button, a {
 				padding: 4px;
 				padding-left: 16px;
 				padding-right: 16px;
 				text-transform: uppercase;
 				border-radius: 16px;
+				text-decoration: none;
 
 				&.primary {
 					color: #fff;
@@ -513,10 +570,10 @@
 			height: 80%;
 
 			.overlay {
-							display: flex;
-							align-items: center;
-							justify-content: center;
-							height: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 100%;
 			}
 
 			svg {
