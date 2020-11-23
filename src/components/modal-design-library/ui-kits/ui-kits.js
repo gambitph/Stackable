@@ -85,7 +85,7 @@ const UIKits = props => {
 							>
 								{ backbuttonLabel }
 							</Button>
-							{ ! isPro && (
+							{ ! isPro && previewMode.plan === 'premium' && (
 								<ProControl
 									title={ __( 'Upcoming Feature', i18n ) }
 									description={ __( 'Build your website with a few clicks with our upcoming Premium feature that will let you use our predesigned templates with ease.', i18n ) }
