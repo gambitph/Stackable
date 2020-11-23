@@ -84,7 +84,6 @@ const useUIKits = props => { //eslint-disable-line
 			showLock,
 			button1,
 			onClickButton1,
-
 		}
 	}, [] )
 
