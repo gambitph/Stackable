@@ -83,14 +83,49 @@ export const getUIKits = async ( {
 	search = '',
 	reset = false,
 } ) => {
-	let library = Object.values( await fetchDesignLibrary( reset ) )
+	const _library = {}
 
-	if ( isMood ) {
-		library = library.filter( ( { mood } ) => mood === isMood )
-	}
+	let library = Object.values( await fetchDesignLibrary( reset ) )
 
 	if ( isPlan ) {
 		library = library.filter( ( { plan } ) => plan === isPlan )
+	}
+
+	library.forEach( style => {
+		const {
+			categories, image, plan, colors, mood, tags,
+		} = style
+
+		if ( ! _library[ last( categories ) ] ) {
+			_library[ last( categories ) ] = {
+				colors,
+				count: 1,
+				mood: [ mood ],
+				image,
+				label: startCase( last( categories ) ),
+				tags,
+				category: last( categories ),
+				categories,
+				description: sprintf( __( '%s Block Design', i18n ), 1 ),
+				plan,
+				blockList: [ style ],
+			}
+		} else {
+			const { count, blockList } = _library[ last( categories ) ]
+			_library[ last( categories ) ].count = count + 1
+			_library[ last( categories ) ].description = sprintf( __( '%s Block Designs', i18n ), count + 1 )
+			_library[ last( categories ) ].colors = uniq( [ ..._library[ last( categories ) ].colors, ...colors ] )
+			_library[ last( categories ) ].categories = uniq( [ ..._library[ last( categories ) ].categories, ...categories ] )
+			_library[ last( categories ) ].mood = uniq( [ ..._library[ last( categories ) ].mood, mood ] )
+			_library[ last( categories ) ].tags = uniq( [ ..._library[ last( categories ) ].tags, ...tags ] )
+			_library[ last( categories ) ].blockList = [ ...blockList, style ]
+		}
+	} )
+
+	library = values( _library )
+
+	if ( isMood ) {
+		library = library.filter( ( { mood } ) => mood === isMood )
 	}
 
 	if ( hasColors && hasColors.length ) {
@@ -106,44 +141,22 @@ export const getUIKits = async ( {
 
 		// Every search term should match a property of a design.
 		terms.forEach( searchTerm => {
+			const searchTermRegExp = new RegExp( `^${ searchTerm }` )
 			library = library.filter( design => {
 				// Our search term needs to match at least one of these properties.
 				return [ 'label', 'plan', 'tags', 'categories', 'colors' ].some( designProp => {
 					// Search whether the term matched.
-					return design[ designProp ].toString().toLowerCase().indexOf( searchTerm ) !== -1
+					if ( Array.isArray( design[ designProp ] ) ) {
+						return design[ designProp ]?.some( item => item.toString().toLowerCase().match( searchTermRegExp ) )
+					}
+
+					return design[ designProp ]?.toLowerCase().indexOf( searchTerm ) !== -1
 				} )
 			} )
 		} )
 	}
 
-	const result = {}
-
-	library.forEach( style => {
-		const {
-			categories, image, plan, colors,
-		} = style
-
-		if ( ! result[ last( categories ) ] ) {
-			result[ last( categories ) ] = {
-				colors,
-				count: 1,
-				image,
-				label: startCase( last( categories ) ),
-				category: last( categories ),
-				description: sprintf( __( '%s Block Design', i18n ), 1 ),
-				plan,
-				blockList: [ style ],
-			}
-		} else {
-			const { count, blockList } = result[ last( categories ) ]
-			result[ last( categories ) ].count = count + 1
-			result[ last( categories ) ].description = sprintf( __( '%s Block Designs', i18n ), count + 1 )
-			result[ last( categories ) ].colors = uniq( [ ...result[ last( categories ) ].colors, ...colors ] )
-			result[ last( categories ) ].blockList = [ ...blockList, style ]
-		}
-	} )
-
-	return values( result )
+	return library
 }
 
 export const getDesigns = async ( {
@@ -188,11 +201,16 @@ export const getDesigns = async ( {
 
 		// Every search term should match a property of a design.
 		terms.forEach( searchTerm => {
+			const searchTermRegExp = new RegExp( `^${ searchTerm }` )
 			library = library.filter( design => {
 				// Our search term needs to match at least one of these properties.
 				return [ 'label', 'plan', 'block', 'tags', 'categories', 'colors' ].some( designProp => {
 					// Search whether the term matched.
-					return design[ designProp ].toString().toLowerCase().indexOf( searchTerm ) !== -1
+					if ( Array.isArray( design[ designProp ] ) ) {
+						return design[ designProp ]?.some( item => item.toString().toLowerCase().match( searchTermRegExp ) )
+					}
+
+					return design[ designProp ]?.toLowerCase().indexOf( searchTerm ) !== -1
 				} )
 			} )
 		} )
