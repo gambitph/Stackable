@@ -33,6 +33,7 @@ import {
 	DivBackground,
 	ButtonIconPopoverControl,
 	ColumnPaddingControl,
+	BorderControlsHelper,
 } from '~stackable/components'
 import {
 	descriptionPlaceholder,
@@ -183,6 +184,14 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 							blockAttributes={ props.attributes }
 						/>
 					</ButtonIconPopoverControl>
+					{ show.border &&
+						<BorderControlsHelper
+							attrNameTemplate="column%s"
+							setAttributes={ setAttributes }
+							blockAttributes={ props.attributes }
+						/>
+					}
+
 					{ show.borderRadius &&
 					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }
@@ -195,6 +204,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 						className="ugb--help-tip-general-border-radius"
 					/>
 					}
+
 					{ show.shadow &&
 					<AdvancedRangeControl
 						label={ __( 'Shadow / Outline', i18n ) }

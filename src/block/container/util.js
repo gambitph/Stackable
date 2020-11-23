@@ -15,6 +15,7 @@ export const showOptions = blockProps => {
 		restrictContent: ( ! showBlockBackground && align === 'full' ) || ( showBlockBackground && blockInnerWidth === 'full' ),
 		columnBackground: design !== 'plain',
 		borderRadius: design !== 'plain' && ! ( ! showBlockBackground && align === 'full' ),
+		border: design !== 'plain',
 		image: design !== 'basic' && design !== 'plain',
 	}, blockProps )
 }

@@ -17,6 +17,7 @@ export const showOptions = blockProps => {
 		containerOffset: design.match( /^overlap(.*)?[2-5]$/ ),
 		reverseHorizontally: ! design.match( /^overlap-?\w*[45]$/ ),
 		borderRadius: design !== 'plain',
+		border: design !== 'plain',
 		columnBackground: design !== 'plain',
 		featuredImageAsBackground: design.match( /^(overlap-bg|half)/ ),
 		titleSpacing: showTitle,

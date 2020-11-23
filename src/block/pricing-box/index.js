@@ -20,6 +20,7 @@ import {
 	createImageAttributes,
 	createTypographyAttributes,
 	descriptionPlaceholder,
+	createBorderAttributes,
 } from '~stackable/util'
 import { PricingBoxIcon } from '~stackable/icons'
 import { disabledBlocks, i18n } from 'stackable'
@@ -50,6 +51,9 @@ const schema = {
 
 	// Column.
 	...createBackgroundAttributes( 'column%s' ),
+
+	// Border.
+	...createBorderAttributes( 'column%s' ),
 
 	// Image.
 	showImage: {

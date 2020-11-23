@@ -18,6 +18,7 @@ import {
 	createBackgroundAttributes,
 	createAllCombinationAttributes,
 	createTypographyAttributes,
+	createBorderAttributes,
 } from '~stackable/util'
 import { disabledBlocks, i18n } from 'stackable'
 
@@ -59,6 +60,9 @@ const schema = {
 		type: 'string',
 		default: '',
 	},
+
+	// Border.
+	...createBorderAttributes( 'container%s' ),
 
 	// Title.
 	title: {

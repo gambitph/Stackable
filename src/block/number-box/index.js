@@ -10,6 +10,7 @@ import {
 	createResponsiveAttributes,
 	createTypographyAttributes,
 	descriptionPlaceholder,
+	createBorderAttributes,
 } from '~stackable/util'
 import { NumberBoxIcon } from '~stackable/icons'
 
@@ -118,6 +119,9 @@ export const schema = {
 
 	// Column.
 	...createBackgroundAttributes( 'column%s' ),
+
+	// Border.
+	...createBorderAttributes( 'column%s' ),
 
 	// Number attributes.
 	showNumber: {

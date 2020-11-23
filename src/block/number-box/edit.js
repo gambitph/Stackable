@@ -18,6 +18,7 @@ import {
 	DivBackground,
 	ButtonIconPopoverControl,
 	ColumnPaddingControl,
+	BorderControlsHelper,
 } from '~stackable/components'
 import {
 	createResponsiveAttributeNames,
@@ -170,6 +171,14 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 							blockAttributes={ props.attributes }
 						/>
 					</ButtonIconPopoverControl>
+
+					{ show.border &&
+						<BorderControlsHelper
+							attrNameTemplate="column%s"
+							setAttributes={ setAttributes }
+							blockAttributes={ props.attributes }
+						/>
+					}
 
 					{ show.borderRadius &&
 					<AdvancedRangeControl

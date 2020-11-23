@@ -188,6 +188,10 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.13.0 =
+* New: Border options for all blocks
+* Fixed: Global Settings will no longer show up when in content only editing mode
+
 = 2.12.2 =
 * Fixed: WordPress 5.4 compatibility
 * Fixed: Blocks without a layout tab would not show options when they're first added

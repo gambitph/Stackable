@@ -8,6 +8,7 @@ import {
 	appendImportant,
 	createBackgroundStyles,
 	createBackgroundOverlayStyles,
+	createBorderStyleSet,
 	clampInheritedStyle,
 	__getValue,
 } from '~stackable/util'
@@ -30,6 +31,12 @@ export const createStyles = props => {
 			'.ugb-image-box__box': {
 				borderRadius: appendImportant( getValue( 'borderRadius', '%spx !important' ) ),
 			},
+		} )
+	}
+
+	if ( show.border ) {
+		styles.push( {
+			...createBorderStyleSet( 'column%s', '.ugb-image-box__item', props.attributes ),
 		} )
 	}
 

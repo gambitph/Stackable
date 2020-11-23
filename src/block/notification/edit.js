@@ -33,6 +33,7 @@ import {
 	IconControlsHelper,
 	ButtonIconPopoverControl,
 	ColumnPaddingControl,
+	BorderControlsHelper,
 } from '~stackable/components'
 import {
 	descriptionPlaceholder,
@@ -207,6 +208,13 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 							blockAttributes={ props.attributes }
 						/>
 					</ButtonIconPopoverControl>
+					{ show.containerBorder &&
+						<BorderControlsHelper
+							attrNameTemplate="container%s"
+							setAttributes={ setAttributes }
+							blockAttributes={ props.attributes }
+						/>
+					}
 					{ show.borderRadius &&
 					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }

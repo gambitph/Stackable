@@ -30,6 +30,7 @@ import {
 	DivBackground,
 	ButtonIconPopoverControl,
 	ColumnPaddingControl,
+	BorderControlsHelper,
 } from '~stackable/components'
 import {
 	descriptionPlaceholder,
@@ -146,59 +147,71 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 					initialOpen={ false }
 					className="ugb--help-tip-column-background-on-off"
 				>
-					<ButtonIconPopoverControl
-						label={ __( 'Background', i18n ) }
-						popoverLabel={ __( 'Background', i18n ) }
-						onReset={ () => {
-							setAttributes( {
-								columnBackgroundColorType: '',
-								columnBackgroundColor: '',
-								columnBackgroundColor2: '',
-								columnBackgroundColorOpacity: '',
-								columnBackgroundMediaID: '',
-								columnBackgroundMediaUrl: '',
-								columnBackgroundTintStrength: '',
-								columnFixedBackground: '',
-							} )
-						} }
-						allowReset={ props.attributes.columnBackgroundColor || props.attributes.columnBackgroundMediaUrl }
-						hasColorPreview={ props.attributes.columnBackgroundColor }
-						hasImagePreview={ props.attributes.columnBackgroundMediaUrl }
-						colorPreview={ props.attributes.columnBackgroundColorType === 'gradient' ? [ props.attributes.columnBackgroundColor, props.attributes.columnBackgroundColor2 ] : props.attributes.columnBackgroundColor }
-						imageUrlPreview={ props.attributes.columnBackgroundMediaUrl }
-					>
-						<BackgroundControlsHelper
-							attrNameTemplate="column%s"
-							setAttributes={ setAttributes }
-							blockAttributes={ props.attributes }
-						/>
-					</ButtonIconPopoverControl>
+					{ applyFilters( 'stackable.testimonial.edit.inspector.style.container.before',
+						<Fragment>
+							<ButtonIconPopoverControl
+								label={ __( 'Background', i18n ) }
+								popoverLabel={ __( 'Background', i18n ) }
+								onReset={ () => {
+									setAttributes( {
+										columnBackgroundColorType: '',
+										columnBackgroundColor: '',
+										columnBackgroundColor2: '',
+										columnBackgroundColorOpacity: '',
+										columnBackgroundMediaID: '',
+										columnBackgroundMediaUrl: '',
+										columnBackgroundTintStrength: '',
+										columnFixedBackground: '',
+									} )
+								} }
+								allowReset={ props.attributes.columnBackgroundColor || props.attributes.columnBackgroundMediaUrl }
+								hasColorPreview={ props.attributes.columnBackgroundColor }
+								hasImagePreview={ props.attributes.columnBackgroundMediaUrl }
+								colorPreview={ props.attributes.columnBackgroundColorType === 'gradient' ? [ props.attributes.columnBackgroundColor, props.attributes.columnBackgroundColor2 ] : props.attributes.columnBackgroundColor }
+								imageUrlPreview={ props.attributes.columnBackgroundMediaUrl }
+							>
+								<BackgroundControlsHelper
+									attrNameTemplate="column%s"
+									setAttributes={ setAttributes }
+									blockAttributes={ props.attributes }
+								/>
+							</ButtonIconPopoverControl>
 
-					{ show.borderRadius &&
-					<AdvancedRangeControl
-						label={ __( 'Border Radius', i18n ) }
-						value={ borderRadius }
-						onChange={ borderRadius => setAttributes( { borderRadius } ) }
-						min={ 0 }
-						max={ 50 }
-						allowReset={ true }
-						placeholder="12"
-						className="ugb--help-tip-general-border-radius"
-					/>
-					}
+							{ show.border &&
+							<BorderControlsHelper
+								attrNameTemplate="column%s"
+								setAttributes={ setAttributes }
+								blockAttributes={ props.attributes }
+							/>
+							}
 
-					{ show.shadow &&
-					<AdvancedRangeControl
-						label={ __( 'Shadow / Outline', i18n ) }
-						value={ shadow }
-						onChange={ shadow => setAttributes( { shadow } ) }
-						min={ 0 }
-						max={ 9 }
-						allowReset={ true }
-						placeholder={ design !== 'basic2' ? 3 : '' }
-						className="ugb--help-tip-general-shadow"
-					/>
-					}
+							{ show.borderRadius &&
+							<AdvancedRangeControl
+								label={ __( 'Border Radius', i18n ) }
+								value={ borderRadius }
+								onChange={ borderRadius => setAttributes( { borderRadius } ) }
+								min={ 0 }
+								max={ 50 }
+								allowReset={ true }
+								placeholder="12"
+								className="ugb--help-tip-general-border-radius"
+							/>
+							}
+
+							{ show.shadow &&
+								<AdvancedRangeControl
+									label={ __( 'Shadow / Outline', i18n ) }
+									value={ shadow }
+									onChange={ shadow => setAttributes( { shadow } ) }
+									min={ 0 }
+									max={ 9 }
+									allowReset={ true }
+									placeholder={ design !== 'basic2' ? 3 : '' }
+									className="ugb--help-tip-general-shadow"
+								/>
+							}
+						</Fragment>
+						, props ) }
 				</PanelAdvancedSettings>
 			}
 

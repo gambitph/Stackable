@@ -11,6 +11,7 @@ import {
 	marginLeftAlign,
 	marginRightAlign,
 	createResponsiveStyles,
+	createBorderStyleSet,
 	__getValue,
 } from '~stackable/util'
 
@@ -43,6 +44,12 @@ export const createStyles = props => {
 			'.ugb-feature-grid__item': {
 				borderRadius: getValue( 'borderRadius', '%spx !important' ),
 			},
+		} )
+	}
+
+	if ( show.border ) {
+		styles.push( {
+			...createBorderStyleSet( 'column%s', '.ugb-feature-grid__item', props.attributes ),
 		} )
 	}
 

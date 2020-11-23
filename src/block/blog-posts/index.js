@@ -18,6 +18,7 @@ import {
 	createTypographyAttributes,
 	createResponsiveAttributes,
 	createButtonAttributes,
+	createBorderAttributes,
 } from '~stackable/util'
 import { BlogPostsIcon } from '~stackable/icons'
 import { disabledBlocks, i18n } from 'stackable'
@@ -102,6 +103,9 @@ const schema = {
 
 	// Column.
 	...createBackgroundAttributes( 'column%s' ),
+
+	// Border.
+	...createBorderAttributes( 'column%s' ),
 
 	// Featured Image.
 	showImage: {

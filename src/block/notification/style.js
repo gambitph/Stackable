@@ -13,6 +13,7 @@ import {
 	appendImportant,
 	__getValue,
 	createIconStyleSet,
+	createBorderStyleSet,
 } from '~stackable/util'
 import deepmerge from 'deepmerge'
 
@@ -90,6 +91,12 @@ export const createStyles = props => {
 			} ),
 		},
 	} )
+
+	if ( show.containerBorder ) {
+		styles.push( {
+			...createBorderStyleSet( 'container%s', '.ugb-notification__item', props.attributes ),
+		} )
+	}
 
 	// Dismissible.
 	const {

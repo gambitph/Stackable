@@ -14,6 +14,7 @@ export const showOptions = blockProps => {
 
 	return applyFilters( 'stackable.feature-grid.show', {
 		columnBackground: design !== 'plain',
+		border: design !== 'plain',
 		columnBackground1: design !== 'plain',
 		columnBackground2: design !== 'plain',
 		columnBackground3: design !== 'plain',

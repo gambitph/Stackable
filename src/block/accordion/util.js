@@ -15,6 +15,7 @@ export const showOptions = blockProps => {
 		borderRadius: design !== 'plain',
 		shadow: design !== 'plain',
 		border: design === 'line-colored' || design === 'plain',
+		containerBorder: design !== 'plain',
 		titleSpacing: showTitle,
 	}, blockProps )
 }

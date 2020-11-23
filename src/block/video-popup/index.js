@@ -5,7 +5,11 @@
  * External dependencies
  */
 import { VideoPopupIcon } from '~stackable/icons'
-import { createBackgroundAttributes, createResponsiveAttributes } from '~stackable/util'
+import {
+	createBackgroundAttributes,
+	createResponsiveAttributes,
+	createBorderAttributes,
+} from '~stackable/util'
 
 /**
  * Internal dependencies
@@ -65,6 +69,9 @@ export const schema = {
 		type: 'number',
 		default: '',
 	},
+
+	// Border.
+	...createBorderAttributes( 'column%s' ),
 
 	...createBackgroundAttributes( 'preview%s' ),
 	previewBackgroundColor: {

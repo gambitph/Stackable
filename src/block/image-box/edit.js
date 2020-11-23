@@ -20,6 +20,7 @@ import {
 	AdvancedToolbarControl,
 	UrlInputPopover,
 	ColumnPaddingControl,
+	BorderControlsHelper,
 } from '~stackable/components'
 import {
 	createTypographyAttributeNames,
@@ -162,6 +163,15 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 						className="ugb--help-tip-image-box-height"
 					/>
 				</ResponsiveControl>
+
+				{ show.border &&
+				<BorderControlsHelper
+					attrNameTemplate="column%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+				}
+
 				{ show.borderRadius &&
 					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }
@@ -174,6 +184,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 						className="ugb--help-tip-general-border-radius"
 					/>
 				}
+
 				{ show.shadow &&
 					<AdvancedRangeControl
 						label={ __( 'Shadow / Outline', i18n ) }

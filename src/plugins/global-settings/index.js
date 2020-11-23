@@ -8,7 +8,7 @@ import './typography'
  * External dependencies
  */
 import { SVGStackableIcon } from '~stackable/icons'
-import { i18n } from 'stackable'
+import { i18n, isContentOnlyMode } from 'stackable'
 
 /**
  * Wordpress dependencies
@@ -53,7 +53,9 @@ const GlobalSettings = () => {
 		</Fragment> )
 }
 
-registerPlugin( 'stackable-global-settings', {
-	render: GlobalSettings,
-} )
+if ( ! isContentOnlyMode ) {
+	registerPlugin( 'stackable-global-settings', {
+		render: GlobalSettings,
+	} )
+}
 
