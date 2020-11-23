@@ -291,7 +291,7 @@ const removeAttributesFromDesignAttributeExport = attributes => {
 }
 
 const blockBackground = blockName => {
-	addFilter( `stackable.${ blockName }.edit.inspector.style.block`, `stackable/${ blockName }/block-background`, addInspectorPanel, 18 )
+	addFilter( `stackable.${ blockName }.edit.inspector.section.block`, `stackable/${ blockName }/block-background`, addInspectorPanel, 18 )
 	addFilter( `stackable.${ blockName }.attributes`, `stackable/${ blockName }/block-background`, addAttributes )
 	addFilter( `stackable.${ blockName }.edit.inspector.before`, `stackable/${ blockName }/block-background`, addAlignmentToolbar )
 	addFilter( `stackable.${ blockName }.settings`, `stackable/${ blockName }/block-background`, addAlignSupport )

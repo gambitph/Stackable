@@ -16,7 +16,7 @@ const withTabbedInspector = ( tabs = null ) => WrappedComponent => {
 	const NewComp = props => {
 		const { blockName } = props
 		const [ activeTab, setActiveTab ] = useState( null )
-		const blockStyleControls = applyFilters( `stackable.${ blockName }.edit.inspector.style.block`, null, props )
+		const blockStyleControls = applyFilters( `stackable.${ blockName }.edit.inspector.section.block`, null, props )
 
 		return (
 			<Fragment>
@@ -31,10 +31,11 @@ const withTabbedInspector = ( tabs = null ) => WrappedComponent => {
 						onClick={ setActiveTab }
 					/>
 
-					{ ( ! activeTab || activeTab === 'layout' ) &&
+					{ ( ! activeTab || activeTab === 'section' ) &&
 						<InspectorPanelControls>
-							{ applyFilters( `stackable.${ blockName }.edit.inspector.layout.before`, null, props ) }
-							{ applyFilters( `stackable.${ blockName }.edit.inspector.layout.after`, null, props ) }
+							{ applyFilters( `stackable.${ blockName }.edit.inspector.section.before`, null, props ) }
+							{ applyFilters( `stackable.${ blockName }.edit.inspector.section.after`, null, props ) }
+							{ blockStyleControls }
 						</InspectorPanelControls>
 					}
 
@@ -42,8 +43,6 @@ const withTabbedInspector = ( tabs = null ) => WrappedComponent => {
 						<InspectorPanelControls tab="style">
 							{ applyFilters( `stackable.${ blockName }.edit.inspector.style.before`, null, props ) }
 							{ applyFilters( `stackable.${ blockName }.edit.inspector.style.after`, null, props ) }
-							{ blockStyleControls && <div className="ugb-panel-controls-separator" role="presentation">— — —</div> }
-							{ blockStyleControls }
 						</InspectorPanelControls>
 					}
 
