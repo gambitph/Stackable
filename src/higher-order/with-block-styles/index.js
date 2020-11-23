@@ -40,8 +40,6 @@ const withBlockStyles = ( styleFunction, options = {} ) => createHigherOrderComp
 				this.props.attributes.uniqueClass,
 			] )
 
-			console.log( `withBlockStyles ${ blockName }` )
-
 			const { blockName } = this.props
 			const styleObject = applyFilters( `stackable.${ blockName }.styles`, styleFunction( this.props ), this.props )
 
