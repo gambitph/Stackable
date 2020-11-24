@@ -1,13 +1,23 @@
+/**
+ * External dependencies
+ */
+import classnames from 'classnames'
+
 const Sidebar = props => {
 	const {
 		onSelect,
 		options,
 		value,
 		forceDisabledExcept,
+		className,
 	} = props
 
+	const mainClasses = classnames( 'ugb-sidebar', {
+		[ className ]: className,
+	} )
+
 	return (
-		<ul className="ugb-sidebar">
+		<ul className={ mainClasses }>
 
 			{ props.title && (
 				<h3 className="ugb-sidebar__title">{ props.title }</h3>

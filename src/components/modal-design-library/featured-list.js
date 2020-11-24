@@ -30,7 +30,7 @@ const FeaturedListItem = props => {
 		...rest
 	} = props
 
-	const [ showOverlay, setShowOverlay ] = useState( false )
+	const [ isHovered, setIsHovered ] = useState( false )
 	const [ imageLoaded, setImageLoaded ] = useState( false )
 
 	const renderButton1 = button1Href ?
@@ -48,15 +48,15 @@ const FeaturedListItem = props => {
 		>
 			<div
 				className="image-wrapper ugb-shadow-4"
-				onMouseEnter={ () => setShowOverlay( true ) }
-				onMouseLeave={ () => setShowOverlay( false ) }
+				onMouseEnter={ () => setIsHovered( true ) }
+				onMouseLeave={ () => setIsHovered( false ) }
 			>
 				{ showLock && <Icon icon="lock" /> }
 				<div className="overlay">
 					{ ! imageLoaded && <Spinner className="test" /> }
-					{ showOverlay && (
+					{ true && (
 						<span>
-							{ itemIsBusy && <Spinner /> }
+							{ itemIsBusy && isHovered && <Spinner /> }
 							{ ! itemIsBusy && button1 && renderButton1 }
 							{ ! itemIsBusy && button2 && renderButton2 }
 						</span>
