@@ -28,6 +28,47 @@ import {
 } from '@wordpress/blocks'
 import { __ } from '@wordpress/i18n'
 
+window.stkDebug = {
+	start( name ) {
+		if ( this[ name ] ) {
+			this[ name ] = {
+				callCount: ( this[ name ].callCount || 0 ) + 1,
+				runTime: this[ name ].runTime - Date.now(),
+			}
+		} else {
+			this[ name ] = {
+				callCount: 1,
+				runTime: -Date.now(),
+			}
+		}
+	},
+
+	end( name ) {
+		if ( this[ name ] ) {
+			this[ name ] = {
+				...this[ name ],
+				runTime: this[ name ].runTime + Date.now(),
+			}
+		} else {
+			this[ name ] = {
+				runTime: Date.now(),
+			}
+		}
+	},
+
+	get( name ) {
+		return this[ name ]
+	},
+
+	getAll() {
+		return window.lodash.omit( this, 'start', 'end', 'get', 'getAll' )
+	},
+}
+
+window.wp.domReady( () => {
+	console.log( window.stkDebug.getAll() ) // eslint-disable-line no-console
+} )
+
 // Register our block collection or category (WP <= 5.3).
 if ( supportsBlockCollections() ) {
 	registerBlockCollection( 'ugb', {
