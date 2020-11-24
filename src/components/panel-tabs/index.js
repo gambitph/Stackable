@@ -20,7 +20,7 @@ import { Icon } from '@wordpress/components'
 const TABS = [
 	{
 		value: 'layout',
-		title: __( 'layout', i18n ),
+		title: __( 'Layout', i18n ),
 		label: __( 'Layout Tab', i18n ),
 		icon: 'admin-settings',
 	},

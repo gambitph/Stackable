@@ -102,6 +102,8 @@ const DesignLayoutSelector = props => {
 							return
 						}
 
+						updateInitialBlocks()
+
 						// Close the layout selector.
 						doAction( `stackable.design-layout-selector.${ props.clientId }`, ( { isOpen: false, isNewlyAddedBlock: false } ) )
 
@@ -122,8 +124,6 @@ const DesignLayoutSelector = props => {
 						} else {
 							setAttributes( newAttributes )
 						}
-
-						updateInitialBlocks()
 					} }
 
 					key={ layout.label }

@@ -1,6 +1,5 @@
 /**
- * Higher-order component for displaying layout design selector
- * when adding a new Stackable block.
+ * Higher-order component for displaying layout design selector when adding a new Stackable block.
  *
  * Used in BLOCK_NAME/edit.js.
  */
