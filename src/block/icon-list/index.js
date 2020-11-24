@@ -26,6 +26,13 @@ import { applyFilters, addFilter } from '@wordpress/hooks'
 import { DEFAULT_CHECK_SVG, createIconListIconAttributes } from './util'
 
 export const schema = {
+	// This is for optimization purposes.
+	compiledStyles: {
+		source: 'html',
+		selector: 'style',
+		default: '',
+	},
+
 	icon: {
 		type: 'string',
 		default: DEFAULT_CHECK_SVG,

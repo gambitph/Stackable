@@ -26,6 +26,13 @@ import {
 } from '~stackable/util'
 
 const schema = {
+	// This is for optimization purposes.
+	compiledStyles: {
+		source: 'html',
+		selector: 'style',
+		default: '',
+	},
+
 	alignment: {
 		type: 'string',
 		default: 'center',

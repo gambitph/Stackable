@@ -32,6 +32,13 @@ import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
 const schema = {
+	// This is for optimization purposes.
+	compiledStyles: {
+		source: 'html',
+		selector: 'style',
+		default: '',
+	},
+
 	restrictContentWidth: {
 		type: 'boolean',
 		default: false,

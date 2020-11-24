@@ -30,6 +30,13 @@ import { applyFilters } from '@wordpress/hooks'
 import { disabledBlocks, i18n } from 'stackable'
 
 export const schema = {
+	// This is for optimization purposes.
+	compiledStyles: {
+		source: 'html',
+		selector: 'style',
+		default: '',
+	},
+
 	num1: {
 		source: 'html',
 		selector: '.ugb-number-box__item1 .ugb-number-box__number',

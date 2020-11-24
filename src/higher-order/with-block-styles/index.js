@@ -40,7 +40,11 @@ const withBlockStyles = ( styleFunction, options = {} ) => createHigherOrderComp
 				this.props.attributes.uniqueClass,
 			] )
 
-			console.log( `withBlockStyles ${ blockName }` )
+			// Use the compiled styles attributes.
+			if ( ! this.props.clientId ) {
+				const styles = this.props.attributes.compiledStyles ? <style>{ this.props.attributes.compiledStyles }</style> : null
+				return <WrappedComponent { ...this.props } className={ newClassName } styles={ styles } />
+			}
 
 			const { blockName } = this.props
 			const styleObject = applyFilters( `stackable.${ blockName }.styles`, styleFunction( this.props ), this.props )
