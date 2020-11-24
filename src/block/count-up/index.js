@@ -30,6 +30,13 @@ import { applyFilters } from '@wordpress/hooks'
 import { disabledBlocks, i18n } from 'stackable'
 
 export const schema = {
+	// This is for optimization purposes.
+	compiledStyles: {
+		source: 'html',
+		selector: 'style',
+		default: '',
+	},
+
 	title1: {
 		source: 'html',
 		selector: '.ugb-countup__item:nth-of-type(1) .ugb-countup__title',

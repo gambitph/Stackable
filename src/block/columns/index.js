@@ -22,6 +22,13 @@ import { applyFilters, addFilter } from '@wordpress/hooks'
 import { createResponsiveAttributes, createAllCombinationAttributes } from '~stackable/util'
 
 export const schema = {
+	// This is for optimization purposes.
+	compiledStyles: {
+		source: 'html',
+		selector: 'style',
+		default: '',
+	},
+
 	design: {
 		type: 'string',
 		default: 'plain',
