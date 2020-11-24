@@ -158,6 +158,7 @@ const DesignLayoutSelector = props => {
 
 									// If chosen design is basic, just close the layout selector.
 									if ( design.id === 'basic' ) {
+										updateInitialBlocks()
 										setIsBusy( false )
 										// Close the layout selector
 										doAction( `stackable.design-layout-selector.${ props.clientId }`, ( { isOpen: false, isNewlyAddedBlock: false } ) )
