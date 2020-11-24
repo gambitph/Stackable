@@ -7,7 +7,7 @@
  */
 import { isPro, i18n } from 'stackable'
 import {
-	getDesigns, getAllBlocks, getDesign,
+	getDesigns, getAllBlocks, getDesign, getUIKits,
 } from '~stackable/design-library'
 import { useLocalStorage } from '~stackable/util'
 import {
@@ -33,7 +33,7 @@ const useBlockDesigns = props => {
 	const [ blockList, setBlockList ] = useState( [] )
 	const [ designs, setDesigns ] = useState( [] )
 	const [ doReset, setDoReset ] = useState( false )
-	const [ isApplyingDesign, setIsApplyingDesign ] = useState( false )
+	const [ itemIsBusy, setIsItemBusy ] = useState( false )
 	const [ contentTitle, setContentTitle ] = useState( props.selectedBlock ? __( 'Switch Design', i18n ) : __( 'All Block Designs', i18n ) )
 
 	const [ searchDebounced, setSearchDebounced ] = useState( search )
@@ -97,16 +97,20 @@ const useBlockDesigns = props => {
 				if ( props.uiKitsModuleProps ) {
 					const {
 						setPreviewMode = () => {},
-						UIKits = {},
 					} = props.uiKitsModuleProps
 
-					const newPreviewMode = {
-						...( find( UIKits, UIKit => last( _option.categories ) === UIKit.category ) || {} ),
-						fromBlockDesigns: true,
-					}
+					setIsItemBusy( true )
+					getUIKits().then( _UIKits => {
+						const newPreviewMode = {
+							...( find( _UIKits, UIKit => last( _option.categories ) === UIKit.category ) || {} ),
+							fromBlockDesigns: true,
+						}
 
-					setPreviewMode( newPreviewMode || null )
-
+						setIsItemBusy( false )
+						setPreviewMode( newPreviewMode || null )
+						props.setActiveTab( 'ui-kits' )
+					} )
+				} else {
 					props.setActiveTab( 'ui-kits' )
 				}
 			}
@@ -126,10 +130,10 @@ const useBlockDesigns = props => {
 			return
 		}
 
-		setIsApplyingDesign( true )
+		setIsItemBusy( true )
 
 		getDesign( design.id ).then( designData => {
-			setIsApplyingDesign( false )
+			setIsItemBusy( false )
 			props.onSelect( designData )
 		} )
 	}, [ props.onSelect ] )
@@ -217,7 +221,7 @@ const useBlockDesigns = props => {
 		setMood,
 		setSearch,
 		setDoReset,
-		isApplyingDesign,
+		itemIsBusy,
 	}
 }
 

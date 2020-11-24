@@ -41,7 +41,7 @@ const BlockDesigns = props => {
 		setMood,
 		setSearch,
 		setDoReset,
-		isApplyingDesign,
+		itemIsBusy,
 	} = props.moduleProps
 
 	return (
@@ -114,7 +114,7 @@ const BlockDesigns = props => {
 						onSelect={ onDesignSelect }
 						options={ designs }
 						itemProps={ itemProps }
-						itemIsBusy={ isApplyingDesign }
+						itemIsBusy={ itemIsBusy }
 					/>
 				</div>
 

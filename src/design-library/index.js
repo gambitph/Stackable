@@ -75,14 +75,15 @@ domReady( () => {
 	// fetchDesignLibrary()
 } )
 
-export const getUIKits = async ( {
-	mood: isMood = '',
-	plan: isPlan = '',
-	colors: hasColors = [],
-	style: hasStyle = '',
-	search = '',
-	reset = false,
-} ) => {
+export const getUIKits = async ( options = {} ) => {
+	const {
+		mood: isMood = '',
+		plan: isPlan = '',
+		colors: hasColors = [],
+		style: hasStyle = '',
+		search = '',
+		reset = false,
+	} = options
 	const _library = {}
 
 	let library = Object.values( await fetchDesignLibrary( reset ) )
@@ -159,16 +160,18 @@ export const getUIKits = async ( {
 	return library
 }
 
-export const getDesigns = async ( {
-	type: isType = '',
-	block: isBlock = '',
-	mood: isMood = '',
-	plan: isPlan = '',
-	colors: hasColors = [],
-	categories: hasCategories = [],
-	search = '',
-	reset = false,
-} ) => {
+export const getDesigns = async ( options = {} ) => {
+	const {
+		type: isType = '',
+		block: isBlock = '',
+		mood: isMood = '',
+		plan: isPlan = '',
+		colors: hasColors = [],
+		categories: hasCategories = [],
+		search = '',
+		reset = false,
+	} = options
+
 	let library = Object.values( await fetchDesignLibrary( reset ) )
 
 	if ( isType ) {
