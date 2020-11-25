@@ -44,9 +44,9 @@ export const combineStyleRules = ( styleObject, minify = true ) => {
 
 			// KebabCase the style rule, but support custom CSS properties (double dashes) and vendor prefixes (one dash).
 			const cleanedRuleName = ruleName.replace( /^(--?)?(.*?$)/, ( matches, dashes, rule ) => `${ dashes || '' }${ kebabCase( rule ) }` )
-			return `${ rules }\n\t${ cleanedRuleName }: ${ rule };`
+			return rules + `\n\t` + cleanedRuleName + ': ' + rule + ';' // Faster than using `
 		}, '' )
-		return `${ styleString }\n\n${ selector } {${ styles }\n}`
+		return styleString + `\n\n` + selector + ' {' + styles + `\n}` // Faster than using `
 	}, '' ).trim()
 
 	return minify ? minifyCSS( css ) : css
@@ -168,7 +168,7 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 		const cleanedStyles = addBlockClassNames( styleObject.desktopTablet, blockMainClassName, blockUniqueClassName, editorMode )
 		const styleString = combineStyleRules( cleanedStyles, ! editorMode )
 		if ( styleString ) {
-			styleStrings.push( `\n${ formMediaQuery( [ 'desktop', 'tablet' ], breakTablet, breakMobile ) } {\n${ styleString } }` )
+			styleStrings.push( `\n\n${ formMediaQuery( [ 'desktop', 'tablet' ], breakTablet, breakMobile ) } {\n${ styleString } }` )
 		}
 	}
 
@@ -176,7 +176,7 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 		const cleanedStyles = addBlockClassNames( styleObject.desktopOnly, blockMainClassName, blockUniqueClassName, editorMode )
 		const styleString = combineStyleRules( cleanedStyles, ! editorMode )
 		if ( styleString ) {
-			styleStrings.push( `\n${ formMediaQuery( [ 'desktop' ], breakTablet, breakMobile ) } {\n${ styleString } }` )
+			styleStrings.push( `\n\n${ formMediaQuery( [ 'desktop' ], breakTablet, breakMobile ) } {\n${ styleString } }` )
 		}
 	}
 
@@ -184,7 +184,7 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 		const cleanedStyles = addBlockClassNames( styleObject.tablet, blockMainClassName, blockUniqueClassName, editorMode )
 		const styleString = combineStyleRules( cleanedStyles, ! editorMode )
 		if ( styleString ) {
-			styleStrings.push( `\n${ formMediaQuery( [ 'mobile', 'tablet' ], breakTablet, breakMobile ) } {\n${ styleString } }` )
+			styleStrings.push( `\n\n${ formMediaQuery( [ 'mobile', 'tablet' ], breakTablet, breakMobile ) } {\n${ styleString } }` )
 		}
 	}
 
@@ -192,7 +192,7 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 		const cleanedStyles = addBlockClassNames( styleObject.tabletOnly, blockMainClassName, blockUniqueClassName, editorMode )
 		const styleString = combineStyleRules( cleanedStyles, ! editorMode )
 		if ( styleString ) {
-			styleStrings.push( `\n${ formMediaQuery( [ 'tablet' ], breakTablet, breakMobile ) } {\n${ styleString } }` )
+			styleStrings.push( `\n\n${ formMediaQuery( [ 'tablet' ], breakTablet, breakMobile ) } {\n${ styleString } }` )
 		}
 	}
 
@@ -200,7 +200,7 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 		const cleanedStyles = addBlockClassNames( styleObject.mobile, blockMainClassName, blockUniqueClassName, editorMode )
 		const styleString = combineStyleRules( cleanedStyles, ! editorMode )
 		if ( styleString ) {
-			styleStrings.push( `\n${ formMediaQuery( [ 'mobile' ], breakTablet, breakMobile ) } {\n${ styleString } }` )
+			styleStrings.push( `\n\n${ formMediaQuery( [ 'mobile' ], breakTablet, breakMobile ) } {\n${ styleString } }` )
 		}
 	}
 
@@ -208,7 +208,7 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 		const cleanedStyles = addBlockClassNames( styleObject.ie11, blockMainClassName, blockUniqueClassName, editorMode )
 		const styleString = combineStyleRules( cleanedStyles, ! editorMode )
 		if ( styleString ) {
-			styleStrings.push( `\n@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {\n${ styleString } }` )
+			styleStrings.push( `\n\n@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {\n${ styleString } }` )
 		}
 	}
 
