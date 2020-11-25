@@ -22,13 +22,6 @@ import { disabledBlocks, i18n } from 'stackable'
 import { applyFilters } from '@wordpress/hooks'
 
 export const schema = {
-	// This is for optimization purposes.
-	compiledStyles: {
-		source: 'html',
-		selector: 'style',
-		default: '',
-	},
-
 	align: {
 		type: 'string',
 		default: 'full',

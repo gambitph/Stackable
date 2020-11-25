@@ -27,13 +27,6 @@ import { __ } from '@wordpress/i18n'
 import { disabledBlocks, i18n } from 'stackable'
 
 export const schema = {
-	// This is for optimization purposes.
-	compiledStyles: {
-		source: 'html',
-		selector: 'style',
-		default: '',
-	},
-
 	videoLink: {
 		type: 'string',
 	},

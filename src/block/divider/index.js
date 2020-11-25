@@ -22,13 +22,6 @@ import { addFilter, applyFilters } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
 
 const schema = {
-	// This is for optimization purposes.
-	compiledStyles: {
-		source: 'html',
-		selector: 'style',
-		default: '',
-	},
-
 	design: {
 		type: 'string',
 		default: 'basic',
