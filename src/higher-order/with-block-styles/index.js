@@ -11,6 +11,7 @@ import classnames from 'classnames'
 import { Component } from '@wordpress/element'
 import { createHigherOrderComponent } from '@wordpress/compose'
 import PropTypes from 'prop-types'
+import { isEqual, omit } from 'lodash'
 
 const withBlockStyles = ( styleFunction, options = {} ) => createHigherOrderComponent(
 	WrappedComponent => class extends Component {
@@ -27,6 +28,10 @@ const withBlockStyles = ( styleFunction, options = {} ) => createHigherOrderComp
 			blockName: '',
 			className: '',
 			mainClassName: '',
+		}
+
+		shouldComponentUpdate( nextProps ) {
+			return ! isEqual( omit( nextProps.attributes, 'uniqueClass' ), omit( this.props.attributes, 'uniqueClass' ) )
 		}
 
 		render() {

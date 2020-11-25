@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import { addMatcher } from './listener'
+import { isEqual, omit } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -26,6 +27,10 @@ const withClickOpenInspector = ( matchers = [] ) => createHigherOrderComponent(
 			matchers.forEach( value => {
 				addMatcher( blockName, value[ 0 ], value[ 1 ] )
 			} )
+		}
+
+		shouldComponentUpdate( nextProps ) {
+			return ! isEqual( omit( nextProps.attributes, 'uniqueClass' ), omit( this.props.attributes, 'uniqueClass' ) )
 		}
 
 		render() {
