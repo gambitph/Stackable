@@ -179,7 +179,7 @@ const TypographyPreview = props => {
 			<div className="editor-styles-wrapper">
 				<div className="block-editor-block-list__layout">
 					<div className="wp-block block-editor-block-list__block">
-						<style>{ generateStyles( styles ) }</style>
+						<style>{ generateStyles( styles ).join( '' ) }</style>
 						<Tag className="ugb-global-typography-preview__label" data-tag={ props.tag } data-device={ device }>{ props.children }</Tag>
 					</div>
 				</div>
