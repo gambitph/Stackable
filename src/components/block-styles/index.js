@@ -230,6 +230,11 @@ const BlockStyles = props => {
 		breakMobile = 768,
 	} = props
 	const styles = generateStyles( style, blockMainClassName, blockUniqueClassName, breakTablet, breakMobile, editorMode )
+
+	// It's way faster in React if you do smaller `<style>` tags instead of just a single one. Do it when in editor mode.
+	if ( editorMode ) {
+		return styles ? styles.split( `\n\n` ).map( ( styles, i ) => <style key={ i }>{ styles }</style> ) : null
+	}
 	return styles ? <style>{ styles }</style> : null
 }
 
