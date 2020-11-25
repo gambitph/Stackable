@@ -237,6 +237,8 @@ export const compileCSS = ( css, mainClass, uniqueID, isEditor = false ) => {
 		} ).trim()
 }
 
+const prependCSSClassCache = {}
+
 /**
  * Ensures the cssSelector is only applied to the uniqueClassName element.
  * Wraps the cssSelector with a uniqueClassName, and takes into account the mainClassName.
@@ -255,7 +257,12 @@ export const compileCSS = ( css, mainClass, uniqueID, isEditor = false ) => {
  * @return {string} The modified CSS selector.
  */
 export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassName = '', wrapSelector = '' ) => {
-	return cssSelector.trim().replace( /[\n\s\t]+/g, ' ' )
+	const key = `${ cssSelector }-${ mainClassName }-${ uniqueClassName }-${ wrapSelector }`
+	if ( prependCSSClassCache[ key ] ) {
+		return prependCSSClassCache[ key ]
+	}
+
+	const selector = cssSelector.trim().replace( /[\n\s\t]+/g, ' ' )
 		.split( ',' )
 		.map( s => {
 			let newSelector = ''
@@ -272,6 +279,9 @@ export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassNam
 			return wrapSelector ? `${ wrapSelector } ${ newSelector }` : newSelector
 		} )
 		.join( ', ' )
+
+	prependCSSClassCache[ key ] = selector
+	return selector
 }
 
 /**
