@@ -270,7 +270,7 @@ const BlockStyles = props => {
 	if ( editorMode ) {
 		return styles ? styles.map( ( styles, i ) => <style key={ i }>{ styles }</style> ) : null
 	}
-	return styles ? <style>{ minifyCSS( styles.join( '' ) ) }</style> : null
+	return styles && styles.length ? <style>{ minifyCSS( styles.join( '' ) ) }</style> : null
 }
 
 export default BlockStyles
