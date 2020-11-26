@@ -284,7 +284,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
                     			<div class="s-getting-started__two-column">
                         			<div class="s-getting-started__entry">
                             			<h4><?php _e( 'Adding by Block Type', STACKABLE_I18N )?></h4>
-                            				<p><?php _e( 'Clicking the <strong>(+) icon</strong> then scroll to the <strong>Stackable Blocks area</strong> to add a block.', STACKABLE_I18N )?></p>
+                            				<p><?php _e( 'Click the <strong>(+) icon</strong> then scroll to the <strong>Stackable Blocks area</strong> to add a block.', STACKABLE_I18N )?></p>
                             			<hr>
                             			<p><?php _e( 'Pick a block layout/design from our <strong>Layout Picker</strong>.', STACKABLE_I18N )?></p>
                         			</div>
@@ -296,7 +296,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
                     			<div class="s-getting-started__two-column">
                         			<div class="s-getting-started__entry">
                             			<h4><?php _e( 'Adding from the Design Library', STACKABLE_I18N )?></h4>
-                            			<p><?php _e( 'You can also launch the Design Library, and choose from <strong>read-made UI Kits</strong> & <strong>Block Designs</strong>.', STACKABLE_I18N ) ?></p>
+                            			<p><?php _e( 'You can also launch the Design Library, and choose from <strong>ready-made UI Kits</strong> & <strong>Block Designs</strong>.', STACKABLE_I18N ) ?></p>
                             			<hr>
                             			<span class="indented">
                                 			<h5><?php _e( 'UI Kits Tab', STACKABLE_I18N )?></h5>
@@ -355,7 +355,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
                         			</div>
                     			</div>
                     
-                    			<div class="s-getting-started__two-column">
+                    			<div class="s-getting-started__two-column reverse">
                         			<div class="s-image-caption">
                             			<img src="<?php echo plugins_url( 'images/global-settings.png', __FILE__ )?>">
                         			</div>
