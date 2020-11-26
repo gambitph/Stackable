@@ -17,10 +17,20 @@ import { __ } from '@wordpress/i18n'
 import { ButtonGroup, Button } from '@wordpress/components'
 import { useState, useEffect } from '@wordpress/element'
 
-const ModalDesignLibrary = props => {
-	const [ activeTab, setActiveTab ] = useState( 'block-designs' )
+// Used to remember last opened tab and UI Kit.
+const cache = {}
 
-	const uiKitsModuleProps = useUIKits( { ...props, setActiveTab } )
+const ModalDesignLibrary = props => {
+	const [ activeTab, _setActiveTab ] = useState( cache.activeTab || 'block-designs' )
+
+	const setActiveTab = tab => {
+		cache.activeTab = tab
+		_setActiveTab( tab )
+	}
+
+	const uiKitsModuleProps = useUIKits( {
+		...props, setActiveTab, cache,
+	} )
 
 	// Pass down UI Kit props to block designs. Mainly used for accessing UI kits.
 	const blockDesignsModuleProps = useBlockDesigns( {

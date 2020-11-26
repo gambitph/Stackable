@@ -30,7 +30,7 @@ const useUIKits = props => { //eslint-disable-line
 	const [ doReset, setDoReset ] = useState( false )
 	const [ columns, setColumns ] = useState( 3 )
 	const [ UIKits, setUIKits ] = useState( [] )
-	const [ previewMode, setPreviewMode ] = useState( null )
+	const [ previewMode, setPreviewMode ] = useState( props.cache.lastUIKit || null )
 	const [ isApplyingDesign, setIsApplyingDesign ] = useState( false )
 	const [ contentTitle, setContentTitle ] = useState( __( 'All UI Kits', i18n ) )
 
@@ -114,7 +114,10 @@ const useUIKits = props => { //eslint-disable-line
 		const button2 = showLock ? __( 'Learn More', i18n ) : undefined
 		const onClickButton1 = showLock ?
 			undefined :
-			onDesignSelect
+			option => {
+				props.cache.lastUIKit = previewMode
+				onDesignSelect( option )
+			}
 		const button2Href = showLock ? 'https://wpstackable.com/upgrade/?utm_source=design-library-learn-more&utm_campaign=learnmore&utm_medium=gutenberg' : undefined
 
 		return {
@@ -124,7 +127,7 @@ const useUIKits = props => { //eslint-disable-line
 			button2Href,
 			onClickButton1,
 		}
-	}, [ onDesignSelect ] )
+	}, [ onDesignSelect, previewMode ] )
 
 	useEffect( () => {
 		getAllCategories().then( styles => {
