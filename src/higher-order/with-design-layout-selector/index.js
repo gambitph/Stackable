@@ -68,6 +68,9 @@ const withDesignLayoutSelector = createHigherOrderComponent(
 				if ( isExistingBlock === null && blocksShouldNotOpenSelectorInitially.every( name => name !== props.name ) ) {
 					setIsOpen( true )
 					setIsNewlyAddedBlock( true )
+				} else {
+					setIsOpen( false )
+					setIsNewlyAddedBlock( false )
 				}
 			}, [ isExistingBlock ] )
 
