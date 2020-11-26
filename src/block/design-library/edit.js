@@ -73,15 +73,15 @@ export default compose( [
 
 				const block = createBlock( blockName, blockAttributes, innerBlocks )
 
-				dispatch( 'stackable/util' )?.updateInitialBlocks()
 				replaceBlock( clientId, block )
+				dispatch( 'stackable/util' )?.updateInitialBlocks()
 			},
 			// Replaces the current block with one or more blocks from a string.
 			replaceBlocWithContent: serializedBlock => {
 				const block = parse( serializedBlock )
 
-				dispatch( 'stackable/util' )?.updateInitialBlocks()
 				replaceBlocks( clientId, block )
+				dispatch( 'stackable/util' )?.updateInitialBlocks()
 			},
 		}
 	} ),
