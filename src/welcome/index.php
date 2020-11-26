@@ -279,7 +279,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
                             			</ul>
                         			</div>
                         			<div class="s-image-caption">
-                            			<img src="<?php echo plugins_url( 'images/adding-a-new-block.png', __FILE__ ) ?>">
+                            			<img draggable="false" src="<?php echo plugins_url( 'images/adding-a-new-block.png', __FILE__ ) ?>">
                         			</div>
                     			</div>
 
@@ -291,7 +291,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
                             			<p><?php _e( 'Pick a block layout/design from our <strong>Layout Picker</strong>.', STACKABLE_I18N )?></p>
                         			</div>
                         			<div class="s-image-caption">
-                            			<img src="<?php echo plugins_url( 'images/layout-picker-and-block-picker.png', __FILE__ ) ?>">
+                            			<img draggable="false" src="<?php echo plugins_url( 'images/layout-picker-and-block-picker.png', __FILE__ ) ?>">
                         			</div>
                     			</div>
 
@@ -310,13 +310,13 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
                             			</span>
                         			</div>
                         			<div class="s-image-caption">
-                            			<img src="<?php echo plugins_url( 'images/design-library.png', __FILE__ )?>">
+                            			<img draggable="false" src="<?php echo plugins_url( 'images/design-library.png', __FILE__ )?>">
                         			</div>
                     			</div>
 
                     			<div class="s-getting-started__entry">
                         			<div class="s-getting-started__help-tip primary">
-                            			<img src="<?php echo plugins_url( 'images/info.svg', __FILE__ )?>">
+                            			<img draggable="false" src="<?php echo plugins_url( 'images/info.svg', __FILE__ )?>">
                             			<span>
                                 			<h4><?php _e( 'What is a UI Kit?', STACKABLE_I18N )?></h4>
                                 			<p><?php _e( 'A UI Kit is a cohesive collection of block designs with a uniform look and feel.', STACKABLE_I18N )?></p>
@@ -346,10 +346,10 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
                     
                     			<div class="s-getting-started__entry">
                         			<div class="s-image-caption">
-                            			<img src="<?php echo plugins_url( 'images/toolbar-and-inspector.png', __FILE__ )?>">
+                            			<img draggable="false" src="<?php echo plugins_url( 'images/toolbar-and-inspector.png', __FILE__ )?>">
                         			</div>
                         			<div class="s-getting-started__help-tip secondary">
-                            			<img src="<?php echo plugins_url( 'images/star.svg', __FILE__ )?>">
+                            			<img draggable="false" src="<?php echo plugins_url( 'images/star.svg', __FILE__ )?>">
                             			<span>
                                 			<h4><?php _e( 'Tip', STACKABLE_I18N)?></h4>
                                 			<p><?php _e( 'You can automatically open the inspector panel you want to tweak (ex. Title, Container, etc.) by double-clicking the element on the design area.', STACKABLE_I18N )?></p>
@@ -359,7 +359,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
                     
                     			<div class="s-getting-started__two-column reverse">
                         			<div class="s-image-caption">
-                            			<img src="<?php echo plugins_url( 'images/global-settings.png', __FILE__ )?>">
+                            			<img draggable="false" src="<?php echo plugins_url( 'images/global-settings.png', __FILE__ )?>">
                         			</div>
                         			<div class="s-getting-started__entry">
 										<h4><?php _e( 'Global Settings Panel', STACKABLE_I18N )?></h4>
@@ -383,7 +383,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
                             			<h4><?php _e( 'More Resources', STACKABLE_I18N )?></h4>
                             			<div class="resources__list">
                                 			<div class="resources__item s-box">
-                            					<img src="<?php echo plugins_url( 'images/smile.svg', __FILE__ )?>">
+                            					<img draggable="false" src="<?php echo plugins_url( 'images/smile.svg', __FILE__ )?>">
 												<h5><?php _e( 'Community', STACKABLE_I18N )?></h5>
 												<p><?php _e( 'Join like-minded people who help each other do amazing things', STACKABLE_I18N )?></p>
 												<a class="s-getting-started__button primary" href="https://wpstackable.com/community/">
@@ -392,7 +392,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
                                 			</div>
                             
                                 			<div class="resources__item s-box">
-                            					<img src="<?php echo plugins_url( 'images/book-open.svg', __FILE__ )?>">
+                            					<img draggable="false" src="<?php echo plugins_url( 'images/book-open.svg', __FILE__ )?>">
 												<h5><?php _e( 'Documentation', STACKABLE_I18N )?></h5>
 												<p><?php _e( 'Learn how to use Stackable\'s powerful page building tools', STACKABLE_I18N )?></p>
 												<a class="s-getting-started__button primary" href="https://docs.wpstackable.com/">
@@ -401,7 +401,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
                                 			</div>
                             
                                 			<div class="resources__item s-box">
-                            					<img src="<?php echo plugins_url( 'images/align-left.svg', __FILE__ )?>">
+                            					<img draggable="false" src="<?php echo plugins_url( 'images/align-left.svg', __FILE__ )?>">
 												<h5><?php _e( 'Blog', STACKABLE_I18N )?></h5>
 												<p><?php _e( 'Browse through our articles and find what you\'re looking for', STACKABLE_I18N )?></p>
 												<a class="s-getting-started__button primary" href="https://wpstackable.com/blog/">
@@ -410,7 +410,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
                                 			</div>
                             
                                 			<div class="resources__item s-box">
-                            					<img src="<?php echo plugins_url( 'images/headphones.svg', __FILE__ )?>">
+                            					<img draggable="false" src="<?php echo plugins_url( 'images/headphones.svg', __FILE__ )?>">
 												<h5><?php _e( 'Get Support', STACKABLE_I18N )?></h5>
 												<p><?php _e( 'Stuck with something? Email us and we\'ll help you out', STACKABLE_I18N )?></p>
 												<a class="s-getting-started__button primary" href="mailto:support@wpstackable.com">
