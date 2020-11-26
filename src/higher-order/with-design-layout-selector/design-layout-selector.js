@@ -20,7 +20,7 @@ import {
 } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
 import {
-	Placeholder, Icon, Button, ButtonGroup,
+	Placeholder, Icon, Button, ButtonGroup, Spinner,
 } from '@wordpress/components'
 import { dispatch } from '@wordpress/data'
 
@@ -201,6 +201,7 @@ const DesignLayoutSelector = props => {
 			className={ classNames }
 			label={ label }
 		>
+			{ isBusy && <div className="ugb-design-layout-selector__spinner" data-testid="spinner"><Spinner /></div> }
 			<div className="ugb-design-layout-selector__content">
 				{ !! layouts.length &&
 					<div className="components-placeholder__instructions">{ layoutInstructions }</div>
