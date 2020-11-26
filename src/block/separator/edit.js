@@ -34,6 +34,17 @@ import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
 
+addFilter( 'stackable.separator.edit.inspector.layout.excludeDesigns', 'default', ret => {
+	const newExcludeDesigns = [
+		'straight-1',
+	]
+
+	return [
+		...ret,
+		...newExcludeDesigns,
+	]
+} )
+
 addFilter( 'stackable.separator.edit.inspector.layout.before', 'stackable/separator', ( output, props ) => {
 	const { setAttributes } = props
 
@@ -47,7 +58,7 @@ addFilter( 'stackable.separator.edit.inspector.layout.before', 'stackable/separa
 				<DesignSeparatorControl
 					onChange={ design => setAttributes( { design } ) }
 					selected={ design }
-					excludeDesigns={ [ 'straight-1' ] }
+					excludeDesigns={ applyFilters( 'stackable.separator.edit.inspector.layout.excludeDesigns', [] ) }
 				/>
 			</DesignPanelBody>
 		</Fragment>

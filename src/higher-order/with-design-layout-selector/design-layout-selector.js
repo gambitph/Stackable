@@ -91,7 +91,7 @@ const DesignLayoutSelector = props => {
 
 	const layoutItems = !! layouts.length && (
 		<div className="ugb-design-layout-selector__layout-items">
-			{ ( layouts || [] ).map( layout => (
+			{ ( layouts.filter( layout => ! applyFilters( `stackable.${ name }.edit.inspector.layout.excludeDesigns`, [] ).includes( layout.value ) ) || [] ).map( layout => (
 				<DesignLayoutSelectorItem
 					className="ugb-design-layout-selector__layout-item"
 					onClick={ () => {

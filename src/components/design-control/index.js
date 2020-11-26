@@ -7,6 +7,7 @@
 import { DesignPanelItem } from '~stackable/components'
 import { omit } from 'lodash'
 import classnames from 'classnames'
+import { isPro } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -15,7 +16,8 @@ import { RadioControl } from '@wordpress/components'
 
 const DesignControl = props => {
 	// Convert the options.
-	const fixedOptions = props.options.map( option => {
+	const _options = props.options.filter( option => option.premium ? isPro : true )
+	const fixedOptions = _options.map( option => {
 		return {
 			...option,
 			label: (
