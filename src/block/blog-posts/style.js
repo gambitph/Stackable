@@ -77,31 +77,60 @@ export const createStyles = props => {
 	} = props.attributes
 
 	const columnSelector = applyFilters( 'stackable.blog-posts.spacing-paddings.selector', '> .ugb-inner-block > .ugb-block-content > *', props )
+	const columnEditorSelector = applyFilters( 'stackable.blog-posts.spacing-paddings.selector', '> .ugb-inner-block > .ugb-block-content > .ugb-blog-posts__item', props )
 
 	styles.push( {
-		desktopTablet: {
-			[ columnSelector ]: appendImportantAll( {
-				paddingTop: getValue( 'columnPaddingTop', `%s${ columnPaddingUnit }` ),
-				paddingBottom: getValue( 'columnPaddingBottom', `%s${ columnPaddingUnit }` ),
-				paddingRight: getValue( 'columnPaddingRight', `%s${ columnPaddingUnit }` ),
-				paddingLeft: getValue( 'columnPaddingLeft', `%s${ columnPaddingUnit }` ),
-			} ),
+		saveOnly: {
+			desktopTablet: {
+				[ columnSelector ]: appendImportantAll( {
+					paddingTop: getValue( 'columnPaddingTop', `%s${ columnPaddingUnit }` ),
+					paddingBottom: getValue( 'columnPaddingBottom', `%s${ columnPaddingUnit }` ),
+					paddingRight: getValue( 'columnPaddingRight', `%s${ columnPaddingUnit }` ),
+					paddingLeft: getValue( 'columnPaddingLeft', `%s${ columnPaddingUnit }` ),
+				} ),
+			},
+			tabletOnly: {
+				[ columnSelector ]: appendImportantAll( {
+					paddingTop: getValue( 'tabletColumnPaddingTop', `%s${ tabletColumnPaddingUnit }` ),
+					paddingRight: getValue( 'tabletColumnPaddingRight', `%s${ tabletColumnPaddingUnit }` ),
+					paddingBottom: getValue( 'tabletColumnPaddingBottom', `%s${ tabletColumnPaddingUnit }` ),
+					paddingLeft: getValue( 'tabletColumnPaddingLeft', `%s${ tabletColumnPaddingUnit }` ),
+				} ),
+			},
+			mobile: {
+				[ columnSelector ]: appendImportantAll( {
+					paddingTop: getValue( 'mobileColumnPaddingTop', `%s${ mobileColumnPaddingUnit }` ),
+					paddingRight: getValue( 'mobileColumnPaddingRight', `%s${ mobileColumnPaddingUnit }` ),
+					paddingBottom: getValue( 'mobileColumnPaddingBottom', `%s${ mobileColumnPaddingUnit }` ),
+					paddingLeft: getValue( 'mobileColumnPaddingLeft', `%s${ mobileColumnPaddingUnit }` ),
+				} ),
+			},
 		},
-		tabletOnly: {
-			[ columnSelector ]: appendImportantAll( {
-				paddingTop: getValue( 'tabletColumnPaddingTop', `%s${ tabletColumnPaddingUnit }` ),
-				paddingRight: getValue( 'tabletColumnPaddingRight', `%s${ tabletColumnPaddingUnit }` ),
-				paddingBottom: getValue( 'tabletColumnPaddingBottom', `%s${ tabletColumnPaddingUnit }` ),
-				paddingLeft: getValue( 'tabletColumnPaddingLeft', `%s${ tabletColumnPaddingUnit }` ),
-			} ),
-		},
-		mobile: {
-			[ columnSelector ]: appendImportantAll( {
-				paddingTop: getValue( 'mobileColumnPaddingTop', `%s${ mobileColumnPaddingUnit }` ),
-				paddingRight: getValue( 'mobileColumnPaddingRight', `%s${ mobileColumnPaddingUnit }` ),
-				paddingBottom: getValue( 'mobileColumnPaddingBottom', `%s${ mobileColumnPaddingUnit }` ),
-				paddingLeft: getValue( 'mobileColumnPaddingLeft', `%s${ mobileColumnPaddingUnit }` ),
-			} ),
+		editor: {
+			desktopTablet: {
+				[ columnEditorSelector ]: appendImportantAll( {
+					paddingTop: getValue( 'columnPaddingTop', `%s${ columnPaddingUnit }` ),
+					paddingBottom: getValue( 'columnPaddingBottom', `%s${ columnPaddingUnit }` ),
+					paddingRight: getValue( 'columnPaddingRight', `%s${ columnPaddingUnit }` ),
+					paddingLeft: getValue( 'columnPaddingLeft', `%s${ columnPaddingUnit }` ),
+				} ),
+			},
+			tabletOnly: {
+				[ columnEditorSelector ]: appendImportantAll( {
+					paddingTop: getValue( 'tabletColumnPaddingTop', `%s${ tabletColumnPaddingUnit }` ),
+					paddingRight: getValue( 'tabletColumnPaddingRight', `%s${ tabletColumnPaddingUnit }` ),
+					paddingBottom: getValue( 'tabletColumnPaddingBottom', `%s${ tabletColumnPaddingUnit }` ),
+					paddingLeft: getValue( 'tabletColumnPaddingLeft', `%s${ tabletColumnPaddingUnit }` ),
+				} ),
+			},
+			mobile: {
+				[ columnEditorSelector ]: appendImportantAll( {
+					paddingTop: getValue( 'mobileColumnPaddingTop', `%s${ mobileColumnPaddingUnit }` ),
+					paddingRight: getValue( 'mobileColumnPaddingRight', `%s${ mobileColumnPaddingUnit }` ),
+					paddingBottom: getValue( 'mobileColumnPaddingBottom', `%s${ mobileColumnPaddingUnit }` ),
+					paddingLeft: getValue( 'mobileColumnPaddingLeft', `%s${ mobileColumnPaddingUnit }` ),
+				} ),
+			},
 		},
 	} )
 
