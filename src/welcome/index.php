@@ -261,8 +261,10 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					<div class="s-body s-box s-box-spaced s-getting-started">
 						<div class="s-getting-started-wrapper">
 							<div class="s-getting-started-content">
-								<h2 class="title"><?php _e( 'How to start using Stackable', STACKABLE_I18N ) ?></h2>
-								<p><?php _e( 'There\'s a lot you can achieve using Stackable. Here\'s a quick guide to start you off.', STACKABLE_I18N )?></p>
+								<div class="s-getting-started__entry s-getting-started__header">
+									<h2 class="title"><?php _e( 'How to start using Stackable', STACKABLE_I18N ) ?></h2>
+									<p><?php _e( 'There\'s a lot you can achieve using Stackable. Here\'s a quick guide to start you off.', STACKABLE_I18N )?></p>
+								</div>
                     			<div class="s-getting-started__two-column">
                         			<div class="s-getting-started__entry">
                             			<h4><?php _e( 'ADDING BLOCKS', STACKABLE_I18N )?></h4>

@@ -1,28 +1,6 @@
 /**
  * Styles used by the Getting Started section.
  */
-
-.getting-started .s-header h1 {
-	margin: 0 auto;
-}
-.s-tab-premium {
-	&,
-	&:hover {
-		color: #f34957;
-	}
-}
-.s-title {
-	text-align: center;
-	margin-bottom: 30px;
-}
-.s-spacer {
-	height: 50px;
-}
-
-.s-center {
-	text-align: center;
-}
-
 .s-getting-started-body {
 	display: grid;
 	grid-template-columns: 1fr 1.2fr;
@@ -56,20 +34,27 @@
 		align-items: center;
 		row-gap: 32px;
 
-		& > h2 {
-			text-align: center;
-			font-size: 32px;
-			font-weight: 500;
-			color: #f00069;
-			margin: 8px;
-			letter-spacing: 1px;
+		.s-getting-started__header {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+
+			& > h2 {
+				text-align: center;
+				font-size: 32px;
+				font-weight: 500;
+				color: #f00069;
+				margin: 8px;
+				letter-spacing: 1px;
+			}
+
+			& > p {
+				text-align: center;
+				max-width: 600px;
+				white-space: normal;
+			}
 		}
 
-		& > p {
-			text-align: center;
-			max-width: 600px;
-			white-space: normal;
-		}
 
 		p {
 			font-size: 14px;
