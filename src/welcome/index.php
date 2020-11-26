@@ -371,7 +371,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 										<p><?php _e( 'Start creating your site or check out our full guide to Stackable.', STACKABLE_I18N )?></p>
                             			<div class="button-group">
 											<a class="s-getting-started__button primary" href="post-new.php?post_type=page"><?php _e( 'Create New Page', STACKABLE_I18N )?></a>
-											<a class="s-getting-started__button secondary" href="https://docs.wpstackable.com/"><?php _e( 'Read Full Guide', STACKABLE_I18N )?></a>
+											<a class="s-getting-started__button secondary" href="https://wpstackable.com/blog/how-to-add-content-using-stackable/"><?php _e( 'Read Full Guide', STACKABLE_I18N )?></a>
                             			</div>
                         			</div>
                     			</div>

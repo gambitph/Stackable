@@ -54,7 +54,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		row-gap: 16px;
+		row-gap: 32px;
 
 		& > h2 {
 			text-align: center;
@@ -110,6 +110,10 @@
 					flex-basis: 50%;
 				}
 			}
+		}
+
+		& > .s-getting-started__entry > .s-image-caption > img {
+			width: 100%;
 		}
 
 		ul {
