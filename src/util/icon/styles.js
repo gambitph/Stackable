@@ -57,9 +57,17 @@ export const createIconStyleSet = ( attrNameTemplate = '%s', mainClassName = '',
 			color: appendImportant( getValue( 'Color' ) ),
 			transform: appendImportant( getValue( 'Rotation', 'rotate(%sdeg)' ) ),
 		},
-		[ `.${ mainClassName } .ugb-icon-inner-svg, .${ mainClassName } .ugb-icon-inner-svg svg *` ]: {
-			color: appendImportant( getValue( 'Color' ) ),
-			fill: appendImportant( getValue( 'Color' ) ),
+		saveOnly: {
+			[ `.${ mainClassName } .ugb-icon-inner-svg, .${ mainClassName } .ugb-icon-inner-svg svg *` ]: {
+				color: appendImportant( getValue( 'Color' ) ),
+				fill: appendImportant( getValue( 'Color' ) ),
+			},
+		},
+		editor: {
+			[ `.${ mainClassName } .ugb-icon-inner-svg, .${ mainClassName } .ugb-icon-inner-svg svg path, .${ mainClassName } .ugb-icon-inner-svg svg g, .${ mainClassName } .ugb-icon-inner-svg svg shape, .${ mainClassName } .ugb-icon-inner-svg svg circle, .${ mainClassName } .ugb-icon-inner-svg svg path, .${ mainClassName } .ugb-icon-inner-svg svg rect, .${ mainClassName } .ugb-icon-inner-svg svg polygon, .${ mainClassName } .ugb-icon-inner-svg svg ellipse` ]: {
+				color: appendImportant( getValue( 'Color' ) ),
+				fill: appendImportant( getValue( 'Color' ) ),
+			},
 		},
 		[ `.${ mainClassName }` ]: {
 			opacity: appendImportant( getValue( 'Opacity' ) ),

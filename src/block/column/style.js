@@ -11,6 +11,7 @@ import {
 	whiteIfDarkBlackIfLight,
 } from '~stackable/util'
 import deepmerge from 'deepmerge'
+import { first } from 'lodash'
 
 /**
  * Internal dependencies
@@ -60,7 +61,10 @@ export const createStyles = props => {
 	} )
 
 	// Content Vertical Align
-	styles.push( ...createResponsiveStyles( '> .ugb-inner-block > .ugb-block-content > *', '%sColumnContentVerticalAlign', 'justifyContent', '%s', props.attributes, { important: true } ) )
+	styles.push( {
+		saveOnly: first( createResponsiveStyles( '> .ugb-inner-block > .ugb-block-content > *', '%sColumnContentVerticalAlign', 'justifyContent', '%s', props.attributes, { important: true } ) ),
+		editor: first( createResponsiveStyles( '> .ugb-inner-block > .ugb-block-content > .ugb-column__item', '%sColumnContentVerticalAlign', 'justifyContent', '%s', props.attributes, { important: true } ) ),
+	} )
 
 	// Content Width
 	styles.push( {
@@ -86,29 +90,57 @@ export const createStyles = props => {
 		mobileColumnPaddingUnit = 'px',
 	} = props.attributes
 	styles.push( {
-		desktopTablet: {
-			'> .ugb-inner-block > .ugb-block-content > *': appendImportantAll( {
-				paddingTop: getValue( 'columnPaddingTop', `%s${ columnPaddingUnit }` ),
-				paddingBottom: getValue( 'columnPaddingBottom', `%s${ columnPaddingUnit }` ),
-				paddingRight: getValue( 'columnPaddingRight', `%s${ columnPaddingUnit }` ),
-				paddingLeft: getValue( 'columnPaddingLeft', `%s${ columnPaddingUnit }` ),
-			} ),
+		saveOnly: {
+			desktopTablet: {
+				'> .ugb-inner-block > .ugb-block-content > *': appendImportantAll( {
+					paddingTop: getValue( 'columnPaddingTop', `%s${ columnPaddingUnit }` ),
+					paddingBottom: getValue( 'columnPaddingBottom', `%s${ columnPaddingUnit }` ),
+					paddingRight: getValue( 'columnPaddingRight', `%s${ columnPaddingUnit }` ),
+					paddingLeft: getValue( 'columnPaddingLeft', `%s${ columnPaddingUnit }` ),
+				} ),
+			},
+			tabletOnly: {
+				'> .ugb-inner-block > .ugb-block-content > *': appendImportantAll( {
+					paddingTop: getValue( 'tabletColumnPaddingTop', `%s${ tabletColumnPaddingUnit }` ),
+					paddingRight: getValue( 'tabletColumnPaddingRight', `%s${ tabletColumnPaddingUnit }` ),
+					paddingBottom: getValue( 'tabletColumnPaddingBottom', `%s${ tabletColumnPaddingUnit }` ),
+					paddingLeft: getValue( 'tabletColumnPaddingLeft', `%s${ tabletColumnPaddingUnit }` ),
+				} ),
+			},
+			mobile: {
+				'> .ugb-inner-block > .ugb-block-content > *': appendImportantAll( {
+					paddingTop: getValue( 'mobileColumnPaddingTop', `%s${ mobileColumnPaddingUnit }` ),
+					paddingRight: getValue( 'mobileColumnPaddingRight', `%s${ mobileColumnPaddingUnit }` ),
+					paddingBottom: getValue( 'mobileColumnPaddingBottom', `%s${ mobileColumnPaddingUnit }` ),
+					paddingLeft: getValue( 'mobileColumnPaddingLeft', `%s${ mobileColumnPaddingUnit }` ),
+				} ),
+			},
 		},
-		tabletOnly: {
-			'> .ugb-inner-block > .ugb-block-content > *': appendImportantAll( {
-				paddingTop: getValue( 'tabletColumnPaddingTop', `%s${ tabletColumnPaddingUnit }` ),
-				paddingRight: getValue( 'tabletColumnPaddingRight', `%s${ tabletColumnPaddingUnit }` ),
-				paddingBottom: getValue( 'tabletColumnPaddingBottom', `%s${ tabletColumnPaddingUnit }` ),
-				paddingLeft: getValue( 'tabletColumnPaddingLeft', `%s${ tabletColumnPaddingUnit }` ),
-			} ),
-		},
-		mobile: {
-			'> .ugb-inner-block > .ugb-block-content > *': appendImportantAll( {
-				paddingTop: getValue( 'mobileColumnPaddingTop', `%s${ mobileColumnPaddingUnit }` ),
-				paddingRight: getValue( 'mobileColumnPaddingRight', `%s${ mobileColumnPaddingUnit }` ),
-				paddingBottom: getValue( 'mobileColumnPaddingBottom', `%s${ mobileColumnPaddingUnit }` ),
-				paddingLeft: getValue( 'mobileColumnPaddingLeft', `%s${ mobileColumnPaddingUnit }` ),
-			} ),
+		editor: {
+			desktopTablet: {
+				'> .ugb-inner-block > .ugb-block-content > .ugb-column__item': appendImportantAll( {
+					paddingTop: getValue( 'columnPaddingTop', `%s${ columnPaddingUnit }` ),
+					paddingBottom: getValue( 'columnPaddingBottom', `%s${ columnPaddingUnit }` ),
+					paddingRight: getValue( 'columnPaddingRight', `%s${ columnPaddingUnit }` ),
+					paddingLeft: getValue( 'columnPaddingLeft', `%s${ columnPaddingUnit }` ),
+				} ),
+			},
+			tabletOnly: {
+				'> .ugb-inner-block > .ugb-block-content > .ugb-column__item': appendImportantAll( {
+					paddingTop: getValue( 'tabletColumnPaddingTop', `%s${ tabletColumnPaddingUnit }` ),
+					paddingRight: getValue( 'tabletColumnPaddingRight', `%s${ tabletColumnPaddingUnit }` ),
+					paddingBottom: getValue( 'tabletColumnPaddingBottom', `%s${ tabletColumnPaddingUnit }` ),
+					paddingLeft: getValue( 'tabletColumnPaddingLeft', `%s${ tabletColumnPaddingUnit }` ),
+				} ),
+			},
+			mobile: {
+				'> .ugb-inner-block > .ugb-block-content > .ugb-column__item': appendImportantAll( {
+					paddingTop: getValue( 'mobileColumnPaddingTop', `%s${ mobileColumnPaddingUnit }` ),
+					paddingRight: getValue( 'mobileColumnPaddingRight', `%s${ mobileColumnPaddingUnit }` ),
+					paddingBottom: getValue( 'mobileColumnPaddingBottom', `%s${ mobileColumnPaddingUnit }` ),
+					paddingLeft: getValue( 'mobileColumnPaddingLeft', `%s${ mobileColumnPaddingUnit }` ),
+				} ),
+			},
 		},
 	} )
 
