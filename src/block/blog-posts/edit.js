@@ -1022,24 +1022,25 @@ export default compose(
 		} = props.attributes
 		const { getEntityRecords } = select( 'core' )
 
-		const categoryQuery = {
-			categories: taxonomyFilterType === '__in' && taxonomyType === 'category' && taxonomy ? taxonomy : undefined,
-			categories_exclude: taxonomyFilterType === '__not_in' && taxonomyType === 'category' && taxonomy ? taxonomy : undefined, // eslint-disable-line camelcase
-		}
-
-		const tagQuery = {
-			tags: taxonomyFilterType === '__in' && taxonomyType === 'post_tag' && taxonomy ? taxonomy : undefined,
-			tags_exclude: taxonomyFilterType === '__not_in' && taxonomyType === 'post_tag' && taxonomy ? taxonomy : undefined, // eslint-disable-line camelcase
-		}
-
 		const postQuery = pickBy( {
 			order,
 			orderby: orderBy,
 			per_page: numberOfItems, // eslint-disable-line camelcase
-			...categoryQuery,
-			...tagQuery,
 			...applyFilters( 'stackable.blog-posts.postQuery', {}, props ),
 		}, value => ! isUndefined( value ) && value !== '' )
+
+		if ( taxonomy && taxonomyType ) {
+			// Categories.
+			if ( taxonomyType === 'category' ) {
+				postQuery[ taxonomyFilterType === '__in' ? 'categories' : 'categories_exclude' ] = taxonomy
+			// Tags.
+			} else if ( taxonomyType === 'post_tag' ) {
+				postQuery[ taxonomyFilterType === '__in' ? 'tags' : 'tags_exclude' ] = taxonomy
+			// Custom taxonomies.
+			} else {
+				postQuery[ taxonomyFilterType === '__in' ? taxonomyType : `${ taxonomyType }_exclude` ] = taxonomy
+			}
+		}
 
 		return {
 			posts: getEntityRecords( 'postType', postType, postQuery ),
