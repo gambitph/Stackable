@@ -397,6 +397,9 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					admin_url( 'options-general.php?page=stackable' ),
 					__( 'Settings', STACKABLE_I18N )
 				);
+
+				// Prevent warnings in PHP 7.0+ when a plugin uses this filter incorrectly.
+				$links = (array) $links;
 				array_unshift( $links, $settings_link );
 			}
 
@@ -406,6 +409,9 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					'https://wpstackable.com/premium/?utm_source=wp-plugins&utm_campaign=gopremium&utm_medium=wp-dashboard',
 					__( 'Go Premium', STACKABLE_I18N )
 				);
+
+				// Prevent warnings in PHP 7.0+ when a plugin uses this filter incorrectly.
+				$links = (array) $links;
 				$links[] = $premium_link;
 			}
 
