@@ -221,7 +221,14 @@ const DesignLayoutSelector = props => {
 						<Button
 							isLink
 							isLarge
-							onClick={ () => doAction( `stackable.design-layout-selector.${ props.clientId }`, ( { isOpen: false, isNewlyAddedBlock: false } ) ) }
+							onClick={ () => {
+								const { updateInitialBlocks } = dispatch( 'stackable/util' )
+								if ( isNewlyAddedBlock ) {
+									updateInitialBlocks()
+								}
+
+								doAction( `stackable.design-layout-selector.${ props.clientId }`, ( { isOpen: false, isNewlyAddedBlock: false } ) )
+							} }
 						>
 							{ isNewlyAddedBlock ? __( 'Skip', i18n ) : __( 'Cancel', i18n ) }
 						</Button>
