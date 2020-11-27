@@ -50,6 +50,7 @@ const DesignLayoutSelector = props => {
 	const [ isBusy, setIsBusy ] = useState( true )
 
 	useEffect( () => {
+		let isMounted = true
 		const blockButtonElement = document.querySelector( 'button[data-label="Block"]' )
 		const sidebarPanel = document.querySelector( '.block-editor-block-inspector' )
 
@@ -57,8 +58,10 @@ const DesignLayoutSelector = props => {
 			type: 'block',
 			block: name,
 		} ).then( designs => {
-			setDesigns( currDesigns => [ ...currDesigns, ...designs ] )
-			setIsBusy( false )
+			if ( isMounted ) {
+				setDesigns( currDesigns => [ ...currDesigns, ...designs ] )
+				setIsBusy( false )
+			}
 		} )
 
 		// Hide the sidebar panel and block tab.
@@ -68,6 +71,7 @@ const DesignLayoutSelector = props => {
 		}
 
 		return () => {
+			isMounted = false
 			if ( blockButtonElement && sidebarPanel ) {
 				blockButtonElement.style.opacity = '1'
 				sidebarPanel.style.opacity = '1'
