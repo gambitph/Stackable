@@ -23,19 +23,21 @@ const DesignLayoutSelectorItem = ( {
 	            srcUrl ? `${ srcUrl }/${ image }` :
 	            image
 
+	const isLayoutPremium = otherProps.plan !== 'free'
+	const isLocked = isLayoutPremium && ! isPro && showProNotice
+
+	if ( isLayoutPremium && ! isPro && ! showProNotice ) {
+		return null
+	}
+
 	const itemClassNames = classnames( [
 		'ugb-design-layout-selector__item',
 		className,
 	], {
 		'is-premium': otherProps.plan && ! isPro && otherProps.plan !== 'free',
+		'is-locked': isLocked,
 	} )
 
-	const isLayoutPremium = otherProps.plan !== 'free'
-	if ( isLayoutPremium && ! isPro && ! showProNotice ) {
-		return null
-	}
-
-	const isLocked = isLayoutPremium && ! isPro && showProNotice
 	const Tag = isLocked ? `div` : `button`
 
 	return (

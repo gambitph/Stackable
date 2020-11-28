@@ -27,11 +27,6 @@
 	position: relative;
 	max-width: 750px;
 	margin: auto !important;
-	&:not(.is-busy) {
-		.ugb-design-layout-selector__spinner {
-			display: none;
-		}
-	}
 	&.is-busy {
 		.ugb-design-layout-selector__content {
 			opacity: 0.15;
@@ -41,6 +36,17 @@
 
 .ugb-design-layout-selector__close-button {
 	width: 100%;
+	padding-top: 8px;
+	align-items: center;
+	justify-content: space-between;
+	display: flex;
+	flex-direction: row;
+}
+.ugb-design-layout-selector__notice {
+	margin: 0 !important;
+	font-size: 10px !important;
+	font-style: italic;
+	color: #aaa;
 }
 
 .ugb-design-layout-selector__item {
@@ -58,6 +64,27 @@
 		.ugb-design-layout-selector__wrapper {
 			&::after {
 				cursor: default;
+			}
+		}
+	}
+
+	&:hover {
+		.ugb-design-layout-selector__wrapper {
+			// box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08);
+			&::after {
+				opacity: 0.05;
+			}
+			.ugb-design-layout-selector__lock {
+				opacity: 0;
+				transform: scale(0.5);
+			}
+			.ugb-design-layout-selector__item-premium-button {
+				opacity: 1;
+			}
+		}
+		&.is-premium {
+			.ugb-design-layout-selector__wrapper::after {
+				opacity: 0.25;
 			}
 		}
 	}
@@ -133,7 +160,6 @@
 	position: relative;
 	border-radius: 8px;
 	overflow: hidden;
-	box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08);
 	margin-top: 3px; // This is so that the outline would not touch the image.
 
 	> *:not(.ugb-design-layout-selector__image) {
@@ -151,19 +177,6 @@
 		position: absolute;
 		opacity: 0;
 		transition: all 0.2s ease-in;
-	}
-
-	&:hover {
-		&::after {
-			opacity: 0.1;
-		}
-		.ugb-design-layout-selector__lock {
-			opacity: 0;
-			transform: scale(0.5);
-		}
-		.ugb-design-layout-selector__item-premium-button {
-			opacity: 1;
-		}
 	}
 }
 
@@ -199,7 +212,11 @@
 }
 
 .ugb-design-layout-selector__design-library {
+	position: relative;
 	margin-top: 24px;
+	&.is-busy {
+		opacity: 0.15;
+	}
 }
 
 .ugb-design-layout-selector__content {

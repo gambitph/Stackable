@@ -1,9 +1,8 @@
-
 /**
  * External dependencies
  */
 import {
-	i18n, isPro,
+	i18n, isPro, showProNotice,
 } from 'stackable'
 import { applyBlockDesign } from '~stackable/util'
 import { getDesigns, getDesign } from '~stackable/design-library'
@@ -37,51 +36,39 @@ const basicDesign = {
 const DesignLayoutSelector = props => {
 	const {
 		name,
-		isNewlyAddedBlock,
 	} = props
 
 	const [ layouts, setLayouts ] = useState( [] )
-	const [ designs, setDesigns ] = useState( layouts.length ? [] : isNewlyAddedBlock ? [ basicDesign ] : [] )
-	const [ isBusy, setIsBusy ] = useState( true )
+	const [ designs, setDesigns ] = useState( [] )
+	const [ isBusy, setIsBusy ] = useState( false )
+	const [ isDesignBusy, setIsDesignBusy ] = useState( true )
 
 	useEffect( () => {
+		const isMounted = true
 		const name = props.name.split( '/' )[ 1 ]
-		setLayouts( applyFilters( `stackable.${ name }.edit.layouts`, [] ).map( layout => ( { ...layout, plan: layout.premium ? 'premium' : 'free' } ) ) )
+		const layouts = applyFilters( `stackable.${ name }.edit.layouts`, [] ).map( layout => ( { ...layout, plan: layout.premium ? 'premium' : 'free' } ) )
 
-		let isMounted = true
-		const blockButtonElement = document.querySelector( 'button[data-label="Block"]' )
-		const sidebarPanel = document.querySelector( '.block-editor-block-inspector' )
+		// If there are no layouts, then allow the user to selec the default look and not be forced to pick from the design library.
+		setLayouts( layouts.length ? layouts : [ basicDesign ] )
 
+		// Get the designs.
 		getDesigns( {
 			type: 'block',
 			block: name,
 		} ).then( designs => {
 			if ( isMounted ) {
-				setDesigns( currDesigns => [ ...currDesigns, ...designs ] )
-				setIsBusy( false )
+				setDesigns( designs )
+				setIsDesignBusy( false )
+
+				// If there are no layouts and designs available, just pick the first one right away.
+				if ( ! designs.length && layouts.length <= 1 ) {
+					props.setAttributes( { design: layouts[ 0 ]?.value || basicDesign.id } )
+				}
 			}
 		} )
-
-		// Hide the sidebar panel and block tab.
-		if ( blockButtonElement && sidebarPanel ) {
-			blockButtonElement.style.opacity = '0'
-			sidebarPanel.style.opacity = '0'
-		}
-
-		return () => {
-			isMounted = false
-			if ( blockButtonElement && sidebarPanel ) {
-				blockButtonElement.style.opacity = '1'
-				sidebarPanel.style.opacity = '1'
-			}
-		}
 	}, [] )
 
 	const label = <Fragment><Icon icon="admin-settings" />{ __( 'Pick a layout or design', i18n ) }</Fragment>
-	const classNames = classnames( 'ugb-design-layout-selector', { 'is-busy': isBusy } )
-
-	const layoutInstructions = isNewlyAddedBlock ? __( 'Select a variation to start with.', i18n ) : __( 'Select a variation.', i18n )
-	const designInstructions = isNewlyAddedBlock ? __( 'Select a design from our library to start with.', i18n ) : __( 'Select a design from our library.', i18n )
 
 	const layoutItems = !! layouts.length && (
 		<div className="ugb-design-layout-selector__layout-items">
@@ -103,9 +90,11 @@ const DesignLayoutSelector = props => {
 		</div>
 	)
 
+	const designClassNames = classnames( 'ugb-design-layout-selector__design-library', { 'is-busy': isDesignBusy } )
 	const designItems = !! designs.length && (
-		<div className="ugb-design-layout-selector__design-library">
+		<div className={ designClassNames }>
 			<div className="components-placeholder__fieldset ugb-design-layout-selector__design-container">
+				{ isDesignBusy && <div className="ugb-design-layout-selector__spinner" data-testid="spinner"><Spinner /></div> }
 				<div className="ugb-design-layout-selector__design-items">
 					{ ( designs || [] ).map( design => {
 						const passedProps = {
@@ -143,6 +132,7 @@ const DesignLayoutSelector = props => {
 		</div>
 	)
 
+	const classNames = classnames( 'ugb-design-layout-selector', { 'is-busy': isBusy } )
 	return (
 		<Placeholder
 			className={ classNames }
@@ -151,13 +141,13 @@ const DesignLayoutSelector = props => {
 			{ isBusy && <div className="ugb-design-layout-selector__spinner" data-testid="spinner"><Spinner /></div> }
 			<div className="ugb-design-layout-selector__content">
 				{ !! layouts.length &&
-					<div className="components-placeholder__instructions">{ layoutInstructions }</div>
+					<div className="components-placeholder__instructions">{ __( 'Select a variation to start with.', i18n ) }</div>
 				}
 				{ layoutItems }
 				{ !! designs.length &&
 					<div className="components-placeholder__instructions" >
 						{ !! layouts.length && __( 'Or pick from our Design Library.', i18n ) }
-						{ ! layouts.length && designInstructions }
+						{ ! layouts.length && __( 'Select a design from our library to start with.', i18n ) }
 					</div>
 				}
 				{ designItems }
@@ -181,6 +171,9 @@ const DesignLayoutSelector = props => {
 						{ __( 'Skip', i18n ) }
 					</Button>
 				</ButtonGroup>
+				{ ! isPro && showProNotice &&
+					<p className="ugb-design-layout-selector__notice">{ __( 'You can hide premium hints in the settings', i18n ) }</p>
+				}
 			</div>
 		</Placeholder>
 	)
@@ -188,9 +181,6 @@ const DesignLayoutSelector = props => {
 
 DesignLayoutSelector.defaultProps = {
 	name: '',
-	layouts: [],
-	isNewlyAddedBlock: false,
-	isSelectedBlock: true,
 }
 
 export default DesignLayoutSelector
