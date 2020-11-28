@@ -15,14 +15,11 @@ import classnames from 'classnames'
 import {
 	Fragment, useEffect, useState,
 } from '@wordpress/element'
-import {
-	applyFilters, doAction, hasFilter,
-} from '@wordpress/hooks'
+import { applyFilters } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
 import {
 	Placeholder, Icon, Button, ButtonGroup, Spinner,
 } from '@wordpress/components'
-import { dispatch } from '@wordpress/data'
 
 /**
  * Internal dependencies
@@ -40,16 +37,17 @@ const basicDesign = {
 const DesignLayoutSelector = props => {
 	const {
 		name,
-		layouts,
 		isNewlyAddedBlock,
-		isSelectedBlock,
 	} = props
-	const selectedLayout = props.attributes.design
 
+	const [ layouts, setLayouts ] = useState( [] )
 	const [ designs, setDesigns ] = useState( layouts.length ? [] : isNewlyAddedBlock ? [ basicDesign ] : [] )
 	const [ isBusy, setIsBusy ] = useState( true )
 
 	useEffect( () => {
+		const name = props.name.split( '/' )[ 1 ]
+		setLayouts( applyFilters( `stackable.${ name }.edit.layouts`, [] ).map( layout => ( { ...layout, plan: layout.premium ? 'premium' : 'free' } ) ) )
+
 		let isMounted = true
 		const blockButtonElement = document.querySelector( 'button[data-label="Block"]' )
 		const sidebarPanel = document.querySelector( '.block-editor-block-inspector' )
@@ -79,14 +77,6 @@ const DesignLayoutSelector = props => {
 		}
 	}, [] )
 
-	// Close the selector when the block is not already selected.
-	useEffect( () => {
-		if ( isSelectedBlock !== props.clientId ) {
-			// Close the layout selector.
-			doAction( `stackable.design-layout-selector.${ props.clientId }`, ( { isOpen: false } ) )
-		}
-	}, [ isSelectedBlock, isNewlyAddedBlock ] )
-
 	const label = <Fragment><Icon icon="admin-settings" />{ __( 'Pick a layout or design', i18n ) }</Fragment>
 	const classNames = classnames( 'ugb-design-layout-selector', { 'is-busy': isBusy } )
 
@@ -99,37 +89,13 @@ const DesignLayoutSelector = props => {
 				<DesignLayoutSelectorItem
 					className="ugb-design-layout-selector__layout-item"
 					onClick={ () => {
-						const { updateInitialBlocks } = dispatch( 'stackable/util' )
-						const { setAttributes } = props
-
 						if ( layout.premium && ! isPro ) {
 							return
 						}
 
-						updateInitialBlocks()
-
-						// Close the layout selector.
-						doAction( `stackable.design-layout-selector.${ props.clientId }`, ( { isOpen: false, isNewlyAddedBlock: false } ) )
-
-						// If currently selected is the same as the newly selected layout. Don't do anything.
-						if ( props.attributes.design === layout.value ) {
-							return
-						}
-
-						// Manually trigger the setAttributes filter.
-						const newAttributes = applyFilters( `stackable.${ name }.setAttributes`, {
-							design: layout.value,
-						},
-						props )
-
-						// Check if a custom filter exists in the block.
-						if ( hasFilter( `stackable.${ name }.edit.inspector.layout.attributes` ) ) {
-							setAttributes( applyFilters( `stackable.${ name }.edit.inspector.layout.attributes`, newAttributes ) )
-						} else {
-							setAttributes( newAttributes )
-						}
+						const { setAttributes } = props
+						setAttributes( { design: layout.value } )
 					} }
-
 					key={ layout.label }
 					{ ...layout }
 				/>
@@ -151,8 +117,6 @@ const DesignLayoutSelector = props => {
 							<DesignLayoutSelectorItem
 								className="ugb-design-layout-selector__design-item"
 								onClick={ () => {
-									const { updateInitialBlocks } = dispatch( 'stackable/util' )
-
 									// Should not be selected if not premium user
 									if ( ! isPro && design.plan !== 'free' ) {
 										return
@@ -160,31 +124,10 @@ const DesignLayoutSelector = props => {
 
 									setIsBusy( true )
 
-									// If chosen design is basic, just close the layout selector.
-									if ( design.id === 'basic' ) {
-										updateInitialBlocks()
-										setIsBusy( false )
-										// Close the layout selector
-										doAction( `stackable.design-layout-selector.${ props.clientId }`, ( { isOpen: false, isNewlyAddedBlock: false } ) )
-										return
-									}
-
 									getDesign( design.id )
 										.then( designData => {
-											const {
-												attributes,
-											} = designData
-
 											setIsBusy( false )
-
-											// Refetch the initial blocks. Include the currently added block.
-											updateInitialBlocks()
-
-											// Close the layout selector
-											doAction( `stackable.design-layout-selector.${ props.clientId }`, ( { isOpen: false, isNewlyAddedBlock: false } ) )
-
-											// Apply the block design.
-											applyBlockDesign( attributes, props.clientId )
+											applyBlockDesign( designData.attributes, props.clientId )
 										} )
 										.catch( () => {
 											setIsBusy( false )
@@ -221,22 +164,22 @@ const DesignLayoutSelector = props => {
 			</div>
 			<div className="ugb-design-layout-selector__close-button">
 				<ButtonGroup>
-					{ selectedLayout !== '' && (
-						<Button
-							isLink
-							isLarge
-							onClick={ () => {
-								const { updateInitialBlocks } = dispatch( 'stackable/util' )
-								if ( isNewlyAddedBlock ) {
-									updateInitialBlocks()
-								}
+					<Button
+						isLink
+						isLarge
+						onClick={ () => {
+							if ( layouts.length ) {
+								const layout = layouts.find( layout => {
+									return ! isPro ? ! layout.premium : true
+								} )
 
-								doAction( `stackable.design-layout-selector.${ props.clientId }`, ( { isOpen: false, isNewlyAddedBlock: false } ) )
-							} }
-						>
-							{ isNewlyAddedBlock ? __( 'Skip', i18n ) : __( 'Cancel', i18n ) }
-						</Button>
-					) }
+								const { setAttributes } = props
+								setAttributes( { design: layout.value } )
+							}
+						} }
+					>
+						{ __( 'Skip', i18n ) }
+					</Button>
 				</ButtonGroup>
 			</div>
 		</Placeholder>
