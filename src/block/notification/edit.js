@@ -171,6 +171,18 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 						allowReset={ true }
 						placeholder={ design === 'bordered' ? 5 : 3 }
 					/>
+					{ design === 'outlined' && show.borderRadius &&
+						<AdvancedRangeControl
+							label={ __( 'Border Radius', i18n ) }
+							value={ borderRadius }
+							onChange={ borderRadius => setAttributes( { borderRadius } ) }
+							min={ 0 }
+							max={ 50 }
+							allowReset={ true }
+							placeholder="12"
+							className="ugb--help-tip-general-border-radius"
+						/>
+					}
 				</PanelAdvancedSettings>
 			}
 
