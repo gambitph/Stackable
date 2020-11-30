@@ -27,32 +27,17 @@
 		margin: 16px;
 	}
 
-	.ugb-modal-design-library__back-button {
-		outline: none !important;
-	}
-
 	.components-base-control__help {
 		text-align: center;
 		font-style: italic !important;
 	}
 
-	.ugb-design-library__modal {
-		.components-modal__header-heading-container {
-			flex-grow: unset !important;
-			height: inherit;
-			width: 276px !important;
-		}
-
-		.components-modal__header-heading-wrapper {
-			display: flex;
-			height: 100%;
-			justify-content: flex-start;
-		}
-
-		.ugb-modal-design-library__header-buttons .components-button {
-			height: 100%;
+	.ugb-modal-design-library__header-buttons {
+		margin-left: 40px;
+		button {
 			box-shadow: none;
 			padding: 0 24px;
+			height: 60px;
 			&:hover {
 				color: #f00069;
 				background: #f1f1f1;
@@ -61,12 +46,11 @@
 				background-color: #fad9e4 !important;
 				color: #f00069 !important;
 			}
-			.ugb-modal-design-library__tag {
-				margin-left: 8px;
-			}
+		}
+		.ugb-modal-design-library__tag {
+			margin-left: 8px;
 		}
 	}
-
 
 	.components-modal__content {
 		padding: 0;

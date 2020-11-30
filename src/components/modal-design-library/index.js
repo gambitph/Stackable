@@ -3,7 +3,6 @@
  */
 import { BlockDesigns, useBlockDesigns } from './block-designs/'
 import { UIKits, useUIKits } from './ui-kits/'
-import DesignLibraryModal from './design-library-modal'
 
 /**
  * External deprendencies
@@ -14,8 +13,12 @@ import { i18n } from 'stackable'
  * WordPress deprendencies
  */
 import { __ } from '@wordpress/i18n'
-import { ButtonGroup, Button } from '@wordpress/components'
-import { useState, useEffect } from '@wordpress/element'
+import {
+	ButtonGroup, Button, Modal,
+} from '@wordpress/components'
+import {
+	Fragment, useState, useEffect,
+} from '@wordpress/element'
 
 // Used to remember last opened tab and UI Kit.
 const cache = {}
@@ -37,38 +40,50 @@ const ModalDesignLibrary = props => {
 		...props, setActiveTab, uiKitsModuleProps,
 	} )
 
+	// Focus on the search bar.
 	useEffect( () => {
-		const input = document.querySelector( '.ugb-modal-design-library__cover-inner input' )
-		if ( input ) {
-			input.focus()
+		let isMounted = true
+
+		setTimeout( () => {
+			if ( isMounted ) {
+				const input = document.querySelector( '.ugb-modal-design-library__cover-inner input' )
+				if ( input ) {
+					input.focus()
+				}
+			}
+		}, 1 )
+
+		return () => {
+			isMounted = false
 		}
 	}, [ activeTab ] )
 
 	return (
-		<DesignLibraryModal
+		<Modal
 			className="ugb-modal-design-library"
-			overlayClassName="ugb-modal-design-library__modal"
-			title={ __( 'Stackable Design Library', i18n ) }
 			onRequestClose={ props.onClose }
-			headerContent={
-				<ButtonGroup className="ugb-modal-design-library__header-buttons">
+			title={
+				<Fragment>
+					{ __( 'Stackable Design Library', i18n ) }
+					<ButtonGroup className="ugb-modal-design-library__header-buttons">
 
-					<Button
-						className={ activeTab === 'block-designs' ? 'is-active' : undefined }
-						onClick={ () => setActiveTab( 'block-designs' ) }
-					>
-						{ __( 'Block Designs', i18n ) }
-					</Button>
+						<Button
+							className={ activeTab === 'block-designs' ? 'is-active' : undefined }
+							onClick={ () => setActiveTab( 'block-designs' ) }
+						>
+							{ __( 'Block Designs', i18n ) }
+						</Button>
 
-					<Button
-						className={ activeTab === 'ui-kits' ? 'is-active' : undefined }
-						onClick={ () => setActiveTab( 'ui-kits' ) }
-						disabled={ !! props.selectedBlock }
-					>
-						{ __( 'UI Kits', i18n ) }<span className="ugb-modal-design-library__tag">{ __( 'New', i18n ) }</span>
-					</Button>
+						<Button
+							className={ activeTab === 'ui-kits' ? 'is-active' : undefined }
+							onClick={ () => setActiveTab( 'ui-kits' ) }
+							disabled={ !! props.selectedBlock }
+						>
+							{ __( 'UI Kits', i18n ) }<span className="ugb-modal-design-library__tag">{ __( 'New', i18n ) }</span>
+						</Button>
 
-				</ButtonGroup>
+					</ButtonGroup>
+				</Fragment>
 			}
 		>
 
@@ -77,7 +92,7 @@ const ModalDesignLibrary = props => {
 				{ activeTab === 'ui-kits' && <UIKits { ...{ ...props, moduleProps: uiKitsModuleProps } } /> }
 			</div>
 
-		</DesignLibraryModal>
+		</Modal>
 	)
 }
 
