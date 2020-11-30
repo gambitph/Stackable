@@ -79,7 +79,8 @@ const ModalDesignLibrary = props => {
 							onClick={ () => setActiveTab( 'ui-kits' ) }
 							disabled={ !! props.selectedBlock }
 						>
-							{ __( 'UI Kits', i18n ) }<span className="ugb-modal-design-library__tag">{ __( 'New', i18n ) }</span>
+							{ __( 'UI Kits', i18n ) }
+							<span className="ugb-modal-design-library__tag">{ __( 'New', i18n ) }</span>
 						</Button>
 
 					</ButtonGroup>

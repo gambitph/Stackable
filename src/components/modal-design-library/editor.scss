@@ -38,6 +38,9 @@
 			box-shadow: none;
 			padding: 0 24px;
 			height: 60px;
+			&[disabled] {
+				pointer-events: none !important;
+			}
 			&:hover {
 				color: #f00069;
 				background: #f1f1f1;
