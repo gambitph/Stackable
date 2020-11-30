@@ -64,7 +64,6 @@ const edit = ( { replaceBlockWithAttributes, replaceBlocWithContent } ) => {
 export default compose( [
 	withDispatch( ( dispatch, { clientId } ) => {
 		const { replaceBlock, replaceBlocks } = dispatch( 'core/block-editor' )
-
 		return {
 			// Replaces the current block with a block made out of attributes.
 			replaceBlockWithAttributes: ( blockName, attributes, innerBlocks ) => {
@@ -72,16 +71,12 @@ export default compose( [
 				const blockAttributes = applyFilters( `stackable.${ shortBlockName }.design.filtered-block-attributes`, attributes )
 
 				const block = createBlock( blockName, blockAttributes, innerBlocks )
-
 				replaceBlock( clientId, block )
-				dispatch( 'stackable/util' )?.updateInitialBlocks()
 			},
 			// Replaces the current block with one or more blocks from a string.
 			replaceBlocWithContent: serializedBlock => {
 				const block = parse( serializedBlock )
-
 				replaceBlocks( clientId, block )
-				dispatch( 'stackable/util' )?.updateInitialBlocks()
 			},
 		}
 	} ),
