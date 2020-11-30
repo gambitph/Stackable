@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+import { Button } from '@wordpress/components'
 import classnames from 'classnames'
 
 const Sidebar = props => {
@@ -12,7 +13,7 @@ const Sidebar = props => {
 		className,
 	} = props
 
-	const mainClasses = classnames( 'ugb-sidebar', {
+	const mainClasses = classnames( 'ugb-design-library__sidebar', {
 		[ className ]: className,
 	} )
 
@@ -20,7 +21,7 @@ const Sidebar = props => {
 		<ul className={ mainClasses }>
 
 			{ props.title && (
-				<h3 className="ugb-sidebar__title">{ props.title }</h3>
+				<h4 className="ugb-design-library__sidebar__title">{ props.title }</h4>
 			) }
 
 			{ ( options || [] ).map( option => {
@@ -31,11 +32,9 @@ const Sidebar = props => {
 
 				return (
 					<li key={ option.value }>
-						<div
+						<Button
 							className={ value === option.value ? 'is-active' : undefined }
-							role="button"
 							disabled={ disabled	}
-							aria-pressed={ value === option.value ? 'true' : 'false' }
 							onMouseDown={ () => {
 								if ( ! disabled ) {
 									onSelect( option.value )
@@ -46,9 +45,10 @@ const Sidebar = props => {
 									this.click()
 								}
 							} }
+							isLink
 						>
 							{ option.label }
-						</div>
+						</Button>
 					</li>
 				)
 			} ) }
