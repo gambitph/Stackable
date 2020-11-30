@@ -47,26 +47,22 @@ const BlockDesigns = props => {
 	return (
 		<Fragment>
 			<aside className="ugb-modal-design-library__sidebar">
-				<div className="ugb-modal-design-library__filters">
+				<Sidebar
+					options={ options }
+					value={ plan }
+					onSelect={ setPlan }
+					forceDisabledExcept={ props.selectedBlock ? [ 'free', 'premium' ] : null }
+				/>
 
-					<Sidebar
-						options={ options }
-						value={ plan }
-						onSelect={ setPlan }
-						forceDisabledExcept={ props.selectedBlock ? [ 'free', 'premium' ] : null }
-					/>
+				<ControlSeparator />
 
-					<ControlSeparator />
-
-					<Sidebar
-						title={ __( 'Browse By Block', i18n ) }
-						options={ blockList }
-						value={ block }
-						onSelect={ setBlock }
-						forceDisabledExcept={ props.selectedBlock ? props.selectedBlock : null }
-					/>
-
-				</div>
+				<Sidebar
+					title={ __( 'Browse By Block', i18n ) }
+					options={ blockList }
+					value={ block }
+					onSelect={ setBlock }
+					forceDisabledExcept={ props.selectedBlock ? props.selectedBlock : null }
+				/>
 			</aside>
 
 			<aside className="ugb-modal-design-library__content">

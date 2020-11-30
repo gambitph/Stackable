@@ -98,8 +98,6 @@ const useUIKits = props => { //eslint-disable-line
 		} )
 	}, [ props.onSelect ] )
 
-	const backbuttonLabel = useMemo( () => previewMode?.fromBlockDesigns ? __( 'Back to Block Designs', i18n ) : __( 'Back to UI Kits', i18n ), [ previewMode ] )
-
 	const backButtonOnClick = useCallback( () => {
 		setPreviewMode( null )
 
@@ -193,7 +191,6 @@ const useUIKits = props => { //eslint-disable-line
 		setPreviewMode,
 		isApplyingDesign,
 		previewInnerProps,
-		backbuttonLabel,
 		backButtonOnClick,
 	}
 }

@@ -1,105 +1,29 @@
 @import "common";
 
+.ugb-modal-design-library__tag {
+	background-color: #f00069;
+	color: #fff !important;
+	font-size: 10px !important;
+	padding: 4px 8px;
+	text-transform: uppercase;
+	display: inline-block;
+	letter-spacing: 1px;
+}
+
 .ugb-modal-design-library {
 	width: 100%;
 	max-width: 90%;
 	height: 90%;
 	min-height: 500px;
 
-	.ugb-modal-design-library__premium-tag {
-		width: max-content;
-		background-color: #e74673;
-		padding: 8px;
-		color: #fff;
-		font-size: 16px;
-		font-weight: 600;
-		text-transform: uppercase;
-		margin-top: 16px;
-	}
-
-	.ugb-modal-design-library__preview-cover {
-		img {
-			width: 100%;
-		}
-	}
-
-	.ugb-modal-design-library__preview-info {
-		display: flex;
-		column-gap: 40px;
-		margin-bottom: 16px;
-
-		.ugb-modal-design-library__preview-info-item {
-			h4 {
-				text-transform: uppercase;
-				font-size: 12px;
-				font-weight: 400;
-			}
-
-			.components-circular-option-picker__option-wrapper {
-				transform: scale(1) !important;
-
-				.components-circular-option-picker__option {
-					cursor: default !important;
-				}
-			}
-		}
-
-		.ugb-modal-design-library__preview-info-typography {
-			font-size: 16px;
-			font-weight: 300;
-		}
-	}
-
-	.ugb-design-library__ui-kit-topbar-wrapper {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		height: 100%;
-
-		.components-button {
-			font-size: 16px;
-			text-transform: uppercase;
-			letter-spacing: 1px;
-			height: 100%;
-			padding: 20px;
-			border-radius: 0;
-			white-space: normal;
-		}
-	}
-
-	.ugb-design-library__ui-kit-header-text {
-		margin-right: 40px;
-		white-space: normal;
-
-		h2 {
-			font-size: 30px;
-			font-weight: 600;
-			margin: 0;
-		}
-
-		p {
-			margin: 0;
-			margin-top: 16px;
-			text-transform: uppercase;
-		}
-	}
-
-	margin: 0;
-	margin-top: 0;
-	.ugb-modal-design-library__preview-sidebar {
-		display: flex;
-		flex-direction: column;
-		overflow-x: hidden;
-		height: 100%;
-		justify-content: space-between;
-	}
-
 	.ugb-design-control-pro-note {
-		box-shadow: none;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		margin: 16px;
 	}
 
 	.ugb-modal-design-library__back-button {
-		margin-left: 24px;
 		outline: none !important;
 	}
 
@@ -125,23 +49,16 @@
 			height: 100%;
 			box-shadow: none;
 			padding: 0 24px;
-			transition: all 0.3s ease-in-out;
 			&:hover {
 				color: #f00069;
-				background: #e1e1e1;
+				background: #f1f1f1;
 			}
-
-			.tag {
-				margin-left: 8px;
-				background-color: #f00069;
-				color: #fff !important;
-				font-size: 10px !important;
-				padding: 4px 8px;
-			}
-
 			&.is-active {
 				background-color: #fad9e4 !important;
 				color: #f00069 !important;
+			}
+			.ugb-modal-design-library__tag {
+				margin-left: 8px;
 			}
 		}
 	}
@@ -157,22 +74,22 @@
 	}
 	.ugb-modal-design-library__wrapper {
 		display: grid;
-		grid-template-columns: 300px auto;
-		grid-template-rows: 50px auto;
+		grid-template-columns: max-content auto;
+		grid-template-rows: 1fr;
 		flex: 1;
 	}
 	.ugb-modal-design-library__sidebar {
+		position: relative;
+		min-width: 220px;
 		box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
 		background: #fff;
-		grid-column: 1 / 2;
-		grid-row: 1 / 3;
-		display: flex;
-		flex-direction: column;
-		overflow: hidden;
+		overflow-x: hidden;
+		overflow-y: auto;
+		padding: 24px;
 
 		.ugb-control-separator {
-			margin: 8px 0 !important;
-			width: 100% !important;
+			margin: 8px -24px !important;
+			width: calc(100% + 48px) !important;
 		}
 	}
 
@@ -182,12 +99,8 @@
 		align-items: center;
 		grid-column: 2 / 3;
 		grid-row: 1 / 3;
-		overflow-y: scroll;
-	}
-
-	.ugb-modal-design-library__content-body {
+		overflow-y: auto;
 		padding: 24px;
-		padding-top: 0;
 	}
 
 	@media screen and (max-width: 880px) {
@@ -244,8 +157,7 @@
 		display: flex;
 		justify-content: center;
 		border-radius: 8px;
-		padding: 40px 24px;
-		margin: 24px;
+		padding: 42px 24px;
 		margin-bottom: 0;
 		text-align: center;
 		color: #fff;
@@ -352,18 +264,54 @@
 			}
 		}
 	}
+}
 
-	.ugb-modal-design-library__filters {
-		overflow-y: auto;
-		overflow-x: hidden;
-		height: 100%;
-		padding-top: 24px;
-		padding-bottom: 24px;
+// UI Kits title.
+.ugb-design-library__ui-kit-title-wrapper {
+	display: grid;
+	grid-column-gap: 40px;
+	grid-row-gap: 16px;
+	grid-template-columns: auto auto;
+	button {
+		grid-row: 1 / 3;
+		grid-column: 2 / 3;
+	}
+}
+.ugb-design-library__ui-kit-title {
+	font-size: 24px;
+	margin: 0;
+}
+.ugb-design-library__ui-kit-title-description {
+	margin: 0;
+}
+
+// UI Kits preview information.
+.ugb-modal-design-library__preview-info-wrapper {
+	display: flex;
+	column-gap: 40px;
+	margin-bottom: 16px;
+
+	.ugb-modal-design-library__preview-info-item {
+		h4 {
+			text-transform: uppercase;
+		}
+
+		.components-circular-option-picker__option-wrapper {
+			transform: scale(1) !important;
+
+			.components-circular-option-picker__option {
+				cursor: default !important;
+			}
+		}
+	}
+
+	.ugb-modal-design-library__preview-info-typography {
+		font-size: 16px;
+		font-weight: 300;
 	}
 }
 
 .ugb-design-library__sidebar {
-	padding: 0 24px;
 	margin: 0;
 	li button {
 		text-decoration: none !important;

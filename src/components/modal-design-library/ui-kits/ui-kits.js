@@ -7,12 +7,12 @@ import ControlSeparator from '../../control-separator'
 import Topbar from '../topbar'
 import FeaturedList from '../featured-list'
 
-import PreviewInfo from './preview-info'
-
 /**
  * External deprendencies
  */
-import { i18n, isPro } from 'stackable'
+import {
+	i18n, isPro, showProNotice,
+} from 'stackable'
 import { AdvancedToolbarControl } from '~stackable/components'
 
 /**
@@ -48,55 +48,50 @@ const UIKits = props => {
 		isApplyingDesign,
 		previewInnerProps,
 		onDesignSelect,
-		backbuttonLabel,
 		backButtonOnClick,
 	} = props.moduleProps
 
 	return (
 		<Fragment>
 			<aside className="ugb-modal-design-library__sidebar">
-				<div className="ugb-modal-design-library__filters">
+				{ ! previewMode && (
+					<Fragment>
+						<Sidebar
+							options={ options }
+							value={ plan }
+							onSelect={ setPlan }
+						/>
 
-					{ ! previewMode && (
-						<Fragment>
-							<Sidebar
-								options={ options }
-								value={ plan }
-								onSelect={ setPlan }
+						<ControlSeparator />
+
+						<Sidebar
+							title={ __( 'Browse By Style', i18n ) }
+							options={ styleList }
+							value={ style }
+							onSelect={ setStyle }
+						/>
+					</Fragment>
+				) }
+
+				{ !! previewMode && (
+					<Fragment>
+						<Button
+							className="ugb-modal-design-library__back-button"
+							isLink
+							onClick={ backButtonOnClick }
+						>
+							{ __( 'Back to UI Kits', i18n ) }
+						</Button>
+						{ ! isPro && showProNotice &&
+							<ProControl
+								title={ __( 'Upcoming Feature', i18n ) }
+								description={ __( 'Build your website with a few clicks with our upcoming Premium feature that will let you use our predesigned templates with ease.', i18n ) }
+								button={ __( 'Get Premium', i18n ) }
+								showHideNote={ false }
 							/>
-
-							<ControlSeparator />
-
-							<Sidebar
-								title={ __( 'Browse By Style', i18n ) }
-								options={ styleList }
-								value={ style }
-								onSelect={ setStyle }
-							/>
-						</Fragment>
-					) }
-
-					{ !! previewMode && (
-						<div className="ugb-modal-design-library__preview-sidebar">
-							<Button
-								className="ugb-modal-design-library__back-button"
-								isLink
-								onClick={ backButtonOnClick }
-							>
-								{ backbuttonLabel }
-							</Button>
-							{ ! isPro && previewMode.plan === 'premium' && (
-								<ProControl
-									title={ __( 'Upcoming Feature', i18n ) }
-									description={ __( 'Build your website with a few clicks with our upcoming Premium feature that will let you use our predesigned templates with ease.', i18n ) }
-									button={ __( 'Get Premium', i18n ) }
-									showHideNote={ false }
-								/>
-							) }
-						</div>
-					) }
-
-				</div>
+						}
+					</Fragment>
+				) }
 			</aside>
 
 			<aside className="ugb-modal-design-library__content">
@@ -159,7 +154,7 @@ const UIKits = props => {
 						<div className="ugb-modal-design-library__content-body">
 
 							{ previewMode.plan === 'premium' && (
-								<div className="ugb-modal-design-library__premium-tag">
+								<div className="ugb-modal-design-library__tag">
 									{ __( 'Premium', i18n ) }
 								</div>
 							) }
@@ -171,11 +166,9 @@ const UIKits = props => {
 								isDevMode={ isDevMode }
 								setDoReset={ setDoReset }
 							>
-								<div className="ugb-design-library__ui-kit-topbar-wrapper">
-									<div className="ugb-design-library__ui-kit-header-text">
-										<h2>{ previewMode.label }</h2>
-										<p>{ previewMode.description }</p>
-									</div>
+								<div className="ugb-design-library__ui-kit-title-wrapper">
+									<h2 className="ugb-design-library__ui-kit-title">{ previewMode.label }</h2>
+									<p className="ugb-design-library__ui-kit-title-description">{ previewMode.description }</p>
 									<Button
 										disabled
 										isSecondary
@@ -184,10 +177,6 @@ const UIKits = props => {
 									</Button>
 								</div>
 							</Topbar>
-
-							<PreviewInfo
-								colors={ previewMode.colors }
-							/>
 
 							<FeaturedList
 								columns={ columns }
