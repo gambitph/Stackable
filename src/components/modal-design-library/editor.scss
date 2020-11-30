@@ -16,6 +16,10 @@
 	height: 90%;
 	min-height: 500px;
 
+	--wp-admin-theme-color: #f00069;
+	--wp-admin-theme-color-darker-10: #{ darken(#f00069, 10%) };
+	--wp-admin-theme-color-darker-20: #{ darken(#f00069, 20%) };
+
 	.ugb-design-control-pro-note {
 		position: absolute;
 		bottom: 0;
@@ -198,42 +202,10 @@
 	}
 
 	.ugb-modal-design-library__topbar {
-		height: 80px;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		margin-top: 16px;
-
-		.ugb-advanced-toolbar-control {
-
-			.components-button-group {
-				.is-primary {
-					color: #e74673 !important;
-					background-color: #fad9e4 !important;
-				}
-
-				.components-button {
-					box-shadow: inset 0 0 0 1px #c0bfbf !important;
-					padding: 16px !important;
-					font-weight: 400;
-
-					&:hover {
-						color: #000;
-					}
-
-					&:first-child {
-						border-top-left-radius: 5px;
-						border-bottom-left-radius: 5px;
-					}
-
-					&:last-child {
-						border-top-right-radius: 5px;
-						border-bottom-right-radius: 5px;
-					}
-				}
-			}
-
-		}
 
 		span {
 			display: flex;
@@ -263,6 +235,12 @@
 				background: transparent;
 			}
 		}
+	}
+}
+
+.ugb-modal-design-library__mood-toolbar {
+	.components-base-control__field {
+		margin-bottom: 0 !important;
 	}
 }
 
@@ -386,11 +364,6 @@
 }
 
 .ugb-design-library__featured-list {
-	.ugb-design-library__featured-list-title > h2 {
-		font-size: 24px;
-		font-weight: bold;
-	}
-
 	.components-spinner {
 		margin-left: 50%;
 	}
@@ -508,7 +481,7 @@
 			display: block !important;
 			text-align: left;
 			position: relative;
-			border-radius: 16px;
+			border-radius: 8px;
 			overflow: hidden;
 			height: 80%;
 

@@ -84,6 +84,7 @@ const BlockDesigns = props => {
 						setDoReset={ setDoReset }
 					>
 						<AdvancedToolbarControl
+							className="ugb-modal-design-library__mood-toolbar"
 							controls={ [
 								{
 									value: '',

@@ -108,9 +108,7 @@ const FeaturedList = props => {
 	return (
 		<div className={ classNames }>
 			{ title && (
-				<div className="ugb-design-library__featured-list-title">
-					<h2>{ title }</h2>
-				</div>
+				<h3 className="ugb-design-library__list-title">{ title }</h3>
 			) }
 
 			{ isBusy && <Spinner /> }
