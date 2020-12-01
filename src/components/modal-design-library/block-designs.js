@@ -1,80 +1,56 @@
 /**
- * Block Designs tab hooks.
+ * Internal deprendencies
  */
+import Sidebar from './sidebar'
+import Cover from './cover'
+import ControlSeparator from '../control-separator'
+import Topbar from './topbar'
+import FeaturedList from './featured-list'
 
 /**
  * External deprendencies
  */
-import { isPro, i18n } from 'stackable'
+import { i18n, isPro } from 'stackable'
+import { AdvancedToolbarControl } from '~stackable/components'
 import {
 	getDesigns, getAllBlocks, getDesign, getUIKits,
 } from '~stackable/design-library'
 import { useLocalStorage } from '~stackable/util'
 import {
-	keys, find, last,
+	keys, find, last, startCase,
 } from 'lodash'
 
 /**
  * WordPress deprendencies
  */
+import { __, sprintf } from '@wordpress/i18n'
 import {
-	useState, useEffect, useMemo, useCallback,
+	Fragment, useState, useEffect, useCallback,
 } from '@wordpress/element'
 import { select } from '@wordpress/data'
-import { __, sprintf } from '@wordpress/i18n'
 
-const useBlockDesigns = props => {
+/**
+ * WordPress deprendencies
+ */
+
+const BlockDesigns = props => {
 	const [ columns, setColumns ] = useState( 3 )
-	const [ plan, _setPlan ] = useState( '' )
-	const [ block, _setBlock ] = useState( props.selectedBlock )
+	const [ plan, setPlan ] = useState( '' )
+	const [ block, setBlock ] = useState( props.selectedBlock )
 	const [ mood, setMood ] = useState( '' )
-	const [ search, _setSearch ] = useState( props.search )
+	const [ search, setSearch ] = useState( props.search )
 	const [ isBusy, setIsBusy ] = useState( true )
 	const [ blockList, setBlockList ] = useState( [] )
 	const [ designs, setDesigns ] = useState( [] )
 	const [ doReset, setDoReset ] = useState( false )
 	const [ itemIsBusy, setIsItemBusy ] = useState( false )
-	const [ contentTitle, setContentTitle ] = useState( props.selectedBlock ? __( 'Switch Design', i18n ) : __( 'All Block Designs', i18n ) )
 
 	const [ searchDebounced, setSearchDebounced ] = useState( search )
 	const [ debounceTimeout, setDebounceTimeout ] = useState( null )
 	const [ isDevMode, setIsDevMode ] = useLocalStorage( 'stk__design_library_dev_mode', false )
 
-	const options = useMemo( () => [
-		{
-			label: __( 'All Block Designs', i18n ),
-			value: '',
-		},
-		{
-			label: __( 'Free Designs', i18n ),
-			value: 'free',
-		},
-		{
-			label: __( 'Premium Designs', i18n ),
-			value: 'premium',
-		},
-	], [] )
-
-	const setPlan = useCallback( plan => {
-		setContentTitle( options.find( option => option.value === plan ).label )
-		_setSearch( '' )
-		_setPlan( plan )
-	}, [ JSON.stringify( options ) ] )
-
-	const setBlock = useCallback( block => {
-		setContentTitle( sprintf( __( '%s Block Designs', i18n ),
-			blockList.find( option => option.value === block ).label ) )
-		_setSearch( '' )
-		_setBlock( block )
-	}, [ JSON.stringify( blockList ) ] )
-
-	const setSearch = useCallback( search => {
-		setContentTitle( sprintf( __( 'Search result for: "%s"', i18n ), search ) )
-		if ( search === '' ) {
-			setContentTitle( options.find( option => option.value === plan ).label )
-		}
-		_setSearch( search )
-	}, [ JSON.stringify( options ) ] )
+	const contentTitle = search !== '' ? sprintf( __( 'Search result for: "%s"', i18n ), search ) :
+		plan !== '' || block !== '' ? sprintf( __( '%s %s UI Kits', i18n ), startCase( plan || '' ), startCase( block || '' ) ).trim() : __( 'All UI Kits', i18n )
 
 	const itemProps = useCallback( option => {
 		const showLock = ! isPro && option.plan !== 'free'
@@ -189,31 +165,104 @@ const useBlockDesigns = props => {
 			] )
 		} )
 	}, [] )
+	return (
+		<Fragment>
+			<aside className="ugb-modal-design-library__sidebar">
+				<Sidebar
+					options={ [
+						{
+							label: __( 'All Block Designs', i18n ),
+							value: '',
+						},
+						{
+							label: __( 'Free Designs', i18n ),
+							value: 'free',
+						},
+						{
+							label: __( 'Premium Designs', i18n ),
+							value: 'premium',
+						},
+					] }
+					value={ plan }
+					onSelect={ plan => {
+						setSearch( '' )
+						setPlan( plan )
+					} }
+					forceDisabledExcept={ props.selectedBlock ? [ 'free', 'premium' ] : null }
+				/>
 
-	return {
-		itemProps,
-		contentTitle,
-		options,
-		columns,
-		plan,
-		block,
-		mood,
-		search,
-		isBusy,
-		blockList,
-		designs,
-		doReset,
-		isDevMode,
-		onDesignSelect,
-		setIsDevMode,
-		setColumns,
-		setPlan,
-		setBlock,
-		setMood,
-		setSearch,
-		setDoReset,
-		itemIsBusy,
-	}
+				<ControlSeparator />
+
+				<Sidebar
+					title={ __( 'Browse By Block', i18n ) }
+					options={ blockList }
+					value={ block }
+					onSelect={ block => {
+						setSearch( '' )
+						setBlock( block )
+					} }
+					forceDisabledExcept={ props.selectedBlock ? props.selectedBlock : null }
+				/>
+			</aside>
+
+			<aside className="ugb-modal-design-library__content">
+
+				<Cover
+					title={ __( 'Stackable Block Designs', i18n ) }
+					description={ __( 'Choose from over 200 predesigned templates you can customize with Stackable.', i18n ) }
+					placeholder={ __( 'Ex: Corporate, Minimalist, Header, etc.', i18n ) }
+					value={ search }
+					onChange={ setSearch }
+				/>
+
+				<div className="ugb-modal-design-library__content-body">
+					<Topbar
+						setColumns={ setColumns }
+						columns={ columns }
+						setIsDevMode={ setIsDevMode }
+						isDevMode={ isDevMode }
+						setDoReset={ setDoReset }
+					>
+						<AdvancedToolbarControl
+							className="ugb-modal-design-library__mood-toolbar"
+							controls={ [
+								{
+									value: '',
+									title: __( 'All', i18n ),
+								},
+								{
+									value: 'light',
+									title: __( 'Light', i18n ),
+								},
+								{
+									value: 'dark',
+									title: __( 'Dark', i18n ),
+								},
+							] }
+							value={ mood }
+							onChange={ setMood }
+						/>
+					</Topbar>
+
+					<FeaturedList
+						title={ contentTitle }
+						columns={ columns }
+						isBusy={ isBusy }
+						onSelect={ onDesignSelect }
+						options={ designs }
+						itemProps={ itemProps }
+						itemIsBusy={ itemIsBusy }
+					/>
+				</div>
+
+			</aside>
+
+		</Fragment>
+	)
 }
 
-export default useBlockDesigns
+BlockDesigns.defaultProps = {
+	moduleProps: {},
+}
+
+export default BlockDesigns

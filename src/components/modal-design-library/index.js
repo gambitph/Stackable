@@ -1,8 +1,8 @@
 /**
  * Internal deprendencies
  */
-import { BlockDesigns } from './block-designs/'
-import { UIKits } from './ui-kits/'
+import BlockDesigns from './block-designs'
+import UIKits from './ui-kits'
 
 /**
  * External deprendencies
