@@ -171,7 +171,7 @@ const DesignLayoutSelector = props => {
 						{ __( 'Skip', i18n ) }
 					</Button>
 				</ButtonGroup>
-				{ ! isPro && showProNotice &&
+				{ ! isPro && showProNotice && ( ( !! layouts.length && layouts.some( layout => layout.plan === 'premium' ) ) || ( !! designs.length && designs.some( design => design.plan === 'premium' ) ) ) &&
 					<p className="ugb-design-layout-selector__notice">{ __( 'You can hide premium hints in the settings', i18n ) }</p>
 				}
 			</div>
