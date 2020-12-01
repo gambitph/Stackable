@@ -11,7 +11,7 @@ import {
 export default {
 	design: {
 		type: 'string',
-		default: '',
+		default: 'plain',
 	},
 
 	...createResponsiveAttributes( '%sColumnContentVerticalAlign', {

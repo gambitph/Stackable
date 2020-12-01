@@ -7,7 +7,7 @@ import { createResponsiveAttributes, createAllCombinationAttributes } from '~sta
 export default {
 	design: {
 		type: 'string',
-		default: '',
+		default: 'plain',
 	},
 	columns: {
 		type: 'number',

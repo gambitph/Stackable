@@ -10,11 +10,9 @@ import { i18n } from 'stackable'
 /**
  * Internal dependencies
  */
-import './design'
 import edit from './edit'
 import save from './save'
 import schema from './schema'
-import deprecated from './deprecated'
 
 /**
  * WordPress dependencies
@@ -44,7 +42,6 @@ export const settings = {
 		anchor: true,
 	},
 
-	deprecated,
 	edit,
 	save,
 
