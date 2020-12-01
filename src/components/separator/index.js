@@ -9,7 +9,7 @@ import { separators } from './separators'
 import classnames from 'classnames'
 
 const Separator = props => {
-	const { shape: SeparatorComp, shadow: ShadowComp } = separators[ props.design ][ ! props.inverted ? 'default' : 'inverted' ]
+	const { shape: SeparatorComp, shadow: ShadowComp } = separators[ props.design || 'wave-1' ][ ! props.inverted ? 'default' : 'inverted' ]
 
 	const mainClasses = classnames( [
 		props.className,
