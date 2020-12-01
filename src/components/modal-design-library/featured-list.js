@@ -53,7 +53,7 @@ const FeaturedListItem = props => {
 			>
 				{ showLock && <Icon icon="lock" /> }
 				<div className="overlay">
-					{ ! imageLoaded && <Spinner className="test" /> }
+					{ ! imageLoaded && <Spinner /> }
 					{ true && (
 						<span>
 							{ itemIsBusy && isHovered && <Spinner /> }
