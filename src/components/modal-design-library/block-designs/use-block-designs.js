@@ -93,26 +93,17 @@ const useBlockDesigns = props => {
 		 * ACCESS UI KIT PROPS AND OPEN THE UI KIT
 		 */
 			_option => {
-				// Open UI Kit Preview when uiKitsModuleProps is defined.
-				if ( props.uiKitsModuleProps ) {
-					const {
-						setPreviewMode = () => {},
-					} = props.uiKitsModuleProps
+				setIsItemBusy( true )
+				getUIKits().then( _UIKits => {
+					const newPreviewMode = {
+						...( find( _UIKits, UIKit => last( _option.categories ) === UIKit.category ) || {} ),
+						fromBlockDesigns: true,
+					}
 
-					setIsItemBusy( true )
-					getUIKits().then( _UIKits => {
-						const newPreviewMode = {
-							...( find( _UIKits, UIKit => last( _option.categories ) === UIKit.category ) || {} ),
-							fromBlockDesigns: true,
-						}
-
-						setIsItemBusy( false )
-						setPreviewMode( newPreviewMode || null )
-						props.setActiveTab( 'ui-kits' )
-					} )
-				} else {
+					setIsItemBusy( false )
+					props.cache.uiKits.preview = newPreviewMode || null
 					props.setActiveTab( 'ui-kits' )
-				}
+				} )
 			}
 
 		return {

@@ -6,6 +6,7 @@ import Cover from '../cover'
 import ControlSeparator from '../../control-separator'
 import Topbar from '../topbar'
 import FeaturedList from '../featured-list'
+import useUIKits from './use-ui-kits'
 
 /**
  * External deprendencies
@@ -49,7 +50,7 @@ const UIKits = props => {
 		previewInnerProps,
 		onDesignSelect,
 		backButtonOnClick,
-	} = props.moduleProps
+	} = useUIKits( props )
 
 	return (
 		<Fragment>

@@ -1,8 +1,8 @@
 /**
  * Internal deprendencies
  */
-import { BlockDesigns, useBlockDesigns } from './block-designs/'
-import { UIKits, useUIKits } from './ui-kits/'
+import { BlockDesigns } from './block-designs/'
+import { UIKits } from './ui-kits/'
 
 /**
  * External deprendencies
@@ -21,7 +21,10 @@ import {
 } from '@wordpress/element'
 
 // Used to remember last opened tab and UI Kit.
-const cache = {}
+const cache = {
+	uiKits: {},
+	blockDesigns: {},
+}
 
 const ModalDesignLibrary = props => {
 	const [ activeTab, _setActiveTab ] = useState( cache.activeTab || 'block-designs' )
@@ -30,15 +33,6 @@ const ModalDesignLibrary = props => {
 		cache.activeTab = tab
 		_setActiveTab( tab )
 	}
-
-	const uiKitsModuleProps = useUIKits( {
-		...props, setActiveTab, cache,
-	} )
-
-	// Pass down UI Kit props to block designs. Mainly used for accessing UI kits.
-	const blockDesignsModuleProps = useBlockDesigns( {
-		...props, setActiveTab, uiKitsModuleProps,
-	} )
 
 	// Focus on the search bar.
 	useEffect( () => {
@@ -89,8 +83,12 @@ const ModalDesignLibrary = props => {
 		>
 
 			<div className="ugb-modal-design-library__wrapper">
-				{ activeTab === 'block-designs' && <BlockDesigns { ...{ ...props, moduleProps: blockDesignsModuleProps } } /> }
-				{ activeTab === 'ui-kits' && <UIKits { ...{ ...props, moduleProps: uiKitsModuleProps } } /> }
+				{ activeTab === 'block-designs' && <BlockDesigns { ...{
+					...props, setActiveTab, cache,
+				} } /> }
+				{ activeTab === 'ui-kits' && <UIKits { ...{
+					...props, setActiveTab, cache,
+				} } /> }
 			</div>
 
 		</Modal>

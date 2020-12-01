@@ -6,6 +6,7 @@ import Cover from '../cover'
 import ControlSeparator from '../../control-separator'
 import Topbar from '../topbar'
 import FeaturedList from '../featured-list'
+import useBlockDesigns from './use-block-designs'
 
 /**
  * External deprendencies
@@ -42,7 +43,7 @@ const BlockDesigns = props => {
 		setSearch,
 		setDoReset,
 		itemIsBusy,
-	} = props.moduleProps
+	} = useBlockDesigns( props )
 
 	return (
 		<Fragment>

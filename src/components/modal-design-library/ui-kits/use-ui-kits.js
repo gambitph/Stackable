@@ -30,7 +30,7 @@ const useUIKits = props => { //eslint-disable-line
 	const [ doReset, setDoReset ] = useState( false )
 	const [ columns, setColumns ] = useState( 3 )
 	const [ UIKits, setUIKits ] = useState( [] )
-	const [ previewMode, setPreviewMode ] = useState( props.cache.lastUIKit || null )
+	const [ previewMode, setPreviewMode ] = useState( props.cache.uiKits.preview || null )
 	const [ isApplyingDesign, setIsApplyingDesign ] = useState( false )
 	const [ contentTitle, setContentTitle ] = useState( __( 'All UI Kits', i18n ) )
 
@@ -100,6 +100,7 @@ const useUIKits = props => { //eslint-disable-line
 
 	const backButtonOnClick = useCallback( () => {
 		setPreviewMode( null )
+		props.cache.uiKits.preview = null
 
 		if ( previewMode?.fromBlockDesigns ) {
 			props.setActiveTab( 'block-designs' )
