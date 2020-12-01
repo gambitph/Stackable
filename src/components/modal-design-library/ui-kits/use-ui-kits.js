@@ -114,7 +114,7 @@ const useUIKits = props => { //eslint-disable-line
 		const onClickButton1 = showLock ?
 			undefined :
 			option => {
-				props.cache.lastUIKit = previewMode
+				props.cache.uiKits.preview = previewMode
 				onDesignSelect( option )
 			}
 		const button2Href = showLock ? 'https://wpstackable.com/upgrade/?utm_source=design-library-learn-more&utm_campaign=learnmore&utm_medium=gutenberg' : undefined
