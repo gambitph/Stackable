@@ -382,9 +382,9 @@ const edit = props => {
 }
 
 export default compose(
-	withDesignLayoutSelector,
 	withUniqueClass,
 	withSetAttributeHook,
+	withDesignLayoutSelector,
 	withGoogleFont,
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Text%sAlign' ] ),

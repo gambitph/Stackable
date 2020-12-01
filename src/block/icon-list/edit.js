@@ -330,9 +330,9 @@ const Edit = props => {
 }
 
 export default compose(
-	withDesignLayoutSelector,
 	withUniqueClass,
 	withSetAttributeHook,
+	withDesignLayoutSelector,
 	withGoogleFont,
 	withTransformOldIconAttributes,
 	withTabbedInspector(),

@@ -367,9 +367,9 @@ const Edit = props => {
 }
 
 export default compose(
-	withDesignLayoutSelector,
 	withUniqueClass,
 	withSetAttributeHook,
+	withDesignLayoutSelector,
 	withGoogleFont,
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Icon%sAlign', 'Title%sAlign' ] ),

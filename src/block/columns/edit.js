@@ -534,10 +534,10 @@ addFilter( 'stackable.columns.setAttributes', 'stackable/columns/columns-change'
 } )
 
 export default compose(
-	withDesignLayoutSelector,
 	withState( { sortColumnHighlight: null } ),
 	withUniqueClass,
 	withSetAttributeHook,
+	withDesignLayoutSelector,
 	withGoogleFont,
 	withTabbedInspector(),
 	withContentAlignReseter(),
