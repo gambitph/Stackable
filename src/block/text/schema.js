@@ -16,7 +16,7 @@ import { __ } from '@wordpress/i18n'
 export default {
 	design: {
 		type: 'string',
-		default: 'plain',
+		default: '',
 	},
 	columns: {
 		type: 'number',

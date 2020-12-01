@@ -23,7 +23,7 @@ import { i18n } from 'stackable'
 export default {
 	design: {
 		type: 'string',
-		default: 'basic',
+		default: '',
 	},
 	columns: {
 		type: 'number',

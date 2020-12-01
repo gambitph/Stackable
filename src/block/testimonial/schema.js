@@ -20,7 +20,7 @@ import { __ } from '@wordpress/i18n'
 export default {
 	design: {
 		type: 'string',
-		default: 'basic',
+		default: '',
 	},
 	borderRadius: {
 		type: 'number',
