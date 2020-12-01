@@ -16,6 +16,12 @@ import { RichText } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
+/**
+ * Internal dependencies
+ */
+import schema from './schema'
+import save from './save'
+
 const deprecatedSave_1_17_2 = props => {
 	const { attributes, className } = props
 	const {
@@ -297,6 +303,22 @@ export const deprecatedSchema_1_17_2 = {
 }
 
 const deprecated = [
+	{
+		attributes: {
+			...schema,
+			design: {
+				type: 'string',
+				default: 'basic',
+			},
+		},
+		save,
+		migrate: attributes => {
+			return {
+				...attributes,
+				design: attributes.design || 'basic',
+			}
+		},
+	},
 	{
 		attributes: deprecatedSchema_1_17_2,
 		save: deprecatedSave_1_17_2,

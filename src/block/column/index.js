@@ -6,72 +6,21 @@
  */
 import { ColumnsIcon } from '~stackable/icons'
 import { i18n } from 'stackable'
-import {
-	createBackgroundAttributes,
-	createResponsiveAttributes,
-	createAllCombinationAttributes,
-	createBorderAttributes,
-} from '~stackable/util'
 
 /**
  * Internal dependencies
  */
+import './design'
 import edit from './edit'
 import save from './save'
+import schema from './schema'
+import deprecated from './deprecated'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
-
-export const schema = {
-	design: {
-		type: 'string',
-		default: 'plain',
-	},
-
-	...createResponsiveAttributes( '%sColumnContentVerticalAlign', {
-		type: 'string',
-		default: '',
-	} ),
-	...createResponsiveAttributes( 'content%sWidth', {
-		type: 'number',
-		default: '',
-	} ),
-	...createResponsiveAttributes( 'content%sWidthUnit', {
-		type: 'string',
-		default: '',
-	} ),
-	...createResponsiveAttributes( 'content%sHorizontalAlign', {
-		type: 'string',
-		default: '',
-	} ),
-
-	borderRadius: {
-		type: 'number',
-		default: '',
-	},
-	shadow: {
-		type: 'number',
-		default: '',
-	},
-
-	// Column Background
-	...createBackgroundAttributes( 'column%s' ),
-
-	// Border.
-	...createBorderAttributes( 'column%s' ),
-
-	// Text Colors
-	...createAllCombinationAttributes(
-		'%sColor', {
-			type: 'string',
-			default: '',
-		},
-		[ 'Heading', 'BodyText', 'Link', 'LinkHover' ]
-	),
-}
 
 export const name = 'ugb/column'
 
@@ -95,6 +44,7 @@ export const settings = {
 		anchor: true,
 	},
 
+	deprecated,
 	edit,
 	save,
 

@@ -25,15 +25,18 @@ addFilter( 'stackable.testimonial.design.no-text-attributes', 'stackable/testimo
 
 // Ignore these attributes when exporting / applying designs.
 addFilter( 'stackable.testimonial.design.filtered-block-attributes', 'stackable/testimonial', ( attributes, blockAttributes = null ) => {
-	return omit( attributes, [
-		'image1Id',
-		...( blockAttributes && blockAttributes.image1Id ? [ 'image1Url' ] : [] ),
-		'image2Id',
-		...( blockAttributes && blockAttributes.image2Id ? [ 'image2Url' ] : [] ),
-		'image3Id',
-		...( blockAttributes && blockAttributes.image3Id ? [ 'image3Url' ] : [] ),
-		'image1Alt',
-		'image2Alt',
-		'image3Alt',
-	] )
+	return {
+		...omit( attributes, [
+			'image1Id',
+			...( blockAttributes && blockAttributes.image1Id ? [ 'image1Url' ] : [] ),
+			'image2Id',
+			...( blockAttributes && blockAttributes.image2Id ? [ 'image2Url' ] : [] ),
+			'image3Id',
+			...( blockAttributes && blockAttributes.image3Id ? [ 'image3Url' ] : [] ),
+			'image1Alt',
+			'image2Alt',
+			'image3Alt',
+		] ),
+		design: attributes.design || 'basic',
+	}
 } )

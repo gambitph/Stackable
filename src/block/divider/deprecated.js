@@ -8,6 +8,12 @@ import { applyFilters } from '@wordpress/hooks'
  */
 import classnames from 'classnames'
 
+/**
+ * Internal dependencies
+ */
+import schema from './schema'
+import save from './save'
+
 const deprecatedSchema_1_17_3 = {
 	height: {
 		default: 1,
@@ -99,6 +105,22 @@ const deprecatedSave_1_17_3_v2 = props => {
 }
 
 const deprecated = [
+	{
+		attributes: {
+			...schema,
+			design: {
+				type: 'string',
+				default: 'basic',
+			},
+		},
+		save,
+		migrate: attributes => {
+			return {
+				...attributes,
+				design: attributes.design || 'basic',
+			}
+		},
+	},
 	{
 		attributes: deprecatedSchema_1_17_3,
 		save: deprecatedSave_1_17_3,

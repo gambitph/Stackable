@@ -2,6 +2,8 @@
  * Internal dependencies
  */
 import SVGArrow from './images/arrow.svg'
+import schema from './schema'
+import save from './save'
 
 /**
  * External dependencies
@@ -446,6 +448,22 @@ const migrate_1_17_3 = attributes => {
 }
 
 const deprecated = [
+	{
+		attributes: {
+			...schema,
+			design: {
+				type: 'string',
+				default: 'basic',
+			},
+		},
+		save,
+		migrate: attributes => {
+			return {
+				...attributes,
+				design: attributes.design || 'basic',
+			}
+		},
+	},
 	{
 		attributes: deprecatedSchema_1_17_3,
 		save: deprecatedSave_1_17_3,
