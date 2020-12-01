@@ -50,7 +50,7 @@ const BlockDesigns = props => {
 	const [ isDevMode, setIsDevMode ] = useLocalStorage( 'stk__design_library_dev_mode', false )
 
 	const contentTitle = search !== '' ? sprintf( __( 'Search result for: "%s"', i18n ), search ) :
-		plan !== '' || block !== '' ? sprintf( __( '%s %s UI Kits', i18n ), startCase( plan || '' ), startCase( block || '' ) ).trim() : __( 'All UI Kits', i18n )
+		plan !== '' || block !== '' ? sprintf( __( '%s %s Block Designs', i18n ), startCase( plan || '' ), startCase( last( block.split( '/' ) ) || '' ) ).trim() : __( 'All Block Designs', i18n )
 
 	const itemProps = useCallback( option => {
 		const showLock = ! isPro && option.plan !== 'free'
