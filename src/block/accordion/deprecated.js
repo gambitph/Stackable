@@ -2,6 +2,8 @@
  * Internal dependencies
  */
 import SVGArrowIconV1173 from './deprecated/images_1_17_3/arrow.svg'
+import schema from './schema'
+import save from './save'
 
 /**
  * External dependencies
@@ -140,6 +142,20 @@ const deprecatedSave_1_17_3 = props => {
 }
 
 const deprecated = [
+	{
+		attributes: {
+			...schema,
+			design: {
+				type: 'string',
+				default: 'basic',
+			},
+		},
+		save,
+		migrate: attributes => ( {
+			...attributes,
+			design: attributes.design || 'basic',
+		} ),
+	},
 	{
 		attributes: deprecatedSchema_1_17_3,
 		save: deprecatedSave_1_17_3,

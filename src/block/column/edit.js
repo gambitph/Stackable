@@ -34,19 +34,38 @@ import {
 	withTabbedInspector,
 	withContentAlignReseter,
 	withBlockStyles,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
+import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
  */
-import { i18n } from 'stackable'
-import { __ } from '@wordpress/i18n'
+import {
+	__,
+} from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
 import { withSelect } from '@wordpress/data'
+
+addFilter( 'stackable.column.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
+		},
+		{
+			label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
 
 addFilter( 'stackable.column.edit.inspector.layout.before', 'stackable/column', ( output, props ) => {
 	const { setAttributes } = props
@@ -63,14 +82,7 @@ addFilter( 'stackable.column.edit.inspector.layout.before', 'stackable/column', 
 			>
 				<DesignControl
 					selected={ design }
-					options={ applyFilters( 'stackable.column.edit.layouts', [
-						{
-							label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
-						},
-						{
-							label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
-						},
-					] ) }
+					options={ applyFilters( 'stackable.column.edit.layouts', [] ) }
 					onChange={ design => setAttributes( { design } ) }
 				 />
 			</PanelAdvancedSettings>
@@ -374,6 +386,7 @@ const edit = props => {
 export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
+	withDesignLayoutSelector,
 	withGoogleFont,
 	withTabbedInspector(),
 	withContentAlignReseter(),

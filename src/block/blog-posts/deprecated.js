@@ -1,3 +1,9 @@
+/**
+ * Internal dependencies
+ */
+import schema from './schema'
+import save from './save'
+
 const deprecatedSchema_1_17_3 = {
 	className: {
 		type: 'string',
@@ -98,6 +104,22 @@ const deprecatedSchema_1_17_3 = {
 }
 
 const deprecated = [
+	{
+		attributes: {
+			...schema,
+			design: {
+				type: 'string',
+				default: 'basic',
+			},
+		},
+		save,
+		migrate: attributes => {
+			return {
+				...attributes,
+				design: attributes.design || 'basic',
+			}
+		},
+	},
 	{
 		attributes: deprecatedSchema_1_17_3,
 		save: () => null,

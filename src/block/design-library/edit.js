@@ -48,7 +48,7 @@ const edit = ( { replaceBlockWithAttributes, replaceBlocWithContent } ) => {
 						} = designData
 
 						if ( name && attributes ) {
-							replaceBlockWithAttributes( name, attributes, [] )
+							replaceBlockWithAttributes( name, applyFilters( 'stackable.design-library.attributes', attributes ), [] )
 						} else if ( serialized ) {
 							replaceBlocWithContent( serialized )
 						} else {

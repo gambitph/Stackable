@@ -5,7 +5,6 @@
 /**
  * External dependencies
  */
-import { createTypographyAttributes, createResponsiveAttributes } from '~stackable/util'
 import { IconListIcon } from '~stackable/icons'
 import { range } from 'lodash'
 import { disabledBlocks, i18n } from 'stackable'
@@ -17,70 +16,13 @@ import './design'
 import deprecated from './deprecated'
 import edit from './edit'
 import save from './save'
+import schema from './schema'
 
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n'
+import { __ } from '@wordpress/i18n'
 import { applyFilters, addFilter } from '@wordpress/hooks'
-import { DEFAULT_CHECK_SVG, createIconListIconAttributes } from './util'
-
-export const schema = {
-	icon: {
-		type: 'string',
-		default: DEFAULT_CHECK_SVG,
-	},
-	iconShape: {
-		type: 'string',
-	},
-	iconColor: {
-		type: 'string',
-	},
-	...createResponsiveAttributes( 'icon%sSize', {
-		type: 'number',
-		default: '',
-	} ),
-	columns: {
-		type: 'number',
-		default: 2,
-	},
-	tabletColumns: {
-		type: 'number',
-		default: '',
-	},
-	mobileColumns: {
-		type: 'number',
-		default: '',
-	},
-	text: {
-		source: 'html',
-		selector: 'ul',
-		multiline: 'li',
-		default: range( 1, 7 ).map( i => sprintf( __( 'Line %d', i18n ), i ) ).map( s => `<li>${ s }</li>` ).join( '' ),
-	},
-	displayAsGrid: {
-		type: 'boolean',
-		default: false,
-	},
-	gap: {
-		type: 'number',
-		default: '',
-	},
-	listTextColor: {
-		type: 'string',
-		default: '',
-	},
-	opacity: {
-		type: 'number',
-		default: '',
-	},
-	rotation: {
-		type: 'number',
-		default: '',
-	},
-	...createTypographyAttributes( 'listText%s' ),
-	...createIconListIconAttributes(),
-}
 
 export const name = 'ugb/icon-list'
 

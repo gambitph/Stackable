@@ -8,7 +8,9 @@ import { showOptions } from './util'
  * External dependencies
  */
 import { BlockContainer } from '~stackable/components'
-import { withUniqueClass, withBlockStyles } from '~stackable/higher-order'
+import {
+	withUniqueClass, withBlockStyles,
+} from '~stackable/higher-order'
 import classnames from 'classnames'
 import { range } from 'lodash'
 

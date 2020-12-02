@@ -130,6 +130,11 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 			$attributes = apply_filters( 'stackable_block_migrate_attributes', $attributes, 'blog-posts' );
 		}
 
+		// Render nothing if layout attribute is empty.
+		if ( $attributes['design'] == '' ) {
+			return;
+		}
+
 		$attributes = stackable_blog_posts_block_default_attributes( $attributes );
 		$post_query = stackable_blog_posts_post_query( $attributes );
 

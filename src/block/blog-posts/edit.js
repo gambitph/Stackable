@@ -3,6 +3,12 @@
  */
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignList from './images/list.png'
+import ImageDesignHorizontalCard from './images/horizontal-card.png'
+import ImageDesignImageCard from './images/image-card.png'
+import ImageDesignPortfolio from './images/portfolio.png'
+import ImageDesignPortfolio2 from './images/portfolio2.png'
+import ImageDesignVerticalCard from './images/vertical-card.png'
+import ImageDesignVerticalCard2 from './images/vertical-card2.png'
 import createStyles from './style'
 import { showOptions } from './util'
 import TaxonomyControl from './taxonomy-control'
@@ -45,6 +51,7 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 	withClickOpenInspector,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import {
 	i18n, showProNotice,
@@ -65,7 +72,9 @@ import {
 	TextControl,
 	ToggleControl,
 } from '@wordpress/components'
-import { __ } from '@wordpress/i18n'
+import {
+	__, sprintf, _x,
+} from '@wordpress/i18n'
 import { decodeEntities } from '@wordpress/htmlEntities'
 import { withSelect } from '@wordpress/data'
 import { applyFilters, addFilter } from '@wordpress/hooks'
@@ -79,6 +88,40 @@ const META_SEPARATORS = {
 	pipe: '|',
 }
 
+addFilter( 'stackable.blog-posts.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
+		},
+		{
+			label: __( 'List', i18n ), value: 'list', image: ImageDesignList,
+		},
+		{
+			label: __( 'Portfolio', i18n ), value: 'portfolio', image: ImageDesignPortfolio, premium: true,
+		},
+		{
+			label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Portfolio', i18n ), 2 ), value: 'portfolio2', image: ImageDesignPortfolio2, premium: true,
+		},
+		{
+			label: __( 'Vertical Card', i18n ), value: 'vertical-card', image: ImageDesignVerticalCard, premium: true,
+		},
+		{
+			label: __( 'Horizontal Card', i18n ), value: 'horizontal-card', image: ImageDesignHorizontalCard, premium: true,
+		},
+		{
+			label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Vertical Card', i18n ), 2 ), value: 'vertical-card2', image: ImageDesignVerticalCard2, premium: true,
+		},
+		{
+			label: __( 'Image Card', i18n ), value: 'image-card', image: ImageDesignImageCard, premium: true,
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
+
 addFilter( 'stackable.blog-posts.edit.inspector.layout.before', 'stackable/blog-posts', ( output, props ) => {
 	const { setAttributes } = props
 	const {
@@ -91,14 +134,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.layout.before', 'stackable/blog-
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ applyFilters( 'stackable.blog-posts.edit.layouts', [
-					{
-						label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
-					},
-					{
-						label: __( 'List', i18n ), value: 'list', image: ImageDesignList,
-					},
-				] ) }
+				options={ applyFilters( 'stackable.blog-posts.edit.layouts', [] ) }
 				onChange={ design => setAttributes( { design } ) }
 			>
 				{ showProNotice && <ProControlButton /> }
@@ -994,6 +1030,7 @@ class Edit extends Component {
 export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
+	withDesignLayoutSelector,
 	withGoogleFont,
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Category%sAlign', 'Title%sAlign', 'Excerpt%sAlign', 'Meta%sAlign', 'Readmore%sAlign' ] ),

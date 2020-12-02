@@ -46,6 +46,7 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 	withClickOpenInspector,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 
 /**
@@ -53,6 +54,9 @@ import {
  */
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignHalf from './images/half.png'
+import ImageDesignHorizontal from './images/horizontal.png'
+import ImageDesignOverlay from './images/overlay.png'
 import { i18n, showProNotice } from 'stackable'
 import createStyles from './style'
 import { showOptions } from './util'
@@ -72,6 +76,34 @@ import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
 import { withSelect } from '@wordpress/data'
 
+addFilter( 'stackable.team-member.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
+		},
+		{
+			label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
+		},
+		{
+			label: __( 'Horizontal', i18n ), value: 'horizontal', image: ImageDesignHorizontal, premium: true,
+		},
+		{
+			label: __( 'Overlay', i18n ), value: 'overlay', image: ImageDesignOverlay, premium: true,
+		},
+		{
+			label: __( 'Overlay Simple', i18n ), value: 'overlay-simple', image: ImageDesignOverlay, premium: true,
+		},
+		{
+			label: __( 'Half', i18n ), value: 'half', image: ImageDesignHalf, premium: true,
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
+
 addFilter( 'stackable.team-member.edit.inspector.layout.before', 'stackable/team-member', ( output, props ) => {
 	const { setAttributes } = props
 	const {
@@ -84,14 +116,7 @@ addFilter( 'stackable.team-member.edit.inspector.layout.before', 'stackable/team
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ applyFilters( 'stackable.team-member.edit.layouts', [
-					{
-						label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
-					},
-					{
-						label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
-					},
-				] ) }
+				options={ applyFilters( 'stackable.team-member.edit.layouts', [] ) }
 				onChange={ design => setAttributes( { design } ) }
 			>
 				{ showProNotice && <ProControlButton /> }
@@ -767,6 +792,7 @@ const edit = props => {
 export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
+	withDesignLayoutSelector,
 	withGoogleFont,
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Image%sAlign', 'Name%sAlign', 'Position%sAlign', 'Description%sAlign', 'Social%sAlign' ] ),

@@ -26,6 +26,7 @@ import {
 	withTabbedInspector,
 	withContentAlignReseter,
 	withBlockStyles,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
 
@@ -37,6 +38,28 @@ import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
+
+addFilter( 'stackable.divider.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
+		},
+		{
+			label: __( 'Bar', i18n ), value: 'bar', image: ImageDesignBar,
+		},
+		{
+			label: __( 'Dots', i18n ), value: 'dots', image: ImageDesignDots,
+		},
+		{
+			label: __( 'Asterisks', i18n ), value: 'asterisks', image: ImageDesignAsterisks,
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
 
 addFilter( 'stackable.divider.edit.inspector.layout.before', 'stackable/divider', ( output, props ) => {
 	const { setAttributes } = props
@@ -50,20 +73,7 @@ addFilter( 'stackable.divider.edit.inspector.layout.before', 'stackable/divider'
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ applyFilters( 'stackable.divider.edit.layouts', [
-					{
-						label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
-					},
-					{
-						label: __( 'Bar', i18n ), value: 'bar', image: ImageDesignBar,
-					},
-					{
-						label: __( 'Dots', i18n ), value: 'dots', image: ImageDesignDots,
-					},
-					{
-						label: __( 'Asterisks', i18n ), value: 'asterisks', image: ImageDesignAsterisks,
-					},
-				] ) }
+				options={ applyFilters( 'stackable.divider.edit.layouts', [] ) }
 				onChange={ design => setAttributes( { design } ) }
 			/>
 		</Fragment>
@@ -165,6 +175,7 @@ const edit = props => {
 export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
+	withDesignLayoutSelector,
 	withGoogleFont,
 	withTabbedInspector(),
 	withContentAlignReseter(),

@@ -34,6 +34,7 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 	withClickOpenInspector,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
 import { i18n, showProNotice } from 'stackable'
@@ -44,6 +45,10 @@ import { i18n, showProNotice } from 'stackable'
 import createStyles from './style'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignBackground from './images/background.png'
+import ImageDesignFaded from './images/faded.png'
+import ImageDesignHeading from './images/heading.png'
+import ImageDesignHeading2 from './images/heading2.png'
 import { showOptions } from './util'
 
 /**
@@ -60,6 +65,34 @@ import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
 
+addFilter( 'stackable.number-box.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
+		},
+		{
+			image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
+		},
+		{
+			label: __( 'Background', i18n ), value: 'background', image: ImageDesignBackground, premium: true,
+		},
+		{
+			label: __( 'Heading', i18n ), value: 'heading', image: ImageDesignHeading, premium: true,
+		},
+		{
+			label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Heading', i18n ), 2 ), value: 'heading2', image: ImageDesignHeading2, premium: true,
+		},
+		{
+			label: __( 'Faded', i18n ), value: 'faded', image: ImageDesignFaded, premium: true,
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
+
 addFilter( 'stackable.number-box.edit.inspector.layout.before', 'stackable/number-box', ( output, props ) => {
 	const { setAttributes } = props
 	const {
@@ -72,15 +105,7 @@ addFilter( 'stackable.number-box.edit.inspector.layout.before', 'stackable/numbe
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ [
-					{
-						image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
-					},
-					{
-						image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
-					},
-					...applyFilters( 'stackable.number-box.edit.layouts', [] ),
-				] }
+				options={ applyFilters( 'stackable.number-box.edit.layouts', [] ) }
 				onChange={ design => {
 					setAttributes( { design } )
 				} }
@@ -548,6 +573,7 @@ const edit = props => {
 export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
+	withDesignLayoutSelector,
 	withGoogleFont,
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Number%sAlign', 'Title%sAlign', 'Description%sAlign' ] ),

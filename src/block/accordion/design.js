@@ -28,3 +28,10 @@ addFilter( 'stackable.accordion.edit.designs', 'stackable/accordion', designs =>
 		// },
 	}
 } )
+
+addFilter( 'stackable.accordion.design.filtered-block-attributes', 'stackable/accordion', attributes => {
+	return {
+		...attributes,
+		design: attributes.design || 'basic',
+	}
+} )

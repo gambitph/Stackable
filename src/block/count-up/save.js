@@ -4,7 +4,9 @@
 import {
 	BlockContainer, SvgIconHelper, DivBackground,
 } from '~stackable/components'
-import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+import {
+	withBlockStyles, withUniqueClass,
+} from '~stackable/higher-order'
 import { range } from 'lodash'
 
 /**

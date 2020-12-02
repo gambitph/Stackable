@@ -10,7 +10,9 @@ import SVGArrowIcon from './images/arrow.svg'
  */
 import classnames from 'classnames'
 import { BlockContainer, DivBackground } from '~stackable/components'
-import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+import {
+	withBlockStyles, withUniqueClass,
+} from '~stackable/higher-order'
 
 /**
  * WordPress dependencies

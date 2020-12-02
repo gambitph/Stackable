@@ -3,6 +3,9 @@
  */
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignBordered from './images/bordered.png'
+import ImageDesignOutlined from './images/outlined.png'
+import ImageDesignLargeIcon from './images/large-icon.png'
 import SVGCloseIcon from './images/close-icon.svg'
 import createStyles from './style'
 import { showOptions } from './util'
@@ -51,6 +54,7 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 	withClickOpenInspector,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
 
@@ -73,6 +77,31 @@ const NOTIFICATION_TYPE = [
 	{ value: 'info', label: __( 'Information', i18n ) },
 ]
 
+addFilter( 'stackable.notification.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
+		},
+		{
+			image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
+		},
+		{
+			label: __( 'Bordered', i18n ), value: 'bordered', image: ImageDesignBordered, premium: true,
+		},
+		{
+			label: __( 'Outlined', i18n ), value: 'outlined', image: ImageDesignOutlined, premium: true,
+		},
+		{
+			label: __( 'Large Icon', i18n ), value: 'large-icon', image: ImageDesignLargeIcon, premium: true,
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
+
 addFilter( 'stackable.notification.edit.inspector.layout.before', 'stackable/notification', ( output, props ) => {
 	const { setAttributes } = props
 	const {
@@ -85,15 +114,7 @@ addFilter( 'stackable.notification.edit.inspector.layout.before', 'stackable/not
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ [
-					{
-						image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
-					},
-					{
-						image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
-					},
-					...applyFilters( 'stackable.notification.edit.layouts', [] ),
-				] }
+				options={ applyFilters( 'stackable.notification.edit.layouts', [] ) }
 				onChange={ design => {
 					setAttributes( { design } )
 				} }
@@ -638,6 +659,7 @@ const edit = props => {
 export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
+	withDesignLayoutSelector,
 	withGoogleFont,
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Icon%sAlign', 'Title%sAlign', 'Description%sAlign', 'Button%sAlign' ] ),

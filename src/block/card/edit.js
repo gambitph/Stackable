@@ -45,6 +45,7 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 	withClickOpenInspector,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 
 /**
@@ -52,6 +53,9 @@ import {
  */
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignFaded from './images/faded.png'
+import ImageDesignFull from './images/full.png'
+import ImageDesignHorizontal from './images/horizontal.png'
 import { i18n, showProNotice } from 'stackable'
 import createStyles from './style'
 import { showOptions } from './util'
@@ -68,6 +72,31 @@ import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
 import { withSelect } from '@wordpress/data'
 
+addFilter( 'stackable.card.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
+		},
+		{
+			label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
+		},
+		{
+			label: __( 'Horizontal', i18n ), value: 'horizontal', image: ImageDesignHorizontal, premium: true,
+		},
+		{
+			label: __( 'Full', i18n ), value: 'full', image: ImageDesignFull, premium: true,
+		},
+		{
+			label: __( 'Faded', i18n ), value: 'faded', image: ImageDesignFaded, premium: true,
+		},
+	]
+	return [
+		...layouts,
+		...newLayouts,
+
+	]
+} )
+
 addFilter( 'stackable.card.edit.inspector.layout.before', 'stackable/card', ( output, props ) => {
 	const { setAttributes } = props
 	const {
@@ -80,14 +109,7 @@ addFilter( 'stackable.card.edit.inspector.layout.before', 'stackable/card', ( ou
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ applyFilters( 'stackable.card.edit.layouts', [
-					{
-						label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
-					},
-					{
-						label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
-					},
-				] ) }
+				options={ applyFilters( 'stackable.card.edit.layouts', [] ) }
 				onChange={ design => setAttributes( { design } ) }
 			>
 				{ showProNotice && <ProControlButton /> }
@@ -716,6 +738,7 @@ const edit = props => {
 export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
+	withDesignLayoutSelector,
 	withGoogleFont,
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Title%sAlign', 'Subtitle%sAlign', 'Description%sAlign', 'Button%sAlign' ] ),

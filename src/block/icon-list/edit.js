@@ -9,6 +9,7 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 	withClickOpenInspector,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import {
 	AdvancedRangeControl,
@@ -331,6 +332,7 @@ const Edit = props => {
 export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
+	withDesignLayoutSelector,
 	withGoogleFont,
 	withTransformOldIconAttributes,
 	withTabbedInspector(),

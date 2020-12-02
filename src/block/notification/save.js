@@ -2,7 +2,9 @@
  * External dependencies
  */
 import classnames from 'classnames'
-import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+import {
+	withBlockStyles, withUniqueClass,
+} from '~stackable/higher-order'
 import {
 	SvgIconHelper,
 	BlockContainer,

@@ -20,12 +20,15 @@ addFilter( 'stackable.header.design.no-text-attributes', 'stackable/header', att
 
 // Ignore these attributes when exporting / applying designs.
 addFilter( 'stackable.header.design.filtered-block-attributes', 'stackable/header', attributes => {
-	return omit( attributes, [
-		'buttonUrl',
-		'buttonNewTab',
-		'buttonNoFollow',
-		'button2Url',
-		'button2NewTab',
-		'button2NoFollow',
-	] )
+	return {
+		...omit( attributes, [
+			'buttonUrl',
+			'buttonNewTab',
+			'buttonNoFollow',
+			'button2Url',
+			'button2NewTab',
+			'button2NoFollow',
+		] ),
+		design: attributes.design || 'basic',
+	}
 } )

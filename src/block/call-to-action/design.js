@@ -19,9 +19,12 @@ addFilter( 'stackable.cta.design.no-text-attributes', 'stackable/cta', attribute
 
 // Ignore these attributes when exporting / applying designs.
 addFilter( 'stackable.cta.design.filtered-block-attributes', 'stackable/cta', attributes => {
-	return omit( attributes, [
-		'buttonUrl',
-		'buttonNewTab',
-		'buttonNoFollow',
-	] )
+	return {
+		...omit( attributes, [
+			'buttonUrl',
+			'buttonNewTab',
+			'buttonNoFollow',
+		] ),
+		design: attributes.design || 'basic',
+	}
 } )

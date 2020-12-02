@@ -9,7 +9,6 @@
  * External dependencies
  */
 import { ButtonIcon } from '~stackable/icons'
-import { createButtonAttributes } from '~stackable/util'
 
 /**
  * Internal dependencies
@@ -18,6 +17,7 @@ import './design'
 import deprecated from './deprecated'
 import edit from './edit'
 import save from './save'
+import schema from './schema'
 import { disabledBlocks, i18n } from 'stackable'
 
 /**
@@ -25,32 +25,6 @@ import { disabledBlocks, i18n } from 'stackable'
  */
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
-
-export const schema = {
-	design: {
-		type: 'string',
-		default: 'basic',
-	},
-	borderRadius: {
-		type: 'number',
-		default: '',
-	},
-	collapseOn: {
-		type: 'string',
-		default: '',
-	},
-	showButton2: {
-		type: 'boolean',
-		default: false,
-	},
-	showButton3: {
-		type: 'boolean',
-		default: false,
-	},
-	...createButtonAttributes( 'button1%s', { selector: '.ugb-button1' } ),
-	...createButtonAttributes( 'button2%s', { selector: '.ugb-button2' } ),
-	...createButtonAttributes( 'button3%s', { selector: '.ugb-button3' } ),
-}
 
 export const name = 'ugb/button'
 
