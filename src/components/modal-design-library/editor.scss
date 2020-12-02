@@ -408,13 +408,6 @@
 		flex-basis: 100%;
 		padding: 8px;
 
-		&:hover {
-			.components-spinner {
-				z-index: 5;
-				opacity: 1 !important;
-			}
-		}
-
 		.components-button,
 		a {
 			text-decoration: none;
@@ -485,6 +478,20 @@
 			overflow: hidden;
 			height: 80%;
 
+			img {
+				object-fit: contain;
+				display: block;
+				width: 100%;
+				min-height: 50px;
+				background: #fff;
+				pointer-events: none;
+				transition: all 0.15s ease-in;
+
+				.loading {
+					min-height: 10vw;
+				}
+			}
+
 			svg {
 				position: absolute;
 				right: 16px;
@@ -498,13 +505,12 @@
 				transform: none;
 			}
 
-			&:active,
-			&:focus {
-				border: none !important;
-				outline: 0 !important;
-			}
-
 			&:hover {
+				.components-spinner {
+					z-index: 5;
+					opacity: 1 !important;
+				}
+
 				svg {
 					opacity: 0;
 					transform: scale(0.5);
@@ -519,20 +525,6 @@
 					filter: brightness(0.7);
 				}
 			}
-		}
-
-		img {
-			object-fit: contain;
-			display: block;
-			width: 100%;
-			min-height: 50px;
-			background: #fff;
-			pointer-events: none;
-			transition: all 0.15s ease-in;
-		}
-
-		.loading {
-			min-height: 10vw;
 		}
 
 		h4 {
