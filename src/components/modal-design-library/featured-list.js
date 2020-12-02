@@ -34,11 +34,11 @@ const FeaturedListItem = props => {
 	const [ imageLoaded, setImageLoaded ] = useState( false )
 
 	const renderButton1 = button1Href ?
-		<a className="primary ugb-shadow-7" href={ button1Href }>{ button1 }</a> :
+		<a className="primary ugb-shadow-7" href={ button1Href } target="_blank" rel="noopener noreferrer">{ button1 }</a> :
 		<Button className="primary ugb-shadow-7" onClick={ onClickButton1 }>{ button1 }</Button>
 
 	const renderButton2 = button2Href ?
-		<a className="secondary ugb-shadow-7" href={ button2Href }>{ button2 }</a> :
+		<a className="secondary ugb-shadow-7" href={ button2Href } target="_blank" rel="noopener noreferrer">{ button2 }</a> :
 		<Button className="secondary ugb-shadow-7" onClick={ onClickButton2 }>{ button2 }</Button>
 
 	return (

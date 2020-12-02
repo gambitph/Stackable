@@ -90,6 +90,7 @@ const UIKits = props => {
 		const onClickButton1 = showLock ?
 			undefined :
 			option => {
+				props.cache.hasSelectedUIKit = true
 				props.cache.uiKits.preview = previewMode
 				onDesignSelect( option )
 			}

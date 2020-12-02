@@ -24,15 +24,11 @@ import {
 const cache = {
 	uiKits: {},
 	blockDesigns: {},
+	hasSelectedUIKit: false,
 }
 
 const ModalDesignLibrary = props => {
-	const [ activeTab, _setActiveTab ] = useState( cache.activeTab || 'block-designs' )
-
-	const setActiveTab = tab => {
-		cache.activeTab = tab
-		_setActiveTab( tab )
-	}
+	const [ activeTab, setActiveTab ] = useState( cache.hasSelectedUIKit ? 'ui-kits' : 'block-designs' )
 
 	// Focus on the search bar.
 	useEffect( () => {
