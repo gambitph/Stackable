@@ -311,8 +311,4 @@ const UIKits = props => {
 	)
 }
 
-UIKits.defaultProps = {
-	moduleProps: {},
-}
-
 export default UIKits

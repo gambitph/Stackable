@@ -90,7 +90,7 @@ const BlockDesigns = props => {
 			onClickButton2,
 			button2Href,
 		}
-	}, [ props.uiKitsModuleProps, props.setActiveTab ] )
+	}, [ props.setActiveTab ] )
 
 	const onDesignSelect = useCallback( design => {
 		if ( ! isPro && design.plan !== 'free' ) {
@@ -259,10 +259,6 @@ const BlockDesigns = props => {
 
 		</Fragment>
 	)
-}
-
-BlockDesigns.defaultProps = {
-	moduleProps: {},
 }
 
 export default BlockDesigns
