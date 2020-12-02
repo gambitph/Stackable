@@ -10,7 +10,7 @@ import { omit } from 'lodash'
  */
 import { __ } from '@wordpress/i18n'
 import {
-	Icon, Button, Spinner,
+	Icon, Button, Spinner, ButtonGroup,
 } from '@wordpress/components'
 import { useState } from '@wordpress/element'
 
@@ -30,7 +30,6 @@ const FeaturedListItem = props => {
 		...rest
 	} = props
 
-	const [ isHovered, setIsHovered ] = useState( false )
 	const [ imageLoaded, setImageLoaded ] = useState( false )
 
 	const renderButton1 = button1Href ?
@@ -48,27 +47,20 @@ const FeaturedListItem = props => {
 		>
 			<div
 				className="image-wrapper ugb-shadow-4"
-				onMouseEnter={ () => setIsHovered( true ) }
-				onMouseLeave={ () => setIsHovered( false ) }
 			>
 				{ showLock && <Icon icon="lock" /> }
-				<div className="overlay">
-					{ ! imageLoaded && <Spinner /> }
-					{ true && (
-						<span>
-							{ itemIsBusy && isHovered && <Spinner /> }
-							{ ! itemIsBusy && button1 && renderButton1 }
-							{ ! itemIsBusy && button2 && renderButton2 }
-						</span>
-					) }
-					<img
-						className={ ! imageLoaded ? 'loading' : undefined }
-						src={ image }
-						alt={ title }
-						loading="lazy"
-						onLoad={ () => setImageLoaded( true ) }
-					/>
-				</div>
+				{ ( ! imageLoaded || itemIsBusy ) && <Spinner /> }
+				<ButtonGroup>
+					{ ! itemIsBusy && button1 && renderButton1 }
+					{ ! itemIsBusy && button2 && renderButton2 }
+				</ButtonGroup>
+				<img
+					className={ ! imageLoaded ? 'loading' : undefined }
+					src={ image }
+					alt={ title }
+					loading="lazy"
+					onLoad={ () => setImageLoaded( true ) }
+				/>
 			</div>
 			<h4>{ title }</h4>
 			<p>{ description }</p>

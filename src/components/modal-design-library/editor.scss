@@ -408,55 +408,68 @@
 		flex-basis: 100%;
 		padding: 8px;
 
-		.overlay {
-			display: flex;
-			align-items: center;
-			justify-content: center;
+		&:hover {
+			.components-spinner {
+				z-index: 5;
+				opacity: 1 !important;
+			}
+		}
 
-			& > .components-spinner {
-				position: absolute;
-				left: 0;
+		.components-button,
+		a {
+			text-decoration: none;
+			color: #fff;
+			border: 0;
+			text-transform: uppercase;
+			height: auto;
+			min-height: auto;
+			width: auto;
+			margin: 0 auto;
+			transition: all 0.3s ease-in-out;
+			font-size: 10px;
+			letter-spacing: 1px;
+			line-height: 1em;
+			border-radius: 25px;
+			padding: 10px 15px;
+			transition-timing-function: cubic-bezier(0.81, 0.37, 0.61, 1);
+			transition-duration: 0.2s;
+			opacity: 0;
+
+			&:hover {
+				transform: scale(1.02);
 			}
 
-			span {
-				position: absolute;
-				display: flex;
-				flex-direction: column;
-				row-gap: 8px;
-				z-index: 1;
-			}
-
-			.components-button,
-			a {
-				padding: 4px;
-				padding-left: 16px;
-				padding-right: 16px;
-				text-transform: uppercase;
-				border-radius: 8px;
-				text-decoration: none;
-				transition: all 0.3s cubic-bezier(0.81, 0.37, 0.61, 1);
-				opacity: 0;
+			&.primary {
+				color: #fff;
+				background: linear-gradient(330deg, #b300be, #f00069);
 
 				&:hover {
-					transform: scale(1.02);
-				}
-
-				&.primary {
-					color: #fff;
-					background: linear-gradient(330deg, #b300be, #f00069);
-
-					&:hover {
-						background: linear-gradient(to right, #f00069 0%, #f00069 100%);
-					}
-
-
-				}
-
-				&.secondary {
-					color: #e74673;
-					background-color: #fff;
+					background: linear-gradient(to right, #f00069 0%, #f00069 100%);
 				}
 			}
+
+			&.secondary {
+				color: #e74673;
+				background-color: #fff;
+			}
+		}
+
+		.components-button-group {
+			display: flex;
+			position: absolute;
+			flex-direction: column;
+			z-index: 3;
+			top: 50%;
+			left: 50%;
+			transform: translateY(-50%) translateX(-50%);
+			row-gap: 8px;
+		}
+
+		.components-spinner {
+			opacity: 0;
+			position: absolute;
+			top: 50%;
+			margin-left: 50%;
 		}
 
 		.image-wrapper {
@@ -465,19 +478,12 @@
 			transition: all 0.2s ease-in;
 			width: 100%;
 			height: max-content;
-			display: block !important;
+			display: flex !important;
 			text-align: left;
 			position: relative;
 			border-radius: 8px;
 			overflow: hidden;
 			height: 80%;
-
-			.overlay {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				height: 100%;
-			}
 
 			svg {
 				position: absolute;
@@ -516,6 +522,7 @@
 		}
 
 		img {
+			object-fit: contain;
 			display: block;
 			width: 100%;
 			min-height: 50px;
