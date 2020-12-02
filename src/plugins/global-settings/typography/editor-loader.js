@@ -106,7 +106,7 @@ export const GlobalTypographyStyles = () => {
 				} ) )
 			} )
 
-			setStyles( generateStyles( deepmerge.all( styleObject ) ) )
+			setStyles( generateStyles( deepmerge.all( styleObject ) ).join( '' ) )
 		} )
 
 		clearTimeout( styleTimeout )

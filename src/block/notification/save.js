@@ -2,7 +2,9 @@
  * External dependencies
  */
 import classnames from 'classnames'
-import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+import {
+	withBlockStyles, withUniqueClass,
+} from '~stackable/higher-order'
 import {
 	SvgIconHelper,
 	BlockContainer,
@@ -74,9 +76,9 @@ const save = props => {
 	const itemClasses = classnames( [
 		'ugb-notification__item',
 		'ugb-notification--new-icon', // For backward compatibility < 2.6 for new icon.
-	], {
+	], applyFilters( 'stackable.notification.itemclasses', {
 		[ `ugb--shadow-${ shadow }` ]: shadow !== '',
-	} )
+	}, props ) )
 
 	const show = showOptions( props )
 

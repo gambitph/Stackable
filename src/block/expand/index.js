@@ -8,16 +8,12 @@
 import deprecated from './deprecated'
 import edit from './edit'
 import save from './save'
+import schema from './schema'
 
 /**
  * External dependencies
  */
 import { ExpandIcon } from '~stackable/icons'
-import {
-	createAllCombinationAttributes,
-	createTypographyAttributes,
-	descriptionPlaceholder,
-} from '~stackable/util'
 import { disabledBlocks, i18n } from 'stackable'
 
 /**
@@ -25,84 +21,6 @@ import { disabledBlocks, i18n } from 'stackable'
  */
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
-
-export const schema = {
-	// Title.
-	title: {
-		source: 'html',
-		selector: '.ugb-expand__title',
-		default: __( 'Title for This Block', i18n ),
-	},
-	showTitle: {
-		type: 'boolean',
-		default: true,
-	},
-	titleTag: {
-		type: 'string',
-		default: '',
-	},
-	...createTypographyAttributes( 'title%s' ),
-	titleColor: {
-		type: 'string',
-		default: '',
-	},
-
-	// Text.
-	text: {
-		source: 'html',
-		selector: '.ugb-expand__less-text',
-		multiline: 'p',
-		default: `<p>${ __( 'Some short text that can be expanded to show more details.', i18n ) }</p>`,
-	},
-	moreText: {
-		source: 'html',
-		selector: '.ugb-expand__more-text',
-		multiline: 'p',
-		default: `<p>${ __( 'Some short text that can be expanded to show more details.', i18n ) } ${ descriptionPlaceholder( 'medium' ) }</p>`,
-	},
-	...createTypographyAttributes( 'text%s' ),
-	textColor: {
-		type: 'string',
-		default: '',
-	},
-
-	// Link.
-	moreLabel: {
-		source: 'html',
-		selector: '.ugb-expand__more-toggle-text',
-		default: __( 'Show more', i18n ),
-	},
-	lessLabel: {
-		source: 'html',
-		selector: '.ugb-expand__less-toggle-text',
-		default: __( 'Show less', i18n ),
-	},
-	...createTypographyAttributes( 'link%s' ),
-	linkColor: {
-		type: 'string',
-		default: '',
-	},
-
-	// Alignments.
-	...createAllCombinationAttributes(
-		'%s%sAlign', {
-			type: 'string',
-			default: '',
-		},
-		[ 'Title', 'Text', 'Link' ],
-		[ '', 'Tablet', 'Mobile' ]
-	),
-
-	// Spacing.
-	...createAllCombinationAttributes(
-		'%s%sBottomMargin', {
-			type: 'number',
-			default: '',
-		},
-		[ 'Title', 'Text', 'Link' ],
-		[ '', 'Tablet', 'Mobile' ]
-	),
-}
 
 export const name = 'ugb/expand'
 

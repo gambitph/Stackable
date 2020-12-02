@@ -13,7 +13,9 @@ import {
 	SocialButtonEditHelper,
 	DivBackground,
 } from '~stackable/components'
-import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+import {
+	withBlockStyles, withUniqueClass,
+} from '~stackable/higher-order'
 import { SOCIAL_SITES } from '~stackable/util'
 import classnames from 'classnames'
 import { range, upperFirst } from 'lodash'

@@ -17,7 +17,7 @@ import {
 	PanelAdvancedSettings,
 } from '~stackable/components'
 import {
-	withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass, withClickOpenInspector,
+	withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass, withClickOpenInspector, withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import createStyles from './style'
 
@@ -34,6 +34,17 @@ import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
 
+addFilter( 'stackable.separator.edit.inspector.layout.excludeDesigns', 'default', ret => {
+	const newExcludeDesigns = [
+		'straight-1',
+	]
+
+	return [
+		...ret,
+		...newExcludeDesigns,
+	]
+} )
+
 addFilter( 'stackable.separator.edit.inspector.layout.before', 'stackable/separator', ( output, props ) => {
 	const { setAttributes } = props
 
@@ -47,7 +58,7 @@ addFilter( 'stackable.separator.edit.inspector.layout.before', 'stackable/separa
 				<DesignSeparatorControl
 					onChange={ design => setAttributes( { design } ) }
 					selected={ design }
-					excludeDesigns={ [ 'straight-1' ] }
+					excludeDesigns={ applyFilters( 'stackable.separator.edit.inspector.layout.excludeDesigns', [] ) }
 				/>
 			</DesignPanelBody>
 		</Fragment>
@@ -376,6 +387,7 @@ const edit = props => {
 export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
+	withDesignLayoutSelector,
 	withGoogleFont,
 	withTabbedInspector(),
 	withBlockStyles( createStyles, { editorMode: true } ),

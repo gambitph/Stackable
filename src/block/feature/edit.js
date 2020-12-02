@@ -42,6 +42,7 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 	withClickOpenInspector,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
 
@@ -50,6 +51,17 @@ import classnames from 'classnames'
  */
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignHalf from './images/half.png'
+import ImageDesignOverlap from './images/overlap.png'
+import ImageDesignOverlap2 from './images/overlap2.png'
+import ImageDesignOverlap3 from './images/overlap3.png'
+import ImageDesignOverlap4 from './images/overlap4.png'
+import ImageDesignOverlap5 from './images/overlap5.png'
+import ImageDesignOverlapShape from './images/overlap-shape.png'
+import ImageDesignOverlapShape2 from './images/overlap-shape2.png'
+import ImageDesignOverlapShape3 from './images/overlap-shape3.png'
+import ImageDesignOverlapShape4 from './images/overlap-shape4.png'
+import ImageDesignOverlapShape5 from './images/overlap-shape5.png'
 import createStyles from './style'
 import { showOptions } from './util'
 
@@ -59,12 +71,61 @@ import { showOptions } from './util'
 import {
 	ToggleControl,
 } from '@wordpress/components'
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 import { RichText } from '@wordpress/block-editor'
 import { withSelect } from '@wordpress/data'
+
+addFilter( 'stackable.feature.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
+		},
+		{
+			image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
+		},
+		{
+			label: __( 'Half Background', i18n ), value: 'half', image: ImageDesignHalf, premium: true,
+		},
+		{
+			label: sprintf( __( 'Overlap Shape %s', i18n ), 1 ), value: 'overlap', image: ImageDesignOverlapShape, premium: true,
+		},
+		{
+			label: sprintf( __( 'Overlap Shape %s', i18n ), 2 ), value: 'overlap2', image: ImageDesignOverlapShape2, premium: true,
+		},
+		{
+			label: sprintf( __( 'Overlap Shape %s', i18n ), 3 ), value: 'overlap3', image: ImageDesignOverlapShape3, premium: true,
+		},
+		{
+			label: sprintf( __( 'Overlap Shape %s', i18n ), 4 ), value: 'overlap4', image: ImageDesignOverlapShape4, premium: true,
+		},
+		{
+			label: sprintf( __( 'Overlap Shape %s', i18n ), 5 ), value: 'overlap5', image: ImageDesignOverlapShape5, premium: true,
+		},
+		{
+			label: sprintf( __( 'Overlap Background %s', i18n ), 1 ), value: 'overlap-bg', image: ImageDesignOverlap, premium: true,
+		},
+		{
+			label: sprintf( __( 'Overlap Background %s', i18n ), 2 ), value: 'overlap-bg2', image: ImageDesignOverlap2, premium: true,
+		},
+		{
+			label: sprintf( __( 'Overlap Background %s', i18n ), 3 ), value: 'overlap-bg3', image: ImageDesignOverlap3, premium: true,
+		},
+		{
+			label: sprintf( __( 'Overlap Background %s', i18n ), 4 ), value: 'overlap-bg4', image: ImageDesignOverlap4, premium: true,
+		},
+		{
+			label: sprintf( __( 'Overlap Background %s', i18n ), 5 ), value: 'overlap-bg5', image: ImageDesignOverlap5, premium: true,
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
 
 addFilter( 'stackable.feature.edit.inspector.layout.before', 'stackable/feature', ( output, props ) => {
 	const { setAttributes } = props
@@ -78,15 +139,7 @@ addFilter( 'stackable.feature.edit.inspector.layout.before', 'stackable/feature'
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ [
-					{
-						image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
-					},
-					{
-						image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
-					},
-					...applyFilters( 'stackable.feature.edit.layouts', [] ),
-				] }
+				options={ applyFilters( 'stackable.feature.edit.layouts', [] ) }
 				onChange={ design => {
 					setAttributes( { design } )
 				} }
@@ -623,6 +676,7 @@ const edit = props => {
 export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
+	withDesignLayoutSelector,
 	withGoogleFont,
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Title%sAlign', 'Description%sAlign', 'Button%sAlign' ] ),

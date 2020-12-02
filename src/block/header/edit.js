@@ -37,6 +37,7 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 	withClickOpenInspector,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
 import { i18n, showProNotice } from 'stackable'
@@ -47,6 +48,11 @@ import { i18n, showProNotice } from 'stackable'
 import createStyles from './style'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignCenterOverlay from './images/center-overlay.png'
+import ImageDesignHalf from './images/half.png'
+import ImageDesignHalfOverlay from './images/half-overlay.png'
+import ImageDesignHuge from './images/huge.png'
+import ImageDesignSideOverlay from './images/side-overlay.png'
 import { showOptions } from './util'
 
 /**
@@ -63,6 +69,37 @@ import { compose } from '@wordpress/compose'
 import { RichText } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
 
+addFilter( 'stackable.header.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
+		},
+		{
+			image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
+		},
+		{
+			label: __( 'Half Overlay', i18n ), value: 'half-overlay', image: ImageDesignHalfOverlay, premium: true,
+		},
+		{
+			label: __( 'Center Overlay', i18n ), value: 'center-overlay', image: ImageDesignCenterOverlay, premium: true,
+		},
+		{
+			label: __( 'Side Overlay', i18n ), value: 'side-overlay', image: ImageDesignSideOverlay, premium: true,
+		},
+		{
+			label: __( 'Half', i18n ), value: 'half', image: ImageDesignHalf, premium: true,
+		},
+		{
+			label: __( 'Huge', i18n ), value: 'huge', image: ImageDesignHuge, premium: true,
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
+
 addFilter( 'stackable.header.edit.inspector.layout.before', 'stackable/header', ( output, props ) => {
 	const { setAttributes } = props
 	const {
@@ -75,15 +112,7 @@ addFilter( 'stackable.header.edit.inspector.layout.before', 'stackable/header', 
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ [
-					{
-						image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
-					},
-					{
-						image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
-					},
-					...applyFilters( 'stackable.header.edit.layouts', [] ),
-				] }
+				options={ applyFilters( 'stackable.header.edit.layouts', [] ) }
 				onChange={ design => {
 					setAttributes( { design } )
 				} }
@@ -567,6 +596,7 @@ const edit = props => {
 export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
+	withDesignLayoutSelector,
 	withGoogleFont,
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Title%sAlign', 'Subtitle%sAlign', 'Button%sAlign' ] ),

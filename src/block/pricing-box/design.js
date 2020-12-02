@@ -37,24 +37,27 @@ addFilter( 'stackable.pricing-box.design.no-text-attributes', 'stackable/pricing
 
 // Ignore these attributes when exporting / applying designs.
 addFilter( 'stackable.pricing-box.design.filtered-block-attributes', 'stackable/pricing-box', ( attributes, blockAttributes = null ) => {
-	return omit( attributes, [
-		'image1Id',
-		...( blockAttributes && blockAttributes.image1Id ? [ 'image1Url' ] : [] ),
-		'image2Id',
-		...( blockAttributes && blockAttributes.image2Id ? [ 'image2Url' ] : [] ),
-		'image3Id',
-		...( blockAttributes && blockAttributes.image3Id ? [ 'image3Url' ] : [] ),
-		'image1Alt',
-		'image2Alt',
-		'image3Alt',
-		'button1Url',
-		'button1NewTab',
-		'button1NoFollow',
-		'button2Url',
-		'button2NewTab',
-		'button2NoFollow',
-		'button3Url',
-		'button3NewTab',
-		'button3NoFollow',
-	] )
+	return {
+		...omit( attributes, [
+			'image1Id',
+			...( blockAttributes && blockAttributes.image1Id ? [ 'image1Url' ] : [] ),
+			'image2Id',
+			...( blockAttributes && blockAttributes.image2Id ? [ 'image2Url' ] : [] ),
+			'image3Id',
+			...( blockAttributes && blockAttributes.image3Id ? [ 'image3Url' ] : [] ),
+			'image1Alt',
+			'image2Alt',
+			'image3Alt',
+			'button1Url',
+			'button1NewTab',
+			'button1NoFollow',
+			'button2Url',
+			'button2NewTab',
+			'button2NoFollow',
+			'button3Url',
+			'button3NewTab',
+			'button3NoFollow',
+		] ),
+		design: attributes.design || 'basic',
+	}
 } )

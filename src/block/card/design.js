@@ -28,21 +28,24 @@ addFilter( 'stackable.card.design.no-text-attributes', 'stackable/card', attribu
 
 // Ignore these attributes when exporting / applying designs.
 addFilter( 'stackable.card.design.filtered-block-attributes', 'stackable/card', ( attributes, blockAttributes = null ) => {
-	return omit( attributes, [
-		...( blockAttributes && blockAttributes.image1Id ? [ 'image1Url' ] : [] ),
-		'image1Id',
-		...( blockAttributes && blockAttributes.image2Id ? [ 'image2Url' ] : [] ),
-		'image2Id',
-		...( blockAttributes && blockAttributes.image3Id ? [ 'image3Url' ] : [] ),
-		'image3Id',
-		'button1Url',
-		'button1NewTab',
-		'button1NoFollow',
-		'button2Url',
-		'button2NewTab',
-		'button2NoFollow',
-		'button3Url',
-		'button3NewTab',
-		'button3NoFollow',
-	] )
+	return {
+		...omit( attributes, [
+			...( blockAttributes && blockAttributes.image1Id ? [ 'image1Url' ] : [] ),
+			'image1Id',
+			...( blockAttributes && blockAttributes.image2Id ? [ 'image2Url' ] : [] ),
+			'image2Id',
+			...( blockAttributes && blockAttributes.image3Id ? [ 'image3Url' ] : [] ),
+			'image3Id',
+			'button1Url',
+			'button1NewTab',
+			'button1NoFollow',
+			'button2Url',
+			'button2NewTab',
+			'button2NoFollow',
+			'button3Url',
+			'button3NewTab',
+			'button3NoFollow',
+		] ),
+		design: attributes.design || 'basic', // Make sure that the design attribute is filled up or our design picker will appear.
+	}
 } )

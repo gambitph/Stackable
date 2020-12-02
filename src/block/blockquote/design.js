@@ -14,3 +14,10 @@ addFilter( 'stackable.blockquote.design.no-text-attributes', 'stackable/blockquo
 		'text',
 	] )
 } )
+
+addFilter( 'stackable.blockquote.design.filtered-block-attributes', 'stackable/blockquote', attributes => {
+	return {
+		...attributes,
+		design: attributes.design || 'plain',
+	}
+} )

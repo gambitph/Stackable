@@ -11,46 +11,17 @@ import { DividerIcon } from '~stackable/icons'
 /**
  * Internal dependencies
  */
+import './design'
 import edit from './edit'
 import save from './save'
 import deprecated from './deprecated'
+import schema from './schema'
 
 /**
  * WordPress dependencies
  */
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
-
-const schema = {
-	design: {
-		type: 'string',
-		default: 'basic',
-	},
-	color: {
-		type: 'string',
-		default: '',
-	},
-	hrMarginTop: {
-		type: 'number',
-		default: '',
-	},
-	hrMarginBottom: {
-		type: 'number',
-		default: '',
-	},
-	height: {
-		default: '',
-		type: 'number',
-	},
-	width: {
-		default: '',
-		type: 'number',
-	},
-	alignment: {
-		type: 'string',
-		default: 'center',
-	},
-}
 
 export const name = 'ugb/divider'
 

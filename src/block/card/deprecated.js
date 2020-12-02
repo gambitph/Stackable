@@ -4,7 +4,9 @@
 import {
 	DeprecatedButtonContent_1_15_5,
 } from '~stackable/components/button-edit'
-import { descriptionPlaceholder } from '~stackable/util'
+import {
+	descriptionPlaceholder,
+} from '~stackable/util'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 
@@ -14,6 +16,9 @@ import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { RichText } from '@wordpress/block-editor'
+
+import schema from './schema'
+import save from './save'
 
 export const deprecatedSchema_1_17_3 = {
 	mediaID: {
@@ -238,6 +243,23 @@ const deprecatedSave_1_17_3 = props => {
 }
 
 const deprecated = [
+	// The design attribute should now be blank be default.
+	{
+		attributes: {
+			...schema,
+			design: {
+				type: 'string',
+				default: 'basic',
+			},
+		},
+		save,
+		migrate: attributes => {
+			return {
+				...attributes,
+				design: attributes.design || 'basic',
+			}
+		},
+	},
 	{
 		attributes: deprecatedSchema_1_17_3,
 		save: deprecatedSave_1_17_3,

@@ -6,115 +6,22 @@
  * External dependencies
  */
 import { ContainerIcon } from '~stackable/icons'
-import {
-	createResponsiveAttributes,
-	createAllCombinationAttributes,
-	createBackgroundAttributes,
-	createImageBackgroundAttributes,
-	createBorderAttributes,
-} from '~stackable/util'
 import { disabledBlocks, i18n } from 'stackable'
 
 /**
  * Internal dependencies
  */
+import './design'
 import deprecated from './deprecated'
 import edit from './edit'
 import save from './save'
+import schema from './schema'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
-
-export const schema = {
-	restrictContentWidth: {
-		type: 'boolean',
-		default: false,
-	},
-	design: {
-		type: 'string',
-		default: 'basic',
-	},
-	...createResponsiveAttributes( '%sHeight', {
-		type: 'string',
-		default: '',
-	} ),
-	height: {
-		type: 'string',
-		default: 'normal',
-	},
-	...createResponsiveAttributes( 'content%sWidth', {
-		type: 'number',
-		default: '',
-	} ),
-	...createAllCombinationAttributes(
-		'content%s%sAlign', {
-			type: 'string',
-			default: '',
-		},
-		[ 'Vertical', 'Horizontal' ],
-		[ '', 'Tablet', 'Mobile' ]
-	),
-
-	borderRadius: {
-		type: 'number',
-		default: '',
-	},
-	shadow: {
-		type: 'number',
-		default: '',
-	},
-
-	// Border.
-	...createBorderAttributes( 'column%s' ),
-
-	// Column Background
-	...createBackgroundAttributes( 'column%s' ),
-
-	// Image.
-	...createImageBackgroundAttributes( 'image%s' ),
-	imageSize: {
-		type: 'string',
-		default: 'full',
-	},
-	...createAllCombinationAttributes(
-		'Image%s%s', {
-			type: 'number',
-			default: '',
-		},
-		[ '', 'Tablet', 'Mobile' ],
-		[ 'Height', 'Width' ]
-	),
-	...createResponsiveAttributes( 'image%sHeightUnit', {
-		type: 'string',
-		default: 'px',
-	} ),
-	...createResponsiveAttributes( 'image%sWidthUnit', {
-		type: 'string',
-		default: '%',
-	} ),
-
-	// Text Colors
-	...createAllCombinationAttributes(
-		'%sColor', {
-			type: 'string',
-			default: '',
-		},
-		[ 'Heading', 'BodyText', 'Link', 'LinkHover' ]
-	),
-
-	// Options for image2 & image3 when responsive.
-	imageCollapseOnMobile: {
-		type: 'boolean',
-		default: true,
-	},
-	imageCollapseOnMobileHeight: {
-		type: 'number',
-		default: 300,
-	},
-}
 
 export const name = 'ugb/container'
 
