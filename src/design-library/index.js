@@ -1,5 +1,17 @@
+/**
+ * External dependencies
+ */
+import {
+	uniq, first, last, startCase, values,
+} from 'lodash'
+import { i18n } from 'stackable'
+
+/**
+ * Wordpress dependencies
+ */
 import domReady from '@wordpress/dom-ready'
 import apiFetch from '@wordpress/api-fetch'
+import { __, sprintf } from '@wordpress/i18n'
 
 let designLibrary = null
 let blockDesigns = {}
@@ -63,16 +75,103 @@ domReady( () => {
 	// fetchDesignLibrary()
 } )
 
-export const getDesigns = async ( {
-	type: isType = '',
-	block: isBlock = '',
-	mood: isMood = '',
-	plan: isPlan = '',
-	colors: hasColors = [],
-	categories: hasCategories = [],
-	search = '',
-	reset = false,
-} ) => {
+export const getUIKits = async ( options = {} ) => {
+	const {
+		mood: isMood = '',
+		plan: isPlan = '',
+		colors: hasColors = [],
+		style: hasStyle = '',
+		search = '',
+		reset = false,
+	} = options
+	const _library = {}
+
+	let library = Object.values( await fetchDesignLibrary( reset ) )
+
+	if ( isPlan ) {
+		library = library.filter( ( { plan } ) => plan === isPlan )
+	}
+
+	library.forEach( style => {
+		const {
+			categories, image, plan, colors, mood, tags,
+		} = style
+
+		if ( ! _library[ last( categories ) ] ) {
+			_library[ last( categories ) ] = {
+				colors,
+				count: 1,
+				mood: [ mood ],
+				image,
+				label: startCase( last( categories ) ),
+				tags,
+				category: last( categories ),
+				categories,
+				description: sprintf( __( '%s Block Design', i18n ), 1 ),
+				plan,
+				blockList: [ style ],
+			}
+		} else {
+			const { count, blockList } = _library[ last( categories ) ]
+			_library[ last( categories ) ].count = count + 1
+			_library[ last( categories ) ].description = sprintf( __( '%s Block Designs', i18n ), count + 1 )
+			_library[ last( categories ) ].colors = uniq( [ ..._library[ last( categories ) ].colors, ...colors ] )
+			_library[ last( categories ) ].categories = uniq( [ ..._library[ last( categories ) ].categories, ...categories ] )
+			_library[ last( categories ) ].mood = uniq( [ ..._library[ last( categories ) ].mood, mood ] )
+			_library[ last( categories ) ].tags = uniq( [ ..._library[ last( categories ) ].tags, ...tags ] )
+			_library[ last( categories ) ].blockList = [ ...blockList, style ]
+		}
+	} )
+
+	library = values( _library )
+
+	if ( isMood ) {
+		library = library.filter( ( { mood } ) => mood.includes( isMood ) )
+	}
+
+	if ( hasColors && hasColors.length ) {
+		library = library.filter( ( { colors } ) => colors.some( color => hasColors.includes( color ) ) )
+	}
+
+	if ( hasStyle !== '' ) {
+		library = library.filter( ( { categories } ) => categories.some( category => hasStyle === category ) )
+	}
+
+	if ( search ) {
+		const terms = search.toLowerCase().replace( /\s+/, ' ' ).trim().split( ' ' )
+
+		// Every search term should match a property of a design.
+		terms.forEach( searchTerm => {
+			const searchTermRegExp = new RegExp( `^${ searchTerm }` )
+			library = library.filter( design => {
+				// Our search term needs to match at least one of these properties.
+				return [ 'label', 'plan', 'tags', 'categories', 'colors' ].some( designProp => {
+					// Search whether the term matched.
+					if ( Array.isArray( design[ designProp ] ) ) {
+						return design[ designProp ]?.some( item => item.toString().toLowerCase().match( searchTermRegExp ) )
+					}
+
+					return design[ designProp ]?.toLowerCase().indexOf( searchTerm ) !== -1
+				} )
+			} )
+		} )
+	}
+
+	return library
+}
+
+export const getDesigns = async ( options = {} ) => {
+	const {
+		type: isType = '',
+		block: isBlock = '',
+		mood: isMood = '',
+		plan: isPlan = '',
+		colors: hasColors = [],
+		categories: hasCategories = [],
+		search = '',
+		reset = false,
+	} = options
+
 	let library = Object.values( await fetchDesignLibrary( reset ) )
 
 	if ( isType ) {
@@ -105,15 +204,22 @@ export const getDesigns = async ( {
 
 		// Every search term should match a property of a design.
 		terms.forEach( searchTerm => {
+			const searchTermRegExp = new RegExp( `^${ searchTerm }` )
 			library = library.filter( design => {
 				// Our search term needs to match at least one of these properties.
 				return [ 'label', 'plan', 'block', 'tags', 'categories', 'colors' ].some( designProp => {
 					// Search whether the term matched.
-					return design[ designProp ].toString().toLowerCase().indexOf( searchTerm ) !== -1
+					if ( Array.isArray( design[ designProp ] ) ) {
+						return design[ designProp ]?.some( item => item.toString().toLowerCase().match( searchTermRegExp ) )
+					}
+
+					return design[ designProp ]?.toLowerCase().indexOf( searchTerm ) !== -1
 				} )
 			} )
 		} )
 	}
+
+	library = library.map( design => ( { ...design, description: sprintf( __( '%s UI Kit', i18n ), startCase( last( design.categories ) ) ) } ) )
 
 	return library
 }
@@ -152,4 +258,17 @@ export const getAllBlocks = async () => {
 		}
 		return blocks
 	}, [] )
+}
+
+/**
+ * Gets the list of categories available in the design library.
+ */
+export const getAllCategories = async () => {
+	const library = Object.values( await fetchDesignLibrary() )
+
+	return uniq( library.reduce( ( categories, designs ) => {
+		const { categories: _categories } = designs
+		// Only get the first index.
+		return [ ...categories, first( _categories ) ]
+	}, [] ) )
 }
