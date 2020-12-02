@@ -192,7 +192,7 @@ const UIKits = props => {
 							isLink
 							onClick={ backButtonOnClick }
 						>
-							{ __( 'Back to UI Kits', i18n ) }
+							{ previewMode.fromBlockDesigns ? __( 'Back to Block Designs', i18n ) : __( 'Back to UI Kits', i18n ) }
 						</Button>
 						{ ! isPro && showProNotice &&
 							<ProControl
