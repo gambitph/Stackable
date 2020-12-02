@@ -3,6 +3,11 @@
  */
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignBackground from './images/background.png'
+import ImageDesignBasic2 from './images/basic2.png'
+import ImageDesignBubble from './images/bubble.png'
+import ImageDesignVertical from './images/vertical.png'
+import ImageDesignVerticalInverse from './images/vertical-inverse.png'
 import { createStyles } from './style'
 import { showOptions } from './util'
 
@@ -50,6 +55,7 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 	withClickOpenInspector,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 
 /**
@@ -64,6 +70,37 @@ import { compose } from '@wordpress/compose'
 import { RichText } from '@wordpress/block-editor'
 import { withSelect } from '@wordpress/data'
 
+addFilter( 'stackable.testimonial.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
+		},
+		{
+			image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
+		},
+		{
+			label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Basic', i18n ), 2 ), value: 'basic2', image: ImageDesignBasic2, premium: true,
+		},
+		{
+			label: __( 'Bubble', i18n ), value: 'bubble', image: ImageDesignBubble, premium: true,
+		},
+		{
+			label: __( 'Background', i18n ), value: 'background', image: ImageDesignBackground, premium: true,
+		},
+		{
+			label: __( 'Vertical', i18n ), value: 'vertical', image: ImageDesignVertical, premium: true,
+		},
+		{
+			label: __( 'Vertical Inverse', i18n ), value: 'vertical-inverse', image: ImageDesignVerticalInverse, premium: true,
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
+
 addFilter( 'stackable.testimonial.edit.inspector.layout.before', 'stackable/testimonial', ( output, props ) => {
 	const { setAttributes } = props
 	const {
@@ -76,15 +113,7 @@ addFilter( 'stackable.testimonial.edit.inspector.layout.before', 'stackable/test
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ [
-					{
-						image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
-					},
-					{
-						image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
-					},
-					...applyFilters( 'stackable.testimonial.edit.layouts', [] ),
-				] }
+				options={ applyFilters( 'stackable.testimonial.edit.layouts', [] ) }
 				onChange={ design => {
 					setAttributes( { design } )
 				} }
@@ -625,6 +654,7 @@ const edit = props => {
 export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
+	withDesignLayoutSelector,
 	withGoogleFont,
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Testimonial%sAlign', 'Image%sAlign', 'Name%sAlign', 'Position%sAlign' ] ),

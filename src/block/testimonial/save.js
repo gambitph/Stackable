@@ -12,7 +12,9 @@ import {
 	Image,
 	DivBackground,
 } from '~stackable/components'
-import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+import {
+	withBlockStyles, withUniqueClass,
+} from '~stackable/higher-order'
 import classnames from 'classnames'
 import { range } from 'lodash'
 import striptags from 'striptags'

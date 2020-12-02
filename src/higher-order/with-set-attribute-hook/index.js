@@ -9,7 +9,7 @@ import { createHigherOrderComponent } from '@wordpress/compose'
  * External dependencies
  */
 import PropTypes from 'prop-types'
-import { isEqual } from 'lodash'
+import { isEqual, omit } from 'lodash'
 
 export const createUniqueClass = uid => `ugb-${ uid.substring( 0, 7 ) }`
 
@@ -37,6 +37,10 @@ const withSetAttributeHook = createHigherOrderComponent(
 			if ( ! isEqual( prevProps.attributes, this.props.attributes ) ) {
 				doAction( 'stackable.setAttributes.after' )
 			}
+		}
+
+		shouldComponentUpdate( nextProps ) {
+			return ! isEqual( omit( nextProps.attributes, 'uniqueClass' ), omit( this.props.attributes, 'uniqueClass' ) )
 		}
 
 		setAttributes( attributes ) {

@@ -1,66 +1,190 @@
 /**
  * Styles used by the Getting Started section.
  */
+@media screen and (min-width: 800px) {
+	.s-getting-started.s-box.s-box-spaced {
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+		max-width: 1100px;
+	}
 
-.getting-started .s-header h1 {
-	margin: 0 auto;
-}
-.s-tab-premium {
-	&,
-	&:hover {
-		color: #f34957;
+	.s-getting-started__two-column {
+		display: grid;
+		grid-template-columns: 1fr 2fr;
+		overflow: hidden;
+		.s-getting-started__entry {
+			padding: 0 0 0 48px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+		}
+		.s-image-caption {
+			transform: translateX(32px);
+		}
+
+		&.reverse {
+			grid-template-columns: 2fr 1fr;
+			.s-getting-started__entry {
+				grid-column: 2 / 3;
+				grid-row: 1 / 2;
+				padding: 0 48px 0 0;
+			}
+			.s-image-caption {
+				grid-column: 1 / 2;
+				grid-row: 1 / 2;
+				transform: translateX(-32px);
+			}
+		}
+	}
+
+	.s-getting-started__centered {
+		max-width: 848px;
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+
+	.inner-columns {
+		grid-template-columns: 1fr 1fr;
+		display: grid;
+		grid-column-gap: 24px;
+		grid-row-gap: 0;
 	}
 }
-.s-title {
-	text-align: center;
-	margin-bottom: 30px;
-}
-.s-spacer {
-	height: 50px;
-}
-.s-center {
-	text-align: center;
-}
-.s-getting-started-body {
-	display: grid;
-	grid-template-columns: 1fr 1.2fr;
-	grid-gap: 35px;
-	align-items: center;
-	margin-bottom: 35px;
-	&.s-reverse {
-		grid-template-columns: 1.2fr 1fr;
+
+@media screen and (max-width: 801px) {
+	.s-getting-started__entry {
+		margin: 0 0 42px;
 	}
 }
-.s-tip {
-	margin: 1.5em 40px 1em;
-	text-indent: -25px;
-	color: #da5e68;
-	line-height: 1.3em;
+
+.s-getting-started {
+	.title,
+	.subtitle {
+		text-align: center;
+	}
+
+	.resources__item.s-box,
+	.resources__item.s-box:last-child {
+		margin-bottom: 24px !important;
+	}
+
+	h2.title {
+		font-size: 32px;
+		color: #f00069;
+		line-height: 1.2em;
+		margin: 8px;
+	}
+
+	h4 {
+		font-size: 21px;
+		color: #000;
+		margin-bottom: 1em;
+	}
+
+	h5 {
+		font-size: 16px;
+		color: #000;
+		margin-bottom: 1em;
+	}
+
+	.indented {
+		margin: 1.5em 0 1em 2em;
+	}
 }
-.s-video {
-	max-width: 100%;
-	margin: 0 auto;
-	display: block;
+
+.s-getting-started__two-column,
+.s-getting-started__centered {
+	margin-bottom: 64px !important;
 }
-.s-buttons {
-	display: flex;
-	flex-direction: row;
+
+.s-getting-started__entry p,
+.s-getting-started__entry h4,
+.s-getting-started__entry ul {
+	margin-top: 0;
+}
+
+.s-getting-started__button,
+.s-getting-started__button:active {
+	transition: all 0.1s ease-in-out;
+	text-decoration: none;
+	border: none;
+	color: #fff;
+	padding: 12px 20px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-size: 14px;
+	cursor: pointer;
+	box-sizing: border-box !important;
+	display: inline-block;
+	&.primary {
+		background: linear-gradient(135deg, #b300be, #f00069);
+		&:hover {
+			color: #fff !important;
+			background: linear-gradient(135deg, #f00069, #f00069) !important;
+		}
+	}
+	&.secondary {
+		background: transparent;
+		box-shadow: inset 0px 0px 0px 1px;
+		&:hover {
+			color: #fff !important;
+			background: #f00069 !important;
+			box-shadow: inset 0px 0px 0px 0px !important;
+		}
+	}
+}
+
+.s-getting-started__footer {
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	> * {
-		margin: 0 15px;
+	padding: 40px;
+	background-color: #000;
+	border-radius: 8px;
+	background-size: cover;
+	background-position: center top;
+	padding-top: 64px;
+	padding-bottom: 64px;
+	color: #fff;
+	h2 {
+		font-size: 24px;
+		font-weight: 400;
+		letter-spacing: 1px;
+		color: #fff;
+	}
+	h2,
+	p {
+		text-align: center;
+	}
+	.button-group {
+		display: flex;
+		column-gap: 16px;
+		margin-top: 32px;
+		justify-content: center;
 	}
 }
-.s-button-plain {
-	background: none !important;
-	color: #f34957 !important;
-	padding-left: 0 !important;
-	padding-right: 0 !important;
-	.dashicons {
-		vertical-align: text-top;
+
+.s-getting-started__help-tip {
+	position: relative;
+	padding: 24px 24px 24px 65px;
+	h4 {
+		font-size: 16px;
+		margin: 0;
 	}
-}
-.s-button-small {
-	padding: 8px 23px !important;
-	display: inline-block !important;
+	p {
+		margin: 0;
+	}
+	&.primary {
+		background-color: #e9feff;
+	}
+	&.secondary {
+		background-color: #ffffe9;
+	}
+	img {
+		width: 24px;
+		height: 24px;
+		position: absolute;
+		top: 24px;
+		left: 24px;
+	}
 }

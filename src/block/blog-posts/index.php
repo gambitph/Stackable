@@ -87,9 +87,24 @@ if ( ! function_exists( 'stackable_blog_posts_post_query' ) ) {
 				'suppress_filters' => false,
     	);
 
-		if ( ! empty( $attributes['taxonomy'] ) ) {
-        	$passed_attributes[ 'category' . $attributes['taxonomyFilterType'] ] = $attributes['postType'] === 'post' && $attributes['taxonomyType'] === 'category' ? explode( ',', $attributes['taxonomy'] ) : '';
-        	$passed_attributes[ 'tag' . $attributes['taxonomyFilterType'] ] = $attributes['postType'] === 'post' && $attributes['taxonomyType'] === 'post_tag' ? explode( ',', $attributes['taxonomy'] ) : '';
+		if ( ! empty( $attributes['taxonomy'] ) && ! empty( $attributes['taxonomyType'] ) ) {
+			// Categories.
+			if ( $attributes['taxonomyType'] === 'category' ) {
+				$passed_attributes[ 'category' . $attributes['taxonomyFilterType'] ] = explode( ',', $attributes['taxonomy'] );
+			// Tags.
+			} else if ( $attributes['taxonomyType'] === 'post_tag' ) {
+				$passed_attributes[ 'tag' . $attributes['taxonomyFilterType'] ] = explode( ',', $attributes['taxonomy'] );
+			// Custom taxonomies.
+			} else {
+				$passed_attributes['tax_query'] = array(
+					array(
+						'taxonomy' => $attributes['taxonomyType'],
+						'field' => 'term_id',
+						'terms' => explode( ',', $attributes['taxonomy'] ),
+						'operator' => $attributes['taxonomyFilterType'] === '__in' ? 'IN' : 'NOT IN',
+					),
+				);
+			}
     	}
 
 		return apply_filters( 'stackable/blog-post/post_query',
@@ -113,6 +128,11 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 		// Migrate attributes if this is an old block.
 		if ( stackable_block_blog_posts_is_deprecated( $attributes, $content ) ) {
 			$attributes = apply_filters( 'stackable_block_migrate_attributes', $attributes, 'blog-posts' );
+		}
+
+		// Render nothing if layout attribute is empty.
+		if ( $attributes['design'] == '' ) {
+			return;
 		}
 
 		$attributes = stackable_blog_posts_block_default_attributes( $attributes );

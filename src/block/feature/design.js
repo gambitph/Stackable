@@ -19,12 +19,15 @@ addFilter( 'stackable.feature.design.no-text-attributes', 'stackable/feature', a
 
 // Ignore these attributes when exporting / applying designs.
 addFilter( 'stackable.feature.design.filtered-block-attributes', 'stackable/feature', ( attributes, blockAttributes = null ) => {
-	return omit( attributes, [
-		'imageId',
-		...( blockAttributes && blockAttributes.imageId ? [ 'imageUrl' ] : [] ),
-		'imageAlt',
-		'buttonUrl',
-		'buttonNewTab',
-		'buttonNoFollow',
-	] )
+	return {
+		...omit( attributes, [
+			'imageId',
+			...( blockAttributes && blockAttributes.imageId ? [ 'imageUrl' ] : [] ),
+			'imageAlt',
+			'buttonUrl',
+			'buttonNewTab',
+			'buttonNoFollow',
+		] ),
+		design: attributes.design || 'plain',
+	}
 } )

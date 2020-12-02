@@ -1,7 +1,9 @@
 /**
  * External dependencies
  */
-import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+import {
+	withBlockStyles, withUniqueClass,
+} from '~stackable/higher-order'
 import { BlockContainer, DivBackground } from '~stackable/components'
 
 /**

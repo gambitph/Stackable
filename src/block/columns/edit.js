@@ -5,6 +5,9 @@ import createStyles from './style'
 import { showOptions, getColumnCountFromDesign } from './util'
 import ImageDesignGrid from './images/grid.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignUneven from './images/uneven.png'
+import ImageDesignUneven2 from './images/uneven-2.png'
+import ImageDesignTiled from './images/tiled.png'
 
 /**
  * External dependencies
@@ -31,6 +34,7 @@ import {
 	withTabbedInspector,
 	withContentAlignReseter,
 	withBlockStyles,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
 import { range } from 'lodash'
@@ -40,8 +44,12 @@ import { i18n, showProNotice } from 'stackable'
  * WordPress dependencies
  */
 import { ToggleControl } from '@wordpress/components'
-import { __ } from '@wordpress/i18n'
-import { addFilter, applyFilters } from '@wordpress/hooks'
+import {
+	__, sprintf, _x,
+} from '@wordpress/i18n'
+import {
+	addFilter, applyFilters,
+} from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { compose, withState } from '@wordpress/compose'
@@ -90,6 +98,44 @@ const COLUMN_DEFAULTS = {
 		columns6: 16,
 	},
 }
+
+addFilter( 'stackable.columns.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			label: __( 'Grid', i18n ), value: 'grid', image: ImageDesignGrid,
+		},
+		{
+			label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
+		},
+		{
+			label: __( 'Uneven', i18n ), value: 'uneven', image: ImageDesignUneven, premium: true,
+		},
+		{
+			label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Uneven', i18n ), 2 ), value: 'uneven-2', image: ImageDesignUneven2, premium: true,
+		},
+		{
+			label: __( 'Tiled', i18n ), value: 'tiled', image: ImageDesignTiled, premium: true,
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
+
+addFilter( 'stackable.columns.edit.inspector.layout.attributes', 'stackable/columns', attributes => {
+	const {
+		design,
+		columns = 2,
+	} = attributes
+	const columnCount = getColumnCountFromDesign( columns, design )
+	return {
+		design,
+		columns,
+		...COLUMN_DEFAULTS[ columnCount ],
+	}
+} )
 
 addFilter( 'stackable.columns.edit.inspector.layout.before', 'stackable/columns', ( output, props ) => {
 	const { setAttributes } = props
@@ -167,20 +213,9 @@ addFilter( 'stackable.columns.edit.inspector.layout.before', 'stackable/columns'
 				<DesignControl
 					selected={ design }
 					label={ __( 'Layouts', i18n ) }
-					options={ applyFilters( 'stackable.columns.edit.layouts', [
-						{
-							label: __( 'Grid', i18n ), value: 'grid', image: ImageDesignGrid,
-						},
-						{
-							label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
-						},
-					] ) }
+					options={ applyFilters( 'stackable.columns.edit.layouts', [] ) }
 					onChange={ design => {
-						const columnCount = getColumnCountFromDesign( columns, design )
-						setAttributes( {
-							design,
-							...COLUMN_DEFAULTS[ columnCount ],
-						} )
+						setAttributes( applyFilters( 'stackable.columns.edit.inspector.layout.attributes', { design, columns } ) )
 					} }
 				/>
 				{ showProNotice && <ProControlButton /> }
@@ -502,6 +537,7 @@ export default compose(
 	withState( { sortColumnHighlight: null } ),
 	withUniqueClass,
 	withSetAttributeHook,
+	withDesignLayoutSelector,
 	withGoogleFont,
 	withTabbedInspector(),
 	withContentAlignReseter(),

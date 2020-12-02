@@ -44,6 +44,7 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 	withClickOpenInspector,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 
 /**
@@ -51,6 +52,9 @@ import {
  */
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignHorizontal from './images/horizontal.png'
+import ImageDesignLargeMid from './images/large-mid.png'
+import ImageDesignZigzag from './images/zigzag.png'
 import { i18n, showProNotice } from 'stackable'
 import createStyles from './style'
 import { showOptions } from './util'
@@ -65,6 +69,31 @@ import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
 import { withSelect } from '@wordpress/data'
 
+addFilter( 'stackable.feature-grid.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
+		},
+		{
+			image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
+		},
+		{
+			label: __( 'Horizontal', i18n ), value: 'horizontal', image: ImageDesignHorizontal, premium: true,
+		},
+		{
+			label: __( 'Large Mid', i18n ), value: 'large-mid', image: ImageDesignLargeMid, premium: true,
+		},
+		{
+			label: __( 'Zigzag', i18n ), value: 'zigzag', image: ImageDesignZigzag, premium: true,
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
+
 addFilter( 'stackable.feature-grid.edit.inspector.layout.before', 'stackable/feature-grid', ( output, props ) => {
 	const { setAttributes } = props
 	const {
@@ -77,15 +106,7 @@ addFilter( 'stackable.feature-grid.edit.inspector.layout.before', 'stackable/fea
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ [
-					{
-						image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
-					},
-					{
-						image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
-					},
-					...applyFilters( 'stackable.feature-grid.edit.layouts', [] ),
-				] }
+				options={ applyFilters( 'stackable.feature-grid.edit.layouts', [] ) }
 				onChange={ design => {
 					setAttributes( { design } )
 				} }
@@ -585,6 +606,7 @@ const edit = props => {
 export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
+	withDesignLayoutSelector,
 	withGoogleFont,
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Image%sAlign', 'Title%sAlign', 'Description%sAlign', 'Button%sAlign' ] ),

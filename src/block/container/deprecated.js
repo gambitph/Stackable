@@ -9,6 +9,12 @@ import classnames from 'classnames'
 import { applyFilters } from '@wordpress/hooks'
 import { InnerBlocks } from '@wordpress/block-editor'
 
+/**
+ * Internal dependencies
+ */
+import schema from './schema'
+import save from './save'
+
 const deprecatedSchema_1_17_3 = {
 	textColor: {
 		type: 'string',
@@ -170,6 +176,22 @@ const deprecatedSave_1_17_3 = props => {
 }
 
 const deprecated = [
+	{
+		attributes: {
+			...schema,
+			design: {
+				type: 'strng',
+				default: 'basic',
+			},
+		},
+		save,
+		migrate: attributes => {
+			return {
+				...attributes,
+				design: attributes.design || 'basic',
+			}
+		},
+	},
 	{
 		attributes: deprecatedSchema_1_17_3,
 		save: deprecatedSave_1_17_3,

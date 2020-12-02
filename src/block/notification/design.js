@@ -19,9 +19,12 @@ addFilter( 'stackable.notification.design.no-text-attributes', 'stackable/notifi
 
 // Ignore these attributes when exporting / applying designs.
 addFilter( 'stackable.notification.design.filtered-block-attributes', 'stackable/notification', attributes => {
-	return omit( attributes, [
-		'buttonUrl',
-		'buttonNewTab',
-		'buttonNoFollow',
-	] )
+	return {
+		...omit( attributes, [
+			'buttonUrl',
+			'buttonNewTab',
+			'buttonNoFollow',
+		] ),
+		design: attributes.design || 'basic',
+	}
 } )

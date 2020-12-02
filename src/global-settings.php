@@ -46,8 +46,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			/**
 			 * Color hooks
 			 */
-
-			add_action( 'wp_enqueue_scripts', array( $this, 'color_add_global_styles' ) );
+add_action( 'wp_enqueue_scripts', array( $this, 'color_add_global_styles' ) );
 
 			add_action( 'after_setup_theme', array( $this, 'color_add_global_color_palette' ), 9999 );
 

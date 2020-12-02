@@ -5,6 +5,7 @@ import BlockStyles, {
 	addBlockClassNames, combineStyleRules, generateStyles,
 } from '../'
 import { render } from '@testing-library/react'
+import { minifyCSS } from '~stackable/util'
 
 describe( 'Add Block Class Names', () => {
 	test( 'should work', () => {
@@ -24,28 +25,43 @@ describe( 'Add Block Class Names', () => {
 
 describe( 'Combine Style Rules', () => {
 	test( 'should work', () => {
-		expect( combineStyleRules( {} ) ).toBe( '' )
+		expect( combineStyleRules( {} ) ).toEqual( [] )
 		expect( combineStyleRules( {
 			'.class': {},
-		} ) ).toBe( '' )
+		} )[ 0 ] ).toMatch( /.class\s*\{\s*\}/ )
 		expect( combineStyleRules( {
 			'.class': {},
 			'.class2': {},
 			'.class3': {
 				margin: undefined,
 			},
-		} ) ).toBe( '' )
+		} )[ 0 ] ).toMatch( /.class\s*\{\s*\}/ )
+		expect( combineStyleRules( {
+			'.class': {},
+			'.class2': {},
+			'.class3': {
+				margin: undefined,
+			},
+		} )[ 1 ] ).toMatch( /.class2\s*\{\s*\}/ )
+		expect( combineStyleRules( {
+			'.class': {},
+			'.class2': {},
+			'.class3': {
+				margin: undefined,
+			},
+		} )[ 2 ] ).toMatch( /.class3\s*\{\s*\}/ )
+
 		expect( combineStyleRules( {
 			'.class': {
 				margin: 0,
 			},
-		} ) ).toBe( '.class{margin:0}' )
+		} )[ 0 ] ).toMatch( /.class\s*\{\s*margin:\s*0;\s*}/ )
 		expect( combineStyleRules( {
 			'.class': {
 				margin: 0,
 				padding: 0,
 			},
-		} ) ).toBe( '.class{margin:0;padding:0}' )
+		} )[ 0 ] ).toMatch( /.class\s*\{\s*margin:\s*0;\s*padding:\s*0;\s*}/ )
 		expect( combineStyleRules( {
 			'.class': {
 				margin: 0,
@@ -54,19 +70,7 @@ describe( 'Combine Style Rules', () => {
 			'.class2': {
 				margin: 0,
 			},
-		} ) ).toBe( '.class{margin:0;padding:0}.class2{margin:0}' )
-		expect( combineStyleRules( {
-			'.class': {
-				margin: 0,
-				padding: 0,
-			},
-			'.class2': {
-			},
-			'.class3:after': {
-				margin: 0,
-				content: '""',
-			},
-		} ) ).toBe( '.class{margin:0;padding:0}.class3:after{margin:0;content:""}' )
+		} )[ 1 ] ).toMatch( /.class2\s*\{\s*margin:\s*0;\s*}/ )
 	} )
 
 	test( 'should adjust style rule names', () => {
@@ -77,7 +81,7 @@ describe( 'Combine Style Rules', () => {
 				BorderTopRadius: 0,
 				'--customProp': 0,
 			},
-		} ) ).toBe( '.class{margin-right:0;padding:0;border-top-radius:0;--custom-prop:0}' )
+		} )[ 0 ] ).toMatch( /.class\s*\{\s*margin-right:\s*0;\s*padding:\s*0;\s*border-top-radius:\s*0;\s*--custom-prop:\s*0;\s*\}/ )
 	} )
 } )
 
@@ -86,7 +90,7 @@ describe( 'generateStyles', () => {
 		const styles = {
 			'.test': { color: 'red' },
 		}
-		expect( generateStyles( styles ) ).toEqual( '.test{color:red}' )
+		expect( minifyCSS( generateStyles( styles ).join( '' ) ) ).toMatch( '.test{color:red}' )
 	} )
 
 	it( 'should render desktop only styles', () => {
@@ -95,7 +99,7 @@ describe( 'generateStyles', () => {
 		}
 
 		const results = generateStyles( styles, '', '', 900, 400 )
-		expect( results ).toEqual( expect.stringMatching( /@media[^\{]+min-width:900px[^\{]+\{\.test{color:red/ ) )
+		expect( minifyCSS( results.join( '' ) ) ).toEqual( expect.stringMatching( /@media[^\{]+min-width:900px[^\{]+\{\.test{color:red/ ) )
 	} )
 
 	it( 'should render desktop and tablet only styles', () => {
@@ -104,7 +108,7 @@ describe( 'generateStyles', () => {
 		}
 
 		const results = generateStyles( styles, '', '', 900, 400 )
-		expect( results ).toEqual( expect.stringMatching( /@media[^\{]+min-width:400px[^\{]+\{\.test{color:red/ ) )
+		expect( minifyCSS( results.join( '' ) ) ).toEqual( expect.stringMatching( /@media[^\{]+min-width:400px[^\{]+\{\.test{color:red/ ) )
 	} )
 
 	it( 'should render tablet and mobile', () => {
@@ -113,7 +117,7 @@ describe( 'generateStyles', () => {
 		}
 
 		const results = generateStyles( styles, '', '', 900, 400 )
-		expect( results ).toEqual( expect.stringMatching( /@media[^\{]+max-width:900px[^\{]+\{\.test{color:red/ ) )
+		expect( minifyCSS( results.join( '' ) ) ).toEqual( expect.stringMatching( /@media[^\{]+max-width:900px[^\{]+\{\.test{color:red/ ) )
 	} )
 
 	it( 'should render tablet only', () => {
@@ -122,8 +126,8 @@ describe( 'generateStyles', () => {
 		}
 
 		const results = generateStyles( styles, '', '', 900, 400 )
-		expect( results ).toEqual( expect.stringMatching( /@media[^\{]+max-width:900px[^\{]+\{\.test{color:red/ ) )
-		expect( results ).toEqual( expect.stringMatching( /@media[^\{]+min-width:400px[^\{]+\{\.test{color:red/ ) )
+		expect( minifyCSS( results.join( '' ) ) ).toEqual( expect.stringMatching( /@media[^\{]+max-width:900px[^\{]+\{\.test{color:red/ ) )
+		expect( minifyCSS( results.join( '' ) ) ).toEqual( expect.stringMatching( /@media[^\{]+min-width:400px[^\{]+\{\.test{color:red/ ) )
 	} )
 
 	it( 'should render mobile only', () => {
@@ -132,7 +136,7 @@ describe( 'generateStyles', () => {
 		}
 
 		const results = generateStyles( styles, '', '', 900, 400 )
-		expect( results ).toEqual( expect.stringMatching( /@media[^\{]+max-width:400px[^\{]+\{\.test{color:red/ ) )
+		expect( minifyCSS( results.join( '' ) ) ).toEqual( expect.stringMatching( /@media[^\{]+max-width:400px[^\{]+\{\.test{color:red/ ) )
 	} )
 
 	it( 'should render ie11 styles', () => {
@@ -141,7 +145,7 @@ describe( 'generateStyles', () => {
 		}
 
 		const results = generateStyles( styles, '', '', 900, 400 )
-		expect( results ).toEqual( expect.stringMatching( /@media screen and [^\{]+-ms-high-contrast:active[^\{]+,screen and [^\{]+-ms-high-contrast:none[^\{]+\{\.test{color:red/ ) )
+		expect( minifyCSS( results.join( '' ) ) ).toEqual( expect.stringMatching( /@media screen and [^\{]+-ms-high-contrast:active[^\{]+,screen and [^\{]+-ms-high-contrast:none[^\{]+\{\.test{color:red/ ) )
 	} )
 
 	it( 'should render editor only styles', () => {
@@ -150,8 +154,8 @@ describe( 'generateStyles', () => {
 		}
 
 		const results = generateStyles( styles, '', '', 900, 400, true )
-		expect( results ).toMatch( /.test\s*{\s*color:\s*red/ )
-		expect( results ).toContain( '#editor' )
+		expect( minifyCSS( results.join( '' ) ) ).toMatch( /.test\s*{\s*color:\s*red/ )
+		expect( minifyCSS( results.join( '' ) ) ).toContain( '#editor' )
 	} )
 } )
 
@@ -236,9 +240,10 @@ describe( 'BlockStyles', () => {
 			},
 		}
 		const { container } = render( <BlockStyles style={ style } editorMode={ true } breakTablet="900" breakMobile="400" /> )
-		expect( container.querySelector( 'style' ).innerHTML ).toEqual( expect.stringMatching( /.editor/ ) )
-		expect( container.querySelector( 'style' ).innerHTML ).toEqual( expect.stringMatching( /#editor .editor\s*{\s*color:\s*blue/ ) )
-		expect( container.querySelector( 'style' ).innerHTML ).toEqual( expect.stringMatching( /@media[^\{]+900px[^\}]+#editor .tablet\s*{\s*color:\s*yellow/ ) )
-		expect( container.querySelector( 'style' ).innerHTML ).toEqual( expect.stringMatching( /@media[^\{]+400px[^\}]+#editor .mobile\s*{\s*color:\s*green/ ) )
+		expect( container.innerHTML ).toEqual( expect.stringMatching( /<style\s*>/ ) )
+		expect( container.innerHTML ).toEqual( expect.stringMatching( /.editor/ ) )
+		expect( container.innerHTML ).toEqual( expect.stringMatching( /#editor .editor\s*{\s*color:\s*blue/ ) )
+		expect( container.innerHTML ).toEqual( expect.stringMatching( /@media[^\{]+900px[^\}]+#editor .tablet\s*{\s*color:\s*yellow/ ) )
+		expect( container.innerHTML ).toEqual( expect.stringMatching( /@media[^\{]+400px[^\}]+#editor .mobile\s*{\s*color:\s*green/ ) )
 	} )
 } )

@@ -19,6 +19,7 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 	withClickOpenInspector,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import { createButtonAttributeNames } from '~stackable/util'
 
@@ -47,6 +48,31 @@ import {
 import { i18n, showProNotice } from 'stackable'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 
+addFilter( 'stackable.button.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
+		},
+		{
+			label: __( 'Spread', i18n ), value: 'spread', image: ImageDesignSpread,
+		},
+		{
+			label: __( 'Full Width', i18n ), value: 'fullwidth', image: ImageDesignFullWidth,
+		},
+		{
+			label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Grouped', i18n ), 1 ), value: 'grouped-1', image: ImageDesignGrouped1,
+		},
+		{
+			label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Grouped', i18n ), 2 ), value: 'grouped-2', image: ImageDesignGrouped2,
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
+
 addFilter( 'stackable.button.edit.inspector.layout.before', 'stackable/button', ( output, props ) => {
 	const { setAttributes } = props
 	const {
@@ -59,23 +85,7 @@ addFilter( 'stackable.button.edit.inspector.layout.before', 'stackable/button', 
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ applyFilters( 'stackable.button.edit.layouts', [
-					{
-						label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
-					},
-					{
-						label: __( 'Spread', i18n ), value: 'spread', image: ImageDesignSpread,
-					},
-					{
-						label: __( 'Full Width', i18n ), value: 'fullwidth', image: ImageDesignFullWidth,
-					},
-					{
-						label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Grouped', i18n ), 1 ), value: 'grouped-1', image: ImageDesignGrouped1,
-					},
-					{
-						label: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Grouped', i18n ), 2 ), value: 'grouped-2', image: ImageDesignGrouped2,
-					},
-				] ) }
+				options={ applyFilters( 'stackable.button.edit.layouts', [] ) }
 				onChange={ design => setAttributes( { design } ) }
 			>
 				{ showProNotice && <ProControlButton /> }
@@ -236,6 +246,7 @@ const edit = props => {
 export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
+	withDesignLayoutSelector,
 	withGoogleFont,
 	withTabbedInspector(),
 	withContentAlignReseter(),

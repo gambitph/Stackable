@@ -37,6 +37,7 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 	withClickOpenInspector,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
 import { i18n, showProNotice } from 'stackable'
@@ -48,6 +49,10 @@ import { range } from 'lodash'
 import SVGArrow from './images/arrow.svg'
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignBox from './images/box.png'
+import ImageDesignCaptioned from './images/captioned.png'
+import ImageDesignFade from './images/fade.png'
+import ImageDesignLine from './images/line.png'
 import createStyles from './style'
 import { showOptions } from './util'
 
@@ -65,6 +70,34 @@ import { Component, Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 import { withSelect } from '@wordpress/data'
 
+addFilter( 'stackable.image-box.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
+		},
+		{
+			image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
+		},
+		{
+			label: __( 'Box', i18n ), value: 'box', image: ImageDesignBox, premium: true,
+		},
+		{
+			label: __( 'Captioned', i18n ), value: 'captioned', image: ImageDesignCaptioned, premium: true,
+		},
+		{
+			label: __( 'Fade', i18n ), value: 'fade', image: ImageDesignFade, premium: true,
+		},
+		{
+			label: __( 'Line', i18n ), value: 'line', image: ImageDesignLine, premium: true,
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
+
 addFilter( 'stackable.image-box.edit.inspector.layout.before', 'stackable/image-box', ( output, props ) => {
 	const { setAttributes } = props
 	const {
@@ -77,15 +110,7 @@ addFilter( 'stackable.image-box.edit.inspector.layout.before', 'stackable/image-
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ [
-					{
-						image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
-					},
-					{
-						image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
-					},
-					...applyFilters( 'stackable.image-box.edit.layouts', [] ),
-				] }
+				options={ applyFilters( 'stackable.image-box.edit.layouts', [] ) }
 				onChange={ design => {
 					setAttributes( { design } )
 				} }
@@ -752,6 +777,7 @@ class Edit extends Component {
 export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
+	withDesignLayoutSelector,
 	withGoogleFont,
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Line%sAlign', 'Subtitle%sAlign', 'Title%sAlign', 'Description%sAlign', 'Arrow%sAlign' ] ),

@@ -3,6 +3,9 @@
  */
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignColored from './images/colored.png'
+import ImageDesignCompact from './images/compact.png'
+import ImageDesignSectioned from './images/sectioned.png'
 import { createStyles } from './style'
 import { showOptions } from './util'
 
@@ -51,6 +54,7 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 	withClickOpenInspector,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import { i18n, showProNotice } from 'stackable'
 import { range } from 'lodash'
@@ -68,6 +72,31 @@ import { Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 import { withSelect } from '@wordpress/data'
 
+addFilter( 'stackable.pricing-box.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
+		},
+		{
+			image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
+		},
+		{
+			label: __( 'Compact', i18n ), value: 'compact', image: ImageDesignCompact, premium: true,
+		},
+		{
+			label: __( 'Colored', i18n ), value: 'colored', image: ImageDesignColored, premium: true,
+		},
+		{
+			label: __( 'Sectioned', i18n ), value: 'sectioned', image: ImageDesignSectioned, premium: true,
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
+
 addFilter( 'stackable.pricing-box.edit.inspector.layout.before', 'stackable/pricing-box', ( output, props ) => {
 	const { setAttributes } = props
 	const {
@@ -80,15 +109,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.layout.before', 'stackable/pric
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ [
-					{
-						image: ImageDesignBasic, label: __( 'Basic', i18n ), value: 'basic',
-					},
-					{
-						image: ImageDesignPlain, label: __( 'Plain', i18n ), value: 'plain',
-					},
-					...applyFilters( 'stackable.pricing-box.edit.layouts', [] ),
-				] }
+				options={ applyFilters( 'stackable.pricing-box.edit.layouts', [] ) }
 				onChange={ design => {
 					setAttributes( { design } )
 				} }
@@ -860,6 +881,7 @@ const edit = props => {
 export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
+	withDesignLayoutSelector,
 	withGoogleFont,
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Image%sAlign', 'Title%sAlign', 'Price%sAlign', 'SubPrice%sAlign', 'Button%sAlign', 'Description%sAlign' ] ),

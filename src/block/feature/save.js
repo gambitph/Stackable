@@ -4,7 +4,9 @@
 import {
 	ButtonEdit, BlockContainer, Image, DivBackground,
 } from '~stackable/components'
-import { withUniqueClass, withBlockStyles } from '~stackable/higher-order'
+import {
+	withUniqueClass, withBlockStyles,
+} from '~stackable/higher-order'
 import classnames from 'classnames'
 import striptags from 'striptags'
 

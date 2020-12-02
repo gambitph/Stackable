@@ -3,6 +3,9 @@
  */
 import ImageDesignBasic from './images/basic.png'
 import ImageDesignPlain from './images/plain.png'
+import ImageDesignCenteredQuote from './images/centered-quote.png'
+import ImageDesignHighlight from './images/highlight.png'
+import ImageDesignHude from './images/huge.png'
 import { QUOTE_ICONS } from './quotes'
 import { showOptions } from './util'
 import createStyles from './style'
@@ -41,6 +44,7 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 	withClickOpenInspector,
+	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 
 /**
@@ -54,6 +58,31 @@ import { i18n, showProNotice } from 'stackable'
 import { compose } from '@wordpress/compose'
 import classnames from 'classnames'
 
+addFilter( 'stackable.blockquote.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
+		},
+		{
+			label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
+		},
+		{
+			label: __( 'Centered Quote', i18n ), value: 'centered-quote', image: ImageDesignCenteredQuote, premium: true,
+		},
+		{
+			label: __( 'Huge', i18n ), value: 'huge', image: ImageDesignHude, premium: true,
+		},
+		{
+			label: __( 'Highlight', i18n ), value: 'highlight', image: ImageDesignHighlight, premium: true,
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
+
 addFilter( 'stackable.blockquote.edit.inspector.layout.before', 'stackable/blockquote', ( output, props ) => {
 	const { setAttributes } = props
 	const {
@@ -66,14 +95,7 @@ addFilter( 'stackable.blockquote.edit.inspector.layout.before', 'stackable/block
 			<DesignPanelBody
 				initialOpen={ true }
 				selected={ design }
-				options={ applyFilters( 'stackable.blockquote.edit.layouts', [
-					{
-						label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
-					},
-					{
-						label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
-					},
-				] ) }
+				options={ applyFilters( 'stackable.blockquote.edit.layouts', [] ) }
 				onChange={ design => setAttributes( { design } ) }
 			>
 				{ showProNotice && <ProControlButton /> }
@@ -362,6 +384,7 @@ const edit = props => {
 export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
+	withDesignLayoutSelector,
 	withGoogleFont,
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Text%sAlign' ] ),
