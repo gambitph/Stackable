@@ -126,7 +126,7 @@ export const getUIKits = async ( options = {} ) => {
 	library = values( _library )
 
 	if ( isMood ) {
-		library = library.filter( ( { mood } ) => mood === isMood )
+		library = library.filter( ( { mood } ) => mood.includes( isMood ) )
 	}
 
 	if ( hasColors && hasColors.length ) {
