@@ -97,6 +97,12 @@
 	margin-bottom: 64px !important;
 }
 
+.s-getting-started__entry p,
+.s-getting-started__entry h4,
+.s-getting-started__entry ul {
+	margin-top: 0;
+}
+
 .s-getting-started__button,
 .s-getting-started__button:active {
 	transition: all 0.1s ease-in-out;
