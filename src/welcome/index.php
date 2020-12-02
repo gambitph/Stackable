@@ -413,7 +413,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 										<h5><?php _e( 'Get Support', STACKABLE_I18N )?></h5>
 										<p><?php _e( 'Stuck with something? Email us and we\'ll help you out', STACKABLE_I18N )?></p>
 										<a class="s-getting-started__button primary" href="<?php echo esc_url( sugb_fs()->contact_url( 'technical_support' ) ) ?>">
-											<?php _e( 'Contact', STACKABLE_I18N )?>
+											<?php _e( 'Contact Support', STACKABLE_I18N )?>
 										</a>
 									<?php } else { ?>
 										<h5><?php _e( 'Get Support', STACKABLE_I18N )?></h5>
