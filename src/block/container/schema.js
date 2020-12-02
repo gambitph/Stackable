@@ -16,7 +16,7 @@ export default {
 	},
 	design: {
 		type: 'string',
-		default: '',
+		default: 'basic',
 	},
 	...createResponsiveAttributes( '%sHeight', {
 		type: 'string',

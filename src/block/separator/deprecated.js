@@ -2,8 +2,6 @@
  * Internal dependencies
  */
 import { separators, shadows } from './deprecated/separators_1_15'
-import schema from './schema'
-import save from './save'
 
 /**
  * WordPress dependencies
@@ -219,22 +217,6 @@ export const deprecatedSchema_1_15 = {
 }
 
 const deprecated = [
-	{
-		attributes: {
-			...schema,
-			design: {
-				type: 'string',
-				default: 'wave-1',
-			},
-		},
-		save,
-		migrate: attributes => {
-			return {
-				...attributes,
-				design: attributes.design || 'wave-1',
-			}
-		},
-	},
 	{
 		attributes: deprecatedSchema_1_15,
 		save: deprecatedSave_1_15,

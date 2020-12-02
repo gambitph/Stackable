@@ -1,10 +1,4 @@
 /**
- * Internal dependencies
- */
-import schema from './schema'
-import save from './save'
-
-/**
  * External dependencies
  */
 import {
@@ -264,22 +258,6 @@ export const deprecatedSchema_1_15_5 = {
 }
 
 const deprecated = [
-	{
-		attributes: {
-			...schema,
-			design: {
-				type: 'string',
-				default: 'basic',
-			},
-		},
-		save,
-		migrate: attributes => {
-			return {
-				...attributes,
-				design: attributes.design || 'basic',
-			}
-		},
-	},
 	{
 		attributes: deprecatedSchema_1_15_5,
 		save: deprecatedSave_1_15_5,

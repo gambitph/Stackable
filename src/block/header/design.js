@@ -29,6 +29,5 @@ addFilter( 'stackable.header.design.filtered-block-attributes', 'stackable/heade
 			'button2NewTab',
 			'button2NoFollow',
 		] ),
-		design: attributes.design || 'basic',
 	}
 } )

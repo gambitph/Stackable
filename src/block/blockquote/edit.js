@@ -44,7 +44,6 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 	withClickOpenInspector,
-	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 
 /**
@@ -384,7 +383,6 @@ const edit = props => {
 export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
-	withDesignLayoutSelector,
 	withGoogleFont,
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Text%sAlign' ] ),

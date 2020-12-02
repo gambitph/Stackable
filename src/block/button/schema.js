@@ -7,7 +7,7 @@ import { createButtonAttributes } from '~stackable/util'
 export default {
 	design: {
 		type: 'string',
-		default: '',
+		default: 'basic',
 	},
 	borderRadius: {
 		type: 'number',

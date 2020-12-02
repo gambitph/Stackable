@@ -58,6 +58,5 @@ addFilter( 'stackable.pricing-box.design.filtered-block-attributes', 'stackable/
 			'button3NewTab',
 			'button3NoFollow',
 		] ),
-		design: attributes.design || 'basic',
 	}
 } )

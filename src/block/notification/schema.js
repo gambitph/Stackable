@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n'
 export default {
 	design: {
 		type: 'string',
-		default: '',
+		default: 'basic',
 	},
 	notifType: {
 		type: 'string',

@@ -19,7 +19,6 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 	withClickOpenInspector,
-	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import { createButtonAttributeNames } from '~stackable/util'
 
@@ -246,7 +245,6 @@ const edit = props => {
 export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
-	withDesignLayoutSelector,
 	withGoogleFont,
 	withTabbedInspector(),
 	withContentAlignReseter(),

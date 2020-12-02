@@ -25,6 +25,5 @@ addFilter( 'stackable.cta.design.filtered-block-attributes', 'stackable/cta', at
 			'buttonNewTab',
 			'buttonNoFollow',
 		] ),
-		design: attributes.design || 'basic',
 	}
 } )

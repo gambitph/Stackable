@@ -51,6 +51,5 @@ addFilter( 'stackable.feature-grid.design.filtered-block-attributes', 'stackable
 			'button4NewTab',
 			'button4NoFollow',
 		] ),
-		design: attributes.design || 'basic',
 	}
 } )

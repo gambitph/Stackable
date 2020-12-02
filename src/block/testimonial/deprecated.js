@@ -12,12 +12,6 @@ import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { RichText } from '@wordpress/block-editor'
 
-/**
- * Internal dependencies
- */
-import schema from './schema'
-import save from './save'
-
 const deprecatedSchema_1_17_3 = {
 	mediaID1: {
 		type: 'number',
@@ -289,22 +283,6 @@ const deprecatedSave_1_17_3 = props => {
 }
 
 const deprecated = [
-	{
-		attributes: {
-			...schema,
-			design: {
-				type: 'string',
-				default: 'basic',
-			},
-		},
-		save,
-		migrate: attributes => {
-			return {
-				...attributes,
-				design: attributes.design || 'basic',
-			}
-		},
-	},
 	{
 		attributes: deprecatedSchema_1_17_3,
 		save: deprecatedSave_1_17_3,
