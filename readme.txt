@@ -192,6 +192,8 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * New: Border options for all blocks
 * New: Inspector performance improvements
 * New: Added ID anchor tags to all blocks
+* New: Revamped getting started page
+* New: Compatibility with WordPress 5.6
 * Fixed: Blog Posts block now handle custom taxonomies in posts and pages correctly
 * Fixed: Global Settings will no longer show up when in content only editing mode
 * Fixed: PHP error when other plugins use the plugin_action_links filter incorrectly
