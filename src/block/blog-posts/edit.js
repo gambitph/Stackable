@@ -1064,7 +1064,7 @@ export default compose(
 			orderby: orderBy,
 			per_page: numberOfItems, // eslint-disable-line camelcase
 			...applyFilters( 'stackable.blog-posts.postQuery', {}, props ),
-		}, value => ! isUndefined( value ) && value !== '' && isEmpty( value ) )
+		}, value => ! isUndefined( value ) && value !== '' && ! isEmpty( value ) && value !== 0 )
 
 		if ( taxonomy && taxonomyType ) {
 			// Categories.
