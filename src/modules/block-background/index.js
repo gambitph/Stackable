@@ -33,7 +33,9 @@ import { __ } from '@wordpress/i18n'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
-import { Toolbar, ToggleControl } from '@wordpress/components'
+import {
+	ToolbarButton, ToggleControl, ToolbarGroup,
+} from '@wordpress/components'
 
 // When block background is turned on, change the ailgnment and block inner width also.
 removeFilter( 'stackable.setAttributes', 'stackable/module/block-background/show' )
@@ -106,6 +108,33 @@ const addAlignmentToolbar = ( output, props ) => {
 		blockInnerWidth = '',
 	} = props.attributes
 
+	const toolbarOptions = [
+		{
+			icon: 'align-center',
+			label: __( 'Align center', i18n ),
+			isActive: blockInnerWidth === '' || blockInnerWidth === 'center',
+			onClick: () => {
+				setAttributes( { blockInnerWidth: 'center' } )
+			},
+		},
+		{
+			icon: 'align-wide',
+			label: __( 'Wide width', i18n ),
+			isActive: blockInnerWidth === 'wide',
+			onClick: () => {
+				setAttributes( { blockInnerWidth: 'wide' } )
+			},
+		},
+		{
+			icon: 'align-full-width',
+			label: __( 'Full width', i18n ),
+			isActive: blockInnerWidth === 'full',
+			onClick: () => {
+				setAttributes( { blockInnerWidth: 'full' } )
+			},
+		},
+	]
+
 	return (
 		<Fragment>
 			{ output }
@@ -129,37 +158,11 @@ const addAlignmentToolbar = ( output, props ) => {
 					/>
 				) }
 				{ showBlockBackground && (
-					<Toolbar
+					<ToolbarGroup
 						label={ __( 'Change Alignment', i18n ) }
-						controls={
-							[
-								{
-									icon: 'align-center',
-									title: __( 'Align center', i18n ),
-									isActive: blockInnerWidth === '' || blockInnerWidth === 'center',
-									onClick: () => {
-										setAttributes( { blockInnerWidth: 'center' } )
-									},
-								},
-								{
-									icon: 'align-wide',
-									title: __( 'Wide width', i18n ),
-									isActive: blockInnerWidth === 'wide',
-									onClick: () => {
-										setAttributes( { blockInnerWidth: 'wide' } )
-									},
-								},
-								{
-									icon: 'align-full-width',
-									title: __( 'Full width', i18n ),
-									isActive: blockInnerWidth === 'full',
-									onClick: () => {
-										setAttributes( { blockInnerWidth: 'full' } )
-									},
-								},
-							]
-						}
-					/>
+					>
+						{ toolbarOptions.map( option => <ToolbarButton key={ option.label } { ...option } /> ) }
+					</ToolbarGroup>
 				) }
 			</BlockControls>
 		</Fragment>
@@ -308,3 +311,4 @@ const blockBackground = blockName => {
 }
 
 export default blockBackground
+
