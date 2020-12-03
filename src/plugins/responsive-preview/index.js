@@ -14,7 +14,7 @@ import { throttle } from 'lodash'
  */
 import domReady from '@wordpress/dom-ready'
 import { addAction } from '@wordpress/hooks'
-import { select } from '@wordpress/data'
+import { select, subscribe } from '@wordpress/data'
 
 const query = '.edit-post-visual-editor'
 
@@ -56,20 +56,23 @@ const observerCallback = () => {
 addAction( 'stackable.setAttributes.after', 'stackable/responsive-preview', observerCallback )
 
 const responsivePreview = () => {
-	const visualEditorEl = document.querySelector( query )
-	if ( ! visualEditorEl ) {
-		return
-	}
+	const unsubscribe = subscribe( () => {
+		const visualEditorEl = document.querySelector( query )
+		if ( ! visualEditorEl ) {
+			return
+		}
 
-	// Observe all changes of the element
-	const config = {
-		attributes: true, childList: true, subtree: true,
-	}
+		// Observe all changes of the element
+		const config = {
+			attributes: true, childList: true, subtree: true,
+		}
 
-	// Listen to changes in the editor.
-	const visualEditorElObserver = new MutationObserver( throttle( observerCallback, 500 ) )
+		// Listen to changes in the editor.
+		const visualEditorElObserver = new MutationObserver( throttle( observerCallback, 500 ) )
 
-	visualEditorElObserver.observe( visualEditorEl, config )
+		visualEditorElObserver.observe( visualEditorEl, config )
+		unsubscribe()
+	} )
 }
 
 // Only do this when WP version is >=5.5
