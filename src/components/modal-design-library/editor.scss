@@ -114,11 +114,15 @@
 		width: 24px;
 		flex: 0;
 		margin: 0 10px 10px;
+		flex-basis: 20px;
 	}
 	.components-circular-option-picker__option-wrapper {
 		height: 22px;
 		width: 22px;
 		margin: 0;
+		.components-circular-option-picker__option {
+			padding: 0;
+		}
 	}
 
 	// Check mark when color is active.
