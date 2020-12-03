@@ -15,10 +15,13 @@
 	background-color: transparent;
 	position: relative;
 	overflow: visible;
-	&::before,
-	&::after {
-		content: "";
-		display: none !important;
+	// Only apply when block background is disabled.
+	&:not(.ugb--has-block-background) {
+		&::before,
+		&::after {
+			content: "";
+			display: none !important;
+		}
 	}
 
 	.ugb-blockquote__item {
