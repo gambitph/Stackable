@@ -16,7 +16,8 @@
 	position: relative;
 	overflow: visible;
 	// Only apply when block background is disabled.
-	&::before:not(.ugb--has-block-background),
+	&:not(.ugb--has-block-background)::before,
+	// Prevent themes and other styles from adding in their own quotes or pseudo element styles.
 	&::after {
 		content: "";
 		display: none !important;
