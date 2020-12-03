@@ -56,7 +56,9 @@ import {
 	i18n, showProNotice,
 } from 'stackable'
 import {
-	isUndefined, pickBy,
+	isEmpty,
+	isUndefined,
+	pickBy,
 } from 'lodash'
 import classnames from 'classnames'
 
@@ -1062,7 +1064,7 @@ export default compose(
 			orderby: orderBy,
 			per_page: numberOfItems, // eslint-disable-line camelcase
 			...applyFilters( 'stackable.blog-posts.postQuery', {}, props ),
-		}, value => ! isUndefined( value ) && value !== '' && ( Array.isArray( value ) ? !! value.length : true ) )
+		}, value => ! isUndefined( value ) && value !== '' && isEmpty( value ) )
 
 		if ( taxonomy && taxonomyType ) {
 			// Categories.
