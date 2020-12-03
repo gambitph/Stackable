@@ -16,12 +16,10 @@
 	position: relative;
 	overflow: visible;
 	// Only apply when block background is disabled.
-	&:not(.ugb--has-block-background) {
-		&::before,
-		&::after {
-			content: "";
-			display: none !important;
-		}
+	&::before:not(.ugb--has-block-background),
+	&::after {
+		content: "";
+		display: none !important;
 	}
 
 	.ugb-blockquote__item {
