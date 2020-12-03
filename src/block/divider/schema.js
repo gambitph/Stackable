@@ -1,7 +1,7 @@
 export default {
 	design: {
 		type: 'string',
-		default: '',
+		default: 'basic',
 	},
 	color: {
 		type: 'string',

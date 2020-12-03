@@ -15,12 +15,6 @@ import classnames from 'classnames'
 import { i18n } from 'stackable'
 import { RichText } from '@wordpress/block-editor'
 
-/**
- * Internal dependencies
- */
-import schema from './schema'
-import save from './save'
-
 const deprecatedSchema_1_15_6 = {
 	title: {
 		source: 'html',
@@ -405,22 +399,6 @@ const deprecatedSave_1_15_6 = props => {
 }
 
 const deprecated = [
-	{
-		attributes: {
-			...schema,
-			design: {
-				type: 'string',
-				default: 'basic',
-			},
-		},
-		save,
-		migrate: attributes => {
-			return {
-				...attributes,
-				design: attributes.design || 'basic',
-			}
-		},
-	},
 	{
 		attributes: deprecatedSchema_1_15_6,
 		save: deprecatedSave_1_15_6,

@@ -31,6 +31,5 @@ addFilter( 'stackable.button.design.filtered-block-attributes', 'stackable/butto
 			'button3NewTab',
 			'button3NoFollow',
 		] ),
-		design: attributes.design || 'basic',
 	}
 } )

@@ -29,6 +29,5 @@ addFilter( 'stackable.blog-posts.design.filtered-block-attributes', 'stackable/b
 			'postExclude',
 			'postInclude',
 		] ),
-		design: attributes.design || 'basic',
 	}
 } )

@@ -25,6 +25,5 @@ addFilter( 'stackable.notification.design.filtered-block-attributes', 'stackable
 			'buttonNewTab',
 			'buttonNoFollow',
 		] ),
-		design: attributes.design || 'basic',
 	}
 } )

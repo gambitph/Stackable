@@ -28,6 +28,5 @@ addFilter( 'stackable.feature.design.filtered-block-attributes', 'stackable/feat
 			'buttonNewTab',
 			'buttonNoFollow',
 		] ),
-		design: attributes.design || 'plain',
 	}
 } )

@@ -25,10 +25,3 @@ addFilter( 'stackable.count-up.design.no-text-attributes', 'stackable/count-up',
 		'description4',
 	] )
 } )
-
-addFilter( 'stackable.count-up.design.filtered-block-attributes', 'stackable/count-up', attributes => {
-	return {
-		...attributes,
-		design: attributes.design || 'plain',
-	}
-} )

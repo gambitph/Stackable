@@ -34,7 +34,6 @@ import {
 	withTabbedInspector,
 	withContentAlignReseter,
 	withBlockStyles,
-	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
 import { range } from 'lodash'
@@ -537,7 +536,6 @@ export default compose(
 	withState( { sortColumnHighlight: null } ),
 	withUniqueClass,
 	withSetAttributeHook,
-	withDesignLayoutSelector,
 	withGoogleFont,
 	withTabbedInspector(),
 	withContentAlignReseter(),

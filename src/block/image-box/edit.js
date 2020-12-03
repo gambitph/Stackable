@@ -37,7 +37,6 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 	withClickOpenInspector,
-	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 import classnames from 'classnames'
 import { i18n, showProNotice } from 'stackable'
@@ -777,7 +776,6 @@ class Edit extends Component {
 export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
-	withDesignLayoutSelector,
 	withGoogleFont,
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Line%sAlign', 'Subtitle%sAlign', 'Title%sAlign', 'Description%sAlign', 'Arrow%sAlign' ] ),

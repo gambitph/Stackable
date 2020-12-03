@@ -5,7 +5,7 @@ export default {
 	},
 	design: {
 		type: 'string',
-		default: '',
+		default: 'wave-1',
 	},
 	height: {
 		type: 'number',

@@ -22,10 +22,3 @@ addFilter( 'stackable.number-box.design.no-text-attributes', 'stackable/number-b
 		'description3',
 	] )
 } )
-
-addFilter( 'stackable.number-box.design.filtered-block-attributes', 'stackable/number-box', attributes => {
-	return {
-		...attributes,
-		design: attributes.design || 'basic',
-	}
-} )

@@ -45,7 +45,6 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 	withClickOpenInspector,
-	withDesignLayoutSelector,
 } from '~stackable/higher-order'
 
 /**
@@ -738,7 +737,6 @@ const edit = props => {
 export default compose(
 	withUniqueClass,
 	withSetAttributeHook,
-	withDesignLayoutSelector,
 	withGoogleFont,
 	withTabbedInspector(),
 	withContentAlignReseter( [ 'Title%sAlign', 'Subtitle%sAlign', 'Description%sAlign', 'Button%sAlign' ] ),

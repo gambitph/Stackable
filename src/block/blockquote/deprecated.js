@@ -2,8 +2,6 @@
  * Internal dependencies
  */
 import { QUOTE_ICONS } from './quotes'
-import schema from './schema'
-import save from './save'
 
 /**
  * External dependencies
@@ -360,22 +358,6 @@ const deprecatedSchema_1_13 = {
 }
 
 const deprecated = [
-	{
-		attributes: {
-			...schema,
-			design: {
-				type: 'string',
-				default: 'plain',
-			},
-		},
-		save,
-		migrate: attributes => {
-			return {
-				...attributes,
-				design: attributes.design || 'plain',
-			}
-		},
-	},
 	{
 		attributes: deprecatedSchema_1_17_3,
 		save: deprecatedSave_1_17_3,

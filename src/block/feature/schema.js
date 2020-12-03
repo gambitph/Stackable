@@ -22,7 +22,7 @@ import { i18n } from 'stackable'
 export default {
 	design: {
 		type: 'string',
-		default: '',
+		default: 'plain',
 	},
 	...createResponsiveAttributes( 'imageColumn%sWidth', {
 		type: 'number',

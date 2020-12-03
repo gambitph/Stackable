@@ -46,6 +46,5 @@ addFilter( 'stackable.card.design.filtered-block-attributes', 'stackable/card', 
 			'button3NewTab',
 			'button3NoFollow',
 		] ),
-		design: attributes.design || 'basic', // Make sure that the design attribute is filled up or our design picker will appear.
 	}
 } )

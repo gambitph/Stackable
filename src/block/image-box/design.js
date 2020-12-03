@@ -51,6 +51,5 @@ addFilter( 'stackable.image-box.design.filtered-block-attributes', 'stackable/im
 			'image4Id',
 			...( blockAttributes && blockAttributes.image4Id ? [ 'image4Url' ] : [] ),
 		] ),
-		design: attributes.design || 'basic',
 	}
 } )

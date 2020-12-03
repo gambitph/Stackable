@@ -37,6 +37,5 @@ addFilter( 'stackable.testimonial.design.filtered-block-attributes', 'stackable/
 			'image2Alt',
 			'image3Alt',
 		] ),
-		design: attributes.design || 'basic',
 	}
 } )

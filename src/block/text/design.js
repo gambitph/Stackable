@@ -19,10 +19,3 @@ addFilter( 'stackable.text.design.no-text-attributes', 'stackable/text', attribu
 		'text4',
 	] )
 } )
-
-addFilter( 'stackable.text.design.filtered-block-attributes', 'stackable/text', attributes => {
-	return {
-		...attributes,
-		design: attributes.design || 'plain',
-	}
-} )

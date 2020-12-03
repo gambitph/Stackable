@@ -8,8 +8,6 @@ import { descriptionPlaceholder } from '~stackable/util'
  */
 import SVGCloseIconV112 from './images/close-icon-v1-12.svg'
 import classnames from 'classnames'
-import schema from './schema'
-import save from './save'
 
 /**
  * WordPress dependencies
@@ -107,22 +105,6 @@ const deprecatedSave_1_17 = props => {
 }
 
 const deprecated = [
-	{
-		attributes: {
-			...schema,
-			design: {
-				type: 'string',
-				default: 'basic',
-			},
-		},
-		save,
-		migrate: attributes => {
-			return {
-				...attributes,
-				design: attributes.design || 'basic',
-			}
-		},
-	},
 	{
 		attributes: deprecatedSchema_1_17,
 		save: deprecatedSave_1_17,

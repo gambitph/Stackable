@@ -58,6 +58,5 @@ addFilter( 'stackable.team-member.design.filtered-block-attributes', 'stackable/
 			'social3YoutubeUrl',
 			'social3EmailUrl',
 		] ),
-		design: attributes.design || 'basic',
 	}
 } )

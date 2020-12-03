@@ -81,7 +81,7 @@ export default {
 
 	design: {
 		type: 'string',
-		default: '',
+		default: 'plain',
 	},
 	borderRadius: {
 		type: 'number',
