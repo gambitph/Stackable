@@ -288,7 +288,6 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 							<div class="s-getting-started__entry">
 								<h4><?php _e( 'Adding by Block Type', STACKABLE_I18N )?></h4>
 								<p><?php _e( 'Click the <strong>(+) icon</strong> then scroll to the <strong>Stackable Blocks area</strong> to add a block.', STACKABLE_I18N )?></p>
-								<p><?php _e( 'Pick a block layout/design from our <strong>Layout Picker</strong>.', STACKABLE_I18N )?></p>
 							</div>
 							<div class="s-image-caption">
 								<img draggable="false" src="<?php echo plugins_url( 'images/layout-picker-and-block-picker.jpg', __FILE__ ) ?>">
@@ -300,11 +299,11 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 								<h4><?php _e( 'Adding from the Design Library', STACKABLE_I18N )?></h4>
 								<p><?php _e( 'You can also launch the Design Library, and choose from <strong>ready-made UI Kits</strong> & <strong>Block Designs</strong>.', STACKABLE_I18N ) ?></p>
 								<span class="indented">
-									<h5><?php _e( 'UI Kits Tab', STACKABLE_I18N )?></h5>
+									<h5><?php _e( 'UI Kits', STACKABLE_I18N )?></h5>
 									<p><?php _e( 'Choose blocks from different <strong>UI Kits</strong> that can be used to build an entire website.', STACKABLE_I18N ) ?></p>
 								</span>
 								<span class="indented">
-									<h5><?php _e( 'Block Designs Tab', STACKABLE_I18N )?></h5>
+									<h5><?php _e( 'Block Designs', STACKABLE_I18N )?></h5>
 									<p><?php _e( 'Choose from different <strong>individual Block Designs</strong>. Mix and match block designs to build your site.', STACKABLE_I18N )?></p>
 								</span>
 							</div>
