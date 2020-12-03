@@ -1065,9 +1065,11 @@ export default compose(
 			per_page: numberOfItems, // eslint-disable-line camelcase
 			...applyFilters( 'stackable.blog-posts.postQuery', {}, props ),
 		}, value => {
+			// Exludes and includes can be empty.
 			if ( Array.isArray( value ) ) {
 				return ! isEmpty( value )
 			}
+			// Don't include empty values.
 			return ! isUndefined( value ) && value !== ''
 		} )
 
