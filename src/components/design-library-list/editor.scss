@@ -78,9 +78,9 @@
 	.ugb-design-library-item__image {
 		svg {
 			position: absolute;
-			top: 50%;
+			top: calc(50% - 17.5px);
 			left: 50%;
-			transform: translate(-50%, -40%);
+			transform: translate(-50%, -50%);
 			opacity: 0;
 			fill: #000;
 			height: 35px;
@@ -95,10 +95,8 @@
 		.ugb-design-library-item__image {
 			img {
 				opacity: 0.4;
-				filter: blur(3px);
 			}
 			svg {
-				transform: translate(-50%, -50%);
 				opacity: 1;
 			}
 		}

@@ -1,21 +1,28 @@
 /**
  * External dependencies
  */
-import { orderBy } from 'lodash'
+import {
+	orderBy, last, startCase,
+} from 'lodash'
 import ControlSeparator from '../control-separator'
-import { getAllBlocks, getDesigns } from '~stackable/design-library'
+import {
+	getAllBlocks, getDesigns,
+} from '~stackable/design-library'
 import { i18n } from 'stackable'
 import classnames from 'classnames'
 
 /**
  * WordPress dependencies
  */
-import { useEffect, useState } from '@wordpress/element'
+import {
+	Fragment, useEffect, useState,
+} from '@wordpress/element'
 import { select } from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
 
 const BlockList = props => {
 	const [ blockDesignList, setBlockDesignList ] = useState( [] )
+	const [ uiKitList, setUiKitList ] = useState( {} )
 	const [ blockList, setBlockList ] = useState( {} )
 	const [ totalDesigns, setTotalDesigns ] = useState( 0 )
 	const [ totalFree, setTotalFree ] = useState( 0 )
@@ -67,12 +74,17 @@ const BlockList = props => {
 				return blocks
 			}, {} )
 
+			const uiKits = Object.keys( uiKitList ).reduce( ( kits, kitName ) => {
+				kits[ kitName ].num = 0
+				return kits
+			}, {} )
+
 			// Count the number of designs per block.
 			let freeDesigns = 0
 			let allDesigns = 0
 			const blocks = designs.reduce( ( blocks, design ) => {
 				const {
-					block, type, plan,
+					block, type, plan, categories,
 				} = design
 				if ( type === 'block' && blocks[ block ] ) {
 					blocks[ block ].count++
@@ -83,15 +95,29 @@ const BlockList = props => {
 						freeDesigns++
 					}
 				}
+
+				// Gather the UI Kit categories.
+				if ( categories && categories.length === 3 ) {
+					const category = last( categories )
+					if ( typeof uiKits[ category ] === 'undefined' ) {
+						uiKits[ category ] = {
+							label: startCase( last( categories ) ),
+							num: 0,
+						}
+					}
+					uiKits[ category ].num++
+				}
+
 				return blocks
 			}, { ...initBlocks } )
 
+			setUiKitList( uiKits )
 			setTotalDesigns( allDesigns )
 			setTotalFree( freeDesigns )
 			setTotalPremium( allDesigns - freeDesigns )
 			setBlockDesignList( orderBy( blocks, [ 'title' ], [ 'asc' ] ) )
 		} )
-	}, [ blockList, props.search, props.mood, props.colors ] )
+	}, [ blockList, props.search, props.mood, JSON.stringify( props.colors ) ] )
 
 	return (
 		<ul className="ugb-block-list">
@@ -101,7 +127,9 @@ const BlockList = props => {
 					data-count={ totalDesigns }
 					onClick={ () => {
 						setSelected( '' )
-						props.onSelect( { block: '', plan: '' } )
+						props.onSelect( {
+							block: '', plan: '', categories: [],
+						} )
 					} }
 					onKeyPress={ e => {
 						if ( e.keyCode === 13 ) {
@@ -126,7 +154,9 @@ const BlockList = props => {
 						data-count={ totalFree }
 						onClick={ () => {
 							setSelected( 'free' )
-							props.onSelect( { block: '', plan: 'free' } )
+							props.onSelect( {
+								block: '', plan: 'free', categories: [],
+							} )
 						} }
 						onKeyPress={ e => {
 							if ( e.keyCode === 13 ) {
@@ -148,7 +178,9 @@ const BlockList = props => {
 						data-count={ totalPremium }
 						onClick={ () => {
 							setSelected( 'premium' )
-							props.onSelect( { block: '', plan: 'premium' } )
+							props.onSelect( {
+								block: '', plan: 'premium', categories: [],
+							} )
 						} }
 						onKeyPress={ e => {
 							if ( e.keyCode === 13 ) {
@@ -167,7 +199,54 @@ const BlockList = props => {
 					</div>
 				</li>
 			}
+			{ Object.keys( uiKitList ).length &&
+				<Fragment>
+					<ControlSeparator />
+					<h4>{ __( 'Browse UI Kits', i18n ) }</h4>
+				</Fragment>
+			}
+			{ Object.keys( uiKitList ).map( ( uiKitCategory, i ) => {
+				const isSelected = selected === uiKitCategory && ! props.forceBlock
+				const classes = classnames( {
+					'is-active': isSelected,
+					'is-disabled': props.forceBlock,
+				} )
+
+				const uiKit = uiKitList[ uiKitCategory ].label
+				const uiKitCount = uiKitList[ uiKitCategory ].num
+				return (
+					<li key={ i }>
+						<div
+							className={ classes }
+							data-count={ uiKitCount }
+							onClick={ () => {
+								if ( ! props.forceBlock ) {
+									setSelected( uiKitCategory )
+									props.onSelect( {
+										block: '', plan: '', categories: [ uiKitCategory ],
+									} )
+								}
+							} }
+							onKeyPress={ e => {
+								if ( e.keyCode === 13 ) {
+									this.click()
+								}
+							} }
+							role="button"
+							tabIndex={ 0 }
+							aria-pressed={ isSelected ? 'true' : 'false' }
+						>
+							 { uiKit }
+							 <span
+								className="ugb-block-list__count"
+								data-testid={ `${ uiKit }-count` }
+							>{ uiKitCount }</span>
+						</div>
+					</li>
+				)
+			} ) }
 			<ControlSeparator />
+			<h4>{ __( 'Browse Block Designs', i18n ) }</h4>
 			{ blockDesignList.map( ( block, i ) => {
 				const isSelected = selected === block.name || block.name === props.forceBlock
 				const classes = classnames( {
@@ -183,7 +262,9 @@ const BlockList = props => {
 							onClick={ () => {
 								if ( ! props.forceBlock ) {
 									setSelected( block.name )
-									props.onSelect( { block: block.name, plan: '' } )
+									props.onSelect( {
+										block: block.name, plan: '', categories: [],
+									} )
 								}
 						 } }
 							onKeyPress={ e => {
@@ -212,6 +293,7 @@ BlockList.defaultProps = {
 	search: '',
 	mood: '',
 	colors: [],
+	categories: [],
 	onSelect: () => {},
 	forceBlock: '',
 }

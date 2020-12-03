@@ -5,7 +5,7 @@ import SVGViewSingle from './images/view-single.svg'
 import SVGViewMany from './images/view-many.svg'
 import SVGViewFew from './images/view-few.svg'
 import BlockList from './block-list'
-import ColorList from './color-list'
+// import ColorList from './color-list'
 
 /**
  * External deprendencies
@@ -31,8 +31,10 @@ const ModalDesignLibrary = props => {
 	const [ search, setSearch ] = useState( props.search )
 	const [ block, setBlock ] = useState()
 	const [ plan, setPlan ] = useState( '' )
+	const [ categories, setCategories ] = useState( [] )
 	const [ mood, setMood ] = useState( '' )
-	const [ colors, setColors ] = useState( [] )
+	const [ colors ] = useState( [] )
+	// const colors = []
 	const [ columns, setColumns ] = useState( 3 )
 	const [ designs, setDesigns ] = useState( [] )
 	const [ isBusy, setIsBusy ] = useState( true )
@@ -72,6 +74,7 @@ const ModalDesignLibrary = props => {
 			type: 'block',
 			block,
 			plan,
+			categories,
 			mood,
 			colors,
 			search: searchDebounced,
@@ -82,7 +85,7 @@ const ModalDesignLibrary = props => {
 			setIsBusy( false )
 			setDoReset( false )
 		} )
-	}, [ block, mood, colors, plan, searchDebounced, doReset ] )
+	}, [ block, mood, colors, plan, categories, searchDebounced, doReset ] )
 
 	return (
 		<Modal
@@ -100,11 +103,11 @@ const ModalDesignLibrary = props => {
 						data-testid="input-search"
 					/>
 					<div className="ugb-modal-design-library__filters">
-						<ColorList
+						{ /* <ColorList
 							onSelect={ colorList => {
 								setColors( colorList )
 							} }
-						/>
+						/> */ }
 						<AdvancedToolbarControl
 							controls={ [
 								{
@@ -127,10 +130,14 @@ const ModalDesignLibrary = props => {
 							search={ search }
 							mood={ mood }
 							colors={ colors }
+							categories={ categories }
 							forceBlock={ props.selectedBlock }
-							onSelect={ ( { block, plan } ) => {
+							onSelect={ ( {
+								block, plan, categories,
+							} ) => {
 								setBlock( block )
 								setPlan( plan )
+								setCategories( categories )
 							} }
 						/>
 					</div>
