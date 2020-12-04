@@ -140,6 +140,16 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 
 		$recent_posts = wp_get_recent_posts( $post_query );
 
+		// Manually slice the array based on the number of posts per page.
+		if ( sizeof( $recent_posts ) > $post_query['numberposts'] ) {
+			$recent_posts = array_slice( $recent_posts, 0, $post_query['numberposts'] );
+		}
+
+		print_r( get_posts( array(
+			'numberposts' => 4,
+			'include' => ['1', '8', '12', '14']
+		) )  );
+
 		$posts_markup = '';
 		$show = stackable_blog_posts_util_show_options( $attributes );
 		$props = array( 'attributes' => array() );
