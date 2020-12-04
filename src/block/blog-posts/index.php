@@ -145,11 +145,6 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 			$recent_posts = array_slice( $recent_posts, 0, $post_query['numberposts'] );
 		}
 
-		print_r( get_posts( array(
-			'numberposts' => 4,
-			'include' => ['1', '8', '12', '14']
-		) )  );
-
 		$posts_markup = '';
 		$show = stackable_blog_posts_util_show_options( $attributes );
 		$props = array( 'attributes' => array() );
