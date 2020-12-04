@@ -138,6 +138,10 @@ export const HeadingIcon = () => {
 	return colorizeIcon( <SVGHeadingIcon width="20" height="20" /> )
 }
 
+export const GroupContainerIcon = () => {
+	return colorizeIcon( <SVGContainerIcon width="20" height="20" className="components-menu-items__item-icon" /> )
+}
+
 export const IconIcon = () => {
 	return colorizeIcon( <SVGIconIcon width="20" height="20" /> )
 }
