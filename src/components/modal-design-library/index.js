@@ -12,8 +12,11 @@ import BlockList from './block-list'
  */
 import DesignLibraryList from '~stackable/components/design-library-list'
 import { getDesigns, setDevModeDesignLibrary } from '~stackable/design-library'
-import { i18n, devMode } from 'stackable'
+import {
+	i18n, isPro, devMode,
+} from 'stackable'
 import { useLocalStorage } from '~stackable/util'
+import { last } from 'lodash'
 
 /**
  * WordPress deprendencies
@@ -22,7 +25,7 @@ import {
 	Modal, TextControl, Button, ToggleControl,
 } from '@wordpress/components'
 import {
-	useEffect, useState,
+	useEffect, useState, useMemo,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
@@ -35,7 +38,9 @@ const ModalDesignLibrary = props => {
 	const [ designs, setDesigns ] = useState( [] )
 	const [ isBusy, setIsBusy ] = useState( true )
 	const [ doReset, setDoReset ] = useState( false )
+	const [ viewBy, setViewBy ] = useState( props.selectedBlock ? 'block-designs' : 'ui-kits' )
 	const [ isDevMode, setIsDevMode ] = useLocalStorage( 'stk__design_library_dev_mode', false )
+	const [ firstSelectedCategory, setFirstSelectedCategory ] = useState( '' )
 
 	useEffect( () => setBlock( props.selectedBlock ), [ props.selectedBlock ] )
 
@@ -75,11 +80,40 @@ const ModalDesignLibrary = props => {
 			reset: doReset,
 		} ).then( designs => {
 			setDesigns( designs )
+
+			// Get the first category that can be selected by default when viewing UI Kits.
+			if ( ! firstSelectedCategory ) {
+				designs.some( design => {
+					// When free, select the first free category.
+					if ( ! isPro && design.plan === 'free' ) {
+						setFirstSelectedCategory( last( design.categories ) )
+						return true
+					// If pro, select the first available.
+					} else if ( isPro ) {
+						setFirstSelectedCategory( last( design.categories ) )
+						return true
+					}
+					return false
+				} )
+			}
+			// console.log( designs )
 		} ).finally( () => {
 			setIsBusy( false )
 			setDoReset( false )
 		} )
 	}, [ block, plan, categories, searchDebounced, doReset ] )
+
+	// Filter the designs
+	const designSorted = useMemo( () => {
+		let designSorted = ! props.selectedBlock ? designs : designs.filter( design => design.block === props.selectedBlock )
+		// If we're vieiwng the default list of UI Kits, show only the first free one.
+		if ( viewBy === 'ui-kits' && categories.length === 0 ) {
+			designSorted = designSorted.filter( design => {
+				return design.categories.includes( firstSelectedCategory )
+			} )
+		}
+		return designSorted
+	}, [ props.selectedBlock, designs, viewBy, categories.length, firstSelectedCategory ] )
 
 	return (
 		<Modal
@@ -102,6 +136,7 @@ const ModalDesignLibrary = props => {
 							search={ search }
 							categories={ categories }
 							forceBlock={ props.selectedBlock }
+							viewBy={ viewBy }
 							onSelect={ ( {
 								block, plan, categories,
 							} ) => {
@@ -109,6 +144,7 @@ const ModalDesignLibrary = props => {
 								setPlan( plan )
 								setCategories( categories )
 							} }
+							onChangeViewBy={ setViewBy }
 						/>
 					</div>
 				</aside>
@@ -160,7 +196,7 @@ const ModalDesignLibrary = props => {
 						columns={ columns }
 						onSelect={ props.onSelect }
 						isBusy={ isBusy }
-						designs={ ! props.selectedBlock ? designs : designs.filter( design => design.block === props.selectedBlock ) }
+						designs={ designSorted }
 					/>
 				</div>
 			</div>

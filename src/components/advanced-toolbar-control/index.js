@@ -114,7 +114,13 @@ const AdvancedToolbarControl = props => {
 					controls.map( ( option, index ) => {
 						const controlProps = {
 							...option,
-							onClick: () => props.onChange( option.value !== props.value ? option.value : '' ),
+							onClick: () => {
+								// If toggle only, prevent buttons from being unselected.
+								if ( props.isToggleOnly && option.value === props.value ) {
+									return
+								}
+								props.onChange( option.value !== props.value ? option.value : '' )
+							},
 							isPrimary: props.value === option.value,
 							isSmall: props.isSmall,
 							children: ! option.icon ? option.custom || <span className="ugb-advanced-toolbar-control__text-button">{ option.title }</span> : null,
@@ -141,6 +147,7 @@ AdvancedToolbarControl.defaultProps = {
 	multiline: false,
 	fullwidth: true,
 	isSmall: false,
+	isToggleOnly: false,
 }
 
 export default AdvancedToolbarControl

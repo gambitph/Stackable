@@ -4,6 +4,10 @@
 	height: 90%;
 	min-height: 500px;
 
+	--wp-admin-theme-color: #f00069;
+	--wp-admin-theme-color-darker-10: #{ darken(#f00069, 10%) };
+	--wp-admin-theme-color-darker-20: #{ darken(#f00069, 20%) };
+
 	.components-modal__content {
 		padding: 0;
 		display: flex;
@@ -48,8 +52,7 @@
 	}
 
 	.ugb-modal-design-library__search {
-		padding: 24px;
-		background: #f1f1f1;
+		padding: 24px 24px 0;
 		.components-base-control__field {
 			margin: 0;
 		}
@@ -81,6 +84,9 @@
 
 .ugb-modal-design-library__filters .ugb-block-list {
 	margin-top: 0 !important;
+	.components-button-group {
+		text-align: center;
+	}
 }
 .ugb-block-list {
 	h4 {
@@ -95,6 +101,7 @@
 		}
 		[aria-pressed="true"] {
 			font-weight: bold;
+			color: #f00069;
 		}
 		.is-disabled {
 			opacity: 0.3;

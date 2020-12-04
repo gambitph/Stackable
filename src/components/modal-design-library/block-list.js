@@ -9,13 +9,15 @@ import AdvancedToolbarControl from '../advanced-toolbar-control'
 import {
 	getAllBlocks, getDesigns,
 } from '~stackable/design-library'
-import { i18n } from 'stackable'
+import { isPro, i18n } from 'stackable'
 import classnames from 'classnames'
 
 /**
  * WordPress dependencies
  */
-import { useEffect, useState } from '@wordpress/element'
+import {
+	useEffect, useState, useMemo,
+} from '@wordpress/element'
 import { select } from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
 
@@ -27,7 +29,9 @@ const BlockList = props => {
 	const [ totalFree, setTotalFree ] = useState( 0 )
 	const [ totalPremium, setTotalPremium ] = useState( 0 )
 	const [ selected, setSelected ] = useState( '' )
-	const [ viewBy, setViewBy ] = useState( props.forceBlock ? 'block-designs' : 'ui-kits' )
+	const {
+		viewBy,
+	} = props
 
 	// Create our block list.
 	useEffect( () => {
@@ -106,6 +110,7 @@ const BlockList = props => {
 						uiKits[ category ] = {
 							label: startCase( last( categories ) ),
 							num: 0,
+							isPremium: plan !== 'free',
 						}
 					}
 					uiKits[ category ].num++
@@ -122,6 +127,24 @@ const BlockList = props => {
 		} )
 	}, [ blockList, props.search, props.mood ] )
 
+	// Sort the UI Kits so that the free ones are first when in the free version.
+	const uiKitListKeys = useMemo( () => {
+		const list = Object.keys( uiKitList )
+		if ( ! isPro ) {
+			list.sort( ( a, b ) => {
+				if ( ! uiKitList[ a ].isPremium && uiKitList[ b ].isPremium ) {
+					return -1
+				} else if ( uiKitList[ a ].isPremium && ! uiKitList[ b ].isPremium ) {
+					return 1
+				}
+				return 0
+			} )
+		}
+		return list
+	}, [ JSON.stringify( uiKitList ) ] )
+
+	let previousWasFree = true
+
 	return (
 		<ul className="ugb-block-list">
 			<AdvancedToolbarControl
@@ -136,38 +159,13 @@ const BlockList = props => {
 					},
 				] }
 				value={ viewBy }
-				onChange={ value => setViewBy( value ) }
+				onChange={ props.onChangeViewBy }
+				isSmall={ true }
+				fullwidth={ false }
+				isToggleOnly={ true }
 			/>
-			{ viewBy === 'ui-kits' &&
-				<li>
-					<div
-						className={ selected === '' ? 'is-active' : '' }
-						data-count={ totalDesigns }
-						onClick={ () => {
-							setSelected( '' )
-							props.onSelect( {
-								block: '', plan: '', categories: [],
-							} )
-						} }
-						onKeyPress={ e => {
-							if ( e.keyCode === 13 ) {
-								this.click()
-							}
-						} }
-						role="button"
-						tabIndex={ 0 }
-						aria-pressed={ selected === '' ? 'true' : 'false' }
-					>
-						{ __( 'All', i18n ) }
-						<span
-							className="ugb-block-list__count"
-							data-testid="all-count"
-						>{ totalDesigns }</span>
-					</div>
-				</li>
-			}
-			{ viewBy === 'ui-kits' && Object.keys( uiKitList ).map( ( uiKitCategory, i ) => {
-				const isSelected = selected === uiKitCategory && ! props.forceBlock
+			{ viewBy === 'ui-kits' && uiKitListKeys.reduce( ( uiKits, uiKitCategory, i ) => {
+				const isSelected = ( ( selected === '' && i === 0 ) || selected === uiKitCategory ) && ! props.forceBlock
 				const classes = classnames( {
 					'is-active': isSelected,
 					'is-disabled': props.forceBlock,
@@ -175,7 +173,13 @@ const BlockList = props => {
 
 				const uiKit = uiKitList[ uiKitCategory ].label
 				const uiKitCount = uiKitList[ uiKitCategory ].num
-				return (
+
+				if ( ! isPro && previousWasFree && uiKitList[ uiKitCategory ].isPremium ) {
+					uiKits.push( <ControlSeparator /> )
+					previousWasFree = false
+				}
+
+				uiKits.push(
 					<li key={ i }>
 						<div
 							className={ classes }
@@ -205,7 +209,9 @@ const BlockList = props => {
 						</div>
 					</li>
 				)
-			} ) }
+
+				return uiKits
+			}, [] ) }
 
 			{ viewBy === 'block-designs' &&
 				<li>
@@ -337,6 +343,8 @@ BlockList.defaultProps = {
 	categories: [],
 	onSelect: () => {},
 	forceBlock: '',
+	viewBy: '',
+	onChangeViewBy: () => {},
 }
 
 export default BlockList
