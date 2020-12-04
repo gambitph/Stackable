@@ -47,19 +47,19 @@ export const createStyles = props => {
 
 	// Text.
 	styles.push( {
-		'.ugb-expand__less-text, .ugb-expand__more-text': {
+		'.ugb-expand__less-text p, .ugb-expand__more-text p': {
 			...createTypographyStyles( 'text%s', 'desktop', props.attributes ),
 			color: getValue( 'textColor' ),
 			textAlign: getValue( 'textAlign' ),
 		},
 		tablet: {
-			'.ugb-expand__less-text, .ugb-expand__more-text': {
+			'.ugb-expand__less-text p, .ugb-expand__more-text p': {
 				...createTypographyStyles( 'text%s', 'tablet', props.attributes ),
 				textAlign: getValue( 'textTabletAlign' ),
 			},
 		},
 		mobile: {
-			'.ugb-expand__less-text, .ugb-expand__more-text': {
+			'.ugb-expand__less-text p, .ugb-expand__more-text p': {
 				...createTypographyStyles( 'text%s', 'mobile', props.attributes ),
 				textAlign: getValue( 'textMobileAlign' ),
 			},
