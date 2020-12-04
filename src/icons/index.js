@@ -191,7 +191,7 @@ export const VideoPopupIcon = () => {
 }
 
 export const UngroupContainerIcon = () => {
-	return colorizeIcon( <SVGUngroupContainerIcon width="20" height="20" /> )
+	return colorizeIcon( <SVGUngroupContainerIcon width="20" height="20" className="components-menu-items__item-icon" /> )
 }
 
 export const GhostButtonIcon = () => <ButtonIcon />
