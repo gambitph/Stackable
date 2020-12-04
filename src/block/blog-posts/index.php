@@ -141,7 +141,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 		$recent_posts = wp_get_recent_posts( $post_query );
 
 		// Manually slice the array based on the number of posts per page.
-		if ( sizeof( $recent_posts ) > $post_query['numberposts'] ) {
+		if ( is_array( $recent_posts ) && count( $recent_posts ) > $post_query['numberposts'] ) {
 			$recent_posts = array_slice( $recent_posts, 0, $post_query['numberposts'] );
 		}
 
