@@ -71,8 +71,8 @@ export const SVGStackableCategoryIcon = () => {
 	return colorizeIcon( <SVGStackableIconTextured width="20" height="20" className="components-panel__icon" /> )
 }
 
-export const SVGStackableIcon = () => {
-	return <SVGStackableIconTextured width="20" height="20" />
+export const SVGStackableIcon = ( { className } ) => {
+	return <SVGStackableIconTextured className={ className } width="20" height="20" />
 }
 
 export const StackableIcon = () => {
