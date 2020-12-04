@@ -58,7 +58,7 @@ const DesignLibraryControl = props => {
 				onClick={ () => setIsLibraryOpen( true ) }
 			>{ __( 'Open Design Library', i18n ) }</Button>
 			<TextControl
-				placeholder={ __( 'Search designs...', i18n ) }
+				placeholder={ __( 'E.g. light, dark, red, minimalist...', i18n ) }
 				value={ search }
 				onChange={ search => setSearch( search ) }
 			/>

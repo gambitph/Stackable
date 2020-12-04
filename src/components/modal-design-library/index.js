@@ -10,7 +10,6 @@ import BlockList from './block-list'
 /**
  * External deprendencies
  */
-import AdvancedToolbarControl from '~stackable/components/advanced-toolbar-control'
 import DesignLibraryList from '~stackable/components/design-library-list'
 import { getDesigns, setDevModeDesignLibrary } from '~stackable/design-library'
 import { i18n, devMode } from 'stackable'
@@ -32,9 +31,6 @@ const ModalDesignLibrary = props => {
 	const [ block, setBlock ] = useState()
 	const [ plan, setPlan ] = useState( '' )
 	const [ categories, setCategories ] = useState( [] )
-	const [ mood, setMood ] = useState( '' )
-	const [ colors ] = useState( [] )
-	// const colors = []
 	const [ columns, setColumns ] = useState( 3 )
 	const [ designs, setDesigns ] = useState( [] )
 	const [ isBusy, setIsBusy ] = useState( true )
@@ -75,8 +71,6 @@ const ModalDesignLibrary = props => {
 			block,
 			plan,
 			categories,
-			mood,
-			colors,
 			search: searchDebounced,
 			reset: doReset,
 		} ).then( designs => {
@@ -85,7 +79,7 @@ const ModalDesignLibrary = props => {
 			setIsBusy( false )
 			setDoReset( false )
 		} )
-	}, [ block, mood, colors, plan, categories, searchDebounced, doReset ] )
+	}, [ block, plan, categories, searchDebounced, doReset ] )
 
 	return (
 		<Modal
@@ -97,39 +91,15 @@ const ModalDesignLibrary = props => {
 				<aside className="ugb-modal-design-library__sidebar">
 					<TextControl
 						className="ugb-modal-design-library__search"
-						placeholder={ __( 'Search designs...', i18n ) }
+						placeholder={ __( 'E.g. light, dark, red, minimalist...', i18n ) }
 						value={ search }
 						onChange={ search => setSearch( search ) }
 						data-testid="input-search"
+						type="search"
 					/>
 					<div className="ugb-modal-design-library__filters">
-						{ /* <ColorList
-							onSelect={ colorList => {
-								setColors( colorList )
-							} }
-						/> */ }
-						<AdvancedToolbarControl
-							controls={ [
-								{
-									value: '',
-									title: __( 'All', i18n ),
-								},
-								{
-									value: 'light',
-									title: __( 'Light', i18n ),
-								},
-								{
-									value: 'dark',
-									title: __( 'Dark', i18n ),
-								},
-							] }
-							value={ mood }
-							onChange={ mood => setMood( mood ) }
-						/>
 						<BlockList
 							search={ search }
-							mood={ mood }
-							colors={ colors }
 							categories={ categories }
 							forceBlock={ props.selectedBlock }
 							onSelect={ ( {

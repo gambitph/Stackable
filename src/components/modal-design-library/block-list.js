@@ -5,6 +5,7 @@ import {
 	orderBy, last, startCase,
 } from 'lodash'
 import ControlSeparator from '../control-separator'
+import AdvancedToolbarControl from '../advanced-toolbar-control'
 import {
 	getAllBlocks, getDesigns,
 } from '~stackable/design-library'
@@ -14,9 +15,7 @@ import classnames from 'classnames'
 /**
  * WordPress dependencies
  */
-import {
-	Fragment, useEffect, useState,
-} from '@wordpress/element'
+import { useEffect, useState } from '@wordpress/element'
 import { select } from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
 
@@ -28,6 +27,7 @@ const BlockList = props => {
 	const [ totalFree, setTotalFree ] = useState( 0 )
 	const [ totalPremium, setTotalPremium ] = useState( 0 )
 	const [ selected, setSelected ] = useState( '' )
+	const [ viewBy, setViewBy ] = useState( props.forceBlock ? 'block-designs' : 'ui-kits' )
 
 	// Create our block list.
 	useEffect( () => {
@@ -74,8 +74,11 @@ const BlockList = props => {
 				return blocks
 			}, {} )
 
+			// Reset all the UI Kit counts.
 			const uiKits = Object.keys( uiKitList ).reduce( ( kits, kitName ) => {
-				kits[ kitName ].num = 0
+				if ( typeof kits[ kitName ] !== 'undefined' ) {
+					kits[ kitName ].num = 0
+				}
 				return kits
 			}, {} )
 
@@ -117,37 +120,122 @@ const BlockList = props => {
 			setTotalPremium( allDesigns - freeDesigns )
 			setBlockDesignList( orderBy( blocks, [ 'title' ], [ 'asc' ] ) )
 		} )
-	}, [ blockList, props.search, props.mood, JSON.stringify( props.colors ) ] )
+	}, [ blockList, props.search, props.mood ] )
 
 	return (
 		<ul className="ugb-block-list">
-			<li>
-				<div
-					className={ selected === '' ? 'is-active' : '' }
-					data-count={ totalDesigns }
-					onClick={ () => {
-						setSelected( '' )
-						props.onSelect( {
-							block: '', plan: '', categories: [],
-						} )
-					} }
-					onKeyPress={ e => {
-						if ( e.keyCode === 13 ) {
-							this.click()
-						}
-					} }
-					role="button"
-					tabIndex={ 0 }
-					aria-pressed={ selected === '' ? 'true' : 'false' }
-				>
-					{ __( 'All Block Designs', i18n ) }
-					<span
-						className="ugb-block-list__count"
-						data-testid="all-count"
-					>{ totalDesigns }</span>
-				</div>
-			</li>
-			{ totalDesigns !== totalFree &&
+			<AdvancedToolbarControl
+				controls={ [
+					{
+						value: 'ui-kits',
+						title: __( 'UI Kits', i18n ),
+					},
+					{
+						value: 'block-designs',
+						title: __( 'Block Designs', i18n ),
+					},
+				] }
+				value={ viewBy }
+				onChange={ value => setViewBy( value ) }
+			/>
+			{ viewBy === 'ui-kits' &&
+				<li>
+					<div
+						className={ selected === '' ? 'is-active' : '' }
+						data-count={ totalDesigns }
+						onClick={ () => {
+							setSelected( '' )
+							props.onSelect( {
+								block: '', plan: '', categories: [],
+							} )
+						} }
+						onKeyPress={ e => {
+							if ( e.keyCode === 13 ) {
+								this.click()
+							}
+						} }
+						role="button"
+						tabIndex={ 0 }
+						aria-pressed={ selected === '' ? 'true' : 'false' }
+					>
+						{ __( 'All', i18n ) }
+						<span
+							className="ugb-block-list__count"
+							data-testid="all-count"
+						>{ totalDesigns }</span>
+					</div>
+				</li>
+			}
+			{ viewBy === 'ui-kits' && Object.keys( uiKitList ).map( ( uiKitCategory, i ) => {
+				const isSelected = selected === uiKitCategory && ! props.forceBlock
+				const classes = classnames( {
+					'is-active': isSelected,
+					'is-disabled': props.forceBlock,
+				} )
+
+				const uiKit = uiKitList[ uiKitCategory ].label
+				const uiKitCount = uiKitList[ uiKitCategory ].num
+				return (
+					<li key={ i }>
+						<div
+							className={ classes }
+							data-count={ uiKitCount }
+							onClick={ () => {
+								if ( ! props.forceBlock ) {
+									setSelected( uiKitCategory )
+									props.onSelect( {
+										block: '', plan: '', categories: [ uiKitCategory ],
+									} )
+								}
+							} }
+							onKeyPress={ e => {
+								if ( e.keyCode === 13 ) {
+									this.click()
+								}
+							} }
+							role="button"
+							tabIndex={ 0 }
+							aria-pressed={ isSelected ? 'true' : 'false' }
+						>
+							 { uiKit }
+							 <span
+								className="ugb-block-list__count"
+								data-testid={ `${ uiKit }-count` }
+							>{ uiKitCount }</span>
+						</div>
+					</li>
+				)
+			} ) }
+
+			{ viewBy === 'block-designs' &&
+				<li>
+					<div
+						className={ selected === '' ? 'is-active' : '' }
+						data-count={ totalDesigns }
+						onClick={ () => {
+							setSelected( '' )
+							props.onSelect( {
+								block: '', plan: '', categories: [],
+							} )
+						} }
+						onKeyPress={ e => {
+							if ( e.keyCode === 13 ) {
+								this.click()
+							}
+						} }
+						role="button"
+						tabIndex={ 0 }
+						aria-pressed={ selected === '' ? 'true' : 'false' }
+					>
+						{ __( 'All Block Designs', i18n ) }
+						<span
+							className="ugb-block-list__count"
+							data-testid="all-count"
+						>{ totalDesigns }</span>
+					</div>
+				</li>
+			}
+			{ viewBy === 'block-designs' && totalDesigns !== totalFree &&
 				<li>
 					<div
 						className={ selected === 'free' ? 'is-active' : '' }
@@ -199,55 +287,8 @@ const BlockList = props => {
 					</div>
 				</li>
 			}
-			{ Object.keys( uiKitList ).length &&
-				<Fragment>
-					<ControlSeparator />
-					<h4>{ __( 'Browse UI Kits', i18n ) }</h4>
-				</Fragment>
-			}
-			{ Object.keys( uiKitList ).map( ( uiKitCategory, i ) => {
-				const isSelected = selected === uiKitCategory && ! props.forceBlock
-				const classes = classnames( {
-					'is-active': isSelected,
-					'is-disabled': props.forceBlock,
-				} )
-
-				const uiKit = uiKitList[ uiKitCategory ].label
-				const uiKitCount = uiKitList[ uiKitCategory ].num
-				return (
-					<li key={ i }>
-						<div
-							className={ classes }
-							data-count={ uiKitCount }
-							onClick={ () => {
-								if ( ! props.forceBlock ) {
-									setSelected( uiKitCategory )
-									props.onSelect( {
-										block: '', plan: '', categories: [ uiKitCategory ],
-									} )
-								}
-							} }
-							onKeyPress={ e => {
-								if ( e.keyCode === 13 ) {
-									this.click()
-								}
-							} }
-							role="button"
-							tabIndex={ 0 }
-							aria-pressed={ isSelected ? 'true' : 'false' }
-						>
-							 { uiKit }
-							 <span
-								className="ugb-block-list__count"
-								data-testid={ `${ uiKit }-count` }
-							>{ uiKitCount }</span>
-						</div>
-					</li>
-				)
-			} ) }
-			<ControlSeparator />
-			<h4>{ __( 'Browse Block Designs', i18n ) }</h4>
-			{ blockDesignList.map( ( block, i ) => {
+			{ viewBy === 'block-designs' && <ControlSeparator /> }
+			{ viewBy === 'block-designs' && blockDesignList.map( ( block, i ) => {
 				const isSelected = selected === block.name || block.name === props.forceBlock
 				const classes = classnames( {
 					'is-active': isSelected,

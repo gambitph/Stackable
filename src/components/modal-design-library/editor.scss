@@ -79,21 +79,26 @@
 	}
 }
 
-.ugb-block-list h4 {
-	margin-bottom: 0px;
-	padding: 0 10px 6px;
+.ugb-modal-design-library__filters .ugb-block-list {
+	margin-top: 0 !important;
 }
-.ugb-block-list li {
-	margin: 0;
-	> div {
-		padding: 6px 10px;
-		cursor: pointer;
+.ugb-block-list {
+	h4 {
+		margin-bottom: 0px;
+		padding: 0 10px 6px;
 	}
-	[aria-pressed="true"] {
-		font-weight: bold;
-	}
-	.is-disabled {
-		opacity: 0.3;
+	li {
+		margin: 0;
+		> div {
+			padding: 6px 10px;
+			cursor: pointer;
+		}
+		[aria-pressed="true"] {
+			font-weight: bold;
+		}
+		.is-disabled {
+			opacity: 0.3;
+		}
 	}
 }
 .ugb-block-list .ugb-block-list__count {
