@@ -126,6 +126,7 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com?utm_sour
 
 ### News Article Updates
 
+- [v2.13 UI Kits, Borders & Improved Performance](https://wpstackable.com/blog/ui-kits-borders/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.12 Better User Interface and User Experience](https://wpstackable.com/blog/better-user-interface-and-user-experience/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.11 Introducing Global Colors and Global Typography](https://wpstackable.com/blog/global-colors-and-global-typography/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.10 Better Responsive Controls, Better List Block Icons and Low-Highlight Effect](https://wpstackable.com/blog/better-responsive-controls-better-list-block-icons-low-highlight-effect/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -189,6 +190,8 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 2.13.0 =
+[UI Kits, Borders & Improved Performance](https://wpstackable.com/blog/ui-kits-borders/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
 * New: UI Kits, check the Design Library
 * New: Border options for all blocks
 * New: Inspector performance improvements
