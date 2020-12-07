@@ -205,6 +205,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Blockquote block background image tint not working
 * Fixed: Global Settings will no longer show up when in content only editing mode
 * Fixed: PHP error when other plugins use the plugin_action_links filter incorrectly
+* Fixed: Some slider controls are stuck on the left when moving them
 
 = 2.12.2 =
 * Fixed: WordPress 5.4 compatibility
