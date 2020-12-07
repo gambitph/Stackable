@@ -9,7 +9,7 @@ import { getDesigns, getDesign } from '~stackable/design-library'
 import classnames from 'classnames'
 
 /**
- * Wordpress dependencies
+ * WordPress dependencies
  */
 import {
 	Fragment, useEffect, useState,

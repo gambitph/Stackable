@@ -9,7 +9,7 @@ can be applied to Stackable and Native blocks.
 ```editor-loader.js``` is responsible for generating global CSS variables. 
 
 ### ```editor-color-palette-change.js```
-As of __Wordpress v5.5.1__, changing the responsive preview mode and view mode resets the color palette. ```editor-color-palette-change.js``` is responsible for retrieving the global colors back to the editor.
+As of __WordPress v5.5.1__, changing the responsive preview mode and view mode resets the color palette. ```editor-color-palette-change.js``` is responsible for retrieving the global colors back to the editor.
 
 ## List of Action Hooks 
  

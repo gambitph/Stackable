@@ -11,7 +11,7 @@ import { SVGStackableIcon } from '~stackable/icons'
 import { i18n, isContentOnlyMode } from 'stackable'
 
 /**
- * Wordpress dependencies
+ * WordPress dependencies
  */
 import { registerPlugin } from '@wordpress/plugins'
 import { Fragment } from '@wordpress/element'

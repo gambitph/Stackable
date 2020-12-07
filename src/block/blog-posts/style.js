@@ -17,7 +17,7 @@ import deepmerge from 'deepmerge'
 import { showOptions } from './util'
 
 /**
- * Wordpress dependencies
+ * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
 

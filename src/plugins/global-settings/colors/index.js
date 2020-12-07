@@ -15,7 +15,7 @@ import { PanelAdvancedSettings } from '~stackable/components'
 import rgba from 'color-rgba'
 
 /**
- * Wordpress dependencies
+ * WordPress dependencies
  */
 import { addFilter } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'

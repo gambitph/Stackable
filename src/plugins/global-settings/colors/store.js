@@ -6,7 +6,7 @@ import {
 } from 'lodash'
 
 /**
- * Wordpress dependencies
+ * WordPress dependencies
  */
 import {
 	registerStore, dispatch, select,
