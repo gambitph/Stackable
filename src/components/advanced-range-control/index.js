@@ -117,6 +117,8 @@ AdvancedRangeControl.defaultProps = {
 	screens: [ 'desktop' ],
 	placeholder: '',
 	initialPosition: '',
+	min: 0,
+	max: 100,
 }
 
 export default AdvancedRangeControl
