@@ -18,7 +18,7 @@ import { i18n } from 'stackable'
 import { whiteIfDark } from '~stackable/util'
 
 /**
- * Wordpress dependencies
+ * WordPress dependencies
  */
 import {
 	Button, ColorPicker, Popover, BaseControl, ButtonGroup,

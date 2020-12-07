@@ -3,7 +3,7 @@
  */
 
 /**
- * Wordpress dependencies
+ * WordPress dependencies
  */
 import { createHigherOrderComponent } from '@wordpress/compose'
 import { useMemo } from '@wordpress/element'

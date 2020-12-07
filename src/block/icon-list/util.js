@@ -5,7 +5,7 @@ import { range } from 'lodash'
 import { faGetSVGIcon } from '~stackable/util'
 
 /**
- * Wordpress dependencies
+ * WordPress dependencies
  */
 import { sprintf } from '@wordpress/i18n'
 

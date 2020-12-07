@@ -7,7 +7,7 @@ import {
 import classnames from 'classnames'
 
 /**
- * Wordpress dependencies
+ * WordPress dependencies
  */
 import { Icon } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'

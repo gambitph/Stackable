@@ -10,7 +10,7 @@ import { updateMediaQueries } from './util'
 import { throttle } from 'lodash'
 
 /**
- * Wordpress dependencies
+ * WordPress dependencies
  */
 import domReady from '@wordpress/dom-ready'
 import { addAction } from '@wordpress/hooks'
