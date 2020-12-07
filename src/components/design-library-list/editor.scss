@@ -76,18 +76,21 @@
 		}
 	}
 	.ugb-design-library-item__image {
-		svg {
+		.dashicon {
 			position: absolute;
 			top: calc(50% - 17.5px);
 			left: 50%;
 			transform: translate(-50%, -50%);
 			opacity: 0;
 			fill: #000;
-			height: 35px;
-			width: 35px;
+			height: 24px;
+			width: 24px;
+			&::before {
+				font-size: 24px;
+			}
 		}
 		img,
-		svg {
+		.dashicon {
 			transition: all 0.3s ease-in-out;
 		}
 	}
@@ -96,7 +99,7 @@
 			img {
 				opacity: 0.4;
 			}
-			svg {
+			.dashicon {
 				opacity: 1;
 			}
 		}
@@ -126,15 +129,11 @@
 	right: 5px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
+	transition: none !important;
 }
 
 .ugb-design-library-item__premium-link {
 	cursor: pointer;
-	display: flex;
-	svg {
-		height: 15px;
-		margin-right: 5px;
-	}
 }
 
 .ugb-design-library-item__favorite {
@@ -143,13 +142,13 @@
 	cursor: pointer;
 	outline: none;
 	transition: all 0.3 ease-in-out;
-	svg {
+	.dashicon {
 		fill: #bbb;
 		height: 14px;
 		width: 14px;
 	}
 	&:hover {
-		svg {
+		.dashicon {
 			fill: #d30c5c;
 		}
 	}
@@ -157,14 +156,14 @@
 	&.ugb--is-favorite {
 		&,
 		&:hover {
-			svg {
+			.dashicon {
 				fill: #d30c5c;
 			}
 		}
 	}
 
 	// &.ugb--is-busy {
-	// 	svg {
+	// 	.dashicon {
 	// 		opacity: 0.3;
 	// 	}
 	// }

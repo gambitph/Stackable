@@ -62,7 +62,6 @@ const DesignLibraryListItem = props => {
 						buttonClassName="ugb-design-library-item__premium-link"
 						button={
 							<Fragment>
-								<Dashicon icon="external" />
 								{ props.premiumLabel }
 							</Fragment>
 						} />
