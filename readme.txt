@@ -8,93 +8,33 @@ Stable tag: 2.13.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Stackable is a Library of Page Builder Gutenberg Blocks which will reimagine the way you use the WordPress Block Editor.
+All-in-one solution for creating stunning websites with Gutenberg.
 
 == Description ==
 
-**Reimagine the Way You Use the WordPress Block Editor**
+**The Ultimate Companion to Gutenberg**
 
-[Stackable](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is a block library that is one of the first, most expansive, and highly rated plugins made specially for the new WordPress Block Editor (Gutenberg).
-
-Stackable adds essential custom blocks to give you a true page builder experience inside the Block Editor. Stackable gives you a suite of high quality blocks, each with their own precise page builder options that let you build the perfect website and landing page that you envision.
+[Stackable](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) is the ultimate trusted Gutenberg companion you've been waiting for. Build any website with our ready made designs, extensive block collection, UI Kits, and more. Have the confidence to easily design the fastest websites using a new page building experience for Gutenberg.
 
 [youtube https://www.youtube.com/watch?v=idv-1cDz61g]
 
-With Stackable, you get:
+## More than Just Blocks. Discover a whole new experience of web design with the new WordPress Editor.
 
-- 27 Quality Page Building Blocks for Gutenberg
-- 50+ Block Layouts and 70+ Pre-set Section / Block Designs that can be switched with just one click
-- Global Colors & Global Typography
-- Page Builder-like tabbed options
-- Advanced and diverse web design options,
-- Responsive customization controls to precisely design your blocks for tablet and mobile visitors
-- Built-in Section / Background controls for the easiest way to build page sections using only a single block
-- Versatile image and color options, hover effects and separators / shape dividers
-- Detailed responsiveness options
+Stackable is the all-in-one solution for creating stunning websites with Gutenberg. Stackable has helped thousands of bloggers, merchants, designers and web development professionals make the most out of the new WordPress Editor through these awesome features.
 
-Whether you are a DIYer, business owner, graphic artist or a web agency, Stackable is just the WordPress custom block collection you’ve been waiting for.
+> [Try our live demos](https://demo.wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
-See Stackable in action by checking out our demo. Visit our [website](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) (made with Gutenberg + Stackable blocks) to learn even more about Stackable.
+## Ready Made Block Designs and UI Kits
 
-## The Easiest and Most Straightforward Way to Build Page Sections
+Enjoy an impressive Design Library of UI Kits, Block Designs and Separators to jumpstart your designing process. Never start from scratch and design like a pro with the help of our gorgeous and professionally-made designs.
 
-Stackable lets you reimagine the way you use the WordPress Block Editor for a truly easy and intuitive way of building stunning web pages. With Stackable, you can build entire page sections by using a single block with the built-in section / background controls. There’s really nothing like it.
+- Dozens of UI Kit Designs
+- Hundreds of Block Designs
+- Various built-in Separator Designs
 
-Stackable blocks are designed to be highly versatile and usable either as:
+## Powerful Custom Blocks
 
-1. units that can be combined with other blocks, or
-2. stand-alone sections, which can easily be achieved by turning on the block background settings (a uniquely Stackable feature).
-
-Having this flexibility makes Stackable an all-in-one tool for building your website.
-
-## Stunning Layouts and Pre-set Section / Block Designs
-
-Together with this new way of building sections, we’ll start you off with great built-in multiple block layouts and pre-set section / block designs. All our designs are stunning, professionally-made and ready-to-use.
-
-Unlike any other block library, our pre-set section / block designs are **cohesive across almost all blocks, making them truly useable for building full websites**. Gain access to a very diverse collection of pre-set designs and layouts which are all **interchangeable with one click!**
-
-We have absolutely the best and most expansive design collection with 50+ block layouts and 60+ pre-set design sections (with more on the way!).
-
-## Design with Powerful Precision Controls in an Intuitive UI
-
-Stackable now offers the most advanced block design controls with the widest range of design settings. With this block collection, enjoy:
-
-- Intuitive and easy to use block design settings for the easiest page building experience for casual users like entrepreneurs, bloggers, and DIYers
-- Highly advanced precision options for professionals and advanced users
-- Detailed block settings include:
-  - Highly adjustable column and block background options including single tint, gradient tint, image and video
-  - Flexible typography options including text highlight options
-  - Cutting-edge color settings including built-in gradient tint and gradient blend mode options
-  - Advanced image settings and responsive image loading
-  - Precision controls for block dimensions, spacing and alignment
-  - Highly detailed responsiveness block options for pixel perfect tablet and mobile designs
-  - Built-in separators / shape dividers for each block
-
-All of Stackable's powerful options are easily managed in an intuitive UI for a smooth block editing experience. This is achieved by our three-tab configuration, easy toggle on/off for block elements, and streamlined settings.
-
-## A Truly Useful Block Library with 27 Quality Gutenberg Blocks
-
-We’ve come up with page building blocks that are all functional and stunning. We’ve put in the design effort so you can enjoy a truly usable and quality block collection for the new WordPress block editor (Gutenberg).
-
-## Stackable WordPress Theme
-
-Get our WordPress theme that's beautiful & flexible, Gutenberg-ready and made especially for Stackable blocks and the new WordPress editor. [Download the Stackable Theme now](http://eepurl.com/dJY9xI).
-
-## Stackable Premium
-
-[Stackable Premium](https://wpstackable.com/premium/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) extends the capabilities of Stackable and the new WordPress editor to give you the smoothest page building experience. Using the core Stackable Philosophy of balancing utility and great design, Stackable Premium offers:
-
-- Premium Block Layouts and Pre-Set Section / Block Designs
-- Premium hover and image box effects
-- Three-layer separators
-- Premium functionality and design options with guided CSS customizer, 50+ blob image shape options, option to use different image shapes for different columns, advanced settings for column spacing, and custom post types for Posts Block
-- Premium updates and focused one-on-one customer care (1 year)
-
-While you can create great pages with Stackable, Stackable Premium lets you do so much more.
-
-Try out a [live demo of Stackable Premium](https://demo.wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
-
-## Stackable Blocks
+Get 27 flexible custom Gutenberg blocks that are feature-rich and look good out of the box, and provide a robust foundation for any website even without a single line of code.
 
 - Advanced Columns & Grid Block — [View Block](https://wpstackable.com/columns-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Container Block — [View Block](https://wpstackable.com/container-block/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -124,6 +64,50 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com?utm_sour
 - Divider Block
 - Spacer Block
 
+## Page Builder-like Design Options
+
+Turn the Gutenberg Editor into a page builder. Fine-tune your creations with a wide range of familiar web design options.
+
+- Multiple Block Layouts
+- Hover Animations and Image Box Effects
+- Block Background and Image Color Settings
+- Block Typography Settings
+- Image Shapes and Settings
+- Advanced Icon Options
+- Advanced Column and Spacing Settings
+- Global Colors & Typography Settings
+- Responsiveness
+    - Live Responsive Editing
+    - Ability to tweak designs for Tablet and Mobile views
+    - Hide / Show Specific Blocks on Desktop, Tablet or Mobile
+
+## Agency Tools
+
+Cater to more clients effectively and efficiently with our Agency Tools, which were specially made for web design professionals.
+
+- Block CSS Customizer
+- Role Manager
+
+## Integrations
+
+Make your page building experience more well-rounded by using other popular tools. We’ve seamlessly integrated with these essential third-party plugins and tools:
+
+- WPML
+- Font Awesome
+- Google Fonts
+
+## Fast Page Loading Speed
+
+Optimize your website’s performance, and get lightning fast page loading and maximize your page speed insights
+
+- Loads the minimal amount of CSS and JS files in the frontend, less than ~30kb total
+- Adds almost no PHP server overhead for fast page loads
+- Optimized page loading with browser caching for fast viewing speeds
+- Responsive image loading for faster browsing speeds in mobile devices
+- Compatible with Optimization Plugins and use optimization techniques such as combining CSS and JS files and minification
+
+> [Try our live demo](https://demo.wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link) | [Learn more](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
 ### News Article Updates
 
 - [v2.13 UI Kits, Borders & Improved Performance](https://wpstackable.com/blog/ui-kits-borders/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -141,7 +125,7 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com?utm_sour
 - [v2.1 Help Video Snippets and Auto-Expand Settings](https://wpstackable.com/blog/help-video-snippets-auto-expand-settings/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.0 Version 2 is Out!](https://wpstackable.com/blog/version-2-is-out/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
-### Learn More About Stackable - Gutenberg Blocks
+### Learn More About Stackable - Page Builder Gutenberg Blocks & Designs
 
 - Read our [documentation and tutorials](https://docs.wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - Visit our [site wpstackable.com](https://wpstackable.com?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -157,19 +141,39 @@ Try out a [live demo of Stackable Premium](https://demo.wpstackable.com?utm_sour
 
 = Minimum Requirements =
 
-You’ll need WordPress version 5.0 or higher for this to work.
+You’ll need WordPress version 5.4 or higher for this to work.
 
 == Frequently Asked Questions ==
 
-**What are blocks?**
+**Is Stackable Free?**
 
-Blocks are the new shortcodes in WordPress 5.0 / Gutenberg.
+Yes, Stackable is free forever.
 
-They're the basic elements that you add into your content to build your pages, like buttons, cards, videos, etc.
+We have a premium version that adds more designs and advanced features. You may want to check [Stackable Premium here](https://wpstackable.com/premium/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link).
+
+**Do I need to know how to code to use Stackable?**
+
+No, you don't need to know a single line of code when using Stackable
+
+**Do you have a live demo?**
+
+Yes, we have live demo that you can check out here:
+
+**What are Blocks?**
+
+Blocks are the new shortcodes in WordPress 5.0 / Gutenberg. They’re the basic elements that you add into your content to build your pages, like buttons, cards, videos, etc.
 
 Stackable gives you lots of awesome blocks for you to create awesome landing pages and front pages.
 
-**Can I use this with other block plugins?**
+**What are UI Kits?**
+
+UI kits are a beautiful and cohesive collection of our block designs for budiling full sites easily. These kits offer a wide variety of web design styles and categories that allow you to kick start your design process right away
+
+**Can I disable blocks that I do not use?**
+
+Yes, you can manage your blocks and choose what blocks to enable/disable.
+
+**Can I use this plugin with other block plugins?**
 
 Yes! Stackable blocks play well with other blocks.
 
