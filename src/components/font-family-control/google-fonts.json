@@ -538,6 +538,20 @@
     ]
   },
   {
+    "family": "Andika New Basic",
+    "variants": [
+      "regular",
+      "italic",
+      "700",
+      "700italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Angkor",
     "variants": [
       "regular"
@@ -6458,6 +6472,17 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Langar",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "gurmukhi",
       "latin",
       "latin-ext"
     ]
