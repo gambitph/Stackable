@@ -76,8 +76,6 @@ const save = props => {
 						<RichText.Content
 							tagName={ titleTag || 'h4' }
 							className="ugb-accordion__title"
-							role="heading"
-							aria-level="3"
 							value={ title }
 						/>
 						{ showArrow &&

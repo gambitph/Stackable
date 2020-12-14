@@ -2,6 +2,10 @@
  * Internal dependencies
  */
 import SVGArrowIconV1173 from './deprecated/images_1_17_3/arrow.svg'
+import schema from './schema'
+import createStyles from './style'
+import { showOptions } from './util'
+import SVGArrowIcon from './images/arrow.svg'
 
 /**
  * External dependencies
@@ -9,6 +13,10 @@ import SVGArrowIconV1173 from './deprecated/images_1_17_3/arrow.svg'
 import { descriptionPlaceholder } from '~stackable/util'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
+import { BlockContainer, DivBackground } from '~stackable/components'
+import {
+	withBlockStyles, withUniqueClass,
+} from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
@@ -16,7 +24,87 @@ import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 import { createBlock } from '@wordpress/blocks'
-import { RichText } from '@wordpress/block-editor'
+import { InnerBlocks, RichText } from '@wordpress/block-editor'
+import { Fragment } from '@wordpress/element'
+import { compose } from '@wordpress/compose'
+
+// Accessibility: https://www.w3.org/TR/wai-aria-practices/examples/accordion/accordion.html
+const _deprecatedSave_2_13_0 = props => {
+	const { className } = props
+	const {
+		design = 'basic',
+		shadow = '',
+		titleTag = '',
+		title = '',
+		openStart = false,
+		showArrow = true,
+		onlyOnePanelOpen = false,
+	} = props.attributes
+
+	const show = showOptions( props )
+
+	const mainClasses = classnames( [
+		className,
+		'ugb-accordion--v2',
+		`ugb-accordion--design-${ design }`,
+	], applyFilters( 'stackable.accordion.mainclasses', {
+		'ugb-accordion--open': openStart,
+		'ugb-accordion--single-open': onlyOnePanelOpen,
+	}, props ) )
+
+	const itemClasses = classnames( [
+		'ugb-accordion__item',
+	], applyFilters( 'stackable.accordion.itemclasses', {}, props ) )
+
+	const headingClasses = classnames( [
+		'ugb-accordion__heading',
+	], applyFilters( 'stackable.accordion.headingclasses', {
+		[ `ugb--shadow-${ shadow }` ]: show.headerBackground && shadow !== '',
+	}, design, props ) )
+
+	return (
+		<BlockContainer.Save className={ mainClasses } blockProps={ props } aria-expanded={ openStart ? 'true' : 'false' } render={ () => (
+			<Fragment>
+				<DivBackground
+					className={ itemClasses }
+					backgroundAttrName="container%s"
+					blockProps={ props }
+					showBackground={ show.containerBackground }
+				>
+					<DivBackground
+						className={ headingClasses }
+						backgroundAttrName="container%s"
+						blockProps={ props }
+						showBackground={ show.headerBackground }
+						role="button"
+						tabIndex="0"
+					>
+						<RichText.Content
+							tagName={ titleTag || 'h4' }
+							className="ugb-accordion__title"
+							role="heading"
+							aria-level="3"
+							value={ title }
+						/>
+						{ showArrow &&
+							<SVGArrowIcon className="ugb-accordion__arrow" width="20" height="20" />
+						}
+					</DivBackground>
+					<div className="ugb-accordion__content" role="region">
+						<div className="ugb-accordion__content-inner">
+							<InnerBlocks.Content />
+						</div>
+					</div>
+				</DivBackground>
+			</Fragment>
+		) } />
+	)
+}
+
+const deprecatedSave_2_13_0 = compose(
+	withUniqueClass,
+	withBlockStyles( createStyles ),
+)( _deprecatedSave_2_13_0 )
 
 const ArrowIcon_1_17_3 = ( { fill } ) => <SVGArrowIconV1173 width="20" height="20" fill={ fill } />
 
@@ -140,6 +228,10 @@ const deprecatedSave_1_17_3 = props => {
 }
 
 const deprecated = [
+	{
+		attributes: schema,
+		save: deprecatedSave_2_13_0,
+	},
 	{
 		attributes: deprecatedSchema_1_17_3,
 		save: deprecatedSave_1_17_3,
