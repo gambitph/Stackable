@@ -68,6 +68,7 @@ if ( ! function_exists( 'stackable_blog_posts_block_default_attributes' ) ) {
 			'showMeta' => true,
 			'showExcerpt' => true,
 			'showReadmore' => true,
+			'blockTag' => 'article',
 
 			'columns' => 2,
 		);
@@ -337,7 +338,8 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 				$posts_markup .= $output;
 			} else {
 				$posts_markup .= sprintf(
-					'<article class="%s">%s%s<div class="%s">%s%s%s%s%s%s</div></article>',
+					'<%s class="%s">%s%s<div class="%s">%s%s%s%s%s%s</div></%s>',
+					$attributes['blockTag'],
 					$item_classes,
 					$attributes['showImage'] && $show['imageAsBackground'] ? $featured_image_background : '',
 					$attributes['showImage'] && ! $show['imageAsBackground'] && $show['imageOutsideContainer'] ? $featured_image : '',
@@ -347,7 +349,8 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 					$attributes['showTitle'] ? $title : '',
 					$attributes['showMeta'] ? $meta : '',
 					$attributes['showExcerpt'] ? $excerpt : '',
-					$attributes['showReadmore'] ? $readmore : ''
+					$attributes['showReadmore'] ? $readmore : '',
+					$attributes['blockTag'],
 				);
 			}
 		}
