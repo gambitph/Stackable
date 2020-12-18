@@ -21,7 +21,7 @@ export const showOptions = blockProps => {
 		numberBGColor: ( design === 'basic' || design === 'plain' ) && numberStyle !== 'none',
 		numberStyle: true,
 		columnBackground: design !== 'plain',
-		numberSpacing: showNumber,
+		numberSpacing: showNumber && ! [ 'heading', 'heading2', 'background', 'faded' ].includes( design ),
 		titleSpacing: showTitle,
 		descriptionSpacing: showDescription,
 	}, blockProps )
