@@ -2,7 +2,6 @@
  * External dependencies
  */
 import { getAttrName } from '~stackable/util'
-import { isEqual, omit } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -36,10 +35,6 @@ const withContentAlignReseter = ( attributeNamesToReset = [] ) => createHigherOr
 
 				return attributes
 			} )
-		}
-
-		shouldComponentUpdate( nextProps ) {
-			return ! isEqual( omit( nextProps.attributes, 'uniqueClass' ), omit( this.props.attributes, 'uniqueClass' ) )
 		}
 
 		render() {

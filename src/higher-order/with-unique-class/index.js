@@ -5,11 +5,6 @@ import { addFilter } from '@wordpress/hooks'
 import { Component } from '@wordpress/element'
 import { createHigherOrderComponent } from '@wordpress/compose'
 
-/**
- * External dependencies
- */
-import { isEqual, omit } from 'lodash'
-
 export const createUniqueClass = uid => `ugb-${ uid.substring( 0, 7 ) }`
 
 const withUniqueClass = createHigherOrderComponent(
@@ -29,10 +24,6 @@ const withUniqueClass = createHigherOrderComponent(
 			if ( typeof attributes.uniqueClass === 'undefined' || attributes.uniqueClass !== newUniqueClass ) {
 				setAttributes( { uniqueClass: newUniqueClass } )
 			}
-		}
-
-		shouldComponentUpdate( nextProps ) {
-			return ! isEqual( omit( nextProps.attributes, 'uniqueClass' ), omit( this.props.attributes, 'uniqueClass' ) )
 		}
 
 		render() {
