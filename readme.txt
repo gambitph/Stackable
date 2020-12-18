@@ -193,6 +193,11 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.13.2 =
+* Fixed: Accordion SEO issue with heading levels
+* Fixed: Blocks didn't re-render when some props changed
+* Fixed: Don't show number spacing for some layouts
+
 = 2.13.1 =
 * Fixed: Blog posts block load more button stopped working
 * Fixed: Number box alignment does not apply for some layouts
