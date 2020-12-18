@@ -57,9 +57,21 @@ const createImageStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAt
 	}
 }
 
-export const createImageMask = ( attrNameTemplate = '%s', blockAttributes = {} ) => {
+export const createImageMask = ( attrNameTemplate = '%s', blockAttributes = {}, options = {} ) => {
+	const {
+		parentAttrNameTemplate,
+	} = options
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
-	const getValue = __getValue( blockAttributes, getAttrName )
+	const _getValue = __getValue( blockAttributes, getAttrName )
+
+	const getValue = value => {
+		if ( parentAttrNameTemplate ) {
+			const getParentAttrName = attrName => camelCase( sprintf( parentAttrNameTemplate, attrName ) )
+			const getParentValue = __getValue( blockAttributes, getParentAttrName )
+			return _getValue( value ) !== undefined ? _getValue( value ) : getParentValue( value )
+		}
+		return _getValue( value )
+	}
 
 	const shape = getValue( 'Shape' )
 	if ( ! shape ) {
