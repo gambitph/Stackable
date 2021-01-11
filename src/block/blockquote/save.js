@@ -60,7 +60,7 @@ const save = props => {
 					blockProps={ props }
 					showBackground={ show.containerBackground }
 				>
-					{ showQuote && QUOTE_ICONS[ quoteIcon ].iconFunc( {}, {
+					{ showQuote && QUOTE_ICONS[ quoteIcon || 'round-thin' ].iconFunc( {}, {
 						className: 'ugb-blockquote__quote',
 						width: quoteSize,
 						height: quoteSize,
