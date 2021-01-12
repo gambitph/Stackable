@@ -52,6 +52,11 @@ const TAG_OPTIONS = [
 		title: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Heading', i18n ), 6 ),
 		icon: <SVGH6 />,
 	},
+	{
+		value: 'p',
+		title: sprintf( _x( '%s', 'Nth Title', i18n ), __( 'Paragraph', i18n ) ),
+		icon: <SVGH6 />,
+	},
 ]
 
 const HeadingButtonsControl = props => {
