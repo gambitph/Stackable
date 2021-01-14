@@ -17,8 +17,10 @@
 
 .ugb-range-control {
 	display: flex;
+	align-items: center;
 	.components-range-control {
 		flex: 1;
+		margin: 0 !important;
 	}
 	// Style the input control to make it smaller.
 	.components-input-control__container {
