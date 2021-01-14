@@ -7,6 +7,7 @@ import SVGH3 from './images/heading3.svg'
 import SVGH4 from './images/heading4.svg'
 import SVGH5 from './images/heading5.svg'
 import SVGH6 from './images/heading6.svg'
+import SVGP from './images/paragraph.svg'
 
 /**
  * External dependencies
@@ -51,6 +52,11 @@ const TAG_OPTIONS = [
 		value: 'h6',
 		title: sprintf( _x( '%s %d', 'Nth Title', i18n ), __( 'Heading', i18n ), 6 ),
 		icon: <SVGH6 />,
+	},
+	{
+		value: 'p',
+		title: sprintf( _x( '%s', 'Nth Title', i18n ), __( 'Paragraph', i18n ) ),
+		icon: <SVGP />,
 	},
 ]
 
