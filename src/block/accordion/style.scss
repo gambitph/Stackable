@@ -7,7 +7,7 @@
 @import "common";
 
 .ugb-accordion.ugb-accordion--v2 {
-	&.ugb-accordion--open .ugb-accordion__heading .ugb-accordion__arrow {
+	&.ugb-accordion--open > .ugb-inner-block > .ugb-block-content > .ugb-accordion__item > .ugb-accordion__heading .ugb-accordion__arrow {
 		transform: rotate(180deg);
 	}
 
