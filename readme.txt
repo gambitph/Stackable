@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.4
 Tested up to: 5.6
 Requires PHP: 5.3
-Stable tag: 2.13.2
+Stable tag: 2.13.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -192,6 +192,14 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 2.13.3 =
+* New: You can now select titles to use Pargraph tags instead of H1-H6
+* Fixed: Can't convert reusable blocks to regular blocks
+* Fixed: Some inspector style conflicts
+* Fixed: Nested Accordion block arrows did not rotate when opened
+* Fixed: Feature Grid image shape for the column is now working
+* Fixed: Clicking on the default quote icon in the Blockquote block
 
 = 2.13.2 =
 * Fixed: Accordion SEO issue with heading levels

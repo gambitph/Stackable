@@ -1895,6 +1895,27 @@
     ]
   },
   {
+    "family": "Bodoni Moda",
+    "variants": [
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Bokor",
     "variants": [
       "regular"
@@ -4323,6 +4344,34 @@
     ]
   },
   {
+    "family": "Fraunces",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Freckle Face",
     "variants": [
       "regular"
@@ -4920,6 +4969,18 @@
     ]
   },
   {
+    "family": "Hachi Maru Pop",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Halant",
     "variants": [
       "300",
@@ -5414,6 +5475,25 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Imbue",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800",
+      "900"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -9590,6 +9670,18 @@
     ]
   },
   {
+    "family": "Potta One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "japanese",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
     "family": "Pragati Narrow",
     "variants": [
       "regular",
@@ -10615,7 +10707,16 @@
       "600",
       "700",
       "800",
-      "900"
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
     ],
     "subsets": [
       "latin",
@@ -12795,6 +12896,17 @@
       "700"
     ],
     "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Yusei Magic",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "japanese",
       "latin",
       "latin-ext"
     ]
