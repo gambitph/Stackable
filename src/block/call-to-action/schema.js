@@ -58,7 +58,7 @@ export default {
 	// Description.
 	description: {
 		source: 'html',
-		selector: 'p, .ugb-cta__description',
+		selector: '.ugb-cta__description',
 		default: descriptionPlaceholder(),
 	},
 	showDescription: {
