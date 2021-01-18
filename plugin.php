@@ -148,12 +148,13 @@ require_once( plugin_dir_path( __FILE__ ) . 'freemius.php' );
 /**
  * Block Initializer.
  */
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/disabled-blocks.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/disabled-blocks.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/init-deprecated.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/fonts.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/icons.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/blog-posts/index.php' );
+// TODO: v3 block
+// require_once( plugin_dir_path( __FILE__ ) . 'src/block/blog-posts/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/pro.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/help/help-tooltip.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/help/welcome-tutorial-video.php' );

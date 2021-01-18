@@ -5,7 +5,7 @@
 /**
  * External dependencies
  */
-import { NumberBoxIcon } from '~stackable/icons'
+import { CardIcon } from '~stackable/icons'
 
 /**
  * Internal dependencies
@@ -15,6 +15,7 @@ import { NumberBoxIcon } from '~stackable/icons'
 import edit from './edit'
 import save from './save'
 import schema from './schema'
+import variations from './variations'
 
 /**
  * WordPress dependencies
@@ -23,24 +24,25 @@ import { disabledBlocks, i18n } from 'stackable'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
 
-export const name = 'stackable/number-box'
+export const name = 'stackable/card-group'
 
 export const settings = {
-	title: __( 'Number Box', i18n ),
+	title: __( 'Card Group', i18n ),
 	description: __( 'Describe a single subject in a small card. You can use this to describe your product, service or a person.', i18n ),
-	icon: NumberBoxIcon,
+	icon: CardIcon,
 	category: 'layout',
 	keywords: [
-		__( 'Number Box', i18n ),
+		__( 'Card', i18n ),
 		__( 'Stackable', i18n ),
 	],
-	parent: [ 'stackable/card-group' ],
 	attributes: schema,
 	supports: {
 		// inserter: false,
 		anchor: true,
+		align: [ 'center', 'wide', 'full' ],
 	},
 
+	variations,
 	// deprecated,
 	edit,
 	save,

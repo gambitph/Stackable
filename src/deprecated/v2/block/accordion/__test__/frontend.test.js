@@ -33,13 +33,4 @@ describe( 'Accordion in frontend', () => {
 		fireEvent.keyPress( title, { key: 'space' } )
 		expect( el ).not.toHaveClass( 'ugb-accordion--open' )
 	} )
-
-	// TODO: should have different aria labels
-	// test( 'should have different aria labels', () => {
-	// } )
-
-	// TODO: should open/close multiple accordions
-	// test( 'should open/close multiple accordions', () => {
-
-	// } )
 } )

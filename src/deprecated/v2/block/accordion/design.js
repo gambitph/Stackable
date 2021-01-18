@@ -18,7 +18,6 @@ addFilter( 'stackable.accordion.design.no-text-attributes', 'stackable/accordion
 addFilter( 'stackable.accordion.edit.designs', 'stackable/accordion', designs => {
 	return {
 		...designs,
-		// TODO: sample, remove this
 		// corporate: {
 		// 	label: __( 'Corporate', i18n ),
 		// 	attributes: {

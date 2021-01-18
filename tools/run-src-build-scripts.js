@@ -11,7 +11,7 @@ const log = file => {
 	console.log( `✔️  Sucessfully run build file ${ displayFile }` ) // eslint-disable-line
 }
 
-glob.sync( './src/{block,components,welcome}/**/build.js' ).forEach( file => {
+glob.sync( './src/{deprecated,block,components,welcome}/**/build.js' ).forEach( file => {
 	childProcess.fork( path.resolve( file ) )
 	log( file )
 } )

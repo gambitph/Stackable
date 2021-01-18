@@ -86,7 +86,7 @@ gulp.task( 'style', function() {
 } )
 
 gulp.task( 'style-deprecated-v1', function() {
-	return gulp.src( [ path.resolve( __dirname, './src/deprecated/blocks-v1/*.scss' ) ] )
+	return gulp.src( [ path.resolve( __dirname, './src/deprecated/v1/*.scss' ) ] )
 		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
 		.pipe( concat( 'frontend_blocks_deprecated.css' ) )
 		.pipe( postcss( postCSSOptions ) )

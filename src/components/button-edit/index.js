@@ -19,8 +19,6 @@ import { RichText } from '@wordpress/block-editor'
 export * from './deprecated'
 export { default as ButtonEditHelper } from './helper'
 
-// TODO: [V2] move ButtonEdit to RichButton
-
 let buttonInstanceId = 1
 
 class ButtonEdit extends Component {

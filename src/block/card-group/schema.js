@@ -3,8 +3,8 @@ export default {
 		type: 'string',
 		default: '',
 	},
-	columnWidth: {
-		type: 'number',
-		default: '',
+	columnWidths: {
+		type: 'array',
+		default: [],
 	},
 }

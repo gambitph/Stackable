@@ -1,16 +1,12 @@
 /**
- * This is the file that Webpack is compiling into editor_blocks.js
+ * This is the file that Webpack is compiling into editor_blocks_v2.js
  */
 
 /**
  * Internal dependencies
  */
-import './format-types'
-import './plugins'
-import './help'
-import './compatibility'
-import { SVGStackableCategoryIcon } from './icons'
-import { supportsBlockCollections } from './util'
+import { SVGStackableCategoryIcon } from '../../icons'
+import { supportsBlockCollections } from '../../util'
 
 /**
  * External dependencies
@@ -30,8 +26,8 @@ import { __ } from '@wordpress/i18n'
 
 // Register our block collection or category (WP <= 5.3).
 if ( supportsBlockCollections() ) {
-	registerBlockCollection( 'stackable', {
-		title: __( 'Stackable', i18n ),
+	registerBlockCollection( 'ugb', {
+		title: __( 'Stackable (v2)', i18n ),
 		icon: SVGStackableCategoryIcon,
 	} )
 } else {
@@ -39,7 +35,7 @@ if ( supportsBlockCollections() ) {
 		...getCategories(),
 		{
 			slug: 'stackable',
-			title: __( 'Stackable', i18n ),
+			title: __( 'Stackable (v2)', i18n ),
 			icon: SVGStackableCategoryIcon,
 		},
 	] )

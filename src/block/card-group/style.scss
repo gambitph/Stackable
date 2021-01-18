@@ -1,0 +1,43 @@
+@import "common";
+
+#editor {
+	.stk-card-group {
+		// display: block;
+		.stk-card-group-inner > .block-editor-inner-blocks > .block-editor-block-list__layout {
+			// display: flex;
+			// flex-wrap: wrap;
+			// flex-wrap: no-wrap;
+			// gap: 24px;
+			// display: grid;
+			// grid-auto-columns: minmax(0, 1fr);
+			// grid-auto-flow: column;
+			// grid-gap: $box-hori-padding;
+			> [data-type^="stackable/"] {
+				margin-top: 0;
+				margin-bottom: 0;
+				// flex: 1 1 auto;
+				// max-width: none;
+				// width: auto;
+				// box-sizing: border-box;
+			}
+			> *:not([data-type^="stackable/"]):not(.block-list-appender) {
+				display: none;
+			}
+			> .block-list-appender {
+				position: absolute;
+				left: 100%;
+			}
+		}
+	}
+}
+
+
+.stk-card-group {
+	// display: flex;
+	// flex-wrap: wrap;
+	// gap: 24px;
+	// display: grid;
+	// grid-auto-columns: minmax(0, 1fr);
+	// grid-auto-flow: column;
+	// grid-gap: $box-hori-padding;
+}
