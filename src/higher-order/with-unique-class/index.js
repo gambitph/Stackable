@@ -27,7 +27,7 @@ const withUniqueClass = createHigherOrderComponent(
 			// If there's one already, check whether we need to re-create one.
 			// Duplicating a block or copy pasting a block may give us duplicate IDs.
 			} else if ( attributes.uniqueClass !== newUniqueClass ) {
-				if ( document.querySelectorAll( `.ugb-${ attributes.uniqueClass }` ).length > 1 ) {
+				if ( document.querySelectorAll( `.${ attributes.uniqueClass }` ).length > 1 ) {
 					this.props.attributes.uniqueClass = newUniqueClass
 				}
 			}
