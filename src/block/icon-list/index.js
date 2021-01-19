@@ -17,6 +17,7 @@ import deprecated from './deprecated'
 import edit from './edit'
 import save from './save'
 import schema from './schema'
+import example from './example'
 
 /**
  * WordPress dependencies
@@ -36,6 +37,7 @@ export const settings = {
 		__( 'Stackable', i18n ),
 	],
 	attributes: schema,
+	example,
 	supports: {
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
 		anchor: true,

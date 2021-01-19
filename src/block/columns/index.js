@@ -14,6 +14,7 @@ import './auto-select'
 import edit from './edit'
 import save from './save'
 import schema from './schema'
+import example from './example'
 
 /**
  * WordPress dependencies
@@ -34,6 +35,7 @@ export const settings = {
 		__( 'Stackable', i18n ),
 	],
 	attributes: schema,
+	example,
 
 	supports: {
 		html: false,
