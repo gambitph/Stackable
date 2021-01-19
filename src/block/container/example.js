@@ -11,7 +11,6 @@ export default {
 	imageMobileWidthUnit: '%',
 	imageCollapseOnMobile: true,
 	imageCollapseOnMobileHeight: 300,
-	uniqueClass: 'ugb-503e624',
 	hideDesktop: false,
 	hideTablet: false,
 	hideMobile: false,
