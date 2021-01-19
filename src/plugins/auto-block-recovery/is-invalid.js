@@ -67,6 +67,11 @@ export const isInvalid = ( block, allowedTags = ALLOWED_ERROR_TAGS ) => {
 		return true
 	}
 
+	// Check whether we're missing an aria-level attribute. For accordion block in < 2.13.2
+	if ( isAriaLevel( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
 	// Get which HTML tags the error occurred.
 	const tags = getInvalidationTags( block )
 	if ( ! tags ) {
@@ -216,6 +221,38 @@ export const isLabelAttribute = issue => {
 	const diffAttributes = difference( attributes1, attributes2 )
 
 	if ( diffAttributes.includes( 'aria-label' ) || diffAttributes.includes( 'title' ) || diffAttributes.includes( 'alt' ) ) {
+		return true
+	}
+
+	return false
+}
+
+/**
+ * Check whether an aria-level attribute was removed. Issue with accordion block < 2.13.2
+ *
+ * @param {Array} issue The invalidation object
+ * @return {boolean} True or false
+ */
+export const isAriaLevel = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 3 ) {
+		return false
+	}
+
+	if ( typeof issue.args[ 1 ] !== 'object' || typeof issue.args[ 2 ] !== 'object' ) {
+		return false
+	}
+	if ( ! Array.isArray( issue.args[ 1 ] ) || ! Array.isArray( issue.args[ 2 ] ) ) {
+		return false
+	}
+
+	const oldExists = issue.args[ 2 ].some( attributePair => attributePair[ 0 ] === 'aria-level' )
+	const newExists = issue.args[ 1 ].some( attributePair => attributePair[ 0 ] === 'aria-level' )
+
+	if ( oldExists && ! newExists ) {
 		return true
 	}
 
