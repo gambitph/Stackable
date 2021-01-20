@@ -192,20 +192,20 @@ if ( ! function_exists( 'stackable_block_assets_v2' ) ) {
 		$enqueue_scripts_in_frontend = apply_filters( 'stackable_enqueue_scripts', ! is_admin() );
 
 		// Frontend block styles.
-		// if ( is_admin() || $enqueue_styles_in_frontend ) {
-		// 	wp_enqueue_style(
-		// 		'ugb-style-css-v2',
-		// 		plugins_url( 'dist/frontend_blocks_v2.css', STACKABLE_FILE ),
-		// 		array(),
-		// 		STACKABLE_VERSION
-		// 	);
-		// }
+		if ( is_admin() || $enqueue_styles_in_frontend ) {
+			wp_enqueue_style(
+				'ugb-style-css-v2',
+				plugins_url( 'dist/frontend_blocks_deprecated_v2.css', STACKABLE_FILE ),
+				array(),
+				STACKABLE_VERSION
+			);
+		}
 
 		// Frontend only scripts.
 		if ( $enqueue_scripts_in_frontend ) {
 			wp_enqueue_script(
 				'ugb-block-frontend-js-v2',
-				plugins_url( 'dist/frontend_blocks_v2.js', STACKABLE_FILE ),
+				plugins_url( 'dist/frontend_blocks_deprecated_v2.js', STACKABLE_FILE ),
 				array(),
 				STACKABLE_VERSION
 			);
@@ -231,7 +231,7 @@ if ( ! function_exists( 'stackable_block_editor_assets_v2' ) ) {
 		$dependencies = array( 'ugb-block-js', 'ugb-block-js-vendor', 'code-editor', 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'wp-util', 'wp-plugins', 'wp-edit-post', 'wp-i18n', 'wp-api' );
 		wp_enqueue_script(
 			'ugb-block-js-v2',
-			plugins_url( 'dist/editor_blocks_v2.js', STACKABLE_FILE ),
+			plugins_url( 'dist/editor_blocks_deprecated_v2.js', STACKABLE_FILE ),
 			// wp-util for wp.ajax.
 			// wp-plugins & wp-edit-post for Gutenberg plugins.
 			apply_filters( 'stackable_editor_blocks_dependencies', $dependencies ),
@@ -242,12 +242,12 @@ if ( ! function_exists( 'stackable_block_editor_assets_v2' ) ) {
 		wp_set_script_translations( 'ugb-block-js-v2', STACKABLE_I18N );
 
 		// Backend editor only styles.
-		// wp_enqueue_style(
-		// 	'ugb-block-editor-css-v2',
-		// 	plugins_url( 'dist/editor_blocks_v2.css', STACKABLE_FILE ),
-		// 	array( 'wp-edit-blocks' ),
-		// 	STACKABLE_VERSION
-		// );
+		wp_enqueue_style(
+			'ugb-block-editor-css-v2',
+			plugins_url( 'dist/editor_blocks_deprecated_v2.css', STACKABLE_FILE ),
+			array( 'wp-edit-blocks' ),
+			STACKABLE_VERSION
+		);
 	}
 
 	// Enqueue in a higher number so that other scripts that add on Stackable can load first. E.g. Premium.

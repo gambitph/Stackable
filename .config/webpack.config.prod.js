@@ -11,7 +11,7 @@ module.exports = [ {
 
 	entry: {
         'editor_blocks': path.resolve( __dirname, '../src/blocks.js' ),
-        'editor_blocks_v2': path.resolve( __dirname, '../src/deprecated/v2/blocks.js' ),
+        'editor_blocks_deprecated_v2': path.resolve( __dirname, '../src/deprecated/v2/blocks.js' ),
     },
 
 	output: {
@@ -60,7 +60,7 @@ module.exports = [ {
 
 	entry: {
 		'frontend_blocks': path.resolve( __dirname, '../src/block-frontend.js' ),
-		'frontend_blocks_v2': path.resolve( __dirname, '../src/deprecated/v2/block-frontend.js' ),
+		'frontend_blocks_deprecated_v2': path.resolve( __dirname, '../src/deprecated/v2/block-frontend.js' ),
         'admin_welcome': path.resolve( __dirname, '../src/welcome/admin.js' ),
     },
 

@@ -78,9 +78,40 @@ gulp.task( 'style-editor', function() {
 } )
 
 gulp.task( 'style', function() {
-	return gulp.src( [ path.resolve( __dirname, './src/common.scss' ), path.resolve( __dirname, './src/**/style.scss' ) ] )
+	return gulp.src( [ path.resolve( __dirname, './src/common.scss' ), path.resolve( __dirname, './src/**/style.scss' ), '!' + path.resolve( __dirname, './src/deprecated/**/style.scss' ) ] )
 		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
 		.pipe( concat( 'frontend_blocks.css' ) )
+		.pipe( postcss( postCSSOptions ) )
+		.pipe( gulp.dest( 'dist/' ) )
+} )
+
+gulp.task( 'welcome-styles', function() {
+	return gulp.src( path.resolve( __dirname, './src/welcome/admin.scss' ) )
+		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
+		.pipe( postcss( postCSSOptions ) )
+		.pipe( rename( {
+			basename: 'admin_welcome',
+			dirname: '',
+		} ) )
+		.pipe( gulp.dest( 'dist/' ) )
+} )
+
+/*********************************************************************
+ * START deprecated build styles, we still build these
+ ********************************************************************/
+
+gulp.task( 'style-editor-deprecated-v2', function() {
+	return gulp.src( [ path.resolve( __dirname, './src/deprecated/v2/**/editor.scss' ) ] )
+		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
+		.pipe( concat( 'editor_blocks_deprecated_v2.css' ) )
+		.pipe( postcss( postCSSOptions ) )
+		.pipe( gulp.dest( 'dist/' ) )
+} )
+
+gulp.task( 'style-deprecated-v2', function() {
+	return gulp.src( [ path.resolve( __dirname, './src/deprecated/v2/common.scss' ), path.resolve( __dirname, './src/deprecated/v2/**/style.scss' ) ] )
+		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
+		.pipe( concat( 'frontend_blocks_deprecated_v2.css' ) )
 		.pipe( postcss( postCSSOptions ) )
 		.pipe( gulp.dest( 'dist/' ) )
 } )
@@ -101,18 +132,16 @@ gulp.task( 'style-deprecated-wp-v5-3', function() {
 		.pipe( gulp.dest( 'dist/' ) )
 } )
 
-gulp.task( 'style-deprecated', gulp.parallel( 'style-deprecated-v1', 'style-deprecated-wp-v5-3' ) )
+gulp.task( 'style-deprecated', gulp.parallel(
+	'style-editor-deprecated-v2',
+	'style-deprecated-v2',
+	'style-deprecated-v1',
+	'style-deprecated-wp-v5-3'
+) )
 
-gulp.task( 'welcome-styles', function() {
-	return gulp.src( path.resolve( __dirname, './src/welcome/admin.scss' ) )
-		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
-		.pipe( postcss( postCSSOptions ) )
-		.pipe( rename( {
-			basename: 'admin_welcome',
-			dirname: '',
-		} ) )
-		.pipe( gulp.dest( 'dist/' ) )
-} )
+/*********************************************************************
+ * END deprecated build styles, we still build these
+ ********************************************************************/
 
 gulp.task( 'build-process', gulp.parallel( 'style', 'style-editor', 'welcome-styles', 'style-deprecated' ) )
 

@@ -1,5 +1,5 @@
 /**
- * This is the file that Webpack is compiling into editor_blocks_v2.js
+ * This is the file that Webpack is compiling into editor_blocks_deprecated_v2.js
  */
 
 /**
