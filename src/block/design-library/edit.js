@@ -3,7 +3,7 @@
  */
 import { SVGStackableIcon } from '~stackable/icons'
 import { ModalDesignLibrary } from '~stackable/components'
-import { i18n } from 'stackable'
+import { i18n, srcUrl } from 'stackable'
 
 /**
  * WordPress dependencies.
@@ -18,8 +18,27 @@ import { useState } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
-const edit = ( { replaceBlockWithAttributes, replaceBlocWithContent } ) => {
+/**
+ * Internal dependencies
+ */
+import previewImage from './images/preview.jpg'
+
+const edit = ( {
+	attributes, replaceBlockWithAttributes, replaceBlocWithContent,
+} ) => {
 	const [ isLibraryOpen, setIsLibraryOpen ] = useState( false ) // eslint-disable-line react-hooks/rules-of-hooks
+
+	if ( attributes.previewMode ) {
+		const src = previewImage.match( /https?:/i ) ? previewImage :
+			srcUrl ? `${ srcUrl }/${ previewImage }` :
+				previewImage
+
+		return (
+			<div className="ugb-design-library-block">
+				<img src={ src } alt="design-library" />
+			</div>
+		)
+	}
 
 	return (
 		<div className="ugb-design-library-block">
