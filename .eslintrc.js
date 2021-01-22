@@ -3,7 +3,7 @@ var path = require( 'path' )
 module.exports = {
 	root: true,
 	extends: [
-		'plugin:@wordpress/eslint-plugin/recommended',
+		'plugin:@wordpress/eslint-plugin/recommended-with-formatting',
 		'plugin:jest/recommended',
 	],
 	rules: {

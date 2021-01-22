@@ -105,7 +105,7 @@ gulp.task( 'style-editor-deprecated-v2', function() {
 		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
 		.pipe( concat( 'editor_blocks_deprecated_v2.css' ) )
 		.pipe( postcss( postCSSOptions ) )
-		.pipe( gulp.dest( 'dist/' ) )
+		.pipe( gulp.dest( 'dist/deprecated/' ) )
 } )
 
 gulp.task( 'style-deprecated-v2', function() {
@@ -113,7 +113,7 @@ gulp.task( 'style-deprecated-v2', function() {
 		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
 		.pipe( concat( 'frontend_blocks_deprecated_v2.css' ) )
 		.pipe( postcss( postCSSOptions ) )
-		.pipe( gulp.dest( 'dist/' ) )
+		.pipe( gulp.dest( 'dist/deprecated/' ) )
 } )
 
 gulp.task( 'style-deprecated-v1', function() {
@@ -121,7 +121,7 @@ gulp.task( 'style-deprecated-v1', function() {
 		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
 		.pipe( concat( 'frontend_blocks_deprecated.css' ) )
 		.pipe( postcss( postCSSOptions ) )
-		.pipe( gulp.dest( 'dist/' ) )
+		.pipe( gulp.dest( 'dist/deprecated/' ) )
 } )
 
 gulp.task( 'style-deprecated-wp-v5-3', function() {
@@ -129,7 +129,7 @@ gulp.task( 'style-deprecated-wp-v5-3', function() {
 		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
 		.pipe( concat( 'editor_blocks_wp_v5_3.css' ) )
 		.pipe( postcss( postCSSOptions ) )
-		.pipe( gulp.dest( 'dist/' ) )
+		.pipe( gulp.dest( 'dist/deprecated/' ) )
 } )
 
 gulp.task( 'style-deprecated', gulp.parallel(
@@ -171,7 +171,10 @@ const watchFuncs = ( basePath = '.' ) => {
 	)
 }
 
-gulp.task( 'watch', gulp.series( 'build-process', () => watchFuncs() ) )
+gulp.task( 'watch', gulp.series( 'build-process', function watch( done ) {
+	watchFuncs()
+	done()
+} ) )
 
 module.exports = {
 	buildInclude,

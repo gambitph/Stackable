@@ -63,7 +63,7 @@ if ( ! function_exists( 'stackable_block_editor_assets_deprecated' ) ) {
 		if ( stackable_should_load_v1_styles() && $enqueue_styles_in_frontend ) {
 			wp_enqueue_style(
 				'ugb-style-css-deprecated',
-				plugins_url( 'dist/frontend_blocks_deprecated.css', STACKABLE_FILE ),
+				plugins_url( 'dist/deprecated/frontend_blocks_deprecated.css', STACKABLE_FILE ),
 				array( 'ugb-style-css' ),
 				STACKABLE_VERSION
 			);
@@ -163,7 +163,7 @@ if ( ! function_exists( 'stackable_enqueue_wp_5_3_compatibility' ) ) {
 	function stackable_enqueue_wp_5_3_compatibility() {
 		wp_enqueue_style(
 			'ugb-block-editor-css-wp-5-3',
-			plugins_url( 'dist/editor_blocks_wp_v5_3.css', STACKABLE_FILE ),
+			plugins_url( 'dist/deprecated/editor_blocks_wp_v5_3.css', STACKABLE_FILE ),
 			array( 'ugb-block-editor-css' ),
 			STACKABLE_VERSION
 		);
@@ -195,7 +195,7 @@ if ( ! function_exists( 'stackable_block_assets_v2' ) ) {
 		if ( is_admin() || $enqueue_styles_in_frontend ) {
 			wp_enqueue_style(
 				'ugb-style-css-v2',
-				plugins_url( 'dist/frontend_blocks_deprecated_v2.css', STACKABLE_FILE ),
+				plugins_url( 'dist/deprecated/frontend_blocks_deprecated_v2.css', STACKABLE_FILE ),
 				array(),
 				STACKABLE_VERSION
 			);
@@ -205,7 +205,7 @@ if ( ! function_exists( 'stackable_block_assets_v2' ) ) {
 		if ( $enqueue_scripts_in_frontend ) {
 			wp_enqueue_script(
 				'ugb-block-frontend-js-v2',
-				plugins_url( 'dist/frontend_blocks_deprecated_v2.js', STACKABLE_FILE ),
+				plugins_url( 'dist/deprecated/frontend_blocks_deprecated_v2.js', STACKABLE_FILE ),
 				array(),
 				STACKABLE_VERSION
 			);
@@ -231,7 +231,7 @@ if ( ! function_exists( 'stackable_block_editor_assets_v2' ) ) {
 		$dependencies = array( 'ugb-block-js', 'ugb-block-js-vendor', 'code-editor', 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'wp-util', 'wp-plugins', 'wp-edit-post', 'wp-i18n', 'wp-api' );
 		wp_enqueue_script(
 			'ugb-block-js-v2',
-			plugins_url( 'dist/editor_blocks_deprecated_v2.js', STACKABLE_FILE ),
+			plugins_url( 'dist/deprecated/editor_blocks_deprecated_v2.js', STACKABLE_FILE ),
 			// wp-util for wp.ajax.
 			// wp-plugins & wp-edit-post for Gutenberg plugins.
 			apply_filters( 'stackable_editor_blocks_dependencies', $dependencies ),
@@ -244,7 +244,7 @@ if ( ! function_exists( 'stackable_block_editor_assets_v2' ) ) {
 		// Backend editor only styles.
 		wp_enqueue_style(
 			'ugb-block-editor-css-v2',
-			plugins_url( 'dist/editor_blocks_deprecated_v2.css', STACKABLE_FILE ),
+			plugins_url( 'dist/deprecated/editor_blocks_deprecated_v2.css', STACKABLE_FILE ),
 			array( 'wp-edit-blocks' ),
 			STACKABLE_VERSION
 		);
