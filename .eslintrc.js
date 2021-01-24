@@ -61,6 +61,13 @@ module.exports = {
 
 		// Turn this off since it's showing errors when optional chaining "?."
 		'no-unused-expressions': 'off',
+
+		// Fix some import errors.
+		'import/no-extraneous-dependencies': 'off',
+		'import/no-unresolved': 'off',
+
+		// We will use dynamic text domain.
+		'@wordpress/i18n-text-domain': 'off',
 	},
 	globals: {
 		localStorage: true,
