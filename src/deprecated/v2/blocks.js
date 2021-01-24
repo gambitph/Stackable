@@ -5,6 +5,7 @@
 /**
  * Internal dependencies
  */
+import './plugins'
 import { SVGStackableCategoryIcon } from '../../icons'
 import { supportsBlockCollections } from '../../util'
 

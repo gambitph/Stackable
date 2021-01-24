@@ -1,7 +1,6 @@
 /**
  * Internal dependencies
  */
-import './auto-block-recovery'
 import './responsive-preview'
 import './global-settings'
 import './premium-notice'
