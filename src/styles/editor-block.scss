@@ -1,34 +1,34 @@
 /**
- * Core Block Styles
+ * Core Block Styles for the editor
  */
 @import "breakpoints";
-
-.stk-container.stk-block,
-.content-entry .stk-container.stk-block {
-	margin: 0;
-}
 
 /**
  * Resizeable rows and columns
  */
-.stk-row {
+.stk-row .block-editor-block-list__layout {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
 }
-.stk-column {
+.stk-row .block-editor-block-list__layout > div {
 	flex: 1 1 auto;
 	box-sizing: border-box;
 }
+[data-type^="stackable/"] .stk-row,
+.stk-column .block-editor-block-list__layout {
+	display: block;
+}
+
 // Columns can be collapsed for tablet and mobile only.
 @include desktop {
-	.stk-row {
+	.stk-row .block-editor-block-list__layout {
 		flex-wrap: nowrap;
 	}
 }
 // Mobile auto-collapses all columns.
 @include mobile {
-	.stk-column {
+	.stk-row .block-editor-block-list__layout > div {
 		flex: 1 1 100%;
 	}
 }

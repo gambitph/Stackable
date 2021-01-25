@@ -18,52 +18,6 @@ $break-mobile: 480px;
 $break-js-tablet: 1025px;
 $break-js-mobile: 768px;
 
-@mixin desktop {
-	@media only screen and (min-width: 1025px) {
-		@content;
-	}
-}
-@mixin desktop-tablet {
-	@media only screen and (min-width: 769px) {
-		@content;
-	}
-}
-@mixin tablet {
-	@media only screen and (min-width: 769px) and (max-width: 1024px) {
-		@content;
-	}
-}
-@mixin mobile {
-	@media only screen and (max-width: 768px) {
-		@content;
-	}
-}
-
-/**
- * Resizeable rows and columns
- */
-.stk-row {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-}
-.stk-column {
-	flex: 1 1 auto;
-	box-sizing: border-box;
-}
-// Columns can be collapsed for tablet and mobile only.
-@include desktop {
-	.stk-row {
-		flex-wrap: nowrap;
-	}
-}
-// Mobile auto-collapses all columns.
-@include mobile {
-	.stk-column {
-		flex: 1 1 100%;
-	}
-}
-
 [class*="ugb-"] form[class*="-link"],
 form[class*="ugb-"][class*="-link"],
 [class*="ugb-"] + form[class*="-link"] {
