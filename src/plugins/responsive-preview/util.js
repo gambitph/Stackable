@@ -13,10 +13,10 @@ import md5 from 'md5'
  */
 const stackableCSSFiles = [
 	null, // Include style tags.
-	'/dist/frontend_blocks__premium_only.css',
-	'/dist/frontend_blocks.css',
-	'/dist/editor_blocks__premium_only.css',
-	'/dist/editor_blocks.css',
+	'/dist/frontend_blocks',
+	'/dist/deprecated/frontend_blocks',
+	'/dist/editor_blocks',
+	'/dist/deprecated/editor_blocks',
 ]
 
 /**
@@ -93,7 +93,7 @@ export const getCssObject = ( matchingFilenames = stackableCSSFiles, documentSty
 		if ( ! cssRulesCache[ __id ] || ( cssRulesCache[ __id ] && ! isEqual( cssRulesCache[ __id ], cssRules ) ) ) {
 			cssRulesCache[ __id ] = ! isEmpty( cssRules ) && [ ...cssRules ]
 			Array.from( styleSheets[ index ].cssRules ).forEach( ( { cssText, media }, mediaIndex ) => {
-				if ( media && cssText.includes( '.ugb' ) && media.mediaText.match( /(max|min)-width/ ) ) {
+				if ( media && ( cssText.includes( '.ugb' ) || cssText.includes( '.stk' ) ) && media.mediaText.match( /(max|min)-width/ ) ) {
 					const maxWidth = media.mediaText.match( /max-width:\s*(\d+)px/ )
 					const minWidth = media.mediaText.match( /min-width:\s*(\d+)px/ )
 
