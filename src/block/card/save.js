@@ -27,8 +27,10 @@ export default props => {
 
 	const classNames = classnames( [
 		'stk-card',
+		'stk-block',
 		'stk-column',
 		`stk-${ props.attributes.uniqueId }`,
+		'stk-container',
 	], {
 		'stk-is-first': props.attributes.isFirstBlock,
 		'stk-is-last': props.attributes.isLastBlock,

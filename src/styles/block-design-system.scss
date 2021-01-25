@@ -1,0 +1,55 @@
+@import "cssvars";
+
+/**
+ * Default Stackable UI Kit design.
+ */
+@include cssvars-responsive( (
+	/**
+	 * Containers
+	 */
+	container-background-color: #fff,
+	container-border-radius: 0px,
+
+	container-padding: (
+		desktop: 48px 32px,
+		tablet: 48px 32px,
+		mobile: 32px 24px,
+	),
+	container-padding-large: (
+		desktop: 64px 80px,
+		tablet: 64px 80px,
+		mobile: 32px 24px,
+	),
+
+	/**
+	 * Block backgrounds
+	 */
+	block-background-padding: (
+		desktop: 48px 120px,
+		tablet: 32px 48px,
+		mobile: 24px 24px,
+	),
+
+	block-margin: (
+		desktop: 0 0 24px,
+		tablet: 0 0 24px,
+		mobile: 0 0 16px,
+	),
+) );
+
+/**
+ * Block Design System.
+ */
+
+// Blocks
+.stk-block,
+.content-entry .stk-block {
+	margin: cssvar(block-margin);
+}
+
+// Containers
+.stk-container {
+	background-color: cssvar(container-background-color);
+	border-radius: cssvar(container-border-radius);
+	padding: cssvar(container-padding);
+}

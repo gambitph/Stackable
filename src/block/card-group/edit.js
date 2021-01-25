@@ -11,7 +11,7 @@ const edit = props => {
 		}`
 	} )
 
-	return <div className="stk-card-group stk-row">
+	return <div className="stk-card-group stk-block stk-row">
 		{ columns.length ? <style>{ columns.join( '' ) }</style> : null }
 		<div className="stk-card-group-inner">
 			<InnerBlocks

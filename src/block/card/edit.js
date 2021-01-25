@@ -138,8 +138,10 @@ const Edit = props => {
 
 	const classNames = classnames( [
 		'stk-card',
+		'stk-block',
 		'stk-column',
 		`stk-${ props.attributes.uniqueId }`,
+		'stk-container',
 	], {
 		'stk-is-first': isFirstBlock,
 		'stk-is-last': isLastBlock,

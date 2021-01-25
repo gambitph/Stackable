@@ -18,7 +18,7 @@ export default props => {
 	] )
 
 	return (
-		<div className="stk-card-group">
+		<div className="stk-card-group stk-block">
 			{ columns.length ? <style>{ columns.join( '' ) }</style> : null }
 			<div className={ classNames }>
 				<InnerBlocks.Content />
