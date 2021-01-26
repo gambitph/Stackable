@@ -495,7 +495,7 @@ const addStyles = ( styleObject, props ) => {
 				...createTypographyStyles( 'BlockTitle%s', 'desktop', props.attributes ),
 				color: whiteIfDark( blockTitleColor, showBlockBackground && blockBackgroundBackgroundColor ),
 				textAlign: getValue( 'blockTitleAlign' ),
-				marginBottom: getValue( 'blockTitleBottomMargin', '%spx' ),
+				marginBottom: appendImportant( getValue( 'blockTitleBottomMargin', '%spx' ) ),
 				maxWidth: appendImportant( getValue( 'blockTitleWidth', '%s' + getValue( 'blockTitleWidthUnit', '%s', 'px' ) ) ),
 				marginLeft: hasTitleHorizontalAlign ? appendImportant( marginLeftAlign( getValue( 'blockTitleHorizontalAlign' ) ) ) : undefined,
 				marginRight: hasTitleHorizontalAlign ? appendImportant( marginRightAlign( getValue( 'blockTitleHorizontalAlign' ) ) ) : undefined,
@@ -504,7 +504,7 @@ const addStyles = ( styleObject, props ) => {
 				'.ugb-block-title': {
 					...createTypographyStyles( 'BlockTitle%s', 'tablet', props.attributes ),
 					textAlign: getValue( 'blockTitleTabletAlign' ),
-					marginBottom: getValue( 'blockTitleTabletBottomMargin', '%spx' ),
+					marginBottom: appendImportant( getValue( 'blockTitleTabletBottomMargin', '%spx' ) ),
 					maxWidth: appendImportant( getValue( 'blockTitleTabletWidth', '%s' + getValue( 'blockTitleTabletWidthUnit', '%s', 'px' ) ) ),
 				},
 			},
@@ -512,7 +512,7 @@ const addStyles = ( styleObject, props ) => {
 				'.ugb-block-title': {
 					...createTypographyStyles( 'BlockTitle%s', 'mobile', props.attributes ),
 					textAlign: getValue( 'blockTitleMobileAlign' ),
-					marginBottom: getValue( 'blockTitleMobileBottomMargin', '%spx' ),
+					marginBottom: appendImportant( getValue( 'blockTitleMobileBottomMargin', '%spx' ) ),
 					maxWidth: appendImportant( getValue( 'blockTitleMobileWidth', '%s' + getValue( 'blockTitleMobileWidthUnit', '%s', 'px' ) ) ),
 				},
 			},
