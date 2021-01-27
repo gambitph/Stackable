@@ -110,12 +110,12 @@ export const createStyles = props => {
 			} ),
 			tablet: {
 				'.ugb-icon__icon': appendImportantAll( {
-					alignSelf: leftRightToFlex( getValue( 'tabletIconAlign' ) ),
+					alignSelf: leftRightToFlex( getValue( 'iconTabletAlign' ) ),
 				} ),
 			},
 			mobile: {
 				'.ugb-icon__icon': appendImportantAll( {
-					alignSelf: leftRightToFlex( getValue( 'mobileIconAlign' ) ),
+					alignSelf: leftRightToFlex( getValue( 'iconMobileAlign' ) ),
 				} ),
 			},
 		} )
