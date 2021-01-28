@@ -1,127 +1,53 @@
 import {
 	InnerBlocks,
-	__experimentalBlock as Block,
 } from '@wordpress/block-editor'
-import {
-	Fragment, useRef, useEffect, useState,
-} from '@wordpress/element'
+import { Fragment, useState } from '@wordpress/element'
 import {
 	useSelect, select,
 } from '@wordpress/data'
 import classnames from 'classnames'
+import { i18n } from 'stackable'
 import {
 	first, last, indexOf, nth,
 } from 'lodash'
-import { BlockContainer } from '~stackable/components'
-import { ResizableBox } from '@wordpress/components'
-import { compose, createHigherOrderComponent } from '@wordpress/compose'
-import { withUniqueClass } from '~stackable/higher-order'
-import { useShowMoversGestures } from './util'
-
-export const createUniqueClass = uid => `${ uid.substring( 0, 7 ) }`
+import {
+	BlockContainer, InspectorTabs, InspectorStyleControls, InspectorControls,
+} from '~stackable/components'
+import {
+	useUniqueId,
+	useBlockContext,
+} from '~stackable/hooks'
+import { ResizableBox, ToggleControl } from '@wordpress/components'
+import { compose } from '@wordpress/compose'
+import { __ } from '@wordpress/i18n'
+import {
+	withIsHovered,
+} from '~stackable/higher-order'
 
 const TEMPLATE = [
 	[ 'core/heading', { content: 'Card Title' } ],
 	[ 'core/paragraph', { content: 'Card Text' } ],
 ]
 
-const useUniqueId = props => {
-	useEffect( () => {
-		// When there's no unique ID yet, create one.
-		if ( ! props.attributes.uniqueId ) {
-			props.attributes.uniqueId = createUniqueClass( props.clientId )
-		// If there's one already, check whether the we need to re-create one.
-		// Duplicating a block or copy pasting a block may give us duplicate IDs.
-		} else if ( createUniqueClass( props.clientId ) !== props.attributes.uniqueId ) {
-			if ( document.querySelectorAll( `[data-id="${ props.attributes.uniqueId }"]` ).length > 1 ) {
-				props.attributes.uniqueId = createUniqueClass( props.clientId )
-			}
-		}
-	}, [] )
-}
-
-const useFirstLastBlock = props => {
-	const blockInfo = useSelect(
-		select => {
-			const { getBlock, getBlockParents } = select( 'core/block-editor' )
-			const parentClientId = first( getBlockParents( props.clientId ) )
-			const parent = parentClientId ? getBlock( parentClientId ) : null
-			const index = indexOf( parent?.innerBlocks, getBlock( props.clientId ) )
-			const isLastBlock = last( parent?.innerBlocks )?.clientId === props.clientId
-			// getAdjacentBlockClientId
-			return {
-				parentBlock: parent,
-				isFirstBlock: first( parent?.innerBlocks )?.clientId === props.clientId,
-				isLastBlock,
-				adjacentBlock: nth( parent?.innerBlocks, ! isLastBlock ? index + 1 : index - 1 ),
-				adjacentBlocks: parent?.innerBlocks || [],
-			}
-		},
-		[ props.clientId ]
-	)
-
-	// Quietly update the first block attribute.
-	useEffect( () => {
-		props.attributes.isFirstBlock = blockInfo.isFirstBlock
-	}, [ blockInfo.isFirstBlock ] )
-
-	// Quietly update the last block attribute.
-	useEffect( () => {
-		props.attributes.isLastBlock = blockInfo.isLastBlock
-	}, [ blockInfo.isLastBlock ] )
-
-	return blockInfo
-}
-
-const useHasInnerBlocks = props => {
-	const {
-		hasInnerBlocks,
-	} = useSelect(
-		select => {
-			const { getBlock } = select( 'core/block-editor' )
-			const block = getBlock( props.clientId )
-			return {
-				hasInnerBlocks: !! ( block && block.innerBlocks.length ),
-			}
-		},
-		[ props.clientId ]
-	)
-
-	return hasInnerBlocks
-}
-
-const withIsHovered = createHigherOrderComponent(
-	WrappedComponent => props => {
-		const ref = useRef()
-		const { showMovers, gestures } = useShowMoversGestures( { ref } )
-		return (
-			<div
-				{ ...gestures }
-				ref={ ref }
-			>
-				<WrappedComponent { ...props } isHovered={ showMovers } />
-			</div>
-		)
-	},
-	'withIsHovered'
-)
-
 const Edit = props => {
-	const hasInnerBlocks = useHasInnerBlocks( props )
 	// const {
 	// 	isFirstBlock, isLastBlock, adjacentBlock,
 	// } = useBlockInfo( props )
 	const {
-		isFirstBlock, isLastBlock, adjacentBlock, parentBlock,
-	} = useFirstLastBlock( props )
+		isFirstBlock, isLastBlock, isOnlyBlock, adjacentBlock, parentBlock, hasInnerBlocks,
+	} = useBlockContext( props )
 	useUniqueId( props )
 
 	// console.log( 'adjacentBlock', props.clientId, adjacentBlock.clientId )
 	// console.log( 'isfirst block', props.clientId, adjacentBlock.clientId )
+	const {
+		hasContainer,
+	} = props.attributes
 
 	const {
 		toggleSelection, isSelected, setAttributes, isHovered,
 	} = props
+
 	// const ref = useRef()
 	// const { hasSelectedInnerBlock } = select( 'core/block-editor' )
 	// const isAncestorOfSelectedBlock = hasSelectedInnerBlock(
@@ -141,14 +67,27 @@ const Edit = props => {
 		'stk-block',
 		'stk-column',
 		`stk-${ props.attributes.uniqueId }`,
-		'stk-container',
 	], {
 		'stk-is-first': isFirstBlock,
 		'stk-is-last': isLastBlock,
+		'stk-container': hasContainer,
 	} )
 
 	return (
 		<Fragment>
+
+			<InspectorTabs
+				{ ...props }
+			/>
+
+			<InspectorStyleControls>
+				<ToggleControl
+					label={ __( 'Open link in new tab', i18n ) }
+					checked={ hasContainer }
+					onChange={ value => setAttributes( { hasContainer: value } ) }
+				/>
+			</InspectorStyleControls>
+
 			<style>
 				{ props.attributes.columnWidth ? `[data-block="${ props.clientId }"] {
 					flex: 1 1 ${ props.attributes.columnWidth }% !important;
@@ -158,9 +97,9 @@ const Edit = props => {
 			<ResizableBox
 				enable={ {
 					top: false,
-					right: ! isLastBlock,
+					right: ! isOnlyBlock && ! isLastBlock,
 					bottom: false,
-					left: ! isFirstBlock,
+					left: ! isOnlyBlock && ! isFirstBlock,
 					topRight: false,
 					bottomRight: false,
 					bottomLeft: false,

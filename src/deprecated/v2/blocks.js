@@ -12,7 +12,7 @@ import { supportsBlockCollections } from '../../util'
 /**
  * External dependencies
  */
-import registerBlock from '~stackable/register-block'
+import registerBlock from './register-block'
 import { i18n } from 'stackable'
 
 /**

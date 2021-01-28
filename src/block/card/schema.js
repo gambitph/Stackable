@@ -22,4 +22,8 @@ export default {
 		type: 'number',
 		default: '',
 	},
+	hasContainer: {
+		type: 'boolean',
+		default: true,
+	},
 }

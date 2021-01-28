@@ -11,6 +11,15 @@ import { applyFilters } from '@wordpress/hooks'
 import { createBlock } from '@wordpress/blocks'
 import { dispatch, select } from '@wordpress/data'
 
+/**
+ * Converts the registered block name into a block name string that can be used in hook names or ids.
+ *
+ * @param {string} name The block name
+ */
+export const getBlockName = name => {
+	return name.replace( /\//g, '-' )
+}
+
 const ignoreAttributes = [
 	'uniqueClass',
 ]
