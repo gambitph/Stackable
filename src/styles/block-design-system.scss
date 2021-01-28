@@ -24,7 +24,13 @@
 	/**
 	 * Block backgrounds
 	 */
+	block-background-color: #f1f1f1,
 	block-background-padding: (
+		desktop: 48px 32px,
+		tablet: 48px 32px,
+		mobile: 32px 24px,
+	),
+	block-background-full-padding: (
 		desktop: 48px 120px,
 		tablet: 32px 48px,
 		mobile: 24px 24px,
@@ -53,4 +59,14 @@
 	border-radius: cssvar(container-border-radius);
 	padding: cssvar(container-padding);
 	box-shadow: 0 5px 30px -10px rgba(18, 63, 82, 0.3);
+}
+
+// Block Background
+.stk-block-background {
+	background-color: cssvar(block-background-color);
+	padding: cssvar(block-background-padding);
+}
+// Block background when the block is full width
+.stk-block-background.alignfull {
+	padding: cssvar(block-background-full-padding);
 }

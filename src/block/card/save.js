@@ -20,6 +20,10 @@ export default props => {
 	// const parent = parentClientId ? getBlock( parentClientId ) : null
 	// const isFirstBlock = first( parent?.innerBlocks )?.clientId === props.clientId
 	// const isLastBlock = last( parent?.innerBlocks )?.clientId === props.clientId
+	const {
+		hasContainer,
+		hasBackground,
+	} = props.attributes
 
 	// },
 	// 	[ props.clientId ]
@@ -34,6 +38,8 @@ export default props => {
 	], {
 		'stk-is-first': props.attributes.isFirstBlock,
 		'stk-is-last': props.attributes.isLastBlock,
+		'stk-container': hasContainer,
+		'stk-block-background': hasBackground,
 	} )
 
 	return (

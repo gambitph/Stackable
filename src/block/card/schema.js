@@ -26,4 +26,8 @@ export default {
 		type: 'boolean',
 		default: true,
 	},
+	hasBackground: {
+		type: 'boolean',
+		default: false,
+	},
 }

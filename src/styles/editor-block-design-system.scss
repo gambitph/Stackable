@@ -1,0 +1,6 @@
+@import "block-design-system";
+
+// Block background when the block is full width
+[data-align="full"] > .stk-block-background {
+	padding: cssvar(block-background-full-padding);
+}

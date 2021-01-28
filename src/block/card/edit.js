@@ -11,7 +11,12 @@ import {
 	first, last, indexOf, nth,
 } from 'lodash'
 import {
-	BlockContainer, InspectorTabs, InspectorStyleControls, InspectorControls,
+	BlockContainer,
+	InspectorTabs,
+	InspectorStyleControls,
+	InspectorControls,
+	PanelAdvancedSettings,
+	InspectorSectionControls,
 } from '~stackable/components'
 import {
 	useUniqueId,
@@ -42,6 +47,7 @@ const Edit = props => {
 	// console.log( 'isfirst block', props.clientId, adjacentBlock.clientId )
 	const {
 		hasContainer,
+		hasBackground,
 	} = props.attributes
 
 	const {
@@ -71,6 +77,7 @@ const Edit = props => {
 		'stk-is-first': isFirstBlock,
 		'stk-is-last': isLastBlock,
 		'stk-container': hasContainer,
+		'stk-block-background': hasBackground,
 	} )
 
 	return (
@@ -80,12 +87,34 @@ const Edit = props => {
 				{ ...props }
 			/>
 
+			<InspectorSectionControls>
+				<PanelAdvancedSettings
+					title={ __( 'Background', i18n ) }
+					id="background"
+					checked={ hasBackground }
+					onChange={ hasBackground => setAttributes( { hasBackground } ) }
+					// toggleOnSetAttributes={ [
+					// 	'arrowSize',
+					// 	'arrowColor',
+					// ] }
+					toggleAttributeName="hasBackground"
+				>
+				</PanelAdvancedSettings>
+			</InspectorSectionControls>
+
 			<InspectorStyleControls>
-				<ToggleControl
-					label={ __( 'Open link in new tab', i18n ) }
+				<PanelAdvancedSettings
+					title={ __( 'Container', i18n ) }
+					id="container"
 					checked={ hasContainer }
-					onChange={ value => setAttributes( { hasContainer: value } ) }
-				/>
+					onChange={ hasContainer => setAttributes( { hasContainer } ) }
+					// toggleOnSetAttributes={ [
+					// 	'arrowSize',
+					// 	'arrowColor',
+					// ] }
+					toggleAttributeName="hasContainer"
+				>
+				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 
 			<style>
