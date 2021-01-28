@@ -92,6 +92,16 @@
 	}
 }
 
+[data-ugb-tab="section"] {
+	.ugb-inspector-panel-controls:not(.ugb-panel-section) {
+		display: none;
+	}
+	// Advanced Gutenberg tab is always in advanced, hide it.
+	.block-editor-block-inspector__advanced {
+		display: none;
+	}
+}
+
 [data-ugb-tab="layout"] {
 	.ugb-inspector-panel-controls:not(.ugb-panel-layout) {
 		display: none;

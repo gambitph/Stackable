@@ -60,4 +60,8 @@ const InspectorTabs = props => {
 	)
 }
 
+InspectorTabs.defaultProps = {
+	tabs: [ 'section', 'style', 'advanced' ],
+}
+
 export default InspectorTabs
