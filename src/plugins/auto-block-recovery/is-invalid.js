@@ -11,11 +11,16 @@ const ALLOWED_ERROR_TAGS = [ 'style', 'svg' ]
 
 export const isInvalid = ( block, allowedTags = ALLOWED_ERROR_TAGS ) => {
 	const {
-		name, isValid, validationIssues,
+		name, isValid, validationIssues, originalContent,
 	} = block
 
 	// Only do this for Stackable blocks.
 	if ( ! name || ! name.match( /^ugb\// ) ) {
+		return false
+	}
+
+	// Only do this for blocks with .ugb-main-block
+	if ( ! originalContent.match( /ugb-main-block/ ) ) {
 		return false
 	}
 
