@@ -1,28 +1,5 @@
 @import "common";
 
-.stk-card {
-	// padding: 16px;
-	// box-shadow: nth($shadows, 5);
-	margin: 0 16px;
-
-}
-// @include desktop-tablet {
-// 	.stk-card {
-// 		&:first-child {
-// 			margin-left: 0;
-// 		}
-// 		&:last-child {
-// 			margin-right: 0;
-// 		}
-// 	}
-// }
-// @include mobile {
-// 	.stk-card {
-// 		margin-left: 0;
-// 		margin-right: 0;
-// 	}
-// }
-
 [data-type="stackable/card"] {
 	width: 100%;
 }

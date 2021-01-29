@@ -36,7 +36,7 @@ const edit = props => {
 		}`
 	} )
 
-	const classNames = classnames( [
+	const blockClassNames = classnames( [
 		'stk-card-group',
 		'stk-block',
 		'stk-row',
@@ -44,6 +44,10 @@ const edit = props => {
 	], {
 		'stk-block-background': hasBackground,
 	} )
+
+	const contentClassNames = classnames( [
+		'stk-block-content',
+	] )
 
 	return <Fragment>
 
@@ -66,9 +70,9 @@ const edit = props => {
 			</PanelAdvancedSettings>
 		</InspectorSectionControls>
 
-		<div className={ classNames } data-id={ props.attributes.uniqueId }>
+		<div className={ blockClassNames } data-id={ props.attributes.uniqueId }>
 			{ columns.length ? <style>{ columns.join( '' ) }</style> : null }
-			<div className="stk-card-group-inner">
+			<div className={ contentClassNames }>
 				<InnerBlocks
 					orientation="horizontal"
 					allowedBlocks={ [ 'stackable/card' ] }

@@ -29,28 +29,35 @@ export default props => {
 	// 	[ props.clientId ]
 	// )
 
-	const classNames = classnames( [
+	const blockClassNames = classnames( [
 		'stk-card',
 		'stk-block',
 		'stk-column',
 		`stk-${ props.attributes.uniqueId }`,
-		'stk-container',
 	], {
 		'stk-is-first': props.attributes.isFirstBlock,
 		'stk-is-last': props.attributes.isLastBlock,
-		'stk-container': hasContainer,
 		'stk-block-background': hasBackground,
 	} )
 
+	const contentClassNames = classnames( [
+		'stk-block-content',
+		'stk-column-wrapper',
+	], {
+		'stk-container': hasContainer,
+	} )
+
 	return (
-		<div className={ classNames } data-id={ props.attributes.uniqueId }>
+		<div className={ blockClassNames } data-id={ props.attributes.uniqueId }>
 			<style>
 				{ props.attributes.columnWidth ? `.stk-${ props.attributes.uniqueId } {
 					flex: 1 1 ${ props.attributes.columnWidth }% !important;
 					max-width: ${ props.attributes.columnWidth }% !important;
 				}` : null }
 			</style>
-			<InnerBlocks.Content />
+			<div className={ contentClassNames }>
+				<InnerBlocks.Content />
+			</div>
 		</div>
 	)
 }

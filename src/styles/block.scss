@@ -3,9 +3,10 @@
  */
 @import "breakpoints";
 
-.stk-container.stk-block,
-.content-entry .stk-container.stk-block {
-	margin: 0;
+// Containers
+.stk-column {
+	margin-top: 0;
+	margin-bottom: 0;
 }
 
 /**
@@ -17,9 +18,10 @@
 	flex-wrap: wrap;
 }
 .stk-column {
-	flex: 1 1 auto;
+	flex: 1 1 0px; // flex-basis 0 means that all columns will be equal.
 	box-sizing: border-box;
 }
+
 // Columns can be collapsed for tablet and mobile only.
 @include desktop {
 	.stk-row {
@@ -30,5 +32,15 @@
 @include mobile {
 	.stk-column {
 		flex: 1 1 100%;
+	}
+}
+
+// Block inner blocks.
+.stk-block-content {
+	> *:first-child {
+		margin-top: 0;
+	}
+	> *:last-child {
+		margin-bottom: 0;
 	}
 }

@@ -34,7 +34,7 @@ export const settings = {
 		__( 'Number Box', i18n ),
 		__( 'Stackable', i18n ),
 	],
-	parent: [ 'stackable/card-group' ],
+	// parent: [ 'stackable/card-group' ],
 	attributes: schema,
 	supports: {
 		// inserter: false,

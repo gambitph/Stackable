@@ -16,7 +16,7 @@ export default props => {
 		}`
 	} )
 
-	const mainClassNames = classnames( [
+	const blockClassName = classnames( [
 		'stk-card-group',
 		'stk-block',
 		`stk-${ props.attributes.uniqueId }`,
@@ -24,14 +24,15 @@ export default props => {
 		'stk-block-background': hasBackground,
 	} )
 
-	const classNames = classnames( [
+	const contentClassNames = classnames( [
 		'stk-row',
+		'stk-block-content',
 	] )
 
 	return (
-		<div className={ mainClassNames } data-id={ props.attributes.uniqueId }>
+		<div className={ blockClassName } data-id={ props.attributes.uniqueId }>
 			{ columns.length ? <style>{ columns.join( '' ) }</style> : null }
-			<div className={ classNames }>
+			<div className={ contentClassNames }>
 				<InnerBlocks.Content />
 			</div>
 		</div>

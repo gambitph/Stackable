@@ -21,6 +21,7 @@ import {
 import {
 	useUniqueId,
 	useBlockContext,
+	useBlockColumnEffect,
 } from '~stackable/hooks'
 import { ResizableBox, ToggleControl } from '@wordpress/components'
 import { compose } from '@wordpress/compose'
@@ -41,6 +42,7 @@ const Edit = props => {
 	const {
 		isFirstBlock, isLastBlock, isOnlyBlock, adjacentBlock, parentBlock, hasInnerBlocks,
 	} = useBlockContext( props )
+	useBlockColumnEffect( props )
 	useUniqueId( props )
 
 	// console.log( 'adjacentBlock', props.clientId, adjacentBlock.clientId )
@@ -68,7 +70,7 @@ const Edit = props => {
 	// const [ isHovered, hoverDivProps ] = useIsHovered()
 	const [ currentWidth, setCurrentWidth ] = useState( 100 )
 
-	const classNames = classnames( [
+	const blockClassNames = classnames( [
 		'stk-card',
 		'stk-block',
 		'stk-column',
@@ -76,8 +78,14 @@ const Edit = props => {
 	], {
 		'stk-is-first': isFirstBlock,
 		'stk-is-last': isLastBlock,
-		'stk-container': hasContainer,
 		'stk-block-background': hasBackground,
+	} )
+
+	const contentClassNames = classnames( [
+		'stk-block-content',
+		'stk-column-wrapper',
+	], {
+		'stk-container': hasContainer,
 	} )
 
 	return (
@@ -222,13 +230,15 @@ const Edit = props => {
 				// 	isVisible: true,
 				// } }
 			>
-				<div className={ classNames } data-id={ props.attributes.uniqueId }>
-					<InnerBlocks
-						// orientation="horizontal"
-						template={ TEMPLATE }
-						renderAppender={ () => ! hasInnerBlocks ? <InnerBlocks.ButtonBlockAppender /> : <InnerBlocks.DefaultBlockAppender /> }
-						// allowedBlocks={ [ 'stackable/card' ] }
-					/>
+				<div className={ blockClassNames } data-id={ props.attributes.uniqueId }>
+					<div className={ contentClassNames }>
+						<InnerBlocks
+							// orientation="horizontal"
+							template={ TEMPLATE }
+							renderAppender={ () => ! hasInnerBlocks ? <InnerBlocks.ButtonBlockAppender /> : <InnerBlocks.DefaultBlockAppender /> }
+							// allowedBlocks={ [ 'stackable/card' ] }
+						/>
+					</div>
 				</div>
 			</ResizableBox>
 		</Fragment>

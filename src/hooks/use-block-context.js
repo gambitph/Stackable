@@ -1,4 +1,3 @@
-import { useEffect } from '@wordpress/element'
 import { useSelect } from '@wordpress/data'
 import {
 	first, last, indexOf, nth,
@@ -26,16 +25,6 @@ const useBlockContext = props => {
 		},
 		[ props.clientId ]
 	)
-
-	// Quietly update the first block attribute.
-	useEffect( () => {
-		props.attributes.isFirstBlock = blockInfo.isFirstBlock
-	}, [ blockInfo.isFirstBlock ] )
-
-	// Quietly update the last block attribute.
-	useEffect( () => {
-		props.attributes.isLastBlock = blockInfo.isLastBlock
-	}, [ blockInfo.isLastBlock ] )
 
 	return blockInfo
 }
