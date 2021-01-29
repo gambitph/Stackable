@@ -12,6 +12,7 @@
 .stk-row > .stk-block-content > * > .block-editor-block-list__layout > .block-list-appender {
 	position: absolute;
 	left: 100%;
+	top: 0;
 }
 // ...but sometimes it might not become visible in align full or wide
 [data-align="full"] > .stk-row:not(.stk-block-background) > .stk-block-content > * > .block-editor-block-list__layout > .block-list-appender,
@@ -23,13 +24,13 @@
 /**
  * Resizeable rows and columns
  */
-.stk-row .block-editor-block-list__layout {
+.stk-row > .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
 }
 .stk-row .block-editor-block-list__layout > div {
-	flex: 1 1 auto;
+	flex: 1 1 0;
 	box-sizing: border-box;
 }
 [data-type^="stackable/"] .stk-row,

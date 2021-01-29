@@ -4,7 +4,8 @@
 @import "breakpoints";
 
 // Containers
-.stk-column {
+.stk-column,
+.stk-block.stk-column {
 	margin-top: 0;
 	margin-bottom: 0;
 }
@@ -18,7 +19,7 @@
 	flex-wrap: wrap;
 }
 .stk-column {
-	flex: 1 1 0px; // flex-basis 0 means that all columns will be equal.
+	flex: 1 1 0; // flex-basis 0 means that all columns will be equal.
 	box-sizing: border-box;
 }
 

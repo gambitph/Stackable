@@ -73,7 +73,7 @@
 .stk-column-wrapper {
 	margin: cssvar(column-margin);
 }
-.stk-columns-1 > .stk-column-wrapper {
+.stk-is-first.stk-is-last > .stk-column-wrapper { // Remove the margins if it's only 1 block.
 	margin: 0;
 }
 

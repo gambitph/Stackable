@@ -8,7 +8,7 @@ const useBlockContext = props => {
 		select => {
 			const { getBlock, getBlockParents } = select( 'core/block-editor' )
 			const block = getBlock( props.clientId )
-			const parentClientId = first( getBlockParents( props.clientId ) )
+			const parentClientId = last( getBlockParents( props.clientId ) )
 			const parent = parentClientId ? getBlock( parentClientId ) : null
 			const index = indexOf( parent?.innerBlocks, getBlock( props.clientId ) )
 			const isLastBlock = last( parent?.innerBlocks )?.clientId === props.clientId
