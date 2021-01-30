@@ -21,6 +21,10 @@
 .stk-column {
 	flex: 1 1 0; // flex-basis 0 means that all columns will be equal.
 	box-sizing: border-box;
+
+	// Make sure the contents occupy the entire area.
+	display: flex;
+	align-items: stretch;
 }
 
 // Columns can be collapsed for tablet and mobile only.
@@ -38,6 +42,15 @@
 
 // Block inner blocks.
 .stk-block-content {
+	width: 100%;
+	&:not(.stk-row) {
+		// Make sure the inner blocks are top aligned.
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+	}
+
+	// Ensure the contents don't have extra margins.
 	> *:first-child {
 		margin-top: 0;
 	}
