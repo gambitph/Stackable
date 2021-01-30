@@ -3,11 +3,13 @@
  */
 @import "breakpoints";
 
-// Rows
-.stk-row > .stk-block-content > * > .block-editor-block-list__layout > [data-type^="stackable/"] {
+// Blocks
+[data-type^="stackable/"] {
 	margin-top: 0;
 	margin-bottom: 0;
 }
+
+// Rows
 // Float the appender.
 .stk-row > .stk-block-content > * > .block-editor-block-list__layout > .block-list-appender {
 	position: absolute;
