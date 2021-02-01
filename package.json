@@ -18,6 +18,7 @@
 		"bigpicture": "^2.5.3",
 		"classnames": "^2.2.6",
 		"color-rgba": "^2.2.3",
+		"compare-versions": "^3.6.0",
 		"counterup2": "^1.0.4",
 		"deepmerge": "^3.3.0",
 		"is-dark-color": "^1.2.0",
