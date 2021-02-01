@@ -46,6 +46,7 @@ const edit = props => {
 	} )
 
 	const contentClassNames = classnames( [
+		'stk-inner-blocks',
 		'stk-block-content',
 	] )
 

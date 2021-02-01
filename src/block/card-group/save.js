@@ -25,6 +25,7 @@ export default props => {
 	} )
 
 	const contentClassNames = classnames( [
+		'stk-inner-blocks',
 		'stk-row',
 		'stk-block-content',
 	] )

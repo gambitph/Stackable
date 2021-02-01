@@ -7,10 +7,9 @@
 	/**
 	 * Block
 	 */
-	block-margin: (
-		desktop: 0 0 24px,
-		tablet: 0 0 24px,
-		mobile: 0 0 16px,
+	block-margin-bottom: (
+		desktop: 24px,
+		mobile: 16px,
 	),
 
 	/**
@@ -18,6 +17,7 @@
 	 */
 	container-background-color: #fff,
 	container-border-radius: 0px,
+	container-box-shadow: 0 5px 30px -10px rgba(18, 63, 82, 0.3),
 
 	container-padding: (
 		desktop: 48px 32px,
@@ -32,7 +32,7 @@
 	 * Columns
 	 */
 	column-margin: (
-		desktop: 8px 16px,
+		desktop: 16px 16px,
 		mobile: 8px 0px,
 	),
 
@@ -58,15 +58,23 @@
 // Blocks
 .stk-block,
 .entry-content .stk-block {
-	margin: cssvar(block-margin);
+	margin-bottom: cssvar(block-margin-bottom);
 }
 
 // Containers
 .stk-container {
 	background-color: cssvar(container-background-color);
 	border-radius: cssvar(container-border-radius);
+	box-shadow: cssvar(container-box-shadow);
 	padding: cssvar(container-padding);
-	box-shadow: 0 5px 30px -10px rgba(18, 63, 82, 0.3);
+}
+.stk-container--no-padding {
+	background-color: cssvar(container-background-color);
+	border-radius: cssvar(container-border-radius);
+	box-shadow: cssvar(container-box-shadow);
+}
+.stk-container-padding {
+	padding: cssvar(container-padding);
 }
 
 // Columns

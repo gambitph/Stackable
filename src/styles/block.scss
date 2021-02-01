@@ -43,6 +43,15 @@
 // Block inner blocks.
 .stk-block-content {
 	width: 100%;
+	position: relative;
+	&:not(.stk-row) {
+		// Make sure the inner blocks are top aligned.
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+	}
+}
+.stk-inner-blocks {
 	&:not(.stk-row) {
 		// Make sure the inner blocks are top aligned.
 		display: flex;
@@ -57,4 +66,11 @@
 	> *:last-child {
 		margin-bottom: 0;
 	}
+}
+
+// Images
+.stk-image--fit {
+	object-fit: cover;
+	height: 100% !important;
+	width: 100% !important;
 }

@@ -1,1 +1,11 @@
 @import "common";
+
+.stk-card__image {
+	height: 300px;
+	width: 100%;
+	background-size: cover;
+
+	+ .stk-card__content:not(.stk-container-padding) {
+		padding-top: cssvar(block-margin-bottom);
+	}
+}

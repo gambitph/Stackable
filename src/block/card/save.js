@@ -2,32 +2,14 @@
  * WordPress dependencies
  */
 import { InnerBlocks } from '@wordpress/block-editor'
-import { select } from '@wordpress/data'
 import classnames from 'classnames'
-import { first, last } from 'lodash'
-import {
-	useSelect,
-} from '@wordpress/data'
+import { Image } from '~stackable/components'
 
 export default props => {
-	// const {
-	// 	isFirstBlock, isLastBlock,
-	// } = useSelect(
-	// select => {
-	// console.log( 'save', props.clientId )
-	// const { getBlock, getBlockParents } = select( 'core/block-editor' )
-	// const parentClientId = first( getBlockParents( props.clientId ) )
-	// const parent = parentClientId ? getBlock( parentClientId ) : null
-	// const isFirstBlock = first( parent?.innerBlocks )?.clientId === props.clientId
-	// const isLastBlock = last( parent?.innerBlocks )?.clientId === props.clientId
 	const {
 		hasContainer,
 		hasBackground,
 	} = props.attributes
-
-	// },
-	// 	[ props.clientId ]
-	// )
 
 	const blockClassNames = classnames( [
 		'stk-card',
@@ -44,7 +26,14 @@ export default props => {
 		'stk-block-content',
 		'stk-column-wrapper',
 	], {
-		'stk-container': hasContainer,
+		'stk-container--no-padding': hasContainer,
+	} )
+
+	const innerClassNames = classnames( [
+		'stk-inner-blocks',
+		'stk-card__content',
+	], {
+		'stk-container-padding': hasContainer,
 	} )
 
 	return (
@@ -56,7 +45,24 @@ export default props => {
 				}` : null }
 			</style>
 			<div className={ contentClassNames }>
-				<InnerBlocks.Content />
+				{ props.attributes.imageUrl &&
+					<div className="stk-card__image">
+						<Image
+							className="stk-image--fit"
+							imageId={ props.attributes.imageId }
+							src={ props.attributes.imageUrl }
+							alt={ props.attributes.imageAlt }
+							title={ props.attributes.imageTitle }
+							// width={ imageWidth }
+							// shadow={ imageShadow }
+							// shape={ attributes[ `image${ i }Shape` ] || imageShape }
+							// shapeStretch={ attributes[ `image${ i }ShapeStretch` ] || imageShapeStretch }
+						/>
+					</div>
+				}
+				<div className={ innerClassNames }>
+					<InnerBlocks.Content />
+				</div>
 			</div>
 		</div>
 	)

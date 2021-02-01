@@ -2,28 +2,22 @@ import {
 	InnerBlocks,
 } from '@wordpress/block-editor'
 import { Fragment, useState } from '@wordpress/element'
-import {
-	useSelect, select,
-} from '@wordpress/data'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 import {
-	first, last, indexOf, nth,
-} from 'lodash'
-import {
-	BlockContainer,
 	InspectorTabs,
 	InspectorStyleControls,
-	InspectorControls,
 	PanelAdvancedSettings,
 	InspectorSectionControls,
+	ImageUploadPlaceholder,
+	Image,
 } from '~stackable/components'
 import {
 	useUniqueId,
 	useBlockContext,
 	useBlockColumnEffect,
 } from '~stackable/hooks'
-import { ResizableBox, ToggleControl } from '@wordpress/components'
+import { ResizableBox } from '@wordpress/components'
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import {
@@ -31,22 +25,18 @@ import {
 } from '~stackable/higher-order'
 
 const TEMPLATE = [
-	[ 'core/heading', { content: 'Card Title' } ],
-	[ 'core/paragraph', { content: 'Card Text' } ],
+	[ 'core/heading', { content: 'Title for This Block' } ],
+	[ 'core/paragraph', { content: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.' } ],
+	[ 'ugb/button', { buttonText: 'Button' } ],
 ]
 
 const Edit = props => {
-	// const {
-	// 	isFirstBlock, isLastBlock, adjacentBlock,
-	// } = useBlockInfo( props )
 	const {
-		isFirstBlock, isLastBlock, isOnlyBlock, adjacentBlock, parentBlock, hasInnerBlocks,
+		isFirstBlock, isLastBlock, isOnlyBlock, parentBlock, hasInnerBlocks,
 	} = useBlockContext( props )
 	useBlockColumnEffect( props )
 	useUniqueId( props )
 
-	// console.log( 'adjacentBlock', props.clientId, adjacentBlock.clientId )
-	// console.log( 'isfirst block', props.clientId, adjacentBlock.clientId )
 	const {
 		hasContainer,
 		hasBackground,
@@ -56,18 +46,8 @@ const Edit = props => {
 		toggleSelection, isSelected, setAttributes, isHovered,
 	} = props
 
-	// const ref = useRef()
-	// const { hasSelectedInnerBlock } = select( 'core/block-editor' )
-	// const isAncestorOfSelectedBlock = hasSelectedInnerBlock(
-	// 	props.clientId,
-	// 	true
-	// )
-	// console.log( ref )//?.current && ref.current.matches( ':hover' ) )
-
 	const [ resizeableHovered, setResizeableHovered ] = useState( false )
-	// console.log( 'showMovers', nodeRef?.current && nodeRef.current.matches( ':hover' ) )
 
-	// const [ isHovered, hoverDivProps ] = useIsHovered()
 	const [ currentWidth, setCurrentWidth ] = useState( 100 )
 
 	const blockClassNames = classnames( [
@@ -85,7 +65,14 @@ const Edit = props => {
 		'stk-block-content',
 		'stk-column-wrapper',
 	], {
-		'stk-container': hasContainer,
+		'stk-container--no-padding': hasContainer,
+	} )
+
+	const innerClassNames = classnames( [
+		'stk-inner-blocks',
+		'stk-card__content',
+	], {
+		'stk-container-padding': hasContainer,
 	} )
 
 	return (
@@ -232,12 +219,52 @@ const Edit = props => {
 			>
 				<div className={ blockClassNames } data-id={ props.attributes.uniqueId }>
 					<div className={ contentClassNames }>
-						<InnerBlocks
-							// orientation="horizontal"
-							template={ TEMPLATE }
-							renderAppender={ () => ! hasInnerBlocks ? <InnerBlocks.ButtonBlockAppender /> : <InnerBlocks.DefaultBlockAppender /> }
-							// allowedBlocks={ [ 'stackable/card' ] }
+						{ /* { props.attributes.imageUrl && */ }
+						<ImageUploadPlaceholder
+							imageID={ props.attributes.imageId }
+							imageURL={ props.attributes.imageUrl }
+							// imageSize={ imageSize }
+							// className={ imageClasses }
+							className="stk-card__image"
+							onRemove={ () => {
+								setAttributes( {
+									imageUrl: '',
+									imageId: '',
+									imageAlt: '',
+									imageTitle: '',
+								} )
+							} }
+							onChange={ image => {
+								setAttributes( {
+									imageUrl: image.url,
+									imageId: image.id,
+									imageAlt: image.alt,
+									imageTitle: image.title,
+								} )
+							} }
+							render={
+								<Image
+									imageId={ props.attributes.imageId }
+									src={ props.attributes.imageUrl }
+									className="stk-image--fit"
+									// size={ imageSize }
+									// shape={ attributes[ `image${ i }Shape` ] || imageShape }
+									// shapeStretch={ attributes[ `image${ i }ShapeStretch` ] || imageShapeStretch }
+									// alt={ imageAlt }
+									// shadow={ imageShadow }
+									// width={ imageWidth }
+								/>
+							}
 						/>
+						{ /* } */ }
+						<div className={ innerClassNames }>
+							<InnerBlocks
+								// orientation="horizontal"
+								template={ TEMPLATE }
+								renderAppender={ () => ! hasInnerBlocks ? <InnerBlocks.ButtonBlockAppender /> : <InnerBlocks.DefaultBlockAppender /> }
+								// allowedBlocks={ [ 'stackable/card' ] }
+							/>
+						</div>
 					</div>
 				</div>
 			</ResizableBox>

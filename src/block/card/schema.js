@@ -1,3 +1,7 @@
+import {
+	createImageBackgroundAttributes,
+} from '~stackable/util'
+
 export default {
 	uniqueId: {
 		type: 'string',
@@ -30,4 +34,5 @@ export default {
 		type: 'boolean',
 		default: false,
 	},
+	...createImageBackgroundAttributes( 'image%s' ),
 }
