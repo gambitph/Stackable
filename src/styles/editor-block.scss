@@ -4,9 +4,12 @@
 @import "breakpoints";
 
 // Blocks
-[data-type^="stackable/"] {
+[data-type^="stackable/"],
+[data-type^="stackable/"].wp-block { // .wp-block to ensure our styles are followed.
 	margin-top: 0;
 	margin-bottom: 0;
+	z-index: 1;
+	max-width: none;
 }
 
 // Rows
@@ -15,10 +18,12 @@
 	position: absolute;
 	left: 100%;
 	top: 0;
+	z-index: 2;
 }
-// ...but sometimes it might not become visible in align full or wide
+// ...but sometimes it might not become visible in align full, wide or float right
 [data-align="full"] > .stk-row:not(.stk-block-background) > .stk-block-content > * > .block-editor-block-list__layout > .block-list-appender,
-[data-align="wide"] > .stk-row > .stk-block-content > * > .block-editor-block-list__layout > .block-list-appender {
+[data-align="wide"] > .stk-row > .stk-block-content > * > .block-editor-block-list__layout > .block-list-appender,
+[data-align="right"] > .stk-row > .stk-block-content > * > .block-editor-block-list__layout > .block-list-appender {
 	left: auto;
 	right: 0;
 }
@@ -80,4 +85,27 @@
 	> [data-type]:last-of-type {
 		margin-bottom: 0;
 	}
+}
+
+// Block float alignment.
+[data-type^="stackable/"] {
+	&[data-align="left"] {
+		float: left;
+	}
+	&[data-align="right"] {
+		float: right;
+	}
+	&[data-align="left"],
+	&[data-align="right"] {
+		width: auto;
+		> .wp-block[data-align] {
+			height: auto;
+		}
+		// Default width for inner blocks.
+		.block-editor-block-list__layout:first-of-type > [data-type^="stackable/"] {
+			max-width: 350px;
+			width: auto;
+		}
+	}
+
 }

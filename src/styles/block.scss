@@ -74,3 +74,12 @@
 	height: 100% !important;
 	width: 100% !important;
 }
+
+// Block float alignment.
+.stk-block.alignleft,
+.stk-block.alignright {
+	.stk-inner-blocks:first-of-type > .stk-block {
+		max-width: 350px; // Give a default width for a floated block.
+		width: auto;
+	}
+}

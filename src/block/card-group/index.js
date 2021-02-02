@@ -39,7 +39,7 @@ export const settings = {
 	supports: {
 		// inserter: false,
 		anchor: true,
-		align: [ 'center', 'wide', 'full' ],
+		align: true,
 	},
 
 	variations,
