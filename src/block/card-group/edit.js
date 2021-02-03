@@ -15,7 +15,6 @@ import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import {
 	useUniqueId,
-	useBlockContext,
 } from '~stackable/hooks'
 
 const edit = props => {
@@ -27,14 +26,6 @@ const edit = props => {
 	} = props.attributes
 
 	useUniqueId( props )
-
-	console.log( 'props.attributes.columnWidths', props.attributes.columnWidths )
-	const columns = ( props.attributes.columnWidths || [] ).map( ( width, i ) => {
-		return `[data-block="${ props.clientId }"] .block-editor-block-list__layout > [data-type^="stackable/"]:nth-child(${ i + 1 }) {
-			flex: 1 1 ${ width }% !important;
-			max-width: ${ width }% !important;
-		}`
-	} )
 
 	const blockClassNames = classnames( [
 		'stk-card-group',
@@ -72,7 +63,6 @@ const edit = props => {
 		</InspectorSectionControls>
 
 		<div className={ blockClassNames } data-id={ props.attributes.uniqueId }>
-			{ columns.length ? <style>{ columns.join( '' ) }</style> : null }
 			<div className={ contentClassNames }>
 				<InnerBlocks
 					orientation="horizontal"

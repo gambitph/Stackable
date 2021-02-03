@@ -9,7 +9,6 @@
 	margin-top: 0;
 	margin-bottom: 0;
 	z-index: 1;
-	max-width: none;
 }
 
 // Rows
@@ -55,6 +54,8 @@
 }
 .stk-column-resizeable {
 	height: 100% !important;
+	width: 100% !important;
+	max-width: none !important; // Don't force the max-width, we'll rely on the JS part.
 	display: flex;
 }
 

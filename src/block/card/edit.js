@@ -1,7 +1,9 @@
 import {
 	InnerBlocks,
 } from '@wordpress/block-editor'
-import { Fragment, useState } from '@wordpress/element'
+import {
+	Fragment, useState, useEffect,
+} from '@wordpress/element'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 import {
@@ -19,7 +21,7 @@ import {
 } from '~stackable/hooks'
 import { ResizableBox } from '@wordpress/components'
 import { compose } from '@wordpress/compose'
-import { __ } from '@wordpress/i18n'
+import { setLocaleData, __ } from '@wordpress/i18n'
 import {
 	withIsHovered,
 } from '~stackable/higher-order'
@@ -27,15 +29,27 @@ import {
 const TEMPLATE = [
 	[ 'core/heading', { content: 'Title for This Block' } ],
 	[ 'core/paragraph', { content: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.' } ],
-	[ 'ugb/button', { buttonText: 'Button' } ],
+	[ 'core/button', { content: 'Button' } ],
 ]
 
 const Edit = props => {
 	const {
-		isFirstBlock, isLastBlock, isOnlyBlock, parentBlock, hasInnerBlocks,
+		isFirstBlock, isLastBlock, isOnlyBlock, parentBlock, hasInnerBlocks, adjacentBlocks, blockIndex,
 	} = useBlockContext( props )
 	useBlockColumnEffect( props )
 	useUniqueId( props )
+
+	const [ prevAdjacentBlocks, setPrevAdjacentBlocks ] = useState( adjacentBlocks.length )
+	useEffect( () => {
+		if ( prevAdjacentBlocks !== adjacentBlocks.length ) {
+			// Reset the column widths in desktop if a column was added / removed.
+			const clientIds = adjacentBlocks.map( props => props.clientId )
+			const { updateBlockAttributes } = wp.data.dispatch( 'core/block-editor' )
+			updateBlockAttributes( clientIds, { columnWidth: '' } )
+
+			setPrevAdjacentBlocks( adjacentBlocks.length )
+		}
+	}, [ adjacentBlocks ] )
 
 	const {
 		hasContainer,
@@ -46,9 +60,11 @@ const Edit = props => {
 		toggleSelection, isSelected, setAttributes, isHovered,
 	} = props
 
-	const [ resizeableHovered, setResizeableHovered ] = useState( false )
-
-	const [ currentWidth, setCurrentWidth ] = useState( 100 )
+	const [ currentWidths, setCurrentWidths ] = useState( [] )
+	const [ newWidths, setNewWidths ] = useState( [] )
+	const [ maxWidth, setMaxWidth ] = useState( 2000 )
+	const [ tempStyles, setTempStyles ] = useState( '' )
+	const MIN_COLUMN_WIDTH = 150
 
 	const blockClassNames = classnames( [
 		'stk-card',
@@ -114,8 +130,8 @@ const Edit = props => {
 
 			<style>
 				{ props.attributes.columnWidth ? `[data-block="${ props.clientId }"] {
-					flex: 1 1 ${ props.attributes.columnWidth }% !important;
-					max-width: ${ props.attributes.columnWidth }% !important;
+					flex: 1 1 ${ props.attributes.columnWidth }%;
+					max-width: ${ props.attributes.columnWidth }%;
 				}` : null }
 			</style>
 			<ResizableBox
@@ -129,94 +145,81 @@ const Edit = props => {
 					bottomLeft: false,
 					topLeft: false,
 				} }
+				minWidth={ MIN_COLUMN_WIDTH }
+				minHeight="100"
+				maxWidth={ maxWidth }
 				className="stk-column-resizeable"
-				showHandle={ isSelected || isHovered }
-				// showHandle={ false }
-				// showHandle={ ref?.current && ref.current.matches( ':hover' ) }
+				showHandle={ isHovered }
 				onResizeStart={ ( _event, _direction, elt ) => {
 					toggleSelection( false )
-					setCurrentWidth( elt.clientWidth )
-					// wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( adjacentBlock.clientId, {
-					// 	columnWidth: '',
-					// } )
+
+					// Get the current pixel width of the columns.
+					const columnWidths = adjacentBlocks.map( ( { clientId } ) => {
+						return document.querySelector(`[data-block="${ clientId }"]` )?.clientWidth
+					} )
+					setCurrentWidths( columnWidths )
+
+					// We will keep the new widths here.
+					setNewWidths( [] )
+
+					// Set the maximum width for the current column.
+					const adjacentBlockIndex = _direction === 'right' ? blockIndex + 1 : blockIndex - 1
+					const maxWidth = columnWidths[ blockIndex ] + ( columnWidths[ adjacentBlockIndex ] - MIN_COLUMN_WIDTH )
+					setMaxWidth( maxWidth )
 				} }
 				onResize={ ( _event, _direction, elt, delta ) => {
-					const parent = elt.closest( '.block-editor-block-list__layout' )
-					// const columnWidth = parseFloat( ( elt.clientWidth / parent.clientWidth * 100 ).toFixed( 1 ) )
-					// let columnWidth = parent.attributes.columnWidths?[0]
-					// if ( ! columnWidth )
-					const columnWidth = parseFloat( ( ( currentWidth + delta.width ) / parent.clientWidth * 100 ).toFixed( 1 ) )
-					// console.log( ( elt.clientWidth / parent.clientWidth * 100 ).toFixed( 1 ), delta )
-					// console.log( currentWidth + delta.width, currentWidth, delta.width )
-					// parentBlock
-					// setAttributes( { columnWidth } )
-					const columnWidths = [ columnWidth, 100 - columnWidth ]
-					console.log( 'columnWidths', columnWidths, parentBlock )
+					// Clear the currently selected block.
+					if ( wp.data.select('core/block-editor').hasSelectedBlock() ) {
+						wp.data.dispatch('core/block-editor').clearSelectedBlock()
+					}
 
-					const columnStyles = ( columnWidths || [] ).map( ( width, i ) => {
-						return `[data-block="${ parentBlock.clientId }"] .block-editor-block-list__layout > [data-type^="stackable/"]:nth-child(${ i + 1 }) {
+					// Compute for the new widths.
+					const columnWidths = [ ...currentWidths ]
+					const totalWidth = currentWidths.reduce( ( a, b ) => a + b, 0 )
+					const adjacentBlockIndex = _direction === 'right' ? blockIndex + 1 : blockIndex - 1
+					columnWidths[ adjacentBlockIndex ] -= delta.width
+					columnWidths[ blockIndex ] += delta.width
+
+					// Fix the widths, ensure that our total width is 100%
+					const columnPercentages = ( columnWidths || [] ).map( ( width, i ) => {
+						return parseFloat( ( width / totalWidth * 100 ).toFixed( 1 ) )
+					} )
+					const totalCurrentWidth = columnPercentages.reduce( ( a, b ) => a + b, 0 )
+					if ( totalCurrentWidth !== 100 ) {
+						columnPercentages[ adjacentBlockIndex ] = parseFloat( ( columnPercentages[ adjacentBlockIndex ] + 100 - totalCurrentWidth ).toFixed( 1 ) )
+					}
+
+					setNewWidths( columnPercentages )
+
+					// Add the temporary styles for our column widths.
+					const columnStyles = columnPercentages.map( ( width, i ) => {
+						return `[data-block="${ adjacentBlocks[ i ].clientId }"] {
 							flex: 1 1 ${ width }% !important;
 							max-width: ${ width }% !important;
 						}`
 					} ).join( '' )
-
-					let parentStyleEl = document.querySelector( `style#stk-style-${ parentBlock.clientId }` )
-					if ( ! parentStyleEl ) {
-						parentStyleEl = document.createElement( 'style' )
-						parentStyleEl.setAttribute( 'id', `stk-style-${ parentBlock.clientId }` )
-						document.body.appendChild( parentStyleEl )
-					}
-					parentStyleEl.innerHTML = columnStyles
-
-					// parentBlock.attributes.columnWidths = columnWidths
-					// wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( parentBlock.clientId, { columnWidths } )
-
-					// wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( props.clientId, { columnWidth } )
-					// wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( adjacentBlock.clientId, {
-					// 	columnWidth: 100 - columnWidth,
-					// } )
-
-					// onResize( elt.clientHeight );
+					setTempStyles( columnStyles )
 				} }
 				onResizeStop={ ( _event, _direction, elt, delta ) => {
-					const parent = elt.closest( '.block-editor-block-list__layout' )
-					// const columnWidth = parseFloat( ( elt.clientWidth / parent.clientWidth * 100 ).toFixed( 1 ) )
-					const columnWidth = parseFloat( ( ( currentWidth + delta.width ) / parent.clientWidth * 100 ).toFixed( 1 ) )
-					const columnWidths = [ columnWidth, 100 - columnWidth ]
-					wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( parentBlock.clientId, { columnWidths } )
+					if ( ! newWidths.length ) {
+						return
+					}
 
-					setTimeout( () => {
-						const parentStyleEl = document.querySelector( `style#stk-style-${ parentBlock.clientId }` )
-						if ( parentStyleEl ) {
-							document.body.removeChild( parentStyleEl )
-						}
-					}, 100 )
-					// console.log( ( elt.clientWidth / parent.clientWidth * 100 ).toFixed( 1 ), delta )
-					// console.log( currentWidth + delta.width, currentWidth, delta.width )
-					// setAttributes( { columnWidth } )
-					// // wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( props.clientId, { columnWidth } )
-					// wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( adjacentBlock.clientId, {
-					// 	columnWidth: 100 - columnWidth,
-					// } )
+					// Update the block widths.
+					const updatePromises = newWidths.map( ( width, i ) => {
+						return wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( adjacentBlocks[ i ].clientId, { columnWidth: width } )
+					} )
 
-					// onResize( elt.clientHeight );
+					// Wait until all attribute updates have been applied.
+					Promise.all( updatePromises ).then( () => {
+						setTimeout( () => {
+							setTempStyles( '' )
+						}, 350 )
+
+					} )
 				} }
-				// onMouseOver={ () => {
-				// 	console.log( 'onMouseEnter', onMouseEnter )
-				// 	setResizeableHovered( true )
-				// } }
-				// onMouseOut={ () => {
-				// 	console.log( 'onMouseLeave', onMouseLeave )
-				// 	setResizeableHovered( false )
-				// } }
-				// __experimentalShowTooltip={ true }
-				// __experimentalTooltipProps={ {
-				// 	axis: 'x',
-				// 	position: 'left',
-				// 	// isVisible: isResizing,
-				// 	isVisible: true,
-				// } }
 			>
+				{ tempStyles && <style>{ tempStyles }</style> }
 				<div className={ blockClassNames } data-id={ props.attributes.uniqueId }>
 					<div className={ contentClassNames }>
 						{ /* { props.attributes.imageUrl && */ }
