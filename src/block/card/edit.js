@@ -19,12 +19,13 @@ import {
 	useBlockContext,
 	useBlockColumnEffect,
 } from '~stackable/hooks'
-import { ResizableBox } from '@wordpress/components'
 import { compose } from '@wordpress/compose'
 import { setLocaleData, __ } from '@wordpress/i18n'
 import {
 	withIsHovered,
 } from '~stackable/higher-order'
+import ResizableColumn from './resizable-column'
+import { dispatch, select } from '@wordpress/data'
 
 const TEMPLATE = [
 	[ 'core/heading', { content: 'Title for This Block' } ],
@@ -34,22 +35,14 @@ const TEMPLATE = [
 
 const Edit = props => {
 	const {
-		isFirstBlock, isLastBlock, isOnlyBlock, parentBlock, hasInnerBlocks, adjacentBlocks, blockIndex,
+		isFirstBlock, isLastBlock, hasInnerBlocks, adjacentBlocks,
 	} = useBlockContext( props )
 	useBlockColumnEffect( props )
 	useUniqueId( props )
 
-	const [ prevAdjacentBlocks, setPrevAdjacentBlocks ] = useState( adjacentBlocks.length )
-	useEffect( () => {
-		if ( prevAdjacentBlocks !== adjacentBlocks.length ) {
-			// Reset the column widths in desktop if a column was added / removed.
-			const clientIds = adjacentBlocks.map( props => props.clientId )
-			const { updateBlockAttributes } = wp.data.dispatch( 'core/block-editor' )
-			updateBlockAttributes( clientIds, { columnWidth: '' } )
-
-			setPrevAdjacentBlocks( adjacentBlocks.length )
-		}
-	}, [ adjacentBlocks ] )
+	const {
+		updateBlockAttributes,
+	} = dispatch( 'core/block-editor' )
 
 	const {
 		hasContainer,
@@ -57,14 +50,8 @@ const Edit = props => {
 	} = props.attributes
 
 	const {
-		toggleSelection, isSelected, setAttributes, isHovered,
+		setAttributes, isHovered,
 	} = props
-
-	const [ currentWidths, setCurrentWidths ] = useState( [] )
-	const [ newWidths, setNewWidths ] = useState( [] )
-	const [ maxWidth, setMaxWidth ] = useState( 2000 )
-	const [ tempStyles, setTempStyles ] = useState( '' )
-	const MIN_COLUMN_WIDTH = 150
 
 	const blockClassNames = classnames( [
 		'stk-card',
@@ -134,92 +121,20 @@ const Edit = props => {
 					max-width: ${ props.attributes.columnWidth }%;
 				}` : null }
 			</style>
-			<ResizableBox
-				enable={ {
-					top: false,
-					right: ! isOnlyBlock && ! isLastBlock,
-					bottom: false,
-					left: ! isOnlyBlock && ! isFirstBlock,
-					topRight: false,
-					bottomRight: false,
-					bottomLeft: false,
-					topLeft: false,
-				} }
-				minWidth={ MIN_COLUMN_WIDTH }
-				minHeight="100"
-				maxWidth={ maxWidth }
-				className="stk-column-resizeable"
+			<ResizableColumn
 				showHandle={ isHovered }
-				onResizeStart={ ( _event, _direction, elt ) => {
-					toggleSelection( false )
-
-					// Get the current pixel width of the columns.
-					const columnWidths = adjacentBlocks.map( ( { clientId } ) => {
-						return document.querySelector(`[data-block="${ clientId }"]` )?.clientWidth
+				blockProps={ props }
+				onChangeDesktop={ widths => {
+					widths.forEach( ( width, i ) => {
+						updateBlockAttributes( adjacentBlocks[ i ].clientId, { columnWidth: width } )
 					} )
-					setCurrentWidths( columnWidths )
-
-					// We will keep the new widths here.
-					setNewWidths( [] )
-
-					// Set the maximum width for the current column.
-					const adjacentBlockIndex = _direction === 'right' ? blockIndex + 1 : blockIndex - 1
-					const maxWidth = columnWidths[ blockIndex ] + ( columnWidths[ adjacentBlockIndex ] - MIN_COLUMN_WIDTH )
-					setMaxWidth( maxWidth )
 				} }
-				onResize={ ( _event, _direction, elt, delta ) => {
-					// Clear the currently selected block.
-					if ( wp.data.select('core/block-editor').hasSelectedBlock() ) {
-						wp.data.dispatch('core/block-editor').clearSelectedBlock()
-					}
-
-					// Compute for the new widths.
-					const columnWidths = [ ...currentWidths ]
-					const totalWidth = currentWidths.reduce( ( a, b ) => a + b, 0 )
-					const adjacentBlockIndex = _direction === 'right' ? blockIndex + 1 : blockIndex - 1
-					columnWidths[ adjacentBlockIndex ] -= delta.width
-					columnWidths[ blockIndex ] += delta.width
-
-					// Fix the widths, ensure that our total width is 100%
-					const columnPercentages = ( columnWidths || [] ).map( ( width, i ) => {
-						return parseFloat( ( width / totalWidth * 100 ).toFixed( 1 ) )
-					} )
-					const totalCurrentWidth = columnPercentages.reduce( ( a, b ) => a + b, 0 )
-					if ( totalCurrentWidth !== 100 ) {
-						columnPercentages[ adjacentBlockIndex ] = parseFloat( ( columnPercentages[ adjacentBlockIndex ] + 100 - totalCurrentWidth ).toFixed( 1 ) )
-					}
-
-					setNewWidths( columnPercentages )
-
-					// Add the temporary styles for our column widths.
-					const columnStyles = columnPercentages.map( ( width, i ) => {
-						return `[data-block="${ adjacentBlocks[ i ].clientId }"] {
-							flex: 1 1 ${ width }% !important;
-							max-width: ${ width }% !important;
-						}`
-					} ).join( '' )
-					setTempStyles( columnStyles )
-				} }
-				onResizeStop={ ( _event, _direction, elt, delta ) => {
-					if ( ! newWidths.length ) {
-						return
-					}
-
-					// Update the block widths.
-					const updatePromises = newWidths.map( ( width, i ) => {
-						return wp.data.dispatch( 'core/block-editor' ).updateBlockAttributes( adjacentBlocks[ i ].clientId, { columnWidth: width } )
-					} )
-
-					// Wait until all attribute updates have been applied.
-					Promise.all( updatePromises ).then( () => {
-						setTimeout( () => {
-							setTempStyles( '' )
-						}, 350 )
-
+				onResetDesktop={ () => {
+					adjacentBlocks.forEach( ( { clientId } ) => {
+						updateBlockAttributes( clientId, { columnWidth: '' } )
 					} )
 				} }
 			>
-				{ tempStyles && <style>{ tempStyles }</style> }
 				<div className={ blockClassNames } data-id={ props.attributes.uniqueId }>
 					<div className={ contentClassNames }>
 						{ /* { props.attributes.imageUrl && */ }
@@ -259,7 +174,6 @@ const Edit = props => {
 								/>
 							}
 						/>
-						{ /* } */ }
 						<div className={ innerClassNames }>
 							<InnerBlocks
 								// orientation="horizontal"
@@ -270,7 +184,7 @@ const Edit = props => {
 						</div>
 					</div>
 				</div>
-			</ResizableBox>
+			</ResizableColumn>
 		</Fragment>
 	)
 }
