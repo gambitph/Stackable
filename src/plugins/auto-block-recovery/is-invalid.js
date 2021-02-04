@@ -381,7 +381,7 @@ export const findFirstDiffPos = ( a, b ) => {
  */
 export const getTagTree = html => {
 	const tags = ( html.match( /<\/?[\w\d]+/g ) || [] ).map( tag => tag.replace( '<', '' ) )
-	return ( tags || [] ).reduce( ( stack, tag ) => {
+	return tags.reduce( ( stack, tag ) => {
 		if ( tag.indexOf( '/' ) === 0 ) {
 			stack.pop()
 		} else {
