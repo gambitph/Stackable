@@ -17,11 +17,11 @@
 	 */
 	container-background-color: #fff,
 	container-border-radius: 0px,
-	container-box-shadow: 0 5px 30px -10px rgba(18, 63, 82, 0.3),
+	container-box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.04),
 
 	container-padding: (
-		desktop: 48px 32px,
-		mobile: 32px 24px,
+		desktop: 32px 32px,
+		mobile: 24px 24px,
 	),
 	container-padding-large: (
 		desktop: 64px 80px,
@@ -32,7 +32,7 @@
 	 * Columns
 	 */
 	column-margin: (
-		desktop: 16px 16px,
+		desktop: 12px 12px,
 		mobile: 8px 0px,
 	),
 
@@ -41,13 +41,13 @@
 	 */
 	block-background-color: #f1f1f1,
 	block-background-padding: (
-		desktop: 48px 32px,
-		mobile: 32px 24px,
+		desktop: 24px 24px,
+		mobile: 16px 16px,
 	),
 	block-background-full-padding: (
-		desktop: 48px 120px,
-		tablet: 32px 48px,
-		mobile: 24px 24px,
+		desktop: 24px 104px,
+		tablet: 24px 32px,
+		mobile: 16px 16px,
 	),
 ) );
 
