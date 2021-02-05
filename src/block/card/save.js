@@ -39,9 +39,23 @@ export default props => {
 	return (
 		<div className={ blockClassNames } data-id={ props.attributes.uniqueId }>
 			<style>
-				{ props.attributes.columnWidth ? `.stk-${ props.attributes.uniqueId } {
-					flex: 1 1 ${ props.attributes.columnWidth }% !important;
-					max-width: ${ props.attributes.columnWidth }% !important;
+				{ props.attributes.columnWidth ? `@media screen and (min-width: 769px) {
+					.stk-${ props.attributes.uniqueId } {
+						flex: 1 1 ${ props.attributes.columnWidth }%;
+						max-width: ${ props.attributes.columnWidth }%;
+					}
+				}` : null }
+				{ props.attributes.columnWidthTablet ? `@media screen and (max-width: 1024px) and (min-width: 769px) {
+					.stk-${ props.attributes.uniqueId } {
+						flex: 1 1 ${ props.attributes.columnWidthTablet }%;
+						max-width: ${ props.attributes.columnWidthTablet }%;
+					}
+				}` : null }
+				{ props.attributes.columnWidthMobile ? `@media screen and (max-width: 768px) {
+					.stk-${ props.attributes.uniqueId } {
+						flex: 1 1 ${ props.attributes.columnWidthMobile }%;
+						max-width: ${ props.attributes.columnWidthMobile }%;
+					}
 				}` : null }
 			</style>
 			<div className={ contentClassNames }>

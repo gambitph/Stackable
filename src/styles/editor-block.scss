@@ -38,6 +38,8 @@
 .stk-row .block-editor-block-list__layout > div {
 	flex: 1 1 0;
 	box-sizing: border-box;
+	margin-left: 0;
+	margin-right: 0;
 }
 [data-type^="stackable/"] .stk-row,
 .stk-column .block-editor-block-list__layout {
@@ -69,6 +71,7 @@
 @include mobile {
 	.stk-row .block-editor-block-list__layout > div {
 		flex: 1 1 100%;
+		max-width: 100%;
 	}
 }
 

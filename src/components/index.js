@@ -35,6 +35,7 @@ export { default as DesignLibraryList } from './design-library-list'
 export { default as PanelTabs } from './panel-tabs'
 export { default as BlockStyles } from './block-styles'
 export { default as GlobalStyleControl } from './global-style-control'
+export { default as ResizableColumn } from './resizable-column'
 export {
 	default as InspectorTabs,
 	PreInspectorTabFill,

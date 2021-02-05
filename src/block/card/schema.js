@@ -26,6 +26,14 @@ export default {
 		type: 'number',
 		default: '',
 	},
+	columnWidthTablet: {
+		type: 'number',
+		default: '',
+	},
+	columnWidthMobile: {
+		type: 'number',
+		default: '',
+	},
 	hasContainer: {
 		type: 'boolean',
 		default: true,

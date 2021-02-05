@@ -13,6 +13,7 @@ import {
 	InspectorSectionControls,
 	ImageUploadPlaceholder,
 	Image,
+	ResizableColumn,
 } from '~stackable/components'
 import {
 	useUniqueId,
@@ -24,7 +25,6 @@ import { setLocaleData, __ } from '@wordpress/i18n'
 import {
 	withIsHovered,
 } from '~stackable/higher-order'
-import ResizableColumn from './resizable-column'
 import { dispatch, select } from '@wordpress/data'
 
 const TEMPLATE = [
@@ -50,10 +50,11 @@ const Edit = props => {
 	} = props.attributes
 
 	const {
-		setAttributes, isHovered,
+		className, setAttributes, isHovered,
 	} = props
 
 	const blockClassNames = classnames( [
+		className,
 		'stk-card',
 		'stk-block',
 		'stk-column',
@@ -116,9 +117,19 @@ const Edit = props => {
 			</InspectorStyleControls>
 
 			<style>
-				{ props.attributes.columnWidth ? `[data-block="${ props.clientId }"] {
-					flex: 1 1 ${ props.attributes.columnWidth }%;
-					max-width: ${ props.attributes.columnWidth }%;
+				{ /* TODO: Move this to style generation */ }
+				{ props.attributes.columnWidth ? `.stk-preview-device-desktop .block-editor-block-list__layout [data-block="${ props.clientId }"],
+				.stk-preview-device-tablet .block-editor-block-list__layout [data-block="${ props.clientId }"] {
+						flex: 1 1 ${ props.attributes.columnWidth }%;
+						max-width: ${ props.attributes.columnWidth }%;
+				}` : null }
+				{ props.attributes.columnWidthTablet ? `.stk-preview-device-tablet .block-editor-block-list__layout [data-block="${ props.clientId }"] {
+						flex: 1 1 ${ props.attributes.columnWidthTablet }%;
+						max-width: ${ props.attributes.columnWidthTablet }%;
+				}` : null }
+				{ props.attributes.columnWidthMobile ? `.stk-preview-device-mobile .block-editor-block-list__layout [data-block="${ props.clientId }"] {
+						flex: 1 1 ${ props.attributes.columnWidthMobile }%;
+						max-width: ${ props.attributes.columnWidthMobile }%;
 				}` : null }
 			</style>
 			<ResizableColumn
@@ -128,6 +139,12 @@ const Edit = props => {
 					widths.forEach( ( width, i ) => {
 						updateBlockAttributes( adjacentBlocks[ i ].clientId, { columnWidth: width } )
 					} )
+				} }
+				onChangeTablet={ width => {
+					setAttributes( { columnWidthTablet: width } )
+				} }
+				onChangeMobile={ width => {
+					setAttributes( { columnWidthMobile: width } )
 				} }
 				onResetDesktop={ () => {
 					adjacentBlocks.forEach( ( { clientId } ) => {

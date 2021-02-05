@@ -1,12 +1,9 @@
 import {
 	InnerBlocks,
 } from '@wordpress/block-editor'
-import { Fragment, useState } from '@wordpress/element'
+import { Fragment } from '@wordpress/element'
 import {
-	BlockContainer,
 	InspectorTabs,
-	InspectorStyleControls,
-	InspectorControls,
 	PanelAdvancedSettings,
 	InspectorSectionControls,
 } from '~stackable/components'
@@ -17,8 +14,9 @@ import {
 	useUniqueId,
 } from '~stackable/hooks'
 
-const edit = props => {
+const Edit = props => {
 	const {
+		className,
 		setAttributes,
 	} = props
 	const {
@@ -28,6 +26,7 @@ const edit = props => {
 	useUniqueId( props )
 
 	const blockClassNames = classnames( [
+		className,
 		'stk-card-group',
 		'stk-block',
 		'stk-row',
@@ -73,4 +72,4 @@ const edit = props => {
 	</Fragment>
 }
 
-export default edit
+export default Edit
