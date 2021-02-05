@@ -1,3 +1,4 @@
+import createStyles from './style'
 import {
 	InnerBlocks,
 } from '@wordpress/block-editor'
@@ -14,6 +15,7 @@ import {
 	ImageUploadPlaceholder,
 	Image,
 	ResizableColumn,
+	Style,
 } from '~stackable/components'
 import {
 	useUniqueId,
@@ -23,7 +25,7 @@ import {
 import { compose } from '@wordpress/compose'
 import { setLocaleData, __ } from '@wordpress/i18n'
 import {
-	withIsHovered,
+	withIsHovered, withStyles,
 } from '~stackable/higher-order'
 import { dispatch, select } from '@wordpress/data'
 
@@ -115,23 +117,12 @@ const Edit = props => {
 				>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
-
-			<style>
-				{ /* TODO: Move this to style generation */ }
-				{ props.attributes.columnWidth ? `.stk-preview-device-desktop .block-editor-block-list__layout [data-block="${ props.clientId }"],
-				.stk-preview-device-tablet .block-editor-block-list__layout [data-block="${ props.clientId }"] {
-						flex: 1 1 ${ props.attributes.columnWidth }%;
-						max-width: ${ props.attributes.columnWidth }%;
-				}` : null }
-				{ props.attributes.columnWidthTablet ? `.stk-preview-device-tablet .block-editor-block-list__layout [data-block="${ props.clientId }"] {
-						flex: 1 1 ${ props.attributes.columnWidthTablet }%;
-						max-width: ${ props.attributes.columnWidthTablet }%;
-				}` : null }
-				{ props.attributes.columnWidthMobile ? `.stk-preview-device-mobile .block-editor-block-list__layout [data-block="${ props.clientId }"] {
-						flex: 1 1 ${ props.attributes.columnWidthMobile }%;
-						max-width: ${ props.attributes.columnWidthMobile }%;
-				}` : null }
-			</style>
+			<Style
+				blockUniqueClassName={ `stk-${ props.attributes.uniqueId }` }
+				blockMainClassName={ 'stk-card' }
+				style={ props.blockStyles }
+				editorMode={ true }
+			/>
 			<ResizableColumn
 				showHandle={ isHovered }
 				blockProps={ props }
@@ -208,4 +199,5 @@ const Edit = props => {
 
 export default compose(
 	withIsHovered,
+	withStyles( createStyles( '3.0.0' ) )
 )( Edit )

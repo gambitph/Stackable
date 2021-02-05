@@ -1,11 +1,22 @@
 /**
+ * Internal dependencies
+ */
+import createStyles from './style'
+
+/**
+ * External dependencies
+ */
+import classnames from 'classnames'
+import { Style, Image } from '~stackable/components'
+
+/**
  * WordPress dependencies
  */
 import { InnerBlocks } from '@wordpress/block-editor'
-import classnames from 'classnames'
-import { Image } from '~stackable/components'
+import { compose } from '@wordpress/compose'
+import { withStyles } from '~stackable/higher-order'
 
-export default props => {
+const Save = props => {
 	const {
 		hasContainer,
 		hasBackground,
@@ -38,26 +49,11 @@ export default props => {
 
 	return (
 		<div className={ blockClassNames } data-id={ props.attributes.uniqueId }>
-			<style>
-				{ props.attributes.columnWidth ? `@media screen and (min-width: 769px) {
-					.stk-${ props.attributes.uniqueId } {
-						flex: 1 1 ${ props.attributes.columnWidth }%;
-						max-width: ${ props.attributes.columnWidth }%;
-					}
-				}` : null }
-				{ props.attributes.columnWidthTablet ? `@media screen and (max-width: 1024px) and (min-width: 769px) {
-					.stk-${ props.attributes.uniqueId } {
-						flex: 1 1 ${ props.attributes.columnWidthTablet }%;
-						max-width: ${ props.attributes.columnWidthTablet }%;
-					}
-				}` : null }
-				{ props.attributes.columnWidthMobile ? `@media screen and (max-width: 768px) {
-					.stk-${ props.attributes.uniqueId } {
-						flex: 1 1 ${ props.attributes.columnWidthMobile }%;
-						max-width: ${ props.attributes.columnWidthMobile }%;
-					}
-				}` : null }
-			</style>
+			<Style
+				blockUniqueClassName={ `stk-${ props.attributes.uniqueId }` }
+				blockMainClassName={ 'stk-card' }
+				style={ props.blockStyles }
+			/>
 			<div className={ contentClassNames }>
 				{ props.attributes.imageUrl &&
 					<div className="stk-card__image">
@@ -81,3 +77,10 @@ export default props => {
 		</div>
 	)
 }
+
+// Export no styles, deprecations can use this to add their own style versions.
+export const SaveNoStyles = Save
+
+export default compose(
+	withStyles( createStyles( '3.0.0' ) )
+)( Save )

@@ -21,7 +21,7 @@ import { useState, useEffect } from '@wordpress/element'
 import { withSelect } from '@wordpress/data'
 
 const MIN_COLUMN_WIDTHS = {
-	Desktop: 200,
+	Desktop: 100,
 	Tablet: 50,
 	Mobile: 50,
 }

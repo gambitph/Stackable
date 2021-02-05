@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { TypographyControl } from '~stackable/components'
-import { generateStyles } from '~stackable/components/block-styles'
+import { generateStyles } from '~stackable/components/style'
 import {
 	createTypographyStyles, loadGoogleFont,
 } from '~stackable/util'

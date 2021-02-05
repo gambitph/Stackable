@@ -72,9 +72,9 @@ export const marginRightAlign = align => {
 }
 
 export const leftRightToFlex = align => {
-	return align === 'left' ? 'flex-start' :
-		align === 'right' ? 'flex-end' :
-			align
+	return align === 'left' ? 'flex-start'
+		: align === 'right' ? 'flex-end'
+			: align
 }
 
 /**

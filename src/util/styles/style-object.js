@@ -7,7 +7,7 @@ import deepmerge from 'deepmerge'
 /**
  * Style object, this manages the generation of styles.
  */
-class BlockStyles {
+class StyleObject {
 	constructor( styles = [] ) {
 	  this.styles = styles
 	}
@@ -43,4 +43,4 @@ class BlockStyles {
 	}
 }
 
-export default BlockStyles
+export default StyleObject

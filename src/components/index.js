@@ -34,6 +34,7 @@ export { default as DesignLibraryControl } from './design-library-control'
 export { default as DesignLibraryList } from './design-library-list'
 export { default as PanelTabs } from './panel-tabs'
 export { default as BlockStyles } from './block-styles'
+export { default as Style } from './style'
 export { default as GlobalStyleControl } from './global-style-control'
 export { default as ResizableColumn } from './resizable-column'
 export {

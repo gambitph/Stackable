@@ -8,7 +8,7 @@
 import {
 	createTypographyStyles, loadGoogleFont,
 } from '~stackable/util'
-import { generateStyles } from '~stackable/components/block-styles'
+import { generateStyles } from '~stackable/components/style'
 import deepmerge from 'deepmerge'
 import { head } from 'lodash'
 
