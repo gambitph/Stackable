@@ -8,15 +8,14 @@ import createStyles from './style'
  */
 import classnames from 'classnames'
 import { Style, Image } from '~stackable/components'
+import { version as VERSION } from 'stackable'
 
 /**
  * WordPress dependencies
  */
 import { InnerBlocks } from '@wordpress/block-editor'
-import { compose } from '@wordpress/compose'
-import { withStyles } from '~stackable/higher-order'
 
-const Save = props => {
+export const Save = ( version = VERSION ) => props => {
 	const {
 		hasContainer,
 		hasBackground,
@@ -49,10 +48,11 @@ const Save = props => {
 
 	return (
 		<div className={ blockClassNames } data-id={ props.attributes.uniqueId }>
-			<Style
+			<Style.Content
 				blockUniqueClassName={ `stk-${ props.attributes.uniqueId }` }
 				blockMainClassName={ 'stk-card' }
-				style={ props.blockStyles }
+				styleFunc={ createStyles( version ) }
+				blockProps={ props }
 			/>
 			<div className={ contentClassNames }>
 				{ props.attributes.imageUrl &&
@@ -78,9 +78,4 @@ const Save = props => {
 	)
 }
 
-// Export no styles, deprecations can use this to add their own style versions.
-export const SaveNoStyles = Save
-
-export default compose(
-	withStyles( createStyles( '3.0.0' ) )
-)( Save )
+export default Save()

@@ -3,10 +3,10 @@ import {
 	InnerBlocks,
 } from '@wordpress/block-editor'
 import {
-	Fragment, useState, useEffect,
+	Fragment,
 } from '@wordpress/element'
 import classnames from 'classnames'
-import { i18n } from 'stackable'
+import { i18n, version as VERSION } from 'stackable'
 import {
 	InspectorTabs,
 	InspectorStyleControls,
@@ -23,11 +23,11 @@ import {
 	useBlockColumnEffect,
 } from '~stackable/hooks'
 import { compose } from '@wordpress/compose'
-import { setLocaleData, __ } from '@wordpress/i18n'
+import { __ } from '@wordpress/i18n'
 import {
-	withIsHovered, withStyles,
+	withIsHovered,
 } from '~stackable/higher-order'
-import { dispatch, select } from '@wordpress/data'
+import { dispatch } from '@wordpress/data'
 
 const TEMPLATE = [
 	[ 'core/heading', { content: 'Title for This Block' } ],
@@ -120,7 +120,8 @@ const Edit = props => {
 			<Style
 				blockUniqueClassName={ `stk-${ props.attributes.uniqueId }` }
 				blockMainClassName={ 'stk-card' }
-				style={ props.blockStyles }
+				styleFunc={ createStyles( VERSION ) }
+				blockProps={ props }
 				editorMode={ true }
 			/>
 			<ResizableColumn
@@ -199,5 +200,4 @@ const Edit = props => {
 
 export default compose(
 	withIsHovered,
-	withStyles( createStyles( '3.0.0' ) )
 )( Edit )

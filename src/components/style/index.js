@@ -5,6 +5,7 @@ import { minifyCSS, prependCSSClass } from '~stackable/util'
 import {
 	kebabCase, omit, isEqual, sortBy,
 } from 'lodash'
+import { useMemo } from '@wordpress/element'
 
 /**
  * Returns an identical styleObject with all the selectors modified to be wrapped
@@ -262,14 +263,42 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 
 const Style = props => {
 	const {
-		style = {},
+		// style = {},
 		editorMode = false,
 		blockUniqueClassName = '',
 		blockMainClassName = '',
 		breakTablet = 1024,
 		breakMobile = 768,
+		styleFunc = () => {},
+		blockProps = {},
 	} = props
-	const styles = generateStyles( style, blockMainClassName, blockUniqueClassName, breakTablet, breakMobile, editorMode )
+
+	// Generate styles, but optimize.
+	const styles = useMemo( () => {
+		const style = styleFunc( blockProps )
+		return generateStyles( style, blockMainClassName, blockUniqueClassName, breakTablet, breakMobile, editorMode )
+	}, [ JSON.stringify( blockProps.attributes ) + blockProps.clientId ] )
+
+	// It's way faster in React if you do smaller `<style>` tags instead of just a single one. Do it when in editor mode.
+	if ( editorMode ) {
+		return styles ? styles.map( ( styles, i ) => <style key={ i }>{ styles }</style> ) : null
+	}
+	return styles && styles.length ? <style>{ minifyCSS( styles.join( '' ) ) }</style> : null
+}
+
+Style.Content = props => {
+	const {
+		// style = {},
+		editorMode = false,
+		blockUniqueClassName = '',
+		blockMainClassName = '',
+		breakTablet = 1024,
+		breakMobile = 768,
+		styleFunc = () => {},
+		blockProps = {},
+	} = props
+
+	const styles = generateStyles( styleFunc( blockProps ), blockMainClassName, blockUniqueClassName, breakTablet, breakMobile, editorMode )
 
 	// It's way faster in React if you do smaller `<style>` tags instead of just a single one. Do it when in editor mode.
 	if ( editorMode ) {
