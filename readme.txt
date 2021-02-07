@@ -193,6 +193,14 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.14.0 =
+* New: You can now copy and paste block styles! (premium)
+* New: Added block previews
+* Fixed: Accordion text content can be a bit blurry
+* Fixed: Don't enqueue blank Google Fonts in Global Settings
+* Fixed: Expand block text color doesn't apply in backend
+* Fixed: Icon block, title alignment in tablet and mobile did not apply
+
 = 2.13.4 =
 * Fixed: Issue with styling duplicated blocks
 * Fixed: Accordion block migration error
