@@ -58,7 +58,7 @@ export const settings = {
 			horizontalContentAlign: false,
 			verticalContentAlign: false,
 			modifyStyles: false,
-			overwritePaddingUnits: [ 'px', 'em' ],
+			paddingUnits: [ 'px', 'em' ],
 		},
 		'custom-css': {
 			default: applyFilters( 'stackable.separator.custom-css.default', '' ),

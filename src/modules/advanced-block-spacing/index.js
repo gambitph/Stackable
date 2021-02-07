@@ -306,7 +306,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					<WhenResponsiveScreen screen="desktop">
 						<FourRangeControl
 							label={ __( 'Block Margins', i18n ) }
-							units={ options.overwriteMarginUnits || [ 'px', '%' ] }
+							units={ options.marginUnits }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
 							defaultLocked={ false }
 							top={ marginTop }
@@ -337,7 +337,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					<WhenResponsiveScreen screen="tablet">
 						<FourRangeControl
 							label={ __( 'Block Margins', i18n ) }
-							units={ options.overwriteMarginUnits || [ 'px', '%' ] }
+							units={ options.marginUnits }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
 							defaultLocked={ false }
 							top={ tabletMarginTop }
@@ -366,7 +366,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					<WhenResponsiveScreen screen="mobile">
 						<FourRangeControl
 							label={ __( 'Block Margins', i18n ) }
-							units={ options.overwriteMarginUnits || [ 'px', '%' ] }
+							units={ options.marginUnits }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
 							defaultLocked={ false }
 							top={ mobileMarginTop }
@@ -397,7 +397,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					<WhenResponsiveScreen screen="desktop">
 						<FourRangeControl
 							label={ __( 'Block Paddings', i18n ) }
-							units={ options.overwritePaddingUnits || [ 'px', 'em', '%' ] }
+							units={ options.paddingUnits }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
 							defaultLocked={ false }
 							top={ paddingTop }
@@ -427,7 +427,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					<WhenResponsiveScreen screen="tablet">
 						<FourRangeControl
 							label={ __( 'Block Paddings', i18n ) }
-							units={ options.overwritePaddingUnits || [ 'px', 'em', '%' ] }
+							units={ options.paddingUnits }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
 							defaultLocked={ false }
 							top={ tabletPaddingTop }
@@ -456,7 +456,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 					<WhenResponsiveScreen screen="mobile">
 						<FourRangeControl
 							label={ __( 'Block Paddings', i18n ) }
-							units={ options.overwritePaddingUnits || [ 'px', 'em', '%' ] }
+							units={ options.paddingUnits }
 							screens={ [ 'desktop', 'tablet', 'mobile' ] }
 							defaultLocked={ false }
 							top={ mobilePaddingTop }
@@ -735,8 +735,8 @@ const advancedBlockSpacing = ( blockName, options = {} ) => {
 		enablePaddingRight: true,
 		enablePaddingBottom: true,
 		enablePaddingLeft: true,
-		overwritePaddingUnits: false,
-		overwriteMarginUnits: false,
+		paddingUnits: [ 'px', 'em', '%' ],
+		marginUnits: [ 'px', '%' ],
 		...options,
 	}
 
