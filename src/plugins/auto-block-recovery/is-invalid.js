@@ -19,8 +19,8 @@ export const isInvalid = ( block, allowedTags = ALLOWED_ERROR_TAGS ) => {
 		return false
 	}
 
-	// Only do this for blocks with .ugb-main-block
-	if ( ! originalContent.match( /ugb-main-block/ ) ) {
+	// Only do this for blocks with .ugb-main-block and not separator block.
+	if ( ! name.match( /separator/ ) && ! originalContent.match( /ugb-main-block/ ) ) {
 		return false
 	}
 
