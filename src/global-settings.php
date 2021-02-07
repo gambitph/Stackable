@@ -446,7 +446,7 @@ add_action( 'wp_enqueue_scripts', array( $this, 'color_add_global_styles' ) );
 
 				// Gather the Google Fonts.
 				if ( array_key_exists( 'fontFamily', $styles ) ) {
-					if ( Stackable_Google_Fonts::is_web_font( $styles['fontFamily'] ) ) {
+					if ( Stackable_Google_Fonts::is_web_font( $styles['fontFamily'] ) && ! empty( $styles['fontFamily'] ) ) {
 						if ( ! in_array( $styles['fontFamily'], $google_fonts ) ) {
 							$google_fonts[] = $styles['fontFamily'];
 						}
@@ -462,7 +462,9 @@ add_action( 'wp_enqueue_scripts', array( $this, 'color_add_global_styles' ) );
 			}
 
 			// Load the Google Font.
-			Stackable_Google_Fonts::enqueue_google_fonts( $google_fonts, 'stackable-global-typography-google-fonts' );
+			if ( ! empty( $google_fonts ) ) {
+				Stackable_Google_Fonts::enqueue_google_fonts( $google_fonts, 'stackable-global-typography-google-fonts' );
+			}
 
 			if ( count( $css ) ) {
 				$this->generated_typography_css = true;
