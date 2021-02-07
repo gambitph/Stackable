@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import useDeviceEditorClasses from './use-device-editor-classes'
+import getSnapWidths from './get-snap-widths'
 
 /**
  * External dependencies
@@ -43,6 +44,7 @@ const ResizableColumn = props => {
 	const [ newWidthsPercent, setNewWidthsPercent ] = useState( [] )
 	const [ maxWidth, setMaxWidth ] = useState( 2000 )
 	const [ tempStyles, setTempStyles ] = useState( '' )
+	const [ snapWidths, setSnapWidths ] = useState( null )
 
 	const isDesktop = props.previewDeviceType === 'Desktop'
 	const isTablet = props.previewDeviceType === 'Tablet'
@@ -58,6 +60,16 @@ const ResizableColumn = props => {
 			setPrevAdjacentBlocks( adjacentBlocks.length )
 		}
 	}, [ adjacentBlocks ] )
+
+	// We have a timeout below, this ensures that our timeout only runs while
+	// this Component is mounted.
+	const [ isMounted, setIsMounted ] = useState( false )
+	useEffect( () => {
+		setIsMounted( true )
+		return () => {
+			setIsMounted( false )
+		}
+	}, [] )
 
 	const className = classnames( [
 		'stk-column-resizeable',
@@ -81,6 +93,8 @@ const ResizableColumn = props => {
 			maxWidth={ maxWidth }
 			className={ className }
 			showHandle={ props.showHandle }
+			snap={ snapWidths }
+			snapGap={ 15 }
 			onResizeStart={ ( _event, _direction ) => {
 				toggleSelection( false )
 
@@ -145,6 +159,12 @@ const ResizableColumn = props => {
 					} ).join( '' )
 					setTempStyles( columnStyles )
 
+					// Set snap widths. We need to do this here not on
+					// ResizeStart or it won't be used at first drag.
+					if ( ! snapWidths ) {
+						setSnapWidths( { x: getSnapWidths( columnWidths, blockIndex, totalWidth, _direction ) } )
+					}
+
 				// In tablet and mobile, when the column is resized, it's
 				// adjusted alone, it can span the whole width for responsive
 				// control.
@@ -160,6 +180,12 @@ const ResizableColumn = props => {
 							max-width: ${ columnPercentages }% !important;
 						}`
 					setTempStyles( columnStyles )
+
+					// Set snap widths. We need to do this here not on
+					// ResizeStart or it won't be used at first drag.
+					if ( ! snapWidths ) {
+						setSnapWidths( { x: getSnapWidths( [ 100 ], 0, maxWidth, _direction ) } )
+					}
 				}
 			} }
 			onResizeStop={ ( _event, _direction, elt, delta ) => {
@@ -177,9 +203,13 @@ const ResizableColumn = props => {
 				// Wait until all attribute updates have been applied.
 				if ( tempStyles ) {
 					setTimeout( () => {
-						setTempStyles( '' )
+						if ( isMounted ) {
+							setTempStyles( '' )
+						}
 					}, 400 )
 				}
+
+				setSnapWidths( null )
 			} }
 		>
 			{ tempStyles && <style>{ tempStyles }</style> }
