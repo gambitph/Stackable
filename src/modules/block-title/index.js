@@ -473,7 +473,7 @@ const addTitleSaveOutput = ( output, design, props ) => {
 	)
 }
 
-const addStyles = ( styleObject, props ) => {
+const addStyles = ( options = {} ) => ( styleObject, props ) => {
 	const getValue = __getValue( props.attributes )
 
 	const {
@@ -495,7 +495,7 @@ const addStyles = ( styleObject, props ) => {
 				...createTypographyStyles( 'BlockTitle%s', 'desktop', props.attributes ),
 				color: whiteIfDark( blockTitleColor, showBlockBackground && blockBackgroundBackgroundColor ),
 				textAlign: getValue( 'blockTitleAlign' ),
-				marginBottom: appendImportant( getValue( 'blockTitleBottomMargin', '%spx' ) ),
+				marginBottom: appendImportant( getValue( 'blockTitleBottomMargin', '%spx' ), options.marginBottomImportant ),
 				maxWidth: appendImportant( getValue( 'blockTitleWidth', '%s' + getValue( 'blockTitleWidthUnit', '%s', 'px' ) ) ),
 				marginLeft: hasTitleHorizontalAlign ? appendImportant( marginLeftAlign( getValue( 'blockTitleHorizontalAlign' ) ) ) : undefined,
 				marginRight: hasTitleHorizontalAlign ? appendImportant( marginRightAlign( getValue( 'blockTitleHorizontalAlign' ) ) ) : undefined,
@@ -504,7 +504,7 @@ const addStyles = ( styleObject, props ) => {
 				'.ugb-block-title': {
 					...createTypographyStyles( 'BlockTitle%s', 'tablet', props.attributes ),
 					textAlign: getValue( 'blockTitleTabletAlign' ),
-					marginBottom: appendImportant( getValue( 'blockTitleTabletBottomMargin', '%spx' ) ),
+					marginBottom: appendImportant( getValue( 'blockTitleTabletBottomMargin', '%spx' ), options.marginBottomImportant ),
 					maxWidth: appendImportant( getValue( 'blockTitleTabletWidth', '%s' + getValue( 'blockTitleTabletWidthUnit', '%s', 'px' ) ) ),
 				},
 			},
@@ -512,7 +512,7 @@ const addStyles = ( styleObject, props ) => {
 				'.ugb-block-title': {
 					...createTypographyStyles( 'BlockTitle%s', 'mobile', props.attributes ),
 					textAlign: getValue( 'blockTitleMobileAlign' ),
-					marginBottom: appendImportant( getValue( 'blockTitleMobileBottomMargin', '%spx' ) ),
+					marginBottom: appendImportant( getValue( 'blockTitleMobileBottomMargin', '%spx' ), options.marginBottomImportant ),
 					maxWidth: appendImportant( getValue( 'blockTitleMobileWidth', '%s' + getValue( 'blockTitleMobileWidthUnit', '%s', 'px' ) ) ),
 				},
 			},
@@ -575,14 +575,19 @@ const centerBlockTitle = attributeNamesToReset => {
 	]
 }
 
-const blockTitle = blockName => {
+const blockTitle = ( blockName, options = {} ) => {
+	const optionsToPass = {
+		marginBottomImportant: false,
+		...options,
+	}
+
 	removeFilter( 'stackable.panel-spacing-body.edit.before', 'stackable/block-title' )
 	addFilter( `stackable.${ blockName }.edit.inspector.style.block`, `stackable/${ blockName }/block-title`, addInspectorPanel, 17 )
 	addFilter( `stackable.${ blockName }.attributes`, `stackable/${ blockName }/block-title`, addAttributes )
 	addFilter( 'stackable.panel-spacing-body.edit.before', 'stackable/block-title', addTitleSpacing )
 	addFilter( `stackable.${ blockName }.edit.output.before`, `stackable/${ blockName }/block-title`, addTitleEditOutput )
 	addFilter( `stackable.${ blockName }.save.output.before`, `stackable/${ blockName }/block-title`, addTitleSaveOutput )
-	addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/block-title`, addStyles )
+	addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/block-title`, addStyles( optionsToPass ) )
 	addFilter( 'stackable.with-content-align-reseter.attributeNamesToReset', `stackable/${ blockName }/block-title`, centerBlockTitle )
 	addFilter( `stackable.${ blockName }.design.filtered-block-attributes`, `stackable/${ blockName }/block-title`, removeAttributesFromDesignAttributeExport )
 	doAction( `stackable.module.block-title`, blockName )
