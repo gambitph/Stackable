@@ -18,8 +18,11 @@ import classnames from 'classnames'
  */
 import { compose } from '@wordpress/compose'
 import { ResizableBox } from '@wordpress/components'
-import { useState, useEffect } from '@wordpress/element'
+import {
+	useState, useEffect,
+} from '@wordpress/element'
 import { withSelect } from '@wordpress/data'
+import useWithShift from './use-with-shift'
 
 const MIN_COLUMN_WIDTHS = {
 	Desktop: 100,
@@ -70,6 +73,11 @@ const ResizableColumn = props => {
 			setIsMounted( false )
 		}
 	}, [] )
+
+	const isShiftKey = useWithShift()
+	useEffect( () => {
+		setSnapWidths( null )
+	}, [ isShiftKey ] )
 
 	const className = classnames( [
 		'stk-column-resizeable',
@@ -162,7 +170,7 @@ const ResizableColumn = props => {
 					// Set snap widths. We need to do this here not on
 					// ResizeStart or it won't be used at first drag.
 					if ( ! snapWidths ) {
-						setSnapWidths( { x: getSnapWidths( columnWidths, blockIndex, totalWidth, _direction ) } )
+						setSnapWidths( { x: getSnapWidths( columnWidths, blockIndex, totalWidth, _direction, isShiftKey ) } )
 					}
 
 				// In tablet and mobile, when the column is resized, it's
@@ -184,7 +192,7 @@ const ResizableColumn = props => {
 					// Set snap widths. We need to do this here not on
 					// ResizeStart or it won't be used at first drag.
 					if ( ! snapWidths ) {
-						setSnapWidths( { x: getSnapWidths( [ 100 ], 0, maxWidth, _direction ) } )
+						setSnapWidths( { x: getSnapWidths( [ 100 ], 0, maxWidth, _direction, isShiftKey ) } )
 					}
 				}
 			} }
