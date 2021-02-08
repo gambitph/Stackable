@@ -194,12 +194,15 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 2.14.0 =
-* New: You can now copy and paste block styles! (premium)
-* New: Added block previews
+* New: You can now copy and paste Stackable and native block styles! (premium)
+* Fixed: Feature Grid block container image is always set to cover
+* Fixed: Removed inapplicable margin/padding unit in separators
 * Fixed: Accordion text content can be a bit blurry
 * Fixed: Don't enqueue blank Google Fonts in Global Settings
 * Fixed: Expand block text color doesn't apply in backend
 * Fixed: Icon block, title alignment in tablet and mobile did not apply
+* Fixed: Auto block recovery should not affect v1 blocks
+* Fixed: Margins of the Icon block title won't apply
 
 = 2.13.4 =
 * Fixed: Issue with styling duplicated blocks
