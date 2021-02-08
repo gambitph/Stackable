@@ -10,7 +10,7 @@ import getSnapWidths from './get-snap-widths'
 import {
 	useBlockContext,
 } from '~stackable/hooks'
-import { clamp } from 'lodash'
+import { clamp, isEqual } from 'lodash'
 import classnames from 'classnames'
 
 /**
@@ -149,11 +149,11 @@ const ResizableColumn = props => {
 
 					// Fix the widths, ensure that our total width is 100%
 					columnPercentages = ( columnWidths || [] ).map( width => {
-						return parseFloat( ( width / totalWidth * 100 ).toFixed( 1 ) )
+						return parseFloat( ( width / totalWidth * 100 ).toFixed( 2 ) )
 					} )
 					const totalCurrentWidth = columnPercentages.reduce( ( a, b ) => a + b, 0 )
 					if ( totalCurrentWidth !== 100 ) {
-						columnPercentages[ adjacentBlockIndex ] = parseFloat( ( columnPercentages[ adjacentBlockIndex ] + 100 - totalCurrentWidth ).toFixed( 1 ) )
+						columnPercentages[ adjacentBlockIndex ] = parseFloat( ( columnPercentages[ adjacentBlockIndex ] + 100 - totalCurrentWidth ).toFixed( 2 ) )
 					}
 
 					setNewWidthsPercent( columnPercentages )
@@ -178,7 +178,7 @@ const ResizableColumn = props => {
 				// control.
 				} else {
 					const newWidth = currentWidths + delta.width
-					columnPercentages = clamp( parseFloat( ( newWidth / maxWidth * 100 ).toFixed( 1 ) ), 0, 100 )
+					columnPercentages = clamp( parseFloat( ( newWidth / maxWidth * 100 ).toFixed( 2 ) ), 0, 100 )
 
 					setNewWidthsPercent( columnPercentages )
 
@@ -200,7 +200,13 @@ const ResizableColumn = props => {
 				// Update the block widths.
 				if ( delta.width ) {
 					if ( isDesktop ) {
-						props.onChangeDesktop( newWidthsPercent )
+						// For even 3-columns, floats have a tendency of being
+						// unequal, e.g. 33.35 or 33.43, assume to be equal.
+						if ( isEqual( newWidthsPercent.map( n => n | 0 ), [ 33, 33, 33 ] ) ) { // eslint-disable-line no-bitwise
+							props.onChangeDesktop( [ 33.33, 33.33, 33.33 ] )
+						} else {
+							props.onChangeDesktop( newWidthsPercent )
+						}
 					} else if ( isTablet ) {
 						props.onChangeTablet( newWidthsPercent )
 					} else {
