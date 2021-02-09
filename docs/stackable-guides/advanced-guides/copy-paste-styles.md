@@ -4,7 +4,7 @@
 This feature is only available in Stackable Premium
 {% endhint %}
 
-The Copy Paste Styles is a feature that will allow you to copy the styles of one block, and paste it to another so you don't have to manually duplicate it anymore. Pretty-self explanatory right? Yes, it's a simple concept, but a very useful one that is!
+The Copy Paste Styles is a feature that will allow you to copy the styles of one block and paste it to another so you don't have to manually duplicate it anymore. Pretty self-explanatory right? Yes, it's a simple concept, but a very useful one that is!
 
 The good thing about this new feature is that it supports multi-selection, meaning you can copy multiple block styles. You can also copy paste styles in different posts and pages!
 
