@@ -2,7 +2,7 @@ export default {
 	attributes: {
 		playButtonType: 'normal',
 		previewBackgroundColor: '#000000',
-		previewBackgroundMediaUrl: 'http://sandbox.gambit.ph/bea/wp-content/uploads/sites/59/2020/09/mike-swigunski-tYGZvg-Ozh4-unsplash.jpg',
+		previewBackgroundMediaUrl: 'https://source.unsplash.com/random',
 		previewBackgroundCustomSizeUnit: '%',
 		previewTabletBackgroundCustomSizeUnit: '%',
 		previewMobileBackgroundCustomSizeUnit: '%',

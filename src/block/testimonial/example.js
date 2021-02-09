@@ -14,7 +14,7 @@ export default {
 		imageShape: 'circle',
 		imageSize: 'large',
 		image1Id: 607,
-		image1Url: 'http://sandbox.gambit.ph/bea/wp-content/uploads/sites/59/2020/12/christiana-rivers-O_XIvDy0pcs-unsplash-1024x684.jpg',
+		image1Url: 'https://source.unsplash.com/random',
 		image1Alt: 'Name',
 		image1ShapeFlipX: false,
 		image1ShapeFlipY: false,

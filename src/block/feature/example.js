@@ -5,7 +5,7 @@ export default {
 		columnBackgroundCustomSizeUnit: '%',
 		columnTabletBackgroundCustomSizeUnit: '%',
 		columnMobileBackgroundCustomSizeUnit: '%',
-		imageUrl: 'http://sandbox.gambit.ph/bea/wp-content/uploads/sites/59/2020/09/you-x-ventures-Kt-E_Qq8DW4-unsplash-683x1024.jpg',
+		imageUrl: 'https://source.unsplash.com/random',
 		imageSize: 'large',
 		imageId: 429,
 		imageWidth: 580,

@@ -40,7 +40,7 @@ export default {
 		blockInnerWidth: 'wide',
 		align: 'full',
 		blockBackgroundBackgroundColor: '#000000',
-		blockBackgroundBackgroundMediaUrl: 'http://sandbox.gambit.ph/bea/wp-content/uploads/sites/59/2020/08/maarten-deckers-T5nXYXCf50I-unsplash.jpg',
+		blockBackgroundBackgroundMediaUrl: 'https://source.unsplash.com/random',
 		blockBackgroundBackgroundTintStrength: 3,
 		blockBackgroundBackgroundCustomSizeUnit: '%',
 		blockBackgroundTabletBackgroundCustomSizeUnit: '%',

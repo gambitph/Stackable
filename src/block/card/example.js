@@ -11,7 +11,7 @@ export default {
 		imageBackgroundTabletWidthUnit: '%',
 		imageBackgroundMobileWidthUnit: '%',
 		image1Id: 475,
-		image1Url: 'http://sandbox.gambit.ph/bea/wp-content/uploads/sites/59/2020/09/inside-weather-dbH_vy7vICE-unsplash-1024x1024.jpg',
+		image1Url: 'https://source.unsplash.com/random',
 		title1: 'Title for This Block',
 		showTitle: true,
 		titleLineHeightUnit: 'em',
