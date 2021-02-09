@@ -14,7 +14,7 @@ You can install Stackable into your WordPress site in a few ways.
 
 ![](../../.gitbook/assets/stackable-install-tutorial-2-search-03-1%20%281%29.jpg)
 
-![](../../.gitbook/assets/stackable-install-tutorial-3-activate-02-1%20%281%29.jpg)
+![](../../.gitbook/assets/stackable-install-tutorial-3-activate-02-1%20%281%29%20%281%29.jpg)
 
 ## **2. Through the Stackable Website**
 
