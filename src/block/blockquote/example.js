@@ -1,6 +1,6 @@
 export default {
 	attributes: {
-		design: 'centered-quote',
+		design: 'basic',
 		containerBackgroundCustomSizeUnit: '%',
 		containerTabletBackgroundCustomSizeUnit: '%',
 		containerMobileBackgroundCustomSizeUnit: '%',

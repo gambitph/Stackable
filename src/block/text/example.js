@@ -1,11 +1,12 @@
 export default {
 	attributes: {
-		design: 'plain',
+		design: 'side-title-1',
 		columns: 1,
 		reverseTitle: false,
 		alignment: 'center',
 		showColumnRule: false,
-		showTitle: false,
+		showTitle: true,
+		title: 'Block Title',
 		titleLineHeightUnit: 'em',
 		titleTabletLineHeightUnit: 'em',
 		titleMobileLineHeightUnit: 'em',
@@ -18,7 +19,7 @@ export default {
 		textLineHeightUnit: 'em',
 		textTabletLineHeightUnit: 'em',
 		textMobileLineHeightUnit: 'em',
-		uniqueClass: 'ugb-df490cc',
+		uniqueClass: 'ugb-286b500',
 		hideDesktop: false,
 		hideTablet: false,
 		hideMobile: false,
