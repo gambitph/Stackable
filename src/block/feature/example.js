@@ -5,7 +5,7 @@ export default {
 		columnBackgroundCustomSizeUnit: '%',
 		columnTabletBackgroundCustomSizeUnit: '%',
 		columnMobileBackgroundCustomSizeUnit: '%',
-		imageUrl: 'https://source.unsplash.com/random',
+		imageUrl: 'https://source.unsplash.com/400x300/?architecture',
 		imageSize: 'large',
 		imageId: 429,
 		imageWidth: 580,

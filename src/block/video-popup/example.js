@@ -2,7 +2,7 @@ export default {
 	attributes: {
 		playButtonType: 'normal',
 		previewBackgroundColor: '#000000',
-		previewBackgroundMediaUrl: 'https://source.unsplash.com/random',
+		previewBackgroundMediaUrl: 'https://source.unsplash.com/800x500/?sea,coast,water',
 		previewBackgroundCustomSizeUnit: '%',
 		previewTabletBackgroundCustomSizeUnit: '%',
 		previewMobileBackgroundCustomSizeUnit: '%',

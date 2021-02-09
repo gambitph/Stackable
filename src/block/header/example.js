@@ -40,7 +40,7 @@ export default {
 		blockInnerWidth: 'wide',
 		align: 'full',
 		blockBackgroundBackgroundColor: '#000000',
-		blockBackgroundBackgroundMediaUrl: 'https://source.unsplash.com/random',
+		blockBackgroundBackgroundMediaUrl: 'https://source.unsplash.com/800x500/?nature,plant,trees',
 		blockBackgroundBackgroundTintStrength: 3,
 		blockBackgroundBackgroundCustomSizeUnit: '%',
 		blockBackgroundTabletBackgroundCustomSizeUnit: '%',

@@ -11,7 +11,7 @@ export default {
 		imageBackgroundTabletWidthUnit: '%',
 		imageBackgroundMobileWidthUnit: '%',
 		image1Id: 475,
-		image1Url: 'https://source.unsplash.com/random',
+		image1Url: 'https://source.unsplash.com/400x300/?abstract',
 		title1: 'Title for This Block',
 		showTitle: true,
 		titleLineHeightUnit: 'em',

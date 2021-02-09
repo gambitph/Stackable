@@ -10,7 +10,7 @@ export default {
 		imageShape: 'circle',
 		imageSize: 'thumbnail',
 		image1Id: 606,
-		image1Url: 'https://source.unsplash.com/random',
+		image1Url: 'https://source.unsplash.com/300x300/?face',
 		image1Alt: 'Name',
 		image1ShapeFlipX: false,
 		image1ShapeFlipY: false,

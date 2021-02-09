@@ -14,7 +14,7 @@ export default {
 		imageShape: 'circle',
 		imageSize: 'large',
 		image1Id: 607,
-		image1Url: 'https://source.unsplash.com/random',
+		image1Url: 'https://source.unsplash.com/300x300/?selfie',
 		image1Alt: 'Name',
 		image1ShapeFlipX: false,
 		image1ShapeFlipY: false,
