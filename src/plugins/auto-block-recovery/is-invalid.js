@@ -1,23 +1,26 @@
 // Checks whether the block is invalid because of a styling issue.
-import { Tokenizer } from 'simple-html-tokenizer'
 import {
 	getSaveContent,
 } from '@wordpress/blocks'
 import {
-	DecodeEntityParser, getNextNonWhitespaceToken, isClosedByToken, isEqualTokensOfType,
-} from '@wordpress/blocks/build/api/validation'
-import { isEqual, difference } from 'lodash'
+	isEqual, difference, filter,
+} from 'lodash'
 
 // We will auto-recover if there are errors encountered in these tags.
 const ALLOWED_ERROR_TAGS = [ 'style', 'svg' ]
 
 export const isInvalid = ( block, allowedTags = ALLOWED_ERROR_TAGS ) => {
 	const {
-		name, isValid, validationIssues,
+		name, isValid, validationIssues, originalContent,
 	} = block
 
 	// Only do this for Stackable blocks.
 	if ( ! name || ! name.match( /^ugb\// ) ) {
+		return false
+	}
+
+	// Only do this for blocks with .ugb-main-block and not separator block.
+	if ( ! name.match( /separator/ ) && ! originalContent.match( /ugb-main-block/ ) ) {
 		return false
 	}
 
@@ -64,6 +67,11 @@ export const isInvalid = ( block, allowedTags = ALLOWED_ERROR_TAGS ) => {
 		return true
 	}
 	if ( isLabelAttribute( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
+	// Check whether we're missing an aria-level attribute. For accordion block in < 2.13.2
+	if ( isAriaLevel( validationIssues[ 0 ] ) ) {
 		return true
 	}
 
@@ -223,6 +231,38 @@ export const isLabelAttribute = issue => {
 }
 
 /**
+ * Check whether an aria-level attribute was removed. Issue with accordion block < 2.13.2
+ *
+ * @param {Array} issue The invalidation object
+ * @return {boolean} True or false
+ */
+export const isAriaLevel = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 3 ) {
+		return false
+	}
+
+	if ( typeof issue.args[ 1 ] !== 'object' || typeof issue.args[ 2 ] !== 'object' ) {
+		return false
+	}
+	if ( ! Array.isArray( issue.args[ 1 ] ) || ! Array.isArray( issue.args[ 2 ] ) ) {
+		return false
+	}
+
+	const oldExists = issue.args[ 2 ].some( attributePair => attributePair[ 0 ] === 'aria-level' )
+	const newExists = issue.args[ 1 ].some( attributePair => attributePair[ 0 ] === 'aria-level' )
+
+	if ( oldExists && ! newExists ) {
+		return true
+	}
+
+	return false
+}
+
+/**
  * Checks whether the validation error is because of a missing / additional Svg tag.
  *
  * @param {Array} issue The invalidation object
@@ -316,6 +356,47 @@ export const isMissingVideoPlaysInlineTag = issue => {
 }
 
 /**
+ * Compares 2 arrays and returns the index of the first character difference
+ *
+ * @param {string} a String to compare
+ * @param {string} b String to compare
+ *
+ * @return {number} Index of where the difference occured
+ */
+export const findFirstDiffPos = ( a, b ) => {
+	const longerLength = Math.max( a.length, b.length )
+	for ( let i = 0; i < longerLength; i++ ) {
+		if ( a[ i ] !== b[ i ] ) {
+			return i
+		}
+	}
+
+	return -1
+}
+
+/**
+ * From a partial HTML, get all the tags and generate the HTML tag hierarchy
+ * e.g. <div>...<style></style>...<span>...
+ * will return
+ * [ "div", "span" ]
+ *
+ * @param {string} html The html to convert to a tag tree
+ *
+ * @return {Array} List of html tags.
+ */
+export const getTagTree = html => {
+	const tags = ( html.match( /<\/?[\w\d]+/g ) || [] ).map( tag => tag.replace( '<', '' ) )
+	return tags.reduce( ( stack, tag ) => {
+		if ( tag.indexOf( '/' ) === 0 ) {
+			stack.pop()
+		} else {
+			stack.push( tag )
+		}
+		return stack
+	}, [] )
+}
+
+/**
  * Gets the HTML tag tree where the invalid block error ocurred.
  *
  * @param {Object} block The invalid block object
@@ -339,103 +420,11 @@ export const getInvalidationTags = block => {
 		return false
 	}
 
-	return getInequivalentHTMLError( originalContent, expectedContent )
-}
+	const diff1 = originalContent.substr( 0, findFirstDiffPos( originalContent, expectedContent ) )
+	const diff2 = expectedContent.substr( 0, findFirstDiffPos( originalContent, expectedContent ) )
 
-/**
- * Tokenize an HTML string, gracefully handling any errors thrown during
- * underlying tokenization.
- *
- * Copied from @wordpress/blocks/build/api/validation
- *
- * @see getHTMLTokens in @wordpress/blocks/build/api/validation
- *
- * @param {string} html   HTML string to tokenize.
- *
- * @return {Object[]|null} Array of valid tokenized HTML elements, or null on error
- */
-function getHTMLTokens( html ) {
-	try {
-		return new Tokenizer( new DecodeEntityParser() ).tokenize( html )
-	} catch ( e ) {
-	}
-
-	return null
-}
-
-/**
- * Returns the tag trail (array of html tags) where the mismatch occurred during
- * the test if the given HTML strings are effectively equivalent. Returns false
- * when the mismatch cannot be pinpointed or if there is no error or for invalid
- * HTML. This is not a good detector whether 2 HTML strings are equivalent.
- *
- * This function is a modification of the isEquivalentHTML function.
- *
- * @see isEquivalentHTML in @wordpress/blocks/build/api/validation
- *
- * @param {string} actual   Actual HTML string.
- * @param {string} expected Expected HTML string.
- *
- * @return {Array|boolean} An array containing the HTML tags where the error occurred,
- * or false if it isn't available
- */
-export function getInequivalentHTMLError( actual, expected ) {
-	// Tokenize input content and reserialized save content
-	const [ actualTokens, expectedTokens ] = [ actual, expected ].map(
-		html => getHTMLTokens( html )
-	)
-
-	// If either is malformed then stop comparing - the strings are not equivalent
-	if ( ! actualTokens || ! expectedTokens ) {
-		return false
-	}
-
-	const htmlTagTrail = []
-	let actualToken, expectedToken
-	while ( ( actualToken = getNextNonWhitespaceToken( actualTokens ) ) ) {
-		expectedToken = getNextNonWhitespaceToken( expectedTokens )
-
-		// Add new opening tags to the tag trail.
-		if ( actualToken.type === 'StartTag' ) {
-			htmlTagTrail.push( actualToken.tagName.toLowerCase() )
-		}
-
-		// Inequal if exhausted all expected tokens
-		if ( ! expectedToken ) {
-			return htmlTagTrail
-		}
-
-		// Inequal if next non-whitespace token of each set are not same type
-		if ( actualToken.type !== expectedToken.type ) {
-			return htmlTagTrail
-		}
-
-		// Defer custom token type equality handling, otherwise continue and
-		// assume as equal
-		const isEqualTokens = isEqualTokensOfType[ actualToken.type ]
-		if ( isEqualTokens && ! isEqualTokens( actualToken, expectedToken ) ) {
-			return htmlTagTrail
-		}
-
-		// Remove tags from the tag trail if they close.
-		if ( actualToken.type === 'StartTag' && actualToken.selfClosing === true ) {
-			htmlTagTrail.pop()
-		} else if ( actualToken.type === 'EndTag' ) {
-			htmlTagTrail.pop()
-		}
-
-		// Peek at the next tokens (actual and expected) to see if they close
-		// a self-closing tag
-		if ( isClosedByToken( actualToken, expectedTokens[ 0 ] ) ) {
-			// Consume the next expected token that closes the current actual
-			// self-closing token
-			getNextNonWhitespaceToken( expectedTokens )
-		} else if ( isClosedByToken( expectedToken, actualTokens[ 0 ] ) ) {
-			// Consume the next actual token that closes the current expected
-			// self-closing token
-			getNextNonWhitespaceToken( actualTokens )
-		}
-	}
-
-	return false
+	return filter( [
+		...getTagTree( diff1 ),
+		...getTagTree( diff2 ),
+	] )
 }

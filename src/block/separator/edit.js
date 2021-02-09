@@ -201,7 +201,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						min="0"
 						max="400"
 						onChange={ paddingTop => setAttributes( { paddingTop } ) }
-						units={ [ 'px', 'em', '%' ] }
+						units={ [ 'px', 'em' ] }
 						unit={ paddingUnit }
 						onChangeUnit={ paddingUnit => setAttributes( { paddingUnit } ) }
 						allowReset={ true }
@@ -213,7 +213,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						min="0"
 						max="400"
 						onChange={ paddingBottom => setAttributes( { paddingBottom } ) }
-						units={ [ 'px', 'em', '%' ] }
+						units={ [ 'px', 'em' ] }
 						unit={ paddingUnit }
 						onChangeUnit={ paddingUnit => setAttributes( { paddingUnit } ) }
 						allowReset={ true }
@@ -253,7 +253,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						min="0"
 						max="400"
 						onChange={ tabletPaddingTop => setAttributes( { tabletPaddingTop } ) }
-						units={ [ 'px', 'em', '%' ] }
+						units={ [ 'px', 'em' ] }
 						unit={ tabletPaddingUnit }
 						onChangeUnit={ tabletPaddingUnit => setAttributes( { tabletPaddingUnit } ) }
 						allowReset={ true }
@@ -264,7 +264,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						min="0"
 						max="400"
 						onChange={ tabletPaddingBottom => setAttributes( { tabletPaddingBottom } ) }
-						units={ [ 'px', 'em', '%' ] }
+						units={ [ 'px', 'em' ] }
 						unit={ tabletPaddingUnit }
 						onChangeUnit={ tabletPaddingUnit => setAttributes( { tabletPaddingUnit } ) }
 						allowReset={ true }
@@ -301,7 +301,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						min="0"
 						max="400"
 						onChange={ mobilePaddingTop => setAttributes( { mobilePaddingTop } ) }
-						units={ [ 'px', 'em', '%' ] }
+						units={ [ 'px', 'em' ] }
 						unit={ mobilePaddingUnit }
 						onChangeUnit={ mobilePaddingUnit => setAttributes( { mobilePaddingUnit } ) }
 						allowReset={ true }
@@ -312,7 +312,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						min="0"
 						max="400"
 						onChange={ mobilePaddingBottom => setAttributes( { mobilePaddingBottom } ) }
-						units={ [ 'px', 'em', '%' ] }
+						units={ [ 'px', 'em' ] }
 						unit={ mobilePaddingUnit }
 						onChangeUnit={ mobilePaddingUnit => setAttributes( { mobilePaddingUnit } ) }
 						allowReset={ true }

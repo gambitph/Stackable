@@ -12,22 +12,26 @@ if ( window.NodeList && ! window.NodeList.prototype.forEach ) {
 // Returns array instead of HTMLCollection.
 /* eslint-disable */
 ( function( constructor ) {
-	if ( constructor &&
-        constructor.prototype &&
-        constructor.prototype.firstElementChild == null ) {
-		Object.defineProperty( constructor.prototype, 'firstElementChild', {
-			get() {
-				let node,
-					nodes = this.childNodes,
-					i = 0
-				while ( node = nodes[ i++ ] ) {
-					if ( node.nodeType === 1 ) {
-						return node
+	try {
+		if ( constructor &&
+			constructor.prototype &&
+			constructor.prototype.firstElementChild == null ) {
+			Object.defineProperty( constructor.prototype, 'firstElementChild', {
+				get() {
+					let node,
+						nodes = this.childNodes,
+						i = 0
+					while ( node = nodes[ i++ ] ) {
+						if ( node.nodeType === 1 ) {
+							return node
+						}
 					}
-				}
-				return null
-			},
-		} )
+					return null
+				},
+			} )
+		}
+	} catch ( err ) {
+		// Do nothing.
 	}
 }( window.Node || window.Element ) )
 /* eslint-enable */
