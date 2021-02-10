@@ -22,7 +22,7 @@ export default {
 		subtitleLineHeightUnit: 'em',
 		subtitleTabletLineHeightUnit: 'em',
 		subtitleMobileLineHeightUnit: 'em',
-		description1: 'Description forthis block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.',
+		description1: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block.',
 		showDescription: true,
 		descriptionLineHeightUnit: 'em',
 		descriptionTabletLineHeightUnit: 'em',
