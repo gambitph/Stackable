@@ -8,7 +8,7 @@ export default {
 		columnBackgroundCustomSizeUnit: '%',
 		columnTabletBackgroundCustomSizeUnit: '%',
 		columnMobileBackgroundCustomSizeUnit: '%',
-		title: 'Title for This Block',
+		title: 'Header Title',
 		showTitle: true,
 		titleColor: '#ffffff',
 		titleLineHeightUnit: 'em',

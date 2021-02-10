@@ -16,7 +16,7 @@ export default {
 		titleLineHeightUnit: 'em',
 		titleTabletLineHeightUnit: 'em',
 		titleMobileLineHeightUnit: 'em',
-		description: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.',
+		description: 'Description for this block. Use this space for describing your block. Any text will do.',
 		showDescription: true,
 		descriptionLineHeightUnit: 'em',
 		descriptionTabletLineHeightUnit: 'em',

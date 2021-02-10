@@ -24,9 +24,9 @@ export default {
 			clientId: 'e6b76d8f-bb66-45fb-938f-ef35d5fca25f',
 			name: 'core/paragraph',
 			isValid: true,
-			originalContent: '<p>Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block. </p>',
+			originalContent: '<p>Description for this block. Use this space for describing your block. Any text will do.</p>',
 			attributes: {
-				content: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block. ',
+				content: 'Description for this block. Use this space for describing your block. Any text will do.',
 				dropCap: false,
 			},
 		},

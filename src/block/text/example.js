@@ -15,7 +15,7 @@ export default {
 		subtitleTabletLineHeightUnit: 'em',
 		subtitleMobileLineHeightUnit: 'em',
 		subtitleOnTop: false,
-		text1: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.',
+		text1: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block.',
 		textLineHeightUnit: 'em',
 		textTabletLineHeightUnit: 'em',
 		textMobileLineHeightUnit: 'em',

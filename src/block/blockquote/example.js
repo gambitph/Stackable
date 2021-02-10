@@ -7,7 +7,7 @@ export default {
 		showQuote: true,
 		quoteIcon: 'round-thin',
 		quoteSize: 70,
-		text: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block. Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.',
+		text: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block.',
 		textLineHeightUnit: 'em',
 		textTabletLineHeightUnit: 'em',
 		textMobileLineHeightUnit: 'em',
