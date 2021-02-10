@@ -10,6 +10,7 @@ import deprecated from './deprecated'
 import edit from './edit'
 import save from './save'
 import schema from './schema'
+import example from './example'
 
 /**
  * External dependencies
@@ -45,6 +46,7 @@ export const settings = {
 	save,
 
 	attributes: schema,
+	example,
 
 	// Stackable modules.
 	modules: {

@@ -1,0 +1,20 @@
+export default {
+	attributes: {
+		alignment: 'center',
+		title: 'Title for This Block',
+		titleLineHeightUnit: 'em',
+		titleTabletLineHeightUnit: 'em',
+		titleMobileLineHeightUnit: 'em',
+		subtitle: 'Subtitle for this block',
+		showSubtitle: true,
+		subtitleLineHeightUnit: 'em',
+		subtitleTabletLineHeightUnit: 'em',
+		subtitleMobileLineHeightUnit: 'em',
+		showTopLine: true,
+		showBottomLine: false,
+		uniqueClass: 'ugb-f80e479',
+		hideDesktop: false,
+		hideTablet: false,
+		hideMobile: false,
+	},
+}

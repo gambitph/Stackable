@@ -24,7 +24,12 @@ import domReady from '@wordpress/dom-ready'
 import { render } from '@wordpress/element'
 import { subscribe } from '@wordpress/data'
 
-export const schema = {}
+export const schema = {
+	previewMode: {
+		type: 'boolean',
+		default: false,
+	},
+}
 
 export const name = 'ugb/design-library'
 
@@ -39,6 +44,11 @@ export const settings = {
 		__( 'Stackable', i18n ),
 	],
 	attributes: schema,
+	example: {
+		attributes: {
+			previewMode: true,
+		},
+	},
 
 	supports: {
 		customClassName: false,

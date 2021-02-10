@@ -9,6 +9,7 @@
  * External dependencies
  */
 import { ButtonIcon } from '~stackable/icons'
+import { disabledBlocks, i18n } from 'stackable'
 
 /**
  * Internal dependencies
@@ -18,7 +19,7 @@ import deprecated from './deprecated'
 import edit from './edit'
 import save from './save'
 import schema from './schema'
-import { disabledBlocks, i18n } from 'stackable'
+import example from './example'
 
 /**
  * WordPress dependencies
@@ -38,6 +39,7 @@ export const settings = {
 		__( 'Stackable', i18n ),
 	],
 	attributes: schema,
+	example,
 	supports: {
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
 		anchor: true,
