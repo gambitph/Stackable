@@ -27,7 +27,7 @@ addFilter( 'stackable.count-up.design.no-text-attributes', 'stackable/count-up',
 } )
 
 // Ignore these attributes when exporting / applying designs.
-addFilter( 'stackable.card.design.filtered-block-attributes', 'stackable/card', attributes => {
+addFilter( 'stackable.count-up.design.filtered-block-attributes', 'stackable/count-up', attributes => {
 	return {
 		...omit( attributes, [
 			'icon1',
