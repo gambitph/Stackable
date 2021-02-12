@@ -1,6 +1,6 @@
 # Using Pods Fields in Blocks
 
-Learn how to use \(a few of\) your fields from Pods inside your blocks.
+Learn how to use (a few of) your fields from Pods inside your blocks.
 
 [Pods](https://pods.io/) is used by many site creators for working with WordPress custom post types and custom fields.
 
