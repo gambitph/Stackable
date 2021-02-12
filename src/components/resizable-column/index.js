@@ -17,12 +17,13 @@ import classnames from 'classnames'
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
-import { ResizableBox } from '@wordpress/components'
+import { ResizableBox, TextControl } from '@wordpress/components'
 import {
-	useState, useEffect,
+	useState, useEffect, useRef, useCallback,
 } from '@wordpress/element'
 import { withSelect } from '@wordpress/data'
 import useWithShift from './use-with-shift'
+import { AdvancedRangeControl, AdvancedTextControl } from '..'
 
 const MIN_COLUMN_WIDTHS = {
 	Desktop: 100,
@@ -79,6 +80,29 @@ const ResizableColumn = props => {
 		setSnapWidths( null )
 	}, [ isShiftKey ] )
 
+	const [ isEditWidth, setIsEditWidth ] = useState( false )
+	const [ defaultInputValue, setDefaultInputValue ] = useState( '' )
+	const popupRef = useRef()
+	const outsideClickListener = useCallback( event => {
+		console.log( event.target )
+		if ( ! event.target.closest( '.stk-resizable-column__popup' ) ) {
+			setIsEditWidth( false )
+		}
+	}, [] )
+	useEffect( () => {
+		if ( isEditWidth ) {
+			setDefaultInputValue( props.blockProps.attributes.columnWidth )
+			document.addEventListener( 'click', outsideClickListener )
+			// setTimeout( () => {
+			// console.log( 'popupRef', popupRef )
+			popupRef.current.querySelector( 'input' ).select()
+			// }, 1 )
+			return () => {
+				document.removeEventListener( 'click', outsideClickListener )
+			}
+		}
+	}, [ isEditWidth ] )
+
 	const className = classnames( [
 		'stk-column-resizeable',
 		className,
@@ -109,7 +133,13 @@ const ResizableColumn = props => {
 				// In desktop, get all the column widths.
 				if ( isDesktop ) {
 					// Get the current pixel width of the columns.
-					const columnWidths = adjacentBlocks.map( ( { clientId } ) => {
+					const parentEl = document.querySelector( `[data-block="${ parentBlock.clientId }"]` )
+					const parentWidth = parentEl.clientWidth
+					const columnWidths = adjacentBlocks.map( ( { clientId, attributes } ) => {
+						// If there's already a column width set, use that value.
+						if ( attributes.columnWidth ) {
+							return parentWidth * attributes.columnWidth / 100
+						}
 						const blockEl = document.querySelector( `[data-block="${ clientId }"]` )
 						return blockEl?.clientWidth || 0
 					} )
@@ -138,6 +168,8 @@ const ResizableColumn = props => {
 			onResize={ ( _event, _direction, elt, delta ) => {
 				let columnPercentages = []
 
+				setIsEditWidth( false )
+
 				// In desktop, when one column is resized, the next column is adjusted also.
 				if ( isDesktop ) {
 					// Compute for the new widths.
@@ -149,11 +181,11 @@ const ResizableColumn = props => {
 
 					// Fix the widths, ensure that our total width is 100%
 					columnPercentages = ( columnWidths || [] ).map( width => {
-						return parseFloat( ( width / totalWidth * 100 ).toFixed( 2 ) )
+						return parseFloat( ( width / totalWidth * 100 ).toFixed( 1 ) )
 					} )
 					const totalCurrentWidth = columnPercentages.reduce( ( a, b ) => a + b, 0 )
 					if ( totalCurrentWidth !== 100 ) {
-						columnPercentages[ adjacentBlockIndex ] = parseFloat( ( columnPercentages[ adjacentBlockIndex ] + 100 - totalCurrentWidth ).toFixed( 2 ) )
+						columnPercentages[ adjacentBlockIndex ] = parseFloat( ( columnPercentages[ adjacentBlockIndex ] + 100 - totalCurrentWidth ).toFixed( 1 ) )
 					}
 
 					setNewWidthsPercent( columnPercentages )
@@ -163,6 +195,9 @@ const ResizableColumn = props => {
 						return `[data-block="${ adjacentBlocks[ i ].clientId }"] {
 							flex: 1 1 ${ width }% !important;
 							max-width: ${ width }% !important;
+						}
+						[data-block="${ adjacentBlocks[ i ].clientId }"] .test {
+							--test: '${ width }%' !important;
 						}`
 					} ).join( '' )
 					setTempStyles( columnStyles )
@@ -178,7 +213,7 @@ const ResizableColumn = props => {
 				// control.
 				} else {
 					const newWidth = currentWidths + delta.width
-					columnPercentages = clamp( parseFloat( ( newWidth / maxWidth * 100 ).toFixed( 2 ) ), 0, 100 )
+					columnPercentages = clamp( parseFloat( ( newWidth / maxWidth * 100 ).toFixed( 1 ) ), 0, 100 )
 
 					setNewWidthsPercent( columnPercentages )
 
@@ -186,6 +221,9 @@ const ResizableColumn = props => {
 					const columnStyles = `[data-block="${ props.blockProps.clientId }"] {
 							flex: 1 1 ${ columnPercentages }% !important;
 							max-width: ${ columnPercentages }% !important;
+						}
+						[data-block="${ props.blockProps.clientId }"] .test {
+							--test: '${ columnPercentages }%' !important;
 						}`
 					setTempStyles( columnStyles )
 
@@ -226,10 +264,72 @@ const ResizableColumn = props => {
 				setSnapWidths( null )
 			} }
 		>
+			{
+				! isOnlyBlock && isEditWidth &&
+				<div className="stk-resizable-column__popup" ref={ popupRef }>
+					{ /* <TextControl
+						label="Column"
+						className="stk-resizable-column__input"
+						value={ props.blockProps.attributes.columnWidth }
+						onChange={ value => props.blockProps.setAttributes( { columnWidth: value } ) }
+						onBlur={ () => setIsEditWidth( false ) }
+					/> */ }
+					<AdvancedTextControl
+						label="Column"
+						className="stk-resizable-column__input"
+						value={ props.blockProps.attributes.columnWidth }
+						onChange={ value => props.blockProps.setAttributes( { columnWidth: value } ) }
+						// onBlur={ () => setIsEditWidth( false ) }
+						units={ [ '%', 'px' ] }
+						unit="%"
+						allowReset={ true }
+						placeholder={ defaultInputValue }
+					/>
+					{ /* % */ }
+				</div>
+				// <input
+				// 	className="components-text-control__input stk-resizable-column__input"
+				// 	type="text"
+				// 	// id={ id }
+				// 	value={ props.blockProps.attributes.columnWidth }
+				// 	onChange={ event => {
+				// 		const value = event.target.value
+				// 		console.log( 'value', value )
+				// 		props.blockProps.setAttributes( { columnWidth: value } )
+				// 	} }
+				// 	// aria-label={ __( 'Column width', i18n ) }
+				// 	// aria-describedby={ !! help ? id + '__help' : undefined }
+				// 	// { ...props }
+				// />
+			}
+			{
+				! isOnlyBlock && <div className="test"
+					style={ { '--test': `'${ props.blockProps.attributes.columnWidth || defaultInputValue }%'` } }
+					onClick={ () => setIsEditWidth( ! isEditWidth ) }
+					onKeyDown={ event => {
+						if ( event.keyCode === 13 ) {
+							setIsEditWidth( ! isEditWidth )
+						}
+					} }
+					role="button"
+					tabIndex="0"
+				></div>
+			 }
 			{ tempStyles && <style>{ tempStyles }</style> }
 			{ props.children }
 		</ResizableBox>
 	)
+}
+
+const ResizableTooltip = props => {
+	return (
+		<div className="test" style={ { '--test': `'${ props.blockProps.attributes.columnWidth }'` } }></div>
+	)
+}
+
+ResizableTooltip.defaultProps = {
+	deviceType: 'Desktop',
+
 }
 
 ResizableColumn.defaultProps = {
