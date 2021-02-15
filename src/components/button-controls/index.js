@@ -378,7 +378,7 @@ const ButtonControls = props => {
 				/>
 			) }
 
-			{ design !== 'link' && <ControlSeparator /> }
+			{ props.onChangeIcon && design !== 'link' && <ControlSeparator /> }
 
 			{ props.onChangeIcon && design !== 'link' &&
 				<IconControl

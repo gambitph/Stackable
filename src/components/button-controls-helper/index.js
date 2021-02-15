@@ -95,7 +95,7 @@ const ButtonControlsHelper = props => {
 			} }
 
 			icon={ props.blockAttributes[ getAttrName( 'Icon' ) ] || '' }
-			onChangeIcon={ value => setAttributes( { [ getAttrName( 'Icon' ) ]: value } ) }
+			onChangeIcon={ props.enableIcon ? value => setAttributes( { [ getAttrName( 'Icon' ) ]: value } ) : null }
 			onResetAdvancedIcon={ () => {
 				setAttributes( {
 					[ getAttrName( 'IconSize' ) ]: '',
@@ -119,6 +119,7 @@ ButtonControlsHelper.defaultProps = {
 	attrNameTemplate: '%s',
 	setAttributes: () => {},
 	blockAttributes: {},
+	enableIcon: true,
 }
 
 export default ButtonControlsHelper

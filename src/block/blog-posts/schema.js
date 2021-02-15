@@ -237,6 +237,25 @@ export default {
 		default: '',
 	} ),
 
+	// Pagination
+	showPagination: {
+		type: 'boolean',
+		default: false,
+	},
+	...createButtonAttributes( 'pagination%s', {
+		exclude: [
+			'Url',
+			'NewTab',
+			'NoFollow',
+			'Icon',
+			'IconPosition',
+		],
+	} ),
+	...createResponsiveAttributes( 'pagination%sAlign', {
+		type: 'string',
+		default: '',
+	} ),
+
 	// Button.
 	showLoadMoreButton: {
 		type: 'boolean',
@@ -275,4 +294,9 @@ export default {
 		type: 'number',
 		default: '',
 	} ),
+	...createResponsiveAttributes( 'Pagination%sTopMargin', {
+		type: 'number',
+		default: '',
+	} ),
+
 }
