@@ -94,8 +94,7 @@ const Pagination = props => {
 				className={ mainClasses }
 				onClick={ () => paginate( currentPage - 1 ) }
 			>
-				<span className="fas fa-angle-left" />
-				{ __( 'Previous', i18n ) }
+				{ sprintf( __( '%s Previous', i18n ), '«' ) }
 			</PaginationButton> }
 			{ generatePaginationArray( currentPage, pages ).map( ( page, index ) => <PaginationButton
 				key={ page + index }
@@ -110,8 +109,7 @@ const Pagination = props => {
 					className={ mainClasses }
 					onClick={ () => paginate( currentPage + 1 ) }
 				>
-					{ __( 'Next', i18n ) }
-					<span className="fas fa-angle-right" />
+					{ sprintf( __( 'Next %s', i18n ), '»' ) }
 				</PaginationButton>
 			}
 		</div>
