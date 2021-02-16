@@ -22,7 +22,7 @@ import { __, sprintf } from '@wordpress/i18n'
  *
  * @return {Array} generated pagination array
  */
-const generatePaginationArray = ( currentPage, pages ) => {
+export const generatePaginationArray = ( currentPage, pages ) => {
 	const offsetInBetween = 2
 	const leftOffset = clamp( currentPage - offsetInBetween, 1, pages )
 	const rightOffset = clamp( currentPage + offsetInBetween, 1, pages )
@@ -30,8 +30,14 @@ const generatePaginationArray = ( currentPage, pages ) => {
 	if ( leftOffset === 1 ) {
 		ret.splice( 0, 2 )
 	}
+	if ( leftOffset === 2 ) {
+		ret.splice( 1, 1 )
+	}
 	if ( rightOffset === pages ) {
 		ret.splice( ret.length - 3, 2 )
+	}
+	if ( rightOffset === pages - 1 ) {
+		ret.splice( ret.length - 3, 1 )
 	}
 	return ret
 }
