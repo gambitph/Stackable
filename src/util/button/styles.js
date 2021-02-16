@@ -92,6 +92,9 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 				[ `.${ mainClassName }.is-active .ugb-button--inner, .${ mainClassName }.is-active svg:not(.ugb-custom-icon)` ]: {
 					color: appendImportant( whiteIfDarkBlackIfLight( getValue( 'HoverTextColor' ), getValue( 'HoverBackgroundColor' ) ) ),
 				},
+				[ `.${ mainClassName }:focus` ]: {
+					backgroundColor: appendImportant( getValue( 'HoverBackgroundColor' ) !== '' ? getValue( 'HoverBackgroundColor' ) : undefined ),
+				},
 			} : {} ),
 		} )
 
@@ -133,6 +136,13 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 					( getValue( 'BackgroundColor' ) !== '' ? appendImportant( getValue( 'BackgroundColor' ) ) : undefined ),
 			},
 			...( hasActiveStyles ? {
+				[ `.${ mainClassName }:focus` ]: {
+					borderColor: getValue( 'HoverBackgroundColor' ) !== '' ? appendImportant( getValue( 'HoverBackgroundColor' ) ) : undefined,
+				},
+				[ `.${ mainClassName }:focus .ugb-button--inner` ]: {
+					color: getValue( 'HoverBackgroundColor' ) !== '' ? appendImportant( getValue( 'HoverBackgroundColor' ) ) :
+						( getValue( 'BackgroundColor' ) !== '' ? appendImportant( getValue( 'BackgroundColor' ) ) : undefined ),
+				},
 				[ `.${ mainClassName }.is-active` ]: {
 					borderColor: getValue( 'HoverBackgroundColor' ) !== '' ? appendImportant( getValue( 'HoverBackgroundColor' ) ) : undefined,
 				},
