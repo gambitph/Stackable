@@ -119,32 +119,6 @@ Pagination.defautProps = {
 	atrrNameTemplate: '',
 }
 
-Pagination.Content = props => {
-	const containerClassNames = classnames( [
-		'ugb-button-container',
-		props.containerClassName,
-	]
-	)
-
-	const getAttrName = attrName => camelCase( sprintf( props.attrNameTemplate, attrName ) )
-	const getAttrValue = ( attrName, defaultValue = '' ) => {
-		const value = props.blockAttributes[ getAttrName( attrName ) ]
-		return value === 0 ? value : ( value || defaultValue )
-	}
-
-	const mainClasses = classnames( [
-		'ugb-button',
-		`ugb-button--size-${ getAttrValue( 'Size', 'normal' ) }`,
-	], {
-		'ugb-button--ghost-to-normal-effect': getAttrValue( 'HoverGhostToNormal' ),
-		[ `ugb--hover-effect-${ getAttrValue( 'HoverEffect' ) }` ]: getAttrValue( 'Design' ) !== 'link' && getAttrValue( 'HoverEffect' ),
-		[ `ugb--shadow-${ getAttrValue( 'Shadow' ) }` ]: getAttrValue( 'Design', 'basic' ) === 'basic' && getAttrValue( 'Shadow' ),
-		[ `ugb-button--design-${ getAttrValue( 'Design' ) }` ]: getAttrValue( 'Design', 'basic' ) !== 'basic',
-	} )
-
-	return <div className={ containerClassNames } data-child-classes={ mainClasses } />
-}
-
 export const usePagination = ( posts, numberOfItems ) => {
 	const [ pages, setPages ] = useState( 1 )
 	const [ currentPage, setCurrentPage ] = useState( 1 )

@@ -11,7 +11,6 @@ import classnames from 'classnames'
  * Internal dependencies
  */
 import createStyles from './style'
-import Pagination from './pagination'
 
 /**
  * WordPress dependencies
@@ -30,7 +29,6 @@ const save = props => {
 		columnBackgroundColor = '',
 		columnBackgroundColor2 = '',
 		showLoadMoreButton = false,
-		showPagination = false,
 		loadMoreItems = '',
 	} = attributes
 
@@ -61,13 +59,6 @@ const save = props => {
 							blockAttributes={ props.attributes }
 							url="#0"
 							role="button"
-						/>
-					) }
-					{ showPagination && (
-						<Pagination.Content
-							containerClassName="ugb-blog-posts__pagination"
-							attrNameTemplate="pagination%s"
-							blockAttributes={ props.attributes }
 						/>
 					) }
 				</Fragment>

@@ -1793,7 +1793,7 @@ if ( ! function_exists( 'stackable_blog_posts_attributes' ) ) {
 				'default' => '',
 			),
 			'paginationShadow' => array(
-				'type' => 'string',
+				'type' => 'number',
 				'default' => '',
 			),
 			'paginationSize' => array(
