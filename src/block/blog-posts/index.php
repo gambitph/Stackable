@@ -108,7 +108,7 @@ if ( ! function_exists( 'stackable_blog_posts_post_query' ) ) {
   	}
 
 		return apply_filters( 'stackable/blog-post/post_query',
-  		$passed_attributes,
+			$passed_attributes,
 			$attributes
 		);
 	}
