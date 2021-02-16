@@ -1587,17 +1587,6 @@
     ]
   },
   {
-    "family": "Benne",
-    "variants": [
-      "regular"
-    ],
-    "subsets": [
-      "kannada",
-      "latin",
-      "latin-ext"
-    ]
-  },
-  {
     "family": "Bentham",
     "variants": [
       "regular"
