@@ -401,6 +401,14 @@ export const getTagTree = html => {
 	}, [] )
 }
 
+/**
+ * Checks whether the block contains empty id attributes
+ * e.g. <div id=""></div>
+ *
+ * @param {Array} issue The invalidation array
+ *
+ * @return {boolean} if true, the html content has empty id attributes. Otherwise, false.
+ */
 export const hasEmptyId = issue => {
 	if ( ! issue.args ) {
 		return false
