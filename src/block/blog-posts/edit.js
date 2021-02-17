@@ -831,7 +831,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 				>
 					<ProControl
 						title={ __( 'Say Hello to More Options 👋', i18n ) }
-						description={ __( 'Get a load more button, more post options and Custom Post Types. This feature is only available on Stackable Premium', i18n ) }
+						description={ __( 'Get a load more button, pagination, more post options and Custom Post Types. This feature is only available on Stackable Premium', i18n ) }
 					/>
 				</PanelAdvancedSettings>
 			) }
@@ -846,7 +846,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 				>
 					<ProControl
 						title={ __( 'Say Hello to More Options 👋', i18n ) }
-						description={ __( 'Get a load more button, more post options and Custom Post Types. This feature is only available on Stackable Premium', i18n ) }
+						description={ __( 'Get a load more button, pagination, more post options and Custom Post Types. This feature is only available on Stackable Premium', i18n ) }
 					/>
 				</PanelAdvancedSettings>
 			) }
