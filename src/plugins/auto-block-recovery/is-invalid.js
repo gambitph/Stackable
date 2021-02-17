@@ -423,9 +423,9 @@ export const hasEmptyId = issue => {
 		return false
 	}
 
-	const hasEmptyId1 = ! issue.args[ 3 ].match( /id=""/ )
-	const hasEmptyId2 = ! issue.args[ 4 ].match( /id=""/ )
-	return hasEmptyId1 && ! hasEmptyId2
+	const oldHasEmptyId = ! issue.args[ 3 ].match( /id=""/ )
+	const newHasEmptyId = ! issue.args[ 4 ].match( /id=""/ )
+	return oldHasEmptyId && ! newHasEmptyId
 }
 
 /**
