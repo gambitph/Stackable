@@ -75,6 +75,11 @@ export const isInvalid = ( block, allowedTags = ALLOWED_ERROR_TAGS ) => {
 		return true
 	}
 
+	// Check whether the block contains empty `id` attributes.
+	if ( hasEmptyId( validationIssues[ 1 ] ) ) {
+		return true
+	}
+
 	// Get which HTML tags the error occurred.
 	const tags = getInvalidationTags( block )
 	if ( ! tags ) {
@@ -394,6 +399,25 @@ export const getTagTree = html => {
 		}
 		return stack
 	}, [] )
+}
+
+export const hasEmptyId = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 5 ) {
+		return false
+	}
+
+	// Block contents
+	if ( typeof issue.args[ 3 ] !== 'string' || typeof issue.args[ 4 ] !== 'string' ) {
+		return false
+	}
+
+	const hasEmptyId1 = ! issue.args[ 3 ].match( /id=""/ )
+	const hasEmptyId2 = ! issue.args[ 4 ].match( /id=""/ )
+	return hasEmptyId1 && ! hasEmptyId2
 }
 
 /**
