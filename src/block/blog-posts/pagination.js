@@ -94,7 +94,7 @@ const Pagination = props => {
 				className={ mainClasses }
 				onClick={ () => paginate( currentPage - 1 ) }
 			>
-				{ sprintf( __( '%s Previous', i18n ), '«' ) }
+				{ __( '« Previous', i18n ) }
 			</PaginationButton> }
 			{ generatePaginationArray( currentPage, pages ).map( ( page, index ) => <PaginationButton
 				key={ page + index }
@@ -109,7 +109,7 @@ const Pagination = props => {
 					className={ mainClasses }
 					onClick={ () => paginate( currentPage + 1 ) }
 				>
-					{ sprintf( __( 'Next %s', i18n ), '»' ) }
+					{ __( 'Next »', i18n ) }
 				</PaginationButton>
 			}
 		</div>
