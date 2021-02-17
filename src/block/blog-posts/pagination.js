@@ -43,19 +43,29 @@ export const generatePaginationArray = ( currentPage, pages ) => {
 }
 
 const PaginationButton = ( {
-	className, children, onClick,
+	className, children, onClick, isActive,
 } ) => {
-	return <button className={ className } onClick={ onClick }>
-		<span className="ugb-button--inner">
-			{ children }
-		</span>
-	</button>
+	const TagName = isActive ? 'span' : 'button'
+	const mainClasses = classnames(
+		className, {
+			'is-active': isActive,
+		}
+	)
+
+	return (
+		<TagName className={ mainClasses } onClick={ onClick }>
+			<span className="ugb-button--inner">
+				{ children }
+			</span>
+		</TagName>
+	)
 }
 
 PaginationButton.defaultProps = {
 	className: '',
 	children: null,
 	onClick: () => {},
+	isActive: false,
 }
 
 const Pagination = props => {
@@ -99,7 +109,8 @@ const Pagination = props => {
 			{ generatePaginationArray( currentPage, pages ).map( ( page, index ) => <PaginationButton
 				key={ page + index }
 				onClick={ () => page !== '...' && paginate( page ) }
-				className={ `${ mainClasses }${ currentPage === page ? ' is-active' : '' }` }
+				className={ mainClasses }
+				isActive={ currentPage === page }
 			>
 				{ page }
 			</PaginationButton>
