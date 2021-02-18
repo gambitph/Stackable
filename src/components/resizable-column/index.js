@@ -185,8 +185,8 @@ const ResizableColumn = props => {
 							flex: 1 1 ${ width }% !important;
 							max-width: ${ width }% !important;
 						}
-						[data-block="${ adjacentBlocks[ i ].clientId }"] .test {
-							--test: '${ width.toFixed( 1 ) }%' !important;
+						[data-block="${ adjacentBlocks[ i ].clientId }"] .stk-resizable-column__size-tooltip {
+							--width: '${ width.toFixed( 1 ) }%' !important;
 						}`
 					} ).join( '' )
 					setTempStyles( columnStyles )
@@ -211,8 +211,8 @@ const ResizableColumn = props => {
 							flex: 1 1 ${ columnPercentages }% !important;
 							max-width: ${ columnPercentages }% !important;
 						}
-						[data-block="${ props.blockProps.clientId }"] .test {
-							--test: '${ columnPercentages.toFixed( 1 ) }%' !important;
+						[data-block="${ props.blockProps.clientId }"] .stk-resizable-column__size-tooltip {
+							--width: '${ columnPercentages.toFixed( 1 ) }%' !important;
 						}`
 					setTempStyles( columnStyles )
 
@@ -309,7 +309,13 @@ const _ResizableTooltip = props => {
 		adjacentBlocks, isOnlyBlock, blockIndex, isLastBlock, isFirstBlock,
 	} = props.blockContext
 
-	// Compute the column label value if none is available.
+	const [ isEditWidth, setIsEditWidth ] = useState( false )
+	const [ originalInputValue, setOriginalInputValue ] = useState( '' )
+	const [ currentInputValue, setCurrentInputValue ] = useState( '' )
+	const popupRef = useRef()
+	const tooltipRef = useRef()
+
+	// Compute the default column label value if none is available.
 	const columnLabel = useMemo( () => {
 		if ( ! props.value && ! originalInputValue ) {
 			// In mobile, the columns collapse to 100%.
@@ -327,11 +333,10 @@ const _ResizableTooltip = props => {
 		return ``
 	}, [ adjacentBlocks, props.value, originalInputValue, props.previewDeviceType ] )
 
-	const [ isEditWidth, setIsEditWidth ] = useState( false )
-	const [ originalInputValue, setOriginalInputValue ] = useState( '' )
-	const [ currentInputValue, setCurrentInputValue ] = useState( '' )
-	const popupRef = useRef()
-	const tooltipRef = useRef()
+	// Create the label of the tooltip.
+	const tooltipLabel = useMemo( () => {
+		return `'${ ( props.value ? parseFloat( props.value ).toFixed( 1 ) : '' ) || originalInputValue || columnLabel }%'`
+	}, [ props.value, originalInputValue, columnLabel ] )
 
 	// Setup the input field when the popup opens.
 	useEffect( () => {
@@ -351,7 +356,7 @@ const _ResizableTooltip = props => {
 		if ( direction === 'right' ) {
 			// Open the popup of the column on the right.
 			const nextIndex = ! isLastBlock ? blockIndex + 1 : 0
-			const nextTooltip = tooltipRef.current.closest( '.stk-row' ).querySelectorAll( '.test' )[ nextIndex ]
+			const nextTooltip = tooltipRef.current.closest( '.stk-row' ).querySelectorAll( '.stk-resizable-column__size-tooltip' )[ nextIndex ]
 			if ( nextTooltip ) {
 				nextTooltip.dispatchEvent( new CustomEvent( 'openColumnInputPopup' ) ) // eslint-disable-line no-undef
 				// Close the current popup.
@@ -360,7 +365,7 @@ const _ResizableTooltip = props => {
 		} else {
 			// Open the popup of the column on the left.
 			const prevIndex = ! isFirstBlock ? blockIndex - 1 : adjacentBlocks.length - 1
-			const prevTooltip = tooltipRef.current.closest( '.stk-row' ).querySelectorAll( '.test' )[ prevIndex ]
+			const prevTooltip = tooltipRef.current.closest( '.stk-row' ).querySelectorAll( '.stk-resizable-column__size-tooltip' )[ prevIndex ]
 			if ( prevTooltip ) {
 				prevTooltip.dispatchEvent( new CustomEvent( 'openColumnInputPopup' ) ) // eslint-disable-line no-undef
 				// Close the current popup.
@@ -412,9 +417,9 @@ const _ResizableTooltip = props => {
 			{
 				! isOnlyBlock && (
 					<div
-						className="test"
+						className="stk-resizable-column__size-tooltip"
 						ref={ tooltipRef }
-						style={ { '--test': `'${ ( props.value ? parseFloat( props.value ).toFixed( 1 ) : '' ) || originalInputValue || columnLabel }%'` } }
+						style={ { '--width': tooltipLabel } }
 						onMouseDown={ () => setIsEditWidth( ! isEditWidth ) }
 						onKeyDown={ event => {
 							if ( event.keyCode === 13 ) {

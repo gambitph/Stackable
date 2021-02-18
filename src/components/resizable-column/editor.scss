@@ -1,7 +1,7 @@
 // Show column widths when hovering.
 .stk-row:hover .block-editor-block-list__layout:first-of-type > .wp-block {
 	.stk-column-resizeable:first-of-type {
-		> .test,
+		> .stk-resizable-column__size-tooltip,
 		> .stk-resizable-column__popup {
 			display: block !important;
 		}
@@ -10,20 +10,19 @@
 // Show column widths when columns and their contents are selected.
 [data-type^="stackable/"].has-child-selected > .stk-row .block-editor-block-list__layout:first-of-type > .wp-block {
 	.stk-column-resizeable:first-of-type {
-		> .test,
+		> .stk-resizable-column__size-tooltip,
 		> .stk-resizable-column__popup {
 			display: block !important;
 		}
 	}
 }
-.test {
+.stk-resizable-column__size-tooltip {
 	display: none;
-	// pointer-events: none;
 	&::before {
-		content: var(--test);
+		content: var(--width);
 	}
+	// Drop down icon.
 	&::after {
-		// content: ' %';
 		content: "\f347";
 		font-family: Dashicons;
 		top: 2px;
@@ -33,7 +32,6 @@
 	}
 
 	background: rgba(0, 0, 0, 0.75);
-	// background: var(--wp-admin-theme-color);
 	border-radius: 2px;
 	box-sizing: border-box;
 	font-size: 12px;
@@ -41,8 +39,6 @@
 	padding: 4px 8px;
 	position: absolute;
 	top: 0;
-	// margin-top: 16px;
-	// transform: translateX(-50%);
 	left: 0;
 	white-space: nowrap;
 	z-index: 9;
@@ -51,7 +47,6 @@
 	transition: opacity 0.3s ease-in-out;
 	&:hover {
 		opacity: 1;
-		// background: var(--wp-admin-theme-color);
 	}
 	&:focus {
 		border-color: #007cba;
