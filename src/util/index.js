@@ -309,3 +309,17 @@ export const moveArrayIndex = ( values, oldIndex, newIndex ) => {
 	values.splice( oldIndex < newIndex ? oldIndex : oldIndex + 1, 1 ) // Remove value in old position.
 	return values
 }
+
+/**
+ * Create a DOM Element based on HTML string
+ *
+ * @param {string} htmlString
+ *
+ * @return {*} DOM Element
+ */
+export const createElementFromHTMLString = htmlString => {
+	const parentElement = document.createElement( 'div' )
+	parentElement.innerHTML = htmlString
+
+	return parentElement.firstElementChild
+}
