@@ -5,6 +5,7 @@ import {
 import {
 	isEqual, difference, filter,
 } from 'lodash'
+import { createElementFromHTMLString } from '~stackable/util'
 
 // We will auto-recover if there are errors encountered in these tags.
 const ALLOWED_ERROR_TAGS = [ 'style', 'svg' ]
@@ -423,8 +424,9 @@ export const hasEmptyId = issue => {
 		return false
 	}
 
-	const oldHasEmptyId = ! issue.args[ 3 ].match( /id=""/ )
-	const newHasEmptyId = ! issue.args[ 4 ].match( /id=""/ )
+	const newHasEmptyId = createElementFromHTMLString( issue.args[ 3 ] ).getAttribute( 'id' ) === ''
+	const oldHasEmptyId = createElementFromHTMLString( issue.args[ 4 ] ).getAttribute( 'id' ) === ''
+
 	return oldHasEmptyId && ! newHasEmptyId
 }
 
