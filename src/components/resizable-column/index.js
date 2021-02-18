@@ -372,7 +372,7 @@ const _ResizableTooltip = props => {
 				setIsEditWidth( false )
 			}
 		}
-	}, [] )
+	}, [ tooltipRef.current, adjacentBlocks.length ] )
 
 	// Listen for external triggers to open the column input for this column.
 	const openColumnInputPopupListener = useCallback( () => {
