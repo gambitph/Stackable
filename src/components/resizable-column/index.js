@@ -331,7 +331,7 @@ const _ResizableTooltip = props => {
 		}
 
 		return ``
-	}, [ adjacentBlocks, props.value, originalInputValue, props.previewDeviceType ] )
+	}, [ adjacentBlocks.length, props.value, originalInputValue, props.previewDeviceType ] )
 
 	// Create the label of the tooltip.
 	const tooltipLabel = useMemo( () => {
@@ -372,7 +372,9 @@ const _ResizableTooltip = props => {
 				setIsEditWidth( false )
 			}
 		}
-	}, [ tooltipRef.current, adjacentBlocks.length ] )
+	}, [
+		adjacentBlocks.map( ( { clientId } ) => clientId ).join( ',' ), // Dependency is the arrangement of the columns.
+	] )
 
 	// Listen for external triggers to open the column input for this column.
 	const openColumnInputPopupListener = useCallback( () => {
@@ -383,7 +385,7 @@ const _ResizableTooltip = props => {
 		return () => {
 			tooltipRef.current?.removeEventListener( 'openColumnInputPopup', openColumnInputPopupListener )
 		}
-	}, [ openColumnInputPopupListener, tooltipRef ] )
+	}, [ openColumnInputPopupListener ] )
 
 	return (
 		<Fragment>
@@ -407,6 +409,7 @@ const _ResizableTooltip = props => {
 								// When hitting tab, open the next column popup.
 								if ( event.keyCode === 9 ) {
 									openNextColumn( event.shiftKey ? 'left' : 'right' )
+									event.preventDefault()
 								}
 							} }
 							placeholder={ originalInputValue || columnLabel }
