@@ -1,19 +1,32 @@
-import {
-	InnerBlocks,
-} from '@wordpress/block-editor'
-import { Fragment } from '@wordpress/element'
+/**
+ * Internal dependencies
+ */
+import createStyles from './style'
+
+/**
+ * External dependencies
+ */
+import { i18n, version as VERSION } from 'stackable'
+import classnames from 'classnames'
 import {
 	InspectorTabs,
 	PanelAdvancedSettings,
 	InspectorSectionControls,
 	ResizableBottomMargin,
+	Style,
 } from '~stackable/components'
-import { i18n } from 'stackable'
-import { __ } from '@wordpress/i18n'
-import classnames from 'classnames'
 import {
 	useUniqueId,
 } from '~stackable/hooks'
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
+import {
+	InnerBlocks,
+} from '@wordpress/block-editor'
+import { Fragment } from '@wordpress/element'
 
 const Edit = props => {
 	const {
@@ -63,9 +76,13 @@ const Edit = props => {
 		</InspectorSectionControls>
 
 		<div className={ blockClassNames } data-id={ props.attributes.uniqueId }>
-			<style>
-				{ props.attributes.blockMarginBottom !== '' ? `.stk-${ props.attributes.uniqueId } { margin-bottom: ${ props.attributes.blockMarginBottom }px; }` : '' }
-			</style>
+			<Style
+				blockUniqueClassName={ `stk-${ props.attributes.uniqueId }` }
+				blockMainClassName={ 'stk-card-group' }
+				styleFunc={ createStyles( VERSION ) }
+				blockProps={ props }
+				editorMode={ true }
+			/>
 			<div className={ contentClassNames }>
 				<InnerBlocks
 					orientation="horizontal"

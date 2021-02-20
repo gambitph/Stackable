@@ -1,10 +1,21 @@
 /**
+ * Internal dependencies
+ */
+import createStyles from './style'
+
+/**
+ * External dependencies
+ */
+import { Style } from '~stackable/components'
+import { version as VERSION } from 'stackable'
+
+/**
  * WordPress dependencies
  */
 import { InnerBlocks } from '@wordpress/block-editor'
 import classnames from 'classnames'
 
-export default props => {
+export const Save = ( version = VERSION ) => props => {
 	const {
 		hasBackground,
 	} = props.attributes
@@ -25,9 +36,17 @@ export default props => {
 
 	return (
 		<div className={ blockClassName } data-id={ props.attributes.uniqueId }>
+			<Style.Content
+				blockUniqueClassName={ `stk-${ props.attributes.uniqueId }` }
+				blockMainClassName={ 'stk-card-group' }
+				styleFunc={ createStyles( version ) }
+				blockProps={ props }
+			/>
 			<div className={ contentClassNames }>
 				<InnerBlocks.Content />
 			</div>
 		</div>
 	)
 }
+
+export default Save()
