@@ -15,7 +15,7 @@ import { ResizableBox } from '@wordpress/components'
 const DEFAULT_BOTTOM_MARGIN = 24
 
 const SNAP_HEIGHTS = range( 50, 1001, 50 )
-const SNAP_HEIGHTS_TENS = range( 5, 1001, 5 )
+const SNAP_HEIGHTS_TENS = range( 8, 1001, 8 )
 
 const getSnapWidths = ( isShiftKey = false ) => {
 	return { y: ! isShiftKey ? SNAP_HEIGHTS : SNAP_HEIGHTS_TENS }
@@ -39,6 +39,7 @@ const ResizableBottomMargin = props => {
 		'stk-resizable-bottom-margin',
 	], {
 		'stk--is-resizing': currentHeight !== null,
+		'stk--is-tiny': ( props.value !== '' ? props.value : defaultBottomMargin ) < 5,
 	} )
 
 	return (
@@ -84,15 +85,18 @@ const ResizableBottomMargin = props => {
 				}
 			} }
 			onResizeStop={ () => {
-				props.onChange( currentHeight )
+				props.onChange( currentHeight === defaultBottomMargin ? '' : currentHeight )
 				setCurrentHeight( null )
 				setIsResizing( false )
 			} }
 		>
 			{ props.previewSelector && isResizing &&
-				<style>{ `${ props.previewSelector } { margin-bottom: ${ currentHeight }px !important; }` }</style>
+				// #editor so that our styles will override the currently set margin.
+				<style>{ `#editor ${ props.previewSelector } { margin-bottom: ${ currentHeight }px !important; }` }</style>
 			}
-			<span className="stk-resizable-bottom-margin__label">{ `${ isResizing ? currentHeight : ( props.value || defaultBottomMargin ) }px` }</span>
+			<span className="stk-resizable-bottom-margin__label">
+				{ `${ isResizing ? currentHeight : ( props.value !== '' ? props.value : defaultBottomMargin ) }px` }
+			</span>
 		</ResizableBox>
 	)
 }

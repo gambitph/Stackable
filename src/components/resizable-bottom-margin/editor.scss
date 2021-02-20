@@ -12,10 +12,13 @@
 	left: 0;
 	right: 0;
 	z-index: 9; // If the margin becomes 0, this makes the handler still selectable.
+
+	// Make more visible when resizing or when hovered.
 	&.stk--is-resizing,
 	&:hover {
 		background: rgba(220, 158, 93, 0.45);
 	}
+
 	.components-resizable-box__handle {
 		height: 100%; // The handle should be the entire margin
 		bottom: 0 !important; // Anchor on the bottom
@@ -24,6 +27,11 @@
 		&::after {
 			display: none !important;
 		}
+	}
+
+	// Make the handler highlight when hovered if the margin is too small.
+	&.stk--is-tiny:hover .components-resizable-box__handle {
+		background: rgba(220, 158, 93, 0.45);
 	}
 }
 
@@ -38,6 +46,7 @@
 	font-size: 12px;
 	color: #000;
 	overflow: hidden;
+	height: 100%; // This will clip the label when the margin is too small.
 
 	// Save for next time on when we decide to allow people to click and type in margins.
 	// cursor: pointer;
