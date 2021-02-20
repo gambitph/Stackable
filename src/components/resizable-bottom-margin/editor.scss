@@ -38,4 +38,16 @@
 	font-size: 12px;
 	color: #000;
 	overflow: hidden;
+
+	// Save for next time on when we decide to allow people to click and type in margins.
+	// cursor: pointer;
+	// z-index: 3;
+	// &::after {
+	// 	content: "\f347";
+	// 	font-family: Dashicons;
+	// 	top: 2px;
+	// 	position: relative;
+	// 	margin-left: 4px;
+	// 	font-size: 11px;
+	// }
 }
