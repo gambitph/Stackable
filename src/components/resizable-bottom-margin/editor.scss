@@ -5,8 +5,8 @@
 
 // The resizer itself.
 .stk-resizable-bottom-margin {
-	background: rgba(220, 158, 93, 0.9); // This color should be visible even if the background is black.
-	opacity: 0.7;
+	background: rgba(220, 158, 93, 0.3); // This color should be visible even if the background is black.
+	opacity: 1;
 	position: absolute !important;
 	bottom: 0;
 	left: 0;
@@ -14,7 +14,7 @@
 	z-index: 9; // If the margin becomes 0, this makes the handler still selectable.
 	&.stk--is-resizing,
 	&:hover {
-		opacity: 0.8;
+		background: rgba(220, 158, 93, 0.45);
 	}
 	.components-resizable-box__handle {
 		height: 100%; // The handle should be the entire margin
@@ -29,10 +29,9 @@
 
 .stk-resizable-bottom-margin__label {
 	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
+	top: 50%;
+	left: 50%;
+	transform: translateY(-50%) translateX(-50%);
 	display: flex;
 	align-items: center;
 	justify-content: center;
