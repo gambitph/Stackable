@@ -10,6 +10,7 @@ import { AdvancedTextControl } from '..'
  */
 import {
 	useBlockContext,
+	useWithShift,
 } from '~stackable/hooks'
 import { clamp, isEqual } from 'lodash'
 import classnames from 'classnames'
@@ -25,7 +26,6 @@ import {
 	Fragment, useState, useEffect, useRef, useCallback, useMemo,
 } from '@wordpress/element'
 import { withSelect } from '@wordpress/data'
-import useWithShift from './use-with-shift'
 
 const MIN_COLUMN_WIDTHS = {
 	Desktop: 100,
@@ -353,26 +353,22 @@ const _ResizableTooltip = props => {
 
 	// Opens the manual entry for the next column.
 	const openNextColumn = useCallback( ( direction = 'right' ) => {
+		if ( ! window.CustomEvent ) {
+			return
+		}
 		if ( direction === 'right' ) {
 			// Open the popup of the column on the right.
 			const nextIndex = ! isLastBlock ? blockIndex + 1 : 0
 			const nextTooltip = tooltipRef.current.closest( '.stk-row' ).querySelectorAll( '.stk-resizable-column__size-tooltip' )[ nextIndex ]
-			if ( nextTooltip ) {
-				nextTooltip.dispatchEvent( new CustomEvent( 'openColumnInputPopup' ) ) // eslint-disable-line no-undef
-				// Close the current popup.
-				setIsEditWidth( false )
-			}
+			nextTooltip?.dispatchEvent( new window.CustomEvent( 'openColumnInputPopup' ) )
 		} else {
 			// Open the popup of the column on the left.
 			const prevIndex = ! isFirstBlock ? blockIndex - 1 : adjacentBlocks.length - 1
 			const prevTooltip = tooltipRef.current.closest( '.stk-row' ).querySelectorAll( '.stk-resizable-column__size-tooltip' )[ prevIndex ]
-			if ( prevTooltip ) {
-				prevTooltip.dispatchEvent( new CustomEvent( 'openColumnInputPopup' ) ) // eslint-disable-line no-undef
-				// Close the current popup.
-				setIsEditWidth( false )
-			}
+			prevTooltip?.dispatchEvent( new window.CustomEvent( 'openColumnInputPopup' ) )
 		}
 	}, [
+		tooltipRef.current,
 		adjacentBlocks.map( ( { clientId } ) => clientId ).join( ',' ), // Dependency is the arrangement of the columns.
 	] )
 
@@ -385,7 +381,7 @@ const _ResizableTooltip = props => {
 		return () => {
 			tooltipRef.current?.removeEventListener( 'openColumnInputPopup', openColumnInputPopupListener )
 		}
-	}, [ openColumnInputPopupListener ] )
+	}, [ tooltipRef.current, openColumnInputPopupListener ] )
 
 	return (
 		<Fragment>
@@ -409,6 +405,7 @@ const _ResizableTooltip = props => {
 								// When hitting tab, open the next column popup.
 								if ( event.keyCode === 9 ) {
 									openNextColumn( event.shiftKey ? 'left' : 'right' )
+									event.stopPropagation()
 									event.preventDefault()
 								}
 							} }

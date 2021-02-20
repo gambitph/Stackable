@@ -10,9 +10,9 @@ export default {
 		type: 'string',
 		default: '',
 	},
-	columnWidths: {
-		type: 'array',
-		default: [],
+	blockMarginBottom: {
+		type: 'number',
+		default: '',
 	},
 	hasBackground: {
 		type: 'boolean',

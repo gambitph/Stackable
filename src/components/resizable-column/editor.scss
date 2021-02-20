@@ -1,18 +1,44 @@
+/**
+ * COMMENTED THIS OUT FOR NOW, THIS ONE DISPLAYS COLUMN VALUES OF ALL DECENDANTS
+ * AND ITS PARENTS. THE NEXT ONE DISPLAYS ONLY FOR THE SELECTED BLOCK AND ITS
+ * PARENTS.
+ * TODO: TEST FIRST WHICH ONE IS BETTER.
+ */
+
+// // Show column widths when hovering.
+// .stk-row:hover .block-editor-block-list__layout:first-of-type > .wp-block {
+// 	.stk-column-resizeable:first-of-type {
+// 		> .stk-resizable-column__size-tooltip,
+// 		> .stk-resizable-column__popup {
+// 			display: block !important;
+// 		}
+// 	}
+// }
+// // Show column widths when columns and their contents are selected.
+// [data-type^="stackable/"].has-child-selected > .stk-row .block-editor-block-list__layout:first-of-type > .wp-block {
+// 	.stk-column-resizeable:first-of-type {
+// 		> .stk-resizable-column__size-tooltip,
+// 		> .stk-resizable-column__popup {
+// 			display: block !important;
+// 		}
+// 	}
+// }
+
 // Show column widths when hovering.
-.stk-row:hover .block-editor-block-list__layout:first-of-type > .wp-block {
-	.stk-column-resizeable:first-of-type {
+.stk-row:hover > * > * > .block-editor-block-list__layout > .wp-block {
+	> * > .stk-column-resizeable {
 		> .stk-resizable-column__size-tooltip,
 		> .stk-resizable-column__popup {
-			display: block !important;
+			display: block;
 		}
 	}
 }
 // Show column widths when columns and their contents are selected.
-[data-type^="stackable/"].has-child-selected > .stk-row .block-editor-block-list__layout:first-of-type > .wp-block {
-	.stk-column-resizeable:first-of-type {
+[data-type^="stackable/"].has-child-selected > .stk-row > * > * > .block-editor-block-list__layout > .wp-block {
+	> * > .stk-column-resizeable {
 		> .stk-resizable-column__size-tooltip,
 		> .stk-resizable-column__popup {
-			display: block !important;
+			display: block;
 		}
 	}
 }

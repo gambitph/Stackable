@@ -37,6 +37,7 @@ export { default as BlockStyles } from './block-styles'
 export { default as Style } from './style'
 export { default as GlobalStyleControl } from './global-style-control'
 export { default as ResizableColumn } from './resizable-column'
+export { default as ResizableBottomMargin } from './resizable-bottom-margin'
 export {
 	default as InspectorTabs,
 	PreInspectorTabFill,

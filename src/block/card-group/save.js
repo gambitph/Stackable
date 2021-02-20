@@ -9,13 +9,6 @@ export default props => {
 		hasBackground,
 	} = props.attributes
 
-	const columns = ( props.attributes.columnWidths || [] ).map( ( width, i ) => {
-		return `.stk-${ props.attributes.uniqueId } > .stk-column:nth-child(${ i + 1 }) {
-			flex: 1 1 ${ width }% !important;
-			max-width: ${ width }% !important;
-		}`
-	} )
-
 	const blockClassName = classnames( [
 		'stk-card-group',
 		'stk-block',
@@ -32,7 +25,6 @@ export default props => {
 
 	return (
 		<div className={ blockClassName } data-id={ props.attributes.uniqueId }>
-			{ columns.length ? <style>{ columns.join( '' ) }</style> : null }
 			<div className={ contentClassNames }>
 				<InnerBlocks.Content />
 			</div>

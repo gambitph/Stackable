@@ -1,0 +1,42 @@
+// Only show resizable bottom margin when hovering over the block.
+.stk-block:not(:hover) > .stk-resizable-bottom-margin:not(.stk--is-resizing) {
+	opacity: 0;
+}
+
+// The resizer itself.
+.stk-resizable-bottom-margin {
+	background: rgba(220, 158, 93, 0.9); // This color should be visible even if the background is black.
+	opacity: 0.7;
+	position: absolute !important;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 9; // If the margin becomes 0, this makes the handler still selectable.
+	&.stk--is-resizing,
+	&:hover {
+		opacity: 0.8;
+	}
+	.components-resizable-box__handle {
+		height: 100%; // The handle should be the entire margin
+		bottom: 0 !important; // Anchor on the bottom
+		min-height: 5px; // If the margin becomes 0, this makes the handler still selectable.
+		&::before,
+		&::after {
+			display: none !important;
+		}
+	}
+}
+
+.stk-resizable-bottom-margin__label {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 12px;
+	color: #000;
+	overflow: hidden;
+}

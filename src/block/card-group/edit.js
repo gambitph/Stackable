@@ -6,6 +6,7 @@ import {
 	InspectorTabs,
 	PanelAdvancedSettings,
 	InspectorSectionControls,
+	ResizableBottomMargin,
 } from '~stackable/components'
 import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
@@ -62,12 +63,20 @@ const Edit = props => {
 		</InspectorSectionControls>
 
 		<div className={ blockClassNames } data-id={ props.attributes.uniqueId }>
+			<style>
+				{ props.attributes.blockMarginBottom !== '' ? `.stk-${ props.attributes.uniqueId } { margin-bottom: ${ props.attributes.blockMarginBottom }px; }` : '' }
+			</style>
 			<div className={ contentClassNames }>
 				<InnerBlocks
 					orientation="horizontal"
 					allowedBlocks={ [ 'stackable/card' ] }
 				/>
 			</div>
+			<ResizableBottomMargin
+				previewSelector={ `.stk-${ props.attributes.uniqueId }` }
+				value={ props.attributes.blockMarginBottom }
+				onChange={ value => setAttributes( { blockMarginBottom: value } ) }
+			/>
 		</div>
 	</Fragment>
 }
