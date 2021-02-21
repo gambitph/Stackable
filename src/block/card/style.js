@@ -37,7 +37,7 @@ const createStyles = ( version = '' ) => props => {
 						maxWidth: getValue( 'columnWidth', '%s%' ),
 					},
 				},
-				tablet: {
+				tabletOnly: {
 					'': {
 						flex: getValue( 'columnWidthTablet', '1 1 %s%' ),
 						maxWidth: getValue( 'columnWidthTablet', '%s%' ),

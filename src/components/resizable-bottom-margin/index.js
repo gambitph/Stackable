@@ -11,8 +11,14 @@ import { useWithShift } from '~stackable/hooks'
 import { useState, useEffect } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 import { ResizableBox } from '@wordpress/components'
+import { compose } from '@wordpress/compose'
+import { withSelect } from '@wordpress/data'
 
-const DEFAULT_BOTTOM_MARGIN = 24
+const DEFAULT_BOTTOM_MARGINS = {
+	Desktop: 24,
+	Tablet: 24,
+	Mobile: 16,
+}
 
 const SNAP_HEIGHTS = range( 50, 1001, 50 )
 const SNAP_HEIGHTS_TENS = range( 8, 1001, 8 )
@@ -21,7 +27,7 @@ const getSnapWidths = ( isShiftKey = false ) => {
 	return { y: ! isShiftKey ? SNAP_HEIGHTS : SNAP_HEIGHTS_TENS }
 }
 
-const ResizableBottomMargin = props => {
+const _ResizableBottomMarginSingle = props => {
 	const [ initialHeight, setInitialHeight ] = useState( 0 )
 	const [ currentHeight, setCurrentHeight ] = useState( null )
 	const [ isResizing, setIsResizing ] = useState( false )
@@ -33,7 +39,7 @@ const ResizableBottomMargin = props => {
 	}, [ isShiftKey ] )
 
 	// Allow other developers to override the default bottom margin value.
-	const defaultBottomMargin = applyFilters( 'stackable.resizable-bottom-margin.default', DEFAULT_BOTTOM_MARGIN )
+	const defaultBottomMargin = applyFilters( 'stackable.resizable-bottom-margin.default', DEFAULT_BOTTOM_MARGINS[ props.previewDeviceType ] )
 
 	const classNames = classnames( [
 		'stk-resizable-bottom-margin',
@@ -101,10 +107,65 @@ const ResizableBottomMargin = props => {
 	)
 }
 
-ResizableBottomMargin.defaultProps = {
+_ResizableBottomMarginSingle.defaultProps = {
 	previewSelector: '',
 	value: '',
 	onChange: () => {},
 }
 
-export default ResizableBottomMargin
+const ResizableBottomMarginSingle = compose( [
+	withSelect( select => {
+		const {
+			__experimentalGetPreviewDeviceType,
+		} = select( 'core/edit-post' )
+
+		return {
+			previewDeviceType: __experimentalGetPreviewDeviceType(),
+		}
+	} ),
+] )( _ResizableBottomMarginSingle )
+
+const ResizableBottomMargin = props => {
+	const isDesktop = props.previewDeviceType === 'Desktop'
+	const isMobile = props.previewDeviceType === 'Mobile'
+
+	let value = props.valueDesktop // props[ `value${ props.previewDeviceType }` ]
+	if ( ! isDesktop && props.valueTablet !== '' ) {
+		value = props.valueTablet
+	}
+	if ( isMobile && props.valueMobile !== '' ) {
+		value = props.valueMobile
+	}
+
+	return (
+		<ResizableBottomMarginSingle
+			previewSelector={ props.previewSelector }
+			value={ value }
+			onChange={ value => {
+				props[ `onChange${ props.previewDeviceType }` ]( value )
+			} }
+		/>
+	)
+}
+
+ResizableBottomMargin.defaultProps = {
+	previewSelector: '',
+	valueDesktop: '',
+	valueTablet: '',
+	valueMobile: '',
+	onChangeDesktop: () => {},
+	onChangeTablet: () => {},
+	onChangeMobile: () => {},
+}
+
+export default compose( [
+	withSelect( select => {
+		const {
+			__experimentalGetPreviewDeviceType,
+		} = select( 'core/edit-post' )
+
+		return {
+			previewDeviceType: __experimentalGetPreviewDeviceType(),
+		}
+	} ),
+] )( ResizableBottomMargin )

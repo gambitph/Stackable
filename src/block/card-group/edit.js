@@ -91,8 +91,12 @@ const Edit = props => {
 			</div>
 			<ResizableBottomMargin
 				previewSelector={ `.stk-${ props.attributes.uniqueId }` }
-				value={ props.attributes.blockMarginBottom }
-				onChange={ value => setAttributes( { blockMarginBottom: value } ) }
+				valueDesktop={ props.attributes.blockMarginBottom }
+				valueTablet={ props.attributes.blockMarginBottomTablet }
+				valueMobile={ props.attributes.blockMarginBottomMobile }
+				onChangeDesktop={ value => setAttributes( { blockMarginBottom: value } ) }
+				onChangeTablet={ value => setAttributes( { blockMarginBottomTablet: value } ) }
+				onChangeMobile={ value => setAttributes( { blockMarginBottomMobile: value } ) }
 			/>
 		</div>
 	</Fragment>

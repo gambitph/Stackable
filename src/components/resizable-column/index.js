@@ -257,7 +257,9 @@ const ResizableColumn = props => {
 				isVisible={ ! isOnlyBlock }
 				blockContext={ blockContext }
 				blockProps={ props.blockProps }
-				value={ props.blockProps.attributes.columnWidth }
+				value={ isDesktop ? props.blockProps.attributes.columnWidth
+					: isTablet ? ( props.blockProps.attributes.columnWidthTablet || props.blockProps.attributes.columnWidth )
+						: props.blockProps.attributes.columnWidthMobile }
 				onChange={ width => {
 					if ( width < MIN_COLUMN_WIDTH_PERCENTAGE[ props.previewDeviceType ] ) {
 						return
@@ -318,16 +320,21 @@ const _ResizableTooltip = props => {
 	// Compute the default column label value if none is available.
 	const columnLabel = useMemo( () => {
 		if ( ! props.value && ! originalInputValue ) {
-			// In mobile, the columns collapse to 100%.
-			if ( props.previewDeviceType === 'Mobile' ) {
-				return 100.0
-			}
 			// The columns are evenly distributed by default.
-			const value = ( 100 / adjacentBlocks.length ).toFixed( 1 )
-			if ( value.toString() === '33.3' ) {
-				return 33.33
+			if ( props.previewDeviceType === 'Desktop' ) {
+				const value = ( 100 / adjacentBlocks.length ).toFixed( 1 )
+				if ( value.toString() === '33.3' ) {
+					return 33.33
+				}
+				return value
 			}
-			return value
+			// In mobile, the columns are  "auto" so that we don't display
+			// inaccurate percentage widths.
+			if ( props.previewDeviceType === 'Tablet' ) {
+				return __( 'Auto', i18n )
+			}
+			// In mobile, the columns collapse to 100%.
+			return 100.0
 		}
 
 		return ``
@@ -335,14 +342,15 @@ const _ResizableTooltip = props => {
 
 	// Create the label of the tooltip.
 	const tooltipLabel = useMemo( () => {
-		return `'${ ( props.value ? parseFloat( props.value ).toFixed( 1 ) : '' ) || originalInputValue || columnLabel }%'`
+		const label = ( props.value ? parseFloat( props.value ).toFixed( 1 ) : '' ) || originalInputValue || columnLabel
+		return label !== __( 'Auto', i18n ) ? `'${ label }%'` : `'${ label }'`
 	}, [ props.value, originalInputValue, columnLabel ] )
 
 	// Setup the input field when the popup opens.
 	useEffect( () => {
 		if ( isEditWidth ) {
 			setOriginalInputValue( props.value )
-			setCurrentInputValue( props.value || columnLabel )
+			setCurrentInputValue( props.value || ( columnLabel !== __( 'Auto', i18n ) ? columnLabel : '' ) )
 
 			// When the manual entry opens, select the whole value.
 			setTimeout( () => {

@@ -14,6 +14,14 @@ export default {
 		type: 'number',
 		default: '',
 	},
+	blockMarginBottomTablet: {
+		type: 'number',
+		default: '',
+	},
+	blockMarginBottomMobile: {
+		type: 'number',
+		default: '',
+	},
 	hasBackground: {
 		type: 'boolean',
 		default: false,
