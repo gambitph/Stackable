@@ -9,6 +9,7 @@ import edit from './edit'
 import save from './save'
 import deprecated from './deprecated'
 import schema from './schema'
+import example from './example'
 
 /**
  * External dependencies
@@ -39,6 +40,7 @@ export const settings = {
 		anchor: true,
 	},
 	attributes: schema,
+	example,
 
 	save,
 	edit,

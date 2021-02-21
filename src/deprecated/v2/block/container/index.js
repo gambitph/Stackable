@@ -15,6 +15,7 @@ import deprecated from './deprecated'
 import edit from './edit'
 import save from './save'
 import schema from './schema'
+import example from './example'
 
 /**
  * WordPress dependencies
@@ -46,6 +47,7 @@ export const settings = {
 	edit,
 	save,
 	attributes: schema,
+	example,
 
 	// Stackable modules.
 	modules: {

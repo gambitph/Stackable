@@ -19,6 +19,7 @@ addFilter( 'stackable.blog-posts.design.no-text-attributes', 'stackable/blog-pos
 addFilter( 'stackable.blog-posts.design.filtered-block-attributes', 'stackable/button', attributes => {
 	return {
 		...omit( attributes, [
+			'numberOfItems',
 			'order',
 			'orderBy',
 			'postType',

@@ -18,6 +18,7 @@ import './design'
 import deprecated from './deprecated'
 import edit from './edit'
 import save from './save'
+import example from './example'
 
 /**
  * WordPress dependencies
@@ -98,6 +99,7 @@ export const settings = {
 		__( 'YouTube Vimeo mp4', i18n ),
 	],
 	attributes: schema,
+	example,
 	supports: {
 		align: [ 'center', 'wide', 'full' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.

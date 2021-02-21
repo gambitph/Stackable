@@ -25,3 +25,15 @@ addFilter( 'stackable.count-up.design.no-text-attributes', 'stackable/count-up',
 		'description4',
 	] )
 } )
+
+// Ignore these attributes when exporting / applying designs.
+addFilter( 'stackable.count-up.design.filtered-block-attributes', 'stackable/count-up', attributes => {
+	return {
+		...omit( attributes, [
+			'icon1',
+			'icon2',
+			'icon3',
+			'icon4',
+		] ),
+	}
+} )

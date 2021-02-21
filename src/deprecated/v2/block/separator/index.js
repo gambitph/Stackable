@@ -9,6 +9,7 @@ import { default as deprecated } from './deprecated'
 import { default as edit } from './edit'
 import { default as save } from './save'
 import schema from './schema'
+import example from './example'
 
 /**
  * External dependencies
@@ -35,6 +36,7 @@ export const settings = {
 		__( 'Stackable', i18n ),
 	],
 	attributes: schema,
+	example,
 	supports: {
 		align: [ 'full' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
@@ -58,6 +60,7 @@ export const settings = {
 			horizontalContentAlign: false,
 			verticalContentAlign: false,
 			modifyStyles: false,
+			paddingUnits: [ 'px', 'em' ],
 		},
 		'custom-css': {
 			default: applyFilters( 'stackable.separator.custom-css.default', '' ),

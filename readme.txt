@@ -2,7 +2,7 @@
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.4
-Tested up to: 5.6
+Tested up to: 5.6.1
 Requires PHP: 5.3
 Stable tag: 3.0.0
 License: GPLv3
@@ -110,6 +110,7 @@ Optimize your website’s performance, and get lightning fast page loading and m
 
 ### News Article Updates
 
+- [v2.14 Copy and Paste Block Styles](https://wpstackable.com/blog/copy-and-paste-block-styles/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.13 UI Kits, Borders & Improved Performance](https://wpstackable.com/blog/ui-kits-borders/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.12 Better User Interface and User Experience](https://wpstackable.com/blog/better-user-interface-and-user-experience/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.11 Introducing Global Colors and Global Typography](https://wpstackable.com/blog/global-colors-and-global-typography/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -192,6 +193,25 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 2.14.0 =
+[Copy and Paste Block Styles](https://wpstackable.com/blog/copy-and-paste-block-styles/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+* New: You can now copy and paste Stackable and native block styles! (premium)
+* New: Added block previews
+* Fixed: Feature Grid block container image is always set to cover
+* Fixed: Removed inapplicable margin/padding unit in separators
+* Fixed: Accordion text content can be a bit blurry
+* Fixed: Don't enqueue blank Google Fonts in Global Settings
+* Fixed: Expand block text color doesn't apply in backend
+* Fixed: Icon block, title alignment in tablet and mobile did not apply
+* Fixed: Auto block recovery should not affect v1 blocks
+* Fixed: Margins of the Icon block title won't apply
+
+= 2.13.4 =
+* Fixed: Issue with styling duplicated blocks
+* Fixed: Accordion block migration error
+* Fixed: Google Fonts possible enqueueing issue
 
 = 2.13.3 =
 * New: You can now select titles to use Pargraph tags instead of H1-H6

@@ -41,6 +41,7 @@ const externals = [
 	'codeEditor',
 	'rich-text',
 	'url',
+	'keyboard-shortcuts',
 ].reduce( ( externals, name ) => ( {
 	...externals,
 	[ `@wordpress/${ name }` ]: `wp.${ camelCaseDash( name ) }`,

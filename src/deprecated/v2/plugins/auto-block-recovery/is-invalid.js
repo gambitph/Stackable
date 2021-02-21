@@ -11,11 +11,16 @@ const ALLOWED_ERROR_TAGS = [ 'style', 'svg' ]
 
 export const isInvalid = ( block, allowedTags = ALLOWED_ERROR_TAGS ) => {
 	const {
-		name, isValid, validationIssues,
+		name, isValid, validationIssues, originalContent,
 	} = block
 
 	// Only do this for Stackable blocks.
 	if ( ! name || ! name.match( /^ugb\// ) ) {
+		return false
+	}
+
+	// Only do this for blocks with .ugb-main-block and not separator block.
+	if ( ! name.match( /separator/ ) && ! originalContent.match( /ugb-main-block/ ) ) {
 		return false
 	}
 
@@ -62,6 +67,11 @@ export const isInvalid = ( block, allowedTags = ALLOWED_ERROR_TAGS ) => {
 		return true
 	}
 	if ( isLabelAttribute( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
+	// Check whether we're missing an aria-level attribute. For accordion block in < 2.13.2
+	if ( isAriaLevel( validationIssues[ 0 ] ) ) {
 		return true
 	}
 
@@ -221,6 +231,38 @@ export const isLabelAttribute = issue => {
 }
 
 /**
+ * Check whether an aria-level attribute was removed. Issue with accordion block < 2.13.2
+ *
+ * @param {Array} issue The invalidation object
+ * @return {boolean} True or false
+ */
+export const isAriaLevel = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 3 ) {
+		return false
+	}
+
+	if ( typeof issue.args[ 1 ] !== 'object' || typeof issue.args[ 2 ] !== 'object' ) {
+		return false
+	}
+	if ( ! Array.isArray( issue.args[ 1 ] ) || ! Array.isArray( issue.args[ 2 ] ) ) {
+		return false
+	}
+
+	const oldExists = issue.args[ 2 ].some( attributePair => attributePair[ 0 ] === 'aria-level' )
+	const newExists = issue.args[ 1 ].some( attributePair => attributePair[ 0 ] === 'aria-level' )
+
+	if ( oldExists && ! newExists ) {
+		return true
+	}
+
+	return false
+}
+
+/**
  * Checks whether the validation error is because of a missing / additional Svg tag.
  *
  * @param {Array} issue The invalidation object
@@ -343,8 +385,8 @@ export const findFirstDiffPos = ( a, b ) => {
  * @return {Array} List of html tags.
  */
 export const getTagTree = html => {
-	const tags = html.match( /(?<=<)\/?[\w\d]+/g )
-	return ( tags || [] ).reduce( ( stack, tag ) => {
+	const tags = ( html.match( /<\/?[\w\d]+/g ) || [] ).map( tag => tag.replace( '<', '' ) )
+	return tags.reduce( ( stack, tag ) => {
 		if ( tag.indexOf( '/' ) === 0 ) {
 			stack.pop()
 		} else {

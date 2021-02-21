@@ -16,6 +16,7 @@ import edit from './edit'
 import save from './save'
 import deprecated from './deprecated'
 import schema from './schema'
+import example from './example'
 
 /**
  * WordPress dependencies
@@ -36,6 +37,7 @@ export const settings = {
 		__( 'Stackable', i18n ),
 	],
 	attributes: schema,
+	example,
 	supports: {
 		align: [ 'center', 'wide', 'full' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
@@ -56,7 +58,9 @@ export const settings = {
 		'advanced-responsive': true,
 		'block-background': true,
 		'block-separators': true,
-		'block-title': true,
+		'block-title': {
+			marginBottomImportant: true,
+		},
 		'content-align': true,
 		'block-designs': true,
 		'custom-css': {
