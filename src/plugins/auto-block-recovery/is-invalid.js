@@ -5,7 +5,6 @@ import {
 import {
 	isEqual, difference, filter,
 } from 'lodash'
-import { createElementFromHTMLString } from '~stackable/util'
 
 // We will auto-recover if there are errors encountered in these tags.
 const ALLOWED_ERROR_TAGS = [ 'style', 'svg' ]
@@ -76,8 +75,28 @@ export const isInvalid = ( block, allowedTags = ALLOWED_ERROR_TAGS ) => {
 		return true
 	}
 
-	// Check whether the block contains empty `id` attributes.
-	if ( hasEmptyId( validationIssues[ 1 ] ) ) {
+	// Check whether the styles are rearranged.
+	if ( isRearrangedStyles( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
+	// Check whether there are added styles.
+	if ( isAddedStyles( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
+	// Check whether the block has no data-video attribute
+	if ( isDataVideo( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
+	// Check whether the block has no aria-hidden attribute
+	if ( isAriaHidden( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
+	// Check whether the block has no focusable attribute
+	if ( isFocusable( validationIssues[ 0 ] ) ) {
 		return true
 	}
 
@@ -403,34 +422,6 @@ export const getTagTree = html => {
 }
 
 /**
- * Checks whether the block contains empty id attributes
- * e.g. <div id=""></div>
- *
- * @param {Array} issue The invalidation array
- *
- * @return {boolean} if true, the html content has empty id attributes. Otherwise, false.
- */
-export const hasEmptyId = issue => {
-	if ( ! issue.args ) {
-		return false
-	}
-
-	if ( issue.args.length !== 5 ) {
-		return false
-	}
-
-	// Block contents
-	if ( typeof issue.args[ 3 ] !== 'string' || typeof issue.args[ 4 ] !== 'string' ) {
-		return false
-	}
-
-	const newHasEmptyId = createElementFromHTMLString( issue.args[ 3 ] ).getAttribute( 'id' ) === ''
-	const oldHasEmptyId = createElementFromHTMLString( issue.args[ 4 ] ).getAttribute( 'id' ) === ''
-
-	return oldHasEmptyId && ! newHasEmptyId
-}
-
-/**
  * Gets the HTML tag tree where the invalid block error ocurred.
  *
  * @param {Object} block The invalid block object
@@ -461,4 +452,137 @@ export const getInvalidationTags = block => {
 		...getTagTree( diff1 ),
 		...getTagTree( diff2 ),
 	] )
+}
+
+/**
+ * Checks whether the styles are only rearranged
+ * but are equal.
+ *
+ * @param {Object} issue the invalidation object
+ * @return {booleam} if true, the block has rearranged styles. Otherwise, false.
+ */
+export const isRearrangedStyles = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 3 ) {
+		return false
+	}
+
+	if ( ! issue.args[ 0 ].match( /text/ ) ) {
+		return false
+	}
+
+	const newStyles = issue.args[ 1 ].match( /.ugb(.*?(?=\{)){(.*?(?=\}))}/g )
+	const oldStyles = issue.args[ 2 ].match( /.ugb(.*?(?=\{)){(.*?(?=\}))}/g )
+	if ( newStyles && oldStyles ) {
+		return isEqual( newStyles.sort(), oldStyles.sort() )
+	}
+
+	return false
+}
+
+/**
+ * Checks whether there are added styles
+ * to the block
+ *
+ * @param {Object} issue the invalidation object
+ * @return {booleam} if true, the block has rearranged styles. Otherwise, false.
+ */
+export const isAddedStyles = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 3 ) {
+		return false
+	}
+
+	if ( ! issue.args[ 0 ].match( /text/ ) ) {
+		return false
+	}
+
+	const newStyles = issue.args[ 1 ].match( /.ugb(.*?(?=\{)){(.*?(?=\}))}/g )
+	const oldStyles = issue.args[ 2 ].match( /.ugb(.*?(?=\{)){(.*?(?=\}))}/g )
+	if ( newStyles && oldStyles ) {
+		return difference( newStyles, oldStyles ).length
+	}
+
+	return false
+}
+
+/**
+ * Checks whether the block has
+ * no data-video attribute. For video popup block.
+ *
+ * @param {Object} issue the validation object
+ * @return {boolean} if true, the block has no data-video. Otherwise, false.
+ */
+export const isDataVideo = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 3 ) {
+		return false
+	}
+
+	if ( ! issue.args[ 0 ].match( /attributes/ ) ) {
+		return false
+	}
+
+	const newHasDataVideo = issue.args[ 1 ].some( attribute => attribute[ 0 ] === 'data-video' )
+	const oldHasDataVideo = issue.args[ 2 ].some( attribute => attribute[ 0 ] === 'data-video' )
+	return newHasDataVideo && ! oldHasDataVideo
+}
+
+/**
+ * Checks whether the block has
+ * no aria-hidden attribute.
+ *
+ * @param {Object} issue the validation object
+ * @return {boolean} if true, the block has no aria-hidden. Otherwise, false.
+ */
+export const isAriaHidden = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 3 ) {
+		return false
+	}
+
+	if ( ! issue.args[ 0 ].match( /attributes/ ) ) {
+		return false
+	}
+
+	const newHasAriaHidden = issue.args[ 1 ].some( attribute => attribute[ 0 ] === 'aria-hidden' )
+	const oldHasAriaHidden = issue.args[ 2 ].some( attribute => attribute[ 0 ] === 'aria-hidden' )
+	return newHasAriaHidden && ! oldHasAriaHidden
+}
+
+/**
+ * Checks whether the block has
+ * no focusable attribute.
+ *
+ * @param {Object} issue the validation object
+ * @return {boolean} if true, the block has no focusable. Otherwise, false.
+ */
+export const isFocusable = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 3 ) {
+		return false
+	}
+
+	if ( ! issue.args[ 0 ].match( /attributes/ ) ) {
+		return false
+	}
+
+	const newHasFocusable = issue.args[ 1 ].some( attribute => attribute[ 0 ] === 'focusable' )
+	const oldHasFocusable = issue.args[ 2 ].some( attribute => attribute[ 0 ] === 'focusable' )
+	return newHasFocusable && ! oldHasFocusable
 }
