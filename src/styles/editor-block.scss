@@ -4,8 +4,8 @@
 @import "breakpoints";
 
 // Blocks
-[data-type^="stackable/"],
-[data-type^="stackable/"].wp-block { // .wp-block to ensure our styles are followed.
+.editor-styles-wrapper [data-type^="stackable/"],
+.editor-styles-wrapper [data-type^="stackable/"].wp-block { // .wp-block to ensure our styles are followed.
 	margin-top: 0;
 	margin-bottom: 0;
 	z-index: 1;
