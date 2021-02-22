@@ -88,4 +88,3 @@ export const moveInnerBlock = ( clientId, fromIndex, toIndex ) => {
 
 	replaceInnerBlocks( clientId, newInnerBlocks, false )
 }
-

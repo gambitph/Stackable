@@ -21,7 +21,7 @@ export const DEFAULT_CHECK_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBo
  *
  * @return {*} DOM Element
  */
-export const createElementFromHTMLString = htmlString => {
+const createElementFromHTMLString = htmlString => {
 	const parentElement = document.createElement( 'div' )
 	parentElement.innerHTML = htmlString
 
