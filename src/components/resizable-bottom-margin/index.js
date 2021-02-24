@@ -80,7 +80,6 @@ const _ResizableBottomMarginSingle = props => {
 				setIsResizing( true )
 				setCurrentHeight( currentMargin || 0 )
 			} }
-			// showHandle={ false }
 			onResize={ ( _event, _direction, elt, delta ) => {
 				setCurrentHeight( initialHeight + delta.height )
 

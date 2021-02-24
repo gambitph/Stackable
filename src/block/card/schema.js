@@ -43,4 +43,20 @@ export default {
 		default: false,
 	},
 	...createImageBackgroundAttributes( 'image%s' ),
+	imageHeight: {
+		type: 'number',
+		default: '',
+	},
+	imageWidth: {
+		type: 'number',
+		default: '',
+	},
+	imageHeightUnit: {
+		type: 'string',
+		default: 'px',
+	},
+	imageWidthUnit: {
+		type: 'string',
+		default: '%',
+	},
 }

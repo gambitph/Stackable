@@ -12,10 +12,9 @@ import {
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 	InspectorSectionControls,
-	ImageUploadPlaceholder,
-	Image,
 	ResizableColumn,
 	Style,
+	Image2,
 } from '~stackable/components'
 import {
 	useUniqueId,
@@ -30,7 +29,7 @@ import {
 import { dispatch } from '@wordpress/data'
 
 const TEMPLATE = [
-	[ 'core/heading', { content: 'Title for This Block' } ],
+	[ 'core/heading', {} ],
 	[ 'core/paragraph', { content: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.' } ],
 	[ 'core/button', { content: 'Button' } ],
 ]
@@ -146,49 +145,42 @@ const Edit = props => {
 			>
 				<div className={ blockClassNames } data-id={ props.attributes.uniqueId }>
 					<div className={ contentClassNames }>
-						{ /* { props.attributes.imageUrl && */ }
-						<ImageUploadPlaceholder
+						<Image2
 							imageID={ props.attributes.imageId }
 							imageURL={ props.attributes.imageUrl }
-							// imageSize={ imageSize }
-							// className={ imageClasses }
 							className="stk-card__image"
+							imageId={ props.attributes.imageId }
+							src={ props.attributes.imageUrl }
+							height={ props.attributes.imageHeight || 300 }
+							width={ props.attributes.imageWidth || 100 }
+							heightUnit={ props.attributes.imageHeightUnit || 'px' }
+							widthUnit={ props.attributes.imageWidthUnit || '%' }
+							onChangeSize={ size => {
+								setAttributes( {
+									imageHeight: size.height,
+									imageWidth: size.width,
+								} )
+							} }
+							enableWidth={ false }
+							enableDiagonal={ false }
 							onRemove={ () => {
 								setAttributes( {
 									imageUrl: '',
 									imageId: '',
-									imageAlt: '',
-									imageTitle: '',
 								} )
 							} }
 							onChange={ image => {
 								setAttributes( {
 									imageUrl: image.url,
 									imageId: image.id,
-									imageAlt: image.alt,
-									imageTitle: image.title,
 								} )
 							} }
-							render={
-								<Image
-									imageId={ props.attributes.imageId }
-									src={ props.attributes.imageUrl }
-									className="stk-image--fit"
-									// size={ imageSize }
-									// shape={ attributes[ `image${ i }Shape` ] || imageShape }
-									// shapeStretch={ attributes[ `image${ i }ShapeStretch` ] || imageShapeStretch }
-									// alt={ imageAlt }
-									// shadow={ imageShadow }
-									// width={ imageWidth }
-								/>
-							}
 						/>
 						<div className={ innerClassNames }>
 							<InnerBlocks
-								// orientation="horizontal"
 								template={ TEMPLATE }
 								renderAppender={ () => ! hasInnerBlocks ? <InnerBlocks.ButtonBlockAppender /> : <InnerBlocks.DefaultBlockAppender /> }
-								// allowedBlocks={ [ 'stackable/card' ] }
+								templateInsertUpdatesSelection={ true }
 							/>
 						</div>
 					</div>

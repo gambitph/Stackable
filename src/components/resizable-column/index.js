@@ -112,7 +112,7 @@ const ResizableColumn = props => {
 			className={ className }
 			showHandle={ props.showHandle }
 			snap={ snapWidths }
-			snapGap={ 15 }
+			snapGap={ 20 }
 			onResizeStart={ ( _event, _direction ) => {
 				toggleSelection( false )
 
