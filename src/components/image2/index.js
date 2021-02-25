@@ -1,22 +1,24 @@
 /**
  * This component is meant to replace the ImageUploadPlaceholder and Image
  */
+import getSnapSizes from './get-snap-sizes'
 
 /**
  * External dependencies
  */
 import { MediaUpload } from '@wordpress/block-editor'
 import { Dashicon, ResizableBox } from '@wordpress/components'
-import { useState } from '@wordpress/element'
+import { useState, useEffect } from '@wordpress/element'
 import classnames from 'classnames'
 import striptags from 'striptags'
 import { clamp } from 'lodash'
+import { useWithShift } from '~stackable/hooks'
 
-const formSize = ( size = '', unit = '%' ) => {
+const formSize = ( size = '', unit = '%', usePx = false ) => {
 	if ( ! size && size !== 0 ) {
-		return unit === '%' ? '100%' : 150
+		return unit === '%' ? '100%' : ( usePx ? '150px' : 150 )
 	}
-	return unit === '%' ? `${ size }%` : size
+	return unit === '%' ? `${ size }%` : ( usePx ? size : `${ size }px` )
 }
 
 const getImageClasses = props => {
@@ -46,6 +48,16 @@ const Image2 = props => {
 	const [ initialWidth, setInitialWidth ] = useState()
 	const [ parentHeight, setParentHeight ] = useState()
 	const [ parentWidth, setParentWidth ] = useState()
+
+	const [ currentHeight, setCurrentHeight ] = useState()
+	const [ currentWidth, setCurrentWidth ] = useState()
+
+	const [ snap, setSnap ] = useState( null )
+
+	const isShiftKey = useWithShift()
+	useEffect( () => {
+		setSnap( null )
+	}, [ isShiftKey ] )
 
 	const imageClasses = classnames( [
 		getImageClasses( props ),
@@ -114,6 +126,9 @@ const Image2 = props => {
 						role="button"
 						tabIndex={ 0 }
 
+						snap={ snap }
+						snapGap={ 15 }
+
 						onResizeStart={ ( _event, _direction, elt ) => {
 							// Lock the aspect ratio when changing diagonally.
 							setLockAspectRatio( _direction === 'bottomRight' )
@@ -141,24 +156,34 @@ const Image2 = props => {
 							setInitialWidth( currentWidth || 0 )
 
 							setIsResizing( true )
+							setSnap( null )
 						} }
-						onResizeStop={ ( _event, _direction, elt, delta ) => {
-							// Get the new size of the image after dragging.
+						onResize={ ( _event, _direction, elt, delta ) => {
+							// Get the new size of the image when dragging.
 							let currentHeight, currentWidth
 							if ( props.heightUnit === '%' ) {
 								currentHeight = clamp( Math.round( ( initialHeight + delta.height ) / parentHeight * 1000 ) / 10, 0, 100 )
 							} else {
 								currentHeight = initialHeight + delta.height
 							}
+							setCurrentHeight( currentHeight )
 
 							if ( props.widthUnit === '%' ) {
-								currentWidth = clamp( Math.round( ( initialWidth + delta.width ) / parentWidth * 1000 ) / 10, 0, 100 )
+								currentWidth = clamp( Math.round( ( initialWidth + delta.width ) / parentWidth * 100 ), 0, 100 )
 							} else {
 								currentWidth = initialWidth + delta.width
 							}
+							setCurrentWidth( currentWidth )
 
+							// Adjust the snapping of the image size.
+							if ( ! snap ) {
+								setSnap( getSnapSizes( parentWidth, parentHeight, props.widthUnit, props.heightUnit, _direction, isShiftKey ) )
+							}
+						} }
+						onResizeStop={ () => {
 							props.onChangeSize( { width: currentWidth, height: currentHeight } )
 							setIsResizing( false )
+							setSnap( null )
 						} }
 					>
 						{ props.src && props.onRemove && props.hasRemove && (
@@ -172,6 +197,12 @@ const Image2 = props => {
 								<Dashicon icon="no" />
 							</button>
 						) }
+						<Tooltip
+							enableHeight={ props.enableHeight || props.enableDiagonal }
+							enableWidth={ props.enableWidth || props.enableDiagonal }
+							height={ formSize( currentHeight || props.height, props.heightUnit ) }
+							width={ formSize( currentWidth || props.width, props.widthUnit ) }
+						/>
 						<img
 							className="stk-img"
 							src={ props.src || undefined }
@@ -217,6 +248,40 @@ Image2.defaultProps = {
 	hasRemove: true,
 	onRemove: () => {},
 	onChangeSize: () => {},
+}
+
+const Tooltip = props => {
+	const [ isEditing, setIsEditing ] = useState( false )
+	return (
+		<div
+			className="stk-img-resizer-tooltip"
+			role="button"
+			tabIndex="0"
+			onClick={ event => {
+				event.preventDefault()
+				event.stopPropagation()
+				setIsEditing( ! isEditing )
+			} }
+			onKeyDown={ event => {
+				if ( event.keyCode === 13 ) {
+					setIsEditing( ! isEditing )
+				}
+			} }
+		>
+			{ props.enableHeight ? props.height : null }
+			{ props.enableHeight && props.enableWidth ? ' × ' : null }
+			{ props.enableWidth ? props.width : null }
+		</div>
+	)
+}
+Tooltip.defaultProps = {
+	width: '',
+	height: '',
+	// widthUnit: '%',
+	// heightUnit: 'px',
+	enableWidth: true,
+	enableHeight: true,
+	allowChange: true,
 }
 
 Image2.Content = props => {
