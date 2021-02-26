@@ -71,6 +71,7 @@
 	cursor: pointer;
 	opacity: 0.9;
 	transition: opacity 0.3s ease-in-out;
+	user-select: none;
 	&:hover {
 		opacity: 1;
 	}

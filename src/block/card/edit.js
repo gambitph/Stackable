@@ -155,12 +155,19 @@ const Edit = props => {
 							width={ props.attributes.imageWidth || 100 }
 							heightUnit={ props.attributes.imageHeightUnit || 'px' }
 							widthUnit={ props.attributes.imageWidthUnit || '%' }
-							onChangeSize={ size => {
-								setAttributes( {
-									imageHeight: size.height,
-									imageWidth: size.width,
-								} )
+							// TODO: combine units and size
+							onChangeSize={ ( { width, height } ) => {
+								const size = {}
+								if ( typeof width !== 'undefined' ) {
+									size.imageWidth = width
+								}
+								if ( typeof height !== 'undefined' ) {
+									size.imageHeight = height
+								}
+								setAttributes( size )
 							} }
+							onChangeHeightUnit={ value => setAttributes( { imageHeightUnit: value } ) }
+							onChangeWidthUnit={ value => setAttributes( { imageWidthUnit: value } ) }
 							enableWidth={ false }
 							enableDiagonal={ false }
 							onRemove={ () => {

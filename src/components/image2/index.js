@@ -4,21 +4,36 @@
 import getSnapSizes from './get-snap-sizes'
 
 /**
+ * Internal dependencies
+ */
+import { AdvancedTextControl } from '..'
+
+/**
  * External dependencies
  */
-import { MediaUpload } from '@wordpress/block-editor'
-import { Dashicon, ResizableBox } from '@wordpress/components'
-import { useState, useEffect } from '@wordpress/element'
+import { useWithShift } from '~stackable/hooks'
 import classnames from 'classnames'
 import striptags from 'striptags'
 import { clamp } from 'lodash'
-import { useWithShift } from '~stackable/hooks'
+import { i18n } from 'stackable'
 
-const formSize = ( size = '', unit = '%', usePx = false ) => {
+/**
+ * WordPress dependencies
+ */
+import { MediaUpload } from '@wordpress/block-editor'
+import {
+	BaseControl, Dashicon, Popover, ResizableBox,
+} from '@wordpress/components'
+import {
+	Fragment, useState, useEffect, useRef, useCallback,
+} from '@wordpress/element'
+import { __ } from '@wordpress/i18n'
+
+const formSize = ( size = '', unit = '%', usePx = false, usePct = true ) => {
 	if ( ! size && size !== 0 ) {
-		return unit === '%' ? '100%' : ( usePx ? '150px' : 150 )
+		return unit === '%' ? ( usePct ? '100%' : 100 ) : ( usePx ? '150px' : 150 )
 	}
-	return unit === '%' ? `${ size }%` : ( usePx ? size : `${ size }px` )
+	return unit === '%' ? ( usePct ? `${ size }%` : size ) : ( usePx ? `${ size }px` : size )
 }
 
 const getImageClasses = props => {
@@ -61,6 +76,7 @@ const Image2 = props => {
 
 	const imageClasses = classnames( [
 		getImageClasses( props ),
+		'stk-img-resizer',
 	], {
 		'stk-img-placeholder': ! props.src,
 		'stk--is-resizing': isResizing,
@@ -115,8 +131,12 @@ const Image2 = props => {
 						// Lock aspect ratio when resizing via the corner handler
 						lockAspectRatio={ lockAspectRatio }
 
-						// Open the media picker.
-						onClick={ obj.open }
+						// Open the media picker, but only when the image is clicked, not the popup, etc.
+						onClick={ event => {
+							if ( event.target?.classList?.contains( 'stk-img' ) || event.target?.classList?.contains( 'stk-img-placeholder' ) ) {
+								obj.open()
+							}
+						} }
 						onKeyDown={ event => {
 							if ( event.keyCode === 13 ) {
 								obj.open()
@@ -200,8 +220,14 @@ const Image2 = props => {
 						<Tooltip
 							enableHeight={ props.enableHeight || props.enableDiagonal }
 							enableWidth={ props.enableWidth || props.enableDiagonal }
-							height={ formSize( currentHeight || props.height, props.heightUnit ) }
-							width={ formSize( currentWidth || props.width, props.widthUnit ) }
+							height={ formSize( currentHeight || props.height, props.heightUnit, false, false ) }
+							width={ formSize( currentWidth || props.width, props.widthUnit, false, false ) }
+							heightUnit={ props.heightUnit }
+							widthUnit={ props.widthUnit }
+							onChangeHeight={ value => props.onChangeSize( { height: value } ) }
+							onChangeHeightUnit={ unit => props.onChangeHeightUnit( unit ) }
+							onChangeWidth={ value => props.onChangeSize( { width: value } ) }
+							onChangeWidthUnit={ unit => props.onChangeWidthUnit( unit ) }
 						/>
 						<img
 							className="stk-img"
@@ -247,41 +273,165 @@ Image2.defaultProps = {
 	onChange: () => {},
 	hasRemove: true,
 	onRemove: () => {},
+	// TODO: Combine change size and change units
 	onChangeSize: () => {},
+	onChangeHeightUnit: () => {},
+	onChangeWidthUnit: () => {},
 }
 
+const clampSize = ( value, unit = '%' ) => {
+	let ret
+	if ( unit === '%' ) {
+		ret = clamp( value, 5, 100 )
+	}
+	ret = Math.max( value, 5 )
+	return isNaN( ret ) ? '' : ret
+}
+
+// For fixing the jump when switching units
+// const getImageContainerEl = innerEl => {
+// 	const imgEl = innerEl.closest( '.stk-img-resizer' )
+// 	return imgEl?.parentElement
+// }
+
+// TODO: switching from % to px should not change the size of the image
 const Tooltip = props => {
 	const [ isEditing, setIsEditing ] = useState( false )
+	const [ currentWidth, setCurrentWidth ] = useState( '' )
+	const [ currentHeight, setCurrentHeight ] = useState( '' )
+
+	const tooltipRef = useRef()
+	const popupRef = useRef()
+
+	const focusInput = useCallback( () => {
+		// When the manual entry opens, select the whole value.
+		setTimeout( () => {
+			popupRef.current.querySelector( 'input' ).select()
+		}, 1 )
+	}, [ popupRef.current ] )
+
+	useEffect( () => {
+		if ( isEditing ) {
+			setCurrentWidth( props.width )
+			setCurrentHeight( props.height )
+			focusInput()
+		} else {
+			setCurrentWidth( '' )
+			setCurrentHeight( '' )
+		}
+	}, [ isEditing ] )
+
+	const className = classnames( [
+		'stk-img-resizer-tooltip',
+	], {
+		'stk--is-editing': isEditing,
+	} )
+
+	const popupClassName = classnames( [
+		'stk-image-size-popup',
+	], {
+		'stk--is-wide': props.enableWidth && props.enableHeight,
+	} )
+
+	const widthControl = <AdvancedTextControl
+		label={ props.enableWidth && props.enableHeight ? __( 'Width', i18n ) : __( 'Image Width', i18n ) }
+		className="stk-image-size-popup__size"
+		units={ [ 'px', '%' ] }
+		unit={ props.widthUnit }
+		onChangeUnit={ value => {
+			props.onChangeWidthUnit( value )
+			focusInput()
+		} }
+		onChange={ value => {
+			setCurrentWidth( value )
+			if ( value >= 5 ) {
+				props.onChangeWidth( clampSize( value, props.widthUnit ) )
+			}
+		} }
+		value={ currentWidth }
+	/>
+
+	const heightControl = <AdvancedTextControl
+		label={ props.enableWidth && props.enableHeight ? __( 'Height', i18n ) : __( 'Image Height', i18n ) }
+		className="stk-image-size-popup__size"
+		units={ [ 'px', '%' ] }
+		unit={ props.heightUnit }
+		onChangeUnit={ value => {
+			props.onChangeHeightUnit( value )
+			focusInput()
+		} }
+		onChange={ value => {
+			setCurrentHeight( value )
+			if ( value >= 5 ) {
+				props.onChangeHeight( clampSize( value, props.heightUnit ) )
+			}
+		} }
+		value={ currentHeight }
+	/>
+
 	return (
-		<div
-			className="stk-img-resizer-tooltip"
-			role="button"
-			tabIndex="0"
-			onClick={ event => {
-				event.preventDefault()
-				event.stopPropagation()
-				setIsEditing( ! isEditing )
-			} }
-			onKeyDown={ event => {
-				if ( event.keyCode === 13 ) {
+		<Fragment>
+			{ isEditing && (
+				<Popover
+					className={ popupClassName }
+					anchorRef={ tooltipRef.current }
+					position="bottom right"
+					onFocusOutside={ () => setIsEditing( false ) }
+				>
+					<div ref={ popupRef }>
+						{ props.enableWidth && props.enableHeight &&
+							<BaseControl
+								help={ props.help }
+								className={ classnames( 'ugb-advanced-text-control', props.className ) }
+							>
+								<div className="components-base-control__label">{ __( 'Image Size', i18n ) }</div>
+								<div className="stk-image-size-popup__control-wrapper">
+									{ widthControl }
+									<span className="stk-image-size-popup__x">×</span>
+									{ heightControl }
+								</div>
+							</BaseControl>
+						}
+						{ props.enableWidth && ! props.enableHeight && widthControl }
+						{ ! props.enableWidth && props.enableHeight && heightControl }
+					</div>
+				</Popover>
+			) }
+			<div
+				className={ className }
+				role="button"
+				tabIndex="0"
+				onMouseDown={ event => {
+					event.preventDefault()
+					event.stopPropagation()
 					setIsEditing( ! isEditing )
-				}
-			} }
-		>
-			{ props.enableHeight ? props.height : null }
-			{ props.enableHeight && props.enableWidth ? ' × ' : null }
-			{ props.enableWidth ? props.width : null }
-		</div>
+				} }
+				onKeyDown={ event => {
+					if ( event.keyCode === 13 ) {
+						setIsEditing( ! isEditing )
+					}
+				} }
+				ref={ tooltipRef }
+			>
+				{ props.enableWidth ? `${ currentWidth || props.width }${ props.widthUnit }` : null }
+				{ props.enableWidth && props.enableHeight ? ' × ' : null }
+				{ props.enableHeight ? `${ currentHeight || props.height }${ props.heightUnit }` : null }
+			</div>
+		</Fragment>
 	)
 }
 Tooltip.defaultProps = {
 	width: '',
 	height: '',
-	// widthUnit: '%',
-	// heightUnit: 'px',
+	widthUnit: '%',
+	heightUnit: 'px',
 	enableWidth: true,
 	enableHeight: true,
 	allowChange: true,
+	onChangeWidth: () => {},
+	onChangeHeight: () => {},
+	onChangeWidthUnit: () => {},
+	onChangeHeightUnit: () => {},
 }
 
 Image2.Content = props => {
