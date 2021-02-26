@@ -47,9 +47,9 @@ const save = props => {
 
 	const itemClasses = classnames( [
 		'ugb-blockquote__item',
-	], {
+	], applyFilters( 'stackable.blockquote.itemclasses', {
 		[ `ugb--shadow-${ shadow }` ]: show.containerBackground && shadow !== '',
-	} )
+	}, props ) )
 
 	return (
 		<BlockContainer.Save blockTag={ blockTag || 'blockquote' } className={ mainClasses } blockProps={ props } render={ () => (

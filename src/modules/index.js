@@ -9,6 +9,7 @@ import blockBackground from './block-background'
 import blockSeparators from './block-separators'
 import blockTitle from './block-title'
 import blockDesigns from './block-designs'
+import clickableContainer from './clickable-container'
 import contentAlign from './content-align'
 import customCSS from './custom-css'
 export { getModule, initBlockModule } from './modules'
@@ -22,6 +23,7 @@ export const modules = [
 	{ name: 'block-separators', module: blockSeparators },
 	{ name: 'block-title', module: blockTitle },
 	{ name: 'block-designs', module: blockDesigns },
+	{ name: 'clickable-container', module: clickableContainer },
 	{ name: 'content-align', module: contentAlign },
 	{ name: 'custom-css', module: customCSS },
 ]

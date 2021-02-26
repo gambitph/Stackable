@@ -61,6 +61,7 @@ export const settings = {
 		'block-title': true,
 		'content-align': true,
 		'block-designs': true,
+		'clickable-container': true,
 		'custom-css': {
 			default: applyFilters( 'stackable.testimonial.custom-css.default', '' ),
 		},

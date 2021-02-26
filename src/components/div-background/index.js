@@ -2,7 +2,13 @@
  * External dependencies
  */
 import classnames from 'classnames'
-import { createVideoBackground, hasBackgroundOverlay } from '~stackable/util'
+import { hasBackgroundOverlay } from '~stackable/util'
+import { omit } from 'lodash'
+
+/**
+ * WordPress dependencies
+ */
+import { applyFilters } from '@wordpress/hooks'
 
 const DivBackground = props => {
 	const {
@@ -11,7 +17,6 @@ const DivBackground = props => {
 		backgroundAttrName,
 		blockProps,
 		showBackground,
-		showVideoBackground,
 		...propsToPass
 	} = props
 	const divClasses = classnames( [
@@ -21,9 +26,9 @@ const DivBackground = props => {
 	} )
 
 	return (
-		<BlockTag className={ divClasses } { ...propsToPass }>
+		<BlockTag className={ divClasses } { ...omit( propsToPass, 'index' ) }>
 			{ props.children }
-			{ showBackground && showVideoBackground && createVideoBackground( backgroundAttrName, blockProps ) }
+			{ applyFilters( 'stackable.div-background.output.after', null, props, blockProps ) }
 		</BlockTag>
 	)
 }
