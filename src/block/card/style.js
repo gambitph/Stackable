@@ -11,6 +11,7 @@ const createStyles = ( version = '' ) => props => {
 	const getValue = __getValue( props.attributes )
 	const styles = new StyleObject()
 
+	// TODO: move these into a new column util (?)
 	// Column styles.
 	styles.add( {
 		style: {
@@ -56,6 +57,7 @@ const createStyles = ( version = '' ) => props => {
 		versionDeprecated: '',
 	} )
 
+	// TODO: move these into a new image util (?)
 	// TODO: image adv styles like zoom, filter, etc.
 	// Image styles.
 	styles.add( {

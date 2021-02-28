@@ -22,6 +22,7 @@ export default {
 		type: 'string',
 		default: '',
 	},
+	// TODO: move these into a column util (?)
 	columnWidth: {
 		type: 'number',
 		default: '',
@@ -34,6 +35,7 @@ export default {
 		type: 'number',
 		default: '',
 	},
+
 	hasContainer: {
 		type: 'boolean',
 		default: true,
@@ -42,6 +44,8 @@ export default {
 		type: 'boolean',
 		default: false,
 	},
+
+	// TODO: move these into a new image util (?)
 	...createImageBackgroundAttributes( 'image%s' ),
 	imageHeight: {
 		type: 'number',
