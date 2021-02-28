@@ -56,23 +56,21 @@ export const Save = ( version = VERSION ) => props => {
 			/>
 			<div className={ contentClassNames }>
 				{ props.attributes.imageUrl &&
-					<div className="stk-card__image">
-						<Image2.Content
-							className="stk-image--fit"
-							imageId={ props.attributes.imageId }
-							src={ props.attributes.imageUrl }
-							alt={ props.attributes.imageAlt }
-							title={ props.attributes.imageTitle }
-							height={ props.attributes.imageHeight || 300 }
-							width={ props.attributes.imageWidth || 100 }
-							heightUnit={ props.attributes.imageHeightUnit || 'px' }
-							widthUnit={ props.attributes.imageWidthUnit || '%' }
-							// width={ imageWidth }
-							// shadow={ imageShadow }
-							// shape={ attributes[ `image${ i }Shape` ] || imageShape }
-							// shapeStretch={ attributes[ `image${ i }ShapeStretch` ] || imageShapeStretch }
-						/>
-					</div>
+					<Image2.Content
+						className="stk-card__image"
+						imageId={ props.attributes.imageId }
+						src={ props.attributes.imageUrl }
+						alt={ props.attributes.imageAlt }
+						title={ props.attributes.imageTitle }
+						height={ props.attributes.imageHeight || 300 }
+						width={ props.attributes.imageWidth || 100 }
+						heightUnit={ props.attributes.imageHeightUnit || 'px' }
+						widthUnit={ props.attributes.imageWidthUnit || '%' }
+						// width={ imageWidth }
+						// shadow={ imageShadow }
+						// shape={ attributes[ `image${ i }Shape` ] || imageShape }
+						// shapeStretch={ attributes[ `image${ i }ShapeStretch` ] || imageShapeStretch }
+					/>
 				}
 				<div className={ innerClassNames }>
 					<InnerBlocks.Content />

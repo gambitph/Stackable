@@ -4,6 +4,7 @@
 import {
 	__getValue,
 	StyleObject,
+	appendImportantAll,
 } from '~stackable/util'
 
 const createStyles = ( version = '' ) => props => {
@@ -48,6 +49,34 @@ const createStyles = ( version = '' ) => props => {
 						flex: getValue( 'columnWidthMobile', '1 1 %s%' ),
 						maxWidth: getValue( 'columnWidthMobile', '%s%' ),
 					},
+				},
+			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
+
+	// TODO: image adv styles like zoom, filter, etc.
+	// Image styles.
+	styles.add( {
+		style: {
+			// Only save styles since styles in edit are already in the Component.
+			saveOnly: {
+				'.stk-card__image': appendImportantAll( {
+					width: getValue( 'imageWidth', `%s${ getValue( 'imageWidthUnit', '%s', '%' ) }` ),
+					height: getValue( 'imageHeight', `%s${ getValue( 'imageHeightUnit', '%s', 'px' ) }` ),
+				} ),
+				tablet: {
+					'.stk-card__image': appendImportantAll( {
+						width: getValue( 'imageWidthTablet', `%s${ getValue( 'imageWidthUnitTablet', '%s', '%' ) }` ),
+						height: getValue( 'imageHeightTablet', `%s${ getValue( 'imageHeightUnitTablet', '%s', 'px' ) }` ),
+					} ),
+				},
+				mobile: {
+					'.stk-card__image': appendImportantAll( {
+						width: getValue( 'imageWidthMobile', `%s${ getValue( 'imageWidthUnitMobile', '%s', '%' ) }` ),
+						height: getValue( 'imageHeightMobile', `%s${ getValue( 'imageHeightUnitMobile', '%s', 'px' ) }` ),
+					} ),
 				},
 			},
 		},

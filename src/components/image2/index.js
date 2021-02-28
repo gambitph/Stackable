@@ -308,6 +308,7 @@ Image.defaultProps = {
 	onChangeSize: () => {},
 }
 
+// Support responsive options.
 const ImageResponsive = props => {
 	const isDesktop = props.previewDeviceType === 'Desktop'
 	const isMobile = props.previewDeviceType === 'Mobile'
@@ -414,9 +415,7 @@ ImageContent.defaultProps = {
 	shadow: '',
 }
 
-ImageResponsive.Content = ImageContent
-
-export default compose( [
+const _ImageResponsive = compose( [
 	withSelect( select => {
 		const {
 			__experimentalGetPreviewDeviceType,
@@ -428,5 +427,5 @@ export default compose( [
 	} ),
 ] )( ImageResponsive )
 
-// Image.Content = ImageContent
-// export default Image
+_ImageResponsive.Content = ImageContent
+export default _ImageResponsive
