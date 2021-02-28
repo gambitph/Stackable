@@ -149,6 +149,7 @@ const Edit = props => {
 							imageID={ props.attributes.imageId }
 							imageURL={ props.attributes.imageUrl }
 							className="stk-card__image"
+							size={ props.attributes.imageSize }
 							imageId={ props.attributes.imageId }
 							src={ props.attributes.imageUrl }
 							width={ 100 }
