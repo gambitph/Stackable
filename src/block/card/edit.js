@@ -152,12 +152,12 @@ const Edit = props => {
 							size={ props.attributes.imageSize }
 							imageId={ props.attributes.imageId }
 							src={ props.attributes.imageUrl }
+							heightUnits={ [ 'px' ] }
 							width={ 100 }
 							widthUnit="%"
 							height={ props.attributes.imageHeight || 300 }
 							heightUnit="px"
-							heightUnits={ [ 'px' ] }
-							onChangeSize={ ( {
+							onChangeSizeDesktop={ ( {
 								width, height, widthUnit, heightUnit,
 							} ) => {
 								const size = {}
@@ -172,6 +172,44 @@ const Edit = props => {
 								}
 								if ( typeof widthUnit !== 'undefined' ) {
 									size.imageWidthUnit = widthUnit
+								}
+								setAttributes( size )
+							} }
+							heightTablet={ props.attributes.imageHeightTablet }
+							onChangeSizeTablet={ ( {
+								width, height, widthUnit, heightUnit,
+							} ) => {
+								const size = {}
+								if ( typeof width !== 'undefined' ) {
+									size.imageWidthTablet = width
+								}
+								if ( typeof height !== 'undefined' ) {
+									size.imageHeightTablet = height
+								}
+								if ( typeof heightUnit !== 'undefined' ) {
+									size.imageHeightUnitTablet = heightUnit
+								}
+								if ( typeof widthUnit !== 'undefined' ) {
+									size.imageWidthUnitTablet = widthUnit
+								}
+								setAttributes( size )
+							} }
+							heightMobile={ props.attributes.imageHeightMobile }
+							onChangeSizeMobile={ ( {
+								width, height, widthUnit, heightUnit,
+							} ) => {
+								const size = {}
+								if ( typeof width !== 'undefined' ) {
+									size.imageWidthMobile = width
+								}
+								if ( typeof height !== 'undefined' ) {
+									size.imageHeightMobile = height
+								}
+								if ( typeof heightUnit !== 'undefined' ) {
+									size.imageHeightUnitMobile = heightUnit
+								}
+								if ( typeof widthUnit !== 'undefined' ) {
+									size.imageWidthUnitMobile = widthUnit
 								}
 								setAttributes( size )
 							} }

@@ -13,7 +13,9 @@ import { i18n } from 'stackable'
 /**
  * WordPress dependencies
  */
-import { BaseControl, Popover } from '@wordpress/components'
+import {
+	BaseControl, Button, Popover,
+} from '@wordpress/components'
 import {
 	Fragment, useState, useEffect, useRef, useCallback,
 } from '@wordpress/element'
@@ -122,7 +124,10 @@ const Tooltip = props => {
 			setPrevSwitchedWidth( null )
 			setCurrentWidth( value )
 			if ( value >= 5 ) {
-				props.onChangeWidth( { value: clampSize( value, props.widthUnit ) } )
+				props.onChangeWidth( {
+					value: clampSize( value, props.widthUnit ),
+					unit: props.widthUnit,
+				} )
 			}
 		} }
 	/>
@@ -162,10 +167,33 @@ const Tooltip = props => {
 			setPrevSwitchedHeight( null )
 			setCurrentHeight( value )
 			if ( value >= 5 ) {
-				props.onChangeHeight( { value: clampSize( value, props.heightUnit ) } )
+				props.onChangeHeight( {
+					value: clampSize( value, props.heightUnit ),
+					unit: props.heightUnit,
+				} )
 			}
 		} }
 	/>
+
+	const resetButton = <Button
+		className="stk-image-size-popup__reset"
+		isSecondary
+		isSmall
+		onClick={ () => {
+			setPrevSwitchedHeight( null )
+			setPrevSwitchedWidth( null )
+			setCurrentHeight( '' )
+			setCurrentWidth( '' )
+			if ( props.enableWidth ) {
+				props.onChangeWidth( { value: '', unit: '' } )
+			}
+			if ( props.enableHeight ) {
+				props.onChangeHeight( { value: '', unit: '' } )
+			}
+		} }
+	>
+		{ __( 'Reset', i18n ) }
+	</Button>
 
 	return (
 		<Fragment>
@@ -187,11 +215,17 @@ const Tooltip = props => {
 									{ widthControl }
 									<span className="stk-image-size-popup__x">×</span>
 									{ heightControl }
+									{ props.allowReset && resetButton }
 								</div>
 							</BaseControl>
 						}
-						{ props.enableWidth && ! props.enableHeight && widthControl }
-						{ ! props.enableWidth && props.enableHeight && heightControl }
+						{ ! ( props.enableWidth && props.enableHeight ) &&
+							<div className="stk-image-size-popup__control-wrapper">
+								{ props.enableWidth && ! props.enableHeight && widthControl }
+								{ ! props.enableWidth && props.enableHeight && heightControl }
+								{ props.allowReset && resetButton }
+							</div>
+						}
 					</div>
 				</Popover>
 			) }
@@ -228,7 +262,7 @@ Tooltip.defaultProps = {
 	heightUnits: [ 'px', '%' ],
 	enableWidth: true,
 	enableHeight: true,
-	allowChange: true,
+	allowReset: true,
 	onChangeWidth: () => {},
 	onChangeHeight: () => {},
 }

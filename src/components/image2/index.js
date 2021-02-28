@@ -201,7 +201,12 @@ const Image = props => {
 							}
 						} }
 						onResizeStop={ () => {
-							props.onChangeSize( { width: currentWidth, height: currentHeight } )
+							props.onChangeSize( {
+								width: currentWidth,
+								widthUnit: props.widthUnit,
+								height: currentHeight,
+								heightUnit: props.heightUnit,
+							} )
 							setIsResizing( false )
 							setCurrentWidth( null )
 							setCurrentHeight( null )
@@ -229,6 +234,7 @@ const Image = props => {
 							heightUnits={ props.heightUnits }
 							heightUnit={ props.heightUnit }
 							widthUnit={ props.widthUnit }
+							allowReset={ props.allowReset }
 							onChangeHeight={ ( { value, unit } ) => {
 								const size = {}
 								if ( typeof value !== 'undefined' ) {
@@ -294,6 +300,7 @@ Image.defaultProps = {
 	enableWidth: true,
 	enableHeight: true,
 	enableDiagonal: true,
+	allowReset: true,
 
 	hasRemove: true,
 	onChange: () => {},
@@ -305,20 +312,39 @@ const ImageResponsive = props => {
 	const isDesktop = props.previewDeviceType === 'Desktop'
 	const isMobile = props.previewDeviceType === 'Mobile'
 
-	let value = props.valueDesktop
-	if ( ! isDesktop && props.valueTablet !== '' ) {
-		value = props.valueTablet
+	let width = props.width
+	let widthUnit = props.widthUnit || '%'
+	if ( ! isDesktop && props.widthTablet !== '' ) {
+		width = props.widthTablet
+		widthUnit = props.widthUnitTablet
 	}
-	if ( isMobile && props.valueMobile !== '' ) {
-		value = props.valueMobile
+	if ( isMobile && props.widthMobile !== '' ) {
+		width = props.widthMobile
+		widthUnit = props.widthUnitMobile
+	}
+
+	let height = props.height
+	let heightUnit = props.heightUnit || 'px'
+	if ( ! isDesktop && props.heightTablet !== '' ) {
+		height = props.heightTablet
+		if ( props.heightUnitTablet !== '' ) {
+			heightUnit = props.heightUnitTablet
+		}
+	}
+	if ( isMobile && props.heightMobile !== '' ) {
+		height = props.heightMobile
+		if ( props.heightUnitMobile !== '' ) {
+			heightUnit = props.heightUnitMobile
+		}
 	}
 
 	return (
 		<Image
 			{ ...props }
-			// width={  }
-			previewSelector={ props.previewSelector }
-			value={ value }
+			width={ width }
+			widthUnit={ widthUnit }
+			height={ height }
+			heightUnit={ heightUnit }
 			onChangeSize={ value => {
 				props[ `onChangeSize${ props.previewDeviceType }` ]( value )
 			} }
@@ -328,10 +354,6 @@ const ImageResponsive = props => {
 
 ImageResponsive.defaultProps = {
 	...Image.defaultProps,
-	widthDesktop: '',
-	heightDesktop: '',
-	widthUnitDesktop: '%',
-	heightUnitDesktop: 'px',
 
 	widthTablet: '',
 	heightTablet: '',
@@ -394,17 +416,17 @@ ImageContent.defaultProps = {
 
 ImageResponsive.Content = ImageContent
 
-// export default compose( [
-// 	withSelect( select => {
-// 		const {
-// 			__experimentalGetPreviewDeviceType,
-// 		} = select( 'core/edit-post' )
+export default compose( [
+	withSelect( select => {
+		const {
+			__experimentalGetPreviewDeviceType,
+		} = select( 'core/edit-post' )
 
-// 		return {
-// 			previewDeviceType: __experimentalGetPreviewDeviceType(),
-// 		}
-// 	} ),
-// ] )( ImageResponsive )
+		return {
+			previewDeviceType: __experimentalGetPreviewDeviceType(),
+		}
+	} ),
+] )( ImageResponsive )
 
-Image.Content = ImageContent
-export default Image
+// Image.Content = ImageContent
+// export default Image

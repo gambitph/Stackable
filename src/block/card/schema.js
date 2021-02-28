@@ -59,4 +59,36 @@ export default {
 		type: 'string',
 		default: '%',
 	},
+	imageHeightTablet: {
+		type: 'number',
+		default: '',
+	},
+	imageWidthTablet: {
+		type: 'number',
+		default: '',
+	},
+	imageHeightUnitTablet: {
+		type: 'string',
+		default: '',
+	},
+	imageWidthUnitTablet: {
+		type: 'string',
+		default: '',
+	},
+	imageHeightMobile: {
+		type: 'number',
+		default: '',
+	},
+	imageWidthMobile: {
+		type: 'number',
+		default: '',
+	},
+	imageHeightUnitMobile: {
+		type: 'string',
+		default: '',
+	},
+	imageWidthUnitMobile: {
+		type: 'string',
+		default: '',
+	},
 }

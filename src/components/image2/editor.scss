@@ -117,13 +117,24 @@
 		margin-left: 4px;
 		font-size: 11px;
 	}
+
+	// Create an outline since the tooltip is small so that it's easier to click.
+	&::before {
+		content: "";
+		position: absolute;
+		top: -8px;
+		right: -8px;
+		bottom: -8px;
+		left: -8px;
+		z-index: -1;
+	}
 }
 
 .stk-image-size-popup {
 	.components-popover__content {
 		padding: 8px 16px;
 		min-width: auto;
-		width: 170px;
+		width: 200px;
 		font-size: 12px;
 		.stk-image-size-popup__control-wrapper {
 			display: flex;
@@ -134,11 +145,15 @@
 			align-self: flex-end;
 			height: 34px;
 		}
+		.stk-image-size-popup__reset {
+			align-self: flex-end;
+			margin-bottom: 10px;
+		}
 	}
 	// Wide when we can edit both width and height
 	&.stk--is-wide {
 		.components-popover__content {
-			width: 270px;
+			width: 310px;
 		}
 	}
 }
