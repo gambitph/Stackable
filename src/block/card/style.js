@@ -63,18 +63,18 @@ const createStyles = ( version = '' ) => props => {
 			// Only save styles since styles in edit are already in the Component.
 			saveOnly: {
 				'.stk-card__image': appendImportantAll( {
-					width: getValue( 'imageWidth', `%s${ getValue( 'imageWidthUnit', '%s', '%' ) }` ),
+					// width: getValue( 'imageWidth', `%s${ getValue( 'imageWidthUnit', '%s', '%' ) }` ),
 					height: getValue( 'imageHeight', `%s${ getValue( 'imageHeightUnit', '%s', 'px' ) }` ),
 				} ),
 				tablet: {
 					'.stk-card__image': appendImportantAll( {
-						width: getValue( 'imageWidthTablet', `%s${ getValue( 'imageWidthUnitTablet', '%s', '%' ) }` ),
+						// width: getValue( 'imageWidthTablet', `%s${ getValue( 'imageWidthUnitTablet', '%s', '%' ) }` ),
 						height: getValue( 'imageHeightTablet', `%s${ getValue( 'imageHeightUnitTablet', '%s', 'px' ) }` ),
 					} ),
 				},
 				mobile: {
 					'.stk-card__image': appendImportantAll( {
-						width: getValue( 'imageWidthMobile', `%s${ getValue( 'imageWidthUnitMobile', '%s', '%' ) }` ),
+						// width: getValue( 'imageWidthMobile', `%s${ getValue( 'imageWidthUnitMobile', '%s', '%' ) }` ),
 						height: getValue( 'imageHeightMobile', `%s${ getValue( 'imageHeightUnitMobile', '%s', 'px' ) }` ),
 					} ),
 				},
