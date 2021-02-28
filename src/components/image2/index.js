@@ -55,7 +55,6 @@ const getImageClasses = props => {
 	} )
 }
 
-// TODO: snapping, display size when resizing.
 const Image2 = props => {
 	const [ isResizing, setIsResizing ] = useState( false )
 	const [ lockAspectRatio, setLockAspectRatio ] = useState( false )
@@ -66,6 +65,10 @@ const Image2 = props => {
 
 	const [ currentHeight, setCurrentHeight ] = useState()
 	const [ currentWidth, setCurrentWidth ] = useState()
+
+	// Used to fix issue with Resizable where height in % doesn't show while resizing.
+	// @see https://github.com/bokuweb/re-resizable/issues/442
+	const [ tempStyle, setTempStyle ] = useState( null )
 
 	const [ snap, setSnap ] = useState( null )
 
@@ -121,8 +124,8 @@ const Image2 = props => {
 							topLeft: false,
 						} }
 						size={ {
-							width: formSize( props.width, props.widthUnit ),
-							height: formSize( props.height, props.heightUnit ),
+							width: formSize( currentWidth || props.width, props.widthUnit ),
+							height: formSize( currentHeight || props.height, props.heightUnit ),
 						} }
 
 						// Resizing is a bit slow when the image is centered, make it a bit faster.
@@ -147,7 +150,7 @@ const Image2 = props => {
 						tabIndex={ 0 }
 
 						snap={ snap }
-						snapGap={ 15 }
+						snapGap={ 10 }
 
 						onResizeStart={ ( _event, _direction, elt ) => {
 							// Lock the aspect ratio when changing diagonally.
@@ -169,7 +172,6 @@ const Image2 = props => {
 								const parentWidth = elt.parentElement.getBoundingClientRect().width
 								setParentWidth( parentWidth )
 								currentWidth = ( props.width || 100 ) / 100 * parentWidth
-								// }
 							} else if ( ! props.width ) {
 								currentWidth = elt.getBoundingClientRect().width
 							}
@@ -182,7 +184,9 @@ const Image2 = props => {
 							// Get the new size of the image when dragging.
 							let currentHeight, currentWidth
 							if ( props.heightUnit === '%' ) {
-								currentHeight = clamp( Math.round( ( initialHeight + delta.height ) / parentHeight * 1000 ) / 10, 0, 100 )
+								currentHeight = clamp( Math.round( ( initialHeight + delta.height ) / parentHeight * 100 ), 0, 100 )
+								// This is to make percentage heights work, see comment above about the issue in ResizableBox.
+								setTempStyle( `.stk--is-resizing { height: ${ currentHeight }% !important; }` )
 							} else {
 								currentHeight = initialHeight + delta.height
 							}
@@ -203,6 +207,9 @@ const Image2 = props => {
 						onResizeStop={ () => {
 							props.onChangeSize( { width: currentWidth, height: currentHeight } )
 							setIsResizing( false )
+							setCurrentWidth( null )
+							setCurrentHeight( null )
+							setTempStyle( null )
 							setSnap( null )
 						} }
 					>
@@ -222,12 +229,14 @@ const Image2 = props => {
 							enableWidth={ props.enableWidth || props.enableDiagonal }
 							height={ formSize( currentHeight || props.height, props.heightUnit, false, false ) }
 							width={ formSize( currentWidth || props.width, props.widthUnit, false, false ) }
+							widthUnits={ props.widthUnits }
+							heightUnits={ props.heightUnits }
 							heightUnit={ props.heightUnit }
 							widthUnit={ props.widthUnit }
 							onChangeHeight={ value => props.onChangeSize( { height: value } ) }
-							onChangeHeightUnit={ unit => props.onChangeHeightUnit( unit ) }
+							onChangeHeightUnit={ value => props.onChangeSize( { heightUnit: value } ) }
 							onChangeWidth={ value => props.onChangeSize( { width: value } ) }
-							onChangeWidthUnit={ unit => props.onChangeWidthUnit( unit ) }
+							onChangeWidthUnit={ value => props.onChangeSize( { widthUnit: value } ) }
 						/>
 						<img
 							className="stk-img"
@@ -237,6 +246,8 @@ const Image2 = props => {
 							width={ props.width || undefined }
 							height={ props.height || undefined }
 						/>
+						{ /* This is to make percentage heights work, see comment above about the issue in ResizableBox */ }
+						{ isResizing && tempStyle && <style>{ tempStyle }</style> }
 					</ResizableBox>
 				)
 			} }>
@@ -258,6 +269,8 @@ Image2.defaultProps = {
 	height: '',
 	widthUnit: '%',
 	heightUnit: 'px',
+	widthUnits: [ 'px', '%' ],
+	heightUnits: [ 'px', '%' ],
 
 	shape: '',
 	shapeStretch: false,
@@ -270,13 +283,10 @@ Image2.defaultProps = {
 	enableHeight: true,
 	enableDiagonal: true,
 
-	onChange: () => {},
 	hasRemove: true,
+	onChange: () => {},
 	onRemove: () => {},
-	// TODO: Combine change size and change units
 	onChangeSize: () => {},
-	onChangeHeightUnit: () => {},
-	onChangeWidthUnit: () => {},
 }
 
 const clampSize = ( value, unit = '%' ) => {
@@ -288,17 +298,30 @@ const clampSize = ( value, unit = '%' ) => {
 	return isNaN( ret ) ? '' : ret
 }
 
-// For fixing the jump when switching units
-// const getImageContainerEl = innerEl => {
-// 	const imgEl = innerEl.closest( '.stk-img-resizer' )
-// 	return imgEl?.parentElement
-// }
+// This is in charge of converting px <-> % sizes when switching units.
+const convertSizeByUnit = ( value, toUnit = '%', side = 'height', imgEl ) => {
+	// Convert to px, just get the current measurement.
+	if ( toUnit === 'px' ) {
+		return side === 'height' ? imgEl?.clientHeight : imgEl?.clientWidth
+	}
+	// Convert to %
+	const imgResizerEl = imgEl?.closest( '.stk-img-resizer' )
+	const parentRect = imgResizerEl?.parentElement
+	if ( ! parentRect ) {
+		return value
+	}
+	const parentSize = side === 'height' ? parentRect.clientHeight : parentRect.clientWidth
+	return clamp( Math.round( value / parentSize * 10 ) * 10, 10, 100 ) // Round nearest 10%
+}
 
-// TODO: switching from % to px should not change the size of the image
+// TODO: responsiveness
 const Tooltip = props => {
 	const [ isEditing, setIsEditing ] = useState( false )
 	const [ currentWidth, setCurrentWidth ] = useState( '' )
 	const [ currentHeight, setCurrentHeight ] = useState( '' )
+
+	const [ prevSwitchedWidth, setPrevSwitchedWidth ] = useState( null )
+	const [ prevSwitchedHeight, setPrevSwitchedHeight ] = useState( null )
 
 	const tooltipRef = useRef()
 	const popupRef = useRef()
@@ -311,6 +334,8 @@ const Tooltip = props => {
 	}, [ popupRef.current ] )
 
 	useEffect( () => {
+		setPrevSwitchedWidth( null )
+		setPrevSwitchedHeight( null )
 		if ( isEditing ) {
 			setCurrentWidth( props.width )
 			setCurrentHeight( props.height )
@@ -336,37 +361,79 @@ const Tooltip = props => {
 	const widthControl = <AdvancedTextControl
 		label={ props.enableWidth && props.enableHeight ? __( 'Width', i18n ) : __( 'Image Width', i18n ) }
 		className="stk-image-size-popup__size"
-		units={ [ 'px', '%' ] }
+		units={ props.widthUnits }
 		unit={ props.widthUnit }
-		onChangeUnit={ value => {
-			props.onChangeWidthUnit( value )
+		value={ currentWidth }
+		onChangeUnit={ unit => {
+			if ( unit === props.widthUnit ) {
+				return
+			}
+
+			// When switching units, prevent the image from abruptly changing widths
+			if ( prevSwitchedWidth === null ) {
+				setPrevSwitchedWidth( props.width )
+				// At first switch, remember the width
+				// Calculate new width based on the current one
+				const imgEl = tooltipRef.current?.parentElement.querySelector( '.stk-img' )
+				const newSize = convertSizeByUnit( props.width, unit, 'width', imgEl )
+				setCurrentWidth( newSize )
+				props.onChangeWidth( clampSize( newSize, unit ) )
+			} else {
+				// when already came from a switch, set the previous width back
+				setCurrentWidth( prevSwitchedWidth )
+				props.onChangeWidth( prevSwitchedWidth )
+				setPrevSwitchedWidth( null )
+			}
+
+			props.onChangeWidthUnit( unit )
 			focusInput()
 		} }
 		onChange={ value => {
+			setPrevSwitchedWidth( null )
 			setCurrentWidth( value )
 			if ( value >= 5 ) {
 				props.onChangeWidth( clampSize( value, props.widthUnit ) )
 			}
 		} }
-		value={ currentWidth }
 	/>
 
 	const heightControl = <AdvancedTextControl
 		label={ props.enableWidth && props.enableHeight ? __( 'Height', i18n ) : __( 'Image Height', i18n ) }
 		className="stk-image-size-popup__size"
-		units={ [ 'px', '%' ] }
+		units={ props.heightUnits }
 		unit={ props.heightUnit }
-		onChangeUnit={ value => {
-			props.onChangeHeightUnit( value )
+		value={ currentHeight }
+		onChangeUnit={ unit => {
+			if ( unit === props.heightUnit ) {
+				return
+			}
+
+			// When switching units, prevent the image from abruptly changing heights
+			if ( prevSwitchedHeight === null ) {
+				setPrevSwitchedHeight( props.height )
+				// At first switch, remember the height
+				// Calculate new height based on the current one
+				const imgEl = tooltipRef.current?.parentElement.querySelector( '.stk-img' )
+				const newSize = convertSizeByUnit( props.height, unit, 'height', imgEl )
+				setCurrentHeight( newSize )
+				props.onChangeHeight( clampSize( newSize, unit ) )
+			} else {
+				// when already came from a switch, set the previous height back
+				setCurrentHeight( prevSwitchedHeight )
+				props.onChangeHeight( prevSwitchedHeight )
+				setPrevSwitchedHeight( null )
+			}
+
+			props.onChangeHeightUnit( unit )
 			focusInput()
 		} }
 		onChange={ value => {
+			setPrevSwitchedHeight( null )
 			setCurrentHeight( value )
 			if ( value >= 5 ) {
 				props.onChangeHeight( clampSize( value, props.heightUnit ) )
 			}
 		} }
-		value={ currentHeight }
 	/>
 
 	return (
@@ -425,6 +492,8 @@ Tooltip.defaultProps = {
 	height: '',
 	widthUnit: '%',
 	heightUnit: 'px',
+	widthUnits: [ 'px', '%' ],
+	heightUnits: [ 'px', '%' ],
 	enableWidth: true,
 	enableHeight: true,
 	allowChange: true,

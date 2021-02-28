@@ -151,12 +151,14 @@ const Edit = props => {
 							className="stk-card__image"
 							imageId={ props.attributes.imageId }
 							src={ props.attributes.imageUrl }
+							width={ 100 }
+							widthUnit="%"
 							height={ props.attributes.imageHeight || 300 }
-							width={ props.attributes.imageWidth || 100 }
-							heightUnit={ props.attributes.imageHeightUnit || 'px' }
-							widthUnit={ props.attributes.imageWidthUnit || '%' }
-							// TODO: combine units and size
-							onChangeSize={ ( { width, height } ) => {
+							heightUnit="px"
+							heightUnits={ [ 'px' ] }
+							onChangeSize={ ( {
+								width, height, widthUnit, heightUnit,
+							} ) => {
 								const size = {}
 								if ( typeof width !== 'undefined' ) {
 									size.imageWidth = width
@@ -164,10 +166,14 @@ const Edit = props => {
 								if ( typeof height !== 'undefined' ) {
 									size.imageHeight = height
 								}
+								if ( typeof heightUnit !== 'undefined' ) {
+									size.imageHeightUnit = heightUnit
+								}
+								if ( typeof widthUnit !== 'undefined' ) {
+									size.imageWidthUnit = widthUnit
+								}
 								setAttributes( size )
 							} }
-							onChangeHeightUnit={ value => setAttributes( { imageHeightUnit: value } ) }
-							onChangeWidthUnit={ value => setAttributes( { imageWidthUnit: value } ) }
 							enableWidth={ false }
 							enableDiagonal={ false }
 							onRemove={ () => {
