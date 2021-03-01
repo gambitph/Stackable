@@ -53,8 +53,8 @@ if ( ! hasFilter( 'stackable.div-background.output.after', 'stackable/clickable-
 					<a
 						href={ url }
 						target={ newTab ? '_blank' : undefined }
-						rel={ rel.join( ' ' ) }
-						title={ striptags( title ) }
+						rel={ rel.join( ' ' ) || undefined }
+						title={ striptags( title ) || undefined }
 					>{ null }</a>
 				) }
 			</Fragment>
