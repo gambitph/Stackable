@@ -233,9 +233,7 @@ const Tooltip = props => {
 				className={ className }
 				role="button"
 				tabIndex="0"
-				onMouseDown={ event => {
-					event.preventDefault()
-					event.stopPropagation()
+				onMouseDown={ () => {
 					setIsEditing( ! isEditing )
 				} }
 				onKeyDown={ event => {
