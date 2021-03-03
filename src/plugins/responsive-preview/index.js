@@ -16,8 +16,6 @@ import domReady from '@wordpress/dom-ready'
 import { addAction } from '@wordpress/hooks'
 import { select, subscribe } from '@wordpress/data'
 
-const query = '.edit-post-visual-editor'
-
 // The previous mode.
 let previousMode = 'Desktop'
 
@@ -45,7 +43,7 @@ const observerCallback = () => {
 	// Gets the current width of the visual editor
 	// Cache the width since it's expensive to perform getComputedStyle
 	if ( ! widthsDetected[ mode ] ) {
-		const visualEditorEl = document.querySelector( query )
+		const visualEditorEl = document.querySelector( '.edit-post-visual-editor.editor-styles-wrapper' ) || document.querySelector( '.editor-styles-wrapper' )
 		widthsDetected[ mode ] = parseInt( window.getComputedStyle( visualEditorEl ).width, 10 )
 	}
 
@@ -57,7 +55,7 @@ addAction( 'stackable.setAttributes.after', 'stackable/responsive-preview', obse
 
 const responsivePreview = () => {
 	const unsubscribe = subscribe( () => {
-		const visualEditorEl = document.querySelector( query )
+		const visualEditorEl = document.querySelector( '.edit-post-visual-editor.editor-styles-wrapper' ) || document.querySelector( '.editor-styles-wrapper' )
 		if ( ! visualEditorEl ) {
 			return
 		}
