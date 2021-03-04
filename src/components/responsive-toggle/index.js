@@ -4,6 +4,8 @@
 import {
 	getSelectedScreen, isScreenPickerOpen, setSelectedScreen,
 } from '~stackable/util'
+import { i18n } from 'stackable'
+import { lowerCase, startCase } from 'lodash'
 
 /**
  * Internal dependencies
@@ -20,9 +22,9 @@ import {
 } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
 import { Component } from '@wordpress/element'
-import { i18n } from 'stackable'
 import { Button, Popover } from '@wordpress/components'
-import { withInstanceId } from '@wordpress/compose'
+import { withInstanceId, compose } from '@wordpress/compose'
+import { withSelect, withDispatch } from '@wordpress/data'
 
 const responsiveIcons = {
 	desktop: <SVGDesktop />,
@@ -47,11 +49,18 @@ class ResponsiveToggle extends Component {
 	}
 
 	onChangeScreen( value ) {
-		this.props.onChangeScreen( value )
+		const {
+			onChangeScreen, previewDeviceType, setPreviewDeviceType,
+		} = this.props
+		onChangeScreen( value )
 		this.setState( { screen: value } )
-		setSelectedScreen( value )
-		doAction( 'stackable.responsive-toggle.screen.change', value )
 		this.setState( { isMouseOver: value } )
+		if ( ! previewDeviceType && ! setPreviewDeviceType ) {
+			setSelectedScreen( value )
+			doAction( 'stackable.responsive-toggle.screen.change', value )
+		} else {
+			setPreviewDeviceType( startCase( value ) )
+		}
 	}
 
 	onOtherScreenChange( screen ) {
@@ -68,25 +77,37 @@ class ResponsiveToggle extends Component {
 	}
 
 	componentDidMount() {
-		const { instanceId } = this.props
-		addAction( 'stackable.responsive-toggle.screen.change', `stackable/responsive-toggle-${ instanceId }`, this.onOtherScreenChange.bind( this ) )
-		addAction( 'stackable.responsive-toggle.screen.open', `stackable/responsive-toggle-${ instanceId }`, this.onOtherScreenOpen.bind( this ) )
-		addAction( 'stackable.responsive-toggle.screen.close', `stackable/responsive-toggle-${ instanceId }`, this.onOtherScreenClose.bind( this ) )
+		const { instanceId, previewDeviceType } = this.props
+		if ( ! previewDeviceType ) {
+			// Add action hooks for WP <= 5.4.
+			addAction( 'stackable.responsive-toggle.screen.change', `stackable/responsive-toggle-${ instanceId }`, this.onOtherScreenChange.bind( this ) )
+			addAction( 'stackable.responsive-toggle.screen.open', `stackable/responsive-toggle-${ instanceId }`, this.onOtherScreenOpen.bind( this ) )
+			addAction( 'stackable.responsive-toggle.screen.close', `stackable/responsive-toggle-${ instanceId }`, this.onOtherScreenClose.bind( this ) )
+		}
 	}
 
 	componentWillUnmount() {
-		const { instanceId } = this.props
-		removeAction( 'stackable.responsive-toggle.screen.change', `stackable/responsive-toggle-${ instanceId }` )
-		removeAction( 'stackable.responsive-toggle.screen.open', `stackable/responsive-toggle-${ instanceId }` )
-		removeAction( 'stackable.responsive-toggle.screen.close', `stackable/responsive-toggle-${ instanceId }` )
+		const { instanceId, previewDeviceType } = this.props
+		if ( ! previewDeviceType ) {
+			// Add action hooks for WP <= 5.4.
+			removeAction( 'stackable.responsive-toggle.screen.change', `stackable/responsive-toggle-${ instanceId }` )
+			removeAction( 'stackable.responsive-toggle.screen.open', `stackable/responsive-toggle-${ instanceId }` )
+			removeAction( 'stackable.responsive-toggle.screen.close', `stackable/responsive-toggle-${ instanceId }` )
+		}
 	}
 
 	render() {
+		const isScreenPickerOpen = this.props.previewDeviceType ?
+			lowerCase( this.props.previewDeviceType ) !== 'desktop' :
+			this.state.isScreenPickerOpen
+
+		const selectedScreen = lowerCase( this.props.previewDeviceType ) || this.state.screen
+
 		return (
 			<div className="ugb-base-control-multi-label__responsive">
 				{ this.props.screens.length > 1 &&
 					this.props.screens.map( ( screen, i ) => {
-						if ( i > 0 && ! this.state.isScreenPickerOpen && ! this.state.isMouseOver ) {
+						if ( i > 0 && ! isScreenPickerOpen && ! this.state.isMouseOver ) {
 							return null
 						}
 						return (
@@ -94,7 +115,7 @@ class ResponsiveToggle extends Component {
 								key={ i }
 							>
 								<Button
-									className={ this.state.screen === screen ? 'is-active' : '' }
+									className={ selectedScreen === screen ? 'is-active' : '' }
 									onClick={ () => this.onChangeScreen( screen ) }
 									icon={ responsiveIcons[ screen ] }
 									showTooltip={ false }
@@ -127,4 +148,7 @@ ResponsiveToggle.defaultProps = {
 	onChangeScreen: () => {},
 }
 
-export default withInstanceId( ResponsiveToggle )
+export default compose(
+	withSelect( select => ( { previewDeviceType: select( 'core/edit-post' ).__experimentalGetPreviewDeviceType && select( 'core/edit-post' ).__experimentalGetPreviewDeviceType() } ) ),
+	withDispatch( dispatch => ( { setPreviewDeviceType: dispatch( 'core/edit-post' ).__experimentalSetPreviewDeviceType } ) )
+)( withInstanceId( ResponsiveToggle ) )

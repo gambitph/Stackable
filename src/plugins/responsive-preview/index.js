@@ -1,7 +1,6 @@
 /**
  * Internal dependencies
  */
-import './auto-change-responsive-preview'
 import { updateMediaQueries } from './util'
 
 /**
