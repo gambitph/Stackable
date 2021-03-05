@@ -40,3 +40,7 @@ You can find the list of compatible blocks in Toolset's [documentation](https://
 * Make the necessary adjustments on the Stackable block in the Inspector
   * Columns, Height, Borders, etc.
 
+{% page-ref page="selecting-dynamic-sources-in-stackable-blocks.md" %}
+
+
+
