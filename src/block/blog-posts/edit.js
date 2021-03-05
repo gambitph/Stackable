@@ -59,6 +59,7 @@ import {
 	isEmpty,
 	isUndefined,
 	pickBy,
+	uniqBy,
 } from 'lodash'
 import classnames from 'classnames'
 
@@ -1087,7 +1088,7 @@ export default compose(
 		}
 
 		return {
-			posts: getEntityRecords( 'postType', postType, postQuery ),
+			posts: uniqBy( getEntityRecords( 'postType', postType, postQuery ), 'id' ), // `getEntityRecords` sometimes returns duplicate posts in WP >= 5.7.
 		}
 	} ),
 )( Edit )
