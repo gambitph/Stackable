@@ -131,7 +131,7 @@ const ResetButton = props => {
 	return (
 		<div className="ugb-global-settings-color-picker__reset-button">
 			<Button
-				onMouseDown={ () => setIsResetPopoverOpen( toggle => ! toggle ) }
+				onClick={ () => setIsResetPopoverOpen( ! isResetPopoverOpen ) }
 				disabled={ props.disabled }
 				isSecondary
 				isSmall
@@ -140,7 +140,7 @@ const ResetButton = props => {
 			</Button>
 			{ isResetPopoverOpen && (
 				<Popover
-					className="components-dropdown__content"
+					className="ugb-global-settings-color-picker__reset-button-popover"
 					onFocusOutside={ () => setIsResetPopoverOpen( false ) }
 					position="bottom center"
 				>
