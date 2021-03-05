@@ -32,14 +32,11 @@ const formSize = ( size = '', unit = '%', usePx = false, usePct = true ) => {
 	return unit === '%' ? ( usePct ? `${ size }%` : size ) : ( usePx ? `${ size }px` : size )
 }
 
-const getImageClasses = props => {
+const getImageWrapperClasses = props => {
 	return classnames( [
 		props.className,
 		'stk-img-wrapper',
 	], {
-		// Responsive.
-		[ `wp-image-${ props.imageId }` ]: props.imageId,
-
 		// Shape.
 		'stk-img--shape': props.shape,
 
@@ -48,6 +45,15 @@ const getImageClasses = props => {
 
 		// Shadow is only available when there is no shape.
 		[ `stk--shadow-${ props.shadow }` ]: ! props.shape && props.shadow,
+	} )
+}
+
+const getImageClasses = props => {
+	return classnames( [
+		'stk-img',
+	], {
+		// Image props Id
+		[ `wp-image-${ props.imageId }` ]: props.imageId,
 	} )
 }
 
@@ -73,13 +79,15 @@ const Image = props => {
 		setSnap( null )
 	}, [ isShiftKey ] )
 
-	const imageClasses = classnames( [
-		getImageClasses( props ),
+	const imageWrapperClasses = classnames( [
+		getImageWrapperClasses( props ),
 		'stk-img-resizer',
 	], {
 		'stk-img-placeholder': ! props.src,
 		'stk--is-resizing': isResizing,
 	} )
+
+	const imageClasses = getImageClasses( props )
 
 	return (
 		<MediaUpload
@@ -108,7 +116,7 @@ const Image = props => {
 			render={ obj => {
 				return (
 					<ResizableBox
-						className={ imageClasses }
+						className={ imageWrapperClasses }
 						enable={ {
 							top: false,
 							right: props.enableWidth,
@@ -257,7 +265,7 @@ const Image = props => {
 							} }
 						/>
 						<img
-							className="stk-img"
+							className={ imageClasses }
 							src={ props.src || undefined }
 							alt={ striptags( props.alt || undefined ) }
 							title={ striptags( props.title || undefined ) }
@@ -372,6 +380,7 @@ ImageResponsive.defaultProps = {
 }
 
 const ImageContent = props => {
+	const imageWrapperClasses = getImageWrapperClasses( props )
 	const imageClasses = getImageClasses( props )
 
 	const width = props.width || props.width === 0
@@ -383,9 +392,9 @@ const ImageContent = props => {
 		: undefined
 
 	return (
-		<div className={ imageClasses }>
+		<div className={ imageWrapperClasses }>
 			<img
-				className="stk-img"
+				className={ imageClasses }
 				src={ props.src || undefined }
 				alt={ striptags( props.alt || undefined ) }
 				title={ striptags( props.title || undefined ) }

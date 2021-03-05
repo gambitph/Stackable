@@ -7,15 +7,17 @@ import createStyles from './style'
  * External dependencies
  */
 import { Style } from '~stackable/components'
+import { withVersion } from '~stackable/higher-order'
 import { version as VERSION } from 'stackable'
+import classnames from 'classnames'
 
 /**
  * WordPress dependencies
  */
 import { InnerBlocks } from '@wordpress/block-editor'
-import classnames from 'classnames'
+import { compose } from '@wordpress/compose'
 
-export const Save = ( version = VERSION ) => props => {
+export const Save = props => {
 	const {
 		hasBackground,
 	} = props.attributes
@@ -39,7 +41,7 @@ export const Save = ( version = VERSION ) => props => {
 			<Style.Content
 				blockUniqueClassName={ `stk-${ props.attributes.uniqueId }` }
 				blockMainClassName={ 'stk-card-group' }
-				styleFunc={ createStyles( version ) }
+				styleFunc={ createStyles( props.version ) }
 				blockProps={ props }
 			/>
 			<div className={ contentClassNames }>
@@ -49,4 +51,6 @@ export const Save = ( version = VERSION ) => props => {
 	)
 }
 
-export default Save()
+export default compose(
+	withVersion( VERSION )
+)( Save )

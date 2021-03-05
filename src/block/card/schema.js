@@ -1,8 +1,7 @@
-import {
-	createImageBackgroundAttributes,
-} from '~stackable/util'
+import { imageAttributes, columnAttributes } from '~stackable/helpers'
+import { convertResponsiveAttributes } from '~stackable/util'
 
-export default {
+export default convertResponsiveAttributes( {
 	uniqueId: {
 		type: 'string',
 		source: 'attribute',
@@ -22,19 +21,8 @@ export default {
 		type: 'string',
 		default: '',
 	},
-	// TODO: move these into a column util (?)
-	columnWidth: {
-		type: 'number',
-		default: '',
-	},
-	columnWidthTablet: {
-		type: 'number',
-		default: '',
-	},
-	columnWidthMobile: {
-		type: 'number',
-		default: '',
-	},
+
+	...columnAttributes,
 
 	hasContainer: {
 		type: 'boolean',
@@ -45,54 +33,10 @@ export default {
 		default: false,
 	},
 
-	// TODO: move these into a new image util (?)
-	...createImageBackgroundAttributes( 'image%s' ),
-	imageHeight: {
-		type: 'number',
-		default: '',
-	},
-	imageWidth: {
-		type: 'number',
-		default: '',
-	},
-	imageHeightUnit: {
-		type: 'string',
-		default: 'px',
-	},
-	imageWidthUnit: {
-		type: 'string',
-		default: '%',
-	},
-	imageHeightTablet: {
-		type: 'number',
-		default: '',
-	},
-	imageWidthTablet: {
-		type: 'number',
-		default: '',
-	},
-	imageHeightUnitTablet: {
+	...imageAttributes,
+
+	blockBackgroundColor: {
 		type: 'string',
 		default: '',
 	},
-	imageWidthUnitTablet: {
-		type: 'string',
-		default: '',
-	},
-	imageHeightMobile: {
-		type: 'number',
-		default: '',
-	},
-	imageWidthMobile: {
-		type: 'number',
-		default: '',
-	},
-	imageHeightUnitMobile: {
-		type: 'string',
-		default: '',
-	},
-	imageWidthUnitMobile: {
-		type: 'string',
-		default: '',
-	},
-}
+} )

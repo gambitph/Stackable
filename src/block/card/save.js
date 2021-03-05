@@ -7,19 +7,26 @@ import createStyles from './style'
  * External dependencies
  */
 import classnames from 'classnames'
-import { Style, Image2 } from '~stackable/components'
+import {
+	Style, Image2,
+} from '~stackable/components'
+import { withVersion } from '~stackable/higher-order'
+import { getImageProps } from '~stackable/helpers'
 import { version as VERSION } from 'stackable'
 
 /**
  * WordPress dependencies
  */
 import { InnerBlocks } from '@wordpress/block-editor'
+import { compose } from '@wordpress/compose'
 
-export const Save = ( version = VERSION ) => props => {
+export const Save = props => {
 	const {
 		hasContainer,
 		hasBackground,
 	} = props.attributes
+
+	const imageProps = getImageProps( props.attributes )
 
 	const blockClassNames = classnames( [
 		'stk-card',
@@ -51,25 +58,14 @@ export const Save = ( version = VERSION ) => props => {
 			<Style.Content
 				blockUniqueClassName={ `stk-${ props.attributes.uniqueId }` }
 				blockMainClassName={ 'stk-card' }
-				styleFunc={ createStyles( version ) }
+				styleFunc={ createStyles( props.version ) }
 				blockProps={ props }
 			/>
 			<div className={ contentClassNames }>
 				{ props.attributes.imageUrl &&
 					<Image2.Content
 						className="stk-card__image"
-						imageId={ props.attributes.imageId }
-						src={ props.attributes.imageUrl }
-						alt={ props.attributes.imageAlt }
-						title={ props.attributes.imageTitle }
-						height={ props.attributes.imageHeight || 300 }
-						width={ props.attributes.imageWidth || 100 }
-						heightUnit={ props.attributes.imageHeightUnit || 'px' }
-						widthUnit={ props.attributes.imageWidthUnit || '%' }
-						// width={ imageWidth }
-						// shadow={ imageShadow }
-						// shape={ attributes[ `image${ i }Shape` ] || imageShape }
-						// shapeStretch={ attributes[ `image${ i }ShapeStretch` ] || imageShapeStretch }
+						{ ...imageProps }
 					/>
 				}
 				<div className={ innerClassNames }>
@@ -80,4 +76,6 @@ export const Save = ( version = VERSION ) => props => {
 	)
 }
 
-export default Save()
+export default compose(
+	withVersion( VERSION )
+)( Save )

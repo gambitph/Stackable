@@ -111,3 +111,25 @@ export const pickAttributes = ( attributes = {}, namesToPick = [], attrNameTempl
 }
 
 export const createResponsiveAttributeNames = attrNameTemplate => Object.keys( createResponsiveAttributes( attrNameTemplate ) )
+
+/**
+ * Converts all attribute names that end in "_" into Tablet and Mobile attributes
+ *
+ * @param {Object} attributes Attribute object
+ *
+ * @return {Object} Adjusted attributes
+ */
+export const convertResponsiveAttributes = attributes => {
+	return Object.keys( attributes ).reduce( ( newAttributes, name ) => {
+		if ( name.endsWith( '_' ) ) {
+			const newName = name.slice( 0, -1 )
+			newAttributes[ newName ] = { ...attributes[ name ] }
+			newAttributes[ `${ newName }Tablet` ] = { ...attributes[ name ], default: '' }
+			newAttributes[ `${ newName }Mobile` ] = { ...attributes[ name ], default: '' }
+			return newAttributes
+		}
+
+		newAttributes[ name ] = attributes[ name ]
+		return newAttributes
+	}, {} )
+}
