@@ -10,7 +10,6 @@
 .ugb-blockquote.ugb-blockquote--v3 {
 	border: 0 !important;
 	padding: 0 !important;
-	font-style: italic;
 	text-align: inherit;
 	background-color: transparent;
 	position: relative;
@@ -21,6 +20,11 @@
 	&::after {
 		content: "";
 		display: none !important;
+	}
+
+	.ugb-blockquote__text {
+		font-style: italic;
+		font-weight: normal;
 	}
 
 	.ugb-blockquote__item {
