@@ -13,7 +13,7 @@ import {
  * @param {Object} blockProps Block props
  * @param {Object} options Options
  */
-export default ( styles, blockProps, options ) => {
+export default ( styles, blockProps, options = {} ) => {
 	const getValue = __getValue( blockProps.attributes )
 	const {
 		selector = '.stk-img-wrapper',

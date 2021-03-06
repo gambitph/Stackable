@@ -148,7 +148,7 @@ const ResizableBottomMargin = props => {
 }
 
 ResizableBottomMargin.defaultProps = {
-	previewSelector: '',
+	previewSelector: '', // Selector of the element where the margin is applied e.g. .stk-card-group
 	valueDesktop: '',
 	valueTablet: '',
 	valueMobile: '',

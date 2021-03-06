@@ -1,3 +1,5 @@
+import { marginBottomAttributes } from '~stackable/helpers'
+
 export default {
 	uniqueId: {
 		type: 'string',
@@ -10,18 +12,7 @@ export default {
 		type: 'string',
 		default: '',
 	},
-	blockMarginBottom: {
-		type: 'number',
-		default: '',
-	},
-	blockMarginBottomTablet: {
-		type: 'number',
-		default: '',
-	},
-	blockMarginBottomMobile: {
-		type: 'number',
-		default: '',
-	},
+	...marginBottomAttributes,
 	hasBackground: {
 		type: 'boolean',
 		default: false,

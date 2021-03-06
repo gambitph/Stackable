@@ -27,6 +27,7 @@ import {
 	InnerBlocks,
 } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
+import { getMarginBottomProps, useMarginBottom } from '~stackable/helpers'
 
 const Edit = props => {
 	const {
@@ -38,6 +39,8 @@ const Edit = props => {
 	} = props.attributes
 
 	useUniqueId( props )
+	const marginBottomProps = getMarginBottomProps( props.attributes )
+	const { setMarginBottom } = useMarginBottom()
 
 	const blockClassNames = classnames( [
 		className,
@@ -90,13 +93,8 @@ const Edit = props => {
 				/>
 			</div>
 			<ResizableBottomMargin
-				previewSelector={ `.stk-${ props.attributes.uniqueId }` }
-				valueDesktop={ props.attributes.blockMarginBottom }
-				valueTablet={ props.attributes.blockMarginBottomTablet }
-				valueMobile={ props.attributes.blockMarginBottomMobile }
-				onChangeDesktop={ value => setAttributes( { blockMarginBottom: value } ) }
-				onChangeTablet={ value => setAttributes( { blockMarginBottomTablet: value } ) }
-				onChangeMobile={ value => setAttributes( { blockMarginBottomMobile: value } ) }
+				{ ...marginBottomProps }
+				{ ...setMarginBottom }
 			/>
 		</div>
 	</Fragment>
