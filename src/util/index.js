@@ -293,10 +293,6 @@ let _currentSelectedScreen = 'desktop'
 export const getSelectedScreen = () => _currentSelectedScreen
 export const setSelectedScreen = value => _currentSelectedScreen = value
 
-let _currentScreenPickerIsOpen = false
-export const isScreenPickerOpen = () => _currentScreenPickerIsOpen
-export const setIsScreenPickerOpen = value => _currentScreenPickerIsOpen = value
-
 /**
  * Moves an array value to a new index.
  *

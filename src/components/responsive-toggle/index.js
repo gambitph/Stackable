@@ -2,10 +2,10 @@
  * External dependencies
  */
 import {
-	getSelectedScreen, isScreenPickerOpen,
+	getSelectedScreen, setSelectedScreen,
 } from '~stackable/util'
 import { i18n } from 'stackable'
-import { lowerCase, startCase } from 'lodash'
+import { startCase } from 'lodash'
 
 /**
  * Internal dependencies
@@ -13,17 +13,19 @@ import { lowerCase, startCase } from 'lodash'
 import SVGDesktop from './images/desktop.svg'
 import SVGMobile from './images/mobile.svg'
 import SVGTablet from './images/tablet.svg'
-import PreviewModeSubscriber from './deprecated'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
 import { Button, Popover } from '@wordpress/components'
-import { compose } from '@wordpress/compose'
+import {
+	withInstanceId, compose,
+} from '@wordpress/compose'
 import {
 	withSelect, withDispatch, select,
 } from '@wordpress/data'
+import { Component } from '@wordpress/element'
 
 const responsiveIcons = {
 	desktop: <SVGDesktop />,
@@ -37,12 +39,11 @@ const labels = {
 	mobile: __( 'Mobile', i18n ),
 }
 
-class ResponsiveToggle extends PreviewModeSubscriber {
+class ResponsiveToggle extends Component {
 	constructor() {
 		super( ...arguments )
 		this.state = {
 			screen: getSelectedScreen(),
-			isScreenPickerOpen: isScreenPickerOpen(),
 			isMouseOver: false,
 		}
 	}
@@ -54,10 +55,10 @@ class ResponsiveToggle extends PreviewModeSubscriber {
 		onChangeScreen( value )
 		this.setState( { screen: value } )
 		this.setState( { isMouseOver: value } )
+		setSelectedScreen( value )
 		if ( setPreviewDeviceType ) {
 			setPreviewDeviceType( startCase( value ) )
 		}
-		this.onChangeScreenAfter && this.onChangeScreenAfter( value )
 	}
 
 	onOtherScreenChange( screen ) {
@@ -65,26 +66,16 @@ class ResponsiveToggle extends PreviewModeSubscriber {
 		this.setState( { screen } )
 	}
 
-	onOtherScreenOpen() {
-		this.setState( { isScreenPickerOpen: true } )
-	}
-
-	onOtherScreenClose() {
-		this.setState( { isScreenPickerOpen: false } )
-	}
-
 	render() {
-		const isScreenPickerOpen = this.props.previewDeviceType ?
-			lowerCase( this.props.previewDeviceType ) !== 'desktop' :
-			this.state.isScreenPickerOpen
-
-		const selectedScreen = lowerCase( this.props.previewDeviceType ) || this.state.screen
+		const {
+			screen: selectedScreen,
+		} = this.state
 
 		return (
 			<div className="ugb-base-control-multi-label__responsive">
 				{ this.props.screens.length > 1 &&
 					this.props.screens.map( ( screen, i ) => {
-						if ( i > 0 && ! isScreenPickerOpen && ! this.state.isMouseOver ) {
+						if ( i > 0 && selectedScreen === 'desktop' && ! this.state.isMouseOver ) {
 							return null
 						}
 						return (
@@ -134,4 +125,4 @@ if ( select( 'core/edit-post' ).__experimentalGetPreviewDeviceType ) {
 	)
 }
 
-export default compose( ...composeList )( ResponsiveToggle )
+export default compose( ...composeList )( withInstanceId( ResponsiveToggle ) )
