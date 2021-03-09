@@ -85,3 +85,7 @@ svg.ugb-stackable-icon-gradient {
 		}
 	}
 }
+
+button[class*="ugb-"] > span.dashicons {
+	margin: auto !important;
+}
