@@ -132,6 +132,7 @@ const ResetButton = props => {
 		<div className="ugb-global-settings-color-picker__reset-button">
 			<Button
 				onClick={ () => setIsResetPopoverOpen( ! isResetPopoverOpen ) }
+				onMouseDown={ event => event.preventDefault() } // Prevents the onFocusOutside from triggering when clicking the button.
 				disabled={ props.disabled }
 				isSecondary
 				isSmall
@@ -198,7 +199,8 @@ const ColorOption = props => {
 					className="components-circular-option-picker__option"
 					label={ name }
 					style={ { backgroundColor: color, color } }
-					onMouseDown={ () => props.onClick( color ) }
+					onClick={ () => props.onClick( color ) }
+					onMouseDown={ event => event.preventDefault() } // Prevents the onFocusOutside from triggering when clicking the button.
 				/>
 				{ props.children }
 			</div>
@@ -339,7 +341,7 @@ const ColorPickers = props => {
 						color={ color.color }
 						name={ color.name }
 						locked={ ! color.slug.match( /^stk-/ ) }
-						onClick={ () => setSelectedIndex( index ) }
+						onClick={ () => setSelectedIndex( selectedIndex !== index ? index : null ) }
 					>
 						{ selectedIndex === index &&
 							<Popover
