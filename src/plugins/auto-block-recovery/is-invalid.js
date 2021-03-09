@@ -474,8 +474,8 @@ export const isRearrangedStyles = issue => {
 		return false
 	}
 
-	const newStyles = issue.args[ 1 ].match( /.ugb(.*?(?=\{)){(.*?(?=\}))}/g )
-	const oldStyles = issue.args[ 2 ].match( /.ugb(.*?(?=\{)){(.*?(?=\}))}/g )
+	const newStyles = issue.args[ 1 ].match( /.ugb-[^\{]*{[^\}]*}/g )
+	const oldStyles = issue.args[ 2 ].match( /.ugb-[^\{]*{[^\}]*}/g )
 	if ( newStyles && oldStyles ) {
 		return isEqual( newStyles.sort(), oldStyles.sort() )
 	}
@@ -503,8 +503,8 @@ export const isAddedStyles = issue => {
 		return false
 	}
 
-	const newStyles = issue.args[ 1 ].match( /.ugb(.*?(?=\{)){(.*?(?=\}))}/g )
-	const oldStyles = issue.args[ 2 ].match( /.ugb(.*?(?=\{)){(.*?(?=\}))}/g )
+	const newStyles = issue.args[ 1 ].match( /.ugb-[^\{]*{[^\}]*}/g )
+	const oldStyles = issue.args[ 2 ].match( /.ugb-[^\{]*{[^\}]*}/g )
 	if ( newStyles && oldStyles ) {
 		return difference( newStyles, oldStyles ).length
 	}
