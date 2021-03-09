@@ -2,7 +2,7 @@
  * External dependencies
  */
 import {
-	getSelectedScreen, isScreenPickerOpen, setSelectedScreen,
+	getSelectedScreen, isScreenPickerOpen,
 } from '~stackable/util'
 import { i18n } from 'stackable'
 import { lowerCase, startCase } from 'lodash'
@@ -13,18 +13,17 @@ import { lowerCase, startCase } from 'lodash'
 import SVGDesktop from './images/desktop.svg'
 import SVGMobile from './images/mobile.svg'
 import SVGTablet from './images/tablet.svg'
+import PreviewModeSubscriber from './deprecated'
 
 /**
  * WordPress dependencies
  */
-import {
-	addAction, doAction, removeAction,
-} from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
-import { Component } from '@wordpress/element'
 import { Button, Popover } from '@wordpress/components'
 import { withInstanceId, compose } from '@wordpress/compose'
-import { withSelect, withDispatch } from '@wordpress/data'
+import {
+	withSelect, withDispatch, select,
+} from '@wordpress/data'
 
 const responsiveIcons = {
 	desktop: <SVGDesktop />,
@@ -38,7 +37,7 @@ const labels = {
 	mobile: __( 'Mobile', i18n ),
 }
 
-class ResponsiveToggle extends Component {
+class ResponsiveToggle extends PreviewModeSubscriber {
 	constructor() {
 		super( ...arguments )
 		this.state = {
@@ -50,17 +49,15 @@ class ResponsiveToggle extends Component {
 
 	onChangeScreen( value ) {
 		const {
-			onChangeScreen, previewDeviceType, setPreviewDeviceType,
+			onChangeScreen, setPreviewDeviceType,
 		} = this.props
 		onChangeScreen( value )
 		this.setState( { screen: value } )
 		this.setState( { isMouseOver: value } )
-		if ( ! previewDeviceType && ! setPreviewDeviceType ) {
-			setSelectedScreen( value )
-			doAction( 'stackable.responsive-toggle.screen.change', value )
-		} else {
+		if ( setPreviewDeviceType ) {
 			setPreviewDeviceType( startCase( value ) )
 		}
+		this.onChangeScreenAfter && this.onChangeScreenAfter( value )
 	}
 
 	onOtherScreenChange( screen ) {
@@ -74,26 +71,6 @@ class ResponsiveToggle extends Component {
 
 	onOtherScreenClose() {
 		this.setState( { isScreenPickerOpen: false } )
-	}
-
-	componentDidMount() {
-		const { instanceId, previewDeviceType } = this.props
-		if ( ! previewDeviceType ) {
-			// Add action hooks for WP <= 5.4.
-			addAction( 'stackable.responsive-toggle.screen.change', `stackable/responsive-toggle-${ instanceId }`, this.onOtherScreenChange.bind( this ) )
-			addAction( 'stackable.responsive-toggle.screen.open', `stackable/responsive-toggle-${ instanceId }`, this.onOtherScreenOpen.bind( this ) )
-			addAction( 'stackable.responsive-toggle.screen.close', `stackable/responsive-toggle-${ instanceId }`, this.onOtherScreenClose.bind( this ) )
-		}
-	}
-
-	componentWillUnmount() {
-		const { instanceId, previewDeviceType } = this.props
-		if ( ! previewDeviceType ) {
-			// Add action hooks for WP <= 5.4.
-			removeAction( 'stackable.responsive-toggle.screen.change', `stackable/responsive-toggle-${ instanceId }` )
-			removeAction( 'stackable.responsive-toggle.screen.open', `stackable/responsive-toggle-${ instanceId }` )
-			removeAction( 'stackable.responsive-toggle.screen.close', `stackable/responsive-toggle-${ instanceId }` )
-		}
 	}
 
 	render() {
@@ -148,7 +125,13 @@ ResponsiveToggle.defaultProps = {
 	onChangeScreen: () => {},
 }
 
-export default compose(
-	withSelect( select => ( { previewDeviceType: select( 'core/edit-post' ).__experimentalGetPreviewDeviceType && select( 'core/edit-post' ).__experimentalGetPreviewDeviceType() } ) ),
-	withDispatch( dispatch => ( { setPreviewDeviceType: dispatch( 'core/edit-post' ).__experimentalSetPreviewDeviceType } ) )
-)( withInstanceId( ResponsiveToggle ) )
+const composeList = []
+
+if ( select( 'core/edit-post' ).__experimentalGetPreviewDeviceType ) {
+	composeList.push(
+		withSelect( select => ( { previewDeviceType: select( 'core/edit-post' ).__experimentalGetPreviewDeviceType() } ) ),
+		withDispatch( dispatch => ( { setPreviewDeviceType: dispatch( 'core/edit-post' ).__experimentalSetPreviewDeviceType } ) )
+	)
+}
+
+export default compose( ...composeList )( withInstanceId( ResponsiveToggle ) )
