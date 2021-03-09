@@ -9,6 +9,10 @@
 	}
 	button {
 		display: flex;
+
+		.dashicons {
+			margin: auto !important;
+		}
 	}
 }
 // Make sure our popover is still below custom color pickers.
@@ -26,6 +30,7 @@
 .ugb-button-icon-control__wrapper {
 	display: flex;
 	align-items: center;
+
 	.ugb-button-icon-control__reset {
 		padding: 6px;
 		margin: 0 6px;
