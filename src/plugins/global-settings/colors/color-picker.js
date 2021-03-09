@@ -16,12 +16,13 @@ import classnames from 'classnames'
 import { cloneDeep } from 'lodash'
 import { i18n } from 'stackable'
 import { whiteIfDark } from '~stackable/util'
+import { Button } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
 import {
-	Button, ColorPicker, Popover, BaseControl, ButtonGroup,
+	ColorPicker, Popover, BaseControl, ButtonGroup,
 } from '@wordpress/components'
 import {
 	Fragment, useState, useMemo,

@@ -2,13 +2,14 @@
  * Internal dependencies
  */
 import ColorPreview from './color-preview'
+import Button from '../button'
 
 /**
  * WordPress dependencies
  */
 import { addFilter, removeFilter } from '@wordpress/hooks'
 import {
-	BaseControl, Button, Popover, ToggleControl, ButtonGroup, PanelBody,
+	BaseControl, Popover, ToggleControl, ButtonGroup, PanelBody,
 } from '@wordpress/components'
 import {
 	Component, createRef, Fragment,

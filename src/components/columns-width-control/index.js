@@ -39,9 +39,7 @@ import ColumnsInputs from './columns-inputs'
 /**
  * WordPress dependencies
  */
-import {
-	BaseControl, Button,
-} from '@wordpress/components'
+import { BaseControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import {
 	Fragment, useState, useEffect,
@@ -53,7 +51,7 @@ import {
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 import { range, isEqual } from 'lodash'
-import { AdvancedRangeControl } from '~stackable/components'
+import { AdvancedRangeControl, Button } from '~stackable/components'
 
 const MIN = 10
 

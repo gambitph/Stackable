@@ -6,6 +6,7 @@ import {
 } from 'stackable'
 import { applyBlockDesign } from '~stackable/util'
 import { getDesigns, getDesign } from '~stackable/design-library'
+import { Button } from '~stackable/components'
 import classnames from 'classnames'
 
 /**
@@ -17,7 +18,7 @@ import {
 import { applyFilters } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
 import {
-	Placeholder, Icon, Button, ButtonGroup, Spinner,
+	Placeholder, Icon, ButtonGroup, Spinner,
 } from '@wordpress/components'
 
 /**
