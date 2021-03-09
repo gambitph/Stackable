@@ -16,7 +16,8 @@ import domReady from '@wordpress/dom-ready'
 import { addAction } from '@wordpress/hooks'
 import { select, subscribe } from '@wordpress/data'
 
-const query = '.editor-styles-wrapper'
+const query = '.edit-post-visual-editor > .editor-styles-wrapper' +
+	', .edit-post-visual-editor.editor-styles-wrapper' // Fallback for < WP 5.6
 
 // The previous mode.
 let previousMode = 'Desktop'
