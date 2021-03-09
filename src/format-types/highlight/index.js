@@ -1,7 +1,9 @@
 /**
  * External dependencies
  */
-import { ColorPaletteControl, AdvancedToolbarControl } from '~stackable/components'
+import {
+	ColorPaletteControl, AdvancedToolbarControl, Button,
+} from '~stackable/components'
 import { whiteIfDarkBlackIfLight } from '~stackable/util'
 import { i18n } from 'stackable'
 
@@ -9,7 +11,7 @@ import { i18n } from 'stackable'
  * WordPress dependencies
  */
 import {
-	Button, Toolbar, Popover,
+	Toolbar, Popover,
 } from '@wordpress/components'
 import {
 	applyFormat, registerFormatType, removeFormat,
