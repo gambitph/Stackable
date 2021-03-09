@@ -1,18 +1,20 @@
 /**
  * External dependencies
  */
-import { getSelectedScreen } from '~stackable/util'
+import { getSelectedScreen, setSelectedScreen } from '~stackable/util'
 import { lowerCase } from 'lodash'
 
 /**
  * WordPress dependencies
  */
-import { addAction, removeAction } from '@wordpress/hooks'
 import {
-	Children, cloneElement, Component, Fragment,
+	addAction, removeAction,
+} from '@wordpress/hooks'
+import {
+	Children, cloneElement, Component,
 } from '@wordpress/element'
-import { withInstanceId } from '@wordpress/compose'
 import { withSelect } from '@wordpress/data'
+import { withInstanceId } from '@wordpress/compose'
 
 class WhenResponsiveScreen extends Component {
 	constructor() {
@@ -20,33 +22,25 @@ class WhenResponsiveScreen extends Component {
 		this.state = {
 			screen: getSelectedScreen(),
 		}
-		this.onScreenChange = this.onScreenChange.bind( this )
-	}
-
-	onScreenChange( screen ) {
-		this.setState( { screen } )
 	}
 
 	componentDidMount() {
-		const { instanceId, previewDeviceType } = this.props
-		if ( ! previewDeviceType ) {
-			// Add action hooks for WP <= 5.4.
-			addAction( 'stackable.responsive-toggle.screen.change', `stackable/when-responsive-screen-${ instanceId }`, this.onScreenChange )
-		}
+		addAction( 'stackable.when-responsive-screen', `change-viewport-${ this.instanceId }`, screen => {
+			setSelectedScreen( screen )
+			this.setState( { screen } )
+		} )
 	}
 
 	componentWillUnmount() {
-		const { instanceId, previewDeviceType } = this.props
-		if ( ! previewDeviceType ) {
-			// Add action hooks for WP <= 5.4.
-			removeAction( 'stackable.responsive-toggle.screen.change', `stackable/when-responsive-screen-${ instanceId }` )
-		}
+		removeAction( 'stackable.when-responsive-screen', `change-viewport-${ this.instanceId }` )
 	}
 
 	render() {
 		const screen = this.props.previewDeviceType || this.state.screen
 		const children = Children.toArray( this.props.children ).map( child => {
-			return cloneElement( child, { screens: this.props.screens, screen } )
+			return cloneElement( child, {
+				screens: this.props.screens, screen,
+			} )
 		} )
 
 		// If this is the currently selected screen.
@@ -58,11 +52,7 @@ class WhenResponsiveScreen extends Component {
 		// no option available, then just show the desktop screen option.
 		const isNoScreen = ! this.props.screens.includes( this.state.screen ) && ! isCurrentScreen && this.props.screen === 'desktop'
 
-		return (
-			<Fragment>
-				{ ( isCurrentScreen || isNoScreen ) && children }
-			</Fragment>
-		)
+		return ( isCurrentScreen || isNoScreen ) && children
 	}
 }
 

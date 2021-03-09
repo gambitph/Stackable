@@ -2,10 +2,10 @@
  * External dependencies
  */
 import {
-	getSelectedScreen, setSelectedScreen,
+	getSelectedScreen,
 } from '~stackable/util'
 import { i18n } from 'stackable'
-import { startCase } from 'lodash'
+import { lowerCase, startCase } from 'lodash'
 
 /**
  * Internal dependencies
@@ -21,12 +21,13 @@ import Button from '../button'
 import { __ } from '@wordpress/i18n'
 import { Popover } from '@wordpress/components'
 import {
-	withInstanceId, compose,
+	compose,
 } from '@wordpress/compose'
 import {
-	withSelect, withDispatch, select,
+	withDispatch, withSelect, select,
 } from '@wordpress/data'
 import { Component } from '@wordpress/element'
+import { doAction } from '@wordpress/hooks'
 
 const responsiveIcons = {
 	desktop: <SVGDesktop />,
@@ -44,33 +45,22 @@ class ResponsiveToggle extends Component {
 	constructor() {
 		super( ...arguments )
 		this.state = {
-			screen: getSelectedScreen(),
 			isMouseOver: false,
 		}
 	}
 
 	onChangeScreen( value ) {
 		const {
-			onChangeScreen, setPreviewDeviceType,
+			setPreviewDeviceType,
 		} = this.props
-		onChangeScreen( value )
-		this.setState( { screen: value } )
-		this.setState( { isMouseOver: value } )
-		setSelectedScreen( value )
+		doAction( 'stackable.when-responsive-screen', value )
 		if ( setPreviewDeviceType ) {
 			setPreviewDeviceType( startCase( value ) )
 		}
 	}
 
-	onOtherScreenChange( screen ) {
-		this.props.onChangeScreen( screen )
-		this.setState( { screen } )
-	}
-
 	render() {
-		const {
-			screen: selectedScreen,
-		} = this.state
+		const selectedScreen = this.props.previewDeviceType || getSelectedScreen()
 
 		return (
 			<div className="ugb-base-control-multi-label__responsive">
@@ -121,9 +111,9 @@ const composeList = []
 
 if ( select( 'core/edit-post' ).__experimentalGetPreviewDeviceType ) {
 	composeList.push(
-		withSelect( select => ( { previewDeviceType: select( 'core/edit-post' ).__experimentalGetPreviewDeviceType() } ) ),
-		withDispatch( dispatch => ( { setPreviewDeviceType: dispatch( 'core/edit-post' ).__experimentalSetPreviewDeviceType } ) )
+		withDispatch( dispatch => ( { setPreviewDeviceType: dispatch( 'core/edit-post' ).__experimentalSetPreviewDeviceType } ) ),
+		withSelect( select => ( { previewDeviceType: lowerCase( select( 'core/edit-post' ).__experimentalGetPreviewDeviceType() ) } ) )
 	)
 }
 
-export default compose( ...composeList )( withInstanceId( ResponsiveToggle ) )
+export default compose( ...composeList )( ResponsiveToggle )
