@@ -8,7 +8,7 @@ import { searchFontAwesomeIconName } from './search'
  * WordPress dependencies
  */
 import {
-	Button, Popover, PanelBody, TextControl, Spinner,
+	Popover, PanelBody, TextControl, Spinner,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import {
@@ -21,7 +21,7 @@ import {
 import {
 	i18n, isPro, settingsUrl,
 } from 'stackable'
-import { FontAwesomeIcon } from '~stackable/components'
+import { Button, FontAwesomeIcon } from '~stackable/components'
 import { faGetSVGIcon } from '~stackable/util'
 import { FileDrop } from 'react-file-drop'
 import classnames from 'classnames'

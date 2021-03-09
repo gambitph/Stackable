@@ -2,14 +2,14 @@
  * External dependencies.
  */
 import { SVGStackableIcon } from '~stackable/icons'
-import { ModalDesignLibrary } from '~stackable/components'
+import { Button, ModalDesignLibrary } from '~stackable/components'
 import { i18n, srcUrl } from 'stackable'
 
 /**
  * WordPress dependencies.
  */
 import {
-	Button, Placeholder,
+	Placeholder,
 } from '@wordpress/components'
 import { compose } from '@wordpress/compose'
 import { createBlock, parse } from '@wordpress/blocks'

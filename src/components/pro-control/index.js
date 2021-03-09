@@ -3,6 +3,7 @@
  */
 import ProModal from '../pro-modal'
 import SVGProIcon from './images/pro-icon.svg'
+import Button from '../button'
 
 /**
  * WordPress dependencies
@@ -13,7 +14,6 @@ import { __ } from '@wordpress/i18n'
  * External dependencies
  */
 import { i18n } from 'stackable'
-import { Button } from '@wordpress/components'
 import classnames from 'classnames'
 
 const LABELS = {

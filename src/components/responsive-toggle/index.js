@@ -13,12 +13,13 @@ import { startCase } from 'lodash'
 import SVGDesktop from './images/desktop.svg'
 import SVGMobile from './images/mobile.svg'
 import SVGTablet from './images/tablet.svg'
+import Button from '../button'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { Button, Popover } from '@wordpress/components'
+import { Popover } from '@wordpress/components'
 import {
 	withInstanceId, compose,
 } from '@wordpress/compose'

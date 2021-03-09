@@ -194,6 +194,10 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.14.1 =
+* Fixed: Compatibility adjustments for WordPress 5.7
+* Fixed: Advanced tab can sometimes be visible in the Styles tab
+
 = 2.14.0 =
 [Copy and Paste Block Styles](https://wpstackable.com/blog/copy-and-paste-block-styles/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 

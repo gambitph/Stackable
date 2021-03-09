@@ -45,6 +45,8 @@
   * [How to Use Global Typography](stackable-guides/advanced-guides/how-to-use-global-typography.md)
   * [Translate Blocks Using WPML \(Multilingual\)](stackable-guides/advanced-guides/translate-blocks-using-wpml-multilingual.md)
   * [Using ACF Fields in Blocks](stackable-guides/advanced-guides/using-acf-fields-in-blocks.md)
+  * [Dynamic Sources with Toolset Integration](stackable-guides/advanced-guides/dynamic-sources-with-toolset-integration.md)
+  * [Selecting Dynamic Sources in Stackable Blocks](stackable-guides/advanced-guides/selecting-dynamic-sources-in-stackable-blocks.md)
 
 ## 🔧 Troubleshooting
 
