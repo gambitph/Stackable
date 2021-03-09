@@ -20,7 +20,7 @@ import PreviewModeSubscriber from './deprecated'
  */
 import { __ } from '@wordpress/i18n'
 import { Button, Popover } from '@wordpress/components'
-import { withInstanceId, compose } from '@wordpress/compose'
+import { compose } from '@wordpress/compose'
 import {
 	withSelect, withDispatch, select,
 } from '@wordpress/data'
@@ -134,4 +134,4 @@ if ( select( 'core/edit-post' ).__experimentalGetPreviewDeviceType ) {
 	)
 }
 
-export default compose( ...composeList )( withInstanceId( ResponsiveToggle ) )
+export default compose( ...composeList )( ResponsiveToggle )
