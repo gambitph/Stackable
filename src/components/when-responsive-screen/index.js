@@ -32,7 +32,7 @@ class WhenResponsiveScreen extends Component {
 	}
 
 	componentWillUnmount() {
-		removeAction( 'stackable.when-responsive-screen', `change-viewport-${ this.instanceId }` )
+		removeAction( 'stackable.when-responsive-screen', `change-viewport-${ this.props.instanceId }` )
 	}
 
 	render() {
