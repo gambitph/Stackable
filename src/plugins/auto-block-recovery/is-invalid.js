@@ -75,6 +75,11 @@ export const isInvalid = ( block, allowedTags = ALLOWED_ERROR_TAGS ) => {
 		return true
 	}
 
+	// Check whether we're missing !important in styles.
+	if ( isMissingStyleImportant( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
 	// Get which HTML tags the error occurred.
 	const tags = getInvalidationTags( block )
 	if ( ! tags ) {
@@ -256,6 +261,44 @@ export const isAriaLevel = issue => {
 	const newExists = issue.args[ 1 ].some( attributePair => attributePair[ 0 ] === 'aria-level' )
 
 	if ( oldExists && ! newExists ) {
+		return true
+	}
+
+	return false
+}
+
+/**
+ * Checkes whether the styles have missing !important
+ *
+ * @param {Object} issue the invalidation object
+ * @return {boolean} If true, the styles have missing !important. Otherwise, false.
+ */
+export const isMissingStyleImportant = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 3 ) {
+		return false
+	}
+
+	if ( ! issue.args[ 0 ].match( /text/ ) ) {
+		return false
+	}
+
+	// Only do this for stackable styles.
+	if (
+		! issue.args[ 1 ].match( /.ugb-[^\{]*{[^\}]*}/ ) &&
+		! issue.args[ 2 ].match( /.ugb-[^\{]*{[^\}]*}/ )
+	) {
+		return false
+	}
+
+	const oldStylesWithoutImportant = issue.args[ 1 ].replace( / !important/g, '' )
+	const newStylesWithoutImportant = issue.args[ 2 ].replace( / !important/g, '' )
+
+	// If both styles are equal without important, return true.
+	if ( oldStylesWithoutImportant === newStylesWithoutImportant ) {
 		return true
 	}
 
