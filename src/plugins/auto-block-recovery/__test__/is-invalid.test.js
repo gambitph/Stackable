@@ -334,6 +334,39 @@ describe( 'isInvalid', () => {
 
 		unregisterBlockType( 'ugb/dummy' )
 	} )
+
+	it( 'should detect missing important in styles', () => {
+		const blockSettings = {
+			category: 'common',
+			save: () => (
+				<div className="ugb-dummy">
+					<div className="ugb-main-block">
+						<style>
+							{ [
+								'.ugb-main-block { color: #fff; } !important',
+								'.ugb-dummy { color: #fff; } !important',
+							].join( ' ' ) }
+						</style>
+					test
+					</div>
+				</div>
+			),
+			title: 'Test Block',
+		}
+
+		registerBlockType( 'ugb/dummy', blockSettings )
+
+		const block1 = createBlockWithFallback( {
+			blockName: 'ugb/dummy',
+			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><style>.ugb-main-block { color: #fff; } .ugb-dummy { color: #fff; }</style>test</div></div>',
+			attrs: {},
+			innerBlocks: [],
+		} )
+
+		expect( isInvalid( block1 ) ).toBe( true )
+
+		unregisterBlockType( 'ugb/dummy' )
+	} )
 } )
 
 describe( 'getInequivalentHTMLError', () => {
