@@ -25,7 +25,7 @@ class WhenResponsiveScreen extends Component {
 	}
 
 	componentDidMount() {
-		addAction( 'stackable.when-responsive-screen', `change-viewport-${ this.instanceId }`, screen => {
+		addAction( 'stackable.when-responsive-screen', `change-viewport-${ this.props.instanceId }`, screen => {
 			setSelectedScreen( screen )
 			this.setState( { screen } )
 		} )
