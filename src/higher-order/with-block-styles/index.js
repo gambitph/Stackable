@@ -27,7 +27,7 @@ const BlockStylesWithMemo = props => {
 
 	const styleObject = useMemo(
 		() => applyFilters( `stackable.${ blockName }.styles`, styleFunction( blockProps ), blockProps ),
-		[ Object.values( currentAttributes ).join( ',' ) ]
+		[ Object.values( currentAttributes ).join( ',' ) + blockProps.clientId ]
 	)
 
 	return (
