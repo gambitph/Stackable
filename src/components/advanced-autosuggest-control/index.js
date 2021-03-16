@@ -16,7 +16,7 @@ import Autosuggest from 'react-autosuggest'
 import { BaseControl } from '@wordpress/components'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
-import { kebabCase } from 'lodash'
+import { kebabCase, isEqual } from 'lodash'
 
 // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
 const escapeRegexCharacters = str => str.replace( /[.*+?^${}()|[\]\\]/g, '\\$&' )
@@ -34,7 +34,11 @@ const getSuggestions = ( value, options ) => {
 
 	// Non-grouped options. Find a matching value.
 	if ( ! isGroupedOptions( options ) ) {
-		return options.filter( option => regex.test( option.label ) || regex.test( option.value ) )
+		return options.filter( option =>
+			typeof option === 'string' ?
+				regex.test( option ) :
+				( regex.test( option.label ) || regex.test( option.value ) )
+		)
 	}
 
 	// Grouped options. Find a matching value.
@@ -62,7 +66,7 @@ const getLabelFromValue = ( value, options ) => {
 
 	// Non-grouped options
 	if ( ! isGroupedOptions( options ) ) {
-		const matchingOptions = options.filter( option => option.value === value )
+		const matchingOptions = options.filter( option => ( typeof option === 'string' ? option : option.value ) === value )
 		if ( ! matchingOptions.length ) {
 			return value
 		}
@@ -154,6 +158,14 @@ class AdvancedAutosuggestControl extends Component {
 			suggestions,
 			isEmpty: value.trim() !== '' && suggestions.length === 0,
 		} )
+	}
+
+	componentWillReceiveProps( prevProps ) {
+		if ( ! isEqual( prevProps.options, this.props.options ) ) {
+			this.setState( {
+				suggestions: getSuggestions( this.props.value, this.props.options ),
+			} )
+		}
 	}
 
 	// Autosuggest will call this function every time you need to clear suggestions.
