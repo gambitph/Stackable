@@ -16,7 +16,7 @@ import Autosuggest from 'react-autosuggest'
 import { BaseControl } from '@wordpress/components'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
-import { kebabCase, isEqual } from 'lodash'
+import { kebabCase } from 'lodash'
 
 // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
 const escapeRegexCharacters = str => str.replace( /[.*+?^${}()|[\]\\]/g, '\\$&' )
@@ -109,8 +109,8 @@ class AdvancedAutosuggestControl extends Component {
 	constructor() {
 		super( ...arguments )
 		this.state = {
-			value: this.props.value,
-			label: this.props.value ? getLabelFromValue( this.props.value, this.props.options ) : this.props.value,
+			value: '',
+			label: '',
 			suggestions: [],
 			isEmpty: false,
 		}
@@ -143,6 +143,12 @@ class AdvancedAutosuggestControl extends Component {
 	// Autosuggest will call this function every time you need to update suggestions.
 	// You already implemented this logic above, so just use it.
 	onSuggestionsFetchRequested( { value, reason } ) {
+		if ( this.props.disableAutoIndex ) {
+			this.setState( {
+				suggestions: getSuggestions( '', this.props.options ),
+			} )
+			return
+		}
 		// If the input was clicked (can be thought as a dropdown was opened), show all the options.
 		if ( reason === 'input-focused' || reason === 'suggestion-selected' ) {
 			this.setState( {
@@ -160,12 +166,22 @@ class AdvancedAutosuggestControl extends Component {
 		} )
 	}
 
-	componentWillReceiveProps( prevProps ) {
-		if ( ! isEqual( prevProps.options, this.props.options ) ) {
+	componentDidMount() {
+		if ( this.props.options.length && this.props.value ) {
 			this.setState( {
-				suggestions: getSuggestions( this.props.value, this.props.options ),
+				value: this.props.value,
+				label: this.props.value ? getLabelFromValue( this.props.value, this.props.options ) : this.props.value,
+				suggestions: getSuggestions( this.props.disableAutoIndex ? '' : this.props.value, this.props.options ),
 			} )
 		}
+	}
+
+	componentWillReceiveProps( receivedProps ) {
+		this.setState( {
+			value: receivedProps.value,
+			label: receivedProps.value ? getLabelFromValue( receivedProps.value, receivedProps.options ) : receivedProps.value,
+			suggestions: getSuggestions( this.props.disableAutoIndex ? '' : receivedProps.value, receivedProps.options ),
+		} )
 	}
 
 	// Autosuggest will call this function every time you need to clear suggestions.
@@ -180,7 +196,8 @@ class AdvancedAutosuggestControl extends Component {
 
 		// Autosuggest will pass through all these props to the input.
 		const inputProps = {
-			placeholder: '',
+			disabled: this.props.inputProps?.disabled,
+			placeholder: this.props.placeholder,
 			value: label,
 			onChange: this.onChange,
 			onFocus: this.onFocus,
