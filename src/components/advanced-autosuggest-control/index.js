@@ -221,7 +221,8 @@ class AdvancedAutosuggestControl extends Component {
 						focusInputOnSuggestionClick={ false }
 						onSuggestionsFetchRequested={ this.onSuggestionsFetchRequested }
 						onSuggestionsClearRequested={ this.onSuggestionsClearRequested }
-						getSuggestionValue={ getSuggestionValue }
+						onSuggestionSelected={ this.props.onSuggestionSelected }
+						getSuggestionValue={ this.props.getSuggestionValue || getSuggestionValue }
 						renderSuggestion={ suggestion => {
 							return <div
 								className="ugb-autosuggest-option"
@@ -254,6 +255,9 @@ AdvancedAutosuggestControl.defaultProps = {
 	noMatchesLabel: __( 'No matches found', i18n ),
 	renderOption: null, // If given a function, it will be called to render the option.
 	highlightValueOnFocus: false,
+	getSuggestionValue: null,
+	disableAutoIndex: false,
+	onSuggestionSelected: () => {},
 }
 
 export default AdvancedAutosuggestControl
