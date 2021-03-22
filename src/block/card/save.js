@@ -7,11 +7,9 @@ import createStyles from './style'
  * External dependencies
  */
 import classnames from 'classnames'
-import { Image2 } from '~stackable/components'
 import { withVersion } from '~stackable/higher-order'
-import { getImageProps } from '~stackable/helpers'
 import {
-	BlockDiv, getColumnClasses, Style,
+	BlockDiv, getColumnClasses, Image, Style,
 } from '~stackable/block-components'
 import { version as VERSION } from 'stackable'
 
@@ -26,7 +24,6 @@ export const Save = props => {
 		hasContainer,
 	} = props.attributes
 
-	const imageProps = getImageProps( props.attributes )
 	const [ columnClass, columnWrapperClass ] = getColumnClasses( props.attributes )
 
 	const blockClassNames = classnames( [
@@ -59,9 +56,9 @@ export const Save = props => {
 			/>
 			<div className={ contentClassNames }>
 				{ props.attributes.imageUrl &&
-					<Image2.Content
+					<Image.Content
 						className="stk-card__image"
-						{ ...imageProps }
+						blockProps={ props }
 					/>
 				}
 				<div className={ innerClassNames }>

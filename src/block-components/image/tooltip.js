@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { AdvancedTextControl } from '..'
+import { AdvancedTextControl } from '~stackable/components'
 
 /**
  * External dependencies
@@ -60,7 +60,7 @@ const Tooltip = props => {
 	const focusInput = useCallback( () => {
 		// When the manual entry opens, select the whole value.
 		setTimeout( () => {
-			popupRef.current.querySelector( 'input' ).select()
+			popupRef.current?.querySelector( 'input' ).select()
 		}, 1 )
 	}, [ popupRef.current ] )
 
@@ -202,7 +202,11 @@ const Tooltip = props => {
 					className={ popupClassName }
 					anchorRef={ tooltipRef.current }
 					position="bottom right"
-					onFocusOutside={ () => setIsEditing( false ) }
+					onFocusOutside={ event => {
+						if ( event.relatedTarget !== tooltipRef.current ) {
+							setIsEditing( false )
+						}
+					} }
 				>
 					<div ref={ popupRef }>
 						{ props.enableWidth && props.enableHeight &&

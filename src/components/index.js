@@ -105,5 +105,4 @@ export {
 	InspectorStyleControls,
 	InspectorAdvancedControls,
 } from './inspector-tabs'
-export { default as Image2 } from './image2'
 export { default as Div } from './div'

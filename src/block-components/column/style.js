@@ -10,9 +10,14 @@ import {
  *
  * @param {Object} styles The StyleObject to append to
  * @param {Object} blockProps Block props
+ * @param {Object} options Other options
  */
-export const addStyles = ( styles, blockProps ) => {
+export const addStyles = ( styles, blockProps, options = {} ) => {
 	const getValue = __getValue( blockProps.attributes )
+
+	const {
+		selector = '',
+	} = options
 
 	styles.add( {
 		style: {
@@ -35,19 +40,19 @@ export const addStyles = ( styles, blockProps ) => {
 			},
 			saveOnly: {
 				desktopTablet: {
-					'': {
+					[ selector ]: {
 						flex: getValue( 'columnWidth', '1 1 %s%' ),
 						maxWidth: getValue( 'columnWidth', '%s%' ),
 					},
 				},
 				tabletOnly: {
-					'': {
+					[ selector ]: {
 						flex: getValue( 'columnWidthTablet', '1 1 %s%' ),
 						maxWidth: getValue( 'columnWidthTablet', '%s%' ),
 					},
 				},
 				mobile: {
-					'': {
+					[ selector ]: {
 						flex: getValue( 'columnWidthMobile', '1 1 %s%' ),
 						maxWidth: getValue( 'columnWidthMobile', '%s%' ),
 					},

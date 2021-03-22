@@ -351,7 +351,7 @@ const _ResizableTooltip = props => {
 
 			// When the manual entry opens, select the whole value.
 			setTimeout( () => {
-				popupRef.current.querySelector( 'input' ).select()
+				popupRef.current?.querySelector( 'input' ).select()
 			}, 1 )
 		}
 	}, [ isEditWidth ] )
@@ -395,7 +395,11 @@ const _ResizableTooltip = props => {
 					className="stk-resizable-column__popup"
 					anchorRef={ tooltipRef.current }
 					position="bottom right"
-					onFocusOutside={ () => setIsEditWidth( false ) }
+					onFocusOutside={ event => {
+						if ( event.relatedTarget !== tooltipRef.current ) {
+							setIsEditWidth( false )
+						}
+					} }
 				>
 					<div ref={ popupRef }>
 						<AdvancedTextControl

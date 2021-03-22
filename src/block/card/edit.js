@@ -12,7 +12,6 @@ import {
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 	InspectorSectionControls,
-	Image2,
 	BackgroundControlsHelper,
 } from '~stackable/components'
 import {
@@ -24,10 +23,7 @@ import {
 	withIsHovered,
 } from '~stackable/higher-order'
 import {
-	getImageProps, useImage,
-} from '~stackable/helpers'
-import {
-	Column, getColumnClasses, BlockDiv, Style,
+	Column, getColumnClasses, BlockDiv, Style, Image,
 } from '~stackable/block-components'
 
 const TEMPLATE = [
@@ -69,9 +65,6 @@ const Edit = props => {
 	], {
 		'stk-container-padding': hasContainer,
 	} )
-
-	const imageProps = getImageProps( props.attributes )
-	const { setImage } = useImage()
 
 	return (
 		<Fragment>
@@ -120,16 +113,13 @@ const Edit = props => {
 			<Column showHandle={ isHovered }>
 				<BlockDiv className={ blockClassNames }>
 					<div className={ contentClassNames }>
-						<Image2
-							{ ...imageProps }
-							{ ...setImage }
+						<Image
 							className="stk-card__image"
 							enableWidth={ false }
 							enableDiagonal={ false }
 							heightUnits={ [ 'px' ] }
 							width={ 100 }
 							widthUnit="%"
-							height={ props.attributes.imageHeight || 300 }
 							heightUnit="px"
 						/>
 						<div className={ innerClassNames }>
