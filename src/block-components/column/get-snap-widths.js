@@ -23,7 +23,7 @@
 const SNAP_WIDTHS = [ 0.25, 0.33333, 0.5, 0.66666, 0.75, 1 ]
 const SNAP_WIDTHS_TENS = [ 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 ]
 
-export const getSnapWidths = ( columnWidths, columnIndex, totalWidth, direction = 'right', isShiftKey = false ) => {
+export default ( columnWidths, columnIndex, totalWidth, direction = 'right', isShiftKey = false ) => {
 	const leftEdge = columnWidths.slice( 0, columnIndex ).reduce( ( a, b ) => a + b, 0 )
 	const rightEdge = leftEdge + columnWidths[ columnIndex ]
 

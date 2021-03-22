@@ -1,6 +1,6 @@
 import { convertResponsiveAttributes } from '~stackable/util'
 
-export default convertResponsiveAttributes( {
+export const marginBottomAttributes = convertResponsiveAttributes( {
 	blockMarginBottom_: {
 		type: 'number',
 		default: '',

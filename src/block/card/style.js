@@ -1,7 +1,8 @@
 /**
  * External dependencies
  */
-import { addColumnStyles, addImageStyles } from '~stackable/helpers'
+import { BlockDiv, Column } from '~stackable/block-components'
+import { addImageStyles } from '~stackable/helpers'
 import {
 	// __getValue,
 	StyleObject,
@@ -11,8 +12,11 @@ const createStyles = ( version = '' ) => props => {
 	// const getValue = __getValue( props.attributes )
 	const styles = new StyleObject()
 
+	// addBlockBackgroundStyles( styles, props )
+	BlockDiv.addStyles( styles, props )
+
 	// Column styles.
-	addColumnStyles( styles, props )
+	Column.addStyles( styles, props )
 
 	// TODO: image adv styles like zoom, filter, etc.
 	// Image styles.

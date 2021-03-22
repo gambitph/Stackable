@@ -1,42 +1,21 @@
-import { imageAttributes, columnAttributes } from '~stackable/helpers'
+import { BlockDiv, Column } from '~stackable/block-components'
+import {
+	imageAttributes,
+} from '~stackable/helpers'
 import { convertResponsiveAttributes } from '~stackable/util'
 
 export default convertResponsiveAttributes( {
-	uniqueId: {
-		type: 'string',
-		source: 'attribute',
-		selector: '[data-id]',
-		attribute: 'data-id',
-		default: '',
-	},
-	isFirstBlock: {
+	...BlockDiv.attributes,
+	...Column.attributes,
+
+	hasContainer: {
 		type: 'boolean',
-		default: false,
-	},
-	isLastBlock: {
-		type: 'boolean',
-		default: false,
+		default: true,
 	},
 	design: {
 		type: 'string',
 		default: '',
 	},
 
-	...columnAttributes,
-
-	hasContainer: {
-		type: 'boolean',
-		default: true,
-	},
-	hasBackground: {
-		type: 'boolean',
-		default: false,
-	},
-
 	...imageAttributes,
-
-	blockBackgroundColor: {
-		type: 'string',
-		default: '',
-	},
 } )

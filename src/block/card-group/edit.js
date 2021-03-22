@@ -13,11 +13,7 @@ import {
 	PanelAdvancedSettings,
 	InspectorSectionControls,
 	ResizableBottomMargin,
-	Style,
 } from '~stackable/components'
-import {
-	useUniqueId,
-} from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -28,6 +24,7 @@ import {
 } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
 import { getMarginBottomProps, useMarginBottom } from '~stackable/helpers'
+import { BlockDiv, Style } from '~stackable/block-components'
 
 const Edit = props => {
 	const {
@@ -38,19 +35,14 @@ const Edit = props => {
 		hasBackground,
 	} = props.attributes
 
-	useUniqueId( props )
 	const marginBottomProps = getMarginBottomProps( props.attributes )
 	const { setMarginBottom } = useMarginBottom()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-card-group',
-		'stk-block',
 		'stk-row',
-		`stk-${ props.attributes.uniqueId }`,
-	], {
-		'stk-block-background': hasBackground,
-	} )
+	] )
 
 	const contentClassNames = classnames( [
 		'stk-inner-blocks',
@@ -78,14 +70,8 @@ const Edit = props => {
 			</PanelAdvancedSettings>
 		</InspectorSectionControls>
 
-		<div className={ blockClassNames } data-id={ props.attributes.uniqueId }>
-			<Style
-				blockUniqueClassName={ `stk-${ props.attributes.uniqueId }` }
-				blockMainClassName={ 'stk-card-group' }
-				styleFunc={ createStyles( VERSION ) }
-				blockProps={ props }
-				editorMode={ true }
-			/>
+		<BlockDiv className={ blockClassNames }>
+			<Style styleFunc={ createStyles( VERSION ) } />
 			<div className={ contentClassNames }>
 				<InnerBlocks
 					orientation="horizontal"
@@ -96,7 +82,7 @@ const Edit = props => {
 				{ ...marginBottomProps }
 				{ ...setMarginBottom }
 			/>
-		</div>
+		</BlockDiv>
 	</Fragment>
 }
 

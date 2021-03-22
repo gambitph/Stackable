@@ -6,7 +6,6 @@ import createStyles from './style'
 /**
  * External dependencies
  */
-import { Style } from '~stackable/components'
 import { withVersion } from '~stackable/higher-order'
 import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
@@ -16,19 +15,12 @@ import classnames from 'classnames'
  */
 import { InnerBlocks } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
+import { BlockDiv, Style } from '~stackable/block-components'
 
 export const Save = props => {
-	const {
-		hasBackground,
-	} = props.attributes
-
 	const blockClassName = classnames( [
 		'stk-card-group',
-		'stk-block',
-		`stk-${ props.attributes.uniqueId }`,
-	], {
-		'stk-block-background': hasBackground,
-	} )
+	] )
 
 	const contentClassNames = classnames( [
 		'stk-inner-blocks',
@@ -37,17 +29,18 @@ export const Save = props => {
 	] )
 
 	return (
-		<div className={ blockClassName } data-id={ props.attributes.uniqueId }>
+		<BlockDiv.Content
+			className={ blockClassName }
+			blockProps={ props }
+		>
 			<Style.Content
-				blockUniqueClassName={ `stk-${ props.attributes.uniqueId }` }
-				blockMainClassName={ 'stk-card-group' }
 				styleFunc={ createStyles( props.version ) }
 				blockProps={ props }
 			/>
 			<div className={ contentClassNames }>
 				<InnerBlocks.Content />
 			</div>
-		</div>
+		</BlockDiv.Content>
 	)
 }
 

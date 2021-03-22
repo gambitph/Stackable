@@ -5,7 +5,7 @@ import { useDispatch } from '@wordpress/data'
 import { useCallback } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
-const useMarginBottom = () => {
+export const useMarginBottom = () => {
 	const { clientId } = useBlockEditContext()
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 
@@ -27,5 +27,3 @@ const useMarginBottom = () => {
 		},
 	}
 }
-
-export default useMarginBottom

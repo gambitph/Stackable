@@ -7,11 +7,12 @@ import createStyles from './style'
  * External dependencies
  */
 import classnames from 'classnames'
-import {
-	Style, Image2,
-} from '~stackable/components'
+import { Image2 } from '~stackable/components'
 import { withVersion } from '~stackable/higher-order'
 import { getImageProps } from '~stackable/helpers'
+import {
+	BlockDiv, getColumnClasses, Style,
+} from '~stackable/block-components'
 import { version as VERSION } from 'stackable'
 
 /**
@@ -23,25 +24,19 @@ import { compose } from '@wordpress/compose'
 export const Save = props => {
 	const {
 		hasContainer,
-		hasBackground,
 	} = props.attributes
 
 	const imageProps = getImageProps( props.attributes )
+	const [ columnClass, columnWrapperClass ] = getColumnClasses( props.attributes )
 
 	const blockClassNames = classnames( [
 		'stk-card',
-		'stk-block',
-		'stk-column',
-		`stk-${ props.attributes.uniqueId }`,
-	], {
-		'stk-is-first': props.attributes.isFirstBlock,
-		'stk-is-last': props.attributes.isLastBlock,
-		'stk-block-background': hasBackground,
-	} )
+		columnClass,
+	] )
 
 	const contentClassNames = classnames( [
 		'stk-block-content',
-		'stk-column-wrapper',
+		columnWrapperClass,
 	], {
 		'stk-container--no-padding': hasContainer,
 	} )
@@ -54,10 +49,11 @@ export const Save = props => {
 	} )
 
 	return (
-		<div className={ blockClassNames } data-id={ props.attributes.uniqueId }>
+		<BlockDiv.Content
+			className={ blockClassNames }
+			blockProps={ props }
+		>
 			<Style.Content
-				blockUniqueClassName={ `stk-${ props.attributes.uniqueId }` }
-				blockMainClassName={ 'stk-card' }
 				styleFunc={ createStyles( props.version ) }
 				blockProps={ props }
 			/>
@@ -72,7 +68,7 @@ export const Save = props => {
 					<InnerBlocks.Content />
 				</div>
 			</div>
-		</div>
+		</BlockDiv.Content>
 	)
 }
 

@@ -11,7 +11,7 @@ import {
  * @param {Object} styles The StyleObject to append to
  * @param {Object} blockProps Block props
  */
-export default ( styles, blockProps ) => {
+export const addStyles = ( styles, blockProps ) => {
 	const getValue = __getValue( blockProps.attributes )
 
 	styles.add( {

@@ -1,6 +1,6 @@
 import { convertResponsiveAttributes } from '~stackable/util'
 
-export default convertResponsiveAttributes( {
+export const imageAttributes = convertResponsiveAttributes( {
 	imageUrl: {
 		type: 'string',
 		default: '',

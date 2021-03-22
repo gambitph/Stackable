@@ -12,15 +12,11 @@ import {
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 	InspectorSectionControls,
-	ResizableColumn,
-	Style,
 	Image2,
 	BackgroundControlsHelper,
 } from '~stackable/components'
 import {
-	useUniqueId,
 	useBlockContext,
-	useBlockColumnEffect,
 } from '~stackable/hooks'
 import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
@@ -28,8 +24,11 @@ import {
 	withIsHovered,
 } from '~stackable/higher-order'
 import {
-	getImageProps, useColumn, useImage,
+	getImageProps, useImage,
 } from '~stackable/helpers'
+import {
+	Column, getColumnClasses, BlockDiv, Style,
+} from '~stackable/block-components'
 
 const TEMPLATE = [
 	[ 'core/heading', {} ],
@@ -38,11 +37,7 @@ const TEMPLATE = [
 ]
 
 const Edit = props => {
-	const {
-		isFirstBlock, isLastBlock, hasInnerBlocks,
-	} = useBlockContext( props )
-	useBlockColumnEffect( props )
-	useUniqueId( props )
+	const { hasInnerBlocks } = useBlockContext()
 
 	const {
 		hasContainer,
@@ -53,21 +48,17 @@ const Edit = props => {
 		className, setAttributes, isHovered,
 	} = props
 
+	const [ columnClass, columnWrapperClass ] = getColumnClasses( props.attributes )
+
 	const blockClassNames = classnames( [
 		className,
 		'stk-card',
-		'stk-block',
-		'stk-column',
-		`stk-${ props.attributes.uniqueId }`,
-	], {
-		'stk-is-first': isFirstBlock,
-		'stk-is-last': isLastBlock,
-		'stk-block-background': hasBackground,
-	} )
+		columnClass,
+	] )
 
 	const contentClassNames = classnames( [
 		'stk-block-content',
-		'stk-column-wrapper',
+		columnWrapperClass,
 	], {
 		'stk-container--no-padding': hasContainer,
 	} )
@@ -81,7 +72,6 @@ const Edit = props => {
 
 	const imageProps = getImageProps( props.attributes )
 	const { setImage } = useImage()
-	const { setColumn } = useColumn()
 
 	return (
 		<Fragment>
@@ -124,19 +114,11 @@ const Edit = props => {
 				>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
-			<Style
-				blockUniqueClassName={ `stk-${ props.attributes.uniqueId }` }
-				blockMainClassName={ 'stk-card' }
-				styleFunc={ createStyles( VERSION ) }
-				blockProps={ props }
-				editorMode={ true }
-			/>
-			<ResizableColumn
-				showHandle={ isHovered }
-				blockProps={ props }
-				{ ...setColumn }
-			>
-				<div className={ blockClassNames } data-id={ props.attributes.uniqueId }>
+
+			<Style styleFunc={ createStyles( VERSION ) } />
+
+			<Column showHandle={ isHovered }>
+				<BlockDiv className={ blockClassNames }>
 					<div className={ contentClassNames }>
 						<Image2
 							{ ...imageProps }
@@ -158,8 +140,8 @@ const Edit = props => {
 							/>
 						</div>
 					</div>
-				</div>
-			</ResizableColumn>
+				</BlockDiv>
+			</Column>
 		</Fragment>
 	)
 }

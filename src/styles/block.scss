@@ -88,3 +88,20 @@
 		width: auto;
 	}
 }
+
+// Responsive hiding.
+@include desktop {
+	.stk--hide-desktop {
+		display: none !important;
+	}
+}
+@include tablet {
+	.stk--hide-tablet {
+		display: none !important;
+	}
+}
+@include mobile {
+	.stk--hide-mobile {
+		display: none !important;
+	}
+}

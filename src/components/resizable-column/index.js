@@ -1,8 +1,8 @@
 /**
  * Internal dependencies
  */
-import useDeviceEditorClasses from './use-device-editor-classes'
-import getSnapWidths from './get-snap-widths'
+import { useDeviceEditorClasses } from './use-device-editor-classes'
+import { getSnapWidths } from './get-snap-widths'
 import { AdvancedTextControl } from '..'
 
 /**
@@ -25,6 +25,7 @@ import { ResizableBox, Popover } from '@wordpress/components'
 import {
 	Fragment, useState, useEffect, useRef, useCallback, useMemo,
 } from '@wordpress/element'
+import { useBlockEditContext } from '@wordpress/block-editor'
 import { withSelect } from '@wordpress/data'
 
 const MIN_COLUMN_WIDTHS = {
@@ -40,7 +41,8 @@ const MIN_COLUMN_WIDTH_PERCENTAGE = {
 }
 
 const ResizableColumn = props => {
-	const blockContext = useBlockContext( props.blockProps )
+	const { clientId } = useBlockEditContext()
+	const blockContext = useBlockContext()
 	const {
 		isFirstBlock, isLastBlock, isOnlyBlock, adjacentBlocks, blockIndex, parentBlock,
 	} = blockContext
@@ -48,10 +50,6 @@ const ResizableColumn = props => {
 	// This is used to add editor classes based on the preview device type.
 	// Mainly for generating editor styles.
 	useDeviceEditorClasses( props.previewDeviceType )
-
-	const {
-		toggleSelection,
-	} = props.blockProps
 
 	const [ currentWidths, setCurrentWidths ] = useState( [] )
 	const [ newWidthsPercent, setNewWidthsPercent ] = useState( [] )
@@ -114,7 +112,7 @@ const ResizableColumn = props => {
 			snap={ snapWidths }
 			snapGap={ 20 }
 			onResizeStart={ ( _event, _direction ) => {
-				toggleSelection( false )
+				// toggleSelection( false )
 
 				// In desktop, get all the column widths.
 				if ( isDesktop ) {
@@ -146,7 +144,7 @@ const ResizableColumn = props => {
 				// Tablet and mobile.
 				} else {
 					// Get the current pixel width of the columns.
-					const blockEl = document.querySelector( `[data-block="${ props.blockProps.clientId }"]` )
+					const blockEl = document.querySelector( `[data-block="${ clientId }"]` )
 					const columnWidth = blockEl?.clientWidth || 0
 					setCurrentWidths( columnWidth )
 
@@ -207,11 +205,11 @@ const ResizableColumn = props => {
 					setNewWidthsPercent( columnPercentages )
 
 					// Add the temporary styles for our column widths.
-					const columnStyles = `[data-block="${ props.blockProps.clientId }"] {
+					const columnStyles = `[data-block="${ clientId }"] {
 							flex: 1 1 ${ columnPercentages }% !important;
 							max-width: ${ columnPercentages }% !important;
 						}
-						[data-block="${ props.blockProps.clientId }"] .stk-resizable-column__size-tooltip {
+						[data-block="${ clientId }"] .stk-resizable-column__size-tooltip {
 							--width: '${ columnPercentages.toFixed( 1 ) }%' !important;
 						}`
 					setTempStyles( columnStyles )
@@ -256,10 +254,9 @@ const ResizableColumn = props => {
 			{ <ResizableTooltip
 				isVisible={ ! isOnlyBlock }
 				blockContext={ blockContext }
-				blockProps={ props.blockProps }
-				value={ isDesktop ? props.blockProps.attributes.columnWidth
-					: isTablet ? ( props.blockProps.attributes.columnWidthTablet || props.blockProps.attributes.columnWidth )
-						: props.blockProps.attributes.columnWidthMobile }
+				value={ isDesktop ? props.columnWidth
+					: isTablet ? ( props.columnWidthTablet || props.columnWidth )
+						: props.columnWidthMobile }
 				onChange={ width => {
 					if ( width < MIN_COLUMN_WIDTH_PERCENTAGE[ props.previewDeviceType ] ) {
 						return
@@ -447,7 +444,6 @@ const _ResizableTooltip = props => {
 _ResizableTooltip.defaultProps = {
 	isVisible: true,
 	blockContext: {},
-	blockProps: {},
 	value: '',
 	onChange: () => {},
 }
@@ -467,7 +463,9 @@ const ResizableTooltip = compose( [
 ResizableColumn.defaultProps = {
 	className: '',
 	showHandle: true,
-	blockProps: {},
+	columnWidth: '',
+	columnWidthTablet: '',
+	columnWidthMobile: '',
 	onChangeDesktop: () => {},
 	onChangeTablet: () => {},
 	onChangeMobile: () => {},

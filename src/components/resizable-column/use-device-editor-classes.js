@@ -13,10 +13,8 @@ const addDeviceTypeClass = throttle( previewDeviceType => {
 	}
 }, 100 )
 
-const useDeviceEditorClasses = previewDeviceType => {
+export const useDeviceEditorClasses = previewDeviceType => {
 	useEffect( () => {
 		addDeviceTypeClass( previewDeviceType )
 	}, [ previewDeviceType ] )
 }
-
-export default useDeviceEditorClasses

@@ -1,0 +1,12 @@
+// Background overlay. Any block / item that has a background/gradient/overlay should have this class.
+// #editor .stk--has-background-overlay {
+// 	&.stk--has-background-overlay {
+// 		&::before,
+// 		> .stk-video-background {
+// 			pointer-events: none;
+// 		}
+// 	}
+// }
+.stk-video-background {
+	pointer-events: none;
+}

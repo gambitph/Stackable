@@ -1,6 +1,6 @@
-export { default as marginBottomAttributes } from './attributes'
-export { default as useMarginBottom } from './use-margin-bottom'
-export { default as addMarginBottomStyles } from './style'
+export * from './attributes'
+export * from './use-margin-bottom'
+export * from './style'
 
 export const getMarginBottomProps = attributes => {
 	return {

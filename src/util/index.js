@@ -275,6 +275,7 @@ export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassNam
 			} else {
 				newSelector = `.${ uniqueClassName } ${ s.trim() }`
 					.replace( new RegExp( `(.${ uniqueClassName }) (.${ mainClassName }(#|:|\\[|\\.|\\s|$))`, 'g' ), '$1$2' )
+					.replace( /\s:/, ':' ) // If the selector given is just a pseudo selector ':before', it will produce ' :before', remove the extra space.
 			}
 			return wrapSelector ? `${ wrapSelector } ${ newSelector }` : newSelector
 		} )

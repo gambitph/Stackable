@@ -1,9 +1,14 @@
 import { useSelect } from '@wordpress/data'
+import { useBlockEditContext } from '@wordpress/block-editor'
 import {
 	first, last, indexOf, nth,
 } from 'lodash'
 
-const useBlockContext = ( { clientId } ) => {
+const useBlockContext = ( blockClientId = null ) => {
+	// If nothing is provided, use the current block.
+	const blockProps = useBlockEditContext()
+	const clientId = blockClientId || blockProps.clientId
+
 	const blockInfo = useSelect(
 		select => {
 			const { getBlock, getBlockParents } = select( 'core/block-editor' )

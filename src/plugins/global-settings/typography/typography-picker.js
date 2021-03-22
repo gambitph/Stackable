@@ -2,7 +2,6 @@
  * External dependencies
  */
 import { TypographyControl } from '~stackable/components'
-import { generateStyles } from '~stackable/components/style'
 import {
 	createTypographyStyles, loadGoogleFont,
 } from '~stackable/util'
@@ -17,6 +16,7 @@ import classnames from 'classnames'
  */
 import { __, sprintf } from '@wordpress/i18n'
 import { useSelect } from '@wordpress/data'
+import { generateStyles } from '~stackable/block-components'
 
 const TypographyPicker = props => {
 	const { value } = props

@@ -5,7 +5,7 @@ import { useDispatch } from '@wordpress/data'
 import { useCallback } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
-const useImage = () => {
+export const useImage = () => {
 	const { clientId } = useBlockEditContext()
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 
@@ -104,5 +104,3 @@ const useImage = () => {
 		},
 	}
 }
-
-export default useImage

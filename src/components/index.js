@@ -34,17 +34,7 @@ export { default as DesignLibraryControl } from './design-library-control'
 export { default as DesignLibraryList } from './design-library-list'
 export { default as PanelTabs } from './panel-tabs'
 export { default as BlockStyles } from './block-styles'
-export { default as Style } from './style'
 export { default as GlobalStyleControl } from './global-style-control'
-export { default as ResizableColumn } from './resizable-column'
-export { default as ResizableBottomMargin } from './resizable-bottom-margin'
-export {
-	default as InspectorTabs,
-	PreInspectorTabFill,
-	InspectorSectionControls,
-	InspectorStyleControls,
-	InspectorAdvancedControls,
-} from './inspector-tabs'
 
 // Reusable non-editor components
 export { default as DesignPanelBody } from './design-panel-body'
@@ -92,8 +82,6 @@ export { default as AlignButtonsControl } from './align-buttons-control'
 export { default as BlockContainer } from './block-container'
 export { default as CodeTextarea } from './code-textarea'
 export { default as Separator } from './separator'
-export { default as Image } from './image'
-export { default as Image2 } from './image2'
 export { default as ConvertToContainerButton } from './convert-to-container-buttons'
 export { default as GetBlockAttributesButton } from './block-attributes-get-button'
 export { default as DivBackground } from './div-background'
@@ -103,3 +91,19 @@ export { default as FontAwesomeIcon } from './font-awesome-icon'
 export { default as AdminBaseSetting } from './admin-base-setting'
 export { default as AdminTextSetting } from './admin-text-setting'
 export { default as AdminToggleSetting } from './admin-toggle-setting'
+
+// V2 only Components, for deprecation
+export { default as Image } from './image'
+
+// V3 only Components
+export { default as ResizableColumn } from './resizable-column'
+export { default as ResizableBottomMargin } from './resizable-bottom-margin'
+export {
+	default as InspectorTabs,
+	PreInspectorTabFill,
+	InspectorSectionControls,
+	InspectorStyleControls,
+	InspectorAdvancedControls,
+} from './inspector-tabs'
+export { default as Image2 } from './image2'
+export { default as Div } from './div'

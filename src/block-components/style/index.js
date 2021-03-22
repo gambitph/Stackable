@@ -1,26 +1,33 @@
 /**
+ * Internal dependencies
+ */
+import { getUniqueBlockClass } from '../block-div'
+
+/**
  * External dependencies
  */
 import { minifyCSS, prependCSSClass } from '~stackable/util'
 import {
 	kebabCase, omit, isEqual, sortBy,
 } from 'lodash'
+
 import { useMemo } from '@wordpress/element'
+import { useBlockEditContext } from '@wordpress/block-editor'
+import { useSelect } from '@wordpress/data'
 
 /**
  * Returns an identical styleObject with all the selectors modified to be wrapped
  * in the provided unique className selector.
  *
  * @param {Object} styleObject The object containing selectors and style rules
- * @param {string} blockMainClassName The main className of the block
  * @param {string} blockUniqueClassName The unique className of the block
  * @param {boolean} editorMode If true, wrap the selectors with `#editor`
  *
  * @return {Object} Modified styleObject
  */
-export const addBlockClassNames = ( styleObject, blockMainClassName = '', blockUniqueClassName = '', editorMode = false ) => {
+export const addBlockClassNames = ( styleObject, blockUniqueClassName = '', editorMode = false ) => {
 	return Object.keys( styleObject ).reduce( ( newStyles, selector ) => {
-		const newSelector = prependCSSClass( selector, blockMainClassName, blockUniqueClassName, editorMode ? '#editor' : '' )
+		const newSelector = prependCSSClass( selector, blockUniqueClassName, blockUniqueClassName, editorMode ? '#editor' : '' )
 		return {
 			...newStyles,
 			[ newSelector ]: styleObject[ selector ],
@@ -84,7 +91,6 @@ export const formMediaQuery = ( _devices = [ 'desktop' ], breakDesktop = 1024, b
  * Generates full CSS style string for a block given its CSS object.
  *
  * @param {Object} styleObject The CSS styles
- * @param {string} blockMainClassName Main block className
  * @param {string} blockUniqueClassName Unique ID className for the block
  * @param {number} breakTablet max-width for tablets
  * @param {number} breakMobile max-width for mobile
@@ -93,7 +99,7 @@ export const formMediaQuery = ( _devices = [ 'desktop' ], breakDesktop = 1024, b
  *
  * @return {string} Minified CSS string
  */
-export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqueClassName = '', breakTablet = 1024, breakMobile = 768, editorMode = false, recursiveCalls = 0 ) => {
+export const generateStyles = ( styleObject, blockUniqueClassName = '', breakTablet = 1024, breakMobile = 768, editorMode = false, recursiveCalls = 0 ) => {
 	const styleStrings = []
 
 	/**
@@ -162,12 +168,12 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 
 	const desktopStyles = omit( styleObject, [ 'desktopTablet', 'desktopOnly', 'tablet', 'tabletOnly', 'mobile', 'ie11', 'editor', 'saveOnly', 'custom' ] )
 	if ( Object.keys( desktopStyles ).length ) {
-		const cleanedStyles = addBlockClassNames( desktopStyles, blockMainClassName, blockUniqueClassName, editorMode )
+		const cleanedStyles = addBlockClassNames( desktopStyles, blockUniqueClassName, editorMode )
 		Array.prototype.push.apply( styleStrings, combineStyleRules( cleanedStyles ) ) // Faster than .concat method.
 	}
 
 	if ( typeof styleObject.desktopTablet !== 'undefined' ) {
-		const cleanedStyles = addBlockClassNames( styleObject.desktopTablet, blockMainClassName, blockUniqueClassName, editorMode )
+		const cleanedStyles = addBlockClassNames( styleObject.desktopTablet, blockUniqueClassName, editorMode )
 		const styleString = combineStyleRules( cleanedStyles, ! editorMode )
 		if ( styleString ) {
 			if ( editorMode ) {
@@ -181,7 +187,7 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 	}
 
 	if ( typeof styleObject.desktopOnly !== 'undefined' ) {
-		const cleanedStyles = addBlockClassNames( styleObject.desktopOnly, blockMainClassName, blockUniqueClassName, editorMode )
+		const cleanedStyles = addBlockClassNames( styleObject.desktopOnly, blockUniqueClassName, editorMode )
 		const styleString = combineStyleRules( cleanedStyles, ! editorMode )
 		if ( styleString ) {
 			if ( editorMode ) {
@@ -195,7 +201,7 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 	}
 
 	if ( typeof styleObject.tablet !== 'undefined' ) {
-		const cleanedStyles = addBlockClassNames( styleObject.tablet, blockMainClassName, blockUniqueClassName, editorMode )
+		const cleanedStyles = addBlockClassNames( styleObject.tablet, blockUniqueClassName, editorMode )
 		const styleString = combineStyleRules( cleanedStyles, ! editorMode )
 		if ( styleString ) {
 			if ( editorMode ) {
@@ -209,7 +215,7 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 	}
 
 	if ( typeof styleObject.tabletOnly !== 'undefined' ) {
-		const cleanedStyles = addBlockClassNames( styleObject.tabletOnly, blockMainClassName, blockUniqueClassName, editorMode )
+		const cleanedStyles = addBlockClassNames( styleObject.tabletOnly, blockUniqueClassName, editorMode )
 		const styleString = combineStyleRules( cleanedStyles, ! editorMode )
 		if ( styleString ) {
 			if ( editorMode ) {
@@ -223,7 +229,7 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 	}
 
 	if ( typeof styleObject.mobile !== 'undefined' ) {
-		const cleanedStyles = addBlockClassNames( styleObject.mobile, blockMainClassName, blockUniqueClassName, editorMode )
+		const cleanedStyles = addBlockClassNames( styleObject.mobile, blockUniqueClassName, editorMode )
 		const styleString = combineStyleRules( cleanedStyles, ! editorMode )
 		if ( styleString ) {
 			if ( editorMode ) {
@@ -237,7 +243,7 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 	}
 
 	if ( typeof styleObject.ie11 !== 'undefined' ) {
-		const cleanedStyles = addBlockClassNames( styleObject.ie11, blockMainClassName, blockUniqueClassName, editorMode )
+		const cleanedStyles = addBlockClassNames( styleObject.ie11, blockUniqueClassName, editorMode )
 		const styleString = combineStyleRules( cleanedStyles, ! editorMode )
 		if ( styleString ) {
 			styleStrings.push( `\n\n@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {\n${ styleString.join( '' ) } }` )
@@ -250,61 +256,62 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 
 	// CSS that will only be rendered while editing.
 	if ( editorMode && typeof styleObject.editor !== 'undefined' && ! recursiveCalls ) {
-		Array.prototype.push.apply( styleStrings, generateStyles( styleObject.editor, blockMainClassName, blockUniqueClassName, breakTablet, breakMobile, editorMode, recursiveCalls++ ) ) // Faster than concat.
+		Array.prototype.push.apply( styleStrings, generateStyles( styleObject.editor, blockUniqueClassName, breakTablet, breakMobile, editorMode, recursiveCalls++ ) ) // Faster than concat.
 	}
 
 	// CSS that will only be rendered while saving.
 	if ( ! editorMode && typeof styleObject.saveOnly !== 'undefined' && ! recursiveCalls ) {
-		Array.prototype.push.apply( styleStrings, generateStyles( styleObject.saveOnly, blockMainClassName, blockUniqueClassName, breakTablet, breakMobile, editorMode, recursiveCalls++ ) ) // Faster than concat.
+		Array.prototype.push.apply( styleStrings, generateStyles( styleObject.saveOnly, blockUniqueClassName, breakTablet, breakMobile, editorMode, recursiveCalls++ ) ) // Faster than concat.
 	}
 
 	return styleStrings
 }
 
-const Style = props => {
+export const Style = props => {
 	const {
-		// style = {},
-		editorMode = false,
-		blockUniqueClassName = '',
-		blockMainClassName = '',
 		breakTablet = 1024,
 		breakMobile = 768,
 		styleFunc = () => {},
-		blockProps = {},
 	} = props
+
+	const { clientId } = useBlockEditContext()
+
+	const { attributes } = useSelect(
+		select => {
+			const { getBlockAttributes } = select( 'core/block-editor' )
+			return {
+				attributes: getBlockAttributes( clientId ),
+			}
+		},
+		[ clientId ]
+	)
+
+	const blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
 
 	// Generate styles, but optimize.
 	const styles = useMemo( () => {
-		const style = styleFunc( blockProps )
-		return generateStyles( style, blockMainClassName, blockUniqueClassName, breakTablet, breakMobile, editorMode )
-	}, [ JSON.stringify( blockProps.attributes ) + blockProps.clientId ] )
+		const style = styleFunc( {
+			attributes,
+			clientId,
+		} )
+		return generateStyles( style, blockUniqueClassName, breakTablet, breakMobile, true )
+	}, [ JSON.stringify( attributes ) + clientId ] )
 
 	// It's way faster in React if you do smaller `<style>` tags instead of just a single one. Do it when in editor mode.
-	if ( editorMode ) {
-		return styles ? styles.map( ( styles, i ) => <style key={ i }>{ styles }</style> ) : null
-	}
-	return styles && styles.length ? <style>{ minifyCSS( styles.join( '' ) ) }</style> : null
+	return styles ? styles.map( ( styles, i ) => <style key={ i }>{ styles }</style> ) : null
 }
 
 Style.Content = props => {
 	const {
-		// style = {},
-		editorMode = false,
-		blockUniqueClassName = '',
-		blockMainClassName = '',
 		breakTablet = 1024,
 		breakMobile = 768,
 		styleFunc = () => {},
 		blockProps = {},
 	} = props
 
-	const styles = generateStyles( styleFunc( blockProps ), blockMainClassName, blockUniqueClassName, breakTablet, breakMobile, editorMode )
+	const blockUniqueClassName = getUniqueBlockClass( blockProps.attributes.uniqueId )
 
-	// It's way faster in React if you do smaller `<style>` tags instead of just a single one. Do it when in editor mode.
-	if ( editorMode ) {
-		return styles ? styles.map( ( styles, i ) => <style key={ i }>{ styles }</style> ) : null
-	}
+	const styles = generateStyles( styleFunc( blockProps ), blockUniqueClassName, breakTablet, breakMobile, false )
+
 	return styles && styles.length ? <style>{ minifyCSS( styles.join( '' ) ) }</style> : null
 }
-
-export default Style

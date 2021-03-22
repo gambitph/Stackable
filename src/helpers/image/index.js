@@ -1,6 +1,6 @@
-export { default as imageAttributes } from './attributes'
-export { default as useImage } from './use-image'
-export { default as addImageStyles } from './style'
+export * from './attributes'
+export * from './use-image'
+export * from './style'
 
 export const getImageProps = attributes => {
 	return {
