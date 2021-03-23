@@ -3,7 +3,7 @@ import {
 	getSaveContent,
 } from '@wordpress/blocks'
 import {
-	isEqual, difference, filter,
+	isEqual, difference, filter, first,
 } from 'lodash'
 
 // We will auto-recover if there are errors encountered in these tags.
@@ -49,6 +49,11 @@ export const isInvalid = ( block, allowedTags = ALLOWED_ERROR_TAGS ) => {
 
 	// Check whether we're missing an image class.
 	if ( isMissingWPImageClass( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
+	// Check whether the wp image class has changed.
+	if ( isWPImageClassChanged( validationIssues[ 0 ] ) ) {
 		return true
 	}
 
@@ -163,6 +168,33 @@ export const isMissingWPImageClass = issue => {
 
 	return ( issue.args[ 2 ].match( /wp-image-\d+/ ) && ! issue.args[ 3 ].match( /wp-image-\d+/ ) ) ||
 		( ! issue.args[ 2 ].match( /wp-image-\d+/ ) && issue.args[ 3 ].match( /wp-image-\d+/ ) )
+}
+
+export const isWPImageClassChanged = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 4 ) {
+		return false
+	}
+
+	if ( typeof issue.args[ 1 ] !== 'string' || typeof issue.args[ 2 ] !== 'string' || typeof issue.args[ 3 ] !== 'string' ) {
+		return false
+	}
+
+	if ( issue.args[ 1 ] !== 'class' ) {
+		return false
+	}
+
+	const newWPImageClassName = first( issue.args[ 2 ].match( /wp-image-\d+/ ) )
+	const oldWPImageClassName = first( issue.args[ 3 ].match( /wp-image-\d+/ ) )
+
+	if ( newWPImageClassName && oldWPImageClassName ) {
+		return oldWPImageClassName !== newWPImageClassName
+	}
+
+	return false
 }
 
 /**
