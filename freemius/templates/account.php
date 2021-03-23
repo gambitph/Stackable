@@ -21,7 +21,9 @@
 	/**
 	 * @var FS_Plugin_Tag $update
 	 */
-	$update = $fs->get_update( false, false, WP_FS__TIME_24_HOURS_IN_SEC / 24 );
+	$update = $fs->has_release_on_freemius() ?
+        $fs->get_update( false, false, WP_FS__TIME_24_HOURS_IN_SEC / 24 ) :
+        null;
 
 	if ( is_object($update) ) {
 		/**
@@ -433,11 +435,11 @@
 											'value' => $fs->get_plugin_version()
 										);
 
-										if ( $is_premium && ! $is_whitelabeled ) {
+										if ( ! fs_is_network_admin() && $is_premium && ! $is_whitelabeled ) {
 										    $profile[] = array(
                                                 'id'    => 'beta_program',
                                                 'title' => '',
-                                                'value' => $user->is_beta
+                                                'value' => $site->is_beta
                                             );
                                         }
 

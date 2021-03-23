@@ -344,6 +344,159 @@ describe( 'isInvalid', () => {
 		unregisterBlockType( 'ugb/dummy' )
 	} )
 
+	it( 'should detect rearranged styles', () => {
+		const blockSettings = {
+			category: 'common',
+			save: () => (
+				<div className="ugb-dummy">
+					<div className="ugb-main-block">
+						<style>
+							{ [
+								'.ugb-dummy { color: #fff; }',
+								'.ugb-main-block { color: #fff; }',
+							].join( ' ' ) }
+						</style>
+					test
+					</div>
+				</div>
+			),
+			title: 'Test Block',
+		}
+
+		registerBlockType( 'ugb/dummy', blockSettings )
+
+		const block1 = createBlockWithFallback( {
+			blockName: 'ugb/dummy',
+			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><style>.ugb-main-block { color: #fff; } .ugb-dummy { color: #fff; }</style>test</div></div>',
+			attrs: {},
+			innerBlocks: [],
+		} )
+
+		expect( isInvalid( block1 ) ).toBe( true )
+
+		unregisterBlockType( 'ugb/dummy' )
+	} )
+
+	it( 'should detect added styles', () => {
+		const blockSettings = {
+			category: 'common',
+			save: () => (
+				<div className="ugb-dummy">
+					<div className="ugb-main-block">
+						<style>
+							{ [
+								'.ugb-dummy { color: #fff; }',
+								'.ugb-main-block { color: #fff; }',
+							].join( ' ' ) }
+						</style>
+					test
+					</div>
+				</div>
+			),
+			title: 'Test Block',
+		}
+
+		registerBlockType( 'ugb/dummy', blockSettings )
+
+		const block1 = createBlockWithFallback( {
+			blockName: 'ugb/dummy',
+			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><style>.ugb-dummy { color: #fff; }</style>test</div></div>',
+			attrs: {},
+			innerBlocks: [],
+		} )
+
+		expect( isInvalid( block1 ) ).toBe( true )
+
+		unregisterBlockType( 'ugb/dummy' )
+	} )
+
+	it( 'should detect missing data-video attribute', () => {
+		const blockSettings = {
+			category: 'common',
+			save: () => (
+				<div className="ugb-dummy">
+					<div className="ugb-main-block">
+						<div data-video="test">
+							test
+						</div>
+					</div>
+				</div>
+			),
+			title: 'Test Block',
+		}
+
+		registerBlockType( 'ugb/dummy', blockSettings )
+
+		const block1 = createBlockWithFallback( {
+			blockName: 'ugb/dummy',
+			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><div>test</div></div></div>',
+			attrs: {},
+			innerBlocks: [],
+		} )
+
+		expect( isInvalid( block1 ) ).toBe( true )
+
+		unregisterBlockType( 'ugb/dummy' )
+	} )
+
+	it( 'should detect missing aria-hidden attribute', () => {
+		const blockSettings = {
+			category: 'common',
+			save: () => (
+				<div className="ugb-dummy">
+					<div className="ugb-main-block">
+						<div aria-hidden="true">
+							test
+						</div>
+					</div>
+				</div>
+			),
+			title: 'Test Block',
+		}
+
+		registerBlockType( 'ugb/dummy', blockSettings )
+
+		const block1 = createBlockWithFallback( {
+			blockName: 'ugb/dummy',
+			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><div>test</div></div></div>',
+			attrs: {},
+			innerBlocks: [],
+		} )
+
+		expect( isInvalid( block1 ) ).toBe( true )
+
+		unregisterBlockType( 'ugb/dummy' )
+	} )
+
+	it( 'should detect missing focusable attribute', () => {
+		const blockSettings = {
+			category: 'common',
+			save: () => (
+				<div className="ugb-dummy">
+					<div className="ugb-main-block">
+						<div focusable="true">
+							test
+						</div>
+					</div>
+				</div>
+			),
+			title: 'Test Block',
+		}
+
+		registerBlockType( 'ugb/dummy', blockSettings )
+
+		const block1 = createBlockWithFallback( {
+			blockName: 'ugb/dummy',
+			innerHTML: '<div class="ugb-dummy"><div class="ugb-main-block"><div>test</div></div></div>',
+			attrs: {},
+			innerBlocks: [],
+		} )
+
+		expect( isInvalid( block1 ) ).toBe( true )
+
+		unregisterBlockType( 'ugb/dummy' )
+	} )
+
 	it( 'should detect added image classes', () => {
 		const blockSettings = {
 			category: 'common',

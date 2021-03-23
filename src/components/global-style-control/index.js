@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { i18n } from 'stackable'
-import { AdvancedAutosuggestControl } from '~stackable/components'
+import { AdvancedAutosuggestControl, Button } from '~stackable/components'
 import classnames from 'classnames'
 import { pick } from 'lodash'
 
@@ -10,7 +10,6 @@ import { pick } from 'lodash'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { Button } from '@wordpress/components'
 
 const StyleItem = props => {
 	const mainClasses = classnames( [

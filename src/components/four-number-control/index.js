@@ -2,12 +2,13 @@
  * Internal dependencies
  */
 import BaseControlMultiLabel from '../base-control-multi-label'
+import Button from '../button'
 
 /**
  * WordPress dependencies
  */
 import {
-	BaseControl, Dashicon, Button,
+	BaseControl, Dashicon,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 
