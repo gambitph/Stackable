@@ -557,6 +557,13 @@ export const isFocusable = issue => {
 	return newHasFocusable && ! oldHasFocusable
 }
 
+/**
+ * Checks whether the block has a different
+ * style content
+ *
+ * @param {Object} block
+ * @return {boolean} if true, the block has a different style content. Otherwise, false
+ */
 export const isDifferentStyleContent = block => {
 	const {
 		name, attributes, innerBlocks, originalContent, isValid,
