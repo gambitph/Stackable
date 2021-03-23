@@ -75,6 +75,31 @@ export const isInvalid = ( block, allowedTags = ALLOWED_ERROR_TAGS ) => {
 		return true
 	}
 
+	// Check whether the styles are rearranged.
+	if ( isRearrangedStyles( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
+	// Check whether there are added styles.
+	if ( isAddedStyles( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
+	// Check whether the block has no data-video attribute
+	if ( isDataVideo( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
+	// Check whether the block has no aria-hidden attribute
+	if ( isAriaHidden( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
+	// Check whether the block has no focusable attribute
+	if ( isFocusable( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
 	// Get which HTML tags the error occurred.
 	const tags = getInvalidationTags( block )
 	if ( ! tags ) {
@@ -427,4 +452,137 @@ export const getInvalidationTags = block => {
 		...getTagTree( diff1 ),
 		...getTagTree( diff2 ),
 	] )
+}
+
+/**
+ * Checks whether the styles are only rearranged
+ * but are equal.
+ *
+ * @param {Object} issue the invalidation object
+ * @return {booleam} if true, the block has rearranged styles. Otherwise, false.
+ */
+export const isRearrangedStyles = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 3 ) {
+		return false
+	}
+
+	if ( ! issue.args[ 0 ].match( /text/ ) ) {
+		return false
+	}
+
+	const newStyles = issue.args[ 1 ].match( /.ugb-[^\{]*{[^\}]*}/g )
+	const oldStyles = issue.args[ 2 ].match( /.ugb-[^\{]*{[^\}]*}/g )
+	if ( newStyles && oldStyles ) {
+		return isEqual( newStyles.sort(), oldStyles.sort() )
+	}
+
+	return false
+}
+
+/**
+ * Checks whether there are added styles
+ * to the block
+ *
+ * @param {Object} issue the invalidation object
+ * @return {booleam} if true, the block has rearranged styles. Otherwise, false.
+ */
+export const isAddedStyles = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 3 ) {
+		return false
+	}
+
+	if ( ! issue.args[ 0 ].match( /text/ ) ) {
+		return false
+	}
+
+	const newStyles = issue.args[ 1 ].match( /.ugb-[^\{]*{[^\}]*}/g )
+	const oldStyles = issue.args[ 2 ].match( /.ugb-[^\{]*{[^\}]*}/g )
+	if ( newStyles && oldStyles ) {
+		return difference( newStyles, oldStyles ).length
+	}
+
+	return false
+}
+
+/**
+ * Checks whether the block has
+ * no data-video attribute. For video popup block.
+ *
+ * @param {Object} issue the validation object
+ * @return {boolean} if true, the block has no data-video. Otherwise, false.
+ */
+export const isDataVideo = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 3 ) {
+		return false
+	}
+
+	if ( ! issue.args[ 0 ].match( /attributes/ ) ) {
+		return false
+	}
+
+	const newHasDataVideo = issue.args[ 1 ].some( attribute => attribute[ 0 ] === 'data-video' )
+	const oldHasDataVideo = issue.args[ 2 ].some( attribute => attribute[ 0 ] === 'data-video' )
+	return newHasDataVideo && ! oldHasDataVideo
+}
+
+/**
+ * Checks whether the block has
+ * no aria-hidden attribute.
+ *
+ * @param {Object} issue the validation object
+ * @return {boolean} if true, the block has no aria-hidden. Otherwise, false.
+ */
+export const isAriaHidden = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 3 ) {
+		return false
+	}
+
+	if ( ! issue.args[ 0 ].match( /attributes/ ) ) {
+		return false
+	}
+
+	const newHasAriaHidden = issue.args[ 1 ].some( attribute => attribute[ 0 ] === 'aria-hidden' )
+	const oldHasAriaHidden = issue.args[ 2 ].some( attribute => attribute[ 0 ] === 'aria-hidden' )
+	return newHasAriaHidden && ! oldHasAriaHidden
+}
+
+/**
+ * Checks whether the block has
+ * no focusable attribute.
+ *
+ * @param {Object} issue the validation object
+ * @return {boolean} if true, the block has no focusable. Otherwise, false.
+ */
+export const isFocusable = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 3 ) {
+		return false
+	}
+
+	if ( ! issue.args[ 0 ].match( /attributes/ ) ) {
+		return false
+	}
+
+	const newHasFocusable = issue.args[ 1 ].some( attribute => attribute[ 0 ] === 'focusable' )
+	const oldHasFocusable = issue.args[ 2 ].some( attribute => attribute[ 0 ] === 'focusable' )
+	return newHasFocusable && ! oldHasFocusable
 }
