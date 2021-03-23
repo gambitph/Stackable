@@ -581,7 +581,7 @@ export const isDifferentStyleContent = block => {
 	}
 
 	const originalStyleContent = originalContent.match( /<style>(.+?(?=<\/style>))*<\/style>/g )?.[ 0 ]
-	const expectedStyleContent = expectedContent.match( /<style>[^\<]*<\/style>/g )?.[ 0 ]
+	const expectedStyleContent = expectedContent.match( /<style>(.+?(?=<\/style>))*<\/style>/g )?.[ 0 ]
 
 	if ( originalStyleContent && expectedStyleContent ) {
 		return originalStyleContent !== expectedStyleContent
