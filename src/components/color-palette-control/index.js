@@ -44,12 +44,17 @@ const ColorPaletteControl = props => {
 	const colorName = colorObject && colorObject.name
 	const ariaLabel = sprintf( colorIndicatorAriaLabel, label.toLowerCase(), colorName || value )
 
+	let _value = value
+	if ( _value.match( /var\(/g ) && _value.match( /#(.*?(?=\)))/g ) ) {
+		_value = _value.match( /#(.*?(?=\)))/g )[ 0 ]
+	}
+
 	const labelElement = (
 		<Fragment>
 			{ label }
-			{ value && (
+			{ _value && (
 				<ColorIndicator
-					colorValue={ value }
+					colorValue={ _value }
 					aria-label={ ariaLabel }
 				/>
 			) }
@@ -63,7 +68,7 @@ const ColorPaletteControl = props => {
 			label={ labelElement }>
 			<ColorPalette
 				className="editor-color-palette-control__color-palette"
-				value={ value }
+				value={ _value }
 				onChange={ value => {
 					// Allow the selected color to be overridden.
 					const colorObject = getColorObjectByColorValue( colors, value )
