@@ -91,7 +91,7 @@ export const createStyles = props => {
 	// Image.
 	if ( ! show.featuredImageAsBackground ) {
 		styles.push( {
-			...( ! show.featuredImageAsBackground ? createImageStyleSet( 'image%s', 'ugb-img', props.attributes) : {} ),
+			...( ! show.featuredImageAsBackground ? createImageStyleSet( 'image%s', 'ugb-img', props.attributes ) : {} ),
 		} )
 	} else {
 		styles.push( {
