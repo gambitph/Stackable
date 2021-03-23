@@ -294,8 +294,8 @@ export const isMissingStyleImportant = issue => {
 		return false
 	}
 
-	const oldStylesWithoutImportant = issue.args[ 1 ].replace( / !important/g, '' )
-	const newStylesWithoutImportant = issue.args[ 2 ].replace( / !important/g, '' )
+	const oldStylesWithoutImportant = issue.args[ 1 ].replace( /\s*!important/g, '' )
+	const newStylesWithoutImportant = issue.args[ 2 ].replace( /\s*!important/g, '' )
 
 	// If both styles are equal without important, return true.
 	if ( oldStylesWithoutImportant === newStylesWithoutImportant ) {
