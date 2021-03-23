@@ -53,15 +53,22 @@ export const convertSVGStringToBase64 = ( svgTag = '', color = '' ) => {
 		const svgChildElements = svgEl.querySelectorAll( '*' )
 
 		if ( color ) {
+			let _color = color
+			if ( color.match( /#(......)/g ) ) {
+				_color = color.match( /#(......)/g )[ 0 ]
+			} else if ( color.match( /var\(/g ) ) {
+				const colorVariable = color.match( /--(.*?(?=\)))/g )[ 0 ]
+				_color = window.getComputedStyle( document.documentElement ).getPropertyValue( colorVariable )
+			}
 			svgChildElements.forEach( child => {
 				if ( child && ! [ 'DEFS', 'TITLE', 'DESC' ].includes( child.tagName ) ) {
-					child.setAttribute( 'fill', color )
-					child.setAttribute( 'stroke', color )
-					child.style.fill = color
-					child.style.stroke = color
+					child.setAttribute( 'fill', _color )
+					child.setAttribute( 'stroke', _color )
+					child.style.fill = _color
+					child.style.stroke = _color
 				}
 			} )
-			svgEl.setAttribute( 'style', `fill: ${ color } !important; color: ${ color } !important` )
+			svgEl.setAttribute( 'style', `fill: ${ _color } !important; color: ${ _color } !important` )
 		}
 
 		/**
