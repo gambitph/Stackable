@@ -18,6 +18,10 @@ import { compose } from '@wordpress/compose'
 import { BlockDiv, Style } from '~stackable/block-components'
 
 export const Save = props => {
+	const {
+		attributes,
+	} = props
+
 	const blockClassName = classnames( [
 		'stk-card-group',
 	] )
@@ -31,11 +35,11 @@ export const Save = props => {
 	return (
 		<BlockDiv.Content
 			className={ blockClassName }
-			blockProps={ props }
+			attributes={ attributes }
 		>
 			<Style.Content
 				styleFunc={ createStyles( props.version ) }
-				blockProps={ props }
+				attributes={ attributes }
 			/>
 			<div className={ contentClassNames }>
 				<InnerBlocks.Content />

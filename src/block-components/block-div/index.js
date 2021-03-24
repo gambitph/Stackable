@@ -8,7 +8,7 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 import { useSelect } from '@wordpress/data'
 import { Div } from '~stackable/components'
 
-export const getUniqueBlockClass = uniqueId => `stk-${ uniqueId }`
+export const getUniqueBlockClass = uniqueId => uniqueId ? `stk-${ uniqueId }` : ''
 
 export const BlockDiv = props => {
 	const { clientId } = useBlockEditContext()
@@ -45,21 +45,22 @@ BlockDiv.defaultProps = {
 
 BlockDiv.Content = props => {
 	const {
-		blockProps,
+		attributes,
+		...propsToPass
 	} = props
 
 	const classNames = classnames( [
 		props.className,
 		'stk-block',
-		getUniqueBlockClass( blockProps.attributes.uniqueId ),
+		getUniqueBlockClass( attributes.uniqueId ),
 	], {
-		'stk-block-background': blockProps.attributes.hasBackground,
+		'stk-block-background': attributes.hasBackground,
 	} )
 
 	return <Div.Content
-		{ ...props }
+		{ ...propsToPass }
 		className={ classNames }
-		data-id={ blockProps.attributes.uniqueId }
+		data-id={ attributes.uniqueId }
 	/>
 }
 

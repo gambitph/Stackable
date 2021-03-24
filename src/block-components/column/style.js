@@ -9,11 +9,11 @@ import {
  * Adds image styles.
  *
  * @param {Object} styles The StyleObject to append to
- * @param {Object} blockProps Block props
+ * @param {Object} attributes Block attributes
  * @param {Object} options Other options
  */
-export const addStyles = ( styles, blockProps, options = {} ) => {
-	const getValue = __getValue( blockProps.attributes )
+export const addStyles = ( styles, attributes, options = {} ) => {
+	const getValue = __getValue( attributes )
 
 	const {
 		selector = '',
@@ -23,16 +23,16 @@ export const addStyles = ( styles, blockProps, options = {} ) => {
 		style: {
 			editor: {
 				custom: {
-					[ `.stk-preview-device-desktop .block-editor-block-list__layout [data-block="${ blockProps.clientId }"],
-					.stk-preview-device-tablet .block-editor-block-list__layout [data-block="${ blockProps.clientId }"]` ]: {
+					[ `.stk-preview-device-desktop .block-editor-block-list__layout [data-block="${ attributes.clientId }"],
+					.stk-preview-device-tablet .block-editor-block-list__layout [data-block="${ attributes.clientId }"]` ]: {
 						flex: getValue( 'columnWidth', '1 1 %s%' ),
 						maxWidth: getValue( 'columnWidth', '%s%' ),
 					},
-					[ `.stk-preview-device-tablet .block-editor-block-list__layout [data-block="${ blockProps.clientId }"]` ]: {
+					[ `.stk-preview-device-tablet .block-editor-block-list__layout [data-block="${ attributes.clientId }"]` ]: {
 						flex: getValue( 'columnWidthTablet', '1 1 %s%' ),
 						maxWidth: getValue( 'columnWidthTablet', '%s%' ),
 					},
-					[ `.stk-preview-device-mobile .block-editor-block-list__layout [data-block="${ blockProps.clientId }"]` ]: {
+					[ `.stk-preview-device-mobile .block-editor-block-list__layout [data-block="${ attributes.clientId }"]` ]: {
 						flex: getValue( 'columnWidthMobile', '1 1 %s%' ),
 						maxWidth: getValue( 'columnWidthMobile', '%s%' ),
 					},

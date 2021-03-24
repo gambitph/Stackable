@@ -10,11 +10,11 @@ import {
  * Adds image styles.
  *
  * @param {Object} styles The StyleObject to append to
- * @param {Object} blockProps Block props
+ * @param {Object} attributes Block attributes
  * @param {Object} options Options
  */
-export const addImageStyles = ( styles, blockProps, options = {} ) => {
-	const getValue = __getValue( blockProps.attributes )
+export const addImageStyles = ( styles, attributes, options = {} ) => {
+	const getValue = __getValue( attributes )
 	const {
 		selector = '.stk-img-wrapper',
 		enableWidth = true,

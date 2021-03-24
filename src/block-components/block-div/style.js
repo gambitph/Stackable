@@ -10,12 +10,12 @@ import { addBackgroundStyles } from '~stackable/helpers'
  * Adds image styles.
  *
  * @param {Object} styles The StyleObject to append to
- * @param {Object} blockProps Block props
+ * @param {Object} attributes Block attributes
  */
-export const addStyles = ( styles, blockProps ) => {
-	// const getValue = __getValue( blockProps.attributes )
+export const addStyles = ( styles, attributes ) => {
+	// const getValue = __getValue( attributes )
 
-	addBackgroundStyles( styles, blockProps, {
+	addBackgroundStyles( styles, attributes, {
 		attrNameTemplate: 'block%s',
 	} )
 }

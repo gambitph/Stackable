@@ -290,10 +290,7 @@ export const Style = props => {
 
 	// Generate styles, but optimize.
 	const styles = useMemo( () => {
-		const style = styleFunc( {
-			attributes,
-			clientId,
-		} )
+		const style = styleFunc( { ...attributes, clientId } )
 		return generateStyles( style, blockUniqueClassName, breakTablet, breakMobile, true )
 	}, [ JSON.stringify( attributes ) + clientId ] )
 
@@ -306,12 +303,12 @@ Style.Content = props => {
 		breakTablet = 1024,
 		breakMobile = 768,
 		styleFunc = () => {},
-		blockProps = {},
+		attributes = {},
 	} = props
 
-	const blockUniqueClassName = getUniqueBlockClass( blockProps.attributes.uniqueId )
+	const blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
 
-	const styles = generateStyles( styleFunc( blockProps ), blockUniqueClassName, breakTablet, breakMobile, false )
+	const styles = generateStyles( styleFunc( attributes ), blockUniqueClassName, breakTablet, breakMobile, false )
 
 	return styles && styles.length ? <style>{ minifyCSS( styles.join( '' ) ) }</style> : null
 }

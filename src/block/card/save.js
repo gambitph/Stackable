@@ -21,6 +21,9 @@ import { compose } from '@wordpress/compose'
 
 export const Save = props => {
 	const {
+		attributes,
+	} = props
+	const {
 		hasContainer,
 	} = props.attributes
 
@@ -48,17 +51,17 @@ export const Save = props => {
 	return (
 		<BlockDiv.Content
 			className={ blockClassNames }
-			blockProps={ props }
+			attributes={ attributes }
 		>
 			<Style.Content
 				styleFunc={ createStyles( props.version ) }
-				blockProps={ props }
+				attributes={ attributes }
 			/>
 			<div className={ contentClassNames }>
 				{ props.attributes.imageUrl &&
 					<Image.Content
 						className="stk-card__image"
-						blockProps={ props }
+						attributes={ attributes }
 					/>
 				}
 				<div className={ innerClassNames }>

@@ -15,14 +15,14 @@ import { sprintf } from '@wordpress/i18n'
  * Internal dependencies
  */
 
-export const addBackgroundOnlyStyles = ( styles, blockProps, options = {} ) => {
+export const addBackgroundOnlyStyles = ( styles, attributes, options = {} ) => {
 	const {
 		selector = '',
 		attrNameTemplate = '%s',
 	} = options
 
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
-	const getValue = __getValue( blockProps.attributes, getAttrName )
+	const getValue = __getValue( attributes, getAttrName )
 
 	const customSize = getValue( 'BackgroundCustomSize' ) ? getValue( 'BackgroundCustomSize' ) + ( getValue( 'BackgroundCustomSizeUnit' ) || '%' ) : undefined
 	const tabletCustomSize = getValue( 'TabletBackgroundCustomSize' ) ? getValue( 'TabletBackgroundCustomSize' ) + ( getValue( 'TabletBackgroundCustomSizeUnit' ) || '%' ) : undefined
@@ -30,7 +30,7 @@ export const addBackgroundOnlyStyles = ( styles, blockProps, options = {} ) => {
 
 	// Background color opacity.
 	let backgroundColor = getValue( 'BackgroundColor' )
-	if ( ! getValue( 'BackgroundColorType' ) && typeof blockProps.attributes[ getAttrName( 'BackgroundColorOpacity' ) ] !== 'undefined' && blockProps.attributes[ getAttrName( 'BackgroundColorOpacity' ) ] !== '' ) {
+	if ( ! getValue( 'BackgroundColorType' ) && typeof attributes[ getAttrName( 'BackgroundColorOpacity' ) ] !== 'undefined' && attributes[ getAttrName( 'BackgroundColorOpacity' ) ] !== '' ) {
 		if ( ! getValue( 'BackgroundMediaURL' ) && ! getValue( 'TabletBackgroundMediaURL' ) && ! getValue( 'MobileBackgroundMediaURL' ) ) {
 			backgroundColor = `${ hexToRgba( getValue( 'BackgroundColor' ) || '#ffffff', getValue( 'BackgroundColorOpacity' ) || 0 ) }`
 		}
@@ -75,14 +75,14 @@ export const addBackgroundOnlyStyles = ( styles, blockProps, options = {} ) => {
 	} )
 }
 
-export const addBackgroundOverlayStyles = ( styles, blockProps, options = {} ) => {
+export const addBackgroundOverlayStyles = ( styles, attributes, options = {} ) => {
 	const {
 		selector = '',
 		attrNameTemplate = '%s',
 	} = options
 
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
-	const getValue = __getValue( blockProps.attributes, getAttrName )
+	const getValue = __getValue( attributes, getAttrName )
 
 	const opacity = parseInt( getValue( 'BackgroundTintStrength', '', 5 ) || 0, 10 ) / 10
 	const isGradient = getValue( 'BackgroundColorType' ) === 'gradient'
@@ -121,7 +121,7 @@ export const addBackgroundOverlayStyles = ( styles, blockProps, options = {} ) =
 	} )
 }
 
-export const addBackgroundStyles = ( styles, blockProps, options = {} ) => {
-	addBackgroundOnlyStyles( styles, blockProps, options )
-	addBackgroundOverlayStyles( styles, blockProps, options )
+export const addBackgroundStyles = ( styles, attributes, options = {} ) => {
+	addBackgroundOnlyStyles( styles, attributes, options )
+	addBackgroundOverlayStyles( styles, attributes, options )
 }

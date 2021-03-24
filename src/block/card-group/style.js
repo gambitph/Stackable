@@ -8,13 +8,13 @@ import {
 	StyleObject,
 } from '~stackable/util'
 
-const createStyles = ( version = '' ) => props => {
-	// const getValue = __getValue( props.attributes )
+const createStyles = ( version = '' ) => attributes => {
+	// const getValue = __getValue( attributes )
 	const styles = new StyleObject()
 
-	BlockDiv.addStyles( styles, props )
+	BlockDiv.addStyles( styles, attributes )
 
-	addMarginBottomStyles( styles, props )
+	addMarginBottomStyles( styles, attributes )
 
 	return styles.getMerged( version )
 }

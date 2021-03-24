@@ -9,18 +9,18 @@ import {
 	StyleObject,
 } from '~stackable/util'
 
-const createStyles = ( version = '' ) => props => {
-	// const getValue = __getValue( props.attributes )
+const createStyles = ( version = '' ) => attributes => {
+	// const getValue = __getValue( attributes )
 	const styles = new StyleObject()
 
 	// addBlockBackgroundStyles( styles, props )
-	BlockDiv.addStyles( styles, props )
+	BlockDiv.addStyles( styles, attributes )
 
 	// Column styles.
-	Column.addStyles( styles, props )
+	Column.addStyles( styles, attributes )
 
 	// TODO: image adv styles like zoom, filter, etc.
-	Image.addStyles( styles, props, {
+	Image.addStyles( styles, attributes, {
 		enableWidth: false,
 		selector: '.stk-card__image',
 	} )

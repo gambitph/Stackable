@@ -56,10 +56,9 @@ Image.defaultProps = {
 
 Image.Content = props => {
 	const {
-		blockProps,
+		attributes,
 		...propsToPass
 	} = props
-	const { attributes } = blockProps
 
 	return <Image_.Content
 		imageId={ attributes.imageId }
@@ -86,7 +85,7 @@ Image.Content = props => {
 }
 
 Image.Content.defaultProps = {
-	blockProps: {},
+	attributes: {},
 }
 
 Image.InspectorControls = null
