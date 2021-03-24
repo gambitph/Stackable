@@ -1,5 +1,7 @@
 import ModalDesignLibrary from '..'
-import { render, wait } from '@testing-library/react'
+import {
+	render, wait,
+} from '@testing-library/react'
 import { getAllBlocks, getDesigns } from '~stackable/design-library'
 import { select } from '@wordpress/data'
 
@@ -26,30 +28,37 @@ describe( 'ModalDesignLibrary', () => {
 			type: 'block',
 			plan: 'free',
 			label: 'Header Design 1',
+			categories: [],
 		}, {
 			block: 'ugb/feature',
 			type: 'block',
 			plan: 'free',
 			label: 'Feature Design 1',
+			categories: [],
 		}, {
 			block: 'ugb/feature',
 			type: 'block',
 			plan: 'premium',
 			label: 'Feature Design 2',
+			categories: [],
 		} ] ) )
 	} )
 
 	it( 'should render', async () => {
 		const {
-			getByTestId, getByText, getByLabelText,
-		} = render( <ModalDesignLibrary /> )
+			getByTestId, getByText, rerender,
+		} = render( <ModalDesignLibrary selectedBlock="ugb/feature" /> )
 
 		await wait()
 
+		expect( getByText( 'Stackable Design Library' ) ).toBeTruthy()
 		expect( getByTestId( 'input-search' ) ).toBeTruthy()
-		expect( getByLabelText( /red/ ) ).toBeTruthy()
-		expect( getByText( 'Light' ) ).toBeTruthy()
-		expect( getByText( 'My ugb/header Design' ) ).toBeTruthy()
+		expect( getByText( 'UI Kits' ) ).toBeTruthy()
+		expect( getByText( 'Block Designs' ) ).toBeTruthy()
+		expect( getByText( 'Feature Design 1' ) ).toBeTruthy()
+		expect( getByText( 'Feature Design 2' ) ).toBeTruthy()
+
+		rerender( <ModalDesignLibrary selectedBlock="ugb/header" /> )
 		expect( getByText( 'Header Design 1' ) ).toBeTruthy()
 	} )
 } )
