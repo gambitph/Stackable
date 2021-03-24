@@ -6,6 +6,7 @@ import SVGViewMany from './images/view-many.svg'
 import SVGViewFew from './images/view-few.svg'
 import BlockList from './block-list'
 // import ColorList from './color-list'
+import Button from '../button'
 
 /**
  * External deprendencies
@@ -22,7 +23,7 @@ import { last } from 'lodash'
  * WordPress deprendencies
  */
 import {
-	Modal, TextControl, Button, ToggleControl,
+	Modal, TextControl, ToggleControl,
 } from '@wordpress/components'
 import {
 	useEffect, useState, useMemo,

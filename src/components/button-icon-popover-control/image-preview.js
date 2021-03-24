@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import SVGImageIcon from './images/image.svg'
+import Button from '../button'
 
 /**
  * External dependencies
@@ -13,7 +14,6 @@ import { i18n } from 'stackable'
  */
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
-import { Button } from '@wordpress/components'
 
 const ImagePreview = props => {
 	return (
