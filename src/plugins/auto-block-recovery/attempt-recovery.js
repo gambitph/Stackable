@@ -37,21 +37,44 @@ export const autoAttemptRecovery = () => {
 				const mainBlocks = recoverBlocks( select( 'core/editor' ).getEditorBlocks() )
 				// Replace the recovered blocks with the new ones.
 				mainBlocks.forEach( block => {
+					if ( block.isReusable && block.ref ) {
+						// Update the reusable blocks.
+						dispatch( 'core' ).editEntityRecord( 'postType', 'wp_block', block.ref, { content: serialize( block.blocks ) } ).then( () => {
+							dispatch( 'core' ).saveEditedEntityRecord( 'postType', 'wp_block', block.ref )
+						} )
+					}
+
 					if ( block.recovered && block.replacedClientId ) {
-						if ( block.ref ) {
-							// Update the reusable blocks.
-							dispatch( 'core' ).editEntityRecord( 'postType', 'wp_block', block.ref, { content: serialize( [ block ] ) } ).then( () => {
-								dispatch( 'core' ).saveEditedEntityRecord( 'postType', 'wp_block', block.ref )
-							} )
-						} else {
-							dispatch( 'core/block-editor' ).replaceBlock( block.replacedClientId, block )
-						}
+						dispatch( 'core/block-editor' ).replaceBlock( block.replacedClientId, block )
 					}
 				} )
 				enableBlockWarnings()
 			}
 		} )
 	}, 0 )
+}
+
+const recursivelyRecoverInvalidBlockList = blocks => {
+	const _blocks = [ ...blocks ]
+	let recoveryCalled = false
+	const recursivelyRecoverBlocks = willRecoverBlocks => {
+		willRecoverBlocks.forEach( _block => {
+			if ( isInvalid( _block ) ) {
+				recoveryCalled = true
+				const newBlock = recoverBlock( _block )
+				for ( const key in newBlock ) {
+					_block[ key ] = newBlock[ key ]
+				}
+			}
+
+			if ( _block.innerBlocks.length ) {
+				recursivelyRecoverBlocks( _block.innerBlocks )
+			}
+		} )
+	}
+
+	recursivelyRecoverBlocks( _blocks )
+	return [ _blocks, recoveryCalled ]
 }
 
 // Recursive fixing of all blocks. This doesn't actually fix any blocks in the
@@ -62,16 +85,20 @@ export const autoAttemptRecovery = () => {
 // It's not the responsibility of this function to manipulate the editor.
 export const recoverBlocks = blocks => {
 	return blocks.map( block => {
-		let _block = block
+		const _block = block
 		if ( block.name === 'core/block' ) {
 			const { attributes: { ref } } = block
-			const parsedBlock = parse( select( 'core' ).getEntityRecords( 'postType', 'wp_block', { include: [ ref ] } )?.[0]?.content?.raw )[ 0 ] || {}
+			const parsedBlocks = parse( select( 'core' ).getEntityRecords( 'postType', 'wp_block', { include: [ ref ] } )?.[0]?.content?.raw ) || []
 
-			if ( parsedBlock?.name?.startsWith( 'ugb/' ) ) {
-				_block = parsedBlock
-				_block.isReusable = true
-				_block.ref = ref
-				_block.content = select( 'core' ).getEntityRecords( 'postType', 'wp_block', { include: [ ref ] } )?.[0]?.content
+			const [ recoveredBlocks, recoveryCalled ] = recursivelyRecoverInvalidBlockList( parsedBlocks )
+
+			if ( recoveryCalled ) {
+				console.log( 'Stackable notice: block ' + _block.name + ' (' + _block.clientId + ') was auto-recovered, you should not see this after saving your page.' ) // eslint-disable-line no-console
+				return {
+					blocks: recoveredBlocks,
+					isReusable: true,
+					ref,
+				}
 			}
 		}
 
@@ -88,10 +115,6 @@ export const recoverBlocks = blocks => {
 			const newBlock = recoverBlock( _block )
 			newBlock.replacedClientId = _block.clientId
 			newBlock.recovered = true
-			if ( _block.isReusable ) {
-				newBlock.ref = _block.ref
-				newBlock.content = _block.content
-			}
 			console.log( 'Stackable notice: block ' + _block.name + ' (' + _block.clientId + ') was auto-recovered, you should not see this after saving your page.' ) // eslint-disable-line no-console
 
 			return newBlock
