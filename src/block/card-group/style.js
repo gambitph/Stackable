@@ -1,8 +1,7 @@
 /**
  * External dependencies
  */
-import { BlockDiv } from '~stackable/block-components'
-import { addMarginBottomStyles } from '~stackable/helpers'
+import { BlockDiv, MarginBottom } from '~stackable/block-components'
 import {
 	// __getValue,
 	StyleObject,
@@ -14,7 +13,7 @@ const createStyles = ( version = '' ) => attributes => {
 
 	BlockDiv.addStyles( styles, attributes )
 
-	addMarginBottomStyles( styles, attributes )
+	MarginBottom.addStyles( styles, attributes )
 
 	return styles.getMerged( version )
 }

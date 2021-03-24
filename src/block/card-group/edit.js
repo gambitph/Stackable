@@ -12,7 +12,6 @@ import {
 	InspectorTabs,
 	PanelAdvancedSettings,
 	InspectorSectionControls,
-	ResizableBottomMargin,
 } from '~stackable/components'
 
 /**
@@ -23,8 +22,9 @@ import {
 	InnerBlocks,
 } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
-import { getMarginBottomProps, useMarginBottom } from '~stackable/helpers'
-import { BlockDiv, Style } from '~stackable/block-components'
+import {
+	BlockDiv, MarginBottom, Style,
+} from '~stackable/block-components'
 
 const Edit = props => {
 	const {
@@ -34,9 +34,6 @@ const Edit = props => {
 	const {
 		hasBackground,
 	} = props.attributes
-
-	const marginBottomProps = getMarginBottomProps( props.attributes )
-	const { setMarginBottom } = useMarginBottom()
 
 	const blockClassNames = classnames( [
 		className,
@@ -78,10 +75,7 @@ const Edit = props => {
 					allowedBlocks={ [ 'stackable/card' ] }
 				/>
 			</div>
-			<ResizableBottomMargin
-				{ ...marginBottomProps }
-				{ ...setMarginBottom }
-			/>
+			<MarginBottom />
 		</BlockDiv>
 	</Fragment>
 }

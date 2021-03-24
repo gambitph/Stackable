@@ -13,7 +13,7 @@ import {
  * @param {Object} attributes Block attributes
  * @param {Object} options Options
  */
-export const addMarginBottomStyles = ( styles, attributes, options = {} ) => {
+export const addStyles = ( styles, attributes, options = {} ) => {
 	const getValue = __getValue( attributes )
 	const {
 		selector = '',

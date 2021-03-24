@@ -1,11 +1,10 @@
-import { BlockDiv } from '~stackable/block-components'
-import { marginBottomAttributes } from '~stackable/helpers'
+import { BlockDiv, MarginBottom } from '~stackable/block-components'
 
 export default {
 	...BlockDiv.attributes,
+	...MarginBottom.attributes,
 	design: {
 		type: 'string',
 		default: '',
 	},
-	...marginBottomAttributes,
 }
