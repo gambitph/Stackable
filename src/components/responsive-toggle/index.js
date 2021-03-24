@@ -11,6 +11,7 @@ import {
 import SVGDesktop from './images/desktop.svg'
 import SVGMobile from './images/mobile.svg'
 import SVGTablet from './images/tablet.svg'
+import Button from '../button'
 
 /**
  * WordPress dependencies
@@ -21,7 +22,7 @@ import {
 import { __ } from '@wordpress/i18n'
 import { Component } from '@wordpress/element'
 import { i18n } from 'stackable'
-import { Button, Popover } from '@wordpress/components'
+import { Popover } from '@wordpress/components'
 import { withInstanceId } from '@wordpress/compose'
 
 const responsiveIcons = {

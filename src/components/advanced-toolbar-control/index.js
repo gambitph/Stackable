@@ -9,6 +9,7 @@ import SVGIconRight from './images/right.svg'
 import SVGIconStretch from './images/stretch.svg'
 import SVGIconTop from './images/top.svg'
 import SVGIconVerticalCenter from './images/vertical-center.svg'
+import Button from '../button'
 
 /**
  * External dependencies
@@ -19,7 +20,7 @@ import classnames from 'classnames'
  * WordPress dependencies
  */
 import {
-	BaseControl, ButtonGroup, Button,
+	BaseControl, ButtonGroup,
 } from '@wordpress/components'
 import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'

@@ -52,5 +52,9 @@
 			flex-shrink: 0;
 			margin: $text-margin-bottom #{$box-hori-padding / 2};
 		}
+		// Prevent the white-space nowrap from the parent from affecting the title.
+		.ugb-icon__title {
+			white-space: normal;
+		}
 	}
 }
