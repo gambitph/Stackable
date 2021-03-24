@@ -163,6 +163,7 @@ const HighlightButton = props => {
 					className="components-stackable-highlight__popover"
 					focusOnMount="container"
 					useRef={ popoverEl }
+					isAlternate
 				>
 					<div className="components-stackable-highlight__inner">
 						<AdvancedToolbarControl

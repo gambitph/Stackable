@@ -119,4 +119,5 @@
 * [Branding Guidelines](resources/branding-guidelines.md)
 * [Docs Writing Guidelines](resources/docs-writing-guidelines.md)
 * [Theme Integration Guide](resources/theme-integration-guide.md)
+* [Changelog](resources/changelog.md)
 
