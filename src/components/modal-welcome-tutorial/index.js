@@ -1,6 +1,9 @@
-import {
-	Button, Modal,
-} from '@wordpress/components'
+/**
+ * Internal dependencies
+ */
+import Button from '../button'
+
+import { Modal } from '@wordpress/components'
 import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 
