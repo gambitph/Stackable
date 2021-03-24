@@ -15,7 +15,7 @@
 	 *
 	 * @var string
 	 */
-	$this_sdk_version = '2.4.1';
+	$this_sdk_version = '2.4.2';
 
 	#region SDK Selection Logic --------------------------------------------------------------------
 
@@ -512,7 +512,7 @@
 		}
 
 		/**
-		 * @param array <string,string> $module Plugin or Theme details.
+		 * @param array <string,string|bool|array> $module Plugin or Theme details.
 		 *
 		 * @return Freemius
 		 * @throws Freemius_Exception
