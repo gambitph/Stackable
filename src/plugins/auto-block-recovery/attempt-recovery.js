@@ -1,7 +1,9 @@
 import {
-	select, dispatch,
+	select, dispatch, subscribe,
 } from '@wordpress/data'
-import { createBlock } from '@wordpress/blocks'
+import {
+	createBlock, parse, serialize,
+} from '@wordpress/blocks'
 import { isInvalid } from './is-invalid'
 
 // Add some styles to hide the flash of errored blocks.
@@ -26,19 +28,29 @@ export const autoAttemptRecovery = () => {
 	// blocks momentarily, let's hide these until the recovery is done.
 	disableBlockWarnings()
 
-	// We need to do this inside a timeout since when calling this, the Block
-	// Editor might not be ready yet with the contents or might not have
-	// initialized yet.
 	setTimeout( () => {
-		// Recover all the blocks that we can find.
-		const mainBlocks = recoverBlocks( select( 'core/editor' ).getEditorBlocks() )
-		// Replace the recovered blocks with the new ones.
-		mainBlocks.forEach( block => {
-			if ( block.recovered && block.replacedClientId ) {
-				dispatch( 'core/block-editor' ).replaceBlock( block.replacedClientId, block )
+		const unsubscribe = subscribe( () => {
+		// Run the auto block recovery if the `getEntityRecords` is already resolved.
+			if ( select( 'core' ).getEntityRecords( 'postType', 'wp_block' ) !== null ) {
+				unsubscribe()
+				// Recover all the blocks that we can find.
+				const mainBlocks = recoverBlocks( select( 'core/editor' ).getEditorBlocks() )
+				// Replace the recovered blocks with the new ones.
+				mainBlocks.forEach( block => {
+					if ( block.recovered && block.replacedClientId ) {
+						if ( block.ref ) {
+							// Update the reusable blocks.
+							dispatch( 'core' ).editEntityRecord( 'postType', 'wp_block', block.ref, { content: serialize( [ block ] ) } ).then( () => {
+								dispatch( 'core' ).saveEditedEntityRecord( 'postType', 'wp_block', block.ref )
+							} )
+						} else {
+							dispatch( 'core/block-editor' ).replaceBlock( block.replacedClientId, block )
+						}
+					}
+				} )
+				enableBlockWarnings()
 			}
 		} )
-		enableBlockWarnings()
 	}, 0 )
 }
 
@@ -50,24 +62,42 @@ export const autoAttemptRecovery = () => {
 // It's not the responsibility of this function to manipulate the editor.
 export const recoverBlocks = blocks => {
 	return blocks.map( block => {
-		if ( block.innerBlocks && block.innerBlocks.length ) {
-			const newInnerBlocks = recoverBlocks( block.innerBlocks )
-			if ( newInnerBlocks.some( block => block.recovered ) ) {
-				block.innerBlocks = newInnerBlocks
-				block.replacedClientId = block.clientId
-				block.recovered = true
+		let _block = block
+		if ( block.name === 'core/block' ) {
+			const { attributes: { ref } } = block
+			const parsedBlock = parse( select( 'core' ).getEntityRecords( 'postType', 'wp_block', { include: [ ref ] } )?.[0]?.content?.raw )[ 0 ] || {}
+
+			if ( parsedBlock?.name?.startsWith( 'ugb/' ) ) {
+				_block = parsedBlock
+				_block.isReusable = true
+				_block.ref = ref
+				_block.content = select( 'core' ).getEntityRecords( 'postType', 'wp_block', { include: [ ref ] } )?.[0]?.content
 			}
 		}
 
-		if ( isInvalid( block ) ) {
-			const newBlock = recoverBlock( block )
-			newBlock.replacedClientId = block.clientId
+		if ( _block.innerBlocks && _block.innerBlocks.length ) {
+			const newInnerBlocks = recoverBlocks( _block.innerBlocks )
+			if ( newInnerBlocks.some( block => block.recovered ) ) {
+				_block.innerBlocks = newInnerBlocks
+				_block.replacedClientId = _block.clientId
+				_block.recovered = true
+			}
+		}
+
+		if ( isInvalid( _block ) ) {
+			const newBlock = recoverBlock( _block )
+			newBlock.replacedClientId = _block.clientId
 			newBlock.recovered = true
-			console.log( 'Stackable notice: block ' + block.name + ' (' + block.clientId + ') was auto-recovered, you should not see this after saving your page.' ) // eslint-disable-line no-console
+			if ( _block.isReusable ) {
+				newBlock.ref = _block.ref
+				newBlock.content = _block.content
+			}
+			console.log( 'Stackable notice: block ' + _block.name + ' (' + _block.clientId + ') was auto-recovered, you should not see this after saving your page.' ) // eslint-disable-line no-console
+
 			return newBlock
 		}
 
-		return block
+		return _block
 	} )
 }
 
