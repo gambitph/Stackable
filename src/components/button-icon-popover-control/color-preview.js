@@ -1,4 +1,9 @@
 /**
+ * Internal dependencies
+ */
+import Button from '../button'
+
+/**
  * External dependencies
  */
 import { i18n } from 'stackable'
@@ -9,7 +14,6 @@ import classnames from 'classnames'
  */
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
-import { Button } from '@wordpress/components'
 
 const ColorPreview = props => {
 	let backgroundColor = props.color || 'transparent'

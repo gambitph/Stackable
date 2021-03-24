@@ -8,49 +8,76 @@ import { BlockStyles } from '~stackable/components'
  */
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
-import { Component } from '@wordpress/element'
-import { createHigherOrderComponent } from '@wordpress/compose'
-import PropTypes from 'prop-types'
+import { useMemo } from '@wordpress/element'
 
-const withBlockStyles = ( styleFunction, options = {} ) => createHigherOrderComponent(
-	WrappedComponent => class extends Component {
-		static propTypes = {
-			attributes: PropTypes.shape( {
-				uniqueClass: PropTypes.string.isRequired,
-			} ),
-			blockName: PropTypes.string.isRequired,
-			mainClassName: PropTypes.string.isRequired,
-		}
+// Render the block styles, but with useMemo for caching. This is used for caching styles in the editor.
+const BlockStylesWithMemo = props => {
+	const {
+		styleFunction,
+		...blockProps
+	} = props
 
-		static defaultProps = {
-			attributes: {},
-			blockName: '',
-			className: '',
-			mainClassName: '',
-		}
+	const { blockName } = blockProps
 
-		render() {
-			const newClassName = classnames( [
-				this.props.className,
-				this.props.attributes.uniqueClass,
-			] )
+	// Grab all the non-content only attributes. Make sure that we only
+	// re-compute the styles only when attributes that affect styles are
+	// modified.
+	let currentAttributes = applyFilters( `stackable.${ blockName }.design.no-text-attributes`, blockProps.attributes )
+	currentAttributes = applyFilters( `stackable.${ blockName }.design.filtered-block-attributes`, currentAttributes )
 
-			const { blockName } = this.props
-			const styleObject = applyFilters( `stackable.${ blockName }.styles`, styleFunction( this.props ), this.props )
+	const styleObject = useMemo(
+		() => applyFilters( `stackable.${ blockName }.styles`, styleFunction( blockProps ), blockProps ),
+		[ Object.values( currentAttributes ).join( ',' ) + blockProps.clientId ]
+	)
 
-			const BlockStyle = (
+	return (
+		<BlockStyles
+			blockUniqueClassName={ blockProps.attributes.uniqueClass }
+			blockMainClassName={ blockProps.mainClassName }
+			style={ styleObject }
+			editorMode={ true }
+		/>
+	)
+}
+
+const withBlockStyles = ( styleFunction, options = {} ) => WrappedComponent => {
+	const NewComp = props => {
+		const newClassName = classnames( [
+			props.className,
+			props.attributes.uniqueClass,
+		] )
+
+		const { blockName } = props
+
+		// Render the block styles, but when in editor mode, do useMemo for caching.
+		let BlockStyle
+		if ( options.editorMode ) {
+			BlockStyle = <BlockStylesWithMemo styleFunction={ styleFunction } { ...props } />
+		} else {
+			const styleObject = applyFilters( `stackable.${ blockName }.styles`, styleFunction( props ), props )
+
+			BlockStyle = (
 				<BlockStyles
-					blockUniqueClassName={ this.props.attributes.uniqueClass }
-					blockMainClassName={ this.props.mainClassName }
+					blockUniqueClassName={ props.attributes.uniqueClass }
+					blockMainClassName={ props.mainClassName }
 					style={ styleObject }
-					editorMode={ options.editorMode || false }
+					editorMode={ false }
 				/>
 			)
-
-			return <WrappedComponent { ...this.props } className={ newClassName } styles={ BlockStyle } />
 		}
-	},
-	'withBlockStyles'
-)
+
+		return <WrappedComponent { ...props } className={ newClassName } styles={ BlockStyle } />
+	}
+
+	NewComp.defaultProps = {
+		...( WrappedComponent.defaultProps || {} ),
+		attributes: {},
+		blockName: '',
+		className: '',
+		mainClassName: '',
+	}
+
+	return NewComp
+}
 
 export default withBlockStyles
