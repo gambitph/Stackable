@@ -2,7 +2,7 @@
  * External dependencies
  */
 import classnames from 'classnames'
-import { BaseControlMultiLabel } from '~stackable/components'
+import { BaseControlMultiLabel, Button } from '~stackable/components'
 import { sortableContainer, sortableElement } from 'react-sortable-hoc'
 import { i18n } from 'stackable'
 import { omit, range } from 'lodash'
@@ -11,7 +11,7 @@ import { omit, range } from 'lodash'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { BaseControl, Button } from '@wordpress/components'
+import { BaseControl } from '@wordpress/components'
 
 const SortableContainer = sortableContainer( ( { children } ) => {
 	return <div className="ugb-sort-control__container">{ children }</div>
