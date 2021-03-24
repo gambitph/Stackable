@@ -3,7 +3,7 @@ import {
 	getSaveContent,
 } from '@wordpress/blocks'
 import {
-	isEqual, difference, filter,
+	isEqual, difference, filter, first,
 } from 'lodash'
 
 // We will auto-recover if there are errors encountered in these tags.
@@ -52,6 +52,11 @@ export const isInvalid = ( block, allowedTags = ALLOWED_ERROR_TAGS ) => {
 		return true
 	}
 
+	// Check whether the wp image class has changed.
+	if ( isWPImageClassChanged( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
 	// Check whether we're missing an image class.
 	if ( isMissingVideoTag( validationIssues[ 0 ] ) ) {
 		return true
@@ -66,12 +71,33 @@ export const isInvalid = ( block, allowedTags = ALLOWED_ERROR_TAGS ) => {
 	if ( isImageLabel( validationIssues[ 0 ] ) ) {
 		return true
 	}
+
 	if ( isLabelAttribute( validationIssues[ 0 ] ) ) {
 		return true
 	}
 
 	// Check whether we're missing an aria-level attribute. For accordion block in < 2.13.2
 	if ( isAriaLevel( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
+	// Check whether the block has no data-video attribute
+	if ( isDataVideo( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
+	// Check whether the block has no aria-hidden attribute
+	if ( isAriaHidden( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
+	// Check whether the block has no focusable attribute
+	if ( isFocusable( validationIssues[ 0 ] ) ) {
+		return true
+	}
+
+	// Check whether the style content is different.
+	if ( isDifferentStyleContent( block ) ) {
 		return true
 	}
 
@@ -138,6 +164,33 @@ export const isMissingWPImageClass = issue => {
 
 	return ( issue.args[ 2 ].match( /wp-image-\d+/ ) && ! issue.args[ 3 ].match( /wp-image-\d+/ ) ) ||
 		( ! issue.args[ 2 ].match( /wp-image-\d+/ ) && issue.args[ 3 ].match( /wp-image-\d+/ ) )
+}
+
+export const isWPImageClassChanged = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 4 ) {
+		return false
+	}
+
+	if ( typeof issue.args[ 1 ] !== 'string' || typeof issue.args[ 2 ] !== 'string' || typeof issue.args[ 3 ] !== 'string' ) {
+		return false
+	}
+
+	if ( issue.args[ 1 ] !== 'class' ) {
+		return false
+	}
+
+	const newWPImageClassName = first( issue.args[ 2 ].match( /wp-image-\d+/ ) )
+	const oldWPImageClassName = first( issue.args[ 3 ].match( /wp-image-\d+/ ) )
+
+	if ( newWPImageClassName && oldWPImageClassName ) {
+		return oldWPImageClassName !== newWPImageClassName
+	}
+
+	return false
 }
 
 /**
@@ -427,4 +480,112 @@ export const getInvalidationTags = block => {
 		...getTagTree( diff1 ),
 		...getTagTree( diff2 ),
 	] )
+}
+
+/**
+ * Checks whether the block has
+ * no data-video attribute. For video popup block.
+ *
+ * @param {Object} issue the validation object
+ * @return {boolean} if true, the block has no data-video. Otherwise, false.
+ */
+export const isDataVideo = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 3 ) {
+		return false
+	}
+
+	if ( ! issue.args[ 0 ].match( /attributes/ ) ) {
+		return false
+	}
+
+	const newHasDataVideo = issue.args[ 1 ].some( attribute => attribute[ 0 ] === 'data-video' )
+	const oldHasDataVideo = issue.args[ 2 ].some( attribute => attribute[ 0 ] === 'data-video' )
+	return newHasDataVideo && ! oldHasDataVideo
+}
+
+/**
+ * Checks whether the block has
+ * no aria-hidden attribute.
+ *
+ * @param {Object} issue the validation object
+ * @return {boolean} if true, the block has no aria-hidden. Otherwise, false.
+ */
+export const isAriaHidden = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 3 ) {
+		return false
+	}
+
+	if ( ! issue.args[ 0 ].match( /attributes/ ) ) {
+		return false
+	}
+
+	const newHasAriaHidden = issue.args[ 1 ].some( attribute => attribute[ 0 ] === 'aria-hidden' )
+	const oldHasAriaHidden = issue.args[ 2 ].some( attribute => attribute[ 0 ] === 'aria-hidden' )
+	return newHasAriaHidden && ! oldHasAriaHidden
+}
+
+/**
+ * Checks whether the block has
+ * no focusable attribute.
+ *
+ * @param {Object} issue the validation object
+ * @return {boolean} if true, the block has no focusable. Otherwise, false.
+ */
+export const isFocusable = issue => {
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 3 ) {
+		return false
+	}
+
+	if ( ! issue.args[ 0 ].match( /attributes/ ) ) {
+		return false
+	}
+
+	const newHasFocusable = issue.args[ 1 ].some( attribute => attribute[ 0 ] === 'focusable' )
+	const oldHasFocusable = issue.args[ 2 ].some( attribute => attribute[ 0 ] === 'focusable' )
+	return newHasFocusable && ! oldHasFocusable
+}
+
+/**
+ * Checks whether the block has a different
+ * style content
+ *
+ * @param {Object} block
+ * @return {boolean} if true, the block has a different style content. Otherwise, false
+ */
+export const isDifferentStyleContent = block => {
+	const {
+		name, attributes, innerBlocks, originalContent, isValid,
+	} = block
+
+	if ( isValid ) {
+		return false
+	}
+
+	let expectedContent
+	try {
+		expectedContent = getSaveContent( name, attributes, innerBlocks )
+	} catch ( error ) {
+		return false
+	}
+
+	const originalStyleContent = originalContent.match( /<style>(.*)?<\/style>/g )?.[ 0 ]
+	const expectedStyleContent = expectedContent.match( /<style>(.*)?<\/style>/g )?.[ 0 ]
+
+	if ( originalStyleContent && expectedStyleContent ) {
+		return originalStyleContent !== expectedStyleContent
+	}
+
+	return false
 }
