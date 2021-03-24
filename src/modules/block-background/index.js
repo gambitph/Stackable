@@ -161,7 +161,15 @@ const addAlignmentToolbar = ( output, props ) => {
 					<ToolbarGroup
 						label={ __( 'Change Alignment', i18n ) }
 					>
-						{ toolbarOptions.map( option => <ToolbarButton key={ option.label } { ...option } /> ) }
+						{ toolbarOptions.map( option => {
+							return (
+								<ToolbarButton
+									className="ugb-button-component"
+									key={ option.label }
+									{ ...option }
+								/>
+							)
+						} ) }
 					</ToolbarGroup>
 				) }
 			</BlockControls>
