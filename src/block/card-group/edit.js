@@ -48,9 +48,7 @@ const Edit = props => {
 
 	return <Fragment>
 
-		<InspectorTabs
-			{ ...props }
-		/>
+		<InspectorTabs />
 
 		<InspectorSectionControls>
 			<PanelAdvancedSettings

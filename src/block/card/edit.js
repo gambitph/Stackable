@@ -69,29 +69,9 @@ const Edit = props => {
 	return (
 		<Fragment>
 
-			<InspectorTabs
-				{ ...props }
-			/>
+			<InspectorTabs />
 
-			<InspectorSectionControls>
-				<PanelAdvancedSettings
-					title={ __( 'Background', i18n ) }
-					id="background"
-					checked={ hasBackground }
-					onChange={ hasBackground => setAttributes( { hasBackground } ) }
-					toggleOnSetAttributes={ [
-						'blockBackgroundColor',
-						'arrowColor',
-					] }
-					toggleAttributeName="hasBackground"
-				>
-					<BackgroundControlsHelper
-						attrNameTemplate="block%s"
-						setAttributes={ setAttributes }
-						blockAttributes={ props.attributes }
-					/>
-				</PanelAdvancedSettings>
-			</InspectorSectionControls>
+			<BlockDiv.InspectorControls />
 
 			<InspectorStyleControls>
 				<PanelAdvancedSettings

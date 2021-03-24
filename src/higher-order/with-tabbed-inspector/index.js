@@ -26,7 +26,6 @@ const withTabbedInspector = ( tabs = null ) => WrappedComponent => {
 				<InspectorControls>
 					<PanelTabs
 						tabs={ tabs }
-						blockProps={ props }
 						onTabFirstOpen={ setActiveTab }
 						onClick={ setActiveTab }
 					/>

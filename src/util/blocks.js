@@ -24,6 +24,7 @@ const ignoreAttributes = [
 	'uniqueClass',
 ]
 
+// DEPRECATED: Not used anymore since calls to this can be pretty expensive.
 // Checks whether a block is modified or not.
 const cachedDefaultAttributes = {}
 export function isUnmodifiedBlock( block ) {

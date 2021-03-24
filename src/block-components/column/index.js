@@ -55,9 +55,6 @@ Column.defaultProps = {
 	isHovered: true,
 }
 
-// Column.Content = props => {
-// }
-
 Column.InspectorControls = null
 
 Column.attributes = attributes

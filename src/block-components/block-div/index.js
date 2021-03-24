@@ -1,6 +1,7 @@
 import { attributes } from './attributes'
 import { useUniqueId } from './use-unique-id'
 import { addStyles } from './style'
+import { Edit } from './edit'
 
 import classnames from 'classnames'
 
@@ -66,10 +67,10 @@ BlockDiv.Content = props => {
 
 BlockDiv.Content.defaultProps = {
 	className: '',
-	blockProps: {},
+	attributes: {},
 }
 
-BlockDiv.InspectorControls = null
+BlockDiv.InspectorControls = Edit
 
 BlockDiv.attributes = attributes
 

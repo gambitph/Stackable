@@ -176,7 +176,6 @@ PanelTabs.defaultProps = {
 	className: '',
 	style: {},
 	closeOtherPanels: true,
-	blockProps: {},
 	initialTab: '',
 	onClickPanel: () => {},
 	onClick: () => {},

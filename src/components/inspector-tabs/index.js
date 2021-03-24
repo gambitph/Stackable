@@ -46,7 +46,6 @@ const InspectorTabs = props => {
 
 			<PanelTabs
 				tabs={ props.tabs }
-				blockProps={ props }
 				onTabFirstOpen={ setActiveTab }
 				onClick={ setActiveTab }
 			/>
