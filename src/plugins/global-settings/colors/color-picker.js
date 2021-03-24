@@ -16,12 +16,13 @@ import classnames from 'classnames'
 import { cloneDeep } from 'lodash'
 import { i18n } from 'stackable'
 import { whiteIfDark } from '~stackable/util'
+import { Button } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
 import {
-	Button, ColorPicker, Popover, BaseControl, ButtonGroup,
+	ColorPicker, Popover, BaseControl, ButtonGroup,
 } from '@wordpress/components'
 import {
 	Fragment, useState, useMemo,
@@ -131,7 +132,8 @@ const ResetButton = props => {
 	return (
 		<div className="ugb-global-settings-color-picker__reset-button">
 			<Button
-				onMouseDown={ () => setIsResetPopoverOpen( toggle => ! toggle ) }
+				onClick={ () => setIsResetPopoverOpen( ! isResetPopoverOpen ) }
+				onMouseDown={ event => event.preventDefault() } // Prevents the onFocusOutside from triggering when clicking the button.
 				disabled={ props.disabled }
 				isSecondary
 				isSmall
@@ -140,7 +142,7 @@ const ResetButton = props => {
 			</Button>
 			{ isResetPopoverOpen && (
 				<Popover
-					className="components-dropdown__content"
+					className="ugb-global-settings-color-picker__reset-button-popover"
 					onFocusOutside={ () => setIsResetPopoverOpen( false ) }
 					position="bottom center"
 				>
@@ -198,7 +200,8 @@ const ColorOption = props => {
 					className="components-circular-option-picker__option"
 					label={ name }
 					style={ { backgroundColor: color, color } }
-					onMouseDown={ () => props.onClick( color ) }
+					onClick={ () => props.onClick( color ) }
+					onMouseDown={ event => event.preventDefault() } // Prevents the onFocusOutside from triggering when clicking the button.
 				/>
 				{ props.children }
 			</div>
@@ -339,7 +342,7 @@ const ColorPickers = props => {
 						color={ color.color }
 						name={ color.name }
 						locked={ ! color.slug.match( /^stk-/ ) }
-						onClick={ () => setSelectedIndex( index ) }
+						onClick={ () => setSelectedIndex( selectedIndex !== index ? index : null ) }
 					>
 						{ selectedIndex === index &&
 							<Popover

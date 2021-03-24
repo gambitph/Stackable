@@ -1,10 +1,12 @@
 /**
+ * Internal dependencies
+ */
+import Button from '../button'
+
+/**
  * WordPress dependencies
  */
-import {
-	Popover,
-	Button,
-} from '@wordpress/components'
+import { Popover } from '@wordpress/components'
 import { __experimentalLinkControl as LinkControl } from '@wordpress/block-editor'
 import { keyboardReturn } from '@wordpress/icons'
 import { __ } from '@wordpress/i18n'

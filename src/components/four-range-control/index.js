@@ -13,7 +13,7 @@ import SVGTopImage from './images/top.svg'
  * WordPress dependencies
  */
 import {
-	BaseControl, Dashicon, Button, Tooltip,
+	BaseControl, Dashicon, Tooltip,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { Component, Fragment } from '@wordpress/element'
@@ -24,7 +24,7 @@ import { Component, Fragment } from '@wordpress/element'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 import { pick } from 'lodash'
-import { AdvancedRangeControl } from '~stackable/components'
+import { AdvancedRangeControl, Button } from '~stackable/components'
 
 class FourRangeControl extends Component {
 	constructor() {

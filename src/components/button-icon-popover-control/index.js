@@ -2,13 +2,14 @@
  * Internal dependencies
  */
 import ColorPreview from './color-preview'
+import Button from '../button'
 
 /**
  * WordPress dependencies
  */
 import { addFilter, removeFilter } from '@wordpress/hooks'
 import {
-	BaseControl, Button, Popover, ToggleControl, ButtonGroup, PanelBody,
+	BaseControl, Popover, ToggleControl, ButtonGroup, PanelBody,
 } from '@wordpress/components'
 import {
 	Component, createRef, Fragment,
@@ -178,34 +179,33 @@ class ButtonIconPopoverControl extends Component {
 									onClickOutside={ () => this.setState( { showResetPopover: false } ) }
 									focusOnMount={ false }
 									position="bottom center"
+									className="ugb-button-icon-control__reset-popover"
 								>
-									<div className="components-color-picker__body">
-										<h4 className="ugb-button-icon-control__text-title">
-											{ this.props.resetPopoverTitle }
-										</h4>
-										<p className="components-base-control__help">
-											{ this.props.resetPopoverDescription }
-										</p>
-										<ButtonGroup>
-											<Button
-												onClick={ () => {
-													this.setState( { showResetPopover: false } )
-													this.props.onReset()
-												} }
-												isDestructive
-												isSecondary
-												isSmall
-											>
-												{ __( 'Reset', i18n ) }
-											</Button>
-											<Button
-												onClick={ () => this.setState( { showResetPopover: false } ) }
-												isSmall
-											>
-												{ __( 'Cancel', i18n ) }
-											</Button>
-										</ButtonGroup>
-									</div>
+									<h4 className="ugb-button-icon-control__text-title">
+										{ this.props.resetPopoverTitle }
+									</h4>
+									<p className="components-base-control__help">
+										{ this.props.resetPopoverDescription }
+									</p>
+									<ButtonGroup>
+										<Button
+											onClick={ () => {
+												this.setState( { showResetPopover: false } )
+												this.props.onReset()
+											} }
+											isDestructive
+											isSecondary
+											isSmall
+										>
+											{ __( 'Reset', i18n ) }
+										</Button>
+										<Button
+											onClick={ () => this.setState( { showResetPopover: false } ) }
+											isSmall
+										>
+											{ __( 'Cancel', i18n ) }
+										</Button>
+									</ButtonGroup>
 								</Popover>
 							) }
 						</Fragment>
