@@ -36,7 +36,7 @@ describe( 'BlockList', () => {
 			plan: 'free',
 		} ] ) )
 
-		const { getByText } = render( <BlockList /> )
+		const { getByText } = render( <BlockList viewBy="block-designs" /> )
 		await wait()
 
 		expect( getByText( 'My ugb/header Design' ) ).toBeTruthy()
@@ -70,7 +70,7 @@ describe( 'BlockList', () => {
 			plan: 'free',
 		} ] ) )
 
-		const { getByText, queryByText } = render( <BlockList /> )
+		const { getByText, queryByText } = render( <BlockList viewBy="block-designs" /> )
 		await wait()
 
 		expect( queryByText( 'My ugb/header Design' ) ).toBeNull()
@@ -104,7 +104,7 @@ describe( 'BlockList', () => {
 			plan: 'free',
 		} ] ) )
 
-		const { getByText, queryByText } = render( <BlockList /> )
+		const { getByText, queryByText } = render( <BlockList viewBy="block-designs" /> )
 		await wait()
 
 		expect( queryByText( 'My ugb/header Design' ) ).toBeNull()
@@ -127,7 +127,7 @@ describe( 'BlockList', () => {
 			plan: 'free',
 		} ] ) )
 
-		const { getByTestId, queryByText } = render( <BlockList /> )
+		const { getByTestId, queryByText } = render( <BlockList viewBy="block-designs" /> )
 		await wait()
 
 		expect( getByTestId( 'all-count' ).textContent ).toEqual( '3' )
@@ -155,7 +155,7 @@ describe( 'BlockList', () => {
 			plan: 'premium',
 		} ] ) )
 
-		const { getByText, getByTestId } = render( <BlockList /> )
+		const { getByText, getByTestId } = render( <BlockList viewBy="block-designs" /> )
 		await wait()
 
 		// Free should not show up since all our designs are premium.
@@ -181,7 +181,7 @@ describe( 'BlockList', () => {
 			plan: 'premium',
 		} ] ) )
 
-		const { getByTestId, getByText } = render( <BlockList /> )
+		const { getByTestId, getByText } = render( <BlockList viewBy="block-designs" /> )
 		await wait()
 
 		expect( getByText( 'Free Designs' ) ).toBeTruthy()
@@ -216,7 +216,7 @@ describe( 'BlockList', () => {
 			plan: 'premium',
 		} ] ) )
 
-		const { getByText } = render( <BlockList /> )
+		const { getByText } = render( <BlockList viewBy="block-designs" /> )
 		await wait()
 
 		expect( getByText( 'All Block Designs' ) ).toHaveClass( 'is-active' )
@@ -266,7 +266,7 @@ describe( 'BlockList', () => {
 		} ] ) )
 
 		const onSelect = jest.fn()
-		const { getByText } = render( <BlockList onSelect={ onSelect } /> )
+		const { getByText } = render( <BlockList onSelect={ onSelect } viewBy="block-designs" /> )
 		await wait()
 
 		expect( onSelect ).toHaveBeenCalledTimes( 0 )
@@ -287,7 +287,7 @@ describe( 'BlockList', () => {
 		} ] ) )
 
 		const onSelect = jest.fn()
-		const { getByText, queryByText } = render( <BlockList onSelect={ onSelect } forceBlock={ 'ugb/header' } /> )
+		const { getByText, queryByText } = render( <BlockList onSelect={ onSelect } forceBlock={ 'ugb/header' } viewBy="block-designs" /> )
 		await wait()
 
 		expect( getByText( 'All Block Designs' ) ).toHaveClass( 'is-active' )
