@@ -7,7 +7,7 @@ import AdvancedToolbarControl from '../advanced-toolbar-control'
  * External dependencies
  */
 import {
-	DesignLibraryList, ModalDesignLibrary,
+	DesignLibraryList, ModalDesignLibrary, Button,
 } from '~stackable/components'
 import { getDesigns } from '~stackable/design-library'
 import { isPro, i18n } from 'stackable'
@@ -15,9 +15,7 @@ import { isPro, i18n } from 'stackable'
 /**
  * WordPress dependencies
  */
-import {
-	TextControl, Button,
-} from '@wordpress/components'
+import { TextControl } from '@wordpress/components'
 import { useEffect, useState } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 

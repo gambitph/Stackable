@@ -384,6 +384,13 @@
          * @var boolean|null
          */
         private $_use_external_pricing = null;
+        /**
+         * @author Leo Fajardo (@leorw)
+         * @since 2.4.2
+         *
+         * @var string|null
+         */
+        private $_pricing_js_path = null;
 
         #endregion
 
@@ -3954,7 +3961,7 @@
             if ( $is_connected ) {
                 FS_GDPR_Manager::instance()->store_is_required( $pong->is_gdpr_required );
             }
-
+            
             $this->store_connectivity_info( $pong, $is_connected );
 
             return $this->_has_api_connection;
@@ -5484,7 +5491,7 @@
         function is_extensions_tracking_allowed() {
             return ( true === $this->apply_filters(
                     'is_extensions_tracking_allowed',
-                    $this->_storage->get( 'is_extensions_tracking_allowed', true )
+                    $this->_storage->get( 'is_extensions_tracking_allowed', null )
                 ) );
         }
 
@@ -5528,10 +5535,12 @@
          * @author Leo Fajardo (@leorw)
          * @since 2.3.2
          *
-         * @param bool $is_enabled
+         * @param bool|null $is_enabled
          */
-        private function update_extensions_tracking_flag( $is_enabled ) {
-            $this->_storage->store( 'is_extensions_tracking_allowed', $is_enabled );
+        function update_extensions_tracking_flag( $is_enabled ) {
+            if ( is_bool( $is_enabled ) ) {
+                $this->_storage->store( 'is_extensions_tracking_allowed', $is_enabled );
+            }
         }
 
         /**
@@ -6860,8 +6869,6 @@
          */
         function _sync_cron_method( array $blog_ids, $current_blog_id = null ) {
             if ( $this->is_registered() ) {
-                $this->sync_user_beta_mode();
-
                 if ( $this->has_paid_plan() ) {
                     // Initiate background plan sync.
                     $this->_sync_license( true, false, $current_blog_id );
@@ -7234,7 +7241,8 @@
                         }
 
                         if ( $this->is_plugin_new_install() || $this->is_only_premium() ) {
-                            if ( ! $this->_anonymous_mode ) {
+                            if ( ! $this->_anonymous_mode &&
+                                 ( ! $this->is_addon() || ! $this->_parent->is_anonymous() ) ) {
                                 // Show notice for new plugin installations.
                                 $this->_admin_notices->add(
                                     sprintf(
@@ -7285,6 +7293,10 @@
          * @return bool
          */
         private function should_add_sticky_optin_notice() {
+            if ( $this->is_addon() && $this->_parent->is_anonymous() ) {
+                return false;
+            }
+
             if ( fs_is_network_admin() ) {
                 if ( ! $this->_is_network_active ) {
                     return false;
@@ -7355,7 +7367,7 @@
          * @since  1.1.4
          */
         function _add_connect_pointer_script() {
-			$vars            = array( 'id' => $this->_module_id );
+            $vars            = array( 'id' => $this->_module_id );
             $pointer_content = fs_get_template( 'connect.php', $vars );
             ?>
             <script type="text/javascript">// <![CDATA[
@@ -8222,7 +8234,7 @@
             $parent_licenses_endpoint = "/plugins/{$this->get_id()}/parent_licenses.json?filter=activatable";
 
             $fs = $this;
-
+            
             if ( $this->is_addon() ) {
                 $parent_instance = $this->get_parent_instance();
 
@@ -9881,7 +9893,7 @@
 
             if ( is_object( $fs ) ) {
                 $fs->remove_sdk_reference();
-
+                
                 self::require_plugin_essentials();
 
                 if ( is_plugin_active( $fs->_free_plugin_basename ) ||
@@ -10446,7 +10458,7 @@
             if ( fs_starts_with( $option_name, WP_FS__MODULE_TYPE_THEME . '_' ) ) {
                 $option_name = str_replace( WP_FS__MODULE_TYPE_THEME . '_', '', $option_name );
             }
-
+            
             switch ( $option_name ) {
                 case 'plugins':
                 case 'themes':
@@ -12945,7 +12957,7 @@
                 // Subscription cancellation dialog box is currently not supported for multisite networks.
                 return array();
             }
-
+            
             if ( $this->is_whitelabeled() ) {
                 return array();
             }
@@ -13045,7 +13057,7 @@
                 ! $this->is_premium() &&
                 /**
                  * Also handle the case when an upgrade was made using the free version.
-                 *
+                 * 
                  * @author Leo Fajardo (@leorw)
                  * @since 2.3.2
                  */
@@ -13238,26 +13250,25 @@
                 self::shoot_ajax_failure();
             }
 
-            $user = $this->get_api_user_scope()->call(
+            $site = $this->get_api_site_scope()->call(
                 '',
                 'put',
                 array(
-                    'plugin_id' => $this->get_id(),
                     'is_beta'   => ( 'true' == $is_beta ),
                     'fields'    => 'is_beta'
                 )
             );
 
-            if ( ! $this->is_api_result_entity( $user ) ) {
+            if ( ! $this->is_api_result_entity( $site ) ) {
                 self::shoot_ajax_failure(
-                    FS_Api::is_api_error_object( $user ) ?
-                        $user->error->message :
+                    FS_Api::is_api_error_object( $site ) ?
+                        $site->error->message :
                         fs_text_inline( "An unknown error has occurred while trying to set the user's beta mode.", 'unknown-error-occurred', $this->get_slug() )
                 );
             }
 
-            $this->_user->is_beta = $user->is_beta;
-            $this->_store_user();
+            $this->_site->is_beta = $site->is_beta;
+            $this->_store_site();
 
             self::shoot_ajax_response( array( 'success' => true ) );
         }
@@ -13272,7 +13283,7 @@
          */
         function _activate_license_ajax_action() {
             $this->_logger->entrance();
-
+            
             $this->check_ajax_referer( 'activate_license' );
 
             $license_key = trim( fs_request_get( 'license_key' ) );
@@ -13292,7 +13303,7 @@
                 fs_request_get( 'blog_id', null ),
                 fs_request_get( 'module_id', null, 'post' ),
                 fs_request_get( 'user_id', null ),
-                fs_request_get_bool( 'is_extensions_tracking_allowed', true )
+                fs_request_get_bool( 'is_extensions_tracking_allowed', null )
             );
 
             if (
@@ -13342,7 +13353,7 @@
             foreach ( $installs_info_by_slug_map as $slug => $install_info ) {
                 $install_ids[ $slug ] = $install_info['install']->id;
             }
-
+            
             $params['install_ids'] = implode( ',', array_values( $install_ids ) );
 
             $install = $this->get_api_site_scope()->call( $this->add_show_pending( '/' ), 'put', $params );
@@ -13435,7 +13446,7 @@
          *
          * @author Vova Feldman (@svovaf)
          * @since  2.3.0
-         *
+         *         
          * @param string      $license_key
          * @param null|bool   $is_marketing_allowed
          * @param null|number $plugin_id
@@ -13482,7 +13493,31 @@
          * @return string
          */
         function get_pricing_js_path() {
-            return $this->apply_filters( 'freemius_pricing_js_path', WP_FS__DIR_INCLUDES . '/freemius-pricing/freemius-pricing.js' );
+            if ( ! isset( $this->_pricing_js_path ) ) {
+                $pricing_js_path = $this->apply_filters( 'freemius_pricing_js_path', '' );
+
+                if ( empty( $pricing_js_path ) ) {
+                    global $fs_active_plugins;
+
+                    foreach ( $fs_active_plugins->plugins as $sdk_path => $data ) {
+                        if ( $data->plugin_path == $this->get_plugin_basename() ) {
+                            $plugin_or_theme_root_dir = ( $this->is_plugin() ? WP_PLUGIN_DIR : get_theme_root( get_stylesheet() ) );
+
+                            $pricing_js_path = $plugin_or_theme_root_dir
+                                . '/'
+                                // The basename will be `plugins`, `themes`, or the basename of a custom plugins or themes directory.
+                                . str_replace( '../' . basename( $plugin_or_theme_root_dir ) . '/', '', $sdk_path )
+                                . '/includes/freemius-pricing/freemius-pricing.js';
+
+                            break;
+                        }
+                    }
+                }
+
+                $this->_pricing_js_path = $pricing_js_path;
+            }
+
+            return $this->_pricing_js_path;
         }
 
         /**
@@ -13527,7 +13562,7 @@
             $blog_id = null,
             $plugin_id = null,
             $license_owner_id = null,
-            $is_extensions_tracking_allowed = true
+            $is_extensions_tracking_allowed = null
         ) {
             $this->_logger->entrance();
 
@@ -16449,19 +16484,6 @@
         }
 
         /**
-         * @author Leo Fajardo (@leorw)
-         * @since 2.3.0
-         */
-        private function sync_user_beta_mode() {
-            $user = $this->get_api_user_scope()->get( '/?plugin_id=' . $this->get_id() . '&fields=is_beta' );
-
-            if ( $this->is_api_result_entity( $user ) ) {
-                $this->_user->is_beta = $user->is_beta;
-                $this->_store_user();
-            }
-        }
-
-        /**
          * @author Vova Feldman (@svovaf)
          * @since  1.1.7.4
          *
@@ -17148,9 +17170,7 @@
                 $this->disable_opt_in_notice_and_lock_user();
             }
 
-            if ( ! is_null( $is_extensions_tracking_allowed ) ) {
-                $this->update_extensions_tracking_flag( $is_extensions_tracking_allowed );
-            }
+            $this->update_extensions_tracking_flag( $is_extensions_tracking_allowed );
 
             return $this->setup_account(
                 $this->_user,
@@ -17195,9 +17215,7 @@
                 $this->disable_opt_in_notice_and_lock_user();
             }
 
-            if ( ! is_null( $is_extensions_tracking_allowed ) ) {
-                $this->update_extensions_tracking_flag( $is_extensions_tracking_allowed );
-            }
+            $this->update_extensions_tracking_flag( $is_extensions_tracking_allowed );
 
             $sites = array();
             foreach ( $site_ids as $site_id ) {
@@ -17240,9 +17258,7 @@
                 $this->disable_opt_in_notice_and_lock_user();
             }
 
-            if ( ! is_null( $is_extensions_tracking_allowed ) ) {
-                $this->update_extensions_tracking_flag( $is_extensions_tracking_allowed );
-            }
+            $this->update_extensions_tracking_flag( $is_extensions_tracking_allowed );
 
             $install_ids = array();
 
@@ -17353,7 +17369,7 @@
                  */
                 $license_key = fs_request_get( 'license_secret_key' );
 
-                $this->update_extensions_tracking_flag( fs_request_get_bool( 'is_extensions_tracking_allowed', true ) );
+                $this->update_extensions_tracking_flag( fs_request_get_bool( 'is_extensions_tracking_allowed', null ) );
 
                 $this->install_with_current_user( $license_key );
             }
@@ -20605,6 +20621,20 @@
                     }
                 }
 
+                if ( ! $this->is_addon() &&
+                     $this->_site->is_beta() !== $site->is_beta
+                ) {
+                    // Beta flag updated.
+                    $this->_site = $site;
+
+                    $this->_store_site(
+                        true,
+                        $is_site_level_sync ?
+                            null :
+                            $this->get_network_install_blog_id()
+                    );
+                }
+
                 if ( $this->is_addon() || $this->has_addons() ) {
                     /**
                      * Purge the valid user licenses cache so that when the "Account" or the "Add-Ons" page is loaded,
@@ -21298,7 +21328,7 @@
 
             if ( $this->has_secret_key() ) {
                 $endpoint = add_query_arg( 'type', 'all', $endpoint );
-            } else if ( $this->is_registered() && $this->_user->is_beta() ) {
+            } else if ( is_object( $this->_site ) && $this->_site->is_beta() ) {
                 $endpoint = add_query_arg( 'type', 'beta', $endpoint );
             }
 
@@ -23393,6 +23423,14 @@
 
             if ( $this->is_only_premium() && $this->is_free_plan() ) {
                 // Don't add tracking links for premium-only products that were opted-in by relation (add-on or a parent product) before activating any license.
+                return;
+            }
+
+            if (
+                $this->is_addon() &&
+                ! $this->is_only_premium() &&
+                $this->_parent->is_anonymous()
+            ) {
                 return;
             }
 
