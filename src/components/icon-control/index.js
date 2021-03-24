@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { BaseControl, Button } from '@wordpress/components'
+import { BaseControl } from '@wordpress/components'
 import { withInstanceId, withState } from '@wordpress/compose'
 import SVGIconControl from './images/smile.svg'
 
@@ -11,7 +11,9 @@ import SVGIconControl from './images/smile.svg'
  */
 import { i18n } from 'stackable'
 import { omit } from 'lodash'
-import { IconSearchPopover, SvgIcon } from '~stackable/components'
+import {
+	IconSearchPopover, SvgIcon, Button,
+} from '~stackable/components'
 
 const IconControl = withInstanceId( withState( {
 	openPopover: false,

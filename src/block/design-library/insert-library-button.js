@@ -3,11 +3,11 @@
  */
 import { i18n } from 'stackable'
 import { SVGStackableIcon } from '~stackable/icons'
+import { Button } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import { Button } from '@wordpress/components'
 import { createBlock } from '@wordpress/blocks'
 import { dispatch } from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
