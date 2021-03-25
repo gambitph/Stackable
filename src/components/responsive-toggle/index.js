@@ -24,7 +24,7 @@ import {
 	compose,
 } from '@wordpress/compose'
 import {
-	withDispatch, withSelect,
+	withSelect, dispatch,
 } from '@wordpress/data'
 import { Component } from '@wordpress/element'
 import { doAction } from '@wordpress/hooks'
@@ -50,13 +50,9 @@ class ResponsiveToggle extends Component {
 	}
 
 	onChangeScreen( value ) {
-		const {
-			setPreviewDeviceType,
-		} = this.props
+		this.props.onChangeScreen( value )
 		doAction( 'stackable.when-responsive-screen', value )
-		if ( setPreviewDeviceType ) {
-			setPreviewDeviceType( startCase( value ) )
-		}
+		dispatch( 'core/block-editor' )?.__experimentalSetPreviewDeviceType?.( startCase( value ) )
 	}
 
 	render() {
@@ -107,14 +103,6 @@ ResponsiveToggle.defaultProps = {
 	onChangeScreen: () => {},
 }
 
-const composeList = []
-
-if ( withDispatch( dispatch => ( { setPreviewDeviceType: dispatch( 'core/edit-post' )?.__experimentalSetPreviewDeviceType } ) ) ) {
-	composeList.push( withDispatch( dispatch => ( { setPreviewDeviceType: dispatch( 'core/edit-post' )?.__experimentalSetPreviewDeviceType } ) ) )
-}
-
-if ( withSelect( select => ( { previewDeviceType: lowerCase( select( 'core/edit-post' )?.__experimentalGetPreviewDeviceType?.() ) } ) ) ) {
-	composeList.push( withSelect( select => ( { previewDeviceType: lowerCase( select( 'core/edit-post' )?.__experimentalGetPreviewDeviceType?.() ) } ) ) )
-}
-
-export default compose( ...composeList )( ResponsiveToggle )
+export default compose(
+	withSelect( select => ( { previewDeviceType: lowerCase( select( 'core/edit-post' )?.__experimentalGetPreviewDeviceType?.() ) } ) )
+)( ResponsiveToggle )

@@ -59,10 +59,11 @@ describe( 'Unit switcher', () => {
 		expect( queryByLabelText( 'Mobile' ) ).toBeNull()
 
 		// Click desktop to show the other responsive buttons.
-		fireEvent.click( getByLabelText( 'Desktop' ) )
+		fireEvent.mouseEnter( getByLabelText( 'Desktop' ) )
 		expect( getByLabelText( 'Tablet' ) ).toBeTruthy()
 		expect( getByLabelText( 'Mobile' ) ).toBeTruthy()
 
+		fireEvent.click( getByLabelText( 'Desktop' ) )
 		expect( onChangeScreen ).toHaveBeenCalledWith( 'desktop' )
 		fireEvent.click( getByLabelText( 'Tablet' ) )
 		expect( onChangeScreen ).toHaveBeenCalledWith( 'tablet' )
