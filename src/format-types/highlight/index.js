@@ -154,6 +154,7 @@ const HighlightButton = props => {
 					aria-haspopup="true"
 					tooltip={ __( 'Color & Highlight', i18n ) }
 					onClick={ () => setIsOpen( ! isOpen ) }
+					isPressed={ isActive }
 				>
 					<span className="components-stackable-highlight-color__indicator" style={ { backgroundColor: displayIconColor } } />
 				</Button>
