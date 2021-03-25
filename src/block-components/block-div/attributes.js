@@ -1,5 +1,5 @@
+import { backgroundAttributes } from '../helpers'
 import { convertResponsiveAttributes, getAttrName } from '~stackable/util'
-import { backgroundAttributes } from '~stackable/helpers'
 import { upperFirst } from 'lodash'
 
 const _attributes = convertResponsiveAttributes( {

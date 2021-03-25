@@ -50,6 +50,8 @@ class PanelAdvancedSettings extends Component {
 			return attributes
 		}
 
+		console.warn( '[Stackable V3 deprecation warning] toggleOnSetAttributes and toggleAttributeName props of PanelAdvancedSettings are deprecated, use stackable/hooks/useDidAttributesChange instead' ) // eslint-disable-line no-console
+
 		// Check if an attribute we're watching for was modified with a value.
 		let checkToggle = false
 		this.props.toggleOnSetAttributes.some( attrName => {
@@ -124,7 +126,7 @@ class PanelAdvancedSettings extends Component {
 				ref={ this.panelRef }
 				title={
 					<Fragment>
-						{ this.props.hasToggle && this.props.toggleAttributeName && (
+						{ this.props.hasToggle && (
 							<span className={ `editor-panel-toggle-settings__panel-title` }>
 								<FormToggle
 									className="ugb-toggle-panel-form-toggle"
@@ -148,7 +150,7 @@ class PanelAdvancedSettings extends Component {
 								{ this.props.title }
 							</span>
 						) }
-						{ ! ( this.props.hasToggle && this.props.toggleAttributeName ) && this.props.title }
+						{ ! this.props.hasToggle && this.props.title }
 					</Fragment>
 				}
 			>
@@ -175,9 +177,10 @@ PanelAdvancedSettings.defaultProps = {
 	hasToggle: true,
 	initialAdvanced: false,
 	advancedChildren: null,
+	onToggle: () => {},
+	// Deprecated on v3:
 	toggleOnSetAttributes: [],
 	toggleAttributeName: '',
-	onToggle: () => {},
 }
 
 export default withMemory( PanelAdvancedSettings )

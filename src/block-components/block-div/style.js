@@ -1,7 +1,11 @@
 /**
+ * Internal dependencies
+ */
+import { addBackgroundStyles } from '../helpers'
+
+/**
  * External dependencies
  */
-import { addBackgroundStyles } from '~stackable/helpers'
 // import {
 // 	__getValue,
 // } from '~stackable/util'

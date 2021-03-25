@@ -1,19 +1,33 @@
+/**
+ * Internal dependencies
+ */
+import { Edit as BackgroundControls } from '../helpers/backgrounds'
 import { attributes } from './attributes'
-import { useUniqueId } from './use-unique-id'
-import { addStyles } from './style'
 
-import classnames from 'classnames'
+/**
+ * External dependencies
+ */
 import { i18n } from 'stackable'
-
-import { useBlockEditContext } from '@wordpress/block-editor'
-import { useSelect, useDispatch } from '@wordpress/data'
-import { __ } from '@wordpress/i18n'
+import { pick } from 'lodash'
 import {
-	BackgroundControlsHelper, Div, InspectorSectionControls, PanelAdvancedSettings,
+	InspectorSectionControls,
+	PanelAdvancedSettings,
 } from '~stackable/components'
 
-export const Edit = props => {
-	const { clientId } = useBlockEditContext()
+/**
+ * WordPress dependencies
+ */
+import { useBlockEditContext } from '@wordpress/block-editor'
+import { useSelect, useDispatch } from '@wordpress/data'
+import { useCallback } from '@wordpress/element'
+import { __ } from '@wordpress/i18n'
+import { useDidAttributesChange } from '~stackable/hooks'
+
+// These attributes will turn on the block background.
+const toggleAttributes = Object.keys( attributes ).filter( attr => ! [ 'uniqueId', 'hasBackground' ].includes( attr ) )
+
+export const Edit = () => {
+	const { clientId, name: blockName } = useBlockEditContext()
 
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 	const { attributes } = useSelect(
@@ -26,29 +40,21 @@ export const Edit = props => {
 		[ clientId ]
 	)
 
-	const {
-		hasContainer,
-		hasBackground,
-	} = attributes
+	// Turn on hasBackground when background attributes are changed.
+	const onAttributesChanged = useCallback( () => {
+		updateBlockAttributes( clientId, { hasBackground: true } )
+	}, [ clientId ] )
+	useDidAttributesChange( onAttributesChanged, blockName, pick( attributes, toggleAttributes ) )
 
 	return (
 		<InspectorSectionControls>
 			<PanelAdvancedSettings
 				title={ __( 'Background', i18n ) }
 				id="background"
-				checked={ hasBackground }
+				checked={ attributes.hasBackground }
 				onChange={ hasBackground => updateBlockAttributes( clientId, { hasBackground } ) }
-				toggleOnSetAttributes={ [
-					'blockBackgroundColor',
-					'arrowColor',
-				] }
-				toggleAttributeName="hasBackground"
 			>
-				<BackgroundControlsHelper
-					attrNameTemplate="block%s"
-					// setAttributes={ setAttributes }
-					blockAttributes={ attributes }
-				/>
+				<BackgroundControls attrNameTemplate="block%s" />
 			</PanelAdvancedSettings>
 		</InspectorSectionControls>
 	)
