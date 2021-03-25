@@ -196,12 +196,12 @@ class AdvancedAutosuggestControl extends Component {
 
 		// Autosuggest will pass through all these props to the input.
 		const inputProps = {
-			disabled: this.props.inputProps?.disabled,
 			placeholder: this.props.placeholder,
 			value: label,
 			onChange: this.onChange,
 			onFocus: this.onFocus,
 			type: 'search', // This adds a clear button inside the text input.
+			...this.props.inputProps,
 		}
 
 		return (
@@ -236,6 +236,7 @@ class AdvancedAutosuggestControl extends Component {
 						getSectionSuggestions={ getSectionSuggestions }
 						shouldRenderSuggestions={ shouldRenderSuggestions }
 						inputProps={ inputProps }
+						renderInputComponent={ this.props.renderInputComponent ? this.props.renderInputComponent : ( props => <input { ...props } /> ) }
 					/>
 					{ this.state.isEmpty && <div className="ugb--autosuggest-empty">{ this.props.noMatchesLabel }</div> }
 					{ this.props.children }
@@ -258,6 +259,8 @@ AdvancedAutosuggestControl.defaultProps = {
 	getSuggestionValue: null,
 	disableAutoIndex: false,
 	onSuggestionSelected: () => {},
+	renderInputComponent: null,
+	inputProps: {},
 }
 
 export default AdvancedAutosuggestControl
