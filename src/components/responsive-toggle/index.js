@@ -108,6 +108,6 @@ ResponsiveToggle.defaultProps = {
 }
 
 export default compose(
-	withDispatch( dispatch => ( { setPreviewDeviceType: dispatch( 'core/edit-post' ).__experimentalSetPreviewDeviceType } ) ),
-	withSelect( select => ( { previewDeviceType: select( 'core/edit-post' ).__experimentalGetPreviewDeviceType && lowerCase( select( 'core/edit-post' ).__experimentalGetPreviewDeviceType() ) } ) )
+	withDispatch( dispatch => ( { setPreviewDeviceType: dispatch( 'core/edit-post' )?.__experimentalSetPreviewDeviceType } ) ),
+	withSelect( select => ( { previewDeviceType: lowerCase( select( 'core/edit-post' )?.__experimentalGetPreviewDeviceType?.() ) } ) )
 )( ResponsiveToggle )
