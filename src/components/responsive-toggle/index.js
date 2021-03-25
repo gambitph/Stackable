@@ -103,6 +103,10 @@ ResponsiveToggle.defaultProps = {
 	onChangeScreen: () => {},
 }
 
-export default compose(
-	withSelect( select => ( { previewDeviceType: lowerCase( select( 'core/edit-post' )?.__experimentalGetPreviewDeviceType?.() ) } ) )
-)( ResponsiveToggle )
+const composeList = []
+
+if ( withSelect( select => ( { previewDeviceType: lowerCase( select( 'core/edit-post' )?.__experimentalGetPreviewDeviceType?.() ) } ) ) ) {
+	composeList.push( withSelect( select => ( { previewDeviceType: lowerCase( select( 'core/edit-post' )?.__experimentalGetPreviewDeviceType?.() ) } ) ) )
+}
+
+export default compose( ...composeList )( ResponsiveToggle )
