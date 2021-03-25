@@ -3,7 +3,9 @@ import {
 } from '@testing-library/react'
 import { getAllBlocks, getDesigns } from '~stackable/design-library'
 import BlockList from '../block-list'
-import { select } from '@wordpress/data'
+import {
+	select, dispatch,
+} from '@wordpress/data'
 
 jest.mock( '~stackable/design-library' )
 jest.mock( '@wordpress/data' )
@@ -20,6 +22,13 @@ describe( 'BlockList', () => {
 				getPreference: () => {
 					return []
 				},
+				__experimentalGetPreviewDeviceType: () => 'Desktop',
+			}
+		} )
+
+		dispatch.mockImplementation( () => {
+			return {
+				__experimentalSetPreviewDeviceType: () => {},
 			}
 		} )
 	} )
