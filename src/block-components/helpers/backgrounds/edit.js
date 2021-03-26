@@ -12,14 +12,14 @@ import {
 	ControlSeparator,
 	ImageControl,
 } from '~stackable/components'
-import { useBlockAttributes, useDeviceType } from '~stackable/hooks'
-import { getAttrNameFunction, urlIsVideo } from '~stackable/util'
+import {
+	useAttributeEditHandlers, useDeviceType,
+} from '~stackable/hooks'
+import { urlIsVideo } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
-import { useBlockEditContext } from '@wordpress/block-editor'
-import { useDispatch } from '@wordpress/data'
 import { useCallback, Fragment } from '@wordpress/element'
 import {
 	__, _x, sprintf,
@@ -28,15 +28,13 @@ import { ToggleControl } from '@wordpress/components'
 
 // TODO: Post v3, add option to select the image size for the background (full, large, medium)
 export const BackgroundControls = props => {
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
 	const deviceType = useDeviceType()
 
-	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
-
-	const getAttrName = getAttrNameFunction( props.attrNameTemplate )
-	const getAttribute = attrName => attributes[ getAttrName( attrName ) ]
-	const updateAttributes = attrName => value => updateBlockAttributes( clientId, { [ getAttrName( attrName ) ]: value } )
+	const {
+		getAttribute,
+		updateAttributeHandler,
+		updateAttributes,
+	} = useAttributeEditHandlers( props.attrNameTemplate )
 
 	const hasBackgroundMedia = getAttribute( 'backgroundMediaURL' ) || getAttribute( 'backgroundMediaURLTablet' ) || getAttribute( 'backgroundMediaURLMobile' )
 	const isBackgroundVideo = useCallback( () => {
@@ -60,7 +58,7 @@ export const BackgroundControls = props => {
 					},
 				] }
 				value={ getAttribute( 'backgroundColorType' ) }
-				onChange={ updateAttributes( 'backgroundColorType' ) }
+				onChange={ updateAttributeHandler( 'backgroundColorType' ) }
 				fullwidth={ false }
 				isSmall={ true }
 			/>
@@ -71,14 +69,14 @@ export const BackgroundControls = props => {
 						: __( 'Background Color', i18n )
 				}
 				value={ getAttribute( 'backgroundColor' ) }
-				onChange={ updateAttributes( 'backgroundColor' ) }
+				onChange={ updateAttributeHandler( 'backgroundColor' ) }
 			/>
 			{ getAttribute( 'backgroundColorType' ) !== 'gradient' &&
 				( ! getAttribute( 'backgroundMediaURL' ) && ! getAttribute( 'backgroundMediaURLTablet' ) && ! getAttribute( 'backgroundMediaURLMobile' ) ) && (
 				<AdvancedRangeControl
 					label={ __( 'Background Color Opacity', i18n ) }
 					value={ getAttribute( 'backgroundColorOpacity' ) }
-					onChange={ updateAttributes( 'onChangeBackgroundColorOpacity' ) }
+					onChange={ updateAttributeHandler( 'onChangeBackgroundColorOpacity' ) }
 					min={ 0 }
 					max={ 1 }
 					step={ 0.1 }
@@ -91,18 +89,18 @@ export const BackgroundControls = props => {
 				<ColorPaletteControl
 					label={ sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Background Color', i18n ), 2 ) }
 					value={ getAttribute( 'backgroundColor2' ) }
-					onChange={ updateAttributes( 'backgroundColor2' ) }
+					onChange={ updateAttributeHandler( 'backgroundColor2' ) }
 				/>
 			) }
 			{ getAttribute( 'backgroundColorType' ) === 'gradient' && (
 				<ButtonIconPopoverControl
 					label={ __( 'Adv. Gradient Color Settings', i18n ) }
 					onReset={ () => {
-						updateBlockAttributes( clientId, {
-							[ getAttrName( 'backgroundGradientDirection' ) ]: '',
-							[ getAttrName( 'backgroundGradientBlendMode' ) ]: '',
-							[ getAttrName( 'backgroundGradientLocation1' ) ]: '',
-							[ getAttrName( 'backgroundGradientLocation2' ) ]: '',
+						updateAttributes( {
+							backgroundGradientDirection: '',
+							backgroundGradientBlendMode: '',
+							backgroundGradientLocation1: '',
+							backgroundGradientLocation2: '',
 						} )
 					} }
 					allowReset={
@@ -115,7 +113,7 @@ export const BackgroundControls = props => {
 					<AdvancedRangeControl
 						label={ __( 'Gradient Direction (degrees)', i18n ) }
 						value={ getAttribute( 'backgroundGradientDirection' ) }
-						onChange={ updateAttributes( 'backgroundGradientDirection' ) }
+						onChange={ updateAttributeHandler( 'backgroundGradientDirection' ) }
 						min={ 0 }
 						max={ 360 }
 						step={ 10 }
@@ -127,7 +125,7 @@ export const BackgroundControls = props => {
 					<AdvancedRangeControl
 						label={ sprintf( __( 'Color %d Location', i18n ), 1 ) }
 						value={ getAttribute( 'backgroundGradientLocation1' ) }
-						onChange={ updateAttributes( 'backgroundGradientLocation1' ) }
+						onChange={ updateAttributeHandler( 'backgroundGradientLocation1' ) }
 						min={ 0 }
 						max={ 100 }
 						step={ 1 }
@@ -139,7 +137,7 @@ export const BackgroundControls = props => {
 					<AdvancedRangeControl
 						label={ sprintf( __( 'Color %d Location', i18n ), 2 ) }
 						value={ getAttribute( 'backgroundGradientLocation2' ) }
-						onChange={ updateAttributes( 'backgroundGradientLocation2' ) }
+						onChange={ updateAttributeHandler( 'backgroundGradientLocation2' ) }
 						min={ 0 }
 						max={ 100 }
 						step={ 1 }
@@ -151,7 +149,7 @@ export const BackgroundControls = props => {
 					<BlendModeControl
 						label={ __( 'Background Gradient Blend Mode', i18n ) }
 						value={ getAttribute( 'backgroundGradientBlendMode' ) }
-						onChange={ updateAttributes( 'backgroundGradientBlendMode' ) }
+						onChange={ updateAttributeHandler( 'backgroundGradientBlendMode' ) }
 						className="ugb--help-tip-background-blend-mode"
 					/>
 				</ButtonIconPopoverControl>
@@ -166,15 +164,15 @@ export const BackgroundControls = props => {
 					label={ props.backgroundMediaAllowVideo ? __( 'Background Image or Video', i18n ) : __( 'Background Image', i18n ) }
 					help={ props.backgroundMediaAllowVideo ? __( 'Use .mp4 format for videos', i18n ) : '' }
 					onRemove={ () => {
-						updateBlockAttributes( clientId, {
-							[ getAttrName( 'backgroundMediaId' ) ]: '',
-							[ getAttrName( 'backgroundMediaURL' ) ]: '',
+						updateAttributes( {
+							backgroundMediaId: '',
+							backgroundMediaURL: '',
 						} )
 					} }
 					onChange={ ( { url, id } ) => {
-						updateBlockAttributes( clientId, {
-							[ getAttrName( 'backgroundMediaId' ) ]: id,
-							[ getAttrName( 'backgroundMediaURL' ) ]: url,
+						updateAttributes( {
+							backgroundMediaId: id,
+							backgroundMediaURL: url,
 						} )
 					} }
 					imageID={ getAttribute( 'backgroundMediaId' ) }
@@ -187,15 +185,15 @@ export const BackgroundControls = props => {
 					label={ props.backgroundMediaAllowVideo ? __( 'Background Image or Video', i18n ) : __( 'Background Image', i18n ) }
 					help={ props.backgroundMediaAllowVideo ? __( 'Use .mp4 format for videos', i18n ) : '' }
 					onRemove={ () => {
-						updateBlockAttributes( clientId, {
-							[ getAttrName( 'backgroundMediaIdTablet' ) ]: '',
-							[ getAttrName( 'backgroundMediaURLTablet' ) ]: '',
+						updateAttributes( {
+							backgroundMediaIdTablet: '',
+							backgroundMediaURLTablet: '',
 						} )
 					} }
 					onChange={ ( { url, id } ) => {
-						updateBlockAttributes( clientId, {
-							[ getAttrName( 'backgroundMediaIdTablet' ) ]: id,
-							[ getAttrName( 'backgroundMediaURLTablet' ) ]: url,
+						updateAttributes( {
+							backgroundMediaIdTablet: id,
+							backgroundMediaURLTablet: url,
 						} )
 					} }
 					imageID={ getAttribute( 'backgroundMediaIdTablet' ) }
@@ -208,15 +206,15 @@ export const BackgroundControls = props => {
 					label={ props.backgroundMediaAllowVideo ? __( 'Background Image or Video', i18n ) : __( 'Background Image', i18n ) }
 					help={ props.backgroundMediaAllowVideo ? __( 'Use .mp4 format for videos', i18n ) : '' }
 					onRemove={ () => {
-						updateBlockAttributes( clientId, {
-							[ getAttrName( 'backgroundMediaIdMobile' ) ]: '',
-							[ getAttrName( 'backgroundMediaURLMobile' ) ]: '',
+						updateAttributes( {
+							backgroundMediaIdMobile: '',
+							backgroundMediaURLMobile: '',
 						} )
 					} }
 					onChange={ ( { url, id } ) => {
-						updateBlockAttributes( clientId, {
-							[ getAttrName( 'backgroundMediaIdMobile' ) ]: id,
-							[ getAttrName( 'backgroundMediaURLMobile' ) ]: url,
+						updateAttributes( {
+							backgroundMediaIdMobile: id,
+							backgroundMediaURLMobile: url,
 						} )
 					} }
 					imageID={ getAttribute( 'backgroundMediaIdMobile' ) }
@@ -233,20 +231,20 @@ export const BackgroundControls = props => {
 						const noValue = typeof value === 'undefined' || value === ''
 						// If the tint is changed, but on background color yet, make it black. Fixes #136.
 						if ( getAttribute( 'backgroundColor' ) === '' && ! noValue ) {
-							updateBlockAttributes( clientId, {
-								[ getAttrName( 'backgroundTintStrength' ) ]: value,
-								[ getAttrName( 'backgroundColor' ) ]: '#000000',
+							updateAttributes( {
+								backgroundTintStrength: value,
+								backgroundColor: '#000000',
 							} )
 						// If the tint is reset, and the background is black (was set earlier), remove it.
 						} else if ( getAttribute( 'backgroundColor' ) === '#000000' && noValue ) {
-							updateBlockAttributes( clientId, {
-								[ getAttrName( 'backgroundTintStrength' ) ]: value,
-								[ getAttrName( 'backgroundColor' ) ]: '',
+							updateAttributes( {
+								backgroundTintStrength: value,
+								backgroundColor: '',
 							} )
 						} else {
-							updateBlockAttributes( clientId, {
-								[ getAttrName( 'backgroundTintStrength' ) ]: value,
-								[ getAttrName( 'backgroundColor' ) ]: getAttribute( 'backgroundColor' ),
+							updateAttributes( {
+								backgroundTintStrength: value,
+								backgroundColor: getAttribute( 'backgroundColor' ),
 							} )
 						}
 					} }
@@ -263,7 +261,7 @@ export const BackgroundControls = props => {
 				<ToggleControl
 					label={ __( 'Fixed Background', i18n ) }
 					checked={ getAttribute( 'fixedBackground' ) }
-					onChange={ updateAttributes( 'fixedBackground' ) }
+					onChange={ updateAttributeHandler( 'fixedBackground' ) }
 					className="ugb--help-tip-background-fixed"
 				/>
 			}
@@ -272,23 +270,23 @@ export const BackgroundControls = props => {
 				<ButtonIconPopoverControl
 					label={ __( 'Adv. Background Image Settings', i18n ) }
 					onReset={ () => {
-						updateBlockAttributes( clientId, {
-							[ getAttrName( 'BackgroundPosition' ) ]: '',
-							[ getAttrName( 'BackgroundPositionTablet' ) ]: '',
-							[ getAttrName( 'BackgroundPositionMobile' ) ]: '',
-							[ getAttrName( 'BackgroundRepeat' ) ]: '',
-							[ getAttrName( 'BackgroundRepeatTablet' ) ]: '',
-							[ getAttrName( 'BackgroundRepeatMobile' ) ]: '',
-							[ getAttrName( 'BackgroundSize' ) ]: '',
-							[ getAttrName( 'BackgroundSizeTablet' ) ]: '',
-							[ getAttrName( 'BackgroundSizeMobile' ) ]: '',
-							[ getAttrName( 'BackgroundCustomSize' ) ]: '',
-							[ getAttrName( 'BackgroundCustomSizeTablet' ) ]: '',
-							[ getAttrName( 'BackgroundCustomSizeMobile' ) ]: '',
-							[ getAttrName( 'BackgroundCustomSizeUnit' ) ]: '%',
-							[ getAttrName( 'BackgroundCustomSizeUnitTablet' ) ]: '%',
-							[ getAttrName( 'BackgroundCustomSizeUnitMobile' ) ]: '%',
-							[ getAttrName( 'BackgroundImageBlendMode' ) ]: '',
+						updateAttributes( {
+							BackgroundPosition: '',
+							BackgroundPositionTablet: '',
+							BackgroundPositionMobile: '',
+							BackgroundRepeat: '',
+							BackgroundRepeatTablet: '',
+							BackgroundRepeatMobile: '',
+							BackgroundSize: '',
+							BackgroundSizeTablet: '',
+							BackgroundSizeMobile: '',
+							BackgroundCustomSize: '',
+							BackgroundCustomSizeTablet: '',
+							BackgroundCustomSizeMobile: '',
+							BackgroundCustomSizeUnit: '%',
+							BackgroundCustomSizeUnitTablet: '%',
+							BackgroundCustomSizeUnitMobile: '%',
+							BackgroundImageBlendMode: '',
 						} )
 					} }
 					allowReset={
@@ -315,7 +313,7 @@ export const BackgroundControls = props => {
 								{ label: __( 'Bottom Right', i18n ), value: 'bottom right' },
 							] }
 							value={ getAttribute( 'backgroundPosition' ) }
-							onChange={ updateAttributes( 'BackgroundPosition' ) }
+							onChange={ updateAttributeHandler( 'BackgroundPosition' ) }
 							className="ugb--help-tip-background-image-position"
 						/>
 					}
@@ -335,7 +333,7 @@ export const BackgroundControls = props => {
 								{ label: __( 'Bottom Right', i18n ), value: 'bottom right' },
 							] }
 							value={ getAttribute( 'BackgroundPositionTablet' ) }
-							onChange={ updateAttributes( 'BackgroundPositionTablet' ) }
+							onChange={ updateAttributeHandler( 'BackgroundPositionTablet' ) }
 							className="ugb--help-tip-background-image-position"
 						/>
 					}
@@ -355,7 +353,7 @@ export const BackgroundControls = props => {
 								{ label: __( 'Bottom Right', i18n ), value: 'bottom right' },
 							] }
 							value={ getAttribute( 'BackgroundPositionMobile' ) }
-							onChange={ updateAttributes( 'BackgroundPositionMobile' ) }
+							onChange={ updateAttributeHandler( 'BackgroundPositionMobile' ) }
 							className="ugb--help-tip-background-image-position"
 						/>
 					}
@@ -371,7 +369,7 @@ export const BackgroundControls = props => {
 								{ label: __( 'Repeat-Y', i18n ), value: 'repeat-y' },
 							] }
 							value={ getAttribute( 'backgroundRepeat' ) }
-							onChange={ updateAttributes( 'BackgroundRepeat' ) }
+							onChange={ updateAttributeHandler( 'BackgroundRepeat' ) }
 							className="ugb--help-tip-background-image-repeat"
 						/>
 					}
@@ -386,7 +384,7 @@ export const BackgroundControls = props => {
 								{ label: __( 'Repeat-Y', i18n ), value: 'repeat-y' },
 							] }
 							value={ getAttribute( 'BackgroundRepeatTablet' ) }
-							onChange={ updateAttributes( 'BackgroundRepeatTablet' ) }
+							onChange={ updateAttributeHandler( 'BackgroundRepeatTablet' ) }
 							className="ugb--help-tip-background-image-repeat"
 						/>
 					}
@@ -401,7 +399,7 @@ export const BackgroundControls = props => {
 								{ label: __( 'Repeat-Y', i18n ), value: 'repeat-y' },
 							] }
 							value={ getAttribute( 'BackgroundRepeatMobile' ) }
-							onChange={ updateAttributes( 'BackgroundRepeatMobile' ) }
+							onChange={ updateAttributeHandler( 'BackgroundRepeatMobile' ) }
 							className="ugb--help-tip-background-image-repeat"
 						/>
 					}
@@ -417,7 +415,7 @@ export const BackgroundControls = props => {
 								{ label: __( 'Custom', i18n ), value: 'custom' },
 							] }
 							value={ getAttribute( 'backgroundSize' ) }
-							onChange={ updateAttributes( 'BackgroundSize' ) }
+							onChange={ updateAttributeHandler( 'BackgroundSize' ) }
 							className="ugb--help-tip-background-image-size"
 						/>
 					}
@@ -432,7 +430,7 @@ export const BackgroundControls = props => {
 								{ label: __( 'Custom', i18n ), value: 'custom' },
 							] }
 							value={ getAttribute( 'BackgroundSizeTablet' ) }
-							onChange={ updateAttributes( 'BackgroundSizeTablet' ) }
+							onChange={ updateAttributeHandler( 'BackgroundSizeTablet' ) }
 							className="ugb--help-tip-background-image-size"
 						/>
 					}
@@ -447,7 +445,7 @@ export const BackgroundControls = props => {
 								{ label: __( 'Custom', i18n ), value: 'custom' },
 							] }
 							value={ getAttribute( 'BackgroundSizeMobile' ) }
-							onChange={ updateAttributes( 'BackgroundSizeMobile' ) }
+							onChange={ updateAttributeHandler( 'BackgroundSizeMobile' ) }
 							className="ugb--help-tip-background-image-size"
 						/>
 					}
@@ -459,9 +457,9 @@ export const BackgroundControls = props => {
 							min={ [ 0, 0, 0 ] }
 							max={ [ 1000, 100, 100 ] }
 							unit={ getAttribute( 'backgroundCustomSizeUnit' ) }
-							onChangeUnit={ updateAttributes( 'BackgroundCustomSizeUnit' ) }
+							onChangeUnit={ updateAttributeHandler( 'BackgroundCustomSizeUnit' ) }
 							value={ getAttribute( 'backgroundCustomSize' ) }
-							onChange={ updateAttributes( 'BackgroundCustomSize' ) }
+							onChange={ updateAttributeHandler( 'BackgroundCustomSize' ) }
 							allowReset={ true }
 						/>
 					}
@@ -472,9 +470,9 @@ export const BackgroundControls = props => {
 							min={ [ 0, 0, 0 ] }
 							max={ [ 1000, 100, 100 ] }
 							unit={ getAttribute( 'BackgroundCustomSizeUnitTablet' ) }
-							onChangeUnit={ updateAttributes( 'BackgroundCustomSizeUnitTablet' ) }
+							onChangeUnit={ updateAttributeHandler( 'BackgroundCustomSizeUnitTablet' ) }
 							value={ getAttribute( 'BackgroundCustomSizeTablet' ) }
-							onChange={ updateAttributes( 'BackgroundCustomSizeTablet' ) }
+							onChange={ updateAttributeHandler( 'BackgroundCustomSizeTablet' ) }
 							allowReset={ true }
 						/>
 					}
@@ -485,18 +483,18 @@ export const BackgroundControls = props => {
 							min={ [ 0, 0, 0 ] }
 							max={ [ 1000, 100, 100 ] }
 							unit={ getAttribute( 'BackgroundCustomSizeUnitMobile' ) }
-							onChangeUnit={ updateAttributes( 'BackgroundCustomSizeUnitMobile' ) }
+							onChangeUnit={ updateAttributeHandler( 'BackgroundCustomSizeUnitMobile' ) }
 							value={ getAttribute( 'BackgroundCustomSizeMobile' ) }
-							onChange={ updateAttributes( 'BackgroundCustomSizeMobile' ) }
+							onChange={ updateAttributeHandler( 'BackgroundCustomSizeMobile' ) }
 							allowReset={ true }
 						/>
 					}
 
-					{ updateAttributes( 'BackgroundImageBlendMode' ) && (
+					{ updateAttributeHandler( 'BackgroundImageBlendMode' ) && (
 						<BlendModeControl
 							label={ __( 'Image Blend Mode', i18n ) }
 							value={ getAttribute( 'backgroundImageBlendMode' ) }
-							onChange={ updateAttributes( 'BackgroundImageBlendMode' ) }
+							onChange={ updateAttributeHandler( 'BackgroundImageBlendMode' ) }
 						/>
 					) }
 				</ButtonIconPopoverControl>
