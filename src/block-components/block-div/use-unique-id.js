@@ -1,21 +1,13 @@
+import { useBlockAttributes } from '~stackable/hooks'
+
 import { useEffect } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
-import { useSelect } from '@wordpress/data'
 
 export const createUniqueClass = uid => `${ uid.substring( 0, 7 ) }`
 
 export const useUniqueId = () => {
 	const { clientId } = useBlockEditContext()
-
-	const { attributes } = useSelect(
-		select => {
-			const { getBlockAttributes } = select( 'core/block-editor' )
-			return {
-				attributes: getBlockAttributes( clientId ),
-			}
-		},
-		[ clientId ]
-	)
+	const attributes = useBlockAttributes( clientId )
 
 	useEffect( () => {
 		// When there's no unique ID yet, create one.

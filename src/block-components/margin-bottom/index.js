@@ -1,24 +1,17 @@
 import { attributes } from './attributes'
 import { addStyles } from './style'
+import { getUniqueBlockClass } from '../block-div'
+
+import { ResizableBottomMargin } from '~stackable/components'
+import { useBlockAttributes } from '~stackable/hooks'
 
 import { useBlockEditContext } from '@wordpress/block-editor'
-import { useSelect, useDispatch } from '@wordpress/data'
-import { ResizableBottomMargin } from '~stackable/components'
-import { getUniqueBlockClass } from '../block-div'
+import { useDispatch } from '@wordpress/data'
 
 export const MarginBottom = () => {
 	const { clientId } = useBlockEditContext()
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
-
-	const { attributes } = useSelect(
-		select => {
-			const { getBlockAttributes } = select( 'core/block-editor' )
-			return {
-				attributes: getBlockAttributes( clientId ),
-			}
-		},
-		[ clientId ]
-	)
+	const attributes = useBlockAttributes( clientId )
 
 	return (
 		<ResizableBottomMargin

@@ -4,26 +4,18 @@ import { addStyles } from './style'
 import { Edit } from './edit'
 
 import classnames from 'classnames'
+import { Div } from '~stackable/components'
+import { useBlockAttributes } from '~stackable/hooks'
 
 import { useBlockEditContext } from '@wordpress/block-editor'
-import { useSelect } from '@wordpress/data'
-import { Div } from '~stackable/components'
 
 export const getUniqueBlockClass = uniqueId => uniqueId ? `stk-${ uniqueId }` : ''
 
 export const BlockDiv = props => {
 	const { clientId } = useBlockEditContext()
-	useUniqueId()
+	const attributes = useBlockAttributes( clientId )
 
-	const { attributes } = useSelect(
-		select => {
-			const { getBlockAttributes } = select( 'core/block-editor' )
-			return {
-				attributes: getBlockAttributes( clientId ),
-			}
-		},
-		[ clientId ]
-	)
+	useUniqueId()
 
 	const classNames = classnames( [
 		props.className,

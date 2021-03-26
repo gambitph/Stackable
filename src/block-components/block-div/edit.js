@@ -1,8 +1,11 @@
 /**
  * Internal dependencies
  */
-import { Edit as BackgroundControls } from '../helpers/backgrounds'
-import { attributes } from './attributes'
+import {
+	backgroundAttributes,
+	BackgroundControls,
+	BorderControls,
+} from '../helpers'
 
 /**
  * External dependencies
@@ -13,38 +16,31 @@ import {
 	InspectorSectionControls,
 	PanelAdvancedSettings,
 } from '~stackable/components'
+import { useBlockAttributes, useDidAttributesChange } from '~stackable/hooks'
+import { getAttrName } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import { useBlockEditContext } from '@wordpress/block-editor'
-import { useSelect, useDispatch } from '@wordpress/data'
+import { useDispatch } from '@wordpress/data'
 import { useCallback } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { useDidAttributesChange } from '~stackable/hooks'
 
 // These attributes will turn on the block background.
-const toggleAttributes = Object.keys( attributes ).filter( attr => ! [ 'uniqueId', 'hasBackground' ].includes( attr ) )
+const backgroundAttributeNames = Object.keys( backgroundAttributes ).map( name => getAttrName( 'block%s', name ) )
 
 export const Edit = () => {
 	const { clientId, name: blockName } = useBlockEditContext()
 
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
-	const { attributes } = useSelect(
-		select => {
-			const { getBlockAttributes } = select( 'core/block-editor' )
-			return {
-				attributes: getBlockAttributes( clientId ),
-			}
-		},
-		[ clientId ]
-	)
+	const attributes = useBlockAttributes( clientId )
 
 	// Turn on hasBackground when background attributes are changed.
 	const onAttributesChanged = useCallback( () => {
 		updateBlockAttributes( clientId, { hasBackground: true } )
 	}, [ clientId ] )
-	useDidAttributesChange( onAttributesChanged, blockName, pick( attributes, toggleAttributes ) )
+	useDidAttributesChange( onAttributesChanged, blockName, pick( attributes, backgroundAttributeNames ) )
 
 	return (
 		<InspectorSectionControls>
@@ -55,6 +51,14 @@ export const Edit = () => {
 				onChange={ hasBackground => updateBlockAttributes( clientId, { hasBackground } ) }
 			>
 				<BackgroundControls attrNameTemplate="block%s" />
+			</PanelAdvancedSettings>
+			<PanelAdvancedSettings
+				title={ __( 'Borders & Shadows', i18n ) }
+				id="borders"
+				// checked={ attributes.hasBorders }
+				// onChange={ hasBorders => updateBlockAttributes( clientId, { hasBorders } ) }
+			>
+				<BorderControls attrNameTemplate="block%s" />
 			</PanelAdvancedSettings>
 		</InspectorSectionControls>
 	)

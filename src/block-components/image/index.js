@@ -3,8 +3,9 @@ import { addStyles } from './style'
 import { useImage } from './use-image'
 import Image_ from './image'
 
+import { useBlockAttributes } from '~stackable/hooks'
+
 import { useBlockEditContext } from '@wordpress/block-editor'
-import { useSelect } from '@wordpress/data'
 
 export const Image = props => {
 	const {
@@ -12,16 +13,7 @@ export const Image = props => {
 	} = props
 
 	const { clientId } = useBlockEditContext()
-
-	const { attributes } = useSelect(
-		select => {
-			const { getBlockAttributes } = select( 'core/block-editor' )
-			return {
-				attributes: getBlockAttributes( clientId ),
-			}
-		},
-		[ clientId ]
-	)
+	const attributes = useBlockAttributes( clientId )
 
 	const { setImage } = useImage()
 

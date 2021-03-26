@@ -1,19 +1,12 @@
 /**
  * External dependencies
  */
-import { camelCase } from 'lodash'
 import {
-	appendImportantAll, hexToRgba, __getValue,
+	appendImportantAll,
+	getAttrNameFunction,
+	hexToRgba,
+	__getValue,
 } from '~stackable/util'
-
-/**
- * WordPress dependencies
- */
-import { sprintf } from '@wordpress/i18n'
-
-/**
- * Internal dependencies
- */
 
 export const addBackgroundOnlyStyles = ( styles, attributes, options = {} ) => {
 	const {
@@ -21,17 +14,17 @@ export const addBackgroundOnlyStyles = ( styles, attributes, options = {} ) => {
 		attrNameTemplate = '%s',
 	} = options
 
-	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
+	const getAttrName = getAttrNameFunction( attrNameTemplate )
 	const getValue = __getValue( attributes, getAttrName )
 
 	const customSize = getValue( 'BackgroundCustomSize' ) ? getValue( 'BackgroundCustomSize' ) + ( getValue( 'BackgroundCustomSizeUnit' ) || '%' ) : undefined
-	const tabletCustomSize = getValue( 'TabletBackgroundCustomSize' ) ? getValue( 'TabletBackgroundCustomSize' ) + ( getValue( 'TabletBackgroundCustomSizeUnit' ) || '%' ) : undefined
-	const mobileCustomSize = getValue( 'MobileBackgroundCustomSize' ) ? getValue( 'MobileBackgroundCustomSize' ) + ( getValue( 'MobileBackgroundCustomSizeUnit' ) || '%' ) : undefined
+	const tabletCustomSize = getValue( 'BackgroundCustomSizeTablet' ) ? getValue( 'BackgroundCustomSizeTablet' ) + ( getValue( 'BackgroundCustomSizeUnitTablet' ) || '%' ) : undefined
+	const mobileCustomSize = getValue( 'BackgroundCustomSizeMobile' ) ? getValue( 'BackgroundCustomSizeMobile' ) + ( getValue( 'BackgroundCustomSizeUnitMobile' ) || '%' ) : undefined
 
 	// Background color opacity.
 	let backgroundColor = getValue( 'BackgroundColor' )
 	if ( ! getValue( 'BackgroundColorType' ) && typeof attributes[ getAttrName( 'BackgroundColorOpacity' ) ] !== 'undefined' && attributes[ getAttrName( 'BackgroundColorOpacity' ) ] !== '' ) {
-		if ( ! getValue( 'BackgroundMediaURL' ) && ! getValue( 'TabletBackgroundMediaURL' ) && ! getValue( 'MobileBackgroundMediaURL' ) ) {
+		if ( ! getValue( 'BackgroundMediaURL' ) && ! getValue( 'BackgroundMediaURLTablet' ) && ! getValue( 'BackgroundMediaURLMobile' ) ) {
 			backgroundColor = `${ hexToRgba( getValue( 'BackgroundColor' ) || '#ffffff', getValue( 'BackgroundColorOpacity' ) || 0 ) }`
 		}
 	}
@@ -51,21 +44,21 @@ export const addBackgroundOnlyStyles = ( styles, attributes, options = {} ) => {
 			},
 			tablet: {
 				[ selector ]: {
-					backgroundImage: getValue( 'TabletBackgroundMediaURL', `url(%s)` ),
-					backgroundPosition: getValue( 'TabletBackgroundPosition' ),
-					backgroundRepeat: getValue( 'TabletBackgroundRepeat' ),
-					backgroundSize: getValue( 'TabletBackgroundSize' )
-						? ( getValue( 'TabletBackgroundSize' ) !== 'custom' ? getValue( 'TabletBackgroundSize' ) : tabletCustomSize )
+					backgroundImage: getValue( 'BackgroundMediaURLTablet', `url(%s)` ),
+					backgroundPosition: getValue( 'BackgroundPositionTablet' ),
+					backgroundRepeat: getValue( 'BackgroundRepeatTablet' ),
+					backgroundSize: getValue( 'BackgroundSizeTablet' )
+						? ( getValue( 'BackgroundSizeTablet' ) !== 'custom' ? getValue( 'BackgroundSizeTablet' ) : tabletCustomSize )
 						: undefined,
 				},
 			},
 			mobile: {
 				[ selector ]: {
-					backgroundImage: getValue( 'MobileBackgroundMediaURL', `url(%s)` ),
-					backgroundPosition: getValue( 'MobileBackgroundPosition' ),
-					backgroundRepeat: getValue( 'MobileBackgroundRepeat' ),
-					backgroundSize: getValue( 'MobileBackgroundSize' )
-						? ( getValue( 'MobileBackgroundSize' ) !== 'custom' ? getValue( 'MobileBackgroundSize' ) : mobileCustomSize )
+					backgroundImage: getValue( 'BackgroundMediaURLMobile', `url(%s)` ),
+					backgroundPosition: getValue( 'BackgroundPositionMobile' ),
+					backgroundRepeat: getValue( 'BackgroundRepeatMobile' ),
+					backgroundSize: getValue( 'BackgroundSizeMobile' )
+						? ( getValue( 'BackgroundSizeMobile' ) !== 'custom' ? getValue( 'BackgroundSizeMobile' ) : mobileCustomSize )
 						: undefined,
 				},
 			},
@@ -81,7 +74,7 @@ export const addBackgroundOverlayStyles = ( styles, attributes, options = {} ) =
 		attrNameTemplate = '%s',
 	} = options
 
-	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
+	const getAttrName = getAttrNameFunction( attrNameTemplate )
 	const getValue = __getValue( attributes, getAttrName )
 
 	const opacity = parseInt( getValue( 'BackgroundTintStrength', '', 5 ) || 0, 10 ) / 10

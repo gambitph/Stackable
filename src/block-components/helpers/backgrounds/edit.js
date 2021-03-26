@@ -2,7 +2,6 @@
  * External dependencies
  */
 import { i18n } from 'stackable'
-import { camelCase, upperFirst } from 'lodash'
 import {
 	AdvancedToolbarControl,
 	AdvancedRangeControl,
@@ -13,29 +12,29 @@ import {
 	ControlSeparator,
 	ImageControl,
 } from '~stackable/components'
+import { useBlockAttributes, useDeviceType } from '~stackable/hooks'
+import { getAttrNameFunction, urlIsVideo } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { useDispatch } from '@wordpress/data'
-import { useCallback } from '@wordpress/element'
+import { useCallback, Fragment } from '@wordpress/element'
 import {
 	__, _x, sprintf,
 } from '@wordpress/i18n'
-import { BaseControl, ToggleControl } from '@wordpress/components'
-import { useBlockAttributes, useDeviceType } from '~stackable/hooks'
-import { urlIsVideo } from '~stackable/util'
+import { ToggleControl } from '@wordpress/components'
 
 // TODO: Post v3, add option to select the image size for the background (full, large, medium)
-export const Edit = props => {
+export const BackgroundControls = props => {
 	const { clientId } = useBlockEditContext()
 	const attributes = useBlockAttributes( clientId )
 	const deviceType = useDeviceType()
 
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 
-	const getAttrName = attrName => camelCase( sprintf( props.attrNameTemplate, upperFirst( attrName ) ) )
+	const getAttrName = getAttrNameFunction( props.attrNameTemplate )
 	const getAttribute = attrName => attributes[ getAttrName( attrName ) ]
 	const updateAttributes = attrName => value => updateBlockAttributes( clientId, { [ getAttrName( attrName ) ]: value } )
 
@@ -48,10 +47,7 @@ export const Edit = props => {
 	}, [ getAttribute( 'backgroundMediaURL' ), getAttribute( 'backgroundMediaURLTablet' ), getAttribute( 'backgroundMediaURLMobile' ) ] )
 
 	return (
-		<BaseControl
-			id="ugb-background-color-type"
-			className="ugb--help-tip-background-color-type"
-		>
+		<Fragment>
 			<AdvancedToolbarControl
 				controls={ [
 					{
@@ -505,11 +501,11 @@ export const Edit = props => {
 					) }
 				</ButtonIconPopoverControl>
 			}
-		</BaseControl>
+		</Fragment>
 	)
 }
 
-Edit.defaultProps = {
+BackgroundControls.defaultProps = {
 	attrNameTemplate: '%s',
 	backgroundMediaAllowVideo: true,
 }

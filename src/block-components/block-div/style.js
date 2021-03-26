@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { addBackgroundStyles } from '../helpers'
+import { addBackgroundStyles, addBorderStyles } from '../helpers'
 
 /**
  * External dependencies
@@ -19,7 +19,12 @@ import { addBackgroundStyles } from '../helpers'
 export const addStyles = ( styles, attributes ) => {
 	// const getValue = __getValue( attributes )
 
-	addBackgroundStyles( styles, attributes, {
+	if ( attributes.hasBackground ) {
+		addBackgroundStyles( styles, attributes, {
+			attrNameTemplate: 'block%s',
+		} )
+	}
+	addBorderStyles( styles, attributes, {
 		attrNameTemplate: 'block%s',
 	} )
 }

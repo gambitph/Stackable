@@ -3,11 +3,10 @@ import { addStyles } from './style'
 import { useColumn } from './use-column'
 
 import { ResizableColumn } from '~stackable/components'
-import { useBlockContext } from '~stackable/hooks'
+import { useBlockAttributes, useBlockContext } from '~stackable/hooks'
 
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { useEffect } from '@wordpress/element'
-import { useSelect } from '@wordpress/data'
 
 export { getColumnClasses } from './use-column'
 
@@ -20,16 +19,7 @@ export const Column = props => {
 	const { clientId } = useBlockEditContext()
 	const { isFirstBlock, isLastBlock } = useBlockContext()
 	const setHandlers = useColumn()
-
-	const { attributes } = useSelect(
-		select => {
-			const { getBlockAttributes } = select( 'core/block-editor' )
-			return {
-				attributes: getBlockAttributes( clientId ),
-			}
-		},
-		[ clientId ]
-	)
+	const attributes = useBlockAttributes( clientId )
 
 	// Quietly update the first block attribute.
 	useEffect( () => {

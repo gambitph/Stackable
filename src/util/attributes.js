@@ -5,6 +5,7 @@ import {
 	camelCase,
 	omit,
 	pick,
+	upperFirst,
 } from 'lodash'
 
 /**
@@ -13,7 +14,11 @@ import {
 import { sprintf } from '@wordpress/i18n'
 
 export const getAttrName = ( attrNameTemplate = '%s', param1 = '', param2 = '' ) => {
-	return camelCase( sprintf( attrNameTemplate, param1, param2 ) )
+	return camelCase( sprintf( attrNameTemplate, upperFirst( param1 ), upperFirst( param2 ) ) )
+}
+
+export const getAttrNameFunction = attrNameTemplate => ( param1 = '', param2 = '' ) => {
+	return getAttrName( attrNameTemplate, param1, param2 )
 }
 
 /**
