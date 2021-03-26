@@ -30,7 +30,7 @@ export const borderAttributes = convertResponsiveAttributes( {
 		default: '',
 	},
 	shadow: {
-		type: 'number',
+		type: 'string',
 		default: '',
 	},
 } )

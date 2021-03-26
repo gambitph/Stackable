@@ -25,7 +25,10 @@ export const useAttributeEditHandlers = ( attrNameTemplate = '%s' ) => {
 
 	const getAttrName = getAttrNameFunction( attrNameTemplate )
 	const getAttribute = attrName => attributes[ getAttrName( attrName ) ]
-	const updateAttributeHandler = attrName => value => updateBlockAttributes( clientId, { [ getAttrName( attrName ) ]: value } )
+
+	const updateAttribute = ( attrName, value ) => updateBlockAttributes( clientId, { [ getAttrName( attrName ) ]: value } )
+	const updateAttributeHandler = attrName => value => updateAttribute( attrName, value )
+
 	const updateAttributes = values => {
 		const attributes = Object.keys( values ).reduce( ( attributes, attrName ) => {
 			attributes[ getAttrName( attrName ) ] = values[ attrName ]
@@ -39,5 +42,6 @@ export const useAttributeEditHandlers = ( attrNameTemplate = '%s' ) => {
 		getAttribute,
 		updateAttributeHandler,
 		updateAttributes,
+		updateAttribute,
 	}
 }

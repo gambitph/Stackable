@@ -20,6 +20,7 @@ export const addBorderStyles = ( styles, attributes, options = {} ) => {
 		style: {
 			[ selector ]: {
 				borderRadius: getValue( 'borderRadius', '%spx' ),
+				boxShadow: getValue( 'shadow' ),
 			},
 		},
 		versionAdded: '3.0.0',
