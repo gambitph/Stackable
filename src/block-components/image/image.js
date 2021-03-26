@@ -11,7 +11,7 @@ import Tooltip from './tooltip'
 /**
  * External dependencies
  */
-import { useWithShift } from '~stackable/hooks'
+import { useDeviceType, useWithShift } from '~stackable/hooks'
 import classnames from 'classnames'
 import striptags from 'striptags'
 import { clamp } from 'lodash'
@@ -22,8 +22,6 @@ import { clamp } from 'lodash'
 import { MediaUpload } from '@wordpress/block-editor'
 import { Dashicon, ResizableBox } from '@wordpress/components'
 import { useState, useEffect } from '@wordpress/element'
-import { compose } from '@wordpress/compose'
-import { withSelect } from '@wordpress/data'
 
 const formSize = ( size = '', unit = '%', usePx = false, usePct = true ) => {
 	if ( ! size && size !== 0 ) {
@@ -318,8 +316,9 @@ Image.defaultProps = {
 
 // Support responsive options.
 const ImageResponsive = props => {
-	const isDesktop = props.previewDeviceType === 'Desktop'
-	const isMobile = props.previewDeviceType === 'Mobile'
+	const deviceType = useDeviceType()
+	const isDesktop = deviceType === 'Desktop'
+	const isMobile = deviceType === 'Mobile'
 
 	let width = props.width
 	let widthUnit = props.widthUnit || '%'
@@ -355,7 +354,7 @@ const ImageResponsive = props => {
 			height={ height }
 			heightUnit={ heightUnit }
 			onChangeSize={ value => {
-				props[ `onChangeSize${ props.previewDeviceType }` ]( value )
+				props[ `onChangeSize${ deviceType }` ]( value )
 			} }
 		/>
 	)
@@ -424,17 +423,5 @@ ImageContent.defaultProps = {
 	shadow: '',
 }
 
-const _ImageResponsive = compose( [
-	withSelect( select => {
-		const {
-			__experimentalGetPreviewDeviceType,
-		} = select( 'core/edit-post' )
-
-		return {
-			previewDeviceType: __experimentalGetPreviewDeviceType(),
-		}
-	} ),
-] )( ImageResponsive )
-
-_ImageResponsive.Content = ImageContent
-export default _ImageResponsive
+ImageResponsive.Content = ImageContent
+export default ImageResponsive

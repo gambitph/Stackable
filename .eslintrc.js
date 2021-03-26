@@ -61,6 +61,9 @@ module.exports = {
 
 		// We will use dynamic text domain.
 		'@wordpress/i18n-text-domain': 'off',
+
+		// No translator comments.
+		'@wordpress/i18n-translator-comments': 'off',
 	},
 	globals: {
 		localStorage: true,

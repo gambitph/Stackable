@@ -117,6 +117,8 @@ class PanelAdvancedSettings extends Component {
 			[ `ugb-panel--${ this.props.id }` ]: this.props.id,
 		} )
 
+		const hasToggle = this.props.hasToggle && this.props.onChange
+
 		return (
 			<PanelBody
 				className={ mainClasses }
@@ -126,7 +128,7 @@ class PanelAdvancedSettings extends Component {
 				ref={ this.panelRef }
 				title={
 					<Fragment>
-						{ this.props.hasToggle && (
+						{ hasToggle && (
 							<span className={ `editor-panel-toggle-settings__panel-title` }>
 								<FormToggle
 									className="ugb-toggle-panel-form-toggle"
@@ -150,7 +152,7 @@ class PanelAdvancedSettings extends Component {
 								{ this.props.title }
 							</span>
 						) }
-						{ ! this.props.hasToggle && this.props.title }
+						{ ! hasToggle && this.props.title }
 					</Fragment>
 				}
 			>

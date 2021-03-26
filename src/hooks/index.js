@@ -1,3 +1,5 @@
 export { default as useBlockContext } from './use-block-context'
 export { default as useWithShift } from './use-with-shift'
 export * from './use-did-attributes-change'
+export * from './use-device-type'
+export * from './use-block-attributes'

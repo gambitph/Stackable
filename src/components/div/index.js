@@ -11,13 +11,14 @@ const Div = props => {
 		backgroundUrl,
 		backgroundUrlTablet,
 		backgroundUrlMobile,
+		backgroundColorType,
 		...propsToPass
 	} = props
 
 	const classNames = classnames( [
 		className,
 	], {
-		'stk--has-background-overlay': backgroundUrl || backgroundUrlTablet || backgroundUrlMobile,
+		'stk--has-background-overlay': backgroundColorType === 'gradient' || backgroundUrl || backgroundUrlTablet || backgroundUrlMobile,
 	} )
 
 	return (
@@ -38,6 +39,7 @@ Div.defaultProps = {
 	backgroundUrl: '',
 	backgroundUrlTablet: '',
 	backgroundUrlMobile: '',
+	backgroundColorType: '',
 }
 
 Div.Content = props => {
@@ -47,13 +49,14 @@ Div.Content = props => {
 		backgroundUrl,
 		backgroundUrlTablet,
 		backgroundUrlMobile,
+		backgroundColorType,
 		...propsToPass
 	} = props
 
 	const classNames = classnames( [
 		className,
 	], {
-		'stk--has-background-overlay': backgroundUrl || backgroundUrlTablet || backgroundUrlMobile,
+		'stk--has-background-overlay': backgroundColorType === 'gradient' || backgroundUrl || backgroundUrlTablet || backgroundUrlMobile,
 	} )
 
 	return (

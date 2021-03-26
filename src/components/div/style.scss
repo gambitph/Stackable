@@ -4,7 +4,7 @@
 	z-index: 1;
 	background-size: cover;
 	background-position: center;
-	> &.stk--has-background-overlay::before {
+	&::before {
 		content: "";
 		position: absolute;
 		top: 0;

@@ -1,22 +1,22 @@
 /**
  * External dependencies
  */
-import { urlIsVideo } from '~stackable/util'
 import classnames from 'classnames'
+import { urlIsVideo } from '~stackable/util'
+import { useDeviceType } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
 import { Fragment } from '@wordpress/element'
-import { compose } from '@wordpress/compose'
-import { withSelect } from '@wordpress/data'
 
-const _VideoBackground = props => {
+const VideoBackground = props => {
 	let backgroundSrc = props.videoUrl
-	if ( props.previewDeviceType !== 'Desktop' && props.videoUrlTablet ) {
+	const deviceType = useDeviceType()
+	if ( deviceType !== 'Desktop' && props.videoUrlTablet ) {
 		backgroundSrc = props.videoUrlTablet
 	}
-	if ( props.previewDeviceType === 'Mobile' && props.videoUrlMobile ) {
+	if ( deviceType === 'Mobile' && props.videoUrlMobile ) {
 		backgroundSrc = props.videoUrlMobile
 	}
 
@@ -36,23 +36,11 @@ const _VideoBackground = props => {
 	)
 }
 
-_VideoBackground.defaultProps = {
+VideoBackground.defaultProps = {
 	videoUrl: '',
 	videoUrlTablet: '',
 	videoUrlMobile: '',
 }
-
-const VideoBackground = compose( [
-	withSelect( select => {
-		const {
-			__experimentalGetPreviewDeviceType,
-		} = select( 'core/edit-post' )
-
-		return {
-			previewDeviceType: __experimentalGetPreviewDeviceType(),
-		}
-	} ),
-] )( _VideoBackground )
 
 VideoBackground.Content = props => {
 	const desktopClassNames = classnames( [

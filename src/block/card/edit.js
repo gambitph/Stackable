@@ -11,8 +11,6 @@ import {
 	InspectorTabs,
 	InspectorStyleControls,
 	PanelAdvancedSettings,
-	InspectorSectionControls,
-	BackgroundControlsHelper,
 } from '~stackable/components'
 import {
 	useBlockContext,
@@ -37,7 +35,6 @@ const Edit = props => {
 
 	const {
 		hasContainer,
-		hasBackground,
 	} = props.attributes
 
 	const {

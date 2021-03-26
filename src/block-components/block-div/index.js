@@ -37,6 +37,10 @@ export const BlockDiv = props => {
 		{ ...props }
 		className={ classNames }
 		data-id={ attributes.uniqueId }
+		backgroundUrl={ attributes.blockBackgroundMediaUrl }
+		backgroundUrlTablet={ attributes.blockBackgroundMediaUrlTablet }
+		backgroundUrlMobile={ attributes.blockBackgroundMediaUrlMobile }
+		backgroundColorType={ attributes.blockBackgroundColorType }
 	/>
 }
 
@@ -62,6 +66,10 @@ BlockDiv.Content = props => {
 		{ ...propsToPass }
 		className={ classNames }
 		data-id={ attributes.uniqueId }
+		backgroundUrl={ attributes.blockBackgroundMediaUrl }
+		backgroundUrlTablet={ attributes.blockBackgroundMediaUrlTablet }
+		backgroundUrlMobile={ attributes.blockBackgroundMediaUrlMobile }
+		backgroundColorType={ attributes.blockBackgroundColorType }
 	/>
 }
 

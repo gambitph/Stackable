@@ -10,6 +10,7 @@ import { AdvancedTextControl } from '..'
  */
 import {
 	useBlockContext,
+	useDeviceType,
 	useWithShift,
 } from '~stackable/hooks'
 import { clamp, isEqual } from 'lodash'
@@ -20,13 +21,11 @@ import { i18n } from 'stackable'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { compose } from '@wordpress/compose'
 import { ResizableBox, Popover } from '@wordpress/components'
 import {
 	Fragment, useState, useEffect, useRef, useCallback, useMemo,
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
-import { withSelect } from '@wordpress/data'
 
 const MIN_COLUMN_WIDTHS = {
 	Desktop: 100,
@@ -49,7 +48,8 @@ const ResizableColumn = props => {
 
 	// This is used to add editor classes based on the preview device type.
 	// Mainly for generating editor styles.
-	useDeviceEditorClasses( props.previewDeviceType )
+	const deviceType = useDeviceType()
+	useDeviceEditorClasses( deviceType )
 
 	const [ currentWidths, setCurrentWidths ] = useState( [] )
 	const [ newWidthsPercent, setNewWidthsPercent ] = useState( [] )
@@ -57,8 +57,8 @@ const ResizableColumn = props => {
 	const [ tempStyles, setTempStyles ] = useState( '' )
 	const [ snapWidths, setSnapWidths ] = useState( null )
 
-	const isDesktop = props.previewDeviceType === 'Desktop'
-	const isTablet = props.previewDeviceType === 'Tablet'
+	const isDesktop = deviceType === 'Desktop'
+	const isTablet = deviceType === 'Tablet'
 
 	// Reset the column widths in desktop if a column was added / removed.
 	const [ prevAdjacentBlocks, setPrevAdjacentBlocks ] = useState( adjacentBlocks.length )
@@ -96,15 +96,15 @@ const ResizableColumn = props => {
 		<ResizableBox
 			enable={ {
 				top: false,
-				right: props.previewDeviceType === 'Desktop' ? ! isOnlyBlock && ! isLastBlock : ! isOnlyBlock,
+				right: deviceType === 'Desktop' ? ! isOnlyBlock && ! isLastBlock : ! isOnlyBlock,
 				bottom: false,
-				left: props.previewDeviceType === 'Desktop' ? ! isOnlyBlock && ! isFirstBlock : false,
+				left: deviceType === 'Desktop' ? ! isOnlyBlock && ! isFirstBlock : false,
 				topRight: false,
 				bottomRight: false,
 				bottomLeft: false,
 				topLeft: false,
 			} }
-			minWidth={ MIN_COLUMN_WIDTHS[ props.previewDeviceType ] }
+			minWidth={ MIN_COLUMN_WIDTHS[ deviceType ] }
 			minHeight="100"
 			maxWidth={ maxWidth }
 			className={ className }
@@ -258,7 +258,7 @@ const ResizableColumn = props => {
 					: isTablet ? ( props.columnWidthTablet || props.columnWidth )
 						: props.columnWidthMobile }
 				onChange={ width => {
-					if ( width < MIN_COLUMN_WIDTH_PERCENTAGE[ props.previewDeviceType ] ) {
+					if ( width < MIN_COLUMN_WIDTH_PERCENTAGE[ deviceType ] ) {
 						return
 					}
 
@@ -288,7 +288,7 @@ const ResizableColumn = props => {
 						props.onChangeDesktop( columnWidths )
 					} else {
 						// Tablet and Mobile.
-						const finalWidth = clamp( width, MIN_COLUMN_WIDTH_PERCENTAGE[ props.previewDeviceType ], 100 )
+						const finalWidth = clamp( width, MIN_COLUMN_WIDTH_PERCENTAGE[ deviceType ], 100 )
 						if ( isTablet ) {
 							props.onChangeTablet( finalWidth )
 						} else {
@@ -303,11 +303,12 @@ const ResizableColumn = props => {
 	)
 }
 
-const _ResizableTooltip = props => {
+const ResizableTooltip = props => {
 	const {
 		adjacentBlocks, isOnlyBlock, blockIndex, isLastBlock, isFirstBlock,
 	} = props.blockContext
 
+	const deviceType = useDeviceType()
 	const [ isEditWidth, setIsEditWidth ] = useState( false )
 	const [ originalInputValue, setOriginalInputValue ] = useState( '' )
 	const [ currentInputValue, setCurrentInputValue ] = useState( '' )
@@ -318,7 +319,7 @@ const _ResizableTooltip = props => {
 	const columnLabel = useMemo( () => {
 		if ( ! props.value && ! originalInputValue ) {
 			// The columns are evenly distributed by default.
-			if ( props.previewDeviceType === 'Desktop' ) {
+			if ( deviceType === 'Desktop' ) {
 				const value = ( 100 / adjacentBlocks.length ).toFixed( 1 )
 				if ( value.toString() === '33.3' ) {
 					return 33.33
@@ -327,7 +328,7 @@ const _ResizableTooltip = props => {
 			}
 			// In mobile, the columns are  "auto" so that we don't display
 			// inaccurate percentage widths.
-			if ( props.previewDeviceType === 'Tablet' ) {
+			if ( deviceType === 'Tablet' ) {
 				return __( 'Auto', i18n )
 			}
 			// In mobile, the columns collapse to 100%.
@@ -335,7 +336,7 @@ const _ResizableTooltip = props => {
 		}
 
 		return ``
-	}, [ adjacentBlocks.length, props.value, originalInputValue, props.previewDeviceType ] )
+	}, [ adjacentBlocks.length, props.value, originalInputValue, deviceType ] )
 
 	// Create the label of the tooltip.
 	const tooltipLabel = useMemo( () => {
@@ -445,24 +446,12 @@ const _ResizableTooltip = props => {
 	)
 }
 
-_ResizableTooltip.defaultProps = {
+ResizableTooltip.defaultProps = {
 	isVisible: true,
 	blockContext: {},
 	value: '',
 	onChange: () => {},
 }
-
-const ResizableTooltip = compose( [
-	withSelect( select => {
-		const {
-			__experimentalGetPreviewDeviceType,
-		} = select( 'core/edit-post' )
-
-		return {
-			previewDeviceType: __experimentalGetPreviewDeviceType(),
-		}
-	} ),
-] )( _ResizableTooltip )
 
 ResizableColumn.defaultProps = {
 	className: '',
@@ -476,14 +465,4 @@ ResizableColumn.defaultProps = {
 	onResetDesktop: () => {},
 }
 
-export default compose( [
-	withSelect( select => {
-		const {
-			__experimentalGetPreviewDeviceType,
-		} = select( 'core/edit-post' )
-
-		return {
-			previewDeviceType: __experimentalGetPreviewDeviceType(),
-		}
-	} ),
-] )( ResizableColumn )
+export default ResizableColumn
