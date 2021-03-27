@@ -1,0 +1,116 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header block Save render should match snapshot 1`] = `
+<div
+  class="wp-block-ugb-header ugb-header ugb-header--v3 ugb-header--design-basic ugb-main-block"
+>
+  <style>
+    .ugb-header__item{background-color:#000000 !important}.ugb-header__item:before{background-color:#000000 !important}.ugb-header__title{color:#ffffff}.ugb-header__subtitle{color:#ffffff}
+  </style>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-header__item"
+      >
+        <div
+          class="ugb-content-wrapper"
+        >
+          <h2
+            class="ugb-header__title"
+          >
+            <div>
+              Title for This Block
+            </div>
+          </h2>
+          <p
+            class="ugb-header__subtitle"
+          >
+            <div>
+              Description for this block. Use this space for describing your block. Any text will do.
+            </div>
+          </p>
+          <div
+            class="ugb-header__buttons"
+          >
+            <div
+              class="ugb-button-container"
+            >
+              <a
+                class="ugb-button1 ugb-button ugb-button--size-normal"
+                href=""
+                rel=""
+                title=""
+              >
+                
+                <span
+                  class="ugb-button--inner"
+                >
+                  <div>
+                    Button text
+                  </div>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Header block Save render should match snapshot with attributes 1`] = `
+<div
+  class="wp-block-ugb-header ugb-header ugb-header--v3 ugb-header--design-wave-2 ugb-header--invert ugb-main-block"
+>
+  <style>
+    .ugb-header__item{border-radius:123px !important;border-style:columnBorderType !important;border-color:#123456 !important;border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-color:#123456 !important;background-attachment:fixed;background-image:url(columnBackgroundMediaUrl);background-position:columnBackgroundPosition;background-repeat:columnBackgroundRepeat;background-size:columnBackgroundSize;background-blend-mode:columnBackgroundImageBlendMode}.ugb-header__item:before{background-color:#123456 !important;opacity:12.3}.ugb-button2 .ugb-button--inner{font-family:"button2FontFamily",Sans-serif !important;font-size:123button2FontSizeUnit !important;font-weight:button2FontWeight !important;text-transform:button2TextTransform !important;letter-spacing:123px !important;line-height:123button2LineHeightUnit !important}.ugb-button2{opacity:123;border-radius:123px !important}.ugb-button2:before{border-radius:123px !important}.ugb-button2:hover{opacity:123}.ugb-button2.ugb-button--has-icon.ugb-button--has-icon svg{margin-right:123px;width:123px;height:123px}.ugb-button-container{margin-bottom:123px !important}@media screen and (max-width:1025px){.ugb-header__item{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-image:url(columnTabletBackgroundMediaUrl);background-position:columnTabletBackgroundPosition;background-repeat:columnTabletBackgroundRepeat;background-size:columnTabletBackgroundSize}.ugb-header__item:before{opacity:12.3}.ugb-button2 .ugb-button--inner{line-height:123button2TabletLineHeightUnit !important;font-size:123button2TabletFontSizeUnit !important}}@media screen and (min-width:768px) and (max-width:1025px){.ugb-button-container{margin-bottom:123px !important}}@media screen and (max-width:768px){.ugb-header__item{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-image:url(columnMobileBackgroundMediaUrl);background-position:columnMobileBackgroundPosition;background-repeat:columnMobileBackgroundRepeat;background-size:columnMobileBackgroundSize}.ugb-header__item:before{opacity:12.3}.ugb-button2 .ugb-button--inner{line-height:123button2MobileLineHeightUnit !important;font-size:123button2MobileFontSizeUnit !important}.ugb-button-container{margin-bottom:123px !important}}
+  </style>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-header__item ugb--full-height ugb--shadow-123 ugb--has-background-overlay"
+      >
+        <div
+          class="ugb-content-wrapper"
+        >
+          <div
+            class="ugb-header__buttons"
+          >
+            <div
+              class="ugb-button-container"
+            >
+              <a
+                class="ugb-button2 ugb-button ugb-button--size-button2Size ugb-button--ghost-to-normal-effect ugb--hover-effect-button2HoverEffect ugb-button--design-button2Design ugb-button--has-icon ugb-button--icon-position-button2IconPosition"
+                href="button2Url"
+                rel="noopener noreferrer nofollow"
+                target="_blank"
+                title=""
+              >
+                <div
+                  class="ugb-icon-inner-svg"
+                />
+                <span
+                  class="ugb-button--inner"
+                >
+                  <div>
+                    button2Text
+                  </div>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

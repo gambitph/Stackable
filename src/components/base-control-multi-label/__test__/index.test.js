@@ -49,26 +49,4 @@ describe( 'Unit switcher', () => {
 		const { queryByLabelText } = render( <BaseControlMultiLabel screens={ [ 'desktop' ] } /> )
 		expect( queryByLabelText( 'Desktop' ) ).toBeNull()
 	} )
-
-	it( 'should have responsive toggles for multiple screens', () => {
-		const onChangeScreen = jest.fn()
-
-		const { getByLabelText, queryByLabelText } = render( <BaseControlMultiLabel screens={ [ 'desktop', 'tablet', 'mobile' ] } onChangeScreen={ onChangeScreen } /> )
-		expect( getByLabelText( 'Desktop' ) ).toBeTruthy()
-		expect( queryByLabelText( 'Tablet' ) ).toBeNull()
-		expect( queryByLabelText( 'Mobile' ) ).toBeNull()
-
-		// Click desktop to show the other responsive buttons.
-		fireEvent.click( getByLabelText( 'Desktop' ) )
-		expect( getByLabelText( 'Tablet' ) ).toBeTruthy()
-		expect( getByLabelText( 'Mobile' ) ).toBeTruthy()
-
-		expect( onChangeScreen ).toHaveBeenCalledWith( 'desktop' )
-		fireEvent.click( getByLabelText( 'Tablet' ) )
-		expect( onChangeScreen ).toHaveBeenCalledWith( 'tablet' )
-		fireEvent.click( getByLabelText( 'Mobile' ) )
-		expect( onChangeScreen ).toHaveBeenCalledWith( 'mobile' )
-		fireEvent.click( getByLabelText( 'Desktop' ) )
-		expect( onChangeScreen ).toHaveBeenCalledWith( 'desktop' )
-	} )
 } )

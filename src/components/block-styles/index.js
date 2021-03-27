@@ -5,6 +5,10 @@ import { minifyCSS, prependCSSClass } from '~stackable/util'
 import {
 	kebabCase, omit, isEqual, sortBy,
 } from 'lodash'
+import { getEditorStylesOnly } from '~stackable/block-components'
+import { useBlockAttributes, useDeviceType } from '~stackable/hooks'
+import { useBlockEditContext } from '@wordpress/block-editor'
+import { useMemo } from '@wordpress/element'
 
 /**
  * Returns an identical styleObject with all the selectors modified to be wrapped
@@ -258,18 +262,39 @@ export const generateStyles = ( styleObject, blockMainClassName = '', blockUniqu
 const BlockStyles = props => {
 	const {
 		style = {},
-		editorMode = false,
 		blockUniqueClassName = '',
 		blockMainClassName = '',
 		breakTablet = 1025,
 		breakMobile = 768,
 	} = props
-	const styles = generateStyles( style, blockMainClassName, blockUniqueClassName, breakTablet, breakMobile, editorMode )
+
+	const { clientId } = useBlockEditContext()
+	const attributes = useBlockAttributes( clientId )
+	const deviceType = useDeviceType()
+
+	// Generate styles, but optimize.
+	const styles = useMemo( () => {
+		// Don't print out all the styles, since we're in the editor, we only
+		// need to show the styles that we're previewing in!
+		const editorStyles = getEditorStylesOnly( style, deviceType )
+
+		return generateStyles( editorStyles, blockMainClassName, blockUniqueClassName, breakTablet, breakMobile, true )
+	}, [ deviceType, JSON.stringify( attributes ), clientId ] )
 
 	// It's way faster in React if you do smaller `<style>` tags instead of just a single one. Do it when in editor mode.
-	if ( editorMode ) {
-		return styles ? styles.map( ( styles, i ) => <style key={ i }>{ styles }</style> ) : null
-	}
+	return styles ? styles.map( ( styles, i ) => <style key={ i }>{ styles }</style> ) : null
+}
+
+BlockStyles.Content = props => {
+	const {
+		style = {},
+		blockUniqueClassName = '',
+		blockMainClassName = '',
+		breakTablet = 1025,
+		breakMobile = 768,
+	} = props
+	const styles = generateStyles( style, blockMainClassName, blockUniqueClassName, breakTablet, breakMobile, false )
+
 	return styles && styles.length ? <style>{ minifyCSS( styles.join( '' ) ) }</style> : null
 }
 

@@ -163,6 +163,7 @@ export const BackgroundControls = props => {
 				<ImageControl
 					label={ props.backgroundMediaAllowVideo ? __( 'Background Image or Video', i18n ) : __( 'Background Image', i18n ) }
 					help={ props.backgroundMediaAllowVideo ? __( 'Use .mp4 format for videos', i18n ) : '' }
+					screens="all"
 					onRemove={ () => {
 						updateAttributes( {
 							backgroundMediaId: '',
@@ -184,6 +185,7 @@ export const BackgroundControls = props => {
 				<ImageControl
 					label={ props.backgroundMediaAllowVideo ? __( 'Background Image or Video', i18n ) : __( 'Background Image', i18n ) }
 					help={ props.backgroundMediaAllowVideo ? __( 'Use .mp4 format for videos', i18n ) : '' }
+					screens="all"
 					onRemove={ () => {
 						updateAttributes( {
 							backgroundMediaIdTablet: '',
@@ -205,6 +207,7 @@ export const BackgroundControls = props => {
 				<ImageControl
 					label={ props.backgroundMediaAllowVideo ? __( 'Background Image or Video', i18n ) : __( 'Background Image', i18n ) }
 					help={ props.backgroundMediaAllowVideo ? __( 'Use .mp4 format for videos', i18n ) : '' }
+					screens="all"
 					onRemove={ () => {
 						updateAttributes( {
 							backgroundMediaIdMobile: '',
@@ -300,6 +303,7 @@ export const BackgroundControls = props => {
 					{ deviceType === 'Desktop' &&
 						<AdvancedSelectControl
 							label={ __( 'Image Position', i18n ) }
+							screens="all"
 							options={ [
 								{ label: __( 'Default', i18n ), value: '' },
 								{ label: __( 'Top Left', i18n ), value: 'top left' },
@@ -320,6 +324,7 @@ export const BackgroundControls = props => {
 					{ deviceType === 'Tablet' &&
 						<AdvancedSelectControl
 							label={ __( 'Image Position', i18n ) }
+							screens="all"
 							options={ [
 								{ label: __( 'Default', i18n ), value: '' },
 								{ label: __( 'Top Left', i18n ), value: 'top left' },
@@ -340,6 +345,7 @@ export const BackgroundControls = props => {
 					{ deviceType === 'Mobile' &&
 						<AdvancedSelectControl
 							label={ __( 'Image Position', i18n ) }
+							screens="all"
 							options={ [
 								{ label: __( 'Default', i18n ), value: '' },
 								{ label: __( 'Top Left', i18n ), value: 'top left' },
@@ -361,6 +367,7 @@ export const BackgroundControls = props => {
 					{ deviceType === 'Desktop' &&
 						<AdvancedSelectControl
 							label={ __( 'Image Repeat', i18n ) }
+							screens="all"
 							options={ [
 								{ label: __( 'Default', i18n ), value: '' },
 								{ label: __( 'No-Repeat', i18n ), value: 'no-repeat' },
@@ -376,6 +383,7 @@ export const BackgroundControls = props => {
 					{ deviceType === 'Tablet' &&
 						<AdvancedSelectControl
 							label={ __( 'Image Repeat', i18n ) }
+							screens="all"
 							options={ [
 								{ label: __( 'Default', i18n ), value: '' },
 								{ label: __( 'No-Repeat', i18n ), value: 'no-repeat' },
@@ -391,6 +399,7 @@ export const BackgroundControls = props => {
 					{ deviceType === 'Mobile' &&
 						<AdvancedSelectControl
 							label={ __( 'Image Repeat', i18n ) }
+							screens="all"
 							options={ [
 								{ label: __( 'Default', i18n ), value: '' },
 								{ label: __( 'No-Repeat', i18n ), value: 'no-repeat' },
@@ -407,6 +416,7 @@ export const BackgroundControls = props => {
 					{ deviceType === 'Desktop' &&
 						<AdvancedSelectControl
 							label={ __( 'Image Size', i18n ) }
+							screens="all"
 							options={ [
 								{ label: __( 'Default', i18n ), value: '' },
 								{ label: __( 'Auto', i18n ), value: 'auto' },
@@ -422,6 +432,7 @@ export const BackgroundControls = props => {
 					{ deviceType === 'Tablet' &&
 						<AdvancedSelectControl
 							label={ __( 'Image Size', i18n ) }
+							screens="all"
 							options={ [
 								{ label: __( 'Default', i18n ), value: '' },
 								{ label: __( 'Auto', i18n ), value: 'auto' },
@@ -437,6 +448,7 @@ export const BackgroundControls = props => {
 					{ deviceType === 'Mobile' &&
 						<AdvancedSelectControl
 							label={ __( 'Image Size', i18n ) }
+							screens="all"
 							options={ [
 								{ label: __( 'Default', i18n ), value: '' },
 								{ label: __( 'Auto', i18n ), value: 'auto' },
@@ -453,6 +465,7 @@ export const BackgroundControls = props => {
 					{ getAttribute( 'backgroundSize' ) === 'custom' && deviceType === 'Desktop' &&
 						<AdvancedRangeControl
 							label={ __( 'Custom Size', i18n ) }
+							screens="all"
 							units={ [ 'px', '%', 'vw' ] }
 							min={ [ 0, 0, 0 ] }
 							max={ [ 1000, 100, 100 ] }
@@ -466,6 +479,7 @@ export const BackgroundControls = props => {
 					{ getAttribute( 'BackgroundSizeTablet' ) === 'custom' && deviceType === 'Tablet' &&
 						<AdvancedRangeControl
 							label={ __( 'Custom Size', i18n ) }
+							screens="all"
 							units={ [ 'px', '%', 'vw' ] }
 							min={ [ 0, 0, 0 ] }
 							max={ [ 1000, 100, 100 ] }
@@ -479,6 +493,7 @@ export const BackgroundControls = props => {
 					{ getAttribute( 'BackgroundSizeMobile' ) === 'custom' && deviceType === 'Mobile' &&
 						<AdvancedRangeControl
 							label={ __( 'Custom Size', i18n ) }
+							screens="all"
 							units={ [ 'px', '%', 'vw' ] }
 							min={ [ 0, 0, 0 ] }
 							max={ [ 1000, 100, 100 ] }

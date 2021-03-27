@@ -5,6 +5,7 @@ import {
 	backgroundAttributes,
 	BackgroundControls,
 	BorderControls,
+	SizeControls,
 } from '../helpers'
 
 /**
@@ -55,10 +56,14 @@ export const Edit = () => {
 			<PanelAdvancedSettings
 				title={ __( 'Borders & Shadows', i18n ) }
 				id="borders"
-				// checked={ attributes.hasBorders }
-				// onChange={ hasBorders => updateBlockAttributes( clientId, { hasBorders } ) }
 			>
 				<BorderControls attrNameTemplate="block%s" />
+			</PanelAdvancedSettings>
+			<PanelAdvancedSettings
+				title={ __( 'Size & Spacing', i18n ) }
+				id="size"
+			>
+				<SizeControls attrNameTemplate="block%s" />
 			</PanelAdvancedSettings>
 		</InspectorSectionControls>
 	)

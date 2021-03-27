@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testimonial block Save render should match snapshot 1`] = `
+<div
+  class="wp-block-ugb-testimonial ugb-testimonial--v3 ugb-testimonial--columns-2 ugb-testimonial--design-basic ugb-main-block"
+>
+  <style>
+    .ugb-img{-webkit-mask-image:url('data:image/svg+xml;base64,PHN2Zz48L3N2Zz4=');mask-image:url('data:image/svg+xml;base64,PHN2Zz48L3N2Zz4=')}
+  </style>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-testimonial__item ugb-testimonial__item1"
+      >
+        <div
+          class="ugb-testimonial__body-wrapper"
+        >
+          <p
+            class="ugb-testimonial__body"
+          >
+            <div>
+              Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.
+            </div>
+          </p>
+        </div>
+        <div
+          class="ugb-testimonial__person"
+        >
+          
+          <h4
+            class="ugb-testimonial__name"
+          >
+            <div>
+              Name
+            </div>
+          </h4>
+          <p
+            class="ugb-testimonial__position"
+          >
+            <div>
+              Position
+            </div>
+          </p>
+        </div>
+      </div>
+      <div
+        class="ugb-testimonial__item ugb-testimonial__item2"
+      >
+        <div
+          class="ugb-testimonial__body-wrapper"
+        >
+          <p
+            class="ugb-testimonial__body"
+          >
+            <div>
+              Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.
+            </div>
+          </p>
+        </div>
+        <div
+          class="ugb-testimonial__person"
+        >
+          
+          <h4
+            class="ugb-testimonial__name"
+          >
+            <div>
+              Name
+            </div>
+          </h4>
+          <p
+            class="ugb-testimonial__position"
+          >
+            <div>
+              Position
+            </div>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Testimonial block Save render should match snapshot with attributes 1`] = `
+<div
+  class="wp-block-ugb-testimonial ugb-testimonial--v3 ugb-testimonial--columns-3 ugb-testimonial--design-wave-2 ugb-main-block"
+>
+  <style>
+    .ugb-testimonial__item{border-radius:123px !important;border-style:columnBorderType !important;border-color:#123456 !important;border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-color:#123456 !important;background-attachment:fixed;background-image:url(columnBackgroundMediaUrl);background-position:columnBackgroundPosition;background-repeat:columnBackgroundRepeat;background-size:columnBackgroundSize;background-blend-mode:columnBackgroundImageBlendMode}.ugb-testimonial__item:before{background-color:#123456 !important;opacity:12.3}@media screen and (max-width:1025px){.ugb-testimonial__item{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-image:url(columnTabletBackgroundMediaUrl);background-position:columnTabletBackgroundPosition;background-repeat:columnTabletBackgroundRepeat;background-size:columnTabletBackgroundSize}.ugb-testimonial__item:before{opacity:12.3}}@media screen and (max-width:768px){.ugb-testimonial__item{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-image:url(columnMobileBackgroundMediaUrl);background-position:columnMobileBackgroundPosition;background-repeat:columnMobileBackgroundRepeat;background-size:columnMobileBackgroundSize}.ugb-testimonial__item:before{opacity:12.3}}
+  </style>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-testimonial__item ugb-testimonial__item1 ugb--shadow-123 ugb--has-background-overlay"
+      >
+        <div
+          class="ugb-testimonial__body-wrapper"
+        />
+        <div
+          class="ugb-testimonial__person"
+        />
+      </div>
+      <div
+        class="ugb-testimonial__item ugb-testimonial__item2 ugb--shadow-123 ugb--has-background-overlay"
+      >
+        <div
+          class="ugb-testimonial__body-wrapper"
+        />
+        <div
+          class="ugb-testimonial__person"
+        />
+      </div>
+      <div
+        class="ugb-testimonial__item ugb-testimonial__item3 ugb--shadow-123 ugb--has-background-overlay"
+      >
+        <div
+          class="ugb-testimonial__body-wrapper"
+        />
+        <div
+          class="ugb-testimonial__person"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

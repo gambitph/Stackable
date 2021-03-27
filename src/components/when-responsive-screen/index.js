@@ -1,60 +1,36 @@
 /**
  * External dependencies
  */
-import { getSelectedScreen } from '~stackable/util'
+import { useDeviceType } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
-import { addAction, removeAction } from '@wordpress/hooks'
 import {
-	Children, cloneElement, Component, Fragment,
+	Children, cloneElement, Fragment,
 } from '@wordpress/element'
-import { withInstanceId } from '@wordpress/compose'
 
-class WhenResponsiveScreen extends Component {
-	constructor() {
-		super( ...arguments )
-		this.state = {
-			screen: getSelectedScreen(),
-		}
-		this.onScreenChange = this.onScreenChange.bind( this )
-	}
+const WhenResponsiveScreen = props => {
+	const deviceType = useDeviceType()
 
-	onScreenChange( screen ) {
-		this.setState( { screen } )
-	}
+	const children = Children.toArray( props.children ).map( child => {
+		return cloneElement( child, { screens: props.screens, screen: deviceType.toLowerCase() } )
+	} )
 
-	componentDidMount() {
-		const { instanceId } = this.props
-		addAction( 'stackable.responsive-toggle.screen.change', `stackable/when-responsive-screen-${ instanceId }`, this.onScreenChange )
-	}
+	// If this is the currently selected screen.
+	const isCurrentScreen = deviceType.toLowerCase() === props.screen
 
-	componentWillUnmount() {
-		const { instanceId } = this.props
-		removeAction( 'stackable.responsive-toggle.screen.change', `stackable/when-responsive-screen-${ instanceId }` )
-	}
+	// If there is no screen available, then just show the desktop. For
+	// example, if only desktop & tablet are assigned to the screens prop,
+	// and we're currently showing the mobile screen option, since there's
+	// no option available, then just show the desktop screen option.
+	const isNoScreen = ! props.screens.includes( deviceType.toLowerCase() ) && ! isCurrentScreen && deviceType === 'Desktop'
 
-	render() {
-		const children = Children.toArray( this.props.children ).map( child => {
-			return cloneElement( child, { screens: this.props.screens, screen: this.state.screen } )
-		} )
-
-		// If this is the currently selected screen.
-		const isCurrentScreen = this.state.screen === this.props.screen
-
-		// If there is no screen available, then just show the desktop. For
-		// example, if only desktop & tablet are assigned to the screens prop,
-		// and we're currently showing the mobile screen option, since there's
-		// no option available, then just show the desktop screen option.
-		const isNoScreen = ! this.props.screens.includes( this.state.screen ) && ! isCurrentScreen && this.props.screen === 'desktop'
-
-		return (
-			<Fragment>
-				{ ( isCurrentScreen || isNoScreen ) && children }
-			</Fragment>
-		)
-	}
+	return (
+		<Fragment>
+			{ ( isCurrentScreen || isNoScreen ) && children }
+		</Fragment>
+	)
 }
 
 WhenResponsiveScreen.defaultProps = {
@@ -62,4 +38,4 @@ WhenResponsiveScreen.defaultProps = {
 	screens: [ 'desktop', 'tablet', 'mobile' ],
 }
 
-export default withInstanceId( WhenResponsiveScreen )
+export default WhenResponsiveScreen

@@ -1,7 +1,9 @@
 /**
  * Internal dependencies
  */
-import { addBackgroundStyles, addBorderStyles } from '../helpers'
+import {
+	addBackgroundStyles, addBorderStyles, addSizeStyles,
+} from '../helpers'
 
 /**
  * External dependencies
@@ -25,6 +27,9 @@ export const addStyles = ( styles, attributes ) => {
 		} )
 	}
 	addBorderStyles( styles, attributes, {
+		attrNameTemplate: 'block%s',
+	} )
+	addSizeStyles( styles, attributes, {
 		attrNameTemplate: 'block%s',
 	} )
 }

@@ -38,12 +38,14 @@ const withBlockStyles = ( styleFunction, options = {} ) => createHigherOrderComp
 			const { blockName } = this.props
 			const styleObject = applyFilters( `stackable.${ blockName }.styles`, styleFunction( this.props ), this.props )
 
+			const isEditorMode = options.editorMode || false
+
+			const BlockStyleTag = isEditorMode ? BlockStyles : BlockStyles.Content
 			const BlockStyle = (
-				<BlockStyles
+				<BlockStyleTag
 					blockUniqueClassName={ this.props.attributes.uniqueClass }
 					blockMainClassName={ this.props.mainClassName }
 					style={ styleObject }
-					editorMode={ options.editorMode || false }
 				/>
 			)
 

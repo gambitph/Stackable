@@ -286,19 +286,6 @@ export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassNam
 }
 
 /**
- * Global responsive setting functions. This is used by the
- * WhenResponsiveScreen and ResponsiveToggle components to
- * specify the current responsive screen size.
- */
-let _currentSelectedScreen = 'desktop'
-export const getSelectedScreen = () => _currentSelectedScreen
-export const setSelectedScreen = value => _currentSelectedScreen = value
-
-let _currentScreenPickerIsOpen = false
-export const isScreenPickerOpen = () => _currentScreenPickerIsOpen
-export const setIsScreenPickerOpen = value => _currentScreenPickerIsOpen = value
-
-/**
  * Moves an array value to a new index.
  *
  * @param {Array} values The array to manipulate

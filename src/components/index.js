@@ -33,7 +33,6 @@ export { default as InspectorPanelControls } from './panel-tabs/inspector-panel-
 export { default as DesignLibraryControl } from './design-library-control'
 export { default as DesignLibraryList } from './design-library-list'
 export { default as PanelTabs } from './panel-tabs'
-export { default as BlockStyles } from './block-styles'
 export { default as GlobalStyleControl } from './global-style-control'
 
 // Reusable non-editor components
@@ -93,6 +92,7 @@ export { default as AdminTextSetting } from './admin-text-setting'
 export { default as AdminToggleSetting } from './admin-toggle-setting'
 
 // V2 only Components, for deprecation
+export { default as BlockStyles } from './block-styles'
 export { default as Image } from './image'
 
 // V3 only Components

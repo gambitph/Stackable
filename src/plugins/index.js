@@ -1,7 +1,6 @@
 /**
  * Internal dependencies
  */
-import './responsive-preview'
 import './global-settings'
 import './premium-notice'
 import { default as DebugSidebar } from './debug-sidebar'

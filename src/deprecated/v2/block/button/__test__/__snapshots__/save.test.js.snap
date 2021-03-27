@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button block Save render should match snapshot 1`] = `
+<div
+  class="wp-block-ugb-button ugb-main-block"
+>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-button-container"
+      >
+        <a
+          class="ugb-button1 ugb-button ugb-button--size-normal"
+          href=""
+          rel=""
+          title=""
+        >
+          
+          <span
+            class="ugb-button--inner"
+          >
+            <div>
+              Button text
+            </div>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Button block Save render should match snapshot with attributes 1`] = `
+<div
+  class="wp-block-ugb-button ugb-button--collapse-collapseOn ugb-main-block"
+>
+  <style>
+    .ugb-block-content .ugb-button{border-radius:123px}.ugb-button1 .ugb-button--inner{font-family:"button1FontFamily",Sans-serif !important;font-size:123button1FontSizeUnit !important;font-weight:button1FontWeight !important;text-transform:button1TextTransform !important;letter-spacing:123px !important;line-height:123button1LineHeightUnit !important}.ugb-button1{opacity:123;border-radius:123px !important}.ugb-button1:before{border-radius:123px !important}.ugb-button1:hover{opacity:123}.ugb-button1.ugb-button--has-icon.ugb-button--has-icon svg{margin-right:123px;width:123px;height:123px}.ugb-button2 .ugb-button--inner{font-family:"button2FontFamily",Sans-serif !important;font-size:123button2FontSizeUnit !important;font-weight:button2FontWeight !important;text-transform:button2TextTransform !important;letter-spacing:123px !important;line-height:123button2LineHeightUnit !important}.ugb-button2{opacity:123;border-radius:123px !important}.ugb-button2:before{border-radius:123px !important}.ugb-button2:hover{opacity:123}.ugb-button2.ugb-button--has-icon.ugb-button--has-icon svg{margin-right:123px;width:123px;height:123px}.ugb-button3 .ugb-button--inner{font-family:"button3FontFamily",Sans-serif !important;font-size:123button3FontSizeUnit !important;font-weight:button3FontWeight !important;text-transform:button3TextTransform !important;letter-spacing:123px !important;line-height:123button3LineHeightUnit !important}.ugb-button3{opacity:123;border-radius:123px !important}.ugb-button3:before{border-radius:123px !important}.ugb-button3:hover{opacity:123}.ugb-button3.ugb-button--has-icon.ugb-button--has-icon svg{margin-right:123px;width:123px;height:123px}@media screen and (max-width:1025px){.ugb-button1 .ugb-button--inner{line-height:123button1TabletLineHeightUnit !important;font-size:123button1TabletFontSizeUnit !important}.ugb-button2 .ugb-button--inner{line-height:123button2TabletLineHeightUnit !important;font-size:123button2TabletFontSizeUnit !important}.ugb-button3 .ugb-button--inner{line-height:123button3TabletLineHeightUnit !important;font-size:123button3TabletFontSizeUnit !important}}@media screen and (max-width:768px){.ugb-block-content{flex-direction:column}.ugb-button1 .ugb-button--inner{line-height:123button1MobileLineHeightUnit !important;font-size:123button1MobileFontSizeUnit !important}.ugb-button2 .ugb-button--inner{line-height:123button2MobileLineHeightUnit !important;font-size:123button2MobileFontSizeUnit !important}.ugb-button3 .ugb-button--inner{line-height:123button3MobileLineHeightUnit !important;font-size:123button3MobileFontSizeUnit !important}}
+  </style>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-button-container"
+      >
+        <a
+          class="ugb-button1 ugb-button ugb-button--size-button1Size ugb-button--ghost-to-normal-effect ugb--hover-effect-button1HoverEffect ugb-button--design-button1Design ugb-button--has-icon ugb-button--icon-position-button1IconPosition"
+          href="button1Url"
+          rel="noopener noreferrer nofollow"
+          target="_blank"
+          title=""
+        >
+          <div
+            class="ugb-icon-inner-svg"
+          />
+          <span
+            class="ugb-button--inner"
+          >
+            <div>
+              button1Text
+            </div>
+          </span>
+        </a>
+      </div>
+      <div
+        class="ugb-button-container"
+      >
+        <a
+          class="ugb-button2 ugb-button ugb-button--size-button2Size ugb-button--ghost-to-normal-effect ugb--hover-effect-button2HoverEffect ugb-button--design-button2Design ugb-button--has-icon ugb-button--icon-position-button2IconPosition"
+          href="button2Url"
+          rel="noopener noreferrer nofollow"
+          target="_blank"
+          title=""
+        >
+          <div
+            class="ugb-icon-inner-svg"
+          />
+          <span
+            class="ugb-button--inner"
+          >
+            <div>
+              button2Text
+            </div>
+          </span>
+        </a>
+      </div>
+      <div
+        class="ugb-button-container"
+      >
+        <a
+          class="ugb-button3 ugb-button ugb-button--size-button3Size ugb-button--ghost-to-normal-effect ugb--hover-effect-button3HoverEffect ugb-button--design-button3Design ugb-button--has-icon ugb-button--icon-position-button3IconPosition"
+          href="button3Url"
+          rel="noopener noreferrer nofollow"
+          target="_blank"
+          title=""
+        >
+          <div
+            class="ugb-icon-inner-svg"
+          />
+          <span
+            class="ugb-button--inner"
+          >
+            <div>
+              button3Text
+            </div>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;

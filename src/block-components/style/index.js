@@ -10,10 +10,11 @@ import { minifyCSS, prependCSSClass } from '~stackable/util'
 import {
 	kebabCase, omit, isEqual, sortBy,
 } from 'lodash'
+import deepmerge from 'deepmerge'
 
 import { useMemo } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
-import { useSelect } from '@wordpress/data'
+import { useBlockAttributes, useDeviceType } from '~stackable/hooks'
 
 /**
  * Returns an identical styleObject with all the selectors modified to be wrapped
@@ -267,6 +268,56 @@ export const generateStyles = ( styleObject, blockUniqueClassName = '', breakTab
 	return styleStrings
 }
 
+// Extracts only the styles for the given deviceType, this flattens the style
+// object and will not produce any media queries. Use this only for the editor.
+export const getEditorStylesOnly = ( style, deviceType = 'Desktop' ) => {
+	const styles = [
+		omit( style, [ 'desktopTablet', 'desktopOnly', 'tablet', 'tabletOnly', 'mobile', 'editor', 'ie11', 'saveOnly' ] ),
+	]
+	if ( deviceType === 'Desktop' ) {
+		styles.push( style.desktopTablet || {} )
+		styles.push( style.desktopOnly || {} )
+		if ( style.editor ) {
+			styles.push( omit( style.editor, [ 'desktopTablet', 'desktopOnly', 'tablet', 'tabletOnly', 'mobile', 'editor', 'ie11', 'saveOnly' ] ) )
+			styles.push( style.editor.desktopTablet || {} )
+			styles.push( style.editor.desktopOnly || {} )
+		}
+	} else if ( deviceType === 'Tablet' ) {
+		styles.push( style.desktopTablet || {} )
+		styles.push( style.tablet || {} )
+		styles.push( style.tabletOnly || {} )
+		if ( style.editor ) {
+			styles.push( omit( style.editor, [ 'desktopTablet', 'desktopOnly', 'tablet', 'tabletOnly', 'mobile', 'editor', 'ie11', 'saveOnly' ] ) )
+			styles.push( style.editor.desktopTablet || {} )
+			styles.push( style.editor.tablet || {} )
+			styles.push( style.editor.tabletOnly || {} )
+		}
+	} else {
+		styles.push( style.tablet || {} )
+		styles.push( style.mobile || {} )
+		if ( style.editor ) {
+			styles.push( omit( style.editor, [ 'desktopTablet', 'desktopOnly', 'tablet', 'tabletOnly', 'mobile', 'editor', 'ie11', 'saveOnly' ] ) )
+			styles.push( style.editor.tablet || {} )
+			styles.push( style.editor.mobile || {} )
+		}
+	}
+
+	// Remove all undefined styles so that they won't overwrite the other
+	// defined styles.
+	styles.forEach( style => {
+		Object.keys( style ).forEach( selector => {
+			// Remove undefined properties, undefined means we will not use the style rule.
+			Object.keys( style[ selector ] ).forEach( key => style[ selector ][ key ] === undefined ? delete style[ selector ][ key ] : {} )
+			// If we end up with an empty selector (no remaining styles), remove it.
+			if ( ! Object.keys( style[ selector ] ).length ) {
+				delete style[ selector ]
+			}
+		} )
+	} )
+
+	return deepmerge.all( styles )
+}
+
 export const Style = props => {
 	const {
 		breakTablet = 1024,
@@ -275,24 +326,21 @@ export const Style = props => {
 	} = props
 
 	const { clientId } = useBlockEditContext()
-
-	const { attributes } = useSelect(
-		select => {
-			const { getBlockAttributes } = select( 'core/block-editor' )
-			return {
-				attributes: getBlockAttributes( clientId ),
-			}
-		},
-		[ clientId ]
-	)
+	const attributes = useBlockAttributes( clientId )
+	const deviceType = useDeviceType()
 
 	const blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
 
 	// Generate styles, but optimize.
 	const styles = useMemo( () => {
 		const style = styleFunc( { ...attributes, clientId } )
-		return generateStyles( style, blockUniqueClassName, breakTablet, breakMobile, true )
-	}, [ JSON.stringify( attributes ) + clientId ] )
+
+		// Don't print out all the styles, since we're in the editor, we only
+		// need to show the styles that we're previewing in!
+		const editorStyles = getEditorStylesOnly( style, deviceType )
+
+		return generateStyles( editorStyles, blockUniqueClassName, breakTablet, breakMobile, true )
+	}, [ deviceType, JSON.stringify( attributes ), clientId ] )
 
 	// It's way faster in React if you do smaller `<style>` tags instead of just a single one. Do it when in editor mode.
 	return styles ? styles.map( ( styles, i ) => <style key={ i }>{ styles }</style> ) : null

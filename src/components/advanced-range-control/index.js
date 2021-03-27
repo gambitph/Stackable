@@ -14,7 +14,7 @@ import { BaseControl } from '@wordpress/components'
  */
 import classnames from 'classnames'
 import { omit } from 'lodash'
-import { getSelectedScreen } from '~stackable/util'
+import { useDeviceType } from '~stackable/hooks'
 
 export const convertToNumber = value => {
 	if ( typeof value === 'string' && value !== '' && value.match( /^[\d.]+$/ ) ) {
@@ -25,6 +25,7 @@ export const convertToNumber = value => {
 
 const AdvancedRangeControl = props => {
 	const propsToPass = { ...omit( props, [ 'className', 'help', 'label', 'units', 'unit', 'onChangeUnit', 'screens', 'placeholder', 'initialPosition' ] ) }
+	const deviceType = useDeviceType()
 
 	// Change the min, max & step values depending on the unit used.
 	const i = props.units.indexOf( props.unit ) < 0 ? 0 : props.units.indexOf( props.unit )
@@ -49,7 +50,7 @@ const AdvancedRangeControl = props => {
 	// { desktop: [ 21, 22 ], tablet: [ 31, 32 ], mobile: [ 41, 42 ] }
 	if ( ! Array.isArray( placeholder ) && typeof placeholder === 'object' ) {
 		// If the passed placeholder is an object
-		const screenSize = getSelectedScreen() || 'desktop'
+		const screenSize = deviceType.toLowerCase() || 'desktop'
 		if ( typeof placeholder[ screenSize ] !== 'undefined' ) {
 			placeholder = placeholder[ screenSize ]
 		} else {

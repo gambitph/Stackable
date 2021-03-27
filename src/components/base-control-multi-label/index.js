@@ -4,13 +4,11 @@
 import ResponsiveToggle from '~stackable/components/responsive-toggle'
 
 const BaseControlMultiLabel = props => {
+	const screens = props.screens === 'all' ? [ 'desktop', 'tablet', 'mobile' ] : props.screens
 	return (
 		<div className="ugb-base-control-multi-label">
 			<div className="ugb-base-control-multi-label__label components-base-control__label">{ props.label }</div>
-			<ResponsiveToggle
-				screens={ props.screens }
-				onChangeScreen={ props.onChangeScreen }
-			/>
+			<ResponsiveToggle screens={ screens } />
 			<div className="ugb-base-control-multi-label__units">
 				{ props.units.length > 1 &&
 					props.units.map( ( unit, i ) => {
@@ -36,8 +34,7 @@ BaseControlMultiLabel.defaultProps = {
 	units: [ 'px' ],
 	unit: 'px',
 	onChangeUnit: () => {},
-	screens: [ 'desktop' ],
-	onChangeScreen: () => {},
+	screens: [ 'desktop' ], // You can pass "all" as shortcut for all devices.
 	afterButton: null,
 }
 

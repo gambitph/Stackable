@@ -1,4 +1,6 @@
-import { backgroundAttributes, borderAttributes } from '../helpers'
+import {
+	backgroundAttributes, borderAttributes, sizeAttributes,
+} from '../helpers'
 import { convertResponsiveAttributes, getAttrName } from '~stackable/util'
 import { upperFirst } from 'lodash'
 
@@ -30,6 +32,13 @@ export const attributes = convertResponsiveAttributes( {
 	...Object.keys( borderAttributes ).reduce( ( attributes, key ) => {
 		const attributeName = getAttrName( 'block%s', upperFirst( key ) )
 		attributes[ attributeName ] = { ...borderAttributes[ key ] }
+		return attributes
+	}, {} ),
+
+	// Size attributes
+	...Object.keys( sizeAttributes ).reduce( ( attributes, key ) => {
+		const attributeName = getAttrName( 'block%s', upperFirst( key ) )
+		attributes[ attributeName ] = { ...sizeAttributes[ key ] }
 		return attributes
 	}, {} ),
 } )
