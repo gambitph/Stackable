@@ -31,6 +31,18 @@
 	align-items: stretch;
 }
 
+// Column widths.
+@include desktop-tablet {
+	@for $i from 2 through 10 {
+		.stk-row.stk-columns-#{ $i } {
+			> .stk-column {
+				flex: 1 1 #{ 100% / $i };
+				max-width: #{ 100% / $i };
+			}
+		}
+	}
+}
+
 // Columns can be collapsed for tablet and mobile only.
 @include desktop {
 	.stk-row {
