@@ -14,18 +14,28 @@ const useBlockContext = ( blockClientId = null ) => {
 			const { getBlock, getBlockParents } = select( 'core/block-editor' )
 			const block = getBlock( clientId )
 			const parentClientId = last( getBlockParents( clientId ) )
-			const parent = parentClientId ? getBlock( parentClientId ) : null
-			const index = indexOf( parent?.innerBlocks, getBlock( clientId ) )
-			const isLastBlock = last( parent?.innerBlocks )?.clientId === clientId
+
+			const hasParent = parentClientId && parentClientId !== clientId
+			if ( ! hasParent ) {
+				return {
+					numInnerBlocks: block?.innerBlocks?.length,
+					hasInnerBlocks: !! block?.innerBlocks?.length,
+				}
+			}
+
+			const parent = hasParent ? getBlock( parentClientId ) : null
+			const index = hasParent ? indexOf( parent?.innerBlocks, getBlock( clientId ) ) : -1
+			const isLastBlock = hasParent ? last( parent?.innerBlocks )?.clientId === clientId : false
 			return {
 				blockIndex: index,
 				parentBlock: parent,
-				isFirstBlock: first( parent?.innerBlocks )?.clientId === clientId,
+				isFirstBlock: hasParent ? first( parent?.innerBlocks )?.clientId === clientId : false,
 				isLastBlock,
-				isOnlyBlock: ! parent || parent?.innerBlocks?.length <= 1,
-				adjacentBlock: nth( parent?.innerBlocks, ! isLastBlock ? index + 1 : index - 1 ),
-				adjacentBlockIndex: ! isLastBlock ? index + 1 : index - 1,
+				isOnlyBlock: hasParent ? ( parent?.innerBlocks?.length <= 1 ) : false,
+				adjacentBlock: hasParent ? nth( parent?.innerBlocks, ! isLastBlock ? index + 1 : index - 1 ) : null,
+				adjacentBlockIndex: hasParent ? ( ! isLastBlock ? index + 1 : index - 1 ) : -1,
 				adjacentBlocks: parent?.innerBlocks || [],
+				numInnerBlocks: block?.innerBlocks?.length,
 				hasInnerBlocks: !! block?.innerBlocks?.length,
 			}
 		},
