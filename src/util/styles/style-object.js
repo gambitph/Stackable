@@ -1,8 +1,26 @@
 /**
+ * Internal dependencies
+ */
+import { appendImportant } from '.'
+
+/**
  * External dependencies
  */
 import compareVersions from 'compare-versions'
 import deepmerge from 'deepmerge'
+
+export const doImportant = ( styleObject, doImportant = true ) => {
+	if ( typeof styleObject !== 'object' ) {
+		return appendImportant( styleObject, doImportant )
+	}
+
+	return Object.keys( styleObject ).reduce( ( newStyleObject, key ) => {
+		return {
+			...newStyleObject,
+			[ key ]: doImportant( styleObject[ key ], doImportant ),
+		}
+	}, {} )
+}
 
 /**
  * Style object, this manages the generation of styles.
@@ -38,8 +56,9 @@ class StyleObject {
 			.map( ( { styleObject } ) => styleObject ) // Get the styles only.
 	}
 
-	getMerged( version = '' ) {
-		return deepmerge.all( this.getStyles( version ) )
+	getMerged( version = '', important = true ) {
+		const styles = deepmerge.all( this.getStyles( version ) )
+		return important ? doImportant( styles ) : styles
 	}
 }
 
