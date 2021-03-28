@@ -35,6 +35,12 @@ const AdvancedRangeControl = props => {
 	if ( Array.isArray( props.max ) ) {
 		propsToPass.max = props.max[ i ]
 	}
+	if ( Array.isArray( props.sliderMin ) ) {
+		propsToPass.sliderMin = props.sliderMin[ i ]
+	}
+	if ( Array.isArray( props.sliderMax ) ) {
+		propsToPass.sliderMax = props.sliderMax[ i ]
+	}
 	if ( Array.isArray( props.step ) ) {
 		propsToPass.step = props.step[ i ]
 	}
@@ -118,8 +124,10 @@ AdvancedRangeControl.defaultProps = {
 	screens: [ 'desktop' ],
 	placeholder: '',
 	initialPosition: '',
-	min: 0,
-	max: 100,
+	max: Infinity,
+	min: -Infinity,
+	sliderMin: null,
+	sliderMax: null,
 }
 
 export default AdvancedRangeControl
