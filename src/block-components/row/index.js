@@ -1,6 +1,4 @@
 import { attributes } from './attributes'
-// import { addStyles } from './style'
-// import { useColumn } from './use-column'
 
 import { useBlockAttributes, useBlockContext } from '~stackable/hooks'
 
@@ -10,11 +8,6 @@ import { Fragment, useEffect } from '@wordpress/element'
 export * from './use-row'
 
 export const Row = props => {
-	// const {
-	// 	isHovered,
-	// 	...propsToPass
-	// } = props
-
 	const { clientId } = useBlockEditContext()
 	const { numInnerBlocks } = useBlockContext()
 	const attributes = useBlockAttributes( clientId )
@@ -26,12 +19,8 @@ export const Row = props => {
 	return <Fragment children={ props.children } />
 }
 
-// Row.defaultProps = {
-// 	isHovered: true,
-// }
-
-// Row.InspectorControls = null
+Row.InspectorControls = null
 
 Row.attributes = attributes
 
-// Row.addStyles = addStyles
+Row.addStyles = () => {}
