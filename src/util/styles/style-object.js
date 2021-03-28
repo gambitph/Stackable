@@ -9,15 +9,15 @@ import { appendImportant } from '.'
 import compareVersions from 'compare-versions'
 import deepmerge from 'deepmerge'
 
-export const doImportant = ( styleObject, doImportant = true ) => {
+export const doImportant = ( styleObject, important = true ) => {
 	if ( typeof styleObject !== 'object' ) {
-		return appendImportant( styleObject, doImportant )
+		return appendImportant( styleObject, important )
 	}
 
 	return Object.keys( styleObject ).reduce( ( newStyleObject, key ) => {
 		return {
 			...newStyleObject,
-			[ key ]: doImportant( styleObject[ key ], doImportant ),
+			[ key ]: doImportant( styleObject[ key ], important ),
 		}
 	}, {} )
 }
