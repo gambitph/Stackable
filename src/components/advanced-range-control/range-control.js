@@ -9,7 +9,9 @@
 import {
 	Button, RangeControl, __experimentalNumberControl as NumberControl,
 } from '@wordpress/components'
-import { useState } from '@wordpress/element'
+import {
+	useState, useLayoutEffect,
+} from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 /**
@@ -18,6 +20,7 @@ import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { clamp } from 'lodash'
 import { i18n } from 'stackable'
+import { useDeviceType } from '~stackable/hooks'
 
 // NumberControl is only supported in WP 5.5
 const isNumberControlSupported = !! NumberControl
@@ -32,6 +35,7 @@ const StackableRangeControl = props => {
 		allowReset,
 		withInputField,
 		isShiftStepEnabled,
+		placeholderRender,
 		...propsToPass
 	} = props
 
@@ -90,6 +94,16 @@ const StackableRangeControl = props => {
 		props.sliderMax || props.max || 100
 	)
 
+	// This makes sure that dynamic placeholders can be recomputed after other
+	// styles have been applied.
+	const [ placeholderValue, setPlaceholderValue ] = useState( props.placeholder )
+	const [ deviceType ] = useDeviceType()
+	useLayoutEffect( () => {
+		setPlaceholderValue( ( placeholderRender && ! value )
+			? placeholderRender( value )
+			: ( props.placeholder !== null ? props.placeholder : initialPosition ) )
+	}, [ deviceType, !! value ] )
+
 	return <div
 		className={ classNames }
 		style={ { '--ugb-advanced-range-control--width': percentageValue } }
@@ -114,7 +128,7 @@ const StackableRangeControl = props => {
 				shiftStep={ props.shiftStep }
 				step={ props.step }
 				value={ value }
-				placeholder={ props.placeholder !== null ? props.placeholder : initialPosition }
+				placeholder={ placeholderValue }
 			/>
 		) }
 		{ allowReset &&
@@ -144,6 +158,7 @@ StackableRangeControl.defaultProps = {
 	step: 1,
 	resetFallbackValue: '',
 	placeholder: null,
+	placeholderRender: null,
 	initialPosition: 0,
 	onChange: () => {},
 }

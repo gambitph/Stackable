@@ -211,6 +211,7 @@ class FourRangeControl extends Component {
 							onChange={ this.onChangeAll }
 							allowReset={ true }
 							{ ...propsToPass }
+							{ ...this.props.propsToPassTop }
 						/>
 					</div>
 				}
@@ -227,6 +228,7 @@ class FourRangeControl extends Component {
 									onChange={ this.onChangeTop }
 									allowReset={ true }
 									{ ...propsToPass }
+									{ ...this.props.propsToPassTop }
 									placeholder={ this.props.placeholderTop || propsToPass.placeholder }
 								/>
 							</div>
@@ -242,6 +244,7 @@ class FourRangeControl extends Component {
 									onChange={ this.onChangeRight }
 									allowReset={ true }
 									{ ...propsToPass }
+									{ ...this.props.propsToPassRight }
 									placeholder={ this.props.placeholderRight || propsToPass.placeholder }
 								/>
 							</div>
@@ -257,6 +260,7 @@ class FourRangeControl extends Component {
 									onChange={ this.onChangeBottom }
 									allowReset={ true }
 									{ ...propsToPass }
+									{ ...this.props.propsToPassBottom }
 									placeholder={ this.props.placeholderBottom || propsToPass.placeholder }
 								/>
 							</div>
@@ -272,6 +276,7 @@ class FourRangeControl extends Component {
 									onChange={ this.onChangeLeft }
 									allowReset={ true }
 									{ ...propsToPass }
+									{ ...this.props.propsToPassLeft }
 									placeholder={ this.props.placeholderLeft || propsToPass.placeholder }
 								/>
 							</div>
@@ -309,6 +314,10 @@ FourRangeControl.defaultProps = {
 	placeholderBottom: '',
 	placeholderLeft: '',
 	initialPosition: '',
+	propsToPassTop: {},
+	propsToPassRight: {},
+	propsToPassBottom: {},
+	propsToPassLeft: {},
 }
 
 export default FourRangeControl

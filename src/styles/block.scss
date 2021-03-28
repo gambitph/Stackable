@@ -84,6 +84,12 @@
 		margin-bottom: 0;
 	}
 }
+// Column with a block background has a padding that might not be obvious.
+.stk-block-background {
+	&.stk-column > .stk-block-content {
+		margin: 0;
+	}
+}
 
 // Images
 .stk-image--fit {

@@ -155,7 +155,9 @@ export const BorderControls = props => {
 				min={ 0 }
 				sliderMax={ 50 }
 				allowReset={ true }
-				placeholder="12"
+				placeholderRender={ props.blockEl
+					? () => parseFloat( window.getComputedStyle( props.blockEl ).borderRadius )
+					: null }
 				className="ugb--help-tip-general-border-radius"
 			/>
 			<ShadowControl
@@ -168,4 +170,5 @@ export const BorderControls = props => {
 
 BorderControls.defaultProps = {
 	attrNameTemplate: '%s',
+	blockEl: null,
 }

@@ -23,6 +23,7 @@ export const Save = props => {
 	} = props
 
 	const blockClassName = classnames( [
+		props.className,
 		'stk-card-group',
 	] )
 
@@ -30,7 +31,9 @@ export const Save = props => {
 		'stk-inner-blocks',
 		'stk-row',
 		'stk-block-content',
-	] )
+	], {
+		[ `stk-columns-${ props.attributes.numInnerBlocks }` ]: props.attributes.numInnerBlocks && props.attributes.numInnerBlocks > 1,
+	} )
 
 	return (
 		<BlockDiv.Content

@@ -17,7 +17,9 @@ import {
 	InspectorSectionControls,
 	PanelAdvancedSettings,
 } from '~stackable/components'
-import { useBlockAttributes, useDidAttributesChange } from '~stackable/hooks'
+import {
+	useBlockAttributes, useBlockEl, useDidAttributesChange,
+} from '~stackable/hooks'
 import { getAttrName } from '~stackable/util'
 
 /**
@@ -36,6 +38,7 @@ export const Edit = () => {
 
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 	const attributes = useBlockAttributes( clientId )
+	const blockEl = useBlockEl()
 
 	// Turn on hasBackground when background attributes are changed.
 	const onAttributesChanged = useCallback( () => {
@@ -57,13 +60,19 @@ export const Edit = () => {
 				title={ __( 'Borders & Shadows', i18n ) }
 				id="borders"
 			>
-				<BorderControls attrNameTemplate="block%s" />
+				<BorderControls
+					attrNameTemplate="block%s"
+					blockEl={ blockEl }
+				/>
 			</PanelAdvancedSettings>
 			<PanelAdvancedSettings
 				title={ __( 'Size & Spacing', i18n ) }
 				id="size"
 			>
-				<SizeControls attrNameTemplate="block%s" />
+				<SizeControls
+					attrNameTemplate="block%s"
+					blockEl={ blockEl }
+				/>
 			</PanelAdvancedSettings>
 		</InspectorSectionControls>
 	)

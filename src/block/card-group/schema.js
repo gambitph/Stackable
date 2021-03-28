@@ -7,4 +7,8 @@ export default {
 		type: 'string',
 		default: '',
 	},
+	numInnerBlocks: {
+		type: 'number',
+		default: '',
+	},
 }

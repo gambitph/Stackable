@@ -30,6 +30,7 @@ export const Save = props => {
 	const [ columnClass, columnWrapperClass ] = getColumnClasses( props.attributes )
 
 	const blockClassNames = classnames( [
+		props.className,
 		'stk-card',
 		columnClass,
 	] )

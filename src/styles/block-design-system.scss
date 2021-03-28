@@ -88,19 +88,9 @@
 // Block Background
 .stk-block-background {
 	background-color: cssvar(block-background-color);
-	&:not(.stk-column) {
-		padding: cssvar(block-background-padding);
-	}
-	&.stk-column > .stk-block-content {
-		margin: cssvar(block-background-padding);
-	}
+	padding: cssvar(block-background-padding);
 }
 // Block background when the block is full width
 .stk-block-background.alignfull {
-	&:not(.stk-column) {
-		padding: cssvar(block-background-full-padding);
-	}
-	&.stk-column > .stk-block-content {
-		margin: cssvar(block-background-full-padding);
-	}
+	padding: cssvar(block-background-full-padding);
 }
