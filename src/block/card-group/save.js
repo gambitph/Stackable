@@ -15,12 +15,16 @@ import classnames from 'classnames'
  */
 import { InnerBlocks } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
-import { BlockDiv, Style } from '~stackable/block-components'
+import {
+	BlockDiv, getRowClasses, Style,
+} from '~stackable/block-components'
 
 export const Save = props => {
 	const {
 		attributes,
 	} = props
+
+	const rowClass = getRowClasses( props.attributes )
 
 	const blockClassName = classnames( [
 		props.className,
@@ -28,12 +32,10 @@ export const Save = props => {
 	] )
 
 	const contentClassNames = classnames( [
+		rowClass,
 		'stk-inner-blocks',
-		'stk-row',
 		'stk-block-content',
-	], {
-		[ `stk-columns-${ props.attributes.numInnerBlocks }` ]: props.attributes.numInnerBlocks && props.attributes.numInnerBlocks > 1,
-	} )
+	] )
 
 	return (
 		<BlockDiv.Content

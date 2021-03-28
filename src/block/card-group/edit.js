@@ -21,11 +21,10 @@ import { __ } from '@wordpress/i18n'
 import {
 	InnerBlocks,
 } from '@wordpress/block-editor'
-import { Fragment, useEffect } from '@wordpress/element'
+import { Fragment } from '@wordpress/element'
 import {
-	BlockDiv, MarginBottom, Style,
+	BlockDiv, MarginBottom, Style, getRowClasses,
 } from '~stackable/block-components'
-import { useBlockContext } from '~stackable/hooks'
 
 const Edit = props => {
 	const {
@@ -36,18 +35,13 @@ const Edit = props => {
 		hasBackground,
 	} = props.attributes
 
-	const { hasInnerBlocks, numInnerBlocks } = useBlockContext()
+	const rowClass = getRowClasses( props.attributes )
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-card-group',
-		'stk-row',
-	], {
-		[ `stk-columns-${ numInnerBlocks }` ]: hasInnerBlocks,
-	} )
-	useEffect( () => {
-		props.attributes.numInnerBlocks = numInnerBlocks
-	}, [ numInnerBlocks ] )
+		rowClass,
+	] )
 
 	const contentClassNames = classnames( [
 		'stk-inner-blocks',
