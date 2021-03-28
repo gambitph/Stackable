@@ -10,7 +10,7 @@ import {
 	Button, RangeControl, __experimentalNumberControl as NumberControl,
 } from '@wordpress/components'
 import {
-	useState, useLayoutEffect,
+	useState, useLayoutEffect, useEffect,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
@@ -43,6 +43,11 @@ const StackableRangeControl = props => {
 	// any number in the number field without any validation and then we can
 	// just set the proper value on the onChange prop.
 	const [ value, setValue ] = useState( props.value === '' || isNaN( props.value ) ? '' : props.value )
+
+	// Update the internal value state if the prop changes.
+	useEffect( () => {
+		setValue( props.value === '' || isNaN( props.value ) ? '' : props.value )
+	}, [ props.value ] )
 
 	// When the value is changed, set the internal value to it, but provide only
 	// a valid number to the onChange event.
