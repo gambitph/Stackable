@@ -1,10 +1,11 @@
+/**
+ * Internal dependencies
+ */
 import createStyles from './style'
-import {
-	InnerBlocks,
-} from '@wordpress/block-editor'
-import {
-	Fragment,
-} from '@wordpress/element'
+
+/**
+ * External dependencies
+ */
 import classnames from 'classnames'
 import { i18n, version as VERSION } from 'stackable'
 import {
@@ -15,14 +16,20 @@ import {
 import {
 	useBlockContext,
 } from '~stackable/hooks'
-import { compose } from '@wordpress/compose'
-import { __ } from '@wordpress/i18n'
 import {
 	withIsHovered,
 } from '~stackable/higher-order'
 import {
-	Column, getColumnClasses, BlockDiv, Style, Image,
+	Column, getColumnClasses, BlockDiv, Style, Image, getAlignmentClasses, Alignment, useAlignment,
 } from '~stackable/block-components'
+
+/**
+ * WordPress dependencies
+ */
+import { compose } from '@wordpress/compose'
+import { __ } from '@wordpress/i18n'
+import { InnerBlocks } from '@wordpress/block-editor'
+import { Fragment } from '@wordpress/element'
 
 const TEMPLATE = [
 	[ 'core/heading', {} ],
@@ -41,7 +48,9 @@ const Edit = props => {
 		className, setAttributes, isHovered,
 	} = props
 
+	const { blockOrientation } = useAlignment()
 	const [ columnClass, columnWrapperClass ] = getColumnClasses( props.attributes )
+	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
 	const blockClassNames = classnames( [
 		className,
@@ -58,6 +67,7 @@ const Edit = props => {
 
 	const innerClassNames = classnames( [
 		'stk-inner-blocks',
+		blockAlignmentClass,
 		'stk-card__content',
 	], {
 		'stk-container-padding': hasContainer,
@@ -68,6 +78,7 @@ const Edit = props => {
 
 			<InspectorTabs />
 
+			<Alignment.InspectorControls hasColumnAlignment={ true } />
 			<BlockDiv.InspectorControls />
 
 			<InspectorStyleControls>
@@ -102,6 +113,7 @@ const Edit = props => {
 						<div className={ innerClassNames }>
 							<InnerBlocks
 								template={ TEMPLATE }
+								orientation={ blockOrientation }
 								renderAppender={ () => ! hasInnerBlocks ? <InnerBlocks.ButtonBlockAppender /> : <InnerBlocks.DefaultBlockAppender /> }
 								templateInsertUpdatesSelection={ true }
 							/>

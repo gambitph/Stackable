@@ -60,6 +60,10 @@
 .entry-content .stk-block {
 	margin-bottom: cssvar(block-margin-bottom);
 }
+// Block spacing when horizontally oriented.
+.stk--block-orientation-horizontal > * + * {
+	margin-left: cssvar(block-margin-bottom);
+}
 
 // Containers
 .stk-container {

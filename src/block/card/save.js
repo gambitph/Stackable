@@ -8,10 +8,14 @@ import createStyles from './style'
  */
 import classnames from 'classnames'
 import { withVersion } from '~stackable/higher-order'
-import {
-	BlockDiv, getColumnClasses, Image, Style,
-} from '~stackable/block-components'
 import { version as VERSION } from 'stackable'
+import {
+	BlockDiv,
+	getAlignmentClasses,
+	getColumnClasses,
+	Image,
+	Style,
+} from '~stackable/block-components'
 
 /**
  * WordPress dependencies
@@ -28,6 +32,7 @@ export const Save = props => {
 	} = props.attributes
 
 	const [ columnClass, columnWrapperClass ] = getColumnClasses( props.attributes )
+	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
 	const blockClassNames = classnames( [
 		props.className,
@@ -44,6 +49,7 @@ export const Save = props => {
 
 	const innerClassNames = classnames( [
 		'stk-inner-blocks',
+		blockAlignmentClass,
 		'stk-card__content',
 	], {
 		'stk-container-padding': hasContainer,

@@ -40,10 +40,28 @@
 	box-sizing: border-box;
 	margin-left: 0;
 	margin-right: 0;
+	width: 100%; // Some native blocks have auto widths so they won't follow left/center/right text alignment e.g. buttons
 }
 [data-type^="stackable/"] .stk-row,
 .stk-column .block-editor-block-list__layout {
 	display: block;
+}
+
+// Inner block orientation
+.stk--block-orientation-vertical > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	display: flex;
+	flex-direction: column;
+	> * { // Some native blocks can have margin left/right auto, they will center.
+		width: 100%;
+	}
+}
+.stk--block-orientation-horizontal > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	display: flex;
+	flex-direction: row;
+	> * {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
 }
 
 // Columns should occupy the entire available area.

@@ -2,6 +2,7 @@
  * External dependencies
  */
 import {
+	Alignment,
 	BlockDiv, Column, Image,
 } from '~stackable/block-components'
 import {
@@ -13,7 +14,7 @@ const createStyles = ( version = '' ) => attributes => {
 	// const getValue = __getValue( attributes )
 	const styles = new StyleObject()
 
-	// addBlockBackgroundStyles( styles, props )
+	Alignment.addStyles( styles, attributes )
 	BlockDiv.addStyles( styles, attributes )
 
 	// Column styles.

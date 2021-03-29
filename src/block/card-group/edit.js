@@ -6,36 +6,35 @@ import createStyles from './style'
 /**
  * External dependencies
  */
-import { i18n, version as VERSION } from 'stackable'
+import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import {
 	InspectorTabs,
-	PanelAdvancedSettings,
-	InspectorSectionControls,
 } from '~stackable/components'
+import {
+	BlockDiv,
+	MarginBottom,
+	Style,
+	getRowClasses,
+	Alignment,
+	getAlignmentClasses,
+} from '~stackable/block-components'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
 import {
 	InnerBlocks,
 } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
-import {
-	BlockDiv, MarginBottom, Style, getRowClasses,
-} from '~stackable/block-components'
 
 const Edit = props => {
 	const {
 		className,
-		setAttributes,
 	} = props
-	const {
-		hasBackground,
-	} = props.attributes
 
 	const rowClass = getRowClasses( props.attributes )
+	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
 	const blockClassNames = classnames( [
 		className,
@@ -45,6 +44,7 @@ const Edit = props => {
 
 	const contentClassNames = classnames( [
 		'stk-inner-blocks',
+		blockAlignmentClass,
 		'stk-block-content',
 	] )
 
@@ -52,20 +52,8 @@ const Edit = props => {
 
 		<InspectorTabs />
 
-		<InspectorSectionControls>
-			<PanelAdvancedSettings
-				title={ __( 'Background', i18n ) }
-				id="background"
-				checked={ hasBackground }
-				onChange={ hasBackground => setAttributes( { hasBackground } ) }
-				// toggleOnSetAttributes={ [
-				// 	'arrowSize',
-				// 	'arrowColor',
-				// ] }
-				toggleAttributeName="hasBackground"
-			>
-			</PanelAdvancedSettings>
-		</InspectorSectionControls>
+		<Alignment.InspectorControls hasRowAlignment={ true } />
+		<BlockDiv.InspectorControls />
 
 		<BlockDiv className={ blockClassNames }>
 			<Style styleFunc={ createStyles( VERSION ) } />

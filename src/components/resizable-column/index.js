@@ -179,7 +179,7 @@ const ResizableColumn = props => {
 
 					// Add the temporary styles for our column widths.
 					const columnStyles = columnPercentages.map( ( width, i ) => {
-						return `[data-block="${ adjacentBlocks[ i ].clientId }"] {
+						return `#editor [data-block="${ adjacentBlocks[ i ].clientId }"] {
 							flex: 1 1 ${ width }% !important;
 							max-width: ${ width }% !important;
 						}
@@ -205,7 +205,7 @@ const ResizableColumn = props => {
 					setNewWidthsPercent( columnPercentages )
 
 					// Add the temporary styles for our column widths.
-					const columnStyles = `[data-block="${ clientId }"] {
+					const columnStyles = `#editor [data-block="${ clientId }"] {
 							flex: 1 1 ${ columnPercentages }% !important;
 							max-width: ${ columnPercentages }% !important;
 						}

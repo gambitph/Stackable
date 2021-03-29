@@ -6,6 +6,7 @@ import {
 	AdvancedToolbarControl,
 	AdvancedRangeControl,
 	FourRangeControl,
+	ResponsiveControl2,
 } from '~stackable/components'
 import {
 	useAttributeEditHandlers, useDeviceType,
@@ -28,7 +29,26 @@ export const SizeControls = props => {
 
 	return (
 		<Fragment>
-			{ deviceType === 'Desktop' &&
+			<ResponsiveControl2
+				desktopProps={ {
+					value: getAttribute( 'height' ),
+					unit: getAttribute( 'heightUnit' ),
+					onChange: updateAttributeHandler( 'height' ),
+					onChangeUnit: updateAttributeHandler( 'heightUnit' ),
+				} }
+				tabletProps={ {
+					value: getAttribute( 'heightTablet' ),
+					unit: getAttribute( 'heightUnitTablet' ),
+					onChange: updateAttributeHandler( 'heightTablet' ),
+					onChangeUnit: updateAttributeHandler( 'heightUnitTablet' ),
+				} }
+				mobileProps={ {
+					value: getAttribute( 'heightMobile' ),
+					unit: getAttribute( 'heightUnitMobile' ),
+					onChange: updateAttributeHandler( 'heightMobile' ),
+					onChangeUnit: updateAttributeHandler( 'heightUnitMobile' ),
+				} }
+			>
 				<AdvancedRangeControl
 					label={ __( 'Min. Block Height', i18n ) }
 					units={ [ 'px', 'vh' ] }
@@ -36,49 +56,10 @@ export const SizeControls = props => {
 					sliderMax={ [ 1000, 100 ] }
 					step={ [ 1, 1 ] }
 					allowReset={ true }
-					screens="all"
-					value={ getAttribute( 'height' ) }
-					unit={ getAttribute( 'heightUnit' ) }
-					onChange={ updateAttributeHandler( 'height' ) }
-					onChangeUnit={ updateAttributeHandler( 'heightUnit' ) }
 					placeholder="0"
 					className="ugb--help-tip-advanced-block-height"
 				/>
-			}
-			{ deviceType === 'Tablet' &&
-				<AdvancedRangeControl
-					label={ __( 'Min. Block Height', i18n ) }
-					units={ [ 'px', 'vh' ] }
-					min={ [ 0, 0 ] }
-					sliderMax={ [ 1000, 100 ] }
-					step={ [ 1, 1 ] }
-					allowReset={ true }
-					screens="all"
-					value={ getAttribute( 'heightTablet' ) }
-					unit={ getAttribute( 'heightUnitTablet' ) }
-					onChange={ updateAttributeHandler( 'heightTablet' ) }
-					onChangeUnit={ updateAttributeHandler( 'heightUnitTablet' ) }
-					placeholder="0"
-					className="ugb--help-tip-advanced-block-height"
-				/>
-			}
-			{ deviceType === 'Mobile' &&
-				<AdvancedRangeControl
-					label={ __( 'Min. Block Height', i18n ) }
-					units={ [ 'px', 'vh' ] }
-					min={ [ 0, 0 ] }
-					sliderMax={ [ 1000, 100 ] }
-					step={ [ 1, 1 ] }
-					screens="all"
-					allowReset={ true }
-					value={ getAttribute( 'heightMobile' ) }
-					unit={ getAttribute( 'heightUnitMobile' ) }
-					onChange={ updateAttributeHandler( 'heightMobile' ) }
-					onChangeUnit={ updateAttributeHandler( 'heightUnitMobile' ) }
-					placeholder="0"
-					className="ugb--help-tip-advanced-block-height"
-				/>
-			}
+			</ResponsiveControl2>
 
 			{ getAttribute( 'height' ) !== '' && deviceType === 'Desktop' &&
 				<AdvancedToolbarControl
@@ -111,56 +92,38 @@ export const SizeControls = props => {
 				/>
 			}
 
-			{ deviceType === 'Desktop' &&
+			<ResponsiveControl2
+				desktopProps={ {
+					value: getAttribute( 'width' ),
+					unit: getAttribute( 'widthUnit' ),
+					onChange: updateAttributeHandler( 'width' ),
+					onChangeUnit: updateAttributeHandler( 'widthUnit' ),
+				} }
+				tabletProps={ {
+					value: getAttribute( 'widthTablet' ),
+					unit: getAttribute( 'widthUnitTablet' ),
+					onChange: updateAttributeHandler( 'widthTablet' ),
+					onChangeUnit: updateAttributeHandler( 'widthUnitTablet' ),
+				} }
+				mobileProps={ {
+					value: getAttribute( 'widthMobile' ),
+					unit: getAttribute( 'widthUnitMobile' ),
+					onChange: updateAttributeHandler( 'widthMobile' ),
+					onChangeUnit: updateAttributeHandler( 'widthUnitMobile' ),
+				} }
+			>
 				<AdvancedRangeControl
 					label={ __( 'Max. Content Width', i18n ) }
-					screens="all"
 					units={ [ 'px', '%' ] }
 					min={ [ 0, 0 ] }
 					sliderMax={ [ 1500, 100 ] }
 					step={ [ 1, 1 ] }
 					allowReset={ true }
-					value={ getAttribute( 'Width' ) }
-					unit={ getAttribute( 'WidthUnit' ) }
-					onChange={ updateAttributeHandler( 'Width' ) }
-					onChangeUnit={ updateAttributeHandler( 'WidthUnit' ) }
 					placeholder=""
 					initialPosition="1500"
 					className="ugb--help-tip-advanced-block-content-width"
 				/>
-			}
-			{ deviceType === 'Tablet' &&
-				<AdvancedRangeControl
-					label={ __( 'Max. Content Width', i18n ) }
-					screens="all"
-					units={ [ 'px', '%' ] }
-					min={ [ 0, 0 ] }
-					sliderMax={ [ 1000, 100 ] }
-					step={ [ 1, 1 ] }
-					allowReset={ true }
-					value={ getAttribute( 'WidthTablet' ) }
-					unit={ getAttribute( 'WidthUnitTablet' ) }
-					onChange={ updateAttributeHandler( 'WidthTablet' ) }
-					onChangeUnit={ updateAttributeHandler( 'WidthUnitTablet' ) }
-					className="ugb--help-tip-advanced-block-content-width"
-				/>
-			}
-			{ deviceType === 'Mobile' &&
-				<AdvancedRangeControl
-					label={ __( 'Max. Content Width', i18n ) }
-					screens="all"
-					units={ [ 'px', '%' ] }
-					min={ [ 0, 0 ] }
-					sliderMax={ [ 1000, 100 ] }
-					step={ [ 1, 1 ] }
-					allowReset={ true }
-					value={ getAttribute( 'WidthMobile' ) }
-					unit={ getAttribute( 'WidthUnitMobile' ) }
-					onChange={ updateAttributeHandler( 'WidthMobile' ) }
-					onChangeUnit={ updateAttributeHandler( 'WidthUnitMobile' ) }
-					className="ugb--help-tip-advanced-block-content-width"
-				/>
-			}
+			</ResponsiveControl2>
 
 			{ getAttribute( 'width' ) !== '' && deviceType === 'Desktop' &&
 				<AdvancedToolbarControl

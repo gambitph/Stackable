@@ -1,5 +1,6 @@
 export * from './block-div'
 export * from './column'
+export * from './alignment'
 export * from './row'
 export * from './image'
 export * from './style'

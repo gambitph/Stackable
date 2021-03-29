@@ -69,11 +69,24 @@
 	}
 }
 .stk-inner-blocks {
+	flex: 1;
 	&:not(.stk-row) {
 		// Make sure the inner blocks are top aligned.
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
+
+		// Inner block orientation.
+		&:not(.stk--block-orientation-horizontal) {
+			flex-direction: column;
+		}
+		&.stk--block-orientation-horizontal {
+			flex-direction: row;
+			> * {
+				margin-top: 0;
+				margin-bottom: 0;
+			}
+		}
 	}
 
 	// Ensure the contents don't have extra margins.

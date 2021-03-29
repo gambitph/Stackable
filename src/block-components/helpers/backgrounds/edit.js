@@ -11,6 +11,7 @@ import {
 	ColorPaletteControl,
 	ControlSeparator,
 	ImageControl,
+	ResponsiveControl2,
 } from '~stackable/components'
 import {
 	useAttributeEditHandlers, useDeviceType,
@@ -159,72 +160,62 @@ export const BackgroundControls = props => {
 				<ControlSeparator />
 			}
 
-			{ deviceType === 'Desktop' &&
-				<ImageControl
-					label={ props.backgroundMediaAllowVideo ? __( 'Background Image or Video', i18n ) : __( 'Background Image', i18n ) }
-					help={ props.backgroundMediaAllowVideo ? __( 'Use .mp4 format for videos', i18n ) : '' }
-					screens="all"
-					onRemove={ () => {
+			<ResponsiveControl2
+				desktopProps={ {
+					onRemove: () => {
 						updateAttributes( {
 							backgroundMediaId: '',
 							backgroundMediaURL: '',
 						} )
-					} }
-					onChange={ ( { url, id } ) => {
+					},
+					onChange: ( { url, id } ) => {
 						updateAttributes( {
 							backgroundMediaId: id,
 							backgroundMediaURL: url,
 						} )
-					} }
-					imageID={ getAttribute( 'backgroundMediaId' ) }
-					imageURL={ getAttribute( 'backgroundMediaURL' ) }
-					allowedTypes={ props.backgroundMediaAllowVideo ? [ 'image', 'video' ] : [ 'image' ] }
-				/>
-			}
-			{ deviceType === 'Tablet' &&
-				<ImageControl
-					label={ props.backgroundMediaAllowVideo ? __( 'Background Image or Video', i18n ) : __( 'Background Image', i18n ) }
-					help={ props.backgroundMediaAllowVideo ? __( 'Use .mp4 format for videos', i18n ) : '' }
-					screens="all"
-					onRemove={ () => {
+					},
+					imageID: getAttribute( 'backgroundMediaId' ),
+					imageURL: getAttribute( 'backgroundMediaURL' ),
+				} }
+				tabletProps={ {
+					onRemove: () => {
 						updateAttributes( {
 							backgroundMediaIdTablet: '',
 							backgroundMediaURLTablet: '',
 						} )
-					} }
-					onChange={ ( { url, id } ) => {
+					},
+					onChange: ( { url, id } ) => {
 						updateAttributes( {
 							backgroundMediaIdTablet: id,
 							backgroundMediaURLTablet: url,
 						} )
-					} }
-					imageID={ getAttribute( 'backgroundMediaIdTablet' ) }
-					imageURL={ getAttribute( 'backgroundMediaURLTablet' ) }
-					allowedTypes={ props.backgroundMediaAllowVideo ? [ 'image', 'video' ] : [ 'image' ] }
-				/>
-			}
-			{ deviceType === 'Mobile' &&
-				<ImageControl
-					label={ props.backgroundMediaAllowVideo ? __( 'Background Image or Video', i18n ) : __( 'Background Image', i18n ) }
-					help={ props.backgroundMediaAllowVideo ? __( 'Use .mp4 format for videos', i18n ) : '' }
-					screens="all"
-					onRemove={ () => {
+					},
+					imageID: getAttribute( 'backgroundMediaIdTablet' ),
+					imageURL: getAttribute( 'backgroundMediaURLTablet' ),
+				} }
+				mobileProps={ {
+					onRemove: () => {
 						updateAttributes( {
 							backgroundMediaIdMobile: '',
 							backgroundMediaURLMobile: '',
 						} )
-					} }
-					onChange={ ( { url, id } ) => {
+					},
+					onChange: ( { url, id } ) => {
 						updateAttributes( {
 							backgroundMediaIdMobile: id,
 							backgroundMediaURLMobile: url,
 						} )
-					} }
-					imageID={ getAttribute( 'backgroundMediaIdMobile' ) }
-					imageURL={ getAttribute( 'backgroundMediaURLMobile' ) }
+					},
+					imageID: getAttribute( 'backgroundMediaIdMobile' ),
+					imageURL: getAttribute( 'backgroundMediaURLMobile' ),
+				} }
+			>
+				<ImageControl
+					label={ props.backgroundMediaAllowVideo ? __( 'Background Image or Video', i18n ) : __( 'Background Image', i18n ) }
+					help={ props.backgroundMediaAllowVideo ? __( 'Use .mp4 format for videos', i18n ) : '' }
 					allowedTypes={ props.backgroundMediaAllowVideo ? [ 'image', 'video' ] : [ 'image' ] }
 				/>
-			}
+			</ResponsiveControl2>
 
 			{ hasBackgroundMedia &&
 				<AdvancedRangeControl
@@ -300,10 +291,22 @@ export const BackgroundControls = props => {
 					}
 				>
 
-					{ deviceType === 'Desktop' &&
+					<ResponsiveControl2
+						desktopProps={ {
+							value: getAttribute( 'backgroundPosition' ),
+							onChange: updateAttributeHandler( 'BackgroundPosition' ),
+						} }
+						tabletProps={ {
+							value: getAttribute( 'BackgroundPositionTablet' ),
+							onChange: updateAttributeHandler( 'BackgroundPositionTablet' ),
+						} }
+						mobileProps={ {
+							value: getAttribute( 'BackgroundPositionMobile' ),
+							onChange: updateAttributeHandler( 'BackgroundPositionMobile' ),
+						} }
+					>
 						<AdvancedSelectControl
 							label={ __( 'Image Position', i18n ) }
-							screens="all"
 							options={ [
 								{ label: __( 'Default', i18n ), value: '' },
 								{ label: __( 'Top Left', i18n ), value: 'top left' },
@@ -316,58 +319,26 @@ export const BackgroundControls = props => {
 								{ label: __( 'Bottom Center', i18n ), value: 'bottom center' },
 								{ label: __( 'Bottom Right', i18n ), value: 'bottom right' },
 							] }
-							value={ getAttribute( 'backgroundPosition' ) }
-							onChange={ updateAttributeHandler( 'BackgroundPosition' ) }
 							className="ugb--help-tip-background-image-position"
 						/>
-					}
-					{ deviceType === 'Tablet' &&
-						<AdvancedSelectControl
-							label={ __( 'Image Position', i18n ) }
-							screens="all"
-							options={ [
-								{ label: __( 'Default', i18n ), value: '' },
-								{ label: __( 'Top Left', i18n ), value: 'top left' },
-								{ label: __( 'Top Center', i18n ), value: 'top center' },
-								{ label: __( 'Top Right', i18n ), value: 'top right' },
-								{ label: __( 'Center Left', i18n ), value: 'center left' },
-								{ label: __( 'Center Center', i18n ), value: 'center center' },
-								{ label: __( 'Center Right', i18n ), value: 'center right' },
-								{ label: __( 'Bottom Left', i18n ), value: 'bottom left' },
-								{ label: __( 'Bottom Center', i18n ), value: 'bottom center' },
-								{ label: __( 'Bottom Right', i18n ), value: 'bottom right' },
-							] }
-							value={ getAttribute( 'BackgroundPositionTablet' ) }
-							onChange={ updateAttributeHandler( 'BackgroundPositionTablet' ) }
-							className="ugb--help-tip-background-image-position"
-						/>
-					}
-					{ deviceType === 'Mobile' &&
-						<AdvancedSelectControl
-							label={ __( 'Image Position', i18n ) }
-							screens="all"
-							options={ [
-								{ label: __( 'Default', i18n ), value: '' },
-								{ label: __( 'Top Left', i18n ), value: 'top left' },
-								{ label: __( 'Top Center', i18n ), value: 'top center' },
-								{ label: __( 'Top Right', i18n ), value: 'top right' },
-								{ label: __( 'Center Left', i18n ), value: 'center left' },
-								{ label: __( 'Center Center', i18n ), value: 'center center' },
-								{ label: __( 'Center Right', i18n ), value: 'center right' },
-								{ label: __( 'Bottom Left', i18n ), value: 'bottom left' },
-								{ label: __( 'Bottom Center', i18n ), value: 'bottom center' },
-								{ label: __( 'Bottom Right', i18n ), value: 'bottom right' },
-							] }
-							value={ getAttribute( 'BackgroundPositionMobile' ) }
-							onChange={ updateAttributeHandler( 'BackgroundPositionMobile' ) }
-							className="ugb--help-tip-background-image-position"
-						/>
-					}
+					</ResponsiveControl2>
 
-					{ deviceType === 'Desktop' &&
+					<ResponsiveControl2
+						desktopProps={ {
+							value: getAttribute( 'backgroundRepeat' ),
+							onChange: updateAttributeHandler( 'BackgroundRepeat' ),
+						} }
+						tabletProps={ {
+							value: getAttribute( 'BackgroundRepeatTablet' ),
+							onChange: updateAttributeHandler( 'BackgroundRepeatTablet' ),
+						} }
+						mobileProps={ {
+							value: getAttribute( 'BackgroundRepeatMobile' ),
+							onChange: updateAttributeHandler( 'BackgroundRepeatMobile' ),
+						} }
+					>
 						<AdvancedSelectControl
 							label={ __( 'Image Repeat', i18n ) }
-							screens="all"
 							options={ [
 								{ label: __( 'Default', i18n ), value: '' },
 								{ label: __( 'No-Repeat', i18n ), value: 'no-repeat' },
@@ -375,48 +346,26 @@ export const BackgroundControls = props => {
 								{ label: __( 'Repeat-X', i18n ), value: 'repeat-x' },
 								{ label: __( 'Repeat-Y', i18n ), value: 'repeat-y' },
 							] }
-							value={ getAttribute( 'backgroundRepeat' ) }
-							onChange={ updateAttributeHandler( 'BackgroundRepeat' ) }
 							className="ugb--help-tip-background-image-repeat"
 						/>
-					}
-					{ deviceType === 'Tablet' &&
-						<AdvancedSelectControl
-							label={ __( 'Image Repeat', i18n ) }
-							screens="all"
-							options={ [
-								{ label: __( 'Default', i18n ), value: '' },
-								{ label: __( 'No-Repeat', i18n ), value: 'no-repeat' },
-								{ label: __( 'Repeat', i18n ), value: 'repeat' },
-								{ label: __( 'Repeat-X', i18n ), value: 'repeat-x' },
-								{ label: __( 'Repeat-Y', i18n ), value: 'repeat-y' },
-							] }
-							value={ getAttribute( 'BackgroundRepeatTablet' ) }
-							onChange={ updateAttributeHandler( 'BackgroundRepeatTablet' ) }
-							className="ugb--help-tip-background-image-repeat"
-						/>
-					}
-					{ deviceType === 'Mobile' &&
-						<AdvancedSelectControl
-							label={ __( 'Image Repeat', i18n ) }
-							screens="all"
-							options={ [
-								{ label: __( 'Default', i18n ), value: '' },
-								{ label: __( 'No-Repeat', i18n ), value: 'no-repeat' },
-								{ label: __( 'Repeat', i18n ), value: 'repeat' },
-								{ label: __( 'Repeat-X', i18n ), value: 'repeat-x' },
-								{ label: __( 'Repeat-Y', i18n ), value: 'repeat-y' },
-							] }
-							value={ getAttribute( 'BackgroundRepeatMobile' ) }
-							onChange={ updateAttributeHandler( 'BackgroundRepeatMobile' ) }
-							className="ugb--help-tip-background-image-repeat"
-						/>
-					}
+					</ResponsiveControl2>
 
-					{ deviceType === 'Desktop' &&
+					<ResponsiveControl2
+						desktopProps={ {
+							value: getAttribute( 'backgroundSize' ),
+							onChange: updateAttributeHandler( 'BackgroundSize' ),
+						} }
+						tabletProps={ {
+							value: getAttribute( 'BackgroundSizeTablet' ),
+							onChange: updateAttributeHandler( 'BackgroundSizeTablet' ),
+						} }
+						mobileProps={ {
+							value: getAttribute( 'BackgroundSizeMobile' ),
+							onChange: updateAttributeHandler( 'BackgroundSizeMobile' ),
+						} }
+					>
 						<AdvancedSelectControl
 							label={ __( 'Image Size', i18n ) }
-							screens="all"
 							options={ [
 								{ label: __( 'Default', i18n ), value: '' },
 								{ label: __( 'Auto', i18n ), value: 'auto' },
@@ -424,43 +373,9 @@ export const BackgroundControls = props => {
 								{ label: __( 'Contain', i18n ), value: 'contain' },
 								{ label: __( 'Custom', i18n ), value: 'custom' },
 							] }
-							value={ getAttribute( 'backgroundSize' ) }
-							onChange={ updateAttributeHandler( 'BackgroundSize' ) }
 							className="ugb--help-tip-background-image-size"
 						/>
-					}
-					{ deviceType === 'Tablet' &&
-						<AdvancedSelectControl
-							label={ __( 'Image Size', i18n ) }
-							screens="all"
-							options={ [
-								{ label: __( 'Default', i18n ), value: '' },
-								{ label: __( 'Auto', i18n ), value: 'auto' },
-								{ label: __( 'Cover', i18n ), value: 'cover' },
-								{ label: __( 'Contain', i18n ), value: 'contain' },
-								{ label: __( 'Custom', i18n ), value: 'custom' },
-							] }
-							value={ getAttribute( 'BackgroundSizeTablet' ) }
-							onChange={ updateAttributeHandler( 'BackgroundSizeTablet' ) }
-							className="ugb--help-tip-background-image-size"
-						/>
-					}
-					{ deviceType === 'Mobile' &&
-						<AdvancedSelectControl
-							label={ __( 'Image Size', i18n ) }
-							screens="all"
-							options={ [
-								{ label: __( 'Default', i18n ), value: '' },
-								{ label: __( 'Auto', i18n ), value: 'auto' },
-								{ label: __( 'Cover', i18n ), value: 'cover' },
-								{ label: __( 'Contain', i18n ), value: 'contain' },
-								{ label: __( 'Custom', i18n ), value: 'custom' },
-							] }
-							value={ getAttribute( 'BackgroundSizeMobile' ) }
-							onChange={ updateAttributeHandler( 'BackgroundSizeMobile' ) }
-							className="ugb--help-tip-background-image-size"
-						/>
-					}
+					</ResponsiveControl2>
 
 					{ getAttribute( 'backgroundSize' ) === 'custom' && deviceType === 'Desktop' &&
 						<AdvancedRangeControl

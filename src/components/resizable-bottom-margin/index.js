@@ -11,8 +11,6 @@ import { useDeviceType, useWithShift } from '~stackable/hooks'
 import { useState, useEffect } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 import { ResizableBox } from '@wordpress/components'
-import { compose } from '@wordpress/compose'
-import { withSelect } from '@wordpress/data'
 
 const DEFAULT_BOTTOM_MARGINS = {
 	Desktop: 24,
