@@ -57,19 +57,19 @@ export const Edit = () => {
 				<BackgroundControls attrNameTemplate="block%s" />
 			</PanelAdvancedSettings>
 			<PanelAdvancedSettings
-				title={ __( 'Borders & Shadows', i18n ) }
-				id="borders"
+				title={ __( 'Size & Spacing', i18n ) }
+				id="size"
 			>
-				<BorderControls
+				<SizeControls
 					attrNameTemplate="block%s"
 					blockEl={ blockEl }
 				/>
 			</PanelAdvancedSettings>
 			<PanelAdvancedSettings
-				title={ __( 'Size & Spacing', i18n ) }
-				id="size"
+				title={ __( 'Borders & Shadows', i18n ) }
+				id="borders"
 			>
-				<SizeControls
+				<BorderControls
 					attrNameTemplate="block%s"
 					blockEl={ blockEl }
 				/>

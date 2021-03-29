@@ -158,6 +158,118 @@ export const SizeControls = props => {
 
 			{ deviceType === 'Desktop' &&
 				<FourRangeControl
+					label={ __( 'Block Paddings', i18n ) }
+					units={ [ 'px', 'em', '%' ] }
+					screens="all"
+					defaultLocked={ true }
+					top={ getAttribute( 'paddingTop' ) }
+					bottom={ getAttribute( 'paddingBottom' ) }
+					right={ getAttribute( 'paddingRight' ) }
+					left={ getAttribute( 'paddingLeft' ) }
+					unit={ getAttribute( 'paddingUnit' ) || 'px' }
+					min={ [ 0, 0, 0 ] }
+					sliderMax={ [ 200, 30, 100 ] }
+					onChange={ paddings => {
+						updateAttributes( {
+							paddingTop: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
+							paddingRight: ! paddings.right && paddings.right !== 0 ? '' : parseInt( paddings.right, 10 ),
+							paddingBottom: ! paddings.bottom && paddings.bottom !== 0 ? '' : parseInt( paddings.bottom, 10 ),
+							paddingLeft: ! paddings.left && paddings.left !== 0 ? '' : parseInt( paddings.left, 10 ),
+						} )
+					} }
+					onChangeUnit={ updateAttributeHandler( 'paddingUnit' ) }
+					propsToPassTop={ props.blockEl ? {
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingTop ),
+					} : null }
+					propsToPassRight={ props.blockEl ? {
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingRight ),
+					} : null }
+					propsToPassBottom={ props.blockEl ? {
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingBottom ),
+					} : null }
+					propsToPassLeft={ props.blockEl ? {
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingLeft ),
+					} : null }
+					className="ugb--help-tip-advanced-block-paddings"
+				/>
+			}
+			{ deviceType === 'Tablet' &&
+				<FourRangeControl
+					label={ __( 'Block Paddings', i18n ) }
+					units={ [ 'px', 'em', '%' ] }
+					screens="all"
+					defaultLocked={ true }
+					top={ getAttribute( 'paddingTopTablet' ) }
+					bottom={ getAttribute( 'paddingBottomTablet' ) }
+					right={ getAttribute( 'paddingRightTablet' ) }
+					left={ getAttribute( 'paddingLeftTablet' ) }
+					unit={ getAttribute( 'paddingUnitTablet' ) || 'px' }
+					min={ [ 0, 0, 0 ] }
+					sliderMax={ [ 200, 30, 100 ] }
+					onChange={ paddings => {
+						updateAttributes( {
+							paddingTopTablet: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
+							paddingRightTablet: ! paddings.right && paddings.right !== 0 ? '' : parseInt( paddings.right, 10 ),
+							paddingBottomTablet: ! paddings.bottom && paddings.bottom !== 0 ? '' : parseInt( paddings.bottom, 10 ),
+							paddingLeftTablet: ! paddings.left && paddings.left !== 0 ? '' : parseInt( paddings.left, 10 ),
+						} )
+					} }
+					onChangeUnit={ updateAttributeHandler( 'paddingUnitTablet' ) }
+					propsToPassTop={ props.blockEl ? {
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingTop ),
+					} : null }
+					propsToPassRight={ props.blockEl ? {
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingRight ),
+					} : null }
+					propsToPassBottom={ props.blockEl ? {
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingBottom ),
+					} : null }
+					propsToPassLeft={ props.blockEl ? {
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingLeft ),
+					} : null }
+					className="ugb--help-tip-advanced-block-paddings"
+				/>
+			}
+			{ deviceType === 'Mobile' &&
+				<FourRangeControl
+					label={ __( 'Block Paddings', i18n ) }
+					units={ [ 'px', 'em', '%' ] }
+					screens="all"
+					defaultLocked={ true }
+					top={ getAttribute( 'paddingTopMobile' ) }
+					bottom={ getAttribute( 'paddingBottomMobile' ) }
+					right={ getAttribute( 'paddingRightMobile' ) }
+					left={ getAttribute( 'paddingLeftMobile' ) }
+					unit={ getAttribute( 'paddingUnitMobile' ) || 'px' }
+					min={ [ 0, 0, 0 ] }
+					sliderMax={ [ 200, 30, 100 ] }
+					onChange={ paddings => {
+						updateAttributes( {
+							paddingTopMobile: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
+							paddingRightMobile: ! paddings.right && paddings.right !== 0 ? '' : parseInt( paddings.right, 10 ),
+							paddingBottomMobile: ! paddings.bottom && paddings.bottom !== 0 ? '' : parseInt( paddings.bottom, 10 ),
+							paddingLeftMobile: ! paddings.left && paddings.left !== 0 ? '' : parseInt( paddings.left, 10 ),
+						} )
+					} }
+					onChangeUnit={ updateAttributeHandler( 'paddingUnitMobile' ) }
+					propsToPassTop={ props.blockEl ? {
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingTop ),
+					} : null }
+					propsToPassRight={ props.blockEl ? {
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingRight ),
+					} : null }
+					propsToPassBottom={ props.blockEl ? {
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingBottom ),
+					} : null }
+					propsToPassLeft={ props.blockEl ? {
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingLeft ),
+					} : null }
+					className="ugb--help-tip-advanced-block-paddings"
+				/>
+			}
+
+			{ deviceType === 'Desktop' &&
+				<FourRangeControl
 					label={ __( 'Block Margins', i18n ) }
 					units={ [ 'px', '%' ] }
 					screens="all"
@@ -274,117 +386,6 @@ export const SizeControls = props => {
 				/>
 			}
 
-			{ deviceType === 'Desktop' &&
-				<FourRangeControl
-					label={ __( 'Block Paddings', i18n ) }
-					units={ [ 'px', 'em', '%' ] }
-					screens="all"
-					defaultLocked={ true }
-					top={ getAttribute( 'paddingTop' ) }
-					bottom={ getAttribute( 'paddingBottom' ) }
-					right={ getAttribute( 'paddingRight' ) }
-					left={ getAttribute( 'paddingLeft' ) }
-					unit={ getAttribute( 'paddingUnit' ) || 'px' }
-					min={ [ 0, 0, 0 ] }
-					sliderMax={ [ 200, 30, 100 ] }
-					onChange={ paddings => {
-						updateAttributes( {
-							paddingTop: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
-							paddingRight: ! paddings.right && paddings.right !== 0 ? '' : parseInt( paddings.right, 10 ),
-							paddingBottom: ! paddings.bottom && paddings.bottom !== 0 ? '' : parseInt( paddings.bottom, 10 ),
-							paddingLeft: ! paddings.left && paddings.left !== 0 ? '' : parseInt( paddings.left, 10 ),
-						} )
-					} }
-					onChangeUnit={ updateAttributeHandler( 'paddingUnit' ) }
-					propsToPassTop={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingTop ),
-					} : null }
-					propsToPassRight={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingRight ),
-					} : null }
-					propsToPassBottom={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingBottom ),
-					} : null }
-					propsToPassLeft={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingLeft ),
-					} : null }
-					className="ugb--help-tip-advanced-block-paddings"
-				/>
-			}
-			{ deviceType === 'Tablet' &&
-				<FourRangeControl
-					label={ __( 'Block Paddings', i18n ) }
-					units={ [ 'px', 'em', '%' ] }
-					screens="all"
-					defaultLocked={ true }
-					top={ getAttribute( 'paddingTopTablet' ) }
-					bottom={ getAttribute( 'paddingBottomTablet' ) }
-					right={ getAttribute( 'paddingRightTablet' ) }
-					left={ getAttribute( 'paddingLeftTablet' ) }
-					unit={ getAttribute( 'paddingUnitTablet' ) || 'px' }
-					min={ [ 0, 0, 0 ] }
-					sliderMax={ [ 200, 30, 100 ] }
-					onChange={ paddings => {
-						updateAttributes( {
-							paddingTopTablet: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
-							paddingRightTablet: ! paddings.right && paddings.right !== 0 ? '' : parseInt( paddings.right, 10 ),
-							paddingBottomTablet: ! paddings.bottom && paddings.bottom !== 0 ? '' : parseInt( paddings.bottom, 10 ),
-							paddingLeftTablet: ! paddings.left && paddings.left !== 0 ? '' : parseInt( paddings.left, 10 ),
-						} )
-					} }
-					onChangeUnit={ updateAttributeHandler( 'paddingUnitTablet' ) }
-					propsToPassTop={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingTop ),
-					} : null }
-					propsToPassRight={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingRight ),
-					} : null }
-					propsToPassBottom={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingBottom ),
-					} : null }
-					propsToPassLeft={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingLeft ),
-					} : null }
-					className="ugb--help-tip-advanced-block-paddings"
-				/>
-			}
-			{ deviceType === 'Mobile' &&
-				<FourRangeControl
-					label={ __( 'Block Paddings', i18n ) }
-					units={ [ 'px', 'em', '%' ] }
-					screens="all"
-					defaultLocked={ true }
-					top={ getAttribute( 'paddingTopMobile' ) }
-					bottom={ getAttribute( 'paddingBottomMobile' ) }
-					right={ getAttribute( 'paddingRightMobile' ) }
-					left={ getAttribute( 'paddingLeftMobile' ) }
-					unit={ getAttribute( 'paddingUnitMobile' ) || 'px' }
-					min={ [ 0, 0, 0 ] }
-					sliderMax={ [ 200, 30, 100 ] }
-					onChange={ paddings => {
-						updateAttributes( {
-							paddingTopMobile: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
-							paddingRightMobile: ! paddings.right && paddings.right !== 0 ? '' : parseInt( paddings.right, 10 ),
-							paddingBottomMobile: ! paddings.bottom && paddings.bottom !== 0 ? '' : parseInt( paddings.bottom, 10 ),
-							paddingLeftMobile: ! paddings.left && paddings.left !== 0 ? '' : parseInt( paddings.left, 10 ),
-						} )
-					} }
-					onChangeUnit={ updateAttributeHandler( 'paddingUnitMobile' ) }
-					propsToPassTop={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingTop ),
-					} : null }
-					propsToPassRight={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingRight ),
-					} : null }
-					propsToPassBottom={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingBottom ),
-					} : null }
-					propsToPassLeft={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingLeft ),
-					} : null }
-					className="ugb--help-tip-advanced-block-paddings"
-				/>
-			}
 		</Fragment>
 	)
 }
