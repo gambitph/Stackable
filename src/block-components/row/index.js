@@ -1,4 +1,4 @@
-import { attributes } from './attributes'
+import { addAttributes } from './attributes'
 
 import { useBlockAttributes, useBlockContext } from '~stackable/hooks'
 
@@ -21,6 +21,6 @@ export const Row = props => {
 
 Row.InspectorControls = null
 
-Row.attributes = attributes
+Row.addAttributes = addAttributes
 
 Row.addStyles = () => {}

@@ -1,4 +1,4 @@
-import { attributes } from './attributes'
+import { addAttributes } from './attributes'
 import { addStyles } from './style'
 import { useColumn } from './use-column'
 
@@ -47,6 +47,6 @@ Column.defaultProps = {
 
 Column.InspectorControls = null
 
-Column.attributes = attributes
+Column.addAttributes = addAttributes
 
 Column.addStyles = addStyles

@@ -69,3 +69,12 @@ export const sizeAttributes = convertResponsiveAttributes( {
 		default: 'px',
 	},
 } )
+
+export const addSizeAttributes = ( attrObject, attrNameTemplate = '%s' ) => {
+	attrObject.add( {
+		attributes: sizeAttributes,
+		attrNameTemplate,
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
+}

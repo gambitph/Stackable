@@ -1,8 +1,12 @@
-import { convertResponsiveAttributes } from '~stackable/util'
-
-export const attributes = convertResponsiveAttributes( {
-	blockMarginBottom_: {
-		type: 'number',
-		default: '',
-	},
-} )
+export const addAttributes = attrObject => {
+	attrObject.add( {
+		attributes: {
+			blockMarginBottom_: {
+				type: 'number',
+				default: '',
+			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
+}

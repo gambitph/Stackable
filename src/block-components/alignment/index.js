@@ -1,4 +1,4 @@
-import { attributes } from './attributes'
+import { addAttributes } from './attributes'
 import { Edit } from './edit'
 import { addStyles } from './style'
 
@@ -10,6 +10,6 @@ export const Alignment = () => {
 
 Alignment.InspectorControls = Edit
 
-Alignment.attributes = attributes
+Alignment.addAttributes = addAttributes
 
 Alignment.addStyles = addStyles

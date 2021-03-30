@@ -4,23 +4,36 @@ import {
 	Column,
 	Image,
 } from '~stackable/block-components'
-import { convertResponsiveAttributes } from '~stackable/util'
+import { AttributeObject } from '~stackable/util'
+import { version as VERSION } from 'stackable'
 
-export default convertResponsiveAttributes( {
-	...BlockDiv.attributes,
-	...Column.attributes,
-	...Image.attributes,
-	...Alignment.attributes,
+export const attributes = ( version = VERSION ) => {
+	const attrObject = new AttributeObject()
 
-	hasContainer: {
-		type: 'boolean',
-		default: true,
-	},
-	design: {
-		type: 'string',
-		default: '',
-	},
-	displayCondition: {
-		type: 'object',
-	},
-} )
+	BlockDiv.addAttributes( attrObject )
+	Column.addAttributes( attrObject )
+	Image.addAttributes( attrObject )
+	Alignment.addAttributes( attrObject )
+
+	attrObject.add( {
+		attributes: {
+			hasContainer: {
+				type: 'boolean',
+				default: true,
+			},
+			design: {
+				type: 'string',
+				default: '',
+			},
+			displayCondition: {
+				type: 'object',
+			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
+
+	return attrObject.getMerged( version )
+}
+
+export default attributes( VERSION )

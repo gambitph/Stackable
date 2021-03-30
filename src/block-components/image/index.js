@@ -1,4 +1,4 @@
-import { attributes } from './attributes'
+import { addAttributes } from './attributes'
 import { addStyles } from './style'
 import { useImage } from './use-image'
 import Image_ from './image'
@@ -82,6 +82,6 @@ Image.Content.defaultProps = {
 
 Image.InspectorControls = null
 
-Image.attributes = attributes
+Image.addAttributes = addAttributes
 
 Image.addStyles = addStyles

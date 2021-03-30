@@ -1,45 +1,33 @@
 import {
-	backgroundAttributes, borderAttributes, sizeAttributes,
+	addBackgroundAttributes,
+	addBorderAttributes,
+	addSizeAttributes,
 } from '../helpers'
-import { convertResponsiveAttributes, getAttrName } from '~stackable/util'
-import { upperFirst } from 'lodash'
 
-export const attributes = convertResponsiveAttributes( {
-	uniqueId: {
-		type: 'string',
-		source: 'attribute',
-		selector: '[data-id]',
-		attribute: 'data-id',
-		default: '',
-	},
-	hasBackground: {
-		type: 'boolean',
-		default: false,
-	},
-	hasBorders: {
-		type: 'boolean',
-		default: false,
-	},
+export const addAttributes = attrObject => {
+	attrObject.add( {
+		attributes: {
+			uniqueId: {
+				type: 'string',
+				source: 'attribute',
+				selector: '[data-id]',
+				attribute: 'data-id',
+				default: '',
+			},
+			hasBackground: {
+				type: 'boolean',
+				default: false,
+			},
+			hasBorders: {
+				type: 'boolean',
+				default: false,
+			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
 
-	// Background attributes
-	...Object.keys( backgroundAttributes ).reduce( ( attributes, key ) => {
-		const attributeName = getAttrName( 'block%s', upperFirst( key ) )
-		attributes[ attributeName ] = { ...backgroundAttributes[ key ] }
-		return attributes
-	}, {} ),
-
-	// Border attributes
-	...Object.keys( borderAttributes ).reduce( ( attributes, key ) => {
-		const attributeName = getAttrName( 'block%s', upperFirst( key ) )
-		attributes[ attributeName ] = { ...borderAttributes[ key ] }
-		return attributes
-	}, {} ),
-
-	// Size attributes
-	...Object.keys( sizeAttributes ).reduce( ( attributes, key ) => {
-		const attributeName = getAttrName( 'block%s', upperFirst( key ) )
-		attributes[ attributeName ] = { ...sizeAttributes[ key ] }
-		return attributes
-	}, {} ),
-} )
-
+	addBackgroundAttributes( attrObject, 'block%s' )
+	addBorderAttributes( attrObject, 'block%s' )
+	addSizeAttributes( attrObject, 'block%s' )
+}

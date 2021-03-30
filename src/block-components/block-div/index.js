@@ -1,4 +1,4 @@
-import { attributes } from './attributes'
+import { addAttributes } from './attributes'
 import { useUniqueId } from './use-unique-id'
 import { addStyles } from './style'
 import { Edit } from './edit'
@@ -72,6 +72,6 @@ BlockDiv.Content.defaultProps = {
 
 BlockDiv.InspectorControls = Edit
 
-BlockDiv.attributes = attributes
+BlockDiv.addAttributes = addAttributes
 
 BlockDiv.addStyles = addStyles

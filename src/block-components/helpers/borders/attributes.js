@@ -34,3 +34,12 @@ export const borderAttributes = convertResponsiveAttributes( {
 		default: '',
 	},
 } )
+
+export const addBorderAttributes = ( attrObject, attrNameTemplate = '%s' ) => {
+	attrObject.add( {
+		attributes: borderAttributes,
+		attrNameTemplate,
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
+}

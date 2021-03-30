@@ -1,4 +1,4 @@
-import { attributes } from './attributes'
+import { addAttributes } from './attributes'
 import { addStyles } from './style'
 import { getUniqueBlockClass } from '../block-div'
 
@@ -26,6 +26,6 @@ export const MarginBottom = () => {
 	)
 }
 
-MarginBottom.attributes = attributes
+MarginBottom.addAttributes = addAttributes
 
 MarginBottom.addStyles = addStyles

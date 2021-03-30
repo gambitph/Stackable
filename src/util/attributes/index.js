@@ -1,3 +1,5 @@
+export * from './attribute-object'
+
 /**
  * External dependencies
  */

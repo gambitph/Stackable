@@ -74,3 +74,12 @@ export const backgroundAttributes = convertResponsiveAttributes( {
 		default: '%',
 	},
 } )
+
+export const addBackgroundAttributes = ( attrObject, attrNameTemplate = '%s' ) => {
+	attrObject.add( {
+		attributes: backgroundAttributes,
+		attrNameTemplate,
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
+}
