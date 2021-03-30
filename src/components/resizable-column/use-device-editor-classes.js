@@ -1,5 +1,6 @@
 import { useEffect } from '@wordpress/element'
 import { throttle } from 'lodash'
+import { useDeviceType } from '~stackable/hooks'
 
 let editorEl = null
 
@@ -13,8 +14,9 @@ const addDeviceTypeClass = throttle( previewDeviceType => {
 	}
 }, 100 )
 
-export const useDeviceEditorClasses = previewDeviceType => {
+export const useDeviceEditorClasses = () => {
+	const deviceType = useDeviceType()
 	useEffect( () => {
-		addDeviceTypeClass( previewDeviceType )
-	}, [ previewDeviceType ] )
+		addDeviceTypeClass( deviceType )
+	}, [ deviceType ] )
 }

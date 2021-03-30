@@ -8,6 +8,7 @@ import { Div } from '~stackable/components'
 import { useBlockAttributes } from '~stackable/hooks'
 
 import { useBlockEditContext } from '@wordpress/block-editor'
+import { getHtmlTag } from '../advanced/use-html-tag'
 
 export const getUniqueBlockClass = uniqueId => uniqueId ? `stk-${ uniqueId }` : ''
 
@@ -16,6 +17,9 @@ export const BlockDiv = props => {
 	const attributes = useBlockAttributes( clientId )
 
 	useUniqueId()
+
+	// The HTML Tag selected of the block in the Advanced tab.
+	const htmlTag = getHtmlTag( attributes )
 
 	const classNames = classnames( [
 		props.className,
@@ -29,6 +33,7 @@ export const BlockDiv = props => {
 		{ ...props }
 		className={ classNames }
 		data-id={ attributes.uniqueId }
+		blockTag={ htmlTag }
 		backgroundUrl={ attributes.blockBackgroundMediaUrl }
 		backgroundUrlTablet={ attributes.blockBackgroundMediaUrlTablet }
 		backgroundUrlMobile={ attributes.blockBackgroundMediaUrlMobile }
@@ -46,6 +51,9 @@ BlockDiv.Content = props => {
 		...propsToPass
 	} = props
 
+	// The HTML Tag selected of the block in the Advanced tab.
+	const htmlTag = getHtmlTag( attributes )
+
 	const classNames = classnames( [
 		props.className,
 		'stk-block',
@@ -58,6 +66,7 @@ BlockDiv.Content = props => {
 		{ ...propsToPass }
 		className={ classNames }
 		data-id={ attributes.uniqueId }
+		blockTag={ htmlTag }
 		backgroundUrl={ attributes.blockBackgroundMediaUrl }
 		backgroundUrlTablet={ attributes.blockBackgroundMediaUrlTablet }
 		backgroundUrlMobile={ attributes.blockBackgroundMediaUrlMobile }

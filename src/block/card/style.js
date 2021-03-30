@@ -2,6 +2,7 @@
  * External dependencies
  */
 import {
+	Advanced,
 	Alignment,
 	BlockDiv, Column, Image,
 } from '~stackable/block-components'
@@ -16,9 +17,10 @@ const createStyles = ( version = '' ) => attributes => {
 
 	Alignment.addStyles( styles, attributes )
 	BlockDiv.addStyles( styles, attributes )
+	Column.addStyles( styles, attributes )
+	Advanced.addStyles( styles, attributes )
 
 	// Column styles.
-	Column.addStyles( styles, attributes )
 
 	// TODO: image adv styles like zoom, filter, etc.
 	Image.addStyles( styles, attributes, {

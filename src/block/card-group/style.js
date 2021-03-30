@@ -2,7 +2,10 @@
  * External dependencies
  */
 import {
-	Alignment, BlockDiv, MarginBottom,
+	Advanced,
+	Alignment,
+	BlockDiv,
+	MarginBottom,
 } from '~stackable/block-components'
 import {
 	// __getValue,
@@ -16,6 +19,7 @@ const createStyles = ( version = '' ) => attributes => {
 	Alignment.addStyles( styles, attributes )
 	BlockDiv.addStyles( styles, attributes )
 	MarginBottom.addStyles( styles, attributes )
+	Advanced.addStyles( styles, attributes )
 
 	return styles.getMerged( version )
 }

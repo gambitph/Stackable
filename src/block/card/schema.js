@@ -1,4 +1,5 @@
 import {
+	Advanced,
 	Alignment,
 	BlockDiv,
 	Column,
@@ -14,6 +15,7 @@ export const attributes = ( version = VERSION ) => {
 	Column.addAttributes( attrObject )
 	Image.addAttributes( attrObject )
 	Alignment.addAttributes( attrObject )
+	Advanced.addAttributes( attrObject )
 
 	attrObject.add( {
 		attributes: {

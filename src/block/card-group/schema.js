@@ -1,4 +1,5 @@
 import {
+	Advanced,
 	Alignment,
 	BlockDiv,
 	MarginBottom,
@@ -14,6 +15,7 @@ export const attributes = ( version = VERSION ) => {
 	MarginBottom.addAttributes( attrObject )
 	Row.addAttributes( attrObject )
 	Alignment.addAttributes( attrObject )
+	Advanced.addAttributes( attrObject )
 
 	attrObject.add( {
 		attributes: {

@@ -20,7 +20,7 @@ import {
 	withIsHovered,
 } from '~stackable/higher-order'
 import {
-	Column, getColumnClasses, BlockDiv, Style, Image, getAlignmentClasses, Alignment, useAlignment,
+	Column, getColumnClasses, BlockDiv, Style, Image, getAlignmentClasses, Alignment, useAlignment, Advanced,
 } from '~stackable/block-components'
 
 /**
@@ -80,6 +80,7 @@ const Edit = props => {
 
 			<Alignment.InspectorControls hasColumnAlignment={ true } />
 			<BlockDiv.InspectorControls />
+			<Advanced.InspectorControls />
 
 			<InspectorStyleControls>
 				<PanelAdvancedSettings

@@ -18,6 +18,7 @@ import {
 	getRowClasses,
 	Alignment,
 	getAlignmentClasses,
+	Advanced,
 } from '~stackable/block-components'
 
 /**
@@ -54,6 +55,7 @@ const Edit = props => {
 
 		<Alignment.InspectorControls hasRowAlignment={ true } />
 		<BlockDiv.InspectorControls />
+		<Advanced.InspectorControls />
 
 		<BlockDiv className={ blockClassNames }>
 			<Style styleFunc={ createStyles( VERSION ) } />

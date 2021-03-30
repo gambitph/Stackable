@@ -49,7 +49,7 @@ const ResizableColumn = props => {
 	// This is used to add editor classes based on the preview device type.
 	// Mainly for generating editor styles.
 	const deviceType = useDeviceType()
-	useDeviceEditorClasses( deviceType )
+	useDeviceEditorClasses()
 
 	const [ currentWidths, setCurrentWidths ] = useState( [] )
 	const [ newWidthsPercent, setNewWidthsPercent ] = useState( [] )
