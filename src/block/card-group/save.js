@@ -17,6 +17,7 @@ import { InnerBlocks } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
 import {
 	BlockDiv,
+	CustomCSS,
 	getAlignmentClasses,
 	getRowClasses,
 	Style,
@@ -51,6 +52,7 @@ export const Save = props => {
 				styleFunc={ createStyles( props.version ) }
 				attributes={ attributes }
 			/>
+			<CustomCSS.Content attributes={ attributes } />
 			<div className={ contentClassNames }>
 				<InnerBlocks.Content />
 			</div>

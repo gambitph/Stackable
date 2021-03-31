@@ -11,6 +11,7 @@ import { withVersion } from '~stackable/higher-order'
 import { version as VERSION } from 'stackable'
 import {
 	BlockDiv,
+	CustomCSS,
 	getAlignmentClasses,
 	getColumnClasses,
 	Image,
@@ -64,6 +65,7 @@ export const Save = props => {
 				styleFunc={ createStyles( props.version ) }
 				attributes={ attributes }
 			/>
+			<CustomCSS.Content attributes={ attributes } />
 			<div className={ contentClassNames }>
 				{ props.attributes.imageUrl &&
 					<Image.Content

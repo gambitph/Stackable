@@ -3,6 +3,7 @@ import {
 	Alignment,
 	BlockDiv,
 	Column,
+	CustomCSS,
 	Image,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
@@ -16,6 +17,7 @@ export const attributes = ( version = VERSION ) => {
 	Image.addAttributes( attrObject )
 	Alignment.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
+	CustomCSS.addAttributes( attrObject )
 
 	attrObject.add( {
 		attributes: {

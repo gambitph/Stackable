@@ -1,12 +1,9 @@
 /**
- * Internal dependencies
- */
-import { getUniqueBlockClass } from '../block-div'
-
-/**
  * External dependencies
  */
-import { minifyCSS, prependCSSClass } from '~stackable/util'
+import {
+	getUniqueBlockClass, minifyCSS, prependCSSClass,
+} from '~stackable/util'
 import {
 	kebabCase, omit, isEqual, sortBy,
 } from 'lodash'

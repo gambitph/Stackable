@@ -1,9 +1,9 @@
 import { addAttributes } from './attributes'
 import { addStyles } from './style'
-import { getUniqueBlockClass } from '../block-div'
 
 import { ResizableBottomMargin } from '~stackable/components'
 import { useBlockAttributes } from '~stackable/hooks'
+import { getUniqueBlockClass } from '~stackable/util'
 
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { useDispatch } from '@wordpress/data'

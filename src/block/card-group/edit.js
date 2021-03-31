@@ -19,6 +19,7 @@ import {
 	Alignment,
 	getAlignmentClasses,
 	Advanced,
+	CustomCSS,
 } from '~stackable/block-components'
 
 /**
@@ -56,9 +57,11 @@ const Edit = props => {
 		<Alignment.InspectorControls hasRowAlignment={ true } />
 		<BlockDiv.InspectorControls />
 		<Advanced.InspectorControls />
+		<CustomCSS.InspectorControls mainBlockClass="stk-card-group" />
 
 		<BlockDiv className={ blockClassNames }>
 			<Style styleFunc={ createStyles( VERSION ) } />
+			<CustomCSS mainBlockClass="stk-card-group" />
 			<div className={ contentClassNames }>
 				<InnerBlocks
 					orientation="horizontal"

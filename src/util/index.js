@@ -30,6 +30,8 @@ import { applyFilters } from '@wordpress/hooks'
 import { i18n } from 'stackable'
 import rgba from 'color-rgba'
 
+export const getUniqueBlockClass = uniqueId => uniqueId ? `stk-${ uniqueId }` : ''
+
 /**
  * Returns an array range of numbers.
  *

@@ -6,11 +6,10 @@ import { Edit } from './edit'
 import classnames from 'classnames'
 import { Div } from '~stackable/components'
 import { useBlockAttributes } from '~stackable/hooks'
+import { getUniqueBlockClass } from '~stackable/util'
 
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { getHtmlTag } from '../advanced/use-html-tag'
-
-export const getUniqueBlockClass = uniqueId => uniqueId ? `stk-${ uniqueId }` : ''
 
 export const BlockDiv = props => {
 	const { clientId } = useBlockEditContext()
