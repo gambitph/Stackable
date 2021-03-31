@@ -20,7 +20,17 @@ import {
 	withIsHovered,
 } from '~stackable/higher-order'
 import {
-	Column, getColumnClasses, BlockDiv, Style, Image, getAlignmentClasses, Alignment, useAlignment, Advanced, CustomCSS,
+	Column,
+	getColumnClasses,
+	BlockDiv,
+	Style,
+	Image,
+	getAlignmentClasses,
+	Alignment,
+	useAlignment,
+	Advanced,
+	CustomCSS,
+	Responsive,
 } from '~stackable/block-components'
 
 /**
@@ -82,6 +92,7 @@ const Edit = props => {
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-card" />
+			<Responsive.InspectorControls />
 
 			<InspectorStyleControls>
 				<PanelAdvancedSettings

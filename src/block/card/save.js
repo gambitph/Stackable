@@ -14,6 +14,7 @@ import {
 	CustomCSS,
 	getAlignmentClasses,
 	getColumnClasses,
+	getResponsiveClasses,
 	Image,
 	Style,
 } from '~stackable/block-components'
@@ -34,11 +35,13 @@ export const Save = props => {
 
 	const [ columnClass, columnWrapperClass ] = getColumnClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+	const responsiveClass = getResponsiveClasses( props.attributes )
 
 	const blockClassNames = classnames( [
 		props.className,
 		'stk-card',
 		columnClass,
+		responsiveClass,
 	] )
 
 	const contentClassNames = classnames( [

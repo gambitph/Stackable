@@ -5,6 +5,7 @@ import {
 	Column,
 	CustomCSS,
 	Image,
+	Responsive,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
@@ -18,6 +19,7 @@ export const attributes = ( version = VERSION ) => {
 	Alignment.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
 	CustomCSS.addAttributes( attrObject )
+	Responsive.addAttributes( attrObject )
 
 	attrObject.add( {
 		attributes: {

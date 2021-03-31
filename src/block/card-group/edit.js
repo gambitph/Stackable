@@ -20,6 +20,7 @@ import {
 	getAlignmentClasses,
 	Advanced,
 	CustomCSS,
+	Responsive,
 } from '~stackable/block-components'
 
 /**
@@ -58,6 +59,7 @@ const Edit = props => {
 		<BlockDiv.InspectorControls />
 		<Advanced.InspectorControls />
 		<CustomCSS.InspectorControls mainBlockClass="stk-card-group" />
+		<Responsive.InspectorControls />
 
 		<BlockDiv className={ blockClassNames }>
 			<Style styleFunc={ createStyles( VERSION ) } />

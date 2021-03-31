@@ -4,6 +4,7 @@ import {
 	BlockDiv,
 	CustomCSS,
 	MarginBottom,
+	Responsive,
 	Row,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
@@ -18,6 +19,7 @@ export const attributes = ( version = VERSION ) => {
 	Alignment.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
 	CustomCSS.addAttributes( attrObject )
+	Responsive.addAttributes( attrObject )
 
 	attrObject.add( {
 		attributes: {

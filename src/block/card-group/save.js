@@ -19,6 +19,7 @@ import {
 	BlockDiv,
 	CustomCSS,
 	getAlignmentClasses,
+	getResponsiveClasses,
 	getRowClasses,
 	Style,
 } from '~stackable/block-components'
@@ -30,10 +31,12 @@ export const Save = props => {
 
 	const rowClass = getRowClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+	const responsiveClass = getResponsiveClasses( props.attributes )
 
 	const blockClassName = classnames( [
 		props.className,
 		'stk-card-group',
+		responsiveClass,
 	] )
 
 	const contentClassNames = classnames( [
