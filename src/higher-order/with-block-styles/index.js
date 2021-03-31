@@ -8,51 +8,40 @@ import { BlockStyles } from '~stackable/components'
  */
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
-import { Component } from '@wordpress/element'
-import { createHigherOrderComponent } from '@wordpress/compose'
-import PropTypes from 'prop-types'
 
-const withBlockStyles = ( styleFunction, options = {} ) => createHigherOrderComponent(
-	WrappedComponent => class extends Component {
-		static propTypes = {
-			attributes: PropTypes.shape( {
-				uniqueClass: PropTypes.string.isRequired,
-			} ),
-			blockName: PropTypes.string.isRequired,
-			mainClassName: PropTypes.string.isRequired,
-		}
+const withBlockStyles = ( styleFunction, options = {} ) => WrappedComponent => {
+	const NewComp = props => {
+		const newClassName = classnames( [
+			props.className,
+			props.attributes.uniqueClass,
+		] )
 
-		static defaultProps = {
-			attributes: {},
-			blockName: '',
-			className: '',
-			mainClassName: '',
-		}
+		const { blockName } = props
+		const styleObject = applyFilters( `stackable.${ blockName }.styles`, styleFunction( props ), props )
 
-		render() {
-			const newClassName = classnames( [
-				this.props.className,
-				this.props.attributes.uniqueClass,
-			] )
+		const isEditorMode = options.editorMode || false
 
-			const { blockName } = this.props
-			const styleObject = applyFilters( `stackable.${ blockName }.styles`, styleFunction( this.props ), this.props )
+		const BlockStyleTag = isEditorMode ? BlockStyles : BlockStyles.Content
+		const BlockStyle = (
+			<BlockStyleTag
+				blockUniqueClassName={ props.attributes.uniqueClass }
+				blockMainClassName={ props.mainClassName }
+				style={ styleObject }
+			/>
+		)
 
-			const isEditorMode = options.editorMode || false
+		return <WrappedComponent { ...props } className={ newClassName } styles={ BlockStyle } />
+	}
 
-			const BlockStyleTag = isEditorMode ? BlockStyles : BlockStyles.Content
-			const BlockStyle = (
-				<BlockStyleTag
-					blockUniqueClassName={ this.props.attributes.uniqueClass }
-					blockMainClassName={ this.props.mainClassName }
-					style={ styleObject }
-				/>
-			)
+	NewComp.defaultProps = {
+		...( WrappedComponent.defaultProps || {} ),
+		attributes: {},
+		blockName: '',
+		className: '',
+		mainClassName: '',
+	}
 
-			return <WrappedComponent { ...this.props } className={ newClassName } styles={ BlockStyle } />
-		}
-	},
-	'withBlockStyles'
-)
+	return NewComp
+}
 
 export default withBlockStyles

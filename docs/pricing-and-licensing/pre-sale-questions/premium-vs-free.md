@@ -29,8 +29,8 @@ If you need technical assistance, we're here to help! Premium users can just sen
 | Feature | Free | Premium |
 | :--- | :--- | :--- |
 | Blocks | All | All |
-| Block Layouts | 55 total layouts | 124 total layouts |
-| Design Library | 73 designs | 295 designs |
+| Block Layouts | 58 total layouts | 127 total layouts |
+| Design Library | 89 designs | 355 designs |
 | Separator Layers | 1 layer | 3 layers |
 | Fine-Grain Column Settings | ❌ | ✅ |
 | Advanced Column and Gap Spacing | ❌ | ✅ |

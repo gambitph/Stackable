@@ -4,6 +4,7 @@
 import SVGDesktop from './images/desktop.svg'
 import SVGMobile from './images/mobile.svg'
 import SVGTablet from './images/tablet.svg'
+import Button from '../button'
 
 /**
  * External dependencies
@@ -18,7 +19,7 @@ import { __ } from '@wordpress/i18n'
 import {
 	useState, useCallback,
 } from '@wordpress/element'
-import { Button, Popover } from '@wordpress/components'
+import { Popover } from '@wordpress/components'
 import { dispatch } from '@wordpress/data'
 import { withInstanceId } from '@wordpress/compose'
 

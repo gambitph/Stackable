@@ -101,6 +101,7 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 		);
 
 		global $content_width;
+		global $wp_version;
 		wp_localize_script( 'ugb-block-js-vendor', 'stackable', array(
 			'srcUrl' => untrailingslashit( plugins_url( '/', STACKABLE_FILE ) ),
 			'contentWidth' => isset( $content_width ) ? $content_width : 900,
@@ -113,6 +114,7 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 			'currentTheme' => esc_html( get_template() ),
 			'settingsUrl' => admin_url( 'options-general.php?page=stackable' ),
 			'version' => STACKABLE_VERSION,
+			'wpVersion' => $wp_version,
 
 			// Fonts.
 			'locale' => get_locale(),

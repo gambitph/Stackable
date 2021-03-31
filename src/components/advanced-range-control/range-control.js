@@ -4,10 +4,15 @@
  */
 
 /**
+ * Internal dependencies
+ */
+import Button from '../button'
+
+/**
  * WordPress dependencies
  */
 import {
-	Button, RangeControl, __experimentalNumberControl as NumberControl,
+	RangeControl, __experimentalNumberControl as NumberControl,
 } from '@wordpress/components'
 import {
 	useState, useLayoutEffect, useEffect,
