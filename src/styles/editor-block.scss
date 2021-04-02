@@ -3,6 +3,12 @@
  */
 @import "breakpoints";
 
+// Position relative (required for block links) will not work properly with
+// margin bottom resizer, make it static in the editor.
+#editor .stk-block {
+	position: static;
+}
+
 // Blocks
 .editor-styles-wrapper [data-type^="stackable/"],
 .editor-styles-wrapper [data-type^="stackable/"].wp-block { // .wp-block to ensure our styles are followed.

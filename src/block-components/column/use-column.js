@@ -66,4 +66,3 @@ export const getColumnClasses = attributes => {
 		'stk-column-wrapper',
 	]
 }
-

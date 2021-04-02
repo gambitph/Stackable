@@ -390,18 +390,27 @@ const ImageContent = props => {
 		? ( props.heightUnit === '%' ? `${ props.height }%` : props.height )
 		: undefined
 
+	const propsToPass = {}
+	const alt = striptags( props.alt || undefined )
+	if ( alt ) {
+		propsToPass.alt = alt
+	}
+	const title = striptags( props.title || undefined )
+	if ( title ) {
+		propsToPass.title = title
+	}
+
 	return (
-		<div className={ imageWrapperClasses }>
-			<img
+		<figure className={ imageWrapperClasses }>
+			<img // eslint-disable-line jsx-a11y/alt-text
 				className={ imageClasses }
 				src={ props.src || undefined }
-				alt={ striptags( props.alt || undefined ) }
-				title={ striptags( props.title || undefined ) }
 				width={ width || undefined }
 				height={ height || undefined }
+				{ ...propsToPass }
 			/>
 			{ props.children }
-		</div>
+		</figure>
 	)
 }
 

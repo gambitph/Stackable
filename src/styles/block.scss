@@ -3,6 +3,11 @@
  */
 @import "breakpoints";
 
+// We need to set this to relative for making the whole block clickable.
+.stk-block {
+	position: relative;
+}
+
 // Containers
 .stk-column,
 .stk-block.stk-column {

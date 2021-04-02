@@ -99,6 +99,8 @@ export { default as Image } from './image'
 
 // V3 only Components
 export { default as ShadowControl } from './shadow-control'
+export { default as LinkControl } from './link-control'
+export { default as Link } from './link'
 export { default as ResizableColumn } from './resizable-column'
 export { default as ResponsiveControl2 } from './responsive-control2'
 export { default as ResizableBottomMargin } from './resizable-bottom-margin'

@@ -40,6 +40,7 @@ import { compose } from '@wordpress/compose'
 import { __ } from '@wordpress/i18n'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
+import { BlockLink } from '~stackable/block-components/block-link'
 
 const TEMPLATE = [
 	[ 'core/heading', {} ],
@@ -91,6 +92,7 @@ const Edit = props => {
 			<Alignment.InspectorControls hasColumnAlignment={ true } />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
+			<BlockLink.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-card" />
 			<Responsive.InspectorControls />
 

@@ -9,6 +9,7 @@ import {
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
+import { BlockLink } from '~stackable/block-components/block-link'
 
 export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
@@ -20,6 +21,7 @@ export const attributes = ( version = VERSION ) => {
 	Advanced.addAttributes( attrObject )
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
+	BlockLink.addAttributes( attrObject )
 
 	attrObject.add( {
 		attributes: {

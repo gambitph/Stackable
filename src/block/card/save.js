@@ -24,6 +24,7 @@ import {
  */
 import { InnerBlocks } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
+import { BlockLink } from '~stackable/block-components/block-link'
 
 export const Save = props => {
 	const {
@@ -80,6 +81,7 @@ export const Save = props => {
 					<InnerBlocks.Content />
 				</div>
 			</div>
+			<BlockLink.Content attributes={ attributes } />
 		</BlockDiv.Content>
 	)
 }
