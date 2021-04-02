@@ -1,6 +1,13 @@
-import { Link } from '~stackable/components'
+/**
+ * Internal dependencies
+ */
 import { addAttributes } from './attributes'
 import { Edit } from './edit'
+
+/**
+ * External dependencies
+ */
+import { Link } from '~stackable/components'
 
 export const BlockLink = () => {
 	return null
