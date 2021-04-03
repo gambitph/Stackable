@@ -27,6 +27,15 @@ export const SizeControls = props => {
 		updateAttributes,
 	} = useAttributeEditHandlers( props.attrNameTemplate )
 
+	const {
+		labelHeight = __( 'Min. Height', i18n ),
+		labelContentWidth = __( 'Max. Content Width', i18n ),
+		labelHorizontalAlign = __( 'Content Horizontal Align', i18n ),
+		labelVerticalAlign = __( 'Content Vertical Align', i18n ),
+		labelPaddings = __( 'Paddings', i18n ),
+		labelMargins = __( 'Margins', i18n ),
+	} = props.labels
+
 	return (
 		<Fragment>
 			<ResponsiveControl2
@@ -50,7 +59,7 @@ export const SizeControls = props => {
 				} }
 			>
 				<AdvancedRangeControl
-					label={ __( 'Min. Block Height', i18n ) }
+					label={ labelHeight }
 					units={ [ 'px', 'vh' ] }
 					min={ [ 0, 0 ] }
 					sliderMax={ [ 1000, 100 ] }
@@ -63,7 +72,7 @@ export const SizeControls = props => {
 
 			{ getAttribute( 'height' ) !== '' && deviceType === 'Desktop' &&
 				<AdvancedToolbarControl
-					label={ __( 'Content Vertical Align', i18n ) }
+					label={ labelVerticalAlign }
 					screens="all"
 					controls="flex-vertical"
 					value={ getAttribute( 'VerticalAlign' ) }
@@ -73,7 +82,7 @@ export const SizeControls = props => {
 			}
 			{ ( getAttribute( 'height' ) !== '' || getAttribute( 'heightTablet' ) !== '' ) && deviceType === 'Tablet' &&
 				<AdvancedToolbarControl
-					label={ __( 'Content Vertical Align', i18n ) }
+					label={ labelVerticalAlign }
 					screens="all"
 					controls="flex-vertical"
 					value={ getAttribute( 'VerticalAlignTablet' ) }
@@ -83,7 +92,7 @@ export const SizeControls = props => {
 			}
 			{ ( getAttribute( 'height' ) !== '' || getAttribute( 'heightTablet' ) !== '' || getAttribute( 'heightMobile' ) !== '' ) && deviceType === 'Mobile' &&
 				<AdvancedToolbarControl
-					label={ __( 'Content Vertical Align', i18n ) }
+					label={ labelVerticalAlign }
 					screens="all"
 					controls="flex-vertical"
 					value={ getAttribute( 'VerticalAlignMobile' ) }
@@ -113,7 +122,7 @@ export const SizeControls = props => {
 				} }
 			>
 				<AdvancedRangeControl
-					label={ __( 'Max. Content Width', i18n ) }
+					label={ labelContentWidth }
 					units={ [ 'px', '%' ] }
 					min={ [ 0, 0 ] }
 					sliderMax={ [ 1500, 100 ] }
@@ -127,7 +136,7 @@ export const SizeControls = props => {
 
 			{ getAttribute( 'width' ) !== '' && deviceType === 'Desktop' &&
 				<AdvancedToolbarControl
-					label={ __( 'Content Horizontal Align', i18n ) }
+					label={ labelHorizontalAlign }
 					screens="all"
 					controls="flex-horizontal"
 					value={ getAttribute( 'HorizontalAlign' ) }
@@ -137,7 +146,7 @@ export const SizeControls = props => {
 			}
 			{ ( getAttribute( 'height' ) !== '' || getAttribute( 'heightTablet' ) !== '' ) && deviceType === 'Tablet' &&
 				<AdvancedToolbarControl
-					label={ __( 'Content Horizontal Align', i18n ) }
+					label={ labelHorizontalAlign }
 					screens="all"
 					controls="flex-horizontal"
 					value={ getAttribute( 'HorizontalAlignTablet' ) }
@@ -147,7 +156,7 @@ export const SizeControls = props => {
 			}
 			{ ( getAttribute( 'height' ) !== '' || getAttribute( 'heightTablet' ) !== '' || getAttribute( 'heightMobile' ) !== '' ) && deviceType === 'Mobile' &&
 				<AdvancedToolbarControl
-					label={ __( 'Content Horizontal Align', i18n ) }
+					label={ labelHorizontalAlign }
 					screens="all"
 					controls="flex-horizontal"
 					value={ getAttribute( 'HorizontalAlignMobile' ) }
@@ -158,7 +167,7 @@ export const SizeControls = props => {
 
 			{ deviceType === 'Desktop' &&
 				<FourRangeControl
-					label={ __( 'Block Paddings', i18n ) }
+					label={ labelPaddings }
 					units={ [ 'px', 'em', '%' ] }
 					screens="all"
 					defaultLocked={ true }
@@ -195,7 +204,7 @@ export const SizeControls = props => {
 			}
 			{ deviceType === 'Tablet' &&
 				<FourRangeControl
-					label={ __( 'Block Paddings', i18n ) }
+					label={ labelPaddings }
 					units={ [ 'px', 'em', '%' ] }
 					screens="all"
 					defaultLocked={ true }
@@ -232,7 +241,7 @@ export const SizeControls = props => {
 			}
 			{ deviceType === 'Mobile' &&
 				<FourRangeControl
-					label={ __( 'Block Paddings', i18n ) }
+					label={ labelPaddings }
 					units={ [ 'px', 'em', '%' ] }
 					screens="all"
 					defaultLocked={ true }
@@ -268,9 +277,9 @@ export const SizeControls = props => {
 				/>
 			}
 
-			{ deviceType === 'Desktop' &&
+			{ props.enableMargin && deviceType === 'Desktop' &&
 				<FourRangeControl
-					label={ __( 'Block Margins', i18n ) }
+					label={ labelMargins }
 					units={ [ 'px', '%' ] }
 					screens="all"
 					defaultLocked={ false }
@@ -305,13 +314,12 @@ export const SizeControls = props => {
 					enableRight={ getAttribute( 'align' ) !== 'full' }
 					enableLeft={ getAttribute( 'align' ) !== 'full' }
 					placeholder="0"
-					placeholderBottom={ props.marginPlaceholderBottom }
 					className="ugb--help-tip-advanced-block-margins"
 				/>
 			}
-			{ deviceType === 'Tablet' &&
+			{ props.enableMargin && deviceType === 'Tablet' &&
 				<FourRangeControl
-					label={ __( 'Block Margins', i18n ) }
+					label={ labelMargins }
 					units={ [ 'px', '%' ] }
 					screens="all"
 					defaultLocked={ false }
@@ -348,9 +356,9 @@ export const SizeControls = props => {
 					className="ugb--help-tip-advanced-block-margins"
 				/>
 			}
-			{ deviceType === 'Mobile' &&
+			{ props.enableMargin && deviceType === 'Mobile' &&
 				<FourRangeControl
-					label={ __( 'Block Margins', i18n ) }
+					label={ labelMargins }
 					units={ [ 'px', '%' ] }
 					screens="all"
 					defaultLocked={ false }
@@ -393,5 +401,6 @@ export const SizeControls = props => {
 SizeControls.defaultProps = {
 	attrNameTemplate: '%s',
 	blockEl: null,
-	marginPlaceholderBottom: '',
+	enableMargin: true,
+	labels: {},
 }

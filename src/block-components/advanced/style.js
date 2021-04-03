@@ -22,18 +22,21 @@ export const addStyles = ( styles, attributes ) => {
 			'': {
 				opacity: getValue( 'opacity' ),
 				zIndex: getValue( 'zIndex' ),
+				overflow: getValue( 'overflow' ),
 				clear: getValue( 'clear' ),
 			},
 			tablet: {
 				'': {
 					opacity: getValue( 'opacityTablet' ),
 					zIndex: getValue( 'zIndexTablet' ),
+					overflow: getValue( 'overflowTablet' ),
 				},
 			},
 			mobile: {
 				'': {
 					opacity: getValue( 'opacityMobile' ),
 					zIndex: getValue( 'zIndexMobile' ),
+					overflow: getValue( 'overflowMobile' ),
 				},
 			},
 

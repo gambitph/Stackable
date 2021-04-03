@@ -82,6 +82,31 @@ export const Edit = () => {
 							className="ugb--help-tip-advanced-opacity"
 						/>
 					</ResponsiveControl2>
+					<ResponsiveControl2
+						desktopProps={ {
+							value: attributes.overflow,
+							onChange: overflow => updateBlockAttributes( clientId, { overflow } ),
+						} }
+						tabletProps={ {
+							value: attributes.overflowTablet,
+							onChange: overflowTablet => updateBlockAttributes( clientId, { overflowTablet } ),
+						} }
+						mobileProps={ {
+							value: attributes.overflowMobile,
+							onChange: overflowMobile => updateBlockAttributes( clientId, { overflowMobile } ),
+						} }
+					>
+						<AdvancedSelectControl
+							label={ __( 'Overflow', i18n ) }
+							options={ [
+								{ value: '', label: __( 'Default', i18n ) },
+								{ value: 'auto', label: __( 'Auto', i18n ) },
+								{ value: 'hidden', label: __( 'Hidden', i18n ) },
+								{ value: 'scroll', label: __( 'Scroll', i18n ) },
+								{ value: 'visible', label: __( 'Visible', i18n ) },
+							] }
+						/>
+					</ResponsiveControl2>
 				</PanelAdvancedSettings>
 
 				<PanelAdvancedSettings

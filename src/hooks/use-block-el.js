@@ -8,8 +8,8 @@ import { useBlockAttributes } from './use-block-attributes'
  */
 import { useBlockEditContext } from '@wordpress/block-editor'
 
-export const useBlockEl = () => {
+export const useBlockEl = selector => {
 	const { clientId } = useBlockEditContext()
 	const { uniqueId } = useBlockAttributes( clientId )
-	return document.querySelector( `.stk-${ uniqueId }` )
+	return document.querySelector( `.stk-${ uniqueId }${ selector ? ' ' + selector : '' }` )
 }

@@ -7,11 +7,9 @@ import createStyles from './style'
  * External dependencies
  */
 import classnames from 'classnames'
-import { i18n, version as VERSION } from 'stackable'
+import { version as VERSION } from 'stackable'
 import {
 	InspectorTabs,
-	InspectorStyleControls,
-	PanelAdvancedSettings,
 } from '~stackable/components'
 import {
 	useBlockContext,
@@ -31,13 +29,13 @@ import {
 	Advanced,
 	CustomCSS,
 	Responsive,
+	ContainerDiv,
 } from '~stackable/block-components'
 
 /**
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
-import { __ } from '@wordpress/i18n'
 import { InnerBlocks } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
 import { BlockLink } from '~stackable/block-components/block-link'
@@ -56,7 +54,7 @@ const Edit = props => {
 	} = props.attributes
 
 	const {
-		className, setAttributes, isHovered,
+		className, isHovered,
 	} = props
 
 	const { blockOrientation } = useAlignment()
@@ -72,9 +70,8 @@ const Edit = props => {
 	const contentClassNames = classnames( [
 		'stk-block-content',
 		columnWrapperClass,
-	], {
-		'stk-container--no-padding': hasContainer,
-	} )
+		'stk--no-padding',
+	] )
 
 	const innerClassNames = classnames( [
 		'stk-inner-blocks',
@@ -95,28 +92,14 @@ const Edit = props => {
 			<BlockLink.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-card" />
 			<Responsive.InspectorControls />
-
-			<InspectorStyleControls>
-				<PanelAdvancedSettings
-					title={ __( 'Container', i18n ) }
-					id="container"
-					checked={ hasContainer }
-					onChange={ hasContainer => setAttributes( { hasContainer } ) }
-					// toggleOnSetAttributes={ [
-					// 	'arrowSize',
-					// 	'arrowColor',
-					// ] }
-					toggleAttributeName="hasContainer"
-				>
-				</PanelAdvancedSettings>
-			</InspectorStyleControls>
+			<ContainerDiv.InspectorControls sizeSelector=".stk-card__content" />
 
 			<Style styleFunc={ createStyles( VERSION ) } />
 			<CustomCSS mainBlockClass="stk-card" />
 
 			<Column showHandle={ isHovered }>
 				<BlockDiv className={ blockClassNames }>
-					<div className={ contentClassNames }>
+					<ContainerDiv className={ contentClassNames }>
 						<Image
 							className="stk-card__image"
 							enableWidth={ false }
@@ -134,7 +117,7 @@ const Edit = props => {
 								templateInsertUpdatesSelection={ true }
 							/>
 						</div>
-					</div>
+					</ContainerDiv>
 				</BlockDiv>
 			</Column>
 		</Fragment>

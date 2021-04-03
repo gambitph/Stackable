@@ -3,6 +3,7 @@ import {
 	Alignment,
 	BlockDiv,
 	Column,
+	ContainerDiv,
 	CustomCSS,
 	Image,
 	Responsive,
@@ -15,6 +16,7 @@ export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
 
 	BlockDiv.addAttributes( attrObject )
+	ContainerDiv.addAttributes( attrObject, { hasDefaultContainer: true } )
 	Column.addAttributes( attrObject )
 	Image.addAttributes( attrObject )
 	Alignment.addAttributes( attrObject )

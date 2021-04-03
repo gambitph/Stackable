@@ -1,5 +1,6 @@
 export * from './advanced'
 export * from './block-div'
+export * from './container-div'
 export * from './column'
 export * from './custom-css'
 export * from './alignment'

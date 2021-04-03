@@ -66,13 +66,10 @@
 }
 
 // Containers
-.stk-container {
-	background-color: cssvar(container-background-color);
-	border-radius: cssvar(container-border-radius);
-	box-shadow: cssvar(container-box-shadow);
+.stk-container:not(.stk--no-padding) {
 	padding: cssvar(container-padding);
 }
-.stk-container--no-padding {
+.stk-container:not(.stk--no-background) {
 	background-color: cssvar(container-background-color);
 	border-radius: cssvar(container-border-radius);
 	box-shadow: cssvar(container-box-shadow);

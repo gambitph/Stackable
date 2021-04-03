@@ -11,6 +11,8 @@ export const addSizeStyles = ( styles, attributes, options = {} ) => {
 	const {
 		selector = '',
 		attrNameTemplate = '%s',
+		horizontalAlignRule = 'justifyContent',
+		verticalAlignRule = 'alignItems',
 	} = options
 
 	const getAttrName = getAttrNameFunction( attrNameTemplate )
@@ -64,16 +66,16 @@ export const addSizeStyles = ( styles, attributes, options = {} ) => {
 		style: {
 			[ selector ]: {
 				minHeight: getValue( 'height', `%s${ getValue( 'heightUnit' ) || 'px' }` ),
-				justifyContent: getValue( 'horizontalAlign' ),
-				alignItems: getValue( 'verticalAlign' ),
+				[ horizontalAlignRule || 'justifyContent' ]: getValue( 'horizontalAlign' ),
+				[ verticalAlignRule || 'alignItems' ]: getValue( 'verticalAlign' ),
 				maxWidth: getValue( 'width', `%s${ getValue( 'widthUnit' ) || 'px' }` ),
 				minWidth: getValue( 'width' ) ? 'auto' : undefined, // Some themes can limit min-width, preventing block width.
 			},
 			tablet: {
 				[ selector ]: {
 					minHeight: getValue( 'heightTablet', `%s${ getValue( 'heightUnitTablet' ) || 'px' }` ),
-					justifyContent: getValue( 'horizontalAlignTablet' ),
-					alignItems: getValue( 'verticalAlignTablet' ),
+					[ horizontalAlignRule || 'justifyContent' ]: getValue( 'horizontalAlignTablet' ),
+					[ verticalAlignRule || 'alignItems' ]: getValue( 'verticalAlignTablet' ),
 					maxWidth: getValue( 'widthTablet', `%s${ getValue( 'widthUnitTablet' ) || 'px' }` ),
 					minWidth: getValue( 'widthTablet' ) ? 'auto' : undefined, // Some themes can limit min-width, preventing block width.
 				},
@@ -81,8 +83,8 @@ export const addSizeStyles = ( styles, attributes, options = {} ) => {
 			mobile: {
 				[ selector ]: {
 					minHeight: getValue( 'heightMobile', `%s${ getValue( 'heightUnitMobile' ) || 'px' }` ),
-					justifyContent: getValue( 'horizontalAlignMobile' ),
-					alignItems: getValue( 'verticalAlignMobile' ),
+					[ horizontalAlignRule || 'justifyContent' ]: getValue( 'horizontalAlignMobile' ),
+					[ verticalAlignRule || 'alignItems' ]: getValue( 'verticalAlignMobile' ),
 					maxWidth: getValue( 'widthMobile', `%s${ getValue( 'widthUnitMobile' ) || 'px' }` ),
 					minWidth: getValue( 'widthMobile' ) ? 'auto' : undefined, // Some themes can limit min-width, preventing block width.
 				},

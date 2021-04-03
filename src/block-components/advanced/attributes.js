@@ -13,6 +13,10 @@ export const addAttributes = attrObject => {
 				type: 'number',
 				default: '',
 			},
+			overflow_: {
+				type: 'string',
+				default: '',
+			},
 
 			clear: {
 				type: 'string',

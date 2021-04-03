@@ -4,7 +4,7 @@
 import {
 	Advanced,
 	Alignment,
-	BlockDiv, Column, Image,
+	BlockDiv, Column, ContainerDiv, Image,
 } from '~stackable/block-components'
 import {
 	// __getValue,
@@ -19,6 +19,11 @@ const createStyles = ( version = '' ) => attributes => {
 	BlockDiv.addStyles( styles, attributes )
 	Column.addStyles( styles, attributes )
 	Advanced.addStyles( styles, attributes )
+	ContainerDiv.addStyles( styles, attributes, {
+		sizeSelector: '.stk-card__content',
+		sizeVerticalAlignRule: 'justifyContent',
+		sizeHorizontalAlignRule: 'alignSelf',
+	} )
 
 	// Column styles.
 

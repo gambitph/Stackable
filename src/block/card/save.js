@@ -11,6 +11,7 @@ import { withVersion } from '~stackable/higher-order'
 import { version as VERSION } from 'stackable'
 import {
 	BlockDiv,
+	ContainerDiv,
 	CustomCSS,
 	getAlignmentClasses,
 	getColumnClasses,
@@ -48,9 +49,8 @@ export const Save = props => {
 	const contentClassNames = classnames( [
 		'stk-block-content',
 		columnWrapperClass,
-	], {
-		'stk-container--no-padding': hasContainer,
-	} )
+		'stk--no-padding',
+	] )
 
 	const innerClassNames = classnames( [
 		'stk-inner-blocks',
@@ -70,7 +70,10 @@ export const Save = props => {
 				attributes={ attributes }
 			/>
 			<CustomCSS.Content attributes={ attributes } />
-			<div className={ contentClassNames }>
+			<ContainerDiv.Content
+				className={ contentClassNames }
+				attributes={ attributes }
+			>
 				{ props.attributes.imageUrl &&
 					<Image.Content
 						className="stk-card__image"
@@ -80,7 +83,7 @@ export const Save = props => {
 				<div className={ innerClassNames }>
 					<InnerBlocks.Content />
 				</div>
-			</div>
+			</ContainerDiv.Content>
 			<BlockLink.Content attributes={ attributes } />
 		</BlockDiv.Content>
 	)
