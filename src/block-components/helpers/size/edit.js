@@ -70,36 +70,26 @@ export const SizeControls = props => {
 				/>
 			</ResponsiveControl2>
 
-			{ getAttribute( 'height' ) !== '' && deviceType === 'Desktop' &&
+			<ResponsiveControl2
+				desktopProps={ {
+					value: getAttribute( 'VerticalAlign' ),
+					onChange: updateAttributeHandler( 'VerticalAlign' ),
+				} }
+				tabletProps={ {
+					value: getAttribute( 'VerticalAlignTablet' ),
+					onChange: updateAttributeHandler( 'VerticalAlignTablet' ),
+				} }
+				mobileProps={ {
+					value: getAttribute( 'VerticalAlignMobile' ),
+					onChange: updateAttributeHandler( 'VerticalAlignMobile' ),
+				} }
+			>
 				<AdvancedToolbarControl
 					label={ labelVerticalAlign }
-					screens="all"
 					controls="flex-vertical"
-					value={ getAttribute( 'VerticalAlign' ) }
-					onChange={ updateAttributeHandler( 'VerticalAlign' ) }
 					className="ugb--help-tip-advanced-block-vertical-align"
 				/>
-			}
-			{ ( getAttribute( 'height' ) !== '' || getAttribute( 'heightTablet' ) !== '' ) && deviceType === 'Tablet' &&
-				<AdvancedToolbarControl
-					label={ labelVerticalAlign }
-					screens="all"
-					controls="flex-vertical"
-					value={ getAttribute( 'VerticalAlignTablet' ) }
-					onChange={ updateAttributeHandler( 'VerticalAlignTablet' ) }
-					className="ugb--help-tip-advanced-block-vertical-align"
-				/>
-			}
-			{ ( getAttribute( 'height' ) !== '' || getAttribute( 'heightTablet' ) !== '' || getAttribute( 'heightMobile' ) !== '' ) && deviceType === 'Mobile' &&
-				<AdvancedToolbarControl
-					label={ labelVerticalAlign }
-					screens="all"
-					controls="flex-vertical"
-					value={ getAttribute( 'VerticalAlignMobile' ) }
-					onChange={ updateAttributeHandler( 'VerticalAlignMobile' ) }
-					className="ugb--help-tip-advanced-block-vertical-align"
-				/>
-			}
+			</ResponsiveControl2>
 
 			<ResponsiveControl2
 				desktopProps={ {
