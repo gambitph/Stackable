@@ -77,7 +77,7 @@ export const BackgroundControls = props => {
 				<AdvancedRangeControl
 					label={ __( 'Background Color Opacity', i18n ) }
 					value={ getAttribute( 'backgroundColorOpacity' ) }
-					onChange={ updateAttributeHandler( 'onChangeBackgroundColorOpacity' ) }
+					onChange={ updateAttributeHandler( 'backgroundColorOpacity' ) }
 					min={ 0 }
 					max={ 1 }
 					step={ 0.1 }
