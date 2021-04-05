@@ -1,12 +1,12 @@
 /**
  * Internal dependencies
  */
-import BaseControlMultiLabel from '../base-control-multi-label'
+import { BaseControl } from '..'
 
 /**
  * WordPress dependencies
  */
-import { BaseControl, TextControl } from '@wordpress/components'
+import { TextControl } from '@wordpress/components'
 
 /**
  * External dependencies
@@ -14,19 +14,20 @@ import { BaseControl, TextControl } from '@wordpress/components'
 import classnames from 'classnames'
 import { omit } from 'lodash'
 
-const AdvancedSelectControl = props => {
+const AdvancedTextControl = props => {
 	return (
 		<BaseControl
 			help={ props.help }
 			className={ classnames( 'ugb-advanced-text-control', props.className ) }
+			label={ props.label }
+			units={ props.units }
+			unit={ props.unit }
+			onChangeUnit={ props.onChangeUnit }
+			screens={ props.screens }
+			allowReset={ true }
+			value={ props.value }
+			onChange={ props.onChange }
 		>
-			<BaseControlMultiLabel
-				label={ props.label }
-				units={ props.units }
-				unit={ props.unit }
-				onChangeUnit={ props.onChangeUnit }
-				screens={ props.screens }
-			/>
 			<TextControl
 				{ ...omit( props, [ 'className', 'help', 'label', 'units', 'unit', 'onChangeUnit', 'screens' ] ) }
 			/>
@@ -34,7 +35,7 @@ const AdvancedSelectControl = props => {
 	)
 }
 
-AdvancedSelectControl.defaultProps = {
+AdvancedTextControl.defaultProps = {
 	onChange: () => {},
 	onChangeUnit: () => {},
 	help: '',
@@ -44,4 +45,4 @@ AdvancedSelectControl.defaultProps = {
 	screens: [ 'desktop' ],
 }
 
-export default AdvancedSelectControl
+export default AdvancedTextControl

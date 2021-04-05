@@ -410,6 +410,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 			>
 				<HeadingButtonsControl
 					value={ titleTag || 'h3' }
+					defaultValue="h3"
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
 				<TypographyControlHelper

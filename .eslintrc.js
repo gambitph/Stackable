@@ -64,6 +64,9 @@ module.exports = {
 
 		// No translator comments.
 		'@wordpress/i18n-translator-comments': 'off',
+
+		// We use our own BaseControl.
+		'@wordpress/no-base-control-with-label-without-id': 'off',
 	},
 	globals: {
 		localStorage: true,

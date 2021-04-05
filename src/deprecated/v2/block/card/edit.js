@@ -463,6 +463,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 			>
 				<HeadingButtonsControl
 					value={ titleTag || 'h4' }
+					defaultValue="h4"
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
 				<TypographyControlHelper

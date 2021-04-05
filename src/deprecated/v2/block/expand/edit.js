@@ -84,6 +84,7 @@ addFilter( 'stackable.expand.edit.inspector.style.before', 'stackable/expand', (
 			>
 				<HeadingButtonsControl
 					value={ titleTag || 'h4' }
+					defaultValue="h4"
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
 				<TypographyControlHelper

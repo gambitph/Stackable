@@ -21,6 +21,12 @@
 		color: #555d66;
 		box-shadow: none !important;
 		margin-left: 5px;
+		.dashicon {
+			font-size: 16px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 		svg {
 			height: 16px;
 			width: 16px;

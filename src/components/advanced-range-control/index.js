@@ -1,13 +1,8 @@
 /**
  * Internal dependencies
  */
-import BaseControlMultiLabel from '../base-control-multi-label'
 import RangeControl from './range-control'
-
-/**
- * WordPress dependencies
- */
-import { BaseControl } from '@wordpress/components'
+import { BaseControl } from '..'
 
 /**
  * External dependencies
@@ -24,7 +19,7 @@ export const convertToNumber = value => {
 }
 
 const AdvancedRangeControl = props => {
-	const propsToPass = { ...omit( props, [ 'className', 'help', 'label', 'units', 'unit', 'onChangeUnit', 'screens', 'placeholder', 'initialPosition' ] ) }
+	const propsToPass = { ...omit( props, [ 'className', 'help', 'label', 'units', 'unit', 'onChangeUnit', 'screens', 'placeholder', 'initialPosition', 'allowReset' ] ) }
 	const deviceType = useDeviceType()
 
 	// Change the min, max & step values depending on the unit used.
@@ -99,14 +94,16 @@ const AdvancedRangeControl = props => {
 		<BaseControl
 			help={ props.help }
 			className={ classNames }
+			label={ props.label }
+			units={ props.units }
+			unit={ props.unit }
+			onChangeUnit={ props.onChangeUnit }
+			screens={ props.screens }
+			onChange={ props.onChange }
+			allowReset={ props.allowReset }
+			value={ props.value }
+			defaultValue={ props.defaultValue }
 		>
-			<BaseControlMultiLabel
-				label={ props.label }
-				units={ props.units }
-				unit={ props.unit }
-				onChangeUnit={ props.onChangeUnit }
-				screens={ props.screens }
-			/>
 			<RangeControl
 				{ ...propsToPass }
 			/>
@@ -128,6 +125,8 @@ AdvancedRangeControl.defaultProps = {
 	min: -Infinity,
 	sliderMin: null,
 	sliderMax: null,
+	allowReset: false,
+	defaultValue: '',
 }
 
 export default AdvancedRangeControl

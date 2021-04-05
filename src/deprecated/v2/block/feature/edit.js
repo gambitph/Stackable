@@ -3,6 +3,7 @@
  */
 import { i18n, showProNotice } from 'stackable'
 import {
+	AdvancedToggleControl,
 	DesignPanelBody,
 	ImageUploadPlaceholder,
 	ProControlButton,
@@ -67,9 +68,6 @@ import { showOptions } from './util'
 /**
  * WordPress dependencies
  */
-import {
-	ToggleControl,
-} from '@wordpress/components'
 import { __, sprintf } from '@wordpress/i18n'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 import { Fragment } from '@wordpress/element'
@@ -190,7 +188,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 					</ResponsiveControl>
 				}
 				{ show.reverseHorizontally &&
-					<ToggleControl
+					<AdvancedToggleControl
 						label={ __( 'Reverse Horizontally', i18n ) }
 						checked={ invert }
 						onChange={ invert => setAttributes( { invert } ) }
@@ -405,6 +403,7 @@ addFilter( 'stackable.feature.edit.inspector.style.before', 'stackable/feature',
 			>
 				<HeadingButtonsControl
 					value={ titleTag || 'h2' }
+					defaultValue="h2"
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
 				<TypographyControlHelper

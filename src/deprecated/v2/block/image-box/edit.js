@@ -2,6 +2,7 @@
  * External dependencies
  */
 import {
+	AdvancedSelectControl,
 	DesignPanelBody,
 	ImageUploadPlaceholder,
 	ProControlButton,
@@ -59,10 +60,7 @@ import { showOptions } from './util'
  * WordPress dependencies
  */
 import { RichText } from '@wordpress/block-editor'
-import {
-	SelectControl,
-	withFocusOutside,
-} from '@wordpress/components'
+import { withFocusOutside } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { Component, Fragment } from '@wordpress/element'
@@ -418,7 +416,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 				title={ __( 'Effects', i18n ) }
 				initialOpen={ false }
 			>
-				<SelectControl
+				<AdvancedSelectControl
 					label={ __( 'Image Hover Effect', i18n ) }
 					options={ applyFilters( 'stackable.image-box.edit.image-hover-effects', [
 						{ label: __( 'None', i18n ), value: '' },
@@ -505,6 +503,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 			>
 				<HeadingButtonsControl
 					value={ titleTag || 'h4' }
+					defaultValue="h4"
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
 				<TypographyControlHelper

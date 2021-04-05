@@ -11,6 +11,7 @@ import { showOptions } from './util'
  * External dependencies
  */
 import {
+	AdvancedToggleControl,
 	BlockContainer,
 	DesignPanelBody,
 	ContentAlignControl,
@@ -46,9 +47,6 @@ import { range } from 'lodash'
  * WordPress dependencies
  */
 import { i18n } from 'stackable'
-import {
-	ToggleControl,
-} from '@wordpress/components'
 import {
 	__, sprintf, _x,
 } from '@wordpress/i18n'
@@ -134,7 +132,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 					className="ugb--help-tip-general-columns"
 				/>
 				{ show.reverseTitle &&
-					<ToggleControl
+					<AdvancedToggleControl
 						label={ __( 'Reverse Title', i18n ) }
 						checked={ reverseTitle }
 						onChange={ reverseTitle => setAttributes( { reverseTitle } ) }
@@ -277,6 +275,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 			>
 				<HeadingButtonsControl
 					value={ titleTag || 'h2' }
+					defaultValue="h2"
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
 				<TypographyControlHelper
@@ -321,7 +320,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 				] }
 				toggleAttributeName="showSubtitle"
 			>
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Subtitle on Top', i18n ) }
 					checked={ subtitleOnTop }
 					onChange={ subtitleOnTop => setAttributes( { subtitleOnTop } ) }

@@ -10,7 +10,7 @@ const BaseControlMultiLabel = props => {
 			<div className="ugb-base-control-multi-label__label components-base-control__label">{ props.label }</div>
 			<ResponsiveToggle screens={ screens } />
 			<div className="ugb-base-control-multi-label__units">
-				{ props.units.length > 1 &&
+				{ props.units?.length > 1 &&
 					props.units.map( ( unit, i ) => {
 						return (
 							<button

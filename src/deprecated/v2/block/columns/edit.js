@@ -13,6 +13,7 @@ import ImageDesignTiled from './images/tiled.png'
  * External dependencies
  */
 import {
+	AdvancedToggleControl,
 	BlockContainer,
 	ProControlButton,
 	ContentAlignControl,
@@ -42,7 +43,6 @@ import { i18n, showProNotice } from 'stackable'
 /**
  * WordPress dependencies
  */
-import { ToggleControl } from '@wordpress/components'
 import {
 	__, sprintf, _x,
 } from '@wordpress/i18n'
@@ -311,7 +311,7 @@ addFilter( 'stackable.columns.edit.inspector.style.before', 'stackable/columns',
 				<ControlSeparator />
 
 				{ show.noPaddings &&
-					<ToggleControl
+					<AdvancedToggleControl
 						label={ __( 'No Paddings', i18n ) }
 						checked={ noPaddings }
 						onChange={ noPaddings => setAttributes( { noPaddings } ) }

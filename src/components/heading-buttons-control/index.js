@@ -55,7 +55,7 @@ const TAG_OPTIONS = [
 	},
 	{
 		value: 'p',
-		title: sprintf( _x( '%s', 'Nth Title', i18n ), __( 'Paragraph', i18n ) ),
+		title: __( 'Paragraph', i18n ),
 		icon: <SVGP />,
 	},
 ]

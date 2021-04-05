@@ -465,6 +465,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 			>
 				<HeadingButtonsControl
 					value={ nameTag || 'h4' }
+					defaultValue="h4"
 					onChange={ nameTag => setAttributes( { nameTag } ) }
 				/>
 				<TypographyControlHelper
@@ -571,7 +572,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 					toggleAttributeName="showSocial"
 				>
 					<div className="components-base-control">
-						<div className="components-base-control__label">{ __( 'Social Buttons', i18n ) }</div>
+						<div className="components-base-control__label ugb-team-member-setting__social-label">{ __( 'Social Buttons', i18n ) }</div>
 						{ Object.keys( SOCIAL_SITES ).map( socialId => {
 							return (
 								<ToggleControl

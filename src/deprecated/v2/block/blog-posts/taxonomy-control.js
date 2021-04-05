@@ -133,12 +133,13 @@ class TaxonomyControl extends Component {
 		}
 
 		return (
-			<div>
+			<div className="stk-blog-taxonomy-controls">
 				{ isPro &&
 					<AdvancedSelectControl
 						label={ __( 'Post Type', i18n ) }
 						options={ postTypeOptions }
 						value={ this.props.postType }
+						allowReset={ false }
 						onChange={ value => {
 							const taxonomyTypesAvailable = Object.keys( this.state.termList[ value ].taxonomies )
 							this.props.onChangePostType( value )
@@ -152,6 +153,7 @@ class TaxonomyControl extends Component {
 						label={ __( 'Filter by Taxonomy', i18n ) }
 						options={ taxonomyTypeOptions }
 						value={ this.props.taxonomyType }
+						allowReset={ false }
 						onChange={ value => {
 							this.props.onChangeTaxonomyType( value )
 							this.props.onChangeTaxonomy( '' )
@@ -162,6 +164,7 @@ class TaxonomyControl extends Component {
 				<Fragment>
 					<AdvancedSelectControl
 						label={ __( 'Taxonomy Filter Type', i18n ) }
+						allowReset={ false }
 						options={ [
 							{ label: __( 'Included In', i18n ), value: '__in' },
 							{ label: __( 'Not In', i18n ), value: '__not_in' },

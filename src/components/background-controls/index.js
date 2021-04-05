@@ -3,6 +3,7 @@
  */
 import {
 	AdvancedRangeControl,
+	AdvancedToggleControl,
 	AdvancedSelectControl,
 	BlendModeControl,
 	ButtonIconPopoverControl,
@@ -19,7 +20,6 @@ import { urlIsVideo } from '~stackable/util'
  */
 import {
 	BaseControl,
-	ToggleControl,
 } from '@wordpress/components'
 import {
 	__, _x, sprintf,
@@ -64,9 +64,9 @@ const BackgroundControls = props => {
 			{ props.onChangeBackgroundColor && (
 				<ColorPaletteControl
 					label={
-						props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' ?
-							sprintf( _x( '%s #%d', 'Panel title', i18n ), props.labelBackgroundColor, 1 ) :
-							props.labelBackgroundColor
+						props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient'
+							? sprintf( _x( '%s #%d', 'Panel title', i18n ), props.labelBackgroundColor, 1 )
+							: props.labelBackgroundColor
 					}
 					value={ props.backgroundColor }
 					onChange={ props.onChangeBackgroundColor }
@@ -230,7 +230,7 @@ const BackgroundControls = props => {
 			{ props.onChangeFixedBackground && props.onChangeBackgroundMedia &&
 				( props.backgroundMediaURL || props.tabletBackgroundMediaURL || props.mobileBackgroundMediaURL ) &&
 				! isBackgroundVideo() && (
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Fixed Background', i18n ) }
 					checked={ props.fixedBackground }
 					onChange={ props.onChangeFixedBackground }

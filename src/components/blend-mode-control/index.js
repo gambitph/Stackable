@@ -1,8 +1,12 @@
 /**
+ * Internal dependencies
+ */
+import { AdvancedSelectControl } from '..'
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { SelectControl } from '@wordpress/components'
 
 /**
  * External dependencies
@@ -12,7 +16,7 @@ import classnames from 'classnames'
 
 const BlendModeControl = props => {
 	return (
-		<SelectControl
+		<AdvancedSelectControl
 			{ ...props }
 			className={ classnames( [ 'ugb--help-tip-background-blend-mode', props.className ] ) }
 			options={ [

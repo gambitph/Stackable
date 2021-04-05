@@ -5,6 +5,7 @@ import { i18n } from 'stackable'
 import {
 	PanelAdvancedSettings,
 	InspectorAdvancedControls,
+	AdvancedToggleControl,
 } from '~stackable/components'
 import { useBlockAttributes } from '~stackable/hooks'
 
@@ -15,7 +16,6 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 import { useDispatch } from '@wordpress/data'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { ToggleControl } from '@wordpress/components'
 
 export const Edit = () => {
 	const { clientId } = useBlockEditContext()
@@ -34,17 +34,17 @@ export const Edit = () => {
 					title={ __( 'Responsive', i18n ) }
 					initialOpen={ false }
 				>
-					<ToggleControl
+					<AdvancedToggleControl
 						label={ __( 'Hide on Desktop', i18n ) }
 						checked={ hideDesktop }
 						onChange={ hideDesktop => updateBlockAttributes( clientId, { hideDesktop } ) }
 					/>
-					<ToggleControl
+					<AdvancedToggleControl
 						label={ __( 'Hide on Tablet', i18n ) }
 						checked={ hideTablet }
 						onChange={ hideTablet => updateBlockAttributes( clientId, { hideTablet } ) }
 					/>
-					<ToggleControl
+					<AdvancedToggleControl
 						label={ __( 'Hide on Mobile', i18n ) }
 						checked={ hideMobile }
 						onChange={ hideMobile => updateBlockAttributes( clientId, { hideMobile } ) }

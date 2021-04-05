@@ -1,30 +1,31 @@
 /**
  * Internal dependencies
  */
-import BaseControlMultiLabel from '../base-control-multi-label'
-// import SVGAllImage from './images/all.svg'
+import SVGAllImage from './images/all.svg'
 import SVGBottomImage from './images/bottom.svg'
-// import SVGHorizontalImage from './images/horizontal.svg'
 import SVGLeftImage from './images/left.svg'
 import SVGRightImage from './images/right.svg'
 import SVGTopImage from './images/top.svg'
+import SVGFullImage from './images/full.svg'
 
 /**
  * WordPress dependencies
  */
 import {
-	BaseControl, Dashicon, Tooltip,
+	Tooltip,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { Component, Fragment } from '@wordpress/element'
-// import SVGVerticalImage from './images/vertical.svg'
+
 /**
  * External dependencies
  */
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 import { pick } from 'lodash'
-import { AdvancedRangeControl, Button } from '~stackable/components'
+import {
+	AdvancedRangeControl, Button, BaseControl,
+} from '~stackable/components'
 
 class FourRangeControl extends Component {
 	constructor() {
@@ -168,12 +169,9 @@ class FourRangeControl extends Component {
 		const lockButton = <Button
 			className={ lockClassNames }
 			onClick={ this.onToggleLock }
-			icon={ (
-				<Dashicon
-					icon={ this.state.locked ? 'admin-links' : 'editor-unlink' }
-					size="16"
-				/>
-			) }
+			isSecondary
+			icon={ this.state.locked ? <SVGAllImage /> : <SVGFullImage /> }
+			label={ this.state.locked ? __( 'Individual sides', i18n ) : __( 'All sides', i18n ) }
 		/>
 
 		// The ALL option can either be 'all', 'vertical', or 'horizontal'.
@@ -188,15 +186,14 @@ class FourRangeControl extends Component {
 			<BaseControl
 				help={ this.props.help }
 				className={ classnames( 'ugb-four-range-control', this.props.className, { 'ugb--locked': this.state.locked } ) }
+				label={ this.props.label }
+				units={ this.props.units }
+				unit={ this.props.unit }
+				onChangeUnit={ this.props.onChangeUnit }
+				screens={ this.props.screens }
+				afterButton={ lockButton }
+				allowReset={ true }
 			>
-				<BaseControlMultiLabel
-					label={ this.props.label }
-					units={ this.props.units }
-					unit={ this.props.unit }
-					onChangeUnit={ this.props.onChangeUnit }
-					screens={ this.props.screens }
-					afterButton={ lockButton }
-				/>
 				{ this.state.locked &&
 					<div className="ugb-four-range-control__range">
 						{

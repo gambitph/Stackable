@@ -1,9 +1,4 @@
 /**
- * Internal dependencies
- */
-import BaseControlMultiLabel from '../base-control-multi-label'
-
-/**
  * WordPress dependencies
  */
 import { Component, createRef } from '@wordpress/element'
@@ -13,10 +8,10 @@ import { __ } from '@wordpress/i18n'
  * External dependencies
  */
 import Autosuggest from 'react-autosuggest'
-import { BaseControl } from '@wordpress/components'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 import { kebabCase } from 'lodash'
+import { BaseControl } from '..'
 
 // https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
 const escapeRegexCharacters = str => str.replace( /[.*+?^${}()|[\]\\]/g, '\\$&' )
@@ -179,11 +174,16 @@ class AdvancedAutosuggestControl extends Component {
 			<BaseControl
 				help={ this.props.help }
 				className={ classnames( 'ugb-advanced-autosuggest-control', this.props.className ) }
+				label={ this.props.label }
+				screens={ this.props.screens }
+				value={ this.props.value }
+				onChange={ value => { // Will be used to reset.
+					if ( value === '' ) {
+						this.onChange( null, { newValue: '' } )
+					}
+				} }
+				allowReset={ this.props.allowReset }
 			>
-				<BaseControlMultiLabel
-					label={ this.props.label }
-					screens={ this.props.screens }
-				/>
 				<div className="ugb-advanced-autosuggest-control__select" ref={ this.autosuggestDiv }>
 					<Autosuggest
 						multiSection={ isGroupedOptions( this.props.options ) }
@@ -225,6 +225,7 @@ AdvancedAutosuggestControl.defaultProps = {
 	noMatchesLabel: __( 'No matches found', i18n ),
 	renderOption: null, // If given a function, it will be called to render the option.
 	highlightValueOnFocus: false,
+	allowReset: true,
 }
 
 export default AdvancedAutosuggestControl

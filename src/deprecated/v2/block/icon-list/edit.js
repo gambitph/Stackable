@@ -11,6 +11,7 @@ import {
 	withClickOpenInspector,
 } from '~stackable/higher-order'
 import {
+	AdvancedToggleControl,
 	AdvancedRangeControl,
 	BlockContainer,
 	ColorPaletteControl,
@@ -40,9 +41,6 @@ import {
 	Fragment, createRef, useEffect, useState,
 } from '@wordpress/element'
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import {
-	ToggleControl,
-} from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { compose } from '@wordpress/compose'
 import { select } from '@wordpress/data'
@@ -105,7 +103,7 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 					/>
 				</ResponsiveControl>
 				{ ( ( columns && columns > 1 ) || ( tabletColumns && tabletColumns > 1 ) || ( mobileColumns && mobileColumns > 1 ) ) && (
-					<ToggleControl
+					<AdvancedToggleControl
 						label={ __( 'Display as a grid (left to right & evenly spaced)', i18n ) }
 						checked={ displayAsGrid }
 						onChange={ displayAsGrid => setAttributes( { displayAsGrid } ) }
@@ -247,9 +245,9 @@ const Edit = props => {
 		const { __experimentalGetPreviewDeviceType: getPreviewDeviceType } = select( 'core/edit-post' )
 		const previewDeviceType = getPreviewDeviceType ? getPreviewDeviceType() : 'Desktop'
 		const currentIconSize = (
-			previewDeviceType === 'Desktop' ? props.attributes.iconSize :
-				previewDeviceType === 'Tablet' ? ( props.attributes.iconTabletSize || props.attributes.iconSize ) :
-					( props.attributes.iconMobileSize || props.attributes.iconTabletSize || props.attributes.iconSize ) ) ||
+			previewDeviceType === 'Desktop' ? props.attributes.iconSize
+				: previewDeviceType === 'Tablet' ? ( props.attributes.iconTabletSize || props.attributes.iconSize )
+					: ( props.attributes.iconMobileSize || props.attributes.iconTabletSize || props.attributes.iconSize ) ) ||
 		 20
 
 		// Check if the click location if it's estimated to be on the icon.

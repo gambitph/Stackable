@@ -124,8 +124,14 @@ const StackableRangeControl = props => {
 			onChange={ handleOnChange }
 			withInputField={ false }
 			allowReset={ false }
-			max={ props.sliderMax !== null ? props.sliderMax : props.max }
-			min={ props.sliderMin !== null ? props.sliderMin : props.min }
+			min={ props.sliderMin !== null
+				? props.sliderMin
+				: ( props.min === -Infinity ? 0 : props.min ) // Dont' allow Infinity on the slider since it will not move.
+			}
+			max={ props.sliderMax !== null
+				? props.sliderMax
+				: ( props.max === Infinity ? 100 : props.max ) // Dont' allow Infinity on the slider since it will not move.
+			}
 		/>
 		{ withInputField && isNumberControlSupported && (
 			<NumberControl

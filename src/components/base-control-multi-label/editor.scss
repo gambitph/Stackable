@@ -3,6 +3,7 @@
 	grid-template-columns: auto 1fr auto;
 	margin-bottom: 5px;
 	align-items: center;
+	overflow-x: hidden;
 	.ugb-base-control-multi-label__label {
 		margin-bottom: 0;
 	}

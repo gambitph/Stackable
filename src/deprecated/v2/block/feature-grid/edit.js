@@ -363,6 +363,7 @@ addFilter( 'stackable.feature-grid.edit.inspector.style.before', 'stackable/feat
 			>
 				<HeadingButtonsControl
 					value={ titleTag || 'h5' }
+					defaultValue="h5"
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
 				<TypographyControlHelper

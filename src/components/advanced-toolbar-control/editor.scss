@@ -3,6 +3,9 @@
 	&.ugb-toolbar--full-width {
 		display: flex;
 		flex-wrap: nowrap;
+		button {
+			min-width: auto;
+		}
 		> button,
 		> button > svg {
 			width: 100% !important;

@@ -12,6 +12,7 @@ import {
 	ControlSeparator,
 	ImageControl,
 	ResponsiveControl2,
+	AdvancedToggleControl,
 } from '~stackable/components'
 import {
 	useAttributeEditHandlers, useDeviceType,
@@ -25,7 +26,6 @@ import { useCallback, Fragment } from '@wordpress/element'
 import {
 	__, _x, sprintf,
 } from '@wordpress/i18n'
-import { ToggleControl } from '@wordpress/components'
 
 // TODO: Post v3, add option to select the image size for the background (full, large, medium)
 export const BackgroundControls = props => {
@@ -252,7 +252,7 @@ export const BackgroundControls = props => {
 			}
 
 			{ hasBackgroundMedia && ! isBackgroundVideo() &&
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Fixed Background', i18n ) }
 					checked={ getAttribute( 'fixedBackground' ) }
 					onChange={ updateAttributeHandler( 'fixedBackground' ) }

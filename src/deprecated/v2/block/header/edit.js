@@ -2,6 +2,7 @@
  * External dependencies
  */
 import {
+	AdvancedToggleControl,
 	AdvancedRangeControl,
 	AlignButtonsControl,
 	BackgroundControlsHelper,
@@ -58,9 +59,6 @@ import { showOptions } from './util'
  * WordPress dependencies
  */
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import {
-	ToggleControl,
-} from '@wordpress/components'
 import {
 	__, _x, sprintf,
 } from '@wordpress/i18n'
@@ -152,20 +150,20 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 				initialOpen={ true }
 			>
 				{ ! [ 'basic', 'plain', 'center-overlay' ].includes( design ) &&
-					<ToggleControl
+					<AdvancedToggleControl
 						label={ __( 'Reverse Horizontally', i18n ) }
 						checked={ invert }
 						onChange={ invert => setAttributes( { invert } ) }
 					/>
 				}
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Full Height', i18n ) }
 					checked={ fullHeight }
 					onChange={ fullHeight => setAttributes( { fullHeight } ) }
 					className="ugb--help-tip-full-height"
 				/>
 				{ show.restrictContent &&
-					<ToggleControl
+					<AdvancedToggleControl
 						label={ __( 'Restrict to Content Width', i18n ) }
 						checked={ restrictContentWidth }
 						onChange={ restrictContentWidth => setAttributes( { restrictContentWidth } ) }
@@ -361,6 +359,7 @@ addFilter( 'stackable.header.edit.inspector.style.before', 'stackable/header', (
 			>
 				<HeadingButtonsControl
 					value={ titleTag || 'h2' }
+					defaultValue="h2"
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
 				<TypographyControlHelper

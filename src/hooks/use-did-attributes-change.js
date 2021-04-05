@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import { pick } from 'lodash'
+
+/**
  * WordPress dependencies
  */
 import { select } from '@wordpress/data'
@@ -12,11 +17,13 @@ const blockAttributeDefaults = {}
  * supplied.
  *
  * @param {Function} callback Function to call when a given attribute has
- *                            changed
+ * changed
  * @param {string} blockName Name of the block
  * @param {Object} attributes The current attribute object
+ * @param {boolean} nonDefaultsOnly If true, an attribute set to a default value
+ * (e.g. blank string) will not trigger a change
  */
-export const useDidAttributesChange = ( callback, blockName, attributes ) => {
+export const useDidAttributesChange = ( callback, blockName, attributes, nonDefaultsOnly = true ) => {
 	// We keep the current state of the attributes here.
 	const [ attributeValues, setAttributeValues ] = useState( attributes )
 
@@ -34,17 +41,30 @@ export const useDidAttributesChange = ( callback, blockName, attributes ) => {
 	// non-default value.
 	useEffect( () => {
 		const differences = Object.keys( attributes ).filter( k => attributes[ k ] !== attributeValues[ k ] )
-		setAttributeValues( attributes )
 
 		// If one of the attributes were changed into a non-default value,
 		// trigger the callback.
-		differences.some( attrName => {
-			const defaultValue = blockAttributeDefaults[ blockName ][ attrName ]
-			if ( attributes[ attrName ] !== defaultValue ) {
-				callback()
-				return true
-			}
-			return false
-		} )
+		const attrsChanged = []
+		if ( nonDefaultsOnly ) {
+			differences.forEach( attrName => {
+				const defaultValue = blockAttributeDefaults[ blockName ][ attrName ]
+				if ( attributes[ attrName ] !== defaultValue ) {
+					attrsChanged.push( attrName )
+				}
+			} )
+		} else {
+			attrsChanged.push( ...differences )
+		}
+
+		// Do the callback on the attributes that have changed.
+		if ( attrsChanged.length ) {
+			callback(
+				pick( attributes, attrsChanged ), // New attributes
+				pick( attributeValues, attrsChanged ) // Old attributes
+			)
+		}
+
+		// Our new attributes
+		setAttributeValues( attributes )
 	}, Object.values( attributes ) )
 }

@@ -286,6 +286,7 @@ addFilter( 'stackable.cta.edit.inspector.style.before', 'stackable/cta', ( outpu
 			>
 				<HeadingButtonsControl
 					value={ titleTag || 'h3' }
+					defaultValue="h3"
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
 				<TypographyControlHelper

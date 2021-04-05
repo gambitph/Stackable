@@ -13,6 +13,7 @@ import ImageDesignImage3 from './images/image3.png'
  * External dependencies
  */
 import {
+	AdvancedToggleControl,
 	ColumnPaddingControl,
 	BlockContainer,
 	DesignPanelBody,
@@ -48,7 +49,6 @@ import classnames from 'classnames'
  * WordPress dependencies
  */
 import { i18n, showProNotice } from 'stackable'
-import { ToggleControl } from '@wordpress/components'
 import {
 	__, sprintf, _x,
 } from '@wordpress/i18n'
@@ -156,6 +156,7 @@ addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/contain
 							{ label: __( 'Half-screen height', i18n ), value: 'half' },
 							{ label: __( 'Full-screen height', i18n ), value: 'full' },
 						] }
+						defaultValue="normal"
 					/>
 				</ResponsiveControl>
 
@@ -192,7 +193,7 @@ addFilter( 'stackable.container.edit.inspector.style.before', 'stackable/contain
 				}
 
 				{ show.restrictContent &&
-					<ToggleControl
+					<AdvancedToggleControl
 						label={ __( 'Restrict to Content Width', i18n ) }
 						checked={ restrictContentWidth }
 						onChange={ restrictContentWidth => setAttributes( { restrictContentWidth } ) }

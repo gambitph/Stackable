@@ -414,6 +414,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 			>
 				<HeadingButtonsControl
 					value={ titleTag || 'h4' }
+					defaultValue="h4"
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
 				<TypographyControlHelper

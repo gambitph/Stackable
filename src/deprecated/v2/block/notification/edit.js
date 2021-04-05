@@ -451,6 +451,7 @@ addFilter( 'stackable.notification.edit.inspector.style.before', 'stackable/noti
 			>
 				<HeadingButtonsControl
 					value={ titleTag || 'h5' }
+					defaultValue="h5"
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
 				<TypographyControlHelper

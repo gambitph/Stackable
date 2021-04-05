@@ -163,6 +163,7 @@ const BlockList = props => {
 				isSmall={ true }
 				fullwidth={ false }
 				isToggleOnly={ true }
+				allowReset={ false }
 			/>
 			{ viewBy === 'ui-kits' && uiKitListKeys.reduce( ( uiKits, uiKitCategory, i ) => {
 				const isSelected = ( ( selected === '' && i === 0 ) || selected === uiKitCategory ) && ! props.forceBlock

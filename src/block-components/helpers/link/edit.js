@@ -2,7 +2,9 @@
  * External dependencies
  */
 import { i18n } from 'stackable'
-import { LinkControl } from '~stackable/components'
+import {
+	AdvancedTextControl, AdvancedToggleControl, LinkControl,
+} from '~stackable/components'
 
 /**
  * WordPress dependencies
@@ -10,7 +12,6 @@ import { LinkControl } from '~stackable/components'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { useAttributeEditHandlers } from '~stackable/hooks'
-import { TextControl, ToggleControl } from '@wordpress/components'
 
 export const LinkControls = props => {
 	const {
@@ -25,12 +26,12 @@ export const LinkControls = props => {
 				value={ getAttribute( 'url' ) }
 				onChange={ updateAttributeHandler( 'url' ) }
 			/>
-			<ToggleControl
+			<AdvancedToggleControl
 				label={ __( 'Open in new tab', i18n ) }
 				checked={ getAttribute( 'newTab' ) }
 				onChange={ updateAttributeHandler( 'newTab' ) }
 			/>
-			<TextControl
+			<AdvancedTextControl
 				label={ __( 'Link rel', i18n ) }
 				value={ getAttribute( 'rel' ) }
 				onChange={ updateAttributeHandler( 'rel' ) }

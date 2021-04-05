@@ -7,6 +7,7 @@ import './pro'
  * External dependencies
  */
 import {
+	AdvancedToggleControl,
 	AdvancedRangeControl,
 	BlockContainer,
 	ColorPaletteControl,
@@ -25,9 +26,6 @@ import createStyles from './style'
  * WordPress dependencies
  */
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import {
-	ToggleControl,
-} from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { compose } from '@wordpress/compose'
@@ -119,14 +117,15 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 					onChange={ layer1Width => setAttributes( { layer1Width } ) }
 					allowReset={ true }
 					placeholder="1"
+					defaultValue={ 1 }
 					className="ugb--help-tip-separator-width"
 				/>
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Flip Horizontally', i18n ) }
 					checked={ layer1Flip }
 					onChange={ layer1Flip => setAttributes( { layer1Flip } ) }
 				/>
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Shadow', i18n ) }
 					checked={ layer1Shadow }
 					onChange={ layer1Shadow => setAttributes( { layer1Shadow } ) }
@@ -148,6 +147,7 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						} }
 						allowReset={ true }
 						placeholder="200"
+						defaultValue={ 200 }
 					/>
 				</WhenResponsiveScreen>
 				<WhenResponsiveScreen screen="tablet">
@@ -174,12 +174,12 @@ addFilter( 'stackable.separator.edit.inspector.style.before', 'stackable/separat
 						allowReset={ true }
 					/>
 				</WhenResponsiveScreen>
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Flip Vertically', i18n ) }
 					checked={ flipVertically }
 					onChange={ flipVertically => setAttributes( { flipVertically } ) }
 				/>
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Flip Horizontally', i18n ) }
 					checked={ flipHorizontally }
 					onChange={ flipHorizontally => setAttributes( { flipHorizontally } ) }

@@ -360,6 +360,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 			>
 				<HeadingButtonsControl
 					value={ titleTag || 'h4' }
+					defaultValue="h4"
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
 				<TypographyControlHelper

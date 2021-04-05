@@ -418,6 +418,7 @@ addFilter( 'stackable.testimonial.edit.inspector.style.before', 'stackable/testi
 				<HeadingButtonsControl
 					label={ sprintf( _x( '%s HTML Tag', 'component' ), __( 'Name', i18n ) ) }
 					value={ nameTag || 'h4' }
+					defaultValue="h4"
 					onChange={ nameTag => setAttributes( { nameTag } ) }
 				/>
 				<TypographyControlHelper

@@ -5,11 +5,16 @@
  * https://github.com/WordPress/gutenberg/issues/13018
  */
 /**
+ * Internal dependencies
+ */
+import { BaseControl } from '..'
+
+/**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n'
 import {
-	BaseControl, ColorIndicator, ColorPalette,
+	ColorIndicator, ColorPalette,
 } from '@wordpress/components'
 import { compose, ifCondition } from '@wordpress/compose'
 import { getColorObjectByColorValue, withColorContext } from '@wordpress/block-editor'
@@ -60,7 +65,8 @@ const ColorPaletteControl = props => {
 		<BaseControl
 			className={ classnames( [ className, 'editor-color-palette-control' ] ) }
 			id="editor-color-palette-control"
-			label={ labelElement }>
+			label={ labelElement }
+		>
 			<ColorPalette
 				className="editor-color-palette-control__color-palette"
 				value={ value }

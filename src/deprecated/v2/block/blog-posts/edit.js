@@ -17,6 +17,7 @@ import TaxonomyControl from './taxonomy-control'
  * External dependencies
  */
 import {
+	AdvancedToggleControl,
 	DesignPanelBody,
 	ProControlButton,
 	ProControl,
@@ -71,7 +72,6 @@ import {
 	Placeholder,
 	Spinner,
 	TextControl,
-	ToggleControl,
 } from '@wordpress/components'
 import {
 	__, sprintf, _x,
@@ -260,8 +260,9 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					min={ 1 }
 					max={ 100 }
 					allowReset={ true }
-					value={ numberOfItems }
+					value={ numberOfItems || 6 }
 					onChange={ numberOfItems => setAttributes( { numberOfItems } ) }
+					defaultValue={ 6 }
 					placeholder="6"
 				/>
 				<AdvancedSelectControl
@@ -281,6 +282,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 						orderBy: value.split( ',' )[ 0 ],
 						order: value.split( ',' )[ 1 ],
 					} ) }
+					defaultValue="date,desc"
 				/>
 				<TaxonomyControl
 					postType={ postType }
@@ -575,7 +577,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					blockAttributes={ props.attributes }
 					placeholder="11"
 				/>
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Highlighted', i18n ) }
 					checked={ categoryHighlighted }
 					onChange={ categoryHighlighted => setAttributes( { categoryHighlighted } ) }
@@ -618,6 +620,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 			>
 				<HeadingButtonsControl
 					value={ titleTag || 'h3' }
+					defaultValue="h3"
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
 				<TypographyControlHelper
@@ -708,20 +711,23 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 				] }
 				toggleAttributeName="showMeta"
 			>
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Show Author', i18n ) }
 					checked={ showAuthor }
 					onChange={ showAuthor => setAttributes( { showAuthor } ) }
+					defaultValue={ true }
 				/>
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Show Date', i18n ) }
 					checked={ showDate }
 					onChange={ showDate => setAttributes( { showDate } ) }
+					defaultValue={ true }
 				/>
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Show Comments', i18n ) }
 					checked={ showComments }
 					onChange={ showComments => setAttributes( { showComments } ) }
+					defaultValue={ true }
 				/>
 				<TypographyControlHelper
 					attrNameTemplate="meta%s"
@@ -874,9 +880,9 @@ class Edit extends Component {
 		}, this.props ) )
 
 		// Removing posts from display should be instant.
-		const displayPosts = hasPosts && posts.length > numberOfItems ?
-			posts.slice( 0, numberOfItems ) :
-			posts
+		const displayPosts = hasPosts && posts.length > numberOfItems
+			? posts.slice( 0, numberOfItems )
+			: posts
 
 		const itemClasses = classnames( [
 			'ugb-blog-posts__item',
@@ -896,9 +902,9 @@ class Edit extends Component {
 					icon="admin-post"
 					label={ __( 'Posts', i18n ) }
 				>
-					{ ! Array.isArray( posts ) ?
-						<Spinner /> :
-						__( 'No posts found.', i18n )
+					{ ! Array.isArray( posts )
+						? <Spinner />
+						: __( 'No posts found.', i18n )
 					}
 				</Placeholder>
 			)

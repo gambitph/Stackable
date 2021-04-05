@@ -1,7 +1,6 @@
 /**
  * Internal dependencies
  */
-import BaseControlMultiLabel from '../base-control-multi-label'
 import SVGIconBottom from './images/bottom.svg'
 import SVGIconHorizontalCenter from './images/horizontal-center.svg'
 import SVGIconLeft from './images/left.svg'
@@ -10,6 +9,7 @@ import SVGIconStretch from './images/stretch.svg'
 import SVGIconTop from './images/top.svg'
 import SVGIconVerticalCenter from './images/vertical-center.svg'
 import Button from '../button'
+import { BaseControl } from '..'
 
 /**
  * External dependencies
@@ -20,7 +20,7 @@ import classnames from 'classnames'
  * WordPress dependencies
  */
 import {
-	BaseControl, ButtonGroup,
+	ButtonGroup,
 } from '@wordpress/components'
 import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
@@ -102,14 +102,17 @@ const AdvancedToolbarControl = props => {
 		<BaseControl
 			help={ props.help }
 			className={ classnames( 'ugb-advanced-toolbar-control', props.className ) }
+			label={ props.label }
+			units={ props.units }
+			unit={ props.unit }
+			onChangeUnit={ props.onChangeUnit }
+			screens={ props.screens }
+			allowReset={ props.allowReset }
+			value={ props.value }
+			defaultValue={ props.defaultValue }
+			onChange={ props.onChange }
+			isSmall={ props.isSmall }
 		>
-			<BaseControlMultiLabel
-				label={ props.label }
-				units={ props.units }
-				unit={ props.unit }
-				onChangeUnit={ props.onChangeUnit }
-				screens={ props.screens }
-			/>
 			<ButtonGroup
 				children={
 					controls.map( ( option, index ) => {
@@ -149,6 +152,8 @@ AdvancedToolbarControl.defaultProps = {
 	fullwidth: true,
 	isSmall: false,
 	isToggleOnly: false,
+	allowReset: true,
+	defaultValue: '',
 }
 
 export default AdvancedToolbarControl

@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { SelectControl } from '@wordpress/components'
+import { RadioControl } from '@wordpress/components'
 
 /**
  * External dependencies
@@ -10,29 +10,30 @@ import classnames from 'classnames'
 import { omit } from 'lodash'
 import { BaseControl } from '..'
 
-const AdvancedSelectControl = props => {
+// TODO: reset not showing up
+const AdvancedRadioControl = props => {
 	return (
 		<BaseControl
 			help={ props.help }
-			className={ classnames( 'ugb-advanced-select-control', props.className ) }
+			className={ classnames( 'ugb-advanced-radio-control', props.className ) }
 			label={ props.label }
 			units={ props.units }
 			unit={ props.unit }
 			onChangeUnit={ props.onChangeUnit }
 			screens={ props.screens }
 			allowReset={ props.allowReset }
-			value={ props.value }
+			value={ props.selected }
 			onChange={ props.onChange }
 			defaultValue={ props.defaultValue }
 		>
-			<SelectControl
-				{ ...omit( props, [ 'className', 'help', 'label', 'units', 'unit', 'onChangeUnit', 'screens' ] ) }
+			<RadioControl
+				{ ...omit( props, [ 'className', 'help', 'label', 'units', 'unit', 'onChangeUnit', 'screens', 'allowReset' ] ) }
 			/>
 		</BaseControl>
 	)
 }
 
-AdvancedSelectControl.defaultProps = {
+AdvancedRadioControl.defaultProps = {
 	onChange: () => {},
 	onChangeUnit: () => {},
 	help: '',
@@ -44,4 +45,4 @@ AdvancedSelectControl.defaultProps = {
 	defaultValue: '',
 }
 
-export default AdvancedSelectControl
+export default AdvancedRadioControl

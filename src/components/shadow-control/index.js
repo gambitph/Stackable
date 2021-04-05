@@ -29,7 +29,7 @@ const ShadowControl = props => {
 	return (
 		<AdvancedRangeControl
 			{ ...props }
-			value={ shadows.indexOf( props.value ) }
+			value={ shadows.indexOf( props.value ) || '' }
 			onChange={ index => props.onChange( shadows[ index ] ) }
 			min={ 0 }
 			max={ shadows.length - 1 }

@@ -98,6 +98,9 @@ export { default as BlockStyles } from './block-styles'
 export { default as Image } from './image'
 
 // V3 only Components
+export { default as BaseControl } from './base-control'
+export { default as AdvancedToggleControl } from './advanced-toggle-control'
+export { default as AdvancedRadioControl } from './advanced-radio-control'
 export { default as ShadowControl } from './shadow-control'
 export { default as LinkControl } from './link-control'
 export { default as Link } from './link'

@@ -8,6 +8,7 @@ import { showOptions } from './util'
  * External dependencies
  */
 import {
+	AdvancedToggleControl,
 	BlockContainer,
 	ContentAlignControl,
 	AdvancedRangeControl,
@@ -46,9 +47,6 @@ import { pick, range } from 'lodash'
 /**
  * WordPress dependencies
  */
-import {
-	 ToggleControl,
-} from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import {
@@ -180,13 +178,14 @@ addFilter( 'stackable.icon.edit.inspector.style.before', 'stackable/icon', ( out
 				] }
 				toggleAttributeName="showTitle"
 			>
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Title on Top', i18n ) }
 					checked={ titleTop }
 					onChange={ titleTop => setAttributes( { titleTop } ) }
 				/>
 				<HeadingButtonsControl
 					value={ titleTag || 'h5' }
+					defaultValue="h5"
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
 				<TypographyControlHelper

@@ -4,7 +4,6 @@
 import {
 	addFilter, applyFilters, doAction,
 } from '@wordpress/hooks'
-import { ToggleControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 
@@ -12,7 +11,7 @@ import { Fragment } from '@wordpress/element'
  * External dependencies
  */
 import { i18n } from 'stackable'
-import { PanelAdvancedSettings } from '~stackable/components'
+import { AdvancedToggleControl, PanelAdvancedSettings } from '~stackable/components'
 
 const responsivePanel = blockName => ( output, props ) => {
 	const { setAttributes } = props
@@ -30,17 +29,17 @@ const responsivePanel = blockName => ( output, props ) => {
 				initialOpen={ false }
 			>
 				{ applyFilters( `stackable.${ blockName }.edit.advanced.responsive.before`, null, props ) }
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Hide on Desktop', i18n ) }
 					checked={ hideDesktop }
 					onChange={ hideDesktop => setAttributes( { hideDesktop } ) }
 				/>
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Hide on Tablet', i18n ) }
 					checked={ hideTablet }
 					onChange={ hideTablet => setAttributes( { hideTablet } ) }
 				/>
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Hide on Mobile', i18n ) }
 					checked={ hideMobile }
 					onChange={ hideMobile => setAttributes( { hideMobile } ) }

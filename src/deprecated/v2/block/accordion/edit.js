@@ -15,6 +15,7 @@ import SVGArrowIcon from './images/arrow.svg'
  * External dependencies
  */
 import {
+	AdvancedToggleControl,
 	ColorPaletteControl,
 	DesignPanelBody,
 	ProControlButton,
@@ -52,7 +53,6 @@ import classnames from 'classnames'
 import {
 	RichText, InnerBlocks,
 } from '@wordpress/block-editor'
-import { ToggleControl } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 import { compose, withState } from '@wordpress/compose'
@@ -135,18 +135,18 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 				title={ __( 'General', i18n ) }
 				initialOpen={ true }
 			>
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Close adjacent on open', i18n ) }
 					checked={ onlyOnePanelOpen }
 					onChange={ onlyOnePanelOpen => setAttributes( { onlyOnePanelOpen } ) }
 					className="ugb--help-tip-accordion-adjacent-open"
 				/>
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Open at the start', i18n ) }
 					checked={ openStart }
 					onChange={ openStart => setAttributes( { openStart } ) }
 				/>
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Reverse arrow', i18n ) }
 					checked={ reverseArrow }
 					onChange={ reverseArrow => setAttributes( { reverseArrow } ) }
@@ -279,6 +279,7 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 			>
 				<HeadingButtonsControl
 					value={ titleTag || 'h4' }
+					defaultValue="h4"
 					onChange={ titleTag => setAttributes( { titleTag } ) }
 				/>
 				<TypographyControlHelper
