@@ -23,7 +23,6 @@ const buildInclude = [
 	path.resolve( __dirname, './freemius/**' ),
 	path.resolve( __dirname, './images/**' ),
 	path.resolve( __dirname, './src/welcome/images/**' ), // Welcome screen / settings images.
-	'!' + path.resolve( __dirname, './dist/deprecation-tests.json' ),
 	'!' + path.resolve( __dirname, './dist/videos/**' ), // Help tooltip videos.
 	'!' + path.resolve( __dirname, './dist/*.js.map' ), // JS Map files.
 ]

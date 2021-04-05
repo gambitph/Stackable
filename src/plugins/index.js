@@ -3,7 +3,6 @@
  */
 import './global-settings'
 import './premium-notice'
-import { default as DebugSidebar } from './debug-sidebar'
 
 /**
  * WordPress dependencies
@@ -19,9 +18,5 @@ import { devMode } from 'stackable'
 registerPlugin( 'stackable-convert-to-container-button', { render: ConvertToContainerButton } )
 
 if ( devMode ) {
-	registerPlugin( 'stackable-block-tester', {
-		icon: 'clipboard',
-		render: DebugSidebar,
-	} )
 	registerPlugin( 'stackable-block-attributes-get-button', { render: GetBlockAttributesButton } )
 }
