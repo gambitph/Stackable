@@ -53,6 +53,7 @@ export const settings = {
 		'advanced-general': true,
 		'advanced-block-spacing': true,
 		'advanced-responsive': true,
+		'advanced-conditional-display': true,
 		'content-align': true,
 		'custom-css': {
 			default: applyFilters( 'stackable.heading.custom-css.default', '' ),

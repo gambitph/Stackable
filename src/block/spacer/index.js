@@ -51,6 +51,7 @@ export const settings = {
 			enableBringToFront: false,
 		},
 		'advanced-responsive': true,
+		'advanced-conditional-display': true,
 		'custom-css': {
 			default: applyFilters( 'stackable.spacer.custom-css.default', '' ),
 		},

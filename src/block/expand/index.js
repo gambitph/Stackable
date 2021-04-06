@@ -57,6 +57,7 @@ export const settings = {
 		// 	paddingSelector: '.ugb-block-content',
 		// },
 		'advanced-responsive': true,
+		'advanced-conditional-display': true,
 		// 'block-background': true,
 		// 'block-separators': true,
 		// 'block-title': true,

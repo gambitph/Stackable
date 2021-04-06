@@ -50,6 +50,7 @@ export const settings = {
 		'advanced-general': true,
 		'advanced-block-spacing': true,
 		'advanced-responsive': true,
+		'advanced-conditional-display': true,
 		'block-background': true,
 		'block-separators': true,
 		'block-title': true,

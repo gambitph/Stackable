@@ -5,6 +5,7 @@ import advancedGeneral from './advanced-general'
 import advancedBlockSpacing from './advanced-block-spacing'
 import advancedColumnSpacing from './advanced-column-spacing'
 import advancedResponsive from './advanced-responsive'
+import advancedConditionalDisplay from './advanced-conditional-display'
 import blockBackground from './block-background'
 import blockSeparators from './block-separators'
 import blockTitle from './block-title'
@@ -16,6 +17,7 @@ export { getModule, initBlockModule } from './modules'
 export const modules = [
 	{ name: 'advanced-general', module: advancedGeneral },
 	{ name: 'advanced-responsive', module: advancedResponsive },
+	{ name: 'advanced-conditional-display', module: advancedConditionalDisplay },
 	{ name: 'advanced-block-spacing', module: advancedBlockSpacing },
 	{ name: 'advanced-column-spacing', module: advancedColumnSpacing },
 	{ name: 'block-background', module: blockBackground },

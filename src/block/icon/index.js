@@ -56,6 +56,7 @@ export const settings = {
 			paddings: false,
 		},
 		'advanced-responsive': true,
+		'advanced-conditional-display': true,
 		'block-background': true,
 		'block-separators': true,
 		'block-title': {
