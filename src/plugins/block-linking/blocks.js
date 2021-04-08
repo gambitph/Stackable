@@ -7,10 +7,27 @@ import { addFilter } from '@wordpress/hooks'
 addFilter( 'stackable.block-linking.blocks', 'stackable', blocks => {
 	return {
 		...blocks,
-		'stackable/card': { filterAttributes: [ 'columnWidth', 'imageUrl', 'imageId', 'imageAlt', 'imageTitle' ] },
+		'stackable/card': { filterAttributes: [ 'imageUrl', 'imageId', 'imageAlt', 'imageTitle' ] },
 		'stackable/card-group': {},
 	}
 } )
+
+// These attributes are essential to be not linked across all Stackable blocks.
+addFilter( 'stackable.block-linking.blocks', 'stackable-essentials', blocks => {
+	Object.keys( blocks ).forEach( blockType => {
+		if ( blockType.startsWith( 'stackable/' ) ) {
+			if ( ! blocks[ blockType ].filterAttributes ) {
+				blocks[ blockType ].filterAttributes = []
+			}
+			blocks[ blockType ].filterAttributes.push(
+				'uniqueId', // This should always be unique
+				'columnWidth', 'columnWidthTablet', 'columnWidthMobile', 'isFirstBlock', 'isLastBlock', // Columns
+				'blockLinkUrl', // Block link url
+			)
+		}
+	} )
+	return blocks
+}, 99 )
 
 addFilter( 'stackable.block-linking.blocks', 'core', blocks => {
 	return {
@@ -61,3 +78,18 @@ addFilter( 'stackable.block-linking.blocks', 'core', blocks => {
 		'core/video': { filterAttributes: [ 'caption', 'id', 'poster', 'src' ] },
 	}
 } )
+
+addFilter( 'stackable.block-linking.blocks', 'common', blocks => {
+	Object.keys( blocks ).forEach( blockType => {
+		if ( ! blocks[ blockType ].filterAttributes ) {
+			blocks[ blockType ].filterAttributes = []
+		}
+		if ( ! blocks[ blockType ].filterAttributes.includes( 'id' ) ) {
+			blocks[ blockType ].filterAttributes.push( 'id' )
+		}
+		if ( ! blocks[ blockType ].filterAttributes.includes( 'anchor' ) ) {
+			blocks[ blockType ].filterAttributes.push( 'anchor' )
+		}
+	} )
+	return blocks
+}, 99 )
