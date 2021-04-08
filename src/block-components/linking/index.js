@@ -1,12 +1,17 @@
 import classnames from 'classnames'
 import { i18n } from 'stackable'
-import { useLinking } from '~stackable/hooks'
+import { useBlockContext, useLinking } from '~stackable/hooks'
 
 import { Dashicon, Tooltip } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 
 export const Linking = () => {
 	const [ isLinked, setIsLinked ] = useLinking()
+
+	const { isOnlyBlock } = useBlockContext()
+	if ( isOnlyBlock ) {
+		return null
+	}
 
 	const classNames = classnames( [
 		'stk-linking-wrapper__tooltip',
