@@ -11,9 +11,7 @@ import { version as VERSION } from 'stackable'
 import {
 	InspectorTabs,
 } from '~stackable/components'
-import {
-	useBlockContext,
-} from '~stackable/hooks'
+import { useBlockContext } from '~stackable/hooks'
 import {
 	withIsHovered,
 } from '~stackable/higher-order'
@@ -30,6 +28,7 @@ import {
 	CustomCSS,
 	Responsive,
 	ContainerDiv,
+	Linking,
 } from '~stackable/block-components'
 
 /**
@@ -43,7 +42,9 @@ import { BlockLink } from '~stackable/block-components/block-link'
 const TEMPLATE = [
 	[ 'core/heading', {} ],
 	[ 'core/paragraph', { content: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.' } ],
-	[ 'core/button', { content: 'Button' } ],
+	[ 'core/buttons', {}, [
+		[ 'core/button', { text: 'Button' } ],
+	] ],
 ]
 
 const Edit = props => {
@@ -90,14 +91,15 @@ const Edit = props => {
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 			<BlockLink.InspectorControls />
+			<ContainerDiv.InspectorControls sizeSelector=".stk-card__content" />
 			<CustomCSS.InspectorControls mainBlockClass="stk-card" />
 			<Responsive.InspectorControls />
-			<ContainerDiv.InspectorControls sizeSelector=".stk-card__content" />
 
 			<Style styleFunc={ createStyles( VERSION ) } />
 			<CustomCSS mainBlockClass="stk-card" />
 
 			<Column showHandle={ isHovered }>
+				<Linking show={ isHovered } />
 				<BlockDiv className={ blockClassNames }>
 					<ContainerDiv className={ contentClassNames }>
 						<Image

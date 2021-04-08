@@ -29,7 +29,7 @@ export const useDidAttributesChange = ( callback, blockName, attributes, nonDefa
 
 	// Get all the default values of the block we're checking, we cross check
 	// against this list.
-	if ( ! blockAttributeDefaults[ blockName ] ) {
+	if ( blockName && ! blockAttributeDefaults[ blockName ] ) {
 		const attributeDefinition = select( 'core/blocks' ).getBlockType( blockName ).attributes
 		blockAttributeDefaults[ blockName ] = Object.keys( attributeDefinition ).reduce( ( defaultValues, attrName ) => {
 			defaultValues[ attrName ] = attributeDefinition[ attrName ].default || ''
@@ -40,6 +40,10 @@ export const useDidAttributesChange = ( callback, blockName, attributes, nonDefa
 	// When an attribute changes, check whether the attribute changed into a
 	// non-default value.
 	useEffect( () => {
+		if ( ! blockName ) {
+			return
+		}
+
 		const differences = Object.keys( attributes ).filter( k => attributes[ k ] !== attributeValues[ k ] )
 
 		// If one of the attributes were changed into a non-default value,
@@ -66,5 +70,5 @@ export const useDidAttributesChange = ( callback, blockName, attributes, nonDefa
 
 		// Our new attributes
 		setAttributeValues( attributes )
-	}, Object.values( attributes ) )
+	}, [ JSON.stringify( attributes || {} ) ] )
 }

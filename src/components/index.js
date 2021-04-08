@@ -35,8 +35,6 @@ export { default as DesignLibraryList } from './design-library-list'
 export { default as PanelTabs } from './panel-tabs'
 export { default as GlobalStyleControl } from './global-style-control'
 export { default as Button } from './button'
-
-// Reusable non-editor components
 export { default as DesignPanelBody } from './design-panel-body'
 export { default as DesignPanelItem } from './design-panel-item'
 export { default as DesignControl } from './design-control'

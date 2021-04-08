@@ -47,27 +47,11 @@ const BaseControl = props => {
 				/>
 			}
 			{ props.children }
-			{ props.allowLink &&
-				<Button
-					className={ classnames(
-						[ 'stk-inspector-control__link-button' ],
-						{ 'stk--is-linked': props.isLinked }
-					) }
-					isSmall
-					isSecondary={ props.isLinked ? true : false }
-					aria-label={ props.isLinked ? __( 'Unlink attribute', i18n ) : __( 'Link attribute', i18n ) }
-					onClick={ props.onLink }
-					icon={ (
-						<Dashicon
-							icon={ props.isLinked ? 'admin-links' : 'editor-unlink' }
-						/>
-					) }
-				/>
-			}
 			{ props.allowReset && showReset &&
 				<Button
 					className="stk-inspector-control__reset-button"
 					isSmall
+					isTertiary
 					aria-label={ __( 'Reset', i18n ) }
 					onClick={ () => {
 						if ( props.onReset ) {
@@ -101,7 +85,6 @@ BaseControl.defaultProps = {
 	showReset: null,
 	defaultValue: '',
 	onReset: null,
-	allowLink: false,
 	isLinked: true,
 	onLink: () => {},
 	afterButton: null,

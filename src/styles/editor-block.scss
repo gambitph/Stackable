@@ -29,7 +29,8 @@
 [data-align="full"] > .stk-row:not(.stk-block-background) > .stk-block-content > * > .block-editor-block-list__layout > .block-list-appender,
 [data-align="wide"] > .stk-row > .stk-block-content > * > .block-editor-block-list__layout > .block-list-appender,
 [data-align="right"] > .stk-row > .stk-block-content > * > .block-editor-block-list__layout > .block-list-appender {
-	left: auto;
+	// TODO: alignwide/alignfull brings the appender to the middle of the screen.
+	// left: auto;
 	right: 0;
 }
 

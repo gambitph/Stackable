@@ -3,6 +3,7 @@
  */
 import './global-settings'
 import './premium-notice'
+import { BlockLinking } from './block-linking'
 
 /**
  * WordPress dependencies
@@ -16,6 +17,7 @@ import { ConvertToContainerButton, GetBlockAttributesButton } from '~stackable/c
 import { devMode } from 'stackable'
 
 registerPlugin( 'stackable-convert-to-container-button', { render: ConvertToContainerButton } )
+registerPlugin( 'stackable-attribute-listener', { render: BlockLinking } )
 
 if ( devMode ) {
 	registerPlugin( 'stackable-block-attributes-get-button', { render: GetBlockAttributesButton } )
