@@ -1,6 +1,7 @@
 /**
  * External dependencies
  */
+import { pick } from 'lodash'
 import { i18n } from 'stackable'
 import {
 	InspectorSectionControls,
@@ -27,7 +28,7 @@ export const Edit = () => {
 	const onAttributesChanged = useCallback( () => {
 		updateBlockAttributes( clientId, { hasBlockLink: true } )
 	}, [ clientId ] )
-	useDidAttributesChange( onAttributesChanged, blockName, attributes.blockLinkUrl )
+	useDidAttributesChange( onAttributesChanged, blockName, pick( attributes, [ 'blockLinkUrl' ] ) )
 
 	return (
 		<Fragment>
