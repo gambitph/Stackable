@@ -1,5 +1,7 @@
 import { useBlockEditContext } from '@wordpress/block-editor'
-import { useState, useEffect } from '@wordpress/element'
+import {
+	useState, useEffect, useMemo,
+} from '@wordpress/element'
 import { select } from '@wordpress/data'
 import { useBlockAttributes } from './use-block-attributes'
 
@@ -21,7 +23,10 @@ export const useLinking = () => {
 		return () => window.removeEventListener( 'stackable-linked-storage', handleLinkedChanged ) // eslint-disable-line @wordpress/no-global-event-listener
 	}, [] )
 
-	const isLinked = ! linkedData.includes( uniqueId )
+	const isLinked = useMemo( () => {
+		return ! linkedData.includes( uniqueId )
+	}, [ linkedData ] )
+
 	const setIsLinked = isLinked => {
 		const latestLinkedData = getLinkedData()
 		const newUnlinkedUniqueIds = isLinked
@@ -55,6 +60,6 @@ export const isBlockLinked = clientId => {
 	if ( ! clientId ) {
 		return null
 	}
-	const { uniqueId } = select( 'core/block-editor' ).getBlockAttributes( clientId )
-	return uniqueId ? ! getLinkedData().includes( uniqueId ) : null
+	const attributes = select( 'core/block-editor' ).getBlockAttributes( clientId )
+	return attributes?.uniqueId ? ! getLinkedData().includes( attributes.uniqueId ) : null
 }
