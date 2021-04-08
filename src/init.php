@@ -100,6 +100,8 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 			STACKABLE_VERSION
 		);
 
+		$version_parts = explode( '-', STACKABLE_VERSION );
+
 		global $content_width;
 		global $wp_version;
 		wp_localize_script( 'ugb-block-js-vendor', 'stackable', array(
@@ -113,7 +115,7 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 			'displayWelcomeVideo' => function_exists( 'stackable_display_welcome_video' ) ? stackable_display_welcome_video() : false,
 			'currentTheme' => esc_html( get_template() ),
 			'settingsUrl' => admin_url( 'options-general.php?page=stackable' ),
-			'version' => STACKABLE_VERSION,
+			'version' => array_shift( $version_parts ),
 			'wpVersion' => $wp_version,
 
 			// Fonts.
