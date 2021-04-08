@@ -91,27 +91,26 @@ const CONTROLS = {
 }
 
 const AdvancedToolbarControl = props => {
-	const controls = typeof props.controls === 'string' ? CONTROLS[ props.controls ] : props.controls
+	const {
+		className = '',
+		controls: _controls,
+		fullwidth,
+		multiline,
+		isToggleOnly,
+		...propsToPass
+	} = props
+
+	const controls = typeof _controls === 'string' ? CONTROLS[ _controls ] : _controls
 
 	const toolbarClasses = classnames( {
-		'ugb-toolbar--full-width': props.fullwidth,
-		'ugb-toolbar--multiline': props.multiline,
+		'ugb-toolbar--full-width': fullwidth,
+		'ugb-toolbar--multiline': multiline,
 	} )
 
 	return (
 		<BaseControl
-			help={ props.help }
-			className={ classnames( 'ugb-advanced-toolbar-control', props.className ) }
-			label={ props.label }
-			units={ props.units }
-			unit={ props.unit }
-			onChangeUnit={ props.onChangeUnit }
-			screens={ props.screens }
-			allowReset={ props.allowReset }
-			value={ props.value }
-			defaultValue={ props.defaultValue }
-			onChange={ props.onChange }
-			isSmall={ props.isSmall }
+			className={ classnames( 'ugb-advanced-toolbar-control', className ) }
+			{ ...propsToPass }
 		>
 			<ButtonGroup
 				children={
@@ -120,7 +119,7 @@ const AdvancedToolbarControl = props => {
 							...option,
 							onClick: () => {
 								// If toggle only, prevent buttons from being unselected.
-								if ( props.isToggleOnly && option.value === props.value ) {
+								if ( isToggleOnly && option.value === props.value ) {
 									return
 								}
 								props.onChange( option.value !== props.value ? option.value : '' )
@@ -153,7 +152,6 @@ AdvancedToolbarControl.defaultProps = {
 	isSmall: false,
 	isToggleOnly: false,
 	allowReset: true,
-	defaultValue: '',
 }
 
 export default AdvancedToolbarControl
