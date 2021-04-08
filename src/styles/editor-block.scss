@@ -42,7 +42,7 @@
 	flex-direction: row;
 	flex-wrap: wrap;
 }
-.stk-row .block-editor-block-list__layout > div {
+.stk-row > .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout > div {
 	flex: 1 1 0;
 	box-sizing: border-box;
 	margin-left: 0;
