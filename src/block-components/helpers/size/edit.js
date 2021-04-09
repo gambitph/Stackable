@@ -178,16 +178,16 @@ export const SizeControls = props => {
 					} }
 					onChangeUnit={ updateAttributeHandler( 'paddingUnit' ) }
 					propsToPassTop={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingTop ),
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl.el() ).paddingTop ),
 					} : null }
 					propsToPassRight={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingRight ),
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl.el() ).paddingRight ),
 					} : null }
 					propsToPassBottom={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingBottom ),
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl.el() ).paddingBottom ),
 					} : null }
 					propsToPassLeft={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingLeft ),
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl.el() ).paddingLeft ),
 					} : null }
 					className="ugb--help-tip-advanced-block-paddings"
 				/>
@@ -215,16 +215,16 @@ export const SizeControls = props => {
 					} }
 					onChangeUnit={ updateAttributeHandler( 'paddingUnitTablet' ) }
 					propsToPassTop={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingTop ),
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl.el() ).paddingTop ),
 					} : null }
 					propsToPassRight={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingRight ),
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl.el() ).paddingRight ),
 					} : null }
 					propsToPassBottom={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingBottom ),
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl.el() ).paddingBottom ),
 					} : null }
 					propsToPassLeft={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingLeft ),
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl.el() ).paddingLeft ),
 					} : null }
 					className="ugb--help-tip-advanced-block-paddings"
 				/>
@@ -252,16 +252,16 @@ export const SizeControls = props => {
 					} }
 					onChangeUnit={ updateAttributeHandler( 'paddingUnitMobile' ) }
 					propsToPassTop={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingTop ),
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl.el() ).paddingTop ),
 					} : null }
 					propsToPassRight={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingRight ),
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl.el() ).paddingRight ),
 					} : null }
 					propsToPassBottom={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingBottom ),
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl.el() ).paddingBottom ),
 					} : null }
 					propsToPassLeft={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).paddingLeft ),
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl.el() ).paddingLeft ),
 					} : null }
 					className="ugb--help-tip-advanced-block-paddings"
 				/>
@@ -290,16 +290,16 @@ export const SizeControls = props => {
 					} }
 					onChangeUnit={ updateAttributeHandler( 'marginUnit' ) }
 					propsToPassTop={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).marginTop ),
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl.el() ).marginTop ),
 					} : null }
 					propsToPassRight={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).marginRight ),
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl.el() ).marginRight ),
 					} : null }
 					propsToPassBottom={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).marginBottom ),
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl.el() ).marginBottom ),
 					} : null }
 					propsToPassLeft={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).marginLeft ),
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl.el() ).marginLeft ),
 					} : null }
 					enableRight={ getAttribute( 'align' ) !== 'full' }
 					enableLeft={ getAttribute( 'align' ) !== 'full' }
@@ -330,16 +330,16 @@ export const SizeControls = props => {
 					} }
 					onChangeUnit={ updateAttributeHandler( 'marginUnitTablet' ) }
 					propsToPassTop={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).marginTop ),
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl.el() ).marginTop ),
 					} : null }
 					propsToPassRight={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).marginRight ),
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl.el() ).marginRight ),
 					} : null }
 					propsToPassBottom={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).marginBottom ),
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl.el() ).marginBottom ),
 					} : null }
 					propsToPassLeft={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).marginLeft ),
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl.el() ).marginLeft ),
 					} : null }
 					enableRight={ getAttribute( 'align' ) !== 'full' }
 					enableLeft={ getAttribute( 'align' ) !== 'full' }
@@ -369,16 +369,16 @@ export const SizeControls = props => {
 					} }
 					onChangeUnit={ updateAttributeHandler( 'marginUnitMobile' ) }
 					propsToPassTop={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).marginTop ),
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl.el() ).marginTop ),
 					} : null }
 					propsToPassRight={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).marginRight ),
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl.el() ).marginRight ),
 					} : null }
 					propsToPassBottom={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).marginBottom ),
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl.el() ).marginBottom ),
 					} : null }
 					propsToPassLeft={ props.blockEl ? {
-						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl ).marginLeft ),
+						placeholderRender: () => parseFloat( window.getComputedStyle( props.blockEl.el() ).marginLeft ),
 					} : null }
 					className="ugb--help-tip-advanced-block-margins"
 				/>

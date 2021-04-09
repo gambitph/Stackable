@@ -156,7 +156,7 @@ export const BorderControls = props => {
 				sliderMax={ 50 }
 				allowReset={ true }
 				placeholderRender={ props.blockEl
-					? () => parseFloat( window.getComputedStyle( props.blockEl ).borderRadius )
+					? () => parseFloat( window.getComputedStyle( props.blockEl.el() ).borderRadius )
 					: null }
 				className="ugb--help-tip-general-border-radius"
 			/>
