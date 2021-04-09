@@ -22,20 +22,10 @@ export const addStyles = ( styles, attributes ) => {
 				textAlign: getValue( 'contentAlign' ),
 				alignSelf: getValue( 'columnAlign' ), // Column-only option: Self = the current column.
 			},
-			[ `.stk--block-align-${ attributes.uniqueId }` ]: {
-				alignItems: getValue( 'rowAlign' ) || // Row-only option
-					( isHorizontal ? getValue( 'innerBlockVerticalAlign' ) : undefined ), // Column-only option
-				justifyContent: ! isHorizontal ? getValue( 'innerBlockVerticalAlign' ) : undefined, // Column-only option
-			},
 			tablet: {
 				'': {
 					textAlign: getValue( 'contentAlignTablet' ),
 					alignSelf: getValue( 'columnAlignTablet' ), // Column-only option: Self = the current column.
-				},
-				[ `.stk--block-align-${ attributes.uniqueId }` ]: {
-					alignItems: getValue( 'rowAlignTablet' ) || // Row-only option
-						( isHorizontal ? getValue( 'innerBlockVerticalAlignTablet' ) : undefined ), // Column-only option
-					justifyContent: ! isHorizontal ? getValue( 'innerBlockVerticalAlignTablet' ) : undefined, // Column-only option
 				},
 			},
 			mobile: {
@@ -43,10 +33,27 @@ export const addStyles = ( styles, attributes ) => {
 					textAlign: getValue( 'contentAlignMobile' ),
 					alignSelf: getValue( 'columnAlignMobile' ), // Column-only option: Self = the current column.
 				},
+			},
+
+			saveOnly: {
 				[ `.stk--block-align-${ attributes.uniqueId }` ]: {
-					alignItems: getValue( 'rowAlignMobile' ) || // Row-only option
-						( isHorizontal ? getValue( 'innerBlockVerticalAlignMobile' ) : undefined ), // Column-only option
-					justifyContent: ! isHorizontal ? getValue( 'innerBlockVerticalAlignMobile' ) : undefined, // Column-only option
+					alignItems: getValue( 'rowAlign' ) || // Row-only option
+						( isHorizontal ? getValue( 'innerBlockVerticalAlign' ) : undefined ), // Column-only option
+					justifyContent: ! isHorizontal ? getValue( 'innerBlockVerticalAlign' ) : undefined, // Column-only option
+				},
+				tablet: {
+					[ `.stk--block-align-${ attributes.uniqueId }` ]: {
+						alignItems: getValue( 'rowAlignTablet' ) || // Row-only option
+							( isHorizontal ? getValue( 'innerBlockVerticalAlignTablet' ) : undefined ), // Column-only option
+						justifyContent: ! isHorizontal ? getValue( 'innerBlockVerticalAlignTablet' ) : undefined, // Column-only option
+					},
+				},
+				mobile: {
+					[ `.stk--block-align-${ attributes.uniqueId }` ]: {
+						alignItems: getValue( 'rowAlignMobile' ) || // Row-only option
+							( isHorizontal ? getValue( 'innerBlockVerticalAlignMobile' ) : undefined ), // Column-only option
+						justifyContent: ! isHorizontal ? getValue( 'innerBlockVerticalAlignMobile' ) : undefined, // Column-only option
+					},
 				},
 			},
 
