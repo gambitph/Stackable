@@ -14,7 +14,7 @@ import {
 import { i18n } from 'stackable'
 import { pick } from 'lodash'
 import {
-	InspectorSectionControls,
+	InspectorBlockControls,
 	PanelAdvancedSettings,
 } from '~stackable/components'
 import {
@@ -47,7 +47,7 @@ export const Edit = () => {
 	useDidAttributesChange( onAttributesChanged, blockName, pick( attributes, backgroundAttributeNames ) )
 
 	return (
-		<InspectorSectionControls>
+		<InspectorBlockControls>
 			<PanelAdvancedSettings
 				title={ __( 'Background', i18n ) }
 				id="background"
@@ -74,6 +74,6 @@ export const Edit = () => {
 					blockEl={ blockEl }
 				/>
 			</PanelAdvancedSettings>
-		</InspectorSectionControls>
+		</InspectorBlockControls>
 	)
 }

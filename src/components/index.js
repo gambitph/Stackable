@@ -108,7 +108,7 @@ export { default as ResizableBottomMargin } from './resizable-bottom-margin'
 export {
 	default as InspectorTabs,
 	PreInspectorTabFill,
-	InspectorSectionControls,
+	InspectorBlockControls,
 	InspectorStyleControls,
 	InspectorAdvancedControls,
 } from './inspector-tabs'

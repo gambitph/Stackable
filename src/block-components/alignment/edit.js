@@ -5,7 +5,7 @@ import { i18n } from 'stackable'
 import {
 	AdvancedToolbarControl,
 	AlignButtonsControl,
-	InspectorSectionControls,
+	InspectorBlockControls,
 	PanelAdvancedSettings,
 	ResponsiveControl2,
 } from '~stackable/components'
@@ -35,7 +35,7 @@ export const Edit = props => {
 					onChange={ contentAlign => updateBlockAttributes( clientId, { contentAlign } ) }
 				/>
 			</BlockControls>
-			<InspectorSectionControls>
+			<InspectorBlockControls>
 				<PanelAdvancedSettings
 					title={ __( 'Alignment', i18n ) }
 					id="alignment"
@@ -142,7 +142,7 @@ export const Edit = props => {
 						</ResponsiveControl2>
 					}
 				</PanelAdvancedSettings>
-			</InspectorSectionControls>
+			</InspectorBlockControls>
 		</Fragment>
 	)
 }

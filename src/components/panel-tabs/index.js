@@ -19,10 +19,10 @@ import { Icon } from '@wordpress/components'
 
 const TABS = [
 	{
-		value: 'section',
-		title: __( 'Section', i18n ),
-		label: __( 'Section Tab', i18n ),
-		icon: 'align-wide',
+		value: 'block',
+		title: __( 'Block', i18n ),
+		label: __( 'Block Tab', i18n ),
+		icon: 'block-default',
 	},
 	{
 		value: 'layout',

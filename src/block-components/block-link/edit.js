@@ -4,7 +4,7 @@
 import { pick } from 'lodash'
 import { i18n } from 'stackable'
 import {
-	InspectorSectionControls,
+	InspectorBlockControls,
 	PanelAdvancedSettings,
 } from '~stackable/components'
 import { useBlockAttributes, useDidAttributesChange } from '~stackable/hooks'
@@ -32,7 +32,7 @@ export const Edit = () => {
 
 	return (
 		<Fragment>
-			<InspectorSectionControls>
+			<InspectorBlockControls>
 				<PanelAdvancedSettings
 					title={ __( 'Link', i18n ) }
 					id="link"
@@ -41,7 +41,7 @@ export const Edit = () => {
 				>
 					<LinkControls attrNameTemplate="blockLink%s" />
 				</PanelAdvancedSettings>
-			</InspectorSectionControls>
+			</InspectorBlockControls>
 		</Fragment>
 	)
 }

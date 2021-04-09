@@ -11,13 +11,13 @@ import { createSlotFill } from '@wordpress/components'
 import { InspectorControls, useBlockEditContext } from '@wordpress/block-editor'
 
 const { Slot: PreInspectorTabSlot, Fill: PreInspectorTabFill } = createSlotFill( 'StackablePreInspectorTab' )
-const { Slot: SectionInspectorTabSlot, Fill: SectionInspectorTabFill } = createSlotFill( 'StackableSectionInspectorTab' )
+const { Slot: BlockInspectorTabSlot, Fill: BlockInspectorTabFill } = createSlotFill( 'StackableBlockInspectorTab' )
 const { Slot: StyleInspectorTabSlot, Fill: StyleInspectorTabFill } = createSlotFill( 'StackableStyleInspectorTab' )
 const { Slot: AdvancedInspectorTabSlot, Fill: AdvancedInspectorTabFill } = createSlotFill( 'StackableAdvancedInspectorTab' )
 
-const InspectorSectionControls = ( { children } ) => {
+const InspectorBlockControls = ( { children } ) => {
 	const { isSelected } = useBlockEditContext()
-	return isSelected ? <SectionInspectorTabFill>{ children }</SectionInspectorTabFill> : null
+	return isSelected ? <BlockInspectorTabFill>{ children }</BlockInspectorTabFill> : null
 }
 
 const InspectorStyleControls = ( { children } ) => {
@@ -32,7 +32,7 @@ const InspectorAdvancedControls = ( { children } ) => {
 
 export {
 	PreInspectorTabFill,
-	InspectorSectionControls,
+	InspectorBlockControls,
 	InspectorStyleControls,
 	InspectorAdvancedControls,
 }
@@ -50,9 +50,9 @@ const InspectorTabs = props => {
 				onClick={ setActiveTab }
 			/>
 
-			{ ( ! activeTab || activeTab === 'style' ) && <StyleInspectorTabSlot /> }
+			{ ( ! activeTab || activeTab === 'block' ) && <BlockInspectorTabSlot /> }
 
-			{ ( ! activeTab || activeTab === 'section' ) && <SectionInspectorTabSlot /> }
+			{ ( ! activeTab || activeTab === 'style' ) && <StyleInspectorTabSlot /> }
 
 			{ ( ! activeTab || activeTab === 'advanced' ) && <AdvancedInspectorTabSlot /> }
 		</InspectorControls>
@@ -60,7 +60,7 @@ const InspectorTabs = props => {
 }
 
 InspectorTabs.defaultProps = {
-	tabs: [ 'section', 'style', 'advanced' ],
+	tabs: [ 'block', 'style', 'advanced' ],
 }
 
 export default InspectorTabs
