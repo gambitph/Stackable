@@ -10,7 +10,6 @@ import classnames from 'classnames'
  */
 import { Fragment } from '@wordpress/element'
 import { sprintf } from '@wordpress/i18n'
-import { addFilter } from '@wordpress/hooks'
 
 export const createVideoBackground = ( attrNameTemplate, blockProps ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
@@ -74,15 +73,3 @@ export const createVideoBackground = ( attrNameTemplate, blockProps ) => {
 		</Fragment>
 	)
 }
-
-addFilter( 'stackable.div-background.output.after', 'stackable/background', ( output, props, blockProps ) => {
-	const {
-		backgroundAttrName,
-	} = props
-	return (
-		<Fragment>
-			{ output }
-			{ createVideoBackground( backgroundAttrName, blockProps ) }
-		</Fragment>
-	)
-} )
