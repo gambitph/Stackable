@@ -78,7 +78,7 @@ const TypographyControl = props => {
 								onChange={ props.onChangeTabletFontSize }
 								value={ props.tabletFontSize }
 								allowReset={ true }
-								unit={ props.tabletfontSizeUnit }
+								unit={ props.tabletFontSizeUnit }
 								onChangeUnit={ props.onChangeTabletFontSizeUnit }
 								{ ...props.fontSizeProps }
 								className="ugb--help-tip-typography-size"
@@ -90,7 +90,7 @@ const TypographyControl = props => {
 								onChange={ props.onChangeMobileFontSize }
 								value={ props.mobileFontSize }
 								allowReset={ true }
-								unit={ props.mobilefontSizeUnit }
+								unit={ props.mobileFontSizeUnit }
 								onChangeUnit={ props.onChangeMobileFontSizeUnit }
 								{ ...props.fontSizeProps }
 								className="ugb--help-tip-typography-size"
@@ -226,7 +226,7 @@ const TypographyControl = props => {
 							onChange={ props.onChangeTabletFontSize }
 							value={ props.tabletFontSize }
 							allowReset={ true }
-							unit={ props.tabletfontSizeUnit }
+							unit={ props.tabletFontSizeUnit }
 							onChangeUnit={ props.onChangeTabletFontSizeUnit }
 							{ ...props.fontSizeProps }
 							className="ugb--help-tip-typography-size"
@@ -238,7 +238,7 @@ const TypographyControl = props => {
 							onChange={ props.onChangeMobileFontSize }
 							value={ props.mobileFontSize }
 							allowReset={ true }
-							unit={ props.mobilefontSizeUnit }
+							unit={ props.mobileFontSizeUnit }
 							onChangeUnit={ props.onChangeMobileFontSizeUnit }
 							{ ...props.fontSizeProps }
 							className="ugb--help-tip-typography-size"
