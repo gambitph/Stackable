@@ -115,7 +115,7 @@ const addInspectorPanel = ( output, props ) => {
 		<Fragment>
 			{ output }
 			<PanelAdvancedSettings
-				title={ __( 'Clickable Containers', i18n ) }
+				title={ __( 'Container Link', i18n ) }
 				id="clickable-container"
 				checked={ showClickableContainer }
 				onChange={ showClickableContainer => setAttributes( {
