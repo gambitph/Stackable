@@ -30,7 +30,7 @@ const ColorPaletteControl = props => {
 		disableCustomColors,
 		label,
 		onChange,
-		value,
+		value: _value,
 		className = '',
 	} = props
 
@@ -40,9 +40,14 @@ const ColorPaletteControl = props => {
 			name: color.name || color.fallback || color.color || __( 'Untitled Color', i18n ),
 		}
 	} )
-	const colorObject = getColorObjectByColorValue( colors, value )
+	const colorObject = getColorObjectByColorValue( colors, _value )
 	const colorName = colorObject && colorObject.name
-	const ariaLabel = sprintf( colorIndicatorAriaLabel, label.toLowerCase(), colorName || value )
+	const ariaLabel = sprintf( colorIndicatorAriaLabel, label.toLowerCase(), colorName || _value )
+
+	let value = _value
+	if ( _value.includes( '--stk-global-color' ) && _value.match( /#[\d\w]{6}/ ) ) {
+		value = _value.match( /#[\d\w]{6}/ )[ 0 ]
+	}
 
 	const labelElement = (
 		<Fragment>
