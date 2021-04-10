@@ -30,7 +30,7 @@ const ColorPaletteControl = props => {
 		disableCustomColors,
 		label,
 		onChange,
-		value,
+		value: _value,
 		className = '',
 	} = props
 
@@ -40,21 +40,21 @@ const ColorPaletteControl = props => {
 			name: color.name || color.fallback || color.color || __( 'Untitled Color', i18n ),
 		}
 	} )
-	const colorObject = getColorObjectByColorValue( colors, value )
+	const colorObject = getColorObjectByColorValue( colors, _value )
 	const colorName = colorObject && colorObject.name
-	const ariaLabel = sprintf( colorIndicatorAriaLabel, label.toLowerCase(), colorName || value )
+	const ariaLabel = sprintf( colorIndicatorAriaLabel, label.toLowerCase(), colorName || _value )
 
-	let _value = value
-	if ( _value.match( /stk-global-color\(/g ) && _value.match( /#(.*?(?=\)))/g ) ) {
-		_value = _value.match( /#(.*?(?=\)))/g )[ 0 ]
+	let value = _value
+	if ( _value.includes( '--stk-global-color' ) && _value.match( /#[\d\w]{6}/ ) ) {
+		value = _value.match( /#[\d\w]{6}/ )[ 0 ]
 	}
 
 	const labelElement = (
 		<Fragment>
 			{ label }
-			{ _value && (
+			{ value && (
 				<ColorIndicator
-					colorValue={ _value }
+					colorValue={ value }
 					aria-label={ ariaLabel }
 				/>
 			) }
@@ -68,7 +68,7 @@ const ColorPaletteControl = props => {
 			label={ labelElement }>
 			<ColorPalette
 				className="editor-color-palette-control__color-palette"
-				value={ _value }
+				value={ value }
 				onChange={ value => {
 					// Allow the selected color to be overridden.
 					const colorObject = getColorObjectByColorValue( colors, value )
