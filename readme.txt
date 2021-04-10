@@ -194,6 +194,17 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.14.2 =
+* Fixed: Possible PHP undefined variable warning in global settings
+* Fixed: Picking a global color did not visibly show as active
+* Fixed: Text highlight toolbar button now shows pressed state when active
+* Fixed: Block title and Block description spacing in some blocks didn't get applied
+* Fixed: Count Up and Notification block's icon alignment not working in tablet and mobile
+* Fixed: Some em units did not display as active
+* Fixed: Missing stretch class in Feature block
+* Fixed: Disabled html editing in the Accordion block
+* Fixed: Text of some blocks now are blank when you first add them so you can type immediately
+
 = 2.14.1 =
 * Fixed: Compatibility adjustments for WordPress 5.7
 * Fixed: Advanced tab can sometimes be visible in the Styles tab
