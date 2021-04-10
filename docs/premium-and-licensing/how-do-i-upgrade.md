@@ -1,2 +1,0 @@
-# How Do I Upgrade?
-

@@ -1,2 +1,0 @@
-# Premium & Licensing FAQs
-
