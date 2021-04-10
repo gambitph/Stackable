@@ -83,7 +83,6 @@ export { default as CodeTextareaControl } from './code-textarea-control'
 export { default as Separator } from './separator'
 export { default as ConvertToContainerButton } from './convert-to-container-buttons'
 export { default as GetBlockAttributesButton } from './block-attributes-get-button'
-export { default as DivBackground } from './div-background'
 export { default as ModalWelcomeTutorial } from './modal-welcome-tutorial'
 export { default as ModalDesignLibrary } from './modal-design-library'
 export { default as FontAwesomeIcon } from './font-awesome-icon'
@@ -94,6 +93,7 @@ export { default as AdminToggleSetting } from './admin-toggle-setting'
 // V2 only Components, for deprecation
 export { default as BlockStyles } from './block-styles'
 export { default as Image } from './image'
+export { default as DivBackground } from './div-background'
 
 // V3 only Components
 export { default as BaseControl } from './base-control'
