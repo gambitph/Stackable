@@ -204,6 +204,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Missing stretch class in Feature block
 * Fixed: Disabled html editing in the Accordion block
 * Fixed: Text of some blocks now are blank when you first add them so you can type immediately
+* Fixed: Get the correct color from custom properties in Icon List block icons
 
 = 2.14.1 =
 * Fixed: Compatibility adjustments for WordPress 5.7
