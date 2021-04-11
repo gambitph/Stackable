@@ -635,7 +635,7 @@ add_action( 'wp_enqueue_scripts', array( $this, 'color_add_global_styles' ) );
 
 				$clamp_tablet_value = null;
 				if ( array_key_exists( 'tabletFontSize', $styles ) ) {
-					$clamp_tablet_value = $this->clamp_inherited_style( $style['tabletFontSize'], $inherit_max );
+					$clamp_tablet_value = $this->clamp_inherited_style( $styles['tabletFontSize'], $inherit_max );
 					if ( ! empty( $clamp_tablet_value ) ) {
 						$font_size = $this->create_style( 'font-size', $clamp_tablet_value . $styles['tabletFontSizeUnit'] );
 					}
