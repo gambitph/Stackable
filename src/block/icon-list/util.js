@@ -54,11 +54,16 @@ export const convertSVGStringToBase64 = ( svgTag = '', color = '' ) => {
 
 		if ( color ) {
 			let _color = color
-			if ( color.match( /#(......)/g ) ) {
-				_color = color.match( /#(......)/g )[ 0 ]
-			} else if ( color.match( /var\(/g ) ) {
-				const colorVariable = color.match( /--(.*?(?=\)))/g )[ 0 ]
-				_color = window.getComputedStyle( document.documentElement ).getPropertyValue( colorVariable )
+			if ( color.match( /#([\d\w]{6})/g ) ) {
+				_color = color.match( /#([\d\w]{6})/g )[ 0 ]
+			} else if ( color.match( /var\((.*)?--[\w\d-_]+/g ) ) {
+				const colorVariable = color.match( /--[\w\d-_]+/g )[ 0 ]
+				try {
+					// Try and get the actual value, this can possibly get an error due to stylesheet access security.
+					_color = window.getComputedStyle( document.documentElement ).getPropertyValue( colorVariable ) || color
+				} catch ( err ) {
+					_color = color
+				}
 			}
 			svgChildElements.forEach( child => {
 				if ( child && ! [ 'DEFS', 'TITLE', 'DESC' ].includes( child.tagName ) ) {
