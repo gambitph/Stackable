@@ -60,13 +60,14 @@ import {
 	isEmpty,
 	isUndefined,
 	pickBy,
+	uniqBy,
 } from 'lodash'
 import classnames from 'classnames'
 
 /**
  * WordPress dependencies
  */
-import { Component, Fragment } from '@wordpress/element'
+import { Fragment } from '@wordpress/element'
 import { dateI18n, format } from '@wordpress/date'
 import {
 	Placeholder,
@@ -77,7 +78,7 @@ import {
 	__, sprintf, _x,
 } from '@wordpress/i18n'
 import { decodeEntities } from '@wordpress/htmlEntities'
-import { withSelect } from '@wordpress/data'
+import { useSelect } from '@wordpress/data'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 import { compose } from '@wordpress/compose'
 
@@ -831,207 +832,263 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 	)
 } )
 
-class Edit extends Component {
-	render() {
-		const {
-			setAttributes,
-			className,
-			attributes,
-			posts,
-		} = this.props
+const Edit = props => {
+	const {
+		setAttributes,
+		className,
+		attributes,
+		// posts,
+	} = props
 
+	const {
+		columns = 2,
+		design = 'basic',
+		shadow = '',
+		titleTag = '',
+		imageSize = 'large',
+		categoryHighlighted = false,
+		excerptLength = '',
+		metaSeparator = '',
+		showImage = true,
+		showTitle = true,
+		showCategory = true,
+		showExcerpt = true,
+		showMeta = true,
+		showReadmore = false,
+		showAuthor = true,
+		showDate = true,
+		showComments = true,
+		readmoreText = '',
+		columnBackgroundColor = '',
+		columnBackgroundColor2 = '',
+		showLoadMoreButton = false,
+	} = attributes
+
+	const { posts, isRequesting } = useSelect( select => {
 		const {
-			columns = 2,
-			design = 'basic',
-			shadow = '',
+			postType = 'post',
 			numberOfItems = 6,
-			titleTag = '',
-			imageSize = 'large',
-			categoryHighlighted = false,
-			excerptLength = '',
-			metaSeparator = '',
-			showImage = true,
-			showTitle = true,
-			showCategory = true,
-			showExcerpt = true,
-			showMeta = true,
-			showReadmore = false,
-			showAuthor = true,
-			showDate = true,
-			showComments = true,
-			readmoreText = '',
-			columnBackgroundColor = '',
-			columnBackgroundColor2 = '',
-			showLoadMoreButton = false,
-		} = attributes
+			orderBy = 'date',
+			order = 'desc',
+			taxonomyType = '',
+			taxonomy = '',
+			taxonomyFilterType = '__in',
+		} = props.attributes
+		const { getEntityRecords } = select( 'core' )
+		const { isResolving } = select( 'core/data' )
 
-		const show = showOptions( this.props )
-		const hasPosts = Array.isArray( posts ) && posts.length
-		const TitleTag = titleTag || 'h3'
-
-		const mainClasses = classnames( [
-			className,
-			'ugb-blog-posts--v2',
-			`ugb-blog-posts--columns-${ columns }`,
-			`ugb-blog-posts--design-${ design }`,
-		], applyFilters( 'stackable.blog-posts.mainclasses', {
-			'ugb-blog-posts--cat-highlighted': categoryHighlighted,
-			'ugb-blog-posts--has-bg-color': columnBackgroundColor || columnBackgroundColor2,
-		}, this.props ) )
-
-		// Removing posts from display should be instant.
-		const displayPosts = hasPosts && posts.length > numberOfItems
-			? posts.slice( 0, numberOfItems )
-			: posts
-
-		const itemClasses = classnames( [
-			'ugb-blog-posts__item',
-		], {
-			[ `ugb--shadow-${ shadow || 3 }` ]: ! show.imageShadow,
+		const postQuery = pickBy( {
+			order,
+			orderby: orderBy,
+			per_page: numberOfItems, // eslint-disable-line camelcase
+			...applyFilters( 'stackable.blog-posts.postQuery', {}, props ),
+		}, value => {
+			// Exludes and includes can be empty.
+			if ( Array.isArray( value ) ) {
+				return ! isEmpty( value )
+			}
+			// Don't include empty values.
+			return ! isUndefined( value ) && value !== ''
 		} )
 
-		const featuredImageClasses = classnames( [
-			'ugb-blog-posts__featured-image',
-		], {
-			[ `ugb--shadow-${ shadow || 3 }` ]: show.imageShadow,
-		} )
-
-		if ( ! hasPosts ) {
-			return (
-				<Placeholder
-					icon="admin-post"
-					label={ __( 'Posts', i18n ) }
-				>
-					{ ! Array.isArray( posts )
-						? <Spinner />
-						: __( 'No posts found.', i18n )
-					}
-				</Placeholder>
-			)
+		if ( taxonomy && taxonomyType ) {
+			// Categories.
+			if ( taxonomyType === 'category' ) {
+				postQuery[ taxonomyFilterType === '__in' ? 'categories' : 'categories_exclude' ] = taxonomy
+				// Tags.
+			} else if ( taxonomyType === 'post_tag' ) {
+				postQuery[ taxonomyFilterType === '__in' ? 'tags' : 'tags_exclude' ] = taxonomy
+				// Custom taxonomies.
+			} else {
+				postQuery[ taxonomyFilterType === '__in' ? taxonomyType : `${ taxonomyType }_exclude` ] = taxonomy
+			}
 		}
 
+		const posts = getEntityRecords( 'postType', postType, postQuery )
+
+		return {
+			posts: ! Array.isArray( posts ) ? posts : uniqBy( posts, 'id' ),
+			isRequesting: isResolving( 'core', 'getEntityRecords', [
+				'postType',
+				postType,
+				postQuery,
+			] ),
+		}
+	}, [
+		attributes.postType,
+		attributes.numberOfItems,
+		attributes.orderBy,
+		attributes.order,
+		attributes.taxonomyType,
+		attributes.taxonomy,
+		attributes.taxonomyFilterType,
+		attributes.postOffset,
+		attributes.postExclude,
+		attributes.postInclude,
+	] )
+
+	const show = showOptions( props )
+	const hasPosts = Array.isArray( posts ) && posts.length
+	const TitleTag = titleTag || 'h3'
+
+	const mainClasses = classnames( [
+		className,
+		'ugb-blog-posts--v2',
+		`ugb-blog-posts--columns-${ columns }`,
+		`ugb-blog-posts--design-${ design }`,
+	], applyFilters( 'stackable.blog-posts.mainclasses', {
+		'ugb-blog-posts--cat-highlighted': categoryHighlighted,
+		'ugb-blog-posts--has-bg-color': columnBackgroundColor || columnBackgroundColor2,
+	}, props ) )
+
+	const itemClasses = classnames( [
+		'ugb-blog-posts__item',
+	], {
+		[ `ugb--shadow-${ shadow || 3 }` ]: ! show.imageShadow,
+	} )
+
+	const featuredImageClasses = classnames( [
+		'ugb-blog-posts__featured-image',
+	], {
+		[ `ugb--shadow-${ shadow || 3 }` ]: show.imageShadow,
+	} )
+
+	if ( isRequesting || ! hasPosts ) {
 		return (
-			<BlockContainer.Edit className={ mainClasses } blockProps={ this.props } render={ () => (
-				<Fragment>
-					{ ( displayPosts || [] ).map( ( post, i ) => {
-						const featuredImageSrc = ( ( post.featured_image_urls && post.featured_image_urls[ imageSize || 'large' ] ) || [] )[ 0 ]
-						const featuredImage = featuredImageSrc &&
-							<figure className={ featuredImageClasses }>
-								{ /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
-								<a><img src={ featuredImageSrc } alt={ __( 'featured', i18n ) } /></a>
-							</figure>
-
-						const featuredImageBackground = featuredImageSrc &&
-							<div
-								className="ugb-blog-posts__featured-image-background"
-								style={ { backgroundImage: `url(${ featuredImageSrc })` } }
-							/>
-
-						const title = <TitleTag className="ugb-blog-posts__title">
-							{ /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
-							<a>{ decodeEntities( post.title.rendered.trim() ) || __( '(Untitled)', i18n ) }</a>
-						</TitleTag>
-
-						const category = post.category_list &&
-							<div className="ugb-blog-posts__category" dangerouslySetInnerHTML={ { __html: post.category_list.replace( /href=['"].*?['"]/g, '' ) } } />
-
-						const separator = <span className="ugb-blog-posts__sep">{ META_SEPARATORS[ metaSeparator || 'dot' ] }</span>
-
-						const author = post.author_info && post.author_info.name &&
-							<span>{ post.author_info.name }</span>
-
-						const date = post.date_gmt &&
-							<time dateTime={ format( 'c', post.date_gmt ) } className="ugb-blog-posts__date">
-								{ dateI18n( 'F d, Y', post.date_gmt ) }
-							</time>
-
-						const comments = <span>{ post.comments_num }</span>
-
-						// Trim the excerpt.
-						let excerptString = post.post_excerpt_stackable.split( ' ' )
-						if ( excerptString.length > ( excerptLength || 55 ) ) {
-							excerptString = excerptString.slice( 0, excerptLength || 55 ).join( ' ' ) + '...'
-						} else {
-							excerptString = post.post_excerpt_stackable
-						}
-
-						const excerpt = excerptString &&
-							<div className="ugb-blog-posts__excerpt" dangerouslySetInnerHTML={ { __html: excerptString } } />
-
-						const readmore = <p className="ugb-blog-posts__readmore">
-							{ /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
-							<a>{ readmoreText ? readmoreText : __( 'Continue reading', i18n ) }</a>
-						</p>
-
-						const meta = ( showAuthor || showDate || showComments ) &&
-							<aside className="entry-meta ugb-blog-posts__meta">
-								{ showAuthor && author }
-								{ showAuthor && author && ( ( showDate && date ) || ( showComments && comments ) ) && separator }
-								{ showDate && date }
-								{ ( ( showAuthor && author ) || ( showDate && date ) ) && showComments && comments && separator }
-								{ showComments && comments }
-							</aside>
-
-						const output = applyFilters( 'stackable.blog-posts.edit.output', null, this.props, {
-							itemClasses,
-							featuredImageBackground,
-							featuredImage,
-							category,
-							title,
-							author,
-							separator,
-							date,
-							comments,
-							excerpt,
-							readmore,
-							meta,
-						}, i )
-						if ( output ) {
-							return output
-						}
-
-						return (
-							<DivBackground
-								tagName="article"
-								className={ itemClasses }
-								backgroundAttrName="column%s"
-								blockProps={ this.props }
-								showBackground={ show.showBackgroundInItem }
-								showBackgroundVideo={ false }
-								key={ i }
-							>
-								{ showImage && show.imageAsBackground && featuredImageBackground }
-								{ showImage && ! show.imageAsBackground && show.imageOutsideContainer && featuredImage }
-								<DivBackground
-									className="ugb-blog-posts__content"
-									backgroundAttrName="column%s"
-									blockProps={ this.props }
-									showBackground={ show.showBackgroundInContent }
-									showBackgroundVideo={ false }
-								>
-									{ showImage && ! show.imageAsBackground && ! show.imageOutsideContainer && featuredImage }
-									{ showCategory && category }
-									{ showTitle && title }
-									{ showMeta && meta }
-									{ showExcerpt && excerpt }
-									{ showReadmore && readmore }
-								</DivBackground>
-							</DivBackground>
-						)
-					} ) }
-					{ showLoadMoreButton &&
-						<ButtonEditHelper
-							containerClassName="ugb-blog-posts__load-more-button"
-							attrNameTemplate="loadMoreButton%s"
-							setAttributes={ setAttributes }
-							blockAttributes={ attributes }
-							isSelected={ false }
-						/>
-					}
-				</Fragment>
-			) } />
+			<Placeholder
+				icon="admin-post"
+				label={ __( 'Posts', i18n ) }
+			>
+				{ ( ! Array.isArray( posts ) || isRequesting ) ? (
+					<Spinner />
+				) : (
+					__( 'No posts found.', i18n )
+				) }
+			</Placeholder>
 		)
 	}
+
+	return (
+		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
+			<Fragment>
+				{ ( posts || [] ).map( ( post, i ) => {
+					const featuredImageSrc = ( ( post.featured_image_urls && post.featured_image_urls[ imageSize || 'large' ] ) || [] )[ 0 ]
+					const featuredImage = featuredImageSrc &&
+					<figure className={ featuredImageClasses }>
+						{ /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
+						<a><img src={ featuredImageSrc } alt={ __( 'featured', i18n ) } /></a>
+					</figure>
+
+					const featuredImageBackground = featuredImageSrc &&
+					<div
+						className="ugb-blog-posts__featured-image-background"
+						style={ { backgroundImage: `url(${ featuredImageSrc })` } }
+					/>
+
+					const title = <TitleTag className="ugb-blog-posts__title">
+						{ /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
+						<a>{ decodeEntities( post.title.rendered.trim() ) || __( '(Untitled)', i18n ) }</a>
+					</TitleTag>
+
+					const category = post.category_list &&
+					<div className="ugb-blog-posts__category" dangerouslySetInnerHTML={ { __html: post.category_list.replace( /href=['"].*?['"]/g, '' ) } } />
+
+					const separator = <span className="ugb-blog-posts__sep">{ META_SEPARATORS[ metaSeparator || 'dot' ] }</span>
+
+					const author = post.author_info && post.author_info.name &&
+					<span>{ post.author_info.name }</span>
+
+					const date = post.date_gmt &&
+					<time dateTime={ format( 'c', post.date_gmt ) } className="ugb-blog-posts__date">
+						{ dateI18n( 'F d, Y', post.date_gmt ) }
+					</time>
+
+					const comments = <span>{ post.comments_num }</span>
+
+					// Trim the excerpt.
+					let excerptString = post.post_excerpt_stackable.split( ' ' )
+					if ( excerptString.length > ( excerptLength || 55 ) ) {
+						excerptString = excerptString.slice( 0, excerptLength || 55 ).join( ' ' ) + '...'
+					} else {
+						excerptString = post.post_excerpt_stackable
+					}
+
+					const excerpt = excerptString &&
+					<div className="ugb-blog-posts__excerpt" dangerouslySetInnerHTML={ { __html: excerptString } } />
+
+					const readmore = <p className="ugb-blog-posts__readmore">
+						{ /* eslint-disable-next-line jsx-a11y/anchor-is-valid */ }
+						<a>{ readmoreText ? readmoreText : __( 'Continue reading', i18n ) }</a>
+					</p>
+
+					const meta = ( showAuthor || showDate || showComments ) &&
+					<aside className="entry-meta ugb-blog-posts__meta">
+						{ showAuthor && author }
+						{ showAuthor && author && ( ( showDate && date ) || ( showComments && comments ) ) && separator }
+						{ showDate && date }
+						{ ( ( showAuthor && author ) || ( showDate && date ) ) && showComments && comments && separator }
+						{ showComments && comments }
+					</aside>
+
+					const output = applyFilters( 'stackable.blog-posts.edit.output', null, props, {
+						itemClasses,
+						featuredImageBackground,
+						featuredImage,
+						category,
+						title,
+						author,
+						separator,
+						date,
+						comments,
+						excerpt,
+						readmore,
+						meta,
+					}, i )
+					if ( output ) {
+						return output
+					}
+
+					return (
+						<DivBackground
+							tagName="article"
+							className={ itemClasses }
+							backgroundAttrName="column%s"
+							blockProps={ props }
+							showBackground={ show.showBackgroundInItem }
+							showBackgroundVideo={ false }
+							key={ i }
+						>
+							{ showImage && show.imageAsBackground && featuredImageBackground }
+							{ showImage && ! show.imageAsBackground && show.imageOutsideContainer && featuredImage }
+							<DivBackground
+								className="ugb-blog-posts__content"
+								backgroundAttrName="column%s"
+								blockProps={ props }
+								showBackground={ show.showBackgroundInContent }
+								showBackgroundVideo={ false }
+							>
+								{ showImage && ! show.imageAsBackground && ! show.imageOutsideContainer && featuredImage }
+								{ showCategory && category }
+								{ showTitle && title }
+								{ showMeta && meta }
+								{ showExcerpt && excerpt }
+								{ showReadmore && readmore }
+							</DivBackground>
+						</DivBackground>
+					)
+				} ) }
+				{ showLoadMoreButton &&
+				<ButtonEditHelper
+					containerClassName="ugb-blog-posts__load-more-button"
+					attrNameTemplate="loadMoreButton%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ attributes }
+					isSelected={ false }
+				/>
+				}
+			</Fragment>
+		) } />
+	)
 }
 
 export default compose(
@@ -1053,49 +1110,6 @@ export default compose(
 		[ '.ugb-blog-posts__item', 'column-background' ],
 		[ '.ugb-blog-posts__load-more-button', 'loadmore' ],
 	] ),
-	withSelect( ( select, props ) => {
-		const {
-			postType = 'post',
-			numberOfItems = 6,
-			orderBy = 'date',
-			order = 'desc',
-			taxonomyType = '',
-			taxonomy = '',
-			taxonomyFilterType = '__in',
-		} = props.attributes
-		const { getEntityRecords } = select( 'core' )
-
-		const postQuery = pickBy( {
-			order,
-			orderby: orderBy,
-			per_page: numberOfItems, // eslint-disable-line camelcase
-			...applyFilters( 'stackable.blog-posts.postQuery', {}, props ),
-		}, value => {
-			// Exludes and includes can be empty.
-			if ( Array.isArray( value ) ) {
-				return ! isEmpty( value )
-			}
-			// Don't include empty values.
-			return ! isUndefined( value ) && value !== ''
-		} )
-
-		if ( taxonomy && taxonomyType ) {
-			// Categories.
-			if ( taxonomyType === 'category' ) {
-				postQuery[ taxonomyFilterType === '__in' ? 'categories' : 'categories_exclude' ] = taxonomy
-			// Tags.
-			} else if ( taxonomyType === 'post_tag' ) {
-				postQuery[ taxonomyFilterType === '__in' ? 'tags' : 'tags_exclude' ] = taxonomy
-			// Custom taxonomies.
-			} else {
-				postQuery[ taxonomyFilterType === '__in' ? taxonomyType : `${ taxonomyType }_exclude` ] = taxonomy
-			}
-		}
-
-		return {
-			posts: getEntityRecords( 'postType', postType, postQuery ),
-		}
-	} ),
 )( Edit )
 
 addFilter( 'stackable.click-open-inspector.listener-override', 'stackable/blog-posts', override => {
