@@ -29,6 +29,16 @@ export const getShapeSVG = shape => {
 	return ! svgs[ shape ] ? null : svgs[ shape ]
 }
 
+const createImageBorderStyles = ( attrNameTemplate = '%s', blockAttributes = {} ) => {
+	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
+	const getValue = __getValue( blockAttributes, getAttrName )
+
+	const shape = getValue( 'Shape' )
+	return {
+		borderRadius: ! shape ? getValue( 'BorderRadius', '%spx' ) : undefined,
+	}
+}
+
 const createImageStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
 	const getValue = __getValue( blockAttributes, getAttrName )
@@ -122,6 +132,10 @@ export const createImageStyleSet = ( attrNameTemplate = '%s', mainClassName = ''
 			...createImageStyles( attrNameTemplate, 'desktop', blockAttributes, options ),
 		}
 	} else {
+		style[ `.${ mainClassName }` ] = {
+			...style[ `.${ mainClassName }` ],
+			...createImageBorderStyles( attrNameTemplate, blockAttributes ),
+		}
 		style.desktopTablet = {
 			[ `.${ mainClassName }` ]: {
 				...createImageStyles( attrNameTemplate, 'desktop', blockAttributes, options ),

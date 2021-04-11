@@ -1,2 +1,0 @@
-# Pre Sale Questions
-
