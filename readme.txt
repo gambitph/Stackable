@@ -195,7 +195,10 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 2.14.2 =
+* Fixed: Added Auto Block Recovery support for reusable blocks
 * Fixed: Possible PHP undefined variable warning in global settings
+* Fixed: Image border radius now properly shows in mobile for the Feature block
+* Fixed: Gradient backgrounds would overlap if there's a border in Column blocks
 * Fixed: Picking a global color did not visibly show as active
 * Fixed: Text highlight toolbar button now shows pressed state when active
 * Fixed: Block title and Block description spacing in some blocks didn't get applied
@@ -204,6 +207,8 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Missing stretch class in Feature block
 * Fixed: Disabled html editing in the Accordion block
 * Fixed: Text of some blocks now are blank when you first add them so you can type immediately
+* Fixed: Get the correct color from custom properties in Icon List block icons
+* Fixed: Image Box block now properly adds min-height
 
 = 2.14.1 =
 * Fixed: Compatibility adjustments for WordPress 5.7

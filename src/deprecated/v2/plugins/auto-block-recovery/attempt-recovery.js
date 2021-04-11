@@ -1,7 +1,9 @@
 import {
-	select, dispatch,
+	select, dispatch, subscribe,
 } from '@wordpress/data'
-import { createBlock } from '@wordpress/blocks'
+import {
+	createBlock, parse, serialize,
+} from '@wordpress/blocks'
 import { isInvalid } from './is-invalid'
 
 // Add some styles to hide the flash of errored blocks.
@@ -30,16 +32,53 @@ export const autoAttemptRecovery = () => {
 	// Editor might not be ready yet with the contents or might not have
 	// initialized yet.
 	setTimeout( () => {
-		// Recover all the blocks that we can find.
-		const mainBlocks = recoverBlocks( select( 'core/editor' ).getEditorBlocks() )
-		// Replace the recovered blocks with the new ones.
-		mainBlocks.forEach( block => {
-			if ( block.recovered && block.replacedClientId ) {
-				dispatch( 'core/block-editor' ).replaceBlock( block.replacedClientId, block )
+		const unsubscribe = subscribe( () => {
+			// Run the auto block recovery if the `getEntityRecords` is already resolved.
+			if ( select( 'core' ).getEntityRecords( 'postType', 'wp_block' ) !== null ) {
+				unsubscribe()
+				// Recover all the blocks that we can find.
+				const mainBlocks = recoverBlocks( select( 'core/editor' ).getEditorBlocks() )
+				// Replace the recovered blocks with the new ones.
+				mainBlocks.forEach( block => {
+					if ( block.isReusable && block.ref ) {
+						// Update the reusable blocks.
+						dispatch( 'core' ).editEntityRecord( 'postType', 'wp_block', block.ref, { content: serialize( block.blocks ) } ).then( () => {
+							// But don't save them, let the user do the saving themselves. Our goal is to get rid of the block error visually.
+							// dispatch( 'core' ).saveEditedEntityRecord( 'postType', 'wp_block', block.ref )
+						} )
+					}
+
+					if ( block.recovered && block.replacedClientId ) {
+						dispatch( 'core/block-editor' ).replaceBlock( block.replacedClientId, block )
+					}
+				} )
+				enableBlockWarnings()
 			}
 		} )
-		enableBlockWarnings()
 	}, 0 )
+}
+
+const recursivelyRecoverInvalidBlockList = blocks => {
+	const _blocks = [ ...blocks ]
+	let recoveryCalled = false
+	const recursivelyRecoverBlocks = willRecoverBlocks => {
+		willRecoverBlocks.forEach( _block => {
+			if ( isInvalid( _block ) ) {
+				recoveryCalled = true
+				const newBlock = recoverBlock( _block )
+				for ( const key in newBlock ) {
+					_block[ key ] = newBlock[ key ]
+				}
+			}
+
+			if ( _block.innerBlocks.length ) {
+				recursivelyRecoverBlocks( _block.innerBlocks )
+			}
+		} )
+	}
+
+	recursivelyRecoverBlocks( _blocks )
+	return [ _blocks, recoveryCalled ]
 }
 
 // Recursive fixing of all blocks. This doesn't actually fix any blocks in the
@@ -49,7 +88,26 @@ export const autoAttemptRecovery = () => {
 //
 // It's not the responsibility of this function to manipulate the editor.
 export const recoverBlocks = blocks => {
-	return blocks.map( block => {
+	return blocks.map( _block => {
+		const block = _block
+
+		// If the block is a reusable block, recover the Stackable blocks inside it.
+		if ( _block.name === 'core/block' ) {
+			const { attributes: { ref } } = _block
+			const parsedBlocks = parse( select( 'core' ).getEntityRecords( 'postType', 'wp_block', { include: [ ref ] } )?.[ 0 ]?.content?.raw ) || []
+
+			const [ recoveredBlocks, recoveryCalled ] = recursivelyRecoverInvalidBlockList( parsedBlocks )
+
+			if ( recoveryCalled ) {
+				console.log( 'Stackable notice: block ' + block.name + ' (' + block.clientId + ') was auto-recovered, you should not see this after saving your page.' ) // eslint-disable-line no-console
+				return {
+					blocks: recoveredBlocks,
+					isReusable: true,
+					ref,
+				}
+			}
+		}
+
 		if ( block.innerBlocks && block.innerBlocks.length ) {
 			const newInnerBlocks = recoverBlocks( block.innerBlocks )
 			if ( newInnerBlocks.some( block => block.recovered ) ) {
@@ -64,6 +122,7 @@ export const recoverBlocks = blocks => {
 			newBlock.replacedClientId = block.clientId
 			newBlock.recovered = true
 			console.log( 'Stackable notice: block ' + block.name + ' (' + block.clientId + ') was auto-recovered, you should not see this after saving your page.' ) // eslint-disable-line no-console
+
 			return newBlock
 		}
 
