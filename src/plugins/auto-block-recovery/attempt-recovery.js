@@ -28,9 +28,12 @@ export const autoAttemptRecovery = () => {
 	// blocks momentarily, let's hide these until the recovery is done.
 	disableBlockWarnings()
 
+	// We need to do this inside a timeout since when calling this, the Block
+	// Editor might not be ready yet with the contents or might not have
+	// initialized yet.
 	setTimeout( () => {
 		const unsubscribe = subscribe( () => {
-		// Run the auto block recovery if the `getEntityRecords` is already resolved.
+			// Run the auto block recovery if the `getEntityRecords` is already resolved.
 			if ( select( 'core' ).getEntityRecords( 'postType', 'wp_block' ) !== null ) {
 				unsubscribe()
 				// Recover all the blocks that we can find.
@@ -84,16 +87,17 @@ const recursivelyRecoverInvalidBlockList = blocks => {
 //
 // It's not the responsibility of this function to manipulate the editor.
 export const recoverBlocks = blocks => {
-	return blocks.map( block => {
-		const _block = block
-		if ( block.name === 'core/block' ) {
-			const { attributes: { ref } } = block
+	return blocks.map( _block => {
+		const block = _block
+
+		if ( _block.name === 'core/block' ) {
+			const { attributes: { ref } } = _block
 			const parsedBlocks = parse( select( 'core' ).getEntityRecords( 'postType', 'wp_block', { include: [ ref ] } )?.[0]?.content?.raw ) || []
 
 			const [ recoveredBlocks, recoveryCalled ] = recursivelyRecoverInvalidBlockList( parsedBlocks )
 
 			if ( recoveryCalled ) {
-				console.log( 'Stackable notice: block ' + _block.name + ' (' + _block.clientId + ') was auto-recovered, you should not see this after saving your page.' ) // eslint-disable-line no-console
+				console.log( 'Stackable notice: block ' + block.name + ' (' + block.clientId + ') was auto-recovered, you should not see this after saving your page.' ) // eslint-disable-line no-console
 				return {
 					blocks: recoveredBlocks,
 					isReusable: true,
@@ -102,25 +106,25 @@ export const recoverBlocks = blocks => {
 			}
 		}
 
-		if ( _block.innerBlocks && _block.innerBlocks.length ) {
-			const newInnerBlocks = recoverBlocks( _block.innerBlocks )
+		if ( block.innerBlocks && block.innerBlocks.length ) {
+			const newInnerBlocks = recoverBlocks( block.innerBlocks )
 			if ( newInnerBlocks.some( block => block.recovered ) ) {
-				_block.innerBlocks = newInnerBlocks
-				_block.replacedClientId = _block.clientId
-				_block.recovered = true
+				block.innerBlocks = newInnerBlocks
+				block.replacedClientId = block.clientId
+				block.recovered = true
 			}
 		}
 
-		if ( isInvalid( _block ) ) {
-			const newBlock = recoverBlock( _block )
-			newBlock.replacedClientId = _block.clientId
+		if ( isInvalid( block ) ) {
+			const newBlock = recoverBlock( block )
+			newBlock.replacedClientId = block.clientId
 			newBlock.recovered = true
-			console.log( 'Stackable notice: block ' + _block.name + ' (' + _block.clientId + ') was auto-recovered, you should not see this after saving your page.' ) // eslint-disable-line no-console
+			console.log( 'Stackable notice: block ' + block.name + ' (' + block.clientId + ') was auto-recovered, you should not see this after saving your page.' ) // eslint-disable-line no-console
 
 			return newBlock
 		}
 
-		return _block
+		return block
 	} )
 }
 
