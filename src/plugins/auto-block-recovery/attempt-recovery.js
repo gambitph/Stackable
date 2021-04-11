@@ -43,7 +43,8 @@ export const autoAttemptRecovery = () => {
 					if ( block.isReusable && block.ref ) {
 						// Update the reusable blocks.
 						dispatch( 'core' ).editEntityRecord( 'postType', 'wp_block', block.ref, { content: serialize( block.blocks ) } ).then( () => {
-							dispatch( 'core' ).saveEditedEntityRecord( 'postType', 'wp_block', block.ref )
+							// But don't save them, let the user do the saving themselves. Our goal is to get rid of the block error visually.
+							// dispatch( 'core' ).saveEditedEntityRecord( 'postType', 'wp_block', block.ref )
 						} )
 					}
 
@@ -90,6 +91,7 @@ export const recoverBlocks = blocks => {
 	return blocks.map( _block => {
 		const block = _block
 
+		// If the block is a reusable block, recover the Stackable blocks inside it.
 		if ( _block.name === 'core/block' ) {
 			const { attributes: { ref } } = _block
 			const parsedBlocks = parse( select( 'core' ).getEntityRecords( 'postType', 'wp_block', { include: [ ref ] } )?.[0]?.content?.raw ) || []
