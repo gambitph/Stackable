@@ -53,15 +53,27 @@ export const convertSVGStringToBase64 = ( svgTag = '', color = '' ) => {
 		const svgChildElements = svgEl.querySelectorAll( '*' )
 
 		if ( color ) {
+			let _color = color
+			if ( color.match( /#([\d\w]{6})/g ) ) {
+				_color = color.match( /#([\d\w]{6})/g )[ 0 ]
+			} else if ( color.match( /var\((.*)?--[\w\d-_]+/g ) ) {
+				const colorVariable = color.match( /--[\w\d-_]+/g )[ 0 ]
+				try {
+					// Try and get the actual value, this can possibly get an error due to stylesheet access security.
+					_color = window.getComputedStyle( document.documentElement ).getPropertyValue( colorVariable ) || color
+				} catch ( err ) {
+					_color = color
+				}
+			}
 			svgChildElements.forEach( child => {
 				if ( child && ! [ 'DEFS', 'TITLE', 'DESC' ].includes( child.tagName ) ) {
-					child.setAttribute( 'fill', color )
-					child.setAttribute( 'stroke', color )
-					child.style.fill = color
-					child.style.stroke = color
+					child.setAttribute( 'fill', _color )
+					child.setAttribute( 'stroke', _color )
+					child.style.fill = _color
+					child.style.stroke = _color
 				}
 			} )
-			svgEl.setAttribute( 'style', `fill: ${ color } !important; color: ${ color } !important` )
+			svgEl.setAttribute( 'style', `fill: ${ _color } !important; color: ${ _color } !important` )
 		}
 
 		/**

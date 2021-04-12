@@ -185,16 +185,16 @@ export const createStyles = props => {
 			},
 			tablet: {
 				'.ugb-notification__icon': {
-					marginLeft: iconTabletAlign !== '' || tabletContentAlign !== '' ? marginLeftAlign( iconTabletAlign || tabletContentAlign ) : undefined,
-					marginRight: iconTabletAlign !== '' || tabletContentAlign !== '' ? marginRightAlign( iconTabletAlign || tabletContentAlign ) : undefined,
+					marginLeft: iconTabletAlign !== '' || tabletContentAlign !== '' ? appendImportant( marginLeftAlign( iconTabletAlign || tabletContentAlign ) ) : undefined,
+					marginRight: iconTabletAlign !== '' || tabletContentAlign !== '' ? appendImportant( marginRightAlign( iconTabletAlign || tabletContentAlign ) ) : undefined,
 					height: getValue( 'iconTabletSize', '%spx !important' ),
 					width: getValue( 'iconTabletSize', '%spx !important' ),
 				},
 			},
 			mobile: {
 				'.ugb-notification__icon': {
-					marginLeft: iconMobileAlign !== '' || mobileContentAlign !== '' ? marginLeftAlign( iconMobileAlign || mobileContentAlign ) : undefined,
-					marginRight: iconMobileAlign !== '' || mobileContentAlign !== '' ? marginRightAlign( iconMobileAlign || mobileContentAlign ) : undefined,
+					marginLeft: iconMobileAlign !== '' || mobileContentAlign !== '' ? appendImportant( marginLeftAlign( iconMobileAlign || mobileContentAlign ) ) : undefined,
+					marginRight: iconMobileAlign !== '' || mobileContentAlign !== '' ? appendImportant( marginRightAlign( iconMobileAlign || mobileContentAlign ) ) : undefined,
 					height: getValue( 'iconMobileSize', '%spx !important' ),
 					width: getValue( 'iconMobileSize', '%spx !important' ),
 				},

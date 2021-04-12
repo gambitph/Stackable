@@ -3,7 +3,7 @@
 // background gradients & videos Still follow the border radius of the Container
 // block.
 .ugb-column > .ugb-inner-block > .ugb-block-content > .ugb-column__item {
-	overflow: visible !important;
+	overflow: visible;
 }
 
 // Allow our columns to look like they span more than one row.
