@@ -12,7 +12,6 @@ import ImageDesignVerticalCard2 from './images/vertical-card2.png'
 import createStyles from './style'
 import { showOptions } from './util'
 import TaxonomyControl from './taxonomy-control'
-import Pagination, { usePagination } from './pagination'
 
 /**
  * External dependencies
@@ -893,7 +892,7 @@ const Edit = props => {
 
 	const {
 		paginate, currentPage, pages, currentPagePosts,
-	} = usePagination( posts, numberOfItems )
+	} = applyFilters( 'stackable.blog-posts.pagination.hooks', posts, numberOfItems )
 
 	const show = showOptions( props )
 	const hasPosts = Array.isArray( posts ) && posts.length
@@ -1053,16 +1052,16 @@ const Edit = props => {
 					isSelected={ false }
 				/>
 				}
-				{ showPagination &&
-					<Pagination
-						containerClassName="ugb-blog-posts__pagination"
-						attrNameTemplate="pagination%s"
-						blockAttributes={ props.attributes }
-						paginate={ paginate }
-						currentPage={ currentPage }
-						pages={ pages }
-					/>
-				}
+				{ applyFilters( 'stackable.blog-posts.edit.output.pagination.after', null, {
+					...props,
+					showPagination,
+					containerClassName: 'ugb-blog-posts__pagination',
+					attrNameTemplate: 'pagination%s',
+					blockAttributes: attributes,
+					paginate,
+					currentPage,
+					pages,
+				} ) }
 			</Fragment>
 		) } />
 	)
