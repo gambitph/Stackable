@@ -1,2 +1,0 @@
-# Contacting Support
-

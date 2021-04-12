@@ -1,12 +1,6 @@
 /**
- * External dependencies
- */
-import { i18n } from 'stackable'
-
-/**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
 import {
 	createTypographyAttributes, createAllCombinationAttributes,
 } from '~stackable/util'
@@ -21,7 +15,7 @@ export default {
 	title: {
 		source: 'html',
 		selector: '.ugb-heading__title',
-		default: __( 'Title for This Block', i18n ),
+		default: '',
 	},
 	titleTag: {
 		type: 'string',
@@ -37,7 +31,7 @@ export default {
 	subtitle: {
 		source: 'html',
 		selector: '.ugb-heading__subtitle',
-		default: __( 'Subtitle for this block', i18n ),
+		default: '',
 	},
 	showSubtitle: {
 		type: 'boolean',

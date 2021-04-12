@@ -4,7 +4,6 @@
 import {
 	createAllCombinationAttributes,
 	createTypographyAttributes,
-	descriptionPlaceholder,
 } from '~stackable/util'
 import { i18n } from 'stackable'
 
@@ -18,7 +17,7 @@ export default {
 	title: {
 		source: 'html',
 		selector: '.ugb-expand__title',
-		default: __( 'Title for This Block', i18n ),
+		default: '',
 	},
 	showTitle: {
 		type: 'boolean',
@@ -39,13 +38,13 @@ export default {
 		source: 'html',
 		selector: '.ugb-expand__less-text',
 		multiline: 'p',
-		default: `<p>${ __( 'Some short text that can be expanded to show more details.', i18n ) }</p>`,
+		default: '',
 	},
 	moreText: {
 		source: 'html',
 		selector: '.ugb-expand__more-text',
 		multiline: 'p',
-		default: `<p>${ __( 'Some short text that can be expanded to show more details.', i18n ) } ${ descriptionPlaceholder( 'medium' ) }</p>`,
+		default: '',
 	},
 	...createTypographyAttributes( 'text%s' ),
 	textColor: {

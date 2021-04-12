@@ -59,6 +59,7 @@ import {
 	isEmpty,
 	isUndefined,
 	pickBy,
+	uniqBy,
 } from 'lodash'
 import classnames from 'classnames'
 
@@ -77,7 +78,7 @@ import {
 	__, sprintf, _x,
 } from '@wordpress/i18n'
 import { decodeEntities } from '@wordpress/htmlEntities'
-import { withSelect } from '@wordpress/data'
+import { useSelect } from '@wordpress/data'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 import { compose } from '@wordpress/compose'
 
@@ -861,14 +862,12 @@ const Edit = props => {
 		setAttributes,
 		className,
 		attributes,
-		posts,
 	} = props
 
 	const {
 		columns = 2,
 		design = 'basic',
 		shadow = '',
-		numberOfItems = 6,
 		titleTag = '',
 		imageSize = 'large',
 		categoryHighlighted = false,
@@ -888,7 +887,71 @@ const Edit = props => {
 		columnBackgroundColor = '',
 		columnBackgroundColor2 = '',
 		showLoadMoreButton = false,
+		numberOfItems = 6,
 	} = attributes
+
+	const {
+		posts, isRequesting,
+	} = useSelect( select => {
+		const {
+			postType = 'post',
+			orderBy = 'date',
+			order = 'desc',
+			taxonomyType = '',
+			taxonomy = '',
+			taxonomyFilterType = '__in',
+		} = props.attributes
+		const { getEntityRecords } = select( 'core' )
+		const { isResolving } = select( 'core/data' )
+
+		const postQuery = pickBy( {
+			order,
+			orderby: orderBy,
+			per_page: -1, // eslint-disable-line camelcase
+			...applyFilters( 'stackable.blog-posts.postQuery', {}, props ),
+		}, value => {
+			// Exludes and includes can be empty.
+			if ( Array.isArray( value ) ) {
+				return ! isEmpty( value )
+			}
+			// Don't include empty values.
+			return ! isUndefined( value ) && value !== ''
+		} )
+
+		if ( taxonomy && taxonomyType ) {
+			// Categories.
+			if ( taxonomyType === 'category' ) {
+				postQuery[ taxonomyFilterType === '__in' ? 'categories' : 'categories_exclude' ] = taxonomy
+				// Tags.
+			} else if ( taxonomyType === 'post_tag' ) {
+				postQuery[ taxonomyFilterType === '__in' ? 'tags' : 'tags_exclude' ] = taxonomy
+				// Custom taxonomies.
+			} else {
+				postQuery[ taxonomyFilterType === '__in' ? taxonomyType : `${ taxonomyType }_exclude` ] = taxonomy
+			}
+		}
+
+		const posts = getEntityRecords( 'postType', postType, postQuery )
+
+		return {
+			posts: ! Array.isArray( posts ) ? posts : uniqBy( posts, 'id' ),
+			isRequesting: isResolving( 'core', 'getEntityRecords', [
+				'postType',
+				postType,
+				postQuery,
+			] ),
+		}
+	}, [
+		attributes.postType,
+		attributes.orderBy,
+		attributes.order,
+		attributes.taxonomyType,
+		attributes.taxonomy,
+		attributes.taxonomyFilterType,
+		attributes.postOffset,
+		attributes.postExclude,
+		attributes.postInclude,
+	] )
 
 	const {
 		paginate, currentPage, pages, currentPagePosts,
@@ -920,16 +983,17 @@ const Edit = props => {
 		[ `ugb--shadow-${ shadow || 3 }` ]: show.imageShadow,
 	} )
 
-	if ( ! hasPosts ) {
+	if ( isRequesting || ! hasPosts ) {
 		return (
 			<Placeholder
 				icon="admin-post"
 				label={ __( 'Posts', i18n ) }
 			>
-				{ ! Array.isArray( posts ) ?
-					<Spinner /> :
+				{ ( ! Array.isArray( currentPagePosts ) || isRequesting ) ? (
+					<Spinner />
+				) : (
 					__( 'No posts found.', i18n )
-				}
+				) }
 			</Placeholder>
 		)
 	}
@@ -1087,47 +1151,6 @@ export default compose(
 		[ '.ugb-blog-posts__load-more-button', 'loadmore' ],
 		[ '.ugb-blog-posts__pagination', 'pagination' ],
 	] ),
-	withSelect( ( select, props ) => {
-		const {
-			postType = 'post',
-			orderBy = 'date',
-			order = 'desc',
-			taxonomyType = '',
-			taxonomy = '',
-			taxonomyFilterType = '__in',
-		} = props.attributes
-		const { getEntityRecords } = select( 'core' )
-
-		const postQuery = pickBy( {
-			order,
-			orderby: orderBy,
-			per_page: -1, // eslint-disable-line camelcase
-			...applyFilters( 'stackable.blog-posts.postQuery', {}, props ),
-		}, value => {
-			// Exludes and includes can be empty.
-			if ( Array.isArray( value ) ) {
-				return ! isEmpty( value )
-			}
-			// Don't include empty values.
-			return ! isUndefined( value ) && value !== ''
-		} )
-		if ( taxonomy && taxonomyType ) {
-			// Categories.
-			if ( taxonomyType === 'category' ) {
-				postQuery[ taxonomyFilterType === '__in' ? 'categories' : 'categories_exclude' ] = taxonomy
-			// Tags.
-			} else if ( taxonomyType === 'post_tag' ) {
-				postQuery[ taxonomyFilterType === '__in' ? 'tags' : 'tags_exclude' ] = taxonomy
-			// Custom taxonomies.
-			} else {
-				postQuery[ taxonomyFilterType === '__in' ? taxonomyType : `${ taxonomyType }_exclude` ] = taxonomy
-			}
-		}
-
-		return {
-			posts: getEntityRecords( 'postType', postType, postQuery ),
-		}
-	} ),
 )( Edit )
 
 addFilter( 'stackable.click-open-inspector.listener-override', 'stackable/blog-posts', override => {

@@ -101,7 +101,7 @@ Support for IE 11 should be the bare minimum. Instead of revamping designs in or
 
 Gutenberg has a block [deprecation system](https://wordpress.org/gutenberg/handbook/block-api/deprecated-blocks/) in place that we use. We also have a few steps that we need to perform in order to maintain a clean code structure.
 
-A block gets *deprecated* when something is changed in its `save` function or `attriubte` list (e.g. when you add a feature or rename an attribute). When the content editor starts up, these 2 are checked, and if the `save` output doesn't match the block in the editor, an error shows up and there will be no way to edit the block.
+A block gets *deprecated* when something is changed in its `save` function or `attribute` list (e.g. when you add a feature or rename an attribute). When the content editor starts up, these 2 are checked, and if the `save` output doesn't match the block in the editor, an error shows up and there will be no way to edit the block.
 
 Deprecating a block means that we tell the editor that the block will encounter an error (since we changed its `save` & `attributes`) and how it should deal with the changes.
 
