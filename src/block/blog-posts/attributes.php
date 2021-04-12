@@ -1840,6 +1840,18 @@ if ( ! function_exists( 'stackable_blog_posts_attributes' ) ) {
 				'type' => 'string',
 				'default' => '',
 			),
+			'nextLabel' => array(
+				'type' => 'string',
+				'default' => __( 'Next »', 'stackable' ),
+			),
+			'previousLabel' => array(
+				'type' => 'string',
+				'default' => __( '« Previous', 'stackable' ),
+			),
+			'showNextPrevious' => array(
+				'type' => 'boolean',
+				'default' => true,
+			),
 		);
 	}
 }

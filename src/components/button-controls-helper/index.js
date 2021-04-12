@@ -4,11 +4,12 @@
 import { ButtonControls } from '~stackable/components'
 import { __getValue } from '~stackable/util'
 import { camelCase } from 'lodash'
+import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
  */
-import { sprintf } from '@wordpress/i18n'
+import { sprintf, __ } from '@wordpress/i18n'
 
 const ButtonControlsHelper = props => {
 	const { setAttributes } = props
@@ -53,6 +54,8 @@ const ButtonControlsHelper = props => {
 			} }
 			hoverEffect={ props.blockAttributes[ getAttrName( 'HoverEffect' ) ] || '' }
 			hoverOpacity={ props.blockAttributes[ getAttrName( 'HoverOpacity' ) ] || '' }
+			hoverOpacityLabel={ props.hoverOpacityLabel }
+			hoverColorsLabel={ props.hoverColorsLabel }
 			hoverTextColor={ props.blockAttributes[ getAttrName( 'HoverTextColor' ) ] || '' }
 			hoverBackgroundColor={ props.blockAttributes[ getAttrName( 'HoverBackgroundColor' ) ] || '' }
 			hoverBackgroundColor2={ props.blockAttributes[ getAttrName( 'HoverBackgroundColor2' ) ] || '' }
@@ -120,6 +123,8 @@ ButtonControlsHelper.defaultProps = {
 	setAttributes: () => {},
 	blockAttributes: {},
 	enableIcon: true,
+	hoverOpacityLabel: __( 'Hover Opacity', i18n ),
+	hoverColorsLabel: __( 'Hover Colors', i18n ),
 }
 
 export default ButtonControlsHelper

@@ -242,6 +242,18 @@ export default {
 		type: 'boolean',
 		default: false,
 	},
+	showNextPrevious: {
+		type: 'boolean',
+		default: true,
+	},
+	nextLabel: {
+		type: 'string',
+		default: __( 'Next »', i18n ),
+	},
+	previousLabel: {
+		type: 'string',
+		default: __( '« Previous', i18n ),
+	},
 	...createButtonAttributes( 'pagination%s', {
 		exclude: [
 			'Url',
