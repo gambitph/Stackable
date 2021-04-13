@@ -196,6 +196,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 = 2.14.2 =
 * Fixed: Added Auto Block Recovery support for reusable blocks
+* Fixed: Video Popup block play button SEO and accessibility issues
 * Fixed: Possible PHP undefined variable warning in global settings
 * Fixed: Image border radius now properly shows in mobile for the Feature block
 * Fixed: Gradient backgrounds would overlap if there's a border in Column blocks
