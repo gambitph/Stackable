@@ -209,6 +209,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Disabled html editing in the Accordion block
 * Fixed: Text of some blocks now are blank when you first add them so you can type immediately
 * Fixed: Get the correct color from custom properties in Icon List block icons
+* Fixed: Better color picker support for Neve Theme colors
 * Fixed: Image Box block now properly adds min-height
 
 = 2.14.1 =
