@@ -58,7 +58,7 @@ export const settings = {
 		// 'block-background': true,
 		// 'block-separators': true,
 		// 'block-title': true,
-		'clickable-container': true,
+		'container-link': true,
 		'content-align': true,
 		'custom-css': {
 			default: applyFilters( 'stackable.column.custom-css.default', '' ),

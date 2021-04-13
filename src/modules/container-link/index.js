@@ -28,7 +28,7 @@ import {
 	ToggleControl, TextControl,
 } from '@wordpress/components'
 
-const createClickableContainerAttributes = ( attrNameTemplate, options = {} ) => {
+const createContainerLinkAttributes = ( attrNameTemplate, options = {} ) => {
 	const {
 		selector = '.ugb-button',
 	} = options
@@ -86,21 +86,21 @@ const createClickableContainerAttributes = ( attrNameTemplate, options = {} ) =>
 }
 const addAttributes = attributes => ( {
 	...attributes,
-	showClickableContainer: {
+	showContainerLink: {
 		type: 'boolean',
 		default: false,
 	},
-	...createClickableContainerAttributes( 'container1%s', {
-		selector: '.ugb-clickable-container:nth-child(1) > a',
+	...createContainerLinkAttributes( 'container1%s', {
+		selector: '.ugb-container-link:nth-child(1) > a',
 	} ),
-	...createClickableContainerAttributes( 'container2%s', {
-		selector: '.ugb-clickable-container:nth-child(2) > a',
+	...createContainerLinkAttributes( 'container2%s', {
+		selector: '.ugb-container-link:nth-child(2) > a',
 	} ),
-	...createClickableContainerAttributes( 'container3%s', {
-		selector: '.ugb-clickable-container:nth-child(3) > a',
+	...createContainerLinkAttributes( 'container3%s', {
+		selector: '.ugb-container-link:nth-child(3) > a',
 	} ),
-	...createClickableContainerAttributes( 'container4%s', {
-		selector: '.ugb-clickable-container:nth-child(4) > a',
+	...createContainerLinkAttributes( 'container4%s', {
+		selector: '.ugb-container-link:nth-child(4) > a',
 	} ),
 } )
 
@@ -108,7 +108,7 @@ const addInspectorPanel = ( output, props ) => {
 	const { setAttributes } = props
 	const {
 		columns = 1,
-		showClickableContainer = false,
+		showContainerLink = false,
 	} = props.attributes
 
 	return (
@@ -116,12 +116,12 @@ const addInspectorPanel = ( output, props ) => {
 			{ output }
 			<PanelAdvancedSettings
 				title={ __( 'Container Link', i18n ) }
-				id="clickable-container"
-				checked={ showClickableContainer }
-				onChange={ showClickableContainer => setAttributes( {
-					showClickableContainer,
+				id="container-link"
+				checked={ showContainerLink }
+				onChange={ showContainerLink => setAttributes( {
+					showContainerLink,
 				} ) }
-				toggleAttributeName="showClickableContainer"
+				toggleAttributeName="showContainerLink"
 			>
 				{ range( 1, columns + 1 ).map( column => {
 					const getAttrName = attrName => camelCase( sprintf( `container%d%s`, column, attrName ) )
@@ -132,7 +132,7 @@ const addInspectorPanel = ( output, props ) => {
 					return (
 						<Fragment key={ column }>
 							<URLInputControl
-								label={ sprintf( __( 'Link / URL #%d', i18n ), column ) }
+								label={ columns === 1 ? __( 'Link / URL', i18n ) : sprintf( __( 'Link / URL #%d', i18n ), column ) }
 								value={ getAttrValue( 'Url' ) }
 								onChange={ url => setAttributes( {
 									[ getAttrName( 'Url' ) ]: url,
@@ -140,7 +140,7 @@ const addInspectorPanel = ( output, props ) => {
 								placeholder="http://"
 							/>
 							<TextControl
-								label={ sprintf( __( 'Link %d Title', i18n ), column ) }
+								label={ columns === 1 ? __( 'Link Title', i18n ) : sprintf( __( 'Link %d Title', i18n ), column ) }
 								value={ getAttrValue( 'Title' ) }
 								onChange={ title => setAttributes( {
 									[ getAttrName( 'Title' ) ]: title,
@@ -171,23 +171,23 @@ const addInspectorPanel = ( output, props ) => {
 
 const addItemClasses = ( classes, props ) => {
 	const {
-		showClickableContainer = false,
+		showContainerLink = false,
 	} = props.attributes
 
 	return {
 		...classes,
-		'ugb-clickable-container': showClickableContainer,
+		'ugb-container-link': showContainerLink,
 	}
 }
 
 const addBoxClasses = ( classes, design, props ) => {
 	const {
-		showClickableContainer = false,
+		showContainerLink = false,
 	} = props.attributes
 
 	return {
 		...classes,
-		'ugb-clickable-container': showClickableContainer,
+		'ugb-container-link': showContainerLink,
 	}
 }
 
@@ -209,19 +209,22 @@ const removeAttributesFromDesignAttributeExport = attributes => {
 	] )
 }
 
-const clickableContainer = ( blockName, options = {} ) => {
+const containerLink = ( blockName, options = {} ) => {
 	const {
 		classFilter = null,
+		customFilters = false,
 	} = options
-	addFilter( `stackable.${ blockName }.edit.inspector.style.block`, `stackable/${ blockName }/clickable-container`, addInspectorPanel, 18 )
-	addFilter( `stackable.${ blockName }.attributes`, `stackable/${ blockName }/clickable-container`, addAttributes )
-	addFilter( `stackable.${ blockName }.design.filtered-block-attributes`, `stackable/${ blockName }/clickable-container`, removeAttributesFromDesignAttributeExport )
-	if ( classFilter ) {
-		addFilter( `stackable.${ blockName }.${ classFilter }`, `stackable/${ blockName }/clickable-container`, addItemClasses )
-	} else {
-		addFilter( `stackable.${ blockName }.itemclasses`, `stackable/${ blockName }/clickable-container`, addItemClasses )
-		addFilter( `stackable.${ blockName }.boxclasses`, `stackable/${ blockName }/clickable-container`, addBoxClasses )
+	addFilter( `stackable.${ blockName }.edit.inspector.style.block`, `stackable/${ blockName }/container-link`, addInspectorPanel, 18 )
+	addFilter( `stackable.${ blockName }.attributes`, `stackable/${ blockName }/container-link`, addAttributes )
+	addFilter( `stackable.${ blockName }.design.filtered-block-attributes`, `stackable/${ blockName }/container-link`, removeAttributesFromDesignAttributeExport )
+	if ( ! customFilters ) {
+		if ( classFilter ) {
+			addFilter( `stackable.${ blockName }.${ classFilter }`, `stackable/${ blockName }/container-link`, addItemClasses )
+		} else {
+			addFilter( `stackable.${ blockName }.itemclasses`, `stackable/${ blockName }/container-link`, addItemClasses )
+			addFilter( `stackable.${ blockName }.boxclasses`, `stackable/${ blockName }/container-link`, addBoxClasses )
+		}
 	}
 }
 
-export default clickableContainer
+export default containerLink

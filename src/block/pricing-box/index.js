@@ -61,7 +61,7 @@ export const settings = {
 		'block-title': true,
 		'content-align': true,
 		'block-designs': true,
-		'clickable-container': true,
+		'container-link': true,
 		'custom-css': {
 			default: applyFilters( 'stackable.pricing-box.custom-css.default', '' ),
 		},

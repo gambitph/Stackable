@@ -61,7 +61,7 @@ export const settings = {
 		'block-background': true,
 		'block-separators': true,
 		// 'block-title': true,
-		'clickable-container': {
+		'container-link': {
 			classFilter: 'wrapperClasses',
 		},
 		'content-align': true,

@@ -11,19 +11,19 @@ import { Fragment } from '@wordpress/element'
 import { sprintf } from '@wordpress/i18n'
 import striptags from 'striptags'
 
-if ( ! hasFilter( 'stackable.div-background.output.after', 'stackable/clickable-container' ) ) {
-	addFilter( 'stackable.div-background.output.after', 'stackable/clickable-container', ( output, props, blockProps ) => {
+if ( ! hasFilter( 'stackable.div-background.output.after', 'stackable/container-link' ) ) {
+	addFilter( 'stackable.div-background.output.after', 'stackable/container-link', ( output, props, blockProps ) => {
 		const {
 			index = 1,
 			className,
 		} = props
 
-		if ( ! className.match( /ugb-clickable-container/ ) ) {
+		if ( ! className.match( /ugb-container-link/ ) ) {
 			return output
 		}
 
 		const {
-			showClickableContainer = false,
+			showContainerLink = false,
 		} = blockProps.attributes
 
 		const getAttrName = attrName => camelCase( sprintf( `container%d%s`, index, attrName ) )
@@ -49,8 +49,10 @@ if ( ! hasFilter( 'stackable.div-background.output.after', 'stackable/clickable-
 		return (
 			<Fragment>
 				{ output }
-				{ showClickableContainer && url && (
+				{ showContainerLink && url && (
 					<a
+						tabIndex="-1"
+						aria-hidden="true"
 						href={ url }
 						target={ newTab ? '_blank' : undefined }
 						rel={ rel.join( ' ' ) || undefined }
