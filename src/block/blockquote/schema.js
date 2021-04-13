@@ -8,7 +8,6 @@ import './design'
  */
 import {
 	createBackgroundAttributes,
-	descriptionPlaceholder,
 	createAllCombinationAttributes,
 	createTypographyAttributes,
 	createResponsiveAttributes,
@@ -69,7 +68,7 @@ export default {
 	text: {
 		source: 'html',
 		selector: '.ugb-blockquote__text',
-		default: descriptionPlaceholder( 'long' ),
+		default: '',
 	},
 	...createTypographyAttributes( 'text%s' ),
 	textColor: {

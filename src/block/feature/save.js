@@ -46,6 +46,7 @@ const save = props => {
 		imageShape = '',
 		imageHeight = '',
 		imageShadow = '',
+		imageShapeStretch = '',
 
 		// Button.
 		showButton = true,
@@ -145,6 +146,7 @@ const save = props => {
 								height={ imageHeight }
 								alt={ striptags( imageAlt ) }
 								shape={ imageShape }
+								shapeStretch={ imageShapeStretch }
 								shadow={ imageShadow }
 							/>
 						</div>

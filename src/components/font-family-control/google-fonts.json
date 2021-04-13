@@ -688,14 +688,24 @@
   {
     "family": "Archivo",
     "variants": [
+      "100",
+      "200",
+      "300",
       "regular",
-      "italic",
       "500",
-      "500italic",
       "600",
-      "600italic",
       "700",
-      "700italic"
+      "800",
+      "900",
+      "100italic",
+      "200italic",
+      "300italic",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic",
+      "800italic",
+      "900italic"
     ],
     "subsets": [
       "latin",
@@ -858,12 +868,12 @@
     "family": "Asap",
     "variants": [
       "regular",
-      "italic",
       "500",
-      "500italic",
       "600",
-      "600italic",
       "700",
+      "italic",
+      "500italic",
+      "600italic",
       "700italic"
     ],
     "subsets": [
@@ -2032,7 +2042,11 @@
       "regular",
       "500",
       "600",
-      "700"
+      "700",
+      "italic",
+      "500italic",
+      "600italic",
+      "700italic"
     ],
     "subsets": [
       "cyrillic",
@@ -3382,6 +3396,20 @@
       "devanagari",
       "latin",
       "latin-ext"
+    ]
+  },
+  {
+    "family": "Dela Gothic One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "greek",
+      "japanese",
+      "latin",
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -6316,6 +6344,20 @@
     ]
   },
   {
+    "family": "Kiwi Maru",
+    "variants": [
+      "300",
+      "regular",
+      "500"
+    ],
+    "subsets": [
+      "cyrillic",
+      "japanese",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Knewave",
     "variants": [
       "regular"
@@ -6732,6 +6774,23 @@
     ],
     "subsets": [
       "arabic",
+      "latin",
+      "latin-ext",
+      "vietnamese"
+    ]
+  },
+  {
+    "family": "Lexend",
+    "variants": [
+      "100",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700",
+      "800"
+    ],
+    "subsets": [
       "latin",
       "latin-ext",
       "vietnamese"
@@ -7406,6 +7465,7 @@
     ],
     "subsets": [
       "latin",
+      "latin-ext",
       "malayalam"
     ]
   },
@@ -8388,6 +8448,17 @@
       "regular"
     ],
     "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "New Tegomin",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "japanese",
       "latin",
       "latin-ext"
     ]
@@ -12423,6 +12494,18 @@
     ],
     "subsets": [
       "latin"
+    ]
+  },
+  {
+    "family": "Train One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "japanese",
+      "latin",
+      "latin-ext"
     ]
   },
   {

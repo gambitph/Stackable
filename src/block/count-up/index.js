@@ -59,7 +59,9 @@ export const settings = {
 		'advanced-responsive': true,
 		'block-background': true,
 		'block-separators': true,
-		'block-title': true,
+		'block-title': {
+			marginBottomImportant: true,
+		},
 		'container-link': true,
 		'content-align': true,
 		'block-designs': true,
