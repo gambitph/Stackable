@@ -54,4 +54,8 @@ export default {
 		},
 		[ 'Heading', 'BodyText', 'Link', 'LinkHover' ]
 	),
+
+	displayCondition: {
+		type: 'object',
+	},
 }

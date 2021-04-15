@@ -106,4 +106,8 @@ export default {
 		[ 'Title', 'Description', 'Button' ],
 		[ '', 'Tablet', 'Mobile' ]
 	),
+
+	displayCondition: {
+		type: 'object',
+	},
 }

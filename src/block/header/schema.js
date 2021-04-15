@@ -146,4 +146,8 @@ export default {
 		type: 'boolean',
 		default: false,
 	},
+
+	displayCondition: {
+		type: 'object',
+	},
 }

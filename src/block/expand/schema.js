@@ -88,4 +88,8 @@ export default {
 		[ 'Title', 'Text', 'Link' ],
 		[ '', 'Tablet', 'Mobile' ]
 	),
+
+	displayCondition: {
+		type: 'object',
+	},
 }

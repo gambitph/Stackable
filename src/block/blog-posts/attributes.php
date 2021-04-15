@@ -1640,6 +1640,9 @@ if ( ! function_exists( 'stackable_blog_posts_attributes' ) ) {
 			'className' => array(
 				'type' => 'string',
 			),
+			'displayCondition' => array(
+				'type' => 'object',
+			),
 		);
 	}
 }

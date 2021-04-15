@@ -143,4 +143,8 @@ export default {
 		[ 'Title', 'Subtitle', 'Text' ],
 		[ '', 'Tablet', 'Mobile' ]
 	),
+
+	displayCondition: {
+		type: 'object',
+	},
 }

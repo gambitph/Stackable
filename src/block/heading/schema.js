@@ -106,4 +106,8 @@ export default {
 		[ 'Title', 'Subtitle', 'TopLine', 'BottomLine' ],
 		[ '', 'Tablet', 'Mobile' ]
 	),
+
+	displayCondition: {
+		type: 'object',
+	},
 }
