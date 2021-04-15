@@ -3,7 +3,6 @@
  */
 import { i18n } from 'stackable'
 import {
-	descriptionPlaceholder,
 	createTypographyAttributes,
 	createAllCombinationAttributes,
 } from '~stackable/util'
@@ -99,25 +98,25 @@ export default {
 		type: 'string',
 		source: 'html',
 		selector: '.ugb-text__text-1',
-		default: descriptionPlaceholder( 'medium' ),
+		default: '',
 	},
 	text2: {
 		type: 'string',
 		source: 'html',
 		selector: '.ugb-text__text-2',
-		default: descriptionPlaceholder( 'medium' ),
+		default: '',
 	},
 	text3: {
 		type: 'string',
 		source: 'html',
 		selector: '.ugb-text__text-3',
-		default: descriptionPlaceholder( 'medium' ),
+		default: '',
 	},
 	text4: {
 		type: 'string',
 		source: 'html',
 		selector: '.ugb-text__text-4',
-		default: descriptionPlaceholder( 'medium' ),
+		default: '',
 	},
 	...createTypographyAttributes( 'text%s' ),
 	textColor: {

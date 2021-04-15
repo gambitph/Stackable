@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.4
 Tested up to: 5.7
 Requires PHP: 5.3
-Stable tag: 2.14.1
+Stable tag: 2.14.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -193,6 +193,24 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 2.14.2 =
+* Fixed: Added Auto Block Recovery support for reusable blocks
+* Fixed: Video Popup block play button SEO and accessibility issues
+* Fixed: Possible PHP undefined variable warning in global settings
+* Fixed: Image border radius now properly shows in mobile for the Feature block
+* Fixed: Gradient backgrounds would overlap if there's a border in Column blocks
+* Fixed: Picking a global color did not visibly show as active
+* Fixed: Text highlight toolbar button now shows pressed state when active
+* Fixed: Block title and Block description spacing in some blocks didn't get applied
+* Fixed: Count Up and Notification block's icon alignment not working in tablet and mobile
+* Fixed: Some em units did not display as active
+* Fixed: Missing stretch class in Feature block
+* Fixed: Disabled html editing in the Accordion block
+* Fixed: Text of some blocks now are blank when you first add them so you can type immediately
+* Fixed: Get the correct color from custom properties in Icon List block icons
+* Fixed: Better color picker support for Neve Theme colors
+* Fixed: Image Box block now properly adds min-height
 
 = 2.14.1 =
 * Fixed: Compatibility adjustments for WordPress 5.7

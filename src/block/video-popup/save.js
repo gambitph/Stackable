@@ -49,10 +49,11 @@ const save = props => {
 					data-video={ striptags( videoID ) }
 				>
 					{ /* eslint-disable-next-line */ }
-					<a href="#" className="ugb-video-popup__overlay" aria-label="Play" />
-					<span className="ugb-video-popup__play-button">
-						{ getPlayButton( playButtonType ) }
-					</span>
+					<button className="ugb-video-popup__overlay" aria-label="Play">
+						<span className="ugb-video-popup__play-button">
+							{ getPlayButton( playButtonType ) }
+						</span>
+					</button>
 				</DivBackground>
 			</Fragment>
 		) } />

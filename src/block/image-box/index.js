@@ -58,7 +58,9 @@ export const settings = {
 		'advanced-conditional-display': true,
 		'block-background': true,
 		'block-separators': true,
-		'block-title': true,
+		'block-title': {
+			marginBottomImportant: true,
+		},
 		'content-align': true,
 		'block-designs': true,
 		'custom-css': {
@@ -70,10 +72,10 @@ export const settings = {
 // The "height" option is really the "columnHeight" option. @see edit.js
 // Disable the default column height.
 addFilter( 'stackable.image-box.advanced-column-spacing.styles', 'stackable/image-box/column-height', styles => {
-	styles[ '> .ugb-inner-block > .ugb-block-content > *' ] = {
+	styles.desktopTablet[ '> .ugb-inner-block > .ugb-block-content > *' ] = {
 		minHeight: undefined,
 	}
-	styles.tablet[ '> .ugb-inner-block > .ugb-block-content > *' ] = {
+	styles.tabletOnly[ '> .ugb-inner-block > .ugb-block-content > *' ] = {
 		minHeight: undefined,
 	}
 	styles.mobile[ '> .ugb-inner-block > .ugb-block-content > *' ] = {
