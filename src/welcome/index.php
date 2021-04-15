@@ -130,10 +130,12 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					<?php } ?>
 				<?php } ?>
 
-				<a class="s-tab"
-					href="<?php echo admin_url( 'admin.php?page=stackable-dynamic-fields' ) ?>">
-					<?php _e( 'Dynamic Fields', STACKABLE_I18N ) ?>
-				</a>
+				<?php if ( sugb_fs()->can_use_premium_code() ) { ?>
+					<a class="s-tab"
+						href="<?php echo admin_url( 'admin.php?page=stackable-dynamic-fields' ) ?>">
+						<?php _e( 'Dynamic Fields', STACKABLE_I18N ) ?>
+					</a>
+				<?php } ?>
 			</div>
 			<?php
 		}

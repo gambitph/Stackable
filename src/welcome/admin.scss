@@ -68,12 +68,19 @@ body[class*="page_stackable"] {
 	label {
 		.s-settings-field__title {
 			width: 200px;
+		}
+		.s-dynamic-fields__title {
+			width: 150px;
+		}
+		.s-settings-field__title,
+		.s-dynamic-fields__title {
 			display: inline-block;
 			font-weight: bold;
 			color: #666;
 			padding-right: 15px;
 			box-sizing: border-box;
 		}
+
 		.s-settings-field__status {
 			width: 40px;
 			display: inline-block;
@@ -91,7 +98,8 @@ body[class*="page_stackable"] {
 			}
 		}
 	}
-	[type="text"] {
+	[type="text"],
+	select {
 		padding: 0.5em 1em;
 		width: calc(100% - 300px);
 		box-shadow: 0 5px 30px -10px rgba(18, 63, 82, 0.1);
@@ -107,6 +115,21 @@ body[class*="page_stackable"] {
 		margin-left: 200px;
 		font-style: italic;
 		margin-top: 4px;
+	}
+	.s-dynamic-fields__description {
+		margin-left: 150px;
+		font-style: italic;
+		margin-top: 4px;
+	}
+	.s-dynamic-fields__action-icons {
+		.edit-action-icon,
+		.delete-action-icon,
+		.move-action-icon {
+			margin-left: 5px;
+			border: none;
+			background-color: white;
+			cursor: pointer;
+		}
 	}
 }
 .s-icon-settings .s-settings-field p {
@@ -212,8 +235,8 @@ body.settings_page_stackable-getting-started {
 	}
 }
 body.settings_page_stackable,
-body.settings_page_stackable-getting-started {
-
+body.settings_page_stackable-getting-started,
+body.toplevel_page_stackable-dynamic-fields {
 	img {
 		max-width: 100%;
 	}
@@ -238,7 +261,8 @@ body.settings_page_stackable-getting-started {
 		&.s-box-small {
 			padding-left: 15px;
 			padding-right: 15px;
-			box-shadow: 0 25px 15px -15px rgba(18, 63, 82, 0.15), 0 2px 7px 0 rgba(18, 63, 82, 0.15);
+			box-shadow: 0 25px 15px -15px rgba(18, 63, 82, 0.15),
+				0 2px 7px 0 rgba(18, 63, 82, 0.15);
 			h3 {
 				color: #f34957;
 			}
@@ -273,6 +297,9 @@ body.settings_page_stackable-getting-started {
 		&.s-button-left {
 			margin-left: 0;
 		}
+	}
+	.s-dynamic-content-card {
+		margin-top: 80px;
 	}
 	.s-body-container {
 		padding-top: 0;
@@ -596,7 +623,8 @@ body.settings_page_stackable-getting-started {
 // Collapse to a single column for mobile.
 @media screen and (max-width: $break-large) {
 	body.settings_page_stackable,
-	body.stackable_page_stackable-settings {
+	body.stackable_page_stackable-settings,
+	body.toplevel_page_stackable-dynamic-fields {
 		.s-body-container {
 			grid-template-columns: 1fr;
 		}
