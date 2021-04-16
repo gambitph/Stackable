@@ -61,7 +61,7 @@ class PanelTabs extends Component {
 	constructor() {
 		super( ...arguments )
 
-		this.tabsToUse = this.props.tabs || [ 'layout', 'style', 'advanced' ]
+		this.tabsToUse = this.props.tabs || [ 'layout', 'style', 'advanced', 'block' ]
 
 		this.state = {
 			activeTab: this.props.initialTab ? this.props.initialTab : this.tabsToUse[ 0 ],
