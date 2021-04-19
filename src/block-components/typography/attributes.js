@@ -57,7 +57,11 @@ export const typographyAttributes = {
 	},
 }
 
-export const addAttributes = ( attrObject, attrNameTemplate = '%s', selector = '.stk-content' ) => {
+export const addAttributes = ( attrObject, attrNameTemplate = '%s', selector = '.stk-content', options = {} ) => {
+	const {
+		enableTextTag = true,
+		defaultTextTag = 'p',
+	} = options
 	attrObject.add( {
 		attributes: {
 			...typographyAttributes,
@@ -66,6 +70,12 @@ export const addAttributes = ( attrObject, attrNameTemplate = '%s', selector = '
 				selector,
 				default: '',
 			},
+			...( enableTextTag ? {
+				textTag: {
+					type: 'string',
+					default: defaultTextTag,
+				},
+			} : {} ),
 		},
 		attrNameTemplate,
 		versionAdded: '3.0.0',

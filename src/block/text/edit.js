@@ -46,7 +46,7 @@ const Edit = props => {
 
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
-			<Typography.InspectorControls />
+			<Typography.InspectorControls enableTextTag={ false } />
 			<CustomCSS.InspectorControls mainBlockClass="stk-advanced-text" />
 			<Responsive.InspectorControls />
 

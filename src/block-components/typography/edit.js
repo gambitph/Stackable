@@ -13,6 +13,7 @@ import {
 	ColorPaletteControl,
 	FontFamilyControl,
 	FontSizeControl,
+	HeadingButtonsControl,
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 	ResponsiveControl2,
@@ -33,6 +34,7 @@ import { BaseControl } from '@wordpress/components'
 export const Edit = props => {
 	const {
 		attrNameTemplate = '%s',
+		enableTextTag = true,
 	} = props
 
 	const { clientId } = useBlockEditContext()
@@ -52,6 +54,12 @@ export const Edit = props => {
 					title={ __( 'Text', i18n ) }
 					id="text"
 				>
+					{ enableTextTag && (
+						<HeadingButtonsControl
+							value={ getValue( 'textTag' ) }
+							onChange={ value => setAttributes( { [ getAttrName( 'textTag' ) ]: value } ) }
+						/>
+					) }
 					<ButtonIconPopoverControl
 						label={ __( 'Typography', i18n ) }
 						popoverLabel={ __( 'Typography', i18n ) }
