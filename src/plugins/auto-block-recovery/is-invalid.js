@@ -96,6 +96,11 @@ export const isInvalid = ( block, allowedTags = ALLOWED_ERROR_TAGS ) => {
 		return true
 	}
 
+	// Check whether the video popup changed from an anchor tag to a button
+	if ( isVideoButton( name, validationIssues[ 0 ] ) ) {
+		return true
+	}
+
 	// Check whether the style content is different.
 	if ( isDifferentStyleContent( block ) ) {
 		return true
@@ -555,6 +560,29 @@ export const isFocusable = issue => {
 	const newHasFocusable = issue.args[ 1 ].some( attribute => attribute[ 0 ] === 'focusable' )
 	const oldHasFocusable = issue.args[ 2 ].some( attribute => attribute[ 0 ] === 'focusable' )
 	return newHasFocusable && ! oldHasFocusable
+}
+
+/**
+ * Check whether the video popup changed from an anchor tag to a button
+ *
+ * @param {string} blockName
+ * @param {Object} issue the validation object
+ * @return {boolean} if true, the block had an anchor tag. Otherwise, false.
+ */
+export const isVideoButton = ( blockName, issue ) => {
+	if ( blockName !== 'ugb/video-popup' ) {
+		return false
+	}
+
+	if ( ! issue.args ) {
+		return false
+	}
+
+	if ( issue.args.length !== 3 ) {
+		return false
+	}
+
+	return issue.args[ 1 ] === 'button' && issue.args[ 2 ] === 'a'
 }
 
 /**
