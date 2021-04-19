@@ -131,10 +131,12 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 				<?php } ?>
 
 				<?php if ( sugb_fs()->can_use_premium_code() ) { ?>
-					<a class="s-tab"
-						href="<?php echo admin_url( 'admin.php?page=stackable-dynamic-fields' ) ?>">
-						<?php _e( 'Dynamic Fields', STACKABLE_I18N ) ?>
-					</a>
+					<?php if ( get_option( 'stackable_dynamic_fields_admin' )[ 'enabled' ] ) { ?>
+						<a class="s-tab"
+							href="<?php echo admin_url( 'admin.php?page=stackable-dynamic-fields' ) ?>">
+							<?php _e( 'Dynamic Fields', STACKABLE_I18N ) ?>
+						</a>
+					<?php } ?>
 				<?php } ?>
 			</div>
 			<?php
@@ -183,6 +185,16 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 							<div class="s-editing-mode-settings"></div>
 							<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
 								<p class="s-settings-pro"><?php _e( 'This is only available in Stackable Premium.', STACKABLE_I18N ) ?> <a href="https://wpstackable.com/premium/?utm_source=wp-settings-role-manager&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a></p>
+							<?php endif; ?>
+						</article>
+						<article class="s-box" id="dynamic-fields-settings">
+							<h2><?php _e( '📤 Dynamic Field Settings', STACKABLE_I18N ) ?></h2>
+							<?php if ( sugb_fs()->can_use_premium_code() ) : ?>
+								<p class="s-settings-subtitle"><?php _e( 'Enable access and adjust permissions for dynamic fields with these settings.' , STACKABLE_I18N ) ?></em></p>
+							<?php endif; ?>
+							<div class="s-dynamic-field-settings"></div>
+							<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
+								<p class="s-settings-pro"><?php _e( 'This is only available in Stackable Premium.', STACKABLE_I18N ) ?> <a href="https://wpstackable.com/premium/?utm_source=wp-settings-icons&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a></p>
 							<?php endif; ?>
 						</article>
 						<article class="s-box" id="global-settings">

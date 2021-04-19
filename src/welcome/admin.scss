@@ -99,6 +99,10 @@ body[class*="page_stackable"] {
 		}
 	}
 	[type="text"],
+	[type="number"],
+	[type="date"],
+	[type="time"],
+	[type="url"],
 	select {
 		padding: 0.5em 1em;
 		width: calc(100% - 300px);
