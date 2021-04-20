@@ -91,6 +91,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 		public static function print_tabs() {
 			$screen = get_current_screen();
+			$dynamic_fields_permission = apply_filters( 'stackable_dynamic_fields_user_permissions', '' );
 			?>
 			<div class="s-body s-tabs">
 				<a class="s-tab <?php echo $screen->base === 'settings_page_stackable-getting-started' ? 's-active' : '' ?>"
@@ -132,10 +133,12 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 				<?php if ( sugb_fs()->can_use_premium_code() ) { ?>
 					<?php if ( get_option( 'stackable_dynamic_fields_admin' )[ 'enabled' ] ) { ?>
-						<a class="s-tab"
-							href="<?php echo admin_url( 'admin.php?page=stackable-dynamic-fields' ) ?>">
-							<?php _e( 'Dynamic Fields', STACKABLE_I18N ) ?>
-						</a>
+						<?php if ( $dynamic_fields_permission === 'administrator' || $dynamic_fields_permission === 'contributor' ) { ?>
+							<a class="s-tab"
+								href="<?php echo admin_url( 'admin.php?page=stackable-dynamic-fields' ) ?>">
+								<?php _e( 'Dynamic Fields', STACKABLE_I18N ) ?>
+							</a>
+						<?php } ?>
 					<?php } ?>
 				<?php } ?>
 			</div>

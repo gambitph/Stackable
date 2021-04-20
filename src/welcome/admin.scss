@@ -102,10 +102,17 @@ body[class*="page_stackable"] {
 	[type="number"],
 	[type="date"],
 	[type="time"],
-	[type="url"],
 	select {
 		padding: 0.5em 1em;
 		width: calc(100% - 300px);
+		box-shadow: 0 5px 30px -10px rgba(18, 63, 82, 0.1);
+		border: 1px solid rgba(0, 0, 0, 0.1);
+		margin: 0;
+	}
+	[type="url"],
+	.s-dynamic-fields__url-title {
+		padding: 0.5em 1em;
+		width: calc(50% - 150px);
 		box-shadow: 0 5px 30px -10px rgba(18, 63, 82, 0.1);
 		border: 1px solid rgba(0, 0, 0, 0.1);
 		margin: 0;
