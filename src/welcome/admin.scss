@@ -140,6 +140,9 @@ body[class*="page_stackable"] {
 			border: none;
 			background-color: white;
 			cursor: pointer;
+			span {
+				color: #666;
+			}
 		}
 	}
 }
@@ -186,10 +189,26 @@ body[class*="page_stackable"] {
 	color: #27de6c;
 	font-weight: bold;
 }
-.s-dynamic-field-dropzone {
-	height: 2px;
-	background-color: #216faf;
-	margin: 0 10%;
+.s-dynamic-fields__sort-element {
+	margin-top: 30px;
+}
+.s-dynamic-fields-notice {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	h1 {
+		margin-bottom: 16px;
+	}
+}
+.s-button-set-right {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	.s-button,
+	.s-button--ghost {
+		margin: 0 16px !important;
+	}
 }
 .s-button-set {
 	display: flex;
@@ -316,6 +335,18 @@ body.toplevel_page_stackable-dynamic-fields {
 		}
 		&.s-button-left {
 			margin-left: 0;
+		}
+		&.s-button--ghost {
+			border: 1px solid linear-gradient(90deg, #8c33da -100%, #f34957 200%);
+			border: 1px solid #8c33da;
+			color: linear-gradient(90deg, #8c33da -100%, #f34957 200%);
+			color: #8c33da;
+			background: #fff;
+		}
+		&.s-button--plain {
+			color: linear-gradient(90deg, #8c33da -100%, #f34957 200%);
+			color: #8c33da;
+			background: #fff;
 		}
 	}
 	.s-dynamic-content-card {
