@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { camelCase } from 'lodash'
+import { camelCase, unescape } from 'lodash'
 import { i18n } from 'stackable'
 import { useBlockAttributes } from '~stackable/hooks'
 import {
@@ -18,7 +18,7 @@ import {
 	PanelAdvancedSettings,
 	ResponsiveControl2,
 } from '~stackable/components'
-import { __getValue } from '~stackable/util'
+import { __getValue, getDefaultFontSize } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -27,9 +27,10 @@ import {
 	useBlockEditContext,
 } from '@wordpress/block-editor'
 import { useDispatch } from '@wordpress/data'
-import { Fragment } from '@wordpress/element'
+import { Fragment, useMemo } from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
-import { BaseControl } from '@wordpress/components'
+import { BaseControl, TextareaControl } from '@wordpress/components'
+import { escapeHTML } from '@wordpress/escape-html'
 
 export const Edit = props => {
 	const {
@@ -47,6 +48,15 @@ export const Edit = props => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
 	const getValue = __getValue( attributes, getAttrName, '' )
 
+	const placeholder = useMemo( () => {
+		if ( typeof props.placeholder === 'function' ) {
+			// If the placeholder is a function, this means that it's computed based on the detected default font size.
+			return props.fontSize || Math.round( props.placeholder( getDefaultFontSize( props.htmlTag, true ) ) )
+		}
+		// Use the given placeholder, or use the detected font size.
+		return props.fontSize || props.placeholder || getDefaultFontSize( props.htmlTag, true )
+	}, [ props.htmlTag, props.fontSize ] )
+
 	return (
 		<Fragment>
 			<InspectorStyleControls>
@@ -60,11 +70,46 @@ export const Edit = props => {
 							onChange={ value => setAttributes( { [ getAttrName( 'textTag' ) ]: value } ) }
 						/>
 					) }
+					<TextareaControl
+						label={ __( 'Text Content', i18n ) }
+						value={ unescape( getValue( 'text' ) ) }
+						onChange={ value => setAttributes( { [ getAttrName( 'text' ) ]: escapeHTML( value ) } ) }
+					/>
 					<ButtonIconPopoverControl
 						label={ __( 'Typography', i18n ) }
 						popoverLabel={ __( 'Typography', i18n ) }
-						onReset={ () => {} }
-						allowReset={ true }
+						onReset={ () => {
+							setAttributes( {
+								[ getAttrName( 'fontFamily' ) ]: '',
+								[ getAttrName( 'fontSize' ) ]: '',
+								[ getAttrName( 'fontSizeUnit' ) ]: 'px',
+								[ getAttrName( 'tabletFontSize' ) ]: '',
+								[ getAttrName( 'tabletFontSizeUnit' ) ]: 'px',
+								[ getAttrName( 'mobileFontSize' ) ]: '',
+								[ getAttrName( 'mobileFontSizeUnit' ) ]: 'px',
+								[ getAttrName( 'fontWeight' ) ]: '',
+								[ getAttrName( 'textTransform' ) ]: '',
+								[ getAttrName( 'letterSpacing' ) ]: '',
+								[ getAttrName( 'lineHeight' ) ]: '',
+								[ getAttrName( 'tabletLineHeight' ) ]: '',
+								[ getAttrName( 'mobileLineHeight' ) ]: '',
+								[ getAttrName( 'lineHeightUnit' ) ]: 'em',
+								[ getAttrName( 'tabletLineHeightUnit' ) ]: 'em',
+								[ getAttrName( 'mobileLineHeightUnit' ) ]: 'em',
+							} )
+						} }
+						allowReset={
+							( getValue( 'fontFamily' ) ||
+								getValue( 'fontSize' ) ||
+								getValue( 'tabletFontSize' ) ||
+								getValue( 'mobileFontSize' ) ||
+								getValue( 'fontWeight' ) ||
+								getValue( 'textTransform' ) ||
+								getValue( 'letterSpacing' ) ||
+								getValue( 'lineHeight' ) ||
+								getValue( 'tabletLineHeight' ) ||
+								getValue( 'mobileLineHeight' ) )
+						}
 					>
 						<FontFamilyControl
 							label={ __( 'Font Family', i18n ) }
@@ -94,6 +139,7 @@ export const Edit = props => {
 							<FontSizeControl
 								label={ __( 'Size', i18n ) }
 								allowReset={ true }
+								placeholder={ placeholder }
 							/>
 						</ResponsiveControl2>
 						<AdvancedSelectControl
@@ -191,7 +237,8 @@ export const Edit = props => {
 					>
 						<FontSizeControl
 							label={ __( 'Size', i18n ) }
-							placeholder={ '' }
+							placeholder={ placeholder }
+							allowReset={ true }
 						/>
 					</ResponsiveControl2>
 					<BaseControl
@@ -212,6 +259,12 @@ export const Edit = props => {
 							fullwidth={ false }
 							value={ getValue( 'textColorType' ) }
 							onChange={ value => setAttributes( { [ getAttrName( 'textColorType' ) ]: value } ) }
+							onReset={ () => {
+								setAttributes( {
+									[ getAttrName( 'textColor1' ) ]: '',
+									[ getAttrName( 'textColor2' ) ]: '',
+								} )
+							} }
 						/>
 						<ColorPaletteControl
 							label={ getValue( 'textColorType' ) === 'gradient' ? sprintf( __( 'Text Color #%s', i18n ), 1 )
