@@ -127,6 +127,9 @@ body[class*="page_stackable"] {
 		font-style: italic;
 		margin-top: 4px;
 	}
+	.s-dynamic-fields__options-field {
+		margin-top: 16px;
+	}
 	.s-dynamic-fields__description {
 		margin-left: 150px;
 		font-style: italic;
@@ -202,6 +205,7 @@ body[class*="page_stackable"] {
 	}
 }
 .s-button-set-right {
+	margin-top: 16px;
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
