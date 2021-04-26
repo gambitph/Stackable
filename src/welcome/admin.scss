@@ -112,10 +112,13 @@ body[class*="page_stackable"] {
 	[type="url"],
 	.s-dynamic-fields__url-title {
 		padding: 0.5em 1em;
-		width: calc(50% - 150px);
+		width: calc(50% - 160px);
 		box-shadow: 0 5px 30px -10px rgba(18, 63, 82, 0.1);
 		border: 1px solid rgba(0, 0, 0, 0.1);
 		margin: 0;
+	}
+	[type="url"] {
+		margin-right: 20px;
 	}
 	&.s-settings-field-small {
 		[type="text"] {
@@ -204,10 +207,12 @@ body[class*="page_stackable"] {
 		margin-bottom: 16px;
 	}
 }
-.s-button-set-right {
+.s-button-set-margin-top {
 	margin-top: 16px;
+}
+.s-button-set-left {
 	display: flex;
-	justify-content: flex-end;
+	justify-content: flex-start;
 	align-items: center;
 	.s-button,
 	.s-button--ghost {

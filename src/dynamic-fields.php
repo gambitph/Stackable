@@ -13,7 +13,7 @@ if ( ! function_exists( 'stackable_get_dynamic_fields_settings' ) ) {
 		$options = get_option( 'stackable_dynamic_fields_admin' );
 		if ( empty( $options ) ) {
 			return array(
-				'manager' => array(),
+				'manager' => array( 'administrator' ),
 				'enabled' => true,
 			);
 		}
