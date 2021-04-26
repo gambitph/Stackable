@@ -91,7 +91,6 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 		public static function print_tabs() {
 			$screen = get_current_screen();
-			$dynamic_fields_is_manager = apply_filters( 'stackable_dynamic_fields_is_user_manager', false );
 			?>
 			<div class="s-body s-tabs">
 				<a class="s-tab <?php echo $screen->base === 'settings_page_stackable-getting-started' ? 's-active' : '' ?>"
@@ -132,8 +131,8 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 				<?php } ?>
 
 				<?php if ( sugb_fs()->can_use_premium_code() ) { ?>
-					<?php if ( get_option( 'stackable_dynamic_fields_admin' )[ 'enabled' ] ) { ?>
-						<?php if ( $dynamic_fields_is_manager || current_user_can( 'manage_options' ) ) { ?>
+					<?php if ( stackable_is_dynamic_fields_enabled() ) { ?>
+						<?php if ( stackable_is_dynamic_fields_manager() || current_user_can( 'manage_options' ) ) { ?>
 							<a class="s-tab"
 								href="<?php echo admin_url( 'admin.php?page=stackable-dynamic-fields' ) ?>">
 								<?php _e( 'Dynamic Fields', STACKABLE_I18N ) ?>
@@ -191,13 +190,11 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 							<?php endif; ?>
 						</article>
 						<article class="s-box" id="dynamic-fields-settings">
-							<h2><?php _e( '📤 Dynamic Field Settings', STACKABLE_I18N ) ?></h2>
-							<?php if ( sugb_fs()->can_use_premium_code() ) : ?>
-								<p class="s-settings-subtitle"><?php _e( 'Enable access and adjust permissions for dynamic fields with these settings.' , STACKABLE_I18N ) ?></em></p>
-							<?php endif; ?>
+							<h2><?php _e( '📤 Dynamic Fields', STACKABLE_I18N ) ?></h2>
+							<p class="s-settings-subtitle"><?php printf( __( 'Create Dynamic Fields that you can reference across your entire site. You can assign which roles can manage your Dynamic Fields. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://wpstackable.com/dynamic-fields/?utm_source=wp-settings-dynamic-fields&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
 							<div class="s-dynamic-field-settings"></div>
 							<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
-								<p class="s-settings-pro"><?php _e( 'This is only available in Stackable Premium.', STACKABLE_I18N ) ?> <a href="https://wpstackable.com/premium/?utm_source=wp-settings-icons&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a></p>
+								<p class="s-settings-pro"><?php _e( 'This is only available in Stackable Premium.', STACKABLE_I18N ) ?> <a href="https://wpstackable.com/premium/?utm_source=wp-settings-dynamic-fields&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a></p>
 							<?php endif; ?>
 						</article>
 						<article class="s-box" id="global-settings">
