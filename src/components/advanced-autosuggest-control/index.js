@@ -256,6 +256,7 @@ AdvancedAutosuggestControl.defaultProps = {
 	noMatchesLabel: __( 'No matches found', i18n ),
 	renderOption: null, // If given a function, it will be called to render the option.
 	highlightValueOnFocus: false,
+	placeholder: '',
 	getSuggestionValue: null,
 	disableAutoIndex: false,
 	onSuggestionSelected: () => {},
