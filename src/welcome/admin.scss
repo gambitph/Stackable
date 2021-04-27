@@ -152,6 +152,12 @@ body[class*="page_stackable"] {
 		}
 	}
 }
+.s-dynamic-fields-settings-header {
+	display: flex;
+	.ugb-admin-setting__label {
+		width: 0;
+	}
+}
 .s-icon-settings .s-settings-field p {
 	margin-left: 240px;
 }
