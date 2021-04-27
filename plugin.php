@@ -112,7 +112,7 @@ if ( ! function_exists( 'stackable_notice_gutenberg_plugin_activated' ) ) {
 			if ( ! $ignore ) {
 				printf(
 					'<div class="notice notice-error is-dismissible stackable_notice_gutenberg_plugin"><p>%s</p>%s</div>',
-					sprintf( __( '%sStackable Notice%s: Please deactivate the %sGutenberg plugin%s! As of WordPress 5.0, this plugin is no longer required for the Block Editor to work.', STACKABLE_I18N ), '<strong>', '</strong>', '<strong>', '</strong>' ),
+					sprintf( __( '%sStackable Notice%s: We noticed that the Gutenberg plugin is active! Just a heads up, you don\'t need the Gutenberg plugin anymore to use the Block Editor. The Gutenberg plugin may contain non-final features which may not be compatible with some block plugins. %sPlease deactivate the Gutenberg plugin%s unless you really need it. Click the close button on the side to dismiss this notice.', STACKABLE_I18N ), '<strong>', '</strong>', '<strong>', '</strong>' ),
 					'<script>( function() {
 						document.body.addEventListener( "click", function( event ) {
 							if( event.target.matches( ".notice.stackable_notice_gutenberg_plugin button.notice-dismiss" ) ) {
