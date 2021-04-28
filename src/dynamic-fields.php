@@ -9,9 +9,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! function_exists( 'stackable_get_dynamic_fields_settings' ) ) {
+	/**
+	 * Retrieves admin settings for dynamic fields from database
+	 *
+	 * @return array
+	 */
 	function stackable_get_dynamic_fields_settings() {
 		$options = get_option( 'stackable_dynamic_fields_admin' );
-		if ( empty( $options ) ) {
+		if ( $options === false ) {
 			return array(
 				'manager' => array( 'administrator' ),
 				'enabled' => true,
@@ -22,37 +27,20 @@ if ( ! function_exists( 'stackable_get_dynamic_fields_settings' ) ) {
 }
 
 if ( ! function_exists( 'stackable_is_dynamic_fields_enabled' ) ) {
+	/**
+	 * Returns whether dynamic fields should be enabled
+	 *
+	 * @return boolean
+	 */
 	function stackable_is_dynamic_fields_enabled() {
 		return sugb_fs()->can_use_premium_code() && stackable_get_dynamic_fields_settings()['enabled'];
-	}
-}
-
-if ( ! function_exists( 'stackable_is_dynamic_fields_manager' ) ) {
-	function stackable_is_dynamic_fields_manager() {
-		if ( ! is_user_logged_in() ) {
-			return false;
-		}
-
-		$manager_roles = stackable_get_dynamic_fields_settings()['manager'];
-		if ( ! $manager_roles ) {
-			return false;
-		}
-
-		$user = wp_get_current_user();
-		foreach ( $user->roles as $user_role ) {
-			if ( in_array( $user_role, $manager_roles ) ) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 }
 
 if ( ! class_exists( 'Stackable_Premium_Settings_Dynamic_Fields' ) ) {
 
 	/**
-	 * Premium dynamic fields settings page.
+	 * Premium settings for dynamic fields
 	 */
     class Stackable_Premium_Settings_Dynamic_Fields {
 		/**
