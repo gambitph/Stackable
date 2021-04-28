@@ -77,7 +77,7 @@ if ( ! class_exists( 'Stackable_Premium_Settings_Dynamic_Fields' ) ) {
 				array(
 					'type' => 'object',
 					'description' => __( 'Settings that control dynamic fields functionality and permissions.', STACKABLE_I18N ),
-					'sanitize_callback' => array( $this, 'sanitize_array_field' ),
+					'sanitize_callback' => array( $this, 'sanitize_dynamic_fields_admin' ),
 					'show_in_rest' => array(
 						'schema' => array(
 							'type' => 'object',
@@ -99,9 +99,27 @@ if ( ! class_exists( 'Stackable_Premium_Settings_Dynamic_Fields' ) ) {
 			);
 		}
 
-		public function sanitize_array_field( $input ) {
-			// TODO: Get all roles then do add_cap or remove_cap on each role
-			return ! is_array( $input ) ? array() : $input;
+		public function sanitize_dynamic_fields_admin( $input ) {
+			$sanitized_array = ! is_array( $input ) ? array() : $input;
+			
+			if ( empty( $sanitized_array ) ) {
+				return $sanitized_array;
+			}
+
+			// Update role's manager capabilities
+			$managers = $sanitized_array[ 'manager' ];
+			$roles_obj = new WP_Roles();
+			foreach ( $roles_obj->roles as $role => $role_data ) {
+				$current_role = get_role( $role );
+				if( in_array( $role, $managers ) ) {
+					$current_role->add_cap( 'manage_stackable_dynamic_fields' );
+				}
+				else {
+					$current_role->remove_cap( 'manage_stackable_dynamic_fields' );
+				}
+			}
+
+			return $sanitized_array;
 		}
 	}
 
