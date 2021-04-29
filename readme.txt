@@ -206,6 +206,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 * Fixed: Changed "Gutenberg plugin is active" notice message to be clearer
 * Fixed: Team Member block image now doesn't grow bigger than its container
+* Fixed: Global color reset popover width
 
 = 2.14.2 =
 * Fixed: Added Auto Block Recovery support for reusable blocks
