@@ -80,19 +80,23 @@ Turn the Gutenberg Editor into a page builder. Fine-tune your creations with a w
     - Live Responsive Editing
     - Ability to tweak designs for Tablet and Mobile views
     - Hide / Show Specific Blocks on Desktop, Tablet or Mobile
+- Dynamic Content **
 
 ## Agency Tools
 
 Cater to more clients effectively and efficiently with our Agency Tools, which were specially made for web design professionals.
 
-- Block CSS Customizer
-- Role Manager
+- Block CSS Customizer **
+- Role Manager **
 
 ## Integrations
 
 Make your page building experience more well-rounded by using other popular tools. We’ve seamlessly integrated with these essential third-party plugins and tools:
 
+- ACF **
 - WPML
+- Blocksy
+- Toolset
 - Font Awesome
 - Google Fonts
 
@@ -138,6 +142,8 @@ Optimize your website’s performance, and get lightning fast page loading and m
 - Join the [Stackable Community in Facebook](https://www.facebook.com/groups/wpstackable/)
 - Follow us in [Twitter @wpstackable](https://twitter.com/wpstackable)
 - [Leave us a rating](https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks/reviews/?rate=5#new-post)
+
+> ** Those marked with asterisks are part of Stackable Premium
 
 == Installation ==
 
