@@ -161,7 +161,6 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/jetpack.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/multisite.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/design-library/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/global-settings.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/dynamic-fields.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/premium-notice/index.php' );
 
 /**
