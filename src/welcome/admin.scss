@@ -74,6 +74,7 @@ body[class*="page_stackable"] {
 		}
 		.s-dynamic-fields__title {
 			width: 150px;
+			word-break: break-word;
 		}
 		.s-settings-field__title,
 		.s-dynamic-fields__title {
@@ -146,6 +147,8 @@ body[class*="page_stackable"] {
 		margin-top: 16px;
 	}
 	.s-dynamic-fields__action-icons {
+		width: 150px;
+		flex: 0 0 auto;
 		.edit-action-icon,
 		.delete-action-icon,
 		.move-action-icon {
