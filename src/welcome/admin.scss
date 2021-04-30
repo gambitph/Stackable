@@ -35,6 +35,9 @@ body[class*="page_stackable"] {
 			margin-bottom: 24px;
 		}
 	}
+	&.s-header-non-admin {
+		padding-bottom: 26px;
+	}
 	&.s-logo-icon {
 		img {
 			height: 34px;
@@ -129,14 +132,18 @@ body[class*="page_stackable"] {
 		margin-left: 200px;
 		font-style: italic;
 		margin-top: 4px;
+		&.s-dynamic-fields__description {
+			margin-left: 150px;
+			width: calc(100% - 300px);
+		}
+		&.s-dynamic-fields__form-error {
+			margin-left: 150px;
+			width: calc(100% - 300px);
+			color: #ff5a7f;
+		}
 	}
 	.s-dynamic-fields__options-field {
 		margin-top: 16px;
-	}
-	.s-dynamic-fields__description {
-		margin-left: 150px;
-		font-style: italic;
-		margin-top: 4px;
 	}
 	.s-dynamic-fields__action-icons {
 		.edit-action-icon,
@@ -157,6 +164,10 @@ body[class*="page_stackable"] {
 	.ugb-admin-setting__label {
 		width: 0;
 	}
+}
+.s-dynamic-fields-enable {
+	margin-top: -4px;
+	margin-left: 8px;
 }
 .s-icon-settings .s-settings-field p {
 	margin-left: 240px;
@@ -364,8 +375,8 @@ body.toplevel_page_stackable-dynamic-fields {
 			background: #fff;
 		}
 	}
-	.s-dynamic-content-card {
-		margin-top: 80px;
+	.s-dynamic-fields-card {
+		margin-top: 50px;
 	}
 	.s-body-container {
 		padding-top: 0;
