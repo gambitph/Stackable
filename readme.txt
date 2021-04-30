@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.4
 Tested up to: 5.7
 Requires PHP: 5.3
-Stable tag: 2.14.2
+Stable tag: 2.15.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -204,6 +204,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 = 2.15.0 =
 [Introducing Dynamic Content](https://wpstackable.com/blog/introducing-dynamic-content/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
+* New: You can now add Dynamic Content to your blocks from the Dynamic Fields toolbar button (premium)
 * Fixed: Changed "Gutenberg plugin is active" notice message to be clearer
 * Fixed: Team Member block image now doesn't grow bigger than its container
 * Fixed: Global color reset popover width
