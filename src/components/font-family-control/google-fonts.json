@@ -647,6 +647,22 @@
     ]
   },
   {
+    "family": "Antonio",
+    "variants": [
+      "100",
+      "200",
+      "300",
+      "regular",
+      "500",
+      "600",
+      "700"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Arapey",
     "variants": [
       "regular",
@@ -6167,6 +6183,19 @@
     ]
   },
   {
+    "family": "Karantina",
+    "variants": [
+      "300",
+      "regular",
+      "700"
+    ],
+    "subsets": [
+      "hebrew",
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
     "family": "Karla",
     "variants": [
       "200",
@@ -8012,7 +8041,8 @@
     ],
     "subsets": [
       "latin",
-      "latin-ext"
+      "latin-ext",
+      "vietnamese"
     ]
   },
   {
@@ -9085,6 +9115,18 @@
       "italic"
     ],
     "subsets": [
+      "latin",
+      "latin-ext"
+    ]
+  },
+  {
+    "family": "Orelega One",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "cyrillic",
+      "cyrillic-ext",
       "latin",
       "latin-ext"
     ]
@@ -13218,6 +13260,16 @@
     "subsets": [
       "chinese-simplified",
       "latin"
+    ]
+  },
+  {
+    "family": "Zen Dots",
+    "variants": [
+      "regular"
+    ],
+    "subsets": [
+      "latin",
+      "latin-ext"
     ]
   },
   {
