@@ -28,7 +28,7 @@ domReady( () => {
 		}
 	}
 	elems.forEach( el => {
-		const a = el.querySelector( 'a' )
+		const a = el.querySelector( '.ugb-video-popup__overlay, a' )
 		a.addEventListener( 'click', ev => {
 			ev.preventDefault()
 			openVideo( el )

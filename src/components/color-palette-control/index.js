@@ -50,7 +50,7 @@ const ColorPaletteControl = props => {
 	const ariaLabel = sprintf( colorIndicatorAriaLabel, label.toLowerCase(), colorName || _value )
 
 	let value = _value
-	if ( _value.includes( '--stk-global-color' ) && _value.match( /#[\d\w]{6}/ ) ) {
+	if ( typeof _value === 'string' && _value.includes( '--stk-global-color' ) && _value.match( /#[\d\w]{6}/ ) ) {
 		value = _value.match( /#[\d\w]{6}/ )[ 0 ]
 	}
 

@@ -56,6 +56,13 @@
 	z-index: 6 !important;
 }
 
+button.ugb-video-popup__overlay {
+	all: unset;
+	width: 100%;
+	height: 100%;
+	background: transparent !important;
+	cursor: pointer;
+}
 .ugb-video-popup__play-button {
 	position: absolute;
 	top: 0;
@@ -84,13 +91,13 @@
 }
 
 // Don't add a background color to the popup's close button.
-#bp_container .bp-x {
+#bp_container .bp-x { /* stylelint-disable-line */
 	&,
 	&:hover {
 		background: none !important;
 	}
 }
 // Fix some theme may interfere with the placement of our popup video.
-#bp_sv {
+#bp_sv { /* stylelint-disable-line */
 	margin: auto !important;
 }

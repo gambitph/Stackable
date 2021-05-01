@@ -29,7 +29,11 @@ const getSuggestions = ( value, options ) => {
 
 	// Non-grouped options. Find a matching value.
 	if ( ! isGroupedOptions( options ) ) {
-		return options.filter( option => regex.test( option.label ) || regex.test( option.value ) )
+		return options.filter( option =>
+			typeof option === 'string'
+				? regex.test( option )
+				: ( regex.test( option.label ) || regex.test( option.value ) )
+		)
 	}
 
 	// Grouped options. Find a matching value.
@@ -57,7 +61,7 @@ const getLabelFromValue = ( value, options ) => {
 
 	// Non-grouped options
 	if ( ! isGroupedOptions( options ) ) {
-		const matchingOptions = options.filter( option => option.value === value )
+		const matchingOptions = options.filter( option => ( typeof option === 'string' ? option : option.value ) === value )
 		if ( ! matchingOptions.length ) {
 			return value
 		}
@@ -100,8 +104,8 @@ class AdvancedAutosuggestControl extends Component {
 	constructor() {
 		super( ...arguments )
 		this.state = {
-			value: this.props.value,
-			label: this.props.value ? getLabelFromValue( this.props.value, this.props.options ) : this.props.value,
+			value: '',
+			label: '',
 			suggestions: [],
 			isEmpty: false,
 		}
@@ -134,6 +138,12 @@ class AdvancedAutosuggestControl extends Component {
 	// Autosuggest will call this function every time you need to update suggestions.
 	// You already implemented this logic above, so just use it.
 	onSuggestionsFetchRequested( { value, reason } ) {
+		if ( this.props.disableAutoIndex ) {
+			this.setState( {
+				suggestions: getSuggestions( '', this.props.options ),
+			} )
+			return
+		}
 		// If the input was clicked (can be thought as a dropdown was opened), show all the options.
 		if ( reason === 'input-focused' || reason === 'suggestion-selected' ) {
 			this.setState( {
@@ -151,6 +161,24 @@ class AdvancedAutosuggestControl extends Component {
 		} )
 	}
 
+	componentDidMount() {
+		if ( this.props.options.length && this.props.value ) {
+			this.setState( {
+				value: this.props.value,
+				label: this.props.value ? getLabelFromValue( this.props.value, this.props.options ) : this.props.value,
+				suggestions: getSuggestions( this.props.disableAutoIndex ? '' : this.props.value, this.props.options ),
+			} )
+		}
+	}
+
+	componentWillReceiveProps( receivedProps ) {
+		this.setState( {
+			value: receivedProps.value,
+			label: receivedProps.value ? getLabelFromValue( receivedProps.value, receivedProps.options ) : receivedProps.value,
+			suggestions: getSuggestions( this.props.disableAutoIndex ? '' : receivedProps.value, receivedProps.options ),
+		} )
+	}
+
 	// Autosuggest will call this function every time you need to clear suggestions.
 	onSuggestionsClearRequested() {
 		this.setState( {
@@ -163,11 +191,12 @@ class AdvancedAutosuggestControl extends Component {
 
 		// Autosuggest will pass through all these props to the input.
 		const inputProps = {
-			placeholder: '',
+			placeholder: this.props.placeholder,
 			value: label,
 			onChange: this.onChange,
 			onFocus: this.onFocus,
 			type: 'search', // This adds a clear button inside the text input.
+			...this.props.inputProps,
 		}
 
 		return (
@@ -192,7 +221,8 @@ class AdvancedAutosuggestControl extends Component {
 						focusInputOnSuggestionClick={ false }
 						onSuggestionsFetchRequested={ this.onSuggestionsFetchRequested }
 						onSuggestionsClearRequested={ this.onSuggestionsClearRequested }
-						getSuggestionValue={ getSuggestionValue }
+						onSuggestionSelected={ this.props.onSuggestionSelected }
+						getSuggestionValue={ this.props.getSuggestionValue || getSuggestionValue }
 						renderSuggestion={ suggestion => {
 							return <div
 								className="ugb-autosuggest-option"
@@ -206,6 +236,7 @@ class AdvancedAutosuggestControl extends Component {
 						getSectionSuggestions={ getSectionSuggestions }
 						shouldRenderSuggestions={ shouldRenderSuggestions }
 						inputProps={ inputProps }
+						renderInputComponent={ this.props.renderInputComponent ? this.props.renderInputComponent : ( props => <input { ...props } /> ) }
 					/>
 					{ this.state.isEmpty && <div className="ugb--autosuggest-empty">{ this.props.noMatchesLabel }</div> }
 					{ this.props.children }
@@ -226,6 +257,12 @@ AdvancedAutosuggestControl.defaultProps = {
 	renderOption: null, // If given a function, it will be called to render the option.
 	highlightValueOnFocus: false,
 	allowReset: true,
+	placeholder: '',
+	getSuggestionValue: null,
+	disableAutoIndex: false,
+	onSuggestionSelected: () => {},
+	renderInputComponent: null,
+	inputProps: {},
 }
 
 export default AdvancedAutosuggestControl

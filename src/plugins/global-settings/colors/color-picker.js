@@ -78,7 +78,7 @@ const DeleteButton = props => {
 			</Button>
 			{ isDeletePopoverOpen && (
 				<Popover
-					className="components-dropdown__content"
+					className="ugb-global-settings-color-picker__delete-button-popover"
 					focusOnMount={ false }
 					onFocusOutside={ () => setIsDeletePopoverOpen( false ) }
 					position="bottom center"
