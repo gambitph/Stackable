@@ -5,11 +5,6 @@
  * External dependencies
  */
 import { VideoPopupIcon } from '~stackable/icons'
-import {
-	createBackgroundAttributes,
-	createResponsiveAttributes,
-	createBorderAttributes,
-} from '~stackable/util'
 
 /**
  * Internal dependencies
@@ -19,6 +14,7 @@ import deprecated from './deprecated'
 import edit from './edit'
 import save from './save'
 import example from './example'
+import schema from './schema'
 
 /**
  * WordPress dependencies
@@ -26,65 +22,6 @@ import example from './example'
 import { applyFilters } from '@wordpress/hooks'
 import { __ } from '@wordpress/i18n'
 import { disabledBlocks, i18n } from 'stackable'
-
-export const schema = {
-	videoLink: {
-		type: 'string',
-	},
-	videoID: {
-		type: 'string',
-		source: 'attribute',
-		selector: '[data-video]',
-		attribute: 'data-video',
-	},
-
-	...createResponsiveAttributes( '%sWidth', {
-		type: 'number',
-		default: '',
-	} ),
-	...createResponsiveAttributes( '%sHeight', {
-		type: 'number',
-		default: '',
-	} ),
-	borderRadius: {
-		type: 'number',
-		default: '',
-	},
-	shadow: {
-		type: 'number',
-		default: '',
-	},
-
-	playButtonType: {
-		type: 'string',
-		default: 'normal',
-	},
-	playButtonColor: {
-		type: 'string',
-	},
-	playButtonSize: {
-		type: 'number',
-		default: '',
-	},
-	playButtonOpacity: {
-		type: 'number',
-		default: '',
-	},
-
-	// Border.
-	...createBorderAttributes( 'column%s' ),
-
-	...createBackgroundAttributes( 'preview%s' ),
-	previewBackgroundColor: {
-		type: 'string',
-		default: '#000000',
-	},
-
-	hoverEffect: {
-		type: 'string',
-		default: '',
-	},
-}
 
 export const name = 'ugb/video-popup'
 

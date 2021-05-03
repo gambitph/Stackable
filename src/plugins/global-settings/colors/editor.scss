@@ -39,10 +39,14 @@
 	margin-bottom: 12px;
 }
 
-.ugb-global-settings-color-picker__reset-button-popover {
+.ugb-global-settings-color-picker__reset-button-popover,
+.ugb-global-settings-color-picker__delete-button-popover {
 	.components-popover__content {
-		width: 250px;
 		padding: 12px;
+
+		& > div {
+			width: 250px;
+		}
 	}
 }
 
