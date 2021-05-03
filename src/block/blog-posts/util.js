@@ -19,6 +19,7 @@ export const showOptions = blockProps => {
 		showMeta = true,
 		showReadmore = true,
 		showLoadMoreButton = false,
+		showPagination = false,
 	} = blockProps.attributes
 
 	return applyFilters( 'stackable.blog-posts.show', {
@@ -42,6 +43,7 @@ export const showOptions = blockProps => {
 		metaSpacing: showMeta,
 		readmoreSpacing: showReadmore,
 		loadMoreSpacing: showLoadMoreButton,
+		paginationSpacing: showPagination,
 		contentOrderStyles: design !== 'image-card',
 	}, blockProps )
 }

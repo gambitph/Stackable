@@ -70,8 +70,8 @@ if ( ! function_exists( 'stackable_blog_posts_attributes' ) ) {
 			),
 			'taxonomyFilterType' => array(
 				'type' => 'string',
-    	    	'default' => '__in',
-    		),
+				'default' => '__in',
+  		),
 			'postOffset' => array(
 				'type' => 'number',
 				'default' => '',
@@ -97,8 +97,8 @@ if ( ! function_exists( 'stackable_blog_posts_attributes' ) ) {
 				'default' => '',
 			),
 			'columnBackgroundMediaId' => array(
-        		'type' => 'string',
-        		'default' => '',
+				'type' => 'string',
+				'default' => '',
 			),
 			'columnBackgroundMediaUrl' => array(
 				'type' => 'string',
@@ -1639,6 +1639,218 @@ if ( ! function_exists( 'stackable_blog_posts_attributes' ) ) {
 			),
 			'className' => array(
 				'type' => 'string',
+			),
+			'showPagination' => array(
+				'type' => 'boolean',
+				'default' => false,
+			),
+			'paginationAlign' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationBackgroundColor' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationBackgroundColor2' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationBackgroundColorType' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationBackgroundGradientDirection' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationBorderRadius' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationBorderWidth' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationDesign' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationFontFamily' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationFontSize' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationFontSizeUnit' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationFontSizeUnit' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationFontWeight' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationHoverBackgroundColor' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationHoverBackgroundColor2' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationHoverBackgroundGradientDirection' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationHoverEffect' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationHoverGhostToNormal' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationHoverGhostToNormal' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationHoverOpacity' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationHoverTextColor' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationIconSize' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationIconSpacing' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationLetterSpacing' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationLineHeight' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationLineHeightUnit' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationMobileAlign' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationMobileFontSize' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationMobileFontSizeUnit' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationMobileLineHeight' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationMobileLineHeightUnit' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationMobileTopMargin' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationOpacity' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationPaddingBottom' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationPaddingLeft' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationPaddingRight' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationPaddingTop' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationShadow' => array(
+				'type' => 'number',
+				'default' => '',
+			),
+			'paginationSize' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationTabletAlign' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationTabletAlign' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationTabletFontSize' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationTabletFontSizeUnit' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationTabletLineHeight' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationTabletLineHeightUnit' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationTabletTopMargin' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationTextColor' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationTextTransform' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'paginationTopMargin' => array(
+				'type' => 'string',
+				'default' => '',
+			),
+			'nextLabel' => array(
+				'type' => 'string',
+				'default' => __( 'Next »', 'stackable' ),
+			),
+			'previousLabel' => array(
+				'type' => 'string',
+				'default' => __( '« Previous', 'stackable' ),
+			),
+			'showNextPrevious' => array(
+				'type' => 'boolean',
+				'default' => true,
 			),
 		);
 	}
