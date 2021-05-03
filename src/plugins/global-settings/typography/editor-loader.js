@@ -115,7 +115,7 @@ export const GlobalTypographyStyles = () => {
 		return () => removeAction( 'stackable.global-settings.typography-update-global-styles', 'stackable/typography-styles' )
 	}, [ JSON.stringify( typographySettings ), applySettingsTo, device ] )
 
-	return <style>{ styles }</style>
+	return styles
 }
 
 export const formSelectors = ( tag, applyTo ) => {
@@ -158,7 +158,7 @@ export const formParagraphSelectors = applyTo => {
 }
 
 domReady( () => {
-	const wrapper = document.createElement( 'div' )
+	const wrapper = document.createElement( 'style' )
 	document.body.appendChild( wrapper )
 	render( <GlobalTypographyStyles />, wrapper )
 } )

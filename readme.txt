@@ -201,6 +201,9 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.15.4 =
+* Fixed: A vertical scrollbar can be present in the block editor
+
 = 2.15.3 =
 * Fixed: Backward compatibility with WordPress 5.6
 * Change: Increased minimum compatibility of Stackable to at least WordPress 5.5.4
