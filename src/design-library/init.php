@@ -25,7 +25,7 @@ if ( ! class_exists( 'Stackable_Design_Library' ) ) {
 			add_filter( 'stackable_design_library_retreive_body', array( $this, 'replace_dev_mode_urls' ) );
 		}
 
-		public static function validate_string( $value = '', $request, $param ) {
+		public static function validate_string( $value, $request, $param ) {
 			if ( ! is_string( $value ) ) {
 				return new WP_Error( 'invalid_param', sprintf( esc_html__( '%s must be a string.', STACKABLE_I18N ), $param ) );
 			}

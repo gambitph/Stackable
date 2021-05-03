@@ -2,9 +2,9 @@
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.4
-Tested up to: 5.7
+Tested up to: 5.7.1
 Requires PHP: 5.3
-Stable tag: 2.14.2
+Stable tag: 2.15.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -80,19 +80,23 @@ Turn the Gutenberg Editor into a page builder. Fine-tune your creations with a w
     - Live Responsive Editing
     - Ability to tweak designs for Tablet and Mobile views
     - Hide / Show Specific Blocks on Desktop, Tablet or Mobile
+- Dynamic Content **
 
 ## Agency Tools
 
 Cater to more clients effectively and efficiently with our Agency Tools, which were specially made for web design professionals.
 
-- Block CSS Customizer
-- Role Manager
+- Block CSS Customizer **
+- Role Manager **
 
 ## Integrations
 
 Make your page building experience more well-rounded by using other popular tools. We’ve seamlessly integrated with these essential third-party plugins and tools:
 
+- ACF **
 - WPML
+- Blocksy
+- Toolset
 - Font Awesome
 - Google Fonts
 
@@ -110,6 +114,7 @@ Optimize your website’s performance, and get lightning fast page loading and m
 
 ### News Article Updates
 
+- [v2.15 Introducing Dynamic Content](https://wpstackable.com/blog/introducing-dynamic-content/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.14 Copy and Paste Block Styles](https://wpstackable.com/blog/copy-and-paste-block-styles/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.13 UI Kits, Borders & Improved Performance](https://wpstackable.com/blog/ui-kits-borders/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.12 Better User Interface and User Experience](https://wpstackable.com/blog/better-user-interface-and-user-experience/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -137,6 +142,8 @@ Optimize your website’s performance, and get lightning fast page loading and m
 - Join the [Stackable Community in Facebook](https://www.facebook.com/groups/wpstackable/)
 - Follow us in [Twitter @wpstackable](https://twitter.com/wpstackable)
 - [Leave us a rating](https://wordpress.org/support/plugin/stackable-ultimate-gutenberg-blocks/reviews/?rate=5#new-post)
+
+> ** Those marked with asterisks are part of Stackable Premium
 
 == Installation ==
 
@@ -194,8 +201,25 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.15.2 =
+* Fixed: Constant naming issue in PHP 5.3
+
+= 2.15.1 =
+* Fixed: E_PARSE PHP warning
+* Fixed: Deprecated warning shown in PHP 8
+
+= 2.15.0 =
+[Introducing Dynamic Content](https://wpstackable.com/blog/introducing-dynamic-content/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+* New: You can now add Dynamic Content to your blocks from the Dynamic Fields toolbar button (premium)
+* Fixed: Changed "Gutenberg plugin is active" notice message to be clearer
+* Fixed: Team Member block image now doesn't grow bigger than its container
+* Fixed: Global color reset popover width
+* Fixed: Corrected custom CSS selector name in the blog post block
+
 = 2.14.2 =
 * Fixed: Added Auto Block Recovery support for reusable blocks
+* Fixed: Video Popup block play button SEO and accessibility issues
 * Fixed: Possible PHP undefined variable warning in global settings
 * Fixed: Image border radius now properly shows in mobile for the Feature block
 * Fixed: Gradient backgrounds would overlap if there's a border in Column blocks
@@ -208,6 +232,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Disabled html editing in the Accordion block
 * Fixed: Text of some blocks now are blank when you first add them so you can type immediately
 * Fixed: Get the correct color from custom properties in Icon List block icons
+* Fixed: Better color picker support for Neve Theme colors
 * Fixed: Image Box block now properly adds min-height
 
 = 2.14.1 =
