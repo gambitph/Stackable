@@ -91,6 +91,12 @@ const Edit = props => {
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 			<BlockLink.InspectorControls />
+			<Image.InspectorControls
+				hasWidth={ false }
+				heightUnits={ [ 'px' ] }
+				hasBorderRadius={ false }
+				hasShape={ false }
+			/>
 			<ContainerDiv.InspectorControls sizeSelector=".stk-card__content" />
 			<CustomCSS.InspectorControls mainBlockClass="stk-card" />
 			<Responsive.InspectorControls />

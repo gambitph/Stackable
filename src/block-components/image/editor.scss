@@ -157,3 +157,27 @@
 		}
 	}
 }
+
+// The wrapper of the image. We need this wrapper for our image zoom feature,
+// but the resizer needs overflow visible.
+.stk-img-resizer-wrapper {
+	position: relative;
+	width: 100% !important;
+	height: 100% !important;
+	margin: 0 !important;
+	display: block !important;
+	overflow: hidden;
+}
+
+.ugb-button-icon-control__popover .ugb-image-shape-control {
+	// Make the option wide.
+	.ugb-design-control {
+		margin: 0 !important;
+		height: 300px !important;
+		max-height: 50vh !important;
+	}
+	// Make the option 3 columns.
+	.components-radio-control__option {
+		width: 25%;
+	}
+}

@@ -15,9 +15,16 @@ export const addAttributes = attrObject => {
 			},
 			imageSize: {
 				type: 'string',
-				default: 'large',
+				default: 'full',
 			},
-			imageTitle: {
+			imageBorderRadius: {
+				type: 'number',
+				default: '',
+			},
+			imageFocalPoint_: {
+				type: 'object',
+			},
+			imageFit_: {
 				type: 'string',
 				default: '',
 			},
@@ -41,9 +48,32 @@ export const addAttributes = attrObject => {
 				type: 'number',
 				default: '',
 			},
-			imagePosition: {
-				type: 'number',
+
+			imageShadow: {
+				type: 'string',
 				default: '',
+			},
+			imageFilter: {
+				type: 'string',
+				default: '',
+			},
+
+			// Shape.
+			imageShape: {
+				type: 'string',
+				default: '',
+			},
+			imageShapeFlipX: {
+				type: 'boolean',
+				default: '',
+			},
+			imageShapeFlipY: {
+				type: 'boolean',
+				default: '',
+			},
+			imageShapeStretch: {
+				type: 'boolean',
+				default: true,
 			},
 		},
 		versionAdded: '3.0.0',

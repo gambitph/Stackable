@@ -138,7 +138,10 @@ const Image = props => {
 
 						// Open the media picker, but only when the image is clicked, not the popup, etc.
 						onClick={ event => {
-							if ( event.target?.classList?.contains( 'stk-img' ) || event.target?.classList?.contains( 'stk-img-placeholder' ) ) {
+							if ( event.target?.classList?.contains( 'stk-img' ) ||
+								event.target?.classList?.contains( 'stk-img-placeholder' ) ||
+								event.target?.classList?.contains( 'stk-img-resizer-wrapper' )
+							) {
 								obj.open()
 							}
 						} }
@@ -262,14 +265,16 @@ const Image = props => {
 								props.onChangeSize( size )
 							} }
 						/>
-						<img
-							className={ imageClasses }
-							src={ props.src || undefined }
-							alt={ striptags( props.alt || undefined ) }
-							title={ striptags( props.title || undefined ) }
-							width={ props.width || undefined }
-							height={ props.height || undefined }
-						/>
+						<div className="stk-img-resizer-wrapper">
+							<img
+								className={ imageClasses }
+								src={ props.src || undefined }
+								alt={ striptags( props.alt || undefined ) }
+								title={ striptags( props.title || undefined ) }
+								width={ props.width || undefined }
+								height={ props.height || undefined }
+							/>
+						</div>
 						{ /* This is to make percentage heights work, see comment above about the issue in ResizableBox */ }
 						{ isResizing && tempStyle && <style>{ tempStyle }</style> }
 					</ResizableBox>
