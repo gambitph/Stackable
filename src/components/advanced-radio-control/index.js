@@ -27,7 +27,7 @@ const AdvancedRadioControl = props => {
 			defaultValue={ props.defaultValue }
 		>
 			<RadioControl
-				{ ...omit( props, [ 'className', 'help', 'label', 'units', 'unit', 'onChangeUnit', 'screens', 'allowReset' ] ) }
+				{ ...omit( props, [ 'className', 'help', 'label', 'units', 'unit', 'onChangeUnit', 'screens', 'allowReset', 'defaultValue' ] ) }
 			/>
 		</BaseControl>
 	)

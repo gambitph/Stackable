@@ -26,7 +26,7 @@ const AdvancedSelectControl = props => {
 			defaultValue={ props.defaultValue }
 		>
 			<SelectControl
-				{ ...omit( props, [ 'className', 'help', 'label', 'units', 'unit', 'onChangeUnit', 'screens' ] ) }
+				{ ...omit( props, [ 'className', 'help', 'label', 'units', 'unit', 'onChangeUnit', 'screens', 'defaultValue' ] ) }
 			/>
 		</BaseControl>
 	)
