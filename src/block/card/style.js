@@ -7,12 +7,10 @@ import {
 	BlockDiv, Column, ContainerDiv, Image,
 } from '~stackable/block-components'
 import {
-	// __getValue,
 	StyleObject,
 } from '~stackable/util'
 
 const createStyles = ( version = '' ) => attributes => {
-	// const getValue = __getValue( attributes )
 	const styles = new StyleObject()
 
 	Alignment.addStyles( styles, attributes )
@@ -24,10 +22,6 @@ const createStyles = ( version = '' ) => attributes => {
 		sizeVerticalAlignRule: 'justifyContent',
 		sizeHorizontalAlignRule: 'alignSelf',
 	} )
-
-	// Column styles.
-
-	// TODO: image adv styles like zoom, filter, etc.
 	Image.addStyles( styles, attributes, {
 		enableWidth: false,
 		selector: '.stk-card__image',

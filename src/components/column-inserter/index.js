@@ -19,13 +19,18 @@ const ColumnInserter = () => {
 	const { clientId: rootClientId } = useBlockEditContext()
 
 	const onAppend = useCallback( () => {
-		const { innerBlocks } = select( 'core/block-editor' ).getBlock( rootClientId )
+		const {
+			getBlock,
+			__experimentalGetAllowedBlocks: getAllowedBlocks,
+		} = select( 'core/block-editor' )
+
+		const { innerBlocks } = getBlock( rootClientId )
 		const lastBlock = last( innerBlocks )
 
 		// Copy the last block
 		const block = getBlockFromExample(
-			lastBlock.name,
-			pick( lastBlock, [ 'attributes', 'innerBlocks' ] )
+			lastBlock?.name || getAllowedBlocks( rootClientId )[ 0 ].name,
+			pick( lastBlock || {}, [ 'attributes', 'innerBlocks' ] )
 		)
 
 		dispatch( 'core/block-editor' ).insertBlock( block, innerBlocks.length, rootClientId )

@@ -27,10 +27,6 @@ export const attributes = ( version = VERSION ) => {
 
 	attrObject.add( {
 		attributes: {
-			hasContainer: {
-				type: 'boolean',
-				default: true,
-			},
 			design: {
 				type: 'string',
 				default: '',
