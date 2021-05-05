@@ -57,7 +57,7 @@ export const typographyAttributes = {
 	},
 }
 
-export const addAttributes = ( attrObject, attrNameTemplate = '%s', selector = '.stk-content', options = {} ) => {
+export const addAttributes = ( attrObject, selector = '.stk-content', options = {} ) => {
 	const {
 		enableTextTag = true,
 		defaultTextTag = 'p',
@@ -77,7 +77,6 @@ export const addAttributes = ( attrObject, attrNameTemplate = '%s', selector = '
 				},
 			} : {} ),
 		},
-		attrNameTemplate,
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	} )

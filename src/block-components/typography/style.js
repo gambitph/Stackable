@@ -1,9 +1,8 @@
 /**
  * External dependencies
  */
-import { camelCase } from 'lodash'
 import {
-	getFontFamily, __getValue, clampInheritedStyle, appendImportant, appendImportantAll,
+	getFontFamily, clampInheritedStyle, appendImportant, appendImportantAll,
 } from '~stackable/util'
 
 /**
@@ -14,7 +13,6 @@ import { sprintf } from '@wordpress/i18n'
 export const addStyles = ( styles, attributes, options = {} ) => {
 	const {
 		selector = '',
-		attrNameTemplate = '%s',
 		importantSize = false,
 		important = true,
 		inherit = true, // If false, desktop styles will only be applied to desktop, etc.
@@ -22,29 +20,26 @@ export const addStyles = ( styles, attributes, options = {} ) => {
 		inheritMin,
 	} = options
 
-	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
-	const getValue = __getValue( attributes, getAttrName, '' )
-
-	const desktopFontSize = getValue( 'FontSize' )
-	const tabletFontSize = getValue( 'TabletFontSize' )
-	const mobileFontSize = getValue( 'MobileFontSize' )
+	const desktopFontSize = attributes.fontSize
+	const tabletFontSize = attributes.tabletFontSize
+	const mobileFontSize = attributes.mobileFontSize
 
 	const clampDesktopValue = inherit && clampInheritedStyle( desktopFontSize, { min: inheritMin, max: inheritMax } )
 	const clampTabletValue = clampInheritedStyle( tabletFontSize, { min: inheritMin, max: inheritMax } )
 
 	const typographyStyles = {
 		[ selector ]: {
-			textAlign: getValue( 'textAlign' ),
-			fontFamily: getValue( 'FontFamily' ) !== '' ? getFontFamily( getValue( 'FontFamily' ) ) : undefined,
-			fontSize: desktopFontSize !== '' ? appendImportant( `${ desktopFontSize }${ getValue( 'FontSizeUnit' ) || 'px' }`, importantSize ) : undefined,
-			fontWeight: getValue( 'FontWeight' ) !== '' ? getValue( 'FontWeight' ) : undefined,
-			textTransform: getValue( 'TextTransform' ) !== '' ? getValue( 'TextTransform' ) : undefined,
-			letterSpacing: getValue( 'LetterSpacing' ) !== '' ? `${ getValue( 'LetterSpacing' ) }px` : undefined,
-			lineHeight: getValue( 'LineHeight' ) !== '' ? `${ getValue( 'LineHeight' ) }${ getValue( 'LineHeightUnit' ) || 'em' }` : undefined,
-			...( getValue( 'textColorType' ) !== 'gradient' ? {
-				color: getValue( 'textColor1' ),
+			textAlign: attributes.textAlign,
+			fontFamily: attributes.fontFamily !== '' ? getFontFamily( attributes.fontFamily ) : undefined,
+			fontSize: desktopFontSize !== '' ? appendImportant( `${ desktopFontSize }${ attributes.fontSizeUnit || 'px' }`, importantSize ) : undefined,
+			fontWeight: attributes.fontWeight !== '' ? attributes.fontWeight : undefined,
+			textTransform: attributes.textTransform !== '' ? attributes.textTransform : undefined,
+			letterSpacing: attributes.letterSpacing !== '' ? `${ attributes.letterSpacing }px` : undefined,
+			lineHeight: attributes.lineHeight !== '' ? `${ attributes.lineHeight }${ attributes.lineHeightUnit || 'em' }` : undefined,
+			...( attributes.textColorType !== 'gradient' ? {
+				color: attributes.textColor1,
 			} : {
-				background: `-webkit-linear-gradient(${ getValue( 'textGradientDirection' ) !== '' ? `${ getValue( 'textGradientDirection' ) }deg, ` : '' }${ getValue( 'textColor1' ) }, ${ getValue( 'textColor2' ) })`,
+				background: `-webkit-linear-gradient(${ attributes.textGradientDirection !== '' ? `${ attributes.textGradientDirection }deg, ` : '' }${ attributes.textColor1 }, ${ attributes.textColor2 })`,
 				backgroundClip: 'text',
 				'-webkit-background-clip': 'text',
 				'-moz-background-clip': 'text',
@@ -57,32 +52,32 @@ export const addStyles = ( styles, attributes, options = {} ) => {
 		},
 		tablet: {
 			[ selector ]: {
-				textAlign: getValue( 'tabletTextAlign' ),
-				lineHeight: getValue( 'TabletLineHeight' ) !== '' ? `${ getValue( 'TabletLineHeight' ) }${ getValue( 'TabletLineHeightUnit' ) || 'em' }` : undefined,
+				textAlign: attributes.tabletTextAlign,
+				lineHeight: attributes.tabletLineHeight !== '' ? `${ attributes.tabletLineHeight }${ attributes.tabletLineHeightUnit || 'em' }` : undefined,
 				...( clampDesktopValue
 					? {
-						fontSize: `${ clampDesktopValue }${ getValue( 'FontSizeUnit' ) || 'px' }`,
+						fontSize: `${ clampDesktopValue }${ attributes.fontSizeUnit || 'px' }`,
 					}
 					: {} ),
 				...( tabletFontSize
 					? {
-						fontSize: getValue( 'TabletFontSize', `%s${ getValue( 'TabletFontSizeUnit' ) || 'px' }` ),
+						fontSize: sprintf( `%s${ attributes.tabletFontSizeUnit || 'px' }`, attributes.tabletFontSize ),
 					} : {} ),
 			},
 		},
 		mobile: {
 			[ selector ]: {
-				textAlign: getValue( 'mobileTextAlign' ),
-				lineHeight: getValue( 'MobileLineHeight' ) !== '' ? `${ getValue( 'MobileLineHeight' ) }${ getValue( 'MobileLineHeightUnit' ) || 'em' }` : undefined,
+				textAlign: attributes.mobileTextAlign,
+				lineHeight: attributes.mobileLineHeight !== '' ? `${ attributes.mobileLineHeight }${ attributes.mobileLineHeightUnit || 'em' }` : undefined,
 				...( clampTabletValue
 					? {
-						fontSize: `${ clampTabletValue }${ getValue( 'TabletFontSizeUnit' ) || 'px' }`,
+						fontSize: `${ clampTabletValue }${ attributes.tabletFontSizeUnit || 'px' }`,
 					} : ( ( clampDesktopValue || tabletFontSize )
-						? {} : { fontSize: `${ clampDesktopValue }${ getValue( 'FontSizeUnit' ) || 'px' }` }
+						? {} : { fontSize: `${ clampDesktopValue }${ attributes.fontSizeUnit || 'px' }` }
 					) ),
 				...( mobileFontSize
 					? {
-						fontSize: getValue( 'MobileFontSize', `%s${ getValue( 'MobileFontSizeUnit' ) || 'px' }` ),
+						fontSize: sprintf( `%s${ attributes.mobileFontSizeUnit || 'px' }`, attributes.mobileFontSize ),
 					} : {} ),
 			},
 		},

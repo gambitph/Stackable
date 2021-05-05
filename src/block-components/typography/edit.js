@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { camelCase, unescape } from 'lodash'
+import { unescape } from 'lodash'
 import { i18n } from 'stackable'
 import { useBlockAttributes } from '~stackable/hooks'
 import {
@@ -18,7 +18,7 @@ import {
 	PanelAdvancedSettings,
 	ResponsiveControl2,
 } from '~stackable/components'
-import { __getValue, getDefaultFontSize } from '~stackable/util'
+import { getDefaultFontSize } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -34,7 +34,6 @@ import { escapeHTML } from '@wordpress/escape-html'
 
 export const Edit = props => {
 	const {
-		attrNameTemplate = '%s',
 		enableTextTag = true,
 	} = props
 
@@ -44,9 +43,6 @@ export const Edit = props => {
 	const attributes = useBlockAttributes( clientId )
 
 	const setAttributes = valueObject => updateBlockAttributes( clientId, valueObject )
-
-	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
-	const getValue = __getValue( attributes, getAttrName, '' )
 
 	const placeholder = useMemo( () => {
 		if ( typeof props.placeholder === 'function' ) {
@@ -66,74 +62,74 @@ export const Edit = props => {
 				>
 					{ enableTextTag && (
 						<HeadingButtonsControl
-							value={ getValue( 'textTag' ) }
-							onChange={ value => setAttributes( { [ getAttrName( 'textTag' ) ]: value } ) }
+							value={ attributes.textTag }
+							onChange={ value => setAttributes( { textTag: value } ) }
 						/>
 					) }
 					<TextareaControl
 						label={ __( 'Text Content', i18n ) }
-						value={ unescape( getValue( 'text' ) ) }
-						onChange={ value => setAttributes( { [ getAttrName( 'text' ) ]: escapeHTML( value ) } ) }
+						value={ unescape( attributes.text ) }
+						onChange={ value => setAttributes( { text: escapeHTML( value ) } ) }
 					/>
 					<ButtonIconPopoverControl
 						label={ __( 'Typography', i18n ) }
 						popoverLabel={ __( 'Typography', i18n ) }
 						onReset={ () => {
 							setAttributes( {
-								[ getAttrName( 'fontFamily' ) ]: '',
-								[ getAttrName( 'fontSize' ) ]: '',
-								[ getAttrName( 'fontSizeUnit' ) ]: 'px',
-								[ getAttrName( 'tabletFontSize' ) ]: '',
-								[ getAttrName( 'tabletFontSizeUnit' ) ]: 'px',
-								[ getAttrName( 'mobileFontSize' ) ]: '',
-								[ getAttrName( 'mobileFontSizeUnit' ) ]: 'px',
-								[ getAttrName( 'fontWeight' ) ]: '',
-								[ getAttrName( 'textTransform' ) ]: '',
-								[ getAttrName( 'letterSpacing' ) ]: '',
-								[ getAttrName( 'lineHeight' ) ]: '',
-								[ getAttrName( 'tabletLineHeight' ) ]: '',
-								[ getAttrName( 'mobileLineHeight' ) ]: '',
-								[ getAttrName( 'lineHeightUnit' ) ]: 'em',
-								[ getAttrName( 'tabletLineHeightUnit' ) ]: 'em',
-								[ getAttrName( 'mobileLineHeightUnit' ) ]: 'em',
+								  fontFamily: '',
+								  fontSize: '',
+								  fontSizeUnit: 'px',
+								  tabletFontSize: '',
+								  tabletFontSizeUnit: 'px',
+								  mobileFontSize: '',
+								  mobileFontSizeUnit: 'px',
+								  fontWeight: '',
+								  textTransform: '',
+								  letterSpacing: '',
+								  lineHeight: '',
+								  tabletLineHeight: '',
+								  mobileLineHeight: '',
+								  lineHeightUnit: 'em',
+								  tabletLineHeightUnit: 'em',
+								  mobileLineHeightUnit: 'em',
 							} )
 						} }
 						allowReset={
-							( getValue( 'fontFamily' ) ||
-								getValue( 'fontSize' ) ||
-								getValue( 'tabletFontSize' ) ||
-								getValue( 'mobileFontSize' ) ||
-								getValue( 'fontWeight' ) ||
-								getValue( 'textTransform' ) ||
-								getValue( 'letterSpacing' ) ||
-								getValue( 'lineHeight' ) ||
-								getValue( 'tabletLineHeight' ) ||
-								getValue( 'mobileLineHeight' ) )
+							( attributes.fontFamily ||
+								 attributes.fontSize ||
+								 attributes.tabletFontSize ||
+								 attributes.mobileFontSize ||
+								 attributes.fontWeight ||
+								 attributes.textTransform ||
+								 attributes.letterSpacing ||
+								 attributes.lineHeight ||
+								 attributes.tabletLineHeight ||
+								 attributes.mobileLineHeight )
 						}
 					>
 						<FontFamilyControl
 							label={ __( 'Font Family', i18n ) }
-							onChange={ fontFamily => setAttributes( { [ getAttrName( 'fontFamily' ) ]: fontFamily } ) }
-							value={ getValue( 'fontFamily' ) }
+							onChange={ fontFamily => setAttributes( { fontFamily } ) }
+							value={ attributes.fontFamily }
 						/>
 						<ResponsiveControl2
 							desktopProps={ {
-								onChange: value => setAttributes( { [ getAttrName( 'fontSize' ) ]: value } ),
-								value: getValue( 'fontSize' ),
-								unit: getValue( 'fontSizeUnit' ),
-								onChangeUnit: value => setAttributes( { [ getAttrName( 'fontSizeUnit' ) ]: value } ),
+								onChange: value => setAttributes( { fontSize: value } ),
+								value: attributes.fontSize,
+								unit: attributes.fontSizeUnit,
+								onChangeUnit: value => setAttributes( { fontSizeUnit: value } ),
 							} }
 							tabletProps={ {
-								onChange: value => setAttributes( { [ getAttrName( 'TabletFontSize' ) ]: value } ),
-								value: getValue( 'tabletFontSize' ),
-								unit: getValue( 'tabletFontSizeUnit' ),
-								onChangeUnit: value => setAttributes( { [ getAttrName( 'tabletFontSizeUnit' ) ]: value } ),
+								onChange: value => setAttributes( { tabletFontSize: value } ),
+								value: attributes.tabletFontSize,
+								unit: attributes.tabletFontSizeUnit,
+								onChangeUnit: value => setAttributes( { tabletFontSizeUnit: value } ),
 							} }
 							mobileProps={ {
-								onChange: value => setAttributes( { [ getAttrName( 'mobileFontSize' ) ]: value } ),
-								value: getValue( 'mobileFontSize' ),
-								unit: getValue( 'mobileFontSizeUnit' ),
-								onChangeUnit: value => setAttributes( { [ getAttrName( 'mobileFontSizeUnit' ) ]: value } ),
+								onChange: value => setAttributes( { mobileFontSize: value } ),
+								value: attributes.mobileFontSize,
+								unit: attributes.mobileFontSizeUnit,
+								onChangeUnit: value => setAttributes( { mobileFontSizeUnit: value } ),
 							} }
 						>
 							<FontSizeControl
@@ -158,8 +154,8 @@ export const Edit = props => {
 								{ label: __( 'Normal', i18n ), value: 'normal' },
 								{ label: __( 'Bold', i18n ), value: 'bold' },
 							] }
-							onChange={ value => setAttributes( { [ getAttrName( 'fontWeight' ) ]: value } ) }
-							value={ getValue( 'fontWeight' ) }
+							onChange={ value => setAttributes( { fontWeight: value } ) }
+							value={ attributes.fontWeight }
 						/>
 						<AdvancedSelectControl
 							label={ __( 'Transform', i18n ) }
@@ -170,27 +166,27 @@ export const Edit = props => {
 								{ label: __( 'Capitalize', i18n ), value: 'capitalize' },
 								{ label: __( 'None', i18n ), value: 'none' },
 							] }
-							onChange={ value => setAttributes( { [ getAttrName( 'textTransform' ) ]: value } ) }
-							value={ getValue( 'textTransform' ) }
+							onChange={ value => setAttributes( { textTransform: value } ) }
+							value={ attributes.textTransform }
 						/>
 						<ResponsiveControl2
 							desktopProps={ {
-								value: getValue( 'lineHeight' ),
-								onChange: value => setAttributes( { [ getAttrName( 'lineHeight' ) ]: value } ),
-								unit: getValue( 'lineHeightUnit' ),
-								onChangeUnit: value => setAttributes( { [ getAttrName( 'lineHeightUnit' ) ]: value } ),
+								value: attributes.lineHeight,
+								onChange: value => setAttributes( { lineHeight: value } ),
+								unit: attributes.lineHeightUnit,
+								onChangeUnit: value => setAttributes( { lineHeightUnit: value } ),
 							} }
 							tabletProps={ {
-								value: getValue( 'tabletLineHeight' ),
-								onChange: value => setAttributes( { [ getAttrName( 'tabletLineHeight' ) ]: value } ),
-								unit: getValue( 'tabletLineHeightUnit' ),
-								onChangeUnit: value => setAttributes( { [ getAttrName( 'tabletLineHeightUnit' ) ]: value } ),
+								value: attributes.tabletLineHeight,
+								onChange: value => setAttributes( { tabletLineHeight: value } ),
+								unit: attributes.tabletLineHeightUnit,
+								onChangeUnit: value => setAttributes( { tabletLineHeightUnit: value } ),
 							} }
 							mobileProps={ {
-								value: getValue( 'mobileLineHeight' ),
-								onChange: value => setAttributes( { [ getAttrName( 'mobileLineHeight' ) ]: value } ),
-								unit: getValue( 'mobileLineHeightUnit' ),
-								onChangeUnit: value => setAttributes( { [ getAttrName( 'mobileLineHeightUnit' ) ]: value } ),
+								value: attributes.mobileLineHeight,
+								onChange: value => setAttributes( { mobileLineHeight: value } ),
+								unit: attributes.mobileLineHeightUnit,
+								onChangeUnit: value => setAttributes( { mobileLineHeightUnit: value } ),
 							} }
 						>
 							<AdvancedRangeControl
@@ -210,29 +206,29 @@ export const Edit = props => {
 							max={ 10 }
 							step={ 0.1 }
 							allowReset={ true }
-							onChange={ value => setAttributes( { [ getAttrName( 'letterSpacing' ) ]: value } ) }
-							value={ getValue( 'letterSpacing' ) }
+							onChange={ value => setAttributes( { letterSpacing: value } ) }
+							value={ attributes.letterSpacing }
 							placeholder="0"
 						/>
 					</ButtonIconPopoverControl>
 					<ResponsiveControl2
 						desktopProps={ {
-							onChange: value => setAttributes( { [ getAttrName( 'fontSize' ) ]: value } ),
-							value: getValue( 'fontSize' ),
-							unit: getValue( 'fontSizeUnit' ),
-							onChangeUnit: value => setAttributes( { [ getAttrName( 'fontSizeUnit' ) ]: value } ),
+							onChange: value => setAttributes( { fontSize: value } ),
+							value: attributes.fontSize,
+							unit: attributes.fontSizeUnit,
+							onChangeUnit: value => setAttributes( { fontSizeUnit: value } ),
 						} }
 						tabletProps={ {
-							onChange: value => setAttributes( { [ getAttrName( 'TabletFontSize' ) ]: value } ),
-							value: getValue( 'tabletFontSize' ),
-							unit: getValue( 'tabletFontSizeUnit' ),
-							onChangeUnit: value => setAttributes( { [ getAttrName( 'tabletFontSizeUnit' ) ]: value } ),
+							onChange: value => setAttributes( { tabletFontSize: value } ),
+							value: attributes.tabletFontSize,
+							unit: attributes.tabletFontSizeUnit,
+							onChangeUnit: value => setAttributes( { tabletFontSizeUnit: value } ),
 						} }
 						mobileProps={ {
-							onChange: value => setAttributes( { [ getAttrName( 'mobileFontSize' ) ]: value } ),
-							value: getValue( 'mobileFontSize' ),
-							unit: getValue( 'mobileFontSizeUnit' ),
-							onChangeUnit: value => setAttributes( { [ getAttrName( 'mobileFontSizeUnit' ) ]: value } ),
+							onChange: value => setAttributes( { mobileFontSize: value } ),
+							value: attributes.mobileFontSize,
+							unit: attributes.mobileFontSizeUnit,
+							onChangeUnit: value => setAttributes( { mobileFontSizeUnit: value } ),
 						} }
 					>
 						<FontSizeControl
@@ -257,33 +253,33 @@ export const Edit = props => {
 							] }
 							isSmall={ true }
 							fullwidth={ false }
-							value={ getValue( 'textColorType' ) }
-							onChange={ value => setAttributes( { [ getAttrName( 'textColorType' ) ]: value } ) }
+							value={ attributes.textColorType }
+							onChange={ value => setAttributes( { textColorType: value } ) }
 							onReset={ () => {
 								setAttributes( {
-									[ getAttrName( 'textColor1' ) ]: '',
-									[ getAttrName( 'textColor2' ) ]: '',
+									  textColor1: '',
+									  textColor2: '',
 								} )
 							} }
 						/>
 						<ColorPaletteControl
-							label={ getValue( 'textColorType' ) === 'gradient' ? sprintf( __( 'Text Color #%s', i18n ), 1 )
+							label={ attributes.textColorType === 'gradient' ? sprintf( __( 'Text Color #%s', i18n ), 1 )
 								: __( 'Text Color', i18n ) }
-							value={ getValue( 'textColor1' ) }
-							onChange={ value => setAttributes( { [ getAttrName( 'textColor1' ) ]: value } ) }
+							value={ attributes.textColor1 }
+							onChange={ value => setAttributes( { textColor1: value } ) }
 						/>
-						{ getValue( 'textColorType' ) === 'gradient' && (
+						{ attributes.textColorType === 'gradient' && (
 							<Fragment>
 								<ColorPaletteControl
 									label={ __( 'Text Color #2', i18n ) }
-									value={ getValue( 'textColor2' ) }
-									onChange={ value => setAttributes( { [ getAttrName( 'textColor2' ) ]: value } ) }
+									value={ attributes.textColor2 }
+									onChange={ value => setAttributes( { textColor2: value } ) }
 								/>
 
 								<AdvancedRangeControl
 									label={ __( 'Gradient Direction (degrees)', i18n ) }
-									value={ getValue( 'textGradientDirection' ) }
-									onChange={ value => setAttributes( { [ getAttrName( 'textGradientDirection' ) ]: value } ) }
+									value={ attributes.textGradientDirection }
+									onChange={ value => setAttributes( { textGradientDirection: value } ) }
 									min={ 0 }
 									max={ 360 }
 									step={ 10 }
@@ -294,16 +290,16 @@ export const Edit = props => {
 					</BaseControl>
 					<ResponsiveControl2
 						desktopProps={ {
-							value: getValue( 'textAlign' ),
-							onChange: value => setAttributes( { [ getAttrName( 'textAlign' ) ]: value } ),
+							value: attributes.textAlign,
+							onChange: value => setAttributes( { textAlign: value } ),
 						} }
 						tabletProps={ {
-							value: getValue( 'tabletTextAlign' ),
-							onChange: value => setAttributes( { [ getAttrName( 'tabletTextAlign' ) ]: value } ),
+							value: attributes.tabletTextAlign,
+							onChange: value => setAttributes( { tabletTextAlign: value } ),
 						} }
 						mobileProps={ {
-							value: getValue( 'mobileTextAlign' ),
-							onChange: value => setAttributes( { [ getAttrName( 'mobileTextAlign' ) ]: value } ),
+							value: attributes.mobileTextAlign,
+							onChange: value => setAttributes( { mobileTextAlign: value } ),
 						} }
 					>
 						<AlignButtonsControl

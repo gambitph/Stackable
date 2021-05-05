@@ -18,7 +18,7 @@ export const attributes = ( version = VERSION ) => {
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
-	Typography.addAttributes( attrObject, '%s', '.stk-advanced-text__text', { enableTextTag: false } )
+	Typography.addAttributes( attrObject, '.stk-advanced-text__text', { enableTextTag: false } )
 
 	return attrObject.getMerged( version )
 }
