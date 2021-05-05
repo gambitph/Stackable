@@ -9,6 +9,7 @@ import createStyles from './style'
 import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import {
+	ColumnInserter,
 	InspectorTabs,
 } from '~stackable/components'
 import {
@@ -68,6 +69,7 @@ const Edit = props => {
 				<InnerBlocks
 					orientation="horizontal"
 					allowedBlocks={ [ 'stackable/card' ] }
+					renderAppender={ () => <ColumnInserter /> }
 				/>
 			</div>
 			<MarginBottom />

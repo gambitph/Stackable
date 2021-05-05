@@ -25,7 +25,7 @@ export const useLinking = () => {
 
 	const isLinked = useMemo( () => {
 		return ! linkedData.includes( uniqueId )
-	}, [ linkedData ] )
+	}, [ linkedData, uniqueId ] )
 
 	const setIsLinked = isLinked => {
 		const latestLinkedData = getLinkedData()

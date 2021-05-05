@@ -103,6 +103,7 @@ export { default as AdvancedFocalPointControl } from './advanced-focal-point-con
 export { default as ImageFilterControl } from './image-filter-control'
 export { default as ShadowControl } from './shadow-control'
 export { default as LinkControl } from './link-control'
+export { default as ColumnInserter } from './column-inserter'
 export { default as Link } from './link'
 export { default as ResizableColumn } from './resizable-column'
 export { default as ResponsiveControl2 } from './responsive-control2'
