@@ -10,6 +10,7 @@ import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import {
 	ColumnInserter,
+	GroupPlaceholder,
 	InspectorTabs,
 } from '~stackable/components'
 import {
@@ -31,6 +32,7 @@ import {
 	InnerBlocks,
 } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
+import { useBlockContext } from '~stackable/hooks'
 
 const Edit = props => {
 	const {
@@ -39,6 +41,7 @@ const Edit = props => {
 
 	const rowClass = getRowClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+	const { hasInnerBlocks } = useBlockContext()
 
 	const blockClassNames = classnames( [
 		className,
@@ -65,14 +68,18 @@ const Edit = props => {
 		<BlockDiv className={ blockClassNames }>
 			<Style styleFunc={ createStyles( VERSION ) } />
 			<CustomCSS mainBlockClass="stk-card-group" />
-			<div className={ contentClassNames }>
-				<InnerBlocks
-					orientation="horizontal"
-					allowedBlocks={ [ 'stackable/card' ] }
-					renderAppender={ () => <ColumnInserter /> }
-				/>
-			</div>
-			<MarginBottom />
+
+			{ ! hasInnerBlocks && <GroupPlaceholder /> }
+			<Fragment>
+				<div className={ contentClassNames }>
+					<InnerBlocks
+						orientation="horizontal"
+						allowedBlocks={ [ 'stackable/card' ] }
+						renderAppender={ () => hasInnerBlocks ? <ColumnInserter /> : null }
+					/>
+				</div>
+				{ hasInnerBlocks && <MarginBottom /> }
+			</Fragment>
 		</BlockDiv>
 	</Fragment>
 }
