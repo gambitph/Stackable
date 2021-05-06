@@ -19,7 +19,7 @@ export const convertToNumber = value => {
 }
 
 const AdvancedRangeControl = props => {
-	const propsToPass = { ...omit( props, [ 'className', 'help', 'label', 'units', 'unit', 'onChangeUnit', 'screens', 'placeholder', 'initialPosition', 'allowReset' ] ) }
+	const propsToPass = { ...omit( props, [ 'className', 'help', 'label', 'units', 'unit', 'onChangeUnit', 'screens', 'placeholder', 'initialPosition', 'allowReset', 'defaultValue' ] ) }
 	const deviceType = useDeviceType()
 
 	// Change the min, max & step values depending on the unit used.

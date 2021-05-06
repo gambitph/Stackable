@@ -76,35 +76,35 @@ export const Edit = props => {
 						popoverLabel={ __( 'Typography', i18n ) }
 						onReset={ () => {
 							setAttributes( {
-								  fontFamily: '',
-								  fontSize: '',
-								  fontSizeUnit: 'px',
-								  tabletFontSize: '',
-								  tabletFontSizeUnit: 'px',
-								  mobileFontSize: '',
-								  mobileFontSizeUnit: 'px',
-								  fontWeight: '',
-								  textTransform: '',
-								  letterSpacing: '',
-								  lineHeight: '',
-								  tabletLineHeight: '',
-								  mobileLineHeight: '',
-								  lineHeightUnit: 'em',
-								  tabletLineHeightUnit: 'em',
-								  mobileLineHeightUnit: 'em',
+								fontFamily: '',
+								fontSize: '',
+								fontSizeUnit: 'px',
+								tabletFontSize: '',
+								tabletFontSizeUnit: 'px',
+								mobileFontSize: '',
+								mobileFontSizeUnit: 'px',
+								fontWeight: '',
+								textTransform: '',
+								letterSpacing: '',
+								lineHeight: '',
+								tabletLineHeight: '',
+								mobileLineHeight: '',
+								lineHeightUnit: 'em',
+								tabletLineHeightUnit: 'em',
+								mobileLineHeightUnit: 'em',
 							} )
 						} }
 						allowReset={
 							( attributes.fontFamily ||
-								 attributes.fontSize ||
-								 attributes.tabletFontSize ||
-								 attributes.mobileFontSize ||
-								 attributes.fontWeight ||
-								 attributes.textTransform ||
-								 attributes.letterSpacing ||
-								 attributes.lineHeight ||
-								 attributes.tabletLineHeight ||
-								 attributes.mobileLineHeight )
+								attributes.fontSize ||
+								attributes.tabletFontSize ||
+								attributes.mobileFontSize ||
+								attributes.fontWeight ||
+								attributes.textTransform ||
+								attributes.letterSpacing ||
+								attributes.lineHeight ||
+								attributes.tabletLineHeight ||
+								attributes.mobileLineHeight )
 						}
 					>
 						<FontFamilyControl
@@ -257,8 +257,8 @@ export const Edit = props => {
 							onChange={ value => setAttributes( { textColorType: value } ) }
 							onReset={ () => {
 								setAttributes( {
-									  textColor1: '',
-									  textColor2: '',
+									textColor1: '',
+									textColor2: '',
 								} )
 							} }
 						/>

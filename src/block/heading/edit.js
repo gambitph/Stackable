@@ -5,7 +5,7 @@ import createStyles from './style'
 
 /**
  * External dependencies
-k*/
+ */
 import {
 	BlockDiv,
 	CustomCSS,
@@ -14,8 +14,7 @@ import {
 	Style,
 	Typography,
 } from '~stackable/block-components'
-import { descriptionPlaceholder } from '~stackable/util'
-import { version as VERSION } from 'stackable'
+import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
 import { InspectorTabs } from '~stackable/components'
 
@@ -24,6 +23,7 @@ import { InspectorTabs } from '~stackable/components'
  */
 import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
+import { __ } from '@wordpress/i18n'
 
 const Edit = props => {
 	const {
@@ -31,12 +31,12 @@ const Edit = props => {
 	} = props
 
 	const {
-		text,
+		text, textTag,
 	} = props.attributes
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-advanced-text',
+		'stk-advanced-heading',
 	] )
 
 	return (
@@ -46,21 +46,21 @@ const Edit = props => {
 
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
-			<Typography.InspectorControls enableTextTag={ false } />
-			<CustomCSS.InspectorControls mainBlockClass="stk-advanced-text" />
+			<Typography.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-advanced-heading" />
 			<Responsive.InspectorControls />
 
 			<Style styleFunc={ createStyles( VERSION ) } />
-			<CustomCSS mainBlockClass="stk-advanced-text__text" />
+			<CustomCSS mainBlockClass="stk-advanced-heading__text" />
 
 			<BlockDiv className={ blockClassNames }>
 				<RichText
-					tagName="p"
-					placeholder={ descriptionPlaceholder( 'medium' ) }
+					tagName={ textTag || 'h2' }
+					placeholder={ __( 'Title for This Block', i18n ) }
 					keepPlaceholderOnFocus
 					value={ text }
 					onChange={ text => setAttributes( { text } ) }
-					className="stk-advanced-text__text"
+					className="stk-advanced-heading__text"
 				/>
 			</BlockDiv>
 		</Fragment>

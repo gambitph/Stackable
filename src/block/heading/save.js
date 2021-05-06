@@ -26,7 +26,7 @@ const Save = props => {
 	} = props
 
 	const {
-		text,
+		text, textTag,
 	} = attributes
 
 	const responsiveClass = getResponsiveClasses( props.attributes )
@@ -48,8 +48,8 @@ const Save = props => {
 			/>
 			<CustomCSS.Content attributes={ attributes } />
 			<RichText.Content
-				className="stk-advanced-text__text"
-				tagName="p"
+				className="stk-advanced-heading__text"
+				tagName={ textTag }
 				value={ text }
 			/>
 		</BlockDiv.Content>

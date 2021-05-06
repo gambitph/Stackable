@@ -1,10 +1,20 @@
 /**
  * External dependencies
  */
+import { toNumber } from 'lodash'
 import {
 	__getValue,
 	appendImportantAll,
 } from '~stackable/util'
+import { getShapeCSS } from './get-shape-css'
+
+const focalPointToPosition = ( { x, y } ) => {
+	let _x = toNumber( x )
+	let _y = toNumber( y )
+	_x = isNaN( _x ) ? 50 : _x * 100
+	_y = isNaN( _y ) ? 50 : _y * 100
+	return `${ _x }% ${ _y }%`
+}
 
 /**
  * Adds image styles.
@@ -46,4 +56,45 @@ export const addStyles = ( styles, attributes, options = {} ) => {
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	} )
+
+	styles.add( {
+		style: {
+			[ selector ]: appendImportantAll( {
+				boxShadow: getValue( 'imageShadow' ),
+			} ),
+			[ `${ selector } img` ]: appendImportantAll( {
+				filter: getValue( 'imageFilter' ),
+				transform: getValue( 'imageZoom', 'scale(%s)' ),
+				borderRadius: getValue( 'imageBorderRadius', `%spx` ),
+				objectPosition: getValue( 'imageFocalPoint' ) ? focalPointToPosition( getValue( 'imageFocalPoint' ) ) : undefined,
+				objectFit: getValue( 'imageFit' ),
+			} ),
+			tablet: {
+				[ `${ selector } img` ]: appendImportantAll( {
+					objectPosition: getValue( 'imageFocalPointTablet' ) ? focalPointToPosition( getValue( 'imageFocalPointTablet' ) ) : undefined,
+					objectFit: getValue( 'imageFitTablet' ),
+				} ),
+			},
+			mobile: {
+				[ `${ selector } img` ]: appendImportantAll( {
+					objectPosition: getValue( 'imageFocalPointMobile' ) ? focalPointToPosition( getValue( 'imageFocalPointMobile' ) ) : undefined,
+					objectFit: getValue( 'imageFitMobile' ),
+				} ),
+			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
+
+	if ( getValue( 'imageShape' ) ) {
+		styles.add( {
+			style: {
+				[ selector ]: appendImportantAll( {
+					...getShapeCSS( getValue( 'imageShape' ), getValue( 'imageShapeFlipX' ), getValue( 'imageShapeFlipY' ), getValue( 'imageShapeStretch' ) ),
+				} ),
+			},
+			versionAdded: '3.0.0',
+			versionDeprecated: '',
+		} )
+	}
 }

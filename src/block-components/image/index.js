@@ -1,6 +1,7 @@
 import { addAttributes } from './attributes'
 import { addStyles } from './style'
 import { useImage } from './use-image'
+import { Edit } from './edit'
 import Image_ from './image'
 
 import { useBlockAttributes } from '~stackable/hooks'
@@ -39,6 +40,10 @@ export const Image = props => {
 		heightUnitTablet={ attributes.imageHeightUnitTablet }
 		heightUnitMobile={ attributes.imageHeightUnitMobile }
 
+		shape={ attributes.imageShape }
+		shapeStretch={ attributes.imageShapeStretch }
+		shadow={ attributes.imageShadow }
+
 		{ ...propsToPass }
 	/>
 }
@@ -55,6 +60,7 @@ Image.Content = props => {
 	return <Image_.Content
 		imageId={ attributes.imageId }
 		imageURL={ attributes.imageUrl }
+		alt={ attributes.imageAlt }
 		size={ attributes.imageSize }
 		src={ attributes.imageUrl }
 
@@ -72,6 +78,10 @@ Image.Content = props => {
 		heightUnitTablet={ attributes.imageHeightUnitTablet }
 		heightUnitMobile={ attributes.imageHeightUnitMobile }
 
+		shape={ attributes.imageShape }
+		shapeStretch={ attributes.imageShapeStretch }
+		shadow={ attributes.imageShadow }
+
 		{ ...propsToPass }
 	/>
 }
@@ -80,7 +90,7 @@ Image.Content.defaultProps = {
 	attributes: {},
 }
 
-Image.InspectorControls = null
+Image.InspectorControls = Edit
 
 Image.addAttributes = addAttributes
 

@@ -9,7 +9,7 @@ import { applyFilters } from '@wordpress/hooks'
 
 const getShadows = () => {
 	return applyFilters( 'stackable.shadows', [
-		'',
+		'none',
 		'0 0 0 1px rgba(120, 120, 120, 0.1)',
 		'0 0 0 2px rgba(120, 120, 120, 0.1)',
 		'0 5px 5px 0 rgba(18, 63, 82, 0.035), 0 0 0 1px rgba(176, 181, 193, 0.2)',
@@ -29,12 +29,12 @@ const ShadowControl = props => {
 	return (
 		<AdvancedRangeControl
 			{ ...props }
-			value={ shadows.indexOf( props.value ) || '' }
-			onChange={ index => props.onChange( shadows[ index ] ) }
+			value={ props.value ? shadows.indexOf( props.value ) : '' }
+			onChange={ index => props.onChange( index !== '' ? shadows[ index ] : index ) }
 			min={ 0 }
 			max={ shadows.length - 1 }
 			allowReset={ true }
-			placeholder="0"
+			placeholder=""
 			className="ugb--help-tip-general-shadow"
 		/>
 	)
