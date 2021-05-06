@@ -217,13 +217,16 @@ const containerLink = ( blockName, options = {} ) => {
 	addFilter( `stackable.${ blockName }.edit.inspector.style.block`, `stackable/${ blockName }/container-link`, addInspectorPanel, 18 )
 	addFilter( `stackable.${ blockName }.attributes`, `stackable/${ blockName }/container-link`, addAttributes )
 	addFilter( `stackable.${ blockName }.design.filtered-block-attributes`, `stackable/${ blockName }/container-link`, removeAttributesFromDesignAttributeExport )
-	if ( ! customFilters ) {
-		if ( classFilter ) {
-			addFilter( `stackable.${ blockName }.${ classFilter }`, `stackable/${ blockName }/container-link`, addItemClasses )
-		} else {
-			addFilter( `stackable.${ blockName }.itemclasses`, `stackable/${ blockName }/container-link`, addItemClasses )
-			addFilter( `stackable.${ blockName }.boxclasses`, `stackable/${ blockName }/container-link`, addBoxClasses )
-		}
+
+	if ( customFilters ) {
+		return
+	}
+
+	if ( classFilter ) {
+		addFilter( `stackable.${ blockName }.${ classFilter }`, `stackable/${ blockName }/container-link`, addItemClasses )
+	} else {
+		addFilter( `stackable.${ blockName }.itemclasses`, `stackable/${ blockName }/container-link`, addItemClasses )
+		addFilter( `stackable.${ blockName }.boxclasses`, `stackable/${ blockName }/container-link`, addBoxClasses )
 	}
 }
 

@@ -42,6 +42,7 @@ if ( ! hasFilter( 'stackable.div-background.output.after', 'stackable/container-
 			rel.push( 'noopener' )
 			rel.push( 'noreferrer' )
 		}
+
 		if ( noFollow ) {
 			rel.push( 'nofollow' )
 		}
@@ -57,7 +58,9 @@ if ( ! hasFilter( 'stackable.div-background.output.after', 'stackable/container-
 						target={ newTab ? '_blank' : undefined }
 						rel={ rel.join( ' ' ) || undefined }
 						title={ striptags( title ) || undefined }
-					>{ null }</a>
+					>
+						{ null }
+					</a>
 				) }
 			</Fragment>
 		)
