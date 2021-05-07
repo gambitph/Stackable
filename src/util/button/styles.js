@@ -63,6 +63,9 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 	// hover color, cancel this faded effect.
 	let cancelHoverOpacity = false
 
+	// Hover gradient.
+	const hasHoverGradientEffect = getValue( 'BackgroundColorType' ) === 'gradient' && ( getValue( 'HoverBackgroundColor' ) || getValue( 'HoverBackgroundColor2' ) || getValue( 'HoverBackgroundGradientDirection' ) )
+
 	// Basic design.
 	if ( getValue( 'Design' ) === '' || getValue( 'Design' ) === 'basic' ) {
 		styles.push( {
@@ -83,11 +86,16 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 				color: appendImportant( whiteIfDarkBlackIfLight( getValue( 'HoverTextColor' ), getValue( 'HoverBackgroundColor' ) ) ),
 			},
 			[ `.${ mainClassName }:hover` ]: {
-				backgroundColor: getValue( 'HoverBackgroundColor' ) !== '' ? getValue( 'HoverBackgroundColor' ) : undefined,
+				backgroundImage: getValue( 'HoverBackgroundColor' ) !== '' ? getValue( 'HoverBackgroundColor' ) : undefined,
 			},
 			...( hasActiveStyles ? {
 				[ `.${ mainClassName }.is-active` ]: {
-					backgroundColor: getValue( 'HoverBackgroundColor' ) !== '' ? getValue( 'HoverBackgroundColor' ) : undefined,
+					...( hasHoverGradientEffect ? {
+						backgroundImage:
+						`linear-gradient(${ getValue( 'HoverBackgroundGradientDirection', '%sdeg' ) || getValue( 'BackgroundGradientDirection', '%sdeg', '90deg' ) }, ${ getValue( 'HoverBackgroundColor' ) || getValue( 'BackgroundColor' ) || defaultColor1 }, ${ getValue( 'HoverBackgroundColor2' ) || getValue( 'BackgroundColor2' ) || defaultColor2 })`,
+					} : {
+						backgroundColor: getValue( 'HoverBackgroundColor' ) !== '' ? getValue( 'HoverBackgroundColor' ) : undefined,
+					} ),
 				},
 				[ `.${ mainClassName }.is-active .ugb-button--inner, .${ mainClassName }.is-active svg:not(.ugb-custom-icon)` ]: {
 					color: appendImportant( whiteIfDarkBlackIfLight( getValue( 'HoverTextColor' ), getValue( 'HoverBackgroundColor' ) ) ),
@@ -100,8 +108,6 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 
 		cancelHoverOpacity = getValue( 'HoverBackgroundColor' ) !== ''
 
-		// Hover gradient.
-		const hasHoverGradientEffect = getValue( 'BackgroundColorType' ) === 'gradient' && ( getValue( 'HoverBackgroundColor' ) || getValue( 'HoverBackgroundColor2' ) || getValue( 'HoverBackgroundGradientDirection' ) )
 		styles.push( {
 			[ `.${ mainClassName }:before` ]: {
 				content: hasHoverGradientEffect ? '""' : undefined,
