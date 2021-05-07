@@ -206,13 +206,18 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 				$featured_image_src = $featured_image_urls[ $attributes['imageSize'] ];
 				if ( ! empty( $featured_image_src ) ) {
 					$featured_image = sprintf(
-						'<figure class="%s"><a href="%s"><img src="%s" alt="%s" width="%s" height="%s"/></a></figure>',
+						'<figure class="%s"><a href="%s">%s</a></figure>',
 						esc_attr( $featured_image_classes ),
 						esc_url( get_permalink( $post_id ) ),
-						esc_url( $featured_image_src[0] ),
-						esc_attr( get_the_title( $post_id ) ),
-						esc_attr( $featured_image_src[1] ),
-						esc_attr( $featured_image_src[2] )
+						get_the_post_thumbnail(
+							$post_id,
+							$attributes['imageSize'],
+							array(
+								'alt' => esc_attr( get_the_title( $post_id ) ),
+								'width' => esc_attr( $featured_image_src[1] ),
+								'height' => esc_attr( $featured_image_src[2] ),
+							)
+						)
 					);
 
 					$featured_image_background = sprintf(
