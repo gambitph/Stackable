@@ -39,6 +39,7 @@ if ( ! function_exists( 'stackable_blog_posts_util_show_options' ) ) {
 			'excerptSpacing' => $attributes['showExcerpt'],
 			'metaSpacing' => $attributes['showMeta'],
 			'readmoreSpacing' => $attributes['showReadmore'],
+			'paginationSpacing' => $attributes['showPagination'],
 			'contentOrderStyles' => $design !== 'image-card',
 		);
 	}

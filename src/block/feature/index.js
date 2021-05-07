@@ -22,7 +22,7 @@ import { FeatureIcon } from '~stackable/icons'
  */
 import { __ } from '@wordpress/i18n'
 import { disabledBlocks, i18n } from 'stackable'
-import { applyFilters } from '@wordpress/hooks'
+import { applyFilters, addFilter } from '@wordpress/hooks'
 
 export const name = 'ugb/feature'
 
@@ -59,6 +59,10 @@ export const settings = {
 		'block-background': true,
 		'block-separators': true,
 		// 'block-title': true,
+		'container-link': {
+			// We will generate our own container link filter based on selected design.
+			customFilters: true,
+		},
 		'content-align': true,
 		'block-designs': true,
 		'custom-css': {
@@ -66,3 +70,27 @@ export const settings = {
 		},
 	},
 }
+
+addFilter( 'stackable.feature.itemclasses', 'custom', ( classes, props ) => {
+	const {
+		showContainerLink = false,
+		design = 'plain',
+	} = props.attributes
+
+	return {
+		...classes,
+		'ugb-container-link': showContainerLink && [ 'plain', 'basic', 'half' ].includes( design ),
+	}
+} )
+
+addFilter( 'stackable.feature.contentclasses', 'custom', ( classes, props ) => {
+	const {
+		showContainerLink = false,
+		design = 'plain',
+	} = props.attributes
+
+	return {
+		...classes,
+		'ugb-container-link': showContainerLink && ! [ 'plain', 'basic', 'half' ].includes( design ),
+	}
+} )
