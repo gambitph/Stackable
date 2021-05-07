@@ -210,7 +210,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 						esc_attr( $featured_image_classes ),
 						esc_url( get_permalink( $post_id ) ),
 						get_the_post_thumbnail(
-							$post['ID'],
+							$post_id,
 							$attributes['imageSize'],
 							array(
 								'alt' => esc_attr( get_the_title( $post_id ) ),
