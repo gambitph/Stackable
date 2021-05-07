@@ -86,7 +86,7 @@ export const createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '
 				color: appendImportant( whiteIfDarkBlackIfLight( getValue( 'HoverTextColor' ), getValue( 'HoverBackgroundColor' ) ) ),
 			},
 			[ `.${ mainClassName }:hover` ]: {
-				backgroundImage: getValue( 'HoverBackgroundColor' ) !== '' ? getValue( 'HoverBackgroundColor' ) : undefined,
+				backgroundColor: getValue( 'HoverBackgroundColor' ) !== '' ? getValue( 'HoverBackgroundColor' ) : undefined,
 			},
 			...( hasActiveStyles ? {
 				[ `.${ mainClassName }.is-active` ]: {
