@@ -181,3 +181,19 @@
 		width: 25%;
 	}
 }
+
+// Image mask. We need this since our mask is on the resizable wrapper.
+.stk-img-wrapper {
+	// Shapes.
+	&.stk-img--shape .stk-img-resizer-wrapper {
+		mask-mode: alpha;
+		mask-repeat: no-repeat;
+		mask-size: contain;
+		mask-position: center;
+		border-radius: none;
+	}
+	// Firefox doesn't stretch SVG masks via attributes, stretching is done here. Fixes #246.
+	&.stk-image--shape-stretch .stk-img-resizer-wrapper {
+		mask-size: 100% 100%;
+	}
+}

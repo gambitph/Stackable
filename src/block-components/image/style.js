@@ -89,9 +89,17 @@ export const addStyles = ( styles, attributes, options = {} ) => {
 	if ( getValue( 'imageShape' ) ) {
 		styles.add( {
 			style: {
-				[ selector ]: appendImportantAll( {
-					...getShapeCSS( getValue( 'imageShape' ), getValue( 'imageShapeFlipX' ), getValue( 'imageShapeFlipY' ), getValue( 'imageShapeStretch' ) ),
-				} ),
+				editor: {
+					// This is so that the resizer won't get clipped.
+					[ `${ selector } .stk-img-resizer-wrapper` ]: appendImportantAll( {
+						...getShapeCSS( getValue( 'imageShape' ), getValue( 'imageShapeFlipX' ), getValue( 'imageShapeFlipY' ), getValue( 'imageShapeStretch' ) ),
+					} ),
+				},
+				saveOnly: {
+					[ selector ]: appendImportantAll( {
+						...getShapeCSS( getValue( 'imageShape' ), getValue( 'imageShapeFlipX' ), getValue( 'imageShapeFlipY' ), getValue( 'imageShapeStretch' ) ),
+					} ),
+				},
 			},
 			versionAdded: '3.0.0',
 			versionDeprecated: '',
