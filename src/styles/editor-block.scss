@@ -81,6 +81,7 @@
 
 // Columns can be collapsed for tablet and mobile only.
 @include desktop {
+	.stk-row > .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout,
 	.stk-row .block-editor-block-list__layout {
 		flex-wrap: nowrap;
 	}
@@ -130,4 +131,10 @@
 		}
 	}
 
+}
+
+// Wide and full width blocks are limited by some themes in the editor, make them span any width.
+.editor-styles-wrapper [data-type^="stackable/"][data-align="wide"] .wp-block,
+.editor-styles-wrapper [data-type^="stackable/"][data-align="full"] .wp-block {
+	max-width: 100%;
 }
