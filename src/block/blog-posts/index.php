@@ -216,7 +216,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 					);
 
 					// Remove the built in style attribute in the thumbnail.
-					$thumbnail = preg_replace( '/style=\"[^\"]*\"\s/', "", $thumbnail );
+					$thumbnail = preg_replace( '/style=\"[^\"]*\"\s?/', "", $thumbnail );
 
 					$featured_image = sprintf(
 						'<figure class="%s"><a href="%s">%s</a></figure>',
