@@ -41,6 +41,8 @@ jobs:
         while ! mysqladmin ping --host=127.0.0.1 --password=root --silent; do
           sleep 1
         done
+
+    # Change the PHP version to v8.0.0
     - name: Setup PHP v8.0.0
       uses: shivammathur/setup-php@v2
       with:
