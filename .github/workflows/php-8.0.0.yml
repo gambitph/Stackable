@@ -53,7 +53,7 @@ jobs:
       
     - name: Install dependencies
       run: |
-        composer require phpunit/phpunit --dev --ignore-platform-reqs
+        composer require phpunit/phpunit:7.5.20 --dev --ignore-platform-reqs
         composer require wp-phpunit/wp-phpunit:${{ matrix.wp-versions }} --dev --ignore-platform-reqs
         composer require roots/wordpress:${{ matrix.wp-versions }} --dev --ignore-platform-reqs
         composer install --prefer-dist --no-progress --ignore-platform-reqs
