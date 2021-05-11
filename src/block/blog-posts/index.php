@@ -205,24 +205,14 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 				$featured_image_urls = stackable_featured_image_urls_from_url( $featured_image_id );
 				$featured_image_src = $featured_image_urls[ $attributes['imageSize'] ];
 				if ( ! empty( $featured_image_src ) ) {
-					$thumbnail = get_the_post_thumbnail(
-						$post_id,
-						$attributes['imageSize'],
-						array(
-							'alt' => esc_attr( get_the_title( $post_id ) ),
-							'width' => esc_attr( $featured_image_src[1] ),
-							'height' => esc_attr( $featured_image_src[2] ),
-						)
-					);
-
-					// Remove the built in style attribute in the thumbnail.
-					$thumbnail = preg_replace( '/style=\"[^\"]*\"\s?/', "", $thumbnail );
-
 					$featured_image = sprintf(
-						'<figure class="%s"><a href="%s">%s</a></figure>',
+						'<figure class="%s"><a href="%s"><img src="%s" alt="%s" width="%s" height="%s"/></a></figure>',
 						esc_attr( $featured_image_classes ),
 						esc_url( get_permalink( $post_id ) ),
-						$thumbnail
+						esc_url( $featured_image_src[0] ),
+						esc_attr( get_the_title( $post_id ) ),
+						esc_attr( $featured_image_src[1] ),
+						esc_attr( $featured_image_src[2] )
 					);
 
 					$featured_image_background = sprintf(
@@ -557,38 +547,50 @@ if ( ! function_exists( 'stackable_post_excerpt' ) ) {
 }
 
 if ( ! function_exists( 'stackable_get_excerpt' ) ) {
-    /**
-     * Get the excerpt.
-     *
-     * @since 1.7
-     */
-    function stackable_get_excerpt( $post_id, $post = null ) {
+	/**
+	 * Get the excerpt.
+	 *
+	 * @since 1.7
+	 */
+	function stackable_get_excerpt( $post_id, $post = null ) {
+		// Remove jetpack sharing button.
+		add_filter( 'sharing_show', '__return_false' );
 		// If there's an excerpt provided, use it.
 		$excerpt = get_post_field( 'post_excerpt', $post_id, 'display' );
 		// We need to check before running the filters since some plugins override it.
 		if ( ! empty( $excerpt ) ) {
 			$excerpt = apply_filters( 'the_excerpt', $excerpt );
 			if ( ! empty( $excerpt ) ) {
+				// Remove the jetpack sharing button filter.
+				remove_filter( 'sharing_show', '__return_false' );
 				return $excerpt;
 			}
 		}
 
-        $max_excerpt = 100; // WP default is 55.
+		$max_excerpt = 100; // WP default is 55.
 
 		// If there's post content given to us, trim it and use that.
-        if ( ! empty( $post['post_content'] ) ) {
-            return apply_filters( 'the_excerpt', wp_trim_words( $post['post_content'], $max_excerpt ) );
+		if ( ! empty( $post['post_content'] ) ) {
+			// Remove the jetpack sharing button filter.
+			$post_content = apply_filters( 'the_excerpt', wp_trim_words( $post['post_content'], $max_excerpt ) );
+			remove_filter( 'sharing_show', '__return_false' );
+			return $post_content;
 		}
 
 		// If there's no post content given to us, then get the content.
 		$post_content = get_post_field( 'post_content', $post_id );
 		if ( ! empty( $post_content ) ) {
+			// Remove the jetpack sharing button filter.
 			$post_content = apply_filters( 'the_content', $post_content );
-			return apply_filters( 'the_excerpt', wp_trim_words( $post_content, $max_excerpt ) );
+			$post_content = apply_filters( 'the_excerpt', wp_trim_words( $post_content, $max_excerpt ) );
+			remove_filter( 'sharing_show', '__return_false' );
+			return $post_content;
 		}
 
+		// Remove the jetpack sharing button filter.
+		remove_filter( 'sharing_show', '__return_false' );
 		return "";
-    }
+  }
 }
 
 if ( ! function_exists( 'stackable_render_block_blog_posts' ) ) {
