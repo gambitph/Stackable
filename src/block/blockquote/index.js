@@ -64,6 +64,7 @@ export const settings = {
 		// 'block-title': true,
 		'content-align': true,
 		'block-designs': true,
+		'container-link': true,
 		'custom-css': {
 			default: applyFilters( 'stackable.blockquote.custom-css.default', '' ),
 		},

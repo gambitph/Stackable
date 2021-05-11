@@ -63,6 +63,7 @@ export const settings = {
 		'block-background': true,
 		'block-separators': true,
 		// 'block-title': true,
+		'container-link': true,
 		'content-align': true,
 		'block-designs': true,
 		'custom-css': {

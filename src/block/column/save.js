@@ -40,9 +40,9 @@ const save = props => {
 	const itemClasses = classnames( [
 		'ugb-column__item',
 		`${ uniqueClass }-column-wrapper`,
-	], {
+	], applyFilters( 'stackable.column.itemclasses', {
 		[ `ugb--shadow-${ shadow }` ]: shadow !== '',
-	} )
+	}, props ) )
 
 	// const wrapperClasses = classnames( [
 	// 	'ugb-container__wrapper',

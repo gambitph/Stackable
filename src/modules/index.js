@@ -10,6 +10,7 @@ import blockBackground from './block-background'
 import blockSeparators from './block-separators'
 import blockTitle from './block-title'
 import blockDesigns from './block-designs'
+import containerLink from './container-link'
 import contentAlign from './content-align'
 import customCSS from './custom-css'
 export { getModule, initBlockModule } from './modules'
@@ -24,6 +25,7 @@ export const modules = [
 	{ name: 'block-separators', module: blockSeparators },
 	{ name: 'block-title', module: blockTitle },
 	{ name: 'block-designs', module: blockDesigns },
+	{ name: 'container-link', module: containerLink },
 	{ name: 'content-align', module: contentAlign },
 	{ name: 'custom-css', module: customCSS },
 ]

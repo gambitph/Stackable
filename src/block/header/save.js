@@ -58,7 +58,7 @@ const save = props => {
 	], applyFilters( 'stackable.header.boxclasses', {
 		'ugb--full-height': fullHeight,
 		[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== '',
-	}, props ) )
+	}, design, props ) )
 
 	const titleComp = showTitle && ! RichText.isEmpty( title ) &&
 		<RichText.Content

@@ -354,9 +354,9 @@ const edit = props => {
 	const itemClasses = classnames( [
 		'ugb-column__item',
 		`${ uniqueClass }-column-wrapper`,
-	], {
+	], applyFilters( 'stackable.column.itemclasses', {
 		[ `ugb--shadow-${ shadow }` ]: shadow !== '',
-	} )
+	}, props ) )
 
 	return (
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (

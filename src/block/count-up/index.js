@@ -63,6 +63,7 @@ export const settings = {
 		'block-title': {
 			marginBottomImportant: true,
 		},
+		'container-link': true,
 		'content-align': true,
 		'block-designs': true,
 		'custom-css': {
