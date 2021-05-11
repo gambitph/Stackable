@@ -54,11 +54,11 @@ const GlobalColorStyles = () => {
 		}
 	}, [ JSON.stringify( colors ) ] )
 
-	return <style>{ styles }</style>
+	return styles
 }
 
 domReady( () => {
-	const wrapper = document.createElement( 'div' )
+	const wrapper = document.createElement( 'style' )
 	document.body.appendChild( wrapper )
 	render( <GlobalColorStyles />, wrapper )
 } )

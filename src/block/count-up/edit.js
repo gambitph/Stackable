@@ -548,6 +548,7 @@ const edit = props => {
 							backgroundAttrName="column%s"
 							blockProps={ props }
 							showBackground={ show.columnBackground }
+							index={ i }
 							key={ i }
 						>
 							{ applyFilters( 'stackable.count-up.save.output', (

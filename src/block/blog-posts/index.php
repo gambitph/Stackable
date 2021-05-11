@@ -85,7 +85,7 @@ if ( ! function_exists( 'stackable_blog_posts_post_query' ) ) {
 				'orderby' => $attributes['orderBy'],
 				'numberposts' => $attributes['numberOfItems'],
 				'suppress_filters' => false,
-    	);
+  	);
 
 		if ( ! empty( $attributes['taxonomy'] ) && ! empty( $attributes['taxonomyType'] ) ) {
 			// Categories.
@@ -105,10 +105,10 @@ if ( ! function_exists( 'stackable_blog_posts_post_query' ) ) {
 					),
 				);
 			}
-    	}
+  	}
 
 		return apply_filters( 'stackable/blog-post/post_query',
-      		$passed_attributes,
+			$passed_attributes,
 			$attributes
 		);
 	}
@@ -205,14 +205,24 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 				$featured_image_urls = stackable_featured_image_urls_from_url( $featured_image_id );
 				$featured_image_src = $featured_image_urls[ $attributes['imageSize'] ];
 				if ( ! empty( $featured_image_src ) ) {
+					$thumbnail = get_the_post_thumbnail(
+						$post_id,
+						$attributes['imageSize'],
+						array(
+							'alt' => esc_attr( get_the_title( $post_id ) ),
+							'width' => esc_attr( $featured_image_src[1] ),
+							'height' => esc_attr( $featured_image_src[2] ),
+						)
+					);
+
+					// Remove the built in style attribute in the thumbnail.
+					$thumbnail = preg_replace( '/style=\"[^\"]*\"\s?/', "", $thumbnail );
+
 					$featured_image = sprintf(
-						'<figure class="%s"><a href="%s"><img src="%s" alt="%s" width="%s" height="%s"/></a></figure>',
+						'<figure class="%s"><a href="%s">%s</a></figure>',
 						esc_attr( $featured_image_classes ),
 						esc_url( get_permalink( $post_id ) ),
-						esc_url( $featured_image_src[0] ),
-						esc_attr( get_the_title( $post_id ) ),
-						esc_attr( $featured_image_src[1] ),
-						esc_attr( $featured_image_src[2] )
+						$thumbnail
 					);
 
 					$featured_image_background = sprintf(

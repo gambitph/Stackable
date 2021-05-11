@@ -81,6 +81,7 @@ const save = props => {
 							backgroundAttrName="column%s"
 							blockProps={ props }
 							showBackground={ show.columnBackground }
+							index={ i }
 							key={ i }
 						>
 							<div className={ bodyWrapperClasses }>

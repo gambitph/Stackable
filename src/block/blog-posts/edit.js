@@ -502,6 +502,22 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 						/>
 					</ResponsiveControl>
 				}
+				{ show.paginationSpacing &&
+				<ResponsiveControl
+					attrNameTemplate="pagination%sTopMargin"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AdvancedRangeControl
+						label={ __( 'Pagination', i18n ) }
+						min={ -50 }
+						max={ 100 }
+						placeholder="16"
+						allowReset={ true }
+						className="ugb--help-tip-alignment-button"
+					/>
+				</ResponsiveControl>
+				}
 			</PanelSpacingBody>
 
 			<PanelAdvancedSettings
@@ -809,13 +825,28 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 
 			{ showProNotice && (
 				<PanelAdvancedSettings
+					title={ __( 'Pagination', i18n ) }
+					id="pagination"
+					initialOpen={ false }
+				>
+					<ProControl
+						title={ __( 'Say Hello to More Options 👋', i18n ) }
+						description={ __( 'Get a load more button, pagination, more post options and Custom Post Types. This feature is only available on Stackable Premium', i18n ) }
+					/>
+				</PanelAdvancedSettings>
+			) }
+
+			{ applyFilters( 'stackable.blog-posts.edit.inspector.style.pagination.after', null, props ) }
+
+			{ showProNotice && (
+				<PanelAdvancedSettings
 					title={ __( 'Load More Button', i18n ) }
 					id="loadmore"
 					initialOpen={ false }
 				>
 					<ProControl
 						title={ __( 'Say Hello to More Options 👋', i18n ) }
-						description={ __( 'Get a load more button, more post options and Custom Post Types. This feature is only available on Stackable Premium', i18n ) }
+						description={ __( 'Get a load more button, pagination, more post options and Custom Post Types. This feature is only available on Stackable Premium', i18n ) }
 					/>
 				</PanelAdvancedSettings>
 			) }
@@ -831,7 +862,6 @@ const Edit = props => {
 		setAttributes,
 		className,
 		attributes,
-		// posts,
 	} = props
 
 	const {
@@ -852,16 +882,19 @@ const Edit = props => {
 		showAuthor = true,
 		showDate = true,
 		showComments = true,
+		showPagination = false,
 		readmoreText = '',
 		columnBackgroundColor = '',
 		columnBackgroundColor2 = '',
 		showLoadMoreButton = false,
+		numberOfItems = 6,
 	} = attributes
 
-	const { posts, isRequesting } = useSelect( select => {
+	const {
+		posts, isRequesting,
+	} = useSelect( select => {
 		const {
 			postType = 'post',
-			numberOfItems = 6,
 			orderBy = 'date',
 			order = 'desc',
 			taxonomyType = '',
@@ -874,7 +907,7 @@ const Edit = props => {
 		const postQuery = pickBy( {
 			order,
 			orderby: orderBy,
-			per_page: numberOfItems, // eslint-disable-line camelcase
+			per_page: -1, // eslint-disable-line camelcase
 			...applyFilters( 'stackable.blog-posts.postQuery', {}, props ),
 		}, value => {
 			// Exludes and includes can be empty.
@@ -910,7 +943,6 @@ const Edit = props => {
 		}
 	}, [
 		attributes.postType,
-		attributes.numberOfItems,
 		attributes.orderBy,
 		attributes.order,
 		attributes.taxonomyType,
@@ -920,6 +952,10 @@ const Edit = props => {
 		attributes.postExclude,
 		attributes.postInclude,
 	] )
+
+	const {
+		paginate, currentPage, pages, currentPagePosts,
+	} = applyFilters( 'stackable.blog-posts.pagination.hooks', posts, numberOfItems )
 
 	const show = showOptions( props )
 	const hasPosts = Array.isArray( posts ) && posts.length
@@ -953,7 +989,7 @@ const Edit = props => {
 				icon="admin-post"
 				label={ __( 'Posts', i18n ) }
 			>
-				{ ( ! Array.isArray( posts ) || isRequesting ) ? (
+				{ ( ! Array.isArray( currentPagePosts ) || isRequesting ) ? (
 					<Spinner />
 				) : (
 					__( 'No posts found.', i18n )
@@ -965,7 +1001,7 @@ const Edit = props => {
 	return (
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
 			<Fragment>
-				{ ( posts || [] ).map( ( post, i ) => {
+				{ ( currentPagePosts || [] ).map( ( post, i ) => {
 					const featuredImageSrc = ( ( post.featured_image_urls && post.featured_image_urls[ imageSize || 'large' ] ) || [] )[ 0 ]
 					const featuredImage = featuredImageSrc &&
 					<figure className={ featuredImageClasses }>
@@ -1080,6 +1116,16 @@ const Edit = props => {
 					isSelected={ false }
 				/>
 				}
+				{ applyFilters( 'stackable.blog-posts.edit.output.pagination.after', null, {
+					...props,
+					showPagination,
+					containerClassName: 'ugb-blog-posts__pagination',
+					attrNameTemplate: 'pagination%s',
+					blockAttributes: attributes,
+					paginate,
+					currentPage,
+					pages,
+				} ) }
 			</Fragment>
 		) } />
 	)
@@ -1103,6 +1149,7 @@ export default compose(
 		[ '.ugb-blog-posts--design-image-card .ugb-blog-posts__header', 'image' ],
 		[ '.ugb-blog-posts__item', 'column-background' ],
 		[ '.ugb-blog-posts__load-more-button', 'loadmore' ],
+		[ '.ugb-blog-posts__pagination', 'pagination' ],
 	] ),
 )( Edit )
 

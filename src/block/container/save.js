@@ -50,9 +50,9 @@ const save = props => {
 	const contentWrapperClasses = classnames( [
 		'ugb-container__content-wrapper',
 		`${ uniqueClass }-content-wrapper`,
-	], {
+	], applyFilters( 'stackable.container.itemclasses', {
 		'ugb-content-wrapper': show.restrictContent && restrictContentWidth, // We need this for .ugb--restrict-content-width to work.
-	} )
+	}, props ) )
 
 	return (
 		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (

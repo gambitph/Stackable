@@ -655,6 +655,7 @@ const edit = props => {
 							backgroundAttrName="column%s"
 							blockProps={ props }
 							showBackground={ show.columnBackground }
+							index={ i }
 							key={ i }
 						>
 							{ showImage &&
