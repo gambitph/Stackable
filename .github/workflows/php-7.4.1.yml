@@ -57,7 +57,7 @@ jobs:
     # Install all dependencies from composer.json
     - name: Install dependencies
       run: |
-        composer require wp-phpunit/wp-phpunit:${{ matrix.wp-versions }} --dev
+        composer require wp-phpunit/wp-phpunit:7.5.20 --dev
         composer require roots/wordpress:${{ matrix.wp-versions }} --dev
         composer install --prefer-dist --no-progress
 
