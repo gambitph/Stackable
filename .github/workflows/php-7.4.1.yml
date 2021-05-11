@@ -1,0 +1,73 @@
+name: Unit Tests / PHP (v7.4.1)
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    # Use Ubuntu 20.04.
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        wp-versions: ['5.5.4', '5.6.3', '5.7.1']
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+
+    - name: Build Stackable Free Plugin
+      run: |
+        npm ci
+        npm run build --if-present
+
+    - name: Setup MySQL
+      uses: mirromutth/mysql-action@v1.1
+      with:
+        mysql database: 'stackable' # Optional, default value is "test". The specified database which will be create
+        mysql root password: 'root' # Required if "mysql user" is empty, default is empty. The root superuser password
+        mysql user: 'root' # Required if "mysql root password" is empty, default is empty. The superuser for the specified database. Can use secrets, too
+        mysql version: '5.6'
+        mysql password: 'root' # Required if "mysql user" exists. The password for the "mysql user"
+
+    # Wait for MySQL server to initialize.
+    - name: Wait for MySQL
+      run: |
+        while ! mysqladmin ping --host=127.0.0.1 --password=root --silent; do
+          sleep 1
+        done
+
+    # Change the PHP version to v7.4.1
+    - name: Setup PHP v7.4.1
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.4.1'
+
+    # Check the current PHP version installed
+    - name: Check PHP version
+      run: php -v
+      
+    # Install all dependencies from composer.json
+    - name: Install dependencies
+      run: |
+        composer require wp-phpunit/wp-phpunit:${{ matrix.wp-versions }} --dev
+        composer require roots/wordpress:${{ matrix.wp-versions }} --dev
+        composer install --prefer-dist --no-progress
+
+    # Run all tests.
+    - name: Run test suite
+      env:
+        MYSQL_GITHUB_ACTION: true
+        MYSQL_DATABASE: stackable
+        MYSQL_USER: root
+        MYSQL_PASSWORD: root
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_PORT: 3306
+      run: composer run-script test
