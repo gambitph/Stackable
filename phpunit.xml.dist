@@ -8,7 +8,7 @@
     convertWarningsToExceptions="true"
     >
     <testsuites>
-        <testsuite>
+        <testsuite name="Stackable PHPUnit">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>
