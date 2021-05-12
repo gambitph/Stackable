@@ -3,7 +3,7 @@ Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.5.4
 Tested up to: 5.7.1
-Requires PHP: 5.3
+Requires PHP: 5.6
 Stable tag: 2.16.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -204,7 +204,11 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 = 2.16.0 =
 * New: Containers in some blocks can now become links
 * New: Added pagination to the Blog Posts block (premium)
+* Change: Increased the minimum PHP to 5.6
+* Fixed: Jetpack social sharing buttons won't show up anymore in the blog posts block excerpt
 * Fixed: Compatibility with WP Review Pro in the blog posts block
+* Fixed: The Video Popup block play button can be misaligned
+* Fixed: Right and bottom Container paddings in tablet and mobile are interchanged
 * Fixed: A vertical scrollbar can be present in the block editor
 
 = 2.15.3 =
