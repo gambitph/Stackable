@@ -29,7 +29,7 @@ export const addStyles = ( styles, attributes, options = {} ) => {
 
 	const typographyStyles = {
 		[ selector ]: {
-			textAlign: attributes.textAlign,
+			textAlign: attributes.textAlign ? attributes.textAlign : undefined,
 			fontFamily: attributes.fontFamily !== '' ? getFontFamily( attributes.fontFamily ) : undefined,
 			fontSize: desktopFontSize !== '' ? appendImportant( `${ desktopFontSize }${ attributes.fontSizeUnit || 'px' }`, importantSize ) : undefined,
 			fontWeight: attributes.fontWeight !== '' ? attributes.fontWeight : undefined,
@@ -37,7 +37,7 @@ export const addStyles = ( styles, attributes, options = {} ) => {
 			letterSpacing: attributes.letterSpacing !== '' ? `${ attributes.letterSpacing }px` : undefined,
 			lineHeight: attributes.lineHeight !== '' ? `${ attributes.lineHeight }${ attributes.lineHeightUnit || 'em' }` : undefined,
 			...( attributes.textColorType !== 'gradient' ? {
-				color: attributes.textColor1,
+				color: attributes.textColor1 ? attributes.textColor1 : undefined,
 			} : {
 				background: `-webkit-linear-gradient(${ attributes.textGradientDirection !== '' ? `${ attributes.textGradientDirection }deg, ` : '' }${ attributes.textColor1 }, ${ attributes.textColor2 })`,
 				backgroundClip: 'text',

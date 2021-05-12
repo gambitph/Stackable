@@ -1,0 +1,17 @@
+@import "common";
+
+.stk-advanced-heading {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	p {
+		&.stk-advanced-heading__text {
+			// Remove default text margins.
+			margin-top: 0;
+			margin-bottom: 0;
+		}
+	}
+}

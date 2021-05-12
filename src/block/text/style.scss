@@ -1,0 +1,11 @@
+@import "common";
+
+.stk-advanced-text {
+	p {
+		&.stk-advanced-text__text {
+			// Remove default text margins.
+			margin-top: 0;
+			margin-bottom: 0;
+		}
+	}
+}
