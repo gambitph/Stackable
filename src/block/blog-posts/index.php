@@ -570,36 +570,28 @@ if ( ! function_exists( 'stackable_get_excerpt' ) ) {
 		// We need to check before running the filters since some plugins override it.
 		if ( ! empty( $excerpt ) ) {
 			$excerpt = apply_filters( 'the_excerpt', $excerpt );
-			if ( ! empty( $excerpt ) ) {
-				// Remove the jetpack sharing button filter.
-				remove_filter( 'sharing_show', '__return_false' );
-				return $excerpt;
+		}
+
+		if ( empty( $excerpt ) ) {
+			$max_excerpt = 100; // WP default is 55.
+
+			// If there's post content given to us, trim it and use that.
+			if ( ! empty( $post['post_content'] ) ) {
+				$excerpt = apply_filters( 'the_excerpt', wp_trim_words( $post['post_content'], $max_excerpt ) );
+			} else {
+				// If there's no post content given to us, then get the content.
+				$excerpt = get_post_field( 'post_content', $post_id );
+				if ( ! empty( $excerpt ) ) {
+					// Remove the jetpack sharing button filter.
+					$excerpt = apply_filters( 'the_content', $excerpt );
+					$excerpt = apply_filters( 'the_excerpt', wp_trim_words( $excerpt, $max_excerpt ) );
+				}
 			}
-		}
-
-		$max_excerpt = 100; // WP default is 55.
-
-		// If there's post content given to us, trim it and use that.
-		if ( ! empty( $post['post_content'] ) ) {
-			// Remove the jetpack sharing button filter.
-			$post_content = apply_filters( 'the_excerpt', wp_trim_words( $post['post_content'], $max_excerpt ) );
-			remove_filter( 'sharing_show', '__return_false' );
-			return $post_content;
-		}
-
-		// If there's no post content given to us, then get the content.
-		$post_content = get_post_field( 'post_content', $post_id );
-		if ( ! empty( $post_content ) ) {
-			// Remove the jetpack sharing button filter.
-			$post_content = apply_filters( 'the_content', $post_content );
-			$post_content = apply_filters( 'the_excerpt', wp_trim_words( $post_content, $max_excerpt ) );
-			remove_filter( 'sharing_show', '__return_false' );
-			return $post_content;
 		}
 
 		// Remove the jetpack sharing button filter.
 		remove_filter( 'sharing_show', '__return_false' );
-		return "";
+		return empty( $excerpt ) ? "" : $excerpt;
   }
 }
 
