@@ -61,14 +61,16 @@ const ResizableColumn = props => {
 	const isTablet = deviceType === 'Tablet'
 
 	// Reset the column widths in desktop if a column was added / removed.
-	const [ prevAdjacentBlocks, setPrevAdjacentBlocks ] = useState( adjacentBlocks.length )
+	const [ prevAdjacentBlocks, setPrevAdjacentBlocks ] = useState( adjacentBlocks?.length )
 	useEffect( () => {
-		if ( prevAdjacentBlocks !== adjacentBlocks.length ) {
-			// Reset the desktop sizes, no need to resize tablet and mobile.
-			props.onResetDesktop()
+		if ( typeof adjacentBlocks?.length !== 'undefined' ) {
+			if ( prevAdjacentBlocks !== adjacentBlocks.length ) {
+				// Reset the desktop sizes, no need to resize tablet and mobile.
+				props.onResetDesktop()
 
-			// Remember the previous block length.
-			setPrevAdjacentBlocks( adjacentBlocks.length )
+				// Remember the previous block length.
+				setPrevAdjacentBlocks( adjacentBlocks.length )
+			}
 		}
 	}, [ adjacentBlocks ] )
 
@@ -317,7 +319,7 @@ const ResizableTooltip = props => {
 
 	// Compute the default column label value if none is available.
 	const columnLabel = useMemo( () => {
-		if ( ! props.value && ! originalInputValue ) {
+		if ( typeof adjacentBlocks !== 'undefined' && ! props.value && ! originalInputValue ) {
 			// The columns are evenly distributed by default.
 			if ( deviceType === 'Desktop' ) {
 				const value = ( 100 / adjacentBlocks.length ).toFixed( 1 )
@@ -336,7 +338,7 @@ const ResizableTooltip = props => {
 		}
 
 		return ``
-	}, [ adjacentBlocks.length, props.value, originalInputValue, deviceType ] )
+	}, [ adjacentBlocks?.length, props.value, originalInputValue, deviceType ] )
 
 	// Create the label of the tooltip.
 	const tooltipLabel = useMemo( () => {
@@ -375,7 +377,7 @@ const ResizableTooltip = props => {
 		}
 	}, [
 		tooltipRef.current,
-		adjacentBlocks.map( ( { clientId } ) => clientId ).join( ',' ), // Dependency is the arrangement of the columns.
+		adjacentBlocks?.map( ( { clientId } ) => clientId ).join( ',' ), // Dependency is the arrangement of the columns.
 	] )
 
 	// Listen for external triggers to open the column input for this column.

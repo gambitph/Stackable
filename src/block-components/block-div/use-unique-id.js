@@ -9,6 +9,9 @@ export const useUniqueId = () => {
 
 	useEffect( () => {
 		const attributes = select( 'core/block-editor' ).getBlockAttributes( clientId )
+		if ( ! attributes ) {
+			return
+		}
 
 		// When there's no unique ID yet, create one.
 		if ( ! attributes.uniqueId ) {
