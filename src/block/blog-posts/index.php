@@ -580,11 +580,11 @@ if ( ! function_exists( 'stackable_get_excerpt' ) ) {
 				$excerpt = apply_filters( 'the_excerpt', wp_trim_words( $post['post_content'], $max_excerpt ) );
 			} else {
 				// If there's no post content given to us, then get the content.
-				$excerpt = get_post_field( 'post_content', $post_id );
-				if ( ! empty( $excerpt ) ) {
+				$post_content = get_post_field( 'post_content', $post_id );
+				if ( ! empty( $post_content ) ) {
 					// Remove the jetpack sharing button filter.
-					$excerpt = apply_filters( 'the_content', $excerpt );
-					$excerpt = apply_filters( 'the_excerpt', wp_trim_words( $excerpt, $max_excerpt ) );
+					$post_content = apply_filters( 'the_content', $post_content );
+					$excerpt = apply_filters( 'the_excerpt', wp_trim_words( $post_content, $max_excerpt ) );
 				}
 			}
 		}
