@@ -11,7 +11,7 @@ import { version as VERSION } from 'stackable'
 import {
 	InspectorTabs,
 } from '~stackable/components'
-import { useBlockContext } from '~stackable/hooks'
+import { useBlockContext, useBlockStyle } from '~stackable/hooks'
 import {
 	withIsHovered,
 } from '~stackable/higher-order'
@@ -29,6 +29,7 @@ import {
 	Responsive,
 	ContainerDiv,
 	Linking,
+	BlockStyle,
 } from '~stackable/block-components'
 
 /**
@@ -61,6 +62,7 @@ const Edit = props => {
 	const { blockOrientation } = useAlignment()
 	const [ columnClass, columnWrapperClass ] = getColumnClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+	const blockStyle = useBlockStyle()
 
 	const blockClassNames = classnames( [
 		className,
@@ -91,9 +93,12 @@ const Edit = props => {
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 			<BlockLink.InspectorControls />
+			<BlockStyle.InspectorControls />
 			<Image.InspectorControls
-				hasWidth={ false }
+				hasWidth={ blockStyle === 'horizontal' }
+				hasHeight={ blockStyle !== 'horizontal' }
 				heightUnits={ [ 'px' ] }
+				widthUnits={ [ 'px' ] }
 				hasBorderRadius={ false }
 				hasShape={ false }
 			/>
@@ -110,12 +115,16 @@ const Edit = props => {
 					<ContainerDiv className={ contentClassNames }>
 						<Image
 							className="stk-card__image"
-							enableWidth={ false }
+							enableWidth={ blockStyle === 'horizontal' }
+							enableHeight={ blockStyle !== 'horizontal' }
 							enableDiagonal={ false }
+							widthUnits={ [ 'px' ] }
 							heightUnits={ [ 'px' ] }
-							width={ 100 }
-							widthUnit="%"
-							heightUnit="px"
+							defaultWidth={ 250 }
+							width={ blockStyle !== 'horizontal' ? 100 : undefined }
+							widthUnit={ blockStyle !== 'horizontal' ? '%' : 'px' }
+							height={ blockStyle !== 'horizontal' ? undefined : 100 }
+							heightUnit={ blockStyle !== 'horizontal' ? 'px' : '%' }
 						/>
 						<div className={ innerClassNames }>
 							<InnerBlocks

@@ -18,7 +18,7 @@ export const attributes = ( version = VERSION ) => {
 	BlockDiv.addAttributes( attrObject )
 	ContainerDiv.addAttributes( attrObject, { hasDefaultContainer: true } )
 	Column.addAttributes( attrObject )
-	Image.addAttributes( attrObject )
+	Image.addAttributes( attrObject, { imageWidthUnitDefault: 'px' } )
 	Alignment.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
 	CustomCSS.addAttributes( attrObject )

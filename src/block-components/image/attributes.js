@@ -1,4 +1,8 @@
-export const addAttributes = attrObject => {
+export const addAttributes = ( attrObject, options = {} ) => {
+	const {
+		imageWidthUnitDefault = '%',
+	} = options
+
 	attrObject.add( {
 		attributes: {
 			imageUrl: {
@@ -42,7 +46,7 @@ export const addAttributes = attrObject => {
 			},
 			imageWidthUnit_: {
 				type: 'string',
-				default: '%',
+				default: imageWidthUnitDefault,
 			},
 			imageZoom: {
 				type: 'number',

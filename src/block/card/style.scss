@@ -9,3 +9,12 @@
 		padding-top: cssvar(block-margin-bottom);
 	}
 }
+
+.stk-card.is-style-horizontal > .stk-container {
+	flex-direction: row;
+
+	> .stk-card__image {
+		height: 100%;
+		width: 250px;
+	}
+}
