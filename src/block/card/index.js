@@ -13,6 +13,7 @@ import { CardIcon } from '~stackable/icons'
 import edit from './edit'
 import save from './save'
 import schema from './schema'
+import { blockStyles } from './variations'
 
 /**
  * WordPress dependencies
@@ -37,6 +38,7 @@ export const settings = {
 		anchor: true,
 		stkBlockLinking: true,
 	},
+	 styles: blockStyles,
 
 	// deprecated,
 	edit,

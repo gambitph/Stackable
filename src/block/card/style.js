@@ -1,4 +1,9 @@
 /**
+ * Internal dependencies
+ */
+import { blockStyles } from './variations'
+
+/**
  * External dependencies
  */
 import {
@@ -6,6 +11,7 @@ import {
 	Alignment,
 	BlockDiv, Column, ContainerDiv, Image,
 } from '~stackable/block-components'
+import { getBlockStyle } from '~stackable/hooks'
 import {
 	StyleObject,
 } from '~stackable/util'
@@ -22,8 +28,11 @@ const createStyles = ( version = '' ) => attributes => {
 		sizeVerticalAlignRule: 'justifyContent',
 		sizeHorizontalAlignRule: 'alignSelf',
 	} )
+
+	const blockStyle = getBlockStyle( blockStyles, attributes.className )
 	Image.addStyles( styles, attributes, {
-		enableWidth: false,
+		enableWidth: blockStyle === 'horizontal',
+		enableHeight: blockStyle !== 'horizontal',
 		selector: '.stk-card__image',
 	} )
 

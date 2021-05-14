@@ -5,11 +5,14 @@ import { Edit } from './edit'
 import Image_ from './image'
 
 import { useBlockAttributes } from '~stackable/hooks'
+import { pickBy } from 'lodash'
 
 import { useBlockEditContext } from '@wordpress/block-editor'
 
 export const Image = props => {
 	const {
+		defaultWidth,
+		defaultHeight,
 		...propsToPass
 	} = props
 
@@ -26,14 +29,14 @@ export const Image = props => {
 		size={ attributes.imageSize }
 		src={ attributes.imageUrl }
 
-		width={ attributes.imageWidth || 150 }
+		width={ attributes.imageWidth || defaultWidth }
 		widthTablet={ attributes.imageWidthTablet }
 		widthMobile={ attributes.imageWidthMobile }
 		widthUnit={ attributes.imageWidthUnit || '%' }
 		widthUnitTablet={ attributes.imageWidthUnitTablet }
 		widthUnitMobile={ attributes.imageWidthUnitMobile }
 
-		height={ attributes.imageHeight || 300 }
+		height={ attributes.imageHeight || defaultHeight }
 		heightTablet={ attributes.imageHeightTablet }
 		heightMobile={ attributes.imageHeightMobile }
 		heightUnit={ attributes.imageHeightUnit || 'px' }
@@ -44,11 +47,13 @@ export const Image = props => {
 		shapeStretch={ attributes.imageShapeStretch }
 		shadow={ attributes.imageShadow }
 
-		{ ...propsToPass }
+		{ ...pickBy( propsToPass, v => v !== undefined ) }
 	/>
 }
 
 Image.defaultProps = {
+	defaultWidth: 150,
+	defaultHeight: 300,
 }
 
 Image.Content = props => {

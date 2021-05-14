@@ -1,4 +1,5 @@
-import { registerBlockVariation } from '@wordpress/blocks'
+import { i18n } from 'stackable'
+import { __ } from '@wordpress/i18n'
 
 // registerBlockVariation( 'stackable/card', {
 // 	name: 'custom',
@@ -10,3 +11,14 @@ import { registerBlockVariation } from '@wordpress/blocks'
 // 	],
 // } )
 
+export const blockStyles = [
+	{
+		name: 'default',
+		label: 'Default',
+		isDefault: true,
+	},
+	{
+		name: 'horizontal',
+		label: __( 'Horizontal', i18n ),
+	},
+]
