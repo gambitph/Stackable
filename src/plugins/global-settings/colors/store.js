@@ -60,6 +60,10 @@ registerStore( 'stackable/global-colors', {
  * @return {Array} new stackable global color array
  */
 const convertBetaStackableColorsToRelease = colors => compact( ( colors || [] ).map( color => {
+	if ( typeof color !== 'object' ) {
+		return null
+	}
+
 	if ( color.fallback && color.colorVar ) {
 		// Let us not include global colors linked to theme colors.
 		return color.slug.match( /^stk-global-color/ ) ?
@@ -92,7 +96,7 @@ domReady( () => {
 			let colors
 
 			// Added compatibility from Global Settings Beta to Release Version.
-			const { colors: _colors } = select( 'core/block-editor' ).getSettings( )
+			const _colors = compact( select( 'core/block-editor' ).getSettings().colors )
 			if ( ( _colors || [] ).some( color => color.fallback && color.colorVar ) ) {
 				colors = convertBetaStackableColorsToRelease( _colors )
 				dispatch( 'core/block-editor' ).updateSettings( { colors } )
