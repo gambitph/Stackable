@@ -36,7 +36,7 @@ const createStyles = ( version = '' ) => attributes => {
 		selector: '.stk-card__image',
 	} )
 
-	return styles.getMerged( version )
+	return styles.getStyles( version )
 }
 
 export default createStyles

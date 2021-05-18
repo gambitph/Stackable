@@ -21,7 +21,9 @@ import { clamp } from 'lodash'
  */
 import { MediaUpload } from '@wordpress/block-editor'
 import { Dashicon, ResizableBox } from '@wordpress/components'
-import { useState, useEffect } from '@wordpress/element'
+import {
+	useState, useEffect, memo,
+} from '@wordpress/element'
 
 const formSize = ( size = '', unit = '%', usePx = false, usePct = true ) => {
 	if ( ! size && size !== 0 ) {
@@ -55,7 +57,7 @@ const getImageClasses = props => {
 	} )
 }
 
-const Image = props => {
+const Image = memo( props => {
 	const [ isResizing, setIsResizing ] = useState( false )
 	const [ lockAspectRatio, setLockAspectRatio ] = useState( false )
 	const [ initialHeight, setInitialHeight ] = useState()
@@ -284,7 +286,7 @@ const Image = props => {
 			{ props.children }
 		</MediaUpload>
 	)
-}
+} )
 
 Image.defaultProps = {
 	imageId: '',

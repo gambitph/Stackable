@@ -8,7 +8,9 @@ import { useDeviceType, useWithShift } from '~stackable/hooks'
 /**
  * WordPress dependencies
  */
-import { useState, useEffect } from '@wordpress/element'
+import {
+	useState, useEffect, useCallback, memo,
+} from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 import { ResizableBox } from '@wordpress/components'
 
@@ -111,7 +113,7 @@ ResizableBottomMarginSingle.defaultProps = {
 	onChange: () => {},
 }
 
-const ResizableBottomMargin = props => {
+const ResizableBottomMargin = memo( props => {
 	const deviceType = useDeviceType()
 	const isDesktop = deviceType === 'Desktop'
 	const isMobile = deviceType === 'Mobile'
@@ -124,25 +126,30 @@ const ResizableBottomMargin = props => {
 		value = props.valueMobile
 	}
 
+	const onChange = useCallback( value => {
+		const callback = props[ `onChange${ deviceType }` ]
+		if ( callback ) {
+			callback( value )
+		}
+	}, [ deviceType, props.onChangeDesktop, props.onChangeTablet, props.onChangeMobile ] )
+
 	return (
 		<ResizableBottomMarginSingle
 			previewSelector={ props.previewSelector }
 			value={ value }
-			onChange={ value => {
-				props[ `onChange${ deviceType }` ]( value )
-			} }
+			onChange={ onChange }
 		/>
 	)
-}
+} )
 
 ResizableBottomMargin.defaultProps = {
 	previewSelector: '', // Selector of the element where the margin is applied e.g. .stk-card-group
 	valueDesktop: '',
 	valueTablet: '',
 	valueMobile: '',
-	onChangeDesktop: () => {},
-	onChangeTablet: () => {},
-	onChangeMobile: () => {},
+	onChangeDesktop: null,
+	onChangeTablet: null,
+	onChangeMobile: null,
 }
 
 export default ResizableBottomMargin

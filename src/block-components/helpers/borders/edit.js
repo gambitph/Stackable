@@ -13,9 +13,30 @@ import {
 /**
  * WordPress dependencies
  */
-import { Fragment } from '@wordpress/element'
+import {
+	Fragment, useMemo, useCallback,
+} from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { useAttributeEditHandlers } from '~stackable/hooks'
+
+const BORDER_CONTROLS = [
+	{
+		value: '',
+		title: __( 'None', i18n ),
+	},
+	{
+		value: 'solid',
+		title: __( 'Solid', i18n ),
+	},
+	{
+		value: 'dashed',
+		title: __( 'Dashed', i18n ),
+	},
+	{
+		value: 'dotted',
+		title: __( 'Dotted', i18n ),
+	},
+]
 
 export const BorderControls = props => {
 	const {
@@ -24,28 +45,19 @@ export const BorderControls = props => {
 		updateAttributes,
 	} = useAttributeEditHandlers( props.attrNameTemplate )
 
+	const borderRadiusPlaceholder = useMemo( () => {
+		return props.blockEl
+			? () => props.blockEl.el() && parseFloat( window.getComputedStyle( props.blockEl.el() ).borderRadius )
+			: null
+	}, [ props.blockEl ] )
+
+	const onChangeShadow = useCallback( updateAttributeHandler( 'shadow' ), [ updateAttributeHandler ] )
+
 	return (
 		<Fragment>
 			<AdvancedToolbarControl
 				label={ __( 'Borders', i18n ) }
-				controls={ [
-					{
-						value: '',
-						title: __( 'None', i18n ),
-					},
-					{
-						value: 'solid',
-						title: __( 'Solid', i18n ),
-					},
-					{
-						value: 'dashed',
-						title: __( 'Dashed', i18n ),
-					},
-					{
-						value: 'dotted',
-						title: __( 'Dotted', i18n ),
-					},
-				] }
+				controls={ BORDER_CONTROLS }
 				className="ugb-border-controls__border-type-toolbar"
 				value={ getAttribute( 'borderType' ) }
 				onChange={ updateAttributeHandler( 'borderType' ) }
@@ -155,14 +167,12 @@ export const BorderControls = props => {
 				min={ 0 }
 				sliderMax={ 50 }
 				allowReset={ true }
-				placeholderRender={ props.blockEl
-					? () => parseFloat( window.getComputedStyle( props.blockEl.el() ).borderRadius )
-					: null }
+				placeholderRender={ borderRadiusPlaceholder }
 				className="ugb--help-tip-general-border-radius"
 			/>
 			<ShadowControl
 				value={ getAttribute( 'shadow' ) }
-				onChange={ updateAttributeHandler( 'shadow' ) }
+				onChange={ onChangeShadow }
 			/>
 		</Fragment>
 	)

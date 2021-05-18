@@ -18,7 +18,7 @@ import {
 } from '@wordpress/components'
 import { compose, ifCondition } from '@wordpress/compose'
 import { getColorObjectByColorValue, withColorContext } from '@wordpress/block-editor'
-import { Fragment } from '@wordpress/element'
+import { Fragment, memo } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 
 /**
@@ -30,7 +30,7 @@ import classnames from 'classnames'
 // translators: first %s: The type of color (e.g. background color), second %s: the color name or value (e.g. red or #ff0000)
 const colorIndicatorAriaLabel = __( '(current %s: %s)', i18n )
 
-const ColorPaletteControl = props => {
+const ColorPaletteControl = memo( props => {
 	const {
 		disableCustomColors,
 		label,
@@ -84,7 +84,7 @@ const ColorPaletteControl = props => {
 			/>
 		</BaseControl>
 	)
-}
+} )
 
 export default compose( [
 	withColorContext,

@@ -6,7 +6,7 @@ import { PanelTabs } from '~stackable/components'
 /**
  * WordPress dependencies
  */
-import { useState } from '@wordpress/element'
+import { useState, memo } from '@wordpress/element'
 import { createSlotFill } from '@wordpress/components'
 import { InspectorControls, useBlockEditContext } from '@wordpress/block-editor'
 
@@ -63,4 +63,4 @@ InspectorTabs.defaultProps = {
 	tabs: [ 'block', 'style', 'advanced' ],
 }
 
-export default InspectorTabs
+export default memo( InspectorTabs )

@@ -10,6 +10,7 @@ import { BaseControl } from '..'
 import classnames from 'classnames'
 import { omit } from 'lodash'
 import { useDeviceType } from '~stackable/hooks'
+import { memo } from '@wordpress/element'
 
 export const convertToNumber = value => {
 	if ( typeof value === 'string' && value !== '' && value.match( /^[\d.]+$/ ) ) {
@@ -129,4 +130,4 @@ AdvancedRangeControl.defaultProps = {
 	defaultValue: '',
 }
 
-export default AdvancedRangeControl
+export default memo( AdvancedRangeControl )

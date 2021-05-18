@@ -7,11 +7,12 @@ import { useBlockAttributes } from './use-block-attributes'
  * WordPress dependencies
  */
 import { useBlockEditContext } from '@wordpress/block-editor'
+import { useMemo } from '@wordpress/element'
 
 export const useBlockEl = selector => {
 	const { clientId } = useBlockEditContext()
 	const { uniqueId } = useBlockAttributes( clientId )
-	return new BlockEl( uniqueId, selector )
+	return useMemo( () => new BlockEl( uniqueId, selector ), [ uniqueId, selector ] )
 }
 
 class BlockEl {
