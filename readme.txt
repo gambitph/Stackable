@@ -114,6 +114,7 @@ Optimize your website’s performance, and get lightning fast page loading and m
 
 ### News Article Updates
 
+- [v2.16 Clickable Containers and Pagination](https://wpstackable.com/blog/clickable-containers-and-pagination/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.15 Introducing Dynamic Content](https://wpstackable.com/blog/introducing-dynamic-content/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.14 Copy and Paste Block Styles](https://wpstackable.com/blog/copy-and-paste-block-styles/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.13 UI Kits, Borders & Improved Performance](https://wpstackable.com/blog/ui-kits-borders/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -202,6 +203,8 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 2.16.0 =
+[Clickable Containers and Pagination](https://wpstackable.com/blog/clickable-containers-and-pagination/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
 * New: Containers in some blocks can now become links
 * New: Added pagination to the Blog Posts block (premium)
 * Change: Increased the minimum PHP to 5.6
