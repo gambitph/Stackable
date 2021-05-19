@@ -212,6 +212,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * Fixed: Compatibility with WP Review Pro in the blog posts block
 * Fixed: The Video Popup block play button can be misaligned
 * Fixed: Right and bottom Container paddings in tablet and mobile are interchanged
+* Fixed: Global colors can have an error when colors are set to null
 * Fixed: A vertical scrollbar can be present in the block editor
 
 = 2.15.3 =
