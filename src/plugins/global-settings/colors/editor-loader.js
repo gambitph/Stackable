@@ -13,12 +13,12 @@ import domReady from '@wordpress/dom-ready'
  * External dependencies
  */
 import rgba from 'color-rgba'
-import { compact } from 'lodash'
+import { compact, isPlainObject } from 'lodash'
 
 const renderGlobalStyles = ( newColors, setStyles ) => {
 	// Output all our --stk-global-colors.
 	const styleRules = newColors.map( color => {
-		if ( typeof color !== 'object' ) {
+		if ( ! isPlainObject( color ) ) {
 			return null
 		}
 
@@ -33,7 +33,7 @@ const renderGlobalStyles = ( newColors, setStyles ) => {
 
 	// Output all the rgba colors, detect the actual color values.
 	const rgbaStyleRules = newColors.map( color => {
-		if ( typeof color !== 'object' ) {
+		if ( ! isPlainObject( color ) ) {
 			return null
 		}
 
@@ -53,7 +53,7 @@ const renderGlobalStyles = ( newColors, setStyles ) => {
 
 const GlobalColorStyles = () => {
 	const { colors } = useSelect( select => ( {
-		 colors: select( 'core/block-editor' ).getSettings().colors,
+		colors: select( 'core/block-editor' ).getSettings().colors,
 	} ) )
 	const [ styles, setStyles ] = useState( '' )
 

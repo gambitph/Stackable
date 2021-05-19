@@ -2,7 +2,7 @@
  * External dependencies
  */
 import {
-	omit, compact, head,
+	omit, compact, head, isPlainObject,
 } from 'lodash'
 
 /**
@@ -60,7 +60,7 @@ registerStore( 'stackable/global-colors', {
  * @return {Array} new stackable global color array
  */
 const convertBetaStackableColorsToRelease = colors => compact( ( colors || [] ).map( color => {
-	if ( typeof color !== 'object' ) {
+	if ( ! isPlainObject( color ) ) {
 		return null
 	}
 
