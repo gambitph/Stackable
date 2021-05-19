@@ -355,7 +355,7 @@ const ColorPickers = props => {
 						key={ index }
 						color={ color.color }
 						name={ color.name }
-						locked={ ! ( color.slug || '' ).match( /^stk-/ ) }
+						locked={ ! ( color.slug || '' ).startsWith( 'stk-' ) }
 						onClick={ () => setSelectedIndex( selectedIndex !== index ? index : null ) }
 					>
 						{ selectedIndex === index &&
