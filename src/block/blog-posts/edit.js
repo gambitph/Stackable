@@ -905,10 +905,11 @@ const Edit = props => {
 		const { isResolving } = select( 'core/data' )
 
 		const postQuery = pickBy( {
-			order,
-			orderby: orderBy,
-			per_page: -1, // eslint-disable-line camelcase
-			...applyFilters( 'stackable.blog-posts.postQuery', {}, props ),
+			...applyFilters( 'stackable.blog-posts.postQuery', {
+				order,
+				orderby: orderBy,
+				per_page: numberOfItems, // eslint-disable-line camelcase
+			}, props ),
 		}, value => {
 			// Exludes and includes can be empty.
 			if ( Array.isArray( value ) ) {
@@ -951,11 +952,15 @@ const Edit = props => {
 		attributes.postOffset,
 		attributes.postExclude,
 		attributes.postInclude,
+		attributes.numberOfItems,
 	] )
 
 	const {
-		paginate, currentPage, pages, currentPagePosts,
-	} = applyFilters( 'stackable.blog-posts.pagination.hooks', posts, numberOfItems )
+		paginate,
+		currentPage,
+		pages,
+		currentPagePosts = posts,
+	} = applyFilters( 'stackable.blog-posts.pagination.hooks', posts, numberOfItems ) || {}
 
 	const show = showOptions( props )
 	const hasPosts = Array.isArray( posts ) && posts.length
