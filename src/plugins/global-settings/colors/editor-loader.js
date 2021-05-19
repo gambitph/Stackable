@@ -22,7 +22,7 @@ const renderGlobalStyles = ( newColors, setStyles ) => {
 			return null
 		}
 
-		if ( typeof color.slug === 'string' && color.slug.match( /^stk-global-color/ ) ) {
+		if ( typeof color.slug === 'string' && color.slug.startsWith( 'stk-global-color' ) ) {
 			return `--${ color.slug || '' }: ${ color.color || '' };`
 		}
 
