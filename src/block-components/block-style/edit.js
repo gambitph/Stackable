@@ -17,8 +17,9 @@ import {
  */
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
+import { memo } from '@wordpress/element'
 
-export const Edit = props => {
+export const Edit = memo( props => {
 	const { clientId } = useBlockEditContext()
 
 	return (
@@ -32,7 +33,7 @@ export const Edit = props => {
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
 	)
-}
+} )
 
 Edit.defaultProps = {
 	initialOpen: true,

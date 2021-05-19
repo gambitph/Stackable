@@ -1,4 +1,4 @@
-import './hide-style-panel'
+// import './hide-style-panel'
 // import { addAttributes } from './attributes'
 // import { useUniqueId } from './use-unique-id'
 // import { addStyles } from './style'

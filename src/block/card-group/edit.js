@@ -31,8 +31,11 @@ import {
 import {
 	InnerBlocks,
 } from '@wordpress/block-editor'
-import { Fragment } from '@wordpress/element'
+import { Fragment, useCallback } from '@wordpress/element'
 import { useBlockContext } from '~stackable/hooks'
+
+const styleFunction = createStyles( VERSION )
+const ALLOWED_INNER_BLOCKS = [ 'stackable/card' ]
 
 const Edit = props => {
 	const {
@@ -55,6 +58,11 @@ const Edit = props => {
 		'stk-block-content',
 	] )
 
+	const renderAppender = useCallback(
+		() => hasInnerBlocks ? <ColumnInserter /> : null,
+		[ hasInnerBlocks ]
+	)
+
 	return <Fragment>
 
 		<InspectorTabs />
@@ -66,20 +74,18 @@ const Edit = props => {
 		<Responsive.InspectorControls />
 
 		<BlockDiv className={ blockClassNames }>
-			<Style styleFunc={ createStyles( VERSION ) } />
+			<Style styleFunc={ styleFunction } />
 			<CustomCSS mainBlockClass="stk-card-group" />
 
 			{ ! hasInnerBlocks && <GroupPlaceholder /> }
-			<Fragment>
-				<div className={ contentClassNames }>
-					<InnerBlocks
-						orientation="horizontal"
-						allowedBlocks={ [ 'stackable/card' ] }
-						renderAppender={ () => hasInnerBlocks ? <ColumnInserter /> : null }
-					/>
-				</div>
-				{ hasInnerBlocks && <MarginBottom /> }
-			</Fragment>
+			<div className={ contentClassNames }>
+				<InnerBlocks
+					orientation="horizontal"
+					allowedBlocks={ ALLOWED_INNER_BLOCKS }
+					renderAppender={ renderAppender }
+				/>
+			</div>
+			{ hasInnerBlocks && <MarginBottom /> }
 		</BlockDiv>
 	</Fragment>
 }

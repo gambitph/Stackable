@@ -37,7 +37,9 @@ import {
  */
 import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
-import { Fragment } from '@wordpress/element'
+import {
+	Fragment, useCallback,
+} from '@wordpress/element'
 import { BlockLink } from '~stackable/block-components/block-link'
 
 const TEMPLATE = [
@@ -47,6 +49,10 @@ const TEMPLATE = [
 		[ 'core/button', { text: 'Button' } ],
 	] ],
 ]
+
+const widthUnit = [ 'px' ]
+const heightUnit = [ 'px' ]
+const styleFunction = createStyles( VERSION )
 
 const Edit = props => {
 	const { hasInnerBlocks } = useBlockContext()
@@ -84,6 +90,11 @@ const Edit = props => {
 		'stk-container-padding': hasContainer,
 	} )
 
+	const renderAppender = useCallback(
+		() => ! hasInnerBlocks ? <InnerBlocks.ButtonBlockAppender /> : <InnerBlocks.DefaultBlockAppender />,
+		[ hasInnerBlocks ]
+	)
+
 	return (
 		<Fragment>
 
@@ -106,7 +117,7 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-card" />
 			<Responsive.InspectorControls />
 
-			<Style styleFunc={ createStyles( VERSION ) } />
+			<Style styleFunc={ styleFunction } />
 			<CustomCSS mainBlockClass="stk-card" />
 
 			<Column showHandle={ isHovered }>
@@ -118,8 +129,8 @@ const Edit = props => {
 							enableWidth={ blockStyle === 'horizontal' }
 							enableHeight={ blockStyle !== 'horizontal' }
 							enableDiagonal={ false }
-							widthUnits={ [ 'px' ] }
-							heightUnits={ [ 'px' ] }
+							widthUnits={ widthUnit }
+							heightUnits={ heightUnit }
 							defaultWidth={ 250 }
 							width={ blockStyle !== 'horizontal' ? 100 : undefined }
 							widthUnit={ blockStyle !== 'horizontal' ? '%' : 'px' }
@@ -130,7 +141,7 @@ const Edit = props => {
 							<InnerBlocks
 								template={ TEMPLATE }
 								orientation={ blockOrientation }
-								renderAppender={ () => ! hasInnerBlocks ? <InnerBlocks.ButtonBlockAppender /> : <InnerBlocks.DefaultBlockAppender /> }
+								renderAppender={ renderAppender }
 								templateInsertUpdatesSelection={ true }
 							/>
 						</div>

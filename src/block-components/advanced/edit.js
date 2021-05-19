@@ -23,6 +23,21 @@ import {
 	__, _x, sprintf,
 } from '@wordpress/i18n'
 
+const HTML_TAG_OPTIONS = [
+	{ value: '', label: __( 'Default', i18n ) },
+	{ value: 'div', label: _x( 'Div', 'HTML Tag', i18n ) },
+	{ value: 'blockquote', label: _x( 'Blockquote', 'HTML Tag', i18n ) },
+	{ value: 'section', label: _x( 'Section', 'HTML Tag', i18n ) },
+	{ value: 'article', label: _x( 'Article', 'HTML Tag', i18n ) },
+	{ value: 'aside', label: _x( 'Aside', 'HTML Tag', i18n ) },
+	{ value: 'main', label: _x( 'Main', 'HTML Tag', i18n ) },
+	{ value: 'header', label: _x( 'Header', 'HTML Tag', i18n ) },
+	{ value: 'footer', label: _x( 'Footer', 'HTML Tag', i18n ) },
+	{ value: 'nav', label: _x( 'Nav', 'HTML Tag', i18n ) },
+	{ value: 'address', label: _x( 'Address', 'HTML Tag', i18n ) },
+	{ value: 'hgroup', label: _x( 'Hgroup', 'HTML Tag', i18n ) },
+]
+
 export const Edit = () => {
 	const { clientId } = useBlockEditContext()
 
@@ -42,20 +57,7 @@ export const Edit = () => {
 					<AdvancedSelectControl
 						label={ sprintf( _x( '%s HTML Tag', 'component' ), __( 'Block', i18n ) ) }
 						value={ attributes.htmlTag }
-						options={ [
-							{ value: '', label: __( 'Default', i18n ) },
-							{ value: 'div', label: _x( 'Div', 'HTML Tag', i18n ) },
-							{ value: 'blockquote', label: _x( 'Blockquote', 'HTML Tag', i18n ) },
-							{ value: 'section', label: _x( 'Section', 'HTML Tag', i18n ) },
-							{ value: 'article', label: _x( 'Article', 'HTML Tag', i18n ) },
-							{ value: 'aside', label: _x( 'Aside', 'HTML Tag', i18n ) },
-							{ value: 'main', label: _x( 'Main', 'HTML Tag', i18n ) },
-							{ value: 'header', label: _x( 'Header', 'HTML Tag', i18n ) },
-							{ value: 'footer', label: _x( 'Footer', 'HTML Tag', i18n ) },
-							{ value: 'nav', label: _x( 'Nav', 'HTML Tag', i18n ) },
-							{ value: 'address', label: _x( 'Address', 'HTML Tag', i18n ) },
-							{ value: 'hgroup', label: _x( 'Hgroup', 'HTML Tag', i18n ) },
-						] }
+						options={ HTML_TAG_OPTIONS }
 						onChange={ htmlTag => updateBlockAttributes( clientId, { htmlTag } ) }
 					/>
 					<ResponsiveControl2

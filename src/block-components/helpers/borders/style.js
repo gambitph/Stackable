@@ -58,6 +58,23 @@ export const addBorderStyles = ( styles, attributes, options = {} ) => {
 			},
 			versionAdded: '3.0.0',
 			versionDeprecated: '',
+			// dependencies: [ getAttrName ],
 		} )
 	}
 }
+
+// borderRadius
+// BorderType
+// BorderColor
+// BorderWidthTop
+// BorderWidthRight
+// BorderWidthBottom
+// BorderWidthLeft
+// BorderWidthTopTablet
+// BorderWidthRightTablet
+// BorderWidthBottomTablet
+// BorderWidthLeftTablet
+// BorderWidthTopMobile
+// BorderWidthRightMobile
+// BorderWidthBottomMobile
+// BorderWidthLeftMobile

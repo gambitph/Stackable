@@ -22,6 +22,11 @@ export const doImportant = ( styleObject, important = true ) => {
 	}, {} )
 }
 
+export const mergeStyles = ( styles, important = true ) => {
+	const _styles = deepmerge.all( styles )
+	return important ? doImportant( _styles ) : _styles
+}
+
 /**
  * Style object, this manages the generation of styles.
  */
@@ -57,8 +62,7 @@ class StyleObject {
 	}
 
 	getMerged( version = '', important = true ) {
-		const styles = deepmerge.all( this.getStyles( version ) )
-		return important ? doImportant( styles ) : styles
+		return mergeStyles( this.getStyles( version ), important )
 	}
 }
 

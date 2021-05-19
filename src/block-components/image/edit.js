@@ -27,6 +27,7 @@ import {
  */
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { useDispatch, useSelect } from '@wordpress/data'
+import { useMemo, useCallback } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 export const Edit = props => {
@@ -45,6 +46,30 @@ export const Edit = props => {
 		const image = select( 'core' ).getMedia( attributes.imageId )
 		return { imageData: { ...image } }
 	}, [ attributes.imageId ] )
+
+	const heightPlaceholderRender = useMemo( () => {
+		return blockElImage
+			? () => parseFloat( window.getComputedStyle( blockElImage.el() ).height )
+			: null
+	}, [ blockElImage ] )
+
+	const widthPlaceholderRender = useMemo( () => {
+		return blockElImage
+			? () => parseFloat( window.getComputedStyle( blockElImage.el() ).width )
+			: null
+	}, [ blockElImage ] )
+
+	const onChangeFocalPointDesktop = useCallback( imageFocalPoint => {
+		updateBlockAttributes( clientId, { imageFocalPoint: imageFocalPoint || undefined } )
+	}, [ clientId ] )
+
+	const onChangeFocalPointTablet = useCallback( imageFocalPointTablet => {
+		updateBlockAttributes( clientId, { imageFocalPointTablet: imageFocalPointTablet || undefined } )
+	}, [ clientId ] )
+
+	const onChangeFocalPointMobile = useCallback( imageFocalPointMobile => {
+		updateBlockAttributes( clientId, { imageFocalPointMobile: imageFocalPointMobile || undefined } )
+	}, [ clientId ] )
 
 	return (
 		<InspectorStyleControls>
@@ -100,6 +125,7 @@ export const Edit = props => {
 							step={ props.widthStep }
 							initialPosition={ 100 }
 							allowReset={ true }
+							placeholderRender={ widthPlaceholderRender }
 						/>
 					</ResponsiveControl2>
 				}
@@ -132,9 +158,7 @@ export const Edit = props => {
 							sliderMax={ props.heightMax }
 							step={ props.heightStep }
 							allowReset={ true }
-							placeholderRender={ blockElImage
-								? () => parseFloat( window.getComputedStyle( blockElImage.el() ).height )
-								: null }
+							placeholderRender={ heightPlaceholderRender }
 						/>
 					</ResponsiveControl2>
 				}
@@ -189,15 +213,15 @@ export const Edit = props => {
 				<ResponsiveControl2
 					desktopProps={ {
 						value: attributes.imageFocalPoint,
-						onChange: imageFocalPoint => updateBlockAttributes( clientId, { imageFocalPoint: imageFocalPoint || undefined } ),
+						onChange: onChangeFocalPointDesktop,
 					} }
 					tabletProps={ {
 						value: attributes.imageFocalPointTablet,
-						onChange: imageFocalPointTablet => updateBlockAttributes( clientId, { imageFocalPointTablet: imageFocalPointTablet || undefined } ),
+						onChange: onChangeFocalPointTablet,
 					} }
 					mobileProps={ {
 						value: attributes.imageFocalPointMobile,
-						onChange: imageFocalPointMobile => updateBlockAttributes( clientId, { imageFocalPointMobile: imageFocalPointMobile || undefined } ),
+						onChange: onChangeFocalPointMobile,
 					} }
 				>
 					<AdvancedFocalPointControl

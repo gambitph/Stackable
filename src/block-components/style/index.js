@@ -4,12 +4,15 @@
 import {
 	getUniqueBlockClass, minifyCSS, prependCSSClass,
 } from '~stackable/util'
+import { mergeStyles } from '~stackable/util/styles/style-object'
 import {
 	kebabCase, omit, isEqual, sortBy,
 } from 'lodash'
 import deepmerge from 'deepmerge'
 
-import { useMemo } from '@wordpress/element'
+import {
+	useMemo, memo,
+} from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { useBlockAttributes, useDeviceType } from '~stackable/hooks'
 
@@ -315,33 +318,32 @@ export const getEditorStylesOnly = ( style, deviceType = 'Desktop' ) => {
 	return deepmerge.all( styles )
 }
 
-export const Style = props => {
+export const Style = memo( props => {
 	const {
 		breakTablet = 1024,
 		breakMobile = 768,
 		styleFunc = () => {},
 	} = props
-
+	const deviceType = useDeviceType()
 	const { clientId } = useBlockEditContext()
 	const attributes = useBlockAttributes( clientId )
-	const deviceType = useDeviceType()
 
 	const blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
 
 	// Generate styles, but optimize.
 	const styles = useMemo( () => {
-		const style = styleFunc( { ...attributes, clientId } )
+		const styles = mergeStyles( styleFunc( { ...attributes, clientId } ) )
 
 		// Don't print out all the styles, since we're in the editor, we only
 		// need to show the styles that we're previewing in!
-		const editorStyles = getEditorStylesOnly( style, deviceType )
+		const editorStyles = getEditorStylesOnly( styles, deviceType )
 
 		return generateStyles( editorStyles, blockUniqueClassName, breakTablet, breakMobile, true )
 	}, [ deviceType, JSON.stringify( attributes ), clientId ] )
 
 	// It's way faster in React if you do smaller `<style>` tags instead of just a single one. Do it when in editor mode.
 	return styles ? styles.map( ( styles, i ) => <style key={ i }>{ styles }</style> ) : null
-}
+} )
 
 Style.Content = props => {
 	const {
@@ -353,7 +355,10 @@ Style.Content = props => {
 
 	const blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
 
-	const styles = generateStyles( styleFunc( attributes ), blockUniqueClassName, breakTablet, breakMobile, false )
+	const styles = generateStyles( mergeStyles( styleFunc( attributes ) ), blockUniqueClassName, breakTablet, breakMobile, false )
 
 	return styles && styles.length ? <style>{ minifyCSS( styles.join( '' ) ) }</style> : null
 }
+
+// For debugging
+Style.displayName = 'Style'

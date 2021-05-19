@@ -2,6 +2,7 @@
  * WordPress dependencies
  */
 import { FocalPointPicker } from '@wordpress/components'
+import { memo } from '@wordpress/element'
 
 /**
  * External dependencies
@@ -44,4 +45,4 @@ AdvancedFocalPointControl.defaultProps = {
 	defaultValue: '',
 }
 
-export default AdvancedFocalPointControl
+export default memo( AdvancedFocalPointControl )

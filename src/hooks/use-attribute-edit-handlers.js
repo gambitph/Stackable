@@ -1,9 +1,8 @@
-import { useBlockAttributes } from './use-block-attributes'
-
 import { getAttrNameFunction } from '~stackable/util'
 
-import { useDispatch } from '@wordpress/data'
+import { select, dispatch } from '@wordpress/data'
 import { useBlockEditContext } from '@wordpress/block-editor'
+import { useCallback } from '@wordpress/element'
 
 /**
  * Provides all the functions needed to get and update attributes for control
@@ -20,22 +19,35 @@ import { useBlockEditContext } from '@wordpress/block-editor'
  */
 export const useAttributeEditHandlers = ( attrNameTemplate = '%s' ) => {
 	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
-	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 
 	const getAttrName = getAttrNameFunction( attrNameTemplate )
-	const getAttribute = attrName => attributes[ getAttrName( attrName ) ]
 
-	const updateAttribute = ( attrName, value ) => updateBlockAttributes( clientId, { [ getAttrName( attrName ) ]: value } )
-	const updateAttributeHandler = attrName => value => updateAttribute( attrName, value )
+	const getAttribute = useCallback( attrName => {
+		const getAttrName = getAttrNameFunction( attrNameTemplate )
+		const attributes = select( 'core/block-editor' ).getBlockAttributes( clientId )
+		return attributes[ getAttrName( attrName ) ]
+	}, [ clientId, attrNameTemplate ] )
 
-	const updateAttributes = values => {
+	const updateAttribute = useCallback( ( attrName, value ) => {
+		const { updateBlockAttributes } = dispatch( 'core/block-editor' )
+		const getAttrName = getAttrNameFunction( attrNameTemplate )
+		return updateBlockAttributes( clientId, {
+			[ getAttrName( attrName ) ]: value,
+		} )
+	}, [ clientId, attrNameTemplate ] )
+
+	const updateAttributeHandler = useCallback( attrName => {
+		return value => updateAttribute( attrName, value )
+	}, [ attrNameTemplate, updateAttribute ] )
+
+	const updateAttributes = useCallback( values => {
 		const attributes = Object.keys( values ).reduce( ( attributes, attrName ) => {
 			attributes[ getAttrName( attrName ) ] = values[ attrName ]
 			return attributes
 		}, {} )
+		const { updateBlockAttributes } = dispatch( 'core/block-editor' )
 		updateBlockAttributes( clientId, attributes )
-	}
+	}, [ clientId ] )
 
 	return {
 		getAttrName,
