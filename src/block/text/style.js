@@ -19,7 +19,7 @@ const createStyles = ( version = '' ) => attributes => {
 		selector: '.stk-advanced-text__text',
 	} )
 
-	return styles.getMerged( version )
+	return styles.getStyles( version )
 }
 
 export default createStyles

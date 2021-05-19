@@ -2,23 +2,26 @@
  * External dependencies
  */
 import {
-	BlockDiv,
-	CustomCSS,
 	Advanced,
-	Typography,
+	Alignment,
+	BlockDiv,
+	MarginBottom,
 } from '~stackable/block-components'
-import { StyleObject } from '~stackable/util'
+import {
+	StyleObject,
+} from '~stackable/util'
 
 const createStyles = ( version = '' ) => attributes => {
+	// const getValue = __getValue( attributes )
 	const styles = new StyleObject()
 
+	Alignment.addStyles( styles, attributes )
 	BlockDiv.addStyles( styles, attributes )
+	MarginBottom.addStyles( styles, attributes )
 	Advanced.addStyles( styles, attributes )
-	CustomCSS.addStyles( styles, attributes )
-	Typography.addStyles( styles, attributes, {
-		selector: '.stk-advanced-heading__text',
-	} )
+
 	return styles.getStyles( version )
 }
 
 export default createStyles
+

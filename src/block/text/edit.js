@@ -25,6 +25,8 @@ import { InspectorTabs } from '~stackable/components'
 import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
 
+const styleFunction = createStyles( VERSION )
+
 const Edit = props => {
 	const {
 		className, setAttributes,
@@ -50,7 +52,7 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-advanced-text" />
 			<Responsive.InspectorControls />
 
-			<Style styleFunc={ createStyles( VERSION ) } />
+			<Style styleFunc={ styleFunction } />
 			<CustomCSS mainBlockClass="stk-advanced-text__text" />
 
 			<BlockDiv className={ blockClassNames }>

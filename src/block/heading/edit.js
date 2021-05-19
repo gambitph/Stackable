@@ -25,6 +25,8 @@ import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 
+const styleFunction = createStyles( VERSION )
+
 const Edit = props => {
 	const {
 		className, setAttributes,
@@ -50,7 +52,7 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-advanced-heading" />
 			<Responsive.InspectorControls />
 
-			<Style styleFunc={ createStyles( VERSION ) } />
+			<Style styleFunc={ styleFunction } />
 			<CustomCSS mainBlockClass="stk-advanced-heading__text" />
 
 			<BlockDiv className={ blockClassNames }>
