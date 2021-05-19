@@ -226,7 +226,17 @@ const ColorPickers = props => {
 	const colors = Array.isArray( _colors ) ? _colors : []
 
 	// Enable reset if there are Stackable global colors.
-	const disableReset = useMemo( () => ! colors.some( color => color.slug && color.slug.includes( 'stk-global-color' ) ), [ JSON.stringify( colors ) ] )
+	const disableReset = useMemo( () => ! colors.some( color => {
+		if ( typeof color !== 'object' ) {
+			return false
+		}
+
+		if ( typeof color.slug === 'string' && color.slug.includes( 'stk-global-color' ) ) {
+			return true
+		}
+
+		return false
+	}, [ JSON.stringify( colors ) ] ) )
 
 	/**
 	 * Function used to update the colors in @wordpress/data,
@@ -336,12 +346,16 @@ const ColorPickers = props => {
 		<BaseControl className={ classNames }>
 			<ResetButton onClick={ onColorPaletteReset } disabled={ disableReset } />
 			{ colors.map( ( color, index ) => {
+				if ( typeof color !== 'object' ) {
+					return null
+				}
+
 				return (
 					<ColorOption
 						key={ index }
 						color={ color.color }
 						name={ color.name }
-						locked={ ! color.slug.match( /^stk-/ ) }
+						locked={ ! ( color.slug || '' ).startsWith( 'stk-' ) }
 						onClick={ () => setSelectedIndex( selectedIndex !== index ? index : null ) }
 					>
 						{ selectedIndex === index &&
