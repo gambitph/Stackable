@@ -2,47 +2,86 @@
  * Internal dependencies
  */
 import {
-	addBackgroundStyles, addBorderStyles, addSizeStyles,
+	BorderStyle, SizeStyle, BackgroundStyle,
 } from '../helpers'
+import { Fragment } from '@wordpress/element'
 
-/**
- * External dependencies
- */
-// import {
-// 	__getValue,
-// } from '~stackable/util'
-
-/**
- * Adds image styles.
- *
- * @param {Object} styles The StyleObject to append to
- * @param {Object} attributes Block attributes
- * @param {Object} options
- */
-export const addStyles = ( styles, attributes, options = {} ) => {
-	// const getValue = __getValue( attributes )
+export const Style = props => {
 	const {
 		backgroundSelector = '.stk-container',
 		borderSelector = '.stk-container',
 		sizeSelector = '.stk-container',
 		sizeVerticalAlignRule = null,
 		sizeHorizontalAlignRule = null,
-	} = options
+	} = props.options
 
-	if ( attributes.hasContainer ) {
-		addBackgroundStyles( styles, attributes, {
-			attrNameTemplate: 'container%s',
-			selector: backgroundSelector,
-		} )
-	}
-	addBorderStyles( styles, attributes, {
-		attrNameTemplate: 'container%s',
-		selector: borderSelector,
-	} )
-	addSizeStyles( styles, attributes, {
-		attrNameTemplate: 'container%s',
-		selector: sizeSelector,
-		verticalAlignRule: sizeVerticalAlignRule,
-		horizontalAlignRule: sizeHorizontalAlignRule,
-	} )
+	return (
+		<Fragment>
+			{ props.attributes.hasContainer &&
+				<BackgroundStyle
+					{ ...props }
+					options={ {
+						attrNameTemplate: 'container%s',
+						selector: backgroundSelector,
+					} }
+				/>
+			}
+			<BorderStyle
+				{ ...props }
+				options={ {
+					attrNameTemplate: 'container%s',
+					selector: borderSelector,
+				} }
+			/>
+			<SizeStyle
+				{ ...props }
+				options={ {
+					attrNameTemplate: 'container%s',
+					selector: sizeSelector,
+					verticalAlignRule: sizeVerticalAlignRule,
+					horizontalAlignRule: sizeHorizontalAlignRule,
+				} }
+			/>
+		</Fragment>
+	)
+}
+
+Style.Content = props => {
+	const {
+		backgroundSelector = '.stk-container',
+		borderSelector = '.stk-container',
+		sizeSelector = '.stk-container',
+		sizeVerticalAlignRule = null,
+		sizeHorizontalAlignRule = null,
+	} = props.options
+
+	return (
+		<Fragment>
+			{ props.attributes.hasContainer &&
+				<BackgroundStyle.Content
+					{ ...props }
+					options={ {
+						attrNameTemplate: 'container%s',
+						selector: backgroundSelector,
+					} }
+				/>
+			}
+			<BorderStyle.Content
+				{ ...props }
+				options={ {
+					attrNameTemplate: 'container%s',
+					selector: borderSelector,
+				} }
+			/>
+			<SizeStyle.Content
+				{ ...props }
+				options={ {
+					attrNameTemplate: 'container%s',
+					selector: sizeSelector,
+					verticalAlignRule: sizeVerticalAlignRule,
+					horizontalAlignRule: sizeHorizontalAlignRule,
+				} }
+			/>
+		</Fragment>
+	)
 }

@@ -1,5 +1,5 @@
 import { addAttributes } from './attributes'
-import { addStyles } from './style'
+import { Style } from './style'
 import { Edit } from './edit'
 
 import classnames from 'classnames'
@@ -22,6 +22,7 @@ export const ContainerDiv = props => {
 	return <Div
 		{ ...props }
 		className={ classNames }
+		hasBackground={ attributes.hasContainer }
 		backgroundUrl={ attributes.containerBackgroundMediaUrl }
 		backgroundUrlTablet={ attributes.containerBackgroundMediaUrlTablet }
 		backgroundUrlMobile={ attributes.containerBackgroundMediaUrlMobile }
@@ -49,6 +50,7 @@ ContainerDiv.Content = props => {
 	return <Div.Content
 		{ ...propsToPass }
 		className={ classNames }
+		hasBackground={ attributes.hasContainer }
 		backgroundUrl={ attributes.containerBackgroundMediaUrl }
 		backgroundUrlTablet={ attributes.containerBackgroundMediaUrlTablet }
 		backgroundUrlMobile={ attributes.containerBackgroundMediaUrlMobile }
@@ -65,4 +67,4 @@ ContainerDiv.InspectorControls = Edit
 
 ContainerDiv.addAttributes = addAttributes
 
-ContainerDiv.addStyles = addStyles
+ContainerDiv.Style = Style

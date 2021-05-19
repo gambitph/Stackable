@@ -15,7 +15,7 @@ import {
 	RangeControl, __experimentalNumberControl as NumberControl,
 } from '@wordpress/components'
 import {
-	useState, useLayoutEffect, useEffect,
+	useState, useLayoutEffect, useEffect, useCallback, memo,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
@@ -35,7 +35,7 @@ export const getPercentageValue = ( value, min, max ) => {
 	return `${ clamp( percentageValue, 0, 100 ) }%`
 }
 
-const StackableRangeControl = props => {
+const StackableRangeControl = memo( props => {
 	const {
 		allowReset,
 		withInputField,
@@ -56,7 +56,7 @@ const StackableRangeControl = props => {
 
 	// When the value is changed, set the internal value to it, but provide only
 	// a valid number to the onChange event.
-	const handleOnChange = value => {
+	const handleOnChange = useCallback( value => {
 		setValue( value )
 		if ( ! isNaN( value ) ) {
 			const parsedValue = parseFloat( value )
@@ -66,16 +66,16 @@ const StackableRangeControl = props => {
 			}
 		}
 		props.onChange( props.resetFallbackValue )
-	}
+	}, [ props.onChange, props.min, props.max, props.resetFallbackValue ] )
 
-	const handleOnReset = () => {
+	const handleOnReset = useCallback( () => {
 		setValue( props.resetFallbackValue )
 		props.onChange( props.resetFallbackValue )
-	}
+	}, [ props.onChange, props.resetFallbackValue ] )
 
 	// When the number input is blurred, make sure that the value inside the
 	// field looks correct.  The number is within min/max and is a number.
-	const handleOnBlur = () => {
+	const handleOnBlur = useCallback( () => {
 		if ( ! isNaN( value ) ) {
 			const parsedValue = parseFloat( value )
 			if ( ! isNaN( parsedValue ) ) {
@@ -84,7 +84,7 @@ const StackableRangeControl = props => {
 			}
 		}
 		setValue( props.resetFallbackValue )
-	}
+	}, [ props.min, props.max, props.resetFallbackValue ] )
 
 	/**
 	 * We cannot trust the initialPosition of the RangeControl, so we
@@ -159,7 +159,7 @@ const StackableRangeControl = props => {
 			</Button>
 		}
 	</div>
-}
+} )
 
 StackableRangeControl.defaultProps = {
 	className: '',

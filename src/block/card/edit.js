@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import createStyles from './style'
+import { CardStyles } from './style'
 
 /**
  * External dependencies
@@ -19,7 +19,6 @@ import {
 	Column,
 	getColumnClasses,
 	BlockDiv,
-	Style,
 	Image,
 	getAlignmentClasses,
 	Alignment,
@@ -52,7 +51,6 @@ const TEMPLATE = [
 
 const widthUnit = [ 'px' ]
 const heightUnit = [ 'px' ]
-const styleFunction = createStyles( VERSION )
 
 const Edit = props => {
 	const { hasInnerBlocks } = useBlockContext()
@@ -117,7 +115,7 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-card" />
 			<Responsive.InspectorControls />
 
-			<Style styleFunc={ styleFunction } />
+			<CardStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-card" />
 
 			<Column showHandle={ isHovered }>

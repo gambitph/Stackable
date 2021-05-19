@@ -4,6 +4,7 @@
 	z-index: 1;
 	background-size: cover;
 	background-position: center;
+	overflow: hidden;
 	&::before {
 		content: "";
 		position: absolute;

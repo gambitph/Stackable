@@ -1,35 +1,35 @@
 /**
  * Internal dependencies
  */
+import { Fragment } from '@wordpress/element'
 import {
-	addBackgroundStyles, addBorderStyles, addSizeStyles,
+	BorderStyle, SizeStyle, BackgroundStyle,
 } from '../helpers'
 
-/**
- * External dependencies
- */
-// import {
-// 	__getValue,
-// } from '~stackable/util'
-
-/**
- * Adds image styles.
- *
- * @param {Object} styles The StyleObject to append to
- * @param {Object} attributes Block attributes
- */
-export const addStyles = ( styles, attributes ) => {
-	// const getValue = __getValue( attributes )
-
-	if ( attributes.hasBackground ) {
-		addBackgroundStyles( styles, attributes, {
-			attrNameTemplate: 'block%s',
-		} )
+export const Style = props => {
+	const options = {
+		attrNameTemplate: 'block%s',
 	}
-	addBorderStyles( styles, attributes, {
+
+	return (
+		<Fragment>
+			{ props.attributes.hasBackground && <BackgroundStyle { ...props } options={ options } /> }
+			<BorderStyle { ...props } options={ options } />
+			<SizeStyle { ...props } options={ options } />
+		</Fragment>
+	)
+}
+
+Style.Content = props => {
+	const options = {
 		attrNameTemplate: 'block%s',
-	} )
-	addSizeStyles( styles, attributes, {
-		attrNameTemplate: 'block%s',
-	} )
+	}
+
+	return (
+		<Fragment>
+			{ props.attributes.hasBackground && <BackgroundStyle.Content { ...props } options={ options } /> }
+			<BorderStyle.Content { ...props } options={ options } />
+			<SizeStyle.Content { ...props } options={ options } />
+		</Fragment>
+	)
 }
