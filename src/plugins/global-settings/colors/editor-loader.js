@@ -37,7 +37,7 @@ const renderGlobalStyles = ( newColors, setStyles ) => {
 			return null
 		}
 
-		if ( typeof color.slug === 'string' && color.slug.match( /^stk-global-color/ ) ) {
+		if ( typeof color.slug === 'string' && color.slug.startsWith( 'stk-global-color' ) ) {
 			const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( `--${ color.slug }` ).trim() )
 			if ( Array.isArray( rgbaColor ) && rgbaColor.length !== 0 ) {
 				rgbaColor.splice( 3, 1 )
