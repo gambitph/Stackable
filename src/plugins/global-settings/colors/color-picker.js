@@ -231,7 +231,7 @@ const ColorPickers = props => {
 			return false
 		}
 
-		if ( typeof color.slug === 'string' && color.slug.match( /stk-global-color/ ) ) {
+		if ( typeof color.slug === 'string' && color.slug.includes( 'stk-global-color' ) ) {
 			return true
 		}
 
