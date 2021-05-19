@@ -66,7 +66,7 @@ const convertBetaStackableColorsToRelease = colors => compact( ( colors || [] ).
 
 	if ( color.fallback && color.colorVar ) {
 		// Let us not include global colors linked to theme colors.
-		return color.slug.match( /^stk-global-color/ ) ?
+		return color.slug.startsWith( 'stk-global-color' ) ?
 			{
 				color: color.fallback,
 				slug: `stk-global-color-${ Math.floor( Math.random() * new Date().getTime() ) % 100000 }`,
