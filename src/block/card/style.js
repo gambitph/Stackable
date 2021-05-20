@@ -11,32 +11,98 @@ import {
 	Alignment,
 	BlockDiv, Column, ContainerDiv, Image,
 } from '~stackable/block-components'
-import { getBlockStyle } from '~stackable/hooks'
 import {
-	StyleObject,
+	useBlockAttributes, useDeviceType, getBlockStyle,
+} from '~stackable/hooks'
+import {
+	getUniqueBlockClass,
 } from '~stackable/util'
+import {
+	Fragment, renderToString, useMemo,
+} from '@wordpress/element'
+import { useBlockEditContext } from '@wordpress/block-editor'
 
-const createStyles = ( version = '' ) => attributes => {
-	const styles = new StyleObject()
+export const CardStyles = props => {
+	const {
+		...propsToPass
+	} = props
 
-	Alignment.addStyles( styles, attributes )
-	BlockDiv.addStyles( styles, attributes )
-	Column.addStyles( styles, attributes )
-	Advanced.addStyles( styles, attributes )
-	ContainerDiv.addStyles( styles, attributes, {
-		sizeSelector: '.stk-card__content',
-		sizeVerticalAlignRule: 'justifyContent',
-		sizeHorizontalAlignRule: 'alignSelf',
-	} )
+	const deviceType = useDeviceType()
+	const { clientId } = useBlockEditContext()
+	const attributes = useBlockAttributes( clientId )
 
-	const blockStyle = getBlockStyle( blockStyles, attributes.className )
-	Image.addStyles( styles, attributes, {
-		enableWidth: blockStyle === 'horizontal',
-		enableHeight: blockStyle !== 'horizontal',
-		selector: '.stk-card__image',
-	} )
+	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
+	propsToPass.deviceType = deviceType
+	propsToPass.attributes = { ...attributes, clientId }
 
-	return styles.getStyles( version )
+	const blockStyle = useMemo( () => getBlockStyle( blockStyles, attributes.className ), [ attributes.className ] )
+
+	return (
+		<Fragment>
+			<Alignment.Style { ...propsToPass } />
+			<BlockDiv.Style { ...propsToPass } />
+			<Column.Style { ...propsToPass } />
+			<Advanced.Style { ...propsToPass } />
+			<ContainerDiv.Style
+				{ ...propsToPass }
+				options={ {
+					sizeSelector: '.stk-card__content',
+					sizeVerticalAlignRule: 'justifyContent',
+					sizeHorizontalAlignRule: 'alignSelf',
+				} }
+			/>
+			<Image.Style
+				{ ...propsToPass }
+				options={ {
+					enableWidth: blockStyle === 'horizontal',
+					enableHeight: blockStyle !== 'horizontal',
+					selector: '.stk-card__image',
+				} }
+			/>
+		</Fragment>
+	)
 }
 
-export default createStyles
+CardStyles.defaultProps = {
+	isEditor: false,
+}
+
+CardStyles.Content = props => {
+	const {
+		...propsToPass
+	} = props
+
+	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
+	const blockStyle = getBlockStyle( blockStyles, props.attributes.className )
+
+	const styles = (
+		<Fragment>
+			<Alignment.Style.Content { ...propsToPass } />
+			<BlockDiv.Style.Content { ...propsToPass } />
+			<Column.Style.Content { ...propsToPass } />
+			<Advanced.Style.Content { ...propsToPass } />
+			<ContainerDiv.Style.Content
+				{ ...propsToPass }
+				options={ {
+					sizeSelector: '.stk-card__content',
+					sizeVerticalAlignRule: 'justifyContent',
+					sizeHorizontalAlignRule: 'alignSelf',
+				} }
+			/>
+			<Image.Style.Content
+				{ ...propsToPass }
+				options={ {
+					enableWidth: blockStyle === 'horizontal',
+					enableHeight: blockStyle !== 'horizontal',
+					selector: '.stk-card__image',
+				} }
+			/>
+		</Fragment>
+	)
+
+	return renderToString( styles ) ? <style>{ styles }</style> : null
+}
+
+CardStyles.Content.defaultProps = {
+	attributes: {},
+}

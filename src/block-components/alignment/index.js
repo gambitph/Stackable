@@ -1,6 +1,6 @@
 import { addAttributes } from './attributes'
 import { Edit } from './edit'
-import { addStyles } from './style'
+import { Style } from './style'
 
 export * from './use-alignment'
 
@@ -12,4 +12,4 @@ Alignment.InspectorControls = Edit
 
 Alignment.addAttributes = addAttributes
 
-Alignment.addStyles = addStyles
+Alignment.Style = Style

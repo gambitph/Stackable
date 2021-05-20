@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import createStyles from './style'
+import { CardStyles } from './style'
 
 /**
  * External dependencies
@@ -17,7 +17,6 @@ import {
 	getColumnClasses,
 	getResponsiveClasses,
 	Image,
-	Style,
 } from '~stackable/block-components'
 
 /**
@@ -65,10 +64,7 @@ export const Save = props => {
 			className={ blockClassNames }
 			attributes={ attributes }
 		>
-			<Style.Content
-				styleFunc={ createStyles( props.version ) }
-				attributes={ attributes }
-			/>
+			<CardStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
 			<ContainerDiv.Content
 				className={ contentClassNames }

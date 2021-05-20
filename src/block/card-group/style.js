@@ -5,21 +5,62 @@ import {
 	Advanced,
 	Alignment,
 	BlockDiv,
-	MarginBottom,
 } from '~stackable/block-components'
 import {
-	StyleObject,
+	useBlockAttributes, useDeviceType,
+} from '~stackable/hooks'
+import {
+	getUniqueBlockClass,
 } from '~stackable/util'
+import { Fragment, renderToString } from '@wordpress/element'
+import { useBlockEditContext } from '@wordpress/block-editor'
 
-const createStyles = ( version = '' ) => attributes => {
-	const styles = new StyleObject()
+export const CardGroupStyles = props => {
+	const {
+		...propsToPass
+	} = props
 
-	Alignment.addStyles( styles, attributes )
-	BlockDiv.addStyles( styles, attributes )
-	MarginBottom.addStyles( styles, attributes )
-	Advanced.addStyles( styles, attributes )
+	const deviceType = useDeviceType()
+	const { clientId } = useBlockEditContext()
+	const attributes = useBlockAttributes( clientId )
 
-	return styles.getStyles( version )
+	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
+	propsToPass.deviceType = deviceType
+	propsToPass.attributes = { ...attributes, clientId }
+
+	return (
+		<Fragment>
+			<Alignment.Style { ...propsToPass } />
+			<BlockDiv.Style { ...propsToPass } />
+			{ /* <MarginBottom.Style { ...propsToPass } /> */ }
+			<Advanced.Style { ...propsToPass } />
+		</Fragment>
+	)
 }
 
-export default createStyles
+CardGroupStyles.defaultProps = {
+	isEditor: false,
+}
+
+CardGroupStyles.Content = props => {
+	const {
+		...propsToPass
+	} = props
+
+	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
+
+	const styles = (
+		<Fragment>
+			<Alignment.Style.Content { ...propsToPass } />
+			<BlockDiv.Style.Content { ...propsToPass } />
+			{ /* <MarginBottom.Style.Content { ...propsToPass } /> */ }
+			<Advanced.Style.Content { ...propsToPass } />
+		</Fragment>
+	)
+
+	return renderToString( styles ) ? <style>{ styles }</style> : null
+}
+
+CardGroupStyles.Content.defaultProps = {
+	attributes: {},
+}

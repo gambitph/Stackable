@@ -1,5 +1,5 @@
 import { addAttributes } from './attributes'
-import { addStyles } from './style'
+import { Style } from './style'
 import { useImage } from './use-image'
 import { Edit } from './edit'
 import Image_ from './image'
@@ -99,4 +99,4 @@ Image.InspectorControls = Edit
 
 Image.addAttributes = addAttributes
 
-Image.addStyles = addStyles
+Image.Style = Style

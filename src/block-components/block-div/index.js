@@ -1,6 +1,6 @@
 import { addAttributes } from './attributes'
 import { useUniqueId } from './use-unique-id'
-import { addStyles } from './style'
+import { Style } from './style'
 import { Edit } from './edit'
 
 import classnames from 'classnames'
@@ -33,6 +33,7 @@ export const BlockDiv = props => {
 		className={ classNames }
 		data-id={ attributes.uniqueId }
 		blockTag={ htmlTag }
+		hasBackground={ attributes.hasBackground }
 		backgroundUrl={ attributes.blockBackgroundMediaUrl }
 		backgroundUrlTablet={ attributes.blockBackgroundMediaUrlTablet }
 		backgroundUrlMobile={ attributes.blockBackgroundMediaUrlMobile }
@@ -66,6 +67,7 @@ BlockDiv.Content = props => {
 		className={ classNames }
 		data-id={ attributes.uniqueId }
 		blockTag={ htmlTag }
+		hasBackground={ attributes.hasBackground }
 		backgroundUrl={ attributes.blockBackgroundMediaUrl }
 		backgroundUrlTablet={ attributes.blockBackgroundMediaUrlTablet }
 		backgroundUrlMobile={ attributes.blockBackgroundMediaUrlMobile }
@@ -82,4 +84,4 @@ BlockDiv.InspectorControls = Edit
 
 BlockDiv.addAttributes = addAttributes
 
-BlockDiv.addStyles = addStyles
+BlockDiv.Style = Style

@@ -1,5 +1,5 @@
 import { addAttributes } from './attributes'
-import { addStyles } from './style'
+import { Style } from './style'
 import { useColumn } from './use-column'
 
 import { ResizableColumn } from '~stackable/components'
@@ -49,4 +49,4 @@ Column.InspectorControls = null
 
 Column.addAttributes = addAttributes
 
-Column.addStyles = addStyles
+Column.Style = Style

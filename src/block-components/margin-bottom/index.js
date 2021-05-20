@@ -1,5 +1,5 @@
 import { addAttributes } from './attributes'
-import { addStyles } from './style'
+import { Style } from './style'
 
 import { ResizableBottomMargin } from '~stackable/components'
 import { getUniqueBlockClass } from '~stackable/util'
@@ -27,4 +27,4 @@ export const MarginBottom = () => {
 
 MarginBottom.addAttributes = addAttributes
 
-MarginBottom.addStyles = addStyles
+MarginBottom.Style = Style

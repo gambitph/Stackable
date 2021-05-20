@@ -4,62 +4,95 @@
 import {
 	__getValue,
 } from '~stackable/util'
+import { Style as StyleComponent } from '~stackable/components'
+import { useMemo } from '@wordpress/element'
 
-/**
- * Adds image styles.
- *
- * @param {Object} styles The StyleObject to append to
- * @param {Object} attributes Block attributes
- * @param {Object} options Other options
- */
-export const addStyles = ( styles, attributes, options = {} ) => {
-	const getValue = __getValue( attributes )
-
+const getStyles = ( attributes, options = {} ) => {
 	const {
 		selector = '',
 	} = options
+	const getValue = __getValue( attributes )
 
-	styles.add( {
-		style: {
-			editor: {
-				custom: {
-					[ `.stk-preview-device-desktop .block-editor-block-list__layout [data-block="${ attributes.clientId }"],
-					.stk-preview-device-tablet .block-editor-block-list__layout [data-block="${ attributes.clientId }"]` ]: {
-						flex: getValue( 'columnWidth', '1 1 %s%' ),
-						maxWidth: getValue( 'columnWidth', '%s%' ),
-					},
-					[ `.stk-preview-device-tablet .block-editor-block-list__layout [data-block="${ attributes.clientId }"]` ]: {
-						flex: getValue( 'columnWidthTablet', '1 1 %s%' ),
-						maxWidth: getValue( 'columnWidthTablet', '%s%' ),
-					},
-					[ `.stk-preview-device-mobile .block-editor-block-list__layout [data-block="${ attributes.clientId }"]` ]: {
-						flex: getValue( 'columnWidthMobile', '1 1 %s%' ),
-						maxWidth: getValue( 'columnWidthMobile', '%s%' ),
-					},
+	return {
+		editor: {
+			custom: {
+				[ `.stk-preview-device-desktop .block-editor-block-list__layout [data-block="${ attributes.clientId }"],
+				.stk-preview-device-tablet .block-editor-block-list__layout [data-block="${ attributes.clientId }"]` ]: {
+					flex: getValue( 'columnWidth', '1 1 %s%' ),
+					maxWidth: getValue( 'columnWidth', '%s%' ),
 				},
-			},
-			saveOnly: {
-				desktopTablet: {
-					[ selector ]: {
-						flex: getValue( 'columnWidth', '1 1 %s%' ),
-						maxWidth: getValue( 'columnWidth', '%s%' ),
-					},
+				[ `.stk-preview-device-tablet .block-editor-block-list__layout [data-block="${ attributes.clientId }"]` ]: {
+					flex: getValue( 'columnWidthTablet', '1 1 %s%' ),
+					maxWidth: getValue( 'columnWidthTablet', '%s%' ),
 				},
-				tabletOnly: {
-					[ selector ]: {
-						flex: getValue( 'columnWidthTablet', '1 1 %s%' ),
-						maxWidth: getValue( 'columnWidthTablet', '%s%' ),
-					},
-				},
-				mobile: {
-					[ selector ]: {
-						flex: getValue( 'columnWidthMobile', '1 1 %s%' ),
-						maxWidth: getValue( 'columnWidthMobile', '%s%' ),
-					},
+				[ `.stk-preview-device-mobile .block-editor-block-list__layout [data-block="${ attributes.clientId }"]` ]: {
+					flex: getValue( 'columnWidthMobile', '1 1 %s%' ),
+					maxWidth: getValue( 'columnWidthMobile', '%s%' ),
 				},
 			},
 		},
-		versionAdded: '3.0.0',
-		versionDeprecated: '',
-	} )
+		saveOnly: {
+			desktopTablet: {
+				[ selector ]: {
+					flex: getValue( 'columnWidth', '1 1 %s%' ),
+					maxWidth: getValue( 'columnWidth', '%s%' ),
+				},
+			},
+			tabletOnly: {
+				[ selector ]: {
+					flex: getValue( 'columnWidthTablet', '1 1 %s%' ),
+					maxWidth: getValue( 'columnWidthTablet', '%s%' ),
+				},
+			},
+			mobile: {
+				[ selector ]: {
+					flex: getValue( 'columnWidthMobile', '1 1 %s%' ),
+					maxWidth: getValue( 'columnWidthMobile', '%s%' ),
+				},
+			},
+		},
+	}
+}
+
+export const Style = props => {
+	const {
+		attributes,
+		options = {},
+		...propsToPass
+	} = props
+
+	const getValue = __getValue( attributes )
+
+	const styles = useMemo(
+		() => getStyles( attributes, options ),
+		[ getValue( 'columnWidth' ), getValue( 'columnWidthTablet' ), getValue( 'columnWidthMobile' ), attributes.clientId ]
+	)
+
+	return (
+		<StyleComponent
+			styles={ styles }
+			versionAdded="3.0.0"
+			versionDeprecated=""
+			{ ...propsToPass }
+		/>
+	)
+}
+
+Style.Content = props => {
+	const {
+		attributes,
+		options = {},
+		...propsToPass
+	} = props
+
+	const styles = getStyles( attributes, options )
+
+	return (
+		<StyleComponent.Content
+			styles={ styles }
+			versionAdded="3.0.0"
+			versionDeprecated=""
+			{ ...propsToPass }
+		/>
+	)
 }

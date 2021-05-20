@@ -25,7 +25,7 @@ export const BlockLinking = () => {
 	)
 
 	const linkableBlockClientId = useClosestLinkableBlock( currentClientId )
-	const isLinked = isBlockLinked( linkableBlockClientId )
+	const isLinked = useMemo( () => isBlockLinked( linkableBlockClientId ), [ currentClientId ] )
 
 	const cb = useCallback( newAttributes => {
 		// This callback can be called falsely if the user switches to different blocks.

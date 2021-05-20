@@ -8,6 +8,7 @@ const Div = props => {
 	const {
 		blockTag: BlockTag,
 		className,
+		hasBackground,
 		backgroundUrl,
 		backgroundUrlTablet,
 		backgroundUrlMobile,
@@ -18,7 +19,7 @@ const Div = props => {
 	const classNames = classnames( [
 		className,
 	], {
-		'stk--has-background-overlay': backgroundColorType === 'gradient' || backgroundUrl || backgroundUrlTablet || backgroundUrlMobile,
+		'stk--has-background-overlay': hasBackground && ( backgroundColorType === 'gradient' || backgroundUrl || backgroundUrlTablet || backgroundUrlMobile ),
 	} )
 
 	return (
@@ -36,6 +37,7 @@ const Div = props => {
 Div.defaultProps = {
 	blockTag: 'div',
 	className: '',
+	hasBackground: true,
 	backgroundUrl: '',
 	backgroundUrlTablet: '',
 	backgroundUrlMobile: '',
@@ -46,6 +48,7 @@ Div.Content = props => {
 	const {
 		blockTag: BlockTag,
 		className,
+		hasBackground,
 		backgroundUrl,
 		backgroundUrlTablet,
 		backgroundUrlMobile,
@@ -56,7 +59,7 @@ Div.Content = props => {
 	const classNames = classnames( [
 		className,
 	], {
-		'stk--has-background-overlay': backgroundColorType === 'gradient' || backgroundUrl || backgroundUrlTablet || backgroundUrlMobile,
+		'stk--has-background-overlay': hasBackground && ( backgroundColorType === 'gradient' || backgroundUrl || backgroundUrlTablet || backgroundUrlMobile ),
 	} )
 
 	return (

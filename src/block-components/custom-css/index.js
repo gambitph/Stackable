@@ -22,5 +22,3 @@ CustomCSS.Content.defaultProps = {
 CustomCSS.InspectorControls = Edit
 
 CustomCSS.addAttributes = addAttributes
-
-CustomCSS.addStyles = () => {}

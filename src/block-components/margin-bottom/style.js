@@ -5,37 +5,81 @@ import {
 	__getValue,
 	appendImportantAll,
 } from '~stackable/util'
+import { Style as StyleComponent } from '~stackable/components'
 
 /**
- * Adds image styles.
- *
- * @param {Object} styles The StyleObject to append to
- * @param {Object} attributes Block attributes
- * @param {Object} options Options
+ * WordPress dependencies
  */
-export const addStyles = ( styles, attributes, options = {} ) => {
+import { useMemo } from '@wordpress/element'
+
+export const getStyles = ( attributes, options = {} ) => {
 	const getValue = __getValue( attributes )
 	const {
 		selector = '',
 	} = options
 
-	styles.add( {
-		style: {
+	return {
+		[ selector ]: appendImportantAll( {
+			marginBottom: getValue( 'blockMarginBottom', '%spx' ),
+		} ),
+		tablet: {
 			[ selector ]: appendImportantAll( {
-				marginBottom: getValue( 'blockMarginBottom', '%spx' ),
+				marginBottom: getValue( 'blockMarginBottomTablet', '%spx' ),
 			} ),
-			tablet: {
-				[ selector ]: appendImportantAll( {
-					marginBottom: getValue( 'blockMarginBottomTablet', '%spx' ),
-				} ),
-			},
-			mobile: {
-				[ selector ]: appendImportantAll( {
-					marginBottom: getValue( 'blockMarginBottomMobile', '%spx' ),
-				} ),
-			},
 		},
-		versionAdded: '3.0.0',
-		versionDeprecated: '',
-	} )
+		mobile: {
+			[ selector ]: appendImportantAll( {
+				marginBottom: getValue( 'blockMarginBottomMobile', '%spx' ),
+			} ),
+		},
+	}
+}
+
+export const Style = props => {
+	const {
+		attributes,
+		options = {},
+		...propsToPass
+	} = props
+
+	const getValue = __getValue( attributes )
+
+	const styles = useMemo(
+		() => getStyles( attributes, options ),
+		[
+			options.selector,
+			getValue( 'blockMarginBottom' ),
+			getValue( 'blockMarginBottomTablet' ),
+			getValue( 'blockMarginBottomMobile' ),
+			attributes.uniqueId,
+		]
+	)
+
+	return (
+		<StyleComponent
+			styles={ styles }
+			versionAdded="3.0.0"
+			versionDeprecated=""
+			{ ...propsToPass }
+		/>
+	)
+}
+
+Style.Content = props => {
+	const {
+		attributes,
+		options = {},
+		...propsToPass
+	} = props
+
+	const styles = getStyles( attributes, options )
+
+	return (
+		<StyleComponent.Content
+			styles={ styles }
+			versionAdded="3.0.0"
+			versionDeprecated=""
+			{ ...propsToPass }
+		/>
+	)
 }
