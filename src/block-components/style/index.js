@@ -272,6 +272,7 @@ export const getEditorStylesOnly = ( style, deviceType = 'Desktop' ) => {
 	const styles = [
 		omit( style, [ 'desktopTablet', 'desktopOnly', 'tablet', 'tabletOnly', 'mobile', 'editor', 'ie11', 'saveOnly' ] ),
 	]
+
 	if ( deviceType === 'Desktop' ) {
 		styles.push( style.desktopTablet || {} )
 		styles.push( style.desktopOnly || {} )

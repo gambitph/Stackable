@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import createStyles from './style'
+import { HeadingStyles } from './style'
 
 /**
  * External dependencies
@@ -11,7 +11,6 @@ import {
 	CustomCSS,
 	Responsive,
 	Advanced,
-	Style,
 	Typography,
 } from '~stackable/block-components'
 import { version as VERSION, i18n } from 'stackable'
@@ -24,8 +23,6 @@ import { InspectorTabs } from '~stackable/components'
 import { Fragment } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
-
-const styleFunction = createStyles( VERSION )
 
 const Edit = props => {
 	const {
@@ -52,7 +49,7 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-advanced-heading" />
 			<Responsive.InspectorControls />
 
-			<Style styleFunc={ styleFunction } />
+			<HeadingStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-advanced-heading__text" />
 
 			<BlockDiv className={ blockClassNames }>

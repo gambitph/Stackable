@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import createStyles from './style'
+import { ButtonGroupStyles } from './style'
 
 /**
  * External dependencies
@@ -16,7 +16,6 @@ import {
 import {
 	BlockDiv,
 	MarginBottom,
-	Style,
 	getRowClasses,
 	Alignment,
 	getAlignmentClasses,
@@ -34,7 +33,6 @@ import {
 import { Fragment, useCallback } from '@wordpress/element'
 import { useBlockContext } from '~stackable/hooks'
 
-const styleFunction = createStyles( VERSION )
 const ALLOWED_INNER_BLOCKS = [ 'stackable/button' ]
 
 const Edit = props => {
@@ -74,7 +72,7 @@ const Edit = props => {
 			<Responsive.InspectorControls />
 
 			<BlockDiv className={ blockClassNames }>
-				<Style styleFunc={ styleFunction } />
+				<ButtonGroupStyles version={ VERSION } />
 				<CustomCSS mainBlockClass="stk-button-group" />
 
 				{ ! hasInnerBlocks && <GroupPlaceholder /> }

@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import createStyles from './style'
+import { ButtonGroupStyles } from './style'
 
 /**
  * External dependencies
@@ -20,7 +20,6 @@ import {
 	getAlignmentClasses,
 	getResponsiveClasses,
 	getRowClasses,
-	Style,
 } from '~stackable/block-components'
 
 export const Save = props => {
@@ -50,10 +49,7 @@ export const Save = props => {
 			className={ blockClassName }
 			attributes={ attributes }
 		>
-			<Style.Content
-				styleFunc={ createStyles( props.version ) }
-				attributes={ attributes }
-			/>
+			<ButtonGroupStyles version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
 			<div className={ contentClassNames }>
 				<InnerBlocks.Content />

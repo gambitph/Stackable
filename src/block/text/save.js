@@ -1,12 +1,11 @@
 /**
  * Internal dependencies
  */
-import createStyles from './style'
+import { TextStyles } from './style'
 
 import {
 	BlockDiv,
 	CustomCSS,
-	Style,
 	getResponsiveClasses,
 } from '~stackable/block-components'
 import { version as VERSION } from 'stackable'
@@ -42,10 +41,7 @@ const Save = props => {
 			className={ blockClassNames }
 			attributes={ attributes }
 		>
-			<Style.Content
-				styleFunc={ createStyles( VERSION ) }
-				attributes={ attributes }
-			/>
+			<TextStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
 			<RichText.Content
 				className="stk-advanced-text__text"
