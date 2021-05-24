@@ -1,52 +1,20 @@
 /**
  * External dependencies
  */
-import { find, noop } from 'lodash'
 import classnames from 'classnames'
+import { getBlockStyle } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
-import { useMemo } from '@wordpress/element'
-import { useSelect, useDispatch } from '@wordpress/data'
+import {
+	memo, useMemo, useCallback,
+} from '@wordpress/element'
+import {
+	select, useSelect, useDispatch,
+} from '@wordpress/data'
 import TokenList from '@wordpress/token-list'
 import { ENTER, SPACE } from '@wordpress/keycodes'
-import { _x } from '@wordpress/i18n'
-import {
-	 getBlockType,
-	 cloneBlock,
-	 getBlockFromExample,
-	 createBlock,
-} from '@wordpress/blocks'
-
-/**
- * Internal dependencies
- */
-import BlockPreview from '@wordpress/block-editor'
-
-/**
- * Returns the active style from the given className.
- *
- * @param {Array} styles Block style variations.
- * @param {string} className  Class name
- *
- * @return {Object?} The active style.
- */
-export function getActiveStyle( styles, className ) {
-	 for ( const style of new TokenList( className ).values() ) {
-		 if ( style.indexOf( 'is-style-' ) === -1 ) {
-			 continue
-		 }
-
-		 const potentialStyleName = style.substring( 9 )
-		 const activeStyle = find( styles, { name: potentialStyleName } )
-		 if ( activeStyle ) {
-			 return activeStyle
-		 }
-	 }
-
-	 return find( styles, 'isDefault' )
-}
 
 /**
  * Replaces the active style in the block's className.
@@ -58,156 +26,110 @@ export function getActiveStyle( styles, className ) {
  * @return {string} The updated className.
  */
 export function replaceActiveStyle( className, activeStyle, newStyle ) {
-	 const list = new TokenList( className )
+	const list = new TokenList( className )
 
-	 if ( activeStyle ) {
-		 list.remove( 'is-style-' + activeStyle.name )
-	 }
+	if ( activeStyle ) {
+		list.remove( 'is-style-' + activeStyle.name )
+	}
 
-	 list.add( 'is-style-' + newStyle.name )
+	if ( newStyle.name !== 'default' ) {
+		list.add( 'is-style-' + newStyle.name )
+	}
 
-	 return list.value
+	return list.value
 }
 
-const useGenericPreviewBlock = ( block, type ) =>
-	 useMemo(
-		 () =>
-			 type.example
-				 ? getBlockFromExample( block.name, {
-						 attributes: type.example.attributes,
-						 innerBlocks: type.example.innerBlocks,
-				   } )
-				 : cloneBlock( block ),
-		 [ type.example ? block.name : block, type ]
-	 )
+const BlockStyles = props => {
+	const { clientId, styles } = props
 
-function BlockStyles( {
-	 clientId,
-	 onSwitch = noop,
-	 onHoverClassName = noop,
-	 itemRole,
-} ) {
-	 const selector = select => {
-		 const { getBlock } = select( 'core/block-editor' )
-		 const { getBlockStyles } = select( 'core/blocks' )
-		 const block = getBlock( clientId )
-		 const blockType = getBlockType( block.name )
-		 return {
-			 block,
-			 type: blockType,
-			 styles: getBlockStyles( block.name ),
-			 className: block.attributes.className || '',
-		 }
-	 }
+	const { className, blockName } = useSelect( select => {
+		const block = select( 'core/block-editor' ).getBlock( clientId )
+		return {
+			className: block.attributes.className || '',
+			blockName: block.name,
+		}
+	}, [ clientId ] )
 
-	 const {
-		styles, block, type, className,
-	} = useSelect( selector, [
-		 clientId,
-	 ] )
+	const activeStyle = useMemo( () => {
+		return getBlockStyle( styles, className )
+	}, [ styles, className ] )
 
-	 const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
-	 const genericPreviewBlock = useGenericPreviewBlock( block, type )
+	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 
-	 if ( ! styles || styles.length === 0 ) {
-		 return null
-	 }
+	const onSelect = useCallback( style => {
+		const styleClassName = replaceActiveStyle(
+			className,
+			activeStyle,
+			style
+		)
 
-	 if ( ! type.styles && ! find( styles, 'isDefault' ) ) {
-		 styles.unshift( {
-			 name: 'default',
-			 label: _x( 'Default', 'block style' ),
-			 isDefault: true,
-		 } )
-	 }
-	//  console.log( 'styles', ! type.styles, find( styles, 'isDefault' ), styles )
+		// Selecting a new style can update other attributes too.
+		const block = select( 'core/block-editor' ).getBlock( clientId )
+		const updatedAttributes = ! style.onSelect ? {} : style.onSelect( block.attributes )
 
-	 const activeStyle = getActiveStyle( styles, className )
+		updateBlockAttributes( clientId, {
+			...updatedAttributes,
+			className: styleClassName,
+		} )
+	}, [ clientId, activeStyle, className ] )
 
-	 return (
-		 <div className="block-editor-block-styles">
-			 { styles.map( style => {
-				 const styleClassName = replaceActiveStyle(
-					 className,
-					 activeStyle,
-					 style
-				 )
-				 return (
-					 <BlockStyleItem
-						 genericPreviewBlock={ genericPreviewBlock }
-						 className={ className }
-						 isActive={ activeStyle === style }
-						 key={ style.name }
-						 onSelect={ () => {
-							 updateBlockAttributes( clientId, {
-								 className: styleClassName,
-							 } )
-							 onHoverClassName( null )
-							 onSwitch()
-						 } }
-						 onBlur={ () => onHoverClassName( null ) }
-						 onHover={ () => onHoverClassName( styleClassName ) }
-						 style={ style }
-						 styleClassName={ styleClassName }
-						 itemRole={ itemRole }
-					 />
-				 )
-			 } ) }
-		 </div>
-	 )
+	return (
+		<div className="block-editor-block-styles">
+			{ styles.map( style => {
+				return (
+					<BlockStyleItem
+						className={ className }
+						isActive={ activeStyle === style }
+						key={ style.name }
+						onSelect={ onSelect }
+						style={ style }
+						blockName={ blockName }
+					/>
+				)
+			} ) }
+		</div>
+	)
 }
 
-// TODO: nothing appears here yet.
-function BlockStyleItem( {
-	 genericPreviewBlock,
-	 style,
-	 isActive,
-	 onBlur,
-	 onHover,
-	 onSelect,
-	 styleClassName,
-	 itemRole,
-} ) {
-	 const previewBlocks = useMemo( () => {
-		 return {
-			 ...genericPreviewBlock,
-			 attributes: {
-				 ...genericPreviewBlock.attributes,
-				 className: styleClassName,
-			 },
-		 }
-	 }, [ genericPreviewBlock, styleClassName ] )
-	//  console.log( previewBlocks )
+const BlockStyleItem = memo( props => {
+	const {
+		style,
+		isActive,
+		onSelect,
+		blockName,
+	} = props
 
-	 return (
-		 <div
-			 key={ style.name }
-			 className={ classnames( 'block-editor-block-styles__item', {
-				 'is-active': isActive,
-			 } ) }
-			 onClick={ () => onSelect() }
-			 onKeyDown={ event => {
-				 if ( ENTER === event.keyCode || SPACE === event.keyCode ) {
-					 event.preventDefault()
-					 onSelect()
-				 }
-			 } }
-			 onMouseEnter={ onHover }
-			 onMouseLeave={ onBlur }
-			 role={ itemRole || 'button' }
-			 tabIndex="0"
-			 aria-label={ style.label || style.name }
-		 >
-			 <div className="block-editor-block-styles__item-preview">
-				 { /* <BlockPreview viewportWidth={ 500 } blocks={ previewBlocks } /> */ }
-				 { /* <BlockPreview viewportWidth={ 500 } blocks={ {} } /> */ }
-			 </div>
-			 <div className="block-editor-block-styles__item-label">
-				 { style.label || style.name }
-			 </div>
-		 </div>
-	 )
-}
+	const Image = style.image
+
+	return (
+		<div
+			className={ classnames( 'block-editor-block-styles__item', {
+				'is-active': isActive,
+			} ) }
+			onClick={ () => onSelect( style ) }
+			onKeyDown={ event => {
+				if ( ENTER === event.keyCode || SPACE === event.keyCode ) {
+					event.preventDefault()
+					onSelect( style )
+				}
+			} }
+			role="button"
+			tabIndex="0"
+			aria-label={ style.label || style.name }
+		>
+			<div
+				className="block-editor-block-styles__item-preview stk-block-styles-preview"
+				data-block={ blockName }
+				data-style={ style.name }
+			>
+				{ style.image && <Image /> }
+			</div>
+			<div className="block-editor-block-styles__item-label">
+				{ style.label || style.name }
+			</div>
+		</div>
+	)
+} )
 
 export default BlockStyles
 
