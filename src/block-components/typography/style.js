@@ -2,62 +2,60 @@
  * External dependencies
  */
 import {
-	getFontFamily, clampInheritedStyle, appendImportant, appendImportantAll,
+	getFontFamily, clampInheritedStyle, appendImportant, appendImportantAll, getAttrNameFunction, __getValue,
 } from '~stackable/util'
 import { Style as StyleComponent } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import { sprintf } from '@wordpress/i18n'
 import { useMemo, Fragment } from '@wordpress/element'
 
 const getTypographySizeStyle = ( options = {} ) => {
 	const {
 		selector,
-		fontSize,
-		clampDesktopValue,
-		tabletFontSize,
-		importantSize,
-		clampTabletValue,
-		mobileFontSize,
+		fontSize = '',
+		clampDesktopValue = '',
+		fontSizeTablet = '',
+		importantSize = '',
+		clampTabletValue = '',
+		fontSizeMobile = '',
 		important,
-		fontSizeUnit,
-		tabletFontSizeUnit,
-		mobileFontSizeUnit,
+		fontSizeUnit = 'px',
+		fontSizeUnitTablet = 'px',
+		fontSizeUnitMobile = 'px',
 	} = options
 
 	const styles = {
 		[ selector ]: {
 			fontSize: fontSize !== '' ? appendImportant( `${ fontSize }${ fontSizeUnit || 'px' }`, importantSize ) : undefined,
 		},
-		tablet: {
-			[ selector ]: {
-				...( clampDesktopValue
-					? {
-						fontSize: `${ clampDesktopValue }${ fontSizeUnit || 'px' }`,
-					}
-					: {} ),
-				...( tabletFontSize
-					? {
-						fontSize: sprintf( `%s${ tabletFontSizeUnit || 'px' }`, tabletFontSize ),
-					} : {} ),
-			},
-		},
-		mobile: {
-			[ selector ]: {
-				...( clampTabletValue
-					? {
-						fontSize: `${ clampTabletValue }${ tabletFontSizeUnit || 'px' }`,
-					} : ( ( clampDesktopValue || tabletFontSize )
-						? {} : { fontSize: `${ clampDesktopValue }${ fontSizeUnit || 'px' }` }
-					) ),
-				...( mobileFontSize
-					? {
-						fontSize: sprintf( `%s${ mobileFontSizeUnit || 'px' }`, mobileFontSize ),
-					} : {} ),
-			},
-		},
+		tablet: { [ selector ]: {} },
+		mobile: { [ selector ]: {} },
+	}
+
+	// Handle tablet styles
+	if ( clampDesktopValue ) {
+		styles.tablet[ selector ].fontSize = `${ clampDesktopValue }${ fontSizeUnit || 'px' }`
+	}
+
+	if ( fontSizeTablet ) {
+		styles.tablet[ selector ].fontSize = `${ fontSizeTablet }${ fontSizeUnitTablet || 'px' }`
+	}
+
+	// Handle mobile styles
+	if ( clampDesktopValue ) {
+		styles.mobile[ selector ].fontSize = `${ clampDesktopValue }${ fontSizeUnit || 'px' }`
+	}
+
+	if ( clampTabletValue ) {
+		styles.mobile[ selector ].fontSize = `${ clampTabletValue }${ fontSizeUnitTablet || 'px' }`
+	} else if ( clampDesktopValue || fontSizeTablet !== '' ) {
+		styles.mobile[ selector ].fontSize = undefined
+	}
+
+	if ( fontSizeMobile ) {
+		styles.mobile[ selector ].fontSize = `${ fontSizeMobile }${ fontSizeUnitMobile || 'px' }`
 	}
 
 	if ( important ) {
@@ -73,27 +71,19 @@ const getTypographyColorStyle = ( options = {} ) => {
 	const {
 		selector,
 		important,
-		textColorType,
-		textColor1,
-		textColor2,
-		textGradientDirection,
+		textColorType = '',
+		textColor1 = '',
+		textColor2 = '',
+		textGradientDirection = '',
 	} = options
 
 	const styles = {
 		[ selector ]: {
 			...( textColorType !== 'gradient' ? {
 				color: textColor1 ? textColor1 : undefined,
-			} : {
-				background: `-webkit-linear-gradient(${ textGradientDirection !== '' ? `${ textGradientDirection }deg, ` : '' }${ textColor1 }, ${ textColor2 })`,
-				backgroundClip: 'text',
-				'-webkit-background-clip': 'text',
-				'-moz-background-clip': 'text',
-				'-o-background-clip': 'text',
-				textFillColor: 'transparent',
-				'-webkit-text-fill-color': 'transparent',
-				'-moz-text-fill-color': 'transparent',
-				'-o-text-fill-color': 'transparent',
-			} ),
+			} : textColor1 !== '' && textColor2 !== '' ? {
+				backgroundImage: `linear-gradient(${ textGradientDirection !== '' ? `${ textGradientDirection }deg, ` : '' }${ textColor1 }, ${ textColor2 })`,
+			} : {} ),
 		},
 	}
 
@@ -107,19 +97,19 @@ const getTypographyColorStyle = ( options = {} ) => {
 const getTypographyMiscStyles = ( options = {} ) => {
 	const {
 		selector,
-		textAlign,
-		fontFamily,
-		fontWeight,
-		textTransform,
-		letterSpacing,
-		lineHeight,
-		lineHeightUnit,
-		tabletTextAlign,
-		tabletLineHeight,
-		tabletLineHeightUnit,
-		mobileTextAlign,
-		mobileLineHeight,
-		mobileLineHeightUnit,
+		textAlign = '',
+		fontFamily = '',
+		fontWeight = '',
+		textTransform = '',
+		letterSpacing = '',
+		lineHeight = '',
+		lineHeightUnit = 'em',
+		textAlignTablet = '',
+		lineHeightTablet = '',
+		lineHeightUnitTablet = 'em',
+		textAlignMobile = '',
+		lineHeightMobile = '',
+		lineHeightUnitMobile = 'em',
 		important,
 	} = options
 
@@ -134,14 +124,14 @@ const getTypographyMiscStyles = ( options = {} ) => {
 		},
 		tablet: {
 			[ selector ]: {
-				textAlign: tabletTextAlign,
-				lineHeight: tabletLineHeight !== '' ? `${ tabletLineHeight }${ tabletLineHeightUnit || 'em' }` : undefined,
+				textAlign: textAlignTablet !== '' ? textAlignTablet : undefined,
+				lineHeight: lineHeightTablet !== '' ? `${ lineHeightTablet }${ lineHeightUnitTablet || 'em' }` : undefined,
 			},
 		},
 		mobile: {
 			[ selector ]: {
-				textAlign: mobileTextAlign,
-				lineHeight: mobileLineHeight !== '' ? `${ mobileLineHeight }${ mobileLineHeightUnit || 'em' }` : undefined,
+				textAlign: textAlignMobile !== '' ? textAlignMobile : undefined,
+				lineHeight: lineHeightMobile !== '' ? `${ lineHeightMobile }${ lineHeightUnitMobile || 'em' }` : undefined,
 			},
 		},
 	}
@@ -164,6 +154,7 @@ export const Style = props => {
 
 	const {
 		selector = '',
+		attrNameTemplate = '%s',
 		importantSize = false,
 		important = true,
 		inherit = true, // If false, desktop styles will only be applied to desktop, etc.
@@ -171,44 +162,21 @@ export const Style = props => {
 		inheritMin,
 	} = options
 
-	const {
-		fontSize,
-		tabletFontSize,
-		mobileFontSize,
-		fontSizeUnit,
-		tabletFontSizeUnit,
-		mobileFontSizeUnit,
-		textColorType,
-		textColor1,
-		textColor2,
-		textGradientDirection,
-		textAlign,
-		fontFamily,
-		fontWeight,
-		textTransform,
-		letterSpacing,
-		lineHeight,
-		lineHeightUnit,
-		tabletTextAlign,
-		tabletLineHeight,
-		tabletLineHeightUnit,
-		mobileTextAlign,
-		mobileLineHeight,
-		mobileLineHeightUnit,
-	} = attributes
+	const getAttrName = getAttrNameFunction( attrNameTemplate )
+	const getValue = __getValue( attributes, getAttrName, '' )
 
 	const clampDesktopValue = useMemo(
-		() => inherit && clampInheritedStyle( fontSize, { min: inheritMin, max: inheritMax } ),
+		() => inherit && clampInheritedStyle( getValue( 'fontSize' ), { min: inheritMin, max: inheritMax } ),
 		[
-			fontSize,
+			getValue( 'fontSize' ),
 			inheritMin,
 			inheritMax,
 		] )
 
 	const clampTabletValue = useMemo(
-		() => clampInheritedStyle( tabletFontSize, { min: inheritMin, max: inheritMax } ),
+		() => clampInheritedStyle( getValue( 'fontSizeTablet' ), { min: inheritMin, max: inheritMax } ),
 		[
-			tabletFontSize,
+			getValue( 'fontSizeTablet' ),
 			inheritMin,
 			inheritMax,
 		] )
@@ -217,30 +185,30 @@ export const Style = props => {
 		() => getTypographySizeStyle( {
 			selector,
 			attributes,
-			fontSize,
+			fontSize: getValue( 'fontSize' ),
 			clampDesktopValue,
-			tabletFontSize,
+			fontSizeTablet: getValue( 'fontSizeTablet' ),
 			importantSize,
 			clampTabletValue,
-			mobileFontSize,
+			fontSizeMobile: getValue( 'fontSizeMobile' ),
 			important,
-			fontSizeUnit,
-			tabletFontSizeUnit,
-			mobileFontSizeUnit,
+			fontSizeUnit: getValue( 'fontSizeUnit' ),
+			fontSizeUnitTablet: getValue( 'fontSizeUnitTablet' ),
+			fontSizeUnitMobile: getValue( 'fontSizeUnitMobile' ),
 		} ),
 		[
 			selector,
 			attributes,
-			fontSize,
+			getValue( 'fontSize' ),
 			clampDesktopValue,
-			tabletFontSize,
+			getValue( 'fontSizeTablet' ),
 			importantSize,
 			clampTabletValue,
-			mobileFontSize,
+			getValue( 'fontSizeMobile' ),
 			important,
-			fontSizeUnit,
-			tabletFontSizeUnit,
-			mobileFontSizeUnit,
+			getValue( 'fontSizeUnit' ),
+			getValue( 'fontSizeUnitTablet' ),
+			getValue( 'fontSizeUnitMobile' ),
 		]
 	)
 
@@ -248,54 +216,54 @@ export const Style = props => {
 		() => getTypographyColorStyle( {
 			selector,
 			important,
-			textColorType,
-			textColor1,
-			textColor2,
-			textGradientDirection,
+			textColorType: getValue( 'textColorType' ),
+			textColor1: getValue( 'textColor1' ),
+			textColor2: getValue( 'textColor2' ),
+			textGradientDirection: getValue( 'textGradientDirection' ),
 		} ),
 		[
 			selector,
 			important,
-			textColorType,
-			textColor1,
-			textColor2,
-			textGradientDirection,
+			getValue( 'textColorType' ),
+			getValue( 'textColor1' ),
+			getValue( 'textColor2' ),
+			getValue( 'textGradientDirection' ),
 		]
 	)
 
 	const typographyMiscStyles = useMemo(
 		() => getTypographyMiscStyles( {
 			selector,
-			textAlign,
-			fontFamily,
-			fontWeight,
-			textTransform,
-			letterSpacing,
-			lineHeight,
-			lineHeightUnit,
-			tabletTextAlign,
-			tabletLineHeight,
-			tabletLineHeightUnit,
-			mobileTextAlign,
-			mobileLineHeight,
-			mobileLineHeightUnit,
+			textAlign: getValue( 'textAlign' ),
+			fontFamily: getValue( 'fontFamily' ),
+			fontWeight: getValue( 'fontWeight' ),
+			textTransform: getValue( 'textTransform' ),
+			letterSpacing: getValue( 'letterSpacing' ),
+			lineHeight: getValue( 'lineHeight' ),
+			lineHeightUnit: getValue( 'lineHeightUnit' ),
+			textAlignTablet: getValue( 'textAlignTablet' ),
+			lineHeightTablet: getValue( 'lineHeightTablet' ),
+			lineHeightUnitTablet: getValue( 'lineHeightUnitTablet' ),
+			textAlignMobile: getValue( 'textAlignMobile' ),
+			lineHeightMobile: getValue( 'lineHeightMobile' ),
+			lineHeightUnitMobile: getValue( 'lineHeightUnitMobile' ),
 			important,
 		} ),
 		[
 			selector,
-			textAlign,
-			fontFamily,
-			fontWeight,
-			textTransform,
-			letterSpacing,
-			lineHeight,
-			lineHeightUnit,
-			tabletTextAlign,
-			tabletLineHeight,
-			tabletLineHeightUnit,
-			mobileTextAlign,
-			mobileLineHeight,
-			mobileLineHeightUnit,
+			getValue( 'textAlign' ),
+			getValue( 'fontFamily' ),
+			getValue( 'fontWeight' ),
+			getValue( 'textTransform' ),
+			getValue( 'letterSpacing' ),
+			getValue( 'lineHeight' ),
+			getValue( 'lineHeightUnit' ),
+			getValue( 'textAlignTablet' ),
+			getValue( 'lineHeightTablet' ),
+			getValue( 'lineHeightUnitTablet' ),
+			getValue( 'textAlignMobile' ),
+			getValue( 'lineHeightMobile' ),
+			getValue( 'lineHeightUnitMobile' ),
 			important,
 		]
 	)
@@ -333,6 +301,7 @@ Style.Content = props => {
 
 	const {
 		selector = '',
+		attrNameTemplate = '%s',
 		importantSize = false,
 		important = true,
 		inherit = true, // If false, desktop styles will only be applied to desktop, etc.
@@ -340,75 +309,52 @@ Style.Content = props => {
 		inheritMin,
 	} = options
 
-	const {
-		fontSize,
-		tabletFontSize,
-		mobileFontSize,
-		fontSizeUnit,
-		tabletFontSizeUnit,
-		mobileFontSizeUnit,
-		textColorType,
-		textColor1,
-		textColor2,
-		textGradientDirection,
-		textAlign,
-		fontFamily,
-		fontWeight,
-		textTransform,
-		letterSpacing,
-		lineHeight,
-		lineHeightUnit,
-		tabletTextAlign,
-		tabletLineHeight,
-		tabletLineHeightUnit,
-		mobileTextAlign,
-		mobileLineHeight,
-		mobileLineHeightUnit,
-	} = attributes
+	const getAttrName = getAttrNameFunction( attrNameTemplate )
+	const getValue = __getValue( attributes, getAttrName, '' )
 
-	const clampDesktopValue = inherit && clampInheritedStyle( fontSize, { min: inheritMin, max: inheritMax } )
+	const clampDesktopValue = inherit && clampInheritedStyle( getValue( 'fontSize' ), { min: inheritMin, max: inheritMax } )
 
-	const clampTabletValue = clampInheritedStyle( tabletFontSize, { min: inheritMin, max: inheritMax } )
+	const clampTabletValue = clampInheritedStyle( getValue( 'fontSizeTablet' ), { min: inheritMin, max: inheritMax } )
 
 	const typographySizeStyles = getTypographySizeStyle( {
 		selector,
 		attributes,
-		fontSize,
+		fontSize: getValue( 'fontSize' ),
 		clampDesktopValue,
-		tabletFontSize,
+		fontSizeTablet: getValue( 'fontSizeTablet' ),
 		importantSize,
 		clampTabletValue,
-		mobileFontSize,
+		fontSizeMobile: getValue( 'fontSizeMobile' ),
 		important,
-		fontSizeUnit,
-		tabletFontSizeUnit,
-		mobileFontSizeUnit,
+		fontSizeUnit: getValue( 'fontSizeUnit' ),
+		fontSizeUnitTablet: getValue( 'fontSizeUnitTablet' ),
+		fontSizeUnitMobile: getValue( 'fontSizeUnitMobile' ),
 	} )
 
 	const typographyColorStyles = getTypographyColorStyle( {
 		selector,
 		important,
-		textColorType,
-		textColor1,
-		textColor2,
-		textGradientDirection,
+		textColorType: getValue( 'textColorType' ),
+		textColor1: getValue( 'textColor1' ),
+		textColor2: getValue( 'textColor2' ),
+		textGradientDirection: getValue( 'textGradientDirection' ),
 	} )
 
 	const typographyMiscStyles = getTypographyMiscStyles( {
 		selector,
-		textAlign,
-		fontFamily,
-		fontWeight,
-		textTransform,
-		letterSpacing,
-		lineHeight,
-		lineHeightUnit,
-		tabletTextAlign,
-		tabletLineHeight,
-		tabletLineHeightUnit,
-		mobileTextAlign,
-		mobileLineHeight,
-		mobileLineHeightUnit,
+		textAlign: getValue( 'textAlign' ),
+		fontFamily: getValue( 'fontFamily' ),
+		fontWeight: getValue( 'fontWeight' ),
+		textTransform: getValue( 'textTransform' ),
+		letterSpacing: getValue( 'letterSpacing' ),
+		lineHeight: getValue( 'lineHeight' ),
+		lineHeightUnit: getValue( 'lineHeightUnit' ),
+		textAlignTablet: getValue( 'textAlignTablet' ),
+		lineHeightTablet: getValue( 'lineHeightTablet' ),
+		lineHeightUnitTablet: getValue( 'lineHeightUnitTablet' ),
+		textAlignMobile: getValue( 'textAlignMobile' ),
+		lineHeightMobile: getValue( 'lineHeightMobile' ),
+		lineHeightUnitMobile: getValue( 'lineHeightUnitMobile' ),
 		important,
 	} )
 

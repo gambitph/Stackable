@@ -12,11 +12,13 @@ import {
 	Responsive,
 	Advanced,
 	Typography,
+	getTypographyClasses,
 } from '~stackable/block-components'
 import { descriptionPlaceholder } from '~stackable/util'
 import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import { InspectorTabs } from '~stackable/components'
+import { useBlockEl } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -38,6 +40,15 @@ const Edit = props => {
 		'stk-advanced-text',
 	] )
 
+	const [ , textClasses ] = getTypographyClasses( props.attributes )
+
+	const textClassNames = classnames( [
+		'stk-advanced-text__text',
+		textClasses,
+	] )
+
+	const blockEl = useBlockEl()
+
 	return (
 		<Fragment>
 
@@ -45,7 +56,7 @@ const Edit = props => {
 
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
-			<Typography.InspectorControls enableTextTag={ false } />
+			<Typography.InspectorControls enableTextTag={ false } blockEl={ blockEl } blockElSelector=".stk-advanced-text__text" />
 			<CustomCSS.InspectorControls mainBlockClass="stk-advanced-text" />
 			<Responsive.InspectorControls />
 
@@ -59,7 +70,7 @@ const Edit = props => {
 					keepPlaceholderOnFocus
 					value={ text }
 					onChange={ text => setAttributes( { text } ) }
-					className="stk-advanced-text__text"
+					className={ textClassNames }
 				/>
 			</BlockDiv>
 		</Fragment>

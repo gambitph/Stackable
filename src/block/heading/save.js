@@ -7,6 +7,7 @@ import {
 	BlockDiv,
 	CustomCSS,
 	getResponsiveClasses,
+	getTypographyClasses,
 } from '~stackable/block-components'
 import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
@@ -36,6 +37,13 @@ const Save = props => {
 		responsiveClass,
 	] )
 
+	const [ , textClasses ] = getTypographyClasses( props.attributes )
+
+	const textClassNames = classnames( [
+		'stk-advanced-heading__text',
+		textClasses,
+	] )
+
 	return (
 		<BlockDiv.Content
 			className={ blockClassNames }
@@ -44,7 +52,7 @@ const Save = props => {
 			<HeadingStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
 			<RichText.Content
-				className="stk-advanced-heading__text"
+				className={ textClassNames }
 				tagName={ textTag }
 				value={ text }
 			/>

@@ -49,7 +49,7 @@ export const Save = props => {
 			className={ blockClassName }
 			attributes={ attributes }
 		>
-			<ButtonGroupStyles version={ props.version } attributes={ attributes } />
+			<ButtonGroupStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
 			<div className={ contentClassNames }>
 				<InnerBlocks.Content />

@@ -2,19 +2,23 @@ import { convertResponsiveAttributes } from '~stackable/util'
 
 export const typographyAttributes = {
 	...convertResponsiveAttributes( {
-		fontSize: {
+		fontSize_: {
 			type: 'number',
 			default: '',
 		},
-		lineHeight: {
+		lineHeight_: {
 			type: 'number',
 			default: '',
 		},
-		fontSizeUnit: {
+		fontSizeUnit_: {
 			type: 'string',
 			default: '',
 		},
-		lineHeightUnit: {
+		lineHeightUnit_: {
+			type: 'string',
+			default: '',
+		},
+		textAlign_: {
 			type: 'string',
 			default: '',
 		},
@@ -51,25 +55,25 @@ export const typographyAttributes = {
 		type: 'number',
 		default: '',
 	},
-	textAlign: {
-		type: 'string',
-		default: '',
-	},
 }
 
 export const addAttributes = ( attrObject, selector = '.stk-content', options = {} ) => {
 	const {
 		enableTextTag = true,
+		enableTextContent = true,
 		defaultTextTag = 'p',
+		attrNameTemplate = '%s',
 	} = options
 	attrObject.add( {
 		attributes: {
 			...typographyAttributes,
-			text: {
-				source: 'html',
-				selector,
-				default: '',
-			},
+			...( enableTextContent ? {
+				text: {
+					source: 'html',
+					selector,
+					default: '',
+				},
+			} : {} ),
 			...( enableTextTag ? {
 				textTag: {
 					type: 'string',
@@ -79,5 +83,6 @@ export const addAttributes = ( attrObject, selector = '.stk-content', options = 
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
+		attrNameTemplate,
 	} )
 }

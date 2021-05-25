@@ -3,11 +3,11 @@
  */
 import { i18n } from 'stackable'
 import {
-	 AdvancedToolbarControl,
-	 AdvancedRangeControl,
-	 ColorPaletteControl,
-	 SpacingControl,
-	 ShadowControl,
+	AdvancedToolbarControl,
+	AdvancedRangeControl,
+	ColorPaletteControl,
+	SpacingControl,
+	ShadowControl,
 } from '~stackable/components'
 
 /**
@@ -16,7 +16,7 @@ import {
 import {
 	Fragment, useMemo, useCallback,
 } from '@wordpress/element'
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import { useAttributeEditHandlers } from '~stackable/hooks'
 
 const BORDER_CONTROLS = [
@@ -40,6 +40,10 @@ const BORDER_CONTROLS = [
 
 export const BorderControls = props => {
 	const {
+		blockElSelector,
+	} = props
+
+	const {
 		getAttribute,
 		updateAttributeHandler,
 		updateAttributes,
@@ -47,7 +51,7 @@ export const BorderControls = props => {
 
 	const borderRadiusPlaceholder = useMemo( () => {
 		return props.blockEl
-			? () => props.blockEl.el() && parseFloat( window.getComputedStyle( props.blockEl.el() ).borderRadius )
+			? () => props.blockEl.el() && parseFloat( window.getComputedStyle( blockElSelector ? props.blockEl.el().querySelector( blockElSelector ) : props.blockEl.el() ).borderRadius )
 			: null
 	}, [ props.blockEl ] )
 
@@ -56,7 +60,7 @@ export const BorderControls = props => {
 	return (
 		<Fragment>
 			<AdvancedToolbarControl
-				label={ __( 'Borders', i18n ) }
+				label={ sprintf( __( '%s Type', i18n ), props.label ) }
 				controls={ BORDER_CONTROLS }
 				className="ugb-border-controls__border-type-toolbar"
 				value={ getAttribute( 'borderType' ) }
@@ -67,7 +71,7 @@ export const BorderControls = props => {
 
 			{ getAttribute( 'borderType' ) &&
 				<SpacingControl
-					label={ __( 'Border Width' ) }
+					label={ sprintf( __( '%s Width' ), props.label ) }
 					units={ [ 'px' ] }
 					min={ 0 }
 					max={ 99 }
@@ -161,7 +165,7 @@ export const BorderControls = props => {
 			}
 
 			<AdvancedRangeControl
-				label={ __( 'Border Radius', i18n ) }
+				label={ sprintf( __( '%s Radius', i18n ), props.label ) }
 				value={ getAttribute( 'borderRadius' ) }
 				onChange={ updateAttributeHandler( 'borderRadius' ) }
 				min={ 0 }
@@ -181,4 +185,5 @@ export const BorderControls = props => {
 BorderControls.defaultProps = {
 	attrNameTemplate: '%s',
 	blockEl: null,
+	label: __( 'Border', i18n ),
 }

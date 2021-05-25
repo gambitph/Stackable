@@ -6,6 +6,7 @@
 // We need to set this to relative for making the whole block clickable.
 .stk-block {
 	position: relative;
+	width: 100%;
 }
 
 // Containers
@@ -143,5 +144,39 @@
 @include mobile {
 	.stk--hide-mobile {
 		display: none !important;
+	}
+}
+
+// Typography Classes.
+.stk--is-gradient {
+	background-clip: text;
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+	-o-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-moz-text-fill-color: transparent;
+	-o-text-fill-color: transparent;
+}
+
+.stk--gradient-wrapper:hover {
+	.stk--is-gradient:not(.stk--hover-gradient) {
+		background-image: unset !important;
+		background-clip: unset;
+		-webkit-background-clip: unset;
+		-moz-background-clip: unset;
+		-o-background-clip: unset;
+		-webkit-text-fill-color: unset;
+		-moz-text-fill-color: unset;
+		-o-text-fill-color: unset;
+	}
+
+	.stk--hover-gradient {
+		background-clip: text;
+		-webkit-background-clip: text;
+		-moz-background-clip: text;
+		-o-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		-moz-text-fill-color: transparent;
+		-o-text-fill-color: transparent;
 	}
 }
