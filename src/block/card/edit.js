@@ -2,6 +2,7 @@
  * Internal dependencies
  */
 import { CardStyles } from './style'
+import { blockStyles } from './block-styles'
 
 /**
  * External dependencies
@@ -66,7 +67,7 @@ const Edit = props => {
 	const { blockOrientation } = useAlignment()
 	const [ columnClass, columnWrapperClass ] = getColumnClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
-	const blockStyle = useBlockStyle()
+	const blockStyle = useBlockStyle( blockStyles )
 
 	const blockClassNames = classnames( [
 		className,
@@ -102,7 +103,7 @@ const Edit = props => {
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 			<BlockLink.InspectorControls />
-			<BlockStyle.InspectorControls />
+			<BlockStyle.InspectorControls styles={ blockStyles } />
 			<Image.InspectorControls
 				hasWidth={ blockStyle === 'horizontal' }
 				hasHeight={ blockStyle !== 'horizontal' }

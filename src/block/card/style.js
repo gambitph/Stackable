@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { blockStyles } from './variations'
+import { blockStyles } from './block-styles'
 
 /**
  * External dependencies
@@ -22,6 +22,12 @@ import {
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
+const containerDivOptions = {
+	sizeSelector: '.stk-card__content',
+	sizeVerticalAlignRule: 'justifyContent',
+	sizeHorizontalAlignRule: 'alignSelf',
+}
+
 export const CardStyles = props => {
 	const {
 		...propsToPass
@@ -36,6 +42,13 @@ export const CardStyles = props => {
 	propsToPass.attributes = { ...attributes, clientId }
 
 	const blockStyle = useMemo( () => getBlockStyle( blockStyles, attributes.className ), [ attributes.className ] )
+	const imageOptions = useMemo( () => {
+		return {
+			enableWidth: blockStyle === 'horizontal',
+			enableHeight: blockStyle !== 'horizontal',
+			selector: '.stk-card__image',
+		}
+	}, [ blockStyle ] )
 
 	return (
 		<Fragment>
@@ -45,19 +58,11 @@ export const CardStyles = props => {
 			<Advanced.Style { ...propsToPass } />
 			<ContainerDiv.Style
 				{ ...propsToPass }
-				options={ {
-					sizeSelector: '.stk-card__content',
-					sizeVerticalAlignRule: 'justifyContent',
-					sizeHorizontalAlignRule: 'alignSelf',
-				} }
+				options={ containerDivOptions }
 			/>
 			<Image.Style
 				{ ...propsToPass }
-				options={ {
-					enableWidth: blockStyle === 'horizontal',
-					enableHeight: blockStyle !== 'horizontal',
-					selector: '.stk-card__image',
-				} }
+				options={ imageOptions }
 			/>
 		</Fragment>
 	)
@@ -92,8 +97,8 @@ CardStyles.Content = props => {
 			<Image.Style.Content
 				{ ...propsToPass }
 				options={ {
-					enableWidth: blockStyle === 'horizontal',
-					enableHeight: blockStyle !== 'horizontal',
+					enableWidth: blockStyle.name === 'horizontal',
+					enableHeight: blockStyle.name !== 'horizontal',
 					selector: '.stk-card__image',
 				} }
 			/>

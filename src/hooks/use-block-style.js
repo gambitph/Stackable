@@ -1,16 +1,14 @@
 import { find } from 'lodash'
 import TokenList from '@wordpress/token-list'
 import { useBlockEditContext } from '@wordpress/block-editor'
-import { useSelect } from '@wordpress/data'
+import { useMemo } from '@wordpress/element'
 import { useBlockAttributes } from './use-block-attributes'
 
-export const useBlockStyle = () => {
-	const { clientId, name: blockName } = useBlockEditContext()
+export const useBlockStyle = styles => {
+	const { clientId } = useBlockEditContext()
 	const { className } = useBlockAttributes( clientId )
 
-	const { currentStyle } = useSelect( select => {
-		const { getBlockStyles } = select( 'core/blocks' )
-		const styles = getBlockStyles( blockName )
+	const currentStyle = useMemo( () => {
 		let currentStyle = ''
 
 		for ( const style of new TokenList( className ).values() ) {
@@ -30,8 +28,8 @@ export const useBlockStyle = () => {
 			currentStyle = find( styles, 'isDefault' )
 		}
 
-		return { currentStyle }
-	}, [ blockName, className ] )
+		return currentStyle
+	}, [ className, styles ] )
 
 	return currentStyle?.name || 'default'
 }
@@ -45,9 +43,9 @@ export const getBlockStyle = ( styles, className ) => {
 		const potentialStyleName = style.substring( 9 )
 		const activeStyle = find( styles, { name: potentialStyleName } )
 		if ( activeStyle ) {
-			return activeStyle.name
+			return activeStyle
 		}
 	}
 
-	return find( styles, 'isDefault' )?.name || 'default'
+	return find( styles, 'isDefault' )
 }

@@ -29,7 +29,7 @@ export const Edit = memo( props => {
 				id="styles"
 				initialOpen={ props.initialOpen }
 			>
-				<BlockStyles clientId={ clientId } />
+				<BlockStyles styles={ props.styles } clientId={ clientId } />
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
 	)
@@ -37,4 +37,5 @@ export const Edit = memo( props => {
 
 Edit.defaultProps = {
 	initialOpen: true,
+	styles: [],
 }
