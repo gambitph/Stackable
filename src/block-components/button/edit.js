@@ -23,7 +23,6 @@ import {
  * Internal dependencies
  */
 import { BorderControls } from '../helpers'
-import { Typography } from '../typography'
 
 /**
  * WordPress dependencies
@@ -47,418 +46,383 @@ export const Edit = () => {
 	const blockEl = useBlockEl()
 
 	return (
-		<InspectorStyleControls>
-			<PanelAdvancedSettings
-				title={ __( 'Text', i18n ) }
-				id="text"
-			>
-				<TabbedLayout
-					options={ [
-						{
-							label: __( 'Normal', i18n ),
-							value: 'normal',
-						},
-						{
-							label: __( 'Hover', i18n ),
-							value: 'hover',
-						},
-					] }
-					value={ selectedTab }
-					onChange={ setSelectedTab }
-				/>
 
-				{ selectedTab === 'normal' && (
-					<Typography.InspectorControls
-						enableTextTag={ false }
-						withPanelAdvancedSettings={ false }
-						disableAlign={ true }
+		<Fragment>
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'Button', i18n ) }
+					id="button"
+				>
+
+					<TabbedLayout
+						options={ [
+							{
+								label: __( 'Normal', i18n ),
+								value: 'normal',
+							},
+							{
+								label: __( 'Hover', i18n ),
+								value: 'hover',
+							},
+						] }
+						value={ selectedTab }
+						onChange={ setSelectedTab }
 					/>
-				) }
 
-				{ selectedTab === 'hover' && (
-					<Typography.InspectorControls
-						enableTextTag={ false }
-						withPanelAdvancedSettings={ false }
-						attrNameTemplate="hover%s"
-						enableTextContent={ false }
-						disableAlign={ true }
+					{ selectedTab === 'normal' && (
+						<BaseControl
+							id="stk-button-normal-color-type"
+						>
+							<ToggleControl
+								label={ __( 'No Background Color' ) }
+								checked={ attributes.buttonNoBackgroundColor }
+								onChange={ value => updateBlockAttributes( clientId, { buttonNoBackgroundColor: value } ) }
+							/>
+							{ ! attributes.buttonNoBackgroundColor && (
+								<Fragment>
+									<AdvancedToolbarControl
+										controls={ [
+											{
+												value: '',
+												title: __( 'Single', i18n ),
+											},
+											{
+												value: 'gradient',
+												title: __( 'Gradient', i18n ),
+											},
+										] }
+										isSmall={ true }
+										fullwidth={ false }
+										value={ attributes.buttonBackgroundColorType }
+										onChange={ value => updateBlockAttributes( clientId, { buttonBackgroundColorType: value } ) }
+									/>
+									<ColorPaletteControl
+										label={ attributes.buttonBackgroundColorType === 'gradient' ? sprintf( __( 'Button Color #%s', i18n ), 1 )
+											: __( 'Button Color', i18n ) }
+										value={ attributes.buttonBackgroundColor }
+										onChange={ value => updateBlockAttributes( clientId, { buttonBackgroundColor: value } ) }
+									/>
+									{ attributes.buttonBackgroundColorType === 'gradient' && (
+										<Fragment>
+											<ColorPaletteControl
+												label={ __( 'Button Color #2', i18n ) }
+												value={ attributes.buttonBackgroundColor2 }
+												onChange={ value => updateBlockAttributes( clientId, { buttonBackgroundColor2: value } ) }
+											/>
+
+											<AdvancedRangeControl
+												label={ __( 'Gradient Direction (degrees)', i18n ) }
+												value={ attributes.buttonBackgroundGradientDirection }
+												onChange={ value => updateBlockAttributes( clientId, { buttonBackgroundGradientDirection: value } ) }
+												min={ 0 }
+												max={ 360 }
+												step={ 10 }
+												allowReset={ true }
+											/>
+										</Fragment>
+									) }
+								</Fragment>
+							) }
+							<BorderControls
+								blockEl={ blockEl }
+								blockElSelector=".stk-button__button"
+								attrNameTemplate="button%s"
+							/>
+						</BaseControl>
+					) }
+
+					{ selectedTab === 'hover' && (
+						<BaseControl
+							id="stk-button-hover-color-type"
+						>
+							<ToggleControl
+								label={ __( 'No Hover Background Color' ) }
+								checked={ attributes.buttonHoverNoBackgroundColor }
+								onChange={ value => updateBlockAttributes( clientId, { buttonHoverNoBackgroundColor: value } ) }
+							/>
+							{ ! attributes.buttonHoverNoBackgroundColor && (
+								<Fragment>
+									<AdvancedToolbarControl
+										controls={ [
+											{
+												value: '',
+												title: __( 'Single', i18n ),
+											},
+											{
+												value: 'gradient',
+												title: __( 'Gradient', i18n ),
+											},
+										] }
+										isSmall={ true }
+										fullwidth={ false }
+										value={ attributes.buttonHoverBackgroundColorType }
+										onChange={ value => updateBlockAttributes( clientId, { buttonHoverBackgroundColorType: value } ) }
+									/>
+									<ColorPaletteControl
+										label={ attributes.buttonHoverBackgroundColorType === 'gradient' ? sprintf( __( 'Button Hover Color #%s', i18n ), 1 )
+											: __( 'Button Hover Color', i18n ) }
+										value={ attributes.buttonHoverBackgroundColor }
+										onChange={ value => updateBlockAttributes( clientId, { buttonHoverBackgroundColor: value } ) }
+									/>
+									{ attributes.buttonHoverBackgroundColorType === 'gradient' && (
+										<Fragment>
+											<ColorPaletteControl
+												label={ __( 'Button Hover Color #2', i18n ) }
+												value={ attributes.buttonHoverBackgroundColor2 }
+												onChange={ value => updateBlockAttributes( clientId, { buttonHoverBackgroundColor2: value } ) }
+											/>
+
+											<AdvancedRangeControl
+												label={ __( 'Hover Gradient Direction (degrees)', i18n ) }
+												value={ attributes.buttonHoverBackgroundGradientDirection }
+												onChange={ value => updateBlockAttributes( clientId, { buttonHoverBackgroundGradientDirection: value } ) }
+												min={ 0 }
+												max={ 360 }
+												step={ 10 }
+												allowReset={ true }
+											/>
+										</Fragment>
+									) }
+								</Fragment>
+							) }
+							<BorderControls
+								attrNameTemplate="buttonHover%s"
+								label={ __( 'Hover Border', i18n ) }
+								blockEl={ blockEl }
+								blockElSelector=".stk-button__button"
+							/>
+						</BaseControl>
+					) }
+				</PanelAdvancedSettings>
+				<PanelAdvancedSettings
+					title={ __( 'Spacing', i18n ) }
+					id="spacing"
+				>
+					{ deviceType === 'Desktop' && (
+						<FourRangeControl
+							label={ __( 'Button Paddings', i18n ) }
+							units={ [ 'px', '%' ] }
+							screens="all"
+							defaultLocked={ false }
+							top={ attributes.buttonPaddingTop }
+							bottom={ attributes.buttonPaddingBottom }
+							right={ attributes.buttonPaddingRight }
+							left={ attributes.buttonPaddingLeft }
+							unit={ attributes.buttonPaddingUnit || 'px' }
+							sliderMin={ [ 0, 0 ] }
+							sliderMax={ [ 40, 100 ] }
+							onChange={ paddings => {
+								updateBlockAttributes(
+									clientId,
+									{
+										buttonPaddingTop: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
+										buttonPaddingRight: ! paddings.right && paddings.right !== 0 ? '' : parseInt( paddings.right, 10 ),
+										buttonPaddingBottom: ! paddings.bottom && paddings.bottom !== 0 ? '' : parseInt( paddings.bottom, 10 ),
+										buttonPaddingLeft: ! paddings.left && paddings.left !== 0 ? '' : parseInt( paddings.left, 10 ),
+									} )
+							} }
+							onChangeUnit={ value => updateBlockAttributes( clientId, { marginUnitMobile: value } ) }
+							propsToPassTop={ {
+								placeholderRender: () => blockEl.el() && parseFloat( window.getComputedStyle( blockEl.el().querySelector( '.stk-button__button' ) ).paddingTop ),
+							} }
+							propsToPassBottom={ {
+								placeholderRender: () => blockEl.el() && parseFloat( window.getComputedStyle( blockEl.el().querySelector( '.stk-button__button' ) ).paddingBottom ),
+							} }
+							propsToPassLeft={ {
+								placeholderRender: () => blockEl.el() && parseFloat( window.getComputedStyle( blockEl.el().querySelector( '.stk-button__button' ) ).paddingLeft ),
+							} }
+							propsToPassRight={ {
+								placeholderRender: () => blockEl.el() && parseFloat( window.getComputedStyle( blockEl.el().querySelector( '.stk-button__button' ) ).paddingRight ),
+							} }
+						/>
+					) }
+					{ deviceType === 'Tablet' && (
+						<FourRangeControl
+							label={ __( 'Button Paddings', i18n ) }
+							units={ [ 'px', '%' ] }
+							screens="all"
+							defaultLocked={ false }
+							top={ attributes.buttonPaddingTopTablet }
+							bottom={ attributes.buttonPaddingBottomTablet }
+							right={ attributes.buttonPaddingRightTablet }
+							left={ attributes.buttonPaddingLeftTablet }
+							unit={ attributes.buttonPaddingUnitTablet || 'px' }
+							sliderMin={ [ 0, 0 ] }
+							sliderMax={ [ 40, 100 ] }
+							onChange={ paddings => {
+								updateBlockAttributes(
+									clientId,
+									{
+										buttonPaddingTopTablet: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
+										buttonPaddingRightTablet: ! paddings.right && paddings.right !== 0 ? '' : parseInt( paddings.right, 10 ),
+										buttonPaddingBottomTablet: ! paddings.bottom && paddings.bottom !== 0 ? '' : parseInt( paddings.bottom, 10 ),
+										buttonPaddingLeftTablet: ! paddings.left && paddings.left !== 0 ? '' : parseInt( paddings.left, 10 ),
+									} )
+							} }
+							onChangeUnit={ value => updateBlockAttributes( clientId, { marginUnitMobile: value } ) }
+						/>
+					) }
+					{ deviceType === 'Mobile' && (
+						<FourRangeControl
+							label={ __( 'Button Paddings', i18n ) }
+							units={ [ 'px', '%' ] }
+							screens="all"
+							defaultLocked={ false }
+							top={ attributes.buttonPaddingTopMobile }
+							bottom={ attributes.buttonPaddingBottomMobile }
+							right={ attributes.buttonPaddingRightMobile }
+							left={ attributes.buttonPaddingLeftMobile }
+							unit={ attributes.buttonPaddingUnitMobile || 'px' }
+							sliderMin={ [ 0, 0 ] }
+							sliderMax={ [ 40, 100 ] }
+							onChange={ paddings => {
+								updateBlockAttributes(
+									clientId,
+									{
+										buttonPaddingTopMobile: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
+										buttonPaddingRightMobile: ! paddings.right && paddings.right !== 0 ? '' : parseInt( paddings.right, 10 ),
+										buttonPaddingBottomMobile: ! paddings.bottom && paddings.bottom !== 0 ? '' : parseInt( paddings.bottom, 10 ),
+										buttonPaddingLeftMobile: ! paddings.left && paddings.left !== 0 ? '' : parseInt( paddings.left, 10 ),
+									} )
+							} }
+							onChangeUnit={ value => updateBlockAttributes( clientId, { marginUnitMobile: value } ) }
+						/>
+					) }
+				</PanelAdvancedSettings>
+				<PanelAdvancedSettings
+					title={ __( 'Icon', i18n ) }
+					id="button-icon"
+					hasToggle={ true }
+					onChange={ value => updateBlockAttributes( clientId, { showIcon: value } ) }
+					checked={ attributes.showIcon }
+				>
+
+					<TabbedLayout
+						options={ [
+							{
+								label: __( 'Normal', i18n ),
+								value: 'normal',
+							},
+							{
+								label: __( 'Hover', i18n ),
+								value: 'hover',
+							},
+						] }
+						value={ selectedTab }
+						onChange={ setSelectedTab }
 					/>
-				) }
 
-			</PanelAdvancedSettings>
-			<PanelAdvancedSettings
-				title={ __( 'Button', i18n ) }
-				id="button"
-			>
+					{ selectedTab === 'normal' && (
+						<Fragment>
+							<IconControl
+								label={ __( 'Icon', i18n ) }
+								value={ attributes.icon }
+								onChange={ icon => updateBlockAttributes( clientId, { icon } ) }
+							/>
 
-				<TabbedLayout
-					options={ [
-						{
-							label: __( 'Normal', i18n ),
-							value: 'normal',
-						},
-						{
-							label: __( 'Hover', i18n ),
-							value: 'hover',
-						},
-					] }
-					value={ selectedTab }
-					onChange={ setSelectedTab }
-				/>
+							<AdvancedToolbarControl
+								controls={ [
+									{
+										value: '',
+										title: __( 'Single', i18n ),
+									},
+									{
+										value: 'gradient',
+										title: __( 'Gradient', i18n ),
+									},
+								] }
+								isSmall={ true }
+								fullwidth={ false }
+								value={ attributes.iconColorType }
+								onChange={ value => updateBlockAttributes( clientId, { iconColorType: value } ) }
+							/>
 
-				{ selectedTab === 'normal' && (
-					<BaseControl
-						id="stk-button-normal-color-type"
-					>
-						<ToggleControl
-							label={ __( 'No Background Color' ) }
-							checked={ attributes.buttonNoBackgroundColor }
-							onChange={ value => updateBlockAttributes( clientId, { buttonNoBackgroundColor: value } ) }
-						/>
-						{ ! attributes.buttonNoBackgroundColor && (
-							<Fragment>
-								<AdvancedToolbarControl
-									controls={ [
-										{
-											value: '',
-											title: __( 'Single', i18n ),
-										},
-										{
-											value: 'gradient',
-											title: __( 'Gradient', i18n ),
-										},
-									] }
-									isSmall={ true }
-									fullwidth={ false }
-									value={ attributes.buttonBackgroundColorType }
-									onChange={ value => updateBlockAttributes( clientId, { buttonBackgroundColorType: value } ) }
-								/>
-								<ColorPaletteControl
-									label={ attributes.buttonBackgroundColorType === 'gradient' ? sprintf( __( 'Button Color #%s', i18n ), 1 )
-										: __( 'Button Color', i18n ) }
-									value={ attributes.buttonBackgroundColor }
-									onChange={ value => updateBlockAttributes( clientId, { buttonBackgroundColor: value } ) }
-								/>
-								{ attributes.buttonBackgroundColorType === 'gradient' && (
-									<Fragment>
-										<ColorPaletteControl
-											label={ __( 'Button Color #2', i18n ) }
-											value={ attributes.buttonBackgroundColor2 }
-											onChange={ value => updateBlockAttributes( clientId, { buttonBackgroundColor2: value } ) }
-										/>
+							<ColorPaletteControl
+								label={ attributes.iconColorType === 'gradient' ? sprintf( __( 'Icon Color #%s', i18n ), 1 )
+									: __( 'Icon Color', i18n ) }
+								value={ attributes.iconColor1 }
+								onChange={ value => updateBlockAttributes( clientId, { iconColor1: value } ) }
+							/>
+							{ attributes.buttonHoverBackgroundColorType === 'gradient' && (
+								<Fragment>
+									<ColorPaletteControl
+										label={ __( 'Icon Color #2', i18n ) }
+										value={ attributes.iconColor2 }
+										onChange={ value => updateBlockAttributes( clientId, { iconColor2: value } ) }
+									/>
 
-										<AdvancedRangeControl
-											label={ __( 'Gradient Direction (degrees)', i18n ) }
-											value={ attributes.buttonBackgroundGradientDirection }
-											onChange={ value => updateBlockAttributes( clientId, { buttonBackgroundGradientDirection: value } ) }
-											min={ 0 }
-											max={ 360 }
-											step={ 10 }
-											allowReset={ true }
-										/>
-									</Fragment>
-								) }
-							</Fragment>
-						) }
-						<BorderControls
-							blockEl={ blockEl }
-							blockElSelector=".stk-button__button"
-							attrNameTemplate="button%s"
-						/>
-					</BaseControl>
-				) }
+									<AdvancedRangeControl
+										label={ __( 'Hover Gradient Direction (degrees)', i18n ) }
+										value={ attributes.iconColorGradientDirection }
+										onChange={ value => updateBlockAttributes( clientId, { iconColorGradientDirection: value } ) }
+										min={ 0 }
+										max={ 360 }
+										step={ 10 }
+										allowReset={ true }
+									/>
+								</Fragment>
+							) }
 
-				{ selectedTab === 'hover' && (
-					<BaseControl
-						id="stk-button-hover-color-type"
-					>
-						<ToggleControl
-							label={ __( 'No Hover Background Color' ) }
-							checked={ attributes.buttonHoverNoBackgroundColor }
-							onChange={ value => updateBlockAttributes( clientId, { buttonHoverNoBackgroundColor: value } ) }
-						/>
-						{ ! attributes.buttonHoverNoBackgroundColor && (
-							<Fragment>
-								<AdvancedToolbarControl
-									controls={ [
-										{
-											value: '',
-											title: __( 'Single', i18n ),
-										},
-										{
-											value: 'gradient',
-											title: __( 'Gradient', i18n ),
-										},
-									] }
-									isSmall={ true }
-									fullwidth={ false }
-									value={ attributes.buttonHoverBackgroundColorType }
-									onChange={ value => updateBlockAttributes( clientId, { buttonHoverBackgroundColorType: value } ) }
-								/>
-								<ColorPaletteControl
-									label={ attributes.buttonHoverBackgroundColorType === 'gradient' ? sprintf( __( 'Button Hover Color #%s', i18n ), 1 )
-										: __( 'Button Hover Color', i18n ) }
-									value={ attributes.buttonHoverBackgroundColor }
-									onChange={ value => updateBlockAttributes( clientId, { buttonHoverBackgroundColor: value } ) }
-								/>
-								{ attributes.buttonHoverBackgroundColorType === 'gradient' && (
-									<Fragment>
-										<ColorPaletteControl
-											label={ __( 'Button Hover Color #2', i18n ) }
-											value={ attributes.buttonHoverBackgroundColor2 }
-											onChange={ value => updateBlockAttributes( clientId, { buttonHoverBackgroundColor2: value } ) }
-										/>
-
-										<AdvancedRangeControl
-											label={ __( 'Hover Gradient Direction (degrees)', i18n ) }
-											value={ attributes.buttonHoverBackgroundGradientDirection }
-											onChange={ value => updateBlockAttributes( clientId, { buttonHoverBackgroundGradientDirection: value } ) }
-											min={ 0 }
-											max={ 360 }
-											step={ 10 }
-											allowReset={ true }
-										/>
-									</Fragment>
-								) }
-							</Fragment>
-						) }
-						<BorderControls
-							attrNameTemplate="buttonHover%s"
-							label={ __( 'Hover Border', i18n ) }
-							blockEl={ blockEl }
-							blockElSelector=".stk-button__button"
-						/>
-					</BaseControl>
-				) }
-			</PanelAdvancedSettings>
-			<PanelAdvancedSettings
-				title={ __( 'Spacing', i18n ) }
-				id="spacing"
-			>
-				{ deviceType === 'Desktop' && (
-					<FourRangeControl
-						label={ __( 'Button Paddings', i18n ) }
-						units={ [ 'px', '%' ] }
-						screens="all"
-						defaultLocked={ false }
-						top={ attributes.buttonPaddingTop }
-						bottom={ attributes.buttonPaddingBottom }
-						right={ attributes.buttonPaddingRight }
-						left={ attributes.buttonPaddingLeft }
-						unit={ attributes.buttonPaddingUnit || 'px' }
-						sliderMin={ [ 0, 0 ] }
-						sliderMax={ [ 40, 100 ] }
-						onChange={ paddings => {
-							updateBlockAttributes(
-								clientId,
-								{
-									buttonPaddingTop: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
-									buttonPaddingRight: ! paddings.right && paddings.right !== 0 ? '' : parseInt( paddings.right, 10 ),
-									buttonPaddingBottom: ! paddings.bottom && paddings.bottom !== 0 ? '' : parseInt( paddings.bottom, 10 ),
-									buttonPaddingLeft: ! paddings.left && paddings.left !== 0 ? '' : parseInt( paddings.left, 10 ),
-								} )
-						} }
-						onChangeUnit={ value => updateBlockAttributes( clientId, { marginUnitMobile: value } ) }
-						propsToPassTop={ {
-							placeholderRender: () => blockEl.el() && parseFloat( window.getComputedStyle( blockEl.el().querySelector( '.stk-button__button' ) ).paddingTop ),
-						} }
-						propsToPassBottom={ {
-							placeholderRender: () => blockEl.el() && parseFloat( window.getComputedStyle( blockEl.el().querySelector( '.stk-button__button' ) ).paddingBottom ),
-						} }
-						propsToPassLeft={ {
-							placeholderRender: () => blockEl.el() && parseFloat( window.getComputedStyle( blockEl.el().querySelector( '.stk-button__button' ) ).paddingLeft ),
-						} }
-						propsToPassRight={ {
-							placeholderRender: () => blockEl.el() && parseFloat( window.getComputedStyle( blockEl.el().querySelector( '.stk-button__button' ) ).paddingRight ),
-						} }
-					/>
-				) }
-				{ deviceType === 'Tablet' && (
-					<FourRangeControl
-						label={ __( 'Button Paddings', i18n ) }
-						units={ [ 'px', '%' ] }
-						screens="all"
-						defaultLocked={ false }
-						top={ attributes.buttonPaddingTopTablet }
-						bottom={ attributes.buttonPaddingBottomTablet }
-						right={ attributes.buttonPaddingRightTablet }
-						left={ attributes.buttonPaddingLeftTablet }
-						unit={ attributes.buttonPaddingUnitTablet || 'px' }
-						sliderMin={ [ 0, 0 ] }
-						sliderMax={ [ 40, 100 ] }
-						onChange={ paddings => {
-							updateBlockAttributes(
-								clientId,
-								{
-									buttonPaddingTopTablet: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
-									buttonPaddingRightTablet: ! paddings.right && paddings.right !== 0 ? '' : parseInt( paddings.right, 10 ),
-									buttonPaddingBottomTablet: ! paddings.bottom && paddings.bottom !== 0 ? '' : parseInt( paddings.bottom, 10 ),
-									buttonPaddingLeftTablet: ! paddings.left && paddings.left !== 0 ? '' : parseInt( paddings.left, 10 ),
-								} )
-						} }
-						onChangeUnit={ value => updateBlockAttributes( clientId, { marginUnitMobile: value } ) }
-					/>
-				) }
-				{ deviceType === 'Mobile' && (
-					<FourRangeControl
-						label={ __( 'Button Paddings', i18n ) }
-						units={ [ 'px', '%' ] }
-						screens="all"
-						defaultLocked={ false }
-						top={ attributes.buttonPaddingTopMobile }
-						bottom={ attributes.buttonPaddingBottomMobile }
-						right={ attributes.buttonPaddingRightMobile }
-						left={ attributes.buttonPaddingLeftMobile }
-						unit={ attributes.buttonPaddingUnitMobile || 'px' }
-						sliderMin={ [ 0, 0 ] }
-						sliderMax={ [ 40, 100 ] }
-						onChange={ paddings => {
-							updateBlockAttributes(
-								clientId,
-								{
-									buttonPaddingTopMobile: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
-									buttonPaddingRightMobile: ! paddings.right && paddings.right !== 0 ? '' : parseInt( paddings.right, 10 ),
-									buttonPaddingBottomMobile: ! paddings.bottom && paddings.bottom !== 0 ? '' : parseInt( paddings.bottom, 10 ),
-									buttonPaddingLeftMobile: ! paddings.left && paddings.left !== 0 ? '' : parseInt( paddings.left, 10 ),
-								} )
-						} }
-						onChangeUnit={ value => updateBlockAttributes( clientId, { marginUnitMobile: value } ) }
-					/>
-				) }
-			</PanelAdvancedSettings>
-			<PanelAdvancedSettings
-				title={ __( 'Icon', i18n ) }
-				id="button-icon"
-				hasToggle={ true }
-				onChange={ value => updateBlockAttributes( clientId, { showIcon: value } ) }
-				checked={ attributes.showIcon }
-			>
-
-				<TabbedLayout
-					options={ [
-						{
-							label: __( 'Normal', i18n ),
-							value: 'normal',
-						},
-						{
-							label: __( 'Hover', i18n ),
-							value: 'hover',
-						},
-					] }
-					value={ selectedTab }
-					onChange={ setSelectedTab }
-				/>
-
-				{ selectedTab === 'normal' && (
-					<Fragment>
-						<IconControl
-							label={ __( 'Icon', i18n ) }
-							value={ attributes.icon }
-							onChange={ icon => updateBlockAttributes( clientId, { icon } ) }
-						/>
-
-						<AdvancedToolbarControl
-							controls={ [
-								{
-									value: '',
-									title: __( 'Single', i18n ),
-								},
-								{
-									value: 'gradient',
-									title: __( 'Gradient', i18n ),
-								},
-							] }
-							isSmall={ true }
-							fullwidth={ false }
-							value={ attributes.iconColorType }
-							onChange={ value => updateBlockAttributes( clientId, { iconColorType: value } ) }
-						/>
-
-						<ColorPaletteControl
-							label={ attributes.iconColorType === 'gradient' ? sprintf( __( 'Icon Color #%s', i18n ), 1 )
-								: __( 'Icon Color', i18n ) }
-							value={ attributes.iconColor1 }
-							onChange={ value => updateBlockAttributes( clientId, { iconColor1: value } ) }
-						/>
-						{ attributes.buttonHoverBackgroundColorType === 'gradient' && (
-							<Fragment>
-								<ColorPaletteControl
-									label={ __( 'Icon Color #2', i18n ) }
-									value={ attributes.iconColor2 }
-									onChange={ value => updateBlockAttributes( clientId, { iconColor2: value } ) }
-								/>
-
+							<ResponsiveControl2
+								desktopProps={ {
+									value: attributes.iconSize,
+									onChange: value => updateBlockAttributes( clientId, { iconSize: value } ),
+								} }
+								tabletProps={ {
+									value: attributes.iconSizeTablet,
+									onChange: value => updateBlockAttributes( clientId, { iconSizeTablet: value } ),
+								} }
+								mobileProps={ {
+									value: attributes.iconSizeMobile,
+									onChange: value => updateBlockAttributes( clientId, { iconSizeMobile: value } ),
+								} }
+							>
 								<AdvancedRangeControl
-									label={ __( 'Hover Gradient Direction (degrees)', i18n ) }
-									value={ attributes.iconColorGradientDirection }
-									onChange={ value => updateBlockAttributes( clientId, { iconColorGradientDirection: value } ) }
+									label={ __( 'Icon Size', i18n ) }
 									min={ 0 }
-									max={ 360 }
-									step={ 10 }
+									max={ 100 }
+									step={ 1 }
 									allowReset={ true }
 								/>
-							</Fragment>
-						) }
+							</ResponsiveControl2>
 
-						<ResponsiveControl2
-							desktopProps={ {
-								value: attributes.iconSize,
-								onChange: value => updateBlockAttributes( clientId, { iconSize: value } ),
-							} }
-							tabletProps={ {
-								value: attributes.iconSizeTablet,
-								onChange: value => updateBlockAttributes( clientId, { iconSizeTablet: value } ),
-							} }
-							mobileProps={ {
-								value: attributes.iconSizeMobile,
-								onChange: value => updateBlockAttributes( clientId, { iconSizeMobile: value } ),
-							} }
-						>
 							<AdvancedRangeControl
-								label={ __( 'Icon Size', i18n ) }
+								label={ __( 'Icon Opacity', i18n ) }
+								value={ attributes.iconOpacity }
 								min={ 0 }
-								max={ 100 }
-								step={ 1 }
+								max={ 1 }
+								step={ 0.1 }
+								onChange={ value => updateBlockAttributes( clientId, { iconOpacity: value } ) }
 								allowReset={ true }
+								placeholder="1.0"
 							/>
-						</ResponsiveControl2>
 
-						<AdvancedRangeControl
-							label={ __( 'Icon Opacity', i18n ) }
-							value={ attributes.iconOpacity }
-							min={ 0 }
-							max={ 1 }
-							step={ 0.1 }
-							onChange={ value => updateBlockAttributes( clientId, { iconOpacity: value } ) }
-							allowReset={ true }
-							placeholder="1.0"
-						/>
+							<AdvancedRangeControl
+								label={ __( 'Icon Rotation', i18n ) }
+								value={ attributes.iconRotation }
+								min={ 0 }
+								max={ 360 }
+								onChange={ value => updateBlockAttributes( clientId, { iconRotation: value } ) }
+								allowReset={ true }
+								placeholder="0"
+							/>
 
-						<AdvancedRangeControl
-							label={ __( 'Icon Rotation', i18n ) }
-							value={ attributes.iconRotation }
-							min={ 0 }
-							max={ 360 }
-							onChange={ value => updateBlockAttributes( clientId, { iconRotation: value } ) }
-							allowReset={ true }
-							placeholder="0"
-						/>
+							<AdvancedSelectControl
+								label={ __( 'Icon Position', i18n ) }
+								value={ attributes.iconPosition }
+								options={ [
+									{ value: '', label: __( 'Left', i18n ) },
+									{ value: 'right', label: __( 'Right', i18n ) },
+								] }
+								onChange={ value => updateBlockAttributes( clientId, { iconPosition: value } ) }
+							/>
 
-						<AdvancedSelectControl
-							label={ __( 'Icon Position', i18n ) }
-							value={ attributes.iconPosition }
-							options={ [
-								{ value: '', label: __( 'Left', i18n ) },
-								{ value: 'right', label: __( 'Right', i18n ) },
-							] }
-							onChange={ value => updateBlockAttributes( clientId, { iconPosition: value } ) }
-						/>
+						</Fragment>
+					) }
 
-					</Fragment>
-				) }
+				</PanelAdvancedSettings>
 
-			</PanelAdvancedSettings>
-
-		</InspectorStyleControls>
+			</InspectorStyleControls>
+		</Fragment>
 	)
 }

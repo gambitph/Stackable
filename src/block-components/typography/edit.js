@@ -17,21 +17,26 @@ import {
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 	ResponsiveControl2,
+	TabbedLayout,
 } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import { Fragment, useMemo } from '@wordpress/element'
+import {
+	Fragment, useMemo, useState,
+} from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
-import { BaseControl, TextareaControl } from '@wordpress/components'
+import {
+	BaseControl, TextareaControl,
+} from '@wordpress/components'
 import { escapeHTML } from '@wordpress/escape-html'
 
-export const Edit = props => {
+const TypographyControls = props => {
 	const {
+		label,
 		enableTextTag = true,
 		enableTextContent = true,
-		withPanelAdvancedSettings = true,
 		attrNameTemplate = '%s',
 		disableAlign = false,
 		blockElSelector,
@@ -49,7 +54,7 @@ export const Edit = props => {
 		updateAttributes,
 	} = useAttributeEditHandlers( attrNameTemplate )
 
-	const controls = (
+	return (
 		<Fragment>
 			{ enableTextTag && (
 				<HeadingButtonsControl
@@ -59,7 +64,7 @@ export const Edit = props => {
 			) }
 			{ enableTextContent && (
 				<TextareaControl
-					label={ __( 'Text Content', i18n ) }
+					label={ sprintf( __( '%s Content', i18n ), label ) }
 					value={ unescape( getAttribute( 'text' ) ) }
 					onChange={ value => updateAttribute( 'text', escapeHTML( value ) ) }
 				/>
@@ -256,15 +261,15 @@ export const Edit = props => {
 					} }
 				/>
 				<ColorPaletteControl
-					label={ getAttribute( 'textColorType' ) === 'gradient' ? sprintf( __( 'Text Color #%s', i18n ), 1 )
-						: __( 'Text Color', i18n ) }
+					label={ getAttribute( 'textColorType' ) === 'gradient' ? sprintf( sprintf( __( '%s Color #%s', i18n ), label ), 1 )
+						: sprintf( __( '%s Color', i18n ), label ) }
 					value={ getAttribute( 'textColor1' ) }
 					onChange={ value => updateAttribute( 'textColor1', value ) }
 				/>
 				{ getAttribute( 'textColorType' ) === 'gradient' && (
 					<Fragment>
 						<ColorPaletteControl
-							label={ __( 'Text Color #2', i18n ) }
+							label={ sprintf( __( '%s Color #2', i18n ), label ) }
 							value={ getAttribute( 'textColor2' ) }
 							onChange={ value => updateAttribute( 'textColor2', value ) }
 						/>
@@ -303,15 +308,71 @@ export const Edit = props => {
 			) }
 		</Fragment>
 	)
+}
 
-	return withPanelAdvancedSettings ? (
+TypographyControls.defaultProps = {
+	label: __( 'Text', i18n ),
+}
+
+export const Edit = props => {
+	const {
+		enableTextTag = true,
+		enableTextContent = true,
+		attrNameTemplate = '%s',
+		withHoverTab = false,
+		hoverAttrNameTemplate = '%s',
+		disableAlign = false,
+		blockElSelector,
+	} = props
+
+	const [ selectedTab, setSelectedTab ] = useState( 'normal' )
+
+	return (
 		<InspectorStyleControls>
 			<PanelAdvancedSettings
 				title={ __( 'Text', i18n ) }
 				id="text"
 			>
-				{ controls }
+				{ withHoverTab && (
+					<TabbedLayout
+						options={ [
+							{
+								label: __( 'Normal', i18n ),
+								value: 'normal',
+							},
+							{
+								label: __( 'Hover', i18n ),
+								value: 'hover',
+							},
+						] }
+						value={ selectedTab }
+						onChange={ setSelectedTab }
+					/>
+				) }
+
+				{ selectedTab === 'normal' && (
+					<TypographyControls
+						enableTextTag={ enableTextTag }
+						enableTextContent={ enableTextContent }
+						attrNameTemplate={ attrNameTemplate }
+						disableAlign={ disableAlign }
+						blockEl={ props.blockEl }
+						blockElSelector={ blockElSelector }
+					/>
+				) }
+
+				{ selectedTab === 'hover' && (
+					<TypographyControls
+						enableTextTag={ false }
+						enableTextContent={ false }
+						attrNameTemplate={ hoverAttrNameTemplate }
+						disableAlign={ disableAlign }
+						blockEl={ props.blockEl }
+						blockElSelector={ blockElSelector }
+						label={ __( 'Hover Text', i18n ) }
+					/>
+				) }
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
-	) : controls
+	)
 }

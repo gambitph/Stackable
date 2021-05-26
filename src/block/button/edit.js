@@ -19,7 +19,11 @@ import {
 	Responsive,
 	Linking,
 	Button,
+	Typography,
 } from '~stackable/block-components'
+import {
+	useBlockEl,
+} from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -54,6 +58,8 @@ const Edit = props => {
 		columnClass,
 	] )
 
+	const blockEl = useBlockEl()
+
 	const typographyInnerClassNames = classnames( [
 		typographyInnerClasses,
 		'stk-button__inner-text',
@@ -69,6 +75,13 @@ const Edit = props => {
 			<CustomCSS.InspectorControls mainBlockClass="stk-button" />
 			<Responsive.InspectorControls />
 
+			<Typography.InspectorControls
+				enableTextTag={ false }
+				disableAlign={ true }
+				withHoverTab={ true }
+				hoverAttrNameTemplate="hover%s"
+				blockEl={ blockEl }
+			/>
 			<ButtonStyles version={ VERSION } />
 
 			<Column showHandle={ isHovered }>
