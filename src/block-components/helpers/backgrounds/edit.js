@@ -71,6 +71,7 @@ export const BackgroundControls = props => {
 				}
 				value={ getAttribute( 'backgroundColor' ) }
 				onChange={ updateAttributeHandler( 'backgroundColor' ) }
+				hasTransparent={ true }
 			/>
 			{ getAttribute( 'backgroundColorType' ) !== 'gradient' &&
 				( ! getAttribute( 'backgroundMediaURL' ) && ! getAttribute( 'backgroundMediaURLTablet' ) && ! getAttribute( 'backgroundMediaURLMobile' ) ) && (

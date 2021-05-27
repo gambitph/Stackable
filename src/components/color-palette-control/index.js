@@ -45,6 +45,15 @@ const ColorPaletteControl = memo( props => {
 			name: color.name || color.fallback || color.color || __( 'Untitled Color', i18n ),
 		}
 	} )
+
+	if ( props.hasTransparent ) {
+		colors.push( {
+			name: __( 'Transparent', i18n ),
+			slug: '_stk-transparent', // Make it unique to prevent conflict.
+			color: 'transparent',
+		} )
+	}
+
 	const colorObject = getColorObjectByColorValue( colors, _value )
 	const colorName = colorObject && colorObject.name
 	const ariaLabel = sprintf( colorIndicatorAriaLabel, label.toLowerCase(), colorName || _value )

@@ -1,0 +1,20 @@
+// Style transparent circular color option.
+.stk-inspector-control {
+	.components-circular-option-picker__option[style*="color:transparent"],
+	.components-circular-option-picker__option[style*="color: transparent"] {
+		background-image: linear-gradient(-45deg, #fff 49%, #f00 49%, #f00 51%, #fff 51%);
+	}
+	.components-circular-option-picker__option[style*="color:transparent"],
+	.components-circular-option-picker__option[style*="color: transparent"] {
+		&.is-pressed {
+			background-image: linear-gradient(-45deg, #fff 49%, #f1caca 49%, #f1caca 51%, #fff 51%);
+			+ svg {
+				fill: #000 !important;
+			}
+		}
+	}
+	.component-color-indicator[style*="background:transparent"],
+	.component-color-indicator[style*="background: transparent"] {
+		background-image: linear-gradient(-45deg, #fff 48%, #f00 48%, #f00 52%, #fff 52%) !important;
+	}
+}

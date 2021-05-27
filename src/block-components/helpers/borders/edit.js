@@ -157,6 +157,7 @@ export const BorderControls = props => {
 						updateAttributes( attributes )
 					} }
 					label={ __( 'Border Color', i18n ) }
+					hasTransparent={ true }
 				/>
 			}
 
