@@ -1,4 +1,5 @@
 import { convertResponsiveAttributes } from '~stackable/util'
+import { addLinkAttributes } from '../helpers/link'
 
 export const buttonAttributes = {
 	// Button Paddings.
@@ -85,4 +86,6 @@ export const addAttributes = ( attrObject, options = {} ) => {
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	} )
+
+	addLinkAttributes( attrObject, 'link%s', selector )
 }

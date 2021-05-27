@@ -20,6 +20,7 @@ import {
  * Internal dependencies
  */
 import { BorderControls } from '../helpers'
+import { LinkControls } from '../helpers/link'
 
 /**
  * WordPress dependencies
@@ -46,6 +47,13 @@ export const Edit = () => {
 
 		<Fragment>
 			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'Link', i18n ) }
+					id="link"
+				>
+					<LinkControls attrNameTemplate="link%s" />
+				</PanelAdvancedSettings>
+
 				<PanelAdvancedSettings
 					title={ __( 'Button', i18n ) }
 					id="button"

@@ -5,23 +5,35 @@ import { addAttributes } from './attributes'
 import { Style } from './style'
 import { Edit } from './edit'
 
+/**
+ * External dependencies
+ */
+import { Link } from '~stackable/components'
+
 export const Button = props => {
 	return (
-		<a // eslint-disable-line
-			className={ props.className }
-		>
+		<Link className={ props.className }>
 			{ props.children }
-		</a>
+		</Link>
 	)
 }
 
 Button.Content = props => {
+	const {
+		attributes,
+	} = props
+
 	return (
-		<a // eslint-disable-line
+		<Link.Content
 			className={ props.className }
+			href={ attributes.linkUrl }
+			target={ attributes.linkNewTab ? '_blank' : '' }
+			rel={ attributes.linkRel }
+			aria-hidden="true"
+			tabindex="-1"
 		>
 			{ props.children }
-		</a>
+		</Link.Content>
 	)
 }
 
