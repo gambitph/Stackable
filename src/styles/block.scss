@@ -183,10 +183,26 @@
 
 // Button.
 .stk-button {
+	.stk-button__svg-wrapper {
+		position: relative;
+
+		& > .stk--shape-icon {
+			position: absolute;
+			z-index: 1;
+			margin: auto;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
+	}
+
 	.stk-button__inner-svg {
 		display: flex;
+		position: relative;
+		z-index: 2;
 
-		& > svg {
+		& > svg:last-child {
 			height: 1em;
 			width: 1em;
 		}

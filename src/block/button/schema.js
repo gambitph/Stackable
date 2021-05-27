@@ -32,7 +32,10 @@ export const attributes = ( version = VERSION ) => {
 	} )
 
 	Icon.addAttributes( attrObject )
-	Icon.addAttributes( attrObject, { attrNameTemplate: 'hover%s' } )
+	Icon.addAttributes( attrObject, {
+		attrNameTemplate: 'hover%s',
+		excludedAttributes: [ 'icon', 'backgroundShape', 'shaped', 'showBackgroundShape' ],
+	} )
 
 	return attrObject.getMerged( version )
 }

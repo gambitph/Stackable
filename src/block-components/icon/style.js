@@ -4,7 +4,7 @@
 import {
 	getAttrNameFunction, __getValue,
 } from '~stackable/util'
-
+import { compact } from 'lodash'
 import { Style as StyleComponent } from '~stackable/components'
 /**
  * WordPress dependencies
@@ -145,6 +145,36 @@ const getShapedIconStyle = ( options = {} ) => {
 	return iconStyles
 }
 
+const getBackgroundShapeStyle = ( options = {} ) => {
+	const {
+		backgroundShapeSelector,
+		showBackgroundShape,
+		backgroundShapeColor,
+		backgroundShapeOpacity,
+		backgroundShapeSize,
+		backgroundShapeOffsetHorizontal,
+		backgroundShapeOffsetVertical,
+	} = options
+
+	const iconStyles = {}
+
+	if ( showBackgroundShape ) {
+		const transform = compact( [
+			backgroundShapeSize !== '' ? `scale(${ backgroundShapeSize })` : undefined,
+			backgroundShapeOffsetHorizontal !== '' ? `translateX(${ backgroundShapeOffsetHorizontal }px)` : undefined,
+			backgroundShapeOffsetVertical !== '' ? `translateY(${ backgroundShapeOffsetVertical }px)` : undefined,
+		] ).join( ' ' )
+
+		iconStyles[ backgroundShapeSelector ] = {
+			fill: backgroundShapeColor !== '' ? backgroundShapeColor : undefined,
+			opacity: backgroundShapeOpacity !== '' ? backgroundShapeOpacity : undefined,
+			transform: transform !== '' ? transform : undefined,
+		}
+	}
+
+	return iconStyles
+}
+
 export const Style = props => {
 	const {
 		attributes,
@@ -156,10 +186,15 @@ export const Style = props => {
 		selector = '',
 		attrNameTemplate = '%s',
 		wrapperSelector = '',
+		backgroundShapeSelector = '.stk--shape-icon',
+		normalAttrNameTemplate = '%s',
 	} = options
 
 	const getAttrName = getAttrNameFunction( attrNameTemplate )
 	const getValue = __getValue( attributes, getAttrName, '' )
+
+	const getNormalAttrName = getAttrNameFunction( normalAttrNameTemplate )
+	const getNormalValue = __getValue( attributes, getNormalAttrName, '' )
 
 	const iconStyles = useMemo(
 		() => getIconStyle( {
@@ -197,7 +232,7 @@ export const Style = props => {
 	const shapedIconStyles = useMemo(
 		() => getShapedIconStyle( {
 			selector,
-			shaped: getValue( 'shaped' ),
+			shaped: getNormalValue( 'shaped' ),
 			shapeColor: getValue( 'shapeColor' ),
 			noShapeColor: getValue( 'noShapeColor' ),
 			shapeBorderRadius: getValue( 'shapeBorderRadius' ),
@@ -220,7 +255,7 @@ export const Style = props => {
 		} ),
 		[
 			selector,
-			getValue( 'shaped' ),
+			getNormalValue( 'shaped' ),
 			getValue( 'shapeColor' ),
 			getValue( 'noShapeColor' ),
 			getValue( 'shapeBorderRadius' ),
@@ -242,6 +277,27 @@ export const Style = props => {
 		]
 	)
 
+	const backgroundShapeStyles = useMemo(
+		() => getBackgroundShapeStyle( {
+			backgroundShapeSelector,
+			showBackgroundShape: getNormalValue( 'showBackgroundShape' ),
+			backgroundShapeColor: getValue( 'backgroundShapeColor' ),
+			backgroundShapeOpacity: getValue( 'backgroundShapeOpacity' ),
+			backgroundShapeSize: getValue( 'backgroundShapeSize' ),
+			backgroundShapeOffsetHorizontal: getValue( 'backgroundShapeOffsetHorizontal' ),
+			backgroundShapeOffsetVertical: getValue( 'backgroundShapeOffsetVertical' ),
+		} ),
+		[
+			backgroundShapeSelector,
+			getNormalValue( 'showBackgroundShape' ),
+			getValue( 'backgroundShapeColor' ),
+			getValue( 'backgroundShapeOpacity' ),
+			getValue( 'backgroundShapeSize' ),
+			getValue( 'backgroundShapeOffsetHorizontal' ),
+			getValue( 'backgroundShapeOffsetVertical' ),
+		]
+	)
+
 	return (
 		<Fragment>
 			<StyleComponent
@@ -252,6 +308,12 @@ export const Style = props => {
 			/>
 			<StyleComponent
 				styles={ shapedIconStyles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
+			<StyleComponent
+				styles={ backgroundShapeStyles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
 				{ ...propsToPass }
@@ -271,10 +333,15 @@ Style.Content = props => {
 		selector = '',
 		attrNameTemplate = '%s',
 		wrapperSelector = '',
+		backgroundShapeSelector = '.stk--shape-icon',
+		normalAttrNameTemplate = '%s',
 	} = options
 
 	const getAttrName = getAttrNameFunction( attrNameTemplate )
 	const getValue = __getValue( attributes, getAttrName, '' )
+
+	const getNormalAttrName = getAttrNameFunction( normalAttrNameTemplate )
+	const getNormalValue = __getValue( attributes, getNormalAttrName, '' )
 
 	const iconStyles = getIconStyle( {
 		selector,
@@ -294,7 +361,7 @@ Style.Content = props => {
 
 	const shapedIconStyles = getShapedIconStyle( {
 		selector,
-		shaped: getValue( 'shaped' ),
+		shaped: getNormalValue( 'shaped' ),
 		shapeColor: getValue( 'shapeColor' ),
 		noShapeColor: getValue( 'noShapeColor' ),
 		shapeBorderRadius: getValue( 'shapeBorderRadius' ),
@@ -316,6 +383,16 @@ Style.Content = props => {
 		shapeOutlineWidthLeftMobile: getValue( 'shapeOutlineWidthLeftMobile' ),
 	} )
 
+	const backgroundShapeStyles = getBackgroundShapeStyle( {
+		backgroundShapeSelector,
+		showBackgroundShape: getNormalValue( 'showBackgroundShape' ),
+		backgroundShapeColor: getValue( 'backgroundShapeColor' ),
+		backgroundShapeOpacity: getValue( 'backgroundShapeOpacity' ),
+		backgroundShapeSize: getValue( 'backgroundShapeSize' ),
+		backgroundShapeOffsetHorizontal: getValue( 'backgroundShapeOffsetHorizontal' ),
+		backgroundShapeOffsetVertical: getValue( 'backgroundShapeOffsetVertical' ),
+	} )
+
 	return (
 		<Fragment>
 			<StyleComponent.Content
@@ -326,6 +403,12 @@ Style.Content = props => {
 			/>
 			<StyleComponent.Content
 				styles={ shapedIconStyles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
+			<StyleComponent.Content
+				styles={ backgroundShapeStyles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
 				{ ...propsToPass }

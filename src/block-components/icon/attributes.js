@@ -138,7 +138,7 @@ export const addAttributes = ( attrObject, options = {} ) => {
 	} = options
 
 	attrObject.add( {
-		attributes: excludedAttributes.length ? omit( iconAttributes, ...excludedAttributes ) : iconAttributes,
+		attributes: excludedAttributes.length ? omit( iconAttributes, excludedAttributes ) : iconAttributes,
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 		attrNameTemplate,

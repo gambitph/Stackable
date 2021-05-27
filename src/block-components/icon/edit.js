@@ -32,7 +32,9 @@ const IconControls = props => {
 	const {
 		label,
 		enableIcon = true,
+		enableBackgroundShapeIcon = true,
 		attrNameTemplate = '%s',
+		normalAttrNameTemplate = '%s',
 	} = props
 
 	const {
@@ -40,6 +42,11 @@ const IconControls = props => {
 		updateAttributeHandler,
 		updateAttributes,
 	} = useAttributeEditHandlers( attrNameTemplate )
+
+	const {
+		getAttribute: getNormalAttribute,
+		updateAttributeHandler: updateNormalAttributeHandler,
+	} = useAttributeEditHandlers( normalAttrNameTemplate )
 
 	return (
 		<Fragment>
@@ -160,11 +167,11 @@ const IconControls = props => {
 
 			<ToggleControl
 				label={ __( 'Shaped', i18n ) }
-				checked={ getAttribute( 'shaped' ) }
-				onChange={ updateAttributeHandler( 'shaped' ) }
+				checked={ getNormalAttribute( 'shaped' ) }
+				onChange={ updateNormalAttributeHandler( 'shaped' ) }
 			/>
 
-			{ getAttribute( 'shaped' ) && (
+			{ getNormalAttribute( 'shaped' ) && (
 				<Fragment>
 
 					<ToggleControl
@@ -299,18 +306,20 @@ const IconControls = props => {
 
 			<ToggleControl
 				label={ __( 'Background Shape', i18n ) }
-				checked={ getAttribute( 'showBackgroundShape' ) }
-				onChange={ updateAttributeHandler( 'showBackgroundShape' ) }
+				checked={ getNormalAttribute( 'showBackgroundShape' ) }
+				onChange={ updateNormalAttributeHandler( 'showBackgroundShape' ) }
 			/>
 
-			{ getAttribute( 'showBackgroundShape' ) && (
+			{ getNormalAttribute( 'showBackgroundShape' ) && (
 				<Fragment>
 
-					<ImageShapeControl
-						label={ __( 'Shape', i18n ) }
-						selected={ getAttribute( 'backgroundShape' ) }
-						onChange={ updateAttributeHandler( 'backgroundShape' ) }
-					/>
+					{ enableBackgroundShapeIcon && (
+						<ImageShapeControl
+							label={ __( 'Shape', i18n ) }
+							selected={ getAttribute( 'backgroundShape' ) }
+							onChange={ updateAttributeHandler( 'backgroundShape' ) }
+						/>
+					) }
 
 					<ColorPaletteControl
 						label={ __( 'Shape Color', i18n ) }
@@ -420,7 +429,9 @@ export const Edit = props => {
 				{ selectedTab === 'hover' && (
 					<IconControls
 						enableIcon={ false }
+						enableBackgroundShapeIcon={ false }
 						attrNameTemplate={ hoverAttrNameTemplate }
+						normalAttrNameTemplate={ attrNameTemplate }
 					/>
 				) }
 			</PanelAdvancedSettings>

@@ -82,6 +82,7 @@ const Edit = props => {
 			<Button.InspectorControls />
 			<Icon.InspectorControls
 				withHoverTab={ true }
+				hoverAttrNameTemplate="hover%s"
 				hasToggle={ true }
 				checked={ props.attributes.showIcon }
 				onChange={ value => setAttributes( { showIcon: value } ) }
