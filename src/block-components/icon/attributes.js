@@ -26,7 +26,7 @@ export const iconAttributes = {
 		default: '',
 	},
 	iconColorGradientDirection: {
-		type: 'string',
+		type: 'number',
 		default: '',
 	},
 	iconOpacity: {

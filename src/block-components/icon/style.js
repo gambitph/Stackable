@@ -15,6 +15,7 @@ const getIconStyle = ( options = {} ) => {
 	const {
 		selector,
 		wrapperSelector,
+		uniqueId,
 		iconColorType,
 		iconColor1,
 		iconColor2,
@@ -56,18 +57,18 @@ const getIconStyle = ( options = {} ) => {
 	}
 
 	if ( iconColorType !== 'gradient' && iconColor1 !== '' ) {
-		iconStyles[ `${ selector }, ${ selector } svg:last-child, ${ selector } svg:last-child g, ${ selector } svg:last-child path, ${ selector } svg:last-child rect, ${ selector } svg:last-child polygon, ${ selector } svg:last-child ellipse` ] = {
+		iconStyles[ `${ selector } svg:last-child, ${ selector } svg:last-child g, ${ selector } svg:last-child path, ${ selector } svg:last-child rect, ${ selector } svg:last-child polygon, ${ selector } svg:last-child ellipse` ] = {
 			fill: iconColor1,
 		}
 	}
 
 	if ( iconColorType === 'gradient' && iconColor1 !== '' && iconColor2 !== '' ) {
-		iconStyles[ '#stk--linear-gradient' ] = {
-			'--stk-color-stop-1': iconColor1,
-			'--stk-color-stop-2': iconColor2,
+		iconStyles[ `${ selector } #${ uniqueId }` ] = {
+			[ `--${ uniqueId }-color-1` ]: iconColor1 !== '' ? iconColor1 : undefined,
+			[ `--${ uniqueId }-color-2` ]: iconColor2 !== '' ? iconColor2 : undefined,
 		}
-		iconStyles[ `${ selector }, ${ selector } svg:last-child, ${ selector } svg:last-child g, ${ selector } svg:last-child path, ${ selector } svg:last-child rect, ${ selector } svg:last-child polygon, ${ selector } svg:last-child ellipse` ] = {
-			fill: 'url(#stk--linear-gradient)',
+		iconStyles[ `${ selector } svg:last-child, ${ selector } svg:last-child g, ${ selector } svg:last-child path, ${ selector } svg:last-child rect, ${ selector } svg:last-child polygon, ${ selector } svg:last-child ellipse` ] = {
+			fill: `url(#${ uniqueId })`,
 		}
 	}
 
@@ -193,6 +194,8 @@ export const Style = props => {
 	const getAttrName = getAttrNameFunction( attrNameTemplate )
 	const getValue = __getValue( attributes, getAttrName, '' )
 
+	const uniqueId = 'linear-gradient-' + attributes.uniqueId
+
 	const getNormalAttrName = getAttrNameFunction( normalAttrNameTemplate )
 	const getNormalValue = __getValue( attributes, getNormalAttrName, '' )
 
@@ -200,6 +203,7 @@ export const Style = props => {
 		() => getIconStyle( {
 			selector,
 			wrapperSelector,
+			uniqueId,
 			iconColorType: getValue( 'iconColorType' ),
 			iconColor1: getValue( 'iconColor1' ),
 			iconColor2: getValue( 'iconColor2' ),
@@ -215,6 +219,7 @@ export const Style = props => {
 		[
 			selector,
 			wrapperSelector,
+			uniqueId,
 			getValue( 'iconColorType' ),
 			getValue( 'iconColor1' ),
 			getValue( 'iconColor2' ),
@@ -340,12 +345,15 @@ Style.Content = props => {
 	const getAttrName = getAttrNameFunction( attrNameTemplate )
 	const getValue = __getValue( attributes, getAttrName, '' )
 
+	const uniqueId = 'linear-gradient-' + attributes.uniqueId
+
 	const getNormalAttrName = getAttrNameFunction( normalAttrNameTemplate )
 	const getNormalValue = __getValue( attributes, getNormalAttrName, '' )
 
 	const iconStyles = getIconStyle( {
 		selector,
 		wrapperSelector,
+		uniqueId,
 		iconColorType: getValue( 'iconColorType' ),
 		iconColor1: getValue( 'iconColor1' ),
 		iconColor2: getValue( 'iconColor2' ),
