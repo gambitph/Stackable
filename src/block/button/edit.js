@@ -20,6 +20,7 @@ import {
 	Linking,
 	Button,
 	Typography,
+	Icon,
 } from '~stackable/block-components'
 import {
 	useBlockEl,
@@ -70,10 +71,6 @@ const Edit = props => {
 
 			<InspectorTabs />
 			<BlockDiv.InspectorControls />
-			<Advanced.InspectorControls />
-			<Button.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-button" />
-			<Responsive.InspectorControls />
 
 			<Typography.InspectorControls
 				enableTextTag={ false }
@@ -82,6 +79,18 @@ const Edit = props => {
 				hoverAttrNameTemplate="hover%s"
 				blockEl={ blockEl }
 			/>
+			<Button.InspectorControls />
+			<Icon.InspectorControls
+				withHoverTab={ true }
+				hasToggle={ true }
+				checked={ props.attributes.showIcon }
+				onChange={ value => setAttributes( { showIcon: value } ) }
+			/>
+
+			<Advanced.InspectorControls />
+			<CustomCSS.InspectorControls mainBlockClass="stk-button" />
+			<Responsive.InspectorControls />
+
 			<ButtonStyles version={ VERSION } />
 
 			<Column showHandle={ isHovered }>
@@ -90,6 +99,7 @@ const Edit = props => {
 					<Button
 						className={ buttonClassNames }
 					>
+						<Icon />
 						<RichText
 							tagName="span"
 							className={ typographyInnerClassNames }

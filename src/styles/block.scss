@@ -180,3 +180,22 @@
 		-o-text-fill-color: transparent;
 	}
 }
+
+// Button.
+.stk-button {
+	.stk-button__inner-svg {
+		display: flex;
+
+		& > svg {
+			height: 1em;
+			width: 1em;
+		}
+	}
+
+	a.stk-button__button {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		column-gap: 4px;
+	}
+}

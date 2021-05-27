@@ -9,6 +9,7 @@ import {
 	BlockDiv,
 	BorderStyle,
 	Typography,
+	Icon,
 } from '~stackable/block-components'
 import { getUniqueBlockClass } from '~stackable/util'
 import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
@@ -72,6 +73,16 @@ export const ButtonStyles = props => {
 						attrNameTemplate: 'hover%s',
 					},
 				} } />
+			<Icon.Style
+				{ ...{
+					...propsToPass,
+					options: {
+						...propsToPass.options,
+						selector: '.stk-button__button > .stk-button__inner-svg',
+						wrapperSelector: '.stk-button__button',
+						attrNameTemplate: '%s',
+					},
+				} } />
 		</Fragment>
 	)
 }
@@ -127,6 +138,16 @@ ButtonStyles.Content = props => {
 						...propsToPass.options,
 						selector: '.stk-button__button:hover > .stk-button__inner-text',
 						attrNameTemplate: 'hover%s',
+					},
+				} } />
+			<Icon.Style.Content
+				{ ...{
+					...propsToPass,
+					options: {
+						...propsToPass.options,
+						selector: '.stk-button__button > .stk-button__inner-svg',
+						wrapperSelector: '.stk-button__button',
+						attrNameTemplate: '%s',
 					},
 				} } />
 		</Fragment>
