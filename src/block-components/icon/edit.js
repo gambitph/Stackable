@@ -380,9 +380,6 @@ export const Edit = props => {
 		attrNameTemplate = '%s',
 		withHoverTab = false,
 		hoverAttrNameTemplate = '%s',
-		hasToggle = true,
-		checked,
-		onChange,
 	} = props
 
 	const [ selectedTab, setSelectedTab ] = useState( 'normal' )
@@ -392,9 +389,6 @@ export const Edit = props => {
 			<PanelAdvancedSettings
 				title={ __( 'Icon', i18n ) }
 				id="icon"
-				hasToggle={ hasToggle }
-				checked={ checked }
-				onChange={ onChange }
 			>
 				{ withHoverTab && (
 					<TabbedLayout
@@ -425,6 +419,7 @@ export const Edit = props => {
 						enableBackgroundShapeIcon={ false }
 						attrNameTemplate={ hoverAttrNameTemplate }
 						normalAttrNameTemplate={ attrNameTemplate }
+						label={ __( 'Icon Hover', i18n ) }
 					/>
 				) }
 			</PanelAdvancedSettings>

@@ -45,7 +45,7 @@ SVGIcon.Content = props => {
 }
 
 const LinearGradient = ( {
-	gradientTransform, id,
+	id,
 } ) => (
 	<svg style={ { height: 0, width: 0 } }>
 		<defs>
@@ -55,7 +55,6 @@ const LinearGradient = ( {
 				x2="100%"
 				y1="0"
 				y2="0"
-				gradientTransform={ gradientTransform }
 			>
 				<stop offset="0%" style={ { stopOpacity: 1, stopColor: `var(--${ kebabCase( id ) }-color-1)` } }></stop>
 				<stop offset="100%" style={ { stopOpacity: 1, stopColor: `var(--${ kebabCase( id ) }-color-2)` } }></stop>
@@ -80,7 +79,6 @@ export const Icon = props => {
 	const linearGradient = useMemo( () =>
 		<LinearGradient
 			id={ 'linear-gradient-' + attributes.uniqueId }
-			gradientTransform={ getValue( 'iconColorGradientDirection' ) !== '' ? `rotate(${ getValue( 'iconColorGradientDirection' ) })` : undefined }
 			iconColor1={ getValue( 'iconColor1' ) }
 			iconColor2={ getValue( 'iconColor2' ) }
 		/>,
@@ -91,7 +89,7 @@ export const Icon = props => {
 		getValue( 'iconColor2' ),
 	] )
 
-	if ( ! getValue( 'showIcon' ) || ! getValue( 'icon' ) ) {
+	if ( ! getValue( 'icon' ) ) {
 		return null
 	}
 
@@ -118,14 +116,13 @@ Icon.Content = props => {
 
 	const ShapeComp = getShapeSVG( getValue( 'backgroundShape' ) || 'blob1' )
 
-	if ( ! getValue( 'showIcon' ) || ! getValue( 'icon' ) ) {
+	if ( ! getValue( 'icon' ) ) {
 		return null
 	}
 
 	const linearGradient = (
 		<LinearGradient
 			id={ 'linear-gradient-' + attributes.uniqueId }
-			gradientTransform={ getValue( 'iconColorGradientDirection' ) !== '' ? `rotate(${ getValue( 'iconColorGradientDirection' ) })` : undefined }
 			iconColor1={ getValue( 'iconColor1' ) }
 			iconColor2={ getValue( 'iconColor2' ) }
 		/>

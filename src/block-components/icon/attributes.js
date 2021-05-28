@@ -5,10 +5,6 @@ import { omit } from 'lodash'
 import { convertResponsiveAttributes } from '~stackable/util'
 
 export const iconAttributes = {
-	showIcon: {
-		type: 'boolean',
-		default: false,
-	},
 	icon: {
 		type: 'string',
 		default: '',
