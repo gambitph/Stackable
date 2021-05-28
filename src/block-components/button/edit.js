@@ -27,9 +27,6 @@ import { LinkControls } from '../helpers/link'
  */
 import { __, sprintf } from '@wordpress/i18n'
 import { useDispatch } from '@wordpress/data'
-import {
-	ToggleControl,
-} from '@wordpress/components'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { useState, Fragment } from '@wordpress/element'
 
@@ -80,56 +77,50 @@ export const Edit = () => {
 							<BaseControl
 								id="stk-button-normal-color-type"
 							>
-								<ToggleControl
-									label={ __( 'No Background Color' ) }
-									checked={ attributes.buttonNoBackgroundColor }
-									onChange={ value => updateBlockAttributes( clientId, { buttonNoBackgroundColor: value } ) }
-								/>
-								{ ! attributes.buttonNoBackgroundColor && (
-									<Fragment>
-										<AdvancedToolbarControl
-											controls={ [
-												{
-													value: '',
-													title: __( 'Single', i18n ),
-												},
-												{
-													value: 'gradient',
-													title: __( 'Gradient', i18n ),
-												},
-											] }
-											isSmall={ true }
-											fullwidth={ false }
-											value={ attributes.buttonBackgroundColorType }
-											onChange={ value => updateBlockAttributes( clientId, { buttonBackgroundColorType: value } ) }
-										/>
-										<ColorPaletteControl
-											label={ attributes.buttonBackgroundColorType === 'gradient' ? sprintf( __( 'Button Color #%s', i18n ), 1 )
-												: __( 'Button Color', i18n ) }
-											value={ attributes.buttonBackgroundColor }
-											onChange={ value => updateBlockAttributes( clientId, { buttonBackgroundColor: value } ) }
-										/>
-										{ attributes.buttonBackgroundColorType === 'gradient' && (
-											<Fragment>
-												<ColorPaletteControl
-													label={ __( 'Button Color #2', i18n ) }
-													value={ attributes.buttonBackgroundColor2 }
-													onChange={ value => updateBlockAttributes( clientId, { buttonBackgroundColor2: value } ) }
-												/>
+								<Fragment>
+									<AdvancedToolbarControl
+										controls={ [
+											{
+												value: '',
+												title: __( 'Single', i18n ),
+											},
+											{
+												value: 'gradient',
+												title: __( 'Gradient', i18n ),
+											},
+										] }
+										isSmall={ true }
+										fullwidth={ false }
+										value={ attributes.buttonBackgroundColorType }
+										onChange={ value => updateBlockAttributes( clientId, { buttonBackgroundColorType: value } ) }
+									/>
+									<ColorPaletteControl
+										label={ attributes.buttonBackgroundColorType === 'gradient' ? sprintf( __( 'Button Color #%s', i18n ), 1 )
+											: __( 'Button Color', i18n ) }
+										value={ attributes.buttonBackgroundColor }
+										onChange={ value => updateBlockAttributes( clientId, { buttonBackgroundColor: value } ) }
+										hasTransparent={ attributes.buttonBackgroundColorType !== 'gradient' }
+									/>
+									{ attributes.buttonBackgroundColorType === 'gradient' && (
+										<Fragment>
+											<ColorPaletteControl
+												label={ __( 'Button Color #2', i18n ) }
+												value={ attributes.buttonBackgroundColor2 }
+												onChange={ value => updateBlockAttributes( clientId, { buttonBackgroundColor2: value } ) }
+											/>
 
-												<AdvancedRangeControl
-													label={ __( 'Gradient Direction (degrees)', i18n ) }
-													value={ attributes.buttonBackgroundGradientDirection }
-													onChange={ value => updateBlockAttributes( clientId, { buttonBackgroundGradientDirection: value } ) }
-													min={ 0 }
-													max={ 360 }
-													step={ 10 }
-													allowReset={ true }
-												/>
-											</Fragment>
-										) }
-									</Fragment>
-								) }
+											<AdvancedRangeControl
+												label={ __( 'Gradient Direction (degrees)', i18n ) }
+												value={ attributes.buttonBackgroundGradientDirection }
+												onChange={ value => updateBlockAttributes( clientId, { buttonBackgroundGradientDirection: value } ) }
+												min={ 0 }
+												max={ 360 }
+												step={ 10 }
+												allowReset={ true }
+											/>
+										</Fragment>
+									) }
+								</Fragment>
 							</BaseControl>
 
 							<BorderControls
@@ -236,56 +227,51 @@ export const Edit = () => {
 							<BaseControl
 								id="stk-button-hover-color-type"
 							>
-								<ToggleControl
-									label={ __( 'No Hover Background Color' ) }
-									checked={ attributes.buttonHoverNoBackgroundColor }
-									onChange={ value => updateBlockAttributes( clientId, { buttonHoverNoBackgroundColor: value } ) }
-								/>
-								{ ! attributes.buttonHoverNoBackgroundColor && (
-									<Fragment>
-										<AdvancedToolbarControl
-											controls={ [
-												{
-													value: '',
-													title: __( 'Single', i18n ),
-												},
-												{
-													value: 'gradient',
-													title: __( 'Gradient', i18n ),
-												},
-											] }
-											isSmall={ true }
-											fullwidth={ false }
-											value={ attributes.buttonHoverBackgroundColorType }
-											onChange={ value => updateBlockAttributes( clientId, { buttonHoverBackgroundColorType: value } ) }
-										/>
-										<ColorPaletteControl
-											label={ attributes.buttonHoverBackgroundColorType === 'gradient' ? sprintf( __( 'Button Hover Color #%s', i18n ), 1 )
-												: __( 'Button Hover Color', i18n ) }
-											value={ attributes.buttonHoverBackgroundColor }
-											onChange={ value => updateBlockAttributes( clientId, { buttonHoverBackgroundColor: value } ) }
-										/>
-										{ attributes.buttonHoverBackgroundColorType === 'gradient' && (
-											<Fragment>
-												<ColorPaletteControl
-													label={ __( 'Button Hover Color #2', i18n ) }
-													value={ attributes.buttonHoverBackgroundColor2 }
-													onChange={ value => updateBlockAttributes( clientId, { buttonHoverBackgroundColor2: value } ) }
-												/>
 
-												<AdvancedRangeControl
-													label={ __( 'Hover Gradient Direction (degrees)', i18n ) }
-													value={ attributes.buttonHoverBackgroundGradientDirection }
-													onChange={ value => updateBlockAttributes( clientId, { buttonHoverBackgroundGradientDirection: value } ) }
-													min={ 0 }
-													max={ 360 }
-													step={ 10 }
-													allowReset={ true }
-												/>
-											</Fragment>
-										) }
-									</Fragment>
-								) }
+								<Fragment>
+									<AdvancedToolbarControl
+										controls={ [
+											{
+												value: '',
+												title: __( 'Single', i18n ),
+											},
+											{
+												value: 'gradient',
+												title: __( 'Gradient', i18n ),
+											},
+										] }
+										isSmall={ true }
+										fullwidth={ false }
+										value={ attributes.buttonHoverBackgroundColorType }
+										onChange={ value => updateBlockAttributes( clientId, { buttonHoverBackgroundColorType: value } ) }
+									/>
+									<ColorPaletteControl
+										label={ attributes.buttonHoverBackgroundColorType === 'gradient' ? sprintf( __( 'Button Hover Color #%s', i18n ), 1 )
+											: __( 'Button Hover Color', i18n ) }
+										value={ attributes.buttonHoverBackgroundColor }
+										onChange={ value => updateBlockAttributes( clientId, { buttonHoverBackgroundColor: value } ) }
+										hasTransparent={ attributes.buttonHoverBackgroundColorType !== 'gradient' }
+									/>
+									{ attributes.buttonHoverBackgroundColorType === 'gradient' && (
+										<Fragment>
+											<ColorPaletteControl
+												label={ __( 'Button Hover Color #2', i18n ) }
+												value={ attributes.buttonHoverBackgroundColor2 }
+												onChange={ value => updateBlockAttributes( clientId, { buttonHoverBackgroundColor2: value } ) }
+											/>
+
+											<AdvancedRangeControl
+												label={ __( 'Hover Gradient Direction (degrees)', i18n ) }
+												value={ attributes.buttonHoverBackgroundGradientDirection }
+												onChange={ value => updateBlockAttributes( clientId, { buttonHoverBackgroundGradientDirection: value } ) }
+												min={ 0 }
+												max={ 360 }
+												step={ 10 }
+												allowReset={ true }
+											/>
+										</Fragment>
+									) }
+								</Fragment>
 							</BaseControl>
 
 							<BorderControls

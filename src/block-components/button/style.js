@@ -59,20 +59,11 @@ const getButtonPaddingStyles = ( options = {} ) => {
 const getButtonNormalStyles = ( options = {} ) => {
 	const {
 		selector,
-		buttonNoBackgroundColor,
 		buttonBackgroundColorType,
 		buttonBackgroundColor,
 		buttonBackgroundColor2,
 		buttonBackgroundGradientDirection,
 	} = options
-
-	if ( buttonNoBackgroundColor ) {
-		return {
-			[ selector ]: {
-				background: 'transparent',
-			},
-		}
-	}
 
 	const normalButtonStyle = {
 		[ selector ]: {
@@ -93,7 +84,6 @@ const getButtonNormalStyles = ( options = {} ) => {
 const getButtonHoverStyles = ( options = {} ) => {
 	const {
 		selector,
-		buttonHoverNoBackgroundColor,
 		buttonBackgroundColor,
 		buttonBackgroundColor2,
 		buttonBackgroundGradientDirection,
@@ -102,14 +92,6 @@ const getButtonHoverStyles = ( options = {} ) => {
 		buttonHoverBackgroundGradientDirection,
 		buttonHoverBackgroundColorType,
 	} = options
-
-	if ( buttonHoverNoBackgroundColor ) {
-		return {
-			[ selector + ':hover' ]: {
-				background: 'transparent',
-			},
-		}
-	}
 
 	const hoverButtonStyle = {
 		...( buttonHoverBackgroundColorType === 'gradient'
@@ -143,8 +125,6 @@ export const Style = props => {
 		buttonHoverBackgroundColor2 = '',
 		buttonHoverBackgroundGradientDirection = '',
 		buttonHoverBackgroundColorType = '',
-		buttonNoBackgroundColor = '',
-		buttonHoverNoBackgroundColor = '',
 		buttonPaddingTop = '',
 		buttonPaddingBottom = '',
 		buttonPaddingRight = '',
@@ -208,7 +188,6 @@ export const Style = props => {
 	const buttonNormalColorStyles = useMemo(
 		() => getButtonNormalStyles( {
 			selector,
-			buttonNoBackgroundColor,
 			buttonBackgroundColorType,
 			buttonBackgroundColor,
 			buttonBackgroundColor2,
@@ -216,7 +195,6 @@ export const Style = props => {
 		} ),
 		[
 			selector,
-			buttonNoBackgroundColor,
 			buttonBackgroundColorType,
 			buttonBackgroundColor,
 			buttonBackgroundColor2,
@@ -227,7 +205,6 @@ export const Style = props => {
 	const buttonHoverColorStyles = useMemo(
 		() => getButtonHoverStyles( {
 			selector,
-			buttonHoverNoBackgroundColor,
 			buttonBackgroundColor,
 			buttonBackgroundColor2,
 			buttonBackgroundGradientDirection,
@@ -238,7 +215,6 @@ export const Style = props => {
 		} ),
 		[
 			selector,
-			buttonHoverNoBackgroundColor,
 			buttonBackgroundColor,
 			buttonBackgroundColor2,
 			buttonBackgroundGradientDirection,
@@ -288,8 +264,6 @@ Style.Content = props => {
 		buttonHoverBackgroundColor2 = '',
 		buttonHoverBackgroundGradientDirection = '',
 		buttonHoverBackgroundColorType = '',
-		buttonNoBackgroundColor = '',
-		buttonHoverNoBackgroundColor = '',
 		buttonPaddingTop = '',
 		buttonPaddingBottom = '',
 		buttonPaddingRight = '',
@@ -332,7 +306,6 @@ Style.Content = props => {
 
 	const buttonNormalColorStyles = getButtonNormalStyles( {
 		selector,
-		buttonNoBackgroundColor,
 		buttonBackgroundColorType,
 		buttonBackgroundColor,
 		buttonBackgroundColor2,
@@ -341,7 +314,6 @@ Style.Content = props => {
 
 	const buttonHoverColorStyles = getButtonHoverStyles( {
 		selector,
-		buttonHoverNoBackgroundColor,
 		buttonBackgroundColor,
 		buttonBackgroundColor2,
 		buttonBackgroundGradientDirection,

@@ -50,10 +50,6 @@ export const iconAttributes = {
 		type: 'boolean',
 		default: false,
 	},
-	noShapeColor: {
-		type: 'boolean',
-		default: false,
-	},
 	shapeColor: {
 		type: 'string',
 		default: '',

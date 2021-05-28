@@ -25,11 +25,6 @@ export const buttonAttributes = {
 			default: 'px',
 		},
 	} ),
-	// Button Normal Styles
-	buttonNoBackgroundColor: {
-		type: 'boolean',
-		default: '',
-	},
 	buttonBackgroundColorType: {
 		type: 'string',
 		default: '',
@@ -47,11 +42,6 @@ export const buttonAttributes = {
 		default: '',
 	},
 
-	// Button Hover Styles
-	buttonHoverNoBackgroundColor: {
-		type: 'boolean',
-		default: '',
-	},
 	buttonHoverBackgroundColorType: {
 		type: 'string',
 		default: '',

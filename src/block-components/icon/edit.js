@@ -174,19 +174,12 @@ const IconControls = props => {
 			{ getNormalAttribute( 'shaped' ) && (
 				<Fragment>
 
-					<ToggleControl
-						label={ __( 'No Shape Color', i18n ) }
-						checked={ getAttribute( 'noShapeColor' ) }
-						onChange={ updateAttributeHandler( 'noShapeColor' ) }
+					<ColorPaletteControl
+						label={ __( 'Shape Color', i18n ) }
+						value={ getAttribute( 'shapeColor' ) }
+						onChange={ updateAttributeHandler( 'shapeColor' ) }
+						hasTransparent={ true }
 					/>
-
-					{ ! getAttribute( 'noShapeColor' ) && (
-						<ColorPaletteControl
-							label={ __( 'Shape Color', i18n ) }
-							value={ getAttribute( 'shapeColor' ) }
-							onChange={ updateAttributeHandler( 'shapeColor' ) }
-						/>
-					) }
 
 					<AdvancedRangeControl
 						label={ __( 'Shape Border Radius', i18n ) }

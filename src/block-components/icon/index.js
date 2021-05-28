@@ -13,14 +13,36 @@ import { kebabCase } from 'lodash'
 import { Edit } from './edit'
 import { addAttributes } from './attributes'
 import { Style } from './style'
+import { extractSvg } from './util'
+import FontAwesomeIcon from './font-awesome-icon'
 
 /**
  * WordPress dependencies
  */
 import { useBlockEditContext } from '@wordpress/block-editor'
+import {
+	useMemo,
+} from '@wordpress/element'
 
-// Creates a unique ID that depends on a gradient color.
-const TempIcon = () => <svg data-prefix="fas" data-icon="info-circle" className="svg-inline--fa fa-info-circle fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"></path></svg>
+const SVGIcon = props => {
+	const {
+		...propsToPass
+	} = props
+
+	propsToPass.value = useMemo( () => props.value === 'string' ? extractSvg( props.value ) : props.value, [ props.value ] )
+
+	return <FontAwesomeIcon { ...propsToPass } />
+}
+
+SVGIcon.Content = props => {
+	const {
+		...propsToPass
+	} = props
+
+	propsToPass.value = props.value === 'string' ? extractSvg( props.value ) : props.value
+
+	return <FontAwesomeIcon.Content { ...propsToPass } />
+}
 
 const LinearGradient = ( {
 	gradientTransform, id,
@@ -53,26 +75,34 @@ export const Icon = props => {
 	const getAttrName = getAttrNameFunction( attrNameTemplate )
 	const getValue = __getValue( attributes, getAttrName, '' )
 
-	const ShapeComp = getShapeSVG( getValue( 'backgroundShape' ) || 'blob1' )
+	const ShapeComp = useMemo( () => getShapeSVG( getValue( 'backgroundShape' ) || 'blob1' ), [ getValue( 'backgroundShape' ) ] )
 
-	if ( ! getValue( 'showIcon' ) ) {
+	const linearGradient = useMemo( () =>
+		<LinearGradient
+			id={ 'linear-gradient-' + attributes.uniqueId }
+			gradientTransform={ getValue( 'iconColorGradientDirection' ) !== '' ? `rotate(${ getValue( 'iconColorGradientDirection' ) })` : undefined }
+			iconColor1={ getValue( 'iconColor1' ) }
+			iconColor2={ getValue( 'iconColor2' ) }
+		/>,
+	[
+		attributes.uniqueId,
+		getValue( 'iconColorGradientDirection' ),
+		getValue( 'iconColor1' ),
+		getValue( 'iconColor2' ),
+	] )
+
+	if ( ! getValue( 'showIcon' ) || ! getValue( 'icon' ) ) {
 		return null
 	}
 
 	return (
 		<span className="stk-button__svg-wrapper">
-			<span className="stk-button__inner-svg">
-				<LinearGradient
-					id={ 'linear-gradient-' + attributes.uniqueId }
-					gradientTransform={ getValue( 'iconColorGradientDirection' ) !== '' ? `rotate(${ getValue( 'iconColorGradientDirection' ) })` : undefined }
-					iconColor1={ getValue( 'iconColor1' ) }
-					iconColor2={ getValue( 'iconColor2' ) }
-				/>
-				<TempIcon />
-			</span>
-			{ getValue( 'showBackgroundShape' ) && (
-				<ShapeComp className="stk--shape-icon" />
-			) }
+			<SVGIcon
+				className="stk-button__inner-svg"
+				prependRender={ linearGradient }
+				value={ getValue( 'icon' ) }
+			/>
+			{ getValue( 'showBackgroundShape' ) && <ShapeComp className="stk--shape-icon" /> }
 		</span>
 	)
 }
@@ -88,21 +118,26 @@ Icon.Content = props => {
 
 	const ShapeComp = getShapeSVG( getValue( 'backgroundShape' ) || 'blob1' )
 
-	if ( ! getValue( 'showIcon' ) ) {
+	if ( ! getValue( 'showIcon' ) || ! getValue( 'icon' ) ) {
 		return null
 	}
 
+	const linearGradient = (
+		<LinearGradient
+			id={ 'linear-gradient-' + attributes.uniqueId }
+			gradientTransform={ getValue( 'iconColorGradientDirection' ) !== '' ? `rotate(${ getValue( 'iconColorGradientDirection' ) })` : undefined }
+			iconColor1={ getValue( 'iconColor1' ) }
+			iconColor2={ getValue( 'iconColor2' ) }
+		/>
+	)
+
 	return (
 		<span className="stk-button__svg-wrapper">
-			<span className="stk-button__inner-svg">
-				<LinearGradient
-					id={ 'linear-gradient-' + attributes.uniqueId }
-					gradientTransform={ getValue( 'iconColorGradientDirection' ) !== '' ? `rotate(${ getValue( 'iconColorGradientDirection' ) })` : undefined }
-					iconColor1={ getValue( 'iconColor1' ) }
-					iconColor2={ getValue( 'iconColor2' ) }
-				/>
-				<TempIcon />
-			</span>
+			<SVGIcon.Content
+				className="stk-button__inner-svg"
+				prependRender={ linearGradient }
+				value={ getValue( 'icon' ) }
+			/>
 			{ getValue( 'showBackgroundShape' ) && (
 				<ShapeComp className="stk--shape-icon" />
 			) }

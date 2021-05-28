@@ -80,7 +80,6 @@ const getShapedIconStyle = ( options = {} ) => {
 		selector,
 		shaped,
 		shapeColor,
-		noShapeColor,
 		shapeBorderRadius,
 		shapePadding,
 		shapeOutline,
@@ -111,7 +110,7 @@ const getShapedIconStyle = ( options = {} ) => {
 
 	if ( shaped ) {
 		iconStyles[ selector ] = {
-			backgroundColor: noShapeColor ? undefined : shapeColor !== '' ? shapeColor : undefined,
+			backgroundColor: shapeColor !== '' ? shapeColor : undefined,
 			borderRadius: shapeBorderRadius !== '' ? `${ shapeBorderRadius }%` : undefined,
 			padding: shapePadding !== '' ? `${ shapePadding }px` : undefined,
 			...( shapeOutline ? {
@@ -239,7 +238,6 @@ export const Style = props => {
 			selector,
 			shaped: getNormalValue( 'shaped' ),
 			shapeColor: getValue( 'shapeColor' ),
-			noShapeColor: getValue( 'noShapeColor' ),
 			shapeBorderRadius: getValue( 'shapeBorderRadius' ),
 			shapePadding: getValue( 'shapePadding' ),
 
@@ -262,7 +260,6 @@ export const Style = props => {
 			selector,
 			getNormalValue( 'shaped' ),
 			getValue( 'shapeColor' ),
-			getValue( 'noShapeColor' ),
 			getValue( 'shapeBorderRadius' ),
 			getValue( 'shapePadding' ),
 			getValue( 'shapeOutline' ),
@@ -371,7 +368,6 @@ Style.Content = props => {
 		selector,
 		shaped: getNormalValue( 'shaped' ),
 		shapeColor: getValue( 'shapeColor' ),
-		noShapeColor: getValue( 'noShapeColor' ),
 		shapeBorderRadius: getValue( 'shapeBorderRadius' ),
 		shapePadding: getValue( 'shapePadding' ),
 
