@@ -56,11 +56,13 @@ export const Save = props => {
 			<ButtonStyles.Content { ...propsToPass } />
 			<Button.Content { ...propsToPass } className={ buttonClassNames }>
 				<Icon.Content attributes={ props.attributes } />
-				<RichText.Content
-					tagName="span"
-					className={ typographyInnerClassNames }
-					value={ props.attributes.text }
-				/>
+				{ props.attributes.showText && (
+					<RichText.Content
+						tagName="span"
+						className={ typographyInnerClassNames }
+						value={ props.attributes.text }
+					/>
+				) }
 			</Button.Content>
 		</BlockDiv.Content>
 	)

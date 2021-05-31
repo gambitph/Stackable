@@ -28,7 +28,9 @@ export const attributes = ( version = VERSION ) => {
 		enableTextTag: false,
 	} )
 	Typography.addAttributes( attrObject, '.stk-button__button:hover > .stk-button__inner-text', {
-		enableTextTag: false, attrNameTemplate: 'hover%s', enableTextContent: false,
+		enableTextTag: false,
+		attrNameTemplate: 'hover%s',
+		enableTextContent: false,
 	} )
 
 	Icon.addAttributes( attrObject, {

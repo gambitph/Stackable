@@ -68,6 +68,10 @@ export const addAttributes = ( attrObject, selector = '.stk-content', options = 
 		attributes: {
 			...typographyAttributes,
 			...( enableTextContent ? {
+				showText: {
+					type: 'boolean',
+					default: true,
+				},
 				text: {
 					source: 'html',
 					selector,

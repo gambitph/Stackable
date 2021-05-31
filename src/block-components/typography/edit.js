@@ -323,15 +323,28 @@ export const Edit = props => {
 		hoverAttrNameTemplate = '%s',
 		disableAlign = false,
 		blockElSelector,
+		withToggle = false,
 	} = props
 
 	const [ selectedTab, setSelectedTab ] = useState( 'normal' )
+
+	const {
+		getAttribute,
+		updateAttribute,
+	} = useAttributeEditHandlers( attrNameTemplate )
 
 	return (
 		<InspectorStyleControls>
 			<PanelAdvancedSettings
 				title={ __( 'Text', i18n ) }
 				id="text"
+				{ ...{
+					...( withToggle ? {
+						hasToggle: withToggle,
+						checked: getAttribute( 'showText' ),
+						onChange: value => updateAttribute( 'showText', value ),
+					} : {} ),
+				} }
 			>
 				{ withHoverTab && (
 					<TabbedLayout

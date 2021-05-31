@@ -14,8 +14,7 @@ import {
 	getColumnClasses,
 	getTypographyClasses,
 	BlockDiv,
-	Advanced,
-	CustomCSS,
+	Advanced, CustomCSS,
 	Responsive,
 	Linking,
 	Button,
@@ -78,6 +77,7 @@ const Edit = props => {
 				withHoverTab={ true }
 				hoverAttrNameTemplate="hover%s"
 				blockEl={ blockEl }
+				withToggle={ true }
 			/>
 			<Button.InspectorControls />
 			<Icon.InspectorControls
@@ -101,15 +101,17 @@ const Edit = props => {
 						className={ buttonClassNames }
 					>
 						<Icon />
-						<RichText
-							tagName="span"
-							className={ typographyInnerClassNames }
-							placeholder={ __( 'Button text', i18n ) }
-							withoutInteractiveFormatting={ true }
-							keepPlaceholderOnFocus
-							value={ props.attributes.text }
-							onChange={ value => setAttributes( { text: value } ) }
-						/>
+						{ props.attributes.showText && (
+							<RichText
+								tagName="span"
+								className={ typographyInnerClassNames }
+								placeholder={ __( 'Button text', i18n ) }
+								withoutInteractiveFormatting={ true }
+								keepPlaceholderOnFocus
+								value={ props.attributes.text }
+								onChange={ value => setAttributes( { text: value } ) }
+							/>
+						) }
 					</Button>
 				</BlockDiv>
 			</Column>
