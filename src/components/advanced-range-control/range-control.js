@@ -84,7 +84,7 @@ const StackableRangeControl = memo( props => {
 			}
 		}
 		setValue( props.resetFallbackValue )
-	}, [ props.min, props.max, props.resetFallbackValue ] )
+	}, [ value, props.min, props.max, props.resetFallbackValue ] )
 
 	/**
 	 * We cannot trust the initialPosition of the RangeControl, so we
