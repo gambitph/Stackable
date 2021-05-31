@@ -159,7 +159,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 							<?php if ( sugb_fs()->can_use_premium_code() ) : ?>
 								<p class="s-settings-subtitle"><?php printf( __( 'If you have %sFont Awesome Pro%s, you can use your Pro icons by inputting your Pro Kit code below.' , STACKABLE_I18N ), '<a href="https://fontawesome.com/referral?a=2c8dfc8669" target="_fontawesome">', '</a>' ) ?></em></p>
 							<?php else: ?>
-								<p class="s-settings-subtitle"><?php printf( __( '%sFont Awesome Pro%s Integration is available by inputting your Pro Kit code. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://fontawesome.com/referral?a=2c8dfc8669" target="_fontawesome">', '</a>', '<a href="https://docs.wpstackable.com/stackable-guides/advanced-guides/how-to-use-your-font-awesome-pro-icons/?utm_source=wp-settings-icons&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
+								<p class="s-settings-subtitle"><?php printf( __( '%sFont Awesome Pro%s Integration is available by inputting your Pro Kit code. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://fontawesome.com/referral?a=2c8dfc8669" target="_fontawesome">', '</a>', '<a href="https://docs.wpstackable.com/article/358-how-to-use-your-font-awesome-pro-icons/?utm_source=wp-settings-icons&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
 							<?php endif; ?>
 							<div class="s-icon-settings"></div>
 							<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
@@ -172,7 +172,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 								<p class="s-settings-subtitle"><?php printf( __( 'Lock the Block Editor\'s inspector for different user roles, and give clients edit access to only images and content. Content Editing Mode affects all blocks. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://wpstackable.com/blog/introducing-role-manager-for-gutenberg/?utm_source=wp-settings-role-manager&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
 							<?php endif; ?>
 							<?php if ( sugb_fs()->can_use_premium_code() ) : ?>
-								<p class="s-settings-subtitle"><?php printf( __( 'Lock the Block Editor\'s inspector for different user roles, and give clients edit access to only images and content. Content Editing Mode affects all blocks. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/stackable-guides/advanced-guides/role-manager-and-content-editing-mode/?utm_source=wp-settings-role-manager&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
+								<p class="s-settings-subtitle"><?php printf( __( 'Lock the Block Editor\'s inspector for different user roles, and give clients edit access to only images and content. Content Editing Mode affects all blocks. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/article/360-role-manager-and-content-editing-mode/?utm_source=wp-settings-role-manager&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
 							<?php endif; ?>
 							<div class="s-editing-mode-settings"></div>
 							<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
@@ -181,7 +181,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 						</article>
 						<article class="s-box" id="global-settings">
 							<h2><?php _e( '🌏 Global Settings', STACKABLE_I18N ) ?></h2>
-							<p class="s-settings-subtitle"><?php printf( __( 'Each WordPress theme is unique, so if your global settings are not working correctly with your theme, here are a few options you can tweak to make them work. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/stackable-guides/advanced-guides/how-to-use-global-settings/?utm_source=wp-settings-global-settings&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
+							<p class="s-settings-subtitle"><?php printf( __( 'Each WordPress theme is unique, so if your global settings are not working correctly with your theme, here are a few options you can tweak to make them work. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/article/361-how-to-use-global-settings/?utm_source=wp-settings-global-settings&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
 							<div class="s-global-settings"></div>
 						</article>
                         <article class="s-box" id="block-settings">
@@ -370,7 +370,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 								<p><?php _e( 'Start creating your site or check out our full guide to Stackable.', STACKABLE_I18N )?></p>
 								<div class="button-group">
 									<a class="s-getting-started__button primary" href="post-new.php?post_type=page"><?php _e( 'Create New Page', STACKABLE_I18N )?></a>
-									<a class="s-getting-started__button secondary" target="_docs" href="https://docs.wpstackable.com/stackable-guides/beginner-guides/customizing-blocks/?utm_source=wp-getting-started-footer&utm_campaign=getting-started&utm_medium=wp-dashboard"><?php _e( 'Read Full Guide', STACKABLE_I18N )?></a>
+									<a class="s-getting-started__button secondary" target="_docs" href="https://docs.wpstackable.com/article/346-customizing-blocks/?utm_source=wp-getting-started-footer&utm_campaign=getting-started&utm_medium=wp-dashboard"><?php _e( 'Read Full Guide', STACKABLE_I18N )?></a>
 								</div>
 							</div>
 						</div>
