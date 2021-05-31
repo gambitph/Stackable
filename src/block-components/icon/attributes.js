@@ -62,7 +62,6 @@ export const iconAttributes = {
 	showBackgroundShape: {
 		type: 'boolean',
 		default: false,
-
 	},
 	backgroundShape: {
 		type: 'string',
@@ -127,10 +126,58 @@ export const addAttributes = ( attrObject, options = {} ) => {
 	const {
 		attrNameTemplate = '%s',
 		excludedAttributes = [],
+		enableGradient = true,
+		enableShape = true,
+		enableBackgroundShape = true,
 	} = options
 
+	const finalExcludedAttributes = [ ...excludedAttributes ]
+
+	if ( ! enableGradient ) {
+		finalExcludedAttributes.push(
+			'iconColorType',
+			'iconColor2',
+			'iconColorGradientDirection'
+		)
+	}
+
+	if ( ! enableShape ) {
+		finalExcludedAttributes.push(
+			'shaped',
+			'shapeColor',
+			'shapeBorderRadius',
+			'shapePadding',
+			'shapeOutline',
+			'shapeOutlineColor',
+			'shapeOutlineWidthTop',
+			'shapeOutlineWidthRight',
+			'shapeOutlineWidthBottom',
+			'shapeOutlineWidthLeft',
+			'shapeOutlineWidthTopTablet',
+			'shapeOutlineWidthRightTablet',
+			'shapeOutlineWidthBottomTablet',
+			'shapeOutlineWidthLeftTablet',
+			'shapeOutlineWidthTopMobile',
+			'shapeOutlineWidthRightMobile',
+			'shapeOutlineWidthBottomMobile',
+			'shapeOutlineWidthLeftMobile'
+		)
+	}
+
+	if ( ! enableBackgroundShape ) {
+		finalExcludedAttributes.push(
+			'showBackgroundShape',
+			'backgroundShape',
+			'backgroundShapeColor',
+			'backgroundShapeOpacity',
+			'backgroundShapeSize',
+			'backgroundShapeOffsetHorizontal',
+			'backgroundShapeOffsetVertical'
+		)
+	}
+
 	attrObject.add( {
-		attributes: excludedAttributes.length ? omit( iconAttributes, excludedAttributes ) : iconAttributes,
+		attributes: finalExcludedAttributes.length ? omit( iconAttributes, finalExcludedAttributes ) : iconAttributes,
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 		attrNameTemplate,

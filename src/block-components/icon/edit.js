@@ -33,8 +33,12 @@ const IconControls = props => {
 		label,
 		enableIcon = true,
 		enableBackgroundShapeIcon = true,
+		enableGradient = true,
+		enableShape = true,
+		enableBackgroundShape = true,
 		attrNameTemplate = '%s',
 		normalAttrNameTemplate = '%s',
+
 	} = props
 
 	const {
@@ -58,47 +62,59 @@ const IconControls = props => {
 				/>
 			) }
 
-			<AdvancedToolbarControl
-				controls={ [
-					{
-						value: '',
-						title: __( 'Single', i18n ),
-					},
-					{
-						value: 'gradient',
-						title: __( 'Gradient', i18n ),
-					},
-				] }
-				isSmall={ true }
-				fullwidth={ false }
-				value={ getAttribute( 'iconColorType' ) }
-				onChange={ updateAttributeHandler( 'iconColorType' ) }
-			/>
-
-			<ColorPaletteControl
-				label={ getAttribute( 'iconColorType' ) === 'gradient' ? sprintf( __( '%s Color #%s', i18n ), label, 1 )
-					: sprintf( __( '%s Color', i18n ), label ) }
-				value={ getAttribute( 'iconColor1' ) }
-				onChange={ updateAttributeHandler( 'iconColor1' ) }
-			/>
-			{ getAttribute( 'iconColorType' ) === 'gradient' && (
+			{ enableGradient && (
 				<Fragment>
-					<ColorPaletteControl
-						label={ sprintf( __( '%s Color #2', i18n ), label ) }
-						value={ getAttribute( 'iconColor2' ) }
-						onChange={ updateAttributeHandler( 'iconColor2' ) }
+					<AdvancedToolbarControl
+						controls={ [
+							{
+								value: '',
+								title: __( 'Single', i18n ),
+							},
+							{
+								value: 'gradient',
+								title: __( 'Gradient', i18n ),
+							},
+						] }
+						isSmall={ true }
+						fullwidth={ false }
+						value={ getAttribute( 'iconColorType' ) }
+						onChange={ updateAttributeHandler( 'iconColorType' ) }
 					/>
 
-					<AdvancedRangeControl
-						label={ __( 'Gradient Direction (degrees)', i18n ) }
-						value={ getAttribute( 'iconColorGradientDirection' ) }
-						onChange={ updateAttributeHandler( 'iconColorGradientDirection' ) }
-						min={ 0 }
-						max={ 360 }
-						step={ 10 }
-						allowReset={ true }
+					<ColorPaletteControl
+						label={ getAttribute( 'iconColorType' ) === 'gradient' ? sprintf( __( '%s Color #%s', i18n ), label, 1 )
+							: sprintf( __( '%s Color', i18n ), label ) }
+						value={ getAttribute( 'iconColor1' ) }
+						onChange={ updateAttributeHandler( 'iconColor1' ) }
 					/>
+					{ getAttribute( 'iconColorType' ) === 'gradient' && (
+						<Fragment>
+							<ColorPaletteControl
+								label={ sprintf( __( '%s Color #2', i18n ), label ) }
+								value={ getAttribute( 'iconColor2' ) }
+								onChange={ updateAttributeHandler( 'iconColor2' ) }
+							/>
+
+							<AdvancedRangeControl
+								label={ __( 'Gradient Direction (degrees)', i18n ) }
+								value={ getAttribute( 'iconColorGradientDirection' ) }
+								onChange={ updateAttributeHandler( 'iconColorGradientDirection' ) }
+								min={ 0 }
+								max={ 360 }
+								step={ 10 }
+								allowReset={ true }
+							/>
+						</Fragment>
+					) }
 				</Fragment>
+			) }
+
+			{ ! enableGradient && (
+				<ColorPaletteControl
+					label={ sprintf( __( '%s Color', i18n ), label ) }
+					value={ getAttribute( 'iconColor1' ) }
+					onChange={ updateAttributeHandler( 'iconColor1' ) }
+				/>
 			) }
 
 			<ResponsiveControl2
@@ -165,208 +181,215 @@ const IconControls = props => {
 				placeholder="0"
 			/>
 
-			<ToggleControl
-				label={ __( 'Shaped', i18n ) }
-				checked={ getNormalAttribute( 'shaped' ) }
-				onChange={ updateNormalAttributeHandler( 'shaped' ) }
-			/>
-
-			{ getNormalAttribute( 'shaped' ) && (
+			{ enableShape && (
 				<Fragment>
-
-					<ColorPaletteControl
-						label={ __( 'Shape Color', i18n ) }
-						value={ getAttribute( 'shapeColor' ) }
-						onChange={ updateAttributeHandler( 'shapeColor' ) }
-						hasTransparent={ true }
-					/>
-
-					<AdvancedRangeControl
-						label={ __( 'Shape Border Radius', i18n ) }
-						value={ getAttribute( 'shapeBorderRadius' ) }
-						onChange={ updateAttributeHandler( 'shapeBorderRadius' ) }
-						min={ 0 }
-						max={ 100 }
-						step={ 1 }
-						allowReset={ true }
-						placeholder={ 50 }
-					/>
-
-					<AdvancedRangeControl
-						label={ __( 'Shape Padding', i18n ) }
-						value={ getAttribute( 'shapePadding' ) }
-						onChange={ updateAttributeHandler( 'shapePadding' ) }
-						min={ 0 }
-						max={ 150 }
-						step={ 1 }
-						allowReset={ true }
-						placeholder={ 20 }
-					/>
-
 					<ToggleControl
-						label={ __( 'Shape Outline', i18n ) }
-						checked={ getAttribute( 'shapeOutline' ) }
-						onChange={ updateAttributeHandler( 'shapeOutline' ) }
+						label={ __( 'Shaped', i18n ) }
+						checked={ getNormalAttribute( 'shaped' ) }
+						onChange={ updateNormalAttributeHandler( 'shaped' ) }
 					/>
 
-					{ getAttribute( 'shapeOutline' ) && (
+					{ getNormalAttribute( 'shaped' ) && (
 						<Fragment>
 
 							<ColorPaletteControl
-								label={ __( 'Shape Outline Color', i18n ) }
-								value={ getAttribute( 'shapeOutlineColor' ) }
-								onChange={ updateAttributeHandler( 'shapeOutlineColor' ) }
+								label={ __( 'Shape Color', i18n ) }
+								value={ getAttribute( 'shapeColor' ) }
+								onChange={ updateAttributeHandler( 'shapeColor' ) }
+								hasTransparent={ true }
 							/>
 
-							<SpacingControl
-								label={ __( 'Shape Outline Width' ) }
-								units={ [ 'px' ] }
+							<AdvancedRangeControl
+								label={ __( 'Shape Border Radius', i18n ) }
+								value={ getAttribute( 'shapeBorderRadius' ) }
+								onChange={ updateAttributeHandler( 'shapeBorderRadius' ) }
 								min={ 0 }
-								max={ 99 }
+								max={ 100 }
 								step={ 1 }
-								sliderMax={ 5 }
-								defaultLocked={ true }
-
-								valueDesktop={ {
-									top: getAttribute( 'shapeOutlineWidthTop' ),
-									right: getAttribute( 'shapeOutlineWidthRight' ),
-									bottom: getAttribute( 'shapeOutlineWidthBottom' ),
-									left: getAttribute( 'shapeOutlineWidthLeft' ),
-								} }
-								onChangeDesktop={
-									( {
-										top, right, bottom, left,
-									} ) => {
-										const attributes = {
-											ShapeOutlineWidthTop: ! top && top !== 0 ? '' : parseInt( top, 10 ),
-											ShapeOutlineWidthRight: ! right && right !== 0 ? '' : parseInt( right, 10 ),
-											ShapeOutlineWidthBottom: ! bottom && bottom !== 0 ? '' : parseInt( bottom, 10 ),
-											ShapeOutlineWidthLeft: ! left && left !== 0 ? '' : parseInt( left, 10 ),
-										}
-										updateAttributes( attributes )
-									}
-								}
-
-								valueTablet={ {
-									top: getAttribute( 'shapeOutlineWidthTopTablet' ),
-									right: getAttribute( 'shapeOutlineWidthRightTablet' ),
-									bottom: getAttribute( 'shapeOutlineWidthBottomTablet' ),
-									left: getAttribute( 'shapeOutlineWidthLeftTablet' ),
-								} }
-								onChangeTablet={
-									( {
-										top, right, bottom, left,
-									} ) => {
-										updateAttributes( {
-											ShapeOutlineWidthTopTablet: ! top && top !== 0 ? '' : parseInt( top, 10 ),
-											ShapeOutlineWidthRightTablet: ! right && right !== 0 ? '' : parseInt( right, 10 ),
-											ShapeOutlineWidthBottomTablet: ! bottom && bottom !== 0 ? '' : parseInt( bottom, 10 ),
-											ShapeOutlineWidthLeftTablet: ! left && left !== 0 ? '' : parseInt( left, 10 ),
-										} )
-									}
-								}
-
-								valueMobile={ {
-									top: getAttribute( 'shapeOutlineWidthTopMobile' ),
-									right: getAttribute( 'shapeOutlineWidthRightMobile' ),
-									bottom: getAttribute( 'shapeOutlineWidthBottomMobile' ),
-									left: getAttribute( 'shapeOutlineWidthLeftMobile' ),
-								} }
-								onChangeMobile={
-									( {
-										top, right, bottom, left,
-									} ) => {
-										updateAttributes( {
-											ShapeOutlineWidthTopMobile: ! top && top !== 0 ? '' : parseInt( top, 10 ),
-											ShapeOutlineWidthRightMobile: ! right && right !== 0 ? '' : parseInt( right, 10 ),
-											ShapeOutlineWidthBottomMobile: ! bottom && bottom !== 0 ? '' : parseInt( bottom, 10 ),
-											ShapeOutlineWidthLeftMobile: ! left && left !== 0 ? '' : parseInt( left, 10 ),
-										} )
-									}
-								}
-
-								placeholder="1"
-								placeholderTop="1"
-								placeholderLeft="1"
-								placeholderBottom="1"
-								placeholderRight="1"
+								allowReset={ true }
+								placeholder={ 50 }
 							/>
+
+							<AdvancedRangeControl
+								label={ __( 'Shape Padding', i18n ) }
+								value={ getAttribute( 'shapePadding' ) }
+								onChange={ updateAttributeHandler( 'shapePadding' ) }
+								min={ 0 }
+								max={ 150 }
+								step={ 1 }
+								allowReset={ true }
+								placeholder={ 20 }
+							/>
+
+							<ToggleControl
+								label={ __( 'Shape Outline', i18n ) }
+								checked={ getAttribute( 'shapeOutline' ) }
+								onChange={ updateAttributeHandler( 'shapeOutline' ) }
+							/>
+
+							{ getAttribute( 'shapeOutline' ) && (
+								<Fragment>
+
+									<ColorPaletteControl
+										label={ __( 'Shape Outline Color', i18n ) }
+										value={ getAttribute( 'shapeOutlineColor' ) }
+										onChange={ updateAttributeHandler( 'shapeOutlineColor' ) }
+									/>
+
+									<SpacingControl
+										label={ __( 'Shape Outline Width' ) }
+										units={ [ 'px' ] }
+										min={ 0 }
+										max={ 99 }
+										step={ 1 }
+										sliderMax={ 5 }
+										defaultLocked={ true }
+
+										valueDesktop={ {
+											top: getAttribute( 'shapeOutlineWidthTop' ),
+											right: getAttribute( 'shapeOutlineWidthRight' ),
+											bottom: getAttribute( 'shapeOutlineWidthBottom' ),
+											left: getAttribute( 'shapeOutlineWidthLeft' ),
+										} }
+										onChangeDesktop={
+											( {
+												top, right, bottom, left,
+											} ) => {
+												const attributes = {
+													ShapeOutlineWidthTop: ! top && top !== 0 ? '' : parseInt( top, 10 ),
+													ShapeOutlineWidthRight: ! right && right !== 0 ? '' : parseInt( right, 10 ),
+													ShapeOutlineWidthBottom: ! bottom && bottom !== 0 ? '' : parseInt( bottom, 10 ),
+													ShapeOutlineWidthLeft: ! left && left !== 0 ? '' : parseInt( left, 10 ),
+												}
+												updateAttributes( attributes )
+											}
+										}
+
+										valueTablet={ {
+											top: getAttribute( 'shapeOutlineWidthTopTablet' ),
+											right: getAttribute( 'shapeOutlineWidthRightTablet' ),
+											bottom: getAttribute( 'shapeOutlineWidthBottomTablet' ),
+											left: getAttribute( 'shapeOutlineWidthLeftTablet' ),
+										} }
+										onChangeTablet={
+											( {
+												top, right, bottom, left,
+											} ) => {
+												updateAttributes( {
+													ShapeOutlineWidthTopTablet: ! top && top !== 0 ? '' : parseInt( top, 10 ),
+													ShapeOutlineWidthRightTablet: ! right && right !== 0 ? '' : parseInt( right, 10 ),
+													ShapeOutlineWidthBottomTablet: ! bottom && bottom !== 0 ? '' : parseInt( bottom, 10 ),
+													ShapeOutlineWidthLeftTablet: ! left && left !== 0 ? '' : parseInt( left, 10 ),
+												} )
+											}
+										}
+
+										valueMobile={ {
+											top: getAttribute( 'shapeOutlineWidthTopMobile' ),
+											right: getAttribute( 'shapeOutlineWidthRightMobile' ),
+											bottom: getAttribute( 'shapeOutlineWidthBottomMobile' ),
+											left: getAttribute( 'shapeOutlineWidthLeftMobile' ),
+										} }
+										onChangeMobile={
+											( {
+												top, right, bottom, left,
+											} ) => {
+												updateAttributes( {
+													ShapeOutlineWidthTopMobile: ! top && top !== 0 ? '' : parseInt( top, 10 ),
+													ShapeOutlineWidthRightMobile: ! right && right !== 0 ? '' : parseInt( right, 10 ),
+													ShapeOutlineWidthBottomMobile: ! bottom && bottom !== 0 ? '' : parseInt( bottom, 10 ),
+													ShapeOutlineWidthLeftMobile: ! left && left !== 0 ? '' : parseInt( left, 10 ),
+												} )
+											}
+										}
+
+										placeholder="1"
+										placeholderTop="1"
+										placeholderLeft="1"
+										placeholderBottom="1"
+										placeholderRight="1"
+									/>
+								</Fragment>
+							) }
+
 						</Fragment>
 					) }
-
 				</Fragment>
 			) }
 
-			<ToggleControl
-				label={ __( 'Background Shape', i18n ) }
-				checked={ getNormalAttribute( 'showBackgroundShape' ) }
-				onChange={ updateNormalAttributeHandler( 'showBackgroundShape' ) }
-			/>
-
-			{ getNormalAttribute( 'showBackgroundShape' ) && (
+			{ enableBackgroundShape && (
 				<Fragment>
+					<ToggleControl
+						label={ __( 'Background Shape', i18n ) }
+						checked={ getNormalAttribute( 'showBackgroundShape' ) }
+						onChange={ updateNormalAttributeHandler( 'showBackgroundShape' ) }
+					/>
 
-					{ enableBackgroundShapeIcon && (
-						<ImageShapeControl
-							label={ __( 'Shape', i18n ) }
-							selected={ getAttribute( 'backgroundShape' ) }
-							onChange={ updateAttributeHandler( 'backgroundShape' ) }
-						/>
+					{ getNormalAttribute( 'showBackgroundShape' ) && (
+						<Fragment>
+
+							{ enableBackgroundShapeIcon && (
+								<ImageShapeControl
+									label={ __( 'Shape', i18n ) }
+									selected={ getAttribute( 'backgroundShape' ) }
+									onChange={ updateAttributeHandler( 'backgroundShape' ) }
+								/>
+							) }
+
+							<ColorPaletteControl
+								label={ __( 'Shape Color', i18n ) }
+								value={ getAttribute( 'backgroundShapeColor' ) }
+								onChange={ updateAttributeHandler( 'backgroundShapeColor' ) }
+							/>
+
+							<AdvancedRangeControl
+								label={ __( 'Shape Opacity', i18n ) }
+								value={ getAttribute( 'backgroundShapeOpacity' ) }
+								onChange={ updateAttributeHandler( 'backgroundShapeOpacity' ) }
+								min={ 0 }
+								max={ 1 }
+								step={ 0.1 }
+								placeholder="1"
+								allowReset={ true }
+							/>
+
+							<AdvancedRangeControl
+								label={ __( 'Shape Size', i18n ) }
+								value={ getAttribute( 'backgroundShapeSize' ) }
+								onChange={ updateAttributeHandler( 'backgroundShapeSize' ) }
+								min={ 0 }
+								max={ 3 }
+								step={ 0.1 }
+								placeholder="1"
+								allowReset={ true }
+							/>
+
+							<AdvancedRangeControl
+								label={ __( 'Horizontal Offset', i18n ) }
+								value={ getAttribute( 'backgroundShapeOffsetHorizontal' ) }
+								onChange={ updateAttributeHandler( 'backgroundShapeOffsetHorizontal' ) }
+								min={ -30 }
+								max={ 30 }
+								step={ 1 }
+								placeholder="0"
+								allowReset={ true }
+							/>
+
+							<AdvancedRangeControl
+								label={ __( 'Vertical Offset', i18n ) }
+								value={ getAttribute( 'backgroundShapeOffsetVertical' ) }
+								onChange={ updateAttributeHandler( 'backgroundShapeOffsetVertical' ) }
+								min={ -30 }
+								max={ 30 }
+								step={ 1 }
+								placeholder="0"
+								allowReset={ true }
+							/>
+
+						</Fragment>
 					) }
-
-					<ColorPaletteControl
-						label={ __( 'Shape Color', i18n ) }
-						value={ getAttribute( 'backgroundShapeColor' ) }
-						onChange={ updateAttributeHandler( 'backgroundShapeColor' ) }
-					/>
-
-					<AdvancedRangeControl
-						label={ __( 'Shape Opacity', i18n ) }
-						value={ getAttribute( 'backgroundShapeOpacity' ) }
-						onChange={ updateAttributeHandler( 'backgroundShapeOpacity' ) }
-						min={ 0 }
-						max={ 1 }
-						step={ 0.1 }
-						placeholder="1"
-						allowReset={ true }
-					/>
-
-					<AdvancedRangeControl
-						label={ __( 'Shape Size', i18n ) }
-						value={ getAttribute( 'backgroundShapeSize' ) }
-						onChange={ updateAttributeHandler( 'backgroundShapeSize' ) }
-						min={ 0 }
-						max={ 3 }
-						step={ 0.1 }
-						placeholder="1"
-						allowReset={ true }
-					/>
-
-					<AdvancedRangeControl
-						label={ __( 'Horizontal Offset', i18n ) }
-						value={ getAttribute( 'backgroundShapeOffsetHorizontal' ) }
-						onChange={ updateAttributeHandler( 'backgroundShapeOffsetHorizontal' ) }
-						min={ -30 }
-						max={ 30 }
-						step={ 1 }
-						placeholder="0"
-						allowReset={ true }
-					/>
-
-					<AdvancedRangeControl
-						label={ __( 'Vertical Offset', i18n ) }
-						value={ getAttribute( 'backgroundShapeOffsetVertical' ) }
-						onChange={ updateAttributeHandler( 'backgroundShapeOffsetVertical' ) }
-						min={ -30 }
-						max={ 30 }
-						step={ 1 }
-						placeholder="0"
-						allowReset={ true }
-					/>
-
 				</Fragment>
 			) }
-
 		</Fragment>
 	)
 }
@@ -380,6 +403,9 @@ export const Edit = props => {
 		attrNameTemplate = '%s',
 		withHoverTab = false,
 		hoverAttrNameTemplate = '%s',
+		enableGradient = true,
+		enableShape = true,
+		enableBackgroundShape = true,
 	} = props
 
 	const [ selectedTab, setSelectedTab ] = useState( 'normal' )
@@ -410,6 +436,9 @@ export const Edit = props => {
 				{ selectedTab === 'normal' && (
 					<IconControls
 						attrNameTemplate={ attrNameTemplate }
+						enableGradient={ enableGradient }
+						enableShape={ enableShape }
+						enableBackgroundShape={ enableBackgroundShape }
 					/>
 				) }
 
@@ -420,6 +449,9 @@ export const Edit = props => {
 						attrNameTemplate={ hoverAttrNameTemplate }
 						normalAttrNameTemplate={ attrNameTemplate }
 						label={ __( 'Icon Hover', i18n ) }
+						enableGradient={ enableGradient }
+						enableShape={ enableShape }
+						enableBackgroundShape={ enableBackgroundShape }
 					/>
 				) }
 			</PanelAdvancedSettings>

@@ -83,6 +83,9 @@ const Edit = props => {
 			<Icon.InspectorControls
 				withHoverTab={ true }
 				hoverAttrNameTemplate="hover%s"
+				enableGradient={ false }
+				enableShape={ false }
+				enableBackgroundShape={ false }
 			/>
 
 			<Advanced.InspectorControls />
