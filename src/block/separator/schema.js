@@ -153,8 +153,4 @@ export default {
 		type: 'number',
 		default: 0.5,
 	},
-
-	displayCondition: {
-		type: 'object',
-	},
 }

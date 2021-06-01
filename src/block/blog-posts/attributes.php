@@ -1852,9 +1852,6 @@ if ( ! function_exists( 'stackable_blog_posts_attributes' ) ) {
 				'type' => 'boolean',
 				'default' => true,
 			),
-			'displayCondition' => array(
-				'type' => 'object',
-			),
 		);
 	}
 }

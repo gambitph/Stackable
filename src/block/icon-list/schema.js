@@ -66,8 +66,4 @@ export default {
 	},
 	...createTypographyAttributes( 'listText%s' ),
 	...createIconListIconAttributes(),
-
-	displayCondition: {
-		type: 'object',
-	},
 }

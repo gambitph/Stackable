@@ -229,8 +229,4 @@ export default {
 		},
 		[ '', 'Tablet', 'Mobile' ]
 	),
-
-	displayCondition: {
-		type: 'object',
-	},
 }

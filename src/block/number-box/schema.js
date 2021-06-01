@@ -209,8 +209,4 @@ export default {
 	bodyTextColor: {
 		type: 'string',
 	},
-
-	displayCondition: {
-		type: 'object',
-	},
 }

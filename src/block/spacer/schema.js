@@ -16,7 +16,4 @@ export default {
 	// Background.
 	...createBackgroundAttributes( '%s' ),
 
-	displayCondition: {
-		type: 'object',
-	},
 }

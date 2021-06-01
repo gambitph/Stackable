@@ -95,8 +95,4 @@ export default {
 		type: 'number',
 		default: 300,
 	},
-
-	displayCondition: {
-		type: 'object',
-	},
 }

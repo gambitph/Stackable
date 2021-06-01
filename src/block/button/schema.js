@@ -28,8 +28,4 @@ export default {
 	...createButtonAttributes( 'button1%s', { selector: '.ugb-button1' } ),
 	...createButtonAttributes( 'button2%s', { selector: '.ugb-button2' } ),
 	...createButtonAttributes( 'button3%s', { selector: '.ugb-button3' } ),
-
-	displayCondition: {
-		type: 'object',
-	},
 }

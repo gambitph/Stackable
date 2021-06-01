@@ -27,8 +27,4 @@ export default {
 		type: 'string',
 		default: 'center',
 	},
-
-	displayCondition: {
-		type: 'object',
-	},
 }

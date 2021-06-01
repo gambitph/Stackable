@@ -79,8 +79,4 @@ export default {
 		type: 'string',
 		default: '',
 	} ),
-
-	displayCondition: {
-		type: 'object',
-	},
 }

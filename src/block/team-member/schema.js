@@ -305,8 +305,4 @@ export default {
 		},
 		[ '1', '2', '3' ]
 	),
-
-	displayCondition: {
-		type: 'object',
-	},
 }

@@ -170,8 +170,4 @@ export default {
 		type: 'number',
 		default: '',
 	} ),
-
-	displayCondition: {
-		type: 'object',
-	},
 }

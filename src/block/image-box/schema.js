@@ -241,8 +241,4 @@ export default {
 		[ 'Subtitle', 'Title', 'Line', 'Description', 'Arrow' ],
 		[ '', 'Tablet', 'Mobile' ]
 	),
-
-	displayCondition: {
-		type: 'object',
-	},
 }
