@@ -1,28 +1,39 @@
 /**
+ * Internal dependencies
+ */
+import ControlIconToggle from '../control-icon-toggle'
+import ResponsiveToggle from '~stackable/components/responsive-toggle'
+import { i18n } from 'stackable'
+
+/**
  * External dependencies
  */
-import ResponsiveToggle from '~stackable/components/responsive-toggle'
+import { useMemo } from '@wordpress/element'
+import { __ } from '@wordpress/i18n'
 
 const BaseControlMultiLabel = props => {
 	const screens = props.screens === 'all' ? [ 'desktop', 'tablet', 'mobile' ] : props.screens
+
+	const units = useMemo( () => (
+		props.units?.map( unit => {
+			return { value: unit }
+		} )
+	), [ props.units ] ) || []
+
 	return (
 		<div className="ugb-base-control-multi-label">
 			<div className="ugb-base-control-multi-label__label components-base-control__label">{ props.label }</div>
 			<ResponsiveToggle screens={ screens } />
 			<div className="ugb-base-control-multi-label__units">
-				{ props.units?.length > 1 &&
-					props.units.map( ( unit, i ) => {
-						return (
-							<button
-								key={ i }
-								className={ props.unit === unit ? 'is-active' : '' }
-								onClick={ () => props.onChangeUnit( unit ) }
-							>
-								{ unit }
-							</button>
-						)
-					} )
-				}
+				<ControlIconToggle
+					className="stk-control-unit-toggle"
+					value={ props.unit }
+					options={ units }
+					onChange={ unit => props.onChangeUnit( unit ) }
+					labelPosition="left"
+					buttonLabel={ __( 'Unit', i18n ) }
+					hasLabels={ false }
+				/>
 				{ props.afterButton }
 			</div>
 		</div>

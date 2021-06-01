@@ -1,0 +1,46 @@
+.stk-label-unit-toggle {
+	margin-left: 6px;
+	align-items: center;
+	width: 24px;
+	height: 24px;
+	position: relative;
+	z-index: 4;
+	overflow: hidden;
+	&[aria-expanded="true"] {
+		overflow: visible;
+		.stk-label-unit-toggle__wrapper {
+			background: #fff;
+			outline: 1px solid #222;
+		}
+	}
+	&[aria-expanded="false"]:hover {
+		outline: 1px solid #222;
+	}
+	button {
+		height: 14px;
+		width: 14px;
+		padding: 5px !important; // Force override for Gutenberg 7.7.
+		min-width: 11px !important; // Force override for Gutenberg 7.7.
+		box-sizing: content-box;
+		border-radius: 0 !important;
+		margin: 0;
+		justify-content: center;
+		svg {
+			height: 100%;
+			width: 100%;
+		}
+		&:hover,
+		&.is-active {
+			box-shadow: none !important;
+		}
+	}
+}
+.stk-label-unit-toggle__wrapper {
+	position: absolute;
+	outline: 1px solid transparent;
+}
+.stk-label-unit-toggle__popup-left {
+	.components-popover__content {
+		margin-right: 10px;
+	}
+}
