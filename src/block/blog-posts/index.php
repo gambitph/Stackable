@@ -215,8 +215,15 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 						)
 					);
 
-					// Remove the built in style attribute in the thumbnail.
-					$thumbnail = preg_replace( '/style=\"[^\"]*\"\s?/', "", $thumbnail );
+					// Get the image tag in the thumbnail markup.
+					preg_match( "/<img[^\>]*>/", $thumbnail, $match );
+
+					// Remove the built in style attribute in the image.
+					if ( is_array( $match ) && count( $match ) > 0 ) {
+						// Only remove the style tag inside the image tag.
+						$new_img = preg_replace( '/style=\"[^\"]*\"\s?/', "", $match[ 0 ] );
+						$thumbnail = preg_replace( "/<img[^\>]*>/", $new_img, $thumbnail );
+					}
 
 					$featured_image = sprintf(
 						'<figure class="%s"><a href="%s">%s</a></figure>',
