@@ -33,6 +33,7 @@ const BaseControlMultiLabel = props => {
 					labelPosition="left"
 					buttonLabel={ __( 'Unit', i18n ) }
 					hasLabels={ false }
+					hasColors={ false }
 				/>
 				{ props.afterButton }
 			</div>

@@ -29,7 +29,7 @@ const ControlIconToggle = props => {
 	const offset = useMemo( () => {
 		const index = props.options.findIndex( el => el.value === value )
 		return index / options.length * 100
-	}, [ options ] )
+	}, [ options, value ] )
 
 	// Close the picker if the user clicks outside.
 	const clickOutsideListener = useCallback( event => {
@@ -51,7 +51,12 @@ const ControlIconToggle = props => {
 		return null
 	}
 
-	const className = classnames( [ props.className, 'stk-label-unit-toggle' ] )
+	const className = classnames( [
+		props.className,
+		'stk-label-unit-toggle',
+	], {
+		'stk-label-unit-toggle__colored': props.hasColors,
+	} )
 
 	return (
 		<div
@@ -75,6 +80,7 @@ const ControlIconToggle = props => {
 							>
 								<Button
 									className={ value === option.value ? 'is-active' : '' }
+									data-index={ i }
 									data-value={ option.value }
 									onClick={ () => {
 										if ( ! isOpen ) {
@@ -100,7 +106,7 @@ const ControlIconToggle = props => {
 									<Popover
 										focusOnMount={ false }
 										position={ `middle ${ props.labelPosition }` }
-										className={ `components-tooltip stk-label-unit-toggle__popup-${ props.labelPosition }` }
+										className="components-tooltip stk-label-unit-toggle__popup"
 										aria-hidden="true"
 									>
 										{ tooltip }
@@ -123,6 +129,7 @@ ControlIconToggle.defaultProps = {
 	labelPosition: 'right',
 	buttonLabel: '',
 	hasLabels: true,
+	hasColors: true,
 }
 
 export default memo( ControlIconToggle )
