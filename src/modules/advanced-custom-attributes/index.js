@@ -27,14 +27,19 @@ const INVALID_ATTRIBUTES = [
 
 const createAddSaveProps = ( extraProps, blockProps ) => {
 	const customAttributes = {}
-	if ( isString( blockProps.attributes.customAttributes ) && blockProps.attributes.customAttributes !== '' ) {
-		compact( blockProps.attributes.customAttributes.split( ' ' ) ).forEach( attribute => {
-			try {
+
+	if ( blockProps.attributes.customAttributes === '' ) {
+		return extraProps
+	}
+
+	if ( isString( blockProps.attributes.customAttributes ) ) {
+		try {
+			compact( blockProps.attributes.customAttributes.split( ' ' ) ).forEach( attribute => {
 				const [ key, ..._value ] = attribute.split( '=' )
 				const value = JSON.parse( _value.join( '=' ) )
 				Object.assign( customAttributes, { [ toLower( key ) ]: value } )
-			} catch {}
-		} )
+			} )
+		} catch {}
 	}
 
 	return {
@@ -58,39 +63,33 @@ const CustomAttributesControl = props => {
 	useEffect( () => {
 		const timeout = setTimeout( () => {
 			const customAttributesSplit = compact( customAttributes.split( ' ' ) )
-			const valid = customAttributesSplit.length === 0 ?
-				true :
-				customAttributesSplit.every( attribute => {
+
+			try {
+				customAttributesSplit.forEach( attribute => {
 					const attributePair = attribute.split( '=' )
 					if ( attributePair.length < 2 ) {
-						setError( 'Error: Not a valid attribute. Input must be of pattern key1="value1" key2="value2".' )
-						return false
+						throw new Error( 'Not a valid attribute. Input must be of pattern key1="value1" key2="value2".' )
 					}
 
 					const [ key, ..._value ] = attributePair
+					const value = JSON.parse( _value.join( '=' ) )
 
-					// Filter invalid html attribute names
-					try {
-						const value = JSON.parse( _value.join( '=' ) )
-						if ( ! isString( value ) ) {
-							throw new Error( `The attribute value of ${ key } is not valid. Must be of type string but received ${ typeof value }` )
-						}
-
-						if ( INVALID_ATTRIBUTES.includes( key ) ) {
-							throw new Error( `Attribute key '${ key }' is not allowed.` )
-						}
-
-						document.createElement( 'div' ).setAttribute( key, value )
-						return true
-					} catch ( e ) {
-						setError( e.toString().trim() )
-						return false
+					if ( ! isString( value ) ) {
+						throw new Error( `The attribute value of ${ key } is not valid. Must be of type string but received ${ typeof value }` )
 					}
-				} )
 
-			if ( valid ) {
-				props.onChange( customAttributes )
-				setError( '' )
+					if ( INVALID_ATTRIBUTES.includes( key ) ) {
+						throw new Error( `Attribute key '${ key }' is not allowed.` )
+					}
+
+					document.createElement( 'div' ).setAttribute( key, value ) // Check if the attribute key and value can be a valid html attribute.
+
+					props.onChange( customAttributes )
+					setError( '' )
+				} )
+			} catch ( e ) {
+				setError( e.toString().trim() )
+				return false
 			}
 		}, 300 )
 
