@@ -14,13 +14,15 @@ import { TextControl } from '@wordpress/components'
 import { PanelAdvancedSettings } from '~stackable/components'
 import { i18n } from 'stackable'
 import {
-	compact, isString, omit,
+	compact, isString, omit, toLower,
 } from 'lodash'
 
 const INVALID_ATTRIBUTES = [
 	'id',
 	'class',
 	'className',
+	'style',
+	'ref',
 ]
 
 const createAddSaveProps = ( extraProps, blockProps ) => {
@@ -28,9 +30,9 @@ const createAddSaveProps = ( extraProps, blockProps ) => {
 	if ( isString( blockProps.attributes.customAttributes ) && blockProps.attributes.customAttributes !== '' ) {
 		compact( blockProps.attributes.customAttributes.split( ' ' ) ).forEach( attribute => {
 			try {
-				const [ key, _value ] = attribute.split( '=' )
-				const value = JSON.parse( _value )
-				Object.assign( customAttributes, { [ key ]: value } )
+				const [ key, ..._value ] = attribute.split( '=' )
+				const value = JSON.parse( _value.join( '=' ) )
+				Object.assign( customAttributes, { [ toLower( key ) ]: value } )
 			} catch {}
 		} )
 	}
@@ -60,18 +62,22 @@ const CustomAttributesControl = props => {
 				true :
 				customAttributesSplit.every( attribute => {
 					const attributePair = attribute.split( '=' )
-					if ( attributePair.length !== 2 ) {
+					if ( attributePair.length < 2 ) {
 						setError( 'Error: Not a valid attribute. Input must be of pattern key1="value1" key2="value2".' )
 						return false
 					}
 
-					const [ key, _value ] = attributePair
+					const [ key, ..._value ] = attributePair
 
 					// Filter invalid html attribute names
 					try {
-						const value = JSON.parse( _value )
+						const value = JSON.parse( _value.join( '=' ) )
 						if ( ! isString( value ) ) {
-							throw new Error( `Error: The attribute value of ${ key } is not valid. Must be of type string but received ${ typeof value }` )
+							throw new Error( `The attribute value of ${ key } is not valid. Must be of type string but received ${ typeof value }` )
+						}
+
+						if ( INVALID_ATTRIBUTES.includes( key ) ) {
+							throw new Error( `Attribute key '${ key }' is not allowed.` )
 						}
 
 						document.createElement( 'div' ).setAttribute( key, value )
