@@ -1,4 +1,13 @@
 /**
+ * External dependencies
+ */
+import { PanelAdvancedSettings } from '~stackable/components'
+import { i18n } from 'stackable'
+import {
+	compact, isString, omit, toLower,
+} from 'lodash'
+
+/**
  * WordPress dependencies
  */
 import { addFilter } from '@wordpress/hooks'
@@ -8,39 +17,28 @@ import {
 import { __ } from '@wordpress/i18n'
 import { TextControl } from '@wordpress/components'
 
-/**
- * External dependencies
- */
-import { PanelAdvancedSettings } from '~stackable/components'
-import { i18n } from 'stackable'
-import {
-	compact, isString, omit, toLower,
-} from 'lodash'
-
 const INVALID_ATTRIBUTES = [
 	'id',
 	'class',
 	'className',
 	'style',
 	'ref',
+	'children',
 ]
 
 const createAddSaveProps = ( extraProps, blockProps ) => {
-	const customAttributes = {}
-
-	if ( blockProps.attributes.customAttributes === '' ) {
+	if ( ! isString( blockProps.attributes.customAttributes ) || blockProps.attributes.customAttributes === '' ) {
 		return extraProps
 	}
 
-	if ( isString( blockProps.attributes.customAttributes ) ) {
-		try {
-			compact( blockProps.attributes.customAttributes.split( ' ' ) ).forEach( attribute => {
-				const [ key, ..._value ] = attribute.split( '=' )
-				const value = JSON.parse( _value.join( '=' ) )
-				Object.assign( customAttributes, { [ toLower( key ) ]: value } )
-			} )
-		} catch {}
-	}
+	const customAttributes = {}
+	try {
+		compact( blockProps.attributes.customAttributes.split( ' ' ) ).forEach( attribute => {
+			const [ key, ..._value ] = attribute.split( '=' )
+			const value = JSON.parse( _value.join( '=' ) )
+			customAttributes[ toLower( key ) ] = value
+		} )
+	} catch {}
 
 	return {
 		...extraProps,
@@ -75,14 +73,18 @@ const CustomAttributesControl = props => {
 					const value = JSON.parse( _value.join( '=' ) )
 
 					if ( ! isString( value ) ) {
-						throw new Error( `The attribute value of ${ key } is not valid. Must be of type string but received ${ typeof value }` )
+						throw new Error( `The attribute value of ${ key } is not valid. Must be of type string but received: '${ typeof value }'.` )
 					}
 
 					if ( INVALID_ATTRIBUTES.includes( key ) ) {
 						throw new Error( `Attribute key '${ key }' is not allowed.` )
 					}
 
-					document.createElement( 'div' ).setAttribute( key, value ) // Check if the attribute key and value can be a valid html attribute.
+					/**
+					 * Check if the attribute key and value can be a valid html attribute.
+					 * Throws an error if not valid.
+					 */
+					document.createElement( 'div' ).setAttribute( key, value )
 
 					props.onChange( customAttributes )
 					setError( '' )
