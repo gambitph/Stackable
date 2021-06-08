@@ -3,7 +3,7 @@
  */
 import { PanelAdvancedSettings } from '~stackable/components'
 import { i18n } from 'stackable'
-import { omit, isString } from 'lodash'
+import { omit, isUndefined } from 'lodash'
 import striptags from 'striptags'
 
 /**
@@ -50,9 +50,9 @@ const createAddSaveProps = ( extraProps, blockProps ) => {
 					if (
 						! INVALID_BLOCK_ATTRIBUTES.includes( match ) &&
 						blockProps.attributes.hasOwnProperty( match ) &&
-						isString( blockProps.attributes[ match ] )
+						! isUndefined( blockProps.attributes[ match ] )
 					) {
-						value = value.replace( _match, striptags( blockProps.attributes[ match ] ) )
+						value = value.replace( _match, striptags( blockProps.attributes[ match ].toString() ) )
 					}
 				} )
 			}
