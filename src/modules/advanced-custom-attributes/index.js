@@ -4,7 +4,7 @@
 import { PanelAdvancedSettings } from '~stackable/components'
 import { i18n } from 'stackable'
 import {
-	compact, isString, omit, toLower,
+	isString, omit,
 } from 'lodash'
 
 /**
@@ -17,13 +17,18 @@ import {
 import { __ } from '@wordpress/i18n'
 import { TextControl } from '@wordpress/components'
 
+/**
+ * We need to filter unsupported attributes
+ * to avoid block errors.
+ */
 const INVALID_ATTRIBUTES = [
-	'id',
+	'children',
 	'class',
 	'className',
-	'style',
+	'id',
 	'ref',
-	'children',
+	'style',
+	'dangerouslySetInnerHTML',
 ]
 
 const createAddSaveProps = ( extraProps, blockProps ) => {
@@ -33,11 +38,14 @@ const createAddSaveProps = ( extraProps, blockProps ) => {
 
 	const customAttributes = {}
 	try {
-		compact( blockProps.attributes.customAttributes.split( ' ' ) ).forEach( attribute => {
-			const [ key, ..._value ] = attribute.split( '=' )
-			const value = JSON.parse( _value.join( '=' ) )
-			customAttributes[ toLower( key ) ] = value
-		} )
+		const customAttributesMatch = blockProps.attributes.customAttributes.match( /(.*?(?=\=))\="[^\"]*"/g )
+		if ( Array.isArray( customAttributesMatch ) ) {
+			customAttributesMatch.forEach( attribute => {
+				const [ key, ..._value ] = attribute.trim().split( '=' )
+				const value = JSON.parse( _value.join( '=' ) )
+				customAttributes[ key ] = value
+			} )
+		}
 	} catch {}
 
 	return {
@@ -54,27 +62,37 @@ const addAttributes = attributes => ( {
 	},
 } )
 
-const CustomAttributesControl = props => {
-	const [ customAttributes, setCustomAttributes ] = useState( props.value )
+export const CustomAttributesControl = props => {
+	const [ customAttributes, setCustomAttributes ] = useState( props.value || '' )
 	const [ error, setError ] = useState( '' )
 
 	useEffect( () => {
 		const timeout = setTimeout( () => {
-			const customAttributesSplit = compact( customAttributes.split( ' ' ) )
-
 			try {
-				customAttributesSplit.forEach( attribute => {
-					const attributePair = attribute.split( '=' )
-					if ( attributePair.length < 2 ) {
-						throw new Error( 'Not a valid attribute. Input must be of pattern key1="value1" key2="value2".' )
-					}
+				if ( customAttributes.trim() === '' ) {
+					props.onChange( '' )
+					setError( '' )
+					return
+				}
 
-					const [ key, ..._value ] = attributePair
+				let tempCustomAttributes = customAttributes
+				const customAttributesMatch = customAttributes.match( /(.*?(?=\=))\="[^\"]*"/g )
+				if ( customAttributes.trim() !== '' && ! customAttributesMatch ) {
+					throw new Error( 'Not a valid attribute. Input must be of pattern key1="value1" key2="value2".' )
+				}
+
+				// Trim the original input value to check if there are unnecessary characters added.
+				customAttributesMatch.forEach( attribute => {
+					tempCustomAttributes = tempCustomAttributes.replace( attribute.trim(), '' )
+				} )
+
+				if ( tempCustomAttributes.trim() !== '' ) {
+					throw new Error( `Unexpected syntax: '${ tempCustomAttributes.trim() }'.` )
+				}
+
+				customAttributesMatch.forEach( attribute => {
+					const [ key, ..._value ] = attribute.trim().split( '=' )
 					const value = JSON.parse( _value.join( '=' ) )
-
-					if ( ! isString( value ) ) {
-						throw new Error( `The attribute value of ${ key } is not valid. Must be of type string but received: '${ typeof value }'.` )
-					}
 
 					if ( INVALID_ATTRIBUTES.includes( key ) ) {
 						throw new Error( `Attribute key '${ key }' is not allowed.` )
@@ -131,9 +149,9 @@ const addInspectorControls = ( output, props ) => {
 const advancedCustomAttributes = ( blockName, options = {} ) => {
 	const {} = options
 
-	addFilter( `stackable.${ blockName }.main-block.extraProps`, `stackable/${ blockName }/advanced-custom-attributes`, createAddSaveProps )
 	addFilter( `stackable.${ blockName }.attributes`, `stackable/${ blockName }/advanced-custom-attributes`, addAttributes )
 	addFilter( `stackable.${ blockName }.edit.inspector.advanced.before`, `stackable/${ blockName }/advanced-custom-attributes`, addInspectorControls )
+	addFilter( `stackable.${ blockName }.main-block.extraProps`, `stackable/${ blockName }/advanced-custom-attributes`, createAddSaveProps )
 }
 
 export default advancedCustomAttributes
