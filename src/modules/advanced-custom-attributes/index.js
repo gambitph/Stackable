@@ -3,9 +3,8 @@
  */
 import { PanelAdvancedSettings } from '~stackable/components'
 import { i18n } from 'stackable'
-import {
-	isString, omit,
-} from 'lodash'
+import { omit, isString } from 'lodash'
+import striptags from 'striptags'
 
 /**
  * WordPress dependencies
@@ -14,7 +13,7 @@ import { addFilter } from '@wordpress/hooks'
 import {
 	Fragment, useState, useEffect,
 } from '@wordpress/element'
-import { __ } from '@wordpress/i18n'
+import { __, sprintf } from '@wordpress/i18n'
 import { TextControl } from '@wordpress/components'
 
 /**
@@ -31,21 +30,34 @@ const INVALID_ATTRIBUTES = [
 	'dangerouslySetInnerHTML',
 ]
 
+const INVALID_BLOCK_ATTRIBUTES = [
+	'customAttributes',
+]
+
 const createAddSaveProps = ( extraProps, blockProps ) => {
-	if ( ! isString( blockProps.attributes.customAttributes ) || blockProps.attributes.customAttributes === '' ) {
+	if ( ! Array.isArray( blockProps.attributes.customAttributes ) || blockProps.attributes.customAttributes.length === 0 ) {
 		return extraProps
 	}
 
 	const customAttributes = {}
 	try {
-		const customAttributesMatch = blockProps.attributes.customAttributes.match( /(.*?(?=\=))\="[^\"]*"/g )
-		if ( Array.isArray( customAttributesMatch ) ) {
-			customAttributesMatch.forEach( attribute => {
-				const [ key, ..._value ] = attribute.trim().split( '=' )
-				const value = JSON.parse( _value.join( '=' ) )
-				customAttributes[ key ] = value
-			} )
-		}
+		blockProps.attributes.customAttributes.forEach( ( [ key, _value ] ) => {
+			let value = _value
+			const dynamicAttributeMatch = value.match( /%[^\%]*%/g )
+			if ( dynamicAttributeMatch ) {
+				dynamicAttributeMatch.forEach( _match => {
+					const match = _match.substr( 1, _match.length - 2 )
+					if (
+						! INVALID_BLOCK_ATTRIBUTES.includes( match ) &&
+						blockProps.attributes.hasOwnProperty( match ) &&
+						isString( blockProps.attributes[ match ] )
+					) {
+						value = value.replace( _match, striptags( blockProps.attributes[ match ] ) )
+					}
+				} )
+			}
+			customAttributes[ key ] = value
+		} )
 	} catch {}
 
 	return {
@@ -57,20 +69,29 @@ const createAddSaveProps = ( extraProps, blockProps ) => {
 const addAttributes = attributes => ( {
 	...attributes,
 	customAttributes: {
-		type: 'string',
-		default: '',
+		type: 'array',
+		default: [],
 	},
 } )
 
 export const CustomAttributesControl = props => {
-	const [ customAttributes, setCustomAttributes ] = useState( props.value || '' )
+	const [ customAttributes, setCustomAttributes ] = useState(
+		Array.isArray( props.value ) ?
+			props.value.map( attribute => {
+				const [ key, _value ] = attribute
+				const value = `"${ _value }"`
+				return [ key, value ].join( '=' )
+			} ).join( ' ' ) :
+			''
+	)
+
 	const [ error, setError ] = useState( '' )
 
 	useEffect( () => {
 		const timeout = setTimeout( () => {
 			try {
 				if ( customAttributes.trim() === '' ) {
-					props.onChange( '' )
+					props.onChange( [] )
 					setError( '' )
 					return
 				}
@@ -78,7 +99,7 @@ export const CustomAttributesControl = props => {
 				let tempCustomAttributes = customAttributes
 				const customAttributesMatch = customAttributes.match( /(.*?(?=\=))\="[^\"]*"/g )
 				if ( customAttributes.trim() !== '' && ! customAttributesMatch ) {
-					throw new Error( 'Not a valid attribute. Input must be of pattern key1="value1" key2="value2".' )
+					throw new Error( __( 'Not a valid attribute. Input must be of pattern key1="value1" key2="value2".', i18n ) )
 				}
 
 				// Trim the original input value to check if there are unnecessary characters added.
@@ -87,15 +108,16 @@ export const CustomAttributesControl = props => {
 				} )
 
 				if ( tempCustomAttributes.trim() !== '' ) {
-					throw new Error( `Unexpected syntax: '${ tempCustomAttributes.trim() }'.` )
+					throw new Error( sprintf( __( "Unexpected syntax: '%s'.", i18n ), tempCustomAttributes.trim() ) )
 				}
 
+				const newCustomAttributes = []
 				customAttributesMatch.forEach( attribute => {
 					const [ key, ..._value ] = attribute.trim().split( '=' )
 					const value = JSON.parse( _value.join( '=' ) )
 
 					if ( INVALID_ATTRIBUTES.includes( key ) ) {
-						throw new Error( `Attribute key '${ key }' is not allowed.` )
+						throw new Error( sprintf( __( "Attribute key '%s' is not allowed.", i18n ), key ) )
 					}
 
 					/**
@@ -103,10 +125,11 @@ export const CustomAttributesControl = props => {
 					 * Throws an error if not valid.
 					 */
 					document.createElement( 'div' ).setAttribute( key, value )
-
-					props.onChange( customAttributes )
-					setError( '' )
+					newCustomAttributes.push( [ key, value ] )
 				} )
+
+				props.onChange( newCustomAttributes )
+				setError( '' )
 			} catch ( e ) {
 				setError( e.toString().trim() )
 				return false
@@ -119,7 +142,7 @@ export const CustomAttributesControl = props => {
 	return (
 		<Fragment>
 			<TextControl
-				label={ __( 'Custom Attributes' ) }
+				label={ __( 'Custom Attributes', i18n ) }
 				value={ customAttributes }
 				onChange={ setCustomAttributes }
 			/>

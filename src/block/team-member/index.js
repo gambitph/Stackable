@@ -54,6 +54,7 @@ export const settings = {
 		'advanced-column-spacing': {
 			paddings: false,
 		},
+		'advanced-custom-attributes': true,
 		'advanced-responsive': true,
 		'block-background': true,
 		'block-separators': true,
