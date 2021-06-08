@@ -20,6 +20,8 @@ const SpacingControl = props => {
 	// Allow different sets of min/max/step values per screen size.
 	const min = Array.isArray( props.min ) ? props.min : [ props.min, props.min, props.min ]
 	const max = Array.isArray( props.max ) ? props.max : [ props.max, props.max, props.max ]
+	const sliderMin = Array.isArray( props.sliderMin ) ? props.sliderMin : [ props.sliderMin, props.sliderMin, props.sliderMin ]
+	const sliderMax = Array.isArray( props.sliderMax ) ? props.sliderMax : [ props.sliderMax, props.sliderMax, props.sliderMax ]
 	const step = Array.isArray( props.step ) ? props.step : [ props.step, props.step, props.step ]
 
 	return <Fragment>
@@ -28,6 +30,8 @@ const SpacingControl = props => {
 				{ ...propsToPass }
 				min={ min[ 0 ] }
 				max={ max[ 0 ] }
+				sliderMin={ sliderMin[ 0 ] }
+				sliderMax={ sliderMax[ 0 ] }
 				step={ step[ 0 ] }
 				top={ props.valueDesktop.top }
 				right={ props.valueDesktop.right }
@@ -58,6 +62,8 @@ const SpacingControl = props => {
 				{ ...propsToPass }
 				min={ min[ 1 ] }
 				max={ max[ 1 ] }
+				sliderMin={ sliderMin[ 1 ] }
+				sliderMax={ sliderMax[ 1 ] }
 				step={ step[ 1 ] }
 				top={ props.valueTablet.top }
 				right={ props.valueTablet.right }
@@ -83,6 +89,8 @@ const SpacingControl = props => {
 				{ ...propsToPass }
 				min={ min[ 2 ] }
 				max={ max[ 2 ] }
+				sliderMin={ sliderMin[ 2 ] }
+				sliderMax={ sliderMax[ 2 ] }
 				step={ step[ 2 ] }
 				top={ props.valueMobile.top }
 				right={ props.valueMobile.right }
