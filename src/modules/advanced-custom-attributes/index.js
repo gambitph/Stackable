@@ -137,6 +137,7 @@ export const CustomAttributesControl = props => {
 	return (
 		<Fragment>
 			<TextControl
+				data-testid="custom-attributes"
 				label={ __( 'Custom Attributes', i18n ) }
 				value={ customAttributes }
 				onChange={ setCustomAttributes }
