@@ -3,7 +3,7 @@
  */
 import { PanelAdvancedSettings } from '~stackable/components'
 import { i18n } from 'stackable'
-import { omit, isUndefined } from 'lodash'
+import { isUndefined } from 'lodash'
 import striptags from 'striptags'
 
 /**
@@ -11,24 +11,10 @@ import striptags from 'striptags'
  */
 import { addFilter } from '@wordpress/hooks'
 import {
-	Fragment, useState, useEffect,
+	Fragment, useState, useEffect, render, unmountComponentAtNode,
 } from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
 import { TextControl } from '@wordpress/components'
-
-/**
- * We need to filter unsupported attributes
- * to avoid block errors.
- */
-const INVALID_ATTRIBUTES = [
-	'children',
-	'class',
-	'className',
-	'id',
-	'ref',
-	'style',
-	'dangerouslySetInnerHTML',
-]
 
 const INVALID_BLOCK_ATTRIBUTES = [
 	'customAttributes',
@@ -62,7 +48,7 @@ const createAddSaveProps = ( extraProps, blockProps ) => {
 
 	return {
 		...extraProps,
-		...omit( customAttributes, INVALID_ATTRIBUTES ),
+		...customAttributes,
 	}
 }
 
@@ -116,15 +102,24 @@ export const CustomAttributesControl = props => {
 					const [ key, ..._value ] = attribute.trim().split( '=' )
 					const value = JSON.parse( _value.join( '=' ) )
 
-					if ( INVALID_ATTRIBUTES.includes( key ) ) {
-						throw new Error( sprintf( __( "Attribute key '%s' is not allowed.", i18n ), key ) )
-					}
-
 					/**
-					 * Check if the attribute key and value can be a valid html attribute.
+					 * Checks if the attribute key and value can be a valid html attribute.
 					 * Throws an error if not valid.
 					 */
 					document.createElement( 'div' ).setAttribute( key, value )
+
+					/**
+					 * Checks if the attribute key and value can be a valid react prop
+					 * Throws an error if not valid.
+					 */
+					try {
+						const dummyNode = document.createElement( 'div' )
+						render( <div { ...{ [ key ]: value } } />, dummyNode )
+						unmountComponentAtNode( dummyNode )
+					} catch {
+						throw new Error( sprintf( __( "Attribute key '%s' is not allowed.", i18n ), key ) )
+					}
+
 					newCustomAttributes.push( [ key, value ] )
 				} )
 
