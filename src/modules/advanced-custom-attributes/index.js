@@ -146,7 +146,7 @@ export const CustomAttributesControl = props => {
 				value={ customAttributes }
 				onChange={ setCustomAttributes }
 			/>
-			{ !! error && <p>{ error }</p> }
+			{ !! error && <p className="stk-custom-attributes-control__has-error">{ error }</p> }
 		</Fragment>
 	)
 }
@@ -159,6 +159,11 @@ const addInspectorControls = ( output, props ) => {
 				title={ __( 'Custom Attributes', i18n ) }
 				initialOpen={ false }
 			>
+				<p className="components-base-control__help">
+					{ __( 'Add custom HTML attributes to your Stackable blocks.', i18n ) }
+					&nbsp;
+					<a href="https://docs.wpstackable.com" target="_docs">{ __( 'Learn more about Custom Attributes', i18n ) }</a>
+				</p>
 				<CustomAttributesControl
 					label={ __( 'Custom Attributes' ) }
 					value={ props.attributes.customAttributes }
