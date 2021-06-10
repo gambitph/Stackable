@@ -202,6 +202,20 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.17.0 =
+* New: You can now add your own Custom Attributes in Stackable blocks
+* Fixed: The featured image in blog posts blocks now correctly use the image's alt text
+* Fixed: JS error encountered when a global color becomes null
+* Fixed: Icon block's icon alignment issue when align is set to right
+* Fixed: Compatibility with WP Review Pro in the blog posts block
+* Fixed: Possible PHP warning when encountering a block without attributes when loading Google Fonts
+* Fixed: Possible dynamic content PHP warning
+* Fixed: Block error with ACF Pro when using Wysiwyg fields from Options pages as dynamic content
+* Fixed: Container links should not be included when copy and pasting styles
+* Fixed: Increased clamped padding in tablets from 30 to 100
+* Fixed: Updated documentation links
+* Fixed: The icon's column gap did not take effect in mobile
+
 = 2.16.0 =
 [Clickable Containers and Pagination](https://wpstackable.com/blog/clickable-containers-and-pagination/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 
