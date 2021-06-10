@@ -7,6 +7,10 @@
 @import "common";
 
 .ugb-icon {
+	&.ugb-icon--v2 {
+		display: flex;
+	}
+
 	.ugb-inner-block {
 		width: auto;
 	}
