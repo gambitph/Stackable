@@ -3,7 +3,7 @@
  */
 import { PanelAdvancedSettings } from '~stackable/components'
 import { i18n } from 'stackable'
-import { isUndefined } from 'lodash'
+import { isUndefined, omit } from 'lodash'
 import striptags from 'striptags'
 
 /**
@@ -15,6 +15,12 @@ import {
 } from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
 import { TextControl } from '@wordpress/components'
+
+const INVALID_HTML_ATTRIBUTES = [
+	'class',
+	'className',
+	'id',
+]
 
 const INVALID_BLOCK_ATTRIBUTES = [
 	'customAttributes',
@@ -48,7 +54,7 @@ const createAddSaveProps = ( extraProps, blockProps ) => {
 
 	return {
 		...extraProps,
-		...customAttributes,
+		...omit( customAttributes, INVALID_HTML_ATTRIBUTES ),
 	}
 }
 
@@ -116,6 +122,10 @@ export const CustomAttributesControl = props => {
 						const dummyNode = document.createElement( 'div' )
 						render( <div { ...{ [ key ]: value } } />, dummyNode )
 						unmountComponentAtNode( dummyNode )
+
+						if ( INVALID_HTML_ATTRIBUTES.includes( key ) ) {
+							throw new Error()
+						}
 					} catch {
 						throw new Error( sprintf( __( "Attribute key '%s' is not allowed.", i18n ), key ) )
 					}
