@@ -72,7 +72,7 @@ const CustomAttributesControl = props => {
 			onChange={ setCustomAttributes }
 			help={ <Fragment>
 				{ __( 'You can type in custom HTML attributes for this block in the field above.', i18n ) }
-				<a href="https://docs.wpstackable.com" target="_docs">{ __( 'Learn more about Custom Attributes', i18n ) }</a>
+				<a href="https://docs.wpstackable.com/article/461-how-to-use-custom-attributes?utm_source=inspector&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">{ __( 'Learn more about Custom Attributes', i18n ) }</a>
 			</Fragment>
 			}
 		/>
