@@ -157,16 +157,16 @@ export const createStyles = props => {
 	// Advanced Column Gap
 	styles.push( {
 		'.ugb-icon__content-wrapper': {
-			columnGap: getValue( 'columnGap' ) !== '' ? appendImportant( getValue( 'columnGap' ) + 'px', true ) : undefined,
+			columnGap: appendImportant( getValue( 'columnGap', '%spx' ) ),
 		},
 		tablet: {
 			'.ugb-icon__content-wrapper': {
-				columnGap: getValue( 'tabletColumnGap' ) !== '' ? appendImportant( getValue( 'tabletColumnGap' ) + 'px', true ) : undefined,
+				columnGap: appendImportant( getValue( 'tabletColumnGap', '%spx' ) ),
 			},
 		},
 		mobile: {
 			'.ugb-icon__content-wrapper': {
-				columnGap: getValue( 'mobileColumnGap' ) !== '' ? appendImportant( getValue( 'mobileColumnGap' ) + 'px', true ) : undefined,
+				columnGap: appendImportant( getValue( 'mobileColumnGap', '%spx' ) ),
 			},
 		},
 	} )
