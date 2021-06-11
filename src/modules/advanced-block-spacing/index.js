@@ -406,7 +406,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							left={ paddingLeft }
 							unit={ paddingUnit }
 							min={ [ 0, 0, 0 ] }
-							max={ [ 500, 30, 100 ] }
+							sliderMax={ [ 500, 100, 100 ] }
 							onChange={ paddings => {
 								setAttributes( {
 									paddingTop: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
@@ -436,7 +436,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							left={ tabletPaddingLeft }
 							unit={ tabletPaddingUnit }
 							min={ [ 0, 0, 0 ] }
-							max={ [ 500, 30, 100 ] }
+							sliderMax={ [ 500, 100, 100 ] }
 							onChange={ paddings => {
 								setAttributes( {
 									tabletPaddingTop: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
@@ -465,7 +465,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 							left={ mobilePaddingLeft }
 							unit={ mobilePaddingUnit }
 							min={ [ 0, 0, 0 ] }
-							max={ [ 500, 30, 100 ] }
+							sliderMax={ [ 500, 100, 100 ] }
 							onChange={ paddings => {
 								setAttributes( {
 									mobilePaddingTop: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
