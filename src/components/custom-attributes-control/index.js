@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { i18n } from 'stackable'
+import { escape } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -17,7 +18,7 @@ const CustomAttributesControl = props => {
 		Array.isArray( props.value ) ?
 			props.value.map( attribute => {
 				const [ key, _value ] = attribute
-				const value = `"${ _value }"`
+				const value = `"${ escape( _value ) }"`
 				return [ key, value ].join( '=' )
 			} ).join( ' ' ) :
 			''
@@ -28,7 +29,7 @@ const CustomAttributesControl = props => {
 			const el = document.createElement( 'div' )
 			el.innerHTML = `<div ${ customAttributes } />`
 			// Get all the "fixed" attributes:
-			const attrNodeMap = el.children[ 0 ].attributes
+			const attrNodeMap = el.children[ 0 ]?.attributes || []
 			const attributes = []
 			for ( let i = attrNodeMap.length - 1; i >= 0; i-- ) {
 				if ( ! props.invalidHtmlAttributes.includes( attrNodeMap[ i ].name ) ) {
@@ -61,7 +62,7 @@ const CustomAttributesControl = props => {
 					Array.isArray( props.value ) ?
 						props.value.map( attribute => {
 							const [ key, _value ] = attribute
-							const value = `"${ _value }"`
+							const value = `"${ escape( _value ) }"`
 							return [ key, value ].join( '=' )
 						} ).join( ' ' ) :
 						''

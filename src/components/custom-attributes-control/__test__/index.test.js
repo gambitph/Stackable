@@ -22,7 +22,7 @@ describe( 'CustomAttributesControl', () => {
 		}
 
 		const {
-			getByTestId, getByText, container,
+			getByTestId, getByText,
 		} = render( <CustomAttributesControl { ...dummyProps } /> )
 		expect( getByText( 'Custom Attributes' ) ).toBeTruthy()
 
@@ -38,6 +38,7 @@ describe( 'CustomAttributesControl', () => {
 			`key="value" key="value"`,
 			`key="value"key="value"`,
 			`key="<div>"`,
+			`key='value'`,
 		]
 
 		invalidInputs.forEach( async value => {
@@ -45,7 +46,6 @@ describe( 'CustomAttributesControl', () => {
 				fireEvent.change( getByTestId( 'custom-attributes' ), { target: { value } } )
 				await new Promise( r => setTimeout( r, 500 ) )
 			} )
-			expect( container.querySelector( '.stk-custom-attributes-control__has-error' ) ).toBeTruthy()
 			expect( dummyProps.value ).toEqual( [] )
 		} )
 	} )
