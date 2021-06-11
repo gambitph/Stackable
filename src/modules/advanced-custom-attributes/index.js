@@ -81,7 +81,7 @@ const addInspectorControls = ( output, props ) => {
 			>
 
 				<CustomAttributesControl
-					label={ __( 'Custom Attributes' ) }
+					label={ __( 'Custom Attributes', i18n ) }
 					value={ props.attributes.customAttributes }
 					invalidHtmlAttributes={ INVALID_HTML_ATTRIBUTES }
 					onChange={ value => props.setAttributes( { customAttributes: value } ) }
