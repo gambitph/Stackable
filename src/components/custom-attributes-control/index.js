@@ -11,7 +11,7 @@ import {
 	Fragment, useState, useEffect, render, unmountComponentAtNode, useRef,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { TextControl } from '@wordpress/components'
+import { TextControl, ExternalLink } from '@wordpress/components'
 
 const CustomAttributesControl = props => {
 	const inputRef = useRef()
@@ -82,11 +82,17 @@ const CustomAttributesControl = props => {
 
 				props.onChange( attributes )
 			} }
-			help={ <Fragment>
-				{ __( 'You can type in custom HTML attributes for this block in the field above.', i18n ) } &nbsp;
-				<a href="https://docs.wpstackable.com/article/461-how-to-use-custom-attributes?utm_source=inspector&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">{ __( 'Learn more about Custom Attributes', i18n ) }</a>
-			</Fragment>
-			}
+			help={ (
+				<Fragment>
+					{ __( 'You can type in custom HTML attributes for this block in the field above.', i18n ) } <br />
+					<ExternalLink
+						href="https://docs.wpstackable.com/article/461-how-to-use-custom-attributes?utm_source=inspector&utm_campaign=learnmore&utm_medium=gutenberg"
+						target="_docs"
+					>
+						{ __( 'Learn more about Custom Attributes', i18n ) }
+					</ExternalLink>
+				</Fragment>
+			) }
 		/>
 	)
 }
