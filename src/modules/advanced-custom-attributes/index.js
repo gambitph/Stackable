@@ -52,8 +52,8 @@ const createAddSaveProps = ( extraProps, blockProps ) => {
 						value = value.replace( _match, striptags( blockProps.attributes[ match ].toString() ) )
 					}
 				} )
+				customAttributes[ key ] = value
 			}
-			customAttributes[ key ] = value
 		} catch {}
 	} )
 
