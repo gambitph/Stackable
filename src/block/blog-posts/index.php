@@ -210,7 +210,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 						$post_id,
 						$attributes['imageSize'],
 						array(
-							'alt' => esc_attr( ! empty( $post_meta ) ? $post_meta : '' ),
+							'alt' => esc_attr( ! empty( $image_alt ) ? $image_alt : '' ),
 							'width' => esc_attr( $featured_image_src[1] ),
 							'height' => esc_attr( $featured_image_src[2] ),
 						)
