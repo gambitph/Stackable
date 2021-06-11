@@ -48,15 +48,20 @@ const CustomAttributesControl = props => {
 			value={ customAttributes }
 			onBlur={ () => {
 				// Sanitize the input on blur.
-				setCustomAttributes(
-					Array.isArray( props.value ) ?
-						props.value.map( attribute => {
-							const [ key, _value ] = attribute
-							const value = `"${ escape( _value ) }"`
-							return [ key, value ].join( '=' )
-						} ).join( ' ' ) :
-						''
-				)
+				if (
+					Array.isArray( props.value ) &&
+					props.value.length > 0
+				) {
+					setCustomAttributes(
+						Array.isArray( props.value ) ?
+							props.value.map( attribute => {
+								const [ key, _value ] = attribute
+								const value = `"${ escape( _value ) }"`
+								return [ key, value ].join( '=' )
+							} ).join( ' ' ) :
+							''
+					)
+				}
 			} }
 			onChange={ newCustomAttributes => {
 				setCustomAttributes( newCustomAttributes )
@@ -65,7 +70,7 @@ const CustomAttributesControl = props => {
 				// Get all the "fixed" attributes:
 				const attrNodeMap = el.children[ 0 ]?.attributes || []
 				const attributes = []
-				for ( let i = attrNodeMap.length - 1; i >= 0; i-- ) {
+				for ( let i = 0; i < attrNodeMap.length; i++ ) {
 					if ( ! props.invalidHtmlAttributes.includes( attrNodeMap[ i ].name ) ) {
 						try {
 						// Checks if the attribute key and value can be a valid react prop
