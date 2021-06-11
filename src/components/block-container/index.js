@@ -16,7 +16,7 @@ BlockContainer.Edit = props => {
 		render,
 		mainClass,
 		blockTag: blockTagProp,
-		...containerProps
+		..._containerProps
 	} = props
 	const { blockName } = blockProps
 	const {
@@ -34,6 +34,8 @@ BlockContainer.Edit = props => {
 	const innerClasses = classnames( [
 		'ugb-inner-block',
 	], applyFilters( `stackable.${ blockName }.main-block.inner-classes`, {}, blockProps ) )
+
+	const containerProps = applyFilters( `stackable.${ blockName }.main-block.extraProps`, _containerProps, blockProps )
 
 	// If anchor is not defined, force id to be undefined.
 	const id = anchor !== '' ? anchor : undefined
@@ -68,7 +70,7 @@ BlockContainer.Save = props => {
 		render,
 		mainClass,
 		blockTag: blockTagProp,
-		...containerProps
+		..._containerProps
 	} = props
 	const { blockName } = blockProps
 	const {
@@ -86,6 +88,8 @@ BlockContainer.Save = props => {
 	const innerClasses = classnames( [
 		'ugb-inner-block',
 	], applyFilters( `stackable.${ blockName }.main-block.inner-classes`, {}, blockProps ) )
+
+	const containerProps = applyFilters( `stackable.${ blockName }.main-block.extraProps`, _containerProps, blockProps )
 
 	// If anchor is not defined, force id to be undefined.
 	const id = anchor !== '' ? anchor : undefined

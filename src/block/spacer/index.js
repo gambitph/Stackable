@@ -50,6 +50,7 @@ export const settings = {
 		'block-separators': {
 			enableBringToFront: false,
 		},
+		'advanced-custom-attributes': true,
 		'advanced-responsive': true,
 		'custom-css': {
 			default: applyFilters( 'stackable.spacer.custom-css.default', '' ),
