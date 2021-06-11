@@ -38,6 +38,7 @@ const CustomAttributesControl = props => {
 						// Throws an error if not valid.
 						const dummyNode = document.createElement( 'div' )
 						render( <div { ...{ [ attrNodeMap[ i ].name ]: attrNodeMap[ i ].value } } />, dummyNode )
+						document.createElement( 'div' ).setAttribute( attrNodeMap[ i ].name, attrNodeMap[ i ].value )
 						unmountComponentAtNode( dummyNode )
 
 						attributes.push( [ attrNodeMap[ i ].name, attrNodeMap[ i ].value ] )
