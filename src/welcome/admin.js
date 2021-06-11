@@ -250,6 +250,35 @@ AdditionalOptions.defaultProps = {
 	showProNoticesOption: false,
 }
 
+const OptimizationSettings = () => {
+	const [ optimizeScriptLoad, setOptimizeScriptLoad ] = useState( false )
+
+	useEffect( () => {
+		loadPromise.then( () => {
+			const settings = new models.Settings()
+			settings.fetch().then( response => {
+				setOptimizeScriptLoad( !! response.stackable_optimize_script_load )
+			} )
+		} )
+	}, [] )
+
+	const updateOptimizeScriptLoad = value => {
+		const model = new models.Settings( { stackable_optimize_script_load: value } ) // eslint-disable-line camelcase
+		model.save()
+		setOptimizeScriptLoad( value )
+	}
+
+	return <Fragment>
+		<AdminToggleSetting
+			label={ __( 'Frontend JS & CSS Files', i18n ) }
+			value={ optimizeScriptLoad }
+			onChange={ updateOptimizeScriptLoad }
+			disabled={ __( 'Load across entire site', i18n ) }
+			enabled={ __( 'Load only in posts with Stackable blocks', i18n ) }
+		/>
+	</Fragment>
+}
+
 // Load all the options into the UI.
 domReady( () => {
 	render(
@@ -267,5 +296,10 @@ domReady( () => {
 	render(
 		<GlobalSettings />,
 		document.querySelector( '.s-global-settings' )
+	)
+
+	render(
+		<OptimizationSettings />,
+		document.querySelector( '.s-optimization-settings' )
 	)
 } )

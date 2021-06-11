@@ -204,6 +204,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 = 2.17.0 =
 * New: You can now add your own Custom Attributes in Stackable blocks
+* New: You can now opt to only load JS and CSS frontend files only in pages that use Stackable blocks
 * Fixed: The featured image in blog posts blocks now correctly use the image's alt text
 * Fixed: JS error encountered when a global color becomes null
 * Fixed: Icon block's icon alignment issue when align is set to right
