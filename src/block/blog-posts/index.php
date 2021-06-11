@@ -205,7 +205,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 				$featured_image_urls = stackable_featured_image_urls_from_url( $featured_image_id );
 				$featured_image_src = $featured_image_urls[ $attributes['imageSize'] ];
 				if ( ! empty( $featured_image_src ) ) {
-					$post_meta = get_post_meta( $featured_image_id, '_wp_attachment_image_alt', true );
+					$image_alt = get_post_meta( $featured_image_id, '_wp_attachment_image_alt', true );
 					$thumbnail = get_the_post_thumbnail(
 						$post_id,
 						$attributes['imageSize'],
