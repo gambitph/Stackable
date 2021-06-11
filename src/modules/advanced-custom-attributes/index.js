@@ -1,7 +1,9 @@
 /**
  * External dependencies
  */
-import { PanelAdvancedSettings } from '~stackable/components'
+import {
+	PanelAdvancedSettings, CustomAttributesControl,
+} from '~stackable/components'
 import { i18n } from 'stackable'
 import { isUndefined, omit } from 'lodash'
 import striptags from 'striptags'
@@ -11,15 +13,17 @@ import striptags from 'striptags'
  */
 import { addFilter } from '@wordpress/hooks'
 import {
-	Fragment, useState, useEffect, render, unmountComponentAtNode,
+	Fragment,
 } from '@wordpress/element'
-import { __, sprintf } from '@wordpress/i18n'
-import { TextControl } from '@wordpress/components'
+import { __ } from '@wordpress/i18n'
 
 const INVALID_HTML_ATTRIBUTES = [
 	'class',
 	'className',
 	'id',
+	'ref',
+	'style',
+	'dangerouslySetInnerHTML',
 ]
 
 const INVALID_BLOCK_ATTRIBUTES = [
@@ -31,10 +35,11 @@ const createAddSaveProps = ( extraProps, blockProps ) => {
 		return extraProps
 	}
 
-	const customAttributes = {}
-	try {
-		blockProps.attributes.customAttributes.forEach( ( [ key, _value ] ) => {
-			let value = _value
+	const customAttributes = Object.fromEntries( blockProps.attributes.customAttributes )
+	Object.keys( customAttributes ).forEach( key => {
+		try {
+			let value = customAttributes[ key ]
+			// Replace the value if it's dynamic
 			const dynamicAttributeMatch = value.match( /%[^\%]*%/g )
 			if ( dynamicAttributeMatch ) {
 				dynamicAttributeMatch.forEach( _match => {
@@ -49,8 +54,8 @@ const createAddSaveProps = ( extraProps, blockProps ) => {
 				} )
 			}
 			customAttributes[ key ] = value
-		} )
-	} catch {}
+		} catch {}
+	} )
 
 	return {
 		...extraProps,
@@ -66,97 +71,6 @@ const addAttributes = attributes => ( {
 	},
 } )
 
-export const CustomAttributesControl = props => {
-	const [ customAttributes, setCustomAttributes ] = useState(
-		Array.isArray( props.value ) ?
-			props.value.map( attribute => {
-				const [ key, _value ] = attribute
-				const value = `"${ _value }"`
-				return [ key, value ].join( '=' )
-			} ).join( ' ' ) :
-			''
-	)
-
-	const [ error, setError ] = useState( '' )
-
-	useEffect( () => {
-		const timeout = setTimeout( () => {
-			try {
-				if ( customAttributes.trim() === '' ) {
-					props.onChange( [] )
-					setError( '' )
-					return
-				}
-
-				let tempCustomAttributes = customAttributes
-				const customAttributesMatch = customAttributes.match( /(.*?(?=\=))\="[^\"]*"/g )
-				if ( customAttributes.trim() !== '' && ! customAttributesMatch ) {
-					throw new Error( __( 'Not a valid attribute. Input must be of pattern key1="value1" key2="value2".', i18n ) )
-				}
-
-				// Trim the original input value to check if there are unnecessary characters added.
-				customAttributesMatch.forEach( attribute => {
-					tempCustomAttributes = tempCustomAttributes.replace( attribute.trim(), '' )
-				} )
-
-				if ( tempCustomAttributes.trim() !== '' ) {
-					throw new Error( sprintf( __( "Unexpected syntax: '%s'.", i18n ), tempCustomAttributes.trim() ) )
-				}
-
-				const newCustomAttributes = []
-				customAttributesMatch.forEach( attribute => {
-					const [ key, ..._value ] = attribute.trim().split( '=' )
-					const value = JSON.parse( _value.join( '=' ) )
-
-					/**
-					 * Checks if the attribute key and value can be a valid html attribute.
-					 * Throws an error if not valid.
-					 */
-					document.createElement( 'div' ).setAttribute( key, value )
-
-					/**
-					 * Checks if the attribute key and value can be a valid react prop
-					 * Throws an error if not valid.
-					 */
-					try {
-						const dummyNode = document.createElement( 'div' )
-						render( <div { ...{ [ key ]: value } } />, dummyNode )
-						unmountComponentAtNode( dummyNode )
-
-						if ( INVALID_HTML_ATTRIBUTES.includes( key ) ) {
-							throw new Error()
-						}
-					} catch {
-						throw new Error( sprintf( __( "Attribute key '%s' is not allowed.", i18n ), key ) )
-					}
-
-					newCustomAttributes.push( [ key, value ] )
-				} )
-
-				props.onChange( newCustomAttributes )
-				setError( '' )
-			} catch ( e ) {
-				setError( e.toString().trim() )
-				return false
-			}
-		}, 300 )
-
-		return () => clearTimeout( timeout )
-	}, [ customAttributes ] )
-
-	return (
-		<Fragment>
-			<TextControl
-				data-testid="custom-attributes"
-				label={ __( 'Custom Attributes', i18n ) }
-				value={ customAttributes }
-				onChange={ setCustomAttributes }
-			/>
-			{ !! error && <p className="stk-custom-attributes-control__has-error">{ error }</p> }
-		</Fragment>
-	)
-}
-
 const addInspectorControls = ( output, props ) => {
 	return (
 		<Fragment>
@@ -165,14 +79,11 @@ const addInspectorControls = ( output, props ) => {
 				title={ __( 'Custom Attributes', i18n ) }
 				initialOpen={ false }
 			>
-				<p className="components-base-control__help">
-					{ __( 'Add custom HTML attributes to your Stackable blocks.', i18n ) }
-					&nbsp;
-					<a href="https://docs.wpstackable.com" target="_docs">{ __( 'Learn more about Custom Attributes', i18n ) }</a>
-				</p>
+
 				<CustomAttributesControl
 					label={ __( 'Custom Attributes' ) }
 					value={ props.attributes.customAttributes }
+					invalidHtmlAttributes={ INVALID_HTML_ATTRIBUTES }
 					onChange={ value => props.setAttributes( { customAttributes: value } ) }
 				/>
 			</PanelAdvancedSettings>

@@ -1,11 +1,21 @@
-import { CustomAttributesControl } from '../'
+import CustomAttributesControl from '../'
 import {
 	render, act, fireEvent,
 } from '@testing-library/react'
 
 describe( 'CustomAttributesControl', () => {
 	it( 'should catch attribute errors.', async () => {
+		const INVALID_HTML_ATTRIBUTES = [
+			'class',
+			'className',
+			'id',
+			'ref',
+			'style',
+			'dangerouslySetInnerHTML',
+		]
+
 		const dummyProps = {
+			invalidHtmlAttributes: INVALID_HTML_ATTRIBUTES,
 			label: 'Custom Attributes',
 			value: [],
 			onChange: jest.fn(),
@@ -17,12 +27,17 @@ describe( 'CustomAttributesControl', () => {
 		expect( getByText( 'Custom Attributes' ) ).toBeTruthy()
 
 		const invalidInputs = [
-			'test',
-			'key=value',
-			'key="value" key2=invalid',
-			'style="color: red;"',
-			'dangerouslySetInnerHTML="content"',
-			'ref="sample ref"',
+			`test`,
+			`key=value`,
+			`key="value" key2=invalid`,
+			`style="color: red;"`,
+			`dangerouslySetInnerHTML="content"`,
+			`ref="sample ref"`,
+			`key="value,'`,
+			`key-_!@#="value"`,
+			`key="value" key="value"`,
+			`key="value"key="value"`,
+			`key="<div>"`,
 		]
 
 		invalidInputs.forEach( async value => {
