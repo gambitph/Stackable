@@ -44,6 +44,7 @@ const CustomAttributesControl = props => {
 		<TextControl
 			ref={ inputRef }
 			data-testid="custom-attributes"
+			className="ugb-custom-attributes-control"
 			label={ __( 'Custom Attributes', i18n ) }
 			value={ customAttributes }
 			onBlur={ () => {
@@ -89,7 +90,15 @@ const CustomAttributesControl = props => {
 			} }
 			help={ (
 				<Fragment>
-					{ __( 'You can type in custom HTML attributes for this block in the field above.', i18n ) } <br />
+					{ __( 'You can type in custom HTML attributes for this block in the field above.', i18n ) }
+					&nbsp;
+					{ __( 'Example:', i18n ) }
+					<br />
+					<code>{ `data-id="my-title"` }</code>
+					<br />
+					<code>{ `aria-label="Hello"` }</code>
+					<br />
+					<br />
 					<ExternalLink
 						href="https://docs.wpstackable.com/article/461-how-to-use-custom-attributes?utm_source=inspector&utm_campaign=learnmore&utm_medium=gutenberg"
 						target="_docs"
