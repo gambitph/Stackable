@@ -114,6 +114,7 @@ Optimize your website’s performance, and get lightning fast page loading and m
 
 ### News Article Updates
 
+- [v2.17 Custom Attributes and Optimization](https://wpstackable.com/blog/custom-attributes-and-optimization/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.16 Clickable Containers and Pagination](https://wpstackable.com/blog/clickable-containers-and-pagination/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.15 Introducing Dynamic Content](https://wpstackable.com/blog/introducing-dynamic-content/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.14 Copy and Paste Block Styles](https://wpstackable.com/blog/copy-and-paste-block-styles/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -203,6 +204,8 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Changelog ==
 
 = 2.17.0 =
+[Custom Attributes and Optimization](https://wpstackable.com/blog/custom-attributes-and-optimization/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
 * New: You can now add your own Custom Attributes in Stackable blocks
 * New: You can now opt to only load JS and CSS frontend files only in pages that use Stackable blocks
 * Fixed: The featured image in blog posts blocks now correctly use the image's alt text
