@@ -37,8 +37,11 @@ const createAddSaveProps = ( extraProps, blockProps ) => {
 
 	const customAttributes = Object.fromEntries( blockProps.attributes.customAttributes )
 	Object.keys( customAttributes ).forEach( key => {
+		// Unescape the value, since we're storing them as escaped strings.
+		let value = unescape( customAttributes[ key ] )
+		customAttributes[ key ] = value
+
 		try {
-			let value = customAttributes[ key ]
 			// Replace the value if it's dynamic
 			const dynamicAttributeMatch = value.match( /%[^\%]*%/g )
 			if ( dynamicAttributeMatch ) {
