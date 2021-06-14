@@ -1,7 +1,6 @@
 import {
 	Advanced,
 	BlockDiv,
-	Column,
 	CustomCSS,
 	Responsive,
 	Button,
@@ -15,7 +14,6 @@ import { version as VERSION } from 'stackable'
 export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
 	BlockDiv.addAttributes( attrObject )
-	Column.addAttributes( attrObject )
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )

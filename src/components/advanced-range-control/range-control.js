@@ -12,7 +12,7 @@ import Button from '../button'
  * WordPress dependencies
  */
 import {
-	RangeControl, __experimentalNumberControl as NumberControl,
+	RangeControl, __experimentalNumberControl as NumberControl, // eslint-disable-line @wordpress/no-unsafe-wp-apis
 } from '@wordpress/components'
 import {
 	useState, useLayoutEffect, useEffect, useCallback, memo,
@@ -84,7 +84,7 @@ const StackableRangeControl = memo( props => {
 			}
 		}
 		setValue( props.resetFallbackValue )
-	}, [ props.min, props.max, props.resetFallbackValue ] )
+	}, [ value, props.min, props.max, props.resetFallbackValue ] )
 
 	/**
 	 * We cannot trust the initialPosition of the RangeControl, so we

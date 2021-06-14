@@ -10,8 +10,6 @@ import {
 	withIsHovered,
 } from '~stackable/higher-order'
 import {
-	Column,
-	getColumnClasses,
 	getTypographyClasses,
 	BlockDiv,
 	Advanced, CustomCSS,
@@ -20,6 +18,7 @@ import {
 	Button,
 	Typography,
 	Icon,
+	BlockStyle,
 } from '~stackable/block-components'
 import {
 	useBlockEl,
@@ -37,13 +36,12 @@ import { RichText } from '@wordpress/block-editor'
  * Internal dependencies
  */
 import { ButtonStyles } from './style'
+import { blockStyles } from './block-styles'
 
 const Edit = props => {
 	const {
 		className, isHovered, setAttributes,
 	} = props
-
-	const [ columnClass ] = getColumnClasses( props.attributes )
 
 	const [ typographyWrapperClass, typographyInnerClasses ] = getTypographyClasses( props.attributes, { hoverAttrNameTemplate: 'hover%s' } )
 
@@ -55,7 +53,6 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-button',
-		columnClass,
 	] )
 
 	const blockEl = useBlockEl()
@@ -71,6 +68,7 @@ const Edit = props => {
 			<InspectorTabs />
 			<BlockDiv.InspectorControls />
 
+			<BlockStyle.InspectorControls styles={ blockStyles } />
 			<Typography.InspectorControls
 				enableTextTag={ false }
 				disableAlign={ true }
@@ -94,27 +92,26 @@ const Edit = props => {
 
 			<ButtonStyles version={ VERSION } />
 
-			<Column showHandle={ isHovered }>
-				<Linking show={ isHovered } />
-				<BlockDiv className={ blockClassNames }>
-					<Button
-						className={ buttonClassNames }
-					>
-						<Icon />
-						{ props.attributes.showText && (
-							<RichText
-								tagName="span"
-								className={ typographyInnerClassNames }
-								placeholder={ __( 'Button text', i18n ) }
-								withoutInteractiveFormatting={ true }
-								keepPlaceholderOnFocus
-								value={ props.attributes.text }
-								onChange={ value => setAttributes( { text: value } ) }
-							/>
-						) }
-					</Button>
-				</BlockDiv>
-			</Column>
+			<Linking show={ isHovered } />
+			<BlockDiv className={ blockClassNames }>
+				<Button
+					className={ buttonClassNames }
+					enableLinearGradient={ false }
+				>
+					<Icon />
+					{ props.attributes.showText && (
+						<RichText
+							tagName="span"
+							className={ typographyInnerClassNames }
+							placeholder={ __( 'Button text', i18n ) }
+							withoutInteractiveFormatting={ true }
+							keepPlaceholderOnFocus
+							value={ props.attributes.text }
+							onChange={ value => setAttributes( { text: value } ) }
+						/>
+					) }
+				</Button>
+			</BlockDiv>
 		</Fragment>
 	)
 }

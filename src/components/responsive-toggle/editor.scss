@@ -1,37 +1,10 @@
-.ugb-base-control-multi-label__responsive {
-	display: flex;
-	margin-left: 6px;
-	align-items: center;
-	button {
-		height: 14px;
-		width: 14px;
-		padding: 5px !important; // Force override for Gutenberg 7.7.
-		min-width: 11px !important; // Force override for Gutenberg 7.7.
-		box-sizing: content-box;
-		border-radius: 0 !important;
-		margin: 0;
-		border: 1px solid transparent;
-		svg {
-			height: 100%;
-			width: 100%;
-		}
-		&:hover,
-		&.is-active {
-			border: 1px solid #1e1e1e !important;
-			box-shadow: none !important;
-		}
-		&.is-active:not([data-screen="desktop"]) {
-			background: #007cba;
-			background: var(--wp-admin-theme-color, #007cba);
-			color: #fff;
-			border-color: #007cba !important;
-			border-color: var(--wp-admin-theme-color, #007cba) !important;
-		}
-		&[data-screen="desktop"]:not(:hover) {
-			border-color: transparent !important;
-		}
-		&.is-active:not(:first-child) {
-			background: #ab5af1 !important;
-		}
+.stk-control-responsive-toggle {
+	button.is-active:not([data-value="desktop"]) {
+		background: #007cba;
+		background: var(--wp-admin-theme-color, #007cba);
+		color: #fff;
+		border-color: #007cba !important;
+		border-color: var(--wp-admin-theme-color, #007cba) !important;
 	}
 }
+

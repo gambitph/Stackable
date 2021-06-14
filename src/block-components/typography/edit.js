@@ -261,7 +261,7 @@ const TypographyControls = props => {
 					} }
 				/>
 				<ColorPaletteControl
-					label={ getAttribute( 'textColorType' ) === 'gradient' ? sprintf( sprintf( __( '%s Color #%s', i18n ), label ), 1 )
+					label={ getAttribute( 'textColorType' ) === 'gradient' ? sprintf( __( '%s Color #%s', i18n ), label, 1 )
 						: sprintf( __( '%s Color', i18n ), label ) }
 					value={ getAttribute( 'textColor1' ) }
 					onChange={ value => updateAttribute( 'textColor1', value ) }

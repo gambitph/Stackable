@@ -21,7 +21,7 @@ import FontAwesomeIcon from './font-awesome-icon'
  */
 import { useBlockEditContext } from '@wordpress/block-editor'
 import {
-	useMemo,
+	useMemo, Fragment,
 } from '@wordpress/element'
 
 const SVGIcon = props => {
@@ -66,6 +66,7 @@ const LinearGradient = ( {
 export const Icon = props => {
 	const {
 		attrNameTemplate = '%s',
+		enableLinearGradient = true,
 	} = props
 
 	const { clientId } = useBlockEditContext()
@@ -77,11 +78,15 @@ export const Icon = props => {
 	const ShapeComp = useMemo( () => getShapeSVG( getValue( 'backgroundShape' ) || 'blob1' ), [ getValue( 'backgroundShape' ) ] )
 
 	const linearGradient = useMemo( () =>
-		<LinearGradient
-			id={ 'linear-gradient-' + attributes.uniqueId }
-			iconColor1={ getValue( 'iconColor1' ) }
-			iconColor2={ getValue( 'iconColor2' ) }
-		/>,
+		enableLinearGradient
+			? (
+				<LinearGradient
+					id={ 'linear-gradient-' + attributes.uniqueId }
+					iconColor1={ getValue( 'iconColor1' ) }
+					iconColor2={ getValue( 'iconColor2' ) }
+				/>
+			)
+			: <Fragment />,
 	[
 		attributes.uniqueId,
 		getValue( 'iconColorGradientDirection' ),
@@ -109,6 +114,7 @@ Icon.Content = props => {
 	const {
 		attributes,
 		attrNameTemplate,
+		enableLinearGradient = true,
 	} = props
 
 	const getAttrName = getAttrNameFunction( attrNameTemplate )
@@ -120,13 +126,13 @@ Icon.Content = props => {
 		return null
 	}
 
-	const linearGradient = (
+	const linearGradient = enableLinearGradient ? (
 		<LinearGradient
 			id={ 'linear-gradient-' + attributes.uniqueId }
 			iconColor1={ getValue( 'iconColor1' ) }
 			iconColor2={ getValue( 'iconColor2' ) }
 		/>
-	)
+	) : <Fragment />
 
 	return (
 		<span className="stk-button__svg-wrapper">

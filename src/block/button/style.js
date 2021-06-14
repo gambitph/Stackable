@@ -5,7 +5,6 @@
 import {
 	Advanced,
 	Button,
-	Column,
 	BlockDiv,
 	BorderStyle,
 	Typography,
@@ -19,7 +18,6 @@ import { useBlockEditContext } from '@wordpress/block-editor'
  * WordPress dependencies
  */
 import { Fragment, renderToString } from '@wordpress/element'
-import { sprintf } from '@wordpress/i18n'
 
 export const ButtonStyles = props => {
 	const {
@@ -42,7 +40,6 @@ export const ButtonStyles = props => {
 	return (
 		<Fragment>
 			<BlockDiv.Style { ...propsToPass } />
-			<Column.Style { ...{ ...propsToPass, options: { ...propsToPass.options, selector: '' } } } />
 			<Advanced.Style { ...propsToPass } />
 			<Button.Style { ...propsToPass } />
 			<BorderStyle { ...propsToPass } />
@@ -52,7 +49,7 @@ export const ButtonStyles = props => {
 					options: {
 						...propsToPass.options,
 						selector: propsToPass.options.selector + ':hover',
-						attrNameTemplate: sprintf( propsToPass.options.attrNameTemplate, 'Hover%s' ),
+						attrNameTemplate: 'buttonHover%s',
 					},
 				} } />
 			<Typography.Style
@@ -121,7 +118,6 @@ ButtonStyles.Content = props => {
 	const styles = (
 		<Fragment>
 			<BlockDiv.Style.Content { ...propsToPass } />
-			<Column.Style.Content { ...{ ...propsToPass, options: { ...propsToPass.options, selector: '' } } } />
 			<Advanced.Style.Content { ...propsToPass } />
 			<Button.Style.Content { ...propsToPass } />
 			<BorderStyle.Content { ...propsToPass } />
@@ -131,7 +127,7 @@ ButtonStyles.Content = props => {
 					options: {
 						...propsToPass.options,
 						selector: propsToPass.options.selector + ':hover',
-						attrNameTemplate: sprintf( props.options.attrNameTemplate, 'Hover%s' ),
+						attrNameTemplate: 'buttonHover%s',
 					},
 				} } />
 			<Typography.Style.Content

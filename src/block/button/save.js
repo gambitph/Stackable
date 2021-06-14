@@ -5,7 +5,6 @@ import { withVersion } from '~stackable/higher-order'
 import classnames from 'classnames'
 import { version as VERSION } from 'stackable'
 import {
-	getColumnClasses,
 	getTypographyClasses,
 	BlockDiv,
 	Button,
@@ -29,7 +28,6 @@ export const Save = props => {
 		...propsToPass
 	} = props
 
-	const [ columnClass ] = getColumnClasses( props.attributes )
 	const responsiveClass = getResponsiveClasses( props.attributes )
 
 	const [ typographyWrapperClass, typographyInnerClasses ] = getTypographyClasses( props.attributes, { hoverAttrNameTemplate: 'hover%s' } )
@@ -42,7 +40,6 @@ export const Save = props => {
 	const blockClassNames = classnames( [
 		props.className,
 		'stk-button',
-		columnClass,
 		responsiveClass,
 	] )
 
@@ -54,7 +51,7 @@ export const Save = props => {
 	return (
 		<BlockDiv.Content className={ blockClassNames } attributes={ props.attributes }>
 			<ButtonStyles.Content { ...propsToPass } />
-			<Button.Content { ...propsToPass } className={ buttonClassNames }>
+			<Button.Content { ...propsToPass } className={ buttonClassNames } enableLinearGradient={ false }>
 				<Icon.Content attributes={ props.attributes } />
 				{ props.attributes.showText && (
 					<RichText.Content

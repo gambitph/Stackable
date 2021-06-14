@@ -42,7 +42,7 @@ const getStyles2 = ( attributes, options = {} ) => {
 	return {
 		[ selector ]: {
 			borderStyle: getValue( 'BorderType' ),
-			borderColor: getValue( 'BorderColor' ) || '#000000',
+			borderColor: getValue( 'BorderColor' ) ? getValue( 'BorderColor' ) : undefined,
 			borderTopWidth: getValue( 'BorderWidthTop', '%spx' ) || '1px',
 			borderRightWidth: getValue( 'BorderWidthRight', '%spx' ) || '1px',
 			borderBottomWidth: getValue( 'BorderWidthBottom', '%spx' ) || '1px',
