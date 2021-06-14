@@ -38,7 +38,7 @@ export const useAttributeEditHandlers = ( attrNameTemplate = '%s' ) => {
 
 	const updateAttributeHandler = useCallback( attrName => {
 		return value => updateAttribute( attrName, value )
-	}, [ attrNameTemplate, updateAttribute ] )
+	}, [ clientId, attrNameTemplate ] )
 
 	const updateAttributes = useCallback( values => {
 		const attributes = Object.keys( values ).reduce( ( attributes, attrName ) => {
@@ -47,7 +47,7 @@ export const useAttributeEditHandlers = ( attrNameTemplate = '%s' ) => {
 		}, {} )
 		const { updateBlockAttributes } = dispatch( 'core/block-editor' )
 		updateBlockAttributes( clientId, attributes )
-	}, [ clientId ] )
+	}, [ clientId, attrNameTemplate ] )
 
 	return {
 		getAttrName,

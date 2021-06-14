@@ -272,7 +272,9 @@ export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassNam
 		.split( ',' )
 		.map( s => {
 			let newSelector = ''
-			if ( ! uniqueClassName || ! mainClassName ) {
+			if ( s.includes( '%s' ) ) {
+				newSelector = s.replaceAll( '%s', uniqueClassName )
+			} else if ( ! uniqueClassName || ! mainClassName ) {
 				newSelector = s
 			} else if ( s.includes( uniqueClassName ) ) {
 				newSelector = s

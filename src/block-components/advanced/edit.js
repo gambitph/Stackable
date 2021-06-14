@@ -62,30 +62,6 @@ export const Edit = () => {
 					/>
 					<ResponsiveControl2
 						desktopProps={ {
-							value: attributes.opacity,
-							onChange: opacity => updateBlockAttributes( clientId, { opacity } ),
-						} }
-						tabletProps={ {
-							value: attributes.opacityTablet,
-							onChange: opacityTablet => updateBlockAttributes( clientId, { opacityTablet } ),
-						} }
-						mobileProps={ {
-							value: attributes.opacityMobile,
-							onChange: opacityMobile => updateBlockAttributes( clientId, { opacityMobile } ),
-						} }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Opacity', i18n ) }
-							min={ 0.0 }
-							max={ 1.0 }
-							step={ 0.1 }
-							allowReset={ true }
-							placeholder="1"
-							className="ugb--help-tip-advanced-opacity"
-						/>
-					</ResponsiveControl2>
-					<ResponsiveControl2
-						desktopProps={ {
 							value: attributes.overflow,
 							onChange: overflow => updateBlockAttributes( clientId, { overflow } ),
 						} }
@@ -109,12 +85,48 @@ export const Edit = () => {
 							] }
 						/>
 					</ResponsiveControl2>
+					<AdvancedSelectControl
+						label={ __( 'Clear', i18n ) }
+						value={ attributes.clear }
+						options={ [
+							{ value: '', label: __( 'Default', i18n ) },
+							{ value: 'left', label: __( 'Left', i18n ) },
+							{ value: 'right', label: __( 'Right', i18n ) },
+							{ value: 'both', label: __( 'Both', i18n ) },
+							{ value: 'none', label: __( 'None', i18n ) },
+						] }
+						onChange={ clear => updateBlockAttributes( clientId, { clear } ) }
+					/>
 				</PanelAdvancedSettings>
 
 				<PanelAdvancedSettings
 					title={ __( 'Position', i18n ) }
 					id="position"
 				>
+					<ResponsiveControl2
+						desktopProps={ {
+							value: attributes.opacity,
+							onChange: opacity => updateBlockAttributes( clientId, { opacity } ),
+						} }
+						tabletProps={ {
+							value: attributes.opacityTablet,
+							onChange: opacityTablet => updateBlockAttributes( clientId, { opacityTablet } ),
+						} }
+						mobileProps={ {
+							value: attributes.opacityMobile,
+							onChange: opacityMobile => updateBlockAttributes( clientId, { opacityMobile } ),
+						} }
+					>
+						<AdvancedRangeControl
+							label={ __( 'Opacity', i18n ) }
+							min={ 0.0 }
+							max={ 1.0 }
+							step={ 0.1 }
+							allowReset={ true }
+							placeholder="1"
+							className="ugb--help-tip-advanced-opacity"
+						/>
+					</ResponsiveControl2>
 					<ResponsiveControl2
 						desktopProps={ {
 							value: attributes.zIndex,
@@ -234,18 +246,6 @@ export const Edit = () => {
 							className="ugb--help-tip-advanced-block-paddings"
 						/>
 					</ResponsiveControl2>
-					<AdvancedSelectControl
-						label={ __( 'Clear', i18n ) }
-						value={ attributes.clear }
-						options={ [
-							{ value: '', label: __( 'Default', i18n ) },
-							{ value: 'left', label: __( 'Left', i18n ) },
-							{ value: 'right', label: __( 'Right', i18n ) },
-							{ value: 'both', label: __( 'Both', i18n ) },
-							{ value: 'none', label: __( 'None', i18n ) },
-						] }
-						onChange={ clear => updateBlockAttributes( clientId, { clear } ) }
-					/>
 				</PanelAdvancedSettings>
 			</InspectorAdvancedControls>
 		</Fragment>

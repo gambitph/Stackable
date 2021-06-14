@@ -25,6 +25,8 @@
 		border-radius: 0 !important;
 		margin: 0;
 		justify-content: center;
+		font-size: 10px; // For text only toggles
+		font-weight: 400; // For text only toggles
 		svg {
 			height: 100%;
 			width: 100%;
@@ -34,13 +36,26 @@
 			box-shadow: none !important;
 		}
 	}
+	+ .stk-label-unit-toggle {
+		margin-left: 0;
+	}
 }
 .stk-label-unit-toggle__wrapper {
 	position: absolute;
 	outline: 1px solid transparent;
 }
-.stk-label-unit-toggle__popup-left {
+.stk-label-unit-toggle__popup.is-from-right {
 	.components-popover__content {
 		margin-right: 10px;
+	}
+}
+
+.stk-label-unit-toggle__colored {
+	button.is-active:not([data-index="0"]) {
+		background: #007cba;
+		background: var(--wp-admin-theme-color, #007cba);
+		color: #fff;
+		border-color: #007cba !important;
+		border-color: var(--wp-admin-theme-color, #007cba) !important;
 	}
 }
