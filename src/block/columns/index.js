@@ -49,6 +49,7 @@ export const settings = {
 	modules: {
 		'advanced-general': true,
 		'advanced-block-spacing': true,
+		'advanced-custom-attributes': true,
 		'advanced-responsive': true,
 		'advanced-conditional-display': true,
 		'block-background': true,

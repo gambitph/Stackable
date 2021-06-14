@@ -52,6 +52,7 @@ export const settings = {
 	modules: {
 		'advanced-general': true,
 		'advanced-block-spacing': true,
+		'advanced-custom-attributes': true,
 		// 'advanced-column-spacing': {
 		// 	columnGap: false,
 		// },

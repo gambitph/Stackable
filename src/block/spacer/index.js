@@ -50,6 +50,7 @@ export const settings = {
 		'block-separators': {
 			enableBringToFront: false,
 		},
+		'advanced-custom-attributes': true,
 		'advanced-responsive': true,
 		'advanced-conditional-display': true,
 		'custom-css': {

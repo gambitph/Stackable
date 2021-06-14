@@ -13,7 +13,7 @@ import {
  * External dependencies
  */
 import classnames from 'classnames'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, isPlainObject } from 'lodash'
 import { i18n } from 'stackable'
 import { whiteIfDark } from '~stackable/util'
 import { Button } from '~stackable/components'
@@ -227,7 +227,7 @@ const ColorPickers = props => {
 
 	// Enable reset if there are Stackable global colors.
 	const disableReset = useMemo( () => ! colors.some( color => {
-		if ( typeof color !== 'object' ) {
+		if ( ! isPlainObject( color ) ) {
 			return false
 		}
 
@@ -346,7 +346,7 @@ const ColorPickers = props => {
 		<BaseControl className={ classNames }>
 			<ResetButton onClick={ onColorPaletteReset } disabled={ disableReset } />
 			{ colors.map( ( color, index ) => {
-				if ( typeof color !== 'object' ) {
+				if ( ! isPlainObject( color ) ) {
 					return null
 				}
 

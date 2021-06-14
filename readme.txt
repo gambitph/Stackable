@@ -2,9 +2,9 @@
 Contributors: bfintal, gambitph, freemius
 Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.5.4
-Tested up to: 5.7.1
+Tested up to: 5.7.2
 Requires PHP: 5.6
-Stable tag: 2.16.0
+Stable tag: 2.17.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -114,6 +114,7 @@ Optimize your website’s performance, and get lightning fast page loading and m
 
 ### News Article Updates
 
+- [v2.17 Custom Attributes and Optimization](https://wpstackable.com/blog/custom-attributes-and-optimization/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.16 Clickable Containers and Pagination](https://wpstackable.com/blog/clickable-containers-and-pagination/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.15 Introducing Dynamic Content](https://wpstackable.com/blog/introducing-dynamic-content/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
 - [v2.14 Copy and Paste Block Styles](https://wpstackable.com/blog/copy-and-paste-block-styles/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
@@ -201,6 +202,23 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 2.17.0 =
+[Custom Attributes and Optimization](https://wpstackable.com/blog/custom-attributes-and-optimization/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)
+
+* New: You can now add your own Custom Attributes in Stackable blocks
+* New: You can now opt to only load JS and CSS frontend files only in pages that use Stackable blocks
+* Fixed: The featured image in blog posts blocks now correctly use the image's alt text
+* Fixed: JS error encountered when a global color becomes null
+* Fixed: Icon block's icon alignment issue when align is set to right
+* Fixed: Compatibility with WP Review Pro in the blog posts block
+* Fixed: Possible PHP warning when encountering a block without attributes when loading Google Fonts
+* Fixed: Possible dynamic content PHP warning
+* Fixed: Block error with ACF Pro when using Wysiwyg fields from Options pages as dynamic content
+* Fixed: Container links should not be included when copy and pasting styles
+* Fixed: Increased clamped padding in tablets from 30 to 100
+* Fixed: Updated documentation links
+* Fixed: The icon's column gap did not take effect in mobile
 
 = 2.16.0 =
 [Clickable Containers and Pagination](https://wpstackable.com/blog/clickable-containers-and-pagination/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)

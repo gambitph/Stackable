@@ -205,18 +205,26 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 				$featured_image_urls = stackable_featured_image_urls_from_url( $featured_image_id );
 				$featured_image_src = $featured_image_urls[ $attributes['imageSize'] ];
 				if ( ! empty( $featured_image_src ) ) {
+					$image_alt = get_post_meta( $featured_image_id, '_wp_attachment_image_alt', true );
 					$thumbnail = get_the_post_thumbnail(
 						$post_id,
 						$attributes['imageSize'],
 						array(
-							'alt' => esc_attr( get_the_title( $post_id ) ),
+							'alt' => esc_attr( ! empty( $image_alt ) ? $image_alt : '' ),
 							'width' => esc_attr( $featured_image_src[1] ),
 							'height' => esc_attr( $featured_image_src[2] ),
 						)
 					);
 
-					// Remove the built in style attribute in the thumbnail.
-					$thumbnail = preg_replace( '/style=\"[^\"]*\"\s?/', "", $thumbnail );
+					// Get the image tag in the thumbnail markup.
+					preg_match( "/<img[^\>]*>/", $thumbnail, $match );
+
+					// Remove the built in style attribute in the image.
+					if ( is_array( $match ) && count( $match ) > 0 ) {
+						// Only remove the style tag inside the image tag.
+						$new_img = preg_replace( '/style=\"[^\"]*\"\s?/', "", $match[ 0 ] );
+						$thumbnail = preg_replace( "/<img[^\>]*>/", $new_img, $thumbnail );
+					}
 
 					$featured_image = sprintf(
 						'<figure class="%s"><a href="%s">%s</a></figure>',

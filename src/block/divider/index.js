@@ -49,6 +49,7 @@ export const settings = {
 	// Stackable modules.
 	modules: {
 		'advanced-block-spacing': true,
+		'advanced-custom-attributes': true,
 		'advanced-responsive': true,
 		'advanced-conditional-display': true,
 		'content-align': true,

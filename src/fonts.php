@@ -55,7 +55,7 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 			foreach ( $blocks as $block ) {
 
 				// Gather all "fontFamily" attribute values
-				if ( $this->is_stackable_block( $block['blockName'] ) ) {
+				if ( $this->is_stackable_block( $block['blockName'] ) && is_array( $block['attrs'] ) ) {
 					foreach ( $block['attrs'] as $attr_name => $font_name ) {
 						if ( preg_match( '/fontFamily$/i', $attr_name ) ) {
 							if ( ! self::is_web_font( $font_name ) ) {
