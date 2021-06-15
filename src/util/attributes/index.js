@@ -1,4 +1,5 @@
 export * from './attribute-object'
+import { getPermutation } from './util'
 
 /**
  * External dependencies
@@ -119,24 +120,50 @@ export const pickAttributes = ( attributes = {}, namesToPick = [], attrNameTempl
 
 export const createResponsiveAttributeNames = attrNameTemplate => Object.keys( createResponsiveAttributes( attrNameTemplate ) )
 
+const REMOVE_ATTRS = [ 'stkResponsive', 'stkHover', 'stkUnits' ]
+
 /**
- * Converts all attribute names that end in "_" into Tablet and Mobile attributes
+ * Adds the necessary tablet, mobile, hover and unit attribute definitions.
  *
  * @param {Object} attributes Attribute object
  *
  * @return {Object} Adjusted attributes
  */
-export const convertResponsiveAttributes = attributes => {
+export const expandAttributes = attributes => {
 	return Object.keys( attributes ).reduce( ( newAttributes, name ) => {
-		if ( name.endsWith( '_' ) ) {
-			const newName = name.slice( 0, -1 )
-			newAttributes[ newName ] = { ...attributes[ name ] }
-			newAttributes[ `${ newName }Tablet` ] = { ...attributes[ name ], default: '' }
-			newAttributes[ `${ newName }Mobile` ] = { ...attributes[ name ], default: '' }
-			return newAttributes
+		const suffixes = [ [ name ] ]
+
+		// Add the new attribute names (the order is important).
+		if ( newAttributes[ name ].stkUnits ) {
+			suffixes.push( [ '', 'Unit' ] )
+		}
+		if ( newAttributes[ name ].stkResponsive ) {
+			suffixes.push( [ '', 'Tablet', 'Mobile' ] )
+		}
+		if ( newAttributes[ name ].stkHover ) {
+			suffixes.push( [ '', 'Hover', 'ParentHover' ] )
 		}
 
-		newAttributes[ name ] = attributes[ name ]
+		const attributeNames = getPermutation( suffixes )
+		attributeNames.forEach( attributeName => {
+			// Form the new attributes
+			const parameters = { ...omit( attributes[ name ], REMOVE_ATTRS ) }
+
+			// Override the default
+			if ( attributeName !== name ) {
+				parameters.default = ''
+			}
+
+			// If this is a unit, then the default value is the unit itself.
+			if ( attributeName.startsWith( `${ name }Unit` ) ) {
+				parameters.type = 'string'
+				parameters.default = newAttributes[ name ].stkUnits || 'px'
+			}
+
+			// Add the new attribute.
+			newAttributes[ attributeName ] = parameters
+		} )
+
 		return newAttributes
-	}, {} )
+	}, attributes )
 }
