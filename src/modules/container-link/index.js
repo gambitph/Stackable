@@ -188,7 +188,7 @@ const addBoxClasses = ( classes, props1, props2 ) => {
 
 	return {
 		...classes,
-		'ugb-container-link': showContainerLink,
+		'ugb-container-link': showContainerLink || false,
 	}
 }
 
