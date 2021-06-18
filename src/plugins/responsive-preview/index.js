@@ -29,9 +29,6 @@ const viewportWidths = {
 	Mobile: 360,
 }
 
-// Cache the responsive widths of the preview.
-const widthsDetected = {}
-
 const observerCallback = () => {
 	const {
 		__experimentalGetPreviewDeviceType: getPreviewDeviceType,
@@ -50,13 +47,7 @@ const observerCallback = () => {
 	}
 	previousMode = mode
 
-	// Gets the current width of the visual editor
-	// Cache the width since it's expensive to perform getComputedStyle
-	if ( ! widthsDetected[ mode ] ) {
-		widthsDetected[ mode ] = viewportWidths[ mode ]
-	}
-
-	updateMediaQueries( mode, widthsDetected[ mode ] )
+	updateMediaQueries( mode, viewportWidths[ mode ] )
 }
 
 // Update the responsive preview when an attribute is changed.
