@@ -167,3 +167,18 @@ export const expandAttributes = attributes => {
 		return newAttributes
 	}, attributes )
 }
+
+export const getAttributeName = ( attrName, deviceType = 'desktop', hoverState = 'normal' ) => {
+	const deviceAttrName = deviceType.toLowerCase() === 'desktop' ? '' : upperFirst( deviceType )
+	const hoverAttrName =
+		hoverState === 'normal' ? ''
+			: hoverState === 'hover' ? 'Hover'
+				: 'ParentHover'
+
+	// Follow format if supplied.
+	if ( attrName?.includes( '%s' ) ) {
+		return sprintf( attrName, `${ deviceAttrName }${ hoverAttrName }` )
+	}
+
+	return `${ attrName }${ deviceAttrName }${ hoverAttrName }`
+}
