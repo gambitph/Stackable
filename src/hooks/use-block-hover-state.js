@@ -84,3 +84,7 @@ export const useBlockHoverState = () => {
 	return [ currentHoverState, setHoverState, blockHoverClass ]
 }
 
+export const useBlockHoverClass = () => {
+	const hoverState = useBlockHoverState()
+	return hoverState[ 2 ]
+}

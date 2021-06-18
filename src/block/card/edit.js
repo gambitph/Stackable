@@ -12,7 +12,9 @@ import { version as VERSION } from 'stackable'
 import {
 	InspectorTabs,
 } from '~stackable/components'
-import { useBlockContext, useBlockStyle } from '~stackable/hooks'
+import {
+	useBlockContext, useBlockHoverClass, useBlockStyle,
+} from '~stackable/hooks'
 import {
 	withIsHovered,
 } from '~stackable/higher-order'
@@ -68,11 +70,13 @@ const Edit = props => {
 	const [ columnClass, columnWrapperClass ] = getColumnClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockStyle = useBlockStyle( blockStyles )
+	const blockHoverClass = useBlockHoverClass()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-card',
 		columnClass,
+		blockHoverClass,
 	] )
 
 	const contentClassNames = classnames( [
