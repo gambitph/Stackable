@@ -4,7 +4,7 @@
 import {
 	getUniqueBlockClass, minifyCSS, prependCSSClass,
 } from '~stackable/util'
-import { mergeStyles } from '~stackable/util/styles/style-object'
+import { doImportant } from '~stackable/components/style'
 import {
 	kebabCase, omit, isEqual, sortBy,
 } from 'lodash'
@@ -370,3 +370,8 @@ Style.Content = props => {
 
 // For debugging
 Style.displayName = 'Style'
+
+export const mergeStyles = ( styles, important = true ) => {
+	const _styles = deepmerge.all( styles )
+	return important ? doImportant( _styles ) : _styles
+}

@@ -1,10 +1,9 @@
 import compareVersions from 'compare-versions'
 import { getEditorStylesOnly, generateStyles } from '~stackable/block-components/style'
+import { appendImportant, minifyCSS } from '~stackable/util'
 import {
 	Fragment, memo, useMemo,
 } from '@wordpress/element'
-import { doImportant } from '~stackable/util/styles/style-object'
-import { minifyCSS } from '~stackable/util'
 
 const Style = memo( props => {
 	const {
@@ -96,3 +95,16 @@ Style.Content.defaultProps = {
 }
 
 export default Style
+
+export const doImportant = ( styleObject, important = true ) => {
+	if ( typeof styleObject !== 'object' ) {
+		return appendImportant( styleObject, important )
+	}
+
+	return Object.keys( styleObject ).reduce( ( newStyleObject, key ) => {
+		return {
+			...newStyleObject,
+			[ key ]: doImportant( styleObject[ key ], important ),
+		}
+	}, {} )
+}
