@@ -56,7 +56,6 @@ const AlignButtonsControl = props => {
 AlignButtonsControl.defaultProps = {
 	className: '',
 	label: __( 'Align', i18n ),
-	value: ALIGN_OPTIONS[ 0 ].value,
 	justified: false,
 }
 

@@ -9,7 +9,9 @@ import SVGIconStretch from './images/stretch.svg'
 import SVGIconTop from './images/top.svg'
 import SVGIconVerticalCenter from './images/vertical-center.svg'
 import Button from '../button'
-import { BaseControl } from '..'
+import AdvancedControl, { extractControlProps } from '../base-control2'
+import { useControlHandlers } from '../base-control2/hooks'
+import { ResetButton } from '../base-control2/reset-button'
 
 /**
  * External dependencies
@@ -91,14 +93,16 @@ const CONTROLS = {
 }
 
 const AdvancedToolbarControl = props => {
+	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.valueCallback, props.changeCallback )
+	const [ _propsToPass, controlProps ] = extractControlProps( props )
+
 	const {
 		className = '',
 		controls: _controls,
 		fullwidth,
 		multiline,
 		isToggleOnly,
-		...propsToPass
-	} = props
+	} = _propsToPass
 
 	const controls = typeof _controls === 'string' ? CONTROLS[ _controls ] : _controls
 
@@ -107,10 +111,13 @@ const AdvancedToolbarControl = props => {
 		'ugb-toolbar--multiline': multiline,
 	} )
 
+	const value = typeof props.value === 'undefined' ? _value : props.value
+	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
+
 	return (
-		<BaseControl
+		<AdvancedControl
+			{ ...controlProps }
 			className={ classnames( 'ugb-advanced-toolbar-control', className ) }
-			{ ...propsToPass }
 		>
 			<ButtonGroup
 				children={
@@ -119,12 +126,12 @@ const AdvancedToolbarControl = props => {
 							...option,
 							onClick: () => {
 								// If toggle only, prevent buttons from being unselected.
-								if ( isToggleOnly && option.value === props.value ) {
+								if ( isToggleOnly && option.value === value ) {
 									return
 								}
-								props.onChange( option.value !== props.value ? option.value : '' )
+								onChange( option.value !== value ? option.value : '' )
 							},
-							isPrimary: props.value === option.value,
+							isPrimary: value === option.value,
 							isSmall: props.isSmall,
 							children: ! option.icon ? option.custom || <span className="ugb-advanced-toolbar-control__text-button">{ option.title }</span> : null,
 						}
@@ -133,25 +140,30 @@ const AdvancedToolbarControl = props => {
 				}
 				className={ toolbarClasses }
 			/>
-		</BaseControl>
+			<ResetButton
+				allowReset={ props.allowReset }
+				value={ value }
+				default={ props.default }
+				onChange={ onChange }
+			/>
+		</AdvancedControl>
 	)
 }
 
 AdvancedToolbarControl.defaultProps = {
-	onChange: () => {},
-	onChangeUnit: () => {},
-	help: '',
-	className: '',
-	units: [ 'px' ],
-	unit: 'px',
-	screens: [ 'desktop' ],
-	value: '',
 	controls: [],
 	multiline: false,
 	fullwidth: true,
 	isSmall: false,
 	isToggleOnly: false,
+
 	allowReset: true,
+	default: '',
+
+	attribute: '',
+
+	value: undefined,
+	onChange: undefined,
 }
 
 export default AdvancedToolbarControl

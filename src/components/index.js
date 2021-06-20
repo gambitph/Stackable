@@ -97,6 +97,8 @@ export { default as DivBackground } from './div-background'
 
 // V3 only Components
 export { default as BaseControl } from './base-control'
+export { default as BaseControl2 } from './base-control2'
+export { default as ImageControl2 } from './image-control2'
 export { default as AdvancedToggleControl } from './advanced-toggle-control'
 export { default as AdvancedRadioControl } from './advanced-radio-control'
 export { default as AdvancedFocalPointControl } from './advanced-focal-point-control'
@@ -119,3 +121,4 @@ export {
 } from './inspector-tabs'
 export { default as Div } from './div'
 export { default as ControlIconToggle } from './control-icon-toggle'
+export { default as AdvancedRangeControl2 } from './advanced-range-control2'

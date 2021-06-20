@@ -28,6 +28,10 @@ export const useAttributeEditHandlers = ( attrNameTemplate = '%s' ) => {
 		return attributes[ getAttrName( attrName ) ]
 	}, [ clientId, attrNameTemplate ] )
 
+	const getAttributes = useCallback( () => {
+		return select( 'core/block-editor' ).getBlockAttributes( clientId )
+	}, [ clientId ] )
+
 	const updateAttribute = useCallback( ( attrName, value ) => {
 		const { updateBlockAttributes } = dispatch( 'core/block-editor' )
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
@@ -52,6 +56,7 @@ export const useAttributeEditHandlers = ( attrNameTemplate = '%s' ) => {
 	return {
 		getAttrName,
 		getAttribute,
+		getAttributes,
 		updateAttributeHandler,
 		updateAttributes,
 		updateAttribute,

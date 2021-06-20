@@ -50,7 +50,21 @@ class StyleObject {
 				responsive = false,
 				hover = false,
 				dependencies = [], // If this style rerender depends on other attributes, add them here.
+				styles = null,
 			} = styleParams
+
+			// This is a shorthand, you can define multiple style rules in a
+			// single styleParam.
+			if ( styles ) {
+				Object.values( styles ).forEach( attrName => {
+					deps.push( ...this.getDependencyAttrnames( [ {
+						...styleParams,
+						styles: null,
+						attrName,
+					} ] ) )
+				} )
+				return
+			}
 
 			const pushAttr = ( attrName, device = 'desktop', state = 'normal' ) => {
 				deps.push( getAttributeName( attrName, device, state ) )
@@ -145,7 +159,19 @@ class StyleObject {
 		this.initStyles()
 
 		this.styleParams.forEach( styleParams => {
-			this.add( attributes, styleParams, blockState )
+			if ( ! styleParams.styles ) {
+				this.add( attributes, styleParams, blockState )
+			} else {
+				// This is a shorthand, you can define multiple style rules in a
+				// single styleParam.
+				Object.keys( styleParams.styles ).forEach( styleRule => {
+					this.add( attributes, {
+						...styleParams,
+						styleRule,
+						attrName: styleParams.styles[ styleRule ],
+					}, blockState )
+				} )
+			}
 		} )
 
 		return this.styles
@@ -153,7 +179,7 @@ class StyleObject {
 
 	add( attributes, styleParams = {}, blockState = 'normal' ) {
 		const {
-			selector = '',
+			selector: _selector = '',
 			styleRule = '',
 			attrName = '',
 			format = '%s',
@@ -162,6 +188,7 @@ class StyleObject {
 			hover = false,
 
 			// Additional options.
+			selectorCallback = null, // Can be used instead of selector.
 			renderIn: _renderIn = '', // editor, custom, saveOnly
 			valueCallback = null,
 			enabledCallback = null, // Function that if returns false, will not render this style.
@@ -178,6 +205,8 @@ class StyleObject {
 				return
 			}
 		}
+
+		const selector = selectorCallback ? selectorCallback( attributes ) : _selector
 
 		const getValue = ( attrName, device, state ) => {
 			const unitAttrName = getAttributeName( `${ attrName }Unit`, device, state )

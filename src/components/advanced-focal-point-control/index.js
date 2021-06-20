@@ -1,4 +1,11 @@
 /**
+ * Internal dependencies
+ */
+import AdvancedControl, { extractControlProps } from '../base-control2'
+import { useControlHandlers } from '../base-control2/hooks'
+import { ResetButton } from '../base-control2/reset-button'
+
+/**
  * WordPress dependencies
  */
 import { FocalPointPicker } from '@wordpress/components'
@@ -8,41 +15,42 @@ import { memo } from '@wordpress/element'
  * External dependencies
  */
 import classnames from 'classnames'
-import { omit } from 'lodash'
-import { BaseControl } from '..'
 
 const AdvancedFocalPointControl = props => {
+	const [ value, onChange ] = useControlHandlers( props.attribute )
+	const [ propsToPass, controlProps ] = extractControlProps( props )
+
 	return (
-		<BaseControl
-			help={ props.help }
+		<AdvancedControl
+			{ ...controlProps }
 			className={ classnames( 'stk-advanced-focal-point-control', props.className ) }
-			label={ props.label }
-			units={ props.units }
-			unit={ props.unit }
-			onChangeUnit={ props.onChangeUnit }
-			screens={ props.screens }
-			allowReset={ props.allowReset }
-			value={ props.value }
-			onChange={ props.onChange }
-			defaultValue={ props.defaultValue }
 		>
 			<FocalPointPicker
-				{ ...omit( props, [ 'className', 'help', 'label', 'units', 'unit', 'onChangeUnit', 'screens', 'allowReset', 'defaultValue' ] ) }
+				{ ...propsToPass }
+				value={ typeof props.value === 'undefined' ? value : props.value }
+				onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
 			/>
-		</BaseControl>
+			<ResetButton
+				allowReset={ props.allowReset }
+				value={ typeof props.value === 'undefined' ? value : props.value }
+				default={ props.default }
+				onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
+			/>
+		</AdvancedControl>
 	)
 }
 
 AdvancedFocalPointControl.defaultProps = {
-	onChange: () => {},
-	onChangeUnit: () => {},
-	help: '',
 	className: '',
-	units: [ 'px' ],
-	unit: 'px',
-	screens: [ 'desktop' ],
+	url: '',
+
 	allowReset: true,
-	defaultValue: '',
+	default: '',
+
+	attribute: '',
+
+	value: undefined,
+	onChange: undefined,
 }
 
 export default memo( AdvancedFocalPointControl )
