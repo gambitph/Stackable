@@ -27,6 +27,7 @@ export const addAttributes = ( attrObject, options = {} ) => {
 			},
 			imageFocalPoint: {
 				stkResponsive: true,
+				stkHover: true,
 				type: 'object',
 			},
 			imageFit: {
@@ -47,11 +48,13 @@ export const addAttributes = ( attrObject, options = {} ) => {
 				default: '',
 			},
 			imageZoom: {
+				stkHover: true,
 				type: 'number',
 				default: '',
 			},
 
 			imageShadow: {
+				stkHover: true,
 				type: 'string',
 				default: '',
 			},

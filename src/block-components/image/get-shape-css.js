@@ -33,8 +33,6 @@ export const getShapeCSS = ( shape, shapeFlipX, shapeFlipY, shapeStretch ) => {
 		transform={ ! shapeFlipX && ! shapeFlipY ? undefined : `scale(${ shapeFlipX ? -1 : 1 },${ shapeFlipY ? -1 : 1 })` }
 	/>
 	const maskString = btoa( svgRenderToString( MaskComp ) )
-	return {
-		'-webkit-mask-image': `url('data:image/svg+xml;base64,${ maskString }')`,
-		'mask-image': `url('data:image/svg+xml;base64,${ maskString }')`,
-	}
+
+	return `url('data:image/svg+xml;base64,${ maskString }')`
 }
