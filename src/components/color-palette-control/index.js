@@ -82,7 +82,7 @@ const ColorPaletteControl = memo( props => {
 	return (
 		<AdvancedControl
 			{ ...controlProps }
-			className={ classnames( [ className, 'editor-color-palette-control' ] ) }
+			className={ classnames( [ className, 'editor-color-palette-control', 'stk-color-palette-control' ] ) }
 			id="editor-color-palette-control"
 			label={ labelElement }
 		>

@@ -1,5 +1,5 @@
 // Style transparent circular color option.
-.stk-inspector-control {
+.stk-color-palette-control {
 	.components-circular-option-picker__option[style*="color:transparent"],
 	.components-circular-option-picker__option[style*="color: transparent"] {
 		background-image: linear-gradient(-45deg, #fff 49%, #f00 49%, #f00 51%, #fff 51%);
