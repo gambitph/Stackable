@@ -48,10 +48,14 @@ class StyleObject {
 				attrName = '',
 				hasUnits = false,
 				responsive = false,
-				hover = false,
+				hover: _hover = false,
+				hoverCallback = null,
 				dependencies = [], // If this style rerender depends on other attributes, add them here.
 				styles = null,
+
 			} = styleParams
+
+			const hover = hoverCallback ? 'all' : _hover
 
 			// This is a shorthand, you can define multiple style rules in a
 			// single styleParam.
@@ -74,8 +78,10 @@ class StyleObject {
 
 				// Add the attribute names of the other dependencies.
 				dependencies.forEach( attrName => {
+					deps.push( getAttributeName( attrName, 'desktop', 'normal' ) ) // Always depend on the normal state.
 					deps.push( getAttributeName( attrName, device, state ) )
 					if ( hasUnits ) {
+						deps.push( getAttributeName( `${ attrName }Unit`, 'desktop', 'normal' ) ) // Always depend on the normal state.
 						deps.push( getAttributeName( `${ attrName }Unit`, device, state ) )
 					}
 				} )
@@ -185,10 +191,11 @@ class StyleObject {
 			format = '%s',
 			hasUnits = false, // False, or the default unit e.g. 'px' or '%'
 			responsive = false,
-			hover = false,
+			hover: _hover = false,
 
 			// Additional options.
 			selectorCallback = null, // Can be used instead of selector.
+			hoverCallback = null,
 			renderIn: _renderIn = '', // editor, custom, saveOnly
 			valueCallback = null,
 			enabledCallback = null, // Function that if returns false, will not render this style.
@@ -207,6 +214,7 @@ class StyleObject {
 		}
 
 		const selector = selectorCallback ? selectorCallback( attributes ) : _selector
+		const hover = hoverCallback ? hoverCallback( attributes ) : _hover
 
 		const getValue = ( attrName, device, state ) => {
 			const unitAttrName = getAttributeName( `${ attrName }Unit`, device, state )
