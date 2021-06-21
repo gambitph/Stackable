@@ -15,6 +15,7 @@ export const ContainerDiv = props => {
 	const classNames = classnames( [
 		props.className,
 		'stk-container',
+		`stk-${ attributes.uniqueId }-container`,
 	], {
 		'stk--no-background': ! attributes.hasContainer,
 	} )
@@ -43,6 +44,7 @@ ContainerDiv.Content = props => {
 	const classNames = classnames( [
 		props.className,
 		'stk-container',
+		`stk-${ attributes.uniqueId }-container`,
 	], {
 		'stk--no-background': ! attributes.hasContainer,
 	} )

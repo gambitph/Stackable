@@ -25,35 +25,36 @@ export const addAttributes = ( attrObject, options = {} ) => {
 				type: 'number',
 				default: '',
 			},
-			imageFocalPoint_: {
+			imageFocalPoint: {
+				stkResponsive: true,
+				stkHover: true,
 				type: 'object',
 			},
-			imageFit_: {
+			imageFit: {
+				stkResponsive: true,
 				type: 'string',
 				default: '',
 			},
-			imageHeight_: {
+			imageHeight: {
+				stkResponsive: true,
+				stkUnits: 'px',
 				type: 'number',
 				default: '',
 			},
-			imageWidth_: {
+			imageWidth: {
+				stkResponsive: true,
+				stkUnits: imageWidthUnitDefault,
 				type: 'number',
 				default: '',
-			},
-			imageHeightUnit_: {
-				type: 'string',
-				default: 'px',
-			},
-			imageWidthUnit_: {
-				type: 'string',
-				default: imageWidthUnitDefault,
 			},
 			imageZoom: {
+				stkHover: true,
 				type: 'number',
 				default: '',
 			},
 
 			imageShadow: {
+				stkHover: true,
 				type: 'string',
 				default: '',
 			},

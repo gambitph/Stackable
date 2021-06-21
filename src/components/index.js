@@ -72,7 +72,6 @@ export { default as FourRangeControl } from './four-range-control'
 export { default as ColumnsWidthControl } from './columns-width-control'
 export { default as SmallNumberControl } from './small-number-control'
 export { default as ResponsiveToggle } from './responsive-toggle'
-export { default as ResponsiveControl } from './responsive-control'
 export { default as BaseControlMultiLabel } from './base-control-multi-label'
 export { default as WhenResponsiveScreen } from './when-responsive-screen'
 export { default as HeadingButtonsControl } from './heading-buttons-control'
@@ -91,12 +90,15 @@ export { default as AdminTextSetting } from './admin-text-setting'
 export { default as AdminToggleSetting } from './admin-toggle-setting'
 
 // V2 only Components, for deprecation
+export { default as ResponsiveControl } from './responsive-control'
 export { default as BlockStyles } from './block-styles'
 export { default as Image } from './image'
 export { default as DivBackground } from './div-background'
 
 // V3 only Components
 export { default as BaseControl } from './base-control'
+export { default as BaseControl2 } from './base-control2'
+export { default as ImageControl2 } from './image-control2'
 export { default as AdvancedToggleControl } from './advanced-toggle-control'
 export { default as AdvancedRadioControl } from './advanced-radio-control'
 export { default as AdvancedFocalPointControl } from './advanced-focal-point-control'
@@ -120,3 +122,4 @@ export {
 export { default as Div } from './div'
 export { default as TabbedLayout } from './tabbed-layout'
 export { default as ControlIconToggle } from './control-icon-toggle'
+export { default as AdvancedRangeControl2 } from './advanced-range-control2'

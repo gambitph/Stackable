@@ -1,80 +1,58 @@
 /**
- * External dependencies
+ * Internal dependencies
  */
-import {
-	__getValue,
-} from '~stackable/util'
-
 import { Style as StyleComponent } from '~stackable/components'
-import { useMemo } from '@wordpress/element'
+import { getStyles, useStyles } from '~stackable/util'
 
-export const getStyles = attributes => {
-	const getValue = __getValue( attributes )
-
-	const isHorizontal = getValue( 'innerBlockOrientation' ) === 'horizontal'
-
-	return {
-		'': {
-			textAlign: getValue( 'contentAlign' ),
-			alignSelf: getValue( 'columnAlign' ), // Column-only option: Self = the current column.
-		},
-		tablet: {
-			'': {
-				textAlign: getValue( 'contentAlignTablet' ),
-				alignSelf: getValue( 'columnAlignTablet' ), // Column-only option: Self = the current column.
-			},
-		},
-		mobile: {
-			'': {
-				textAlign: getValue( 'contentAlignMobile' ),
-				alignSelf: getValue( 'columnAlignMobile' ), // Column-only option: Self = the current column.
+const getStyleParams = () => {
+	return [
+		{
+			selector: '',
+			responsive: 'all',
+			styles: {
+				textAlign: 'contentAlign',
+				alignSelf: 'columnAlign',
 			},
 		},
 
-		saveOnly: {
-			[ `.stk--block-align-${ attributes.uniqueId }` ]: {
-				alignItems: getValue( 'rowAlign' ) || // Row-only option
-					( isHorizontal ? getValue( 'innerBlockVerticalAlign' ) : undefined ), // Column-only option
-				justifyContent: ! isHorizontal ? getValue( 'innerBlockVerticalAlign' ) : undefined, // Column-only option
+		{
+			renderIn: 'save',
+			selectorCallback: attributes => `.stk--block-align-${ attributes.uniqueId }`,
+			styles: {
+				alignItems: 'rowAlign',
+				justifyContent: 'innerBlockVerticalAlign',
 			},
-			tablet: {
-				[ `.stk--block-align-${ attributes.uniqueId }` ]: {
-					alignItems: getValue( 'rowAlignTablet' ) || // Row-only option
-						( isHorizontal ? getValue( 'innerBlockVerticalAlignTablet' ) : undefined ), // Column-only option
-					justifyContent: ! isHorizontal ? getValue( 'innerBlockVerticalAlignTablet' ) : undefined, // Column-only option
-				},
-			},
-			mobile: {
-				[ `.stk--block-align-${ attributes.uniqueId }` ]: {
-					alignItems: getValue( 'rowAlignMobile' ) || // Row-only option
-						( isHorizontal ? getValue( 'innerBlockVerticalAlignMobile' ) : undefined ), // Column-only option
-					justifyContent: ! isHorizontal ? getValue( 'innerBlockVerticalAlignMobile' ) : undefined, // Column-only option
-				},
-			},
+			responsive: 'all',
+			enabledCallback: attributes => attributes.innerBlockOrientation !== 'horizontal',
+		},
+		{
+			renderIn: 'save',
+			selectorCallback: attributes => `.stk--block-align-${ attributes.uniqueId }`,
+			styleRule: 'alignItems',
+			attrName: 'innerBlockVerticalAlign',
+			responsive: 'all',
+			enabledCallback: attributes => attributes.innerBlockOrientation === 'horizontal',
 		},
 
-		editor: {
-			[ `.stk--block-align-${ attributes.uniqueId } > .block-editor-inner-blocks > .block-editor-block-list__layout` ]: {
-				alignItems: getValue( 'rowAlign' ) || // Row-only option
-					( isHorizontal ? getValue( 'innerBlockVerticalAlign' ) : undefined ), // Column-only option
-				justifyContent: ! isHorizontal ? getValue( 'innerBlockVerticalAlign' ) : undefined, // Column-only option
+		{
+			renderIn: 'edit',
+			selectorCallback: attributes => `.stk--block-align-${ attributes.uniqueId } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
+			styles: {
+				alignItems: 'rowAlign',
+				justifyContent: 'innerBlockVerticalAlign',
 			},
-			tablet: {
-				[ `.stk--block-align-${ attributes.uniqueId } > .block-editor-inner-blocks > .block-editor-block-list__layout` ]: {
-					alignItems: getValue( 'rowAlignTablet' ) || // Row-only option
-						( isHorizontal ? getValue( 'innerBlockVerticalAlignTablet' ) : undefined ), // Column-only option
-					justifyContent: ! isHorizontal ? getValue( 'innerBlockVerticalAlignTablet' ) : undefined, // Column-only option
-				},
-			},
-			mobile: {
-				[ `.stk--block-align-${ attributes.uniqueId } > .block-editor-inner-blocks > .block-editor-block-list__layout` ]: {
-					alignItems: getValue( 'rowAlignMobile' ) || // Row-only option
-						( isHorizontal ? getValue( 'innerBlockVerticalAlignMobile' ) : undefined ), // Column-only option
-					justifyContent: ! isHorizontal ? getValue( 'innerBlockVerticalAlignMobile' ) : undefined, // Column-only option
-				},
-			},
+			responsive: 'all',
+			enabledCallback: attributes => attributes.innerBlockOrientation !== 'horizontal',
 		},
-	}
+		{
+			renderIn: 'edit',
+			selectorCallback: attributes => `.stk--block-align-${ attributes.uniqueId } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
+			styleRule: 'alignItems',
+			attrName: 'innerBlockVerticalAlign',
+			responsive: 'all',
+			enabledCallback: attributes => attributes.innerBlockOrientation === 'horizontal',
+		},
+	]
 }
 
 export const Style = props => {
@@ -84,28 +62,7 @@ export const Style = props => {
 		...propsToPass
 	} = props
 
-	const getValue = __getValue( attributes )
-
-	const styles = useMemo(
-		() => getStyles( attributes, options ),
-		[
-			getValue( 'contentAlign' ),
-			getValue( 'columnAlign' ),
-			getValue( 'contentAlignTablet' ),
-			getValue( 'columnAlignTablet' ),
-			getValue( 'contentAlignMobile' ),
-			getValue( 'columnAlignMobile' ),
-
-			getValue( 'rowAlign' ),
-			getValue( 'innerBlockVerticalAlign' ),
-			getValue( 'rowAlignTablet' ),
-			getValue( 'innerBlockVerticalAlignTablet' ),
-			getValue( 'rowAlignMobile' ),
-			getValue( 'innerBlockVerticalAlignMobile' ),
-
-			attributes.uniqueId,
-		]
-	)
+	const styles = useStyles( attributes, getStyleParams( options ) )
 
 	return (
 		<StyleComponent
@@ -124,7 +81,7 @@ Style.Content = props => {
 		...propsToPass
 	} = props
 
-	const styles = getStyles( attributes, options )
+	const styles = getStyles( attributes, getStyleParams( options ) )
 
 	return (
 		<StyleComponent.Content

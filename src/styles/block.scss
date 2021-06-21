@@ -20,6 +20,16 @@
 	overflow: hidden;
 }
 
+// Hover transitions.
+.stk-block,
+.stk-container,
+.stk-img-wrapper,
+.stk-img-wrapper img {
+	transition: all 0.12s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+	border-width: 1px;
+	border-style: none;
+}
+
 /**
  * Resizeable rows and columns
  */

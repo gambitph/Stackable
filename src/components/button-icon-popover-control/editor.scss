@@ -106,6 +106,6 @@
 }
 
 // Add margin bottom to controls in popover
-.ugb-button-icon-control__popover .components-base-control {
+.ugb-button-icon-control__popover .components-panel__body > .components-base-control {
 	margin-bottom: 24px;
 }

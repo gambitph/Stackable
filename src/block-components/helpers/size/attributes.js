@@ -1,70 +1,86 @@
-import { convertResponsiveAttributes } from '~stackable/util'
+import { expandAttributes } from '~stackable/util'
 
-export const sizeAttributes = convertResponsiveAttributes( {
-	height_: {
+export const sizeAttributes = expandAttributes( {
+	height: {
+		stkResponsive: true,
 		type: 'number',
 		default: '',
 	},
-	heightUnit_: {
+	heightUnit: {
+		stkResponsive: true,
 		type: 'string',
 		default: 'px',
 	},
-	width_: {
+	width: {
+		stkResponsive: true,
 		type: 'number',
 		default: '',
 	},
-	widthUnit_: {
-		type: 'string',
-		default: 'px',
-	},
-
-	verticalAlign_: {
-		type: 'string',
-		default: '',
-	},
-	horizontalAlign_: {
-		type: 'string',
-		default: '',
-	},
-
-	marginTop_: {
-		type: 'number',
-		default: '',
-	},
-	marginRight_: {
-		type: 'number',
-		default: '',
-	},
-	marginBottom_: {
-		type: 'number',
-		default: '',
-	},
-	marginLeft_: {
-		type: 'number',
-		default: '',
-	},
-	marginUnit_: {
+	widthUnit: {
+		stkResponsive: true,
 		type: 'string',
 		default: 'px',
 	},
 
-	paddingTop_: {
+	verticalAlign: {
+		stkResponsive: true,
+		type: 'string',
+		default: '',
+	},
+	horizontalAlign: {
+		stkResponsive: true,
+		type: 'string',
+		default: '',
+	},
+
+	marginTop: {
+		stkResponsive: true,
 		type: 'number',
 		default: '',
 	},
-	paddingRight_: {
+	marginRight: {
+		stkResponsive: true,
 		type: 'number',
 		default: '',
 	},
-	paddingBottom_: {
+	marginBottom: {
+		stkResponsive: true,
 		type: 'number',
 		default: '',
 	},
-	paddingLeft_: {
+	marginLeft: {
+		stkResponsive: true,
 		type: 'number',
 		default: '',
 	},
-	paddingUnit_: {
+	marginUnit: {
+		stkResponsive: true,
+		type: 'string',
+		default: 'px',
+	},
+
+	paddingTop: {
+		stkResponsive: true,
+		type: 'number',
+		default: '',
+	},
+	paddingRight: {
+		stkResponsive: true,
+		type: 'number',
+		default: '',
+	},
+	paddingBottom: {
+		stkResponsive: true,
+		type: 'number',
+		default: '',
+	},
+	paddingLeft: {
+		stkResponsive: true,
+		type: 'number',
+		default: '',
+	},
+	paddingUnit: {
+		stkResponsive: true,
 		type: 'string',
 		default: 'px',
 	},

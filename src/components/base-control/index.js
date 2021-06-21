@@ -1,4 +1,8 @@
 /**
+ * An updated version of the BaseControlMultiLabel, which includes a reset button.
+ */
+
+/**
  * Internal dependencies
  */
 import BaseControlMultiLabel from '../base-control-multi-label'

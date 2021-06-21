@@ -9,7 +9,8 @@ export const addAttributes = attrObject => {
 				type: 'boolean',
 				default: false,
 			},
-			columnWidth_: {
+			columnWidth: {
+				stkResponsive: true,
 				type: 'number',
 				default: '',
 			},

@@ -3,15 +3,18 @@ export const addAttributes = attrObject => {
 	// uniqueId attribute
 	attrObject.add( {
 		attributes: {
-			contentAlign_: {
+			contentAlign: {
+				stkResponsive: true,
 				type: 'string',
 				default: '',
 			},
-			rowAlign_: {
+			rowAlign: {
+				stkResponsive: true,
 				type: 'string',
 				default: '',
 			},
-			columnAlign_: {
+			columnAlign: {
+				stkResponsive: true,
 				type: 'string',
 				default: '',
 			},
@@ -19,7 +22,8 @@ export const addAttributes = attrObject => {
 				type: 'string',
 				default: '',
 			},
-			innerBlockVerticalAlign_: {
+			innerBlockVerticalAlign: {
+				stkResponsive: true,
 				type: 'string',
 				default: '',
 			},

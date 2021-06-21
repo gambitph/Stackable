@@ -7,7 +7,8 @@
 /**
  * Internal dependencies
  */
-import { BaseControl } from '..'
+import AdvancedControl, { extractControlProps } from '../base-control2'
+import { useControlHandlers } from '../base-control2/hooks'
 
 /**
  * WordPress dependencies
@@ -34,10 +35,11 @@ const ColorPaletteControl = memo( props => {
 	const {
 		disableCustomColors,
 		label,
-		onChange,
-		value: _value,
 		className = '',
 	} = props
+
+	const [ _value, _onChange ] = useControlHandlers( props.attribute )
+	const [ _propsToPass, controlProps ] = extractControlProps( props )
 
 	const colors = props.colors.map( color => {
 		return {
@@ -54,13 +56,15 @@ const ColorPaletteControl = memo( props => {
 		} )
 	}
 
-	const colorObject = getColorObjectByColorValue( colors, _value )
+	let value = typeof props.value === 'undefined' ? _value : props.value
+	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
+
+	const colorObject = getColorObjectByColorValue( colors, value )
 	const colorName = colorObject && colorObject.name
 	const ariaLabel = sprintf( colorIndicatorAriaLabel, label.toLowerCase(), colorName || _value )
 
-	let value = _value
-	if ( typeof _value === 'string' && _value.includes( '--stk-global-color' ) && _value.match( /#[\d\w]{6}/ ) ) {
-		value = _value.match( /#[\d\w]{6}/ )[ 0 ]
+	if ( typeof value === 'string' && value.includes( '--stk-global-color' ) && value.match( /#[\d\w]{6}/ ) ) {
+		value = value.match( /#[\d\w]{6}/ )[ 0 ]
 	}
 
 	const labelElement = (
@@ -76,7 +80,8 @@ const ColorPaletteControl = memo( props => {
 	)
 
 	return (
-		<BaseControl
+		<AdvancedControl
+			{ ...controlProps }
 			className={ classnames( [ className, 'editor-color-palette-control' ] ) }
 			id="editor-color-palette-control"
 			label={ labelElement }
@@ -91,7 +96,7 @@ const ColorPaletteControl = memo( props => {
 				} }
 				{ ... { colors, disableCustomColors } }
 			/>
-		</BaseControl>
+		</AdvancedControl>
 	)
 } )
 

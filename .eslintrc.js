@@ -67,6 +67,10 @@ module.exports = {
 
 		// We use our own BaseControl.
 		'@wordpress/no-base-control-with-label-without-id': 'off',
+
+		// In array spread, ignore unused args if they start with _
+		// e.g. const [ _unused, used ] = [ 'a', 'b', 'c' ]
+		'no-unused-vars': [ 'error', { varsIgnorePattern: '^_' } ],
 	},
 	globals: {
 		localStorage: true,

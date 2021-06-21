@@ -1,5 +1,5 @@
 import { i18n } from 'stackable'
-import { AdvancedRangeControl } from '~stackable/components'
+import { AdvancedRangeControl2 } from '~stackable/components'
 
 import {
 	__,
@@ -22,15 +22,25 @@ const getShadows = () => {
 	] )
 }
 
+const valueCallback = value => {
+	const shadows = getShadows()
+	return value ? shadows.indexOf( value ) : ''
+}
+
+const changeCallback = index => {
+	const shadows = getShadows()
+	return index !== '' ? shadows[ index ] : index
+}
+
 // TODO: Turn this into an advanced shadow control
 const ShadowControl = props => {
 	const shadows = useMemo( () => getShadows(), [] )
 
 	return (
-		<AdvancedRangeControl
+		<AdvancedRangeControl2
 			{ ...props }
-			value={ props.value ? shadows.indexOf( props.value ) : '' }
-			onChange={ index => props.onChange( index !== '' ? shadows[ index ] : index ) }
+			valueCallback={ valueCallback }
+			changeCallback={ changeCallback }
 			min={ 0 }
 			max={ shadows.length - 1 }
 			allowReset={ true }
@@ -42,8 +52,6 @@ const ShadowControl = props => {
 
 ShadowControl.defaultProps = {
 	label: __( 'Shadow / Outline', i18n ),
-	value: '',
-	onChange: () => {},
 }
 
 export default ShadowControl

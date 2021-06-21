@@ -5,15 +5,18 @@ export const addAttributes = attrObject => {
 				type: 'string',
 				default: '',
 			},
-			opacity_: {
+			opacity: {
+				stkResponsive: true,
 				type: 'number',
 				default: '',
 			},
-			zIndex_: {
+			zIndex: {
+				stkResponsive: true,
 				type: 'number',
 				default: '',
 			},
-			overflow_: {
+			overflow: {
+				stkResponsive: true,
 				type: 'string',
 				default: '',
 			},
@@ -22,29 +25,31 @@ export const addAttributes = attrObject => {
 				type: 'string',
 				default: '',
 			},
-			position_: {
+			position: {
+				stkResponsive: true,
+				stkUnits: 'px',
 				type: 'string',
 				default: '',
 			},
-			positionTop_: {
+			positionTop: {
+				stkResponsive: true,
 				type: 'number',
 				default: '',
 			},
-			positionRight_: {
+			positionRight: {
+				stkResponsive: true,
 				type: 'number',
 				default: '',
 			},
-			positionBottom_: {
+			positionBottom: {
+				stkResponsive: true,
 				type: 'number',
 				default: '',
 			},
-			positionLeft_: {
+			positionLeft: {
+				stkResponsive: true,
 				type: 'number',
 				default: '',
-			},
-			positionUnit_: {
-				type: 'string',
-				default: 'px',
 			},
 		},
 		versionAdded: '3.0.0',

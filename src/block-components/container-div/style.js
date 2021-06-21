@@ -8,9 +8,9 @@ import { Fragment } from '@wordpress/element'
 
 export const Style = props => {
 	const {
-		backgroundSelector = '.stk-container',
-		borderSelector = '.stk-container',
-		sizeSelector = '.stk-container',
+		backgroundSelector = '.%s-container',
+		borderSelector = '.%s-container',
+		sizeSelector = '.%s-container',
 		sizeVerticalAlignRule = null,
 		sizeHorizontalAlignRule = null,
 	} = props.options
@@ -48,9 +48,9 @@ export const Style = props => {
 
 Style.Content = props => {
 	const {
-		backgroundSelector = '.stk-container',
-		borderSelector = '.stk-container',
-		sizeSelector = '.stk-container',
+		backgroundSelector = '.%s-container',
+		borderSelector = '.%s-container',
+		sizeSelector = '.%s-container',
 		sizeVerticalAlignRule = null,
 		sizeHorizontalAlignRule = null,
 	} = props.options

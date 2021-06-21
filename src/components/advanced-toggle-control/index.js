@@ -14,17 +14,21 @@ import classnames from 'classnames'
  */
 import { useInstanceId } from '@wordpress/compose'
 import { FormToggle } from '@wordpress/components'
+import { useControlHandlers } from '../base-control2/hooks'
 
 const AdvancedToggleControl = props => {
 	const {
 		label,
-		checked,
 		help,
-		onChange,
 	} = props
 
 	const instanceId = useInstanceId( AdvancedToggleControl )
 	const id = `inspector-toggle-control-${ instanceId }`
+
+	const [ _checked, _onChange ] = useControlHandlers( props.attribute )
+
+	const checked = typeof props.checked === 'undefined' ? _checked : props.checked
+	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
 
 	let describedBy, helpLabel
 	if ( help ) {
@@ -44,8 +48,8 @@ const AdvancedToggleControl = props => {
 			help={ helpLabel }
 			className={ className }
 			allowReset={ true }
-			value={ props.checked }
-			showReset={ props.defaultValue ? props.checked !== props.defaultValue : props.checked }
+			value={ checked }
+			showReset={ props.defaultValue ? checked !== props.defaultValue : checked }
 			onChange={ onChange }
 			hasLabel={ false }
 			defaultValue={ props.defaultValue }
@@ -65,15 +69,14 @@ const AdvancedToggleControl = props => {
 
 AdvancedToggleControl.defaultProps = {
 	className: '',
-	checked: false,
-	onChange: () => {},
 	allowReset: false,
 	showReset: null,
 	defaultValue: '',
-	onReset: null,
-	allowLink: false,
-	isLinked: true,
-	onLink: () => {},
+
+	attribute: '',
+
+	checked: undefined,
+	onChange: undefined,
 }
 
 export default AdvancedToggleControl

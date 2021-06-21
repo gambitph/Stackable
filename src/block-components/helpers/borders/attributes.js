@@ -1,6 +1,6 @@
-import { convertResponsiveAttributes } from '~stackable/util'
+import { expandAttributes } from '~stackable/util'
 
-export const borderAttributes = convertResponsiveAttributes( {
+export const borderAttributes = expandAttributes( {
 	borderType: {
 		type: 'string',
 		default: '',
@@ -9,27 +9,33 @@ export const borderAttributes = convertResponsiveAttributes( {
 		type: 'string',
 		default: '',
 	},
-	borderWidthTop_: {
+	borderWidthTop: {
+		stkResponsive: true,
 		type: 'number',
 		default: '',
 	},
-	borderWidthRight_: {
+	borderWidthRight: {
+		stkResponsive: true,
 		type: 'number',
 		default: '',
 	},
-	borderWidthBottom_: {
+	borderWidthBottom: {
+		stkResponsive: true,
 		type: 'number',
 		default: '',
 	},
-	borderWidthLeft_: {
+	borderWidthLeft: {
+		stkResponsive: true,
 		type: 'number',
 		default: '',
 	},
 	borderRadius: {
+		stkHover: true,
 		type: 'number',
 		default: '',
 	},
 	shadow: {
+		stkHover: true,
 		type: 'string',
 		default: '',
 	},

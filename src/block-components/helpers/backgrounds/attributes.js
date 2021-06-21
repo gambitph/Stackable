@@ -1,6 +1,6 @@
-import { convertResponsiveAttributes } from '~stackable/util'
+import { expandAttributes } from '~stackable/util'
 
-export const backgroundAttributes = convertResponsiveAttributes( {
+export const backgroundAttributes = expandAttributes( {
 	backgroundColorType: {
 		type: 'string',
 		default: '',
@@ -13,11 +13,13 @@ export const backgroundAttributes = convertResponsiveAttributes( {
 		type: 'string',
 		default: '',
 	},
-	backgroundMediaId_: {
+	backgroundMediaId: {
+		stkResponsive: true,
 		type: 'string',
 		default: '',
 	},
-	backgroundMediaUrl_: {
+	backgroundMediaUrl: {
+		stkResponsive: true,
 		type: 'string',
 		default: '',
 	},
@@ -25,15 +27,18 @@ export const backgroundAttributes = convertResponsiveAttributes( {
 		type: 'string',
 		default: '',
 	},
-	backgroundPosition_: {
+	backgroundPosition: {
+		stkResponsive: true,
 		type: 'string',
 		default: '',
 	},
-	backgroundRepeat_: {
+	backgroundRepeat: {
+		stkResponsive: true,
 		type: 'string',
 		default: '',
 	},
-	backgroundSize_: {
+	backgroundSize: {
+		stkResponsive: true,
 		type: 'string',
 		default: '',
 	},
@@ -53,7 +58,8 @@ export const backgroundAttributes = convertResponsiveAttributes( {
 		type: 'number',
 		default: '',
 	},
-	backgroundCustomSize_: {
+	backgroundCustomSize: {
+		stkResponsive: true,
 		type: 'number',
 		default: '',
 	},
@@ -69,7 +75,8 @@ export const backgroundAttributes = convertResponsiveAttributes( {
 		type: 'boolean',
 		default: '',
 	},
-	backgroundCustomSizeUnit_: {
+	backgroundCustomSizeUnit: {
+		stkResponsive: true,
 		type: 'string',
 		default: '%',
 	},

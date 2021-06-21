@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import { convertResponsiveAttributes } from '.'
+import { expandAttributes } from '.'
 
 /**
  * External dependencies
@@ -61,7 +61,7 @@ export class AttributeObject {
 	}
 
 	getMerged( version = '' ) {
-		return convertResponsiveAttributes(
+		return expandAttributes(
 			deepmerge.all( this.getAttributes( version ) )
 		)
 	}

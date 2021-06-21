@@ -1,14 +1,19 @@
 /**
+ * Internal dependencies
+ */
+import { getShapeCSS } from './get-shape-css'
+import { Style as StyleComponent } from '~stackable/components'
+import { getStyles, useStyles } from '~stackable/util'
+
+/**
  * External dependencies
  */
 import { toNumber } from 'lodash'
-import {
-	__getValue,
-	appendImportantAll,
-} from '~stackable/util'
-import { getShapeCSS } from './get-shape-css'
-import { Style as StyleComponent } from '~stackable/components'
-import { Fragment, useMemo } from '@wordpress/element'
+
+/**
+ * WordPress dependencies
+ */
+import { Fragment } from '@wordpress/element'
 
 const focalPointToPosition = ( { x, y } ) => {
 	let _x = toNumber( x )
@@ -18,92 +23,97 @@ const focalPointToPosition = ( { x, y } ) => {
 	return `${ _x }% ${ _y }%`
 }
 
-export const getStyles1 = ( attributes, options = {} ) => {
-	const getValue = __getValue( attributes )
+const getStyleParams = ( options = {} ) => {
 	const {
 		selector = '.stk-img-wrapper',
 		enableWidth = true,
 		enableHeight = true,
 	} = options
 
-	return {
-		// Only save styles since styles in edit are already in the Component.
-		saveOnly: {
-			[ selector ]: appendImportantAll( {
-				width: enableWidth ? getValue( 'imageWidth', `%s${ getValue( 'imageWidthUnit', '%s', '%' ) }` ) : undefined,
-				height: enableHeight ? getValue( 'imageHeight', `%s${ getValue( 'imageHeightUnit', '%s', 'px' ) }` ) : undefined,
-			} ),
-			tablet: {
-				[ selector ]: appendImportantAll( {
-					width: enableWidth ? getValue( 'imageWidthTablet', `%s${ getValue( 'imageWidthUnitTablet', '%s', '%' ) }` ) : undefined,
-					height: enableHeight ? getValue( 'imageHeightTablet', `%s${ getValue( 'imageHeightUnitTablet', '%s', 'px' ) }` ) : undefined,
-				} ),
-			},
-			mobile: {
-				[ selector ]: appendImportantAll( {
-					width: enableWidth ? getValue( 'imageWidthMobile', `%s${ getValue( 'imageWidthUnitMobile', '%s', '%' ) }` ) : undefined,
-					height: enableHeight ? getValue( 'imageHeightMobile', `%s${ getValue( 'imageHeightUnitMobile', '%s', 'px' ) }` ) : undefined,
-				} ),
-			},
+	return [
+		{
+			selector,
+			styleRule: 'width',
+			attrName: 'imageWidth',
+			hasUnits: '%',
+			responsive: 'all',
+			enabledCallback: () => enableWidth,
 		},
-	}
-}
-
-export const getStyles2 = ( attributes, options = {} ) => {
-	const getValue = __getValue( attributes )
-	const {
-		selector = '.stk-img-wrapper',
-	} = options
-
-	return {
-		[ selector ]: appendImportantAll( {
-			boxShadow: getValue( 'imageShadow' ),
-		} ),
-		[ `${ selector } img` ]: appendImportantAll( {
-			filter: getValue( 'imageFilter' ),
-			transform: getValue( 'imageZoom', 'scale(%s)' ),
-			borderRadius: getValue( 'imageBorderRadius', `%spx` ),
-			objectPosition: getValue( 'imageFocalPoint' ) ? focalPointToPosition( getValue( 'imageFocalPoint' ) ) : undefined,
-			objectFit: getValue( 'imageFit' ),
-		} ),
-		tablet: {
-			[ `${ selector } img` ]: appendImportantAll( {
-				objectPosition: getValue( 'imageFocalPointTablet' ) ? focalPointToPosition( getValue( 'imageFocalPointTablet' ) ) : undefined,
-				objectFit: getValue( 'imageFitTablet' ),
-			} ),
+		{
+			selector,
+			styleRule: 'height',
+			attrName: 'imageHeight',
+			responsive: 'all',
+			enabledCallback: () => enableHeight,
 		},
-		mobile: {
-			[ `${ selector } img` ]: appendImportantAll( {
-				objectPosition: getValue( 'imageFocalPointMobile' ) ? focalPointToPosition( getValue( 'imageFocalPointMobile' ) ) : undefined,
-				objectFit: getValue( 'imageFitMobile' ),
-			} ),
+		{
+			selector,
+			styleRule: 'boxShadow',
+			attrName: 'imageShadow',
+			hover: 'all',
 		},
-	}
-}
+		{
+			selector: `${ selector } img`,
+			styleRule: 'filter',
+			attrName: 'imageFilter',
+		},
+		{
+			selector: `${ selector } img`,
+			styleRule: 'transform',
+			attrName: 'imageZoom',
+			format: 'scale(%s)',
+			hover: 'all',
+		},
+		{
+			selector: `${ selector } img`,
+			styleRule: 'borderRadius',
+			attrName: 'imageBorderRadius',
+			format: '%spx',
+		},
+		{
+			selector: `${ selector } img`,
+			styleRule: 'objectPosition',
+			attrName: 'imageFocalPoint',
+			valueCallback: focalPointToPosition,
+			responsive: 'all',
+			hover: 'all',
+		},
+		{
+			selector: `${ selector } img`,
+			styleRule: 'objectFit',
+			attrName: 'imageFit',
+			responsive: 'all',
+		},
 
-export const getStyles3 = ( attributes, options = {} ) => {
-	const getValue = __getValue( attributes )
-	const {
-		selector = '.stk-img-wrapper',
-	} = options
-
-	if ( ! getValue( 'imageShape' ) ) {
-		return {}
-	}
-
-	return {
-		editor: {
+		// Image Shape
+		{
+			renderIn: 'edit',
 			// This is so that the resizer won't get clipped.
-			[ `${ selector } .stk-img-resizer-wrapper` ]: appendImportantAll( {
-				...getShapeCSS( getValue( 'imageShape' ), getValue( 'imageShapeFlipX' ), getValue( 'imageShapeFlipY' ), getValue( 'imageShapeStretch' ) ),
-			} ),
+			selector: `${ selector } .stk-img-resizer-wrapper`,
+			styleRule: 'mask-image',
+			vendorPrefixes: [ '-webkit-' ],
+			attrName: 'imageShape',
+			responsive: 'all',
+			enabledCallback: attributes => !! attributes.imageShape,
+			valueCallback: ( value, attributes ) => {
+				return getShapeCSS( value, attributes.imageShapeFlipX, attributes.imageShapeFlipY, attributes.imageShapeStretch )
+			},
+			dependencies: [ 'imageShapeFlipX', 'imageShapeFlipY', 'imageShapeStretch' ],
 		},
-		saveOnly: {
-			[ selector ]: appendImportantAll( {
-				...getShapeCSS( getValue( 'imageShape' ), getValue( 'imageShapeFlipX' ), getValue( 'imageShapeFlipY' ), getValue( 'imageShapeStretch' ) ),
-			} ),
+		{
+			renderIn: 'save',
+			selector,
+			styleRule: 'mask-image',
+			vendorPrefixes: [ '-webkit-' ],
+			attrName: 'imageShape',
+			responsive: 'all',
+			enabledCallback: attributes => !! attributes.imageShape,
+			valueCallback: ( value, attributes ) => {
+				return getShapeCSS( value, attributes.imageShapeFlipX, attributes.imageShapeFlipY, attributes.imageShapeStretch )
+			},
+			dependencies: [ 'imageShapeFlipX', 'imageShapeFlipY', 'imageShapeStretch' ],
 		},
-	}
+	]
 }
 
 export const Style = props => {
@@ -113,79 +123,12 @@ export const Style = props => {
 		...propsToPass
 	} = props
 
-	const getValue = __getValue( attributes )
-
-	const styles1 = useMemo(
-		() => getStyles1( attributes, options ),
-		[
-			options.selector,
-			options.enableWidth,
-			options.enableHeight,
-			getValue( 'imageWidth' ),
-			getValue( 'imageWidthUnit' ),
-			getValue( 'imageHeight' ),
-			getValue( 'imageHeightUnit' ),
-
-			getValue( 'imageWidthTablet' ),
-			getValue( 'imageWidthUnitTablet' ),
-			getValue( 'imageHeightTablet' ),
-			getValue( 'imageHeightUnitTablet' ),
-
-			getValue( 'imageWidthMobile' ),
-			getValue( 'imageWidthUnitMobile' ),
-			getValue( 'imageHeightMobile' ),
-			getValue( 'imageHeightUnitMobile' ),
-			attributes.uniqueId,
-		]
-	)
-
-	const styles2 = useMemo(
-		() => getStyles2( attributes, options ),
-		[
-			options.selector,
-			getValue( 'imageShadow' ),
-			getValue( 'imageFilter' ),
-			getValue( 'imageZoom' ),
-			getValue( 'imageBorderRadius' ),
-
-			getValue( 'imageFocalPoint' ),
-			getValue( 'imageFit' ),
-			getValue( 'imageFocalPointTablet' ),
-			getValue( 'imageFitTablet' ),
-			getValue( 'imageFocalPointMobile' ),
-			getValue( 'imageFitMobile' ),
-			attributes.uniqueId,
-		]
-	)
-
-	const styles3 = useMemo(
-		() => getStyles3( attributes, options ),
-		[
-			options.selector,
-			getValue( 'imageShape' ),
-			getValue( 'imageShapeFlipX' ),
-			getValue( 'imageShapeFlipY' ),
-			getValue( 'imageShapeStretch' ),
-			attributes.uniqueId,
-		]
-	)
+	const styles = useStyles( attributes, getStyleParams( options ) )
 
 	return (
 		<Fragment>
 			<StyleComponent
-				styles={ styles1 }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-			<StyleComponent
-				styles={ styles2 }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-			<StyleComponent
-				styles={ styles3 }
+				styles={ styles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
 				{ ...propsToPass }
@@ -201,26 +144,12 @@ Style.Content = props => {
 		...propsToPass
 	} = props
 
-	const styles1 = getStyles1( attributes, options )
-	const styles2 = getStyles2( attributes, options )
-	const styles3 = getStyles3( attributes, options )
+	const styles = getStyles( attributes, getStyleParams( options ) )
 
 	return (
 		<Fragment>
 			<StyleComponent.Content
-				styles={ styles1 }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-			<StyleComponent.Content
-				styles={ styles2 }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-			<StyleComponent.Content
-				styles={ styles3 }
+				styles={ styles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
 				{ ...propsToPass }

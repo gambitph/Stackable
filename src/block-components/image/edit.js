@@ -4,7 +4,7 @@
 import { i18n } from 'stackable'
 import {
 	AdvancedFocalPointControl,
-	AdvancedRangeControl,
+	AdvancedRangeControl2,
 	AdvancedSelectControl,
 	AdvancedToggleControl,
 	ButtonIconPopoverControl,
@@ -15,11 +15,10 @@ import {
 	ImageSizeControl,
 	InspectorStyleControls,
 	PanelAdvancedSettings,
-	ResponsiveControl2,
 	ShadowControl,
 } from '~stackable/components'
 import {
-	useBlockAttributes, useBlockEl,
+	useBlockAttributes,
 } from '~stackable/hooks'
 
 /**
@@ -27,19 +26,13 @@ import {
  */
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { useDispatch, useSelect } from '@wordpress/data'
-import { useMemo, useCallback } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 export const Edit = props => {
-	const {
-		imageSelector = '.stk-img-wrapper',
-	} = props
-
 	const { clientId } = useBlockEditContext()
 
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 	const attributes = useBlockAttributes( clientId )
-	const blockElImage = useBlockEl( imageSelector )
 
 	// Get the image size urls.
 	const { imageData } = useSelect( select => {
@@ -47,37 +40,13 @@ export const Edit = props => {
 		return { imageData: { ...image } }
 	}, [ attributes.imageId ] )
 
-	const heightPlaceholderRender = useMemo( () => {
-		return blockElImage
-			? () => parseFloat( window.getComputedStyle( blockElImage.el() ).height )
-			: null
-	}, [ blockElImage ] )
-
-	const widthPlaceholderRender = useMemo( () => {
-		return blockElImage
-			? () => parseFloat( window.getComputedStyle( blockElImage.el() ).width )
-			: null
-	}, [ blockElImage ] )
-
-	const onChangeFocalPointDesktop = useCallback( imageFocalPoint => {
-		updateBlockAttributes( clientId, { imageFocalPoint: imageFocalPoint || undefined } )
-	}, [ clientId ] )
-
-	const onChangeFocalPointTablet = useCallback( imageFocalPointTablet => {
-		updateBlockAttributes( clientId, { imageFocalPointTablet: imageFocalPointTablet || undefined } )
-	}, [ clientId ] )
-
-	const onChangeFocalPointMobile = useCallback( imageFocalPointMobile => {
-		updateBlockAttributes( clientId, { imageFocalPointMobile: imageFocalPointMobile || undefined } )
-	}, [ clientId ] )
-
 	return (
 		<InspectorStyleControls>
 			<PanelAdvancedSettings
 				title={ __( 'Image', i18n ) }
 				id="image"
 			>
-				<ImageControl
+				<ImageControl // TODO: add selected image size as a prop.
 					label={ __( 'Select Image', i18n ) }
 					allowedTypes={ [ 'image' ] }
 					imageID={ attributes.imageId }
@@ -97,70 +66,32 @@ export const Edit = props => {
 				/>
 
 				{ props.hasWidth &&
-					<ResponsiveControl2
-						desktopProps={ {
-							value: attributes.imageWidth,
-							unit: attributes.imageWidthUnit,
-							onChange: imageWidth => updateBlockAttributes( clientId, { imageWidth } ),
-							onChangeUnit: imageWidth => updateBlockAttributes( clientId, { imageWidth } ),
-						} }
-						tabletProps={ {
-							value: attributes.imageWidthTablet,
-							unit: attributes.imageWidthUnitTablet,
-							onChange: imageWidthTablet => updateBlockAttributes( clientId, { imageWidthTablet } ),
-							onChangeUnit: imageWidthTablet => updateBlockAttributes( clientId, { imageWidthTablet } ),
-						} }
-						mobileProps={ {
-							value: attributes.imageWidthMobile,
-							unit: attributes.imageWidthUnitMobile,
-							onChange: imageWidthMobile => updateBlockAttributes( clientId, { imageWidthMobile } ),
-							onChangeUnit: imageWidthMobile => updateBlockAttributes( clientId, { imageWidthMobile } ),
-						} }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Width', i18n ) }
-							units={ props.widthUnits }
-							min={ props.widthMin }
-							sliderMax={ props.widthMax }
-							step={ props.widthStep }
-							initialPosition={ 100 }
-							allowReset={ true }
-							placeholderRender={ widthPlaceholderRender }
-						/>
-					</ResponsiveControl2>
+					<AdvancedRangeControl2
+						label={ __( 'Width 2', i18n ) }
+						attribute="imageWidth"
+						units={ props.widthUnits }
+						min={ props.widthMin }
+						sliderMax={ props.widthMax }
+						step={ props.widthStep }
+						initialPosition={ 100 }
+						allowReset={ true }
+						placeholder="250" // TODO: This should be referenced somewher instead of just a static number
+						responsive="all"
+					/>
 				}
 
 				{ props.hasHeight &&
-					<ResponsiveControl2
-						desktopProps={ {
-							value: attributes.imageHeight,
-							unit: attributes.imageHeightUnit,
-							onChange: imageHeight => updateBlockAttributes( clientId, { imageHeight } ),
-							onChangeUnit: imageHeight => updateBlockAttributes( clientId, { imageHeight } ),
-						} }
-						tabletProps={ {
-							value: attributes.imageHeightTablet,
-							unit: attributes.imageHeightUnitTablet,
-							onChange: imageHeightTablet => updateBlockAttributes( clientId, { imageHeightTablet } ),
-							onChangeUnit: imageHeightTablet => updateBlockAttributes( clientId, { imageHeightTablet } ),
-						} }
-						mobileProps={ {
-							value: attributes.imageHeightMobile,
-							unit: attributes.imageHeightUnitMobile,
-							onChange: imageHeightMobile => updateBlockAttributes( clientId, { imageHeightMobile } ),
-							onChangeUnit: imageHeightMobile => updateBlockAttributes( clientId, { imageHeightMobile } ),
-						} }
-					>
-						<AdvancedRangeControl
-							label={ __( 'Height', i18n ) }
-							units={ props.heightUnits }
-							min={ props.heightMin }
-							sliderMax={ props.heightMax }
-							step={ props.heightStep }
-							allowReset={ true }
-							placeholderRender={ heightPlaceholderRender }
-						/>
-					</ResponsiveControl2>
+					<AdvancedRangeControl2
+						label={ __( 'Height', i18n ) }
+						attribute="imageHeight"
+						units={ props.heightUnits }
+						min={ props.heightMin }
+						sliderMax={ props.heightMax }
+						step={ props.heightStep }
+						allowReset={ true }
+						placeholder="300" // TODO: This should be referenced somewher instead of just a static number
+						responsive="all"
+					/>
 				}
 
 				<ImageAltControl
@@ -169,10 +100,10 @@ export const Edit = props => {
 					onChange={ imageAlt => updateBlockAttributes( clientId, { imageAlt } ) }
 				/>
 
-				<AdvancedRangeControl
+				<AdvancedRangeControl2
 					label={ __( 'Zoom', i18n ) }
-					value={ attributes.imageZoom }
-					onChange={ imageZoom => updateBlockAttributes( clientId, { imageZoom } ) }
+					attribute="imageZoom"
+					hover="all"
 					min={ 0 }
 					sliderMax={ 3 }
 					step={ 0.01 }
@@ -181,8 +112,8 @@ export const Edit = props => {
 				/>
 
 				<ShadowControl
-					value={ attributes.imageShadow }
-					onChange={ imageShadow => updateBlockAttributes( clientId, { imageShadow } ) }
+					attribute="imageShadow"
+					hover="all"
 				/>
 
 				<ImageSizeControl
@@ -197,12 +128,11 @@ export const Edit = props => {
 				/>
 
 				{ props.hasBorderRadius &&
-					<AdvancedRangeControl
+					<AdvancedRangeControl2
 						label={ __( 'Border Radius', i18n ) }
-						value={ attributes.imageBorderRadius }
+						attribute="imageBorderRadius"
 						min="0"
 						sliderMax="30"
-						onChange={ imageBorderRadius => updateBlockAttributes( clientId, { imageBorderRadius } ) }
 						placeholder="0"
 						defaultValue={ 0 }
 						allowReset={ true }
@@ -210,53 +140,28 @@ export const Edit = props => {
 					/>
 				}
 
-				<ResponsiveControl2
-					desktopProps={ {
-						value: attributes.imageFocalPoint,
-						onChange: onChangeFocalPointDesktop,
-					} }
-					tabletProps={ {
-						value: attributes.imageFocalPointTablet,
-						onChange: onChangeFocalPointTablet,
-					} }
-					mobileProps={ {
-						value: attributes.imageFocalPointMobile,
-						onChange: onChangeFocalPointMobile,
-					} }
-				>
-					<AdvancedFocalPointControl
-						label={ __( 'Focal point', i18n ) }
-						url={ attributes.imageUrl }
-					/>
-				</ResponsiveControl2>
+				<AdvancedFocalPointControl
+					attribute="imageFocalPoint"
+					label={ __( 'Focal point', i18n ) }
+					url={ attributes.imageUrl }
+					responsive="all"
+					hover="all"
+				/>
 
-				<ResponsiveControl2
-					desktopProps={ {
-						value: attributes.imageFit,
-						onChange: imageFit => updateBlockAttributes( clientId, { imageFit } ),
-					} }
-					tabletProps={ {
-						value: attributes.imageFitTablet,
-						onChange: imageFitTablet => updateBlockAttributes( clientId, { imageFitTablet } ),
-					} }
-					mobileProps={ {
-						value: attributes.imageFitMobile,
-						onChange: imageFitMobile => updateBlockAttributes( clientId, { imageFitMobile } ),
-					} }
-				>
-					<AdvancedSelectControl
-						label={ __( 'Image Fit', i18n ) }
-						options={ [
-							{ label: __( 'Default', i18n ), value: '' },
-							{ label: __( 'Contain', i18n ), value: 'contain' },
-							{ label: __( 'Cover', i18n ), value: 'cover' },
-							{ label: __( 'Fill', i18n ), value: 'fill' },
-							{ label: __( 'None', i18n ), value: 'none' },
-							{ label: __( 'Scale Down', i18n ), value: 'scale-down' },
-						] }
-						className="ugb--help-tip-background-image-size"
-					/>
-				</ResponsiveControl2>
+				<AdvancedSelectControl
+					label={ __( 'Image Fit', i18n ) }
+					attribute="imageFit"
+					options={ [
+						{ label: __( 'Default', i18n ), value: '' },
+						{ label: __( 'Contain', i18n ), value: 'contain' },
+						{ label: __( 'Cover', i18n ), value: 'cover' },
+						{ label: __( 'Fill', i18n ), value: 'fill' },
+						{ label: __( 'None', i18n ), value: 'none' },
+						{ label: __( 'Scale Down', i18n ), value: 'scale-down' },
+					] }
+					className="ugb--help-tip-background-image-size"
+					responsive="all"
+				/>
 
 				{ props.hasShape &&
 					<ButtonIconPopoverControl

@@ -1,6 +1,6 @@
-import { convertResponsiveAttributes } from '~stackable/util'
+import { expandAttributes } from '~stackable/util'
 
-export const linkAttributes = ( selector = 'a' ) => convertResponsiveAttributes( {
+export const linkAttributes = ( selector = 'a' ) => expandAttributes( {
 	url: {
 		type: 'string',
 		source: 'attribute',
