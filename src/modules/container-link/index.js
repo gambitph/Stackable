@@ -12,7 +12,7 @@ import {
 	createAllCombinationAttributes,
 } from '~stackable/util'
 import {
-	omit, range, camelCase,
+	omit, range, camelCase, isPlainObject,
 } from 'lodash'
 import { i18n } from 'stackable'
 
@@ -180,14 +180,15 @@ const addItemClasses = ( classes, props ) => {
 	}
 }
 
-const addBoxClasses = ( classes, design, props ) => {
-	const {
-		showContainerLink = false,
-	} = props.attributes
+const addBoxClasses = ( classes, props1, props2 ) => {
+	const showContainerLink = isPlainObject( props1 ) ?
+		props1.attributes.showContainerLink : isPlainObject( props2 ) ?
+			props2.attributes.showContainerLink :
+			false
 
 	return {
 		...classes,
-		'ugb-container-link': showContainerLink,
+		'ugb-container-link': showContainerLink || false,
 	}
 }
 
