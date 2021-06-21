@@ -17,13 +17,17 @@ import { addAction } from '@wordpress/hooks'
 import { select, subscribe } from '@wordpress/data'
 
 const query = '.edit-post-visual-editor > .editor-styles-wrapper' +
-	', .edit-post-visual-editor.editor-styles-wrapper' // Fallback for < WP 5.6
+	', .edit-post-visual-editor.editor-styles-wrapper' + // Fallback for < WP 5.6
+	', .edit-post-visual-editor__content-area > div'
 
 // The previous mode.
 let previousMode = 'Desktop'
 
-// Cache the responsive widths of the preview.
-const widthsDetected = {}
+const viewportWidths = {
+	Desktop: 2000,
+	Tablet: 768,
+	Mobile: 360,
+}
 
 const observerCallback = () => {
 	const {
@@ -43,14 +47,7 @@ const observerCallback = () => {
 	}
 	previousMode = mode
 
-	// Gets the current width of the visual editor
-	// Cache the width since it's expensive to perform getComputedStyle
-	if ( ! widthsDetected[ mode ] ) {
-		const visualEditorEl = document.querySelector( query )
-		widthsDetected[ mode ] = parseInt( window.getComputedStyle( visualEditorEl ).width, 10 )
-	}
-
-	updateMediaQueries( mode, widthsDetected[ mode ] )
+	updateMediaQueries( mode, viewportWidths[ mode ] )
 }
 
 // Update the responsive preview when an attribute is changed.
