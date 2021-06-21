@@ -181,7 +181,7 @@ const addItemClasses = ( classes, props ) => {
 }
 
 const addBoxClasses = ( classes, props1, props2 ) => {
-	const	showContainerLink = isPlainObject( props1 ) ?
+	const showContainerLink = isPlainObject( props1 ) ?
 		props1.attributes.showContainerLink : isPlainObject( props2 ) ?
 			props2.attributes.showContainerLink :
 			false
