@@ -195,11 +195,13 @@ class StyleObject {
 
 			// Additional options.
 			selectorCallback = null, // Can be used instead of selector.
+			hoverSelector: _hoverSelector = '', // You can specify your own hover selector (for saving purposes only)
 			hoverCallback = null,
 			renderIn: _renderIn = '', // editor, custom, saveOnly
 			valueCallback = null,
 			enabledCallback = null, // Function that if returns false, will not render this style.
 			vendorPrefixes = [], // Add vendor prefixes to also generate for the styleRule, e.g. '-webkit-'
+			clampCallback = null, // Function that can be used to limit the value in tablet/mobile based on the desktop value
 		} = styleParams
 
 		const renderIn = _renderIn === 'save' ? 'saveOnly' // Use "save" shorthand for "saveOnly"
@@ -222,6 +224,19 @@ class StyleObject {
 
 			const unit = hasUnits ? ( attributes[ unitAttrName ] || hasUnits ) : ''
 			let value = attributes[ actualAttrName ]
+
+			// Allow unspecified tablet & mobile values to be clamped based on the desktop value.
+			if ( clampCallback && responsive ) {
+				const desktopValue = getAttributeName( attrName, 'desktop', state )
+				const tabletValue = getAttributeName( attrName, 'tablet', state )
+				if ( value === '' || typeof value === 'undefined' ) {
+					if ( device === 'tablet' ) {
+						value = clampCallback( desktopValue, attributes, device, state, unit )
+					} else if ( device === 'mobile' ) {
+						value = clampCallback( tabletValue !== '' ? tabletValue : desktopValue, attributes, device, state, unit )
+					}
+				}
+			}
 
 			if ( value === '' || typeof value === 'undefined' ) {
 				return undefined
@@ -252,7 +267,7 @@ class StyleObject {
 		const hasParentHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'parent-hover' ) )
 
 		let parentHoverSelector = `:where(.stk-block:hover) .%s ${ selector }`
-		let hoverSelector = `.stk-block.%s:hover ${ selector }`
+		let hoverSelector = _hoverSelector || `.stk-block.%s:hover ${ selector }`
 
 		// This is for the editor, change the selector to make the styles show up right away.
 		if ( blockState === 'hover' ) {
