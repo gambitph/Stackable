@@ -10,11 +10,11 @@ import { useCallback } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { dispatch } from '@wordpress/data'
 
-export const useControlHandlers = ( attribute, valueCallback, onChangeCallback ) => {
+export const useControlHandlers = ( attribute, responsive = false, hover = false, valueCallback = null, onChangeCallback = null ) => {
 	const { clientId } = useBlockEditContext()
 
 	const attributes = useBlockAttributes( clientId )
-	const attrName = useAttributeName( attribute )
+	const attrName = useAttributeName( attribute, responsive, hover )
 
 	let value = attributes[ attrName ]
 	if ( valueCallback ) {

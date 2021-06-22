@@ -101,7 +101,7 @@ const AdvancedControl = props => {
 	const attributes = useBlockAttributes( clientId )
 
 	// Unit handles
-	const unitAttrName = useAttributeName( `${ props.attribute }Unit` )
+	const unitAttrName = useAttributeName( `${ props.attribute }Unit`, props.responsive, props.hover )
 	const unit = attributes[ unitAttrName ]
 	const onChangeUnit = useCallback( unit => updateBlockAttributes( clientId, { [ unitAttrName ]: unit } ), [ unitAttrName ] )
 

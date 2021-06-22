@@ -16,7 +16,7 @@ import { SelectControl } from '@wordpress/components'
 import classnames from 'classnames'
 
 const AdvancedSelectControl = props => {
-	const [ value, onChange ] = useControlHandlers( props.attribute )
+	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 
 	return (
@@ -47,6 +47,8 @@ AdvancedSelectControl.defaultProps = {
 	default: '',
 
 	attribute: '',
+	responsive: false,
+	hover: false,
 
 	value: undefined,
 	onChange: undefined,

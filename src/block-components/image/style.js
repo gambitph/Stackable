@@ -94,9 +94,9 @@ const getStyleParams = ( options = {} ) => {
 			vendorPrefixes: [ '-webkit-' ],
 			attrName: 'imageShape',
 			responsive: 'all',
-			enabledCallback: attributes => !! attributes.imageShape,
-			valueCallback: ( value, attributes ) => {
-				return getShapeCSS( value, attributes.imageShapeFlipX, attributes.imageShapeFlipY, attributes.imageShapeStretch )
+			enabledCallback: getAttribute => !! getAttribute( 'imageShape' ),
+			valueCallback: ( value, getAttribute ) => {
+				return getShapeCSS( value, getAttribute( 'imageShapeFlipX' ), getAttribute( 'imageShapeFlipY' ), getAttribute( 'imageShapeStretch' ) )
 			},
 			dependencies: [ 'imageShapeFlipX', 'imageShapeFlipY', 'imageShapeStretch' ],
 		},
@@ -107,9 +107,9 @@ const getStyleParams = ( options = {} ) => {
 			vendorPrefixes: [ '-webkit-' ],
 			attrName: 'imageShape',
 			responsive: 'all',
-			enabledCallback: attributes => !! attributes.imageShape,
-			valueCallback: ( value, attributes ) => {
-				return getShapeCSS( value, attributes.imageShapeFlipX, attributes.imageShapeFlipY, attributes.imageShapeStretch )
+			enabledCallback: getAttribute => !! getAttribute( 'imageShape' ),
+			valueCallback: ( value, getAttribute ) => {
+				return getShapeCSS( value, getAttribute( 'imageShapeFlipX' ), getAttribute( 'imageShapeFlipY' ), getAttribute( 'imageShapeStretch' ) )
 			},
 			dependencies: [ 'imageShapeFlipX', 'imageShapeFlipY', 'imageShapeStretch' ],
 		},

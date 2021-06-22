@@ -24,8 +24,8 @@ const ImageControl = props => {
 	const { clientId } = useBlockEditContext()
 
 	const attributes = useBlockAttributes( clientId )
-	const attrNameId = useAttributeName( `${ props.attribute }Id` )
-	const attrNameUrl = useAttributeName( `${ props.attribute }Url` )
+	const attrNameId = useAttributeName( `${ props.attribute }Id`, props.responsive, props.hover )
+	const attrNameUrl = useAttributeName( `${ props.attribute }Url`, props.responsive, props.hover )
 
 	const imageId = attributes[ attrNameId ]
 	const imageUrl = attributes[ attrNameUrl ]
@@ -124,6 +124,8 @@ ImageControl.defaultProps = {
 
 	attribute: '',
 	allowedTypes: [ 'image' ],
+	responsive: false,
+	hover: false,
 
 	value: undefined,
 	onChange: undefined,
