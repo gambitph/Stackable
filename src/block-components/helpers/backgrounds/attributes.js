@@ -6,6 +6,7 @@ export const backgroundAttributes = expandAttributes( {
 		default: '',
 	},
 	backgroundColor: {
+		stkHover: true,
 		type: 'string',
 		default: '',
 	},
@@ -47,10 +48,12 @@ export const backgroundAttributes = expandAttributes( {
 		default: '',
 	},
 	backgroundColorOpacity: {
+		stkHover: true,
 		type: 'number',
 		default: '',
 	},
 	backgroundTintStrength: {
+		stkHover: true,
 		type: 'number',
 		default: '',
 	},
@@ -60,6 +63,7 @@ export const backgroundAttributes = expandAttributes( {
 	},
 	backgroundCustomSize: {
 		stkResponsive: true,
+		stkUnits: '%',
 		type: 'number',
 		default: '',
 	},
@@ -74,11 +78,6 @@ export const backgroundAttributes = expandAttributes( {
 	fixedBackground: {
 		type: 'boolean',
 		default: '',
-	},
-	backgroundCustomSizeUnit: {
-		stkResponsive: true,
-		type: 'string',
-		default: '%',
 	},
 } )
 
