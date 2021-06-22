@@ -68,19 +68,6 @@ export const ButtonStyles = props => {
 						...propsToPass.options,
 						selector: '.stk-button__button > .stk-button__svg-wrapper > .stk-button__inner-svg',
 						wrapperSelector: '.stk-button__button',
-						attrNameTemplate: '%s',
-					},
-				} } />
-			<Icon.Style
-				{ ...{
-					...propsToPass,
-					options: {
-						...propsToPass.options,
-						selector: '.stk-button__button:hover > .stk-button__svg-wrapper > .stk-button__inner-svg',
-						backgroundShapeSelector: '.stk-button__button:hover .stk--shape-icon',
-						wrapperSelector: '.stk-button__button:hover',
-						attrNameTemplate: 'hover%s',
-						normalAttrNameTemplate: '%s',
 					},
 				} } />
 		</Fragment>
@@ -136,7 +123,6 @@ ButtonStyles.Content = props => {
 					options: {
 						...propsToPass.options,
 						selector: '.stk-button__button > .stk-button__svg-wrapper > .stk-button__inner-svg',
-						backgroundShapeSelector: '.stk-button__button:hover .stk--shape-icon',
 						wrapperSelector: '.stk-button__button',
 					},
 				} } />

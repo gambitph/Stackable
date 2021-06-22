@@ -228,7 +228,7 @@ class StyleObject {
 			}
 		}
 
-		const selector = selectorCallback ? selectorCallback( getAttribute, attributes ) : _selector
+		let selector = selectorCallback ? selectorCallback( getAttribute, attributes ) : _selector
 		const hover = hoverCallback ? hoverCallback( getAttribute, attributes ) : _hover
 
 		const getValue = ( attrName, device, state ) => {
@@ -284,15 +284,42 @@ class StyleObject {
 		const hasHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'hover' ) )
 		const hasParentHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'parent-hover' ) )
 
-		let parentHoverSelector = `:where(.stk-block:hover) .%s ${ selector }`
-		let hoverSelector = _hoverSelector || `.stk-block.%s:hover ${ selector }`
+		let parentHoverSelector
+		let hoverSelector
 
-		// This is for the editor, change the selector to make the styles show up right away.
-		if ( blockState === 'hover' ) {
-			hoverSelector = `.%s.stk--is-hovered ${ selector }`
+		if ( Array.isArray( _hoverSelector ) ) {
+			hoverSelector = _hoverSelector.join( ', ' )
 		}
-		if ( blockState === 'parent-hovered' ) {
-			parentHoverSelector = `.%s.stk--is-hovered .%s-container`
+
+		if ( Array.isArray( selector ) ) {
+			// This is to handle multiple selectors.
+			parentHoverSelector = selector.map( s => {
+				if ( blockState === 'parent-hovered' ) {
+					return `.%s.stk--is-hovered .%s-container`
+				}
+
+				return `:where(.stk-block:hover) .%s ${ s }`
+			} ).join( ', ' )
+
+			hoverSelector = hoverSelector || selector.map( s => {
+				if ( blockState === 'hover' ) {
+					return `.%s.stk--is-hovered ${ s }`
+				}
+
+				return `.stk-block.%s:hover ${ s }`
+			} ).join( ', ' )
+
+			selector = selector.join( ', ' )
+		} else {
+			parentHoverSelector = `:where(.stk-block:hover) .%s ${ selector }`
+			hoverSelector = _hoverSelector || `.stk-block.%s:hover ${ selector }`
+			// This is for the editor, change the selector to make the styles show up right away.
+			if ( blockState === 'hover' ) {
+				hoverSelector = `.%s.stk--is-hovered ${ selector }`
+			}
+			if ( blockState === 'parent-hovered' ) {
+				parentHoverSelector = `.%s.stk--is-hovered .%s-container`
+			}
 		}
 
 		this.appendToSelector( selector, styleRule, getValue( attrName, 'desktop', 'normal' ), 'desktop', renderIn, vendorPrefixes )

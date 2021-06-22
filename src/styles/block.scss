@@ -169,7 +169,7 @@
 	-o-text-fill-color: transparent;
 }
 
-.stk--gradient-wrapper:hover,
+:where(.stk-block:hover) .stk--gradient-wrapper,
 .stk--gradient-wrapper.stk--is-hovered,
 .stk--gradient-wrapper .stk--is-hovered, {
 	.stk--is-gradient:not(.stk--hover-gradient) {
