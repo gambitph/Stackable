@@ -4,17 +4,17 @@
 import { i18n } from 'stackable'
 import {
 	 AdvancedToolbarControl,
-	 AdvancedRangeControl,
 	 ColorPaletteControl,
-	 SpacingControl,
 	 ShadowControl,
+	 AdvancedRangeControl,
+	 FourRangeControl,
 } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
 import {
-	Fragment, useMemo, useCallback,
+	Fragment, useMemo,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { useAttributeEditHandlers } from '~stackable/hooks'
@@ -41,8 +41,7 @@ const BORDER_CONTROLS = [
 export const BorderControls = props => {
 	const {
 		getAttribute,
-		updateAttributeHandler,
-		updateAttributes,
+		getAttrName,
 	} = useAttributeEditHandlers( props.attrNameTemplate )
 
 	const borderRadiusPlaceholder = useMemo( () => {
@@ -51,129 +50,56 @@ export const BorderControls = props => {
 			: null
 	}, [ props.blockEl ] )
 
-	const onChangeShadow = useCallback( updateAttributeHandler( 'shadow' ), [ updateAttributeHandler ] )
-
 	return (
 		<Fragment>
-			<AdvancedToolbarControl
-				label={ __( 'Borders', i18n ) }
-				controls={ BORDER_CONTROLS }
-				className="ugb-border-controls__border-type-toolbar"
-				value={ getAttribute( 'borderType' ) }
-				onChange={ updateAttributeHandler( 'borderType' ) }
-				fullwidth={ true }
-				isSmall={ true }
-			/>
+			{ props.hasBorderType &&
+				<AdvancedToolbarControl
+					label={ __( 'Borders', i18n ) }
+					controls={ BORDER_CONTROLS }
+					className="ugb-border-controls__border-type-toolbar"
+					attribute={ getAttrName( 'borderType' ) }
+					fullwidth={ true }
+					isSmall={ true }
+				/>
+			}
 
-			{ getAttribute( 'borderType' ) &&
-				<SpacingControl
+			{ ( getAttribute( 'borderType' ) || ! props.hasBorderType ) && props.hasBorderControls &&
+				<FourRangeControl
 					label={ __( 'Border Width' ) }
-					units={ [ 'px' ] }
+					attribute={ getAttrName( 'borderWidth' ) }
+					responsive="all"
+					hover="all"
 					min={ 0 }
 					max={ 99 }
 					step={ 1 }
 					sliderMax={ 5 }
 					defaultLocked={ true }
-
-					valueDesktop={ {
-						top: getAttribute( 'borderWidthTop' ),
-						right: getAttribute( 'borderWidthRight' ),
-						bottom: getAttribute( 'borderWidthBottom' ),
-						left: getAttribute( 'borderWidthLeft' ),
-					} }
-					onChangeDesktop={
-						( {
-							top, right, bottom, left,
-						} ) => {
-							const attributes = {
-								BorderWidthTop: ! top && top !== 0 ? '' : parseInt( top, 10 ),
-								BorderWidthRight: ! right && right !== 0 ? '' : parseInt( right, 10 ),
-								BorderWidthBottom: ! bottom && bottom !== 0 ? '' : parseInt( bottom, 10 ),
-								BorderWidthLeft: ! left && left !== 0 ? '' : parseInt( left, 10 ),
-							}
-							if ( ! getAttribute( 'borderType' ) ) {
-								attributes.borderType = 'solid'
-							}
-							updateAttributes( attributes )
-						}
-					}
-
-					valueTablet={ {
-						top: getAttribute( 'borderWidthTopTablet' ),
-						right: getAttribute( 'borderWidthRightTablet' ),
-						bottom: getAttribute( 'borderWidthBottomTablet' ),
-						left: getAttribute( 'borderWidthLeftTablet' ),
-					} }
-					onChangeTablet={
-						( {
-							top, right, bottom, left,
-						} ) => {
-							updateAttributes( {
-								BorderWidthTopTablet: ! top && top !== 0 ? '' : parseInt( top, 10 ),
-								BorderWidthRightTablet: ! right && right !== 0 ? '' : parseInt( right, 10 ),
-								BorderWidthBottomTablet: ! bottom && bottom !== 0 ? '' : parseInt( bottom, 10 ),
-								BorderWidthLeftTablet: ! left && left !== 0 ? '' : parseInt( left, 10 ),
-							} )
-						}
-					}
-
-					valueMobile={ {
-						top: getAttribute( 'borderWidthTopMobile' ),
-						right: getAttribute( 'borderWidthRightMobile' ),
-						bottom: getAttribute( 'borderWidthBottomMobile' ),
-						left: getAttribute( 'borderWidthLeftMobile' ),
-					} }
-					onChangeMobile={
-						( {
-							top, right, bottom, left,
-						} ) => {
-							updateAttributes( {
-								BorderWidthTopMobile: ! top && top !== 0 ? '' : parseInt( top, 10 ),
-								BorderWidthRightMobile: ! right && right !== 0 ? '' : parseInt( right, 10 ),
-								BorderWidthBottomMobile: ! bottom && bottom !== 0 ? '' : parseInt( bottom, 10 ),
-								BorderWidthLeftMobile: ! left && left !== 0 ? '' : parseInt( left, 10 ),
-							} )
-						}
-					}
-
-					placeholder="1"
-					placeholderTop="1"
-					placeholderLeft="1"
-					placeholderBottom="1"
-					placeholderRight="1"
 				/>
 			}
 
-			{ getAttribute( 'borderType' ) &&
+			{ ( getAttribute( 'borderType' ) || ! props.hasBorderType ) && props.hasBorderControls &&
 				<ColorPaletteControl
-					value={ getAttribute( 'borderColor' ) }
-					onChange={ color => {
-						const attributes = {
-							BorderColor: color,
-						}
-						if ( ! getAttribute( 'borderType' ) ) {
-							attributes.borderType = 'solid'
-						}
-						updateAttributes( attributes )
-					} }
 					label={ __( 'Border Color', i18n ) }
+					attribute={ getAttrName( 'borderColor' ) }
+					hover="all"
 					hasTransparent={ true }
 				/>
 			}
 
 			<AdvancedRangeControl
 				label={ __( 'Border Radius', i18n ) }
-				value={ getAttribute( 'borderRadius' ) }
-				onChange={ updateAttributeHandler( 'borderRadius' ) }
+				attribute={ getAttrName( 'borderRadius' ) }
+				responsive="all"
+				hover="all"
+				className="ugb--help-tip-general-border-radius"
 				min={ 0 }
 				sliderMax={ 50 }
-				allowReset={ true }
 				placeholderRender={ borderRadiusPlaceholder }
-				className="ugb--help-tip-general-border-radius"
 			/>
 			<ShadowControl
-				value={ getAttribute( 'shadow' ) }
-				onChange={ onChangeShadow }
+				label={ __( 'Shadow / Outline', i18n ) }
+				attribute={ getAttrName( 'shadow' ) }
+				hover="all"
 			/>
 		</Fragment>
 	)
@@ -182,4 +108,6 @@ export const BorderControls = props => {
 BorderControls.defaultProps = {
 	attrNameTemplate: '%s',
 	blockEl: null,
+	hasBorderType: true,
+	hasBorderControls: true,
 }

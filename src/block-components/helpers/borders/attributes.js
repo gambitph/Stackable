@@ -4,30 +4,17 @@ export const borderAttributes = {
 		default: '',
 	},
 	borderColor: {
+		stkHover: true,
 		type: 'string',
 		default: '',
 	},
-	borderWidthTop: {
+	borderWidth: {
 		stkResponsive: true,
-		type: 'number',
-		default: '',
-	},
-	borderWidthRight: {
-		stkResponsive: true,
-		type: 'number',
-		default: '',
-	},
-	borderWidthBottom: {
-		stkResponsive: true,
-		type: 'number',
-		default: '',
-	},
-	borderWidthLeft: {
-		stkResponsive: true,
-		type: 'number',
-		default: '',
+		stkHover: true,
+		type: 'object',
 	},
 	borderRadius: {
+		stkResponsive: true,
 		stkHover: true,
 		type: 'number',
 		default: '',
