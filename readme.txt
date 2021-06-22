@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.5.4
 Tested up to: 5.7.2
 Requires PHP: 5.6
-Stable tag: 2.17.0
+Stable tag: 2.17.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -80,6 +80,7 @@ Turn the Gutenberg Editor into a page builder. Fine-tune your creations with a w
     - Live Responsive Editing
     - Ability to tweak designs for Tablet and Mobile views
     - Hide / Show Specific Blocks on Desktop, Tablet or Mobile
+- Custom data-* attributes
 - Dynamic Content **
 
 ## Agency Tools
@@ -202,6 +203,13 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 2.17.1 =
+* Fixed: Compatibility fix with Toolset
+* Fixed: Turning on Optimization settings prevents global colors from working in Divider block colors
+* Fixed: When no aria-label is given in Image Box blocks, role="img" is no longer added
+* Fixed: WordPress 5.8 compatibility issues
+* Fixed: Removed some attributes which should not be included when copy and pasting styles
 
 = 2.17.0 =
 [Custom Attributes and Optimization](https://wpstackable.com/blog/custom-attributes-and-optimization/?utm_source=wp-repo&utm_campaign=readme&utm_medium=link)

@@ -92,7 +92,7 @@ const save = props => {
 						>
 							{ attributes[ `image${ i }Url` ] &&
 								<div className="ugb-image-box__box ugb-image-box__image-wrapper">
-									<div className="ugb-image-box__box ugb-image-box__image" role="img" aria-label={ ariaLabel }></div>
+									<div className="ugb-image-box__box ugb-image-box__image" role={ ariaLabel ? 'img' : undefined } aria-label={ ariaLabel || undefined }></div>
 								</div>
 							}
 							{ showOverlay &&

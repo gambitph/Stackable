@@ -5,6 +5,7 @@ module.exports = api => {
 		presets: [
 			[ '@babel/preset-env', { modules: false } ],
 			'@babel/preset-react',
+			'@wordpress/babel-preset-default', // @see https://github.com/WordPress/gutenberg/tree/trunk/packages/babel-preset-default
 		],
 		env: {
 			test: {

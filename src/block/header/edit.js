@@ -522,7 +522,7 @@ const edit = props => {
 	], applyFilters( 'stackable.header.boxclasses', {
 		'ugb--full-height': fullHeight,
 		[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== '',
-	}, design, props ) )
+	}, props ) )
 
 	return (
 		<BlockContainer.Edit className={ mainClasses } blockProps={ props } render={ () => (
