@@ -2,121 +2,204 @@
  * External dependencies
  */
 import {
-	appendImportantAll,
-	getAttrNameFunction,
 	hexToRgba,
 	__getValue,
+	getStyles,
+	useStyles,
 } from '~stackable/util'
 import { Style as StyleComponent } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import { Fragment, useMemo } from '@wordpress/element'
+import { Fragment } from '@wordpress/element'
 
-const getStyles1 = ( attributes, options = {} ) => {
+const getStyleParams = ( options = {} ) => {
 	const {
 		selector = '',
 		attrNameTemplate = '%s',
 	} = options
 
-	const getAttrName = getAttrNameFunction( attrNameTemplate )
-	const getValue = __getValue( attributes, getAttrName )
+	// const getAttrName = getAttrNameFunction( attrNameTemplate )
 
-	const customSize = getValue( 'BackgroundCustomSize' ) ? getValue( 'BackgroundCustomSize' ) + ( getValue( 'BackgroundCustomSizeUnit' ) || '%' ) : undefined
-	const tabletCustomSize = getValue( 'BackgroundCustomSizeTablet' ) ? getValue( 'BackgroundCustomSizeTablet' ) + ( getValue( 'BackgroundCustomSizeUnitTablet' ) || '%' ) : undefined
-	const mobileCustomSize = getValue( 'BackgroundCustomSizeMobile' ) ? getValue( 'BackgroundCustomSizeMobile' ) + ( getValue( 'BackgroundCustomSizeUnitMobile' ) || '%' ) : undefined
-
-	// Background color opacity.
-	let backgroundColor = getValue( 'BackgroundColor' )
-	if ( ! getValue( 'BackgroundColorType' ) && typeof attributes[ getAttrName( 'BackgroundColorOpacity' ) ] !== 'undefined' && attributes[ getAttrName( 'BackgroundColorOpacity' ) ] !== '' ) {
-		if ( ! getValue( 'BackgroundMediaURL' ) && ! getValue( 'BackgroundMediaURLTablet' ) && ! getValue( 'BackgroundMediaURLMobile' ) ) {
-			backgroundColor = `${ hexToRgba( getValue( 'BackgroundColor' ) || '#ffffff', getValue( 'BackgroundColorOpacity' ) || 0 ) }`
-		}
-	}
-
-	return {
-		[ selector ]: {
-			backgroundColor,
-			backgroundAttachment: getValue( 'FixedBackground' ) ? 'fixed' : undefined,
-			backgroundImage: getValue( 'BackgroundMediaURL', `url(%s)` ),
-			backgroundPosition: getValue( 'BackgroundPosition' ),
-			backgroundRepeat: getValue( 'BackgroundRepeat' ),
-			backgroundSize: getValue( 'BackgroundSize' )
-				? ( getValue( 'BackgroundSize' ) !== 'custom' ? getValue( 'BackgroundSize' ) : customSize )
-				: undefined,
-			backgroundBlendMode: getValue( 'BackgroundImageBlendMode' ),
-		},
-		tablet: {
-			[ selector ]: {
-				backgroundImage: getValue( 'BackgroundMediaURLTablet', `url(%s)` ),
-				backgroundPosition: getValue( 'BackgroundPositionTablet' ),
-				backgroundRepeat: getValue( 'BackgroundRepeatTablet' ),
-				backgroundSize: getValue( 'BackgroundSizeTablet' )
-					? ( getValue( 'BackgroundSizeTablet' ) !== 'custom' ? getValue( 'BackgroundSizeTablet' ) : tabletCustomSize )
-					: undefined,
+	return [
+		{
+			selector,
+			styleRule: 'backgroundColor',
+			attrName: 'backgroundColor',
+			attrNameTemplate,
+			hoverCallback: getAttribute => {
+				return getAttribute( 'backgroundColorType' ) !== 'gradient'
+					? 'all' : false
 			},
-		},
-		mobile: {
-			[ selector ]: {
-				backgroundImage: getValue( 'BackgroundMediaURLMobile', `url(%s)` ),
-				backgroundPosition: getValue( 'BackgroundPositionMobile' ),
-				backgroundRepeat: getValue( 'BackgroundRepeatMobile' ),
-				backgroundSize: getValue( 'BackgroundSizeMobile' )
-					? ( getValue( 'BackgroundSizeMobile' ) !== 'custom' ? getValue( 'BackgroundSizeMobile' ) : mobileCustomSize )
-					: undefined,
+			valueCallback: ( value, getAttribute, device, state ) => {
+				const backgroundColorType = getAttribute( 'backgroundColorType' )
+				const backgroundColorOpacity = getAttribute( 'backgroundColorOpacity', 'desktop', state )
+
+				const hasBackground = getAttribute( 'backgroundMediaUrl', 'desktop' ) ||
+					getAttribute( 'backgroundMediaUrl', 'tablet' ) ||
+					getAttribute( 'backgroundMediaUrl', 'mobile' )
+
+				if ( ! backgroundColorType && backgroundColorOpacity && ! hasBackground ) {
+					return `${ hexToRgba( value || '#ffffff', backgroundColorOpacity || 0 ) }`
+				}
+
+				return value
 			},
+			valuePreCallback: ( _value, getAttribute, device, state ) => {
+				let value = _value
+				if ( ! value && getAttribute( 'backgroundColorOpacity', 'desktop', state ) ) {
+					if ( device !== 'desktop' || state !== 'normal' ) {
+						value = getAttribute( 'backgroundColor', 'desktop', 'normal' )
+					}
+				}
+				return value
+			},
+			dependencies: [ 'backgroundColorOpacity', 'backgroundColorType', 'backgroundMediaUrl' ],
 		},
-	}
-}
-
-const getStyles2 = ( attributes, options = {} ) => {
-	const {
-		selector = '',
-		attrNameTemplate = '%s',
-	} = options
-
-	const getAttrName = getAttrNameFunction( attrNameTemplate )
-	const getValue = __getValue( attributes, getAttrName )
-
-	const opacity = parseInt( getValue( 'BackgroundTintStrength', '', 5 ) || 0, 10 ) / 10
-	const isGradient = getValue( 'BackgroundColorType' ) === 'gradient'
-
-	// The default color is the same as the other one but transparent. Same so that there won't be a weird transition to transparent.
-	const defaultColor1 = hexToRgba( getValue( 'BackgroundColor2' ) || '#ffffff', 0 )
-	const defaultColor2 = hexToRgba( getValue( 'BackgroundColor' ) || '#ffffff', 0 )
-
-	// Gradient location.
-	const color1Location = `${ getValue( 'BackgroundGradientLocation1' ) || '0' }%`
-	const color2Location = `${ getValue( 'BackgroundGradientLocation2' ) || '100' }%`
-
-	return {
-		[ `${ selector }:before` ]: appendImportantAll( {
-			backgroundColor: ! isGradient && getValue( 'BackgroundColor' ) ? getValue( 'BackgroundColor' ) : undefined,
-			backgroundImage: isGradient
-				? `linear-gradient(${ getValue( 'BackgroundGradientDirection', '%sdeg', '90deg' ) }, ${ getValue( 'BackgroundColor' ) || defaultColor1 } ${ color1Location }, ${ getValue( 'BackgroundColor2' ) || defaultColor2 } ${ color2Location })`
-				: undefined,
-			opacity: getValue( 'BackgroundMediaURL' ) ? opacity : undefined,
-			mixBlendMode: isGradient ? getValue( 'BackgroundGradientBlendMode' ) : undefined,
-		} ),
-		tablet: {
-			[ `${ selector }:before` ]: appendImportantAll( {
-				opacity: getValue( 'BackgroundMediaURLTablet' ) ? opacity : undefined,
-			} ),
+		{
+			selector,
+			styleRule: 'backgroundImage',
+			attrName: 'backgroundMediaUrl',
+			attrNameTemplate,
+			format: 'url(%s)',
+			responsive: 'all',
 		},
-		mobile: {
-			[ `${ selector }:before` ]: appendImportantAll( {
-				opacity: getValue( 'BackgroundMediaURLMobile' ) ? opacity : undefined,
-			} ),
+		{
+			selector,
+			styleRule: 'backgroundAttachment',
+			attrName: 'fixedBackground',
+			attrNameTemplate,
+			valueCallback: value => value ? 'fixed' : undefined,
+		},
+		{
+			selector,
+			styleRule: 'backgroundPosition',
+			attrName: 'backgroundPosition',
+			attrNameTemplate,
+			responsive: 'all',
+		},
+		{
+			selector,
+			styleRule: 'backgroundRepeat',
+			attrName: 'backgroundRepeat',
+			attrNameTemplate,
+			responsive: 'all',
+		},
+		{
+			selector,
+			styleRule: 'backgroundSize',
+			attrName: 'backgroundSize',
+			attrNameTemplate,
+			responsive: 'all',
+			valueCallback: ( value, getAttribute, device ) => {
+				if ( value === 'custom' ) {
+					if ( getAttribute( 'backgroundCustomSize', device ) ) {
+						return getAttribute( 'backgroundCustomSize', device ) + ( getAttribute( 'backgroundCustomSizeUnit', device ) || '%' )
+					}
+				}
+				return value
+			},
+			dependencies: [ 'backgroundCustomSize', 'backgroundCustomSizeUnit' ],
+		},
+		{
+			selector,
+			styleRule: 'backgroundBlendMode',
+			attrName: 'backgroundImageBlendMode',
+			attrNameTemplate,
+		},
+
+		{
+			selector: `${ selector }:before`,
+			styleRule: 'backgroundColor',
+			attrName: 'backgroundColor',
+			attrNameTemplate,
+			hover: 'all',
+			valuePreCallback: ( value, getAttribute, device, state ) => {
+				if ( value === '' ) {
+					if ( getAttribute( 'backgroundTintStrength', device, state ) ) {
+						return '#000000'
+					}
+				}
+				return value
+			},
+			valueCallback: ( value, getAttribute ) => {
+				const isGradient = getAttribute( 'backgroundColorType' ) === 'gradient'
+				return ! isGradient && value ? value : undefined
+			},
+			dependencies: [ 'backgroundColorType' ],
+		},
+		{
+			selector: `${ selector }:before`,
+			styleRule: 'opacity',
+			attrName: 'backgroundTintStrength',
+			attrNameTemplate,
+			hover: 'all',
+			enabledCallback: getAttribute => !! getAttribute( 'backgroundMediaUrl', 'mobile', 'normal', true ),
+			valuePreCallback: ( value, getAttribute, device, state ) => {
+				if ( value === '' ) {
+					if ( getAttribute( 'backgroundColor', device, state ) ) {
+						return 5
+					}
+				}
+				return value
+			},
+			valueCallback: value => {
+				return parseInt( value, 10 ) / 10
+			},
+			dependencies: [ 'backgroundColor', 'backgroundMediaUrl' ],
+		},
+		{
+			selector: `${ selector }:before`,
+			styleRule: 'mixBlendMode',
+			attrName: 'backgroundGradientBlendMode',
+			attrNameTemplate,
+			enabledCallback: getAttribute => getAttribute( 'backgroundColorType' ) === 'gradient',
+			dependencies: [ 'backgroundColorType' ],
+		},
+
+		{
+			selector: `${ selector }:before`,
+			styleRule: 'backgroundImage',
+			attrName: 'backgroundColor',
+			attrNameTemplate,
+			enabledCallback: getAttribute => getAttribute( 'backgroundColorType' ) === 'gradient',
+			valueCallback: ( value, getAttribute ) => {
+				// The default color is the same as the other one but transparent. Same so that there won't be a weird transition to transparent.
+				const defaultColor1 = hexToRgba( getAttribute( 'backgroundColor2' ) || '#ffffff', 0 )
+				const defaultColor2 = hexToRgba( getAttribute( 'backgroundColor' ) || '#ffffff', 0 )
+
+				// Gradient location.
+				const color1Location = `${ getAttribute( 'backgroundGradientLocation1' ) || '0' }%`
+				const color2Location = `${ getAttribute( 'backgroundGradientLocation2' ) || '100' }%`
+
+				let angle = getAttribute( 'backgroundGradientDirection' )
+				if ( angle === '' ) {
+					angle = '90'
+				}
+				angle = `${ angle }deg`
+
+				return `linear-gradient(${ angle }, ${ getAttribute( 'backgroundColor' ) || defaultColor1 } ${ color1Location }, ${ getAttribute( 'BackgroundColor2' ) || defaultColor2 } ${ color2Location })`
+			},
+			dependencies: [ 'backgroundColorType', 'backgroundColor', 'backgroundColor2', 'backgroundGradientLocation1', 'backgroundGradientLocation2', 'backgroundGradientDirection' ],
 		},
 
 		// In the editor, the background overlay can go outside the block if there's a border radius.
-		editor: {
-			[ `${ selector }:before` ]: appendImportantAll( {
-				borderRadius: isGradient || getValue( 'BackgroundColor' ) ? getValue( 'borderRadius', '%spx' ) : undefined, // Block border radius
-			} ),
+		{
+			renderIn: 'edit',
+			selector: `${ selector }:before`,
+			styleRule: 'borderRadius',
+			attrName: 'borderRadius',
+			attrNameTemplate,
+			format: '%spx',
+			enabledCallback: getAttribute =>
+				getAttribute( 'backgroundColorType' ) === 'gradient' ||
+				getAttribute( 'backgroundColor' ) ||
+				getAttribute( 'backgroundColor', 'desktop', 'hover' ) ||
+				getAttribute( 'backgroundColor', 'desktop', 'parent-hovered' ),
+			dependencies: [ 'backgroundColorType', 'backgroundColor' ],
 		},
-	}
+	]
 }
 
 export const BackgroundStyle = props => {
@@ -125,80 +208,13 @@ export const BackgroundStyle = props => {
 		options = {},
 		...propsToPass
 	} = props
-	const {
-		attrNameTemplate = '%s',
-	} = options
 
-	const getAttrName = getAttrNameFunction( attrNameTemplate )
-	const getValue = __getValue( attributes, getAttrName )
-
-	const styles1 = useMemo(
-		() => getStyles1( attributes, options ),
-		[
-			options.attrNameTemplate,
-			options.selector,
-			getValue( 'BorderRadius' ), // Clip the background image
-
-			getValue( 'BackgroundCustomSize' ),
-			getValue( 'BackgroundCustomSizeUnit' ),
-			getValue( 'BackgroundCustomSizeTablet' ),
-			getValue( 'BackgroundCustomSizeUnitTablet' ),
-			getValue( 'BackgroundCustomSizeMobile' ),
-			getValue( 'BackgroundCustomSizeUnitMobile' ),
-
-			getValue( 'BackgroundColor' ),
-			getValue( 'BackgroundColorType' ),
-			getValue( 'BackgroundColorOpacity' ),
-			getValue( 'BackgroundMediaURL' ),
-			getValue( 'BackgroundMediaURLTablet' ),
-			getValue( 'BackgroundMediaURLMobile' ),
-
-			getValue( 'FixedBackground' ),
-			getValue( 'BackgroundImageBlendMode' ),
-
-			getValue( 'BackgroundPosition' ),
-			getValue( 'BackgroundRepeat' ),
-			getValue( 'BackgroundSize' ),
-			getValue( 'BackgroundPositionTablet' ),
-			getValue( 'BackgroundRepeatTablet' ),
-			getValue( 'BackgroundSizeTablet' ),
-			getValue( 'BackgroundPositionMobile' ),
-			getValue( 'BackgroundRepeatMobile' ),
-			getValue( 'BackgroundSizeMobile' ),
-			attributes.uniqueId,
-		]
-	)
-
-	const styles2 = useMemo(
-		() => getStyles2( attributes, options ),
-		[
-			options.attrNameTemplate,
-			options.selector,
-			getValue( 'BackgroundTintStrength' ),
-			getValue( 'BackgroundColorType' ),
-			getValue( 'BackgroundColor2' ),
-			getValue( 'BackgroundColor' ),
-			getValue( 'BackgroundGradientLocation1' ),
-			getValue( 'BackgroundGradientLocation2' ),
-			getValue( 'BackgroundGradientDirection' ),
-			getValue( 'BackgroundMediaURL' ),
-			getValue( 'BackgroundGradientBlendMode' ),
-			getValue( 'BackgroundMediaURLTablet' ),
-			getValue( 'BackgroundMediaURLMobile' ),
-			attributes.uniqueId,
-		]
-	)
+	const styles = useStyles( attributes, getStyleParams( options ) )
 
 	return (
 		<Fragment>
 			<StyleComponent
-				styles={ styles1 }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-			<StyleComponent
-				styles={ styles2 }
+				styles={ styles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
 				{ ...propsToPass }
@@ -214,19 +230,12 @@ BackgroundStyle.Content = props => {
 		...propsToPass
 	} = props
 
-	const styles1 = getStyles1( attributes, options )
-	const styles2 = getStyles2( attributes, options )
+	const styles = getStyles( attributes, getStyleParams( options ) )
 
 	return (
 		<Fragment>
 			<StyleComponent.Content
-				styles={ styles1 }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-			<StyleComponent.Content
-				styles={ styles2 }
+				styles={ styles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
 				{ ...propsToPass }

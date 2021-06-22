@@ -4,20 +4,19 @@
 import { i18n } from 'stackable'
 import {
 	AdvancedToolbarControl,
-	AdvancedRangeControl,
 	AdvancedSelectControl,
 	BlendModeControl,
 	ButtonIconPopoverControl,
 	ColorPaletteControl,
 	ControlSeparator,
-	ImageControl,
-	ResponsiveControl2,
 	AdvancedToggleControl,
+	AdvancedRangeControl2,
+	ImageControl2,
 } from '~stackable/components'
 import {
 	useAttributeEditHandlers, useDeviceType,
 } from '~stackable/hooks'
-import { urlIsVideo } from '~stackable/util'
+import { getAttributeName, urlIsVideo } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -33,17 +32,18 @@ export const BackgroundControls = props => {
 
 	const {
 		getAttribute,
-		updateAttributeHandler,
+		getAttributes,
 		updateAttributes,
+		getAttrName,
 	} = useAttributeEditHandlers( props.attrNameTemplate )
 
-	const hasBackgroundMedia = getAttribute( 'backgroundMediaURL' ) || getAttribute( 'backgroundMediaURLTablet' ) || getAttribute( 'backgroundMediaURLMobile' )
+	const hasBackgroundMedia = getAttribute( 'backgroundMediaUrl' ) || getAttribute( 'backgroundMediaUrlTablet' ) || getAttribute( 'backgroundMediaUrlMobile' )
 	const isBackgroundVideo = useCallback( () => {
-		return [ getAttribute( 'backgroundMediaURL' ), getAttribute( 'backgroundMediaURLTablet' ), getAttribute( 'backgroundMediaURLMobile' ) ]
+		return [ getAttribute( 'backgroundMediaUrl' ), getAttribute( 'backgroundMediaUrlTablet' ), getAttribute( 'backgroundMediaUrlMobile' ) ]
 			.filter( value => value )
 			.filter( urlIsVideo )
 			.length > 0
-	}, [ getAttribute( 'backgroundMediaURL' ), getAttribute( 'backgroundMediaURLTablet' ), getAttribute( 'backgroundMediaURLMobile' ) ] )
+	}, [ getAttribute( 'backgroundMediaUrl' ), getAttribute( 'backgroundMediaUrlTablet' ), getAttribute( 'backgroundMediaUrlMobile' ) ] )
 
 	return (
 		<Fragment>
@@ -58,8 +58,7 @@ export const BackgroundControls = props => {
 						title: __( 'Gradient', i18n ),
 					},
 				] }
-				value={ getAttribute( 'backgroundColorType' ) }
-				onChange={ updateAttributeHandler( 'backgroundColorType' ) }
+				attribute={ getAttrName( 'backgroundColorType' ) }
 				fullwidth={ false }
 				isSmall={ true }
 			/>
@@ -69,16 +68,16 @@ export const BackgroundControls = props => {
 						? sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Background Color', i18n ), 1 )
 						: __( 'Background Color', i18n )
 				}
-				value={ getAttribute( 'backgroundColor' ) }
-				onChange={ updateAttributeHandler( 'backgroundColor' ) }
+				attribute={ getAttrName( 'backgroundColor' ) }
 				hasTransparent={ true }
+				hover={ getAttribute( 'backgroundColorType' ) !== 'gradient' ? 'all' : false }
 			/>
 			{ getAttribute( 'backgroundColorType' ) !== 'gradient' &&
-				( ! getAttribute( 'backgroundMediaURL' ) && ! getAttribute( 'backgroundMediaURLTablet' ) && ! getAttribute( 'backgroundMediaURLMobile' ) ) && (
-				<AdvancedRangeControl
+				( ! getAttribute( 'backgroundMediaUrl' ) && ! getAttribute( 'backgroundMediaUrlTablet' ) && ! getAttribute( 'backgroundMediaUrlMobile' ) ) && (
+				<AdvancedRangeControl2
 					label={ __( 'Background Color Opacity', i18n ) }
-					value={ getAttribute( 'backgroundColorOpacity' ) }
-					onChange={ updateAttributeHandler( 'backgroundColorOpacity' ) }
+					attribute={ getAttrName( 'backgroundColorOpacity' ) }
+					hover="all"
 					min={ 0 }
 					max={ 1 }
 					step={ 0.1 }
@@ -90,8 +89,7 @@ export const BackgroundControls = props => {
 			{ getAttribute( 'backgroundColorType' ) === 'gradient' && (
 				<ColorPaletteControl
 					label={ sprintf( _x( '%s #%d', 'option title', i18n ), __( 'Background Color', i18n ), 2 ) }
-					value={ getAttribute( 'backgroundColor2' ) }
-					onChange={ updateAttributeHandler( 'backgroundColor2' ) }
+					attribute={ getAttrName( 'backgroundColor2' ) }
 				/>
 			) }
 			{ getAttribute( 'backgroundColorType' ) === 'gradient' && (
@@ -112,10 +110,9 @@ export const BackgroundControls = props => {
 						getAttribute( 'backgroundGradientBlendMode' )
 					}
 				>
-					<AdvancedRangeControl
+					<AdvancedRangeControl2
 						label={ __( 'Gradient Direction (degrees)', i18n ) }
-						value={ getAttribute( 'backgroundGradientDirection' ) }
-						onChange={ updateAttributeHandler( 'backgroundGradientDirection' ) }
+						attribute={ getAttrName( 'backgroundGradientDirection' ) }
 						min={ 0 }
 						max={ 360 }
 						step={ 10 }
@@ -124,10 +121,9 @@ export const BackgroundControls = props => {
 						className="ugb--help-tip-gradient-direction"
 					/>
 
-					<AdvancedRangeControl
+					<AdvancedRangeControl2
 						label={ sprintf( __( 'Color %d Location', i18n ), 1 ) }
-						value={ getAttribute( 'backgroundGradientLocation1' ) }
-						onChange={ updateAttributeHandler( 'backgroundGradientLocation1' ) }
+						attribute={ getAttrName( 'backgroundGradientLocation1' ) }
 						min={ 0 }
 						max={ 100 }
 						step={ 1 }
@@ -136,10 +132,9 @@ export const BackgroundControls = props => {
 						className="ugb--help-tip-gradient-location"
 					/>
 
-					<AdvancedRangeControl
+					<AdvancedRangeControl2
 						label={ sprintf( __( 'Color %d Location', i18n ), 2 ) }
-						value={ getAttribute( 'backgroundGradientLocation2' ) }
-						onChange={ updateAttributeHandler( 'backgroundGradientLocation2' ) }
+						attribute={ getAttrName( 'backgroundGradientLocation2' ) }
 						min={ 0 }
 						max={ 100 }
 						step={ 1 }
@@ -150,8 +145,7 @@ export const BackgroundControls = props => {
 
 					<BlendModeControl
 						label={ __( 'Background Gradient Blend Mode', i18n ) }
-						value={ getAttribute( 'backgroundGradientBlendMode' ) }
-						onChange={ updateAttributeHandler( 'backgroundGradientBlendMode' ) }
+						attribute={ getAttrName( 'backgroundGradientBlendMode' ) }
 						className="ugb--help-tip-background-blend-mode"
 					/>
 				</ButtonIconPopoverControl>
@@ -161,88 +155,19 @@ export const BackgroundControls = props => {
 				<ControlSeparator />
 			}
 
-			<ResponsiveControl2
-				desktopProps={ {
-					onRemove: () => {
-						updateAttributes( {
-							backgroundMediaId: '',
-							backgroundMediaURL: '',
-						} )
-					},
-					onChange: ( { url, id } ) => {
-						updateAttributes( {
-							backgroundMediaId: id,
-							backgroundMediaURL: url,
-						} )
-					},
-					imageID: getAttribute( 'backgroundMediaId' ),
-					imageURL: getAttribute( 'backgroundMediaURL' ),
-				} }
-				tabletProps={ {
-					onRemove: () => {
-						updateAttributes( {
-							backgroundMediaIdTablet: '',
-							backgroundMediaURLTablet: '',
-						} )
-					},
-					onChange: ( { url, id } ) => {
-						updateAttributes( {
-							backgroundMediaIdTablet: id,
-							backgroundMediaURLTablet: url,
-						} )
-					},
-					imageID: getAttribute( 'backgroundMediaIdTablet' ),
-					imageURL: getAttribute( 'backgroundMediaURLTablet' ),
-				} }
-				mobileProps={ {
-					onRemove: () => {
-						updateAttributes( {
-							backgroundMediaIdMobile: '',
-							backgroundMediaURLMobile: '',
-						} )
-					},
-					onChange: ( { url, id } ) => {
-						updateAttributes( {
-							backgroundMediaIdMobile: id,
-							backgroundMediaURLMobile: url,
-						} )
-					},
-					imageID: getAttribute( 'backgroundMediaIdMobile' ),
-					imageURL: getAttribute( 'backgroundMediaURLMobile' ),
-				} }
-			>
-				<ImageControl
-					label={ props.backgroundMediaAllowVideo ? __( 'Background Image or Video', i18n ) : __( 'Background Image', i18n ) }
-					help={ props.backgroundMediaAllowVideo ? __( 'Use .mp4 format for videos', i18n ) : '' }
-					allowedTypes={ props.backgroundMediaAllowVideo ? [ 'image', 'video' ] : [ 'image' ] }
-				/>
-			</ResponsiveControl2>
+			<ImageControl2
+				label={ props.backgroundMediaAllowVideo ? __( 'Background Image or Video', i18n ) : __( 'Background Image', i18n ) }
+				help={ props.backgroundMediaAllowVideo ? __( '1Use .mp4 format for videos', i18n ) : '' }
+				allowedTypes={ props.backgroundMediaAllowVideo ? [ 'image', 'video' ] : [ 'image' ] }
+				attribute={ getAttrName( 'backgroundMedia' ) }
+				responsive="all"
+			/>
 
 			{ hasBackgroundMedia &&
-				<AdvancedRangeControl
+				<AdvancedRangeControl2
 					label={ __( 'Background Media Tint Strength', i18n ) }
-					value={ getAttribute( 'backgroundTintStrength' ) }
-					onChange={ value => {
-						const noValue = typeof value === 'undefined' || value === ''
-						// If the tint is changed, but on background color yet, make it black. Fixes #136.
-						if ( getAttribute( 'backgroundColor' ) === '' && ! noValue ) {
-							updateAttributes( {
-								backgroundTintStrength: value,
-								backgroundColor: '#000000',
-							} )
-						// If the tint is reset, and the background is black (was set earlier), remove it.
-						} else if ( getAttribute( 'backgroundColor' ) === '#000000' && noValue ) {
-							updateAttributes( {
-								backgroundTintStrength: value,
-								backgroundColor: '',
-							} )
-						} else {
-							updateAttributes( {
-								backgroundTintStrength: value,
-								backgroundColor: getAttribute( 'backgroundColor' ),
-							} )
-						}
-					} }
+					attribute={ getAttrName( 'backgroundTintStrength' ) }
+					hover="all"
 					min={ 0 }
 					max={ 10 }
 					step={ 1 }
@@ -255,8 +180,7 @@ export const BackgroundControls = props => {
 			{ hasBackgroundMedia && ! isBackgroundVideo() &&
 				<AdvancedToggleControl
 					label={ __( 'Fixed Background', i18n ) }
-					checked={ getAttribute( 'fixedBackground' ) }
-					onChange={ updateAttributeHandler( 'fixedBackground' ) }
+					attribute={ getAttrName( 'fixedBackground' ) }
 					className="ugb--help-tip-background-fixed"
 				/>
 			}
@@ -292,142 +216,68 @@ export const BackgroundControls = props => {
 					}
 				>
 
-					<ResponsiveControl2
-						desktopProps={ {
-							value: getAttribute( 'backgroundPosition' ),
-							onChange: updateAttributeHandler( 'BackgroundPosition' ),
-						} }
-						tabletProps={ {
-							value: getAttribute( 'BackgroundPositionTablet' ),
-							onChange: updateAttributeHandler( 'BackgroundPositionTablet' ),
-						} }
-						mobileProps={ {
-							value: getAttribute( 'BackgroundPositionMobile' ),
-							onChange: updateAttributeHandler( 'BackgroundPositionMobile' ),
-						} }
-					>
-						<AdvancedSelectControl
-							label={ __( 'Image Position', i18n ) }
-							options={ [
-								{ label: __( 'Default', i18n ), value: '' },
-								{ label: __( 'Top Left', i18n ), value: 'top left' },
-								{ label: __( 'Top Center', i18n ), value: 'top center' },
-								{ label: __( 'Top Right', i18n ), value: 'top right' },
-								{ label: __( 'Center Left', i18n ), value: 'center left' },
-								{ label: __( 'Center Center', i18n ), value: 'center center' },
-								{ label: __( 'Center Right', i18n ), value: 'center right' },
-								{ label: __( 'Bottom Left', i18n ), value: 'bottom left' },
-								{ label: __( 'Bottom Center', i18n ), value: 'bottom center' },
-								{ label: __( 'Bottom Right', i18n ), value: 'bottom right' },
-							] }
-							className="ugb--help-tip-background-image-position"
-						/>
-					</ResponsiveControl2>
+					<AdvancedSelectControl
+						label={ __( 'Image Position', i18n ) }
+						attribute={ getAttrName( 'backgroundPosition' ) }
+						options={ [
+							{ label: __( 'Default', i18n ), value: '' },
+							{ label: __( 'Top Left', i18n ), value: 'top left' },
+							{ label: __( 'Top Center', i18n ), value: 'top center' },
+							{ label: __( 'Top Right', i18n ), value: 'top right' },
+							{ label: __( 'Center Left', i18n ), value: 'center left' },
+							{ label: __( 'Center Center', i18n ), value: 'center center' },
+							{ label: __( 'Center Right', i18n ), value: 'center right' },
+							{ label: __( 'Bottom Left', i18n ), value: 'bottom left' },
+							{ label: __( 'Bottom Center', i18n ), value: 'bottom center' },
+							{ label: __( 'Bottom Right', i18n ), value: 'bottom right' },
+						] }
+						className="ugb--help-tip-background-image-position"
+						responsive="all"
+					/>
 
-					<ResponsiveControl2
-						desktopProps={ {
-							value: getAttribute( 'backgroundRepeat' ),
-							onChange: updateAttributeHandler( 'BackgroundRepeat' ),
-						} }
-						tabletProps={ {
-							value: getAttribute( 'BackgroundRepeatTablet' ),
-							onChange: updateAttributeHandler( 'BackgroundRepeatTablet' ),
-						} }
-						mobileProps={ {
-							value: getAttribute( 'BackgroundRepeatMobile' ),
-							onChange: updateAttributeHandler( 'BackgroundRepeatMobile' ),
-						} }
-					>
-						<AdvancedSelectControl
-							label={ __( 'Image Repeat', i18n ) }
-							options={ [
-								{ label: __( 'Default', i18n ), value: '' },
-								{ label: __( 'No-Repeat', i18n ), value: 'no-repeat' },
-								{ label: __( 'Repeat', i18n ), value: 'repeat' },
-								{ label: __( 'Repeat-X', i18n ), value: 'repeat-x' },
-								{ label: __( 'Repeat-Y', i18n ), value: 'repeat-y' },
-							] }
-							className="ugb--help-tip-background-image-repeat"
-						/>
-					</ResponsiveControl2>
+					<AdvancedSelectControl
+						label={ __( 'Image Repeat', i18n ) }
+						attribute={ getAttrName( 'backgroundRepeat' ) }
+						options={ [
+							{ label: __( 'Default', i18n ), value: '' },
+							{ label: __( 'No-Repeat', i18n ), value: 'no-repeat' },
+							{ label: __( 'Repeat', i18n ), value: 'repeat' },
+							{ label: __( 'Repeat-X', i18n ), value: 'repeat-x' },
+							{ label: __( 'Repeat-Y', i18n ), value: 'repeat-y' },
+						] }
+						className="ugb--help-tip-background-image-repeat"
+						responsive="all"
+					/>
 
-					<ResponsiveControl2
-						desktopProps={ {
-							value: getAttribute( 'backgroundSize' ),
-							onChange: updateAttributeHandler( 'BackgroundSize' ),
-						} }
-						tabletProps={ {
-							value: getAttribute( 'BackgroundSizeTablet' ),
-							onChange: updateAttributeHandler( 'BackgroundSizeTablet' ),
-						} }
-						mobileProps={ {
-							value: getAttribute( 'BackgroundSizeMobile' ),
-							onChange: updateAttributeHandler( 'BackgroundSizeMobile' ),
-						} }
-					>
-						<AdvancedSelectControl
-							label={ __( 'Image Size', i18n ) }
-							options={ [
-								{ label: __( 'Default', i18n ), value: '' },
-								{ label: __( 'Auto', i18n ), value: 'auto' },
-								{ label: __( 'Cover', i18n ), value: 'cover' },
-								{ label: __( 'Contain', i18n ), value: 'contain' },
-								{ label: __( 'Custom', i18n ), value: 'custom' },
-							] }
-							className="ugb--help-tip-background-image-size"
-						/>
-					</ResponsiveControl2>
+					<AdvancedSelectControl
+						label={ __( 'Image Size', i18n ) }
+						attribute={ getAttrName( 'backgroundSize' ) }
+						options={ [
+							{ label: __( 'Default', i18n ), value: '' },
+							{ label: __( 'Auto', i18n ), value: 'auto' },
+							{ label: __( 'Cover', i18n ), value: 'cover' },
+							{ label: __( 'Contain', i18n ), value: 'contain' },
+							{ label: __( 'Custom', i18n ), value: 'custom' },
+						] }
+						className="ugb--help-tip-background-image-size"
+						responsive="all"
+					/>
 
-					{ getAttribute( 'backgroundSize' ) === 'custom' && deviceType === 'Desktop' &&
-						<AdvancedRangeControl
+					{ getAttributes()[ getAttributeName( getAttrName( 'backgroundSize' ), deviceType ) ] === 'custom' &&
+						<AdvancedRangeControl2
 							label={ __( 'Custom Size', i18n ) }
-							screens="all"
+							attribute={ getAttrName( 'backgroundCustomSize' ) }
+							responsive="all"
 							units={ [ 'px', '%', 'vw' ] }
 							min={ [ 0, 0, 0 ] }
 							max={ [ 1000, 100, 100 ] }
-							unit={ getAttribute( 'backgroundCustomSizeUnit' ) }
-							onChangeUnit={ updateAttributeHandler( 'BackgroundCustomSizeUnit' ) }
-							value={ getAttribute( 'backgroundCustomSize' ) }
-							onChange={ updateAttributeHandler( 'BackgroundCustomSize' ) }
-							allowReset={ true }
-						/>
-					}
-					{ getAttribute( 'BackgroundSizeTablet' ) === 'custom' && deviceType === 'Tablet' &&
-						<AdvancedRangeControl
-							label={ __( 'Custom Size', i18n ) }
-							screens="all"
-							units={ [ 'px', '%', 'vw' ] }
-							min={ [ 0, 0, 0 ] }
-							max={ [ 1000, 100, 100 ] }
-							unit={ getAttribute( 'BackgroundCustomSizeUnitTablet' ) }
-							onChangeUnit={ updateAttributeHandler( 'BackgroundCustomSizeUnitTablet' ) }
-							value={ getAttribute( 'BackgroundCustomSizeTablet' ) }
-							onChange={ updateAttributeHandler( 'BackgroundCustomSizeTablet' ) }
-							allowReset={ true }
-						/>
-					}
-					{ getAttribute( 'BackgroundSizeMobile' ) === 'custom' && deviceType === 'Mobile' &&
-						<AdvancedRangeControl
-							label={ __( 'Custom Size', i18n ) }
-							screens="all"
-							units={ [ 'px', '%', 'vw' ] }
-							min={ [ 0, 0, 0 ] }
-							max={ [ 1000, 100, 100 ] }
-							unit={ getAttribute( 'BackgroundCustomSizeUnitMobile' ) }
-							onChangeUnit={ updateAttributeHandler( 'BackgroundCustomSizeUnitMobile' ) }
-							value={ getAttribute( 'BackgroundCustomSizeMobile' ) }
-							onChange={ updateAttributeHandler( 'BackgroundCustomSizeMobile' ) }
-							allowReset={ true }
 						/>
 					}
 
-					{ updateAttributeHandler( 'BackgroundImageBlendMode' ) && (
-						<BlendModeControl
-							label={ __( 'Image Blend Mode', i18n ) }
-							value={ getAttribute( 'backgroundImageBlendMode' ) }
-							onChange={ updateAttributeHandler( 'BackgroundImageBlendMode' ) }
-						/>
-					) }
+					<BlendModeControl
+						label={ __( 'Image Blend Mode', i18n ) }
+						attribute={ getAttrName( 'backgroundImageBlendMode' ) }
+					/>
 				</ButtonIconPopoverControl>
 			}
 		</Fragment>
