@@ -1,62 +1,3 @@
-import { convertResponsiveAttributes } from '~stackable/util'
-
-export const typographyAttributes = {
-	...convertResponsiveAttributes( {
-		fontSize_: {
-			type: 'number',
-			default: '',
-		},
-		lineHeight_: {
-			type: 'number',
-			default: '',
-		},
-		fontSizeUnit_: {
-			type: 'string',
-			default: '',
-		},
-		lineHeightUnit_: {
-			type: 'string',
-			default: '',
-		},
-		textAlign_: {
-			type: 'string',
-			default: '',
-		},
-	} ),
-	fontFamily: {
-		type: 'string',
-		default: '',
-	},
-	fontWeight: {
-		type: 'string',
-		default: '',
-	},
-	textTransform: {
-		type: 'string',
-		default: '',
-	},
-	letterSpacing: {
-		type: 'string',
-		default: '',
-	},
-	textColorType: {
-		type: 'string',
-		default: '',
-	},
-	textColor1: {
-		type: 'string',
-		default: '',
-	},
-	textColor2: {
-		type: 'string',
-		default: '',
-	},
-	textGradientDirection: {
-		type: 'number',
-		default: '',
-	},
-}
-
 export const addAttributes = ( attrObject, selector = '.stk-content', options = {} ) => {
 	const {
 		enableTextTag = true,
@@ -66,7 +7,66 @@ export const addAttributes = ( attrObject, selector = '.stk-content', options = 
 	} = options
 	attrObject.add( {
 		attributes: {
-			...typographyAttributes,
+			fontSize: {
+				stkResponsive: true,
+				stkHover: true,
+				type: 'number',
+				default: '',
+				stkUnits: 'px',
+			},
+			lineHeight: {
+				stkResponsive: true,
+				stkHover: true,
+				type: 'number',
+				default: '',
+				stkUnits: 'px',
+			},
+			textAlign: {
+				stkResponsive: true,
+				stkHover: true,
+				type: 'string',
+				default: '',
+			},
+			fontFamily: {
+				type: 'string',
+				stkHover: true,
+				default: '',
+			},
+			fontWeight: {
+				type: 'string',
+				stkHover: true,
+				default: '',
+			},
+			textTransform: {
+				type: 'string',
+				stkHover: true,
+				default: '',
+			},
+			letterSpacing: {
+				type: 'string',
+				stkHover: true,
+				default: '',
+			},
+			textColorType: {
+				type: 'string',
+				stkHover: true,
+				default: '',
+			},
+			textColor1: {
+				type: 'string',
+				stkHover: true,
+				default: '',
+			},
+			textColor2: {
+				type: 'string',
+				stkHover: true,
+				default: '',
+			},
+			textGradientDirection: {
+				type: 'number',
+				stkHover: true,
+				default: '',
+			},
 			...( enableTextContent ? {
 				showText: {
 					type: 'boolean',

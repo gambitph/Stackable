@@ -18,7 +18,7 @@ import { descriptionPlaceholder } from '~stackable/util'
 import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import { InspectorTabs } from '~stackable/components'
-import { useBlockEl } from '~stackable/hooks'
+import { useBlockEl, useBlockHoverClass } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -35,9 +35,11 @@ const Edit = props => {
 		text,
 	} = props.attributes
 
+	const blockHoverClass = useBlockHoverClass()
 	const blockClassNames = classnames( [
 		className,
 		'stk-advanced-text',
+		blockHoverClass,
 	] )
 
 	const [ , textClasses ] = getTypographyClasses( props.attributes )

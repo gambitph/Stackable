@@ -2,7 +2,6 @@
  * External dependencies
  */
 import { omit } from 'lodash'
-import { convertResponsiveAttributes } from '~stackable/util'
 
 export const iconAttributes = {
 	icon: {
@@ -41,7 +40,6 @@ export const iconAttributes = {
 		type: 'number',
 		default: '',
 	},
-
 	shaped: {
 		type: 'boolean',
 		default: false,
@@ -58,7 +56,6 @@ export const iconAttributes = {
 		type: 'number',
 		default: '',
 	},
-
 	showBackgroundShape: {
 		type: 'boolean',
 		default: false,
@@ -87,7 +84,6 @@ export const iconAttributes = {
 		type: 'number',
 		default: '',
 	},
-
 	shapeOutline: {
 		type: 'boolean',
 		default: false,
@@ -96,30 +92,31 @@ export const iconAttributes = {
 		type: 'string',
 		default: '',
 	},
-
-	...convertResponsiveAttributes( {
-		iconSize_: {
-			type: 'number',
-			default: '',
-		},
-		shapeOutlineWidthTop_: {
-			type: 'number',
-			default: '',
-		},
-		shapeOutlineWidthRight_: {
-			type: 'number',
-			default: '',
-		},
-		shapeOutlineWidthBottom_: {
-			type: 'number',
-			default: '',
-		},
-		shapeOutlineWidthLeft_: {
-			type: 'number',
-			default: '',
-		},
-	} ),
-
+	iconSize: {
+		stkResponsive: true,
+		type: 'number',
+		default: '',
+	},
+	shapeOutlineWidthTop: {
+		stkResponsive: true,
+		type: 'number',
+		default: '',
+	},
+	shapeOutlineWidthRight: {
+		stkResponsive: true,
+		type: 'number',
+		default: '',
+	},
+	shapeOutlineWidthBottom: {
+		stkResponsive: true,
+		type: 'number',
+		default: '',
+	},
+	shapeOutlineWidthLeft: {
+		stkResponsive: true,
+		type: 'number',
+		default: '',
+	},
 }
 
 export const addAttributes = ( attrObject, options = {} ) => {

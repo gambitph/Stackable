@@ -1,64 +1,4 @@
-import { convertResponsiveAttributes } from '~stackable/util'
 import { addLinkAttributes } from '../helpers/link'
-
-export const buttonAttributes = {
-	// Button Paddings.
-	...convertResponsiveAttributes( {
-		buttonPaddingTop_: {
-			type: 'number',
-			default: '',
-		},
-		buttonPaddingBottom_: {
-			type: 'number',
-			default: '',
-		},
-		buttonPaddingRight_: {
-			type: 'number',
-			default: '',
-		},
-		buttonPaddingLeft_: {
-			type: 'number',
-			default: '',
-		},
-		buttonPaddingUnit_: {
-			type: 'string',
-			default: 'px',
-		},
-	} ),
-	buttonBackgroundColorType: {
-		type: 'string',
-		default: '',
-	},
-	buttonBackgroundColor: {
-		type: 'string',
-		default: '', // button primary color.
-	},
-	buttonBackgroundColor2: {
-		type: 'string',
-		default: '',
-	},
-	buttonBackgroundGradientDirection: {
-		type: 'number',
-		default: '',
-	},
-
-	buttonHoverBackgroundColorType: {
-		type: 'string',
-		default: '',
-	},
-	buttonHoverBackgroundColor: {
-		type: 'string',
-		default: '',
-	},
-	buttonHoverBackgroundColor2: {
-		type: 'string',
-		default: '',
-	},
-	buttonHoverBackgroundGradientDirection: {
-		type: 'number',
-		default: '',
-	},
-}
 
 export const addAttributes = ( attrObject, options = {} ) => {
 	const {
@@ -66,7 +6,51 @@ export const addAttributes = ( attrObject, options = {} ) => {
 	} = options
 	attrObject.add( {
 		attributes: {
-			...buttonAttributes,
+			buttonPaddingTop: {
+				stkResponsive: true,
+				type: 'number',
+				default: '',
+			},
+			buttonPaddingBottom: {
+				stkResponsive: true,
+				type: 'number',
+				default: '',
+			},
+			buttonPaddingRight: {
+				stkResponsive: true,
+				type: 'number',
+				default: '',
+			},
+			buttonPaddingLeft: {
+				stkResponsive: true,
+				type: 'number',
+				default: '',
+			},
+			buttonPaddingUnit: {
+				stkResponsive: true,
+				type: 'string',
+				default: 'px',
+			},
+			buttonBackgroundColorType: {
+				stkHover: true,
+				type: 'string',
+				default: '',
+			},
+			buttonBackgroundColor: {
+				stkHover: true,
+				type: 'string',
+				default: '', // button primary color.
+			},
+			buttonBackgroundColor2: {
+				stkHover: true,
+				type: 'string',
+				default: '',
+			},
+			buttonBackgroundGradientDirection: {
+				stkHover: true,
+				type: 'number',
+				default: '',
+			},
 			text: {
 				source: 'html',
 				selector,

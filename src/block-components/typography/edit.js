@@ -5,14 +5,13 @@ import { unescape } from 'lodash'
 import { i18n } from 'stackable'
 import { useAttributeEditHandlers } from '~stackable/hooks'
 import {
-	AdvancedRangeControl,
+	AdvancedRangeControl2,
 	AdvancedSelectControl,
 	AdvancedToolbarControl,
 	AlignButtonsControl,
 	ButtonIconPopoverControl,
 	ColorPaletteControl,
 	FontFamilyControl,
-	FontSizeControl,
 	HeadingButtonsControl,
 	InspectorStyleControls,
 	PanelAdvancedSettings,
@@ -24,7 +23,7 @@ import {
  * WordPress dependencies
  */
 import {
-	Fragment, useMemo, useState,
+	Fragment, useState,
 } from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
 import {
@@ -39,14 +38,7 @@ const TypographyControls = props => {
 		enableTextContent = true,
 		attrNameTemplate = '%s',
 		disableAlign = false,
-		blockElSelector,
 	} = props
-
-	const fontSizePlaceholder = useMemo( () => {
-		return props.blockEl
-			? () => props.blockEl.el() && parseFloat( window.getComputedStyle( blockElSelector ? props.blockEl.el().querySelector( blockElSelector ) : props.blockEl.el() ).fontSize )
-			: null
-	}, [ props.blockEl ] )
 
 	const {
 		getAttribute,
@@ -110,32 +102,18 @@ const TypographyControls = props => {
 					onChange={ fontFamily => updateAttribute( 'fontFamily', fontFamily ) }
 					value={ getAttribute( 'fontFamily' ) }
 				/>
-				<ResponsiveControl2
-					desktopProps={ {
-						onChange: value => updateAttribute( 'fontSize', value ),
-						value: getAttribute( 'fontSize' ),
-						unit: getAttribute( 'fontSizeUnit' ),
-						onChangeUnit: value => updateAttribute( 'fontSizeUnit', value ),
-					} }
-					tabletProps={ {
-						onChange: value => updateAttribute( 'fontSizeTablet', value ),
-						value: getAttribute( 'fontSizeTablet' ),
-						unit: getAttribute( 'fontSizeUnitTablet' ),
-						onChangeUnit: value => updateAttribute( 'fontSizeUnitTablet', value ),
-					} }
-					mobileProps={ {
-						onChange: value => updateAttribute( 'fontSizeMobile', value ),
-						value: getAttribute( 'fontSizeMobile' ),
-						unit: getAttribute( 'fontSizeUnitMobile' ),
-						onChangeUnit: value => updateAttribute( 'fontSizeUnitMobile', value ),
-					} }
-				>
-					<FontSizeControl
-						label={ __( 'Size', i18n ) }
-						allowReset={ true }
-						placeholderRender={ fontSizePlaceholder }
-					/>
-				</ResponsiveControl2>
+				<AdvancedRangeControl2
+					label={ __( 'Size', i18n ) }
+					allowReset={ true }
+					attribute="fontSize"
+					units={ [ 'px', 'em' ] }
+					min={ [ 0, 0 ] }
+					max={ [ 150, 7 ] }
+					step={ [ 1, 0.05 ] }
+					placeholder="32"
+					responsive="all"
+					hover="all"
+				/>
 				<AdvancedSelectControl
 					label={ __( 'Weight', i18n ) }
 					options={ [
@@ -167,74 +145,41 @@ const TypographyControls = props => {
 					onChange={ value => updateAttribute( 'textTransform', value ) }
 					value={ getAttribute( 'textTransform' ) }
 				/>
-				<ResponsiveControl2
-					desktopProps={ {
-						value: getAttribute( 'lineHeight' ),
-						onChange: value => updateAttribute( 'lineHeight', value ),
-						unit: getAttribute( 'lineHeightUnit' ),
-						onChangeUnit: value => updateAttribute( 'lineHeightUnit', value ),
-					} }
-					tabletProps={ {
-						value: getAttribute( 'lineHeightTablet' ),
-						onChange: value => updateAttribute( 'lineHeightTablet', value ),
-						unit: getAttribute( 'lineHeightUnitTablet' ),
-						onChangeUnit: value => updateAttribute( 'lineHeightUnitTablet', value ),
-					} }
-					mobileProps={ {
-						value: getAttribute( 'lineHeightMobile' ),
-						onChange: value => updateAttribute( 'lineHeightMobile', value ),
-						unit: getAttribute( 'lineHeightUnitMobile' ),
-						onChangeUnit: value => updateAttribute( 'lineHeightUnitMobile', value ),
-					} }
-				>
-					<AdvancedRangeControl
-						label={ __( 'Line-Height', i18n ) }
-						units={ [ 'px', 'em' ] }
-						min={ [ 1, 0.1 ] }
-						max={ [ 100, 10 ] }
-						step={ [ 1, 0.1 ] }
-						palceholder={ [ 30, 1.5 ] }
-						allowReset={ true }
-						initialPosition={ [ 37, 1.8 ] }
-					/>
-				</ResponsiveControl2>
-				<AdvancedRangeControl
+				<AdvancedRangeControl2
+					label={ __( 'Line-Height', i18n ) }
+					attribute="lineHeight"
+					units={ [ 'px', 'em' ] }
+					min={ [ 1, 0.1 ] }
+					max={ [ 100, 10 ] }
+					step={ [ 1, 0.1 ] }
+					placeholder={ [ 30, 1.5 ] }
+					allowReset={ true }
+					initialPosition={ [ 37, 1.8 ] }
+					responsive="all"
+					hover="all"
+				/>
+				<AdvancedRangeControl2
 					label={ __( 'Letter Spacing', i18n ) }
+					attribute="letterSpacing"
 					min={ -5 }
 					max={ 10 }
 					step={ 0.1 }
 					allowReset={ true }
-					onChange={ value => updateAttribute( 'letterSpacing', value ) }
-					value={ getAttribute( 'letterSpacing' ) }
 					placeholder="0"
 				/>
 			</ButtonIconPopoverControl>
-			<ResponsiveControl2
-				desktopProps={ {
-					onChange: value => updateAttribute( 'fontSize', value ),
-					value: getAttribute( 'fontSize' ),
-					unit: getAttribute( 'fontSizeUnit' ),
-					onChangeUnit: value => updateAttribute( 'fontSizeUnit', value ),
-				} }
-				tabletProps={ {
-					onChange: value => updateAttribute( 'fontSizeTablet', value ),
-					value: getAttribute( 'fontSizeTablet' ),
-					unit: getAttribute( 'fontSizeUnitTablet' ),
-					onChangeUnit: value => updateAttribute( 'fontSizeUnitTablet', value ),
-				} }
-				mobileProps={ {
-					onChange: value => updateAttribute( 'fontSizeMobile', value ),
-					value: getAttribute( 'fontSizeMobile' ),
-					unit: getAttribute( 'fontSizeUnitMobile' ),
-					onChangeUnit: value => updateAttribute( 'fontSizeUnitMobile', value ),
-				} }
-			>
-				<FontSizeControl
-					label={ __( 'Size', i18n ) }
-					placeholderRender={ fontSizePlaceholder }
-					allowReset={ true }
-				/>
-			</ResponsiveControl2>
+			<AdvancedRangeControl2
+				label={ __( 'Size', i18n ) }
+				allowReset={ true }
+				attribute="fontSize"
+				units={ [ 'px', 'em' ] }
+				min={ [ 0, 0 ] }
+				max={ [ 150, 7 ] }
+				step={ [ 1, 0.05 ] }
+				placeholder="32"
+				responsive="all"
+				hover="all"
+			/>
 			<BaseControl
 				id="stk-typography-color-type"
 			>
@@ -274,10 +219,9 @@ const TypographyControls = props => {
 							onChange={ value => updateAttribute( 'textColor2', value ) }
 						/>
 
-						<AdvancedRangeControl
+						<AdvancedRangeControl2
 							label={ __( 'Gradient Direction (degrees)', i18n ) }
-							value={ getAttribute( 'textGradientDirection' ) }
-							onChange={ value => updateAttribute( 'textGradientDirection', value ) }
+							attribute="textGradientDirection"
 							min={ 0 }
 							max={ 360 }
 							step={ 10 }

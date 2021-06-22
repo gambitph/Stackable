@@ -22,6 +22,7 @@ import {
 } from '~stackable/block-components'
 import {
 	useBlockEl,
+	useBlockHoverClass,
 } from '~stackable/hooks'
 
 /**
@@ -43,8 +44,9 @@ const Edit = props => {
 		className, isHovered, setAttributes,
 	} = props
 
-	const [ typographyWrapperClass, typographyInnerClasses ] = getTypographyClasses( props.attributes, { hoverAttrNameTemplate: 'hover%s' } )
+	const [ typographyWrapperClass, typographyInnerClasses ] = getTypographyClasses( props.attributes )
 
+	const blockHoverClass = useBlockHoverClass()
 	const buttonClassNames = classnames( [
 		'stk-button__button',
 		typographyWrapperClass,
@@ -53,6 +55,7 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-button',
+		blockHoverClass,
 	] )
 
 	const blockEl = useBlockEl()

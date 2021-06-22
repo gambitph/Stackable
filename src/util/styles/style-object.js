@@ -193,6 +193,7 @@ class StyleObject {
 			valueCallback = null,
 			enabledCallback = null, // Function that if returns false, will not render this style.
 			vendorPrefixes = [], // Add vendor prefixes to also generate for the styleRule, e.g. '-webkit-'
+			hoverSelector: _hoverSelector = '', // If custom hover selector is provided, use that instead.
 		} = styleParams
 
 		const renderIn = _renderIn === 'save' ? 'saveOnly' // Use "save" shorthand for "saveOnly"
@@ -244,7 +245,7 @@ class StyleObject {
 		const hasParentHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'parent-hover' ) )
 
 		let parentHoverSelector = `:where(.stk-block:hover) .%s ${ selector }`
-		let hoverSelector = `.stk-block.%s:hover ${ selector }`
+		let hoverSelector = _hoverSelector ? _hoverSelector : `.stk-block.%s:hover ${ selector }`
 
 		// This is for the editor, change the selector to make the styles show up right away.
 		if ( blockState === 'hover' ) {

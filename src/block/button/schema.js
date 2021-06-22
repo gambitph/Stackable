@@ -20,29 +20,23 @@ export const attributes = ( version = VERSION ) => {
 	Button.addAttributes( attrObject, { selector: '.stk-button__button' } )
 
 	addBorderAttributes( attrObject, 'button%s' )
-	addBorderAttributes( attrObject, 'buttonHover%s' )
 
 	Typography.addAttributes( attrObject, '.stk-button__inner-text', {
 		enableTextTag: false,
 	} )
-	Typography.addAttributes( attrObject, '.stk-button__button:hover > .stk-button__inner-text', {
-		enableTextTag: false,
-		attrNameTemplate: 'hover%s',
-		enableTextContent: false,
-	} )
 
 	Icon.addAttributes( attrObject, {
 		enableGradient: false,
 		enableShape: false,
 		enableBackgroundShape: false,
 	} )
-	Icon.addAttributes( attrObject, {
-		attrNameTemplate: 'hover%s',
-		excludedAttributes: [ 'icon', 'backgroundShape', 'shaped', 'showBackgroundShape' ],
-		enableGradient: false,
-		enableShape: false,
-		enableBackgroundShape: false,
-	} )
+	//Icon.addAttributes( attrObject, {
+	//attrNameTemplate: 'hover%s',
+	//excludedAttributes: [ 'icon', 'backgroundShape', 'shaped', 'showBackgroundShape' ],
+	//enableGradient: false,
+	//enableShape: false,
+	//enableBackgroundShape: false,
+	//} )
 
 	return attrObject.getMerged( version )
 }
