@@ -50,6 +50,7 @@ export const settings = {
 	modules: {
 		'advanced-general': true,
 		'advanced-responsive': true,
+		'advanced-conditional-display': true,
 		'advanced-block-spacing': {
 			enableMarginRight: false,
 			enableMarginLeft: false,

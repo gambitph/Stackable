@@ -47,6 +47,11 @@ const LABELS = {
 		description: __( 'Get a load more button, more post options and Custom Post Types. This feature is only available on Stackable Premium.', i18n ),
 		button: __( 'Learn More', i18n ),
 	},
+	display: {
+		title: __( 'Say Hello to More Display Conditions 👋', i18n ),
+		description: __( 'Get more condition types, add multiple conditions and more. This feature is only available on Stackable Premium.', i18n ),
+		button: __( 'Learn More', i18n ),
+	},
 }
 
 const ProControl = props => {
