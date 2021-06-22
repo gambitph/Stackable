@@ -1,6 +1,4 @@
-import { expandAttributes } from '~stackable/util'
-
-export const backgroundAttributes = expandAttributes( {
+export const backgroundAttributes = {
 	backgroundColorType: {
 		type: 'string',
 		default: '',
@@ -79,7 +77,7 @@ export const backgroundAttributes = expandAttributes( {
 		type: 'boolean',
 		default: '',
 	},
-} )
+}
 
 export const addBackgroundAttributes = ( attrObject, attrNameTemplate = '%s' ) => {
 	attrObject.add( {

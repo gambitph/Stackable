@@ -1,6 +1,4 @@
-import { expandAttributes } from '~stackable/util'
-
-export const borderAttributes = expandAttributes( {
+export const borderAttributes = {
 	borderType: {
 		type: 'string',
 		default: '',
@@ -39,7 +37,7 @@ export const borderAttributes = expandAttributes( {
 		type: 'string',
 		default: '',
 	},
-} )
+}
 
 export const addBorderAttributes = ( attrObject, attrNameTemplate = '%s' ) => {
 	attrObject.add( {
