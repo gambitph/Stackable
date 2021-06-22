@@ -323,7 +323,7 @@ const ButtonControls = props => {
 					onChange={ props.onChangePaddings }
 					enableLeft={ false }
 					enableRight={ false }
-					placeholder={ [ 8, 8 ] }
+					placeholder={ 8 }
 					className="ugb--help-tip-button-vertical-padding"
 				/>
 			}
@@ -336,7 +336,7 @@ const ButtonControls = props => {
 					enableTop={ false }
 					enableBottom={ false }
 					max={ 100 }
-					placeholder={ [ 26, 26 ] }
+					placeholder={ 26 }
 					className="ugb--help-tip-button-horizontal-padding"
 				/>
 			}

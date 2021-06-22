@@ -3,13 +3,14 @@
  */
 import { getAttributeName } from '~stackable/util'
 import { useBlockHoverState, useDeviceType } from '~stackable/hooks'
+import { getAttrName } from '../attributes'
 
 /**
  * External dependencies
  */
 import { useMemo } from '@wordpress/element'
 import { sprintf } from '@wordpress/i18n'
-import { getAttrName } from '../attributes'
+import { useBlockEditContext } from '@wordpress/block-editor'
 
 /**
  * Style object, this manages the generation of styles.
@@ -28,7 +29,6 @@ class StyleObject {
 	 */
 	initStyles() {
 		this.styles = {
-			custom: {},
 			editor: {},
 			saveOnly: {},
 		}
@@ -129,38 +129,38 @@ class StyleObject {
 	}
 
 	appendToSelector( selector, rule, value, device = 'desktop', renderIn = '', vendorPrefixes = [] ) {
-		const stlyes = renderIn === '' ? this.styles
+		const styles = renderIn === '' ? this.styles
 			: this.styles[ renderIn ]
 
 		if ( device === 'desktop' || ! device ) {
-			if ( typeof stlyes[ selector ] === 'undefined' ) {
-				stlyes[ selector ] = {}
+			if ( typeof styles[ selector ] === 'undefined' ) {
+				styles[ selector ] = {}
 			}
-			stlyes[ selector ][ rule ] = value
+			styles[ selector ][ rule ] = value
 			vendorPrefixes.forEach( vendorPrefix => {
-				stlyes[ selector ][ `${ vendorPrefix }${ rule }` ] = value
+				styles[ selector ][ `${ vendorPrefix }${ rule }` ] = value
 			} )
 		} else if ( device === 'tablet' ) {
-			if ( typeof stlyes.tablet === 'undefined' ) {
-				stlyes.tablet = {}
+			if ( typeof styles.tablet === 'undefined' ) {
+				styles.tablet = {}
 			}
-			if ( typeof stlyes.tablet[ selector ] === 'undefined' ) {
-				stlyes.tablet[ selector ] = {}
+			if ( typeof styles.tablet[ selector ] === 'undefined' ) {
+				styles.tablet[ selector ] = {}
 			}
-			stlyes.tablet[ selector ][ rule ] = value
+			styles.tablet[ selector ][ rule ] = value
 			vendorPrefixes.forEach( vendorPrefix => {
-				stlyes.tablet[ selector ][ `${ vendorPrefix }${ rule }` ] = value
+				styles.tablet[ selector ][ `${ vendorPrefix }${ rule }` ] = value
 			} )
 		} else if ( device === 'mobile' ) {
-			if ( typeof stlyes.mobile === 'undefined' ) {
-				stlyes.mobile = {}
+			if ( typeof styles.mobile === 'undefined' ) {
+				styles.mobile = {}
 			}
-			if ( typeof stlyes.mobile[ selector ] === 'undefined' ) {
-				stlyes.mobile[ selector ] = {}
+			if ( typeof styles.mobile[ selector ] === 'undefined' ) {
+				styles.mobile[ selector ] = {}
 			}
-			stlyes.mobile[ selector ][ rule ] = value
+			styles.mobile[ selector ][ rule ] = value
 			vendorPrefixes.forEach( vendorPrefix => {
-				stlyes.mobile[ selector ][ `${ vendorPrefix }${ rule }` ] = value
+				styles.mobile[ selector ][ `${ vendorPrefix }${ rule }` ] = value
 			} )
 		}
 	}
@@ -210,16 +210,35 @@ class StyleObject {
 			clampCallback = null, // Function that can be used to limit the value in tablet/mobile based on the desktop value
 		} = styleParams
 
-		const getAttribute = ( _attrName, device = 'desktop', state = 'normal' ) => {
+		const getAttribute = ( _attrName, device = 'desktop', state = 'normal', getInherited = false ) => {
 			const attrName = attrNameTemplate ? getAttrName( attrNameTemplate, _attrName ) : _attrName
-			return attributes[ getAttributeName( attrName, device, state ) ]
+			let value = attributes[ getAttributeName( attrName, device, state ) ]
+
+			if ( ! getInherited ) {
+				return value
+			}
+
+			// Try and get an inherited value (e.g. if no tablet is supplied, get the desktop value)
+			const deviceSteps = device === 'mobile' ? [ 'mobile', 'tablet', 'desktop' ]
+				: device === 'tablet' ? [ 'tablet', 'desktop' ]
+					: [ 'desktop' ]
+
+			deviceSteps.some( device => {
+				const _value = attributes[ getAttributeName( attrName, device ) ]
+				if ( _value !== '' && typeof _value !== 'undefined' ) {
+					value = _value
+					return true
+				}
+				return false
+			} )
+
+			return value
 		}
 
 		const attrName = attrNameTemplate ? getAttrName( attrNameTemplate, _attrName ) : _attrName
 
-		const renderIn = _renderIn === 'save' ? 'saveOnly' // Use "save" shorthand for "saveOnly"
-			: _renderIn === 'edit' ? 'editor' // Use "edit" shorthand for "editor"
-				: _renderIn
+		const renderIn = _renderIn.replace( 'save', 'saveOnly' ) // Use "save" shorthand for "saveOnly"
+			.replace( 'edit', 'editor' ) // Use "edit" shorthand for "editor"
 
 		// Allow to be disabled.
 		if ( enabledCallback ) {
@@ -343,14 +362,21 @@ export default StyleObject
  *
  * This already handles the responsiveness and hover states of the style.
  *
- * @param {Object} attributes Block attributes
+ * @param {Object} _attributes Block attributes
  * @param {Array} styleParams Style definitions for each attribute
  *
  * @return {StyleObject} A object that can be rendered by a StyleComponent
  */
-export const useStyles = ( attributes, styleParams ) => {
+export const useStyles = ( _attributes, styleParams ) => {
 	const deviceType = useDeviceType()
 	const [ currentHoverState ] = useBlockHoverState()
+	const { clientId } = useBlockEditContext()
+
+	// Add the clientId, this can be used by styles for the editor.
+	const attributes = {
+		..._attributes,
+		clientId,
+	}
 
 	const styleObject = useMemo( () => new StyleObject( styleParams ), [] )
 	return useMemo(
