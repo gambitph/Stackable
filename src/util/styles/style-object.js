@@ -287,7 +287,7 @@ class StyleObject {
 		let parentHoverSelector
 		let hoverSelector
 
-		if ( Array.isArray( _hoverSelector ) ) {
+		if ( Array.isArray( _hoverSelector ) && blockState !== 'hover' ) {
 			hoverSelector = _hoverSelector.join( ', ' )
 		}
 

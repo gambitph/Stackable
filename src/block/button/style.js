@@ -34,7 +34,7 @@ export const ButtonStyles = props => {
 	propsToPass.options = {
 		...propsToPass.options,
 		selector: '.stk-button__button',
-		attrNameTemplate: 'button%s',
+		hoverSelector: '.stk-button__button:hover',
 	}
 
 	return (
@@ -67,6 +67,7 @@ export const ButtonStyles = props => {
 					options: {
 						...propsToPass.options,
 						selector: '.stk-button__button > .stk-button__svg-wrapper > .stk-button__inner-svg',
+						hoverSelector: '.stk-button__button:hover > .stk-button__svg-wrapper > .stk-button__inner-svg',
 						wrapperSelector: '.stk-button__button',
 					},
 				} } />
@@ -90,7 +91,7 @@ ButtonStyles.Content = props => {
 	propsToPass.options = {
 		...options,
 		selector: '.stk-button__button',
-		attrNameTemplate: 'button%s',
+		hoverSelector: '.stk-button__button:hover',
 	}
 
 	const styles = (
@@ -123,6 +124,7 @@ ButtonStyles.Content = props => {
 					options: {
 						...propsToPass.options,
 						selector: '.stk-button__button > .stk-button__svg-wrapper > .stk-button__inner-svg',
+						hoverSelector: '.stk-button__button:hover > .stk-button__svg-wrapper > .stk-button__inner-svg',
 						wrapperSelector: '.stk-button__button',
 					},
 				} } />

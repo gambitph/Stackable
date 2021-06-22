@@ -13,6 +13,7 @@ const getStyleParams = ( options = {} ) => {
 		wrapperSelector,
 		uniqueId,
 		backgroundShapeSelector,
+		hoverSelector,
 	} = options
 
 	return [
@@ -25,6 +26,7 @@ const getStyleParams = ( options = {} ) => {
 			},
 			responsive: 'all',
 			hover: 'all',
+			hoverSelector,
 			format: '%spx',
 		},
 		{
@@ -32,12 +34,14 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'opacity',
 			attrName: 'iconOpacity',
 			hover: 'all',
+			hoverSelector,
 		},
 		{
 			selector: `${ selector } svg:last-child`,
 			styleRule: 'transform',
 			attrName: 'iconRotation',
 			hover: 'all',
+			hoverSelector,
 			format: 'rotate(%sdeg)',
 		},
 		{
@@ -51,6 +55,7 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'columnGap',
 			attrName: 'iconGap',
 			hover: 'all',
+			hoverSelector,
 			format: `%spx`,
 		},
 		{
@@ -72,6 +77,14 @@ const getStyleParams = ( options = {} ) => {
 			},
 			dependencies: [ 'iconColorType', 'iconColor1', 'iconColor2' ],
 			hover: 'all',
+			hoverSelector: [
+				`${ hoverSelector } svg:last-child`,
+				`${ hoverSelector } svg:last-child g`,
+				`${ hoverSelector } svg:last-child path`,
+				`${ hoverSelector } svg:last-child rect`,
+				`${ hoverSelector } svg:last-child polygon`,
+				`${ hoverSelector } svg:last-child ellipse`,
+			],
 		},
 		{
 			selector: `${ selector } #${ uniqueId }`,
@@ -89,6 +102,7 @@ const getStyleParams = ( options = {} ) => {
 				return value
 			},
 			hover: 'all',
+			hoverSelector,
 			dependencies: [ 'iconColorType', 'iconColor1', 'iconColor2' ],
 		},
 
@@ -99,6 +113,7 @@ const getStyleParams = ( options = {} ) => {
 			attrName: 'shapeColor',
 			enabledCallback: attributes => attributes.shaped,
 			hover: 'all',
+			hoverSelector,
 			dependencies: [ 'shaped' ],
 		},
 		{
@@ -108,6 +123,7 @@ const getStyleParams = ( options = {} ) => {
 			format: `%s%`,
 			enabledCallback: attributes => attributes.shaped,
 			hover: 'all',
+			hoverSelector,
 			dependencies: [ 'shaped' ],
 		},
 		{
@@ -117,6 +133,7 @@ const getStyleParams = ( options = {} ) => {
 			format: `%spx`,
 			enabledCallback: attributes => attributes.shaped,
 			hover: 'all',
+			hoverSelector,
 			dependencies: [ 'shaped' ],
 		},
 		{
@@ -126,6 +143,7 @@ const getStyleParams = ( options = {} ) => {
 			valuePreCallback: ( value, getAttribute, device, state ) => getAttribute( 'shapeOutline', 'desktop', state ) ? value : undefined,
 			enabledCallback: attributes => attributes.shaped,
 			hover: 'all',
+			hoverSelector,
 			dependencies: [ 'shapeOutline', 'shaped' ],
 		},
 		{
@@ -147,6 +165,7 @@ const getStyleParams = ( options = {} ) => {
 			},
 			enabledCallback: attributes => attributes.shaped,
 			hover: 'all',
+			hoverSelector,
 			dependencies: [ 'shaped', 'shapeOutline', 'shapeOutlineWidthTop', 'shapeOutlineWidthRight', 'shapeOutlineWidthBottom', 'shapeOutlineWidthLeft' ],
 		},
 		{
@@ -160,6 +179,7 @@ const getStyleParams = ( options = {} ) => {
 			enabledCallback: attributes => attributes.shaped,
 			valuePreCallback: ( value, getAttribute, device, state ) => getAttribute( 'shapeOutline', 'desktop', state ) ? value : undefined,
 			hover: 'all',
+			hoverSelector,
 			responsive: 'all',
 			format: '%spx',
 			dependencies: [ 'shapeOutline', 'shaped' ],
@@ -171,6 +191,7 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'fill',
 			attrName: 'backgroundShapeColor',
 			hover: 'all',
+			hoverSelector,
 			enabledCallback: attributes => attributes.showBackgroundShape,
 			dependencies: [ 'showBackgroundShape' ],
 		},
@@ -179,6 +200,7 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'opacity',
 			attrName: 'backgroundShapeOpacity',
 			hover: 'all',
+			hoverSelector,
 			enabledCallback: attributes => attributes.showBackgroundShape,
 			dependencies: [ 'showBackgroundShape' ],
 		},
@@ -186,6 +208,7 @@ const getStyleParams = ( options = {} ) => {
 			selector: backgroundShapeSelector,
 			styleRule: 'transform',
 			hover: 'all',
+			hoverSelector,
 			valuePreCallback: ( value, getAttribute, device, state ) => {
 				const backgroundShapeSize = getAttribute( 'backgroundShapeSize', 'desktop', state )
 				const backgroundShapeOffsetHorizontal = getAttribute( 'backgroundShapeOffsetHorizontal', 'desktop', state )
@@ -216,12 +239,13 @@ export const Style = props => {
 		selector = '',
 		wrapperSelector = '',
 		backgroundShapeSelector = '.stk--shape-icon',
+		hoverSelector = '',
 	} = options
 
 	const uniqueId = 'linear-gradient-' + attributes.uniqueId
 
 	const styles = useStyles( attributes, getStyleParams( {
-		selector, wrapperSelector, uniqueId, backgroundShapeSelector,
+		selector, wrapperSelector, uniqueId, backgroundShapeSelector, hoverSelector,
 	} ) )
 
 	return (
@@ -245,12 +269,13 @@ Style.Content = props => {
 		selector = '',
 		wrapperSelector = '',
 		backgroundShapeSelector = '.stk--shape-icon',
+		hoverSelector = '',
 	} = options
 
 	const uniqueId = 'linear-gradient-' + attributes.uniqueId
 
 	const styles = getStyles( attributes, getStyleParams( {
-		selector, wrapperSelector, uniqueId, backgroundShapeSelector,
+		selector, wrapperSelector, uniqueId, backgroundShapeSelector, hoverSelector,
 	} ) )
 
 	return (

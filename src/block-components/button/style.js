@@ -9,6 +9,7 @@ import {
 const getStyleParams = options => {
 	const {
 		selector,
+		hoverSelector,
 	} = options
 
 	return [
@@ -31,6 +32,7 @@ const getStyleParams = options => {
 			styleRule: 'background',
 			attrName: 'buttonBackgroundColor',
 			hover: 'all',
+			hoverSelector,
 			valueCallback: ( _, getAttribute, device, state ) => {
 				const buttonBackgroundGradientDirection = getAttribute( 'buttonBackgroundGradientDirection', device, state )
 				const buttonBackgroundColor = getAttribute( 'buttonBackgroundColor', device, state )
