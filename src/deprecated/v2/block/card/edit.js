@@ -159,6 +159,7 @@ addFilter( 'stackable.card.edit.inspector.style.before', 'stackable/card', ( out
 					min={ 1 }
 					max={ 3 }
 					className="ugb--help-tip-general-columns"
+					default={ 2 }
 				/>
 
 				{ ( ! show.columnBackground && show.borderRadius ) &&

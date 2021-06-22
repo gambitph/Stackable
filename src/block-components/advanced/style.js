@@ -15,7 +15,7 @@ const getStyleParams = () => {
 			attrName: 'positionNum',
 			responsive: 'all',
 			hover: 'all',
-			hasUnits: 'px',
+			format: '%spx',
 			valuePreCallback: ( value, getAttribute, device ) => {
 				if ( value.top === '' ) {
 					const isSticky = getAttribute( 'position', device, 'normal', true ) === 'sticky'
@@ -32,7 +32,7 @@ const getStyleParams = () => {
 			attrName: 'positionNum',
 			responsive: 'all',
 			hover: 'all',
-			hasUnits: 'px',
+			format: '%spx',
 			valuePreCallback: value => value.right,
 		},
 		{
@@ -41,7 +41,7 @@ const getStyleParams = () => {
 			attrName: 'positionNum',
 			responsive: 'all',
 			hover: 'all',
-			hasUnits: 'px',
+			format: '%spx',
 			valuePreCallback: value => value.bottom,
 		},
 		{
@@ -50,7 +50,7 @@ const getStyleParams = () => {
 			attrName: 'positionNum',
 			responsive: 'all',
 			hover: 'all',
-			hasUnits: 'px',
+			format: '%spx',
 			valuePreCallback: value => value.left,
 		},
 		{

@@ -142,6 +142,7 @@ addFilter( 'stackable.count-up.edit.inspector.style.before', 'stackable/count-up
 					min={ 1 }
 					max={ 4 }
 					className="ugb--help-tip-general-columns"
+					default={ 2 }
 				/>
 				<ContentAlignControl
 					setAttributes={ setAttributes }

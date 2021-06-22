@@ -167,7 +167,7 @@ addFilter( 'stackable.columns.edit.inspector.layout.before', 'stackable/columns'
 					} }
 					min={ 2 }
 					max={ design !== 'grid' ? 6 : 8 }
-					placeholder="2"
+					default={ 2 }
 					className="ugb--help-tip-general-columns"
 				/>
 
@@ -268,7 +268,7 @@ addFilter( 'stackable.columns.edit.inspector.style.before', 'stackable/columns',
 					} }
 					min={ 2 }
 					max={ design !== 'grid' ? 6 : 8 }
-					placeholder="2"
+					default={ 2 }
 					className="ugb--help-tip-general-columns"
 				/>
 

@@ -100,6 +100,7 @@ addFilter( 'stackable.icon-list.edit.inspector.style.before', 'stackable/icon-li
 						label={ __( 'Columns', i18n ) }
 						min={ 1 }
 						max={ 4 }
+						default={ 2 }
 					/>
 				</ResponsiveControl>
 				{ ( ( columns && columns > 1 ) || ( tabletColumns && tabletColumns > 1 ) || ( mobileColumns && mobileColumns > 1 ) ) && (

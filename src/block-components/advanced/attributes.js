@@ -33,7 +33,6 @@ export const addAttributes = attrObject => {
 			positionNum: {
 				stkResponsive: true,
 				stkHover: true,
-				stkUnits: 'px',
 				type: 'object',
 				default: '',
 			},

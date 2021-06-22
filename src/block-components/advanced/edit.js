@@ -3,7 +3,7 @@
  */
 import { i18n } from 'stackable'
 import {
-	AdvancedRangeControl2,
+	AdvancedRangeControl,
 	AdvancedSelectControl,
 	FourRangeControl,
 	InspectorAdvancedControls,
@@ -85,7 +85,7 @@ export const Edit = () => {
 					title={ __( 'Position', i18n ) }
 					id="position"
 				>
-					<AdvancedRangeControl2
+					<AdvancedRangeControl
 						label={ __( 'Opacity', i18n ) }
 						attribute="opacity"
 						responsive="all"
@@ -97,7 +97,7 @@ export const Edit = () => {
 						placeholder="1"
 						className="ugb--help-tip-advanced-opacity"
 					/>
-					<AdvancedRangeControl2
+					<AdvancedRangeControl
 						label={ __( 'Z-Index', i18n ) }
 						attribute="zIndex"
 						responsive="all"
@@ -130,10 +130,10 @@ export const Edit = () => {
 						attribute="positionNum"
 						responsive="all"
 						hover="all"
-						units={ [ 'px', 'em', '%' ] }
 						defaultLocked={ false }
-						sliderMin={ [ -100, -10, -20 ] }
-						sliderMax={ [ 200, 30, 100 ] }
+						hasLock={ false }
+						sliderMin={ -100 }
+						sliderMax={ 100 }
 						className="ugb--help-tip-advanced-block-paddings"
 					/>
 				</PanelAdvancedSettings>

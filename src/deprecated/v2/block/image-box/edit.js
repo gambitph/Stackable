@@ -163,6 +163,7 @@ addFilter( 'stackable.image-box.edit.inspector.style.before', 'stackable/image-b
 					min={ 1 }
 					max={ 4 }
 					className="ugb--help-tip-general-columns"
+					default={ 3 }
 				/>
 				{
 

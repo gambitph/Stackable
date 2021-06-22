@@ -1,5 +1,5 @@
 import { i18n } from 'stackable'
-import { AdvancedRangeControl2 } from '~stackable/components'
+import { AdvancedRangeControl } from '~stackable/components'
 
 import {
 	__,
@@ -37,7 +37,7 @@ const ShadowControl = props => {
 	const shadows = useMemo( () => getShadows(), [] )
 
 	return (
-		<AdvancedRangeControl2
+		<AdvancedRangeControl
 			{ ...props }
 			valueCallback={ valueCallback }
 			changeCallback={ changeCallback }

@@ -153,6 +153,7 @@ addFilter( 'stackable.number-box.edit.inspector.style.before', 'stackable/number
 					min={ 1 }
 					max={ 3 }
 					className="ugb--help-tip-general-columns"
+					default={ 2 }
 				/>
 				<ContentAlignControl
 					setAttributes={ setAttributes }

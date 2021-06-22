@@ -7,7 +7,7 @@ import SVGLeftImage from './images/left.svg'
 import SVGRightImage from './images/right.svg'
 import SVGTopImage from './images/top.svg'
 import SVGFullImage from './images/full.svg'
-import RangeControl from '../advanced-range-control2/range-control'
+import RangeControl from '../advanced-range-control/range-control'
 import { ResetButton } from '../base-control2/reset-button'
 import AdvancedControl, { extractControlProps } from '../base-control2'
 import { useControlHandlers } from '../base-control2/hooks'
@@ -73,10 +73,10 @@ const FourRangeControl = props => {
 	const lockClassNames = classnames( [
 		'ugb-four-range-control__lock',
 	], {
-		'ugb--is-locked': isLocked,
+		'ugb--is-locked': props.hasLock && isLocked,
 	} )
 
-	controlProps.after = <Button
+	controlProps.after = props.hasLock && <Button
 		className={ lockClassNames }
 		onClick={ () => setIsLocked( ! isLocked ) }
 		isSecondary
@@ -278,6 +278,7 @@ const FourRangeControl = props => {
 
 FourRangeControl.defaultProps = {
 	defaultLocked: true,
+	hasLock: true,
 	enableTop: true,
 	enableRight: true,
 	enableBottom: true,

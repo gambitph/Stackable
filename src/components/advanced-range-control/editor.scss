@@ -1,7 +1,3 @@
-.ugb-advanced-range-control {
-	width: 100%;
-}
-
 // We cannot trust the initialPosition of the RangeControl, so we manually set
 // it via CSS.
 .ugb-range-control {
@@ -16,6 +12,7 @@
 }
 
 .ugb-range-control {
+	flex: 1;
 	display: flex;
 	align-items: center;
 	.components-range-control {

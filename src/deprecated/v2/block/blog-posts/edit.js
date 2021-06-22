@@ -205,6 +205,7 @@ addFilter( 'stackable.blog-posts.edit.inspector.style.before', 'stackable/blog-p
 					min={ 1 }
 					max={ 4 }
 					className="ugb--help-tip-general-columns"
+					default={ 2 }
 				/>
 
 				{ ! show.columnBackground && show.borderRadius &&

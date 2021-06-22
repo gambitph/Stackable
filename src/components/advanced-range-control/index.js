@@ -2,132 +2,103 @@
  * Internal dependencies
  */
 import RangeControl from './range-control'
-import { BaseControl } from '..'
+import { useControlHandlers } from '../base-control2/hooks'
+import AdvancedControl, { extractControlProps } from '../base-control2'
+import { ResetButton } from '../base-control2/reset-button'
+import {
+	useAttributeName,
+	useBlockAttributes,
+	useBlockHoverState,
+	useDeviceType,
+} from '~stackable/hooks'
 
 /**
  * External dependencies
  */
-import classnames from 'classnames'
-import { omit } from 'lodash'
-import { useDeviceType } from '~stackable/hooks'
 import { memo } from '@wordpress/element'
-
-export const convertToNumber = value => {
-	if ( typeof value === 'string' && value !== '' && value.match( /^[\d.]+$/ ) ) {
-		return value.includes( '.' ) ? parseFloat( value ) : parseInt( value, 10 )
-	}
-	return value
-}
+import { useBlockEditContext } from '@wordpress/block-editor'
 
 const AdvancedRangeControl = props => {
-	const propsToPass = { ...omit( props, [ 'className', 'help', 'label', 'units', 'unit', 'onChangeUnit', 'screens', 'placeholder', 'initialPosition', 'allowReset', 'defaultValue' ] ) }
+	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
+	const [ propsToPass, controlProps ] = extractControlProps( props )
+
 	const deviceType = useDeviceType()
+	const [ currentHoverState ] = useBlockHoverState()
+	const hasUnits = !! props.units?.length
+	const unitAttrName = useAttributeName( `${ props.attribute }Unit`, props.responsive, props.hover )
+
+	const { clientId } = useBlockEditContext()
+	const attributes = useBlockAttributes( clientId )
+
+	const unit = attributes[ unitAttrName ]
 
 	// Change the min, max & step values depending on the unit used.
-	const i = props.units.indexOf( props.unit ) < 0 ? 0 : props.units.indexOf( props.unit )
-	if ( Array.isArray( props.min ) ) {
-		propsToPass.min = props.min[ i ]
-	}
-	if ( Array.isArray( props.max ) ) {
-		propsToPass.max = props.max[ i ]
-	}
-	if ( Array.isArray( props.sliderMin ) ) {
-		propsToPass.sliderMin = props.sliderMin[ i ]
-	}
-	if ( Array.isArray( props.sliderMax ) ) {
-		propsToPass.sliderMax = props.sliderMax[ i ]
-	}
-	if ( Array.isArray( props.step ) ) {
-		propsToPass.step = props.step[ i ]
-	}
-	propsToPass.initialPosition = props.initialPosition !== '' ? props.initialPosition : props.placeholder
-
-	propsToPass.placeholder = props.placeholder
-	let placeholder = props.placeholder
-
-	// Different placeholders can be used for different screens.
-	// Placeholders can be an object like:
-	// { desktop: 20, tablet: 30, mobile: 40 }
-	// or for different units
-	// { desktop: [ 21, 22 ], tablet: [ 31, 32 ], mobile: [ 41, 42 ] }
-	if ( ! Array.isArray( placeholder ) && typeof placeholder === 'object' ) {
-		// If the passed placeholder is an object
-		const screenSize = deviceType.toLowerCase() || 'desktop'
-		if ( typeof placeholder[ screenSize ] !== 'undefined' ) {
-			placeholder = placeholder[ screenSize ]
-		} else {
-			placeholder = placeholder[ Object.keys( placeholder )[ 0 ] ]
+	if ( hasUnits ) {
+		const i = props.units.indexOf( unit ) < 0 ? 0 : props.units.indexOf( unit )
+		if ( Array.isArray( props.min ) ) {
+			propsToPass.min = props.min[ i ]
 		}
-		// Placeholder can be an array for different units.
-		if ( Array.isArray( placeholder ) ) {
-			propsToPass.placeholder = placeholder[ i ] || ''
-			propsToPass.initialPosition = placeholder[ i ] || ''
-		} else {
-			propsToPass.placeholder = placeholder || ''
-			propsToPass.initialPosition = placeholder || ''
+		if ( Array.isArray( props.max ) ) {
+			propsToPass.max = props.max[ i ]
 		}
-		if ( Array.isArray( props.initialPosition ) ) {
-			propsToPass.initialPosition = props.initialPosition[ i ] || ''
+		if ( Array.isArray( props.sliderMin ) ) {
+			propsToPass.sliderMin = props.sliderMin[ i ]
 		}
+		if ( Array.isArray( props.sliderMax ) ) {
+			propsToPass.sliderMax = props.sliderMax[ i ]
+		}
+		if ( Array.isArray( props.step ) ) {
+			propsToPass.step = props.step[ i ]
+		}
+		propsToPass.initialPosition = props.initialPosition !== '' ? props.initialPosition : props.placeholder
 
-		// Initial position needs to be an actual number.
-		propsToPass.initialPosition = convertToNumber( propsToPass.initialPosition )
-	} else if ( Array.isArray( placeholder ) && props.screen === 'desktop' ) {
-		// If the passed placeholder is an array
-		propsToPass.placeholder = placeholder[ i ] || ''
-		propsToPass.initialPosition = placeholder[ i ] || ''
-
-		if ( Array.isArray( props.initialPosition ) ) {
-			propsToPass.initialPosition = props.initialPosition[ i ] || ''
+		// If the unit was not the default, remove the placeholder.
+		if ( i !== 0 ) {
+			propsToPass.initialPosition = ''
+			propsToPass.placeholder = ''
 		}
-	} else if ( props.screen && props.screen !== 'desktop' ) {
-		// If the passed placeholder is a not an object or an array, and the current screen is not desktop.
-		propsToPass.placeholder = ''
+	}
+
+	// Remove the placeholder.
+	if ( deviceType !== 'Desktop' ) {
 		propsToPass.initialPosition = ''
+		propsToPass.placeholder = ''
 	}
 
-	const classNames = classnames( [
-		'ugb-advanced-range-control',
-		props.className,
-	] )
+	let placeholderRender = props.placeholderRender
+	if ( deviceType !== 'Desktop' || currentHoverState !== 'normal' || ( hasUnits && unit !== props.units[ 0 ] ) ) {
+		placeholderRender = null
+	}
 
 	return (
-		<BaseControl
-			help={ props.help }
-			className={ classNames }
-			label={ props.label }
-			units={ props.units }
-			unit={ props.unit }
-			onChangeUnit={ props.onChangeUnit }
-			screens={ props.screens }
-			onChange={ props.onChange }
-			allowReset={ props.allowReset }
-			value={ props.value }
-			defaultValue={ props.defaultValue }
-		>
+		<AdvancedControl { ...controlProps }>
 			<RangeControl
 				{ ...propsToPass }
+				value={ typeof props.value === 'undefined' ? value : props.value }
+				onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
+				allowReset={ false }
+				placeholderRender={ placeholderRender }
 			/>
-		</BaseControl>
+			<ResetButton
+				allowReset={ props.allowReset }
+				value={ typeof props.value === 'undefined' ? value : props.value }
+				default={ props.default }
+				onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
+			/>
+		</AdvancedControl>
 	)
 }
 
 AdvancedRangeControl.defaultProps = {
-	onChange: () => {},
-	onChangeUnit: () => {},
-	help: '',
-	className: '',
-	units: [ 'px' ],
-	unit: 'px',
-	screens: [ 'desktop' ],
-	placeholder: '',
-	initialPosition: '',
-	max: Infinity,
-	min: -Infinity,
-	sliderMin: null,
-	sliderMax: null,
-	allowReset: false,
-	defaultValue: '',
+	allowReset: true,
+	default: '',
+
+	attribute: '',
+	responsive: false,
+	hover: false,
+
+	value: undefined,
+	onChange: undefined,
 }
 
 export default memo( AdvancedRangeControl )
