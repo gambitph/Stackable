@@ -2,177 +2,210 @@
  * External dependencies
  */
 import {
-	getAttrNameFunction, __getValue,
+	useStyles, getStyles,
 } from '~stackable/util'
 import { compact } from 'lodash'
 import { Style as StyleComponent } from '~stackable/components'
-/**
- * WordPress dependencies
- */
-import { useMemo, Fragment } from '@wordpress/element'
 
-const getIconStyle = ( options = {} ) => {
+const getStyleParams = ( options = {} ) => {
 	const {
 		selector,
 		wrapperSelector,
 		uniqueId,
-		iconColorType,
-		iconColor1,
-		iconColor2,
-		iconSize,
-		iconSizeTablet,
-		iconSizeMobile,
-		iconOpacity,
-		iconRotation,
-		iconPosition,
-		iconGap,
-	} = options
-
-	const iconStyles = {
-		[ selector + ' svg:last-child' ]: {
-			opacity: iconOpacity !== '' ? iconOpacity : undefined,
-			transform: iconRotation !== '' ? `rotate(${ iconRotation }deg)` : undefined,
-			height: iconSize !== '' ? `${ iconSize }px` : undefined,
-			width: iconSize !== '' ? `${ iconSize }px` : undefined,
-		},
-		tablet: {
-			[ selector + ' svg:last-child' ]: {
-				height: iconSizeTablet !== '' ? `${ iconSizeTablet }px` : undefined,
-				width: iconSizeTablet !== '' ? `${ iconSizeTablet }px` : undefined,
-			},
-		},
-		mobile: {
-			[ selector + ' svg:last-child' ]: {
-				height: iconSizeMobile !== '' ? `${ iconSizeMobile }px` : undefined,
-				width: iconSizeMobile !== '' ? `${ iconSizeMobile }px` : undefined,
-			},
-		},
-	}
-
-	if ( wrapperSelector ) {
-		iconStyles[ wrapperSelector ] = {
-			flexDirection: iconPosition !== '' ? 'row-reverse' : undefined,
-			columnGap: iconGap !== '' ? `${ iconGap }px` : undefined,
-		}
-	}
-
-	if ( iconColorType !== 'gradient' && iconColor1 !== '' ) {
-		iconStyles[ `${ selector } svg:last-child, ${ selector } svg:last-child g, ${ selector } svg:last-child path, ${ selector } svg:last-child rect, ${ selector } svg:last-child polygon, ${ selector } svg:last-child ellipse` ] = {
-			fill: iconColor1,
-		}
-	}
-
-	if ( iconColorType === 'gradient' && iconColor1 !== '' && iconColor2 !== '' ) {
-		iconStyles[ `${ selector } #${ uniqueId }` ] = {
-			[ `--${ uniqueId }-color-1` ]: iconColor1 !== '' ? iconColor1 : undefined,
-			[ `--${ uniqueId }-color-2` ]: iconColor2 !== '' ? iconColor2 : undefined,
-		}
-		iconStyles[ `${ selector } svg:last-child, ${ selector } svg:last-child g, ${ selector } svg:last-child path, ${ selector } svg:last-child rect, ${ selector } svg:last-child polygon, ${ selector } svg:last-child ellipse` ] = {
-			fill: `url(#${ uniqueId })`,
-		}
-	}
-
-	return iconStyles
-}
-
-const getShapedIconStyle = ( options = {} ) => {
-	const {
-		selector,
-		shaped,
-		shapeColor,
-		shapeBorderRadius,
-		shapePadding,
-		shapeOutline,
-		shapeOutlineColor,
-		shapeOutlineWidthTop,
-		shapeOutlineWidthRight,
-		shapeOutlineWidthBottom,
-		shapeOutlineWidthLeft,
-		shapeOutlineWidthTopTablet,
-		shapeOutlineWidthRightTablet,
-		shapeOutlineWidthBottomTablet,
-		shapeOutlineWidthLeftTablet,
-		shapeOutlineWidthTopMobile,
-		shapeOutlineWidthRightMobile,
-		shapeOutlineWidthBottomMobile,
-		shapeOutlineWidthLeftMobile,
-	} = options
-
-	const iconStyles = {
-		[ selector ]: {},
-		tablet: {
-			[ selector ]: {},
-		},
-		mobile: {
-			[ selector ]: {},
-		},
-	}
-
-	if ( shaped ) {
-		iconStyles[ selector ] = {
-			backgroundColor: shapeColor !== '' ? shapeColor : undefined,
-			borderRadius: shapeBorderRadius !== '' ? `${ shapeBorderRadius }%` : undefined,
-			padding: shapePadding !== '' ? `${ shapePadding }px` : undefined,
-			...( shapeOutline ? {
-				borderColor: shapeOutlineColor !== '' ? shapeOutlineColor : undefined,
-				borderStyle: shapeOutlineWidthTop !== '' && shapeOutlineWidthRight !== '' && shapeOutlineWidthBottom !== '' && shapeOutlineWidthLeft !== '' ? 'solid' : undefined,
-				borderTopWidth: shapeOutlineWidthTop !== '' ? `${ shapeOutlineWidthTop }px` : undefined,
-				borderRightWidth: shapeOutlineWidthRight !== '' ? `${ shapeOutlineWidthRight }px` : undefined,
-				borderBottomWidth: shapeOutlineWidthBottom !== '' ? `${ shapeOutlineWidthBottom }px` : undefined,
-				borderLeftWidth: shapeOutlineWidthLeft !== '' ? `${ shapeOutlineWidthLeft }px` : undefined,
-			} : {} ),
-		}
-
-		iconStyles.tablet[ selector ] = {
-			...( shapeOutline ? {
-				borderTopWidth: shapeOutlineWidthTopTablet !== '' ? `${ shapeOutlineWidthTopTablet }px` : undefined,
-				borderRightWidth: shapeOutlineWidthRightTablet !== '' ? `${ shapeOutlineWidthRightTablet }px` : undefined,
-				borderBottomWidth: shapeOutlineWidthBottomTablet !== '' ? `${ shapeOutlineWidthBottomTablet }px` : undefined,
-				borderLeftWidth: shapeOutlineWidthLeftTablet !== '' ? `${ shapeOutlineWidthLeftTablet }px` : undefined,
-			} : {} ),
-		}
-
-		iconStyles.mobile[ selector ] = {
-			...( shapeOutline ? {
-				borderTopWidth: shapeOutlineWidthTopMobile !== '' ? `${ shapeOutlineWidthTopMobile }px` : undefined,
-				borderRightWidth: shapeOutlineWidthRightMobile !== '' ? `${ shapeOutlineWidthRightMobile }px` : undefined,
-				borderBottomWidth: shapeOutlineWidthBottomMobile !== '' ? `${ shapeOutlineWidthBottomMobile }px` : undefined,
-				borderLeftWidth: shapeOutlineWidthLeftMobile !== '' ? `${ shapeOutlineWidthLeftMobile }px` : undefined,
-			} : {} ),
-		}
-	}
-
-	return iconStyles
-}
-
-const getBackgroundShapeStyle = ( options = {} ) => {
-	const {
 		backgroundShapeSelector,
-		showBackgroundShape,
-		backgroundShapeColor,
-		backgroundShapeOpacity,
-		backgroundShapeSize,
-		backgroundShapeOffsetHorizontal,
-		backgroundShapeOffsetVertical,
 	} = options
 
-	const iconStyles = {}
+	return [
+		// Icon Styles
+		{
+			selector: `${ selector } svg:last-child`,
+			styles: {
+				height: 'iconSize',
+				width: 'iconSize',
+			},
+			responsive: 'all',
+			hover: 'all',
+			format: '%spx',
+		},
+		{
+			selector: `${ selector } svg:last-child`,
+			styleRule: 'opacity',
+			attrName: 'iconOpacity',
+			hover: 'all',
+		},
+		{
+			selector: `${ selector } svg:last-child`,
+			styleRule: 'transform',
+			attrName: 'iconRotation',
+			hover: 'all',
+			format: 'rotate(%sdeg)',
+		},
+		{
+			selector: wrapperSelector,
+			styleRule: 'flexDirection',
+			attrName: 'iconPosition',
+			valuePreCallback: value => value !== '' ? 'row-reverse' : undefined,
+		},
+		{
+			selector: wrapperSelector,
+			styleRule: 'columnGap',
+			attrName: 'iconGap',
+			hover: 'all',
+			format: `%spx`,
+		},
+		{
+			selector: `${ selector } svg:last-child, ${ selector } svg:last-child g, ${ selector } svg:last-child path, ${ selector } svg:last-child rect, ${ selector } svg:last-child polygon, ${ selector } svg:last-child ellipse`,
+			styleRule: 'fill',
+			attrName: 'iconColor1',
+			valuePreCallback: ( value, getAttribute, device, state ) => {
+				if ( getAttribute( 'iconColorType', 'desktop', state ) === 'gradient' || getAttribute( 'iconColor1', 'desktop', state ) === '' ) {
+					return undefined
+				}
+				return value
+			},
+			dependencies: [ 'iconColorType' ],
+			hover: 'all',
+		},
+		{
+			selector: `${ selector } #${ uniqueId }`,
+			styles: {
+				[ `--${ uniqueId }-color-1` ]: 'iconColor1',
+				[ `--${ uniqueId }-color-2` ]: 'iconColor2',
+			},
+			valuePreCallback: ( value, getAttribute, device, state ) => {
+				if ( getAttribute( 'iconColorType', 'desktop', state ) !== 'gradient' || getAttribute( 'iconColor1', 'desktop', state ) === '' || getAttribute( 'iconColor2', 'desktop', state ) === '' ) {
+					return undefined
+				}
+				return value
+			},
+			hover: 'all',
+			dependencies: [ 'iconColorType', 'iconColor1', 'iconColor2' ],
+		},
+		{
+			selector: `${ selector } svg:last-child, ${ selector } svg:last-child g, ${ selector } svg:last-child path, ${ selector } svg:last-child rect, ${ selector } svg:last-child polygon, ${ selector } svg:last-child ellipse`,
+			styleRule: 'fill',
+			attrName: 'iconColor1',
+			valuePreCallback: ( value, getAttribute, device, state ) => {
+				if ( getAttribute( 'iconColorType', 'desktop', state ) !== 'gradient' || getAttribute( 'iconColor1', 'desktop', state ) === '' || getAttribute( 'iconColor2', 'desktop', state ) === '' ) {
+					return undefined
+				}
 
-	if ( showBackgroundShape ) {
-		const transform = compact( [
-			backgroundShapeSize !== '' ? `scale(${ backgroundShapeSize })` : undefined,
-			backgroundShapeOffsetHorizontal !== '' ? `translateX(${ backgroundShapeOffsetHorizontal }px)` : undefined,
-			backgroundShapeOffsetVertical !== '' ? `translateY(${ backgroundShapeOffsetVertical }px)` : undefined,
-		] ).join( ' ' )
+				return `url(#${ uniqueId })`
+			},
+			hover: 'all',
+			dependencies: [ 'iconColorType', 'iconColor1', 'iconColor2' ],
+		},
 
-		iconStyles[ backgroundShapeSelector ] = {
-			fill: backgroundShapeColor !== '' ? backgroundShapeColor : undefined,
-			opacity: backgroundShapeOpacity !== '' ? backgroundShapeOpacity : undefined,
-			transform: transform !== '' ? transform : undefined,
-		}
-	}
+		// Shape Styles
+		{
+			selector,
+			styleRule: 'backgroundColor',
+			attrName: 'shapeColor',
+			enabledCallback: attributes => attributes.shaped,
+			hover: 'all',
+			dependencies: [ 'shaped' ],
+		},
+		{
+			selector,
+			styleRule: 'borderRadius',
+			attrName: 'shapeBorderRadius',
+			format: `%s%`,
+			enabledCallback: attributes => attributes.shaped,
+			hover: 'all',
+			dependencies: [ 'shaped' ],
+		},
+		{
+			selector,
+			styleRule: 'padding',
+			attrName: 'shapePadding',
+			format: `%spx`,
+			enabledCallback: attributes => attributes.shaped,
+			hover: 'all',
+			dependencies: [ 'shaped' ],
+		},
+		{
+			selector,
+			styleRule: 'borderColor',
+			attrName: 'shapeOutlineColor',
+			valuePreCallback: ( value, getAttribute, device, state ) => getAttribute( 'shapeOutline', 'desktop', state ) ? value : undefined,
+			enabledCallback: attributes => attributes.shaped,
+			hover: 'all',
+			dependencies: [ 'shapeOutline', 'shaped' ],
+		},
+		{
+			selector,
+			styleRule: 'borderStyle',
+			attrName: 'borderStyle',
+			valuePreCallback: ( value, getAttribute, device, state ) => {
+				if (
+					getAttribute( 'shapeOutlineWidthTop', 'desktop', state ) === '' ||
+					getAttribute( 'shapeOutlineWidthRight', 'desktop', state ) === '' ||
+					getAttribute( 'shapeOutlineWidthBottom', 'desktop', state ) === '' ||
+					getAttribute( 'shapeOutlineWidthLeft', 'desktop', state ) === '' || ! getAttribute( 'shapeOutline', 'desktop', state )
+				) {
+					return undefined
+				}
 
-	return iconStyles
+				return 'solid'
+			},
+			enabledCallback: attributes => attributes.shaped,
+			hover: 'all',
+			dependencies: [ 'shaped', 'shapeOutline', 'shapeOutlineWidthTop', 'shapeOutlineWidthRight', 'shapeOutlineWidthBottom', 'shapeOutlineWidthLeft' ],
+		},
+		{
+			selector,
+			styles: {
+				borderTopWidth: 'shapeOutlineWidthTop',
+				borderRightWidth: 'shapeOutlineWidthRight',
+				borderBottomWidth: 'shapeOutlineWidthBottom',
+				borderLeftWidth: 'shapeOutlineWidthLeft',
+			},
+			enabledCallback: attributes => attributes.shaped,
+			valuePreCallback: ( value, getAttribute, device, state ) => getAttribute( 'shapeOutline', 'desktop', state ) ? value : undefined,
+			hover: 'all',
+			responsive: 'all',
+			format: '%spx',
+			dependencies: [ 'shapeOutline', 'shaped' ],
+		},
+
+		// Background Shape Styles
+		{
+			selector: backgroundShapeSelector,
+			styleRule: 'fill',
+			attrName: 'backgroundShapeColor',
+			hover: 'all',
+			enabledCallback: attributes => attributes.showBackgroundShape,
+			dependencies: [ 'showBackgroundShape' ],
+		},
+		{
+			selector: backgroundShapeSelector,
+			styleRule: 'opacity',
+			attrName: 'backgroundShapeOpacity',
+			hover: 'all',
+			enabledCallback: attributes => attributes.showBackgroundShape,
+			dependencies: [ 'showBackgroundShape' ],
+		},
+		{
+			selector: backgroundShapeSelector,
+			styleRule: 'transform',
+			hover: 'all',
+			valuePreCallback: ( value, getAttribute, device, state ) => {
+				const backgroundShapeSize = getAttribute( 'backgroundShapeSize', 'desktop', state )
+				const backgroundShapeOffsetHorizontal = getAttribute( 'backgroundShapeOffsetHorizontal', 'desktop', state )
+				const backgroundShapeOffsetVertical = getAttribute( 'backgroundShapeOffsetVertical', 'desktop', state )
+
+				const transform = compact( [
+					backgroundShapeSize !== '' ? `scale(${ backgroundShapeSize })` : undefined,
+					backgroundShapeOffsetHorizontal !== '' ? `translateX(${ backgroundShapeOffsetHorizontal }px)` : undefined,
+					backgroundShapeOffsetVertical !== '' ? `translateY(${ backgroundShapeOffsetVertical }px)` : undefined,
+				] ).join( ' ' )
+
+				return transform
+			},
+			dependencies: [ 'showBackgroundShape', 'backgroundShapeSize', 'backgroundShapeOffsetVertical', 'backgroundShapeOffsetHorizontal' ],
+			enabledCallback: attributes => attributes.showBackgroundShape,
+		},
+	]
 }
 
 export const Style = props => {
@@ -184,143 +217,23 @@ export const Style = props => {
 
 	const {
 		selector = '',
-		attrNameTemplate = '%s',
 		wrapperSelector = '',
 		backgroundShapeSelector = '.stk--shape-icon',
-		normalAttrNameTemplate = '%s',
 	} = options
-
-	const getAttrName = getAttrNameFunction( attrNameTemplate )
-	const getValue = __getValue( attributes, getAttrName, '' )
 
 	const uniqueId = 'linear-gradient-' + attributes.uniqueId
 
-	const getNormalAttrName = getAttrNameFunction( normalAttrNameTemplate )
-	const getNormalValue = __getValue( attributes, getNormalAttrName, '' )
-
-	const iconStyles = useMemo(
-		() => getIconStyle( {
-			selector,
-			wrapperSelector,
-			uniqueId,
-			iconColorType: getValue( 'iconColorType' ),
-			iconColor1: getValue( 'iconColor1' ),
-			iconColor2: getValue( 'iconColor2' ),
-			iconColorGradientDirection: getValue( 'iconColorGradientDirection' ),
-			iconSize: getValue( 'iconSize' ),
-			iconSizeTablet: getValue( 'iconSizeTablet' ),
-			iconSizeMobile: getValue( 'iconSizeMobile' ),
-			iconOpacity: getValue( 'iconOpacity' ),
-			iconRotation: getValue( 'iconRotation' ),
-			iconPosition: getValue( 'iconPosition' ),
-			iconGap: getValue( 'iconGap' ),
-		} ),
-		[
-			selector,
-			wrapperSelector,
-			uniqueId,
-			getValue( 'iconColorType' ),
-			getValue( 'iconColor1' ),
-			getValue( 'iconColor2' ),
-			getValue( 'iconColorGradientDirection' ),
-			getValue( 'iconSize' ),
-			getValue( 'iconSizeTablet' ),
-			getValue( 'iconSizeMobile' ),
-			getValue( 'iconOpacity' ),
-			getValue( 'iconRotation' ),
-			getValue( 'iconPosition' ),
-			getValue( 'iconGap' ),
-		]
-	)
-
-	const shapedIconStyles = useMemo(
-		() => getShapedIconStyle( {
-			selector,
-			shaped: getNormalValue( 'shaped' ),
-			shapeColor: getValue( 'shapeColor' ),
-			shapeBorderRadius: getValue( 'shapeBorderRadius' ),
-			shapePadding: getValue( 'shapePadding' ),
-
-			shapeOutline: getValue( 'shapeOutline' ),
-			shapeOutlineColor: getValue( 'shapeOutlineColor' ),
-			shapeOutlineWidthTop: getValue( 'shapeOutlineWidthTop' ),
-			shapeOutlineWidthRight: getValue( 'shapeOutlineWidthRight' ),
-			shapeOutlineWidthBottom: getValue( 'shapeOutlineWidthBottom' ),
-			shapeOutlineWidthLeft: getValue( 'shapeOutlineWidthLeft' ),
-			shapeOutlineWidthTopTablet: getValue( 'shapeOutlineWidthTopTablet' ),
-			shapeOutlineWidthRightTablet: getValue( 'shapeOutlineWidthRightTablet' ),
-			shapeOutlineWidthBottomTablet: getValue( 'shapeOutlineWidthBottomTablet' ),
-			shapeOutlineWidthLeftTablet: getValue( 'shapeOutlineWidthLeftTablet' ),
-			shapeOutlineWidthTopMobile: getValue( 'shapeOutlineWidthTopMobile' ),
-			shapeOutlineWidthRightMobile: getValue( 'shapeOutlineWidthRightMobile' ),
-			shapeOutlineWidthBottomMobile: getValue( 'shapeOutlineWidthBottomMobile' ),
-			shapeOutlineWidthLeftMobile: getValue( 'shapeOutlineWidthLeftMobile' ),
-		} ),
-		[
-			selector,
-			getNormalValue( 'shaped' ),
-			getValue( 'shapeColor' ),
-			getValue( 'shapeBorderRadius' ),
-			getValue( 'shapePadding' ),
-			getValue( 'shapeOutline' ),
-			getValue( 'shapeOutlineColor' ),
-			getValue( 'shapeOutlineWidthTop' ),
-			getValue( 'shapeOutlineWidthRight' ),
-			getValue( 'shapeOutlineWidthBottom' ),
-			getValue( 'shapeOutlineWidthLeft' ),
-			getValue( 'shapeOutlineWidthTopTablet' ),
-			getValue( 'shapeOutlineWidthRightTablet' ),
-			getValue( 'shapeOutlineWidthBottomTablet' ),
-			getValue( 'shapeOutlineWidthLeftTablet' ),
-			getValue( 'shapeOutlineWidthTopMobile' ),
-			getValue( 'shapeOutlineWidthRightMobile' ),
-			getValue( 'shapeOutlineWidthBottomMobile' ),
-			getValue( 'shapeOutlineWidthLeftMobile' ),
-		]
-	)
-
-	const backgroundShapeStyles = useMemo(
-		() => getBackgroundShapeStyle( {
-			backgroundShapeSelector,
-			showBackgroundShape: getNormalValue( 'showBackgroundShape' ),
-			backgroundShapeColor: getValue( 'backgroundShapeColor' ),
-			backgroundShapeOpacity: getValue( 'backgroundShapeOpacity' ),
-			backgroundShapeSize: getValue( 'backgroundShapeSize' ),
-			backgroundShapeOffsetHorizontal: getValue( 'backgroundShapeOffsetHorizontal' ),
-			backgroundShapeOffsetVertical: getValue( 'backgroundShapeOffsetVertical' ),
-		} ),
-		[
-			backgroundShapeSelector,
-			getNormalValue( 'showBackgroundShape' ),
-			getValue( 'backgroundShapeColor' ),
-			getValue( 'backgroundShapeOpacity' ),
-			getValue( 'backgroundShapeSize' ),
-			getValue( 'backgroundShapeOffsetHorizontal' ),
-			getValue( 'backgroundShapeOffsetVertical' ),
-		]
-	)
+	const styles = useStyles( attributes, getStyleParams( {
+		selector, wrapperSelector, uniqueId, backgroundShapeSelector,
+	} ) )
 
 	return (
-		<Fragment>
-			<StyleComponent
-				styles={ iconStyles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-			<StyleComponent
-				styles={ shapedIconStyles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-			<StyleComponent
-				styles={ backgroundShapeStyles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-		</Fragment>
+		<StyleComponent
+			styles={ styles }
+			versionAdded="3.0.0"
+			versionDeprecated=""
+			{ ...propsToPass }
+		/>
 	)
 }
 
@@ -333,90 +246,22 @@ Style.Content = props => {
 
 	const {
 		selector = '',
-		attrNameTemplate = '%s',
 		wrapperSelector = '',
 		backgroundShapeSelector = '.stk--shape-icon',
-		normalAttrNameTemplate = '%s',
 	} = options
-
-	const getAttrName = getAttrNameFunction( attrNameTemplate )
-	const getValue = __getValue( attributes, getAttrName, '' )
 
 	const uniqueId = 'linear-gradient-' + attributes.uniqueId
 
-	const getNormalAttrName = getAttrNameFunction( normalAttrNameTemplate )
-	const getNormalValue = __getValue( attributes, getNormalAttrName, '' )
-
-	const iconStyles = getIconStyle( {
-		selector,
-		wrapperSelector,
-		uniqueId,
-		iconColorType: getValue( 'iconColorType' ),
-		iconColor1: getValue( 'iconColor1' ),
-		iconColor2: getValue( 'iconColor2' ),
-		iconColorGradientDirection: getValue( 'iconColorGradientDirection' ),
-		iconSize: getValue( 'iconSize' ),
-		iconSizeTablet: getValue( 'iconSizeTablet' ),
-		iconSizeMobile: getValue( 'iconSizeMobile' ),
-		iconOpacity: getValue( 'iconOpacity' ),
-		iconRotation: getValue( 'iconRotation' ),
-		iconPosition: getValue( 'iconPosition' ),
-		iconGap: getValue( 'iconGap' ),
-	} )
-
-	const shapedIconStyles = getShapedIconStyle( {
-		selector,
-		shaped: getNormalValue( 'shaped' ),
-		shapeColor: getValue( 'shapeColor' ),
-		shapeBorderRadius: getValue( 'shapeBorderRadius' ),
-		shapePadding: getValue( 'shapePadding' ),
-
-		shapeOutline: getValue( 'shapeOutline' ),
-		shapeOutlineColor: getValue( 'shapeOutlineColor' ),
-		shapeOutlineWidthTop: getValue( 'shapeOutlineWidthTop' ),
-		shapeOutlineWidthRight: getValue( 'shapeOutlineWidthRight' ),
-		shapeOutlineWidthBottom: getValue( 'shapeOutlineWidthBottom' ),
-		shapeOutlineWidthLeft: getValue( 'shapeOutlineWidthLeft' ),
-		shapeOutlineWidthTopTablet: getValue( 'shapeOutlineWidthTopTablet' ),
-		shapeOutlineWidthRightTablet: getValue( 'shapeOutlineWidthRightTablet' ),
-		shapeOutlineWidthBottomTablet: getValue( 'shapeOutlineWidthBottomTablet' ),
-		shapeOutlineWidthLeftTablet: getValue( 'shapeOutlineWidthLeftTablet' ),
-		shapeOutlineWidthTopMobile: getValue( 'shapeOutlineWidthTopMobile' ),
-		shapeOutlineWidthRightMobile: getValue( 'shapeOutlineWidthRightMobile' ),
-		shapeOutlineWidthBottomMobile: getValue( 'shapeOutlineWidthBottomMobile' ),
-		shapeOutlineWidthLeftMobile: getValue( 'shapeOutlineWidthLeftMobile' ),
-	} )
-
-	const backgroundShapeStyles = getBackgroundShapeStyle( {
-		backgroundShapeSelector,
-		showBackgroundShape: getNormalValue( 'showBackgroundShape' ),
-		backgroundShapeColor: getValue( 'backgroundShapeColor' ),
-		backgroundShapeOpacity: getValue( 'backgroundShapeOpacity' ),
-		backgroundShapeSize: getValue( 'backgroundShapeSize' ),
-		backgroundShapeOffsetHorizontal: getValue( 'backgroundShapeOffsetHorizontal' ),
-		backgroundShapeOffsetVertical: getValue( 'backgroundShapeOffsetVertical' ),
-	} )
+	const styles = getStyles( attributes, getStyleParams( {
+		selector, wrapperSelector, uniqueId, backgroundShapeSelector,
+	} ) )
 
 	return (
-		<Fragment>
-			<StyleComponent.Content
-				styles={ iconStyles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-			<StyleComponent.Content
-				styles={ shapedIconStyles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-			<StyleComponent.Content
-				styles={ backgroundShapeStyles }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-		</Fragment>
+		<StyleComponent.Content
+			styles={ styles }
+			versionAdded="3.0.0"
+			versionDeprecated=""
+			{ ...propsToPass }
+		/>
 	)
 }

@@ -8,7 +8,7 @@ import {
 	BaseControl,
 	AdvancedToolbarControl,
 	ColorPaletteControl,
-	FourRangeControl,
+	FourRangeControl2,
 } from '~stackable/components'
 import { i18n } from 'stackable'
 import {
@@ -26,14 +26,12 @@ import { LinkControls } from '../helpers/link'
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n'
-import { useDispatch } from '@wordpress/data'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
 
 export const Edit = () => {
 	const deviceType = useDeviceType()
 	const { clientId } = useBlockEditContext()
-	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
 	const attributes = useBlockAttributes( clientId )
 	const [ hoverState ] = useBlockHoverState()
 
@@ -110,96 +108,17 @@ export const Edit = () => {
 							attrNameTemplate="button%s"
 						/>
 
-						{ deviceType === 'Desktop' && (
-							<FourRangeControl
-								label={ __( 'Button Paddings', i18n ) }
-								units={ [ 'px', '%' ] }
-								screens="all"
-								defaultLocked={ false }
-								top={ attributes.buttonPaddingTop }
-								bottom={ attributes.buttonPaddingBottom }
-								right={ attributes.buttonPaddingRight }
-								left={ attributes.buttonPaddingLeft }
-								unit={ attributes.buttonPaddingUnit || 'px' }
-								sliderMin={ [ 0, 0 ] }
-								sliderMax={ [ 40, 100 ] }
-								onChange={ paddings => {
-									updateBlockAttributes(
-										clientId,
-										{
-											buttonPaddingTop: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
-											buttonPaddingRight: ! paddings.right && paddings.right !== 0 ? '' : parseInt( paddings.right, 10 ),
-											buttonPaddingBottom: ! paddings.bottom && paddings.bottom !== 0 ? '' : parseInt( paddings.bottom, 10 ),
-											buttonPaddingLeft: ! paddings.left && paddings.left !== 0 ? '' : parseInt( paddings.left, 10 ),
-										} )
-								} }
-								onChangeUnit={ value => updateBlockAttributes( clientId, { marginUnitMobile: value } ) }
-								propsToPassTop={ {
-									placeholderRender: () => blockEl.el() && parseFloat( window.getComputedStyle( blockEl.el().querySelector( '.stk-button__button' ) ).paddingTop ),
-								} }
-								propsToPassBottom={ {
-									placeholderRender: () => blockEl.el() && parseFloat( window.getComputedStyle( blockEl.el().querySelector( '.stk-button__button' ) ).paddingBottom ),
-								} }
-								propsToPassLeft={ {
-									placeholderRender: () => blockEl.el() && parseFloat( window.getComputedStyle( blockEl.el().querySelector( '.stk-button__button' ) ).paddingLeft ),
-								} }
-								propsToPassRight={ {
-									placeholderRender: () => blockEl.el() && parseFloat( window.getComputedStyle( blockEl.el().querySelector( '.stk-button__button' ) ).paddingRight ),
-								} }
-							/>
-						) }
-						{ deviceType === 'Tablet' && (
-							<FourRangeControl
-								label={ __( 'Button Paddings', i18n ) }
-								units={ [ 'px', '%' ] }
-								screens="all"
-								defaultLocked={ false }
-								top={ attributes.buttonPaddingTopTablet }
-								bottom={ attributes.buttonPaddingBottomTablet }
-								right={ attributes.buttonPaddingRightTablet }
-								left={ attributes.buttonPaddingLeftTablet }
-								unit={ attributes.buttonPaddingUnitTablet || 'px' }
-								sliderMin={ [ 0, 0 ] }
-								sliderMax={ [ 40, 100 ] }
-								onChange={ paddings => {
-									updateBlockAttributes(
-										clientId,
-										{
-											buttonPaddingTopTablet: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
-											buttonPaddingRightTablet: ! paddings.right && paddings.right !== 0 ? '' : parseInt( paddings.right, 10 ),
-											buttonPaddingBottomTablet: ! paddings.bottom && paddings.bottom !== 0 ? '' : parseInt( paddings.bottom, 10 ),
-											buttonPaddingLeftTablet: ! paddings.left && paddings.left !== 0 ? '' : parseInt( paddings.left, 10 ),
-										} )
-								} }
-								onChangeUnit={ value => updateBlockAttributes( clientId, { marginUnitMobile: value } ) }
-							/>
-						) }
-						{ deviceType === 'Mobile' && (
-							<FourRangeControl
-								label={ __( 'Button Paddings', i18n ) }
-								units={ [ 'px', '%' ] }
-								screens="all"
-								defaultLocked={ false }
-								top={ attributes.buttonPaddingTopMobile }
-								bottom={ attributes.buttonPaddingBottomMobile }
-								right={ attributes.buttonPaddingRightMobile }
-								left={ attributes.buttonPaddingLeftMobile }
-								unit={ attributes.buttonPaddingUnitMobile || 'px' }
-								sliderMin={ [ 0, 0 ] }
-								sliderMax={ [ 40, 100 ] }
-								onChange={ paddings => {
-									updateBlockAttributes(
-										clientId,
-										{
-											buttonPaddingTopMobile: ! paddings.top && paddings.top !== 0 ? '' : parseInt( paddings.top, 10 ),
-											buttonPaddingRightMobile: ! paddings.right && paddings.right !== 0 ? '' : parseInt( paddings.right, 10 ),
-											buttonPaddingBottomMobile: ! paddings.bottom && paddings.bottom !== 0 ? '' : parseInt( paddings.bottom, 10 ),
-											buttonPaddingLeftMobile: ! paddings.left && paddings.left !== 0 ? '' : parseInt( paddings.left, 10 ),
-										} )
-								} }
-								onChangeUnit={ value => updateBlockAttributes( clientId, { marginUnitMobile: value } ) }
-							/>
-						) }
+						<FourRangeControl2
+							label={ __( 'Button Paddings', i18n ) }
+							units={ [ 'px', '%' ] }
+							responsive="all"
+							defaultLocked={ false }
+							attribute="buttonPadding"
+							sliderMin={ [ 0, 0 ] }
+							sliderMax={ [ 40, 100 ] }
+							default="16"
+						/>
+
 					</Fragment>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>

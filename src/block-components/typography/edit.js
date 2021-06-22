@@ -27,7 +27,7 @@ import {
 } from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
 import {
-	BaseControl, TextareaControl,
+	TextareaControl,
 } from '@wordpress/components'
 import { escapeHTML } from '@wordpress/escape-html'
 import { useDispatch } from '@wordpress/data'
@@ -180,57 +180,53 @@ const TypographyControls = props => {
 				responsive="all"
 				hover="all"
 			/>
-			<BaseControl
-				id="stk-typography-color-type"
-			>
-				<AdvancedToolbarControl
-					controls={ [
-						{
-							value: '',
-							title: __( 'Single', i18n ),
-						},
-						{
-							value: 'gradient',
-							title: __( 'Gradient', i18n ),
-						},
-					] }
-					isSmall={ true }
-					fullwidth={ false }
-					attribute="textColorType"
-					hover="all"
-					onReset={ () => {
-						setAttributes( {
-							[ getAttributeName( 'textColor1', 'desktop', state ) ]: '',
-							[ getAttributeName( 'textColor2', 'desktop', state ) ]: '',
-						} )
-					} }
-				/>
-				<ColorPaletteControl
-					label={ attributes[ getAttributeName( 'textColorType', 'desktop', state ) ] === 'gradient' ? sprintf( __( '%s Color #%s', i18n ), label, 1 )
-						: sprintf( __( '%s Color', i18n ), label ) }
-					attribute="textColor1"
-					hover="all"
-				/>
-				{ attributes[ getAttributeName( 'textColorType', 'desktop', state ) ] === 'gradient' && (
-					<Fragment>
-						<ColorPaletteControl
-							label={ sprintf( __( '%s Color #2', i18n ), label ) }
-							atribute="textColor2"
-							hover="all"
-						/>
+			<AdvancedToolbarControl
+				controls={ [
+					{
+						value: '',
+						title: __( 'Single', i18n ),
+					},
+					{
+						value: 'gradient',
+						title: __( 'Gradient', i18n ),
+					},
+				] }
+				isSmall={ true }
+				fullwidth={ false }
+				attribute="textColorType"
+				hover="all"
+				onReset={ () => {
+					setAttributes( {
+						[ getAttributeName( 'textColor1', 'desktop', state ) ]: '',
+						[ getAttributeName( 'textColor2', 'desktop', state ) ]: '',
+					} )
+				} }
+			/>
+			<ColorPaletteControl
+				label={ attributes[ getAttributeName( 'textColorType', 'desktop', state ) ] === 'gradient' ? sprintf( __( '%s Color #%s', i18n ), label, 1 )
+					: sprintf( __( '%s Color', i18n ), label ) }
+				attribute="textColor1"
+				hover="all"
+			/>
+			{ attributes[ getAttributeName( 'textColorType', 'desktop', state ) ] === 'gradient' && (
+				<Fragment>
+					<ColorPaletteControl
+						label={ sprintf( __( '%s Color #2', i18n ), label ) }
+						attribute="textColor2"
+						hover="all"
+					/>
 
-						<AdvancedRangeControl2
-							label={ __( 'Gradient Direction (degrees)', i18n ) }
-							attribute="textGradientDirection"
-							hover="all"
-							min={ 0 }
-							max={ 360 }
-							step={ 10 }
-							allowReset={ true }
-						/>
-					</Fragment>
-				) }
-			</BaseControl>
+					<AdvancedRangeControl2
+						label={ __( 'Gradient Direction (degrees)', i18n ) }
+						attribute="textGradientDirection"
+						hover="all"
+						min={ 0 }
+						max={ 360 }
+						step={ 10 }
+						allowReset={ true }
+					/>
+				</Fragment>
+			) }
 			{ ! disableAlign && (
 				<AlignButtonsControl
 					label={ __( 'Align', i18n ) }

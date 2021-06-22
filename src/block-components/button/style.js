@@ -3,7 +3,7 @@
  */
 import { Style as StyleComponent } from '~stackable/components'
 import {
-	getAttributeName, useStyles, getStyles,
+	useStyles, getStyles,
 } from '~stackable/util'
 
 const getStyleParams = options => {
@@ -21,8 +21,8 @@ const getStyleParams = options => {
 				paddingRight: 'buttonPaddingRight',
 				paddingLeft: 'buttonPaddingLeft',
 			},
-			valueCallback: ( value, attributes, device, state ) => {
-				return `${ value }${ attributes[ getAttributeName( 'buttonPaddingUnit', device, state ) ] }`
+			valueCallback: ( value, getAttribute, device, state ) => {
+				return `${ value }${ getAttribute( 'buttonPaddingUnit', device, state ) || 'px' }`
 			},
 			dependencies: [ 'buttonPaddingUnit' ],
 		},
@@ -31,13 +31,13 @@ const getStyleParams = options => {
 			styleRule: 'background',
 			attrName: 'buttonBackgroundColor',
 			hover: 'all',
-			valueCallback: ( _, attributes, device, state ) => {
-				const buttonBackgroundGradientDirection = attributes[ getAttributeName( 'buttonBackgroundGradientDirection', device, state ) ]
-				const buttonBackgroundColor = attributes[ getAttributeName( 'buttonBackgroundColor', device, state ) ]
-				const buttonBackgroundColor2 = attributes[ getAttributeName( 'buttonBackgroundColor2', device, state ) ]
+			valueCallback: ( _, getAttribute, device, state ) => {
+				const buttonBackgroundGradientDirection = getAttribute( 'buttonBackgroundGradientDirection', device, state )
+				const buttonBackgroundColor = getAttribute( 'buttonBackgroundColor', device, state )
+				const buttonBackgroundColor2 = getAttribute( 'buttonBackgroundColor2', device, state )
 
-				if ( attributes[ getAttributeName( 'buttonBackgroundColorType', device, state ) ] !== 'gradient' ) {
-					return attributes[ getAttributeName( 'buttonBackgroundColor', device, state ) ]
+				if ( getAttribute( 'buttonBackgroundColorType', device, state ) !== 'gradient' ) {
+					return getAttribute( 'buttonBackgroundColor', device, state )
 				}
 
 				return `linear-gradient(${ buttonBackgroundGradientDirection !== '' ? buttonBackgroundGradientDirection + 'deg' : '90deg' }, ${ buttonBackgroundColor || buttonBackgroundColor2 }, ${ buttonBackgroundColor2 || buttonBackgroundColor })`

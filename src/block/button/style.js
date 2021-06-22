@@ -58,16 +58,7 @@ export const ButtonStyles = props => {
 					options: {
 						...propsToPass.options,
 						selector: '.stk-button__button > .stk-button__inner-text',
-						attrNameTemplate: '%s',
-					},
-				} } />
-			<Typography.Style
-				{ ...{
-					...propsToPass,
-					options: {
-						...propsToPass.options,
-						selector: '.stk-button__button:hover > .stk-button__inner-text',
-						attrNameTemplate: 'hover%s',
+						hoverSelector: '.stk-button__button:hover > .stk-button__inner-text',
 					},
 				} } />
 			<Icon.Style
@@ -136,16 +127,7 @@ ButtonStyles.Content = props => {
 					options: {
 						...propsToPass.options,
 						selector: '.stk-button__button > .stk-button__inner-text',
-						attrNameTemplate: '%s',
-					},
-				} } />
-			<Typography.Style.Content
-				{ ...{
-					...propsToPass,
-					options: {
-						...propsToPass.options,
-						selector: '.stk-button__button:hover > .stk-button__inner-text',
-						attrNameTemplate: 'hover%s',
+						hoverSelector: '.stk-button__button:hover > .stk-button__inner-text',
 					},
 				} } />
 			<Icon.Style.Content
@@ -154,19 +136,8 @@ ButtonStyles.Content = props => {
 					options: {
 						...propsToPass.options,
 						selector: '.stk-button__button > .stk-button__svg-wrapper > .stk-button__inner-svg',
-						wrapperSelector: '.stk-button__button',
-						attrNameTemplate: '%s',
-					},
-				} } />
-			<Icon.Style.Content
-				{ ...{
-					...propsToPass,
-					options: {
-						...propsToPass.options,
-						selector: '.stk-button__button:hover > .stk-button__svg-wrapper > .stk-button__inner-svg',
 						backgroundShapeSelector: '.stk-button__button:hover .stk--shape-icon',
-						wrapperSelector: '.stk-button__button:hover',
-						attrNameTemplate: 'hover%s',
+						wrapperSelector: '.stk-button__button',
 					},
 				} } />
 		</Fragment>

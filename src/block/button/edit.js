@@ -21,7 +21,6 @@ import {
 	BlockStyle,
 } from '~stackable/block-components'
 import {
-	useBlockEl,
 	useBlockHoverClass,
 } from '~stackable/hooks'
 
@@ -49,16 +48,14 @@ const Edit = props => {
 	const blockHoverClass = useBlockHoverClass()
 	const buttonClassNames = classnames( [
 		'stk-button__button',
-		typographyWrapperClass,
 	] )
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-button',
 		blockHoverClass,
+		typographyWrapperClass,
 	] )
-
-	const blockEl = useBlockEl()
 
 	const typographyInnerClassNames = classnames( [
 		typographyInnerClasses,
@@ -75,15 +72,10 @@ const Edit = props => {
 			<Typography.InspectorControls
 				enableTextTag={ false }
 				disableAlign={ true }
-				withHoverTab={ true }
-				hoverAttrNameTemplate="hover%s"
-				blockEl={ blockEl }
 				withToggle={ true }
 			/>
 			<Button.InspectorControls />
 			<Icon.InspectorControls
-				withHoverTab={ true }
-				hoverAttrNameTemplate="hover%s"
 				enableGradient={ false }
 				enableShape={ false }
 				enableBackgroundShape={ false }

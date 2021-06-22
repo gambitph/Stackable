@@ -2,7 +2,7 @@
  * External dependencies
  */
 import {
-	getFontFamily, clampInheritedStyle, getAttributeName, useStyles, getStyles,
+	getFontFamily, clampInheritedStyle, useStyles, getStyles,
 } from '~stackable/util'
 import { Style as StyleComponent } from '~stackable/components'
 
@@ -24,39 +24,39 @@ const getStyleParams = ( options = {} ) => {
 			responsive: 'all',
 			hover: 'all',
 			hoverSelector,
-			valueCallback: ( _value, attributes, device, state ) => {
+			valueCallback: ( _value, getAttribute, device, state ) => {
 				let value = _value
 				const clampDesktopValue = inherit && clampInheritedStyle(
-					attributes[ getAttributeName( 'fontSize', 'desktop', state ) ],
+					getAttribute( 'fontSize', 'desktop', state ),
 					{ min: inheritMin, max: inheritMax }
 				)
 
 				const clampTabletValue = clampInheritedStyle(
-					attributes[ getAttributeName( 'fontSize', 'tablet', state ) ],
+					getAttribute( 'fontSize', 'tablet', state ),
 					{ min: inheritMin, max: inheritMax }
 				)
 				if ( device === 'tablet' ) {
 					if ( clampDesktopValue ) {
-						value = `${ clampDesktopValue }${ attributes[ getAttributeName( 'fontSizeUnit', device, state ) ] || 'px' }`
+						value = `${ clampDesktopValue }${ getAttribute( 'fontSizeUnit', device, state ) || 'px' }`
 					}
-					if ( attributes[ getAttributeName( 'fontSize', device, state ) ] !== '' ) {
-						value = `${ attributes[ getAttributeName( 'fontSize', device, state ) ] }${ attributes[ getAttributeName( 'fontSizeUnit', device, state ) ] || 'px' }`
+					if ( getAttribute( 'fontSize', device, state ) !== '' ) {
+						value = `${ getAttribute( 'fontSize', device, state ) }${ getAttribute( 'fontSizeUnit', device, state ) || 'px' }`
 					}
 				}
 
 				if ( device === 'mobile' ) {
 					if ( clampDesktopValue ) {
-						value = `${ clampDesktopValue }${ attributes[ getAttributeName( 'fontSizeUnit', device, state ) ] || 'px' }`
+						value = `${ clampDesktopValue }${ getAttribute( 'fontSizeUnit', device, state ) || 'px' }`
 					}
 
 					if ( clampTabletValue ) {
-						value = `${ clampTabletValue }${ attributes[ getAttributeName( 'fontSizeUnit', device, state ) ] || 'px' }`
-					} else if ( clampDesktopValue || attributes[ getAttributeName( 'fontSize', device, state ) ] !== '' ) {
+						value = `${ clampTabletValue }${ getAttribute( 'fontSizeUnit', device, state ) || 'px' }`
+					} else if ( clampDesktopValue || getAttribute( 'fontSize', device, state ) !== '' ) {
 						value = undefined
 					}
 
-					if ( attributes[ getAttributeName( 'fontSize', device, state ) ] !== '' ) {
-						value = `${ attributes[ getAttributeName( 'fontSize', device, state ) ] }${ attributes[ getAttributeName( 'fontSizeUnit', device, state ) ] || 'px' }`
+					if ( getAttribute( 'fontSize', device, state ) !== '' ) {
+						value = `${ getAttribute( 'fontSize', device, state ) }${ getAttribute( 'fontSizeUnit', device, state ) || 'px' }`
 					}
 				}
 
@@ -70,7 +70,12 @@ const getStyleParams = ( options = {} ) => {
 			hover: 'all',
 			hoverSelector,
 			attrName: 'textColor1',
-			enabledCallback: attributes => attributes.textColorType !== 'gradient',
+			valuePreCallback: ( value, getAttribute, device, state ) => {
+				if ( getAttribute( 'textColorType', 'desktop', state ) === 'gradient' ) {
+					return undefined
+				}
+				return value
+			},
 			dependencies: [ 'textColorType' ],
 		},
 		{
@@ -79,16 +84,23 @@ const getStyleParams = ( options = {} ) => {
 			hover: 'all',
 			hoverSelector,
 			attrName: 'textColor1',
-			valueCallback: ( value, attributes, device, state ) => {
-				const textColor1 = attributes[ getAttributeName( 'textColor1', device, state ) ]
-				const textColor2 = attributes[ getAttributeName( 'textColor2', device, state ) ]
-				const textGradientDirection = attributes[ getAttributeName( 'textGradientDirection', device, state ) ]
+			valuePreCallback: ( value, getAttribute, device, state ) => {
+				if (
+					getAttribute( 'textColorType', 'desktop', state ) !== 'gradient' ||
+					getAttribute( 'textColor1', 'desktop', state ) === '' ||
+					getAttribute( 'textColor2', 'desktop', state ) === ''
+				) {
+					return undefined
+				}
+				return value
+			},
+			valueCallback: ( value, getAttribute, device, state ) => {
+				const textColor1 = getAttribute( 'textColor1', 'desktop', state )
+				const textColor2 = getAttribute( 'textColor2', 'desktop', state )
+				const textGradientDirection = getAttribute( 'textGradientDirection', 'desktop', state )
 
 				return `linear-gradient(${ textGradientDirection !== '' ? `${ textGradientDirection }deg, ` : '' }${ textColor1 }, ${ textColor2 })`
 			},
-			enabledCallback: ( {
-				textColorType, textColor1, textColor2,
-			} ) => textColorType === 'gradient' && textColor1 !== '' && textColor2 !== '',
 			dependencies: [ 'textColorType', 'textColor1', 'textColor2', 'textGradientDirection' ],
 		},
 		{

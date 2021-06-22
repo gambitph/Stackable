@@ -9,26 +9,32 @@ export const iconAttributes = {
 		default: '',
 	},
 	iconColorType: {
+		stkHover: true,
 		type: 'string',
 		default: '',
 	},
 	iconColor1: {
+		stkHover: true,
 		type: 'string',
 		default: '',
 	},
 	iconColor2: {
+		stkHover: true,
 		type: 'string',
 		default: '',
 	},
 	iconColorGradientDirection: {
+		stkHover: true,
 		type: 'number',
 		default: '',
 	},
 	iconOpacity: {
+		stkHover: true,
 		type: 'number',
 		default: '',
 	},
 	iconRotation: {
+		stkHover: true,
 		type: 'number',
 		default: '',
 	},
@@ -37,6 +43,7 @@ export const iconAttributes = {
 		default: '',
 	},
 	iconGap: {
+		stkHover: true,
 		type: 'number',
 		default: '',
 	},
@@ -45,14 +52,17 @@ export const iconAttributes = {
 		default: false,
 	},
 	shapeColor: {
+		stkHover: true,
 		type: 'string',
 		default: '',
 	},
 	shapeBorderRadius: {
+		stkHover: true,
 		type: 'number',
 		default: '',
 	},
 	shapePadding: {
+		stkHover: true,
 		type: 'number',
 		default: '',
 	},
@@ -65,54 +75,66 @@ export const iconAttributes = {
 		default: '',
 	},
 	backgroundShapeColor: {
+		stkHover: true,
 		type: 'string',
 		default: '',
 	},
 	backgroundShapeOpacity: {
+		stkHover: true,
 		type: 'string',
 		default: '',
 	},
 	backgroundShapeSize: {
+		stkHover: true,
 		type: 'number',
 		default: '',
 	},
 	backgroundShapeOffsetHorizontal: {
+		stkHover: true,
 		type: 'number',
 		default: '',
 	},
 	backgroundShapeOffsetVertical: {
+		stkHover: true,
 		type: 'number',
 		default: '',
 	},
 	shapeOutline: {
+		stkHover: true,
 		type: 'boolean',
 		default: false,
 	},
 	shapeOutlineColor: {
+		stkHover: true,
 		type: 'string',
 		default: '',
 	},
 	iconSize: {
+		stkHover: true,
 		stkResponsive: true,
 		type: 'number',
 		default: '',
 	},
 	shapeOutlineWidthTop: {
+		stkHover: true,
 		stkResponsive: true,
 		type: 'number',
 		default: '',
 	},
 	shapeOutlineWidthRight: {
+		stkHover: true,
 		stkResponsive: true,
 		type: 'number',
 		default: '',
 	},
 	shapeOutlineWidthBottom: {
+		stkHover: true,
 		stkResponsive: true,
 		type: 'number',
 		default: '',
 	},
 	shapeOutlineWidthLeft: {
+		stkHover: true,
 		stkResponsive: true,
 		type: 'number',
 		default: '',
@@ -121,7 +143,6 @@ export const iconAttributes = {
 
 export const addAttributes = ( attrObject, options = {} ) => {
 	const {
-		attrNameTemplate = '%s',
 		excludedAttributes = [],
 		enableGradient = true,
 		enableShape = true,
@@ -177,6 +198,5 @@ export const addAttributes = ( attrObject, options = {} ) => {
 		attributes: finalExcludedAttributes.length ? omit( iconAttributes, finalExcludedAttributes ) : iconAttributes,
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
-		attrNameTemplate,
 	} )
 }

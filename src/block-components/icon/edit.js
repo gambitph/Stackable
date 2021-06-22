@@ -6,18 +6,18 @@ import {
 	PanelAdvancedSettings,
 	AdvancedToolbarControl,
 	ColorPaletteControl,
-	AdvancedRangeControl,
-	TabbedLayout,
 	IconControl,
-	ResponsiveControl2,
 	AdvancedSelectControl,
 	ImageShapeControl,
-	SpacingControl,
+	AdvancedRangeControl2,
+	FourRangeControl2,
 } from '~stackable/components'
 import { i18n } from 'stackable'
 import {
-	useAttributeEditHandlers,
+	useBlockAttributes,
+	useBlockHoverState,
 } from '~stackable/hooks'
+import { getAttributeName } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -26,41 +26,33 @@ import { __, sprintf } from '@wordpress/i18n'
 import {
 	ToggleControl,
 } from '@wordpress/components'
-import { useState, Fragment } from '@wordpress/element'
+import { useCallback, Fragment } from '@wordpress/element'
+import { useDispatch } from '@wordpress/data'
+import { useBlockEditContext } from '@wordpress/block-editor'
 
 const IconControls = props => {
 	const {
-		label,
-		enableIcon = true,
-		enableBackgroundShapeIcon = true,
 		enableGradient = true,
 		enableShape = true,
 		enableBackgroundShape = true,
-		attrNameTemplate = '%s',
-		normalAttrNameTemplate = '%s',
-
 	} = props
 
-	const {
-		getAttribute,
-		updateAttributeHandler,
-		updateAttributes,
-	} = useAttributeEditHandlers( attrNameTemplate )
+	const { clientId } = useBlockEditContext()
+	const attributes = useBlockAttributes( clientId )
+	const [ state ] = useBlockHoverState()
 
-	const {
-		getAttribute: getNormalAttribute,
-		updateAttributeHandler: updateNormalAttributeHandler,
-	} = useAttributeEditHandlers( normalAttrNameTemplate )
+	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
+	const setAttributes = useCallback( attrs => {
+		updateBlockAttributes( clientId, attrs )
+	}, [ clientId ] )
 
 	return (
 		<Fragment>
-			{ enableIcon && (
-				<IconControl
-					label={ label }
-					value={ getAttribute( 'icon' ) }
-					onChange={ updateAttributeHandler( 'icon' ) }
-				/>
-			) }
+			<IconControl
+				label={ __( 'Icon', i18n ) }
+				value={ attributes[ getAttributeName( 'icon' ) ] }
+				onChange={ value => setAttributes( { [ getAttributeName( 'icon' ) ]: value } ) }
+			/>
 
 			{ enableGradient && (
 				<Fragment>
@@ -77,28 +69,28 @@ const IconControls = props => {
 						] }
 						isSmall={ true }
 						fullwidth={ false }
-						value={ getAttribute( 'iconColorType' ) }
-						onChange={ updateAttributeHandler( 'iconColorType' ) }
+						attribute="iconColorType"
+						hover="all"
 					/>
 
 					<ColorPaletteControl
-						label={ getAttribute( 'iconColorType' ) === 'gradient' ? sprintf( __( '%s Color #%s', i18n ), label, 1 )
-							: sprintf( __( '%s Color', i18n ), label ) }
-						value={ getAttribute( 'iconColor1' ) }
-						onChange={ updateAttributeHandler( 'iconColor1' ) }
+						label={ attributes[ getAttributeName( 'iconColorType', 'desktop', state ) ] === 'gradient' ? sprintf( __( 'Icon Color #%s', i18n ), 1 )
+							: __( 'Icon Color', i18n ) }
+						attribute="iconColor1"
+						hover="all"
 					/>
-					{ getAttribute( 'iconColorType' ) === 'gradient' && (
+					{ attributes[ getAttributeName( 'iconColorType', 'desktop', state ) ] === 'gradient' && (
 						<Fragment>
 							<ColorPaletteControl
-								label={ sprintf( __( '%s Color #2', i18n ), label ) }
-								value={ getAttribute( 'iconColor2' ) }
-								onChange={ updateAttributeHandler( 'iconColor2' ) }
+								label={ sprintf( __( 'Icon Color #%s', i18n ), 2 ) }
+								attribute="iconColor2"
+								hover="all"
 							/>
 
-							<AdvancedRangeControl
+							<AdvancedRangeControl2
 								label={ __( 'Gradient Direction (degrees)', i18n ) }
-								value={ getAttribute( 'iconColorGradientDirection' ) }
-								onChange={ updateAttributeHandler( 'iconColorGradientDirection' ) }
+								attribute="iconColorGradientDirection"
+								hover="all"
 								min={ 0 }
 								max={ 360 }
 								step={ 10 }
@@ -111,98 +103,84 @@ const IconControls = props => {
 
 			{ ! enableGradient && (
 				<ColorPaletteControl
-					label={ sprintf( __( '%s Color', i18n ), label ) }
-					value={ getAttribute( 'iconColor1' ) }
-					onChange={ updateAttributeHandler( 'iconColor1' ) }
+					label={ __( 'Icon Color', i18n ) }
+					attribute="iconColor1"
+					hover="all"
 				/>
 			) }
 
-			<ResponsiveControl2
-				desktopProps={ {
-					value: getAttribute( 'iconSize' ),
-					onChange: updateAttributeHandler( 'iconSize' ),
-				} }
-				tabletProps={ {
-					value: getAttribute( 'iconSizeTablet' ),
-					onChange: updateAttributeHandler( 'iconSizeTablet' ),
-				} }
-				mobileProps={ {
-					value: getAttribute( 'iconSizeMobile' ),
-					onChange: updateAttributeHandler( 'iconSizeMobile' ),
-				} }
-			>
-				<AdvancedRangeControl
-					label={ sprintf( __( '%s Size', i18n ), label ) }
-					min={ 0 }
-					max={ 100 }
-					step={ 1 }
-					allowReset={ true }
-				/>
-			</ResponsiveControl2>
+			<AdvancedRangeControl2
+				label={ __( 'Icon Size', i18n ) }
+				attribute="iconSize"
+				min={ 0 }
+				max={ 100 }
+				step={ 1 }
+				allowReset={ true }
+				hover="all"
+			/>
 
-			<AdvancedRangeControl
-				label={ sprintf( __( '%s Opacity', i18n ), label ) }
-				value={ getAttribute( 'iconOpacity' ) }
+			<AdvancedRangeControl2
+				label={ __( 'Icon Opacity', i18n ) }
+				attribute="iconOpacity"
 				min={ 0 }
 				max={ 1 }
 				step={ 0.1 }
-				onChange={ updateAttributeHandler( 'iconOpacity' ) }
 				allowReset={ true }
 				placeholder="1.0"
+				hover="all"
 			/>
 
-			<AdvancedRangeControl
-				label={ sprintf( __( '%s Rotation', i18n ), label ) }
-				value={ getAttribute( 'iconRotation' ) }
+			<AdvancedRangeControl2
+				label={ __( 'Icon Rotation', i18n ) }
+				attribute="iconRotation"
 				min={ 0 }
 				max={ 360 }
-				onChange={ updateAttributeHandler( 'iconRotation' ) }
 				allowReset={ true }
 				placeholder="0"
+				hover="all"
 			/>
 
 			<AdvancedSelectControl
-				label={ sprintf( __( '%s Position', i18n ), label ) }
-				value={ getAttribute( 'iconPosition' ) }
+				label={ __( 'Icon Position', i18n ) }
+				attribute="iconPosition"
 				options={ [
 					{ value: '', label: __( 'Left', i18n ) },
 					{ value: 'right', label: __( 'Right', i18n ) },
 				] }
-				onChange={ updateAttributeHandler( 'iconPosition' ) }
 			/>
 
-			<AdvancedRangeControl
-				label={ sprintf( __( '%s Gap', i18n ), label ) }
-				value={ getAttribute( 'iconGap' ) }
+			<AdvancedRangeControl2
+				label={ __( 'Icon Gap', i18n ) }
+				attribute="iconGap"
 				min={ 0 }
 				max={ 50 }
-				onChange={ updateAttributeHandler( 'iconGap' ) }
 				allowReset={ true }
 				placeholder="0"
+				hover="all"
 			/>
 
 			{ enableShape && (
 				<Fragment>
 					<ToggleControl
 						label={ __( 'Shaped', i18n ) }
-						checked={ getNormalAttribute( 'shaped' ) }
-						onChange={ updateNormalAttributeHandler( 'shaped' ) }
+						checked={ attributes[ getAttributeName( 'shaped' ) ] }
+						onChange={ value => setAttributes( { [ getAttributeName( 'shaped' ) ]: value } ) }
 					/>
 
-					{ getNormalAttribute( 'shaped' ) && (
+					{ attributes[ getAttributeName( 'shaped' ) ] && (
 						<Fragment>
 
 							<ColorPaletteControl
 								label={ __( 'Shape Color', i18n ) }
-								value={ getAttribute( 'shapeColor' ) }
-								onChange={ updateAttributeHandler( 'shapeColor' ) }
+								attribute="shapeColor"
+								hover="all"
 								hasTransparent={ true }
 							/>
 
-							<AdvancedRangeControl
+							<AdvancedRangeControl2
 								label={ __( 'Shape Border Radius', i18n ) }
-								value={ getAttribute( 'shapeBorderRadius' ) }
-								onChange={ updateAttributeHandler( 'shapeBorderRadius' ) }
+								attribute="shapeBorderRadius"
+								hover="all"
 								min={ 0 }
 								max={ 100 }
 								step={ 1 }
@@ -210,10 +188,10 @@ const IconControls = props => {
 								placeholder={ 50 }
 							/>
 
-							<AdvancedRangeControl
+							<AdvancedRangeControl2
 								label={ __( 'Shape Padding', i18n ) }
-								value={ getAttribute( 'shapePadding' ) }
-								onChange={ updateAttributeHandler( 'shapePadding' ) }
+								attribute="shapePadding"
+								hover="all"
 								min={ 0 }
 								max={ 150 }
 								step={ 1 }
@@ -223,20 +201,20 @@ const IconControls = props => {
 
 							<ToggleControl
 								label={ __( 'Shape Outline', i18n ) }
-								checked={ getAttribute( 'shapeOutline' ) }
-								onChange={ updateAttributeHandler( 'shapeOutline' ) }
+								checked={ attributes[ getAttributeName( 'shapeOutline', 'desktop', state ) ] }
+								onChange={ value => setAttributes( { [ getAttributeName( 'shapeOutline', 'desktop', state ) ]: value } ) }
 							/>
 
-							{ getAttribute( 'shapeOutline' ) && (
+							{ attributes[ getAttributeName( 'shapeOutline', 'desktop', state ) ] && (
 								<Fragment>
 
 									<ColorPaletteControl
 										label={ __( 'Shape Outline Color', i18n ) }
-										value={ getAttribute( 'shapeOutlineColor' ) }
-										onChange={ updateAttributeHandler( 'shapeOutlineColor' ) }
+										attribute="shapeOutlineColor"
+										hover="all"
 									/>
 
-									<SpacingControl
+									<FourRangeControl2
 										label={ __( 'Shape Outline Width' ) }
 										units={ [ 'px' ] }
 										min={ 0 }
@@ -244,71 +222,12 @@ const IconControls = props => {
 										step={ 1 }
 										sliderMax={ 5 }
 										defaultLocked={ true }
-
-										valueDesktop={ {
-											top: getAttribute( 'shapeOutlineWidthTop' ),
-											right: getAttribute( 'shapeOutlineWidthRight' ),
-											bottom: getAttribute( 'shapeOutlineWidthBottom' ),
-											left: getAttribute( 'shapeOutlineWidthLeft' ),
-										} }
-										onChangeDesktop={
-											( {
-												top, right, bottom, left,
-											} ) => {
-												const attributes = {
-													ShapeOutlineWidthTop: ! top && top !== 0 ? '' : parseInt( top, 10 ),
-													ShapeOutlineWidthRight: ! right && right !== 0 ? '' : parseInt( right, 10 ),
-													ShapeOutlineWidthBottom: ! bottom && bottom !== 0 ? '' : parseInt( bottom, 10 ),
-													ShapeOutlineWidthLeft: ! left && left !== 0 ? '' : parseInt( left, 10 ),
-												}
-												updateAttributes( attributes )
-											}
-										}
-
-										valueTablet={ {
-											top: getAttribute( 'shapeOutlineWidthTopTablet' ),
-											right: getAttribute( 'shapeOutlineWidthRightTablet' ),
-											bottom: getAttribute( 'shapeOutlineWidthBottomTablet' ),
-											left: getAttribute( 'shapeOutlineWidthLeftTablet' ),
-										} }
-										onChangeTablet={
-											( {
-												top, right, bottom, left,
-											} ) => {
-												updateAttributes( {
-													ShapeOutlineWidthTopTablet: ! top && top !== 0 ? '' : parseInt( top, 10 ),
-													ShapeOutlineWidthRightTablet: ! right && right !== 0 ? '' : parseInt( right, 10 ),
-													ShapeOutlineWidthBottomTablet: ! bottom && bottom !== 0 ? '' : parseInt( bottom, 10 ),
-													ShapeOutlineWidthLeftTablet: ! left && left !== 0 ? '' : parseInt( left, 10 ),
-												} )
-											}
-										}
-
-										valueMobile={ {
-											top: getAttribute( 'shapeOutlineWidthTopMobile' ),
-											right: getAttribute( 'shapeOutlineWidthRightMobile' ),
-											bottom: getAttribute( 'shapeOutlineWidthBottomMobile' ),
-											left: getAttribute( 'shapeOutlineWidthLeftMobile' ),
-										} }
-										onChangeMobile={
-											( {
-												top, right, bottom, left,
-											} ) => {
-												updateAttributes( {
-													ShapeOutlineWidthTopMobile: ! top && top !== 0 ? '' : parseInt( top, 10 ),
-													ShapeOutlineWidthRightMobile: ! right && right !== 0 ? '' : parseInt( right, 10 ),
-													ShapeOutlineWidthBottomMobile: ! bottom && bottom !== 0 ? '' : parseInt( bottom, 10 ),
-													ShapeOutlineWidthLeftMobile: ! left && left !== 0 ? '' : parseInt( left, 10 ),
-												} )
-											}
-										}
-
-										placeholder="1"
-										placeholderTop="1"
-										placeholderLeft="1"
-										placeholderBottom="1"
-										placeholderRight="1"
+										attribute={ 'shapeOutLineWidth' }
+										responsive="all"
+										hover="all"
+										default="1"
 									/>
+
 								</Fragment>
 							) }
 
@@ -321,31 +240,29 @@ const IconControls = props => {
 				<Fragment>
 					<ToggleControl
 						label={ __( 'Background Shape', i18n ) }
-						checked={ getNormalAttribute( 'showBackgroundShape' ) }
-						onChange={ updateNormalAttributeHandler( 'showBackgroundShape' ) }
+						checked={ attributes[ getAttributeName( 'showBackgroundShape' ) ] }
+						onChange={ value => setAttributes( { [ getAttributeName( 'showBackgroundShape' ) ]: value } ) }
 					/>
 
-					{ getNormalAttribute( 'showBackgroundShape' ) && (
+					{ attributes[ getAttributeName( 'showBackgroundShape' ) ] && (
 						<Fragment>
 
-							{ enableBackgroundShapeIcon && (
-								<ImageShapeControl
-									label={ __( 'Shape', i18n ) }
-									selected={ getAttribute( 'backgroundShape' ) }
-									onChange={ updateAttributeHandler( 'backgroundShape' ) }
-								/>
-							) }
+							<ImageShapeControl
+								label={ __( 'Shape', i18n ) }
+								selected={ attributes[ getAttributeName( 'backgroundShape' ) ] }
+								onChange={ value => setAttributes( { [ getAttributeName( 'backgroundShape' ) ]: value } ) }
+							/>
 
 							<ColorPaletteControl
 								label={ __( 'Shape Color', i18n ) }
-								value={ getAttribute( 'backgroundShapeColor' ) }
-								onChange={ updateAttributeHandler( 'backgroundShapeColor' ) }
+								attribute="backgroundShapeColor"
+								hover="all"
 							/>
 
-							<AdvancedRangeControl
+							<AdvancedRangeControl2
 								label={ __( 'Shape Opacity', i18n ) }
-								value={ getAttribute( 'backgroundShapeOpacity' ) }
-								onChange={ updateAttributeHandler( 'backgroundShapeOpacity' ) }
+								attribute="backgroundShapeOpacity"
+								hover="all"
 								min={ 0 }
 								max={ 1 }
 								step={ 0.1 }
@@ -353,10 +270,10 @@ const IconControls = props => {
 								allowReset={ true }
 							/>
 
-							<AdvancedRangeControl
+							<AdvancedRangeControl2
 								label={ __( 'Shape Size', i18n ) }
-								value={ getAttribute( 'backgroundShapeSize' ) }
-								onChange={ updateAttributeHandler( 'backgroundShapeSize' ) }
+								attribute="backgroundShapeSize"
+								hover="all"
 								min={ 0 }
 								max={ 3 }
 								step={ 0.1 }
@@ -364,10 +281,10 @@ const IconControls = props => {
 								allowReset={ true }
 							/>
 
-							<AdvancedRangeControl
+							<AdvancedRangeControl2
 								label={ __( 'Horizontal Offset', i18n ) }
-								value={ getAttribute( 'backgroundShapeOffsetHorizontal' ) }
-								onChange={ updateAttributeHandler( 'backgroundShapeOffsetHorizontal' ) }
+								attribute="backgroundShapeOffsetHorizontal"
+								hover="all"
 								min={ -30 }
 								max={ 30 }
 								step={ 1 }
@@ -375,10 +292,10 @@ const IconControls = props => {
 								allowReset={ true }
 							/>
 
-							<AdvancedRangeControl
+							<AdvancedRangeControl2
 								label={ __( 'Vertical Offset', i18n ) }
-								value={ getAttribute( 'backgroundShapeOffsetVertical' ) }
-								onChange={ updateAttributeHandler( 'backgroundShapeOffsetVertical' ) }
+								attribute="backgroundShapeOffsetVertical"
+								hover="all"
 								min={ -30 }
 								max={ 30 }
 								step={ 1 }
@@ -400,15 +317,10 @@ IconControls.defaultProps = {
 
 export const Edit = props => {
 	const {
-		attrNameTemplate = '%s',
-		withHoverTab = false,
-		hoverAttrNameTemplate = '%s',
 		enableGradient = true,
 		enableShape = true,
 		enableBackgroundShape = true,
 	} = props
-
-	const [ selectedTab, setSelectedTab ] = useState( 'normal' )
 
 	return (
 		<InspectorStyleControls>
@@ -416,44 +328,13 @@ export const Edit = props => {
 				title={ __( 'Icon', i18n ) }
 				id="icon"
 			>
-				{ withHoverTab && (
-					<TabbedLayout
-						options={ [
-							{
-								label: __( 'Normal', i18n ),
-								value: 'normal',
-							},
-							{
-								label: __( 'Hover', i18n ),
-								value: 'hover',
-							},
-						] }
-						value={ selectedTab }
-						onChange={ setSelectedTab }
-					/>
-				) }
 
-				{ selectedTab === 'normal' && (
-					<IconControls
-						attrNameTemplate={ attrNameTemplate }
-						enableGradient={ enableGradient }
-						enableShape={ enableShape }
-						enableBackgroundShape={ enableBackgroundShape }
-					/>
-				) }
+				<IconControls
+					enableGradient={ enableGradient }
+					enableShape={ enableShape }
+					enableBackgroundShape={ enableBackgroundShape }
+				/>
 
-				{ selectedTab === 'hover' && (
-					<IconControls
-						enableIcon={ false }
-						enableBackgroundShapeIcon={ false }
-						attrNameTemplate={ hoverAttrNameTemplate }
-						normalAttrNameTemplate={ attrNameTemplate }
-						label={ __( 'Icon Hover', i18n ) }
-						enableGradient={ enableGradient }
-						enableShape={ enableShape }
-						enableBackgroundShape={ enableBackgroundShape }
-					/>
-				) }
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
 	)

@@ -30,14 +30,14 @@ const Save = props => {
 	} = attributes
 
 	const responsiveClass = getResponsiveClasses( props.attributes )
+	const [ wrapperClasses, textClasses ] = getTypographyClasses( props.attributes )
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-advanced-text',
 		responsiveClass,
+		wrapperClasses,
 	] )
-
-	const [ , textClasses ] = getTypographyClasses( props.attributes )
 
 	const textClassNames = classnames( [
 		'stk-advanced-heading__text',

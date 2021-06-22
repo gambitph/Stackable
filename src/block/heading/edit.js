@@ -36,13 +36,13 @@ const Edit = props => {
 	} = props.attributes
 
 	const blockHoverClass = useBlockHoverClass()
+	const [ wrapperClasses, textClasses ] = getTypographyClasses( props.attributes )
 	const blockClassNames = classnames( [
 		className,
 		'stk-advanced-heading',
 		blockHoverClass,
+		wrapperClasses,
 	] )
-
-	const [ , textClasses ] = getTypographyClasses( props.attributes )
 
 	const textClassNames = classnames( [
 		'stk-advanced-heading__text',
