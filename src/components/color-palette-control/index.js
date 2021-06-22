@@ -38,7 +38,7 @@ const ColorPaletteControl = memo( props => {
 		className = '',
 	} = props
 
-	const [ _value, _onChange ] = useControlHandlers( props.attribute )
+	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover )
 	const [ _propsToPass, controlProps ] = extractControlProps( props )
 
 	const colors = props.colors.map( color => {

@@ -17,40 +17,40 @@ const getStyleParams = () => {
 
 		{
 			renderIn: 'save',
-			selectorCallback: attributes => `.stk--block-align-${ attributes.uniqueId }`,
+			selectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) }`,
 			styles: {
 				alignItems: 'rowAlign',
 				justifyContent: 'innerBlockVerticalAlign',
 			},
 			responsive: 'all',
-			enabledCallback: attributes => attributes.innerBlockOrientation !== 'horizontal',
+			enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
 		},
 		{
 			renderIn: 'save',
-			selectorCallback: attributes => `.stk--block-align-${ attributes.uniqueId }`,
+			selectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) }`,
 			styleRule: 'alignItems',
 			attrName: 'innerBlockVerticalAlign',
 			responsive: 'all',
-			enabledCallback: attributes => attributes.innerBlockOrientation === 'horizontal',
+			enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) === 'horizontal',
 		},
 
 		{
 			renderIn: 'edit',
-			selectorCallback: attributes => `.stk--block-align-${ attributes.uniqueId } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
+			selectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
 			styles: {
 				alignItems: 'rowAlign',
 				justifyContent: 'innerBlockVerticalAlign',
 			},
 			responsive: 'all',
-			enabledCallback: attributes => attributes.innerBlockOrientation !== 'horizontal',
+			enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) !== 'horizontal',
 		},
 		{
 			renderIn: 'edit',
-			selectorCallback: attributes => `.stk--block-align-${ attributes.uniqueId } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
+			selectorCallback: getAttribute => `.stk--block-align-${ getAttribute( 'uniqueId' ) } > .block-editor-inner-blocks > .block-editor-block-list__layout`,
 			styleRule: 'alignItems',
 			attrName: 'innerBlockVerticalAlign',
 			responsive: 'all',
-			enabledCallback: attributes => attributes.innerBlockOrientation === 'horizontal',
+			enabledCallback: getAttribute => getAttribute( 'innerBlockOrientation' ) === 'horizontal',
 		},
 	]
 }

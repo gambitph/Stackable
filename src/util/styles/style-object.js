@@ -9,6 +9,7 @@ import { useBlockHoverState, useDeviceType } from '~stackable/hooks'
  */
 import { useMemo } from '@wordpress/element'
 import { sprintf } from '@wordpress/i18n'
+import { getAttrName } from '../attributes'
 
 /**
  * Style object, this manages the generation of styles.
@@ -45,16 +46,17 @@ class StyleObject {
 		const deps = []
 		styleParams.forEach( styleParams => {
 			const {
-				attrName = '',
+				attrName: _attrName = '',
 				hasUnits = false,
 				responsive = false,
 				hover: _hover = false,
 				hoverCallback = null,
 				dependencies = [], // If this style rerender depends on other attributes, add them here.
 				styles = null,
-
+				attrNameTemplate = '',
 			} = styleParams
 
+			const attrName = attrNameTemplate ? getAttrName( attrNameTemplate, _attrName ) : _attrName
 			const hover = hoverCallback ? 'all' : _hover
 
 			// This is a shorthand, you can define multiple style rules in a
@@ -77,7 +79,9 @@ class StyleObject {
 				}
 
 				// Add the attribute names of the other dependencies.
-				dependencies.forEach( attrName => {
+				dependencies.forEach( _attrName => {
+					const attrName = attrNameTemplate ? getAttrName( attrNameTemplate, _attrName ) : _attrName
+
 					deps.push( getAttributeName( attrName, 'desktop', 'normal' ) ) // Always depend on the normal state.
 					deps.push( getAttributeName( attrName, device, state ) )
 					if ( hasUnits ) {
@@ -187,22 +191,31 @@ class StyleObject {
 		const {
 			selector: _selector = '',
 			styleRule = '',
-			attrName = '',
+			attrName: _attrName = '',
 			format = '%s',
 			hasUnits = false, // False, or the default unit e.g. 'px' or '%'
 			responsive = false,
 			hover: _hover = false,
 
 			// Additional options.
+			attrNameTemplate = '',
 			selectorCallback = null, // Can be used instead of selector.
 			hoverSelector: _hoverSelector = '', // You can specify your own hover selector (for saving purposes only)
 			hoverCallback = null,
 			renderIn: _renderIn = '', // editor, custom, saveOnly
+			valuePreCallback = null,
 			valueCallback = null,
 			enabledCallback = null, // Function that if returns false, will not render this style.
 			vendorPrefixes = [], // Add vendor prefixes to also generate for the styleRule, e.g. '-webkit-'
 			clampCallback = null, // Function that can be used to limit the value in tablet/mobile based on the desktop value
 		} = styleParams
+
+		const getAttribute = ( _attrName, device = 'desktop', state = 'normal' ) => {
+			const attrName = attrNameTemplate ? getAttrName( attrNameTemplate, _attrName ) : _attrName
+			return attributes[ getAttributeName( attrName, device, state ) ]
+		}
+
+		const attrName = attrNameTemplate ? getAttrName( attrNameTemplate, _attrName ) : _attrName
 
 		const renderIn = _renderIn === 'save' ? 'saveOnly' // Use "save" shorthand for "saveOnly"
 			: _renderIn === 'edit' ? 'editor' // Use "edit" shorthand for "editor"
@@ -210,13 +223,13 @@ class StyleObject {
 
 		// Allow to be disabled.
 		if ( enabledCallback ) {
-			if ( ! enabledCallback( attributes ) ) {
+			if ( ! enabledCallback( getAttribute, attributes ) ) {
 				return
 			}
 		}
 
-		const selector = selectorCallback ? selectorCallback( attributes ) : _selector
-		const hover = hoverCallback ? hoverCallback( attributes ) : _hover
+		const selector = selectorCallback ? selectorCallback( getAttribute, attributes ) : _selector
+		const hover = hoverCallback ? hoverCallback( getAttribute, attributes ) : _hover
 
 		const getValue = ( attrName, device, state ) => {
 			const unitAttrName = getAttributeName( `${ attrName }Unit`, device, state )
@@ -231,11 +244,16 @@ class StyleObject {
 				const tabletValue = getAttributeName( attrName, 'tablet', state )
 				if ( value === '' || typeof value === 'undefined' ) {
 					if ( device === 'tablet' ) {
-						value = clampCallback( desktopValue, attributes, device, state, unit )
+						value = clampCallback( desktopValue, getAttribute, device, state, unit, attributes )
 					} else if ( device === 'mobile' ) {
-						value = clampCallback( tabletValue !== '' ? tabletValue : desktopValue, attributes, device, state, unit )
+						value = clampCallback( tabletValue !== '' ? tabletValue : desktopValue, getAttribute, device, state, unit, attributes )
 					}
 				}
+			}
+
+			// Allow value to be overridden, helpful for when the value is blank.
+			if ( valuePreCallback ) {
+				value = valuePreCallback( value, getAttribute, device, state, attributes )
 			}
 
 			if ( value === '' || typeof value === 'undefined' ) {
@@ -254,7 +272,7 @@ class StyleObject {
 
 			// Allow to be manually adjusted.
 			if ( valueCallback ) {
-				value = valueCallback( value, attributes, device, state )
+				value = valueCallback( value, getAttribute, device, state, attributes )
 			}
 
 			return value

@@ -25,7 +25,7 @@ const AdvancedToggleControl = props => {
 	const instanceId = useInstanceId( AdvancedToggleControl )
 	const id = `inspector-toggle-control-${ instanceId }`
 
-	const [ _checked, _onChange ] = useControlHandlers( props.attribute )
+	const [ _checked, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover )
 
 	const checked = typeof props.checked === 'undefined' ? _checked : props.checked
 	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
@@ -74,6 +74,8 @@ AdvancedToggleControl.defaultProps = {
 	defaultValue: '',
 
 	attribute: '',
+	responsive: false,
+	hover: false,
 
 	checked: undefined,
 	onChange: undefined,

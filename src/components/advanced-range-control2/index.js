@@ -19,13 +19,13 @@ import { memo } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
 const AdvancedRangeControl = props => {
-	const [ value, onChange ] = useControlHandlers( props.attribute, props.valueCallback, props.changeCallback )
+	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 
 	const deviceType = useDeviceType()
 	const [ currentHoverState ] = useBlockHoverState()
 	const hasUnits = !! props.units?.length
-	const unitAttrName = useAttributeName( `${ props.attribute }Unit` )
+	const unitAttrName = useAttributeName( `${ props.attribute }Unit`, props.responsive, props.hover )
 
 	const { clientId } = useBlockEditContext()
 	const attributes = useBlockAttributes( clientId )
@@ -94,6 +94,8 @@ AdvancedRangeControl.defaultProps = {
 	default: '',
 
 	attribute: '',
+	responsive: false,
+	hover: false,
 
 	value: undefined,
 	onChange: undefined,

@@ -17,7 +17,7 @@ import { memo } from '@wordpress/element'
 import classnames from 'classnames'
 
 const AdvancedFocalPointControl = props => {
-	const [ value, onChange ] = useControlHandlers( props.attribute )
+	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 
 	return (
@@ -48,6 +48,8 @@ AdvancedFocalPointControl.defaultProps = {
 	default: '',
 
 	attribute: '',
+	responsive: false,
+	hover: false,
 
 	value: undefined,
 	onChange: undefined,
