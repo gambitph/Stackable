@@ -18,7 +18,7 @@ import { descriptionPlaceholder } from '~stackable/util'
 import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import { InspectorTabs } from '~stackable/components'
-import { useBlockEl, useBlockHoverClass } from '~stackable/hooks'
+import { useBlockHoverClass } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -49,8 +49,6 @@ const Edit = props => {
 		textClasses,
 	] )
 
-	const blockEl = useBlockEl()
-
 	return (
 		<Fragment>
 
@@ -58,7 +56,7 @@ const Edit = props => {
 
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
-			<Typography.InspectorControls enableTextTag={ false } blockEl={ blockEl } blockElSelector=".stk-advanced-text__text" />
+			<Typography.InspectorControls enableTextTag={ false } />
 			<CustomCSS.InspectorControls mainBlockClass="stk-advanced-text" />
 			<Responsive.InspectorControls />
 

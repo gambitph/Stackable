@@ -128,6 +128,7 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'letterSpacing',
 			attrName: 'letterSpacing',
 			hasUnits: 'px',
+			hover: 'all',
 		},
 	]
 }

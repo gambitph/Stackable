@@ -3,7 +3,9 @@
  */
 import { unescape } from 'lodash'
 import { i18n } from 'stackable'
-import { useAttributeEditHandlers } from '~stackable/hooks'
+import {
+	useAttributeEditHandlers, useBlockAttributes, useBlockHoverState,
+} from '~stackable/hooks'
 import {
 	AdvancedRangeControl2,
 	AdvancedSelectControl,
@@ -15,92 +17,89 @@ import {
 	HeadingButtonsControl,
 	InspectorStyleControls,
 	PanelAdvancedSettings,
-	ResponsiveControl2,
-	TabbedLayout,
 } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
 import {
-	Fragment, useState,
+	Fragment, useCallback,
 } from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
 import {
 	BaseControl, TextareaControl,
 } from '@wordpress/components'
 import { escapeHTML } from '@wordpress/escape-html'
+import { useDispatch } from '@wordpress/data'
+import { getAttributeName } from '~stackable/util'
+import { useBlockEditContext } from '@wordpress/block-editor'
 
 const TypographyControls = props => {
 	const {
 		label,
 		enableTextTag = true,
 		enableTextContent = true,
-		attrNameTemplate = '%s',
 		disableAlign = false,
 	} = props
 
-	const {
-		getAttribute,
-		updateAttribute,
-		updateAttributes,
-	} = useAttributeEditHandlers( attrNameTemplate )
+	const { clientId } = useBlockEditContext()
+	const attributes = useBlockAttributes( clientId )
+	const [ state ] = useBlockHoverState()
+
+	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
+	const setAttributes = useCallback( attrs => {
+		updateBlockAttributes( clientId, attrs )
+	}, [ clientId ] )
 
 	return (
 		<Fragment>
 			{ enableTextTag && (
 				<HeadingButtonsControl
-					value={ getAttribute( 'textTag' ) }
-					onChange={ value => updateAttribute( 'textTag', value ) }
+					value={ attributes[ getAttributeName( 'textTag' ) ] }
+					onChange={ value => setAttributes( { [ getAttributeName( 'textTag' ) ]: value } ) }
 				/>
 			) }
 			{ enableTextContent && (
 				<TextareaControl
 					label={ sprintf( __( '%s Content', i18n ), label ) }
-					value={ unescape( getAttribute( 'text' ) ) }
-					onChange={ value => updateAttribute( 'text', escapeHTML( value ) ) }
+					value={ unescape( attributes[ getAttributeName( 'text' ) ] ) }
+					onChange={ value => setAttributes( { [ getAttributeName( 'text' ) ]: escapeHTML( value ) } ) }
 				/>
 			) }
 			<ButtonIconPopoverControl
 				label={ __( 'Typography', i18n ) }
 				popoverLabel={ __( 'Typography', i18n ) }
 				onReset={ () => {
-					updateAttributes( {
-						fontFamily: '',
-						fontSize: '',
-						fontSizeUnit: 'px',
-						fontSizeTablet: '',
-						fontSizeUnitTablet: 'px',
-						fontSizeMobile: '',
-						fontSizeUnitMobile: 'px',
-						fontWeight: '',
-						textTransform: '',
-						letterSpacing: '',
-						lineHeight: '',
-						lineHeightTablet: '',
-						lineHeightMobile: '',
-						lineHeightUnit: 'em',
-						lineHeightUnitTablet: 'em',
-						lineHeightUnitMobile: 'em',
+					setAttributes( {
+						[ getAttributeName( 'fontFamily' ) ]: '',
+						[ getAttributeName( 'fontSize', 'desktop', state ) ]: '',
+						[ getAttributeName( 'fontSize', 'tablet', state ) ]: '',
+						[ getAttributeName( 'fontSize', 'mobile', state ) ]: '',
+						[ getAttributeName( 'fontWeight', 'desktop', state ) ]: '',
+						[ getAttributeName( 'textTransform', 'desktop', state ) ]: '',
+						[ getAttributeName( 'letterSpacing', 'desktop', state ) ]: '',
+						[ getAttributeName( 'lineHeight', 'desktop', state ) ]: '',
+						[ getAttributeName( 'lineHeight', 'tablet', state ) ]: '',
+						[ getAttributeName( 'lineHeight', 'mobile', state ) ]: '',
 					} )
 				} }
 				allowReset={
-					( getAttribute( 'fontFamily' ) ||
-								getAttribute( 'fontSize' ) ||
-								getAttribute( 'fontSizeTablet' ) ||
-								getAttribute( 'fontSizeMobile' ) ||
-								getAttribute( 'fontWeight' ) ||
-								getAttribute( 'textTransform' ) ||
-								getAttribute( 'letterSpacing' ) ||
-								getAttribute( 'lineHeight' ) ||
-								getAttribute( 'lineHeightTablet' ) ||
-								getAttribute( 'lineHeightMobile' ) )
+					( attributes[ getAttributeName( 'fontFamily' ) ] ||
+						attributes[ getAttributeName( 'fontSize', 'desktop', state ) ] ||
+						attributes[ getAttributeName( 'fontSize', 'tablet', state ) ] ||
+						attributes[ getAttributeName( 'fontSize', 'mobile', state ) ] ||
+						attributes[ getAttributeName( 'fontWeight', 'desktop', state ) ] ||
+						attributes[ getAttributeName( 'textTransform', 'desktop', state ) ] ||
+						attributes[ getAttributeName( 'letterSpacing', 'desktop', state ) ] ||
+						attributes[ getAttributeName( 'lineHeight', 'desktop', state ) ] ||
+						attributes[ getAttributeName( 'lineHeight', 'tablet', state ) ] ||
+						attributes[ getAttributeName( 'lineHeight', 'mobile', state ) ] )
 				}
 			>
 				<FontFamilyControl
 					label={ __( 'Font Family', i18n ) }
-					onChange={ fontFamily => updateAttribute( 'fontFamily', fontFamily ) }
-					value={ getAttribute( 'fontFamily' ) }
+					onChange={ fontFamily => setAttributes( { [ getAttributeName( 'fontFamily' ) ]: fontFamily } ) }
+					value={ attributes[ getAttributeName( 'fontFamily' ) ] }
 				/>
 				<AdvancedRangeControl2
 					label={ __( 'Size', i18n ) }
@@ -130,8 +129,8 @@ const TypographyControls = props => {
 						{ label: __( 'Normal', i18n ), value: 'normal' },
 						{ label: __( 'Bold', i18n ), value: 'bold' },
 					] }
-					onChange={ value => updateAttribute( 'fontWeight', value ) }
-					value={ getAttribute( 'fontWeight' ) }
+					attribute="fontWeight"
+					hover="all"
 				/>
 				<AdvancedSelectControl
 					label={ __( 'Transform', i18n ) }
@@ -142,8 +141,8 @@ const TypographyControls = props => {
 						{ label: __( 'Capitalize', i18n ), value: 'capitalize' },
 						{ label: __( 'None', i18n ), value: 'none' },
 					] }
-					onChange={ value => updateAttribute( 'textTransform', value ) }
-					value={ getAttribute( 'textTransform' ) }
+					attribute="textTransform"
+					hover="all"
 				/>
 				<AdvancedRangeControl2
 					label={ __( 'Line-Height', i18n ) }
@@ -166,6 +165,7 @@ const TypographyControls = props => {
 					step={ 0.1 }
 					allowReset={ true }
 					placeholder="0"
+					hover="all"
 				/>
 			</ButtonIconPopoverControl>
 			<AdvancedRangeControl2
@@ -196,32 +196,33 @@ const TypographyControls = props => {
 					] }
 					isSmall={ true }
 					fullwidth={ false }
-					value={ getAttribute( 'textColorType' ) }
-					onChange={ value => updateAttribute( 'textColorType', value ) }
+					attribute="textColorType"
+					hover="all"
 					onReset={ () => {
-						updateAttributes( {
-							textColor1: '',
-							textColor2: '',
+						setAttributes( {
+							[ getAttributeName( 'textColor1', 'desktop', state ) ]: '',
+							[ getAttributeName( 'textColor2', 'desktop', state ) ]: '',
 						} )
 					} }
 				/>
 				<ColorPaletteControl
-					label={ getAttribute( 'textColorType' ) === 'gradient' ? sprintf( __( '%s Color #%s', i18n ), label, 1 )
+					label={ attributes[ getAttributeName( 'textColorType', 'desktop', state ) ] === 'gradient' ? sprintf( __( '%s Color #%s', i18n ), label, 1 )
 						: sprintf( __( '%s Color', i18n ), label ) }
-					value={ getAttribute( 'textColor1' ) }
-					onChange={ value => updateAttribute( 'textColor1', value ) }
+					attribute="textColor1"
+					hover="all"
 				/>
-				{ getAttribute( 'textColorType' ) === 'gradient' && (
+				{ attributes[ getAttributeName( 'textColorType', 'desktop', state ) ] === 'gradient' && (
 					<Fragment>
 						<ColorPaletteControl
 							label={ sprintf( __( '%s Color #2', i18n ), label ) }
-							value={ getAttribute( 'textColor2' ) }
-							onChange={ value => updateAttribute( 'textColor2', value ) }
+							atribute="textColor2"
+							hover="all"
 						/>
 
 						<AdvancedRangeControl2
 							label={ __( 'Gradient Direction (degrees)', i18n ) }
 							attribute="textGradientDirection"
+							hover="all"
 							min={ 0 }
 							max={ 360 }
 							step={ 10 }
@@ -231,24 +232,11 @@ const TypographyControls = props => {
 				) }
 			</BaseControl>
 			{ ! disableAlign && (
-				<ResponsiveControl2
-					desktopProps={ {
-						value: getAttribute( 'textAlign' ),
-						onChange: value => updateAttribute( 'textAlign', value ),
-					} }
-					tabletProps={ {
-						value: getAttribute( 'textAlignTablet' ),
-						onChange: value => updateAttribute( 'textAlignTablet', value ),
-					} }
-					mobileProps={ {
-						value: getAttribute( 'textAlignMobile' ),
-						onChange: value => updateAttribute( 'textAlignMobile', value ),
-					} }
-				>
-					<AlignButtonsControl
-						label={ __( 'Align', i18n ) }
-					/>
-				</ResponsiveControl2>
+				<AlignButtonsControl
+					label={ __( 'Align', i18n ) }
+					attribute="textAlign"
+					responsive="all"
+				/>
 			) }
 		</Fragment>
 	)
@@ -263,14 +251,9 @@ export const Edit = props => {
 		enableTextTag = true,
 		enableTextContent = true,
 		attrNameTemplate = '%s',
-		withHoverTab = false,
-		hoverAttrNameTemplate = '%s',
 		disableAlign = false,
-		blockElSelector,
 		withToggle = false,
 	} = props
-
-	const [ selectedTab, setSelectedTab ] = useState( 'normal' )
 
 	const {
 		getAttribute,
@@ -290,45 +273,14 @@ export const Edit = props => {
 					} : {} ),
 				} }
 			>
-				{ withHoverTab && (
-					<TabbedLayout
-						options={ [
-							{
-								label: __( 'Normal', i18n ),
-								value: 'normal',
-							},
-							{
-								label: __( 'Hover', i18n ),
-								value: 'hover',
-							},
-						] }
-						value={ selectedTab }
-						onChange={ setSelectedTab }
-					/>
-				) }
 
-				{ selectedTab === 'normal' && (
-					<TypographyControls
-						enableTextTag={ enableTextTag }
-						enableTextContent={ enableTextContent }
-						attrNameTemplate={ attrNameTemplate }
-						disableAlign={ disableAlign }
-						blockEl={ props.blockEl }
-						blockElSelector={ blockElSelector }
-					/>
-				) }
+				<TypographyControls
+					enableTextTag={ enableTextTag }
+					enableTextContent={ enableTextContent }
+					attrNameTemplate={ attrNameTemplate }
+					disableAlign={ disableAlign }
+				/>
 
-				{ selectedTab === 'hover' && (
-					<TypographyControls
-						enableTextTag={ false }
-						enableTextContent={ false }
-						attrNameTemplate={ hoverAttrNameTemplate }
-						disableAlign={ disableAlign }
-						blockEl={ props.blockEl }
-						blockElSelector={ blockElSelector }
-						label={ __( 'Hover Text', i18n ) }
-					/>
-				) }
 			</PanelAdvancedSettings>
 		</InspectorStyleControls>
 	)

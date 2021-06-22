@@ -48,10 +48,14 @@ class StyleObject {
 				attrName = '',
 				hasUnits = false,
 				responsive = false,
-				hover = false,
+				hover: _hover = false,
+				hoverCallback = null,
 				dependencies = [], // If this style rerender depends on other attributes, add them here.
 				styles = null,
+
 			} = styleParams
+
+			const hover = hoverCallback ? 'all' : _hover
 
 			// This is a shorthand, you can define multiple style rules in a
 			// single styleParam.
@@ -74,8 +78,10 @@ class StyleObject {
 
 				// Add the attribute names of the other dependencies.
 				dependencies.forEach( attrName => {
+					deps.push( getAttributeName( attrName, 'desktop', 'normal' ) ) // Always depend on the normal state.
 					deps.push( getAttributeName( attrName, device, state ) )
 					if ( hasUnits ) {
+						deps.push( getAttributeName( `${ attrName }Unit`, 'desktop', 'normal' ) ) // Always depend on the normal state.
 						deps.push( getAttributeName( `${ attrName }Unit`, device, state ) )
 					}
 				} )
@@ -185,15 +191,17 @@ class StyleObject {
 			format = '%s',
 			hasUnits = false, // False, or the default unit e.g. 'px' or '%'
 			responsive = false,
-			hover = false,
+			hover: _hover = false,
 
 			// Additional options.
 			selectorCallback = null, // Can be used instead of selector.
+			hoverSelector: _hoverSelector = '', // You can specify your own hover selector (for saving purposes only)
+			hoverCallback = null,
 			renderIn: _renderIn = '', // editor, custom, saveOnly
 			valueCallback = null,
 			enabledCallback = null, // Function that if returns false, will not render this style.
 			vendorPrefixes = [], // Add vendor prefixes to also generate for the styleRule, e.g. '-webkit-'
-			hoverSelector: _hoverSelector = '', // If custom hover selector is provided, use that instead.
+			clampCallback = null, // Function that can be used to limit the value in tablet/mobile based on the desktop value
 		} = styleParams
 
 		const renderIn = _renderIn === 'save' ? 'saveOnly' // Use "save" shorthand for "saveOnly"
@@ -208,6 +216,7 @@ class StyleObject {
 		}
 
 		const selector = selectorCallback ? selectorCallback( attributes ) : _selector
+		const hover = hoverCallback ? hoverCallback( attributes ) : _hover
 
 		const getValue = ( attrName, device, state ) => {
 			const unitAttrName = getAttributeName( `${ attrName }Unit`, device, state )
@@ -215,6 +224,19 @@ class StyleObject {
 
 			const unit = hasUnits ? ( attributes[ unitAttrName ] || hasUnits ) : ''
 			let value = attributes[ actualAttrName ]
+
+			// Allow unspecified tablet & mobile values to be clamped based on the desktop value.
+			if ( clampCallback && responsive ) {
+				const desktopValue = getAttributeName( attrName, 'desktop', state )
+				const tabletValue = getAttributeName( attrName, 'tablet', state )
+				if ( value === '' || typeof value === 'undefined' ) {
+					if ( device === 'tablet' ) {
+						value = clampCallback( desktopValue, attributes, device, state, unit )
+					} else if ( device === 'mobile' ) {
+						value = clampCallback( tabletValue !== '' ? tabletValue : desktopValue, attributes, device, state, unit )
+					}
+				}
+			}
 
 			if ( value === '' || typeof value === 'undefined' ) {
 				return undefined
@@ -245,7 +267,7 @@ class StyleObject {
 		const hasParentHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'parent-hover' ) )
 
 		let parentHoverSelector = `:where(.stk-block:hover) .%s ${ selector }`
-		let hoverSelector = _hoverSelector ? _hoverSelector : `.stk-block.%s:hover ${ selector }`
+		let hoverSelector = _hoverSelector || `.stk-block.%s:hover ${ selector }`
 
 		// This is for the editor, change the selector to make the styles show up right away.
 		if ( blockState === 'hover' ) {
