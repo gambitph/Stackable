@@ -80,6 +80,7 @@ Turn the Gutenberg Editor into a page builder. Fine-tune your creations with a w
     - Live Responsive Editing
     - Ability to tweak designs for Tablet and Mobile views
     - Hide / Show Specific Blocks on Desktop, Tablet or Mobile
+- Custom data-* attributes
 - Dynamic Content **
 
 ## Agency Tools
