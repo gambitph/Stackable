@@ -78,8 +78,12 @@ if ( ! class_exists( 'Stackable_Optimization_Settings' ) ) {
 		public function load_frontend_scripts_conditionally( $block_content, $block ) {
 			if ( ! $this->is_script_loaded ) {
 				if ( get_option( 'stackable_optimize_script_load' ) && ! is_admin() ) {
-					if ( stripos( $block['blockName'], 'ugb/' ) === 0 ||
-						stripos( $block['blockName'], 'stackable/' ) === 0 ) {
+					if ( 
+						stripos( $block['blockName'], 'ugb/' ) === 0 ||
+						stripos( $block['blockName'], 'stackable/' ) === 0 ||
+						stripos( $block_content, '<!-- wp:ugb/' ) !==  false ||
+						stripos( $block_content, '<!-- wp:stackable/' ) !== false
+					) {
 						stackable_block_assets();
 						$this->is_script_loaded = true;
 					}
