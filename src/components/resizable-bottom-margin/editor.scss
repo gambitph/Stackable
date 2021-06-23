@@ -8,7 +8,7 @@
 	background: rgba(220, 158, 93, 0.3); // This color should be visible even if the background is black.
 	opacity: 1;
 	position: absolute !important;
-	bottom: 0;
+	top: 100%;
 	left: 0;
 	right: 0;
 	z-index: 9; // If the margin becomes 0, this makes the handler still selectable.
