@@ -27,7 +27,7 @@ import {
 } from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
 import {
-	TextareaControl,
+	TextControl,
 } from '@wordpress/components'
 import { escapeHTML } from '@wordpress/escape-html'
 import { getAttributeName } from '~stackable/util'
@@ -55,6 +55,7 @@ export const Edit = props => {
 		<InspectorStyleControls>
 			<PanelAdvancedSettings
 				title={ __( 'Text', i18n ) }
+				initialOpen={ true }
 				id="text"
 				{ ...{
 					...( withToggle ? {
@@ -65,17 +66,17 @@ export const Edit = props => {
 				} }
 			>
 				<Fragment>
+					{ enableTextContent && (
+						<TextControl
+							label={ sprintf( __( '%s Content', i18n ), label ) }
+							value={ unescape( getAttribute( 'text' ) ) }
+							onChange={ value => updateAttribute( 'text', escapeHTML( value ) ) }
+						/>
+					) }
 					{ enableTextTag && (
 						<HeadingButtonsControl
 							value={ getAttribute( 'textTag' ) }
 							onChange={ updateAttributeHandler( 'textTag' ) }
-						/>
-					) }
-					{ enableTextContent && (
-						<TextareaControl
-							label={ sprintf( __( '%s Content', i18n ), label ) }
-							value={ unescape( getAttribute( 'text' ) ) }
-							onChange={ value => updateAttribute( 'text', escapeHTML( value ) ) }
 						/>
 					) }
 					<ButtonIconPopoverControl
