@@ -32,7 +32,14 @@ export const HeadingStyles = props => {
 		<Fragment>
 			<BlockDiv.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
-			<Typography.Style { ...{ ...{ ...propsToPass, options: { ...propsToPass.options, selector: '.stk-advanced-heading__text' } } } } />
+			<Typography.Style { ...{
+				...propsToPass,
+				options: {
+					...propsToPass.options,
+					selector: '.stk-advanced-heading__text',
+					hoverSelector: '.stk-advanced-heading__text:hover',
+				},
+			} } />
 		</Fragment>
 	)
 }
@@ -54,7 +61,14 @@ HeadingStyles.Content = props => {
 		<Fragment>
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
-			<Typography.Style.Content { ...{ ...{ ...propsToPass, options: { ...propsToPass.options, selector: '.stk-advanced-heading__text' } } } } />
+			<Typography.Style.Content { ...{
+				...propsToPass,
+				options: {
+					...propsToPass.options,
+					selector: '.stk-advanced-heading__text',
+					hoverSelector: '.stk-advanced-heading__text:hover',
+				},
+			} } />
 		</Fragment>
 	)
 
