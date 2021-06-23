@@ -34,13 +34,13 @@ const Save = props => {
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-advanced-text',
+		'stk-heading',
 		responsiveClass,
 		wrapperClasses,
 	] )
 
 	const textClassNames = classnames( [
-		'stk-advanced-heading__text',
+		'stk-heading__text',
 		textClasses,
 	] )
 

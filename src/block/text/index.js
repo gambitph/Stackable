@@ -1,5 +1,5 @@
 /**
- * BLOCK: Advanced Text Block.
+ * BLOCK: Text Block.
  */
 /**
  * External dependencies
@@ -19,10 +19,10 @@ import schema from './schema'
 import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 
-export const name = 'stackable/advanced-text'
+export const name = 'stackable/text'
 
 export const settings = {
-	title: __( 'Advanced Text (v3)', i18n ),
+	title: __( 'Text', i18n ),
 	description: __( 'Start with the building block of all page layouts.', i18n ),
 	icon: TextIcon,
 	category: 'common',

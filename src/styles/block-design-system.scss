@@ -93,8 +93,8 @@
 
 // Remove top and bottom margin.
 .stk-block {
-	.stk-advanced-heading__text,
-	.stk-advanced-text__text {
+	.stk-heading__text,
+	.stk-text__text {
 		margin-top: 0;
 		margin-bottom: 0;
 	}

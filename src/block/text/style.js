@@ -36,8 +36,8 @@ export const TextStyles = props => {
 				...propsToPass,
 				options: {
 					...propsToPass.options,
-					selector: '.stk-advanced-text__text',
-					hoverSelector: '.stk-advanced-text__text:hover',
+					selector: '.stk-text__text',
+					hoverSelector: '.stk-text__text:hover',
 				},
 			} } />
 		</Fragment>
@@ -65,8 +65,8 @@ TextStyles.Content = props => {
 				...propsToPass,
 				options: {
 					...propsToPass.options,
-					selector: '.stk-advanced-text__text',
-					hoverSelector: '.stk-advanced-text__text:hover',
+					selector: '.stk-text__text',
+					hoverSelector: '.stk-text__text:hover',
 				},
 			} } />
 		</Fragment>

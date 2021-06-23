@@ -18,7 +18,7 @@ export const attributes = ( version = VERSION ) => {
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
-	Typography.addAttributes( attrObject, '.stk-advanced-heading__text', { defaultTextTag: 'h2' } )
+	Typography.addAttributes( attrObject, '.stk-heading__text', { defaultTextTag: 'h2' } )
 
 	return attrObject.getMerged( version )
 }

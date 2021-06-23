@@ -39,13 +39,13 @@ const Edit = props => {
 	const [ wrapperClasses, textClasses ] = getTypographyClasses( props.attributes )
 	const blockClassNames = classnames( [
 		className,
-		'stk-advanced-heading',
+		'stk-heading',
 		blockHoverClass,
 		wrapperClasses,
 	] )
 
 	const textClassNames = classnames( [
-		'stk-advanced-heading__text',
+		'stk-heading__text',
 		textClasses,
 	] )
 
@@ -58,12 +58,12 @@ const Edit = props => {
 
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
-			<Typography.InspectorControls blockEl={ blockEl } blockElSelector=".stk-advanced-heading__text" />
-			<CustomCSS.InspectorControls mainBlockClass="stk-advanced-heading" />
+			<Typography.InspectorControls blockEl={ blockEl } blockElSelector=".stk-heading__text" />
+			<CustomCSS.InspectorControls mainBlockClass="stk-heading" />
 			<Responsive.InspectorControls />
 
 			<HeadingStyles version={ VERSION } />
-			<CustomCSS mainBlockClass="stk-advanced-heading__text" />
+			<CustomCSS mainBlockClass="stk-heading__text" />
 
 			<BlockDiv className={ blockClassNames }>
 				<RichText

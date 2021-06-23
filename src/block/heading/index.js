@@ -19,10 +19,10 @@ import schema from './schema'
 import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 
-export const name = 'stackable/advanced-heading'
+export const name = 'stackable/heading'
 
 export const settings = {
-	title: __( 'Advanced Heading (v3)', i18n ),
+	title: __( 'Heading', i18n ),
 	description: __( 'Introduce new sections of your content in style.', i18n ),
 	icon: HeadingIcon,
 	category: 'common',

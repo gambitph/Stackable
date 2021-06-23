@@ -40,13 +40,13 @@ const Edit = props => {
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-advanced-text',
+		'stk-text',
 		blockHoverClass,
 		wrapperClasses,
 	] )
 
 	const textClassNames = classnames( [
-		'stk-advanced-text__text',
+		'stk-text__text',
 		textClasses,
 	] )
 
@@ -58,11 +58,11 @@ const Edit = props => {
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 			<Typography.InspectorControls enableTextTag={ false } />
-			<CustomCSS.InspectorControls mainBlockClass="stk-advanced-text" />
+			<CustomCSS.InspectorControls mainBlockClass="stk-text" />
 			<Responsive.InspectorControls />
 
 			<TextStyles version={ VERSION } />
-			<CustomCSS mainBlockClass="stk-advanced-text__text" />
+			<CustomCSS mainBlockClass="stk-text__text" />
 
 			<BlockDiv className={ blockClassNames }>
 				<RichText

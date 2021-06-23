@@ -36,8 +36,8 @@ export const HeadingStyles = props => {
 				...propsToPass,
 				options: {
 					...propsToPass.options,
-					selector: '.stk-advanced-heading__text',
-					hoverSelector: '.stk-advanced-heading__text:hover',
+					selector: '.stk-heading__text',
+					hoverSelector: '.stk-heading__text:hover',
 				},
 			} } />
 		</Fragment>
@@ -65,8 +65,8 @@ HeadingStyles.Content = props => {
 				...propsToPass,
 				options: {
 					...propsToPass.options,
-					selector: '.stk-advanced-heading__text',
-					hoverSelector: '.stk-advanced-heading__text:hover',
+					selector: '.stk-heading__text',
+					hoverSelector: '.stk-heading__text:hover',
 				},
 			} } />
 		</Fragment>
