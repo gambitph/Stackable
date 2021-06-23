@@ -85,7 +85,7 @@ if ( ! function_exists( 'stackable_blog_posts_post_query' ) ) {
 				'orderby' => $attributes['orderBy'],
 				'numberposts' => $attributes['numberOfItems'],
 				'suppress_filters' => false,
-    	);
+  	);
 
 		if ( ! empty( $attributes['taxonomy'] ) && ! empty( $attributes['taxonomyType'] ) ) {
 			// Categories.
@@ -105,10 +105,10 @@ if ( ! function_exists( 'stackable_blog_posts_post_query' ) ) {
 					),
 				);
 			}
-    	}
+  	}
 
 		return apply_filters( 'stackable/blog-post/post_query',
-      		$passed_attributes,
+			$passed_attributes,
 			$attributes
 		);
 	}
@@ -205,14 +205,32 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 				$featured_image_urls = stackable_featured_image_urls_from_url( $featured_image_id );
 				$featured_image_src = $featured_image_urls[ $attributes['imageSize'] ];
 				if ( ! empty( $featured_image_src ) ) {
+					$image_alt = get_post_meta( $featured_image_id, '_wp_attachment_image_alt', true );
+					$thumbnail = get_the_post_thumbnail(
+						$post_id,
+						$attributes['imageSize'],
+						array(
+							'alt' => esc_attr( ! empty( $image_alt ) ? $image_alt : '' ),
+							'width' => esc_attr( $featured_image_src[1] ),
+							'height' => esc_attr( $featured_image_src[2] ),
+						)
+					);
+
+					// Get the image tag in the thumbnail markup.
+					preg_match( "/<img[^\>]*>/", $thumbnail, $match );
+
+					// Remove the built in style attribute in the image.
+					if ( is_array( $match ) && count( $match ) > 0 ) {
+						// Only remove the style tag inside the image tag.
+						$new_img = preg_replace( '/style=\"[^\"]*\"\s?/', "", $match[ 0 ] );
+						$thumbnail = preg_replace( "/<img[^\>]*>/", $new_img, $thumbnail );
+					}
+
 					$featured_image = sprintf(
-						'<figure class="%s"><a href="%s"><img src="%s" alt="%s" width="%s" height="%s"/></a></figure>',
+						'<figure class="%s"><a href="%s">%s</a></figure>',
 						esc_attr( $featured_image_classes ),
 						esc_url( get_permalink( $post_id ) ),
-						esc_url( $featured_image_src[0] ),
-						esc_attr( get_the_title( $post_id ) ),
-						esc_attr( $featured_image_src[1] ),
-						esc_attr( $featured_image_src[2] )
+						$thumbnail
 					);
 
 					$featured_image_background = sprintf(
@@ -547,38 +565,42 @@ if ( ! function_exists( 'stackable_post_excerpt' ) ) {
 }
 
 if ( ! function_exists( 'stackable_get_excerpt' ) ) {
-    /**
-     * Get the excerpt.
-     *
-     * @since 1.7
-     */
-    function stackable_get_excerpt( $post_id, $post = null ) {
+	/**
+	 * Get the excerpt.
+	 *
+	 * @since 1.7
+	 */
+	function stackable_get_excerpt( $post_id, $post = null ) {
+		// Remove jetpack sharing button.
+		add_filter( 'sharing_show', '__return_false' );
 		// If there's an excerpt provided, use it.
 		$excerpt = get_post_field( 'post_excerpt', $post_id, 'display' );
 		// We need to check before running the filters since some plugins override it.
 		if ( ! empty( $excerpt ) ) {
 			$excerpt = apply_filters( 'the_excerpt', $excerpt );
-			if ( ! empty( $excerpt ) ) {
-				return $excerpt;
+		}
+
+		if ( empty( $excerpt ) ) {
+			$max_excerpt = 100; // WP default is 55.
+
+			// If there's post content given to us, trim it and use that.
+			if ( ! empty( $post['post_content'] ) ) {
+				$excerpt = apply_filters( 'the_excerpt', wp_trim_words( $post['post_content'], $max_excerpt ) );
+			} else {
+				// If there's no post content given to us, then get the content.
+				$post_content = get_post_field( 'post_content', $post_id );
+				if ( ! empty( $post_content ) ) {
+					// Remove the jetpack sharing button filter.
+					$post_content = apply_filters( 'the_content', $post_content );
+					$excerpt = apply_filters( 'the_excerpt', wp_trim_words( $post_content, $max_excerpt ) );
+				}
 			}
 		}
 
-        $max_excerpt = 100; // WP default is 55.
-
-		// If there's post content given to us, trim it and use that.
-        if ( ! empty( $post['post_content'] ) ) {
-            return apply_filters( 'the_excerpt', wp_trim_words( $post['post_content'], $max_excerpt ) );
-		}
-
-		// If there's no post content given to us, then get the content.
-		$post_content = get_post_field( 'post_content', $post_id );
-		if ( ! empty( $post_content ) ) {
-			$post_content = apply_filters( 'the_content', $post_content );
-			return apply_filters( 'the_excerpt', wp_trim_words( $post_content, $max_excerpt ) );
-		}
-
-		return "";
-    }
+		// Remove the jetpack sharing button filter.
+		remove_filter( 'sharing_show', '__return_false' );
+		return empty( $excerpt ) ? "" : $excerpt;
+  }
 }
 
 if ( ! function_exists( 'stackable_render_block_blog_posts' ) ) {

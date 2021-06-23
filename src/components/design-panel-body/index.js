@@ -40,7 +40,7 @@ function DesignPanelBody( props ) {
 				<p className="components-base-control__help">{ help }</p>
 			}
 			{ options &&
-				<DesignControl { ...omit( props, [ 'help', 'title' ] ) } />
+				<DesignControl { ...omit( props, [ 'help', 'title', 'children' ] ) } />
 			}
 			{ props.children }
 		</PanelAdvancedSettings>

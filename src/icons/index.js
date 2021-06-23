@@ -46,7 +46,13 @@ export const colorizeIcon = SvgIcon => {
 
 // Add our SVG gradient placeholder definition that we'll reuse.
 domReady( () => {
+	if ( document.querySelector( 'svg.ugb-stackable-gradient' ) ) {
+		return
+	}
+
 	const stackableGradient = document.createElement( 'DIV' )
+	stackableGradient.setAttribute( 'style', 'height: 0; width: 0; overflow: hidden;' )
+	stackableGradient.setAttribute( 'aria-hidden', 'true' )
 	document.querySelector( 'body' ).appendChild( stackableGradient )
 	render(
 		<svg

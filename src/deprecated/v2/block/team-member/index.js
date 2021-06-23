@@ -54,6 +54,7 @@ export const settings = {
 		'advanced-column-spacing': {
 			paddings: false,
 		},
+		'advanced-custom-attributes': true,
 		'advanced-responsive': true,
 		'block-background': true,
 		'block-separators': true,
@@ -62,6 +63,7 @@ export const settings = {
 		},
 		'content-align': true,
 		'block-designs': true,
+		'container-link': true,
 		'custom-css': {
 			default: applyFilters( 'stackable.team-member.custom-css.default', '' ),
 		},

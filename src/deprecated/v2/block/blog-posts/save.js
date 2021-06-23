@@ -54,7 +54,7 @@ const save = props => {
 				<Fragment>
 					{ showLoadMoreButton && (
 						<ButtonEditHelper.Content
-							className="ugb-blog-posts__load-more-button"
+							containerClassName="ugb-blog-posts__load-more-button"
 							attrNameTemplate={ `loadMoreButton%s` }
 							blockAttributes={ props.attributes }
 							url="#0"

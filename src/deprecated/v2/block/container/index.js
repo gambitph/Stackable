@@ -57,10 +57,14 @@ export const settings = {
 			columnGap: false,
 			paddings: false,
 		},
+		'advanced-custom-attributes': true,
 		'advanced-responsive': true,
 		'block-background': true,
 		'block-separators': true,
 		// 'block-title': true,
+		'container-link': {
+			classFilter: 'wrapperClasses',
+		},
 		'content-align': true,
 		'custom-css': {
 			default: applyFilters( 'stackable.container.custom-css.default', '' ),

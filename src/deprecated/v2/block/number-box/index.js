@@ -14,6 +14,7 @@ import deprecated from './deprecated'
 import edit from './edit'
 import save from './save'
 import schema from './schema'
+import example from './example'
 
 /**
  * WordPress dependencies
@@ -34,6 +35,7 @@ export const settings = {
 		__( 'Stackable', i18n ),
 	],
 	attributes: schema,
+	example,
 	supports: {
 		align: [ 'center', 'wide', 'full' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
@@ -51,6 +53,7 @@ export const settings = {
 			verticalColumnAlign: true,
 			paddings: false,
 		},
+		'advanced-custom-attributes': true,
 		'advanced-responsive': true,
 		'block-background': true,
 		'block-separators': true,
@@ -59,6 +62,7 @@ export const settings = {
 		},
 		'content-align': true,
 		'block-designs': true,
+		'container-link': true,
 		'custom-css': {
 			default: applyFilters( 'stackable.number-box.custom-css.default', '' ),
 		},

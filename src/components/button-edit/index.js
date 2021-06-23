@@ -222,6 +222,7 @@ ButtonEdit.Content = props => {
 		target = '',
 		role = '',
 		title = '',
+		containerClassName = '',
 	} = props
 
 	const mainClasses = classnames( [
@@ -238,6 +239,11 @@ ButtonEdit.Content = props => {
 		[ `ugb-button--icon-position-${ iconPosition }` ]: iconPosition,
 	} )
 
+	const containerClassNames = classnames( [
+		'ugb-button-container',
+		containerClassName,
+	] )
+
 	const rel = []
 	if ( newTab ) {
 		rel.push( 'noopener' )
@@ -253,7 +259,7 @@ ButtonEdit.Content = props => {
 	}
 
 	return (
-		<div className="ugb-button-container">
+		<div className={ containerClassNames }>
 			{ ( text || iconButton ) &&
 				<a
 					className={ mainClasses }

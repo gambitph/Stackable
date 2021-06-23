@@ -279,9 +279,9 @@ export const isLabelAttribute = issue => {
 
 	const attributes1 = issue.args[ 1 ].map( attributePair => attributePair[ 0 ] )
 	const attributes2 = issue.args[ 2 ].map( attributePair => attributePair[ 0 ] )
-	const diffAttributes = difference( attributes1, attributes2 )
+	const diffAttributes = [ ...difference( attributes1, attributes2 ), ...difference( attributes2, attributes1 ) ]
 
-	if ( diffAttributes.includes( 'aria-label' ) || diffAttributes.includes( 'title' ) || diffAttributes.includes( 'alt' ) ) {
+	if ( diffAttributes.includes( 'aria-label' ) || diffAttributes.includes( 'title' ) || diffAttributes.includes( 'alt' ) || diffAttributes.includes( 'role' ) ) {
 		return true
 	}
 

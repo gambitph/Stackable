@@ -67,6 +67,7 @@ const save = props => {
 							backgroundAttrName="column%s"
 							blockProps={ props }
 							showBackground={ show.columnBackground }
+							index={ i }
 							key={ i }
 						>
 							{ showNumber && ! RichText.isEmpty( num ) && (

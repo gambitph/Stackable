@@ -62,6 +62,7 @@ export const settings = {
 			modifyStyles: false,
 			paddingUnits: [ 'px', 'em' ],
 		},
+		'advanced-custom-attributes': true,
 		'custom-css': {
 			default: applyFilters( 'stackable.separator.custom-css.default', '' ),
 		},

@@ -78,6 +78,7 @@ const save = props => {
 							backgroundAttrName="column%s"
 							blockProps={ props }
 							showBackground={ show.columnBackground && show[ `columnBackground${ i }` ] }
+							index={ i }
 							key={ i }
 						>
 							{ imageUrl && showImage &&

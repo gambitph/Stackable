@@ -6,3 +6,7 @@ dist/**
 !dist/*.json
 **/*__premium_only*
 coverage
+
+composer.lock
+/vendor
+/wordpress

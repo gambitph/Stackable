@@ -1,0 +1,25 @@
+.ugb-container-link {
+	position: relative;
+
+	& > a {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+	}
+
+	& > a:focus {
+		background: transparent !important;
+	}
+
+	& > a::after {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		content: "";
+		z-index: 10;
+	}
+}

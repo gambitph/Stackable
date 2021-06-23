@@ -147,7 +147,7 @@ const HighlightButton = props => {
 
 	return (
 		<BlockControls>
-			<Toolbar className="stackable-components-toolbar">
+			<Toolbar className="stackable-components-toolbar" label={ __( 'Color & Highlight', i18n ) }>
 				<Button
 					className="components-button components-icon-button components-toolbar__control"
 					icon="editor-textcolor"
@@ -185,11 +185,11 @@ const HighlightButton = props => {
 							value={ colorType }
 							onChange={ colorType => {
 								// Pick default colors for when the highlight type changes.
-								const defaultHighlightColor = highlightColor ? highlightColor :
-									colorType !== '' ? ( textColor || '#f34957' ) : highlightColor
-								const defaultTextColor = colorType === 'highlight' ? whiteIfDarkBlackIfLight( '', defaultHighlightColor ) :
-									colorType === 'low' ? '' :
-										highlightColor || textColor || ''
+								const defaultHighlightColor = highlightColor ? highlightColor
+									: colorType !== '' ? ( textColor || '#f34957' ) : highlightColor
+								const defaultTextColor = colorType === 'highlight' ? whiteIfDarkBlackIfLight( '', defaultHighlightColor )
+									: colorType === 'low' ? ''
+										: highlightColor || textColor || ''
 
 								onChange( createApplyFormat( value, colorType, defaultTextColor, defaultHighlightColor ), { withoutHistory: true } )
 							} }

@@ -30,7 +30,7 @@ const AdvancedRangeControl = props => {
 	const { clientId } = useBlockEditContext()
 	const attributes = useBlockAttributes( clientId )
 
-	const unit = attributes[ unitAttrName ]
+	const unit = attributes ? attributes[ unitAttrName ] : ''
 
 	// Change the min, max & step values depending on the unit used.
 	if ( hasUnits ) {
