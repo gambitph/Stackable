@@ -109,6 +109,7 @@ const AdvancedToolbarControl = props => {
 	const toolbarClasses = classnames( {
 		'ugb-toolbar--full-width': fullwidth,
 		'ugb-toolbar--multiline': multiline,
+		'ugb-toolbar--small': props.isSmall,
 	} )
 
 	const value = typeof props.value === 'undefined' ? _value : props.value
