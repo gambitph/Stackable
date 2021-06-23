@@ -16,7 +16,7 @@ export const useControlHandlers = ( attribute, responsive = false, hover = false
 	const attributes = useBlockAttributes( clientId )
 	const attrName = useAttributeName( attribute, responsive, hover )
 
-	let value = attributes[ attrName ]
+	let value = attributes ? attributes[ attrName ] : ''
 	if ( valueCallback ) {
 		value = valueCallback( value )
 	}
