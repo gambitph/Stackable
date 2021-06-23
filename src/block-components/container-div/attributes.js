@@ -4,7 +4,7 @@ import {
 	addSizeAttributes,
 } from '../helpers'
 
-export const addAttributes = ( attrObject, options ) => {
+export const addAttributes = ( attrObject, options = {} ) => {
 	const {
 		hasDefaultContainer = false,
 	} = options
