@@ -81,8 +81,8 @@ if ( ! class_exists( 'Stackable_Optimization_Settings' ) ) {
 					if ( 
 						stripos( $block['blockName'], 'ugb/' ) === 0 ||
 						stripos( $block['blockName'], 'stackable/' ) === 0 ||
-						stripos( $block_content, '<!-- wp:ugb/' ) !==  FALSE ||
-						stripos( $block_content, '<!-- wp:stackable/' ) !== FALSE
+						stripos( $block_content, '<!-- wp:ugb/' ) !==  false ||
+						stripos( $block_content, '<!-- wp:stackable/' ) !== false
 					) {
 						stackable_block_assets();
 						$this->is_script_loaded = true;
