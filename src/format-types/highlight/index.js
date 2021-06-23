@@ -147,7 +147,7 @@ const HighlightButton = props => {
 
 	return (
 		<BlockControls>
-			<Toolbar className="stackable-components-toolbar">
+			<Toolbar className="stackable-components-toolbar" label={ __( 'Color & Highlight', i18n ) }>
 				<Button
 					className="components-button components-icon-button components-toolbar__control"
 					icon="editor-textcolor"
