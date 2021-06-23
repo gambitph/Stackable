@@ -120,5 +120,4 @@ export {
 	InspectorAdvancedControls,
 } from './inspector-tabs'
 export { default as Div } from './div'
-export { default as TabbedLayout } from './tabbed-layout'
 export { default as ControlIconToggle } from './control-icon-toggle'
