@@ -205,7 +205,7 @@ const ButtonControls = props => {
 
 			{ props.onChangeOpacity && (
 				<AdvancedRangeControl
-					label={ __( 'Hover Opacity', i18n ) }
+					label={ props.hoverOpacityLabel }
 					value={ props.hoverOpacity }
 					onChange={ props.onChangeHoverOpacity }
 					min={ 0 }
@@ -219,7 +219,7 @@ const ButtonControls = props => {
 
 			{ props.hasHoverColors && design !== 'link' && ( ! props.onChangeUseSocialColors || ! props.useSocialColors ) && (
 				<ButtonIconPopoverControl
-					label={ __( 'Hover Colors', i18n ) }
+					label={ props.hoverColorsLabel }
 					onReset={ props.onResetHoverColors }
 					allowReset={
 						props.hoverBackgroundColor ||
@@ -379,7 +379,7 @@ const ButtonControls = props => {
 				/>
 			) }
 
-			{ design !== 'link' && <ControlSeparator /> }
+			{ props.onChangeIcon && design !== 'link' && <ControlSeparator /> }
 
 			{ props.onChangeIcon && design !== 'link' &&
 				<IconControl
@@ -472,7 +472,9 @@ ButtonControls.defaultProps = {
 	onResetHoverColors: () => {},
 	hoverEffect: '',
 	hoverOpacity: '',
+	hoverOpacityLabel: __( 'Hover Opacity', i18n ),
 	hoverTextColor: '',
+	hoverColorsLabel: __( 'Hover Colors', i18n ),
 	hoverBackgroundColor: '',
 	hoverBackgroundColor2: '',
 	hoverBackgroundGradientDirection: '',

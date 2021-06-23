@@ -62,10 +62,10 @@ const save = props => {
 					const title = attributes[ `title${ i }` ]
 					const description = attributes[ `description${ i }` ]
 					const ariaLabel = striptags(
-						( showTitle && ! RichText.isEmpty( title ) ) ? title :
-							( showSubtitle && ! RichText.isEmpty( subtitle ) ) ? subtitle :
-								( showDescription && ! RichText.isEmpty( description ) ) ? description :
-									''
+						( showTitle && ! RichText.isEmpty( title ) ) ? title
+							: ( showSubtitle && ! RichText.isEmpty( subtitle ) ) ? subtitle
+								: ( showDescription && ! RichText.isEmpty( description ) ) ? description
+									: ''
 					)
 
 					const itemClasses = classnames( [
@@ -92,7 +92,7 @@ const save = props => {
 						>
 							{ attributes[ `image${ i }Url` ] &&
 								<div className="ugb-image-box__box ugb-image-box__image-wrapper">
-									<div className="ugb-image-box__box ugb-image-box__image" role="img" aria-label={ ariaLabel }></div>
+									<div className="ugb-image-box__box ugb-image-box__image" role={ ariaLabel ? 'img' : undefined } aria-label={ ariaLabel || undefined }></div>
 								</div>
 							}
 							{ showOverlay &&
@@ -134,7 +134,7 @@ const save = props => {
 								</div>
 							}
 							{ attributes[ `link${ i }Url` ] &&
-								<a
+								<a // eslint-disable-line react/jsx-no-target-blank
 									className="ugb-image-box__overlay-link"
 									href={ attributes[ `link${ i }Url` ] }
 									target={ attributes[ `link${ i }NewTab` ] ? '_blank' : undefined }

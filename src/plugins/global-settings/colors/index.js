@@ -90,7 +90,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 				<p className="components-base-control__help">
 					{ __( 'Change your color palette for all your blocks across your site.', i18n ) }
 					&nbsp;
-					<a href="https://docs.wpstackable.com/stackable-guides/advanced-guides/how-to-use-global-colors/?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
+					<a href="https://docs.wpstackable.com/article/362-how-to-use-global-colors?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
 						{ __( 'Learn more about Global Colors', i18n ) }
 					</a>
 				</p>

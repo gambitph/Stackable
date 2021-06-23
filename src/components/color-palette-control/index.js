@@ -27,6 +27,7 @@ import { applyFilters } from '@wordpress/hooks'
  */
 import { i18n } from 'stackable'
 import classnames from 'classnames'
+import { isPlainObject, compact } from 'lodash'
 
 // translators: first %s: The type of color (e.g. background color), second %s: the color name or value (e.g. red or #ff0000)
 const colorIndicatorAriaLabel = __( '(current %s: %s)', i18n )
@@ -41,12 +42,18 @@ const ColorPaletteControl = memo( props => {
 	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover )
 	const [ _propsToPass, controlProps ] = extractControlProps( props )
 
-	const colors = props.colors.map( color => {
+	const colors = compact( props.colors.map( color => {
+		// Make sure to only get color objects. If null, also return null.
+		// This will be removed by lodash's `compact` function.
+		if ( ! isPlainObject( color ) ) {
+			return null
+		}
+
 		return {
 			...color,
 			name: color.name || color.fallback || color.color || __( 'Untitled Color', i18n ),
 		}
-	} )
+	} ) )
 
 	if ( props.hasTransparent ) {
 		colors.push( {

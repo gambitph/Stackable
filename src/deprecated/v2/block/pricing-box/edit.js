@@ -859,6 +859,7 @@ const edit = props => {
 							backgroundAttrName="column%s"
 							blockProps={ props }
 							showBackground={ show.columnBackground }
+							index={ i }
 							key={ i }
 						>
 							{ applyFilters( 'stackable.pricing-box.edit.content', (

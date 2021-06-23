@@ -48,7 +48,7 @@ const ColumnPaddingControl = props => {
 			className="ugb--help-tip-advanced-column-paddings"
 			defaultLocked={ true }
 			min={ [ 0, 0, 0 ] }
-			max={ [ 500, 30, 100 ] }
+			sliderMax={ [ 500, 100, 100 ] }
 			step={ 1 }
 
 			valueDesktop={ {
@@ -70,16 +70,16 @@ const ColumnPaddingControl = props => {
 
 			valueTablet={ {
 				top: tabletColumnPaddingTop,
-				right: tabletColumnPaddingBottom,
-				bottom: tabletColumnPaddingRight,
+				right: tabletColumnPaddingRight,
+				bottom: tabletColumnPaddingBottom,
 				left: tabletColumnPaddingLeft,
 			} }
 			valueTabletUnit={ tabletColumnPaddingUnit }
 			onChangeTablet={ paddings => {
 				setAttributes( {
 					tabletColumnPaddingTop: paddings.top,
-					tabletColumnPaddingBottom: paddings.right,
-					tabletColumnPaddingRight: paddings.bottom,
+					tabletColumnPaddingBottom: paddings.bottom,
+					tabletColumnPaddingRight: paddings.right,
 					tabletColumnPaddingLeft: paddings.left,
 				} )
 			} }
@@ -87,16 +87,16 @@ const ColumnPaddingControl = props => {
 
 			valueMobile={ {
 				top: mobileColumnPaddingTop,
-				right: mobileColumnPaddingBottom,
-				bottom: mobileColumnPaddingRight,
+				right: mobileColumnPaddingRight,
+				bottom: mobileColumnPaddingBottom,
 				left: mobileColumnPaddingLeft,
 			} }
 			valueMobileUnit={ mobileColumnPaddingUnit }
 			onChangeMobile={ paddings => {
 				setAttributes( {
 					mobileColumnPaddingTop: paddings.top,
-					mobileColumnPaddingBottom: paddings.right,
-					mobileColumnPaddingRight: paddings.bottom,
+					mobileColumnPaddingBottom: paddings.bottom,
+					mobileColumnPaddingRight: paddings.right,
 					mobileColumnPaddingLeft: paddings.left,
 				} )
 			} }

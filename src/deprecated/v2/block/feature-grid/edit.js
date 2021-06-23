@@ -519,6 +519,7 @@ const edit = props => {
 							backgroundAttrName="column%s"
 							blockProps={ props }
 							showBackground={ show.columnBackground && show[ `columnBackground${ i }` ] }
+							index={ i }
 							key={ i }
 						>
 							{ showImage &&
@@ -531,14 +532,16 @@ const edit = props => {
 											setAttributes( {
 												[ `image${ i }Url` ]: '',
 												[ `image${ i }Id` ]: '',
+												[ `image${ i }Alt` ]: '',
 											} )
 										} }
 										onChange={ ( {
-											url, id,
+											url, id, alt,
 										} ) => {
 											setAttributes( {
 												[ `image${ i }Url` ]: url,
 												[ `image${ i }Id` ]: id,
+												[ `image${ i }Alt` ]: alt,
 											} )
 										} }
 										render={

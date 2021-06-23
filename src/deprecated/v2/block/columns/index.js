@@ -49,6 +49,7 @@ export const settings = {
 	modules: {
 		'advanced-general': true,
 		'advanced-block-spacing': true,
+		'advanced-custom-attributes': true,
 		'advanced-responsive': true,
 		'block-background': true,
 		'block-separators': true,

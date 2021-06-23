@@ -6,6 +6,7 @@ module.exports = [
 			loader: 'babel-loader',
 			options: {
 				// presets: ['es2015'],
+				presets: [ '@wordpress/babel-preset-default' ],
 				// Cache compilation results in ./node_modules/.cache/babel-loader/
 				cacheDirectory: true,
 				plugins: [
