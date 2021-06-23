@@ -1,4 +1,4 @@
-import { getAttrNameFunction } from '~stackable/util'
+import { getAttributeName, getAttrNameFunction } from '~stackable/util'
 
 import { select, dispatch } from '@wordpress/data'
 import { useBlockEditContext } from '@wordpress/block-editor'
@@ -20,28 +20,28 @@ import { useCallback } from '@wordpress/element'
 export const useAttributeEditHandlers = ( attrNameTemplate = '%s' ) => {
 	const { clientId } = useBlockEditContext()
 
-	const getAttrName = getAttrNameFunction( attrNameTemplate )
+	const getAttrName = ( attrName, device, state ) => getAttributeName( getAttrNameFunction( attrNameTemplate )( attrName ), device, state )
 
-	const getAttribute = useCallback( attrName => {
+	const getAttribute = useCallback( ( attrName, device, state ) => {
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
 		const attributes = select( 'core/block-editor' ).getBlockAttributes( clientId )
-		return attributes[ getAttrName( attrName ) ]
+		return attributes[ getAttributeName( getAttrName( attrName ), device, state ) ]
 	}, [ clientId, attrNameTemplate ] )
 
 	const getAttributes = useCallback( () => {
 		return select( 'core/block-editor' ).getBlockAttributes( clientId )
 	}, [ clientId ] )
 
-	const updateAttribute = useCallback( ( attrName, value ) => {
+	const updateAttribute = useCallback( ( attrName, value, device, state ) => {
 		const { updateBlockAttributes } = dispatch( 'core/block-editor' )
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
 		return updateBlockAttributes( clientId, {
-			[ getAttrName( attrName ) ]: value,
+			[ getAttributeName( getAttrName( attrName ), device, state ) ]: value,
 		} )
 	}, [ clientId, attrNameTemplate ] )
 
-	const updateAttributeHandler = useCallback( attrName => {
-		return value => updateAttribute( attrName, value )
+	const updateAttributeHandler = useCallback( ( attrName, device, state ) => {
+		return value => updateAttribute( attrName, value, device, state )
 	}, [ clientId, attrNameTemplate ] )
 
 	const updateAttributes = useCallback( values => {

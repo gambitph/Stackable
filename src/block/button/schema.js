@@ -4,7 +4,6 @@ import {
 	CustomCSS,
 	Responsive,
 	Button,
-	addBorderAttributes,
 	Typography,
 	Icon,
 } from '~stackable/block-components'
@@ -18,8 +17,6 @@ export const attributes = ( version = VERSION ) => {
 	Responsive.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
 	Button.addAttributes( attrObject, { selector: '.stk-button__button' } )
-
-	addBorderAttributes( attrObject, 'button%s' )
 
 	Typography.addAttributes( attrObject, '.stk-button__inner-text', {
 		enableTextTag: false,

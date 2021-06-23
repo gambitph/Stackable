@@ -40,17 +40,13 @@ const BORDER_CONTROLS = [
 
 export const BorderControls = props => {
 	const {
-		blockElSelector,
-	} = props
-
-	const {
 		getAttribute,
 		getAttrName,
 	} = useAttributeEditHandlers( props.attrNameTemplate )
 
 	const borderRadiusPlaceholder = useMemo( () => {
 		return props.blockEl
-			? () => props.blockEl.el() && parseFloat( window.getComputedStyle( blockElSelector ? props.blockEl.el().querySelector( blockElSelector ) : props.blockEl.el() ).borderRadius )
+			? () => props.blockEl.el() && parseFloat( window.getComputedStyle( props.blockEl.el() ).borderRadius )
 			: null
 	}, [ props.blockEl ] )
 

@@ -1,4 +1,5 @@
 import { addLinkAttributes } from '../helpers/link'
+import { addBorderAttributes } from '../helpers/borders'
 
 export const addAttributes = ( attrObject, options = {} ) => {
 	const {
@@ -46,4 +47,5 @@ export const addAttributes = ( attrObject, options = {} ) => {
 	} )
 
 	addLinkAttributes( attrObject, 'link%s', selector )
+	addBorderAttributes( attrObject, 'button%s' )
 }

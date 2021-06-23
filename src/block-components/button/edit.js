@@ -8,13 +8,12 @@ import {
 	BaseControl,
 	AdvancedToolbarControl,
 	ColorPaletteControl,
-	FourRangeControl2,
+	FourRangeControl,
 } from '~stackable/components'
 import { i18n } from 'stackable'
 import {
-	useBlockAttributes, useDeviceType, useBlockEl, useBlockHoverState,
+	useBlockEl, useBlockHoverState, useAttributeEditHandlers,
 } from '~stackable/hooks'
-import { getAttributeName } from '~stackable/util'
 
 /**
  * Internal dependencies
@@ -26,16 +25,15 @@ import { LinkControls } from '../helpers/link'
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n'
-import { useBlockEditContext } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
 
 export const Edit = () => {
-	const deviceType = useDeviceType()
-	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
 	const [ hoverState ] = useBlockHoverState()
-
 	const blockEl = useBlockEl()
+
+	const {
+		getAttribute,
+	} = useAttributeEditHandlers()
 
 	return (
 		<Fragment>
@@ -74,13 +72,15 @@ export const Edit = () => {
 									hover="all"
 								/>
 								<ColorPaletteControl
-									label={ attributes[ getAttributeName( 'buttonBackgroundColorType', deviceType, hoverState ) ] === 'gradient' ? sprintf( __( 'Button Color #%s', i18n ), 1 )
-										: __( 'Button Color', i18n ) }
+									label={ getAttribute( 'buttonBackgroundColorType', 'desktop', hoverState ) === 'gradient'
+										? sprintf( __( 'Button Color #%s', i18n ), 1 )
+										: __( 'Button Color', i18n )
+									}
 									attribute="buttonBackgroundColor"
-									hasTransparent={ attributes.buttonBackgroundColorType !== 'gradient' }
+									hasTransparent={ getAttribute( 'buttonBackgroundColorType', 'desktop', hoverState ) === 'gradient' !== 'gradient' }
 									hover="all"
 								/>
-								{ attributes[ getAttributeName( 'buttonBackgroundColorType', deviceType, hoverState ) ] === 'gradient' && (
+								{ getAttribute( 'buttonBackgroundColorType', 'desktop', hoverState ) === 'gradient' && (
 									<Fragment>
 										<ColorPaletteControl
 											label={ __( 'Button Color #2', i18n ) }
@@ -108,7 +108,7 @@ export const Edit = () => {
 							attrNameTemplate="button%s"
 						/>
 
-						<FourRangeControl2
+						<FourRangeControl
 							label={ __( 'Button Paddings', i18n ) }
 							units={ [ 'px', '%' ] }
 							responsive="all"
@@ -116,7 +116,6 @@ export const Edit = () => {
 							attribute="buttonPadding"
 							sliderMin={ [ 0, 0 ] }
 							sliderMax={ [ 40, 100 ] }
-							default="16"
 						/>
 
 					</Fragment>

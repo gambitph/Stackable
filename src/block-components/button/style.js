@@ -6,6 +6,17 @@ import {
 	useStyles, getStyles,
 } from '~stackable/util'
 
+/**
+ * WordPress dependencies
+ */
+import { Fragment } from '@wordpress/element'
+import { sprintf } from '@wordpress/i18n'
+
+/**
+ * Internal dependencies
+ */
+import { BorderStyle } from '../helpers/borders'
+
 const getStyleParams = options => {
 	const {
 		selector,
@@ -76,12 +87,24 @@ export const Style = props => {
 	const styles = useStyles( attributes, getStyleParams( propsToPass.options ) )
 
 	return (
-		<StyleComponent
-			styles={ styles }
-			versionAdded="3.0.0"
-			versionDeprecated=""
-			{ ...propsToPass }
-		/>
+		<Fragment>
+			<StyleComponent
+				styles={ styles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
+			<BorderStyle
+				{ ...{
+					attributes,
+					...propsToPass,
+					options: {
+						...propsToPass.options,
+						attrNameTemplate: sprintf( 'button%s', propsToPass.options?.attrNameTemplate || '%s' ),
+					},
+				} }
+			/>
+		</Fragment>
 	)
 }
 
@@ -94,11 +117,23 @@ Style.Content = props => {
 	const styles = getStyles( attributes, getStyleParams( propsToPass.options ) )
 
 	return (
-		<StyleComponent.Content
-			styles={ styles }
-			versionAdded="3.0.0"
-			versionDeprecated=""
-			{ ...propsToPass }
-		/>
+		<Fragment>
+			<StyleComponent.Content
+				styles={ styles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
+			<BorderStyle.Content
+				{ ...{
+					attributes,
+					...propsToPass,
+					options: {
+						...propsToPass.options,
+						attrNameTemplate: sprintf( 'button%s', propsToPass.options?.attrNameTemplate || '%s' ),
+					},
+				} }
+			/>
+		</Fragment>
 	)
 }

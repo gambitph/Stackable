@@ -6,7 +6,6 @@ import {
 	Advanced,
 	Button,
 	BlockDiv,
-	BorderStyle,
 	Typography,
 	Icon,
 } from '~stackable/block-components'
@@ -42,16 +41,6 @@ export const ButtonStyles = props => {
 			<BlockDiv.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
 			<Button.Style { ...propsToPass } />
-			<BorderStyle { ...propsToPass } />
-			<BorderStyle
-				{ ...{
-					...propsToPass,
-					options: {
-						...propsToPass.options,
-						selector: propsToPass.options.selector + ':hover',
-						attrNameTemplate: 'buttonHover%s',
-					},
-				} } />
 			<Typography.Style
 				{ ...{
 					...propsToPass,
@@ -99,16 +88,6 @@ ButtonStyles.Content = props => {
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
 			<Button.Style.Content { ...propsToPass } />
-			<BorderStyle.Content { ...propsToPass } />
-			<BorderStyle.Content
-				{ ...{
-					...propsToPass,
-					options: {
-						...propsToPass.options,
-						selector: propsToPass.options.selector + ':hover',
-						attrNameTemplate: 'buttonHover%s',
-					},
-				} } />
 			<Typography.Style.Content
 				{ ...{
 					...propsToPass,
