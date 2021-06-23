@@ -56,6 +56,7 @@ const getStyleParams = ( options = {} ) => {
 			selector: `${ selector } img`,
 			styleRule: 'filter',
 			attrName: 'imageFilter',
+			hover: 'all',
 		},
 		{
 			selector: `${ selector } img`,
