@@ -20,9 +20,11 @@ import { useCallback } from '@wordpress/element'
 export const useAttributeEditHandlers = ( attrNameTemplate = '%s' ) => {
 	const { clientId } = useBlockEditContext()
 
-	const getAttrName = ( attrName, device, state ) => getAttributeName( getAttrNameFunction( attrNameTemplate )( attrName ), device, state )
+	const getAttrName = ( attrName, device = 'desktop', state = 'normal' ) => {
+		return getAttributeName( getAttrNameFunction( attrNameTemplate )( attrName ), device, state )
+	}
 
-	const getAttribute = useCallback( ( attrName, device, state ) => {
+	const getAttribute = useCallback( ( attrName, device = 'desktop', state = 'normal' ) => {
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
 		const attributes = select( 'core/block-editor' ).getBlockAttributes( clientId )
 		return attributes[ getAttributeName( getAttrName( attrName ), device, state ) ]
@@ -32,7 +34,7 @@ export const useAttributeEditHandlers = ( attrNameTemplate = '%s' ) => {
 		return select( 'core/block-editor' ).getBlockAttributes( clientId )
 	}, [ clientId ] )
 
-	const updateAttribute = useCallback( ( attrName, value, device, state ) => {
+	const updateAttribute = useCallback( ( attrName, value, device = 'desktop', state = 'normal' ) => {
 		const { updateBlockAttributes } = dispatch( 'core/block-editor' )
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
 		return updateBlockAttributes( clientId, {
@@ -40,7 +42,7 @@ export const useAttributeEditHandlers = ( attrNameTemplate = '%s' ) => {
 		} )
 	}, [ clientId, attrNameTemplate ] )
 
-	const updateAttributeHandler = useCallback( ( attrName, device, state ) => {
+	const updateAttributeHandler = useCallback( ( attrName, device = 'desktop', state = 'normal' ) => {
 		return value => updateAttribute( attrName, value, device, state )
 	}, [ clientId, attrNameTemplate ] )
 

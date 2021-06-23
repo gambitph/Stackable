@@ -45,10 +45,10 @@ import {
 import { BlockLink } from '~stackable/block-components/block-link'
 
 const TEMPLATE = [
-	[ 'core/heading', {} ],
-	[ 'core/paragraph', { content: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.' } ],
-	[ 'core/buttons', {}, [
-		[ 'core/button', { text: 'Button' } ],
+	[ 'stackable/advanced-heading', {} ],
+	[ 'stackable/advanced-text', { content: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.' } ],
+	[ 'stackable/button-group', {}, [
+		[ 'stackable/button', { text: 'Button' } ],
 	] ],
 ]
 
