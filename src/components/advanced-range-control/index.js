@@ -60,7 +60,7 @@ const AdvancedRangeControl = props => {
 	}
 
 	// Remove the placeholder.
-	if ( deviceType !== 'Desktop' ) {
+	if ( deviceType !== 'Desktop' || currentHoverState !== 'normal' ) {
 		propsToPass.initialPosition = ''
 		propsToPass.placeholder = ''
 	}

@@ -102,6 +102,79 @@ const getStyleParams = () => {
 	]
 }
 
+// If a top, right, bottom, left hover state position was given, it will not
+// animate since there is no initial value for the position (e.g. top: 0). This
+// function adds a `top: 0` for the normal state of the CSS if there's a hover
+// state position e.g. hover `top: 20px` given but no initial state.
+const getStyleParams2 = () => {
+	return [
+		{
+			selector: '',
+			styleRule: 'top',
+			attrName: 'positionNum',
+			responsive: 'all',
+			valuePreCallback: ( value, getAttribute, device, state ) => {
+				if ( ( ! value || value.top === '' ) && state === 'normal' ) {
+					const hoverValue = getAttribute( 'positionNum', device, 'hover' )
+					const parentHoverValue = getAttribute( 'positionNum', device, 'parent-hovered' )
+					if ( ( hoverValue && hoverValue.top !== '' ) || ( parentHoverValue && parentHoverValue.top !== '' ) ) {
+						return 0
+					}
+				}
+				return undefined
+			},
+		},
+		{
+			selector: '',
+			styleRule: 'right',
+			attrName: 'positionNum',
+			responsive: 'all',
+			valuePreCallback: ( value, getAttribute, device, state ) => {
+				if ( ( ! value || value.right === '' ) && state === 'normal' ) {
+					const hoverValue = getAttribute( 'positionNum', device, 'hover' )
+					const parentHoverValue = getAttribute( 'positionNum', device, 'parent-hovered' )
+					if ( ( hoverValue && hoverValue.right !== '' ) || ( parentHoverValue && parentHoverValue.right !== '' ) ) {
+						return 0
+					}
+				}
+				return undefined
+			},
+		},
+		{
+			selector: '',
+			styleRule: 'bottom',
+			attrName: 'positionNum',
+			responsive: 'all',
+			valuePreCallback: ( value, getAttribute, device, state ) => {
+				if ( ( ! value || value.bottom === '' ) && state === 'normal' ) {
+					const hoverValue = getAttribute( 'positionNum', device, 'hover' )
+					const parentHoverValue = getAttribute( 'positionNum', device, 'parent-hovered' )
+					if ( ( hoverValue && hoverValue.bottom !== '' ) || ( parentHoverValue && parentHoverValue.bottom !== '' ) ) {
+						return 0
+					}
+				}
+				return undefined
+			},
+		},
+		{
+			selector: '',
+			styleRule: 'left',
+			attrName: 'positionNum',
+			responsive: 'all',
+			valuePreCallback: ( value, getAttribute, device, state ) => {
+				if ( ( ! value || value.left === '' ) && state === 'normal' ) {
+					const hoverValue = getAttribute( 'positionNum', device, 'hover' )
+					const parentHoverValue = getAttribute( 'positionNum', device, 'parent-hovered' )
+					if ( ( hoverValue && hoverValue.left !== '' ) || ( parentHoverValue && parentHoverValue.left !== '' ) ) {
+						return 0
+					}
+				}
+				return undefined
+			},
+		},
+	]
+}
+
 export const Style = props => {
 	const {
 		attributes,
@@ -110,11 +183,18 @@ export const Style = props => {
 	} = props
 
 	const styles = useStyles( attributes, getStyleParams( options ) )
+	const styles2 = useStyles( attributes, getStyleParams2( options ) )
 
 	return (
 		<Fragment>
 			<StyleComponent
 				styles={ styles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
+			<StyleComponent
+				styles={ styles2 }
 				versionAdded="3.0.0"
 				versionDeprecated=""
 				{ ...propsToPass }
@@ -131,11 +211,18 @@ Style.Content = props => {
 	} = props
 
 	const styles = getStyles( attributes, getStyleParams( options ) )
+	const styles2 = getStyles( attributes, getStyleParams2( options ) )
 
 	return (
 		<Fragment>
 			<StyleComponent.Content
 				styles={ styles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
+			<StyleComponent.Content
+				styles={ styles2 }
 				versionAdded="3.0.0"
 				versionDeprecated=""
 				{ ...propsToPass }
