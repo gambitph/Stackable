@@ -148,18 +148,7 @@ export const addAttributes = ( attrObject, options = {} ) => {
 			'shapePadding',
 			'shapeOutline',
 			'shapeOutlineColor',
-			'shapeOutlineWidthTop',
-			'shapeOutlineWidthRight',
-			'shapeOutlineWidthBottom',
-			'shapeOutlineWidthLeft',
-			'shapeOutlineWidthTopTablet',
-			'shapeOutlineWidthRightTablet',
-			'shapeOutlineWidthBottomTablet',
-			'shapeOutlineWidthLeftTablet',
-			'shapeOutlineWidthTopMobile',
-			'shapeOutlineWidthRightMobile',
-			'shapeOutlineWidthBottomMobile',
-			'shapeOutlineWidthLeftMobile'
+			'shapeOutlineWidth',
 		)
 	}
 
