@@ -86,7 +86,6 @@ if ( ! class_exists( 'Stackable_Optimization_Settings' ) ) {
 					) {
 						stackable_block_assets();
 						$this->is_script_loaded = true;
-						return $block_content;
 					}
 				}
 			}
