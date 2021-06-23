@@ -317,7 +317,7 @@ class StyleObject {
 					return `.%s.stk--is-hovered .%s-container`
 				}
 
-				return `:where(.stk-block:hover) .%s ${ s }`
+				return `:where(.stk-hover-parent:hover) .%s ${ s }`
 			} ).join( ', ' )
 
 			hoverSelector = hoverSelector || selector.map( s => {
@@ -330,7 +330,7 @@ class StyleObject {
 
 			selector = selector.join( ', ' )
 		} else {
-			parentHoverSelector = `:where(.stk-block:hover) .%s ${ selector }`
+			parentHoverSelector = `:where(.stk-hover-parent:hover) .%s ${ selector }`
 			hoverSelector = _hoverSelector || `.stk-block.%s:hover ${ selector }`
 			// This is for the editor, change the selector to make the styles show up right away.
 			if ( blockState === 'hover' ) {

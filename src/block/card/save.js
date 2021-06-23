@@ -41,6 +41,7 @@ export const Save = props => {
 	const blockClassNames = classnames( [
 		props.className,
 		'stk-card',
+		'stk-hover-parent',
 		columnClass,
 		responsiveClass,
 	] )

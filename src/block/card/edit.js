@@ -75,6 +75,7 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-card',
+		'stk-hover-parent',
 		columnClass,
 		blockHoverClass,
 	] )
