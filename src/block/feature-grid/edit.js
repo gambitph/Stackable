@@ -530,14 +530,16 @@ const edit = props => {
 											setAttributes( {
 												[ `image${ i }Url` ]: '',
 												[ `image${ i }Id` ]: '',
+												[ `image${ i }Alt` ]: '',
 											} )
 										} }
 										onChange={ ( {
-											url, id,
+											url, id, alt,
 										} ) => {
 											setAttributes( {
 												[ `image${ i }Url` ]: url,
 												[ `image${ i }Id` ]: id,
+												[ `image${ i }Alt` ]: alt,
 											} )
 										} }
 										render={
