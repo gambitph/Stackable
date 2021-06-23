@@ -59,6 +59,7 @@ export const addAttributes = ( attrObject, options = {} ) => {
 				default: '',
 			},
 			imageFilter: {
+				stkHover: true,
 				type: 'string',
 				default: '',
 			},

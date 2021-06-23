@@ -33,6 +33,15 @@
 	width: 100%;
 }
 
+// Reset button.
+.ugb-advanced-toolbar-control .stk-control__reset-button {
+	top: 7px;
+}
+// Reset button for small toolbars.
+.ugb-advanced-toolbar-control .ugb-toolbar--small + .stk-control__reset-button {
+	top: 0;
+}
+
 /**
  * backward compatibility v5.4
  */

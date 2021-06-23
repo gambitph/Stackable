@@ -23,6 +23,7 @@
 // Hover transitions.
 .stk-block,
 .stk-container,
+.stk-container-padding,
 .stk-img-wrapper, // Images.
 .stk-img-wrapper img, // Images.
 .stk--has-background-overlay::before { // Image background overlays
@@ -31,7 +32,21 @@
 	border-style: none;
 }
 .stk-block {
-	will-change: transform, opacity, top, right, bottom, left;
+	will-change: transform, box-shadow, opacity, top, right, bottom, left, background, margin, padding, min-height, max-width;
+}
+.stk-container,
+.stk-container-padding {
+	will-change: transform, box-shadow, background, margin, padding, min-height, max-width;
+}
+.stk-img-wrapper img {
+	will-change: filter;
+}
+// Some attributes will not animate if they have no starting values.
+.stk-block,
+.stk-container,
+.stk-container-padding {
+	min-height: 0;
+	max-width: 100%;
 }
 
 /**

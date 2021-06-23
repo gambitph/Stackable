@@ -187,18 +187,15 @@ export const Edit = props => {
 						/>
 						<AdvancedToggleControl
 							label={ __( 'Flip Shape Horizontally', i18n ) }
-							checked={ attributes.imageShapeFlipX }
-							onChange={ imageShapeFlipX => updateBlockAttributes( clientId, { imageShapeFlipX } ) }
+							attribute="imageShapeFlipX"
 						/>
 						<AdvancedToggleControl
 							label={ __( 'Flip Shape Vertically', i18n ) }
-							checked={ attributes.imageShapeFlipY }
-							onChange={ imageShapeFlipY => updateBlockAttributes( clientId, { imageShapeFlipY } ) }
+							attribute="imageShapeFlipY"
 						/>
 						<AdvancedToggleControl
 							label={ __( 'Stretch Shape Mask', i18n ) }
-							checked={ attributes.imageShapeStretch }
-							onChange={ imageShapeStretch => updateBlockAttributes( clientId, { imageShapeStretch } ) }
+							attribute="imageShapeStretch"
 							defaultValue={ true }
 						/>
 					</ButtonIconPopoverControl>
@@ -206,14 +203,16 @@ export const Edit = props => {
 
 				<ButtonIconPopoverControl
 					label={ __( 'Image Filter', i18n ) }
+					popoverLabel=""
 					onReset={ () => {
 						updateBlockAttributes( clientId, { imageFilter: '' } )
 					} }
 					allowReset={ attributes.imageFilter }
 				>
 					<ImageFilterControl
-						value={ attributes.imageFilter }
-						onChange={ imageFilter => updateBlockAttributes( clientId, { imageFilter } ) }
+						label={ __( 'Image Filter', i18n ) }
+						attribute="imageFilter"
+						hover="all"
 					/>
 				</ButtonIconPopoverControl>
 			</PanelAdvancedSettings>

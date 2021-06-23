@@ -1,23 +1,17 @@
 export const sizeAttributes = {
 	height: {
 		stkResponsive: true,
+		stkHover: true,
+		stkUnits: 'px',
 		type: 'number',
 		default: '',
-	},
-	heightUnit: {
-		stkResponsive: true,
-		type: 'string',
-		default: 'px',
 	},
 	width: {
 		stkResponsive: true,
+		stkHover: true,
+		stkUnits: 'px',
 		type: 'number',
 		default: '',
-	},
-	widthUnit: {
-		stkResponsive: true,
-		type: 'string',
-		default: 'px',
 	},
 
 	verticalAlign: {
@@ -31,56 +25,17 @@ export const sizeAttributes = {
 		default: '',
 	},
 
-	marginTop: {
+	margin: {
 		stkResponsive: true,
-		type: 'number',
-		default: '',
+		stkHover: true,
+		stkUnits: 'px',
+		type: 'object',
 	},
-	marginRight: {
+	padding: {
 		stkResponsive: true,
-		type: 'number',
-		default: '',
-	},
-	marginBottom: {
-		stkResponsive: true,
-		type: 'number',
-		default: '',
-	},
-	marginLeft: {
-		stkResponsive: true,
-		type: 'number',
-		default: '',
-	},
-	marginUnit: {
-		stkResponsive: true,
-		type: 'string',
-		default: 'px',
-	},
-
-	paddingTop: {
-		stkResponsive: true,
-		type: 'number',
-		default: '',
-	},
-	paddingRight: {
-		stkResponsive: true,
-		type: 'number',
-		default: '',
-	},
-	paddingBottom: {
-		stkResponsive: true,
-		type: 'number',
-		default: '',
-	},
-	paddingLeft: {
-		stkResponsive: true,
-		type: 'number',
-		default: '',
-	},
-	paddingUnit: {
-		stkResponsive: true,
-		type: 'string',
-		default: 'px',
+		stkHover: true,
+		stkUnits: 'px',
+		type: 'object',
 	},
 }
 

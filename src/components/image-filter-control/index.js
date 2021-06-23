@@ -1,7 +1,9 @@
 /**
  * Internal dependencies
  */
-import { AdvancedRangeControl, BaseControl } from '..'
+import { AdvancedRangeControl } from '..'
+import { useControlHandlers } from '../base-control2/hooks'
+import AdvancedControl, { extractControlProps } from '../base-control2'
 
 /**
  * WordPress dependencies
@@ -104,28 +106,29 @@ const filterToValue = filters => {
 }
 
 export const ImageFilterControl = props => {
+	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover )
+	const [ _propsToPass, controlProps ] = extractControlProps( props )
+
 	const [ filters, setFilters ] = useState( {} )
+
+	const value = typeof props.value === 'undefined' ? _value : props.value
+	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
 
 	// Convert incoming value to filter values.
 	useEffect( () => {
-		const extractedValues = [ ...( props.value.matchAll( /([\w-]+)\(([^\)]+)\)/g ) ) ]
+		const extractedValues = [ ...( value.matchAll( /([\w-]+)\(([^\)]+)\)/g ) ) ]
 		const newFilters = extractedValues.reduce( ( filters, match ) => {
 			const [ , name, value ] = match
 			filters[ name ] = parseFloat( value )
 			return filters
 		}, {} )
 		setFilters( newFilters )
-	}, [ props.value ] )
+	}, [ value ] )
 
 	return (
-		<BaseControl
-			help={ props.help }
+		<AdvancedControl
+			{ ...controlProps }
 			className={ classnames( 'stk-image-filter-control', props.className ) }
-			label={ props.label }
-			units={ props.units }
-			unit={ props.unit }
-			onChangeUnit={ props.onChangeUnit }
-			screens={ props.screens }
 		>
 			{ Object.keys( FILTERS ).map( ( filterName, i ) => {
 				const filter = FILTERS[ filterName ]
@@ -138,23 +141,33 @@ export const ImageFilterControl = props => {
 						onChange={ value => {
 							filters[ filterName ] = value
 							setFilters( filters )
-							props.onChange( filterToValue( filters ) )
+							onChange( filterToValue( filters ) )
 						} }
 					/>
 				)
 			} ) }
-		</BaseControl>
+		</AdvancedControl>
 	)
 }
 
 ImageFilterControl.defaultProps = {
-	onChange: () => {},
-	help: '',
-	className: '',
-	screens: [ 'desktop' ],
+	// onChange: () => {},
+	// help: '',
+	// className: '',
+	// screens: [ 'desktop' ],
+	// allowReset: true,
+	// value: '',
+	// defaultValue: '',
+
 	allowReset: true,
-	value: '',
-	defaultValue: '',
+	default: '',
+
+	attribute: '',
+	responsive: false,
+	hover: false,
+
+	value: undefined,
+	onChange: undefined,
 }
 
 export default ImageFilterControl
