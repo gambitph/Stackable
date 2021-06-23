@@ -115,29 +115,10 @@ export const iconAttributes = {
 		type: 'number',
 		default: '',
 	},
-	shapeOutlineWidthTop: {
+	shapeOutlineWidth: {
 		stkHover: true,
 		stkResponsive: true,
-		type: 'number',
-		default: '',
-	},
-	shapeOutlineWidthRight: {
-		stkHover: true,
-		stkResponsive: true,
-		type: 'number',
-		default: '',
-	},
-	shapeOutlineWidthBottom: {
-		stkHover: true,
-		stkResponsive: true,
-		type: 'number',
-		default: '',
-	},
-	shapeOutlineWidthLeft: {
-		stkHover: true,
-		stkResponsive: true,
-		type: 'number',
-		default: '',
+		type: 'object',
 	},
 }
 

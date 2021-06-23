@@ -6,25 +6,9 @@ export const addAttributes = ( attrObject, options = {} ) => {
 	} = options
 	attrObject.add( {
 		attributes: {
-			buttonPaddingTop: {
+			buttonPadding: {
 				stkResponsive: true,
-				type: 'number',
-				default: '',
-			},
-			buttonPaddingBottom: {
-				stkResponsive: true,
-				type: 'number',
-				default: '',
-			},
-			buttonPaddingRight: {
-				stkResponsive: true,
-				type: 'number',
-				default: '',
-			},
-			buttonPaddingLeft: {
-				stkResponsive: true,
-				type: 'number',
-				default: '',
+				type: 'object',
 			},
 			buttonPaddingUnit: {
 				stkResponsive: true,

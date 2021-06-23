@@ -7,7 +7,7 @@ import {
 	useAttributeEditHandlers, useBlockAttributes, useBlockHoverState,
 } from '~stackable/hooks'
 import {
-	AdvancedRangeControl2,
+	AdvancedRangeControl,
 	AdvancedSelectControl,
 	AdvancedToolbarControl,
 	AlignButtonsControl,
@@ -101,7 +101,7 @@ const TypographyControls = props => {
 					onChange={ fontFamily => setAttributes( { [ getAttributeName( 'fontFamily' ) ]: fontFamily } ) }
 					value={ attributes[ getAttributeName( 'fontFamily' ) ] }
 				/>
-				<AdvancedRangeControl2
+				<AdvancedRangeControl
 					label={ __( 'Size', i18n ) }
 					allowReset={ true }
 					attribute="fontSize"
@@ -144,7 +144,7 @@ const TypographyControls = props => {
 					attribute="textTransform"
 					hover="all"
 				/>
-				<AdvancedRangeControl2
+				<AdvancedRangeControl
 					label={ __( 'Line-Height', i18n ) }
 					attribute="lineHeight"
 					units={ [ 'px', 'em' ] }
@@ -157,7 +157,7 @@ const TypographyControls = props => {
 					responsive="all"
 					hover="all"
 				/>
-				<AdvancedRangeControl2
+				<AdvancedRangeControl
 					label={ __( 'Letter Spacing', i18n ) }
 					attribute="letterSpacing"
 					min={ -5 }
@@ -168,7 +168,7 @@ const TypographyControls = props => {
 					hover="all"
 				/>
 			</ButtonIconPopoverControl>
-			<AdvancedRangeControl2
+			<AdvancedRangeControl
 				label={ __( 'Size', i18n ) }
 				allowReset={ true }
 				attribute="fontSize"
@@ -216,7 +216,7 @@ const TypographyControls = props => {
 						hover="all"
 					/>
 
-					<AdvancedRangeControl2
+					<AdvancedRangeControl
 						label={ __( 'Gradient Direction (degrees)', i18n ) }
 						attribute="textGradientDirection"
 						hover="all"

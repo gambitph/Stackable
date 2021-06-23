@@ -152,10 +152,10 @@ const getStyleParams = ( options = {} ) => {
 			attrName: 'borderStyle',
 			valuePreCallback: ( value, getAttribute, device, state ) => {
 				if (
-					! getAttribute( 'shapeOutlineWidthTop', 'desktop', state ) ||
-					! getAttribute( 'shapeOutlineWidthRight', 'desktop', state ) ||
-					! getAttribute( 'shapeOutlineWidthBottom', 'desktop', state ) ||
-					! getAttribute( 'shapeOutlineWidthLeft', 'desktop', state ) ||
+					! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.top ||
+					! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.right ||
+					! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.bottom ||
+					! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.left ||
 					! getAttribute( 'shapeOutline', 'desktop', state )
 				) {
 					return undefined
@@ -166,22 +166,50 @@ const getStyleParams = ( options = {} ) => {
 			enabledCallback: attributes => attributes.shaped,
 			hover: 'all',
 			hoverSelector,
-			dependencies: [ 'shaped', 'shapeOutline', 'shapeOutlineWidthTop', 'shapeOutlineWidthRight', 'shapeOutlineWidthBottom', 'shapeOutlineWidthLeft' ],
+			dependencies: [ 'shaped', 'shapeOutline', 'shapeOutlineWidth' ],
 		},
 		{
 			selector,
-			styles: {
-				borderTopWidth: 'shapeOutlineWidthTop',
-				borderRightWidth: 'shapeOutlineWidthRight',
-				borderBottomWidth: 'shapeOutlineWidthBottom',
-				borderLeftWidth: 'shapeOutlineWidthLeft',
-			},
-			enabledCallback: attributes => attributes.shaped,
-			valuePreCallback: ( value, getAttribute, device, state ) => getAttribute( 'shapeOutline', 'desktop', state ) ? value : undefined,
+			styleRule: 'borderTopWidth',
+			attrName: 'shapeOutlineWidth',
 			hover: 'all',
 			hoverSelector,
 			responsive: 'all',
 			format: '%spx',
+			valuePreCallback: ( value, getAttribute, device, state ) => getAttribute( 'shapeOutline', 'desktop', state ) ? value?.top : undefined,
+			dependencies: [ 'shapeOutline', 'shaped' ],
+		},
+		{
+			selector,
+			styleRule: 'borderRightWidth',
+			attrName: 'shapeOutlineWidth',
+			hover: 'all',
+			hoverSelector,
+			responsive: 'all',
+			format: '%spx',
+			valuePreCallback: ( value, getAttribute, device, state ) => getAttribute( 'shapeOutline', 'desktop', state ) ? value?.right : undefined,
+			dependencies: [ 'shapeOutline', 'shaped' ],
+		},
+		{
+			selector,
+			styleRule: 'borderBottomWidth',
+			attrName: 'shapeOutlineWidth',
+			hover: 'all',
+			hoverSelector,
+			responsive: 'all',
+			format: '%spx',
+			valuePreCallback: ( value, getAttribute, device, state ) => getAttribute( 'shapeOutline', 'desktop', state ) ? value?.bottom : undefined,
+			dependencies: [ 'shapeOutline', 'shaped' ],
+		},
+		{
+			selector,
+			styleRule: 'borderLeftWidth',
+			attrName: 'shapeOutlineWidth',
+			hover: 'all',
+			hoverSelector,
+			responsive: 'all',
+			format: '%spx',
+			valuePreCallback: ( value, getAttribute, device, state ) => getAttribute( 'shapeOutline', 'desktop', state ) ? value?.left : undefined,
 			dependencies: [ 'shapeOutline', 'shaped' ],
 		},
 

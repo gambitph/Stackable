@@ -9,7 +9,7 @@ import {
 	IconControl,
 	AdvancedSelectControl,
 	ImageShapeControl,
-	AdvancedRangeControl2,
+	AdvancedRangeControl,
 	FourRangeControl2,
 } from '~stackable/components'
 import { i18n } from 'stackable'
@@ -87,7 +87,7 @@ const IconControls = props => {
 								hover="all"
 							/>
 
-							<AdvancedRangeControl2
+							<AdvancedRangeControl
 								label={ __( 'Gradient Direction (degrees)', i18n ) }
 								attribute="iconColorGradientDirection"
 								hover="all"
@@ -109,7 +109,7 @@ const IconControls = props => {
 				/>
 			) }
 
-			<AdvancedRangeControl2
+			<AdvancedRangeControl
 				label={ __( 'Icon Size', i18n ) }
 				attribute="iconSize"
 				min={ 0 }
@@ -119,7 +119,7 @@ const IconControls = props => {
 				hover="all"
 			/>
 
-			<AdvancedRangeControl2
+			<AdvancedRangeControl
 				label={ __( 'Icon Opacity', i18n ) }
 				attribute="iconOpacity"
 				min={ 0 }
@@ -130,7 +130,7 @@ const IconControls = props => {
 				hover="all"
 			/>
 
-			<AdvancedRangeControl2
+			<AdvancedRangeControl
 				label={ __( 'Icon Rotation', i18n ) }
 				attribute="iconRotation"
 				min={ 0 }
@@ -149,7 +149,7 @@ const IconControls = props => {
 				] }
 			/>
 
-			<AdvancedRangeControl2
+			<AdvancedRangeControl
 				label={ __( 'Icon Gap', i18n ) }
 				attribute="iconGap"
 				min={ 0 }
@@ -177,7 +177,7 @@ const IconControls = props => {
 								hasTransparent={ true }
 							/>
 
-							<AdvancedRangeControl2
+							<AdvancedRangeControl
 								label={ __( 'Shape Border Radius', i18n ) }
 								attribute="shapeBorderRadius"
 								hover="all"
@@ -188,7 +188,7 @@ const IconControls = props => {
 								placeholder={ 50 }
 							/>
 
-							<AdvancedRangeControl2
+							<AdvancedRangeControl
 								label={ __( 'Shape Padding', i18n ) }
 								attribute="shapePadding"
 								hover="all"
@@ -222,7 +222,7 @@ const IconControls = props => {
 										step={ 1 }
 										sliderMax={ 5 }
 										defaultLocked={ true }
-										attribute={ 'shapeOutLineWidth' }
+										attribute="shapeOutLineWidth"
 										responsive="all"
 										hover="all"
 										default="1"
@@ -259,7 +259,7 @@ const IconControls = props => {
 								hover="all"
 							/>
 
-							<AdvancedRangeControl2
+							<AdvancedRangeControl
 								label={ __( 'Shape Opacity', i18n ) }
 								attribute="backgroundShapeOpacity"
 								hover="all"
@@ -270,7 +270,7 @@ const IconControls = props => {
 								allowReset={ true }
 							/>
 
-							<AdvancedRangeControl2
+							<AdvancedRangeControl
 								label={ __( 'Shape Size', i18n ) }
 								attribute="backgroundShapeSize"
 								hover="all"
@@ -281,7 +281,7 @@ const IconControls = props => {
 								allowReset={ true }
 							/>
 
-							<AdvancedRangeControl2
+							<AdvancedRangeControl
 								label={ __( 'Horizontal Offset', i18n ) }
 								attribute="backgroundShapeOffsetHorizontal"
 								hover="all"
@@ -292,7 +292,7 @@ const IconControls = props => {
 								allowReset={ true }
 							/>
 
-							<AdvancedRangeControl2
+							<AdvancedRangeControl
 								label={ __( 'Vertical Offset', i18n ) }
 								attribute="backgroundShapeOffsetVertical"
 								hover="all"

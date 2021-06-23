@@ -2,7 +2,7 @@
  * External dependencies
  */
 import {
-	AdvancedRangeControl2,
+	AdvancedRangeControl,
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 	BaseControl,
@@ -88,7 +88,7 @@ export const Edit = () => {
 											hover="all"
 										/>
 
-										<AdvancedRangeControl2
+										<AdvancedRangeControl
 											label={ __( 'Gradient Direction (degrees)', i18n ) }
 											attribute="buttonBackgroundGradientDirection"
 											min={ 0 }

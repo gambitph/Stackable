@@ -16,16 +16,34 @@ const getStyleParams = options => {
 		{
 			selector,
 			responsive: 'all',
-			styles: {
-				paddingTop: 'buttonPaddingTop',
-				paddingBottom: 'buttonPaddingBottom',
-				paddingRight: 'buttonPaddingRight',
-				paddingLeft: 'buttonPaddingLeft',
-			},
-			valueCallback: ( value, getAttribute, device, state ) => {
-				return `${ value }${ getAttribute( 'buttonPaddingUnit', device, state ) || 'px' }`
-			},
-			dependencies: [ 'buttonPaddingUnit' ],
+			styleRule: 'paddingTop',
+			attrName: 'buttonPadding',
+			hasUnits: 'px',
+			valuePreCallback: value => value?.top,
+		},
+		{
+			selector,
+			responsive: 'all',
+			styleRule: 'paddingRight',
+			attrName: 'buttonPadding',
+			hasUnits: 'px',
+			valuePreCallback: value => value?.right,
+		},
+		{
+			selector,
+			responsive: 'all',
+			styleRule: 'paddingBottom',
+			attrName: 'buttonPadding',
+			hasUnits: 'px',
+			valuePreCallback: value => value?.bottom,
+		},
+		{
+			selector,
+			responsive: 'all',
+			styleRule: 'paddingLeft',
+			attrName: 'buttonPadding',
+			hasUnits: 'px',
+			valuePreCallback: value => value?.left,
 		},
 		{
 			selector,
