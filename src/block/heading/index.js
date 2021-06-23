@@ -1,5 +1,5 @@
 /**
- * BLOCK: Advanced Heading Block.
+ * BLOCK: Heading Block.
  */
 /**
  * External dependencies
