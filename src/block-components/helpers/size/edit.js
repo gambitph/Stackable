@@ -40,6 +40,7 @@ export const SizeControls = props => {
 				label={ labelHeight }
 				attribute={ getAttrName( 'height' ) }
 				responsive="all"
+				hover="all"
 				units={ [ 'px', 'vh' ] }
 				min={ [ 0, 0 ] }
 				sliderMax={ [ 1000, 100 ] }
@@ -61,6 +62,7 @@ export const SizeControls = props => {
 				label={ labelContentWidth }
 				attribute={ getAttrName( 'width' ) }
 				responsive="all"
+				hover="all"
 				units={ [ 'px', '%' ] }
 				min={ [ 0, 0 ] }
 				sliderMax={ [ 1500, 100 ] }
@@ -104,6 +106,7 @@ export const SizeControls = props => {
 				label={ labelPaddings }
 				attribute={ getAttrName( 'padding' ) }
 				responsive="all"
+				hover="all"
 				units={ [ 'px', 'em', '%' ] }
 				defaultLocked={ true }
 				min={ [ 0, 0, 0 ] }
@@ -116,6 +119,7 @@ export const SizeControls = props => {
 					label={ labelMargins }
 					attribute={ getAttrName( 'margin' ) }
 					responsive="all"
+					hover="all"
 					units={ [ 'px', '%' ] }
 					defaultLocked={ false }
 					sliderMin={ [ -200, -100 ] }

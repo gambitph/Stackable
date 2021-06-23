@@ -1,12 +1,14 @@
 export const sizeAttributes = {
 	height: {
 		stkResponsive: true,
+		stkHover: true,
 		stkUnits: 'px',
 		type: 'number',
 		default: '',
 	},
 	width: {
 		stkResponsive: true,
+		stkHover: true,
 		stkUnits: 'px',
 		type: 'number',
 		default: '',
@@ -25,11 +27,13 @@ export const sizeAttributes = {
 
 	margin: {
 		stkResponsive: true,
+		stkHover: true,
 		stkUnits: 'px',
 		type: 'object',
 	},
 	padding: {
 		stkResponsive: true,
+		stkHover: true,
 		stkUnits: 'px',
 		type: 'object',
 	},
