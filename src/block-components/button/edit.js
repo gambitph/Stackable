@@ -36,91 +36,89 @@ export const Edit = () => {
 	} = useAttributeEditHandlers()
 
 	return (
-		<Fragment>
-			<InspectorStyleControls>
-				<PanelAdvancedSettings
-					title={ __( 'Link', i18n ) }
-					id="link"
-				>
-					<LinkControls attrNameTemplate="link%s" />
-				</PanelAdvancedSettings>
+		<InspectorStyleControls>
+			<PanelAdvancedSettings
+				title={ __( 'Link', i18n ) }
+				id="link"
+			>
+				<LinkControls attrNameTemplate="link%s" />
+			</PanelAdvancedSettings>
 
-				<PanelAdvancedSettings
-					title={ __( 'Button', i18n ) }
-					id="button"
-				>
+			<PanelAdvancedSettings
+				title={ __( 'Button', i18n ) }
+				id="button"
+			>
 
-					<Fragment>
-						<BaseControl
-							id="stk-button-normal-color-type"
-						>
-							<Fragment>
-								<AdvancedToolbarControl
-									controls={ [
-										{
-											value: '',
-											title: __( 'Single', i18n ),
-										},
-										{
-											value: 'gradient',
-											title: __( 'Gradient', i18n ),
-										},
-									] }
-									attribute="buttonBackgroundColorType"
-									isSmall={ true }
-									fullwidth={ false }
-									hover="all"
-								/>
-								<ColorPaletteControl
-									label={ getAttribute( 'buttonBackgroundColorType', 'desktop', hoverState ) === 'gradient'
-										? sprintf( __( 'Button Color #%s', i18n ), 1 )
-										: __( 'Button Color', i18n )
-									}
-									attribute="buttonBackgroundColor"
-									hasTransparent={ getAttribute( 'buttonBackgroundColorType', 'desktop', hoverState ) === 'gradient' !== 'gradient' }
-									hover="all"
-								/>
-								{ getAttribute( 'buttonBackgroundColorType', 'desktop', hoverState ) === 'gradient' && (
-									<Fragment>
-										<ColorPaletteControl
-											label={ __( 'Button Color #2', i18n ) }
-											attribute="buttonBackgroundColor2"
-											hover="all"
-										/>
+				<Fragment>
+					<BaseControl
+						id="stk-button-normal-color-type"
+					>
+						<Fragment>
+							<AdvancedToolbarControl
+								controls={ [
+									{
+										value: '',
+										title: __( 'Single', i18n ),
+									},
+									{
+										value: 'gradient',
+										title: __( 'Gradient', i18n ),
+									},
+								] }
+								attribute="buttonBackgroundColorType"
+								isSmall={ true }
+								fullwidth={ false }
+								hover="all"
+							/>
+							<ColorPaletteControl
+								label={ getAttribute( 'buttonBackgroundColorType', 'desktop', hoverState ) === 'gradient'
+									? sprintf( __( 'Button Color #%s', i18n ), 1 )
+									: __( 'Button Color', i18n )
+								}
+								attribute="buttonBackgroundColor"
+								hasTransparent={ getAttribute( 'buttonBackgroundColorType', 'desktop', hoverState ) === 'gradient' !== 'gradient' }
+								hover="all"
+							/>
+							{ getAttribute( 'buttonBackgroundColorType', 'desktop', hoverState ) === 'gradient' && (
+								<Fragment>
+									<ColorPaletteControl
+										label={ __( 'Button Color #2', i18n ) }
+										attribute="buttonBackgroundColor2"
+										hover="all"
+									/>
 
-										<AdvancedRangeControl
-											label={ __( 'Gradient Direction (degrees)', i18n ) }
-											attribute="buttonBackgroundGradientDirection"
-											min={ 0 }
-											max={ 360 }
-											step={ 10 }
-											allowReset={ true }
-											hover="all"
-										/>
-									</Fragment>
-								) }
-							</Fragment>
-						</BaseControl>
+									<AdvancedRangeControl
+										label={ __( 'Gradient Direction (degrees)', i18n ) }
+										attribute="buttonBackgroundGradientDirection"
+										min={ 0 }
+										max={ 360 }
+										step={ 10 }
+										allowReset={ true }
+										hover="all"
+									/>
+								</Fragment>
+							) }
+						</Fragment>
+					</BaseControl>
 
-						<BorderControls
-							blockEl={ blockEl }
-							blockElSelector=".stk-button__button"
-							attrNameTemplate="button%s"
-						/>
+					<BorderControls
+						blockEl={ blockEl }
+						blockElSelector=".stk-button__button"
+						attrNameTemplate="button%s"
+					/>
 
-						<FourRangeControl
-							label={ __( 'Button Paddings', i18n ) }
-							units={ [ 'px', '%' ] }
-							responsive="all"
-							defaultLocked={ false }
-							attribute="buttonPadding"
-							sliderMin={ [ 0, 0 ] }
-							sliderMax={ [ 40, 100 ] }
-						/>
+					<FourRangeControl
+						label={ __( 'Button Paddings', i18n ) }
+						units={ [ 'px', '%' ] }
+						responsive="all"
+						defaultLocked={ false }
+						attribute="buttonPadding"
+						sliderMin={ [ 0, 0 ] }
+						sliderMax={ [ 40, 100 ] }
+					/>
 
-					</Fragment>
-				</PanelAdvancedSettings>
-			</InspectorStyleControls>
-		</Fragment>
+				</Fragment>
+			</PanelAdvancedSettings>
+		</InspectorStyleControls>
 	)
 }
