@@ -107,12 +107,18 @@ const StackableRangeControl = memo( props => {
 	// This makes sure that dynamic placeholders can be recomputed after other
 	// styles have been applied.
 	const [ placeholderValue, setPlaceholderValue ] = useState( props.placeholder )
+	useEffect( () => {
+		setPlaceholderValue( props.placeholder )
+	}, [ props.placeholder ] )
 	const [ deviceType ] = useDeviceType()
 	useLayoutEffect( () => {
-		setPlaceholderValue( ( placeholderRender && ! value )
-			? placeholderRender( value )
-			: ( props.placeholder !== null ? props.placeholder : initialPosition ) )
-	}, [ deviceType, !! value ] )
+		const timeout = setTimeout( () => {
+			setPlaceholderValue( ( placeholderRender && ! value )
+				? placeholderRender( value )
+				: ( props.placeholder !== null ? props.placeholder : initialPosition ) )
+		}, 400 )
+		return () => clearTimeout( timeout )
+	}, [ deviceType, !! value, props.placeholder ] )
 
 	return <div
 		className={ classNames }

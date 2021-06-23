@@ -7,6 +7,7 @@ export const addAttributes = attrObject => {
 			},
 			opacity: {
 				stkResponsive: true,
+				stkHover: true,
 				type: 'number',
 				default: '',
 			},
@@ -20,35 +21,19 @@ export const addAttributes = attrObject => {
 				type: 'string',
 				default: '',
 			},
-
 			clear: {
 				type: 'string',
 				default: '',
 			},
 			position: {
 				stkResponsive: true,
-				stkUnits: 'px',
 				type: 'string',
 				default: '',
 			},
-			positionTop: {
+			positionNum: {
 				stkResponsive: true,
-				type: 'number',
-				default: '',
-			},
-			positionRight: {
-				stkResponsive: true,
-				type: 'number',
-				default: '',
-			},
-			positionBottom: {
-				stkResponsive: true,
-				type: 'number',
-				default: '',
-			},
-			positionLeft: {
-				stkResponsive: true,
-				type: 'number',
+				stkHover: true,
+				type: 'object',
 				default: '',
 			},
 		},

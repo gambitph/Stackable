@@ -160,6 +160,7 @@ addFilter( 'stackable.team-member.edit.inspector.style.before', 'stackable/team-
 					min={ 1 }
 					max={ 3 }
 					className="ugb--help-tip-general-columns"
+					default={ 2 }
 				/>
 				<ContentAlignControl
 					setAttributes={ setAttributes }

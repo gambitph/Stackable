@@ -1,70 +1,91 @@
 /**
  * External dependencies
  */
-import { getAttrNameFunction, __getValue } from '~stackable/util'
+import { getStyles, useStyles } from '~stackable/util'
 import { Style as StyleComponent } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import { Fragment, useMemo } from '@wordpress/element'
+import { Fragment } from '@wordpress/element'
 
-const getStyles1 = ( attributes, options = {} ) => {
+const getStyleParams = ( options = {} ) => {
 	const {
 		selector = '',
 		attrNameTemplate = '%s',
 	} = options
 
-	const getAttrName = getAttrNameFunction( attrNameTemplate )
-	const getValue = __getValue( attributes, getAttrName )
-
-	return {
-		[ selector ]: {
-			borderRadius: getValue( 'borderRadius', '%spx' ),
-			boxShadow: getValue( 'shadow' ),
+	return [
+		{
+			selector,
+			styleRule: 'borderRadius',
+			attrName: 'borderRadius',
+			attrNameTemplate,
+			format: '%spx',
+			responsive: 'all',
+			hover: 'all',
 		},
-	}
-}
-
-const getStyles2 = ( attributes, options = {} ) => {
-	const {
-		selector = '',
-		attrNameTemplate = '%s',
-	} = options
-
-	const getAttrName = getAttrNameFunction( attrNameTemplate )
-	const getValue = __getValue( attributes, getAttrName )
-
-	if ( ! getValue( 'BorderType' ) ) {
-		return {}
-	}
-
-	return {
-		[ selector ]: {
-			borderStyle: getValue( 'BorderType' ),
-			borderColor: getValue( 'BorderColor' ) ? getValue( 'BorderColor' ) : undefined,
-			borderTopWidth: getValue( 'BorderWidthTop', '%spx' ) || '1px',
-			borderRightWidth: getValue( 'BorderWidthRight', '%spx' ) || '1px',
-			borderBottomWidth: getValue( 'BorderWidthBottom', '%spx' ) || '1px',
-			borderLeftWidth: getValue( 'BorderWidthLeft', '%spx' ) || '1px',
+		{
+			selector,
+			styleRule: 'boxShadow',
+			attrName: 'shadow',
+			attrNameTemplate,
+			hover: 'all',
 		},
-		tablet: {
-			[ selector ]: {
-				borderTopWidth: getValue( 'BorderWidthTopTablet', '%spx' ),
-				borderRightWidth: getValue( 'BorderWidthRightTablet', '%spx' ),
-				borderBottomWidth: getValue( 'BorderWidthBottomTablet', '%spx' ),
-				borderLeftWidth: getValue( 'BorderWidthLeftTablet', '%spx' ),
-			},
+		{
+			selector,
+			styleRule: 'borderStyle',
+			attrName: 'borderType',
+			attrNameTemplate,
 		},
-		mobile: {
-			[ selector ]: {
-				borderTopWidth: getValue( 'BorderWidthTopMobile', '%spx' ),
-				borderRightWidth: getValue( 'BorderWidthRightMobile', '%spx' ),
-				borderBottomWidth: getValue( 'BorderWidthBottomMobile', '%spx' ),
-				borderLeftWidth: getValue( 'BorderWidthLeftMobile', '%spx' ),
-			},
+		{
+			selector,
+			styleRule: 'borderColor',
+			attrName: 'borderColor',
+			attrNameTemplate,
+			hover: 'all',
 		},
-	}
+		{
+			selector,
+			styleRule: 'borderTopWidth',
+			attrName: 'borderWidth',
+			attrNameTemplate,
+			responsive: 'all',
+			hover: 'all',
+			format: '%spx',
+			valuePreCallback: value => value?.top,
+		},
+		{
+			selector,
+			styleRule: 'borderRightWidth',
+			attrName: 'borderWidth',
+			attrNameTemplate,
+			responsive: 'all',
+			hover: 'all',
+			format: '%spx',
+			valuePreCallback: value => value?.right,
+		},
+		{
+			selector,
+			styleRule: 'borderBottomWidth',
+			attrName: 'borderWidth',
+			attrNameTemplate,
+			responsive: 'all',
+			hover: 'all',
+			format: '%spx',
+			valuePreCallback: value => value?.bottom,
+		},
+		{
+			selector,
+			styleRule: 'borderLeftWidth',
+			attrName: 'borderWidth',
+			attrNameTemplate,
+			responsive: 'all',
+			hover: 'all',
+			format: '%spx',
+			valuePreCallback: value => value?.left,
+		},
+	]
 }
 
 export const BorderStyle = props => {
@@ -73,60 +94,13 @@ export const BorderStyle = props => {
 		options = {},
 		...propsToPass
 	} = props
-	const {
-		attrNameTemplate = '%s',
-	} = options
 
-	const getAttrName = getAttrNameFunction( attrNameTemplate )
-	const getValue = __getValue( attributes, getAttrName )
-
-	const styles1 = useMemo(
-		() => getStyles1( attributes, options ),
-		[
-			options.attrNameTemplate,
-			options.selector,
-			getValue( 'borderRadius' ),
-			getValue( 'shadow' ),
-			attributes.uniqueId,
-		]
-	)
-
-	const styles2 = useMemo(
-		() => getStyles2( attributes, options ),
-		[
-			options.attrNameTemplate,
-			options.selector,
-			getValue( 'borderRadius' ),
-			getValue( 'BorderType' ),
-			getValue( 'BorderColor' ),
-			getValue( 'BorderWidthTop' ),
-			getValue( 'BorderWidthRight' ),
-			getValue( 'BorderWidthBottom' ),
-			getValue( 'BorderWidthLeft' ),
-
-			getValue( 'BorderWidthTopTablet' ),
-			getValue( 'BorderWidthRightTablet' ),
-			getValue( 'BorderWidthBottomTablet' ),
-			getValue( 'BorderWidthLeftTablet' ),
-
-			getValue( 'BorderWidthTopMobile' ),
-			getValue( 'BorderWidthRightMobile' ),
-			getValue( 'BorderWidthBottomMobile' ),
-			getValue( 'BorderWidthLeftMobile' ),
-			attributes.uniqueId,
-		]
-	)
+	const styles = useStyles( attributes, getStyleParams( options ) )
 
 	return (
 		<Fragment>
 			<StyleComponent
-				styles={ styles1 }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-			<StyleComponent
-				styles={ styles2 }
+				styles={ styles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
 				{ ...propsToPass }
@@ -142,19 +116,12 @@ BorderStyle.Content = props => {
 		...propsToPass
 	} = props
 
-	const styles1 = getStyles1( attributes, options )
-	const styles2 = getStyles2( attributes, options )
+	const styles = getStyles( attributes, getStyleParams( options ) )
 
 	return (
 		<Fragment>
 			<StyleComponent.Content
-				styles={ styles1 }
-				versionAdded="3.0.0"
-				versionDeprecated=""
-				{ ...propsToPass }
-			/>
-			<StyleComponent.Content
-				styles={ styles2 }
+				styles={ styles }
 				versionAdded="3.0.0"
 				versionDeprecated=""
 				{ ...propsToPass }

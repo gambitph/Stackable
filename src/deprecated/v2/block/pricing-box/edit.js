@@ -161,6 +161,7 @@ addFilter( 'stackable.pricing-box.edit.inspector.style.before', 'stackable/prici
 					min={ 1 }
 					max={ 3 }
 					className="ugb--help-tip-general-columns"
+					default={ 2 }
 				/>
 				<ContentAlignControl
 					setAttributes={ setAttributes }

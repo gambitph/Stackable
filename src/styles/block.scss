@@ -30,6 +30,9 @@
 	border-width: 1px;
 	border-style: none;
 }
+.stk-block {
+	will-change: transform, opacity, top, right, bottom, left;
+}
 
 /**
  * Resizeable rows and columns

@@ -1,35 +1,20 @@
-import { expandAttributes } from '~stackable/util'
-
-export const borderAttributes = expandAttributes( {
+export const borderAttributes = {
 	borderType: {
 		type: 'string',
 		default: '',
 	},
 	borderColor: {
+		stkHover: true,
 		type: 'string',
 		default: '',
 	},
-	borderWidthTop: {
+	borderWidth: {
 		stkResponsive: true,
-		type: 'number',
-		default: '',
-	},
-	borderWidthRight: {
-		stkResponsive: true,
-		type: 'number',
-		default: '',
-	},
-	borderWidthBottom: {
-		stkResponsive: true,
-		type: 'number',
-		default: '',
-	},
-	borderWidthLeft: {
-		stkResponsive: true,
-		type: 'number',
-		default: '',
+		stkHover: true,
+		type: 'object',
 	},
 	borderRadius: {
+		stkResponsive: true,
 		stkHover: true,
 		type: 'number',
 		default: '',
@@ -39,7 +24,7 @@ export const borderAttributes = expandAttributes( {
 		type: 'string',
 		default: '',
 	},
-} )
+}
 
 export const addBorderAttributes = ( attrObject, attrNameTemplate = '%s' ) => {
 	attrObject.add( {

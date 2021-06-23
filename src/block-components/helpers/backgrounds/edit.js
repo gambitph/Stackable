@@ -10,7 +10,7 @@ import {
 	ColorPaletteControl,
 	ControlSeparator,
 	AdvancedToggleControl,
-	AdvancedRangeControl2,
+	AdvancedRangeControl,
 	ImageControl2,
 } from '~stackable/components'
 import {
@@ -74,7 +74,7 @@ export const BackgroundControls = props => {
 			/>
 			{ getAttribute( 'backgroundColorType' ) !== 'gradient' &&
 				( ! getAttribute( 'backgroundMediaUrl' ) && ! getAttribute( 'backgroundMediaUrlTablet' ) && ! getAttribute( 'backgroundMediaUrlMobile' ) ) && (
-				<AdvancedRangeControl2
+				<AdvancedRangeControl
 					label={ __( 'Background Color Opacity', i18n ) }
 					attribute={ getAttrName( 'backgroundColorOpacity' ) }
 					hover="all"
@@ -110,7 +110,7 @@ export const BackgroundControls = props => {
 						getAttribute( 'backgroundGradientBlendMode' )
 					}
 				>
-					<AdvancedRangeControl2
+					<AdvancedRangeControl
 						label={ __( 'Gradient Direction (degrees)', i18n ) }
 						attribute={ getAttrName( 'backgroundGradientDirection' ) }
 						min={ 0 }
@@ -121,7 +121,7 @@ export const BackgroundControls = props => {
 						className="ugb--help-tip-gradient-direction"
 					/>
 
-					<AdvancedRangeControl2
+					<AdvancedRangeControl
 						label={ sprintf( __( 'Color %d Location', i18n ), 1 ) }
 						attribute={ getAttrName( 'backgroundGradientLocation1' ) }
 						min={ 0 }
@@ -132,7 +132,7 @@ export const BackgroundControls = props => {
 						className="ugb--help-tip-gradient-location"
 					/>
 
-					<AdvancedRangeControl2
+					<AdvancedRangeControl
 						label={ sprintf( __( 'Color %d Location', i18n ), 2 ) }
 						attribute={ getAttrName( 'backgroundGradientLocation2' ) }
 						min={ 0 }
@@ -164,7 +164,7 @@ export const BackgroundControls = props => {
 			/>
 
 			{ hasBackgroundMedia &&
-				<AdvancedRangeControl2
+				<AdvancedRangeControl
 					label={ __( 'Background Media Tint Strength', i18n ) }
 					attribute={ getAttrName( 'backgroundTintStrength' ) }
 					hover="all"
@@ -264,7 +264,7 @@ export const BackgroundControls = props => {
 					/>
 
 					{ getAttributes()[ getAttributeName( getAttrName( 'backgroundSize' ), deviceType ) ] === 'custom' &&
-						<AdvancedRangeControl2
+						<AdvancedRangeControl
 							label={ __( 'Custom Size', i18n ) }
 							attribute={ getAttrName( 'backgroundCustomSize' ) }
 							responsive="all"

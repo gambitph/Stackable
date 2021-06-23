@@ -1,6 +1,4 @@
-import { expandAttributes } from '~stackable/util'
-
-export const sizeAttributes = expandAttributes( {
+export const sizeAttributes = {
 	height: {
 		stkResponsive: true,
 		type: 'number',
@@ -84,7 +82,7 @@ export const sizeAttributes = expandAttributes( {
 		type: 'string',
 		default: 'px',
 	},
-} )
+}
 
 export const addSizeAttributes = ( attrObject, attrNameTemplate = '%s' ) => {
 	attrObject.add( {

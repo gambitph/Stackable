@@ -4,7 +4,7 @@
 import { i18n } from 'stackable'
 import {
 	AdvancedFocalPointControl,
-	AdvancedRangeControl2,
+	AdvancedRangeControl,
 	AdvancedSelectControl,
 	AdvancedToggleControl,
 	ButtonIconPopoverControl,
@@ -66,7 +66,7 @@ export const Edit = props => {
 				/>
 
 				{ props.hasWidth &&
-					<AdvancedRangeControl2
+					<AdvancedRangeControl
 						label={ __( 'Width 2', i18n ) }
 						attribute="imageWidth"
 						units={ props.widthUnits }
@@ -81,7 +81,7 @@ export const Edit = props => {
 				}
 
 				{ props.hasHeight &&
-					<AdvancedRangeControl2
+					<AdvancedRangeControl
 						label={ __( 'Height', i18n ) }
 						attribute="imageHeight"
 						units={ props.heightUnits }
@@ -100,7 +100,7 @@ export const Edit = props => {
 					onChange={ imageAlt => updateBlockAttributes( clientId, { imageAlt } ) }
 				/>
 
-				<AdvancedRangeControl2
+				<AdvancedRangeControl
 					label={ __( 'Zoom', i18n ) }
 					attribute="imageZoom"
 					hover="all"
@@ -128,7 +128,7 @@ export const Edit = props => {
 				/>
 
 				{ props.hasBorderRadius &&
-					<AdvancedRangeControl2
+					<AdvancedRangeControl
 						label={ __( 'Border Radius', i18n ) }
 						attribute="imageBorderRadius"
 						min="0"

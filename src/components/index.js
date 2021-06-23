@@ -123,4 +123,3 @@ export {
 export { default as Div } from './div'
 export { default as TabbedLayout } from './tabbed-layout'
 export { default as ControlIconToggle } from './control-icon-toggle'
-export { default as AdvancedRangeControl2 } from './advanced-range-control2'

@@ -128,7 +128,7 @@ addFilter( 'stackable.text.edit.inspector.style.before', 'stackable/text', ( out
 					max={ 4 }
 					value={ columns }
 					onChange={ columns => setAttributes( { columns } ) }
-					placeholder="1"
+					default={ 1 }
 					className="ugb--help-tip-general-columns"
 				/>
 				{ show.reverseTitle &&

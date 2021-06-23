@@ -151,6 +151,7 @@ addFilter( 'stackable.feature-grid.edit.inspector.style.before', 'stackable/feat
 					min={ 1 }
 					max={ 4 }
 					className="ugb--help-tip-general-columns"
+					default={ 3 }
 				/>
 				<ContentAlignControl
 					setAttributes={ setAttributes }
