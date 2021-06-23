@@ -80,19 +80,9 @@ if ( ! class_exists( 'Stackable_Optimization_Settings' ) ) {
 				if ( get_option( 'stackable_optimize_script_load' ) && ! is_admin() ) {
 					if ( 
 						stripos( $block['blockName'], 'ugb/' ) === 0 ||
-						stripos( $block['blockName'], 'stackable/' ) === 0 
-					) {
-						stackable_block_assets();
-						$this->is_script_loaded = true;
-						return $block_content;
-					}
-
-					// When stackable blocks are displayed indirectly. Enqueue the assets.
-					preg_match( '/<!-- wp:ugb\//', $block_content, $ugb_matches );
-					preg_match( '/<!-- wp:stackable\//', $block_content, $stackable_matches );
-					if (
-						count( $ugb_matches ) > 0 ||
-						count( $stackable_matches ) > 0
+						stripos( $block['blockName'], 'stackable/' ) === 0 ||
+						stripos( $block_content, '<!-- wp:ugb/' ) !==  FALSE ||
+						stripos( $block_content, '<!-- wp:stackable/' ) !== FALSE
 					) {
 						stackable_block_assets();
 						$this->is_script_loaded = true;
