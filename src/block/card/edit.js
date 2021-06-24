@@ -46,7 +46,7 @@ import { BlockLink } from '~stackable/block-components/block-link'
 
 const TEMPLATE = [
 	[ 'stackable/heading', {} ],
-	[ 'stackable/text', { content: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.' } ],
+	[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.' } ],
 	[ 'stackable/button-group', {}, [
 		[ 'stackable/button', { text: 'Button' } ],
 	] ],
