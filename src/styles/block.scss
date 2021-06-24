@@ -189,11 +189,6 @@
 
 // Button.
 .stk-button {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	column-gap: 4px;
-
 	.stk-button__svg-wrapper {
 		position: relative;
 
@@ -220,6 +215,10 @@
 	}
 
 	a.stk-button__button {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		column-gap: 4px;
 		position: relative;
 		z-index: 1;
 
