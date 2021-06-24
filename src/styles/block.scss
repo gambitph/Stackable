@@ -215,11 +215,11 @@
 	}
 
 	a.stk-button__button {
+		position: relative;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		column-gap: 4px;
-		position: relative;
 		z-index: 1;
 
 		&:hover::after {
