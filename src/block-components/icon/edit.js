@@ -156,7 +156,6 @@ export const Edit = props => {
 					max={ 50 }
 					allowReset={ true }
 					placeholder="0"
-					hover="all"
 				/>
 
 				{ hasShape && (

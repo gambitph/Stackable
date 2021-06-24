@@ -54,7 +54,6 @@ const getStyleParams = ( options = {} ) => {
 			selector: wrapperSelector,
 			styleRule: 'columnGap',
 			attrName: 'iconGap',
-			hover: 'all',
 			hoverSelector,
 			format: `%spx`,
 		},

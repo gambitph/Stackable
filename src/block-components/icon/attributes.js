@@ -43,7 +43,6 @@ export const iconAttributes = {
 		default: '',
 	},
 	iconGap: {
-		stkHover: true,
 		type: 'number',
 		default: '',
 	},
