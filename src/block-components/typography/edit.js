@@ -68,7 +68,7 @@ export const Edit = props => {
 				<Fragment>
 					{ enableTextContent && (
 						<TextControl
-							label={ sprintf( __( '%s Content', i18n ), label ) }
+							label={ __( 'Content', i18n ) }
 							value={ unescape( getAttribute( 'text' ) ) }
 							onChange={ value => updateAttribute( 'text', escapeHTML( value ) ) }
 						/>
@@ -262,4 +262,3 @@ Edit.defaultProps = {
 	disableAlign: false,
 	withToggle: false,
 }
-
