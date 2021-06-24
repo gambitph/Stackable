@@ -337,7 +337,7 @@ class StyleObject {
 				hoverSelector = `.%s.stk--is-hovered ${ selector }`
 			}
 			if ( blockState === 'parent-hovered' ) {
-				parentHoverSelector = `.%s.stk--is-hovered .%s-container`
+				parentHoverSelector = `.%s.stk--is-hovered ${ selector }`
 			}
 		}
 
