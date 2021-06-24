@@ -2,6 +2,7 @@
  * Core Block Styles
  */
 @import "breakpoints";
+@import "block-transitions";
 
 // We need to set this to relative for making the whole block clickable.
 .stk-block {
@@ -18,35 +19,6 @@
 // Mostly for border radius.
 .stk-container {
 	overflow: hidden;
-}
-
-// Hover transitions.
-.stk-block,
-.stk-container,
-.stk-container-padding,
-.stk-img-wrapper, // Images.
-.stk-img-wrapper img, // Images.
-.stk--has-background-overlay::before { // Image background overlays
-	transition: all 0.12s cubic-bezier(0.45, 0.05, 0.55, 0.95);
-	border-width: 1px;
-	border-style: none;
-}
-.stk-block {
-	will-change: transform, box-shadow, opacity, top, right, bottom, left, background, margin, padding, min-height, max-width;
-}
-.stk-container,
-.stk-container-padding {
-	will-change: transform, box-shadow, background, margin, padding, min-height, max-width;
-}
-.stk-img-wrapper img {
-	will-change: filter;
-}
-// Some attributes will not animate if they have no starting values.
-.stk-block,
-.stk-container,
-.stk-container-padding {
-	min-height: 0;
-	max-width: 100%;
 }
 
 /**
