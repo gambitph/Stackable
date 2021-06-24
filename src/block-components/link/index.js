@@ -74,9 +74,9 @@ Link.Content = props => {
 	return (
 		<LinkComponent.Content
 			className={ props.className }
-			href={ attributes.linkUrl }
-			target={ attributes.linkNewTab ? '_blank' : '' }
-			rel={ attributes.linkRel }
+			href={ attributes.linkUrl || undefined }
+			target={ attributes.linkNewTab ? '_blank' : undefined }
+			rel={ attributes.linkRel || undefined }
 			aria-hidden="true"
 			tabindex="-1"
 		>
