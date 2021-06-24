@@ -12,7 +12,7 @@ import {
 } from '~stackable/components'
 import { i18n } from 'stackable'
 import {
-	useBlockEl, useBlockHoverState, useAttributeEditHandlers,
+	useBlockEl, useAttributeEditHandlers, useBlockHoverState,
 } from '~stackable/hooks'
 
 /**
@@ -28,8 +28,8 @@ import { __, sprintf } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 
 export const Edit = () => {
-	const [ hoverState ] = useBlockHoverState()
 	const blockEl = useBlockEl()
+	const [ state ] = useBlockHoverState()
 
 	const {
 		getAttribute,
@@ -71,15 +71,15 @@ export const Edit = () => {
 								hover="all"
 							/>
 							<ColorPaletteControl
-								label={ getAttribute( 'buttonBackgroundColorType', 'desktop', hoverState ) === 'gradient'
+								label={ getAttribute( 'buttonBackgroundColorType' ) === 'gradient'
 									? sprintf( __( 'Button Color #%s', i18n ), 1 )
 									: __( 'Button Color', i18n )
 								}
 								attribute="buttonBackgroundColor"
-								hasTransparent={ getAttribute( 'buttonBackgroundColorType', 'desktop', hoverState ) === 'gradient' !== 'gradient' }
+								hasTransparent={ state === 'normal' && getAttribute( 'buttonBackgroundColorType' ) !== 'gradient' }
 								hover="all"
 							/>
-							{ getAttribute( 'buttonBackgroundColorType', 'desktop', hoverState ) === 'gradient' && (
+							{ getAttribute( 'buttonBackgroundColorType', 'desktop', state ) === 'gradient' && (
 								<Fragment>
 									<ColorPaletteControl
 										label={ __( 'Button Color #2', i18n ) }

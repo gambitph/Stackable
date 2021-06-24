@@ -19,7 +19,7 @@ export const attributes = ( version = VERSION ) => {
 	Button.addAttributes( attrObject, { selector: '.stk-button__button' } )
 
 	Typography.addAttributes( attrObject, '.stk-button__inner-text', {
-		enableTextTag: false,
+		hasTextTag: false,
 	} )
 
 	Icon.addAttributes( attrObject, {

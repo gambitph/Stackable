@@ -8,6 +8,7 @@ import {
 	CustomCSS,
 	getResponsiveClasses,
 	getTypographyClasses,
+	getAlignmentClasses,
 } from '~stackable/block-components'
 import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
@@ -30,18 +31,19 @@ const Save = props => {
 	} = attributes
 
 	const responsiveClass = getResponsiveClasses( props.attributes )
-	const [ wrapperClasses, textClasses ] = getTypographyClasses( props.attributes )
+	const textClasses = getTypographyClasses( props.attributes )
+	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-text',
 		responsiveClass,
-		wrapperClasses,
 	] )
 
 	const textClassNames = classnames( [
 		'stk-text__text',
 		textClasses,
+		blockAlignmentClass,
 	] )
 
 	return (

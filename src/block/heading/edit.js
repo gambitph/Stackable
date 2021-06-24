@@ -13,6 +13,8 @@ import {
 	Advanced,
 	Typography,
 	getTypographyClasses,
+	getAlignmentClasses,
+	Alignment,
 } from '~stackable/block-components'
 import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
@@ -36,17 +38,18 @@ const Edit = props => {
 	} = props.attributes
 
 	const blockHoverClass = useBlockHoverClass()
-	const [ wrapperClasses, textClasses ] = getTypographyClasses( props.attributes )
+	const textClasses = getTypographyClasses( props.attributes )
+	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockClassNames = classnames( [
 		className,
 		'stk-heading',
 		blockHoverClass,
-		wrapperClasses,
 	] )
 
 	const textClassNames = classnames( [
 		'stk-heading__text',
 		textClasses,
+		blockAlignmentClass,
 	] )
 
 	const blockEl = useBlockEl()
@@ -59,6 +62,7 @@ const Edit = props => {
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 			<Typography.InspectorControls blockEl={ blockEl } blockElSelector=".stk-heading__text" />
+			<Alignment.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-heading" />
 			<Responsive.InspectorControls />
 

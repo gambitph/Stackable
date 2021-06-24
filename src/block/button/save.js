@@ -30,11 +30,10 @@ export const Save = props => {
 
 	const responsiveClass = getResponsiveClasses( props.attributes )
 
-	const [ typographyWrapperClass, typographyInnerClasses ] = getTypographyClasses( props.attributes )
+	const typographyInnerClasses = getTypographyClasses( props.attributes )
 
 	const buttonClassNames = classnames( [
 		'stk-button__button',
-		typographyWrapperClass,
 	] )
 
 	const blockClassNames = classnames( [

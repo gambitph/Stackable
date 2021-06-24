@@ -9,11 +9,13 @@ import {
 	Responsive,
 	Advanced,
 	Typography,
+	Alignment,
 } from '~stackable/block-components'
 
 export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
 
+	Alignment.addAttributes( attrObject )
 	BlockDiv.addAttributes( attrObject )
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )

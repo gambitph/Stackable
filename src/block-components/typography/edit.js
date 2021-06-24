@@ -10,7 +10,6 @@ import {
 	AdvancedRangeControl,
 	AdvancedSelectControl,
 	AdvancedToolbarControl,
-	AlignButtonsControl,
 	ButtonIconPopoverControl,
 	ColorPaletteControl,
 	FontFamilyControl,
@@ -27,6 +26,7 @@ import {
 } from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
 import {
+	TextareaControl,
 	TextControl,
 } from '@wordpress/components'
 import { escapeHTML } from '@wordpress/escape-html'
@@ -35,12 +35,14 @@ import { getAttributeName } from '~stackable/util'
 export const Edit = props => {
 	const {
 		label,
-		enableTextTag,
-		enableTextContent,
+		hasTextTag,
+		hasTextContent,
 		attrNameTemplate,
-		disableAlign,
 		withToggle,
+		isMultiline,
 	} = props
+
+	const TextInput = isMultiline ? TextareaControl : TextControl
 
 	const {
 		getAttribute,
@@ -66,14 +68,15 @@ export const Edit = props => {
 				} }
 			>
 				<Fragment>
-					{ enableTextContent && (
-						<TextControl
+					{ hasTextContent && (
+						<TextInput
 							label={ __( 'Content', i18n ) }
 							value={ unescape( getAttribute( 'text' ) ) }
 							onChange={ value => updateAttribute( 'text', escapeHTML( value ) ) }
+							placeholder={ __( 'Enter text here' ) }
 						/>
 					) }
-					{ enableTextTag && (
+					{ hasTextTag && (
 						<HeadingButtonsControl
 							value={ getAttribute( 'textTag' ) }
 							onChange={ updateAttributeHandler( 'textTag' ) }
@@ -143,7 +146,6 @@ export const Edit = props => {
 								{ label: __( 'Bold', i18n ), value: 'bold' },
 							] }
 							attribute="fontWeight"
-							hover="all"
 						/>
 						<AdvancedSelectControl
 							label={ __( 'Transform', i18n ) }
@@ -155,7 +157,6 @@ export const Edit = props => {
 								{ label: __( 'None', i18n ), value: 'none' },
 							] }
 							attribute="textTransform"
-							hover="all"
 						/>
 						<AdvancedRangeControl
 							label={ __( 'Line-Height', i18n ) }
@@ -168,7 +169,6 @@ export const Edit = props => {
 							allowReset={ true }
 							initialPosition={ [ 37, 1.8 ] }
 							responsive="all"
-							hover="all"
 						/>
 						<AdvancedRangeControl
 							label={ __( 'Letter Spacing', i18n ) }
@@ -178,7 +178,6 @@ export const Edit = props => {
 							step={ 0.1 }
 							allowReset={ true }
 							placeholder="0"
-							hover="all"
 						/>
 					</ButtonIconPopoverControl>
 					<AdvancedRangeControl
@@ -207,45 +206,35 @@ export const Edit = props => {
 						isSmall={ true }
 						fullwidth={ false }
 						attribute="textColorType"
-						hover="all"
 						onReset={ () => {
 							updateAttributes( {
-								[ getAttributeName( 'textColor1', 'desktop', state ) ]: '',
-								[ getAttributeName( 'textColor2', 'desktop', state ) ]: '',
+								[ getAttributeName( 'textColor1' ) ]: '',
+								[ getAttributeName( 'textColor2' ) ]: '',
 							} )
 						} }
 					/>
 					<ColorPaletteControl
-						label={ getAttribute( 'textColorType', 'desktop', state ) === 'gradient' ? sprintf( __( '%s Color #%s', i18n ), label, 1 )
+						label={ getAttribute( 'textColorType' ) === 'gradient' ? sprintf( __( '%s Color #%s', i18n ), label, 1 )
 							: sprintf( __( '%s Color', i18n ), label ) }
 						attribute="textColor1"
-						hover="all"
+						hover={ getAttribute( 'textColorType' ) === 'gradient' ? false : 'all' }
 					/>
-					{ getAttribute( 'textColorType', 'desktop', state ) === 'gradient' && (
+					{ getAttribute( 'textColorType' ) === 'gradient' && (
 						<Fragment>
 							<ColorPaletteControl
 								label={ sprintf( __( '%s Color #2', i18n ), label ) }
 								attribute="textColor2"
-								hover="all"
 							/>
 
 							<AdvancedRangeControl
 								label={ __( 'Gradient Direction (degrees)', i18n ) }
 								attribute="textGradientDirection"
-								hover="all"
 								min={ 0 }
 								max={ 360 }
 								step={ 10 }
 								allowReset={ true }
 							/>
 						</Fragment>
-					) }
-					{ ! disableAlign && (
-						<AlignButtonsControl
-							label={ __( 'Align', i18n ) }
-							attribute="textAlign"
-							responsive="all"
-						/>
 					) }
 				</Fragment>
 
@@ -256,9 +245,9 @@ export const Edit = props => {
 
 Edit.defaultProps = {
 	label: __( 'Text', i18n ),
-	enableTextTag: true,
-	enableTextContent: true,
+	hasTextTag: true,
+	hasTextContent: true,
 	attrNameTemplate: '%s',
-	disableAlign: false,
 	withToggle: false,
+	isMultiline: false,
 }

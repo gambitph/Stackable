@@ -8,11 +8,11 @@ import { Style as StyleComponent } from '~stackable/components'
 
 const getStyleParams = ( options = {} ) => {
 	const {
-		selector,
-		inherit,
+		selector = '',
+		inherit = true,
 		inheritMin,
-		inheritMax,
-		hoverSelector,
+		inheritMax = 50,
+		hoverSelector = '',
 	} = options
 
 	return [
@@ -24,42 +24,36 @@ const getStyleParams = ( options = {} ) => {
 			responsive: 'all',
 			hover: 'all',
 			hoverSelector,
-			valueCallback: ( _value, getAttribute, device, state ) => {
+			clampCallback: ( _value, getAttribute, device, state ) => {
+				const currentValue = getAttribute( 'fontSize', device, state )
+				const isMobile = device === 'mobile'
+
 				let value = _value
-				const clampDesktopValue = inherit && clampInheritedStyle(
-					getAttribute( 'fontSize', 'desktop', state ),
+				const clampedValue = inherit && clampInheritedStyle(
+					_value,
 					{ min: inheritMin, max: inheritMax }
 				)
 
-				const clampTabletValue = clampInheritedStyle(
-					getAttribute( 'fontSize', 'tablet', state ),
-					{ min: inheritMin, max: inheritMax }
-				)
-				if ( device === 'tablet' ) {
-					if ( clampDesktopValue ) {
-						value = `${ clampDesktopValue }${ getAttribute( 'fontSizeUnit', device, state ) || 'px' }`
-					}
-					if ( getAttribute( 'fontSize', device, state ) !== '' ) {
-						value = `${ getAttribute( 'fontSize', device, state ) }${ getAttribute( 'fontSizeUnit', device, state ) || 'px' }`
-					}
+				/**
+				 * When clamping values in mobile, make sure to get the
+				 * clamped desktop value first before checking the clamped
+				 * tablet value.
+				 *
+				 * When the tablet is already clamped, the fallback value should
+				 * be undefined already to avoid generating 2 identical styles.
+				 */
+				if ( isMobile ) {
+					const clampedDesktopValue = inherit && clampInheritedStyle(
+						getAttribute( 'fontSize', 'desktop', state ),
+						{ min: inheritMin, max: inheritMax }
+					)
+					value = clampedDesktopValue ? clampedDesktopValue : value
 				}
 
-				if ( device === 'mobile' ) {
-					if ( clampDesktopValue ) {
-						value = `${ clampDesktopValue }${ getAttribute( 'fontSizeUnit', device, state ) || 'px' }`
-					}
-
-					if ( clampTabletValue ) {
-						value = `${ clampTabletValue }${ getAttribute( 'fontSizeUnit', device, state ) || 'px' }`
-					} else if ( clampDesktopValue || getAttribute( 'fontSize', device, state ) !== '' ) {
-						value = undefined
-					}
-
-					if ( getAttribute( 'fontSize', device, state ) !== '' ) {
-						value = `${ getAttribute( 'fontSize', device, state ) }${ getAttribute( 'fontSizeUnit', device, state ) || 'px' }`
-					}
-				}
-
+				value = clampedValue ? clampedValue : value
+				value = typeof currentValue !== 'undefined' && currentValue !== ''
+					? currentValue
+					: isMobile ? undefined : value
 				return value
 			},
 			dependencies: [ 'fontSizeUnit', 'fontSize' ],
@@ -81,23 +75,22 @@ const getStyleParams = ( options = {} ) => {
 		{
 			selector,
 			styleRule: 'backgroundImage',
-			hover: 'all',
 			hoverSelector,
 			attrName: 'textColor1',
-			valuePreCallback: ( value, getAttribute, device, state ) => {
+			valuePreCallback: ( value, getAttribute ) => {
 				if (
-					getAttribute( 'textColorType', 'desktop', state ) !== 'gradient' ||
-					getAttribute( 'textColor1', 'desktop', state ) === '' ||
-					getAttribute( 'textColor2', 'desktop', state ) === ''
+					getAttribute( 'textColorType', 'desktop', 'normal' ) !== 'gradient' ||
+					getAttribute( 'textColor1', 'desktop', 'normal' ) === '' ||
+					getAttribute( 'textColor2', 'desktop', 'normal' ) === ''
 				) {
 					return undefined
 				}
 				return value
 			},
-			valueCallback: ( value, getAttribute, device, state ) => {
-				const textColor1 = getAttribute( 'textColor1', 'desktop', state )
-				const textColor2 = getAttribute( 'textColor2', 'desktop', state )
-				const textGradientDirection = getAttribute( 'textGradientDirection', 'desktop', state )
+			valueCallback: ( value, getAttribute ) => {
+				const textColor1 = getAttribute( 'textColor1', 'desktop', 'normal' )
+				const textColor2 = getAttribute( 'textColor2', 'desktop', 'normal' )
+				const textGradientDirection = getAttribute( 'textGradientDirection', 'desktop', 'normal' )
 
 				return `linear-gradient(${ textGradientDirection !== '' ? `${ textGradientDirection }deg, ` : '' }${ textColor1 }, ${ textColor2 })`
 			},
@@ -105,18 +98,8 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			selector,
-			styleRule: 'textAlign',
-			attrName: 'textAlign',
-			hover: 'all',
-			hoverSelector,
-			responsive: 'all',
-		},
-		{
-			selector,
 			styleRule: 'lineHeight',
 			attrName: 'lineHeight',
-			hover: 'all',
-			hoverSelector,
 			responsive: 'all',
 			hasUnits: 'em',
 		},
@@ -126,8 +109,6 @@ const getStyleParams = ( options = {} ) => {
 				fontWeight: 'fontWeight',
 				textTransform: 'textTransform',
 			},
-			hover: 'all',
-			hoverSelector,
 		},
 		{
 			selector,
@@ -139,8 +120,7 @@ const getStyleParams = ( options = {} ) => {
 			selector,
 			styleRule: 'letterSpacing',
 			attrName: 'letterSpacing',
-			hasUnits: 'px',
-			hover: 'all',
+			format: '%spx',
 		},
 	]
 }
@@ -152,17 +132,7 @@ export const Style = props => {
 		...propsToPass
 	} = props
 
-	const {
-		selector = '',
-		inherit = true, // If false, desktop styles will only be applied to desktop, etc.
-		inheritMax = 50, // If provided & inherit is true, clamp the inherited value in tablet and mobile to this.
-		inheritMin,
-		hoverSelector = '',
-	} = options
-
-	const styles = useStyles( attributes, getStyleParams( {
-		selector, inherit, inheritMin, inheritMax, hoverSelector,
-	} ) )
+	const styles = useStyles( attributes, getStyleParams( options ) )
 
 	return (
 		<StyleComponent
@@ -181,17 +151,7 @@ Style.Content = props => {
 		...propsToPass
 	} = props
 
-	const {
-		selector = '',
-		inherit = true, // If false, desktop styles will only be applied to desktop, etc.
-		inheritMax = 50, // If provided & inherit is true, clamp the inherited value in tablet and mobile to this.
-		inheritMin,
-		hoverSelector = '',
-	} = options
-
-	const styles = getStyles( attributes, getStyleParams( {
-		selector, inherit, inheritMin, inheritMax, hoverSelector,
-	} ) )
+	const styles = getStyles( attributes, getStyleParams( options ) )
 
 	return (
 		<StyleComponent.Content

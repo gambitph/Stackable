@@ -187,33 +187,13 @@
 	-o-text-fill-color: transparent;
 }
 
-:where(.stk-hover-parent:hover) .stk--gradient-wrapper,
-.stk--gradient-wrapper.stk--is-hovered,
-.stk--gradient-wrapper .stk--is-hovered, {
-	.stk--is-gradient:not(.stk--hover-gradient) {
-		background-image: unset !important;
-		background-clip: unset;
-		-webkit-background-clip: unset;
-		-moz-background-clip: unset;
-		-o-background-clip: unset;
-		-webkit-text-fill-color: unset;
-		-moz-text-fill-color: unset;
-		-o-text-fill-color: unset;
-	}
-
-	.stk--hover-gradient {
-		background-clip: text;
-		-webkit-background-clip: text;
-		-moz-background-clip: text;
-		-o-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		-moz-text-fill-color: transparent;
-		-o-text-fill-color: transparent;
-	}
-}
-
 // Button.
 .stk-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	column-gap: 4px;
+
 	.stk-button__svg-wrapper {
 		position: relative;
 
@@ -240,9 +220,24 @@
 	}
 
 	a.stk-button__button {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		column-gap: 4px;
+		position: relative;
+		z-index: 1;
+
+		&:hover::after {
+			opacity: 1;
+		}
+
+		&::after {
+			content: "";
+			position: absolute;
+			z-index: -1;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			opacity: 0;
+			transition: opacity 0.2s ease-in-out;
+			border-radius: inherit;
+		}
 	}
 }

@@ -43,7 +43,7 @@ const Edit = props => {
 		className, isHovered, setAttributes,
 	} = props
 
-	const [ typographyWrapperClass, typographyInnerClasses ] = getTypographyClasses( props.attributes )
+	const typographyInnerClasses = getTypographyClasses( props.attributes )
 
 	const blockHoverClass = useBlockHoverClass()
 	const buttonClassNames = classnames( [
@@ -54,7 +54,6 @@ const Edit = props => {
 		className,
 		'stk-button',
 		blockHoverClass,
-		typographyWrapperClass,
 	] )
 
 	const typographyInnerClassNames = classnames( [
@@ -70,8 +69,7 @@ const Edit = props => {
 
 			<BlockStyle.InspectorControls styles={ blockStyles } />
 			<Typography.InspectorControls
-				enableTextTag={ false }
-				disableAlign={ true }
+				hasTextTag={ false }
 				withToggle={ true }
 			/>
 			<Button.InspectorControls />

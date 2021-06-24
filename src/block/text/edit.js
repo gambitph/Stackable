@@ -13,6 +13,8 @@ import {
 	Advanced,
 	Typography,
 	getTypographyClasses,
+	getAlignmentClasses,
+	Alignment,
 } from '~stackable/block-components'
 import { descriptionPlaceholder } from '~stackable/util'
 import { version as VERSION } from 'stackable'
@@ -36,18 +38,19 @@ const Edit = props => {
 	} = props.attributes
 
 	const blockHoverClass = useBlockHoverClass()
-	const [ wrapperClasses, textClasses ] = getTypographyClasses( props.attributes )
+	const textClasses = getTypographyClasses( props.attributes )
+	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-text',
 		blockHoverClass,
-		wrapperClasses,
 	] )
 
 	const textClassNames = classnames( [
 		'stk-text__text',
 		textClasses,
+		blockAlignmentClass,
 	] )
 
 	return (
@@ -57,7 +60,8 @@ const Edit = props => {
 
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
-			<Typography.InspectorControls enableTextTag={ false } />
+			<Typography.InspectorControls hasTextTag={ false } />
+			<Alignment.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-text" />
 			<Responsive.InspectorControls />
 

@@ -10,11 +10,7 @@ export const addAttributes = ( attrObject, options = {} ) => {
 			buttonPadding: {
 				stkResponsive: true,
 				type: 'object',
-			},
-			buttonPaddingUnit: {
-				stkResponsive: true,
-				type: 'string',
-				default: 'px',
+				stkUnits: 'px',
 			},
 			buttonBackgroundColorType: {
 				stkHover: true,
@@ -34,11 +30,6 @@ export const addAttributes = ( attrObject, options = {} ) => {
 			buttonBackgroundGradientDirection: {
 				stkHover: true,
 				type: 'number',
-				default: '',
-			},
-			text: {
-				source: 'html',
-				selector,
 				default: '',
 			},
 		},

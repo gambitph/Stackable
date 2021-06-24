@@ -1,7 +1,7 @@
 export const addAttributes = ( attrObject, selector = '.stk-content', options = {} ) => {
 	const {
-		enableTextTag = true,
-		enableTextContent = true,
+		hasTextTag = true,
+		hasTextContent = true,
 		defaultTextTag = 'p',
 		attrNameTemplate = '%s',
 	} = options
@@ -16,40 +16,28 @@ export const addAttributes = ( attrObject, selector = '.stk-content', options = 
 			},
 			lineHeight: {
 				stkResponsive: true,
-				stkHover: true,
 				type: 'number',
 				default: '',
-				stkUnits: 'px',
-			},
-			textAlign: {
-				stkResponsive: true,
-				stkHover: true,
-				type: 'string',
-				default: '',
+				stkUnits: 'em',
 			},
 			fontFamily: {
 				type: 'string',
-				stkHover: true,
 				default: '',
 			},
 			fontWeight: {
 				type: 'string',
-				stkHover: true,
 				default: '',
 			},
 			textTransform: {
 				type: 'string',
-				stkHover: true,
 				default: '',
 			},
 			letterSpacing: {
 				type: 'string',
-				stkHover: true,
 				default: '',
 			},
 			textColorType: {
 				type: 'string',
-				stkHover: true,
 				default: '',
 			},
 			textColor1: {
@@ -59,15 +47,13 @@ export const addAttributes = ( attrObject, selector = '.stk-content', options = 
 			},
 			textColor2: {
 				type: 'string',
-				stkHover: true,
 				default: '',
 			},
 			textGradientDirection: {
 				type: 'number',
-				stkHover: true,
 				default: '',
 			},
-			...( enableTextContent ? {
+			...( hasTextContent ? {
 				showText: {
 					type: 'boolean',
 					default: true,
@@ -78,7 +64,7 @@ export const addAttributes = ( attrObject, selector = '.stk-content', options = 
 					default: '',
 				},
 			} : {} ),
-			...( enableTextTag ? {
+			...( hasTextTag ? {
 				textTag: {
 					type: 'string',
 					default: defaultTextTag,

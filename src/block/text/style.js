@@ -5,6 +5,7 @@ import {
 	BlockDiv,
 	Advanced,
 	Typography,
+	Alignment,
 } from '~stackable/block-components'
 import { getUniqueBlockClass } from '~stackable/util'
 import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
@@ -30,6 +31,7 @@ export const TextStyles = props => {
 
 	return (
 		<Fragment>
+			<Alignment.Style { ...propsToPass } />
 			<BlockDiv.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
 			<Typography.Style { ...{
@@ -59,6 +61,7 @@ TextStyles.Content = props => {
 
 	const styles = (
 		<Fragment>
+			<Alignment.Style.Content { ...propsToPass } />
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
 			<Typography.Style.Content { ...{

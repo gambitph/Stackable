@@ -259,8 +259,8 @@ class StyleObject {
 
 			// Allow unspecified tablet & mobile values to be clamped based on the desktop value.
 			if ( clampCallback && responsive ) {
-				const desktopValue = getAttributeName( attrName, 'desktop', state )
-				const tabletValue = getAttributeName( attrName, 'tablet', state )
+				const desktopValue = attributes[ getAttributeName( attrName, 'desktop', state ) ]
+				const tabletValue = attributes[ getAttributeName( attrName, 'tablet', state ) ]
 				if ( value === '' || typeof value === 'undefined' ) {
 					if ( device === 'tablet' ) {
 						value = clampCallback( desktopValue, getAttribute, device, state, unit, attributes )

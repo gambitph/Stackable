@@ -9,11 +9,11 @@ import { Style as StyleComponent } from '~stackable/components'
 
 const getStyleParams = ( options = {} ) => {
 	const {
-		selector,
-		wrapperSelector,
-		uniqueId,
-		backgroundShapeSelector,
-		hoverSelector,
+		selector = '',
+		uniqueId = '',
+		wrapperSelector = '',
+		backgroundShapeSelector = '.stk--shape-icon',
+		hoverSelector = '',
 	} = options
 
 	return [
@@ -263,18 +263,9 @@ export const Style = props => {
 		...propsToPass
 	} = props
 
-	const {
-		selector = '',
-		wrapperSelector = '',
-		backgroundShapeSelector = '.stk--shape-icon',
-		hoverSelector = '',
-	} = options
-
 	const uniqueId = 'linear-gradient-' + attributes.uniqueId
 
-	const styles = useStyles( attributes, getStyleParams( {
-		selector, wrapperSelector, uniqueId, backgroundShapeSelector, hoverSelector,
-	} ) )
+	const styles = useStyles( attributes, getStyleParams( { ...options, uniqueId } ) )
 
 	return (
 		<StyleComponent
@@ -293,18 +284,9 @@ Style.Content = props => {
 		...propsToPass
 	} = props
 
-	const {
-		selector = '',
-		wrapperSelector = '',
-		backgroundShapeSelector = '.stk--shape-icon',
-		hoverSelector = '',
-	} = options
-
 	const uniqueId = 'linear-gradient-' + attributes.uniqueId
 
-	const styles = getStyles( attributes, getStyleParams( {
-		selector, wrapperSelector, uniqueId, backgroundShapeSelector, hoverSelector,
-	} ) )
+	const styles = getStyles( attributes, getStyleParams( { ...options, uniqueId } ) )
 
 	return (
 		<StyleComponent.Content

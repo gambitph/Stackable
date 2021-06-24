@@ -58,20 +58,80 @@ const getStyleParams = options => {
 		},
 		{
 			selector,
+			renderIn: 'edit',
 			styleRule: 'background',
 			attrName: 'buttonBackgroundColor',
 			hover: 'all',
 			hoverSelector,
-			valueCallback: ( _, getAttribute, device, state ) => {
-				const buttonBackgroundGradientDirection = getAttribute( 'buttonBackgroundGradientDirection', device, state )
-				const buttonBackgroundColor = getAttribute( 'buttonBackgroundColor', device, state )
-				const buttonBackgroundColor2 = getAttribute( 'buttonBackgroundColor2', device, state )
+			valuePreCallback: ( value, getAttribute, device, state ) => {
+				if ( getAttribute( 'buttonBackgroundColorType', 'desktop', state ) !== 'gradient' ) {
+					return value
+				}
 
-				if ( getAttribute( 'buttonBackgroundColorType', device, state ) !== 'gradient' ) {
-					return getAttribute( 'buttonBackgroundColor', device, state )
+				const buttonBackgroundGradientDirection = getAttribute( 'buttonBackgroundGradientDirection', 'desktop', state )
+				const buttonBackgroundColor = getAttribute( 'buttonBackgroundColor', 'desktop', state )
+				const buttonBackgroundColor2 = getAttribute( 'buttonBackgroundColor2', 'desktop', state )
+
+				if (
+					typeof buttonBackgroundColor !== undefined ||
+					buttonBackgroundColor !== '' ||
+					typeof buttonBackgroundColor2 !== undefined ||
+					buttonBackgroundColor2 !== ''
+				) {
+					return `linear-gradient(${ buttonBackgroundGradientDirection !== '' ? buttonBackgroundGradientDirection + 'deg' : '90deg' }, ${ buttonBackgroundColor || buttonBackgroundColor2 }, ${ buttonBackgroundColor2 || buttonBackgroundColor })`
+				}
+
+				return undefined
+			},
+		},
+		{
+			selector,
+			renderIn: 'save',
+			styleRule: 'background',
+			attrName: 'buttonBackgroundColor',
+			valueCallback: ( _, getAttribute ) => {
+				const buttonBackgroundGradientDirection = getAttribute( 'buttonBackgroundGradientDirection' )
+				const buttonBackgroundColor = getAttribute( 'buttonBackgroundColor' )
+				const buttonBackgroundColor2 = getAttribute( 'buttonBackgroundColor2' )
+
+				if ( getAttribute( 'buttonBackgroundColorType' ) !== 'gradient' ) {
+					return getAttribute( 'buttonBackgroundColor' )
 				}
 
 				return `linear-gradient(${ buttonBackgroundGradientDirection !== '' ? buttonBackgroundGradientDirection + 'deg' : '90deg' }, ${ buttonBackgroundColor || buttonBackgroundColor2 }, ${ buttonBackgroundColor2 || buttonBackgroundColor })`
+			},
+			dependencies: [ 'buttonBackgroundGradientDirection', 'buttonBackgroundColor', 'buttonBackgroundColor2', 'buttonBackgroundColorType' ],
+		},
+		{
+			selector: '',
+			renderIn: 'save',
+			styleRule: 'background',
+			attrName: 'buttonBackgroundColor',
+			hover: 'all',
+			hoverSelector: `${ selector }:after`,
+			valuePreCallback: ( value, getAttribute, device, state ) => {
+				if ( state === 'normal' ) {
+					return undefined
+				}
+
+				if ( getAttribute( 'buttonBackgroundColorType', 'desktop', state ) !== 'gradient' ) {
+					return value
+				}
+
+				const buttonBackgroundGradientDirection = getAttribute( 'buttonBackgroundGradientDirection', 'desktop', state )
+				const buttonBackgroundColor = getAttribute( 'buttonBackgroundColor', 'desktop', state )
+				const buttonBackgroundColor2 = getAttribute( 'buttonBackgroundColor2', 'desktop', state )
+
+				if (
+					typeof buttonBackgroundColor !== undefined ||
+					buttonBackgroundColor !== '' ||
+					typeof buttonBackgroundColor2 !== undefined ||
+					buttonBackgroundColor2 !== ''
+				) {
+					return `linear-gradient(${ buttonBackgroundGradientDirection !== '' ? buttonBackgroundGradientDirection + 'deg' : '90deg' }, ${ buttonBackgroundColor || buttonBackgroundColor2 }, ${ buttonBackgroundColor2 || buttonBackgroundColor })`
+				}
+
+				return undefined
 			},
 			dependencies: [ 'buttonBackgroundGradientDirection', 'buttonBackgroundColor', 'buttonBackgroundColor2', 'buttonBackgroundColorType' ],
 		},
