@@ -2,17 +2,23 @@ import classnames from 'classnames'
 import { omit } from 'lodash'
 
 const Link = props => {
-	const className = classnames( [
+	const {
+		children,
+		className,
+		...propsToPass
+	} = props
+	const classNames = classnames( [
 		'stk-link',
-		props.className,
+		className,
 	] )
 
 	return (
 		<a
-			className={ className }
+			className={ classNames }
 			href="#0" // Disallow links in the editor
+			{ ...propsToPass }
 		>
-			{ props.children }
+			{ children }
 		</a>
 	)
 }

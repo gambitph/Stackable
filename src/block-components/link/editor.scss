@@ -1,0 +1,13 @@
+@import "common";
+
+.stk-link__popover {
+	.components-popover__content {
+		width: 360px;
+		padding: 16px;
+	}
+
+	.components-toggle-control:first-child {
+		margin-top: 16px;
+	}
+}
+
