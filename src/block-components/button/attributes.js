@@ -13,7 +13,6 @@ export const addAttributes = ( attrObject, options = {} ) => {
 				stkUnits: 'px',
 			},
 			buttonBackgroundColorType: {
-				stkHover: true,
 				type: 'string',
 				default: '',
 			},

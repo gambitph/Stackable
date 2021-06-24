@@ -52,13 +52,11 @@ export const Save = props => {
 			<ButtonStyles.Content { ...propsToPass } />
 			<Button.Content { ...propsToPass } className={ buttonClassNames } enableLinearGradient={ false }>
 				<Icon.Content attributes={ props.attributes } />
-				{ props.attributes.showText && (
-					<RichText.Content
-						tagName="span"
-						className={ typographyInnerClassNames }
-						value={ props.attributes.text }
-					/>
-				) }
+				<RichText.Content
+					tagName="span"
+					className={ typographyInnerClassNames }
+					value={ props.attributes.text }
+				/>
 			</Button.Content>
 		</BlockDiv.Content>
 	)

@@ -10,6 +10,7 @@ import {
 	Advanced,
 	Typography,
 	Alignment,
+	MarginBottom,
 } from '~stackable/block-components'
 
 export const attributes = ( version = VERSION ) => {
@@ -18,6 +19,7 @@ export const attributes = ( version = VERSION ) => {
 	Alignment.addAttributes( attrObject )
 	BlockDiv.addAttributes( attrObject )
 	CustomCSS.addAttributes( attrObject )
+	MarginBottom.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
 	Typography.addAttributes( attrObject, '.stk-heading__text', { defaultTextTag: 'h2' } )

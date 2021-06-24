@@ -80,7 +80,6 @@ ButtonStyles.Content = props => {
 	propsToPass.options = {
 		...options,
 		selector: '.stk-button__button',
-		hoverSelector: '.stk-button__button:hover',
 	}
 
 	const styles = (

@@ -10,6 +10,7 @@ import {
 	Advanced,
 	Typography,
 	Alignment,
+	MarginBottom,
 } from '~stackable/block-components'
 
 export const attributes = ( version = VERSION ) => {
@@ -20,6 +21,7 @@ export const attributes = ( version = VERSION ) => {
 	Responsive.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
 	Alignment.addAttributes( attrObject )
+	MarginBottom.addAttributes( attrObject )
 	Typography.addAttributes( attrObject, '.stk-text__text', { hasTextTag: false } )
 
 	return attrObject.getMerged( version )

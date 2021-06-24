@@ -6,6 +6,7 @@ import {
 	Advanced,
 	Typography,
 	Alignment,
+	MarginBottom,
 } from '~stackable/block-components'
 import { getUniqueBlockClass } from '~stackable/util'
 import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
@@ -42,6 +43,7 @@ export const HeadingStyles = props => {
 					hoverSelector: '.stk-heading__text:hover',
 				},
 			} } />
+			<MarginBottom.Style { ...propsToPass } />
 		</Fragment>
 	)
 }
@@ -72,6 +74,7 @@ HeadingStyles.Content = props => {
 					hoverSelector: '.stk-heading__text:hover',
 				},
 			} } />
+			<MarginBottom.Style.Content { ...propsToPass } />
 		</Fragment>
 	)
 

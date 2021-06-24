@@ -68,7 +68,6 @@ export const Edit = () => {
 								attribute="buttonBackgroundColorType"
 								isSmall={ true }
 								fullwidth={ false }
-								hover="all"
 							/>
 							<ColorPaletteControl
 								label={ getAttribute( 'buttonBackgroundColorType' ) === 'gradient'
@@ -79,7 +78,7 @@ export const Edit = () => {
 								hasTransparent={ state === 'normal' && getAttribute( 'buttonBackgroundColorType' ) !== 'gradient' }
 								hover="all"
 							/>
-							{ getAttribute( 'buttonBackgroundColorType', 'desktop', state ) === 'gradient' && (
+							{ getAttribute( 'buttonBackgroundColorType' ) === 'gradient' && (
 								<Fragment>
 									<ColorPaletteControl
 										label={ __( 'Button Color #2', i18n ) }

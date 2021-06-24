@@ -20,7 +20,6 @@ import { BorderStyle } from '../helpers/borders'
 const getStyleParams = options => {
 	const {
 		selector,
-		hoverSelector,
 	} = options
 
 	return [
@@ -58,35 +57,6 @@ const getStyleParams = options => {
 		},
 		{
 			selector,
-			renderIn: 'edit',
-			styleRule: 'background',
-			attrName: 'buttonBackgroundColor',
-			hover: 'all',
-			hoverSelector,
-			valuePreCallback: ( value, getAttribute, device, state ) => {
-				if ( getAttribute( 'buttonBackgroundColorType', 'desktop', state ) !== 'gradient' ) {
-					return value
-				}
-
-				const buttonBackgroundGradientDirection = getAttribute( 'buttonBackgroundGradientDirection', 'desktop', state )
-				const buttonBackgroundColor = getAttribute( 'buttonBackgroundColor', 'desktop', state )
-				const buttonBackgroundColor2 = getAttribute( 'buttonBackgroundColor2', 'desktop', state )
-
-				if (
-					typeof buttonBackgroundColor !== undefined ||
-					buttonBackgroundColor !== '' ||
-					typeof buttonBackgroundColor2 !== undefined ||
-					buttonBackgroundColor2 !== ''
-				) {
-					return `linear-gradient(${ buttonBackgroundGradientDirection !== '' ? buttonBackgroundGradientDirection + 'deg' : '90deg' }, ${ buttonBackgroundColor || buttonBackgroundColor2 }, ${ buttonBackgroundColor2 || buttonBackgroundColor })`
-				}
-
-				return undefined
-			},
-		},
-		{
-			selector,
-			renderIn: 'save',
 			styleRule: 'background',
 			attrName: 'buttonBackgroundColor',
 			valueCallback: ( _, getAttribute ) => {
@@ -103,18 +73,16 @@ const getStyleParams = options => {
 			dependencies: [ 'buttonBackgroundGradientDirection', 'buttonBackgroundColor', 'buttonBackgroundColor2', 'buttonBackgroundColorType' ],
 		},
 		{
-			selector: '',
-			renderIn: 'save',
+			selector: `${ selector }:after`,
 			styleRule: 'background',
 			attrName: 'buttonBackgroundColor',
 			hover: 'all',
-			hoverSelector: `${ selector }:after`,
 			valuePreCallback: ( value, getAttribute, device, state ) => {
 				if ( state === 'normal' ) {
 					return undefined
 				}
 
-				if ( getAttribute( 'buttonBackgroundColorType', 'desktop', state ) !== 'gradient' ) {
+				if ( getAttribute( 'buttonBackgroundColorType' ) !== 'gradient' ) {
 					return value
 				}
 
@@ -134,6 +102,32 @@ const getStyleParams = options => {
 				return undefined
 			},
 			dependencies: [ 'buttonBackgroundGradientDirection', 'buttonBackgroundColor', 'buttonBackgroundColor2', 'buttonBackgroundColorType' ],
+		},
+		{
+			selector: `${ selector }:after`,
+			styleRule: 'opacity',
+			attrName: 'buttonBackgroundColor',
+			hover: 'all',
+			hoverSelector: `${ selector }:hover:after`,
+			valuePreCallback: ( value, getAttribute, device, state ) => {
+				if ( state === 'normal' ) {
+					return undefined
+				}
+
+				const buttonBackgroundColor = getAttribute( 'buttonBackgroundColor', 'desktop', state )
+				const buttonBackgroundColor2 = getAttribute( 'buttonBackgroundColor2', 'desktop', state )
+
+				if (
+					typeof buttonBackgroundColor !== undefined ||
+					buttonBackgroundColor !== '' ||
+					typeof buttonBackgroundColor2 !== undefined ||
+					buttonBackgroundColor2 !== ''
+				) {
+					return 1
+				}
+
+				return undefined
+			},
 		},
 	]
 }

@@ -38,7 +38,6 @@ export const Edit = props => {
 		hasTextTag,
 		hasTextContent,
 		attrNameTemplate,
-		withToggle,
 		isMultiline,
 	} = props
 
@@ -59,13 +58,6 @@ export const Edit = props => {
 				title={ __( 'Text', i18n ) }
 				initialOpen={ true }
 				id="text"
-				{ ...{
-					...( withToggle ? {
-						hasToggle: withToggle,
-						checked: getAttribute( 'showText' ),
-						onChange: updateAttributeHandler( 'showText' ),
-					} : {} ),
-				} }
 			>
 				<Fragment>
 					{ hasTextContent && (
@@ -116,18 +108,6 @@ export const Edit = props => {
 							label={ __( 'Font Family', i18n ) }
 							onChange={ updateAttributeHandler( 'fontFamily' ) }
 							value={ getAttribute( 'fontFamily' ) }
-						/>
-						<AdvancedRangeControl
-							label={ __( 'Size', i18n ) }
-							allowReset={ true }
-							attribute="fontSize"
-							units={ [ 'px', 'em' ] }
-							min={ [ 0, 0 ] }
-							max={ [ 150, 7 ] }
-							step={ [ 1, 0.05 ] }
-							placeholder="32"
-							responsive="all"
-							hover="all"
 						/>
 						<AdvancedSelectControl
 							label={ __( 'Weight', i18n ) }
@@ -248,6 +228,5 @@ Edit.defaultProps = {
 	hasTextTag: true,
 	hasTextContent: true,
 	attrNameTemplate: '%s',
-	withToggle: false,
 	isMultiline: false,
 }

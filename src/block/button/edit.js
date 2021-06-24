@@ -68,15 +68,14 @@ const Edit = props => {
 			<BlockDiv.InspectorControls />
 
 			<BlockStyle.InspectorControls styles={ blockStyles } />
-			<Typography.InspectorControls
-				hasTextTag={ false }
-				withToggle={ true }
-			/>
 			<Button.InspectorControls />
 			<Icon.InspectorControls
 				enableGradient={ false }
 				enableShape={ false }
 				enableBackgroundShape={ false }
+			/>
+			<Typography.InspectorControls
+				hasTextTag={ false }
 			/>
 
 			<Advanced.InspectorControls />
@@ -92,17 +91,15 @@ const Edit = props => {
 					enableLinearGradient={ false }
 				>
 					<Icon />
-					{ props.attributes.showText && (
-						<RichText
-							tagName="span"
-							className={ typographyInnerClassNames }
-							placeholder={ __( 'Button text', i18n ) }
-							withoutInteractiveFormatting={ true }
-							keepPlaceholderOnFocus
-							value={ props.attributes.text }
-							onChange={ value => setAttributes( { text: value } ) }
-						/>
-					) }
+					<RichText
+						tagName="span"
+						className={ typographyInnerClassNames }
+						placeholder={ __( 'Button text', i18n ) }
+						withoutInteractiveFormatting={ true }
+						keepPlaceholderOnFocus
+						value={ props.attributes.text }
+						onChange={ value => setAttributes( { text: value } ) }
+					/>
 				</Button>
 			</BlockDiv>
 		</Fragment>
