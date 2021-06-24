@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { useBlockAttributes } from '~stackable/hooks'
+import { useAttributeEditHandlers, useBlockAttributes } from '~stackable/hooks'
 import {
 	getAttrNameFunction, __getValue, getShapeSVG,
 } from '~stackable/util'
@@ -21,8 +21,9 @@ import FontAwesomeIcon from './font-awesome-icon'
  */
 import { useBlockEditContext } from '@wordpress/block-editor'
 import {
-	useMemo, Fragment,
+	useMemo, Fragment, useState, useRef, useEffect, useCallback,
 } from '@wordpress/element'
+import { IconSearchPopover } from '~stackable/components'
 
 const SVGIcon = props => {
 	const {
@@ -69,43 +70,71 @@ export const Icon = props => {
 		enableLinearGradient = true,
 	} = props
 
+	const [ isOpen, setIsOpen ] = useState( false )
+	const popoverEl = useRef( null )
+
+	const clickOutsideListener = useCallback( event => {
+		if ( isOpen ) {
+			if ( ! event.target.closest( popoverEl.current ) && ! event.target.closest( '.components-popover' ) ) {
+				setIsOpen( false )
+			}
+		}
+	} )
+
+	// Assign the outside click listener.
+	useEffect( () => {
+		document.body.addEventListener( 'click', clickOutsideListener )
+		return () => document.body.removeEventListener( 'click', clickOutsideListener )
+	}, [ clickOutsideListener ] )
+
 	const { clientId } = useBlockEditContext()
 	const attributes = useBlockAttributes( clientId )
 
-	const getAttrName = getAttrNameFunction( attrNameTemplate )
-	const getValue = __getValue( attributes, getAttrName, '' )
+	const {
+		getAttribute,
+		updateAttributeHandler,
+	} = useAttributeEditHandlers( attrNameTemplate )
 
-	const ShapeComp = useMemo( () => getShapeSVG( getValue( 'backgroundShape' ) || 'blob1' ), [ getValue( 'backgroundShape' ) ] )
+	const ShapeComp = useMemo( () => getShapeSVG( getAttribute( 'backgroundShape' ) || 'blob1' ), [ getAttribute( 'backgroundShape' ) ] )
 
 	const linearGradient = useMemo( () =>
 		enableLinearGradient
 			? (
 				<LinearGradient
 					id={ 'linear-gradient-' + attributes.uniqueId }
-					iconColor1={ getValue( 'iconColor1' ) }
-					iconColor2={ getValue( 'iconColor2' ) }
+					iconColor1={ getAttribute( 'iconColor1' ) }
+					iconColor2={ getAttribute( 'iconColor2' ) }
 				/>
 			)
 			: <Fragment />,
 	[
 		attributes.uniqueId,
-		getValue( 'iconColorGradientDirection' ),
-		getValue( 'iconColor1' ),
-		getValue( 'iconColor2' ),
+		getAttribute( 'iconColorGradientDirection' ),
+		getAttribute( 'iconColor1' ),
+		getAttribute( 'iconColor2' ),
 	] )
 
-	if ( ! getValue( 'icon' ) ) {
+	if ( ! getAttribute( 'icon' ) ) {
 		return null
 	}
 
 	return (
-		<span className="stk-button__svg-wrapper">
+		<span // eslint-disable-line
+			className="stk-button__svg-wrapper"
+			onClick={ () => setIsOpen( ! isOpen ) }
+		>
 			<SVGIcon
 				className="stk-button__inner-svg"
 				prependRender={ linearGradient }
-				value={ getValue( 'icon' ) }
+				value={ getAttribute( 'icon' ) }
 			/>
-			{ getValue( 'showBackgroundShape' ) && <ShapeComp className="stk--shape-icon" /> }
+			{ getAttribute( 'showBackgroundShape' ) && <ShapeComp className="stk--shape-icon" /> }
+			{ isOpen && (
+				<IconSearchPopover
+					useRef={ popoverEl }
+					onChange={ updateAttributeHandler( 'icon' ) }
+				/>
+			) }
 		</span>
 	)
 }

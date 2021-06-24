@@ -41,7 +41,12 @@ export const Link = props => {
 		<Fragment>
 			<LinkComponent
 				className={ props.className }
-				onClick={ () => setIsOpen( ! isOpen ) }
+				onClick={ e => {
+					if ( e.target.closest( '.rich-text' ) ) {
+						// Only trigger the setIsOpen when the rich text is selected.
+						setIsOpen( ! isOpen )
+					}
+				} }
 			>
 				{ props.children }
 			</LinkComponent>
