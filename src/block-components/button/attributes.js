@@ -52,14 +52,23 @@ const buttonAttributes = {
 
 export const addAttributes = ( attrObject, options = {} ) => {
 	const {
-		hasColor = true,
+		hasTextColor = true,
+		hasTextGradient = true,
 	} = options
 	const attributesToExclude = []
 
-	if ( ! hasColor ) {
+	if ( ! hasTextColor ) {
 		attributesToExclude.push(
 			'buttonTextColorType',
 			'buttonTextColor1',
+			'buttonTextColor2',
+			'buttonTextGradientDirection',
+		)
+	}
+
+	if ( ! hasTextGradient ) {
+		attributesToExclude.push(
+			'buttonTextColorType',
 			'buttonTextColor2',
 			'buttonTextGradientDirection',
 		)

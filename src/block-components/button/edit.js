@@ -28,7 +28,8 @@ import { BorderControls } from '../helpers/borders'
 
 export const Edit = props => {
 	const {
-		hasColor,
+		hasTextColor,
+		hasTextGradient,
 	} = props
 
 	const [ state ] = useBlockHoverState()
@@ -88,36 +89,38 @@ export const Edit = props => {
 					</Fragment>
 				) }
 
-				{ hasColor && (
+				{ hasTextColor && (
 					<Fragment>
-						<AdvancedToolbarControl
-							controls={ [
-								{
-									value: '',
-									title: __( 'Single', i18n ),
-								},
-								{
-									value: 'gradient',
-									title: __( 'Gradient', i18n ),
-								},
-							] }
-							isSmall={ true }
-							fullwidth={ false }
-							attribute="buttonTextColorType"
-							onReset={ () => {
-								updateAttributes( {
-									[ getAttributeName( 'buttonTextColor1' ) ]: '',
-									[ getAttributeName( 'buttonTextColor2' ) ]: '',
-								} )
-							} }
-						/>
+						{ hasTextGradient && (
+							<AdvancedToolbarControl
+								controls={ [
+									{
+										value: '',
+										title: __( 'Single', i18n ),
+									},
+									{
+										value: 'gradient',
+										title: __( 'Gradient', i18n ),
+									},
+								] }
+								isSmall={ true }
+								fullwidth={ false }
+								attribute="buttonTextColorType"
+								onReset={ () => {
+									updateAttributes( {
+										[ getAttributeName( 'buttonTextColor1' ) ]: '',
+										[ getAttributeName( 'buttonTextColor2' ) ]: '',
+									} )
+								} }
+							/>
+						) }
 						<ColorPaletteControl
-							label={ getAttribute( 'buttonTextColorType' ) === 'gradient' ? sprintf( __( 'Text Color #%s', i18n ), 1 )
+							label={ getAttribute( 'buttonTextColorType' ) === 'gradient' && hasTextGradient ? sprintf( __( 'Text Color #%s', i18n ), 1 )
 								: __( 'Text Color', i18n ) }
 							attribute="buttonTextColor1"
-							hover={ getAttribute( 'buttonTextColorType' ) === 'gradient' ? false : 'all' }
+							hover={ getAttribute( 'buttonTextColorType' ) === 'gradient' && hasTextGradient ? false : 'all' }
 						/>
-						{ getAttribute( 'buttonTextColorType' ) === 'gradient' && (
+						{ getAttribute( 'buttonTextColorType' ) === 'gradient' && hasTextGradient && (
 							<Fragment>
 								<ColorPaletteControl
 									label={ sprintf( __( 'Text Color #%s', i18n ), 1 ) }
@@ -182,5 +185,6 @@ export const Edit = props => {
 }
 
 Edit.defaultProps = {
-	hasColor: true,
+	hasTextColor: true,
+	hasTextGradient: true,
 }

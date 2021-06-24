@@ -40,6 +40,7 @@ export const Edit = props => {
 		attrNameTemplate,
 		isMultiline,
 		initialOpen,
+		hasGradient,
 	} = props
 
 	const TextInput = isMultiline ? TextareaControl : TextControl
@@ -176,34 +177,36 @@ export const Edit = props => {
 
 					{ hasColor && (
 						<Fragment>
-							<AdvancedToolbarControl
-								controls={ [
-									{
-										value: '',
-										title: __( 'Single', i18n ),
-									},
-									{
-										value: 'gradient',
-										title: __( 'Gradient', i18n ),
-									},
-								] }
-								isSmall={ true }
-								fullwidth={ false }
-								attribute="textColorType"
-								onReset={ () => {
-									updateAttributes( {
-										[ getAttributeName( 'textColor1' ) ]: '',
-										[ getAttributeName( 'textColor2' ) ]: '',
-									} )
-								} }
-							/>
+							{ hasGradient && (
+								<AdvancedToolbarControl
+									controls={ [
+										{
+											value: '',
+											title: __( 'Single', i18n ),
+										},
+										{
+											value: 'gradient',
+											title: __( 'Gradient', i18n ),
+										},
+									] }
+									isSmall={ true }
+									fullwidth={ false }
+									attribute="textColorType"
+									onReset={ () => {
+										updateAttributes( {
+											[ getAttributeName( 'textColor1' ) ]: '',
+											[ getAttributeName( 'textColor2' ) ]: '',
+										} )
+									} }
+								/>
+							) }
 							<ColorPaletteControl
-								label={ getAttribute( 'textColorType' ) === 'gradient' ? sprintf( __( 'Text Color #%s', i18n ), 1 )
+								label={ getAttribute( 'textColorType' ) === 'gradient' && hasGradient ? sprintf( __( 'Text Color #%s', i18n ), 1 )
 									: __( 'Text Color', i18n ) }
 								attribute="textColor1"
-								hover={ getAttribute( 'textColorType' ) === 'gradient' ? false : 'all' }
+								hover={ hasGradient && getAttribute( 'textColorType' ) === 'gradient' ? false : 'all' }
 							/>
-							{ getAttribute( 'textColorType' ) === 'gradient' && (
+							{ getAttribute( 'textColorType' ) === 'gradient' && hasGradient && (
 								<Fragment>
 									<ColorPaletteControl
 										label={ sprintf( __( 'Text Color #%s', i18n ), 2 ) }
@@ -236,4 +239,5 @@ Edit.defaultProps = {
 	attrNameTemplate: '%s',
 	isMultiline: false,
 	initialOpen: true,
+	hasGradient: true,
 }

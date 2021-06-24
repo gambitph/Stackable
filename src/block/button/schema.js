@@ -20,7 +20,7 @@ export const attributes = ( version = VERSION ) => {
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
-	Button.addAttributes( attrObject )
+	Button.addAttributes( attrObject, { hasTextGradient: false } )
 	Link.addAttributes( attrObject, { selector: '.stk-button__button' } )
 
 	Typography.addAttributes( attrObject, '.stk-button__inner-text', {

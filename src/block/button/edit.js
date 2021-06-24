@@ -70,7 +70,9 @@ const Edit = props => {
 
 			<BlockStyle.InspectorControls styles={ blockStyles } />
 			<Link.InspectorControls />
-			<Button.InspectorControls />
+			<Button.InspectorControls
+				hasTextGradient={ false }
+			/>
 			<Typography.InspectorControls
 				hasTextTag={ false }
 				initialOpen={ false }
