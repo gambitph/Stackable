@@ -7,7 +7,7 @@ import { version as VERSION } from 'stackable'
 import {
 	getTypographyClasses,
 	BlockDiv,
-	Button,
+	Link,
 	Icon,
 	getResponsiveClasses,
 } from '~stackable/block-components'
@@ -50,14 +50,14 @@ export const Save = props => {
 	return (
 		<BlockDiv.Content className={ blockClassNames } attributes={ props.attributes }>
 			<ButtonStyles.Content { ...propsToPass } />
-			<Button.Content { ...propsToPass } className={ buttonClassNames } enableLinearGradient={ false }>
-				<Icon.Content attributes={ props.attributes } />
+			<Link.Content { ...propsToPass } className={ buttonClassNames } >
+				<Icon.Content attributes={ props.attributes } enableLinearGradient={ false } />
 				<RichText.Content
 					tagName="span"
 					className={ typographyInnerClassNames }
 					value={ props.attributes.text }
 				/>
-			</Button.Content>
+			</Link.Content>
 		</BlockDiv.Content>
 	)
 }

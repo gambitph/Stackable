@@ -20,6 +20,8 @@ import { BorderStyle } from '../helpers/borders'
 const getStyleParams = options => {
 	const {
 		selector,
+		textSelector,
+		textHoverSelector,
 	} = options
 
 	return [
@@ -128,6 +130,44 @@ const getStyleParams = options => {
 
 				return undefined
 			},
+		},
+		{
+			selector: textSelector,
+			hoverSelector: textHoverSelector,
+			styleRule: 'color',
+			hover: 'all',
+			attrName: 'buttonTextColor1',
+			valuePreCallback: ( value, getAttribute, device, state ) => {
+				if ( getAttribute( 'buttonTextColorType', 'desktop', state ) === 'gradient' ) {
+					return undefined
+				}
+				return value
+			},
+			dependencies: [ 'buttonTextColorType' ],
+		},
+		{
+			selector: textSelector,
+			hoverSelector: textHoverSelector,
+			styleRule: 'backgroundImage',
+			attrName: 'buttonTextColor1',
+			valuePreCallback: ( value, getAttribute ) => {
+				if (
+					getAttribute( 'buttonTextColorType', 'desktop', 'normal' ) !== 'gradient' ||
+					getAttribute( 'buttonTextColor1', 'desktop', 'normal' ) === '' ||
+					getAttribute( 'buttonTextColor2', 'desktop', 'normal' ) === ''
+				) {
+					return undefined
+				}
+				return value
+			},
+			valueCallback: ( value, getAttribute ) => {
+				const buttonTextColor1 = getAttribute( 'buttonTextColor1', 'desktop', 'normal' )
+				const buttonTextColor2 = getAttribute( 'buttonTextColor2', 'desktop', 'normal' )
+				const buttonTextGradientDirection = getAttribute( 'buttonTextGradientDirection', 'desktop', 'normal' )
+
+				return `linear-gradient(${ buttonTextGradientDirection !== '' ? `${ buttonTextGradientDirection }deg, ` : '' }${ buttonTextColor1 }, ${ buttonTextColor2 })`
+			},
+			dependencies: [ 'buttonTextColorType', 'buttonTextColor1', 'buttonTextColor2', 'buttonTextGradientDirection' ],
 		},
 	]
 }

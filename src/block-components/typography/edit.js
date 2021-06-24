@@ -17,6 +17,7 @@ import {
 	InspectorStyleControls,
 	PanelAdvancedSettings,
 } from '~stackable/components'
+import { getAttributeName } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -30,15 +31,15 @@ import {
 	TextControl,
 } from '@wordpress/components'
 import { escapeHTML } from '@wordpress/escape-html'
-import { getAttributeName } from '~stackable/util'
 
 export const Edit = props => {
 	const {
-		label,
+		hasColor,
 		hasTextTag,
 		hasTextContent,
 		attrNameTemplate,
 		isMultiline,
+		initialOpen,
 	} = props
 
 	const TextInput = isMultiline ? TextareaControl : TextControl
@@ -55,8 +56,8 @@ export const Edit = props => {
 	return (
 		<InspectorStyleControls>
 			<PanelAdvancedSettings
-				title={ __( 'Text', i18n ) }
-				initialOpen={ true }
+				title={ __( 'Typography', i18n ) }
+				initialOpen={ initialOpen }
 				id="text"
 			>
 				<Fragment>
@@ -109,6 +110,18 @@ export const Edit = props => {
 							onChange={ updateAttributeHandler( 'fontFamily' ) }
 							value={ getAttribute( 'fontFamily' ) }
 						/>
+						<AdvancedRangeControl
+							label={ __( 'Size', i18n ) }
+							allowReset={ true }
+							attribute="fontSize"
+							units={ [ 'px', 'em' ] }
+							min={ [ 0, 0 ] }
+							max={ [ 150, 7 ] }
+							step={ [ 1, 0.05 ] }
+							placeholder="32"
+							responsive="all"
+							hover="all"
+						/>
 						<AdvancedSelectControl
 							label={ __( 'Weight', i18n ) }
 							options={ [
@@ -160,60 +173,53 @@ export const Edit = props => {
 							placeholder="0"
 						/>
 					</ButtonIconPopoverControl>
-					<AdvancedRangeControl
-						label={ __( 'Size', i18n ) }
-						allowReset={ true }
-						attribute="fontSize"
-						units={ [ 'px', 'em' ] }
-						min={ [ 0, 0 ] }
-						max={ [ 150, 7 ] }
-						step={ [ 1, 0.05 ] }
-						placeholder="32"
-						responsive="all"
-						hover="all"
-					/>
-					<AdvancedToolbarControl
-						controls={ [
-							{
-								value: '',
-								title: __( 'Single', i18n ),
-							},
-							{
-								value: 'gradient',
-								title: __( 'Gradient', i18n ),
-							},
-						] }
-						isSmall={ true }
-						fullwidth={ false }
-						attribute="textColorType"
-						onReset={ () => {
-							updateAttributes( {
-								[ getAttributeName( 'textColor1' ) ]: '',
-								[ getAttributeName( 'textColor2' ) ]: '',
-							} )
-						} }
-					/>
-					<ColorPaletteControl
-						label={ getAttribute( 'textColorType' ) === 'gradient' ? sprintf( __( '%s Color #%s', i18n ), label, 1 )
-							: sprintf( __( '%s Color', i18n ), label ) }
-						attribute="textColor1"
-						hover={ getAttribute( 'textColorType' ) === 'gradient' ? false : 'all' }
-					/>
-					{ getAttribute( 'textColorType' ) === 'gradient' && (
-						<Fragment>
-							<ColorPaletteControl
-								label={ sprintf( __( '%s Color #2', i18n ), label ) }
-								attribute="textColor2"
-							/>
 
-							<AdvancedRangeControl
-								label={ __( 'Gradient Direction (degrees)', i18n ) }
-								attribute="textGradientDirection"
-								min={ 0 }
-								max={ 360 }
-								step={ 10 }
-								allowReset={ true }
+					{ hasColor && (
+						<Fragment>
+							<AdvancedToolbarControl
+								controls={ [
+									{
+										value: '',
+										title: __( 'Single', i18n ),
+									},
+									{
+										value: 'gradient',
+										title: __( 'Gradient', i18n ),
+									},
+								] }
+								isSmall={ true }
+								fullwidth={ false }
+								attribute="textColorType"
+								onReset={ () => {
+									updateAttributes( {
+										[ getAttributeName( 'textColor1' ) ]: '',
+										[ getAttributeName( 'textColor2' ) ]: '',
+									} )
+								} }
 							/>
+							<ColorPaletteControl
+								label={ getAttribute( 'textColorType' ) === 'gradient' ? sprintf( __( 'Text Color #%s', i18n ), 1 )
+									: __( 'Text Color', i18n ) }
+								attribute="textColor1"
+								hover={ getAttribute( 'textColorType' ) === 'gradient' ? false : 'all' }
+							/>
+							{ getAttribute( 'textColorType' ) === 'gradient' && (
+								<Fragment>
+									<ColorPaletteControl
+										label={ sprintf( __( 'Text Color #%s', i18n ), 2 ) }
+										attribute="textColor2"
+									/>
+
+									<AdvancedRangeControl
+										label={ __( 'Gradient Direction (degrees)', i18n ) }
+										attribute="textGradientDirection"
+										min={ 0 }
+										max={ 360 }
+										step={ 10 }
+										allowReset={ true }
+									/>
+								</Fragment>
+							) }
 						</Fragment>
 					) }
 				</Fragment>
@@ -224,9 +230,10 @@ export const Edit = props => {
 }
 
 Edit.defaultProps = {
-	label: __( 'Text', i18n ),
+	hasColor: true,
 	hasTextTag: true,
 	hasTextContent: true,
 	attrNameTemplate: '%s',
 	isMultiline: false,
+	initialOpen: true,
 }

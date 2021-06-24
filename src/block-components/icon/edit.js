@@ -29,9 +29,9 @@ import { Fragment } from '@wordpress/element'
 
 export const Edit = props => {
 	const {
-		enableGradient,
-		enableShape,
-		enableBackgroundShape,
+		hasGradient,
+		hasShape,
+		hasBackgroundShape,
 	} = props
 
 	const [ state ] = useBlockHoverState()
@@ -54,7 +54,7 @@ export const Edit = props => {
 					onChange={ updateAttributeHandler( 'icon' ) }
 				/>
 
-				{ enableGradient && (
+				{ hasGradient && (
 					<Fragment>
 						<AdvancedToolbarControl
 							controls={ [
@@ -101,7 +101,7 @@ export const Edit = props => {
 					</Fragment>
 				) }
 
-				{ ! enableGradient && (
+				{ ! hasGradient && (
 					<ColorPaletteControl
 						label={ __( 'Icon Color', i18n ) }
 						attribute="iconColor1"
@@ -159,7 +159,7 @@ export const Edit = props => {
 					hover="all"
 				/>
 
-				{ enableShape && (
+				{ hasShape && (
 					<Fragment>
 						<ToggleControl
 							label={ __( 'Shaped', i18n ) }
@@ -236,7 +236,7 @@ export const Edit = props => {
 					</Fragment>
 				) }
 
-				{ enableBackgroundShape && (
+				{ hasBackgroundShape && (
 					<Fragment>
 						<ToggleControl
 							label={ __( 'Background Shape', i18n ) }
@@ -315,7 +315,7 @@ export const Edit = props => {
 
 Edit.defaultProps = {
 	label: __( 'Icon', i18n ),
-	enableGradient: true,
-	enableShape: true,
-	enableBackgroundShape: true,
+	hasGradient: true,
+	hasShape: true,
+	hasBackgroundShape: true,
 }

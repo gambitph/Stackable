@@ -8,6 +8,7 @@ import {
 	BlockDiv,
 	Typography,
 	Icon,
+	BorderStyle,
 } from '~stackable/block-components'
 import { getUniqueBlockClass } from '~stackable/util'
 import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
@@ -34,6 +35,8 @@ export const ButtonStyles = props => {
 		...propsToPass.options,
 		selector: '.stk-button__button',
 		hoverSelector: '.stk-button__button:hover',
+		textSelector: '.stk-button__button > .stk-button__inner-text',
+		textHoverSelector: '.stk-button__button:hover > .stk-button__inner-text',
 	}
 
 	return (
@@ -41,15 +44,7 @@ export const ButtonStyles = props => {
 			<BlockDiv.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
 			<Button.Style { ...propsToPass } />
-			<Typography.Style
-				{ ...{
-					...propsToPass,
-					options: {
-						...propsToPass.options,
-						selector: '.stk-button__button > .stk-button__inner-text',
-						hoverSelector: '.stk-button__button:hover > .stk-button__inner-text',
-					},
-				} } />
+			<Typography.Style { ...propsToPass } />
 			<Icon.Style
 				{ ...{
 					...propsToPass,
@@ -60,6 +55,15 @@ export const ButtonStyles = props => {
 						wrapperSelector: '.stk-button__button',
 					},
 				} } />
+			<BorderStyle
+				{ ...{
+					...propsToPass,
+					options: {
+						...propsToPass.options,
+						attrNameTemplate: 'button%s',
+					},
+				} }
+			/>
 		</Fragment>
 	)
 }
@@ -80,6 +84,9 @@ ButtonStyles.Content = props => {
 	propsToPass.options = {
 		...options,
 		selector: '.stk-button__button',
+		hoverSelector: '.stk-button__button:hover',
+		textSelector: '.stk-button__button > .stk-button__inner-text',
+		textHoverSelector: '.stk-button__button:hover > .stk-button__inner-text',
 	}
 
 	const styles = (
@@ -87,15 +94,7 @@ ButtonStyles.Content = props => {
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
 			<Button.Style.Content { ...propsToPass } />
-			<Typography.Style.Content
-				{ ...{
-					...propsToPass,
-					options: {
-						...propsToPass.options,
-						selector: '.stk-button__button > .stk-button__inner-text',
-						hoverSelector: '.stk-button__button:hover > .stk-button__inner-text',
-					},
-				} } />
+			<Typography.Style.Content { ...propsToPass } />
 			<Icon.Style.Content
 				{ ...{
 					...propsToPass,

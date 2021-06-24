@@ -125,14 +125,14 @@ export const iconAttributes = {
 export const addAttributes = ( attrObject, options = {} ) => {
 	const {
 		excludedAttributes = [],
-		enableGradient = true,
-		enableShape = true,
-		enableBackgroundShape = true,
+		hasGradient = true,
+		hasShape = true,
+		hasBackgroundShape = true,
 	} = options
 
 	const finalExcludedAttributes = [ ...excludedAttributes ]
 
-	if ( ! enableGradient ) {
+	if ( ! hasGradient ) {
 		finalExcludedAttributes.push(
 			'iconColorType',
 			'iconColor2',
@@ -140,7 +140,7 @@ export const addAttributes = ( attrObject, options = {} ) => {
 		)
 	}
 
-	if ( ! enableShape ) {
+	if ( ! hasShape ) {
 		finalExcludedAttributes.push(
 			'shaped',
 			'shapeColor',
@@ -152,7 +152,7 @@ export const addAttributes = ( attrObject, options = {} ) => {
 		)
 	}
 
-	if ( ! enableBackgroundShape ) {
+	if ( ! hasBackgroundShape ) {
 		finalExcludedAttributes.push(
 			'showBackgroundShape',
 			'backgroundShape',
