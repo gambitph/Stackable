@@ -35,6 +35,10 @@ import { useBlockContext } from '~stackable/hooks'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/button' ]
 
+const TEMPLATE = [
+	[ 'stackable/button' ],
+]
+
 const Edit = props => {
 	const {
 		className,
@@ -82,6 +86,8 @@ const Edit = props => {
 							orientation="horizontal"
 							allowedBlocks={ ALLOWED_INNER_BLOCKS }
 							renderAppender={ renderAppender }
+							template={ TEMPLATE }
+							templateInsertUpdatesSelection={ true }
 						/>
 					</div>
 					{ hasInnerBlocks && <MarginBottom /> }
