@@ -128,9 +128,12 @@ const FourRangeControl = props => {
 		propsToPass.placeholder = props.placeholder
 	}
 
-	const onChangeAll = useCallback( value => {
+	const onChangeAll = useCallback( newValue => {
 		onChange( {
-			top: value, right: value, bottom: value, left: value,
+			top: props.enableTop ? newValue : value.top,
+			right: props.enableRight ? newValue : value.right,
+			bottom: props.enableBottom ? newValue : value.bottom,
+			left: props.enableLeft ? newValue : value.left,
 		} )
 	} )
 
