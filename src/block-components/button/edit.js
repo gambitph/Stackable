@@ -146,6 +146,13 @@ export const Edit = props => {
 			>
 
 				<Fragment>
+					<AdvancedRangeControl
+						label={ __( 'Min. Button Height', i18n ) }
+						responsive="all"
+						attribute="buttonMinHeight"
+						min={ 0 }
+						max={ 100 }
+					/>
 					<FourRangeControl
 						label={ __( 'Vertical Padding', i18n ) }
 						units={ [ 'px', '%' ] }

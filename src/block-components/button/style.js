@@ -28,6 +28,13 @@ const getStyleParams = options => {
 		{
 			selector,
 			responsive: 'all',
+			styleRule: 'minHeight',
+			attrName: 'buttonMinHeight',
+			format: '%spx',
+		},
+		{
+			selector,
+			responsive: 'all',
 			styleRule: 'paddingTop',
 			attrName: 'buttonPadding',
 			hasUnits: 'px',

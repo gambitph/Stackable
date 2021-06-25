@@ -48,6 +48,11 @@ const buttonAttributes = {
 		type: 'number',
 		default: '',
 	},
+	buttonMinHeight: {
+		stkResponsive: true,
+		type: 'number',
+		default: '',
+	},
 }
 
 export const addAttributes = ( attrObject, options = {} ) => {
