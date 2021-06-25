@@ -81,6 +81,7 @@ const Edit = props => {
 					orientation="horizontal"
 					allowedBlocks={ ALLOWED_INNER_BLOCKS }
 					renderAppender={ renderAppender }
+					templateInsertUpdatesSelection={ true }
 				/>
 			</div>
 			{ hasInnerBlocks && <MarginBottom /> }
