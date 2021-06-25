@@ -14,6 +14,7 @@ export const ContainerDiv = props => {
 
 	const classNames = classnames( [
 		props.className,
+		'stk-hover-parent',
 		'stk-container',
 		`stk-${ attributes.uniqueId }-container`,
 	], {
@@ -43,6 +44,7 @@ ContainerDiv.Content = props => {
 
 	const classNames = classnames( [
 		props.className,
+		'stk-hover-parent',
 		'stk-container',
 		`stk-${ attributes.uniqueId }-container`,
 	], {
