@@ -63,9 +63,9 @@ const FourRangeControl = props => {
 		return values.every( v => v === value.top )
 	}, [] )
 
-	const firstValue = props.enableTop && value.top !== '' ? value.top
-		: props.enableRight && value.right !== '' ? value.right
-			: props.enableBottom && value.bottom !== '' ? value.bottom
+	const firstValue = props.enableTop ? value.top
+		: props.enableRight ? value.right
+			: props.enableBottom ? value.bottom
 				: value.left
 
 	const [ isLocked, setIsLocked ] = useState( isDefaults ? props.defaultLocked : isEqualInitial )
