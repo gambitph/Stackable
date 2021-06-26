@@ -25,7 +25,7 @@ import { useBlockEl, useBlockHoverClass } from '~stackable/hooks'
 /**
  * WordPress dependencies
  */
-import { Fragment } from '@wordpress/element'
+import { Fragment, useCallback } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 
@@ -55,6 +55,8 @@ const Edit = props => {
 
 	const blockEl = useBlockEl()
 
+	const onChange = useCallback( text => setAttributes( { text } ), [ setAttributes ] )
+
 	return (
 		<Fragment>
 
@@ -76,7 +78,7 @@ const Edit = props => {
 					placeholder={ __( 'Title for This Block', i18n ) }
 					keepPlaceholderOnFocus
 					value={ text }
-					onChange={ text => setAttributes( { text } ) }
+					onChange={ onChange }
 					className={ textClassNames }
 				/>
 				<MarginBottom />

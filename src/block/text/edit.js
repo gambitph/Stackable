@@ -26,7 +26,7 @@ import { useBlockHoverClass } from '~stackable/hooks'
 /**
  * WordPress dependencies
  */
-import { Fragment } from '@wordpress/element'
+import { Fragment, useCallback } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
 
 const Edit = props => {
@@ -54,6 +54,8 @@ const Edit = props => {
 		blockAlignmentClass,
 	] )
 
+	const onChange = useCallback( text => setAttributes( { text } ), [ setAttributes ] )
+
 	return (
 		<Fragment>
 
@@ -75,7 +77,7 @@ const Edit = props => {
 					placeholder={ descriptionPlaceholder( 'medium' ) }
 					keepPlaceholderOnFocus
 					value={ text }
-					onChange={ text => setAttributes( { text } ) }
+					onChange={ onChange }
 					className={ textClassNames }
 				/>
 				<MarginBottom />
