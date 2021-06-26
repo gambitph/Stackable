@@ -54,19 +54,24 @@ const FourRangeControl = props => {
 	}
 	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
 
-	const isDefaults = value.top === '' && value.right === '' && value.bottom === '' && value.left === ''
-	const isEqualInitial = useMemo( () => {
-		const values = Object.values( value || {} )
-		if ( ! values.length ) {
-			return true
-		}
-		return values.every( v => v === value.top )
-	}, [] )
+	const isDefaults = ( props.enableTop && value.top === '' ) &&
+		( props.enableRight && value.right === '' ) &&
+		( props.enableBottom && value.bottom === '' ) &&
+		( props.enableLeft && value.left === '' )
 
 	const firstValue = props.enableTop ? value.top
 		: props.enableRight ? value.right
 			: props.enableBottom ? value.bottom
 				: value.left
+
+	const isEqualInitial = useMemo( () => {
+		let isEqual = true
+		isEqual = props.enableTop && value.top !== firstValue ? false : isEqual
+		isEqual = props.enableRight && value.right !== firstValue ? false : isEqual
+		isEqual = props.enableBottom && value.bottom !== firstValue ? false : isEqual
+		isEqual = props.enableLeft && value.left !== firstValue ? false : isEqual
+		return isEqual
+	}, [] )
 
 	const [ isLocked, setIsLocked ] = useState( isDefaults ? props.defaultLocked : isEqualInitial )
 
