@@ -14,7 +14,7 @@ export const ContainerDiv = props => {
 
 	const classNames = classnames( [
 		props.className,
-		'stk-hover-parent',
+		'stk-hover-parent', // This is needed to trigger parent-hovered hover styles.
 		'stk-container',
 		`stk-${ attributes.uniqueId }-container`,
 	], {
@@ -44,7 +44,7 @@ ContainerDiv.Content = props => {
 
 	const classNames = classnames( [
 		props.className,
-		'stk-hover-parent',
+		'stk-hover-parent', // This is needed to trigger parent-hovered hover styles.
 		'stk-container',
 		`stk-${ attributes.uniqueId }-container`,
 	], {
