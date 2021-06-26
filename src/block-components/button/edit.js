@@ -157,7 +157,7 @@ export const Edit = props => {
 						label={ __( 'Vertical Padding', i18n ) }
 						units={ [ 'px', '%' ] }
 						responsive="all"
-						defaultLocked={ false }
+						defaultLocked={ true }
 						attribute="buttonPadding"
 						sliderMin={ [ 0, 0 ] }
 						sliderMax={ [ 40, 100 ] }
@@ -168,7 +168,7 @@ export const Edit = props => {
 						label={ __( 'Horizontal Padding', i18n ) }
 						units={ [ 'px', '%' ] }
 						responsive="all"
-						defaultLocked={ false }
+						defaultLocked={ true }
 						attribute="buttonPadding"
 						sliderMin={ [ 0, 0 ] }
 						sliderMax={ [ 40, 100 ] }
