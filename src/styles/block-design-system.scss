@@ -91,15 +91,6 @@
 	}
 }
 
-// Remove top and bottom margin.
-.stk-block {
-	.stk-heading__text,
-	.stk-text__text {
-		margin-top: 0;
-		margin-bottom: 0;
-	}
-}
-
 // Block spacing when horizontally oriented.
 .stk--block-orientation-horizontal > * + * {
 	margin-left: cssvar(block-margin-bottom);

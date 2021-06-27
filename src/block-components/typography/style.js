@@ -60,6 +60,14 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			selector,
+			styleRule: 'margin',
+			attrName: 'textRemoveTextMargins',
+			valueCallback: value => {
+				return value ? 0 : undefined
+			},
+		},
+		{
+			selector,
 			styleRule: 'color',
 			hover: 'all',
 			hoverSelector,

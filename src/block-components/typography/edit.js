@@ -9,6 +9,7 @@ import {
 import {
 	AdvancedRangeControl,
 	AdvancedSelectControl,
+	AdvancedToggleControl,
 	AdvancedToolbarControl,
 	ButtonIconPopoverControl,
 	ColorPaletteControl,
@@ -37,6 +38,7 @@ export const Edit = props => {
 		hasColor,
 		hasTextTag,
 		hasTextContent,
+		hasRemoveMargins,
 		attrNameTemplate,
 		isMultiline,
 		initialOpen,
@@ -77,6 +79,14 @@ export const Edit = props => {
 							hasP={ false }
 						/>
 					) }
+
+					{ hasRemoveMargins && (
+						<AdvancedToggleControl
+							label={ __( 'Remove extra text margins', i18n ) }
+							attribute="textRemoveTextMargins"
+						/>
+					) }
+
 					<ButtonIconPopoverControl
 						label={ __( 'Typography', i18n ) }
 						popoverLabel={ __( 'Typography', i18n ) }
@@ -241,4 +251,5 @@ Edit.defaultProps = {
 	isMultiline: false,
 	initialOpen: true,
 	hasGradient: true,
+	hasRemoveMargins: false,
 }

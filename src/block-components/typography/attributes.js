@@ -33,6 +33,10 @@ const typographyAttributes = {
 		type: 'string',
 		default: '',
 	},
+	textRemoveTextMargins: {
+		type: 'boolean',
+		default: '',
+	},
 	textColorType: {
 		type: 'string',
 		default: '',
