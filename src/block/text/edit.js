@@ -64,7 +64,7 @@ const Edit = props => {
 			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
-			<Typography.InspectorControls hasTextTag={ false } />
+			<Typography.InspectorControls hasTextTag={ false } isMultiline={ true } />
 			<CustomCSS.InspectorControls mainBlockClass="stk-text" />
 			<Responsive.InspectorControls />
 

@@ -72,18 +72,19 @@ export const Edit = props => {
 							placeholder={ __( 'Enter text here' ) }
 						/>
 					) }
-					{ hasTextTag && (
-						<HeadingButtonsControl
-							value={ getAttribute( 'textTag' ) }
-							onChange={ updateAttributeHandler( 'textTag' ) }
-							hasP={ false }
-						/>
-					) }
 
 					{ hasRemoveMargins && (
 						<AdvancedToggleControl
 							label={ __( 'Remove extra text margins', i18n ) }
 							attribute="textRemoveTextMargins"
+						/>
+					) }
+
+					{ hasTextTag && (
+						<HeadingButtonsControl
+							value={ getAttribute( 'textTag' ) }
+							onChange={ updateAttributeHandler( 'textTag' ) }
+							hasP={ false }
 						/>
 					) }
 
