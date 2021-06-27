@@ -16,15 +16,16 @@ export const useControlHandlers = ( attribute, responsive = false, hover = false
 	const attributes = useBlockAttributes( clientId )
 	const attrName = useAttributeName( attribute, responsive, hover )
 
+	const originalValue = attributes[ attrName ]
 	let value = attributes ? attributes[ attrName ] : ''
 	if ( valueCallback ) {
 		value = valueCallback( value )
 	}
 
 	const onChange = useCallback( _value => {
-		const value = onChangeCallback ? onChangeCallback( _value ) : _value
+		const value = onChangeCallback ? onChangeCallback( _value, originalValue ) : _value
 		dispatch( 'core/block-editor' ).updateBlockAttributes( clientId, { [ attrName ]: value } )
-	}, [ clientId, attrName, onChangeCallback ] )
+	}, [ clientId, attrName, onChangeCallback, originalValue ] )
 
 	return [ value, onChange ]
 }

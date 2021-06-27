@@ -43,7 +43,6 @@ export const TextStyles = props => {
 					hoverSelector: '.stk-text__text:hover',
 				},
 			} } />
-			<MarginBottom.Style { ...propsToPass } />
 		</Fragment>
 	)
 }

@@ -1,10 +1,9 @@
 export const addAttributes = attrObject => {
 	attrObject.add( {
 		attributes: {
-			blockMarginBottom: {
+			blockMargin: {
 				stkResponsive: true,
-				type: 'number',
-				default: '',
+				type: 'object',
 			},
 		},
 		versionAdded: '3.0.0',
