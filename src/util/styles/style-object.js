@@ -314,7 +314,7 @@ class StyleObject {
 			// This is to handle multiple selectors.
 			parentHoverSelector = selector.map( s => {
 				if ( blockState === 'parent-hovered' ) {
-					return `.%s.stk--is-hovered .%s-container`
+					return `.%s.stk--is-hovered ${ s }`
 				}
 
 				return `:where(.stk-hover-parent:hover) .%s ${ s }`
