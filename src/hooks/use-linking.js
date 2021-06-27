@@ -50,10 +50,9 @@ export const useLinking = () => {
 	]
 }
 
-export const useIsLinked = () => {
-	const { clientId } = useBlockEditContext()
-	const { uniqueId } = useBlockAttributes( clientId )
-	return ! getLinkedData().includes( uniqueId )
+export const useIsLinked = clientId => {
+	const attributes = useBlockAttributes( clientId )
+	return attributes?.uniqueId ? ! getLinkedData().includes( attributes.uniqueId ) : null
 }
 
 export const isBlockLinked = clientId => {
