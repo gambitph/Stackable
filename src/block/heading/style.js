@@ -40,7 +40,6 @@ export const HeadingStyles = props => {
 				options: {
 					...propsToPass.options,
 					selector: '.stk-heading__text',
-					hoverSelector: '.stk-heading__text:hover',
 				},
 			} } />
 		</Fragment>
@@ -70,7 +69,6 @@ HeadingStyles.Content = props => {
 				options: {
 					...propsToPass.options,
 					selector: '.stk-heading__text',
-					hoverSelector: '.stk-heading__text:hover',
 				},
 			} } />
 			<MarginBottom.Style.Content { ...propsToPass } />

@@ -221,6 +221,7 @@
 		z-index: 1;
 
 		&::after {
+			pointer-events: none;
 			content: "";
 			position: absolute;
 			z-index: -1;

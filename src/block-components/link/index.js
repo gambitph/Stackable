@@ -77,8 +77,6 @@ Link.Content = props => {
 			href={ attributes.linkUrl || undefined }
 			target={ attributes.linkNewTab ? '_blank' : undefined }
 			rel={ attributes.linkRel || undefined }
-			aria-hidden="true"
-			tabindex="-1"
 		>
 			{ props.children }
 		</LinkComponent.Content>

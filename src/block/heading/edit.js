@@ -20,7 +20,7 @@ import {
 import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
 import { InspectorTabs } from '~stackable/components'
-import { useBlockEl, useBlockHoverClass } from '~stackable/hooks'
+import { useBlockHoverClass } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -53,8 +53,6 @@ const Edit = props => {
 		blockAlignmentClass,
 	] )
 
-	const blockEl = useBlockEl()
-
 	const onChange = useCallback( text => setAttributes( { text } ), [ setAttributes ] )
 
 	return (
@@ -65,7 +63,7 @@ const Edit = props => {
 			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
-			<Typography.InspectorControls blockEl={ blockEl } blockElSelector=".stk-heading__text" hasRemoveMargins={ true } />
+			<Typography.InspectorControls hasRemoveMargins={ true } />
 			<CustomCSS.InspectorControls mainBlockClass="stk-heading" />
 			<Responsive.InspectorControls />
 
