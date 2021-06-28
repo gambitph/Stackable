@@ -139,7 +139,7 @@ const getStyleParams = ( options = {} ) => {
 			selector,
 			styleRule: 'borderColor',
 			attrName: 'shapeOutlineColor',
-			valuePreCallback: ( value, getAttribute, device, state ) => getAttribute( 'shapeOutline', 'desktop', state ) ? value : undefined,
+			valuePreCallback: ( value, getAttribute ) => getAttribute( 'shapeOutline' ) ? value : undefined,
 			enabledCallback: attributes => attributes.shaped,
 			hover: 'all',
 			hoverSelector,
@@ -155,7 +155,7 @@ const getStyleParams = ( options = {} ) => {
 					! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.right ||
 					! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.bottom ||
 					! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.left ||
-					! getAttribute( 'shapeOutline', 'desktop', state )
+					! getAttribute( 'shapeOutline' )
 				) {
 					return undefined
 				}
@@ -175,7 +175,7 @@ const getStyleParams = ( options = {} ) => {
 			hoverSelector,
 			responsive: 'all',
 			format: '%spx',
-			valuePreCallback: ( value, getAttribute, device, state ) => getAttribute( 'shapeOutline', 'desktop', state ) ? value?.top : undefined,
+			valuePreCallback: ( value, getAttribute ) => getAttribute( 'shapeOutline' ) ? value?.top : undefined,
 			dependencies: [ 'shapeOutline', 'shaped' ],
 		},
 		{
@@ -186,7 +186,7 @@ const getStyleParams = ( options = {} ) => {
 			hoverSelector,
 			responsive: 'all',
 			format: '%spx',
-			valuePreCallback: ( value, getAttribute, device, state ) => getAttribute( 'shapeOutline', 'desktop', state ) ? value?.right : undefined,
+			valuePreCallback: ( value, getAttribute ) => getAttribute( 'shapeOutline' ) ? value?.right : undefined,
 			dependencies: [ 'shapeOutline', 'shaped' ],
 		},
 		{
@@ -197,7 +197,7 @@ const getStyleParams = ( options = {} ) => {
 			hoverSelector,
 			responsive: 'all',
 			format: '%spx',
-			valuePreCallback: ( value, getAttribute, device, state ) => getAttribute( 'shapeOutline', 'desktop', state ) ? value?.bottom : undefined,
+			valuePreCallback: ( value, getAttribute ) => getAttribute( 'shapeOutline' ) ? value?.bottom : undefined,
 			dependencies: [ 'shapeOutline', 'shaped' ],
 		},
 		{
@@ -208,7 +208,7 @@ const getStyleParams = ( options = {} ) => {
 			hoverSelector,
 			responsive: 'all',
 			format: '%spx',
-			valuePreCallback: ( value, getAttribute, device, state ) => getAttribute( 'shapeOutline', 'desktop', state ) ? value?.left : undefined,
+			valuePreCallback: ( value, getAttribute ) => getAttribute( 'shapeOutline' ) ? value?.left : undefined,
 			dependencies: [ 'shapeOutline', 'shaped' ],
 		},
 

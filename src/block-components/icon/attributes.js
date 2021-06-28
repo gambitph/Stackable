@@ -9,7 +9,6 @@ export const iconAttributes = {
 		default: '',
 	},
 	iconColorType: {
-		stkHover: true,
 		type: 'string',
 		default: '',
 	},
@@ -99,7 +98,6 @@ export const iconAttributes = {
 		default: '',
 	},
 	shapeOutline: {
-		stkHover: true,
 		type: 'boolean',
 		default: false,
 	},

@@ -34,6 +34,7 @@ const FontAwesomeIcon = props => {
 		return <RawHTML { ...propsToPass }>{ prependRender + props.value }</RawHTML>
 	}
 
+	// There's a chance that the Font Awesome library hasn't loaded yet, wait for it.
 	if ( ! faIsAPILoaded() ) {
 		return <Spinner />
 	}
@@ -63,6 +64,7 @@ FontAwesomeIcon.Content = props => {
 
 	const prependRender = props.prependRender ? renderToString( props.prependRender ) : ''
 
+	// If given an svg, just display it.
 	if ( typeof props.value === 'string' ) {
 		if ( props.value.match( /^<svg/ ) ) {
 			return <RawHTML { ...propsToPass }>{ prependRender + props.value }</RawHTML>
@@ -74,6 +76,12 @@ FontAwesomeIcon.Content = props => {
 
 	const iconHTML = faGetSVGIcon( prefix, iconName )
 	return <RawHTML { ...propsToPass }>{ prependRender + iconHTML }</RawHTML>
+}
+
+FontAwesomeIcon.defaultProps = {
+	prefix: '',
+	iconName: '',
+	value: '', // This is the old-style of prefix + iconName e.g. 'fab-apple'
 }
 
 export default FontAwesomeIcon

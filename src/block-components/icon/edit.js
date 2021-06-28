@@ -15,7 +15,6 @@ import {
 import { i18n } from 'stackable'
 import {
 	useAttributeEditHandlers,
-	useBlockHoverState,
 } from '~stackable/hooks'
 
 /**
@@ -33,8 +32,6 @@ export const Edit = props => {
 		hasShape,
 		hasBackgroundShape,
 	} = props
-
-	const [ state ] = useBlockHoverState()
 
 	const {
 		getAttribute,
@@ -70,16 +67,15 @@ export const Edit = props => {
 							isSmall={ true }
 							fullwidth={ false }
 							attribute="iconColorType"
-							hover="all"
 						/>
 
 						<ColorPaletteControl
-							label={ getAttribute( 'iconColorType', 'desktop', state ) === 'gradient' ? sprintf( __( 'Icon Color #%s', i18n ), 1 )
+							label={ getAttribute( 'iconColorType' ) === 'gradient' && hasGradient ? sprintf( __( 'Icon Color #%s', i18n ), 1 )
 								: __( 'Icon Color', i18n ) }
 							attribute="iconColor1"
 							hover="all"
 						/>
-						{ getAttribute( 'iconColorType', 'desktop', state ) === 'gradient' && (
+						{ getAttribute( 'iconColorType' ) === 'gradient' && hasGradient && (
 							<Fragment>
 								<ColorPaletteControl
 									label={ sprintf( __( 'Icon Color #%s', i18n ), 2 ) }
@@ -200,11 +196,11 @@ export const Edit = props => {
 
 								<ToggleControl
 									label={ __( 'Shape Outline', i18n ) }
-									checked={ getAttribute( 'shapeOutline', 'desktop', state ) }
-									onChange={ updateAttributeHandler( 'shapeOutline', 'desktop', state ) }
+									checked={ getAttribute( 'shapeOutline' ) }
+									onChange={ updateAttributeHandler( 'shapeOutline' ) }
 								/>
 
-								{ getAttribute( 'shapeOutline', 'desktop', state ) && (
+								{ getAttribute( 'shapeOutline' ) && (
 									<Fragment>
 
 										<ColorPaletteControl
