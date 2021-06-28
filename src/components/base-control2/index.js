@@ -102,8 +102,8 @@ const AdvancedControl = props => {
 
 	// Unit handles
 	const unitAttrName = useAttributeName( `${ props.attribute }Unit`, props.responsive, props.hover )
-	const unit = attributes ? attributes[ unitAttrName ] : ''
-	const onChangeUnit = useCallback( unit => updateBlockAttributes( clientId, { [ unitAttrName ]: unit } ), [ unitAttrName ] )
+	const unit = props.unit ? props.unit : attributes ? attributes[ unitAttrName ] : ''
+	const onChangeUnit = useCallback( props.onChangeUnit ? props.onChangeUnit : unit => updateBlockAttributes( clientId, { [ unitAttrName ]: unit } ), [ unitAttrName ] )
 
 	const propsToPass = omit( props, [ 'attribute' ] )
 
@@ -127,6 +127,9 @@ AdvancedControl.defaultProps = {
 	responsive: false,
 	hover: false,
 	units: false,
+
+	onChangeUnit: null,
+	unit: null,
 }
 
 export default AdvancedControl
