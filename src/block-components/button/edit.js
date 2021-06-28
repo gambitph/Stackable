@@ -13,7 +13,6 @@ import { i18n } from 'stackable'
 import {
 	useAttributeEditHandlers, useBlockHoverState,
 } from '~stackable/hooks'
-import { getAttributeName } from '~stackable/util'
 
 /**
  * WordPress dependencies
@@ -29,14 +28,12 @@ import { BorderControls } from '../helpers/borders'
 export const Edit = props => {
 	const {
 		hasTextColor,
-		hasTextGradient,
 	} = props
 
 	const [ state ] = useBlockHoverState()
 
 	const {
 		getAttribute,
-		updateAttributes,
 	} = useAttributeEditHandlers()
 
 	return (
@@ -90,54 +87,11 @@ export const Edit = props => {
 				) }
 
 				{ hasTextColor && (
-					<Fragment>
-						{ hasTextGradient && (
-							<AdvancedToolbarControl
-								controls={ [
-									{
-										value: '',
-										title: __( 'Single', i18n ),
-									},
-									{
-										value: 'gradient',
-										title: __( 'Gradient', i18n ),
-									},
-								] }
-								isSmall={ true }
-								fullwidth={ false }
-								attribute="buttonTextColorType"
-								onReset={ () => {
-									updateAttributes( {
-										[ getAttributeName( 'buttonTextColor1' ) ]: '',
-										[ getAttributeName( 'buttonTextColor2' ) ]: '',
-									} )
-								} }
-							/>
-						) }
-						<ColorPaletteControl
-							label={ getAttribute( 'buttonTextColorType' ) === 'gradient' && hasTextGradient ? sprintf( __( 'Text Color #%s', i18n ), 1 )
-								: __( 'Text Color', i18n ) }
-							attribute="buttonTextColor1"
-							hover={ getAttribute( 'buttonTextColorType' ) === 'gradient' && hasTextGradient ? false : 'all' }
-						/>
-						{ getAttribute( 'buttonTextColorType' ) === 'gradient' && hasTextGradient && (
-							<Fragment>
-								<ColorPaletteControl
-									label={ sprintf( __( 'Text Color #%s', i18n ), 1 ) }
-									attribute="buttonTextColor2"
-								/>
-
-								<AdvancedRangeControl
-									label={ __( 'Gradient Direction (degrees)', i18n ) }
-									attribute="buttonTextGradientDirection"
-									min={ 0 }
-									max={ 360 }
-									step={ 10 }
-									allowReset={ true }
-								/>
-							</Fragment>
-						) }
-					</Fragment>
+					<ColorPaletteControl
+						label={ __( 'Text Color', i18n ) }
+						attribute="buttonTextColor"
+						hover="all"
+					/>
 				) }
 			</PanelAdvancedSettings>
 			<PanelAdvancedSettings
@@ -193,5 +147,4 @@ export const Edit = props => {
 
 Edit.defaultProps = {
 	hasTextColor: true,
-	hasTextGradient: true,
 }

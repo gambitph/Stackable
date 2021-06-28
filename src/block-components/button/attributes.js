@@ -31,21 +31,9 @@ const buttonAttributes = {
 		type: 'number',
 		default: '',
 	},
-	buttonTextColorType: {
-		type: 'string',
-		default: '',
-	},
-	buttonTextColor1: {
+	buttonTextColor: {
 		type: 'string',
 		stkHover: true,
-		default: '',
-	},
-	buttonTextColor2: {
-		type: 'string',
-		default: '',
-	},
-	buttonTextGradientDirection: {
-		type: 'number',
 		default: '',
 	},
 	buttonMinHeight: {
@@ -58,7 +46,6 @@ const buttonAttributes = {
 export const addAttributes = ( attrObject, options = {} ) => {
 	const {
 		hasTextColor = true,
-		hasTextGradient = true,
 	} = options
 	const attributesToExclude = []
 
@@ -66,14 +53,6 @@ export const addAttributes = ( attrObject, options = {} ) => {
 		attributesToExclude.push(
 			'buttonTextColorType',
 			'buttonTextColor1',
-			'buttonTextColor2',
-			'buttonTextGradientDirection',
-		)
-	}
-
-	if ( ! hasTextGradient ) {
-		attributesToExclude.push(
-			'buttonTextColorType',
 			'buttonTextColor2',
 			'buttonTextGradientDirection',
 		)
