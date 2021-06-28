@@ -69,7 +69,7 @@ ButtonStyles.Content = props => {
 		textSelector: '.stk-button__button > .stk-button__inner-text',
 		textHoverSelector: '.stk-button__button:hover > .stk-button__inner-text',
 		iconSelector: '.stk-button__button .stk--inner-svg',
-		iconHoverSelector: '.stk-button__button:hover .stk-inner-svg',
+		iconHoverSelector: '.stk-button__button:hover .stk--inner-svg',
 	}
 
 	const styles = (
