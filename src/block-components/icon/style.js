@@ -11,55 +11,59 @@ const getStyleParams = ( options = {} ) => {
 	const {
 		selector = '',
 		uniqueId = '',
-		wrapperSelector = '',
-		backgroundShapeSelector = '.stk--shape-icon',
 		hoverSelector = '',
 	} = options
 
 	const getSvgSelector = ( getAttribute, _selector = selector, suffixes = [] ) => {
-		const svgSelector = `${ _selector } svg${ getAttribute( 'iconColorType' ) === 'gradient' ? ':last-child' : '' }`
+		const svgSelector = `${ _selector } .stk--inner-svg svg${ getAttribute( 'iconColorType' ) === 'gradient' ? ':last-child' : '' }`
 		if ( suffixes.length ) {
 			return suffixes.map( suffix => svgSelector + suffix )
 		}
 		return svgSelector
 	}
 
+	const shapeSelector = `${ selector } .stk--inner-svg`
+	const shapeHoverSelector = `${ selector }:hover .stk--inner-svg`
+
+	const backgroundShapeSelector = `${ selector } .stk--shape-icon`
+	const backgroundShapeHoverSelector = `${ selector }:hover .stk--shape-icon`
+
 	return [
 		// Icon Styles
 		{
 			selectorCallback: getAttribute => getSvgSelector( getAttribute ),
+			hoverSelectorCallback: getAttribute => getSvgSelector( getAttribute, hoverSelector ),
 			styles: {
 				height: 'iconSize',
 				width: 'iconSize',
 			},
 			responsive: 'all',
 			hover: 'all',
-			hoverSelector,
 			format: '%spx',
 		},
 		{
 			selectorCallback: getAttribute => getSvgSelector( getAttribute ),
+			hoverSelectorCallback: getAttribute => getSvgSelector( getAttribute, hoverSelector ),
 			styleRule: 'opacity',
 			attrName: 'iconOpacity',
 			hover: 'all',
-			hoverSelector,
 		},
 		{
 			selectorCallback: getAttribute => getSvgSelector( getAttribute ),
+			hoverSelectorCallback: getAttribute => getSvgSelector( getAttribute, hoverSelector ),
 			styleRule: 'transform',
 			attrName: 'iconRotation',
 			hover: 'all',
-			hoverSelector,
 			format: 'rotate(%sdeg)',
 		},
 		{
-			selector: wrapperSelector,
+			selector,
 			styleRule: 'flexDirection',
 			attrName: 'iconPosition',
 			valuePreCallback: value => value !== '' ? 'row-reverse' : undefined,
 		},
 		{
-			selector: wrapperSelector,
+			selector,
 			styleRule: 'columnGap',
 			attrName: 'iconGap',
 			hoverSelector,
@@ -67,6 +71,7 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			selectorCallback: getAttribute => getSvgSelector( getAttribute, selector, [ '', ' g', ' path', ' rect', ' polygon', ' ellipse' ] ),
+			hoverSelectorCallback: getAttribute => getSvgSelector( getAttribute, hoverSelector, [ '', ' g', ' path', ' rect', ' polygon', ' ellipse' ] ),
 			styleRule: 'fill',
 			attrName: 'iconColor1',
 			valuePreCallback: ( value, getAttribute, device, state ) => {
@@ -77,7 +82,6 @@ const getStyleParams = ( options = {} ) => {
 			},
 			dependencies: [ 'iconColorType', 'iconColor1', 'iconColor2' ],
 			hover: 'all',
-			hoverSelectorCallback: getAttribute => getSvgSelector( getAttribute, hoverSelector, [ '', ' g', ' path', ' rect', ' polygon', ' ellipse' ] ),
 		},
 		{
 			selector: `${ selector } #${ uniqueId }`,
@@ -95,52 +99,53 @@ const getStyleParams = ( options = {} ) => {
 				return value
 			},
 			hover: 'all',
-			hoverSelector,
+			hoverSelector: `${ selector }:hover #${ uniqueId }`,
 			dependencies: [ 'iconColorType', 'iconColor1', 'iconColor2' ],
 		},
 
 		// Shape Styles
 		{
-			selector,
+			selector: shapeSelector,
+			hoverSelector: shapeHoverSelector,
 			styleRule: 'backgroundColor',
 			attrName: 'shapeColor',
 			enabledCallback: attributes => attributes.shaped,
 			hover: 'all',
-			hoverSelector,
 			dependencies: [ 'shaped' ],
 		},
 		{
-			selector,
+			selector: shapeSelector,
+			hoverSelector: shapeHoverSelector,
 			styleRule: 'borderRadius',
 			attrName: 'shapeBorderRadius',
 			format: `%s%`,
 			enabledCallback: attributes => attributes.shaped,
 			hover: 'all',
-			hoverSelector,
 			dependencies: [ 'shaped' ],
 		},
 		{
-			selector,
+			selector: shapeSelector,
+			hoverSelector: shapeHoverSelector,
 			styleRule: 'padding',
 			attrName: 'shapePadding',
 			format: `%spx`,
 			enabledCallback: attributes => attributes.shaped,
 			hover: 'all',
-			hoverSelector,
 			dependencies: [ 'shaped' ],
 		},
 		{
-			selector,
+			selector: shapeSelector,
+			hoverSelector: shapeHoverSelector,
 			styleRule: 'borderColor',
 			attrName: 'shapeOutlineColor',
 			valuePreCallback: ( value, getAttribute ) => getAttribute( 'shapeOutline' ) ? value : undefined,
 			enabledCallback: attributes => attributes.shaped,
 			hover: 'all',
-			hoverSelector,
 			dependencies: [ 'shapeOutline', 'shaped' ],
 		},
 		{
-			selector,
+			selector: shapeSelector,
+			hoverSelector: shapeHoverSelector,
 			styleRule: 'borderStyle',
 			attrName: 'borderStyle',
 			valuePreCallback: ( value, getAttribute, device, state ) => {
@@ -158,48 +163,47 @@ const getStyleParams = ( options = {} ) => {
 			},
 			enabledCallback: attributes => attributes.shaped,
 			hover: 'all',
-			hoverSelector,
 			dependencies: [ 'shaped', 'shapeOutline', 'shapeOutlineWidth' ],
 		},
 		{
-			selector,
+			selector: shapeSelector,
+			hoverSelector: shapeHoverSelector,
 			styleRule: 'borderTopWidth',
 			attrName: 'shapeOutlineWidth',
 			hover: 'all',
-			hoverSelector,
 			responsive: 'all',
 			format: '%spx',
 			valuePreCallback: ( value, getAttribute ) => getAttribute( 'shapeOutline' ) ? value?.top : undefined,
 			dependencies: [ 'shapeOutline', 'shaped' ],
 		},
 		{
-			selector,
+			selector: shapeSelector,
+			hoverSelector: shapeHoverSelector,
 			styleRule: 'borderRightWidth',
 			attrName: 'shapeOutlineWidth',
 			hover: 'all',
-			hoverSelector,
 			responsive: 'all',
 			format: '%spx',
 			valuePreCallback: ( value, getAttribute ) => getAttribute( 'shapeOutline' ) ? value?.right : undefined,
 			dependencies: [ 'shapeOutline', 'shaped' ],
 		},
 		{
-			selector,
+			selector: shapeSelector,
+			hoverSelector: shapeHoverSelector,
 			styleRule: 'borderBottomWidth',
 			attrName: 'shapeOutlineWidth',
 			hover: 'all',
-			hoverSelector,
 			responsive: 'all',
 			format: '%spx',
 			valuePreCallback: ( value, getAttribute ) => getAttribute( 'shapeOutline' ) ? value?.bottom : undefined,
 			dependencies: [ 'shapeOutline', 'shaped' ],
 		},
 		{
-			selector,
+			selector: shapeSelector,
+			hoverSelector: shapeHoverSelector,
 			styleRule: 'borderLeftWidth',
 			attrName: 'shapeOutlineWidth',
 			hover: 'all',
-			hoverSelector,
 			responsive: 'all',
 			format: '%spx',
 			valuePreCallback: ( value, getAttribute ) => getAttribute( 'shapeOutline' ) ? value?.left : undefined,
@@ -209,27 +213,27 @@ const getStyleParams = ( options = {} ) => {
 		// Background Shape Styles
 		{
 			selector: backgroundShapeSelector,
+			hoverSelector: backgroundShapeHoverSelector,
 			styleRule: 'fill',
 			attrName: 'backgroundShapeColor',
 			hover: 'all',
-			hoverSelector,
 			enabledCallback: attributes => attributes.showBackgroundShape,
 			dependencies: [ 'showBackgroundShape' ],
 		},
 		{
 			selector: backgroundShapeSelector,
+			hoverSelector: backgroundShapeHoverSelector,
 			styleRule: 'opacity',
 			attrName: 'backgroundShapeOpacity',
 			hover: 'all',
-			hoverSelector,
 			enabledCallback: attributes => attributes.showBackgroundShape,
 			dependencies: [ 'showBackgroundShape' ],
 		},
 		{
 			selector: backgroundShapeSelector,
+			hoverSelector: backgroundShapeHoverSelector,
 			styleRule: 'transform',
 			hover: 'all',
-			hoverSelector,
 			valuePreCallback: ( value, getAttribute, device, state ) => {
 				const backgroundShapeSize = getAttribute( 'backgroundShapeSize', 'desktop', state )
 				const backgroundShapeOffsetHorizontal = getAttribute( 'backgroundShapeOffsetHorizontal', 'desktop', state )

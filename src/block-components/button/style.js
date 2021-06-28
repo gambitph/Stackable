@@ -177,12 +177,6 @@ export const Style = props => {
 				{ ...{
 					attributes,
 					...propsToPass,
-					options: {
-						...propsToPass.options,
-						wrapperSelector: propsToPass.options.selector,
-						selector: propsToPass.options.iconSelector,
-						hoverSelector: propsToPass.options.iconHoverSelector,
-					},
 				} } />
 		</Fragment>
 	)
@@ -218,12 +212,6 @@ Style.Content = props => {
 				{ ...{
 					attributes,
 					...propsToPass,
-					options: {
-						...propsToPass.options,
-						wrapperSelector: propsToPass.options.selector,
-						selector: propsToPass.options.iconSelector,
-						hoverSelector: propsToPass.options.iconHoverSelector,
-					},
 				} } />
 		</Fragment>
 	)
