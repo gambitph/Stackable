@@ -1,8 +1,6 @@
 /**
  * Internal dependencies
  */
-import { getAttributeName } from '~stackable/util'
-import { useBlockHoverState, useDeviceType } from '~stackable/hooks'
 import { getAttrName } from '../attributes'
 
 /**
@@ -10,6 +8,13 @@ import { getAttrName } from '../attributes'
  */
 import { useMemo } from '@wordpress/element'
 import { sprintf } from '@wordpress/i18n'
+import { useBlockHoverState, useDeviceType } from '~stackable/hooks'
+import { getAttributeName } from '~stackable/util'
+import { compact } from 'lodash'
+
+/**
+ * WordPress dependencies
+ */
 import { useBlockEditContext } from '@wordpress/block-editor'
 
 /**
@@ -201,6 +206,7 @@ class StyleObject {
 			attrNameTemplate = '',
 			selectorCallback = null, // Can be used instead of selector.
 			hoverSelector: _hoverSelector = '', // You can specify your own hover selector (for saving purposes only)
+			hoverSelectorCallback = null,
 			hoverCallback = null,
 			renderIn: _renderIn = '', // editor, custom, saveOnly
 			valuePreCallback = null,
@@ -248,6 +254,7 @@ class StyleObject {
 		}
 
 		let selector = selectorCallback ? selectorCallback( getAttribute, attributes ) : _selector
+		let hoverSelector = hoverSelectorCallback ? hoverSelectorCallback( getAttribute, attributes ) : _hoverSelector
 		const hover = hoverCallback ? hoverCallback( getAttribute, attributes ) : _hover
 
 		const getValue = ( attrName, device, state ) => {
@@ -303,43 +310,27 @@ class StyleObject {
 		const hasHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'hover' ) )
 		const hasParentHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'parent-hover' ) )
 
-		let parentHoverSelector
-		let hoverSelector
+		const prependClass = ( _selector, prependString, prependStringIfEditor, blockStateCompare ) => {
+			const getSelector = s => {
+				const prependArray = []
+				prependArray.push( blockState === blockStateCompare ? prependStringIfEditor : prependString )
+				prependArray.push( s )
+				return compact( prependArray ).join( ' ' )
+			}
 
-		if ( Array.isArray( _hoverSelector ) && blockState !== 'hover' ) {
-			hoverSelector = _hoverSelector.join( ', ' )
+			if ( Array.isArray( _selector ) ) {
+				return _selector.map( getSelector ).join( ', ' )
+			}
+
+			return getSelector( _selector )
 		}
 
-		if ( Array.isArray( selector ) ) {
-			// This is to handle multiple selectors.
-			parentHoverSelector = selector.map( s => {
-				if ( blockState === 'parent-hovered' ) {
-					return `.%s.stk--is-hovered ${ s }`
-				}
-
-				return `:where(.stk-hover-parent:hover) .%s ${ s }`
-			} ).join( ', ' )
-
-			hoverSelector = hoverSelector || selector.map( s => {
-				if ( blockState === 'hover' ) {
-					return `.%s.stk--is-hovered ${ s }`
-				}
-
-				return `.stk-block.%s:hover ${ s }`
-			} ).join( ', ' )
-
-			selector = selector.join( ', ' )
-		} else {
-			parentHoverSelector = `:where(.stk-hover-parent:hover) .%s ${ selector }`
-			hoverSelector = _hoverSelector || `.stk-block.%s:hover ${ selector }`
-			// This is for the editor, change the selector to make the styles show up right away.
-			if ( blockState === 'hover' ) {
-				hoverSelector = `.%s.stk--is-hovered ${ selector }`
-			}
-			if ( blockState === 'parent-hovered' ) {
-				parentHoverSelector = `.%s.stk--is-hovered ${ selector }`
-			}
-		}
+		const parentHoverSelector = prependClass( selector, ':where(.stk-hover-parent:hover) .%s', '.%s.stk--is-hovered', 'parent-hovered' )
+		hoverSelector = hoverSelector
+			// In editor, always use the `selector` instead of the hoverSelector.
+			? prependClass( blockState === 'hover' ? selector : hoverSelector || selector, null, '.%s.stk--is-hovered', 'hover' )
+			: prependClass( selector, '.stk-block.%s:hover', '.%s.stk--is-hovered', 'hover' )
+		selector = prependClass( selector )
 
 		this.appendToSelector( selector, styleRule, getValue( attrName, 'desktop', 'normal' ), 'desktop', renderIn, vendorPrefixes )
 		if ( hasHover ) {

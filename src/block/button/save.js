@@ -7,6 +7,7 @@ import { version as VERSION } from 'stackable'
 import {
 	getTypographyClasses,
 	BlockDiv,
+	CustomCSS,
 	Link,
 	Icon,
 	getResponsiveClasses,
@@ -50,6 +51,7 @@ export const Save = props => {
 	return (
 		<BlockDiv.Content className={ blockClassNames } attributes={ props.attributes }>
 			<ButtonStyles.Content { ...propsToPass } />
+			<CustomCSS.Content attributes={ props.attributes } />
 			<Link.Content { ...propsToPass } className={ buttonClassNames } >
 				<Icon.Content attributes={ props.attributes } enableLinearGradient={ false } />
 				<RichText.Content

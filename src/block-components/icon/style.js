@@ -16,10 +16,18 @@ const getStyleParams = ( options = {} ) => {
 		hoverSelector = '',
 	} = options
 
+	const getSvgSelector = ( getAttribute, _selector = selector, suffixes = [] ) => {
+		const svgSelector = `${ _selector } svg${ getAttribute( 'iconColorType' ) === 'gradient' ? ':last-child' : '' }`
+		if ( suffixes.length ) {
+			return suffixes.map( suffix => svgSelector + suffix )
+		}
+		return svgSelector
+	}
+
 	return [
 		// Icon Styles
 		{
-			selector: `${ selector } svg:last-child`,
+			selectorCallback: getAttribute => getSvgSelector( getAttribute ),
 			styles: {
 				height: 'iconSize',
 				width: 'iconSize',
@@ -30,14 +38,14 @@ const getStyleParams = ( options = {} ) => {
 			format: '%spx',
 		},
 		{
-			selector: `${ selector } svg:last-child`,
+			selectorCallback: getAttribute => getSvgSelector( getAttribute ),
 			styleRule: 'opacity',
 			attrName: 'iconOpacity',
 			hover: 'all',
 			hoverSelector,
 		},
 		{
-			selector: `${ selector } svg:last-child`,
+			selectorCallback: getAttribute => getSvgSelector( getAttribute ),
 			styleRule: 'transform',
 			attrName: 'iconRotation',
 			hover: 'all',
@@ -58,32 +66,18 @@ const getStyleParams = ( options = {} ) => {
 			format: `%spx`,
 		},
 		{
-			selector: [
-				`${ selector } svg:last-child`,
-				`${ selector } svg:last-child g`,
-				`${ selector } svg:last-child path`,
-				`${ selector } svg:last-child rect`,
-				`${ selector } svg:last-child polygon`,
-				`${ selector } svg:last-child ellipse`,
-			],
+			selectorCallback: getAttribute => getSvgSelector( getAttribute, selector, [ '', ' g', ' path', ' rect', ' polygon', ' ellipse' ] ),
 			styleRule: 'fill',
 			attrName: 'iconColor1',
 			valuePreCallback: ( value, getAttribute, device, state ) => {
-				if ( getAttribute( 'iconColorType', 'desktop', state ) === 'gradient' && getAttribute( 'iconColor1', 'desktop', state ) && getAttribute( 'iconColor2', 'desktop', state ) ) {
+				if ( getAttribute( 'iconColorType' ) === 'gradient' && getAttribute( 'iconColor1', 'desktop', state ) && getAttribute( 'iconColor2', 'desktop', state ) ) {
 					return `url(#${ uniqueId })`
 				}
 				return value
 			},
 			dependencies: [ 'iconColorType', 'iconColor1', 'iconColor2' ],
 			hover: 'all',
-			hoverSelector: [
-				`${ hoverSelector } svg:last-child`,
-				`${ hoverSelector } svg:last-child g`,
-				`${ hoverSelector } svg:last-child path`,
-				`${ hoverSelector } svg:last-child rect`,
-				`${ hoverSelector } svg:last-child polygon`,
-				`${ hoverSelector } svg:last-child ellipse`,
-			],
+			hoverSelectorCallback: getAttribute => getSvgSelector( getAttribute, hoverSelector, [ '', ' g', ' path', ' rect', ' polygon', ' ellipse' ] ),
 		},
 		{
 			selector: `${ selector } #${ uniqueId }`,
@@ -92,7 +86,7 @@ const getStyleParams = ( options = {} ) => {
 				[ `--${ uniqueId }-color-2` ]: 'iconColor2',
 			},
 			valuePreCallback: ( value, getAttribute, device, state ) => {
-				if ( getAttribute( 'iconColorType', 'desktop', state ) !== 'gradient' ||
+				if ( getAttribute( 'iconColorType' ) !== 'gradient' ||
 					! getAttribute( 'iconColor1', 'desktop', state ) ||
 					! getAttribute( 'iconColor2', 'desktop', state )
 				) {

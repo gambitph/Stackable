@@ -80,6 +80,11 @@
 		background: cssvar(button-background-color);
 		padding: cssvar(button-padding);
 
+		.stk-button__inner-svg {
+			color: cssvar(button-text-color);
+		}
+
+
 		& > .stk-button__inner-text {
 			color: cssvar(button-text-color);
 

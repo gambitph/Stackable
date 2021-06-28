@@ -28,10 +28,13 @@ import { useBlockHoverClass } from '~stackable/hooks'
  */
 import { Fragment, useCallback } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
+import { createBlock } from '@wordpress/blocks'
 
 const Edit = props => {
 	const {
-		className, setAttributes,
+		className,
+		setAttributes,
+		onReplace,
 	} = props
 
 	const {
@@ -79,6 +82,11 @@ const Edit = props => {
 					value={ text }
 					onChange={ onChange }
 					className={ textClassNames }
+					onReplace={ onReplace }
+					onSplit={ value => createBlock(
+						'stackable/text',
+						{ ...props.attributes, text: value }
+					) }
 				/>
 				<MarginBottom />
 			</BlockDiv>

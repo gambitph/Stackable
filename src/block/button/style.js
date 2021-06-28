@@ -45,7 +45,16 @@ export const ButtonStyles = props => {
 			<Advanced.Style { ...propsToPass } />
 			<Button.Style { ...propsToPass } />
 			<Typography.Style { ...propsToPass } />
-			<Icon.Style { ...propsToPass } />
+			<Icon.Style
+				{ ...{
+					...propsToPass,
+					options: {
+						...propsToPass.options,
+						selector: '.stk-button__button > .stk-button__svg-wrapper > .stk-button__inner-svg',
+						hoverSelector: '.stk-button__button:hover > .stk-button__svg-wrapper > .stk-button__inner-svg',
+						wrapperSelector: '.stk-button__button',
+					},
+				} } />
 			<BorderStyle
 				{ ...{
 					...propsToPass,
@@ -86,7 +95,16 @@ ButtonStyles.Content = props => {
 			<Advanced.Style.Content { ...propsToPass } />
 			<Button.Style.Content { ...propsToPass } />
 			<Typography.Style.Content { ...propsToPass } />
-			<Icon.Style.Content { ...propsToPass } />
+			<Icon.Style.Content
+				{ ...{
+					...propsToPass,
+					options: {
+						...propsToPass.options,
+						selector: '.stk-button__button > .stk-button__svg-wrapper > .stk-button__inner-svg',
+						hoverSelector: '.stk-button__button:hover > .stk-button__svg-wrapper > .stk-button__inner-svg',
+						wrapperSelector: '.stk-button__button',
+					},
+				} } />
 		</Fragment>
 	)
 

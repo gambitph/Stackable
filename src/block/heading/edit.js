@@ -28,10 +28,14 @@ import { useBlockHoverClass } from '~stackable/hooks'
 import { Fragment, useCallback } from '@wordpress/element'
 import { RichText } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
+import { createBlock } from '@wordpress/blocks'
 
 const Edit = props => {
 	const {
-		className, setAttributes,
+		className,
+		setAttributes,
+		onReplace,
+		clientId,
 	} = props
 
 	const {
@@ -78,6 +82,25 @@ const Edit = props => {
 					value={ text }
 					onChange={ onChange }
 					className={ textClassNames }
+					onReplace={ onReplace }
+					onSplit={ ( value, isOriginal ) => {
+						let block
+
+						if ( isOriginal || value ) {
+							block = createBlock( 'stackable/heading', {
+								...props.attributes,
+								text: value,
+							} )
+						} else {
+							block = createBlock( 'stackable/text' )
+						}
+
+						if ( isOriginal ) {
+							block.clientId = clientId
+						}
+
+						return block
+					} }
 				/>
 				<MarginBottom />
 			</BlockDiv>

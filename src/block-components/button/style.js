@@ -101,10 +101,10 @@ const getStyleParams = options => {
 				const buttonBackgroundColor2 = getAttribute( 'buttonBackgroundColor2', 'desktop', state )
 
 				if (
-					typeof buttonBackgroundColor !== undefined ||
-					buttonBackgroundColor !== '' ||
-					typeof buttonBackgroundColor2 !== undefined ||
-					buttonBackgroundColor2 !== ''
+					( typeof buttonBackgroundColor !== undefined &&
+					buttonBackgroundColor !== '' ) ||
+					( typeof buttonBackgroundColor2 !== undefined &&
+					buttonBackgroundColor2 !== '' )
 				) {
 					return `linear-gradient(${ buttonBackgroundGradientDirection !== '' ? buttonBackgroundGradientDirection + 'deg' : '90deg' }, ${ buttonBackgroundColor || buttonBackgroundColor2 }, ${ buttonBackgroundColor2 || buttonBackgroundColor })`
 				}
