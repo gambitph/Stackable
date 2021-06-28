@@ -91,10 +91,7 @@ const Edit = props => {
 
 			<Linking show={ isHovered } />
 			<BlockDiv className={ blockClassNames }>
-				<Button
-					className={ buttonClassNames }
-					hasLinearGradient={ false }
-				>
+				<Button className={ buttonClassNames }>
 					<RichText
 						tagName="span"
 						className={ typographyInnerClassNames }

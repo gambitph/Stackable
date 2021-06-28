@@ -10,14 +10,11 @@ import { Icon } from '../icon'
 export const Button = props => {
 	const {
 		className,
-		hasLinearGradient,
 	} = props
 
 	return (
 		<Link className={ className }>
-			<Icon
-				hasLinearGradient={ hasLinearGradient }
-			/>
+			<Icon hasLinearGradient={ false } />
 			{ props.children }
 		</Link>
 	)
@@ -25,13 +22,11 @@ export const Button = props => {
 
 Button.defaultProps = {
 	className: '',
-	hasLinearGradient: true,
 }
 
 Button.Content = props => {
 	const {
 		className,
-		hasLinearGradient,
 		attributes,
 		...propsToPass
 	} = props
@@ -40,7 +35,7 @@ Button.Content = props => {
 		<Link.Content { ...propsToPass } attributes={ attributes } className={ className }>
 			<Icon.Content
 				attributes={ attributes }
-				hasLinearGradient={ hasLinearGradient }
+				hasLinearGradient={ false }
 			/>
 			{ props.children }
 		</Link.Content>
@@ -49,7 +44,6 @@ Button.Content = props => {
 
 Button.Content.defaultProps = {
 	className: '',
-	hasLinearGradient: true,
 	attributes: {},
 }
 

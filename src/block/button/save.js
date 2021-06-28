@@ -55,7 +55,6 @@ export const Save = props => {
 				{ ...propsToPass }
 				className={ buttonClassNames }
 				attributes={ props.attributes }
-				hasLinearGradient={ false }
 			>
 				<RichText.Content
 					tagName="span"

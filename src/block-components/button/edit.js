@@ -30,9 +30,6 @@ import { Icon } from '../icon'
 export const Edit = props => {
 	const {
 		hasTextColor,
-		hasIconGradient,
-		hasIconShape,
-		hasIconBackgroundShape,
 	} = props
 
 	const [ state ] = useBlockHoverState()
@@ -150,9 +147,9 @@ export const Edit = props => {
 
 			</InspectorStyleControls>
 			<Icon.InspectorControls
-				hasGradient={ hasIconGradient }
-				hasShape={ hasIconShape }
-				hasBackgroundShape={ hasIconBackgroundShape }
+				hasGradient={ false }
+				hasShape={ false }
+				hasBackgroundShape={ false }
 			/>
 		</Fragment>
 	)
@@ -160,7 +157,4 @@ export const Edit = props => {
 
 Edit.defaultProps = {
 	hasTextColor: true,
-	hasIconGradient: true,
-	hasIconShape: true,
-	hasIconBackgroundShape: true,
 }

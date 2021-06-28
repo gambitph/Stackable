@@ -20,9 +20,6 @@ export const attributes = ( version = VERSION ) => {
 	Advanced.addAttributes( attrObject )
 	Button.addAttributes( attrObject, {
 		selector: '.stk-button__button',
-		hasIconGradient: false,
-		hasIconShape: false,
-		hasIconBackgroundShape: false,
 	} )
 
 	Typography.addAttributes( attrObject, '.stk-button__inner-text', {

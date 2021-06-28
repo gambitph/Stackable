@@ -48,9 +48,6 @@ export const addAttributes = ( attrObject, options = {} ) => {
 	const {
 		hasTextColor = true,
 		selector,
-		hasIconGradient = true,
-		hasIconShape = true,
-		hasIconBackgroundShape = true,
 	} = options
 	const attributesToExclude = []
 
@@ -74,8 +71,8 @@ export const addAttributes = ( attrObject, options = {} ) => {
 	addBorderAttributes( attrObject, 'button%s' )
 	Link.addAttributes( attrObject, { selector } )
 	Icon.addAttributes( attrObject, {
-		hasGradient: hasIconGradient,
-		hasShape: hasIconShape,
-		hasBackgroundShape: hasIconBackgroundShape,
+		hasGradient: false,
+		hasShape: false,
+		hasBackgroundShape: false,
 	} )
 }
