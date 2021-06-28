@@ -8,8 +8,7 @@ import {
 	getTypographyClasses,
 	BlockDiv,
 	CustomCSS,
-	Link,
-	Icon,
+	Button,
 	getResponsiveClasses,
 } from '~stackable/block-components'
 
@@ -52,14 +51,18 @@ export const Save = props => {
 		<BlockDiv.Content className={ blockClassNames } attributes={ props.attributes }>
 			<ButtonStyles.Content { ...propsToPass } />
 			<CustomCSS.Content attributes={ props.attributes } />
-			<Link.Content { ...propsToPass } className={ buttonClassNames } >
-				<Icon.Content attributes={ props.attributes } enableLinearGradient={ false } />
+			<Button.Content
+				{ ...propsToPass }
+				className={ buttonClassNames }
+				attributes={ props.attributes }
+				hasLinearGradient={ false }
+			>
 				<RichText.Content
 					tagName="span"
 					className={ typographyInnerClassNames }
 					value={ props.attributes.text }
 				/>
-			</Link.Content>
+			</Button.Content>
 		</BlockDiv.Content>
 	)
 }

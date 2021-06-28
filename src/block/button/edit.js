@@ -17,9 +17,7 @@ import {
 	Linking,
 	Button,
 	Typography,
-	Icon,
 	BlockStyle,
-	Link,
 } from '~stackable/block-components'
 import {
 	useBlockHoverClass,
@@ -73,17 +71,15 @@ const Edit = props => {
 			<BlockDiv.InspectorControls />
 
 			<BlockStyle.InspectorControls styles={ blockStyles } />
-			<Link.InspectorControls />
-			<Button.InspectorControls />
+			<Button.InspectorControls
+				hasIconGradient={ false }
+				hasIconShape={ false }
+				hasIconBackgroundShape={ false }
+			/>
 			<Typography.InspectorControls
 				hasTextTag={ false }
 				initialOpen={ false }
 				hasColor={ false }
-			/>
-			<Icon.InspectorControls
-				hasGradient={ false }
-				hasShape={ false }
-				hasBackgroundShape={ false }
 			/>
 
 			<Advanced.InspectorControls />
@@ -95,8 +91,10 @@ const Edit = props => {
 
 			<Linking show={ isHovered } />
 			<BlockDiv className={ blockClassNames }>
-				<Link className={ buttonClassNames }>
-					<Icon enableLinearGradient={ false } />
+				<Button
+					className={ buttonClassNames }
+					hasLinearGradient={ false }
+				>
 					<RichText
 						tagName="span"
 						className={ typographyInnerClassNames }
@@ -111,7 +109,7 @@ const Edit = props => {
 							{ ...props.attributes, text: value }
 						) }
 					/>
-				</Link>
+				</Button>
 			</BlockDiv>
 		</Fragment>
 	)

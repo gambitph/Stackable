@@ -16,6 +16,7 @@ import { sprintf } from '@wordpress/i18n'
  * Internal dependencies
  */
 import { BorderStyle } from '../helpers/borders'
+import { Icon } from '../icon'
 
 const getStyleParams = options => {
 	const {
@@ -172,6 +173,17 @@ export const Style = props => {
 					},
 				} }
 			/>
+			<Icon.Style
+				{ ...{
+					attributes,
+					...propsToPass,
+					options: {
+						...propsToPass.options,
+						wrapperSelector: propsToPass.options.selector,
+						selector: propsToPass.options.iconSelector,
+						hoerSelector: propsToPass.options.iconHoverSelector,
+					},
+				} } />
 		</Fragment>
 	)
 }
@@ -202,6 +214,17 @@ Style.Content = props => {
 					},
 				} }
 			/>
+			<Icon.Style.Content
+				{ ...{
+					attributes,
+					...propsToPass,
+					options: {
+						...propsToPass.options,
+						wrapperSelector: propsToPass.options.selector,
+						selector: propsToPass.options.iconSelector,
+						hoerSelector: propsToPass.options.iconHoverSelector,
+					},
+				} } />
 		</Fragment>
 	)
 }

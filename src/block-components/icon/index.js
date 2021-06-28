@@ -67,7 +67,7 @@ const LinearGradient = ( {
 export const Icon = props => {
 	const {
 		attrNameTemplate = '%s',
-		enableLinearGradient = true,
+		hasLinearGradient = true,
 	} = props
 
 	const [ isOpen, setIsOpen ] = useState( false )
@@ -98,7 +98,7 @@ export const Icon = props => {
 	const ShapeComp = useMemo( () => getShapeSVG( getAttribute( 'backgroundShape' ) || 'blob1' ), [ getAttribute( 'backgroundShape' ) ] )
 
 	const linearGradient = useMemo( () =>
-		enableLinearGradient
+		hasLinearGradient
 			? (
 				<LinearGradient
 					id={ 'linear-gradient-' + attributes.uniqueId }
@@ -120,11 +120,11 @@ export const Icon = props => {
 
 	return (
 		<span // eslint-disable-line
-			className="stk-button__svg-wrapper"
+			className="stk--svg-wrapper"
 			onClick={ () => setIsOpen( ! isOpen ) }
 		>
 			<SVGIcon
-				className="stk-button__inner-svg"
+				className="stk--inner-svg"
 				prependRender={ linearGradient }
 				value={ getAttribute( 'icon' ) }
 			/>
@@ -143,7 +143,7 @@ Icon.Content = props => {
 	const {
 		attributes,
 		attrNameTemplate,
-		enableLinearGradient = true,
+		hasLinearGradient = true,
 	} = props
 
 	const getAttrName = getAttrNameFunction( attrNameTemplate )
@@ -155,7 +155,7 @@ Icon.Content = props => {
 		return null
 	}
 
-	const linearGradient = enableLinearGradient ? (
+	const linearGradient = hasLinearGradient ? (
 		<LinearGradient
 			id={ 'linear-gradient-' + attributes.uniqueId }
 			iconColor1={ getValue( 'iconColor1' ) }
@@ -164,9 +164,9 @@ Icon.Content = props => {
 	) : <Fragment />
 
 	return (
-		<span className="stk-button__svg-wrapper">
+		<span className="stk--svg-wrapper">
 			<SVGIcon.Content
-				className="stk-button__inner-svg"
+				className="stk--inner-svg"
 				prependRender={ linearGradient }
 				value={ getValue( 'icon' ) }
 			/>

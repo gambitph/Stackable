@@ -187,7 +187,7 @@
 
 // Button.
 .stk-button {
-	.stk-button__svg-wrapper {
+	.stk--svg-wrapper {
 		position: relative;
 
 		& > .stk--shape-icon {
@@ -201,7 +201,7 @@
 		}
 	}
 
-	.stk-button__inner-svg {
+	.stk--inner-svg {
 		display: flex;
 		position: relative;
 		z-index: 2;

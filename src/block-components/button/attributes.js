@@ -5,6 +5,7 @@ import {
 	addBorderAttributes,
 } from '~stackable/block-components'
 import { omit } from 'lodash'
+import { Link, Icon } from '../'
 
 const buttonAttributes = {
 	buttonPadding: {
@@ -46,6 +47,10 @@ const buttonAttributes = {
 export const addAttributes = ( attrObject, options = {} ) => {
 	const {
 		hasTextColor = true,
+		selector,
+		hasIconGradient = true,
+		hasIconShape = true,
+		hasIconBackgroundShape = true,
 	} = options
 	const attributesToExclude = []
 
@@ -67,4 +72,10 @@ export const addAttributes = ( attrObject, options = {} ) => {
 	} )
 
 	addBorderAttributes( attrObject, 'button%s' )
+	Link.addAttributes( attrObject, { selector } )
+	Icon.addAttributes( attrObject, {
+		hasGradient: hasIconGradient,
+		hasShape: hasIconShape,
+		hasBackgroundShape: hasIconBackgroundShape,
+	} )
 }

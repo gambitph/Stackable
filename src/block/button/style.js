@@ -7,8 +7,6 @@ import {
 	Button,
 	BlockDiv,
 	Typography,
-	Icon,
-	BorderStyle,
 } from '~stackable/block-components'
 import { getUniqueBlockClass } from '~stackable/util'
 import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
@@ -37,6 +35,8 @@ export const ButtonStyles = props => {
 		hoverSelector: '.stk-button__button:hover',
 		textSelector: '.stk-button__button > .stk-button__inner-text',
 		textHoverSelector: '.stk-button__button:hover > .stk-button__inner-text',
+		iconSelector: '.stk-button__button .stk--inner-svg',
+		iconHoverSelector: '.stk-button__button:hover .stk-inner-svg',
 	}
 
 	return (
@@ -45,25 +45,6 @@ export const ButtonStyles = props => {
 			<Advanced.Style { ...propsToPass } />
 			<Button.Style { ...propsToPass } />
 			<Typography.Style { ...propsToPass } />
-			<Icon.Style
-				{ ...{
-					...propsToPass,
-					options: {
-						...propsToPass.options,
-						selector: '.stk-button__button > .stk-button__svg-wrapper > .stk-button__inner-svg',
-						hoverSelector: '.stk-button__button:hover > .stk-button__svg-wrapper > .stk-button__inner-svg',
-						wrapperSelector: '.stk-button__button',
-					},
-				} } />
-			<BorderStyle
-				{ ...{
-					...propsToPass,
-					options: {
-						...propsToPass.options,
-						attrNameTemplate: 'button%s',
-					},
-				} }
-			/>
 		</Fragment>
 	)
 }
@@ -87,6 +68,8 @@ ButtonStyles.Content = props => {
 		hoverSelector: '.stk-button__button:hover',
 		textSelector: '.stk-button__button > .stk-button__inner-text',
 		textHoverSelector: '.stk-button__button:hover > .stk-button__inner-text',
+		iconSelector: '.stk-button__button .stk--inner-svg',
+		iconHoverSelector: '.stk-button__button:hover .stk-inner-svg',
 	}
 
 	const styles = (
@@ -95,16 +78,6 @@ ButtonStyles.Content = props => {
 			<Advanced.Style.Content { ...propsToPass } />
 			<Button.Style.Content { ...propsToPass } />
 			<Typography.Style.Content { ...propsToPass } />
-			<Icon.Style.Content
-				{ ...{
-					...propsToPass,
-					options: {
-						...propsToPass.options,
-						selector: '.stk-button__button > .stk-button__svg-wrapper > .stk-button__inner-svg',
-						hoverSelector: '.stk-button__button:hover > .stk-button__svg-wrapper > .stk-button__inner-svg',
-						wrapperSelector: '.stk-button__button',
-					},
-				} } />
 		</Fragment>
 	)
 
