@@ -165,6 +165,10 @@
 .stk-heading:not(:first-child) .stk-heading__text {
 	margin-top: 1.5em;
 }
+// No margin top when the first child but only in the frontend.
+.stk-heading:first-child .stk-heading__text:not([contenteditable]) {
+	margin-top: 0;
+}
 // Remove any decorative things added by themes.
 .stk-text__text,
 .stk-heading__text {
