@@ -157,7 +157,7 @@ export const BackgroundControls = props => {
 
 			<ImageControl2
 				label={ props.backgroundMediaAllowVideo ? __( 'Background Image or Video', i18n ) : __( 'Background Image', i18n ) }
-				help={ props.backgroundMediaAllowVideo ? __( '1Use .mp4 format for videos', i18n ) : '' }
+				help={ props.backgroundMediaAllowVideo ? __( 'Use .mp4 format for videos', i18n ) : '' }
 				allowedTypes={ props.backgroundMediaAllowVideo ? [ 'image', 'video' ] : [ 'image' ] }
 				attribute={ getAttrName( 'backgroundMedia' ) }
 				responsive="all"
