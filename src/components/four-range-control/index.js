@@ -46,10 +46,10 @@ const FourRangeControl = props => {
 	const hasOldValues = typeof props.top !== 'undefined' || typeof props.right !== 'undefined' || typeof props.bottom !== 'undefined' || typeof props.left !== 'undefined'
 	if ( hasOldValues ) {
 		value = {
-			top: typeof props.top !== 'undefined' ? props.top : props.defaultTop,
-			right: typeof props.right !== 'undefined' ? props.right : props.defaultRight,
-			bottom: typeof props.bottom !== 'undefined' ? props.bottom : props.defaultBottom,
-			left: typeof props.left !== 'undefined' ? props.left : props.defaultLeft,
+			top: typeof props.top !== 'undefined' ? props.top : props.enableTop ? props.defaultTop : undefined,
+			right: typeof props.right !== 'undefined' ? props.right : props.enableRight ? props.defaultRight : undefined,
+			bottom: typeof props.bottom !== 'undefined' ? props.bottom : props.enableBottom ? props.defaultBottom : undefined,
+			left: typeof props.left !== 'undefined' ? props.left : props.enableLeft ? props.defaultLeft : undefined,
 		}
 	}
 	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
