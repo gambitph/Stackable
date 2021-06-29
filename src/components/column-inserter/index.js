@@ -39,7 +39,7 @@ export const insertColumnBlock = ( rootClientId, blockName = '' ) => {
 	dispatch( 'core/block-editor' ).insertBlock( block, innerBlocks.length, rootClientId )
 }
 
-const ColumnInserter = () => {
+const ColumnInserter = ( { label } ) => {
 	const { clientId } = useBlockEditContext()
 
 	return (
@@ -47,12 +47,16 @@ const ColumnInserter = () => {
 			<Button
 				onMouseDown={ () => insertColumnBlock( clientId ) }
 				icon={ plus }
-				label={ __( 'Add Column', i18n ) }
+				label={ label }
 				tooltipPosition="bottom"
 				className="block-editor-inserter__toggle"
 			/>
 		</div>
 	)
+}
+
+ColumnInserter.defaultProps = {
+	label: __( 'Add Column', i18n ),
 }
 
 export default ColumnInserter

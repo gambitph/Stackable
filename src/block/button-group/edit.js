@@ -6,7 +6,7 @@ import { ButtonGroupStyles } from './style'
 /**
  * External dependencies
  */
-import { version as VERSION } from 'stackable'
+import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
 import {
 	ColumnInserter,
@@ -32,6 +32,7 @@ import {
 } from '@wordpress/block-editor'
 import { Fragment, useCallback } from '@wordpress/element'
 import { useBlockContext } from '~stackable/hooks'
+import { __ } from '@wordpress/i18n'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/button' ]
 
@@ -61,7 +62,7 @@ const Edit = props => {
 	] )
 
 	const renderAppender = useCallback(
-		() => hasInnerBlocks ? <ColumnInserter /> : null,
+		() => hasInnerBlocks ? <ColumnInserter label={ __( 'Add Button', i18n ) } /> : null,
 		[ hasInnerBlocks ]
 	)
 
