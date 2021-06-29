@@ -4,7 +4,7 @@
 	width: 24px;
 	height: 24px;
 	position: relative;
-	z-index: 3;
+	z-index: 5;
 	overflow: hidden;
 	&[aria-expanded="true"] {
 		overflow: visible;
