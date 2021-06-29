@@ -4,9 +4,10 @@
 	width: 24px;
 	height: 24px;
 	position: relative;
-	z-index: 5;
+	z-index: 3;
 	overflow: hidden;
 	&[aria-expanded="true"] {
+		z-index: 4;
 		overflow: visible;
 		.stk-label-unit-toggle__wrapper {
 			background: #fff;
