@@ -131,10 +131,10 @@ const ResizableBottomMargin = memo( props => {
 	const device = useDeviceType()
 
 	const valueCallback = useCallback( _value => {
-		let value = _value?.bottom || ''
+		let value = _value?.bottom || _value?.bottom === 0 ? _value?.bottom : ''
 
 		// If there's a value already, use that. Or check the other inherited values.
-		if ( value ) {
+		if ( value || value === 0 ) {
 			return value
 		}
 
@@ -146,8 +146,8 @@ const ResizableBottomMargin = memo( props => {
 		deviceSteps.some( device => {
 			const _value = attributes[ getAttributeName( props.attribute, device ) ]
 			if ( _value !== '' && typeof _value !== 'undefined' ) {
-				value = _value?.bottom || ''
-				if ( value ) {
+				value = value = _value?.bottom || _value?.bottom === 0 ? _value?.bottom : ''
+				if ( value || value === 0 ) {
 					return true
 				}
 			}

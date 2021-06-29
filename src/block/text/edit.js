@@ -17,7 +17,6 @@ import {
 	Alignment,
 	MarginBottom,
 } from '~stackable/block-components'
-import { descriptionPlaceholder } from '~stackable/util'
 import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import { InspectorTabs } from '~stackable/components'
@@ -77,7 +76,6 @@ const Edit = props => {
 			<BlockDiv className={ blockClassNames }>
 				<RichText
 					tagName="p"
-					placeholder={ descriptionPlaceholder( 'medium' ) }
 					keepPlaceholderOnFocus
 					value={ text }
 					onChange={ onChange }

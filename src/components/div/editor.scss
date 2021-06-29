@@ -7,6 +7,11 @@
 // 		}
 // 	}
 // }
+//
+// Sometimes, the position style doesn't get applied inside editor
+#editor .stk-block.stk--has-background-overlay {
+	position: relative;
+}
 
 .stk-video-background {
 	pointer-events: none;
