@@ -419,6 +419,7 @@ const ResizableTooltip = props => {
 							label={ __( 'Column', i18n ) }
 							className="stk-resizable-column__input"
 							value={ currentInputValue }
+							allowReset={ false }
 							onChange={ value => {
 								props.onChange( clamp( value, 0, 100 ) || originalInputValue )
 								setCurrentInputValue( value )

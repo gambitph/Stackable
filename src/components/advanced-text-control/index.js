@@ -24,7 +24,7 @@ const AdvancedTextControl = props => {
 			unit={ props.unit }
 			onChangeUnit={ props.onChangeUnit }
 			screens={ props.screens }
-			allowReset={ true }
+			allowReset={ props.allowReset }
 			value={ props.value }
 			onChange={ props.onChange }
 		>
@@ -38,6 +38,7 @@ const AdvancedTextControl = props => {
 AdvancedTextControl.defaultProps = {
 	onChange: () => {},
 	onChangeUnit: () => {},
+	allowReset: true,
 	help: '',
 	className: '',
 	units: [ 'px' ],
