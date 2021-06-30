@@ -4,8 +4,30 @@
 import { Style as StyleComponent } from '~stackable/components'
 import { getStyles, useStyles } from '~stackable/util'
 
-const getStyleParams = () => {
+const getStyleParams = ( options = {} ) => {
+	const {
+		hasJustifyContentAlign = false,
+	} = options
+
 	return [
+		{
+			renderIn: 'save',
+			selector: '.stk-block-content',
+			responsive: 'all',
+			styleRule: 'justifyContent',
+			attrName: 'contentAlign',
+			enabledCallback: () => hasJustifyContentAlign,
+			valueCallback: value => value === 'left' ? 'flex-start' : value === 'right' ? 'flex-end' : value,
+		},
+		{
+			renderIn: 'edit',
+			selector: '.block-editor-inner-blocks > .block-editor-block-list__layout',
+			responsive: 'all',
+			styleRule: 'justifyContent',
+			attrName: 'contentAlign',
+			enabledCallback: () => hasJustifyContentAlign,
+			valueCallback: value => value === 'left' ? 'flex-start' : value === 'right' ? 'flex-end' : value,
+		},,
 		{
 			selector: '',
 			responsive: 'all',

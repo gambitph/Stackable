@@ -28,6 +28,10 @@ export const ButtonGroupStyles = props => {
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
 	propsToPass.deviceType = deviceType
 	propsToPass.attributes = { ...attributes, clientId }
+	propsToPass.options = {
+		...propsToPass.options,
+		hasJustifyContentAlign: true,
+	}
 
 	return (
 		<Fragment>
@@ -49,6 +53,10 @@ ButtonGroupStyles.Content = props => {
 	} = props
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
+	propsToPass.options = {
+		...propsToPass.options,
+		hasJustifyContentAlign: true,
+	}
 
 	const styles = (
 		<Fragment>
