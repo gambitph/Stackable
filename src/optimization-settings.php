@@ -61,6 +61,7 @@ if ( ! class_exists( 'Stackable_Optimization_Settings' ) ) {
 		public function disable_frontend_scripts() {
 			if ( get_option( 'stackable_optimize_script_load' ) && ! is_admin() ) {
 				remove_action( 'enqueue_block_assets', 'stackable_block_assets' );
+				remove_action( 'enqueue_block_assets', 'stackable_add_required_block_styles' );
 			}
 		}
 
@@ -85,6 +86,7 @@ if ( ! class_exists( 'Stackable_Optimization_Settings' ) ) {
 						stripos( $block_content, '<!-- wp:stackable/' ) !== false
 					) {
 						stackable_block_assets();
+						stackable_add_required_block_styles();
 						$this->is_script_loaded = true;
 					}
 				}
