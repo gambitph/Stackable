@@ -15,20 +15,15 @@ import { __ } from '@wordpress/i18n'
  */
 import classnames from 'classnames'
 import { i18n } from 'stackable'
+import { applyFilters } from '@wordpress/hooks'
 import { Icon } from '@wordpress/components'
 
-const TABS = [
+const TABS = applyFilters( 'stackable.inspector.tabs', [
 	{
 		value: 'block',
 		title: __( 'Block', i18n ),
 		label: __( 'Block Tab', i18n ),
 		icon: 'block-default',
-	},
-	{
-		value: 'layout',
-		title: __( 'Layout', i18n ),
-		label: __( 'Layout Tab', i18n ),
-		icon: 'admin-settings',
 	},
 	{
 		value: 'style',
@@ -42,7 +37,9 @@ const TABS = [
 		label: __( 'Advanced Tab', i18n ),
 		icon: 'admin-tools',
 	},
-]
+] )
+
+const DEFAULT_TABS = [ 'block', 'style', 'advanced' ]
 
 export const closeAllOpenPanels = clickedEl => {
 	[].forEach.call( document.querySelectorAll( '.components-panel__body .components-panel__body-toggle' ), el => {
@@ -61,7 +58,7 @@ class PanelTabs extends Component {
 	constructor() {
 		super( ...arguments )
 
-		this.tabsToUse = this.props.tabs || [ 'layout', 'style', 'advanced', 'block' ]
+		this.tabsToUse = this.props.tabs || DEFAULT_TABS
 
 		this.state = {
 			activeTab: this.props.initialTab ? this.props.initialTab : this.tabsToUse[ 0 ],
