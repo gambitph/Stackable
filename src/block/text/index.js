@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n'
 export const name = 'stackable/text'
 
 export const settings = {
-	title: __( 'Text', i18n ),
+	title: __( 'Text (v3)', i18n ),
 	description: __( 'Start with the building block of all page layouts.', i18n ),
 	icon: TextIcon,
 	category: 'common',

@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n'
 export const name = 'stackable/heading'
 
 export const settings = {
-	title: __( 'Heading', i18n ),
+	title: __( 'Heading (v3)', i18n ),
 	description: __( 'Introduce new sections of your content in style.', i18n ),
 	icon: HeadingIcon,
 	category: 'common',
