@@ -258,7 +258,7 @@ const addVideoBackgroundOutput = ( output, design, blockProps ) => {
 	)
 }
 
-const addStyles = ( styleObject, props ) => {
+const addStyles = ( styleObject, props, options = { importantBackgroundSize: false } ) => {
 	const getValue = __getValue( props.attributes )
 
 	if ( ! props.attributes.showBlockBackground ) {
@@ -267,7 +267,7 @@ const addStyles = ( styleObject, props ) => {
 
 	const styles = {
 		[ `.${ props.mainClassName }` ]: {
-			...createBackgroundStyles( 'blockBackground%s', 'desktop', props.attributes ),
+			...createBackgroundStyles( 'blockBackground%s', 'desktop', props.attributes, options ),
 		},
 		'': { // We use the blank selector so that other styling (such as the block paddings) can still override the paddings.
 			padding: getValue( 'noPaddings' ) ? '0 !important' : undefined,
@@ -277,7 +277,7 @@ const addStyles = ( styleObject, props ) => {
 		},
 		tablet: {
 			[ `.${ props.mainClassName }` ]: {
-				...createBackgroundStyles( 'blockBackground%s', 'tablet', props.attributes ),
+				...createBackgroundStyles( 'blockBackground%s', 'tablet', props.attributes, options ),
 			},
 			[ `.${ props.mainClassName }:before` ]: {
 				...createBackgroundOverlayStyles( 'blockBackground%s', 'tablet', props.attributes ),
@@ -285,7 +285,7 @@ const addStyles = ( styleObject, props ) => {
 		},
 		mobile: {
 			[ `.${ props.mainClassName }` ]: {
-				...createBackgroundStyles( 'blockBackground%s', 'mobile', props.attributes ),
+				...createBackgroundStyles( 'blockBackground%s', 'mobile', props.attributes, options ),
 			},
 			[ `.${ props.mainClassName }:before` ]: {
 				...createBackgroundOverlayStyles( 'blockBackground%s', 'mobile', props.attributes ),
@@ -301,14 +301,14 @@ const removeAttributesFromDesignAttributeExport = attributes => {
 	return omit( attributes, [ 'blockBackgroundBackgroundMediaId' ] )
 }
 
-const blockBackground = blockName => {
+const blockBackground = ( blockName, options ) => {
 	addFilter( `stackable.${ blockName }.edit.inspector.style.block`, `stackable/${ blockName }/block-background`, addInspectorPanel, 18 )
 	addFilter( `stackable.${ blockName }.attributes`, `stackable/${ blockName }/block-background`, addAttributes )
 	addFilter( `stackable.${ blockName }.edit.inspector.before`, `stackable/${ blockName }/block-background`, addAlignmentToolbar )
 	addFilter( `stackable.${ blockName }.settings`, `stackable/${ blockName }/block-background`, addAlignSupport )
 	addFilter( `stackable.${ blockName }.main-block.classes`, `stackable/${ blockName }/block-background`, addBlockAlignClasses )
 	addFilter( `stackable.${ blockName }.main-block.inner-classes`, `stackable/${ blockName }/block-background`, addBlockAlignInnerClasses )
-	addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/block-background`, addStyles )
+	addFilter( `stackable.${ blockName }.styles`, `stackable/${ blockName }/block-background`, ( styleObject, props ) => addStyles( styleObject, props, options ) )
 	addFilter( `stackable.${ blockName }.edit.output.outer`, `stackable/${ blockName }/block-separators`, addVideoBackgroundOutput )
 	addFilter( `stackable.${ blockName }.save.output.outer`, `stackable/${ blockName }/block-separators`, addVideoBackgroundOutput )
 	addFilter( `stackable.${ blockName }.design.filtered-block-attributes`, `stackable/${ blockName }/block-separators`, removeAttributesFromDesignAttributeExport )
