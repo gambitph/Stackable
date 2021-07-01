@@ -4,7 +4,7 @@
 import { unescape } from 'lodash'
 import { i18n } from 'stackable'
 import {
-	useAttributeEditHandlers, useBlockHoverState,
+	useAttributeEditHandlers, useBlockHoverState, useFontLoader,
 } from '~stackable/hooks'
 import {
 	AdvancedRangeControl,
@@ -55,6 +55,7 @@ export const Edit = props => {
 	} = useAttributeEditHandlers( attrNameTemplate )
 
 	const [ state ] = useBlockHoverState()
+	useFontLoader( getAttribute( 'fontFamily' ) )
 
 	return (
 		<InspectorStyleControls>

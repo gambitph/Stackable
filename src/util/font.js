@@ -65,6 +65,7 @@ export const getFontFamily = fontName => {
 	return '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
 }
 
+// TODO: deprecate this.
 /**
  * Finds all the "font family" attributes and loads the font if needed.
  *

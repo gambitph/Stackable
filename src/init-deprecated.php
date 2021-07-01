@@ -260,3 +260,11 @@ require_once( plugin_dir_path( __FILE__ ) . 'deprecated/v2/block/blog-posts/inde
 /********************************************************************************************
  * END Version 2 backward compatibility.
  ********************************************************************************************/
+
+// Used in Fonts.
+add_filter( 'stackable_is_stackable_block', function( $is_stackable_block, $block_name ) {
+	if ( ! $is_stackable_block ) {
+		return strpos( $block_name, 'ugb/' ) === 0;
+	}
+	return $is_stackable_block;
+}, 10, 2 );
