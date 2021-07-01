@@ -3,6 +3,7 @@
  */
 import {
 	AdvancedRangeControl,
+	AdvancedToggleControl,
 	BlendModeControl,
 	ControlSeparator,
 	ImageControl,
@@ -22,7 +23,6 @@ import { getImageSize, cacheImageData } from '~stackable/util'
 import { __ } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
-import { ToggleControl } from '@wordpress/components'
 import { withSelect } from '@wordpress/data'
 
 const ImageControls = props => {
@@ -173,7 +173,7 @@ const ImageControls = props => {
 			<Fragment>
 				{ ( typeof props.width === 'number' || props.width ) &&
 					<WhenResponsiveScreen>
-						<ToggleControl
+						<AdvancedToggleControl
 							label={ __( 'Force square image', i18n ) }
 							checked={ props.square }
 							onChange={ props.onChangeSquare }
@@ -183,7 +183,7 @@ const ImageControls = props => {
 				}
 				{ ( typeof props.tabletWidth === 'number' || props.tabletWidth ) &&
 					<WhenResponsiveScreen screen="tablet">
-						<ToggleControl
+						<AdvancedToggleControl
 							label={ __( 'Force square image', i18n ) }
 							checked={ props.tabletSquare }
 							onChange={ props.onChangeTabletSquare }
@@ -193,11 +193,12 @@ const ImageControls = props => {
 				}
 				{ ( typeof props.mobileWidth === 'number' || props.mobileWidth ) &&
 					<WhenResponsiveScreen screen="mobile">
-						<ToggleControl
+						<AdvancedToggleControl
 							label={ __( 'Force square image', i18n ) }
 							checked={ props.mobileSquare }
 							onChange={ props.onChangeMobileSquare }
 							className="ugb--help-tip-image-square"
+							defaultValue={ true }
 						/>
 					</WhenResponsiveScreen>
 				}
@@ -249,14 +250,14 @@ const ImageControls = props => {
 				/>
 			}
 			{ props.onChangeLinkNewTab && props.linkUrl &&
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Open link in new tab', i18n ) }
 					checked={ props.linkNewTab }
 					onChange={ props.onChangeLinkNewTab }
 				/>
 			}
 			{ props.onChangeLinkNoFollow && props.linkUrl &&
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Nofollow link', i18n ) }
 					checked={ props.linkNoFollow }
 					onChange={ props.onChangeLinkNoFollow }

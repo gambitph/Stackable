@@ -23,7 +23,6 @@ const buildInclude = [
 	path.resolve( __dirname, './freemius/**' ),
 	path.resolve( __dirname, './images/**' ),
 	path.resolve( __dirname, './src/welcome/images/**' ), // Welcome screen / settings images.
-	'!' + path.resolve( __dirname, './dist/deprecation-tests.json' ),
 	'!' + path.resolve( __dirname, './dist/videos/**' ), // Help tooltip videos.
 	'!' + path.resolve( __dirname, './dist/*.js.map' ), // JS Map files.
 ]
@@ -78,30 +77,12 @@ gulp.task( 'style-editor', function() {
 } )
 
 gulp.task( 'style', function() {
-	return gulp.src( [ path.resolve( __dirname, './src/common.scss' ), path.resolve( __dirname, './src/**/style.scss' ) ] )
+	return gulp.src( [ path.resolve( __dirname, './src/common.scss' ), path.resolve( __dirname, './src/**/style.scss' ), '!' + path.resolve( __dirname, './src/deprecated/**/style.scss' ) ] )
 		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
 		.pipe( concat( 'frontend_blocks.css' ) )
 		.pipe( postcss( postCSSOptions ) )
 		.pipe( gulp.dest( 'dist/' ) )
 } )
-
-gulp.task( 'style-deprecated-v1', function() {
-	return gulp.src( [ path.resolve( __dirname, './src/deprecated/blocks-v1/*.scss' ) ] )
-		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
-		.pipe( concat( 'frontend_blocks_deprecated.css' ) )
-		.pipe( postcss( postCSSOptions ) )
-		.pipe( gulp.dest( 'dist/' ) )
-} )
-
-gulp.task( 'style-deprecated-wp-v5-3', function() {
-	return gulp.src( [ path.resolve( __dirname, './src/deprecated/editor-wp-v5-3/*.scss' ) ] )
-		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
-		.pipe( concat( 'editor_blocks_wp_v5_3.css' ) )
-		.pipe( postcss( postCSSOptions ) )
-		.pipe( gulp.dest( 'dist/' ) )
-} )
-
-gulp.task( 'style-deprecated', gulp.parallel( 'style-deprecated-v1', 'style-deprecated-wp-v5-3' ) )
 
 gulp.task( 'welcome-styles', function() {
 	return gulp.src( path.resolve( __dirname, './src/welcome/admin.scss' ) )
@@ -113,6 +94,53 @@ gulp.task( 'welcome-styles', function() {
 		} ) )
 		.pipe( gulp.dest( 'dist/' ) )
 } )
+
+/*********************************************************************
+ * START deprecated build styles, we still build these
+ ********************************************************************/
+
+gulp.task( 'style-editor-deprecated-v2', function() {
+	return gulp.src( [ path.resolve( __dirname, './src/deprecated/v2/**/editor.scss' ) ] )
+		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
+		.pipe( concat( 'editor_blocks_deprecated_v2.css' ) )
+		.pipe( postcss( postCSSOptions ) )
+		.pipe( gulp.dest( 'dist/deprecated/' ) )
+} )
+
+gulp.task( 'style-deprecated-v2', function() {
+	return gulp.src( [ path.resolve( __dirname, './src/deprecated/v2/common.scss' ), path.resolve( __dirname, './src/deprecated/v2/**/style.scss' ) ] )
+		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
+		.pipe( concat( 'frontend_blocks_deprecated_v2.css' ) )
+		.pipe( postcss( postCSSOptions ) )
+		.pipe( gulp.dest( 'dist/deprecated/' ) )
+} )
+
+gulp.task( 'style-deprecated-v1', function() {
+	return gulp.src( [ path.resolve( __dirname, './src/deprecated/v1/*.scss' ) ] )
+		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
+		.pipe( concat( 'frontend_blocks_deprecated.css' ) )
+		.pipe( postcss( postCSSOptions ) )
+		.pipe( gulp.dest( 'dist/deprecated/' ) )
+} )
+
+gulp.task( 'style-deprecated-wp-v5-3', function() {
+	return gulp.src( [ path.resolve( __dirname, './src/deprecated/editor-wp-v5-3/*.scss' ) ] )
+		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
+		.pipe( concat( 'editor_blocks_wp_v5_3.css' ) )
+		.pipe( postcss( postCSSOptions ) )
+		.pipe( gulp.dest( 'dist/deprecated/' ) )
+} )
+
+gulp.task( 'style-deprecated', gulp.parallel(
+	'style-editor-deprecated-v2',
+	'style-deprecated-v2',
+	'style-deprecated-v1',
+	'style-deprecated-wp-v5-3'
+) )
+
+/*********************************************************************
+ * END deprecated build styles, we still build these
+ ********************************************************************/
 
 gulp.task( 'build-process', gulp.parallel( 'style', 'style-editor', 'welcome-styles', 'style-deprecated' ) )
 
@@ -142,7 +170,10 @@ const watchFuncs = ( basePath = '.' ) => {
 	)
 }
 
-gulp.task( 'watch', gulp.series( 'build-process', () => watchFuncs() ) )
+gulp.task( 'watch', gulp.series( 'build-process', function watch( done ) {
+	watchFuncs()
+	done()
+} ) )
 
 module.exports = {
 	buildInclude,

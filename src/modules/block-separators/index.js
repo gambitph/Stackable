@@ -3,6 +3,7 @@
  */
 import {
 	AdvancedRangeControl,
+	AdvancedToggleControl,
 	ColorPaletteControl,
 	DesignSeparatorControl,
 	PanelAdvancedSettings,
@@ -22,7 +23,6 @@ import { i18n, showProNotice } from 'stackable'
 import { __ } from '@wordpress/i18n'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
-import { ToggleControl } from '@wordpress/components'
 
 const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props ) => {
 	const { setAttributes } = props
@@ -117,24 +117,25 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 					placeholder="1.0"
 					className="ugb--help-tip-separator-width"
 				/>
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Flip Horizontally', i18n ) }
 					checked={ topSeparatorFlipHorizontally }
 					onChange={ topSeparatorFlipHorizontally => setAttributes( { topSeparatorFlipHorizontally } ) }
 				/>
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Flip Vertically', i18n ) }
 					checked={ topSeparatorFlipVertically }
 					onChange={ topSeparatorFlipVertically => setAttributes( { topSeparatorFlipVertically } ) }
 				/>
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Shadow', i18n ) }
 					checked={ topSeparatorShadow }
 					onChange={ topSeparatorShadow => setAttributes( { topSeparatorShadow } ) }
+					defaultValue={ true }
 					className="ugb--help-tip-separator-shadow"
 				/>
 				{ options.enableBringToFront &&
-					<ToggleControl
+					<AdvancedToggleControl
 						label={ __( 'Bring to Front', i18n ) }
 						checked={ topSeparatorBringToFront }
 						onChange={ topSeparatorBringToFront => setAttributes( { topSeparatorBringToFront } ) }
@@ -216,24 +217,25 @@ const addBlockSeparatorPanels = ( blockName, options = {} ) => ( output, props )
 					placeholder="1.0"
 					className="ugb--help-tip-separator-width"
 				/>
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Flip Horizontally', i18n ) }
 					checked={ bottomSeparatorFlipHorizontally }
 					onChange={ bottomSeparatorFlipHorizontally => setAttributes( { bottomSeparatorFlipHorizontally } ) }
 				/>
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Flip Vertically', i18n ) }
 					checked={ bottomSeparatorFlipVertically }
 					onChange={ bottomSeparatorFlipVertically => setAttributes( { bottomSeparatorFlipVertically } ) }
 				/>
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Shadow', i18n ) }
 					checked={ bottomSeparatorShadow }
 					onChange={ bottomSeparatorShadow => setAttributes( { bottomSeparatorShadow } ) }
+					defaultValue={ true }
 					className="ugb--help-tip-separator-shadow"
 				/>
 				{ options.enableBringToFront &&
-					<ToggleControl
+					<AdvancedToggleControl
 						label={ __( 'Bring to Front', i18n ) }
 						checked={ bottomSeparatorBringToFront }
 						onChange={ bottomSeparatorBringToFront => setAttributes( { bottomSeparatorBringToFront } ) }

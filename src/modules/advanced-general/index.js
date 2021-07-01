@@ -2,6 +2,7 @@
  * External dependencies
  */
 import {
+	AdvancedSelectControl,
 	AdvancedRangeControl,
 	ResponsiveControl,
 	PanelAdvancedSettings,
@@ -21,7 +22,6 @@ import {
 import {
 	addFilter, applyFilters, doAction,
 } from '@wordpress/hooks'
-import { SelectControl } from '@wordpress/components'
 import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
@@ -41,7 +41,7 @@ const inspectorControls = ( blockName, options ) => ( output, props ) => {
 			>
 				{ applyFilters( `stackable.${ blockName }.edit.advanced.general.before`, null, props ) }
 				{ options.blockTag &&
-					<SelectControl
+					<AdvancedSelectControl
 						label={ sprintf( _x( '%s HTML Tag', 'component' ), __( 'Block', i18n ) ) }
 						value={ blockTag }
 						options={ [

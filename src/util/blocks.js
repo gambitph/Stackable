@@ -11,10 +11,20 @@ import { applyFilters } from '@wordpress/hooks'
 import { createBlock } from '@wordpress/blocks'
 import { dispatch, select } from '@wordpress/data'
 
+/**
+ * Converts the registered block name into a block name string that can be used in hook names or ids.
+ *
+ * @param {string} name The block name
+ */
+export const getBlockName = name => {
+	return name.replace( /\//g, '-' )
+}
+
 const ignoreAttributes = [
 	'uniqueClass',
 ]
 
+// DEPRECATED: Not used anymore since calls to this can be pretty expensive.
 // Checks whether a block is modified or not.
 const cachedDefaultAttributes = {}
 export function isUnmodifiedBlock( block ) {

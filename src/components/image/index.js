@@ -27,6 +27,7 @@ const Image = props => {
 			className={ imageClasses }
 			src={ props.src || undefined }
 			alt={ striptags( props.alt || undefined ) }
+			title={ striptags( props.title || undefined ) }
 			width={ props.width || undefined }
 			height={ props.height || undefined }
 		/>
@@ -37,6 +38,7 @@ Image.defaultProps = {
 	imageId: '',
 
 	alt: '',
+	title: '',
 	src: '',
 	size: 'full',
 

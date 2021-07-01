@@ -20,13 +20,13 @@ const sanitizeString = str => {
 }
 
 const createAttributeString = attrArray => {
-	return Array.isArray( attrArray ) ?
-		attrArray.map( attribute => {
+	return Array.isArray( attrArray )
+		? attrArray.map( attribute => {
 			const [ key, _value ] = attribute
 			const value = `"${ sanitizeString( _value ) }"`
 			return [ key, value ].join( '=' )
-		} ).join( ' ' ) :
-		''
+		} ).join( ' ' )
+		: ''
 }
 
 const CustomAttributesControl = props => {
@@ -37,7 +37,7 @@ const CustomAttributesControl = props => {
 
 	useEffect( () => {
 		// Only trigger when not focused.
-		if ( inputRef.current !== document.activeElement ) {
+		if ( inputRef.current !== document.activeElement ) { // eslint-disable-line @wordpress/no-global-active-element
 			setCustomAttributes( createAttributeString( props.value ) )
 		}
 	}, [ JSON.stringify( props.value ) ] )

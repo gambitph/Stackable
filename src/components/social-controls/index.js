@@ -2,6 +2,7 @@
  * External dependencies
  */
 import {
+	AdvancedToggleControl,
 	ControlSeparator,
 	ButtonControlsHelper,
 } from '~stackable/components'
@@ -13,7 +14,6 @@ import { i18n } from 'stackable'
  * WordPress dependencies
  */
 import {
-	ToggleControl,
 	TextControl,
 } from '@wordpress/components'
 import {
@@ -40,7 +40,7 @@ const SocialControls = props => {
 			}
 
 			{ props.onChangeNewTab && (
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Open link in new tab', i18n ) }
 					checked={ props.newTab }
 					onChange={ props.onChangeNewTab }

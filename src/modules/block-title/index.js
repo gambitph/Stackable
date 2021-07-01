@@ -94,6 +94,7 @@ const addInspectorPanel = ( output, props ) => {
 			>
 				<HeadingButtonsControl
 					value={ blockTitleTag || 'h2' }
+					defaultValue="h2"
 					onChange={ blockTitleTag => setAttributes( { blockTitleTag } ) }
 				/>
 				<TypographyControlHelper

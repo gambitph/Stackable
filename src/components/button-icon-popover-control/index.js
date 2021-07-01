@@ -9,10 +9,10 @@ import Button from '../button'
  */
 import { addFilter, removeFilter } from '@wordpress/hooks'
 import {
-	BaseControl, Popover, ToggleControl, ButtonGroup, PanelBody,
+	Popover, ToggleControl, PanelBody,
 } from '@wordpress/components'
 import {
-	Component, createRef, Fragment,
+	Component, createRef,
 } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
@@ -22,6 +22,7 @@ import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 import ImagePreview from './image-preview'
+import { BaseControl } from '..'
 
 // Keep the instance ID.
 let buttonInstance = 1
@@ -157,6 +158,15 @@ class ButtonIconPopoverControl extends Component {
 				label={ ! this.props.onToggle && <label htmlFor={ `ugb-button-icon-control__edit-${ this.instanceId }` }>{ this.props.label }</label> }
 				id="ugb-button-icon-control"
 				className={ classnames( 'ugb-button-icon-control', this.props.className ) }
+				allowReset={ true }
+				showReset={ this.props.allowReset || ( this.props.onToggle ? this.props.checked : false ) }
+				onReset={ () => {
+					this.props.onReset()
+					if ( this.props.onToggle ) {
+						this.props.onToggle( false )
+					}
+				} }
+				hasLabel={ ! this.props.onToggle }
 			>
 				{ this.props.onToggle && (
 					<ToggleControl
@@ -166,50 +176,6 @@ class ButtonIconPopoverControl extends Component {
 					/>
 				) }
 				<div className="ugb-button-icon-control__wrapper">
-					{ this.props.allowReset && (
-						<Fragment>
-							<Button
-								onClick={ this.handleReset }
-								className="ugb-button-icon-control__reset"
-								label={ __( 'Reset', i18n ) }
-								icon="image-rotate"
-							/>
-							{ this.state.showResetPopover && (
-								<Popover
-									onClickOutside={ () => this.setState( { showResetPopover: false } ) }
-									focusOnMount={ false }
-									position="bottom center"
-									className="ugb-button-icon-control__reset-popover"
-								>
-									<h4 className="ugb-button-icon-control__text-title">
-										{ this.props.resetPopoverTitle }
-									</h4>
-									<p className="components-base-control__help">
-										{ this.props.resetPopoverDescription }
-									</p>
-									<ButtonGroup>
-										<Button
-											onClick={ () => {
-												this.setState( { showResetPopover: false } )
-												this.props.onReset()
-											} }
-											isDestructive
-											isSecondary
-											isSmall
-										>
-											{ __( 'Reset', i18n ) }
-										</Button>
-										<Button
-											onClick={ () => this.setState( { showResetPopover: false } ) }
-											isSmall
-										>
-											{ __( 'Cancel', i18n ) }
-										</Button>
-									</ButtonGroup>
-								</Popover>
-							) }
-						</Fragment>
-					) }
 					{ this.props.hasImagePreview &&
 						<ImagePreview
 							imageUrl={ this.props.imageUrlPreview }

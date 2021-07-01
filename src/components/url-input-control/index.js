@@ -1,8 +1,12 @@
 /**
+ * Internal, dependencies
+ */
+import { BaseControl } from '..'
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { BaseControl } from '@wordpress/components'
 
 /**
  * External dependencies
@@ -17,6 +21,9 @@ const URLInputControl = props => {
 			label={ props.label }
 			id="url-input-control"
 			help={ props.help }
+			allowReset={ props.allowReset }
+			value={ props.value }
+			onChange={ props.onChange }
 		>
 			<URLInput
 				className="ugb-url-input-control__input"
@@ -34,6 +41,7 @@ URLInputControl.defaultProps = {
 	help: null,
 	value: '',
 	onChange: () => {},
+	allowReset: true,
 }
 
 export default URLInputControl

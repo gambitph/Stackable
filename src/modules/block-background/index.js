@@ -2,6 +2,7 @@
  * External dependencies
  */
 import {
+	AdvancedToggleControl,
 	BackgroundControlsHelper,
 	PanelAdvancedSettings,
 	ControlSeparator,
@@ -34,7 +35,7 @@ import deepmerge from 'deepmerge'
 import { Fragment } from '@wordpress/element'
 import { i18n } from 'stackable'
 import {
-	ToolbarButton, ToggleControl, ToolbarGroup,
+	ToolbarButton, ToolbarGroup,
 } from '@wordpress/components'
 
 // When block background is turned on, change the ailgnment and block inner width also.
@@ -75,7 +76,7 @@ const addInspectorPanel = ( output, props ) => {
 				toggleAttributeName="showBlockBackground"
 				className="ugb--help-tip-background-on-off"
 			>
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'No Paddings', i18n ) }
 					checked={ noPaddings }
 					onChange={ noPaddings => setAttributes( { noPaddings } ) }

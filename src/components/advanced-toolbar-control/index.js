@@ -1,7 +1,6 @@
 /**
  * Internal dependencies
  */
-import BaseControlMultiLabel from '../base-control-multi-label'
 import SVGIconBottom from './images/bottom.svg'
 import SVGIconHorizontalCenter from './images/horizontal-center.svg'
 import SVGIconLeft from './images/left.svg'
@@ -10,6 +9,9 @@ import SVGIconStretch from './images/stretch.svg'
 import SVGIconTop from './images/top.svg'
 import SVGIconVerticalCenter from './images/vertical-center.svg'
 import Button from '../button'
+import AdvancedControl, { extractControlProps } from '../base-control2'
+import { useControlHandlers } from '../base-control2/hooks'
+import { ResetButton } from '../base-control2/reset-button'
 
 /**
  * External dependencies
@@ -20,7 +22,7 @@ import classnames from 'classnames'
  * WordPress dependencies
  */
 import {
-	BaseControl, ButtonGroup,
+	ButtonGroup,
 } from '@wordpress/components'
 import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
@@ -91,25 +93,33 @@ const CONTROLS = {
 }
 
 const AdvancedToolbarControl = props => {
-	const controls = typeof props.controls === 'string' ? CONTROLS[ props.controls ] : props.controls
+	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
+	const [ _propsToPass, controlProps ] = extractControlProps( props )
+
+	const {
+		className = '',
+		controls: _controls,
+		fullwidth,
+		multiline,
+		isToggleOnly,
+	} = _propsToPass
+
+	const controls = typeof _controls === 'string' ? CONTROLS[ _controls ] : _controls
 
 	const toolbarClasses = classnames( {
-		'ugb-toolbar--full-width': props.fullwidth,
-		'ugb-toolbar--multiline': props.multiline,
+		'ugb-toolbar--full-width': fullwidth,
+		'ugb-toolbar--multiline': multiline,
+		'ugb-toolbar--small': props.isSmall,
 	} )
 
+	const value = typeof props.value === 'undefined' ? _value : props.value
+	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
+
 	return (
-		<BaseControl
-			help={ props.help }
-			className={ classnames( 'ugb-advanced-toolbar-control', props.className ) }
+		<AdvancedControl
+			{ ...controlProps }
+			className={ classnames( 'ugb-advanced-toolbar-control', className ) }
 		>
-			<BaseControlMultiLabel
-				label={ props.label }
-				units={ props.units }
-				unit={ props.unit }
-				onChangeUnit={ props.onChangeUnit }
-				screens={ props.screens }
-			/>
 			<ButtonGroup
 				children={
 					controls.map( ( option, index ) => {
@@ -117,12 +127,12 @@ const AdvancedToolbarControl = props => {
 							...option,
 							onClick: () => {
 								// If toggle only, prevent buttons from being unselected.
-								if ( props.isToggleOnly && option.value === props.value ) {
+								if ( isToggleOnly && option.value === value ) {
 									return
 								}
-								props.onChange( option.value !== props.value ? option.value : '' )
+								onChange( option.value !== value ? option.value : '' )
 							},
-							isPrimary: props.value === option.value,
+							isPrimary: value === option.value,
 							isSmall: props.isSmall,
 							children: ! option.icon ? option.custom || <span className="ugb-advanced-toolbar-control__text-button">{ option.title }</span> : null,
 						}
@@ -131,24 +141,32 @@ const AdvancedToolbarControl = props => {
 				}
 				className={ toolbarClasses }
 			/>
-		</BaseControl>
+			<ResetButton
+				allowReset={ props.allowReset }
+				value={ value }
+				default={ props.default }
+				onChange={ onChange }
+			/>
+		</AdvancedControl>
 	)
 }
 
 AdvancedToolbarControl.defaultProps = {
-	onChange: () => {},
-	onChangeUnit: () => {},
-	help: '',
-	className: '',
-	units: [ 'px' ],
-	unit: 'px',
-	screens: [ 'desktop' ],
-	value: '',
 	controls: [],
 	multiline: false,
 	fullwidth: true,
 	isSmall: false,
 	isToggleOnly: false,
+
+	allowReset: true,
+	default: '',
+
+	attribute: '',
+	responsive: false,
+	hover: false,
+
+	value: undefined,
+	onChange: undefined,
 }
 
 export default AdvancedToolbarControl

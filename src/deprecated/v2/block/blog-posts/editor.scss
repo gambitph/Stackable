@@ -1,0 +1,21 @@
+/**
+ * Editor styles for the Posts Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+@import "common";
+
+.ugb-blog-post__inspector-spinner > * {
+	margin: 0 auto 16px;
+	display: block;
+	float: none;
+}
+// Used for double click to open controls.
+.ugb-blog-posts__item::after {
+	pointer-events: none;
+}
+
+.stk-blog-taxonomy-controls .components-form-token-field {
+	padding-left: 8px;
+}

@@ -1,4 +1,9 @@
 /**
+ * Internal dependencies
+ */
+import { AdvancedSelectControl } from '..'
+
+/**
  * External dependencies
  */
 import {
@@ -11,7 +16,6 @@ import classnames from 'classnames'
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { SelectControl } from '@wordpress/components'
 import { withSelect } from '@wordpress/data'
 import { compose } from '@wordpress/compose'
 
@@ -23,6 +27,7 @@ const ImageSizeControl = ( {
 	imageSizes,
 	value,
 	className,
+	defaultValue,
 	...propsToPass
 } ) => {
 	const imageSizeOptions = getImageSizeOptions( imageSizes )
@@ -31,11 +36,12 @@ const ImageSizeControl = ( {
 		return null
 	}
 
-	return <SelectControl
+	return <AdvancedSelectControl
 		{ ...propsToPass }
 		value={ value || 'large' }
 		options={ imageSizeOptions }
 		className={ classnames( className, [ 'ugb--help-tip-image-size' ] ) }
+		defaultValue={ defaultValue || 'large' }
 	/>
 }
 
@@ -43,6 +49,7 @@ ImageSizeControl.defaultProps = {
 	className: '',
 	label: __( 'Image Size' ),
 	value: 'large',
+	defaultValue: '',
 	imageSizes: [],
 	onChange: () => {},
 }

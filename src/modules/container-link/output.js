@@ -51,7 +51,7 @@ if ( ! hasFilter( 'stackable.div-background.output.after', 'stackable/container-
 			<Fragment>
 				{ output }
 				{ showContainerLink && url && (
-					<a
+					<a // eslint-disable-line react/jsx-no-target-blank
 						tabIndex="-1"
 						aria-hidden="true"
 						href={ url }

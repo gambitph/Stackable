@@ -8,7 +8,6 @@ import { __ } from '@wordpress/i18n'
  */
 import { i18n } from 'stackable'
 import { AdvancedToolbarControl } from '~stackable/components'
-import { omit } from 'lodash'
 import classnames from 'classnames'
 
 const ALIGN_OPTIONS = [
@@ -38,11 +37,12 @@ const AlignButtonsControl = props => {
 	const {
 		justified,
 		className,
+		...propsToPass
 	} = props
 
 	return (
 		<AdvancedToolbarControl
-			{ ...omit( props, [ 'justified' ] ) }
+			{ ...propsToPass }
 			className={ classnames( [ className, 'ugb-align-buttons-control' ] ) }
 			controls={
 				ALIGN_OPTIONS.filter( option => {
@@ -56,7 +56,6 @@ const AlignButtonsControl = props => {
 AlignButtonsControl.defaultProps = {
 	className: '',
 	label: __( 'Align', i18n ),
-	value: ALIGN_OPTIONS[ 0 ].value,
 	justified: false,
 }
 

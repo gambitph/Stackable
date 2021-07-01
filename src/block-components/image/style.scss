@@ -1,0 +1,36 @@
+.stk-img-wrapper {
+	width: 100%;
+	max-width: 100%;
+	margin: 0 auto;
+	display: block;
+	overflow: hidden; // This is needed for zooming the image.
+
+	img {
+		object-fit: cover;
+		width: 100% !important;
+		height: 100% !important;
+		margin: 0 !important;
+		display: block !important;
+	}
+
+	// Shapes.
+	&.stk-img--shape {
+		mask-mode: alpha;
+		mask-repeat: no-repeat;
+		mask-size: contain;
+		mask-position: center;
+		border-radius: none;
+	}
+	// Firefox doesn't stretch SVG masks via attributes, stretching is done here. Fixes #246.
+	&.stk-image--shape-stretch {
+		mask-size: 100% 100%;
+	}
+}
+
+// Fallback for IE11: SVG icons will not display as bullets, fallback to normal bullets.
+@media all and (-ms-high-contrast: none) {
+	*::-ms-backdrop,
+	.stk-img-wrapper.stk-img--shape {
+		border-radius: 9999px !important;
+	}
+}

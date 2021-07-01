@@ -1,5 +1,8 @@
-/**
- * Editor styles for the Button Block.
- *
- * Enqueued in the editor only.
- */
+.stk-button-group.stk-row > .stk-block-content .block-editor-block-list__layout > div.wp-block[data-type="stackable/button"] {
+	flex: unset;
+	width: unset;
+
+	& > div {
+		width: unset;
+	}
+}

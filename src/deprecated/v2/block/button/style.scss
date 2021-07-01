@@ -1,0 +1,181 @@
+/**
+ * Frontend styles for the Button Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+
+@import "common";
+
+.ugb-button-wrapper .ugb-block-content {
+	display: flex !important;
+	justify-content: center;
+	flex-wrap: wrap;
+	align-items: center;
+	margin-left: -0.5em;
+	margin-right: -0.5em;
+	width: calc(100% + 1em);
+	.ugb-button {
+		margin: 0 0.5em 0.5em;
+		display: block;
+	}
+	.ugb-button.ugb-button--has-icon,
+	.ugb-button.ugb-has-icon {
+		display: flex;
+	}
+}
+.ugb-button-wrapper {
+	&.ugb-button--design-spread .ugb-block-content {
+		justify-content: space-between;
+		// Responsive go centered
+		@media screen and (max-width: $break-small) {
+			justify-content: center;
+		}
+	}
+	&.ugb-button--design-grouped-1 .ugb-block-content {
+		justify-content: space-evenly;
+		> *:nth-child(2) {
+			margin-right: auto;
+		}
+		> *:nth-child(3) {
+			margin-left: auto;
+		}
+		// Responsive left align
+		@media screen and (max-width: $break-small) {
+			justify-content: flex-start;
+			> *:nth-child(2) {
+				margin-right: 0;
+			}
+			> *:nth-child(3) {
+				margin-left: 0;
+			}
+		}
+	}
+	&.ugb-button--design-grouped-2 .ugb-block-content {
+		justify-content: space-evenly;
+		> *:nth-child(2) {
+			margin-left: auto;
+		}
+		> *:nth-child(1) {
+			margin-right: auto;
+		}
+		// Responsive right align
+		@media screen and (max-width: $break-small) {
+			justify-content: flex-end;
+			> *:nth-child(2) {
+				margin-left: 0;
+			}
+			> *:nth-child(1) {
+				margin-right: 0;
+			}
+		}
+	}
+	&.ugb-button--design-fullwidth .ugb-block-content {
+		flex-wrap: nowrap;
+		> * {
+			width: 100%;
+		}
+		.ugb-button {
+			text-align: center;
+		}
+		@media screen and (max-width: $break-small) {
+			flex-wrap: wrap;
+		}
+	}
+}
+
+// Override the design, when alignments are set for tablet or mobile.
+@media screen and (max-width: $break-js-tablet) {
+	.ugb-button-wrapper.ugb-button--tablet-aligned {
+		&.ugb-button--design-grouped-1 .ugb-block-content {
+			> *:nth-child(2) {
+				margin-right: 0;
+			}
+			> *:nth-child(3) {
+				margin-left: 0;
+			}
+		}
+		&.ugb-button--design-grouped-2 .ugb-block-content {
+			> *:nth-child(2) {
+				margin-left: 0;
+			}
+			> *:nth-child(1) {
+				margin-right: 0;
+			}
+		}
+	}
+}
+@media screen and (max-width: $break-js-mobile) {
+	.ugb-button-wrapper.ugb-button--mobile-aligned {
+		&.ugb-button--design-grouped-1 .ugb-block-content {
+			> *:nth-child(2) {
+				margin-right: 0;
+			}
+			> *:nth-child(3) {
+				margin-left: 0;
+			}
+		}
+		&.ugb-button--design-grouped-2 .ugb-block-content {
+			> *:nth-child(2) {
+				margin-left: 0;
+			}
+			> *:nth-child(1) {
+				margin-right: 0;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: $break-js-tablet) {
+	.ugb-button-wrapper.ugb-button--collapse-tablet {
+		&.ugb-button--design-grouped-1 .ugb-block-content {
+			> *:nth-child(2) {
+				margin-right: 0;
+			}
+			> *:nth-child(3) {
+				margin-left: 0;
+			}
+		}
+		&.ugb-button--design-grouped-2 .ugb-block-content {
+			> *:nth-child(2) {
+				margin-left: 0;
+			}
+			> *:nth-child(1) {
+				margin-right: 0;
+			}
+		}
+	}
+}
+@media screen and (max-width: $break-js-mobile) {
+	.ugb-button-wrapper.ugb-button--collapse-mobile {
+		&.ugb-button--design-grouped-1 .ugb-block-content {
+			> *:nth-child(2) {
+				margin-right: 0;
+			}
+			> *:nth-child(3) {
+				margin-left: 0;
+			}
+		}
+		&.ugb-button--design-grouped-2 .ugb-block-content {
+			> *:nth-child(2) {
+				margin-left: 0;
+			}
+			> *:nth-child(1) {
+				margin-right: 0;
+			}
+		}
+	}
+}
+
+// Only add paddings to the link/button if there's another button before it.
+.ugb-button-wrapper .ugb-button.ugb-button--design-plain,
+.ugb-button-wrapper .ugb-button.ugb-plain-button {
+	margin-left: 0.75em;
+	margin-right: 0.75em;
+}
+
+// Only add paddings to the link/button if there's another button before it.
+.ugb-button-wrapper .ugb-button.ugb-button--design-link,
+.ugb-button-wrapper .ugb-button.ugb-link-button {
+	margin-left: 0.75em;
+	margin-right: 0.75em;
+}

@@ -34,11 +34,8 @@ export { default as InspectorPanelControls } from './panel-tabs/inspector-panel-
 export { default as DesignLibraryControl } from './design-library-control'
 export { default as DesignLibraryList } from './design-library-list'
 export { default as PanelTabs } from './panel-tabs'
-export { default as BlockStyles } from './block-styles'
 export { default as GlobalStyleControl } from './global-style-control'
 export { default as Button } from './button'
-
-// Reusable non-editor components
 export { default as DesignPanelBody } from './design-panel-body'
 export { default as DesignPanelItem } from './design-panel-item'
 export { default as DesignControl } from './design-control'
@@ -76,21 +73,52 @@ export { default as FourRangeControl } from './four-range-control'
 export { default as ColumnsWidthControl } from './columns-width-control'
 export { default as SmallNumberControl } from './small-number-control'
 export { default as ResponsiveToggle } from './responsive-toggle'
-export { default as ResponsiveControl } from './responsive-control'
 export { default as BaseControlMultiLabel } from './base-control-multi-label'
 export { default as WhenResponsiveScreen } from './when-responsive-screen'
 export { default as HeadingButtonsControl } from './heading-buttons-control'
 export { default as AlignButtonsControl } from './align-buttons-control'
 export { default as BlockContainer } from './block-container'
 export { default as CodeTextarea } from './code-textarea'
+export { default as CodeTextareaControl } from './code-textarea-control'
 export { default as Separator } from './separator'
-export { default as Image } from './image'
 export { default as ConvertToContainerButton } from './convert-to-container-buttons'
 export { default as GetBlockAttributesButton } from './block-attributes-get-button'
-export { default as DivBackground } from './div-background'
 export { default as ModalWelcomeTutorial } from './modal-welcome-tutorial'
 export { default as ModalDesignLibrary } from './modal-design-library'
 export { default as FontAwesomeIcon } from './font-awesome-icon'
 export { default as AdminBaseSetting } from './admin-base-setting'
 export { default as AdminTextSetting } from './admin-text-setting'
 export { default as AdminToggleSetting } from './admin-toggle-setting'
+
+// V2 only Components, for deprecation
+export { default as ResponsiveControl } from './responsive-control'
+export { default as BlockStyles } from './block-styles'
+export { default as Image } from './image'
+export { default as DivBackground } from './div-background'
+
+// V3 only Components
+export { default as BaseControl } from './base-control'
+export { default as BaseControl2 } from './base-control2'
+export { default as ImageControl2 } from './image-control2'
+export { default as AdvancedToggleControl } from './advanced-toggle-control'
+export { default as AdvancedRadioControl } from './advanced-radio-control'
+export { default as AdvancedFocalPointControl } from './advanced-focal-point-control'
+export { default as ImageFilterControl } from './image-filter-control'
+export { default as GroupPlaceholder } from './group-placeholder'
+export { default as ShadowControl } from './shadow-control'
+export { default as LinkControl } from './link-control'
+export { default as ColumnInserter } from './column-inserter'
+export { default as Style } from './style'
+export { default as Link } from './link'
+export { default as ResizableColumn } from './resizable-column'
+export { default as ResponsiveControl2 } from './responsive-control2'
+export { default as ResizableBottomMargin } from './resizable-bottom-margin'
+export {
+	default as InspectorTabs,
+	PreInspectorTabFill,
+	InspectorBlockControls,
+	InspectorStyleControls,
+	InspectorAdvancedControls,
+} from './inspector-tabs'
+export { default as Div } from './div'
+export { default as ControlIconToggle } from './control-icon-toggle'

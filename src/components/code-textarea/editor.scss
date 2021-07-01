@@ -1,5 +1,6 @@
 .ugb-code-textarea + .CodeMirror {
 	height: 500px;
+	max-height: 40vh;
 	margin-left: -16px;
 	margin-right: -16px;
 	border-top: 1px solid #ddd;

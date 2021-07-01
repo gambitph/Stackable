@@ -6,12 +6,12 @@
 /**
  * External dependencies
  */
-import { isUnmodifiedBlock } from '~stackable/util'
 import { first } from 'lodash'
 
 /**
  * WordPress dependencies
  */
+import { useBlockEditContext } from '@wordpress/block-editor'
 import { Fragment } from '@wordpress/element'
 import { doAction } from '@wordpress/hooks'
 
@@ -19,20 +19,22 @@ const tabCache = {}
 
 const withMemory = WrappedComponent => {
 	const NewComp = props => {
+		const { clientId } = useBlockEditContext()
+
 		const onClick = tab => {
 			// Cache it.
-			tabCache[ props.blockProps.clientId ] = tab
+			tabCache[ clientId ] = tab
 
-			doAction( 'stackable.inspector.tab.click', props.blockProps.clientId, tab )
+			doAction( 'stackable.inspector.tab.click', clientId, tab )
 
 			props.onClick( tab )
 		}
 
 		const initialTab = props.initialTab || // If there's a prop, use it.
-			tabCache[ props.blockProps.clientId ] || // Or check if there's a previously selected tab.
-			( isUnmodifiedBlock( props.blockProps ) ? ( first( props.tabs ) || 'layout' ) : 'style' ) // Or if not, default to layout or the style tab.
+			tabCache[ clientId ] || // Or check if there's a previously selected tab.
+			( props.tabs?.includes( 'style' ) ? 'style' : ( first( props.tabs ) || 'style' ) ) // Default to the style tab.
 
-		doAction( 'stackable.inspector.tab.initial', props.blockProps.clientId, initialTab )
+		doAction( 'stackable.inspector.tab.initial', clientId, initialTab )
 
 		const propsToPass = {
 			...props,

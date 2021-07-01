@@ -28,6 +28,8 @@ const createImageBackgroundAttributes = ( attrNameTemplate, options = {} ) => {
 				'BackgroundPosition',
 				'BackgroundRepeat',
 				'BackgroundSize',
+				'Alt',
+				'Title',
 			]
 		),
 		...createAllCombinationAttributes(

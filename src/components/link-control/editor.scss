@@ -1,0 +1,25 @@
+.stk-link-control__input {
+	> .block-editor-link-control {
+		min-width: auto;
+		width: 100%;
+	}
+	.block-editor-url-input__input {
+		margin: 0 !important;
+		width: 100% !important;
+	}
+	.block-editor-link-control__search-actions {
+		top: 2px;
+		right: 2px;
+	}
+	.components-spinner {
+		top: 12px !important;
+		right: 36px !important;
+	}
+	.block-editor-link-control__search-results-wrapper {
+		margin-bottom: 24px !important;
+		margin-top: 0 !important;
+	}
+	.block-editor-link-control__search-item.is-current {
+		padding: 0 !important;
+	}
+}

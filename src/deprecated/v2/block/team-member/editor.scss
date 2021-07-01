@@ -1,0 +1,26 @@
+/**
+ * Editor styles for the Team Member Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+.ugb-team-member-setting__social,
+.ugb-team-member-setting__social .components-base-control__field {
+	margin-bottom: 8px !important;
+}
+
+.ugb-team-member__image .ugb-image-upload-has-placeholder {
+	// width: 220px;
+	border-radius: 100%;
+	height: 0;
+	padding-bottom: 100%;
+	svg {
+		top: 50%;
+		position: absolute;
+		transform: translateY(-50%);
+	}
+}
+
+.ugb-team-member-setting__social-label {
+	margin-bottom: 8px;
+}

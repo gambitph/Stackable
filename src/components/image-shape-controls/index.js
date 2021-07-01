@@ -2,14 +2,11 @@
  * WordPress dependencies
  */
 import { Fragment } from '@wordpress/element'
-import {
-	ToggleControl,
-} from '@wordpress/components'
 
 /**
  * External dependencies
  */
-import { ImageShapeControl } from '~stackable/components'
+import { AdvancedToggleControl, ImageShapeControl } from '~stackable/components'
 import { __ } from '@wordpress/i18n'
 import { i18n } from 'stackable'
 import { compose } from '@wordpress/compose'
@@ -18,8 +15,8 @@ import { getImageSize } from '~stackable/util'
 
 const ImageShapeControls = props => {
 	const imageSizeData = props.imageData ? getImageSize( props.imageData, props.imageSize || 'full' ) : null
-	const isSquareImage = props.isSquareImage !== null ? props.isSquareImage :
-		imageSizeData ? imageSizeData.width === imageSizeData.height : false
+	const isSquareImage = props.isSquareImage !== null ? props.isSquareImage
+		: imageSizeData ? imageSizeData.width === imageSizeData.height : false
 
 	return (
 		<Fragment>
@@ -31,7 +28,7 @@ const ImageShapeControls = props => {
 			}
 
 			{ props.onChangeShapeStretch && ! [ '', 'square', 'circle' ].includes( props.shape ) &&
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Flip Shape Horizontally', i18n ) }
 					checked={ props.shapeFlipX }
 					onChange={ props.onChangeShapeFlipX }
@@ -39,7 +36,7 @@ const ImageShapeControls = props => {
 			}
 
 			{ props.onChangeShapeStretch && ! [ '', 'square', 'circle' ].includes( props.shape ) &&
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Flip Shape Vertically', i18n ) }
 					checked={ props.shapeFlipY }
 					onChange={ props.onChangeShapeFlipY }
@@ -47,10 +44,11 @@ const ImageShapeControls = props => {
 			}
 
 			{ props.onChangeShapeStretch && ! [ '', 'square' ].includes( props.shape ) && ! isSquareImage &&
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Stretch Shape Mask', i18n ) }
 					checked={ props.shapeStretch }
 					onChange={ props.onChangeShapeStretch }
+					defaultValue={ true }
 				/>
 			}
 		</Fragment>

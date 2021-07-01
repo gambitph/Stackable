@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Container block Save render should match snapshot 1`] = `
+<div
+  class="wp-block-ugb-container ugb-container--v2 ugb-container--design-basic ugb-main-block"
+>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-container__wrapper -wrapper"
+      >
+        <div
+          class="ugb-container__side"
+        >
+          <div
+            class="ugb-container__content-wrapper -content-wrapper"
+          >
+            <div />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Container block Save render should match snapshot with attributes 1`] = `
+<div
+  class="wp-block-ugb-container ugb-container--v2 ugb-container--design-wave-2 ugb-main-block"
+>
+  <style>
+    .-wrapper.ugb-container__wrapper{border-radius:123px !important;border-style:columnBorderType !important;border-color:#123456 !important;border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-color:#123456 !important;background-attachment:fixed;background-image:url(columnBackgroundMediaUrl);background-position:columnBackgroundPosition;background-repeat:columnBackgroundRepeat;background-size:columnBackgroundSize;background-blend-mode:columnBackgroundImageBlendMode}.-wrapper &gt; .ugb-container__side{align-items:contentHorizontalAlign !important}.-wrapper.ugb-container__wrapper:before{background-color:#123456 !important;opacity:12.3}h1,h2,h3,h4,h5,h6{color:#123456}p,li,label,table{color:#123456}a,a:visited,a:focus{color:#123456}a:hover{color:#123456}.-content-wrapper &gt; h1,.-content-wrapper &gt; h2,.-content-wrapper &gt; h3,.-content-wrapper &gt; h4,.-content-wrapper &gt; h5,.-content-wrapper &gt; h6{color:#123456}.-content-wrapper &gt; p,.-content-wrapper &gt; ol li,.-content-wrapper &gt; ul li{color:#123456}@media screen and (min-width:768px){.-content-wrapper.ugb-container__content-wrapper{width:123% !important}}@media screen and (max-width:1025px){.-wrapper.ugb-container__wrapper{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-image:url(columnTabletBackgroundMediaUrl);background-position:columnTabletBackgroundPosition;background-repeat:columnTabletBackgroundRepeat;background-size:columnTabletBackgroundSize}.-wrapper.ugb-container__wrapper:before{opacity:12.3}}@media screen and (min-width:768px) and (max-width:1025px){.-content-wrapper.ugb-container__content-wrapper{width:123% !important}}@media screen and (max-width:768px){.-wrapper.ugb-container__wrapper{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-image:url(columnMobileBackgroundMediaUrl);background-position:columnMobileBackgroundPosition;background-repeat:columnMobileBackgroundRepeat;background-size:columnMobileBackgroundSize}.-content-wrapper.ugb-container__content-wrapper{width:123% !important}.-wrapper.ugb-container__wrapper:before{opacity:12.3}}
+  </style>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-container__wrapper -wrapper ugb--shadow-123 ugb--has-background-overlay"
+      >
+        <div
+          class="ugb-container__side"
+        >
+          <div
+            class="ugb-container__content-wrapper -content-wrapper"
+          >
+            <div />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

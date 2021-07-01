@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n'
 
 // Register our block collection or category (WP <= 5.3).
 if ( supportsBlockCollections() ) {
-	registerBlockCollection( 'ugb', {
+	registerBlockCollection( 'stackable', {
 		title: __( 'Stackable', i18n ),
 		icon: SVGStackableCategoryIcon,
 	} )
@@ -49,10 +49,12 @@ if ( supportsBlockCollections() ) {
 const importAllAndRegister = r => {
 	r.keys().forEach( key => {
 		const { name, settings } = r( key )
-		try {
-			return name && settings && registerBlock( name, settings )
-		} catch ( error ) {
-			console.error( `Could not register ${ name } block` ) // eslint-disable-line
+		if ( name ) {
+			try {
+				return name && settings && registerBlock( name, settings )
+			} catch ( error ) {
+				console.error(`Could not register ${name} block`); // eslint-disable-line
+			}
 		}
 	} )
 }

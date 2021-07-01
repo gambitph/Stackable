@@ -30,6 +30,8 @@ import { applyFilters } from '@wordpress/hooks'
 import { i18n } from 'stackable'
 import rgba from 'color-rgba'
 
+export const getUniqueBlockClass = uniqueId => uniqueId ? `stk-${ uniqueId }` : ''
+
 /**
  * Returns an array range of numbers.
  *
@@ -51,7 +53,7 @@ export const range = ( start, end ) => {
  *
  * @return {boolean} True if a video.
  */
-export const urlIsVideo = url => url.match( /(mp4|webm|ogg)$/i )
+export const urlIsVideo = url => url.endsWith( 'mp4' ) || url.endsWith( 'webm' ) || url.endsWith( 'ogg' )
 
 /**
  * From a URL, get the video ID and provider: YouTube or Vimeo.
@@ -131,6 +133,10 @@ export const descriptionPlaceholder = length => {
  * @return {string} Rgba color.
  */
 export const hexToRgba = ( hexColor, opacity = null ) => {
+	if ( ! hexColor ) {
+		return ''
+	}
+
 	// Allow others to change the conversion.
 	const overrideOutput = applyFilters( 'stackable.util.hex-to-rgba', null, hexColor, opacity )
 	if ( overrideOutput ) {
@@ -266,7 +272,9 @@ export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassNam
 		.split( ',' )
 		.map( s => {
 			let newSelector = ''
-			if ( ! uniqueClassName || ! mainClassName ) {
+			if ( s.includes( '%s' ) ) {
+				newSelector = s.replaceAll( '%s', uniqueClassName )
+			} else if ( ! uniqueClassName || ! mainClassName ) {
 				newSelector = s
 			} else if ( s.includes( uniqueClassName ) ) {
 				newSelector = s
@@ -275,6 +283,7 @@ export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassNam
 			} else {
 				newSelector = `.${ uniqueClassName } ${ s.trim() }`
 					.replace( new RegExp( `(.${ uniqueClassName }) (.${ mainClassName }(#|:|\\[|\\.|\\s|$))`, 'g' ), '$1$2' )
+					.replace( /\s:/, ':' ) // If the selector given is just a pseudo selector ':before', it will produce ' :before', remove the extra space.
 			}
 			return wrapSelector ? `${ wrapSelector } ${ newSelector }` : newSelector
 		} )
@@ -283,19 +292,6 @@ export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassNam
 	prependCSSClassCache[ key ] = selector
 	return selector
 }
-
-/**
- * Global responsive setting functions. This is used by the
- * WhenResponsiveScreen and ResponsiveToggle components to
- * specify the current responsive screen size.
- */
-let _currentSelectedScreen = 'desktop'
-export const getSelectedScreen = () => _currentSelectedScreen
-export const setSelectedScreen = value => _currentSelectedScreen = value
-
-let _currentScreenPickerIsOpen = false
-export const isScreenPickerOpen = () => _currentScreenPickerIsOpen
-export const setIsScreenPickerOpen = value => _currentScreenPickerIsOpen = value
 
 /**
  * Moves an array value to a new index.

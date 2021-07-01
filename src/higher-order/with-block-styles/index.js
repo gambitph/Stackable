@@ -8,37 +8,6 @@ import { BlockStyles } from '~stackable/components'
  */
 import { applyFilters } from '@wordpress/hooks'
 import classnames from 'classnames'
-import { useMemo } from '@wordpress/element'
-
-// Render the block styles, but with useMemo for caching. This is used for caching styles in the editor.
-const BlockStylesWithMemo = props => {
-	const {
-		styleFunction,
-		...blockProps
-	} = props
-
-	const { blockName } = blockProps
-
-	// Grab all the non-content only attributes. Make sure that we only
-	// re-compute the styles only when attributes that affect styles are
-	// modified.
-	let currentAttributes = applyFilters( `stackable.${ blockName }.design.no-text-attributes`, blockProps.attributes )
-	currentAttributes = applyFilters( `stackable.${ blockName }.design.filtered-block-attributes`, currentAttributes )
-
-	const styleObject = useMemo(
-		() => applyFilters( `stackable.${ blockName }.styles`, styleFunction( blockProps ), blockProps ),
-		[ Object.values( currentAttributes ).join( ',' ) + blockProps.clientId ]
-	)
-
-	return (
-		<BlockStyles
-			blockUniqueClassName={ blockProps.attributes.uniqueClass }
-			blockMainClassName={ blockProps.mainClassName }
-			style={ styleObject }
-			editorMode={ true }
-		/>
-	)
-}
 
 const withBlockStyles = ( styleFunction, options = {} ) => WrappedComponent => {
 	const NewComp = props => {
@@ -48,23 +17,19 @@ const withBlockStyles = ( styleFunction, options = {} ) => WrappedComponent => {
 		] )
 
 		const { blockName } = props
+		const styleObject = applyFilters( `stackable.${ blockName }.styles`, styleFunction( props ), props )
 
-		// Render the block styles, but when in editor mode, do useMemo for caching.
-		let BlockStyle
-		if ( options.editorMode ) {
-			BlockStyle = <BlockStylesWithMemo styleFunction={ styleFunction } { ...props } />
-		} else {
-			const styleObject = applyFilters( `stackable.${ blockName }.styles`, styleFunction( props ), props )
+		const isEditorMode = options.editorMode || false
 
-			BlockStyle = (
-				<BlockStyles
-					blockUniqueClassName={ props.attributes.uniqueClass }
-					blockMainClassName={ props.mainClassName }
-					style={ styleObject }
-					editorMode={ false }
-				/>
-			)
-		}
+		const BlockStyleTag = isEditorMode ? BlockStyles : BlockStyles.Content
+		const BlockStyle = (
+			<BlockStyleTag
+				blockUniqueClassName={ props.attributes.uniqueClass }
+				blockMainClassName={ props.mainClassName }
+				style={ styleObject }
+				attributes={ props.attributes }
+			/>
+		)
 
 		return <WrappedComponent { ...props } className={ newClassName } styles={ BlockStyle } />
 	}

@@ -1,0 +1,34 @@
+// Editor only: Smooth changes.
+// $effect-transition: color 0.2s ease-in-out, opacity 0.2s ease-in-out, background-color 0.2s ease-in-out, height 0.2s ease-in-out, width 0.2s ease-in-out, transform 0.2s ease-in-out, padding 0.2s ease-in-out, border-radius 0.2s ease-in-out, fill 0.2s ease-in-out, top 0.2s ease-in-out, left 0.2s ease-in-out;
+// .wp-admin .wp-block [class*="ugb-"],
+// .wp-admin .wp-block [class*="ugb-"] * {
+// 	transition: $effect-transition;
+// }
+@import "common";
+
+// Standardized block styles for the editor.
+
+// Remove all block margins, to make our advanced block spacing work.
+// We will add our own.
+.block-editor-block-list__block[data-type^="ugb/"] {
+	margin-top: 0 !important;
+	margin-bottom: 0 !important;
+}
+
+[data-type^="ugb/"][data-align="full"] {
+	> * > .ugb-main-block {
+		margin-top: 35px; // Implement our own block margins
+		margin-bottom: 35px; // Implement our own block margins
+		padding: 0 35px;
+		// We don't need this in the editor, but save for the future.
+		// @media screen and (max-width: $break-small) {
+		// 	padding-right: 17.5px;
+		// 	padding-left: 17.5px;
+		// }
+	}
+}
+
+[data-type^="ugb/"] > .wp-block[data-align="full"] {
+	margin-left: -10px;
+	margin-right: -10px;
+}

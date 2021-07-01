@@ -5,6 +5,9 @@
  * that are used across the project.
 */
 
+@import "styles/block-design-system";
+@import "styles/block";
+
 // Most used breakpoints
 $break-huge: 1440px;
 $break-wide: 1280px;

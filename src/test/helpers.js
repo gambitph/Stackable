@@ -16,8 +16,6 @@ import {
 } from '@wordpress/blocks'
 import { render } from '@testing-library/react'
 
-// TODO: cleanup, remove unused functions here
-
 export const blockSaveRender = ( name, settings, attributes = null ) => {
 	if ( ! getBlockType( name ) ) {
 		registerStackableBlock( name, { ...settings, category: 'common' } )

@@ -18,18 +18,10 @@
 		margin: 0;
 		font-weight: 400;
 		outline: none;
-		color: #aaa;
 		padding: 0 4px;
 		background: transparent;
 		cursor: pointer;
 		text-transform: uppercase;
-		&:hover {
-			color: #333;
-		}
-		&.is-active {
-			color: #333;
-			text-decoration: underline;
-		}
 	}
 	.components-button {
 		text-transform: none;

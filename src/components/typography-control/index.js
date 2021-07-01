@@ -3,6 +3,7 @@
  */
 import {
 	AdvancedRangeControl,
+	AdvancedSelectControl,
 	ButtonIconPopoverControl,
 	FontFamilyControl,
 	FontSizeControl,
@@ -18,7 +19,6 @@ import {
 	Fragment, useMemo,
 } from '@wordpress/element'
 import { i18n } from 'stackable'
-import { SelectControl } from '@wordpress/components'
 
 const TypographyControl = props => {
 	// Compute the font size placeholder value.
@@ -99,7 +99,7 @@ const TypographyControl = props => {
 					</Fragment>
 				) }
 				{ props.onChangeFontWeight && (
-					<SelectControl
+					<AdvancedSelectControl
 						label={ __( 'Weight', i18n ) }
 						options={ [
 							{ label: '100', value: '100' },
@@ -121,7 +121,7 @@ const TypographyControl = props => {
 					/>
 				) }
 				{ props.onChangeTextTransform && (
-					<SelectControl
+					<AdvancedSelectControl
 						label={ __( 'Transform', i18n ) }
 						options={ [
 							{ label: __( 'Default', i18n ), value: '' },
