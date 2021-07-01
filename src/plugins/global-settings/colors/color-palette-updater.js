@@ -47,6 +47,16 @@ const GlobalColorPaletteUpdater = () => {
 		if ( ! isEqual( colors, newColors ) ) {
 			dispatch( 'core/block-editor' ).updateSettings( {
 				colors: newColors,
+
+				/**
+				 * withColorContext now gets the colors from features object.
+				 *
+				 * @since v2.7.2
+				 */
+				...(
+					useStackableColorsOnly ?
+						{ __experimentalFeatures: { colors: { theme: [ ...defaultColors ] } } } : {}
+				),
 			} )
 		}
 	}, [ JSON.stringify( colors ), JSON.stringify( defaultColors ), JSON.stringify( stackableColors ), useStackableColorsOnly, isInitializing ] )

@@ -113,6 +113,17 @@ domReady( () => {
 				stackableColors,
 				isInitializing: false,
 			} )
+
+			/**
+			 * withColorContext now gets the colors from features object.
+			 *
+			 * @since v2.7.2
+			 */
+			if ( useStackableColorsOnly ) {
+				setTimeout( () => {
+					dispatch( 'core/block-editor' ).updateSettings( { __experimentalFeatures: { colors: { theme: [] } } } )
+				}, 300 )
+			}
 		} )
 	} )
 } )
