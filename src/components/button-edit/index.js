@@ -163,7 +163,7 @@ class ButtonEdit extends Component {
 					{ openUrlPopover &&
 						<UrlInputPopover
 							value={ url }
-							onChange={ onChangeUrl }
+							onChangeUrl={ onChangeUrl }
 							newTab={ newTab }
 							noFollow={ noFollow }
 							onChangeNewTab={ onChangeNewTab }

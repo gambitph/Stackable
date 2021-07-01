@@ -1,8 +1,6 @@
 /**
  * Internal dependencies
  */
-import { getAttributeName } from '~stackable/util'
-import { useBlockHoverState, useDeviceType } from '~stackable/hooks'
 import { getAttrName } from '../attributes'
 
 /**
@@ -10,6 +8,13 @@ import { getAttrName } from '../attributes'
  */
 import { useMemo } from '@wordpress/element'
 import { sprintf } from '@wordpress/i18n'
+import { useBlockHoverState, useDeviceType } from '~stackable/hooks'
+import { getAttributeName } from '~stackable/util'
+import { compact } from 'lodash'
+
+/**
+ * WordPress dependencies
+ */
 import { useBlockEditContext } from '@wordpress/block-editor'
 
 /**
@@ -201,6 +206,7 @@ class StyleObject {
 			attrNameTemplate = '',
 			selectorCallback = null, // Can be used instead of selector.
 			hoverSelector: _hoverSelector = '', // You can specify your own hover selector (for saving purposes only)
+			hoverSelectorCallback = null,
 			hoverCallback = null,
 			renderIn: _renderIn = '', // editor, custom, saveOnly
 			valuePreCallback = null,
@@ -247,7 +253,8 @@ class StyleObject {
 			}
 		}
 
-		const selector = selectorCallback ? selectorCallback( getAttribute, attributes ) : _selector
+		let selector = selectorCallback ? selectorCallback( getAttribute, attributes ) : _selector
+		let hoverSelector = hoverSelectorCallback ? hoverSelectorCallback( getAttribute, attributes ) : _hoverSelector
 		const hover = hoverCallback ? hoverCallback( getAttribute, attributes ) : _hover
 
 		const getValue = ( attrName, device, state ) => {
@@ -259,8 +266,8 @@ class StyleObject {
 
 			// Allow unspecified tablet & mobile values to be clamped based on the desktop value.
 			if ( clampCallback && responsive ) {
-				const desktopValue = getAttributeName( attrName, 'desktop', state )
-				const tabletValue = getAttributeName( attrName, 'tablet', state )
+				const desktopValue = attributes[ getAttributeName( attrName, 'desktop', state ) ]
+				const tabletValue = attributes[ getAttributeName( attrName, 'tablet', state ) ]
 				if ( value === '' || typeof value === 'undefined' ) {
 					if ( device === 'tablet' ) {
 						value = clampCallback( desktopValue, getAttribute, device, state, unit, attributes )
@@ -303,16 +310,27 @@ class StyleObject {
 		const hasHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'hover' ) )
 		const hasParentHover = hover === 'all' || ( Array.isArray( hover ) && hover.includes( 'parent-hover' ) )
 
-		let parentHoverSelector = `:where(.stk-block:hover) .%s ${ selector }`
-		let hoverSelector = _hoverSelector || `.stk-block.%s:hover ${ selector }`
+		const prependClass = ( _selector, prependString, prependStringIfEditor, blockStateCompare ) => {
+			const getSelector = s => {
+				const prependArray = []
+				prependArray.push( blockState === blockStateCompare ? prependStringIfEditor : prependString )
+				prependArray.push( s )
+				return compact( prependArray ).join( ' ' )
+			}
 
-		// This is for the editor, change the selector to make the styles show up right away.
-		if ( blockState === 'hover' ) {
-			hoverSelector = `.%s.stk--is-hovered ${ selector }`
+			if ( Array.isArray( _selector ) ) {
+				return _selector.map( getSelector ).join( ', ' )
+			}
+
+			return getSelector( _selector )
 		}
-		if ( blockState === 'parent-hovered' ) {
-			parentHoverSelector = `.%s.stk--is-hovered .%s-container`
-		}
+
+		const parentHoverSelector = prependClass( selector, ':where(.stk-hover-parent:hover) .%s', '.%s.stk--is-hovered', 'parent-hovered' )
+		hoverSelector = hoverSelector
+			// In editor, always use the `selector` instead of the hoverSelector.
+			? prependClass( blockState === 'hover' ? selector : hoverSelector || selector, null, '.%s.stk--is-hovered', 'hover' )
+			: prependClass( selector, '.stk-block.%s:hover', '.%s.stk--is-hovered', 'hover' )
+		selector = prependClass( selector )
 
 		this.appendToSelector( selector, styleRule, getValue( attrName, 'desktop', 'normal' ), 'desktop', renderIn, vendorPrefixes )
 		if ( hasHover ) {

@@ -1,0 +1,48 @@
+@import "common";
+
+.stk-block.stk-button {
+	width: auto;
+	margin-bottom: 0;
+	margin-inline-end: 12px;
+	text-align: center;
+
+	.stk-button__button {
+		// make sure that the anchor tag's width matches the parent's ( stk-button ) width.
+		width: 100%;
+		text-decoration: none;
+	}
+}
+
+.stk-button.is-style-ghost {
+	.stk-button__button {
+		border-color: cssvar(button-background-color);
+		border-top-width: 1px;
+		border-right-width: 1px;
+		border-bottom-width: 1px;
+		border-left-width: 1px;
+
+		&:hover {
+			.stk-button__inner-text {
+				color: cssvar(button-background-color);
+			}
+		}
+
+		& > .stk-button__inner-text {
+			color: cssvar(button-background-color);
+		}
+	}
+}
+
+.stk-button.is-style-plain {
+	.stk-button__button {
+		&:hover {
+			.stk-button__inner-text {
+				color: cssvar(button-background-color);
+			}
+		}
+
+		& > .stk-button__inner-text {
+			color: cssvar(button-background-color);
+		}
+	}
+}

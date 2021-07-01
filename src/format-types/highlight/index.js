@@ -147,8 +147,9 @@ const HighlightButton = props => {
 
 	return (
 		<BlockControls>
-			<Toolbar className="stackable-components-toolbar" label={ __( 'Color & Highlight', i18n ) }>
+			<Toolbar className="stackable-components-toolbar">
 				<Button
+					label={ __( 'Color & Highlight', i18n ) }
 					className="components-button components-icon-button components-toolbar__control"
 					icon="editor-textcolor"
 					aria-haspopup="true"

@@ -8,7 +8,9 @@ import {
 	useEffect, useCallback, useState, useMemo,
 } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
-import { isBlockLinked, useDidAttributesChange } from '~stackable/hooks'
+import {
+	isBlockLinked, useDidAttributesChange, useIsLinked,
+} from '~stackable/hooks'
 
 export const BlockLinking = () => {
 	const { updateBlockAttributes } = useDispatch( 'core/block-editor' )
@@ -25,7 +27,7 @@ export const BlockLinking = () => {
 	)
 
 	const linkableBlockClientId = useClosestLinkableBlock( currentClientId )
-	const isLinked = useMemo( () => isBlockLinked( linkableBlockClientId ), [ currentClientId ] )
+	const isLinked = useIsLinked( linkableBlockClientId )
 
 	const cb = useCallback( newAttributes => {
 		// This callback can be called falsely if the user switches to different blocks.
@@ -68,7 +70,7 @@ export const BlockLinking = () => {
 		if ( clientIdsToUpdate.length ) {
 			updateBlockAttributes( clientIdsToUpdate, attributes )
 		}
-	}, [ currentClientId, selectedBlockClientId ] )
+	}, [ currentClientId, selectedBlockClientId, linkableBlockClientId, isLinked ] )
 
 	// Listen to attribute changes.
 	useDidAttributesChange(

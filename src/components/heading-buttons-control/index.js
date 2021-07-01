@@ -60,12 +60,14 @@ const TAG_OPTIONS = [
 	},
 ]
 
+const TAG_OPTIONS_NOP = TAG_OPTIONS.filter( ( { value } ) => value !== 'p' )
+
 const HeadingButtonsControl = props => {
 	return (
 		<AdvancedToolbarControl
 			{ ...props }
 			className="ugb-heading-buttons-control"
-			controls={ TAG_OPTIONS }
+			controls={ props.hasP ? TAG_OPTIONS : TAG_OPTIONS_NOP }
 		/>
 	)
 }
@@ -73,6 +75,7 @@ const HeadingButtonsControl = props => {
 HeadingButtonsControl.defaultProps = {
 	label: sprintf( _x( '%s HTML Tag', 'component' ), __( 'Title', i18n ) ),
 	value: TAG_OPTIONS[ 0 ].value,
+	hasP: true,
 }
 
 export default HeadingButtonsControl

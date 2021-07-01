@@ -2,6 +2,7 @@
  * Core Block Styles for the editor
  */
 @import "breakpoints";
+@import "editor-block-transitions";
 
 // Position relative (required for block links) will not work properly with
 // margin bottom resizer, make it static in the editor.
@@ -137,4 +138,10 @@
 .editor-styles-wrapper [data-type^="stackable/"][data-align="wide"] .wp-block,
 .editor-styles-wrapper [data-type^="stackable/"][data-align="full"] .wp-block {
 	max-width: 100%;
+}
+
+// Headings
+// Our headings have top margins if they're not the first heading, handle the different block structures.
+.editor-styles-wrapper [data-type^="stackable/heading"]:first-child .stk-heading__text {
+	margin-top: 0;
 }

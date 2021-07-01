@@ -79,8 +79,8 @@ export const Save = props => {
 				<div className={ innerClassNames }>
 					<InnerBlocks.Content />
 				</div>
+				<BlockLink.Content attributes={ attributes } />
 			</ContainerDiv.Content>
-			<BlockLink.Content attributes={ attributes } />
 		</BlockDiv.Content>
 	)
 }

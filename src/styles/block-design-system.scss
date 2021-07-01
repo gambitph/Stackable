@@ -49,6 +49,20 @@
 		tablet: 24px 32px,
 		mobile: 16px 16px,
 	),
+
+	/**
+	 * Buttons
+	 */
+	button-background-color: #008de4,
+	button-padding: (
+		desktop: 12px 16px,
+	),
+	button-text-color: #fff,
+
+	/***
+	 * Typography
+	 */
+	// TODO: Add typography colors
 ) );
 
 /**
@@ -60,6 +74,28 @@
 .entry-content .stk-block {
 	margin-bottom: cssvar(block-margin-bottom);
 }
+
+.stk-button {
+	a.stk-button__button {
+		background: cssvar(button-background-color);
+		padding: cssvar(button-padding);
+
+		.stk--inner-svg {
+			color: cssvar(button-text-color);
+		}
+
+
+		& > .stk-button__inner-text {
+			color: cssvar(button-text-color);
+
+			&:hover {
+				color: cssvar(button-text-color); // Override theme's hover text color.
+			}
+		}
+
+	}
+}
+
 // Block spacing when horizontally oriented.
 .stk--block-orientation-horizontal > * + * {
 	margin-left: cssvar(block-margin-bottom);

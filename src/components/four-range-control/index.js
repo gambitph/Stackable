@@ -46,27 +46,32 @@ const FourRangeControl = props => {
 	const hasOldValues = typeof props.top !== 'undefined' || typeof props.right !== 'undefined' || typeof props.bottom !== 'undefined' || typeof props.left !== 'undefined'
 	if ( hasOldValues ) {
 		value = {
-			top: typeof props.top !== 'undefined' ? props.top : props.defaultTop,
-			right: typeof props.right !== 'undefined' ? props.right : props.defaultRight,
-			bottom: typeof props.bottom !== 'undefined' ? props.bottom : props.defaultBottom,
-			left: typeof props.left !== 'undefined' ? props.left : props.defaultLeft,
+			top: typeof props.top !== 'undefined' ? props.top : props.enableTop ? props.defaultTop : undefined,
+			right: typeof props.right !== 'undefined' ? props.right : props.enableRight ? props.defaultRight : undefined,
+			bottom: typeof props.bottom !== 'undefined' ? props.bottom : props.enableBottom ? props.defaultBottom : undefined,
+			left: typeof props.left !== 'undefined' ? props.left : props.enableLeft ? props.defaultLeft : undefined,
 		}
 	}
 	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
 
-	const isDefaults = value.top === '' && value.right === '' && value.bottom === '' && value.left === ''
-	const isEqualInitial = useMemo( () => {
-		const values = Object.values( value || {} )
-		if ( ! values.length ) {
-			return true
-		}
-		return values.every( v => v === value.top )
-	}, [] )
+	const isDefaults = ( props.enableTop && value.top === '' ) &&
+		( props.enableRight && value.right === '' ) &&
+		( props.enableBottom && value.bottom === '' ) &&
+		( props.enableLeft && value.left === '' )
 
-	const firstValue = props.enableTop && value.top !== '' ? value.top
-		: props.enableRight && value.right !== '' ? value.right
-			: props.enableBottom && value.bottom !== '' ? value.bottom
+	const firstValue = props.enableTop ? value.top
+		: props.enableRight ? value.right
+			: props.enableBottom ? value.bottom
 				: value.left
+
+	const isEqualInitial = useMemo( () => {
+		let isEqual = true
+		isEqual = props.enableTop && value.top !== firstValue ? false : isEqual
+		isEqual = props.enableRight && value.right !== firstValue ? false : isEqual
+		isEqual = props.enableBottom && value.bottom !== firstValue ? false : isEqual
+		isEqual = props.enableLeft && value.left !== firstValue ? false : isEqual
+		return isEqual
+	}, [] )
 
 	const [ isLocked, setIsLocked ] = useState( isDefaults ? props.defaultLocked : isEqualInitial )
 
@@ -128,9 +133,12 @@ const FourRangeControl = props => {
 		propsToPass.placeholder = props.placeholder
 	}
 
-	const onChangeAll = useCallback( value => {
+	const onChangeAll = useCallback( newValue => {
 		onChange( {
-			top: value, right: value, bottom: value, left: value,
+			top: props.enableTop ? newValue : value.top,
+			right: props.enableRight ? newValue : value.right,
+			bottom: props.enableBottom ? newValue : value.bottom,
+			left: props.enableLeft ? newValue : value.left,
 		} )
 	} )
 

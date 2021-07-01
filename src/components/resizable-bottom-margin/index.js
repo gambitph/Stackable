@@ -3,7 +3,9 @@
  */
 import classnames from 'classnames'
 import { range } from 'lodash'
-import { useDeviceType, useWithShift } from '~stackable/hooks'
+import {
+	useBlockAttributes, useDeviceType, useWithShift,
+} from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -13,6 +15,9 @@ import {
 } from '@wordpress/element'
 import { applyFilters } from '@wordpress/hooks'
 import { ResizableBox } from '@wordpress/components'
+import { useBlockEditContext } from '@wordpress/block-editor'
+import { useControlHandlers } from '../base-control2/hooks'
+import { getAttributeName } from '~stackable/util'
 
 const DEFAULT_BOTTOM_MARGINS = {
 	Desktop: 24,
@@ -113,25 +118,46 @@ ResizableBottomMarginSingle.defaultProps = {
 	onChange: () => {},
 }
 
+const onChangeCallback = ( value, originalValue ) => {
+	return {
+		...( originalValue || {} ),
+		bottom: value,
+	}
+}
+
 const ResizableBottomMargin = memo( props => {
-	const deviceType = useDeviceType()
-	const isDesktop = deviceType === 'Desktop'
-	const isMobile = deviceType === 'Mobile'
+	const { clientId } = useBlockEditContext()
+	const attributes = useBlockAttributes( clientId )
+	const device = useDeviceType()
 
-	let value = props.valueDesktop // props[ `value${ deviceType }` ]
-	if ( ! isDesktop && props.valueTablet !== '' ) {
-		value = props.valueTablet
-	}
-	if ( isMobile && props.valueMobile !== '' ) {
-		value = props.valueMobile
-	}
+	const valueCallback = useCallback( _value => {
+		let value = _value?.bottom || _value?.bottom === 0 ? _value?.bottom : ''
 
-	const onChange = useCallback( value => {
-		const callback = props[ `onChange${ deviceType }` ]
-		if ( callback ) {
-			callback( value )
+		// If there's a value already, use that. Or check the other inherited values.
+		if ( value || value === 0 ) {
+			return value
 		}
-	}, [ deviceType, props.onChangeDesktop, props.onChangeTablet, props.onChangeMobile ] )
+
+		// Try and get an inherited value (e.g. if no tablet is supplied, get the desktop value)
+		const deviceSteps = device === 'Mobile' ? [ 'mobile', 'tablet', 'desktop' ]
+			: device === 'Tablet' ? [ 'tablet', 'desktop' ]
+				: [ 'desktop' ]
+
+		deviceSteps.some( device => {
+			const _value = attributes[ getAttributeName( props.attribute, device ) ]
+			if ( _value !== '' && typeof _value !== 'undefined' ) {
+				value = value = _value?.bottom || _value?.bottom === 0 ? _value?.bottom : ''
+				if ( value || value === 0 ) {
+					return true
+				}
+			}
+			return false
+		} )
+
+		return value
+	}, [ props.attribute, attributes, device ] )
+
+	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, false, valueCallback, onChangeCallback )
 
 	return (
 		<ResizableBottomMarginSingle
@@ -144,12 +170,8 @@ const ResizableBottomMargin = memo( props => {
 
 ResizableBottomMargin.defaultProps = {
 	previewSelector: '', // Selector of the element where the margin is applied e.g. .stk-card-group
-	valueDesktop: '',
-	valueTablet: '',
-	valueMobile: '',
-	onChangeDesktop: null,
-	onChangeTablet: null,
-	onChangeMobile: null,
+	attribute: '',
+	responsive: false,
 }
 
 export default ResizableBottomMargin

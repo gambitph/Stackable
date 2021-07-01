@@ -119,7 +119,6 @@ export const SizeControls = props => {
 					label={ labelMargins }
 					attribute={ getAttrName( 'margin' ) }
 					responsive="all"
-					hover="all"
 					units={ [ 'px', '%' ] }
 					defaultLocked={ false }
 					sliderMin={ [ -200, -100 ] }

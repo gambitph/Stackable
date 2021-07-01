@@ -37,11 +37,17 @@ const HOVER_OPTIONS = [
 ]
 
 const HoverStateToggle = props => {
-	const [ currentHoverState, setCurrentHoverState ] = useBlockHoverState()
+	const [ currentHoverState, setCurrentHoverState, _blockHoverClass, hasParentHoverState ] = useBlockHoverState()
 
 	const stateOptions = useMemo( () => {
 		const hover = props.hover === 'all' ? [ 'normal', 'hover', 'parent-hovered' ] : props.hover
-		return HOVER_OPTIONS.filter( ( { value } ) => hover.includes( value ) )
+		return HOVER_OPTIONS.filter( ( { value } ) => {
+			// Don't include the parent hover state toggle if there's no parent hovered.
+			if ( ! hasParentHoverState && value === 'parent-hovered' ) {
+				return false
+			}
+			return hover.includes( value )
+		} )
 	}, [ props.hover ] )
 
 	return (

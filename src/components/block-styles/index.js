@@ -6,7 +6,7 @@ import {
 	kebabCase, omit, isEqual, sortBy,
 } from 'lodash'
 import { getEditorStylesOnly } from '~stackable/block-components'
-import { useBlockAttributes, useDeviceType } from '~stackable/hooks'
+import { useDeviceType } from '~stackable/hooks'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { useMemo } from '@wordpress/element'
 
@@ -266,10 +266,10 @@ const BlockStyles = props => {
 		blockMainClassName = '',
 		breakTablet = 1025,
 		breakMobile = 768,
+		attributes = {},
 	} = props
 
 	const { clientId } = useBlockEditContext()
-	const attributes = useBlockAttributes( clientId )
 	const deviceType = useDeviceType()
 
 	// Generate styles, but optimize.

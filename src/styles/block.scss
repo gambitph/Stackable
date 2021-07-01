@@ -2,10 +2,12 @@
  * Core Block Styles
  */
 @import "breakpoints";
+@import "block-transitions";
 
 // We need to set this to relative for making the whole block clickable.
 .stk-block {
 	position: relative;
+	width: 100%;
 }
 
 // Containers
@@ -17,35 +19,6 @@
 // Mostly for border radius.
 .stk-container {
 	overflow: hidden;
-}
-
-// Hover transitions.
-.stk-block,
-.stk-container,
-.stk-container-padding,
-.stk-img-wrapper, // Images.
-.stk-img-wrapper img, // Images.
-.stk--has-background-overlay::before { // Image background overlays
-	transition: all 0.12s cubic-bezier(0.45, 0.05, 0.55, 0.95);
-	border-width: 1px;
-	border-style: none;
-}
-.stk-block {
-	will-change: transform, box-shadow, opacity, top, right, bottom, left, background, margin, padding, min-height, max-width;
-}
-.stk-container,
-.stk-container-padding {
-	will-change: transform, box-shadow, background, margin, padding, min-height, max-width;
-}
-.stk-img-wrapper img {
-	will-change: filter;
-}
-// Some attributes will not animate if they have no starting values.
-.stk-block,
-.stk-container,
-.stk-container-padding {
-	min-height: 0;
-	max-width: 100%;
 }
 
 /**
@@ -174,3 +147,95 @@
 		display: none !important;
 	}
 }
+
+// Headings and Text.
+// This removes the normal margins of headings and paragraphs, so we can add our own.
+.stk-block {
+	.stk-heading__text,
+	.stk-text__text {
+		margin-bottom: 0;
+	}
+}
+.stk-heading,
+.stk-text,
+.stk-block .stk-text__text {
+	margin-top: 0;
+}
+// Headings have a large margin top except when they're the first entry.
+.stk-heading:not(:first-child) .stk-heading__text {
+	margin-top: 1.5em;
+}
+// No margin top when the first child but only in the frontend.
+.stk-heading:first-child .stk-heading__text:not([contenteditable]) {
+	margin-top: 0;
+}
+// Remove any decorative things added by themes.
+.stk-text__text,
+.stk-heading__text {
+	&::after,
+	&::before {
+		content: unset;
+	}
+}
+
+// Typography Classes.
+.stk--is-gradient {
+	background-clip: text;
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+	-o-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-moz-text-fill-color: transparent;
+	-o-text-fill-color: transparent;
+}
+
+// Button.
+.stk-button {
+	.stk--svg-wrapper {
+		position: relative;
+
+		& > .stk--shape-icon {
+			position: absolute;
+			z-index: 1;
+			margin: auto;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
+	}
+
+	.stk--inner-svg {
+		display: flex;
+		position: relative;
+		z-index: 2;
+
+		& > svg:last-child {
+			height: 1em;
+			width: 1em;
+		}
+	}
+
+	a.stk-button__button {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		column-gap: 4px;
+		z-index: 1;
+
+		&::after {
+			pointer-events: none;
+			content: "";
+			position: absolute;
+			z-index: -1;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			opacity: 0;
+			border-radius: inherit;
+		}
+	}
+}
+

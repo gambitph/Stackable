@@ -37,7 +37,7 @@ export const settings = {
 	// parent: [ 'stackable/card-group' ],
 	attributes: schema,
 	supports: {
-		// inserter: false,
+		inserter: false,
 		anchor: true,
 	},
 

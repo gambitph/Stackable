@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { InspectorPanelControls, PanelTabs } from '~stackable/components'
+import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
@@ -9,8 +10,22 @@ import { InspectorPanelControls, PanelTabs } from '~stackable/components'
 import {
 	Fragment, useState,
 } from '@wordpress/element'
-import { applyFilters } from '@wordpress/hooks'
+import { addFilter, applyFilters } from '@wordpress/hooks'
 import { InspectorControls } from '@wordpress/block-editor'
+import { __ } from '@wordpress/i18n'
+
+// Add the layout tab.
+addFilter( 'stackable.inspector.tabs', 'stackable/v2', tabs => {
+	return [
+		{
+			value: 'layout',
+			title: __( 'Layout', i18n ),
+			label: __( 'Layout Tab', i18n ),
+			icon: 'admin-settings',
+		},
+		...tabs,
+	]
+} )
 
 const withTabbedInspector = ( tabs = null ) => WrappedComponent => {
 	const NewComp = props => {
@@ -25,7 +40,7 @@ const withTabbedInspector = ( tabs = null ) => WrappedComponent => {
 
 				<InspectorControls>
 					<PanelTabs
-						tabs={ tabs }
+						tabs={ tabs || [ 'layout', 'style', 'advanced' ] }
 						onTabFirstOpen={ setActiveTab }
 						onClick={ setActiveTab }
 					/>

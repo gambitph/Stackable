@@ -27,6 +27,7 @@ const withBlockStyles = ( styleFunction, options = {} ) => WrappedComponent => {
 				blockUniqueClassName={ props.attributes.uniqueClass }
 				blockMainClassName={ props.mainClassName }
 				style={ styleObject }
+				attributes={ props.attributes }
 			/>
 		)
 

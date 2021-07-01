@@ -27,7 +27,6 @@ export const sizeAttributes = {
 
 	margin: {
 		stkResponsive: true,
-		stkHover: true,
 		stkUnits: 'px',
 		type: 'object',
 	},
