@@ -2,6 +2,7 @@
  * External dependencies
  */
 import {
+	appendImportant,
 	createButtonStyleSet,
 	__getValue,
 } from '~stackable/util'
@@ -39,14 +40,14 @@ export const createStyles = props => {
 
 	styles.push( {
 		'.ugb-block-content': {
-			justifyContent,
+			justifyContent: appendImportant( justifyContent ),
 		},
 		'.ugb-block-content .ugb-button': {
 			borderRadius: getValue( 'borderRadius', '%spx' ),
 		},
 		tablet: {
 			'.ugb-block-content': {
-				justifyContent: ! collapseOnTablet ? tabletJustifyContent : undefined,
+				justifyContent: appendImportant( ! collapseOnTablet ? tabletJustifyContent : undefined ),
 				// Collapse buttons in tablet.
 				flexDirection: collapseOnTablet ? 'column' : undefined,
 				alignItems: collapseOnTablet ? tabletJustifyContent || justifyContent : undefined,
@@ -54,7 +55,7 @@ export const createStyles = props => {
 		},
 		mobile: {
 			'.ugb-block-content': {
-				justifyContent: ! collapseOnMobile ? mobileJustifyContent : undefined,
+				justifyContent: appendImportant( ! collapseOnMobile ? mobileJustifyContent : undefined ),
 				// Collapse buttons in mobile.
 				flexDirection: collapseOnMobile ? 'column' : undefined,
 				alignItems: collapseOnMobile ? mobileJustifyContent || justifyContent : undefined,
