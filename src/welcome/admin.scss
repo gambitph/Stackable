@@ -35,6 +35,9 @@ body[class*="page_stackable"] {
 			margin-bottom: 24px;
 		}
 	}
+	&.s-header-non-admin {
+		padding-bottom: 26px;
+	}
 	&.s-logo-icon {
 		img {
 			height: 34px;
@@ -68,12 +71,20 @@ body[class*="page_stackable"] {
 	label {
 		.s-settings-field__title {
 			width: 200px;
+		}
+		.s-dynamic-fields__title {
+			width: 150px;
+			word-break: break-word;
+		}
+		.s-settings-field__title,
+		.s-dynamic-fields__title {
 			display: inline-block;
 			font-weight: bold;
 			color: #666;
 			padding-right: 15px;
 			box-sizing: border-box;
 		}
+
 		.s-settings-field__status {
 			width: 40px;
 			display: inline-block;
@@ -91,12 +102,27 @@ body[class*="page_stackable"] {
 			}
 		}
 	}
-	[type="text"] {
+	[type="text"],
+	[type="number"],
+	[type="date"],
+	[type="time"],
+	select {
 		padding: 0.5em 1em;
 		width: calc(100% - 300px);
 		box-shadow: 0 5px 30px -10px rgba(18, 63, 82, 0.1);
 		border: 1px solid rgba(0, 0, 0, 0.1);
 		margin: 0;
+	}
+	[type="url"],
+	.s-dynamic-fields__url-title {
+		padding: 0.5em 1em;
+		width: calc(50% - 160px);
+		box-shadow: 0 5px 30px -10px rgba(18, 63, 82, 0.1);
+		border: 1px solid rgba(0, 0, 0, 0.1);
+		margin: 0;
+	}
+	[type="url"] {
+		margin-right: 20px;
 	}
 	&.s-settings-field-small {
 		[type="text"] {
@@ -107,7 +133,44 @@ body[class*="page_stackable"] {
 		margin-left: 200px;
 		font-style: italic;
 		margin-top: 4px;
+		&.s-dynamic-fields__description {
+			margin-left: 150px;
+			width: calc(100% - 300px);
+		}
+		&.s-dynamic-fields__form-error {
+			margin-left: 150px;
+			width: calc(100% - 300px);
+			color: #ff5a7f;
+		}
 	}
+	.s-dynamic-fields__options-field {
+		margin-top: 16px;
+	}
+	.s-dynamic-fields__action-icons {
+		width: 150px;
+		flex: 0 0 auto;
+		.edit-action-icon,
+		.delete-action-icon,
+		.move-action-icon {
+			margin-left: 5px;
+			border: none;
+			background-color: white;
+			cursor: pointer;
+			span {
+				color: #666;
+			}
+		}
+	}
+}
+.s-dynamic-fields-settings-header {
+	display: flex;
+	.ugb-admin-setting__label {
+		width: 0;
+	}
+}
+.s-dynamic-fields-enable {
+	margin-top: -4px;
+	margin-left: 8px;
 }
 .s-icon-settings .s-settings-field p {
 	margin-left: 240px;
@@ -147,6 +210,34 @@ body[class*="page_stackable"] {
 .s-notice-em {
 	color: #888;
 	margin-bottom: 1em;
+}
+.s-dynamic-fields__save {
+	color: #27de6c;
+	font-weight: bold;
+}
+.s-dynamic-fields__sort-element {
+	margin-top: 30px;
+}
+.s-dynamic-fields-notice {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	h1 {
+		margin-bottom: 16px;
+	}
+}
+.s-button-set-margin-top {
+	margin-top: 16px;
+}
+.s-button-set-left {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	.s-button,
+	.s-button--ghost {
+		margin: 0 16px !important;
+	}
 }
 .s-button-set {
 	display: flex;
@@ -212,8 +303,8 @@ body.settings_page_stackable-getting-started {
 	}
 }
 body.settings_page_stackable,
-body.settings_page_stackable-getting-started {
-
+body.settings_page_stackable-getting-started,
+body.toplevel_page_stackable-dynamic-fields {
 	img {
 		max-width: 100%;
 	}
@@ -238,7 +329,8 @@ body.settings_page_stackable-getting-started {
 		&.s-box-small {
 			padding-left: 15px;
 			padding-right: 15px;
-			box-shadow: 0 25px 15px -15px rgba(18, 63, 82, 0.15), 0 2px 7px 0 rgba(18, 63, 82, 0.15);
+			box-shadow: 0 25px 15px -15px rgba(18, 63, 82, 0.15),
+				0 2px 7px 0 rgba(18, 63, 82, 0.15);
 			h3 {
 				color: #f34957;
 			}
@@ -273,6 +365,21 @@ body.settings_page_stackable-getting-started {
 		&.s-button-left {
 			margin-left: 0;
 		}
+		&.s-button--ghost {
+			border: 1px solid linear-gradient(90deg, #8c33da -100%, #f34957 200%);
+			border: 1px solid #8c33da;
+			color: linear-gradient(90deg, #8c33da -100%, #f34957 200%);
+			color: #8c33da;
+			background: #fff;
+		}
+		&.s-button--plain {
+			color: linear-gradient(90deg, #8c33da -100%, #f34957 200%);
+			color: #8c33da;
+			background: #fff;
+		}
+	}
+	.s-dynamic-fields-card {
+		margin-top: 50px;
 	}
 	.s-body-container {
 		padding-top: 0;
@@ -596,7 +703,8 @@ body.settings_page_stackable-getting-started {
 // Collapse to a single column for mobile.
 @media screen and (max-width: $break-large) {
 	body.settings_page_stackable,
-	body.stackable_page_stackable-settings {
+	body.stackable_page_stackable-settings,
+	body.toplevel_page_stackable-dynamic-fields {
 		.s-body-container {
 			grid-template-columns: 1fr;
 		}
