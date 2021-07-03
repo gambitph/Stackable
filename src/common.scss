@@ -96,13 +96,6 @@ $box-vert-padding: 60px;
 	}
 }
 
-// A block can have a ugb-content-width class to make it's content fit the content-width.
-// This should only be used for full-widths.
-.ugb--restrict-content-width .ugb-content-wrapper {
-	max-width: var(--content-width);
-	margin: 0 auto;
-}
-
 // Different box shadows for the shadow setting.
 $shadows: ( none )
 	( 0 0 0 1px rgba(120, 120, 120, 0.1) )
