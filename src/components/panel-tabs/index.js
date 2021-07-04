@@ -18,7 +18,7 @@ import { i18n } from 'stackable'
 import { applyFilters } from '@wordpress/hooks'
 import { Icon } from '@wordpress/components'
 
-const TABS = applyFilters( 'stackable.inspector.tabs', [
+const TABS = [
 	{
 		value: 'block',
 		title: __( 'Block', i18n ),
@@ -37,7 +37,7 @@ const TABS = applyFilters( 'stackable.inspector.tabs', [
 		label: __( 'Advanced Tab', i18n ),
 		icon: 'admin-tools',
 	},
-] )
+]
 
 const DEFAULT_TABS = [ 'block', 'style', 'advanced' ]
 
@@ -140,7 +140,7 @@ class PanelTabs extends Component {
 				ref={ this.containerDiv }
 			>
 				<div className="ugb-panel-tabs__wrapper">
-					{ TABS.map( ( {
+					{ applyFilters( 'stackable.inspector.tabs', TABS ).map( ( {
 						value, title, label, icon,
 					}, i ) => {
 						if ( ! this.tabsToUse.includes( value ) ) {
