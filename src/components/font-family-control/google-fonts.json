@@ -318,8 +318,7 @@
     ],
     "subsets": [
       "latin",
-      "latin-ext",
-      "vietnamese"
+      "latin-ext"
     ]
   },
   {
@@ -1832,8 +1831,7 @@
     ],
     "subsets": [
       "latin",
-      "latin-ext",
-      "vietnamese"
+      "latin-ext"
     ]
   },
   {
@@ -1996,23 +1994,6 @@
     ],
     "subsets": [
       "khmer"
-    ]
-  },
-  {
-    "family": "Bona Nova",
-    "variants": [
-      "regular",
-      "italic",
-      "700"
-    ],
-    "subsets": [
-      "cyrillic",
-      "cyrillic-ext",
-      "greek",
-      "hebrew",
-      "latin",
-      "latin-ext",
-      "vietnamese"
     ]
   },
   {
@@ -2943,8 +2924,7 @@
       "regular"
     ],
     "subsets": [
-      "latin",
-      "latin-ext"
+      "latin"
     ]
   },
   {
@@ -3875,25 +3855,6 @@
     ]
   },
   {
-    "family": "Encode Sans SC",
-    "variants": [
-      "100",
-      "200",
-      "300",
-      "regular",
-      "500",
-      "600",
-      "700",
-      "800",
-      "900"
-    ],
-    "subsets": [
-      "latin",
-      "latin-ext",
-      "vietnamese"
-    ]
-  },
-  {
     "family": "Encode Sans Semi Condensed",
     "variants": [
       "100",
@@ -4266,17 +4227,6 @@
     ]
   },
   {
-    "family": "Festive",
-    "variants": [
-      "regular"
-    ],
-    "subsets": [
-      "latin",
-      "latin-ext",
-      "vietnamese"
-    ]
-  },
-  {
     "family": "Finger Paint",
     "variants": [
       "regular"
@@ -4614,17 +4564,6 @@
     ],
     "subsets": [
       "latin"
-    ]
-  },
-  {
-    "family": "Fuggles",
-    "variants": [
-      "regular"
-    ],
-    "subsets": [
-      "latin",
-      "latin-ext",
-      "vietnamese"
     ]
   },
   {
@@ -5844,8 +5783,7 @@
     ],
     "subsets": [
       "latin",
-      "latin-ext",
-      "vietnamese"
+      "latin-ext"
     ]
   },
   {
@@ -9231,17 +9169,6 @@
     ]
   },
   {
-    "family": "Otomanopee One",
-    "variants": [
-      "regular"
-    ],
-    "subsets": [
-      "japanese",
-      "latin",
-      "latin-ext"
-    ]
-  },
-  {
     "family": "Over the Rainbow",
     "variants": [
       "regular"
@@ -10169,16 +10096,6 @@
     ]
   },
   {
-    "family": "Qahiri",
-    "variants": [
-      "regular"
-    ],
-    "subsets": [
-      "arabic",
-      "latin"
-    ]
-  },
-  {
     "family": "Quando",
     "variants": [
       "regular"
@@ -10267,8 +10184,7 @@
     ],
     "subsets": [
       "latin",
-      "latin-ext",
-      "vietnamese"
+      "latin-ext"
     ]
   },
   {
@@ -10478,9 +10394,7 @@
       "900"
     ],
     "subsets": [
-      "cyrillic-ext",
       "latin",
-      "latin-ext",
       "vietnamese"
     ]
   },
@@ -10543,10 +10457,7 @@
   {
     "family": "Reem Kufi",
     "variants": [
-      "regular",
-      "500",
-      "600",
-      "700"
+      "regular"
     ],
     "subsets": [
       "arabic",
@@ -11000,20 +10911,6 @@
     "subsets": [
       "latin",
       "latin-ext"
-    ]
-  },
-  {
-    "family": "STIX Two Math",
-    "variants": [
-      "regular"
-    ],
-    "subsets": [
-      "cyrillic",
-      "cyrillic-ext",
-      "greek",
-      "latin",
-      "latin-ext",
-      "vietnamese"
     ]
   },
   {
@@ -12633,34 +12530,6 @@
     ]
   },
   {
-    "family": "Tourney",
-    "variants": [
-      "100",
-      "200",
-      "300",
-      "regular",
-      "500",
-      "600",
-      "700",
-      "800",
-      "900",
-      "100italic",
-      "200italic",
-      "300italic",
-      "italic",
-      "500italic",
-      "600italic",
-      "700italic",
-      "800italic",
-      "900italic"
-    ],
-    "subsets": [
-      "latin",
-      "latin-ext",
-      "vietnamese"
-    ]
-  },
-  {
     "family": "Trade Winds",
     "variants": [
       "regular"
@@ -12852,16 +12721,6 @@
       "greek-ext",
       "latin",
       "latin-ext"
-    ]
-  },
-  {
-    "family": "Uchen",
-    "variants": [
-      "regular"
-    ],
-    "subsets": [
-      "latin",
-      "tibetan"
     ]
   },
   {
@@ -13349,19 +13208,6 @@
     ]
   },
   {
-    "family": "Yomogi",
-    "variants": [
-      "regular"
-    ],
-    "subsets": [
-      "cyrillic",
-      "japanese",
-      "latin",
-      "latin-ext",
-      "vietnamese"
-    ]
-  },
-  {
     "family": "Yrsa",
     "variants": [
       "300",
@@ -13418,27 +13264,6 @@
   },
   {
     "family": "Zen Dots",
-    "variants": [
-      "regular"
-    ],
-    "subsets": [
-      "latin",
-      "latin-ext"
-    ]
-  },
-  {
-    "family": "Zen Loop",
-    "variants": [
-      "regular",
-      "italic"
-    ],
-    "subsets": [
-      "latin",
-      "latin-ext"
-    ]
-  },
-  {
-    "family": "Zen Tokyo Zoo",
     "variants": [
       "regular"
     ],
