@@ -36,6 +36,7 @@ import { escapeHTML } from '@wordpress/escape-html'
 export const Edit = props => {
 	const {
 		hasColor,
+		hasColumns,
 		hasTextTag,
 		hasTextContent,
 		hasRemoveMargins,
@@ -65,6 +66,18 @@ export const Edit = props => {
 				id="text"
 			>
 				<Fragment>
+					{ hasColumns && (
+						<AdvancedRangeControl
+							label={ __( 'Columns', i18n ) }
+							allowReset={ true }
+							attribute="columns"
+							min={ 1 }
+							max={ 4 }
+							step={ 1 }
+							placeholder="1"
+							responsive="all"
+						/>
+					) }
 					{ hasTextContent && (
 						<TextInput
 							label={ __( 'Content', i18n ) }
@@ -247,6 +260,7 @@ export const Edit = props => {
 
 Edit.defaultProps = {
 	hasColor: true,
+	hasColumns: true,
 	hasTextTag: true,
 	hasTextContent: true,
 	attrNameTemplate: '%s',

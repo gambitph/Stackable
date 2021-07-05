@@ -54,6 +54,11 @@ const typographyAttributes = {
 		type: 'number',
 		default: '',
 	},
+	columns: {
+		stkResponsive: true,
+		type: 'number',
+		default: '',
+	},
 }
 
 export const addAttributes = ( attrObject, selector = '.stk-content', options = {} ) => {
@@ -61,6 +66,7 @@ export const addAttributes = ( attrObject, selector = '.stk-content', options = 
 		hasTextTag = true,
 		hasTextContent = true,
 		hasColor = true,
+		hasColumns = true,
 		defaultTextTag = 'p',
 		attrNameTemplate = '%s',
 	} = options
@@ -72,6 +78,12 @@ export const addAttributes = ( attrObject, selector = '.stk-content', options = 
 			'textColor1',
 			'textColor2',
 			'textGradientDirection',
+		)
+	}
+
+	if ( ! hasColumns ) {
+		attributesToExclude.push(
+			'hasColumns'
 		)
 	}
 
