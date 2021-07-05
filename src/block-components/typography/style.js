@@ -17,6 +17,12 @@ const getStyleParams = ( options = {} ) => {
 
 	return [
 		{
+			selector: '',
+			styleRule: 'columnCount',
+			attrName: 'columns',
+			responsive: 'all',
+		},
+		{
 			selector,
 			styleRule: 'fontSize',
 			attrName: 'fontSize',

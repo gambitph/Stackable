@@ -80,6 +80,7 @@ const Edit = props => {
 				hasTextTag={ false }
 				initialOpen={ false }
 				hasColor={ false }
+				hasColumns={ false }
 			/>
 
 			<Advanced.InspectorControls />

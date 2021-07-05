@@ -67,7 +67,7 @@ const Edit = props => {
 			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
-			<Typography.InspectorControls hasRemoveMargins={ true } />
+			<Typography.InspectorControls hasRemoveMargins={ true } hasColumns={ false } />
 			<CustomCSS.InspectorControls mainBlockClass="stk-heading" />
 			<Responsive.InspectorControls />
 
