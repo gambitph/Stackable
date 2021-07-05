@@ -14,18 +14,17 @@ import {
 	AdvancedToggleControl,
 	BlockContainer,
 	DesignPanelBody,
-	ContentAlignControl,
 	AdvancedRangeControl,
 	PanelAdvancedSettings,
 	TypographyControlHelper,
 	HeadingButtonsControl,
 	ColorPaletteControl,
-	ResponsiveControl,
 	AlignButtonsControl,
 	PanelSpacingBody,
 	AdvancedToolbarControl,
 	ColumnPaddingControl,
 } from '~stackable/components'
+import { ContentAlignControl, ResponsiveControl } from '../../components'
 import {
 	withUniqueClass,
 	withSetAttributeHook,
@@ -34,7 +33,7 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 	withClickOpenInspector,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import {
 	descriptionPlaceholder,
 	createTypographyAttributeNames,

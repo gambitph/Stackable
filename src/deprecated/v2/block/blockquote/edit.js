@@ -17,21 +17,21 @@ import {
 	DesignPanelBody,
 	ProControlButton,
 	BlockContainer,
-	ContentAlignControl,
 	BackgroundControlsHelper,
 	PanelAdvancedSettings,
-	ResponsiveControl,
 	AdvancedRangeControl,
 	ColorPaletteControl,
 	TypographyControlHelper,
 	AlignButtonsControl,
-	DivBackground,
 	AdvancedToolbarControl,
 	ButtonIconPopoverControl,
 	ColumnPaddingControl,
 	PanelSpacingBody,
 	BorderControlsHelper,
 } from '~stackable/components'
+import {
+	DivBackground, ContentAlignControl, ResponsiveControl,
+} from '../../components'
 import {
 	createResponsiveAttributeNames,
 	descriptionPlaceholder,
@@ -44,7 +44,7 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 	withClickOpenInspector,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 
 /**
  * WordPress dependencies

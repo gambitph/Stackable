@@ -10,7 +10,7 @@ import { showOptions } from './util'
 import { BlockContainer } from '~stackable/components'
 import {
 	withUniqueClass, withBlockStyles,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import classnames from 'classnames'
 import { range } from 'lodash'
 

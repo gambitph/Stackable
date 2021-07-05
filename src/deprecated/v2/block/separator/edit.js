@@ -19,7 +19,7 @@ import {
 } from '~stackable/components'
 import {
 	withBlockStyles, withGoogleFont, withSetAttributeHook, withTabbedInspector, withUniqueClass, withClickOpenInspector,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import createStyles from './style'
 
 /**

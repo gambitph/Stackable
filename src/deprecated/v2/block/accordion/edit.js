@@ -19,21 +19,21 @@ import {
 	ColorPaletteControl,
 	DesignPanelBody,
 	ProControlButton,
-	ContentAlignControl,
 	BackgroundControlsHelper,
 	BlockContainer,
 	AlignButtonsControl,
 	PanelAdvancedSettings,
-	ResponsiveControl,
 	TypographyControlHelper,
 	AdvancedRangeControl,
 	HeadingButtonsControl,
 	FourRangeControl,
 	PanelSpacingBody,
-	DivBackground,
 	ButtonIconPopoverControl,
 	BorderControlsHelper,
 } from '~stackable/components'
+import {
+	DivBackground, ContentAlignControl, ResponsiveControl,
+} from '../../components'
 import {
 	withBlockStyles,
 	withContentAlignReseter,
@@ -42,7 +42,7 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 	withClickOpenInspector,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import { descriptionPlaceholder } from '~stackable/util'
 import { i18n, showProNotice } from 'stackable'
 import classnames from 'classnames'

@@ -3,7 +3,7 @@
  */
 import {
 	DeprecatedButtonContent_1_15_5,
-} from '~stackable/components/button-edit'
+} from '../../components/button-edit'
 import { descriptionPlaceholder } from '~stackable/util'
 
 /**
@@ -290,15 +290,15 @@ const deprecatedSave_1_15_6 = props => {
 			...mainBackgroundStyles,
 		},
 		title: {
-			color: titleColor ? titleColor :
-				   design === 'plain' ? undefined :
-				   '#ffffff',
+			color: titleColor ? titleColor
+				   : design === 'plain' ? undefined
+				   : '#ffffff',
 			textAlign: contentAlign ? contentAlign : undefined,
 		},
 		subtitle: {
-			color: subtitleColor ? subtitleColor :
-				   design === 'plain' ? undefined :
-				   '#ffffff',
+			color: subtitleColor ? subtitleColor
+				   : design === 'plain' ? undefined
+				   : '#ffffff',
 			textAlign: contentAlign ? contentAlign : undefined,
 		},
 	}, design, props )
@@ -366,9 +366,9 @@ const deprecatedSave_1_15_6 = props => {
 				}
 
 				const buttonsStyle = {
-					justifyContent: contentAlign === 'right' ? 'flex-end' :
-						contentAlign === 'left' ? 'flex-start' :
-							undefined,
+					justifyContent: contentAlign === 'right' ? 'flex-end'
+						: contentAlign === 'left' ? 'flex-start'
+							: undefined,
 				}
 
 				const buttonArea = ! buttonText2 ? comps.buttonComp : (

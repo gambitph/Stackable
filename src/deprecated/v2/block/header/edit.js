@@ -10,20 +10,22 @@ import {
 	ButtonControlsHelper,
 	ColumnPaddingControl,
 	ButtonIconPopoverControl,
-	ButtonEditHelper,
 	ColorPaletteControl,
-	ContentAlignControl,
 	ControlSeparator,
 	DesignPanelBody,
 	HeadingButtonsControl,
 	PanelAdvancedSettings,
 	PanelSpacingBody,
 	ProControlButton,
-	ResponsiveControl,
 	TypographyControlHelper,
-	DivBackground,
 	BorderControlsHelper,
 } from '~stackable/components'
+import {
+	ButtonEditHelper,
+	ContentAlignControl,
+	DivBackground,
+	ResponsiveControl,
+} from '../../components'
 import {
 	createButtonAttributeNames,
 	createResponsiveAttributeNames,
@@ -38,7 +40,7 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 	withClickOpenInspector,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import classnames from 'classnames'
 import { i18n, showProNotice } from 'stackable'
 

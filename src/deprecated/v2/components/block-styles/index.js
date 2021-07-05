@@ -5,7 +5,7 @@ import { minifyCSS, prependCSSClass } from '~stackable/util'
 import {
 	kebabCase, omit, isEqual, sortBy,
 } from 'lodash'
-import { getEditorStylesOnly } from '~stackable/block-components'
+import { getEditorStylesOnly } from '~stackable/block-components/style'
 import { useDeviceType } from '~stackable/hooks'
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { useMemo } from '@wordpress/element'

@@ -9,12 +9,11 @@ import { showOptions } from './util'
  */
 import {
 	BlockContainer,
-	Image,
-	DivBackground,
 } from '~stackable/components'
+import { DivBackground, Image } from '../../components'
 import {
 	withBlockStyles, withUniqueClass,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import classnames from 'classnames'
 import { range } from 'lodash'
 import striptags from 'striptags'

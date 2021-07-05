@@ -4,7 +4,6 @@
 import {
 	AdvancedSelectControl,
 	AdvancedRangeControl,
-	ResponsiveControl,
 	PanelAdvancedSettings,
 } from '~stackable/components'
 import {
@@ -12,6 +11,7 @@ import {
 	appendImportant,
 	__getValue,
 } from '~stackable/util'
+import { ResponsiveControl } from '../../components'
 
 /**
  * WordPress dependencies

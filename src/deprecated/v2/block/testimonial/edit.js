@@ -20,23 +20,25 @@ import {
 	DesignPanelBody,
 	ImageUploadPlaceholder,
 	ProControlButton,
-	Image,
-	ContentAlignControl,
 	BackgroundControlsHelper,
 	PanelAdvancedSettings,
 	TypographyControlHelper,
-	ResponsiveControl,
 	AlignButtonsControl,
 	ControlSeparator,
 	ImageControlsHelper,
 	HeadingButtonsControl,
 	PanelSpacingBody,
 	AdvancedRangeControl,
-	DivBackground,
 	ButtonIconPopoverControl,
 	ColumnPaddingControl,
 	BorderControlsHelper,
 } from '~stackable/components'
+import {
+	ContentAlignControl,
+	DivBackground,
+	Image,
+	ResponsiveControl,
+} from '../../components'
 import {
 	descriptionPlaceholder,
 	createTypographyAttributeNames,
@@ -55,7 +57,7 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 	withClickOpenInspector,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 
 /**
  * WordPress dependencies

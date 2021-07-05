@@ -9,21 +9,20 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 	withClickOpenInspector,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import {
 	AdvancedToggleControl,
 	AdvancedRangeControl,
 	BlockContainer,
 	ColorPaletteControl,
-	ContentAlignControl,
 	PanelSpacingBody,
-	ResponsiveControl,
 	TypographyControlHelper,
 	PanelAdvancedSettings,
 	ControlSeparator,
 	IconControl,
 	IconSearchPopover,
 } from '~stackable/components'
+import { ContentAlignControl, ResponsiveControl } from '../../components'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 

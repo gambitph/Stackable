@@ -8,15 +8,13 @@ import { showOptions } from './util'
  * External dependencies
  */
 import { range } from 'lodash'
+import { BlockContainer } from '~stackable/components'
 import {
-	BlockContainer,
-	Image,
-	ButtonEditHelper,
-	DivBackground,
-} from '~stackable/components'
+	ButtonEditHelper, DivBackground, Image,
+} from '../../components'
 import {
 	withBlockStyles, withUniqueClass,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import classnames from 'classnames'
 import striptags from 'striptags'
 

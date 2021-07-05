@@ -22,7 +22,6 @@ import {
 	ProControlButton,
 	ProControl,
 	BlockContainer,
-	ContentAlignControl,
 	ColumnPaddingControl,
 	BackgroundControlsHelper,
 	PanelAdvancedSettings,
@@ -31,15 +30,18 @@ import {
 	ColorPaletteControl,
 	HeadingButtonsControl,
 	AlignButtonsControl,
-	ResponsiveControl,
 	PanelSpacingBody,
 	AdvancedRangeControl,
 	AdvancedSelectControl,
-	DivBackground,
-	ButtonEditHelper,
 	ButtonIconPopoverControl,
 	BorderControlsHelper,
 } from '~stackable/components'
+import {
+	ButtonEditHelper,
+	DivBackground,
+	ContentAlignControl,
+	ResponsiveControl,
+} from '../../components'
 import {
 	createTypographyAttributeNames,
 	createResponsiveAttributeNames,
@@ -52,7 +54,7 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 	withClickOpenInspector,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import {
 	i18n, showProNotice,
 } from 'stackable'

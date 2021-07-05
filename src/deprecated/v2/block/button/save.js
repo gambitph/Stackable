@@ -1,10 +1,11 @@
 /**
  * External dependencies
  */
-import { BlockContainer, ButtonEdit } from '~stackable/components'
+import { BlockContainer } from '~stackable/components'
+import { ButtonEdit } from '../../components'
 import {
 	withBlockStyles, withUniqueClass,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 
 /**
  * Internal dependencies

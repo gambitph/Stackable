@@ -3,7 +3,7 @@
  */
 import {
 	DeprecatedButtonContent_1_15_5,
-} from '~stackable/components/button-edit'
+} from '../../components/button-edit'
 import { descriptionPlaceholder } from '~stackable/util'
 import classnames from 'classnames'
 import { i18n } from 'stackable'

@@ -1,12 +1,4 @@
 // Editor components
-export {
-	default as ButtonEdit,
-	ButtonEditHelper,
-} from './button-edit'
-export {
-	default as SocialButtonEdit,
-	SocialButtonEditHelper,
-} from './social-button-edit'
 export { default as ImageUploadPlaceholder } from './image-upload-placeholder'
 export { default as URLInputControl } from './url-input-control'
 export { default as UrlInputPopover } from './url-input-popover'
@@ -42,7 +34,6 @@ export { default as DesignControl } from './design-control'
 export { default as DesignSeparatorControl } from './design-separator-control'
 export { default as IconControl } from './icon-control'
 export { default as IconSearchPopover } from './icon-search-popover'
-export { default as ContentAlignControl } from './content-align-control'
 export { default as ControlSeparator } from './control-separator'
 export { default as ButtonIconPopoverControl } from './button-icon-popover-control'
 export { default as ImageControls } from './image-controls'
@@ -62,7 +53,6 @@ export { default as IconControlsHelper } from './icon-controls-helper'
 export { default as SocialControls } from './social-controls'
 export { default as SocialControlsHelper } from './social-controls-helper'
 export { default as SpacingControl } from './spacing-control'
-export { default as SvgIcon } from './svg-icon'
 export { default as SvgIconHelper } from './svg-icon-helper'
 export { default as SvgIconPlaceholder } from './svg-icon-placeholder'
 export { default as ProControl } from './pro-control'
@@ -91,10 +81,7 @@ export { default as AdminTextSetting } from './admin-text-setting'
 export { default as AdminToggleSetting } from './admin-toggle-setting'
 
 // V2 only Components, for deprecation
-export { default as ResponsiveControl } from './responsive-control'
-export { default as BlockStyles } from './block-styles'
-export { default as Image } from './image'
-export { default as DivBackground } from './div-background'
+export { default as SvgIcon } from './svg-icon'
 
 // V3 only Components
 export { default as BaseControl } from './base-control'

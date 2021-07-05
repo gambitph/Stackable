@@ -8,8 +8,9 @@ import createStyles from './style'
  * External dependencies
  */
 import classnames from 'classnames'
-import { BlockContainer, DivBackground } from '~stackable/components'
-import { withBlockStyles, withUniqueClass } from '~stackable/higher-order'
+import { BlockContainer } from '~stackable/components'
+import { DivBackground } from '../../components'
+import { withBlockStyles, withUniqueClass } from '../../higher-order'
 
 /**
  * WordPress dependencies

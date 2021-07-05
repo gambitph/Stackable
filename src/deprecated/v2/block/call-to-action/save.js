@@ -2,11 +2,12 @@
  * External dependencies
  */
 import {
-	BlockContainer, ButtonEdit, DivBackground,
+	BlockContainer,
 } from '~stackable/components'
+import { ButtonEdit, DivBackground } from '../../components'
 import {
 	withBlockStyles, withUniqueClass,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import classnames from 'classnames'
 
 /**

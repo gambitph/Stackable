@@ -7,11 +7,11 @@ import {
 	ColorPaletteControl,
 	HeadingButtonsControl,
 	PanelAdvancedSettings,
-	ResponsiveControl,
 	TypographyControlHelper,
 	WhenResponsiveScreen,
 	AdvancedToolbarControl,
 } from '~stackable/components'
+import { ResponsiveControl } from '../../components'
 import {
 	createResponsiveAttributeNames,
 	createResponsiveAttributes,

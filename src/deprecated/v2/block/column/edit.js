@@ -11,15 +11,12 @@ import ImageDesignPlain from './images/plain.png'
  */
 import {
 	BlockContainer,
-	ContentAlignControl,
-	ResponsiveControl,
 	AdvancedToolbarControl,
 	WhenResponsiveScreen,
 	AdvancedRangeControl,
 	ControlSeparator,
 	BackgroundControlsHelper,
 	ColorPaletteControl,
-	DivBackground,
 	PanelAdvancedSettings,
 	DesignControl,
 	ButtonIconPopoverControl,
@@ -28,13 +25,16 @@ import {
 	BorderControlsHelper,
 } from '~stackable/components'
 import {
+	DivBackground, ContentAlignControl, ResponsiveControl,
+} from '../../components'
+import {
 	withUniqueClass,
 	withSetAttributeHook,
 	withGoogleFont,
 	withTabbedInspector,
 	withContentAlignReseter,
 	withBlockStyles,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 

@@ -8,21 +8,21 @@ import {
 	BlockContainer,
 	ButtonIconPopoverControl,
 	ColorPaletteControl,
-	ContentAlignControl,
 	DesignPanelBody,
 	HeadingButtonsControl,
 	IconControl,
 	PanelAdvancedSettings,
 	PanelSpacingBody,
 	ProControlButton,
-	ResponsiveControl,
 	TypographyControlHelper,
 	SvgIconPlaceholder,
-	DivBackground,
 	IconControlsHelper,
 	ColumnPaddingControl,
 	BorderControlsHelper,
 } from '~stackable/components'
+import {
+	DivBackground, ContentAlignControl, ResponsiveControl,
+} from '../../components'
 import {
 	createResponsiveAttributeNames,
 	createTypographyAttributeNames,
@@ -37,7 +37,7 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 	withClickOpenInspector,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import { pick, range } from 'lodash'
 
 /**

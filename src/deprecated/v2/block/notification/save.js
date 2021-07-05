@@ -4,12 +4,11 @@
 import classnames from 'classnames'
 import {
 	withBlockStyles, withUniqueClass,
-} from '~stackable/higher-order'
+} from '../../higher-order'
+import { ButtonEdit, DivBackground } from '../../components'
 import {
 	SvgIconHelper,
 	BlockContainer,
-	ButtonEdit,
-	DivBackground,
 } from '~stackable/components'
 
 /**

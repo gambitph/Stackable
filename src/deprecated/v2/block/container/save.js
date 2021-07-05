@@ -8,10 +8,11 @@ import { showOptions } from './util'
  * External dependencies
  */
 import classnames from 'classnames'
-import { BlockContainer, DivBackground } from '~stackable/components'
+import { BlockContainer } from '~stackable/components'
+import { DivBackground } from '../../components'
 import {
 	withBlockStyles, withUniqueClass,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 
 /**
  * WordPress dependencies

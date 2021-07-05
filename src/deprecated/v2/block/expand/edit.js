@@ -8,16 +8,15 @@ import createStyles from './style'
  */
 import {
 	BlockContainer,
-	ContentAlignControl,
 	TypographyControlHelper,
 	ColorPaletteControl,
-	ResponsiveControl,
 	AlignButtonsControl,
 	PanelAdvancedSettings,
 	HeadingButtonsControl,
 	PanelSpacingBody,
 	AdvancedRangeControl,
 } from '~stackable/components'
+import { ContentAlignControl, ResponsiveControl } from '../../components'
 import {
 	createResponsiveAttributeNames,
 	createTypographyAttributeNames,
@@ -32,7 +31,7 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 	withClickOpenInspector,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 
 /**
  * WordPress dependencies

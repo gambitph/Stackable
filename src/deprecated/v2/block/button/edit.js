@@ -4,13 +4,12 @@
 import {
 	BlockContainer,
 	ButtonControlsHelper,
-	ContentAlignControl,
 	DesignPanelBody,
 	PanelAdvancedSettings,
 	ProControlButton,
-	ButtonEditHelper,
 	AdvancedRangeControl,
 } from '~stackable/components'
+import { ButtonEditHelper, ContentAlignControl } from '../../components'
 import {
 	withBlockStyles,
 	withContentAlignReseter,
@@ -19,7 +18,7 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 	withClickOpenInspector,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import { createButtonAttributeNames } from '~stackable/util'
 
 /**

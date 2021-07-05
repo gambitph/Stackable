@@ -8,13 +8,12 @@ import {
 	ColorPaletteControl,
 	ImageControl,
 	PanelSpacingBody,
-	ResponsiveControl,
 	WhenResponsiveScreen,
-	DivBackground,
 	PanelAdvancedSettings,
 	ButtonIconPopoverControl,
 	BorderControlsHelper,
 } from '~stackable/components'
+import { DivBackground, ResponsiveControl } from '../../components'
 import {
 	getVideoProviderFromURL,
 	urlIsVideo,
@@ -33,7 +32,7 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 	withClickOpenInspector,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import createStyles from './style'
 
 /**

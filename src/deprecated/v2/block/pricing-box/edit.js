@@ -15,29 +15,31 @@ import { showOptions } from './util'
 import classnames from 'classnames'
 import {
 	BlockContainer,
-	ButtonEditHelper,
 	DesignPanelBody,
 	ImageUploadPlaceholder,
 	ProControlButton,
-	Image,
 	BackgroundControlsHelper,
-	ContentAlignControl,
 	ImageControlsHelper,
 	PanelAdvancedSettings,
 	TypographyControlHelper,
 	HeadingButtonsControl,
 	ColorPaletteControl,
-	ResponsiveControl,
 	AlignButtonsControl,
 	ButtonControlsHelper,
 	ControlSeparator,
 	PanelSpacingBody,
 	AdvancedRangeControl,
-	DivBackground,
 	ButtonIconPopoverControl,
 	ColumnPaddingControl,
 	BorderControlsHelper,
 } from '~stackable/components'
+import {
+	ButtonEditHelper,
+	ContentAlignControl,
+	DivBackground,
+	Image,
+	ResponsiveControl,
+} from '../../components'
 import {
 	descriptionPlaceholder,
 	createResponsiveAttributeNames,
@@ -54,7 +56,7 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 	withClickOpenInspector,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import { i18n, showProNotice } from 'stackable'
 import { range } from 'lodash'
 

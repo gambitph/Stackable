@@ -9,16 +9,15 @@ import { showOptions } from './util'
  */
 import {
 	BlockContainer,
-	ContentAlignControl,
 	AdvancedRangeControl,
 	PanelAdvancedSettings,
 	TypographyControlHelper,
 	HeadingButtonsControl,
 	ColorPaletteControl,
-	ResponsiveControl,
 	AlignButtonsControl,
 	PanelSpacingBody,
 } from '~stackable/components'
+import { ContentAlignControl, ResponsiveControl } from '../../components'
 import {
 	withUniqueClass,
 	withSetAttributeHook,
@@ -27,7 +26,7 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 	withClickOpenInspector,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import {
 	descriptionPlaceholder, createTypographyAttributeNames, createResponsiveAttributeNames,
 } from '~stackable/util'

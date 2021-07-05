@@ -2,11 +2,12 @@
  * External dependencies
  */
 import {
-	BlockContainer, ButtonEditHelper, DivBackground,
+	BlockContainer,
 } from '~stackable/components'
+import { ButtonEditHelper, DivBackground } from '../../components'
 import {
 	withBlockStyles, withUniqueClass,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import classnames from 'classnames'
 import { range } from 'lodash'
 

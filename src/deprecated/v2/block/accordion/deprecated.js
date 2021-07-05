@@ -13,10 +13,11 @@ import SVGArrowIcon from './images/arrow.svg'
 import { descriptionPlaceholder } from '~stackable/util'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
-import { BlockContainer, DivBackground } from '~stackable/components'
+import { BlockContainer } from '~stackable/components'
+import { DivBackground } from '../../components'
 import {
 	withBlockStyles, withUniqueClass,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 
 /**
  * WordPress dependencies
@@ -257,8 +258,8 @@ const deprecated = [
 				// New attributes in order to replicate the old designs.
 				showBorder: attributes.design !== 'plain',
 				containerClosedBackgroundColor: attributes.design === 'colored' ? '#ffffff' : undefined,
-				arrowColor: attributes.design === 'colored' || attributes.design === 'basic' || attributes.design === 'plain' ? attributes.headingColor || '#222222' :
-					attributes.design === 'line-colored' ? attributes.headingBackgroundColor : undefined,
+				arrowColor: attributes.design === 'colored' || attributes.design === 'basic' || attributes.design === 'plain' ? attributes.headingColor || '#222222'
+					: attributes.design === 'line-colored' ? attributes.headingBackgroundColor : undefined,
 			}
 
 			// Old block didn't have inner blocks.

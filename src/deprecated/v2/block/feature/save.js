@@ -2,11 +2,14 @@
  * External dependencies
  */
 import {
-	ButtonEdit, BlockContainer, Image, DivBackground,
+	BlockContainer,
 } from '~stackable/components'
 import {
+	ButtonEdit, DivBackground, Image,
+} from '../../components'
+import {
 	withUniqueClass, withBlockStyles,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import classnames from 'classnames'
 import striptags from 'striptags'
 

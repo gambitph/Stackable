@@ -7,16 +7,16 @@ import {
 	WhenResponsiveScreen,
 	BackgroundControlsHelper,
 	ControlSeparator,
-	DivBackground,
 	PanelAdvancedSettings,
 } from '~stackable/components'
+import { DivBackground } from '../../components'
 import {
 	withBlockStyles,
 	withGoogleFont,
 	withSetAttributeHook,
 	withTabbedInspector,
 	withUniqueClass,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import classnames from 'classnames'
 
 /**
