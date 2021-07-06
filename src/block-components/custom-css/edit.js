@@ -1,7 +1,9 @@
 /**
  * External dependencies
  */
-import { i18n, isPro } from 'stackable'
+import {
+	i18n, isPro, showProNotice,
+} from 'stackable'
 import {
 	InspectorAdvancedControls,
 	PanelAdvancedSettings,
@@ -16,6 +18,10 @@ import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
 export const Edit = props => {
+	if ( ! showProNotice ) {
+		return null
+	}
+
 	return (
 		<Fragment>
 			<InspectorAdvancedControls>
