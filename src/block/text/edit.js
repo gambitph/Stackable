@@ -25,20 +25,14 @@ import { useBlockHoverClass } from '~stackable/hooks'
 /**
  * WordPress dependencies
  */
-import { Fragment, useCallback } from '@wordpress/element'
-import { RichText } from '@wordpress/block-editor'
+import { Fragment } from '@wordpress/element'
 import { createBlock } from '@wordpress/blocks'
 
 const Edit = props => {
 	const {
 		className,
-		setAttributes,
 		onReplace,
 	} = props
-
-	const {
-		text,
-	} = props.attributes
 
 	const blockHoverClass = useBlockHoverClass()
 	const textClasses = getTypographyClasses( props.attributes )
@@ -56,8 +50,6 @@ const Edit = props => {
 		blockAlignmentClass,
 	] )
 
-	const onChange = useCallback( text => setAttributes( { text } ), [ setAttributes ] )
-
 	return (
 		<Fragment>
 
@@ -66,7 +58,7 @@ const Edit = props => {
 			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
-			<Typography.InspectorControls hasTextTag={ false } isMultiline={ true } />
+			<Typography.InspectorControls hasTextTag={ false } isMultiline={ true } hasColumns={ true } />
 			<CustomCSS.InspectorControls mainBlockClass="stk-text" />
 			<Responsive.InspectorControls />
 
@@ -74,11 +66,9 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-text__text" />
 
 			<BlockDiv className={ blockClassNames }>
-				<RichText
+				<Typography
 					tagName="p"
 					keepPlaceholderOnFocus
-					value={ text }
-					onChange={ onChange }
 					className={ textClassNames }
 					onReplace={ onReplace }
 					onSplit={ value => createBlock(

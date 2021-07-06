@@ -22,7 +22,10 @@ export const attributes = ( version = VERSION ) => {
 	MarginBottom.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
-	Typography.addAttributes( attrObject, '.stk-heading__text', { defaultTextTag: 'h2', hasColumns: false } )
+	Typography.addAttributes( attrObject, '.stk-heading__text', {
+		defaultTextTag: 'h2',
+		hasTopBottomLine: true,
+	} )
 
 	return attrObject.getMerged( version )
 }

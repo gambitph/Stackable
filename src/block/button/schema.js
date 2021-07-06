@@ -25,7 +25,6 @@ export const attributes = ( version = VERSION ) => {
 	Typography.addAttributes( attrObject, '.stk-button__inner-text', {
 		hasTextTag: false,
 		hasColor: false,
-		hasColumns: false,
 	} )
 
 	return attrObject.getMerged( version )

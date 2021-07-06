@@ -11,6 +11,7 @@ import {
 	AdvancedSelectControl,
 	AdvancedToggleControl,
 	AdvancedToolbarControl,
+	AlignButtonsControl,
 	ButtonIconPopoverControl,
 	ColorPaletteControl,
 	FontFamilyControl,
@@ -40,6 +41,7 @@ export const Edit = props => {
 		hasTextTag,
 		hasTextContent,
 		hasRemoveMargins,
+		hasTopBottomLine,
 		attrNameTemplate,
 		isMultiline,
 		initialOpen,
@@ -254,15 +256,107 @@ export const Edit = props => {
 				</Fragment>
 
 			</PanelAdvancedSettings>
+			{ hasTopBottomLine && (
+				<Fragment>
+
+					<PanelAdvancedSettings
+						title={ __( 'Top Line', i18n ) }
+						id="top-line"
+						hasToggle={ true }
+						checked={ getAttribute( 'showTopLine' ) }
+						onChange={ updateAttributeHandler( 'showTopLine' ) }
+					>
+						<ColorPaletteControl
+							label={ __( 'Line Color', i18n ) }
+							attribute="topLineColor"
+							hover="all"
+						/>
+
+						<AdvancedRangeControl
+							label={ __( 'Width', i18n ) }
+							units={ [ 'px', '%' ] }
+							attribute="topLineWidth"
+							min={ 0 }
+							max={ [ 500, 100 ] }
+							hover="all"
+						/>
+
+						<AdvancedRangeControl
+							label={ __( 'Height', i18n ) }
+							attribute="topLineHeight"
+						/>
+
+						<AdvancedRangeControl
+							label={ __( 'Margin', i18n ) }
+							attribute="topLineMargin"
+							responsive="all"
+							min={ 0 }
+							max={ 100 }
+						/>
+
+						<AlignButtonsControl
+							label={ __( 'Align', i18n ) }
+							attribute="topLineAlign"
+							responsive="all"
+						/>
+
+					</PanelAdvancedSettings>
+					<PanelAdvancedSettings
+						title={ __( 'Bottom Line', i18n ) }
+						id="bottom-line"
+						hasToggle={ true }
+						checked={ getAttribute( 'showBottomLine' ) }
+						onChange={ updateAttributeHandler( 'showBottomLine' ) }
+					>
+
+						<ColorPaletteControl
+							label={ __( 'Line Color', i18n ) }
+							attribute="bottomLineColor"
+							hover="all"
+						/>
+
+						<AdvancedRangeControl
+							label={ __( 'Width', i18n ) }
+							units={ [ 'px', '%' ] }
+							attribute="bottomLineWidth"
+							min={ 0 }
+							max={ [ 500, 100 ] }
+							hover="all"
+						/>
+
+						<AdvancedRangeControl
+							label={ __( 'Height', i18n ) }
+							attribute="bottomLineHeight"
+						/>
+
+						<AdvancedRangeControl
+							label={ __( 'Margin', i18n ) }
+							attribute="bottomLineMargin"
+							responsive="all"
+							min={ 0 }
+							max={ 100 }
+						/>
+
+						<AlignButtonsControl
+							label={ __( 'Align', i18n ) }
+							attribute="bottomLineAlign"
+							responsive="all"
+						/>
+
+					</PanelAdvancedSettings>
+
+				</Fragment>
+			) }
 		</InspectorStyleControls>
 	)
 }
 
 Edit.defaultProps = {
 	hasColor: true,
-	hasColumns: true,
+	hasColumns: false,
 	hasTextTag: true,
 	hasTextContent: true,
+	hasTopBottomLine: false,
 	attrNameTemplate: '%s',
 	isMultiline: false,
 	initialOpen: true,

@@ -6,13 +6,13 @@ import { HeadingStyles } from './style'
 import {
 	BlockDiv,
 	CustomCSS,
+	Typography,
 	getResponsiveClasses,
 	getTypographyClasses,
 	getAlignmentClasses,
 } from '~stackable/block-components'
 import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
-import { RichText } from '@wordpress/block-editor'
 import { withVersion } from '~stackable/higher-order'
 
 /**
@@ -25,10 +25,6 @@ const Save = props => {
 		className,
 		attributes,
 	} = props
-
-	const {
-		text, textTag,
-	} = attributes
 
 	const responsiveClass = getResponsiveClasses( props.attributes )
 	const textClasses = getTypographyClasses( props.attributes )
@@ -53,10 +49,9 @@ const Save = props => {
 		>
 			<HeadingStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			<RichText.Content
+			<Typography.Content
+				attributes={ attributes }
 				className={ textClassNames }
-				tagName={ textTag }
-				value={ text }
 			/>
 		</BlockDiv.Content>
 	)

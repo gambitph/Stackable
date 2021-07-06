@@ -59,14 +59,73 @@ const typographyAttributes = {
 		type: 'number',
 		default: '',
 	},
+	showTopLine: {
+		type: 'boolean',
+		default: '',
+	},
+	topLineWidth: {
+		type: 'number',
+		default: '',
+		stkUnits: 'px',
+		stkHover: true,
+	},
+	topLineHeight: {
+		type: 'number',
+		default: '',
+	},
+	topLineColor: {
+		type: 'string',
+		default: '',
+		stkHover: true,
+	},
+	topLineMargin: {
+		type: 'number',
+		default: '',
+		stkResponsive: true,
+	},
+	topLineAlign: {
+		type: 'string',
+		default: '',
+		stkResponsive: true,
+	},
+	showBottomLine: {
+		type: 'boolean',
+		default: '',
+	},
+	bottomLineWidth: {
+		type: 'number',
+		default: '',
+		stkUnits: 'px',
+		stkHover: true,
+	},
+	bottomLineHeight: {
+		type: 'number',
+		default: '',
+	},
+	bottomLineColor: {
+		type: 'string',
+		default: '',
+		stkHover: true,
+	},
+	bottomLineMargin: {
+		type: 'number',
+		default: '',
+		stkResponsive: true,
+	},
+	bottomLineAlign: {
+		type: 'string',
+		default: '',
+		stkResponsive: true,
+	},
 }
 
 export const addAttributes = ( attrObject, selector = '.stk-content', options = {} ) => {
 	const {
 		hasTextTag = true,
 		hasTextContent = true,
+		hasTopBottomLine = false,
 		hasColor = true,
-		hasColumns = true,
+		hasColumns = false,
 		defaultTextTag = 'p',
 		attrNameTemplate = '%s',
 	} = options
@@ -84,6 +143,21 @@ export const addAttributes = ( attrObject, selector = '.stk-content', options = 
 	if ( ! hasColumns ) {
 		attributesToExclude.push(
 			'hasColumns'
+		)
+	}
+
+	if ( ! hasTopBottomLine ) {
+		attributesToExclude.push(
+			'showTopLine',
+			'topLineWidth',
+			'topLineHeight',
+			'topLineColor',
+			'topLineAlign',
+			'showBottomLine',
+			'bottomLineWidth',
+			'bottomLineHeight',
+			'bottomLineColor',
+			'bottomLineAlign',
 		)
 	}
 
