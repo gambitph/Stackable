@@ -69,16 +69,29 @@ export const Edit = props => {
 			>
 				<Fragment>
 					{ hasColumns && (
-						<AdvancedRangeControl
-							label={ __( 'Columns', i18n ) }
-							allowReset={ true }
-							attribute="columns"
-							min={ 1 }
-							max={ 4 }
-							step={ 1 }
-							placeholder="1"
-							responsive="all"
-						/>
+						<Fragment>
+
+							<AdvancedRangeControl
+								label={ __( 'Columns', i18n ) }
+								allowReset={ true }
+								attribute="columns"
+								min={ 1 }
+								max={ 4 }
+								step={ 1 }
+								placeholder="1"
+								responsive="all"
+							/>
+
+							<AdvancedRangeControl
+								label={ __( 'Column Gap', i18n ) }
+								allowRest={ true }
+								attribute="columnGap"
+								min={ 0 }
+								max={ 100 }
+								responsive="all"
+							/>
+
+						</Fragment>
 					) }
 					{ hasTextContent && (
 						<TextInput

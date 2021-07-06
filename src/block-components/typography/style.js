@@ -23,6 +23,13 @@ const getStyleParams = ( options = {} ) => {
 			responsive: 'all',
 		},
 		{
+			selector: '',
+			styleRule: 'columnGap',
+			attrName: 'columnGap',
+			responsive: 'all',
+			format: '%spx',
+		},
+		{
 			selector,
 			styleRule: 'fontSize',
 			attrName: 'fontSize',

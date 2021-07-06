@@ -59,6 +59,11 @@ const typographyAttributes = {
 		type: 'number',
 		default: '',
 	},
+	columnGap: {
+		stkResponsive: true,
+		type: 'number',
+		default: '',
+	},
 	showTopLine: {
 		type: 'boolean',
 		default: '',
