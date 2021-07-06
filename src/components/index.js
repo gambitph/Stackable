@@ -67,7 +67,6 @@ export { default as BaseControlMultiLabel } from './base-control-multi-label'
 export { default as WhenResponsiveScreen } from './when-responsive-screen'
 export { default as HeadingButtonsControl } from './heading-buttons-control'
 export { default as AlignButtonsControl } from './align-buttons-control'
-export { default as BlockContainer } from './block-container'
 export { default as CodeTextarea } from './code-textarea'
 export { default as CodeTextareaControl } from './code-textarea-control'
 export { default as Separator } from './separator'
@@ -81,6 +80,7 @@ export { default as AdminTextSetting } from './admin-text-setting'
 export { default as AdminToggleSetting } from './admin-toggle-setting'
 
 // V2 only Components, for deprecation
+export { default as BlockContainer } from './block-container'
 export { default as SvgIcon } from './svg-icon'
 
 // V3 only Components

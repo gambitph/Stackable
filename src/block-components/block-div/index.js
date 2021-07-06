@@ -10,6 +10,7 @@ import { getUniqueBlockClass } from '~stackable/util'
 
 import { useBlockEditContext } from '@wordpress/block-editor'
 import { getHtmlTag } from '../advanced/use-html-tag'
+import { CustomAttributes } from '../custom-attributes'
 
 export const BlockDiv = props => {
 	const { clientId } = useBlockEditContext()
@@ -19,6 +20,7 @@ export const BlockDiv = props => {
 
 	// The HTML Tag selected of the block in the Advanced tab.
 	const htmlTag = getHtmlTag( attributes )
+	const customAttributes = CustomAttributes.getCustomAttributes( attributes )
 
 	const classNames = classnames( [
 		props.className,
@@ -30,8 +32,9 @@ export const BlockDiv = props => {
 
 	return <Div
 		{ ...props }
+		{ ...customAttributes }
 		className={ classNames }
-		data-id={ attributes.uniqueId }
+		data-block-id={ attributes.uniqueId }
 		blockTag={ htmlTag }
 		hasBackground={ attributes.hasBackground }
 		backgroundUrl={ attributes.blockBackgroundMediaUrl }
@@ -53,6 +56,7 @@ BlockDiv.Content = props => {
 
 	// The HTML Tag selected of the block in the Advanced tab.
 	const htmlTag = getHtmlTag( attributes )
+	const customAttributes = CustomAttributes.getCustomAttributes( attributes )
 
 	const classNames = classnames( [
 		props.className,
@@ -64,8 +68,9 @@ BlockDiv.Content = props => {
 
 	return <Div.Content
 		{ ...propsToPass }
+		{ ...customAttributes }
 		className={ classNames }
-		data-id={ attributes.uniqueId }
+		data-block-id={ attributes.uniqueId }
 		blockTag={ htmlTag }
 		hasBackground={ attributes.hasBackground }
 		backgroundUrl={ attributes.blockBackgroundMediaUrl }

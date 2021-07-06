@@ -22,6 +22,7 @@ import {
 	Advanced,
 	CustomCSS,
 	Responsive,
+	CustomAttributes,
 } from '~stackable/block-components'
 
 /**
@@ -73,6 +74,7 @@ const Edit = props => {
 			<Alignment.InspectorControls hasRowAlignment={ true } />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
+			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-button-group" />
 			<Responsive.InspectorControls />
 

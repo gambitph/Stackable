@@ -6,7 +6,6 @@ import { Fragment, useRef } from '@wordpress/element'
 import {
 	useSelect, select,
 } from '@wordpress/data'
-import { BlockContainer } from '~stackable/components'
 import { ResizableBox } from '@wordpress/components'
 
 const TEMPLATE = [

@@ -4,6 +4,7 @@ import {
 	BlockDiv,
 	Column,
 	ContainerDiv,
+	CustomAttributes,
 	CustomCSS,
 	Image,
 	Responsive,
@@ -21,6 +22,7 @@ export const attributes = ( version = VERSION ) => {
 	Image.addAttributes( attrObject, { imageWidthUnitDefault: 'px' } )
 	Alignment.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
+	CustomAttributes.addAttributes( attrObject )
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	BlockLink.addAttributes( attrObject )
