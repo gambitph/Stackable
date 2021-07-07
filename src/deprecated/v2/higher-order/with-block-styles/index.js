@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { BlockStyles } from '~stackable/components'
+import { BlockStyles } from '../../components'
 
 /**
  * WordPress dependencies

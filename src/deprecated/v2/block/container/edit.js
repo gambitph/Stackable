@@ -18,8 +18,6 @@ import {
 	BlockContainer,
 	DesignPanelBody,
 	ProControlButton,
-	ContentAlignControl,
-	ResponsiveControl,
 	AdvancedSelectControl,
 	AdvancedToolbarControl,
 	WhenResponsiveScreen,
@@ -27,12 +25,14 @@ import {
 	ControlSeparator,
 	BackgroundControlsHelper,
 	ColorPaletteControl,
-	DivBackground,
 	PanelAdvancedSettings,
 	ButtonIconPopoverControl,
 	PanelSpacingBody,
 	BorderControlsHelper,
 } from '~stackable/components'
+import {
+	DivBackground, ContentAlignControl, ResponsiveControl,
+} from '../../components'
 import {
 	withUniqueClass,
 	withSetAttributeHook,
@@ -41,7 +41,7 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 	withClickOpenInspector,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import { cacheImageData } from '~stackable/util'
 import classnames from 'classnames'
 

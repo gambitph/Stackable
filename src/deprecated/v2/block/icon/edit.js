@@ -10,22 +10,22 @@ import { showOptions } from './util'
 import {
 	AdvancedToggleControl,
 	BlockContainer,
-	ContentAlignControl,
 	AdvancedRangeControl,
 	SvgIconPlaceholder,
-	DivBackground,
 	IconControlsHelper,
 	PanelAdvancedSettings,
 	TypographyControlHelper,
 	HeadingButtonsControl,
 	ColorPaletteControl,
-	ResponsiveControl,
 	AlignButtonsControl,
 	ControlSeparator,
 	PanelSpacingBody,
 	UrlInputPopover,
 	ColumnPaddingControl,
 } from '~stackable/components'
+import {
+	DivBackground, ContentAlignControl, ResponsiveControl,
+} from '../../components'
 import {
 	withUniqueClass,
 	withSetAttributeHook,
@@ -34,7 +34,7 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 	withClickOpenInspector,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import {
 	createTypographyAttributeNames,
 	createResponsiveAttributeNames,

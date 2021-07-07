@@ -1,8 +1,8 @@
 /**
  * External dependencies
  */
-import { initBlockModule } from '~stackable/modules'
-import { withMainClassname } from '~stackable/higher-order'
+import { initBlockModule } from './modules'
+import { withMainClassname } from './higher-order'
 
 /**
  * WordPress dependencies

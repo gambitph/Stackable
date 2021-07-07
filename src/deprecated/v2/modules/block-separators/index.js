@@ -8,10 +8,10 @@ import {
 	DesignSeparatorControl,
 	PanelAdvancedSettings,
 	ProControlButton,
-	ResponsiveControl,
 	Separator,
 } from '~stackable/components'
 import { createAllCombinationAttributes } from '~stackable/util'
+import { ResponsiveControl } from '../../components'
 
 /**
  * WordPress dependencies

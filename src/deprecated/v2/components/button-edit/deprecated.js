@@ -25,15 +25,15 @@ export const DeprecatedButtonContent_1_15_5 = props => {
 	} = props
 
 	const style = {
-		borderRadius: design === 'link' ? undefined :
-		              design === 'plain' ? undefined :
-		              borderRadius + 'px',
+		borderRadius: design === 'link' ? undefined
+		              : design === 'plain' ? undefined
+		              : borderRadius + 'px',
 		backgroundColor: backgroundColor ? backgroundColor : undefined,
 		borderColor: design === 'ghost' ? backgroundColor : undefined,
-		color: design === 'ghost' ? backgroundColor :
-		       design === 'plain' ? backgroundColor :
-		       design === 'link' ? undefined :
-		       color,
+		color: design === 'ghost' ? backgroundColor
+		       : design === 'plain' ? backgroundColor
+		       : design === 'link' ? undefined
+		       : color,
 	}
 	style.backgroundColor = design === 'ghost' ? undefined : style.backgroundColor
 	style.backgroundColor = design === 'plain' ? undefined : style.backgroundColor
@@ -51,7 +51,7 @@ export const DeprecatedButtonContent_1_15_5 = props => {
 
 	return (
 		<div>
-			<a
+			<a // eslint-disable-line react/jsx-no-target-blank
 				className={ mainClasses }
 				href={ url }
 				style={ style }
@@ -62,9 +62,9 @@ export const DeprecatedButtonContent_1_15_5 = props => {
 					<SvgIcon.Content
 						value={ icon }
 						style={ {
-							color: design === 'ghost' ? backgroundColor :
-							       design === 'plain' ? backgroundColor :
-							       color,
+							color: design === 'ghost' ? backgroundColor
+							       : design === 'plain' ? backgroundColor
+							       : color,
 						} }
 					/>
 				}
@@ -72,10 +72,10 @@ export const DeprecatedButtonContent_1_15_5 = props => {
 					tagName="span"
 					className={ design === 'link' ? '' : 'ugb-button--inner' }
 					style={ {
-						color: design === 'ghost' ? backgroundColor :
-						       design === 'plain' ? backgroundColor :
-						       design === 'link' ? undefined :
-						       color,
+						color: design === 'ghost' ? backgroundColor
+						       : design === 'plain' ? backgroundColor
+						       : design === 'link' ? undefined
+						       : color,
 					} }
 					value={ text }
 				/>

@@ -4,7 +4,7 @@
 import { BlockContainer, Separator } from '~stackable/components'
 import {
 	withBlockStyles, withUniqueClass,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 
 /**
  * Internal dependencies

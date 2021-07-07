@@ -10,8 +10,8 @@ export const addAttributes = attrObject => {
 			uniqueId: {
 				type: 'string',
 				source: 'attribute',
-				selector: '[data-id]',
-				attribute: 'data-id',
+				selector: '[data-block-id]',
+				attribute: 'data-block-id',
 				default: '',
 			},
 			hasBackground: {

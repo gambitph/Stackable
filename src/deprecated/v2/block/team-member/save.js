@@ -3,19 +3,17 @@
  */
 import { createStyles } from './style'
 import { showOptions } from './util'
+import {
+	SocialButtonEditHelper, DivBackground, Image,
+} from '../../components'
 
 /**
  * External dependencies
  */
-import {
-	BlockContainer,
-	Image,
-	SocialButtonEditHelper,
-	DivBackground,
-} from '~stackable/components'
+import { BlockContainer } from '~stackable/components'
 import {
 	withBlockStyles, withUniqueClass,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import { SOCIAL_SITES } from '~stackable/util'
 import classnames from 'classnames'
 import { range, upperFirst } from 'lodash'

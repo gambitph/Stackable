@@ -9,10 +9,10 @@ import { showOptions } from './util'
  */
 import {
 	BlockContainer,
-	DivBackground,
 	SvgIconHelper,
 } from '~stackable/components'
-import { withUniqueClass, withBlockStyles } from '~stackable/higher-order'
+import { DivBackground } from '../../components'
+import { withUniqueClass, withBlockStyles } from '../../higher-order'
 import classnames from 'classnames'
 import { range } from 'lodash'
 

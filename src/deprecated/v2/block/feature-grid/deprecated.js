@@ -3,7 +3,7 @@
  */
 import {
 	DeprecatedButtonContent_1_15_5,
-} from '~stackable/components/button-edit'
+} from '../../components/button-edit'
 import { descriptionPlaceholder, range } from '~stackable/util'
 import classnames from 'classnames'
 import { i18n, contentWidth } from 'stackable'
@@ -307,9 +307,9 @@ const deprecated = [
 				const maxContentWidth = attributes.align !== 'wide' ? ( contentWidth || 900 ) : 1200
 				const columnGap = 35 // V1 has this as a fixed value.
 				const columnPaddings = attributes.design === 'plain' ? 0 : 70 // V1 has this as a fixed value.
-				const columnContentWidth = attributes.columns === 1 ? maxContentWidth - columnPaddings :
-					attributes.columns === 2 ? ( ( maxContentWidth - columnGap ) / 2 ) - columnPaddings :
-						( ( maxContentWidth - ( columnGap * 2 ) ) / 3 ) - columnPaddings
+				const columnContentWidth = attributes.columns === 1 ? maxContentWidth - columnPaddings
+					: attributes.columns === 2 ? ( ( maxContentWidth - columnGap ) / 2 ) - columnPaddings
+						: ( ( maxContentWidth - ( columnGap * 2 ) ) / 3 ) - columnPaddings
 				imageWidth = parseInt( ( parseInt( attributes.imageSize, 10 ) || 100 ) / 100 * columnContentWidth, 10 )
 			}
 

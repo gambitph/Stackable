@@ -8,8 +8,6 @@ import {
 	BlockContainer,
 	ButtonIconPopoverControl,
 	ColumnPaddingControl,
-	ContentAlignControl,
-	Image,
 	BackgroundControlsHelper,
 	ImageControlsHelper,
 	PanelAdvancedSettings,
@@ -17,15 +15,19 @@ import {
 	ColorPaletteControl,
 	HeadingButtonsControl,
 	AlignButtonsControl,
-	ResponsiveControl,
 	ControlSeparator,
 	ButtonControlsHelper,
 	PanelSpacingBody,
 	AdvancedRangeControl,
-	ButtonEditHelper,
-	DivBackground,
 	BorderControlsHelper,
 } from '~stackable/components'
+import {
+	ButtonEditHelper,
+	ContentAlignControl,
+	DivBackground,
+	Image,
+	ResponsiveControl,
+} from '../../components'
 import {
 	descriptionPlaceholder,
 	createTypographyAttributeNames,
@@ -44,7 +46,7 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 	withClickOpenInspector,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 
 /**
  * Internal dependencies

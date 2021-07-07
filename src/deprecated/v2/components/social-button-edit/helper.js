@@ -8,7 +8,7 @@ import { sprintf } from '@wordpress/i18n'
  */
 import { camelCase, upperFirst } from 'lodash'
 import { SOCIAL_SITES } from '~stackable/util'
-import { SocialButtonEdit } from '~stackable/components'
+import SocialButtonEdit from './'
 
 const SocialButtonEditHelper = props => {
 	const { setAttributes } = props

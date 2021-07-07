@@ -1,7 +1,8 @@
 /**
  * External dependencies
  */
-import { AlignButtonsControl, ResponsiveControl } from '~stackable/components'
+import { AlignButtonsControl } from '~stackable/components'
+import ResponsiveControl from '../responsive-control'
 
 /**
  * WordPress dependencies

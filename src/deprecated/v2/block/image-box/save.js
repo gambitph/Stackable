@@ -3,7 +3,7 @@
  */
 import {
 	withBlockStyles, withUniqueClass,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import { BlockContainer } from '~stackable/components'
 import classnames from 'classnames'
 import { range } from 'lodash'

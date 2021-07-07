@@ -17,13 +17,11 @@ import {
 	BlockContainer,
 	DesignPanelBody,
 	ProControlButton,
-	ContentAlignControl,
 	BackgroundControlsHelper,
 	PanelAdvancedSettings,
 	TypographyControlHelper,
 	HeadingButtonsControl,
 	ColorPaletteControl,
-	ResponsiveControl,
 	AlignButtonsControl,
 	ButtonControlsHelper,
 	ControlSeparator,
@@ -31,13 +29,17 @@ import {
 	AdvancedRangeControl,
 	FourRangeControl,
 	SvgIconPlaceholder,
-	ButtonEditHelper,
-	DivBackground,
 	IconControlsHelper,
 	ButtonIconPopoverControl,
 	ColumnPaddingControl,
 	BorderControlsHelper,
 } from '~stackable/components'
+import {
+	ButtonEditHelper,
+	ContentAlignControl,
+	DivBackground,
+	ResponsiveControl,
+} from '../../components'
 import {
 	descriptionPlaceholder,
 	createTypographyAttributeNames,
@@ -54,7 +56,7 @@ import {
 	withTabbedInspector,
 	withUniqueClass,
 	withClickOpenInspector,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import classnames from 'classnames'
 
 /**

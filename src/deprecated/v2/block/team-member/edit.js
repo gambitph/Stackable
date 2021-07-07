@@ -6,23 +6,18 @@ import {
 	ImageUploadPlaceholder,
 	ProControlButton,
 	BlockContainer,
-	ContentAlignControl,
 	BackgroundControlsHelper,
 	PanelAdvancedSettings,
 	TypographyControlHelper,
 	ColorPaletteControl,
 	HeadingButtonsControl,
 	AlignButtonsControl,
-	ResponsiveControl,
 	ControlSeparator,
 	PanelSpacingBody,
 	AdvancedRangeControl,
 	ImageBackgroundControlsHelper,
 	ImageControlsHelper,
 	SocialControlsHelper,
-	Image,
-	SocialButtonEditHelper,
-	DivBackground,
 	ButtonIconPopoverControl,
 	ColumnPaddingControl,
 	BorderControlsHelper,
@@ -46,7 +41,7 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 	withClickOpenInspector,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 
 /**
  * Internal dependencies
@@ -59,6 +54,13 @@ import ImageDesignOverlay from './images/overlay.png'
 import { i18n, showProNotice } from 'stackable'
 import createStyles from './style'
 import { showOptions } from './util'
+import {
+	SocialButtonEditHelper,
+	ContentAlignControl,
+	DivBackground,
+	Image,
+	ResponsiveControl,
+} from '../../components'
 
 /**
  * WordPress dependencies

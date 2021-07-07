@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { ButtonEdit } from '~stackable/components'
+import { ButtonEdit } from '../'
 import { SOCIAL_SITES } from '~stackable/util'
 import { upperFirst } from 'lodash'
 import classnames from 'classnames'

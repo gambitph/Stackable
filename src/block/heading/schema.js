@@ -11,6 +11,7 @@ import {
 	Typography,
 	Alignment,
 	MarginBottom,
+	CustomAttributes,
 } from '~stackable/block-components'
 
 export const attributes = ( version = VERSION ) => {
@@ -18,6 +19,7 @@ export const attributes = ( version = VERSION ) => {
 
 	Alignment.addAttributes( attrObject )
 	BlockDiv.addAttributes( attrObject )
+	CustomAttributes.addAttributes( attrObject )
 	CustomCSS.addAttributes( attrObject )
 	MarginBottom.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )

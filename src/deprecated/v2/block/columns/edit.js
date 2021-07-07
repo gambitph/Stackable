@@ -16,8 +16,6 @@ import {
 	AdvancedToggleControl,
 	BlockContainer,
 	ProControlButton,
-	ContentAlignControl,
-	ResponsiveControl,
 	AdvancedSelectControl,
 	AdvancedToolbarControl,
 	WhenResponsiveScreen,
@@ -28,6 +26,7 @@ import {
 	ColumnsWidthControl,
 	PanelAdvancedSettings,
 } from '~stackable/components'
+import { ContentAlignControl, ResponsiveControl } from '../../components'
 import {
 	withUniqueClass,
 	withSetAttributeHook,
@@ -35,7 +34,7 @@ import {
 	withTabbedInspector,
 	withContentAlignReseter,
 	withBlockStyles,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import classnames from 'classnames'
 import { range } from 'lodash'
 import { i18n, showProNotice } from 'stackable'

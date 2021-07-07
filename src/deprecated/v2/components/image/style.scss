@@ -1,0 +1,23 @@
+.ugb-img {
+	object-fit: cover;
+	object-position: center;
+	&.ugb-img--shape {
+		mask-mode: alpha;
+		mask-repeat: no-repeat;
+		mask-size: contain;
+		mask-position: center;
+		border-radius: none;
+	}
+	// Firefox doesn't stretch SVG masks via attributes, stretching is done here. Fixes #246.
+	&.ugb-image--shape-stretch {
+		mask-size: 100% 100%;
+	}
+}
+
+// Fallback for IE11: SVG icons will not display as bullets, fallback to normal bullets.
+@media all and (-ms-high-contrast: none) {
+	*::-ms-backdrop,
+	.ugb-img.ugb-img--shape {
+		border-radius: 9999px !important;
+	}
+}

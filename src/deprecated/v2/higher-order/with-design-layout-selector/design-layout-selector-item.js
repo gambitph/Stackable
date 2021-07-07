@@ -18,10 +18,10 @@ const DesignLayoutSelectorItem = ( {
 	className,
 	...otherProps
 } ) => {
-	const src = ! image ? '' :
-	            image.match( /https?:/i ) ? image :
-	            srcUrl ? `${ srcUrl }/${ image }` :
-	            image
+	const src = ! image ? ''
+	            : image.match( /https?:/i ) ? image
+	            : srcUrl ? `${ srcUrl }/${ image }`
+	            : image
 
 	const isLayoutPremium = otherProps.plan !== 'free'
 	const isLocked = isLayoutPremium && ! isPro && showProNotice

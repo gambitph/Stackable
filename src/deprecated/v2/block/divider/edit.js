@@ -13,12 +13,12 @@ import ImageDesignAsterisks from './images/asterisks.png'
 import {
 	BlockContainer,
 	DesignPanelBody,
-	ContentAlignControl,
 	AdvancedRangeControl,
 	FourRangeControl,
 	ColorPaletteControl,
 	PanelAdvancedSettings,
 } from '~stackable/components'
+import { ContentAlignControl } from '../../components'
 import {
 	withUniqueClass,
 	withSetAttributeHook,
@@ -26,7 +26,7 @@ import {
 	withTabbedInspector,
 	withContentAlignReseter,
 	withBlockStyles,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import classnames from 'classnames'
 
 /**

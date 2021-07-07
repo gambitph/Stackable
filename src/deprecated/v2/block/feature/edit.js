@@ -8,26 +8,28 @@ import {
 	ImageUploadPlaceholder,
 	ProControlButton,
 	BlockContainer,
-	ContentAlignControl,
 	BackgroundControlsHelper,
 	ButtonIconPopoverControl,
 	PanelAdvancedSettings,
 	TypographyControlHelper,
 	HeadingButtonsControl,
 	ColorPaletteControl,
-	ResponsiveControl,
 	AlignButtonsControl,
 	ButtonControlsHelper,
 	ControlSeparator,
 	PanelSpacingBody,
 	AdvancedRangeControl,
 	ImageControlsHelper,
-	Image,
 	ImageBackgroundControlsHelper,
-	ButtonEditHelper,
-	DivBackground,
 	BorderControlsHelper,
 } from '~stackable/components'
+import {
+	ButtonEditHelper,
+	ContentAlignControl,
+	DivBackground,
+	Image,
+	ResponsiveControl,
+} from '../../components'
 import {
 	descriptionPlaceholder,
 	createTypographyAttributeNames,
@@ -43,7 +45,7 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 	withClickOpenInspector,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import classnames from 'classnames'
 
 /**

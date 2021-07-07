@@ -16,10 +16,11 @@ import { Fragment } from '@wordpress/element'
 /**
  * External dependencies
  */
-import { BlockContainer, DivBackground } from '~stackable/components'
+import { BlockContainer } from '~stackable/components'
+import { DivBackground } from '../../components'
 import {
 	withBlockStyles, withUniqueClass,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import classnames from 'classnames'
 
 const save = props => {

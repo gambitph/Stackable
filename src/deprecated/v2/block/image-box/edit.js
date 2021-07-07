@@ -6,13 +6,11 @@ import {
 	DesignPanelBody,
 	ImageUploadPlaceholder,
 	ProControlButton,
-	ContentAlignControl,
 	BlockContainer,
 	ColorPaletteControl,
 	BackgroundControlsHelper,
 	PanelAdvancedSettings,
 	TypographyControlHelper,
-	ResponsiveControl,
 	AlignButtonsControl,
 	HeadingButtonsControl,
 	PanelSpacingBody,
@@ -23,6 +21,7 @@ import {
 	ColumnPaddingControl,
 	BorderControlsHelper,
 } from '~stackable/components'
+import { ContentAlignControl, ResponsiveControl } from '../../components'
 import {
 	createTypographyAttributeNames,
 	createBackgroundAttributeNames,
@@ -38,7 +37,7 @@ import {
 	withContentAlignReseter,
 	withBlockStyles,
 	withClickOpenInspector,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import classnames from 'classnames'
 import { i18n, showProNotice } from 'stackable'
 import { range } from 'lodash'

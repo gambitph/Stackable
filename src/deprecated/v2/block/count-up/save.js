@@ -2,11 +2,12 @@
  * External dependencies
  */
 import {
-	BlockContainer, SvgIconHelper, DivBackground,
+	BlockContainer, SvgIconHelper,
 } from '~stackable/components'
+import { DivBackground } from '../../components'
 import {
 	withBlockStyles, withUniqueClass,
-} from '~stackable/higher-order'
+} from '../../higher-order'
 import { range } from 'lodash'
 
 /**
