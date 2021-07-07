@@ -20,13 +20,13 @@ import { useBlockAttributes, useDeviceType } from '~stackable/hooks'
  *
  * @param {Object} styleObject The object containing selectors and style rules
  * @param {string} blockUniqueClassName The unique className of the block
- * @param {boolean} editorMode If true, wrap the selectors with `#editor`
+ * @param {boolean} editorMode If true, wrap the selectors with `.block-editor-page`
  *
  * @return {Object} Modified styleObject
  */
 export const addBlockClassNames = ( styleObject, blockUniqueClassName = '', editorMode = false ) => {
 	return Object.keys( styleObject ).reduce( ( newStyles, selector ) => {
-		const newSelector = prependCSSClass( selector, blockUniqueClassName, blockUniqueClassName, editorMode ? '#editor' : '' )
+		const newSelector = prependCSSClass( selector, blockUniqueClassName, blockUniqueClassName, editorMode ? '.block-editor-page' : '' )
 		return {
 			...newStyles,
 			[ newSelector ]: styleObject[ selector ],
@@ -93,7 +93,7 @@ export const formMediaQuery = ( _devices = [ 'desktop' ], breakDesktop = 1024, b
  * @param {string} blockUniqueClassName Unique ID className for the block
  * @param {number} breakTablet max-width for tablets
  * @param {number} breakMobile max-width for mobile
- * @param {boolean} editorMode If true, the styles generated will be wrapped in the `#editor` selector
+ * @param {boolean} editorMode If true, the styles generated will be wrapped in the `.block-editor-page` selector
  * @param {boolean} recursiveCalls Used only for editors styles. Number of times this function was called recursively
  *
  * @return {string} Minified CSS string

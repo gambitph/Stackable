@@ -216,7 +216,7 @@ export const minifyCSS = ( css, important = false ) => {
  * @param {string} css
  * @param {string} mainClass
  * @param {string} uniqueID
- * @param {boolean} isEditor If true, will preppend '#editor' to all selectors.
+ * @param {boolean} isEditor If true, will preppend '.block-editor-page' to all selectors.
  * @return {string} CSS
  */
 export const compileCSS = ( css, mainClass, uniqueID, isEditor = false ) => {
@@ -239,7 +239,7 @@ export const compileCSS = ( css, mainClass, uniqueID, isEditor = false ) => {
 			}
 
 			const newSelector = prependCSSClass( selector, mainClass, uniqueID )
-			return ( isEditor ? '#editor ' : '' ) + `${ newSelector } ${ paren }`
+			return ( isEditor ? '.block-editor-page ' : '' ) + `${ newSelector } ${ paren }`
 		} ).trim()
 }
 
