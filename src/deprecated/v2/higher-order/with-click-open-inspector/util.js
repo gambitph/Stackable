@@ -73,7 +73,7 @@ const openPanel = panelEl => {
 
 export const scrollPanelIntoView = panelEl => {
 	const tabs = document.querySelector( '.ugb-panel-tabs' )
-	const sidebar = document.querySelector( '.edit-post-sidebar' )
+	const sidebar = document.querySelector( '.edit-post-sidebar, .edit-widgets-sidebar' )
 
 	let offset = panelEl.getBoundingClientRect().top + 2
 	offset -= tabs ? tabs.getBoundingClientRect().height : 0
@@ -84,5 +84,5 @@ export const scrollPanelIntoView = panelEl => {
 		offset -= sidebarHeader ? sidebarHeader.getBoundingClientRect().height - 1 : 0
 	}
 
-	document.querySelector( '.edit-post-sidebar' ).scrollTop += offset
+	document.querySelector( '.edit-post-sidebar, .edit-widgets-sidebar' ).scrollTop += offset
 }
