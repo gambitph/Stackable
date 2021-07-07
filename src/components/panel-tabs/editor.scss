@@ -49,7 +49,8 @@
 .ugb-panel-tabs {
 	border-bottom: 1px solid #e2e4e7 !important;
 }
-.edit-post-sidebar.ugb--has-panel-tabs {
+.edit-post-sidebar.ugb--has-panel-tabs,
+.edit-widgets-sidebar.ugb--has-panel-tabs {
 	background-color: #f0f3f5;
 	.edit-post-settings-sidebar__panel-block .components-panel__body:last-child {
 		margin-bottom: 0;
