@@ -43,7 +43,7 @@ export const createStyles = props => {
 			marginBottom: `${ marginBottom - 1 + ( isEditing ? -14 : 0 ) }${ marginUnit } !important`,
 		},
 		'.ugb-separator__bottom-pad': {
-			height: paddingBottom !== '' ? `${ paddingBottom }${ paddingUnit }` : undefined,
+			height: appendImportant( paddingBottom !== '' ? `${ paddingBottom }${ paddingUnit }` : undefined ),
 			background: layer1Color ? layer1Color : undefined,
 		},
 		'.ugb-separator__top-pad': {
@@ -76,7 +76,7 @@ export const createStyles = props => {
 				marginBottom: `${ tabletMarginBottom - 1 }${ tabletMarginUnit } !important`, // -1 to prevent white lines.
 			},
 			'.ugb-separator__bottom-pad': {
-				height: tabletPaddingBottom !== '' ? `${ tabletPaddingBottom }${ tabletPaddingUnit }` : undefined,
+				height: appendImportant( tabletPaddingBottom !== '' ? `${ tabletPaddingBottom }${ tabletPaddingUnit }` : undefined ),
 			},
 			'.ugb-separator__top-pad': {
 				height: appendImportant( tabletPaddingTop !== '' ? `${ tabletPaddingTop }${ tabletPaddingUnit }` : undefined ),
@@ -91,7 +91,7 @@ export const createStyles = props => {
 				marginBottom: `${ mobileMarginBottom - 1 }${ mobileMarginUnit } !important`, // -1 to prevent white lines.
 			},
 			'.ugb-separator__bottom-pad': {
-				height: mobilePaddingBottom !== '' ? `${ mobilePaddingBottom }${ mobilePaddingUnit }` : undefined,
+				height: appendImportant( mobilePaddingBottom !== '' ? `${ mobilePaddingBottom }${ mobilePaddingUnit }` : undefined ),
 			},
 			'.ugb-separator__top-pad': {
 				height: appendImportant( mobilePaddingTop !== '' ? `${ mobilePaddingTop }${ mobilePaddingUnit }` : undefined ),
