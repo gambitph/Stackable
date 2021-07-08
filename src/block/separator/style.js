@@ -47,7 +47,7 @@ export const createStyles = props => {
 			background: layer1Color ? layer1Color : undefined,
 		},
 		'.ugb-separator__top-pad': {
-			height: paddingTop !== '' ? `${ paddingTop }${ paddingUnit }` : undefined,
+			height: appendImportant( paddingTop !== '' ? `${ paddingTop }${ paddingUnit }` : undefined ),
 			background: backgroundColor ? backgroundColor : undefined,
 		},
 		'.ugb-separator__shadow, .ugb-separator__layer-1': {
@@ -79,7 +79,7 @@ export const createStyles = props => {
 				height: tabletPaddingBottom !== '' ? `${ tabletPaddingBottom }${ tabletPaddingUnit }` : undefined,
 			},
 			'.ugb-separator__top-pad': {
-				height: tabletPaddingTop !== '' ? `${ tabletPaddingTop }${ tabletPaddingUnit }` : undefined,
+				height: appendImportant( tabletPaddingTop !== '' ? `${ tabletPaddingTop }${ tabletPaddingUnit }` : undefined ),
 			},
 		},
 		mobile: {
@@ -94,7 +94,7 @@ export const createStyles = props => {
 				height: mobilePaddingBottom !== '' ? `${ mobilePaddingBottom }${ mobilePaddingUnit }` : undefined,
 			},
 			'.ugb-separator__top-pad': {
-				height: mobilePaddingTop !== '' ? `${ mobilePaddingTop }${ mobilePaddingUnit }` : undefined,
+				height: appendImportant( mobilePaddingTop !== '' ? `${ mobilePaddingTop }${ mobilePaddingUnit }` : undefined ),
 			},
 		},
 	}
