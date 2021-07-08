@@ -61,7 +61,8 @@ export const settings = {
 		'block-background': true,
 		'block-separators': true,
 		'block-title': {
-			marginBottomImportant: true,
+			blockTitleMarginBottomImportant: true,
+			blockDescriptionMarginBottomImportant: true,
 		},
 		'container-link': true,
 		'content-align': true,
