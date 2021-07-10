@@ -1,0 +1,25 @@
+@import "common";
+
+.stk-dynamic-content-control {
+	display: flex;
+	align-items: center;
+
+	.components-base-control.ugb-advanced-text-control {
+		width: 100%;
+		margin-bottom: 0;
+
+		.components-base-control__field {
+			margin-bottom: 0;
+		}
+	}
+
+	&__button {
+		padding-left: 0;
+		padding-right: 0;
+
+		& > span {
+			margin-left: 0;
+			margin-right: 0;
+		}
+	}
+}

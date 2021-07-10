@@ -9,6 +9,7 @@ import {
 import {
 	AdvancedRangeControl,
 	AdvancedSelectControl,
+	AdvancedTextControl,
 	AdvancedToggleControl,
 	AdvancedToolbarControl,
 	ButtonIconPopoverControl,
@@ -27,10 +28,6 @@ import {
 	Fragment,
 } from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
-import {
-	TextareaControl,
-	TextControl,
-} from '@wordpress/components'
 import { escapeHTML } from '@wordpress/escape-html'
 
 export const Edit = props => {
@@ -45,11 +42,8 @@ export const Edit = props => {
 		hasGradient,
 	} = props
 
-	const TextInput = isMultiline ? TextareaControl : TextControl
-
 	const {
 		getAttribute,
-		updateAttribute,
 		updateAttributeHandler,
 		updateAttributes,
 	} = useAttributeEditHandlers( attrNameTemplate )
@@ -66,11 +60,12 @@ export const Edit = props => {
 			>
 				<Fragment>
 					{ hasTextContent && (
-						<TextInput
+						<AdvancedTextControl
 							label={ __( 'Content', i18n ) }
-							value={ unescape( getAttribute( 'text' ) ) }
-							onChange={ value => updateAttribute( 'text', escapeHTML( value ) ) }
-							placeholder={ __( 'Enter text here' ) }
+							attribute="text"
+							isMultiline={ isMultiline }
+							valueCallback={ unescape }
+							onChangeCallback={ escapeHTML }
 						/>
 					) }
 
