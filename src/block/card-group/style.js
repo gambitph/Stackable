@@ -5,6 +5,7 @@ import {
 	Advanced,
 	Alignment,
 	BlockDiv,
+	EffectsAnimations,
 } from '~stackable/block-components'
 import {
 	useBlockAttributes, useDeviceType,
@@ -34,6 +35,7 @@ export const CardGroupStyles = props => {
 			<BlockDiv.Style { ...propsToPass } />
 			{ /* <MarginBottom.Style { ...propsToPass } /> */ }
 			<Advanced.Style { ...propsToPass } />
+			<EffectsAnimations.Style { ...propsToPass } />
 		</Fragment>
 	)
 }
@@ -55,6 +57,7 @@ CardGroupStyles.Content = props => {
 			<BlockDiv.Style.Content { ...propsToPass } />
 			{ /* <MarginBottom.Style.Content { ...propsToPass } /> */ }
 			<Advanced.Style.Content { ...propsToPass } />
+			<EffectsAnimations.Style.Content { ...propsToPass } />
 		</Fragment>
 	)
 

@@ -7,6 +7,7 @@ import {
 	Typography,
 	Alignment,
 	MarginBottom,
+	EffectsAnimations,
 } from '~stackable/block-components'
 import { getUniqueBlockClass } from '~stackable/util'
 import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
@@ -43,6 +44,7 @@ export const TextStyles = props => {
 					hoverSelector: '.stk-text__text:hover',
 				},
 			} } />
+			<EffectsAnimations.Style { ...propsToPass } />
 		</Fragment>
 	)
 }
@@ -73,6 +75,7 @@ TextStyles.Content = props => {
 					hoverSelector: '.stk-text__text:hover',
 				},
 			} } />
+			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<MarginBottom.Style.Content { ...propsToPass } />
 		</Fragment>
 	)

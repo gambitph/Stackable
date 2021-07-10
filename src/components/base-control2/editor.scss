@@ -12,6 +12,13 @@ $right-space: 28px;
 		display: flex;
 		margin-bottom: 0;
 		align-items: center;
+		h3 {
+			margin: 0 !important;
+			font-size: 13px !important;
+		}
+	}
+	&.stk-control-label--bold {
+		margin-bottom: 16px;
 	}
 	.stk-control-label__toggles {
 		display: flex;

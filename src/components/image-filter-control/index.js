@@ -128,6 +128,7 @@ export const ImageFilterControl = props => {
 	return (
 		<AdvancedControl
 			{ ...controlProps }
+			boldLabel={ true }
 			className={ classnames( 'stk-image-filter-control', props.className ) }
 		>
 			{ Object.keys( FILTERS ).map( ( filterName, i ) => {
