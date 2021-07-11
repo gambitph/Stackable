@@ -123,19 +123,10 @@ gulp.task( 'style-deprecated-v1', function() {
 		.pipe( gulp.dest( 'dist/deprecated/' ) )
 } )
 
-gulp.task( 'style-deprecated-wp-v5-3', function() {
-	return gulp.src( [ path.resolve( __dirname, './src/deprecated/editor-wp-v5-3/*.scss' ) ] )
-		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
-		.pipe( concat( 'editor_blocks_wp_v5_3.css' ) )
-		.pipe( postcss( postCSSOptions ) )
-		.pipe( gulp.dest( 'dist/deprecated/' ) )
-} )
-
 gulp.task( 'style-deprecated', gulp.parallel(
 	'style-editor-deprecated-v2',
 	'style-deprecated-v2',
 	'style-deprecated-v1',
-	'style-deprecated-wp-v5-3'
 ) )
 
 /*********************************************************************

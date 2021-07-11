@@ -153,27 +153,6 @@ if ( ! function_exists( 'stackable_twentytwenty_body_class' ) ) {
  * END Version 1 & TwentyTwenty frontend styles backward compatibility.
  ********************************************************************************************/
 
-if ( ! function_exists( 'stackable_enqueue_wp_5_3_compatibility' ) ) {
-
-	/**
-	 * Enqueues the editor styles for WordPress <= 5.3
-	 *
-	 * @since 2.3.2
-	 */
-	function stackable_enqueue_wp_5_3_compatibility() {
-		wp_enqueue_style(
-			'ugb-block-editor-css-wp-5-3',
-			plugins_url( 'dist/deprecated/editor_blocks_wp_v5_3.css', STACKABLE_FILE ),
-			array( 'ugb-block-editor-css' ),
-			STACKABLE_VERSION
-		);
-	}
-
-	if ( version_compare( stackable_get_wp_version(), '5.4', '<' ) ) {
-		add_action( 'enqueue_block_editor_assets', 'stackable_enqueue_wp_5_3_compatibility', 19 );
-	}
-}
-
 /********************************************************************************************
  * START Version 2 backward compatibility.
  ********************************************************************************************/
