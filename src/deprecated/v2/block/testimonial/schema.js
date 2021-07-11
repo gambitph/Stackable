@@ -2,7 +2,6 @@
  * External dependencies
  */
 import {
-	createBackgroundAttributes,
 	createImageAttributes,
 	createAllCombinationAttributes,
 	createTypographyAttributes,
@@ -10,6 +9,9 @@ import {
 	createBorderAttributes,
 	descriptionPlaceholder,
 } from '~stackable/util'
+import {
+	createBackgroundAttributes,
+} from '../../util'
 import { i18n } from 'stackable'
 
 /**

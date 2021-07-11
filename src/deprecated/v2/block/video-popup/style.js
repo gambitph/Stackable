@@ -2,10 +2,12 @@
  * External dependencies
  */
 import {
-	createBackgroundStyleSet,
 	__getValue,
 	createBorderStyleSet,
 } from '~stackable/util'
+import {
+	createBackgroundStyleSet,
+} from '../../util'
 import deepmerge from 'deepmerge'
 
 /**
@@ -89,9 +91,9 @@ export const createStyles = props => {
 	if ( previewBackgroundTintStrength || previewBackgroundColor ) {
 		styles.push( {
 			'.ugb-video-popup__wrapper:hover:before': {
-				opacity: previewBackgroundColor && previewBackgroundTintStrength === '' ? 0.2 :
-					previewBackgroundTintStrength >= 5 ? ( previewBackgroundTintStrength / 10 ) - 0.3 :
-						( previewBackgroundTintStrength / 10 ) + 0.3,
+				opacity: previewBackgroundColor && previewBackgroundTintStrength === '' ? 0.2
+					: previewBackgroundTintStrength >= 5 ? ( previewBackgroundTintStrength / 10 ) - 0.3
+						: ( previewBackgroundTintStrength / 10 ) + 0.3,
 
 			},
 		} )

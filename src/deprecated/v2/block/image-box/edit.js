@@ -24,11 +24,13 @@ import {
 import { ContentAlignControl, ResponsiveControl } from '../../components'
 import {
 	createTypographyAttributeNames,
-	createBackgroundAttributeNames,
 	createResponsiveAttributeNames,
 	cacheImageData,
 	getImageUrlFromCache,
 } from '~stackable/util'
+import {
+	createBackgroundAttributeNames,
+} from '../../util'
 import {
 	withUniqueClass,
 	withSetAttributeHook,

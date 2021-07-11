@@ -6,12 +6,14 @@ import {
 	createResponsiveStyles,
 	createTypographyStyles,
 	appendImportant,
-	createBackgroundStyles,
-	createBackgroundOverlayStyles,
 	createBorderStyleSet,
 	clampInheritedStyle,
 	__getValue,
 } from '~stackable/util'
+import {
+	createBackgroundStyles,
+	createBackgroundOverlayStyles,
+} from '../../util'
 import deepmerge from 'deepmerge'
 
 /**
@@ -154,9 +156,9 @@ export const createStyles = props => {
 		'.ugb-image-box__image': {
 			backgroundPosition: appendImportant( getValue( 'imageBackgroundPosition' ) ),
 			backgroundRepeat: appendImportant( getValue( 'imageBackgroundRepeat' ) ),
-			backgroundSize: appendImportant( getValue( 'imageBackgroundSize' ) === 'custom' ?
-				getValue( 'imageBackgroundCustomSize', `%s${ getValue( 'imageBackgroundCustomSizeUnit' ) || 'px' }` ) :
-				getValue( 'imagebackgroundSize' ) ),
+			backgroundSize: appendImportant( getValue( 'imageBackgroundSize' ) === 'custom'
+				? getValue( 'imageBackgroundCustomSize', `%s${ getValue( 'imageBackgroundCustomSizeUnit' ) || 'px' }` )
+				: getValue( 'imagebackgroundSize' ) ),
 		},
 	} )
 

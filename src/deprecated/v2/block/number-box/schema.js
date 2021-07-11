@@ -3,12 +3,14 @@
  */
 import {
 	createAllCombinationAttributes,
-	createBackgroundAttributes,
 	createResponsiveAttributes,
 	createTypographyAttributes,
 	descriptionPlaceholder,
 	createBorderAttributes,
 } from '~stackable/util'
+import {
+	createBackgroundAttributes,
+} from '../../util'
 
 /**
  * WordPress dependencies

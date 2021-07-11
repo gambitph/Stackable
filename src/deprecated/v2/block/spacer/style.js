@@ -1,7 +1,10 @@
 /**
  * External dependencies
  */
-import { createBackgroundStyleSet, __getValue } from '~stackable/util'
+import { __getValue } from '~stackable/util'
+import {
+	createBackgroundStyleSet,
+} from '../../util'
 import deepmerge from 'deepmerge'
 
 export const createStyles = props => {

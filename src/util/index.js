@@ -1,7 +1,6 @@
 export * from './font'
 export * from './attributes'
 export * from './typography'
-export * from './background'
 export * from './border'
 export * from './image'
 export * from './image-background'

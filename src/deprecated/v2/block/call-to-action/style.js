@@ -3,7 +3,6 @@
  */
 import {
 	appendImportantAll,
-	createBackgroundStyleSet,
 	createButtonStyleSet,
 	createResponsiveStyles,
 	createTypographyStyles,
@@ -12,6 +11,9 @@ import {
 	__getValue,
 	appendImportant,
 } from '~stackable/util'
+import {
+	createBackgroundStyleSet,
+} from '../../util'
 import deepmerge from 'deepmerge'
 
 /**

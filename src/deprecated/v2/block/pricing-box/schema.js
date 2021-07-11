@@ -3,13 +3,15 @@
  */
 import {
 	createAllCombinationAttributes,
-	createBackgroundAttributes,
 	createButtonAttributes,
 	createImageAttributes,
 	createTypographyAttributes,
 	descriptionPlaceholder,
 	createBorderAttributes,
 } from '~stackable/util'
+import {
+	createBackgroundAttributes,
+} from '../../util'
 import { i18n } from 'stackable'
 
 /**
