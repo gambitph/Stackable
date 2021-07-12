@@ -33,6 +33,7 @@ import {
 	Linking,
 	BlockStyle,
 	CustomAttributes,
+	EffectsAnimations,
 } from '~stackable/block-components'
 
 /**
@@ -118,6 +119,7 @@ const Edit = props => {
 				hasShape={ false }
 			/>
 			<ContainerDiv.InspectorControls sizeSelector=".stk-card__content" />
+			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-card" />
 			<Responsive.InspectorControls />

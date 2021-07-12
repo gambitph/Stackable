@@ -97,9 +97,9 @@ const StackableRangeControl = memo( props => {
 		'ugb-range-control--blank': value === '',
 	} )
 	const isReset = value === ''
-	const initialPosition = props.initialPosition || props.placeholder || ''
+	const initialPosition = props.initialPosition !== null ? props.initialPosition : ( props.placeholder || props.sliderMin || props.min )
 	const percentageValue = getPercentageValue(
-		( isReset ? initialPosition : value ) || ( props.sliderMin || props.min ) || 0,
+		isReset ? initialPosition : value,
 		props.sliderMin || props.min || 0,
 		props.sliderMax || props.max || 100
 	)
@@ -181,7 +181,7 @@ StackableRangeControl.defaultProps = {
 	resetFallbackValue: '',
 	placeholder: null,
 	placeholderRender: null,
-	initialPosition: 0,
+	initialPosition: null,
 	onChange: () => {},
 }
 

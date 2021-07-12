@@ -5,6 +5,7 @@ import {
 	Advanced,
 	Alignment,
 	BlockDiv,
+	EffectsAnimations,
 	MarginBottom,
 } from '~stackable/block-components'
 import {
@@ -39,6 +40,7 @@ export const ButtonGroupStyles = props => {
 			<BlockDiv.Style { ...propsToPass } />
 			<MarginBottom.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
+			<EffectsAnimations.Style { ...propsToPass } />
 		</Fragment>
 	)
 }
@@ -64,6 +66,7 @@ ButtonGroupStyles.Content = props => {
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<MarginBottom.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
+			<EffectsAnimations.Style.Content { ...propsToPass } />
 		</Fragment>
 	)
 

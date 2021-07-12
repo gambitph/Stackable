@@ -4,6 +4,7 @@ import {
 	BlockDiv,
 	CustomAttributes,
 	CustomCSS,
+	EffectsAnimations,
 	MarginBottom,
 	Responsive,
 	Row,
@@ -19,6 +20,7 @@ export const attributes = ( version = VERSION ) => {
 	Row.addAttributes( attrObject )
 	Alignment.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
+	EffectsAnimations.addAttributes( attrObject )
 	CustomAttributes.addAttributes( attrObject )
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )

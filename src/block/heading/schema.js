@@ -12,6 +12,7 @@ import {
 	Alignment,
 	MarginBottom,
 	CustomAttributes,
+	EffectsAnimations,
 } from '~stackable/block-components'
 
 export const attributes = ( version = VERSION ) => {
@@ -19,6 +20,7 @@ export const attributes = ( version = VERSION ) => {
 
 	Alignment.addAttributes( attrObject )
 	BlockDiv.addAttributes( attrObject )
+	EffectsAnimations.addAttributes( attrObject )
 	CustomAttributes.addAttributes( attrObject )
 	CustomCSS.addAttributes( attrObject )
 	MarginBottom.addAttributes( attrObject )

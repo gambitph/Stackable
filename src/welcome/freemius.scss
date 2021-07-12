@@ -25,7 +25,12 @@
 	}
 }
 
-@import "common";
+@mixin box {
+	background-color: #fff;
+	border-radius: 0;
+	overflow: hidden;
+	padding: 60px 35px;
+}
 
 /**
  * Affiliation.

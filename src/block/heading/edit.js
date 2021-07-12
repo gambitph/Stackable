@@ -17,6 +17,7 @@ import {
 	Alignment,
 	MarginBottom,
 	CustomAttributes,
+	EffectsAnimations,
 } from '~stackable/block-components'
 import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
@@ -69,6 +70,7 @@ const Edit = props => {
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 			<Typography.InspectorControls hasRemoveMargins={ true } />
+			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-heading" />
 			<Responsive.InspectorControls />

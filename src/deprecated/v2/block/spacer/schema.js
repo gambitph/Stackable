@@ -1,7 +1,10 @@
 /**
  * External dependencies
  */
-import { createResponsiveAttributes, createBackgroundAttributes } from '~stackable/util'
+import { createResponsiveAttributes } from '~stackable/util'
+import {
+	createBackgroundAttributes,
+} from '../../util'
 
 export default {
 	...createResponsiveAttributes( '%sHeight', {

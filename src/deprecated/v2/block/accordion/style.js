@@ -2,7 +2,6 @@
  * External dependencies
  */
 import {
-	createBackgroundStyleSet,
 	createResponsiveStyles,
 	createTypographyStyles,
 	whiteIfDark,
@@ -10,6 +9,9 @@ import {
 	__getValue,
 	createBorderStyleSet,
 } from '~stackable/util'
+import {
+	createBackgroundStyleSet,
+} from '../../util'
 import deepmerge from 'deepmerge'
 
 /**

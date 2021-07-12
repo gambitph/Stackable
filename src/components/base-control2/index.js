@@ -44,14 +44,21 @@ export const BaseControl = props => {
 		} )
 	), [ props.units ] ) || []
 
+	const labelClassName = classnames( [
+		'stk-control-label',
+	], {
+		'stk-control-label--bold': props.boldLabel,
+	} )
+
+	const label = props.boldLabel ? <h3>{ props.label }</h3> : props.label
+
 	return (
 		<GutBaseControl
-			id="testing"
 			help={ props.help }
 			className={ className }
 		>
-			<div className="stk-control-label">
-				<div className="components-base-control__label">{ props.label }</div>
+			<div className={ labelClassName }>
+				<div className="components-base-control__label">{ label }</div>
 				<div className="stk-control-label__toggles">
 					{ hasRepsonsive && <ResponsiveToggle screens={ responsive } /> }
 					{ hasHover && <HoverStateToggle hover={ props.hover } /> }
@@ -83,6 +90,7 @@ BaseControl.defaultProps = {
 	className: '',
 	label: '',
 	help: '',
+	boldLabel: false,
 
 	responsive: false,
 	hover: false,

@@ -12,7 +12,7 @@ import { sprintf } from '@wordpress/i18n'
 /**
  * Internal dependencies
  */
-import { appendImportant, hexToRgba } from '..'
+import { appendImportant, hexToRgba } from '../../../../util'
 
 const createBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop', blockAttributes = {}, options = {} ) => {
 	const getAttrName = attrName => camelCase( sprintf( attrNameTemplate, attrName ) )
@@ -44,9 +44,9 @@ const createBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 			backgroundImage: getValue( 'BackgroundMediaURL', `url(%s)` ),
 			backgroundPosition: appendImportant( getValue( 'BackgroundPosition' ), importantBackgroundPosition ),
 			backgroundRepeat: appendImportant( getValue( 'BackgroundRepeat' ), importantBackgroundRepeat ),
-			backgroundSize: getValue( 'BackgroundSize' ) ?
-				appendImportant( ( getValue( 'BackgroundSize' ) !== 'custom' ? getValue( 'BackgroundSize' ) : customSize ), importantBackgroundSize ) :
-				undefined,
+			backgroundSize: getValue( 'BackgroundSize' )
+				? appendImportant( ( getValue( 'BackgroundSize' ) !== 'custom' ? getValue( 'BackgroundSize' ) : customSize ), importantBackgroundSize )
+				: undefined,
 			backgroundBlendMode: getValue( 'BackgroundImageBlendMode' ),
 		}
 	} else if ( screen === 'tablet' ) { // Tablet.
@@ -54,9 +54,9 @@ const createBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 			backgroundImage: getValue( 'TabletBackgroundMediaURL', `url(%s)` ),
 			backgroundPosition: appendImportant( getValue( 'TabletBackgroundPosition' ), importantBackgroundPosition ),
 			backgroundRepeat: appendImportant( getValue( 'TabletBackgroundRepeat' ), importantBackgroundRepeat ),
-			backgroundSize: getValue( 'TabletBackgroundSize' ) ?
-				appendImportant( ( getValue( 'TabletBackgroundSize' ) !== 'custom' ? getValue( 'TabletBackgroundSize' ) : tabletCustomSize ), importantBackgroundSize ) :
-				undefined,
+			backgroundSize: getValue( 'TabletBackgroundSize' )
+				? appendImportant( ( getValue( 'TabletBackgroundSize' ) !== 'custom' ? getValue( 'TabletBackgroundSize' ) : tabletCustomSize ), importantBackgroundSize )
+				: undefined,
 		}
 	}
 
@@ -65,9 +65,9 @@ const createBackgroundStyles = ( attrNameTemplate = '%s', screen = 'desktop', bl
 		backgroundImage: getValue( 'MobileBackgroundMediaURL', `url(%s)` ),
 		backgroundPosition: appendImportant( getValue( 'MobileBackgroundPosition' ), importantBackgroundPosition ),
 		backgroundRepeat: appendImportant( getValue( 'MobileBackgroundRepeat' ), importantBackgroundRepeat ),
-		backgroundSize: getValue( 'MobileBackgroundSize' ) ?
-			appendImportant( ( getValue( 'MobileBackgroundSize' ) !== 'custom' ? getValue( 'MobileBackgroundSize' ) : mobileCustomSize ), importantBackgroundSize ) :
-			undefined,
+		backgroundSize: getValue( 'MobileBackgroundSize' )
+			? appendImportant( ( getValue( 'MobileBackgroundSize' ) !== 'custom' ? getValue( 'MobileBackgroundSize' ) : mobileCustomSize ), importantBackgroundSize )
+			: undefined,
 	}
 }
 
@@ -93,9 +93,9 @@ export const createBackgroundOverlayStyles = ( attrNameTemplate = '%s', screen =
 	if ( screen !== 'tablet' && screen !== 'mobile' ) { // Desktop.
 		return {
 			backgroundColor: appendImportant( ! isGradient && getValue( 'BackgroundColor' ) ? getValue( 'BackgroundColor' ) : undefined, importantBackgroundColor ),
-			backgroundImage: appendImportant( isGradient ?
-				`linear-gradient(${ getValue( 'BackgroundGradientDirection', '%sdeg', '90deg' ) }, ${ getValue( 'BackgroundColor' ) || defaultColor1 } ${ color1Location }, ${ getValue( 'BackgroundColor2' ) || defaultColor2 } ${ color2Location })` :
-				undefined, importantBackgroundColor ),
+			backgroundImage: appendImportant( isGradient
+				? `linear-gradient(${ getValue( 'BackgroundGradientDirection', '%sdeg', '90deg' ) }, ${ getValue( 'BackgroundColor' ) || defaultColor1 } ${ color1Location }, ${ getValue( 'BackgroundColor2' ) || defaultColor2 } ${ color2Location })`
+				: undefined, importantBackgroundColor ),
 			opacity: getValue( 'BackgroundMediaURL' ) ? opacity : undefined,
 			mixBlendMode: isGradient ? getValue( 'BackgroundGradientBlendMode' ) : undefined,
 		}
