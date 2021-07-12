@@ -4,7 +4,6 @@
  */
 import {
 	descriptionPlaceholder,
-	createBackgroundAttributes,
 	createResponsiveAttributes,
 	createTypographyAttributes,
 	createButtonAttributes,
@@ -12,6 +11,9 @@ import {
 	createIconAttributes,
 	createBorderAttributes,
 } from '~stackable/util'
+import {
+	createBackgroundAttributes,
+} from '../../util'
 import { i18n } from 'stackable'
 
 /**

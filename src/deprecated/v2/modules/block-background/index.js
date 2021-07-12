@@ -7,15 +7,15 @@ import {
 	PanelAdvancedSettings,
 	ControlSeparator,
 } from '~stackable/components'
+import { __getValue } from '~stackable/util'
 import {
-	createBackgroundAttributeNames,
 	createBackgroundAttributes,
-	createBackgroundOverlayStyles,
+	createBackgroundAttributeNames,
 	createBackgroundStyles,
-	createVideoBackground,
+	createBackgroundOverlayStyles,
 	hasBackgroundOverlay,
-	__getValue,
-} from '~stackable/util'
+	createVideoBackground,
+} from '../../util'
 import { omit } from 'lodash'
 
 /**

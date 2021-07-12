@@ -5,13 +5,15 @@ import {
 	descriptionPlaceholder,
 	createSocialButtonAttributes,
 	createAllCombinationAttributes,
-	createBackgroundAttributes,
 	createImageAttributes,
 	createTypographyAttributes,
 	createImageBackgroundAttributes,
 	createBorderAttributes,
 	SOCIAL_SITES,
 } from '~stackable/util'
+import {
+	createBackgroundAttributes,
+} from '../../util'
 import { upperFirst } from 'lodash'
 
 /**

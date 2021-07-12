@@ -37,6 +37,12 @@ const sassOptions = {
 	includePaths: path.resolve( __dirname, './src/' ),
 }
 
+module.exports = {
+	buildInclude,
+	postCSSOptions,
+	sassOptions,
+}
+
 // Gets all directories recursively.
 const getDirectories = function( dir, filelist ) {
 	const fs = require( 'fs' )
@@ -99,9 +105,14 @@ gulp.task( 'welcome-styles', function() {
  * START deprecated build styles, we still build these
  ********************************************************************/
 
+const deprecatedV2SassOptions = {
+	includePaths: path.resolve( __dirname, './src/deprecated/v2/' ),
+}
+module.exports.deprecatedV2SassOptions = deprecatedV2SassOptions
+
 gulp.task( 'style-editor-deprecated-v2', function() {
 	return gulp.src( [ path.resolve( __dirname, './src/deprecated/v2/**/editor.scss' ) ] )
-		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
+		.pipe( sass( deprecatedV2SassOptions ).on( 'error', sass.logError ) )
 		.pipe( concat( 'editor_blocks_deprecated_v2.css' ) )
 		.pipe( postcss( postCSSOptions ) )
 		.pipe( gulp.dest( 'dist/deprecated/' ) )
@@ -109,7 +120,7 @@ gulp.task( 'style-editor-deprecated-v2', function() {
 
 gulp.task( 'style-deprecated-v2', function() {
 	return gulp.src( [ path.resolve( __dirname, './src/deprecated/v2/common.scss' ), path.resolve( __dirname, './src/deprecated/v2/**/style.scss' ) ] )
-		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
+		.pipe( sass( deprecatedV2SassOptions ).on( 'error', sass.logError ) )
 		.pipe( concat( 'frontend_blocks_deprecated_v2.css' ) )
 		.pipe( postcss( postCSSOptions ) )
 		.pipe( gulp.dest( 'dist/deprecated/' ) )
@@ -117,16 +128,8 @@ gulp.task( 'style-deprecated-v2', function() {
 
 gulp.task( 'style-deprecated-v1', function() {
 	return gulp.src( [ path.resolve( __dirname, './src/deprecated/v1/*.scss' ) ] )
-		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
+		.pipe( sass( deprecatedV2SassOptions ).on( 'error', sass.logError ) )
 		.pipe( concat( 'frontend_blocks_deprecated.css' ) )
-		.pipe( postcss( postCSSOptions ) )
-		.pipe( gulp.dest( 'dist/deprecated/' ) )
-} )
-
-gulp.task( 'style-deprecated-wp-v5-3', function() {
-	return gulp.src( [ path.resolve( __dirname, './src/deprecated/editor-wp-v5-3/*.scss' ) ] )
-		.pipe( sass( sassOptions ).on( 'error', sass.logError ) )
-		.pipe( concat( 'editor_blocks_wp_v5_3.css' ) )
 		.pipe( postcss( postCSSOptions ) )
 		.pipe( gulp.dest( 'dist/deprecated/' ) )
 } )
@@ -135,7 +138,6 @@ gulp.task( 'style-deprecated', gulp.parallel(
 	'style-editor-deprecated-v2',
 	'style-deprecated-v2',
 	'style-deprecated-v1',
-	'style-deprecated-wp-v5-3'
 ) )
 
 /*********************************************************************
@@ -175,9 +177,4 @@ gulp.task( 'watch', gulp.series( 'build-process', function watch( done ) {
 	done()
 } ) )
 
-module.exports = {
-	buildInclude,
-	postCSSOptions,
-	sassOptions,
-	watchFuncs,
-}
+module.exports.watchFuncs = watchFuncs

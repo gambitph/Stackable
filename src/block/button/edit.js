@@ -19,6 +19,7 @@ import {
 	Typography,
 	BlockStyle,
 	CustomAttributes,
+	EffectsAnimations,
 } from '~stackable/block-components'
 import {
 	useBlockHoverClass,
@@ -82,6 +83,7 @@ const Edit = props => {
 			/>
 
 			<Advanced.InspectorControls />
+			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-button" />
 			<Responsive.InspectorControls />

@@ -2,7 +2,6 @@
  * External dependencies
  */
 import {
-	createBackgroundStyleSet,
 	createButtonStyleSet,
 	createTypographyStyles,
 	whiteIfDark,
@@ -13,6 +12,9 @@ import {
 	__getValue,
 	createBorderStyleSet,
 } from '~stackable/util'
+import {
+	createBackgroundStyleSet,
+} from '../../util'
 
 /**
  * Internal dependencies

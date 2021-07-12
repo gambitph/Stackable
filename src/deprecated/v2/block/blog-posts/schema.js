@@ -8,13 +8,15 @@ import './design'
  * External dependencies
  */
 import {
-	createBackgroundAttributes,
 	createAllCombinationAttributes,
 	createTypographyAttributes,
 	createResponsiveAttributes,
 	createButtonAttributes,
 	createBorderAttributes,
 } from '~stackable/util'
+import {
+	createBackgroundAttributes,
+} from '../../util'
 import { i18n } from 'stackable'
 
 /**

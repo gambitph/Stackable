@@ -7,12 +7,14 @@ import './design'
  * External dependencies
  */
 import {
-	createBackgroundAttributes,
 	createAllCombinationAttributes,
 	createTypographyAttributes,
 	createResponsiveAttributes,
 	createBorderAttributes,
 } from '~stackable/util'
+import {
+	createBackgroundAttributes,
+} from '../../util'
 
 export default {
 	design: {

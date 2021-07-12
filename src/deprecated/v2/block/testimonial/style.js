@@ -3,7 +3,6 @@
  */
 import {
 	appendImportantAll,
-	createBackgroundStyleSet,
 	createTypographyStyles,
 	createImageStyleSet,
 	marginLeftAlign,
@@ -14,6 +13,9 @@ import {
 	whiteIfDarkBlackIfLight,
 	__getValue,
 } from '~stackable/util'
+import {
+	createBackgroundStyleSet,
+} from '../../util'
 import { range } from 'lodash'
 
 /**

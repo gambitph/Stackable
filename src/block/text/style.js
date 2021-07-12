@@ -7,6 +7,7 @@ import {
 	Typography,
 	Alignment,
 	MarginBottom,
+	EffectsAnimations,
 } from '~stackable/block-components'
 import {
 	getUniqueBlockClass, useStyles, getStyles,
@@ -72,6 +73,7 @@ export const TextStyles = props => {
 				versionDeprecated=""
 				{ ...propsToPass }
 			/>
+			<EffectsAnimations.Style { ...propsToPass } />
 		</Fragment>
 	)
 }
@@ -103,6 +105,7 @@ TextStyles.Content = props => {
 					hoverSelector: '.stk-text__text:hover',
 				},
 			} } />
+			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<MarginBottom.Style.Content { ...propsToPass } />
 			<StyleComponent.Content
 				styles={ columnStyles }
