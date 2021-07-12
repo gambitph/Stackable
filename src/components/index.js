@@ -78,7 +78,6 @@ export { default as FontAwesomeIcon } from './font-awesome-icon'
 export { default as AdminBaseSetting } from './admin-base-setting'
 export { default as AdminTextSetting } from './admin-text-setting'
 export { default as AdminToggleSetting } from './admin-toggle-setting'
-export { default as DynamicContentControl } from './dynamic-content-control'
 
 // V2 only Components, for deprecation
 export { default as BlockContainer } from './block-container'

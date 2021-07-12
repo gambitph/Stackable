@@ -2,7 +2,6 @@
 
 .stk-dynamic-content-control {
 	display: flex;
-	align-items: center;
 
 	.components-base-control.ugb-advanced-text-control {
 		width: 100%;
@@ -19,7 +18,9 @@
 		border: 1px solid #757575;
 		padding-left: 4px;
 		padding-right: 4px;
-		width: 30px;
+		width: 30px !important;
+		height: 30px;
+		margin-left: 4px;
 
 		.dashicon {
 			margin: 4px;
