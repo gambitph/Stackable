@@ -3,7 +3,6 @@
  */
 import {
 	appendImportantAll,
-	createBackgroundStyleSet,
 	createButtonStyleSet,
 	createTypographyStyles,
 	whiteIfDark,
@@ -15,6 +14,9 @@ import {
 	createBorderStyleSet,
 	__getValue,
 } from '~stackable/util'
+import {
+	createBackgroundStyleSet,
+} from '../../util'
 
 /**
  * Internal dependencies
@@ -198,27 +200,27 @@ export const createStyles = props => {
 		styles.push( {
 			'.ugb-pricing-box__price-line': {
 				...createTypographyStyles( 'price%s', 'desktop', props.attributes ),
-				justifyContent: appendImportant( align === 'center' ? 'center' :
-					align === 'left' ? 'flex-start' :
-						align === 'right' ? 'flex-end' :
-							undefined ),
+				justifyContent: appendImportant( align === 'center' ? 'center'
+					: align === 'left' ? 'flex-start'
+						: align === 'right' ? 'flex-end'
+							: undefined ),
 			},
 			tablet: {
 				'.ugb-pricing-box__price-line': {
 					...createTypographyStyles( 'price%s', 'tablet', props.attributes ),
-					justifyContent: appendImportant( alignTablet === 'center' ? 'center' :
-						alignTablet === 'left' ? 'flex-start' :
-							alignTablet === 'right' ? 'flex-end' :
-								undefined ),
+					justifyContent: appendImportant( alignTablet === 'center' ? 'center'
+						: alignTablet === 'left' ? 'flex-start'
+							: alignTablet === 'right' ? 'flex-end'
+								: undefined ),
 				},
 			},
 			mobile: {
 				'.ugb-pricing-box__price-line': {
 					...createTypographyStyles( 'price%s', 'mobile', props.attributes ),
-					justifyContent: appendImportant( alignMobile === 'center' ? 'center' :
-						alignMobile === 'left' ? 'flex-start' :
-							alignMobile === 'right' ? 'flex-end' :
-								undefined ),
+					justifyContent: appendImportant( alignMobile === 'center' ? 'center'
+						: alignMobile === 'left' ? 'flex-start'
+							: alignMobile === 'right' ? 'flex-end'
+								: undefined ),
 				},
 			},
 		} )

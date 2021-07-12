@@ -2,7 +2,6 @@
  * External dependencies
  */
 import {
-	createBackgroundAttributes,
 	createImageBackgroundAttributes,
 	createAllCombinationAttributes,
 	createTypographyAttributes,
@@ -11,6 +10,9 @@ import {
 	descriptionPlaceholder,
 	createBorderAttributes,
 } from '~stackable/util'
+import {
+	createBackgroundAttributes,
+} from '../../util'
 
 /**
  * WordPress dependencies

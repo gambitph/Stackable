@@ -9,6 +9,7 @@ import {
 	Button,
 	Typography,
 	CustomAttributes,
+	EffectsAnimations,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
@@ -16,6 +17,7 @@ import { version as VERSION } from 'stackable'
 export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
 	BlockDiv.addAttributes( attrObject )
+	EffectsAnimations.addAttributes( attrObject )
 	CustomAttributes.addAttributes( attrObject )
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )

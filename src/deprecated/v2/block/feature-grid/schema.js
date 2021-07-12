@@ -9,13 +9,15 @@ import './design'
  */
 import {
 	descriptionPlaceholder,
-	createBackgroundAttributes,
 	createImageAttributes,
 	createTypographyAttributes,
 	createButtonAttributes,
 	createAllCombinationAttributes,
 	createBorderAttributes,
 } from '~stackable/util'
+import {
+	createBackgroundAttributes,
+} from '../../util'
 import { i18n } from 'stackable'
 
 /**

@@ -3,7 +3,6 @@
  */
 import {
 	appendImportantAll,
-	createBackgroundStyleSet,
 	createTypographyStyles,
 	marginLeftAlign,
 	marginRightAlign,
@@ -15,6 +14,9 @@ import {
 	createIconStyleSet,
 	createBorderStyleSet,
 } from '~stackable/util'
+import {
+	createBackgroundStyleSet,
+} from '../../util'
 import deepmerge from 'deepmerge'
 
 /**
@@ -273,9 +275,9 @@ export const createStyles = props => {
 		// Default button color.
 		// if ( ! show.columnBackground || ! columnBackgroundColor ) {
 		if ( ! buttonBackgroundColor && show.columnBackground ) {
-			const color = columnBackgroundColor ? whiteIfDarkBlackIfLight( buttonBackgroundColor, columnBackgroundColor, '#ffffff', '#424242' ) :
-				design === 'bordered' ? '#424242' :
-					NOTIFY_TEXT_COLORS[ notifType ]
+			const color = columnBackgroundColor ? whiteIfDarkBlackIfLight( buttonBackgroundColor, columnBackgroundColor, '#ffffff', '#424242' )
+				: design === 'bordered' ? '#424242'
+					: NOTIFY_TEXT_COLORS[ notifType ]
 			const colorOpposite = ! color ? undefined : ( color === '#ffffff' ? '#424242' : '#ffffff' )
 			if ( buttonDesign === 'basic' || buttonDesign === '' ) {
 				styles.push( {

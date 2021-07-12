@@ -4,11 +4,13 @@
 import {
 	appendImportantAll,
 	appendImportant,
-	createBackgroundStyleSet,
 	createBorderStyleSet,
 	whiteIfDarkBlackIfLight,
 	__getValue,
 } from '~stackable/util'
+import {
+	createBackgroundStyleSet,
+} from '../../util'
 import deepmerge from 'deepmerge'
 
 /**
@@ -97,34 +99,34 @@ export const createStyles = props => {
 	} = props.attributes
 	styles.push( {
 		[ `.${ uniqueClass }-wrapper > .ugb-container__side` ]: {
-			paddingTop: height === 'short' ? '35px !important' :
-				height === 'tall' ? '120px !important' :
-					undefined,
-			paddingBottom: height === 'short' ? '35px !important' :
-				height === 'tall' ? '120px !important' :
-					undefined,
+			paddingTop: height === 'short' ? '35px !important'
+				: height === 'tall' ? '120px !important'
+					: undefined,
+			paddingBottom: height === 'short' ? '35px !important'
+				: height === 'tall' ? '120px !important'
+					: undefined,
 		},
 		[ `.${ uniqueClass }-wrapper.ugb-container__wrapper` ]: {
-			minHeight: height === 'half' ? '50vh' :
-				height === 'full' ? '100vh' :
-					undefined,
+			minHeight: height === 'half' ? '50vh'
+				: height === 'full' ? '100vh'
+					: undefined,
 			// Remove top/bottom padding for the short/tall height to display properly.
 			paddingTop: height === 'short' || height === 'tall' ? '0 !important' : undefined,
 			paddingBottom: height === 'short' || height === 'tall' ? '0 !important' : undefined,
 		},
 		tablet: {
 			[ `.${ uniqueClass }-wrapper > .ugb-container__side` ]: {
-				paddingTop: tabletHeight === 'short' ? '35px !important' :
-					tabletHeight === 'tall' ? '120px !important' :
-						undefined,
-				paddingBottom: tabletHeight === 'short' ? '35px !important' :
-					tabletHeight === 'tall' ? '120px !important' :
-						undefined,
+				paddingTop: tabletHeight === 'short' ? '35px !important'
+					: tabletHeight === 'tall' ? '120px !important'
+						: undefined,
+				paddingBottom: tabletHeight === 'short' ? '35px !important'
+					: tabletHeight === 'tall' ? '120px !important'
+						: undefined,
 			},
 			[ `.${ uniqueClass }-wrapper.ugb-container__wrapper` ]: {
-				minHeight: tabletHeight === 'half' ? '50vh' :
-					tabletHeight === 'full' ? '100vh' :
-						undefined,
+				minHeight: tabletHeight === 'half' ? '50vh'
+					: tabletHeight === 'full' ? '100vh'
+						: undefined,
 				// Remove top/bottom padding for the short/tall height to display properly.
 				paddingTop: tabletHeight === 'short' || tabletHeight === 'tall' ? '0 !important' : undefined,
 				paddingBottom: tabletHeight === 'short' || tabletHeight === 'tall' ? '0 !important' : undefined,
@@ -132,17 +134,17 @@ export const createStyles = props => {
 		},
 		mobile: {
 			[ `.${ uniqueClass }-wrapper > .ugb-container__side` ]: {
-				paddingTop: mobileHeight === 'short' ? '35px !important' :
-					mobileHeight === 'tall' ? '120px !important' :
-						undefined,
-				paddingBottom: mobileHeight === 'short' ? '35px !important' :
-					mobileHeight === 'tall' ? '120px !important' :
-						undefined,
+				paddingTop: mobileHeight === 'short' ? '35px !important'
+					: mobileHeight === 'tall' ? '120px !important'
+						: undefined,
+				paddingBottom: mobileHeight === 'short' ? '35px !important'
+					: mobileHeight === 'tall' ? '120px !important'
+						: undefined,
 			},
 			[ `.${ uniqueClass }-wrapper.ugb-container__wrapper` ]: {
-				minHeight: mobileHeight === 'half' ? '50vh' :
-					mobileHeight === 'full' ? '100vh' :
-						undefined,
+				minHeight: mobileHeight === 'half' ? '50vh'
+					: mobileHeight === 'full' ? '100vh'
+						: undefined,
 				// Remove top/bottom padding for the short/tall height to display properly.
 				paddingTop: mobileHeight === 'short' || mobileHeight === 'tall' ? '0 !important' : undefined,
 				paddingBottom: mobileHeight === 'short' || mobileHeight === 'tall' ? '0 !important' : undefined,

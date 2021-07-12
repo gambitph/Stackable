@@ -96,4 +96,53 @@ module.exports = [ {
 	},
 
 	plugins,
+},
+{
+
+    mode: 'production',
+
+    devtool: 'hidden-source-map',
+
+	entry: {
+	},
+
+	output: {
+		filename: '[name].js',
+	    library: '[name]',  // it assigns this module to the global (window) object
+    },
+    resolve: {
+        alias: {
+            '~stackable': path.resolve( __dirname, '../src/' )
+        }
+    },
+
+    // Optimize output bundle.
+	optimization: {
+		minimize: true,
+        emitOnErrors: false,
+	},
+
+	module: {
+		rules: [
+			{
+				test: /\.js$/,
+				exclude: /(node_modules|bower_components)/,
+				use: {
+					loader: 'babel-loader',
+					options: {
+						// presets: ['es2015'],
+						presets: [ '@wordpress/babel-preset-default' ],
+						// Cache compilation results in ./node_modules/.cache/babel-loader/
+						cacheDirectory: true,
+						plugins: [
+							'@babel/plugin-proposal-class-properties',
+						]
+					}
+				},
+				resolve: {
+					fullySpecified: false
+				},
+			},
+		],
+	},
 } ]

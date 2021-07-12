@@ -2,7 +2,10 @@
  * External dependencies
  */
 import classnames from 'classnames'
-import { createVideoBackground, hasBackgroundOverlay } from '~stackable/util'
+import {
+	hasBackgroundOverlay,
+	createVideoBackground,
+} from '../../util'
 import { omit } from 'lodash'
 
 /**

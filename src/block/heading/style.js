@@ -7,6 +7,7 @@ import {
 	Typography,
 	Alignment,
 	MarginBottom,
+	EffectsAnimations,
 } from '~stackable/block-components'
 import { getUniqueBlockClass } from '~stackable/util'
 import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
@@ -42,6 +43,7 @@ export const HeadingStyles = props => {
 					selector: '.stk-heading__text',
 				},
 			} } />
+			<EffectsAnimations.Style { ...propsToPass } />
 		</Fragment>
 	)
 }
@@ -71,6 +73,7 @@ HeadingStyles.Content = props => {
 					selector: '.stk-heading__text',
 				},
 			} } />
+			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<MarginBottom.Style.Content { ...propsToPass } />
 		</Fragment>
 	)
