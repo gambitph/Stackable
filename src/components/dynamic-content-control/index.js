@@ -46,7 +46,7 @@ const DynamicContentControl = props => {
 				isSmall
 				isTertiary
 				onClick={ () => setIsPopoverOpen( ! isPopoverOpen ) }
-				isPressed={ isPopoverOpen }
+				isPressed={ isPopoverOpen || props.value?.match( /\!#stk_dynamic:(.*)\!#/ ) }
 			/>
 			{ isPopoverOpen && (
 				<Popover

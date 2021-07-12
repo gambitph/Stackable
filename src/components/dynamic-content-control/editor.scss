@@ -13,13 +13,16 @@
 		}
 	}
 
-	&__button {
-		padding-left: 0;
-		padding-right: 0;
+	.stk-dynamic-content-control__button {
+		height: 100%;
+		min-width: unset;
+		border: 1px solid #757575;
+		padding-left: 4px;
+		padding-right: 4px;
+		width: 30px;
 
-		& > span {
-			margin-left: 0;
-			margin-right: 0;
+		.dashicon {
+			margin: 4px;
 		}
 	}
 }
