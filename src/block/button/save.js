@@ -9,6 +9,7 @@ import {
 	BlockDiv,
 	CustomCSS,
 	Button,
+	Typography,
 	getResponsiveClasses,
 } from '~stackable/block-components'
 
@@ -16,7 +17,6 @@ import {
  * WordPress dependencies
  */
 import { compose } from '@wordpress/compose'
-import { RichText } from '@wordpress/block-editor'
 
 /**
  * Internal dependencies
@@ -56,10 +56,10 @@ export const Save = props => {
 				className={ buttonClassNames }
 				attributes={ props.attributes }
 			>
-				<RichText.Content
+				<Typography.Content
+					attributes={ props.attributes }
 					tagName="span"
 					className={ typographyInnerClassNames }
-					value={ props.attributes.text }
 				/>
 			</Button.Content>
 		</BlockDiv.Content>
