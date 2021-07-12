@@ -26,7 +26,71 @@ export const attributes = ( version = VERSION ) => {
 	Advanced.addAttributes( attrObject )
 	Typography.addAttributes( attrObject, '.stk-heading__text', {
 		defaultTextTag: 'h2',
-		hasTopBottomLine: true,
+	} )
+
+	attrObject.add( {
+		attributes: {
+			showTopLine: {
+				type: 'boolean',
+				default: '',
+			},
+			topLineWidth: {
+				type: 'number',
+				default: '',
+				stkUnits: 'px',
+				stkHover: true,
+			},
+			topLineHeight: {
+				type: 'number',
+				default: '',
+			},
+			topLineColor: {
+				type: 'string',
+				default: '',
+				stkHover: true,
+			},
+			topLineMargin: {
+				type: 'number',
+				default: '',
+				stkResponsive: true,
+			},
+			topLineAlign: {
+				type: 'string',
+				default: '',
+				stkResponsive: true,
+			},
+			showBottomLine: {
+				type: 'boolean',
+				default: '',
+			},
+			bottomLineWidth: {
+				type: 'number',
+				default: '',
+				stkUnits: 'px',
+				stkHover: true,
+			},
+			bottomLineHeight: {
+				type: 'number',
+				default: '',
+			},
+			bottomLineColor: {
+				type: 'string',
+				default: '',
+				stkHover: true,
+			},
+			bottomLineMargin: {
+				type: 'number',
+				default: '',
+				stkResponsive: true,
+			},
+			bottomLineAlign: {
+				type: 'string',
+				default: '',
+				stkResponsive: true,
+			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
 	} )
 
 	return attrObject.getMerged( version )

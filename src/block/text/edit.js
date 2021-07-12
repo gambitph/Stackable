@@ -18,9 +18,11 @@ import {
 	MarginBottom,
 	CustomAttributes,
 } from '~stackable/block-components'
-import { version as VERSION } from 'stackable'
+import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
-import { InspectorTabs } from '~stackable/components'
+import {
+	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, AdvancedRangeControl,
+} from '~stackable/components'
 import { useBlockHoverClass } from '~stackable/hooks'
 
 /**
@@ -28,6 +30,7 @@ import { useBlockHoverClass } from '~stackable/hooks'
  */
 import { Fragment } from '@wordpress/element'
 import { createBlock } from '@wordpress/blocks'
+import { __ } from '@wordpress/i18n'
 
 const Edit = props => {
 	const {
@@ -59,7 +62,40 @@ const Edit = props => {
 			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
-			<Typography.InspectorControls hasTextTag={ false } isMultiline={ true } hasColumns={ true } />
+
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'General', i18n ) }
+					initialOpen={ true }
+					id="general"
+				>
+					<AdvancedRangeControl
+						label={ __( 'Columns', i18n ) }
+						allowReset={ true }
+						attribute="columns"
+						min={ 1 }
+						max={ 4 }
+						step={ 1 }
+						placeholder="1"
+						responsive="all"
+					/>
+
+					<AdvancedRangeControl
+						label={ __( 'Column Gap', i18n ) }
+						allowRest={ true }
+						attribute="columnGap"
+						min={ 0 }
+						max={ 100 }
+						responsive="all"
+					/>
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
+
+			<Typography.InspectorControls
+				hasTextTag={ false }
+				isMultiline={ true }
+				initialOpen={ false }
+			/>
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-text" />
 			<Responsive.InspectorControls />

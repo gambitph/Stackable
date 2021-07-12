@@ -17,19 +17,6 @@ const getStyleParams = ( options = {} ) => {
 
 	return [
 		{
-			selector: '',
-			styleRule: 'columnCount',
-			attrName: 'columns',
-			responsive: 'all',
-		},
-		{
-			selector: '',
-			styleRule: 'columnGap',
-			attrName: 'columnGap',
-			responsive: 'all',
-			format: '%spx',
-		},
-		{
 			selector,
 			styleRule: 'fontSize',
 			attrName: 'fontSize',
@@ -142,98 +129,6 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'letterSpacing',
 			attrName: 'letterSpacing',
 			format: '%spx',
-		},
-		{
-			selector: '.stk--top-line',
-			styleRule: 'height',
-			attrName: 'topLineHeight',
-			format: '%spx',
-		},
-		{
-			selector: '.stk--top-line',
-			styleRule: 'width',
-			attrName: 'topLineWidth',
-			hasUnits: 'px',
-			hover: 'all',
-		},
-		{
-			selector: '.stk--top-line',
-			styleRule: 'backgroundColor',
-			attrName: 'topLineColor',
-			hover: 'all',
-		},
-		{
-			selector: '.stk--top-line',
-			styleRule: 'backgroundColor',
-			attrName: 'topLineColor',
-			hover: 'all',
-		},
-		{
-			selector: '.stk--top-line',
-			styleRule: 'marginBottom',
-			attrName: 'topLineMargin',
-			responsive: 'all',
-			format: '%spx',
-		},
-		{
-			selector: '.stk--top-line',
-			styleRule: 'marginLeft',
-			attrName: 'topLineAlign',
-			responsive: 'all',
-			valueCallback: () => 'auto',
-		},
-		{
-			selector: '.stk--top-line',
-			styleRule: 'marginRight',
-			attrName: 'topLineAlign',
-			responsive: 'all',
-			valueCallback: value => value === 'center' ? 'auto' : undefined,
-		},
-		{
-			selector: '.stk--bottom-line',
-			styleRule: 'height',
-			attrName: 'bottomLineHeight',
-			format: '%spx',
-		},
-		{
-			selector: '.stk--bottom-line',
-			styleRule: 'width',
-			attrName: 'bottomLineWidth',
-			hasUnits: 'px',
-			hover: 'all',
-		},
-		{
-			selector: '.stk--bottom-line',
-			styleRule: 'backgroundColor',
-			attrName: 'bottomLineColor',
-			hover: 'all',
-		},
-		{
-			selector: '.stk--bottom-line',
-			styleRule: 'backgroundColor',
-			attrName: 'bottomLineColor',
-			hover: 'all',
-		},
-		{
-			selector: '.stk--bottom-line',
-			styleRule: 'marginTop',
-			attrName: 'bottomLineMargin',
-			responsive: 'all',
-			format: '%spx',
-		},
-		{
-			selector: '.stk--bottom-line',
-			styleRule: 'marginLeft',
-			attrName: 'bottomLineAlign',
-			responsive: 'all',
-			valueCallback: () => 'auto',
-		},
-		{
-			selector: '.stk--bottom-line',
-			styleRule: 'marginRight',
-			attrName: 'bottomLineAlign',
-			responsive: 'all',
-			valueCallback: value => value === 'center' ? 'auto' : undefined,
 		},
 	]
 }
