@@ -1,11 +1,14 @@
-.edit-post-sidebar .ugb-url-input-control__input {
-	.components-base-control__field {
-		margin-bottom: 0;
-	}
-	input {
-		width: 100%;
-		border-radius: 4px !important;
-		border: 1px solid #8d96a0 !important;
-		flex: 1 !important;
+.edit-post-sidebar,
+.edit-widgets-sidebar {
+	.ugb-url-input-control__input {
+		.components-base-control__field {
+			margin-bottom: 0;
+		}
+		input {
+			width: 100%;
+			border-radius: 4px !important;
+			border: 1px solid #8d96a0 !important;
+			flex: 1 !important;
+		}
 	}
 }

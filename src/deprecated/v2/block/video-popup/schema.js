@@ -1,8 +1,10 @@
 import {
-	createBackgroundAttributes,
 	createResponsiveAttributes,
 	createBorderAttributes,
 } from '~stackable/util'
+import {
+	createBackgroundAttributes,
+} from '../../util'
 
 export default {
 	videoLink: {

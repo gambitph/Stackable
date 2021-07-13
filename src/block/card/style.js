@@ -9,7 +9,7 @@ import { blockStyles } from './block-styles'
 import {
 	Advanced,
 	Alignment,
-	BlockDiv, Column, ContainerDiv, Image,
+	BlockDiv, Column, ContainerDiv, EffectsAnimations, Image,
 } from '~stackable/block-components'
 import {
 	useBlockAttributes, useDeviceType, getBlockStyle,
@@ -56,6 +56,7 @@ export const CardStyles = props => {
 			<BlockDiv.Style { ...propsToPass } />
 			<Column.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
+			<EffectsAnimations.Style { ...propsToPass } />
 			<ContainerDiv.Style
 				{ ...propsToPass }
 				options={ containerDivOptions }
@@ -85,6 +86,7 @@ CardStyles.Content = props => {
 			<Alignment.Style.Content { ...propsToPass } />
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<Column.Style.Content { ...propsToPass } />
+			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
 			<ContainerDiv.Style.Content
 				{ ...propsToPass }

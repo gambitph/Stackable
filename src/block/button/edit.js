@@ -19,6 +19,7 @@ import {
 	Typography,
 	BlockStyle,
 	CustomAttributes,
+	EffectsAnimations,
 } from '~stackable/block-components'
 import {
 	useBlockHoverClass,
@@ -30,7 +31,6 @@ import {
 import { compose } from '@wordpress/compose'
 import { Fragment } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { RichText } from '@wordpress/block-editor'
 import { createBlock } from '@wordpress/blocks'
 
 /**
@@ -43,7 +43,6 @@ const Edit = props => {
 	const {
 		className,
 		isHovered,
-		setAttributes,
 		onReplace,
 	} = props
 
@@ -84,6 +83,7 @@ const Edit = props => {
 			/>
 
 			<Advanced.InspectorControls />
+			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-button" />
 			<Responsive.InspectorControls />
@@ -94,14 +94,12 @@ const Edit = props => {
 			<Linking show={ isHovered } />
 			<BlockDiv className={ blockClassNames }>
 				<Button className={ buttonClassNames }>
-					<RichText
+					<Typography
 						tagName="span"
 						className={ typographyInnerClassNames }
 						placeholder={ __( 'Button text', i18n ) }
 						withoutInteractiveFormatting={ true }
 						keepPlaceholderOnFocus
-						value={ props.attributes.text }
-						onChange={ value => setAttributes( { text: value } ) }
 						onReplace={ onReplace }
 						onSplit={ value => createBlock(
 							'stackable/button',

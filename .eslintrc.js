@@ -82,5 +82,6 @@ module.exports = {
 		Element: true,
 		FileReader: true,
 		MutationObserver: true,
+		IntersectionObserver: true,
 	},
 }

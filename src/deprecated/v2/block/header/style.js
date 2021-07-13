@@ -3,7 +3,6 @@
  */
 import {
 	appendImportantAll,
-	createBackgroundStyleSet,
 	createButtonStyleSet,
 	createTypographyStyles,
 	createResponsiveStyles,
@@ -13,6 +12,9 @@ import {
 	appendImportant,
 	__getValue,
 } from '~stackable/util'
+import {
+	createBackgroundStyleSet,
+} from '../../util'
 import deepmerge from 'deepmerge'
 
 /**
@@ -189,25 +191,25 @@ export const createStyles = props => {
 	if ( showButton || showButton2 ) {
 		styles.push( {
 			'.ugb-header__buttons': {
-				justifyContent: appendImportant( getValue( 'contentAlign' ) === 'left' ? 'flex-start' :
-					getValue( 'contentAlign' ) === 'right' ? 'flex-end' :
-						getValue( 'contentAlign' ) === 'center' ? 'center' :
-							undefined ),
+				justifyContent: appendImportant( getValue( 'contentAlign' ) === 'left' ? 'flex-start'
+					: getValue( 'contentAlign' ) === 'right' ? 'flex-end'
+						: getValue( 'contentAlign' ) === 'center' ? 'center'
+							: undefined ),
 			},
 			tablet: {
 				'.ugb-header__buttons': {
-					justifyContent: appendImportant( getValue( 'tabletContentAlign' ) === 'left' ? 'flex-start' :
-						getValue( 'tabletContentAlign' ) === 'right' ? 'flex-end' :
-							getValue( 'tabletContentAlign' ) === 'center' ? 'center' :
-								undefined ),
+					justifyContent: appendImportant( getValue( 'tabletContentAlign' ) === 'left' ? 'flex-start'
+						: getValue( 'tabletContentAlign' ) === 'right' ? 'flex-end'
+							: getValue( 'tabletContentAlign' ) === 'center' ? 'center'
+								: undefined ),
 				},
 			},
 			mobile: {
 				'.ugb-header__buttons': {
-					justifyContent: appendImportant( getValue( 'mobileContentAlign' ) === 'left' ? 'flex-start' :
-						getValue( 'mobileContentAlign' ) === 'right' ? 'flex-end' :
-							getValue( 'mobileContentAlign' ) === 'center' ? 'center' :
-								undefined ),
+					justifyContent: appendImportant( getValue( 'mobileContentAlign' ) === 'left' ? 'flex-start'
+						: getValue( 'mobileContentAlign' ) === 'right' ? 'flex-end'
+							: getValue( 'mobileContentAlign' ) === 'center' ? 'center'
+								: undefined ),
 				},
 			},
 		} )
@@ -216,10 +218,10 @@ export const createStyles = props => {
 		if ( getValue( 'buttonAlign' ) ) {
 			styles.push( {
 				'.ugb-header__buttons': {
-					justifyContent: appendImportant( getValue( 'buttonAlign' ) === 'left' ? 'flex-start' :
-						getValue( 'buttonAlign' ) === 'right' ? 'flex-end' :
-							getValue( 'buttonAlign' ) === 'center' ? 'center' :
-								undefined ),
+					justifyContent: appendImportant( getValue( 'buttonAlign' ) === 'left' ? 'flex-start'
+						: getValue( 'buttonAlign' ) === 'right' ? 'flex-end'
+							: getValue( 'buttonAlign' ) === 'center' ? 'center'
+								: undefined ),
 				},
 			} )
 		}
@@ -227,10 +229,10 @@ export const createStyles = props => {
 			styles.push( {
 				tablet: {
 					'.ugb-header__buttons': {
-						justifyContent: appendImportant( getValue( 'buttonTabletAlign' ) === 'left' ? 'flex-start' :
-							getValue( 'buttonTabletAlign' ) === 'right' ? 'flex-end' :
-								getValue( 'buttonTabletAlign' ) === 'center' ? 'center' :
-									undefined ),
+						justifyContent: appendImportant( getValue( 'buttonTabletAlign' ) === 'left' ? 'flex-start'
+							: getValue( 'buttonTabletAlign' ) === 'right' ? 'flex-end'
+								: getValue( 'buttonTabletAlign' ) === 'center' ? 'center'
+									: undefined ),
 					},
 				},
 			} )
@@ -239,10 +241,10 @@ export const createStyles = props => {
 			styles.push( {
 				mobile: {
 					'.ugb-header__buttons': {
-						justifyContent: appendImportant( getValue( 'buttonMobileAlign' ) === 'left' ? 'flex-start' :
-							getValue( 'buttonMobileAlign' ) === 'right' ? 'flex-end' :
-								getValue( 'buttonMobileAlign' ) === 'center' ? 'center' :
-									undefined ),
+						justifyContent: appendImportant( getValue( 'buttonMobileAlign' ) === 'left' ? 'flex-start'
+							: getValue( 'buttonMobileAlign' ) === 'right' ? 'flex-end'
+								: getValue( 'buttonMobileAlign' ) === 'center' ? 'center'
+									: undefined ),
 					},
 				},
 			} )

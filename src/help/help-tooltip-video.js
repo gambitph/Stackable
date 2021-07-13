@@ -64,7 +64,7 @@ const HelpToolTipVideo = props => {
 		}
 
 		const elRect = target.getBoundingClientRect()
-		const sidebar = document.querySelector( '.edit-post-sidebar' )
+		const sidebar = document.querySelector( '.edit-post-sidebar, .edit-widgets-sidebar' )
 		if ( sidebar ) {
 			const inspectorRect = sidebar.getBoundingClientRect()
 			elRect.x = inspectorRect.x

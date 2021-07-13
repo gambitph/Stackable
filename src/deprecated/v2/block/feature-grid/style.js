@@ -3,7 +3,6 @@
  */
 import {
 	appendImportantAll,
-	createBackgroundStyleSet,
 	createButtonStyleSet,
 	createTypographyStyles,
 	whiteIfDark,
@@ -14,6 +13,9 @@ import {
 	createBorderStyleSet,
 	__getValue,
 } from '~stackable/util'
+import {
+	createBackgroundStyleSet,
+} from '../../util'
 
 /**
  * Internal dependencies

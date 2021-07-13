@@ -4,10 +4,12 @@
 import {
 	createResponsiveAttributes,
 	createAllCombinationAttributes,
-	createBackgroundAttributes,
 	createImageBackgroundAttributes,
 	createBorderAttributes,
 } from '~stackable/util'
+import {
+	createBackgroundAttributes,
+} from '../../util'
 
 export default {
 	restrictContentWidth: {

@@ -9,6 +9,7 @@ import { useBlockAttributes } from '~stackable/hooks'
 import { getUniqueBlockClass } from '~stackable/util'
 
 import { useBlockEditContext } from '@wordpress/block-editor'
+import { applyFilters } from '@wordpress/hooks'
 import { getHtmlTag } from '../advanced/use-html-tag'
 import { CustomAttributes } from '../custom-attributes'
 
@@ -26,7 +27,9 @@ export const BlockDiv = props => {
 		props.className,
 		'stk-block',
 		getUniqueBlockClass( attributes.uniqueId ),
-	], {
+	],
+	applyFilters( 'stackable.block-components.block-div.classnames', [], attributes ),
+	{
 		'stk-block-background': attributes.hasBackground,
 	} )
 
@@ -41,6 +44,7 @@ export const BlockDiv = props => {
 		backgroundUrlTablet={ attributes.blockBackgroundMediaUrlTablet }
 		backgroundUrlMobile={ attributes.blockBackgroundMediaUrlMobile }
 		backgroundColorType={ attributes.blockBackgroundColorType }
+		{ ...applyFilters( 'stackable.block-components.block-div.attributes', {}, attributes ) }
 	/>
 }
 
@@ -62,7 +66,9 @@ BlockDiv.Content = props => {
 		props.className,
 		'stk-block',
 		getUniqueBlockClass( attributes.uniqueId ),
-	], {
+	],
+	applyFilters( 'stackable.block-components.block-div.classnames.content', [], attributes ),
+	{
 		'stk-block-background': attributes.hasBackground,
 	} )
 
@@ -77,6 +83,7 @@ BlockDiv.Content = props => {
 		backgroundUrlTablet={ attributes.blockBackgroundMediaUrlTablet }
 		backgroundUrlMobile={ attributes.blockBackgroundMediaUrlMobile }
 		backgroundColorType={ attributes.blockBackgroundColorType }
+		{ ...applyFilters( 'stackable.block-components.block-div.attributes.content', {}, attributes ) }
 	/>
 }
 

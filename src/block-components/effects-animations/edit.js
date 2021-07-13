@@ -26,17 +26,17 @@ export const Edit = props => {
 		<Fragment>
 			<InspectorAdvancedControls>
 				<PanelAdvancedSettings
-					title={ __( 'Custom CSS', i18n ) }
-					id="custom-css"
+					title={ __( 'Motion Effects', i18n ) }
+					id="effects-animations"
 				>
 					{ ! isPro &&
 						<ProControl
-							title={ __( 'Say Hello to Custom CSS 👋', i18n ) }
-							description={ __( 'Further tweak this block by adding custom CSS rules. This feature is only available on Stackable Premium', i18n ) }
+							title={ __( 'Say Hello to Motion Effects 👋', i18n ) }
+							description={ __( 'Add entrance fade ins and animations when you scroll. This feature is only available on Stackable Premium', i18n ) }
 						/>
 					}
 					{ isPro &&
-						applyFilters( 'stackable.block-component.custom-css.control', null, {
+						applyFilters( 'stackable.block-component.effects-animations.control', null, {
 							mainBlockClass: props.mainBlockClass,
 						} )
 					}

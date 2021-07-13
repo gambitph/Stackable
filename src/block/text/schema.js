@@ -12,12 +12,14 @@ import {
 	Alignment,
 	MarginBottom,
 	CustomAttributes,
+	EffectsAnimations,
 } from '~stackable/block-components'
 
 export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
 
 	BlockDiv.addAttributes( attrObject )
+	EffectsAnimations.addAttributes( attrObject )
 	CustomAttributes.addAttributes( attrObject )
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
@@ -25,6 +27,23 @@ export const attributes = ( version = VERSION ) => {
 	Alignment.addAttributes( attrObject )
 	MarginBottom.addAttributes( attrObject )
 	Typography.addAttributes( attrObject, '.stk-text__text', { hasTextTag: false } )
+
+	attrObject.add( {
+		attributes: {
+			columns: {
+				stkResponsive: true,
+				type: 'number',
+				default: '',
+			},
+			columnGap: {
+				stkResponsive: true,
+				type: 'number',
+				default: '',
+			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
 
 	return attrObject.getMerged( version )
 }

@@ -3,7 +3,6 @@
  */
 import {
 	appendImportantAll,
-	createBackgroundStyleSet,
 	createTypographyStyles,
 	createImageStyleSet,
 	marginLeftAlign,
@@ -17,6 +16,9 @@ import {
 	createBorderStyleSet,
 	__getValue,
 } from '~stackable/util'
+import {
+	createBackgroundStyleSet,
+} from '../../util'
 import { range } from 'lodash'
 
 /**

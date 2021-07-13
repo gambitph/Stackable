@@ -7,15 +7,116 @@ import {
 	Typography,
 	Alignment,
 	MarginBottom,
+	EffectsAnimations,
 } from '~stackable/block-components'
-import { getUniqueBlockClass } from '~stackable/util'
+import {
+	getUniqueBlockClass, useStyles, getStyles,
+} from '~stackable/util'
 import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
-import { useBlockEditContext } from '@wordpress/block-editor'
+import { Style as StyleComponent } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
 import { Fragment, renderToString } from '@wordpress/element'
+import { useBlockEditContext } from '@wordpress/block-editor'
+
+const getStyleParams = () => {
+	return [
+		{
+			selector: '.stk-heading__top-line',
+			styleRule: 'height',
+			attrName: 'topLineHeight',
+			format: '%spx',
+		},
+		{
+			selector: '.stk-heading__top-line',
+			styleRule: 'width',
+			attrName: 'topLineWidth',
+			hasUnits: 'px',
+			hover: 'all',
+		},
+		{
+			selector: '.stk-heading__top-line',
+			styleRule: 'backgroundColor',
+			attrName: 'topLineColor',
+			hover: 'all',
+		},
+		{
+			selector: '.stk-heading__top-line',
+			styleRule: 'backgroundColor',
+			attrName: 'topLineColor',
+			hover: 'all',
+		},
+		{
+			selector: '.stk-heading__top-line',
+			styleRule: 'marginBottom',
+			attrName: 'topLineMargin',
+			responsive: 'all',
+			format: '%spx',
+		},
+		{
+			selector: '.stk-heading__top-line',
+			styleRule: 'marginLeft',
+			attrName: 'topLineAlign',
+			responsive: 'all',
+			valueCallback: () => 'auto',
+		},
+		{
+			selector: '.stk-heading__top-line',
+			styleRule: 'marginRight',
+			attrName: 'topLineAlign',
+			responsive: 'all',
+			valueCallback: value => value === 'center' ? 'auto' : undefined,
+		},
+		{
+			selector: '.stk-heading__bottom-line',
+			styleRule: 'height',
+			attrName: 'bottomLineHeight',
+			format: '%spx',
+		},
+		{
+			selector: '.stk-heading__bottom-line',
+			styleRule: 'width',
+			attrName: 'bottomLineWidth',
+			hasUnits: 'px',
+			hover: 'all',
+		},
+		{
+			selector: '.stk-heading__bottom-line',
+			styleRule: 'backgroundColor',
+			attrName: 'bottomLineColor',
+			hover: 'all',
+		},
+		{
+			selector: '.stk-heading__bottom-line',
+			styleRule: 'backgroundColor',
+			attrName: 'bottomLineColor',
+			hover: 'all',
+		},
+		{
+			selector: '.stk-heading__bottom-line',
+			styleRule: 'marginTop',
+			attrName: 'bottomLineMargin',
+			responsive: 'all',
+			format: '%spx',
+		},
+		{
+			selector: '.stk-heading__bottom-line',
+			styleRule: 'marginLeft',
+			attrName: 'bottomLineAlign',
+			responsive: 'all',
+			valueCallback: () => 'auto',
+		},
+		{
+			selector: '.stk-heading__bottom-line',
+			styleRule: 'marginRight',
+			attrName: 'bottomLineAlign',
+			responsive: 'all',
+			valueCallback: value => value === 'center' ? 'auto' : undefined,
+		},
+	]
+}
 
 export const HeadingStyles = props => {
 	const {
@@ -30,6 +131,8 @@ export const HeadingStyles = props => {
 	propsToPass.deviceType = deviceType
 	propsToPass.attributes = { ...attributes, clientId }
 
+	const topBottomLineStyles = useStyles( attributes, getStyleParams() )
+
 	return (
 		<Fragment>
 			<Alignment.Style { ...propsToPass } />
@@ -42,6 +145,13 @@ export const HeadingStyles = props => {
 					selector: '.stk-heading__text',
 				},
 			} } />
+			<StyleComponent
+				styles={ topBottomLineStyles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
+			<EffectsAnimations.Style { ...propsToPass } />
 		</Fragment>
 	)
 }
@@ -58,6 +168,7 @@ HeadingStyles.Content = props => {
 	} = props
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
+	const topBottomLineStyles = getStyles( props.attributes, getStyleParams() )
 
 	const styles = (
 		<Fragment>
@@ -71,7 +182,14 @@ HeadingStyles.Content = props => {
 					selector: '.stk-heading__text',
 				},
 			} } />
+			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<MarginBottom.Style.Content { ...propsToPass } />
+			<StyleComponent.Content
+				styles={ topBottomLineStyles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
 		</Fragment>
 	)
 

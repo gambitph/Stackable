@@ -7,15 +7,37 @@ import {
 	Typography,
 	Alignment,
 	MarginBottom,
+	EffectsAnimations,
 } from '~stackable/block-components'
-import { getUniqueBlockClass } from '~stackable/util'
+import {
+	getUniqueBlockClass, useStyles, getStyles,
+} from '~stackable/util'
 import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
-import { useBlockEditContext } from '@wordpress/block-editor'
+import { Style as StyleComponent } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
 import { Fragment, renderToString } from '@wordpress/element'
+import { useBlockEditContext } from '@wordpress/block-editor'
+
+const getStyleParams = () => {
+	return [
+		{
+			selector: '',
+			styleRule: 'columnCount',
+			attrName: 'columns',
+			responsive: 'all',
+		},
+		{
+			selector: '',
+			styleRule: 'columnGap',
+			attrName: 'columnGap',
+			responsive: 'all',
+			format: '%spx',
+		},
+	]
+}
 
 export const TextStyles = props => {
 	const {
@@ -30,6 +52,8 @@ export const TextStyles = props => {
 	propsToPass.deviceType = deviceType
 	propsToPass.attributes = { ...attributes, clientId }
 
+	const columnStyles = useStyles( attributes, getStyleParams() )
+
 	return (
 		<Fragment>
 			<Alignment.Style { ...propsToPass } />
@@ -43,6 +67,13 @@ export const TextStyles = props => {
 					hoverSelector: '.stk-text__text:hover',
 				},
 			} } />
+			<StyleComponent
+				styles={ columnStyles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
+			<EffectsAnimations.Style { ...propsToPass } />
 		</Fragment>
 	)
 }
@@ -59,6 +90,7 @@ TextStyles.Content = props => {
 	} = props
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
+	const columnStyles = getStyles( props.attributes, getStyleParams() )
 
 	const styles = (
 		<Fragment>
@@ -73,7 +105,14 @@ TextStyles.Content = props => {
 					hoverSelector: '.stk-text__text:hover',
 				},
 			} } />
+			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<MarginBottom.Style.Content { ...propsToPass } />
+			<StyleComponent.Content
+				styles={ columnStyles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
 		</Fragment>
 	)
 

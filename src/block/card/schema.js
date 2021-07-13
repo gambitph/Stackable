@@ -6,6 +6,7 @@ import {
 	ContainerDiv,
 	CustomAttributes,
 	CustomCSS,
+	EffectsAnimations,
 	Image,
 	Responsive,
 } from '~stackable/block-components'
@@ -22,6 +23,7 @@ export const attributes = ( version = VERSION ) => {
 	Image.addAttributes( attrObject, { imageWidthUnitDefault: 'px' } )
 	Alignment.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
+	EffectsAnimations.addAttributes( attrObject )
 	CustomAttributes.addAttributes( attrObject )
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
