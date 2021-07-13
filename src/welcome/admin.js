@@ -170,7 +170,7 @@ const GlobalSettings = () => {
 		<AdminTextSetting
 			label={ __( 'Content Selector', i18n ) }
 			help={ __( 'The selector to the content area of your theme.', i18n ) }
-			placeholder=".entry-content"
+			placeholder=".entry-content, .widget-area"
 			value={ contentSelector }
 			onChange={ updateContentSelector }
 		/>
