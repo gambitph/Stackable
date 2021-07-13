@@ -3,6 +3,8 @@
 	// Our inspector panels are now a bit gray, blend the white image
 	// background.
 	.ugb-design-panel-item__image {
+		max-width: 100%;
+		height: auto;
 		mix-blend-mode: darken;
 	}
 }
