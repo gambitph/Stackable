@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { __getValue } from '~stackable/util'
+import { __getValue, appendImportant } from '~stackable/util'
 import {
 	createBackgroundStyleSet,
 } from '../../util'
@@ -15,17 +15,17 @@ export const createStyles = props => {
 	styles.push( {
 		desktopTablet: {
 			'.ugb-spacer': {
-				height: getValue( 'height', `%s${ getValue( 'heightUnit' ) || 'px' }` ),
+				height: appendImportant( getValue( 'height', `%s${ getValue( 'heightUnit' ) || 'px' }` ) ),
 			},
 		},
 		tabletOnly: {
 			'.ugb-spacer': {
-				height: getValue( 'tabletHeight', `%s${ getValue( 'tabletHeightUnit' ) || 'px' }` ),
+				height: appendImportant( getValue( 'tabletHeight', `%s${ getValue( 'tabletHeightUnit' ) || 'px' }` ) ),
 			},
 		},
 		mobile: {
 			'.ugb-spacer': {
-				height: getValue( 'mobileHeight', `%s${ getValue( 'mobileHeightUnit' ) || 'px' }` ),
+				height: appendImportant( getValue( 'mobileHeight', `%s${ getValue( 'mobileHeightUnit' ) || 'px' }` ) ),
 			},
 		},
 	} )
