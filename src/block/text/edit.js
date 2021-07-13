@@ -74,9 +74,9 @@ const Edit = props => {
 						label={ __( 'Columns', i18n ) }
 						allowReset={ true }
 						attribute="columns"
-						min={ 1 }
-						max={ 4 }
-						step={ 1 }
+						min="1"
+						sliderMax="3"
+						step="1"
 						placeholder="1"
 						responsive="all"
 					/>
@@ -85,8 +85,8 @@ const Edit = props => {
 						label={ __( 'Column Gap', i18n ) }
 						allowRest={ true }
 						attribute="columnGap"
-						min={ 0 }
-						max={ 100 }
+						min="0"
+						sliderMax="50"
 						responsive="all"
 					/>
 				</PanelAdvancedSettings>
