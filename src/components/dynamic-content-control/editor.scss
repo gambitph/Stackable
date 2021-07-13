@@ -1,0 +1,29 @@
+@import "common";
+
+.stk-dynamic-content-control {
+	display: flex;
+
+	.components-base-control.ugb-advanced-text-control {
+		width: 100%;
+		margin-bottom: 0;
+
+		.components-base-control__field {
+			margin-bottom: 0;
+		}
+	}
+
+	.stk-dynamic-content-control__button {
+		height: 100%;
+		min-width: unset;
+		border: 1px solid #757575;
+		padding-left: 4px;
+		padding-right: 4px;
+		width: 30px !important;
+		height: 30px;
+		margin-left: 4px;
+
+		.dashicon {
+			margin: 4px;
+		}
+	}
+}

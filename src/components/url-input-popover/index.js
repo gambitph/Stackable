@@ -80,7 +80,7 @@ const UrlInputPopover = props => {
 						}
 
 						// Gets only the changed values to update
-						 const changedValues = omitBy( omit( option, 'id', 'title', 'type' ), ( value, key ) => {
+						const changedValues = omitBy( omit( option, 'id', 'title', 'type' ), ( value, key ) => {
 							return urlOptions[ key ] === value
 						} )
 

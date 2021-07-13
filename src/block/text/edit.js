@@ -19,28 +19,25 @@ import {
 	CustomAttributes,
 	EffectsAnimations,
 } from '~stackable/block-components'
-import { version as VERSION } from 'stackable'
+import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
-import { InspectorTabs } from '~stackable/components'
+import {
+	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, AdvancedRangeControl,
+} from '~stackable/components'
 import { useBlockHoverClass } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
-import { Fragment, useCallback } from '@wordpress/element'
-import { RichText } from '@wordpress/block-editor'
+import { Fragment } from '@wordpress/element'
 import { createBlock } from '@wordpress/blocks'
+import { __ } from '@wordpress/i18n'
 
 const Edit = props => {
 	const {
 		className,
-		setAttributes,
 		onReplace,
 	} = props
-
-	const {
-		text,
-	} = props.attributes
 
 	const blockHoverClass = useBlockHoverClass()
 	const textClasses = getTypographyClasses( props.attributes )
@@ -58,8 +55,6 @@ const Edit = props => {
 		blockAlignmentClass,
 	] )
 
-	const onChange = useCallback( text => setAttributes( { text } ), [ setAttributes ] )
-
 	return (
 		<Fragment>
 
@@ -68,7 +63,40 @@ const Edit = props => {
 			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
-			<Typography.InspectorControls hasTextTag={ false } isMultiline={ true } />
+
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'General', i18n ) }
+					initialOpen={ true }
+					id="general"
+				>
+					<AdvancedRangeControl
+						label={ __( 'Columns', i18n ) }
+						allowReset={ true }
+						attribute="columns"
+						min={ 1 }
+						max={ 4 }
+						step={ 1 }
+						placeholder="1"
+						responsive="all"
+					/>
+
+					<AdvancedRangeControl
+						label={ __( 'Column Gap', i18n ) }
+						allowRest={ true }
+						attribute="columnGap"
+						min={ 0 }
+						max={ 100 }
+						responsive="all"
+					/>
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
+
+			<Typography.InspectorControls
+				hasTextTag={ false }
+				isMultiline={ true }
+				initialOpen={ false }
+			/>
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-text" />
@@ -78,11 +106,9 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-text__text" />
 
 			<BlockDiv className={ blockClassNames }>
-				<RichText
+				<Typography
 					tagName="p"
 					keepPlaceholderOnFocus
-					value={ text }
-					onChange={ onChange }
 					className={ textClassNames }
 					onReplace={ onReplace }
 					onSplit={ value => createBlock(

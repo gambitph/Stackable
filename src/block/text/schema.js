@@ -26,7 +26,24 @@ export const attributes = ( version = VERSION ) => {
 	Advanced.addAttributes( attrObject )
 	Alignment.addAttributes( attrObject )
 	MarginBottom.addAttributes( attrObject )
-	Typography.addAttributes( attrObject, '.stk-text__text', { hasTextTag: false } )
+	Typography.addAttributes( attrObject, '.stk-text__text', { hasTextTag: false, hasColumns: true } )
+
+	attrObject.add( {
+		attributes: {
+			columns: {
+				stkResponsive: true,
+				type: 'number',
+				default: '',
+			},
+			columnGap: {
+				stkResponsive: true,
+				type: 'number',
+				default: '',
+			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
 
 	return attrObject.getMerged( version )
 }

@@ -10,11 +10,37 @@ import classnames from 'classnames'
 import { Fragment } from '@wordpress/element'
 import { __experimentalLinkControl as _LinkControl } from '@wordpress/block-editor'
 
+/**
+ * Internal dependencies
+ */
+import { useDynamicContentControlProps, DynamicContentButton } from '../dynamic-content-control'
+
 const LinkControl = props => {
 	const classNames = classnames( [
 		'stk-link-control',
 		props.className,
 	] )
+
+	const [ dynamicContentProps, inputProps ] = useDynamicContentControlProps( props )
+
+	const control = (
+		<div className="stk-link-control__input">
+			<_LinkControl
+				value={ { url: props.value } }
+				onChange={ ( { url } ) => props.onChange( url ) }
+				settings={ [] } // The Url only.
+				{ ...{
+					...inputProps,
+					...( Object.keys( inputProps ) ? {
+						value: { url: inputProps.value },
+						onChange: ( { url } ) => inputProps.onChange( url ),
+						inputValue: inputProps.value,
+					} : {} ),
+				} }
+			/>
+		</div>
+	)
+
 	return (
 		<Fragment>
 			<BaseControl
@@ -23,13 +49,12 @@ const LinkControl = props => {
 				label={ props.label }
 				screens={ props.screens }
 			>
-				<div className="stk-link-control__input">
-					<_LinkControl
-						value={ { url: props.value } }
-						onChange={ ( { url } ) => props.onChange( url ) }
-						settings={ [] } // The Url only.
-					/>
-				</div>
+				{ props.dynamic ? (
+					<div className="stk-dynamic-content-control">
+						{ control }
+						<DynamicContentButton { ...dynamicContentProps } />
+					</div>
+				) : control }
 			</BaseControl>
 		</Fragment>
 	)
@@ -43,6 +68,7 @@ LinkControl.defaultProps = {
 	value: '',
 	onChange: () => {},
 	showSuggestions: true,
+	dynamic: true,
 }
 
 export default LinkControl

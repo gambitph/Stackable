@@ -3,13 +3,13 @@
  */
 import SVGImageIcon from './images/image.svg'
 import AdvancedControl, { extractControlProps } from '../base-control2'
-import { useAttributeName, useBlockAttributes } from '~stackable/hooks'
 
 /**
  * External dependencies
  */
 import classnames from 'classnames'
 import { i18n } from 'stackable'
+import { useAttributeName, useBlockAttributes } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
