@@ -15,9 +15,7 @@ import { Button, Popover } from '@wordpress/components'
 import {
 	useState, Fragment, useCallback, useEffect,
 } from '@wordpress/element'
-import {
-	applyFilters,
-} from '@wordpress/hooks'
+import { applyFilters } from '@wordpress/hooks'
 import { useSelect } from '@wordpress/data'
 
 /**
@@ -65,7 +63,7 @@ export const useDynamicContentControlProps = props => {
 			props.value.replace( /\!#stk_dynamic(.*)\!#/g, value => {
 				return select( 'stackable/dynamic-content' ).getDynamicContent(
 					value.replace( /\!#/g, '' ).replace( 'stk_dynamic:', '' )
-				)
+				) || ''
 			} )
 		)
 	}, [ props.value ] )
@@ -86,13 +84,18 @@ export const useDynamicContentControlProps = props => {
 
 	const onChange = useCallback( ( newValue, editorQueryString, frontendQueryString ) => {
 		// If `isFormatType` is true, the onChange function will generate a `stackable/dynamic-content` format type.
-		if ( props.isFormatType ) {
-			props.onChange( `<span data-stk-dynamic="${ frontendQueryString }" contenteditable="false" class="stk-dynamic-content">${ newValue }</span>` )
-			return
-		}
+		props.onChange(
+			props.isFormatType
+				? `<span data-stk-dynamic="${ frontendQueryString }" contenteditable="false" class="stk-dynamic-content">${ newValue }</span>`
+				: `!#stk_dynamic:${ frontendQueryString }!#`
+		)
 
-		props.onChange( `!#stk_dynamic:${ frontendQueryString }!#` )
+		setIsPopoverOpen( false )
 	}, [ props.isFormatType ] )
+
+	if ( ! isPro ) {
+		return [ {}, {} ]
+	}
 
 	return [
 		// Dynamic Button Props.

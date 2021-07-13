@@ -66,6 +66,7 @@ export const Edit = props => {
 							isMultiline={ isMultiline }
 							valueCallback={ unescape }
 							onChangeCallback={ escapeHTML }
+							dynamic={ true }
 						/>
 					) }
 

@@ -23,23 +23,30 @@ const AdvancedTextControl = props => {
 		...props,
 		value: typeof props.value === 'undefined' ? value : props.value,
 		onChange: typeof props.onChange === 'undefined' ? onChange : props.onChange,
+		isFormatType: true,
 	} )
 
 	const TextInput = props.isMultiline ? TextareaControl : TextControl
 
+	const control = (
+		<TextInput
+			{ ...propsToPass }
+			value={ typeof props.value === 'undefined' ? value : props.value }
+			onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
+			allowReset={ false }
+			className={ classnames( propsToPass.className, 'ugb-advanced-text-control' ) }
+			{ ...inputProps }
+		/>
+	)
+
 	return (
 		<AdvancedControl { ...controlProps }>
-			<div className="stk-dynamic-content-control">
-				<TextInput
-					{ ...propsToPass }
-					value={ typeof props.value === 'undefined' ? value : props.value }
-					onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
-					allowReset={ false }
-					className={ classnames( propsToPass.className, 'ugb-advanced-text-control' ) }
-					{ ...inputProps }
-				/>
-				<DynamicContentButton { ...dynamicContentProps } />
-			</div>
+			{ props.dynamic ? (
+				<div className="stk-dynamic-content-control">
+					{ control }
+					<DynamicContentButton { ...dynamicContentProps } />
+				</div>
+			) : control }
 			<ResetButton
 				allowReset={ props.allowReset }
 				value={ typeof props.value === 'undefined' ? value : props.value }
