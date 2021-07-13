@@ -84,22 +84,25 @@ const Edit = props => {
 						label={ __( 'Width', i18n ) }
 						units={ [ 'px', '%' ] }
 						attribute="topLineWidth"
-						min={ 0 }
-						max={ [ 500, 100 ] }
+						min="0"
+						sliderMax={ [ 200, 100 ] }
 						hover="all"
 					/>
 
 					<AdvancedRangeControl
 						label={ __( 'Height', i18n ) }
 						attribute="topLineHeight"
+						min="0"
+						sliderMax="20"
+						placeholder="4"
 					/>
 
 					<AdvancedRangeControl
 						label={ __( 'Margin', i18n ) }
 						attribute="topLineMargin"
 						responsive="all"
-						min={ 0 }
-						max={ 100 }
+						sliderMin="0"
+						sliderMax="100"
 					/>
 
 					<AlignButtonsControl
@@ -128,21 +131,24 @@ const Edit = props => {
 						units={ [ 'px', '%' ] }
 						attribute="bottomLineWidth"
 						min={ 0 }
-						max={ [ 500, 100 ] }
+						sliderMax={ [ 200, 100 ] }
 						hover="all"
 					/>
 
 					<AdvancedRangeControl
 						label={ __( 'Height', i18n ) }
 						attribute="bottomLineHeight"
+						min="0"
+						sliderMax="20"
+						placeholder="4"
 					/>
 
 					<AdvancedRangeControl
 						label={ __( 'Margin', i18n ) }
 						attribute="bottomLineMargin"
 						responsive="all"
-						min={ 0 }
-						max={ 100 }
+						sliderMin="0"
+						sliderMax="100"
 					/>
 
 					<AlignButtonsControl
