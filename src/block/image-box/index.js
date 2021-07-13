@@ -53,6 +53,7 @@ export const settings = {
 		'advanced-block-spacing': true,
 		'advanced-column-spacing': {
 			paddings: false,
+			verticalContentAlignImportant: true,
 		},
 		'advanced-custom-attributes': true,
 		'advanced-responsive': true,
