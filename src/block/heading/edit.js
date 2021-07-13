@@ -163,7 +163,7 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-heading__text" />
 
 			<BlockDiv className={ blockClassNames }>
-				{ props.attributes.showTopLine && <div className="stk--top-line" /> }
+				{ props.attributes.showTopLine && <div className="stk-heading__top-line" /> }
 				<Typography
 					defaultTag="h2"
 					placeholder={ __( 'Title for This Block', i18n ) }
@@ -189,7 +189,7 @@ const Edit = props => {
 						return block
 					} }
 				/>
-				{ props.attributes.showBottomLine && <div className="stk--bottom-line" /> }
+				{ props.attributes.showBottomLine && <div className="stk-heading__bottom-line" /> }
 				<MarginBottom />
 			</BlockDiv>
 		</Fragment>
