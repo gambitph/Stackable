@@ -250,6 +250,8 @@ addFilter( 'stackable.accordion.edit.inspector.style.before', 'stackable/accordi
 							containerPaddingLeft: paddings.left,
 						} ) }
 						max={ 200 }
+						sliderMin={ 0 }
+						sliderMax={ 200 }
 						placeholder="18"
 						className="ugb--help-tip-accordion-padding"
 					/>
