@@ -499,6 +499,8 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			$selectors = array();
 
 			foreach ( $content_selectors as $content_selector ) {
+				$content_selector = trim( $content_selector );
+
 				// Include Stackable blocks.
 				$selectors[] = $content_selector . ' .ugb-main-block ' . $tag;
 
