@@ -75,7 +75,7 @@ class PanelTabs extends Component {
 			setTimeout( () => {
 				if ( sidebarPanel ) {
 					sidebarPanel.setAttribute( 'data-ugb-tab', tab )
-					sidebarPanel.closest( '.edit-post-sidebar' )?.classList.add( 'ugb--has-panel-tabs' )
+					sidebarPanel.closest( '.edit-post-sidebar, .edit-widgets-sidebar' )?.classList.add( 'ugb--has-panel-tabs' )
 				}
 			}, 1 )
 		}
@@ -94,7 +94,7 @@ class PanelTabs extends Component {
 		const sidebarPanel = document.querySelector( '[data-ugb-tab]' )
 		if ( sidebarPanel ) {
 			sidebarPanel.removeAttribute( 'data-ugb-tab' )
-			sidebarPanel.closest( '.edit-post-sidebar' ).classList.remove( 'ugb--has-panel-tabs' )
+			sidebarPanel.closest( '.edit-post-sidebar, .edit-widgets-sidebar' ).classList.remove( 'ugb--has-panel-tabs' )
 		}
 
 		// Remove listener to panel closes

@@ -91,7 +91,7 @@ class PanelAdvancedSettings extends Component {
 		if ( ! this.state.opened && this.panelRef.current ) {
 			const panelTitle = this.panelRef.current.querySelector( '.components-panel__body-title' )
 			const tabs = document.querySelector( '.ugb-panel-tabs' )
-			const sidebar = document.querySelector( '.edit-post-sidebar' )
+			const sidebar = document.querySelector( '.edit-post-sidebar, .edit-widgets-sidebar' )
 			if ( tabs && panelTitle.getBoundingClientRect().top < tabs.getBoundingClientRect().bottom ) {
 				scrollPanelIntoView( this.panelRef.current )
 			} else if ( sidebar && sidebar.getBoundingClientRect().bottom < panelTitle.getBoundingClientRect().top ) {
