@@ -1,6 +1,7 @@
 .ugb-img {
 	object-fit: cover;
 	object-position: center;
+	max-width: 100%; // Editing page templates may make the image grow past the screen.
 	&.ugb-img--shape {
 		mask-mode: alpha;
 		mask-repeat: no-repeat;
