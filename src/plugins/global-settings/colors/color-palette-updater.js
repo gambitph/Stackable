@@ -55,7 +55,7 @@ const GlobalColorPaletteUpdater = () => {
 				 */
 				...(
 					useStackableColorsOnly
-						? { __experimentalFeatures: { colors: { theme: [ ...defaultColors ] } } } : {}
+						? { __experimentalFeatures: { colors: { palette: { theme: [ ...defaultColors ] } } } } : {}
 				),
 
 			} )
