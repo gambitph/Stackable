@@ -121,7 +121,7 @@ domReady( () => {
 			 */
 			if ( useStackableColorsOnly ) {
 				setTimeout( () => {
-					dispatch( 'core/block-editor' ).updateSettings( { __experimentalFeatures: { colors: { theme: [] } } } )
+					dispatch( 'core/block-editor' ).updateSettings( { __experimentalFeatures: { colors: { palette: { theme: [] } } } } )
 				}, 300 )
 			}
 		} )

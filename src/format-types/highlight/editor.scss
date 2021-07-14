@@ -1,5 +1,8 @@
 .stackable-components-toolbar {
-	border-right: none !important;
+	border-top: none !important;
+	border-bottom: none !important;
+	border-left: 1px solid #000 !important;
+	border-right: 1px solid #000 !important;
 	.components-icon-button {
 		justify-content: center;
 		svg {

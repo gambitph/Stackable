@@ -47,7 +47,11 @@ class ButtonEdit extends Component {
 			return
 		}
 		if ( ! this.state.openPopup ) {
-			document.body.addEventListener( 'click', this.outsideClickHandler )
+			let selector = document.body
+			if ( document.querySelector( 'iframe[name="editor-canvas"]' ) ) {
+				selector = document.querySelector( 'iframe[name="editor-canvas"]' ).contentWindow.document.body
+			}
+			selector.addEventListener( 'click', this.outsideClickHandler )
 		}
 		this.setState( { openPopup: true } )
 	}
@@ -65,7 +69,11 @@ class ButtonEdit extends Component {
 	}
 
 	hideUrlPopup = () => {
-		document.body.removeEventListener( 'click', this.outsideClickHandler )
+		let selector = document.body
+		if ( document.querySelector( 'iframe[name="editor-canvas"]' ) ) {
+			selector = document.querySelector( 'iframe[name="editor-canvas"]' ).contentWindow.document.body
+		}
+		selector.removeEventListener( 'click', this.outsideClickHandler )
 		this.setState( { openPopup: false } )
 	}
 

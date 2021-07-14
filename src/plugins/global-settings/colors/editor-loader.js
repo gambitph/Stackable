@@ -5,9 +5,8 @@ import {
 	useSelect,
 } from '@wordpress/data'
 import {
-	useEffect, useState, render,
+	useEffect, useState,
 } from '@wordpress/element'
-import domReady from '@wordpress/dom-ready'
 
 /**
  * External dependencies
@@ -15,7 +14,7 @@ import domReady from '@wordpress/dom-ready'
 import rgba from 'color-rgba'
 import { compact, isPlainObject } from 'lodash'
 
-const renderGlobalStyles = ( newColors, setStyles ) => {
+const renderGlobalStyles = ( newColors, isEditingTemplate, setStyles ) => {
 	// Output all our --stk-global-colors.
 	const styleRules = newColors.map( color => {
 		if ( ! isPlainObject( color ) ) {
@@ -37,8 +36,11 @@ const renderGlobalStyles = ( newColors, setStyles ) => {
 			return null
 		}
 
+		const windowObject = isEditingTemplate ? document.querySelector( 'iframe[name="editor-canvas"]' ).contentWindow : window
+		const documentObject = isEditingTemplate ? windowObject.document : window.document
+
 		if ( typeof color.slug === 'string' && color.slug.startsWith( 'stk-global-color' ) ) {
-			const rgbaColor = rgba( window.getComputedStyle( document.documentElement ).getPropertyValue( `--${ color.slug }` ).trim() )
+			const rgbaColor = rgba( windowObject.getComputedStyle( documentObject.documentElement ).getPropertyValue( `--${ color.slug }` ).trim() )
 			if ( Array.isArray( rgbaColor ) && rgbaColor.length !== 0 ) {
 				rgbaColor.splice( 3, 1 )
 				return `--${ color.slug || '' }-rgba: ${ rgbaColor.join( ', ' ) };`
@@ -51,23 +53,18 @@ const renderGlobalStyles = ( newColors, setStyles ) => {
 	setStyles( styles => `${ styles } :root { ${ compact( rgbaStyleRules ).join( ' ' ) }}` )
 }
 
-const GlobalColorStyles = () => {
-	const { colors } = useSelect( select => ( {
+export const GlobalColorStyles = () => {
+	const { colors, isEditingTemplate } = useSelect( select => ( {
 		colors: select( 'core/block-editor' ).getSettings().colors,
+		isEditingTemplate: select( 'core/edit-post' ).isEditingTemplate?.(),
 	} ) )
 	const [ styles, setStyles ] = useState( '' )
 
 	useEffect( () => {
 		if ( colors && Array.isArray( colors ) ) {
-			renderGlobalStyles( colors, setStyles )
+			renderGlobalStyles( colors, isEditingTemplate, setStyles )
 		}
 	}, [ JSON.stringify( colors ) ] )
 
 	return styles
 }
-
-domReady( () => {
-	const wrapper = document.createElement( 'style' )
-	document.body.appendChild( wrapper )
-	render( <GlobalColorStyles />, wrapper )
-} )
