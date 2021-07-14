@@ -491,26 +491,30 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 
 		public function form_tag_selector( $tag ) {
 			// Content area of the theme.
-			$content_selector = get_option( 'stackable_global_content_selector' );
-			if ( empty( $content_selector ) ) {
-				$content_selector = '.entry-content';
+			$content_selectors = array_filter( explode( ',', get_option( 'stackable_global_content_selector' ) ) );
+			if ( empty( $content_selectors ) ) {
+				$content_selectors = [ '.entry-content', '.widget-area' ];
 			}
 
 			$selectors = array();
 
-			// Include Stackable blocks.
-			$selectors[] = $content_selector . ' .ugb-main-block ' . $tag;
+			foreach ( $content_selectors as $content_selector ) {
+				$content_selector = trim( $content_selector );
 
-			// Include native blocks.
-			if ( $this->get_apply_typography_to() !== 'blocks-stackable' ) {
-				$selectors[] = $content_selector . ' [data-block-type="core"] ' . $tag;
-				$selectors[] = $content_selector . ' ' . $tag . '[data-block-type="core"]';
-			}
+				// Include Stackable blocks.
+				$selectors[] = $content_selector . ' .ugb-main-block ' . $tag;
 
-			// Include all other blocks.
-			if ( $this->get_apply_typography_to() === 'blocks-all' ) {
-				$selectors[] = $content_selector . ' [class*="wp-block-"] ' . $tag;
-				$selectors[] = $content_selector . ' ' . $tag . '[class*="wp-block-"]';
+				// Include native blocks.
+				if ( $this->get_apply_typography_to() !== 'blocks-stackable' ) {
+					$selectors[] = $content_selector . ' [data-block-type="core"] ' . $tag;
+					$selectors[] = $content_selector . ' ' . $tag . '[data-block-type="core"]';
+				}
+
+				// Include all other blocks.
+				if ( $this->get_apply_typography_to() === 'blocks-all' ) {
+					$selectors[] = $content_selector . ' [class*="wp-block-"] ' . $tag;
+					$selectors[] = $content_selector . ' ' . $tag . '[class*="wp-block-"]';
+				}
 			}
 
 			return $selectors;

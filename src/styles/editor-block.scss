@@ -6,7 +6,7 @@
 
 // Position relative (required for block links) will not work properly with
 // margin bottom resizer, make it static in the editor.
-#editor .stk-block {
+.block-editor-page .stk-block {
 	position: static;
 }
 

@@ -61,7 +61,7 @@
 	}
 }
 
-#editor .ugb-columns {
+.block-editor-page .ugb-columns {
 	// Plain responsive
 	&.ugb-columns.ugb-columns.ugb-columns > .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
 		@media screen and (max-width: $break-js-mobile) {
@@ -114,7 +114,7 @@
 }
 
 // Grid Responsive.
-#editor .ugb-columns.ugb-columns--design-grid {
+.block-editor-page .ugb-columns.ugb-columns--design-grid {
 	> .ugb-inner-block > .ugb-block-content > .ugb-columns__item > .block-editor-inner-blocks > .block-editor-block-list__layout {
 		@media screen and (max-width: $break-js-mobile) {
 			grid-template-areas: inherit !important;

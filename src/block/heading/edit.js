@@ -84,22 +84,25 @@ const Edit = props => {
 						label={ __( 'Width', i18n ) }
 						units={ [ 'px', '%' ] }
 						attribute="topLineWidth"
-						min={ 0 }
-						max={ [ 500, 100 ] }
+						min="0"
+						sliderMax={ [ 200, 100 ] }
 						hover="all"
 					/>
 
 					<AdvancedRangeControl
 						label={ __( 'Height', i18n ) }
 						attribute="topLineHeight"
+						min="0"
+						sliderMax="20"
+						placeholder="4"
 					/>
 
 					<AdvancedRangeControl
 						label={ __( 'Margin', i18n ) }
 						attribute="topLineMargin"
 						responsive="all"
-						min={ 0 }
-						max={ 100 }
+						sliderMin="0"
+						sliderMax="100"
 					/>
 
 					<AlignButtonsControl
@@ -128,21 +131,24 @@ const Edit = props => {
 						units={ [ 'px', '%' ] }
 						attribute="bottomLineWidth"
 						min={ 0 }
-						max={ [ 500, 100 ] }
+						sliderMax={ [ 200, 100 ] }
 						hover="all"
 					/>
 
 					<AdvancedRangeControl
 						label={ __( 'Height', i18n ) }
 						attribute="bottomLineHeight"
+						min="0"
+						sliderMax="20"
+						placeholder="4"
 					/>
 
 					<AdvancedRangeControl
 						label={ __( 'Margin', i18n ) }
 						attribute="bottomLineMargin"
 						responsive="all"
-						min={ 0 }
-						max={ 100 }
+						sliderMin="0"
+						sliderMax="100"
 					/>
 
 					<AlignButtonsControl
@@ -163,7 +169,7 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-heading__text" />
 
 			<BlockDiv className={ blockClassNames }>
-				{ props.attributes.showTopLine && <div className="stk--top-line" /> }
+				{ props.attributes.showTopLine && <div className="stk-heading__top-line" /> }
 				<Typography
 					defaultTag="h2"
 					placeholder={ __( 'Title for This Block', i18n ) }
@@ -189,7 +195,7 @@ const Edit = props => {
 						return block
 					} }
 				/>
-				{ props.attributes.showBottomLine && <div className="stk--bottom-line" /> }
+				{ props.attributes.showBottomLine && <div className="stk-heading__bottom-line" /> }
 				<MarginBottom />
 			</BlockDiv>
 		</Fragment>

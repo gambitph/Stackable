@@ -53,13 +53,15 @@ export const settings = {
 		'advanced-block-spacing': true,
 		'advanced-column-spacing': {
 			paddings: false,
+			verticalContentAlignImportant: true,
 		},
 		'advanced-custom-attributes': true,
 		'advanced-responsive': true,
 		'block-background': true,
 		'block-separators': true,
 		'block-title': {
-			marginBottomImportant: true,
+			blockTitleMarginBottomImportant: true,
+			blockDescriptionMarginBottomImportant: true,
 		},
 		'content-align': true,
 		'block-designs': true,

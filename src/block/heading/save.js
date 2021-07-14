@@ -49,12 +49,12 @@ const Save = props => {
 		>
 			<HeadingStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			{ props.attributes.showTopLine && <div className="stk--top-line" /> }
+			{ props.attributes.showTopLine && <div className="stk-heading__top-line" /> }
 			<Typography.Content
 				attributes={ attributes }
 				className={ textClassNames }
 			/>
-			{ props.attributes.showBottomLine && <div className="stk--bottom-line" /> }
+			{ props.attributes.showBottomLine && <div className="stk-heading__bottom-line" /> }
 		</BlockDiv.Content>
 	)
 }

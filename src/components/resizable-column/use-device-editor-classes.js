@@ -6,7 +6,7 @@ let editorEl = null
 
 const addDeviceTypeClass = throttle( previewDeviceType => {
 	if ( ! editorEl ) {
-		editorEl = document.querySelector( '#editor' )
+		editorEl = document.querySelector( '.block-editor-page' )
 	}
 	if ( editorEl && ! editorEl.classList.contains( `stk-preview-device-${ previewDeviceType.toLowerCase() }` ) ) {
 		editorEl.classList.remove( 'stk-preview-device-desktop', 'stk-preview-device-tablet', 'stk-preview-device-mobile' )

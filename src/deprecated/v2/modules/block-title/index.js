@@ -496,7 +496,7 @@ const addStyles = ( options = {} ) => ( styleObject, props ) => {
 				...createTypographyStyles( 'BlockTitle%s', 'desktop', props.attributes ),
 				color: whiteIfDark( blockTitleColor, showBlockBackground && blockBackgroundBackgroundColor ),
 				textAlign: getValue( 'blockTitleAlign' ),
-				marginBottom: appendImportant( getValue( 'blockTitleBottomMargin', '%spx' ), options.marginBottomImportant ),
+				marginBottom: appendImportant( getValue( 'blockTitleBottomMargin', '%spx' ), options.blockTitleMarginBottomImportant ),
 				maxWidth: appendImportant( getValue( 'blockTitleWidth', '%s' + getValue( 'blockTitleWidthUnit', '%s', 'px' ) ) ),
 				marginLeft: hasTitleHorizontalAlign ? appendImportant( marginLeftAlign( getValue( 'blockTitleHorizontalAlign' ) ) ) : undefined,
 				marginRight: hasTitleHorizontalAlign ? appendImportant( marginRightAlign( getValue( 'blockTitleHorizontalAlign' ) ) ) : undefined,
@@ -505,7 +505,7 @@ const addStyles = ( options = {} ) => ( styleObject, props ) => {
 				'.ugb-block-title': {
 					...createTypographyStyles( 'BlockTitle%s', 'tablet', props.attributes ),
 					textAlign: getValue( 'blockTitleTabletAlign' ),
-					marginBottom: appendImportant( getValue( 'blockTitleTabletBottomMargin', '%spx' ), options.marginBottomImportant ),
+					marginBottom: appendImportant( getValue( 'blockTitleTabletBottomMargin', '%spx' ), options.blockTitleMarginBottomImportant ),
 					maxWidth: appendImportant( getValue( 'blockTitleTabletWidth', '%s' + getValue( 'blockTitleTabletWidthUnit', '%s', 'px' ) ) ),
 				},
 			},
@@ -513,7 +513,7 @@ const addStyles = ( options = {} ) => ( styleObject, props ) => {
 				'.ugb-block-title': {
 					...createTypographyStyles( 'BlockTitle%s', 'mobile', props.attributes ),
 					textAlign: getValue( 'blockTitleMobileAlign' ),
-					marginBottom: appendImportant( getValue( 'blockTitleMobileBottomMargin', '%spx' ), options.marginBottomImportant ),
+					marginBottom: appendImportant( getValue( 'blockTitleMobileBottomMargin', '%spx' ), options.blockTitleMarginBottomImportant ),
 					maxWidth: appendImportant( getValue( 'blockTitleMobileWidth', '%s' + getValue( 'blockTitleMobileWidthUnit', '%s', 'px' ) ) ),
 				},
 			},
@@ -528,7 +528,7 @@ const addStyles = ( options = {} ) => ( styleObject, props ) => {
 				...createTypographyStyles( 'BlockDescription%s', 'desktop', props.attributes ),
 				color: whiteIfDark( blockDescriptionColor, showBlockBackground && blockBackgroundBackgroundColor ),
 				textAlign: getValue( 'blockDescriptionAlign' ),
-				marginBottom: getValue( 'blockDescriptionBottomMargin', '%spx' ),
+				marginBottom: appendImportant( getValue( 'blockDescriptionBottomMargin', '%spx' ), options.blockDescriptionMarginBottomImportant ),
 				maxWidth: appendImportant( getValue( 'blockDescriptionWidth', '%s' + getValue( 'blockDescriptionWidthUnit', '%s', 'px' ) ) ),
 				marginLeft: hasDescriptionHorizontalAlign ? appendImportant( marginLeftAlign( getValue( 'blockDescriptionHorizontalAlign' ) ) ) : undefined,
 				marginRight: hasDescriptionHorizontalAlign ? appendImportant( marginRightAlign( getValue( 'blockDescriptionHorizontalAlign' ) ) ) : undefined,
@@ -537,7 +537,7 @@ const addStyles = ( options = {} ) => ( styleObject, props ) => {
 				'.ugb-block-description': {
 					...createTypographyStyles( 'BlockDescription%s', 'tablet', props.attributes ),
 					textAlign: getValue( 'blockDescriptionTabletAlign' ),
-					marginBottom: getValue( 'blockDescriptionTabletBottomMargin', '%spx' ),
+					marginBottom: appendImportant( getValue( 'blockDescriptionTabletBottomMargin', '%spx' ), options.blockDescriptionMarginBottomImportant ),
 					maxWidth: appendImportant( getValue( 'blockDescriptionTabletWidth', '%s' + getValue( 'blockDescriptionTabletWidthUnit', '%s', 'px' ) ) ),
 				},
 			},
@@ -545,7 +545,7 @@ const addStyles = ( options = {} ) => ( styleObject, props ) => {
 				'.ugb-block-description': {
 					...createTypographyStyles( 'BlockDescription%s', 'mobile', props.attributes ),
 					textAlign: getValue( 'blockDescriptionMobileAlign' ),
-					marginBottom: getValue( 'blockDescriptionMobileBottomMargin', '%spx' ),
+					marginBottom: appendImportant( getValue( 'blockDescriptionMobileBottomMargin', '%spx' ), options.blockDescriptionMarginBottomImportant ),
 					maxWidth: appendImportant( getValue( 'blockDescriptionMobileWidth', '%s' + getValue( 'blockDescriptionMobileWidthUnit', '%s', 'px' ) ) ),
 				},
 			},
@@ -578,7 +578,8 @@ const centerBlockTitle = attributeNamesToReset => {
 
 const blockTitle = ( blockName, options = {} ) => {
 	const optionsToPass = {
-		marginBottomImportant: false,
+		blockTitleMarginBottomImportant: false,
+		blockDescriptionMarginBottomImportant: false,
 		...options,
 	}
 

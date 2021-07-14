@@ -45,6 +45,23 @@ export const attributes = ( version = VERSION ) => {
 		versionDeprecated: '',
 	} )
 
+	attrObject.add( {
+		attributes: {
+			columns: {
+				stkResponsive: true,
+				type: 'number',
+				default: '',
+			},
+			columnGap: {
+				stkResponsive: true,
+				type: 'number',
+				default: '',
+			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
+
 	return attrObject.getMerged( version )
 }
 
