@@ -67,7 +67,6 @@ if ( ! function_exists( 'stackable_block_editor_assets_deprecated' ) ) {
 				array( 'ugb-style-css' ),
 				STACKABLE_VERSION
 			);
-			add_editor_style( plugins_url( 'dist/frontend_blocks_deprecated.css', STACKABLE_FILE ) );
 		}
 	}
 	add_action( 'enqueue_block_assets', 'stackable_block_editor_assets_deprecated' );
@@ -168,7 +167,6 @@ if ( ! function_exists( 'stackable_enqueue_wp_5_3_compatibility' ) ) {
 			array( 'ugb-block-editor-css' ),
 			STACKABLE_VERSION
 		);
-		add_editor_style( plugins_url( 'dist/editor_blocks_wp_v5_3.css', STACKABLE_FILE ) );
 	}
 
 	if ( version_compare( stackable_get_wp_version(), '5.4', '<' ) ) {
