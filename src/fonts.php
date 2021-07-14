@@ -115,6 +115,7 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 			}
 
 			wp_enqueue_style( $handle, $fonts_url ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+			add_editor_style( $fonts_url );
 		}
 
 	}
