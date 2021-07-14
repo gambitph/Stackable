@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.5.4
 Tested up to: 5.7.2
 Requires PHP: 5.6
-Stable tag: 2.17.1
+Stable tag: 2.17.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -203,6 +203,14 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 2.17.2 =
+* New: WordPress 5.8 compatibility
+* New: Compatible with the new Page Template editor
+* New: Compatible with the new Widgets Editor
+* Fixed: Some block attributes are now properly pasted when using copy and paste styles
+* Fixed: Post IDs and other numbers are not displayed in Dynamic Contents
+* Fixed: Some block styles when the Optimization setting is enabled
 
 = 2.17.1 =
 * Fixed: Compatibility fix with Toolset
