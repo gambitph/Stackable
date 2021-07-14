@@ -1,5 +1,5 @@
 // Background overlay. Any block / item that has a background/gradient/overlay should have this class.
-// .block-editor-page .stk--has-background-overlay {
+// .editor-styles-wrapper .stk--has-background-overlay {
 // 	&.stk--has-background-overlay {
 // 		&::before,
 // 		> .stk-video-background {
@@ -9,7 +9,7 @@
 // }
 //
 // Sometimes, the position style doesn't get applied inside editor
-.block-editor-page .stk-block.stk--has-background-overlay {
+.editor-styles-wrapper .stk-block.stk--has-background-overlay {
 	position: relative;
 }
 
