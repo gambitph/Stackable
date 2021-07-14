@@ -39,7 +39,7 @@ addAction( 'stackable.global-settings.toggle-sidebar', 'toggle', () => {
 } )
 
 const GlobalSettings = () => {
-	const isEditingTemplate = useSelect( select => select( 'core/edit-post' ).isEditingTemplate() )
+	const isEditingTemplate = useSelect( select => select( 'core/edit-post' ).isEditingTemplate?.() )
 
 	/**
 	 * Render the global colors and typography in Gutenberg

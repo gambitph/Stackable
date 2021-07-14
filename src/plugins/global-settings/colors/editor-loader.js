@@ -56,7 +56,7 @@ const renderGlobalStyles = ( newColors, isEditingTemplate, setStyles ) => {
 export const GlobalColorStyles = () => {
 	const { colors, isEditingTemplate } = useSelect( select => ( {
 		colors: select( 'core/block-editor' ).getSettings().colors,
-		isEditingTemplate: select( 'core/edit-post' ).isEditingTemplate(),
+		isEditingTemplate: select( 'core/edit-post' ).isEditingTemplate?.(),
 	} ) )
 	const [ styles, setStyles ] = useState( '' )
 
