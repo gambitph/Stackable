@@ -38,6 +38,7 @@ const LinkControl = props => {
 	return (
 		<AdvancedControl className={ classNames } { ...controlProps }>
 			<DynamicContentControl
+				type={ [ 'link', 'image-url' ] }
 				dynamic={ props.dynamic }
 				{ ...dynamicContentProps }
 			>

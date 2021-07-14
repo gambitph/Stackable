@@ -23,6 +23,10 @@ const AdvancedFocalPointControl = props => {
 
 	propsToPass.url = useDynamicContent( propsToPass.url )
 
+	if ( ! propsToPass.url?.includes( 'http' ) ) {
+		propsToPass.url = undefined
+	}
+
 	return (
 		<AdvancedControl
 			{ ...controlProps }

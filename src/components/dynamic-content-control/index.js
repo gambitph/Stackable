@@ -209,6 +209,7 @@ export const DynamicContentButton = props => {
 							onClose={ props.onClose }
 							onChange={ props.onChange }
 							activeAttribute={ props.activeAttribute }
+							type={ props.type }
 						/>
 					) }
 

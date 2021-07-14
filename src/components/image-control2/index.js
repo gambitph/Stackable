@@ -66,6 +66,7 @@ const ImageControl = props => {
 		>
 			<DynamicContentControl
 				dynamic={ true }
+				type="image-url"
 				{ ...dynamicContentProps }
 			>
 				<MediaUpload
