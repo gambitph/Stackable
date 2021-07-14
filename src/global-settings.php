@@ -54,7 +54,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			 * Typography hooks
 			 */
 
-			add_action( 'after_setup_theme', array( $this, 'typography_add_global_styles' ) );
+			add_action( 'wp_enqueue_scripts', array( $this, 'typography_add_global_styles' ) );
 
 			// For some native blocks, add a note that they're core blocks.
 			add_filter( 'render_block', array( $this, 'typography_detect_native_blocks' ), 10, 2 );
