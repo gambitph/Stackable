@@ -54,7 +54,14 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			 * Typography hooks
 			 */
 
-			add_action( 'wp_enqueue_scripts', array( $this, 'typography_add_global_styles' ) );
+			/**
+			 * Uses `after_setup_theme` instead of `wp_enqueue_scripts` here for handling
+			 * page templates. Make sure to run `typography_add_global_styles` first before
+			 * the `typograhy_detect_native_blocks`  method.
+			 *
+			 * @since 2.17.1
+			 */
+			add_action( 'after_setup_theme', array( $this, 'typography_add_global_styles' ) );
 
 			// For some native blocks, add a note that they're core blocks.
 			add_filter( 'render_block', array( $this, 'typography_detect_native_blocks' ), 10, 2 );
