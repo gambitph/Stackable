@@ -55,6 +55,7 @@ export const createStyles = props => {
 	// Column Background.
 	const columnBackgroundOptions = {
 		importantBackgroundColor: true,
+		importantBackgroundSize: true,
 	}
 	styles.push( {
 		...( show.columnBackground ? createBackgroundStyleSet( 'column%s', `${ uniqueClass }-column-wrapper`, props.attributes, columnBackgroundOptions ) : {} ),
