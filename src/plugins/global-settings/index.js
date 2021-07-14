@@ -1,8 +1,8 @@
 /**
  * Internal dependencies
  */
-import './colors'
-import './typography'
+import { GlobalColorStyles } from './colors'
+import { GlobalTypographyStyles } from './typography'
 
 /**
  * External dependencies
@@ -14,13 +14,17 @@ import { i18n, isContentOnlyMode } from 'stackable'
  * WordPress dependencies
  */
 import { registerPlugin } from '@wordpress/plugins'
-import { Fragment } from '@wordpress/element'
+import {
+	Fragment, render, unmountComponentAtNode, useEffect,
+} from '@wordpress/element'
 import { PluginSidebar, PluginSidebarMoreMenuItem } from '@wordpress/edit-post'
 import { __ } from '@wordpress/i18n'
 import {
 	applyFilters, addAction,
 } from '@wordpress/hooks'
-import { dispatch, select } from '@wordpress/data'
+import {
+	dispatch, select, useSelect,
+} from '@wordpress/data'
 
 // Action used to toggle the global settings panel.
 addAction( 'stackable.global-settings.toggle-sidebar', 'toggle', () => {
@@ -35,6 +39,39 @@ addAction( 'stackable.global-settings.toggle-sidebar', 'toggle', () => {
 } )
 
 const GlobalSettings = () => {
+	const isEditingTemplate = useSelect( select => select( 'core/edit-post' ).isEditingTemplate() )
+
+	/**
+	 * WordPress 5.8 introduces block templates.
+	 *
+	 * When editing blocks inside a template window, the editor is mounted inside
+	 * an `iframe` DOMElement. For the styles to work, we need to mount the styles inside
+	 * the iframe document.
+	 *
+	 * @since 2.17.2
+	 */
+	useEffect( () => {
+		const selector = isEditingTemplate ?
+			document.querySelector( 'iframe[title="Editor canvas"]' ).contentWindow.document.body :
+			document.body
+
+		const globalTypographyWrapperDiv = document.createElement( 'style' )
+		selector.appendChild( globalTypographyWrapperDiv )
+		render( <GlobalTypographyStyles />, globalTypographyWrapperDiv )
+
+		const globalColorWrapperDiv = document.createElement( 'style' )
+		selector.appendChild( globalColorWrapperDiv )
+		render( <GlobalColorStyles />, globalColorWrapperDiv )
+
+		return () => {
+			unmountComponentAtNode( globalTypographyWrapperDiv )
+			unmountComponentAtNode( globalColorWrapperDiv )
+
+			globalTypographyWrapperDiv.remove()
+			globalColorWrapperDiv.remove()
+		}
+	}, [ isEditingTemplate ] )
+
 	return (
 		<Fragment>
 			<PluginSidebarMoreMenuItem

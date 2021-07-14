@@ -14,7 +14,6 @@ import { Component, Fragment } from '@wordpress/element'
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 import { RichText } from '@wordpress/block-editor'
-import { withSelect } from '@wordpress/data'
 
 // Deprecated ButtonEdit.Content methods.
 export * from './deprecated'
@@ -48,11 +47,11 @@ class ButtonEdit extends Component {
 			return
 		}
 		if ( ! this.state.openPopup ) {
-			let body = document.body
+			let selector = document.body
 			if ( document.querySelector( 'iframe[title="Editor canvas"]' ) ) {
-				body = document.querySelector( 'iframe[title="Editor canvas"]' ).contentWindow.document.body
+				selector = document.querySelector( 'iframe[title="Editor canvas"]' ).contentWindow.document.body
 			}
-			body.addEventListener( 'click', this.outsideClickHandler )
+			selector.addEventListener( 'click', this.outsideClickHandler )
 		}
 		this.setState( { openPopup: true } )
 	}
@@ -70,11 +69,11 @@ class ButtonEdit extends Component {
 	}
 
 	hideUrlPopup = () => {
-		let body = document.body
+		let selector = document.body
 		if ( document.querySelector( 'iframe[title="Editor canvas"]' ) ) {
-			body = document.querySelector( 'iframe[title="Editor canvas"]' ).contentWindow.document.body
+			selector = document.querySelector( 'iframe[title="Editor canvas"]' ).contentWindow.document.body
 		}
-		body.removeEventListener( 'click', this.outsideClickHandler )
+		selector.removeEventListener( 'click', this.outsideClickHandler )
 		this.setState( { openPopup: false } )
 	}
 
@@ -296,6 +295,4 @@ ButtonEdit.Content = props => {
 	)
 }
 
-export default withSelect( select => ( {
-	selector: select( 'core/edit-post' ).isEditingTemplate() ? document.querySelector( 'iframe[title="Editor canvas"]' ) : document.body,
-} ) )( ButtonEdit )
+export default ButtonEdit
