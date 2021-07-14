@@ -151,7 +151,7 @@ export const createStyles = props => {
 	// Spacing.
 	styles.push( ...createResponsiveStyles( '.ugb-icon__icon', 'icon%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	if ( show.titleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-icon .ugb-icon__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
+		styles.push( ...createResponsiveStyles( '.ugb-icon__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
 	}
 
 	// Advanced Column Gap
