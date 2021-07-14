@@ -17,13 +17,13 @@ import { useMemo } from '@wordpress/element'
  * @param {Object} styleObject The object containing selectors and style rules
  * @param {string} blockMainClassName The main className of the block
  * @param {string} blockUniqueClassName The unique className of the block
- * @param {boolean} editorMode If true, wrap the selectors with `.block-editor-page`
+ * @param {boolean} editorMode If true, wrap the selectors with `.editor-styles-wrapper`
  *
  * @return {Object} Modified styleObject
  */
 export const addBlockClassNames = ( styleObject, blockMainClassName = '', blockUniqueClassName = '', editorMode = false ) => {
 	return Object.keys( styleObject ).reduce( ( newStyles, selector ) => {
-		const newSelector = prependCSSClass( selector, blockMainClassName, blockUniqueClassName, editorMode ? '.block-editor-page' : '' )
+		const newSelector = prependCSSClass( selector, blockMainClassName, blockUniqueClassName, editorMode ? '.editor-styles-wrapper' : '' )
 		return {
 			...newStyles,
 			[ newSelector ]: styleObject[ selector ],
@@ -90,7 +90,7 @@ export const formMediaQuery = ( _devices = [ 'desktop' ], breakTablet = 1025, br
  * @param {string} blockUniqueClassName Unique ID className for the block
  * @param {number} breakTablet max-width for tablets
  * @param {number} breakMobile max-width for mobile
- * @param {boolean} editorMode If true, the styles generated will be wrapped in the `.block-editor-page` selector
+ * @param {boolean} editorMode If true, the styles generated will be wrapped in the `.editor-styles-wrapper` selector
  * @param {boolean} recursiveCalls Used only for editors styles. Number of times this function was called recursively
  *
  * @return {string} Minified CSS string

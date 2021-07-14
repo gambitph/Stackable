@@ -5,9 +5,8 @@ import {
 	useSelect,
 } from '@wordpress/data'
 import {
-	useEffect, useState, render,
+	useEffect, useState,
 } from '@wordpress/element'
-import domReady from '@wordpress/dom-ready'
 
 /**
  * External dependencies
@@ -51,7 +50,7 @@ const renderGlobalStyles = ( newColors, setStyles ) => {
 	setStyles( styles => `${ styles } :root { ${ compact( rgbaStyleRules ).join( ' ' ) }}` )
 }
 
-const GlobalColorStyles = () => {
+export const GlobalColorStyles = () => {
 	const { colors } = useSelect( select => ( {
 		colors: select( 'core/block-editor' ).getSettings().colors,
 	} ) )
@@ -65,9 +64,3 @@ const GlobalColorStyles = () => {
 
 	return styles
 }
-
-domReady( () => {
-	const wrapper = document.createElement( 'style' )
-	document.body.appendChild( wrapper )
-	render( <GlobalColorStyles />, wrapper )
-} )

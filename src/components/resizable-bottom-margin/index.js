@@ -102,8 +102,8 @@ const ResizableBottomMarginSingle = props => {
 			} }
 		>
 			{ props.previewSelector && isResizing &&
-				// .block-editor-page so that our styles will override the currently set margin.
-				<style>{ `.block-editor-page ${ props.previewSelector } { margin-bottom: ${ currentHeight }px !important; }` }</style>
+				// .editor-styles-wrapper so that our styles will override the currently set margin.
+				<style>{ `.editor-styles-wrapper ${ props.previewSelector } { margin-bottom: ${ currentHeight }px !important; }` }</style>
 			}
 			<span className="stk-resizable-bottom-margin__label">
 				{ `${ isResizing ? currentHeight : ( props.value !== '' ? props.value : defaultBottomMargin ) }px` }

@@ -34,24 +34,24 @@
 }
 
 // This shows padding although not in the frontend.
-.block-editor-page .ugb-accordion.ugb-accordion--v2 .ugb-accordion__content .ugb-accordion__content-inner {
+.editor-styles-wrapper .ugb-accordion.ugb-accordion--v2 .ugb-accordion__content .ugb-accordion__content-inner {
 	padding-top: 0;
 }
-.block-editor-page .ugb-accordion.ugb-accordion--v2 .ugb-accordion__content {
+.editor-styles-wrapper .ugb-accordion.ugb-accordion--v2 .ugb-accordion__content {
 	overflow: visible;
 }
-.block-editor-page .ugb-accordion.ugb-accordion--v2.ugb-accordion--design-plain .ugb-accordion__content .ugb-accordion__content-inner {
+.editor-styles-wrapper .ugb-accordion.ugb-accordion--v2.ugb-accordion--design-plain .ugb-accordion__content .ugb-accordion__content-inner {
 	padding-bottom: 0;
 }
 
 // Fix header overlapping the content toolbar
-.block-editor-page .ugb-accordion.ugb-accordion--v2 .ugb-accordion__heading {
+.editor-styles-wrapper .ugb-accordion.ugb-accordion--v2 .ugb-accordion__heading {
 	z-index: 0;
 }
 
 // Fix not clickable if there's a color overlay.
-.block-editor-page .ugb-accordion.ugb-accordion--v2 .ugb-accordion__item.ugb--has-background-overlay::before,
-.block-editor-page .ugb-accordion.ugb-accordion--v2 .ugb-accordion__item.ugb--has-background-overlay .ugb-video-background {
+.editor-styles-wrapper .ugb-accordion.ugb-accordion--v2 .ugb-accordion__item.ugb--has-background-overlay::before,
+.editor-styles-wrapper .ugb-accordion.ugb-accordion--v2 .ugb-accordion__item.ugb--has-background-overlay .ugb-video-background {
 	z-index: -1 !important;
 }
 
