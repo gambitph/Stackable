@@ -33,6 +33,7 @@ if ( ! function_exists( 'stackable_block_assets' ) ) {
 				array(),
 				STACKABLE_VERSION
 			);
+			add_editor_style( plugins_url( 'dist/frontend_blocks.css', STACKABLE_FILE ) );
 		}
 
 		// Frontend only scripts.
@@ -99,6 +100,7 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 			array( 'wp-edit-blocks' ),
 			STACKABLE_VERSION
 		);
+		add_editor_style( plugins_url( 'dist/editor_blocks.css', STACKABLE_FILE ) );
 
 		global $content_width;
 		global $wp_version;
@@ -166,6 +168,7 @@ if ( ! function_exists( 'stackable_add_required_block_styles' ) ) {
 			--content-width: ' . esc_attr( $full_width_block_inner_width ) . 'px;
 		}';
 		wp_add_inline_style( 'ugb-style-css', $custom_css );
+		add_editor_style( 'ugb-style-css' );
 	}
 	add_action( 'enqueue_block_assets', 'stackable_add_required_block_styles', 11 );
 }
