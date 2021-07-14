@@ -9,7 +9,7 @@ import {
 	AdvancedToggleControl,
 	ButtonIconPopoverControl,
 	ImageAltControl,
-	ImageControl,
+	ImageControl2,
 	ImageFilterControl,
 	ImageShapeControl,
 	ImageSizeControl,
@@ -46,11 +46,10 @@ export const Edit = props => {
 				title={ __( 'Image', i18n ) }
 				id="image"
 			>
-				<ImageControl // TODO: add selected image size as a prop.
+				<ImageControl2 // TODO: add selected image size as a prop.
 					label={ __( 'Select Image', i18n ) }
 					allowedTypes={ [ 'image' ] }
-					imageID={ attributes.imageId }
-					imageURL={ attributes.imageUrl }
+					attribute="image"
 					onRemove={ () => updateBlockAttributes( clientId, { imageId: '', imageUrl: '' } ) }
 					onChange={ image => {
 						// Get the URL of the currently selected image size.
@@ -58,8 +57,8 @@ export const Edit = props => {
 							url,
 						} = image
 						const currentSelectedSize = attributes.imageSize || 'full'
-						if ( image.sizes[ currentSelectedSize ] ) {
-							url = image.sizes[ currentSelectedSize ].url
+						if ( image.sizes?.[ currentSelectedSize ] ) {
+							url = image.sizes?.[ currentSelectedSize ]?.url || url
 						}
 						updateBlockAttributes( clientId, { imageId: image.id, imageUrl: url } )
 					} }
@@ -116,16 +115,18 @@ export const Edit = props => {
 					hover="all"
 				/>
 
-				<ImageSizeControl
-					label={ __( 'Image Size', i18n ) }
-					value={ attributes.imageSize }
-					onChange={ imageSize => {
-						const imageUrl = imageData.media_details?.sizes[ imageSize ]?.source_url || imageData.source_url
-						updateBlockAttributes( clientId, { imageSize, imageUrl } )
-					} }
-					defaultValue="full"
-					className="ugb--help-tip-image-size"
-				/>
+				{ attributes.imageId && (
+					<ImageSizeControl
+						label={ __( 'Image Size', i18n ) }
+						value={ attributes.imageSize }
+						onChange={ imageSize => {
+							const imageUrl = imageData.media_details?.sizes[ imageSize ]?.source_url || imageData.source_url
+							updateBlockAttributes( clientId, { imageSize, imageUrl } )
+						} }
+						defaultValue="full"
+						className="ugb--help-tip-image-size"
+					/>
+				) }
 
 				{ props.hasBorderRadius &&
 					<AdvancedRangeControl

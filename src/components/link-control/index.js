@@ -1,62 +1,62 @@
 /**
  * External dependencies
  */
-import { BaseControl } from '~stackable/components'
 import classnames from 'classnames'
 
 /**
  * WordPress dependencies
  */
-import { Fragment } from '@wordpress/element'
-import { __experimentalLinkControl as _LinkControl } from '@wordpress/block-editor'
+import {
+	__experimentalLinkControl as _LinkControl, // eslint-disable-line @wordpress/no-unsafe-wp-apis
+} from '@wordpress/block-editor'
+import { BaseControl as _BaseControl } from '@wordpress/components'
+import { __ } from '@wordpress/i18n'
 
 /**
  * Internal dependencies
  */
-import { useDynamicContentControlProps, DynamicContentButton } from '../dynamic-content-control'
+import DynamicContentControl, { useDynamicContentControlProps } from '../dynamic-content-control'
+import AdvancedControl, { extractControlProps } from '../base-control2'
+import { useControlHandlers } from '../base-control2/hooks'
+import { ResetButton } from '../base-control2/reset-button'
 
 const LinkControl = props => {
 	const classNames = classnames( [
 		'stk-link-control',
 		props.className,
 	] )
+	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
+	const [ propsToPass, controlProps ] = extractControlProps( props )
 
-	const [ dynamicContentProps, inputProps ] = useDynamicContentControlProps( props )
+	const value = typeof props.value === 'undefined' ? _value : props.value
+	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
 
-	const control = (
-		<div className="stk-link-control__input">
-			<_LinkControl
-				value={ { url: props.value } }
-				onChange={ ( { url } ) => props.onChange( url ) }
-				settings={ [] } // The Url only.
-				{ ...{
-					...inputProps,
-					...( Object.keys( inputProps ) ? {
-						value: { url: inputProps.value },
-						onChange: ( { url } ) => inputProps.onChange( url ),
-						inputValue: inputProps.value,
-					} : {} ),
-				} }
-			/>
-		</div>
-	)
+	const dynamicContentProps = useDynamicContentControlProps( {
+		...props, value, onChange,
+	} )
 
 	return (
-		<Fragment>
-			<BaseControl
-				help={ props.help }
-				className={ classNames }
-				label={ props.label }
-				screens={ props.screens }
+		<AdvancedControl className={ classNames } { ...controlProps }>
+			<DynamicContentControl
+				dynamic={ props.dynamic }
+				{ ...dynamicContentProps }
 			>
-				{ props.dynamic ? (
-					<div className="stk-dynamic-content-control">
-						{ control }
-						<DynamicContentButton { ...dynamicContentProps } />
-					</div>
-				) : control }
-			</BaseControl>
-		</Fragment>
+				<div className="stk-link-control__input">
+					<_LinkControl
+						{ ...propsToPass }
+						value={ { url: value } }
+						onChange={ ( { url } ) => onChange( url ) }
+						settings={ [] } // The Url only.
+					/>
+				</div>
+			</DynamicContentControl>
+
+			<ResetButton
+				allowReset={ props.allowReset && ! props.dynamic }
+				value={ value }
+				onChange={ () => onChange( '' ) }
+			/>
+		</AdvancedControl>
 	)
 }
 
@@ -65,10 +65,11 @@ LinkControl.defaultProps = {
 	label: '',
 	screens: [ 'desktop' ],
 	help: '',
-	value: '',
-	onChange: () => {},
+	value: undefined,
+	onChange: undefined,
 	showSuggestions: true,
 	dynamic: true,
+	allowReset: true,
 }
 
 export default LinkControl

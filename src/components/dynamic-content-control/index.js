@@ -4,14 +4,17 @@
 import {
 	i18n, isPro, showProNotice,
 } from 'stackable'
-import striptags from 'striptags'
-import { isString } from 'lodash'
+import {
+	isString, first,
+} from 'lodash'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { Button, Popover } from '@wordpress/components'
+import {
+	Button, Popover, TextControl,
+} from '@wordpress/components'
 import {
 	useState, Fragment, useCallback, useEffect,
 } from '@wordpress/element'
@@ -22,65 +25,78 @@ import { useSelect } from '@wordpress/data'
  * Internal dependencies
  */
 import ProControl from '../pro-control'
+import SVGDatabaseIcon from './icons/database-light.svg'
+import { ResetButton } from '../base-control2/reset-button'
 
 /**
  * Custom hook for generating component props
- * for the DynamicContentButton and the selected
- * input component.
+ * for the DynamicContentButton.
  *
  * Usage:
  * ```
- * const [ dynamicContentControlProps, inputProps ] = useDynamicContentControlProps( props )
+ * const dynamicContentControlProps = useDynamicContentControlProps( props )
  *
  * return (
- *  <>
- *    <DynamicContentButton { ...dynamicContentControlProps } />
- *    <ControlComponent { ...inputProps } />
- *  </>
+ *    <DynamicContentControl { ...dynamicContentControlProps } />
  * )
  * ```
  *
  * @param {Object} props parent component props.
- * @return {Array} control props for both DynamicContentButton and input component.
+ * @return {Object} control props for DynamicContentControl.
  */
 export const useDynamicContentControlProps = props => {
 	const [ isPopoverOpen, setIsPopoverOpen ] = useState( false )
-	/**
-	 * When the user is premium, the value prop passed inside the
-	 * input component will be the actual dynamic content value.
-	 */
-	const value = useSelect( select => {
-		// If user is not premium, `stackable/dynamic-content` store is inaccessible.
-		if ( ! select( 'stackable/dynamic-content' ) ) {
-			props.value
-		}
-
-		if ( ! isString( props.value ) ) {
-			return props.value
-		}
-
-		return striptags(
-			props.value.replace( /\!#stk_dynamic(.*)\!#/g, value => {
-				return select( 'stackable/dynamic-content' ).getDynamicContent(
-					value.replace( /\!#/g, '' ).replace( 'stk_dynamic:', '' )
-				) || ''
-			} )
-		)
-	}, [ props.value ] )
 
 	const clickOutsideListener = useCallback( event => {
 		if ( isPopoverOpen ) {
-			if ( ! event.target.closest( '.stackable-dynamic-content__popover' ) && ! event.target.closest( '.stackable-dynamic-content__popover' ) ) {
+			if (
+				! event.target.closest( '.stackable-dynamic-content__popover' ) &&
+				! event.target.closest( '.stackable-dynamic-content__popover' )
+			) {
 				setIsPopoverOpen( false )
 			}
 		}
 	} )
 
-	// Assign the outside click listener.
 	useEffect( () => {
 		document.body.addEventListener( 'click', clickOutsideListener )
 		return () => document.body.removeEventListener( 'click', clickOutsideListener )
 	}, [ clickOutsideListener ] )
+
+	const value = useDynamicContent( props.value )
+
+	const activeAttributes = []
+
+	if ( props.value?.includes( '!#stk_dynamic' ) ) {
+		props.value
+			.match( /\!#stk_dynamic:(.*)\!#/g )
+			?.forEach( match => {
+				const value = match
+					.replace( /\!#/g, '' )
+					.replace( 'stk_dynamic:', '' )
+
+				activeAttributes.push( value )
+			} )
+	}
+
+	if ( props.value?.includes( 'data-stk-dynamic="' ) ) {
+		props.value
+			.match( /data-stk-dynamic="[^"]*"/g )
+			?.forEach( match => {
+				const value = match.match( /data-stk-dynamic="(.*?(?="))"/g )?.[ 0 ]
+					?.replace( /"/g, '' )
+					?.replace( 'data-stk-dynamic=', '' )
+
+				if ( value ) {
+					activeAttributes.push( value )
+				}
+			} )
+	}
+
+	const isPressed = isPopoverOpen || activeAttributes.length
+
+	const activeAttribute = first( activeAttributes ) || ''
+	const placeholder = useFieldTitle( activeAttributes )
 
 	const onChange = useCallback( ( newValue, editorQueryString, frontendQueryString ) => {
 		// If `isFormatType` is true, the onChange function will generate a `stackable/dynamic-content` format type.
@@ -91,33 +107,70 @@ export const useDynamicContentControlProps = props => {
 		)
 
 		setIsPopoverOpen( false )
-	}, [ props.isFormatType ] )
+	}, [ props.isFormatType, props.onChange ] )
 
 	if ( ! isPro ) {
-		return [ {}, {} ]
+		return {}
 	}
 
-	return [
-		// Dynamic Button Props.
-		{
-			onClick: () => setIsPopoverOpen( ! isPopoverOpen ),
-			isPressed: isPopoverOpen || props.value?.match( /\!#stk_dynamic:(.*)\!#/ ) || props.value?.match( /data-stk-dynamic="(.*?(?="))"/ ),
-			isPopoverOpen,
-			value: props.value,
-			onClose: () => setIsPopoverOpen( false ),
-			onChange,
-			activeAttribute: props.value?.match( /\!#stk_dynamic:(.*)\!#/ )
-				? props.value.match( /\!#stk_dynamic:(.*)\!#/g )[ 0 ]?.replace( /\!#/g, '' ).replace( 'stk_dynamic:', '' )
-				: props.value?.match( /data-stk-dynamic="(.*?(?="))"/ )
-					? props.value?.match( /data-stk-dynamic="(.*?(?="))"/ )[ 0 ].replace( /"/g, '' ).replace( 'data-stk-dynamic=', '' )
-					: '',
-		},
-		// Input Props.
-		{
-			disabled: props.value?.match( /\!#stk_dynamic:(.*)\!#/ ) || props.value?.match( /data-stk-dynamic="(.*?(?="))"/ ),
-			value,
-		},
-	]
+	return {
+		onClick: () => setIsPopoverOpen( ! isPopoverOpen ),
+		isPressed,
+		isPopoverOpen,
+		value,
+		placeholder,
+		onClose: () => setIsPopoverOpen( false ),
+		onReset: () => props.onChange( '' ),
+		onChange,
+		activeAttribute,
+	}
+}
+
+/**
+ * Custom hook for parsing the dynamic content field data
+ * in a string.
+ *
+ * @example
+ * ```
+ * const value = useDynamicContent( 'Post Title: !#stk_dynamic:current-page/post-title!#' )
+ * // returns `Post Title: The actual post title`
+ * ```
+ * @param {string} value
+ */
+export const useDynamicContent = ( value = '' ) => {
+	return useSelect( select => {
+		if ( ! select( 'stackable/dynamic-content' ) ) {
+			return value
+		}
+
+		if ( ! isString( value ) ) {
+			return value
+		}
+
+		return select( 'stackable/dynamic-content' ).parseDynamicContents( value )
+	} )
+}
+
+/**
+ * Custom hook for getting the field title of a given
+ * field data.
+ *
+ * @example
+ * ```
+ * const fieldName = useFieldTitle( 'current-page/post-title' )
+ * // returns `Post Title`
+ * ```
+ *
+ * @param {string} value
+ */
+export const useFieldTitle = ( value = '' ) => {
+	return useSelect( select => {
+		if ( ! select( 'stackable/dynamic-content' ) ) {
+			return value
+		}
+
+		return select( 'stackable/dynamic-content' ).getFieldTitle( value )
+	} )
 }
 
 export const DynamicContentFields = applyFilters( 'stackable.dynamic-content.component' ) || Fragment
@@ -131,17 +184,17 @@ export const DynamicContentButton = props => {
 		<Fragment>
 			<Button
 				className="stk-dynamic-content-control__button"
-				icon="database"
+				icon={ <SVGDatabaseIcon /> }
 				aria-haspopup="true"
 				label={ __( 'Dynamic Fields', i18n ) }
 				isSmall
 				isTertiary
 				onClick={ props.onClick }
-				isPressed={ props.isPressed }
+				isPressed={ !! props.isPressed }
 			/>
 			{ props.isPopoverOpen && (
 				<Popover
-					position="bottom right"
+					position="top right"
 					className="stackable-dynamic-content__popover"
 				>
 					{ ! isPro && (
@@ -154,7 +207,6 @@ export const DynamicContentButton = props => {
 					{ isPro && (
 						<DynamicContentFields
 							onClose={ props.onClose }
-							value={ props.value }
 							onChange={ props.onChange }
 							activeAttribute={ props.activeAttribute }
 						/>
@@ -165,3 +217,40 @@ export const DynamicContentButton = props => {
 		</Fragment>
 	)
 }
+
+const DynamicContentControl = ( { children, ...otherProps } ) => {
+	if ( ! otherProps.dynamic ) {
+		return children
+	}
+
+	const hasDynamicContent = otherProps.activeAttribute !== ''
+
+	return (
+		<Fragment>
+			<div className="stk-dynamic-content-control">
+				{ ! hasDynamicContent ? children : (
+					<TextControl
+						value={ otherProps.placeholder }
+						disabled={ true }
+					/>
+				) }
+				<DynamicContentButton { ...otherProps } />
+			</div>
+			<ResetButton
+				allowReset={ true }
+				value={ otherProps.activeAttribute }
+				default=""
+				onChange={ otherProps.onReset }
+			/>
+		</Fragment>
+	)
+}
+
+DynamicContentControl.defaultProps = {
+	dynamic: false,
+	children: null,
+	activeAttribute: '',
+	onReset: () => {},
+}
+
+export default DynamicContentControl
