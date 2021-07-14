@@ -55,7 +55,9 @@ export const settings = {
 		'advanced-block-spacing': true,
 		'advanced-custom-attributes': true,
 		'advanced-responsive': true,
-		'block-background': true,
+		'block-background': {
+			importantBackgroundSize: true,
+		},
 		'block-separators': true,
 		// 'block-title': true,
 		'content-align': true,
