@@ -48,8 +48,8 @@ class ButtonEdit extends Component {
 		}
 		if ( ! this.state.openPopup ) {
 			let selector = document.body
-			if ( document.querySelector( 'iframe[title="Editor canvas"]' ) ) {
-				selector = document.querySelector( 'iframe[title="Editor canvas"]' ).contentWindow.document.body
+			if ( document.querySelector( 'iframe[name="editor-canvas"]' ) ) {
+				selector = document.querySelector( 'iframe[name="editor-canvas"]' ).contentWindow.document.body
 			}
 			selector.addEventListener( 'click', this.outsideClickHandler )
 		}
@@ -70,8 +70,8 @@ class ButtonEdit extends Component {
 
 	hideUrlPopup = () => {
 		let selector = document.body
-		if ( document.querySelector( 'iframe[title="Editor canvas"]' ) ) {
-			selector = document.querySelector( 'iframe[title="Editor canvas"]' ).contentWindow.document.body
+		if ( document.querySelector( 'iframe[name="editor-canvas"]' ) ) {
+			selector = document.querySelector( 'iframe[name="editor-canvas"]' ).contentWindow.document.body
 		}
 		selector.removeEventListener( 'click', this.outsideClickHandler )
 		this.setState( { openPopup: false } )

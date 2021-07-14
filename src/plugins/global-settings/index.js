@@ -52,7 +52,7 @@ const GlobalSettings = () => {
 	 */
 	useEffect( () => {
 		const selector = isEditingTemplate ?
-			document.querySelector( 'iframe[title="Editor canvas"]' ).contentWindow.document.body :
+			document.querySelector( 'iframe[name="editor-canvas"]' ).contentWindow.document.body :
 			document.body
 
 		const globalTypographyWrapperDiv = document.createElement( 'style' )
