@@ -36,7 +36,7 @@ const renderGlobalStyles = ( newColors, isEditingTemplate, setStyles ) => {
 			return null
 		}
 
-		const windowObject = isEditingTemplate ? document.querySelector( 'iframe[name="editor-canvas"]' ).contentWindow : window
+		const windowObject = isEditingTemplate ? document.querySelector( 'iframe[name="editor-canvas"]' )?.contentWindow || window : window
 		const documentObject = isEditingTemplate ? windowObject.document : window.document
 
 		if ( typeof color.slug === 'string' && color.slug.startsWith( 'stk-global-color' ) ) {
