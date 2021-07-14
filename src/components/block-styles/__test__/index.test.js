@@ -155,7 +155,7 @@ describe( 'generateStyles', () => {
 
 		const results = generateStyles( styles, '', '', 900, 400, true )
 		expect( minifyCSS( results.join( '' ) ) ).toMatch( /.test\s*{\s*color:\s*red/ )
-		expect( minifyCSS( results.join( '' ) ) ).toContain( '.block-editor-page' )
+		expect( minifyCSS( results.join( '' ) ) ).toContain( '.editor-styles-wrapper' )
 	} )
 } )
 
@@ -223,7 +223,7 @@ describe( 'BlockStyles', () => {
 		}
 		const { container } = render( <BlockStyles style={ style } editorMode={ true } /> )
 		expect( container.querySelector( 'style' ).innerHTML ).toEqual( expect.stringMatching( /.editor/ ) )
-		expect( container.querySelector( 'style' ).innerHTML ).toEqual( expect.stringMatching( /.block-editor-page/ ) )
+		expect( container.querySelector( 'style' ).innerHTML ).toEqual( expect.stringMatching( /.editor-styles-wrapper/ ) )
 	} )
 
 	it( 'should render editor responsive styles', () => {
@@ -242,8 +242,8 @@ describe( 'BlockStyles', () => {
 		const { container } = render( <BlockStyles style={ style } editorMode={ true } breakTablet="900" breakMobile="400" /> )
 		expect( container.innerHTML ).toEqual( expect.stringMatching( /<style\s*>/ ) )
 		expect( container.innerHTML ).toEqual( expect.stringMatching( /.editor/ ) )
-		expect( container.innerHTML ).toEqual( expect.stringMatching( /.block-editor-page .editor\s*{\s*color:\s*blue/ ) )
-		expect( container.innerHTML ).toEqual( expect.stringMatching( /@media[^\{]+900px[^\}]+.block-editor-page .tablet\s*{\s*color:\s*yellow/ ) )
-		expect( container.innerHTML ).toEqual( expect.stringMatching( /@media[^\{]+400px[^\}]+.block-editor-page .mobile\s*{\s*color:\s*green/ ) )
+		expect( container.innerHTML ).toEqual( expect.stringMatching( /.editor-styles-wrapper .editor\s*{\s*color:\s*blue/ ) )
+		expect( container.innerHTML ).toEqual( expect.stringMatching( /@media[^\{]+900px[^\}]+.editor-styles-wrapper .tablet\s*{\s*color:\s*yellow/ ) )
+		expect( container.innerHTML ).toEqual( expect.stringMatching( /@media[^\{]+400px[^\}]+.editor-styles-wrapper .mobile\s*{\s*color:\s*green/ ) )
 	} )
 } )
