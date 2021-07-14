@@ -6,9 +6,12 @@
 
 @import "common";
 
-.ugb-divider.ugb-divider--v2 {
+.ugb-divider--v2 {
 	padding-left: 0 !important;
 	padding-right: 0 !important;
+}
+
+.ugb-divider.ugb-divider--v2 {
 	hr {
 		background: none;
 		background-color: #ddd;
