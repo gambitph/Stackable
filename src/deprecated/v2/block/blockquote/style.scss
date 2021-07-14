@@ -7,9 +7,12 @@
 @import "common";
 
 // Get rid of possible default blockquote styling.
+.ugb-blockquote--v3 {
+	padding: 0 !important;
+}
+
 .ugb-blockquote.ugb-blockquote--v3 {
 	border: 0 !important;
-	padding: 0 !important;
 	font-style: italic;
 	text-align: inherit;
 	position: relative;
