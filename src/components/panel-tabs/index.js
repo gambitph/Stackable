@@ -42,7 +42,7 @@ const TABS = [
 const DEFAULT_TABS = [ 'block', 'style', 'advanced' ]
 
 export const closeAllOpenPanels = clickedEl => {
-	[].forEach.call( document.querySelectorAll( '.edit-post-sidebar,.edit-widgets-sidebar .components-panel__body .components-panel__body-toggle' ), el => {
+	[].forEach.call( document.querySelector( '.edit-post-sidebar,.edit-widgets-sidebar' ).querySelectorAll( '.components-panel__body .components-panel__body-toggle' ), el => {
 		if ( el.offsetHeight === 0 ) {
 			return
 		}
