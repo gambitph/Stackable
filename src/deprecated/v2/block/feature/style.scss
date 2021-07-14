@@ -62,12 +62,12 @@
 }
 
 @media screen and (max-width: $break-medium) {
+	.ugb-feature__item {
+		grid-template-columns: 1fr !important;
+	}
 	.ugb-feature.ugb-feature--v2 {
 		&.ugb-feature--design-basic,
 		&.ugb-feature--design-plain {
-			.ugb-feature__item {
-				grid-template-columns: 1fr !important;
-			}
 			.ugb-feature__content {
 				grid-row: 2;
 				grid-column: 1;
