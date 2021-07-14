@@ -52,19 +52,23 @@ const GlobalSettings = () => {
 	 * @since 2.17.2
 	 */
 	useEffect( () => {
-		const selector = isEditingTemplate
-			? document.querySelector( 'iframe[name="editor-canvas"]' ).contentWindow.document.body
-			: document.body
-
 		const globalTypographyWrapperDiv = document.createElement( 'style' )
-		selector.appendChild( globalTypographyWrapperDiv )
-		render( <GlobalTypographyStyles />, globalTypographyWrapperDiv )
-
 		const globalColorWrapperDiv = document.createElement( 'style' )
-		selector.appendChild( globalColorWrapperDiv )
-		render( <GlobalColorStyles />, globalColorWrapperDiv )
+
+		const timeout = setTimeout( () => {
+			const selector = isEditingTemplate
+				? document.querySelector( 'iframe[name="editor-canvas"]' ).contentWindow.document.body
+				: document.body
+
+			selector.appendChild( globalTypographyWrapperDiv )
+			render( <GlobalTypographyStyles />, globalTypographyWrapperDiv )
+
+			selector.appendChild( globalColorWrapperDiv )
+			render( <GlobalColorStyles />, globalColorWrapperDiv )
+		}, 300 )
 
 		return () => {
+			clearTimeout( timeout )
 			unmountComponentAtNode( globalTypographyWrapperDiv )
 			unmountComponentAtNode( globalColorWrapperDiv )
 
