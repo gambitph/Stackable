@@ -6,6 +6,10 @@
 
 @import "common";
 
+.ugb-icon__title {
+	margin: 0 !important;
+}
+
 .ugb-icon {
 	&.ugb-icon--v2 {
 		display: flex;
@@ -37,10 +41,6 @@
 	}
 	.ugb-icon__title {
 		width: 100%;
-		margin-top: 0 !important;
-		margin-left: 0 !important;
-		margin-right: 0 !important;
-		margin-bottom: 0;
 	}
 	.ugb-icon__icon:first-child,
 	.ugb-icon__title:first-child {
