@@ -54,7 +54,9 @@ export const settings = {
 		// 'advanced-column-spacing': true,
 		'advanced-custom-attributes': true,
 		'advanced-responsive': true,
-		'block-background': true,
+		'block-background': {
+			importantBackgroundSize: true,
+		},
 		'block-separators': true,
 		'block-title': {
 			blockTitleMarginBottomImportant: true,
