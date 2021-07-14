@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import './editor-loader'
+import { GlobalTypographyStyles } from './editor-loader'
 import TypographyPicker from './typography-picker'
 
 /**
@@ -24,6 +24,8 @@ import {
 	addFilter, doAction,
 } from '@wordpress/hooks'
 import { __, sprintf } from '@wordpress/i18n'
+
+export { GlobalTypographyStyles }
 
 const TYPOGRAPHY_TAGS = [
 	{

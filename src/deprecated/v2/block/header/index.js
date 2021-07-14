@@ -57,7 +57,9 @@ export const settings = {
 		},
 		'advanced-custom-attributes': true,
 		'advanced-responsive': true,
-		'block-background': true,
+		'block-background': {
+			importantBackgroundSize: true,
+		},
 		'block-separators': true,
 		// 'block-title': true,
 		'container-link': true,
