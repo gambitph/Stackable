@@ -9,6 +9,11 @@ import fetch from 'node-fetch'
 
 global.React = React
 
+jest.mock( '@wordpress/element', () => ( {
+	...global.React,
+	render: jest.fn(),
+} ) )
+
 // Some may refer to wp.*, just prevent errors.
 global.wp = {}
 

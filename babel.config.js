@@ -10,7 +10,6 @@ module.exports = api => {
 		env: {
 			test: {
 				plugins: [
-					'@babel/plugin-transform-modules-commonjs',
 					'@babel/plugin-proposal-class-properties',
 					'@babel/plugin-proposal-optional-chaining',
 				],
