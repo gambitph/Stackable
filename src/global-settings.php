@@ -55,9 +55,8 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			 */
 
 			/**
-			 * Uses `after_setup_theme` instead of `wp_enqueue_scripts` here for handling
-			 * page templates. Make sure to run `typography_add_global_styles` first before
-			 * the `typograhy_detect_native_blocks`  method.
+			 * Use `after_setup_theme` to check early if there are global
+			 * typography used the `typograhy_detect_native_blocks`  method.
 			 *
 			 * @since 2.17.1
 			 */
