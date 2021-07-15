@@ -29,7 +29,6 @@ export const isWebFont = fontName => ! fontName.match( /^(sans[-+]serif|serif|mo
  * Load the stylesheet of a Google Font.
  *
  * @param {string} fontName The name of the font
- * @param customDoc
  */
 export const loadGoogleFont = fontName => {
 	setTimeout( () => {
