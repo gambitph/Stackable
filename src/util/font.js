@@ -45,6 +45,7 @@ export const loadGoogleFont = fontName => {
 			}
 		}
 
+		const headElement = getDocumentHead()
 		_loadGoogleFont( headElement )
 		if ( headElement !== document.querySelector( 'head' ) ) {
 			_loadGoogleFont( document.querySelector( 'head' ) )
