@@ -54,7 +54,7 @@ export const loadGoogleFont = fontName => {
 
 export const createLinkTagWithGoogleFont = ( fontName = '' ) => {
 	const link = document.createElement( 'link' )
-	link.classList.add( `ugb-google-fonts` )
+	link.classList.add( 'ugb-google-fonts' )
 	link.setAttribute( 'data-font-name', fontName )
 	link.setAttribute( 'href', getGoogleFontURL( fontName ) )
 	link.setAttribute( 'rel', 'stylesheet' )
