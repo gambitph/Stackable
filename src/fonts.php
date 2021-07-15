@@ -39,7 +39,7 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 		}
 
 		public function is_stackable_block( $block_name ) {
-			return strpos( $block_name, 'ugb/' ) === 0;
+			return strpos( $block_name, 'ugb/' ) === 0 || strpos( $block_name, 'stackable/' ) === 0;
 		}
 
 		public static function register_font( $font_name ) {
