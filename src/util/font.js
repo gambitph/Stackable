@@ -33,7 +33,6 @@ export const isWebFont = fontName => ! fontName.match( /^(sans[-+]serif|serif|mo
  */
 export const loadGoogleFont = fontName => {
 	setTimeout( () => {
-		const headElement = getDocumentHead()
 		const _loadGoogleFont = head => {
 			if ( head && isWebFont( fontName ) ) {
 				if ( isGoogleFontEnqueued( fontName, head ) ) {
