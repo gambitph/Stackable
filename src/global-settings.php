@@ -39,7 +39,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		/**
 		 * Initialize
 		 */
-        function __construct() {
+  	function __construct() {
 			// Register our settings.
 			add_action( 'init', array( $this, 'register_global_settings' ) );
 
