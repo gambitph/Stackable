@@ -14,7 +14,6 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 		public static $google_fonts = [];
 
 		function __construct() {
-				// add_action( 'wp_head', array( $this, 'enqueue_frontend_block_fonts' ), 100 );
 				add_filter( 'render_block', array( $this, 'gather_google_fonts' ), 10, 2 );
 				add_filter( 'wp_footer', array( $this, 'enqueue_frontend_block_fonts' ) );
 		}
