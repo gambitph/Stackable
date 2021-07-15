@@ -78,6 +78,11 @@ domReady( () => {
 	const overrides = applyFilters( 'stackable.click-open-inspector.listener-override', {} )
 
 	document.body.addEventListener( 'dblclick', ev => {
+		// Don't do this if we're in the widget editor since it doesn't have a sidebar.
+		if ( wp.customize ) { // This is true if we're in the widget editor.
+			return
+		}
+
 		const blockName = getBlockName( ev.target )
 		if ( ! blockName ) {
 			return
