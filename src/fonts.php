@@ -9,36 +9,30 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
-    class Stackable_Google_Fonts {
+  class Stackable_Google_Fonts {
 
-        function __construct() {
-            add_action( 'wp_head', array( $this, 'enqueue_frontend_block_fonts' ), 100 );
+		public static $google_fonts = [];
+
+		function __construct() {
+				// add_action( 'wp_head', array( $this, 'enqueue_frontend_block_fonts' ), 100 );
+				add_filter( 'render_block', array( $this, 'gather_google_fonts' ), 10, 2 );
+				add_filter( 'wp_footer', array( $this, 'enqueue_frontend_block_fonts' ) );
+		}
+
+		public function gather_google_fonts( $block_content, $block ) {
+				if ( $this->is_stackable_block( $block['blockName'] ) && is_array( $block['attrs'] ) ) {
+					foreach ( $block['attrs'] as $attr_name => $font_name ) {
+						if ( preg_match( '/fontFamily$/i', $attr_name ) ) {
+							self::register_font( $font_name );
+						}
+					}
+				}
+
+				return $block_content;
 		}
 
 		public function enqueue_frontend_block_fonts() {
-			if ( ! apply_filters( 'stackable_enqueue_fonts', true ) ) {
-				return;
-			}
-
-			if ( is_single() || is_page() || is_404() ) {
-				global $post;
-				if ( is_object( $post ) && property_exists( $post, 'post_content' ) ) {
-					$this->_enqueue_frontend_block_fonts( $post->post_content );
-				}
-			} elseif ( is_archive() || is_home() || is_search() ) {
-				global $wp_query;
-				foreach ( $wp_query as $post ) {
-					if ( is_object( $post ) && property_exists( $post, 'post_content' ) ) {
-						$this->_enqueue_frontend_block_fonts( $post->post_content );
-					}
-				}
-			}
-		}
-
-		public function _enqueue_frontend_block_fonts( $content ) {
-			$blocks = parse_blocks( $content );
-			$google_fonts = $this->gather_google_fonts( $blocks );
-			self::enqueue_google_fonts( $google_fonts );
+			self::enqueue_google_fonts( array_unique( self::$google_fonts ) );
 		}
 
 		public static function is_web_font( $font_name ) {
@@ -49,35 +43,17 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 			return strpos( $block_name, 'ugb/' ) === 0;
 		}
 
-		public function gather_google_fonts( $blocks ) {
-
-			$google_fonts = array();
-			foreach ( $blocks as $block ) {
-
-				// Gather all "fontFamily" attribute values
-				if ( $this->is_stackable_block( $block['blockName'] ) && is_array( $block['attrs'] ) ) {
-					foreach ( $block['attrs'] as $attr_name => $font_name ) {
-						if ( preg_match( '/fontFamily$/i', $attr_name ) ) {
-							if ( ! self::is_web_font( $font_name ) ) {
-								continue;
-							}
-							if ( ! in_array( $font_name, $google_fonts ) ) {
-								// Allow themes to disable enqueuing fonts, helpful for custom fonts.
-								if ( apply_filters( 'stackable_enqueue_font', true, $font_name ) ) {
-									$google_fonts[] = $font_name;
-								}
-							}
-						}
-					}
-				}
-
-				// Look for fonts in inner blocks.
-				if ( ! empty( $block['innerBlocks'] ) ) {
-					$google_fonts = array_unique( array_merge( $google_fonts, $this->gather_google_fonts( $block['innerBlocks'] ) ) );
-				}
+		public static function register_font( $font_name ) {
+			if ( ! self::is_web_font( $font_name ) ) {
+				return;
 			}
 
-			return $google_fonts;
+			if ( ! in_array( $font_name, self::$google_fonts ) ) {
+				// Allow themes to disable enqueuing fonts, helpful for custom fonts.
+				if ( apply_filters( 'stackable_enqueue_font', true, $font_name ) ) {
+					self::$google_fonts[] = $font_name;
+				}
+			}
 		}
 
 		/**
@@ -114,7 +90,6 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 			}
 
 			wp_enqueue_style( $handle, $fonts_url ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
-			add_editor_style( $fonts_url ); // Ensure this is loaded in page template editors.
 		}
 
 	}
