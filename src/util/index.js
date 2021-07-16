@@ -304,3 +304,26 @@ export const moveArrayIndex = ( values, oldIndex, newIndex ) => {
 	values.splice( oldIndex < newIndex ? oldIndex : oldIndex + 1, 1 ) // Remove value in old position.
 	return values
 }
+
+/**
+ * Returns the current block editor head
+ * element.
+ *
+ * @return {HTMLDocument} the head document
+ */
+export const getDocumentHead = () => {
+	let head = document.querySelector( 'head' )
+
+	if ( hasEditingContent() ) {
+		head = document.querySelector( 'iframe[name="editor-canvas"]' ).contentWindow.document.querySelector( 'head' )
+	}
+
+	return head
+}
+
+/**
+ * Checks whether the editing template window is open.
+ *
+ * @return {boolean} true if open.
+ */
+export const hasEditingContent = () => !! document.querySelector( 'iframe[name="editor-canvas"]' )

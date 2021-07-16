@@ -2,9 +2,7 @@
  * External dependencies
  */
 import { locale } from 'stackable'
-
-// Fonts already done loading.
-const loadedFonts = []
+import { getDocumentHead } from '.'
 
 // @from https://github.com/elementor/elementor/blob/45eaa6704fe1ad18f6190c8e95952b38b8a38dc7/assets/dev/js/editor/utils/helpers.js#L23
 const subsets = { /* eslint-disable quote-props */
@@ -33,19 +31,38 @@ export const isWebFont = fontName => ! fontName.match( /^(sans[-+]serif|serif|mo
  * @param {string} fontName The name of the font
  */
 export const loadGoogleFont = fontName => {
-	if ( loadedFonts.includes( fontName ) ) {
-		return
-	}
+	setTimeout( () => {
+		const _loadGoogleFont = head => {
+			if ( head && isWebFont( fontName ) ) {
+				if ( isGoogleFontEnqueued( fontName, head ) ) {
+					return
+				}
 
-	if ( document && isWebFont( fontName ) ) {
-		const link = document.createElement( 'link' )
-		link.setAttribute( 'href', getGoogleFontURL( fontName ) )
-		link.setAttribute( 'rel', 'stylesheet' )
-		link.setAttribute( 'type', 'text/css' )
-		document.querySelector( 'head' ).appendChild( link )
-	}
+				const link = createLinkTagWithGoogleFont( fontName )
+				head.appendChild( link )
+			}
+		}
 
-	loadedFonts.push( fontName )
+		const headElement = getDocumentHead()
+		_loadGoogleFont( headElement )
+		if ( headElement !== document.querySelector( 'head' ) ) {
+			_loadGoogleFont( document.querySelector( 'head' ) )
+		}
+	}, 50 )
+}
+
+export const createLinkTagWithGoogleFont = ( fontName = '' ) => {
+	const link = document.createElement( 'link' )
+	link.classList.add( 'ugb-google-fonts' )
+	link.setAttribute( 'data-font-name', fontName )
+	link.setAttribute( 'href', getGoogleFontURL( fontName ) )
+	link.setAttribute( 'rel', 'stylesheet' )
+	link.setAttribute( 'type', 'text/css' )
+	return link
+}
+
+export const isGoogleFontEnqueued = ( fontName, head = document.querySelector( 'head' ) ) => {
+	return head.querySelector( `[data-font-name="${ fontName }"]` )
 }
 
 export const getFontFamily = fontName => {
@@ -65,8 +82,7 @@ export const getFontFamily = fontName => {
 	return '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
 }
 
-// TODO: deprecate this.
-/**
+/** TODO: deprecate this.
  * Finds all the "font family" attributes and loads the font if needed.
  *
  * @param {Object} attributes Block attributes
