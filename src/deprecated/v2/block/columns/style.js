@@ -101,25 +101,25 @@ export const createStyles = props => {
 	} = props.attributes
 	styles.push( {
 		[ `.${ uniqueClass }-content-wrapper` ]: {
-			minHeight: height === 'half' ? '50vh !important' :
-				height === 'full' ? '100vh !important' :
-					height === 'custom' ? appendImportant( getValue( 'heightNum', '%s' + getValue( 'heightNumUnit', '%s', 'px' ) ) ) :
-						undefined,
+			minHeight: height === 'half' ? '50vh !important'
+				: height === 'full' ? '100vh !important'
+					: height === 'custom' ? appendImportant( getValue( 'heightNum', '%s' + getValue( 'heightNumUnit', '%s', 'px' ) ) )
+						: undefined,
 		},
 		tablet: {
 			[ `.${ uniqueClass }-content-wrapper` ]: {
-				minHeight: tabletHeight === 'half' ? '50vh !important' :
-					tabletHeight === 'full' ? '100vh !important' :
-						tabletHeight === 'custom' ? appendImportant( getValue( 'tabletHeightNum', '%s' + getValue( 'tabletHeightNumUnit', '%s', 'px' ) ) ) :
-							undefined,
+				minHeight: tabletHeight === 'half' ? '50vh !important'
+					: tabletHeight === 'full' ? '100vh !important'
+						: tabletHeight === 'custom' ? appendImportant( getValue( 'tabletHeightNum', '%s' + getValue( 'tabletHeightNumUnit', '%s', 'px' ) ) )
+							: undefined,
 			},
 		},
 		mobile: {
 			[ `.${ uniqueClass }-content-wrapper` ]: {
-				minHeight: mobileHeight === 'half' ? '50vh !important' :
-					mobileHeight === 'full' ? '100vh !important' :
-						mobileHeight === 'custom' ? appendImportant( getValue( 'mobileHeightNum', '%s' + getValue( 'mobileHeightNumUnit', '%s', 'px' ) ) ) :
-							undefined,
+				minHeight: mobileHeight === 'half' ? '50vh !important'
+					: mobileHeight === 'full' ? '100vh !important'
+						: mobileHeight === 'custom' ? appendImportant( getValue( 'mobileHeightNum', '%s' + getValue( 'mobileHeightNumUnit', '%s', 'px' ) ) )
+							: undefined,
 			},
 		},
 	} )
@@ -178,13 +178,24 @@ export const createStyles = props => {
 		  'table' ]: {
 			color: getValue( 'bodyTextColor' ),
 		},
-		[ 'a, ' +
+		saveOnly: {
+			[ 'a, ' +
 		  'a:visited, ' +
 		  'a:focus' ]: {
-			color: getValue( 'linkColor' ),
+				color: getValue( 'linkColor' ),
+			},
 		},
 		'a:hover': {
 			color: getValue( 'linkHoverColor' ),
+		},
+	} )
+	styles.push( {
+		editor: {
+			[ 'a, ' +
+		  'a:visited, ' +
+		  'a:focus' ]: {
+				color: appendImportant( getValue( 'linkColor' ) ),
+			},
 		},
 	} )
 
