@@ -180,8 +180,8 @@ export const createStyles = props => {
 		},
 		saveOnly: {
 			[ 'a, ' +
-		  'a:visited, ' +
-		  'a:focus' ]: {
+				'a:visited, ' +
+				'a:focus' ]: {
 				color: getValue( 'linkColor' ),
 			},
 		},
