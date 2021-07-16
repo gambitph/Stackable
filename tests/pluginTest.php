@@ -20,7 +20,7 @@ class PluginTest extends WP_UnitTestCase {
 		$this->assertTrue( function_exists( 'stackable_notice_gutenberg_plugin_ignore' ) );
 
 		// Test loaded assets inside init.php.
-		$this->assertTrue( function_exists( 'stackable_block_assets' ) );
+		$this->assertTrue( function_exists( 'stackable_block_frontend_assets' ) );
 		$this->assertTrue( function_exists( 'stackable_block_editor_assets' ) );
 		$this->assertTrue( function_exists( 'stackable_load_plugin_textdomain' ) );
 		$this->assertTrue( function_exists( 'stackable_add_required_block_styles' ) );
