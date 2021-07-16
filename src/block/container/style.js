@@ -247,8 +247,8 @@ export const createStyles = props => {
 		},
 		saveOnly: {
 			[ 'a, ' +
-		  'a:visited, ' +
-		  'a:focus' ]: {
+				'a:visited, ' +
+				'a:focus' ]: {
 				color: getValue( 'linkColor' ),
 			},
 		},
@@ -260,8 +260,8 @@ export const createStyles = props => {
 	styles.push( {
 		editor: {
 			[ 'a, ' +
-		  'a:visited, ' +
-		  'a:focus' ]: {
+				'a:visited, ' +
+				'a:focus' ]: {
 				color: appendImportant( getValue( 'linkColor' ) ),
 			},
 		},
