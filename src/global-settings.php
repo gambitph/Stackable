@@ -60,10 +60,13 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			 *
 			 * @since 2.17.1
 			 */
-			add_action( 'after_setup_theme', array( $this, 'typography_add_global_styles' ) );
+			add_action( 'after_setup_theme', array( $this, 'typography_parse_global_styles' ) );
 
 			// For some native blocks, add a note that they're core blocks.
 			add_filter( 'render_block', array( $this, 'typography_detect_native_blocks' ), 10, 2 );
+
+			// Add our global typography styles.
+			add_action( 'wp_enqueue_scripts', array( $this, 'typography_add_global_styles' ) );
 		}
 
 		/**
@@ -428,7 +431,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		 *
 		 * @return void
 		 */
-		public function typography_add_global_styles() {
+		public function typography_parse_global_styles() {
 			// Don't do anything if we don't have any global typography.
 			$typography = get_option( 'stackable_global_typography' );
 			if ( ! $typography || ! is_array( $typography ) ) {
@@ -467,14 +470,25 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			}
 
 			if ( count( $css ) ) {
-				$this->generated_typography_css = true;
 				$inline_css = "/* Global typography */\n";
 				$inline_css .= implode( "\n", $css );
+				$this->generated_typography_css = $inline_css;
+			}
+		}
 
+		/**
+		 * Add the inline global typography styles in the frontend
+		 *
+		 * @return void
+		 *
+		 * @since 2.17.2
+		 */
+		public function typography_add_global_styles() {
+			if ( ! empty( $this->generated_typography_css ) ) {
 				// Register our dummy style so that the inline styles would get added.
 				wp_register_style( 'ugb-style-global-typography', false );
 				wp_enqueue_style( 'ugb-style-global-typography' );
-				wp_add_inline_style( 'ugb-style-global-typography', $inline_css );
+				wp_add_inline_style( 'ugb-style-global-typography', $this->generated_typography_css );
 			}
 		}
 
