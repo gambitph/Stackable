@@ -5,7 +5,7 @@
 /**
  * External dependencies
  */
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 import { IconIcon } from '~stackable/icons'
 
 /**
@@ -17,25 +17,23 @@ import save from './save'
 import deprecated from './deprecated'
 import schema from './schema'
 import example from './example'
+import _metadata from './block.json'
 
 /**
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
-import { __ } from '@wordpress/i18n'
 
-export const name = 'ugb/icon'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Icon', i18n ),
-	description: __( 'Pick an icon or upload your own SVG icon to decorate your content.', i18n ),
+	...metadata,
 	icon: IconIcon,
-	category: 'common',
-	keywords: [
-		__( 'Icon', i18n ),
-		__( 'SVG', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	attributes: schema,
 	example,
 	supports: {

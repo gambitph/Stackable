@@ -24,8 +24,8 @@ if ( ! class_exists( 'Stackable_Optimization_Settings' ) ) {
 			// Register our setting.
 			add_action( 'init', array( $this, 'register_optimization_settings' ) );
 
-			// Prevent the scripts from loading normally.
-			add_action( 'init', array( $this, 'disable_frontend_scripts' ) );
+			// Prevent the scripts from loading normally. Low priority so we can remove the assets.
+			add_action( 'init', array( $this, 'disable_frontend_scripts' ), 9 );
 
 			// Load the scripts only when Stackable blocks are detected.
 			add_filter( 'render_block', array( $this, 'load_frontend_scripts_conditionally' ), 10, 2 );
@@ -60,8 +60,8 @@ if ( ! class_exists( 'Stackable_Optimization_Settings' ) ) {
 		 */
 		public function disable_frontend_scripts() {
 			if ( get_option( 'stackable_optimize_script_load' ) && ! is_admin() ) {
-				remove_action( 'enqueue_block_assets', 'stackable_block_assets' );
-				remove_action( 'enqueue_block_assets', 'stackable_add_required_block_styles' );
+				remove_action( 'init', 'stackable_block_frontend_assets' );
+				remove_action( 'init', 'stackable_add_required_block_styles' );
 			}
 		}
 
@@ -79,13 +79,13 @@ if ( ! class_exists( 'Stackable_Optimization_Settings' ) ) {
 		public function load_frontend_scripts_conditionally( $block_content, $block ) {
 			if ( ! $this->is_script_loaded ) {
 				if ( get_option( 'stackable_optimize_script_load' ) && ! is_admin() ) {
-					if ( 
+					if (
 						stripos( $block['blockName'], 'ugb/' ) === 0 ||
 						stripos( $block['blockName'], 'stackable/' ) === 0 ||
 						stripos( $block_content, '<!-- wp:ugb/' ) !==  false ||
 						stripos( $block_content, '<!-- wp:stackable/' ) !== false
 					) {
-						stackable_block_assets();
+						stackable_block_frontend_assets();
 						stackable_add_required_block_styles();
 						$this->is_script_loaded = true;
 					}

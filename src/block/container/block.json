@@ -1,0 +1,10 @@
+{
+	"name": "ugb/container",
+	"title": "Container",
+	"description": "A styled container that you can add other blocks inside. Use this to create unique layouts.",
+	"category": "layout",
+	"keywords": [
+		"Row layout"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

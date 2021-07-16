@@ -1,0 +1,10 @@
+{
+	"name": "ugb/text",
+	"title": "Advanced Text",
+	"description": "Start with the building block of all page layouts.",
+	"category": "common",
+	"keywords": [
+		"Paragraph"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

@@ -11,30 +11,29 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import example from './example'
+import _metadata from './block.json'
 
 /**
  * External dependencies
  */
 import { PricingBoxIcon } from '~stackable/icons'
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 
 /**
  * WordPress dependencies
  */
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import { __ } from '@wordpress/i18n'
 
-export const name = 'ugb/pricing-box'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Pricing Box', i18n ),
-	description: __( 'Display the different pricing tiers of your business.', i18n ),
+	...metadata,
 	icon: PricingBoxIcon,
-	category: 'layout',
-	keywords: [
-		__( 'Pricing Box', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	attributes: schema,
 	example,
 	supports: {

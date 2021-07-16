@@ -11,30 +11,29 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import example from './example'
+import _metadata from './block.json'
 
 /**
  * External dependencies
  */
 import { FeatureGridIcon } from '~stackable/icons'
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 
-export const name = 'ugb/feature-grid'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Feature Grid', i18n ),
-	description: __( 'Display multiple product features or services. You can use Feature Grids one after another.', i18n ),
+	...metadata,
 	icon: FeatureGridIcon,
-	category: 'layout',
-	keywords: [
-		__( 'Feature Grid', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	attributes: schema,
 	example,
 	supports: {

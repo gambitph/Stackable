@@ -1,0 +1,11 @@
+{
+	"name": "ugb/expand",
+	"title": "Expand / Show More",
+	"description": "Display a small snippet of text. Your readers can toggle it to show more information.",
+	"category": "layout",
+	"keywords": [
+		"Hide",
+		"Less"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

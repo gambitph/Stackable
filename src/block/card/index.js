@@ -16,25 +16,24 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import example from './example'
+import _metadata from './block.json'
 
 /**
  * WordPress dependencies
  */
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import { __ } from '@wordpress/i18n'
 
-export const name = 'ugb/card'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Card', i18n ),
-	description: __( 'Describe a single subject in a small card. You can use this to describe your product, service or a person.', i18n ),
+	...metadata,
 	icon: CardIcon,
-	category: 'layout',
-	keywords: [
-		__( 'Card', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	attributes: schema,
 	example,
 	supports: {
@@ -72,6 +71,5 @@ export const settings = {
 		},
 	},
 }
-
 // For column spacings, use advanced paddings & vertical align on the content area only.
 addFilter( 'stackable.card.advanced-column-spacing.vertical-align.selector', 'stackable/card', () => '.ugb-card__content' )

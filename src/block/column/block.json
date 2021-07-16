@@ -1,0 +1,13 @@
+{
+	"name": "ugb/column",
+	"title": "Advanced Column",
+	"description": "A single column within an advanced columns block. Get advanced options on how you want your column to look.",
+	"category": "layout",
+	"keywords": [
+		"Section rows"
+	],
+	"parent": [
+		"ugb/columns"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

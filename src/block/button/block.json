@@ -1,0 +1,10 @@
+{
+	"name": "ugb/button",
+	"title": "Button",
+	"description": "Add a customizable button.",
+	"category": "layout",
+	"keywords": [
+		"Link"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

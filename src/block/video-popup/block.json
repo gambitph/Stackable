@@ -1,0 +1,12 @@
+{
+	"name": "ugb/video-popup",
+	"title": "Video Popup",
+	"description": "Display a large thumbnail that your users can click to play a video full-screen. Great for introductory or tutorial videos.",
+	"category": "common",
+	"keywords": [
+		"YouTube",
+		"Vimeo",
+		"Embed Mp4"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

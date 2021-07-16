@@ -14,25 +14,24 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import example from './example'
+import _metadata from './block.json'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 
-export const name = 'ugb/spacer'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Spacer', i18n ),
-	description: __( 'Sometimes you just need some space.', i18n ),
+	...metadata,
 	icon: SpacerIcon,
-	category: 'layout',
-	keywords: [
-		__( 'Spacer', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	attributes: schema,
 	example,
 	supports: {

@@ -9,7 +9,6 @@ import { withMainClassname } from '~stackable/higher-order'
  */
 import { getBlockType, registerBlockType } from '@wordpress/blocks'
 import { applyFilters } from '@wordpress/hooks'
-import { supportsBlockCollections } from './util'
 
 const registerBlock = ( name, settings = {} ) => {
 	if ( getBlockType( name ) ) {
@@ -19,7 +18,7 @@ const registerBlock = ( name, settings = {} ) => {
 	const blockName = name.replace( /^\w+\//g, '' )
 	const blockSettings = {
 		...settings,
-		category: supportsBlockCollections() ? settings.category : 'stackable',
+		category: settings.category,
 		modules: applyFilters( `stackable.${ blockName }.modules`, settings.modules || {} ),
 		deprecated: ( settings.deprecated || [] ).map( deprecated => {
 			return {

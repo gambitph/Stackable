@@ -1,0 +1,10 @@
+{
+	"name": "ugb/design-library",
+	"title": "Design Library",
+	"description": "Choose a layout or block from the Stackable Design Library.",
+	"category": "layout",
+	"keywords": [
+		"Element Layouts"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

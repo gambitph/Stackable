@@ -1,0 +1,12 @@
+{
+	"name": "ugb/blog-posts",
+	"title": "Posts",
+	"description": "Your latest blog posts. Use this to showcase a few of your posts in your landing pages.",
+	"category": "layout",
+	"keywords": [
+		"Blog Posts",
+		"Lastest Posts",
+		"Query Loop"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

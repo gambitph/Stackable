@@ -378,22 +378,18 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 
 if ( ! function_exists( 'stackable_register_blog_posts_block' ) ) {
     /**
-     * Registers the `ugb/blog-posts` block on server.
+     * Add our render attributes.
      */
-    function stackable_register_blog_posts_block() {
-        if ( ! function_exists( 'register_block_type' ) ) {
-            return;
-        }
+    function stackable_register_blog_posts_block( $options, $block_name ) {
+		if ( $block_name !== 'ugb/blog-posts' ) {
+			return $options;
+		}
 
-        register_block_type(
-            'ugb/blog-posts',
-            array(
-                'attributes' => stackable_blog_posts_attributes(),
-                'render_callback' => 'stackable_render_blog_posts_block',
-            )
-        );
+		$options['attributes'] = stackable_blog_posts_attributes();
+		$options['render_callback'] = 'stackable_render_blog_posts_block';
+		return $options;
     }
-    add_action( 'init', 'stackable_register_blog_posts_block' );
+    add_filter( 'stackable.register-blocks.options', 'stackable_register_blog_posts_block', 10, 2 );
 }
 
 if ( ! function_exists( 'stackable_blog_posts_rest_fields' ) ) {

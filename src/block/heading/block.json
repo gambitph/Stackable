@@ -1,0 +1,10 @@
+{
+	"name": "ugb/heading",
+	"title": "Advanced Heading",
+	"description": "Introduce new sections of your content in style.",
+	"category": "common",
+	"keywords": [
+		"Title"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

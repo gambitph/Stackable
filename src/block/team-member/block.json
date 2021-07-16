@@ -1,0 +1,7 @@
+{
+	"name": "ugb/team-member",
+	"title": "Team Member",
+	"description": "Display members of your team or your office. Use multiple Team Member blocks if you have a large team.",
+	"category": "layout",
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

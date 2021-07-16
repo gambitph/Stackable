@@ -5,7 +5,7 @@
 /**
  * External dependencies
  */
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 import { DividerIcon } from '~stackable/icons'
 
 /**
@@ -16,24 +16,23 @@ import save from './save'
 import deprecated from './deprecated'
 import schema from './schema'
 import example from './example'
+import _metadata from './block.json'
 
 /**
  * WordPress dependencies
  */
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import { __ } from '@wordpress/i18n'
 
-export const name = 'ugb/divider'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Divider', i18n ),
-	description: __( 'Add a pause between your content.', i18n ),
+	...metadata,
 	icon: DividerIcon,
-	category: 'layout',
-	keywords: [
-		__( 'Divider', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	attributes: schema,
 	example,
 	supports: {

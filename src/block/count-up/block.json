@@ -1,0 +1,10 @@
+{
+	"name": "ugb/count-up",
+	"title": "Count Up",
+	"description": "Showcase your stats. Display how many customers you have or the number of downloads of your app.",
+	"category": "common",
+	"keywords": [
+		"Statistics"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

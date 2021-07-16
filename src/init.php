@@ -13,31 +13,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! function_exists( 'stackable_block_assets' ) ) {
+if ( ! function_exists( 'stackable_block_frontend_assets' ) ) {
 
 	/**
-	* Enqueue block assets for both frontend + backend.
+	* Register block assets for both frontend + backend.
 	*
 	* @since 0.1
 	*/
-	function stackable_block_assets() {
-
-		$enqueue_styles_in_frontend = apply_filters( 'stackable_enqueue_styles', ! is_admin() );
-		$enqueue_scripts_in_frontend = apply_filters( 'stackable_enqueue_scripts', ! is_admin() );
-
+	function stackable_block_frontend_assets() {
 		// Frontend block styles.
-		if ( is_admin() || $enqueue_styles_in_frontend ) {
-			wp_enqueue_style(
-				'ugb-style-css',
-				plugins_url( 'dist/frontend_blocks.css', STACKABLE_FILE ),
-				array(),
-				STACKABLE_VERSION
-			);
-		}
+		wp_register_style(
+			'ugb-style-css',
+			plugins_url( 'dist/frontend_blocks.css', STACKABLE_FILE ),
+			array(),
+			STACKABLE_VERSION
+		);
 
 		// Frontend only scripts.
-		if ( $enqueue_scripts_in_frontend ) {
-			wp_enqueue_script(
+		if ( ! is_admin() ) {
+			wp_register_script(
 				'ugb-block-frontend-js',
 				plugins_url( 'dist/frontend_blocks.js', STACKABLE_FILE ),
 				array(),
@@ -49,7 +43,7 @@ if ( ! function_exists( 'stackable_block_assets' ) ) {
 			) );
 		}
 	}
-	add_action( 'enqueue_block_assets', 'stackable_block_assets' );
+	add_action( 'init', 'stackable_block_frontend_assets' );
 }
 
 if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
@@ -71,7 +65,7 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 		) );
 
 		// Backend editor scripts: common vendor files.
-		wp_enqueue_script(
+		wp_register_script(
 			'ugb-block-js-vendor',
 			plugins_url( 'dist/editor_vendor.js', STACKABLE_FILE ),
 			array(),
@@ -80,7 +74,7 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 
 		// Backend editor scripts: blocks.
 		$dependencies = array( 'ugb-block-js-vendor', 'code-editor', 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'wp-util', 'wp-plugins', 'wp-edit-post', 'wp-i18n', 'wp-api' );
-		wp_enqueue_script(
+		wp_register_script(
 			'ugb-block-js',
 			plugins_url( 'dist/editor_blocks.js', STACKABLE_FILE ),
 			// wp-util for wp.ajax.
@@ -93,7 +87,7 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 		wp_set_script_translations( 'ugb-block-js', STACKABLE_I18N );
 
 		// Backend editor only styles.
-		wp_enqueue_style(
+		wp_register_style(
 			'ugb-block-editor-css',
 			plugins_url( 'dist/editor_blocks.css', STACKABLE_FILE ),
 			array( 'wp-edit-blocks' ),
@@ -137,7 +131,7 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 	}
 
 	// Enqueue in a higher number so that other scripts that add on Stackable can load first. E.g. Premium.
-	add_action( 'enqueue_block_editor_assets', 'stackable_block_editor_assets', 20 );
+	add_action( 'init', 'stackable_block_editor_assets' );
 }
 
 if ( ! function_exists( 'stackable_load_plugin_textdomain' ) ) {

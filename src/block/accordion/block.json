@@ -1,0 +1,11 @@
+{
+	"name": "ugb/accordion",
+	"title": "Accordion",
+	"description": "A title that your visitors can toggle to view more text. Use as FAQs or multiple ones for an Accordion.",
+	"category": "common",
+	"keywords": [
+		"Toggle",
+		"Faq"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

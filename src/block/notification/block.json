@@ -1,0 +1,11 @@
+{
+	"name": "ugb/notification",
+	"title": "Notification",
+	"description": "Show a notice to your readers. People can dismiss the notice to permanently hide it.",
+	"category": "formatting",
+	"keywords": [
+		"Notice",
+		"Alert"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

@@ -1,0 +1,10 @@
+{
+	"name": "ugb/cta",
+	"title": "Call to Action",
+	"description": "A small section you can use to call the attention of your visitors. Great for calling attention to your products or deals.",
+	"category": "layout",
+	"keywords": [
+		"Call to Action"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

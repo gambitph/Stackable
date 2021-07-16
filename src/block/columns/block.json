@@ -1,0 +1,10 @@
+{
+	"name": "ugb/columns",
+	"title": "Advanced Columns & Grid",
+	"description": "Add a block that displays content in multiple columns. Get advanced options on how you want your columns to look.",
+	"category": "layout",
+	"keywords": [
+		"Section rows"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

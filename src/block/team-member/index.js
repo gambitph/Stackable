@@ -11,6 +11,7 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import example from './example'
+import _metadata from './block.json'
 
 /**
  * External dependencies
@@ -20,21 +21,19 @@ import { TeamMemberIcon } from '~stackable/icons'
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 
-export const name = 'ugb/team-member'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Team Member', i18n ),
-	description: __( 'Display members of your team or your office. Use multiple Team Member blocks if you have a large team.', i18n ),
+	...metadata,
 	icon: TeamMemberIcon,
-	category: 'layout',
-	keywords: [
-		__( 'Team Member', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	attributes: schema,
 	example,
 	supports: {
