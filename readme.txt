@@ -208,6 +208,7 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 * New: WordPress 5.8 compatibility
 * New: Compatible with the new Page Template editor
 * New: Compatible with the new Widgets Editor
+* Change: Removed "Content Selector" Global Settings option, it's no longer needed.
 * Fixed: Some block attributes are now properly pasted when using copy and paste styles
 * Fixed: Post IDs and other numbers are not displayed in Dynamic Contents
 * Fixed: Some block styles when the Optimization setting is enabled

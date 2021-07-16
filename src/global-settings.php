@@ -134,6 +134,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				)
 			);
 
+			// TODO: Unused since 2.17.2 and WordPress 5.8, this will be removed in v3.
 			register_setting(
 				'stackable_global_settings',
 				'stackable_global_content_selector',
