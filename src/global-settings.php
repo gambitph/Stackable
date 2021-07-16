@@ -136,18 +136,6 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 
 			register_setting(
 				'stackable_global_settings',
-				'stackable_global_content_selector',
-				array(
-					'type' => 'string',
-					'description' => __( 'Stackable global typography content selector', STACKABLE_I18N ),
-					'sanitize_callback' => 'sanitize_text_field',
-					'show_in_rest' => true,
-					'default' => '',
-				)
-			);
-
-			register_setting(
-				'stackable_global_settings',
 				'stackable_global_force_typography',
 				array(
 					'type' => 'boolean',
