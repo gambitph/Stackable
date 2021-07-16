@@ -14,20 +14,20 @@ if ( ! class_exists( 'Stackable_Google_Fonts' ) ) {
 		public static $google_fonts = [];
 
 		function __construct() {
-				add_filter( 'render_block', array( $this, 'gather_google_fonts' ), 10, 2 );
-				add_filter( 'wp_footer', array( $this, 'enqueue_frontend_block_fonts' ) );
+			add_filter( 'render_block', array( $this, 'gather_google_fonts' ), 10, 2 );
+			add_filter( 'wp_footer', array( $this, 'enqueue_frontend_block_fonts' ) );
 		}
 
 		public function gather_google_fonts( $block_content, $block ) {
-				if ( $this->is_stackable_block( $block['blockName'] ) && is_array( $block['attrs'] ) ) {
-					foreach ( $block['attrs'] as $attr_name => $font_name ) {
-						if ( preg_match( '/fontFamily$/i', $attr_name ) ) {
-							self::register_font( $font_name );
-						}
+			if ( $this->is_stackable_block( $block['blockName'] ) && is_array( $block['attrs'] ) ) {
+				foreach ( $block['attrs'] as $attr_name => $font_name ) {
+					if ( preg_match( '/fontFamily$/i', $attr_name ) ) {
+						self::register_font( $font_name );
 					}
 				}
+			}
 
-				return $block_content;
+			return $block_content;
 		}
 
 		public function enqueue_frontend_block_fonts() {
