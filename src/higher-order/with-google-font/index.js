@@ -6,24 +6,30 @@ import { loadGoogleFontInAttributes } from '~stackable/util'
 /**
  * WordPress dependencies
  */
-import { Component } from '@wordpress/element'
+import { useEffect } from '@wordpress/element'
 import { createHigherOrderComponent } from '@wordpress/compose'
+import { useSelect } from '@wordpress/data'
 
 const withGoogleFont = createHigherOrderComponent(
-	WrappedComponent => class extends Component {
-		static defaultProps = {
+	WrappedComponent => {
+		const NewComponent = props => {
+			const isEditingTemplate = useSelect( select =>
+				select( 'core/edit-post' ).isEditingTemplate?.()
+			)
+
+			// Reload the Google Fonts in the editor when switching to and from page template editing.
+			useEffect( () => {
+				loadGoogleFontInAttributes( props.attributes )
+			}, [ isEditingTemplate ] )
+
+			return <WrappedComponent { ...props } />
+		}
+
+		NewComponent.defaultProps = {
 			attributes: {},
 		}
 
-		componentDidMount() {
-			loadGoogleFontInAttributes( this.props.attributes )
-		}
-
-		render() {
-			return (
-				<WrappedComponent { ...this.props } />
-			)
-		}
+		return NewComponent
 	},
 	'withGoogleFont'
 )
