@@ -23,7 +23,7 @@ if ( ! class_exists( 'Stackable_Icons' ) ) {
 			add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
 
 			// Add our FA Kit as a dependency to our editor script.
-			add_filter( 'stackable_editor_blocks_dependencies', array( $this, 'add_kit_dependency' ) );
+			add_filter( 'stackable_editor_js_dependencies', array( $this, 'add_kit_dependency' ) );
 
 			// Add FA parameters to the script tag.
 			add_filter( 'script_loader_tag', array( $this, 'script_loader_tag' ), 10, 2 );

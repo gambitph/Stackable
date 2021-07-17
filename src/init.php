@@ -25,7 +25,7 @@ if ( ! function_exists( 'stackable_block_frontend_assets' ) ) {
 		wp_register_style(
 			'ugb-style-css',
 			plugins_url( 'dist/frontend_blocks.css', STACKABLE_FILE ),
-			array(),
+			apply_filters( 'stackable_frontend_css_dependencies', array() ),
 			STACKABLE_VERSION
 		);
 
@@ -34,7 +34,7 @@ if ( ! function_exists( 'stackable_block_frontend_assets' ) ) {
 			wp_register_script(
 				'ugb-block-frontend-js',
 				plugins_url( 'dist/frontend_blocks.js', STACKABLE_FILE ),
-				array(),
+				apply_filters( 'stackable_frontend_js_dependencies', array() ),
 				STACKABLE_VERSION
 			);
 
@@ -93,7 +93,7 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 			plugins_url( 'dist/editor_blocks.js', STACKABLE_FILE ),
 			// wp-util for wp.ajax.
 			// wp-plugins & wp-edit-post for Gutenberg plugins.
-			apply_filters( 'stackable_editor_blocks_dependencies', $dependencies ),
+			apply_filters( 'stackable_editor_js_dependencies', $dependencies ),
 			STACKABLE_VERSION
 		);
 
@@ -104,7 +104,7 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 		wp_register_style(
 			'ugb-block-editor-css',
 			plugins_url( 'dist/editor_blocks.css', STACKABLE_FILE ),
-			array( 'wp-edit-blocks' ),
+			apply_filters( 'stackable_editor_css_dependencies', array( 'wp-edit-blocks' ) ),
 			STACKABLE_VERSION
 		);
 
