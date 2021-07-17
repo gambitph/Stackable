@@ -85,7 +85,7 @@ if ( ! class_exists( 'Stackable_Optimization_Settings' ) ) {
 						stripos( $block_content, '<!-- wp:ugb/' ) !==  false ||
 						stripos( $block_content, '<!-- wp:stackable/' ) !== false
 					) {
-						stackable_block_frontend_assets();
+						stackable_block_enqueue_frontend_assets();
 						stackable_add_required_block_styles();
 						$this->is_script_loaded = true;
 					}

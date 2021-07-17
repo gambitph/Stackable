@@ -46,6 +46,20 @@ if ( ! function_exists( 'stackable_block_frontend_assets' ) ) {
 	add_action( 'init', 'stackable_block_frontend_assets' );
 }
 
+if ( ! function_exists( 'stackable_block_enqueue_frontend_assets' ) ) {
+
+	/**
+	* Enqueue frontend scripts and styles.
+	*
+	* @since 2.17.2
+	*/
+	function stackable_block_enqueue_frontend_assets() {
+		stackable_block_frontend_assets();
+		wp_enqueue_style( 'ugb-style-css' );
+		wp_enqueue_script( 'ugb-block-frontend-js' );
+	}
+}
+
 if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 
 	/**
