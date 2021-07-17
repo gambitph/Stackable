@@ -198,13 +198,24 @@ export const createStyles = props => {
 		  'table' ]: {
 			color: getValue( 'bodyTextColor' ),
 		},
-		[ 'a, ' +
-		  'a:visited, ' +
-		  'a:focus' ]: {
-			color: getValue( 'linkColor' ),
+		saveOnly: {
+			[ 'a, ' +
+				'a:visited, ' +
+				'a:focus' ]: {
+				color: getValue( 'linkColor' ),
+			},
 		},
 		'a:hover': {
 			color: getValue( 'linkHoverColor' ),
+		},
+	} )
+	styles.push( {
+		editor: {
+			[ 'a, ' +
+				'a:visited, ' +
+				'a:focus' ]: {
+				color: appendImportant( getValue( 'linkColor' ) ),
+			},
 		},
 	} )
 
