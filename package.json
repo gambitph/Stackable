@@ -26,7 +26,7 @@
 		"react-autosuggest": "^9.4.3",
 		"react-compound-slider": "^2.5.0",
 		"react-file-drop": "^3.0.7",
-		"react-sortable-hoc": "^1.11.0",
+		"react-sortable-hoc": "^2.0.0",
 		"striptags": "^3.1.1",
 		"waypoints": "^4.0.1"
 	},
