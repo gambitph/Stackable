@@ -27,7 +27,7 @@
 		"react-compound-slider": "^2.5.0",
 		"react-file-drop": "^3.0.7",
 		"react-sortable-hoc": "^2.0.0",
-		"striptags": "^3.1.1",
+		"striptags": "^3.2.0",
 		"waypoints": "^4.0.1"
 	},
 	"devDependencies": {
@@ -62,7 +62,7 @@
 		"babel-core": "^7.0.0-bridge.0",
 		"babel-jest": "^24.9.0",
 		"babel-loader": "^8.0.6",
-		"browserslist": "^4.6.2",
+		"browserslist": "^4.16.6",
 		"concurrently": "^4.1.0",
 		"css-mqpacker": "^7.0.0",
 		"cssnano": "^4.1.10",
@@ -82,8 +82,8 @@
 		"jest": "^24.8.0",
 		"jsonfile": "^5.0.0",
 		"lint-staged": "^9.2.1",
-		"lodash": "^4.17.11",
-		"node-fetch": "^2.6.0",
+		"lodash": "^4.17.21",
+		"node-fetch": "^2.6.1",
 		"node-sass": "^4.14.1",
 		"onchange": "^5.2.0",
 		"prettier": "^1.17.0",
