@@ -19,6 +19,7 @@ const autoprefixer = require( 'autoprefixer' ),
 const buildInclude = [
 	path.resolve( __dirname, './*.+(txt|php)' ), // All files in the root.
 	path.resolve( __dirname, './src/**/*.php' ), // Only PHP files in our source files, others will be compiled into dist.
+	path.resolve( __dirname, './src/**/block.json' ), // Allow block metadata files.
 	path.resolve( __dirname, './dist/**' ),
 	path.resolve( __dirname, './freemius/**' ),
 	path.resolve( __dirname, './images/**' ),
