@@ -6,7 +6,7 @@
  */
 import { StackableIcon } from '~stackable/icons'
 import {
-	disabledBlocks, i18n, isContentOnlyMode,
+	disabledBlocks, isContentOnlyMode,
 } from 'stackable'
 
 /**
@@ -15,11 +15,11 @@ import {
 import edit from './edit'
 import save from './save'
 import InsertLibraryButton from './insert-library-button'
+import _metadata from './block.json'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
 import domReady from '@wordpress/dom-ready'
 import { render } from '@wordpress/element'
 import { subscribe } from '@wordpress/data'
@@ -31,18 +31,16 @@ export const schema = {
 	},
 }
 
-export const name = 'ugb/design-library'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Design Library', i18n ),
-	description: __( 'Choose a layout or block from the Stackable Design Library.', i18n ),
+	...metadata,
 	icon: StackableIcon,
-	category: 'layout',
-	keywords: [
-		__( 'Design Library', i18n ),
-		__( 'Element Layouts', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	attributes: schema,
 	example: {
 		attributes: {

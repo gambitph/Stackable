@@ -11,6 +11,7 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import example from './example'
+import _metadata from './block.json'
 
 /**
  * External dependencies
@@ -20,21 +21,19 @@ import { ImageBoxIcon } from '~stackable/icons'
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 
-export const name = 'ugb/image-box'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Image Box', i18n ),
-	description: __( 'Display an image that shows more information when hovered on. Can be used as a fancy link to other pages.', i18n ),
+	...metadata,
 	icon: ImageBoxIcon,
-	category: 'layout',
-	keywords: [
-		__( 'Image Box', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	supports: {
 		align: [ 'center', 'wide', 'full' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.

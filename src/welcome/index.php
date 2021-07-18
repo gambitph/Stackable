@@ -184,11 +184,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 							<p class="s-settings-subtitle"><?php printf( __( 'Each WordPress theme is unique, so if your global settings are not working correctly with your theme, here are a few options you can tweak to make them work. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/article/361-how-to-use-global-settings?utm_source=wp-settings-global-settings&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
 							<div class="s-global-settings"></div>
 						</article>
-						<article class="s-box" id="optimization-settings">
-							<h2><?php _e( '🏃‍♂️ Optimization Settings', STACKABLE_I18N ) ?></h2>
-							<p class="s-settings-subtitle"><?php printf( __( 'Here are some settings that you can tweak to optimize Stackable. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/article/460-how-to-use-optimization-settings?utm_source=wp-settings-global-settings&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
-							<div class="s-optimization-settings"></div>
-						</article>
+						<?php do_action( 'stackable_settings_page_mid' ); ?>
                         <article class="s-box" id="block-settings">
                             <h2><?php _e( '🎛 Enable & Disable Blocks', STACKABLE_I18N ) ?></h2>
                             <p class="s-settings-subtitle"><?php _e( 'We have a lot of awesome blocks. But if you\'re overwhelmed with awesomeness, you can hide some of them.' , STACKABLE_I18N ) ?> <em><?php _e( '(If your post contains a disabled block, it will still continue to work. You won\'t just be able to add the disabled blocks.)' , STACKABLE_I18N ) ?></em></p>

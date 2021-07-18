@@ -4,7 +4,7 @@
 export default [
 	{
 		name: 'custom',
-		title: 'Card (v3)',
+		title: 'Card',
 		isDefault: true,
 		// scope: [ 'inserter', 'block' ],
 		// scope: [ 'block' ],

@@ -11,30 +11,29 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import example from './example'
+import _metadata from './block.json'
 
 /**
  * External dependencies
  */
 import { TestimonialIcon } from '~stackable/icons'
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 
-export const name = 'ugb/testimonial'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Testimonial', i18n ),
-	description: __( 'Showcase what your users say about your product or service.', i18n ),
+	...metadata,
 	icon: TestimonialIcon,
-	category: 'layout',
-	keywords: [
-		__( 'Testimonial', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	attributes: schema,
 	example,
 	supports: {

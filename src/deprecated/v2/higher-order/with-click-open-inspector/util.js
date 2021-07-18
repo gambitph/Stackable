@@ -1,5 +1,3 @@
-import { supportsInspectorPositionSticky } from '~stackable/util'
-
 export const openPanelId = panelId => {
 	let panelToOpen = getPanel( panelId )
 	if ( panelToOpen ) {
@@ -78,11 +76,6 @@ export const scrollPanelIntoView = panelEl => {
 	let offset = panelEl.getBoundingClientRect().top + 2
 	offset -= tabs ? tabs.getBoundingClientRect().height : 0
 	offset -= sidebar.getBoundingClientRect().top
-
-	if ( ! supportsInspectorPositionSticky() ) {
-		const sidebarHeader = document.querySelector( '.edit-post-sidebar-header' )
-		offset -= sidebarHeader ? sidebarHeader.getBoundingClientRect().height - 1 : 0
-	}
 
 	document.querySelector( '.edit-post-sidebar, .edit-widgets-sidebar' ).scrollTop += offset
 }

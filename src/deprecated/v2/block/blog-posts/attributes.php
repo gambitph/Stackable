@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! function_exists( 'stackable_blog_posts_attributes' ) ) {
+if ( ! function_exists( 'stackable_blog_posts_attributes_v2' ) ) {
 	/**
 	 * Returns all the attributes for the blog post block to
 	 * be used for `register_block_type`
@@ -22,7 +22,7 @@ if ( ! function_exists( 'stackable_blog_posts_attributes' ) ) {
 	 *
 	 * @since 2.0
 	 */
-	function stackable_blog_posts_attributes() {
+	function stackable_blog_posts_attributes_v2() {
 		return array (
 			'design' => array(
 				'type' => 'string',

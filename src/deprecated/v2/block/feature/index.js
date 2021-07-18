@@ -11,6 +11,7 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import example from './example'
+import _metadata from './block.json'
 
 /**
  * External dependencies
@@ -20,21 +21,19 @@ import { FeatureIcon } from '~stackable/icons'
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 
-export const name = 'ugb/feature'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Feature', i18n ),
-	description: __( 'Display a product feature or a service in a large area.', i18n ),
+	...metadata,
 	icon: FeatureIcon,
-	category: 'layout',
-	keywords: [
-		__( 'Feature', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	supports: {
 		align: [ 'center', 'wide', 'full' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.

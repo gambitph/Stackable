@@ -7,7 +7,7 @@
  */
 import { IconListIcon } from '~stackable/icons'
 import { range } from 'lodash'
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 
 /**
  * Internal dependencies
@@ -18,24 +18,23 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import example from './example'
+import _metadata from './block.json'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 
-export const name = 'ugb/icon-list'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Icon List', i18n ),
-	description: __( 'An unordered list with icons. You can use this as a list of features or benefits.', i18n ),
+	...metadata,
 	icon: IconListIcon,
-	category: 'common',
-	keywords: [
-		__( 'Icon List', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	attributes: schema,
 	example,
 	supports: {

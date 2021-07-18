@@ -1,0 +1,10 @@
+{
+	"name": "ugb/icon",
+	"title": "Icon (v2)",
+	"description": "Pick an icon or upload your own SVG icon to decorate your content.",
+	"category": "stackable-v2",
+	"keywords": [
+		"SVG"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

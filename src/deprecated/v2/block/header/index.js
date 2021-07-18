@@ -6,7 +6,7 @@
  * External dependencies
  */
 import { HeaderIcon } from '~stackable/icons'
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 
 /**
  * Internal dependencies
@@ -17,24 +17,23 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import example from './example'
+import _metadata from './block.json'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
-export const name = 'ugb/header'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Header', i18n ),
-	description: __( 'A large header title area. Typically used at the very top of a page.', i18n ),
+	...metadata,
 	icon: HeaderIcon,
-	category: 'layout',
-	keywords: [
-		__( 'Header', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	supports: {
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.
 		anchor: true,

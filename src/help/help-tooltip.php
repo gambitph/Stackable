@@ -24,7 +24,7 @@ if ( ! class_exists( 'Stackable_Help_Tooltip' ) ) {
 				'stackable_help_tooltip_disabled',
 				array(
 					'type' => 'string',
-					'description' => __( 'Disable Stackable help video tooltips', 'block-options' ),
+					'description' => __( 'Disable Stackable help video tooltips', STACKABLE_I18N ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => '',

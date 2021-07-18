@@ -5,7 +5,6 @@
  * External dependencies
  */
 import { ColumnsIcon } from '~stackable/icons'
-import { i18n } from 'stackable'
 
 /**
  * Internal dependencies
@@ -13,26 +12,23 @@ import { i18n } from 'stackable'
 import edit from './edit'
 import save from './save'
 import schema from './schema'
+import _metadata from './block.json'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
-export const name = 'ugb/column'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Advanced Column', i18n ),
-	description: __( 'A single column within an advanced columns block. Get advanced options on how you want your column to look.', i18n ),
+	...metadata,
 	icon: ColumnsIcon,
-	parent: [ 'ugb/columns' ],
-	category: 'layout',
-	keywords: [
-		__( 'Advanced Columns', i18n ),
-		__( 'section rows', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	attributes: schema,
 
 	supports: {

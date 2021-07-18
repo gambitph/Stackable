@@ -11,30 +11,29 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import example from './example'
+import _metadata from './block.json'
 
 /**
  * External dependencies
  */
 import { NotificationIcon } from '~stackable/icons'
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 
-export const name = 'ugb/notification'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Notification', i18n ),
-	description: __( 'Show a notice to your readers. People can dismiss the notice to permanently hide it.', i18n ),
+	...metadata,
 	icon: NotificationIcon,
-	category: 'formatting',
-	keywords: [
-		__( 'Notification', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	attributes: schema,
 	example,
 	supports: {

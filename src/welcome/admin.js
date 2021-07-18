@@ -167,6 +167,9 @@ const GlobalSettings = () => {
 const AdditionalOptions = props => {
 	const [ helpTooltipsDisabled, setHelpTooltipsDisabled ] = useState( false )
 	const [ v1BackwardCompatibility, setV1BackwardCompatibility ] = useState( false )
+	const [ v2EditorBackwardCompatibility, setV2EditorackwardCompatibility ] = useState( false )
+	const [ v2EditorBackwardCompatibilityHidden, setV2EditorackwardCompatibilityHidden ] = useState( false )
+	const [ v2FrontendBackwardCompatibility, setV2FrontendBackwardCompatibility ] = useState( false )
 	const [ showPremiumNotices, setShowPremiumNotices ] = useState( false )
 	const [ isBusy, setIsBusy ] = useState( false )
 
@@ -177,6 +180,9 @@ const AdditionalOptions = props => {
 			settings.fetch().then( response => {
 				setHelpTooltipsDisabled( !! response.stackable_help_tooltip_disabled )
 				setV1BackwardCompatibility( response.stackable_load_v1_styles === '1' )
+				setV2EditorackwardCompatibility( response.stackable_v2_editor_compatibility === '1' )
+				setV2EditorackwardCompatibilityHidden( response.stackable_v2_editor_compatibility_hidden === '1' )
+				setV2FrontendBackwardCompatibility( response.stackable_v2_frontend_compatibility === '1' )
 				setShowPremiumNotices( response.stackable_show_pro_notices === '1' )
 				setIsBusy( false )
 			} )
@@ -207,6 +213,38 @@ const AdditionalOptions = props => {
 				onChange={ checked => {
 					updateSetting( 'stackable_help_tooltip_disabled', checked ? '1' : '' )
 					setHelpTooltipsDisabled( checked )
+				} }
+			/>
+			<h3>{ __( '🏠 Migration Settings', i18n ) }</h3>
+			<p>
+				{ __( 'Migrating from version 2 to version 3?', i18n ) }
+				&nbsp;
+				<a target="_docs" href="https://docs.wpstackable.com/article/462-migrating-from-version-2-to-version-3?utm_source=wp-settings-migrating&utm_campaign=learnmore&utm_medium=wp-dashboard">{ __( 'Learn more about migration and the settings below', i18n ) }</a>
+			</p>
+			<CheckboxControl
+				label={ __( 'Load version 2 blocks in the editor', i18n ) }
+				checked={ v2EditorBackwardCompatibility }
+				onChange={ checked => {
+					updateSetting( 'stackable_v2_editor_compatibility', checked ? '1' : '' )
+					setV2EditorackwardCompatibility( checked )
+				} }
+			/>
+			<CheckboxControl
+				label={ __( 'Prevent version 2 blocks from being added in the editor', i18n ) }
+				disabled={ ! v2EditorBackwardCompatibility }
+				checked={ v2EditorBackwardCompatibilityHidden }
+				onChange={ checked => {
+					updateSetting( 'stackable_v2_editor_compatibility_hidden', checked ? '1' : '' )
+					setV2EditorackwardCompatibilityHidden( checked )
+				} }
+			/>
+			<CheckboxControl
+				disabled={ v2EditorBackwardCompatibility }
+				label={ __( 'Load version 2 frontend block stylesheet and scripts for backward compatibility', i18n ) }
+				checked={ v2EditorBackwardCompatibility || v2FrontendBackwardCompatibility }
+				onChange={ checked => {
+					updateSetting( 'stackable_v2_frontend_compatibility', checked ? '1' : '' )
+					setV2FrontendBackwardCompatibility( checked )
 				} }
 			/>
 			<CheckboxControl

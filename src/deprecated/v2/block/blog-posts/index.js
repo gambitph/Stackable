@@ -10,30 +10,29 @@ import save from './save'
 import deprecated from './deprecated'
 import schema from './schema'
 import example from './example'
+import _metadata from './block.json'
 
 /**
  * External dependencies
  */
 import { BlogPostsIcon } from '~stackable/icons'
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
-export const name = 'ugb/blog-posts'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Posts', i18n ),
-	description: __( 'Your latest blog posts. Use this to showcase a few of your posts in your landing pages.', i18n ),
+	...metadata,
 	icon: BlogPostsIcon,
-	category: 'layout',
-	keywords: [
-		__( 'Blog Posts', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	supports: {
 		align: [ 'center', 'wide', 'full' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.

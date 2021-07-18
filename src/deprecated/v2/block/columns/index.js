@@ -5,7 +5,7 @@
  * External dependencies
  */
 import { ColumnsIcon } from '~stackable/icons'
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 
 /**
  * Internal dependencies
@@ -15,25 +15,23 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import example from './example'
+import _metadata from './block.json'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
 import { applyFilters, addFilter } from '@wordpress/hooks'
 
-export const name = 'ugb/columns'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Advanced Columns & Grid', i18n ),
-	description: __( 'Add a block that displays content in multiple columns. Get advanced options on how you want your columns to look.', i18n ),
+	...metadata,
 	icon: ColumnsIcon,
-	category: 'layout',
-	keywords: [
-		__( 'Advanced Columns', i18n ),
-		__( 'section rows', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	attributes: schema,
 	example,
 

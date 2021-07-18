@@ -7,7 +7,6 @@
  */
 import './plugins'
 import { SVGStackableCategoryIcon } from '../../icons'
-import { supportsBlockCollections } from '../../util'
 
 /**
  * External dependencies
@@ -19,28 +18,19 @@ import { i18n } from 'stackable'
  * WordPress dependencies
  */
 import {
-	getCategories,
-	setCategories,
-	registerBlockCollection,
+	getCategories, setCategories,
 } from '@wordpress/blocks'
 import { __ } from '@wordpress/i18n'
 
-// Register our block collection or category (WP <= 5.3).
-if ( supportsBlockCollections() ) {
-	registerBlockCollection( 'ugb', {
+// Register our category. Not a collection since our v2 blocks would appear as "Uncategorized"
+setCategories( [
+	...getCategories(),
+	{
+		slug: 'stackable-v2',
 		title: __( 'Stackable (v2)', i18n ),
 		icon: SVGStackableCategoryIcon,
-	} )
-} else {
-	setCategories( [
-		...getCategories(),
-		{
-			slug: 'stackable',
-			title: __( 'Stackable (v2)', i18n ),
-			icon: SVGStackableCategoryIcon,
-		},
-	] )
-}
+	},
+] )
 
 // Import all index.js and register all the blocks found (if name & settings are exported by the script)
 const importAllAndRegister = r => {

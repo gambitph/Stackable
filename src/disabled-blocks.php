@@ -18,9 +18,9 @@ if ( ! function_exists( 'stackable_get_disabled_blocks' ) ) {
 	function stackable_get_disabled_blocks() {
 		$disabled_blocks = get_option( 'stackable_disabled_blocks' );
 		if ( false === $disabled_blocks ) {
-			return array();
+			$disabled_blocks = array();
 		}
-		return $disabled_blocks;
+		return apply_filters( 'stackable_disabled_blocks', $disabled_blocks );
 	}
 }
 
