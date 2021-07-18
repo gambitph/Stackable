@@ -61,7 +61,7 @@ if ( ! class_exists( 'Stackable_Optimization_Settings' ) ) {
 		public function disable_frontend_scripts() {
 			if ( get_option( 'stackable_optimize_script_load' ) && ! is_admin() ) {
 				remove_action( 'init', 'stackable_block_frontend_assets' );
-				remove_action( 'init', 'stackable_add_required_block_styles' );
+				remove_action( 'enqueue_block_assets', 'stackable_add_required_block_styles' );
 			}
 		}
 
