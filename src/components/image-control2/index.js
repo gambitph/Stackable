@@ -65,7 +65,7 @@ const ImageControl = props => {
 			className={ classnames( 'ugb-image-control', props.className ) }
 		>
 			<DynamicContentControl
-				dynamic={ true }
+				enable={ true }
 				type="image-url"
 				{ ...dynamicContentProps }
 			>

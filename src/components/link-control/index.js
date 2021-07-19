@@ -39,7 +39,7 @@ const LinkControl = props => {
 		<AdvancedControl className={ classNames } { ...controlProps }>
 			<DynamicContentControl
 				type={ [ 'link', 'image-url' ] }
-				dynamic={ props.dynamic }
+				enable={ props.isDynamic }
 				{ ...dynamicContentProps }
 			>
 				<div className="stk-link-control__input">
@@ -69,7 +69,7 @@ LinkControl.defaultProps = {
 	value: undefined,
 	onChange: undefined,
 	showSuggestions: true,
-	dynamic: true,
+	isDynamic: true,
 	allowReset: true,
 }
 

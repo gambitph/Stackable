@@ -220,7 +220,7 @@ export const DynamicContentButton = props => {
 }
 
 const DynamicContentControl = ( { children, ...otherProps } ) => {
-	if ( ! otherProps.dynamic ) {
+	if ( ! otherProps.enable ) {
 		return children
 	}
 
@@ -248,7 +248,7 @@ const DynamicContentControl = ( { children, ...otherProps } ) => {
 }
 
 DynamicContentControl.defaultProps = {
-	dynamic: false,
+	enable: false,
 	children: null,
 	activeAttribute: '',
 	onReset: () => {},

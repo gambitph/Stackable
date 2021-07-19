@@ -20,7 +20,6 @@ const AdvancedTextControl = props => {
 	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 	const dynamicContentProps = useDynamicContentControlProps( {
-		...props,
 		value: typeof props.value === 'undefined' ? value : props.value,
 		onChange: typeof props.onChange === 'undefined' ? onChange : props.onChange,
 		isFormatType: true,
@@ -31,7 +30,7 @@ const AdvancedTextControl = props => {
 	return (
 		<AdvancedControl { ...controlProps }>
 			<DynamicContentControl
-				dynamic={ props.dynamic }
+				enable={ props.isDynamic }
 				{ ...dynamicContentProps }
 			>
 				<TextInput
@@ -60,7 +59,7 @@ AdvancedTextControl.defaultProps = {
 	attribute: '',
 	responsive: false,
 	hover: false,
-	dynamic: false,
+	isDynamic: false,
 
 	value: undefined,
 	onChange: undefined,
