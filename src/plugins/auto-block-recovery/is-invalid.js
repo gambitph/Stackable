@@ -11,7 +11,7 @@ const ALLOWED_ERROR_TAGS = [ 'style', 'svg' ]
 
 export const isInvalid = ( block, allowedTags = ALLOWED_ERROR_TAGS ) => {
 	const {
-		name, isValid, validationIssues, originalContent,
+		name, isValid, validationIssues, originalContent = '',
 	} = block
 
 	// Only do this for Stackable blocks.
