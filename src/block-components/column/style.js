@@ -16,16 +16,16 @@ const getStyles = ( attributes, options = {} ) => {
 	return {
 		editor: {
 			custom: {
-				[ `.stk-preview-device-desktop .block-editor-block-list__layout [data-block="${ attributes.clientId }"],
-				.stk-preview-device-tablet .block-editor-block-list__layout [data-block="${ attributes.clientId }"]` ]: {
+				[ `.stk-preview-device-desktop :where(.block-editor-block-list__layout) [data-block="${ attributes.clientId }"],
+				.stk-preview-device-tablet :where(.block-editor-block-list__layout) [data-block="${ attributes.clientId }"]` ]: {
 					flex: getValue( 'columnWidth', '1 1 %s%' ),
 					maxWidth: getValue( 'columnWidth', '%s%' ),
 				},
-				[ `.stk-preview-device-tablet .block-editor-block-list__layout [data-block="${ attributes.clientId }"]` ]: {
+				[ `.stk-preview-device-tablet :where(.block-editor-block-list__layout) [data-block="${ attributes.clientId }"]` ]: {
 					flex: getValue( 'columnWidthTablet', '1 1 %s%' ),
 					maxWidth: getValue( 'columnWidthTablet', '%s%' ),
 				},
-				[ `.stk-preview-device-mobile .block-editor-block-list__layout [data-block="${ attributes.clientId }"]` ]: {
+				[ `.stk-preview-device-mobile :where(.block-editor-block-list__layout) [data-block="${ attributes.clientId }"]` ]: {
 					flex: getValue( 'columnWidthMobile', '1 1 %s%' ),
 					maxWidth: getValue( 'columnWidthMobile', '%s%' ),
 				},
