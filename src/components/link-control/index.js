@@ -31,9 +31,7 @@ const LinkControl = props => {
 	const value = typeof props.value === 'undefined' ? _value : props.value
 	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
 
-	const dynamicContentProps = useDynamicContentControlProps( {
-		...props, value, onChange,
-	} )
+	const dynamicContentProps = useDynamicContentControlProps( { value, onChange } )
 
 	return (
 		<AdvancedControl className={ classNames } { ...controlProps }>

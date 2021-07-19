@@ -41,11 +41,7 @@ const ImageControl = props => {
 
 	const [ _propsToPass, controlProps ] = extractControlProps( props )
 
-	const dynamicContentProps = useDynamicContentControlProps( {
-		...props,
-		onChange: url => onChange( { url, id: '' } ),
-		value: attributes[ attrNameUrl ],
-	} )
+	const dynamicContentProps = useDynamicContentControlProps( { onChange: url => onChange( { url, id: '' } ), value: attributes[ attrNameUrl ] } )
 
 	const imageId = typeof props.imageId !== 'undefined' ? props.imageId : attributes[ attrNameId ]
 	const imageUrl = typeof props.imageURL !== 'undefined' ? props.imageURL : dynamicContentProps.value || attributes[ attrNameUrl ]

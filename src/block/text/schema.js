@@ -26,7 +26,7 @@ export const attributes = ( version = VERSION ) => {
 	Advanced.addAttributes( attrObject )
 	Alignment.addAttributes( attrObject )
 	MarginBottom.addAttributes( attrObject )
-	Typography.addAttributes( attrObject, '.stk-text__text', { hasTextTag: false, hasColumns: true } )
+	Typography.addAttributes( attrObject, '.stk-text__text', { hasTextTag: false } )
 
 	attrObject.add( {
 		attributes: {
