@@ -149,8 +149,8 @@ require_once( plugin_dir_path( __FILE__ ) . 'freemius.php' );
  * Block Initializer.
  */
 require_once( plugin_dir_path( __FILE__ ) . 'src/disabled-blocks.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/init-deprecated.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/init.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/blocks.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/fonts.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/icons.php' );
 // TODO: v3 block
@@ -162,7 +162,6 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/jetpack.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/multisite.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/design-library/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/global-settings.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/optimization-settings.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/premium-notice/index.php' );
 
 /**
@@ -183,3 +182,11 @@ if ( sugb_fs()->is__premium_only() ) {
 		require_once( plugin_dir_path( __FILE__ ) . 'pro__premium_only/index.php' );
 	}
 }
+
+/**
+ * V2 Deprecated
+ */
+require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v1/init.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/init.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/blocks.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/optimization-settings.php' );

@@ -15,26 +15,24 @@ import edit from './edit'
 import save from './save'
 import example from './example'
 import schema from './schema'
+import _metadata from './block.json'
 
 /**
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
-import { __ } from '@wordpress/i18n'
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 
-export const name = 'ugb/video-popup'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Video Popup', i18n ),
-	description: __( 'Display a large thumbnail that your users can click to play a video full-screen. Great for introductory or tutorial videos.', i18n ),
+	...metadata,
 	icon: VideoPopupIcon,
-	category: 'common',
-	keywords: [
-		__( 'Video Popup', i18n ),
-		__( 'Stackable', i18n ),
-		__( 'YouTube Vimeo mp4', i18n ),
-	],
 	attributes: schema,
 	example,
 	supports: {

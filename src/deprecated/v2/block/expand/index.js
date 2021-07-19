@@ -10,31 +10,29 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import example from './example'
+import _metadata from './block.json'
 
 /**
  * External dependencies
  */
 import { ExpandIcon } from '~stackable/icons'
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
-export const name = 'ugb/expand'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Expand / Show More', i18n ),
-	description: __( 'Display a small snippet of text. Your readers can toggle it to show more information.', i18n ),
+	...metadata,
 	icon: ExpandIcon,
-	category: 'layout',
-	keywords: [
-		__( 'Expand', i18n ),
-		__( 'Show more/less', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	attributes: schema,
 	example,
 	supports: {

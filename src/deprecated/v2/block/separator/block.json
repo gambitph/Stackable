@@ -1,0 +1,10 @@
+{
+	"name": "ugb/separator",
+	"title": "Separator (v2)",
+	"description": "A fancy separator to be placed between containers and content.",
+	"category": "stackable-v2",
+	"keywords": [
+		"Svg Divider"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

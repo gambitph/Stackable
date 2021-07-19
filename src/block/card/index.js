@@ -13,25 +13,18 @@ import { CardIcon } from '~stackable/icons'
 import edit from './edit'
 import save from './save'
 import schema from './schema'
+import metadata from './block.json'
 
 /**
  * WordPress dependencies
  */
-import { i18n } from 'stackable'
 import { __ } from '@wordpress/i18n'
 
 export const name = 'stackable/card'
 
 export const settings = {
-	title: __( 'Card', i18n ),
-	description: __( 'Describe a single subject in a small card. You can use this to describe your product, service or a person.', i18n ),
+	...metadata,
 	icon: CardIcon,
-	category: 'layout',
-	keywords: [
-		__( 'Card', i18n ),
-		__( 'Stackable', i18n ),
-	],
-	parent: [ 'stackable/card-group' ],
 	attributes: schema,
 	supports: {
 		anchor: true,

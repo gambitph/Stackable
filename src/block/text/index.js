@@ -12,25 +12,13 @@ import { TextIcon } from '~stackable/icons'
 import edit from './edit'
 import save from './save'
 import schema from './schema'
-
-/**
- * WordPress dependencies
- */
-import { i18n } from 'stackable'
-import { __ } from '@wordpress/i18n'
+import metadata from './block.json'
 
 export const name = 'stackable/text'
 
 export const settings = {
-	title: __( 'Text (v3)', i18n ),
-	description: __( 'Start with the building block of all page layouts.', i18n ),
+	...metadata,
 	icon: TextIcon,
-	category: 'common',
-	keywords: [
-		__( 'Text', i18n ),
-		__( 'Paragraph', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	attributes: schema,
 	supports: {
 		anchor: true,

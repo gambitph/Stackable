@@ -10,31 +10,29 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import example from './example'
+import _metadata from './block.json'
 
 /**
  * External dependencies
  */
 import { AccordionIcon } from '~stackable/icons'
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
-export const name = 'ugb/accordion'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Accordion', i18n ),
-	description: __( 'A title that your visitors can toggle to view more text. Use as FAQs or multiple ones for an Accordion.', i18n ),
+	...metadata,
 	icon: AccordionIcon,
-	category: 'common',
-	keywords: [
-		__( 'Accordion', i18n ),
-		__( 'Toggle', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	attributes: schema,
 	example,
 

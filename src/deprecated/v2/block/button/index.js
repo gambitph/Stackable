@@ -9,7 +9,7 @@
  * External dependencies
  */
 import { ButtonIcon } from '~stackable/icons'
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 
 /**
  * Internal dependencies
@@ -20,24 +20,23 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import example from './example'
+import _metadata from './block.json'
 
 /**
  * WordPress dependencies
  */
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import { __ } from '@wordpress/i18n'
 
-export const name = 'ugb/button'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Button', i18n ),
-	description: __( 'Add a customizable button.', i18n ),
+	...metadata,
 	icon: ButtonIcon,
-	category: 'layout',
-	keywords: [
-		__( 'Button', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	attributes: schema,
 	example,
 	supports: {

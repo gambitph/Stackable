@@ -5,7 +5,7 @@
 /**
  * External dependencies
  */
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 import { HeadingIcon } from '~stackable/icons'
 
 /**
@@ -17,25 +17,23 @@ import save from './save'
 import deprecated from './deprecated'
 import schema from './schema'
 import example from './example'
+import _metadata from './block.json'
 
 /**
  * WordPress dependencies
  */
 import { applyFilters } from '@wordpress/hooks'
-import { __ } from '@wordpress/i18n'
 
-export const name = 'ugb/heading'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Advanced Heading', i18n ),
-	description: __( 'Introduce new sections of your content in style.', i18n ),
+	...metadata,
 	icon: HeadingIcon,
-	category: 'common',
-	keywords: [
-		__( 'Heading', i18n ),
-		__( 'Title', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	attributes: schema,
 	example,
 	supports: {

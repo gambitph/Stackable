@@ -15,25 +15,19 @@ import { NumberBoxIcon } from '~stackable/icons'
 import edit from './edit'
 import save from './save'
 import schema from './schema'
+import metadata from './block.json'
 
 /**
  * WordPress dependencies
  */
-import { disabledBlocks, i18n } from 'stackable'
-import { addFilter, applyFilters } from '@wordpress/hooks'
-import { __ } from '@wordpress/i18n'
+// import { disabledBlocks } from 'stackable'
+// import { addFilter, applyFilters } from '@wordpress/hooks'
 
 export const name = 'stackable/number-box'
 
 export const settings = {
-	title: __( 'Number Box', i18n ),
-	description: __( 'Describe a single subject in a small card. You can use this to describe your product, service or a person.', i18n ),
+	...metadata,
 	icon: NumberBoxIcon,
-	category: 'layout',
-	keywords: [
-		__( 'Number Box', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	// parent: [ 'stackable/card-group' ],
 	attributes: schema,
 	supports: {

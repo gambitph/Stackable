@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! function_exists( 'stackable_blog_posts_util_show_options' ) ) {
+if ( ! function_exists( 'stackable_blog_posts_util_show_options_v2' ) ) {
 	/**
 	 * Used in our save method to toggle on/off block components.
 	 *
@@ -18,7 +18,7 @@ if ( ! function_exists( 'stackable_blog_posts_util_show_options' ) ) {
 	 *
 	 * @return array show/hide features.
 	 */
-	function stackable_blog_posts_util_show_options( $attributes ) {
+	function stackable_blog_posts_util_show_options_v2( $attributes ) {
 		$design = $attributes['design'];
 
 		return array(

@@ -10,6 +10,7 @@ import { default as edit } from './edit'
 import { default as save } from './save'
 import schema from './schema'
 import example from './example'
+import _metadata from './block.json'
 
 /**
  * External dependencies
@@ -19,22 +20,19 @@ import { SeparatorIcon } from '~stackable/icons'
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 import { applyFilters } from '@wordpress/hooks'
 
-export const name = 'ugb/separator'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Separator', i18n ),
-	description: __( 'A fancy separator to be placed between containers and content.', i18n ),
+	...metadata,
 	icon: SeparatorIcon,
-	category: 'layout',
-	keywords: [
-		__( 'Separator', i18n ),
-		__( 'SVG Divider', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	attributes: schema,
 	example,
 	supports: {

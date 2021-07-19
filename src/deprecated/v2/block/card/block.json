@@ -1,0 +1,10 @@
+{
+	"name": "ugb/card",
+	"title": "Card (v2)",
+	"description": "Describe a single subject in a small card. You can use this to describe your product, service or a person.",
+	"category": "stackable-v2",
+	"keywords": [
+		"Card"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

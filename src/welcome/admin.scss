@@ -614,8 +614,21 @@ body.settings_page_stackable-getting-started {
 }
 
 // Additional options.
-.s-other-options-wrapper .components-base-control {
-	margin-bottom: 8px;
+.s-other-options-wrapper {
+	.components-base-control {
+		margin-bottom: 8px;
+	}
+	.components-checkbox-control__input[disabled] {
+		opacity: 0.3;
+		background: #aaa !important;
+	}
+	h3 {
+		margin-top: 2em;
+	}
+	p {
+		margin-bottom: 2em;
+		margin-top: -0.5em;
+	}
 }
 
 @import "news";

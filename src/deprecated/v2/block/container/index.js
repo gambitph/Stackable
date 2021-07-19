@@ -6,7 +6,7 @@
  * External dependencies
  */
 import { ContainerIcon } from '~stackable/icons'
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 
 /**
  * Internal dependencies
@@ -16,25 +16,23 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import example from './example'
+import _metadata from './block.json'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
 import { addFilter, applyFilters } from '@wordpress/hooks'
 
-export const name = 'ugb/container'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Container', i18n ),
-	description: __( 'A styled container that you can add other blocks inside. Use this to create unique layouts.', i18n ),
+	...metadata,
 	icon: ContainerIcon,
-	category: 'layout',
-	keywords: [
-		__( 'Container Layout', i18n ),
-		__( 'Row', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	supports: {
 		anchor: true,
 		align: [ 'center', 'wide', 'full' ],

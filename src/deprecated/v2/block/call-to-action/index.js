@@ -8,7 +8,7 @@
  * External dependencies
  */
 import { CTAIcon } from '~stackable/icons'
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 
 /**
  * Internal dependencies
@@ -19,25 +19,23 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import example from './example'
+import _metadata from './block.json'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
-export const name = 'ugb/cta'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Call to Action', i18n ),
-	description: __( 'A small section you can use to call the attention of your visitors. Great for calling attention to your products or deals.', i18n ),
+	...metadata,
 	icon: CTAIcon,
-	category: 'layout',
-	keywords: [
-		__( 'Call to Action', i18n ),
-		__( 'Stackable', i18n ),
-		__( 'CTA', i18n ),
-	],
 	attributes: schema,
 	example,
 	supports: {

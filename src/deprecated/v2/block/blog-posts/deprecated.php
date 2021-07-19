@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! function_exists( 'stackable_block_blog_posts_is_deprecated' ) ) {
+if ( ! function_exists( 'stackable_block_blog_posts_is_deprecated_v2' ) ) {
 	/**
 	 * Check whether the blog post block is deprecated based on it's attributes & content.
 	 *
@@ -19,7 +19,7 @@ if ( ! function_exists( 'stackable_block_blog_posts_is_deprecated' ) ) {
 	 *
 	 * @since 2.0
 	 */
-	function stackable_block_blog_posts_is_deprecated( $attributes, $content = '' ) {
+	function stackable_block_blog_posts_is_deprecated_v2( $attributes, $content = '' ) {
 		// If no content, then the block was created with version 1.
 		if ( empty( $content ) ) {
 			return true;
@@ -27,7 +27,7 @@ if ( ! function_exists( 'stackable_block_blog_posts_is_deprecated' ) ) {
 	}
 }
 
-if ( ! function_exists( 'stackable_block_blog_posts_migrate_attributes' ) ) {
+if ( ! function_exists( 'stackable_block_blog_posts_migrate_attributes_v2' ) ) {
 	/**
 	 * Migrate old attributes to new attributes.
 	 *
@@ -38,7 +38,7 @@ if ( ! function_exists( 'stackable_block_blog_posts_migrate_attributes' ) ) {
 	 *
 	 * @since 2.0
 	 */
-	function stackable_block_blog_posts_migrate_attributes( $attributes, $block_name ) {
+	function stackable_block_blog_posts_migrate_attributes_v2( $attributes, $block_name ) {
 		if ( $block_name !== 'blog-posts' ) {
 			return $attributes;
 		}
@@ -103,10 +103,10 @@ if ( ! function_exists( 'stackable_block_blog_posts_migrate_attributes' ) ) {
 
 		return $attributes;
 	}
-	add_filter( 'stackable_block_migrate_attributes', 'stackable_block_blog_posts_migrate_attributes', 10, 2 );
+	add_filter( 'stackable_block_migrate_attributes_v2', 'stackable_block_blog_posts_migrate_attributes_v2', 10, 2 );
 }
 
-if ( ! function_exists( 'stackable_block_blog_posts_migrate_output' ) ) {
+if ( ! function_exists( 'stackable_block_blog_posts_migrate_output_v2' ) ) {
 	// We use this for old < v2 blocks as unique IDs.
 	global $stkbp_unique_id;
 	$stkbp_unique_id = 0;
@@ -124,8 +124,8 @@ if ( ! function_exists( 'stackable_block_blog_posts_migrate_output' ) ) {
 	 *
 	 * @since 2.0
 	 */
-	function stackable_block_blog_posts_migrate_output( $output, $attributes, $content ) {
-		if ( ! stackable_block_blog_posts_is_deprecated( $attributes, $content ) ) {
+	function stackable_block_blog_posts_migrate_output_v2( $output, $attributes, $content ) {
+		if ( ! stackable_block_blog_posts_is_deprecated_v2( $attributes, $content ) ) {
 			return $output;
 		}
 
@@ -155,5 +155,5 @@ if ( ! function_exists( 'stackable_block_blog_posts_migrate_output' ) ) {
 			$output
 		);
 	}
-	add_filter( 'stackable/blog-posts/edit.output.markup', 'stackable_block_blog_posts_migrate_output', 10, 3 );
+	add_filter( 'stackable/blog-posts/v2/edit.output.markup', 'stackable_block_blog_posts_migrate_output_v2', 10, 3 );
 }

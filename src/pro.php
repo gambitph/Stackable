@@ -46,7 +46,7 @@ if ( ! function_exists( 'stackable_register_show_pro_notice_option' ) ) {
 			'stackable_show_pro_notices',
 			array(
 				'type' => 'string',
-				'description' => __( 'Hide "Go Premium" notices', 'block-options' ),
+				'description' => __( 'Hide "Go Premium" notices', STACKABLE_I18N ),
 				'sanitize_callback' => 'sanitize_text_field',
 				'show_in_rest' => true,
 				'default' => '',

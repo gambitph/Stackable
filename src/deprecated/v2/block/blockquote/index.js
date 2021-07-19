@@ -13,30 +13,29 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import example from './example'
+import _metadata from './block.json'
 
 /**
  * External dependencies
  */
 import { BlockquoteIcon } from '~stackable/icons'
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
-export const name = 'ugb/blockquote'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Blockquote', i18n ),
-	description: __( 'Display a quote in style.', i18n ),
+	...metadata,
 	icon: BlockquoteIcon,
-	category: 'common',
-	keywords: [
-		__( 'Blockquote', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	supports: {
 		align: [ 'center', 'wide', 'full' ],
 		inserter: ! disabledBlocks.includes( name ), // Hide if disabled.

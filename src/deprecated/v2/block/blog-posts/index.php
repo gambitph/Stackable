@@ -14,14 +14,14 @@ require_once( dirname( __FILE__ ) . '/deprecated.php' );
 require_once( dirname( __FILE__ ) . '/attributes.php' );
 require_once( dirname( __FILE__ ) . '/util.php' );
 
-if ( ! function_exists( 'stackable_attributes_default' ) ) {
+if ( ! function_exists( 'stackable_attributes_default_v2' ) ) {
 	/**
 	 * Merges an attribute array with default values.
 	 * Merged when the attribute value is "" or doesn't exist.
 	 *
 	 * @since 2.0
 	 */
-	function stackable_attributes_default( $attributes, $defaults ) {
+	function stackable_attributes_default_v2( $attributes, $defaults ) {
 		$out = array();
 		foreach ( $attributes as $name => $value ) {
 			$out[ $name ] = $value;
@@ -39,8 +39,8 @@ if ( ! function_exists( 'stackable_attributes_default' ) ) {
 	}
 }
 
-if ( ! function_exists( 'stackable_blog_posts_block_default_attributes' ) ) {
-	function stackable_blog_posts_block_default_attributes( $attributes ) {
+if ( ! function_exists( 'stackable_blog_posts_block_default_attributes_v2' ) ) {
+	function stackable_blog_posts_block_default_attributes_v2( $attributes ) {
 		$defaults = array(
 			'postType' => 'post',
 			'numberOfItems' => 6,
@@ -72,12 +72,12 @@ if ( ! function_exists( 'stackable_blog_posts_block_default_attributes' ) ) {
 			'columns' => 2,
 		);
 
-		return stackable_attributes_default( $attributes, $defaults );
+		return stackable_attributes_default_v2( $attributes, $defaults );
 	}
 }
 
-if ( ! function_exists( 'stackable_blog_posts_post_query' ) ) {
-	function stackable_blog_posts_post_query( $attributes ) {
+if ( ! function_exists( 'stackable_blog_posts_post_query_v2' ) ) {
+	function stackable_blog_posts_post_query_v2( $attributes ) {
 		$passed_attributes = array(
 				'post_type' => $attributes['postType'],
 				'post_status' => 'publish',
@@ -107,7 +107,7 @@ if ( ! function_exists( 'stackable_blog_posts_post_query' ) ) {
 			}
   	}
 
-		return apply_filters( 'stackable/blog-post/post_query',
+		return apply_filters( 'stackable/blog-post/v2/post_query',
 			$passed_attributes,
 			$attributes
 		);
@@ -123,15 +123,15 @@ if ( ! function_exists( 'stackable_blog_posts_post_query' ) ) {
  *
  * @return string Returns the post content with latest posts added.
  */
-if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
-    function stackable_render_blog_posts_block( $attributes, $content ) {
+if ( ! function_exists( 'stackable_render_blog_posts_block_v2' ) ) {
+    function stackable_render_blog_posts_block_v2( $attributes, $content ) {
 		// Migrate attributes if this is an old block.
-		if ( stackable_block_blog_posts_is_deprecated( $attributes, $content ) ) {
-			$attributes = apply_filters( 'stackable_block_migrate_attributes', $attributes, 'blog-posts' );
+		if ( stackable_block_blog_posts_is_deprecated_v2( $attributes, $content ) ) {
+			$attributes = apply_filters( 'stackable_block_migrate_attributes_v2', $attributes, 'blog-posts' );
 		}
 
-		$attributes = stackable_blog_posts_block_default_attributes( $attributes );
-		$post_query = stackable_blog_posts_post_query( $attributes );
+		$attributes = stackable_blog_posts_block_default_attributes_v2( $attributes );
+		$post_query = stackable_blog_posts_post_query_v2( $attributes );
 
 		$recent_posts = wp_get_recent_posts( $post_query );
 
@@ -141,7 +141,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 		}
 
 		$posts_markup = '';
-		$show = stackable_blog_posts_util_show_options( $attributes );
+		$show = stackable_blog_posts_util_show_options_v2( $attributes );
 		$props = array( 'attributes' => array() );
 
 		/**
@@ -202,7 +202,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 			$featured_image_background = '';
 			$featured_image_id = get_post_thumbnail_id( $post_id );
 			if ( ! empty( $featured_image_id ) ) {
-				$featured_image_urls = stackable_featured_image_urls_from_url( $featured_image_id );
+				$featured_image_urls = stackable_featured_image_urls_from_url_v2( $featured_image_id );
 				$featured_image_src = $featured_image_urls[ $attributes['imageSize'] ];
 				if ( ! empty( $featured_image_src ) ) {
 					$image_alt = get_post_meta( $featured_image_id, '_wp_attachment_image_alt', true );
@@ -290,7 +290,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 			);
 
             // Excerpt.
-			$excerpt = stackable_get_excerpt( $post_id, $post );
+			$excerpt = stackable_get_excerpt_v2( $post_id, $post );
 
 			// Trim the excerpt.
 			if ( ! empty( $excerpt ) ) {
@@ -335,7 +335,7 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 				);
 			}
 
-			$output = apply_filters( 'stackable/blog-posts/edit.output', null, $attributes, array(
+			$output = apply_filters( 'stackable/blog-posts/v2/edit.output', null, $attributes, array(
 				'itemClasses' => $item_classes,
 				'contentClasses' => $content_classes,
 				'featuredImageBackground' => $featured_image_background,
@@ -370,39 +370,38 @@ if ( ! function_exists( 'stackable_render_blog_posts_block' ) ) {
 			}
 		}
 
-		do_action( 'stackable/blog-posts/render', $attributes, $content );
+		do_action( 'stackable/blog-posts/v2/render', $attributes, $content );
 
-        return apply_filters( 'stackable/blog-posts/edit.output.markup', $posts_markup, $attributes, $content );
+        return apply_filters( 'stackable/blog-posts/v2/edit.output.markup', $posts_markup, $attributes, $content );
     }
 }
 
-if ( ! function_exists( 'stackable_register_blog_posts_block' ) ) {
+if ( ! function_exists( 'stackable_register_blog_posts_block_v2' ) ) {
     /**
-     * Registers the `ugb/blog-posts` block on server.
+     * Add our render attributes.
      */
-    function stackable_register_blog_posts_block() {
-        if ( ! function_exists( 'register_block_type' ) ) {
-            return;
-        }
+    function stackable_register_blog_posts_block_v2( $options, $block_name ) {
+		if ( $block_name !== 'ugb/blog-posts' ) {
+			return $options;
+		}
 
-        register_block_type(
-            'ugb/blog-posts',
-            array(
-                'attributes' => stackable_blog_posts_attributes(),
-                'render_callback' => 'stackable_render_blog_posts_block',
-            )
-        );
+		$options['attributes'] = stackable_blog_posts_attributes_v2();
+		$options['render_callback'] = 'stackable_render_blog_posts_block_v2';
+		return $options;
     }
-    add_action( 'init', 'stackable_register_blog_posts_block' );
+    add_filter( 'stackable.v2.register-blocks.options', 'stackable_register_blog_posts_block_v2', 10, 2 );
 }
 
-if ( ! function_exists( 'stackable_blog_posts_rest_fields' ) ) {
+if ( ! function_exists( 'stackable_blog_posts_rest_fields_v2' ) ) {
     /**
      * Add more data in the REST API that we'll use in the blog post.
      *
      * @since 1.7
      */
-    function stackable_blog_posts_rest_fields() {
+    function stackable_blog_posts_rest_fields_v2() {
+		if ( ! has_stackable_v2_frontend_compatibility() && ! has_stackable_v2_editor_compatibility() ) {
+			return;
+		}
 
 		$post_types = get_post_types( array( 'public' => true ), 'objects' );
 		foreach ( $post_types as $post_type => $data ) {
@@ -413,7 +412,7 @@ if ( ! function_exists( 'stackable_blog_posts_rest_fields' ) ) {
 			// Featured image urls.
 			register_rest_field( $post_type, 'featured_image_urls',
 				array(
-					'get_callback' => 'stackable_featured_image_urls',
+					'get_callback' => 'stackable_featured_image_urls_v2',
 					'update_callback' => null,
 					'schema' => array(
 						'description' => __( 'Different sized featured images', STACKABLE_I18N ),
@@ -425,7 +424,7 @@ if ( ! function_exists( 'stackable_blog_posts_rest_fields' ) ) {
 			// Excerpt.
 			register_rest_field( $post_type, 'post_excerpt_stackable',
 				array(
-					'get_callback' => 'stackable_post_excerpt',
+					'get_callback' => 'stackable_post_excerpt_v2',
 					'update_callback' => null,
 					'schema' => array(
 						'description' => __( 'Post excerpt for Stackable', STACKABLE_I18N ),
@@ -437,7 +436,7 @@ if ( ! function_exists( 'stackable_blog_posts_rest_fields' ) ) {
 			// Category links.
 			register_rest_field( $post_type, 'category_list',
 				array(
-					'get_callback' => 'stackable_category_list',
+					'get_callback' => 'stackable_category_list_v2',
 					'update_callback' => null,
 					'schema' => array(
 						'description' => __( 'Category list links', STACKABLE_I18N ),
@@ -449,7 +448,7 @@ if ( ! function_exists( 'stackable_blog_posts_rest_fields' ) ) {
 			// Author name.
 			register_rest_field( $post_type, 'author_info',
 				array(
-					'get_callback' => 'stackable_author_info',
+					'get_callback' => 'stackable_author_info_v2',
 					'update_callback' => null,
 					'schema' => array(
 						'description' => __( 'Author information', STACKABLE_I18N ),
@@ -461,7 +460,7 @@ if ( ! function_exists( 'stackable_blog_posts_rest_fields' ) ) {
 			// Number of comments.
 			register_rest_field( $post_type, 'comments_num',
 				array(
-					'get_callback' => 'stackable_commments_number',
+					'get_callback' => 'stackable_commments_number_v2',
 					'update_callback' => null,
 					'schema' => array(
 						'description' => __( 'Number of comments', STACKABLE_I18N ),
@@ -471,28 +470,28 @@ if ( ! function_exists( 'stackable_blog_posts_rest_fields' ) ) {
 			);
 		}
     }
-    add_action( 'rest_api_init', 'stackable_blog_posts_rest_fields' );
+    add_action( 'rest_api_init', 'stackable_blog_posts_rest_fields_v2' );
 }
 
-if ( ! function_exists( 'stackable_featured_image_urls' ) ) {
+if ( ! function_exists( 'stackable_featured_image_urls_v2' ) ) {
     /**
      * Get the different featured image sizes that the blog will use.
 	 * Used in the custom REST API endpoint.
      *
      * @since 1.7
      */
-    function stackable_featured_image_urls( $object, $field_name, $request ) {
-		return stackable_featured_image_urls_from_url( ! empty( $object['featured_media'] ) ? $object['featured_media'] : '' );
+    function stackable_featured_image_urls_v2( $object, $field_name, $request ) {
+		return stackable_featured_image_urls_from_url_v2( ! empty( $object['featured_media'] ) ? $object['featured_media'] : '' );
 	}
 }
 
-if ( ! function_exists( 'stackable_featured_image_urls_from_url' ) ) {
+if ( ! function_exists( 'stackable_featured_image_urls_from_url_v2' ) ) {
 	/**
      * Get the different featured image sizes that the blog will use.
      *
      * @since 2.0
      */
-	function stackable_featured_image_urls_from_url( $attachment_id ) {
+	function stackable_featured_image_urls_from_url_v2( $attachment_id ) {
 		$image = wp_get_attachment_image_src( $attachment_id, 'full', false );
 		$sizes = get_intermediate_image_sizes();
 
@@ -508,13 +507,13 @@ if ( ! function_exists( 'stackable_featured_image_urls_from_url' ) ) {
 	}
 }
 
-if ( ! function_exists( 'stackable_author_info' ) ) {
+if ( ! function_exists( 'stackable_author_info_v2' ) ) {
     /**
      * Get the author name and link.
      *
      * @since 1.7
      */
-    function stackable_author_info( $object ) {
+    function stackable_author_info_v2( $object ) {
 		// Some CPTs may not support authors.
 		if ( ! array_key_exists( 'author', $object ) ) {
 			return array(
@@ -530,47 +529,47 @@ if ( ! function_exists( 'stackable_author_info' ) ) {
     }
 }
 
-if ( ! function_exists( 'stackable_commments_number' ) ) {
+if ( ! function_exists( 'stackable_commments_number_v2' ) ) {
     /**
      * Get the number of comments.
      *
      * @since 1.7
      */
-    function stackable_commments_number( $object ) {
+    function stackable_commments_number_v2( $object ) {
         $num = get_comments_number( $object['id'] );
         return sprintf( _n( '%d comment', '%d comments', $num, STACKABLE_I18N ), $num );
     }
 }
 
-if ( ! function_exists( 'stackable_category_list' ) ) {
+if ( ! function_exists( 'stackable_category_list_v2' ) ) {
     /**
      * Get the category links.
      *
      * @since 1.7
      */
-    function stackable_category_list( $object ) {
+    function stackable_category_list_v2( $object ) {
         return get_the_category_list( esc_html__( ', ', STACKABLE_I18N ), '', $object['id'] );
     }
 }
 
-if ( ! function_exists( 'stackable_post_excerpt' ) ) {
+if ( ! function_exists( 'stackable_post_excerpt_v2' ) ) {
     /**
      * Get the post excerpt.
      *
      * @since 1.7
      */
-    function stackable_post_excerpt( $object ) {
-        return stackable_get_excerpt( $object['id'] );
+    function stackable_post_excerpt_v2( $object ) {
+        return stackable_get_excerpt_v2( $object['id'] );
     }
 }
 
-if ( ! function_exists( 'stackable_get_excerpt' ) ) {
+if ( ! function_exists( 'stackable_get_excerpt_v2' ) ) {
 	/**
 	 * Get the excerpt.
 	 *
 	 * @since 1.7
 	 */
-	function stackable_get_excerpt( $post_id, $post = null ) {
+	function stackable_get_excerpt_v2( $post_id, $post = null ) {
 		// Remove jetpack sharing button.
 		add_filter( 'sharing_show', '__return_false' );
 		// If there's an excerpt provided, use it.
@@ -603,13 +602,13 @@ if ( ! function_exists( 'stackable_get_excerpt' ) ) {
   }
 }
 
-if ( ! function_exists( 'stackable_render_block_blog_posts' ) ) {
+if ( ! function_exists( 'stackable_render_block_blog_posts_v2' ) ) {
 	/**
 	 * Combine our JS & PHP block outputs.
 	 *
 	 * @since 2.0
 	 */
-	function stackable_render_block_blog_posts( $block_content, $block ) {
+	function stackable_render_block_blog_posts_v2( $block_content, $block ) {
 		if ( $block['blockName'] !== 'ugb/blog-posts' ) {
 			return $block_content;
 		}
@@ -643,10 +642,10 @@ if ( ! function_exists( 'stackable_render_block_blog_posts' ) ) {
 		}
 		return $parts[0] . $parts[1] . $block_content . $parts[2];
 	}
-	add_filter( 'render_block', 'stackable_render_block_blog_posts', 10, 2 );
+	add_filter( 'render_block', 'stackable_render_block_blog_posts_v2', 10, 2 );
 }
 
-if ( ! function_exists( 'stackable_rest_get_terms' ) ) {
+if ( ! function_exists( 'stackable_rest_get_terms_v2' ) ) {
 	/**
 	 * REST Callback. Gets all the terms registered for all post types (including category and tags).
 	 *
@@ -654,7 +653,7 @@ if ( ! function_exists( 'stackable_rest_get_terms' ) ) {
 	 *
 	 * @since 2.0
 	 */
-	function stackable_rest_get_terms() {
+	function stackable_rest_get_terms_v2() {
 		$args = array(
 			'public' => true,
 		);
@@ -693,25 +692,29 @@ if ( ! function_exists( 'stackable_rest_get_terms' ) ) {
 	}
 }
 
-if ( ! function_exists( 'stackable_get_terms_endpoint' ) ) {
+if ( ! function_exists( 'stackable_get_terms_endpoint_v2' ) ) {
 	/**
 	 * Define our custom REST API endpoint for getting all the terms/taxonomies.
 	 *
 	 * @since 2.0
 	 */
-	function stackable_get_terms_endpoint() {
+	function stackable_get_terms_endpoint_v2() {
+		if ( ! has_stackable_v2_frontend_compatibility() && ! has_stackable_v2_editor_compatibility() ) {
+			return;
+		}
+
 		register_rest_route( 'wp/v2', '/stk_terms', array(
 			'methods' => 'GET',
-			'callback' => 'stackable_rest_get_terms',
+			'callback' => 'stackable_rest_get_terms_v2',
 			'permission_callback' => function () {
 				return current_user_can( 'edit_posts' );
 			},
 		) );
 	}
-	add_action( 'rest_api_init', 'stackable_get_terms_endpoint' );
+	add_action( 'rest_api_init', 'stackable_get_terms_endpoint_v2' );
 }
 
-if ( ! function_exists( 'stackable_add_custom_orderby_params' ) ) {
+if ( ! function_exists( 'stackable_add_custom_orderby_params_v2' ) ) {
 	/**
 	 * The callback to add `rand` as an option for orderby param in REST API.
 	 * Hook to `rest_{$this->post_type}_collection_params` filter.
@@ -722,7 +725,7 @@ if ( ! function_exists( 'stackable_add_custom_orderby_params' ) ) {
 	 * @see https://felipeelia.dev/wordpress-rest-api-enable-random-order-of-posts-list/
 	 * @see https://www.timrosswebdevelopment.com/wordpress-rest-api-post-order/
 	 */
-	function stackable_add_custom_orderby_params( $query_params ) {
+	function stackable_add_custom_orderby_params_v2( $query_params ) {
 		if ( ! in_array( 'rand', $query_params['orderby']['enum'] ) ) {
 			$query_params['orderby']['enum'][] = 'rand';
 		}
@@ -733,7 +736,7 @@ if ( ! function_exists( 'stackable_add_custom_orderby_params' ) ) {
 	}
 }
 
-if ( ! function_exists( 'stackable_add_custom_orderby' ) ) {
+if ( ! function_exists( 'stackable_add_custom_orderby_v2' ) ) {
 	/**
 	 * Add `rand` as an option for orderby param in REST API.
 	 * Hook to `rest_{$this->post_type}_collection_params` filter.
@@ -744,12 +747,16 @@ if ( ! function_exists( 'stackable_add_custom_orderby' ) ) {
 	 * @see https://felipeelia.dev/wordpress-rest-api-enable-random-order-of-posts-list/
 	 * @see https://www.timrosswebdevelopment.com/wordpress-rest-api-post-order/
 	 */
-	function stackable_add_custom_orderby() {
+	function stackable_add_custom_orderby_v2() {
+		if ( ! has_stackable_v2_frontend_compatibility() && ! has_stackable_v2_editor_compatibility() ) {
+			return;
+		}
+
 		$post_types = get_post_types( array( 'public' => true ) );
 		foreach ( $post_types as $post_type ) {
-			add_filter( 'rest_' . $post_type . '_collection_params', 'stackable_add_custom_orderby_params' );
+			add_filter( 'rest_' . $post_type . '_collection_params', 'stackable_add_custom_orderby_params_v2' );
 		}
 	}
 
-	add_action( 'rest_api_init', 'stackable_add_custom_orderby' );
+	add_action( 'rest_api_init', 'stackable_add_custom_orderby_v2' );
 }

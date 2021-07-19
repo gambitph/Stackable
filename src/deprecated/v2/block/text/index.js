@@ -5,7 +5,7 @@
 /**
  * External dependencies
  */
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 import { TextIcon } from '~stackable/icons'
 
 /**
@@ -17,25 +17,23 @@ import save from './save'
 import deprecated from './deprecated'
 import schema from './schema'
 import example from './example'
+import _metadata from './block.json'
 
 /**
  * WordPress dependencies
  */
 import { addFilter, applyFilters } from '@wordpress/hooks'
-import { __ } from '@wordpress/i18n'
 
-export const name = 'ugb/text'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Advanced Text', i18n ),
-	description: __( 'Start with the building block of all page layouts.', i18n ),
+	...metadata,
 	icon: TextIcon,
-	category: 'common',
-	keywords: [
-		__( 'Text', i18n ),
-		__( 'Pargraph', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	attributes: schema,
 	example,
 	supports: {

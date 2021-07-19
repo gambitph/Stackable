@@ -1,9 +1,4 @@
 /**
- * External dependencies
- */
-import registerStackableBlock from '~stackable/register-block'
-
-/**
  * WordPress dependencies
  */
 import {
@@ -15,6 +10,25 @@ import {
 	unregisterBlockType,
 } from '@wordpress/blocks'
 import { render } from '@testing-library/react'
+import { applyFilters } from '@wordpress/hooks'
+import { getBlockName } from '../util'
+
+const registerStackableBlock = ( name, settings = {} ) => {
+	if ( getBlockType( name ) ) {
+		return
+	}
+
+	const blockName = getBlockName( name )
+	const blockSettings = {
+		...settings,
+		category: settings.category,
+	}
+
+	// Register the block.
+	registerBlockType( name, applyFilters( `stackable.${ blockName }.settings`, blockSettings ) )
+
+	return blockSettings
+}
 
 export const blockSaveRender = ( name, settings, attributes = null ) => {
 	if ( ! getBlockType( name ) ) {

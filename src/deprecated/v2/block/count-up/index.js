@@ -15,26 +15,24 @@ import edit from './edit'
 import save from './save'
 import schema from './schema'
 import example from './example'
+import _metadata from './block.json'
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
-import { disabledBlocks, i18n } from 'stackable'
+import { disabledBlocks } from 'stackable'
 
-export const name = 'ugb/count-up'
+const {
+	name,
+	...metadata
+} = _metadata
+
+export { name }
 
 export const settings = {
-	title: __( 'Count Up', i18n ),
-	description: __( 'Showcase your stats. Display how many customers you have or the number of downloads of your app.', i18n ),
+	...metadata,
 	icon: CountUpIcon,
-	category: 'common',
-	keywords: [
-		__( 'Statistics', i18n ),
-		__( 'Count Up', i18n ),
-		__( 'Stackable', i18n ),
-	],
 	attributes: schema,
 	example,
 

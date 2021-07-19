@@ -2,7 +2,6 @@
  * Internal dependencies
  */
 import { name, settings } from '../'
-import registerStackableBlock from '~stackable/register-block'
 
 /**
  * External dependencies
@@ -11,13 +10,15 @@ import {
 	getBlockType,
 	getSaveElement,
 	unregisterBlockType,
+	registerBlockType,
 } from '@wordpress/blocks'
+import { applyFilters } from '@wordpress/hooks'
 import { render } from '@testing-library/react'
 
 describe( `${ settings.title } block`, () => {
 	beforeEach( () => {
 		if ( ! getBlockType( name ) ) {
-			registerStackableBlock( name, { ...settings, category: 'common' } )
+			registerBlockType( name, applyFilters( `stackable.${ name }.settings`, { ...settings, category: 'common' } ) )
 		}
 	} )
 
