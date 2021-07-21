@@ -1,5 +1,6 @@
 export * from './advanced'
 export * from './block-div'
+export * from './block-link'
 export * from './block-style'
 export * from './button'
 export * from './container-div'
