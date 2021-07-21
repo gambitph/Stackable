@@ -2,187 +2,125 @@
  * External dependencies
  */
 import {
-	createTypographyStyles,
-	createResponsiveStyles,
-	__getValue,
-	appendImportant,
-	appendImportantAll,
+	BlockDiv,
+	Advanced,
+	Typography,
+	Alignment,
+	MarginBottom,
+	EffectsAnimations,
+} from '~stackable/block-components'
+import {
+	getUniqueBlockClass, useStyles, getStyles,
 } from '~stackable/util'
+import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
+import { Style as StyleComponent } from '~stackable/components'
 
 /**
- * Internal dependencies
+ * WordPress dependencies
  */
-import { showOptions } from './util'
-import deepmerge from 'deepmerge'
+import { Fragment, renderToString } from '@wordpress/element'
+import { useBlockEditContext } from '@wordpress/block-editor'
 
-export const createStyles = props => {
-	const getValue = __getValue( props.attributes )
-
-	const show = showOptions( props )
-
-	const styles = []
-
-	// Container
-	const {
-		columnPaddingUnit = 'px',
-		tabletColumnPaddingUnit = 'px',
-		mobileColumnPaddingUnit = 'px',
-	} = props.attributes
-	styles.push( {
-		saveOnly: {
-			desktopTablet: {
-				'> .ugb-inner-block > .ugb-block-content > *': appendImportantAll( {
-					paddingTop: getValue( 'columnPaddingTop', `%s${ columnPaddingUnit }` ),
-					paddingBottom: getValue( 'columnPaddingBottom', `%s${ columnPaddingUnit }` ),
-					paddingRight: getValue( 'columnPaddingRight', `%s${ columnPaddingUnit }` ),
-					paddingLeft: getValue( 'columnPaddingLeft', `%s${ columnPaddingUnit }` ),
-				} ),
-			},
-			tabletOnly: {
-				'> .ugb-inner-block > .ugb-block-content > *': appendImportantAll( {
-					paddingTop: getValue( 'tabletColumnPaddingTop', `%s${ tabletColumnPaddingUnit }` ),
-					paddingRight: getValue( 'tabletColumnPaddingRight', `%s${ tabletColumnPaddingUnit }` ),
-					paddingBottom: getValue( 'tabletColumnPaddingBottom', `%s${ tabletColumnPaddingUnit }` ),
-					paddingLeft: getValue( 'tabletColumnPaddingLeft', `%s${ tabletColumnPaddingUnit }` ),
-				} ),
-			},
-			mobile: {
-				'> .ugb-inner-block > .ugb-block-content > *': appendImportantAll( {
-					paddingTop: getValue( 'mobileColumnPaddingTop', `%s${ mobileColumnPaddingUnit }` ),
-					paddingRight: getValue( 'mobileColumnPaddingRight', `%s${ mobileColumnPaddingUnit }` ),
-					paddingBottom: getValue( 'mobileColumnPaddingBottom', `%s${ mobileColumnPaddingUnit }` ),
-					paddingLeft: getValue( 'mobileColumnPaddingLeft', `%s${ mobileColumnPaddingUnit }` ),
-				} ),
-			},
+const getStyleParams = () => {
+	return [
+		{
+			selector: '',
+			styleRule: 'columnCount',
+			attrName: 'columns',
+			responsive: 'all',
 		},
-		editor: {
-			desktopTablet: {
-				'> .ugb-inner-block > .ugb-block-content > .ugb-text__text-wrapper': appendImportantAll( {
-					paddingTop: getValue( 'columnPaddingTop', `%s${ columnPaddingUnit }` ),
-					paddingBottom: getValue( 'columnPaddingBottom', `%s${ columnPaddingUnit }` ),
-					paddingRight: getValue( 'columnPaddingRight', `%s${ columnPaddingUnit }` ),
-					paddingLeft: getValue( 'columnPaddingLeft', `%s${ columnPaddingUnit }` ),
-				} ),
-			},
-			tabletOnly: {
-				'> .ugb-inner-block > .ugb-block-content > .ugb-text__text-wrapper': appendImportantAll( {
-					paddingTop: getValue( 'tabletColumnPaddingTop', `%s${ tabletColumnPaddingUnit }` ),
-					paddingRight: getValue( 'tabletColumnPaddingRight', `%s${ tabletColumnPaddingUnit }` ),
-					paddingBottom: getValue( 'tabletColumnPaddingBottom', `%s${ tabletColumnPaddingUnit }` ),
-					paddingLeft: getValue( 'tabletColumnPaddingLeft', `%s${ tabletColumnPaddingUnit }` ),
-				} ),
-			},
-			mobile: {
-				'> .ugb-inner-block > .ugb-block-content > .ugb-text__text-wrapper': appendImportantAll( {
-					paddingTop: getValue( 'mobileColumnPaddingTop', `%s${ mobileColumnPaddingUnit }` ),
-					paddingRight: getValue( 'mobileColumnPaddingRight', `%s${ mobileColumnPaddingUnit }` ),
-					paddingBottom: getValue( 'mobileColumnPaddingBottom', `%s${ mobileColumnPaddingUnit }` ),
-					paddingLeft: getValue( 'mobileColumnPaddingLeft', `%s${ mobileColumnPaddingUnit }` ),
-				} ),
-			},
+		{
+			selector: '',
+			styleRule: 'columnGap',
+			attrName: 'columnGap',
+			responsive: 'all',
+			format: '%spx',
 		},
-	} )
-
-	// Column rule.
-	const {
-		showColumnRule = false,
-	} = props.attributes
-	if ( showColumnRule ) {
-		styles.push( {
-			'.ugb-text__rule': appendImportantAll( {
-				background: getValue( 'columnRuleColor' ),
-				width: getValue( 'columnRuleWidth', '%spx' ),
-				height: getValue( 'columnRuleHeight', '%s%' ),
-			} ),
-		} )
-	}
-
-	// Title.
-	const {
-		showTitle = true,
-	} = props.attributes
-	if ( showTitle ) {
-		styles.push( {
-			'.ugb-text__title-wrapper': {
-				justifyContent: appendImportant( getValue( 'titleVerticalAlign' ) ),
-			},
-			'.ugb-text__title': {
-				color: getValue( 'titleColor' ),
-				...createTypographyStyles( 'title%s', 'desktop', props.attributes ),
-				textAlign: getValue( 'titleAlign' ) || getValue( 'contentAlign' ),
-			},
-			tablet: {
-				'.ugb-text__title': {
-					...createTypographyStyles( 'title%s', 'tablet', props.attributes ),
-					textAlign: getValue( 'titleTabletAlign' ) || getValue( 'tabletContentAlign' ),
-				},
-			},
-			mobile: {
-				'.ugb-text__title': {
-					...createTypographyStyles( 'title%s', 'mobile', props.attributes ),
-					textAlign: getValue( 'titleMobileAlign' ) || getValue( 'mobileContentAlign' ),
-				},
-			},
-		} )
-	}
-
-	// Subtitle.
-	const {
-		showSubtitle = true,
-	} = props.attributes
-	if ( showSubtitle ) {
-		styles.push( {
-			'.ugb-text__subtitle': {
-				...createTypographyStyles( 'subtitle%s', 'desktop', props.attributes ),
-				color: getValue( 'subtitleColor' ),
-				textAlign: getValue( 'subtitleAlign' ),
-			},
-			tablet: {
-				'.ugb-text__subtitle': {
-					...createTypographyStyles( 'subtitle%s', 'tablet', props.attributes ),
-					textAlign: getValue( 'subtitleTabletAlign' ),
-				},
-			},
-			mobile: {
-				'.ugb-text__subtitle': {
-					...createTypographyStyles( 'subtitle%s', 'mobile', props.attributes ),
-					textAlign: getValue( 'subtitleMobileAlign' ),
-				},
-			},
-		} )
-	}
-
-	// Text.
-	styles.push( {
-		'.ugb-text__text p': {
-			...createTypographyStyles( 'text%s', 'desktop', props.attributes ),
-			color: getValue( 'textColor' ),
-			textAlign: getValue( 'textAlign' ),
-		},
-		tablet: {
-			'.ugb-text__text p': {
-				...createTypographyStyles( 'text%s', 'tablet', props.attributes ),
-				textAlign: getValue( 'textTabletAlign' ),
-			},
-		},
-		mobile: {
-			'.ugb-text__text p': {
-				...createTypographyStyles( 'text%s', 'mobile', props.attributes ),
-				textAlign: getValue( 'textMobileAlign' ),
-			},
-		},
-	} )
-
-	// Spacing.
-	if ( show.titleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-text__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
-	}
-	if ( show.subtitleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-text__subtitle', 'subtitle%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
-	}
-	styles.push( ...createResponsiveStyles( '.ugb-text__text', 'text%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
-
-	return deepmerge.all( styles )
+	]
 }
 
-export default createStyles
+export const TextStyles = props => {
+	const {
+		...propsToPass
+	} = props
+
+	const deviceType = useDeviceType()
+	const { clientId } = useBlockEditContext()
+	const attributes = useBlockAttributes( clientId )
+
+	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
+	propsToPass.deviceType = deviceType
+	propsToPass.attributes = { ...attributes, clientId }
+
+	const columnStyles = useStyles( attributes, getStyleParams() )
+
+	return (
+		<Fragment>
+			<Alignment.Style { ...propsToPass } />
+			<BlockDiv.Style { ...propsToPass } />
+			<Advanced.Style { ...propsToPass } />
+			<Typography.Style { ...{
+				...propsToPass,
+				options: {
+					...propsToPass.options,
+					selector: '.stk-text__text',
+					hoverSelector: '.stk-text__text:hover',
+				},
+			} } />
+			<StyleComponent
+				styles={ columnStyles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
+			<EffectsAnimations.Style { ...propsToPass } />
+		</Fragment>
+	)
+}
+
+TextStyles.defaultProps = {
+	isEditor: false,
+	attributes: {},
+	options: {},
+}
+
+TextStyles.Content = props => {
+	const {
+		...propsToPass
+	} = props
+
+	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
+	const columnStyles = getStyles( props.attributes, getStyleParams() )
+
+	const styles = (
+		<Fragment>
+			<Alignment.Style.Content { ...propsToPass } />
+			<BlockDiv.Style.Content { ...propsToPass } />
+			<Advanced.Style.Content { ...propsToPass } />
+			<Typography.Style.Content { ...{
+				...propsToPass,
+				options: {
+					...propsToPass.options,
+					selector: '.stk-text__text',
+					hoverSelector: '.stk-text__text:hover',
+				},
+			} } />
+			<EffectsAnimations.Style.Content { ...propsToPass } />
+			<MarginBottom.Style.Content { ...propsToPass } />
+			<StyleComponent.Content
+				styles={ columnStyles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
+		</Fragment>
+	)
+
+	return renderToString( styles ) ? <style>{ styles }</style> : null
+}
+
+TextStyles.Content.defaultProps = {
+	attributes: {},
+	options: {},
+}
+

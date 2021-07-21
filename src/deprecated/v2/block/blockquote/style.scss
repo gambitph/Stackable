@@ -1,0 +1,71 @@
+/**
+ * Frontend styles for the Blockquote Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+
+@import "common";
+
+// Get rid of possible default blockquote styling.
+.ugb-blockquote--v3 {
+	padding: 0 !important;
+}
+
+.ugb-blockquote.ugb-blockquote--v3 {
+	border: 0 !important;
+	font-style: italic;
+	text-align: inherit;
+	position: relative;
+	overflow: visible;
+	// Only apply when block background is disabled.
+	&:not(.ugb--has-block-background)::before,
+	// Prevent themes and other styles from adding in their own quotes or pseudo element styles.
+	&::after {
+		content: "";
+		display: none !important;
+	}
+
+	.ugb-blockquote__item {
+		position: relative;
+		padding: $box-vert-padding $box-hori-padding;
+	}
+
+	.ugb-blockquote__quote {
+		position: absolute;
+		fill: rgba(129, 141, 165, 0.32);
+		width: 70px;
+		height: 70px;
+		transform: translateX(-50%) translateY(-30%);
+		top: 0;
+		left: 0;
+		z-index: 5;
+	}
+	.ugb-blockquote__content {
+		position: relative;
+		z-index: 6;
+	}
+
+	&.ugb-blockquote--small-quote .ugb-blockquote__quote {
+		top: $box-vert-padding;
+		left: $box-hori-padding;
+		transform: translateX(-100%) translateY(-80%);
+	}
+}
+
+.ugb-blockquote.ugb-blockquote--v3.ugb-blockquote--design-basic {
+	.ugb-blockquote__item {
+		@include box();
+		overflow: hidden;
+	}
+
+	.ugb-blockquote__quote {
+		transform: translateX(-30%) translateY(-30%);
+		top: 21px;
+		left: 35px;
+	}
+	&.ugb-blockquote--small-quote .ugb-blockquote__quote {
+		top: $box-vert-padding;
+		left: $box-hori-padding;
+		transform: translateX(-100%) translateY(-80%);
+	}
+}

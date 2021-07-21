@@ -1,138 +1,29 @@
 /**
- * #.# Common SCSS
- *
- * Can include things like variables and mixins
- * that are used across the project.
+ * Common SCSS
 */
 
-// Most used breakpoints
-$break-huge: 1440px;
-$break-wide: 1280px;
-$break-large: 960px; // admin sidebar auto folds. Breakpoint for tablet
-$break-medium: 782px; // adminbar goes big
-$break-small: 600px; // Breakpoint for mobile
-$break-mobile: 480px;
-$break-js-tablet: 1025px;
-$break-js-mobile: 768px;
-
-[class*="ugb-"] form[class*="-link"],
-form[class*="ugb-"][class*="-link"],
-[class*="ugb-"] + form[class*="-link"] {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-// Text margin bottom
-$text-margin-bottom: 16px;
-
-// Box
-$box-radius: 12px;
-$box-hori-padding: 35px;
-$box-vert-padding: 60px;
-
-@mixin boxNoPadding() {
-	box-shadow: 0 5px 5px 0 rgba(18, 63, 82, 0.035), 0 0 0 1px rgba(176, 181, 193, 0.2);
-	background-color: #fff;
-	border-radius: $box-radius;
-	overflow: hidden;
-}
-@mixin box() {
-	@include boxNoPadding();
-	padding: $box-vert-padding $box-hori-padding;
-	@media screen and (max-width: $break-medium) {
-		padding: ($box-vert-padding * 2/3) ($box-hori-padding * 2/3);
-	}
-	@media screen and (max-width: $break-small) {
-		padding: $box-hori-padding ($box-hori-padding / 2);
-	}
-}
-
-@mixin baseButton() {
-	padding: 8px 26px;
-	font-size: 1em;
-	line-height: 1.5 !important;
-	align-items: center;
-}
+@import "styles/block-design-system";
+@import "styles/block";
 
 @mixin transition() {
 	transition: all 0.7s cubic-bezier(0.2, 0.6, 0.4, 1);
 }
 
-// New standardized block styles.
-.ugb-main-block {
-	margin-top: 35px;
-	margin-bottom: 35px;
-	padding: 0;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	&.alignfull {
-		padding: 0 35px;
-		@media screen and (max-width: $break-small) {
-			padding-right: 17.5px;
-			padding-left: 17.5px;
-		}
-	}
-}
-.ugb-inner-block,
-.ugb-block-content {
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	position: relative;
-}
-
-// Full-height blocks
-.ugb--full-height {
-	min-height: 700px;
-}
-@media screen and (min-width: 1025px) {
-	.ugb--full-height {
-		min-height: 100vh;
-	}
-}
-
-// A block can have a ugb-content-width class to make it's content fit the content-width.
-// This should only be used for full-widths.
-.ugb--restrict-content-width .ugb-content-wrapper {
-	max-width: var(--content-width);
-	margin: 0 auto;
-}
-
-// Different box shadows for the shadow setting.
-$shadows: ( none )
-	( 0 0 0 1px rgba(120, 120, 120, 0.1) )
-	( 0 0 0 2px rgba(120, 120, 120, 0.1) )
-	( 0 5px 5px 0 rgba(18, 63, 82, 0.035), 0 0 0 1px rgba(176, 181, 193, 0.2) )
-	( 0px 2px 20px rgba(153, 153, 153, 0.2) )
-	( 0 5px 30px -10px rgba(18, 63, 82, 0.3) )
-	( 0px 10px 30px rgba(0, 0, 0, 0.05) )
-	( 7px 5px 30px rgba(72, 73, 121, 0.15) )
-	( 0px 10px 60px rgba(0, 0, 0, 0.1) )
-	( 0px 70px 130px -60px rgba(72, 73, 121, 0.38) );
-
-@for $i from 0 through 9 {
-	.ugb--shadow-#{ $i },
-	.ugb-shadow-#{ $i } { // Old naming convention.
-		box-shadow: nth($shadows, $i + 1) !important;
-	}
-}
-
 // Make sure all our blocks are at the same level. Mainly for our separator to work.
-div[class^="wp-block-ugb-"] {
+.stk-block {
 	z-index: 1;
 }
 
 // Fix for iOS fixed background attachments do not convert to scroll.
 @supports (-webkit-touch-callout: inherit) {
-	[class*="ugb-"] {
+	.stk-block,
+	.stk-container {
 		background-attachment: scroll !important;
 	}
 }
 
 // Some themes may force pseudo elements on our blocks and this will destroy our column layouts.
-.ugb-block-content::before,
-.ugb-block-content::after {
+.stk-block::before,
+.stk-block::after {
 	content: none !important;
 }

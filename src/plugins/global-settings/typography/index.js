@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import './editor-loader'
+import { GlobalTypographyStyles } from './editor-loader'
 import TypographyPicker from './typography-picker'
 
 /**
@@ -24,6 +24,8 @@ import {
 	addFilter, doAction,
 } from '@wordpress/hooks'
 import { __, sprintf } from '@wordpress/i18n'
+
+export { GlobalTypographyStyles }
 
 const TYPOGRAPHY_TAGS = [
 	{
@@ -131,7 +133,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 				<p className="components-base-control__help">
 					{ __( 'Change the typography of your headings for all your blocks in your site.', i18n ) }
 					&nbsp;
-					<a href="https://docs.wpstackable.com/stackable-guides/advanced-guides/how-to-use-global-typography/?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
+					<a href="https://docs.wpstackable.com/article/363-how-to-use-global-typography?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
 						{ __( 'Learn more about Global Typography', i18n ) }
 					</a>
 				</p>
@@ -162,4 +164,3 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-typography',
 		</Fragment>
 	)
 } )
-

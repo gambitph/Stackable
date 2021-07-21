@@ -1,0 +1,115 @@
+@import "breakpoints";
+
+$_cssvars: ();
+
+// Based from: https://dev.to/felipperegazio/css-custom-properties-vars-with-sass-scss-a-practical-architecture-strategy-1m88
+
+/**
+ * Use this mixin to declare a set of CSS Custom Properties.
+ * The variables in $css_variables will be properly prefixed.
+ * The use of this mixin is encoraged to keep a good scalability.
+ *
+ * Usage:
+ *
+ * @include cssvars((
+ *  base-font-size: 65.5%,
+ *  font-family: #{"HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif},
+ *
+ *  primary-color: #33b5e5,
+ *  secondary-color: #ff500a,
+ * ));
+ *
+ * Will result in
+ *
+ * root {
+ *    --prefix-var-name: value;
+ *    --prefix-var-name: value;
+ *    --prefix-var-name: value;
+ * }
+ *
+ */
+@mixin cssvars( $css_variables ) {
+	// Gather all the styles.
+	$_cssvars: map-merge($_cssvars, $css_variables) !global;
+
+	:root {
+		@each $name, $value in $css_variables {
+			--stk-#{ $name }: #{ $value };
+		}
+	}
+}
+
+@mixin cssvars-responsive( $css_variables ) {
+	$desktop: ();
+	$tablet: ();
+	$mobile: ();
+
+	@each $name, $value in $css_variables {
+		@if type-of( $value ) != map {
+			$_cssvars: map-merge($_cssvars, ( $name: $value )) !global;
+			$desktop: map-merge($desktop, ( $name: $value ));
+		}
+		@else {
+			@if map-get( $value, "desktop" ) {
+				$_cssvars: map-merge($_cssvars, ( $name: map-get($value, "desktop") )) !global;
+				$desktop: map-merge($desktop, ( $name: map-get($value, "desktop") ));
+			}
+			@if map-get( $value, "tablet" ) {
+				$_cssvars: map-merge($_cssvars, ( #{ $name }-tablet: map-get($value, "tablet") )) !global;
+				$tablet: map-merge($tablet, ( $name: map-get($value, "tablet") ));
+			}
+			@if map-get( $value, "mobile" ) {
+				$_cssvars: map-merge($_cssvars, ( #{ $name }-mobile: map-get($value, "mobile") )) !global;
+				$mobile: map-merge($mobile, ( $name: map-get($value, "mobile") ));
+			}
+		}
+	}
+
+	@if length( $desktop ) > 0 {
+		:root {
+			@each $name, $value in $desktop {
+				--stk-#{ $name }: #{ $value };
+			}
+		}
+	}
+
+	@if length( $tablet ) > 0 {
+		@include tablet {
+			:root {
+				@each $name, $value in $tablet {
+					--stk-#{ $name }: #{ $value };
+				}
+			}
+		}
+	}
+
+	@if length( $mobile ) > 0 {
+		@include mobile {
+			:root {
+				@each $name, $value in $mobile {
+					--stk-#{ $name }: #{ $value };
+				}
+			}
+		}
+	}
+}
+
+
+/**
+ * Retrieve a css variable value with prefix
+ *
+ * Usage
+ *
+ * .selector {
+ *   color: cssva(primary-color);
+ * }
+ *
+ * Will result in
+ *
+ * .selector {
+ *    color: var(--prefix-primary-color);
+ * }
+ */
+@function cssvar( $name ) {
+	@return var(--stk-#{ $name }, map-get( $_cssvars, $name ) );
+}

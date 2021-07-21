@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Feature block Save render should match snapshot 1`] = `
+<div
+  class="wp-block-ugb-feature ugb-feature--v2 ugb-feature--design-plain ugb-main-block"
+>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-feature__item"
+      >
+        <div
+          class="ugb-feature__content"
+        >
+          <h2
+            class="ugb-feature__title"
+          >
+            <div>
+              Title for This Block
+            </div>
+          </h2>
+          <p
+            class="ugb-feature__description"
+          >
+            <div>
+              Description for this block. Use this space for describing your block. Any text will do. Description for this block. You can use this space for describing your block.
+            </div>
+          </p>
+          <div
+            class="ugb-button-container"
+          >
+            <a
+              class="ugb-button ugb-button--size-normal"
+              href=""
+              rel=""
+              title=""
+            >
+              
+              <span
+                class="ugb-button--inner"
+              >
+                <div>
+                  Button text
+                </div>
+              </span>
+            </a>
+          </div>
+        </div>
+        <div
+          class="ugb-feature__image-side"
+        >
+          <img
+            alt=""
+            class="ugb-feature__image ugb-img"
+            title=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Feature block Save render should match snapshot with attributes 1`] = `
+<div
+  class="wp-block-ugb-feature ugb-feature--v2 ugb-feature--design-wave-2 ugb-feature--invert ugb-main-block"
+>
+  <style>
+    .ugb-feature__content{border-radius:123px !important;border-style:columnBorderType !important;border-color:#123456 !important;border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-color:#123456 !important;background-attachment:fixed;background-image:url(columnBackgroundMediaUrl);background-position:columnBackgroundPosition !important;background-repeat:columnBackgroundRepeat !important;background-size:columnBackgroundSize !important;background-blend-mode:columnBackgroundImageBlendMode}.ugb-feature__content:before{background-color:#123456 !important;opacity:12.3}.ugb-img{-webkit-mask-image:url('data:image/svg+xml;base64,');mask-image:url('data:image/svg+xml;base64,')}@media screen and (min-width:768px){.ugb-img{width:123px;height:123px !important}}@media screen and (max-width:1025px){.ugb-feature__content{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-image:url(columnTabletBackgroundMediaUrl);background-position:columnTabletBackgroundPosition !important;background-repeat:columnTabletBackgroundRepeat !important;background-size:columnTabletBackgroundSize !important}.ugb-feature__content:before{opacity:12.3}}@media screen and (min-width:768px) and (max-width:1025px){.ugb-img{width:123px;height:123px !important}}@media screen and (max-width:768px){.ugb-feature__content{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-image:url(columnMobileBackgroundMediaUrl);background-position:columnMobileBackgroundPosition !important;background-repeat:columnMobileBackgroundRepeat !important;background-size:columnMobileBackgroundSize !important}.ugb-feature__content:before{opacity:12.3}.ugb-img{width:123px;height:123px !important}}
+  </style>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-feature__item"
+      >
+        <div
+          class="ugb-feature__content ugb--shadow-123 ugb--has-background-overlay"
+        />
+        <div
+          class="ugb-feature__image-side"
+        >
+          <img
+            alt="imageAlt"
+            class="ugb-feature__image ugb-feature__image-has-shape ugb-img wp-image-123 ugb-img--shape"
+            height="123"
+            src="imageUrl"
+            title=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

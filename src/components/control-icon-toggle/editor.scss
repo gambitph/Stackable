@@ -1,0 +1,62 @@
+.stk-label-unit-toggle {
+	margin-left: 6px;
+	align-items: center;
+	width: 24px;
+	height: 24px;
+	position: relative;
+	z-index: 3;
+	overflow: hidden;
+	&[aria-expanded="true"] {
+		z-index: 4;
+		overflow: visible;
+		.stk-label-unit-toggle__wrapper {
+			background: #fff;
+			outline: 1px solid #222;
+		}
+	}
+	&[aria-expanded="false"]:hover {
+		outline: 1px solid #222;
+	}
+	button {
+		height: 14px;
+		width: 14px;
+		padding: 5px !important; // Force override for Gutenberg 7.7.
+		min-width: 11px !important; // Force override for Gutenberg 7.7.
+		box-sizing: content-box;
+		border-radius: 0 !important;
+		margin: 0;
+		justify-content: center;
+		font-size: 10px; // For text only toggles
+		font-weight: 400; // For text only toggles
+		svg {
+			height: 100%;
+			width: 100%;
+		}
+		&:hover,
+		&.is-active {
+			box-shadow: none !important;
+		}
+	}
+	+ .stk-label-unit-toggle {
+		margin-left: 0;
+	}
+}
+.stk-label-unit-toggle__wrapper {
+	position: absolute;
+	outline: 1px solid transparent;
+}
+.stk-label-unit-toggle__popup.is-from-right {
+	.components-popover__content {
+		margin-right: 10px;
+	}
+}
+
+.stk-label-unit-toggle__colored {
+	button.is-active:not([data-index="0"]) {
+		background: #007cba;
+		background: var(--wp-admin-theme-color, #007cba);
+		color: #fff;
+		border-color: #007cba !important;
+		border-color: var(--wp-admin-theme-color, #007cba) !important;
+	}
+}

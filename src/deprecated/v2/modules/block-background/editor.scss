@@ -1,0 +1,32 @@
+@import "common";
+
+[data-type^="ugb/"][data-align="full"] {
+	> * > .ugb-main-block {
+		&.ugb--has-block-background {
+			margin-top: 0;
+			margin-bottom: 0;
+			padding-top: 70px;
+			padding-bottom: 70px;
+
+			&.ugb-main-block--inner-center {
+				@media screen and (min-width: $break-large) {
+					> .ugb-inner-block {
+						max-width: var(--content-width);
+					}
+				}
+			}
+			&.ugb-main-block--inner-wide {
+				@media screen and (min-width: $break-wide) {
+					> .ugb-inner-block {
+						max-width: 1200px;
+					}
+				}
+			}
+			&.ugb-main-block--inner-full {
+				> .ugb-inner-block {
+					width: 100%;
+				}
+			}
+		}
+	}
+}

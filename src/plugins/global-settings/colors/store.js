@@ -2,7 +2,7 @@
  * External dependencies
  */
 import {
-	omit, compact, head,
+	omit, compact, head, isPlainObject,
 } from 'lodash'
 
 /**
@@ -60,10 +60,14 @@ registerStore( 'stackable/global-colors', {
  * @return {Array} new stackable global color array
  */
 const convertBetaStackableColorsToRelease = colors => compact( ( colors || [] ).map( color => {
+	if ( ! isPlainObject( color ) ) {
+		return null
+	}
+
 	if ( color.fallback && color.colorVar ) {
 		// Let us not include global colors linked to theme colors.
-		return color.slug.match( /^stk-global-color/ ) ?
-			{
+		return color.slug.startsWith( 'stk-global-color' )
+			? {
 				color: color.fallback,
 				slug: `stk-global-color-${ Math.floor( Math.random() * new Date().getTime() ) % 100000 }`,
 				rgb: color.rgb || '0, 0, 0',
@@ -92,7 +96,7 @@ domReady( () => {
 			let colors
 
 			// Added compatibility from Global Settings Beta to Release Version.
-			const { colors: _colors } = select( 'core/block-editor' ).getSettings( )
+			const _colors = compact( select( 'core/block-editor' ).getSettings().colors )
 			if ( ( _colors || [] ).some( color => color.fallback && color.colorVar ) ) {
 				colors = convertBetaStackableColorsToRelease( _colors )
 				dispatch( 'core/block-editor' ).updateSettings( { colors } )
@@ -109,6 +113,17 @@ domReady( () => {
 				stackableColors,
 				isInitializing: false,
 			} )
+
+			/**
+			 * withColorContext now gets the colors from features object.
+			 *
+			 * @since v2.7.2
+			 */
+			if ( useStackableColorsOnly ) {
+				setTimeout( () => {
+					dispatch( 'core/block-editor' ).updateSettings( { __experimentalFeatures: { colors: { palette: { theme: [] } } } } )
+				}, 300 )
+			}
 		} )
 	} )
 } )

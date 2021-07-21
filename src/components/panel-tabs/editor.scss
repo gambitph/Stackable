@@ -49,7 +49,8 @@
 .ugb-panel-tabs {
 	border-bottom: 1px solid #e2e4e7 !important;
 }
-.edit-post-sidebar.ugb--has-panel-tabs {
+.edit-post-sidebar.ugb--has-panel-tabs,
+.edit-widgets-sidebar.ugb--has-panel-tabs {
 	background-color: #f0f3f5;
 	.edit-post-settings-sidebar__panel-block .components-panel__body:last-child {
 		margin-bottom: 0;
@@ -92,28 +93,18 @@
 	}
 }
 
-[data-ugb-tab="layout"] {
-	.ugb-inspector-panel-controls:not(.ugb-panel-layout) {
-		display: none;
-	}
-	// Advanced Gutenberg tab is always in advanced, hide it.
-	.block-editor-block-inspector__advanced {
-		display: none;
-	}
-}
-
-[data-ugb-tab="style"] {
-	.ugb-inspector-panel-controls:not(.ugb-panel-style) {
-		display: none;
-	}
-	// Advanced Gutenberg tab is always in advanced, hide it.
-	.block-editor-block-inspector__advanced {
-		display: none;
-	}
-}
-
-[data-ugb-tab="advanced"] {
-	.ugb-inspector-panel-controls:not(.ugb-panel-advanced) {
-		display: none;
+$tabs: "block", "layout", "style", "advanced";
+@each $tab in $tabs {
+	[data-ugb-tab="#{ $tab }"] {
+		// Hide panels which are not specified for thi
+		.ugb-inspector-panel-controls:not(.ugb-panel-#{ $tab }) {
+			display: none;
+		}
+		@if $tab != "advanced" {
+			// Advanced Gutenberg tab is always in advanced, hide it.
+			.block-editor-block-inspector__advanced {
+				display: none;
+			}
+		}
 	}
 }

@@ -1,11 +1,11 @@
 import './color-palette-updater'
-import './editor-loader'
 import './store'
 
 /**
  * Internal dependencies
  */
 import ColorPicker from './color-picker'
+import { GlobalColorStyles } from './editor-loader'
 
 /**
  * External dependencies
@@ -25,6 +25,8 @@ import {
 } from '@wordpress/data'
 import { models } from '@wordpress/api'
 import { ToggleControl } from '@wordpress/components'
+
+export { GlobalColorStyles }
 
 addFilter( 'stackable.util.hex-to-rgba', 'stackable/global-colors', ( output, hexColor, opacity ) => {
 	// Only do this for Stackable global colors.
@@ -90,7 +92,7 @@ addFilter( 'stackable.global-settings.inspector', 'stackable/global-colors', out
 				<p className="components-base-control__help">
 					{ __( 'Change your color palette for all your blocks across your site.', i18n ) }
 					&nbsp;
-					<a href="https://docs.wpstackable.com/stackable-guides/advanced-guides/how-to-use-global-colors/?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
+					<a href="https://docs.wpstackable.com/article/362-how-to-use-global-colors?utm_source=wp-global-settings&utm_campaign=learnmore&utm_medium=gutenberg" target="_docs">
 						{ __( 'Learn more about Global Colors', i18n ) }
 					</a>
 				</p>

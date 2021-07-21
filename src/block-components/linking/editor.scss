@@ -1,0 +1,57 @@
+// Show column widths when hovering.
+.stk-block:hover .stk-linking-wrapper {
+	display: block;
+}
+// Show column widths when columns and their contents are selected.
+[data-type^="stackable/"].has-child-selected .stk-linking-wrapper {
+	display: block;
+}
+
+.stk-linking-wrapper {
+	display: none;
+	position: absolute;
+	top: 0;
+	right: 2px;
+	z-index: 9;
+}
+.stk-linking-wrapper__tooltip {
+	height: 28px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 28px;
+	background: rgba(0, 0, 0, 0.75);
+	border-radius: 2px;
+	color: #fff;
+	.dashicon {
+		font-size: 16px;
+		height: 1em;
+	}
+	cursor: pointer;
+	opacity: 0.9;
+	transition: opacity 0.3s ease-in-out;
+	user-select: none;
+	&.stk--is-unlinked {
+		color: #aaa;
+	}
+	&:hover {
+		opacity: 1;
+	}
+}
+
+
+.stk-linking__tooltip {
+	display: block;
+	width: 200px;
+	white-space: normal;
+	text-align: left;
+	padding: 8px;
+	a {
+		display: block;
+		margin-top: 8px;
+		color: #e989ee;
+		&:hover {
+			color: #ddd;
+		}
+	}
+}

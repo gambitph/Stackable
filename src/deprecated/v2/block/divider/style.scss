@@ -1,0 +1,69 @@
+/**
+ * Frontend styles for the Divider Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+
+@import "common";
+
+.ugb-divider--v2 {
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+
+.ugb-divider.ugb-divider--v2 {
+	hr {
+		background: none;
+		background-color: #ddd;
+		border: 0 !important;
+		padding: 0 !important;
+		max-width: none !important;
+		margin: 0 auto !important;
+		width: 50%;
+		height: 1px;
+		&::before,
+		&::after {
+			display: none;
+		}
+	}
+
+	.ugb-divider__dots {
+		margin: 0 auto;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		overflow: hidden;
+	}
+	.ugb-divider__dot {
+		flex-shrink: 0;
+	}
+}
+
+.ugb-divider.ugb-divider--v2.ugb-divider--design-dots,
+.ugb-divider.ugb-divider--v2.ugb-divider--design-asterisks {
+	hr {
+		background-color: transparent !important;
+		height: 0 !important;
+	}
+
+	.ugb-divider__dot {
+		border-radius: 100%;
+		background-color: #ddd;
+	}
+}
+
+.ugb-divider.ugb-divider--v2.ugb-divider--design-asterisks {
+	.ugb-divider__dot {
+		background: transparent;
+		position: relative;
+		&::before {
+			content: "*";
+			font-family: Georgia, Times, "Times New Roman", serif;
+			line-height: 1;
+			vertical-align: middle;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+	}
+}

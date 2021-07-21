@@ -1,0 +1,241 @@
+/**
+ * Core Block Styles
+ */
+@import "breakpoints";
+@import "block-transitions";
+
+// We need to set this to relative for making the whole block clickable.
+.stk-block {
+	position: relative;
+	width: 100%;
+}
+
+// Containers
+.stk-column,
+.stk-block.stk-column {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+// Mostly for border radius.
+.stk-container {
+	overflow: hidden;
+}
+
+/**
+ * Resizeable rows and columns
+ */
+.stk-row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+.stk-column {
+	flex: 1 1 0; // flex-basis 0 means that all columns will be equal.
+	box-sizing: border-box;
+
+	// Don't center the columns.
+	margin-left: 0;
+	margin-right: 0;
+
+	// Make sure the contents occupy the entire area.
+	display: flex;
+	align-items: stretch;
+}
+
+// Column widths.
+@include desktop-tablet {
+	@for $i from 2 through 10 {
+		.stk-row.stk-columns-#{ $i } {
+			> .stk-column {
+				flex: 1 1 #{ 100% / $i };
+				max-width: #{ 100% / $i };
+			}
+		}
+	}
+}
+
+// Columns can be collapsed for tablet and mobile only.
+@include desktop {
+	.stk-row {
+		flex-wrap: nowrap;
+	}
+}
+// Mobile auto-collapses all columns.
+@include mobile {
+	.stk-column {
+		flex: 1 1 100%;
+		max-width: 100%;
+	}
+}
+
+// Block inner blocks.
+.stk-block-content {
+	width: 100%;
+	position: relative;
+	&:not(.stk-row) {
+		// Make sure the inner blocks are top aligned.
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+	}
+}
+.stk-inner-blocks {
+	flex: 1;
+	&:not(.stk-row) {
+		// Make sure the inner blocks are top aligned.
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+
+		// Inner block orientation.
+		&:not(.stk--block-orientation-horizontal) {
+			flex-direction: column;
+		}
+		&.stk--block-orientation-horizontal {
+			flex-direction: row;
+			> * {
+				margin-top: 0;
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	// Ensure the contents don't have extra margins.
+	> *:first-child {
+		margin-top: 0;
+	}
+	> *:last-child {
+		margin-bottom: 0;
+	}
+}
+// Column with a block background has a padding that might not be obvious.
+.stk-block-background {
+	&.stk-column > .stk-block-content {
+		margin: 0;
+	}
+}
+
+// Images
+.stk-image--fit {
+	object-fit: cover;
+	height: 100% !important;
+	width: 100% !important;
+}
+
+// Block float alignment.
+.stk-block.alignleft,
+.stk-block.alignright {
+	.stk-inner-blocks:first-of-type > .stk-block {
+		max-width: 350px; // Give a default width for a floated block.
+		width: auto;
+	}
+}
+
+// Responsive hiding.
+@include desktop {
+	.stk--hide-desktop {
+		display: none !important;
+	}
+}
+@include tablet {
+	.stk--hide-tablet {
+		display: none !important;
+	}
+}
+@include mobile {
+	.stk--hide-mobile {
+		display: none !important;
+	}
+}
+
+// Headings and Text.
+// This removes the normal margins of headings and paragraphs, so we can add our own.
+.stk-block {
+	.stk-heading__text,
+	.stk-text__text {
+		margin-bottom: 0;
+	}
+}
+.stk-heading,
+.stk-text,
+.stk-block .stk-text__text {
+	margin-top: 0;
+}
+// Headings have a large margin top except when they're the first entry.
+.stk-heading:not(:first-child) .stk-heading__text {
+	margin-top: 1.5em;
+}
+// No margin top when the first child but only in the frontend.
+.stk-heading:first-child .stk-heading__text:not([contenteditable]) {
+	margin-top: 0;
+}
+// Remove any decorative things added by themes.
+.stk-text__text,
+.stk-heading__text {
+	&::after,
+	&::before {
+		content: unset;
+	}
+}
+
+// Typography Classes.
+.stk--is-gradient {
+	background-clip: text;
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+	-o-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-moz-text-fill-color: transparent;
+	-o-text-fill-color: transparent;
+}
+
+// Button.
+.stk-button {
+	.stk--svg-wrapper {
+		position: relative;
+
+		& > .stk--shape-icon {
+			position: absolute;
+			z-index: 1;
+			margin: auto;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
+	}
+
+	.stk--inner-svg {
+		display: flex;
+		position: relative;
+		z-index: 2;
+
+		& > svg:last-child {
+			height: 1em;
+			width: 1em;
+		}
+	}
+
+	a.stk-button__button {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		column-gap: 4px;
+		z-index: 1;
+
+		&::after {
+			pointer-events: none;
+			content: "";
+			position: absolute;
+			z-index: -1;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			opacity: 0;
+			border-radius: inherit;
+		}
+	}
+}
+

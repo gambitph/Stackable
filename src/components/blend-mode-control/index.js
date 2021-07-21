@@ -1,20 +1,24 @@
 /**
+ * Internal dependencies
+ */
+import { AdvancedSelectControl } from '..'
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { SelectControl } from '@wordpress/components'
-import { compose } from '@wordpress/compose'
 
 /**
  * External dependencies
  */
 import { i18n } from 'stackable'
-import { withHelpTip } from '~stackable/higher-order'
+import classnames from 'classnames'
 
 const BlendModeControl = props => {
 	return (
-		<SelectControl
+		<AdvancedSelectControl
 			{ ...props }
+			className={ classnames( [ 'ugb--help-tip-background-blend-mode', props.className ] ) }
 			options={ [
 				{ value: '', label: __( 'None', i18n ) },
 				{ value: 'normal', label: __( 'Normal', i18n ) },
@@ -42,10 +46,9 @@ const BlendModeControl = props => {
 }
 
 BlendModeControl.defaultProps = {
+	className: '',
 	label: __( 'Mix Blend Mode', i18n ),
 	help: __( 'Not supported in all browsers.', i18n ),
 }
 
-export default compose(
-	withHelpTip( 'background-blend-mode' )
-)( BlendModeControl )
+export default BlendModeControl

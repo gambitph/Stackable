@@ -35,7 +35,7 @@ if ( ! class_exists( 'Stackable_Plugin_Premium_Notice' ) ) {
 				'stackable_inspector_premium_notice_status',
 				array(
 					'type' => 'string',
-					'description' => __( 'True if the inspector "Go Premium" notice was already dismissed', 'block-options' ),
+					'description' => __( 'True if the inspector "Go Premium" notice was already dismissed', STACKABLE_I18N ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => '',

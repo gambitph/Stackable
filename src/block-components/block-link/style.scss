@@ -1,0 +1,9 @@
+.stk-block-link {
+	all: unset !important; // We need to unset since we want to ensure that this is invisible.
+	position: absolute !important;
+	top: 0 !important;
+	left: 0 !important;
+	right: 0 !important;
+	bottom: 0 !important;
+	cursor: pointer !important;
+}

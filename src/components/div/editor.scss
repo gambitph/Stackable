@@ -1,0 +1,18 @@
+// Background overlay. Any block / item that has a background/gradient/overlay should have this class.
+// .editor-styles-wrapper .stk--has-background-overlay {
+// 	&.stk--has-background-overlay {
+// 		&::before,
+// 		> .stk-video-background {
+// 			pointer-events: none;
+// 		}
+// 	}
+// }
+//
+// Sometimes, the position style doesn't get applied inside editor
+.editor-styles-wrapper .stk-block.stk--has-background-overlay {
+	position: relative;
+}
+
+.stk-video-background {
+	pointer-events: none;
+}

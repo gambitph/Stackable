@@ -15,14 +15,15 @@ import { __ } from '@wordpress/i18n'
  */
 import classnames from 'classnames'
 import { i18n } from 'stackable'
+import { applyFilters } from '@wordpress/hooks'
 import { Icon } from '@wordpress/components'
 
 const TABS = [
 	{
-		value: 'layout',
-		title: __( 'Layout', i18n ),
-		label: __( 'Layout Tab', i18n ),
-		icon: 'admin-settings',
+		value: 'block',
+		title: __( 'Block', i18n ),
+		label: __( 'Block Tab', i18n ),
+		icon: 'block-default',
 	},
 	{
 		value: 'style',
@@ -38,8 +39,10 @@ const TABS = [
 	},
 ]
 
+const DEFAULT_TABS = [ 'block', 'style', 'advanced' ]
+
 export const closeAllOpenPanels = clickedEl => {
-	[].forEach.call( document.querySelectorAll( '.components-panel__body .components-panel__body-toggle' ), el => {
+	[].forEach.call( document.querySelector( '.edit-post-sidebar, .edit-widgets-sidebar' )?.querySelectorAll( '.components-panel__body .components-panel__body-toggle' ) || [], el => {
 		if ( el.offsetHeight === 0 ) {
 			return
 		}
@@ -55,7 +58,7 @@ class PanelTabs extends Component {
 	constructor() {
 		super( ...arguments )
 
-		this.tabsToUse = this.props.tabs || [ 'layout', 'style', 'advanced' ]
+		this.tabsToUse = this.props.tabs || DEFAULT_TABS
 
 		this.state = {
 			activeTab: this.props.initialTab ? this.props.initialTab : this.tabsToUse[ 0 ],
@@ -75,7 +78,7 @@ class PanelTabs extends Component {
 			setTimeout( () => {
 				if ( sidebarPanel ) {
 					sidebarPanel.setAttribute( 'data-ugb-tab', tab )
-					sidebarPanel.closest( '.edit-post-sidebar' )?.classList.add( 'ugb--has-panel-tabs' )
+					sidebarPanel.closest( '.edit-post-sidebar, .edit-widgets-sidebar' )?.classList.add( 'ugb--has-panel-tabs' )
 				}
 			}, 1 )
 		}
@@ -94,7 +97,7 @@ class PanelTabs extends Component {
 		const sidebarPanel = document.querySelector( '[data-ugb-tab]' )
 		if ( sidebarPanel ) {
 			sidebarPanel.removeAttribute( 'data-ugb-tab' )
-			sidebarPanel.closest( '.edit-post-sidebar' ).classList.remove( 'ugb--has-panel-tabs' )
+			sidebarPanel.closest( '.edit-post-sidebar, .edit-widgets-sidebar' ).classList.remove( 'ugb--has-panel-tabs' )
 		}
 
 		// Remove listener to panel closes
@@ -137,7 +140,7 @@ class PanelTabs extends Component {
 				ref={ this.containerDiv }
 			>
 				<div className="ugb-panel-tabs__wrapper">
-					{ TABS.map( ( {
+					{ applyFilters( 'stackable.inspector.tabs', TABS ).map( ( {
 						value, title, label, icon,
 					}, i ) => {
 						if ( ! this.tabsToUse.includes( value ) ) {
@@ -174,7 +177,6 @@ PanelTabs.defaultProps = {
 	className: '',
 	style: {},
 	closeOtherPanels: true,
-	blockProps: {},
 	initialTab: '',
 	onClickPanel: () => {},
 	onClick: () => {},

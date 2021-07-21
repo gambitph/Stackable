@@ -39,14 +39,14 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 		/**
 		 * Initialize
 		 */
-        function __construct() {
+  	function __construct() {
 			// Register our settings.
 			add_action( 'init', array( $this, 'register_global_settings' ) );
 
 			/**
 			 * Color hooks
 			 */
-add_action( 'wp_enqueue_scripts', array( $this, 'color_add_global_styles' ) );
+			add_action( 'wp_enqueue_scripts', array( $this, 'color_add_global_styles' ) );
 
 			add_action( 'after_setup_theme', array( $this, 'color_add_global_color_palette' ), 9999 );
 
@@ -54,10 +54,19 @@ add_action( 'wp_enqueue_scripts', array( $this, 'color_add_global_styles' ) );
 			 * Typography hooks
 			 */
 
-			add_action( 'wp_enqueue_scripts', array( $this, 'typography_add_global_styles' ) );
+			/**
+			 * Use `after_setup_theme` to check early if there are global
+			 * typography used the `typograhy_detect_native_blocks`  method.
+			 *
+			 * @since 2.17.1
+			 */
+			add_action( 'after_setup_theme', array( $this, 'typography_parse_global_styles' ) );
 
 			// For some native blocks, add a note that they're core blocks.
 			add_filter( 'render_block', array( $this, 'typography_detect_native_blocks' ), 10, 2 );
+
+			// Add our global typography styles.
+			add_action( 'wp_enqueue_scripts', array( $this, 'typography_add_global_styles' ) );
 		}
 
 		/**
@@ -119,18 +128,6 @@ add_action( 'wp_enqueue_scripts', array( $this, 'color_add_global_styles' ) );
 				array(
 					'type' => 'string',
 					'description' => __( 'Stackable global typography apply to setting', STACKABLE_I18N ),
-					'sanitize_callback' => 'sanitize_text_field',
-					'show_in_rest' => true,
-					'default' => '',
-				)
-			);
-
-			register_setting(
-				'stackable_global_settings',
-				'stackable_global_content_selector',
-				array(
-					'type' => 'string',
-					'description' => __( 'Stackable global typography content selector', STACKABLE_I18N ),
 					'sanitize_callback' => 'sanitize_text_field',
 					'show_in_rest' => true,
 					'default' => '',
@@ -398,14 +395,18 @@ add_action( 'wp_enqueue_scripts', array( $this, 'color_add_global_styles' ) );
 				}
 			}
 
+			// Register our dummy style so that the inline styles would get added.
+			wp_register_style( 'ugb-style-global-colors', false );
+			wp_enqueue_style( 'ugb-style-global-colors' );
+
 			if ( count( $css ) ) {
 				$generated_color_css = "/* Global colors */\n";
 				$generated_color_css .= ':root {' . implode( ' ', $css ) . '}';
-				wp_add_inline_style( 'ugb-style-css', $generated_color_css );
+				wp_add_inline_style( 'ugb-style-global-colors', $generated_color_css );
 			}
 
 			if ( count( $core_css ) ) {
-				wp_add_inline_style( 'ugb-style-css', implode( ' ', $core_css ) );
+				wp_add_inline_style( 'ugb-style-global-colors', implode( ' ', $core_css ) );
 			}
 		}
 
@@ -418,7 +419,7 @@ add_action( 'wp_enqueue_scripts', array( $this, 'color_add_global_styles' ) );
 		 *
 		 * @return void
 		 */
-		public function typography_add_global_styles() {
+		public function typography_parse_global_styles() {
 			// Don't do anything if we don't have any global typography.
 			$typography = get_option( 'stackable_global_typography' );
 			if ( ! $typography || ! is_array( $typography ) ) {
@@ -432,7 +433,6 @@ add_action( 'wp_enqueue_scripts', array( $this, 'color_add_global_styles' ) );
 			}
 
 			$css = array();
-			$google_fonts = array();
 
 			// $tags = array( 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' );
 			foreach ( $active_typography as $tag => $styles ) {
@@ -446,11 +446,7 @@ add_action( 'wp_enqueue_scripts', array( $this, 'color_add_global_styles' ) );
 
 				// Gather the Google Fonts.
 				if ( array_key_exists( 'fontFamily', $styles ) ) {
-					if ( Stackable_Google_Fonts::is_web_font( $styles['fontFamily'] ) && ! empty( $styles['fontFamily'] ) ) {
-						if ( ! in_array( $styles['fontFamily'], $google_fonts ) ) {
-							$google_fonts[] = $styles['fontFamily'];
-						}
-					}
+					Stackable_Google_Fonts::register_font( $styles['fontFamily'] );
 				}
 
 				// Note whether we have global typography.
@@ -461,17 +457,27 @@ add_action( 'wp_enqueue_scripts', array( $this, 'color_add_global_styles' ) );
 				}
 			}
 
-			// Load the Google Font.
-			if ( ! empty( $google_fonts ) ) {
-				Stackable_Google_Fonts::enqueue_google_fonts( $google_fonts, 'stackable-global-typography-google-fonts' );
-			}
-
 			if ( count( $css ) ) {
-				$this->generated_typography_css = true;
 				$inline_css = "/* Global typography */\n";
 				$inline_css .= implode( "\n", $css );
-				wp_add_inline_style( 'ugb-style-css', $inline_css );
+				$this->generated_typography_css = $inline_css;
 			}
+		}
+
+		/**
+		* Add the inline global typography styles in the frontend
+		*
+		* @return void
+		*
+		* @since 2.17.2
+		*/
+	   public function typography_add_global_styles() {
+		   if ( ! empty( $this->generated_typography_css ) ) {
+			   // Register our dummy style so that the inline styles would get added.
+			   wp_register_style( 'ugb-style-global-typography', false );
+			   wp_enqueue_style( 'ugb-style-global-typography' );
+			   wp_add_inline_style( 'ugb-style-global-typography', $this->generated_typography_css );
+		   }
 		}
 
 		public function form_selectors( $tag ) {
@@ -483,26 +489,21 @@ add_action( 'wp_enqueue_scripts', array( $this, 'color_add_global_styles' ) );
 
 		public function form_tag_selector( $tag ) {
 			// Content area of the theme.
-			$content_selector = get_option( 'stackable_global_content_selector' );
-			if ( empty( $content_selector ) ) {
-				$content_selector = '.entry-content';
-			}
-
 			$selectors = array();
 
 			// Include Stackable blocks.
-			$selectors[] = $content_selector . ' .ugb-main-block ' . $tag;
+			$selectors[] = '.ugb-main-block ' . $tag;
 
 			// Include native blocks.
 			if ( $this->get_apply_typography_to() !== 'blocks-stackable' ) {
-				$selectors[] = $content_selector . ' [data-block-type="core"] ' . $tag;
-				$selectors[] = $content_selector . ' ' . $tag . '[data-block-type="core"]';
+				$selectors[] = '[data-block-type="core"] ' . $tag;
+				$selectors[] = $tag . '[data-block-type="core"]';
 			}
 
 			// Include all other blocks.
 			if ( $this->get_apply_typography_to() === 'blocks-all' ) {
-				$selectors[] = $content_selector . ' [class*="wp-block-"] ' . $tag;
-				$selectors[] = $content_selector . ' ' . $tag . '[class*="wp-block-"]';
+				$selectors[] = '[class*="wp-block-"] ' . $tag;
+				$selectors[] = $tag . '[class*="wp-block-"]';
 			}
 
 			return $selectors;

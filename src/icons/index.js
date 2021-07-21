@@ -40,7 +40,7 @@ import domReady from '@wordpress/dom-ready'
 export const colorizeIcon = SvgIcon => {
 	return cloneElement( SvgIcon, {
 		fill: 'url(#stackable-gradient)',
-		className: `ugb-stackable-icon-gradient ${ SvgIcon.props.className || '' }`,
+		className: `stk-stackable-icon-gradient ${ SvgIcon.props.className || '' }`,
 	} )
 }
 

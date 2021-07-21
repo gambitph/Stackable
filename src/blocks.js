@@ -10,49 +10,36 @@ import './plugins'
 import './help'
 import './compatibility'
 import { SVGStackableCategoryIcon } from './icons'
-import { supportsBlockCollections } from './util'
 
 /**
  * External dependencies
  */
-import registerBlock from '~stackable/register-block'
+import { applyFilters } from '@wordpress/hooks'
 import { i18n } from 'stackable'
 
 /**
  * WordPress dependencies
  */
 import {
-	getCategories,
-	setCategories,
-	registerBlockCollection,
+	registerBlockCollection, getBlockType, registerBlockType,
 } from '@wordpress/blocks'
 import { __ } from '@wordpress/i18n'
 
-// Register our block collection or category (WP <= 5.3).
-if ( supportsBlockCollections() ) {
-	registerBlockCollection( 'ugb', {
-		title: __( 'Stackable', i18n ),
-		icon: SVGStackableCategoryIcon,
-	} )
-} else {
-	setCategories( [
-		...getCategories(),
-		{
-			slug: 'stackable',
-			title: __( 'Stackable', i18n ),
-			icon: SVGStackableCategoryIcon,
-		},
-	] )
-}
+// Register our block collection.
+registerBlockCollection( 'stackable', {
+	title: __( 'Stackable', i18n ),
+	icon: SVGStackableCategoryIcon,
+} )
 
-// Import all index.js and register all the blocks found (if name & settings are exported by the script)
+// Register all the blocks found
 const importAllAndRegister = r => {
 	r.keys().forEach( key => {
-		const { name, settings } = r( key )
-		try {
-			return name && settings && registerBlock( name, settings )
-		} catch ( error ) {
-			console.error( `Could not register ${ name } block` ) // eslint-disable-line
+		const { settings } = r( key )
+		const { name } = settings
+
+		// Register the block.
+		if ( ! getBlockType( name ) ) {
+			registerBlockType( name, applyFilters( `stackable.${ name }.settings`, settings ) )
 		}
 	} )
 }

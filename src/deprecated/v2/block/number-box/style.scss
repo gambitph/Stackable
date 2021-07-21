@@ -1,0 +1,146 @@
+/**
+ * Frontend styles for the Number Box Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+
+@import "common";
+
+.ugb-number-box.ugb-number-box--v3 {
+	text-align: center;
+	.ugb-block-content {
+		display: grid;
+		grid-auto-columns: minmax(0, 1fr);
+		grid-auto-flow: column;
+		grid-gap: $box-hori-padding;
+	}
+
+	&.ugb-number-box--columns-2 .ugb-block-content {
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		grid-auto-flow: row;
+	}
+	&.ugb-number-box--columns-1 .ugb-block-content {
+		grid-template-columns: minmax(0, 1fr);
+		grid-auto-flow: row;
+	}
+	@media screen and (max-width: $break-medium) {
+		&.ugb-number-box--columns-3 .ugb-block-content {
+			grid-template-columns: minmax(0, 1fr);
+			grid-auto-flow: row;
+		}
+	}
+	@media screen and (max-width: $break-small) {
+		&.ugb-number-box--columns-2 .ugb-block-content {
+			grid-template-columns: minmax(0, 1fr);
+			grid-auto-flow: row;
+		}
+	}
+
+	.ugb-number-box__item {
+		margin-bottom: 0 !important;
+		.ugb-number-box__content {
+			z-index: 4;
+		}
+	}
+
+	.ugb-number-box__item {
+		display: flex;
+		flex-direction: column;
+		@include box();
+	}
+	.ugb-number-box .ugb-inner-block {
+		text-align: center;
+	}
+
+	.ugb-number-box__number {
+		background-color: #ddd;
+		background-color: var(--s-primary-color, #ddd);
+		color: #fff;
+		border-radius: 100%;
+		font-size: 3em;
+		display: block;
+		padding: 0;
+		overflow: visible;
+		margin: 0 auto;
+		height: 2.5em;
+		width: 2.5em;
+		line-height: 2.5em;
+		box-sizing: content-box;
+		white-space: nowrap !important;
+		text-align: center;
+		z-index: 3;
+	}
+	&.ugb-number-box--number-style-square .ugb-number-box__number {
+		border-radius: 0;
+	}
+	&.ugb-number-box--number-style-none .ugb-number-box__number {
+		display: block;
+		background: none;
+		border-radius: 0;
+		color: #222;
+		color: var(--s-primary-color, #222);
+		line-height: 1em;
+		height: auto;
+		width: 100%;
+	}
+
+	.ugb-number-box__number {
+		margin: 0 auto $text-margin-bottom;
+	}
+	.ugb-number-box__title,
+	.ugb-number-box__description {
+		margin: 0 0 $text-margin-bottom 0;
+	}
+
+	.ugb-number-box__title {
+		line-height: 1.1em;
+	}
+}
+
+.ugb-number-box.ugb-number-box--v3.ugb-number-box--design-plain {
+	.ugb-number-box__item {
+		box-shadow: none;
+		border-radius: 0;
+		padding: 0;
+		background: none;
+	}
+}
+
+// IE 11 grid styles
+.ugb-number-box.ugb-number-box--v3 {
+	&.ugb-number-box--columns-3 {
+		.ugb-block-content {
+			-ms-grid-columns: 1fr 35px 1fr 35px 1fr;
+			display: -ms-grid;
+		}
+		.ugb-number-box__item:nth-child(2) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+		.ugb-number-box__item:nth-child(3) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 5;
+		}
+	}
+	&.ugb-number-box--columns-2 {
+		.ugb-block-content {
+			-ms-grid-columns: 1fr 35px 1fr;
+			display: -ms-grid;
+		}
+		.ugb-number-box__item:nth-child(2) {
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-ms-grid-column: 3;
+		}
+	}
+
+	@media screen and (max-width: $break-small) {
+		@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+			.ugb-block-content {
+				display: block !important;
+			}
+			.ugb-number-box__item {
+				margin-bottom: 35px !important;
+			}
+		}
+	}
+}
