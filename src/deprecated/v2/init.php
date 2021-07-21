@@ -65,7 +65,6 @@ if ( ! function_exists( 'stackable_v2_compatibility_option' ) ) {
 			)
 		);
 
-		// TODO: not working yet
 		// If true, v2 blocks will be hidden in the editor inserter. Only works
 		// if `stackable_v2_editor_compatibility` is true.
 		register_setting(
