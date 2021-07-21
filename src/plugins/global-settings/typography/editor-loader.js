@@ -79,7 +79,7 @@ export const GlobalTypographyStyles = () => {
 					}
 
 					// Force styles only for Stackable blocks.
-					const important = selector.match( /ugb\// )
+					const important = selector.match( /ugb\// ) || selector.match( /stackable\// )
 
 					// Generate our styles for this tag.
 					const tagStyles = {
@@ -129,6 +129,7 @@ export const formTagSelectors = ( tag, applyTo ) => {
 
 	// Include Stackable blocks.
 	selectors.push( `[data-type^="ugb/"] ${ tag }` )
+	selectors.push( `[data-type^="stackable/"] ${ tag }` )
 
 	// Include native blocks.
 	if ( applyTo !== 'blocks-stackable' ) {

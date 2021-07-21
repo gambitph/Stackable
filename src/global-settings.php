@@ -493,6 +493,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 
 			// Include Stackable blocks.
 			$selectors[] = '.ugb-main-block ' . $tag;
+			$selectors[] = '.stk-block ' . $tag;
 
 			// Include native blocks.
 			if ( $this->get_apply_typography_to() !== 'blocks-stackable' ) {
