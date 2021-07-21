@@ -53,10 +53,7 @@ const GlobalColorPaletteUpdater = () => {
 				 *
 				 * @since v2.7.2
 				 */
-				...(
-					useStackableColorsOnly ?
-						{ __experimentalFeatures: { colors: { palette: { theme: [ ...defaultColors ] } } } } : {}
-				),
+				__experimentalFeatures: { colors: { palette: { theme: [ ...newColors ] } } },
 			} )
 		}
 	}, [ JSON.stringify( colors ), JSON.stringify( defaultColors ), JSON.stringify( stackableColors ), useStackableColorsOnly, isInitializing ] )
