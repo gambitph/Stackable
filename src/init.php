@@ -68,6 +68,9 @@ if ( ! function_exists( 'stackable_block_editor_assets' ) ) {
 	 * @since 0.1
 	 */
 	function stackable_block_editor_assets() {
+		if ( ! is_admin() ) {
+			return;
+		}
 
 		// Enqueue CodeMirror for Custom CSS.
 		wp_enqueue_code_editor( array(
