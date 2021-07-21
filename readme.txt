@@ -4,7 +4,7 @@ Tags: blocks, gutenberg, gutenberg blocks, page builder, WordPress blocks
 Requires at least: 5.5.4
 Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 2.17.2
+Stable tag: 2.17.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -203,6 +203,9 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 == Upgrade Notice ==
 
 == Changelog ==
+
+= 2.17.3 =
+* Fixed: Removed unnecessary scripts from loading in the frontend
 
 = 2.17.2 =
 * New: WordPress 5.8 compatibility
