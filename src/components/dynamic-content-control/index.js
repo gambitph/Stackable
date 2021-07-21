@@ -47,6 +47,9 @@ import { ResetButton } from '../base-control2/reset-button'
 export const useDynamicContentControlProps = props => {
 	const [ isPopoverOpen, setIsPopoverOpen ] = useState( false )
 
+	// Debounce the value for performance.
+	const [ debouncedValue, setDebouncedValue ] = useState( props.value )
+
 	const clickOutsideListener = useCallback( event => {
 		if ( isPopoverOpen ) {
 			if (
@@ -63,12 +66,18 @@ export const useDynamicContentControlProps = props => {
 		return () => document.body.removeEventListener( 'click', clickOutsideListener )
 	}, [ clickOutsideListener ] )
 
-	const value = useDynamicContent( props.value )
+	useEffect( () => {
+		const timeout = setTimeout( () => {
+			setDebouncedValue( props.value )
+		}, 300 )
+
+		return () => clearTimeout( timeout )
+	}, [ props.value ] )
 
 	const activeAttributes = []
 
-	if ( props.value?.includes( '!#stk_dynamic' ) ) {
-		props.value
+	if ( debouncedValue?.includes( '!#stk_dynamic' ) ) {
+		debouncedValue
 			.match( /\!#stk_dynamic:(.*)\!#/g )
 			?.forEach( match => {
 				const value = match
@@ -79,8 +88,8 @@ export const useDynamicContentControlProps = props => {
 			} )
 	}
 
-	if ( props.value?.includes( 'data-stk-dynamic="' ) ) {
-		props.value
+	if ( debouncedValue?.includes( 'data-stk-dynamic="' ) ) {
+		debouncedValue
 			.match( /data-stk-dynamic="[^"]*"/g )
 			?.forEach( match => {
 				const value = match.match( /data-stk-dynamic="(.*?(?="))"/g )?.[ 0 ]
@@ -93,10 +102,11 @@ export const useDynamicContentControlProps = props => {
 			} )
 	}
 
-	const isPressed = isPopoverOpen || activeAttributes.length
+	const value = useDynamicContent( debouncedValue )
+	const placeholder = useValueWithFieldsTitle( debouncedValue )
 
+	const isPressed = isPopoverOpen || activeAttributes.length
 	const activeAttribute = first( activeAttributes ) || ''
-	const placeholder = useFieldTitle( activeAttributes )
 
 	const onChange = useCallback( ( newValue, editorQueryString, frontendQueryString ) => {
 		// If `isFormatType` is true, the onChange function will generate a `stackable/dynamic-content` format type.
@@ -152,24 +162,47 @@ export const useDynamicContent = ( value = '' ) => {
 }
 
 /**
- * Custom hook for getting the field title of a given
- * field data.
+ * Custom hook for parsing all dynamic content inside of a text
+ * and changing it to its Field Title.
  *
  * @example
  * ```
- * const fieldName = useFieldTitle( 'current-page/post-title' )
- * // returns `Post Title`
+ * const fieldName = useValueWithPostTitle( 'Post title: !#stk_dynamic:current-page/post-title' )
+ * // returns `Post title: [Post Title]`
  * ```
  *
  * @param {string} value
  */
-export const useFieldTitle = ( value = '' ) => {
+export const useValueWithFieldsTitle = ( value = '' ) => {
 	return useSelect( select => {
 		if ( ! select( 'stackable/dynamic-content' ) ) {
 			return value
 		}
 
-		return select( 'stackable/dynamic-content' ).getFieldTitle( value )
+		let newValue = value
+		if ( value?.includes( '!#stk_dynamic' ) ) {
+			newValue = newValue.replace( /\!#stk_dynamic:(.*)\!#/g, match => {
+				const field = match.replace( /\!#/g, '' ).replace( 'stk_dynamic:', '' )
+				const fieldTitle = first( select( 'stackable/dynamic-content' ).getFieldTitle( field ) )
+				return fieldTitle ? `[${ fieldTitle }]` : '[]'
+			} )
+		}
+
+		if ( value?.includes( 'data-stk-dynamic="' ) ) {
+			newValue = newValue.replace( /<span[^\>]+data-stk-dynamic="[^>"]*"[^\>]*>(.*?)<\/span>/g, match => {
+				const field = match.match( /data-stk-dynamic="(.*?(?="))"/g )?.[ 0 ]
+					?.replace( /"/g, '' )
+					?.replace( 'data-stk-dynamic=', '' )
+
+				if ( value ) {
+					const fieldTitle = first( select( 'stackable/dynamic-content' ).getFieldTitle( field ) )
+					return fieldTitle ? `[${ fieldTitle }]` : '[]'
+				}
+				return match
+			} )
+		}
+
+		return newValue
 	} )
 }
 
