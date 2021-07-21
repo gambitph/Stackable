@@ -199,8 +199,8 @@ export const DynamicContentButton = props => {
 				>
 					{ ! isPro && (
 						<ProControl
-							title={ __( 'Say Hello to Dynamic Attributes', i18n ) }
-							description={ __( 'Sample Description.', i18n ) }
+							title={ __( 'Say Hello to Dynamic Attributes 👋', i18n ) }
+							description={ __( 'Add dynamic values to your Stackable blocks. This feature is only available on Stackable Premium.', i18n ) }
 						/>
 					) }
 
@@ -219,8 +219,10 @@ export const DynamicContentButton = props => {
 	)
 }
 
-const DynamicContentControl = ( { children, ...otherProps } ) => {
-	if ( ! otherProps.enable ) {
+const DynamicContentControl = ( {
+	children, enable, ...otherProps
+} ) => {
+	if ( ! enable ) {
 		return children
 	}
 
