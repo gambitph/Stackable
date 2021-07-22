@@ -52,7 +52,6 @@ export const settings = {
 		},
 		'advanced-custom-attributes': true,
 		'advanced-responsive': true,
-		'advanced-conditional-display': true,
 		'custom-css': {
 			default: applyFilters( 'stackable.spacer.custom-css.default', '' ),
 		},

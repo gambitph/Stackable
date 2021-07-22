@@ -68,7 +68,6 @@ export const settings = {
 		'advanced-block-spacing': true,
 		'advanced-column-spacing': { columnGap: false },
 		'advanced-responsive': true,
-		'advanced-conditional-display': true,
 		'block-background': true,
 		'block-separators': true,
 		'block-title': true,
