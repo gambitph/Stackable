@@ -2,6 +2,7 @@ import {
 	Advanced,
 	Alignment,
 	BlockDiv,
+	ConditionalDisplay,
 	CustomAttributes,
 	CustomCSS,
 	EffectsAnimations,
@@ -24,6 +25,7 @@ export const attributes = ( version = VERSION ) => {
 	CustomAttributes.addAttributes( attrObject )
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
+	ConditionalDisplay.addAttributes( attrObject )
 
 	return attrObject.getMerged( version )
 }

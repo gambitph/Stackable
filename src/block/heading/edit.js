@@ -18,6 +18,7 @@ import {
 	MarginBottom,
 	CustomAttributes,
 	EffectsAnimations,
+	ConditionalDisplay,
 } from '~stackable/block-components'
 import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
@@ -164,6 +165,7 @@ const Edit = props => {
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-heading" />
 			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
 
 			<HeadingStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-heading__text" />
@@ -173,7 +175,6 @@ const Edit = props => {
 				<Typography
 					defaultTag="h2"
 					placeholder={ __( 'Title for This Block', i18n ) }
-					keepPlaceholderOnFocus
 					className={ textClassNames }
 					onReplace={ onReplace }
 					onSplit={ ( value, isOriginal ) => {

@@ -3,7 +3,7 @@
  */
 import SVGImageIcon from './images/image.svg'
 import AdvancedControl, { extractControlProps } from '../base-control2'
-import DynamicContentControl, { DynamicContentButton, useDynamicContentControlProps } from '../dynamic-content-control'
+import DynamicContentControl, { useDynamicContentControlProps } from '../dynamic-content-control'
 import { ResetButton } from '../base-control2/reset-button'
 
 /**
@@ -125,7 +125,6 @@ const ImageControl = props => {
 						)
 					} }
 				/>
-				<DynamicContentButton { ...dynamicContentProps } />
 			</DynamicContentControl>
 			<ResetButton
 				allowReset={ props.allowReset && ! props.dynamic }
