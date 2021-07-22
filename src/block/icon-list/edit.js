@@ -65,7 +65,6 @@ const Edit = props => {
 				<Typography
 					defaultTag="ul"
 					multiline="li"
-					keepPlaceholderOnFocus
 				/>
 			</BlockDiv>
 
