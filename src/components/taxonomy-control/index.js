@@ -127,13 +127,13 @@ class TaxonomyControl extends Component {
 		}
 
 		if ( this.state.isLoading ) {
-			return <div className="ugb-blog-post__inspector-spinner">
+			return <div className="stk-taxonomy-control__spinner">
 				<Spinner />
 			</div>
 		}
 
 		return (
-			<div className="stk-blog-taxonomy-controls">
+			<div className="stk-taxonomy-control">
 				{ isPro &&
 					<AdvancedSelectControl
 						label={ __( 'Post Type', i18n ) }
