@@ -194,7 +194,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 								<h2><?php _e( '📤 Dynamic Fields', STACKABLE_I18N ) ?></h2>
 								<div class="s-dynamic-fields-enable"></div>
 							</div>
-							<p class="s-settings-subtitle"><?php printf( __( 'Create Dynamic Fields that you can reference across your entire site. You can assign which roles can manage your Dynamic Fields. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://wpstackable.com/dynamic-fields/?utm_source=wp-settings-dynamic-fields&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
+							<p class="s-settings-subtitle"><?php printf( __( 'Create Dynamic Fields that you can reference across your entire site. You can assign which roles can manage your Dynamic Fields. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/article/463-how-to-use-stackable-dynamic-fields/?utm_source=wp-settings-dynamic-fields&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
 							<?php if( stackable_is_dynamic_fields_enabled() ) : ?>
 								<div class="s-dynamic-fields-manager"></div>
 							<?php endif; ?>
