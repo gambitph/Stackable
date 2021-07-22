@@ -11,7 +11,6 @@ import ImageDesignVerticalCard from './images/vertical-card.png'
 import ImageDesignVerticalCard2 from './images/vertical-card2.png'
 import createStyles from './style'
 import { showOptions } from './util'
-import TaxonomyControl from './taxonomy-control'
 
 /**
  * External dependencies
@@ -35,6 +34,7 @@ import {
 	AdvancedSelectControl,
 	ButtonIconPopoverControl,
 	BorderControlsHelper,
+	TaxonomyControl,
 } from '~stackable/components'
 import {
 	ButtonEditHelper,

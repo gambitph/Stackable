@@ -24,6 +24,7 @@ import {
 	Responsive,
 	CustomAttributes,
 	EffectsAnimations,
+	ConditionalDisplay,
 } from '~stackable/block-components'
 
 /**
@@ -79,6 +80,7 @@ const Edit = props => {
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-button-group" />
 			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
 
 			<BlockDiv className={ blockClassNames }>
 				<ButtonGroupStyles version={ VERSION } />
