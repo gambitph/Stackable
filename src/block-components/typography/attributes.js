@@ -63,6 +63,8 @@ export const addAttributes = ( attrObject, selector = '.stk-content', options = 
 		hasColor = true,
 		defaultTextTag = 'p',
 		attrNameTemplate = '%s',
+		multiline,
+		defaultText = '',
 	} = options
 
 	const attributesToExclude = []
@@ -88,7 +90,8 @@ export const addAttributes = ( attrObject, selector = '.stk-content', options = 
 				text: {
 					source: 'html',
 					selector,
-					default: '',
+					multiline,
+					default: defaultText,
 				},
 			} : {} ),
 			...( hasTextTag ? {
