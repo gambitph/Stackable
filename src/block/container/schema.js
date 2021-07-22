@@ -40,7 +40,7 @@ export const attributes = ( version = VERSION ) => {
 			},
 			showImage: {
 				type: 'boolean',
-				default: 'false',
+				default: false,
 			},
 		},
 		versionAdded: '3.0.0',
