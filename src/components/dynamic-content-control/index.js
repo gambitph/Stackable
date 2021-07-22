@@ -76,7 +76,7 @@ export const useDynamicContentControlProps = props => {
 
 	const activeAttributes = []
 
-	if ( debouncedValue?.includes( '!#stk_dynamic' ) ) {
+	if ( debouncedValue?.includes?.( '!#stk_dynamic' ) ) {
 		debouncedValue
 			.match( /\!#stk_dynamic:(.*)\!#/g )
 			?.forEach( match => {
@@ -88,7 +88,7 @@ export const useDynamicContentControlProps = props => {
 			} )
 	}
 
-	if ( debouncedValue?.includes( 'data-stk-dynamic="' ) ) {
+	if ( debouncedValue?.includes?.( 'data-stk-dynamic="' ) ) {
 		debouncedValue
 			.match( /data-stk-dynamic="[^"]*"/g )
 			?.forEach( match => {
