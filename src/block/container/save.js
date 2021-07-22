@@ -10,6 +10,7 @@ import { version as VERSION } from 'stackable'
 import { withVersion } from '~stackable/higher-order'
 import classnames from 'classnames'
 import {
+	Image,
 	BlockDiv,
 	ContainerDiv,
 	BlockLink,
@@ -43,14 +44,14 @@ export const Save = props => {
 		responsiveClass,
 	] )
 
-	const contentClassNames = classnames( [ 'stk-block-content' ] )
+	const contentClassNames = classnames( [ 'stk-block-content', 'stk--no-padding' ] )
 
 	const innerClassNames = classnames( [
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-container__content',
 	], {
-		'stk-container-padding': hasContainer,
+		'stk--container-padding': hasContainer,
 	} )
 
 	return (
@@ -64,6 +65,12 @@ export const Save = props => {
 				className={ contentClassNames }
 				attributes={ attributes }
 			>
+				{ props.attributes.imageUrl && (
+					<Image.Content
+						className="stk-container__image"
+						attributes={ attributes }
+					/>
+				) }
 				<div className={ innerClassNames }>
 					<InnerBlocks.Content />
 				</div>

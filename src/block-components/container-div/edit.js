@@ -35,8 +35,8 @@ const containerAttributeNames = Object.keys( backgroundAttributes ).map( name =>
 
 export const Edit = props => {
 	const {
-		sizeSelector = '.stk-container',
-		borderSelector = '.stk-container',
+		sizeSelector = '.stk--container',
+		borderSelector = '.stk--container',
 	} = props
 
 	const { clientId, name: blockName } = useBlockEditContext()

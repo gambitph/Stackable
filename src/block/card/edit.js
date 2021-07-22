@@ -92,7 +92,7 @@ const Edit = props => {
 		blockAlignmentClass,
 		'stk-card__content',
 	], {
-		'stk-container-padding': hasContainer,
+		'stk--container-padding': hasContainer,
 	} )
 
 	const renderAppender = useCallback(

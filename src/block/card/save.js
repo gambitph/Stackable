@@ -56,7 +56,7 @@ export const Save = props => {
 		blockAlignmentClass,
 		'stk-card__content',
 	], {
-		'stk-container-padding': hasContainer,
+		'stk--container-padding': hasContainer,
 	} )
 
 	return (

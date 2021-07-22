@@ -32,6 +32,7 @@ const getStyleParams = ( options = {} ) => {
 
 	return [
 		{
+			renderIn: 'save',
 			selector,
 			styleRule: 'width',
 			attrName: 'imageWidth',
@@ -40,9 +41,11 @@ const getStyleParams = ( options = {} ) => {
 			enabledCallback: () => enableWidth,
 		},
 		{
+			renderIn: 'save',
 			selector,
 			styleRule: 'height',
 			attrName: 'imageHeight',
+			hasUnits: '%',
 			responsive: 'all',
 			enabledCallback: () => enableHeight,
 		},

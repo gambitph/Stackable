@@ -118,10 +118,10 @@ const Image = memo( props => {
 					<ResizableBox
 						className={ imageWrapperClasses }
 						enable={ {
-							top: false,
-							right: props.enableWidth,
-							bottom: props.enableHeight,
-							left: false,
+							top: props.heightResizePosition === 'top' ? props.enableHeight : false,
+							bottom: props.heightResizePosition === 'bottom' ? props.enableHeight : false,
+							right: props.widthResizePosition === 'right' ? props.enableWidth : false,
+							left: props.widthResizePosition === 'left' ? props.enableWidth : false,
 							topRight: false,
 							bottomRight: props.enableDiagonal,
 							bottomLeft: false,
@@ -311,7 +311,9 @@ Image.defaultProps = {
 
 	// Resizers.
 	enableWidth: true,
+	widthResizePosition: 'right',
 	enableHeight: true,
+	heightResizePosition: 'bottom',
 	enableDiagonal: true,
 	allowReset: true,
 

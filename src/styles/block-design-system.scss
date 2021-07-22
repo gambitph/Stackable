@@ -102,15 +102,15 @@
 }
 
 // Containers
-.stk-container:not(.stk--no-padding) {
+.stk--container:not(.stk--no-padding) {
 	padding: cssvar(container-padding);
 }
-.stk-container:not(.stk--no-background) {
+.stk--container:not(.stk--no-background) {
 	background-color: cssvar(container-background-color);
 	border-radius: cssvar(container-border-radius);
 	box-shadow: cssvar(container-box-shadow);
 }
-.stk-container-padding {
+.stk--container-padding {
 	padding: cssvar(container-padding);
 }
 
