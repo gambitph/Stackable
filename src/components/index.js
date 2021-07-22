@@ -110,3 +110,4 @@ export {
 } from './inspector-tabs'
 export { default as Div } from './div'
 export { default as ControlIconToggle } from './control-icon-toggle'
+export { default as DynamicContentControl } from './dynamic-content-control'

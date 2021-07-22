@@ -66,7 +66,7 @@ const Edit = props => {
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 
-			<Typography.InspectorControls hasRemoveMargins={ true } initialOpen={ false } />
+			<Typography.InspectorControls hasRemoveMargins={ true } initialOpen={ true } />
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
 					title={ __( 'Top Line', i18n ) }
@@ -175,7 +175,6 @@ const Edit = props => {
 				<Typography
 					defaultTag="h2"
 					placeholder={ __( 'Title for This Block', i18n ) }
-					keepPlaceholderOnFocus
 					className={ textClassNames }
 					onReplace={ onReplace }
 					onSplit={ ( value, isOriginal ) => {

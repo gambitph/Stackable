@@ -15,6 +15,7 @@ import { useDeviceType, useWithShift } from '~stackable/hooks'
 import classnames from 'classnames'
 import striptags from 'striptags'
 import { clamp } from 'lodash'
+import { useDynamicContent } from '~stackable/components/dynamic-content-control'
 
 /**
  * WordPress dependencies
@@ -64,6 +65,7 @@ const Image = memo( props => {
 	const [ initialWidth, setInitialWidth ] = useState()
 	const [ parentHeight, setParentHeight ] = useState()
 	const [ parentWidth, setParentWidth ] = useState()
+	const [ hasImageError, setHasImageError ] = useState( false )
 
 	const [ currentHeight, setCurrentHeight ] = useState()
 	const [ currentWidth, setCurrentWidth ] = useState()
@@ -74,6 +76,8 @@ const Image = memo( props => {
 
 	const [ snap, setSnap ] = useState( null )
 
+	const src = useDynamicContent( props.src )
+
 	const isShiftKey = useWithShift()
 	useEffect( () => {
 		setSnap( null )
@@ -83,7 +87,7 @@ const Image = memo( props => {
 		getImageWrapperClasses( props ),
 		'stk-img-resizer',
 	], {
-		'stk-img-placeholder': ! props.src,
+		'stk-img-placeholder': ! src || hasImageError,
 		'stk--is-resizing': isResizing,
 	} )
 
@@ -225,7 +229,7 @@ const Image = memo( props => {
 							setSnap( null )
 						} }
 					>
-						{ props.src && props.onRemove && props.hasRemove && (
+						{ src && props.onRemove && props.hasRemove && (
 							<button
 								className="stk-img-upload-remove"
 								onClick={ ev => {
@@ -269,8 +273,10 @@ const Image = memo( props => {
 						/>
 						<div className="stk-img-resizer-wrapper">
 							<img
+								onLoad={ () => setHasImageError( false ) }
+								onError={ () => setHasImageError( true ) }
 								className={ imageClasses }
-								src={ props.src || undefined }
+								src={ src || undefined }
 								alt={ striptags( props.alt || undefined ) }
 								title={ striptags( props.title || undefined ) }
 								width={ props.width || undefined }

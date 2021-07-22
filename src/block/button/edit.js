@@ -101,7 +101,6 @@ const Edit = props => {
 						className={ typographyInnerClassNames }
 						placeholder={ __( 'Button text', i18n ) }
 						withoutInteractiveFormatting={ true }
-						keepPlaceholderOnFocus
 						onReplace={ onReplace }
 						onSplit={ value => createBlock(
 							'stackable/button',
