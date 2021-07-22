@@ -108,7 +108,6 @@ const Edit = props => {
 			<BlockDiv className={ blockClassNames }>
 				<Typography
 					tagName="p"
-					keepPlaceholderOnFocus
 					className={ textClassNames }
 					onReplace={ onReplace }
 					onSplit={ value => createBlock(

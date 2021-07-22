@@ -173,7 +173,6 @@ const Edit = props => {
 				<Typography
 					defaultTag="h2"
 					placeholder={ __( 'Title for This Block', i18n ) }
-					keepPlaceholderOnFocus
 					className={ textClassNames }
 					onReplace={ onReplace }
 					onSplit={ ( value, isOriginal ) => {
