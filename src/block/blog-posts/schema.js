@@ -306,9 +306,9 @@ export default {
 		type: 'number',
 		default: '',
 	} ),
-
 	...createResponsiveAttributes( 'Pagination%sTopMargin', {
 		type: 'number',
 		default: '',
 	} ),
+
 }
