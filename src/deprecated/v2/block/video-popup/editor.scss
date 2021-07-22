@@ -1,0 +1,20 @@
+/**
+ * Editor styles for the Video Popup Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+@import "common";
+
+.editor-styles-wrapper [data-type="ugb/video-popup"][data-align="full"] .ugb-video-popup {
+	&.ugb-main-block--inner-full.ugb--has-block-background,
+	&:not(.ugb--has-block-background) {
+		.ugb-video-popup__wrapper {
+			border-radius: 0;
+			// Escape and make it full-screen.
+			margin-left: #{ -$box-hori-padding };
+			margin-right: #{ -$box-hori-padding };
+			width: calc(100% + #{ 2 * $box-hori-padding });
+		}
+	}
+}

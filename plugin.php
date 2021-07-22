@@ -1,12 +1,12 @@
 <?php
 /**
- * Plugin Name: Stackable - Gutenberg Blocks
+ * Plugin Name: Stackable - Gutenberg Blocks (v3 Alpha 1)
  * Plugin URI: https://wpstackable.com
  * Description: An Amazing Block Library That Lets You Reimagine the Way You Use the WordPress Block Editor (Gutenberg).
  * Author: Gambit Technologies, Inc
  * Author URI: http://gambit.ph
  * Text Domain: stackable-ultimate-gutenberg-blocks
- * Version: 2.17.1
+ * Version: 3.0.0-alpha1
  *
  * @package Stackable
  */
@@ -23,7 +23,7 @@ if ( function_exists( 'sugb_fs' ) ) {
 }
 
 defined( 'STACKABLE_SHOW_PRO_NOTICES' ) || define( 'STACKABLE_SHOW_PRO_NOTICES', true );
-defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '2.17.1' );
+defined( 'STACKABLE_VERSION' ) || define( 'STACKABLE_VERSION', '3.0.0-alpha1' );
 defined( 'STACKABLE_FILE' ) || define( 'STACKABLE_FILE', __FILE__ );
 defined( 'STACKABLE_I18N' ) || define( 'STACKABLE_I18N', 'stackable-ultimate-gutenberg-blocks' ); // Plugin slug.
 defined( 'STACKABLE_CLOUDFRONT_URL' ) || define( 'STACKABLE_CLOUDFRONT_URL', 'https://d3gt1urn7320t9.cloudfront.net' ); // CloudFront CDN URL
@@ -148,12 +148,13 @@ require_once( plugin_dir_path( __FILE__ ) . 'freemius.php' );
 /**
  * Block Initializer.
  */
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/disabled-blocks.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/init-deprecated.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/disabled-blocks.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/init.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/blocks.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/fonts.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/icons.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/block/blog-posts/index.php' );
+// TODO: v3 block
+// require_once( plugin_dir_path( __FILE__ ) . 'src/block/blog-posts/index.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/pro.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/help/help-tooltip.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/help/welcome-tutorial-video.php' );
@@ -161,7 +162,6 @@ require_once( plugin_dir_path( __FILE__ ) . 'src/jetpack.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/multisite.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/design-library/init.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/global-settings.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'src/optimization-settings.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'src/plugins/premium-notice/index.php' );
 
 /**
@@ -182,3 +182,11 @@ if ( sugb_fs()->is__premium_only() ) {
 		require_once( plugin_dir_path( __FILE__ ) . 'pro__premium_only/index.php' );
 	}
 }
+
+/**
+ * V2 Deprecated
+ */
+require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v1/init.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/init.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/blocks.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/deprecated/v2/optimization-settings.php' );

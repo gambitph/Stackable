@@ -12,14 +12,14 @@
 			&.ugb-main-block--inner-center {
 				@media screen and (min-width: $break-large) {
 					.ugb-inner-block {
-						max-width: var(--content-width); // TODO: Make this configurable
+						max-width: var(--content-width);
 					}
 				}
 			}
 			&.ugb-main-block--inner-wide {
 				@media screen and (min-width: $break-wide) {
 					.ugb-inner-block {
-						width: 1080px; // TODO: Make this configurable
+						width: 1080px;
 					}
 				}
 			}

@@ -1,66 +1,64 @@
 /**
  * Internal dependencies
  */
-import createStyles from './style'
+import { HeadingStyles } from './style'
 
-/**
- * External dependencies
- */
-import { BlockContainer } from '~stackable/components'
-import { withUniqueClass, withBlockStyles } from '~stackable/higher-order'
+import {
+	BlockDiv,
+	CustomCSS,
+	Typography,
+	getResponsiveClasses,
+	getTypographyClasses,
+	getAlignmentClasses,
+} from '~stackable/block-components'
+import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
+import { withVersion } from '~stackable/higher-order'
 
 /**
  * WordPress dependencies
  */
-import { applyFilters } from '@wordpress/hooks'
-import { RichText } from '@wordpress/block-editor'
-import { Fragment } from '@wordpress/element'
 import { compose } from '@wordpress/compose'
 
-const save = props => {
-	const { attributes, className } = props
-
+const Save = props => {
 	const {
-		titleTag = '',
-		title,
-		showTitle = true,
-		showSubtitle = true,
-		subtitle = '',
-		showTopLine = false,
-		showBottomLine = false,
-	} = attributes
-
-	const mainClasses = classnames( [
 		className,
-	], applyFilters( 'stackable.heading.mainclasses', {
-	}, props ) )
+		attributes,
+	} = props
+
+	const responsiveClass = getResponsiveClasses( props.attributes )
+	const textClasses = getTypographyClasses( props.attributes )
+	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+
+	const blockClassNames = classnames( [
+		className,
+		'stk-heading',
+		responsiveClass,
+	] )
+
+	const textClassNames = classnames( [
+		'stk-heading__text',
+		textClasses,
+		blockAlignmentClass,
+	] )
 
 	return (
-		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
-			<Fragment>
-				{ showTopLine && <div className="ugb-heading__top-line" /> }
-				{ showTitle && ! RichText.isEmpty( title ) &&
-					<RichText.Content
-						tagName={ titleTag || 'h2' }
-						className="ugb-heading__title"
-						value={ title }
-					/>
-				}
-				{ showSubtitle && ! RichText.isEmpty( subtitle ) &&
-					<RichText.Content
-						tagName="p"
-						className="ugb-heading__subtitle"
-						value={ subtitle }
-					/>
-				}
-				{ showBottomLine && <div className="ugb-heading__bottom-line" /> }
-			</Fragment>
-		) } />
+		<BlockDiv.Content
+			className={ blockClassNames }
+			attributes={ attributes }
+		>
+			<HeadingStyles.Content version={ props.version } attributes={ attributes } />
+			<CustomCSS.Content attributes={ attributes } />
+			{ props.attributes.showTopLine && <div className="stk-heading__top-line" /> }
+			<Typography.Content
+				attributes={ attributes }
+				className={ textClassNames }
+			/>
+			{ props.attributes.showBottomLine && <div className="stk-heading__bottom-line" /> }
+		</BlockDiv.Content>
 	)
 }
 
 export default compose(
-	withUniqueClass,
-	withBlockStyles( createStyles ),
-)( save )
+	withVersion( VERSION )
+)( Save )

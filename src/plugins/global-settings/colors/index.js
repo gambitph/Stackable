@@ -1,11 +1,11 @@
 import './color-palette-updater'
-import './editor-loader'
 import './store'
 
 /**
  * Internal dependencies
  */
 import ColorPicker from './color-picker'
+import { GlobalColorStyles } from './editor-loader'
 
 /**
  * External dependencies
@@ -25,6 +25,8 @@ import {
 } from '@wordpress/data'
 import { models } from '@wordpress/api'
 import { ToggleControl } from '@wordpress/components'
+
+export { GlobalColorStyles }
 
 addFilter( 'stackable.util.hex-to-rgba', 'stackable/global-colors', ( output, hexColor, opacity ) => {
 	// Only do this for Stackable global colors.

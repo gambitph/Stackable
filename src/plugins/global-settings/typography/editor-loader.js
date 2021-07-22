@@ -8,17 +8,16 @@
 import {
 	createTypographyStyles, loadGoogleFont,
 } from '~stackable/util'
-import { generateStyles } from '~stackable/components/block-styles'
+import { generateStyles } from '~stackable/block-components'
 import deepmerge from 'deepmerge'
 import { head } from 'lodash'
 
 /**
  * WordPress dependencies
  */
-import domReady from '@wordpress/dom-ready'
 import { loadPromise, models } from '@wordpress/api'
 import {
-	render, useEffect, useState,
+	useEffect, useState,
 } from '@wordpress/element'
 import {
 	addAction, removeAction, applyFilters, doAction,
@@ -156,9 +155,3 @@ export const formParagraphSelectors = applyTo => {
 		`.editor-styles-wrapper .block-editor-block-list__block[data-type^="core/"] td`,
 	]
 }
-
-domReady( () => {
-	const wrapper = document.createElement( 'style' )
-	document.body.appendChild( wrapper )
-	render( <GlobalTypographyStyles />, wrapper )
-} )

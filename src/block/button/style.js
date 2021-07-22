@@ -1,83 +1,89 @@
+
 /**
  * External dependencies
  */
 import {
-	createButtonStyleSet,
-	__getValue,
-} from '~stackable/util'
-import deepmerge from 'deepmerge'
+	Advanced,
+	Button,
+	BlockDiv,
+	Typography,
+	EffectsAnimations,
+} from '~stackable/block-components'
+import { getUniqueBlockClass } from '~stackable/util'
+import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
+import { useBlockEditContext } from '@wordpress/block-editor'
 
-export const createStyles = props => {
-	const getValue = __getValue( props.attributes )
+/**
+ * WordPress dependencies
+ */
+import { Fragment, renderToString } from '@wordpress/element'
 
-	const styles = []
-
+export const ButtonStyles = props => {
 	const {
-		showButton2 = false,
-		showButton3 = false,
-	} = props.attributes
+		...propsToPass
+	} = props
 
-	const contentAlign = getValue( 'contentAlign' )
-	const tabletContentAlign = getValue( 'tabletContentAlign' )
-	const mobileContentAlign = getValue( 'mobileContentAlign' )
-	const justifyContent = contentAlign === 'left' ? 'flex-start' :
-		contentAlign === 'right' ? 'flex-end' :
-			contentAlign === 'center' ? 'center' :
-				undefined
-	const tabletJustifyContent = tabletContentAlign === 'left' ? 'flex-start !important' :
-		tabletContentAlign === 'right' ? 'flex-end !important' :
-			tabletContentAlign === 'center' ? 'center !important' :
-				undefined
-	const mobileJustifyContent = mobileContentAlign === 'left' ? 'flex-start !important' :
-		mobileContentAlign === 'right' ? 'flex-end !important' :
-			mobileContentAlign === 'center' ? 'center !important' :
-				undefined
+	const deviceType = useDeviceType()
+	const { clientId } = useBlockEditContext()
+	const attributes = useBlockAttributes( clientId )
 
-	const collapseOn = getValue( 'collapseOn' )
-	const collapseOnTablet = collapseOn === 'tablet'
-	const collapseOnMobile = !! collapseOn
-
-	styles.push( {
-		'.ugb-block-content': {
-			justifyContent,
-		},
-		'.ugb-block-content .ugb-button': {
-			borderRadius: getValue( 'borderRadius', '%spx' ),
-		},
-		tablet: {
-			'.ugb-block-content': {
-				justifyContent: ! collapseOnTablet ? tabletJustifyContent : undefined,
-				// Collapse buttons in tablet.
-				flexDirection: collapseOnTablet ? 'column' : undefined,
-				alignItems: collapseOnTablet ? tabletJustifyContent || justifyContent : undefined,
-			},
-		},
-		mobile: {
-			'.ugb-block-content': {
-				justifyContent: ! collapseOnMobile ? mobileJustifyContent : undefined,
-				// Collapse buttons in mobile.
-				flexDirection: collapseOnMobile ? 'column' : undefined,
-				alignItems: collapseOnMobile ? mobileJustifyContent || justifyContent : undefined,
-			},
-		},
-	} )
-
-	// styles.push( createButtonStyleSet = ( attrNameTemplate = '%s', mainClassName = '', blockAttributes = {} ) )
-	styles.push( {
-		...createButtonStyleSet( 'button1%s', 'ugb-button1', props.attributes ),
-	} )
-	if ( showButton2 ) {
-		styles.push( {
-			...createButtonStyleSet( 'button2%s', 'ugb-button2', props.attributes ),
-		} )
-	}
-	if ( showButton3 ) {
-		styles.push( {
-			...createButtonStyleSet( 'button3%s', 'ugb-button3', props.attributes ),
-		} )
+	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
+	propsToPass.deviceType = deviceType
+	propsToPass.attributes = { ...attributes, clientId }
+	propsToPass.options = {
+		...propsToPass.options,
+		selector: '.stk-button__button',
+		hoverSelector: '.stk-button__button:hover',
+		textSelector: '.stk-button__button > .stk-button__inner-text',
+		textHoverSelector: '.stk-button__button:hover > .stk-button__inner-text',
 	}
 
-	return deepmerge.all( styles )
+	return (
+		<Fragment>
+			<BlockDiv.Style { ...propsToPass } />
+			<Advanced.Style { ...propsToPass } />
+			<Button.Style { ...propsToPass } />
+			<Typography.Style { ...propsToPass } />
+			<EffectsAnimations.Style { ...propsToPass } />
+		</Fragment>
+	)
 }
 
-export default createStyles
+ButtonStyles.defaultProps = {
+	isEditor: false,
+	attributes: {},
+	options: {},
+}
+
+ButtonStyles.Content = props => {
+	const {
+		options = {},
+		...propsToPass
+	} = props
+
+	propsToPass.blockUniqueClassName = getUniqueBlockClass( propsToPass.attributes.uniqueId )
+	propsToPass.options = {
+		...options,
+		selector: '.stk-button__button',
+		hoverSelector: '.stk-button__button:hover',
+		textSelector: '.stk-button__button > .stk-button__inner-text',
+		textHoverSelector: '.stk-button__button:hover > .stk-button__inner-text',
+	}
+
+	const styles = (
+		<Fragment>
+			<BlockDiv.Style.Content { ...propsToPass } />
+			<Advanced.Style.Content { ...propsToPass } />
+			<Button.Style.Content { ...propsToPass } />
+			<Typography.Style.Content { ...propsToPass } />
+			<EffectsAnimations.Style.Content { ...propsToPass } />
+		</Fragment>
+	)
+
+	return renderToString( styles ) ? <style>{ styles }</style> : null
+}
+
+ButtonStyles.Content.defaultProps = {
+	attributes: {},
+	options: {},
+}

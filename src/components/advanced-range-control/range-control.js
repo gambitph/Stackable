@@ -12,9 +12,11 @@ import Button from '../button'
  * WordPress dependencies
  */
 import {
-	RangeControl, __experimentalNumberControl as NumberControl,
+	RangeControl, __experimentalNumberControl as NumberControl, // eslint-disable-line @wordpress/no-unsafe-wp-apis
 } from '@wordpress/components'
-import { useState } from '@wordpress/element'
+import {
+	useState, useLayoutEffect, useEffect, useCallback, memo,
+} from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 
 /**
@@ -23,6 +25,7 @@ import { __ } from '@wordpress/i18n'
 import classnames from 'classnames'
 import { clamp } from 'lodash'
 import { i18n } from 'stackable'
+import { useDeviceType } from '~stackable/hooks'
 
 // NumberControl is only supported in WP 5.5
 const isNumberControlSupported = !! NumberControl
@@ -32,11 +35,12 @@ export const getPercentageValue = ( value, min, max ) => {
 	return `${ clamp( percentageValue, 0, 100 ) }%`
 }
 
-const StackableRangeControl = props => {
+const StackableRangeControl = memo( props => {
 	const {
 		allowReset,
 		withInputField,
 		isShiftStepEnabled,
+		placeholderRender,
 		...propsToPass
 	} = props
 
@@ -45,9 +49,14 @@ const StackableRangeControl = props => {
 	// just set the proper value on the onChange prop.
 	const [ value, setValue ] = useState( props.value === '' || isNaN( props.value ) ? '' : props.value )
 
+	// Update the internal value state if the prop changes.
+	useEffect( () => {
+		setValue( props.value === '' || isNaN( props.value ) ? '' : props.value )
+	}, [ props.value ] )
+
 	// When the value is changed, set the internal value to it, but provide only
 	// a valid number to the onChange event.
-	const handleOnChange = value => {
+	const handleOnChange = useCallback( value => {
 		setValue( value )
 		if ( ! isNaN( value ) ) {
 			const parsedValue = parseFloat( value )
@@ -57,16 +66,16 @@ const StackableRangeControl = props => {
 			}
 		}
 		props.onChange( props.resetFallbackValue )
-	}
+	}, [ props.onChange, props.min, props.max, props.resetFallbackValue ] )
 
-	const handleOnReset = () => {
+	const handleOnReset = useCallback( () => {
 		setValue( props.resetFallbackValue )
 		props.onChange( props.resetFallbackValue )
-	}
+	}, [ props.onChange, props.resetFallbackValue ] )
 
 	// When the number input is blurred, make sure that the value inside the
 	// field looks correct.  The number is within min/max and is a number.
-	const handleOnBlur = () => {
+	const handleOnBlur = useCallback( () => {
 		if ( ! isNaN( value ) ) {
 			const parsedValue = parseFloat( value )
 			if ( ! isNaN( parsedValue ) ) {
@@ -75,7 +84,7 @@ const StackableRangeControl = props => {
 			}
 		}
 		setValue( props.resetFallbackValue )
-	}
+	}, [ value, props.min, props.max, props.resetFallbackValue ] )
 
 	/**
 	 * We cannot trust the initialPosition of the RangeControl, so we
@@ -88,12 +97,28 @@ const StackableRangeControl = props => {
 		'ugb-range-control--blank': value === '',
 	} )
 	const isReset = value === ''
-	const initialPosition = props.initialPosition || props.placeholder || ''
+	const initialPosition = props.initialPosition !== null ? props.initialPosition : ( props.placeholder || props.sliderMin || props.min )
 	const percentageValue = getPercentageValue(
-		( isReset ? initialPosition : value ) || ( props.sliderMin || props.min ) || 0,
+		isReset ? initialPosition : value,
 		props.sliderMin || props.min || 0,
 		props.sliderMax || props.max || 100
 	)
+
+	// This makes sure that dynamic placeholders can be recomputed after other
+	// styles have been applied.
+	const [ placeholderValue, setPlaceholderValue ] = useState( props.placeholder )
+	useEffect( () => {
+		setPlaceholderValue( props.placeholder )
+	}, [ props.placeholder ] )
+	const [ deviceType ] = useDeviceType()
+	useLayoutEffect( () => {
+		const timeout = setTimeout( () => {
+			setPlaceholderValue( ( placeholderRender && ! value )
+				? placeholderRender( value )
+				: ( props.placeholder !== null ? props.placeholder : initialPosition ) )
+		}, 400 )
+		return () => clearTimeout( timeout )
+	}, [ deviceType, !! value, props.placeholder ] )
 
 	return <div
 		className={ classNames }
@@ -105,8 +130,14 @@ const StackableRangeControl = props => {
 			onChange={ handleOnChange }
 			withInputField={ false }
 			allowReset={ false }
-			max={ props.sliderMax !== null ? props.sliderMax : props.max }
-			min={ props.sliderMin !== null ? props.sliderMin : props.min }
+			min={ props.sliderMin !== null
+				? props.sliderMin
+				: ( props.min === -Infinity ? 0 : props.min ) // Dont' allow Infinity on the slider since it will not move.
+			}
+			max={ props.sliderMax !== null
+				? props.sliderMax
+				: ( props.max === Infinity ? 100 : props.max ) // Dont' allow Infinity on the slider since it will not move.
+			}
 		/>
 		{ withInputField && isNumberControlSupported && (
 			<NumberControl
@@ -119,7 +150,7 @@ const StackableRangeControl = props => {
 				shiftStep={ props.shiftStep }
 				step={ props.step }
 				value={ value }
-				placeholder={ props.placeholder !== null ? props.placeholder : initialPosition }
+				placeholder={ placeholderValue }
 			/>
 		) }
 		{ allowReset &&
@@ -134,7 +165,7 @@ const StackableRangeControl = props => {
 			</Button>
 		}
 	</div>
-}
+} )
 
 StackableRangeControl.defaultProps = {
 	className: '',
@@ -149,7 +180,8 @@ StackableRangeControl.defaultProps = {
 	step: 1,
 	resetFallbackValue: '',
 	placeholder: null,
-	initialPosition: 0,
+	placeholderRender: null,
+	initialPosition: null,
 	onChange: () => {},
 }
 

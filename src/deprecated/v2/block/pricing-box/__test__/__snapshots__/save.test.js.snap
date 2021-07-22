@@ -1,0 +1,199 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pricing Box block Save render should match snapshot 1`] = `
+<div
+  class="wp-block-ugb-pricing-box ugb-pricing-box--v3 ugb-pricing-box--columns-2 ugb-pricing-box--design-basic ugb-main-block"
+>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-pricing-box__item ugb-pricing-box__item1"
+      >
+        
+        <h3
+          class="ugb-pricing-box__title"
+        >
+          <div>
+            Title
+          </div>
+        </h3>
+        <div
+          class="ugb-pricing-box__price-wrapper"
+        >
+          <div
+            class="ugb-pricing-box__price-line"
+          >
+            <span
+              class="ugb-pricing-box__price-prefix"
+            >
+              <div>
+                $
+              </div>
+            </span>
+            <span
+              class="ugb-pricing-box__price"
+            >
+              <div>
+                9
+              </div>
+            </span>
+            <span
+              class="ugb-pricing-box__price-suffix"
+            >
+              <div>
+                .00
+              </div>
+            </span>
+          </div>
+        </div>
+        <p
+          class="ugb-pricing-box__subprice"
+        >
+          <div>
+            Sub Price
+          </div>
+        </p>
+        <div
+          class="ugb-pricing-box__button"
+        >
+          <div
+            class="ugb-button-container"
+          >
+            <a
+              class="ugb-button ugb-button--size-normal"
+              href=""
+              rel=""
+              title=""
+            >
+              
+              <span
+                class="ugb-button--inner"
+              >
+                <div>
+                  Button text
+                </div>
+              </span>
+            </a>
+          </div>
+        </div>
+        <p
+          class="ugb-pricing-box__description"
+        >
+          <div>
+            Description for this block. You can use this space for describing your block.
+          </div>
+        </p>
+      </div>
+      <div
+        class="ugb-pricing-box__item ugb-pricing-box__item2"
+      >
+        
+        <h3
+          class="ugb-pricing-box__title"
+        >
+          <div>
+            Title
+          </div>
+        </h3>
+        <div
+          class="ugb-pricing-box__price-wrapper"
+        >
+          <div
+            class="ugb-pricing-box__price-line"
+          >
+            <span
+              class="ugb-pricing-box__price-prefix"
+            >
+              <div>
+                $
+              </div>
+            </span>
+            <span
+              class="ugb-pricing-box__price"
+            >
+              <div>
+                9
+              </div>
+            </span>
+            <span
+              class="ugb-pricing-box__price-suffix"
+            >
+              <div>
+                .00
+              </div>
+            </span>
+          </div>
+        </div>
+        <p
+          class="ugb-pricing-box__subprice"
+        >
+          <div>
+            Sub Price
+          </div>
+        </p>
+        <div
+          class="ugb-pricing-box__button"
+        >
+          <div
+            class="ugb-button-container"
+          >
+            <a
+              class="ugb-button ugb-button--size-normal"
+              href=""
+              rel=""
+              title=""
+            >
+              
+              <span
+                class="ugb-button--inner"
+              >
+                <div>
+                  Button text
+                </div>
+              </span>
+            </a>
+          </div>
+        </div>
+        <p
+          class="ugb-pricing-box__description"
+        >
+          <div>
+            Description for this block. You can use this space for describing your block.
+          </div>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Pricing Box block Save render should match snapshot with attributes 1`] = `
+<div
+  class="wp-block-ugb-pricing-box ugb-pricing-box--v3 ugb-pricing-box--columns-3 ugb-pricing-box--design-wave-2 ugb-main-block"
+>
+  <style>
+    .ugb-pricing-box__item{border-radius:123px !important;border-style:columnBorderType !important;border-color:#123456 !important;border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-color:#123456 !important;background-attachment:fixed;background-image:url(columnBackgroundMediaUrl);background-position:columnBackgroundPosition;background-repeat:columnBackgroundRepeat;background-size:columnBackgroundSize;background-blend-mode:columnBackgroundImageBlendMode}.ugb-pricing-box__item:before{background-color:#123456 !important;opacity:12.3}@media screen and (max-width:1025px){.ugb-pricing-box__item{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-image:url(columnTabletBackgroundMediaUrl);background-position:columnTabletBackgroundPosition;background-repeat:columnTabletBackgroundRepeat;background-size:columnTabletBackgroundSize}.ugb-pricing-box__item:before{opacity:12.3}}@media screen and (max-width:768px){.ugb-pricing-box__item{border-top-width:123px !important;border-right-width:123px !important;border-bottom-width:123px !important;border-left-width:123px !important;background-image:url(columnMobileBackgroundMediaUrl);background-position:columnMobileBackgroundPosition;background-repeat:columnMobileBackgroundRepeat;background-size:columnMobileBackgroundSize}.ugb-pricing-box__item:before{opacity:12.3}}
+  </style>
+  <div
+    class="ugb-inner-block"
+  >
+    <div
+      class="ugb-block-content"
+    >
+      <div
+        class="ugb-pricing-box__item ugb-pricing-box__item1 ugb--shadow-123 ugb--has-background-overlay"
+      />
+      <div
+        class="ugb-pricing-box__item ugb-pricing-box__item2 ugb--shadow-123 ugb--has-background-overlay"
+      />
+      <div
+        class="ugb-pricing-box__item ugb-pricing-box__item3 ugb--shadow-123 ugb--has-background-overlay"
+      />
+    </div>
+  </div>
+</div>
+`;

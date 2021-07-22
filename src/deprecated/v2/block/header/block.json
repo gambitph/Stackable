@@ -1,0 +1,10 @@
+{
+	"name": "ugb/header",
+	"title": "Header (v2)",
+	"description": "A large header title area. Typically used at the very top of a page.",
+	"category": "stackable-v2",
+	"keywords": [
+		"Hero"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

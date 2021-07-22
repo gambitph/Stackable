@@ -1,11 +1,9 @@
 /**
  * Internal dependencies
  */
-import './auto-block-recovery'
-import './responsive-preview'
 import './global-settings'
 import './premium-notice'
-import { default as DebugSidebar } from './debug-sidebar'
+import { BlockLinking } from './block-linking'
 
 /**
  * WordPress dependencies
@@ -19,11 +17,8 @@ import { ConvertToContainerButton, GetBlockAttributesButton } from '~stackable/c
 import { devMode } from 'stackable'
 
 registerPlugin( 'stackable-convert-to-container-button', { render: ConvertToContainerButton } )
+registerPlugin( 'stackable-attribute-listener', { render: BlockLinking } )
 
 if ( devMode ) {
-	registerPlugin( 'stackable-block-tester', {
-		icon: 'clipboard',
-		render: DebugSidebar,
-	} )
 	registerPlugin( 'stackable-block-attributes-get-button', { render: GetBlockAttributesButton } )
 }

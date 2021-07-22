@@ -1,0 +1,13 @@
+{
+	"name": "stackable/button",
+	"title": "Button",
+	"description": "Add a customizable button.",
+	"category": "layout",
+	"parent": [
+		"stackable/button-group"
+	],
+	"keywords": [
+		"Link"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

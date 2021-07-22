@@ -1,0 +1,11 @@
+@import "block-design-system";
+
+// Block background when the block is full width
+[data-align="full"] > .stk-block-background {
+	padding: cssvar(block-background-full-padding);
+}
+
+// Block spacing when horizontally oriented.
+.stk--block-orientation-horizontal > .block-editor-inner-blocks > .block-editor-block-list__layout > * + * {
+	margin-left: cssvar(block-margin-bottom);
+}

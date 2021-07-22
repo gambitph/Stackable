@@ -1,0 +1,395 @@
+/**
+ * Internal dependencies
+ */
+import ImageDesignBasic from './images/basic.png'
+import ImageDesignPlain from './images/plain.png'
+import ImageDesignCenteredQuote from './images/centered-quote.png'
+import ImageDesignHighlight from './images/highlight.png'
+import ImageDesignHude from './images/huge.png'
+import { QUOTE_ICONS } from './quotes'
+import { showOptions } from './util'
+import createStyles from './style'
+
+/**
+ * External dependencies
+ */
+import {
+	DesignPanelBody,
+	ProControlButton,
+	BlockContainer,
+	BackgroundControlsHelper,
+	PanelAdvancedSettings,
+	AdvancedRangeControl,
+	ColorPaletteControl,
+	TypographyControlHelper,
+	AlignButtonsControl,
+	AdvancedToolbarControl,
+	ButtonIconPopoverControl,
+	ColumnPaddingControl,
+	PanelSpacingBody,
+	BorderControlsHelper,
+} from '~stackable/components'
+import {
+	DivBackground, ContentAlignControl, ResponsiveControl,
+} from '../../components'
+import {
+	createResponsiveAttributeNames,
+	descriptionPlaceholder,
+} from '~stackable/util'
+import {
+	withBlockStyles,
+	withContentAlignReseter,
+	withGoogleFont,
+	withSetAttributeHook,
+	withTabbedInspector,
+	withUniqueClass,
+	withClickOpenInspector,
+} from '../../higher-order'
+
+/**
+ * WordPress dependencies
+ */
+import { addFilter, applyFilters } from '@wordpress/hooks'
+import { __ } from '@wordpress/i18n'
+import { RichText } from '@wordpress/block-editor'
+import { Fragment } from '@wordpress/element'
+import { i18n, showProNotice } from 'stackable'
+import { compose } from '@wordpress/compose'
+import classnames from 'classnames'
+
+addFilter( 'stackable.blockquote.edit.layouts', 'default', layouts => {
+	const newLayouts = [
+		{
+			label: __( 'Basic', i18n ), value: 'basic', image: ImageDesignBasic,
+		},
+		{
+			label: __( 'Plain', i18n ), value: 'plain', image: ImageDesignPlain,
+		},
+		{
+			label: __( 'Centered Quote', i18n ), value: 'centered-quote', image: ImageDesignCenteredQuote, premium: true,
+		},
+		{
+			label: __( 'Huge', i18n ), value: 'huge', image: ImageDesignHude, premium: true,
+		},
+		{
+			label: __( 'Highlight', i18n ), value: 'highlight', image: ImageDesignHighlight, premium: true,
+		},
+	]
+
+	return [
+		...layouts,
+		...newLayouts,
+	]
+} )
+
+addFilter( 'stackable.blockquote.edit.inspector.layout.before', 'stackable/blockquote', ( output, props ) => {
+	const { setAttributes } = props
+	const {
+		design = 'basic',
+	} = props.attributes
+
+	return (
+		<Fragment>
+			{ output }
+			<DesignPanelBody
+				initialOpen={ true }
+				selected={ design }
+				options={ applyFilters( 'stackable.blockquote.edit.layouts', [] ) }
+				onChange={ design => setAttributes( { design } ) }
+			>
+				{ showProNotice && <ProControlButton /> }
+			</DesignPanelBody>
+		</Fragment>
+	)
+} )
+
+addFilter( 'stackable.blockquote.edit.inspector.style.before', 'stackable/blockquote', ( output, props ) => {
+	const { setAttributes } = props
+	const {
+		borderRadius = '',
+		shadow = '',
+		showQuote = true,
+		quoteIcon = 'round-thin',
+		quoteColor = '',
+		quoteOpacity = '',
+		textColor = '',
+	} = props.attributes
+
+	const show = showOptions( props )
+
+	return (
+		<Fragment>
+			{ output }
+			<PanelAdvancedSettings
+				title={ __( 'General', i18n ) }
+				initialOpen={ true }
+			>
+				<ContentAlignControl
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+			</PanelAdvancedSettings>
+
+			{ show.containerBackground &&
+				<PanelAdvancedSettings
+					title={ __( 'Container', i18n ) }
+					id="column-background"
+					initialOpen={ false }
+					className="ugb--help-tip-column-background-on-off"
+				>
+					<ButtonIconPopoverControl
+						label={ __( 'Background', i18n ) }
+						popoverLabel={ __( 'Background', i18n ) }
+						onReset={ () => {
+							setAttributes( {
+								containerBackgroundColorType: '',
+								containerBackgroundColor: '',
+								containerBackgroundColor2: '',
+								containerBackgroundColorOpacity: '',
+								containerBackgroundMediaID: '',
+								containerBackgroundMediaUrl: '',
+								containerBackgroundTintStrength: '',
+								containerFixedBackground: '',
+							} )
+						} }
+						allowReset={ props.attributes.containerBackgroundColor || props.attributes.containerBackgroundMediaUrl }
+						hasColorPreview={ props.attributes.containerBackgroundColor }
+						hasImagePreview={ props.attributes.containerBackgroundMediaUrl }
+						colorPreview={ props.attributes.containerBackgroundColorType === 'gradient' ? [ props.attributes.containerBackgroundColor, props.attributes.containerBackgroundColor2 ] : props.attributes.containerBackgroundColor }
+						imageUrlPreview={ props.attributes.containerBackgroundMediaUrl }
+					>
+						<BackgroundControlsHelper
+							attrNameTemplate="container%s"
+							setAttributes={ setAttributes }
+							blockAttributes={ props.attributes }
+						/>
+					</ButtonIconPopoverControl>
+
+					{ show.border &&
+						<BorderControlsHelper
+							attrNameTemplate="column%s"
+							setAttributes={ setAttributes }
+							blockAttributes={ props.attributes }
+						/> }
+
+					{ show.borderRadius && (
+						<AdvancedRangeControl
+							label={ __( 'Border Radius', i18n ) }
+							value={ borderRadius }
+							onChange={ borderRadius => setAttributes( { borderRadius } ) }
+							min={ 0 }
+							max={ 50 }
+							allowReset={ true }
+							placeholder="12"
+							className="ugb--help-tip-general-border-radius"
+						/>
+					) }
+
+					{ show.shadow && (
+						<AdvancedRangeControl
+							label={ __( 'Shadow / Outline', i18n ) }
+							value={ shadow }
+							onChange={ shadow => setAttributes( { shadow } ) }
+							min={ 0 }
+							max={ 9 }
+							allowReset={ true }
+							placeholder="3"
+							className="ugb--help-tip-general-shadow"
+						/>
+					) }
+				</PanelAdvancedSettings>
+			}
+
+			<PanelSpacingBody
+				initialOpen={ false }
+				blockProps={ props }
+			>
+				<ColumnPaddingControl
+					label={ __( 'Paddings', i18n ) }
+					setAttributes={ setAttributes }
+					attributes={ props.attributes }
+				/>
+			</PanelSpacingBody>
+
+			<PanelAdvancedSettings
+				title={ __( 'Quotation Mark', i18n ) }
+				id="quotation"
+				checked={ showQuote }
+				onChange={ showQuote => setAttributes( { showQuote } ) }
+				toggleOnSetAttributes={ [
+					'quoteIcon',
+					'quoteColor',
+					...createResponsiveAttributeNames( 'quote%sSize' ),
+					...createResponsiveAttributeNames( 'quote%sX' ),
+					...createResponsiveAttributeNames( 'quote%sY' ),
+				] }
+				toggleAttributeName="showQuote"
+			>
+				<AdvancedToolbarControl
+					label={ __( 'Icon', i18n ) }
+					multiline={ true }
+					className="ugb-blockquote__inspector__icon"
+					controls={ Object.values( QUOTE_ICONS ) }
+					value={ quoteIcon }
+					onChange={ value => setAttributes( { quoteIcon: value } ) }
+				/>
+				<ColorPaletteControl
+					value={ quoteColor }
+					onChange={ quoteColor => setAttributes( { quoteColor } ) }
+					label={ __( 'Color', i18n ) }
+				/>
+				<ResponsiveControl
+					attrNameTemplate="quote%sSize"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AdvancedRangeControl
+						label={ __( 'Size', i18n ) }
+						min={ 0 }
+						max={ 400 }
+						allowReset={ true }
+						placeholder="70"
+					/>
+				</ResponsiveControl>
+				<AdvancedRangeControl
+					label={ __( 'Opacity', i18n ) }
+					value={ quoteOpacity }
+					onChange={ quoteOpacity => setAttributes( { quoteOpacity } ) }
+					min={ 0 }
+					max={ 1 }
+					step={ 0.1 }
+					allowReset={ true }
+					placeholder="1"
+				/>
+				<ResponsiveControl
+					attrNameTemplate="quote%sX"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AdvancedRangeControl
+						label={ __( 'Horizontal Position', i18n ) }
+						min={ -400 }
+						max={ 400 }
+						allowReset={ true }
+						placeholder="0"
+					/>
+				</ResponsiveControl>
+				<ResponsiveControl
+					attrNameTemplate="quote%sY"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AdvancedRangeControl
+						label={ __( 'Vertical Position', i18n ) }
+						min={ -400 }
+						max={ 400 }
+						allowReset={ true }
+						placeholder="0"
+					/>
+				</ResponsiveControl>
+			</PanelAdvancedSettings>
+
+			<PanelAdvancedSettings
+				title={ __( 'Text', i18n ) }
+				id="text"
+				hasToggle={ false }
+			>
+				<TypographyControlHelper
+					attrNameTemplate="text%s"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				/>
+				<ColorPaletteControl
+					value={ textColor }
+					onChange={ textColor => setAttributes( { textColor } ) }
+					label={ __( 'Text Color', i18n ) }
+				/>
+				<ResponsiveControl
+					attrNameTemplate="Text%sAlign"
+					setAttributes={ setAttributes }
+					blockAttributes={ props.attributes }
+				>
+					<AlignButtonsControl
+						label={ __( 'Align', i18n ) }
+						className="ugb--help-tip-alignment-description"
+					/>
+				</ResponsiveControl>
+			</PanelAdvancedSettings>
+		</Fragment>
+	)
+} )
+
+const edit = props => {
+	const {
+		className,
+		setAttributes,
+	} = props
+
+	const {
+		blockTag = '',
+		design = 'plain',
+		shadow = '',
+		text = '',
+		showQuote = true,
+		quoteIcon = 'round-thin',
+		quoteSize = 70,
+	} = props.attributes
+
+	const show = showOptions( props )
+
+	const mainClasses = classnames( [
+		className,
+		'ugb-blockquote--v3',
+		`ugb-blockquote--design-${ design }`,
+	], applyFilters( 'stackable.blockquote.mainclasses', {
+		'ugb-blockquote--small-quote': quoteSize < 60,
+	}, design, props ) )
+
+	const itemClasses = classnames( [
+		'ugb-blockquote__item',
+	], applyFilters( 'stackable.blockquote.itemclasses', {
+		[ `ugb--shadow-${ shadow }` ]: show.containerBackground && shadow !== '',
+	}, props ) )
+
+	return (
+		<BlockContainer.Edit blockTag={ blockTag || 'blockquote' } className={ mainClasses } blockProps={ props } render={ () => (
+			<Fragment>
+				<DivBackground
+					className={ itemClasses }
+					backgroundAttrName="container%s"
+					blockProps={ props }
+					showBackground={ show.containerBackground }
+				>
+					{ showQuote && QUOTE_ICONS[ quoteIcon || 'round-thin' ].iconFunc( {}, {
+						className: 'ugb-blockquote__quote',
+						width: quoteSize,
+						height: quoteSize,
+					} ) }
+					<div className="ugb-blockquote__content">
+						<RichText
+							className="ugb-blockquote__text"
+							value={ text }
+							onChange={ text => setAttributes( { text } ) }
+							placeholder={ descriptionPlaceholder( 'long' ) }
+							keepPlaceholderOnFocus
+						/>
+					</div>
+				</DivBackground>
+			</Fragment>
+		) } />
+	)
+}
+
+export default compose(
+	withUniqueClass,
+	withSetAttributeHook,
+	withGoogleFont,
+	withTabbedInspector(),
+	withContentAlignReseter( [ 'Text%sAlign' ] ),
+	withBlockStyles( createStyles, { editorMode: true } ),
+	withClickOpenInspector( [
+		[ '.ugb-blockquote__item', 'column-background' ],
+		[ '.ugb-blockquote__quote', 'quotation' ],
+		[ '.ugb-blockquote__text', 'text' ],
+	] ),
+)( edit )

@@ -26,7 +26,7 @@ const FontAwesomeIcon = props => {
 		faAPILoaded().then( forceUpdate )
 	}, [] )
 
-	const propsToPass = pick( props, [ 'className', 'color', 'fill', 'style' ] )
+	const propsToPass = pick( props, [ 'className', 'color', 'fill', 'style', 'onClick' ] )
 
 	// If given an svg, just display it.
 	if ( typeof props.value === 'string' ) {

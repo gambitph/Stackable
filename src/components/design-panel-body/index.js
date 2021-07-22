@@ -34,7 +34,7 @@ function DesignPanelBody( props ) {
 			title={ selectedOptionInTitle ? <span>{ panelTitle }</span> : title }
 			className={ mainClasses }
 			initialOpen={ initialOpen }
-			{ ...omit( props, [ 'help' ] ) }
+			{ ...omit( props, [ 'help', 'onChange' ] ) }
 		>
 			{ help &&
 				<p className="components-base-control__help">{ help }</p>

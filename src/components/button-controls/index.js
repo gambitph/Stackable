@@ -12,6 +12,8 @@ import {
 	AdvancedToolbarControl,
 	TypographyControlHelper,
 	URLInputControl,
+	AdvancedSelectControl,
+	AdvancedToggleControl,
 } from '~stackable/components'
 
 /**
@@ -27,8 +29,6 @@ import ImageDesignPlain from './images/plain.png'
  */
 import {
 	BaseControl,
-	SelectControl,
-	ToggleControl,
 } from '@wordpress/components'
 import {
 	__, _x, sprintf,
@@ -54,14 +54,14 @@ const ButtonControls = props => {
 				/>
 			) }
 			{ props.onChangeUrl && props.onChangeNewTab && (
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Open link in new tab', i18n ) }
 					checked={ props.newTab }
 					onChange={ props.onChangeNewTab }
 				/>
 			) }
 			{ props.onChangeUrl && props.onChangeNoFollow && (
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Nofollow link', i18n ) }
 					checked={ props.noFollow }
 					onChange={ props.onChangeNoFollow }
@@ -99,7 +99,7 @@ const ButtonControls = props => {
 			<ControlSeparator />
 
 			{ props.onChangeUseSocialColors &&
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Use social colors', i18n ) }
 					checked={ props.useSocialColors }
 					onChange={ props.onChangeUseSocialColors }
@@ -135,9 +135,9 @@ const ButtonControls = props => {
 					{ props.onChangeBackgroundColor && design !== 'link' && (
 						<ColorPaletteControl
 							label={
-								props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' && showGradient ?
-									sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button Color', i18n ), 1 ) :
-									__( 'Button Color', i18n )
+								props.onChangeBackgroundColor2 && props.backgroundColorType === 'gradient' && showGradient
+									? sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button Color', i18n ), 1 )
+									: __( 'Button Color', i18n )
 							}
 							value={ props.backgroundColor }
 							onChange={ props.onChangeBackgroundColor }
@@ -178,7 +178,7 @@ const ButtonControls = props => {
 			{ design !== 'link' && <ControlSeparator /> }
 
 			{ props.onChangeHoverGhostToNormal && design === 'ghost' && (
-				<ToggleControl
+				<AdvancedToggleControl
 					label={ __( 'Change to Normal Button on Hover', i18n ) }
 					checked={ props.hoverGhostToNormal }
 					onChange={ props.onChangeHoverGhostToNormal }
@@ -187,7 +187,7 @@ const ButtonControls = props => {
 			) }
 
 			{ props.onChangeHoverEffect && design !== 'link' && (
-				<SelectControl
+				<AdvancedSelectControl
 					label={ __( 'Hover Effect', i18n ) }
 					value={ props.hoverEffect }
 					onChange={ props.onChangeHoverEffect }
@@ -232,9 +232,9 @@ const ButtonControls = props => {
 					{ props.onChangeHoverBackgroundColor && (
 						<ColorPaletteControl
 							label={
-								props.onChangeHoverBackgroundColor && ( ( design === 'ghost' && props.hoverGhostToNormal ) || ( props.backgroundColorType === 'gradient' && showGradient ) ) ?
-									sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button Color', i18n ), 1 ) :
-									__( 'Button Color', i18n )
+								props.onChangeHoverBackgroundColor && ( ( design === 'ghost' && props.hoverGhostToNormal ) || ( props.backgroundColorType === 'gradient' && showGradient ) )
+									? sprintf( _x( '%s #%d', 'Panel title', i18n ), __( 'Button Color', i18n ), 1 )
+									: __( 'Button Color', i18n )
 							}
 							value={ props.hoverBackgroundColor }
 							onChange={ props.onChangeHoverBackgroundColor }
@@ -286,7 +286,7 @@ const ButtonControls = props => {
 			) }
 
 			{ props.onChangeSize && ( props.onChangeDesign ? design !== 'link' : true ) &&
-				<SelectControl
+				<AdvancedSelectControl
 					label={ __( 'Button Size', i18n ) }
 					value={ size }
 					options={ [
@@ -297,6 +297,7 @@ const ButtonControls = props => {
 						{ value: 'large', label: __( 'Large', i18n ) },
 					] }
 					onChange={ props.onChangeSize }
+					defaultValue="normal"
 					className="ugb--help-tip-button-size"
 				/>
 			}
@@ -322,7 +323,7 @@ const ButtonControls = props => {
 					onChange={ props.onChangePaddings }
 					enableLeft={ false }
 					enableRight={ false }
-					placeholder={ [ 8, 8 ] }
+					placeholder={ 8 }
 					className="ugb--help-tip-button-vertical-padding"
 				/>
 			}
@@ -335,7 +336,7 @@ const ButtonControls = props => {
 					enableTop={ false }
 					enableBottom={ false }
 					max={ 100 }
-					placeholder={ [ 26, 26 ] }
+					placeholder={ 26 }
 					className="ugb--help-tip-button-horizontal-padding"
 				/>
 			}
@@ -406,7 +407,7 @@ const ButtonControls = props => {
 						/>
 					) }
 					{ props.onChangeIconPosition &&
-						<SelectControl
+						<AdvancedSelectControl
 							label={ __( 'Icon Position', i18n ) }
 							value={ props.iconPosition }
 							options={ [

@@ -1,13 +1,11 @@
-const ImageminPlugin = require( 'imagemin-webpack' )
-  
+const ImageMinimizerPlugin = require( 'image-minimizer-webpack-plugin' )
+
 module.exports = [
-	new ImageminPlugin( {
-		bail: false,
-		cache: true,
-		imageminOptions: {
+	new ImageMinimizerPlugin( {
+		minimizerOptions: {
 			plugins: [
 				[ "pngquant", { quality: [ 0.5, 0.5 ] } ],
-			]
-		}
+			],
+		},
 	} ),
 ]

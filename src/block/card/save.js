@@ -1,133 +1,90 @@
 /**
- * External dependencies
- */
-import {
-	BlockContainer, ButtonEditHelper, DivBackground,
-} from '~stackable/components'
-import {
-	withBlockStyles, withUniqueClass,
-} from '~stackable/higher-order'
-import classnames from 'classnames'
-import { range } from 'lodash'
-
-/**
  * Internal dependencies
  */
-import createStyles from './style'
-import { showOptions } from './util'
+import { CardStyles } from './style'
+
+/**
+ * External dependencies
+ */
+import classnames from 'classnames'
+import { withVersion } from '~stackable/higher-order'
+import { version as VERSION } from 'stackable'
+import {
+	BlockDiv,
+	ContainerDiv,
+	CustomCSS,
+	getAlignmentClasses,
+	getColumnClasses,
+	getResponsiveClasses,
+	Image,
+} from '~stackable/block-components'
 
 /**
  * WordPress dependencies
  */
-import { applyFilters } from '@wordpress/hooks'
+import { InnerBlocks } from '@wordpress/block-editor'
 import { compose } from '@wordpress/compose'
-import { Fragment } from '@wordpress/element'
-import { RichText } from '@wordpress/block-editor'
+import { BlockLink } from '~stackable/block-components/block-link'
 
-const save = props => {
-	const { className, attributes } = props
+export const Save = props => {
 	const {
-		columns = 2,
-		design = 'basic',
-		shadow = '',
+		attributes,
+	} = props
+	const {
+		hasContainer,
+	} = props.attributes
 
-		titleTag = 'h4',
-		showImage = true,
-		showTitle = true,
-		showSubtitle = true,
-		showDescription = true,
-		showButton = true,
-		buttonIcon = '',
-	} = attributes
+	const [ columnClass, columnWrapperClass ] = getColumnClasses( props.attributes )
+	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+	const responsiveClass = getResponsiveClasses( props.attributes )
 
-	const show = showOptions( props )
+	const blockClassNames = classnames( [
+		props.className,
+		'stk-card',
+		columnClass,
+		responsiveClass,
+	] )
 
-	const mainClasses = classnames( [
-		className,
-		'ugb-card--v2',
-		`ugb-card--design-${ design }`,
-		`ugb-card--columns-${ columns }`,
-	], applyFilters( 'stackable.card.mainclasses', {
-	}, props ) )
+	const contentClassNames = classnames( [
+		'stk-block-content',
+		columnWrapperClass,
+		'stk--no-padding',
+	] )
+
+	const innerClassNames = classnames( [
+		'stk-inner-blocks',
+		blockAlignmentClass,
+		'stk-card__content',
+	], {
+		'stk-container-padding': hasContainer,
+	} )
 
 	return (
-		<BlockContainer.Save className={ mainClasses } blockProps={ props } render={ () => (
-			<Fragment>
-				{ range( 1, columns + 1 ).map( i => {
-					const imageUrl = attributes[ `image${ i }Url` ]
-					const title = attributes[ `title${ i }` ]
-					const subtitle = attributes[ `subtitle${ i }` ]
-					const description = attributes[ `description${ i }` ]
-					const buttonText = attributes[ `button${ i }Text` ]
-
-					const itemClasses = classnames( [
-						'ugb-card__item',
-						`ugb-card__item${ i }`,
-					], applyFilters( 'stackable.card.itemclasses', {
-						[ `ugb--shadow-${ shadow }` ]: show.columnBackground && shadow !== '',
-					}, props ) )
-
-					const imageClasses = classnames( [
-						'ugb-card__image',
-					], applyFilters( 'stackable.card.imageclasses', {
-						[ `ugb--shadow-${ shadow }` ]: ! show.columnBackground,
-					}, props ) )
-
-					return (
-						<DivBackground
-							className={ itemClasses }
-							backgroundAttrName="column%s"
-							blockProps={ props }
-							showBackground={ show.columnBackground }
-							index={ i }
-							key={ i }
-						>
-							{ showImage && imageUrl &&
-								<div className={ imageClasses } />
-							}
-							<div className="ugb-card__content">
-								{ showTitle && ! RichText.isEmpty( title ) &&
-									<RichText.Content
-										tagName={ titleTag || 'h4' }
-										className="ugb-card__title"
-										value={ title }
-									/>
-								}
-								{ showSubtitle && ! RichText.isEmpty( subtitle ) &&
-									<RichText.Content
-										tagName="p"
-										className="ugb-card__subtitle"
-										value={ subtitle }
-									/>
-								}
-								{ showDescription && ! RichText.isEmpty( description ) &&
-									<RichText.Content
-										tagName="p"
-										className="ugb-card__description"
-										value={ description }
-									/>
-								}
-								{ showButton && ! RichText.isEmpty( buttonText ) &&
-									<ButtonEditHelper.Content
-										attrNameTemplate={ `button%s` }
-										blockAttributes={ props.attributes }
-										text={ buttonText }
-										icon={ attributes[ `button${ i }Icon` ] || buttonIcon }
-										url={ attributes[ `button${ i }Url` ] }
-										newTab={ attributes[ `button${ i }NewTab` ] }
-										noFollow={ attributes[ `button${ i }NoFollow` ] }
-									/>
-								}
-							</div>
-						</DivBackground>
-					)
-				} ) }
-			</Fragment>
-		) } />
+		<BlockDiv.Content
+			className={ blockClassNames }
+			attributes={ attributes }
+		>
+			<CardStyles.Content version={ props.version } attributes={ attributes } />
+			<CustomCSS.Content attributes={ attributes } />
+			<ContainerDiv.Content
+				className={ contentClassNames }
+				attributes={ attributes }
+			>
+				{ props.attributes.imageUrl &&
+					<Image.Content
+						className="stk-card__image"
+						attributes={ attributes }
+					/>
+				}
+				<div className={ innerClassNames }>
+					<InnerBlocks.Content />
+				</div>
+				<BlockLink.Content attributes={ attributes } />
+			</ContainerDiv.Content>
+		</BlockDiv.Content>
 	)
 }
 
 export default compose(
-	withUniqueClass,
-	withBlockStyles( createStyles ),
-)( save )
+	withVersion( VERSION )
+)( Save )

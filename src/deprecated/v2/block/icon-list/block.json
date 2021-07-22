@@ -1,0 +1,11 @@
+{
+	"name": "ugb/icon-list",
+	"title": "Icon List (v2)",
+	"description": "An unordered list with icons. You can use this as a list of features or benefits.",
+	"category": "stackable-v2",
+	"keywords": [
+		"Checklist",
+		"Bullets"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

@@ -1,0 +1,12 @@
+/**
+ * Editor styles for the Posts Block.
+ *
+ * Enqueued in the editor only.
+ */
+
+@import "common";
+
+// Used for double click to open controls.
+.ugb-blog-posts__item::after {
+	pointer-events: none;
+}

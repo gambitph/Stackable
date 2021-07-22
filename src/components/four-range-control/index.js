@@ -1,314 +1,318 @@
 /**
  * Internal dependencies
  */
-import BaseControlMultiLabel from '../base-control-multi-label'
-// import SVGAllImage from './images/all.svg'
+import SVGAllImage from './images/all.svg'
 import SVGBottomImage from './images/bottom.svg'
-// import SVGHorizontalImage from './images/horizontal.svg'
 import SVGLeftImage from './images/left.svg'
 import SVGRightImage from './images/right.svg'
 import SVGTopImage from './images/top.svg'
+import SVGFullImage from './images/full.svg'
+import RangeControl from '../advanced-range-control/range-control'
+import { ResetButton } from '../base-control2/reset-button'
+import AdvancedControl, { extractControlProps } from '../base-control2'
+import { useControlHandlers } from '../base-control2/hooks'
 
 /**
  * WordPress dependencies
  */
 import {
-	BaseControl, Dashicon, Tooltip,
+	Tooltip,
 } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
-import { Component, Fragment } from '@wordpress/element'
-// import SVGVerticalImage from './images/vertical.svg'
+import { useBlockEditContext } from '@wordpress/block-editor'
+import {
+	Fragment, useMemo, useState, useCallback, memo,
+} from '@wordpress/element'
+
 /**
  * External dependencies
  */
 import classnames from 'classnames'
 import { i18n } from 'stackable'
-import { pick } from 'lodash'
-import { AdvancedRangeControl, Button } from '~stackable/components'
+import { Button } from '~stackable/components'
+import {
+	useAttributeName, useBlockAttributes, useDeviceType,
+} from '~stackable/hooks'
 
-class FourRangeControl extends Component {
-	constructor() {
-		super( ...arguments )
+const FourRangeControl = props => {
+	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
+	const [ propsToPass, controlProps ] = extractControlProps( props )
 
-		// Locked state.
-		const values = this.getEnabledValues()
-		const firstValue = this.firstValue()
-		const isEqualValues = Object.values( values ).every( value => value === firstValue )
-		const isDefaults = Object.values( values ).every( value => value === '' )
+	let value = _value || {
+		top: props.defaultTop, right: props.defaultRight, bottom: props.defaultBottom, left: props.defaultLeft,
+	}
 
-		this.state = {
-			locked: isDefaults ? this.props.defaultLocked : isEqualValues,
+	// You can specify the values in this way. This is how this is done in v2
+	const hasOldValues = typeof props.top !== 'undefined' || typeof props.right !== 'undefined' || typeof props.bottom !== 'undefined' || typeof props.left !== 'undefined'
+	if ( hasOldValues ) {
+		value = {
+			top: typeof props.top !== 'undefined' ? props.top : props.enableTop ? props.defaultTop : undefined,
+			right: typeof props.right !== 'undefined' ? props.right : props.enableRight ? props.defaultRight : undefined,
+			bottom: typeof props.bottom !== 'undefined' ? props.bottom : props.enableBottom ? props.defaultBottom : undefined,
+			left: typeof props.left !== 'undefined' ? props.left : props.enableLeft ? props.defaultLeft : undefined,
 		}
-
-		this.onToggleLock = this.onToggleLock.bind( this )
-		this.onChangeAll = this.onChangeAll.bind( this )
-		this.onChangeTop = this.onChangeTop.bind( this )
-		this.onChangeRight = this.onChangeRight.bind( this )
-		this.onChangeBottom = this.onChangeBottom.bind( this )
-		this.onChangeLeft = this.onChangeLeft.bind( this )
 	}
+	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
 
-	getEnabledValues() {
-		return this.getEnabledLocations().reduce( ( values, key ) => {
-			return {
-				...values,
-				[ key ]: this.props[ key ],
-			}
-		}, {} )
-	}
+	const isDefaults = ( props.enableTop && value.top === '' ) &&
+		( props.enableRight && value.right === '' ) &&
+		( props.enableBottom && value.bottom === '' ) &&
+		( props.enableLeft && value.left === '' )
 
-	getEnabledLocations() {
-		return [
-			...( this.props.enableTop ? [ 'top' ] : [] ),
-			...( this.props.enableRight ? [ 'right' ] : [] ),
-			...( this.props.enableBottom ? [ 'bottom' ] : [] ),
-			...( this.props.enableLeft ? [ 'left' ] : [] ),
-		]
-	}
+	const firstValue = props.enableTop ? value.top
+		: props.enableRight ? value.right
+			: props.enableBottom ? value.bottom
+				: value.left
 
-	firstValue() {
-		const locations = this.getEnabledLocations()
-		if ( locations.length ) {
-			return Object.values( this.getEnabledValues() )[ 0 ]
+	const isEqualInitial = useMemo( () => {
+		let isEqual = true
+		isEqual = props.enableTop && value.top !== firstValue ? false : isEqual
+		isEqual = props.enableRight && value.right !== firstValue ? false : isEqual
+		isEqual = props.enableBottom && value.bottom !== firstValue ? false : isEqual
+		isEqual = props.enableLeft && value.left !== firstValue ? false : isEqual
+		return isEqual
+	}, [] )
+
+	const [ isLocked, setIsLocked ] = useState( isDefaults ? props.defaultLocked : isEqualInitial )
+
+	const lockClassNames = classnames( [
+		'ugb-four-range-control__lock',
+	], {
+		'ugb--is-locked': props.hasLock && isLocked,
+	} )
+
+	controlProps.after = props.hasLock && <Button
+		className={ lockClassNames }
+		onClick={ () => setIsLocked( ! isLocked ) }
+		isSecondary
+		icon={ isLocked ? <SVGAllImage /> : <SVGFullImage /> }
+		label={ isLocked ? __( 'Individual sides', i18n ) : __( 'All sides', i18n ) }
+	/>
+
+	const hasUnits = !! props.units?.length
+	const unitAttrName = useAttributeName( `${ props.attribute }Unit`, props.responsive, props.hover )
+
+	const { clientId } = useBlockEditContext()
+	const attributes = useBlockAttributes( clientId )
+	const unit = attributes[ unitAttrName ]
+
+	// Change the min, max & step values depending on the unit used.
+	if ( hasUnits ) {
+		const i = props.units.indexOf( unit ) < 0 ? 0 : props.units.indexOf( unit )
+		if ( Array.isArray( props.min ) ) {
+			propsToPass.min = props.min[ i ]
 		}
-		return ''
+		if ( Array.isArray( props.max ) ) {
+			propsToPass.max = props.max[ i ]
+		}
+		if ( Array.isArray( props.sliderMin ) ) {
+			propsToPass.sliderMin = props.sliderMin[ i ]
+		}
+		if ( Array.isArray( props.sliderMax ) ) {
+			propsToPass.sliderMax = props.sliderMax[ i ]
+		}
+		if ( Array.isArray( props.step ) ) {
+			propsToPass.step = props.step[ i ]
+		}
+		if ( Array.isArray( props.placeholder ) ) {
+			propsToPass.placeholder = props.placeholder[ i ]
+		}
+		propsToPass.initialPosition = props.initialPosition !== '' ? props.initialPosition : props.placeholder
+
+		// If the unit was not the default, remove the placeholder.
+		if ( i !== 0 ) {
+			propsToPass.initialPosition = ''
+			propsToPass.placeholder = props.placeholder
+		}
 	}
 
-	filterOnlyEnabled( forSaving = {} ) {
-		return pick( forSaving, this.getEnabledLocations() )
+	// Remove the placeholder.
+	const deviceType = useDeviceType()
+	if ( deviceType !== 'Desktop' ) {
+		propsToPass.initialPosition = ''
+		propsToPass.placeholder = props.placeholder
 	}
 
-	onToggleLock() {
-		this.setState( { locked: ! this.state.locked } )
-	}
+	const onChangeAll = useCallback( newValue => {
+		onChange( {
+			top: props.enableTop ? newValue : value.top,
+			right: props.enableRight ? newValue : value.right,
+			bottom: props.enableBottom ? newValue : value.bottom,
+			left: props.enableLeft ? newValue : value.left,
+		} )
+	} )
 
-	onChangeAll( value ) {
-		const newValue = ! value && value !== 0 ? '' : value
-		this.props.onChange( this.filterOnlyEnabled( {
+	const onChangeTop = useCallback( newValue => {
+		onChange( {
 			top: newValue,
+			right: value.right,
+			bottom: value.bottom,
+			left: value.left,
+		} )
+	} )
+
+	const onChangeRight = useCallback( newValue => {
+		onChange( {
+			top: value.top,
 			right: newValue,
+			bottom: value.bottom,
+			left: value.left,
+		} )
+	} )
+
+	const onChangeBottom = useCallback( newValue => {
+		onChange( {
+			top: value.top,
+			right: value.right,
 			bottom: newValue,
+			left: value.left,
+		} )
+	} )
+
+	const onChangeLeft = useCallback( newValue => {
+		onChange( {
+			top: value.top,
+			right: value.right,
+			bottom: value.bottom,
 			left: newValue,
-		} ) )
-	}
-
-	onChangeTop( value ) {
-		this.props.onChange( {
-			...this.getEnabledValues(),
-			top: ! value && value !== 0 ? '' : value,
 		} )
-	}
+	} )
 
-	onChangeRight( value ) {
-		this.props.onChange( {
-			...this.getEnabledValues(),
-			right: ! value && value !== 0 ? '' : value,
-		} )
-	}
-
-	onChangeBottom( value ) {
-		this.props.onChange( {
-			...this.getEnabledValues(),
-			bottom: ! value && value !== 0 ? '' : value,
-		} )
-	}
-
-	onChangeLeft( value ) {
-		this.props.onChange( {
-			...this.getEnabledValues(),
-			left: ! value && value !== 0 ? '' : value,
-		} )
-	}
-
-	render() {
-		const {
-			instanceId, units, unit,
-		} = this.props
-		const id = `ugb-four-range-control-${ instanceId }__item-`
-		const propsToPass = {
-			min: this.props.min,
-			max: this.props.max,
-			step: this.props.step,
-			placeholder: this.props.placeholder,
-			initialPosition: this.props.initialPosition,
-			sliderMin: this.props.sliderMin,
-			sliderMax: this.props.sliderMax,
-		}
-
-		// Change the min, max & step values depending on the unit used.
-		const i = units.indexOf( unit ) < 0 ? 0 : units.indexOf( unit )
-		if ( Array.isArray( this.props.min ) ) {
-			propsToPass.min = this.props.min[ i ]
-		}
-		if ( Array.isArray( this.props.max ) ) {
-			propsToPass.max = this.props.max[ i ]
-		}
-		if ( Array.isArray( this.props.sliderMin ) ) {
-			propsToPass.sliderMin = this.props.sliderMin[ i ]
-		}
-		if ( Array.isArray( this.props.sliderMax ) ) {
-			propsToPass.sliderMax = this.props.sliderMax[ i ]
-		}
-		if ( Array.isArray( this.props.step ) ) {
-			propsToPass.step = this.props.step[ i ]
-		}
-		if ( Array.isArray( this.props.placeholder ) ) {
-			propsToPass.placeholder = this.props.placeholder[ i ]
-		}
-		if ( Array.isArray( this.props.initialPosition ) ) {
-			propsToPass.initialPosition = this.props.initialPosition[ i ]
-		}
-
-		const lockClassNames = classnames( [
-			'ugb-four-range-control__lock',
-		], {
-			'ugb--is-locked': this.state.locked,
-		} )
-
-		const lockButton = <Button
-			className={ lockClassNames }
-			onClick={ this.onToggleLock }
-			icon={ (
-				<Dashicon
-					icon={ this.state.locked ? 'admin-links' : 'editor-unlink' }
-					size="16"
-				/>
+	return (
+		<AdvancedControl { ...controlProps }>
+			{ isLocked && (
+				<Fragment>
+					<RangeControl
+						{ ...propsToPass }
+						value={ firstValue }
+						onChange={ onChangeAll }
+						allowReset={ false }
+					/>
+					<ResetButton
+						allowReset={ props.allowReset }
+						value={ firstValue }
+						default={ props.defaultTop }
+						onChange={ onChangeAll }
+					/>
+				</Fragment>
 			) }
-		/>
-
-		// The ALL option can either be 'all', 'vertical', or 'horizontal'.
-		// const allLabel = this.props.enableTop && this.props.enableBottom && ! this.props.enableRight && ! this.props.enableLeft ? __( 'Vertical', i18n ) :
-		// 	! this.props.enableTop && ! this.props.enableBottom && this.props.enableRight && this.props.enableLeft ? __( 'Horizontal', i18n ) :
-		// 		__( 'All', i18n )
-		// const allIcon = this.props.enableTop && this.props.enableBottom && ! this.props.enableRight && ! this.props.enableLeft ? <SVGVerticalImage /> :
-		// 	! this.props.enableTop && ! this.props.enableBottom && this.props.enableRight && this.props.enableLeft ? <SVGHorizontalImage /> :
-		// 		( <SVGAllImage /> )
-
-		return (
-			<BaseControl
-				help={ this.props.help }
-				className={ classnames( 'ugb-four-range-control', this.props.className, { 'ugb--locked': this.state.locked } ) }
-			>
-				<BaseControlMultiLabel
-					label={ this.props.label }
-					units={ this.props.units }
-					unit={ this.props.unit }
-					onChangeUnit={ this.props.onChangeUnit }
-					screens={ this.props.screens }
-					afterButton={ lockButton }
-				/>
-				{ this.state.locked &&
-					<div className="ugb-four-range-control__range">
-						{
-
-							/* <Tooltip text={ allLabel }>
-								<span className="ugb-four-range-control__icon">{ allIcon }</span>
-							</Tooltip> */
-						}
-						<AdvancedRangeControl
-							id={ `${ id }-all` }
-							value={ this.firstValue() }
-							onChange={ this.onChangeAll }
-							allowReset={ true }
-							{ ...propsToPass }
-						/>
-					</div>
-				}
-				{ ! this.state.locked &&
-					<Fragment>
-						{ this.props.enableTop &&
-							<div className="ugb-four-range-control__range">
-								<Tooltip text={ __( 'Top', i18n ) }>
-									<span className="ugb-four-range-control__icon"><SVGTopImage /></span>
-								</Tooltip>
-								<AdvancedRangeControl
-									id={ `${ id }-top` }
-									value={ this.props.top }
-									onChange={ this.onChangeTop }
-									allowReset={ true }
-									{ ...propsToPass }
-									placeholder={ this.props.placeholderTop || propsToPass.placeholder }
-								/>
-							</div>
-						}
-						{ this.props.enableRight &&
-							<div className="ugb-four-range-control__range">
-								<Tooltip text={ __( 'Right', i18n ) }>
-									<span className="ugb-four-range-control__icon"><SVGRightImage /></span>
-								</Tooltip>
-								<AdvancedRangeControl
-									id={ `${ id }-right` }
-									value={ this.props.right }
-									onChange={ this.onChangeRight }
-									allowReset={ true }
-									{ ...propsToPass }
-									placeholder={ this.props.placeholderRight || propsToPass.placeholder }
-								/>
-							</div>
-						}
-						{ this.props.enableBottom &&
-							<div className="ugb-four-range-control__range">
-								<Tooltip text={ __( 'Bottom', i18n ) }>
-									<span className="ugb-four-range-control__icon"><SVGBottomImage /></span>
-								</Tooltip>
-								<AdvancedRangeControl
-									id={ `${ id }-bottom` }
-									value={ this.props.bottom }
-									onChange={ this.onChangeBottom }
-									allowReset={ true }
-									{ ...propsToPass }
-									placeholder={ this.props.placeholderBottom || propsToPass.placeholder }
-								/>
-							</div>
-						}
-						{ this.props.enableLeft &&
-							<div className="ugb-four-range-control__range">
-								<Tooltip text={ __( 'Left', i18n ) }>
-									<span className="ugb-four-range-control__icon"><SVGLeftImage /></span>
-								</Tooltip>
-								<AdvancedRangeControl
-									id={ `${ id }-left` }
-									value={ this.props.left }
-									onChange={ this.onChangeLeft }
-									allowReset={ true }
-									{ ...propsToPass }
-									placeholder={ this.props.placeholderLeft || propsToPass.placeholder }
-								/>
-							</div>
-						}
-					</Fragment>
-				}
-			</BaseControl>
-		)
-	}
+			{ ! isLocked &&
+				<Fragment>
+					{ props.enableTop &&
+						<div className="ugb-four-range-control__range">
+							<Tooltip text={ __( 'Top', i18n ) }>
+								<span className="ugb-four-range-control__icon"><SVGTopImage /></span>
+							</Tooltip>
+							<RangeControl
+								{ ...propsToPass }
+								value={ value.top }
+								onChange={ onChangeTop }
+								allowReset={ false }
+								placeholder={ typeof props.placeholderTop === 'undefined' ? propsToPass.placeholder : props.placeholderTop }
+							/>
+							<ResetButton
+								allowReset={ props.allowReset }
+								value={ value.top }
+								default={ props.defaultTop }
+								onChange={ onChangeTop }
+							/>
+						</div>
+					}
+					{ props.enableRight &&
+						<div className="ugb-four-range-control__range">
+							<Tooltip text={ __( 'Right', i18n ) }>
+								<span className="ugb-four-range-control__icon"><SVGRightImage /></span>
+							</Tooltip>
+							<RangeControl
+								{ ...propsToPass }
+								value={ value.right }
+								onChange={ onChangeRight }
+								allowReset={ false }
+								placeholder={ typeof props.placeholderRight === 'undefined' ? propsToPass.placeholder : props.placeholderRight }
+							/>
+							<ResetButton
+								allowReset={ props.allowReset }
+								value={ value.right }
+								default={ props.defaultRight }
+								onChange={ onChangeRight }
+							/>
+						</div>
+					}
+					{ props.enableBottom &&
+						<div className="ugb-four-range-control__range">
+							<Tooltip text={ __( 'Bottom', i18n ) }>
+								<span className="ugb-four-range-control__icon"><SVGBottomImage /></span>
+							</Tooltip>
+							<RangeControl
+								{ ...propsToPass }
+								value={ value.bottom }
+								onChange={ onChangeBottom }
+								allowReset={ false }
+								placeholder={ typeof props.placeholderBottom === 'undefined' ? propsToPass.placeholder : props.placeholderBottom }
+							/>
+							<ResetButton
+								allowReset={ props.allowReset }
+								value={ value.bottom }
+								default={ props.defaultBottom }
+								onChange={ onChangeBottom }
+							/>
+						</div>
+					}
+					{ props.enableLeft &&
+						<div className="ugb-four-range-control__range">
+							<Tooltip text={ __( 'Left', i18n ) }>
+								<span className="ugb-four-range-control__icon"><SVGLeftImage /></span>
+							</Tooltip>
+							<RangeControl
+								{ ...propsToPass }
+								value={ value.left }
+								onChange={ onChangeLeft }
+								allowReset={ false }
+								placeholder={ typeof props.placeholderLeft === 'undefined' ? propsToPass.placeholder : props.placeholderLeft }
+							/>
+							<ResetButton
+								allowReset={ props.allowReset }
+								value={ value.left }
+								default={ props.defaultLeft }
+								onChange={ onChangeLeft }
+							/>
+						</div>
+					}
+				</Fragment>
+			}
+		</AdvancedControl>
+	)
 }
 
 FourRangeControl.defaultProps = {
-	onChange: () => {},
 	defaultLocked: true,
-	top: '',
-	right: '',
-	bottom: '',
-	left: '',
-	units: [ 'px' ],
-	unit: 'px',
-	onChangeUnit: () => {},
-	screens: [ 'desktop' ],
+	hasLock: true,
 	enableTop: true,
 	enableRight: true,
 	enableBottom: true,
 	enableLeft: true,
-	min: -Infinity,
-	max: Infinity,
-	sliderMin: null,
-	sliderMax: null,
-	step: 1,
+	defaultTop: '',
+	defaultRight: '',
+	defaultBottom: '',
+	defaultLeft: '',
 	placeholder: '',
 	placeholderTop: '',
 	placeholderRight: '',
 	placeholderBottom: '',
 	placeholderLeft: '',
-	initialPosition: '',
+
+	allowReset: true,
+	default: '',
+
+	attribute: '',
+	responsive: false,
+	hover: false,
+
+	top: undefined,
+	right: undefined,
+	bottom: undefined,
+	left: undefined,
+	onChange: undefined,
 }
 
-export default FourRangeControl
+export default memo( FourRangeControl )

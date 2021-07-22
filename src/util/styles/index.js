@@ -11,6 +11,9 @@ import rgba from 'color-rgba'
 import { sprintf } from '@wordpress/i18n'
 import { applyFilters } from '@wordpress/hooks'
 
+export { default as StyleObject } from './style-object'
+export { useStyles, getStyles } from './style-object'
+
 export const isDarkColor = _color => {
 	try {
 		// Allow others to modify the received color.
@@ -70,9 +73,9 @@ export const marginRightAlign = align => {
 }
 
 export const leftRightToFlex = align => {
-	return align === 'left' ? 'flex-start' :
-		align === 'right' ? 'flex-end' :
-			align
+	return align === 'left' ? 'flex-start'
+		: align === 'right' ? 'flex-end'
+			: align
 }
 
 /**

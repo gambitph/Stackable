@@ -22,7 +22,17 @@ module.exports = [
 					]
 				]
 			}
-		}
+		},
+		resolve: {
+			fullySpecified: false
+		},
+	},
+	{
+		// Fixes Module not found error: (probably because the origin is a '*.mjs' file or a '*.js' file where the package.json contains '"type": "module"').
+        test: /\.m?jsx?$/,
+		resolve: {
+			fullySpecified: false
+		},
 	},
 	{
 		test: /\.svg$/,

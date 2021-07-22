@@ -1,109 +1,103 @@
 /**
- * WordPress dependencies
+ * External dependencies
  */
+import { AttributeObject } from '~stackable/util'
+import { version as VERSION } from 'stackable'
 import {
-	createTypographyAttributes, createAllCombinationAttributes,
-} from '~stackable/util'
+	BlockDiv,
+	CustomCSS,
+	Responsive,
+	Advanced,
+	Typography,
+	Alignment,
+	MarginBottom,
+	CustomAttributes,
+	EffectsAnimations,
+	ConditionalDisplay,
+} from '~stackable/block-components'
 
-export default {
-	alignment: {
-		type: 'string',
-		default: 'center',
-	},
+export const attributes = ( version = VERSION ) => {
+	const attrObject = new AttributeObject()
 
-	// Title.
-	title: {
-		source: 'html',
-		selector: '.ugb-heading__title',
-		default: '',
-	},
-	titleTag: {
-		type: 'string',
-		default: '',
-	},
-	...createTypographyAttributes( 'title%s' ),
-	titleColor: {
-		type: 'string',
-		default: '',
-	},
+	Alignment.addAttributes( attrObject )
+	BlockDiv.addAttributes( attrObject )
+	EffectsAnimations.addAttributes( attrObject )
+	CustomAttributes.addAttributes( attrObject )
+	CustomCSS.addAttributes( attrObject )
+	MarginBottom.addAttributes( attrObject )
+	Responsive.addAttributes( attrObject )
+	ConditionalDisplay.addAttributes( attrObject )
+	Advanced.addAttributes( attrObject )
+	Typography.addAttributes( attrObject, '.stk-heading__text', {
+		defaultTextTag: 'h2',
+	} )
 
-	// Subtitle.
-	subtitle: {
-		source: 'html',
-		selector: '.ugb-heading__subtitle',
-		default: '',
-	},
-	showSubtitle: {
-		type: 'boolean',
-		default: true,
-	},
-	...createTypographyAttributes( 'subtitle%s' ),
-	subtitleColor: {
-		type: 'string',
-		default: '',
-	},
-
-	// Top Line.
-	showTopLine: {
-		type: 'boolean',
-		default: false,
-	},
-	topLineColor: {
-		type: 'string',
-		default: '',
-	},
-	topLineHeight: {
-		type: 'number',
-		default: '',
-	},
-	topLineWidth: {
-		type: 'number',
-		default: '',
-	},
-	topLineWidthUnit: {
-		type: 'string',
-		default: '',
-	},
-
-	// Bottom Line.
-	showBottomLine: {
-		type: 'boolean',
-		default: false,
-	},
-	bottomLineColor: {
-		type: 'string',
-		default: '',
-	},
-	bottomLineHeight: {
-		type: 'number',
-		default: '',
-	},
-	bottomLineWidth: {
-		type: 'number',
-		default: '',
-	},
-	bottomLineWidthUnit: {
-		type: 'string',
-		default: '',
-	},
-
-	// Alignments.
-	...createAllCombinationAttributes(
-		'%s%sAlign', {
-			type: 'string',
-			default: '',
+	attrObject.add( {
+		attributes: {
+			showTopLine: {
+				type: 'boolean',
+				default: '',
+			},
+			topLineWidth: {
+				type: 'number',
+				default: '',
+				stkUnits: 'px',
+				stkHover: true,
+			},
+			topLineHeight: {
+				type: 'number',
+				default: '',
+			},
+			topLineColor: {
+				type: 'string',
+				default: '',
+				stkHover: true,
+			},
+			topLineMargin: {
+				type: 'number',
+				default: '',
+				stkResponsive: true,
+			},
+			topLineAlign: {
+				type: 'string',
+				default: '',
+				stkResponsive: true,
+			},
+			showBottomLine: {
+				type: 'boolean',
+				default: '',
+			},
+			bottomLineWidth: {
+				type: 'number',
+				default: '',
+				stkUnits: 'px',
+				stkHover: true,
+			},
+			bottomLineHeight: {
+				type: 'number',
+				default: '',
+			},
+			bottomLineColor: {
+				type: 'string',
+				default: '',
+				stkHover: true,
+			},
+			bottomLineMargin: {
+				type: 'number',
+				default: '',
+				stkResponsive: true,
+			},
+			bottomLineAlign: {
+				type: 'string',
+				default: '',
+				stkResponsive: true,
+			},
 		},
-		[ 'Title', 'Subtitle', 'TopLine', 'BottomLine' ],
-		[ '', 'Tablet', 'Mobile' ]
-	),
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
 
-	// Spacing.
-	...createAllCombinationAttributes(
-		'%s%sBottomMargin', {
-			type: 'number',
-			default: '',
-		},
-		[ 'Title', 'Subtitle', 'TopLine', 'BottomLine' ],
-		[ '', 'Tablet', 'Mobile' ]
-	),
+	return attrObject.getMerged( version )
 }
+
+export default attributes( VERSION )

@@ -66,8 +66,8 @@ const convertBetaStackableColorsToRelease = colors => compact( ( colors || [] ).
 
 	if ( color.fallback && color.colorVar ) {
 		// Let us not include global colors linked to theme colors.
-		return color.slug.startsWith( 'stk-global-color' ) ?
-			{
+		return color.slug.startsWith( 'stk-global-color' )
+			? {
 				color: color.fallback,
 				slug: `stk-global-color-${ Math.floor( Math.random() * new Date().getTime() ) % 100000 }`,
 				rgb: color.rgb || '0, 0, 0',
@@ -113,6 +113,17 @@ domReady( () => {
 				stackableColors,
 				isInitializing: false,
 			} )
+
+			/**
+			 * withColorContext now gets the colors from features object.
+			 *
+			 * @since v2.7.2
+			 */
+			if ( useStackableColorsOnly ) {
+				setTimeout( () => {
+					dispatch( 'core/block-editor' ).updateSettings( { __experimentalFeatures: { colors: { palette: { theme: [] } } } } )
+				}, 300 )
+			}
 		} )
 	} )
 } )

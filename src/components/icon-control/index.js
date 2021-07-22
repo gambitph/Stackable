@@ -2,7 +2,6 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
-import { BaseControl } from '@wordpress/components'
 import { withInstanceId, withState } from '@wordpress/compose'
 import SVGIconControl from './images/smile.svg'
 
@@ -12,7 +11,7 @@ import SVGIconControl from './images/smile.svg'
 import { i18n } from 'stackable'
 import { omit } from 'lodash'
 import {
-	IconSearchPopover, SvgIcon, Button,
+	IconSearchPopover, SvgIcon, Button, BaseControl,
 } from '~stackable/components'
 
 const IconControl = withInstanceId( withState( {
@@ -30,6 +29,9 @@ const IconControl = withInstanceId( withState( {
 		<BaseControl
 			className={ `ugb-icon-control ugb-icon-control-${ instanceId }` }
 			{ ...omit( props, [ 'onChange', 'value' ] ) }
+			allowReset={ true }
+			value={ props.value }
+			onChange={ props.onChange }
 		>
 			<div className="ugb-icon-control__wrapper">
 				<div className="ugb-icon-control__button-wrapper">
@@ -74,21 +76,6 @@ const IconControl = withInstanceId( withState( {
 						/>
 					}
 				</div>
-				<Button
-					onClick={ () => {
-						if ( props.onReset ) {
-							props.onReset()
-						} else {
-							props.onChange( '' )
-						}
-						setState( { openPopover: false } )
-					} }
-					isSmall
-					isSecondary
-					className="components-range-control__reset"
-				>
-					{ __( 'Reset', i18n ) }
-				</Button>
 			</div>
 		</BaseControl>
 	)

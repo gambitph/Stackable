@@ -1,0 +1,24 @@
+/**
+ * Frontend styles for the Heading Block.
+ *
+ * Enqueued in the editor & frontend.
+ */
+
+@import "common";
+
+.ugb-heading__top-line,
+.ugb-heading__bottom-line {
+	height: 4px;
+	width: 100px;
+	background: #333;
+}
+.ugb-heading {
+	.ugb-heading__top-line,
+	.ugb-heading__subtitle {
+		margin-bottom: 16px;
+	}
+	.ugb-heading__title {
+		margin-top: 0 !important;
+		margin-bottom: 8px;
+	}
+}

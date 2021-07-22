@@ -1,0 +1,147 @@
+/**
+ * Core Block Styles for the editor
+ */
+@import "editor-breakpoints";
+@import "editor-block-transitions";
+
+// Position relative (required for block links) will not work properly with
+// margin bottom resizer, make it static in the editor.
+.editor-styles-wrapper .stk-block {
+	position: static;
+}
+
+// Blocks
+.editor-styles-wrapper [data-type^="stackable/"],
+.editor-styles-wrapper [data-type^="stackable/"].wp-block { // .wp-block to ensure our styles are followed.
+	margin-top: 0;
+	margin-bottom: 0;
+	z-index: 1;
+}
+
+// Rows
+// Float the appender.
+.stk-row > .stk-block-content > * > .block-editor-block-list__layout > .block-list-appender {
+	position: absolute;
+	top: -40px;
+	right: 0;
+	width: auto !important;
+	z-index: 2;
+}
+
+/**
+ * Resizeable rows and columns
+ */
+.stk-row > .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+.stk-row > .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout > div {
+	flex: 1 1 0;
+	box-sizing: border-box;
+	margin-left: 0;
+	margin-right: 0;
+	width: 100%; // Some native blocks have auto widths so they won't follow left/center/right text alignment e.g. buttons
+}
+[data-type^="stackable/"] .stk-row,
+.stk-column .block-editor-block-list__layout {
+	display: block;
+}
+
+// Inner block orientation
+.stk--block-orientation-vertical > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	display: flex;
+	flex-direction: column;
+	> * { // Some native blocks can have margin left/right auto, they will center.
+		width: 100%;
+	}
+}
+.stk--block-orientation-horizontal > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	display: flex;
+	flex-direction: row;
+	> * {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+}
+
+// Columns should occupy the entire available area.
+[data-type^="stackable/"] {
+	width: 100%;
+	display: flex;
+}
+[data-type^="stackable/"] > div {
+	width: 100%;
+}
+.stk-column-resizeable {
+	height: 100% !important;
+	width: 100% !important;
+	max-width: none !important; // Don't force the max-width, we'll rely on the JS part.
+	display: flex;
+}
+
+// Columns can be collapsed for tablet and mobile only.
+@include desktop {
+	.stk-row > .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout,
+	.stk-row .block-editor-block-list__layout {
+		flex-wrap: nowrap;
+	}
+}
+// Mobile auto-collapses all columns.
+@include mobile {
+	.stk-row .block-editor-block-list__layout > div {
+		flex: 1 1 100%;
+		max-width: 100%;
+	}
+}
+
+// Block backgrounds.
+.stk-block-background.stk-column {
+	overflow: auto; // Since our block background change the margin of it's contents, we need this to prevent the contents from clipping.
+}
+
+// Block inner blocks.
+.stk-inner-blocks > * > .block-editor-block-list__layout {
+	> [data-type]:first-child {
+		margin-top: 0;
+	}
+	// Last of type since there's a .block-list-appender
+	> [data-type]:last-of-type {
+		margin-bottom: 0;
+	}
+}
+
+// Block float alignment.
+[data-type^="stackable/"] {
+	&[data-align="left"] {
+		float: left;
+	}
+	&[data-align="right"] {
+		float: right;
+	}
+	&[data-align="left"],
+	&[data-align="right"] {
+		width: auto;
+		> .wp-block[data-align] {
+			height: auto;
+		}
+		// Default width for inner blocks.
+		.block-editor-block-list__layout:first-of-type > [data-type^="stackable/"] {
+			max-width: 350px;
+			width: auto;
+		}
+	}
+
+}
+
+// Wide and full width blocks are limited by some themes in the editor, make them span any width.
+.editor-styles-wrapper [data-type^="stackable/"][data-align="wide"] .wp-block,
+.editor-styles-wrapper [data-type^="stackable/"][data-align="full"] .wp-block {
+	max-width: 100%;
+}
+
+// Headings
+// Our headings have top margins if they're not the first heading, handle the different block structures.
+.editor-styles-wrapper [data-type^="stackable/heading"]:first-child .stk-heading__text {
+	margin-top: 0;
+}

@@ -1,0 +1,10 @@
+{
+	"name": "ugb/number-box",
+	"title": "Number Box (v2)",
+	"description": "Display steps or methods that your users will do in your service.",
+	"category": "stackable-v2",
+	"keywords": [
+		"Steps"
+	],
+	"textdomain": "stackable-ultimate-gutenberg-blocks"
+}

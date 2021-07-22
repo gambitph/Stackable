@@ -1,7 +1,6 @@
 export * from './font'
 export * from './attributes'
 export * from './typography'
-export * from './background'
 export * from './border'
 export * from './image'
 export * from './image-background'
@@ -11,8 +10,6 @@ export * from './social'
 export * from './blocks'
 export * from './svg'
 export * from './hooks'
-export * from './collections'
-export * from './inspector'
 export * from './icon'
 export * from './fontawesome'
 export * from './user'
@@ -29,6 +26,8 @@ import { applyFilters } from '@wordpress/hooks'
  */
 import { i18n } from 'stackable'
 import rgba from 'color-rgba'
+
+export const getUniqueBlockClass = uniqueId => uniqueId ? `stk-${ uniqueId }` : ''
 
 /**
  * Returns an array range of numbers.
@@ -51,7 +50,7 @@ export const range = ( start, end ) => {
  *
  * @return {boolean} True if a video.
  */
-export const urlIsVideo = url => url.match( /(mp4|webm|ogg)$/i )
+export const urlIsVideo = url => url.endsWith( 'mp4' ) || url.endsWith( 'webm' ) || url.endsWith( 'ogg' )
 
 /**
  * From a URL, get the video ID and provider: YouTube or Vimeo.
@@ -131,6 +130,10 @@ export const descriptionPlaceholder = length => {
  * @return {string} Rgba color.
  */
 export const hexToRgba = ( hexColor, opacity = null ) => {
+	if ( ! hexColor ) {
+		return ''
+	}
+
 	// Allow others to change the conversion.
 	const overrideOutput = applyFilters( 'stackable.util.hex-to-rgba', null, hexColor, opacity )
 	if ( overrideOutput ) {
@@ -210,7 +213,7 @@ export const minifyCSS = ( css, important = false ) => {
  * @param {string} css
  * @param {string} mainClass
  * @param {string} uniqueID
- * @param {boolean} isEditor If true, will preppend '#editor' to all selectors.
+ * @param {boolean} isEditor If true, will preppend '.editor-styles-wrapper' to all selectors.
  * @return {string} CSS
  */
 export const compileCSS = ( css, mainClass, uniqueID, isEditor = false ) => {
@@ -233,7 +236,7 @@ export const compileCSS = ( css, mainClass, uniqueID, isEditor = false ) => {
 			}
 
 			const newSelector = prependCSSClass( selector, mainClass, uniqueID )
-			return ( isEditor ? '#editor ' : '' ) + `${ newSelector } ${ paren }`
+			return ( isEditor ? '.editor-styles-wrapper ' : '' ) + `${ newSelector } ${ paren }`
 		} ).trim()
 }
 
@@ -266,7 +269,9 @@ export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassNam
 		.split( ',' )
 		.map( s => {
 			let newSelector = ''
-			if ( ! uniqueClassName || ! mainClassName ) {
+			if ( s.includes( '%s' ) ) {
+				newSelector = s.replaceAll( '%s', uniqueClassName )
+			} else if ( ! uniqueClassName || ! mainClassName ) {
 				newSelector = s
 			} else if ( s.includes( uniqueClassName ) ) {
 				newSelector = s
@@ -275,6 +280,7 @@ export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassNam
 			} else {
 				newSelector = `.${ uniqueClassName } ${ s.trim() }`
 					.replace( new RegExp( `(.${ uniqueClassName }) (.${ mainClassName }(#|:|\\[|\\.|\\s|$))`, 'g' ), '$1$2' )
+					.replace( /\s:/, ':' ) // If the selector given is just a pseudo selector ':before', it will produce ' :before', remove the extra space.
 			}
 			return wrapSelector ? `${ wrapSelector } ${ newSelector }` : newSelector
 		} )
@@ -283,19 +289,6 @@ export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassNam
 	prependCSSClassCache[ key ] = selector
 	return selector
 }
-
-/**
- * Global responsive setting functions. This is used by the
- * WhenResponsiveScreen and ResponsiveToggle components to
- * specify the current responsive screen size.
- */
-let _currentSelectedScreen = 'desktop'
-export const getSelectedScreen = () => _currentSelectedScreen
-export const setSelectedScreen = value => _currentSelectedScreen = value
-
-let _currentScreenPickerIsOpen = false
-export const isScreenPickerOpen = () => _currentScreenPickerIsOpen
-export const setIsScreenPickerOpen = value => _currentScreenPickerIsOpen = value
 
 /**
  * Moves an array value to a new index.
@@ -309,3 +302,26 @@ export const moveArrayIndex = ( values, oldIndex, newIndex ) => {
 	values.splice( oldIndex < newIndex ? oldIndex : oldIndex + 1, 1 ) // Remove value in old position.
 	return values
 }
+
+/**
+ * Returns the current block editor head
+ * element.
+ *
+ * @return {HTMLDocument} the head document
+ */
+export const getDocumentHead = () => {
+	let head = document.querySelector( 'head' )
+
+	if ( hasEditingContent() ) {
+		head = document.querySelector( 'iframe[name="editor-canvas"]' ).contentWindow.document.querySelector( 'head' )
+	}
+
+	return head
+}
+
+/**
+ * Checks whether the editing template window is open.
+ *
+ * @return {boolean} true if open.
+ */
+export const hasEditingContent = () => !! document.querySelector( 'iframe[name="editor-canvas"]' )

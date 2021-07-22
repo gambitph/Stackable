@@ -2,139 +2,201 @@
  * External dependencies
  */
 import {
-	createTypographyStyles,
-	whiteIfDark,
-	createResponsiveStyles,
-	appendImportantAll,
-	__getValue,
-	createResponsiveMarginAlign,
+	BlockDiv,
+	Advanced,
+	Typography,
+	Alignment,
+	MarginBottom,
+	EffectsAnimations,
+} from '~stackable/block-components'
+import {
+	getUniqueBlockClass, useStyles, getStyles,
 } from '~stackable/util'
-
-/**
- * Internal dependencies
- */
-import { showOptions } from './util'
-import deepmerge from 'deepmerge'
+import { useDeviceType, useBlockAttributes } from '~stackable/hooks'
+import { Style as StyleComponent } from '~stackable/components'
 
 /**
  * WordPress dependencies
  */
-import { applyFilters } from '@wordpress/hooks'
+import { Fragment, renderToString } from '@wordpress/element'
+import { useBlockEditContext } from '@wordpress/block-editor'
 
-export const createStyles = props => {
-	const getValue = __getValue( props.attributes )
-
-	const show = showOptions( props )
-
-	const {
-		columnBackgroundColor = '',
-	} = props.attributes
-
-	const styles = []
-
-	// Title.
-	const {
-		titleColor = '',
-		showTitle = true,
-	} = props.attributes
-	if ( showTitle ) {
-		const titleColorSelector = applyFilters( 'stackable.heading.styles.title.color-selector', '.ugb-heading__title', props )
-		styles.push( {
-			[ titleColorSelector ]: {
-				color: whiteIfDark( titleColor, show.columnBackground && columnBackgroundColor ),
-			},
-		} )
-
-		styles.push( {
-			'.ugb-heading__title': {
-				...createTypographyStyles( 'title%s', 'desktop', props.attributes ),
-				textAlign: getValue( 'titleAlign' ) || getValue( 'contentAlign' ),
-			},
-			tablet: {
-				'.ugb-heading__title': {
-					...createTypographyStyles( 'title%s', 'tablet', props.attributes ),
-					textAlign: getValue( 'titleTabletAlign' ) || getValue( 'tabletContentAlign' ),
-				},
-			},
-			mobile: {
-				'.ugb-heading__title': {
-					...createTypographyStyles( 'title%s', 'mobile', props.attributes ),
-					textAlign: getValue( 'titleMobileAlign' ) || getValue( 'mobileContentAlign' ),
-				},
-			},
-		} )
-	}
-
-	// Subtitle.
-	const {
-		subtitleColor = '',
-		showSubtitle = true,
-	} = props.attributes
-	if ( showSubtitle ) {
-		styles.push( {
-			'.ugb-heading__subtitle': {
-				...createTypographyStyles( 'subtitle%s', 'desktop', props.attributes ),
-				color: whiteIfDark( subtitleColor, show.columnBackground && columnBackgroundColor ),
-				textAlign: getValue( 'subtitleAlign' ),
-			},
-			tablet: {
-				'.ugb-heading__subtitle': {
-					...createTypographyStyles( 'subtitle%s', 'tablet', props.attributes ),
-					textAlign: getValue( 'subtitleTabletAlign' ),
-				},
-			},
-			mobile: {
-				'.ugb-heading__subtitle': {
-					...createTypographyStyles( 'subtitle%s', 'mobile', props.attributes ),
-					textAlign: getValue( 'subtitleMobileAlign' ),
-				},
-			},
-		} )
-	}
-
-	// Top line.
-	const {
-		showTopLine = false,
-	} = props.attributes
-	if ( showTopLine ) {
-		styles.push( {
-			'.ugb-heading__top-line': appendImportantAll( {
-				backgroundColor: getValue( 'topLineColor' ),
-				height: getValue( 'topLineHeight', '%spx' ),
-				width: getValue( 'topLineWidth', `%s${ getValue( 'topLineWidthUnit' ) || 'px' }` ),
-			} ),
-		} )
-		styles.push( ...createResponsiveMarginAlign( '.ugb-heading__top-line', 'topLine%sAlign', props.attributes ) )
-	}
-
-	// Bottom line.
-	const {
-		showBottomLine = false,
-	} = props.attributes
-	if ( showBottomLine ) {
-		styles.push( {
-			'.ugb-heading__bottom-line': appendImportantAll( {
-				backgroundColor: getValue( 'bottomLineColor' ),
-				height: getValue( 'bottomLineHeight', '%spx' ),
-				width: getValue( 'bottomLineWidth', `%s${ getValue( 'bottomLineWidthUnit' ) || 'px' }` ),
-			} ),
-		} )
-		styles.push( ...createResponsiveMarginAlign( '.ugb-heading__bottom-line', 'bottomLine%sAlign', props.attributes ) )
-	}
-
-	// Spacing.
-	styles.push( ...createResponsiveStyles( '.ugb-heading__title', 'title%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
-	if ( show.subtitleSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-heading__subtitle', 'subtitle%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
-	}
-	if ( show.topLineSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-heading__top-line', 'topLine%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
-	}
-	if ( show.bottomLineSpacing ) {
-		styles.push( ...createResponsiveStyles( '.ugb-heading__bottom-line', 'bottomLine%sBottomMargin', 'marginBottom', '%spx', props.attributes, { important: true } ) )
-	}
-
-	return deepmerge.all( styles )
+const getStyleParams = () => {
+	return [
+		{
+			selector: '.stk-heading__top-line',
+			styleRule: 'height',
+			attrName: 'topLineHeight',
+			format: '%spx',
+		},
+		{
+			selector: '.stk-heading__top-line',
+			styleRule: 'width',
+			attrName: 'topLineWidth',
+			hasUnits: 'px',
+			hover: 'all',
+		},
+		{
+			selector: '.stk-heading__top-line',
+			styleRule: 'backgroundColor',
+			attrName: 'topLineColor',
+			hover: 'all',
+		},
+		{
+			selector: '.stk-heading__top-line',
+			styleRule: 'backgroundColor',
+			attrName: 'topLineColor',
+			hover: 'all',
+		},
+		{
+			selector: '.stk-heading__top-line',
+			styleRule: 'marginBottom',
+			attrName: 'topLineMargin',
+			responsive: 'all',
+			format: '%spx',
+		},
+		{
+			selector: '.stk-heading__top-line',
+			styleRule: 'marginLeft',
+			attrName: 'topLineAlign',
+			responsive: 'all',
+			valueCallback: () => 'auto',
+		},
+		{
+			selector: '.stk-heading__top-line',
+			styleRule: 'marginRight',
+			attrName: 'topLineAlign',
+			responsive: 'all',
+			valueCallback: value => value === 'center' ? 'auto' : undefined,
+		},
+		{
+			selector: '.stk-heading__bottom-line',
+			styleRule: 'height',
+			attrName: 'bottomLineHeight',
+			format: '%spx',
+		},
+		{
+			selector: '.stk-heading__bottom-line',
+			styleRule: 'width',
+			attrName: 'bottomLineWidth',
+			hasUnits: 'px',
+			hover: 'all',
+		},
+		{
+			selector: '.stk-heading__bottom-line',
+			styleRule: 'backgroundColor',
+			attrName: 'bottomLineColor',
+			hover: 'all',
+		},
+		{
+			selector: '.stk-heading__bottom-line',
+			styleRule: 'backgroundColor',
+			attrName: 'bottomLineColor',
+			hover: 'all',
+		},
+		{
+			selector: '.stk-heading__bottom-line',
+			styleRule: 'marginTop',
+			attrName: 'bottomLineMargin',
+			responsive: 'all',
+			format: '%spx',
+		},
+		{
+			selector: '.stk-heading__bottom-line',
+			styleRule: 'marginLeft',
+			attrName: 'bottomLineAlign',
+			responsive: 'all',
+			valueCallback: () => 'auto',
+		},
+		{
+			selector: '.stk-heading__bottom-line',
+			styleRule: 'marginRight',
+			attrName: 'bottomLineAlign',
+			responsive: 'all',
+			valueCallback: value => value === 'center' ? 'auto' : undefined,
+		},
+	]
 }
 
-export default createStyles
+export const HeadingStyles = props => {
+	const {
+		...propsToPass
+	} = props
+
+	const deviceType = useDeviceType()
+	const { clientId } = useBlockEditContext()
+	const attributes = useBlockAttributes( clientId )
+
+	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
+	propsToPass.deviceType = deviceType
+	propsToPass.attributes = { ...attributes, clientId }
+
+	const topBottomLineStyles = useStyles( attributes, getStyleParams() )
+
+	return (
+		<Fragment>
+			<Alignment.Style { ...propsToPass } />
+			<BlockDiv.Style { ...propsToPass } />
+			<Advanced.Style { ...propsToPass } />
+			<Typography.Style { ...{
+				...propsToPass,
+				options: {
+					...propsToPass.options,
+					selector: '.stk-heading__text',
+				},
+			} } />
+			<StyleComponent
+				styles={ topBottomLineStyles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
+			<EffectsAnimations.Style { ...propsToPass } />
+		</Fragment>
+	)
+}
+
+HeadingStyles.defaultProps = {
+	isEditor: false,
+	attributes: {},
+	options: {},
+}
+
+HeadingStyles.Content = props => {
+	const {
+		...propsToPass
+	} = props
+
+	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
+	const topBottomLineStyles = getStyles( props.attributes, getStyleParams() )
+
+	const styles = (
+		<Fragment>
+			<Alignment.Style.Content { ...propsToPass } />
+			<BlockDiv.Style.Content { ...propsToPass } />
+			<Advanced.Style.Content { ...propsToPass } />
+			<Typography.Style.Content { ...{
+				...propsToPass,
+				options: {
+					...propsToPass.options,
+					selector: '.stk-heading__text',
+				},
+			} } />
+			<EffectsAnimations.Style.Content { ...propsToPass } />
+			<MarginBottom.Style.Content { ...propsToPass } />
+			<StyleComponent.Content
+				styles={ topBottomLineStyles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
+		</Fragment>
+	)
+
+	return renderToString( styles ) ? <style>{ styles }</style> : null
+}
+
+HeadingStyles.Content.defaultProps = {
+	attributes: {},
+	options: {},
+}
