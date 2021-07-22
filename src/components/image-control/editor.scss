@@ -15,16 +15,14 @@
 	.ugb-placeholder,
 	.ugb-image-preview {
 		border-radius: 4px;
+		cursor: pointer;
 		transition: all 0.3s ease-in-out;
-		:not(.disabled) {
-			cursor: pointer;
-			&:hover {
-				background: #fafafa;
-			}
-			&:focus {
-				background: #fafafa;
-				box-shadow: 0 0 0 2px rgba(30, 140, 190, 0.8);
-			}
+		&:hover {
+			background: #fafafa;
+		}
+		&:focus {
+			background: #fafafa;
+			box-shadow: 0 0 0 2px rgba(30, 140, 190, 0.8);
 		}
 	}
 	.ugb-image-preview-wrapper {
