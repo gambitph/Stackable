@@ -15,5 +15,4 @@ export default {
 
 	// Background.
 	...createBackgroundAttributes( '%s' ),
-
 }
