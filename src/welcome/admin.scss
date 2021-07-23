@@ -3,7 +3,8 @@
  */
 
 // Clear out the margins of the admin page.
-body[class*="page_stackable"] {
+body[class*="page_stackable"],
+body[class*="page_stk-"] {
 	#wpcontent {
 		padding-left: 0;
 	}
@@ -29,12 +30,15 @@ body[class*="page_stackable"] {
 		display: flex;
 		align-items: center;
 		// Admin notices should appear a little bit below the title.
-		&:not(:last-child) {
-			margin-bottom: 24px;
+		+ div.fs-notice,
+		+ div.notice,
+		+ div.update {
+			margin: 24px 0 0 !important;
 		}
 	}
-	&.s-header-non-admin {
-		padding-bottom: 26px;
+	&.s-header-no-tabs {
+		padding-bottom: 40px;
+		margin-bottom: 40px;
 	}
 	&.s-logo-icon {
 		img {
@@ -245,7 +249,7 @@ body.settings_page_stackable-getting-started {
 }
 body.settings_page_stackable,
 body.settings_page_stackable-getting-started,
-body.toplevel_page_stackable-custom-fields {
+body.toplevel_page_stk-custom-fields {
 	img {
 		max-width: 100%;
 	}
@@ -320,9 +324,6 @@ body.toplevel_page_stackable-custom-fields {
 			color: #8c33da;
 			background: #fff;
 		}
-	}
-	.s-custom-fields-card {
-		margin-top: 50px;
 	}
 	.s-body-container {
 		padding-top: 0;

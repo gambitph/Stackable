@@ -48,7 +48,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
         public function enqueue_dashboard_script( $hook ) {
 			// For stackable pages, show our admin css.
-            if ( 'settings_page_stackable' === $hook || stripos( $hook, 'page_stackable' ) !== false ) {
+            if ( 'settings_page_stackable' === $hook || stripos( $hook, 'page_stackable' ) !== false || stripos( $hook, 'page_stk' ) !== false ) {
 				wp_enqueue_style( 'stackable-welcome', plugins_url( 'dist/admin_welcome.css', STACKABLE_FILE ), array() );
 				wp_enqueue_style( 'ugb-block-editor-css', plugins_url( 'dist/editor_blocks.css', STACKABLE_FILE ), array() );
 				do_action( 'stackable_settings_admin_enqueue_styles' );
@@ -130,10 +130,10 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					<?php } ?>
 				<?php } ?>
 
-				<?php if ( sugb_fs()->can_use_premium_code() && function_exists( 'stackable_is_custom_fields_enabled' ) ) { ?>
+				<?php if ( function_exists( 'stackable_is_custom_fields_enabled' ) ) { ?>
 					<?php if ( stackable_is_custom_fields_enabled() && current_user_can( 'manage_stackable_custom_fields' ) ) { ?>
-						<a class="s-tab <?php echo $screen->base === 'toplevel_page_stackable-custom-fields' ? 's-active' : '' ?>"
-							href="<?php echo admin_url( 'admin.php?page=stackable-custom-fields' ) ?>">
+						<a class="s-tab <?php echo $screen->base === 'toplevel_page_stk-custom-fields' ? 's-active' : '' ?>"
+							href="<?php echo admin_url( 'admin.php?page=stk-custom-fields' ) ?>">
 							<?php _e( 'Custom Fields', STACKABLE_I18N ) ?>
 						</a>
 					<?php } ?>
@@ -144,7 +144,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
 		public static function print_header( $title = '', $image = 'icon' ) {
 			?>
-			<header class="s-header <?php echo ! current_user_can( 'manage_options' ) ? 's-header-non-admin' : '' ?> s-logo-<?php echo $image ?>">
+			<header class="s-header <?php echo ! current_user_can( 'manage_options' ) ? 's-header-no-tabs' : '' ?> s-logo-<?php echo $image ?>">
 				<h1>
 					<img src="<?php echo esc_url( plugins_url( 'images/stackable-' . $image . '.png', __FILE__ ) ) ?>" alt="<?php esc_attr_e( 'Stackable', STACKABLE_I18N ) ?>"/>
 					<?php echo $title ?>
