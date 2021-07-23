@@ -131,11 +131,11 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 						<?php } ?>
 					<?php } ?>
 
-					<?php if ( sugb_fs()->can_use_premium_code() ) { ?>
+					<?php if ( sugb_fs()->can_use_premium_code() && function_exists( 'stackable_is_dynamic_fields_enabled' ) ) { ?>
 						<?php if ( stackable_is_dynamic_fields_enabled() && current_user_can( 'manage_stackable_dynamic_fields' ) ) { ?>
 							<a class="s-tab <?php echo $screen->base === 'toplevel_page_stackable-dynamic-fields' ? 's-active' : '' ?>"
 								href="<?php echo admin_url( 'admin.php?page=stackable-dynamic-fields' ) ?>">
-								<?php _e( 'Dynamic Fields', STACKABLE_I18N ) ?>
+								<?php _e( 'Custom Fields', STACKABLE_I18N ) ?>
 							</a>
 						<?php } ?>
 					<?php } ?>
@@ -191,13 +191,11 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 						</article>
 						<article class="s-box" id="dynamic-fields-settings">
 							<div class="s-dynamic-fields-settings-header">
-								<h2><?php _e( '📤 Dynamic Fields', STACKABLE_I18N ) ?></h2>
+								<h2><?php _e( '📋 Custom Fields', STACKABLE_I18N ) ?></h2>
 								<div class="s-dynamic-fields-enable"></div>
 							</div>
-							<p class="s-settings-subtitle"><?php printf( __( 'Create Dynamic Fields that you can reference across your entire site. You can assign which roles can manage your Dynamic Fields. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/article/463-how-to-use-stackable-dynamic-fields/?utm_source=wp-settings-dynamic-fields&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
-							<?php if( stackable_is_dynamic_fields_enabled() ) : ?>
-								<div class="s-dynamic-fields-manager"></div>
-							<?php endif; ?>
+							<p class="s-settings-subtitle"><?php printf( __( 'Create Custom Fields that you can reference across your entire site. You can assign which roles can manage your Custom Fields. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/article/463-how-to-use-stackable-dynamic-fields/?utm_source=wp-settings-dynamic-fields&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
+							<div class="s-dynamic-fields-manager"></div>
 							<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
 								<p class="s-settings-pro"><?php _e( 'This is only available in Stackable Premium.', STACKABLE_I18N ) ?> <a href="https://wpstackable.com/premium/?utm_source=wp-settings-dynamic-fields&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a></p>
 							<?php endif; ?>
