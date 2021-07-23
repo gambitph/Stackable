@@ -492,7 +492,6 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 			$selectors = array();
 
 			// Include Stackable blocks.
-			$selectors[] = '.ugb-main-block ' . $tag;
 			$selectors[] = '.stk-block ' . $tag;
 
 			// Include native blocks.
@@ -507,7 +506,7 @@ if ( ! class_exists( 'Stackable_Global_Settings' ) ) {
 				$selectors[] = $tag . '[class*="wp-block-"]';
 			}
 
-			return $selectors;
+			return apply_filters( 'stackable_global_typography_selectors', $selectors, $tag );
 		}
 
 		public function form_paragraph_selector() {
