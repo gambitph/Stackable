@@ -268,6 +268,7 @@ AdditionalOptions.defaultProps = {
 	showProNoticesOption: false,
 }
 
+// TODO: move to deprecated v2
 const OptimizationSettings = () => {
 	const [ optimizeScriptLoad, setOptimizeScriptLoad ] = useState( false )
 
@@ -316,8 +317,11 @@ domReady( () => {
 		document.querySelector( '.s-global-settings' )
 	)
 
-	render(
-		<OptimizationSettings />,
-		document.querySelector( '.s-optimization-settings' )
-	)
+	// TODO: move to deprecated v2
+	if ( document.querySelector( '.s-optimization-settings' ) ) {
+		render(
+			<OptimizationSettings />,
+			document.querySelector( '.s-optimization-settings' )
+		)
+	}
 } )

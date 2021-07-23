@@ -16,13 +16,20 @@
 	.ugb-image-preview {
 		border-radius: 4px;
 		transition: all 0.3s ease-in-out;
-		cursor: pointer;
+    cursor: pointer;
 		&:hover {
 			background: #fafafa;
-		}
-		&:focus {
+    }
+    &:focus {
 			background: #fafafa;
 			box-shadow: 0 0 0 2px rgba(30, 140, 190, 0.8);
+		}
+		.dashicons {
+			pointer-events: none;
+			color: #e6e6e6;
+			font-size: 50px;
+			height: 50px;
+			width: 50px;
 		}
 	}
 	.ugb-image-preview-wrapper {

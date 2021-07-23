@@ -173,6 +173,7 @@ export const useDynamicContent = ( value = '' ) => {
  *
  * @param {string} value
  */
+
 export const useValueWithFieldsTitle = ( value = '' ) => {
 	return useSelect( select => {
 		if ( ! select( 'stackable/dynamic-content' ) ) {
@@ -180,7 +181,7 @@ export const useValueWithFieldsTitle = ( value = '' ) => {
 		}
 
 		let newValue = value
-		if ( value?.includes( '!#stk_dynamic' ) ) {
+		if ( value?.includes?.( '!#stk_dynamic' ) ) {
 			newValue = newValue.replace( /\!#stk_dynamic:(.*)\!#/g, match => {
 				const field = match.replace( /\!#/g, '' ).replace( 'stk_dynamic:', '' )
 				const fieldTitle = first( select( 'stackable/dynamic-content' ).getFieldTitle( field ) )
@@ -188,7 +189,7 @@ export const useValueWithFieldsTitle = ( value = '' ) => {
 			} )
 		}
 
-		if ( value?.includes( 'data-stk-dynamic="' ) ) {
+		if ( value?.includes?.( 'data-stk-dynamic="' ) ) {
 			newValue = newValue.replace( /<span[^\>]+data-stk-dynamic="[^>"]*"[^\>]*>(.*?)<\/span>/g, match => {
 				const field = match.match( /data-stk-dynamic="(.*?(?="))"/g )?.[ 0 ]
 					?.replace( /"/g, '' )
