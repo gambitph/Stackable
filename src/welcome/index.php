@@ -92,55 +92,53 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 		public static function print_tabs() {
 			$screen = get_current_screen();
 			?>
-			<?php if ( current_user_can( 'manage_options' ) ) { ?>
-				<div class="s-body s-tabs">
-					<a class="s-tab <?php echo $screen->base === 'settings_page_stackable-getting-started' ? 's-active' : '' ?>"
-						href="<?php echo admin_url( 'options-general.php?page=stackable-getting-started' ) ?>">
-						<?php _e( 'Getting Started', STACKABLE_I18N ) ?>
-					</a>
+			<div class="s-body s-tabs">
+				<a class="s-tab <?php echo $screen->base === 'settings_page_stackable-getting-started' ? 's-active' : '' ?>"
+					href="<?php echo admin_url( 'options-general.php?page=stackable-getting-started' ) ?>">
+					<?php _e( 'Getting Started', STACKABLE_I18N ) ?>
+				</a>
 
-					<a class="s-tab <?php echo $screen->base === 'settings_page_stackable' ? 's-active' : '' ?>"
-						href="<?php echo admin_url( 'options-general.php?page=stackable' ) ?>">
-						<?php _e( 'Settings', STACKABLE_I18N ) ?>
-					</a>
+				<a class="s-tab <?php echo $screen->base === 'settings_page_stackable' ? 's-active' : '' ?>"
+					href="<?php echo admin_url( 'options-general.php?page=stackable' ) ?>">
+					<?php _e( 'Settings', STACKABLE_I18N ) ?>
+				</a>
 
-					<?php if ( sugb_fs()->get_user() ) { ?>
-						<a class="s-tab <?php echo $screen->base === 'settings_page_stackable-account' ? 's-active' : '' ?>"
-							href="<?php echo sugb_fs()->get_account_url() ?>">
-							<?php _e( 'Account', STACKABLE_I18N ) ?>
+				<?php if ( sugb_fs()->get_user() ) { ?>
+					<a class="s-tab <?php echo $screen->base === 'settings_page_stackable-account' ? 's-active' : '' ?>"
+						href="<?php echo sugb_fs()->get_account_url() ?>">
+						<?php _e( 'Account', STACKABLE_I18N ) ?>
+					</a>
+				<?php } ?>
+
+				<?php if ( sugb_fs()->has_affiliate_program() ) { ?>
+					<a class="s-tab <?php echo $screen->base === 'settings_page_stackable-affiliation' ? 's-active' : '' ?>"
+						href="<?php echo admin_url( 'options-general.php?page=stackable-affiliation' ) ?>">
+						<?php _e( 'Affiliation', STACKABLE_I18N ) ?>
+					</a>
+				<?php } ?>
+
+				<a class="s-tab" href="https://docs.wpstackable.com" target="_docs"><?php _e( 'Documentation', STACKABLE_I18N ) ?></a>
+
+				<a class="s-tab <?php echo $screen->base === 'settings_page_stackable-contact' ? 's-active' : '' ?>"
+					href="<?php echo admin_url( 'options-general.php?page=stackable-contact' ) ?>">
+					<?php _e( 'Contact Us', STACKABLE_I18N ) ?>
+				</a>
+
+				<?php if ( ! sugb_fs()->is_whitelabeled() ) { ?>
+					<?php if ( ! sugb_fs()->can_use_premium_code() ) { ?>
+						<a class="s-tab s-tab-premium" href="<?php echo esc_url( sugb_fs()->get_upgrade_url() ) ?>"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a>
+					<?php } ?>
+				<?php } ?>
+
+				<?php if ( sugb_fs()->can_use_premium_code() && function_exists( 'stackable_is_custom_fields_enabled' ) ) { ?>
+					<?php if ( stackable_is_custom_fields_enabled() && current_user_can( 'manage_stackable_custom_fields' ) ) { ?>
+						<a class="s-tab <?php echo $screen->base === 'toplevel_page_stackable-custom-fields' ? 's-active' : '' ?>"
+							href="<?php echo admin_url( 'admin.php?page=stackable-custom-fields' ) ?>">
+							<?php _e( 'Custom Fields', STACKABLE_I18N ) ?>
 						</a>
 					<?php } ?>
-
-					<?php if ( sugb_fs()->has_affiliate_program() ) { ?>
-						<a class="s-tab <?php echo $screen->base === 'settings_page_stackable-affiliation' ? 's-active' : '' ?>"
-							href="<?php echo admin_url( 'options-general.php?page=stackable-affiliation' ) ?>">
-							<?php _e( 'Affiliation', STACKABLE_I18N ) ?>
-						</a>
-					<?php } ?>
-
-					<a class="s-tab" href="https://docs.wpstackable.com" target="_docs"><?php _e( 'Documentation', STACKABLE_I18N ) ?></a>
-
-					<a class="s-tab <?php echo $screen->base === 'settings_page_stackable-contact' ? 's-active' : '' ?>"
-						href="<?php echo admin_url( 'options-general.php?page=stackable-contact' ) ?>">
-						<?php _e( 'Contact Us', STACKABLE_I18N ) ?>
-					</a>
-
-					<?php if ( ! sugb_fs()->is_whitelabeled() ) { ?>
-						<?php if ( ! sugb_fs()->can_use_premium_code() ) { ?>
-							<a class="s-tab s-tab-premium" href="<?php echo esc_url( sugb_fs()->get_upgrade_url() ) ?>"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a>
-						<?php } ?>
-					<?php } ?>
-
-					<?php if ( sugb_fs()->can_use_premium_code() && function_exists( 'stackable_is_custom_fields_enabled' ) ) { ?>
-						<?php if ( stackable_is_custom_fields_enabled() && current_user_can( 'manage_stackable_custom_fields' ) ) { ?>
-							<a class="s-tab <?php echo $screen->base === 'toplevel_page_stackable-custom-fields' ? 's-active' : '' ?>"
-								href="<?php echo admin_url( 'admin.php?page=stackable-custom-fields' ) ?>">
-								<?php _e( 'Custom Fields', STACKABLE_I18N ) ?>
-							</a>
-						<?php } ?>
-					<?php } ?>
-				</div>
-			<?php } ?>
+				<?php } ?>
+			</div>
 			<?php
 		}
 
