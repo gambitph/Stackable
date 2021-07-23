@@ -14,8 +14,6 @@ import save from './save'
 import schema from './schema'
 import metadata from './block.json'
 
-export const name = 'stackable/text'
-
 export const settings = {
 	...metadata,
 	icon: TextIcon,
