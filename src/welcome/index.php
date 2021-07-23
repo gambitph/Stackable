@@ -131,10 +131,10 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 						<?php } ?>
 					<?php } ?>
 
-					<?php if ( sugb_fs()->can_use_premium_code() && function_exists( 'stackable_is_dynamic_fields_enabled' ) ) { ?>
-						<?php if ( stackable_is_dynamic_fields_enabled() && current_user_can( 'manage_stackable_dynamic_fields' ) ) { ?>
-							<a class="s-tab <?php echo $screen->base === 'toplevel_page_stackable-dynamic-fields' ? 's-active' : '' ?>"
-								href="<?php echo admin_url( 'admin.php?page=stackable-dynamic-fields' ) ?>">
+					<?php if ( sugb_fs()->can_use_premium_code() && function_exists( 'stackable_is_custom_fields_enabled' ) ) { ?>
+						<?php if ( stackable_is_custom_fields_enabled() && current_user_can( 'manage_stackable_custom_fields' ) ) { ?>
+							<a class="s-tab <?php echo $screen->base === 'toplevel_page_stackable-custom-fields' ? 's-active' : '' ?>"
+								href="<?php echo admin_url( 'admin.php?page=stackable-custom-fields' ) ?>">
 								<?php _e( 'Custom Fields', STACKABLE_I18N ) ?>
 							</a>
 						<?php } ?>
@@ -189,15 +189,15 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 								<p class="s-settings-pro"><?php _e( 'This is only available in Stackable Premium.', STACKABLE_I18N ) ?> <a href="https://wpstackable.com/premium/?utm_source=wp-settings-role-manager&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a></p>
 							<?php endif; ?>
 						</article>
-						<article class="s-box" id="dynamic-fields-settings">
-							<div class="s-dynamic-fields-settings-header">
+						<article class="s-box" id="custom-fields-settings">
+							<div class="s-custom-fields-settings-header">
 								<h2><?php _e( '📋 Custom Fields', STACKABLE_I18N ) ?></h2>
-								<div class="s-dynamic-fields-enable"></div>
+								<div class="s-custom-fields-enable"></div>
 							</div>
-							<p class="s-settings-subtitle"><?php printf( __( 'Create Custom Fields that you can reference across your entire site. You can assign which roles can manage your Custom Fields. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/article/463-how-to-use-stackable-dynamic-fields/?utm_source=wp-settings-dynamic-fields&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
-							<div class="s-dynamic-fields-manager"></div>
+							<p class="s-settings-subtitle"><?php printf( __( 'Create Custom Fields that you can reference across your entire site. You can assign which roles can manage your Custom Fields. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/article/463-how-to-use-stackable-custom-fields/?utm_source=wp-settings-custom-fields&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
+							<div class="s-custom-fields-manager"></div>
 							<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
-								<p class="s-settings-pro"><?php _e( 'This is only available in Stackable Premium.', STACKABLE_I18N ) ?> <a href="https://wpstackable.com/premium/?utm_source=wp-settings-dynamic-fields&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a></p>
+								<p class="s-settings-pro"><?php _e( 'This is only available in Stackable Premium.', STACKABLE_I18N ) ?> <a href="https://wpstackable.com/premium/?utm_source=wp-settings-custom-fields&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a></p>
 							<?php endif; ?>
 						</article>
 						<article class="s-box" id="global-settings">

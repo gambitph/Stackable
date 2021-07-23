@@ -66,21 +66,17 @@ body[class*="page_stackable"] {
 }
 .s-settings-field {
 	margin-bottom: 16px;
+	--label-width: 200px;
 	label {
+		margin-top: 16px;
 		.s-settings-field__title {
-			width: 200px;
-		}
-		.s-dynamic-fields__title {
-			width: 150px;
-			word-break: break-word;
-		}
-		.s-settings-field__title,
-		.s-dynamic-fields__title {
+			width: var(--label-width, 200px);
 			display: inline-block;
 			font-weight: bold;
 			color: #666;
 			padding-right: 15px;
 			box-sizing: border-box;
+			flex-shrink: 0;
 		}
 
 		.s-settings-field__status {
@@ -104,6 +100,7 @@ body[class*="page_stackable"] {
 	[type="number"],
 	[type="date"],
 	[type="time"],
+	[type="url"],
 	select {
 		padding: 0.5em 1em;
 		width: calc(100% - 300px);
@@ -111,64 +108,26 @@ body[class*="page_stackable"] {
 		border: 1px solid rgba(0, 0, 0, 0.1);
 		margin: 0;
 	}
-	[type="url"],
-	.s-dynamic-fields__url-title {
-		padding: 0.5em 1em;
-		width: calc(50% - 160px);
-		box-shadow: 0 5px 30px -10px rgba(18, 63, 82, 0.1);
-		border: 1px solid rgba(0, 0, 0, 0.1);
-		margin: 0;
-	}
-	[type="url"] {
-		margin-right: 20px;
-	}
 	&.s-settings-field-small {
 		[type="text"] {
 			width: 300px;
 		}
 	}
 	p {
-		margin-left: 200px;
+		margin-left: var(--label-width, 200px);
 		font-style: italic;
 		margin-top: 4px;
-		&.s-dynamic-fields__description {
-			margin-left: 150px;
-			width: calc(100% - 300px);
-		}
-		&.s-dynamic-fields__form-error {
-			margin-left: 150px;
-			width: calc(100% - 300px);
-			color: #ff5a7f;
-		}
-	}
-	.s-dynamic-fields__options-field {
-		margin-top: 16px;
-	}
-	.s-dynamic-fields__action-icons {
-		width: 150px;
-		flex: 0 0 auto;
-		.edit-action-icon,
-		.delete-action-icon,
-		.move-action-icon {
-			margin-left: 5px;
-			border: none;
-			background-color: #fff;
-			cursor: pointer;
-			span {
-				color: #666;
-			}
-		}
 	}
 }
-.s-dynamic-fields-settings-header {
+.s-custom-fields-settings-header {
 	display: flex;
 	.ugb-admin-setting__label {
-		width: 0;
+		display: none;
 	}
 }
-.s-dynamic-fields-enable {
+.s-custom-fields-enable {
 	margin-top: -4px;
-	margin-left: 8px;
+	margin-left: 32px;
 }
 .s-icon-settings .s-settings-field p {
 	margin-left: 240px;
@@ -208,32 +167,6 @@ body[class*="page_stackable"] {
 .s-notice-em {
 	color: #888;
 	margin-bottom: 1em;
-}
-.s-dynamic-fields__unsaved,
-.s-dynamic-fields__save,
-.s-dynamic-fields__error {
-	margin: 0;
-}
-.s-dynamic-fields__save {
-	color: #13c256;
-}
-.s-dynamic-fields__unsaved {
-	color: #777;
-}
-.s-dynamic-fields__error {
-	color: #f00;
-}
-.s-dynamic-fields__sort-element {
-	margin-top: 30px;
-}
-.s-dynamic-fields-notice {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	h1 {
-		margin-bottom: 16px;
-	}
 }
 .s-button-set-margin-top {
 	margin-top: 32px;
@@ -312,7 +245,7 @@ body.settings_page_stackable-getting-started {
 }
 body.settings_page_stackable,
 body.settings_page_stackable-getting-started,
-body.toplevel_page_stackable-dynamic-fields {
+body.toplevel_page_stackable-custom-fields {
 	img {
 		max-width: 100%;
 	}
@@ -388,7 +321,7 @@ body.toplevel_page_stackable-dynamic-fields {
 			background: #fff;
 		}
 	}
-	.s-dynamic-fields-card {
+	.s-custom-fields-card {
 		margin-top: 50px;
 	}
 	.s-body-container {
@@ -712,12 +645,8 @@ body.toplevel_page_stackable-dynamic-fields {
 
 // Collapse to a single column for mobile.
 @media screen and (max-width: 960px) {
-	body.settings_page_stackable,
-	body.stackable_page_stackable-settings,
-	body.toplevel_page_stackable-dynamic-fields {
-		.s-body-container {
-			grid-template-columns: 1fr;
-		}
+	.s-body-container {
+		grid-template-columns: 1fr !important;
 	}
 }
 
