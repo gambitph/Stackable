@@ -66,7 +66,7 @@ export const Edit = props => {
 
 				{ props.hasWidth &&
 					<AdvancedRangeControl
-						label={ __( 'Width 2', i18n ) }
+						label={ __( 'Width', i18n ) }
 						attribute="imageWidth"
 						units={ props.widthUnits }
 						min={ props.widthMin }
