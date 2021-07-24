@@ -91,7 +91,7 @@ const ResizableColumn = props => {
 
 	const className = classnames( [
 		'stk-column-resizeable',
-		className,
+		props.className,
 	] )
 
 	const enable = useMemo( () => ( {

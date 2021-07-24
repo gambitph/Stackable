@@ -7,8 +7,6 @@
 /**
  * Internal dependencies
  */
-import './polyfill'
-
 const context = require.context(
 	'./block', // Search within the src/blocks directory.
 	true, // Search recursively.
