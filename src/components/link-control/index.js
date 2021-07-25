@@ -27,6 +27,10 @@ const LinkControl = props => {
 	] )
 	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
+	const {
+		isDynamic,
+		...inputProps
+	} = propsToPass
 
 	const value = typeof props.value === 'undefined' ? _value : props.value
 	const onChange = typeof props.onChange === 'undefined' ? _onChange : props.onChange
@@ -37,12 +41,12 @@ const LinkControl = props => {
 		<AdvancedControl className={ classNames } { ...controlProps }>
 			<DynamicContentControl
 				type={ [ 'link', 'image-url' ] }
-				enable={ props.isDynamic }
+				enable={ isDynamic }
 				{ ...dynamicContentProps }
 			>
 				<div className="stk-link-control__input">
 					<_LinkControl
-						{ ...propsToPass }
+						{ ...inputProps }
 						value={ { url: value } }
 						onChange={ ( { url } ) => onChange( url ) }
 						settings={ [] } // The Url only.

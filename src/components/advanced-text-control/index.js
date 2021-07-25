@@ -19,6 +19,11 @@ import classnames from 'classnames'
 const AdvancedTextControl = props => {
 	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
+	const {
+		isDynamic,
+		...inputProps
+	} = propsToPass
+
 	const dynamicContentProps = useDynamicContentControlProps( {
 		value: typeof props.value === 'undefined' ? value : props.value,
 		onChange: typeof props.onChange === 'undefined' ? onChange : props.onChange,
@@ -30,11 +35,11 @@ const AdvancedTextControl = props => {
 	return (
 		<AdvancedControl { ...controlProps }>
 			<DynamicContentControl
-				enable={ props.isDynamic }
+				enable={ isDynamic }
 				{ ...dynamicContentProps }
 			>
 				<TextInput
-					{ ...propsToPass }
+					{ ...inputProps }
 					value={ typeof props.value === 'undefined' ? value : props.value }
 					onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
 					allowReset={ false }

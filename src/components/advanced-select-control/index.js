@@ -18,6 +18,10 @@ import classnames from 'classnames'
 const AdvancedSelectControl = props => {
 	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
+	const {
+		defaultValue: _defaultValue, // Don't pass this.
+		...selectProps
+	} = propsToPass
 
 	return (
 		<AdvancedControl
@@ -25,7 +29,7 @@ const AdvancedSelectControl = props => {
 			className={ classnames( 'ugb-advanced-select-control', props.className ) }
 		>
 			<SelectControl
-				{ ...propsToPass }
+				{ ...selectProps }
 				value={ typeof props.value === 'undefined' ? value : props.value }
 				onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
 			/>
