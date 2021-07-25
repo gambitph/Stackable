@@ -113,6 +113,7 @@ const Edit = props => {
 					className={ textClassNames }
 					onReplace={ onReplace }
 					onSplit={ ( value, isOriginal ) => {
+						// @see https://github.com/WordPress/gutenberg/blob/trunk/packages/block-library/src/paragraph/edit.js
 						let newAttributes
 
 						if ( isOriginal || value ) {
