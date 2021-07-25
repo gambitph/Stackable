@@ -112,10 +112,25 @@ const Edit = props => {
 					tagName="p"
 					className={ textClassNames }
 					onReplace={ onReplace }
-					onSplit={ value => createBlock(
-						'stackable/text',
-						{ ...props.attributes, text: value }
-					) }
+					onSplit={ ( value, isOriginal ) => {
+						// @see https://github.com/WordPress/gutenberg/blob/trunk/packages/block-library/src/paragraph/edit.js
+						let newAttributes
+
+						if ( isOriginal || value ) {
+							newAttributes = {
+								...props.attributes,
+								text: value,
+							}
+						}
+
+						const block = createBlock( 'stackable/text', newAttributes )
+
+						if ( isOriginal ) {
+							block.clientId = props.clientId
+						}
+
+						return block
+					} }
 				/>
 				<MarginBottom />
 			</BlockDiv>
