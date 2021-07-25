@@ -184,8 +184,15 @@ export const useValueWithFieldsTitle = ( value = '' ) => {
 		if ( value?.includes?.( '!#stk_dynamic' ) ) {
 			newValue = newValue.replace( /\!#stk_dynamic:(.*)\!#/g, match => {
 				const field = match.replace( /\!#/g, '' ).replace( 'stk_dynamic:', '' )
-				const fieldTitle = first( select( 'stackable/dynamic-content' ).getFieldTitle( field ) )
-				return fieldTitle ? `[${ fieldTitle }]` : '[]'
+				let fieldTitle = first( select( 'stackable/dynamic-content' ).getFieldTitle( field ) )
+
+				if ( ! fieldTitle ) {
+					// If the field title doesn't exist, get the field slug instead.
+					const fieldData = new URL( `stk:${ field }` )
+					fieldTitle = fieldData.pathname.split( '/' )?.[ 1 ]
+				}
+
+				return fieldTitle ? `[${ fieldTitle }]` : ''
 			} )
 		}
 
@@ -196,8 +203,15 @@ export const useValueWithFieldsTitle = ( value = '' ) => {
 					?.replace( 'data-stk-dynamic=', '' )
 
 				if ( value ) {
-					const fieldTitle = first( select( 'stackable/dynamic-content' ).getFieldTitle( field ) )
-					return fieldTitle ? `[${ fieldTitle }]` : '[]'
+					let fieldTitle = first( select( 'stackable/dynamic-content' ).getFieldTitle( field ) )
+
+					if ( ! fieldTitle ) {
+						// If the field title doesn't exist, get the field slug instead.
+						const fieldData = new URL( `stk:${ field }` )
+						fieldTitle = fieldData.pathname.split( '/' )?.[ 1 ]
+					}
+
+					return fieldTitle ? `[${ fieldTitle }]` : ''
 				}
 				return match
 			} )
