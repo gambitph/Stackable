@@ -1,6 +1,8 @@
 .stk-img-wrapper {
-	cursor: copy;
 	position: relative;
+	&:not(.stk--no-click-to-edit) {
+		cursor: copy;
+	}
 
 	&:hover {
 		img {

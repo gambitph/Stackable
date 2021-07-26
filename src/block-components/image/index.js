@@ -8,6 +8,7 @@ import { useBlockAttributes } from '~stackable/hooks'
 import { pickBy } from 'lodash'
 
 import { useBlockEditContext } from '@wordpress/block-editor'
+import { useState, useEffect } from '@wordpress/element'
 
 export const Image = props => {
 	const {
@@ -16,13 +17,31 @@ export const Image = props => {
 		...propsToPass
 	} = props
 
-	const { clientId } = useBlockEditContext()
+	const { clientId, isSelected } = useBlockEditContext()
 	const attributes = useBlockAttributes( clientId )
 
 	const { setImage } = useImage()
 
+	// Enable editing of the image only when the current block that implements
+	// it is selected. We need to use setTimeout since the isSelected is
+	// changed earlier.
+	const [ debouncedIsSelected, setDebouncedIsSelected ] = useState( false )
+	useEffect( () => {
+		if ( ! isSelected ) {
+			setDebouncedIsSelected( false )
+			return
+		}
+		const t = setTimeout( () => {
+			if ( isSelected ) {
+				setDebouncedIsSelected( isSelected )
+			}
+		}, 1 )
+		return () => clearTimeout( t )
+	}, [ isSelected ] )
+
 	return <Image_
 		{ ...setImage }
+		enableClickToEdit={ debouncedIsSelected }
 
 		imageId={ attributes.imageId }
 		imageURL={ attributes.imageUrl }

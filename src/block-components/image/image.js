@@ -89,6 +89,7 @@ const Image = memo( props => {
 	], {
 		'stk-img-placeholder': ! src || hasImageError,
 		'stk--is-resizing': isResizing,
+		'stk--no-click-to-edit': ! props.enableClickToEdit,
 	} )
 
 	const imageClasses = getImageClasses( props )
@@ -144,11 +145,13 @@ const Image = memo( props => {
 
 						// Open the media picker, but only when the image is clicked, not the popup, etc.
 						onClick={ event => {
-							if ( event.target?.classList?.contains( 'stk-img' ) ||
-								event.target?.classList?.contains( 'stk-img-placeholder' ) ||
-								event.target?.classList?.contains( 'stk-img-resizer-wrapper' )
-							) {
-								obj.open()
+							if ( props.enableClickToEdit ) {
+								if ( event.target?.classList?.contains( 'stk-img' ) ||
+									event.target?.classList?.contains( 'stk-img-placeholder' ) ||
+									event.target?.classList?.contains( 'stk-img-resizer-wrapper' )
+								) {
+									obj.open()
+								}
 							}
 						} }
 						onKeyDown={ event => {
@@ -296,6 +299,7 @@ const Image = memo( props => {
 
 Image.defaultProps = {
 	imageId: '',
+	enableClickToEdit: true,
 
 	alt: '',
 	title: '',
