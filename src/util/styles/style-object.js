@@ -382,10 +382,11 @@ export default StyleObject
  *
  * @param {Object} _attributes Block attributes
  * @param {Array} styleParams Style definitions for each attribute
+ * @param {Array} deps if defined, re-create the StyleObject on deps update
  *
  * @return {StyleObject} A object that can be rendered by a StyleComponent
  */
-export const useStyles = ( _attributes, styleParams ) => {
+export const useStyles = ( _attributes, styleParams, deps = [] ) => {
 	const deviceType = useDeviceType()
 	const [ currentHoverState ] = useBlockHoverState()
 	const { clientId } = useBlockEditContext()
@@ -396,7 +397,7 @@ export const useStyles = ( _attributes, styleParams ) => {
 		clientId,
 	}
 
-	const styleObject = useMemo( () => new StyleObject( styleParams ), [] )
+	const styleObject = useMemo( () => new StyleObject( styleParams ), [ ...deps ] )
 	return useMemo(
 		() => styleObject.generateStyles( attributes, currentHoverState ),
 		styleObject.getDependencies( attributes, deviceType, currentHoverState )

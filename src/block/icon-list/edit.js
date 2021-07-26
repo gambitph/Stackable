@@ -7,9 +7,10 @@ import { IconListStyles } from './style'
  * External dependencies
  */
 import classnames from 'classnames'
+import { uniqBy } from 'lodash'
 import { i18n, version as VERSION } from 'stackable'
 import {
-	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, AdvancedRangeControl, IconControl, ColorPaletteControl,
+	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, AdvancedRangeControl, IconControl, ColorPaletteControl, IconSearchPopover,
 } from '~stackable/components'
 import {
 	useBlockHoverClass,
@@ -28,7 +29,10 @@ import {
  * WordPress dependencies
  */
 import {
-	Fragment,
+	useSelect,
+} from '@wordpress/data'
+import {
+	Fragment, useRef, useEffect, useState, useCallback,
 } from '@wordpress/element'
 import {
 	BlockControls,
@@ -63,6 +67,84 @@ import {
 } from '@wordpress/i18n'
 
 const Edit = props => {
+	const textRef = useRef()
+	const [ isOpenIconSearch, setIsOpenIconSearch ] = useState( false )
+	const [ iconSearchAnchor, setIconSearchAnchor ] = useState( null )
+	const [ selectedIconCSSSelector, setSelectedIconCSSSelector ] = useState( null )
+	const [ selectedEvent, setSelectedEvent ] = useState( null )
+	const {
+		isTyping,
+		deviceType,
+	} = useSelect( select => ( {
+		isTyping: select( 'core/block-editor' ).isTyping(),
+		deviceType: select( 'core/edit-post' ).__experimentalGetPreviewDeviceType(),
+	} ) )
+
+	// Click handler to detect whether an icon is clicked, and open the icon
+	// picker for that icon.
+	const iconClickHandler = useCallback( event => {
+		// If li isn't clicked, close the icon search.
+		setSelectedEvent( event )
+		if ( event.target.tagName !== 'LI' || event.target.parentElement.tagName !== 'UL' ) {
+			return setIsOpenIconSearch( false )
+		}
+
+		/**
+		 * Check if the click is on the icon.
+		 */
+
+		// Different icon sizes per device preview.
+		const currentIconSize = (
+			deviceType === 'Desktop' ? props.attributes.iconSize
+				: deviceType === 'Tablet' ? ( props.attributes.iconSizeTablet || props.attributes.iconSize )
+					: ( props.attributes.iconSizeMobile || props.attributes.iconSizeTablet || props.attributes.iconSize ) ) ||
+		20
+
+		// Check if the click location if it's estimated to be on the icon.
+		if ( event.offsetX <= currentIconSize + 21 ) {
+			// Get the selected li and show the icon picker on it.
+			const index = Array.from( event.target.parentElement.children ).indexOf( event.target ) + 1
+			const { currentlyOpenIndex } = event.target.parentElement
+
+			if ( currentlyOpenIndex && currentlyOpenIndex === index ) {
+				event.target.parentElement.currentlyOpenIndex = undefined
+				return setIsOpenIconSearch( false )
+			}
+
+			event.target.parentElement.currentlyOpenIndex = index
+			let traverseToRichText = event.target
+			const selectors = []
+			while ( traverseToRichText.tagName !== 'DIV' ) {
+				traverseToRichText.parentElement.childNodes.forEach( ( el, idx ) => {
+					if ( el === traverseToRichText ) {
+						const tagName = traverseToRichText.tagName.toLowerCase()
+						const selector = `${ tagName }${ tagName === 'li' ? `:nth-child(${ idx + 1 })` : '' }`
+						selectors.push( selector )
+					}
+				} )
+				traverseToRichText = traverseToRichText.parentElement
+			}
+
+			setSelectedIconCSSSelector( selectors.reverse().join( '>' ) )
+			setIconSearchAnchor( event.target )
+			return setIsOpenIconSearch( true )
+		}
+
+		// Hide the icon picker.
+		event.target.parentElement.currentlyOpenIndex = undefined
+		setIconSearchAnchor( null )
+		return setIsOpenIconSearch( false )
+	}, [] )
+
+	useEffect( () => {
+		textRef.current.addEventListener( 'click', iconClickHandler )
+
+		return () => {
+			if ( textRef.current ) {
+				textRef.current.removeEventListener( 'click', iconClickHandler )
+			}
+		}
+	}, [] )
 	const {
 		attributes,
 		setAttributes,
@@ -185,9 +267,37 @@ const Edit = props => {
 
 			<BlockDiv.InspectorControls />
 
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'General', i18n ) }
+					initialOpen={ true }
+					id="general"
+				>
+					<AdvancedRangeControl
+						label={ __( 'Columns', i18n ) }
+						allowReset={ true }
+						attribute="columns"
+						min="1"
+						sliderMax="3"
+						step="1"
+						placeholder="1"
+						responsive="all"
+					/>
+
+					<AdvancedRangeControl
+						label={ __( 'Column Gap', i18n ) }
+						allowRest={ true }
+						attribute="columnGap"
+						min="0"
+						sliderMax="50"
+						responsive="all"
+					/>
+				</PanelAdvancedSettings>
+			</InspectorStyleControls>
+
 			<Typography.InspectorControls
 				isMultiline={ true }
-				initialOpen={ true }
+				initialOpen={ false }
 				hasTextTag={ false }
 			/>
 
@@ -254,13 +364,38 @@ const Edit = props => {
 			<CustomCSS mainBlockClass="stk-icon-list" />
 
 			<BlockDiv className={ blockClassNames }>
-				<Typography
-					__unstableMultilineTag={ tagName }
-					tagName={ tagName }
-					multiline="li"
-				>
-					{ controls }
-				</Typography>
+				<div ref={ textRef }>
+					<Typography
+						__unstableMultilineTag={ tagName }
+						tagName={ tagName }
+						multiline="li"
+					>
+						{ controls }
+					</Typography>
+					{ ! isTyping && isSelected && isOpenIconSearch && (
+						<IconSearchPopover
+							position="bottom left"
+							anchorRef={ iconSearchAnchor }
+							onClose={ () => {
+								if ( selectedEvent ) {
+									selectedEvent.target.parentElement.currentlyOpenIndex = undefined
+								}
+								setIsOpenIconSearch( false )
+							} }
+							onChange={ icon => {
+								setAttributes( {
+									icons: uniqBy( [
+										{
+											selector: selectedIconCSSSelector,
+											icon,
+										},
+										...props.attributes.icons,
+									], 'selector' ),
+								} )
+							} }
+						/>
+					) }
+				</div>
 			</BlockDiv>
 
 		</Fragment>

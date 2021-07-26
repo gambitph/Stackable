@@ -32,11 +32,71 @@ const typographyOptions = {
 	hoverSelector: 'ol:hover > li, ul:hover > li',
 }
 
-const getStyleParams = () => {
-	const selector = 'ol > li:before, ul > li:before'
-	const hoverSelector = 'ol:hover > li:before, ul:hover > li:before'
+const getStyleParams = ( { attributes = {} } ) => {
+	const selector = [
+		'ol > li:before',
+		'ul > li:before',
+	]
+	const hoverSelector = [
+		'.%s:hover ol > li:before',
+		'.%s:hover ul > li:before',
+	]
+
+	const individualIconStyles = attributes.icons.reduce( ( acc, { selector, icon } ) => {
+		return [
+			...acc,
+			{
+				renderIn: 'edit',
+				selector: '> div >' + selector + ':before',
+				hover: 'all',
+				hoverSelector: '.%s:hover > div >' + selector + ':before',
+				styleRule: 'backgroundImage',
+				attrName: 'iconColor',
+				valuePreCallback: ( value, getAttribute, device, state ) => {
+					if ( state !== 'normal' && ! value ) {
+						return undefined
+					}
+
+					const base64 = convertSVGStringToBase64( icon, value || '#000' )
+					return `url('data:image/svg+xml;base64,${ base64 }')`
+				},
+				dependencies: [ 'icons' ],
+			},
+			{
+				renderIn: 'save',
+				selector: '>' + selector + ':before',
+				hover: 'all',
+				hoverSelector: '.%s:hover >' + selector + ':before',
+				styleRule: 'backgroundImage',
+				attrName: 'iconColor',
+				valuePreCallback: ( value, getAttribute, device, state ) => {
+					if ( state !== 'normal' && ! value ) {
+						return undefined
+					}
+
+					const base64 = convertSVGStringToBase64( icon, value || '#000' )
+					return `url('data:image/svg+xml;base64,${ base64 }')`
+				},
+				dependencies: [ 'icons' ],
+			},
+		]
+	}, [] )
 
 	return [
+		...individualIconStyles,
+		{
+			selector: '',
+			styleRule: 'columnCount',
+			attrName: 'columns',
+			responsive: 'all',
+		},
+		{
+			selector: '',
+			styleRule: 'columnGap',
+			attrName: 'columnGap',
+			responsive: 'all',
+			format: '%spx',
+		},
 		{
 			selector,
 			hover: 'all',
@@ -96,8 +156,11 @@ export const IconListStyles = props => {
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
 	propsToPass.deviceType = deviceType
 	propsToPass.attributes = { ...attributes, clientId }
+	const options = { attributes: propsToPass.attributes }
 
-	const iconStyles = useStyles( attributes, getStyleParams() )
+	const iconStyles = useStyles( attributes, getStyleParams( options ), [
+		...propsToPass.attributes.icons.map( ( { icon } ) => icon ),
+	] )
 
 	return (
 		<Fragment>
@@ -123,7 +186,8 @@ IconListStyles.Content = props => {
 	} = props
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
-	const iconStyles = getStyles( propsToPass.attributes, getStyleParams() )
+	const options = { attributes: propsToPass.attributes }
+	const iconStyles = getStyles( propsToPass.attributes, getStyleParams( options ) )
 
 	const styles = (
 		<Fragment>

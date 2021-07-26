@@ -12,10 +12,23 @@ import { version as VERSION } from 'stackable'
 import { DEFAULT_SVG } from './util'
 
 export const iconListAttributes = {
+	// Columns.
+	columns: {
+		stkResponsive: true,
+		type: 'number',
+		default: '',
+	},
+	columnGap: {
+		stkResponsive: true,
+		type: 'number',
+		default: '',
+	},
 	ordered: {
 		type: 'boolean',
 		default: false,
 	},
+
+	// Icon.
 	icon: {
 		type: 'string',
 		default: DEFAULT_SVG,

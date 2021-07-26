@@ -27,6 +27,7 @@ export const Typography = props => {
 		value,
 		onChange,
 		children,
+		ref,
 		...rest
 	} = props
 
@@ -40,6 +41,7 @@ export const Typography = props => {
 			tagName={ ( tagName === null ? getAttribute( 'textTag' ) : tagName ) || defaultTag }
 			value={ value === null ? getAttribute( 'text' ) : value }
 			onChange={ onChange === null ? value => updateAttribute( 'text', value ) : onChange }
+			ref={ ref }
 			{ ...rest }
 		>
 			{ children }
