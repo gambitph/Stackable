@@ -1,13 +1,7 @@
 /**
- * Internal dependencies
- */
-import { blockStyles } from './block-styles'
-
-/**
  * External dependencies
  */
 import {
-	Image,
 	BlockDiv,
 	Alignment,
 	Advanced,
@@ -16,7 +10,7 @@ import {
 	MarginBottom,
 } from '~stackable/block-components'
 import {
-	useDeviceType, useBlockAttributes, getBlockStyle,
+	useDeviceType, useBlockAttributes,
 } from '~stackable/hooks'
 import {
 	getUniqueBlockClass,
@@ -26,7 +20,7 @@ import {
  * WordPress dependencies
  */
 import {
-	Fragment, renderToString, useMemo,
+	Fragment, renderToString,
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
@@ -49,14 +43,6 @@ export const ContainerStyles = props => {
 	propsToPass.deviceType = deviceType
 	propsToPass.attributes = { ...attributes, clientId }
 
-	const blockStyle = useMemo( () => getBlockStyle( blockStyles, attributes.className ), [ attributes.className ] )
-
-	const imageOptions = useMemo( () => ( {
-		enableWidth: blockStyle !== 'image',
-		enableHeight: blockStyle === 'image',
-		selector: '.stk-container__image',
-	} ), [ blockStyle ] )
-
 	return (
 		<Fragment>
 			<Alignment.Style { ...propsToPass } />
@@ -65,7 +51,6 @@ export const ContainerStyles = props => {
 			<EffectsAnimations.Style { ...propsToPass } />
 			<ContainerDiv.Style { ...propsToPass } options={ containerDivOptions } />
 			<MarginBottom.Style { ...propsToPass } />
-			<Image.Style { ...propsToPass } options={ imageOptions } />
 		</Fragment>
 	)
 }
@@ -81,14 +66,6 @@ ContainerStyles.Content = props => {
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
 
-	const blockStyle = getBlockStyle( blockStyles, props.attributes.className )
-
-	const imageOptions = {
-		enableWidth: blockStyle !== 'image',
-		enableHeight: blockStyle === 'image',
-		selector: '.stk-container__image',
-	}
-
 	const styles = (
 		<Fragment>
 			<Alignment.Style.Content { ...propsToPass } />
@@ -97,7 +74,6 @@ ContainerStyles.Content = props => {
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<ContainerDiv.Style.Content { ...propsToPass } options={ containerDivOptions } />
 			<MarginBottom.Style.Content { ...propsToPass } />
-			<Image.Style.Content { ...propsToPass } options={ imageOptions } />
 		</Fragment>
 	)
 

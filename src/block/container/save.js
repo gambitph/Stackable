@@ -10,7 +10,6 @@ import { version as VERSION } from 'stackable'
 import { withVersion } from '~stackable/higher-order'
 import classnames from 'classnames'
 import {
-	Image,
 	BlockDiv,
 	ContainerDiv,
 	BlockLink,
@@ -65,12 +64,6 @@ export const Save = props => {
 				className={ contentClassNames }
 				attributes={ attributes }
 			>
-				{ props.attributes.imageUrl && (
-					<Image.Content
-						className="stk-container__image"
-						attributes={ attributes }
-					/>
-				) }
 				<div className={ innerClassNames }>
 					<InnerBlocks.Content />
 				</div>

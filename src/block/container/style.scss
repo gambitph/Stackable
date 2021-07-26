@@ -1,23 +1,6 @@
-.stk-container {
+// Add default height for the container content.
+.stk-block.stk-container {
 	.stk-container__content {
 		min-height: 400px;
-	}
-
-	.stk--container {
-		height: 100%;
-	}
-
-	&.is-style-image-3 > .stk--container {
-		flex-direction: row-reverse;
-	}
-	&.is-style-image-2 > .stk--container {
-		flex-direction: row;
-	}
-
-	&.is-style-image-2,
-	&.is-style-image-3 {
-		.stk-container__image {
-			height: unset;
-		}
 	}
 }
