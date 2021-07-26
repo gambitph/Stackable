@@ -13,7 +13,7 @@ import { useState, useEffect } from '@wordpress/element'
 export const Image = props => {
 	const {
 		defaultWidth,
-		defaultHeight,
+		defaultHeight: _defaultHeight,
 		...propsToPass
 	} = props
 
@@ -21,6 +21,8 @@ export const Image = props => {
 	const attributes = useBlockAttributes( clientId )
 
 	const { setImage } = useImage()
+
+	const defaultHeight = _defaultHeight === 'auto' && attributes.imageUrl ? 'auto' : 300
 
 	// Enable editing of the image only when the current block that implements
 	// it is selected. We need to use setTimeout since the isSelected is
@@ -77,9 +79,13 @@ Image.defaultProps = {
 
 Image.Content = props => {
 	const {
+		defaultWidth,
+		defaultHeight: _defaultHeight,
 		attributes,
 		...propsToPass
 	} = props
+
+	const defaultHeight = _defaultHeight === 'auto' && attributes.imageUrl ? 'auto' : 300
 
 	return <Image_.Content
 		imageId={ attributes.imageId }
@@ -88,14 +94,14 @@ Image.Content = props => {
 		size={ attributes.imageSize }
 		src={ attributes.imageUrl }
 
-		width={ attributes.imageWidth || 150 }
+		width={ attributes.imageWidth || defaultWidth }
 		widthTablet={ attributes.imageWidthTablet }
 		widthMobile={ attributes.imageWidthMobile }
 		widthUnit={ attributes.imageWidthUnit || '%' }
 		widthUnitTablet={ attributes.imageWidthUnitTablet }
 		widthUnitMobile={ attributes.imageWidthUnitMobile }
 
-		height={ attributes.imageHeight || 300 }
+		height={ attributes.imageHeight || defaultHeight }
 		heightTablet={ attributes.imageHeightTablet }
 		heightMobile={ attributes.imageHeightMobile }
 		heightUnit={ attributes.imageHeightUnit || 'px' }
@@ -112,6 +118,8 @@ Image.Content = props => {
 
 Image.Content.defaultProps = {
 	attributes: {},
+	defaultWidth: 150,
+	defaultHeight: 300,
 }
 
 Image.InspectorControls = Edit

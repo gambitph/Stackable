@@ -89,7 +89,7 @@ export const Edit = props => {
 						sliderMax={ props.heightMax }
 						step={ props.heightStep }
 						allowReset={ true }
-						placeholder="300" // TODO: This should be referenced somewher instead of just a static number
+						placeholder=""
 						responsive="all"
 					/>
 				}

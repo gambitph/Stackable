@@ -147,13 +147,18 @@
 			margin-top: 8px;
 		}
 		.stk-image-size-popup__x {
-			align-self: flex-end;
+			align-self: center;
 			height: 34px;
+			margin-top: 29px;
+			padding: 0 8px;
 		}
 		.stk-image-size-popup__reset {
 			align-self: flex-end;
 			margin-bottom: 10px;
 		}
+	}
+	.components-base-control__field {
+		margin-bottom: 0 !important;
 	}
 	// Wide when we can edit both width and height
 	&.stk--is-wide {

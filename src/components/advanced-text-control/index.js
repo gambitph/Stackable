@@ -21,6 +21,7 @@ const AdvancedTextControl = props => {
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 	const {
 		isDynamic,
+		isMultiline,
 		...inputProps
 	} = propsToPass
 
@@ -30,7 +31,7 @@ const AdvancedTextControl = props => {
 		isFormatType: true,
 	} )
 
-	const TextInput = props.isMultiline ? TextareaControl : TextControl
+	const TextInput = isMultiline ? TextareaControl : TextControl
 
 	return (
 		<AdvancedControl { ...controlProps }>

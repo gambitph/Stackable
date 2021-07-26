@@ -27,6 +27,9 @@ import {
 } from '@wordpress/element'
 
 const formSize = ( size = '', unit = '%', usePx = false, usePct = true ) => {
+	if ( size === 'auto' ) {
+		return size
+	}
 	if ( ! size && size !== 0 ) {
 		return unit === '%' ? ( usePct ? '100%' : 100 ) : ( usePx ? '150px' : 150 )
 	}
@@ -176,8 +179,8 @@ const Image = memo( props => {
 								const parentHeight = elt.parentElement.getBoundingClientRect().height
 								setParentHeight( parentHeight )
 								currentHeight = ( props.height || 100 ) / 100 * parentHeight
-							} else if ( ! props.height ) {
-								currentHeight = elt.getBoundingClientRect().height
+							} else if ( ! props.height || props.height === 'auto' ) {
+								currentHeight = parseInt( elt.getBoundingClientRect().height, 10 )
 							}
 							setInitialHeight( currentHeight || 0 )
 
@@ -186,8 +189,8 @@ const Image = memo( props => {
 								const parentWidth = elt.parentElement.getBoundingClientRect().width
 								setParentWidth( parentWidth )
 								currentWidth = ( props.width || 100 ) / 100 * parentWidth
-							} else if ( ! props.width ) {
-								currentWidth = elt.getBoundingClientRect().width
+							} else if ( ! props.width || props.width === 'auto' ) {
+								currentWidth = parseInt( elt.getBoundingClientRect().width, 10 )
 							}
 							setInitialWidth( currentWidth || 0 )
 

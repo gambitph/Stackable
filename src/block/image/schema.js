@@ -2,9 +2,7 @@ import {
 	Advanced,
 	Alignment,
 	BlockDiv,
-	Column,
 	ConditionalDisplay,
-	ContainerDiv,
 	CustomAttributes,
 	CustomCSS,
 	EffectsAnimations,
@@ -19,9 +17,7 @@ export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
 
 	BlockDiv.addAttributes( attrObject )
-	ContainerDiv.addAttributes( attrObject, { hasDefaultContainer: true } )
-	Column.addAttributes( attrObject )
-	Image.addAttributes( attrObject, { imageWidthUnitDefault: 'px' } )
+	Image.addAttributes( attrObject )
 	Alignment.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
 	EffectsAnimations.addAttributes( attrObject )
@@ -30,17 +26,6 @@ export const attributes = ( version = VERSION ) => {
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 	BlockLink.addAttributes( attrObject )
-
-	attrObject.add( {
-		attributes: {
-			design: {
-				type: 'string',
-				default: '',
-			},
-		},
-		versionAdded: '3.0.0',
-		versionDeprecated: '',
-	} )
 
 	return attrObject.getMerged( version )
 }
