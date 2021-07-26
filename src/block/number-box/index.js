@@ -23,8 +23,6 @@ import metadata from './block.json'
 // import { disabledBlocks } from 'stackable'
 // import { addFilter, applyFilters } from '@wordpress/hooks'
 
-export const name = 'stackable/number-box'
-
 export const settings = {
 	...metadata,
 	icon: NumberBoxIcon,

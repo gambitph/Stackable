@@ -4,6 +4,7 @@ import {
 	BlockDiv,
 	BlockLink,
 	Column,
+	ConditionalDisplay,
 	ContainerDiv,
 	CustomAttributes,
 	CustomCSS,
@@ -27,6 +28,7 @@ export const attributes = ( version = VERSION ) => {
 	CustomAttributes.addAttributes( attrObject )
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
+	ConditionalDisplay.addAttributes( attrObject )
 	BlockLink.addAttributes( attrObject )
 
 	attrObject.add( {

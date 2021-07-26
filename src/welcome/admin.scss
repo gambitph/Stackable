@@ -3,7 +3,8 @@
  */
 
 // Clear out the margins of the admin page.
-body[class*="page_stackable"] {
+body[class*="page_stackable"],
+body[class*="page_stk-"] {
 	#wpcontent {
 		padding-left: 0;
 	}
@@ -29,9 +30,15 @@ body[class*="page_stackable"] {
 		display: flex;
 		align-items: center;
 		// Admin notices should appear a little bit below the title.
-		&:not(:last-child) {
-			margin-bottom: 24px;
+		+ div.fs-notice,
+		+ div.notice,
+		+ div.update {
+			margin: 24px 0 0 !important;
 		}
+	}
+	&.s-header-no-tabs {
+		padding-bottom: 40px;
+		margin-bottom: 40px;
 	}
 	&.s-logo-icon {
 		img {
@@ -63,15 +70,19 @@ body[class*="page_stackable"] {
 }
 .s-settings-field {
 	margin-bottom: 16px;
+	--label-width: 200px;
 	label {
+		margin-top: 16px;
 		.s-settings-field__title {
-			width: 200px;
+			width: var(--label-width, 200px);
 			display: inline-block;
 			font-weight: bold;
 			color: #666;
 			padding-right: 15px;
 			box-sizing: border-box;
+			flex-shrink: 0;
 		}
+
 		.s-settings-field__status {
 			width: 40px;
 			display: inline-block;
@@ -89,7 +100,12 @@ body[class*="page_stackable"] {
 			}
 		}
 	}
-	[type="text"] {
+	[type="text"],
+	[type="number"],
+	[type="date"],
+	[type="time"],
+	[type="url"],
+	select {
 		padding: 0.5em 1em;
 		width: calc(100% - 300px);
 		box-shadow: 0 5px 30px -10px rgba(18, 63, 82, 0.1);
@@ -102,10 +118,20 @@ body[class*="page_stackable"] {
 		}
 	}
 	p {
-		margin-left: 200px;
+		margin-left: var(--label-width, 200px);
 		font-style: italic;
 		margin-top: 4px;
 	}
+}
+.s-custom-fields-settings-header {
+	display: flex;
+	.ugb-admin-setting__label {
+		display: none;
+	}
+}
+.s-custom-fields-enable {
+	margin-top: -4px;
+	margin-left: 32px;
 }
 .s-icon-settings .s-settings-field p {
 	margin-left: 240px;
@@ -145,6 +171,18 @@ body[class*="page_stackable"] {
 .s-notice-em {
 	color: #888;
 	margin-bottom: 1em;
+}
+.s-button-set-margin-top {
+	margin-top: 32px;
+}
+.s-button-set-left {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	.s-button,
+	.s-button--ghost {
+		margin: 0 16px !important;
+	}
 }
 .s-button-set {
 	display: flex;
@@ -210,8 +248,8 @@ body.settings_page_stackable-getting-started {
 	}
 }
 body.settings_page_stackable,
-body.settings_page_stackable-getting-started {
-
+body.settings_page_stackable-getting-started,
+body.toplevel_page_stk-custom-fields {
 	img {
 		max-width: 100%;
 	}
@@ -273,6 +311,18 @@ body.settings_page_stackable-getting-started {
 		}
 		&.s-button-left {
 			margin-left: 0;
+		}
+		&.s-button--ghost {
+			border: 1px solid linear-gradient(90deg, #8c33da -100%, #f34957 200%);
+			border: 1px solid #8c33da;
+			color: linear-gradient(90deg, #8c33da -100%, #f34957 200%);
+			color: #8c33da;
+			background: #fff;
+		}
+		&.s-button--plain {
+			color: linear-gradient(90deg, #8c33da -100%, #f34957 200%);
+			color: #8c33da;
+			background: #fff;
 		}
 	}
 	.s-body-container {
@@ -596,11 +646,8 @@ body.settings_page_stackable-getting-started {
 
 // Collapse to a single column for mobile.
 @media screen and (max-width: 960px) {
-	body.settings_page_stackable,
-	body.stackable_page_stackable-settings {
-		.s-body-container {
-			grid-template-columns: 1fr;
-		}
+	.s-body-container {
+		grid-template-columns: 1fr !important;
 	}
 }
 

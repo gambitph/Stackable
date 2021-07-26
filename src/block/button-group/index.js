@@ -19,8 +19,6 @@ import metadata from './block.json'
  */
 import { __ } from '@wordpress/i18n'
 
-export const name = 'stackable/button-group'
-
 export const settings = {
 	...metadata,
 	icon: ButtonIcon,

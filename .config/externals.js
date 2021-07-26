@@ -50,6 +50,8 @@ const externals = [
 	lodash: 'lodash', // WP loads lodash already.
 	stackable: 'stackable', // Our localized JS variable.
 	fetch: 'fetch', // Used in our debugger sidebar.
+	// react: 'wp.element', // Use the bundled React in Gutenberg. (not working see https://github.com/WordPress/gutenberg/issues/33674)
+	'react-dom': 'wp.element', // Use the bundled ReactDom in Gutenberg.
 } );
 
 module.exports = externals;

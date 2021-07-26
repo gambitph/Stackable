@@ -13,6 +13,7 @@ import {
 	MarginBottom,
 	CustomAttributes,
 	EffectsAnimations,
+	ConditionalDisplay,
 } from '~stackable/block-components'
 
 export const attributes = ( version = VERSION ) => {
@@ -25,6 +26,7 @@ export const attributes = ( version = VERSION ) => {
 	CustomCSS.addAttributes( attrObject )
 	MarginBottom.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
+	ConditionalDisplay.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
 	Typography.addAttributes( attrObject, '.stk-heading__text', {
 		defaultTextTag: 'h2',

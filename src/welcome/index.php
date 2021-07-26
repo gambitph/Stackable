@@ -48,7 +48,7 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 
         public function enqueue_dashboard_script( $hook ) {
 			// For stackable pages, show our admin css.
-            if ( 'settings_page_stackable' === $hook || stripos( $hook, 'page_stackable' ) !== false ) {
+            if ( 'settings_page_stackable' === $hook || stripos( $hook, 'page_stackable' ) !== false || stripos( $hook, 'page_stk' ) !== false ) {
 				wp_enqueue_style( 'stackable-welcome', plugins_url( 'dist/admin_welcome.css', STACKABLE_FILE ), array() );
 				wp_enqueue_style( 'ugb-block-editor-css', plugins_url( 'dist/editor_blocks.css', STACKABLE_FILE ), array() );
 				do_action( 'stackable_settings_admin_enqueue_styles' );
@@ -130,13 +130,21 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 					<?php } ?>
 				<?php } ?>
 
+				<?php if ( function_exists( 'stackable_is_custom_fields_enabled' ) ) { ?>
+					<?php if ( stackable_is_custom_fields_enabled() && current_user_can( 'manage_stackable_custom_fields' ) ) { ?>
+						<a class="s-tab <?php echo $screen->base === 'toplevel_page_stk-custom-fields' ? 's-active' : '' ?>"
+							href="<?php echo admin_url( 'admin.php?page=stk-custom-fields' ) ?>">
+							<?php _e( 'Custom Fields', STACKABLE_I18N ) ?>
+						</a>
+					<?php } ?>
+				<?php } ?>
 			</div>
 			<?php
 		}
 
 		public static function print_header( $title = '', $image = 'icon' ) {
 			?>
-			<header class="s-header s-logo-<?php echo $image ?>">
+			<header class="s-header <?php echo ! current_user_can( 'manage_options' ) ? 's-header-no-tabs' : '' ?> s-logo-<?php echo $image ?>">
 				<h1>
 					<img src="<?php echo esc_url( plugins_url( 'images/stackable-' . $image . '.png', __FILE__ ) ) ?>" alt="<?php esc_attr_e( 'Stackable', STACKABLE_I18N ) ?>"/>
 					<?php echo $title ?>
@@ -177,6 +185,17 @@ if ( ! class_exists( 'Stackable_Welcome_Screen' ) ) {
 							<div class="s-editing-mode-settings"></div>
 							<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
 								<p class="s-settings-pro"><?php _e( 'This is only available in Stackable Premium.', STACKABLE_I18N ) ?> <a href="https://wpstackable.com/premium/?utm_source=wp-settings-role-manager&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a></p>
+							<?php endif; ?>
+						</article>
+						<article class="s-box" id="custom-fields-settings">
+							<div class="s-custom-fields-settings-header">
+								<h2><?php _e( '📋 Custom Fields', STACKABLE_I18N ) ?></h2>
+								<div class="s-custom-fields-enable"></div>
+							</div>
+							<p class="s-settings-subtitle"><?php printf( __( 'Create Custom Fields that you can reference across your entire site. You can assign which roles can manage your Custom Fields. %sLearn more%s.' , STACKABLE_I18N ), '<a href="https://docs.wpstackable.com/article/463-how-to-use-stackable-custom-fields/?utm_source=wp-settings-custom-fields&utm_campaign=learnmore&utm_medium=wp-dashboard" target="_docs">', '</a>' ) ?></em></p>
+							<div class="s-custom-fields-manager"></div>
+							<?php if ( ! sugb_fs()->can_use_premium_code() ) : ?>
+								<p class="s-settings-pro"><?php _e( 'This is only available in Stackable Premium.', STACKABLE_I18N ) ?> <a href="https://wpstackable.com/premium/?utm_source=wp-settings-custom-fields&utm_campaign=gopremium&utm_medium=wp-dashboard" target="_premium"><?php _e( 'Go Premium', STACKABLE_I18N ) ?></a></p>
 							<?php endif; ?>
 						</article>
 						<article class="s-box" id="global-settings">

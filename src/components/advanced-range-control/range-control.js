@@ -41,6 +41,7 @@ const StackableRangeControl = memo( props => {
 		withInputField,
 		isShiftStepEnabled,
 		placeholderRender,
+		defaultValue: _defaultValue, // Don't pass this.
 		...propsToPass
 	} = props
 

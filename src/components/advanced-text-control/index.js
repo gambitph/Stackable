@@ -1,49 +1,73 @@
 /**
  * Internal dependencies
  */
-import { BaseControl } from '..'
+import AdvancedControl, { extractControlProps } from '../base-control2'
+import { useControlHandlers } from '../base-control2/hooks'
+import { ResetButton } from '../base-control2/reset-button'
+import DynamicContentControl, { useDynamicContentControlProps } from '../dynamic-content-control'
 
 /**
  * WordPress dependencies
  */
-import { TextControl } from '@wordpress/components'
+import { TextControl, TextareaControl } from '@wordpress/components'
 
 /**
  * External dependencies
  */
 import classnames from 'classnames'
-import { omit } from 'lodash'
 
 const AdvancedTextControl = props => {
+	const [ value, onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
+	const [ propsToPass, controlProps ] = extractControlProps( props )
+	const {
+		isDynamic,
+		...inputProps
+	} = propsToPass
+
+	const dynamicContentProps = useDynamicContentControlProps( {
+		value: typeof props.value === 'undefined' ? value : props.value,
+		onChange: typeof props.onChange === 'undefined' ? onChange : props.onChange,
+		isFormatType: true,
+	} )
+
+	const TextInput = props.isMultiline ? TextareaControl : TextControl
+
 	return (
-		<BaseControl
-			help={ props.help }
-			className={ classnames( 'ugb-advanced-text-control', props.className ) }
-			label={ props.label }
-			units={ props.units }
-			unit={ props.unit }
-			onChangeUnit={ props.onChangeUnit }
-			screens={ props.screens }
-			allowReset={ props.allowReset }
-			value={ props.value }
-			onChange={ props.onChange }
-		>
-			<TextControl
-				{ ...omit( props, [ 'className', 'help', 'label', 'units', 'unit', 'onChangeUnit', 'screens' ] ) }
+		<AdvancedControl { ...controlProps }>
+			<DynamicContentControl
+				enable={ isDynamic }
+				{ ...dynamicContentProps }
+			>
+				<TextInput
+					{ ...inputProps }
+					value={ typeof props.value === 'undefined' ? value : props.value }
+					onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
+					allowReset={ false }
+					className={ classnames( propsToPass.className, 'ugb-advanced-text-control' ) }
+				/>
+			</DynamicContentControl>
+			<ResetButton
+				allowReset={ props.allowReset && ! props.dynamic }
+				value={ typeof props.value === 'undefined' ? value : props.value }
+				default={ props.default }
+				onChange={ typeof props.onChange === 'undefined' ? onChange : props.onChange }
 			/>
-		</BaseControl>
+		</AdvancedControl>
 	)
 }
 
 AdvancedTextControl.defaultProps = {
-	onChange: () => {},
-	onChangeUnit: () => {},
+	isMultiline: false,
 	allowReset: true,
-	help: '',
-	className: '',
-	units: [ 'px' ],
-	unit: 'px',
-	screens: [ 'desktop' ],
+	default: '',
+
+	attribute: '',
+	responsive: false,
+	hover: false,
+	isDynamic: false,
+
+	value: undefined,
+	onChange: undefined,
 }
 
 export default AdvancedTextControl

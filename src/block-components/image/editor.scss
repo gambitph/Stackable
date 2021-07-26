@@ -48,6 +48,9 @@
 			display: none !important;
 		}
 	}
+	&.stk--is-resizing {
+		transition: none !important;
+	}
 }
 
 .stk-img-upload-remove {
