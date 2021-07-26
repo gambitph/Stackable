@@ -20,8 +20,6 @@ import metadata from './block.json'
  */
 import { __ } from '@wordpress/i18n'
 
-export const name = 'stackable/card'
-
 export const settings = {
 	...metadata,
 	icon: CardIcon,

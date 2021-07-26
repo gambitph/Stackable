@@ -3,7 +3,11 @@ module.exports = {
 	extends: [
 		'plugin:@wordpress/eslint-plugin/recommended-with-formatting',
 		'plugin:jest/recommended',
+		'plugin:compat/recommended',
 	],
+	env: {
+		browser: true,
+	},
 	rules: {
 		// No semi-colons because they're a hassle.
 		semi: [ 'error', 'never' ],

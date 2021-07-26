@@ -31,6 +31,8 @@ const PanelAdvancedSettings = props => {
 	const [ showAdvanced, setShowAdvanced ] = useState( props.initialAdvanced )
 	const instanceId = useMemo( () => parseInt( ( Math.random() * 1000000 ), 10 ), [] )
 
+	const hasToggle = props.hasToggle && props.onChange
+
 	const checkIfAttributeShouldToggleOn = useCallback( ( attributes, blockProps ) => {
 		if ( ! props.hasToggle || ! props.toggleAttributeName || ! props.toggleOnSetAttributes.length ) {
 			return attributes
@@ -86,8 +88,6 @@ const PanelAdvancedSettings = props => {
 		'ugb-toggle-panel-body--advanced': showAdvanced,
 		[ `ugb-panel--${ props.id }` ]: props.id,
 	} )
-
-	const hasToggle = props.hasToggle && props.onChange
 
 	const title = useMemo( () => {
 		return <Fragment>

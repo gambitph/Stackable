@@ -5,22 +5,9 @@ module.exports = [
 		use: {
 			loader: 'babel-loader',
 			options: {
-				// presets: ['es2015'],
 				presets: [ '@wordpress/babel-preset-default' ],
 				// Cache compilation results in ./node_modules/.cache/babel-loader/
 				cacheDirectory: true,
-				plugins: [
-					'@babel/plugin-proposal-class-properties',
-					'@babel/plugin-transform-destructuring',
-					'@babel/plugin-proposal-object-rest-spread',
-					'@babel/plugin-proposal-optional-chaining',
-					[
-						'@babel/plugin-transform-react-jsx',
-						{
-							pragma: 'wp.element.createElement',
-						},
-					]
-				]
 			}
 		},
 		resolve: {
@@ -36,7 +23,20 @@ module.exports = [
 	},
 	{
 		test: /\.svg$/,
-		use: ['@svgr/webpack'], // Settings are in .svgrrc
+		// Settings are in .svgrrc
+		use: [
+			{
+				loader: 'babel-loader', // Use our own babel-loader instead of the included one.
+				options: {
+					presets: [ '@wordpress/babel-preset-default' ],
+					cacheDirectory: true,
+				},
+			},
+			{
+				loader: '@svgr/webpack',
+				options: { babel: false },
+			}
+		],
 	},
 	{
 		test: /\.(png|jpg|gif)$/,

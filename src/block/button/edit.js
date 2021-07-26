@@ -20,6 +20,7 @@ import {
 	BlockStyle,
 	CustomAttributes,
 	EffectsAnimations,
+	ConditionalDisplay,
 } from '~stackable/block-components'
 import {
 	useBlockHoverClass,
@@ -87,6 +88,7 @@ const Edit = props => {
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-button" />
 			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
 
 			<ButtonStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-button" />
@@ -99,7 +101,6 @@ const Edit = props => {
 						className={ typographyInnerClassNames }
 						placeholder={ __( 'Button text', i18n ) }
 						withoutInteractiveFormatting={ true }
-						keepPlaceholderOnFocus
 						onReplace={ onReplace }
 						onSplit={ value => createBlock(
 							'stackable/button',

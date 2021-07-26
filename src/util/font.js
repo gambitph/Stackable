@@ -23,7 +23,7 @@ export const getGoogleFontURL = fontName => {
 	return `https://fonts.googleapis.com/css?family=${ family }:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic${ subset }`
 }
 
-export const isWebFont = fontName => ! fontName.match( /^(sans[-+]serif|serif|monospace|serif-alt)$/i )
+export const isWebFont = fontName => ! fontName?.match( /^(sans[-+]serif|serif|monospace|serif-alt)$/i )
 
 /**
  * Load the stylesheet of a Google Font.

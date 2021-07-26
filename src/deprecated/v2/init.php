@@ -165,6 +165,10 @@ if ( ! function_exists( 'stackable_block_editor_assets_v2' ) ) {
 	 * @since 3.0.0
 	 */
 	function stackable_block_editor_assets_v2() {
+		if ( ! is_admin() ) {
+			return;
+		}
+
 		// Backend editor scripts: blocks.
 		$dependencies = array( 'ugb-block-js', 'ugb-block-js-vendor', 'code-editor', 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'wp-util', 'wp-plugins', 'wp-edit-post', 'wp-i18n', 'wp-api' );
 		wp_register_script(

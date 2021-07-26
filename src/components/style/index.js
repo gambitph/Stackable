@@ -1,5 +1,6 @@
 import compareVersions from 'compare-versions'
 import { getEditorStylesOnly, generateStyles } from '~stackable/block-components/style'
+import { useDynamicContent } from '../dynamic-content-control'
 import { appendImportant, minifyCSS } from '~stackable/util'
 import {
 	Fragment, memo, useMemo,
@@ -31,13 +32,13 @@ const Style = memo( props => {
 		return generateStyles( doImportant( stylesToRender ), blockUniqueClassName, breakTablet, breakMobile )
 	}, [ doRender, styles, deviceType, blockUniqueClassName, breakTablet, breakMobile ] )
 
+	const output = useDynamicContent( css.join( '' ) )
+
 	if ( ! doRender || ! css ) {
 		return null
 	}
 
-	const output = css.join( '' )
-
-	return output ? <style>{ css.join( '' ) }</style> : null
+	return output ? <style>{ output }</style> : null
 } )
 
 Style.defaultProps = {

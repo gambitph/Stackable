@@ -34,6 +34,7 @@ import {
 	BlockStyle,
 	CustomAttributes,
 	EffectsAnimations,
+	ConditionalDisplay,
 } from '~stackable/block-components'
 
 /**
@@ -123,6 +124,7 @@ const Edit = props => {
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-card" />
 			<Responsive.InspectorControls />
+			<ConditionalDisplay.InspectorControls />
 
 			<CardStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-card" />

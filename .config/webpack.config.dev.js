@@ -69,8 +69,8 @@ module.exports = [ {
     devtool: 'cheap-module-source-map',
 
 	entry: {
-		'frontend_blocks': path.resolve( __dirname, '../src/block-frontend.js' ),
 		'admin_welcome': path.resolve( __dirname, '../src/welcome/admin.js' ),
+		// V2 deprecated script, we build this here since that's how we did it before.
 		'frontend_blocks_deprecated_v2': {
 			import: path.resolve( __dirname, '../src/deprecated/v2/block-frontend.js' ),
 			filename: 'deprecated/[name].js'
@@ -109,24 +109,26 @@ module.exports = [ {
 
 	plugins,
 },
-// These files are meant to be very lightweight
+
+/**
+ * Frontend files are meant to be very lightweight, so no Babel, just make use
+ * of eslint-plugin-compat to make sure that we only use JS functions that are
+ * compatible with the browsers we support.
+ */
 {
     mode: 'development',
 
     devtool: 'cheap-module-source-map',
 
+	target: [ 'web', 'es2017' ],
+
 	entry: {
+		'frontend_blocks': path.resolve( __dirname, '../src/block-frontend.js' ),
     },
 
 	output: {
 		filename: '[name].js',
 	    library: '[name]',  // it assigns this module to the global (window) object
-    },
-
-    resolve: {
-        alias: {
-            '~stackable': path.resolve( __dirname, '../src/' )
-        }
     },
 
     // Clean up build output
@@ -139,28 +141,4 @@ module.exports = [ {
 		timings: true,
 		warnings: true,
     },
-
-	module: {
-		rules: [
-			{
-				test: /\.js$/,
-				exclude: /(node_modules|bower_components)/,
-				use: {
-					loader: 'babel-loader',
-					options: {
-						// presets: ['es2015'],
-						presets: [ '@wordpress/babel-preset-default' ],
-						// Cache compilation results in ./node_modules/.cache/babel-loader/
-						cacheDirectory: true,
-						plugins: [
-							'@babel/plugin-proposal-class-properties',
-						]
-					}
-				},
-				resolve: {
-					fullySpecified: false
-				},
-			},
-		],
-	},
 } ]

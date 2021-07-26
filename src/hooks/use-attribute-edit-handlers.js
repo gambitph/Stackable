@@ -26,7 +26,7 @@ export const useAttributeEditHandlers = ( attrNameTemplate = '%s' ) => {
 
 	const getAttribute = useCallback( ( attrName, device = 'desktop', state = 'normal' ) => {
 		const getAttrName = getAttrNameFunction( attrNameTemplate )
-		const attributes = select( 'core/block-editor' ).getBlockAttributes( clientId )
+		const attributes = select( 'core/block-editor' ).getBlockAttributes( clientId ) || {}
 		return attributes[ getAttributeName( getAttrName( attrName ), device, state ) ]
 	}, [ clientId, attrNameTemplate ] )
 
