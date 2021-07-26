@@ -1,0 +1,38 @@
+.stk-icon-list {
+	/**
+	 * Use our own way of
+	 * adding list markers for
+	 * unordered list.
+	 */
+	ul {
+		margin: 0 !important;
+		padding: 0 !important;
+		list-style: none !important;
+
+		& > li {
+			list-style: none !important;
+			&::before {
+				content: "";
+				background-size: contain !important;
+				background-repeat: no-repeat;
+				background-position: center;
+				margin-bottom: 5px;
+				height: var(--icon-size, 16px);
+				width: var(--icon-size, 16px);
+				vertical-align: middle;
+				display: inline-block;
+				margin-inline-end: 1em;
+			}
+
+			& > ul,
+			& > ol {
+				margin-inline-start: calc(var(--icon-size, 16px) + 1em) !important;
+			}
+		}
+	}
+
+	li {
+		margin-top: 0 !important;
+		margin-bottom: 16px;
+	}
+}

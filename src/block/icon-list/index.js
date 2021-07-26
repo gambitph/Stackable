@@ -7,6 +7,7 @@ import { IconListIcon } from '~stackable/icons'
  * Internal dependencies
  */
 import edit from './edit'
+import save from './save'
 import metadata from './block.json'
 import schema from './schema'
 
@@ -24,4 +25,5 @@ export const settings = {
 	},
 
 	edit,
+	save,
 }

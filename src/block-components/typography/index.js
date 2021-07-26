@@ -26,6 +26,7 @@ export const Typography = props => {
 		defaultTag,
 		value,
 		onChange,
+		children,
 		...rest
 	} = props
 
@@ -40,7 +41,9 @@ export const Typography = props => {
 			value={ value === null ? getAttribute( 'text' ) : value }
 			onChange={ onChange === null ? value => updateAttribute( 'text', value ) : onChange }
 			{ ...rest }
-		/>
+		>
+			{ children }
+		</RichText>
 	)
 }
 
@@ -60,6 +63,7 @@ Typography.Content = props => {
 		tagName,
 		defaultTag,
 		value,
+		children,
 		...rest
 	} = props
 
@@ -74,7 +78,9 @@ Typography.Content = props => {
 			tagName={ ( tagName === null ? getAttribute( 'textTag' ) : tagName ) || defaultTag }
 			value={ value === null ? getAttribute( 'text' ) : value }
 			{ ...rest }
-		/>
+		>
+			{ children }
+		</RichText.Content>
 	)
 }
 

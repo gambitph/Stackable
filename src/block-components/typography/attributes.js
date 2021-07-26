@@ -65,6 +65,7 @@ export const addAttributes = ( attrObject, selector = '.stk-content', options = 
 		attrNameTemplate = '%s',
 		multiline,
 		defaultText = '',
+		multilineWrapperTags: __unstableMultilineWrapperTags,
 	} = options
 
 	const attributesToExclude = []
@@ -92,6 +93,7 @@ export const addAttributes = ( attrObject, selector = '.stk-content', options = 
 					selector,
 					multiline,
 					default: defaultText,
+					__unstableMultilineWrapperTags,
 				},
 			} : {} ),
 			...( hasTextTag ? {
