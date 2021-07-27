@@ -23,8 +23,17 @@
 	border-width: 1px;
 	border-style: none;
 }
-.stk--inner-svg {
-	transition: all 0.12s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+.stk--svg-wrapper {
+	.stk--shape-icon,
+	.stk--shape-icon > *,
+	.stk--shape-icon > * > *,
+	.stk--inner-svg {
+		&,
+		& > *,
+		& > * > * {
+			transition: all 0.12s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+		}
+	}
 }
 
 // Comment for now but keep updating this, will need to test first if animations become slow since this may bog down the browser.

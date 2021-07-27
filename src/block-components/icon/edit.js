@@ -215,9 +215,9 @@ export const Edit = props => {
 											min={ 0 }
 											max={ 99 }
 											step={ 1 }
-											sliderMax={ 5 }
+											sliderMax={ 20 }
 											defaultLocked={ true }
-											attribute="shapeOutLineWidth"
+											attribute="shapeOutlineWidth"
 											responsive="all"
 											hover="all"
 											default="1"

@@ -121,7 +121,13 @@ export const Icon = props => {
 	return (
 		<span // eslint-disable-line
 			className="stk--svg-wrapper"
-			onClick={ () => setIsOpen( ! isOpen ) }
+			onClick={ event => {
+				// Only register a click to .stk--inner-svg.
+				if ( event.target.closest( '.stk--inner-svg' ) ) {
+					setIsOpen( ! isOpen )
+				}
+			} }
+
 		>
 			<SVGIcon
 				className="stk--inner-svg"

@@ -15,7 +15,7 @@ const getStyleParams = ( options = {} ) => {
 	} = options
 
 	const getSvgSelector = ( getAttribute, _selector = selector, suffixes = [] ) => {
-		const svgSelector = `${ _selector } .stk--inner-svg svg${ getAttribute( 'iconColorType' ) === 'gradient' ? ':last-child' : '' }`
+		const svgSelector = `${ _selector } .stk--inner-svg svg:last-child`
 		if ( suffixes.length ) {
 			return suffixes.map( suffix => svgSelector + suffix )
 		}
@@ -85,6 +85,14 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			selector: `${ selector } #${ uniqueId }`,
+			styleRule: 'transform',
+			format: 'rotate(%sdeg)',
+			attrName: 'iconColorGradientDirection',
+			hover: 'all',
+			hoverSelector: `${ selector }:hover #${ uniqueId }`,
+		},
+		{
+			selector: `${ selector } #${ uniqueId }`,
 			styles: {
 				[ `--${ uniqueId }-color-1` ]: 'iconColor1',
 				[ `--${ uniqueId }-color-2` ]: 'iconColor2',
@@ -109,7 +117,7 @@ const getStyleParams = ( options = {} ) => {
 			hoverSelector: shapeHoverSelector,
 			styleRule: 'backgroundColor',
 			attrName: 'shapeColor',
-			enabledCallback: attributes => attributes.shaped,
+			enabledCallback: getAttribute => getAttribute( 'shaped' ),
 			hover: 'all',
 			dependencies: [ 'shaped' ],
 		},
@@ -119,7 +127,7 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'borderRadius',
 			attrName: 'shapeBorderRadius',
 			format: `%s%`,
-			enabledCallback: attributes => attributes.shaped,
+			enabledCallback: getAttribute => getAttribute( 'shaped' ),
 			hover: 'all',
 			dependencies: [ 'shaped' ],
 		},
@@ -129,7 +137,7 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'padding',
 			attrName: 'shapePadding',
 			format: `%spx`,
-			enabledCallback: attributes => attributes.shaped,
+			enabledCallback: getAttribute => getAttribute( 'shaped' ),
 			hover: 'all',
 			dependencies: [ 'shaped' ],
 		},
@@ -139,7 +147,7 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'borderColor',
 			attrName: 'shapeOutlineColor',
 			valuePreCallback: ( value, getAttribute ) => getAttribute( 'shapeOutline' ) ? value : undefined,
-			enabledCallback: attributes => attributes.shaped,
+			enabledCallback: getAttribute => getAttribute( 'shaped' ),
 			hover: 'all',
 			dependencies: [ 'shapeOutline', 'shaped' ],
 		},
@@ -161,7 +169,7 @@ const getStyleParams = ( options = {} ) => {
 
 				return 'solid'
 			},
-			enabledCallback: attributes => attributes.shaped,
+			enabledCallback: getAttribute => getAttribute( 'shaped' ),
 			hover: 'all',
 			dependencies: [ 'shaped', 'shapeOutline', 'shapeOutlineWidth' ],
 		},
@@ -217,7 +225,7 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'fill',
 			attrName: 'backgroundShapeColor',
 			hover: 'all',
-			enabledCallback: attributes => attributes.showBackgroundShape,
+			enabledCallback: getAttribute => getAttribute( 'showBackgroundShape' ),
 			dependencies: [ 'showBackgroundShape' ],
 		},
 		{
@@ -226,7 +234,7 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'opacity',
 			attrName: 'backgroundShapeOpacity',
 			hover: 'all',
-			enabledCallback: attributes => attributes.showBackgroundShape,
+			enabledCallback: getAttribute => getAttribute( 'showBackgroundShape' ),
 			dependencies: [ 'showBackgroundShape' ],
 		},
 		{
@@ -240,6 +248,8 @@ const getStyleParams = ( options = {} ) => {
 				const backgroundShapeOffsetVertical = getAttribute( 'backgroundShapeOffsetVertical', 'desktop', state )
 
 				const transform = compact( [
+					'translateX(-50%)',
+					'translateY(-50%)',
 					backgroundShapeSize !== '' ? `scale(${ backgroundShapeSize })` : undefined,
 					backgroundShapeOffsetHorizontal !== '' ? `translateX(${ backgroundShapeOffsetHorizontal }px)` : undefined,
 					backgroundShapeOffsetVertical !== '' ? `translateY(${ backgroundShapeOffsetVertical }px)` : undefined,
@@ -248,7 +258,7 @@ const getStyleParams = ( options = {} ) => {
 				return transform
 			},
 			dependencies: [ 'showBackgroundShape', 'backgroundShapeSize', 'backgroundShapeOffsetVertical', 'backgroundShapeOffsetHorizontal' ],
-			enabledCallback: attributes => attributes.showBackgroundShape,
+			enabledCallback: getAttribute => getAttribute( 'showBackgroundShape' ),
 		},
 	]
 }
