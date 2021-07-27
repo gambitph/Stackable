@@ -9,7 +9,13 @@ import { IconListStyles } from './style'
 import classnames from 'classnames'
 import { i18n, version as VERSION } from 'stackable'
 import {
-	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, AdvancedRangeControl, IconControl, ColorPaletteControl, IconSearchPopover,
+	InspectorTabs,
+	InspectorStyleControls,
+	PanelAdvancedSettings,
+	AdvancedRangeControl,
+	IconControl,
+	ColorPaletteControl,
+	IconSearchPopover,
 } from '~stackable/components'
 import {
 	useBlockHoverClass,
