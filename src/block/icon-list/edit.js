@@ -140,7 +140,7 @@ const Edit = props => {
 		event.target.parentElement.currentlyOpenIndex = undefined
 		setIconSearchAnchor( null )
 		return setIsOpenIconSearch( false )
-	}, [] )
+	}, [ deviceType, props.attributes.iconSize, props.attributes.iconSizeTablet, props.attributes.iconSizeMobile ] )
 
 	useEffect( () => {
 		textRef.current.addEventListener( 'click', iconClickHandler )
@@ -150,7 +150,8 @@ const Edit = props => {
 				textRef.current.removeEventListener( 'click', iconClickHandler )
 			}
 		}
-	}, [] )
+	}, [ iconClickHandler, textRef.current ] )
+
 	const {
 		attributes,
 		setAttributes,
