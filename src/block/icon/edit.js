@@ -52,7 +52,7 @@ const Edit = props => {
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 			<EffectsAnimations.InspectorControls />
-			<Icon.InspectorControls />
+			<Icon.InspectorControls initialOpen={ true } />
 			<CustomAttributes.InspectorControls />
 			<CustomCSS.InspectorControls mainBlockClass="stk-icon" />
 			<Responsive.InspectorControls />

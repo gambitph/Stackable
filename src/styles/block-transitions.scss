@@ -25,12 +25,10 @@
 }
 .stk--svg-wrapper {
 	.stk--shape-icon,
-	.stk--shape-icon > *,
-	.stk--shape-icon > * > *,
 	.stk--inner-svg {
 		&,
-		& > *,
-		& > * > * {
+		& > svg,
+		& > svg > * {
 			transition: all 0.12s cubic-bezier(0.45, 0.05, 0.55, 0.95);
 		}
 	}
@@ -48,7 +46,7 @@
 // 	will-change: filter;
 // }
 // .stk-block p,
-// .stk-block h1,
+// .stk-block h1
 // .stk-block h2,
 // .stk-block h3,
 // .stk-block h4,

@@ -131,6 +131,8 @@ export const addAttributes = ( attrObject, options = {} ) => {
 		hasGradient = true,
 		hasShape = true,
 		hasBackgroundShape = true,
+		hasIconGap = false,
+		hasIconPosition = false,
 	} = options
 
 	const finalExcludedAttributes = [ ...excludedAttributes ]
@@ -164,6 +166,18 @@ export const addAttributes = ( attrObject, options = {} ) => {
 			'backgroundShapeSize',
 			'backgroundShapeOffsetHorizontal',
 			'backgroundShapeOffsetVertical'
+		)
+	}
+
+	if ( ! hasIconGap ) {
+		finalExcludedAttributes.push(
+			'iconGap'
+		)
+	}
+
+	if ( ! hasIconPosition ) {
+		finalExcludedAttributes.push(
+			'iconPosition'
 		)
 	}
 

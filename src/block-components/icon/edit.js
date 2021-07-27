@@ -30,7 +30,10 @@ export const Edit = props => {
 	const {
 		hasGradient,
 		hasShape,
+		hasIconGap,
+		hasIconPosition,
 		hasBackgroundShape,
+		initialOpen,
 	} = props
 
 	const {
@@ -43,6 +46,7 @@ export const Edit = props => {
 			<PanelAdvancedSettings
 				title={ __( 'Icon', i18n ) }
 				id="icon"
+				initialOpen={ initialOpen }
 			>
 
 				<IconControl
@@ -108,8 +112,8 @@ export const Edit = props => {
 				<AdvancedRangeControl
 					label={ __( 'Icon Size', i18n ) }
 					attribute="iconSize"
-					min={ 0 }
-					max={ 100 }
+					sliderMin={ 0 }
+					sliderMax={ 100 }
 					step={ 1 }
 					allowReset={ true }
 					hover="all"
@@ -136,23 +140,27 @@ export const Edit = props => {
 					hover="all"
 				/>
 
-				<AdvancedSelectControl
-					label={ __( 'Icon Position', i18n ) }
-					attribute="iconPosition"
-					options={ [
-						{ value: '', label: __( 'Left', i18n ) },
-						{ value: 'right', label: __( 'Right', i18n ) },
-					] }
-				/>
+				{ hasIconPosition && (
+					<AdvancedSelectControl
+						label={ __( 'Icon Position', i18n ) }
+						attribute="iconPosition"
+						options={ [
+							{ value: '', label: __( 'Left', i18n ) },
+							{ value: 'right', label: __( 'Right', i18n ) },
+						] }
+					/>
+				) }
 
-				<AdvancedRangeControl
-					label={ __( 'Icon Gap', i18n ) }
-					attribute="iconGap"
-					min={ 0 }
-					max={ 50 }
-					allowReset={ true }
-					placeholder="0"
-				/>
+				{ hasIconGap && (
+					<AdvancedRangeControl
+						label={ __( 'Icon Gap', i18n ) }
+						attribute="iconGap"
+						min={ 0 }
+						max={ 50 }
+						allowReset={ true }
+						placeholder="0"
+					/>
+				) }
 
 				{ hasShape && (
 					<Fragment>
@@ -187,8 +195,8 @@ export const Edit = props => {
 									label={ __( 'Shape Padding', i18n ) }
 									attribute="shapePadding"
 									hover="all"
-									min={ 0 }
-									max={ 150 }
+									sliderMin={ 0 }
+									sliderMax={ 150 }
 									step={ 1 }
 									allowReset={ true }
 									placeholder={ 20 }
@@ -313,4 +321,7 @@ Edit.defaultProps = {
 	hasGradient: true,
 	hasShape: true,
 	hasBackgroundShape: true,
+	initialOpen: false,
+	hasIconGap: false,
+	hasIconPosition: false,
 }
