@@ -62,6 +62,12 @@ export const iconListAttributes = {
 		type: 'number',
 		default: '',
 	},
+
+	// Numbers.
+	listType: {
+		type: 'string',
+		default: '',
+	},
 }
 
 export const attributes = ( version = VERSION ) => {

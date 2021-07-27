@@ -16,6 +16,7 @@ import {
 	IconControl,
 	ColorPaletteControl,
 	IconSearchPopover,
+	AdvancedSelectControl,
 } from '~stackable/components'
 import {
 	useBlockHoverClass,
@@ -44,6 +45,25 @@ import {
 	__,
 } from '@wordpress/i18n'
 import { createIconListControls } from './util'
+
+const listTypeOptions = [
+	{
+		label: __( 'Number', i18n ),
+		value: 'decimal',
+	},
+	{
+		label: __( 'Number from zero', i18n ),
+		value: 'decimal-leading-zero',
+	},
+	{
+		label: __( 'Lowercase Roman', i18n ),
+		value: 'lower-roman',
+	},
+	{
+		label: __( 'Uppercase Roman', i18n ),
+		value: 'upper-roman',
+	},
+]
 
 const Edit = props => {
 	const textRef = useRef()
@@ -202,6 +222,13 @@ const Edit = props => {
 							setAttributes( { icon, icons: [] } )
 						} }
 					/>
+
+					<AdvancedSelectControl
+						label={ __( 'List Type', i18n ) }
+						attribute="listType"
+						options={ listTypeOptions }
+					/>
+
 					<ColorPaletteControl
 						label={ __( 'Icon Color', i18n ) }
 						attribute="iconColor"

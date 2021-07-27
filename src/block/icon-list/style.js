@@ -88,6 +88,11 @@ const getStyleParams = ( { attributes = {} } ) => {
 	return [
 		...individualIconStyles,
 		{
+			selector: 'ol',
+			styleRule: 'listStyleType',
+			attrName: 'listType',
+		},
+		{
 			selector: '',
 			styleRule: 'columnCount',
 			attrName: 'columns',
