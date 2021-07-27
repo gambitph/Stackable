@@ -85,6 +85,12 @@ const Edit = props => {
 			}
 
 			event.target.parentElement.currentlyOpenIndex = index
+
+			/**
+			 * Get the CSS selector of the selected icon.
+			 *
+			 * @since 3.0.0
+			 */
 			let traverseToRichText = event.target
 			const selectors = []
 			while ( traverseToRichText.tagName !== 'DIV' ) {
