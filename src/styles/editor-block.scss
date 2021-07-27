@@ -102,11 +102,11 @@
 
 // Block inner blocks.
 .stk-inner-blocks > * > .block-editor-block-list__layout {
-	> [data-type]:first-child {
+	> [data-block]:first-child {
 		margin-top: 0;
 	}
 	// Last of type since there's a .block-list-appender
-	> [data-type]:last-of-type {
+	> [data-block]:nth-last-child(1) {
 		margin-bottom: 0;
 	}
 }
