@@ -134,8 +134,10 @@ export const expandAttributes = attributes => {
 		const suffixes = [ [ name ] ]
 
 		// Add the new attribute names (the order is important).
+		let defaultUnit = 'px'
 		if ( newAttributes[ name ].stkUnits ) {
 			suffixes.push( [ '', 'Unit' ] )
+			defaultUnit = newAttributes[ name ].stkUnits
 		}
 		if ( newAttributes[ name ].stkResponsive ) {
 			suffixes.push( [ '', 'Tablet', 'Mobile' ] )
@@ -147,7 +149,7 @@ export const expandAttributes = attributes => {
 		const attributeNames = getPermutation( suffixes )
 		attributeNames.forEach( attributeName => {
 			// Form the new attributes
-			const parameters = { ...omit( attributes[ name ], REMOVE_ATTRS ) }
+			const parameters = omit( { ...attributes[ name ] }, REMOVE_ATTRS )
 
 			// Override the default
 			if ( attributeName !== name ) {
@@ -157,7 +159,7 @@ export const expandAttributes = attributes => {
 			// If this is a unit, then the default value is the unit itself.
 			if ( attributeName.startsWith( `${ name }Unit` ) ) {
 				parameters.type = 'string'
-				parameters.default = newAttributes[ name ].stkUnits || 'px'
+				parameters.default = defaultUnit
 			}
 
 			// Add the new attribute.

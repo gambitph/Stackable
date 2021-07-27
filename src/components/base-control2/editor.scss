@@ -1,6 +1,8 @@
 $right-space: 28px;
 .stk-control {
-	padding-right: $right-space !important;
+	&:not(.stk--no-padding) {
+		padding-right: $right-space !important;
+	}
 }
 
 .stk-control-label {

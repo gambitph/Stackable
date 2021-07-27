@@ -1,6 +1,8 @@
 .stk-img-wrapper {
-	cursor: copy;
 	position: relative;
+	&:not(.stk--no-click-to-edit) {
+		cursor: copy;
+	}
 
 	&:hover {
 		img {
@@ -135,7 +137,7 @@
 
 .stk-image-size-popup {
 	.components-popover__content {
-		padding: 8px 16px;
+		padding: 16px;
 		min-width: auto;
 		width: 200px;
 		font-size: 12px;
@@ -146,12 +148,17 @@
 		}
 		.stk-image-size-popup__x {
 			align-self: flex-end;
-			height: 34px;
+			padding: 0 8px;
+			line-height: 34px;
 		}
 		.stk-image-size-popup__reset {
 			align-self: flex-end;
 			margin-bottom: 10px;
 		}
+	}
+	.components-base-control,
+	.components-base-control__field {
+		margin-bottom: 0 !important;
 	}
 	// Wide when we can edit both width and height
 	&.stk--is-wide {

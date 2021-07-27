@@ -32,7 +32,8 @@ const getStyleParams = ( options = {} ) => {
 
 	return [
 		{
-			selector,
+			selector: `${ selector }:not(.stk--is-resizing)`,
+			renderIn: 'edit',
 			styleRule: 'width',
 			attrName: 'imageWidth',
 			hasUnits: '%',
@@ -41,13 +42,41 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			selector,
+			renderIn: 'save',
+			styleRule: 'width',
+			attrName: 'imageWidth',
+			hasUnits: '%',
+			responsive: 'all',
+			enabledCallback: () => enableWidth,
+		},
+		{
+			selector: `${ selector }:not(.stk--is-resizing)`,
+			renderIn: 'edit',
 			styleRule: 'height',
 			attrName: 'imageHeight',
+			hasUnits: 'px',
 			responsive: 'all',
 			enabledCallback: () => enableHeight,
 		},
 		{
 			selector,
+			renderIn: 'save',
+			styleRule: 'height',
+			attrName: 'imageHeight',
+			hasUnits: 'px',
+			responsive: 'all',
+			enabledCallback: () => enableHeight,
+		},
+		{
+			selector: `${ selector } .stk-img-resizer-wrapper`,
+			renderIn: 'edit',
+			styleRule: 'boxShadow',
+			attrName: 'imageShadow',
+			hover: 'all',
+		},
+		{
+			selector,
+			renderIn: 'save',
 			styleRule: 'boxShadow',
 			attrName: 'imageShadow',
 			hover: 'all',
@@ -66,7 +95,15 @@ const getStyleParams = ( options = {} ) => {
 			hover: 'all',
 		},
 		{
-			selector: `${ selector } img`,
+			selector: `${ selector } .stk-img-resizer-wrapper`,
+			renderIn: 'edit',
+			styleRule: 'borderRadius',
+			attrName: 'imageBorderRadius',
+			format: '%spx',
+		},
+		{
+			selector: `${ selector }`,
+			renderIn: 'save',
 			styleRule: 'borderRadius',
 			attrName: 'imageBorderRadius',
 			format: '%spx',

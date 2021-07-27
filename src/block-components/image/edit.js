@@ -45,6 +45,7 @@ export const Edit = props => {
 			<PanelAdvancedSettings
 				title={ __( 'Image', i18n ) }
 				id="image"
+				initialOpen={ props.initialOpen }
 			>
 				<ImageControl2 // TODO: add selected image size as a prop.
 					label={ __( 'Select Image', i18n ) }
@@ -88,7 +89,7 @@ export const Edit = props => {
 						sliderMax={ props.heightMax }
 						step={ props.heightStep }
 						allowReset={ true }
-						placeholder="300" // TODO: This should be referenced somewher instead of just a static number
+						placeholder=""
 						responsive="all"
 					/>
 				}
@@ -223,6 +224,7 @@ export const Edit = props => {
 }
 
 Edit.defaultProps = {
+	initialOpen: false,
 	hasWidth: true,
 	widthUnits: [ 'px', '%', 'vw' ],
 	widthMin: [ 0, 0, 0 ],

@@ -114,8 +114,8 @@ const Edit = props => {
 			<Image.InspectorControls
 				hasWidth={ blockStyle === 'horizontal' }
 				hasHeight={ blockStyle !== 'horizontal' }
-				heightUnits={ [ 'px' ] }
-				widthUnits={ [ 'px' ] }
+				widthUnits={ widthUnit }
+				heightUnits={ heightUnit }
 				hasBorderRadius={ false }
 				hasShape={ false }
 			/>

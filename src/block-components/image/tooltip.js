@@ -14,7 +14,7 @@ import { i18n } from 'stackable'
  * WordPress dependencies
  */
 import {
-	BaseControl, Button, Popover,
+	BaseControl, Popover,
 } from '@wordpress/components'
 import {
 	Fragment, useState, useEffect, useRef, useCallback,
@@ -95,6 +95,7 @@ const Tooltip = props => {
 		units={ props.widthUnits }
 		unit={ props.widthUnit }
 		value={ currentWidth }
+		allowReset={ props.allowReset }
 		onChangeUnit={ unit => {
 			if ( unit === props.widthUnit ) {
 				return
@@ -116,7 +117,6 @@ const Tooltip = props => {
 				width = prevSwitchedWidth
 				setPrevSwitchedWidth( null )
 			}
-
 			props.onChangeWidth( { value: width, unit } )
 			focusInput()
 		} }
@@ -128,6 +128,12 @@ const Tooltip = props => {
 					value: clampSize( value, props.widthUnit ),
 					unit: props.widthUnit,
 				} )
+			} else if ( value === '' ) { // Reset.
+				setPrevSwitchedWidth( null )
+				setCurrentWidth( '' )
+				if ( props.enableWidth ) {
+					props.onChangeWidth( { value: '', unit: '' } )
+				}
 			}
 		} }
 	/>
@@ -138,6 +144,7 @@ const Tooltip = props => {
 		units={ props.heightUnits }
 		unit={ props.heightUnit }
 		value={ currentHeight }
+		allowReset={ props.allowReset }
 		onChangeUnit={ unit => {
 			if ( unit === props.heightUnit ) {
 				return
@@ -171,29 +178,18 @@ const Tooltip = props => {
 					value: clampSize( value, props.heightUnit ),
 					unit: props.heightUnit,
 				} )
+			} else if ( value === '' ) { // Reset.
+				setPrevSwitchedHeight( null )
+				setCurrentHeight( '' )
+				if ( props.enableHeight ) {
+					props.onChangeHeight( { value: '', unit: '' } )
+				}
 			}
 		} }
 	/>
 
-	const resetButton = <Button
-		className="stk-image-size-popup__reset"
-		isSecondary
-		isSmall
-		onClick={ () => {
-			setPrevSwitchedHeight( null )
-			setPrevSwitchedWidth( null )
-			setCurrentHeight( '' )
-			setCurrentWidth( '' )
-			if ( props.enableWidth ) {
-				props.onChangeWidth( { value: '', unit: '' } )
-			}
-			if ( props.enableHeight ) {
-				props.onChangeHeight( { value: '', unit: '' } )
-			}
-		} }
-	>
-		{ __( 'Reset', i18n ) }
-	</Button>
+	const labelWidth = ( currentWidth || props.width ) === 'auto' ? 'auto' : `${ currentWidth || props.width }${ props.widthUnit }`
+	const labelHeight = ( currentHeight || props.height ) === 'auto' ? 'auto' : `${ currentHeight || props.height }${ props.heightUnit }`
 
 	return (
 		<Fragment>
@@ -212,14 +208,15 @@ const Tooltip = props => {
 						{ props.enableWidth && props.enableHeight &&
 							<BaseControl
 								help={ props.help }
-								className={ classnames( 'ugb-advanced-text-control', props.className ) }
+								className={ classnames( 'stk-control stk--no-padding', props.className ) }
 							>
-								<div className="components-base-control__label">{ __( 'Image Size', i18n ) }</div>
+								<div className="stk-control-label">
+									<div className="components-base-control__label"><h3>{ __( 'Image Size', i18n ) }</h3></div>
+								</div>
 								<div className="stk-image-size-popup__control-wrapper">
 									{ widthControl }
 									<span className="stk-image-size-popup__x">×</span>
 									{ heightControl }
-									{ props.allowReset && resetButton }
 								</div>
 							</BaseControl>
 						}
@@ -227,7 +224,6 @@ const Tooltip = props => {
 							<div className="stk-image-size-popup__control-wrapper">
 								{ props.enableWidth && ! props.enableHeight && widthControl }
 								{ ! props.enableWidth && props.enableHeight && heightControl }
-								{ props.allowReset && resetButton }
 							</div>
 						}
 					</div>
@@ -247,9 +243,9 @@ const Tooltip = props => {
 				} }
 				ref={ tooltipRef }
 			>
-				{ props.enableWidth ? `${ currentWidth || props.width }${ props.widthUnit }` : null }
+				{ props.enableWidth ? labelWidth : null }
 				{ props.enableWidth && props.enableHeight ? ' × ' : null }
-				{ props.enableHeight ? `${ currentHeight || props.height }${ props.heightUnit }` : null }
+				{ props.enableHeight ? labelHeight : null }
 			</div>
 		</Fragment>
 	)
