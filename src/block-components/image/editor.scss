@@ -137,7 +137,7 @@
 
 .stk-image-size-popup {
 	.components-popover__content {
-		padding: 8px 16px;
+		padding: 16px;
 		min-width: auto;
 		width: 200px;
 		font-size: 12px;
@@ -147,16 +147,16 @@
 			margin-top: 8px;
 		}
 		.stk-image-size-popup__x {
-			align-self: center;
-			height: 34px;
-			margin-top: 29px;
+			align-self: flex-end;
 			padding: 0 8px;
+			line-height: 34px;
 		}
 		.stk-image-size-popup__reset {
 			align-self: flex-end;
 			margin-bottom: 10px;
 		}
 	}
+	.components-base-control,
 	.components-base-control__field {
 		margin-bottom: 0 !important;
 	}

@@ -208,9 +208,11 @@ const Tooltip = props => {
 						{ props.enableWidth && props.enableHeight &&
 							<BaseControl
 								help={ props.help }
-								className={ classnames( 'ugb-advanced-text-control', props.className ) }
+								className={ classnames( 'stk-control stk--no-padding', props.className ) }
 							>
-								<div className="components-base-control__label">{ __( 'Image Size', i18n ) }</div>
+								<div className="stk-control-label">
+									<div className="components-base-control__label"><h3>{ __( 'Image Size', i18n ) }</h3></div>
+								</div>
 								<div className="stk-image-size-popup__control-wrapper">
 									{ widthControl }
 									<span className="stk-image-size-popup__x">×</span>
