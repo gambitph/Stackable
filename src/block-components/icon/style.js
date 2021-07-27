@@ -10,7 +10,6 @@ import { Style as StyleComponent } from '~stackable/components'
 const getStyleParams = ( options = {} ) => {
 	const {
 		selector = '',
-		uniqueId = '',
 		hoverSelector = '',
 	} = options
 
@@ -76,27 +75,25 @@ const getStyleParams = ( options = {} ) => {
 			attrName: 'iconColor1',
 			valuePreCallback: ( value, getAttribute, device, state ) => {
 				if ( getAttribute( 'iconColorType' ) === 'gradient' && getAttribute( 'iconColor1', 'desktop', state ) && getAttribute( 'iconColor2', 'desktop', state ) ) {
-					return `url(#${ uniqueId })`
+					return `url(#linear-gradient-${ getAttribute( 'uniqueId' ) })`
 				}
 				return value
 			},
-			dependencies: [ 'iconColorType', 'iconColor1', 'iconColor2' ],
+			dependencies: [ 'iconColorType', 'iconColor1', 'iconColor2', 'uniqueId' ],
 			hover: 'all',
 		},
 		{
-			selector: `${ selector } #${ uniqueId }`,
+			selectorCallback: getAttribute => `${ selector } #linear-gradient-${ getAttribute( 'uniqueId' ) }`,
 			styleRule: 'transform',
 			format: 'rotate(%sdeg)',
 			attrName: 'iconColorGradientDirection',
 			hover: 'all',
-			hoverSelector: `${ selector }:hover #${ uniqueId }`,
+			hoverSelectorCallback: getAttribute => `${ selector }:hover #linear-gradient-${ getAttribute( 'uniqueId' ) }`,
 		},
 		{
-			selector: `${ selector } #${ uniqueId }`,
-			styles: {
-				[ `--${ uniqueId }-color-1` ]: 'iconColor1',
-				[ `--${ uniqueId }-color-2` ]: 'iconColor2',
-			},
+			selectorCallback: getAttribute => `${ selector } #linear-gradient-${ getAttribute( 'uniqueId' ) }`,
+			styleRuleCallback: getAttribute => `--linear-gradient-${ getAttribute( 'uniqueId' ) }-color-1`,
+			attrName: 'iconColor1',
 			valuePreCallback: ( value, getAttribute, device, state ) => {
 				if ( getAttribute( 'iconColorType' ) !== 'gradient' ||
 					! getAttribute( 'iconColor1', 'desktop', state ) ||
@@ -107,7 +104,24 @@ const getStyleParams = ( options = {} ) => {
 				return value
 			},
 			hover: 'all',
-			hoverSelector: `${ selector }:hover #${ uniqueId }`,
+			hoverSelectorCallback: getAttribute => `${ selector }:hover #linear-gradient-${ getAttribute( 'uniqueId' ) }`,
+			dependencies: [ 'iconColorType', 'iconColor1', 'iconColor2' ],
+		},
+		{
+			selectorCallback: getAttribute => `${ selector } #linear-gradient-${ getAttribute( 'uniqueId' ) }`,
+			styleRuleCallback: getAttribute => `--linear-gradient-${ getAttribute( 'uniqueId' ) }-color-2`,
+			attrName: 'iconColor2',
+			valuePreCallback: ( value, getAttribute, device, state ) => {
+				if ( getAttribute( 'iconColorType' ) !== 'gradient' ||
+					! getAttribute( 'iconColor1', 'desktop', state ) ||
+					! getAttribute( 'iconColor2', 'desktop', state )
+				) {
+					return undefined
+				}
+				return value
+			},
+			hover: 'all',
+			hoverSelectorCallback: getAttribute => `${ selector }:hover #linear-gradient-${ getAttribute( 'uniqueId' ) }`,
 			dependencies: [ 'iconColorType', 'iconColor1', 'iconColor2' ],
 		},
 
@@ -270,9 +284,7 @@ export const Style = props => {
 		...propsToPass
 	} = props
 
-	const uniqueId = 'linear-gradient-' + attributes.uniqueId
-
-	const styles = useStyles( attributes, getStyleParams( { ...options, uniqueId } ) )
+	const styles = useStyles( attributes, getStyleParams( options ) )
 
 	return (
 		<StyleComponent
@@ -291,9 +303,7 @@ Style.Content = props => {
 		...propsToPass
 	} = props
 
-	const uniqueId = 'linear-gradient-' + attributes.uniqueId
-
-	const styles = getStyles( attributes, getStyleParams( { ...options, uniqueId } ) )
+	const styles = getStyles( attributes, getStyleParams( options ) )
 
 	return (
 		<StyleComponent.Content

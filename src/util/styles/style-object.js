@@ -195,7 +195,8 @@ class StyleObject {
 	add( attributes, styleParams = {}, blockState = 'normal' ) {
 		const {
 			selector: _selector = '',
-			styleRule = '',
+			styleRule: _styleRule = '',
+			styleRuleCallback = null,
 			attrName: _attrName = '',
 			format = '%s',
 			hasUnits = false, // False, or the default unit e.g. 'px' or '%'
@@ -251,6 +252,12 @@ class StyleObject {
 			if ( ! enabledCallback( getAttribute, attributes ) ) {
 				return
 			}
+		}
+
+		let styleRule = _styleRule
+		// Allow style rule to be dynamic.
+		if ( styleRuleCallback ) {
+			styleRule = styleRuleCallback( getAttribute, attributes )
 		}
 
 		let selector = selectorCallback ? selectorCallback( getAttribute, attributes ) : _selector

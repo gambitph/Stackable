@@ -77,7 +77,7 @@ export const Edit = props => {
 							label={ getAttribute( 'iconColorType' ) === 'gradient' && hasGradient ? sprintf( __( 'Icon Color #%s', i18n ), 1 )
 								: __( 'Icon Color', i18n ) }
 							attribute="iconColor1"
-							hover="all"
+							hover={ getAttribute( 'iconColorType' ) !== 'gradient' ? 'all' : undefined }
 						/>
 						{ getAttribute( 'iconColorType' ) === 'gradient' && hasGradient && (
 							<Fragment>
