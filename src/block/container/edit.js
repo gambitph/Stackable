@@ -49,7 +49,7 @@ const Edit = props => {
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-container-block',
+		'stk-block-container',
 		blockHoverClass,
 	] )
 
@@ -58,7 +58,7 @@ const Edit = props => {
 	const innerClassNames = classnames( [
 		'stk-inner-blocks',
 		blockAlignmentClass,
-		'stk-container-block__content',
+		'stk-block-container__content',
 	], {
 		'stk-container-padding': hasContainer,
 	} )
@@ -74,7 +74,7 @@ const Edit = props => {
 			<BlockLink.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-container-block" />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-container" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
@@ -82,7 +82,7 @@ const Edit = props => {
 
 			<BlockDiv className={ blockClassNames }>
 				<ContainerStyles version={ VERSION } />
-				<CustomCSS mainBlockClass="stk-container-block" />
+				<CustomCSS mainBlockClass="stk-block-container" />
 
 				<ContainerDiv className={ contentClassNames }>
 					<div className={ innerClassNames }>

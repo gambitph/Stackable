@@ -39,7 +39,7 @@ export const Save = props => {
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-container-block',
+		'stk-block-container',
 		responsiveClass,
 	] )
 
@@ -48,7 +48,7 @@ export const Save = props => {
 	const innerClassNames = classnames( [
 		'stk-inner-blocks',
 		blockAlignmentClass,
-		'stk-container-block__content',
+		'stk-block-container__content',
 	], {
 		'stk-container-padding': hasContainer,
 	} )
