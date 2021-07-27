@@ -29,7 +29,7 @@ export const Save = props => {
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-icon',
+		'stk-block-icon',
 		blockAlignmentClass,
 		responsiveClass,
 	] )
