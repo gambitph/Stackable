@@ -23,12 +23,10 @@ export const createIconAttributes = ( options = {} ) => {
 			default: '',
 		},
 		iconColor2: {
-			stkHover: true,
 			type: 'string',
 			default: '',
 		},
 		iconColorGradientDirection: {
-			stkHover: true,
 			type: 'number',
 			default: '',
 		},
@@ -65,7 +63,6 @@ export const createIconAttributes = ( options = {} ) => {
 			default: '',
 		},
 		shapePadding: {
-			stkHover: true,
 			type: 'number',
 			default: '',
 		},
@@ -88,17 +85,14 @@ export const createIconAttributes = ( options = {} ) => {
 			default: '',
 		},
 		backgroundShapeSize: {
-			stkHover: true,
 			type: 'number',
 			default: '',
 		},
 		backgroundShapeOffsetHorizontal: {
-			stkHover: true,
 			type: 'number',
 			default: '',
 		},
 		backgroundShapeOffsetVertical: {
-			stkHover: true,
 			type: 'number',
 			default: '',
 		},
@@ -112,13 +106,11 @@ export const createIconAttributes = ( options = {} ) => {
 			default: '',
 		},
 		iconSize: {
-			stkHover: true,
 			stkResponsive: true,
 			type: 'number',
 			default: '',
 		},
 		shapeOutlineWidth: {
-			stkHover: true,
 			stkResponsive: true,
 			type: 'object',
 		},

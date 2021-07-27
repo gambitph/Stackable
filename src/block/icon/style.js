@@ -24,6 +24,11 @@ const iconStyleOptions = {
 	hoverSelector: ':hover .stk--svg-wrapper',
 }
 
+const alignmentOptions = {
+	selector: '.stk--svg-wrapper',
+	hasJustifyContentAlign: true,
+}
+
 export const IconStyles = props => {
 	const {
 		...propsToPass
@@ -39,7 +44,7 @@ export const IconStyles = props => {
 
 	return (
 		<Fragment>
-			<Alignment.Style { ...propsToPass } />
+			<Alignment.Style { ...propsToPass } options={ alignmentOptions } />
 			<BlockDiv.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
@@ -61,7 +66,7 @@ IconStyles.Content = props => {
 
 	const styles = (
 		<Fragment>
-			<Alignment.Style.Content { ...propsToPass } />
+			<Alignment.Style.Content { ...propsToPass } options={ alignmentOptions } />
 			<BlockDiv.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />

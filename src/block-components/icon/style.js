@@ -22,10 +22,10 @@ const getStyleParams = ( options = {} ) => {
 	}
 
 	const shapeSelector = `${ selector } .stk--inner-svg`
-	const shapeHoverSelector = `${ selector }:hover .stk--inner-svg`
+	const shapeHoverSelector = `${ hoverSelector } .stk--inner-svg`
 
 	const backgroundShapeSelector = `${ selector } .stk--shape-icon`
-	const backgroundShapeHoverSelector = `${ selector }:hover .stk--shape-icon`
+	const backgroundShapeHoverSelector = `${ hoverSelector } .stk--shape-icon`
 
 	return [
 		// Icon Styles
@@ -37,7 +37,6 @@ const getStyleParams = ( options = {} ) => {
 				width: 'iconSize',
 			},
 			responsive: 'all',
-			hover: 'all',
 			format: '%spx',
 		},
 		{
@@ -59,7 +58,7 @@ const getStyleParams = ( options = {} ) => {
 			selector,
 			styleRule: 'flexDirection',
 			attrName: 'iconPosition',
-			valuePreCallback: value => value !== '' ? 'row-reverse' : undefined,
+			valuePreCallback: value => value ? 'row-reverse' : undefined,
 		},
 		{
 			selector,
@@ -87,7 +86,6 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'transform',
 			format: 'rotate(%sdeg)',
 			attrName: 'iconColorGradientDirection',
-			hover: 'all',
 			hoverSelectorCallback: getAttribute => `${ selector }:hover #linear-gradient-${ getAttribute( 'uniqueId' ) }`,
 		},
 		{
@@ -103,7 +101,6 @@ const getStyleParams = ( options = {} ) => {
 				}
 				return value
 			},
-			hover: 'all',
 			hoverSelectorCallback: getAttribute => `${ selector }:hover #linear-gradient-${ getAttribute( 'uniqueId' ) }`,
 			dependencies: [ 'iconColorType', 'iconColor1', 'iconColor2' ],
 		},
@@ -120,7 +117,6 @@ const getStyleParams = ( options = {} ) => {
 				}
 				return value
 			},
-			hover: 'all',
 			hoverSelectorCallback: getAttribute => `${ selector }:hover #linear-gradient-${ getAttribute( 'uniqueId' ) }`,
 			dependencies: [ 'iconColorType', 'iconColor1', 'iconColor2' ],
 		},
@@ -152,7 +148,6 @@ const getStyleParams = ( options = {} ) => {
 			attrName: 'shapePadding',
 			format: `%spx`,
 			enabledCallback: getAttribute => getAttribute( 'shaped' ),
-			hover: 'all',
 			dependencies: [ 'shaped' ],
 		},
 		{
@@ -192,7 +187,6 @@ const getStyleParams = ( options = {} ) => {
 			hoverSelector: shapeHoverSelector,
 			styleRule: 'borderTopWidth',
 			attrName: 'shapeOutlineWidth',
-			hover: 'all',
 			responsive: 'all',
 			format: '%spx',
 			valuePreCallback: ( value, getAttribute ) => getAttribute( 'shapeOutline' ) ? value?.top : undefined,
@@ -203,7 +197,6 @@ const getStyleParams = ( options = {} ) => {
 			hoverSelector: shapeHoverSelector,
 			styleRule: 'borderRightWidth',
 			attrName: 'shapeOutlineWidth',
-			hover: 'all',
 			responsive: 'all',
 			format: '%spx',
 			valuePreCallback: ( value, getAttribute ) => getAttribute( 'shapeOutline' ) ? value?.right : undefined,
@@ -214,7 +207,6 @@ const getStyleParams = ( options = {} ) => {
 			hoverSelector: shapeHoverSelector,
 			styleRule: 'borderBottomWidth',
 			attrName: 'shapeOutlineWidth',
-			hover: 'all',
 			responsive: 'all',
 			format: '%spx',
 			valuePreCallback: ( value, getAttribute ) => getAttribute( 'shapeOutline' ) ? value?.bottom : undefined,
@@ -225,7 +217,6 @@ const getStyleParams = ( options = {} ) => {
 			hoverSelector: shapeHoverSelector,
 			styleRule: 'borderLeftWidth',
 			attrName: 'shapeOutlineWidth',
-			hover: 'all',
 			responsive: 'all',
 			format: '%spx',
 			valuePreCallback: ( value, getAttribute ) => getAttribute( 'shapeOutline' ) ? value?.left : undefined,
@@ -255,7 +246,6 @@ const getStyleParams = ( options = {} ) => {
 			selector: backgroundShapeSelector,
 			hoverSelector: backgroundShapeHoverSelector,
 			styleRule: 'transform',
-			hover: 'all',
 			valuePreCallback: ( value, getAttribute, device, state ) => {
 				const backgroundShapeSize = getAttribute( 'backgroundShapeSize', 'desktop', state )
 				const backgroundShapeOffsetHorizontal = getAttribute( 'backgroundShapeOffsetHorizontal', 'desktop', state )
