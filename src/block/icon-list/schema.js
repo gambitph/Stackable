@@ -6,6 +6,7 @@ import {
 	EffectsAnimations,
 	Responsive,
 	Typography,
+	MarginBottom,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
@@ -84,6 +85,7 @@ export const attributes = ( version = VERSION ) => {
 		multiline: 'li',
 		multilineWrapperTags: [ 'ol', 'ul' ],
 	} )
+	MarginBottom.addAttributes( attrObject )
 
 	attrObject.add( {
 		attributes: iconListAttributes,

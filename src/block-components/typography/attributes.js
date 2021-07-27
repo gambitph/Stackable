@@ -6,7 +6,6 @@ import { omit } from 'lodash'
 const typographyAttributes = {
 	fontSize: {
 		stkResponsive: true,
-		stkHover: true,
 		type: 'number',
 		default: '',
 		stkUnits: 'px',

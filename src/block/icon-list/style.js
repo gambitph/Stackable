@@ -7,7 +7,7 @@ import { convertSVGStringToBase64 } from './util'
  * External dependencies
  */
 import {
-	Typography,
+	Typography, MarginBottom, BlockDiv, Advanced, EffectsAnimations,
 } from '~stackable/block-components'
 import {
 	useBlockAttributes, useDeviceType,
@@ -177,6 +177,10 @@ export const IconListStyles = props => {
 	return (
 		<Fragment>
 			<Typography.Style { ...propsToPass } options={ typographyOptions } />
+			<MarginBottom.Style { ...propsToPass } />
+			<BlockDiv.Style { ...propsToPass } />
+			<EffectsAnimations.Style { ...propsToPass } />
+			<Advanced.Style { ...propsToPass } />
 			<StyleComponent
 				styles={ iconStyles }
 				versionAdded="3.0.0"
@@ -204,6 +208,10 @@ IconListStyles.Content = props => {
 	const styles = (
 		<Fragment>
 			<Typography.Style.Content { ...propsToPass } options={ typographyOptions } />
+			<MarginBottom.Style.Content { ...propsToPass } />
+			<BlockDiv.Style.Content { ...propsToPass } />
+			<EffectsAnimations.Style.Content { ...propsToPass } />
+			<Advanced.Style.Content { ...propsToPass } />
 			<StyleComponent.Content
 				styles={ iconStyles }
 				versionAdded="3.0.0"

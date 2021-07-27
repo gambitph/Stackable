@@ -30,6 +30,7 @@ import {
 	CustomAttributes,
 	EffectsAnimations,
 	getTypographyClasses,
+	MarginBottom,
 } from '~stackable/block-components'
 
 /**
@@ -318,6 +319,7 @@ const Edit = props => {
 						/>
 					) }
 				</div>
+				<MarginBottom />
 			</BlockDiv>
 
 		</Fragment>
