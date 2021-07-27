@@ -34,13 +34,16 @@ const typographyOptions = {
 
 const getStyleParams = ( { attributes = {} } ) => {
 	const selector = [
-		'ol > li:before',
 		'ul > li:before',
+		'ol > li:before',
 	]
 	const hoverSelector = [
-		'.%s:hover ol > li:before',
 		'.%s:hover ul > li:before',
+		'.%s:hover ol > li:before',
 	]
+
+	const orderedListMarkerSelector = 'ol > li::marker'
+	const orderedListMarkerHoverSelector = '.%s:hover ol > li::marker'
 
 	const individualIconStyles = Object.keys( attributes.icons ).reduce( ( acc, key ) => {
 		return [
@@ -49,7 +52,7 @@ const getStyleParams = ( { attributes = {} } ) => {
 				renderIn: 'edit',
 				selector: '> div >' + key + ':before',
 				hover: 'all',
-				hoverSelector: '.%s:hover > div >' + selector + ':before',
+				hoverSelector: '.%s:hover > div >' + key + ':before',
 				styleRule: 'backgroundImage',
 				attrName: 'iconColor',
 				valuePreCallback: ( value, getAttribute, device, state ) => {
@@ -66,7 +69,7 @@ const getStyleParams = ( { attributes = {} } ) => {
 				renderIn: 'save',
 				selector: '>' + key + ':before',
 				hover: 'all',
-				hoverSelector: '.%s:hover >' + selector + ':before',
+				hoverSelector: '.%s:hover >' + key + ':before',
 				styleRule: 'backgroundImage',
 				attrName: 'iconColor',
 				valuePreCallback: ( value, getAttribute, device, state ) => {
@@ -116,6 +119,13 @@ const getStyleParams = ( { attributes = {} } ) => {
 				return `url('data:image/svg+xml;base64,${ iconWithColor }')`
 			},
 			dependencies: [ 'icon' ],
+		},
+		{
+			selector: orderedListMarkerSelector,
+			hover: 'all',
+			hoverSelector: orderedListMarkerHoverSelector,
+			styleRule: 'color',
+			attrName: 'markerColor',
 		},
 		{
 			selector,

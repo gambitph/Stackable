@@ -184,9 +184,9 @@ const Edit = props => {
 
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
-					title={ __( 'Icon', i18n ) }
+					title={ __( 'Icons & Markers', i18n ) }
 					initialOpen={ false }
-					id="icon"
+					id="icon-and-markers"
 				>
 					<IconControl
 						label={ __( 'Icon', i18n ) }
@@ -197,8 +197,14 @@ const Edit = props => {
 						} }
 					/>
 					<ColorPaletteControl
-						label={ __( 'Icon Color', i18n ) }
+						label={ __( 'Icons Color', i18n ) }
 						attribute="iconColor"
+						hover="all"
+					/>
+
+					<ColorPaletteControl
+						label={ __( 'Markers Color', i18n ) }
+						attribute="markerColor"
 						hover="all"
 					/>
 
@@ -247,7 +253,6 @@ const Edit = props => {
 			<BlockDiv className={ blockClassNames }>
 				<div ref={ textRef }>
 					<Typography
-						__unstableMultilineTag={ tagName }
 						tagName={ tagName }
 						multiline="li"
 					>

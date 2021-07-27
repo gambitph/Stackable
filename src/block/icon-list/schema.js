@@ -38,6 +38,11 @@ export const iconListAttributes = {
 		default: '',
 		stkHover: true,
 	},
+	markerColor: {
+		type: 'string',
+		default: '',
+		stkHover: true,
+	},
 	icons: {
 		type: 'object',
 		default: {},
