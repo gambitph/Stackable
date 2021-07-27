@@ -167,7 +167,7 @@ const Edit = props => {
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-icon-list',
+		'stk-block-icon-list',
 		blockHoverClass,
 		textClasses,
 	] )
@@ -285,11 +285,11 @@ const Edit = props => {
 			<Advanced.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-icon-list" />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-icon-list" />
 			<Responsive.InspectorControls />
 
 			<IconListStyles version={ VERSION } />
-			<CustomCSS mainBlockClass="stk-icon-list" />
+			<CustomCSS mainBlockClass="stk-block-icon-list" />
 
 			<BlockDiv className={ blockClassNames }>
 				<div ref={ textRef }>

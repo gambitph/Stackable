@@ -31,7 +31,7 @@ export const Save = props => {
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-icon-list',
+		'stk-block-icon-list',
 		responsiveClass,
 		textClasses,
 	] )
