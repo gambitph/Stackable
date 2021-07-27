@@ -48,7 +48,6 @@ export const iconListAttributes = {
 		default: {},
 	},
 	iconSize: {
-		stkHover: true,
 		stkResponsive: true,
 		type: 'number',
 		default: '',

@@ -188,15 +188,9 @@ const Edit = props => {
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 
-			<Typography.InspectorControls
-				isMultiline={ true }
-				initialOpen={ false }
-				hasTextTag={ false }
-			/>
-
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
-					title={ __( 'Icons & Markers', i18n ) }
+					title={ __( 'Icons & Numbers', i18n ) }
 					initialOpen={ false }
 					id="icon-and-markers"
 				>
@@ -209,13 +203,13 @@ const Edit = props => {
 						} }
 					/>
 					<ColorPaletteControl
-						label={ __( 'Icons Color', i18n ) }
+						label={ __( 'Icon Color', i18n ) }
 						attribute="iconColor"
 						hover="all"
 					/>
 
 					<ColorPaletteControl
-						label={ __( 'Markers Color', i18n ) }
+						label={ __( 'Number Color', i18n ) }
 						attribute="markerColor"
 						hover="all"
 					/>
@@ -227,7 +221,7 @@ const Edit = props => {
 						max={ 100 }
 						step={ 1 }
 						allowReset={ true }
-						hover="all"
+						responsive="all"
 					/>
 
 					<AdvancedRangeControl
@@ -252,6 +246,12 @@ const Edit = props => {
 					/>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
+
+			<Typography.InspectorControls
+				isMultiline={ true }
+				initialOpen={ false }
+				hasTextTag={ false }
+			/>
 
 			<Advanced.InspectorControls />
 			<EffectsAnimations.InspectorControls />

@@ -401,7 +401,7 @@ export const useStyles = ( _attributes, styleParams ) => {
 		() => styleObject.generateStyles( attributes, currentHoverState ),
 		[
 			...styleObject.getDependencies( attributes, deviceType, currentHoverState ),
-			styleParams.length,
+			styleObject,
 		]
 	)
 }

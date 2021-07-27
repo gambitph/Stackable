@@ -140,7 +140,6 @@ const getStyleParams = ( { attributes = {} } ) => {
 				'--icon-size': 'iconSize',
 			},
 			responsive: 'all',
-			hover: 'all',
 			format: '%spx',
 		},
 		{
