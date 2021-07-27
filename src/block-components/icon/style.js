@@ -262,14 +262,16 @@ const getStyleParams = ( options = {} ) => {
 				const backgroundShapeOffsetVertical = getAttribute( 'backgroundShapeOffsetVertical', 'desktop', state )
 
 				const transform = compact( [
-					'translateX(-50%)',
-					'translateY(-50%)',
 					backgroundShapeSize !== '' ? `scale(${ backgroundShapeSize })` : undefined,
 					backgroundShapeOffsetHorizontal !== '' ? `translateX(${ backgroundShapeOffsetHorizontal }px)` : undefined,
 					backgroundShapeOffsetVertical !== '' ? `translateY(${ backgroundShapeOffsetVertical }px)` : undefined,
-				] ).join( ' ' )
+				] )
 
-				return transform
+				return transform.length ? [
+					'translateX(-50%)',
+					'translateY(-50%)',
+					...transform,
+				].join( ' ' ) : ''
 			},
 			dependencies: [ 'showBackgroundShape', 'backgroundShapeSize', 'backgroundShapeOffsetVertical', 'backgroundShapeOffsetHorizontal' ],
 			enabledCallback: getAttribute => getAttribute( 'showBackgroundShape' ),
