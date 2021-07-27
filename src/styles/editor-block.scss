@@ -106,8 +106,17 @@
 		margin-top: 0;
 	}
 	// Last of type since there's a .block-list-appender
-	> [data-block]:nth-last-child(1) {
+	> [data-block]:nth-last-child(2) {
 		margin-bottom: 0;
+		&[data-type^="stackable/"] > .stk-block {
+			margin-bottom: 0;
+		}
+	}
+	> [data-block]:first-child:last-child {
+		margin-bottom: 0;
+		&[data-type^="stackable/"] > .stk-block {
+			margin-bottom: 0;
+		}
 	}
 }
 

@@ -127,6 +127,7 @@ const Edit = props => {
 					<div className={ contentClassNames }>
 						<InnerBlocks
 							template={ TEMPLATE }
+							templateLock={ props.attributes.templateLock || false }
 							orientation={ blockOrientation }
 							renderAppender={ renderAppender }
 							templateInsertUpdatesSelection={ true }

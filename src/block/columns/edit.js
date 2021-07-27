@@ -96,6 +96,7 @@ const Edit = props => {
 							allowedBlocks={ ALLOWED_INNER_BLOCKS }
 							renderAppender={ renderAppender }
 							template={ TEMPLATE }
+							templateLock={ props.attributes.templateLock || false }
 							templateInsertUpdatesSelection={ true }
 						/>
 					</div>

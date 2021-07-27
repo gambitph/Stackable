@@ -31,6 +31,10 @@ export const attributes = ( version = VERSION ) => {
 
 	attrObject.add( {
 		attributes: {
+			templateLock: {
+				type: 'string',
+				default: '',
+			},
 			columnSpacing: {
 				stkResponsive: true,
 				stkHover: true,
