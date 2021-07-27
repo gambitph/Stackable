@@ -93,7 +93,7 @@ const Edit = props => {
 		blockAlignmentClass,
 		'stk-card__content',
 	], {
-		'stk--container-padding': hasContainer,
+		'stk-container-padding': hasContainer,
 	} )
 
 	const renderAppender = useCallback(
@@ -114,8 +114,8 @@ const Edit = props => {
 			<Image.InspectorControls
 				hasWidth={ blockStyle === 'horizontal' }
 				hasHeight={ blockStyle !== 'horizontal' }
-				heightUnits={ [ 'px' ] }
-				widthUnits={ [ 'px' ] }
+				widthUnits={ widthUnit }
+				heightUnits={ heightUnit }
 				hasBorderRadius={ false }
 				hasShape={ false }
 			/>

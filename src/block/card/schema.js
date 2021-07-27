@@ -37,9 +37,6 @@ export const attributes = ( version = VERSION ) => {
 				type: 'string',
 				default: '',
 			},
-			displayCondition: {
-				type: 'object',
-			},
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',

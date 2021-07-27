@@ -1,36 +1,30 @@
 /**
+ * Internal dependencies
+ */
+// import { blockStyles } from './block-styles'
+
+/**
  * External dependencies
  */
 import {
-	BlockDiv,
-	Alignment,
 	Advanced,
+	Alignment,
+	BlockDiv,
 	EffectsAnimations,
-	ContainerDiv,
-	MarginBottom,
+	Image,
 } from '~stackable/block-components'
 import {
-	useDeviceType, useBlockAttributes,
+	useBlockAttributes, useDeviceType,
 } from '~stackable/hooks'
 import {
 	getUniqueBlockClass,
 } from '~stackable/util'
-
-/**
- * WordPress dependencies
- */
 import {
 	Fragment, renderToString,
 } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
-const containerDivOptions = {
-	sizeSelector: '.stk-container-block__content',
-	sizeVerticalAlignRule: 'justifyContent',
-	sizeHorizontalAlignRule: 'alignSelf',
-}
-
-export const ContainerStyles = props => {
+const BlockStyles = props => {
 	const {
 		...propsToPass
 	} = props
@@ -49,17 +43,16 @@ export const ContainerStyles = props => {
 			<BlockDiv.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
-			<ContainerDiv.Style { ...propsToPass } options={ containerDivOptions } />
-			<MarginBottom.Style { ...propsToPass } />
+			<Image.Style { ...propsToPass } />
 		</Fragment>
 	)
 }
 
-ContainerStyles.defaultProps = {
+BlockStyles.defaultProps = {
 	isEditor: false,
 }
 
-ContainerStyles.Content = props => {
+BlockStyles.Content = props => {
 	const {
 		...propsToPass
 	} = props
@@ -70,16 +63,17 @@ ContainerStyles.Content = props => {
 		<Fragment>
 			<Alignment.Style.Content { ...propsToPass } />
 			<BlockDiv.Style.Content { ...propsToPass } />
-			<Advanced.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
-			<ContainerDiv.Style.Content { ...propsToPass } options={ containerDivOptions } />
-			<MarginBottom.Style.Content { ...propsToPass } />
+			<Advanced.Style.Content { ...propsToPass } />
+			<Image.Style.Content { ...propsToPass } />
 		</Fragment>
 	)
 
 	return renderToString( styles ) ? <style>{ styles }</style> : null
 }
 
-ContainerStyles.Content.defaultProps = {
+BlockStyles.Content.defaultProps = {
 	attributes: {},
 }
+
+export default BlockStyles
