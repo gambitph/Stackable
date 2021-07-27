@@ -42,12 +42,12 @@ const getStyleParams = ( { attributes = {} } ) => {
 		'.%s:hover ul > li:before',
 	]
 
-	const individualIconStyles = attributes.icons.reduce( ( acc, { selector, icon } ) => {
+	const individualIconStyles = Object.keys( attributes.icons ).reduce( ( acc, key ) => {
 		return [
 			...acc,
 			{
 				renderIn: 'edit',
-				selector: '> div >' + selector + ':before',
+				selector: '> div >' + key + ':before',
 				hover: 'all',
 				hoverSelector: '.%s:hover > div >' + selector + ':before',
 				styleRule: 'backgroundImage',
@@ -57,14 +57,14 @@ const getStyleParams = ( { attributes = {} } ) => {
 						return undefined
 					}
 
-					const base64 = convertSVGStringToBase64( icon, value || '#000' )
-					return `url('data:image/svg+xml;base64,${ base64 }')`
+					const iconWithColor = convertSVGStringToBase64( getAttribute( 'icons' )?.[ key ], value || '#000' )
+					return `url('data:image/svg+xml;base64,${ iconWithColor }')`
 				},
 				dependencies: [ 'icons' ],
 			},
 			{
 				renderIn: 'save',
-				selector: '>' + selector + ':before',
+				selector: '>' + key + ':before',
 				hover: 'all',
 				hoverSelector: '.%s:hover >' + selector + ':before',
 				styleRule: 'backgroundImage',
@@ -74,8 +74,8 @@ const getStyleParams = ( { attributes = {} } ) => {
 						return undefined
 					}
 
-					const base64 = convertSVGStringToBase64( icon, value || '#000' )
-					return `url('data:image/svg+xml;base64,${ base64 }')`
+					const iconWithColor = convertSVGStringToBase64( getAttribute( 'icons' )?.[ key ], value || '#000' )
+					return `url('data:image/svg+xml;base64,${ iconWithColor }')`
 				},
 				dependencies: [ 'icons' ],
 			},
@@ -104,16 +104,16 @@ const getStyleParams = ( { attributes = {} } ) => {
 			styleRule: 'backgroundImage',
 			attrName: 'iconColor',
 			valuePreCallback: ( value, getAttribute, device, state ) => {
-				const icon = getAttribute( 'icon' )
+				const iconSVG = getAttribute( 'icon' )
 				if ( state !== 'normal' && ! value ) {
 					return undefined
 				}
 
-				if ( ! icon ) {
+				if ( ! iconSVG ) {
 					return undefined
 				}
-				const base64 = convertSVGStringToBase64( icon, value || '#000' )
-				return `url('data:image/svg+xml;base64,${ base64 }')`
+				const iconWithColor = convertSVGStringToBase64( iconSVG, value || '#000' )
+				return `url('data:image/svg+xml;base64,${ iconWithColor }')`
 			},
 			dependencies: [ 'icon' ],
 		},
@@ -158,9 +158,7 @@ export const IconListStyles = props => {
 	propsToPass.attributes = { ...attributes, clientId }
 	const options = { attributes: propsToPass.attributes }
 
-	const iconStyles = useStyles( attributes, getStyleParams( options ), [
-		...propsToPass.attributes.icons.map( ( { icon } ) => icon ),
-	] )
+	const iconStyles = useStyles( attributes, getStyleParams( options ) )
 
 	return (
 		<Fragment>

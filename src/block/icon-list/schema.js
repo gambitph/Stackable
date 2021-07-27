@@ -39,8 +39,8 @@ export const iconListAttributes = {
 		stkHover: true,
 	},
 	icons: {
-		type: 'array',
-		default: [],
+		type: 'object',
+		default: {},
 	},
 	iconSize: {
 		stkHover: true,

@@ -7,7 +7,6 @@ import { IconListStyles } from './style'
  * External dependencies
  */
 import classnames from 'classnames'
-import { uniqBy } from 'lodash'
 import { i18n, version as VERSION } from 'stackable'
 import {
 	InspectorTabs, InspectorStyleControls, PanelAdvancedSettings, AdvancedRangeControl, IconControl, ColorPaletteControl, IconSearchPopover,
@@ -23,6 +22,7 @@ import {
 	Responsive,
 	CustomAttributes,
 	EffectsAnimations,
+	getTypographyClasses,
 } from '~stackable/block-components'
 
 /**
@@ -35,36 +35,9 @@ import {
 	Fragment, useRef, useEffect, useState, useCallback,
 } from '@wordpress/element'
 import {
-	BlockControls,
-	RichTextShortcut,
-} from '@wordpress/block-editor'
-import {
-	ToolbarButton,
-} from '@wordpress/components'
-/* eslint-disable @wordpress/no-unsafe-wp-apis */
-import {
-	__unstableCanIndentListItems as canIndentListItems,
-	__unstableCanOutdentListItems as canOutdentListItems,
-	__unstableIndentListItems as indentListItems,
-	__unstableOutdentListItems as outdentListItems,
-	__unstableChangeListType as changeListType,
-	__unstableIsListRootSelected as isListRootSelected,
-	__unstableIsActiveListType as isActiveListType,
-} from '@wordpress/rich-text'
-/* eslint-enable @wordpress/no-unsafe-wp-apis */
-import {
-	formatListBullets,
-	formatListBulletsRTL,
-	formatListNumbered,
-	formatListNumberedRTL,
-	formatIndent,
-	formatIndentRTL,
-	formatOutdent,
-	formatOutdentRTL,
-} from '@wordpress/icons'
-import {
-	__, _x, isRTL,
+	__,
 } from '@wordpress/i18n'
+import { createIconListControls } from './util'
 
 const Edit = props => {
 	const textRef = useRef()
@@ -156,110 +129,18 @@ const Edit = props => {
 	const tagName = ordered ? 'ol' : 'ul'
 
 	const blockHoverClass = useBlockHoverClass()
+	const textClasses = getTypographyClasses( attributes )
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-icon-list',
 		blockHoverClass,
+		textClasses,
 	] )
 
-	const controls = ( {
-		value, onChange, onFocus,
-	} ) => (
-		<Fragment>
-			{ isSelected && (
-				<Fragment>
-					<RichTextShortcut
-						type="primary"
-						character="["
-						onUse={ () => {
-							onChange( outdentListItems( value ) )
-						} }
-					/>
-					<RichTextShortcut
-						type="primary"
-						character="]"
-						onUse={ () => {
-							onChange(
-								indentListItems( value, { type: tagName } )
-							)
-						} }
-					/>
-					<RichTextShortcut
-						type="primary"
-						character="m"
-						onUse={ () => {
-							onChange(
-								indentListItems( value, { type: tagName } )
-							)
-						} }
-					/>
-					<RichTextShortcut
-						type="primaryShift"
-						character="m"
-						onUse={ () => {
-							onChange( outdentListItems( value ) )
-						} }
-					/>
-				</Fragment>
-			) }
-
-			<BlockControls group="block">
-				<ToolbarButton
-					icon={ isRTL() ? formatListBulletsRTL : formatListBullets }
-					title={ __( 'Unordered' ) }
-					describedBy={ __( 'Convert to unordered list' ) }
-					isActive={ isActiveListType( value, 'ul', tagName ) }
-					onClick={ () => {
-						onChange( changeListType( value, { type: 'ul' } ) )
-						onFocus()
-
-						if ( isListRootSelected( value ) ) {
-							setAttributes( { ordered: false } )
-						}
-					} }
-				/>
-				<ToolbarButton
-					icon={
-						isRTL() ? formatListNumberedRTL : formatListNumbered
-					}
-					title={ __( 'Ordered' ) }
-					describedBy={ __( 'Convert to ordered list' ) }
-					isActive={ isActiveListType( value, 'ol', tagName ) }
-					onClick={ () => {
-						onChange( changeListType( value, { type: 'ol' } ) )
-						onFocus()
-
-						if ( isListRootSelected( value ) ) {
-							setAttributes( { ordered: true } )
-						}
-					} }
-				/>
-				<ToolbarButton
-					icon={ isRTL() ? formatOutdentRTL : formatOutdent }
-					title={ __( 'Outdent' ) }
-					describedBy={ __( 'Outdent list item' ) }
-					shortcut={ _x( 'Backspace', 'keyboard key' ) }
-					isDisabled={ ! canOutdentListItems( value ) }
-					onClick={ () => {
-						onChange( outdentListItems( value ) )
-						onFocus()
-					} }
-				/>
-				<ToolbarButton
-					icon={ isRTL() ? formatIndentRTL : formatIndent }
-					title={ __( 'Indent' ) }
-					describedBy={ __( 'Indent list item' ) }
-					shortcut={ _x( 'Space', 'keyboard key' ) }
-					isDisabled={ ! canIndentListItems( value ) }
-					onClick={ () => {
-						onChange( indentListItems( value, { type: tagName } ) )
-						onFocus()
-					} }
-				/>
-			</BlockControls>
-		</Fragment>
-	)
+	const controls = useCallback( createIconListControls( {
+		isSelected, tagName, setAttributes,
+	} ), [ isSelected, tagName, setAttributes ] )
 
 	return (
 		<Fragment>
@@ -384,13 +265,10 @@ const Edit = props => {
 							} }
 							onChange={ icon => {
 								setAttributes( {
-									icons: uniqBy( [
-										{
-											selector: selectedIconCSSSelector,
-											icon,
-										},
+									icons: {
 										...props.attributes.icons,
-									], 'selector' ),
+										[ selectedIconCSSSelector ]: icon,
+									},
 								} )
 							} }
 						/>

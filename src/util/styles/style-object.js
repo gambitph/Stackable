@@ -6,8 +6,6 @@ import { getAttrName } from '../attributes'
 /**
  * External dependencies
  */
-import { useMemo } from '@wordpress/element'
-import { sprintf } from '@wordpress/i18n'
 import { useBlockHoverState, useDeviceType } from '~stackable/hooks'
 import { getAttributeName } from '~stackable/util'
 import { compact } from 'lodash'
@@ -16,6 +14,8 @@ import { compact } from 'lodash'
  * WordPress dependencies
  */
 import { useBlockEditContext } from '@wordpress/block-editor'
+import { useMemo } from '@wordpress/element'
+import { sprintf } from '@wordpress/i18n'
 
 /**
  * Style object, this manages the generation of styles.
@@ -382,11 +382,10 @@ export default StyleObject
  *
  * @param {Object} _attributes Block attributes
  * @param {Array} styleParams Style definitions for each attribute
- * @param {Array} deps if defined, re-create the StyleObject on deps update
  *
  * @return {StyleObject} A object that can be rendered by a StyleComponent
  */
-export const useStyles = ( _attributes, styleParams, deps = [] ) => {
+export const useStyles = ( _attributes, styleParams ) => {
 	const deviceType = useDeviceType()
 	const [ currentHoverState ] = useBlockHoverState()
 	const { clientId } = useBlockEditContext()
@@ -397,10 +396,13 @@ export const useStyles = ( _attributes, styleParams, deps = [] ) => {
 		clientId,
 	}
 
-	const styleObject = useMemo( () => new StyleObject( styleParams ), [ ...deps ] )
+	const styleObject = useMemo( () => new StyleObject( styleParams ), [ styleParams.length ] )
 	return useMemo(
 		() => styleObject.generateStyles( attributes, currentHoverState ),
-		styleObject.getDependencies( attributes, deviceType, currentHoverState )
+		[
+			...styleObject.getDependencies( attributes, deviceType, currentHoverState ),
+			styleParams.length,
+		]
 	)
 }
 
