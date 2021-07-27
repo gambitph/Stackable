@@ -137,7 +137,14 @@ const getAdjacentLinkedBlocks = clientId => {
 }
 
 const isSupportedBlock = blockType => {
-	return Object.keys( applyFilters( 'stackable.block-linking.blocks', {} ) ).includes( blockType )
+	const isSupported = Object.keys( applyFilters( 'stackable.block-linking.blocks', {} ) ).includes( blockType )
+
+	if ( ! isSupported && blockType.startsWith( 'stackable/' ) ) {
+		// eslint-disable-next-line no-console
+		console.error( `Stackable: block type "${ blockType }" was not included the list of blocks allowed for linking. See filter "stackable.block-linking.blocks"` )
+	}
+
+	return isSupported
 }
 
 const filterContentAttributes = ( attributes, blockType ) => {
