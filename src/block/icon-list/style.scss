@@ -2,4 +2,9 @@
 	ol > li {
 		list-style-image: none !important;
 	}
+
+	// Line height creates unnecessary row gaps.
+	ul > li::marker {
+		line-height: 0 !important;
+	}
 }
