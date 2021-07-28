@@ -21,3 +21,7 @@
 		width: 100%;
 	}
 }
+// Using inline-block above shows a space, remove it.
+.stk-block-icon {
+	font-size: 0;
+}

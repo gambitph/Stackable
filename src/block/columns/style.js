@@ -6,6 +6,7 @@ import {
 	Alignment,
 	BlockDiv,
 	EffectsAnimations,
+	MarginBottom,
 } from '~stackable/block-components'
 import {
 	useBlockAttributes, useDeviceType,
@@ -13,14 +14,10 @@ import {
 import {
 	getUniqueBlockClass,
 } from '~stackable/util'
-
-/**
- * WordPress dependencies
- */
 import { Fragment, renderToString } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
-export const CardGroupStyles = props => {
+const BlockStyles = props => {
 	const {
 		...propsToPass
 	} = props
@@ -32,34 +29,42 @@ export const CardGroupStyles = props => {
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( attributes.uniqueId )
 	propsToPass.deviceType = deviceType
 	propsToPass.attributes = { ...attributes, clientId }
+	propsToPass.options = {
+		...propsToPass.options,
+		hasJustifyContentAlign: true,
+	}
 
 	return (
 		<Fragment>
 			<Alignment.Style { ...propsToPass } />
 			<BlockDiv.Style { ...propsToPass } />
-			{ /* <MarginBottom.Style { ...propsToPass } /> */ }
+			<MarginBottom.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
 		</Fragment>
 	)
 }
 
-CardGroupStyles.defaultProps = {
+BlockStyles.defaultProps = {
 	isEditor: false,
 }
 
-CardGroupStyles.Content = props => {
+BlockStyles.Content = props => {
 	const {
 		...propsToPass
 	} = props
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
+	propsToPass.options = {
+		...propsToPass.options,
+		hasJustifyContentAlign: true,
+	}
 
 	const styles = (
 		<Fragment>
 			<Alignment.Style.Content { ...propsToPass } />
 			<BlockDiv.Style.Content { ...propsToPass } />
-			{ /* <MarginBottom.Style.Content { ...propsToPass } /> */ }
+			<MarginBottom.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 		</Fragment>
@@ -68,6 +73,8 @@ CardGroupStyles.Content = props => {
 	return renderToString( styles ) ? <style>{ styles }</style> : null
 }
 
-CardGroupStyles.Content.defaultProps = {
+BlockStyles.Content.defaultProps = {
 	attributes: {},
 }
+
+export default BlockStyles

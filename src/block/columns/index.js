@@ -1,11 +1,10 @@
 /**
- * BLOCK: Card Block.
+ * BLOCK: Button Block
  */
-
 /**
  * External dependencies
  */
-import { ImageBoxIcon } from '~stackable/icons'
+import { ColumnsIcon } from '~stackable/icons'
 
 /**
  * Internal dependencies
@@ -22,15 +21,14 @@ import { __ } from '@wordpress/i18n'
 
 export const settings = {
 	...metadata,
-	icon: ImageBoxIcon,
+	icon: ColumnsIcon,
 	attributes: schema,
 	supports: {
 		anchor: true,
 		align: true,
 	},
-	//  styles: blockStyles,
 
-	// deprecated,
 	edit,
 	save,
 }
+

@@ -1,6 +1,3 @@
-/**
- * External dependencies
- */
 import {
 	Advanced,
 	Alignment,
@@ -9,7 +6,6 @@ import {
 	CustomAttributes,
 	CustomCSS,
 	EffectsAnimations,
-	MarginBottom,
 	Responsive,
 	Row,
 } from '~stackable/block-components'
@@ -20,7 +16,6 @@ export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
 
 	BlockDiv.addAttributes( attrObject )
-	MarginBottom.addAttributes( attrObject )
 	Row.addAttributes( attrObject )
 	Alignment.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
@@ -29,17 +24,6 @@ export const attributes = ( version = VERSION ) => {
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
-
-	attrObject.add( {
-		attributes: {
-			design: {
-				type: 'string',
-				default: '',
-			},
-		},
-		versionAdded: '3.0.0',
-		versionDeprecated: '',
-	} )
 
 	return attrObject.getMerged( version )
 }

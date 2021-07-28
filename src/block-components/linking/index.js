@@ -1,15 +1,20 @@
 import classnames from 'classnames'
 import { i18n } from 'stackable'
 import { useBlockContext, useLinking } from '~stackable/hooks'
+import { useClosestLinkableBlock } from '~stackable/plugins/block-linking'
 
 import { Dashicon, Tooltip } from '@wordpress/components'
+import { useBlockEditContext } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
 
 export const Linking = () => {
 	const [ isLinked, setIsLinked ] = useLinking()
 
 	const { isOnlyBlock } = useBlockContext()
-	if ( isOnlyBlock ) {
+	const { clientId } = useBlockEditContext()
+
+	const closestLinkableBlock = useClosestLinkableBlock( clientId )
+	if ( isOnlyBlock || ! closestLinkableBlock ) {
 		return null
 	}
 

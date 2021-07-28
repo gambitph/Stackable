@@ -269,7 +269,9 @@ export const prependCSSClass = ( cssSelector, mainClassName = '', uniqueClassNam
 		.split( ',' )
 		.map( s => {
 			let newSelector = ''
-			if ( s.includes( '%s' ) ) {
+			if ( s.includes( '[data-block' ) ) {
+				newSelector = s
+			} else if ( s.includes( '%s' ) ) {
 				newSelector = s.replaceAll( '%s', uniqueClassName )
 			} else if ( ! uniqueClassName || ! mainClassName ) {
 				newSelector = s
