@@ -6,10 +6,9 @@ import { IconLabelStyles } from './style'
 /**
  * External dependencies
  */
-import { version as VERSION, i18n } from 'stackable'
+import { version as VERSION } from 'stackable'
 import classnames from 'classnames'
 import {
-	ColumnInserter,
 	GroupPlaceholder,
 	InspectorTabs,
 } from '~stackable/components'
@@ -33,7 +32,7 @@ import {
 import {
 	InnerBlocks,
 } from '@wordpress/block-editor'
-import { Fragment, useCallback } from '@wordpress/element'
+import { Fragment } from '@wordpress/element'
 import { useBlockContext } from '~stackable/hooks'
 import { __ } from '@wordpress/i18n'
 
@@ -70,11 +69,6 @@ const Edit = props => {
 		'stk-block-content',
 	] )
 
-	const renderAppender = useCallback(
-		() => hasInnerBlocks ? <ColumnInserter label={ __( 'Add Column', i18n ) } /> : null,
-		[ hasInnerBlocks ]
-	)
-
 	return (
 		<Fragment>
 			<InspectorTabs tabs={ TABS } />
@@ -97,7 +91,6 @@ const Edit = props => {
 					<div className={ contentClassNames }>
 						<InnerBlocks
 							orientation="horizontal"
-							renderAppender={ renderAppender }
 							template={ TEMPLATE }
 							templateLock={ true }
 							templateInsertUpdatesSelection={ true }
