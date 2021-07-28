@@ -28,7 +28,7 @@ export const attributes = ( version = VERSION ) => {
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
-	Typography.addAttributes( attrObject, '.stk-heading__text', {
+	Typography.addAttributes( attrObject, '.stk-block-heading__text', {
 		defaultTextTag: 'h2',
 	} )
 

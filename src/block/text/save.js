@@ -32,12 +32,12 @@ const Save = props => {
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-text',
+		'stk-block-text',
 		responsiveClass,
 	] )
 
 	const textClassNames = classnames( [
-		'stk-text__text',
+		'stk-block-text__text',
 		textClasses,
 		blockAlignmentClass,
 	] )

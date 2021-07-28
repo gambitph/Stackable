@@ -151,6 +151,6 @@
 
 // Headings
 // Our headings have top margins if they're not the first heading, handle the different block structures.
-.editor-styles-wrapper [data-type^="stackable/heading"]:first-child .stk-heading__text {
+.editor-styles-wrapper [data-type^="stackable/heading"]:first-child .stk-block-heading__text {
 	margin-top: 0;
 }

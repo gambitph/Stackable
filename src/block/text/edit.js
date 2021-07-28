@@ -46,12 +46,12 @@ const Edit = props => {
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-text',
+		'stk-block-text',
 		blockHoverClass,
 	] )
 
 	const textClassNames = classnames( [
-		'stk-text__text',
+		'stk-block-text__text',
 		textClasses,
 		blockAlignmentClass,
 	] )
@@ -100,12 +100,12 @@ const Edit = props => {
 			/>
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-text" />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-text" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
 			<TextStyles version={ VERSION } />
-			<CustomCSS mainBlockClass="stk-text__text" />
+			<CustomCSS mainBlockClass="stk-block-text" />
 
 			<BlockDiv className={ blockClassNames }>
 				<Typography

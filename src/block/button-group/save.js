@@ -33,7 +33,7 @@ export const Save = props => {
 
 	const blockClassName = classnames( [
 		props.className,
-		'stk-button-group',
+		'stk-block-button-group',
 		responsiveClass,
 	] )
 
