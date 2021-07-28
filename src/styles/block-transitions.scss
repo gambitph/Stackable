@@ -1,6 +1,9 @@
 /**
  * This defines all styles related to making the hover states of blocks animate smoothly.
  */
+// TODO: rethink how to implement these transitions. These are currently also
+// animating blocks when the webpage is loaded - producing unwanted layout
+// shifts and animations.
 
 // Hover transitions.
 .stk-block,
@@ -12,6 +15,8 @@
 .stk-block-heading__top-line,
 .stk-block-heading__bottom-line,
 .stk-block a::after, // For button animations
+.stk-block li::marker, // For icon list marker
+.stk-block li, // For icon list texts
 .stk-block p,
 .stk-block h1,
 .stk-block h2,

@@ -1,0 +1,10 @@
+.stk-block-icon-list {
+	ol {
+		list-style-image: none;
+	}
+
+	// Line height creates unnecessary row gaps.
+	::marker {
+		line-height: 0;
+	}
+}

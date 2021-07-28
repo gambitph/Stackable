@@ -22,7 +22,6 @@ const getStyleParams = ( options = {} ) => {
 			attrName: 'fontSize',
 			hasUnits: 'px',
 			responsive: 'all',
-			hover: 'all',
 			hoverSelector,
 			clampCallback: ( _value, getAttribute, device, state ) => {
 				const currentValue = getAttribute( 'fontSize', device, state )
