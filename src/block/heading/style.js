@@ -24,92 +24,92 @@ import { useBlockEditContext } from '@wordpress/block-editor'
 const getStyleParams = () => {
 	return [
 		{
-			selector: '.stk-heading__top-line',
+			selector: '.stk-block-heading__top-line',
 			styleRule: 'height',
 			attrName: 'topLineHeight',
 			format: '%spx',
 		},
 		{
-			selector: '.stk-heading__top-line',
+			selector: '.stk-block-heading__top-line',
 			styleRule: 'width',
 			attrName: 'topLineWidth',
 			hasUnits: 'px',
 			hover: 'all',
 		},
 		{
-			selector: '.stk-heading__top-line',
+			selector: '.stk-block-heading__top-line',
 			styleRule: 'backgroundColor',
 			attrName: 'topLineColor',
 			hover: 'all',
 		},
 		{
-			selector: '.stk-heading__top-line',
+			selector: '.stk-block-heading__top-line',
 			styleRule: 'backgroundColor',
 			attrName: 'topLineColor',
 			hover: 'all',
 		},
 		{
-			selector: '.stk-heading__top-line',
+			selector: '.stk-block-heading__top-line',
 			styleRule: 'marginBottom',
 			attrName: 'topLineMargin',
 			responsive: 'all',
 			format: '%spx',
 		},
 		{
-			selector: '.stk-heading__top-line',
+			selector: '.stk-block-heading__top-line',
 			styleRule: 'marginLeft',
 			attrName: 'topLineAlign',
 			responsive: 'all',
 			valueCallback: () => 'auto',
 		},
 		{
-			selector: '.stk-heading__top-line',
+			selector: '.stk-block-heading__top-line',
 			styleRule: 'marginRight',
 			attrName: 'topLineAlign',
 			responsive: 'all',
 			valueCallback: value => value === 'center' ? 'auto' : undefined,
 		},
 		{
-			selector: '.stk-heading__bottom-line',
+			selector: '.stk-block-heading__bottom-line',
 			styleRule: 'height',
 			attrName: 'bottomLineHeight',
 			format: '%spx',
 		},
 		{
-			selector: '.stk-heading__bottom-line',
+			selector: '.stk-block-heading__bottom-line',
 			styleRule: 'width',
 			attrName: 'bottomLineWidth',
 			hasUnits: 'px',
 			hover: 'all',
 		},
 		{
-			selector: '.stk-heading__bottom-line',
+			selector: '.stk-block-heading__bottom-line',
 			styleRule: 'backgroundColor',
 			attrName: 'bottomLineColor',
 			hover: 'all',
 		},
 		{
-			selector: '.stk-heading__bottom-line',
+			selector: '.stk-block-heading__bottom-line',
 			styleRule: 'backgroundColor',
 			attrName: 'bottomLineColor',
 			hover: 'all',
 		},
 		{
-			selector: '.stk-heading__bottom-line',
+			selector: '.stk-block-heading__bottom-line',
 			styleRule: 'marginTop',
 			attrName: 'bottomLineMargin',
 			responsive: 'all',
 			format: '%spx',
 		},
 		{
-			selector: '.stk-heading__bottom-line',
+			selector: '.stk-block-heading__bottom-line',
 			styleRule: 'marginLeft',
 			attrName: 'bottomLineAlign',
 			responsive: 'all',
 			valueCallback: () => 'auto',
 		},
 		{
-			selector: '.stk-heading__bottom-line',
+			selector: '.stk-block-heading__bottom-line',
 			styleRule: 'marginRight',
 			attrName: 'bottomLineAlign',
 			responsive: 'all',
@@ -142,7 +142,7 @@ export const HeadingStyles = props => {
 				...propsToPass,
 				options: {
 					...propsToPass.options,
-					selector: '.stk-heading__text',
+					selector: '.stk-block-heading__text',
 				},
 			} } />
 			<StyleComponent
@@ -179,7 +179,7 @@ HeadingStyles.Content = props => {
 				...propsToPass,
 				options: {
 					...propsToPass.options,
-					selector: '.stk-heading__text',
+					selector: '.stk-block-heading__text',
 				},
 			} } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
