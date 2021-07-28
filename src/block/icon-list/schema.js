@@ -59,7 +59,6 @@ export const iconListAttributes = {
 		default: '',
 	},
 	iconRotation: {
-		stkHover: true,
 		type: 'number',
 		default: '',
 	},
@@ -67,6 +66,11 @@ export const iconListAttributes = {
 	// Numbers.
 	listType: {
 		type: 'string',
+		default: '',
+	},
+	iconGap: {
+		stkResponsive: true,
+		type: 'number',
 		default: '',
 	},
 }
@@ -95,5 +99,4 @@ export const attributes = ( version = VERSION ) => {
 
 	return attrObject.getMerged( version )
 }
-
 export default attributes( VERSION )

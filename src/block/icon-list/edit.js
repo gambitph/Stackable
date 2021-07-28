@@ -207,6 +207,16 @@ const Edit = props => {
 						sliderMax="50"
 						responsive="all"
 					/>
+
+					<AdvancedRangeControl
+						label={ __( 'Icon Gap', i18n ) }
+						allowRest={ true }
+						attribute="iconGap"
+						min="0"
+						sliderMax="20"
+						max="50"
+						responsive="all"
+					/>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
 
@@ -247,8 +257,8 @@ const Edit = props => {
 						label={ __( 'Icon Size', i18n ) }
 						attribute="iconSize"
 						min={ 0 }
-						max={ 100 }
-						step={ 1 }
+						max={ 5 }
+						step={ 0.1 }
 						allowReset={ true }
 						responsive="all"
 					/>
@@ -271,7 +281,6 @@ const Edit = props => {
 						max={ 360 }
 						allowReset={ true }
 						placeholder="0"
-						hover="all"
 					/>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>

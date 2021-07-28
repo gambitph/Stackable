@@ -2,6 +2,7 @@
  * External dependencies
  */
 import { faGetSVGIcon } from '~stackable/util'
+import { kebabCase } from 'lodash'
 
 /**
  * WordPress dependencies
@@ -63,9 +64,11 @@ const createElementFromHTMLString = htmlString => {
  *
  * @param {string} svgTag
  * @param {string} color
+ * @param {Object} styles additional styles
+ *
  * @return {string} base64 string
  */
-export const convertSVGStringToBase64 = ( svgTag = '', color = '' ) => {
+export const convertSVGStringToBase64 = ( svgTag = '', color = '', styles = {} ) => {
 	let svgTagString = svgTag
 
 	// If no SVG given, use the default SVG.
@@ -95,6 +98,7 @@ export const convertSVGStringToBase64 = ( svgTag = '', color = '' ) => {
 					_color = color
 				}
 			}
+
 			svgChildElements.forEach( child => {
 				if ( child && ! [ 'DEFS', 'TITLE', 'DESC' ].includes( child.tagName ) ) {
 					child.setAttribute( 'fill', _color )
@@ -103,7 +107,8 @@ export const convertSVGStringToBase64 = ( svgTag = '', color = '' ) => {
 					child.style.stroke = _color
 				}
 			} )
-			svgEl.setAttribute( 'style', `fill: ${ _color } !important; color: ${ _color } !important` )
+			const willEnqueueStyles = Object.keys( styles ).map( key => styles[ key ] ? `${ kebabCase( key ) }: ${ styles[ key ] } !important;` : '' ).join( '' )
+			svgEl.setAttribute( 'style', `fill: ${ _color } !important; color: ${ _color } !important;` + willEnqueueStyles )
 		}
 
 		/**
