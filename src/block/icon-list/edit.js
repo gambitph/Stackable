@@ -320,11 +320,16 @@ const Edit = props => {
 								setIsOpenIconSearch( false )
 							} }
 							onChange={ icon => {
+								const icons = { ...props.attributes.icons }
+								if ( ! icon ) {
+									// Remove the icon inside the icons.
+									delete icons[ selectedIconCSSSelector ]
+								} else {
+									icons[ selectedIconCSSSelector ] = icon
+								}
+
 								setAttributes( {
-									icons: {
-										...props.attributes.icons,
-										[ selectedIconCSSSelector ]: icon,
-									},
+									icons: { ...icons },
 								} )
 							} }
 						/>
