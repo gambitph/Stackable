@@ -100,9 +100,9 @@ const Edit = props => {
 							templateInsertUpdatesSelection={ true }
 						/>
 					</div>
-					{ hasInnerBlocks && <MarginBottom /> }
 				</Fragment>
 			</BlockDiv>
+			{ hasInnerBlocks && <MarginBottom /> }
 		</Fragment>
 	)
 }

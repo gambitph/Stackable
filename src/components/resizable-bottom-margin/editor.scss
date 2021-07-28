@@ -1,5 +1,6 @@
 // Only show resizable bottom margin when hovering over the block.
-.stk-block:not(:hover) > .stk-resizable-bottom-margin:not(.stk--is-resizing) {
+.stk-block:not(:hover) > .stk-resizable-bottom-margin:not(.stk--is-resizing), // The resizer can be inside the block div
+.stk-block:not(:hover) + .stk-resizable-bottom-margin:not(.stk--is-resizing) { // The resizer is outside the block div.
 	opacity: 0;
 }
 

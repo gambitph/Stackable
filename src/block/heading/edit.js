@@ -197,8 +197,8 @@ const Edit = props => {
 					} }
 				/>
 				{ props.attributes.showBottomLine && <div className="stk-heading__bottom-line" /> }
-				<MarginBottom />
 			</BlockDiv>
+			<MarginBottom />
 		</Fragment>
 	)
 }

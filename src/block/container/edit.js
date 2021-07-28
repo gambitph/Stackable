@@ -83,8 +83,8 @@ const Edit = props => {
 						templateInsertUpdatesSelection={ true }
 					/>
 				</ContainerDiv>
-				<MarginBottom />
 			</BlockDiv>
+			<MarginBottom />
 		</Fragment>
 	)
 }

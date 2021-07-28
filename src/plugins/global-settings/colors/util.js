@@ -55,7 +55,7 @@ export const resetBlockColorAttributes = ( block, colorObjects ) => {
 	const { clientId, name } = block
 	const { updateBlockAttributes } = dispatch( 'core/block-editor' )
 
-	if ( name.includes( 'ugb/' ) ) {
+	if ( name.startsWith( 'ugb/' ) || name.startsWith( 'stackable/' ) ) {
 		//
 		/**
 		 * For stackable blocks.
@@ -69,7 +69,7 @@ export const resetBlockColorAttributes = ( block, colorObjects ) => {
 		if ( ! isEqual( updatedAttributes, block.attributes ) ) {
 			updateBlockAttributes( clientId, updatedAttributes )
 		}
-	} else if ( name.includes( 'core/' ) ) {
+	} else if ( name.startsWith( 'core/' ) ) {
 		//
 		/**
 		 * For core blocks.
@@ -125,7 +125,7 @@ export const updateFallbackBlockAttributes = updatedColors => {
 	const updateFallbackAttributesRecursive = blocks => {
 		blocks.forEach( block => {
 			const { clientId, name } = block
-			if ( name.match( /^ugb\// ) ) {
+			if ( name.startsWith( 'ugb/' ) || name.startsWith( 'stackable/' ) ) {
 				const newAttributes = updateFallbackColorAttributes( block.attributes, updatedColors )
 				if ( ! isEqual( newAttributes, block.attributes ) ) {
 					updateBlockAttributes( clientId, newAttributes )
