@@ -72,8 +72,8 @@ const Edit = props => {
 					defaultWidth="100"
 					defaultHeight="auto"
 				/>
-				<MarginBottom />
 			</BlockDiv>
+			<MarginBottom />
 		</Fragment>
 	)
 }

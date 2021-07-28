@@ -120,18 +120,6 @@ export const Edit = props => {
 							onChange={ updateAttributeHandler( 'fontFamily' ) }
 							value={ getAttribute( 'fontFamily' ) }
 						/>
-						<AdvancedRangeControl
-							label={ __( 'Size', i18n ) }
-							allowReset={ true }
-							attribute="fontSize"
-							units={ [ 'px', 'em' ] }
-							min={ [ 0, 0 ] }
-							max={ [ 150, 7 ] }
-							step={ [ 1, 0.05 ] }
-							placeholder="32"
-							responsive="all"
-							hover="all"
-						/>
 						<AdvancedSelectControl
 							label={ __( 'Weight', i18n ) }
 							options={ [
@@ -183,6 +171,18 @@ export const Edit = props => {
 							placeholder="0"
 						/>
 					</ButtonIconPopoverControl>
+
+					<AdvancedRangeControl
+						label={ __( 'Size', i18n ) }
+						allowReset={ true }
+						attribute="fontSize"
+						units={ [ 'px', 'em' ] }
+						min={ [ 0, 0 ] }
+						max={ [ 150, 7 ] }
+						step={ [ 1, 0.05 ] }
+						placeholder="32"
+						responsive="all"
+					/>
 
 					{ hasColor && (
 						<Fragment>
