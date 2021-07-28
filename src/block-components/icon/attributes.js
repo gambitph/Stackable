@@ -1,8 +1,3 @@
-/**
- * External dependencies
- */
-import { omit } from 'lodash'
-
 export const createIconAttributes = ( options = {} ) => {
 	const {
 		defaultIcon = '',
@@ -118,65 +113,10 @@ export const createIconAttributes = ( options = {} ) => {
 }
 
 export const addAttributes = ( attrObject, options = {} ) => {
-	const {
-		excludedAttributes = [],
-		hasGradient = true,
-		hasShape = true,
-		hasBackgroundShape = true,
-		hasIconGap = false,
-		hasIconPosition = false,
-	} = options
-
-	const finalExcludedAttributes = [ ...excludedAttributes ]
-
-	if ( ! hasGradient ) {
-		finalExcludedAttributes.push(
-			'iconColorType',
-			'iconColor2',
-			'iconColorGradientDirection'
-		)
-	}
-
-	if ( ! hasShape ) {
-		finalExcludedAttributes.push(
-			'shaped',
-			'shapeColor',
-			'shapeBorderRadius',
-			'shapePadding',
-			'shapeOutline',
-			'shapeOutlineColor',
-			'shapeOutlineWidth',
-		)
-	}
-
-	if ( ! hasBackgroundShape ) {
-		finalExcludedAttributes.push(
-			'showBackgroundShape',
-			'backgroundShape',
-			'backgroundShapeColor',
-			'backgroundShapeOpacity',
-			'backgroundShapeSize',
-			'backgroundShapeOffsetHorizontal',
-			'backgroundShapeOffsetVertical'
-		)
-	}
-
-	if ( ! hasIconGap ) {
-		finalExcludedAttributes.push(
-			'iconGap'
-		)
-	}
-
-	if ( ! hasIconPosition ) {
-		finalExcludedAttributes.push(
-			'iconPosition'
-		)
-	}
-
 	const iconAttributes = createIconAttributes( options )
 
 	attrObject.add( {
-		attributes: finalExcludedAttributes.length ? omit( iconAttributes, finalExcludedAttributes ) : iconAttributes,
+		attributes: iconAttributes,
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
 	} )
