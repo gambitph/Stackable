@@ -62,7 +62,7 @@ export const Edit = props => {
 							className="ugb--help-tip-advanced-block-vertical-align"
 						/>
 					}
-					{ props.hasColumnAlignment &&
+					{ ( props.hasColumnAlignment || props.hasBlockAlignment ) &&
 						<AdvancedToolbarControl
 							label={ __( 'Inner Block Alignment', i18n ) }
 							controls={ [
@@ -71,7 +71,7 @@ export const Edit = props => {
 									title: __( 'Horizontal', i18n ),
 								},
 								{
-									value: 'vertical',
+									value: '',
 									title: __( 'Vertical', i18n ),
 								},
 							] }
@@ -96,4 +96,5 @@ export const Edit = props => {
 Edit.defaultProps = {
 	hasRowAlignment: false,
 	hasColumnAlignment: false,
+	hasBlockAlignment: false,
 }

@@ -90,6 +90,7 @@ const Tooltip = props => {
 	} )
 
 	const widthControl = <AdvancedTextControl
+		type="number"
 		label={ props.enableWidth && props.enableHeight ? __( 'Width', i18n ) : __( 'Image Width', i18n ) }
 		className="stk-image-size-popup__size"
 		units={ props.widthUnits }
@@ -139,6 +140,7 @@ const Tooltip = props => {
 	/>
 
 	const heightControl = <AdvancedTextControl
+		type="number"
 		label={ props.enableWidth && props.enableHeight ? __( 'Height', i18n ) : __( 'Image Height', i18n ) }
 		className="stk-image-size-popup__size"
 		units={ props.heightUnits }

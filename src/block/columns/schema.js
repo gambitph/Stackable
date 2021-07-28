@@ -1,6 +1,3 @@
-/**
- * External dependencies
- */
 import {
 	Advanced,
 	Alignment,
@@ -32,7 +29,7 @@ export const attributes = ( version = VERSION ) => {
 
 	attrObject.add( {
 		attributes: {
-			design: {
+			templateLock: {
 				type: 'string',
 				default: '',
 			},

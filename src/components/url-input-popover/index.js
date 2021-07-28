@@ -7,7 +7,7 @@ import Button from '../button'
  * WordPress dependencies
  */
 import { Popover } from '@wordpress/components'
-import { __experimentalLinkControl as LinkControl } from '@wordpress/block-editor'
+import { __experimentalLinkControl as LinkControl } from '@wordpress/block-editor' // eslint-disable-line @wordpress/no-unsafe-wp-apis
 import { keyboardReturn } from '@wordpress/icons'
 import { __ } from '@wordpress/i18n'
 

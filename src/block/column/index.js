@@ -5,7 +5,7 @@
 /**
  * External dependencies
  */
-import { ImageBoxIcon } from '~stackable/icons'
+import { ColumnIcon } from '~stackable/icons'
 
 /**
  * Internal dependencies
@@ -22,11 +22,11 @@ import { __ } from '@wordpress/i18n'
 
 export const settings = {
 	...metadata,
-	icon: ImageBoxIcon,
+	icon: ColumnIcon,
 	attributes: schema,
 	supports: {
 		anchor: true,
-		align: true,
+		stkBlockLinking: true,
 	},
 	//  styles: blockStyles,
 

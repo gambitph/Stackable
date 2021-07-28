@@ -16,11 +16,11 @@
 	.ugb-image-preview {
 		border-radius: 4px;
 		transition: all 0.3s ease-in-out;
-    cursor: pointer;
+		cursor: pointer;
 		&:hover {
 			background: #fafafa;
-    }
-    &:focus {
+		}
+		&:focus {
 			background: #fafafa;
 			box-shadow: 0 0 0 2px rgba(30, 140, 190, 0.8);
 		}

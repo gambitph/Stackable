@@ -1,10 +1,15 @@
 /**
+ * Internal dependencies
+ */
+
+/**
  * External dependencies
  */
 import {
 	Advanced,
 	Alignment,
 	BlockDiv,
+	Column,
 	EffectsAnimations,
 } from '~stackable/block-components'
 import {
@@ -13,14 +18,10 @@ import {
 import {
 	getUniqueBlockClass,
 } from '~stackable/util'
-
-/**
- * WordPress dependencies
- */
-import { Fragment, renderToString } from '@wordpress/element'
+import { renderToString } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
-export const CardGroupStyles = props => {
+const BlockStyles = props => {
 	const {
 		...propsToPass
 	} = props
@@ -34,40 +35,42 @@ export const CardGroupStyles = props => {
 	propsToPass.attributes = { ...attributes, clientId }
 
 	return (
-		<Fragment>
+		<>
 			<Alignment.Style { ...propsToPass } />
 			<BlockDiv.Style { ...propsToPass } />
-			{ /* <MarginBottom.Style { ...propsToPass } /> */ }
+			<Column.Style { ...propsToPass } />
 			<Advanced.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
-		</Fragment>
+		</>
 	)
 }
 
-CardGroupStyles.defaultProps = {
+BlockStyles.defaultProps = {
 	isEditor: false,
 }
 
-CardGroupStyles.Content = props => {
+BlockStyles.Content = props => {
 	const {
 		...propsToPass
 	} = props
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
 
-	const styles = (
-		<Fragment>
+	const stylesToRender = (
+		<>
 			<Alignment.Style.Content { ...propsToPass } />
 			<BlockDiv.Style.Content { ...propsToPass } />
-			{ /* <MarginBottom.Style.Content { ...propsToPass } /> */ }
-			<Advanced.Style.Content { ...propsToPass } />
+			<Column.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
-		</Fragment>
+			<Advanced.Style.Content { ...propsToPass } />
+		</>
 	)
 
-	return renderToString( styles ) ? <style>{ styles }</style> : null
+	return renderToString( stylesToRender ) ? <style>{ stylesToRender }</style> : null
 }
 
-CardGroupStyles.Content.defaultProps = {
+BlockStyles.Content.defaultProps = {
 	attributes: {},
 }
+
+export default BlockStyles

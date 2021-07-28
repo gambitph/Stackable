@@ -9,12 +9,19 @@
 	position: relative;
 	width: 100%;
 }
+.stk-block,
+.entry-content .stk-block {
+	margin-top: 0;
+}
 
 // Containers
 .stk-column,
 .stk-block.stk-column {
 	margin-top: 0;
 	margin-bottom: 0;
+	// We need to add at least 1px here so that when the column collapses
+	// automatically, it still shows up in tablet and moblie.
+	min-width: 1px;
 }
 // Mostly for border radius.
 .stk-container {

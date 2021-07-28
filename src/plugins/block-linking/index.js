@@ -99,7 +99,7 @@ const useLinkableBlockTypes = () => {
 }
 
 // Returns the closest block that supports linking (doesn't mean the block is linked or unlinked)
-const useClosestLinkableBlock = clientId => {
+export const useClosestLinkableBlock = clientId => {
 	const linkableBlockTypes = useLinkableBlockTypes()
 
 	return useMemo( () => {
@@ -107,6 +107,7 @@ const useClosestLinkableBlock = clientId => {
 			return null
 		}
 
+		let linkableClientId = null
 		const {
 			getBlock,
 			getBlockParents,
@@ -115,15 +116,32 @@ const useClosestLinkableBlock = clientId => {
 		// Check if the current block is linkable.
 		const blockType = getBlock( clientId ).name
 		if ( linkableBlockTypes.includes( blockType ) ) {
-			return clientId
+			linkableClientId = clientId
 		}
 
-		// Looks for the parent that is linkable, returns null if can't find any
-		const parents = getBlockParents( clientId ).reverse()
-		return parents.find( clientId => {
-			const blockType = getBlock( clientId ).name
-			return linkableBlockTypes.includes( blockType ) ? clientId : false
-		} ) || null
+		// If current block isn't linkable, look for any parent that is linkable
+		if ( ! linkableClientId ) {
+			const parents = getBlockParents( clientId ).reverse()
+			linkableClientId = parents.find( clientId => {
+				const blockType = getBlock( clientId ).name
+				return linkableBlockTypes.includes( blockType ) ? clientId : false
+			} ) || null
+		}
+
+		// Check if the immediate parent explicitly disallows linking
+		// (stkBlockLinking = false)
+		if ( linkableClientId ) {
+			const parent = last( getBlockParents( linkableClientId ) )
+			if ( parent ) {
+				const blockType = getBlock( parent ).name
+				const blockData = wp.data.select( 'core/blocks' ).getBlockType( blockType )
+				if ( blockData?.supports?.stkBlockLinking === false ) {
+					return null
+				}
+			}
+		}
+
+		return linkableClientId
 	}, [ clientId ] )
 }
 
@@ -141,7 +159,7 @@ const isSupportedBlock = blockType => {
 
 	if ( ! isSupported && blockType.startsWith( 'stackable/' ) ) {
 		// eslint-disable-next-line no-console
-		console.error( `Stackable: block type "${ blockType }" was not included the list of blocks allowed for linking. See filter "stackable.block-linking.blocks"` )
+		console.error( `Stackable: block type "${ blockType }" was not included the list of blocks allowed for linking. Did you forget to include it? See filter "stackable.block-linking.blocks"` )
 	}
 
 	return isSupported
