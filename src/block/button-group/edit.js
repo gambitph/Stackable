@@ -54,7 +54,7 @@ const Edit = props => {
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-button-group',
+		'stk-block-button-group',
 		rowClass,
 	] )
 
@@ -78,13 +78,13 @@ const Edit = props => {
 			<Advanced.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-button-group" />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-button-group" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
 			<BlockDiv className={ blockClassNames }>
 				<ButtonGroupStyles version={ VERSION } />
-				<CustomCSS mainBlockClass="stk-button-group" />
+				<CustomCSS mainBlockClass="stk-block-button-group" />
 
 				{ ! hasInnerBlocks && <GroupPlaceholder /> }
 				<Fragment>
