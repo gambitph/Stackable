@@ -280,6 +280,7 @@ const Edit = props => {
 				isMultiline={ true }
 				initialOpen={ false }
 				hasTextTag={ false }
+				hasTextContent={ false }
 			/>
 
 			<Advanced.InspectorControls />
