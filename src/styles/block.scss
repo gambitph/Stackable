@@ -159,13 +159,13 @@
 // This removes the normal margins of headings and paragraphs, so we can add our own.
 .stk-block {
 	.stk-heading__text,
-	.stk-text__text {
+	.stk-block-text__text {
 		margin-bottom: 0;
 	}
 }
 .stk-heading,
-.stk-text,
-.stk-block .stk-text__text {
+.stk-block-text,
+.stk-block .stk-block-text__text {
 	margin-top: 0;
 }
 // Headings have a large margin top except when they're the first entry.
@@ -177,7 +177,7 @@
 	margin-top: 0;
 }
 // Remove any decorative things added by themes.
-.stk-text__text,
+.stk-block-text__text,
 .stk-heading__text {
 	&::after,
 	&::before {
