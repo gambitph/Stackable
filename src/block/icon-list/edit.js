@@ -53,7 +53,7 @@ const listTypeOptions = [
 		value: 'decimal',
 	},
 	{
-		label: __( 'Number from zero', i18n ),
+		label: __( 'Padded Number', i18n ),
 		value: 'decimal-leading-zero',
 	},
 	{
@@ -63,6 +63,14 @@ const listTypeOptions = [
 	{
 		label: __( 'Uppercase Roman', i18n ),
 		value: 'upper-roman',
+	},
+	{
+		label: __( 'Lowercase Letters', i18n ),
+		value: 'lower-alpha',
+	},
+	{
+		label: __( 'Uppercase Letters', i18n ),
+		value: 'upper-alpha',
 	},
 ]
 
@@ -190,7 +198,6 @@ const Edit = props => {
 				>
 					<AdvancedRangeControl
 						label={ __( 'Columns', i18n ) }
-						allowReset={ true }
 						attribute="columns"
 						min="1"
 						sliderMax="3"
@@ -201,7 +208,6 @@ const Edit = props => {
 
 					<AdvancedRangeControl
 						label={ __( 'Column Gap', i18n ) }
-						allowRest={ true }
 						attribute="columnGap"
 						min="0"
 						sliderMax="50"
@@ -210,12 +216,19 @@ const Edit = props => {
 
 					<AdvancedRangeControl
 						label={ __( 'Icon Gap', i18n ) }
-						allowRest={ true }
 						attribute="iconGap"
 						min="0"
 						sliderMax="20"
-						max="50"
 						responsive="all"
+					/>
+
+					<AdvancedRangeControl
+						label={ __( 'Indendation', i18n ) }
+						attribute="indentation"
+						min="0"
+						sliderMax="50"
+						responsive="all"
+						placeholder=""
 					/>
 				</PanelAdvancedSettings>
 			</InspectorStyleControls>
@@ -261,6 +274,7 @@ const Edit = props => {
 						step={ 0.1 }
 						allowReset={ true }
 						responsive="all"
+						placeholder="1"
 					/>
 
 					<AdvancedRangeControl

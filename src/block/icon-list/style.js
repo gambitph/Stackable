@@ -125,6 +125,13 @@ const getStyleParams = ( { attributes = {} } ) => {
 			format: '%spx',
 		},
 		{
+			selector: [ 'ul', 'ol' ],
+			styleRule: 'paddingLeft',
+			attrName: 'indentation',
+			responsive: 'all',
+			format: '%spx',
+		},
+		{
 			selector: 'ul > li',
 			hover: 'all',
 			hoverSelector: '.%s:hover ul > li',

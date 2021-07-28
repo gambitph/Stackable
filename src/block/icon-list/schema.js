@@ -28,6 +28,10 @@ export const iconListAttributes = {
 		type: 'boolean',
 		default: false,
 	},
+	indentation: {
+		type: 'number',
+		default: '',
+	},
 
 	// Icon.
 	icon: {
