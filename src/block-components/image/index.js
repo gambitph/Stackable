@@ -44,6 +44,7 @@ export const Image = props => {
 	return <Image_
 		{ ...setImage }
 		enableClickToEdit={ debouncedIsSelected }
+		showHandles={ isSelected }
 
 		imageId={ attributes.imageId }
 		imageURL={ attributes.imageUrl }

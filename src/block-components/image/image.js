@@ -127,11 +127,11 @@ const Image = memo( props => {
 						className={ imageWrapperClasses }
 						enable={ {
 							top: false,
-							right: props.enableWidth,
-							bottom: props.enableHeight,
+							right: props.showHandles && props.enableWidth,
+							bottom: props.showHandles && props.enableHeight,
 							left: false,
 							topRight: false,
-							bottomRight: props.enableDiagonal,
+							bottomRight: props.showHandles && props.enableDiagonal,
 							bottomLeft: false,
 							topLeft: false,
 						} }
@@ -303,6 +303,7 @@ const Image = memo( props => {
 Image.defaultProps = {
 	imageId: '',
 	enableClickToEdit: true,
+	showHandles: true,
 
 	alt: '',
 	title: '',

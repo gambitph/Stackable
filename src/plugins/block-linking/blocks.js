@@ -13,6 +13,9 @@ addFilter( 'stackable.block-linking.blocks', 'stackable', blocks => {
 		'stackable/text': { filterAttributes: [ 'text' ] },
 		'stackable/button-group': {},
 		'stackable/button': { filterAttributes: [ 'text', 'linkUrl', 'linkRel', 'linkNewTab' ] },
+		'stackable/columns': {},
+		'stackable/column': {},
+		'stackable/image': { filterAttributes: [ 'imageUrl', 'imageId', 'imageAlt' ] },
 	}
 } )
 
