@@ -335,8 +335,8 @@ const Edit = props => {
 						/>
 					) }
 				</div>
-				<MarginBottom />
 			</BlockDiv>
+			<MarginBottom />
 
 		</Fragment>
 	)
