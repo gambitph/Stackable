@@ -325,10 +325,10 @@ Image.defaultProps = {
 
 	// Resizers.
 	enableWidth: true,
-	widthResizePosition: 'right',
 	enableHeight: true,
-	heightResizePosition: 'bottom',
 	enableDiagonal: true,
+	widthResizePosition: 'right',
+	heightResizePosition: 'bottom',
 	allowReset: true,
 
 	hasRemove: true,

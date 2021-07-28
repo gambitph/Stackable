@@ -30,10 +30,6 @@ export const Save = props => {
 		className,
 	} = props
 
-	const {
-		hasContainer,
-	} = attributes
-
 	const blockAlignmentClass = getAlignmentClasses( attributes )
 	const responsiveClass = getResponsiveClasses( attributes )
 
@@ -43,15 +39,12 @@ export const Save = props => {
 		responsiveClass,
 	] )
 
-	const contentClassNames = classnames( [ 'stk-block-content', 'stk--no-padding' ] )
-
-	const innerClassNames = classnames( [
+	const contentClassNames = classnames( [
+		'stk-block-content',
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-container__content',
-	], {
-		'stk-container-padding': hasContainer,
-	} )
+	] )
 
 	return (
 		<BlockDiv.Content
@@ -64,9 +57,7 @@ export const Save = props => {
 				className={ contentClassNames }
 				attributes={ attributes }
 			>
-				<div className={ innerClassNames }>
-					<InnerBlocks.Content />
-				</div>
+				<InnerBlocks.Content />
 				<BlockLink.Content attributes={ attributes } />
 			</ContainerDiv.Content>
 		</BlockDiv.Content>

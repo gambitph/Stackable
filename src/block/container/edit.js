@@ -40,10 +40,6 @@ const Edit = props => {
 		className,
 	} = props
 
-	const {
-		hasContainer,
-	} = props.attributes
-
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
 
@@ -53,22 +49,19 @@ const Edit = props => {
 		blockHoverClass,
 	] )
 
-	const contentClassNames = classnames( [ 'stk-block-content', 'stk--no-padding' ] )
-
-	const innerClassNames = classnames( [
+	const contentClassNames = classnames( [
+		'stk-block-content',
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-container__content',
-	], {
-		'stk-container-padding': hasContainer,
-	} )
+	] )
 
 	return (
 		<Fragment>
 
 			<InspectorTabs />
 
-			<Alignment.InspectorControls />
+			<Alignment.InspectorControls hasBlockAlignment={ true } />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
 			<BlockLink.InspectorControls />
@@ -85,12 +78,10 @@ const Edit = props => {
 				<CustomCSS mainBlockClass="stk-block-container" />
 
 				<ContainerDiv className={ contentClassNames }>
-					<div className={ innerClassNames }>
-						<InnerBlocks
-							templateLock={ false }
-							templateInsertUpdatesSelection={ true }
-						/>
-					</div>
+					<InnerBlocks
+						templateLock={ false }
+						templateInsertUpdatesSelection={ true }
+					/>
 				</ContainerDiv>
 				<MarginBottom />
 			</BlockDiv>
