@@ -21,14 +21,14 @@ import { applyFilters } from '@wordpress/hooks'
 import { __, sprintf } from '@wordpress/i18n'
 import { Fragment } from '@wordpress/element'
 
-const ImageShapeControl = props => {
+const ImageShapeControl = ( { hasDefault, ...props } ) => {
 	return (
 		<Fragment>
 			<DesignControl
 				{ ...props }
 				className={ classnames( props.className, [ 'ugb-image-shape-control', 'ugb--help-tip-image-shape' ] ) }
 				options={ [
-					...( props.hasDefault ? [ {
+					...( hasDefault ? [ {
 						label: __( 'Default', i18n ), value: '', image: ImageShapeDefault,
 					} ] : [] ),
 					{

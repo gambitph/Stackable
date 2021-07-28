@@ -81,7 +81,7 @@ export const createIconAttributes = ( options = {} ) => {
 		},
 		backgroundShapeOpacity: {
 			stkHover: true,
-			type: 'string',
+			type: 'number',
 			default: '',
 		},
 		backgroundShapeSize: {

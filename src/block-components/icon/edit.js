@@ -14,7 +14,7 @@ import {
 } from '~stackable/components'
 import { i18n } from 'stackable'
 import {
-	useAttributeEditHandlers,
+	useAttributeEditHandlers, useDeviceType,
 } from '~stackable/hooks'
 
 /**
@@ -35,6 +35,8 @@ export const Edit = props => {
 		hasBackgroundShape,
 		initialOpen,
 	} = props
+
+	const deviceType = useDeviceType()
 
 	const {
 		getAttribute,
@@ -200,7 +202,15 @@ export const Edit = props => {
 					<ToggleControl
 						label={ __( 'Shape Outline', i18n ) }
 						checked={ getAttribute( 'shapeOutline' ) }
-						onChange={ updateAttributeHandler( 'shapeOutline' ) }
+						onChange={ value => {
+							updateAttributeHandler( 'shapeOutlineWidth', deviceType )( {
+								top: 4,
+								left: 4,
+								bottom: 4,
+								right: 4,
+							} )
+							updateAttributeHandler( 'shapeOutline' )( value )
+						} }
 					/>
 
 					{ getAttribute( 'shapeOutline' ) && (

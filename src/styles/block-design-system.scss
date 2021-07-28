@@ -63,6 +63,7 @@
 	 * Icons
 	 */
 	icon-size: 56px,
+	icon-shape-color: #ddd,
 
 	/***
 	 * Typography
@@ -138,7 +139,10 @@
 }
 
 // Icons
-.stk--inner-svg svg:last-child {
-	width: cssvar(icon-size);
-	height: cssvar(icon-size);
+.stk--inner-svg {
+	border-color: #000;
+	svg:last-child {
+		width: cssvar(icon-size);
+		height: cssvar(icon-size);
+	}
 }
