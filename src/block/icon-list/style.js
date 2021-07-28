@@ -28,8 +28,14 @@ import {
 } from '@wordpress/element'
 
 const typographyOptions = {
-	selector: 'ol > li, ul > li',
-	hoverSelector: 'ol:hover > li, ul:hover > li',
+	selector: [
+		'ul > li',
+		'ol > li',
+	],
+	hoverSelector: [
+		'.%s:hover ul > li',
+		'.%s:hover ol > li',
+	],
 }
 
 const getStyleParams = ( { attributes = {} } ) => {

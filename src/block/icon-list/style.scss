@@ -5,6 +5,6 @@
 
 	// Line height creates unnecessary row gaps.
 	ul > li::marker {
-		line-height: 0 !important;
+		line-height: 0;
 	}
 }

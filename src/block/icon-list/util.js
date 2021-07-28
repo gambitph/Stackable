@@ -127,7 +127,7 @@ export const convertSVGStringToBase64 = ( svgTag = '', color = '', styles = {} )
  * for the icon list block.
  *
  * @param {{ isSelected, tagName, setAttributes }}  options
- * @return {Function} function which will be used as render props.
+ * @return {Function} function which will be used as render prop.
  */
 export const createIconListControls = ( options = {} ) => {
 	const {
