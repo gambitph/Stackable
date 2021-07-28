@@ -32,12 +32,12 @@ const Save = props => {
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-heading',
+		'stk-block-heading',
 		responsiveClass,
 	] )
 
 	const textClassNames = classnames( [
-		'stk-heading__text',
+		'stk-block-heading__text',
 		textClasses,
 		blockAlignmentClass,
 	] )
@@ -49,12 +49,12 @@ const Save = props => {
 		>
 			<HeadingStyles.Content version={ props.version } attributes={ attributes } />
 			<CustomCSS.Content attributes={ attributes } />
-			{ props.attributes.showTopLine && <div className="stk-heading__top-line" /> }
+			{ props.attributes.showTopLine && <div className="stk-block-heading__top-line" /> }
 			<Typography.Content
 				attributes={ attributes }
 				className={ textClassNames }
 			/>
-			{ props.attributes.showBottomLine && <div className="stk-heading__bottom-line" /> }
+			{ props.attributes.showBottomLine && <div className="stk-block-heading__bottom-line" /> }
 		</BlockDiv.Content>
 	)
 }

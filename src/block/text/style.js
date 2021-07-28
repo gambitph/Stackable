@@ -63,8 +63,8 @@ export const TextStyles = props => {
 				...propsToPass,
 				options: {
 					...propsToPass.options,
-					selector: '.stk-text__text',
-					hoverSelector: '.stk-text__text:hover',
+					selector: '.stk-block-text__text',
+					hoverSelector: '.stk-block-text__text:hover',
 				},
 			} } />
 			<StyleComponent
@@ -101,8 +101,8 @@ TextStyles.Content = props => {
 				...propsToPass,
 				options: {
 					...propsToPass.options,
-					selector: '.stk-text__text',
-					hoverSelector: '.stk-text__text:hover',
+					selector: '.stk-block-text__text',
+					hoverSelector: '.stk-block-text__text:hover',
 				},
 			} } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />

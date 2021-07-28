@@ -19,6 +19,7 @@ export const ContainerDiv = props => {
 		`stk-${ attributes.uniqueId }-container`,
 	], {
 		'stk--no-background': ! attributes.hasContainer,
+		'stk--no-padding': ! attributes.hasContainer,
 	} )
 
 	return <Div
@@ -49,6 +50,7 @@ ContainerDiv.Content = props => {
 		`stk-${ attributes.uniqueId }-container`,
 	], {
 		'stk--no-background': ! attributes.hasContainer,
+		'stk--no-padding': ! attributes.hasContainer,
 	} )
 
 	return <Div.Content

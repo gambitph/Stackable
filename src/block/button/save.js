@@ -33,18 +33,18 @@ export const Save = props => {
 	const typographyInnerClasses = getTypographyClasses( props.attributes )
 
 	const buttonClassNames = classnames( [
-		'stk-button__button',
+		'stk-block-button__button',
 	] )
 
 	const blockClassNames = classnames( [
 		props.className,
-		'stk-button',
+		'stk-block-button',
 		responsiveClass,
 	] )
 
 	const typographyInnerClassNames = classnames( [
 		typographyInnerClasses,
-		'stk-button__inner-text',
+		'stk-block-button__inner-text',
 	] )
 
 	return (
