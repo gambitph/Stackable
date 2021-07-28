@@ -22,6 +22,7 @@ import {
 	CustomAttributes,
 	EffectsAnimations,
 	ConditionalDisplay,
+	MarginBottom,
 } from '~stackable/block-components'
 
 /**
@@ -71,6 +72,7 @@ const Edit = props => {
 					defaultWidth="100"
 					defaultHeight="auto"
 				/>
+				<MarginBottom />
 			</BlockDiv>
 		</Fragment>
 	)

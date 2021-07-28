@@ -82,7 +82,16 @@ const getStyleParams = () => {
 			responsive: 'all',
 			hover: 'all',
 		},
+		// We need to implement z-index on the block itself or else it won't look correct in the editor.
 		{
+			renderIn: 'edit',
+			selectorCallback: getAttribute => `[data-block="${ getAttribute( 'clientId' ) }"]`,
+			styleRule: 'zIndex',
+			attrName: 'zIndex',
+			responsive: 'all',
+		},
+		{
+			renderIn: 'save',
 			selector: '',
 			styleRule: 'zIndex',
 			attrName: 'zIndex',

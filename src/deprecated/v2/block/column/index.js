@@ -4,7 +4,7 @@
 /**
  * External dependencies
  */
-import { ColumnsIcon } from '~stackable/icons'
+import { ColumnIcon } from '~stackable/icons'
 
 /**
  * Internal dependencies
@@ -28,7 +28,7 @@ export { name }
 
 export const settings = {
 	...metadata,
-	icon: ColumnsIcon,
+	icon: ColumnIcon,
 	attributes: schema,
 
 	supports: {
