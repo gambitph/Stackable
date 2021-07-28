@@ -24,6 +24,7 @@ import {
 	CustomAttributes,
 	EffectsAnimations,
 	ConditionalDisplay,
+	MarginBottom,
 } from '~stackable/block-components'
 
 /**
@@ -63,6 +64,7 @@ const Edit = props => {
 			<BlockDiv className={ blockClassNames }>
 				<Icon />
 			</BlockDiv>
+			<MarginBottom />
 		</Fragment>
 	)
 }
