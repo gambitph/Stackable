@@ -43,7 +43,7 @@
 	margin-right: 0;
 	width: 100%; // Some native blocks have auto widths so they won't follow left/center/right text alignment e.g. buttons
 }
-[data-type^="stackable/"] .stk-row,
+
 .stk-column .block-editor-block-list__layout {
 	display: block;
 }
