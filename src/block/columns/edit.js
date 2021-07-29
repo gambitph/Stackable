@@ -80,13 +80,13 @@ const Edit = props => {
 			<Advanced.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-columns" />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-columns" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
 			<BlockDiv className={ blockClassNames }>
 				<BlockStyles version={ VERSION } />
-				<CustomCSS mainBlockClass="stk-columns" />
+				<CustomCSS mainBlockClass="stk-block-columns" />
 
 				{ ! hasInnerBlocks && <GroupPlaceholder /> }
 				<Fragment>
