@@ -6,11 +6,14 @@ import { IconLabelStyles } from './style'
 /**
  * External dependencies
  */
-import { version as VERSION } from 'stackable'
+import { version as VERSION, i18n } from 'stackable'
 import classnames from 'classnames'
 import {
 	GroupPlaceholder,
 	InspectorTabs,
+	InspectorStyleControls,
+	PanelAdvancedSettings,
+	AdvancedRangeControl,
 } from '~stackable/components'
 import {
 	BlockDiv,
@@ -37,11 +40,9 @@ import { useBlockContext } from '~stackable/hooks'
 import { __ } from '@wordpress/i18n'
 
 const TEMPLATE = [
-	[ 'stackable/icon-list', {} ],
+	[ 'ugb/icon', {} ],
 	[ 'stackable/heading', { text: __( 'Icon Label' ), hasP: true } ],
 ]
-
-const TABS = [ 'block', 'advanced' ]
 
 const Edit = props => {
 	const {
@@ -66,10 +67,26 @@ const Edit = props => {
 
 	return (
 		<Fragment>
-			<InspectorTabs tabs={ TABS } />
+			<InspectorTabs />
 
 			<Alignment.InspectorControls hasRowAlignment={ true } />
 			<BlockDiv.InspectorControls />
+			<InspectorStyleControls>
+				<PanelAdvancedSettings
+					title={ __( 'General', i18n ) }
+					id="general"
+					initialOpen={ true }
+				>
+					<AdvancedRangeControl
+						label={ __( 'Icon Gap' ) }
+						attribute="iconGap"
+						responsive="all"
+						sliderMin={ 0 }
+						sliderMax={ 300 }
+					/>
+				</PanelAdvancedSettings>
+
+			</InspectorStyleControls>
 			<Advanced.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />

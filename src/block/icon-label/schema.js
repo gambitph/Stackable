@@ -26,6 +26,16 @@ export const attributes = ( version = VERSION ) => {
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
+	attrObject.add( {
+		attributes: {
+			iconGap: {
+				type: 'number',
+				default: '',
+			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
 
 	return attrObject.getMerged( version )
 }
