@@ -26,6 +26,7 @@ import {
 	EffectsAnimations,
 	ConditionalDisplay,
 } from '~stackable/block-components'
+import { useBlockContext } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -34,7 +35,6 @@ import {
 	InnerBlocks,
 } from '@wordpress/block-editor'
 import { Fragment, useCallback } from '@wordpress/element'
-import { useBlockContext } from '~stackable/hooks'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/card' ]
 
@@ -90,8 +90,8 @@ const Edit = props => {
 					templateInsertUpdatesSelection={ true }
 				/>
 			</div>
-			{ hasInnerBlocks && <MarginBottom /> }
 		</BlockDiv>
+		{ hasInnerBlocks && <MarginBottom /> }
 	</Fragment>
 }
 

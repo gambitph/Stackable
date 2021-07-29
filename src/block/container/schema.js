@@ -2,36 +2,35 @@
  * External dependencies
  */
 import {
-	Advanced,
 	BlockDiv,
-	CustomCSS,
-	Responsive,
-	Button,
-	Typography,
-	CustomAttributes,
+	BlockLink,
+	Alignment,
 	EffectsAnimations,
 	ConditionalDisplay,
+	CustomAttributes,
+	ContainerDiv,
+	CustomCSS,
+	Responsive,
+	Advanced,
+	MarginBottom,
 } from '~stackable/block-components'
 import { AttributeObject } from '~stackable/util'
 import { version as VERSION } from 'stackable'
 
 export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
+
 	BlockDiv.addAttributes( attrObject )
+	MarginBottom.addAttributes( attrObject )
+	ContainerDiv.addAttributes( attrObject, { hasDefaultContainer: true } )
+	Alignment.addAttributes( attrObject )
+	Advanced.addAttributes( attrObject )
 	EffectsAnimations.addAttributes( attrObject )
 	CustomAttributes.addAttributes( attrObject )
+	ConditionalDisplay.addAttributes( attrObject )
 	CustomCSS.addAttributes( attrObject )
 	Responsive.addAttributes( attrObject )
-	ConditionalDisplay.addAttributes( attrObject )
-	Advanced.addAttributes( attrObject )
-	Button.addAttributes( attrObject, {
-		selector: '.stk-block-button__button',
-	} )
-
-	Typography.addAttributes( attrObject, '.stk-block-button__inner-text', {
-		hasTextTag: false,
-		hasColor: false,
-	} )
+	BlockLink.addAttributes( attrObject )
 
 	return attrObject.getMerged( version )
 }

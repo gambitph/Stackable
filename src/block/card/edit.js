@@ -34,6 +34,7 @@ import {
 	BlockStyle,
 	CustomAttributes,
 	EffectsAnimations,
+	BlockLink,
 	ConditionalDisplay,
 } from '~stackable/block-components'
 
@@ -45,7 +46,6 @@ import { InnerBlocks } from '@wordpress/block-editor'
 import {
 	Fragment, useCallback,
 } from '@wordpress/element'
-import { BlockLink } from '~stackable/block-components/block-link'
 
 const TEMPLATE = [
 	[ 'stackable/heading', {} ],

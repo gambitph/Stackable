@@ -1,0 +1,4 @@
+// Lists in the editor can show a margin that's not visible in the frontend.
+.stk-block-icon-list > div > .rich-text {
+	margin: 0;
+}

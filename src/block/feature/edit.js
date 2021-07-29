@@ -89,8 +89,8 @@ const Edit = props => {
 						orientation="horizontal"
 					/>
 				</div>
-				<MarginBottom />
 			</BlockDiv>
+			<MarginBottom />
 		</>
 	)
 }

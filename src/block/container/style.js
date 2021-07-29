@@ -2,13 +2,15 @@
  * External dependencies
  */
 import {
-	Advanced,
-	Alignment,
 	BlockDiv,
+	Alignment,
+	Advanced,
 	EffectsAnimations,
+	ContainerDiv,
+	MarginBottom,
 } from '~stackable/block-components'
 import {
-	useBlockAttributes, useDeviceType,
+	useDeviceType, useBlockAttributes,
 } from '~stackable/hooks'
 import {
 	getUniqueBlockClass,
@@ -17,10 +19,18 @@ import {
 /**
  * WordPress dependencies
  */
-import { Fragment, renderToString } from '@wordpress/element'
+import {
+	Fragment, renderToString,
+} from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
-export const CardGroupStyles = props => {
+const containerDivOptions = {
+	sizeSelector: '.stk-block-container__content',
+	sizeVerticalAlignRule: 'justifyContent',
+	sizeHorizontalAlignRule: 'alignSelf',
+}
+
+export const ContainerStyles = props => {
 	const {
 		...propsToPass
 	} = props
@@ -37,18 +47,19 @@ export const CardGroupStyles = props => {
 		<Fragment>
 			<Alignment.Style { ...propsToPass } />
 			<BlockDiv.Style { ...propsToPass } />
-			{ /* <MarginBottom.Style { ...propsToPass } /> */ }
 			<Advanced.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
+			<ContainerDiv.Style { ...propsToPass } options={ containerDivOptions } />
+			<MarginBottom.Style { ...propsToPass } />
 		</Fragment>
 	)
 }
 
-CardGroupStyles.defaultProps = {
+ContainerStyles.defaultProps = {
 	isEditor: false,
 }
 
-CardGroupStyles.Content = props => {
+ContainerStyles.Content = props => {
 	const {
 		...propsToPass
 	} = props
@@ -59,15 +70,16 @@ CardGroupStyles.Content = props => {
 		<Fragment>
 			<Alignment.Style.Content { ...propsToPass } />
 			<BlockDiv.Style.Content { ...propsToPass } />
-			{ /* <MarginBottom.Style.Content { ...propsToPass } /> */ }
 			<Advanced.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
+			<ContainerDiv.Style.Content { ...propsToPass } options={ containerDivOptions } />
+			<MarginBottom.Style.Content { ...propsToPass } />
 		</Fragment>
 	)
 
 	return renderToString( styles ) ? <style>{ styles }</style> : null
 }
 
-CardGroupStyles.Content.defaultProps = {
+ContainerStyles.Content.defaultProps = {
 	attributes: {},
 }
