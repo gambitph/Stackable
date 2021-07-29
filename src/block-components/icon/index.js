@@ -133,6 +133,7 @@ export const Icon = props => {
 				className="stk--inner-svg"
 				prependRender={ linearGradient }
 				value={ getAttribute( 'icon' ) }
+				ariaLabel={ getAttribute( 'ariaLabel' ) }
 			/>
 			{ getAttribute( 'showBackgroundShape' ) && <ShapeComp className="stk--shape-icon" /> }
 			{ isOpen && (
@@ -175,6 +176,7 @@ Icon.Content = props => {
 				className="stk--inner-svg"
 				prependRender={ linearGradient }
 				value={ getValue( 'icon' ) }
+				ariaLabel={ getValue( 'ariaLabel' ) }
 			/>
 			{ getValue( 'showBackgroundShape' ) && (
 				<ShapeComp className="stk--shape-icon" />

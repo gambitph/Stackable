@@ -27,6 +27,16 @@ export const attributes = ( version = VERSION ) => {
 	Responsive.addAttributes( attrObject )
 	ConditionalDisplay.addAttributes( attrObject )
 	Icon.addAttributes( attrObject, { defaultIcon: 'fa-star' } )
+	attrObject.add( {
+		attributes: {
+			ariaLabel: {
+				type: 'string',
+				default: '',
+			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
 
 	return attrObject.getMerged( version )
 }

@@ -6,9 +6,9 @@ import { IconStyles } from './style'
  * External dependencies
  */
 import classnames from 'classnames'
-import { version as VERSION } from 'stackable'
+import { version as VERSION, i18n } from 'stackable'
 import {
-	InspectorTabs,
+	InspectorTabs, InspectorAdvancedControls, PanelAdvancedSettings, AdvancedTextControl,
 } from '~stackable/components'
 import {
 	useBlockHoverClass,
@@ -30,6 +30,7 @@ import {
  * WordPress dependencies
  */
 import { Fragment } from '@wordpress/element'
+import { __ } from '@wordpress/i18n'
 
 const Edit = props => {
 	const { className, attributes } = props
@@ -51,6 +52,20 @@ const Edit = props => {
 			<Alignment.InspectorControls />
 			<BlockDiv.InspectorControls />
 			<Advanced.InspectorControls />
+
+			<InspectorAdvancedControls>
+				<PanelAdvancedSettings
+					title={ __( 'Accessibility', i18n ) }
+					id="accessibility"
+				>
+					<AdvancedTextControl
+						isDynamic={ false }
+						label={ __( 'Icon Label', i18n ) }
+						attribute="ariaLabel"
+					/>
+				</PanelAdvancedSettings>
+			</InspectorAdvancedControls>
+
 			<EffectsAnimations.InspectorControls />
 			<Icon.InspectorControls initialOpen={ true } />
 			<CustomAttributes.InspectorControls />
