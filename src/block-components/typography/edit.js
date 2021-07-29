@@ -56,7 +56,7 @@ export const Edit = props => {
 	useFontLoader( getAttribute( 'fontFamily' ) )
 
 	useEffect( () => {
-		if ( text !== unescape( debouncedText ) ) {
+		if ( text !== escapeHTML( debouncedText ) ) {
 			setDebouncedText( unescape( text ) )
 		}
 	}, [ text ] )
