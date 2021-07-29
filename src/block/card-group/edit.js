@@ -26,7 +26,7 @@ import {
 	EffectsAnimations,
 	ConditionalDisplay,
 } from '~stackable/block-components'
-import { useBlockContext } from '~stackable/hooks'
+import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -46,11 +46,13 @@ const Edit = props => {
 	const rowClass = getRowClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const { hasInnerBlocks } = useBlockContext()
+	const blockHoverClass = useBlockHoverClass()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-card-group',
 		rowClass,
+		blockHoverClass,
 	] )
 
 	const contentClassNames = classnames( [

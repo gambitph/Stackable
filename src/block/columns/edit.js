@@ -34,7 +34,7 @@ import {
 	InnerBlocks,
 } from '@wordpress/block-editor'
 import { Fragment, useCallback } from '@wordpress/element'
-import { useBlockContext } from '~stackable/hooks'
+import { useBlockContext, useBlockHoverClass } from '~stackable/hooks'
 import { __ } from '@wordpress/i18n'
 
 const ALLOWED_INNER_BLOCKS = [ 'stackable/button' ]
@@ -53,11 +53,13 @@ const Edit = props => {
 	const rowClass = getRowClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const { hasInnerBlocks } = useBlockContext()
+	const blockHoverClass = useBlockHoverClass()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-columns',
 		rowClass,
+		blockHoverClass,
 	] )
 
 	const contentClassNames = classnames( [

@@ -22,6 +22,7 @@ import {
 	getRowClasses,
 	MarginBottom,
 } from '~stackable/block-components'
+import { useBlockHoverClass } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
@@ -51,11 +52,13 @@ const Edit = props => {
 
 	const rowClass = getRowClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+	const blockHoverClass = useBlockHoverClass()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-feature',
 		rowClass,
+		blockHoverClass,
 	] )
 
 	const contentClassNames = classnames( [
