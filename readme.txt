@@ -204,6 +204,9 @@ Nope. Stackable only works with Gutenberg, the new WordPress editor.
 
 == Changelog ==
 
+= 2.17.4 =
+* Fixed: Loading order of styles caused some styling issues in some blocks
+
 = 2.17.3 =
 * Fixed: Removed unnecessary scripts from loading in the frontend
 
