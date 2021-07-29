@@ -35,10 +35,10 @@ export const Save = props => {
 		props.className,
 		'stk-block-columns',
 		responsiveClass,
-		rowClass,
 	] )
 
 	const contentClassNames = classnames( [
+		rowClass,
 		'stk-inner-blocks',
 		blockAlignmentClass,
 		'stk-block-content',
