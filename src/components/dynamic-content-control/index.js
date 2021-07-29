@@ -157,8 +157,13 @@ export const useDynamicContent = ( value = '' ) => {
 			return value
 		}
 
+		/**
+		 * A simple trick for subscribing to post changes.
+		 */
+		select( 'core/editor' ).getPostEdits()
+
 		return select( 'stackable/dynamic-content' ).parseDynamicContents( value )
-	} )
+	}, [ value ] )
 }
 
 /**
