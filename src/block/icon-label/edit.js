@@ -81,7 +81,7 @@ const Edit = props => {
 						label={ __( 'Icon Gap' ) }
 						attribute="iconGap"
 						responsive="all"
-						sliderMin={ 0 }
+						min={ 0 }
 						sliderMax={ 300 }
 					/>
 				</PanelAdvancedSettings>
