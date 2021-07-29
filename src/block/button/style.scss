@@ -1,47 +1,73 @@
 @import "common";
 
-.stk-block.stk-button {
+.stk-block.stk-block-button {
 	width: auto;
-	margin-bottom: 0;
+	margin: 0;
 	margin-inline-end: 12px;
 	text-align: center;
+}
+.stk-block-button {
+	.stk--inner-svg {
+		display: flex;
+		svg {
+			height: 1em;
+			width: 1em;
+		}
+	}
+}
+.stk-block-button__button {
+	display: flex;
+	align-items: center;
+	column-gap: 4px;
+	// make sure that the anchor tag's width matches the parent's ( stk-block-button ) width.
+	width: 100%;
+	text-decoration: none;
 
-	.stk-button__button {
-		// make sure that the anchor tag's width matches the parent's ( stk-button ) width.
+	&::after {
+		pointer-events: none;
+		content: "";
+		position: absolute;
+		z-index: -1;
+		top: 0;
+		left: 0;
 		width: 100%;
-		text-decoration: none;
+		height: 100%;
+		opacity: 0;
+		border-radius: inherit;
 	}
 }
 
-.stk-button.is-style-ghost {
-	.stk-button__button {
+.stk-block-button.is-style-ghost {
+	.stk-block-button__button {
 		border-color: cssvar(button-background-color);
-		border-top-width: 1px;
-		border-right-width: 1px;
-		border-bottom-width: 1px;
-		border-left-width: 1px;
+		.stk--inner-svg {
+			color: cssvar(button-background-color);
+		}
 
 		&:hover {
-			.stk-button__inner-text {
+			.stk-block-button__inner-text {
 				color: cssvar(button-background-color);
 			}
 		}
 
-		& > .stk-button__inner-text {
+		& > .stk-block-button__inner-text {
 			color: cssvar(button-background-color);
 		}
 	}
 }
 
-.stk-button.is-style-plain {
-	.stk-button__button {
+.stk-block-button.is-style-plain {
+	.stk-block-button__button {
+		.stk--inner-svg {
+			color: cssvar(button-background-color);
+		}
 		&:hover {
-			.stk-button__inner-text {
+			.stk-block-button__inner-text {
 				color: cssvar(button-background-color);
 			}
 		}
 
-		& > .stk-button__inner-text {
+		& > .stk-block-button__inner-text {
 			color: cssvar(button-background-color);
 		}
 	}

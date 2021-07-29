@@ -47,12 +47,12 @@ const Edit = props => {
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockClassNames = classnames( [
 		className,
-		'stk-heading',
+		'stk-block-heading',
 		blockHoverClass,
 	] )
 
 	const textClassNames = classnames( [
-		'stk-heading__text',
+		'stk-block-heading__text',
 		textClasses,
 		blockAlignmentClass,
 	] )
@@ -163,15 +163,15 @@ const Edit = props => {
 
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-heading" />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-heading" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
 			<HeadingStyles version={ VERSION } />
-			<CustomCSS mainBlockClass="stk-heading__text" />
+			<CustomCSS mainBlockClass="stk-block-heading" />
 
 			<BlockDiv className={ blockClassNames }>
-				{ props.attributes.showTopLine && <div className="stk-heading__top-line" /> }
+				{ props.attributes.showTopLine && <div className="stk-block-heading__top-line" /> }
 				<Typography
 					defaultTag="h2"
 					placeholder={ __( 'Title for This Block', i18n ) }
@@ -196,9 +196,9 @@ const Edit = props => {
 						return block
 					} }
 				/>
-				{ props.attributes.showBottomLine && <div className="stk-heading__bottom-line" /> }
-				<MarginBottom />
+				{ props.attributes.showBottomLine && <div className="stk-block-heading__bottom-line" /> }
 			</BlockDiv>
+			<MarginBottom />
 		</Fragment>
 	)
 }

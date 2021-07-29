@@ -51,18 +51,18 @@ const Edit = props => {
 
 	const blockHoverClass = useBlockHoverClass()
 	const buttonClassNames = classnames( [
-		'stk-button__button',
+		'stk-block-button__button',
 	] )
 
 	const blockClassNames = classnames( [
 		className,
-		'stk-button',
+		'stk-block-button',
 		blockHoverClass,
 	] )
 
 	const typographyInnerClassNames = classnames( [
 		typographyInnerClasses,
-		'stk-button__inner-text',
+		'stk-block-button__inner-text',
 	] )
 
 	return (
@@ -86,12 +86,12 @@ const Edit = props => {
 			<Advanced.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-button" />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-button" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
 			<ButtonStyles version={ VERSION } />
-			<CustomCSS mainBlockClass="stk-button" />
+			<CustomCSS mainBlockClass="stk-block-button" />
 
 			<Linking show={ isHovered } />
 			<BlockDiv className={ blockClassNames }>
