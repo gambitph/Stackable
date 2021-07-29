@@ -127,9 +127,7 @@ const getStyleParams = ( options = {} ) => {
 			hoverSelector: shapeHoverSelector,
 			styleRule: 'backgroundColor',
 			attrName: 'shapeColor',
-			enabledCallback: getAttribute => getAttribute( 'shaped' ),
 			hover: 'all',
-			dependencies: [ 'shaped' ],
 		},
 		{
 			selector: shapeSelector,
@@ -137,9 +135,7 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'borderRadius',
 			attrName: 'shapeBorderRadius',
 			format: `%s%`,
-			enabledCallback: getAttribute => getAttribute( 'shaped' ),
 			hover: 'all',
-			dependencies: [ 'shaped' ],
 		},
 		{
 			selector: shapeSelector,
@@ -147,18 +143,13 @@ const getStyleParams = ( options = {} ) => {
 			styleRule: 'padding',
 			attrName: 'shapePadding',
 			format: `%spx`,
-			enabledCallback: getAttribute => getAttribute( 'shaped' ),
-			dependencies: [ 'shaped' ],
 		},
 		{
 			selector: shapeSelector,
 			hoverSelector: shapeHoverSelector,
 			styleRule: 'borderColor',
 			attrName: 'shapeOutlineColor',
-			valuePreCallback: ( value, getAttribute ) => getAttribute( 'shapeOutline' ) ? value : undefined,
-			enabledCallback: getAttribute => getAttribute( 'shaped' ),
 			hover: 'all',
-			dependencies: [ 'shapeOutline', 'shaped' ],
 		},
 		{
 			selector: shapeSelector,
@@ -170,17 +161,15 @@ const getStyleParams = ( options = {} ) => {
 					! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.top ||
 					! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.right ||
 					! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.bottom ||
-					! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.left ||
-					! getAttribute( 'shapeOutline' )
+					! getAttribute( 'shapeOutlineWidth', 'desktop', state )?.left
 				) {
 					return undefined
 				}
 
 				return 'solid'
 			},
-			enabledCallback: getAttribute => getAttribute( 'shaped' ),
 			hover: 'all',
-			dependencies: [ 'shaped', 'shapeOutline', 'shapeOutlineWidth' ],
+			dependencies: [ 'shapeOutlineWidth' ],
 		},
 		{
 			selector: shapeSelector,
@@ -189,8 +178,7 @@ const getStyleParams = ( options = {} ) => {
 			attrName: 'shapeOutlineWidth',
 			responsive: 'all',
 			format: '%spx',
-			valuePreCallback: ( value, getAttribute ) => getAttribute( 'shapeOutline' ) ? value?.top : undefined,
-			dependencies: [ 'shapeOutline', 'shaped' ],
+			valuePreCallback: value => value?.top,
 		},
 		{
 			selector: shapeSelector,
@@ -199,8 +187,7 @@ const getStyleParams = ( options = {} ) => {
 			attrName: 'shapeOutlineWidth',
 			responsive: 'all',
 			format: '%spx',
-			valuePreCallback: ( value, getAttribute ) => getAttribute( 'shapeOutline' ) ? value?.right : undefined,
-			dependencies: [ 'shapeOutline', 'shaped' ],
+			valuePreCallback: value => value?.right,
 		},
 		{
 			selector: shapeSelector,
@@ -209,8 +196,7 @@ const getStyleParams = ( options = {} ) => {
 			attrName: 'shapeOutlineWidth',
 			responsive: 'all',
 			format: '%spx',
-			valuePreCallback: ( value, getAttribute ) => getAttribute( 'shapeOutline' ) ? value?.bottom : undefined,
-			dependencies: [ 'shapeOutline', 'shaped' ],
+			valuePreCallback: value => value?.bottom,
 		},
 		{
 			selector: shapeSelector,
@@ -219,8 +205,7 @@ const getStyleParams = ( options = {} ) => {
 			attrName: 'shapeOutlineWidth',
 			responsive: 'all',
 			format: '%spx',
-			valuePreCallback: ( value, getAttribute ) => getAttribute( 'shapeOutline' ) ? value?.left : undefined,
-			dependencies: [ 'shapeOutline', 'shaped' ],
+			valuePreCallback: value => value?.left,
 		},
 
 		// Background Shape Styles

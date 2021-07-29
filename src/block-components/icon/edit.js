@@ -14,16 +14,13 @@ import {
 } from '~stackable/components'
 import { i18n } from 'stackable'
 import {
-	useAttributeEditHandlers, useDeviceType,
+	useAttributeEditHandlers,
 } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n'
-import {
-	ToggleControl,
-} from '@wordpress/components'
 import { Fragment } from '@wordpress/element'
 
 export const Edit = props => {
@@ -35,8 +32,6 @@ export const Edit = props => {
 		hasBackgroundShape,
 		initialOpen,
 	} = props
-
-	const deviceType = useDeviceType()
 
 	const {
 		getAttribute,
@@ -167,8 +162,6 @@ export const Edit = props => {
 				<PanelAdvancedSettings
 					title={ __( 'Icon Shape', i18n ) }
 					id="icon-shape"
-					checked={ getAttribute( 'shaped' ) }
-					onChange={ updateAttributeHandler( 'shaped' ) }
 				>
 
 					<ColorPaletteControl
@@ -199,45 +192,25 @@ export const Edit = props => {
 						placeholder={ 20 }
 					/>
 
-					<ToggleControl
-						label={ __( 'Shape Outline', i18n ) }
-						checked={ getAttribute( 'shapeOutline' ) }
-						onChange={ value => {
-							updateAttributeHandler( 'shapeOutlineWidth', deviceType )( {
-								top: 4,
-								left: 4,
-								bottom: 4,
-								right: 4,
-							} )
-							updateAttributeHandler( 'shapeOutline' )( value )
-						} }
+					<ColorPaletteControl
+						label={ __( 'Shape Outline Color', i18n ) }
+						attribute="shapeOutlineColor"
+						hasTransparent={ true }
+						hover="all"
 					/>
 
-					{ getAttribute( 'shapeOutline' ) && (
-						<Fragment>
-
-							<ColorPaletteControl
-								label={ __( 'Shape Outline Color', i18n ) }
-								attribute="shapeOutlineColor"
-								hasTransparent={ true }
-								hover="all"
-							/>
-
-							<FourRangeControl
-								label={ __( 'Shape Outline Width' ) }
-								units={ [ 'px' ] }
-								min={ 0 }
-								max={ 99 }
-								step={ 1 }
-								sliderMax={ 20 }
-								defaultLocked={ true }
-								attribute="shapeOutlineWidth"
-								responsive="all"
-								default="1"
-							/>
-
-						</Fragment>
-					) }
+					<FourRangeControl
+						label={ __( 'Shape Outline Width' ) }
+						units={ [ 'px' ] }
+						min={ 0 }
+						max={ 99 }
+						step={ 1 }
+						sliderMax={ 20 }
+						defaultLocked={ true }
+						attribute="shapeOutlineWidth"
+						responsive="all"
+						default="1"
+					/>
 
 				</PanelAdvancedSettings>
 			) }

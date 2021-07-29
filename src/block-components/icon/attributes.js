@@ -43,10 +43,6 @@ export const createIconAttributes = ( options = {} ) => {
 			type: 'number',
 			default: '',
 		},
-		shaped: {
-			type: 'boolean',
-			default: false,
-		},
 		shapeColor: {
 			stkHover: true,
 			type: 'string',
@@ -90,10 +86,6 @@ export const createIconAttributes = ( options = {} ) => {
 		backgroundShapeOffsetVertical: {
 			type: 'number',
 			default: '',
-		},
-		shapeOutline: {
-			type: 'boolean',
-			default: false,
 		},
 		shapeOutlineColor: {
 			stkHover: true,
