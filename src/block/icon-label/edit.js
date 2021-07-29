@@ -37,13 +37,8 @@ import { useBlockContext } from '~stackable/hooks'
 import { __ } from '@wordpress/i18n'
 
 const TEMPLATE = [
-	[ 'stackable/column', { templateLock: true }, [
-		[ 'ugb/icon', {} ],
-	] ],
-	[ 'stackable/column', {}, [
-		[ 'stackable/heading', { text: __( 'Icon Label' ) } ],
-		[ 'stackable/text', { text: __( 'Description for this block. Use this space for describing your block.', ) } ],
-	] ],
+	[ 'stackable/icon-list', {} ],
+	[ 'stackable/heading', { text: __( 'Icon Label' ), hasP: true } ],
 ]
 
 const TABS = [ 'block', 'advanced' ]

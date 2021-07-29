@@ -81,7 +81,7 @@ export const Edit = props => {
 						<HeadingButtonsControl
 							value={ getAttribute( 'textTag' ) }
 							onChange={ updateAttributeHandler( 'textTag' ) }
-							hasP={ false }
+							hasP={ getAttribute( 'hasP' ) }
 						/>
 					) }
 
