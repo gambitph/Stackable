@@ -43,7 +43,6 @@
 	margin-right: 0;
 	width: 100%; // Some native blocks have auto widths so they won't follow left/center/right text alignment e.g. buttons
 }
-
 // Mobile auto-collapses all columns.
 @include mobile {
 	.stk-row > .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout > div {
