@@ -7,12 +7,13 @@ import { getStyles, useStyles } from '~stackable/util'
 const getStyleParams = ( options = {} ) => {
 	const {
 		hasJustifyContentAlign = false,
+		selector,
 	} = options
 
 	return [
 		{
 			renderIn: 'save',
-			selector: '.stk-block-content',
+			selector: selector ? selector : '.stk-block-content',
 			responsive: 'all',
 			styleRule: 'justifyContent',
 			attrName: 'contentAlign',
@@ -21,7 +22,7 @@ const getStyleParams = ( options = {} ) => {
 		},
 		{
 			renderIn: 'edit',
-			selector: '.block-editor-inner-blocks > .block-editor-block-list__layout',
+			selector: selector ? selector : '.block-editor-inner-blocks > .block-editor-block-list__layout',
 			responsive: 'all',
 			styleRule: 'justifyContent',
 			attrName: 'contentAlign',

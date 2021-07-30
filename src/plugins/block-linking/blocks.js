@@ -16,6 +16,7 @@ addFilter( 'stackable.block-linking.blocks', 'stackable', blocks => {
 		'stackable/columns': {},
 		'stackable/column': {},
 		'stackable/image': { filterAttributes: [ 'imageUrl', 'imageId', 'imageAlt' ] },
+		'stackable/icon': { filterAttributes: [ 'icon', 'ariaLabel' ] },
 	}
 } )
 

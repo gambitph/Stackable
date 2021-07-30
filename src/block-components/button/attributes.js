@@ -70,9 +70,5 @@ export const addAttributes = ( attrObject, options = {} ) => {
 
 	addBorderAttributes( attrObject, 'button%s' )
 	Link.addAttributes( attrObject, { selector } )
-	Icon.addAttributes( attrObject, {
-		hasGradient: false,
-		hasShape: false,
-		hasBackgroundShape: false,
-	} )
+	Icon.addAttributes( attrObject )
 }
