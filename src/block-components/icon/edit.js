@@ -108,7 +108,6 @@ export const Edit = props => {
 					label={ __( 'Icon Size', i18n ) }
 					attribute="iconSize"
 					min={ 0 }
-					sliderMin={ 0 }
 					sliderMax={ 100 }
 					step={ 1 }
 					allowReset={ true }
