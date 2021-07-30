@@ -184,7 +184,7 @@ export const Edit = props => {
 					<AdvancedRangeControl
 						label={ __( 'Shape Padding', i18n ) }
 						attribute="shapePadding"
-						sliderMin={ 0 }
+						min={ 0 }
 						sliderMax={ 150 }
 						step={ 1 }
 						allowReset={ true }
