@@ -267,8 +267,8 @@ export const Edit = props => {
 					<AdvancedRangeControl
 						label={ __( 'Vertical Offset', i18n ) }
 						attribute="backgroundShapeOffsetVertical"
-						min={ -30 }
-						max={ 30 }
+						sliderMin={ -30 }
+						sliderMax={ 30 }
 						step={ 1 }
 						placeholder="0"
 						allowReset={ true }
