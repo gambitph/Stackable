@@ -30,6 +30,8 @@ import { Icon } from '../icon'
 export const Edit = props => {
 	const {
 		hasTextColor,
+		hasIconGap,
+		hasIconPosition,
 	} = props
 
 	const [ state ] = useBlockHoverState()
@@ -150,6 +152,8 @@ export const Edit = props => {
 				hasGradient={ false }
 				hasShape={ false }
 				hasBackgroundShape={ false }
+				hasIconGap={ hasIconGap }
+				hasIconPosition={ hasIconPosition }
 			/>
 		</Fragment>
 	)
@@ -157,4 +161,6 @@ export const Edit = props => {
 
 Edit.defaultProps = {
 	hasTextColor: true,
+	hasIconGap: true,
+	hasIconPosition: true,
 }

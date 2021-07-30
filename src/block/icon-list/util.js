@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { faGetSVGIcon } from '~stackable/util'
+import { faGetSVGIcon, createElementFromHTMLString } from '~stackable/util'
 import { kebabCase } from 'lodash'
 
 /**
@@ -44,20 +44,6 @@ import {
 
 // The default icon list SVG.
 export const DEFAULT_SVG = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 190"><polygon points="173.8,28.4 60.4,141.8 15.7,97.2 5.1,107.8 60.4,163 184.4,39 173.8,28.4"/></svg>'
-
-/**
- * Create a DOM Element based on HTML string
- *
- * @param {string} htmlString
- *
- * @return {*} DOM Element
- */
-const createElementFromHTMLString = htmlString => {
-	const parentElement = document.createElement( 'div' )
-	parentElement.innerHTML = htmlString
-
-	return parentElement.firstElementChild
-}
 
 /**
  * Convert SVG tag to base64 string
