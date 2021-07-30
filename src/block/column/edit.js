@@ -94,12 +94,12 @@ const Edit = props => {
 			<BlockLink.InspectorControls />
 			<EffectsAnimations.InspectorControls />
 			<CustomAttributes.InspectorControls />
-			<CustomCSS.InspectorControls mainBlockClass="stk-column" />
+			<CustomCSS.InspectorControls mainBlockClass="stk-block-column" />
 			<Responsive.InspectorControls />
 			<ConditionalDisplay.InspectorControls />
 
 			<BlockStyles version={ VERSION } />
-			<CustomCSS mainBlockClass="stk-column" />
+			<CustomCSS mainBlockClass="stk-block-column" />
 
 			<InspectorStyleControls>
 				<PanelAdvancedSettings
