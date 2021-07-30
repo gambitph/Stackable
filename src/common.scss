@@ -23,7 +23,7 @@
 }
 
 // Some themes may force pseudo elements on our blocks and this will destroy our column layouts.
-.stk-block::before,
+.stk-block:not(.stk--has-background-overlay)::before,
 .stk-block::after {
 	content: none !important;
 }
