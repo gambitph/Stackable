@@ -196,7 +196,6 @@ class StyleObject {
 		const {
 			selector: _selector = '',
 			styleRule: _styleRule = '',
-			styleRuleCallback = null,
 			attrName: _attrName = '',
 			format = '%s',
 			hasUnits = false, // False, or the default unit e.g. 'px' or '%'
@@ -209,6 +208,7 @@ class StyleObject {
 			hoverSelector: _hoverSelector = '', // You can specify your own hover selector (for saving purposes only)
 			hoverSelectorCallback = null,
 			hoverCallback = null,
+			styleRuleCallback = null, // Allow style rules to be dynamically generated.
 			renderIn: _renderIn = '', // editor, custom, saveOnly
 			valuePreCallback = null,
 			valueCallback = null,
