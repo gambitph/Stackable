@@ -249,7 +249,7 @@ export const Edit = props => {
 						label={ __( 'Shape Size', i18n ) }
 						attribute="backgroundShapeSize"
 						min={ 0 }
-						max={ 3 }
+						sliderMax={ 3 }
 						step={ 0.1 }
 						placeholder="1"
 						allowReset={ true }
