@@ -2,11 +2,14 @@
  * External dependencies
  */
 import { i18n } from 'stackable'
+import { getAttrNameFunction } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n'
+
+const _getAttributeName = getAttrNameFunction( 'button%s' )
 
 export const blockStyles = [
 	{
@@ -14,31 +17,26 @@ export const blockStyles = [
 		label: __( 'Default', i18n ),
 		isDefault: true,
 		onSelect: attributes => {
+			const states = [ 'normal', 'hover', 'parent-hover' ]
+			const getAttributeName = ( attrName, state = 'normal' ) => _getAttributeName( attrName, 'Desktop', state )
+			const getAttribute = ( attrName, state = 'normal' ) => attributes[ getAttributeName( attrName, state ) ]
+
 			let willSetAttributes = {}
 
-			// Normal button style
-			willSetAttributes = {
-				...willSetAttributes,
-				buttonBorderType: '',
-				buttonBackgroundColor: attributes.buttonBackgroundColor !== 'transparent'
-					? attributes.buttonBackgroundColor
-					: attributes.textColor1,
-				textColor1: attributes.buttonBackgroundColor === 'transparent'
-					? '#fff'
-					: attributes.buttonBackgroundColor,
-			}
+			willSetAttributes.buttonBorderType = ''
 
-			// Hover button style
-			willSetAttributes = {
-				...willSetAttributes,
-				buttonHoverBorderType: '',
-				buttonHoverBackgroundColor: attributes.buttonHoverBackgroundColor !== 'transparent'
-					? attributes.buttonHoverBackgroundColor
-					: attributes.hoverTextColor1,
-				hoverTextColor1: attributes.buttonHoverBackgroundColor === 'transparent'
-					? '#fff'
-					: attributes.buttonHoverBackgroundColor,
-			}
+			states.forEach( state => {
+				willSetAttributes = {
+					...willSetAttributes,
+					[ getAttributeName( 'BackgroundColor', state ) ]: getAttribute( 'BackgroundColor', state ) !== 'transparent'
+						? getAttribute( 'BackgroundColor', state )
+						: getAttribute( 'TextColor', state ),
+					[ getAttributeName( 'TextColor', state ) ]: getAttribute( 'BackgroundColor', state ) === 'transparent'
+						? undefined
+						: getAttribute( 'BackgroundColor', state ),
+
+				}
+			} )
 
 			return willSetAttributes
 		},
@@ -47,37 +45,27 @@ export const blockStyles = [
 		name: 'ghost',
 		label: __( 'Ghost', i18n ),
 		onSelect: attributes => {
+			const states = [ 'normal', 'hover', 'parent-hover' ]
+			const getAttributeName = ( attrName, state = 'normal' ) => _getAttributeName( attrName, 'Desktop', state )
+			const getAttribute = ( attrName, state = 'normal' ) => attributes[ getAttributeName( attrName, state ) ]
+
 			let willSetAttributes = {}
 
-			// Normal button style.
-			willSetAttributes = {
-				...willSetAttributes,
-				buttonBackgroundColorType: '',
-				buttonBorderType: 'solid',
-				buttonBorderColor: attributes.buttonBackgroundColor === 'transparent'
-					? attributes.textColor1
-					: attributes.buttonBackgroundColor,
-				buttonBackgroundColor: 'transparent',
-				textColorType: '',
-				textColor1: attributes.buttonBackgroundColor === 'transparent'
-					? attributes.textColor1
-					: attributes.buttonBackgroundColor,
-			}
+			willSetAttributes.buttonBackgroundColorType = ''
+			willSetAttributes.buttonBorderType = 'solid'
 
-			// Hover button style.
-			willSetAttributes = {
-				...willSetAttributes,
-				buttonHoverBackgroundColorType: '',
-				buttonHoverBorderType: 'solid',
-				buttonHoverBorderColor: attributes.buttonHoverBackgroundColor === 'transparent'
-					? attributes.hoverTextColor1
-					: attributes.buttonHoverBackgroundColor,
-				buttonHoverBackgroundColor: 'transparent',
-				hoverTextColorType: '',
-				hoverTextColor1: attributes.buttonHoverBackgroundColor === 'transparent'
-					? attributes.hoverTextColor1
-					: attributes.buttonHoverBackgroundColor,
-			}
+			states.forEach( state => {
+				willSetAttributes = {
+					...willSetAttributes,
+					[ getAttributeName( 'BorderColor', state ) ]: getAttribute( 'BackgroundColor', state ) === 'transparent'
+						? getAttribute( 'TextColor', state )
+						: getAttribute( 'BackgroundColor', state ),
+					[ getAttributeName( 'BackgroundColor', state ) ]: 'transparent',
+					[ getAttributeName( 'TextColor' ) ]: getAttribute( 'BackgroundColor', state ) === 'transparent'
+						? getAttribute( 'BorderColor', state ) || getAttribute( 'TextColor', state )
+						: getAttribute( 'BackgroundColor' ),
+				}
+			} )
 
 			return willSetAttributes
 		},
@@ -86,31 +74,24 @@ export const blockStyles = [
 		name: 'plain',
 		label: __( 'Plain', i18n ),
 		onSelect: attributes => {
+			const states = [ 'normal', 'hover', 'parent-hover' ]
+			const getAttributeName = ( attrName, state = 'normal' ) => _getAttributeName( attrName, 'Desktop', state )
+			const getAttribute = ( attrName, state = 'normal' ) => attributes[ getAttributeName( attrName, state ) ]
+
 			let willSetAttributes = {}
 
-			// Normal button style.
-			willSetAttributes = {
-				...willSetAttributes,
-				buttonBackgroundColorType: '',
-				buttonBorderType: '',
-				buttonBackgroundColor: 'transparent',
-				textColorType: '',
-				textColor1: attributes.buttonBackgroundColor === 'transparent'
-					? attributes.textColor1
-					: attributes.buttonBackgroundColor,
-			}
+			willSetAttributes.buttonBackgroundColorType = ''
+			willSetAttributes.buttonBorderType = ''
 
-			// Hover button style.
-			willSetAttributes = {
-				...willSetAttributes,
-				buttonHoverBackgroundColorType: '',
-				buttonHoverBorderType: '',
-				buttonHoverBackgroundColor: 'transparent',
-				hoverTextColorType: '',
-				hoverTextColor1: attributes.buttonHoverBackgroundColor === 'transparent'
-					? attributes.hoverTextColor1
-					: attributes.buttonHoverBackgroundColor,
-			}
+			states.forEach( state => {
+				willSetAttributes = {
+					...willSetAttributes,
+					[ getAttributeName( 'TextColor', state ) ]: getAttribute( 'BackgroundColor', state ) === 'transparent'
+						? getAttribute( 'TextColor', state )
+						: getAttribute( 'BackgroundColor', state ),
+					[ getAttributeName( 'BackgroundColor', state ) ]: 'transparent',
+				}
+			} )
 
 			return willSetAttributes
 		},
