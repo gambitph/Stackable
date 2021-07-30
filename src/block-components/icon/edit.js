@@ -196,7 +196,6 @@ export const Edit = props => {
 						label={ __( 'Shape Outline Width' ) }
 						units={ [ 'px' ] }
 						min={ 0 }
-						max={ 99 }
 						step={ 1 }
 						sliderMax={ 20 }
 						defaultLocked={ true }
