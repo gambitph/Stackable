@@ -151,7 +151,7 @@ export const Edit = props => {
 						label={ __( 'Icon Gap', i18n ) }
 						attribute="iconGap"
 						min={ 0 }
-						max={ 50 }
+						sliderMax={ 50 }
 						allowReset={ true }
 						placeholder="0"
 					/>
