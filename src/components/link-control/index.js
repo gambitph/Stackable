@@ -18,7 +18,6 @@ import { __ } from '@wordpress/i18n'
 import DynamicContentControl, { useDynamicContentControlProps } from '../dynamic-content-control'
 import AdvancedControl, { extractControlProps } from '../base-control2'
 import { useControlHandlers } from '../base-control2/hooks'
-import { ResetButton } from '../base-control2/reset-button'
 
 const LinkControl = props => {
 	const classNames = classnames( [
@@ -50,15 +49,10 @@ const LinkControl = props => {
 						value={ { url: value } }
 						onChange={ ( { url } ) => onChange( url ) }
 						settings={ [] } // The Url only.
+						forceIsEditingLink={ ! value }
 					/>
 				</div>
 			</DynamicContentControl>
-
-			<ResetButton
-				allowReset={ props.allowReset && ! props.dynamic }
-				value={ value }
-				onChange={ () => onChange( '' ) }
-			/>
 		</AdvancedControl>
 	)
 }
