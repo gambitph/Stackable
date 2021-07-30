@@ -176,7 +176,7 @@ export const Edit = props => {
 						attribute="shapeBorderRadius"
 						hover="all"
 						min={ 0 }
-						max={ 100 }
+						sliderMax={ 100 }
 						step={ 1 }
 						allowReset={ true }
 						placeholder={ 50 }
