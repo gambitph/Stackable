@@ -44,6 +44,13 @@
 	width: 100%; // Some native blocks have auto widths so they won't follow left/center/right text alignment e.g. buttons
 }
 
+// Mobile auto-collapses all columns.
+@include mobile {
+	.stk-row > .stk-block-content > .block-editor-inner-blocks > .block-editor-block-list__layout > div {
+		flex: 1 1 100%;
+	}
+}
+[data-type^="stackable/"] .stk-row,
 .stk-column .block-editor-block-list__layout {
 	display: block;
 }

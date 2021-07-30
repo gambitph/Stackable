@@ -6,7 +6,7 @@
 	background-position: center;
 	overflow: hidden;
 	&::before {
-		content: "";
+		content: "" !important;
 		position: absolute;
 		top: 0;
 		left: 0;
