@@ -37,8 +37,7 @@
 		border-radius: inherit;
 	}
 
-	.stk-block-button__inner-text,
-	.stk--svg-wrapper {
+	> * {
 		z-index: 2;
 	}
 }
