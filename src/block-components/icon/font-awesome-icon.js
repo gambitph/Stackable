@@ -25,9 +25,14 @@ import { Spinner } from '@wordpress/components'
  */
 const addSVGAriaLabel = ( svgHTML, ariaLabel = '' ) => {
 	const svgNode = createElementFromHTMLString( svgHTML )
+	if ( ! svgNode ) {
+		return ''
+	}
+
 	svgNode.removeAttribute( 'role' )
 	if ( ariaLabel ) {
 		svgNode.setAttribute( 'aria-label', ariaLabel )
+		svgNode.setAttribute( 'role', 'img' )
 	} else {
 		svgNode.setAttribute( 'aria-hidden', 'true' )
 	}

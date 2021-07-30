@@ -192,13 +192,6 @@ export const Edit = props => {
 						placeholder={ 20 }
 					/>
 
-					<ColorPaletteControl
-						label={ __( 'Shape Outline Color', i18n ) }
-						attribute="shapeOutlineColor"
-						hasTransparent={ true }
-						hover="all"
-					/>
-
 					<FourRangeControl
 						label={ __( 'Shape Outline Width' ) }
 						units={ [ 'px' ] }
@@ -210,6 +203,13 @@ export const Edit = props => {
 						attribute="shapeOutlineWidth"
 						responsive="all"
 						default="1"
+					/>
+
+					<ColorPaletteControl
+						label={ __( 'Shape Outline Color', i18n ) }
+						attribute="shapeOutlineColor"
+						hasTransparent={ true }
+						hover="all"
 					/>
 
 				</PanelAdvancedSettings>
