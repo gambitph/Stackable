@@ -255,7 +255,8 @@ export const createStyles = props => {
 				color: getValue( 'linkColor' ),
 			},
 		},
-		'a:hover': {
+		[ 'a:hover, ' +
+			'a:hover:visited' ]: {
 			color: getValue( 'linkHoverColor' ),
 		},
 	} )
@@ -265,6 +266,9 @@ export const createStyles = props => {
 				'a:visited, ' +
 				'a:focus' ]: {
 				color: appendImportant( getValue( 'linkColor' ) ),
+			},
+			'a:hover': {
+				color: appendImportant( getValue( 'linkHoverColor' ) ),
 			},
 		},
 	} )
