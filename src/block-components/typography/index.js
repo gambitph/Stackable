@@ -4,19 +4,19 @@
 import { Edit } from './edit'
 import { addAttributes } from './attributes'
 import { Style } from './style'
+export { getTypographyClasses } from './get-typography-classes'
 
 /**
  * External dependencies
  */
 import { useAttributeEditHandlers } from '~stackable/hooks'
+import { getAttributeName, getAttrName } from '~stackable/util'
 
 /**
  * WordPress dependencies
  */
 import { RichText } from '@wordpress/block-editor'
-import { getAttributeName, getAttrName } from '~stackable/util'
-
-export { getTypographyClasses } from './get-typography-classes'
+import { useEffect, useState } from '@wordpress/element'
 
 export const Typography = props => {
 	const {
@@ -24,23 +24,41 @@ export const Typography = props => {
 		attrNameTemplate,
 		tagName,
 		defaultTag,
-		value,
-		onChange,
+		value: _value,
+		onChange: _onChange,
 		children,
 		ref,
 		...rest
 	} = props
 
+	const [ debouncedText, setDebouncedText ] = useState( '' )
+
 	const {
 		getAttribute, updateAttribute,
 	} = useAttributeEditHandlers( attrNameTemplate )
+	const onChange = _onChange === null ? value => updateAttribute( 'text', value ) : _onChange
+	const value = _value === null ? getAttribute( 'text' ) : _value
+
+	useEffect( () => {
+		if ( value !== debouncedText ) {
+			setDebouncedText( value )
+		}
+	}, [ value ] )
+
+	useEffect( () => {
+		const timeout = setTimeout( () => {
+			onChange( debouncedText )
+		}, 300 )
+
+		return () => clearTimeout( timeout )
+	}, [ debouncedText ] )
 
 	return (
 		<RichText
 			className={ className }
 			tagName={ ( tagName === null ? getAttribute( 'textTag' ) : tagName ) || defaultTag }
-			value={ value === null ? getAttribute( 'text' ) : value }
-			onChange={ onChange === null ? value => updateAttribute( 'text', value ) : onChange }
+			value={ debouncedText }
+			onChange={ setDebouncedText }
 			ref={ ref }
 			{ ...rest }
 		>
