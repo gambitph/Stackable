@@ -90,6 +90,7 @@
 		"sprintf-js": "^1.1.2",
 		"stylelint": "^13.9.0",
 		"stylelint-config-wordpress": "^17.0.0",
+		"stylelint-no-unsupported-browser-features": "^5.0.1",
 		"webpack": "^5.17.0",
 		"webpack-cli": "^4.4.0"
 	},
