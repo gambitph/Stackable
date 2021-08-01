@@ -22,7 +22,7 @@ export const attributes = ( version = VERSION ) => {
 
 	BlockDiv.addAttributes( attrObject )
 	MarginBottom.addAttributes( attrObject )
-	ContainerDiv.addAttributes( attrObject, { hasDefaultContainer: true } )
+	ContainerDiv.addAttributes( attrObject )
 	Alignment.addAttributes( attrObject )
 	Advanced.addAttributes( attrObject )
 	EffectsAnimations.addAttributes( attrObject )
@@ -32,12 +32,12 @@ export const attributes = ( version = VERSION ) => {
 	Responsive.addAttributes( attrObject )
 	BlockLink.addAttributes( attrObject )
 
-	attrObject.add( {
+	attrObject.addDefaultValues( {
 		attributes: {
-			contentAlign: {
-				type: 'string',
-				default: 'center',
-			},
+			hasContainer: true,
+			contentAlign: 'center',
+			containerHeight: 500,
+			containerVerticalAlign: 'center',
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',
