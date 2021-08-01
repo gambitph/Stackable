@@ -48,8 +48,7 @@ $_cssvars: ();
 		@if type-of( $value ) != map {
 			$_cssvars: map-merge($_cssvars, ( $name: $value )) !global;
 			$desktop: map-merge($desktop, ( $name: $value ));
-		}
-		@else {
+		} @else {
 			@if map-get( $value, "desktop" ) {
 				$_cssvars: map-merge($_cssvars, ( $name: map-get($value, "desktop") )) !global;
 				$desktop: map-merge($desktop, ( $name: map-get($value, "desktop") ));

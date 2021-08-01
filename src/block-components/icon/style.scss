@@ -6,7 +6,7 @@
 	 * width equal.
 	 */
 	display: inline-block;
-	& > .stk--inner-svg {
+	> .stk--inner-svg {
 		z-index: 1;
 		display: flex;
 	}

@@ -209,6 +209,7 @@
 }
 
 // Don't add a background color to the popup's close button.
+// stylelint-disable-next-line selector-id-pattern
 #bp_container .bp-x {
 	&,
 	&:hover {

@@ -1,5 +1,5 @@
 module.exports = {
-	extends: "stylelint-config-wordpress",
+	extends: "@wordpress/stylelint-config/scss",
 	plugins: [
 		"stylelint-no-unsupported-browser-features"
 	],
@@ -9,8 +9,11 @@ module.exports = {
 			{
 				severity: "error",
 				ignore: [
-					"multicolumn" // Disable since this is a false positive with grid-template-columns
-				]
+					"user-select-none", // Not supported in UC browser for Android - not that important if this doesn't work.
+					"css3-cursors",
+					"css3-cursors-newer",
+				],
+				ignorePartialSupport: true,
 			}
 		],
 		"at-rule-empty-line-before": null,
