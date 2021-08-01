@@ -19,7 +19,7 @@
 		"classnames": "^2.2.6",
 		"color-rgba": "^2.2.3",
 		"compare-versions": "^3.6.0",
-		"counterup2": "^1.0.4",
+		"counterup2": "^2.0.0",
 		"deepmerge": "^3.3.0",
 		"is-dark-color": "^1.2.0",
 		"md5": "^2.3.0",
