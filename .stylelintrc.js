@@ -12,6 +12,7 @@ module.exports = {
 					"user-select-none", // Not supported in UC browser for Android - not that important if this doesn't work.
 					"css3-cursors",
 					"css3-cursors-newer",
+					"css-masks",
 				],
 				ignorePartialSupport: true,
 			}
