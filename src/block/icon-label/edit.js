@@ -40,8 +40,10 @@ import { useBlockContext } from '~stackable/hooks'
 import { __ } from '@wordpress/i18n'
 
 const TEMPLATE = [
-	[ 'ugb/icon', {} ],
-	[ 'stackable/heading', { text: __( 'Icon Label' ), hasP: true } ],
+	[ 'stackable/icon', { contentAlign: 'center' } ],
+	[ 'stackable/heading', {
+		text: __( 'Icon Label' ), hasP: true, fontSize: 40, textRemoveTextMargins: true,
+	} ],
 ]
 
 const Edit = props => {
