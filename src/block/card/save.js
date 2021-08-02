@@ -14,7 +14,6 @@ import {
 	ContainerDiv,
 	CustomCSS,
 	getAlignmentClasses,
-	getColumnClasses,
 	getResponsiveClasses,
 	Image,
 } from '~stackable/block-components'
@@ -34,20 +33,17 @@ export const Save = props => {
 		hasContainer,
 	} = props.attributes
 
-	const [ columnClass, columnWrapperClass ] = getColumnClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const responsiveClass = getResponsiveClasses( props.attributes )
 
 	const blockClassNames = classnames( [
 		props.className,
 		'stk-card',
-		columnClass,
 		responsiveClass,
 	] )
 
 	const contentClassNames = classnames( [
 		'stk-block-content',
-		columnWrapperClass,
 		'stk--no-padding',
 	] )
 

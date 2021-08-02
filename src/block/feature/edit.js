@@ -28,6 +28,7 @@ import {
  */
 import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
+import { useBlockHoverClass } from '~stackable/hooks'
 
 const TEMPLATE = [
 	[ 'stackable/column', {}, [
@@ -51,11 +52,13 @@ const Edit = props => {
 
 	const rowClass = getRowClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
+	const blockHoverClass = useBlockHoverClass()
 
 	const blockClassNames = classnames( [
 		className,
 		'stk-block-feature',
 		rowClass,
+		blockHoverClass,
 	] )
 
 	const contentClassNames = classnames( [

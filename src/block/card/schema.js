@@ -19,7 +19,7 @@ export const attributes = ( version = VERSION ) => {
 	const attrObject = new AttributeObject()
 
 	BlockDiv.addAttributes( attrObject )
-	ContainerDiv.addAttributes( attrObject, { hasDefaultContainer: true } )
+	ContainerDiv.addAttributes( attrObject )
 	Column.addAttributes( attrObject )
 	Image.addAttributes( attrObject, { imageWidthUnitDefault: 'px' } )
 	Alignment.addAttributes( attrObject )
@@ -37,6 +37,14 @@ export const attributes = ( version = VERSION ) => {
 				type: 'string',
 				default: '',
 			},
+		},
+		versionAdded: '3.0.0',
+		versionDeprecated: '',
+	} )
+
+	attrObject.addDefaultValues( {
+		attributes: {
+			hasContainer: true,
 		},
 		versionAdded: '3.0.0',
 		versionDeprecated: '',

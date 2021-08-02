@@ -26,6 +26,7 @@ import {
 	BlockLink,
 } from '~stackable/block-components'
 import {
+	useBlockContext,
 	useBlockHoverClass,
 } from '~stackable/hooks'
 
@@ -33,13 +34,14 @@ import {
  * WordPress dependencies
  */
 import { InnerBlocks } from '@wordpress/block-editor'
-import { Fragment } from '@wordpress/element'
+import { useCallback } from '@wordpress/element'
 
 const Edit = props => {
 	const {
 		className,
 	} = props
 
+	const { hasInnerBlocks } = useBlockContext()
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockHoverClass = useBlockHoverClass()
 
@@ -56,8 +58,13 @@ const Edit = props => {
 		'stk-block-container__content',
 	] )
 
+	const renderAppender = useCallback(
+		() => ! hasInnerBlocks ? <InnerBlocks.ButtonBlockAppender /> : <InnerBlocks.DefaultBlockAppender />,
+		[ hasInnerBlocks ]
+	)
+
 	return (
-		<Fragment>
+		<>
 
 			<InspectorTabs />
 
@@ -81,11 +88,12 @@ const Edit = props => {
 					<InnerBlocks
 						templateLock={ false }
 						templateInsertUpdatesSelection={ true }
+						renderAppender={ renderAppender }
 					/>
 				</ContainerDiv>
 			</BlockDiv>
 			<MarginBottom />
-		</Fragment>
+		</>
 	)
 }
 

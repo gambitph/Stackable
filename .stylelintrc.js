@@ -1,6 +1,22 @@
-{
-	"extends": "stylelint-config-wordpress",
-	"rules": {
+module.exports = {
+	extends: "@wordpress/stylelint-config/scss",
+	plugins: [
+		"stylelint-no-unsupported-browser-features"
+	],
+	rules: {
+		"plugin/no-unsupported-browser-features": [
+			true,
+			{
+				severity: "error",
+				ignore: [
+					"user-select-none", // Not supported in UC browser for Android - not that important if this doesn't work.
+					"css3-cursors",
+					"css3-cursors-newer",
+					"css-masks",
+				],
+				ignorePartialSupport: true,
+			}
+		],
 		"at-rule-empty-line-before": null,
 		"at-rule-no-unknown": null,
 		"comment-empty-line-before": null,

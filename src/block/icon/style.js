@@ -2,6 +2,7 @@
  * External dependencies
  */
 import {
+	Icon,
 	Advanced,
 	Alignment,
 	BlockDiv,
@@ -13,14 +14,22 @@ import {
 import {
 	getUniqueBlockClass,
 } from '~stackable/util'
-
-/**
- * WordPress dependencies
- */
-import { Fragment, renderToString } from '@wordpress/element'
+import {
+	Fragment, renderToString,
+} from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
 
-export const CardGroupStyles = props => {
+const iconStyleOptions = {
+	selector: '.stk--svg-wrapper',
+	hoverSelector: ':hover .stk--svg-wrapper',
+}
+
+const alignmentOptions = {
+	selector: '.stk--svg-wrapper',
+	hasJustifyContentAlign: true,
+}
+
+export const IconStyles = props => {
 	const {
 		...propsToPass
 	} = props
@@ -35,20 +44,20 @@ export const CardGroupStyles = props => {
 
 	return (
 		<Fragment>
-			<Alignment.Style { ...propsToPass } />
+			<Alignment.Style { ...propsToPass } options={ alignmentOptions } />
 			<BlockDiv.Style { ...propsToPass } />
-			{ /* <MarginBottom.Style { ...propsToPass } /> */ }
 			<Advanced.Style { ...propsToPass } />
 			<EffectsAnimations.Style { ...propsToPass } />
+			<Icon.Style { ...propsToPass } options={ iconStyleOptions } />
 		</Fragment>
 	)
 }
 
-CardGroupStyles.defaultProps = {
+IconStyles.defaultProps = {
 	isEditor: false,
 }
 
-CardGroupStyles.Content = props => {
+IconStyles.Content = props => {
 	const {
 		...propsToPass
 	} = props
@@ -57,17 +66,13 @@ CardGroupStyles.Content = props => {
 
 	const styles = (
 		<Fragment>
-			<Alignment.Style.Content { ...propsToPass } />
+			<Alignment.Style.Content { ...propsToPass } options={ alignmentOptions } />
 			<BlockDiv.Style.Content { ...propsToPass } />
-			{ /* <MarginBottom.Style.Content { ...propsToPass } /> */ }
 			<Advanced.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
+			<Icon.Style.Content { ...propsToPass } options={ iconStyleOptions } />
 		</Fragment>
 	)
 
 	return renderToString( styles ) ? <style>{ styles }</style> : null
-}
-
-CardGroupStyles.Content.defaultProps = {
-	attributes: {},
 }
