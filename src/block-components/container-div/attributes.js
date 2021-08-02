@@ -4,16 +4,12 @@ import {
 	addSizeAttributes,
 } from '../helpers'
 
-export const addAttributes = ( attrObject, options = {} ) => {
-	const {
-		hasDefaultContainer = false,
-	} = options
-
+export const addAttributes = attrObject => {
 	attrObject.add( {
 		attributes: {
 			hasContainer: {
 				type: 'boolean',
-				default: hasDefaultContainer,
+				default: false,
 			},
 		},
 		versionAdded: '3.0.0',

@@ -5,7 +5,7 @@
 /**
  * External dependencies
  */
-import { CardIcon } from '~stackable/icons'
+import { FeatureGridIcon } from '~stackable/icons'
 
 /**
  * Internal dependencies
@@ -13,22 +13,24 @@ import { CardIcon } from '~stackable/icons'
 import edit from './edit'
 import save from './save'
 import schema from './schema'
-import variations from './variations'
 import metadata from './block.json'
 
-export const name = 'stackable/card-group'
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n'
 
 export const settings = {
 	...metadata,
-	icon: CardIcon,
+	icon: FeatureGridIcon,
 	attributes: schema,
 	supports: {
-		// inserter: false,
 		anchor: true,
-		align: true,
+		align: [ 'center', 'wide', 'full' ],
 	},
+	//  styles: blockStyles,
 
-	variations,
+	// deprecated,
 	edit,
 	save,
 }

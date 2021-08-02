@@ -37,7 +37,8 @@ const CustomAttributesControl = props => {
 
 	useEffect( () => {
 		// Only trigger when not focused.
-		if ( inputRef.current !== document.activeElement ) { // eslint-disable-line @wordpress/no-global-active-element
+		// Add a fallback element for WP <= 5.5
+		if ( inputRef.current || document.querySelector( '.ugb-custom-attributes-control input' ) !== document.activeElement ) { // eslint-disable-line @wordpress/no-global-active-element
 			setCustomAttributes( createAttributeString( props.value ) )
 		}
 	}, [ JSON.stringify( props.value ) ] )

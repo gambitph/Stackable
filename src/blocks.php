@@ -25,8 +25,17 @@ if ( ! function_exists( 'stackable_register_blocks' ) ) {
 			'button',
 			'button-group',
 			'card',
-			'card-group',
+			'call-to-action',
+			'column',
+			'columns',
+			'container',
+			'feature',
+			'feature-grid',
+			'header',
 			'heading',
+			'icon',
+			'icon-list',
+			'image',
 			'text',
 		);
 

@@ -16,11 +16,6 @@ import {
 	useBlockContext, useBlockHoverClass, useBlockStyle,
 } from '~stackable/hooks'
 import {
-	withIsHovered,
-} from '~stackable/higher-order'
-import {
-	Column,
-	getColumnClasses,
 	BlockDiv,
 	Image,
 	getAlignmentClasses,
@@ -30,7 +25,6 @@ import {
 	CustomCSS,
 	Responsive,
 	ContainerDiv,
-	Linking,
 	BlockStyle,
 	CustomAttributes,
 	EffectsAnimations,
@@ -41,7 +35,6 @@ import {
 /**
  * WordPress dependencies
  */
-import { compose } from '@wordpress/compose'
 import { InnerBlocks } from '@wordpress/block-editor'
 import {
 	Fragment, useCallback,
@@ -66,11 +59,10 @@ const Edit = props => {
 	} = props.attributes
 
 	const {
-		className, isHovered,
+		className, //isHovered,
 	} = props
 
 	const { blockOrientation } = useAlignment()
-	const [ columnClass, columnWrapperClass ] = getColumnClasses( props.attributes )
 	const blockAlignmentClass = getAlignmentClasses( props.attributes )
 	const blockStyle = useBlockStyle( blockStyles )
 	const blockHoverClass = useBlockHoverClass()
@@ -78,13 +70,11 @@ const Edit = props => {
 	const blockClassNames = classnames( [
 		className,
 		'stk-card',
-		columnClass,
 		blockHoverClass,
 	] )
 
 	const contentClassNames = classnames( [
 		'stk-block-content',
-		columnWrapperClass,
 		'stk--no-padding',
 	] )
 
@@ -129,38 +119,33 @@ const Edit = props => {
 			<CardStyles version={ VERSION } />
 			<CustomCSS mainBlockClass="stk-card" />
 
-			<Column showHandle={ isHovered }>
-				<Linking show={ isHovered } />
-				<BlockDiv className={ blockClassNames }>
-					<ContainerDiv className={ contentClassNames }>
-						<Image
-							className="stk-card__image"
-							enableWidth={ blockStyle === 'horizontal' }
-							enableHeight={ blockStyle !== 'horizontal' }
-							enableDiagonal={ false }
-							widthUnits={ widthUnit }
-							heightUnits={ heightUnit }
-							defaultWidth={ 250 }
-							width={ blockStyle !== 'horizontal' ? 100 : undefined }
-							widthUnit={ blockStyle !== 'horizontal' ? '%' : 'px' }
-							height={ blockStyle !== 'horizontal' ? undefined : 100 }
-							heightUnit={ blockStyle !== 'horizontal' ? 'px' : '%' }
+			<BlockDiv className={ blockClassNames }>
+				<ContainerDiv className={ contentClassNames }>
+					<Image
+						className="stk-card__image"
+						enableWidth={ blockStyle === 'horizontal' }
+						enableHeight={ blockStyle !== 'horizontal' }
+						enableDiagonal={ false }
+						widthUnits={ widthUnit }
+						heightUnits={ heightUnit }
+						defaultWidth={ 250 }
+						width={ blockStyle !== 'horizontal' ? 100 : undefined }
+						widthUnit={ blockStyle !== 'horizontal' ? '%' : 'px' }
+						height={ blockStyle !== 'horizontal' ? undefined : 100 }
+						heightUnit={ blockStyle !== 'horizontal' ? 'px' : '%' }
+					/>
+					<div className={ innerClassNames }>
+						<InnerBlocks
+							template={ TEMPLATE }
+							orientation={ blockOrientation }
+							renderAppender={ renderAppender }
+							templateInsertUpdatesSelection={ true }
 						/>
-						<div className={ innerClassNames }>
-							<InnerBlocks
-								template={ TEMPLATE }
-								orientation={ blockOrientation }
-								renderAppender={ renderAppender }
-								templateInsertUpdatesSelection={ true }
-							/>
-						</div>
-					</ContainerDiv>
-				</BlockDiv>
-			</Column>
+					</div>
+				</ContainerDiv>
+			</BlockDiv>
 		</Fragment>
 	)
 }
 
-export default compose(
-	withIsHovered,
-)( Edit )
+export default Edit
