@@ -30,7 +30,7 @@ export const attributes = ( version = VERSION ) => {
 		attributes: {
 			iconGap: {
 				type: 'number',
-				default: 180,
+				default: 64,
 			},
 		},
 		versionAdded: '3.0.0',

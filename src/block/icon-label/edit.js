@@ -40,9 +40,9 @@ import { useBlockContext } from '~stackable/hooks'
 import { __ } from '@wordpress/i18n'
 
 const TEMPLATE = [
-	[ 'stackable/icon', { contentAlign: 'center' } ],
+	[ 'stackable/icon', { contentAlign: 'left', iconSize: 32 } ],
 	[ 'stackable/heading', {
-		text: __( 'Icon Label' ), hasP: true, fontSize: 40, textRemoveTextMargins: true,
+		text: __( 'Icon Label' ), hasP: true, textTag: 'h3', textRemoveTextMargins: true,
 	} ],
 ]
 
