@@ -24,9 +24,23 @@
 	.block-editor-link-control__search-item.is-current {
 		padding: 0 !important;
 	}
+}
 
-	+ .stk-dynamic-content-control__button {
+// Adjust the location of the dynamic and reset buttons since our control is taller.
+.stk-link-control {
+	.stk-link-control__input + .stk-dynamic-content-control__button {
 		margin-top: 6px;
+	}
+	&.stk--has-value .stk-link-control__input + .stk-dynamic-content-control__button {
+		margin-top: 3px;
+	}
+	.stk-control__reset-button {
+		top: 6px;
+	}
+	.stk--has-dynamic-content {
+		.stk-control__reset-button {
+			top: 3px;
+		}
 	}
 }
 

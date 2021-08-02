@@ -7,6 +7,7 @@ import {
 import {
 	isString, first,
 } from 'lodash'
+import classnames from 'classnames'
 
 /**
  * WordPress dependencies
@@ -281,9 +282,15 @@ const DynamicContentControl = ( {
 
 	const hasDynamicContent = otherProps.activeAttribute !== ''
 
+	const classNames = classnames( [
+		'stk-dynamic-content-control',
+	], {
+		'stk--has-dynamic-content': hasDynamicContent,
+	} )
+
 	return (
 		<Fragment>
-			<div className="stk-dynamic-content-control">
+			<div className={ classNames }>
 				{ ! hasDynamicContent ? children : (
 					<TextControl
 						value={ otherProps.placeholder }

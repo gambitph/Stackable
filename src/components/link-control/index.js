@@ -21,10 +21,6 @@ import { useControlHandlers } from '../base-control2/hooks'
 import { ResetButton } from '../base-control2/reset-button'
 
 const LinkControl = props => {
-	const classNames = classnames( [
-		'stk-link-control',
-		props.className,
-	] )
 	const [ _value, _onChange ] = useControlHandlers( props.attribute, props.responsive, props.hover, props.valueCallback, props.changeCallback )
 	const [ propsToPass, controlProps ] = extractControlProps( props )
 	const {
@@ -37,8 +33,15 @@ const LinkControl = props => {
 
 	const dynamicContentProps = useDynamicContentControlProps( { value, onChange } )
 
+	const classNames = classnames( [
+		'stk-link-control',
+		props.className,
+	], {
+		'stk--has-value': value,
+	} )
+
 	return (
-		<AdvancedControl className={ classNames } { ...controlProps }>
+		<AdvancedControl { ...controlProps } className={ classNames }>
 			<DynamicContentControl
 				type={ [ 'link', 'image-url' ] }
 				enable={ isDynamic }
