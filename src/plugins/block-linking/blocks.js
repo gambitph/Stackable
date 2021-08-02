@@ -7,16 +7,23 @@ import { addFilter } from '@wordpress/hooks'
 addFilter( 'stackable.block-linking.blocks', 'stackable', blocks => {
 	return {
 		...blocks,
+		'stackable/button': { filterAttributes: [ 'text', 'linkUrl', 'linkRel', 'linkNewTab' ] },
+		'stackable/button-group': {},
+		'stackable/call-to-action': {},
 		'stackable/card': { filterAttributes: [ 'imageUrl', 'imageId', 'imageAlt', 'imageTitle' ] },
 		'stackable/card-group': {},
-		'stackable/heading': { filterAttributes: [ 'text' ] },
-		'stackable/text': { filterAttributes: [ 'text' ] },
-		'stackable/button-group': {},
-		'stackable/button': { filterAttributes: [ 'text', 'linkUrl', 'linkRel', 'linkNewTab' ] },
-		'stackable/columns': {},
 		'stackable/column': {},
-		'stackable/image': { filterAttributes: [ 'imageUrl', 'imageId', 'imageAlt' ] },
+		'stackable/columns': {},
+		'stackable/container': {},
+		'stackable/feature': {},
+		'stackable/feature-grid': {},
+		'stackable/header': {},
+		'stackable/heading': { filterAttributes: [ 'text' ] },
 		'stackable/icon': { filterAttributes: [ 'icon', 'ariaLabel' ] },
+		'stackable/icon-label': {},
+		'stackable/icon-list': { filterAttributes: [ 'text' ] },
+		'stackable/image': { filterAttributes: [ 'imageUrl', 'imageId', 'imageAlt' ] },
+		'stackable/text': { filterAttributes: [ 'text' ] },
 	}
 } )
 

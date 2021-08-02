@@ -40,7 +40,7 @@ import { __ } from '@wordpress/i18n'
 const TEMPLATE = [
 	[ 'stackable/heading', { text: __( 'Header' ) } ],
 	[ 'stackable/text', { text: 'Description for this block. Use this space for describing your block.' } ],
-	[ 'stackable/button-group', { contentAlign: 'center' }, [
+	[ 'stackable/button-group', {}, [
 		[ 'stackable/button', { text: 'Button' } ],
 	] ],
 ]

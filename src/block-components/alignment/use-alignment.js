@@ -20,6 +20,9 @@ export const useAlignment = () => {
 
 export const getAlignmentClasses = attributes => {
 	const innerBlocksClass = classnames( {
+		// Use alignment class for aligning text.
+		[ `has-text-align-${ attributes.contentAlign }` ]: attributes.contentAlign,
+
 		// We need to put this in a class to we can also target horizontal
 		// orientations in css.
 		[ `stk--block-orientation-${ attributes.innerBlockOrientation }` ]: attributes.innerBlockOrientation,

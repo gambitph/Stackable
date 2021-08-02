@@ -53,6 +53,10 @@ const typographyAttributes = {
 		type: 'number',
 		default: '',
 	},
+	hasP: {
+		type: 'boolean',
+		default: false,
+	},
 }
 
 export const addAttributes = ( attrObject, selector = '.stk-content', options = {} ) => {

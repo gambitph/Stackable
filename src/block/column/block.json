@@ -8,7 +8,8 @@
 	],
 	"parent": [
 		"stackable/columns",
-		"stackable/feature"
+		"stackable/feature",
+		"stackable/feature-grid"
 	],
 	"textdomain": "stackable-ultimate-gutenberg-blocks"
 }
