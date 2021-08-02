@@ -98,3 +98,62 @@ if ( ! function_exists( 'stackable_register_blocks_v2' ) ) {
 	}
 }
 
+/**
+ * Allow our blocks to display post excerpts
+ * when calling `get_the_excerpt` function.
+ *
+ * @see https://developer.wordpress.org/reference/hooks/excerpt_allowed_blocks/
+ */
+if ( ! function_exists( 'stackable_add_excerpt_wrapper_blocks_v2' ) ) {
+	/**
+	 * Register stackable blocks with inner blocks.
+	 */
+	function stackable_add_excerpt_wrapper_blocks_v2( $allowed_wrapper_blocks ) {
+		$allowed_stackable_wrapper_blocks = [
+			// ugb blocks.
+			'ugb/accordion',
+			'ugb/column',
+			'ugb/columns',
+			'ugb/container',
+		];
+
+		return array_merge( $allowed_stackable_wrapper_blocks, $allowed_wrapper_blocks );
+	}
+
+	add_filter( 'excerpt_allowed_wrapper_blocks', 'stackable_add_excerpt_wrapper_blocks_v2' );
+}
+
+if ( ! function_exists( 'stackable_add_excerpt_blocks_v2' ) ) {
+	/**
+	 * Register "unit" stackable blocks (blocks without inner blocks)
+	 */
+	function stackable_add_excerpt_blocks_v2( $allowed_blocks ) {
+		$allowed_stackable_blocks = [
+			// ugb blocks.
+			'ugb/blockquote',
+			'ugb/blog-posts',
+			'ugb/button',
+			'ugb/cta',
+			'ugb/card',
+			'ugb/count-up',
+			'ugb/expand',
+			'ugb/feature-grid',
+			'ugb/feature',
+			'ugb/header',
+			'ugb/heading',
+			'ugb/icon-list',
+			'ugb/icon',
+			'ugb/image-box',
+			'ugb/notification',
+			'ugb/number-box',
+			'ugb/pricing-box',
+			'ugb/team-member',
+			'ugb/testimonial',
+			'ugb/text',
+		];
+
+		return array_merge( $allowed_stackable_blocks, $allowed_blocks );
+	}
+
+	add_filter( 'excerpt_allowed_blocks', 'stackable_add_excerpt_blocks_v2' );
+}
