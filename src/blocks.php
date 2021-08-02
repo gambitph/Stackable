@@ -88,7 +88,7 @@ if ( ! function_exists( 'stackable_register_blocks' ) ) {
  * Allow our blocks to display post excerpts
  * when calling `get_the_excerpt` function.
  *
- * @see https://developer.wordpress.org/reference/functions/excerpt_remove_blocks/
+ * @see https://developer.wordpress.org/reference/hooks/excerpt_allowed_blocks/
  */
 if ( ! function_exists( 'stackable_add_excerpt_wrapper_blocks' ) ) {
 	/**
