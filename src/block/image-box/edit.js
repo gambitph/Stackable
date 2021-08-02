@@ -760,8 +760,12 @@ class Edit extends Component {
 										onChange={ value => setAttributes( { [ `link${ i }Url` ]: value } ) }
 										newTab={ attributes[ `link${ i }NewTab` ] }
 										noFollow={ attributes[ `link${ i }NoFollow` ] }
+										sponsored={ attributes[ `link${ i }Sponsored` ] }
+										ugc={ attributes[ `link${ i }Ugc` ] }
 										onChangeNewTab={ value => setAttributes( { [ `link${ i }NewTab` ]: value } ) }
 										onChangeNoFollow={ value => setAttributes( { [ `link${ i }NoFollow` ]: value } ) }
+										onChangeSponsored={ value => setAttributes( { [ `link${ i }Sponsored` ]: value } ) }
+										onChangeUgc={ value => setAttributes( { [ `link${ i }Ugc` ]: value } ) }
 									/>
 								}
 							</div>

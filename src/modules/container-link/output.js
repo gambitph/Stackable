@@ -34,6 +34,8 @@ if ( ! hasFilter( 'stackable.div-background.output.after', 'stackable/container-
 
 		const newTab = getAttrValue( 'NewTab' )
 		const noFollow = getAttrValue( 'NoFollow' )
+		const sponsored = getAttrValue( 'Sponsored' )
+		const ugc = getAttrValue( 'Ugc' )
 		const title = getAttrValue( 'Title' )
 		const url = getAttrValue( 'Url' )
 
@@ -45,6 +47,14 @@ if ( ! hasFilter( 'stackable.div-background.output.after', 'stackable/container-
 
 		if ( noFollow ) {
 			rel.push( 'nofollow' )
+		}
+
+		if ( sponsored ) {
+			rel.push( 'sponsored' )
+		}
+
+		if ( ugc ) {
+			rel.push( 'ugc' )
 		}
 
 		return (

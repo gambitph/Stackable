@@ -103,6 +103,20 @@ export default {
 		},
 		[ '1', '2', '3', '4', '5', '6', '7', '8' ]
 	),
+	...createAllCombinationAttributes(
+		'Sponsored%s', {
+			type: 'boolean',
+			default: '',
+		},
+		[ '1', '2', '3', '4', '5', '6', '7', '8' ]
+	),
+	...createAllCombinationAttributes(
+		'Ugc%s', {
+			type: 'boolean',
+			default: '',
+		},
+		[ '1', '2', '3', '4', '5', '6', '7', '8' ]
+	),
 
 	// Title.
 	showTitle: {
