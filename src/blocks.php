@@ -95,11 +95,23 @@ if ( ! function_exists( 'stackable_add_excerpt_wrapper_blocks' ) ) {
 	 * Register stackable blocks with inner blocks.
 	 */
 	function stackable_add_excerpt_wrapper_blocks( $allowed_wrapper_blocks ) {
+		$blocks_dir = dirname( __FILE__ ) . '/block';
+		if ( ! file_exists( $blocks_dir ) ) {
+			return $allowed_wrapper_blocks;
+		}
+
 		global $stk_wrapper_block_folders;
 		$allowed_stackable_wrapper_blocks = array();
 
 		foreach ( $stk_wrapper_block_folders as $stk_wrapper_block ) {
-			array_push( $allowed_stackable_wrapper_blocks, 'stackable/' . $stk_wrapper_block );
+			$block_json_file = $blocks_dir . '/' . $stk_wrapper_block . '/block.json';
+			if ( ! file_exists( $block_json_file ) ) {
+				continue;
+			}
+
+			$metadata = json_decode( file_get_contents( $block_json_file ), true );
+
+			array_push( $allowed_stackable_wrapper_blocks, $metadata['name'] );
 		}
 
 		return array_merge( $allowed_stackable_wrapper_blocks, $allowed_wrapper_blocks );
@@ -113,11 +125,23 @@ if ( ! function_exists( 'stackable_add_excerpt_blocks' ) ) {
 	 * Register "unit" stackable blocks (blocks without inner blocks)
 	 */
 	function stackable_add_excerpt_blocks( $allowed_blocks ) {
+		$blocks_dir = dirname( __FILE__ ) . '/block';
+		if ( ! file_exists( $blocks_dir ) ) {
+			return $allowed_blocks;
+		}
+
 		global $stk_block_folders;
 		$allowed_stackable_blocks = array();
 
 		foreach ( $stk_block_folders as $stk_block ) {
-			array_push( $allowed_stackable_blocks, 'stackable/' . $stk_block );
+			$block_json_file = $blocks_dir . '/' . $stk_block . '/block.json';
+			if ( ! file_exists( $block_json_file ) ) {
+				continue;
+			}
+
+			$metadata = json_decode( file_get_contents( $block_json_file ), true );
+
+			array_push( $allowed_stackable_blocks, $metadata['name'] );
 		}
 
 		return array_merge( $allowed_stackable_blocks, $allowed_blocks );
