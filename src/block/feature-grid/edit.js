@@ -41,6 +41,7 @@ const TEMPLATE = [
 				[ 'stackable/button', {
 					text: 'Button',
 					buttonBackgroundColor: 'transparent',
+					buttonBorderType: 'solid',
 					className: 'is-style-plain',
 				} ],
 			] ],
@@ -55,6 +56,7 @@ const TEMPLATE = [
 				[ 'stackable/button', {
 					text: 'Button',
 					buttonBackgroundColor: 'transparent',
+					buttonBorderType: 'solid',
 					className: 'is-style-plain',
 				} ],
 			] ],

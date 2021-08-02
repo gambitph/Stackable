@@ -10,7 +10,7 @@ const GroupPlaceholder = () => {
 	const { clientId, name: blockName } = useBlockEditContext()
 	const { blockTitle } = useSelect( select => {
 		return {
-			blockTitle: select( 'core/blocks' ).getBlockType( blockName ).title,
+			blockTitle: select( 'core/blocks' ).getBlockType( blockName )?.title,
 		}
 	}, [ blockName ] )
 

@@ -6,4 +6,9 @@
 	right: 0 !important;
 	bottom: 0 !important;
 	cursor: pointer !important;
+	z-index: 2 !important;
+}
+// Ensure every other content is behind the link.
+.stk-block-link ~ * {
+	z-index: 1;
 }

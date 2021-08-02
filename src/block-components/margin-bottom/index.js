@@ -12,12 +12,16 @@ import { useBlockAttributes, useBlockContext } from '~stackable/hooks'
  */
 import { useBlockEditContext } from '@wordpress/block-editor'
 
+const parentBlocksWithoutMargin = [
+	'stackable/icon-label',
+]
+
 export const MarginBottom = () => {
 	const { clientId } = useBlockEditContext()
 	const attributes = useBlockAttributes( clientId )
-	const { isLastBlock } = useBlockContext()
+	const { isLastBlock, parentBlock } = useBlockContext()
 
-	if ( isLastBlock ) {
+	if ( isLastBlock || parentBlocksWithoutMargin.includes( parentBlock?.name ) ) {
 		return null
 	}
 

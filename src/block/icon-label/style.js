@@ -19,7 +19,7 @@ import {
 	useBlockAttributes, useDeviceType,
 } from '~stackable/hooks'
 import {
-	getUniqueBlockClass, useStyles,
+	getUniqueBlockClass, useStyles, getStyles,
 } from '~stackable/util'
 import { renderToString } from '@wordpress/element'
 import { useBlockEditContext } from '@wordpress/block-editor'
@@ -85,6 +85,7 @@ IconLabelStyles.Content = props => {
 	} = props
 
 	propsToPass.blockUniqueClassName = getUniqueBlockClass( props.attributes.uniqueId )
+	const styles = getStyles( propsToPass.attributes, getStyleParams() )
 
 	const stylesToRender = (
 		<>
@@ -93,6 +94,12 @@ IconLabelStyles.Content = props => {
 			<Column.Style.Content { ...propsToPass } />
 			<EffectsAnimations.Style.Content { ...propsToPass } />
 			<Advanced.Style.Content { ...propsToPass } />
+			<StyleComponent.Content
+				styles={ styles }
+				versionAdded="3.0.0"
+				versionDeprecated=""
+				{ ...propsToPass }
+			/>
 		</>
 	)
 

@@ -22,13 +22,13 @@ import {
 	getRowClasses,
 	MarginBottom,
 } from '~stackable/block-components'
+import { useBlockHoverClass } from '~stackable/hooks'
 
 /**
  * WordPress dependencies
  */
 import { InnerBlocks } from '@wordpress/block-editor'
 import { __ } from '@wordpress/i18n'
-import { useBlockHoverClass } from '~stackable/hooks'
 
 const TEMPLATE = [
 	[ 'stackable/column', {}, [

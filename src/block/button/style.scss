@@ -58,6 +58,7 @@
 
 .stk-block-button.is-style-ghost {
 	.stk-block-button__button {
+		border-width: 2px;
 		border-color: cssvar(button-background-color);
 		.stk--inner-svg {
 			color: cssvar(button-background-color);
